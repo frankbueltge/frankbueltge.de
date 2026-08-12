@@ -6,36 +6,50 @@
 /en / 301
 /en/* /:splat 301
 /police /policy 301
-/werke /holdings 301
+/werke /experiments 301
+
+# /holdings -> /experiments (Frank, 2026-08-09): Route und Seitentitel hießen verschieden —
+# die Seite trug seit je „Experiments", die Adresse „holdings". Ein Wort weniger, das erklärt
+# werden muss. Die Sammelseite hieß vorher /lab (Zeile unten), das ist ihre zweite und letzte
+# Umbenennung; beide alten Adressen bleiben als 301 erreichbar, es stirbt kein Link.
+/holdings /experiments 301
+/holdings/* /experiments/:splat 301
+
+# The ecology's /work card was an interstitial between the menu and the project's real page
+# (Frank, 2026-08-09, late) — the menu links /ecology directly now, the card page is gone.
+# Both slash forms, explicitly: Pages' trailing-slash normalization otherwise lets the
+# slashed request fall through to the (edge-cached) old asset instead of this rule.
+/work/research-ecology /ecology 301
+/work/research-ecology/ /ecology 301
 
 # Analytics-Engineering-Post entfernt (2026-07-02, Frank) — beruflicher Inhalt, passt nicht ins Lab.
-/lab/bigquery-dbt /holdings 301
+/lab/bigquery-dbt /experiments 301
 
 # Half-Life zurückgezogen (2026-06) — zu kalt; die Daten wandern ins Protokoll.
-/halbwertszeit /holdings 301
-/halbwertszeit/* /holdings 301
-/werke/halbwertszeit /holdings 301
-/werke/halbwertszeit/* /holdings 301
+/halbwertszeit /experiments 301
+/halbwertszeit/* /experiments 301
+/werke/halbwertszeit /experiments 301
+/werke/halbwertszeit/* /experiments 301
 
 # site-v2 (2026-07-16, decisions doc §1.4): "/lab" war die alte Sammelseite der Experimente —
-# keine zwei Sammelseiten neben /holdings. Die alte Index-Seite ist entfernt (Live-Befund
+# keine zwei Sammelseiten neben /experiments. Die alte Index-Seite ist entfernt (Live-Befund
 # 16.07. abends: /lab/ mit Slash lieferte weiter die alte Verfassungssprache aus, weil CF
 # exakte Pfade matcht und die generierte Seite gewann) — beide Slash-Varianten redirecten.
 # /lab/ueberflug-studie bleibt eine echte, eigenständige Seite und /lab/[slug] bleibt als
 # Route bestehen (aktuell 0 generierte Seiten — die Content-Collection "lab" ist leer).
 # Siehe docs/redirect-matrix-site-v2.md.
-/lab /holdings 301
-/lab/ /holdings 301
+/lab /experiments 301
+/lab/ /experiments 301
 
 # Routen englisch (2026-07-16, Frank: "warum stehen da deutsche begriffe in den urls?") —
-# der English-only-Entscheid gilt auch für Pfade: /encounters und /holdings sind kanonisch,
+# der English-only-Entscheid gilt auch für Pfade: /encounters und /experiments sind kanonisch,
 # die deutschen Pfade der Ökologie-Ära 301en dorthin. (Impressum/Datenschutz bleiben deutsch —
 # Rechtstexte; /protokoll, /praemie etc. sind Werk-Archivpfade und bleiben, bis das
 # Praxis-Oberflächen-Paket sie geordnet migriert.)
 /begegnungen /encounters 301
 /begegnungen/* /encounters/:splat 301
-/bestaende /holdings 301
-/bestaende/* /holdings 301
+/bestaende /experiments 301
+/bestaende/* /experiments 301
 
 # Werk-Slugs englisch (2026-07-20, Frank: "deutsche Slugs will ich nicht") — die zuvor als
 # "Werk-Archivpfade" belassenen deutschen Slugs wandern jetzt geordnet auf englische Slugs
@@ -72,10 +86,50 @@
 # /de/*-Route bekommt ihr EN-Pendant. Die Sonderfälle stehen vor der allgemeinen Regel,
 # damit sie in einem Hop ans tatsächliche Ziel führen statt über /lab bzw. / einen zweiten
 # Redirect zu brauchen (Slash-Varianten explizit — CF matcht exakt, s. o.).
-/de/lab /holdings 301
-/de/lab/ /holdings 301
+/de/lab /experiments 301
+/de/lab/ /experiments 301
 /de/praktiken / 301
 /de/praktiken/ / 301
 /de / 301
 /de/* /:splat 301
 /encounters/enc-2026-001/ /encounters/ 301
+
+# ── research ecology v3, the four-level pyramid (2026-08-12) ──────────────────────────────────
+# Design handoff: docs/design_handoff_research_ecology/README.md. The diagnosis was that the
+# ecology had grown too many pages to be understood; the cure is one entrance (/ecology), one
+# station sheet per room, and plain registers under them. Every route below was a page whose whole
+# content now stands on the sheet it points at — none of it is deleted, all of it is in Git.
+# Human-readable table with the reasoning per row: docs/redirect-matrix-site-v2.md.
+
+# the engine room: the entrance's LAST NIGHT board is what this page was, on the surface that
+# already answers the four questions around it
+/maschinenraum /ecology#now 301
+/maschinenraum/ /ecology#now 301
+
+# the practices' own second surfaces — history, apparatus and the tour each told one part of what
+# the station sheet now tells on one screen
+/atelier/history /atelier 301
+/atelier/apparatus /atelier 301
+/atelier/how-a-line-ends /atelier#figure 301
+/field/history /field 301
+/field/apparatus /field 301
+/field/how-a-claim-came-off /field#figure 301
+/studio/history /studio 301
+/studio/apparatus /studio 301
+/studio/how-a-premiere-returned /studio#figure 301
+
+# the Atelier's five standalone rooms: the sheet carries the state, the registers carry the lists
+/atelier/sheet /atelier 301
+/atelier/sheets /atelier 301
+/atelier/material /atelier 301
+/atelier/foundation /atelier 301
+/atelier/projects /atelier/works 301
+
+# the season: deleted as a level in the v2 rebuild (2026-08-08) and never a live surface after it;
+# the entrance's timeline carries the seam that replaced it
+/season /ecology#record 301
+/season/ /ecology#record 301
+
+# the notation: a document about how the house writes, which belongs with the documents
+/notation https://github.com/frankbueltge/research-ecology 301
+/notation/ https://github.com/frankbueltge/research-ecology 301

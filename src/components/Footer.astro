@@ -10,14 +10,18 @@ const year = 2026
 ---
 
 <footer class="mt-24 border-t border-line/60 footer-dark">
-  <div class="mx-auto flex max-w-5xl flex-col gap-8 px-6 py-14 sm:flex-row sm:items-start sm:justify-between">
-    <div class="flex items-center gap-3">
-      <img src="/logo.webp" alt="" width="48" height="48" class="h-12 w-12 rounded-full" />
-      <span class="text-sm font-semibold">Frank Bültge</span>
-    </div>
+  <!-- Asymmetric vertical padding: the row keeps its generous run-in from the border
+       above, but sits close to the copyright line below, so mark and fine print read
+       as one block instead of two drifting apart. -->
+  <div class="mx-auto flex max-w-5xl flex-col gap-8 px-6 pb-6 pt-14 sm:flex-row sm:items-start sm:justify-between">
+    <!-- The mark stands alone: the name beside it was redundant with the copyright
+         line below, which is also why alt="" is still right — the logo is decorative
+         here, and "Frank Bültge" already reaches screen readers from that line. -->
+    <img src="/logo.webp" alt="" width="96" height="96" class="h-24 w-24 rounded-full" />
 
     <nav aria-label="Footer" class="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-fg-muted">
       <a href="/seed" class="transition-colors hover:text-fg">Offer a seed</a>
+      <a href="/post#digest" class="transition-colors hover:text-fg">Digest</a>
       <a href="/contact" class="transition-colors hover:text-fg">Contact</a>
       <a href="/impressum" class="transition-colors hover:text-fg">Impressum</a>
       <a href="/datenschutz" class="transition-colors hover:text-fg">Datenschutz</a>

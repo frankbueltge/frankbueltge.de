@@ -1,20 +1,23 @@
 /** Zerfallskurve als server-gerenderter SVG-Pfad — kein Client-JS, Mono-Ästhetik. */
+import { bandScale, polyPath } from '@/lib/dataviz/geometry'
+
 export const SPARK_W = 220
 export const SPARK_H = 40
 const MAX_DAYS = 120
 
+/** One-line wrapper around dataviz/geometry.ts's polyPath + bandScale (numeric-equivalence
+ *  proof in geometry.test.ts) — the sqrt normalization (Wurzelskala: zeigt den Sockel, ohne den
+ *  Peak zu erschlagen) stays a pre-transform feeding a plain [0,1]→[SPARK_H-1,1] scale. */
 export function sparkPath(series: [string, number][]): string {
   if (series.length < 2) return ''
   const peak = Math.max(...series.map(([, v]) => v))
   if (peak <= 0) return ''
   const days = Math.min(series.length, MAX_DAYS)
-  const pts = series.slice(0, MAX_DAYS).map(([, v], i) => {
-    const x = (i / (days - 1)) * SPARK_W
-    // Wurzelskala: zeigt den Sockel, ohne den Peak zu erschlagen
-    const y = SPARK_H - Math.sqrt(Math.max(0, v) / peak) * (SPARK_H - 2) - 1
-    return `${x.toFixed(1)},${y.toFixed(1)}`
-  })
-  return `M${pts.join(' L')}`
+  const xScale = bandScale([0, days - 1], [0, SPARK_W])
+  const yScale = bandScale([0, 1], [SPARK_H - 1, 1])
+  return polyPath(
+    series.slice(0, MAX_DAYS).map(([, v], i) => ({ x: xScale(i), y: yScale(Math.sqrt(Math.max(0, v) / peak)) })),
+  )
 }
 
 export const STRIP_W = 320

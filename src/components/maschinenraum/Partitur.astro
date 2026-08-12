@@ -8,6 +8,11 @@
 // a table rendition); the client layer only adds crosshair, tooltip, panel and
 // keyboard. Encounter arcs are deliberately absent: the register carries no dates yet.
 import type { ScoreModel, VoiceId } from '@/lib/partitur'
+import { MARK_OFFSETS, VOICE_META, fanOffsets } from '@/lib/partitur'
+import Readout from '@/components/dataviz/Readout.astro'
+import DetailPanel from '@/components/dataviz/DetailPanel.astro'
+import TableFallback, { type TableColumn } from '@/components/dataviz/TableFallback.astro'
+import { jsonScriptPayload } from '@/lib/dataviz/runtime'
 
 interface Ji {
   id: string
@@ -25,12 +30,6 @@ interface Props {
 
 const { model, ji = null, compact = false } = Astro.props
 
-const VOICE_META: Record<VoiceId, { label: string; short: string; href: string }> = {
-  atelier: { label: 'Atelier · Ulysses', short: 'atelier', href: '/atelier/journal' },
-  field: { label: 'Field · Meridian', short: 'field', href: '/field' },
-  studio: { label: 'Studio · Ensemble', short: 'studio', href: '/studio' },
-  plenum: { label: 'Plenum · data-snack', short: 'plenum', href: '/plenum' },
-}
 const GLYPH_LABEL: Record<string, string> = {
   session: 'session landed',
   work: 'work landed',
@@ -52,10 +51,6 @@ const xAt = (i: number): number => X0 + dayW * (i + 0.5)
 const dayIndex = new Map(model.days.map((d, i) => [d, i]))
 const laneY = (li: number): number => TOP + LANE_H * li + LANE_H / 2
 
-// mark offsets within a day cluster: up to three landings drawn individually,
-// beyond that one face mark + ×n
-const OFFSETS: Record<number, number[]> = { 1: [0], 2: [-6.5, 6.5], 3: [-9, 0, 9] }
-
 interface MarkR {
   glyph: string
   dx: number
@@ -66,18 +61,20 @@ interface ClusterR {
   cx: number
   cy: number
   marks: MarkR[]
+  /** the time lens fans dense days out into their individual landings */
+  fans: MarkR[]
   more: number
   aria: string
   delay: number
 }
 
-let clusterIdx = 0
 const clustersR: ClusterR[] = model.lanes.flatMap((lane, li) =>
   lane.clusters.map((c) => {
     const n = c.events.length
-    const offsets = OFFSETS[Math.min(n, 3)] ?? [0]
+    const offsets = MARK_OFFSETS[Math.min(n, 3)] ?? [0]
     const marks: MarkR[] =
       n <= 3 ? c.events.map((e, mi) => ({ glyph: e.glyph, dx: offsets[mi] })) : [{ glyph: c.glyph, dx: 0 }]
+    const fans: MarkR[] = n > 3 ? c.events.map((e, mi) => ({ glyph: e.glyph, dx: fanOffsets(n)[mi] })) : []
     const first = c.events[0]?.text ?? ''
     return {
       key: `${c.voice}|${c.date}`,
@@ -85,14 +82,61 @@ const clustersR: ClusterR[] = model.lanes.flatMap((lane, li) =>
       cx: xAt(dayIndex.get(c.date) ?? 0),
       cy: laneY(li),
       marks,
+      fans,
       more: n > 3 ? n : 0,
       aria: `${VOICE_META[c.voice].label}, ${c.date}: ${n === 1 ? '1 landing' : `${n} landings`} — ${first.slice(0, 90)}`,
-      // entrance order for the (client-only) fade-in — the site CSP drops style
-      // attributes, so the JS layer sets the delay via CSSOM
-      delay: Math.min(clusterIdx++ * 10, 700),
+      // ignition delay follows the DAY, so the entrance reads as one playhead sweep
+      // left→right (the site CSP drops style attributes; the JS layer sets the
+      // delay via CSSOM)
+      delay: Math.round(((dayIndex.get(c.date) ?? 0) / Math.max(1, nDays)) * 1050),
     }
   }),
 )
+
+// ── The breathing band: each voice as a ribbon whose thickness is the REAL number
+//    of landings per day (0 landings → a quiet 0.7-unit thread). Smoothing between
+//    days is presentation, like any line chart; the marks stay the data carriers. ──
+const smooth = (pts: [number, number][]): string => {
+  if (pts.length < 2) return ''
+  let d = ''
+  for (let i = 0; i < pts.length - 1; i++) {
+    const p0 = pts[Math.max(0, i - 1)]
+    const p1 = pts[i]
+    const p2 = pts[i + 1]
+    const p3 = pts[Math.min(pts.length - 1, i + 2)]
+    const c1x = p1[0] + (p2[0] - p0[0]) / 6
+    const c1y = p1[1] + (p2[1] - p0[1]) / 6
+    const c2x = p2[0] - (p3[0] - p1[0]) / 6
+    const c2y = p2[1] - (p3[1] - p1[1]) / 6
+    d += ` C ${c1x.toFixed(1)} ${c1y.toFixed(1)}, ${c2x.toFixed(1)} ${c2y.toFixed(1)}, ${p2[0].toFixed(1)} ${p2[1].toFixed(1)}`
+  }
+  return d
+}
+const AMP_MAX = compact ? 7 : 9
+const bandPaths = model.lanes.map((lane, li) => {
+  const y = laneY(li)
+  const byDay = new Map(lane.clusters.map((c) => [c.date, c.events.length]))
+  const amps = model.days.map((d) => {
+    const n = byDay.get(d) ?? 0
+    return n === 0 ? 0.7 : Math.min(2.2 + n * 1.15, AMP_MAX)
+  })
+  const top = amps.map((a, i): [number, number] => [xAt(i), y - a])
+  const bottom = amps.map((a, i): [number, number] => [xAt(i), y + a]).reverse()
+  const first = top[0]
+  const bottomStart = bottom[0]
+  return {
+    voice: lane.voice,
+    d: `M ${first[0].toFixed(1)} ${first[1].toFixed(1)}${smooth(top)} L ${bottomStart[0].toFixed(1)} ${bottomStart[1].toFixed(1)}${smooth(bottom)} Z`,
+  }
+})
+
+// one soft light source per cluster — blurred as ONE group (a single filter pass)
+const glowDots = clustersR.map((c) => ({
+  voice: c.voice,
+  cx: c.cx,
+  cy: c.cy,
+  r: 4 + Math.min(c.more || c.marks.length, 6) * 1.1,
+}))
 
 // axis: first day, Mondays, last day — labels colliding with the edges are dropped
 const dow = (d: string): number => new Date(`${d}T00:00:00Z`).getUTCDay()
@@ -108,9 +152,13 @@ const jiIdx = ji?.start ? (dayIndex.get(ji.start) ?? (ji.start < model.start ? 0
 const jiX = jiIdx === null || jiIdx === undefined ? null : X0 + dayW * jiIdx
 const jiRows = ji ? model.lanes.filter((l) => ji.voices.includes(l.voice)).length : 0
 
-// client payload: full texts for the panel, layout for the crosshair
+// client payload: full texts for the panel, layout for the crosshair, and the mark-offset
+// table (MARK_OFFSETS) — the one copy in src/lib/partitur.ts, handed to the client instead of
+// a second hand-kept-in-sync literal (fanOffsets, a formula rather than data, is imported
+// directly by the client script below instead).
 const payload = {
   layout: { vbw: VB_W, x0: X0, dayW, top: TOP, laneH: LANE_H, days: model.days },
+  offsets: MARK_OFFSETS,
   voices: Object.fromEntries(
     model.lanes.map((l) => [l.voice, { label: VOICE_META[l.voice].label, href: VOICE_META[l.voice].href }]),
   ),
@@ -130,14 +178,40 @@ const payload = {
     ),
   ),
 }
-const payloadJson = JSON.stringify(payload).replace(/</g, '\\u003c')
+const payloadJson = jsonScriptPayload(payload)
 
 // table rendition — chronological, so nothing is reachable only by hovering
 const tableRows = model.lanes
   .flatMap((l) => l.clusters.flatMap((c) => c.events))
   .sort((a, b) => a.date.localeCompare(b.date) || a.voice.localeCompare(b.voice))
 
-const minWidth = Math.max(720, Math.round(nDays * 26 + 200))
+// TableFallback's columns/rows — same content as the hand-rolled table before it (date, voice,
+// mark, move · verdict, line), keyed for the shared component's Record<string, string|number>
+// row shape. The "line" cell's old title="" full-text hover and CSS line-clamp move to the
+// column-scoped skin below (TableFallback's row values are plain scalars, no per-cell markup).
+const tableColumns: TableColumn[] = [
+  { key: 'date', label: 'date', nowrap: true },
+  { key: 'voice', label: 'voice' },
+  { key: 'mark', label: 'mark', nowrap: true },
+  { key: 'moveVerdict', label: 'move · verdict' },
+  { key: 'line', label: 'line' },
+]
+const tableRowsData = tableRows.map((e) => ({
+  date: e.date,
+  voice: e.voice,
+  mark: GLYPH_LABEL[e.glyph],
+  moveVerdict: [e.move, e.verdict].filter(Boolean).join(' · ') || '—',
+  line: e.text,
+}))
+
+// A FIXED floor, not one that grows with the day count (Frank, 2026-07-31: "you have to scroll
+// horizontally at the top"). The old floor demanded 26 CSS px per day, so the score outgrew the
+// page after roughly a month and pushed the NEWEST landings — the point of this page — off the
+// right edge, where they had to be hunted for. The figure is a viewBox that scales, and density
+// is already answered by the ×n clusters and the time lens that fans them out; that is what the
+// lens is for. So the score now fits its column at any day count, and the floor only keeps it
+// from collapsing on a phone — where the table below is the honest rendition anyway.
+const minWidth = 720
 ---
 
 <section
@@ -175,14 +249,34 @@ const minWidth = Math.max(720, Math.round(nDays * 26 + 200))
         role="img"
         aria-label={`Score of the research ecology, ${model.start} to ${model.end}: ${tableRows.length} landed sessions across four practices. ${compact ? 'Full score and table on the Maschinenraum page.' : 'Details in the table below.'}`}
       >
+        <defs>
+          {/* bloom for the light layer — applied to ONE group, a single filter pass */}
+          <filter id="pt-glow" x="-40%" y="-40%" width="180%" height="180%">
+            <feGaussianBlur stdDeviation="7" />
+          </filter>
+        </defs>
+
         {/* week grid (Mondays) — quiet, behind everything */}
         {mondays.map(({ i }) => (
           <line
+            class="pt-grid-w"
             x1={X0 + dayW * i} x2={X0 + dayW * i}
             y1={TOP} y2={TOP + LANE_H * model.lanes.length}
             stroke="var(--pt-grid)" stroke-width="1"
           />
         ))}
+
+        {/* the breathing bands: per-day landing density as each voice's ribbon */}
+        {bandPaths.map((b) => (
+          <path class="pt-band" d={b.d} data-voice={b.voice} fill="var(--c)" />
+        ))}
+
+        {/* the light layer: one soft source per cluster, bloomed as a group */}
+        <g class="pt-glowlayer" filter="url(#pt-glow)" aria-hidden="true">
+          {glowDots.map((g) => (
+            <circle cx={g.cx} cy={g.cy} r={g.r} data-voice={g.voice} fill="var(--c)" />
+          ))}
+        </g>
 
         {/* joint-inquiry bracket: three voices, closed on the left, open on the right */}
         {ji && jiX !== null && (
@@ -195,12 +289,21 @@ const minWidth = Math.max(720, Math.round(nDays * 26 + 200))
           </g>
         )}
 
-        {/* voices: baseline, label, count, as-of */}
+        {/* voices: quiet baseline (the band carries the lane now), label, count, as-of.
+            The label is the lane's way into its own house (2026-08-02) — an SVG anchor around the
+            existing text, in the label gutter left of the axis, so it never sits over a mark and
+            the hit areas below stay untouched. It carries no colour of its own: an underline on
+            hover and a focus ring are enough on this stage, and the voice colours are already
+            spoken for by the marks. This is the ONE way the compact score on the entrance leads
+            anywhere per voice (it has no detail panel), and it is where the Plenum — a guest with
+            no door on the hub — gets its link to /plenum. */}
         {model.lanes.map((lane, li) => (
           <g>
-            <line x1={X0} x2={X1} y1={laneY(li)} y2={laneY(li)} stroke="var(--pt-hair)" stroke-width="1" />
-            <text x="14" y={laneY(li) - 3} class="pt-t-voice">{VOICE_META[lane.voice].short}</text>
-            <text x="14" y={laneY(li) + 11} class="pt-t-meta">
+            <line x1={X0} x2={X1} y1={laneY(li)} y2={laneY(li)} stroke="var(--pt-grid)" stroke-width="1" />
+            <a class="pt-voice-link" href={VOICE_META[lane.voice].href} aria-label={`${VOICE_META[lane.voice].label} — open this voice’s own room`}>
+              <text x="14" y={laneY(li) - 3} class="pt-t-voice">{VOICE_META[lane.voice].short}</text>
+            </a>
+            <text x="14" y={laneY(li) + 12} class="pt-t-meta">
               {lane.count === 0
                 ? 'nothing mirrored'
                 : `${lane.count} landed · as of ${lane.asOf?.slice(5)}`}
@@ -225,6 +328,9 @@ const minWidth = Math.max(720, Math.round(nDays * 26 + 200))
         {/* crosshair (client) */}
         <line id="pt-cross" y1={TOP - 4} y2={TOP + LANE_H * model.lanes.length} stroke="var(--pt-hair)" stroke-width="1" aria-hidden="true" />
 
+        {/* the playhead: sweeps once on load, igniting the month left→right (JS-gated) */}
+        <line class="pt-sweep" x1={X0} x2={X0} y1={TOP - 4} y2={TOP + LANE_H * model.lanes.length} aria-hidden="true" />
+
         {/* the landings */}
         {clustersR.map((c) => (
           <g
@@ -246,23 +352,42 @@ const minWidth = Math.max(720, Math.round(nDays * 26 + 200))
             <g class="pt-cluster">
               {c.marks.map((m, mi) => (
                 m.glyph === 'fail' ? (
-                  <g data-mi={c.more > 0 ? -1 : mi} transform={`translate(${c.cx + m.dx} ${c.cy})`}>
-                    <circle r="7.5" fill="var(--pt-stage)" />
-                    <path d="M -4 -4 L 4 4 M -4 4 L 4 -4" stroke="var(--pt-fail)" stroke-width="2.5" stroke-linecap="round" />
+                  <g class={c.more > 0 ? 'pt-face' : undefined} data-mi={c.more > 0 ? -1 : mi} transform={`translate(${c.cx + m.dx} ${c.cy})`}>
+                    <circle r="8" fill="var(--pt-stage)" />
+                    <path d="M -4.5 -4.5 L 4.5 4.5 M -4.5 4.5 L 4.5 -4.5" stroke="var(--pt-fail)" stroke-width="2.5" stroke-linecap="round" />
                   </g>
                 ) : m.glyph === 'work' ? (
                   <path
+                    class={c.more > 0 ? 'pt-face' : undefined}
                     data-mi={c.more > 0 ? -1 : mi}
-                    d={`M ${c.cx + m.dx} ${c.cy - 6} L ${c.cx + m.dx + 6} ${c.cy} L ${c.cx + m.dx} ${c.cy + 6} L ${c.cx + m.dx - 6} ${c.cy} Z`}
+                    d={`M ${c.cx + m.dx} ${c.cy - 6.5} L ${c.cx + m.dx + 6.5} ${c.cy} L ${c.cx + m.dx} ${c.cy + 6.5} L ${c.cx + m.dx - 6.5} ${c.cy} Z`}
                     fill="var(--c)" stroke="var(--pt-stage)" stroke-width="2"
                   />
                 ) : (
-                  <circle data-mi={c.more > 0 ? -1 : mi} cx={c.cx + m.dx} cy={c.cy} r="4.5" fill="var(--c)" stroke="var(--pt-stage)" stroke-width="2" />
+                  <circle class={c.more > 0 ? 'pt-face' : undefined} data-mi={c.more > 0 ? -1 : mi} cx={c.cx + m.dx} cy={c.cy} r="5" fill="var(--c)" stroke="var(--pt-stage)" stroke-width="2" />
                 )
               ))}
               {c.more > 0 && (
-                <text x={c.cx} y={c.cy - 12} text-anchor="middle" class="pt-t-meta">×{c.more}</text>
+                <text x={c.cx} y={c.cy - 12} text-anchor="middle" class="pt-t-meta pt-face">×{c.more}</text>
               )}
+              {/* the time lens fans a dense day out into its individual landings */}
+              {c.fans.map((m, mi) => (
+                m.glyph === 'fail' ? (
+                  <g class="pt-fan" data-mi={mi} transform={`translate(${c.cx + m.dx} ${c.cy})`}>
+                    <circle r="8" fill="var(--pt-stage)" />
+                    <path d="M -4.5 -4.5 L 4.5 4.5 M -4.5 4.5 L 4.5 -4.5" stroke="var(--pt-fail)" stroke-width="2.5" stroke-linecap="round" />
+                  </g>
+                ) : m.glyph === 'work' ? (
+                  <path
+                    class="pt-fan"
+                    data-mi={mi}
+                    d={`M ${c.cx + m.dx} ${c.cy - 6.5} L ${c.cx + m.dx + 6.5} ${c.cy} L ${c.cx + m.dx} ${c.cy + 6.5} L ${c.cx + m.dx - 6.5} ${c.cy} Z`}
+                    fill="var(--c)" stroke="var(--pt-stage)" stroke-width="2"
+                  />
+                ) : (
+                  <circle class="pt-fan" data-mi={mi} cx={c.cx + m.dx} cy={c.cy} r="5" fill="var(--c)" stroke="var(--pt-stage)" stroke-width="2" />
+                )
+              ))}
             </g>
           </g>
         ))}
@@ -270,9 +395,12 @@ const minWidth = Math.max(720, Math.round(nDays * 26 + 200))
     </div>
   </div>
 
-  {/* The tooltip lives OUTSIDE the scroll container — overflow-x would otherwise clip
-      readouts near the right edge (Frank's live finding, 2026-07-31); positioned via CSSOM. */}
-  <div id="pt-tip" class="pt-tip" hidden></div>
+  {/* The readout lives OUTSIDE the scroll container — overflow-x would otherwise clip it near
+      the right edge (Frank's live finding, 2026-07-31); dataviz/readout.ts's createReadout
+      clamps it to .pt-stage's own box (this component's root, position:relative below) rather
+      than the scroll container or the viewport — see that module's house rule 1. 340px matches
+      the old hand-rolled #pt-tip's max-width. */}
+  <Readout id="pt-tip" maxWidth="340px" />
 
   {compact ? (
     <p class="flex flex-wrap items-center gap-x-4 gap-y-1 px-5 pb-4 pt-1 font-mono text-[10px] tracking-[0.06em] text-[color:var(--pt-faint)] sm:px-6">
@@ -284,64 +412,54 @@ const minWidth = Math.max(720, Math.round(nDays * 26 + 200))
     </p>
   ) : (
     <p id="pt-hint" class="px-5 pb-4 pt-2 text-[11px] text-[color:var(--pt-faint)] sm:px-6">
-      Hover a mark for that landing, a dense ×n mark for its voice's day, the open lane for the
-      whole column. Click to read; from there, prev/next (or ← →) steps landing by landing
-      through the voice. The score is keyboard-readable and fully replicated in the table below.
+      The pointer is a time lens: the month stretches under it, and dense ×n days fan out into
+      their individual landings — hover any mark for exactly that one, the open lane for the
+      whole day column. Click to read; prev/next (or ← →) then steps landing by landing through
+      the voice. The score is keyboard-readable and fully replicated in the table below.
     </p>
   )}
 
   {/* Detail panel (full view only): ONE reader per landing, not per day — prev/next
       (and ←/→) step session by session through the voice, including WITHIN dense
-      days (Frank's finding 2026-07-31: "there are often several sessions per day"). */}
+      days (Frank's finding 2026-07-31: "there are often several sessions per day").
+      Ported onto dataviz/DetailPanel.astro + src/lib/dataviz/stepper.ts's buildSegments/step/
+      positionLabel (extracted FROM this component in WP3) — the prev/next/close buttons and
+      the Escape/←/→ keyboard arbitration are the shared shell's; this component only fills the
+      head/body/foot slots and reorders them back to the original layout via the CSS below (the
+      prev/next/pos/close cluster sits beside the heading again, not below the list). The
+      position readout (id="pt-pos") has no shell slot of its own — the client script inserts it
+      between the shell's own prev/next buttons at init, exactly where it always sat. */}
   {!compact && (
-    <div id="pt-panel" class="pt-panel" hidden>
-      <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2">
+    <DetailPanel id="pt-panel">
+      <Fragment slot="head">
         <p id="pt-panel-head" class="pt-kicker"></p>
-        <span class="flex items-baseline gap-4">
-          <button id="pt-prev" type="button" class="pt-close" aria-label="Previous landing in this voice">← prev</button>
-          <span id="pt-pos" class="pt-pos" aria-live="polite"></span>
-          <button id="pt-next" type="button" class="pt-close" aria-label="Next landing in this voice">next →</button>
-          <button id="pt-panel-close" type="button" class="pt-close" aria-label="Close details">close ✕</button>
-        </span>
-      </div>
-      <ol id="pt-panel-list" class="mt-2 space-y-3"></ol>
-      <p class="mt-3"><a id="pt-panel-link" class="pt-link" href="/maschinenraum">open the log →</a></p>
-    </div>
+      </Fragment>
+      <Fragment slot="body">
+        <ol id="pt-panel-list" class="space-y-3"></ol>
+      </Fragment>
+      <Fragment slot="foot">
+        <p><a id="pt-panel-link" class="pt-link" href="/maschinenraum">open the log →</a></p>
+      </Fragment>
+    </DetailPanel>
   )}
 
-  {/* table rendition — nothing is reachable only by hovering (full view only) */}
+  {/* table rendition — nothing is reachable only by hovering (full view only). Ported onto
+      dataviz/TableFallback.astro; column content is identical to the hand-rolled table before
+      it. One accepted loss: the old "line" cell's title="" attribute (full text on hover) has
+      no equivalent in TableFallback's plain-scalar row shape — the three-line clamp (still
+      needed: unclamped, a single landing could be 940px tall) stays, but the hover preview does
+      not; the full line remains readable via the score's own detail panel above. */}
   {!compact && (
-  <details class="border-t border-[color:var(--pt-hairc)] px-5 py-4 sm:px-6">
-    <summary class="cursor-pointer font-mono text-[11px] uppercase tracking-[0.14em] text-[color:var(--pt-muted)]">the score as a table</summary>
-    <div class="pt-tablewrap mt-3 max-h-96 overflow-y-auto">
-      <table class="w-full text-left text-xs">
-        <thead>
-          <tr class="font-mono text-[10px] uppercase tracking-[0.1em] text-[color:var(--pt-faint)]">
-            <th class="py-1 pr-4 font-normal">date</th>
-            <th class="py-1 pr-4 font-normal">voice</th>
-            <th class="py-1 pr-4 font-normal">mark</th>
-            <th class="py-1 pr-4 font-normal">move · verdict</th>
-            <th class="py-1 font-normal">line</th>
-          </tr>
-        </thead>
-        <tbody>
-          {tableRows.map((e) => (
-            <tr class="border-t border-[color:var(--pt-hairc)] align-top text-[color:var(--pt-muted)]">
-              <td class="py-1.5 pr-4 font-mono text-[11px] tabular-nums">{e.date}</td>
-              <td class="py-1.5 pr-4 font-mono text-[11px]">{e.voice}</td>
-              <td class="py-1.5 pr-4">{GLYPH_LABEL[e.glyph]}</td>
-              <td class="py-1.5 pr-4 font-mono text-[11px]">{[e.move, e.verdict].filter(Boolean).join(' · ') || '—'}</td>
-              <td class="py-1.5 text-[color:var(--pt-ink)]">{e.text}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  </details>
+    <TableFallback
+      summary="the score as a table"
+      columns={tableColumns}
+      rows={tableRowsData}
+      caption="The score as a table: every landed session across all four voices, in chronological order."
+    />
   )}
 </section>
 
-<script is:inline type="application/json" id="partitur-data" set:html={payloadJson} />
+<script type="application/json" id="partitur-data" set:html={payloadJson} />
 
 <style>
   .pt-stage {
@@ -360,12 +478,19 @@ const minWidth = Math.max(720, Math.round(nDays * 26 + 200))
     --pt-hairc: rgba(244, 244, 245, 0.09);
     --pt-grid: rgba(244, 244, 245, 0.055);
     --pt-wash: rgba(244, 244, 245, 0.035);
+    /* PALETTE: ecology-voices (src/lib/dataviz/palette.ts), dark column — the stage is
+     * always dark, so only the dark steps appear here. Same quartet as the hub doors and
+     * the encounter score map. */
     --pt-atelier: #9085e9;
     --pt-field: #256abf;
     --pt-studio: #d95926;
     --pt-plenum: #199e70;
     --pt-fail: #d03b3b;
-    background: var(--pt-stage);
+    /* depth: film grain over a slow radial falloff — the room, not a panel
+       (grain via data: URI is allowed by the site CSP: img-src 'self' data:) */
+    background-image:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.035 0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E"),
+      radial-gradient(130% 105% at 22% -12%, #1a1a21 0%, var(--pt-stage) 52%, #0e0e12 100%);
     color: var(--pt-ink);
     /* anchor for the tooltip, which lives outside the clipping scroll container */
     position: relative;
@@ -415,16 +540,103 @@ const minWidth = Math.max(720, Math.round(nDays * 26 + 200))
     height: 2px;
     background: var(--c);
   }
+  .pt-scroll {
+    padding: 8px 4px 0;
+  }
+  /* table rendition (TableFallback.astro's shared shell, skinned here): the wrapping <details>
+     carries the border/padding the old hand-rolled block had; the header rides along and the
+     line column stays three lines tall — unclamped, a single landing could be 940px tall. */
+  :global(.pt-stage .dv-table-fallback) {
+    border-top: 1px solid var(--pt-hairc);
+    padding: 16px 20px;
+  }
+  @media (min-width: 640px) {
+    :global(.pt-stage .dv-table-fallback) {
+      padding-left: 24px;
+      padding-right: 24px;
+    }
+  }
+  :global(.pt-stage .dv-table-fallback summary) {
+    cursor: pointer;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--pt-muted);
+  }
   .pt-scroll,
-  .pt-tablewrap {
-    overflow-x: auto;
+  :global(.pt-stage .dv-table-wrap) {
     /* main is a flex item (min-width:auto) — without inline-size containment the
        canvas min-width would propagate as min-content up to the page and widen
-       the whole page on mobile instead of scrolling here. */
+       the whole page on mobile instead of scrolling here. TableFallback's own .dv-table-wrap
+       already carries overflow-x:auto (its structural CSS). */
     contain: inline-size;
   }
   .pt-scroll {
-    padding: 8px 4px 0;
+    /* AND THE SCORE HAS TO SCROLL IN ITS OWN BOX. Restored 2026-08-02, measured at 390px: the
+       canvas carries a min-width (760px at the no-JS floor, the exact day-count width once the
+       client layer sets it), and `contain: inline-size` alone does not clip or scroll — it only
+       stops that min-width propagating outward as min-content. So the canvas went on PAINTING
+       past the viewport, and document.scrollWidth on the entrance and on this page measured 749
+       against a 390 viewport: the whole hub scrolled sideways on a phone. The refactor onto the
+       shared dataviz primitives dropped this line from the rule above on the reasoning that
+       .dv-table-wrap brings its own — true for the table, but .pt-scroll is not a .dv-table-wrap.
+       The readout deliberately lives OUTSIDE this box for exactly this reason (see the note beside
+       it below), so nothing that has to escape the clip is inside it. */
+    overflow-x: auto;
+  }
+  :global(.pt-stage .dv-table-wrap) {
+    margin-top: 12px;
+    max-height: 60vh;
+    overflow-y: auto;
+  }
+  :global(.pt-stage .dv-table) {
+    width: 100%;
+    text-align: left;
+    font-size: 12px;
+  }
+  :global(.pt-stage .dv-table th) {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    padding: 6px 16px 6px 0;
+    font-weight: 400;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--pt-faint);
+    /* the stage is a gradient, so a flat header strip reads as intended rather than
+       as a patch that almost matches */
+    background: var(--pt-panel2);
+  }
+  :global(.pt-stage .dv-table td) {
+    padding: 6px 16px 6px 0;
+    border-top: 1px solid var(--pt-hairc);
+    vertical-align: top;
+    color: var(--pt-muted);
+  }
+  /* date, mark: no wrap (TableFallback's own nowrap prop) — voice/move·verdict share the
+     mono treatment the date column has; mark and line stay the body font. */
+  :global(.pt-stage .dv-table td:nth-child(1)),
+  :global(.pt-stage .dv-table td:nth-child(2)),
+  :global(.pt-stage .dv-table td:nth-child(4)) {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 11px;
+  }
+  :global(.pt-stage .dv-table td:nth-child(1)) {
+    font-variant-numeric: tabular-nums;
+  }
+  :global(.pt-stage .dv-table td:last-child) {
+    padding-right: 0;
+    color: var(--pt-ink);
+    /* see the caption above this block: the old title="" full-text hover has no equivalent
+       here, but the row stays readable and the clamp keeps the table navigable. */
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
   .pt-canvas {
     position: relative;
@@ -434,12 +646,98 @@ const minWidth = Math.max(720, Math.round(nDays * 26 + 200))
   #pt-cross {
     display: none;
   }
+  /* the voice ribbons: real per-day density, worn quietly under the marks */
+  .pt-band {
+    opacity: 0.16;
+    transition: opacity 0.25s ease;
+  }
+  .pt-glowlayer {
+    opacity: 0.5;
+    transition: opacity 0.25s ease;
+  }
+  /* the time lens: while it is engaged the static layers step back so the
+     shifted marks read cleanly; fans replace a dense day's face mark */
+  .pt-lens .pt-band {
+    opacity: 0.055;
+  }
+  .pt-lens .pt-glowlayer {
+    opacity: 0.22;
+  }
+  .pt-lens .pt-grid-w {
+    opacity: 0.4;
+  }
+  .pt-fan {
+    display: none;
+  }
+  .pt-hit.pt-expanded .pt-fan {
+    display: inline;
+  }
+  .pt-hit.pt-expanded .pt-face {
+    display: none;
+  }
+  /* the playhead: exists only during the JS-gated entrance */
+  .pt-sweep {
+    display: none;
+    stroke: var(--pt-ink);
+    stroke-width: 1.5;
+    opacity: 0;
+  }
+  .pt-anim .pt-sweep {
+    display: inline;
+    animation: pt-sweep 1.15s cubic-bezier(0.3, 0, 0.4, 1) 0.05s forwards;
+  }
+  @keyframes pt-sweep {
+    0% {
+      transform: translateX(0);
+      opacity: 0.55;
+    }
+    92% {
+      opacity: 0.35;
+    }
+    100% {
+      transform: translateX(932px);
+      opacity: 0;
+    }
+  }
+  .pt-anim .pt-glowlayer {
+    opacity: 0;
+    animation: pt-glowin 1.6s ease-out 0.25s forwards;
+  }
+  @keyframes pt-glowin {
+    to {
+      opacity: 0.5;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .pt-anim .pt-sweep {
+      display: none;
+      animation: none;
+    }
+    .pt-anim .pt-glowlayer {
+      animation: none;
+      opacity: 0.5;
+    }
+  }
   svg text.pt-t-voice {
     font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
     font-size: 11.5px;
     letter-spacing: 0.14em;
     text-transform: uppercase;
     fill: var(--pt-ink);
+  }
+  /* the lane label as a link: quiet until asked, and never a second colour on the stage */
+  .pt-voice-link {
+    cursor: pointer;
+    outline: none;
+  }
+  .pt-voice-link:hover text.pt-t-voice,
+  .pt-voice-link:focus-visible text.pt-t-voice {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .pt-voice-link:focus-visible text.pt-t-voice {
+    outline: 2px solid var(--pt-muted);
+    outline-offset: 3px;
   }
   svg text.pt-t-meta {
     font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
@@ -455,6 +753,8 @@ const minWidth = Math.max(720, Math.round(nDays * 26 + 200))
   .pt-hit {
     cursor: pointer;
     outline: none;
+    /* tiny easing so the lens feels fluid rather than snapping per event */
+    transition: transform 0.09s linear;
   }
   .pt-ring {
     stroke: var(--pt-ink);
@@ -492,11 +792,11 @@ const minWidth = Math.max(720, Math.round(nDays * 26 + 200))
       transform: none;
     }
   }
-  .pt-tip {
-    position: absolute;
-    z-index: 10;
-    max-width: 340px;
-    pointer-events: none;
+  /* WP4-style port: #pt-tip is now dataviz/Readout.astro's shared .dv-readout shell —
+     structure (position/clamping/pointer-events/z-index/max-width) lives there, only the
+     score's own skin (background/border/type/shadow) stays here, scoped by id so the same
+     .dv-readout class used by other practices' figures never picks these colors up. */
+  :global(#pt-tip) {
     background: var(--pt-panel2);
     border: 1px solid var(--pt-hair);
     border-radius: 8px;
@@ -506,76 +806,110 @@ const minWidth = Math.max(720, Math.round(nDays * 26 + 200))
     color: var(--pt-ink);
     box-shadow: 0 6px 24px rgba(0, 0, 0, 0.45);
   }
-  /* Tooltip/panel internals are created at runtime (createElement) and therefore
+  /* Readout/panel internals are created at runtime (createElement) and therefore
      carry no Astro scope attributes — hence :global() under the server-rendered root. */
-  .pt-tip :global(.tip-date) {
+  :global(#pt-tip .tip-date) {
     font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
     font-size: 9.5px;
     letter-spacing: 0.1em;
     color: var(--pt-faint);
   }
-  .pt-tip :global(.tip-row) {
+  :global(#pt-tip .tip-row) {
     display: grid;
     grid-template-columns: 14px 52px 1fr;
     gap: 6px;
     align-items: baseline;
     margin-top: 5px;
   }
-  .pt-tip :global(.tip-key) {
+  :global(#pt-tip .tip-key) {
     width: 12px;
     height: 2px;
     background: var(--c);
     align-self: center;
   }
-  .pt-tip :global(.tip-voice) {
+  :global(#pt-tip .tip-voice) {
     font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
     font-size: 9px;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--pt-muted);
   }
-  .pt-panel {
+  /* #pt-panel is now dataviz/DetailPanel.astro's shared shell (id passed through as a prop) —
+     its own CSS only supplies the nav's flex row; the score's skin plus the layout that puts
+     the prev/next/pos/close cluster back beside the heading (not below the list, DetailPanel's
+     plain top-to-bottom DOM order) live here: head+nav share row 1 (nav pushed right via
+     margin-left:auto), body and foot each force their own row via flex-basis:100%. */
+  :global(#pt-panel) {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
     margin: 4px 20px 0;
     border-top: 1px solid var(--pt-hairc);
     padding: 14px 4px 6px;
   }
-  .pt-panel ol {
+  :global(#pt-panel .dv-panel-head) {
+    order: 1;
+  }
+  :global(#pt-panel .dv-panel-nav) {
+    order: 2;
+    margin-left: auto;
+    gap: 16px;
+  }
+  :global(#pt-panel .dv-panel-body) {
+    order: 3;
+    flex-basis: 100%;
+    margin-top: 8px;
+  }
+  :global(#pt-panel .dv-panel-foot) {
+    order: 4;
+    flex-basis: 100%;
+    margin-top: 12px;
+  }
+  #pt-panel-list {
     list-style: none;
     padding: 0;
   }
-  .pt-panel :global(.ev-meta) {
+  :global(#pt-panel .ev-meta) {
     font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
     font-size: 10px;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--pt-faint);
   }
-  .pt-panel :global(.ev-text) {
+  :global(#pt-panel .ev-text) {
     margin-top: 3px;
     font-size: 13px;
     line-height: 1.55;
     color: var(--pt-ink);
     max-width: 72ch;
   }
-  .pt-close {
+  /* the shell's own prev/next/close buttons (DetailPanel.astro's [data-dv-prev] etc.) — same
+     skin the old hand-rolled .pt-close class gave them. */
+  :global(#pt-panel .dv-panel-nav button) {
     font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
     font-size: 10px;
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--pt-faint);
     cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
   }
-  .pt-close:hover {
+  :global(#pt-panel .dv-panel-nav button:hover) {
     color: var(--pt-ink);
   }
-  .pt-close:disabled {
+  :global(#pt-panel .dv-panel-nav button:disabled) {
     opacity: 0.35;
     cursor: default;
   }
-  .pt-close:disabled:hover {
+  :global(#pt-panel .dv-panel-nav button:disabled:hover) {
     color: var(--pt-faint);
   }
-  .pt-pos {
+  /* the position readout ("2/3 this day · 14/27 in field") — inserted at runtime between the
+     shell's own prev/next buttons (no shell slot exists between them); created via
+     createElement, so :global() as above. */
+  :global(#pt-panel .pt-pos) {
     font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
     font-size: 10px;
     color: var(--pt-faint);
@@ -597,6 +931,19 @@ const minWidth = Math.max(720, Math.round(nDays * 26 + 200))
   // The score's interaction layer: crosshair + tooltips, click/Enter → detail panel
   // with the full wording, Esc closes. Everything below is an enhancement — the
   // static rendition (SVG + table) stands on its own.
+  //
+  // Ported onto the shared dataviz primitives: the tooltip onto dataviz/Readout.astro +
+  // createReadout/placeReadout, the detail panel onto dataviz/DetailPanel.astro + src/lib/
+  // dataviz/stepper.ts's buildSegments/step/positionLabel (this file's own former flat/seg/
+  // step, extracted from here in WP3), and the mark-offset table + nearest-mark resolution onto
+  // src/lib/partitur.ts's shared MARK_OFFSETS/fanOffsets/nearestMarkOffset (previously
+  // duplicated server- and client-side by hand — see that module for the fix's own history:
+  // "nobody hits a 9px dot reliably").
+  import { createReadout } from '@/lib/dataviz/readout'
+  import { readJsonScript } from '@/lib/dataviz/runtime'
+  import { buildSegments, positionLabel, step as stepperStep } from '@/lib/dataviz/stepper'
+  import { fanOffsets, nearestMarkOffset } from '@/lib/partitur'
+
   interface TipEvent {
     glyph: string
     session: number | null
@@ -606,6 +953,9 @@ const minWidth = Math.max(720, Math.round(nDays * 26 + 200))
   }
   interface Payload {
     layout: { vbw: number; x0: number; dayW: number; top: number; laneH: number; days: string[] }
+    /** src/lib/partitur.ts's MARK_OFFSETS, handed through instead of a second hand-kept-in-sync
+     *  literal (fanOffsets, a formula rather than data, is imported directly above instead). */
+    offsets: Record<number, number[]>
     voices: Record<string, { label: string; href: string }>
     order: string[]
     clusters: Record<string, TipEvent[]>
@@ -622,15 +972,35 @@ const minWidth = Math.max(720, Math.round(nDays * 26 + 200))
   const panelHead = document.getElementById('pt-panel-head')
   const panelList = document.getElementById('pt-panel-list')
   const panelLink = document.getElementById('pt-panel-link') as HTMLAnchorElement | null
-  const panelClose = document.getElementById('pt-panel-close')
 
   if (stage && dataEl?.textContent && svg && canvas && tip && cross) {
     const compact = stage.dataset.compact === 'true'
-    const data: Payload = JSON.parse(dataEl.textContent)
+    const data = readJsonScript<Payload>('partitur-data')
     const { vbw, x0, dayW, days } = data.layout
     const glyphWord: Record<string, string> = { session: 'session', work: 'work', fail: 'fail' }
-    // must match the server-side OFFSETS table (mark spread within a day cluster)
-    const OFFSETS: Record<number, number[]> = { 1: [0], 2: [-6.5, 6.5], 3: [-9, 0, 9] }
+
+    // ── The time lens (full view only): a cartesian fisheye on the x axis. Under
+    //    the pointer the month stretches locally (≈3.6× at focus); dense days fan
+    //    out into their individual landings and become hoverable one by one.
+    //    fisheye(focus) === focus, so using the pointer as focus is stable. ─────
+    const LENS_R = 170
+    const LENS_D = 2.6
+    const lensOn = () => !compact && stage.classList.contains('pt-lens')
+    const fish = (x: number, focus: number): number => {
+      const dx = x - focus
+      const a = Math.abs(dx)
+      if (a >= LENS_R || a === 0) return x
+      const k = ((LENS_D + 1) * LENS_R * a) / (LENS_D * a + LENS_R)
+      return focus + Math.sign(dx) * k
+    }
+    const unfish = (xd: number, focus: number): number => {
+      const dk = xd - focus
+      const k = Math.abs(dk)
+      if (k >= LENS_R || k === 0) return xd
+      const a = (k * LENS_R) / ((LENS_D + 1) * LENS_R - LENS_D * k)
+      return focus + Math.sign(dk) * a
+    }
+    let lensFocus = 0
 
     // The site CSP drops style ATTRIBUTES — CSSOM assignments like these are allowed.
     // The exact min-width (depends on the day count) and the entrance delays are
@@ -644,18 +1014,20 @@ const minWidth = Math.max(720, Math.round(nDays * 26 + 200))
 
     const scale = () => svg.getBoundingClientRect().width / vbw
 
-    // ── Tooltips — positioned relative to the STAGE (not the canvas) so the scroll
-    //    container never clips them; near the right edge they flip left, near the
-    //    bottom they flip up. Three tiers (Frank's finding 2026-07-31, mouseover was
-    //    day-wise only): a single mark → EXACTLY that landing; a ×n cluster → that
-    //    voice's landings; open lane → the whole day column. ────────────────────
-    const tipHeader = (label: string) => {
+    // ── Tooltips — the readout is placed relative to the STAGE (not the canvas) so
+    //    the scroll container never clips it (dataviz/readout.ts's house rule 1);
+    //    near an edge it flips rather than clipping (house rule 2). Three tiers
+    //    (Frank's finding 2026-07-31, mouseover was day-wise only): a single mark →
+    //    EXACTLY that landing; a ×n cluster → that voice's landings; open lane →
+    //    the whole day column. ──────────────────────────────────────────────────
+    const readout = createReadout(tip, stage)
+    const tipHeader = (container: DocumentFragment, label: string) => {
       const d = document.createElement('p')
       d.className = 'tip-date'
       d.textContent = label
-      tip.appendChild(d)
+      container.appendChild(d)
     }
-    const tipRow = (v: string, e: TipEvent, max: number) => {
+    const tipRow = (container: DocumentFragment, v: string, e: TipEvent, max: number) => {
       const row = document.createElement('div')
       row.className = 'tip-row'
       row.style.setProperty('--c', `var(--pt-${v})`)
@@ -669,28 +1041,25 @@ const minWidth = Math.max(720, Math.round(nDays * 26 + 200))
         (e.glyph === 'fail' ? '✕ ' : e.glyph === 'work' ? '◆ ' : '') +
         (e.text.length > max ? `${e.text.slice(0, max - 1)}…` : e.text)
       row.append(key, voice, text)
-      tip.appendChild(row)
+      container.appendChild(row)
     }
-    const tipNote = (text: string) => {
+    const tipNote = (container: DocumentFragment, text: string) => {
       const more = document.createElement('p')
       more.className = 'tip-voice'
       more.style.marginTop = '3px'
       more.textContent = text
-      tip.appendChild(more)
+      container.appendChild(more)
     }
-    const placeTip = (dayIdx: number, clientY: number) => {
-      tip.hidden = false
+    /** anchor point for the readout, in the STAGE's own local coordinate space — never
+     *  viewport/scroll-container coordinates (dataviz/readout.ts's house rule 1). */
+    const anchorFor = (dayIdx: number, clientY: number) => {
       const stageRect = stage.getBoundingClientRect()
       const svgRect = svg.getBoundingClientRect()
-      const anchorX = svgRect.left - stageRect.left + (x0 + dayW * (dayIdx + 0.5)) * scale()
-      const tw = tip.offsetWidth
-      const th = tip.offsetHeight
-      let left = anchorX + 14
-      if (left + tw > stage.clientWidth - 8) left = anchorX - tw - 14
-      let top = clientY - stageRect.top + 18
-      if (top + th > stage.clientHeight - 8) top = clientY - stageRect.top - th - 12
-      tip.style.left = `${Math.max(8, left)}px`
-      tip.style.top = `${Math.max(8, top)}px`
+      const ax = x0 + dayW * (dayIdx + 0.5)
+      return {
+        anchorX: svgRect.left - stageRect.left + (lensOn() ? fish(ax, lensFocus) : ax) * scale(),
+        anchorY: clientY - stageRect.top,
+      }
     }
 
     /** open lane: the whole day column, all voices (capped per voice) */
@@ -700,16 +1069,16 @@ const minWidth = Math.max(720, Math.round(nDays * 26 + 200))
         .map((v) => ({ v, evs: data.clusters[`${v}|${date}`] }))
         .filter((r): r is { v: string; evs: TipEvent[] } => Boolean(r.evs?.length))
       if (rows.length === 0) {
-        tip.hidden = true
+        readout.hide()
         return
       }
-      tip.textContent = ''
-      tipHeader(date)
+      const frag = document.createDocumentFragment()
+      tipHeader(frag, date)
       for (const { v, evs } of rows) {
-        for (const e of evs.slice(0, 3)) tipRow(v, e, 96)
-        if (evs.length > 3) tipNote(`… ${evs.length - 3} more ${v} landings — hover the mark`)
+        for (const e of evs.slice(0, 3)) tipRow(frag, v, e, 96)
+        if (evs.length > 3) tipNote(frag, `… ${evs.length - 3} more ${v} landings — hover the mark`)
       }
-      placeTip(dayIdx, clientY)
+      readout.show(frag, anchorFor(dayIdx, clientY))
     }
 
     /** mark/cluster: mi ≥ 0 → exactly THAT landing; mi < 0 → all of the voice's landings that day */
@@ -718,22 +1087,44 @@ const minWidth = Math.max(720, Math.round(nDays * 26 + 200))
       const evs = data.clusters[key]
       const dayIdx = days.indexOf(date)
       if (!evs?.length || dayIdx < 0) {
-        tip.hidden = true
+        readout.hide()
         return
       }
-      tip.textContent = ''
+      const frag = document.createDocumentFragment()
       const single = mi >= 0 && mi < evs.length
-      tipHeader(single ? `${date} · ${v} · landing ${mi + 1} of ${evs.length}` : `${date} · ${v} · ${evs.length} landings`)
+      tipHeader(frag, single ? `${date} · ${v} · landing ${mi + 1} of ${evs.length}` : `${date} · ${v} · ${evs.length} landings`)
       if (single) {
         const e = evs[mi]
-        tipRow(v, e, 220)
+        tipRow(frag, v, e, 220)
         const meta = [e.session === null ? null : `S${e.session}`, e.move, e.verdict].filter(Boolean).join(' · ')
-        if (meta) tipNote(meta)
+        if (meta) tipNote(frag, meta)
       } else {
-        for (const e of evs.slice(0, 5)) tipRow(v, e, 110)
-        if (evs.length > 5) tipNote(`… ${evs.length - 5} more — click, then step with next →`)
+        for (const e of evs.slice(0, 5)) tipRow(frag, v, e, 110)
+        if (evs.length > 5) tipNote(frag, `… ${evs.length - 5} more — click, then step with next →`)
       }
-      placeTip(dayIdx, clientY)
+      readout.show(frag, anchorFor(dayIdx, clientY))
+    }
+
+    const allHits = Array.from(svg.querySelectorAll<SVGGElement>('.pt-hit'))
+    const applyLens = (focus: number) => {
+      stage.classList.add('pt-lens')
+      lensFocus = focus
+      for (const h of allHits) {
+        const bx = Number(h.dataset.x ?? 0)
+        const t = fish(bx, focus) - bx
+        h.style.transform = t === 0 ? '' : `translateX(${t.toFixed(2)}px)`
+        h.dataset.t = t.toFixed(2)
+        const n = data.clusters[h.dataset.key ?? '']?.length ?? 0
+        if (n > 3) h.classList.toggle('pt-expanded', Math.abs(bx - focus) < 70)
+      }
+    }
+    const releaseLens = () => {
+      stage.classList.remove('pt-lens')
+      for (const h of allHits) {
+        h.style.transform = ''
+        h.dataset.t = '0'
+        h.classList.remove('pt-expanded')
+      }
     }
 
     svg.addEventListener('pointermove', (ev) => {
@@ -742,34 +1133,38 @@ const minWidth = Math.max(720, Math.round(nDays * 26 + 200))
       const idx = Math.round((xVb - x0 - dayW / 2) / dayW)
       if (idx < 0 || idx >= days.length) {
         cross.style.display = 'none'
-        tip.hidden = true
+        readout.hide()
+        if (!compact) releaseLens()
         return
       }
+      // the pointer is the lens focus — fisheye(focus) === focus, so the day
+      // under the cursor stays put while its neighborhood stretches
+      if (!compact) applyLens(xVb)
       const snapped = x0 + dayW * (idx + 0.5)
-      cross.setAttribute('x1', String(snapped))
-      cross.setAttribute('x2', String(snapped))
+      const snappedR = lensOn() ? fish(snapped, lensFocus) : snapped
+      cross.setAttribute('x1', String(snappedR))
+      cross.setAttribute('x2', String(snappedR))
       cross.style.display = 'inline'
-      // Anywhere inside a cluster's hit band → session-precise via NEAREST mark.
-      // Nobody hits a 9px dot reliably (Frank's finding 2026-07-31): the pointer
-      // only has to be closest, never dead-center. Open lane → day column.
+      // Anywhere inside a cluster's hit band → session-precise via NEAREST mark
+      // (in the cluster's own, possibly lens-shifted frame). A lens-expanded
+      // dense day resolves per fanned mark; unexpanded ones keep the voice list.
       const target = ev.target instanceof Element ? ev.target : null
       const hitEl = target?.closest('.pt-hit') as SVGGElement | null
       const key = hitEl?.dataset.key
-      if (key) {
+      if (key && hitEl) {
         const evs = data.clusters[key]
         if (evs?.length) {
           let mi = -1
-          if (evs.length <= 3) {
-            const offsets = OFFSETS[evs.length] ?? [0]
+          const offsets =
+            evs.length <= 3
+              ? (data.offsets[evs.length] ?? [0])
+              : hitEl.classList.contains('pt-expanded')
+                ? fanOffsets(evs.length)
+                : null
+          if (offsets) {
             const cx = Number(hitEl.dataset.x ?? 0)
-            let best = Infinity
-            offsets.forEach((dx, i) => {
-              const dist = Math.abs(xVb - (cx + dx))
-              if (dist < best) {
-                best = dist
-                mi = i
-              }
-            })
+            const localX = xVb - Number(hitEl.dataset.t ?? 0)
+            mi = nearestMarkOffset(offsets, localX - cx)
           }
           showVoiceTip(key, mi, ev.clientY)
           return
@@ -779,17 +1174,42 @@ const minWidth = Math.max(720, Math.round(nDays * 26 + 200))
     })
     svg.addEventListener('pointerleave', () => {
       cross.style.display = 'none'
-      tip.hidden = true
+      readout.hide()
+      if (!compact) releaseLens()
     })
 
     // ── Detail panel (full view): session-wise reading. The navigation axis is the
     //    flat, chronological landing list PER VOICE — prev/next (and ←/→) step
     //    through every single landing, including within dense days (Frank's finding
     //    2026-07-31). In compact mode a click leads to the full page.
-    const ptPrev = document.getElementById('pt-prev') as HTMLButtonElement | null
-    const ptNext = document.getElementById('pt-next') as HTMLButtonElement | null
-    const ptPos = document.getElementById('pt-pos')
-    const hasPanel = Boolean(panel && panelHead && panelList && panelLink && panelClose && ptPrev && ptNext && ptPos)
+    //
+    //    Ported onto dataviz/DetailPanel.astro's shared shell + src/lib/dataviz/stepper.ts's
+    //    buildSegments/step/positionLabel: the shell owns the prev/next/close buttons and the
+    //    Escape/←/→ keyboard arbitration through its own module-level registry (so several
+    //    DetailPanel instances on one page — this one today, tour panels soon — never fight
+    //    over the same keypress; see stepper.ts's own header for the bug this replaces, where
+    //    this component bound its own document-level keydown listener per instance). This
+    //    component only fills the shell's slots and reacts to the dv:step/dv:close events its
+    //    buttons (and, via the registry, the keyboard) already dispatch.
+    const prevBtn = panel?.querySelector<HTMLButtonElement>('[data-dv-prev]') ?? null
+    const nextBtn = panel?.querySelector<HTMLButtonElement>('[data-dv-next]') ?? null
+    const closeBtn = panel?.querySelector<HTMLButtonElement>('[data-dv-close]') ?? null
+    const hasPanel = Boolean(panel && panelHead && panelList && panelLink && prevBtn && nextBtn && closeBtn)
+
+    // The position readout ("2/3 this day · 14/27 in field") has no shell slot between the
+    // prev/next buttons — inserted there once, at init, exactly where it always sat.
+    let posEl: HTMLSpanElement | null = null
+    if (hasPanel) {
+      prevBtn!.textContent = '← prev'
+      prevBtn!.setAttribute('aria-label', 'Previous landing in this voice')
+      nextBtn!.textContent = 'next →'
+      nextBtn!.setAttribute('aria-label', 'Next landing in this voice')
+      closeBtn!.textContent = 'close ✕'
+      posEl = document.createElement('span')
+      posEl.className = 'pt-pos'
+      posEl.setAttribute('aria-live', 'polite')
+      nextBtn!.before(posEl)
+    }
 
     interface FlatEntry {
       key: string
@@ -799,27 +1219,27 @@ const minWidth = Math.max(720, Math.round(nDays * 26 + 200))
       ev: TipEvent
     }
     const flat: FlatEntry[] = []
-    const seg: Record<string, { start: number; end: number }> = {}
     for (const v of data.order) {
-      const start = flat.length
       for (const d of days) {
         const evs = data.clusters[`${v}|${d}`]
         if (evs) evs.forEach((ev, dayIdx) => flat.push({ key: `${v}|${d}`, voice: v, date: d, dayIdx, ev }))
       }
-      seg[v] = { start, end: flat.length }
     }
+    // one contiguous run per voice (flat is built voice-by-voice above) — buildSegments's
+    // documented precondition, replacing this component's own former hand-rolled seg map.
+    const segmented = buildSegments(flat, (f) => f.voice)
 
     const hitByKey = new Map<string, SVGGElement>()
     let pos = -1
 
     const renderPanel = () => {
       if (!hasPanel || pos < 0) return
-      const entry = flat[pos]
+      const entry = segmented.items[pos]
       const meta = data.voices[entry.voice]
       const dayCount = data.clusters[entry.key]?.length ?? 1
-      const s = seg[entry.voice]
+      const seg = segmented.segments[entry.voice]
       panelHead!.textContent = `${entry.date} · ${meta?.label ?? entry.voice}`
-      ptPos!.textContent = `${entry.dayIdx + 1}/${dayCount} this day · ${pos - s.start + 1}/${s.end - s.start} in ${entry.voice}`
+      posEl!.textContent = positionLabel(segmented, pos, `${entry.dayIdx + 1}/${dayCount} this day`)
       panelList!.textContent = ''
       const li = document.createElement('li')
       const m = document.createElement('p')
@@ -841,8 +1261,8 @@ const minWidth = Math.max(720, Math.round(nDays * 26 + 200))
         panelLink!.href = meta.href
         panelLink!.textContent = `open the ${entry.voice} log →`
       }
-      ptPrev!.disabled = pos <= s.start
-      ptNext!.disabled = pos >= s.end - 1
+      prevBtn!.disabled = pos <= seg.start
+      nextBtn!.disabled = pos >= seg.end - 1
       // tonearm: highlight the active mark, bring it into view, park the crosshair on its day
       for (const g of hitByKey.values()) g.classList.remove('pt-active')
       const g = hitByKey.get(entry.key)
@@ -857,22 +1277,17 @@ const minWidth = Math.max(720, Math.round(nDays * 26 + 200))
         cross.setAttribute('x2', String(snapped))
         cross.style.display = 'inline'
       }
+      // keep the shell's own data-dv-pos in sync — its prev/next buttons read it to compute the
+      // requested position for the next dv:step event (see DetailPanel.astro's own script).
+      panel!.dataset.dvPos = String(pos)
       panel!.hidden = false
-    }
-    const step = (delta: number) => {
-      if (pos < 0) return
-      const s = seg[flat[pos].voice]
-      const next = pos + delta
-      if (next < s.start || next >= s.end) return
-      pos = next
-      renderPanel()
     }
     const activate = (key: string) => {
       if (compact || !hasPanel) {
         window.location.assign('/maschinenraum')
         return
       }
-      pos = flat.findIndex((f) => f.key === key)
+      pos = segmented.items.findIndex((f) => f.key === key)
       renderPanel()
     }
     if (hasPanel) {
@@ -880,21 +1295,18 @@ const minWidth = Math.max(720, Math.round(nDays * 26 + 200))
         panel!.hidden = true
         for (const g of hitByKey.values()) g.classList.remove('pt-active')
       }
-      panelClose!.addEventListener('click', closePanel)
-      ptPrev!.addEventListener('click', () => step(-1))
-      ptNext!.addEventListener('click', () => step(1))
-      document.addEventListener('keydown', (ev) => {
-        if (ev.key === 'Escape') closePanel()
-        if (panel!.hidden) return
-        if (ev.key === 'ArrowLeft') {
-          ev.preventDefault()
-          step(-1)
-        }
-        if (ev.key === 'ArrowRight') {
-          ev.preventDefault()
-          step(1)
-        }
-      })
+      // DetailPanel.astro's own script dispatches these on click (prev/next/close) and on
+      // Escape/←/→ once this panel is the keyboard registry's active one (see above) — one
+      // pair of listeners covers both input paths, instead of a second, parallel keydown
+      // handler here.
+      panel!.addEventListener('dv:close', closePanel)
+      panel!.addEventListener('dv:step', ((ev: CustomEvent<{ pos: number }>) => {
+        if (pos < 0) return
+        const next = stepperStep(segmented, pos, ev.detail.pos - pos)
+        if (next === pos) return
+        pos = next
+        renderPanel()
+      }) as EventListener)
     }
 
     for (const hit of svg.querySelectorAll<SVGGElement>('.pt-hit')) {
@@ -913,7 +1325,7 @@ const minWidth = Math.max(720, Math.round(nDays * 26 + 200))
         showVoiceTip(key, -1, hit.getBoundingClientRect().bottom)
       })
       hit.addEventListener('blur', () => {
-        tip.hidden = true
+        readout.hide()
       })
     }
   }

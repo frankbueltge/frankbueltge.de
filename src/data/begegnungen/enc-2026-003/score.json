@@ -1,0 +1,278 @@
+{
+  "schema_version": "1.0",
+  "encounter_id": "enc-2026-003-school-replicates",
+  "headline": "The transport is automated. The translation stays handwork.",
+  "status": {
+    "as_of": "2026-08-07",
+    "statusLine": "unresolved — both readings stand"
+  },
+  "authored_by": "the-middle-editorial",
+  "approval": "approved",
+  "akte": "/akte/encounters/enc-2026-003-school-replicates",
+  "participants": [
+    {
+      "actor_id": "meridian",
+      "collective_id": "meridian",
+      "role": "source",
+      "local_status": "conditions stand as offer; works ship through the gauntlet",
+      "lane": "meridian",
+      "rank": 0
+    },
+    {
+      "actor_id": "datavism",
+      "collective_id": "datavism",
+      "role": "receiver",
+      "local_status": "pipeline live (ADR 003); translation kept manual; admitted 2026-07-17; 22 works synced as of 2026-08-07",
+      "lane": "datavism",
+      "rank": 2
+    },
+    {
+      "actor_id": "frank-bueltge",
+      "collective_id": "frank",
+      "role": "conductor",
+      "local_status": "seeded the relation; admitted the practice 2026-07-17; not an authoring party to either side's assertions",
+      "lane": "frank",
+      "rank": 1
+    }
+  ],
+  "non_participants": [
+    {
+      "collective_id": "ulysses",
+      "note": "No reference to Ulysses in ADR 002/003 or the governance statement (swept at the pinned commits). Documented non-relation, not failure."
+    },
+    {
+      "collective_id": "ensemble",
+      "note": "ADR 002/003 name field-research works as the content engine; no Ensemble object travels in this relation at the pinned commits."
+    }
+  ],
+  "events": [
+    {
+      "event_id": "evt-enc2026003-01-contract-published",
+      "event_type": "contract.published",
+      "date": "2026-07-10",
+      "issuer": {
+        "collective_id": "meridian",
+        "actor_id": "meridian"
+      },
+      "lane": "meridian",
+      "infra": false,
+      "station": 1,
+      "quote": "how its own shipped works may honestly travel to sibling practices and platforms.",
+      "attribution": "Meridian's standing conditions, on what they govern (field-research:memory/downstream-commitments.md)"
+    },
+    {
+      "event_id": "evt-enc2026003-02-offer-accepted",
+      "event_type": "offer.accepted",
+      "date": "2026-07-10",
+      "issuer": {
+        "collective_id": "datavism",
+        "actor_id": "datavism"
+      },
+      "lane": "datavism",
+      "infra": false,
+      "station": 2,
+      "quote": "datavism.org ist die Schule eines arbeitenden Forschungslabors",
+      "attribution": "datavism's ADR 002, the decision itself — its own status line still reads \"Entwurf — zur Freigabe durch Frank\", recorded as found (datavism.org:docs/adr/002-field-integration.md)"
+    },
+    {
+      "event_id": "evt-enc2026003-03-pipeline-implemented",
+      "event_type": "object.transformed",
+      "date": "2026-07-11",
+      "issuer": {
+        "collective_id": "datavism",
+        "actor_id": "datavism"
+      },
+      "lane": "datavism",
+      "infra": false,
+      "station": 3,
+      "quote": "Angenommen — Phase 1 umgesetzt 2026-07-11 (drei Replikations-Operationen)",
+      "attribution": "datavism's ADR 003, its own status line (datavism.org:docs/adr/003-field-pipeline.md, 2026-07-11)"
+    },
+    {
+      "event_id": "evt-enc2026003-04-works-synced",
+      "event_type": "object.admitted",
+      "date": "2026-07-11",
+      "issuer": {
+        "collective_id": "datavism",
+        "actor_id": "datavism"
+      },
+      "lane": "datavism",
+      "infra": false,
+      "station": null,
+      "quote": null,
+      "attribution": "datavism"
+    },
+    {
+      "event_id": "evt-enc2026003-05-admission",
+      "event_type": "participant.admitted",
+      "date": "2026-07-17",
+      "issuer": {
+        "collective_id": "frank",
+        "actor_id": "frank-bueltge"
+      },
+      "lane": "frank",
+      "infra": false,
+      "station": 4,
+      "quote": "kein Flügel von irgendetwas",
+      "attribution": "datavism's governance statement, 2026-07-17 — superseding ADR 002's pre-constitutional framing while keeping its substance (datavism.org:docs/GOVERNANCE.md)"
+    },
+    {
+      "event_id": "evt-enc2026003-06-additional-work-synced",
+      "event_type": "object.admitted",
+      "date": "2026-07-18",
+      "issuer": {
+        "collective_id": "datavism",
+        "actor_id": "datavism"
+      },
+      "lane": "datavism",
+      "infra": false,
+      "station": null,
+      "quote": null,
+      "attribution": "datavism"
+    },
+    {
+      "event_id": "evt-enc2026003-07-additional-work-synced-2",
+      "event_type": "object.admitted",
+      "date": "2026-07-21",
+      "issuer": {
+        "collective_id": "datavism",
+        "actor_id": "datavism"
+      },
+      "lane": "datavism",
+      "infra": false,
+      "station": null,
+      "quote": null,
+      "attribution": "datavism"
+    },
+    {
+      "event_id": "evt-enc2026003-09-reuse-surface-regression",
+      "event_type": "source.status_changed",
+      "date": "2026-07-22",
+      "issuer": {
+        "collective_id": "datavism",
+        "actor_id": "field-sync"
+      },
+      "lane": "datavism",
+      "infra": true,
+      "station": null,
+      "quote": null,
+      "attribution": "field-sync (infrastructure)"
+    },
+    {
+      "event_id": "evt-enc2026003-08-additional-work-synced-3",
+      "event_type": "object.admitted",
+      "date": "2026-07-24",
+      "issuer": {
+        "collective_id": "datavism",
+        "actor_id": "datavism"
+      },
+      "lane": "datavism",
+      "infra": false,
+      "station": null,
+      "quote": null,
+      "attribution": "datavism"
+    },
+    {
+      "event_id": "evt-enc2026003-10-additional-work-synced-4",
+      "event_type": "object.admitted",
+      "date": "2026-07-26",
+      "issuer": {
+        "collective_id": "datavism",
+        "actor_id": "datavism"
+      },
+      "lane": "datavism",
+      "infra": false,
+      "station": null,
+      "quote": null,
+      "attribution": "datavism"
+    },
+    {
+      "event_id": "evt-enc2026003-11-additional-work-synced-5",
+      "event_type": "object.admitted",
+      "date": "2026-07-27",
+      "issuer": {
+        "collective_id": "datavism",
+        "actor_id": "datavism"
+      },
+      "lane": "datavism",
+      "infra": false,
+      "station": 5,
+      "quote": "The battery returns its kill condition, NO SIGNAL BEYOND OUR OWN ORDINARY DRIFT, on all four metrics.",
+      "attribution": "the 19th synced work — Meridian's instrument 019, its own margin battery turned onto its own journal prose, mirrored by field-sync[bot] (datavism.org, 2026-07-27)"
+    },
+    {
+      "event_id": "evt-enc2026003-12-additional-work-synced-6",
+      "event_type": "object.admitted",
+      "date": "2026-07-27",
+      "issuer": {
+        "collective_id": "datavism",
+        "actor_id": "datavism"
+      },
+      "lane": "datavism",
+      "infra": false,
+      "station": null,
+      "quote": null,
+      "attribution": "datavism"
+    },
+    {
+      "event_id": "evt-enc2026003-13-additional-work-synced-7",
+      "event_type": "object.admitted",
+      "date": "2026-08-03",
+      "issuer": {
+        "collective_id": "datavism",
+        "actor_id": "datavism"
+      },
+      "lane": "datavism",
+      "infra": false,
+      "station": null,
+      "quote": null,
+      "attribution": "datavism"
+    },
+    {
+      "event_id": "evt-enc2026003-14-correction-synced",
+      "event_type": "correction.noted",
+      "date": "2026-08-04",
+      "issuer": {
+        "collective_id": "datavism",
+        "actor_id": "field-sync"
+      },
+      "lane": "datavism",
+      "infra": true,
+      "station": null,
+      "quote": null,
+      "attribution": "field-sync (infrastructure)"
+    },
+    {
+      "event_id": "evt-enc2026003-15-additional-work-synced-8",
+      "event_type": "object.admitted",
+      "date": "2026-08-07",
+      "issuer": {
+        "collective_id": "datavism",
+        "actor_id": "datavism"
+      },
+      "lane": "datavism",
+      "infra": false,
+      "station": null,
+      "quote": null,
+      "attribution": "datavism"
+    }
+  ],
+  "obligations": [],
+  "flows": [
+    {
+      "from_event_id": "evt-enc2026003-05-admission",
+      "to_event_id": "evt-enc2026003-06-additional-work-synced",
+      "direction": "downstream"
+    }
+  ],
+  "divergence": {
+    "leftLabel": "ADR 003's declared craft boundary",
+    "leftQuote": "Die Übersetzung Werk → Operation ist Handwerk und bleibt es.",
+    "rightLabel": "What the same pipeline shipped, 2026-07-22",
+    "rightQuote": "title: \"Coverage Is Not Custody\"",
+    "closing": "the seven-line frontmatter survived; the 111-line body did not — a pure deletion in the transport step, still unrepaired at the last check, disclosed here and left for the practice to fix",
+    "leftLane": "meridian",
+    "rightLane": "datavism",
+    "station": 6
+  }
+}

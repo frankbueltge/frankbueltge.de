@@ -6,9 +6,13 @@ import {
   chronicleEvents,
   clampToLastDays,
   dayRange,
+  fanOffsets,
   jiStart,
   journalEvents,
+  MARK_OFFSETS,
+  nearestMarkOffset,
   scoreOpenings,
+  VOICE_META,
   type ScoreEvent,
 } from './partitur'
 
@@ -106,6 +110,53 @@ describe('clampToLastDays', () => {
   })
 })
 
+describe('MARK_OFFSETS / fanOffsets', () => {
+  it('spreads up to three same-day landings symmetrically around the day center', () => {
+    expect(MARK_OFFSETS[1]).toEqual([0])
+    expect(MARK_OFFSETS[2]).toEqual([-6.5, 6.5])
+    expect(MARK_OFFSETS[3]).toEqual([-9, 0, 9])
+  })
+  it('fans a dense (n > 3) day evenly, centered on 0', () => {
+    expect(fanOffsets(4)).toEqual([-16.5, -5.5, 5.5, 16.5])
+    expect(fanOffsets(1)).toEqual([0])
+  })
+})
+
+describe('nearestMarkOffset', () => {
+  // the hover fix (Frank, 2026-07-31): "nobody hits a 9px dot reliably" — anywhere inside a
+  // cluster's hit band resolves to the CLOSEST mark by pointer distance, not always the first.
+  const offsets = MARK_OFFSETS[3] // [-9, 0, 9]
+
+  it('resolves the nearest mark for a pointer exactly on a mark', () => {
+    expect(nearestMarkOffset(offsets, -9)).toBe(0)
+    expect(nearestMarkOffset(offsets, 0)).toBe(1)
+    expect(nearestMarkOffset(offsets, 9)).toBe(2)
+  })
+
+  it('resolves the nearest mark for a pointer BETWEEN two marks', () => {
+    // -4 is 5 from -9 but only 4 from 0 — the middle mark wins
+    expect(nearestMarkOffset(offsets, -4)).toBe(1)
+    // 4.4 is nearer to 0 (4.4) than to 9 (4.6)
+    expect(nearestMarkOffset(offsets, 4.4)).toBe(1)
+    // 4.6 flips to the mark at 9 (4.4 away) over 0 (4.6 away)
+    expect(nearestMarkOffset(offsets, 4.6)).toBe(2)
+  })
+
+  it('resolves a pointer past either edge to that edge mark', () => {
+    expect(nearestMarkOffset(offsets, -100)).toBe(0)
+    expect(nearestMarkOffset(offsets, 100)).toBe(2)
+  })
+
+  it('an exact tie goes to the earlier offset (deterministic, not unspecified)', () => {
+    // 4.5 is equidistant between 0 (index 1) and 9 (index 2)
+    expect(nearestMarkOffset(offsets, 4.5)).toBe(1)
+  })
+
+  it('a single-mark cluster always resolves to it', () => {
+    expect(nearestMarkOffset(MARK_OFFSETS[1], 37)).toBe(0)
+  })
+})
+
 describe('buildScore', () => {
   it('clusters per voice and day, the heaviest mark becomes the face, as-of per voice', () => {
     const model = buildScore([
@@ -127,5 +178,35 @@ describe('buildScore', () => {
   })
   it('no events, no score — the surface then claims nothing', () => {
     expect(buildScore([])).toBeNull()
+  })
+})
+
+/** Every lane label on the score is a link into that voice's own house (2026-08-02). The score is
+ *  the one surface where all four voices sound at equal weight, and for the Plenum — a guest with
+ *  no door on the hub — its lane is the only place on the entrance where it appears at all. So a
+ *  lane without a house would strand a voice, and the compact score has no detail panel to fall
+ *  back on. */
+describe('VOICE_META', () => {
+  it('gives every voice on the axis a room to open', () => {
+    const model = buildScore([
+      ev({ date: '2026-07-01' }),
+      ev({ voice: 'field', date: '2026-07-01' }),
+      ev({ voice: 'studio', date: '2026-07-01' }),
+      ev({ voice: 'plenum', date: '2026-07-01' }),
+    ])
+    for (const lane of model!.lanes) {
+      const meta = VOICE_META[lane.voice]
+      expect(meta, `voice ${lane.voice}`).toBeDefined()
+      expect(meta.href.startsWith('/'), `voice ${lane.voice}`).toBe(true)
+      expect(meta.short.length, `voice ${lane.voice}`).toBeGreaterThan(0)
+    }
+  })
+
+  it('sends the guest voice to its own room, not into a practice of this house', () => {
+    // The Plenum is data-snack.com's resident collective; /plenum is the record it keeps here.
+    expect(VOICE_META.plenum.href).toBe('/plenum')
+    expect(VOICE_META.plenum.label).toContain('data-snack')
+    const practiceRooms = (['atelier', 'field', 'studio'] as const).map((v) => VOICE_META[v].href)
+    expect(practiceRooms).not.toContain(VOICE_META.plenum.href)
   })
 })

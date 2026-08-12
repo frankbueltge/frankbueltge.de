@@ -1,0 +1,322 @@
+---
+// src/components/plenum/Dossier.astro — /plenum's centre: one sitting of the Plenum, read.
+//
+// WHAT IT IS. The three practices' entrances open on a BODY OF WORK. The Plenum has none here —
+// it is data-snack.com's resident collective, a guest voice, and its snacks are served in its own
+// house. What it has here is its paperwork, so its dossier's protagonist is a SITTING: the last
+// time the table actually sat. Everything a panel shows is a span of the committed minutes,
+// printed beside the path it was read from and under the record's OWN heading, so a reader can
+// check the attribution instead of trusting it.
+//
+// NO-JS FLOOR, and why it is stacking rather than one page per sitting. Every sitting is
+// server-rendered, in full, in the order the selector lists them — so without JavaScript the page
+// is a readable stack of dossiers with the newest first, and the selector is a list of in-page
+// links that work as links. With JavaScript the selector becomes a tab list and shows one sitting
+// at a time. The whole minutes of every sitting already have their own address in the complete
+// record (/plenum/record#<anchor>, linked from every panel); an ENTRANCE that answers "what did
+// this collective last decide" with a link somewhere else has not answered it.
+//
+// DEEP LINKS. Each panel's id is `sitting-<anchor>`, and `<anchor>` is the very id the complete
+// record assigns that sitting — one derivation, locked by a test (dossier.test.ts,
+// "assigns the same anchors, in the same order, as the complete record"). So /plenum#sitting-cs-14
+// opens that sitting with or without scripts: without, the browser scrolls to it; with, the
+// script selects it.
+//
+// House rules this file is built around: no `is:inline` script (the CSP hashes bundled module
+// scripts), no `style=""` (silently dropped), every visitor-facing string from
+// src/config/plenum-wording.ts, and every quotation printed beside the committed path it came from.
+import { PLENUM_GRAMMAR, PLENUM_NARRATIVE } from '@/config/plenum-wording'
+import { renderMarkdown, type MdRefs } from '@/lib/engines/journal'
+import { collidingSessions, type PlenumSitting, type Quoted } from '@/lib/plenum/dossier'
+
+export interface Props {
+  /** every mirrored sitting, newest first — src/lib/plenum/dossier.ts */
+  sittings: PlenumSitting[]
+}
+
+const { sittings } = Astro.props
+const w = PLENUM_NARRATIVE.dossier
+const first = sittings[0]
+
+// The minutes ARE markdown — numbered agendas, bulleted verdicts, backticked paths, bolded
+// self-decisions. Printing the raw source with its asterisks showing would not be more faithful,
+// only less readable; it is the same text the complete record renders, through the same renderer,
+// so the two rooms cannot show one sitting two different ways. `docs` stays empty on purpose: a
+// `.md` reference links out to the collective's own repository here rather than opening the baked
+// modal, which only exists on the record page.
+const mdRefs: MdRefs = { repo: PLENUM_GRAMMAR.repo, docs: new Set<string>() }
+const rendered = (q: Quoted): string => renderMarkdown(q.text, mdRefs)
+
+const current = sittings.filter((s) => s.current)
+const earlier = sittings.filter((s) => !s.current)
+const collisions = collidingSessions(sittings)
+
+/** What the record calls this sitting, in the shortest honest form: its own session label where
+ *  it has one, else the kind of entry it says it is. Never a number this site made up. */
+const label = (s: PlenumSitting): string => s.session ?? w.kinds.noteShort
+
+/** The line under the panel heading: the record's own subject, or the record's own heading where
+ *  it wrote no subject after the colon. Never a sentence written here. */
+const titleOf = (s: PlenumSitting): string => s.subject ?? s.heading
+---
+
+<section class="pl-dsr-wrap" aria-labelledby="dossier-heading" id="dossier">
+  <h2 class="pl-dsr-h2" id="dossier-heading">{w.heading}</h2>
+  <p class="pl-dsr-lead">{w.lead}</p>
+
+  {/* The selector. Server-rendered as plain links to the panels below, which is exactly what
+      they are without JavaScript; the script upgrades them to a tab list. */}
+  <nav class="pl-dsr-pick" data-pdsr-pick aria-label={w.pickLabel}>
+    <p class="pl-dsr-pick-h">{w.pickLabel}</p>
+    {[
+      { label: w.groups.current, items: current, mark: true },
+      { label: w.groups.earlier, items: earlier, mark: false },
+    ].filter((g) => g.items.length > 0).map((group) => (
+      <div class="pl-dsr-group">
+        <p class="pl-dsr-group-h">
+          {group.mark && <span class="pl-mark" aria-hidden="true" />}
+          {group.label} <span>{group.items.length}</span>
+        </p>
+        <ul>
+          {group.items.map((s) => (
+            <li>
+              <a
+                href={`#${s.id}`}
+                class="pl-dsr-tab"
+                data-pdsr-tab={s.anchor}
+                aria-current={s.anchor === first?.anchor ? 'true' : undefined}
+              >
+                <span class="t-no">{s.date} · {label(s)}</span>
+                <span class="t-name">{titleOf(s)}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </nav>
+
+  {sittings.map((s) => (
+    <article
+      class="pl-dsr"
+      id={s.id}
+      data-pdsr-panel={s.anchor}
+      data-current={s.current ? 'true' : 'false'}
+      aria-labelledby={`${s.id}-title`}
+    >
+      <header class="pl-dsr-head">
+        <p class="d-state">
+          <b>{s.current ? w.groups.current : label(s)}</b>
+          {s.kind === 'note' && <span class="d-hint">{w.kinds.note}</span>}
+          {s.sessionShared && <span class="d-hint">{w.sharedSessionNote}</span>}
+        </p>
+        <h3 class="d-title" id={`${s.id}-title`}>
+          <span class="d-no">{s.date} · {label(s)}</span>
+          {titleOf(s)}
+        </h3>
+        <p class="d-meta">
+          {s.contents.length} {s.contents.length === 1 ? 'section' : 'sections'} · {s.words} {w.wordsLabel}
+          {' · '}<a href={s.href}>{w.readWhole}</a>
+        </p>
+      </header>
+
+      {/* — the table: who chaired, who sat, who ran the gate — the collective's own words — */}
+      <div class="d-block">
+        <p class="d-h">{w.fields.table}</p>
+        {s.table ? (
+          <>
+            <div class="d-quote engine-prose" set:html={rendered(s.table)} />
+            <p class="d-src">{w.sourceLabel} {s.table.source}, verbatim</p>
+          </>
+        ) : (
+          <p class="d-gap">{w.gaps.table}</p>
+        )}
+      </div>
+
+      {/* — what was tabled: the sitting's own agenda section — */}
+      <div class="d-block">
+        <p class="d-h">{w.fields.agenda}</p>
+        {s.agenda ? (
+          <>
+            <p class="d-quote-label">“{s.agenda.label}”</p>
+            <div class="d-quote engine-prose" set:html={rendered(s.agenda)} />
+            <p class="d-src">{w.sourceLabel} {s.agenda.source}, verbatim</p>
+          </>
+        ) : (
+          <p class="d-gap">{w.gaps.agenda}</p>
+        )}
+      </div>
+
+      {/* — what it settled: the sitting's own outcome sections, each under its own heading — */}
+      <div class="d-block">
+        <p class="d-h">
+          {w.fields.decisions}
+          {s.decisions.length > 0 && <span class="d-count">{s.decisions.length}</span>}
+        </p>
+        {s.decisions.length > 0 ? (
+          <ul class="d-list">
+            {s.decisions.map((d) => (
+              <li>
+                <p class="d-quote-label">“{d.label}”</p>
+                <div class="d-quote engine-prose" set:html={rendered(d)} />
+                <p class="d-src">{w.sourceLabel} {d.source}, verbatim</p>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p class="d-gap">{w.gaps.decisions}</p>
+        )}
+      </div>
+
+      {/* — what reached it from this ecology: the collective's OWN standing item, never a
+           sentence hunted out of the prose — */}
+      <div class="d-block">
+        <p class="d-h">{w.fields.goodsInward}</p>
+        {s.goodsInward ? (
+          <>
+            <p class="d-quote-label">“{s.goodsInward.label}”</p>
+            <div class="d-quote engine-prose" set:html={rendered(s.goodsInward)} />
+            <p class="d-src">{w.sourceLabel} {s.goodsInward.source}, verbatim</p>
+            <p class="d-note">{w.goodsInwardNote}</p>
+          </>
+        ) : (
+          <p class="d-gap">{w.gaps.goodsInward}</p>
+        )}
+        {s.ecologyNames.length > 0 && (
+          <>
+            <p class="d-note">{w.namesLabel}</p>
+            <ul class="d-names">
+              {s.ecologyNames.map((n) => <li>{n}</li>)}
+            </ul>
+          </>
+        )}
+      </div>
+
+      {/* — the full shape of the evening, so nothing this dossier does not quote is hidden — */}
+      <div class="d-block">
+        <p class="d-h">
+          {w.fields.contents}
+          {s.contents.length > 0 && <span class="d-count">{s.contents.length}</span>}
+        </p>
+        {s.contents.length > 0 ? (
+          <ul class="d-contents">
+            {s.contents.map((c) => (
+              <li>
+                <span>{c.heading}</span>
+                <span class="c-words">{c.words} {w.wordsLabel}</span>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p class="d-gap">{s.words} {w.wordsLabel}, written without section headings.</p>
+        )}
+      </div>
+
+      <p class="d-doors">
+        <a href={s.href}>{w.readWhole} →</a>
+      </p>
+    </article>
+  ))}
+
+  <p class="pl-dsr-prov">
+    {w.provenance}
+    {collisions.length > 0 && <> {w.sharedSessionNote} ({collisions.map((n) => `Session ${n}`).join(', ')}.)</>}
+  </p>
+</section>
+
+<script>
+  // Upgrades the server-rendered stack into a tab list. Everything it does is additive: without
+  // this script the page is every sitting's dossier under working anchor links, which is the
+  // floor, not a degraded mode.
+  for (const root of document.querySelectorAll<HTMLElement>('[data-pdsr-pick]')) {
+    const section = root.closest('section')
+    if (!section) continue
+    const tabs = [...root.querySelectorAll<HTMLAnchorElement>('[data-pdsr-tab]')]
+    const panels = new Map(
+      [...section.querySelectorAll<HTMLElement>('[data-pdsr-panel]')].map((el) => [
+        el.dataset.pdsrPanel ?? '',
+        el,
+      ]),
+    )
+    if (tabs.length === 0 || panels.size === 0) continue
+
+    // Roles are set HERE and not in the markup: without this script these are links to sections,
+    // and calling a link a tab in the accessibility tree when nothing tabs would be a lie told to
+    // exactly the visitors who can least afford one.
+    root.setAttribute('role', 'tablist')
+    for (const tab of tabs) {
+      tab.setAttribute('role', 'tab')
+      tab.removeAttribute('aria-current')
+    }
+    for (const [id, panel] of panels) {
+      panel.setAttribute('role', 'tabpanel')
+      panel.setAttribute('tabindex', '0')
+      const tab = tabs.find((t) => t.dataset.pdsrTab === id)
+      if (tab) {
+        if (!tab.id) tab.id = `pdsr-tab-${id}`
+        panel.setAttribute('aria-labelledby', tab.id)
+      }
+    }
+
+    let current = ''
+    const select = (id: string, focusPanel = false) => {
+      if (!panels.has(id) || id === current) return
+      current = id
+      for (const [key, panel] of panels) {
+        const on = key === id
+        panel.hidden = !on
+        panel.setAttribute('aria-hidden', on ? 'false' : 'true')
+      }
+      for (const tab of tabs) {
+        const on = tab.dataset.pdsrTab === id
+        tab.setAttribute('aria-selected', on ? 'true' : 'false')
+        // Roving tabindex: one stop for the whole selector, arrows move inside it.
+        tab.tabIndex = on ? 0 : -1
+      }
+      if (focusPanel) panels.get(id)?.focus()
+    }
+
+    const fromHash = () => {
+      const id = location.hash.replace(/^#sitting-/, '')
+      return panels.has(id) ? id : ''
+    }
+
+    select(fromHash() || tabs[0].dataset.pdsrTab || '')
+
+    for (const [i, tab] of tabs.entries()) {
+      tab.addEventListener('click', (ev) => {
+        ev.preventDefault()
+        const id = tab.dataset.pdsrTab ?? ''
+        select(id)
+        // Written, not navigated: replaceState keeps the link sendable without adding a history
+        // entry per click and without the jump a real hash change would cause.
+        history.replaceState(null, '', `#sitting-${id}`)
+      })
+      tab.addEventListener('keydown', (ev) => {
+        const delta =
+          ev.key === 'ArrowRight' || ev.key === 'ArrowDown'
+            ? 1
+            : ev.key === 'ArrowLeft' || ev.key === 'ArrowUp'
+              ? -1
+              : ev.key === 'Home'
+                ? -i
+                : ev.key === 'End'
+                  ? tabs.length - 1 - i
+                  : 0
+        if (delta === 0) return
+        ev.preventDefault()
+        const next = tabs[(i + delta + tabs.length) % tabs.length]
+        next.focus()
+        const id = next.dataset.pdsrTab ?? ''
+        select(id)
+        history.replaceState(null, '', `#sitting-${id}`)
+      })
+    }
+
+    // A hash arriving from outside — a pasted deep link or the back button — selects its sitting.
+    window.addEventListener('hashchange', () => {
+      const id = fromHash()
+      if (id) select(id, true)
+    })
+  }
+</script>

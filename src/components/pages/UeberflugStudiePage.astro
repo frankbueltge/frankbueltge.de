@@ -34,6 +34,27 @@ const de = locale === 'de'
 
   <section class="mt-12 max-w-2xl border-t border-line pt-6">
     <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+      {de ? 'Nächste Nachbarn' : 'Nearest neighbors'}
+    </p>
+    <ul class="mt-3 space-y-2 text-sm text-fg-muted">
+      <li>
+        <a href="https://satfleetlive.com" target="_blank" rel="noopener nofollow" class="underline decoration-line underline-offset-2 hover:text-fg">SatFleetLive</a>
+        {de ? ' — SGP4 clientseitig auf CelesTrak-Livedaten, mit „Nur sichtbar"-Filter und derselben Zusicherung, dass der Standort nie den Browser verlässt — aber ohne Erdbeobachtungs-Filter (14.000+ Satelliten aller Art).' : ' — SGP4 client-side on live CelesTrak data, with an "Only Visible" filter and the same never-leaves-the-browser guarantee — but general-purpose, no Earth-observation filter (14,000+ satellites of every kind).'}
+      </li>
+      <li>
+        {de ? 'SpyMeSat (iOS-App)' : 'SpyMeSat (iOS app)'}
+        {de ? ' — eigens für „welche Abbildungssatelliten sind gerade über mir" gebaut, seit rund 2013, aber kommerzielle Konto-App ohne clientseitig nachprüfbare Datenschutz-Architektur.' : ' — purpose-built for "which imaging satellites are overhead," running since ~2013, but a paid account-based app whose client-side privacy architecture isn\'t independently verifiable.'}
+      </li>
+    </ul>
+    <p class="mt-3 leading-relaxed text-fg-muted">
+      {de
+        ? 'Keiner der Nachbarn kombiniert beides: clientseitiges SGP4 mit belegbarer Datenschutz-Garantie UND einen Filter speziell auf Erdbeobachtungs-/Abbildungssatelliten über Eigentümer-Klassifikation. SatFleetLive hat die Datenschutz-Architektur, nicht den EO-Filter; SpyMeSat hat den EO-Filter, nicht nachprüfbar die Architektur. Der Anspruch steht auf dieser Kombination — nicht auf einer der beiden Einzelfähigkeiten allein.'
+        : "No single neighbor combines both: client-side SGP4 with a verifiable privacy guarantee AND a filter specific to Earth-observation/imaging satellites via ownership classification. SatFleetLive owns the privacy architecture, not the EO filter; SpyMeSat owns the EO filter, not verifiably the architecture. The claim rests on that combination, not on either capability alone."}
+    </p>
+  </section>
+
+  <section class="mt-12 max-w-2xl border-t border-line pt-6">
+    <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
       {de ? 'Offene Richtung' : 'Open direction'}
     </p>
     <p class="mt-2 leading-relaxed text-fg-muted">

@@ -1,0 +1,65 @@
+---
+// /atelier/journal/<anchor> — ONE page of the nightly journal (Etappe 2, 2026-08-01).
+// The slug is the DOM id the register has always used: `s12` for a counted session,
+// `note-<slug>` for an unnumbered v4 dispatcher tick. Identity, not a mapping table — the
+// deep links the sheets, the spine and the works published keep resolving.
+import { getCollection } from 'astro:content'
+import Page from '@/layouts/Page.astro'
+import Frame from '@/components/atelier/surface/Frame.astro'
+import { buildSessionEntries, type JournalEntry } from '@/lib/atelier/sessions'
+import { renderMarkdown } from '@/lib/engines/journal'
+import { ATELIER_NARRATIVE } from '@/config/atelier-wording'
+
+export async function getStaticPaths() {
+  const all = await getCollection('atelier')
+  const journal = all.filter((e) => e.id.startsWith('journal/'))
+  const repo = 'https://github.com/frankbueltge/ulysses'
+  const docs = new Set(all.filter((e) => !e.id.includes('/')).map((e) => e.id))
+  const entries = buildSessionEntries(journal)
+
+  // Rendered once for the whole practice, not once per route.
+  return entries.map((entry, i) => ({
+    params: { slug: entry.slug },
+    props: {
+      entry,
+      html: renderMarkdown(entry.text, { repo, docs }),
+      prev: entries[i - 1] ?? null,
+      next: entries[i + 1] ?? null,
+      total: entries.length,
+      position: i + 1,
+    },
+  }))
+}
+
+const { entry, html, prev, next, total, position } = Astro.props as {
+  entry: JournalEntry
+  html: string
+  prev: JournalEntry | null
+  next: JournalEntry | null
+  total: number
+  position: number
+}
+const room = ATELIER_NARRATIVE.journalRoom
+const label = entry.kind === 'session' ? `S${entry.n}` : 'v4'
+const kicker = ['Atelier · journal', 'ulysses', `${label} · ${entry.date}`]
+const statusHtml =
+  `<b>${label}</b> · ${entry.date} · page ${position} of ${total} · ` +
+  `<a href="/atelier/journal" class="underline">the register →</a>`
+---
+
+<Page
+  title={`Atelier — ${label}: ${entry.heading} | Frank Bültge`}
+  description={`${entry.date} — one page of the Atelier's journal, mirrored verbatim from the practice's own repo.`}
+>
+  <Frame active="journal" kicker={kicker} h1={entry.heading} statusHtml={statusHtml} back>
+    <p class="at-req-note">
+      {entry.kind === 'note' ? `${room.noteKicker} — ${room.pageNote}` : room.pageNote}
+    </p>
+    <div class="at-prose" set:html={html} />
+    <nav class="at-page-nav" aria-label="Journal pages">
+      {prev && <a class="at-nav-prev" href={`/atelier/journal/${prev.slug}/`}>← {room.prevLabel}: {prev.kind === 'session' ? `S${prev.n}` : prev.date}</a>}
+      <a href="/atelier/journal">{room.backToRegister}</a>
+      {next && <a class="at-nav-next" href={`/atelier/journal/${next.slug}/`}>{room.nextLabel}: {next.kind === 'session' ? `S${next.n}` : next.date} →</a>}
+    </nav>
+  </Frame>
+</Page>

@@ -3,8 +3,20 @@
 // same view model the instrument renders, so the sheet cannot drift from the page.
 import data from '@/data/meridian/parallax.json'
 
-const { claim, verifications, sources, export_meta: exp } = data
+const { claim, verifications, sources, export_meta: exp, runs, totals, feature_run } = data
 const claimAnchors = claim.supporting + claim.contradicting
+
+// Every count below is DERIVED, never spelled. Until 2026-08-02 this sheet said
+// "two claims from a single run" as words, and stayed wrong for ten days after
+// the archive grew to three runs and seven claims. A number written as prose
+// cannot be kept current by committing data; a number read from the view model
+// cannot go stale, because the CI job "Meridian view model (derivation matches
+// the committed export)" fails the moment the two disagree.
+const featureRun = runs.find((r) => r.run === feature_run) ?? runs[0]
+const otherRuns = runs.filter((r) => r.run !== featureRun.run)
+const n = (count: number, one: string, many: string) => `${count} ${count === 1 ? one : many}`
+const featureClaims = n(featureRun.claims, 'claim', 'claims')
+const totalClaims = n(totals.claims, 'claim', 'claims')
 ---
 
 <div class="mx-auto max-w-2xl px-4 py-14 font-mono">
@@ -25,9 +37,10 @@ const claimAnchors = claim.supporting + claim.contradicting
     <section>
       <h2 class="mb-2 font-semibold text-fg">1. Source &amp; provenance</h2>
       <p>
-        A claim-rooted export from the Meridian Research Runtime's K1-T04 archive, committed here as the
-        open dataset (<code class="text-fg-muted">src/data/meridian/export/</code>): {exp.object_count} objects
-        as {exp.standard}, every one content-hashed (sha256). The closure holds the two claims, {claimAnchors}
+        A claim-rooted export from the Meridian Research Runtime's archive, committed here as the
+        open dataset (<code class="text-fg-muted">src/data/meridian/export/</code>). This instrument reads
+        one run of it — <code class="text-fg-muted">{featureRun.run}</code>: {exp.object_count} objects
+        as {exp.standard}, every one content-hashed (sha256). That closure holds {featureClaims}, {claimAnchors}
         evidence anchors for the contested one, {sources.total} source records ({sources.primary} primary
         theory preprints, {sources.secondary} secondary curated-artwork records), and all
         {verifications.length} verifications. No artifact bytes ship (<code class="text-fg-muted">artifact_count 0</code>):
@@ -78,9 +91,17 @@ const claimAnchors = claim.supporting + claim.contradicting
     <section>
       <h2 class="mb-2 font-semibold text-fg">4. Limits of the method</h2>
       <ul class="ml-4 list-disc space-y-1.5">
-        <li>The empirical base is thin: two claims from a single run. This shows that dissent is preserved, not how often it arises.</li>
+        <li>
+          The empirical base is thin: {totalClaims} across {totals.runs} exported {totals.runs === 1 ? 'run' : 'runs'},
+          of which this instrument reads {featureClaims} from <code class="text-fg-muted">{featureRun.run}</code>.
+          {otherRuns.length > 0 && (
+            <> The other {otherRuns.length === 1 ? 'run is' : 'runs are'} exported and counted here but not
+            rendered as a parallax: {otherRuns.map((r) => r.run).join(', ')}.</>
+          )}
+          This shows that dissent is preserved, not how often it arises.
+        </li>
         <li>Independence is designed but unexercised under a single principal — the cross-practice verifier is one practice, not a federation.</li>
-        <li>In this run no source backs more than one classification, so “which source carries the most” is structurally flat; it becomes informative only across an overlapping corpus.</li>
+        <li>In the run shown here no source backs more than one classification, so “which source carries the most” is structurally flat; it becomes informative only across an overlapping corpus.</li>
         <li>The related corpora (the encounter register, the Ulysses atlas) reference this work only by name, not by shared identifier — cross-practice questions are not yet machine-answerable.</li>
       </ul>
     </section>
@@ -97,7 +118,13 @@ const claimAnchors = claim.supporting + claim.contradicting
       <h2 class="mb-2 font-semibold text-fg">6. Change log</h2>
       <ul class="ml-4 list-disc space-y-1.5">
         <li>v1 (2026-07) — first edition: the claim-rooted export, joined graph, SPARQL view model, and the parallax of the two verifications.</li>
-        <li>v1.1 (2026-07-28) — removed the "runtime source still private" limit: MRR opened its source on 2026-07-26 (Apache 2.0 code, CC BY 4.0 texts, CC0 data).</li>
+        <li>v1.1 (2026-07-28) — removed the "runtime source still private" limit: MRR opened its source on 2026-07-24 (Apache 2.0 code, CC BY 4.0 texts, CC0 data).</li>
+        <li>
+          v1.2 (2026-08-02) — the sheet counts instead of asserting. It had spelled the claim and run
+          counts as words, and went on saying so for ten days after the runtime's archive grew past them;
+          every figure here is now read from the committed export, and a new run appears by committing its
+          crate, not by editing this page.
+        </li>
       </ul>
     </section>
   </div>

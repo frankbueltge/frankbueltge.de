@@ -1,0 +1,95 @@
+import { describe, expect, it } from 'vitest'
+import { readTiles } from './tiles'
+import { NAMING } from '@/config/naming'
+import type { ProtokollDay } from '@/lib/protokoll/types'
+
+const tiles = readTiles()
+
+describe('the live dashboard reads the archive', () => {
+  it('renders a tile for every experiment whose snapshot answers today', () => {
+    // Not an exact number: tiles come and go with the snapshots, and pinning the count would make
+    // this test a chore rather than a guard. What must hold is that the room is not empty and that
+    // the pieces with committed daily data are all present.
+    expect(tiles.length).toBeGreaterThanOrEqual(9)
+    const ids = tiles.map((t) => t.id)
+    for (const id of ['consensus', 'policy', 'redaction', 'ghostFleet', 'roundNumbers', 'patterns', 'atlas']) {
+      expect(ids, `${id} has a committed snapshot and must have a tile`).toContain(id)
+    }
+  })
+
+  it('never renders an empty or placeholder reading', () => {
+    for (const tile of tiles) {
+      expect(tile.big.trim().length, tile.id).toBeGreaterThan(0)
+      expect(tile.big, tile.id).toMatch(/[\d]/) // a reading is a number, always
+      expect(tile.sub.trim().length, tile.id).toBeGreaterThan(20)
+      expect(tile.stamp.trim().length, tile.id).toBeGreaterThan(0)
+      expect(tile.href, tile.id).toMatch(/^\//)
+      // The mock's placeholder values, in case one is ever pasted in from the handoff by mistake.
+      expect(['87 clocks', '+214', '12 items', '38 outlets', '2 silent', '−412 words', '23 dark', '31 in view', '203 works'])
+        .not.toContain(tile.big)
+    }
+  })
+
+  it('draws every mark from a series that exists — no decorative shapes', () => {
+    for (const tile of tiles) {
+      if (tile.viz.kind === 'line' || tile.viz.kind === 'bars') {
+        expect(tile.viz.values.length, `${tile.id} has an empty series`).toBeGreaterThan(0)
+        expect(tile.viz.values.every((v) => Number.isFinite(v)), tile.id).toBe(true)
+      }
+      if (tile.viz.kind === 'cells') expect(tile.viz.count, tile.id).toBeGreaterThan(0)
+      if (tile.viz.kind === 'ratio') expect(tile.viz.whole, tile.id).toBeGreaterThan(0)
+    }
+  })
+
+  it('omits The Protocol when no day file is handed in — absent, never blank', () => {
+    const ids = readTiles({}).map((t) => t.id)
+    expect(ids).not.toContain('protocol')
+  })
+
+  it('counts the day’s unreachable sources rather than glossing over them', () => {
+    const day = {
+      date: '2026-08-10',
+      generated_at: '',
+      schema_version: '3',
+      pipeline_version: '0.1.0',
+      index: null,
+      entries: [
+        { status: 'ok' },
+        { status: 'unavailable' },
+        { status: 'ok' },
+      ],
+    } as unknown as ProtokollDay
+    const tile = readTiles({ protokoll: day }).find((t) => t.id === 'protocol')!
+    expect(tile.big).toBe('3 items')
+    expect(tile.sub).toContain('Feststellung entfällt')
+    // The dim cell is the source that did not answer, at its own position in the day.
+    expect(tile.viz).toEqual({ kind: 'cells', count: 3, marked: [1] })
+  })
+})
+
+describe('the copy dictionary carries no readings', () => {
+  /** Constants of the method, not measurements — the only digits allowed to be written down. The
+   *  bin width is a property of how the pulse is built, fixed in scripts/fetch-pulse.ts; it cannot
+   *  go stale the way a reading can. Anything else with a digit in it belongs in a derivation. */
+  const ALLOWED = new Set(['2-HOUR BINS · TAPERED'])
+
+  function walk(value: unknown, path: string, found: string[]): void {
+    if (typeof value === 'string') {
+      if (/\d/.test(value) && !ALLOWED.has(value)) found.push(`${path}: ${value}`)
+      return
+    }
+    if (Array.isArray(value)) return value.forEach((v, i) => walk(v, `${path}[${i}]`, found))
+    if (value && typeof value === 'object') {
+      for (const [k, v] of Object.entries(value)) walk(v, `${path}.${k}`, found)
+    }
+  }
+
+  it('has no digit typed into any static string of NAMING.opsRoom', () => {
+    // The site's canon: numbers are rendered from data, never typed into wording. A sentence that
+    // needs a number is a FUNCTION here (skipped by this walk, because a function has no literal
+    // to go stale) and gets the number from the same derivation that prints it in the big line.
+    const found: string[] = []
+    walk(NAMING.opsRoom, 'opsRoom', found)
+    expect(found).toEqual([])
+  })
+})

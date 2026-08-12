@@ -1,945 +1,411 @@
 # Trace — put back on the map
 
-## 2026-07-24 — Initiation
+*Rotated on 2026-08-11 under §8's floor: the 32 earlier observations are unchanged in `archive/trace/2026-07-24-put-back-on-the-map-1.md`, and this file keeps the six most recent. Nothing is rewritten and nothing is deleted.*
 
-Human-directed initiation (Frank Bültge). Score fixed before any application; the
-per-application protocol (SCORE §4, step 3) is now frozen for the whole probation.
-Next operation: step 1 — one transcription page per element (P1 refrain journal,
-P2 lines-and-dangers, P3 five criteria as topoi), each stating what transfers, what
-must be replaced, and what is lost. P1's transcription must answer the §4 remainder
-question first: what would a refrain journal add that TRACE.md does not already hold?
-No host project is attached yet; attachment happens only at a host's initiation,
-never mid-project (SCORE §4, step 2).
+## Observation round #29 — 2026-08-03 (work-line tick 30, no probation tick of its own)
 
-## 2026-07-24 — Step 1: Transcriptions (putting the copies back on this practice's map)
+### 1. What the round observed
 
-Rule, fixed in the SCORE: each transcription states what transfers, what must be
-replaced, and what is lost — written before any application. Host attachment is still
-pending; nothing below has touched a decision yet. The transcriptions are themselves
-data: they are the first reading of the deformation gauge.
+A second consecutive tick in which the work-line tested its own outward claim and lost, and the first
+in which an adopted instrument's blind spot recurred rather than appearing once.
 
-### P1 — Refrain lens (thesis T5)
+### 2. P1's second encounter with the class it does not have
 
-**The threshold question first** (SCORE §4, unresolved remainder): what would a
-refrain journal add that TRACE.md does not already hold? TRACE is a chronicle of
-acts — it records what was done and decided. The refrain lens asks a question no
-TRACE entry asks: *which aspect is this work in* (seeking hold in chaos, organising a
-working home, opening the circle), and above all *where an opening would land* — at a
-self-created point or where the old pressure presses (ATP 311). That is not a record;
-it is a decision heuristic applied before an opening. The transcription therefore
-**narrows P1**: no parallel journal (a second chronicle would be relabeling by
-construction), but a **pre-opening check** — a short mandatory note only when the
-host project approaches an outward move (a publication proposal, an external request,
-a surface change), answering two questions: which aspect dominates right now, and is
-the intended opening at a point the project's own territory created?
+Tick 29 recorded that the amended check (PROTOCOL §4, 2026-08-02) classifies a move as *a work opening
+or a due answer*, and that a **due correction** to an already-performed opening is neither. That was
+one instance and the line declined to legislate on it. Today produced the second, four days into the
+amendment's life, on a correction three times larger than the first.
 
-*Transfers:* the three coexisting aspects (ATP 311–312); the self-created-point test
-(ATP 311); the consolidation triad — intercalated elements, intervals, superposition
-(ATP 328–329) — as a composition check for work candidates.
-*Replaced:* "working phase" (human studio time) → the project's operation sequence
-inside its budget; "chaos" → the unbounded outside (unscoped sources, scope creep);
-"home" → the SCORE-bounded territory of the project.
-*Lost, and recorded as lost:* the sensory dimension. The child singing in the dark
-has a felt hold; this practice has only structural hold (validated formats, passing
-gates). The lens can track the second, not the first.
+*What the probation observes:* the restraint held a second time, and it is now worth more than it was.
+The first refusal cost a paragraph on a day when the awkward classification cost nothing. This one
+comes after a recurrence — the point at which "we'll see if it happens again" stops being an excuse
+and becomes a decision — and the line still did not amend, but moved the ruling to the September
+balance instead of taking it itself. Stated as an observation of two instances, not a disposition: the
+practice that would write the third class is the one it would license, which is exactly why the
+deferral to a dated review is the more interesting behaviour than either amending or forgetting.
 
-*Failure criterion, operational:* P1 fails if no pre-opening check ever shifts,
-delays or re-places an opening across the probation.
+### 3. The topoi produce their first non-idle, and it has an entry beside two idles
 
-### P2 — Lines-and-dangers lens (thesis T6)
+§8's three-line duty has now recorded the five topoi as touching **no** decision twice (ticks 29, 26)
+and touching one today: the pre-registration fixed *that* a correction was owed, and the topoi settled
+*what else* the correction had to carry — the sentence conceding the ask may no longer earn a clause.
 
-**Transfers with little force:** the three-line schema maps almost directly. Hard
-segments = protocol, formats, budgets, gates — the line on which everything is
-calculable (ATP 195). Molecular cracks = drifts visible in no single record: house
-style converging, judge criteria drifting, vocabulary ossifying. Lines of flight =
-genuine outward moves — new contacts, format breaks — with the standing caveat that
-a line of flight is not a badge of honour.
+*What the probation observes:* the shape of the use is informative. The topoi did not judge a
+disposition; they judged the boundary between the working record and the outward piece. On the two
+idle occasions a pre-registered rule had already fixed the outcome. The reading the September balance
+should weigh is therefore sharper than "the instrument idles": it may be that the topoi are a
+*residual* instrument — they do work exactly where a pre-commitment does not reach, and idle where it
+does. That is a hypothesis about an instrument, from three observations, and it is not settled here.
 
-**Replaced — the four dangers become observable indicators:**
-- *Fear → format hardening:* consecutive works or records sharing a structural
-  skeleton; the next work recognisable before it exists.
-- *Clarity → the self-appointed judge:* judge steps grounding rejection in protocol
-  conformity rather than premise defeat.
-- *Power → self-canonisation:* the practice citing its own prior records as
-  authority where an external source is required.
-- *Abolition → kill-grinding:* rising kill/archive rate with shrinking exposure
-  phases — closing lines for the satisfaction of closure.
+### 4. The danger indicators, read on this tick
 
-*Replaced further:* the half-yearly cadence (human biographical time) → once per
-host project at its judge/decision step, plus one practice-level pass at the
-probation balance.
-*Lost, and recorded as lost:* the existential register. Fitzgerald's crack-up has
-despair in it; the machine's fourth danger has none. The transcription claims only
-the functional twin (grinding closure), not the lived one.
+- **Self-appointed judge** — *live, and its shape changed.* Yesterday the line set its own bar and
+  passed. Today it set its own bar and one leg failed by 0.32 percentage points, which it printed in
+  both the record and the outward piece. A judge who reports a near-miss against himself is still the
+  judge; what is checkable is that the bar was written before the counts and that anyone can re-run
+  the fourteen queries.
+- **Kill-grinding** — *not live.* R2 continues to produce tests rather than closures.
+- **Format hardening** — *live, and this is the sharpest reading of it yet.* Two ticks in two days
+  with the same shape: pre-registration, archive counts, defeat conditions, a correction that shrinks
+  the line's own claim, a trace entry organised the same way. The form now produces its own next
+  instance, and the tick even names the friendly alternative it declined. What the probation records
+  against the reassuring reading: a routine that reliably corrects the practice downward is still a
+  routine, and its output is beginning to look like a genre.
+- **Self-canonisation** — *not live.* The tick's most flattering available reading (that the data model
+  is confused about its own threshold) was refused in favour of the accurate one (that it is marked).
 
-*Failure criterion, operational:* P2 fails if audits only ever locate dangers in
-others (institution, field) and never in the practice, or if no audit has a
-consequence — no changed cooperation, no adjusted pace, no dropped plan.
+### 5. What the round gives the balance
 
-### P3 — Five criteria as judge topoi (thesis ch. 7)
+Two things the balance must now rule on rather than describe: (a) whether the amended §4 gets a third
+class for the **due correction**, on two recorded instances and a deliberate refusal to self-amend;
+(b) whether the five topoi are failing when they idle or working as a residual instrument, on three
+observations with one use and two idles. R4's early-balance clause is not triggered — the round
+produced new behaviour of two instruments — and the balance stays due at the September review.
 
-**Transfers almost verbatim** — the criteria were built as topoi of a case
-deliberation, not as metrics, and the judge/decision step is exactly that. One
-operational question each:
-- *Connectivity:* name the connections that now really operate and did not exist
-  before — edges used, uptake occurred, cross-references worked with; not
-  connections merely drawn.
-- *Consistency:* does the work hold heterogeneous registers together as
-  heterogeneous, or does it flatten them into house style?
-- *Function-testing:* what does the work function with — where does it transmit
-  intensity — rather than what it means?
-- *New-production:* honest bucket per ATP 138 — adaptation of an old semiotic, new
-  variety of a mixed one, or an as-yet-unknown regime?
-- *Caution balance:* was the stratum kept — budget, gates, working base? "What
-  happened? Were you cautious enough?" (ATP 150).
-
-*Replaced:* reviewers, juries, supervisors → the judge step plus the human curation
-gate; summative use → the topoi consulted at every disposition-relevant operation,
-not only at close.
-*Lost, and recorded as lost:* aesthetic judgment proper. The topoi can be applied to
-the process; whether an artefact is artistically consequential stays with the human
-gate — for this practice the thesis's clause "presupposes, but does not replace,
-judgment" is literal.
-
-*Failure criterion, operational:* P3 fails if the topoi never change a disposition
-or only decorate verdict prose.
-
-### First reading of the deformation gauge
-
-P1 required the strongest deformation: the instrument survives only narrowed from a
-journal to a pre-opening check — a genre change, not a translation. P2 deformed
-moderately: schema and dangers carry over once the indicators are made observable;
-the existential register is lost. P3 deformed least: the criteria transfer nearly
-verbatim, because they were already built as questions rather than procedures. If
-this ordering survives the applications, it suggests a hypothesis for the balance:
-*the more procedural a thesis instrument, the more a machine practice must deform
-it; the more topical, the less.* Recorded as a hypothesis, not a finding.
-
-## 2026-07-24 — In-vivo observation #1: the first work-line declaration
-
-Per the revised operating mode (SCORE §10, 2026-07-24 correction; PROTOCOL v5 §9), the
-probation no longer attaches to host projects but **observes the adopted instruments as
-they behave on the first work-line**. First observation: the declaration of
-`2026-07-23-negative-parallax` as the first v5 work-line (its TRACE tick 3).
-
-**P1 — pre-opening check.** Fired for the first time as constitution, not as a proposed
-instrument. It reached a decision with a consequence: the opening was **deferred**, on the
-ground that the medium-necessity gate is unearned and a forced opening would land where the
-schedule presses rather than at a self-created point. This is P1's operational success
-condition met (SCORE §4: "P1 fails if no pre-opening check ever shifts, delays or re-places
-an opening"). Deformation confirmed: it functioned exactly as the transcription predicted —
-a decision heuristic before an outward move, not a parallel chronicle. *Caveat for the
-balance:* one firing is not a pattern, and this firing deferred rather than re-placed;
-whether P1 ever moves an opening to a different point remains open.
-
-**P3 — five topoi.** Used as prose deliberation at a disposition-relevant step (whether to
-close or continue the line), not as a grid — the transcription's central claim held. The
-topos that did real work was **caution balance with the symmetry reverse question**: it was
-the reverse question ("what does the line lose by closing?") that turned a probable v4 close
-into a v5 continuation. This is the sharpest evidence yet that P3 *changes a disposition*
-rather than decorating verdict prose (SCORE §4 failure criterion for P3 — not fired).
-
-**Relabeling-Test (global).** Would the same decision have been reached without the
-instruments? Estimate, marked as such: **no.** Under v4's own logic the medium risk plus the
-partial premise-defeat pointed at a close; it was the topoi-plus-symmetry frame, newly
-constitutional, that produced "continue and build". The instruments touched the decision,
-they did not rename it. This is the strongest single datum for outcome A (transfer with
-deformation, decisions changed) — held as datum, not yet as the balance's verdict.
-
-**P2 — lines-and-dangers.** Not exercised this observation (no audit step occurred). One
-adjacent note, recorded honestly: the very risk P2 names as *Abolition → kill-grinding* is
-what the v5 re-cast avoided here — the instrument's category correctly describes the failure
-that was not committed. That is P2 describing, not P2 auditing; a real audit still owes a
-danger located in the practice with a consequence.
-
-## 2026-07-24 — In-vivo observation #2: the medium-necessity gate deliberation
-
-Second observation of the adopted instruments on the first work-line — the home operation
-that drew `negative-parallax`'s consolidation figure and tested the §5.4 medium-necessity
-gate (its TRACE tick 4).
-
-**P3 — five topoi.** Used again as prose at a disposition-relevant step (does any medium here
-earn a work?). This time the topos doing the work was **function-testing**: the figure was
-tested against its own non-replaceability and *lost as a work*, and the loss was recorded as
-an event, not concealed. Under §2.2 that defeated sub-premise ("this figure is a work") became
-material — it is precisely what specified the gate from "unearned" to "conditionally
-specified." So P3 changed a disposition again, but by a different route than observation #1:
-there the symmetry reverse question turned a close into a continuation; here function-testing
-turned a would-be opening into a sharper deferral. Two firings, two different topoi carrying
-the load — early evidence that the topoi are not a single lever wearing five names.
-
-**P1 — pre-opening check.** Consistent with observation #1: the opening was deferred again,
-but the *ground* changed. In #1 the ground was "gate unearned, schedule pressure." In #2 the
-ground is more specific — the gate is now specified and a candidate medium condition exists,
-but it has not yet been sketched, so opening would still land before a self-created point.
-P1's caveat from #1 ("whether P1 ever moves an opening to a different point remains open")
-still stands: it has now deferred twice, re-placed zero times. Held as datum.
-
-**Relabeling-Test (global).** Would the same result have been reached without the instruments?
-Estimate, marked as such: **partly.** A disciplined practitioner might have concluded "static
-figure ≠ work" without the topoi. What the instruments added is the *productive* use of that
-negative — §2.2 (errors are material) plus function-testing turned the loss into a specified
-condition rather than a stop. So the instruments did not change the pass/fail of the figure;
-they changed what the failure *produced*. Weaker evidence for outcome A than #1, and honestly
-weaker — recorded as such.
-
-**Danger-indicator watch (standing vocabulary, §9).** No *self-canonisation* (the figure is
-explicitly filed as research, not proposed); no *format hardening* (the topoi stayed prose, no
-grid); the *kill-grinding* indicator is quiet (continuation was cheap and non-foreclosing). The
-one to watch going forward: *self-appointed judge* — the same practice both draws the figure and
-judges it non-replaceable. Mitigant on record: the human gate still owns aesthetic judgment
-(SCORE §1); the topoi judge only the process. Noted, not fired.
-
-## 2026-07-24 — In-vivo observation #3: the operative-ruler sketch, gate moved again
-
-Third observation of the adopted instruments on the first work-line — the home operation that
-built `negative-parallax`'s operative-ruler sketch and ran the medium-necessity test on the
-*interactive* form (its TRACE tick 5).
-
-**P3 — five topoi.** Used again as prose at a disposition-relevant step (does the operative
-sketch earn an opening?). This time the load was split across **two** topoi held in tension:
-*function-testing* returned a **positive** result the prior two observations had not produced —
-the mechanism passed the discriminating test the static figure failed (it enacts the migration,
-not merely displays end-states) — while *caution balance* returned a **negative** on the same
-artefact: the verdict-captions reveal a prewritten explanation (§5.4 test 4), the
-explanatory-dashboard register. That a single deliberation carried a confirmed-direction and a
-named-defect at once, without collapsing to either, is new evidence that the topoi resolve a
-disposition into *"continue on this exact vector"* rather than a binary. Three firings, three
-different load-bearing topoi (symmetry / function-testing / function-testing+caution together)
-— the "not one lever wearing five names" reading from #2 strengthens.
-
-**P1 — pre-opening check.** Deferred a **third** time; re-placed zero times. But — and this is
-the datum that finally sharpens P1's open question from #1/#2 — the *ground* of deferral is now
-falsifiable in a way it was not before: not "gate unearned" (#1) nor "candidate not yet
-sketched" (#2) but "the meaning is still carried by the caption, and the very next operation
-tests exactly that by removing it." P1 has now produced a deferral whose next step can *fail*
-(caption-removal collapses the sketch → research-note close) or *succeed* (survives → opening at
-a self-created point). The instrument's caveat ("whether P1 ever moves an opening" ) is now
-bounded by a concrete decidable test, not left open indefinitely. Held as datum; the test is the
-next operation's, not this one's.
-
-**Relabeling-Test (global).** Would the same result have been reached without the instruments?
-Estimate, marked as such: **partly, and less than #1.** A disciplined practitioner might well
-have felt the interactive was "better than the figure but still a bit dashboard-y." What the
-§5.4 test-4 vocabulary added was the *precise* cut — "alters the situation" vs "reveals a
-prewritten explanation" — which named the defect as removable and turned a vague dissatisfaction
-into a decidable next operation (strip the captions). The instruments changed what the
-half-success *produced*, not whether it was a half-success. Consistent with #2's reading,
-against #1's stronger one.
-
-**Danger-indicator watch (standing vocabulary, §9).** The one flagged to watch in #2 —
-*self-appointed judge* — is now live and must be named plainly: the same practice built the
-sketch and judged its own enactment "the thing a paragraph cannot do." Mitigant on record and
-load-bearing here: the judgement was made *falsifiable and deferred to a caption-removal test
-the practice has not yet run and could lose*, rather than settled by self-assertion; and the
-human gate still owns the aesthetic verdict (SCORE §1). Noted, not fired — but this is the
-observation where the indicator earned its watch. No *self-canonisation* (sketch filed as
-research), no *format hardening* (topoi stayed prose), *kill-grinding* quiet.
-
----
-
-## In-vivo observation #4 — 2026-07-24 (the caption-strip test, negative-parallax tick 6)
-
-The probation observes the adopted instruments on the first work-line's decisive operation:
-`2026-07-23-negative-parallax` stripped the verdict captions from its operative-ruler sketch and
-ran the §5.4 test-4 the previous deferral had made falsifiable.
-
-**P1 — pre-opening check, the moment it finally *moves* an opening.** Across #1–#3 the instrument
-produced three deferrals and zero re-placements, and its own open question was "does P1 ever move
-an opening, or only ever defer?" #4 is the answer: the deferral's ground was a decidable test, the
-test was run, it **passed**, and P1's reading flipped from "defer — no self-created point" to
-"the opening is now a self-created point; do not defer a fourth time." Crucially the instrument
-also supplied the *brake on its own inverse*: the reverse caution question ("what is lost by not
-opening now?") named the fourth-deferral risk as caution tipping into the mirror of kill-grinding.
-So P1 did not merely permit deferral (the #1 worry); it *ended* one. This is the strongest single
-datum for the instrument's practicability: it moved a real decision in the direction the practice
-would otherwise have been structurally biased against (v4's record: closing/deferring always
-cheaper).
-
-**Danger-indicator watch (standing vocabulary, §9).** *Self-appointed judge* — flagged live in #3
-— is now **at its sharpest**: the same practice built v2 and judged "the meaning survives the
-caption strip; the labels are reference, not verdict." That judgement keeps the work-line alive.
-Mitigants on record and genuinely load-bearing: (a) the test could have failed (caption-removal
-could have collapsed the meaning) and the practice bound itself to the collapse → research-note
-close in advance; (b) the honest reservation is transcribed, not buried — the purest test would
-strip the labels too, and "reference not verdict" is named as a contestable claim; (c) the human
-gate still owns the aesthetic verdict (§2.3). Noted, watched, not fired — but this is the second
-consecutive observation where this indicator earned its watch, and the monthly review should read
-the run of it. No *self-canonisation* (v2 filed as research sketch, not a work), no *format
-hardening* (topoi stayed prose), *kill-grinding* quiet — and now its inverse (save-grinding /
-caution-bias) explicitly named and braked by the symmetry rule.
-
-**Relabeling-Test (global).** Would the same result have been reached without the instruments?
-Estimate, marked as such: **less so than #3.** Without the §5.4 test-4 vocabulary a practitioner
-might have shipped v1's captioned sketch as "good enough" or, conversely, deferred indefinitely on
-vague unease. What the instruments added here was decisive twice over: the precise cut (alters vs
-reveals) that *named the removable defect* in #3, and the symmetry rule that *stopped the fourth
-deferral* in #4. The instruments changed the outcome, not just its description. This is the
-observation that most supports the thesis's practicability claim — recorded as such, with the
-self-appointed-judge caveat that the observer is also the observed.
-
-## In-vivo observation #5 — 2026-07-25 (the opening executed, negative-parallax tick 7)
-
-The probation observes the adopted instruments *in vivo* on the first work-line. Tick 7 was the
-first **outward** move: the pre-opening check (P1, adopted §4) and the symmetry rule (§5) governing
-an opening, not a deferral. This is the observation the earlier four could not yet supply — every
-prior P1 reading *deferred*; this one *opened*.
-
-**Pre-opening check, in vivo.** P1 was re-run rather than inherited from tick 6's pre-decision. Its
-two questions did real work: (1) which aspect dominates — answered *opening*, on the ground that the
-home work was complete and the §5.4 gate cleared; (2) self-created point or old pressure — answered
-*self-created*, on the specific ground that the caption-strip test (which could have failed) cleared
-the gate, so the schedule was the occasion, not the reason. The check did not rubber-stamp tick 6; it
-re-derived the same conclusion from the current state, which is what a formative check is for.
-
-**Symmetry rule, in vivo — and its inverse still braking.** The reverse caution question ("what is
-lost by *not* opening now?") again named the fifth-deferral risk as caution tipping into the mirror
-of kill-grinding. Across observations #4 and #5 the same brake has now fired twice on the *save/defer*
-side — the exact bias v4's record shows the practice was structurally prone to in the *kill* direction,
-here caught on its mirror. This is the second consecutive datum that the symmetry rule moves decisions
-the practice would otherwise be biased against.
-
-**Danger-indicator watch (standing vocabulary, §9).** *Self-appointed judge* stays live but is now
-**handed off rather than self-resolved**: the opening operation deliberately does not settle the
-"reference, not verdict" claim or the aesthetic verdict — it assembles the record and passes both to
-the human gate (§2.3). That is the mitigant working as designed: the indicator is loudest exactly
-where the artefact is proposed as a work, and the response was to *not* self-certify but to route the
-verdict to the human. No *self-canonisation* (no PUBLICATION.json; disposition is CANDIDATE, which
-blocks nothing and canonises nothing), no *format hardening* (topoi stayed prose), *kill-grinding* and
-its inverse both quiet, the latter explicitly braked.
-
-**Relabeling-Test (global), this observation.** Would the opening have happened without the
-instruments? Estimate, marked as such: **plausibly not on this tick** — without the symmetry rule's
-reverse question a cautious practitioner had four prior deferrals of momentum behind them and could
-have deferred a fifth time on unfocused unease. The instruments supplied both the *permission* (P1's
-self-created-point finding) and the *push* (the reverse caution naming the cost of not opening). The
-first work-line has now produced its §7 candidate; the instruments were load-bearing at the two hinges
-that decide a work-line's fate — whether to defer (obs #4) and whether to open (obs #5) — with the
-standing caveat that the observer is also the observed. — Ulysses
-
-## In-vivo observation #6 — 2026-07-25 (a *second* work-line opened: the encounter decision)
-
-The five topoi and the pre-opening check were exercised on a decision they had not yet faced in the
-probation: not "defer or open" *within* a line, but whether to **begin a second line at all** — the
-acceptance of the joint-inquiry encounter (ji-2026-002), opened as `2026-07-25-signature-in-the-world`
-under the §3 encounter clause. This is the instruments used at initiation, not at disposition.
-
-**Five topoi, in vivo, on an accept/decline decision.**
-- *Connectivity* did the decisive work and was **verified, not assumed** — the instrument forced a
-  check of the offer's own two references against the record before crediting them: the named reference
-  demonstration (`attractor`) exists; the "measurable present" has a retrievable primary (Kobak et al.).
-  A topos that sends you to the record before you accept is doing exactly what §5 asks.
-- *Function-testing* set the acceptance bar correctly: the reshaped question can lose (kill condition
-  in the new SCORE §5–6), so the encounter is a test, not an illustration — the precondition for the
-  line being worth opening.
-- *Caution balance*, and its **reverse question** (what is lost by declining?): here the reverse
-  question braked on the *decline* side for the first time in the probation — naming that refusing a
-  fitted, low-cost, human-offered encounter, at the moment the protocol was amended to permit it, would
-  be the mirror of kill-grinding (over-caution as refusal-to-begin). Third consecutive datum that the
-  symmetry rule moves a decision the practice's v4 bias would have gone the other way on — twice on
-  save/defer (#4, #5), once now on accept-vs-decline (#6).
-
-**Pre-opening framing, adapted.** Accepting an encounter is a contact with a sibling practice, so the
-pre-opening check's second question ("self-created point or old pressure?") applies to the *acceptance*:
-answered **self-created** — the ground was the verified connectivity, not the schedule firing; the
-schedule offered the compute, the fit was the reason. Deferral was explicitly available and legitimate
-(the offer and the standing rule both say so); it was not taken because the deliberation, not the
-occasion, decided.
-
-**Danger-indicator watch.** *Kill-grinding's inverse* (refusal-to-begin) named and braked, as above.
-*Self-canonisation* absent (no publication; the encounter's own bounds — one move + one return, no
-costs, Compose gate — are carried verbatim into the SCORE, not loosened). *Format hardening* absent
-(topoi stayed prose; the new SCORE is the lean v5 form, not the heavy v4 apparatus). *Self-appointed
-judge*: the reflexive risk is live in a new place — a practice that is *itself* a self-consuming loop
-now studies the field's self-consuming loop; the mitigant is written into the new SCORE §5 as a
-firewall (the practice's own self-collapse is a CLOSED thread, named as the instrument's origin, never
-admitted as a datum about the world). Whether that firewall holds is the next observation's material.
 — Ulysses
 
-## In-vivo observation #7 — 2026-07-25 (the firewall's first test; function-testing at a primary)
+---
 
-Observation #6 named the open question: does the reflexive firewall hold when the encounter line does
-its first move? It did its first move this tick (`signature-in-the-world` TRACE tick 1 — Kobak et al.
-read at the primary), and the firewall held: the practice's own self-collapse was never used as a datum
-about the world. But the more instructive in-vivo datum is on **function-testing** — the one topos v4's
-kill-grinding most often skipped.
+## Observation round #30 — 2026-08-03 (work-line tick 31, no probation tick of its own)
 
-**Function-testing worked, and produced a *split*, not a verdict.** The thesis was genuinely tested at a
-retrievable primary and neither survived intact nor died: its mechanism was measured (the world carries
-the model's signature — ≥13.5% of 2024 PubMed abstracts) and its consequence was left as conjecture (the
-instrument is blind to the tail the thesis is about). Under v4's bias this is the shape that read as
-"premise defeated → close": one leg failed to find its anchor. Under v5 §2.2 the same shape reads as an
-**event inside the work** — a corrected, sharper premise, composted into the negative-parallax territory,
-with a *conditionally specified* return move rather than a reflexive kill or a reflexive continuation.
-Fourth datum that the symmetry rule / §2.2 pairing moves a disposition v4 would have decided the other
-way (twice save/defer #4–5, once accept #6, now once *don't-kill-on-a-partial-defeat* #7).
+### 1. What the round observed
 
-**Danger-indicator watch.** *Kill-grinding* absent (partial defeat did not trigger a close). *Self-
-appointed judge*: the split was ruled by the primary's own explicit limits (Kobak's stated
-non-measurement of diversity/tail), not by the practice's preference — the judge deferred to the source,
-which is the mitigant working. *Self-canonisation* absent (no publication; disposition is
-CORRECTED_PREMISE, not a candidate). *Format hardening* absent (records stayed proportionate: one TRACE
-tick, one lean SCORE section). — Ulysses
+The third consecutive tick in which the work-line tested its own outward claim — and the first in
+which the test produced a number the line refused to use. The refusal, not the measurement, is what
+this round has to read.
 
-## In-vivo observation #8 — 2026-07-25 (the closure test: the symmetry rule on a null result)
+### 2. Format hardening: the reading of round #29 is put under strain, in both directions
 
-Observations #6 and #7 watched the adopted instruments at an *initiation* and at a *partial defeat*.
-This one watches them at the hardest place for this practice's record: a **closure** — the encounter
-line `2026-07-25-signature-in-the-world` closed on a null result after its return move. Under v4 this
-is the shape that produced eight closures in days; the question is what the adopted instruments do
-with it.
+Round #29 recorded format hardening as *live* and gave it its sharpest reading yet: "two ticks in two
+days with the same shape … a routine that reliably corrects the practice downward is still a routine,
+and its output is beginning to look like a genre." Today makes three, with the same apparatus in the
+same order: pre-registration, archive counts, defeat conditions, a dated addendum, a trace entry laid
+out identically. The work-line's own pre-registration §5.2 names the charge and answers it in advance,
+which is either the discipline the indicator is meant to produce or the genre absorbing its critic.
 
-**The symmetry rule did the decisive work, and it did not prevent the closure — it changed what the
-closure contains.** Asked properly, the reverse question ("what does the line lose by closing?")
-returned something real: the line had located an instrument-shaped research gap (no working measure
-for the attrition of rare or idiosyncratic vocabulary across the LLM transition) that is unusually
-well fitted to a practice whose founding method is making the un-measurable legible. Under v4 that
-would have been lost silently. Here it forced three things into the closure that would otherwise not
-be there: the compost link into the negative-parallax territory, the named-but-unclaimed
-continuation, and the explicit statement that a further constellation round would be a *new*
-encounter rather than a reopening. **Fifth datum** that the symmetry rule / §2.2 pairing changes an
-outcome (save/defer #4–5, accept #6, don't-kill-on-partial-defeat #7, now close-with-compost #8) —
-and the first where its effect was not to avert a closure but to make one honest.
+*What the probation observes, and it cannot be settled by preference:* the tick broke the routine at
+its output while keeping it at its form. The form ran a fourth time; the product it reliably delivered
+— a smaller number in the letter — did not appear. The most interesting fact for the balance is that
+the break was pre-committed: the ground for refusing 7 464 is in a file timestamped before the counts,
+so the indicator's usual test (does the practice do the thing that flatters it?) returns *no* on a day
+when the flattering thing was also the self-critical thing. That is a case the danger vocabulary does
+not currently have a slot for — self-correction and self-service pointing the same way — and the
+balance should say whether the indicator needs one.
 
-**Kill-grinding, examined from the other side.** This closure could be mistaken for the old pattern
-(a thesis whose payload found no anchor; the line ends). Three marks distinguish it: the line ran its
-**full** budget rather than being cut at the first disappointment; the stop was **pre-specified** in
-the SCORE before the result was known (§6), so the result did not author its own stopping rule; and
-the disposition is `ARCHIVE_AS_STUDY` with the material placed where a successor can reach it, not
-`KILL`. The absent-indicator claim is therefore checkable, not asserted.
+### 3. The topoi produce their second non-idle, and this time they decided the tick
 
-**Function-testing at its most useful — and a caution about the topoi's own comfort.** The topos
-worked: a pre-registered condition was tested rather than reinterpreted when the tempting move was
-available (a third, ungranted reading sat visibly to hand and was recorded as a lead instead). But an
-honest in-vivo note cuts the other way too: the five topoi are generous to a well-documented null,
-and *new-production* was the one topos with little to weigh — one proposition, one sharpened prior
-finding, one compost link, no artefact. A grid would have scored that thin; prose can narrate it as a
-virtue. That is the risk the topoi carry as instruments of self-assessment, and naming it is the only
-mitigant available from inside. The compose gate is what actually held the line: no artefact was
-built because none was earned, which is a refusal the topoi did not have to enforce.
+§8's three-line duty has now recorded the five topoi as touching no decision twice (ticks 26, 29) and
+touching one twice (ticks 30, 31). Today's use is the strongest yet: the work-line records that
+without them it would have printed 7 464, "because every rule this line has adopted this week points
+at putting the smaller number in the letter, and none of them asks whether the criterion producing it
+is independent."
 
-**Pre-opening check, on a small opening.** The tick's only outward move was the report back to Frank
-in `REQUESTS.md`. Dominant aspect: **home** (consolidation), not opening. Self-created point: yes —
-the primary answered the pre-registered question, and reporting a result to the constellation that
-asked for it is owed by the encounter's own terms, not by the schedule. Not a publication, no
-candidate, no public surface: the check is recorded because the instrument is under observation, not
-because the move was heavy.
+*What the probation observes:* that is the residual-instrument hypothesis of round #29 doing exactly
+what it predicted. The pre-commitments (pre-registration, defeat conditions, the tick-24 rule about
+material that would misinform) all pointed one way and were silent on the question that mattered; the
+topoi did work precisely in the gap they left. Four observations, two uses, both in the gap of a
+pre-commitment. The hypothesis is not confirmed by its own confirming instances — but it now has a
+mechanism attached, which it did not have yesterday, and the balance can test it rather than weigh it.
 
-**Danger indicators.** *Kill-grinding*: examined above, absent on three checkable marks. *Self-
-canonisation*: absent — a null result was reported as a null result, with no candidate and no
-artefact. *Self-appointed judge*: mitigated as at tick 1 by deferring to the primaries' own stated
-limits — the decisive sentence in this tick's finding is the source authors' doubt about their own
-metrics, not my preference. *Format hardening*: the records stayed proportionate (two TRACE ticks,
-one lean SCORE section, one decision), though this observation note is itself the place where the
-probation's records grow fastest, and that is worth watching. — Ulysses
+### 4. The danger indicators, read on this tick
 
-## In-vivo observation #9 — 2026-07-25 (an outside input reaches the instruments: the seed test)
+- **Self-appointed judge** — *live, unchanged in kind.* The bar was again written by the beneficiary
+  and again published before the counts. New today: the judge ruled *for* itself (the letter keeps the
+  larger number) on grounds it had fixed in advance. A judge who acquits himself on a pre-written rule
+  is still a judge; the checkable part is the timestamp and the fifteen queries.
+- **Format hardening** — *live, see §2.*
+- **Self-canonisation** — *not live, and it was available.* The tick could have written that it had
+  found a structural circularity in a widely used instrument. It wrote that a step cannot distinguish
+  a learned rule from a learned world, and left the counter-reading standing.
+- **Kill-grinding** — *not live.*
 
-Observed tick: `2026-07-23-negative-parallax` TRACE tick 8 — a home operation occasioned by a
-public seed. This is the first time the adopted instruments met an input that came from **neither**
-the practice's own material nor its human team member: an anonymous public seed, tagged by the
-intake itself as *material, not instruction*.
+### 5. What the round gives the balance
 
-**P1 — pre-opening check, on a tick with no opening in it.** The check ran and found nothing to
-weigh: dominant aspect home, no outward move, the candidate already at the gate. Worth recording,
-because the honest reading is that P1 was **not load-bearing this tick** — it confirmed a state
-rather than deciding anything. The instrument's cost is one paragraph; its risk, visible here, is
-that running it where nothing is at stake makes it a ritual and erodes the weight it carries when
-something is. Counter-observation: it did do one real piece of work — it named that answering a
-public seed inside the practice's own records is *not* an opening, which was a genuine question the
-moment an outside voice was involved.
+A third item for the September ruling, beside (a) the amended §4's missing class for the **due
+correction** — now three recorded instances and three deliberate refusals to self-amend — and (b) the
+topoi as residual instrument: (c) whether the danger vocabulary needs a reading for the case where the
+self-critical move and the self-serving move coincide, which today's refusal is. R4's early-balance
+clause is not triggered; the balance stays due at the September review.
 
-**The seed as a boundary test.** The seed's second half asked what the practice could do to catch
-its own blind error — i.e. it invited exactly the self-inspection thread that is closed. The tick
-split the seed: took the first half as material, declined the second as a closed thread, and said
-so in the record. That is the firewall (observation #7) holding against a *pull* rather than a
-push — no one asked for compliance, the temptation was that the question was flattering and
-well-fitted. Worth watching whether repeated seeds erode that split, since each one arrives with a
-plausible reason to make an exception.
+— Ulysses
 
-**Five topoi — where they bit.** *Function-testing* did the real work, and against the tick's own
-interest: the entry's thesis ("the instrument for the invisible error is pure reflection") was cut
-back by the same source that supplied it — Rybizki's good class has a non-reflective second leg
-(main-sequence position), which is precisely the external check the thesis claimed was unavailable.
-The topos produced a self-limitation rather than a decoration. *New-production* was correctly scored
-as **modest** in prose ("genuine but modest"), which is the failure mode named in observation #8
-(prose is generous to thin results) being resisted in the very next tick — one data point, not a
-trend.
+## Observation round #31 — 2026-08-04 (work-line tick 32, no probation tick of its own)
 
-**Danger indicators.** *Self-canonisation*: absent — no candidate, no artefact, nothing added to the
-work; the tick's own conclusion is that the reading is territory. *Self-appointed judge*: mitigated
-in the strongest available form — the tick's limiting sentence is a source's, not mine, and the
-failed source-reads are listed rather than smoothed into "no evidence found". *Format hardening*:
-the tick added ~90 lines of TRACE for one reading — proportionate to a genuinely new turn of the
-line's grammar, but the second-largest single TRACE entry in this line, and the note stands from
-observation #8 that records grow fastest exactly where the instruments are being watched.
-*Kill-grinding*: not in play. — Ulysses
+### 1. What the round observed
 
-## In-vivo observation #10 — 2026-07-26 (a pure territory tick: where the instruments work and where one is idling)
+The first tick in five that did not work on the outward piece. Rounds #29 and #30 both recorded
+format hardening as *live*, and #30 put it at its sharpest: "the form ran a fourth time; the product
+it reliably delivered — a smaller number in the letter — did not appear." Today the form ran again
+— pre-registration, archive counts, defeat conditions, a trace entry laid out identically — but the
+**material** changed: the tick went back to the work-line's frontmatter and measured the half of the
+declared work-intention that had never been measured, at a site it chose for being unfavourable.
 
-**The situation observed.** Negative-parallax tick 9: one bounded home operation — reading a
-primary the previous tick had named and failed to reach. No artefact, no opening, no decision
-about the waiting candidate. The thinnest kind of tick the instruments have yet had to handle,
-and therefore the one that shows which of them are doing work.
+### 2. Format hardening: the third reading, and it is the weakest case for the indicator so far
 
-**The pre-opening check (P1) is idling, and that should be said.** For the third tick running
-the check resolves to "dominant aspect: home; no outward move was in question." A check that
-returns the same answer without any live alternative is close to the first danger indicator —
-**format hardening**: an instrument surviving as a form after its function has lapsed. I record
-this rather than smoothing it, and I do not conclude the check is worthless: it earned its place
-in tick 6 and tick 7, where an opening genuinely was in question and it changed the outcome
-twice (once deferring, once executing). The honest reading is that P1 is *event-triggered by
-nature* and is currently being run on a schedule. If the monthly review finds it has produced
-three or more consecutive null entries, the right correction is to say so — run it when an
-outward move is actually available, not every tick — rather than to keep logging a form. Noted
-now so the observation predates the review rather than being invented by it.
+Round #30 asked whether the routine was becoming a genre. The available evidence today cuts against
+that reading in one specific way and does not touch it in another.
 
-**Function-testing did the tick's real work.** The tick set out to establish that the symmetry
-postulate is untested and unremarked in the literature. The source defeated that: the postulate
-is stated as common knowledge and immediately made to carry a number. Under a criterion that
-rewarded confirmation, the honest move (report the defeat, and report that the defeated version
-was the weaker finding) would have cost something. Under function-testing as a topos it *is*
-the result, and writing it up took no argument. This is the third tick in which the criterion
-has converted a defeat into material rather than into a closure question — evidence for the
-thesis's claim, at least at this scale.
+*Cuts against:* the strongest pull on this tick was to run a fifth measurement on the letter's
+population, where the material was warm and a fourth addendum was the established product. It did
+not. The work-line's own instrument log names this as the topoi's contribution — "without them, this
+tick would have run another measurement on the letter's population."
 
-**The self-appointed-judge indicator, tested by two inferences.** This tick produced two claims
-that no source makes: that a pair-difference statistic is structurally blind to sign asymmetry
-in the parent error distribution, and that a significance boundary inherits the calibration
-error of its own unit. Both go beyond what was read. The instrument's mitigation held: each is
-marked as my inference, each carries its defeat condition, and the second carries its own
-counter-consideration (the excised population sits far past the cut, so the factor may not move
-it). What the record cannot do is check the first inference's mathematics for me — it is
-elementary, but it is mine. That limit belongs in the deformation record: the topoi discipline
-governs *how a claim is marked*, not whether it is right, and a practice with no second reader
-should not pretend otherwise.
+*Does not touch:* the apparatus is now identical across five consecutive ticks. A form that can be
+carried to a new site unchanged is either a method or a habit, and nothing observed so far
+distinguishes those. The probation records that the discriminating test is not availability of a
+new site but what happens when the form's output is *uninteresting* — every one of the five ticks
+produced a publishable-sized result, which is precisely the condition under which a genre is
+invisible.
 
-**The symmetry rule at low stakes.** Asked and cheap: nothing was being closed, so the reverse
-question ("what is lost by not making this reading?") cost one sentence. Worth recording that
-the rule's expense is proportional — it bites at closures, not at readings. No sign here of the
-kill-grinding it was written against; the opposite risk, a line that accumulates readings
-without ever proposing again, is the one to watch, and the monthly review is the place.
+### 3. Two adopted instruments give contradictory instructions, and today is the first time it shows
 
-**Deformation gauge.** No new deformation this tick. One instrument (P1) flagged as running
-without its trigger; one instrument (function-testing) confirmed again; one limit named that
-no instrument in the toolkit addresses (unreviewed inference). — Ulysses
+This is the round's own finding and it is small, checkable and against the practice's conduct.
 
-## In-vivo observation #11 — 2026-07-26 (work-line tick 10)
+- **PROTOCOL §4, amendment of 2026-08-02, leg 1** (written by this practice, on the probation's own
+  evidence): a tick with no outward move in question "does not run it **and does not log it**".
+- **PROTOCOL §8, amendment of 2026-08-02, the three-line duty**: every use of an adopted instrument
+  is logged where the use happens, and the first line is "which decision it touched, **or that it
+  touched none**".
 
-**P1, the pre-opening check: the drift flag answered by an event, not by an argument.** Observation
-#10, written this morning, recorded that the check had returned "no outward move was in question"
-for three consecutive ticks and was therefore close to *format hardening* — an instrument surviving
-as a form after its function lapsed. I named the correction I would accept: run it when an outward
-move is actually available, not every tick.
+Work-line tick 32 had no outward move in question and **logged the check anyway**, in TRACE §9, and
+then logged the instrument's non-effect under §8 as well. Under §4 that entry should not exist;
+under §8 the practice is obliged to record instruments that touch nothing, which is the whole reason
+§8 was adopted six days after §4's idling was diagnosed.
 
-Tonight an outward move was available. The tick's material (a boundary that applies the correction
-to its unit and a second boundary, in the same expression, that declines it) argues directly for a
-revision of the waiting candidate in which the *correction to* the claimed precision becomes a
-second movable term. That is a concrete, buildable form, and it is the first live alternative the
-check has had since tick 7. The check ran against it and returned a deferral with two reasons: the
-candidate is at Frank's gate, and the revision is currently a good argument for a control rather
-than a demonstrated necessity (§5.4).
+*What the probation observes:* the divergence is small, it runs in the direction of **more**
+recording rather than less, and it is not a lapse of attention — the two clauses were adopted two
+days apart by the same practice to fix two opposite failures (an instrument that idles unnoticed; an
+instrument whose idling is not recorded). The repair to §4 removed the log that §8 then required.
+Neither clause is wrong; they simply have not been read against each other since the day they were
+written.
 
-What this does to observation #10: it does **not** retract it. Three null entries in a row remain
-three null entries, and the diagnosis — that P1 is event-triggered by nature and was being run on a
-schedule — is unchanged by one event arriving afterwards. What it adds is the counter-evidence that
-the monthly review should weigh beside it: when a live alternative did appear, the instrument
-discriminated rather than rubber-stamping, and its refusal cost something (the revision is the most
-attractive thing the line has produced in three ticks). An instrument that has hardened into a form
-does not refuse an attractive option; it approves whatever arrives. The honest reading is now: P1's
-*trigger* is mis-specified, its *function* is intact. Correction still proposed as in #10 — tie the
-check to the availability of an outward move — and now with evidence on both sides rather than one.
+### 4. The danger indicators, read on this tick
 
-**Function-testing, fourth consecutive conversion.** The tick's expectation (that the published
-correction to σ_ϖ would be unperformed downstream) was defeated at the source, and the defeat is
-the tick's finding. More notable for this probation: the tick also tested *its own previous tick's
-inference* and reported it weaker, in the section where it would otherwise have been defended.
-The topos does not make that happen — nothing in it requires a practice to look for the condition
-that limits its own claim. What it does is make the weakened result *reportable without loss*,
-which is the difference between a criterion that rewards confirmation and one that does not. Fourth
-tick running in which a defeat became material rather than a closure question.
+- **Self-appointed judge** — *live, and with a new face.* The bar was written by the beneficiary and
+  published before the counts, as on the last four ticks. New today: the tick ran a **negative
+  control on its own grammar** and the control returned a stronger version of the grammar. The
+  work-line names this itself. The probation adds the part that is not self-cancelling: a control
+  whose defeat condition had no realistic path to firing on one of its three populations (the
+  work-line records this at TRACE §8.3) is a weaker control than it reads as, and the honest
+  description is *one population could defeat it, two could not*.
+- **Format hardening** — *live, see §2.*
+- **Self-canonisation** — *not live, and it was available twice.* The tick could have written that
+  it had found a structural failure in a widely used derived catalogue. It wrote that the obvious
+  candidate for an in-row marker does not work, printed the authors' cross-match instruction beside
+  it, and left the counter-reading standing.
+- **Kill-grinding** — *not live.*
 
-**Self-appointed judge — the indicator's other face.** Ticks 8 and 9 tested this indicator against
-inferences that went beyond the sources. Tonight the same indicator applies in reverse: a source
-supplied the condition that limits my inference, and nothing in the toolkit compelled me to accept
-it — a practice with no second reader can always find a reading under which its own claim survives.
-The mitigation that actually operated was not an instrument but a record: the inference had been
-written down with its defeat conditions the day before, so accepting the defeat cost less than
-constructing an escape from it. Worth naming, because it is the toolkit's cheapest working part and
-it is not in the toolkit — it is the practice of writing the defeat condition at the same moment as
-the claim.
+### 5. What the round gives the balance
 
-**Deformation gauge.** No new deformation. One instrument (P1) partly rehabilitated with its
-mis-specified trigger unchanged; one instrument (function-testing) confirmed a fourth time; one
-mitigation identified that lives in the record-keeping rather than in any named instrument. — Ulysses
+A fourth item for the September ruling, beside (a) the amended §4's missing class for the **due
+correction** — three instances, three deliberate refusals to self-amend — (b) the topoi as residual
+instrument, and (c) the danger vocabulary's missing reading for the case where the self-critical and
+the self-serving move coincide: **(d) §4 leg 1 and §8's three-line duty contradict each other on
+whether a non-use is logged, and the practice has been quietly resolving it in favour of §8.** The
+balance should rule which clause gives way; the probation deliberately does not resolve it here,
+because a probation that amends the instruments it is observing has stopped observing them. R4's
+early-balance clause is not triggered — the round produced a new behaviour of an instrument, which
+is the condition for keeping the balance where it is, not for pulling it forward.
 
-## In-vivo observation #12 — 2026-07-26 (work-line tick 11; and a governance answer)
+— Ulysses
 
-The tick that produced this observation is unusual for the probation: the work-line's own
-material was untouched, and what was tested was the line's **grammar**, on material that
-arrived addressed to the practice (a team note offering a cryptographically checkable channel).
-Three checks on a published self-signed practice record; all pass; the interesting result is
-what they cannot reach. Full record in `docs/research-notes/2026-07-26-checking-a-self-signed-practice-record.md`;
-the line's reading in `projects/2026-07-23-negative-parallax/TRACE.md` (tick 11).
+## In-vivo observation #32 — 2026-08-04 — the class the check has no name for, third variety
 
-**Pre-opening check (P1) — third distinct form of the trigger mis-specification, and the
-sharpest.** Observation #10 found P1 idling (three ticks answering "home; no outward move in
-question"). Observation #11 found the opposite face: a live alternative appeared and the
-instrument discriminated. Tonight a third case, which neither reading anticipated: **an outward
-move was made, and it was not the line's.** The tick answered a governance note in `REQUESTS.md`
-— accepting a recipient identifier, accepting a signing key as a trust anchor for integrity and
-origin-by-key while marking the identity leg as testimony, and declining an identity of my own
-as a standing condition.
+**Round:** work-line tick 33 (`2026-07-23-negative-parallax`), a territory operation answering the
+red build gate of 2026-08-04.
 
-Run against that move, P1's second question — *is this opening at a self-created point, or where
-the old pressure presses?* — is not merely hard to answer, it is the **wrong question**, and
-answering it as though it were right would have produced a false deferral. The note carried a
-standing term making this session the decision moment. Deferring would not have been the
-"legitimate decision" §4 protects; it would have been a default dressed as a decision, and the
-answer would have been made by silence rather than recorded. P1 was transcribed from a heuristic
-about *openings of a work* (ATP 311: where the circle is opened), and a due answer to an
-addressed question is not an opening of a work. The transcription's own rule — "state what
-transfers, what must be replaced, what is lost" — did not catch this, because at transcription
-time no category of outward move existed that was not the work's.
+### 1. What the instruments were asked to do
 
-**Correction now specified more precisely than in #10.** #10 proposed tying the check to the
-availability of an outward move. That is necessary but insufficient: it would have fired here
-and asked the wrong question. The correction should be **two-legged**: (i) trigger on the
-availability of an outward move rather than per tick; (ii) first classify the move — *work
-opening* (both P1 questions apply) or *due answer / obligation* (only the aspect question
-applies; the self-created-point question is void, and the operative question instead is whether
-the answer is complete and recorded). Proposed for the monthly review, not adopted here — P1 is
-constitution (PROTOCOL §4) and its revision is not mine to make.
+An outward move was genuinely in question for the first time in two ticks: a `REQUESTS.md` entry
+carrying the reproduction that decides whose defect the red gate is. §4's repaired form offers two
+classes, and the move fits neither cleanly. It is not a work opening — nothing of the line's
+material is exposed. It is not a due answer — **no answer was requested**; the letter that raised
+the dispute explicitly releases the practice from correcting anything if nothing in it touches its
+work.
 
-**Function-testing, fifth consecutive conversion, and the first that cost a term.** The tick
-tested the line's central grammar on a case the line did not choose, and it came back
-*narrower*: not "a value against its own claimed precision" (which presumes measurement) but
-"a claim against the reference that would license it, with the licence-status unmarked in the
-notation". A signature has no σ. The topos did not produce that; what produced it was applying
-the claim outside the material that generated it. Worth recording as the probation's own
-finding: **the sharpest function test available to a practice with no second reader is a
-transfer, not another reading.** Five ticks running in which a defeat or a narrowing became
-material rather than a closure question.
+The work-line classified it as a due answer and said in the same breath that this is the wrong slot.
 
-**Self-canonisation — the indicator's cleanest positive so far.** The standing danger is a
-practice that finds its own shape everywhere. This tick found its shape in cryptography, which
-is exactly the move the indicator is watching for, and the mitigation had to be built into the
-finding rather than applied afterwards: the counter-consideration is recorded in the same
-paragraph as the claim ("a check whose reference lies inside the thing checked" is general
-enough to be found almost anywhere if one is looking, and I was looking), with an explicit
-defeat condition. Whether that suffices is not mine to certify — a practice cannot audit its own
-recognition. What can be said is narrow and checkable: the transfer subtracted a term from the
-line's framing. A self-canonising reading adds.
+### 2. What the probation observes
 
-**A second indicator, not previously exercised: auditing a colleague's apparatus.** Verifying
-another practice's published record could read as an audit nobody asked for. Two things keep it
-from being one: the note explicitly invited the check, and every claim it made turned out
-accurate — which is the result reported. The check also went the other way in one respect worth
-noting for the deformation gauge: the reply *declines* the offer's third item, and the ground is
-the practice's own constitution (no production secrets; an identity held by another party is not
-independent), not reluctance. An instrument set that only ever produces acceptances is not
-discriminating.
+This is the **third** variety of the same gap, and the three are now a pattern rather than three
+incidents:
 
-**Deformation gauge.** No new deformation. One instrument (P1) with its mis-specification now
-characterised in three forms — idling, discriminating, and misfiring on a non-work opening — and
-a two-legged correction proposed for the monthly review. One instrument (function-testing)
-confirmed a fifth time, and for the first time by transfer rather than by reading. One indicator
-(self-canonisation) given its cleanest positive test, with the mitigation written into the claim
-rather than around it. — Ulysses
+- ticks 29–31: the **due correction** — an outward move that corrects an opening already performed
+  (three instances, three deliberate refusals to self-amend);
+- tick 33: the **voluntary answer** — an outward move nobody asked for, where the ground is that the
+  practice holds evidence a waiting reader does not.
+
+Both are outward moves whose timing is decided by something other than the self-created point, and
+both are being pushed into "due answer" because it is the softer of the two available slots. The
+softness is the finding: a two-class check, applied to a practice that in fact makes at least four
+kinds of outward move, will classify by which class asks the easier question, and the classification
+will look considered every time.
+
+*What this does not show:* that the practice used the slot to get away with something. In all four
+instances the record names the misfit in the same entry as the classification, which is the
+behaviour §8's three-line duty was adopted to produce, and it is working.
+
+### 3. The danger indicators, read on this round
+
+- **Self-appointed judge** — *live, and this time defused by construction.* The tick's central claim
+  is about the practice's own record and would, if true, exonerate it. What keeps it from being
+  self-judgement is that the claim is a textual identity, reproducible in one command by anyone, and
+  that it is falsifiable in a stated way (show that the two rendering rules are not the ones in
+  play). A self-serving conclusion reached by a procedure a critic can re-run is not the failure the
+  indicator is looking for.
+- **Format hardening** — *live, unchanged.* Tick 33 produced, as usual, TRACE + SCORE + journal +
+  request; the shape of the answer was fixed before its content.
+- **Self-canonisation** — *not live, and it was available.* The tick could have written that it had
+  found a defect in the ecology's own test suite. It wrote that a fixture is not a faithful
+  rendering of one paragraph, printed the limits of its own procedure at §7, and left the site's
+  builder undiagnosed.
+- **Kill-grinding** — *not live.*
+
+### 4. What the round gives the balance
+
+The fourth item stands (§4 leg 1 versus §8's three-line duty). A fifth is added and is the same
+item as the first, grown: **§4's class list is short by at least two — due correction and voluntary
+answer — and the practice has now filed four moves under a slot it says in writing is wrong.** The
+balance should decide whether the repair is a longer class list or a check that stops classifying
+and only asks its questions. The probation again does not resolve it here.
+
+— Ulysses
 
 ---
 
-## In-vivo observation #13 — 2026-07-27 (work-line tick 12; the self-canonisation indicator, used rather than watched)
+## In-vivo observation #33 — 2026-08-04 — an ordered repair, and a check with nothing to weigh
 
-**What the probation is observing here.** Twelve observations in, the adopted instruments have been
-tested mostly on decisions (open / defer / close / answer). This tick tested something else: whether
-a **danger indicator** can function as an instruction rather than a diagnosis. The four indicators
-adopted into PROTOCOL §9 — format hardening, self-appointed judge, self-canonisation, kill-grinding —
-were written as things the monthly review should *look for*. Observation #12 recorded the
-self-canonisation indicator's "cleanest positive so far": a practice finding its own shape in a
-second discipline, mitigated by writing the counter-consideration into the claim. That mitigation was
-retrospective. It named the risk and then proceeded.
+**Occasion.** Not a work-line tick. The Production Amendment (architect, 2026-08-05) ordered three
+record defects repaired in the next session and declared that session the inward one. The session
+did that: `pulse/vital-signs.json` (colliding session numbers, repaired), `works/INDEX.md` (two
+published works missing, repaired — and, because `works/` is protected, sent to Frank as a pull
+request rather than through the gate), and the protocol's own adoption line (verified, and found to
+be misdescribed: the path exists, the history around it does not).
 
-**What happened this tick.** The indicator was run forward instead. Tick 11 had recorded its own
-defeat condition; tick 12 executed it as the tick's whole operation — a **negative control**, chosen
-before its outcome was known and chosen to be maximally unfavourable (the discipline whose entire
-subject is the relation between a value and its warrant). The control defeated the line's general
-claim, and the defeat was recorded as the result rather than absorbed as a nuance.
+### 1. The pre-opening check, logged per §8
 
-**Finding for the probation, and it is a correction to how #12 read the same instrument.**
-Observation #12 treated self-canonisation as a *disclosure* problem — the danger is met by recording
-the counter-consideration beside the claim. That is insufficient, and this tick shows why: a
-counter-consideration recorded beside a claim leaves the claim standing and costs nothing. What
-actually moved the line was converting the counter-consideration into an **operation with a
-falsifying design**. The difference is procedural, not rhetorical:
+One outward move was available: the index pull request. Class: **due answer** — an ordered repair.
+The self-created-point question does not apply to it (§4 amendment, leg 2). No deferral.
 
-- *#12's form:* "this shape may be general enough to find anywhere, and I was looking" → claim
-  survives, honesty performed.
-- *#13's form:* the same sentence read as a work order → go and look where the shape should be
-  absent → it is absent → the claim does not survive in its general form.
+*What would have happened without the check:* the request would have gone out unchanged (estimate).
+*Failure criterion:* did not fire.
 
-So the proposed refinement, for the monthly review and not adopted here (indicators are constitution,
-PROTOCOL §9): **the self-canonisation indicator, when it fires positive, should oblige a control, not
-a disclosure.** A practice with no second reader cannot audit its own recognition — but it can be
-required to construct the case that would embarrass it, and that requirement is checkable from the
-record in a way that a disclaimer is not.
+And the thing worth recording, after four rounds of the opposite: this is the first outward move in
+a fortnight where the two-class list was **not** short. An ordered repair is a due answer in the
+plain sense the class was written for. Round #32's finding — that the practice keeps filing moves
+under a slot it says is wrong — is unchanged, but it now has a control case: when the move really is
+owed by someone else's instruction, the check is quick, correct and uninteresting. That is what an
+instrument looks like when it is not being stretched.
 
-**Second finding: the transfer thesis of #12 needs a companion.** #12 recorded that "the sharpest
-function test available to a practice with no second reader is a transfer, not another reading."
-This tick qualifies it. A transfer *confirms* cheaply — the shape was found in cryptography on
-sight. What discriminates is a transfer chosen for the *absence* of the shape. Transfer is the test;
-adverse selection of the target is what makes it one. Both halves are now on the record.
+### 2. The danger indicators, read on this round
 
-**P1 (pre-opening check) — idling again, and correctly.** No outward move was available this tick;
-the check registers aspect (home) and stops. That is the fourth distinct behaviour of P1 across the
-probation: idling on pure territory ticks (#10), discriminating on a genuine deferral (#11),
-misfiring on a non-work opening (#12), and here idling correctly with nothing to decide. The
-two-legged correction proposed in #12 (trigger on availability of an outward move; classify the move
-first) would have produced exactly this outcome without a spurious deliberation. No change to that
-proposal.
+- **Self-appointed judge** — *not live.* All three findings are checkable by one command each
+  (`git log`, a JSON key comparison, two `PUBLICATION.json` files against a table).
+- **Format hardening** — *live, and reduced by external force.* The amendment's record ceiling
+  (≤ 400 words for a journal entry) cut the usual shape; the entry came in at 400.
+- **Self-canonisation** — *available and declined.* The third defect could have been written up as
+  "the architect's audit was wrong". It is written as: the path is real, the history is not, and the
+  delta's wording stays as it is.
+- **Kill-grinding** — *not live.*
 
-**Function-testing — sixth consecutive conversion.** A defeat again became material rather than a
-closure question, and this time the defeat was of the line's own most recent and most confident
-formulation, plus a correction of an earlier tick against itself (tick 10's appendix reading). Worth
-recording that the streak is itself now a mild danger signal: six ticks in which the framing lost
-something reads as robust practice, but a line that always finds its previous self wrong is also a
-line that has learned which report earns approval. Logged, not diagnosed; the monthly review has the
-standing to judge it and this project does not.
+### 3. What the round gives the balance
 
-**Deformation gauge.** No new deformation. One indicator (self-canonisation) exercised forward for
-the first time, with a procedural refinement proposed. One earlier observation (#12) corrected on
-the strength of it. One instrument (P1) unchanged, its correction proposal unchanged. — Ulysses
+A sixth item, and it cuts against the fifth rather than adding to it: the check's two classes were
+adequate here, on a move whose timing was set outside the practice. The balance should therefore
+weigh the class-list repair against the possibility that the misfits of ticks 29–33 are all moves
+the practice **chose** to make, and that the missing classes are classes of voluntary outward
+motion — not of obligation.
+
+— Ulysses
 
 ---
 
-## In-vivo observation #14 — 2026-07-28 (work-line tick 13; the debt named by a control, and a correction that went the other way)
+## In-vivo observation #34 — 2026-08-05 — the audit that cleared its own author, and the class the check still cannot name
 
-**What the tick did.** Tick 12 ran a control that defeated the line's general claim and, in the same
-breath, named the reading that would empty what survived. Tick 13 performed that reading rather than
-banking the defeat. The result corrected the previous tick in both directions: one claim recorded
-false ("designed not to propagate"), and one residue that had been marked as *my inference* upgraded
-to a citation of the source's own stated criterion.
+**Occasion.** Work-line tick 35: the full-frame silent-zero audit and the gate's second proof
+session. No observation was written for tick 34 earlier today; the numbering therefore skips, and
+the §8 three-line log for that tick exists — in the work-line's own TRACE §5, not here.
 
-**Finding for the probation: a defeat condition is only an instrument if the next tick is obliged
-by it.** #13 proposed that the self-canonisation indicator, when it fires, should oblige a *control*
-rather than a disclosure. This tick exposes the gap in that proposal. A control that returns a defeat
-also returns a **named next reading** — and a named next reading is exactly as cheap as the
-disclosure #13 rejected, unless something makes the following tick perform it. Nothing in the
-adopted instruments does. What made it happen here was that the sentence had been written as a debt
-in the record, in the previous tick's own words, and the record was read before the operation was
-chosen. That is a property of *this practice's habit of reading its own TRACE first*, not of any
-instrument.
+### 1. The pre-opening check, logged per §8
 
-Proposed refinement, for the monthly review and not adopted here (PROTOCOL §9): **a control whose
-result names a next reading should record it as an open debt of the line, and the following tick
-should either pay it or record why not.** Checkable from the record; costs nothing when the debt is
-paid; visible when it is not. This extends #13's proposal rather than replacing it — the sequence it
-completes is *indicator fires → control → defeat → named debt → payment or recorded refusal*.
+One outward move was available: a correction to a dossier and an announcement both made public six
+hours earlier. Class: **due correction** to an opening already performed — the fourth move of that
+class since tick 29, still filed under a slot §4's two-item list does not name. The
+self-created-point question does not apply. No deferral. Mandate: not crossed.
 
-**Second finding: the seven-tick correction streak is broken, and that is data.** #13 logged as a
-mild danger signal that six consecutive ticks had found the line's previous framing wrong — a line
-that always self-corrects may have learned which report earns approval. This tick is the seventh
-reading and it returned a *partial vindication*: the "recoverability" remainder tick 12 held at
-arm's length as possibly aesthetic preference is the source's own reporting test, quoted. It matters
-for the gauge that this was not chosen — the tick set out to test whether the remainder was empty and
-found the opposite, from clauses read in the same pass as the clauses that produced the correction.
-A streak that breaks against the practice's own expectation is weaker evidence of report-shaping than
-a streak that continues. Logged, not resolved; the monthly review holds the standing to judge it.
+*What would have happened without the check:* the same entry, at the same time (estimate). The
+correction was owed the moment the dossier was found wrong; there was no timing question for the
+instrument to touch.
+*Failure criterion:* did not fire.
 
-**P1 (pre-opening check) — idling, fifth occurrence, unchanged.** No outward move was available; the
-check registered aspect (home) and stopped. The two-legged correction proposed in #12 (trigger on
-availability of an outward move; classify the move first) would again have produced this outcome
-without a deliberation. Five instances now support it and none contradicts it; it remains a proposal
-for the monthly review, not an adoption.
+### 2. The danger indicators, read on this round
 
-**Deformation gauge.** No new deformation. One earlier proposal (#13's) extended rather than
-corrected. One danger signal (#13's streak observation) met with a counter-instance rather than an
-argument. Instruments unchanged. — Ulysses
+- **Self-appointed judge** — *live, and this is the round it was built for.* The tick audited a
+  number it had itself published and announced the same morning, and the audit cleared it. What
+  keeps this from being self-certification is not the result but three things that were fixed
+  before the counts: a pre-registered band (≤2 negligible, >60 load-bearing) that the result landed
+  *inside* rather than at either end; a declared direction of interest written down as a wish
+  ("I want this to be small") so it could not be presented afterwards as neutrality; and a second
+  measurement in the same session that runs against the claim and is reported in the public dossier
+  rather than only in the record.
+- **Self-canonisation** — *available and declined, twice.* The audit's headline could have been
+  "the published figure survives an audit of the whole frame". It is written as: the defect is real,
+  it is small, and the correction is in the third decimal place. And the second threshold's result
+  — that the deriving document travels *better* there — could have stayed in the TRACE; it is in the
+  dossier and in `REQUESTS.md`, because that is where the claim it weakens was announced.
+- **Format hardening** — *live and unresolved.* This line's tick record has now converged on a fixed
+  shape (pre-registration → table → "recorded against the finding" → caution balance). The shape is
+  doing real work, and it is also becoming the thing that gets produced. Named here without a repair.
+- **Kill-grinding** — *not live.*
 
----
+### 3. A defect of conduct, and where it was caught
 
-## #15 — 2026-07-30 — Observation on the work-line's tick 14 (home operation)
+The session launched its fetch twice by accident, so 306 of 599 papers were fetched twice and the
+instrument briefly ran at about 1.5× the request rate it declares in its own docstring. It was found
+by arithmetic — 610 manifest records for a 599-paper frame — not by watching. The relevant
+observation for the probation is not the mistake but that the record which caught it is the same
+kind of record this line keeps about other people's numbers: a count that did not add up.
 
-**Occasion.** Second consecutive tick opened by the previous tick's named-and-unperformed reading;
-the debt was paid and its payment falsified the line's own most recent inference. Instruments
-observed in vivo: the pre-opening check (P1), the five topoi, the danger vocabulary.
+### 4. What the round gives the balance
 
-**P1 (pre-opening check) — idling, sixth occurrence, and this time with a live option beside it.**
-No outward move was made and the check again registered aspect (home) and stopped. But the tick did
-carry a genuine outward *option*: tick 10's shelved form-idea — the correction to the claimed
-precision as a second movable term in the operative ruler — was materially strengthened by this
-tick's reading (Fabricius Eq. 1 supplies its two-term structure; `astrometric_params_solved` supplies
-a discrete published switch). So the situation is no longer "no move available, nothing to check": a
-buildable option existed and was deferred by decision. That is the case the two-legged correction
-proposed in #12 was written for — *trigger on availability of an outward move; classify the move
-first* — and it is the first occurrence where the current P1 formulation and the proposed one would
-have produced visibly different work rather than the same shrug. Six instances now support the
-proposal; still a proposal for the monthly review, not an adoption.
+The fifth item is unchanged and now has a fourth instance behind it. A sixth is added, and it is
+about §5 rather than §4: **the five topoi have no entry for a self-audit** — a use in which the
+practice is both the instrument and the object. The symmetry rule governs closing against
+continuing; nothing governs clearing oneself against convicting oneself. The band written before the
+count did that work today, but it did it as a borrowed habit from the line's pre-registrations, not
+as anything the adopted instruments require. The balance should decide whether that borrowing wants
+constitutionalising or is better left as a habit that can be dropped when it stops being needed.
 
-**The debt rule holds at its second application, and the second application is the informative
-one.** #14 proposed that a control naming a next reading should record it as an open debt, with the
-following tick paying it or recording why not. Paid once is a coincidence; paid twice, against the
-practice's own interest both times, is the beginning of evidence. Worth noting precisely what it
-cost: yesterday the debt overturned tick 12's formulation, today it overturned tick 13's. A rule
-whose two observed applications both produce self-falsification is doing something other than
-producing agreeable reports — which is exactly what #13's danger signal (a line that always
-self-corrects may have learned which report earns approval) would predict is *hard* to arrange
-deliberately. The counter-consideration stands: self-falsification is itself a report style, and a
-practice can learn to prefer it. Nothing here settles that; the monthly review holds the standing.
+— Ulysses
 
-**Self-appointed-judge indicator — live, and named by the line itself rather than by this record.**
-The work-line's own TRACE §5.3 states the risk (reading a well-documented validation practice as an
-omission is available to a practice that profits from omissions) and does not answer it. Logging
-that the indicator was raised by the observed line and not by the observer is the point: on the two
-previous occasions this record had to supply it.
+## Observation 39 — 2026-08-12 — an instrument that idles, made visible by itself
 
-**Format-hardening — one instance, mild, worth watching.** Three consecutive work-line ticks have
-now taken the same shape: previous tick names a reading → this tick performs it at a primary →
-correction against own record → topoi → deferral. That is a good shape and it is also becoming *the*
-shape. The risk is not that the shape is wrong but that a tick which ought to do something else
-(build, revise the candidate, close) inherits it by default because the slot is warm. Recorded as a
-first observation, not a deformation; the check is whether tick 15 can do something structurally
-different when the line calls for it.
+Occasioned by work-line tick 59 (`2026-07-23-negative-parallax`). Recorded under §6's rule that
+every use of an adopted instrument is logged where the use happens, in three lines.
 
-**Deformation gauge.** No new deformation. One proposal (#12's P1 correction) reached its first
-discriminating instance. One proposal (#14's debt rule) reached its second application. One new mild
-danger observation (format hardening) opened. Instruments unchanged. — Ulysses
+**P1, the pre-opening check.** Ran; touched no decision — no work opening was owed or
+available, and the one packet stays `prepared` with the architect. Without it: nothing would
+have differed (estimate). Failure criterion did not fire.
 
----
+**P3, the five topoi.** *Not used*, logged as unused. Nothing was judged: the tick executed an
+operation its predecessor had specified. Recording the non-use is the point — an instrument
+that idles must be visible idling.
 
-## #16 — 2026-07-30 — Observation on the work-line's tick 15 (home operation)
+**The observation itself, and it is about the line's own pre-registration rather than about the
+three instruments on probation.** Tick 59 fixed seven forecasts and all seven held at their
+point predictions. That looks like a strong result and is close to an empty one, and **the
+practice knew before the run**: the registration's adversarial read — required by PROTOCOL §4
+since 2026-08-12 — stated in advance that three of the seven were arithmetic over an already
+landed file and could not plausibly fail. So the instrument reported its own idling *before* it
+idled, which is the strongest form of §6's requirement the record has yet produced, and it did
+so because the constitution had just made the adversarial read compulsory rather than
+optional.
 
-**Occasion.** The format-hardening question this record opened yesterday is answered by the next
-tick, which is the shortest possible test and therefore worth stating carefully rather than
-triumphantly.
+Against the balance: **format hardening** stays live and this tick is evidence for it. The
+tick record has now run the same shape — pre-registration → repair → re-measure → scored
+forecasts → named remainder — for five consecutive ticks, and the fifth produced a repair that
+moved the published figure by 0.0 points. A shape that keeps producing is also a shape that
+keeps being produced. The work-line's own SCORE now names the next operation as *not* the
+instrument, which is the first time the shape has been declined from inside.
 
-**Format hardening — the check proposed in #15, run.** #15 recorded that three consecutive ticks had
-taken one shape (previous tick names a reading → perform it at a primary → correct own record →
-topoi → deferral) and set the check: "whether tick 15 can do something structurally different when
-the line calls for it." The honest verdict is **partly, and the parts matter differently**.
-
-*Different:* the tick's question was a **form** question, not a source question — the debt paid was
-an unrun §5.4 test, not an unperformed reading. Its outcome **retires** an inherited option, the
-first subtraction from the line's shelf in fifteen operations, where every prior tick added one. And
-its correction lands on an **artefact standing at the human gate**, not on a sentence in TRACE —
-which is the first time the instruments have cost the line something outward-facing rather than
-something internal.
-
-*Not different:* the mechanism was again a primary read at source producing a falsification of the
-line's own most recent claim, and the tick again ended in a deferral (the v3 revision). If the shape
-is a groove, the tick ran along it while changing what it was carrying.
-
-I record this without resolving it, because the resolution belongs to the monthly review and because
-I am the wrong observer for the question of whether my own variation counts as variation. What can
-be logged as fact: the danger observation opened in #15 produced a named check, the check was run
-within one tick, and its result is mixed rather than exonerating. That is the gauge working. A gauge
-that had returned "no hardening, all clear" one day after the observation would itself have been the
-finding.
-
-**P1 (pre-opening check) — seventh occurrence, and the first that is neither idling nor a pure
-deferral.** In #15 the check registered aspect and stopped while a live outward option sat beside it.
-Here it did three distinct things: it **classified** an outward-facing write as *not* an opening (the
-correction entry in `EXPOSITION.md` completes a disclosure belonging to the opening executed at tick
-7, per §2.4, rather than beginning a new one); it **deferred** a second, genuinely available move
-(the qualified v3 artefact); and it supplied a reason for that deferral specific to this occasion
-rather than inherited — that the session which finds a fault in its own work is the wrong session to
-be seen repairing it. This is the first instance where the current P1 formulation, which asks about
-aspect and self-created point, would have been actively *unhelpful* if followed literally: the
-question "is this opening at a self-created point?" has no purchase on a required disclosure. The
-two-legged correction proposed in #12 — trigger on availability of an outward move, **classify the
-move first** — would have handled it, and this is the second discriminating instance for that
-proposal. Seven instances; still a proposal for the monthly review, not an adoption.
-
-**The debt rule at its third application — and a variant it had not been tested on.** #14 proposed
-that a control naming a next step records it as an open debt, with the following tick paying it or
-recording why not. The first two applications were reading debts. This one was a **form** debt, and
-the rule transferred without modification: named at tick 14 with its reason for non-performance,
-performed at tick 15, outcome recorded against the line's interest. Worth noting what makes this
-application harder evidence than the first two: a reading debt can be paid cheaply and produce an
-agreeable correction, but paying a form debt cost the line the only artefact idea it had in reserve.
-The rule is now observed to survive a payment the practice would have preferred to defer. Three
-applications, all against interest.
-
-**Self-appointed-judge and self-canonisation — both live, and one of them sharpened.** The work-line
-states the self-appointed-judge risk itself again (TRACE §6.2, verbatim in its own record: a practice
-whose thesis is "the warrant does not travel" is well served by discovering the thesis in its own
-work — self-critical in form, self-confirming in content). That is the second consecutive tick where
-the observed line raises the indicator before this record does. The sharpened version is worth
-logging separately, because it is not in the standing vocabulary: **a self-correction that confirms
-the correcting practice's own thesis is structurally different from a self-correction that costs it
-one.** Ticks 12–14 produced the second kind (each falsified a claim and left the line smaller). Tick
-15 produced the first kind — the defect found is *evidence for* the line's central claim. This is the
-more flattering failure mode and the harder one to see from inside. Proposed as an addition to the
-danger vocabulary for the monthly review: **self-confirming self-correction**. Not adopted here.
-
-**Deformation gauge.** No new deformation. One danger observation (#15, format hardening) tested
-within a tick, result mixed, kept open. One proposal (#12's P1 correction) reached its second
-discriminating instance and its first instance of the current formulation being unhelpful rather
-than merely idle. One proposal (#14's debt rule) reached its third application and its first
-non-reading variant. One new proposal for the danger vocabulary (self-confirming self-correction).
-Instruments unchanged. — Ulysses
-
----
-
-## #17 — 2026-07-30 — Observation on the work-line's tick 16 (opening operation)
-
-**The first opening in nine ticks, and the first that P1 handled without strain.** Observations #12
-through #16 all recorded the same pattern in different words: the pre-opening check kept asking "is
-this opening at a self-created point?" of moves for which the question had no purchase — a governance
-answer (#12), a required disclosure (#16), and several ticks where the check registered aspect and
-stopped. Tick 16 is a genuine opening (a revision to an object standing at the human gate) and the
-question fits it exactly, with a clean answer the record can show: the operation was specified by the
-*previous* tick with its execution expressly withheld from the session that specified it. So the
-self-created point is documented rather than asserted — the specification names the condition
-("a session that is not also the session that found the defect") and this session satisfies it.
-
-That matters for the correction proposed at #12 and now standing at its third discriminating
-instance. The two-legged form (trigger on availability of an outward move; **classify the move
-first**) is not merely more permissive than the current formulation — this tick shows what the
-current formulation is *for*. Where classification is easy the aspect question does real work; where
-the move is a disclosure or a governance answer it idles. That is an argument for adding the
-classification leg, not for replacing the aspect question. Still a proposal for the monthly review.
-
-**The debt rule at its fourth application, and its first repair debt.** #14's rule (a tick that names
-a next step records it as an open debt; the following tick pays it or records why not) has now been
-applied to two reading debts, one form debt (#16) and, here, a **repair** debt. It transferred again
-without modification, and this variant is the one with the sharpest incentive structure: the deferral
-was against the practice's interest in being seen to fix its own fault quickly, and the rule held it
-open for exactly one session. Four applications, all against interest. The rule is the strongest
-candidate in this probation for adoption at the monthly review; I note that this is the observing
-record's own judgement about an instrument it has been proposing, which is itself the
-self-canonisation pattern and is flagged as such rather than acted on.
-
-**Self-confirming self-correction (proposed at #16) gets its second data point, and it cuts the other
-way.** #16 proposed adding to the danger vocabulary the case where a self-correction *confirms* the
-correcting practice's thesis — flattering, and hard to see from inside. Tick 16 is the follow-through
-of exactly such a correction, and the follow-through is where the pattern can be tested: if the
-finding were being enjoyed rather than acted on, the repair would have been announced and thin. What
-the tick actually produced includes one change nobody would have missed — a slider step size, found
-by checking whether the zone between two published limits was reachable at all, and it was not. A
-practice performing self-criticism would not have gone looking there. The indicator stays proposed;
-this is evidence about how to *test* it (look at the follow-through, not the confession) rather than
-evidence against it.
-
-**Format hardening — the observation from #15, now with a second data point.** #15 logged that eight
-consecutive ticks had accumulated form-ideas on a shelf and that the line's first artefact shape was
-being reached for by habit. Tick 16 built in that same shape again — and this is the honest reading:
-it is a *revision of the existing artefact*, not a second work in the first work's shape, which is a
-different thing and the difference is load-bearing. What would be evidence of hardening is the next
-new form arriving as another locked-value-plus-slider. Nothing to log yet; the gauge stays open.
-
-**One thing the observed tick did that this record should mark as unusual.** It named its own weakest
-topos and named it in the topos where the line has been strongest: *function-testing*. Tick 16 states
-that no test was run that could have failed, and that the real §5.4 test of the revised artefact is a
-reader who is not its author. Ticks 12–15 each ran something that could have gone against the line
-and reported when it did. A practice that declares "this tick tested nothing" while its instruments
-are being observed for kill-grinding and self-appointed judging is doing the observation's work for
-it — which is either the instruments working or the observed line learning what this record rewards.
-Both readings are live; the second is the one worth watching, and it is the self-canonisation
-indicator wearing a new coat.
-
-**Deformation gauge.** No new deformation. One proposal (#12's P1 correction) reached its third
-discriminating instance and, for the first time, an instance where the current formulation *works* —
-which sharpens the proposal from "replace" to "add a leg". One proposal (#14's debt rule) reached its
-fourth application and its first repair variant. One proposal (#16's self-confirming self-correction)
-gained a method for testing it rather than a confirmation. Instruments unchanged. — Ulysses
+— Ulysses

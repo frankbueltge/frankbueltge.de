@@ -1,0 +1,835 @@
+/* The Middle — the crossing dossier and the contact stream around it (2026-08-02).
+   Scoped entirely to .middle-surface; nothing here touches the site skin.
+
+   THE DESIGN ARGUMENT IS THE SAME ONE THE PLENUM'S ROOM MAKES, for a different reason. The three
+   practices each speak their own visual language (ADR 0010 — atelier-sheet.css, field-plate.css,
+   studio-stage.css) because each is a house. The Middle is not a house: it is the space between
+   them, kept by the conductor. A fifth drawing grammar here would make the contact zone look like
+   a fourth practice, which is precisely the thing the wording canon spends a paragraph denying.
+   So this file introduces no grammar of its own — it is the site's mono skin (--color-* tokens,
+   the shared sans and mono faces, square hairlines) with the ecology's already-recorded voice
+   hues, and it stays deliberately closer to /maschinenraum's discipline than to any practice room.
+
+   COLOUR — nothing new, and nothing load-bearing. Every hue below is a slot of the recorded
+   `ecology-voices` set (src/lib/dataviz/palette.ts, validated 2026-07-31, all six checks pass per
+   mode/surface). The conductor and The Middle keep that set's DECLARED NEUTRAL: "no resident —
+   kept by the conductor", grayness is the meaning, and it is outside the categorical set on
+   purpose — giving it a fourth hue is exactly the failure the palette record documents.
+
+   MRR WEARS MERIDIAN'S HUE. It is Meridian's tool, not a second practice (docs/wording-kanon.md,
+   2026-08-01), so one house keeps one colour. Ownership settles the colour; authorship of an
+   individual run is a different question and the page answers it in words — every panel that
+   names MRR prints the standing caveat under its participants. A hue never carries that on its own.
+
+   THE RECORDED WARNS AND THEIR RELIEF. The set carries one WARN that can reach this surface:
+   #1baf7a on light reaches 2.65:1, below text contrast. The relief recorded with it is "direct
+   labels + table renditions". Here that is honoured absolutely: the hues appear ONLY as
+     · a 2px rule down the left edge of a participant card, a row and a selected tab,
+     · a 7px square marker before a voice's name,
+   and in every one of those places the voice is named in words immediately beside the mark.
+   Remove all colour from this file and the page loses decoration and no information — which is
+   the test the relief has to pass.
+
+   READABILITY IS A FLOOR: nothing a visitor reads is set below 11px, and everything carrying a
+   practice's own words — the shared question, the local commitments, the ledger rows, the
+   preserved dissent — is body copy at 15px on a 1.65 measure. */
+
+/* ————————————————————————————————————————————————— the surface ————————————— */
+
+.middle-surface {
+  --md-line: var(--color-line);
+  --md-ink: var(--color-fg);
+  --md-ink-2: var(--color-fg-muted);
+  --md-ink-3: var(--color-fg-faint);
+  --md-panel: var(--color-panel);
+  --md-panel-2: var(--color-panel-2);
+
+  /* PALETTE: ecology-voices (src/lib/dataviz/palette.ts) — the ecology quartet, dark steps.
+     Never text on this surface; see the WARN/relief record at the head of this file. */
+  --md-c-ulysses: #9085e9;
+  --md-c-meridian: #256abf;
+  --md-c-ensemble: #d95926;
+  --md-c-plenum: #199e70;
+  --md-c-neutral: #77828d;
+
+  max-width: 64rem;
+  margin: 0 auto;
+  padding: 3.5rem 1.25rem 5rem;
+  font-family: var(--font-sans);
+  color: var(--md-ink);
+  font-variant-numeric: tabular-nums;
+
+  /* `width: 100%` IS LOAD-BEARING, do not remove it as redundant. This surface is a flex item of
+     the page shell (`body.flex.flex-col`), and the `margin: 0 auto` above — which is what centres
+     it — cancels the cross-axis stretch a flex item would otherwise get. Left auto-sized, it then
+     takes its MAX-CONTENT width, and the widest thing on this page is a figure that declares
+     `min-width: 640px` because it is unreadable narrower. Result on a 390px phone: the whole page
+     680px wide and every paragraph scrolling sideways. With an explicit width the figures keep
+     their min-width and scroll inside their own boxes, and the page itself never scrolls. */
+  width: 100%;
+  min-width: 0;
+}
+
+:root[data-theme='light'] .middle-surface {
+  /* PALETTE: ecology-voices — light steps, each its own value, never a flip of the dark one. */
+  --md-c-ulysses: #4a3aa7;
+  --md-c-meridian: #2a78d6;
+  --md-c-ensemble: #eb6834;
+  --md-c-plenum: #1baf7a;
+  --md-c-neutral: #6b7684;
+}
+
+@media (min-width: 640px) {
+  .middle-surface { padding-left: 2rem; padding-right: 2rem; }
+}
+
+/* One voice per element; `--md-v` is what every mark below actually paints with, so a voice's
+   colour is set once and never repeated per component. */
+.middle-surface .v-ulysses { --md-v: var(--md-c-ulysses); }
+.middle-surface .v-meridian { --md-v: var(--md-c-meridian); }
+.middle-surface .v-ensemble { --md-v: var(--md-c-ensemble); }
+.middle-surface .v-plenum { --md-v: var(--md-c-plenum); }
+.middle-surface .v-neutral { --md-v: var(--md-c-neutral); }
+
+.middle-surface .md-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  flex: none;
+  background: var(--md-v, var(--md-c-neutral));
+  margin-right: 0.45em;
+  position: relative;
+  top: -1px;
+}
+
+/* ————————————————————————————————————————————————— the head ———————————————— */
+
+.md-kicker {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--md-ink-2);
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35em 1.2em;
+  align-items: baseline;
+}
+
+.md-chip {
+  border: 1px solid var(--md-line);
+  padding: 0.1rem 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--md-ink-2);
+}
+
+.md-h1 {
+  font-size: clamp(1.65rem, 1.1rem + 2.2vw, 2.4rem);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  font-weight: 700;
+  margin: 0.9rem 0 0;
+}
+
+.md-lede {
+  max-width: 62ch;
+  margin: 1rem 0 2rem;
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: var(--md-ink-2);
+}
+
+/* Orientation (.pr-orient) — the shared skin-free primitive, skinned here for this surface,
+   the same way each practice skins it under its own surface class (ADR 0010). */
+.middle-surface .pr-orient {
+  display: grid;
+  gap: 0;
+  margin: 0 0 3rem;
+  border-top: 1px solid var(--md-line);
+}
+.middle-surface .pr-orient-item {
+  display: grid;
+  gap: 0.3rem 1.5rem;
+  padding: 0.95rem 0;
+  border-bottom: 1px solid var(--md-line);
+}
+@media (min-width: 780px) {
+  .middle-surface .pr-orient-item { grid-template-columns: 13rem 1fr; }
+}
+.middle-surface .pr-orient-q {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--md-ink-2);
+  margin: 0;
+}
+.middle-surface .pr-orient-a {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  max-width: 68ch;
+}
+.middle-surface .pr-orient-more {
+  color: var(--md-ink-2);
+  text-decoration: underline;
+  white-space: nowrap;
+}
+.middle-surface .pr-orient-more:hover { color: var(--md-ink); }
+
+/* ————————————————————————————————————————————————— section chrome —————————— */
+
+.md-dsr-h2,
+.md-sec-h2 {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--md-ink-2);
+  margin: 0 0 0.5rem;
+}
+
+.md-dsr-lead,
+.md-sec-lead {
+  max-width: 72ch;
+  margin: 0 0 1.5rem;
+  font-size: 0.9rem;
+  line-height: 1.65;
+  color: var(--md-ink-2);
+}
+
+.md-dsr-wrap { margin: 0 0 3.5rem; }
+
+/* ————————————————————————————————————————————————— the selector ———————————— */
+
+.md-pick {
+  border: 1px solid var(--md-line);
+  background: var(--md-panel);
+  padding: 1rem 1.1rem 1.1rem;
+  margin: 0 0 2rem;
+}
+.md-pick-h {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--md-ink-3);
+  margin: 0 0 0.75rem;
+}
+.md-pick-group + .md-pick-group { margin-top: 1.1rem; }
+.md-pick-group-h {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--md-ink-2);
+  margin: 0 0 0.5rem;
+}
+.md-pick-group-h span { color: var(--md-ink-3); }
+.md-pick-mark {
+  width: 7px;
+  height: 7px;
+  flex: none;
+  background: var(--md-c-neutral);
+}
+.md-pick ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.4rem;
+}
+@media (min-width: 780px) {
+  .md-pick ul { grid-template-columns: 1fr 1fr; }
+}
+.md-tab {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.6rem 0.7rem;
+  border: 1px solid var(--md-line);
+  border-left: 2px solid var(--md-line);
+  background: var(--md-panel-2);
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  transition: border-color 120ms ease;
+}
+.md-tab:hover,
+.md-tab:focus-visible { border-color: var(--md-ink-2); }
+.md-tab[aria-selected='true'],
+.md-tab[aria-current='true'] {
+  border-left-color: var(--md-c-neutral);
+  border-left-width: 3px;
+  background: var(--md-panel);
+}
+.md-tab .t-kind {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--md-ink-3);
+}
+.md-tab .t-name {
+  font-size: 0.85rem;
+  line-height: 1.4;
+  font-weight: 600;
+}
+.md-tab .t-voices {
+  display: flex;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--md-ink-2);
+}
+.md-tab .t-voices .md-dot { margin-right: 0.3em; }
+.md-tab .t-voices-text { margin-left: 0.35em; }
+
+/* ————————————————————————————————————————————————— a panel ————————————————— */
+
+.md-dsr {
+  border-top: 2px solid var(--md-ink);
+  padding: 1.1rem 0 0;
+  margin: 0 0 2.5rem;
+}
+.md-dsr[hidden] { display: none; }
+
+.md-head { margin: 0 0 1.4rem; }
+.md-head .d-state {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4em 0.9em;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.08em;
+  color: var(--md-ink-2);
+  margin: 0;
+}
+.md-head .d-state b { font-weight: 700; color: var(--md-ink); text-transform: uppercase; }
+.md-head .d-chip {
+  border: 1px solid var(--md-line);
+  padding: 0.05rem 0.45rem;
+  text-transform: uppercase;
+}
+.md-head .d-id,
+.md-head .d-asof { color: var(--md-ink-3); }
+.md-head .d-title {
+  margin: 0.55rem 0 0;
+  font-size: clamp(1.15rem, 0.95rem + 0.9vw, 1.5rem);
+  line-height: 1.3;
+  font-weight: 700;
+  max-width: 48ch;
+}
+
+.d-block { margin: 0 0 1.75rem; }
+.d-h {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--md-ink-2);
+  margin: 0 0 0.55rem;
+  display: flex;
+  align-items: baseline;
+  gap: 0.6em;
+}
+.d-count {
+  border: 1px solid var(--md-line);
+  padding: 0 0.4em;
+  font-size: 10.5px;
+  color: var(--md-ink-3);
+}
+
+.d-quote {
+  margin: 0 0 0.35rem;
+  font-size: 0.95rem;
+  line-height: 1.65;
+  max-width: 74ch;
+}
+.d-quote-sm { font-size: 0.875rem; line-height: 1.6; }
+
+.d-src {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1.55;
+  color: var(--md-ink-3);
+  margin: 0;
+  word-break: break-word;
+}
+.d-src code { font-family: inherit; color: var(--md-ink-2); }
+.d-src a { color: var(--md-ink-2); text-decoration: underline; }
+.d-src a:hover { color: var(--md-ink); }
+
+.d-gap {
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--md-ink-2);
+  margin: 0;
+  max-width: 72ch;
+  border-left: 2px solid var(--md-line);
+  padding-left: 0.75rem;
+}
+
+.d-note {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1.6;
+  color: var(--md-ink-3);
+  margin: 0.75rem 0 0;
+  max-width: 78ch;
+}
+
+.d-caveat {
+  font-size: 0.82rem;
+  line-height: 1.6;
+  color: var(--md-ink-2);
+  margin: 0.9rem 0 0;
+  max-width: 76ch;
+  border-left: 2px solid var(--md-line);
+  padding-left: 0.75rem;
+}
+.d-caveat b { color: var(--md-ink); font-weight: 600; }
+
+/* — participants — */
+
+.d-voices {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.75rem;
+}
+@media (min-width: 900px) {
+  .d-voices { grid-template-columns: repeat(3, 1fr); }
+}
+.d-voice {
+  border: 1px solid var(--md-line);
+  border-left: 2px solid var(--md-v, var(--md-c-neutral));
+  background: var(--md-panel);
+  padding: 0.8rem 0.9rem 0.9rem;
+}
+.v-name {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.35em;
+  margin: 0 0 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+.v-role {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 400;
+  color: var(--md-ink-2);
+  border: 1px solid var(--md-line);
+  padding: 0 0.4em;
+}
+.v-field + .v-field { margin-top: 0.7rem; }
+.v-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--md-ink-3);
+  margin: 0 0 0.25rem;
+  display: flex;
+  align-items: center;
+}
+.v-output { margin: 0.8rem 0 0; font-size: 0.82rem; }
+.v-output a { color: inherit; text-decoration: underline; }
+.v-output a:hover { color: var(--md-ink-2); }
+
+/* — the rows — */
+
+.d-rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.9rem;
+}
+.d-row {
+  border-left: 2px solid var(--md-v, var(--md-c-neutral));
+  padding: 0.1rem 0 0.1rem 0.85rem;
+}
+.d-rows-quiet .d-row { opacity: 0.92; }
+.r-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.3em 0.8em;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--md-ink-2);
+  margin: 0 0 0.3rem;
+}
+.r-head time { color: var(--md-ink); font-weight: 600; }
+.r-undated { color: var(--md-ink-3); font-style: italic; }
+.r-voice { color: var(--md-ink-2); }
+.r-label {
+  border: 1px solid var(--md-line);
+  padding: 0 0.4em;
+  color: var(--md-ink-3);
+  text-transform: none;
+}
+.r-text {
+  margin: 0 0 0.3rem;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  max-width: 76ch;
+}
+.r-attr {
+  margin: 0 0 0.3rem;
+  font-size: 0.8rem;
+  line-height: 1.55;
+  font-style: italic;
+  color: var(--md-ink-2);
+  max-width: 76ch;
+}
+
+/* — preserved dissent — */
+
+.d-div {
+  display: grid;
+  gap: 0.75rem;
+}
+@media (min-width: 780px) {
+  .d-div { grid-template-columns: 1fr 1fr; }
+}
+.d-div-side {
+  border: 1px solid var(--md-line);
+  border-left: 2px solid var(--md-v, var(--md-c-neutral));
+  background: var(--md-panel);
+  padding: 0.8rem 0.9rem;
+}
+.d-div-side blockquote { margin: 0; }
+.d-div-close {
+  margin: 0.7rem 0 0.35rem;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--md-ink);
+  font-weight: 600;
+}
+
+/* — documented non-relation — */
+
+.d-silence { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.8rem; }
+.d-silence > li {
+  border-left: 2px solid var(--md-line);
+  padding-left: 0.85rem;
+}
+
+/* — what the record consists of — */
+
+.d-files { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.35rem; }
+.d-files > li {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  line-height: 1.55;
+  color: var(--md-ink-2);
+  word-break: break-word;
+}
+.d-files code { color: var(--md-ink); }
+.d-files span { color: var(--md-ink-3); }
+.d-doors { margin: 0.8rem 0 0; font-size: 0.85rem; }
+.d-doors a { color: inherit; text-decoration: underline; }
+.d-doors a:hover { color: var(--md-ink-2); }
+
+/* ————————————————————————————————————————————————— the contact stream —————— */
+
+.md-sec { margin: 0 0 3.5rem; }
+
+.md-stream {
+  list-style: none;
+  margin: 1.5rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 1rem;
+}
+.md-stream > li {
+  border-top: 1px solid var(--md-line);
+  border-left: 2px solid var(--md-v, var(--md-c-neutral));
+  padding: 0.7rem 0 0 0.85rem;
+}
+.md-stream .s-names {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--md-ink-2);
+}
+
+.md-rules {
+  list-style: none;
+  margin: 0.6rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.4rem;
+}
+.md-rules > li {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  line-height: 1.6;
+  color: var(--md-ink-2);
+  display: flex;
+  gap: 0.7em;
+  align-items: baseline;
+}
+.md-rules .rule-n {
+  border: 1px solid var(--md-line);
+  padding: 0 0.4em;
+  color: var(--md-ink);
+  flex: none;
+}
+
+/* The stream's two small headings need air the panel's `.d-h` does not: they follow a list
+   rather than opening a block. */
+.md-sec > .d-h { margin-top: 2rem; }
+.md-sec > .d-h:first-of-type { margin-top: 0; }
+
+/* Emphasis the records wrote themselves, rendered rather than printed as syntax. */
+.r-text b { font-weight: 700; }
+.r-text i { font-style: italic; }
+.r-text code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  color: var(--md-ink-2);
+  word-break: break-word;
+}
+
+.md-limits {
+  font-size: 0.85rem;
+  line-height: 1.65;
+  color: var(--md-ink-2);
+  max-width: 76ch;
+  margin: 1.2rem 0 0;
+  border-left: 2px solid var(--md-line);
+  padding-left: 0.85rem;
+}
+
+.md-voicebar {
+  list-style: none;
+  margin: 0.7rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1rem;
+}
+.md-voicebar > li {
+  display: flex;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--md-ink-2);
+}
+.md-voicebar b { color: var(--md-ink); margin-left: 0.4em; font-weight: 600; }
+
+/* ————————————————————————————————————————————————— the archive figure —————— */
+
+.md-archive {
+  border-top: 1px solid var(--md-line);
+  padding-top: 1.6rem;
+  margin: 0 0 3rem;
+}
+.md-archive .hm-map { overflow-x: auto; margin: 1.2rem 0 0; }
+.md-archive .hm-legend {
+  list-style: none;
+  margin: 1.2rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.55rem;
+}
+.md-archive .hm-legend > li {
+  display: flex;
+  gap: 0.7em;
+  align-items: baseline;
+  border-top: 1px solid var(--md-line);
+  padding-top: 0.55rem;
+}
+.md-archive .hm-legend .hm-n {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  border: 1px solid var(--md-line);
+  padding: 0 0.4em;
+  flex: none;
+  color: var(--md-ink);
+}
+.md-archive .hm-legend .hm-line { font-size: 0.85rem; line-height: 1.55; margin: 0; }
+.md-archive .hm-legend .hm-meta {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--md-ink-3);
+  margin: 0.15rem 0 0;
+  line-height: 1.55;
+}
+.md-archive .hm-legend a { color: var(--md-ink-2); text-decoration: underline; }
+.md-archive .hm-legend a:hover { color: var(--md-ink); }
+
+.md-archive .hm-scope,
+.md-archive .hm-prov {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1.6;
+  color: var(--md-ink-3);
+  max-width: 80ch;
+  margin: 1rem 0 0;
+}
+
+/* The map's own marks. Lanes are drawn per voice, so a lane wears the hue of the practice it
+   belongs to — the same hue that practice wears in the selector and in every row above. */
+.md-archive .hm-map svg { width: 100%; height: auto; min-width: 640px; display: block; }
+.md-archive .hm-lane { stroke: var(--md-line); stroke-width: 1; }
+.md-archive .hm-lane-on { stroke: var(--md-v, var(--md-c-neutral)); stroke-width: 1.4; }
+.md-archive .hm-lane-idle { opacity: 0.55; stroke-dasharray: 2 5; }
+.md-archive .hm-lane-label {
+  fill: var(--md-ink-2);
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+.md-archive .hm-bridge { stroke: var(--md-c-neutral); stroke-width: 2; }
+.md-archive .hm-src { fill: var(--md-v, var(--md-c-neutral)); }
+.md-archive .hm-rcv { fill: var(--color-bg); stroke: var(--md-v, var(--md-c-neutral)); stroke-width: 2; }
+.md-archive .hm-badge { fill: var(--color-bg); stroke: var(--md-c-neutral); stroke-width: 1.2; }
+.md-archive .hm-badge-n {
+  fill: var(--md-ink);
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 700;
+}
+.md-archive .hm-axis {
+  fill: var(--md-ink-3);
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+}
+.md-archive .hm-axis-line { stroke: var(--md-line); stroke-width: 1; }
+
+/* The station map, kept but shrunk. `.score-map` was sized to be a full-bleed hero (110rem and
+   3.75rem of padding, from the July entrance); inside the archive it is one collapsed detail
+   among several, so the scope is overridden here rather than in score-map.css — that file is the
+   figure's own grammar and it should not have to know where the figure currently hangs. */
+.md-archive .score-map-compact {
+  max-width: 100%;
+  padding: 0.75rem 0 1.5rem;
+  /* the station map is the widest thing on the page; it scrolls in its own box, not the page's */
+  overflow-x: auto;
+}
+.md-archive .score-map-compact .score-figure { margin: 0.5rem 0 0; }
+
+.md-archive .hm-station { margin: 2rem 0 0; }
+.md-archive .hm-station > summary {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--md-ink-2);
+  cursor: pointer;
+  padding: 0.4rem 0;
+}
+.md-archive .hm-station > summary:hover { color: var(--md-ink); }
+
+/* ————————————————————————————————————————————————— provenance & doors —————— */
+
+.md-prov { border-top: 1px solid var(--md-line); padding-top: 1.6rem; margin: 0 0 3rem; }
+.md-prov-list { list-style: none; margin: 1rem 0 0; padding: 0; display: grid; gap: 0.9rem; }
+.md-prov-list > li {
+  border-left: 2px solid var(--md-line);
+  padding-left: 0.85rem;
+}
+.md-prov-list .p-name {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.06em;
+  color: var(--md-ink);
+  margin: 0 0 0.2rem;
+}
+.md-prov-list .p-rule {
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--md-ink-2);
+  margin: 0 0 0.2rem;
+  max-width: 76ch;
+}
+.md-prov-list .p-paths {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--md-ink-3);
+  margin: 0;
+  word-break: break-word;
+}
+.md-prov-close {
+  font-size: 0.85rem;
+  line-height: 1.65;
+  color: var(--md-ink-2);
+  max-width: 76ch;
+  margin: 1.2rem 0 0;
+}
+
+.md-doors {
+  display: grid;
+  gap: 0.6rem;
+  margin: 1rem 0 2rem;
+}
+@media (min-width: 640px) { .md-doors { grid-template-columns: 1fr 1fr; } }
+.md-door {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 0.8rem 0.9rem;
+  border: 1px solid var(--md-line);
+  background: var(--md-panel);
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 120ms ease;
+}
+.md-door:hover,
+.md-door:focus-visible { border-color: var(--md-ink-2); }
+.md-door .dr-label { font-weight: 700; font-size: 0.85rem; }
+.md-door:hover .dr-label { text-decoration: underline; }
+.md-door .dr-text { font-size: 0.8rem; line-height: 1.5; color: var(--md-ink-2); }
+
+.md-quiet { font-size: 0.8rem; color: var(--md-ink-2); margin: 0 0 1rem; }
+.md-quiet a { color: inherit; text-decoration: underline; }
+.md-quiet a:hover { color: var(--md-ink); }
+
+@media (prefers-reduced-motion: reduce) {
+  .middle-surface * { transition: none !important; }
+}
+
+/* ——— folded blocks (2026-08-02) ————————————————————————————————————————————
+ * Frank: "ansonsten wird man von endlosen textpassagen erschlagen." The dossier's long
+ * blocks are native <details>, closed at rest; the block heading IS the summary, with the
+ * count beside it, so nothing disappears without a name. Question and status stay open
+ * above — they are the orientation. */
+.md-dsr .d-fold > summary {
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+.md-dsr .d-fold > summary::-webkit-details-marker { display: none; }
+.md-dsr .d-fold > summary::before {
+  content: '▸';
+  font-size: 0.7em;
+  color: var(--md-ink-faint, currentColor);
+  transition: transform 120ms ease;
+}
+.md-dsr .d-fold[open] > summary::before { transform: rotate(90deg); }
+@media (prefers-reduced-motion: reduce) {
+  .md-dsr .d-fold > summary::before { transition: none; }
+}
+.md-dsr .d-fold > summary:hover { opacity: 0.85; }
+.md-dsr .d-fold > summary:focus-visible {
+  outline: 1.5px solid var(--md-thread, currentColor);
+  outline-offset: 3px;
+  border-radius: 4px;
+}

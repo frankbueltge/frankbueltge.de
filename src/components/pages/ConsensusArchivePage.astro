@@ -1,0 +1,210 @@
+---
+// The Consensus — archive view: one row per committed day since 2026-06-21.
+// Data: every src/data/consensus/<YYYY-MM-DD>.json (nightly, pipelines/consensus/).
+// Git is the archive; failures stay failures and uncommitted days render as gaps.
+import { chronicle } from '@/lib/consensus/archive'
+import { cleanTitle, echoPercent, spanLabel, hhmm } from '@/lib/consensus/format'
+
+const files = import.meta.glob('../../data/consensus/*.json', { eager: true })
+const days = chronicle(files as Record<string, unknown>)
+
+const measured = days.filter((d) => d.kind === 'measured')
+const failures = days.filter((d) => d.kind !== 'measured')
+const first = days[days.length - 1]?.date
+const firstLabel = first
+  ? new Date(first).toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' })
+  : ''
+
+const echoes = measured.map((d) => d.data!.echo_index).sort((a, b) => a - b)
+const median = echoes.length ? echoes[Math.floor(echoes.length / 2)] : 0
+const maxEcho = echoes.length ? echoes[echoes.length - 1] : 0
+
+// Sparkline geometry — oldest day left, echo index scaled to the period maximum.
+const chrono = [...days].reverse()
+const STEP = 7
+const H = 56
+const PAD = 6
+const W = chrono.length * STEP
+const yOf = (echo: number) => H - PAD - (maxEcho > 0 ? (echo / maxEcho) * (H - 2 * PAD) : 0)
+// Split the line at failed/missing days so a gap stays visible as a gap.
+const segments: string[] = []
+let seg: string[] = []
+for (const [i, d] of chrono.entries()) {
+  if (d.kind === 'measured') {
+    seg.push(`${i * STEP + STEP / 2},${yOf(d.data!.echo_index).toFixed(1)}`)
+  } else if (seg.length) {
+    segments.push(seg.join(' '))
+    seg = []
+  }
+}
+if (seg.length) segments.push(seg.join(' '))
+
+const SYN_LABEL: Record<string, string> = {
+  'wire/chain syndication': 'chain syndication',
+  'scattered placement': 'scattered placement',
+  mixed: 'mixed',
+}
+
+const dateLabel = (iso: string) =>
+  new Date(iso).toLocaleDateString('en-GB', { weekday: 'short', day: '2-digit', month: 'short' })
+---
+
+<article class="mx-auto max-w-3xl px-4 py-14">
+  <header class="mb-10">
+    <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+      <a href="/consensus" class="transition-colors hover:text-fg">The Consensus</a> · Archive
+    </p>
+    <h1 class="mt-2 text-[clamp(30px,6vw,56px)] font-bold tracking-[-0.03em]">
+      {measured.length} days, {measured.length} sentences
+    </h1>
+    <p class="mt-3 max-w-xl text-fg-muted">
+      Every day since {firstLabel}, the sentence the news chorus spoke in unison — the most-echoed
+      wording of the day, measured, not curated. Days the measurement failed are recorded as
+      failures, never bridged.
+    </p>
+    <p class="mt-4 font-mono text-xs text-fg-faint">
+      {days.length} calendar days · {measured.length} measured · {failures.length}
+      {failures.length === 1 ? ' failure/gap' : ' failures/gaps'} · median echo {echoPercent(median, 'en')}
+    </p>
+  </header>
+
+  <section class="mb-12" aria-label="Echo index over time">
+    <p class="mb-2 font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+      Echo index, daily — share of the scanned news stream that was verbatim copy
+    </p>
+    <div class="overflow-x-auto">
+      <svg
+        viewBox={`0 0 ${W} ${H}`}
+        width={W}
+        height={H}
+        role="img"
+        aria-label={`Daily echo index from ${first} onwards, scaled to the period maximum of ${echoPercent(maxEcho, 'en')}. Exact values are in the chronicle below.`}
+        class="text-fg"
+      >
+        {segments.map((points) => (
+          <polyline points={points} fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.85" />
+        ))}
+        {chrono.map((d, i) =>
+          d.kind === 'measured' ? (
+            <circle cx={i * STEP + STEP / 2} cy={yOf(d.data!.echo_index)} r="2" fill="currentColor">
+              <title>{d.date}: {echoPercent(d.data!.echo_index, 'en')}</title>
+            </circle>
+          ) : (
+            <line
+              x1={i * STEP + STEP / 2}
+              y1={H - PAD}
+              x2={i * STEP + STEP / 2}
+              y2={H - PAD - 6}
+              stroke="currentColor"
+              stroke-width="1"
+              opacity="0.35"
+            >
+              <title>{d.date}: {d.kind === 'failed' ? 'measurement failed' : 'no record committed'}</title>
+            </line>
+          )
+        )}
+      </svg>
+    </div>
+    <p class="mt-1 font-mono text-[11px] text-fg-faint">
+      Scaled to the period maximum ({echoPercent(maxEcho, 'en')}); short ticks mark failed or missing days.
+    </p>
+  </section>
+
+  <section aria-label="The chronicle, newest first">
+    <ol class="divide-y divide-line/70">
+      {days.map((d) => (
+        <li class="py-5">
+          <div class="flex flex-wrap items-baseline gap-x-4 gap-y-1">
+            <time datetime={d.date} class="font-mono text-xs text-fg-faint">{dateLabel(d.date)}</time>
+            {d.kind === 'measured' ? (
+              <span class="font-mono text-xs tabular-nums text-fg-muted">{echoPercent(d.data!.echo_index, 'en')} echo</span>
+            ) : (
+              <span class="font-mono text-xs uppercase tracking-wide text-fg-faint">
+                {d.kind === 'failed' ? 'measurement failed' : 'no record'}
+              </span>
+            )}
+            {d.kind === 'measured' && d.data!.headline?.syndication && SYN_LABEL[d.data!.headline.syndication.label] && (
+              <span class="rounded border border-line/70 px-1.5 font-mono text-[11px] text-fg-faint">
+                {SYN_LABEL[d.data!.headline.syndication.label]}
+              </span>
+            )}
+          </div>
+
+          {d.kind === 'measured' && d.data!.headline ? (
+            <>
+              <p class="mt-2 leading-snug">„{cleanTitle(d.data!.headline.sample_title)}"</p>
+              <p class="mt-1 font-mono text-xs text-fg-faint">
+                {d.data!.headline.first_domain && <>first {hhmm(d.data!.headline.first_seen)} UTC via {d.data!.headline.first_domain}</>}
+                {d.data!.headline.span_hours != null && <> · spread {spanLabel(d.data!.headline.span_hours, 'en')}</>}
+                {d.data!.headline.soft_echo_extra ? <> · +{d.data!.headline.soft_echo_extra} reworded</> : null}
+              </p>
+              <details class="mt-2">
+                <summary class="cursor-pointer font-mono text-xs text-fg-muted transition-colors hover:text-fg">
+                  {d.data!.headline.domain_count} outlets, word-for-word — the „independent" outlets
+                </summary>
+                {(() => {
+                  const ev = new Map((d.data!.headline!.articles ?? []).map((a) => [a.domain, a.url]))
+                  return (
+                    <>
+                      <ul class="mt-2 flex flex-wrap gap-1.5">
+                        {d.data!.headline!.mastheads.map((m) => (
+                          <li class="rounded border border-line/70 font-mono text-[11px] text-fg-muted">
+                            {ev.has(m) ? (
+                              <a
+                                href={ev.get(m)}
+                                target="_blank"
+                                rel="noopener nofollow"
+                                class="block px-2 py-0.5 underline decoration-line underline-offset-2 transition-colors hover:text-fg"
+                              >{m}</a>
+                            ) : (
+                              <span class="block px-2 py-0.5">{m}</span>
+                            )}
+                          </li>
+                        ))}
+                        {d.data!.headline!.domain_count > d.data!.headline!.mastheads.length && (
+                          <li class="px-2 py-0.5 font-mono text-[11px] text-fg-faint">
+                            + {d.data!.headline!.domain_count - d.data!.headline!.mastheads.length} more
+                          </li>
+                        )}
+                      </ul>
+                      <p class="mt-2 font-mono text-[11px] text-fg-faint">
+                        {ev.size > 0
+                          ? 'Each linked outlet opens the article that carried the sentence — the earliest GDELT saw on that domain.'
+                          : 'Domains only: per-outlet article links are part of the record from 2026-08-05 on; this day predates them and is never backfilled.'}
+                      </p>
+                    </>
+                  )
+                })()}
+              </details>
+            </>
+          ) : d.kind === 'measured' ? (
+            <p class="mt-2 text-sm text-fg-muted">
+              No echo cluster above threshold — {d.data!.stats.articles_scanned} articles scanned.
+            </p>
+          ) : d.kind === 'failed' ? (
+            <p class="mt-2 text-sm text-fg-muted">
+              Source unreachable — finding omitted. GDELT did not answer the nightly requests; 0 articles were
+              scanned. A failure of the measurement, not a quiet news day.
+            </p>
+          ) : (
+            <p class="mt-2 text-sm text-fg-muted">No measurement was committed for this day.</p>
+          )}
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <footer class="mt-12 border-t border-line pt-6">
+    <p class="font-mono text-xs text-fg-faint">
+      Every row is a committed file — <code>src/data/consensus/&lt;date&gt;.json</code>, written nightly by the
+      counter-measurement pipeline from GDELT DOC 2.0 and versioned in the repository. Git is the archive:
+      no row here can be edited without the edit itself becoming part of the record. Per-outlet article
+      links (the evidence that an outlet ran the sentence) are recorded from 2026-08-05 on; earlier days
+      hold domains only and are never backfilled.
+    </p>
+    <nav class="mt-3 flex gap-4">
+      <a href="/consensus" class="font-mono text-xs text-fg-faint transition-colors hover:text-fg">← Today's measurement</a>
+      <a href="/werke/consensus" class="font-mono text-xs text-fg-faint transition-colors hover:text-fg">Method sheet →</a>
+    </nav>
+  </footer>
+</article>

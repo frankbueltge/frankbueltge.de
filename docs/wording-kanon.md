@@ -1,6 +1,6 @@
 # Wording-Kanon — frankbueltge.de & Ökologie
 
-**Stand: 2026-07-24, spät.** Dieses Dokument ist die maßgebliche aktuelle Sprachregelung.
+**Stand: 2026-07-31.** Dieses Dokument ist die maßgebliche aktuelle Sprachregelung.
 Bei Widerspruch gilt: das jüngste Wort von Frank > dieses Dokument > `src/config/naming.ts`
 (Hub-Wortlaute) > alles andere. **Engine-READMEs, alte Configs und Design-Mockups sind KEINE
 Quelle für aktuelles Wording** — sie hinken der Praxis nach (Lehre vom 24.07.: „Error as
@@ -34,11 +34,19 @@ geholt). Wer Selbstbeschreibungen ändert, zieht dieses Dokument im selben Commi
 - **The Field / Meridian:** empirisches Forschungskollektiv, stellt die Messinstrumente
   unserer Zeit auf den Prüfstand — verifiable instruments, adversarial review, claims
   ledger. Der **wissenschaftliche Pol** der Ökologie. NIEMALS „artistic research" für
-  Meridian. — **Daneben, klar getrennt: MRR (Meridian Research Runtime)** = die
-  Engineering-Linie des Architekten, NICHT die Stimme des Meridian-Kollektivs
-  (enc-2026-005, authorship honesty); Berührungen der beiden laufen über The Middle.
-  `/on-record` und `/e2e-automation` gehören zur MRR-Linie und werden nie dem Kollektiv
-  zugeschrieben.
+  Meridian. — **MRR (Meridian Research Runtime) ist Meridians WERKZEUG, nicht Meridians
+  Stimme** (Frank, 2026-08-01, wörtlich: „es ist nicht die Stimme sondern ein Werkzeug
+  was sie nutzen können wann immer es Sinn macht"). Das Werkzeug gehört der Praxis; sie
+  nutzt es, wann es Sinn macht. Was ein Lauf feststellt, ist ein Befund des Werkzeugs —
+  eine **Aussage des Kollektivs** wird daraus erst, wenn das Kollektiv sie sich zu eigen
+  macht. Ein einzelner Lauf, den die Engineering-Linie fährt, ist deshalb weiterhin keine
+  Aussage der Praxis; die Trennung liegt in der **Urheberschaft des einzelnen Laufs**,
+  nicht mehr im Besitz des Werkzeugs. — **Überholt seit 2026-08-01:** die frühere Fassung
+  „MRR = Engineering-Linie des Architekten, NICHT die Stimme des Meridian-Kollektivs"
+  (enc-2026-005). Der Kern von enc-2026-005 bleibt gültig (Urheberschaft eines Laufs wird
+  benannt, nicht verwischt); die Besitz-Zuschreibung ist zurückgezogen. `/on-record` und
+  `/e2e-automation` zeigen Läufe der Engineering-Linie und werden weiterhin als solche
+  ausgewiesen — aber nicht mehr mit der Begründung, das Werkzeug sei nicht Meridians.
 - **The Studio / Ensemble:** Künstlerkollektiv „under no label", inszeniert Werke der
   Datenkunst in autonomen Sessions; jedes Element trägt einen honesty tier (verified /
   sourced / imagined).
@@ -64,6 +72,121 @@ und **Dataset Register** (`/datasets`, neu). Kanonische Wortlaute in `naming.ts`
 - Zahlen (Einträge, Werke) stehen **nie** in den Beschreibungstexten — sie veralten
   nächtlich und werden ausschließlich aus den Daten gerendert.
 
+## Die Ökologie ist EIN Projekt, nicht die Site (Frank, 31.07.)
+
+Die research ecology steht **gleichrangig neben data-snack.com und datavism.org** — ein
+Hauptprojekt unter mehreren, nicht die Identität dieser Site. Der Hub sagte das längst
+(„currently conducting", „THE OTHER HOUSES — main projects in their own right"), die
+Navigation sagte das Gegenteil.
+
+- **Top-Nav (vier Punkte):** `Research Ecology ▾` · `Projects ▾` · `Experiments` · `About`.
+- Alles, was zur Ökologie gehört, liegt **in ihrem** Menü, in benannten Abschnitten:
+  *Practices* (die vier Türen) · *The apparatus* (Maschinenraum, How it works) ·
+  *Records* (Catalogues, Reception) · *Talk back* (Post office, Offer a seed).
+- **Die Ökologie steht im Projektregister** (`src/data/projects.ts`, Slug `research-ecology`)
+  — vorher fehlte dort ausgerechnet das Projekt, das auf dieser Domain wohnt.
+- Türnamen und Projektliste werden im Menü **abgeleitet**, nicht abgetippt (`naming.ts`,
+  `projects.ts`) — eine Umbenennung dort zieht die Navigation mit.
+- Zurückgezogen: „Practices" als oberster Nav-Punkt (las sich, als sei die Ökologie das
+  ganze Haus) und „Archive ▾" als Sammelpunkt, unter dem *Projects* lag.
+
+## Die Begriffsstaffel — Project · Practice · Experiment · Instrument · Work (Frank, 2026-08-09 abends, VERBINDLICH)
+
+Bis heute liefen vier Begriffe durcheinander: eine Praxis stand als Zeile in der
+Experimente-Liste, ein Instrument hieß „Hintergrund-Projekt", die Route hieß anders als die
+Seite. Ab jetzt gilt genau diese Staffel, auf der ganzen Site und in allen Repos:
+
+| Wort | Was es bezeichnet | Heute |
+|---|---|---|
+| **Project** | Das große, laufende Vorhaben mit eigenem Zuhause. Enthält Praxen, Experimente, Instrumente und Werke. | The research ecology · Machine Attention · datavism.org · data-snack.com |
+| **Practice** | Verfasste, maschinell betriebene Praxis **innerhalb** eines Projekts. Bringt Werke hervor; ist selbst keins. | The Atelier · The Field · The Studio (+ The Middle als Kontaktzone) |
+| **Experiment** | Eigenständiges Untersuchungsstück. | die 14 auf `/experiments` · The Foreknown · Dark Ocean |
+| **Instrument** | Läuft leise, liefert einem Projekt zu, **kein Bühnen-Anspruch**, darf jahrelang nichts liefern. Gegenstück: **Flagship**. | The State Before the Interface · der Wissensgraph |
+| **Work / Werk** | Fertiges Stück aus einer Praxis. | die 60 Praxis-Werke |
+
+**Zurückgezogen am selben Tag: „House".** Nachmittags fehlte ein Wort für die Ebene über einer
+Praxis (die Ökologie ist drei Praxen, Machine Attention eine) — eingeführt als **House**, abends
+von Frank verworfen: *„insgesamt finde ich houses nicht so gut. und ich würde bei projekten
+bleiben, weil es projekte sind."* Die Staffel oben braucht das Sonderwort nicht: **Project** ist
+die oberste Ebene und enthält alles Übrige. Damit wandert auch **Project** eine Ebene nach oben —
+Foreknown und Dark Ocean heißen auf der Site jetzt **Experimente** eines Projekts, nicht Projekte
+einer Praxis. Die Zeile „Die vier/fünf Wörter" von heute Nachmittag ist damit **historisch**.
+
+**Übersetzung zum Praxis-Repo (dokumentiert, damit es keine Drift ist):** `machine-attention`
+nennt seine Untersuchungen intern weiterhin *investigations* — dort heißt die Abnahmestufe
+„E-EXPERIMENT", und „das E-Experiment des Experiments" wäre unlesbar. Site-Wort **Experiment**
+= Repo-Wort **investigation**. Eine dokumentierte Zuordnung ist keine Drift; zwei
+undokumentierte Vokabulare wären es.
+
+**Folgen, umgesetzt am 2026-08-09:**
+
+- **Machine Attention ist kein Experiment mehr** und steht nicht mehr in der Liste — eine
+  Praxis ist kein Peer eines Einzelstücks. Eigene Tür: **`/machine-attention`**. Sie ist
+  auch **keine fünfte Tür** im Türen-Raster der Ökologie: sie ist das Gegen-Experiment
+  („eine Verfassung gegen viele"), und ein gemeinsames Raster löschte genau diese Spannung.
+- **„Hintergrund-Projekt" ist gestrichen.** Das Observatorium ist ein **Instrument** der
+  Praxis — leise, aber vollwertig, nicht „im Hintergrund".
+- **Route und Titel heißen gleich:** `/holdings` → **`/experiments`** (301 auf beide alten
+  Adressen; die Seite hieß seit dem 31.07. ohnehin „Experiments").
+- `tier` in `src/data/werke.ts` kennt die Wörter; `werke.test.ts` hält Praxis und
+  Instrument aus der Experimente-Reihe heraus, damit der nächste neue Rang nicht still
+  hineinwandert.
+- **Die Startseite ist nicht mehr die Ökologie** (Frank, 2026-08-09 abends: „research ecology
+  nicht mehr prominent dort inszenieren, sondern als eines von mehreren"). Hero-Titel jetzt
+  **„machines that research, in public"** — ausdrücklich **nicht** „artistic research, under
+  proof" (Franks Wahl; die Festival-Positionierung bleibt gültig, wo sie steht, ist aber kein
+  Hero-Anspruch). Darunter der Block **TWO HOUSES**: beide Häuser gleichrangig, jedes mit
+  seinen Bewohnern — die vier Türkarten behalten ihre validierten Identitätsfarben und wohnen
+  jetzt *in* ihrem Haus.
+- ~~**Menü:** die Gruppe heißt **„Research"** … erste Sektion **Houses**, dann Practices,
+  dann **Investigations**~~ — **überholt am 2026-08-09 (spät),** diese Fassung wurde nie
+  gebaut; maßgeblich ist der Abschnitt „Menü, Hero, About — kein Projekt im Fokus" unten.
+
+## „Experiments" statt „Holdings" (Frank, 31.07.)
+
+Die früheren Arbeiten des Labors heißen wieder **„Experiments"** (dt. „Experimente") —
+Klartext vor Haus-Vokabular; die Umwidmung zu „Holdings"/„Bestände" (Juli 2026) ist damit
+zurückgenommen. ~~**Die Route bleibt `/holdings`**~~ — **überholt am 2026-08-09:** Route und
+Titel heißen jetzt beide `/experiments`, siehe den Abschnitt „Die vier Wörter" oben. Bleibt gültig: es gibt **keinen Dachtitel** für die
+Sammlung (12.07.), jedes Experiment steht für sich.
+
+**Nachtrag (Frank, 08.08.):** `/holdings` führt seit dem 08.08. auch das **laufende** zweite
+Experiment „The State Before the Interface" (`/observatory`) — Franks Anweisung: „lege das
+als Experiment an unter Experiments". Die Fläche ist damit nicht mehr strikt „frühere
+Arbeiten", sondern das Verzeichnis der Experimente des Labors; der Untertitel der Seite
+wurde entsprechend entschärft („offered to the ecology as material" entfiel — das
+Observatorium steht bewusst außerhalb der Ökologie).
+
+**Nachtrag (Frank, 08.08. abends):** Das zweite Experiment heißt jetzt **„machine attention"** —
+eine machine investigative practice (Name von Frank bestätigt, 08.08.). Ihre Bühne lebt
+unter **`/attention`** (nächtlich gespiegelt aus `machine-attention`, Franks Anweisung:
+„[Wortlaut privat; Kern: auf frankbueltge.de veröffentlichen]"). Erstes
+Projekt: **„The Foreknown"** (Beurkundung angekündigter Zukünfte); „The State Before the
+Interface" (`/observatory`) ist seit dem 08.08. ein Projekt dieser Praxis, nicht mehr das
+Experiment selbst — ~~„Hintergrund-Observatorium"~~ heißt seit dem 2026-08-09 **Instrument**
+(siehe „Die vier Wörter"). Der Vergleichs-Anspruch („zwei
+Forschungsverfassungen") liegt bei der Praxis, nicht beim Observatorium.
+
+## Menü, Hero, About — kein Projekt im Fokus (Frank, 2026-08-09 spät, VERBINDLICH)
+
+Franks Anweisung: kein Projekt wird fokussiert — nicht die Ecology, nicht „two houses".
+
+- **Menü (vier Punkte):** **Projects ▾** (Sektion *Research projects* mit den echten
+  Haustüren `/ecology` · `/machine-attention` · `/atlas`; Sektion *Other projects* mit den
+  Karten aus `projects.ts`) · **Lab** (`/experiments` — das Menü-Wort ist „Lab", Route und
+  Seitentitel bleiben) · **About** · **Contact**. **Gestrichen:** die Gruppen „Works" (die
+  Register sind von ihren Heimaten aus erreichbar) und „Talk back" (Post Office und Seed
+  gehören der research ecology, nicht der Site-Leiste). Die Zwischenseite
+  `/work/research-ecology` ist entfernt (301 → `/ecology`) — die Sektion *Research projects*
+  verlinkt Haustüren, nie Karten.
+- **Hero:** Kicker „the standing question", H1 **„what machines are actually better at"** —
+  die Startseite führt mit Franks Forschungsfrage (konstant beobachten, messen, Datenmengen
+  verarbeiten; autonom mit eigenen Mitteln forschen; konkrete, nützliche Werke mit prüfbarem
+  Mehrwert), nicht mit einer Projekt-Inszenierung. Die Two-Houses-Hero-Zeile vom Vormittag
+  ist datiert abgelöst; ihr Gleichrangigkeits-Kern lebt in der OVERVIEW-Sektion weiter.
+- **About:** führt mit derselben Frage, listet alle Projekte gleichrangig (je eine Tür),
+  Rolle generalisiert („in den maschinell betriebenen Projekten überall dieselbe Rolle").
+
 ## Schwarze Liste (zurückgezogen — nie als aktuell verwenden)
 
 | Phrase | Status |
@@ -75,6 +198,8 @@ und **Dataset Register** (`/datasets`, neu). Kanonische Wortlaute in `naming.ts`
 | „Data & AI Engineer" | verworfen 24.07. |
 | „data artist" / „Datenkünstler" | nie |
 | „the whole lab" / `/lab` | Route und Begriff ersetzt durch `/holdings` (Sammelseite) |
+| „Holdings" / „Bestände" als Seitenname | zurückgenommen 31.07. — die Fläche heißt wieder **Experiments**; die Route `/holdings` bleibt |
+| „Practices" als oberster Nav-Punkt | ersetzt 31.07. durch `Research Ecology ▾` — die Ökologie ist ein Projekt, nicht die Site |
 | „Dataset Hub" als Site-Fläche | „hub" ist die Startseite; die Fläche heißt **Dataset Register** (26.07.) |
 | „locally constituted" / „wherever the apparatus permits" | entnebelt 24.07. (Hero-Untertitel) |
 | „cinematic" (datavism) | gestrichen 16.07. |

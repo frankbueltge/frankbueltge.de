@@ -380,6 +380,31 @@ function formLabel(form: string, deLang: boolean): string {
         </p>
       </section>
 
+      <section class="mb-12 border-t border-line pt-6">
+        <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+          {de ? 'Nächste Nachbarn' : 'Nearest neighbors'}
+        </p>
+        <ul class="mt-3 space-y-2 text-sm text-fg-muted">
+          <li>
+            <a href="https://stoptrackingscience.eu" target="_blank" rel="noopener nofollow" class="underline decoration-line underline-offset-2 hover:text-fg">Stop Tracking Science</a>
+            {de ? ' — EU-Aufklärungsseite mit ausführlicher Hintergrunddokumentation zu Verlags-Tracking, kein laufendes automatisiertes Instrument.' : ' — EU advocacy site with detailed background documentation on publisher tracking, not itself a live automated instrument.'}
+          </li>
+          <li>
+            {de ? 'Hanson (2019), „User Tracking on Academic Publisher Platforms"' : 'Hanson (2019), "User Tracking on Academic Publisher Platforms"'}
+            {de ? ' — Momentaufnahme über 15 Verlagsplattformen.' : ' — a snapshot analysis across 15 publisher platforms.'}
+          </li>
+          <li>
+            {de ? 'Marino, „Who\'s Reading Who?"' : 'Marino, "Who\'s Reading Who?"'}, Journal of Intellectual Freedom &amp; Privacy
+            {de ? ' — akademischer Direktvergleich von Subskriptions- vs. Open-Access-Zeitschriften-Tracking.' : ' — an academic study directly comparing subscription vs. open-access journal tracking.'}
+          </li>
+        </ul>
+        <p class="mt-3 max-w-xl text-sm leading-relaxed text-fg-muted">
+          {de
+            ? 'Der Befund selbst — große Verlage tracken stärker, vor jeder Einwilligung, mehr als Diamond-OA-Journale — ist seit 2018–2020 mehrfach dokumentiert. Keine der Vorarbeiten ist ein laufendes, wiederkehrendes Instrument mit gepaarter Kontrollgruppe und zwei Standpunkten (Automat und echter Leser): der Apparat ist der Unterschied, nicht der Fund.'
+            : "The finding itself — big publishers track more, before any consent, more than diamond-OA journals — has been documented repeatedly since 2018–2020. None of the prior work is a live, recurring instrument with a paired control group and two vantage points (crawler and real reader): the apparatus is the differentiator, not the finding."}
+        </p>
+      </section>
+
       <footer class="mt-12 border-t border-line pt-6">
         <p class="font-mono text-xs text-fg-faint">
           {de

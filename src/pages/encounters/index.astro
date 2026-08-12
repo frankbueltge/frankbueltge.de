@@ -1,210 +1,111 @@
 ---
-// site-v2 work order §3: the hub (/) becomes the entrance and now only shows a condensed NOW
-// section; the full encounter experience — score map, legend, station register, event table —
-// moves here, to its stable URL.
-// 2026-07-17: the "second encounter" moment arrived (the ledger holds four) — the register
-// below lists every recorded encounter from src/data/begegnungen/register.json, which the
-// ecology export chain regenerates after every engine session and every nightly scribe run.
-// The entrance keeps the one encounter with an AUTHORED score (the selection rule, now named
-// in src/config/naming.ts); a newer encounter takes the entrance when its score is authored.
+// /encounters — the Middle's station sheet (Level 1 of the ecology pyramid, 2026-08-12).
+//
+// The Middle is not a practice and its sheet must not read like one: it has no resident, no
+// constitution of its own and no works. What it has is a record of what passed between the
+// practices, and the crossing score is that record drawn. The contact stream that used to live
+// here moves to the repository (Git is the archive); the register of crossings stays, one level
+// down, with every encounter in full.
 import Page from '@/layouts/Page.astro'
-import BegegnungEntrance from '@/components/pages/BegegnungEntrance.astro'
-import { currentEntrance } from '@/lib/begegnungen'
+import StationSheet from '@/components/ecology/StationSheet.astro'
+import Figure from '@/components/ecology/figures/Figure.astro'
+import CrossingScoreFigure from '@/components/ecology/figures/CrossingScore.astro'
+import { PYRAMID } from '@/config/ecology-pyramid-wording'
+import { FIGURES } from '@/config/ecology-figure-wording'
+import pulseData from '@/data/pulse/pulse.json'
+import type { PulseSnapshot } from '@/lib/pulse/render'
+import { allWorks } from '@/lib/engines/register'
+import { buildStationSheet, splitDoorLine, type LogEntry } from '@/lib/ecology/pyramid/station'
+import { buildCrossings } from '@/lib/ecology/pyramid/figures'
+import { firstClause, runningInquiry } from '@/lib/ecology/pyramid/landings'
 import register from '@/data/begegnungen/register.json'
+import inquiries from '@/data/begegnungen/joint-inquiries.json'
 
-const entrance = currentEntrance
-interface RegisterEntry {
-  encounter_id: string
-  title: string | null
-  status: { as_of?: string; statusLine?: string } | null
-  approval: string | null
-  authored_by: string | null
-  participants: { id: string; role: string | null }[]
-  record_url: string
-  // Machine-OBSERVED receiver-work premiere status (17.07., "Beobachten & anstoßen"): derived
-  // by the ecology export from the receiver engine's works/, strictly separate from the scribe's
-  // editorial title/status. Present only for encounters whose receiver is one of the cloned
-  // engine collectives; absent for datavism/data-snack (honestly not observable), and in the
-  // determinism test (no engines) — so this stays optional.
-  observed?: {
-    receiver_collective: string
-    engine_repo: string
-    work_slug: string
-    premiered: boolean
-    work_dir: string | null
-    premiered_on: string | null
-    in_production_uri: string
-  }
-}
-const entries = register as RegisterEntry[]
+const works = allWorks()
+const crossings = buildCrossings(register as Parameters<typeof buildCrossings>[0])
 
-// --- Die Historien-Karte: eine EINZIGE überschaubare Karte der ganzen Vielheit (Frank,
-// 2026-07-22, Deleuze "macht Karten!") — Chronologie UND Relation in einem Bild statt N
-// gestapelter Detailkarten. Sechs Praktiken als waagerechte Spuren; jede Begegnung ein
-// senkrechter Verbinder an ihrer Ordinalposition (links = früh, rechts = jetzt), der die
-// beteiligten Spuren überbrückt: Quelle gefüllt, Empfänger als Ring. Kein Fließtext im Bild —
-// die eine Zeile pro Begegnung steht in der nummerierten Legende darunter. Ordinal, nicht
-// zeit-skaliert: nur 003–005 tragen ein Datum, echte Zeitabstände wären eine Lüge. Gebaut aus
-// register.json, also mit jedem Export aktuell. Frank/eine Spur ohne Marke = dokumentiertes
-// Schweigen, sichtbar, nie als Defizit (§7.2, spec 03 §8.1).
-const normId = (id: string) =>
-  id === 'frank-bueltge' ? 'frank'
-    : id === 'data-snack-plenum' ? 'data-snack'
-    : id === 'mrr' ? 'meridian'
-    : id
-const LANES = [
-  { id: 'meridian', label: 'Meridian · field' },
-  { id: 'ensemble', label: 'Ensemble · studio' },
-  { id: 'ulysses', label: 'Ulysses · atelier' },
-  { id: 'datavism', label: 'datavism.org' },
-  { id: 'data-snack', label: 'data-snack.com' },
-  { id: 'frank', label: 'Frank · conductor' },
-]
-const laneIdx = new Map(LANES.map((l, i) => [l.id, i]))
-const LANE_X0 = 188, LANE_X1 = 912, TOP = 56, LANE_DY = 44
-const laneY = (i: number) => TOP + i * LANE_DY
-const bottomY = laneY(LANES.length - 1)
-const statusClass = (s: string) =>
-  /resolv|premier|deliver|applied/i.test(s) ? 'st-done'
-    : /held|declin/i.test(s) ? 'st-held'
-    : /seed/i.test(s) ? 'st-seed'
-    : 'st-open'
+// The Middle's record is the crossings themselves: newest first, each with its own title as the
+// line — the register carries no separate summary, and inventing one would be the Middle editing
+// what it is only supposed to record.
+// The rows carry NO href. The obvious one — /encounters/<encounter_id> — does not exist: this
+// route builds exactly one detail page, for the current entrance, under a short slug. Four rows
+// shipped on 2026-08-12 pointing at routes that were never built, and all four 404'd. Where a
+// reader can go from here is the register below, which links each crossing to its own committed
+// record.
+const log: LogEntry[] = [...crossings]
+  .filter((c) => c.date)
+  .sort((a, b) => ((a.date ?? '') < (b.date ?? '') ? 1 : -1))
+  .slice(0, 3)
+  .map((c) => ({
+    date: c.date!,
+    marker: c.id.split('-').slice(0, 3).join('-'),
+    line: firstClause(c.title, 190) ?? PYRAMID.station.absent,
+  }))
 
-interface HistoryEnc {
-  nr: string; x: number; date: string; headline: string; status: string; cls: string
-  sources: number[]; receivers: number[]; lanes: number[]
-}
-const asLanes = (e: RegisterEntry, role: string) =>
-  [...new Set(e.participants.filter((p) => p.role === role).map((p) => laneIdx.get(normId(p.id))))]
-    .filter((n): n is number => n !== undefined)
-const histEntries: HistoryEnc[] = entries.map((e, i) => {
-  const sources = asLanes(e, 'source')
-  const receivers = asLanes(e, 'receiver')
-  return {
-    nr: e.encounter_id.match(/^enc-\d{4}-(\d{3})/)?.[1] ?? String(i + 1),
-    x: 0,
-    date: e.status?.as_of ?? '',
-    headline: e.title ?? e.encounter_id,
-    status: e.status?.statusLine ?? '',
-    cls: statusClass(e.status?.statusLine ?? ''),
-    sources,
-    receivers,
-    lanes: [...new Set([...sources, ...receivers])].sort((a, b) => a - b),
-  }
+const sheet = buildStationSheet({
+  id: 'middle',
+  snapshot: pulseData as PulseSnapshot,
+  works,
+  log,
+  made: crossings.length,
 })
-const stepX = histEntries.length > 1 ? (LANE_X1 - LANE_X0 - 96) / (histEntries.length - 1) : 0
-histEntries.forEach((h, i) => { h.x = LANE_X0 + 64 + i * stepX })
 
-const laneSvg = LANES.map((l, i) => {
-  const y = laneY(i)
-  const active = histEntries.some((h) => h.lanes.includes(i))
-  return (
-    `<line x1="${LANE_X0}" y1="${y}" x2="${LANE_X1}" y2="${y}" class="hm-lane${active ? '' : ' hm-idle'}"/>` +
-    `<text x="${LANE_X0 - 14}" y="${y + 3.5}" text-anchor="end" class="hm-lane-label">${l.label}</text>`
-  )
-}).join('')
-const encSvg = histEntries.map((h) => {
-  const yTop = laneY(h.lanes[0]), yBot = laneY(h.lanes[h.lanes.length - 1])
-  let s = `<line x1="${h.x}" y1="${yTop}" x2="${h.x}" y2="${yBot}" class="hm-arc ${h.cls}"/>`
-  for (const li of h.sources) s += `<circle cx="${h.x}" cy="${laneY(li)}" r="5.5" class="hm-src ${h.cls}"/>`
-  for (const li of h.receivers) s += `<circle cx="${h.x}" cy="${laneY(li)}" r="5.5" class="hm-rcv ${h.cls}"/>`
-  s += `<circle cx="${h.x}" cy="${yTop - 22}" r="10.5" class="hm-badge ${h.cls}"/>`
-  s += `<text x="${h.x}" y="${yTop - 18.3}" text-anchor="middle" class="hm-badge-n">${h.nr}</text>`
-  return s
-}).join('')
-const historyMapSvg =
-  `<svg viewBox="0 0 960 ${bottomY + 40}" role="img" aria-label="History of ${histEntries.length} encounters across six practices, ordered by record — filled = source, ring = receiver">` +
-  laneSvg + encSvg +
-  `<line x1="${LANE_X0}" y1="${bottomY + 20}" x2="${LANE_X1}" y2="${bottomY + 20}" class="hm-axis-line"/>` +
-  `<text x="${LANE_X0}" y="${bottomY + 34}" class="hm-axis">record order — earliest → now</text>` +
-  `<text x="${LANE_X1}" y="${bottomY + 34}" text-anchor="end" class="hm-axis">${histEntries.length} encounters</text>` +
-  `</svg>`
+// The bracket spans the crossings a running joint inquiry sits across. Where the register does not
+// say which crossings belong to it, the bracket covers the newest stretch it could — so it is only
+// drawn when the inquiries file names one at all.
+const running = runningInquiry()
+const bracket = running && crossings.length > 1
+  ? { label: `${running.title.split(' — ')[0].toUpperCase()} · ${running.label.toUpperCase()}`, from: Math.max(0, crossings.length - 3), to: crossings.length - 1 }
+  : null
+
+// The SAME inquiry the status row names, chosen by the same rule (in motion, most recently
+// updated). Picking it twice by two rules is how a sheet ends up naming one inquiry in its status
+// panel and a different one in its lede — which it did, for exactly one build.
+const live = (inquiries as { status?: string; title?: string; slug?: string; inquiry_id?: string; public_summary?: string; updated_at?: string; record_url?: string }[])
+  .filter((i) => i.status === 'ACTIVE' || i.status === 'REVIEW')
+  .sort((a, b) => ((a.updated_at ?? '') < (b.updated_at ?? '') ? -1 : 1))
+  .at(-1)
+
+const door = splitDoorLine(sheet.station.description)
+const SEO = PYRAMID.stationSeo.middle
+const F = FIGURES.middle
 ---
-<Page
-  title="Encounters — The Middle | Frank Bültge"
-  description="The contact zone of the research ecology: every recorded encounter between the practices — offers, verdicts, refusals, corrections — in one register, every line traceable to a commit."
->
-  {/* Orientierung zuerst (Frank, 24.07.: „man klickt auf encounters und versteht nur
-      bahnhof") — was eine Begegnung ist und wie diese Seite zu lesen ist, VOR der Partitur. */}
-  <section class="mx-auto w-full max-w-4xl px-6 pb-2 pt-14">
-    <p class="font-mono text-xs uppercase tracking-[0.22em] text-fg-muted">
-      Encounters · The Middle — the contact zone
-    </p>
-    <p class="mt-4 max-w-2xl text-sm text-fg-muted">
-      The three practices each work in their own repository, under their own constitution.
-      Here they meet: one offers material, another verifies, adapts, refuses — or corrects.
-      And increasingly they work together, taking up shared research questions as joint
-      inquiries. Each such exchange is an <b class="text-fg">encounter</b>, and this page is
-      their register. Nothing here is a summary written after the fact — every line traces to
-      a commit in the repositories involved.
-    </p>
-    <p class="mt-3 font-mono text-xs text-fg-faint">
-      below: the current encounter in full — its score, station by station — then the history
-      of all {entries.length} recorded encounters
-    </p>
-  </section>
 
-  <BegegnungEntrance />
-
-  <section class="mx-auto w-full max-w-4xl px-6 pb-16" aria-labelledby="history-heading">
-    <h2 id="history-heading" class="font-mono text-xs uppercase tracking-[0.18em] text-fg-faint">
-      The history — every encounter, one map
-    </h2>
-    <p class="mt-3 max-w-2xl text-sm text-fg-muted">
-      One map of the whole ledger: six practices as lanes, every recorded encounter a connector at
-      its place in the record (left = earliest), bridging the practices it joined — filled where a
-      practice is the source, a ring where it receives. An empty lane is not a failure but a
-      documented non-relation. Ordinal, not time-scaled — only the later encounters carry a date.
-    </p>
-    <figure class="hm-map mt-6 overflow-x-auto" set:html={historyMapSvg} />
-    <ol class="mt-7 space-y-4">
-      {histEntries.map((h, i) => (
-        <li class="flex gap-3 border-t border-line/60 pt-4">
-          <span class={`hm-legend-n ${h.cls}`}>{h.nr}</span>
-          <div class="min-w-0">
-            <p class="text-sm text-fg">{h.headline}</p>
-            <p class="mt-1 font-mono text-xs text-fg-muted">
-              {h.sources.map((li) => LANES[li].label.split(' · ')[0]).join(' + ')} → {h.receivers.map((li) => LANES[li].label.split(' · ')[0]).join(' + ')}
-              {h.status ? ` · ${h.status}` : ''}
-              {h.date ? <span class="text-fg-faint"> · as of {h.date}</span> : null}
-              {' · '}
-              <a href={entries[i].record_url} target="_blank" rel="noreferrer" class="underline hover:text-fg">record ↗</a>
-            </p>
-          </div>
-        </li>
-      ))}
-    </ol>
-  </section>
+<Page title={`${SEO.title} | Frank Bültge`} description={SEO.description}>
+  <StationSheet
+    id="middle"
+    kicker={`${sheet.station.name.toUpperCase()} · ${sheet.station.resident.toUpperCase()}`}
+    h1={door.lead}
+    sub={door.rest}
+    status={sheet.status}
+    figureColumns={1}
+    lede={live
+      ? {
+          kicker: F.lede.kicker(live.status ?? ''),
+          title: live.title ?? live.inquiry_id ?? '',
+          teaser: firstClause(live.public_summary, 320),
+          note: running?.label ?? null,
+          noteLabel: F.lede.noteLabel,
+          links: [
+            // The inquiry's own committed record — there is no detail route for it on this site,
+            // and a link into the repository is the honest way to open the thing itself.
+            { label: F.lede.open, href: live.record_url ?? '/encounters/register' },
+            { label: F.lede.record, href: '/encounters/register' },
+          ],
+        }
+      : null}
+    log={sheet.log}
+    logMore={{ label: F.lede.record, href: '/encounters/register' }}
+    doors={sheet.doors}
+  >
+    <Figure
+      slot="figure-main"
+      title={F.score.title}
+      sub={F.score.sub}
+      link={{ label: F.score.link(crossings.length), href: '/encounters' }}
+      caption={F.score.caption(crossings.length)}
+    >
+      <CrossingScoreFigure crossings={crossings} running={bracket} />
+    </Figure>
+  </StationSheet>
 </Page>
-
-<style is:global>
-  .hm-map svg { width: 100%; height: auto; min-width: 640px; }
-  .hm-map .hm-lane { stroke: var(--color-line); stroke-width: 1; }
-  .hm-map .hm-lane.hm-idle { opacity: 0.5; stroke-dasharray: 2 5; }
-  .hm-map .hm-lane-label { fill: var(--color-fg-muted); font: 12px var(--font-mono, ui-monospace, monospace); }
-  .hm-map .hm-arc { stroke-width: 2.5; }
-  .hm-map .hm-src { stroke: none; }
-  .hm-map .hm-rcv { fill: var(--color-bg); stroke-width: 2.5; }
-  .hm-map .hm-badge { fill: var(--color-bg); stroke-width: 1.5; }
-  .hm-map .hm-badge-n { fill: var(--color-fg); font: 700 11px var(--font-mono, ui-monospace, monospace); }
-  .hm-map .hm-axis { fill: var(--color-fg-faint); font: 11px var(--font-mono, ui-monospace, monospace); letter-spacing: 0.04em; }
-  .hm-map .hm-axis-line { stroke: var(--color-line); stroke-width: 1; }
-
-  .hm-map .hm-arc.st-done, .hm-map .hm-rcv.st-done, .hm-map .hm-badge.st-done { stroke: #3a9d78; }
-  .hm-map .hm-src.st-done { fill: #3a9d78; }
-  .hm-map .hm-arc.st-held, .hm-map .hm-rcv.st-held, .hm-map .hm-badge.st-held { stroke: #c0872a; }
-  .hm-map .hm-src.st-held { fill: #c0872a; }
-  .hm-map .hm-arc.st-seed, .hm-map .hm-rcv.st-seed, .hm-map .hm-badge.st-seed { stroke: #7a6ad0; }
-  .hm-map .hm-src.st-seed { fill: #7a6ad0; }
-  .hm-map .hm-arc.st-open, .hm-map .hm-rcv.st-open, .hm-map .hm-badge.st-open { stroke: var(--color-fg-muted); }
-  .hm-map .hm-src.st-open { fill: var(--color-fg-muted); }
-
-  .hm-legend-n {
-    flex: none; width: 1.7rem; height: 1.7rem; border-radius: 999px;
-    border: 1.5px solid var(--color-fg-muted); display: grid; place-items: center;
-    font: 700 12px var(--font-mono, ui-monospace, monospace); color: var(--color-fg);
-  }
-  .hm-legend-n.st-done { border-color: #3a9d78; }
-  .hm-legend-n.st-held { border-color: #c0872a; }
-  .hm-legend-n.st-seed { border-color: #7a6ad0; }
-</style>

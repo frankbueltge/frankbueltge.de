@@ -1,0 +1,24 @@
+---
+// One open channel per work (Frank, 2026-07-31): a prefilled letterbox link. Two shapes:
+// 'link' is a card action beside "Enter the work"; 'line' is the page-level sentence that
+// explains the channel once. /post prefills addressee and regarding from the URL.
+interface Props {
+  ns: 'atelier' | 'field' | 'studio' | 'plenum'
+  slug?: string
+  variant?: 'link' | 'line'
+  class?: string
+}
+const { ns, slug, variant = 'link', class: cls } = Astro.props
+const href = `/post?to=${ns}${slug ? `&regarding=${encodeURIComponent(slug)}` : ''}`
+---
+
+{variant === 'link' ? (
+  <a class={cls} href={href}>Respond →</a>
+) : (
+  <p class={cls}>
+    Every work here has an open channel: <a class="underline hover:text-fg" href={href}>respond
+    through the post office</a> — corrections, objections and readings reach the practice, and
+    with your explicit permission a response can join the work's public
+    <a class="underline hover:text-fg" href="/reception">reception</a>.
+  </p>
+)}

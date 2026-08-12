@@ -10,6 +10,7 @@ import {
   journalTitle,
   ageDays,
   buildInbox,
+  trayFor,
 } from './status'
 
 describe('latestRunPerWorkflow', () => {
@@ -257,12 +258,90 @@ describe('buildInbox', () => {
       openedAt: '2026-07-15T00:00:00Z',
       ageDays: 2,
     })
-    expect(result[0].excerpt).toHaveLength(600)
+    // Eine 650 Zeichen lange Anfrage kommt VOLLSTÄNDIG an. Früher schnitt der Bau bei 600 ab,
+    // und weil der Rest nie gesendet wurde, konnte der „mehr“-Knopf im Dashboard nichts
+    // aufklappen (Frank, 2026-07-31: „passiert nix“).
+    expect(result[0].excerpt).toHaveLength(650)
+  })
+
+  // 15s instead of the 5s default: the 20k-char regex pass is fast in isolation (~3.6s)
+  // but occasionally exceeds 5s under full-suite parallel load — and a flaky timeout here
+  // blocks the practices' nightly publishing gates, which run this suite 4x/day.
+  it('eine wirklich lange Anfrage wird gedeckelt — die Grenze bleibt, sie liegt nur weit genug', { timeout: 15_000 }, () => {
+    const issues = [
+      {
+        number: 9,
+        title: 'Request aus field-research: 2026-07-31 — Request: lang',
+        html_url: 'https://x/9',
+        created_at: '2026-07-17T00:00:00Z',
+        body: 'z'.repeat(20000),
+      },
+    ]
+    const result = buildInbox(issues, '2026-07-17T00:00:00Z')
+    expect(result[0].excerpt).toHaveLength(12000)
   })
 
   it('fehlender Body → leerer Excerpt statt Crash', () => {
     const issues = [{ number: 3, title: 'Request aus studio: Titel', html_url: 'https://x/3', created_at: '2026-07-17T00:00:00Z' }]
     const result = buildInbox(issues, '2026-07-17T00:00:00Z')
     expect(result[0].excerpt).toBe('')
+  })
+
+  it('trägt Fach und Frist-Restlaufzeit an jedem Eintrag', () => {
+    const head = (b: string, f: string) =>
+      `> tl;dr: eine Zeile\n> braucht: ${b}\n> frist: ${f}\n> kontext: irgendwo\n\nText.`
+    const issues = [
+      { number: 1, title: 'Request aus field-research: A', html_url: 'u', created_at: '2026-08-01T00:00:00Z', body: head('entscheidung', '2026-08-10 — bevor Anker A2') },
+      { number: 2, title: 'Request aus studio: B', html_url: 'u', created_at: '2026-08-01T00:00:00Z', body: head('weiterleitung', 'keine') },
+    ]
+    const result = buildInbox(issues, '2026-08-02T00:00:00Z')
+    expect(result[0]).toMatchObject({ tray: 'today', needsAction: true, fristInDays: 8 })
+    expect(result[1]).toMatchObject({ tray: 'postoffice', needsAction: false, fristInDays: null })
+  })
+})
+
+// Die Regel, an die die Praxen gebunden sind (Frank, 2026-07-17, im Kopf jeder REQUESTS.md):
+// eine Anfrage an Frank ist NIE ein Blocker; schweigt er, entscheiden sie selbst. Am 2026-08-02
+// zeigte die Steuerzentrale acht Einträge unter „Heute nötig" — ehrlich waren es null. Diese
+// Tests halten die Sortierung an der Regel fest, damit die Oberfläche nicht wieder gegen sie läuft.
+describe('trayFor — die Standing Rule, nicht das Bauchgefühl', () => {
+  const NOW = '2026-08-02T12:00:00Z'
+  const head = (braucht: string | null, fristDate: string | null, structured = true) =>
+    ({ structured, braucht, fristDate })
+
+  it('nur eine datierte Frist in Reichweite ist heute nötig', () => {
+    expect(trayFor(head('entscheidung', '2026-08-02'), NOW)).toBe('today')
+    expect(trayFor(head('entscheidung', '2026-08-16'), NOW)).toBe('today')
+  })
+
+  it('eine Frist jenseits des Fensters läuft, sie drängt nicht', () => {
+    // Der Detektor-Arm (#310) nennt den 2026-11-25 — echt, aber nicht heute.
+    expect(trayFor(head('entscheidung', '2026-11-25'), NOW)).toBe('running')
+    expect(trayFor(head('entscheidung', `2026-08-${17}`), NOW)).toBe('running')
+  })
+
+  it('eine verstrichene Frist ist nicht mehr seine — die Entscheidung ist gefallen', () => {
+    expect(trayFor(head('entscheidung', '2026-07-30'), NOW)).toBe('running')
+  })
+
+  it('ohne Frist läuft die Praxis bis zu ihrer nächsten Session weiter', () => {
+    expect(trayFor(head('entscheidung', null), NOW)).toBe('running')
+    expect(trayFor(head('antwort', null), NOW)).toBe('running')
+  })
+
+  it('Weiterleitung geht nie in „heute" — auch nicht mit naher Frist', () => {
+    // Frank, 2026-08-02: die Post liegt im Post Office, ob sie rausgeht ist seine Entscheidung,
+    // und er braucht dafür keine wiederholten Erinnerungen.
+    expect(trayFor(head('weiterleitung', null), NOW)).toBe('postoffice')
+    expect(trayFor(head('weiterleitung', '2026-08-03'), NOW)).toBe('postoffice')
+  })
+
+  it('„braucht: nichts" ist zur Kenntnis, nicht zur Tat', () => {
+    expect(trayFor(head('nichts', null), NOW)).toBe('fyi')
+  })
+
+  it('eine Anfrage ohne Kopf läuft ebenfalls — die Regel gilt auch für sie', () => {
+    // Vorher zählte sie als „möglicherweise nötig"; genau daher kam ein Teil des Lärms.
+    expect(trayFor(head(null, null, false), NOW)).toBe('running')
   })
 })

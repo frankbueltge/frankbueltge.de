@@ -1,0 +1,306 @@
+---
+// The entrance, as an ops room (2026-08-11) — docs/design_handoff_homepage_ops_room/README.md,
+// option 3a. Replaces HubEntrance.astro, which stays in the repo unlinked: Git is the archive, so
+// the previous entrance lives in its own file and in this file's history, not in commented blocks.
+//
+// The page is a status board of everything running here: the standing question as hero, the commit
+// pulse as an instrument beside it, one board for every running system, a signal log of the newest
+// works, and a dashboard of the experiments that ship data daily.
+//
+// Three properties this component is built to keep:
+//
+//   · NO NUMBER IS TYPED. Every figure — readings, counts, dates, the week range, the repository
+//     count — is derived at build time by src/lib/ops/* from a committed snapshot. Copy that has to
+//     wrap a number is a function in NAMING.opsRoom taking that number as its argument.
+//   · NO CLIENT DATA FETCHING. The whole page is static output. Exactly two things move, and both
+//     are time, not data: the UTC clock and the dots walking the pulse. One shared rAF loop drives
+//     them, and it never starts under prefers-reduced-motion.
+//   · ABSENCE IS DRAWN. A row whose record is empty says so; a tile whose snapshot yields no
+//     reading is not rendered at all (the handoff's rule) rather than shown with a placeholder.
+import { getRelativeLocaleUrl } from 'astro:i18n'
+import type { Locale } from '@/lib/site'
+import { NAMING } from '@/config/naming'
+import pulseData from '@/data/pulse/pulse.json'
+import type { PulseSnapshot } from '@/lib/pulse/render'
+import { buildStackSvg, stackWeekRange } from '@/lib/ops/stack'
+import { buildBoard, buildSignalLog } from '@/lib/ops/board'
+import { readTiles } from '@/lib/ops/tiles'
+import { bars, cells, linePath, ratioBars, smooth3, SPARK_BOX } from '@/lib/ops/viz'
+import { getLatestProtokoll } from '@/lib/protokoll/data'
+import '@/styles/ops-room.css'
+import '@/styles/hub-triptych.css'
+
+const locale = (Astro.currentLocale ?? 'en') as Locale
+const url = (href: string) => (href.startsWith('http') ? href : getRelativeLocaleUrl(locale, href))
+
+const pulse = pulseData as PulseSnapshot
+const stackSvg = buildStackSvg(pulse)
+const board = buildBoard(pulse)
+const signal = buildSignalLog()
+const tiles = readTiles({ protokoll: await getLatestProtokoll() })
+
+const OPS = NAMING.opsRoom
+/** the practice a board row or log entry belongs to, as a CSS class carrying its --led */
+const voiceClass = (id: string | null) => (id ? ` ops-voice-${id}` : '')
+const nsVoice: Record<string, string> = { atelier: 'ulysses', field: 'meridian', studio: 'ensemble' }
+
+// The three machine-grown catalogues named under the tile grid — read from NAMING.catalogues so
+// the entrance cannot list a catalogue the catalogues page does not have. The Atlas is left out
+// here because it already stands in the grid above as a live tile with its own reading.
+const catalogues = NAMING.catalogues.items.filter((c) => c.href !== '/atlas')
+---
+
+<main id="main" class="ops-room hub-voices flex-1" data-ops-room>
+  {/* ── the strip: what this page is, and the clock that proves it is live ─────────────── */}
+  <div class="ops-strip">
+    <span class="ops-strip-name">
+      <span class="ops-led"></span>
+      <span>{OPS.strip.label}</span>
+    </span>
+    {/* Rendered empty and filled by the script: a build-time clock would be a stopped clock
+        claiming to be a live one — worse than no clock. */}
+    <span class="ops-clock" data-ops-clock aria-live="off"></span>
+  </div>
+
+  {/* ── 1 · hero: the standing question, and the pulse instrument ──────────────────────── */}
+  <section class="ops-hero">
+    <div>
+      <p class="ops-hero-kicker">{NAMING.focusKicker}</p>
+      <h1>{NAMING.title}</h1>
+      <p class="ops-hero-sub">{OPS.hero.sub}</p>
+      <div class="ops-hero-links">
+        <a href={url(OPS.hero.primary.href)}>{OPS.hero.primary.label}</a>
+        <a href={url(OPS.hero.secondary.href)}>{OPS.hero.secondary.label}</a>
+      </div>
+    </div>
+
+    <figure class="ops-panel ops-instrument">
+      <div class="ops-instrument-strip">
+        <span>{OPS.pulsePanel.headLeft(pulse.repos.length)}</span>
+        <span>{OPS.pulsePanel.headRight(stackWeekRange(pulse))}</span>
+      </div>
+      <div class="ops-instrument-body" set:html={stackSvg} />
+      <div class="ops-instrument-strip">
+        <span>{OPS.pulsePanel.footLeft}</span>
+        <span>{OPS.pulsePanel.footRight(pulse.as_of)}</span>
+      </div>
+    </figure>
+  </section>
+
+  {/* ── 2 · the board ──────────────────────────────────────────────────────────────────── */}
+  <section class="ops-section" id="board">
+    <div class="ops-head">
+      <p class="ops-kicker"><b>{OPS.board.kicker}</b> · {OPS.board.kickerSub}</p>
+      <a class="ops-headlink" href={url(OPS.board.link.href)}>{OPS.board.link.label}</a>
+    </div>
+
+    {board.map((group) => (
+      <div>
+        <p class="ops-group-label">{group.label}</p>
+        <ul class="ops-panel ops-board">
+          {group.rows.map((row) => (
+            <li>
+              <a class={`ops-row${voiceClass(row.voice)}`} href={url(row.href)}>
+                <span class="ops-led"></span>
+                <span>
+                  <span class="ops-row-name">{row.name}</span>
+                  <span class="ops-row-resident">{row.resident}</span>
+                </span>
+                <span class="ops-row-what">{row.what}</span>
+                <span class="ops-spark-cell">
+                  {row.spark ? (
+                    <svg class="ops-spark" viewBox={`0 0 ${SPARK_BOX.width} ${SPARK_BOX.height}`} preserveAspectRatio="none" aria-hidden="true">
+                      <path d={linePath(smooth3(row.spark), SPARK_BOX)} />
+                    </svg>
+                  ) : (
+                    <span class="ops-absent">no commit split yet</span>
+                  )}
+                </span>
+                <span class="ops-row-last-cell">
+                  {row.last ? (
+                    <>
+                      <span class="ops-row-last">{row.last.title}</span>
+                      <span class="ops-row-date">{row.last.meta}</span>
+                    </>
+                  ) : (
+                    <span class="ops-absent">{OPS.board.noWork}</span>
+                  )}
+                </span>
+                <span class="ops-row-status" data-status={row.status}>{row.status}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </section>
+
+  {/* ── 3 · the signal log ─────────────────────────────────────────────────────────────── */}
+  <section class="ops-section" id="latest">
+    <div class="ops-head">
+      <p class="ops-kicker"><b>{OPS.signal.kicker}</b> · {OPS.signal.kickerSub}</p>
+      <a class="ops-headlink" href={url(OPS.signal.link.href)}>{OPS.signal.link.label}</a>
+    </div>
+    <ul class="ops-panel ops-log">
+      {signal.map((entry, i) => (
+        /* The stagger comes from a class, not from an inline delay: this site's CSP drops inline
+           style attributes silently, so a per-row delay written that way would have failed
+           without a trace — and drift-check rule 3 catches it before it can. */
+        <li class={`ops-log-row-${Math.min(i, 7)}`}>
+          <a href={url(entry.href)}>
+            <span class="ops-log-date">{entry.date}</span>
+            <span class={`ops-log-ns${voiceClass(nsVoice[entry.ns] ?? null)}`}>{entry.practice}</span>
+            <span class="ops-log-title">
+              {entry.title}
+              {entry.withdrawn && <span class="ops-log-withdrawn">{NAMING.worksRegister.withdrawnLabel}</span>}
+            </span>
+            <span class="ops-log-kind">{entry.kind}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+    <p class="ops-foot-line">{OPS.signal.foot} <span class="ops-cursor">▍</span></p>
+  </section>
+
+  {/* ── 4 · live experiments ───────────────────────────────────────────────────────────── */}
+  <section class="ops-section" id="live">
+    <div class="ops-head">
+      <p class="ops-kicker"><b>{OPS.live.kicker}</b> · {OPS.live.kickerSub}</p>
+      <a class="ops-headlink" href={url(OPS.live.link.href)}>{OPS.live.link.label}</a>
+    </div>
+    <ul class="ops-tiles">
+      {tiles.map((tile) => (
+        <li>
+          <a class="ops-panel ops-tile" href={url(tile.href)}>
+            <span class="ops-tile-head">
+              <span class="ops-tile-name">{tile.name}</span>
+              <span class="ops-led"></span>
+            </span>
+            <span class="ops-tile-big">{tile.big}</span>
+            <span class="ops-tile-sub">{tile.sub}</span>
+            {/* Every mark is drawn from the same snapshot as the reading above it. aria-hidden:
+                the number and the sentence already carry the meaning; the mark is its shape. */}
+            <svg class="ops-tile-viz" viewBox="0 0 96 26" preserveAspectRatio="none" aria-hidden="true">
+              {tile.viz.kind === 'line' && <path class="ops-mark-line" d={linePath(smooth3(tile.viz.values))} />}
+              {tile.viz.kind === 'bars' &&
+                bars(tile.viz.values, new Set(tile.viz.marked)).map((b) => (
+                  <rect class={b.marked ? 'ops-mark' : 'ops-mark-dim'} x={b.x} y={b.y} width={b.width} height={b.height} />
+                ))}
+              {tile.viz.kind === 'cells' &&
+                cells(tile.viz.count, new Set(tile.viz.marked)).map((c) => (
+                  <rect class={c.marked ? 'ops-mark-dim' : 'ops-mark'} x={c.x} y={c.y} width={c.width} height={c.height} />
+                ))}
+              {tile.viz.kind === 'ratio' &&
+                ratioBars(tile.viz.part, tile.viz.whole).map((b) => (
+                  <rect class={b.marked ? 'ops-mark' : 'ops-mark-dim'} x={b.x} y={b.y} width={b.width} height={b.height} />
+                ))}
+            </svg>
+            <span class="ops-tile-stamp">{tile.stamp}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+    {/* The named catalogues, and the room that holds all of them. The index link is not
+        decoration: /catalogues had no inbound link anywhere on the site while sitting in the
+        sitemap — found 2026-08-12 in the orphan audit after the ecology v3 rebuild. */}
+    <p class="ops-catalogues">
+      {OPS.live.cataloguesLead}
+      {catalogues.map((c, i) => (
+        <>
+          {i > 0 && ' · '}
+          <a href={url(c.href)}>{c.name}</a>
+        </>
+      ))}
+      {' · '}<a href={url(NAMING.catalogues.href)}>{NAMING.catalogues.indexLabel}</a>
+    </p>
+  </section>
+
+  {/* ── 5 · the other houses ───────────────────────────────────────────────────────────── */}
+  <section class="ops-section" id="travel">
+    {/* The travel block's own kicker pair, not its long note: a section heading in a status board
+        is a label, and travel.note is a sentence. It still stands, on /ecology, where the section
+        has room for it. */}
+    <p class="ops-kicker"><b>{NAMING.travel.kicker}</b> · {NAMING.travel.kickerSub}</p>
+    <ul class="ops-houses">
+      {NAMING.travel.items.map((house) => (
+        <li>
+          <a class="ops-panel ops-house" href={house.href} target="_blank" rel="noreferrer">
+            <span class="ops-house-name"><span>{house.name}</span><span>↗</span></span>
+            <span class="ops-house-line">{house.description}</span>
+            {house.resident && <span class="ops-house-resident">{house.resident.lead} {house.resident.label}</span>}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+</main>
+
+<style>
+  /* The signal log's stagger. Eight declared steps rather than an inline delay per row, because
+     this site's CSP drops inline style attributes — the rows would simply all have arrived at
+     once, silently. Eight is the ceiling the strip can ever render. */
+  .ops-log-row-0 { animation-delay: 0s; }
+  .ops-log-row-1 { animation-delay: 0.08s; }
+  .ops-log-row-2 { animation-delay: 0.16s; }
+  .ops-log-row-3 { animation-delay: 0.24s; }
+  .ops-log-row-4 { animation-delay: 0.32s; }
+  .ops-log-row-5 { animation-delay: 0.4s; }
+  .ops-log-row-6 { animation-delay: 0.48s; }
+  .ops-log-row-7 { animation-delay: 0.56s; }
+</style>
+
+<script>
+  // The room's only moving parts: the UTC clock and the dots walking the pulse. ONE
+  // requestAnimationFrame loop drives both — a throttled background tab resumes it correctly,
+  // where a pair of setIntervals would drift apart and need reconciling.
+  //
+  // The dots read their positions off the drawn tracks with getPointAtLength, so this script owns
+  // no geometry: whatever src/lib/ops/stack.ts drew is what they walk. If the markup ever changes
+  // shape, they stop moving; they cannot start moving along a line that is not there.
+  const room = document.querySelector<HTMLElement>('[data-ops-room]')
+  if (room) {
+    const clock = room.querySelector<HTMLElement>('[data-ops-clock]')
+    const pad = (n: number) => String(n).padStart(2, '0')
+    const stamp = (d: Date) =>
+      `${d.getUTCFullYear()}-${pad(d.getUTCMonth() + 1)}-${pad(d.getUTCDate())} ` +
+      `${pad(d.getUTCHours())}:${pad(d.getUTCMinutes())}:${pad(d.getUTCSeconds())} UTC`
+
+    if (clock) clock.textContent = stamp(new Date())
+
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)')
+
+    const dots = [...room.querySelectorAll<SVGCircleElement>('.ops-dot')].map((el) => {
+      const track = room.querySelector<SVGPathElement>(`#ops-track-${el.dataset.track}`)
+      return track ? { el, track, length: track.getTotalLength(), speed: Number(el.dataset.speed), phase: Number(el.dataset.phase) } : null
+    })
+    const walkers = dots.filter((d): d is NonNullable<typeof d> => d !== null && d.length > 0)
+
+    let lastTick = 0
+    let lastSecond = ''
+    const step = (now: number) => {
+      requestAnimationFrame(step)
+      // ~10 fps is enough for a drifting dot and keeps the main thread free; the clock only ever
+      // repaints when the rendered second actually changed.
+      if (now - lastTick < 100) return
+      lastTick = now
+
+      if (clock) {
+        const next = stamp(new Date())
+        if (next !== lastSecond) {
+          clock.textContent = next
+          lastSecond = next
+        }
+      }
+
+      if (reduced.matches) return
+      const seconds = now / 1000
+      for (const dot of walkers) {
+        const t = ((seconds * dot.speed + dot.phase) % 1 + 1) % 1
+        const p = dot.track.getPointAtLength(t * dot.length)
+        dot.el.setAttribute('cx', p.x.toFixed(1))
+        dot.el.setAttribute('cy', p.y.toFixed(1))
+      }
+    }
+    requestAnimationFrame(step)
+  }
+</script>

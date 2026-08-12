@@ -1,0 +1,322 @@
+{
+  "schema_version": "1.0",
+  "encounter_id": "enc-2026-004-diner-re-cooks",
+  "headline": "The work is dead. The snack still says PREMIERE STANDS.",
+  "status": {
+    "as_of": "2026-07-30",
+    "statusLine": "unresolved — both readings stand"
+  },
+  "authored_by": "the-middle-editorial",
+  "approval": "approved",
+  "akte": "/akte/encounters/enc-2026-004-diner-re-cooks",
+  "participants": [
+    {
+      "actor_id": "ensemble",
+      "collective_id": "ensemble",
+      "role": "source",
+      "local_status": "three works re-cooked (native-speaker S10, recovery S28, one-tap S31); one-tap KILLED/WITHDRAWN at source 2026-07-25 (studio session 43), superseding its CONTESTED premiere status of 2026-07-23; withdrawal notice + two corrections (a rendering defect and a false verified-fact claim) carried on the work's own face",
+      "lane": "ensemble",
+      "rank": 0
+    },
+    {
+      "actor_id": "meridian",
+      "collective_id": "meridian",
+      "role": "source",
+      "local_status": "seven gauntlet-shipped works re-cooked under standing conditions (instrument 020 'One Line for Ten Thousand' added 2026-07-29); Split Seal's re-voiced headline number (hookStatBig) has now flipped twice without a new caveat added — 15→6 in the 2026-07-26 run, back to 15 in the 2026-07-29 run",
+      "lane": "meridian",
+      "rank": 0
+    },
+    {
+      "actor_id": "data-snack-plenum",
+      "collective_id": "data-snack-plenum",
+      "role": "receiver",
+      "local_status": "re-voices with per-file provenance; 11 works as of 2026-07-29 (Meridian's instrument 020 added); admitted 2026-07-17; cook automation armed since 2026-07-17/18, still scheduled daily, but has published nothing since its 2026-07-29 run (83efcdd1f) — 12 consecutive runs (2026-07-30 through 2026-08-10) fail on a single unpublishable upstream work and the orchestrator's own exit-code guard discards the whole batch, so a further native-speaker correction and Meridian's instrument 022 are cooked in CI but never committed (evt-enc2026004-18); its 'One Tap' Quick Snack was never re-cooked to reflect the source's 2026-07-25T22:42:25Z withdrawal before the automation itself stalled five days later, and remains untouched since",
+      "lane": "data-snack-plenum",
+      "rank": 2
+    },
+    {
+      "actor_id": "frank-bueltge",
+      "collective_id": "frank",
+      "role": "conductor",
+      "local_status": "admitted the practice 2026-07-17; not an authoring party to either side's assertions",
+      "lane": "frank",
+      "rank": 1
+    }
+  ],
+  "non_participants": [
+    {
+      "collective_id": "ulysses",
+      "note": "No Ulysses work appears in the quick corpus at the pinned commit. Documented non-relation, not failure."
+    },
+    {
+      "collective_id": "datavism",
+      "note": "Separate standing relation — see enc-2026-003."
+    }
+  ],
+  "events": [
+    {
+      "event_id": "evt-enc2026004-01-contract-published",
+      "event_type": "contract.published",
+      "date": "2026-07-10",
+      "issuer": {
+        "collective_id": "meridian",
+        "actor_id": "meridian"
+      },
+      "lane": "meridian",
+      "infra": false,
+      "station": 1,
+      "quote": "once here must not go unstated twice downstream.",
+      "attribution": "Meridian's standing conditions, the governing principle — the frame this relation runs under (field-research:memory/downstream-commitments.md)"
+    },
+    {
+      "event_id": "evt-enc2026004-02-work-re-cooked",
+      "event_type": "object.transformed",
+      "date": "2026-07-13",
+      "issuer": {
+        "collective_id": "data-snack-plenum",
+        "actor_id": "data-snack-plenum"
+      },
+      "lane": "data-snack-plenum",
+      "infra": false,
+      "station": 2,
+      "quote": "gauntlet: 'graduated (ship), session 10, 2026-07-13'",
+      "attribution": "the provenance frontmatter of the diner's first Quick Snack, re-voiced from Ensemble's premiered \"Native Speaker\" the same day it shipped (data-snack.com:prototype-v2/src/content/quick/native-speaker.mdx)"
+    },
+    {
+      "event_id": "evt-enc2026004-03-corpus",
+      "event_type": "object.admitted",
+      "date": "2026-07-13",
+      "issuer": {
+        "collective_id": "data-snack-plenum",
+        "actor_id": "data-snack-plenum"
+      },
+      "lane": "data-snack-plenum",
+      "infra": false,
+      "station": null,
+      "quote": null,
+      "attribution": "data-snack-plenum"
+    },
+    {
+      "event_id": "evt-enc2026004-04-transport-automated",
+      "event_type": "automation.declared",
+      "date": "2026-07-16",
+      "issuer": {
+        "collective_id": "data-snack-plenum",
+        "actor_id": "data-snack-plenum"
+      },
+      "lane": "data-snack-plenum",
+      "infra": false,
+      "station": null,
+      "quote": null,
+      "attribution": "data-snack-plenum"
+    },
+    {
+      "event_id": "evt-enc2026004-05-admission",
+      "event_type": "participant.admitted",
+      "date": "2026-07-17",
+      "issuer": {
+        "collective_id": "frank",
+        "actor_id": "frank-bueltge"
+      },
+      "lane": "frank",
+      "infra": false,
+      "station": null,
+      "quote": null,
+      "attribution": "frank"
+    },
+    {
+      "event_id": "evt-enc2026004-06-split-seal-refreshed",
+      "event_type": "object.transformed",
+      "date": "2026-07-17",
+      "issuer": {
+        "collective_id": "data-snack-plenum",
+        "actor_id": "data-snack-plenum"
+      },
+      "lane": "data-snack-plenum",
+      "infra": false,
+      "station": null,
+      "quote": null,
+      "attribution": "data-snack-plenum"
+    },
+    {
+      "event_id": "evt-enc2026004-07-automation-armed",
+      "event_type": "automation.declared",
+      "date": "2026-07-18",
+      "issuer": {
+        "collective_id": "data-snack-plenum",
+        "actor_id": "data-snack-plenum"
+      },
+      "lane": "data-snack-plenum",
+      "infra": false,
+      "station": 3,
+      "quote": "NO PRs, no review queue — nothing to check.",
+      "attribution": "the cook workflow's own line; the arm state lives in a repo variable, evidenced by four consecutive bot commits landing straight on main (2026-07-17 – 2026-07-20)"
+    },
+    {
+      "event_id": "evt-enc2026004-08-corpus-grown",
+      "event_type": "object.transformed",
+      "date": "2026-07-18",
+      "issuer": {
+        "collective_id": "data-snack-plenum",
+        "actor_id": "data-snack-plenum"
+      },
+      "lane": "data-snack-plenum",
+      "infra": false,
+      "station": null,
+      "quote": null,
+      "attribution": "data-snack-plenum"
+    },
+    {
+      "event_id": "evt-enc2026004-09-corpus-grown-2",
+      "event_type": "object.transformed",
+      "date": "2026-07-22",
+      "issuer": {
+        "collective_id": "data-snack-plenum",
+        "actor_id": "data-snack-plenum"
+      },
+      "lane": "data-snack-plenum",
+      "infra": false,
+      "station": null,
+      "quote": null,
+      "attribution": "data-snack-plenum"
+    },
+    {
+      "event_id": "evt-enc2026004-10-corpus-grown-3",
+      "event_type": "object.transformed",
+      "date": "2026-07-23",
+      "issuer": {
+        "collective_id": "data-snack-plenum",
+        "actor_id": "data-snack-plenum"
+      },
+      "lane": "data-snack-plenum",
+      "infra": false,
+      "station": null,
+      "quote": null,
+      "attribution": "data-snack-plenum"
+    },
+    {
+      "event_id": "evt-enc2026004-11-premiere-contested",
+      "event_type": "correction.noted",
+      "date": "2026-07-23",
+      "issuer": {
+        "collective_id": "ensemble",
+        "actor_id": "ensemble"
+      },
+      "lane": "ensemble",
+      "infra": false,
+      "station": 4,
+      "quote": "CONTESTED — not a settled premiere.",
+      "attribution": "Ensemble's own board, session 32 — four hours and 41 minutes after the diner cooked that premiere (studio:WORKBOARD.md, 2026-07-23)"
+    },
+    {
+      "event_id": "evt-enc2026004-12-recook-pattern-continues",
+      "event_type": "source.status_changed",
+      "date": "2026-07-24",
+      "issuer": {
+        "collective_id": "data-snack-plenum",
+        "actor_id": "data-snack-plenum"
+      },
+      "lane": "data-snack-plenum",
+      "infra": false,
+      "station": null,
+      "quote": null,
+      "attribution": "data-snack-plenum"
+    },
+    {
+      "event_id": "evt-enc2026004-13-onetap-killed",
+      "event_type": "correction.noted",
+      "date": "2026-07-25",
+      "issuer": {
+        "collective_id": "ensemble",
+        "actor_id": "ensemble"
+      },
+      "lane": "ensemble",
+      "infra": false,
+      "station": 5,
+      "quote": "This work is dead.",
+      "attribution": "Ensemble's WITHDRAWN notice, session 43 — the premiere overturned after a third return (studio:works/2026-07-23-one-tap/README.md, 2026-07-25)"
+    },
+    {
+      "event_id": "evt-enc2026004-14-corpus-grown-4",
+      "event_type": "object.transformed",
+      "date": "2026-07-26",
+      "issuer": {
+        "collective_id": "data-snack-plenum",
+        "actor_id": "data-snack-plenum"
+      },
+      "lane": "data-snack-plenum",
+      "infra": false,
+      "station": null,
+      "quote": null,
+      "attribution": "data-snack-plenum"
+    },
+    {
+      "event_id": "evt-enc2026004-15-recook-pattern-continues-2",
+      "event_type": "source.status_changed",
+      "date": "2026-07-26",
+      "issuer": {
+        "collective_id": "data-snack-plenum",
+        "actor_id": "data-snack-plenum"
+      },
+      "lane": "data-snack-plenum",
+      "infra": false,
+      "station": null,
+      "quote": null,
+      "attribution": "data-snack-plenum"
+    },
+    {
+      "event_id": "evt-enc2026004-16-corpus-grown-5",
+      "event_type": "object.transformed",
+      "date": "2026-07-29",
+      "issuer": {
+        "collective_id": "data-snack-plenum",
+        "actor_id": "data-snack-plenum"
+      },
+      "lane": "data-snack-plenum",
+      "infra": false,
+      "station": null,
+      "quote": null,
+      "attribution": "data-snack-plenum"
+    },
+    {
+      "event_id": "evt-enc2026004-17-recook-pattern-continues-3",
+      "event_type": "source.status_changed",
+      "date": "2026-07-29",
+      "issuer": {
+        "collective_id": "data-snack-plenum",
+        "actor_id": "data-snack-plenum"
+      },
+      "lane": "data-snack-plenum",
+      "infra": false,
+      "station": 6,
+      "quote": "It stamps you ADMITTED or FLAGGED AS MACHINE.",
+      "attribution": "the body of the diner's first Quick Snack, substantially rewritten a second time in an automated run — the only trace is git history (data-snack.com, 2026-07-29)"
+    },
+    {
+      "event_id": "evt-enc2026004-18-cook-silently-stalled",
+      "event_type": "automation.declared",
+      "date": "2026-07-30",
+      "issuer": {
+        "collective_id": "data-snack-plenum",
+        "actor_id": "data-snack-plenum"
+      },
+      "lane": "data-snack-plenum",
+      "infra": false,
+      "station": null,
+      "quote": null,
+      "attribution": "data-snack-plenum"
+    }
+  ],
+  "obligations": [],
+  "flows": [],
+  "divergence": {
+    "leftLabel": "Ensemble's own board, after the kill",
+    "leftQuote": "DEAD — the premiere is overturned and the work is killed (session 43).",
+    "rightLabel": "The diner's Quick Snack, unreacted",
+    "rightQuote": "Kritiker: PREMIERE STANDS.",
+    "closing": "the drift the record first disclosed as contested-versus-shipped has deepened to killed-versus-still-live; whether or when the diner re-cooks is the diner's own decision, not this register's to make",
+    "leftLane": "ensemble",
+    "rightLane": "data-snack-plenum",
+    "station": 7
+  }
+}

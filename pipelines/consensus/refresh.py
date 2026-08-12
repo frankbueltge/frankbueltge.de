@@ -2,96 +2,118 @@
 """
 The Consensus — Gegenmessung I.
 
-Misst den orchestrierten Konsens: wie viel des scheinbar unabhängigen
-Nachrichten-Konsenses in Wahrheit EINE Quelle ist, wortgleich über nominell
-unabhängige Medien kopiert.
+Measures orchestrated consensus: how much of the seemingly independent news
+consensus is in truth ONE source, copied word-for-word across nominally
+independent outlets.
 
-Verfahren (deterministisch, kein LLM):
-  1. acht breite Nachrichten-Beats über die GDELT DOC 2.0 API abrufen (frei, keine Auth),
-  2. Artikel poolen (Dedupe nach URL),
-  3. wortgleiche 6-Gramm-Phrasen je Titel über DISTINKTE Quell-Domains zählen,
-  4. die Maschine wählt selbst: die Phrase mit der höchsten Domain-Streuung ist die
-     "Schlagzeile des Tages" — der Satz, den die meisten "unabhängigen" Medien
-     wortgleich brachten,
-  5. Echo-Index = Anteil der Titel, die zu irgendeinem >=3-Domain-Echo-Cluster gehören.
+Method v2 (deterministic, no LLM; dated break 2026-08-06):
+  1. fetch the last 24 h of GDELT's raw 15-minute GKG 2.1 files (96 static
+     downloads from data.gdeltproject.org — no API, no key, no rate limit),
+  2. pool articles (title from PAGE_TITLE, dedupe by URL),
+  3. count verbatim 6-gram title phrases across DISTINCT source domains,
+  4. the machine picks its own headline: the phrase with the widest domain
+     spread is the "sentence of the day" — the one most "independent"
+     outlets ran word-for-word,
+  5. echo index = share of titles belonging to any >=3-domain echo cluster.
 
-Output: src/data/consensus/latest.json (+ Archiv <datum>.json). Git ist das Archiv.
+Method history — the break is disclosed, not smoothed over:
+  * v1 (2026-06-22 .. 2026-08-05): pool = 8 beat queries against the GDELT
+    DOC 2.0 API, max 250 articles each. The API's sticky per-IP 429 blocks
+    finally broke 5 of 8 beats on 2026-08-05, and its artlist titles turn
+    out to be degraded strings (dropped apostrophes, truncation) — a real
+    material defect for a verbatim-matching instrument.
+  * v2 (since 2026-08-06): pool = the full English-monitored raw stream
+    (~100k+ articles/day) with faithful page titles. A same-window
+    comparison on 2026-08-05 measured echo_index 0.313 (raw, 114,207
+    articles) vs 0.300 (API, 727 articles) — the quotient survives the pool
+    change; the material is truer. The soft (paraphrase) pass is SUSPENDED
+    in v2: its token blocking was calibrated for ~2k pools and does not
+    survive 100k+; committed v1 days keep their soft values, v2 days carry
+    none until the pass is rebuilt for full-stream scale.
+
+Output: src/data/consensus/latest.json (+ archive <date>.json). Git is the
+archive; committed day files are immutable and never backfilled or
+overwritten across method versions (main() refuses).
+
+Evidence track (2026-08-04): each story carries `articles` — per distinct
+domain the earliest article URL GDELT saw — so the site can link every
+masthead to the article that carried the sentence.
 """
 import json
 import math
 import re
 import sys
 import time
-import urllib.parse
-import urllib.request
 from collections import Counter, defaultdict
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
-API = "https://api.gdeltproject.org/api/v2/doc/doc"
-UA = "Mozilla/5.0 (frankbueltge.de The Consensus / counter-measurement research)"
-BEATS = ["politics", "economy", "technology", "health", "science", "business", "sports", "weather"]
-SHINGLE_N = 6          # 6-Wort-Phrasen — spezifisch genug, dass Treffer keine Floskeln sind
-MIN_DOMAINS = 3        # ein "Echo" gilt ab drei verschiedenen Quellen
-MAXRECORDS = 250
-TIMESPAN = "24H"
+SHINGLE_N = 6          # 6-word phrases — specific enough that a match is no stock phrase
+MIN_DOMAINS = 3        # an "echo" starts at three distinct sources
+SLOTS_PER_DAY = 96     # 24 h of 15-minute GKG files
+METHOD_VERSION = "v2-raw-files"
+METHOD_SINCE = "2026-08-06"
+SOFT_PASS_ENABLED = False  # suspended in v2 — token blocking was calibrated for ~2k pools
+# The syndication classifier is versioned separately from the pool method: c2 classifies on
+# every domain of the phrase, c1 (implicit, unrecorded) classified on the 40-name display list.
+CLASSIFIER_VERSION = "c2-full-domain-set"
+CLASSIFIER_SINCE = "2026-08-09"
 
 ROOT = Path(__file__).resolve().parents[2]
 OUT_DIR = ROOT / "src" / "data" / "consensus"
-CACHE = Path("/tmp/consensus_corpus.json")  # roher Pool — erlaubt Offline-Reprocess ohne GDELT
+CACHE = Path("/tmp/consensus_corpus.json")  # raw pool — allows offline reprocess without GDELT
+
+# The raw-file fetch layer is shared with pipelines/newspool (single source of truth).
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "newspool"))
+from fetch_pool import fetch_slot, parse_gkg  # noqa: E402
 
 
-_last_call = [0.0]
+def last_slots(n: int = SLOTS_PER_DAY) -> list[str]:
+    """The n most recent COMPLETED 15-minute slot stamps, oldest first.
+
+    The newest included slot is one stride behind the current quarter hour —
+    the file for the running quarter may not be published yet, and a
+    predictable window beats a racy one.
+    """
+    now = datetime.now(timezone.utc)
+    newest = now.replace(minute=(now.minute // 15) * 15, second=0, microsecond=0) - timedelta(minutes=15)
+    return [(newest - timedelta(minutes=15 * i)).strftime("%Y%m%d%H%M%S") for i in range(n)][::-1]
 
 
-def _pace(min_gap: float = 5.5) -> None:
-    """GDELT erlaubt 1 Request / 5 s — vor jedem Aufruf aktiv takten statt nachträglich retryen."""
-    wait = min_gap - (time.monotonic() - _last_call[0])
-    if wait > 0:
-        time.sleep(wait)
-    _last_call[0] = time.monotonic()
+def fetch_articles() -> tuple[list[dict], dict]:
+    """Pool the last 24 h of raw GKG files: url-deduped articles + fetch stats.
 
-
-# Beats, deren Abruf nach allen Retries scheiterte — fließt als Ausfallvermerk ins JSON
-# (Lab-Regel: „Feststellung entfällt" statt stiller Lücke, die wie ein ruhiger Tag aussieht).
-_beats_failed = [0]
-
-
-def fetch(query: str, retries: int = 4) -> list[dict]:
-    """Ein Beat über die GDELT DOC API; respektiert das 1-Request-/-5-s-Limit.
-    Backoff exponentiell (6/12/24 s) — GitHub-Runner teilen sich IPs, 429 ist kollektiv."""
-    params = urllib.parse.urlencode(
-        {
-            "query": f'"{query}" sourcelang:english',
-            "mode": "artlist",
-            "format": "json",
-            "maxrecords": MAXRECORDS,
-            "timespan": TIMESPAN,
-            "sort": "datedesc",
-        }
-    )
-    url = f"{API}?{params}"
-    for attempt in range(retries):
-        _pace()
-        try:
-            req = urllib.request.Request(url, headers={"User-Agent": UA})
-            with urllib.request.urlopen(req, timeout=60) as r:
-                raw = r.read().decode("utf-8", "replace")
-        except Exception as e:  # Netz-/Timeout-Fehler: exponentiell warten, erneut
-            print(f"  ! {query}: {e}", file=sys.stderr)
-            if attempt < retries - 1:
-                time.sleep(6 * (2**attempt))
+    A slot that stays absent after retries is a DISCLOSED gap in the stats
+    (lab rule: a gap is recorded, never bridged into a quieter-looking day).
+    """
+    slots = last_slots()
+    pooled: dict[str, dict] = {}
+    missing: list[str] = []
+    for k, stamp in enumerate(slots):
+        raw = fetch_slot(stamp)
+        if raw is None:
+            missing.append(stamp)
+            print(f"  gap {stamp} (slot absent after retries)", file=sys.stderr)
             continue
-        if raw.lstrip().startswith("Please limit"):
-            if attempt < retries - 1:
-                time.sleep(6 * (2**attempt))
-            continue
-        try:
-            return json.loads(raw).get("articles", [])
-        except json.JSONDecodeError:
-            return []
-    _beats_failed[0] += 1
-    return []
+        for row in parse_gkg(raw):
+            if row["url"] not in pooled:
+                s = row["seen"]
+                pooled[row["url"]] = {
+                    "url": row["url"],
+                    "domain": row["domain"],
+                    "title": row["title"],
+                    "seendate": f"{s[:8]}T{s[8:]}Z",
+                }
+        if (k + 1) % 16 == 0:
+            print(f"  {k + 1}/{len(slots)} slots, pool {len(pooled)}", file=sys.stderr)
+        time.sleep(0.3)  # politeness between static-file downloads
+    fetch_stats = {
+        "slots_expected": len(slots),
+        "slots_fetched": len(slots) - len(missing),
+        "slots_missing": missing,
+        "window": f"{slots[0]} .. {slots[-1]} UTC",
+    }
+    return list(pooled.values()), fetch_stats
 
 
 def parse_seen(s: str):
@@ -266,11 +288,29 @@ def analyse(articles: list[dict]) -> dict:
                     cascade.append({"at": sd.isoformat(timespec="minutes"), "domain": dom})
                 if len(cascade) >= 12:
                     break
+        # Evidence track (added 2026-08-04): one retrievable article URL per domain —
+        # the earliest GDELT saw — so every masthead chip on the site can link to the
+        # article that actually carried the sentence. Without this the claim
+        # "word-for-word across N outlets" was asserted, not checkable.
+        per_dom: dict[str, dict] = {}
+        for i in arts:
+            a = articles[i]
+            dom, art_url = a.get("domain", ""), a.get("url", "")
+            if not dom or not art_url:
+                continue
+            sd = parse_seen(a.get("seendate", ""))
+            at = sd.isoformat(timespec="minutes") if sd else ""
+            prev = per_dom.get(dom)
+            if prev is None or (at and (not prev["at"] or at < prev["at"])):
+                per_dom[dom] = {"domain": dom, "url": art_url, "at": at}
+        evidence = sorted(per_dom.values(), key=lambda e: (e["at"] or "9999", e["domain"]))[:40]
         return {
             "phrase": phrase,
             "sample_title": rep,
             "domain_count": len(doms),
             "mastheads": sorted(doms)[:40],
+            "_doms": sorted(doms),  # full set for the classifier; mastheads stay a display list
+            "articles": evidence,
             "article_count": len(arts),
             "first_domain": first_dom,
             "first_seen": first_at,
@@ -287,21 +327,38 @@ def analyse(articles: list[dict]) -> dict:
     echoed = sum(1 for sh in art_shingles if sh & echo_phrases)
     echo_index = round(echoed / len(articles), 3) if articles else 0.0
 
-    # v2 — paraphrasierte Koordination (TF-IDF/Cosinus); v3 — symbolische Klassifikation
-    vecs = tfidf_vectors([a.get("title", "") for a in articles])
-    seed_groups = [list(phrase_arts[p]) for p in echo_phrases]  # verbatim-Cluster als Seed
-    soft = soft_clusters(articles, vecs, seed_groups=seed_groups)
-    soft_idx = {i for g in soft for i in g}
-    soft_echo_index = round(len(soft_idx) / len(articles), 3) if articles else 0.0
+    # Paraphrase pass (TF-IDF/cosine) — SUSPENDED in v2: the token blocking
+    # (>60 docs skipped) was calibrated for ~2k-article pools and degenerates
+    # on the 100k+ raw stream. Suspended openly rather than run meaninglessly;
+    # committed v1 days keep their soft values. soft_echo_index is None until
+    # the pass is rebuilt for full-stream scale (e.g. MinHash/LSH).
+    soft: list[list[int]] = []
+    soft_echo_index: float | None = None
+    if SOFT_PASS_ENABLED:
+        vecs = tfidf_vectors([a.get("title", "") for a in articles])
+        seed_groups = [list(phrase_arts[p]) for p in echo_phrases]
+        soft = soft_clusters(articles, vecs, seed_groups=seed_groups)
+        soft_idx = {i for g in soft for i in g}
+        soft_echo_index = round(len(soft_idx) / len(articles), 3) if articles else 0.0
 
     def enrich(story: dict | None) -> None:
         if not story:
             return
+        # Classify on ALL the phrase's domains, not on the 40-name display list.
+        # Dated fix, 2026-08-09 (classifier c2): `mastheads` is truncated to 40 for the
+        # page, and enrich() used to hand that truncated list to the classifier — so on a
+        # day whose widest sentence ran across 200+ outlets, the TLD share and the label
+        # were computed from an alphabetical slice of a fifth of them. Committed days keep
+        # the values they were measured with (the archive is not rewritten); days from here
+        # carry `classifier: c2` and are the ones comparable with the BigQuery baseline,
+        # which has always classified on the full set (src/data/consensus/baseline.json).
         story["syndication"] = classify_syndication(
-            story["mastheads"], story.get("span_hours"), story["domain_count"]
+            story.get("_doms") or story["mastheads"], story.get("span_hours"), story["domain_count"]
         )
+        if not SOFT_PASS_ENABLED:
+            return  # v2: no paraphrase fields — absent, not zero-faked
         arts = story.get("_arts", set())
-        # weiches Cluster, das die Schlagzeile enthält → zusätzliche Domains durch Paraphrase
+        # soft cluster containing the headline → extra domains via paraphrase
         host = max(soft, key=lambda g: len(set(g) & arts), default=None)
         if host and (set(host) & arts):
             soft_doms = {articles[i].get("domain", "") for i in host}
@@ -316,6 +373,7 @@ def analyse(articles: list[dict]) -> dict:
     for s in (headline, runner_up):
         if s:
             s.pop("_arts", None)
+            s.pop("_doms", None)
     return {
         "headline": headline,
         "runner_up": runner_up,
@@ -328,56 +386,63 @@ def main() -> int:
     reprocess = "--reprocess" in sys.argv
     if reprocess and CACHE.exists():
         cached = json.loads(CACHE.read_text())
-        articles, per_beat = cached["articles"], cached["per_beat"]
-        print(f"Reprocess aus Cache: {len(articles)} Artikel (kein GDELT-Abruf).", file=sys.stderr)
+        articles, fetch_stats = cached["articles"], cached["fetch_stats"]
+        print(f"Reprocess from cache: {len(articles)} articles (no GDELT fetch).", file=sys.stderr)
     else:
-        pooled: dict[str, dict] = {}
-        per_beat = {}
-        for beat in BEATS:
-            arts = fetch(beat)
-            per_beat[beat] = len(arts)
-            for a in arts:
-                url = a.get("url")
-                if url and url not in pooled:
-                    pooled[url] = a
-            print(f"  {beat}: {len(arts)} Artikel (Pool {len(pooled)})", file=sys.stderr)
-        articles = list(pooled.values())
-        CACHE.write_text(json.dumps({"articles": articles, "per_beat": per_beat}))
+        articles, fetch_stats = fetch_articles()
+        CACHE.write_text(json.dumps({"articles": articles, "fetch_stats": fetch_stats}))
     result = analyse(articles)
     now = datetime.now(timezone.utc)
     out = {
         "generated_at": now.isoformat(timespec="seconds"),
         "date": now.strftime("%Y-%m-%d"),
+        "method": {
+            "version": METHOD_VERSION,
+            "since": METHOD_SINCE,
+            "classifier": CLASSIFIER_VERSION,
+            "classifier_since": CLASSIFIER_SINCE,
+            "soft_pass": "suspended — token blocking was calibrated for ~2k pools; "
+                         "rebuild for full-stream scale pending",
+        },
         "echo_index": result["echo_index"],
-        "soft_echo_index": result["soft_echo_index"],
         "headline": result["headline"],
         "runner_up": result["runner_up"],
         "stats": {
             "articles_scanned": len(articles),
             "domains_scanned": len({a.get("domain", "") for a in articles}),
-            "beats": BEATS,
-            "per_beat": per_beat,
-            "beats_failed": _beats_failed[0],
             "shingle_n": SHINGLE_N,
             "min_domains": MIN_DOMAINS,
+            **fetch_stats,
         },
         "source": {
-            "name": "GDELT DOC 2.0 API",
-            "url": "https://blog.gdeltproject.org/gdelt-doc-2-0-api-debuts/",
+            "name": "GDELT GKG 2.1 raw files (15-minute stream)",
+            "url": "https://blog.gdeltproject.org/gkg-2-0-now-includes-page-titles/",
             "license": "GDELT — open / frei nutzbar",
             "retrieved": now.strftime("%Y-%m-%d"),
         },
     }
+    if result["soft_echo_index"] is not None:
+        out["soft_echo_index"] = result["soft_echo_index"]
     OUT_DIR.mkdir(parents=True, exist_ok=True)
+    day_path = OUT_DIR / f"{out['date']}.json"
+    if day_path.exists():
+        prev = json.loads(day_path.read_text())
+        prev_version = (prev.get("method") or {}).get("version", "v1-doc-api")
+        if prev_version != METHOD_VERSION:
+            # Archive files are immutable record: never replace a committed day
+            # measured under another method version (would rewrite history).
+            print(f"REFUSED: {day_path.name} exists with method {prev_version}; "
+                  f"not overwriting with {METHOD_VERSION}.", file=sys.stderr)
+            return 1
     (OUT_DIR / "latest.json").write_text(json.dumps(out, ensure_ascii=False, indent=2) + "\n")
-    (OUT_DIR / f"{out['date']}.json").write_text(json.dumps(out, ensure_ascii=False, indent=2) + "\n")
+    day_path.write_text(json.dumps(out, ensure_ascii=False, indent=2) + "\n")
 
     h = result["headline"]
     if h:
-        print(f"\nSchlagzeile: \"{h['sample_title']}\"")
-        print(f"  {h['domain_count']} verschiedene Medien, wortgleich. Echo-Index {result['echo_index']}")
+        print(f"\nHeadline: \"{h['sample_title']}\"")
+        print(f"  {h['domain_count']} distinct outlets, word-for-word. Echo index {result['echo_index']}")
     else:
-        print("\nKein Echo-Cluster über der Schwelle gefunden.")
+        print("\nNo echo cluster above threshold.")
     return 0
 
 

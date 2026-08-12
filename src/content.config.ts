@@ -159,4 +159,9 @@ const studio = defineCollection({
   schema: z.object({}).loose(),
 })
 
+// The forked nightly line ("Error as Method") is deliberately NOT a collection. Its works are
+// mirrored to src/data/nightly and read as raw markdown, because a collection would hand their
+// text to Astro's asset pipeline, which resolves `![…](figure.svg)` against the source directory
+// — and the mirror puts that figure beside the ROUTE (public/error-as-method/<slug>/), which is
+// what makes the practice's own relative link work without anyone rewriting its text.
 export const collections = { lab, protokoll, atelier, field, plenum, studio, beifang }

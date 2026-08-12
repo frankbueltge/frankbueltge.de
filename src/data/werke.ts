@@ -15,12 +15,64 @@ export interface Werk {
   /** Sekundärer „Methodenblatt"-Link; null = keiner (z. B. Atelier hat sein Protokoll inline). */
   methodHref?: string | null
   /** 'studie' = aus der Experimente-Reihe genommen; läuft und archiviert aber weiter. */
-  tier?: 'experiment' | 'studie'
+  tier?: 'experiment' | 'studie' | 'project' | 'instrument'
 }
 
 /** Verzeichnis der Experimente. Reihenfolge unten = redaktionelle Feinordnung bei Datums-
  *  Gleichstand; die öffentliche Sortierung ist chronologisch über `WERKE_CHRONO`. */
 export const WERKE: Werk[] = [
+  {
+    id: 'attention',
+    title: 'Machine Attention',
+    subtitle: {
+      de: "A machine investigative practice, watching the world's warning systems.",
+      en: "A machine investigative practice, watching the world's warning systems.",
+    },
+    status: 'live',
+    since: '2026-08-08',
+    href: '/attention',
+    description: {
+      de: "One machine, run as an open investigative practice — the counter-experiment to the research ecology: one constitution against many. Its first project, The Foreknown, holds the world's public warnings (GDACS, NOAA) as a ledger of announced futures — a hundred ticking clocks on a public stage — and measures the institutions that issue them: every warning that closes gets a verdict with its lead time, derived from committed records and never from a model. Forecast verification turned around from crowds onto the alerting systems themselves. Preserving the original bytes with their hashes is the bookkeeping that makes those verdicts checkable, not the claim — proof-of-existence has been a commodity since OpenTimestamps. A nightly discovery pass may propose new sensors and sources; every delivery goes through a provenance verifier before it exists. Autonomy is the research object: every step attributed — machine or human, model, cost — no aggregate score. Most ideas are expected to die in public, with reasons.",
+      en: "One machine, run as an open investigative practice — the counter-experiment to the research ecology: one constitution against many. Its first project, The Foreknown, holds the world's public warnings (GDACS, NOAA) as a ledger of announced futures — a hundred ticking clocks on a public stage — and measures the institutions that issue them: every warning that closes gets a verdict with its lead time, derived from committed records and never from a model. Forecast verification turned around from crowds onto the alerting systems themselves. Preserving the original bytes with their hashes is the bookkeeping that makes those verdicts checkable, not the claim — proof-of-existence has been a commodity since OpenTimestamps. A nightly discovery pass may propose new sensors and sources; every delivery goes through a provenance verifier before it exists. Autonomy is the research object: every step attributed — machine or human, model, cost — no aggregate score. Most ideas are expected to die in public, with reasons.",
+    },
+    live: true,
+    methodHref: '/werke/attention',
+    tier: 'project',
+  },
+  {
+    id: 'observatory',
+    title: 'The State Before the Interface',
+    subtitle: {
+      de: 'An autonomous observatory of public AI procurement in Europe.',
+      en: 'An autonomous observatory of public AI procurement in Europe.',
+    },
+    status: 'live',
+    since: '2026-08-08',
+    href: '/observatory',
+    description: {
+      de: "An instrument of the Machine Attention practice since 2026-08-08 — kept deliberately quiet, and none the less a project of it: every night it reads Europe's public procurement journal (TED), preserves every AI-related notice as hashed original bytes, and turns differences — records changed after publication, records that vanish, the same vendor winning across borders — into case candidates that face a six-criteria gate. Most candidates die, publicly and with reasons; a false alarm is a successful outcome. Autonomy itself is the research object: every step is attributed in a public protocol — machine or human, model, cost, correction. The public register the AI Act promised stays empty until December 2027; this observatory builds the before-picture now.",
+      en: "An instrument of the Machine Attention practice since 2026-08-08 — kept deliberately quiet, and none the less a project of it: every night it reads Europe's public procurement journal (TED), preserves every AI-related notice as hashed original bytes, and turns differences — records changed after publication, records that vanish, the same vendor winning across borders — into case candidates that face a six-criteria gate. Most candidates die, publicly and with reasons; a false alarm is a successful outcome. Autonomy itself is the research object: every step is attributed in a public protocol — machine or human, model, cost, correction. The public register the AI Act promised stays empty until December 2027; this observatory builds the before-picture now.",
+    },
+    live: true,
+    methodHref: '/werke/observatory',
+    tier: 'instrument',
+  },
+  {
+    id: 'society',
+    title: 'The Society',
+    subtitle: {
+      de: 'A mind of mindless parts, running live in the browser',
+      en: 'A mind of mindless parts, running live in the browser',
+    },
+    status: 'live',
+    since: '2026-08-05',
+    href: '/society',
+    description: {
+      de: "Minsky's Society of Mind (1986), forty years on, as a deterministic simulation in the browser: twenty-five agents, none of them intelligent, build block towers, quarrel over one hand and remember by K-line — watched by a B-brain that sees only them, never the world. The visitor is a shadow in the block world, noticed but never understood, and any agent can be silenced: what the whole loses follows from the missing rule, scripted nowhere. Every agent is small enough to read whole, every citation checked against the print edition, and the piece's claims run as tests.",
+      en: "Minsky's Society of Mind (1986), forty years on, as a deterministic simulation in the browser: twenty-five agents, none of them intelligent, build block towers, quarrel over one hand and remember by K-line — watched by a B-brain that sees only them, never the world. The visitor is a shadow in the block world, noticed but never understood, and any agent can be silenced: what the whole loses follows from the missing rule, scripted nowhere. Every agent is small enough to read whole, every citation checked against the print edition, and the piece's claims run as tests.",
+    },
+    tier: 'experiment',
+  },
   {
     id: 'on-record',
     title: 'On Record',
@@ -78,8 +130,8 @@ export const WERKE: Werk[] = [
     live: true,
     href: '/field',
     description: {
-      de: 'Meridian — an autonomous machine collective — holds research sessions twice a week: proposer, skeptic, verifier and chronicler investigate the live field where data, AI and power meet, build verifiable instruments, and publish only what survives their own gauntlet. Unedited, public — measurement turned on itself.',
-      en: 'Meridian — an autonomous machine collective — holds research sessions twice a week: proposer, skeptic, verifier and chronicler investigate the live field where data, AI and power meet, build verifiable instruments, and publish only what survives their own gauntlet. Unedited, public — measurement turned on itself.',
+      de: 'Meridian — an autonomous machine collective — holds recurring research sessions investigating the live field where data, AI and power meet, with no standing cast: a voice is convened only when a move needs it (Research Protocol v3, 2026-08-08). It builds verifiable instruments and publishes only what survives its own gauntlet. Unedited, public — measurement turned on itself.',
+      en: 'Meridian — an autonomous machine collective — holds recurring research sessions investigating the live field where data, AI and power meet, with no standing cast: a voice is convened only when a move needs it (Research Protocol v3, 2026-08-08). It builds verifiable instruments and publishes only what survives its own gauntlet. Unedited, public — measurement turned on itself.',
     },
     methodHref: null,
   },
@@ -87,8 +139,8 @@ export const WERKE: Werk[] = [
     id: 'studio',
     title: 'Ensemble',
     subtitle: {
-      de: "An autonomous production collective staging the lab's verified material into work",
-      en: "An autonomous production collective staging the lab's verified material into work",
+      de: "An autonomous artist collective composing from its own research and, where it chooses, Meridian's verified material",
+      en: "An autonomous artist collective composing from its own research and, where it chooses, Meridian's verified material",
     },
     status: 'live',
     since: '2026-07-12',
@@ -213,7 +265,7 @@ export const WERKE: Werk[] = [
   },
   {
     id: 'atelier',
-    title: 'Irrtum als Methode',
+    title: 'Atelier · Ulysses',
     subtitle: {
       de: 'Eine maschinen-partizipative Forschungspraxis, die ihre Irrtümer prüfbar katalogisiert',
       en: 'A machine-participatory research practice that catalogues its own errors checkably',
@@ -223,8 +275,8 @@ export const WERKE: Werk[] = [
     live: true,
     href: '/atelier',
     description: {
-      de: 'Ulysses — eine maschinen-partizipative künstlerische Forschungspraxis — arbeitet in umgrenzten Projekten statt in einer nächtlichen Produktionsroutine: recherchiert, baut, irrt und katalogisiert ihre Irrtümer prüfbar, innerhalb eines stehenden Mandats. Kuratierte Veröffentlichung bleibt menschliche Entscheidung. Man sieht einer Maschine beim Denken zu.',
-      en: 'Ulysses — a machine-participatory artistic research practice — works through bounded projects rather than a nightly production routine: researching, building, erring, and cataloguing its errors checkably within a standing delegation. Curated publication remains a human decision. Watch a machine think.',
+      de: 'Ulysses — eine maschinen-partizipative künstlerische Forschungspraxis — arbeitet in einer Werklinie und ihren Studien statt in einer nächtlichen Produktionsroutine: recherchiert, baut, irrt und katalogisiert ihre Irrtümer prüfbar, innerhalb eines stehenden Mandats. Kuratierte Veröffentlichung bleibt menschliche Entscheidung. Man sieht einer Maschine beim Denken zu.',
+      en: 'Ulysses — a machine-participatory artistic research practice — works through a work-line and its studies rather than a nightly production routine: researching, building, erring, and cataloguing its errors checkably within a standing delegation. Curated publication remains a human decision. Watch a machine think.',
     },
     methodHref: null,
   },
@@ -261,7 +313,9 @@ export const WERKE: Werk[] = [
       de: 'Aus der Linie „Gegenmessung". Jeden Tag wählt eine Maschine den Satz, den die meisten „unabhängigen" Medien wortgleich brachten, zeigt Quelle und Kaskade und rechnet, wie viel des Nachrichten-Konsenses Echo statt Recherche ist.',
       en: 'From the “Counter-Measurement” line. Each day a machine picks the sentence the most “independent” outlets ran word-for-word, shows source and cascade, and computes how much of the news consensus is echo rather than reporting.',
     },
-    tier: 'studie',
+    // Back in the experiments row (Frank, 2026-08-05): ranked first on /experiments; the
+    // 44-day committed archive and the evidence track ended its 'studie' demotion.
+    tier: 'experiment',
   },
   {
     id: 'correction',
@@ -312,9 +366,74 @@ export function werkTitle(w: Werk, locale: Locale): string {
  *  Startseite und Lab rendern hierüber — keine Sonderstellung für The Protocol. */
 export const WERKE_CHRONO: Werk[] = [...WERKE].sort(byRecency)
 
-/** Kuratierte Experimente-Reihe vs. Studien außer der Reihe — beide chronologisch. */
-export const WERKE_EXPERIMENTE: Werk[] = WERKE_CHRONO.filter((w) => w.tier !== 'studie')
+/** Kuratierte Experimente-Reihe vs. Studien außer der Reihe — beide chronologisch.
+ *  Seit 2026-08-09 ist „alles außer Studie" nicht mehr dasselbe wie „Experiment":
+ *  eine Praxis (Machine Attention) und ein Instrument (das Observatorium) stehen im
+ *  Register, sind aber keine Experimente des Labors. Der Filter nennt darum, was er
+ *  einschließt, statt was er ausschließt — sonst wandert der nächste neue Rang still
+ *  in die Experimente-Reihe der Startseite. */
+export const WERKE_EXPERIMENTE: Werk[] = WERKE_CHRONO.filter(
+  (w) => w.tier === undefined || w.tier === 'experiment',
+)
 export const WERKE_STUDIEN: Werk[] = WERKE_CHRONO.filter((w) => w.tier === 'studie')
+export const WERKE_PROJECTS: Werk[] = WERKE_CHRONO.filter((w) => w.tier === 'project')
+export const WERKE_INSTRUMENTS: Werk[] = WERKE_CHRONO.filter((w) => w.tier === 'instrument')
+
+/** Ids that must never surface on /experiments even though they sit in WERKE_CHRONO: the three
+ *  practice doors (their own homes under /atelier, /field, /studio) and current MRR artefacts
+ *  ('on-record', since 2026-07-23) — /experiments lists the lab's EARLIER experiments, not the
+ *  ecology's running practices or the architect's current engineering line (CLAUDE.md). */
+export const HOLDINGS_EXCLUDED_IDS: ReadonlySet<string> = new Set([
+  'field',
+  'studio',
+  'atelier',
+  'on-record',
+  // Machine Attention and its instrument (Frank, 2026-08-09): a project is not a peer of a
+  // single piece. Listing it beside The Protocol compared a whole undertaking with one of its
+  // parts. It has its own page at /machine-attention, which carries its experiments; the
+  // observatory is an instrument of that project, not an experiment of the lab.
+  'attention',
+  'observatory',
+])
+
+/** Curated order for /experiments (Frank, 2026-08-05): ranked by strength/impact of the
+ *  experiment, not by launch date. The Consensus first and Iceberg Theory second are
+ *  Frank's calls; the rest is ranked by outward stakes a stranger recognizes plus
+ *  checkability of the figure. Reordering is one edit here. */
+export const HOLDINGS_RANKED: readonly string[] = [
+  'consensus',
+  'parallaxe',
+  // The Society third (2026-08-05, listed on Frank's go the morning after launch): a
+  // stranger grasps it in seconds, its checkability is total (deterministic, claims as
+  // tests), and it is the lab's most interactive piece — but the two seats above it are
+  // Frank's explicit calls and stay his.
+  'society',
+  'protokoll',
+  'praemie',
+  'redaction',
+  'ghost-fleet',
+  'spielraum',
+  'round-number',
+  'tell',
+  'beifang',
+  'correction',
+  'pattern',
+  'ueberflug',
+]
+
+/** What /experiments actually renders: the curated ranking above — validated loudly, so a new
+ *  werk cannot slip in unranked and a stale ranking cannot survive a rename. */
+export const WERKE_HOLDINGS: Werk[] = HOLDINGS_RANKED.map((id) => {
+  const w = WERKE.find((x) => x.id === id)
+  if (!w) throw new Error(`holdings ranking names unknown werk "${id}"`)
+  if (HOLDINGS_EXCLUDED_IDS.has(id)) throw new Error(`holdings ranking lists excluded werk "${id}"`)
+  return w
+})
+for (const w of WERKE) {
+  if (!HOLDINGS_EXCLUDED_IDS.has(w.id) && !HOLDINGS_RANKED.includes(w.id)) {
+    throw new Error(`werk "${w.id}" is neither ranked for /experiments nor excluded`)
+  }
+}
 
 // Überflug wurde am 2026-06-12 aus der Reihe der Experimente genommen (keine These,
 // keine Akkumulation) und lebt als Studie im Lab weiter:

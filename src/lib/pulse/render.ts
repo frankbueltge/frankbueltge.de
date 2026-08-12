@@ -11,6 +11,8 @@
 // data, not hand-placed per specific week number the way the one-off mockup did — see
 // `computeAnnotations` below.
 
+import { escapeXml } from '@/lib/dataviz/geometry'
+
 export interface PulseWeek {
   iso_year: number
   iso_week: number
@@ -21,6 +23,23 @@ export interface PulseWeek {
   /** Only meaningful (and only ever set) on the LAST week in the snapshot: how many leading
    * bins are real/elapsed. Absent = a complete, fully-elapsed week. */
   cutoff_bin?: number
+  /**
+   * The same week split by repository — one bin array per checkout name, same length as `bins`,
+   * and summing to it. Added 2026-08-11 for the ops room's board, where each running system
+   * carries a sparkline of ITS OWN commit activity; the aggregate ridgeline above it keeps
+   * reading `bins` and is unaffected.
+   *
+   * OPTIONAL on purpose: a snapshot written before that date has no split, and the board draws
+   * no sparkline for that row rather than inventing one out of the aggregate (the mock sliced
+   * the total per practice — a picture that would have looked right and been false). The field
+   * appears on its own the first time scripts/fetch-pulse.ts runs after this change.
+   *
+   * The value type admits `undefined` because a lookup can genuinely miss: a repository with no
+   * commit in a given week is simply absent from that week's split, and the honest reading of
+   * `by_repo['studio']` on a quiet week is "nothing here", not an empty array someone has to
+   * remember to check for.
+   */
+  by_repo?: Record<string, number[] | undefined>
 }
 
 export interface PulseSnapshot {
@@ -45,15 +64,6 @@ const PEAK_H = 96
 const PAD_X = 46
 const PAD_TOP = 130
 const NOTE_W = 190
-
-function escapeXml(value: string): string {
-  return value
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#x27;')
-}
 
 /** Declared smoothing: moving average, window 3, two passes — ported verbatim from
  * hub_pulse_viz.py's `smooth()`. Boundaries clamp to the edge value (no wraparound). */

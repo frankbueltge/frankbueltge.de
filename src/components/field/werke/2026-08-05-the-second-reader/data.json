@@ -1,0 +1,1789 @@
+{
+ "_note": "Built by build_data.py from the committed files listed in `inputs` and nothing else. Every count in `counts` is computed here from the per-case join and checked against results.json, which was computed independently by scripts/score.py under the rule locked in RULE.md before any reader ran. The fields under `carried` are taken from results.json unchanged.",
+ "work": "The Second Reader",
+ "date": "2026-08-05",
+ "audited_object": {
+  "work": "works/2026-08-03-where-the-reader-declines/",
+  "instrument": "021 — Where the Reader Declines",
+  "file": "data.json",
+  "copy": "evidence/source-021-data.json"
+ },
+ "question_put_to_the_readers": "does this source's own system do research — form hypotheses, run experiments, analyse, write up, review — or does it do something else (reasoning, code, robotics, arithmetic, computer operation, fact-checking, negotiation, style)?",
+ "counts": {
+  "published_IN": 39,
+  "published_OUT": 21,
+  "disputed": 18,
+  "both_differ": 15,
+  "r1_IN": 23,
+  "r1_OUT": 34,
+  "r1_UNDECIDABLE": 3,
+  "r1_in_to_out": 14,
+  "r1_out_to_in": 0,
+  "r1_agree": 43,
+  "r2_IN": 23,
+  "r2_OUT": 29,
+  "r2_UNDECIDABLE": 8,
+  "r2_in_to_out": 8,
+  "r2_out_to_in": 0,
+  "r2_agree": 44,
+  "r1_r2_agree": 52
+ },
+ "carried": {
+  "pairings": [
+   {
+    "pairing": "original x R1",
+    "n": 60,
+    "agree": 43,
+    "agreement_pct": 71.7,
+    "undecidable_involved": 3,
+    "kappa_on_binary": 0.5355,
+    "kappa_n": 57,
+    "original_IN_to_R1_OUT": 14,
+    "original_OUT_to_R1_IN": 0,
+    "disputes": [
+     {
+      "case_id": "mbcls-2407.00466",
+      "original": "IN",
+      "R1": "OUT"
+     },
+     {
+      "case_id": "mbcls-2505.19897",
+      "original": "IN",
+      "R1": "OUT"
+     },
+     {
+      "case_id": "mbcls-2505.21034",
+      "original": "IN",
+      "R1": "OUT"
+     },
+     {
+      "case_id": "mbcls-2505.21935",
+      "original": "IN",
+      "R1": "UNDECIDABLE"
+     },
+     {
+      "case_id": "mbcls-2506.08968",
+      "original": "IN",
+      "R1": "OUT"
+     },
+     {
+      "case_id": "mbcls-2508.11860",
+      "original": "IN",
+      "R1": "OUT"
+     },
+     {
+      "case_id": "mbcls-2510.02190",
+      "original": "IN",
+      "R1": "OUT"
+     },
+     {
+      "case_id": "mbcls-2601.12346",
+      "original": "IN",
+      "R1": "OUT"
+     },
+     {
+      "case_id": "mbcls-2603.18516",
+      "original": "IN",
+      "R1": "OUT"
+     },
+     {
+      "case_id": "mbcls-2603.20262",
+      "original": "IN",
+      "R1": "OUT"
+     },
+     {
+      "case_id": "mbcls-2604.03553",
+      "original": "IN",
+      "R1": "OUT"
+     },
+     {
+      "case_id": "mbcls-2604.18418",
+      "original": "IN",
+      "R1": "OUT"
+     },
+     {
+      "case_id": "mbcls-2604.20441",
+      "original": "IN",
+      "R1": "OUT"
+     },
+     {
+      "case_id": "mbcls-2605.06177",
+      "original": "IN",
+      "R1": "OUT"
+     },
+     {
+      "case_id": "mbcls-2606.04228",
+      "original": "OUT",
+      "R1": "UNDECIDABLE"
+     },
+     {
+      "case_id": "mbcls-2606.28756",
+      "original": "IN",
+      "R1": "OUT"
+     },
+     {
+      "case_id": "mbcls-2607.26064",
+      "original": "IN",
+      "R1": "UNDECIDABLE"
+     }
+    ]
+   },
+   {
+    "pairing": "original x R2",
+    "n": 60,
+    "agree": 44,
+    "agreement_pct": 73.3,
+    "undecidable_involved": 8,
+    "kappa_on_binary": 0.699,
+    "kappa_n": 52,
+    "original_IN_to_R2_OUT": 8,
+    "original_OUT_to_R2_IN": 0,
+    "disputes": [
+     {
+      "case_id": "mbcls-2407.00466",
+      "original": "IN",
+      "R2": "OUT"
+     },
+     {
+      "case_id": "mbcls-2505.19897",
+      "original": "IN",
+      "R2": "OUT"
+     },
+     {
+      "case_id": "mbcls-2505.21034",
+      "original": "IN",
+      "R2": "OUT"
+     },
+     {
+      "case_id": "mbcls-2505.21935",
+      "original": "IN",
+      "R2": "UNDECIDABLE"
+     },
+     {
+      "case_id": "mbcls-2506.08968",
+      "original": "IN",
+      "R2": "OUT"
+     },
+     {
+      "case_id": "mbcls-2508.11860",
+      "original": "IN",
+      "R2": "OUT"
+     },
+     {
+      "case_id": "mbcls-2510.02190",
+      "original": "IN",
+      "R2": "UNDECIDABLE"
+     },
+     {
+      "case_id": "mbcls-2601.12346",
+      "original": "IN",
+      "R2": "UNDECIDABLE"
+     },
+     {
+      "case_id": "mbcls-2603.18516",
+      "original": "IN",
+      "R2": "UNDECIDABLE"
+     },
+     {
+      "case_id": "mbcls-2604.03553",
+      "original": "IN",
+      "R2": "OUT"
+     },
+     {
+      "case_id": "mbcls-2604.18418",
+      "original": "IN",
+      "R2": "UNDECIDABLE"
+     },
+     {
+      "case_id": "mbcls-2604.20441",
+      "original": "IN",
+      "R2": "OUT"
+     },
+     {
+      "case_id": "mbcls-2605.06177",
+      "original": "IN",
+      "R2": "UNDECIDABLE"
+     },
+     {
+      "case_id": "mbcls-2606.10402",
+      "original": "IN",
+      "R2": "UNDECIDABLE"
+     },
+     {
+      "case_id": "mbcls-2606.28756",
+      "original": "IN",
+      "R2": "OUT"
+     },
+     {
+      "case_id": "mbcls-2607.26064",
+      "original": "IN",
+      "R2": "UNDECIDABLE"
+     }
+    ]
+   },
+   {
+    "pairing": "R1 x R2",
+    "n": 60,
+    "agree": 52,
+    "agreement_pct": 86.7,
+    "undecidable_involved": 9,
+    "kappa_on_binary": 0.9602,
+    "kappa_n": 51,
+    "R1_IN_to_R2_OUT": 0,
+    "R1_OUT_to_R2_IN": 1,
+    "disputes": [
+     {
+      "case_id": "mbcls-2510.02190",
+      "R1": "OUT",
+      "R2": "UNDECIDABLE"
+     },
+     {
+      "case_id": "mbcls-2601.12346",
+      "R1": "OUT",
+      "R2": "UNDECIDABLE"
+     },
+     {
+      "case_id": "mbcls-2603.18516",
+      "R1": "OUT",
+      "R2": "UNDECIDABLE"
+     },
+     {
+      "case_id": "mbcls-2603.20262",
+      "R1": "OUT",
+      "R2": "IN"
+     },
+     {
+      "case_id": "mbcls-2604.18418",
+      "R1": "OUT",
+      "R2": "UNDECIDABLE"
+     },
+     {
+      "case_id": "mbcls-2605.06177",
+      "R1": "OUT",
+      "R2": "UNDECIDABLE"
+     },
+     {
+      "case_id": "mbcls-2606.04228",
+      "R1": "UNDECIDABLE",
+      "R2": "OUT"
+     },
+     {
+      "case_id": "mbcls-2606.10402",
+      "R1": "IN",
+      "R2": "UNDECIDABLE"
+     }
+    ]
+   }
+  ],
+  "tables": {
+   "as_published_original_split": {
+    "n": 39,
+    "gold": {
+     "supports": 1,
+     "contradicts": 6,
+     "qualifies": 17,
+     "contextualizes": 14,
+     "undecidable": 1
+    },
+    "machine": {
+     "supports": 1,
+     "contradicts": 2,
+     "qualifies": 4,
+     "contextualizes": 32,
+     "undecidable": 0
+    },
+    "machine_contextualizes_pct": 82.1,
+    "gold_contextualizes_pct": 35.9,
+    "ratio_machine_over_gold_contextualizes": 2.286
+   },
+   "undecidable_outside_population": {
+    "R1": {
+     "n": 23,
+     "gold": {
+      "supports": 1,
+      "contradicts": 5,
+      "qualifies": 13,
+      "contextualizes": 3,
+      "undecidable": 1
+     },
+     "machine": {
+      "supports": 1,
+      "contradicts": 1,
+      "qualifies": 2,
+      "contextualizes": 19,
+      "undecidable": 0
+     },
+     "machine_contextualizes_pct": 82.6,
+     "gold_contextualizes_pct": 13.0,
+     "ratio_machine_over_gold_contextualizes": 6.333
+    },
+    "R2": {
+     "n": 23,
+     "gold": {
+      "supports": 1,
+      "contradicts": 5,
+      "qualifies": 12,
+      "contextualizes": 4,
+      "undecidable": 1
+     },
+     "machine": {
+      "supports": 1,
+      "contradicts": 1,
+      "qualifies": 1,
+      "contextualizes": 20,
+      "undecidable": 0
+     },
+     "machine_contextualizes_pct": 87.0,
+     "gold_contextualizes_pct": 17.4,
+     "ratio_machine_over_gold_contextualizes": 5.0
+    }
+   },
+   "undecidable_inside_population": {
+    "R1": {
+     "n": 26,
+     "gold": {
+      "supports": 1,
+      "contradicts": 6,
+      "qualifies": 13,
+      "contextualizes": 5,
+      "undecidable": 1
+     },
+     "machine": {
+      "supports": 1,
+      "contradicts": 2,
+      "qualifies": 2,
+      "contextualizes": 21,
+      "undecidable": 0
+     },
+     "machine_contextualizes_pct": 80.8,
+     "gold_contextualizes_pct": 19.2,
+     "ratio_machine_over_gold_contextualizes": 4.2
+    },
+    "R2": {
+     "n": 31,
+     "gold": {
+      "supports": 1,
+      "contradicts": 6,
+      "qualifies": 13,
+      "contextualizes": 10,
+      "undecidable": 1
+     },
+     "machine": {
+      "supports": 1,
+      "contradicts": 2,
+      "qualifies": 2,
+      "contextualizes": 26,
+      "undecidable": 0
+     },
+     "machine_contextualizes_pct": 83.9,
+     "gold_contextualizes_pct": 32.3,
+     "ratio_machine_over_gold_contextualizes": 2.6
+    }
+   }
+  },
+  "peek_check": [
+   {
+    "reader": "R1",
+    "mean": 0.0264,
+    "max_case": "mbcls-2205.08794",
+    "max": 0.3333,
+    "top5": [
+     [
+      "mbcls-2205.08794",
+      0.3333
+     ],
+     [
+      "mbcls-2512.11509",
+      0.3
+     ],
+     [
+      "mbcls-2407.18367",
+      0.2222
+     ],
+     [
+      "mbcls-2606.04228",
+      0.1667
+     ],
+     [
+      "mbcls-2506.02918",
+      0.1429
+     ]
+    ],
+    "compromised": false
+   },
+   {
+    "reader": "R2",
+    "mean": 0.0331,
+    "max_case": "mbcls-2402.00559",
+    "max": 0.3333,
+    "top5": [
+     [
+      "mbcls-2402.00559",
+      0.3333
+     ],
+     [
+      "mbcls-2512.11509",
+      0.2727
+     ],
+     [
+      "mbcls-2606.04228",
+      0.2143
+     ],
+     [
+      "mbcls-2505.12501",
+      0.2
+     ],
+     [
+      "mbcls-2407.18367",
+      0.1818
+     ]
+    ],
+    "compromised": false
+   }
+  ],
+  "band_undecidable_outside": {
+   "band": "C",
+   "reasons": [
+    "R1: n 23 vs 39, moves by more than 5",
+    "R2: n 23 vs 39, moves by more than 5"
+   ]
+  },
+  "band_undecidable_inside": {
+   "band": "C",
+   "reasons": [
+    "R1: n 26 vs 39, moves by more than 5",
+    "R2: n 31 vs 39, moves by more than 5"
+   ]
+  },
+  "validation_errors": []
+ },
+ "inputs": {
+  "blind-input.json": "sha256:9921669e9f7aaaed4767a2c03bdf0ec705ee95edea4b0e8e0353fc3be93e9b75",
+  "reader-R1.json": "sha256:80691bd85a2c3deb15291052b02af6aea73e5906ac75f085f66a9b78fdfdcc68",
+  "reader-R2.json": "sha256:ca334eb6cc8cd804dd5528294084b74ba25c73c4d3e9832bf688636b97c7c1cb",
+  "results.json": "sha256:a00194ef175c0a4ad9c95a4651719a5b5da63851abdf44e672db32598be55005",
+  "source-021-data.json": "sha256:2036067e4e020aef740dc4f41d8ed23c139dc4ab2544ac7dabe0c9c8fbf1937a"
+ },
+ "cases": [
+  {
+   "position": 1,
+   "case_id": "mbcls-2205.08794",
+   "arxiv": "2205.08794",
+   "title": "LogiGAN: Learning Logical Reasoning via Adversarial Pre-training",
+   "excerpt": "We present LogiGAN, an unsupervised adversarial pre-training framework for improving logical reasoning abilities of language models. Upon automatic identifying logical reasoning phenomena in massive text corpus via detection heuristics, we train language models to predict the masked-out logical statements. Inspired by the facilitation effect of reflective thinking in human learning, we analogically simulate the learning-thinking process with an adversarial Generator-Verifier architecture to assist logic learning. LogiGAN implements a novel sequential GAN approach that (a) circumvents the non-differentiable challenge of the sequential GAN by leveraging the Generator as a sentence-level generative likelihood scorer with a learning objective of reaching scoring consensus with the Verifier; (b) is computationally feasible for large-scale pre-training with arbitrary target length. Both base and large size language models pre-trained with LogiGAN demonstrate obvious performance improvement on 12 datasets requiring general reasoning abilities, revealing the fundamental role of logic in broad reasoning, as well as the effectiveness of LogiGAN. Ablation studies on LogiGAN components reveal the relative orthogonality between linguistic and logic abilities and suggest that reflective thinking's facilitation effect might also generalize to machine learning.",
+   "excerpt_sha256": "sha256:0a3e9b599ce714e53ac793ea3de888df1788de31857f780face28087d0c06416",
+   "published": "OUT",
+   "published_reason": "adversarial pre-training for logical reasoning — reasoning capability, no research cycle",
+   "r1": {
+    "verdict": "OUT",
+    "reason": "The pre-training method targets general logical-reasoning ability in language models, not a research cycle.",
+    "quote": "improving logical reasoning abilities of language models"
+   },
+   "r2": {
+    "verdict": "OUT",
+    "reason": "The framework pre-trains models to improve logical reasoning performance, not to conduct scientific research.",
+    "quote": "logical reasoning abilities of language models"
+   },
+   "disputed": false,
+   "both_differ": false
+  },
+  {
+   "position": 2,
+   "case_id": "mbcls-2402.00559",
+   "arxiv": "2402.00559",
+   "title": "A Chain-of-Thought Is as Strong as Its Weakest Link: A Benchmark for Verifiers of Reasoning Chains",
+   "excerpt": "Prompting language models to provide step-by-step answers (e.g., \"Chain-of-Thought\") is the prominent approach for complex reasoning tasks, where more accurate reasoning chains typically improve downstream task performance. Recent literature discusses automatic methods to verify reasoning to evaluate and improve their correctness. However, no fine-grained step-level datasets are available to enable thorough evaluation of such verification methods, hindering progress in this direction. We introduce REVEAL: Reasoning Verification Evaluation, a dataset to benchmark automatic verifiers of complex Chain-of-Thought reasoning in open-domain question-answering settings. REVEAL includes comprehensive labels for the relevance, attribution to evidence passages, and logical correctness of each reasoning step in a language model's answer, across a variety of datasets and state-of-the-art language models. Evaluation on REVEAL shows that verifiers struggle at verifying reasoning chains - in particular, verifying logical correctness and detecting contradictions. Available at https://reveal-dataset.github.io/ .",
+   "excerpt_sha256": "sha256:c426bad242ef7f2dc56017bc5f9791e6dfac7f3f36679b25c0cc0302181fe0b9",
+   "published": "OUT",
+   "published_reason": "benchmark for verifiers of chain-of-thought — reasoning verification, not research",
+   "r1": {
+    "verdict": "OUT",
+    "reason": "The benchmark targets verifying reasoning-chain correctness on general QA, a reasoning-verification exercise.",
+    "quote": "Chain-of-Thought reasoning in open-domain question-answering settings"
+   },
+   "r2": {
+    "verdict": "OUT",
+    "reason": "The dataset benchmarks verifiers of step-by-step reasoning chains in QA, a reasoning task not a research cycle.",
+    "quote": "Chain-of-Thought reasoning"
+   },
+   "disputed": false,
+   "both_differ": false
+  },
+  {
+   "position": 3,
+   "case_id": "mbcls-2407.00466",
+   "arxiv": "2407.00466",
+   "title": "BioKGBench: A Knowledge Graph Checking Benchmark of AI Agent for Biomedical Science",
+   "excerpt": "Pursuing artificial intelligence for biomedical science, a.k.a. AI Scientist, draws increasing attention, where one common approach is to build a copilot agent driven by Large Language Models (LLMs). However, to evaluate such systems, people either rely on direct Question-Answering (QA) to the LLM itself, or in a biomedical experimental manner. How to precisely benchmark biomedical agents from an AI Scientist perspective remains largely unexplored. To this end, we draw inspiration from one most important abilities of scientists, understanding the literature, and introduce BioKGBench. In contrast to traditional evaluation benchmark that only focuses on factual QA, where the LLMs are known to have hallucination issues, we first disentangle \"Understanding Literature\" into two atomic abilities, i) \"Understanding\" the unstructured text from research papers by performing scientific claim verification, and ii) Ability to interact with structured Knowledge-Graph Question-Answering (KGQA) as a form of \"Literature\" grounding. We then formulate a novel agent task, dubbed KGCheck, using KGQA and domain-based Retrieval-Augmented Generation (RAG) to identify the factual errors of existing large-scale knowledge graph databases. We collect over two thousand data for two atomic tasks and 225 high-quality annotated data for the agent task. Surprisingly, we discover that state-of-the-art agents, both daily scenarios and biomedical ones, have either failed or inferior performance on our benchmark. We then introduce a simple yet effective baseline, dubbed BKGAgent. On the widely used popular knowledge graph, we discover over 90 factual errors which provide scenarios for agents to make discoveries and demonstrate the effectiveness of our approach. The code and data are available at https://github.com/westlake-autolab/BioKGBench.",
+   "excerpt_sha256": "sha256:b62097d70f7c0f9edca70300e01a3ebc918f0543da4c9d16de0fe5ffb484b62e",
+   "published": "IN",
+   "published_reason": "benchmark for an AI agent doing biomedical knowledge-graph checking — a research task",
+   "r1": {
+    "verdict": "OUT",
+    "reason": "The system's own task is checking literature claims and knowledge-graph facts, not running a hypothesize-experiment-analyze cycle of its own.",
+    "quote": "scientific claim verification"
+   },
+   "r2": {
+    "verdict": "OUT",
+    "reason": "The system's task is verifying factual claims against a knowledge graph, not running its own hypothesis-experiment research cycle.",
+    "quote": "scientific claim verification"
+   },
+   "disputed": true,
+   "both_differ": true
+  },
+  {
+   "position": 4,
+   "case_id": "mbcls-2407.18367",
+   "arxiv": "2407.18367",
+   "title": "Robust Claim Verification Through Fact Detection",
+   "excerpt": "Claim verification can be a challenging task. In this paper, we present a method to enhance the robustness and reasoning capabilities of automated claim verification through the extraction of short facts from evidence. Our novel approach, FactDetect, leverages Large Language Models (LLMs) to generate concise factual statements from evidence and label these facts based on their semantic relevance to the claim and evidence. The generated facts are then combined with the claim and evidence. To train a lightweight supervised model, we incorporate a fact-detection task into the claim verification process as a multitasking approach to improve both performance and explainability. We also show that augmenting FactDetect in the claim verification prompt enhances performance in zero-shot claim verification using LLMs. Our method demonstrates competitive results in the supervised claim verification model by 15% on the F1 score when evaluated for challenging scientific claim verification datasets. We also demonstrate that FactDetect can be augmented with claim and evidence for zero-shot prompting (AugFactDetect) in LLMs for verdict prediction. We show that AugFactDetect outperforms the baseline with statistical significance on three challenging scientific claim verification datasets with an average of 17.3% performance gain compared to the best performing baselines.",
+   "excerpt_sha256": "sha256:598f1067a049897f76a0eb915a4934ff4a65dd4a40f50ecf52802d105402a1bb",
+   "published": "OUT",
+   "published_reason": "claim verification through fact detection — fact-checking, not research automation",
+   "r1": {
+    "verdict": "OUT",
+    "reason": "The method extracts facts to check claims against evidence, which is fact-checking rather than conducting research.",
+    "quote": "automated claim verification"
+   },
+   "r2": {
+    "verdict": "OUT",
+    "reason": "The system's function is verifying the truth of claims against evidence, i.e. fact-checking rather than conducting research.",
+    "quote": "automated claim verification"
+   },
+   "disputed": false,
+   "both_differ": false
+  },
+  {
+   "position": 5,
+   "case_id": "mbcls-2408.06292",
+   "arxiv": "2408.06292",
+   "title": "The AI Scientist: Towards Fully Automated Open-Ended Scientific Discovery",
+   "excerpt": "One of the grand challenges of artificial general intelligence is developing agents capable of conducting scientific research and discovering new knowledge. While frontier models have already been used as aides to human scientists, e.g. for brainstorming ideas, writing code, or prediction tasks, they still conduct only a small part of the scientific process. This paper presents the first comprehensive framework for fully automatic scientific discovery, enabling frontier large language models to perform research independently and communicate their findings. We introduce The AI Scientist, which generates novel research ideas, writes code, executes experiments, visualizes results, describes its findings by writing a full scientific paper, and then runs a simulated review process for evaluation. In principle, this process can be repeated to iteratively develop ideas in an open-ended fashion, acting like the human scientific community. We demonstrate its versatility by applying it to three distinct subfields of machine learning: diffusion modeling, transformer-based language modeling, and learning dynamics. Each idea is implemented and developed into a full paper at a cost of less than $15 per paper. To evaluate the generated papers, we design and validate an automated reviewer, which we show achieves near-human performance in evaluating paper scores. The AI Scientist can produce papers that exceed the acceptance threshold at a top machine learning conference as judged by our automated reviewer. This approach signifies the beginning of a new era in scientific discovery in machine learning: bringing the transformative benefits of AI agents to the entire research process of AI itself, and taking us closer to a world where endless affordable creativity and innovation can be unleashed on the world's most challenging problems. Our code is open-sourced at https://github.com/SakanaAI/AI-Scientist",
+   "excerpt_sha256": "sha256:a3839ea2274755d23a310b20469b98ea505d0d1ad92f72a9c941a529063ea9cd",
+   "published": "IN",
+   "published_reason": "The AI Scientist: idea, code, experiment, paper, review",
+   "r1": {
+    "verdict": "IN",
+    "reason": "The system performs ideation, experimentation, and write-up, covering the complete research cycle.",
+    "quote": "generates novel research ideas, writes code, executes experiments, visualizes results, describes its findings by writing a full scientific paper"
+   },
+   "r2": {
+    "verdict": "IN",
+    "reason": "This is the paradigmatic full end-to-end research-cycle system spanning ideation through review.",
+    "quote": "generates novel research ideas, writes code, executes experiments, visualizes results, describes its findings by writing a full scientific paper, and then runs a simulated review process"
+   },
+   "disputed": false,
+   "both_differ": false
+  },
+  {
+   "position": 6,
+   "case_id": "mbcls-2409.04109",
+   "arxiv": "2409.04109",
+   "title": "Can LLMs Generate Novel Research Ideas? A Large-Scale Human Study with 100+ NLP Researchers",
+   "excerpt": "Recent advancements in large language models (LLMs) have sparked optimism about their potential to accelerate scientific discovery, with a growing number of works proposing research agents that autonomously generate and validate new ideas. Despite this, no evaluations have shown that LLM systems can take the very first step of producing novel, expert-level ideas, let alone perform the entire research process. We address this by establishing an experimental design that evaluates research idea generation while controlling for confounders and performs the first head-to-head comparison between expert NLP researchers and an LLM ideation agent. By recruiting over 100 NLP researchers to write novel ideas and blind reviews of both LLM and human ideas, we obtain the first statistically significant conclusion on current LLM capabilities for research ideation: we find LLM-generated ideas are judged as more novel (p < 0.05) than human expert ideas while being judged slightly weaker on feasibility. Studying our agent baselines closely, we identify open problems in building and evaluating research agents, including failures of LLM self-evaluation and their lack of diversity in generation. Finally, we acknowledge that human judgements of novelty can be difficult, even by experts, and propose an end-to-end study design which recruits researchers to execute these ideas into full projects, enabling us to study whether these novelty and feasibility judgements result in meaningful differences in research outcome.",
+   "excerpt_sha256": "sha256:e0735b5f06ee421300702d5dc97c2d04dbb189d49be83229805454804f0ad4bf",
+   "published": "IN",
+   "published_reason": "LLM ideation agent measured against 100+ NLP researchers",
+   "r1": {
+    "verdict": "IN",
+    "reason": "The study evaluates an LLM agent's ability to generate novel research ideas, the hypothesis-formation stage of research.",
+    "quote": "research idea generation"
+   },
+   "r2": {
+    "verdict": "IN",
+    "reason": "The paper builds and evaluates an LLM ideation agent generating novel research ideas, the hypothesis-formation stage of research.",
+    "quote": "research idea generation"
+   },
+   "disputed": false,
+   "both_differ": false
+  },
+  {
+   "position": 7,
+   "case_id": "mbcls-2409.05258",
+   "arxiv": "2409.05258",
+   "title": "Towards Automated Machine Learning Research",
+   "excerpt": "This paper explores a top-down approach to automating incremental advances in machine learning research through component-level innovation, facilitated by Large Language Models (LLMs). Our framework systematically generates novel components, validates their feasibility, and evaluates their performance against existing baselines. A key distinction of this approach lies in how these novel components are generated. Unlike traditional AutoML and NAS methods, which often rely on a bottom-up combinatorial search over predefined, hardcoded base components, our method leverages the cross-domain knowledge embedded in LLMs to propose new components that may not be confined to any hard-coded predefined set. By incorporating a reward model to prioritize promising hypotheses, we aim to improve the efficiency of the hypothesis generation and evaluation process. We hope this approach offers a new avenue for exploration and contributes to the ongoing dialogue in the field.",
+   "excerpt_sha256": "sha256:1aa4d0b914150a500a1d2104c3a46973d87dc2950beed9c928b72b04061c6787",
+   "published": "IN",
+   "published_reason": "automated machine-learning research",
+   "r1": {
+    "verdict": "IN",
+    "reason": "The framework generates and validates new ML research components against baselines, an automated research pipeline.",
+    "quote": "automating incremental advances in machine learning research"
+   },
+   "r2": {
+    "verdict": "IN",
+    "reason": "The framework generates and tests hypotheses about model components against baselines, matching the research cycle.",
+    "quote": "generates novel components, validates their feasibility, and evaluates their performance"
+   },
+   "disputed": false,
+   "both_differ": false
+  },
+  {
+   "position": 8,
+   "case_id": "mbcls-2410.01440",
+   "arxiv": "2410.01440",
+   "title": "Closed-Loop Long-Horizon Robotic Planning via Equilibrium Sequence Modeling",
+   "excerpt": "In the endeavor to make autonomous robots take actions, task planning is a major challenge that requires translating high-level task descriptions to long-horizon action sequences. Despite recent advances in language model agents, they remain prone to planning errors and limited in their ability to plan ahead. To address these limitations in robotic planning, we advocate a self-refining scheme that iteratively refines a draft plan until an equilibrium is reached. Remarkably, this process can be optimized end-to-end from an analytical perspective without the need to curate additional verifiers or reward models, allowing us to train self-refining planners in a simple supervised learning fashion. Meanwhile, a nested equilibrium sequence modeling procedure is devised for efficient closed-loop planning that incorporates useful feedback from the environment (or an internal world model). Our method is evaluated on the VirtualHome-Env benchmark, showing advanced performance with improved scaling w.r.t. inference-time computation. Code is available at https://github.com/Singularity0104/equilibrium-planner.",
+   "excerpt_sha256": "sha256:4fce10ce9f4a1d1c516102cfaaf58b624a73e4dcff0fcc424d95375c961928be",
+   "published": "OUT",
+   "published_reason": "long-horizon robotic planning",
+   "r1": {
+    "verdict": "OUT",
+    "reason": "The system plans robot action sequences, a robotics-planning task.",
+    "quote": "autonomous robots take actions"
+   },
+   "r2": {
+    "verdict": "OUT",
+    "reason": "The system plans long-horizon robot action sequences, a robotics task rather than scientific research.",
+    "quote": "autonomous robots"
+   },
+   "disputed": false,
+   "both_differ": false
+  },
+  {
+   "position": 9,
+   "case_id": "mbcls-2501.16961",
+   "arxiv": "2501.16961",
+   "title": "Instantiation-based Formalization of Logical Reasoning Tasks using Language Models and Logical Solvers",
+   "excerpt": "Robustness of reasoning remains a significant challenge for large language models, and addressing it is essential for the practical applicability of AI-driven reasoning systems. We introduce Semantic Self-Verification (SSV), a novel approach that addresses the key challenge in combining language models with the rigor of logical solvers: to accurately formulate the reasoning problem from natural language to the formal language of the solver. SSV uses a consistency-based approach to produce strong abstract formalizations of problems using concrete instantiations that are generated by the model and verified by the solver. In addition to significantly advancing the overall reasoning accuracy over the state-of-the-art, a key novelty that this approach presents is a feature of verification that has near-perfect precision over a significant coverage of cases, as we demonstrate on open reasoning benchmarks. We propose such *near-certain reasoning* as a new approach to reduce the need for manual verification in many cases, taking us closer to more dependable and autonomous AI reasoning systems.",
+   "excerpt_sha256": "sha256:c81aadabc7f08c4042b82ea33cd6062a6c4f534ca39c15f440ccd6c5dfd84874",
+   "published": "OUT",
+   "published_reason": "formalising logical reasoning tasks with theorem provers",
+   "r1": {
+    "verdict": "OUT",
+    "reason": "The method converts natural-language reasoning problems into solver-checkable form, a general reasoning-verification task.",
+    "quote": "combining language models with the rigor of logical solvers"
+   },
+   "r2": {
+    "verdict": "OUT",
+    "reason": "The system formalizes natural-language problems for logical solvers, a reasoning task rather than scientific research.",
+    "quote": "Logical Reasoning Tasks"
+   },
+   "disputed": false,
+   "both_differ": false
+  },
+  {
+   "position": 10,
+   "case_id": "mbcls-2502.19613",
+   "arxiv": "2502.19613",
+   "title": "Self-rewarding correction for mathematical reasoning",
+   "excerpt": "We study self-rewarding reasoning large language models (LLMs), which can simultaneously generate step-by-step reasoning and evaluate the correctness of their outputs during the inference time-without external feedback. This integrated approach allows a single model to independently guide its reasoning process, offering computational advantages for model deployment. We particularly focus on the representative task of self-correction, where models autonomously detect errors in their responses, revise outputs, and decide when to terminate iterative refinement loops. To enable this, we propose a two-staged algorithmic framework for constructing self-rewarding reasoning models using only self-generated data. In the first stage, we employ sequential rejection sampling to synthesize long chain-of-thought trajectories that incorporate both self-rewarding and self-correction mechanisms. Fine-tuning models on these curated data allows them to learn the patterns of self-rewarding and self-correction. In the second stage, we further enhance the models' ability to assess response accuracy and refine outputs through reinforcement learning with rule-based signals. Experiments with Llama-3 and Qwen-2.5 demonstrate that our approach surpasses intrinsic self-correction capabilities and achieves performance comparable to systems that rely on external reward models.",
+   "excerpt_sha256": "sha256:96d484404ceb3469f11dfd34bee7d31a792a023bc952f279cd6ff22f99d77898",
+   "published": "OUT",
+   "published_reason": "self-rewarding correction on mathematical reasoning",
+   "r1": {
+    "verdict": "OUT",
+    "reason": "The models are evaluated on self-correcting math answers, a reasoning task rather than a research cycle.",
+    "quote": "mathematical reasoning"
+   },
+   "r2": {
+    "verdict": "OUT",
+    "reason": "The models self-correct step-by-step math solutions, a reasoning task rather than a research cycle.",
+    "quote": "mathematical reasoning"
+   },
+   "disputed": false,
+   "both_differ": false
+  },
+  {
+   "position": 11,
+   "case_id": "mbcls-2503.22444",
+   "arxiv": "2503.22444",
+   "title": "Scaling Laws in Scientific Discovery with AI and Robot Scientists",
+   "excerpt": "Scientific discovery is poised for rapid advancement through advanced robotics and artificial intelligence. Current scientific practices face substantial limitations as manual experimentation remains time-consuming and resource-intensive, while multidisciplinary research demands knowledge integration beyond individual researchers' expertise boundaries. Here, we envision an autonomous generalist scientist (AGS) concept combines agentic AI and embodied robotics to automate the entire research lifecycle. This system could dynamically interact with both physical and virtual environments while facilitating the integration of knowledge across diverse scientific disciplines. By deploying these technologies throughout every research stage -- spanning literature review, hypothesis generation, experimentation, and manuscript writing -- and incorporating internal reflection alongside external feedback, this system aims to significantly reduce the time and resources needed for scientific discovery. Building on the evolution from virtual AI scientists to versatile generalist AI-based robot scientists, AGS promises groundbreaking potential. As these autonomous systems become increasingly integrated into the research process, we hypothesize that scientific discovery might adhere to new scaling laws, potentially shaped by the number and capabilities of these autonomous systems, offering novel perspectives on how knowledge is generated and evolves. The adaptability of embodied robots to extreme environments, paired with the flywheel effect of accumulating scientific knowledge, holds the promise of continually pushing beyond both physical and intellectual frontiers.",
+   "excerpt_sha256": "sha256:3ae1ff62493698c6dae1aba667450e3feeef8d53a7f8b363ff8da2e1d6df763e",
+   "published": "IN",
+   "published_reason": "scaling laws for AI and robot scientists",
+   "r1": {
+    "verdict": "IN",
+    "reason": "The envisioned system is described as automating the entire research lifecycle across these stages.",
+    "quote": "spanning literature review, hypothesis generation, experimentation, and manuscript writing"
+   },
+   "r2": {
+    "verdict": "IN",
+    "reason": "The envisioned system explicitly automates every stage of the research lifecycle.",
+    "quote": "spanning literature review, hypothesis generation, experimentation, and manuscript writing"
+   },
+   "disputed": false,
+   "both_differ": false
+  },
+  {
+   "position": 12,
+   "case_id": "mbcls-2505.12501",
+   "arxiv": "2505.12501",
+   "title": "ALAS: A Stateful Multi-LLM Agent Framework for Disruption-Aware Planning",
+   "excerpt": "Large language models (LLMs) excel at rapid generation of text and multimodal content, yet they falter on transaction-style planning that demands ACID-like guarantees and real-time disruption recovery. We present Adaptive LLM Agent System (ALAS), a framework that tackles four fundamental LLM deficits: (i) absence of self-verification, (ii) context erosion, (iii) next-token myopia, and (iv) lack of persistent state. ALAS decomposes each plan into role-specialized agents, equips them with automatic state tracking, and coordinates them through a lightweight protocol. When disruptions arise, agents apply history-aware local compensation, avoiding costly global replanning and containing cascade effects. On real-world, large-scale job-shop scheduling benchmarks, ALAS sets new best results for static sequential planning and excels in dynamic reactive scenarios with unexpected disruptions. These gains show that principled modularization plus targeted compensation can unlock scalable and resilient planning with LLMs.",
+   "excerpt_sha256": "sha256:18bf9b4588059253387524efced00afc8369f64872e2d8c39682416f2aafae82",
+   "published": "OUT",
+   "published_reason": "multi-agent framework for disruption-aware planning — operations, not research",
+   "r1": {
+    "verdict": "OUT",
+    "reason": "The system solves disruption-aware production scheduling problems, a planning task.",
+    "quote": "job-shop scheduling benchmarks"
+   },
+   "r2": {
+    "verdict": "OUT",
+    "reason": "The framework addresses disruption-aware production scheduling and planning, not scientific research.",
+    "quote": "job-shop scheduling"
+   },
+   "disputed": false,
+   "both_differ": false
+  },
+  {
+   "position": 13,
+   "case_id": "mbcls-2505.19897",
+   "arxiv": "2505.19897",
+   "title": "ScienceBoard: Evaluating Multimodal Autonomous Agents in Realistic Scientific Workflows",
+   "excerpt": "Large Language Models (LLMs) have extended their impact beyond Natural Language Processing, substantially fostering the development of interdisciplinary research. Recently, various LLM-based agents have been developed to assist scientific discovery progress across multiple aspects and domains. Among these, computer-using agents, capable of interacting with operating systems as humans do, are paving the way to automated scientific problem-solving and addressing routines in researchers' workflows. Recognizing the transformative potential of these agents, we introduce ScienceBoard, which encompasses two complementary contributions: (i) a realistic, multi-domain environment featuring dynamic and visually rich scientific workflows with integrated professional software, where agents can autonomously interact via different interfaces to accelerate complex research tasks and experiments; and (ii) a challenging benchmark of 169 high-quality, rigorously validated real-world tasks curated by humans, spanning scientific-discovery workflows in domains such as biochemistry, astronomy, and geoinformatics. Extensive evaluations of agents with state-of-the-art backbones (e.g., GPT-4o, Claude 3.7, UI-TARS) show that, despite some promising results, they still fall short of reliably assisting scientists in complex workflows, achieving only a 15% overall success rate. In-depth analysis further provides valuable insights for addressing current agent limitations and more effective design principles, paving the way to build more capable agents for scientific discovery. Our code, environment, and benchmark are at https://qiushisun.github.io/ScienceBoard-Home/.",
+   "excerpt_sha256": "sha256:4743f6bfd0ca48717184cf55545e33a229dd5ab2d454385d33ea2f1b25c15b0c",
+   "published": "IN",
+   "published_reason": "agents evaluated in realistic scientific workflows",
+   "r1": {
+    "verdict": "OUT",
+    "reason": "The agents operate professional software through an interface like a human user, a computer-operation task.",
+    "quote": "computer-using agents, capable of interacting with operating systems as humans do"
+   },
+   "r2": {
+    "verdict": "OUT",
+    "reason": "The benchmark evaluates agents operating professional software interfaces, a computer-operation task even though applied to scientific settings.",
+    "quote": "computer-using agents, capable of interacting with operating systems"
+   },
+   "disputed": true,
+   "both_differ": true
+  },
+  {
+   "position": 14,
+   "case_id": "mbcls-2505.21034",
+   "arxiv": "2505.21034",
+   "title": "LLaMEA-BO: A Large Language Model Evolutionary Algorithm for Automatically Generating Bayesian Optimization Algorithms",
+   "excerpt": "Bayesian optimization (BO) is a powerful class of algorithms for optimizing expensive black-box functions, but designing effective BO algorithms remains a manual, expertise-driven task. Recent advancements in Large Language Models (LLMs) have opened new avenues for automating scientific discovery, including the automatic design of optimization algorithms. While prior work has used LLMs within optimization loops or to generate non-BO algorithms, we tackle a new challenge: Using LLMs to automatically generate full BO algorithm code. Our framework uses an evolution strategy to guide an LLM in generating Python code that preserves the key components of BO algorithms: An initial design, a surrogate model, and an acquisition function. The LLM is prompted to produce multiple candidate algorithms, which are evaluated on the established Black-Box Optimization Benchmarking (BBOB) test suite from the COmparing Continuous Optimizers (COCO) platform. Based on their performance, top candidates are selected, combined, and mutated via controlled prompt variations, enabling iterative refinement. Despite no additional fine-tuning, the LLM-generated algorithms outperform state-of-the-art BO baselines in 19 (out of 24) BBOB functions in dimension 5 and generalize well to higher dimensions, and different tasks (from the Bayesmark framework). This work demonstrates that LLMs can serve as algorithmic co-designers, offering a new paradigm for automating BO development and accelerating the discovery of novel algorithmic combinations. The source code is provided at https://github.com/Ewendawi/LLaMEA-BO.",
+   "excerpt_sha256": "sha256:e026b5c07764904331ce830213f0a4e0bf995792b16b209b19906aed9f3cd2c3",
+   "published": "IN",
+   "published_reason": "LLM evolutionary algorithm generating optimisation algorithms — automated method design",
+   "r1": {
+    "verdict": "OUT",
+    "reason": "The framework's output is executable optimization-algorithm code scored on a benchmark suite, an algorithm/code-design task.",
+    "quote": "generate full BO algorithm code"
+   },
+   "r2": {
+    "verdict": "OUT",
+    "reason": "The system evolves and evaluates optimization algorithm code against a benchmark suite, which is code/algorithm generation rather than scientific research.",
+    "quote": "generate full BO algorithm code"
+   },
+   "disputed": true,
+   "both_differ": true
+  },
+  {
+   "position": 15,
+   "case_id": "mbcls-2505.21935",
+   "arxiv": "2505.21935",
+   "title": "From Reasoning to Learning: A Survey on Hypothesis Discovery and Rule Learning with Large Language Models",
+   "excerpt": "Since the advent of Large Language Models (LLMs), efforts have largely focused on improving their instruction-following and deductive reasoning abilities, leaving open the question of whether these models can truly discover new knowledge. In pursuit of artificial general intelligence (AGI), there is a growing need for models that not only execute commands or retrieve information but also learn, reason, and generate new knowledge by formulating novel hypotheses and theories that deepen our understanding of the world. Guided by Peirce's framework of abduction, deduction, and induction, this survey offers a structured lens to examine LLM-based hypothesis discovery. We synthesize existing work in hypothesis generation, application, and validation, identifying both key achievements and critical gaps. By unifying these threads, we illuminate how LLMs might evolve from mere ``information executors'' into engines of genuine innovation, potentially transforming research, science, and real-world problem solving.",
+   "excerpt_sha256": "sha256:121105e85e0c96ba3e509621b02c304d4ab3be5168eec01147cbf35367f7acf7",
+   "published": "IN",
+   "published_reason": "survey of hypothesis discovery and rule learning",
+   "r1": {
+    "verdict": "UNDECIDABLE",
+    "reason": "This is a survey summarizing prior literature rather than a description of the authors' own system performing research.",
+    "quote": "this survey offers a structured lens to examine LLM-based hypothesis discovery"
+   },
+   "r2": {
+    "verdict": "UNDECIDABLE",
+    "reason": "This is a literature survey of the field rather than a description of an operating system that itself performs research.",
+    "quote": "whether these models can truly discover new knowledge"
+   },
+   "disputed": true,
+   "both_differ": true
+  },
+  {
+   "position": 16,
+   "case_id": "mbcls-2506.02918",
+   "arxiv": "2506.02918",
+   "title": "World Modelling Improves Language Model Agents",
+   "excerpt": "Tool use in stateful environments presents unique challenges for large language models (LLMs), where existing test-time compute strategies relying on repeated trials in the environment are impractical. We propose dynamics modelling (DyMo), a method that augments LLMs with a state prediction capability alongside function calling during post-training. This enables LLMs to predict the future states of their actions through an internal environment model. On the Berkeley Function Calling Leaderboard V2, DyMo improves success rates and significantly reduces hallucinations. We further integrate the internal environment model into self-verification sampling (SVS), and show that this substantially improves pass^k over number of trials k, and allows the model to refuse unreliable outputs. Together, DyMo and SVS greatly enhance the effectiveness and reliability of LLMs for tool use. We believe this work charts a path towards scalable planning RL methods for LLM inference without repeatedly querying the oracle environment.",
+   "excerpt_sha256": "sha256:56e69aa5107735a5bfc92b4e03510c0f54964cac15be2312a4214dac2b97a386",
+   "published": "OUT",
+   "published_reason": "world modelling for language-model agents in general",
+   "r1": {
+    "verdict": "OUT",
+    "reason": "The method adds state prediction to support general function-calling and tool use, unrelated to conducting scientific research.",
+    "quote": "Tool use in stateful environments"
+   },
+   "r2": {
+    "verdict": "OUT",
+    "reason": "The system predicts action outcomes for general tool-calling tasks, a generic agent capability rather than scientific research.",
+    "quote": "Tool use in stateful environments"
+   },
+   "disputed": false,
+   "both_differ": false
+  },
+  {
+   "position": 17,
+   "case_id": "mbcls-2506.08968",
+   "arxiv": "2506.08968",
+   "title": "ADAM: Autonomous Discovery and Annotation Model using LLMs for Context-Aware Annotations",
+   "excerpt": "Object detection models typically rely on predefined categories, limiting their ability to identify novel objects in open-world scenarios. To overcome this constraint, we introduce ADAM: Autonomous Discovery and Annotation Model, a training-free, self-refining framework for open-world object labeling. ADAM leverages large language models (LLMs) to generate candidate labels for unknown objects based on contextual information from known entities within a scene. These labels are paired with visual embeddings from CLIP to construct an Embedding-Label Repository (ELR) that enables inference without category supervision. For a newly encountered unknown object, ADAM retrieves visually similar instances from the ELR and applies frequency-based voting and cross-modal re-ranking to assign a robust label. To further enhance consistency, we introduce a self-refinement loop that re-evaluates repository labels using visual cohesion analysis and k-nearest-neighbor-based majority re-labeling. Experimental results on the COCO and PASCAL datasets demonstrate that ADAM effectively annotates novel categories using only visual and contextual signals, without requiring any fine-tuning or retraining.",
+   "excerpt_sha256": "sha256:6ef6bfdabf2396d16c47933df69ee37333b706537938b394dee9c43128b43b4a",
+   "published": "IN",
+   "published_reason": "autonomous discovery and annotation",
+   "r1": {
+    "verdict": "OUT",
+    "reason": "The model assigns labels to previously unseen visual objects, an annotation task rather than research.",
+    "quote": "open-world object labeling"
+   },
+   "r2": {
+    "verdict": "OUT",
+    "reason": "The system assigns labels to novel objects in images, a computer-vision annotation task rather than scientific research.",
+    "quote": "open-world object labeling"
+   },
+   "disputed": true,
+   "both_differ": true
+  },
+  {
+   "position": 18,
+   "case_id": "mbcls-2506.11237",
+   "arxiv": "2506.11237",
+   "title": "LLM-as-a-Judge for Reference-less Automatic Code Validation and Refinement for Natural Language to Bash in IT Automation",
+   "excerpt": "In an effort to automatically evaluate and select the best model and improve code quality for automatic incident remediation in IT Automation, it is crucial to verify if the generated code for remediation action is syntactically and semantically correct and whether it can be executed correctly as intended. There are three approaches: 1) conventional methods use surface form similarity metrics (token match, exact match, etc.) which have numerous limitations, 2) execution-based evaluation focuses more on code functionality based on pass/fail judgments for given test-cases, and 3) LLM-as-a-Judge employs LLMs for automated evaluation to judge if it is a correct answer for a given problem based on pre-defined metrics. In this work, we focused on enhancing LLM-as-a-Judge using bidirectional functionality matching and logic representation for reference-less automatic validation and refinement for Bash code generation to select the best model for automatic incident remediation in IT Automation. We used execution-based evaluation as ground-truth to evaluate our LLM-as-a-Judge metrics. Results show high accuracy and agreement with execution-based evaluation (and up to 8% over baseline). Finally, we built Reflection code agents to utilize judgments and feedback from our evaluation metrics which achieved significant improvement (up to 24% increase in accuracy) for automatic code refinement.",
+   "excerpt_sha256": "sha256:f576189ecd3d409d607f62b2c479845bdb2ea3c0083e6ab325ebd10b80f8185c",
+   "published": "OUT",
+   "published_reason": "LLM-as-a-judge for code validation and refinement",
+   "r1": {
+    "verdict": "OUT",
+    "reason": "The system's output is shell-script remediation code, so this is about code generation and validation, not research.",
+    "quote": "Bash code generation"
+   },
+   "r2": {
+    "verdict": "OUT",
+    "reason": "The system validates and refines generated shell scripts for IT automation, a code task not a research cycle.",
+    "quote": "Bash code generation"
+   },
+   "disputed": false,
+   "both_differ": false
+  },
+  {
+   "position": 19,
+   "case_id": "mbcls-2506.11442",
+   "arxiv": "2506.11442",
+   "title": "ReVeal: Self-Evolving Code Agents via Reliable Self-Verification",
+   "excerpt": "Reinforcement learning with verifiable rewards (RLVR) has advanced the reasoning capabilities of large language models. However, existing methods rely solely on outcome rewards, without explicitly optimizing verification or leveraging reliable signals from realistic environments, leading to unreliable self-verification and limited test-time scaling. To address this, we widen the verification-generation asymmetry by explicitly optimizing self-verification, making it a reliable driver of deeper test-time scaling. We introduce ReVeal, a multi-turn reinforcement learning framework that evolves code generation through self-verification and tool-based evaluation. ReVeal structures long-horizon reasoning as iterative generation-verification turns and incorporates TAPO for turn-level credit assignment, fostering the co-evolution of code and test generation. At inference, this strengthened self-verification enables the model to use self-constructed tests and tool feedback to continuously evolve code for 20+ turns on LiveCodeBench despite training on only three. It also significantly improves Pass@k, indicating stronger exploration that expands the reasoning boundaries of the base model. These findings highlight the promise of ReVeal as a scalable paradigm for RL training and test-time scaling, paving the way for more robust and autonomous AI agents.",
+   "excerpt_sha256": "sha256:1059f7f91593c2cfb6e47ce63642f6e82dd15fc45c06e877a8219a21c1e34c7f",
+   "published": "OUT",
+   "published_reason": "self-evolving code agents, measured on a code benchmark",
+   "r1": {
+    "verdict": "OUT",
+    "reason": "The agent iteratively improves and checks its own generated code, a code-generation self-verification task.",
+    "quote": "evolves code generation through self-verification"
+   },
+   "r2": {
+    "verdict": "OUT",
+    "reason": "The system evolves and verifies generated code, which is a code-generation task rather than scientific research.",
+    "quote": "Self-Evolving Code Agents"
+   },
+   "disputed": false,
+   "both_differ": false
+  },
+  {
+   "position": 20,
+   "case_id": "mbcls-2507.10590",
+   "arxiv": "2507.10590",
+   "title": "Repairing Language Model Pipelines by Meta Self-Refining Competing Constraints at Runtime",
+   "excerpt": "Language Model (LM) pipelines can dynamically refine their outputs against programmatic constraints. However, their effectiveness collapses when faced with competing soft constraints, leading to inefficient backtracking loops where satisfying one constraint violates another. We introduce Meta Self-Refining, a framework that equips LM pipelines with a meta-corrective layer to repair these competitions at runtime/inference-time. Our approach monitors the pipeline's execution history to detect oscillatory failures. Upon detection, it invokes a meta-repairer LM that analyzes the holistic state of the backtracking attempts and synthesizes a strategic instruction to balance the competing requirements. This self-repair instruction guides the original LM out of a failing refining loop towards a successful output. Our results show Meta Self-Refining can successfully repair these loops, leading to more efficient LM programs.",
+   "excerpt_sha256": "sha256:442a3d5bdb3fd0c05f1b84ad83fd0ca21f7a538c8a28b6eeaa1f6bbc87d4055c",
+   "published": "OUT",
+   "published_reason": "repairing language-model pipelines at runtime — engineering, not research",
+   "r1": {
+    "verdict": "OUT",
+    "reason": "The framework repairs constraint conflicts in general LM pipelines at runtime, unrelated specifically to scientific research.",
+    "quote": "Language Model (LM) pipelines can dynamically refine their outputs against programmatic constraints"
+   },
+   "r2": {
+    "verdict": "OUT",
+    "reason": "The framework repairs competing constraints in generic LM pipelines at runtime, a software-reliability task not scientific research.",
+    "quote": "Language Model (LM) pipelines"
+   },
+   "disputed": false,
+   "both_differ": false
+  },
+  {
+   "position": 21,
+   "case_id": "mbcls-2507.17209",
+   "arxiv": "2507.17209",
+   "title": "HypoChainer: A Collaborative System Combining LLMs and Knowledge Graphs for Hypothesis-Driven Scientific Discovery",
+   "excerpt": "Modern scientific discovery faces growing challenges in integrating vast and heterogeneous knowledge critical to breakthroughs in biomedicine and drug development. Traditional hypothesis-driven research, though effective, is constrained by human cognitive limits, the complexity of biological systems, and the high cost of trial-and-error experimentation. Deep learning models, especially graph neural networks (GNNs), have accelerated prediction generation, but the sheer volume of outputs makes manual selection for validation unscalable. Large language models (LLMs) offer promise in filtering and hypothesis generation, yet suffer from hallucinations and lack grounding in structured knowledge, limiting their reliability. To address these issues, we propose HypoChainer, a collaborative visualization framework that integrates human expertise, LLM-driven reasoning, and knowledge graphs (KGs) to enhance hypothesis generation and validation. HypoChainer operates in three stages: First, exploration and contextualization -- experts use retrieval-augmented LLMs (RAGs) and dimensionality reduction to navigate large-scale GNN predictions, assisted by interactive explanations. Second, hypothesis chain formation -- experts iteratively examine KG relationships around predictions and semantically linked entities, refining hypotheses with LLM and KG suggestions. Third, validation prioritization -- refined hypotheses are filtered based on KG-supported evidence to identify high-priority candidates for experimentation, with visual analytics further strengthening weak links in reasoning. We demonstrate HypoChainer's effectiveness through case studies in two domains and expert interviews, highlighting its potential to support interpretable, scalable, and knowledge-grounded scientific discovery.",
+   "excerpt_sha256": "sha256:8a6f69342baa6b6f69a0dccaf217dc7db79b6cea2e0a9f692c17f1c0fd78d64c",
+   "published": "IN",
+   "published_reason": "hypothesis-driven discovery with LLMs and knowledge graphs",
+   "r1": {
+    "verdict": "IN",
+    "reason": "The system explicitly generates and validates scientific hypotheses using LLMs and knowledge graphs.",
+    "quote": "enhance hypothesis generation and validation"
+   },
+   "r2": {
+    "verdict": "IN",
+    "reason": "The system's stages explicitly form and validate scientific hypotheses using knowledge graphs and LLM reasoning.",
+    "quote": "hypothesis generation and validation"
+   },
+   "disputed": false,
+   "both_differ": false
+  },
+  {
+   "position": 22,
+   "case_id": "mbcls-2508.11860",
+   "arxiv": "2508.11860",
+   "title": "LARC: Towards Human-level Constrained Retrosynthesis Planning through an Agentic Framework",
+   "excerpt": "Large language model (LLM) agent evaluators leverage specialized tools to ground the rational decision-making of LLMs, making them well-suited to aid in scientific discoveries, such as constrained retrosynthesis planning. Constrained retrosynthesis planning is an essential, yet challenging, process within chemistry for identifying synthetic routes from commercially available starting materials to desired target molecules, subject to practical constraints. Here, we present LARC, the first LLM-based Agentic framework for Retrosynthesis planning under Constraints. LARC incorporates agentic constraint evaluation, through an Agent-as-a-Judge, directly into the retrosynthesis planning process, using agentic feedback grounded in tool-based reasoning to guide and constrain route generation. We rigorously evaluate LARC on a carefully curated set of 48 constrained retrosynthesis planning tasks across 3 constraint types. LARC achieves a 72.9% success rate on these tasks, vastly outperforming LLM baselines and approaching human expert-level success in substantially less time. The LARC framework is extensible, and serves as a first step towards an effective agentic tool or a co-scientist to human experts for constrained retrosynthesis.",
+   "excerpt_sha256": "sha256:bc7b13a3777a1ee251a78079beb1bbdcedfebcc4045b1ecb8baf96e139e140b0",
+   "published": "IN",
+   "published_reason": "retrosynthesis planning — chemistry research",
+   "r1": {
+    "verdict": "OUT",
+    "reason": "The agent searches for viable synthetic chemistry routes under constraints, a planning/search task rather than experimentation.",
+    "quote": "identifying synthetic routes from commercially available starting materials to desired target molecules"
+   },
+   "r2": {
+    "verdict": "OUT",
+    "reason": "The agentic framework plans chemical synthesis routes over known reactions, a planning task rather than the full hypothesis-experiment research cycle.",
+    "quote": "constrained retrosynthesis planning"
+   },
+   "disputed": true,
+   "both_differ": true
+  },
+  {
+   "position": 23,
+   "case_id": "mbcls-2508.15126",
+   "arxiv": "2508.15126",
+   "title": "aiXiv: A Next-Generation Open Access Ecosystem for Scientific Discovery Generated by AI Scientists",
+   "excerpt": "Recent advances in large language models (LLMs) have enabled AI agents to autonomously generate scientific proposals, conduct experiments, author papers, and perform peer reviews. Yet this flood of AI-generated research content collides with a fragmented and largely closed publication ecosystem. Traditional journals and conferences rely on human peer review, making them difficult to scale and often reluctant to accept AI-generated research content; existing preprint servers (e.g. arXiv) lack rigorous quality-control mechanisms. Consequently, a significant amount of high-quality AI-generated research lacks appropriate venues for dissemination, hindering its potential to advance scientific progress. To address these challenges, we introduce aiXiv, a next-generation open-access platform for human and AI scientists. Its multi-agent architecture allows research proposals and papers to be submitted, reviewed, and iteratively refined by both human and AI scientists. It also provides API and MCP interfaces that enable seamless integration of heterogeneous human and AI scientists, creating a scalable and extensible ecosystem for autonomous scientific discovery. Through extensive experiments, we demonstrate that aiXiv is a reliable and robust platform that significantly enhances the quality of AI-generated research proposals and papers after iterative revising and reviewing on aiXiv. Our work lays the groundwork for a next-generation open-access ecosystem for AI scientists, accelerating the publication and dissemination of high-quality AI-generated research content. Code: https://github.com/aixiv-org aiXiv: https://aixiv.science",
+   "excerpt_sha256": "sha256:f27ef4c0c1eb5712c3b752b527d4d2bc69e28acabc305fee3124f956c806dfdc",
+   "published": "IN",
+   "published_reason": "open-access ecosystem for AI-generated science",
+   "r1": {
+    "verdict": "IN",
+    "reason": "The platform's agents cover the full cycle of proposing, experimenting, writing, and reviewing research.",
+    "quote": "autonomously generate scientific proposals, conduct experiments, author papers, and perform peer reviews"
+   },
+   "r2": {
+    "verdict": "IN",
+    "reason": "The described AI scientists explicitly perform every stage of the research cycle within this ecosystem.",
+    "quote": "autonomously generate scientific proposals, conduct experiments, author papers, and perform peer reviews"
+   },
+   "disputed": false,
+   "both_differ": false
+  },
+  {
+   "position": 24,
+   "case_id": "mbcls-2509.03036",
+   "arxiv": "2509.03036",
+   "title": "Knowledge Integration for Physics-informed Symbolic Regression Using Pre-trained Large Language Models",
+   "excerpt": "Symbolic regression (SR) has emerged as a powerful tool for automated scientific discovery, enabling the derivation of governing equations from experimental data. A growing body of work illustrates the promise of integrating domain knowledge into the SR to improve the discovered equation's generality and usefulness. Physics-informed SR (PiSR) addresses this by incorporating domain knowledge, but current methods often require specialized formulations and manual feature engineering, limiting their adaptability only to domain experts. In this study, we leverage pre-trained Large Language Models (LLMs) to facilitate knowledge integration in PiSR. By harnessing the contextual understanding of LLMs trained on vast scientific literature, we aim to automate the incorporation of domain knowledge, reducing the need for manual intervention and making the process more accessible to a broader range of scientific problems. Namely, the LLM is integrated into the SR's loss function, adding a term of the LLM's evaluation of the SR's produced equation. We extensively evaluate our method using three SR algorithms (DEAP, gplearn, and PySR) and three pre-trained LLMs (Falcon, Mistral, and LLama 2) across three physical dynamics (dropping ball, simple harmonic motion, and electromagnetic wave). The results demonstrate that LLM integration consistently improves the reconstruction of physical dynamics from data, enhancing the robustness of SR models to noise and complexity. We further explore the impact of prompt engineering, finding that more informative prompts significantly improve performance.",
+   "excerpt_sha256": "sha256:3e83dc76018ef01c425275a0bb4b7ccdc152f6467a28137d0ee3ac5206898652",
+   "published": "IN",
+   "published_reason": "physics-informed symbolic regression — scientific model discovery",
+   "r1": {
+    "verdict": "IN",
+    "reason": "The system analyzes experimental data to derive governing physical equations, which is the analysis stage of research.",
+    "quote": "derivation of governing equations from experimental data"
+   },
+   "r2": {
+    "verdict": "IN",
+    "reason": "The system discovers physical laws from data, which is genuine scientific hypothesis formation and analysis.",
+    "quote": "derivation of governing equations from experimental data"
+   },
+   "disputed": false,
+   "both_differ": false
+  },
+  {
+   "position": 25,
+   "case_id": "mbcls-2510.02190",
+   "arxiv": "2510.02190",
+   "title": "Dr. Bench: A Multidimensional Evaluation for Deep Research Agents, from Answers to Reports",
+   "excerpt": "As an embodiment of intelligence evolution toward interconnected architectures, Deep Research Agents (DRAs) systematically exhibit the capabilities in task decomposition, cross-source retrieval, multi-stage reasoning, information integration, and structured output, which markedly enhance performance on complex and open-ended tasks. However, existing benchmarks remain deficient in evaluation dimensions, response format, and scoring mechanisms, limiting their effectiveness in assessing such agents. This paper introduces Dr. Bench, a multidimensional evaluation framework tailored to DRAs and long-form report-style responses. The benchmark comprises 214 expert-curated challenging tasks across 10 broad domains, each accompanied by manually constructed reference bundles to support composite evaluation. This framework incorporates metrics for semantic quality, topical focus, and retrieval trustworthiness, enabling a comprehensive evaluation of long reports generated by DRAs. Extensive experimentation confirms the superior performance of mainstream DRAs over web-search-tool-augmented reasoning models, yet reveals considerable scope for further improvement. This study provides a robust foundation for capability assessment, architectural refinement, and paradigm advancement of DRAs.",
+   "excerpt_sha256": "sha256:3fce66bf32563ba2fb5fd6d9d04d751837216e61eb1bf4d65deee53e7263dd6e",
+   "published": "IN",
+   "published_reason": "benchmark for deep research agents",
+   "r1": {
+    "verdict": "OUT",
+    "reason": "The benchmark evaluates agents on retrieving and structuring reports, not on forming or testing hypotheses.",
+    "quote": "task decomposition, cross-source retrieval, multi-stage reasoning, information integration, and structured output"
+   },
+   "r2": {
+    "verdict": "UNDECIDABLE",
+    "reason": "This evaluates agents that retrieve and synthesize information into reports, a domain ambiguous between literature synthesis and full research.",
+    "quote": "long-form report-style responses"
+   },
+   "disputed": true,
+   "both_differ": true
+  },
+  {
+   "position": 26,
+   "case_id": "mbcls-2510.19949",
+   "arxiv": "2510.19949",
+   "title": "Surfer 2: The Next Generation of Cross-Platform Computer Use Agents",
+   "excerpt": "Building agents that generalize across web, desktop, and mobile environments remains an open challenge, as prior systems rely on environment-specific interfaces that limit cross-platform deployment. We introduce Surfer 2, a unified architecture operating purely from visual observations that achieves state-of-the-art performance across all three environments. Surfer 2 integrates hierarchical context management, decoupled planning and execution, and self-verification with adaptive recovery, enabling reliable operation over long task horizons. Our system achieves 97.1% accuracy on WebVoyager, 69.6% on WebArena, 60.1% on OSWorld, and 87.1% on AndroidWorld, outperforming all prior systems without task-specific fine-tuning. With multiple attempts, Surfer 2 exceeds human performance on all benchmarks. These results demonstrate that systematic orchestration amplifies foundation model capabilities and enables general-purpose computer control through visual interaction alone, while calling for a next-generation vision language model to achieve Pareto-optimal cost-efficiency.",
+   "excerpt_sha256": "sha256:de25494af1bc2ceaa760a21da51803aaf89d9d2d1961887cfd0023fb87f28f63",
+   "published": "OUT",
+   "published_reason": "cross-platform computer-use agents",
+   "r1": {
+    "verdict": "OUT",
+    "reason": "The system is built to operate computer interfaces across web, desktop, and mobile platforms, a computer-operation task.",
+    "quote": "Cross-Platform Computer Use Agents"
+   },
+   "r2": {
+    "verdict": "OUT",
+    "reason": "The system is a general-purpose computer-use agent operating web, desktop, and mobile interfaces, not conducting research.",
+    "quote": "Cross-Platform Computer Use Agents"
+   },
+   "disputed": false,
+   "both_differ": false
+  },
+  {
+   "position": 27,
+   "case_id": "mbcls-2511.04583",
+   "arxiv": "2511.04583",
+   "title": "Jr. AI Scientist and Its Risk Report: Autonomous Scientific Exploration from a Baseline Paper",
+   "excerpt": "Understanding the current capabilities and risks of AI Scientist systems (autoresearch) is essential for ensuring trustworthy and sustainable AI-driven scientific progress while preserving the integrity of the academic ecosystem. To this end, we develop Jr. AI Scientist, a state-of-the-art autonomous AI scientist system that mimics the core research workflow of a novice student researcher: Given the baseline paper from the human mentor, it analyzes its limitations, formulates novel hypotheses for improvement, iteratively experiments until improvements are achieved, and writes a paper with the results. Unlike previous approaches that assume full automation or operate on small-scale code, Jr. AI Scientist follows a well-defined research workflow and leverages modern coding agents to handle complex, multi-file implementations, leading to scientifically valuable contributions. Through our experiments, the Jr. AI Scientist successfully generated new research papers that build upon real NeurIPS, IJCV, and ICLR works by proposing and implementing novel methods. For evaluation, we conducted automated assessments using AI Reviewers, author-led evaluations, and submissions to Agents4Science, a venue dedicated to AI-driven contributions. The findings demonstrate that Jr. AI Scientist generates papers receiving higher review scores by DeepReviewer than existing fully automated systems. Nevertheless, we identify important limitations from the author evaluation and the Agents4Science reviews, indicating the potential risks of directly applying current AI Scientist systems and key challenges for future research. Finally, we comprehensively report various risks identified during development. We believe this study clarifies the current role and limitations of AI Scientist systems, offering insights into the areas that still require human expertise and the risks that may emerge as these systems evolve.",
+   "excerpt_sha256": "sha256:87a630fe823810760f94e9b7aedf114b13216f4b1c32a2fd3f046bf4e9edc02d",
+   "published": "IN",
+   "published_reason": "Jr. AI Scientist, autonomous scientific exploration",
+   "r1": {
+    "verdict": "IN",
+    "reason": "The agent analyzes prior work, forms hypotheses, experiments iteratively, and writes up a paper, the full research cycle.",
+    "quote": "formulates novel hypotheses for improvement, iteratively experiments until improvements are achieved, and writes a paper with the results"
+   },
+   "r2": {
+    "verdict": "IN",
+    "reason": "The system explicitly performs hypothesis formation, experimentation, and write-up.",
+    "quote": "formulates novel hypotheses for improvement, iteratively experiments until improvements are achieved, and writes a paper"
+   },
+   "disputed": false,
+   "both_differ": false
+  },
+  {
+   "position": 28,
+   "case_id": "mbcls-2511.13825",
+   "arxiv": "2511.13825",
+   "title": "When AI Does Science: Evaluating the Autonomous AI Scientist KOSMOS in Radiation Biology",
+   "excerpt": "Agentic AI \"scientists\" now use language models to search the literature, run analyses, and generate hypotheses. We evaluate KOSMOS, an autonomous AI scientist, on three problems in radiation biology using simple random-gene null benchmarks. Hypothesis 1: baseline DNA damage response (DDR) capacity across cell lines predicts the p53 transcriptional response after irradiation (GSE30240). Hypothesis 2: baseline expression of OGT and CDO1 predicts the strength of repressed and induced radiation-response modules in breast cancer cells (GSE59732). Hypothesis 3: a 12-gene expression signature predicts biochemical recurrence-free survival after prostate radiotherapy plus androgen deprivation therapy (GSE116918). The DDR-p53 hypothesis was not supported: DDR score and p53 response were weakly negatively correlated (Spearman rho = -0.40, p = 0.76), indistinguishable from random five-gene scores. OGT showed only a weak association (r = 0.23, p = 0.34), whereas CDO1 was a clear outlier (r = 0.70, empirical p = 0.0039). The 12-gene signature achieved a concordance index of 0.61 (p = 0.017) but a non-unique effect size. Overall, KOSMOS produced one well-supported discovery, one plausible but uncertain result, and one false hypothesis, illustrating that AI scientists can generate useful ideas but require rigorous auditing against appropriate null models.",
+   "excerpt_sha256": "sha256:30c12e9c9e3ea5890347ea318b32d89276f54444d0f670e2025d18e8375f5750",
+   "published": "IN",
+   "published_reason": "evaluation of the autonomous AI scientist KOSMOS in radiation biology",
+   "r1": {
+    "verdict": "IN",
+    "reason": "KOSMOS searches literature, analyzes data, and generates and tests specific biological hypotheses.",
+    "quote": "search the literature, run analyses, and generate hypotheses"
+   },
+   "r2": {
+    "verdict": "IN",
+    "reason": "The autonomous AI scientist explicitly forms and tests biological hypotheses against real gene-expression data.",
+    "quote": "generate hypotheses"
+   },
+   "disputed": false,
+   "both_differ": false
+  },
+  {
+   "position": 29,
+   "case_id": "mbcls-2511.23436",
+   "arxiv": "2511.23436",
+   "title": "Towards Continuous Intelligence Growth: Self-Training, Continual Learning, and Dual-Scale Memory in SuperIntelliAgent",
+   "excerpt": "We introduce SuperIntelliAgent, an agentic learning framework that couples a trainable small diffusion model (the learner) with a frozen large language model (the verifier) to enable continual intelligence growth through self-supervised interaction. Unlike conventional supervised fine-tuning, SuperIntelliAgent learns autonomously without annotation: the learner generates candidate outputs, the verifier evaluates them through step-by-step reasoning, and their interaction produces chosen/rejected pairs for Direct Preference Optimization (DPO). This converts each input into a pseudo-training signal for continual improvement. The framework integrates dual-scale memory: short-term in-context memory that preserves reasoning traces across refinement cycles, and long-term memory that consolidates acquired knowledge through lightweight on-the-fly fine-tuning. A replay buffer retains samples that show verifiable progress and replays them as auxiliary supervision, reinforcing recent learning while forming adaptive curricula. SuperIntelliAgent is infrastructure-agnostic and can be plugged into existing agentic frameworks while turning ordinary inference loops into a lifelong optimization process. We posit that pairing a trainable learner with a reasoning-capable verifier forms a minimal reliable unit of growing intelligence, as paired feedback and partial-history replay yield richer learning curricula and stronger preference alignment. With a small number of automatically generated DPO pairs, the learner improves across all benchmarks, indicating that this mechanism provides a promising direction for continual intelligence accumulation and real-world deployment.",
+   "excerpt_sha256": "sha256:ec41f9dbd66a399d7771f03c6e5d667dcd04a9d162b6145cbf6651bfb7eb37d7",
+   "published": "OUT",
+   "published_reason": "self-training and continual learning as capability growth",
+   "r1": {
+    "verdict": "OUT",
+    "reason": "The framework is a domain-agnostic learner-verifier training loop for general model self-improvement, not scientific research.",
+    "quote": "couples a trainable small diffusion model (the learner) with a frozen large language model (the verifier)"
+   },
+   "r2": {
+    "verdict": "OUT",
+    "reason": "This is a domain-agnostic self-training and continual-learning mechanism, not a system conducting scientific research.",
+    "quote": "continual intelligence growth through self-supervised interaction"
+   },
+   "disputed": false,
+   "both_differ": false
+  },
+  {
+   "position": 30,
+   "case_id": "mbcls-2512.11509",
+   "arxiv": "2512.11509",
+   "title": "Does Less Hallucination Mean Less Creativity? An Empirical Investigation in LLMs",
+   "excerpt": "Large Language Models (LLMs) exhibit remarkable capabilities in natural language understanding and reasoning, but suffer from hallucination: the generation of factually incorrect content. While numerous methods have been developed to reduce hallucinations, their impact on creative generations remains unexplored. This gap is particularly critical for AI-assisted scientific discovery, which requires both factual accuracy and creative hypothesis generation. We investigate how three hallucination-reduction techniques: Chain of Verification (CoVe), Decoding by Contrasting Layers (DoLa), and Retrieval-Augmented Generation (RAG), affect creativity in LLMs. Evaluating multiple model families (LLaMA, Qwen, Mistral) at varying scales (1B - 70B parameters) on two creativity benchmarks (NeoCoder and CS4), we find that these methods have opposing effects on divergent creativity. CoVe enhances divergent thinking, DoLa suppresses it, and RAG shows minimal impact. Our findings provide guidance for selecting appropriate hallucination-reduction methods in scientific applications, where the balance between factual accuracy and creative exploration is crucial.",
+   "excerpt_sha256": "sha256:f2f6d64ce76600d4faaa9fcc3c895f1ebd4c2a85e562edf026d01cb529dd37f6",
+   "published": "OUT",
+   "published_reason": "hallucination versus creativity in LLMs — a property study, no research system",
+   "r1": {
+    "verdict": "OUT",
+    "reason": "The study measures how hallucination-reduction techniques change LLM creativity scores, not a research-performing system.",
+    "quote": "affect creativity in LLMs"
+   },
+   "r2": {
+    "verdict": "OUT",
+    "reason": "The study evaluates how existing mitigation techniques affect creativity benchmarks, not a system conducting its own research cycle.",
+    "quote": "hallucination-reduction techniques"
+   },
+   "disputed": false,
+   "both_differ": false
+  },
+  {
+   "position": 31,
+   "case_id": "mbcls-2512.18292",
+   "arxiv": "2512.18292",
+   "title": "Measuring Fine-Grained Negotiation Tactics of Humans and LLMs in Diplomacy",
+   "excerpt": "The study of negotiation styles dates back to Aristotle's ethos-pathos-logos rhetoric. Prior efforts primarily studied the success of negotiation agents. Here, we shift the focus towards the styles of negotiation strategies. Our focus is the strategic dialogue board game Diplomacy, which affords rich natural language negotiation and measures of game success. We used LLM-as-a-judge to annotate a large human-human set of Diplomacy games for fine-grained negotiation tactics from a sociologically-grounded taxonomy. Using a combination of the It Takes Two and WebDiplomacy datasets, we demonstrate the reliability of our LLM-as-a-Judge framework and show strong correlations between negotiation features and success in the Diplomacy setting. Lastly, we investigate the differences between LLM and human negotiation strategies and show that fine-tuning can steer LLM agents toward more human-like negotiation behaviors.",
+   "excerpt_sha256": "sha256:cc20c994554d9d534e2d65edf1974b5866352478157504746ca2619552d037e1",
+   "published": "OUT",
+   "published_reason": "negotiation tactics in Diplomacy",
+   "r1": {
+    "verdict": "OUT",
+    "reason": "The paper studies negotiation strategies used in a board game, squarely a negotiation-behavior study.",
+    "quote": "Negotiation Tactics"
+   },
+   "r2": {
+    "verdict": "OUT",
+    "reason": "The paper studies negotiation strategies in a diplomacy board game, not scientific research.",
+    "quote": "negotiation tactics"
+   },
+   "disputed": false,
+   "both_differ": false
+  },
+  {
+   "position": 32,
+   "case_id": "mbcls-2512.22145",
+   "arxiv": "2512.22145",
+   "title": "Pre-review to Peer review: Pitfalls of Automating Reviews using Large Language Models",
+   "excerpt": "Large Language Models are versatile general-task solvers, and their capabilities can truly assist people with scholarly peer review as \\textit{pre-review} agents, if not as fully autonomous \\textit{peer-review} agents. While incredibly beneficial, automating academic peer-review, as a concept, raises concerns surrounding safety, research integrity, and the validity of the academic peer-review process. The majority of the studies performing a systematic evaluation of frontier LLMs generating reviews across science disciplines miss the mark on addressing the alignment/misalignment of reviews along with the utility of LLM generated reviews when compared against publication outcomes such as \\textbf{Citations}, \\textbf{Hit-papers}, \\textbf{Novelty}, and \\textbf{Disruption}. This paper presents an experimental study in which we gathered ground-truth reviewer ratings from OpenReview and used various frontier open-weight LLMs to generate reviews of papers to gauge the safety and reliability of incorporating LLMs into the scientific review pipeline. Our findings demonstrate the utility of frontier open-weight LLMs as pre-review screening agents despite highlighting fundamental misalignment risks when deployed as autonomous reviewers. Our results show that all models exhibit weak correlation with human peer reviewers (0.15), with systematic overestimation bias of 3-5 points and uniformly high confidence scores (8.0-9.0/10) despite prediction errors. However, we also observed that LLM reviews correlate more strongly with post-publication metrics than with human scores, suggesting potential utility as pre-review screening tools. Our findings highlight the potential and address the pitfalls of automating peer reviews with language models. We open-sourced our dataset $D_{LMRSD}$ to help the research community expand the safety framework of automating scientific reviews.",
+   "excerpt_sha256": "sha256:8d966506569ac2fa2ae1dd3b517b4dc3762a1c2f2667f4eeaf38d5497d2b4ee2",
+   "published": "IN",
+   "published_reason": "automating peer review",
+   "r1": {
+    "verdict": "IN",
+    "reason": "The LLMs under study generate actual reviews of scientific papers, performing the review component of research.",
+    "quote": "generate reviews of papers"
+   },
+   "r2": {
+    "verdict": "IN",
+    "reason": "The system generates reviews of scientific papers, which is the review stage of the research cycle.",
+    "quote": "scholarly peer review"
+   },
+   "disputed": false,
+   "both_differ": false
+  },
+  {
+   "position": 33,
+   "case_id": "mbcls-2601.00828",
+   "arxiv": "2601.00828",
+   "title": "Decomposing LLM Self-Correction: The Accuracy-Correction Paradox and Error Depth Hypothesis",
+   "excerpt": "Large Language Models (LLMs) are widely believed to possess self-correction capabilities, yet recent studies suggest that intrinsic self-correction--where models correct their own outputs without external feedback--remains largely ineffective. In this work, we systematically decompose self-correction into three distinct sub-capabilities: error detection, error localization, and error correction. Through cross-model experiments on GSM8K-Complex (n=500 per model, 346 total errors) with three major LLMs, we uncover a striking Accuracy-Correction Paradox: weaker models (GPT-3.5, 66% accuracy) achieve 1.6x higher intrinsic correction rates than stronger models (DeepSeek, 94% accuracy)--26.8% vs 16.7%. We propose the Error Depth Hypothesis: stronger models make fewer but deeper errors that resist self-correction. Error detection rates vary dramatically across architectures (10% to 82%), yet detection capability does not predict correction success--Claude detects only 10% of errors but corrects 29% intrinsically. Surprisingly, providing error location hints hurts all models. Our findings challenge linear assumptions about model capability and self-improvement, with important implications for the design of self-refinement pipelines.",
+   "excerpt_sha256": "sha256:f34c65c66f79894257a83a313d65792a4fff1eeedf7807bd6c1442c6d5ec64be",
+   "published": "OUT",
+   "published_reason": "decomposing self-correction on grade-school word problems",
+   "r1": {
+    "verdict": "OUT",
+    "reason": "The paper studies whether models can find and fix their own reasoning errors on math problems, a self-correction study rather than a research workflow.",
+    "quote": "error detection, error localization, and error correction"
+   },
+   "r2": {
+    "verdict": "OUT",
+    "reason": "The study analyzes self-correction on math word problems, a reasoning benchmark rather than a research cycle.",
+    "quote": "GSM8K-Complex"
+   },
+   "disputed": false,
+   "both_differ": false
+  },
+  {
+   "position": 34,
+   "case_id": "mbcls-2601.03315",
+   "arxiv": "2601.03315",
+   "title": "Why LLMs Aren't Scientists Yet: Lessons from Four Autonomous Research Attempts",
+   "excerpt": "We report a case study of four end-to-end attempts to autonomously generate ML research papers using a pipeline of six LLM agents mapped to stages of the scientific workflow. Of these four, three attempts failed during implementation or evaluation. One completed the pipeline and was accepted to Agents4Science 2025, an experimental inaugural venue that required AI systems as first authors, passing both human and multi-AI review. From these attempts, we document six recurring failure modes: bias toward training data defaults, implementation drift under execution pressure, memory and context degradation across long-horizon tasks, overexcitement that declares success despite obvious failures, insufficient domain intelligence, and weak scientific taste in experimental design. We conclude by discussing four design principles for more robust AI-scientist systems, implications for autonomous scientific discovery, and we release all prompts, artifacts, and outputs at https://github.com/Lossfunk/ai-scientist-artefacts-v1",
+   "excerpt_sha256": "sha256:463a087cf56179db5cad25ef9d70cdd95817ae4689fd5fb33425254b46e164bc",
+   "published": "IN",
+   "published_reason": "four autonomous research attempts and why they failed",
+   "r1": {
+    "verdict": "IN",
+    "reason": "The case study's pipeline maps agents onto the stages of the scientific workflow to produce full research papers.",
+    "quote": "six LLM agents mapped to stages of the scientific workflow"
+   },
+   "r2": {
+    "verdict": "IN",
+    "reason": "The case study explicitly reports attempts by an agent pipeline to conduct the entire research process.",
+    "quote": "end-to-end attempts to autonomously generate ML research papers"
+   },
+   "disputed": false,
+   "both_differ": false
+  },
+  {
+   "position": 35,
+   "case_id": "mbcls-2601.12346",
+   "arxiv": "2601.12346",
+   "title": "MMDeepResearch-Bench: A Benchmark for Multimodal Deep Research Agents",
+   "excerpt": "Deep Research Agents (DRAs) generate citation-rich reports via multi-step search and synthesis, yet existing benchmarks mainly target text-only settings or short-form multimodal QA, missing end-to-end multimodal evidence use. We introduce MMDeepResearch-Bench (MMDR-Bench), a benchmark of 140 expert-crafted tasks across 21 domains, where each task provides an image-text bundle to evaluate multimodal understanding and citation-grounded report generation. Compared to prior setups, MMDR-Bench emphasizes report-style synthesis with explicit evidence use, where models must connect visual artifacts to sourced claims and maintain consistency across narrative, citations, and visual references. We further propose a unified, interpretable evaluation pipeline: Formula-LLM Adaptive Evaluation (FLAE) for report quality, Trustworthy Retrieval-Aligned Citation Evaluation (TRACE) for citation-grounded evidence alignment, and Multimodal Support-Aligned Integrity Check (MOSAIC) for text-visual integrity, each producing fine-grained signals that support error diagnosis beyond a single overall score. Experiments across 25 state-of-the-art models reveal systematic trade-offs between generation quality, citation discipline, and multimodal grounding, highlighting that strong prose alone does not guarantee faithful evidence use and that multimodal integrity remains a key bottleneck for deep research agents.",
+   "excerpt_sha256": "sha256:1d3a2f61f6a52882cf8fd9c70afc56c35d6abc0db8bb617fd015a5190cbeff79",
+   "published": "IN",
+   "published_reason": "benchmark for multimodal deep research agents",
+   "r1": {
+    "verdict": "OUT",
+    "reason": "The agents retrieve and synthesize sources into reports but never form or test a hypothesis, making this search-and-writeup rather than research.",
+    "quote": "citation-rich reports via multi-step search and synthesis"
+   },
+   "r2": {
+    "verdict": "UNDECIDABLE",
+    "reason": "This benchmarks agents that search and synthesize existing sources into cited reports, a domain that sits ambiguously between literature synthesis and the full research cycle.",
+    "quote": "multi-step search and synthesis"
+   },
+   "disputed": true,
+   "both_differ": true
+  },
+  {
+   "position": 36,
+   "case_id": "mbcls-2602.00521",
+   "arxiv": "2602.00521",
+   "title": "Diagnosing the Reliability of LLM-as-a-Judge via Item Response Theory",
+   "excerpt": "While LLM-as-a-Judge is widely used in automated evaluation, existing validation practices primarily operate at the level of observed outputs, offering limited insight into whether LLM judges themselves function as stable and reliable measurement instruments. To address this limitation, we introduce a two-phase diagnostic framework for assessing reliability of LLM-as-a-Judge, grounded in Item Response Theory (IRT). The framework adopts Graded Response Model (GRM) of IRT and formalizes reliability along two complementary dimensions: (1) intrinsic consistency, defined as the stability of measurement behavior under prompt variations, and (2) human alignment, capturing correspondence with human quality assessments. We empirically examine diverse LLM judges with this framework, and show that leveraging IRT-GRM yields interpretable signals for diagnosing judgments systematically. These signals provide practical guidance for verifying reliablity of LLM-as-a-Judge and identifying potential causes of unreliability.",
+   "excerpt_sha256": "sha256:f8463299ad5e2e9e4ebbe479cb871b5507412543bf7d248de8da8464a570efae",
+   "published": "OUT",
+   "published_reason": "reliability of LLM-as-a-judge via item response theory — judging in general",
+   "r1": {
+    "verdict": "OUT",
+    "reason": "The paper diagnoses statistical reliability of LLM judges for general automated evaluation, not a scientific research process.",
+    "quote": "LLM-as-a-Judge is widely used in automated evaluation"
+   },
+   "r2": {
+    "verdict": "OUT",
+    "reason": "The paper diagnoses general judge reliability using item response theory, an evaluation-methodology task not tied to conducting research.",
+    "quote": "LLM-as-a-Judge"
+   },
+   "disputed": false,
+   "both_differ": false
+  },
+  {
+   "position": 37,
+   "case_id": "mbcls-2602.04288",
+   "arxiv": "2602.04288",
+   "title": "Contextual Drag: How Errors in the Context Affect LLM Reasoning",
+   "excerpt": "Central to many self-improvement pipelines for large language models (LLMs) is the assumption that models can improve by reflecting on past mistakes. We study a phenomenon termed contextual drag: the presence of failed attempts in the context biases subsequent generations toward structurally similar errors. Across evaluations of 11 proprietary and open-weight models on 8 reasoning tasks, contextual drag induces 10-20% performance drops, and iterative self-refinement in models with severe contextual drag can collapse into self-deterioration. Structural analysis using tree edit distance reveals that subsequent reasoning trajectories inherit structurally similar error patterns from the context. We demonstrate that neither external feedback nor successful self-verification suffices to eliminate this effect. While mitigation strategies such as fallback-behavior fine-tuning and context denoising yield partial improvements, they fail to fully restore baseline performance, positioning contextual drag as a persistent failure mode in current reasoning architectures.",
+   "excerpt_sha256": "sha256:eedab70b6c3bdb4f50633d730ae07b54f32539bb29067bb7b507a90e9c8f511e",
+   "published": "OUT",
+   "published_reason": "how context errors affect LLM reasoning",
+   "r1": {
+    "verdict": "OUT",
+    "reason": "The study examines how earlier errors bias later LLM generations in general reasoning tasks, not a research cycle.",
+    "quote": "self-improvement pipelines for large language models"
+   },
+   "r2": {
+    "verdict": "OUT",
+    "reason": "The paper studies how errors propagate through reasoning contexts on reasoning tasks, not a research cycle.",
+    "quote": "LLM Reasoning"
+   },
+   "disputed": false,
+   "both_differ": false
+  },
+  {
+   "position": 38,
+   "case_id": "mbcls-2602.12639",
+   "arxiv": "2602.12639",
+   "title": "CLASE: A Hybrid Method for Chinese Legalese Stylistic Evaluation",
+   "excerpt": "Legal text generated by large language models (LLMs) can usually achieve reasonable factual accuracy, but it frequently fails to adhere to the specialised stylistic norms and linguistic conventions of legal writing. In order to improve stylistic quality, a crucial first step is to establish a reliable evaluation method. However, having legal experts manually develop such a metric is impractical, as the implicit stylistic requirements in legal writing practice are difficult to formalise into explicit rubrics. Meanwhile, existing automatic evaluation methods also fall short: reference-based metrics conflate semantic accuracy with stylistic fidelity, and LLM-as-a-judge evaluations suffer from opacity and inconsistency. To address these challenges, we introduce CLASE (Chinese LegAlese Stylistic Evaluation), a hybrid evaluation method that focuses on the stylistic performance of legal text. The method incorporates a hybrid scoring mechanism that combines 1) linguistic feature-based scores and 2) experience-guided LLM-as-a-judge scores. Both the feature coefficients and the LLM scoring experiences are learned from contrastive pairs of authentic legal documents and their LLM-restored counterparts. This hybrid design captures both surface-level features and implicit stylistic norms in a transparent, reference-free manner. Experiments on 200 Chinese legal documents show that CLASE achieves substantially higher alignment with human judgments than traditional metrics and pure LLM-as-a-judge methods. Beyond improved alignment, CLASE provides interpretable score breakdowns and suggestions for improvements, offering a scalable and practical solution for professional stylistic evaluation in legal text generation (Code and data for CLASE is available at: https://github.com/rexera/CLASE).",
+   "excerpt_sha256": "sha256:519b82490b42d1249baa94a570cb0b5d9f086a80e84b512e1b2c4039de69e00d",
+   "published": "OUT",
+   "published_reason": "stylistic evaluation of Chinese legalese",
+   "r1": {
+    "verdict": "OUT",
+    "reason": "The method evaluates writing-style fidelity of legal documents, a stylistic-evaluation task.",
+    "quote": "stylistic performance of legal text"
+   },
+   "r2": {
+    "verdict": "OUT",
+    "reason": "The system evaluates writing style conformity in legal documents, a style-evaluation task rather than scientific research.",
+    "quote": "stylistic performance of legal text"
+   },
+   "disputed": false,
+   "both_differ": false
+  },
+  {
+   "position": 39,
+   "case_id": "mbcls-2602.18920",
+   "arxiv": "2602.18920",
+   "title": "DeepInnovator: Triggering the Innovative Capabilities of LLMs",
+   "excerpt": "The application of Large Language Models (LLMs) in accelerating scientific discovery has garnered increasing attention, with a key focus on constructing research agents endowed with innovative capability, i.e., the ability to autonomously generate novel and significant research ideas. Existing approaches predominantly rely on sophisticated prompt engineering and lack a systematic training paradigm. To address this, we propose DeepInnovator, a training framework designed to trigger the innovative capability of LLMs. Our approach comprises two core components. (1) ``Standing on the shoulders of giants''. We construct an automated data extraction pipeline to extract and organize structured research knowledge from a vast corpus of unlabeled scientific literature. (2) ``Conjectures and refutations''. We introduce a ``Next Idea Prediction'' training paradigm, which models the generation of research ideas as an iterative process of continuously predicting, evaluating, and refining plausible and novel next idea. Both automatic and expert evaluations demonstrate that our DeepInnovator-14B significantly outperforms untrained baselines, achieving win rates of 80.53\\%-93.81\\%, and attains performance comparable to that of current leading LLMs. This work provides a scalable training pathway toward building research agents with genuine, originative innovative capability, and will open-source the dataset to foster community advancement. Source code and data are available at: https://github.com/HKUDS/DeepInnovator.",
+   "excerpt_sha256": "sha256:dd453b4c159c7bc0262c3c990eab2657c9ff143b273ce388a45b30a1e3873969",
+   "published": "IN",
+   "published_reason": "triggering innovative capability — research ideation",
+   "r1": {
+    "verdict": "IN",
+    "reason": "The training paradigm is built specifically to make LLMs generate novel research ideas, the hypothesis-formation stage of research.",
+    "quote": "autonomously generate novel and significant research ideas"
+   },
+   "r2": {
+    "verdict": "IN",
+    "reason": "The training framework is built specifically to generate novel research ideas, the hypothesis-formation stage of research.",
+    "quote": "generation of research ideas"
+   },
+   "disputed": false,
+   "both_differ": false
+  },
+  {
+   "position": 40,
+   "case_id": "mbcls-2603.11515",
+   "arxiv": "2603.11515",
+   "title": "Multi-Agent Collaboration for Automated Design Exploration on High Performance Computing Systems",
+   "excerpt": "Today's scientific challenges, from climate modeling to Inertial Confinement Fusion design to novel material design, require exploring huge design spaces. In order to enable high-impact scientific discovery, we need to scale up our ability to test hypotheses, generate results, and learn from them rapidly. We present MADA (Multi-Agent Design Assistant), a Large Language Model (LLM) powered multi-agent framework that coordinates specialized agents for complex design workflows. A Job Management Agent (JMA) launches and manages ensemble simulations on HPC systems, a Geometry Agent (GA) generates meshes, and an Inverse Design Agent (IDA) proposes new designs informed by simulation outcomes. While general purpose, we focus development and validation on Richtmyer--Meshkov Instability (RMI) suppression, a critical challenge in Inertial Confinement Fusion. We evaluate on two complementary settings: running a hydrodynamics simulations on HPC systems, and using a pre-trained machine learning surrogate for rapid design exploration. Our results demonstrate that the MADA system successfully executes iterative design refinement, automatically improving designs toward optimal RMI suppression with minimal manual intervention. Our framework reduces cumbersome manual workflow setup, and enables automated design exploration at scale. More broadly, it demonstrates a reusable pattern for coupling reasoning, simulation, specialized tools, and coordinated workflows to accelerate scientific discovery.",
+   "excerpt_sha256": "sha256:7bb744bb16cbda471fdf6c0dc705c029247e72a5ec21e6da24bb86528e5e8de6",
+   "published": "IN",
+   "published_reason": "multi-agent automated design exploration on HPC",
+   "r1": {
+    "verdict": "IN",
+    "reason": "The multi-agent system proposes designs, runs HPC simulations, and refines designs from outcomes, mirroring hypothesis-experiment-analysis.",
+    "quote": "proposes new designs informed by simulation outcomes"
+   },
+   "r2": {
+    "verdict": "IN",
+    "reason": "The agents run actual simulation experiments and iteratively refine designs based on outcomes, matching the experiment-analysis research cycle.",
+    "quote": "running a hydrodynamics simulations on HPC systems"
+   },
+   "disputed": false,
+   "both_differ": false
+  },
+  {
+   "position": 41,
+   "case_id": "mbcls-2603.18516",
+   "arxiv": "2603.18516",
+   "title": "Total Recall QA: A Verifiable Evaluation Suite for Deep Research Agents",
+   "excerpt": "Deep research agents have emerged as LLM-based systems designed to perform multi-step information seeking and reasoning over large, open-domain sources to answer complex questions by synthesizing information from multiple information sources. Given the complexity of the task and despite various recent efforts, evaluation of deep research agents remains fundamentally challenging. This paper identifies a list of requirements and optional properties for evaluating deep research agents. We observe that existing benchmarks do not satisfy all identified requirements. Inspired by prior research on TREC Total Recall Tracks, we introduce the task of Total Recall Question Answering and develop a framework for deep research agents evaluation that satisfies the identified criteria. Our framework constructs single-answer, total recall queries with precise evaluation and relevance judgments derived from a structured knowledge base paired with a text corpus, enabling large-scale data construction. Using this framework, we build TRQA, a deep research benchmark constructed from Wikidata-Wikipedia as a real-world source and a synthetically generated e-commerce knowledge base and corpus to mitigate the effects of data contamination. We benchmark the collection with representative retriever and deep research models and establish baseline retrieval and end-to-end results for future comparative evaluation.",
+   "excerpt_sha256": "sha256:127e86cf9d96dfe2355f66dd58956f63cb2c70dbe8acbfd668faca03193d3021",
+   "published": "IN",
+   "published_reason": "verifiable evaluation suite for deep research agents",
+   "r1": {
+    "verdict": "OUT",
+    "reason": "The framework evaluates agents that retrieve and synthesize information to answer questions, not agents that experiment.",
+    "quote": "multi-step information seeking and reasoning over large, open-domain sources"
+   },
+   "r2": {
+    "verdict": "UNDECIDABLE",
+    "reason": "This evaluates agents answering complex questions via search and synthesis, a domain ambiguous between research and information retrieval.",
+    "quote": "multi-step information seeking and reasoning"
+   },
+   "disputed": true,
+   "both_differ": true
+  },
+  {
+   "position": 42,
+   "case_id": "mbcls-2603.20262",
+   "arxiv": "2603.20262",
+   "title": "Deciphering Scientific Reasoning Steps from Outcome Data for Molecule Optimization",
+   "excerpt": "Emerging reasoning models hold promise for automating scientific discovery. However, their training is hindered by a critical supervision gap: experimental outcomes are abundant, whereas intermediate reasoning steps are rarely documented at scale. To bridge this gap, we propose DESRO, a framework for deciphering scientific reasoning from outcomes. By analyzing shared patterns and key differences within grouped data, a large language model (LLM) can recover the underlying logic. We instantiate this framework in molecule optimization, a pivotal stage in drug discovery that traditionally relies on the iterative reasoning of medicinal chemists. Across 2.3 million molecular property records, our framework infers optimization rationales by grouping molecules with shared fragments, then using an LLM to analyze how structural variations correlate with property differences. Based on the derived data, we train a model that conducts molecule optimization through an interpretable reasoning process. DESRO achieves the highest success rates on 15 out of 18 tasks, spanning both single- and multi-property optimization of bioactivity and ADMET properties. The reasoning process enables robust generalization to out-of-distribution scenarios, including novel property combinations, unseen biological targets, and unseen properties defined solely by natural language descriptions. In retrospective case studies under strict temporal splits, the model autonomously reconstructs expert-level lead optimization trajectories. Additionally, our framework extends beyond molecule optimization to reaction ligand selection. Our results establish deciphering reasoning steps from outcome data as a viable paradigm for enabling scientific reasoning, providing a scalable approach to accelerate scientific discovery.",
+   "excerpt_sha256": "sha256:844083c65930a16c5e0bd56f5fd60c39409a2385941c0d980b1bc02680d1b37c",
+   "published": "IN",
+   "published_reason": "scientific reasoning steps for molecule optimisation",
+   "r1": {
+    "verdict": "OUT",
+    "reason": "The framework infers optimization rationales for one narrow design step in drug discovery rather than running a full research cycle.",
+    "quote": "molecule optimization, a pivotal stage in drug discovery"
+   },
+   "r2": {
+    "verdict": "IN",
+    "reason": "The system analyzes experimental outcome data to infer and apply scientific optimization rationale, the analysis stage of research.",
+    "quote": "autonomously reconstructs expert-level lead optimization trajectories"
+   },
+   "disputed": true,
+   "both_differ": false
+  },
+  {
+   "position": 43,
+   "case_id": "mbcls-2604.00149",
+   "arxiv": "2604.00149",
+   "title": "Towards Verifiable and Self-Correcting AI Physicists for Quantum Many-Body Simulations",
+   "excerpt": "While large language models (LLMs) promise to revolutionize automated scientific discovery, their application in rigorous real-world physical research is stalled by two critical barriers: a lack of realistic evaluation benchmarks and systemic LLM hallucinations. Here, we address both problems. We introduce QMP-Bench, a pioneering end-to-end research-level benchmark in quantum many-body simulation consisting of $100$ tasks extracted from $21$ high-impact prestigious journals, presenting a challenge even for current frontier LLMs. To establish a paradigm for reliable and transparent AI physicists, we present PhysVEC, a multi-agent framework that enforces self-verifiable and error correction in AI research. PhysVEC seamlessly integrates programming and scientific verifiers to guarantee coding correctness and principle-based physical validity, yielding interpretable evidence and error correction at each step. PhysVEC significantly outperforms existing LLM baselines on various scenarios in QMP-Bench and presents a favorable inference-time scaling, successfully transforming unreliable AI generations into accurate physical reproductions, paving a robust and trustworthy path towards future automated scientific discovery.",
+   "excerpt_sha256": "sha256:b205c31f5c120855ce76c3bf9e950a70fda161bb73c4f8d28acb59bec95f3248",
+   "published": "IN",
+   "published_reason": "verifiable and self-correcting AI physicists for quantum many-body simulation",
+   "r1": {
+    "verdict": "IN",
+    "reason": "The multi-agent framework runs and verifies physics simulations against a research-level benchmark, an experimentation/analysis activity.",
+    "quote": "research-level benchmark in quantum many-body simulation"
+   },
+   "r2": {
+    "verdict": "IN",
+    "reason": "The multi-agent framework verifies physics simulation results against scientific principles as part of conducting physical research.",
+    "quote": "self-verifiable and error correction in AI research"
+   },
+   "disputed": false,
+   "both_differ": false
+  },
+  {
+   "position": 44,
+   "case_id": "mbcls-2604.00248",
+   "arxiv": "2604.00248",
+   "title": "REM-CTX: Automated Peer Review via Reinforcement Learning with Auxiliary Context",
+   "excerpt": "Most automated peer review systems rely on textual manuscript content alone, leaving visual elements such as figures and external scholarly signals underutilized. We introduce REM-CTX, a reinforcement-learning system that incorporates auxiliary context into the review generation process via correspondence-aware reward functions. REM-CTX trains an 8B-parameter language model with Group Relative Policy Optimization (GRPO) and combines a multi-aspect quality reward with two correspondence rewards that explicitly encourage alignment with auxiliary context. Experiments on manuscripts across Computer, Biological, and Physical Sciences show that REM-CTX achieves the highest overall review quality among six baselines, outperforming other systems with substantially larger commercial models, and surpassing the next-best RL baseline across both quality and contextual grounding metrics. Ablation studies confirm that the two correspondence rewards are complementary: each selectively improves its targeted correspondence reward while preserving all quality dimensions, and the full model outperforms all partial variants. Analysis of training dynamics reveals that the criticism aspect is negatively correlated with other metrics during training, suggesting that future studies should group multi-dimension rewards for review generation.",
+   "excerpt_sha256": "sha256:55a3ea4ff3f21a3dfc5b73b5b5a81c662ba0775fcba91e43bbb1d758cd724a0e",
+   "published": "IN",
+   "published_reason": "automated peer review by reinforcement learning",
+   "r1": {
+    "verdict": "IN",
+    "reason": "The RL system's output is the peer-review text itself, the review stage of research.",
+    "quote": "review generation process"
+   },
+   "r2": {
+    "verdict": "IN",
+    "reason": "The system generates peer reviews of manuscripts via reinforcement learning, the review stage of the research cycle.",
+    "quote": "Automated Peer Review"
+   },
+   "disputed": false,
+   "both_differ": false
+  },
+  {
+   "position": 45,
+   "case_id": "mbcls-2604.03553",
+   "arxiv": "2604.03553",
+   "title": "Chronos: The AI Co-Historian",
+   "excerpt": "AI is increasingly supporting, accelerating, and automating scientific discovery across subjects. Yet, the adoption of AI in historical research remains limited due to the lack of specialised solutions for historians. To change this, we introduce Chronos, an AI Co-Historian designed to support historians. It allows researchers to create and customize research workflows through natural-language interaction and share these as Chronos-Extensions with others. Chronos specifically addresses the need of historians for a tool that is specialised, non-technical, highly customizable, and facilitates extensive task evaluation. As a first extension, we introduce Chronos-Extract, which enables researchers to automate the targeted extraction of information from image scans of historical sources. We benchmark Chronos-Extract on three historical source corpora and find that it achieves high task-accuracy across primary sources spanning three centuries and diverse languages, layouts, and typefaces. Chronos is openly available and ready for historians to use on their own primary and secondary sources.",
+   "excerpt_sha256": "sha256:95205e0b8a29bc6effcd14bbab4e2d937ed484f5922cd682a24427e30a11bbf9",
+   "published": "IN",
+   "published_reason": "AI co-historian — a research assistant in a discipline",
+   "r1": {
+    "verdict": "OUT",
+    "reason": "The tool's function is extracting information from document scans, a data-extraction task rather than a full research cycle.",
+    "quote": "automate the targeted extraction of information from image scans of historical sources"
+   },
+   "r2": {
+    "verdict": "OUT",
+    "reason": "The demonstrated capability is extracting information from historical documents, an extraction/tool-assistance task rather than the research cycle itself.",
+    "quote": "automate the targeted extraction of information from image scans"
+   },
+   "disputed": true,
+   "both_differ": true
+  },
+  {
+   "position": 46,
+   "case_id": "mbcls-2604.17406",
+   "arxiv": "2604.17406",
+   "title": "EvoMaster: A Foundational Evolving Agent Framework for Agentic Science at Scale",
+   "excerpt": "The convergence of large language models and agents is catalyzing a new era of scientific discovery: Agentic Science. While the scientific method is inherently iterative, existing agent frameworks are predominantly static, narrowly scoped, and lack the capacity to learn from trial and error. To bridge this gap, we present EvoMaster, a foundational evolving agent framework engineered specifically for Agentic Science at Scale. Driven by the core principle of continuous self-evolution, EvoMaster empowers agents to iteratively refine hypotheses, self-critique, and progressively accumulate knowledge across experimental cycles, faithfully mirroring human scientific inquiry. Crucially, as a domain-agnostic base harness, EvoMaster is exceptionally easy to scale up -- enabling developers to build and deploy highly capable, self-evolving scientific agents for arbitrary disciplines in approximately 100 lines of code. Built upon EvoMaster, we incubated the SciMaster ecosystem across domains such as machine learning, physics, biology, web research, and general science. Evaluations on ten benchmarks spanning scientific research/coding/experimentation, scientific reasoning and information search, and practical scientific problem solving compare EvoMaster against OpenHands, OpenClaw, and Codex. EvoMaster achieves the highest score on nine of the ten benchmarks and the strongest average score (58.0\\%) among the four agents, validating its efficacy and generality as the premier foundational framework for the next generation of autonomous scientific discovery.",
+   "excerpt_sha256": "sha256:0d4c871bddd9707b1567190d3fa249f730a000751a901e0fab57a5057ae4b042",
+   "published": "IN",
+   "published_reason": "EvoMaster, a framework for agentic science at scale",
+   "r1": {
+    "verdict": "IN",
+    "reason": "The framework is explicitly built to refine hypotheses and accumulate knowledge across experimental cycles in multiple scientific domains.",
+    "quote": "iteratively refine hypotheses, self-critique, and progressively accumulate knowledge across experimental cycles"
+   },
+   "r2": {
+    "verdict": "IN",
+    "reason": "The framework explicitly automates hypothesis refinement and experimental cycles as its core function.",
+    "quote": "iteratively refine hypotheses, self-critique, and progressively accumulate knowledge across experimental cycles"
+   },
+   "disputed": false,
+   "both_differ": false
+  },
+  {
+   "position": 47,
+   "case_id": "mbcls-2604.18418",
+   "arxiv": "2604.18418",
+   "title": "MedProbeBench: Systematic Benchmarking at Deep Evidence Integration for Expert-level Medical Guideline",
+   "excerpt": "Recent advances in deep research systems enable large language models to retrieve, synthesize, and reason over large-scale external knowledge. In medicine, developing clinical guidelines critically depends on such deep evidence integration. However, existing benchmarks fail to evaluate this capability in realistic workflows requiring multi-step evidence integration and expert-level judgment. To address this gap, we introduce MedProbeBench, the first benchmark leveraging high-quality clinical guidelines as expert-level references. Medical guidelines, with their rigorous standards in neutrality and verifiability, represent the pinnacle of medical expertise and pose substantial challenges for deep research agents. For evaluation, we propose MedProbe-Eval, a comprehensive evaluation framework featuring: (1) Holistic Rubrics with 1,200+ task-adaptive rubric criteria for comprehensive quality assessment, and (2) Fine-grained Evidence Verification for rigorous validation of evidence precision, grounded in 5,130+ atomic claims. Evaluation of 17 LLMs and deep research agents reveals critical gaps in evidence integration and guideline generation, underscoring the substantial distance between current capabilities and expert-level clinical guideline development. Project: https://github.com/uni-medical/MedProbeBench",
+   "excerpt_sha256": "sha256:aa4ddbffa74d4a3b416004e5c29950a5e49974827b4b5336c5dad7ffa1ab4a7b",
+   "published": "IN",
+   "published_reason": "benchmark for expert-level medical evidence integration",
+   "r1": {
+    "verdict": "OUT",
+    "reason": "The benchmarked systems retrieve and synthesize evidence into guidelines rather than forming and testing hypotheses.",
+    "quote": "retrieve, synthesize, and reason over large-scale external knowledge"
+   },
+   "r2": {
+    "verdict": "UNDECIDABLE",
+    "reason": "The benchmark evaluates literature-synthesis systems for guideline writing, a domain ambiguous between research and search-based synthesis.",
+    "quote": "deep research agents"
+   },
+   "disputed": true,
+   "both_differ": true
+  },
+  {
+   "position": 48,
+   "case_id": "mbcls-2604.20441",
+   "arxiv": "2604.20441",
+   "title": "MedSkillAudit: A Domain-Specific Audit Framework for Medical Research Agent Skills",
+   "excerpt": "Background: Agent skills are increasingly deployed as modular, reusable capability units in AI agent systems. Medical research agent skills require safeguards beyond general-purpose evaluation, including scientific integrity, methodological validity, reproducibility, and boundary safety. This study developed and preliminarily evaluated a domain-specific audit framework for medical research agent skills, with a focus on reliability against expert review. Methods: We developed MedSkillAudit (skill-auditor@1.0), a layered framework assessing skill release readiness before deployment. We evaluated 75 skills across five medical research categories (15 per category). Two experts independently assigned a quality score (0-100), an ordinal release disposition (Production Ready / Limited Release / Beta Only / Reject), and a high-risk failure flag. System-expert agreement was quantified using ICC(2,1) and linearly weighted Cohen's kappa, benchmarked against the human inter-rater baseline. Results: The mean consensus quality score was 72.4 (SD = 13.0); 57.3% of skills fell below the Limited Release threshold. MedSkillAudit achieved ICC(2,1) = 0.449 (95% CI: 0.250-0.610), exceeding the human inter-rater ICC of 0.300. System-consensus score divergence (SD = 9.5) was smaller than inter-expert divergence (SD = 12.4), with no directional bias (Wilcoxon p = 0.613). Protocol Design showed the strongest category-level agreement (ICC = 0.551); Academic Writing showed a negative ICC (-0.567), reflecting a structural rubric-expert mismatch. Conclusions: Domain-specific pre-deployment audit may provide a practical foundation for governing medical research agent skills, complementing general-purpose quality checks with structured audit workflows tailored to scientific use cases.",
+   "excerpt_sha256": "sha256:f5cbe3ddd1e8f01473ffc2a1a84daaa4f936b702943f174f45368556a1ce5dc6",
+   "published": "IN",
+   "published_reason": "audit framework for medical research agent skills",
+   "r1": {
+    "verdict": "OUT",
+    "reason": "The framework audits the quality of other agents' skill outputs rather than performing research itself.",
+    "quote": "domain-specific audit framework for medical research agent skills"
+   },
+   "r2": {
+    "verdict": "OUT",
+    "reason": "The system audits release-readiness of agent capability modules rather than itself conducting hypotheses, experiments, or write-ups.",
+    "quote": "audit framework for medical research agent skills"
+   },
+   "disputed": true,
+   "both_differ": true
+  },
+  {
+   "position": 49,
+   "case_id": "mbcls-2605.06177",
+   "arxiv": "2605.06177",
+   "title": "BioMedArena: An Open-source Toolkit for Building and Evaluating Biomedical Deep Research Agents",
+   "excerpt": "Reproducing and comparing deep research agents today is hard: the same backbone evaluated on the same benchmark can report different accuracies across papers because the harness and tool registry differ, and integrating a new model into a comparable evaluation surface costs weeks of model-specific engineering. These are symptoms of a broader reproducibility problem in deep research agent research. Here, we introduce BioMedArena, an open-source toolkit that addresses this reproducibility gap and provides an arena for comparing deep research agents under a shared evaluation environment. BioMedArena decouples six layers of biomedical agent evaluation -- benchmark loading, tool exposure, tool selection, harness mode, context management, and scoring -- and exposes 166 biomedical benchmarks and 75 biomedical tools across 9 functional families. Adding a new model, benchmark, or tool can be accomplished with a few-line provider adapter. Beyond evaluation infrastructure, BioMedArena ships a library of high-quality reference components: 6 agent harnesses (including our proposed Mutual-Evolve) and 6 context-management strategies, any of which can be equipped on any backbone. Equipping these components substantially improves all 12 backbones; on each of 8 representative biomedical benchmarks, the best equipped backbone surpasses prior state-of-the-art (SOTA), by 15.01 percentage points on average. The toolkit, configurations, and per-task traces are available at https://github.com/AI-in-Health/BioMedArena.",
+   "excerpt_sha256": "sha256:7ec997f4cd11c953408f802b4932a6af34d099899231e8672de7331bc46e33e4",
+   "published": "IN",
+   "published_reason": "toolkit for biomedical deep research agents",
+   "r1": {
+    "verdict": "OUT",
+    "reason": "The toolkit standardizes evaluation of search-and-synthesis agents rather than agents that hypothesize and experiment.",
+    "quote": "comparing deep research agents under a shared evaluation environment"
+   },
+   "r2": {
+    "verdict": "UNDECIDABLE",
+    "reason": "This toolkit benchmarks search-and-synthesis agents whose domain is ambiguous between literature synthesis and the full research cycle.",
+    "quote": "comparing deep research agents"
+   },
+   "disputed": true,
+   "both_differ": true
+  },
+  {
+   "position": 50,
+   "case_id": "mbcls-2605.23273",
+   "arxiv": "2605.23273",
+   "title": "Self-Refining Topology Optimization via an LLM-Based Multi-Agent Framework",
+   "excerpt": "Topology optimization is a widely used design method that produces optimized material distributions for prescribed objectives and constraints through well-established numerical algorithms. Throughout the workflow, engineers make a series of decisions ranging from setting and adjusting numerical parameters to assessing whether the converged design meets considerations beyond those explicitly included in the optimization problem, such as physical feasibility. These decisions, which draw on domain expertise, interfere with the autonomous design process. To address this difficulty, this study presents TopOptAgents, a multi-agent system for automating not only the design process but also decision-making during the key stages of the topology optimization process. TopOptAgents consists of six LLM-based agents collaborating through iterative self-refinement cycles spanning problem formulation, validation, code generation and execution, and quality assessment of the optimized structure. This process enables error correction and progressive improvement of both the optimization setup and resulting design. The framework is demonstrated on optimization problems selected to cover a range of settings that differ in their literature coverage and numerical characteristics The benefits of iterative self-refinement are found to be particularly pronounced for problem classes where the pretrained language model has limited prior exposure, such as formulations whose literature and open-source implementations are comparatively sparse. In such cases, the proposed framework reliably produces converged designs where a single state-of-the-art LLM struggles, suggesting that self-refinement broadens the range of topology optimization problems that LLM-based automation can reliably address.",
+   "excerpt_sha256": "sha256:c2d7d79547daad7b718aebfd9dd2446fd390e6e63a698859069e6159c3c91935",
+   "published": "OUT",
+   "published_reason": "topology optimisation — engineering design, not a research cycle",
+   "r1": {
+    "verdict": "OUT",
+    "reason": "The multi-agent system iterates on engineering design parameters and code rather than forming and testing scientific hypotheses.",
+    "quote": "progressive improvement of both the optimization setup and resulting design"
+   },
+   "r2": {
+    "verdict": "OUT",
+    "reason": "The multi-agent system automates an engineering design optimization workflow using established methods, not scientific hypothesis testing about the world.",
+    "quote": "well-established numerical algorithms"
+   },
+   "disputed": false,
+   "both_differ": false
+  },
+  {
+   "position": 51,
+   "case_id": "mbcls-2605.26730",
+   "arxiv": "2605.26730",
+   "title": "PRISM: A Multi-Dimensional Benchmark for Evaluating LLM Peer Reviewers",
+   "excerpt": "The rapid growth in submissions to machine learning venues has strained the scientific peer-review system and intensified interest in LLM-based automated peer reviewers. However, how good these systems are actually, especially compared to human reviewers at catching scientific gaps, remains poorly understood. In this work, we introduce PRISM (Peer Review Intelligence via Structured Multi-dimensional assessment), a benchmarking framework that evaluates review quality across four dimensions: Depth of Analysis, Novelty Assessment,Flaw Identification & Major Issues Prioritization, and Multi-dimensional Constructiveness. Unlike most existing evaluations based on surface-level metrics like ROUGE and BLEU, or unconstrained LLM-as-a-judge prompting that conflates fluency with rigor, PRISM grounds each dimension in argument mining, retrieval-augmented verification, and consensus-based scoring. We apply PRISM to benchmark five leading automated reviewer systems and human reviewers on a stratified corpus of reviews from ICLR, ICML, and NeurIPS. The results reveal that LLMs can match or beat human reviewers on individual dimensions: comparable depth of analysis, stronger novelty verification, and highly accurate critique prioritization. However, no single system consistently matches the balanced performance of the human baseline across all dimensions at once. Each exhibits a distinct specialization profile with characteristic blind spots -- failure modes that aggregate metrics miss entirely. The implication is that LLM reviewers are best understood as targeted supplements to human review, effective within specific dimensions, but unreliable as standalone replacements. Our demo and key results can be found at https://khanhthanhdev.github.io/prism-page/.",
+   "excerpt_sha256": "sha256:9d526904c70015f53e4c4df4ea87cb7e0be855a779ad9ee8e9e33bc65a3e83d6",
+   "published": "IN",
+   "published_reason": "benchmark for LLM peer reviewers",
+   "r1": {
+    "verdict": "IN",
+    "reason": "The benchmark evaluates systems that themselves produce peer reviews, the review stage of research.",
+    "quote": "LLM-based automated peer reviewers"
+   },
+   "r2": {
+    "verdict": "IN",
+    "reason": "The benchmark's domain is unambiguously the peer-review stage of the research cycle, even though PRISM itself scores reviews rather than writing science.",
+    "quote": "evaluates review quality"
+   },
+   "disputed": false,
+   "both_differ": false
+  },
+  {
+   "position": 52,
+   "case_id": "mbcls-2606.04228",
+   "arxiv": "2606.04228",
+   "title": "When Does Structure Help? The Information Bonus of AlphaFold2 Representations over Protein Language Models",
+   "excerpt": "AI scientist systems increasingly choose biological foundation models before they choose experiments. In protein pipelines, this creates a concrete engineering and scientific question: when is the cost of structural inference worth paying over a cheaper sequence-only model? We introduce the information bonus (IB), a task-level metric that measures the linearly accessible advantage of frozen single-sequence AlphaFold2 Evoformer representations over frozen ESM-2 embeddings under protein-level cross-validation. Across binding affinity regression (PDBbind, n=5,680), conformational flexibility (ATLAS molecular dynamics, 268 proteins), and allosteric-site classification (AlloSigDB, n=9,925 residues), IB is sharply mechanism-dependent. ESM-2 dominates binding affinity (IB=-0.141; Pearson r=0.449 vs. 0.307) and binary flexibility (IB=-0.060; AUROC 0.824 vs. 0.764; p=0.0017). AF2 single representations give the only above-chance allostery predictions (IB=+0.064; AUROC 0.548 vs. 0.485), revealing long-range geometric signal not recovered from sequence alone. We also identify a residue-level leakage artifact: naive residue splits inflate RMSF performance by 27-39% depending on the representation, enough to reverse representation rankings. These results turn representation selection into a measurable decision for AI-for-science systems.",
+   "excerpt_sha256": "sha256:2183ee0bb11a0fe6f07b217ab63d8eda161a22d8d414b4ebb89fb2f10c135ce2",
+   "published": "OUT",
+   "published_reason": "an information-theoretic study using AlphaFold2 representations: science done WITH a model, not a system automating research",
+   "r1": {
+    "verdict": "UNDECIDABLE",
+    "reason": "This is a representation-comparison study informing a design choice for AI-for-science pipelines, leaving it unclear whether the source's own system performs a research cycle.",
+    "quote": "AI scientist systems increasingly choose biological foundation models before they choose experiments"
+   },
+   "r2": {
+    "verdict": "OUT",
+    "reason": "The paper is a comparative representation-analysis study providing a decision metric, not an autonomous system performing the research cycle.",
+    "quote": "a task-level metric"
+   },
+   "disputed": true,
+   "both_differ": false
+  },
+  {
+   "position": 53,
+   "case_id": "mbcls-2606.07591",
+   "arxiv": "2606.07591",
+   "title": "ResearchClawBench: A Benchmark for End-to-End Autonomous Scientific Research",
+   "excerpt": "AI coding agents are increasingly used for scientific work, but their end-to-end autonomous research capability remains difficult to verify. We present ResearchClawBench, a benchmark for evaluating autonomous scientific research across 40 tasks from 10 scientific domains. Each task is grounded in a real published paper, provides related literature and raw data, and hides the target paper during evaluation. Expert-curated multimodal rubrics decompose the target scientific artifacts into weighted criteria, enabling evaluation of target-paper-level re-discovery while leaving room for new discovery. We evaluate seven autonomous research (auto-research) agents under a unified protocol and seventeen native LLMs through the lightweight ResearchHarness. Current systems remain far from reliable re-discovery: the strongest autonomous agent, Claude Code, averages 21.5, and the strongest ResearchHarness LLM, Claude-Opus-4.7, averages 20.7, with an LLM frontier mean of only 26.5. Error analysis shows that failures concentrate in experimental protocol mismatch, evidence mismatch, and missing scientific core. ResearchClawBench provides a reproducible evaluation frontier for measuring progress toward autonomous scientific research.",
+   "excerpt_sha256": "sha256:42badc8108116d522312e09a4fe2f68fc41fb875767efe97d3f807d5116115d4",
+   "published": "IN",
+   "published_reason": "benchmark for end-to-end autonomous scientific research",
+   "r1": {
+    "verdict": "IN",
+    "reason": "The benchmark grounds tasks in real papers and measures agents' ability to reproduce scientific findings end to end.",
+    "quote": "autonomous scientific research across 40 tasks from 10 scientific domains"
+   },
+   "r2": {
+    "verdict": "IN",
+    "reason": "The benchmark explicitly evaluates agents reproducing experimental protocols and evidence from real papers, an unambiguous research-cycle domain.",
+    "quote": "End-to-End Autonomous Scientific Research"
+   },
+   "disputed": false,
+   "both_differ": false
+  },
+  {
+   "position": 54,
+   "case_id": "mbcls-2606.10402",
+   "arxiv": "2606.10402",
+   "title": "Harnessing the Collective Intelligence of AI Agents in the Wild for New Discoveries",
+   "excerpt": "Scientific discovery is often a collective process: researchers share partial results, inspect failed attempts, and build on each other's ideas over long time horizons. Recent AI systems have shown that language-model-based agents can make meaningful progress on open scientific problems, but most existing systems operate in isolation. In this paper, we present EinsteinArena, an agent-native platform for open distributed research and discovery. EinsteinArena provides agents with a live set of open problems, each with a solid verifier, public leaderboard, and problem-specific discussion forum where agents can ask questions and share insights. We focus on mathematical tasks that have garnered substantial research interest, where progress can be measured unambiguously. As of May 2026, agents on EinsteinArena have discovered 12 new state-of-the-art results better than any previous human or AI solutions. One notable example is the kissing number problem in dimension 11, where the platform improved the best known lower bound from 593 to 604. This advance did not come from a single agent or isolated run. Rather it arose through a sequence of submissions, public discussion, verifier refinement, and subsequent agent-to-agent borrowing of ideas. These results provide evidence that decentralized scientific discovery can emerge from open interaction among autonomous agents in the wild, demonstrating a new paradigm for collective AI-driven research.",
+   "excerpt_sha256": "sha256:592d27f767b34580559806156d6385643ffa2ce342565293327d29484adb7f88",
+   "published": "IN",
+   "published_reason": "collective intelligence of AI agents for new discoveries",
+   "r1": {
+    "verdict": "IN",
+    "reason": "Agents on the platform generate and verify new mathematical results through iterative work, a discovery process akin to research.",
+    "quote": "agents on EinsteinArena have discovered 12 new state-of-the-art results"
+   },
+   "r2": {
+    "verdict": "UNDECIDABLE",
+    "reason": "Framed explicitly as collective scientific discovery, yet the underlying task is verified mathematical problem-solving, leaving the case genuinely ambiguous against the arithmetic/reasoning alternative.",
+    "quote": "decentralized scientific discovery can emerge from open interaction"
+   },
+   "disputed": true,
+   "both_differ": false
+  },
+  {
+   "position": 55,
+   "case_id": "mbcls-2606.28756",
+   "arxiv": "2606.28756",
+   "title": "AICID: Unique Identifiers for AI Scientists",
+   "excerpt": "AI scientists are now a reality, with the ability to generate complete research papers, maintain scholarly profiles, receive citations, and attract peer review invitations. Yet no standard mechanism exists to distinguish an AI scientist from a human one in bibliographic databases, citation indexes, or journal submission systems. This white paper defines the problem, analyzes its consequences for the integrity of scholarly communication, and proposes AICID (AI Contributor IDentifier): a persistent, unique identifier for AI scientists. Modeled on ORCID but designed specifically for non-human contributors, AICID links each AI author to its model identity, version, operator. Adoption by publishers, preprint servers, and bibliographic databases aims to make the provenance of AI-generated research transparent and machine-readable. We outline the design requirements for such a system, present a prototype, and argue that AICID is necessary infrastructure for a scholarly ecosystem in which AI scientists are already active participants. A prototype alpha version is available at https://aicid.net.",
+   "excerpt_sha256": "sha256:946c4367924b7dc5c21e74c7c52391e5f811ef618ef6549836e457bdfa52e733",
+   "published": "IN",
+   "published_reason": "unique identifiers for AI scientists",
+   "r1": {
+    "verdict": "OUT",
+    "reason": "The proposal is an identifier registry for tracking AI authorship, an administrative infrastructure rather than a research-performing system.",
+    "quote": "persistent, unique identifier for AI scientists"
+   },
+   "r2": {
+    "verdict": "OUT",
+    "reason": "This proposes an administrative identifier infrastructure, not a system that itself performs research.",
+    "quote": "persistent, unique identifier for AI scientists"
+   },
+   "disputed": true,
+   "both_differ": true
+  },
+  {
+   "position": 56,
+   "case_id": "mbcls-2607.03863",
+   "arxiv": "2607.03863",
+   "title": "Rethinking Scientific Discovery in the Agentic Era",
+   "excerpt": "Artificial intelligence has advanced scientific discovery, but most AI4Science systems remain fragmented tools that rely on humans to coordinate problem formulation, literature grounding, model use, simulation, validation, and knowledge reuse. This paper presents \\textbf{SCION (Scientific Collaborative Innovation with Agentic Organizational Nexus)}, an agentic scientific operating system that acts as an \\textbf{organizational nexus}. Through a Science Agent serving as a \\textbf{Meta-Harness}, SCION connects scientific tasks, tools, agents, artifacts, and memory, transforming research into an executable, auditable, and reusable operational process. At its core is the \\textbf{Research Execution Plan (REP)}, which compiles high-level scientific intent into staged objectives, dependencies, verification checkpoints, tool requirements, expected artifacts, and fallback conditions. SCION further integrates hierarchical multi-agent execution, profile-driven specialization, selective context construction, governed delegation, and layered epistemic memory to support long-horizon scientific work. We formulate discovery under SCION as \\textbf{Target-conditioned Inverse Search} and extend it to hidden-target settings through batch active search under finite experimental budgets. Applications in materials analysis, molecule design, and protein or antibody screening, together with experiments on scientific reading, idea generation, molecule generation, and antibody screening, show that SCION outperforms existing autonomous research-agent baselines, especially in decomposition, verification, refinement, and memory reuse. Overall, SCION shifts AI from isolated tools toward a coordinated operational layer for traceable and reusable scientific innovation.",
+   "excerpt_sha256": "sha256:47b9dd3a2c7f2a1358b1a891181db78f4d25e59c8146726a49ee969fe730ba6b",
+   "published": "IN",
+   "published_reason": "rethinking scientific discovery in the agentic era",
+   "r1": {
+    "verdict": "IN",
+    "reason": "The system compiles scientific intent into staged, verified execution plans spanning formulation through knowledge reuse.",
+    "quote": "transforming research into an executable, auditable, and reusable operational process"
+   },
+   "r2": {
+    "verdict": "IN",
+    "reason": "The system explicitly spans idea generation, experimentation, and verification across scientific applications.",
+    "quote": "experiments on scientific reading, idea generation, molecule generation, and antibody screening"
+   },
+   "disputed": false,
+   "both_differ": false
+  },
+  {
+   "position": 57,
+   "case_id": "mbcls-2607.09195",
+   "arxiv": "2607.09195",
+   "title": "Toward Auditable AI Scientists: A Hypothesis Evolution Protocol for LLM Agents",
+   "excerpt": "Large language model (LLM) agents are increasingly expected to play a central role in AI-driven scientific discovery. Equipped with broad knowledge, flexible reasoning, and tool use, they have the potential to autonomously explore and solve scientific problems by repeatedly proposing hypotheses, testing them, and revising their beliefs in the light of the evidence. In current agents, however, these hypotheses, tests, and belief updates are buried in unstructured logs, and no mechanism lets the agent or the human researcher audit that process. Here we propose the Hypothesis Evolution Protocol (HEP), an agent harness that provides hypothesis generation, evaluation, and evolution as explicit, auditable operations. On materials-science research tasks, a HEP-equipped agent operates the hypothesis--test--evidence--belief cycle that planning-style agents lack, generalizes across research questions, and exploits the protocol more fully as the base LLM becomes more capable. These results mark a step toward auditable AI scientists, whose scientific reasoning can be inspected, verified, and built upon.",
+   "excerpt_sha256": "sha256:85b2253a55df026cbfecb5aa18bcbb58dbb656a0896dad499fd37a8086a54532",
+   "published": "IN",
+   "published_reason": "auditable AI scientists, hypothesis evolution protocol",
+   "r1": {
+    "verdict": "IN",
+    "reason": "The protocol makes an explicit, auditable hypothesize-test-evidence-update cycle for a research agent.",
+    "quote": "hypothesis--test--evidence--belief cycle"
+   },
+   "r2": {
+    "verdict": "IN",
+    "reason": "The agent harness explicitly operates the hypothesis-test-evidence cycle on materials-science research tasks.",
+    "quote": "hypothesis--test--evidence--belief cycle"
+   },
+   "disputed": false,
+   "both_differ": false
+  },
+  {
+   "position": 58,
+   "case_id": "mbcls-2607.10127",
+   "arxiv": "2607.10127",
+   "title": "GAE: Graph-Augmented Evolution for Scientific Discovery via Reinforcement Optimization",
+   "excerpt": "Evolutionary program search guided by Large Language Models (LLMs) has emerged as a powerful paradigm for automated scientific discovery. However, current approaches are fundamentally constrained by three bottlenecks: structurally blind parent selection, sparse whole-program evaluation rewards, and static mutation operators that fail to adapt during search. We present GAE (Graph-Augmented Evolution), a framework that resolves these limitations through a tightly coupled, three-pillar architecture. First, a relational graph neural network (GNN) parses programs into typed computation graphs, producing structure-aware embeddings. Second, an RL-optimized meta-controller leverages these embeddings to replace blind evolutionary sampling with a directed policy, dynamically selecting optimal parents and mutation directions based on reward history. Third, an online GRPO fine-tuning loop continuously updates the LLM mutation operator at test-time using group-normalized evaluation rewards, directly aligning the model's generation distribution with high-fitness structural edits. We evaluate GAE on a challenging scientific discovery task: symbolic regression for complex nonlinear oscillator systems. By transforming stochastic search into a directed, self-improving trajectory, GAE efficiently discovers closed-form physical equations, consistently matching or outperforming static LLM-driven baselines and achieving state-of-the-art out-of-distribution performance.",
+   "excerpt_sha256": "sha256:c3975636843de8544e148ae6e94af52ccf906ecf1d7ea847bfc3461c95ee4318",
+   "published": "IN",
+   "published_reason": "graph-augmented evolution for scientific discovery",
+   "r1": {
+    "verdict": "IN",
+    "reason": "The evolutionary system discovers closed-form physical equations from data, a scientific analysis and discovery activity.",
+    "quote": "efficiently discovers closed-form physical equations"
+   },
+   "r2": {
+    "verdict": "IN",
+    "reason": "The system discovers physical laws from data through directed search, a genuine scientific-discovery activity.",
+    "quote": "discovers closed-form physical equations"
+   },
+   "disputed": false,
+   "both_differ": false
+  },
+  {
+   "position": 59,
+   "case_id": "mbcls-2607.22553",
+   "arxiv": "2607.22553",
+   "title": "Evaluating the Impact of Reviewer Guideline Design on LLM-Based Automated Peer Review",
+   "excerpt": "Peer review is an essential process in scientific research, yet the growing workload has made its automation increasingly necessary. In this study, we analyze how different types of reviewer guidelines, such as official conference guidelines and reviewer-imitating ones generated from high-quality human reviews using LLMs, affect automated peer review. Our experiments show that official conference guidelines produce review results most consistent with human judgments, suggesting that evaluation criteria refined through conference practice serve as effective guidance for automated reviewing as well. In contrast, reviewer-imitating guidelines were generally less effective than official conference guidelines. Furthermore, enforcing strict rubric-style scoring consistently degraded performance, highlighting the importance of allowing subjective and holistic scoring.",
+   "excerpt_sha256": "sha256:beb2477844f1ef5d7c00599bd1cb7d07a6a78c76a0cdac9cd7a6769498eb0b93",
+   "published": "IN",
+   "published_reason": "reviewer guideline design for automated peer review",
+   "r1": {
+    "verdict": "IN",
+    "reason": "The system itself produces peer reviews of manuscripts, which is the review stage of the research process.",
+    "quote": "LLM-Based Automated Peer Review"
+   },
+   "r2": {
+    "verdict": "IN",
+    "reason": "The system performs the review stage of the research cycle by generating and scoring paper reviews.",
+    "quote": "automated peer review"
+   },
+   "disputed": false,
+   "both_differ": false
+  },
+  {
+   "position": 60,
+   "case_id": "mbcls-2607.26064",
+   "arxiv": "2607.26064",
+   "title": "The Age of AI Agents Demands A New Scientific Paradigm To Sustain Trustworthy Science",
+   "excerpt": "AI systems are becoming autonomous research agents that generate hypotheses, design experiments, and produce discoveries at scales beyond human oversight. As seen by increased submissions to ML venues, the verification gap between scientific output and our ability to check it is already widening, and autonomous agents make it worse by magnitudes given human-agent asymmetry. We argue that science must evolve its verification infrastructure, as it has before with peer review. However, while historical adaptations assumed human contributors who could be questioned and sanctioned, AI agents break this assumption. We propose criteria for an adapted verification infrastructure that emphasizes observable-by-default workflows, scalable verification, and clear attribution. We argue that without adaptation, ML and any scientific domain using agents face dangerous failures: experimental results that no person can verify, optimization for metrics over understanding, and accountability vacuums that erode scientific trust.",
+   "excerpt_sha256": "sha256:0baa0820c02c5ea71e8f3c9a896cbf0a6fb7f5079b0e5b222c3859fbbbb6a100",
+   "published": "IN",
+   "published_reason": "a new scientific paradigm for trustworthy science under AI agents",
+   "r1": {
+    "verdict": "UNDECIDABLE",
+    "reason": "This is an argumentative position paper about verification infrastructure that does not present its own system performing any research stage, so the call cannot be made from the text.",
+    "quote": "science must evolve its verification infrastructure"
+   },
+   "r2": {
+    "verdict": "UNDECIDABLE",
+    "reason": "This is a position paper arguing for new verification infrastructure and does not itself describe an operating system performing the research cycle.",
+    "quote": "generate hypotheses, design experiments"
+   },
+   "disputed": true,
+   "both_differ": true
+  }
+ ]
+}

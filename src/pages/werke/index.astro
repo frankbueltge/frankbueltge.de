@@ -1,6 +1,7 @@
 ---
-// "Works" has been folded into "The File of the Present" in the Lab — index redirects there.
-// The method sheets at /en/werke/<id> remain in place and reachable.
+// The works index lives at /experiments (the lab's earlier experiments). This used to point at
+// the retired /lab route and only resolved via a second 301 in public/_redirects — redirect
+// straight to the real target. The method sheets at /werke/<id> remain in place and reachable.
 import { getRelativeLocaleUrl } from 'astro:i18n'
-return Astro.redirect(getRelativeLocaleUrl('en', '/lab'))
+return Astro.redirect(getRelativeLocaleUrl('en', '/experiments'))
 ---

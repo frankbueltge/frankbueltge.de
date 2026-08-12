@@ -1,8 +1,9 @@
-// Fetches the ecology's real commit activity — the five sibling repos this site, the three
-// autonomous engines and research-ecology (the conductor) all live in — and writes a
-// committed, citable snapshot to src/data/pulse/pulse.json: one row per ISO week (rolling,
-// the last 13 including the current, partial one), 2-hour UTC bins, Monday 00:00 → Sunday
-// 24:00. Same shape as scripts/fetch-climate.ts: the snapshot is committed so the build is
+// Fetches the real commit activity of ALL repositories involved in this site (Frank,
+// 2026-08-10: the pulse is the whole site's, not the ecology's) — the site itself, the three
+// ecology engines and research-ecology, machine-attention, and data-snack-plenum (the
+// resident collective this site integrates) — and writes a committed, citable snapshot to
+// src/data/pulse/pulse.json: one row per ISO week (rolling, the last 13 including the
+// current, partial one), 2-hour UTC bins, Monday 00:00 → Sunday 24:00. Same shape as scripts/fetch-climate.ts: the snapshot is committed so the build is
 // reproducible and offline-safe, and the exact numbers behind the hub's pulse are auditable.
 //
 // This script is the ONE place allowed to read the clock and the sibling checkouts (decisions
@@ -30,17 +31,40 @@ const WEEK_COUNT = 13
 // workspace convention as ~/Documents/GitHub/CLAUDE.md describes ("each subdirectory is an
 // independent project"). Resolved from cwd rather than hard-coded to one machine's username.
 const GH_ROOT = resolve(process.cwd(), '..')
-const REPOS = ['field-research', 'ulysses', 'studio', 'research-ecology', 'frankbueltge.de']
+const REPOS = [
+  'field-research',
+  'ulysses',
+  'studio',
+  'research-ecology',
+  'machine-attention',
+  'data-snack-plenum',
+  // The nightly line, forked back to life in its own repository on 2026-08-11 (see
+  // src/lib/engines/nightly-line.ts). It runs beside the ecology under the same law, so the
+  // pulse counts it like the other machine-run repos — and the ops room's board draws its
+  // sparkline from this repo's own bins.
+  'error-as-method',
+  'frankbueltge.de',
+]
 
-// The pulse measures the MACHINES' activity (Frank, 2026-07-25): for the four engine repos
+// The pulse measures the MACHINES' activity (Frank, 2026-07-25): for the machine-run repos
 // the real work happens across their session/feature branches, so they are counted with
 // `git log --all` — the nightly must clone them with all branches present (--no-single-branch)
 // for this to reproduce. The site repo (frankbueltge.de) is Frank's own; its work lands on
 // main and its human feature branches are not "the ridge before dawn", so it is counted on
 // HEAD/main only. NOTE: `--all` is why the count is far higher than a main-only count would be
 // (field-research alone: ~170 on main vs ~690 across all branches) — that difference IS the
-// machine activity the hero is meant to show.
-const ALL_BRANCHES = new Set(['field-research', 'ulysses', 'studio', 'research-ecology'])
+// machine activity the hero is meant to show. machine-attention and data-snack-plenum joined
+// 2026-08-10 (Frank: the pulse shows every repo involved in this site); both are machine-run,
+// so they are counted like the engines.
+const ALL_BRANCHES = new Set([
+  'field-research',
+  'ulysses',
+  'studio',
+  'research-ecology',
+  'machine-attention',
+  'data-snack-plenum',
+  'error-as-method',
+])
 
 /** ISO 8601 week-numbering, the standard "nearest Thursday" algorithm (UTC throughout). */
 function isoWeekOf(date: Date): { year: number; week: number } {
@@ -74,27 +98,48 @@ const firstMonday = addDays(thisMonday, -7 * (WEEK_COUNT - 1))
 const targetWeeks = Array.from({ length: WEEK_COUNT }, (_, i) => {
   const monday = addDays(firstMonday, 7 * i)
   const { year, week } = isoWeekOf(monday)
-  return { year, week, bins: new Array<number>(BINS_PER_WEEK).fill(0) }
+  return {
+    year,
+    week,
+    bins: new Array<number>(BINS_PER_WEEK).fill(0),
+    // Same bins, kept per repository (2026-08-11): the ops room's board draws one sparkline per
+    // running system, and a sparkline sliced out of the AGGREGATE would look right and be false.
+    // A repo only gets an entry once it has a commit in the window — an empty row is drawn as
+    // "no line yet", never as a flat one it did not earn.
+    byRepo: new Map<string, number[]>(),
+  }
 })
 const weekIndex = new Map(targetWeeks.map((w, i) => [`${w.year}-${w.week}`, i]))
 
 const repoLast: Record<string, string> = {}
+/** Repos whose checkout is missing next to this one — reported, never silently counted as zero. */
+const missing: string[] = []
 for (const repo of REPOS) {
   const repoPath = join(GH_ROOT, repo)
-  const out = execFileSync(
-    'git',
-    [
-      // Engines: --all (session/feature branches = the machine activity). Site repo: the
-      // explicit `main` ref, NOT HEAD — so the count is deterministic regardless of which
-      // branch happens to be checked out locally, and the nightly (actions/checkout of main,
-      // fetch-depth 0) reproduces exactly the same number instead of drifting.
-      '-C', repoPath, 'log',
-      ...(ALL_BRANCHES.has(repo) ? ['--all'] : ['main']),
-      `--since=${firstMonday.toISOString().slice(0, 10)}`,
-      '--format=%aI',
-    ],
-    { encoding: 'utf8' },
-  )
+  let out: string
+  try {
+    out = execFileSync(
+      'git',
+      [
+        // Engines: --all (session/feature branches = the machine activity). Site repo: the
+        // explicit `main` ref, NOT HEAD — so the count is deterministic regardless of which
+        // branch happens to be checked out locally, and the nightly (actions/checkout of main,
+        // fetch-depth 0) reproduces exactly the same number instead of drifting.
+        '-C', repoPath, 'log',
+        ...(ALL_BRANCHES.has(repo) ? ['--all'] : ['main']),
+        `--since=${firstMonday.toISOString().slice(0, 10)}`,
+        '--format=%aI',
+      ],
+      { encoding: 'utf8' },
+    )
+  } catch {
+    // A repo listed here but not cloned beside this one (a new arrival the nightly's clone list
+    // has not caught up with yet, or a local workspace without it). Loud on stderr and absent
+    // from the snapshot — the alternative, counting it as a week of silence, would draw a repo
+    // as idle that was merely unreachable.
+    missing.push(repo)
+    continue
+  }
   const stamps = out.split('\n').filter(Boolean)
   for (const iso of stamps) {
     const t = new Date(iso)
@@ -105,8 +150,14 @@ for (const repo of REPOS) {
     const hourBin = Math.floor(t.getUTCHours() / BIN_HOURS)
     const binIdx = weekdayIdx * (24 / BIN_HOURS) + hourBin
     targetWeeks[idx].bins[binIdx] += 1
+    const own = targetWeeks[idx].byRepo.get(repo) ?? new Array<number>(BINS_PER_WEEK).fill(0)
+    own[binIdx] += 1
+    targetWeeks[idx].byRepo.set(repo, own)
   }
   if (stamps.length) repoLast[repo] = stamps.reduce((a, b) => (a > b ? a : b)).slice(0, 10)
+}
+if (missing.length) {
+  console.warn(`fetch-pulse: no checkout beside this one for ${missing.join(', ')} — omitted from the snapshot`)
 }
 
 // The current (last) week's cutoff: how many 2-hour bins have started, inclusive of the one
@@ -122,6 +173,11 @@ const allWeeks: PulseWeek[] = targetWeeks.map((w, i) => ({
   iso_week: w.week,
   bins: w.bins,
   ...(i === targetWeeks.length - 1 ? { cutoff_bin: cutoffBin } : {}),
+  // Written in REPOS order rather than in the order commits happened to arrive, so a re-run
+  // over unchanged history produces a byte-identical file (the whole point of committing it).
+  ...(w.byRepo.size > 0
+    ? { by_repo: Object.fromEntries(REPOS.filter((r) => w.byRepo.has(r)).map((r) => [r, w.byRepo.get(r)!])) }
+    : {}),
 }))
 
 // Trim leading empty weeks (Frank, 2026-07-25): the ecology is younger than the 13-week

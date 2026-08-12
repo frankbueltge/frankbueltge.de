@@ -23,7 +23,10 @@
     "round-number:refresh": "pipelines/round-number/.venv/bin/python -m round_number.run --repo-root .",
     "ghost-fleet:refresh": "pipelines/ghost-fleet/.venv/bin/python -m ghost_fleet.run --repo-root .",
     "beifang:refresh": "pipelines/beifang/.venv/bin/python -m beifang.run --repo-root .",
-    "beifang:leser": "pipelines/beifang/.venv/bin/python -m beifang.run --repo-root . --vantage leser"
+    "beifang:leser": "pipelines/beifang/.venv/bin/python -m beifang.run --repo-root . --vantage leser",
+    "graph:build": "tsx scripts/build-graph.ts",
+    "graph": "tsx scripts/graph-query.ts",
+    "prepare": "git config core.hooksPath .githooks 2>/dev/null || true"
   },
   "dependencies": {
     "@astrojs/mdx": "^6.0.3",
@@ -35,6 +38,7 @@
     "@tailwindcss/vite": "^4.3.1",
     "astro": "^6.4.8",
     "astro-og-canvas": "^0.11.1",
+    "github-slugger": "^2.0.0",
     "lenis": "^1.3.23",
     "markdown-it": "^14.3.0",
     "satellite.js": "^7.0.1",

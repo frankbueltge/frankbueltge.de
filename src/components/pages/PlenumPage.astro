@@ -6,9 +6,17 @@
 // Content comes from the data-snack-plenum repo. English-language.
 // Thin wrapper: collection access + globs stay here (they resolve per call site), the shared
 // markup lives in EnginePage.
+//
+// 2026-08-02: this component no longer answers /plenum. It renders /plenum/record — the complete
+// record — and the entrance became the sitting dossier (src/pages/plenum/index.astro). Nothing
+// here was shortened in the move: the same component, the same order, the same session anchors,
+// which is why the dossier can deep-link into it. The strings it prints now come from
+// src/config/plenum-wording.ts instead of being typed here, so the entrance and the record cannot
+// describe the same collective in two different ways.
 import { getCollection } from 'astro:content'
 import { sortWorks } from '@/lib/atelier/sort'
 import EnginePage, { type EngineConfig } from '@/components/pages/EnginePage.astro'
+import { PLENUM_GRAMMAR, PLENUM_NARRATIVE } from '@/config/plenum-wording'
 
 const all = await getCollection('plenum')
 
@@ -37,12 +45,13 @@ const works = sortWorks([
 
 const config: EngineConfig = {
   ns: 'plenum',
-  repo: 'https://github.com/frankbueltge/data-snack-plenum',
+  repo: PLENUM_GRAMMAR.repo,
+  extraLink: { label: PLENUM_NARRATIVE.record.backLabel, href: '/plenum' },
   txt: {
-    eyebrow: 'Lab · autonomous editorial process',
-    note: '(self-named, session 1)',
-    title: 'Line Check',
-    lede: 'The weekly plenum of the data-snack cast — four canon characters and a chair, CHEF, who never pitches or votes. Pitches, votes, a verification gate for every claim and every voice; the output is social-post drafts and snack concepts that accumulate here. Every post requires human approval before publication. An experiment in autonomous, verifiable editorial process. Unedited. Git is the memory.',
+    eyebrow: PLENUM_GRAMMAR.eyebrow,
+    note: PLENUM_GRAMMAR.note,
+    title: PLENUM_GRAMMAR.title,
+    lede: PLENUM_GRAMMAR.lede,
     worksH: 'Concept briefs',
     journalH: 'Minutes',
     source: 'Source, protocol & history',

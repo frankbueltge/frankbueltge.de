@@ -95,6 +95,31 @@ const methodUrl = getRelativeLocaleUrl(locale, '/werke/redaction')
   </>
   )}
 
+  <section class="mb-8 border-t border-line pt-6">
+    <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+      {de ? 'Nächste Nachbarn' : 'Nearest neighbors'}
+    </p>
+    <ul class="mt-3 space-y-2 text-sm text-fg-muted">
+      <li>
+        <a href="https://envirodatagov.org/federal-environmental-web-tracker-about-page" target="_blank" rel="noopener nofollow" class="underline decoration-line underline-offset-2 hover:text-fg">EDGI — Federal Environmental Web Tracker</a>
+        {de ? ' — automatisiertes Diffing US-föderaler Webseiten seit 2017, über 1.500 dokumentierte Änderungen, mit menschlicher Relevanzprüfung.' : ' — automated diffing of US federal webpages since 2017, 1,500+ documented changes, with human significance review.'}
+      </li>
+      <li>
+        <a href="https://sunlightfoundation.com/gov404" target="_blank" rel="noopener nofollow" class="underline decoration-line underline-offset-2 hover:text-fg">Sunlight Foundation / Web Integrity Project (Gov404)</a>
+        {de ? ' — katalogisiert föderale Website-Änderungen seit 2016, mit ausführlicher Vorher/Nachher-Dokumentation für Aufsicht und FOIA.' : ' — catalogs federal website changes since 2016, with detailed before/after documentation for oversight and FOIA.'}
+      </li>
+      <li>
+        <a href="https://changedetection.io" target="_blank" rel="noopener nofollow" class="underline decoration-line underline-offset-2 hover:text-fg">changedetection.io</a>
+        {de ? ' — quelloffenes Werkzeug für geplante Erfassung, Diff und Benachrichtigung, ausdrücklich für Regierungsseiten vermarktet.' : ' — free/open-source scheduled-capture, diff and notification tool, explicitly marketed for monitoring government pages.'}
+      </li>
+    </ul>
+    <p class="mt-3 max-w-xl text-sm leading-relaxed text-fg-muted">
+      {de
+        ? 'EDGI und Sunlight decken dasselbe Feld erprobter, mit menschlicher Prüfung und einer durchsuchbaren Datenbank — beide seit fast einem Jahrzehnt, beide auf US-föderale/umweltbezogene Seiten fokussiert. Diese Seite ist erklärt anders: vollautomatisch, ohne menschliche Kuration, ein tägliches Einzelbild statt einer Datenbank — Epistemik, nicht bloß kleinere Ausführung.'
+        : "EDGI and Sunlight cover the same ground more battle-tested, with human review and a searchable database — both nearly a decade old, both US-federal/environment-focused. This page's stated difference: fully automated, no human curation, a daily single pick instead of a database — a different epistemics, not just a smaller version."}
+    </p>
+  </section>
+
   <p class="border-t border-line pt-6 text-xs leading-relaxed text-fg-faint">
     {de
       ? 'Belege sind Wayback-Permalinks (vorher/nachher) — in zwei Klicks selbst nachzuprüfen. Umschreibung ist nicht Vertuschung; das Instrument behauptet keine Absicht.'

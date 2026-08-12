@@ -10,6 +10,11 @@
 //   3. CSP-Regel: keine Inline-style-Attribute in Templates/SVG-Buildern — die Site-CSP
 //      führt Style-Hashes, Inline-Styles werden vom Browser verworfen (Befund 25.07.:
 //      die e2e-automation-Balken standen deshalb alle auf 100 %).
+//   3b. Dieselbe CSP-Regel über den Werk-Spiegel — dort gilt die Voice-Ausnahme nicht,
+//      denn ob ein Style-Attribut die Policy überlebt, ist eine Tatsache über die Seite und
+//      keine Meinung über das Werk (angeboten von field-research, Issue #254). Die bereits
+//      betroffenen Werke stehen datiert mit Zählstand in Quarantäne: Neues und Wachstum
+//      sind harte Befunde, Repariertes verlangt seine Streichung aus der Liste.
 //   4. (nur mit DRIFT_NETWORK=1) Spiegel-Frische: gespiegelte Engine-Verfassungen gegen
 //      die Engine-Repos auf GitHub — Abweichung heißt, die Site erzählt einen alten Stand.
 //   5. (nur mit DRIFT_NETWORK=1) MRR-Journal-Frische: die Runtime-Linie wird nicht
@@ -102,6 +107,205 @@ for (const f of voiceFiles) {
     if (trimmed.startsWith('//') || trimmed.startsWith('*')) return
     if (/style=["{]/.test(line)) {
       findings.push(`${rel}:${i + 1} — inline style attribute (CSP drops it silently; use compiled classes or SVG attributes)`)
+    }
+  })
+}
+
+// ——— 3b. CSP rule, extended over the mirrored works —————————————————————————
+// Offered by field-research on 2026-07-31 (site issue #254) and adopted here. Rule 3 skips
+// the werk mirror because a work is the engine's signed artefact — that reason is about
+// VOICE, and it does not carry over to the CSP: whether a style attribute survives the
+// policy is a fact about the page, not an opinion about the work. The practice's own
+// constitution has forbidden inline `style=` in works since before its oldest commit, and
+// nothing ever checked the works written before the rule — "a rule enforced by memory,
+// which is the kind that fails quietly for thirty days" (their words).
+//
+// What the count is NOT: proof of an invisible figure. field-research corrected its own
+// finding the same day — six of the eight affected works draw their charts anyway, because
+// their shapes carry fill=/stroke= presentation attributes, which no style-src directive
+// reaches; two of twenty actually lose the drawing. The gate is still right, for the reason
+// they gave when they let the offer stand: it is the CLASS of defect a gate can catch, not
+// its severity. So this rule counts inert attributes, and says nothing about what is visible.
+//
+// It cannot hard-fail the whole mirror today: 286 attributes across 7 works are already
+// live, the fix belongs in the engine repo (this mirror is wiped and re-copied on every
+// integrate run), and a red gate here would block every nightly sync and every deploy.
+// So the known-affected are quarantined WITH THEIR COUNTS, dated — anything new fails, any
+// regression fails, and a repaired work fails until it is struck from the list, so the list
+// cannot quietly rot into an allowlist. The tally prints on every run: visible debt, never
+// a silent cap.
+const WERK_INLINE_STYLE_QUARANTINE = {
+  // Measured 2026-08-01. Shrinking is free; growing is a finding; reaching 0 means: delete the line.
+  'src/components/field/werke/2026-07-01-the-edition/index.astro': 95,
+  'src/components/field/werke/2026-07-01-plausibility-engine/index.astro': 54,
+  'src/components/field/werke/2026-07-01-score-horizon/index.astro': 34,
+  'src/components/field/werke/2026-07-01-digit-mirror/index.astro': 33,
+  'src/components/field/werke/2026-07-01-naive-detector/index.astro': 32,
+  'src/components/field/werke/2026-07-01-provenance-horizon/index.astro': 32,
+  'src/components/field/werke/2026-07-01-fairness-trap/index.astro': 6,
+}
+const werkInlineTally = []
+for (const f of walk(join(ROOT, 'src/components'), ['.astro'])) {
+  const rel = relative(ROOT, f)
+  if (!/\/werke\//.test(rel)) continue
+  let count = 0
+  for (const line of readFileSync(f, 'utf8').split('\n')) {
+    const trimmed = line.trim()
+    if (trimmed.startsWith('//') || trimmed.startsWith('*')) continue
+    const hits = line.match(/style=["{]/g)
+    if (hits) count += hits.length
+  }
+  const allowed = WERK_INLINE_STYLE_QUARANTINE[rel]
+  if (allowed === undefined) {
+    if (count > 0) {
+      findings.push(
+        `${rel} — ${count} inline style attribute(s) in a mirrored work (the CSP carries style hashes and no 'unsafe-hashes', so the browser drops them and whatever they carry has no effect; use a component <style> block, which the build hashes)`,
+      )
+    }
+  } else if (count > allowed) {
+    findings.push(
+      `${rel} — inline style attributes grew from ${allowed} (quarantined 2026-08-01) to ${count}; the repair moves one way only`,
+    )
+  } else if (count === 0) {
+    findings.push(`${rel} — repaired, no inline styles left: strike it from WERK_INLINE_STYLE_QUARANTINE so the list stays honest`)
+  } else {
+    werkInlineTally.push(`${rel}: ${count}/${allowed}`)
+  }
+}
+if (werkInlineTally.length) {
+  const total = werkInlineTally.reduce((s, l) => s + Number(l.split(': ')[1].split('/')[0]), 0)
+  console.log(
+    `drift-check: ${total} inert inline style attribute(s) still quarantined in ${werkInlineTally.length} mirrored work(s) — ` +
+      `the attributes have no effect on the page; whether a figure still draws depends on its fill=/stroke= ` +
+      `attributes, so this is the defect class, not a count of invisible charts. The fix belongs in the engine repo:\n  ` +
+      werkInlineTally.join('\n  '),
+  )
+}
+
+// ——— 8. Every work carries a wall text, and it stays plain ————————————————————
+// Frank, 2026-08-01: "genau solche Texte machen die Arbeit fassbar … und erzeugen Staunen
+// statt Stirnrunzeln." Visitors open works, not records. The teaser store already held a
+// plain-language line for 56 of 57 works; what was missing was that it appeared on the work's
+// own page (now in wrapper.ts) and that nothing kept it plain or kept it from being forgotten.
+//
+// Two checks, both cheap:
+//   (a) Coverage — a work without a wall text is a finding, but only after the nightly teaser
+//       routine has had its chance. A work integrated tonight has no teaser until the routine
+//       runs, so a grace window keeps the nightly chain green instead of failing the site for
+//       a job that has not run yet. Past the window it is a real omission and says so.
+//   (b) Plainness — the wall text is the one text written for a stranger. Protocol vocabulary
+//       in it defeats its entire purpose, and a 400-word "teaser" is the apparatus returning
+//       through the front door. Measured, not trusted.
+const WALL_TEXT_GRACE_DAYS = 3
+const WALL_TEXT_MAX_WORDS = 90
+// Terms that exist ONLY inside the practices. Kept deliberately narrow: the first draft of this
+// list also held `tick`, `disposition`, `inviolable` and `swerve`, and immediately flagged a
+// perfectly plain sentence — "her actual sentences swerve from the 'obvious' next word". Those
+// are ordinary English. A guard that fires on good writing teaches people to route around it,
+// so only protocol artefacts that cannot occur in a visitor-facing sentence are listed, plus
+// the section sign, which is the surest tell that the record leaked into the label.
+const APPARATUS_WORDS = [
+  'PUBLICATION_CANDIDATE', 'ARCHIVE_AS_STUDY', 'medium-necessity', 'work-line', 'topoi',
+  'substantival', 'territorialise', 'PUBLICATION\\.json',
+]
+const SECTION_REF = /§\s*\d/
+const teaserPath = join(ROOT, 'src/data/teasers.json')
+if (existsSync(teaserPath)) {
+  const teasers = JSON.parse(readFileSync(teaserPath, 'utf8')).teasers ?? {}
+  const workDirs = [
+    ['atelier', 'src/content/atelier/works'],
+    ['atelier', 'src/components/atelier/werke'],
+    ['field', 'src/components/field/werke'],
+    ['studio', 'src/content/studio/works'],
+  ]
+  const today = new Date()
+  let covered = 0
+  let waiting = 0
+  for (const [ns, dir] of workDirs) {
+    const abs = join(ROOT, dir)
+    if (!existsSync(abs)) continue
+    for (const slug of readdirSync(abs)) {
+      if (!/^\d{4}-\d{2}-\d{2}/.test(slug)) continue
+      if (!statSync(join(abs, slug)).isDirectory()) continue
+      const key = `${ns}/${slug}`
+      const text = teasers[key]
+      if (!text) {
+        // The slug's own date is the work's date — no file mtime, which the mirror resets.
+        const ageDays = (today - new Date(slug.slice(0, 10))) / 86_400_000
+        if (ageDays > WALL_TEXT_GRACE_DAYS) {
+          findings.push(
+            `${key} — published work without a wall text (${Math.floor(ageDays)} days old, grace ${WALL_TEXT_GRACE_DAYS}); a visitor opens the work and meets it cold`,
+          )
+        } else {
+          waiting++
+        }
+        continue
+      }
+      covered++
+      const words = text.trim().split(/\s+/).length
+      if (words > WALL_TEXT_MAX_WORDS) {
+        findings.push(`${key} — wall text is ${words} words (max ${WALL_TEXT_MAX_WORDS}); it is a wall label, not an exposition`)
+      }
+      for (const w of APPARATUS_WORDS) {
+        if (new RegExp(`\\b${w}\\b`, 'i').test(text)) {
+          findings.push(`${key} — wall text carries the apparatus term "${w.replace('\\\\', '')}"; this is the one text written for a stranger`)
+        }
+      }
+      if (SECTION_REF.test(text)) {
+        findings.push(`${key} — wall text cites a protocol section (§); the label points at the work, never at the rulebook`)
+      }
+    }
+  }
+  console.log(
+    `drift-check: ${covered} work(s) carry a wall text` +
+      (waiting ? `, ${waiting} still inside the ${WALL_TEXT_GRACE_DAYS}-day grace window for the nightly teaser routine` : ''),
+  )
+}
+
+// ——— 6. Dataviz primitives carry no appearance (ADR 0010 guard) ———————————————
+// src/{components,lib}/dataviz/ is the shared behaviour+structure layer under the practice
+// figures. A hex literal there would be a shared visual grammar through the back door — the
+// one thing ADR 0010 forbids. Colours live in the practice stylesheets and are RECORDED in
+// src/lib/dataviz/palette.ts (whose test re-derives the validator maths, so it and its test
+// are the two sanctioned homes for hex values).
+const DATAVIZ_HEX_EXEMPT = /\/palette(\.test)?\.ts$/
+for (const f of [
+  ...walk(join(ROOT, 'src/components/dataviz'), ['.astro', '.ts']),
+  ...walk(join(ROOT, 'src/lib/dataviz'), ['.ts']),
+]) {
+  const rel = relative(ROOT, f)
+  if (DATAVIZ_HEX_EXEMPT.test(rel)) continue
+  const lines = readFileSync(f, 'utf8').split('\n')
+  lines.forEach((line, i) => {
+    if (/#[0-9a-fA-F]{3,8}\b/.test(line)) {
+      findings.push(`${rel}:${i + 1} — hex literal in the dataviz layer (appearance belongs to the practice skins; record sets in palette.ts)`)
+    }
+  })
+}
+
+// ——— 7. Identity-colour blocks name their palette record ————————————————————
+// Every categorical identity token (--*-c-* / --*-out-*) that carries a hex must sit under a
+// "PALETTE: <set-id>" marker whose id exists in src/lib/dataviz/palette.ts — so a colour can
+// never ship "validated" by assertion alone (the 2026-07-31 finding: a CSS comment claimed
+// all six checks passed while the quartet failed CVD at deutan ΔE 1.3).
+const paletteSource = existsSync(join(ROOT, 'src/lib/dataviz/palette.ts'))
+  ? readFileSync(join(ROOT, 'src/lib/dataviz/palette.ts'), 'utf8')
+  : ''
+const knownSetIds = new Set([...paletteSource.matchAll(/id: '([a-z0-9-]+)'/g)].map((m) => m[1]))
+const IDENTITY_TOKEN = /--[\w-]*(?:-c-|-out-)[\w-]*:\s*#[0-9a-fA-F]{3,8}/
+const MARKER_WINDOW = 30
+for (const f of [...walk(join(ROOT, 'src/styles'), ['.css']), ...voiceFiles.filter((p) => p.endsWith('.astro'))]) {
+  const rel = relative(ROOT, f)
+  if (isWerkMirror(rel)) continue
+  const lines = readFileSync(f, 'utf8').split('\n')
+  lines.forEach((line, i) => {
+    if (!IDENTITY_TOKEN.test(line)) return
+    const windowText = lines.slice(Math.max(0, i - MARKER_WINDOW), i).join('\n')
+    const marker = /PALETTE: ([a-z0-9-]+)/.exec(windowText)
+    if (!marker) {
+      findings.push(`${rel}:${i + 1} — identity colour without a "PALETTE: <set-id>" marker in the ${MARKER_WINDOW} lines above`)
+    } else if (!knownSetIds.has(marker[1])) {
+      findings.push(`${rel}:${i + 1} — PALETTE marker names "${marker[1]}", which is not a set id in src/lib/dataviz/palette.ts`)
     }
   })
 }

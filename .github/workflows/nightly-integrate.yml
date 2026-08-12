@@ -1,0 +1,115 @@
+# .github/workflows/nightly-integrate.yml
+# Mirrors the forked nightly line (frankbueltge/error-as-method) onto this site.
+#
+# The practice works at night in its own repository and lands its work there through its own
+# gate. This workflow is the second half of that journey and does one thing: copy the narrow set
+# of files a reader needs (scripts/nightly/mirror.mjs), validate the whole site against them, and
+# commit only if everything is green. It never writes prose, never edits what it copies, and
+# never publishes something the build refused.
+#
+# Why a workflow of its own rather than a branch of atelier-integrate: that one resets
+# src/content/atelier wholesale from the ulysses repository. The two mirrors must not be able to
+# delete each other's work, so they touch disjoint trees — atelier-integrate owns
+# src/content/atelier, this one owns src/data/nightly and public/error-as-method.
+name: Nightly line integrate
+
+on:
+  schedule:
+    # 06:00 / 12:00 / 18:00 / 00:00 Berlin (summer time). The line works late; the first run
+    # after midnight is the one that usually finds a new night on main.
+    - cron: '0 4,10,16,22 * * *'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: nightly-integrate
+
+jobs:
+  integrate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci
+
+      - name: Clone the nightly line's repository
+        run: git clone --depth 1 https://github.com/frankbueltge/error-as-method /tmp/nightly
+
+      - name: Mirror works, figures and research days
+        run: |
+          node scripts/nightly/mirror.mjs /tmp/nightly . | tee /tmp/mirror.json
+          # A malformed new work is a report, never a silent gap: the mirror lists what it
+          # refused to take, and the run says so in its summary.
+          node -e '
+            const r = JSON.parse(require("fs").readFileSync("/tmp/mirror.json", "utf8"))
+            const line = (s) => require("fs").appendFileSync(process.env.GITHUB_STEP_SUMMARY, s + "\n")
+            line(`| what | count |`); line(`|---|---|`)
+            line(`| works mirrored | ${r.works.length} |`)
+            line(`| research days mirrored | ${r.journal.length} |`)
+            line(`| inherited, left with the Atelier mirror | ${r.inherited.length} |`)
+            if (r.skipped.length) {
+              line(``); line(`**skipped — a work directory missing its own files:**`)
+              for (const s of r.skipped) line(`- \`${s.slug}\` — missing ${s.missing.join(", ")}`)
+            }
+          '
+
+      # The graph is derived from what this mirror just wrote (a work's meta.json, the
+      # attention export, the encounters register). Deriving it HERE, before validation, is what
+      # makes the honesty test guard the mirrored content instead of tripping over it: on
+      # 2026-08-11 an ecology export landed at 06:33 and every validating workflow after it went
+      # red until the nightly graph job at 04:25 the next morning. See .claude/rules/knowledge-graph.md.
+      - name: Re-derive the knowledge graph from what was just mirrored
+        run: npm run graph:build
+      - name: Validate (drift + check + test + build)
+        run: |
+          set -o pipefail
+          { node scripts/drift-check.mjs && npm run check && npm test && npm run build; } 2>&1 | tee /tmp/validate.log
+
+      - name: Commit + let deploy-cf rebuild (on success)
+        if: success()
+        run: |
+          if [ -n "$(git status --porcelain src/data/nightly public/error-as-method src/data/graph)" ]; then
+            git config user.name "Nightly-Integrate"
+            git config user.email "nightly-integrate@frankbueltge.de"
+            git add -A src/data/nightly public/error-as-method src/data/graph
+            git commit -m "nightly line: integrate $(date -u +%F)"
+            for attempt in 1 2 3 4 5; do
+              git pull --rebase --autostash origin main && git push && break
+              [ "$attempt" = 5 ] && { echo "push failed after 5 rebase attempts (concurrent push race)" >&2; exit 1; }
+              echo "push race — rebasing and retrying ($attempt/5)"; sleep $((attempt * 5))
+            done
+          else
+            echo "no changes"
+          fi
+
+      # An alarm that never goes out stops being a message and becomes furniture: a green run
+      # closes the issue its own red run opened, and says when.
+      - name: A green run closes its own red alarm
+        if: success()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          PREFIX="Nightly-Integrate rot"
+          RUN_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          OFFEN=$(gh issue list --repo "$GITHUB_REPOSITORY" --state open --limit 100 --json number,title \
+            | jq -r --arg p "$PREFIX" '[.[]|select(.title|startswith($p))][].number' || true)
+          for NR in $OFFEN; do
+            gh issue close "$NR" --repo "$GITHUB_REPOSITORY" \
+              --comment "Wieder grün am $(date -u +%F' '%H:%MZ) — dieser Lauf ist durchgelaufen: ${RUN_URL}" || true
+          done
+
+      - name: Red run opens an issue (the site keeps its last good state)
+        if: failure()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          RUN_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          TAIL=$(tail -c 3000 /tmp/validate.log 2>/dev/null || echo "no validate log")
+          gh issue create --repo "$GITHUB_REPOSITORY" \
+            --title "Nightly-Integrate rot ($(date -u +%F))" \
+            --body "$(printf 'Der Spiegel der nächtlichen Linie ist rot; nichts wurde committet, die Site steht auf ihrem letzten guten Stand.\n\nLauf: %s\n\n```\n%s\n```\n' "$RUN_URL" "$TAIL")" || true

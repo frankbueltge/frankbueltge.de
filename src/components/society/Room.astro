@@ -1,0 +1,690 @@
+---
+// src/components/society/Room.astro — the room exit of The Society.
+//
+// The reading exit (/society) is a page: it explains, cites, concedes, and rewards an hour.
+// This is the other exit, for a projection or a terminal where a stranger has four minutes
+// and will read nothing longer than a line (Frank, 2026-08-06). Same engine, same roster,
+// same anatomy (lib/society/layout.ts) — a different address to the visitor:
+//
+//   · ONE picture, filling the screen, in one coordinate space (lib/society/stage.ts):
+//     the society above, the block world directly beneath it, nothing drawn between;
+//   · a camera that goes to what is happening — the shot list is data, one shot per beat;
+//   · one short line at a time from the score (lib/society/score.ts), set in the register
+//     that beat asks for, and composed silence between rather than blank screen;
+//   · exactly ONE gesture — touch a light and that part falls silent — taught by showing
+//     (a light offers itself) and answered by the whole room stopping for the elegy;
+//   · it loops, and it forgets: every pass ends with a new morning and every agent back,
+//     with an attract state in between so a stranger arrives at a beginning.
+//
+// The staging this replaces drew two boxed panels with a rule between them and let a fixed
+// viewBox letterbox itself into the middle of the screen. It read as a figure from a paper
+// (Frank, 2026-08-06: "ist noch nicht so richtig gut inszeniert"); the diagnosis and the
+// list worked through here is docs/society/room-brief.md.
+//
+// House rules unchanged: no inline styles or is:inline scripts (CSP), reduced motion
+// honoured, and every claim the room makes is one the engine actually performs.
+import { AGENTS, type Band } from '@/lib/society/agents'
+import { AGENT_POS, edgeLine, EDGES, NODE_R } from '@/lib/society/layout'
+import { STAGE, SOCIETY, WORLD, transformFor } from '@/lib/society/stage'
+import { jsonScriptPayload } from '@/lib/dataviz/runtime'
+import '@/styles/society-room.css'
+
+const BAND_LABEL: Record<Band, string> = {
+  drives: 'the appetites',
+  builders: 'the builders',
+  body: 'the body',
+  senses: 'the senses',
+  censors: 'the censors',
+  reflection: 'the watcher',
+}
+
+// The bands are named where they actually sit, and INSIDE the constellation rather than in
+// a gutter beside it: the camera frames the agents, so anything set out in the margin is the
+// first thing to leave the screen (it did — "the appetites" arrived as "he appetites"). Each
+// label sits above the leftmost agent of its band, clear of every disc. Shown only while the
+// room is naming things; otherwise this is a sky, not a chart.
+const BAND_MARKS: { band: Band; x: number; y: number }[] = [
+  { band: 'drives', x: 91, y: 64 },
+  { band: 'builders', x: 91, y: 174 },
+  { band: 'body', x: 91, y: 236 },
+  { band: 'senses', x: 91, y: 426 },
+]
+
+const payload = AGENTS.map((a) => ({ id: a.id, name: a.name, elegy: a.elegy }))
+---
+
+<div class="room" data-room>
+  <a class="room-exit" href="/society/">read the piece</a>
+
+  <!-- ——————————————————————— one picture: sky and ground ————————————————— -->
+  <svg
+    class="room-stage"
+    data-room-stage
+    viewBox={`0 0 ${STAGE.w} ${STAGE.h}`}
+    preserveAspectRatio="xMidYMid meet"
+    role="img"
+    aria-label="A society of twenty-nine agents arranged in bands — appetites above, builders and body in the middle, senses at the bottom, the watcher aside — over a table of seven blocks and one hand. Lights move between the agents as they wake one another, and the hand builds below them."
+  >
+    <!-- ——————————————————————— the society ——————————————————————————————— -->
+    <g class="room-society" transform={transformFor(SOCIETY)}>
+      <g class="room-bands" aria-hidden="true">
+        {
+          BAND_MARKS.map((b) => (
+            <text class="room-band-label" x={b.x} y={b.y}>
+              {BAND_LABEL[b.band]}
+            </text>
+          ))
+        }
+        <text class="room-band-label" x="828" y="270" text-anchor="middle">
+          {BAND_LABEL.reflection}
+        </text>
+      </g>
+
+      <g aria-hidden="true">
+        {
+          EDGES.map((e) => {
+            const l = edgeLine(e)
+            return (
+              <line
+                class={`room-edge room-edge-${e.kind}`}
+                x1={l.x1}
+                y1={l.y1}
+                x2={l.x2}
+                y2={l.y2}
+                data-room-edge={`${e.from}|${e.to}`}
+              />
+            )
+          })
+        }
+      </g>
+      <g data-room-pulses aria-hidden="true"></g>
+
+      <g>
+        {
+          AGENTS.map((a) => {
+            const p = AGENT_POS[a.id]
+            const square = a.band === 'censors'
+            return (
+              <g
+                class={`room-node room-node-${a.band}`}
+                data-room-node={a.id}
+                transform={`translate(${p.x} ${p.y})`}
+                tabindex="0"
+                role="button"
+                aria-label={`Silence ${a.name}`}
+              >
+                {/* three rings rather than a blur filter: a soft light that survives a
+                    projector, at a cost twenty-nine of them can pay every frame */}
+                <circle class="room-glow" data-room-glow r="8"></circle>
+                <circle class="room-halo" data-room-halo r="8"></circle>
+                {/* the invitation, shown on one light only and only while it is asked for */}
+                <circle class="room-offer" r={NODE_R} aria-hidden="true"></circle>
+                {square ? (
+                  <rect class="room-core" x="-9" y="-9" width="18" height="18" rx="3"></rect>
+                ) : (
+                  <circle class="room-core" r={NODE_R}></circle>
+                )}
+                <g class="room-tape" aria-hidden="true">
+                  <line x1="-10" y1="-10" x2="10" y2="10"></line>
+                  <line x1="-10" y1="10" x2="10" y2="-10"></line>
+                </g>
+                <text class="room-node-label" y={NODE_R + 15}>{a.name}</text>
+              </g>
+            )
+          })
+        }
+      </g>
+    </g>
+
+    <!-- ——————————————————————— the world it has its hands in ——————————————— -->
+    <g class="room-world" transform={transformFor(WORLD)}>
+      <line class="room-table" x1="8" y1="182" x2="392" y2="182"></line>
+      <ellipse class="room-shadow" data-room-shadow cx="-40" cy="182" rx="26" ry="6"></ellipse>
+      <g data-room-ghosts aria-hidden="true"></g>
+      <g data-room-blocks></g>
+      <g class="room-gaze" data-room-gaze aria-hidden="true">
+        <circle class="room-gaze-open" r="7"></circle>
+        <path class="room-gaze-shut" d="M -7 0 Q 0 5 7 0"></path>
+        <line x1="-11" y1="0" x2="-4" y2="0"></line>
+        <line x1="4" y1="0" x2="11" y2="0"></line>
+      </g>
+      <g class="room-hand" data-room-hand aria-hidden="true">
+        <path d="M -7 -14 L -7 0 L -4 6 M 7 -14 L 7 0 L 4 6 M -7 -14 L 7 -14"></path>
+      </g>
+    </g>
+  </svg>
+
+  <!-- ——————————————————————— what is said, one line at a time ——————————— -->
+  <p class="room-line" data-room-line></p>
+  <p class="room-aside" data-room-aside></p>
+
+  {/* No kicker with the agent's name above it: every elegy in agents.ts already opens with
+      the name ("BALANCE is silent. The tower grows, and grows a lean."), and a label saying
+      BALANCE over a sentence saying BALANCE reads as a caption on a caption — and made a
+      screen reader announce the name twice. The sentence is the whole thing. */}
+  <div class="room-elegy" data-room-elegy aria-live="polite">
+    <p class="room-elegy-text" data-room-elegy-text></p>
+  </div>
+
+  <p class="room-credit">
+    The Society · after Marvin Minsky, The Society of Mind (1986) · frankbueltge.de/society
+  </p>
+
+  <script type="application/json" id="room-agents" set:html={jsonScriptPayload(payload)} />
+</div>
+
+<script>
+  import { makeSociety, seedFromString, silence, step, TICKS_PER_SEC, type Society, type VisitorInput } from '@/lib/society/engine'
+  import { AGENT_POS, EDGES } from '@/lib/society/layout'
+  import { pickMoment } from '@/lib/society/moments'
+  import {
+    advance,
+    ROOM_RATE,
+    SLEEP_AFTER,
+    currentBeat,
+    shownLine,
+    startPass,
+    type Cues,
+  } from '@/lib/society/room-clock'
+  import {
+    fitToViewport,
+    frameRect,
+    lerpRect,
+    shotFor,
+    viewBoxOf,
+    WORLD,
+    type Rect,
+  } from '@/lib/society/stage'
+  import { readJsonScript, reducedMotion } from '@/lib/dataviz/runtime'
+
+  interface RoomAgent { id: string; name: string; elegy: string }
+
+  const root = document.querySelector<HTMLElement>('[data-room]')
+  if (root) init(root)
+
+  function init(root: HTMLElement) {
+    let agents: RoomAgent[]
+    try {
+      agents = readJsonScript<RoomAgent[]>('room-agents')
+    } catch {
+      return
+    }
+    const byId = new Map(agents.map((a) => [a.id, a]))
+    const reduce = reducedMotion()
+
+    // ————————————————————————————— handles ————————————————————————————————
+    const stageSvg = root.querySelector<SVGSVGElement>('[data-room-stage]')!
+    const blocksG = root.querySelector<SVGGElement>('[data-room-blocks]')!
+    const ghostsG = root.querySelector<SVGGElement>('[data-room-ghosts]')!
+    const pulsesG = root.querySelector<SVGGElement>('[data-room-pulses]')!
+    const handG = root.querySelector<SVGGElement>('[data-room-hand]')!
+    const gazeG = root.querySelector<SVGGElement>('[data-room-gaze]')!
+    const shadowEl = root.querySelector<SVGEllipseElement>('[data-room-shadow]')!
+    const lineEl = root.querySelector<HTMLElement>('[data-room-line]')!
+    const asideEl = root.querySelector<HTMLElement>('[data-room-aside]')!
+    const elegyBox = root.querySelector<HTMLElement>('[data-room-elegy]')!
+    const elegyText = root.querySelector<HTMLElement>('[data-room-elegy-text]')!
+
+    const nodeEls = new Map<string, SVGGElement>()
+    const haloEls = new Map<string, SVGCircleElement>()
+    const glowEls = new Map<string, SVGCircleElement>()
+    const coreEls = new Map<string, SVGElement>()
+    root.querySelectorAll<SVGGElement>('[data-room-node]').forEach((el) => {
+      const id = el.dataset.roomNode!
+      nodeEls.set(id, el)
+      haloEls.set(id, el.querySelector<SVGCircleElement>('[data-room-halo]')!)
+      glowEls.set(id, el.querySelector<SVGCircleElement>('[data-room-glow]')!)
+      coreEls.set(id, el.querySelector<SVGElement>('.room-core')!)
+    })
+
+    // ————————————————————————————— the society ————————————————————————————
+    // The same simulation the page runs, on the room's own clock: ROOM_RATE and SLEEP_AFTER
+    // are tuned against the score and live in lib/society/room-clock.ts, where the test that
+    // holds them can reach the values that actually ship.
+    let pass = 0
+    const newMorning = () =>
+      makeSociety(seedFromString(`${new Date().toISOString().slice(0, 10)}#${pass}`), {
+        sleepAfter: SLEEP_AFTER,
+      })
+    let society: Society = newMorning()
+
+    const WX = (x: number) => 20 + x * 3.6
+    const WY = (y: number) => 182 - y * 3.9
+    const BLOCK_W = 22
+    const BLOCK_H = 25
+
+    const blockEls = new Map<string, SVGRectElement>()
+    for (const b of society.world.blocks) {
+      const r = document.createElementNS('http://www.w3.org/2000/svg', 'rect')
+      r.setAttribute('class', 'room-block')
+      r.setAttribute('rx', '2')
+      blocksG.appendChild(r)
+      blockEls.set(b.id, r)
+    }
+
+    // one pulse per edge, parked until a signal actually travels it
+    const pulseEls = EDGES.map((e) => {
+      const c = document.createElementNS('http://www.w3.org/2000/svg', 'circle')
+      c.setAttribute('class', 'room-pulse')
+      c.setAttribute('r', '3.4')
+      pulsesG.appendChild(c)
+      return { edge: e, el: c }
+    })
+    const edgeEls = new Map<string, SVGLineElement>()
+    root.querySelectorAll<SVGLineElement>('[data-room-edge]').forEach((el) => {
+      edgeEls.set(el.dataset.roomEdge!, el)
+    })
+
+    // ————————————————————————————— the visitor ————————————————————————————
+    // What this society has is SEE-MOTION: it detects movement, not bodies. So stillness
+    // reads as absence here, and deliberately — a visitor who has stopped moving for two
+    // and a half seconds is, to these senses, not there. That is also what lets the sleep
+    // act happen at all in front of someone: the first staging held presence for six
+    // seconds, `aloneTicks` reset on every one of them, and the society never slept.
+    const PRESENCE_MS = 2500
+    const visitor = { present: false, x: 50, lastX: 50, speed: 0, seenAt: 0 }
+    /** ever seen this pass — what the score narrates, so a flicker cannot un-say a truth */
+    let sawVisitor = false
+
+    function noticed(clientX: number) {
+      const box = stageSvg.getBoundingClientRect()
+      const vb = stageSvg.viewBox.baseVal
+      const stageX = vb.x + ((clientX - box.left) / box.width) * vb.width
+      // stage → world x (0…100), the coordinate the engine's senses speak. Derived from
+      // the placement rather than written out, so moving the world cannot silently move
+      // where the society thinks the visitor is standing.
+      visitor.x = Math.max(0, Math.min(100, ((stageX - WORLD.tx) / WORLD.k - 20) / 3.6))
+      visitor.present = true
+      visitor.seenAt = performance.now()
+      sawVisitor = true
+      awoken = true
+    }
+    root.addEventListener('pointermove', (ev) => noticed(ev.clientX))
+    root.addEventListener('pointerdown', (ev) => noticed(ev.clientX))
+    root.addEventListener('keydown', () => {
+      // a terminal with no pointer still has someone at it
+      visitor.present = true
+      visitor.seenAt = performance.now()
+      sawVisitor = true
+      awoken = true
+    })
+
+    // ————————————————————————————— the one gesture ————————————————————————
+    let elegyUntil = 0
+    function silenceAgent(id: string) {
+      if (society.ablated.has(id)) return
+      silence(society, id)
+      const el = nodeEls.get(id)
+      el?.classList.add('room-ablated')
+      const agent = byId.get(id)
+      if (!agent) return
+      elegyText.textContent = agent.elegy
+      elegyBox.classList.add('room-elegy-on')
+      root.classList.add('room-mourning')
+      // long enough to be a silence rather than a notification: the room stops, and the
+      // part that was taken away gets the whole screen to itself
+      elegyUntil = performance.now() + 7200
+      touched = true
+    }
+    nodeEls.forEach((el, id) => {
+      el.addEventListener('pointerdown', (ev) => {
+        ev.preventDefault()
+        silenceAgent(id)
+      })
+      el.addEventListener('keydown', (ev) => {
+        if (ev.key === 'Enter' || ev.key === ' ') {
+          ev.preventDefault()
+          silenceAgent(id)
+        }
+      })
+    })
+
+    // The gesture is TAUGHT rather than described: while the invitation stands, one light
+    // offers itself with a slow ring. BALANCE, because its absence is the one a stranger
+    // can read without being told — silence it and the towers stop standing up.
+    const OFFERED = 'balance'
+
+    // ————————————————————————————— the score ——————————————————————————————
+    // The machine that decides what is on screen lives in lib/society/room-clock.ts, with
+    // no DOM attached, so room-clock.test.ts can run a whole pass against the real engine
+    // and check the promise this piece actually makes: that at the instant each line went
+    // up, the thing it claims had happened. This file only draws what that machine says.
+    let clock = startPass(performance.now())
+    let touched = false
+    let sawGrasp = false
+
+    function cues(): Cues {
+      return {
+        grasped: sawGrasp,
+        // the LIVE state, not "a tower was completed at some point". The first tower stands
+        // for about ten seconds and then the wrecker has it, and a score running on its own
+        // clock arrived with "a tower — and no one built it" over a table of scattered
+        // blocks. Waiting for one that is actually standing costs the room fifteen silent
+        // seconds of watching the hand work, which is the best part.
+        towerStands: society.world.towerComplete,
+        visitorSeen: sawVisitor,
+        visitorPresent: visitor.present,
+        silenced: touched,
+        asleep: society.asleep,
+      }
+    }
+
+    function showLine(text: string | null, weight?: string) {
+      lineEl.classList.remove(
+        'room-w-title',
+        'room-w-plain',
+        'room-w-quiet',
+        'room-w-invite',
+        'room-w-final',
+      )
+      if (text === null) {
+        lineEl.classList.remove('room-line-on')
+        return
+      }
+      lineEl.textContent = text
+      lineEl.classList.add('room-line-on', `room-w-${weight ?? 'plain'}`)
+    }
+
+    function advanceScore(now: number) {
+      const { changed } = advance(clock, now, cues())
+      if (!changed) return
+      if (clock.finished) {
+        beginAttract(now)
+        return
+      }
+      render(now)
+    }
+
+    /** the shot the room is on right now, silence taken into account */
+    function beatShot() {
+      return shotFor(currentBeat(clock).id, shownLine(clock) === null)
+    }
+
+    /** put on screen whatever the clock currently says is on screen */
+    function render(now: number) {
+      const beat = currentBeat(clock)
+      const line = shownLine(clock)
+      showLine(line, beat.weight)
+      // The invitation is the only beat that names the parts, because it is the only one
+      // that asks for one — and the naming ends WITH it. Keyed to the beat rather than to
+      // the line: hung off the line's weight, a silent beat left showLine early and every
+      // agent kept its name for the rest of the pass.
+      root.classList.toggle('room-naming', beat.id === 'invite')
+      root.classList.toggle('room-offering', beat.id === 'invite')
+      root.classList.toggle('room-silent', line === null)
+      aim(beatShot())
+    }
+
+    // ————————————————————————————— the attract state ——————————————————————
+    // Between passes the room does not simply start over: it keeps working, quietly, with
+    // nothing said, until someone is there. So a stranger walks up to a beginning rather
+    // than into the middle of a sentence — and an empty gallery still comes round on its
+    // own after a while, because nobody is coming to press start.
+    const ATTRACT_MAX_MS = 24000
+    const ATTRACT_MIN_MS = 4000
+    let attractUntil = 0
+    let attracting = false
+    /** set by any sign of a visitor; read and cleared when the attract state ends */
+    let awoken = false
+
+    function beginAttract(now: number) {
+      attracting = true
+      attractUntil = now + ATTRACT_MAX_MS
+      attractSince = now
+      awoken = false
+      showLine(null)
+      root.classList.add('room-attract', 'room-silent')
+      root.classList.remove('room-offering', 'room-naming')
+      aim('wide')
+    }
+    let attractSince = 0
+
+    function endAttract(now: number) {
+      attracting = false
+      root.classList.remove('room-attract')
+      // a new morning: every silenced agent back, and nothing carried over
+      pass++
+      society = newMorning()
+      nodeEls.forEach((el) => el.classList.remove('room-ablated'))
+      ghostsG.replaceChildren()
+      ghostKey = ''
+      touched = false
+      sawGrasp = false
+      sawVisitor = false
+      clock = startPass(now)
+      render(now)
+    }
+
+    // ————————————————————————————— the camera —————————————————————————————
+    // A framing is a region of interest; the viewBox is that region grown to the shape of
+    // the screen, so there is never a bar and never a stretch — and a portrait terminal
+    // simply sees further up and down, which is the direction this composition is built in.
+    /** a vertical terminal is framed differently — see FRAMINGS_PORTRAIT */
+    let portrait = false
+    let camFrom: Rect = frameRect('wide')
+    let camTo: Rect = camFrom
+    let camStarted = performance.now()
+    let camMs = 1
+    let camWorldX = 64
+    let camName: ReturnType<typeof shotFor> = 'wide'
+
+    function aim(name: ReturnType<typeof shotFor>, worldX = camWorldX, ms = 2600) {
+      camWorldX = worldX
+      camName = name
+      const next = frameRect(name, worldX, portrait)
+      const cur = camAt(performance.now())
+      if (Math.abs(cur.x - next.x) < 1 && Math.abs(cur.w - next.w) < 1) return
+      camFrom = cur
+      camTo = next
+      camStarted = performance.now()
+      camMs = reduce ? 1 : ms
+    }
+
+    function camAt(now: number): Rect {
+      const t = Math.min(1, (now - camStarted) / camMs)
+      // a slow ease at both ends: a camera in a room is pushed, not cut
+      const e = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2
+      return lerpRect(camFrom, camTo, e)
+    }
+
+    function applyCamera(now: number) {
+      const box = stageSvg.getBoundingClientRect()
+      if (!box.width || !box.height) return
+      // turning the terminal on its side re-frames the shot rather than squeezing it
+      const nowPortrait = box.height > box.width
+      if (nowPortrait !== portrait) {
+        portrait = nowPortrait
+        camFrom = camAt(now)
+        camTo = frameRect(camName, camWorldX, portrait)
+        camStarted = now
+        camMs = 1
+      }
+      const shown = fitToViewport(camAt(now), box.width / box.height)
+      stageSvg.setAttribute('viewBox', viewBoxOf(shown))
+    }
+
+    // ————————————————————————————— interjections ——————————————————————————
+    let asideUntil = 0
+    function showAside(text: string, now: number, holdMs: number) {
+      asideEl.textContent = text
+      asideEl.classList.add('room-aside-on')
+      asideUntil = now + holdMs
+    }
+
+    // ————————————————————————————— the loop ———————————————————————————————
+    const SIM_MS = 1000 / (TICKS_PER_SEC * ROOM_RATE)
+    let acc = 0
+    let last = performance.now()
+    let ghostKey = ''
+    /** a moment holds the camera on the table for as long as its caption stands */
+    let cameraHeldUntil = 0
+
+    function tickInput(): VisitorInput {
+      const dx = visitor.x - visitor.lastX
+      visitor.speed = visitor.present ? Math.min(10, Math.abs(dx) * 1.4 + visitor.speed * 0.4) : 0
+      visitor.lastX = visitor.x
+      if (visitor.present && performance.now() - visitor.seenAt > PRESENCE_MS) {
+        visitor.present = false
+      }
+      return visitor.present
+        ? { present: true, x: visitor.x, y: 20, speed: visitor.speed }
+        : { present: false, x: 0, y: 0, speed: 0, sign: 0 }
+    }
+
+    function draw(now: number) {
+      const w = society.world
+      root.classList.toggle('room-asleep', society.asleep)
+
+      for (const b of w.blocks) {
+        const el = blockEls.get(b.id)!
+        const held = w.hand.holding === b.id
+        const bx = held ? w.hand.x : b.x
+        const by = held ? w.hand.y : b.level * 7
+        const bw = b.lying ? BLOCK_H + 8 : BLOCK_W
+        const bh = b.lying ? BLOCK_W - 4 : BLOCK_H
+        el.setAttribute('width', String(bw))
+        el.setAttribute('height', String(bh))
+        el.setAttribute('x', String(WX(bx) - bw / 2))
+        el.setAttribute('y', String(WY(by) - bh))
+      }
+      handG.setAttribute('transform', `translate(${WX(w.hand.x)} ${WY(w.hand.y) - 26})`)
+      gazeG.setAttribute('transform', `translate(${WX(w.gaze.x)} ${WY(w.gaze.y) - 10})`)
+      shadowEl.setAttribute('cx', String(WX(visitor.x)))
+      shadowEl.classList.toggle('room-shadow-on', visitor.present)
+
+      // the dream, drawn: what it remembers, where it once worked
+      const key = society.asleep ? `${society.dream?.kLineId ?? 'none'}` : ''
+      if (key !== ghostKey) {
+        ghostKey = key
+        ghostsG.replaceChildren()
+        const k = society.dream
+          ? society.kLines.find((x) => x.id === society.dream!.kLineId)
+          : undefined
+        if (society.asleep && k) {
+          const spots =
+            k.kind === 'arch'
+              ? [
+                  { x: 22, y: 0, lying: false },
+                  { x: 36, y: 0, lying: false },
+                  { x: 29, y: 7, lying: true },
+                ]
+              : [0, 1, 2, 3].map((i) => ({ x: 64, y: i * 7, lying: false }))
+          // the dream FLOATS: drawn above the table, never on it. What it remembers may
+          // still be standing down there, and two towers in one place read as a glitch
+          // rather than as a thought.
+          const LIFT = 66
+          for (const spot of spots) {
+            const g = document.createElementNS('http://www.w3.org/2000/svg', 'rect')
+            const gw = spot.lying ? BLOCK_H + 8 : BLOCK_W
+            const gh = spot.lying ? BLOCK_W - 4 : BLOCK_H
+            g.setAttribute('class', 'room-ghost')
+            g.setAttribute('rx', '2')
+            g.setAttribute('width', String(gw))
+            g.setAttribute('height', String(gh))
+            g.setAttribute('x', String(WX(spot.x) - gw / 2))
+            g.setAttribute('y', String(WY(spot.y) - gh - LIFT))
+            ghostsG.appendChild(g)
+          }
+        }
+      }
+
+      // the lights
+      for (const [id, halo] of haloEls) {
+        const v = society.a[id] ?? 0
+        halo.setAttribute('r', String(8 + 20 * v))
+        halo.style.opacity = String(0.06 + 0.3 * v)
+        const glow = glowEls.get(id)!
+        glow.setAttribute('r', String(11 + 42 * v))
+        glow.style.opacity = String(0.03 + 0.13 * v)
+        coreEls.get(id)!.style.opacity = String(0.4 + 0.6 * v)
+      }
+
+      // an edge carries what is actually going through it, so the wiring breathes instead
+      // of sitting there as a diagram
+      for (const [key, el] of edgeEls) {
+        const [from, to] = key.split('|')
+        const live = Math.min(society.a[from] ?? 0, society.a[to] ?? 0)
+        el.style.opacity = String(0.07 + 0.34 * live)
+      }
+
+      // signals travelling between them — the thing that reads as a mind from ten metres
+      if (!reduce) {
+        const phase = (now / 900) % 1
+        for (const { edge, el } of pulseEls) {
+          const from = society.a[edge.from] ?? 0
+          const to = society.a[edge.to] ?? 0
+          const live = Math.min(from, to)
+          if (live < 0.35 || edge.kind === 'worth') {
+            el.style.opacity = '0'
+            continue
+          }
+          const a = AGENT_POS[edge.from]
+          const b = AGENT_POS[edge.to]
+          el.setAttribute('cx', String(a.x + (b.x - a.x) * phase))
+          el.setAttribute('cy', String(a.y + (b.y - a.y) * phase))
+          el.style.opacity = String(0.25 + 0.65 * live * Math.sin(phase * Math.PI))
+        }
+      }
+    }
+
+    function frame(now: number) {
+      acc += now - last
+      last = now
+      if (acc > 1200) acc = 1200
+
+      const frozen = now < elegyUntil
+      if (!frozen) {
+        elegyBox.classList.remove('room-elegy-on')
+        root.classList.remove('room-mourning')
+        while (acc >= SIM_MS) {
+          const { events } = step(society, tickInput())
+          for (const e of events) {
+            if (e.kind === 'grasped') sawGrasp = true
+          }
+          const moment = pickMoment(events)
+          if (moment) {
+            showAside(moment.caption, now, moment.holdMs)
+            // The camera goes and looks at what just happened — but only if the room was
+            // already watching the world. A drama on the table must not pull the frame off
+            // the constellation during a beat that is about the parts: the arch phase
+            // throws collapses and misfires constantly, and the first cut of this pinned
+            // the camera to the table right through "touch a light", inviting a stranger to
+            // touch something that was not on screen.
+            if (beatShot() !== 'mind') {
+              aim('site', moment.x, 1400)
+              cameraHeldUntil = now + moment.holdMs
+            }
+          }
+          acc -= SIM_MS
+        }
+        if (attracting) {
+          const long = now - attractSince
+          if ((awoken && long > ATTRACT_MIN_MS) || now > attractUntil) endAttract(now)
+        } else {
+          advanceScore(now)
+        }
+      } else {
+        acc = 0
+      }
+
+      if (asideUntil && now > asideUntil) {
+        asideEl.classList.remove('room-aside-on')
+        asideUntil = 0
+      }
+      if (cameraHeldUntil && now > cameraHeldUntil) {
+        cameraHeldUntil = 0
+        aim(attracting ? 'wide' : beatShot())
+      }
+      // one light offers itself while the invitation stands
+      const offered = nodeEls.get(OFFERED)
+      if (offered) offered.classList.toggle('room-offered', root.classList.contains('room-offering'))
+
+      applyCamera(now)
+      draw(now)
+      requestAnimationFrame(frame)
+    }
+
+    render(performance.now())
+    requestAnimationFrame(frame)
+  }
+</script>

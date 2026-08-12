@@ -1,0 +1,368 @@
+---
+// src/components/field/ClaimFigure.astro — the Field's signature figure: "The claim under review."
+// One claim of the collective's, the ceiling the runtime's ruling holds it to, the two verifications
+// closing in on it from opposite sides, every finding they filed, and the evidence beneath it.
+//
+// The figure itself is built at BUILD TIME by src/lib/field/claimladder.ts (pure, tested, derived
+// from the committed MRR export only). This component is the wiring: the shared WP3 primitives
+// around it (Readout, DetailPanel, LegendFilter, TableFallback), the field's own skin in
+// src/styles/field-plate.css, and the `dv:figure-ready` handshake that lets a guided tour drive it
+// (src/lib/tour/engine.ts) without either side importing the other.
+//
+// ATTRIBUTION — still the one thing that must never soften, REVISED 2026-08-01
+// (docs/wording-kanon.md): the CLAIM is the Meridian collective's; the RULING, the two
+// VERIFICATIONS and this whole machine-readable record are the Meridian Research Runtime's —
+// the collective's OWN INSTRUMENT. What must stay separable is the claim from the machinery
+// that reviewed it: the ruling caps the claim by rule, not by anyone's opinion. Who DROVE
+// this run is named too (the architect's engineering line), because a run's authorship is
+// still a fact about the run. What is no longer said, on Frank's decision: that the runtime
+// is "not the collective's research voice" — the tool is theirs.
+// FIELD_NARRATIVE.claim.attribution says all of this on the page, under the figure.
+//
+// House rules this file keeps, all four load-bearing:
+//   · `.fd-claim-figure` is `position: relative` and the SCROLL box is its child, so the Readout is
+//     clamped to what the visitor can actually see (readout.ts house rule 1);
+//   · no `is:inline` script and no dynamic `style=""`: the site's CSP hashes bundled module scripts
+//     and silently drops style attributes, so every dynamic style goes through runtime.ts's setVars
+//     (here: only the Readout's own placement, inside createReadout);
+//   · nothing is reachable ONLY by hovering an SVG mark — every mark carries a native <title>, and
+//     every finding plus every declared conflict of interest repeats in the table below;
+//   · visitor-facing copy comes from src/config/field-wording.ts, never from this file.
+import Readout from '@/components/dataviz/Readout.astro'
+import DetailPanel from '@/components/dataviz/DetailPanel.astro'
+import LegendFilter from '@/components/dataviz/LegendFilter.astro'
+import TableFallback from '@/components/dataviz/TableFallback.astro'
+import { jsonScriptPayload } from '@/lib/dataviz/runtime'
+import {
+  CLAIM_COLUMNS,
+  buildClaimSvg,
+  claimRows,
+  type ClaimFamily,
+  type ClaimModel,
+} from '@/lib/field/claimladder'
+import { FIELD_NARRATIVE } from '@/config/field-wording'
+
+export interface Props {
+  model: ClaimModel
+  /** DOM id a tour would drive this figure by */
+  id?: string
+  /** the figure's own heading; omitted renders no heading */
+  heading?: string
+}
+
+const { model, id = 'field-claim-plate', heading } = Astro.props
+const w = FIELD_NARRATIVE.claim
+
+const svg = buildClaimSvg(model, {
+  svgId: id,
+  label: undefined,
+  headline: w.headline,
+  permittedLabel: w.permittedLabel,
+  marginNotes: w.marginNotes,
+})
+
+const LEGEND_ORDER: ClaimFamily[] = ['ruling', 'claim', 'review', 'evidence']
+const SWATCH: Record<ClaimFamily, string> = {
+  ruling: 'var(--fd-c-caveat)',
+  claim: 'var(--fd-c-stamp)',
+  review: 'var(--fd-c-review)',
+  evidence: 'var(--fd-ink-2)',
+}
+const legendItems = LEGEND_ORDER.map((family) => ({
+  key: family,
+  label: w.legend[family].label,
+  hint: w.legend[family].hint,
+  count: model.counts[family],
+  swatch: SWATCH[family],
+}))
+
+// The payload the client script reads: exactly the fields the readout and the panel show. No prose
+// that is not already in the model, and no statement that is not already in the SVG's own titles.
+const payload = {
+  marks: model.marks.map((m) => ({
+    key: m.key,
+    family: m.family,
+    label: m.label,
+    detail: m.detail,
+    source: m.source,
+    findingIndex: m.findingIndex,
+  })),
+  findings: model.findings.map((f) => ({
+    severity: f.severity,
+    statement: f.statement,
+    verificationUrn: f.verificationUrn,
+    recommendation: f.recommendation,
+    confidence: f.confidence,
+    evidencePath: f.evidencePath,
+  })),
+}
+
+const rows = claimRows(model)
+const provenance = `${w.provenancePrefix} ${model.provenance.join(' · ')}`
+const legendLabelId = `${id}-legend-label`
+---
+
+<section class="fd-claim-section" data-cf-root>
+  {heading && <h2 class="fd-claim-h">{heading}</h2>}
+  <p class="fd-room-intro">{w.lede}</p>
+
+  <p class="fd-band-legend" id={legendLabelId}>{w.keyLabel}</p>
+  <LegendFilter items={legendItems} mode="multi" labelledby={legendLabelId} />
+
+  <div class="fd-claim-figure" data-cf-figure>
+    <div class="fd-claim-scroll">
+      <div data-cf-svg set:html={svg} />
+    </div>
+    <Readout id={`${id}-readout`} maxWidth="48ch" />
+  </div>
+
+  <p class="fd-band-legend">{w.caliperNote}</p>
+  <p class="fd-band-legend">{w.hint}</p>
+
+  <DetailPanel id={`${id}-panel`}>
+    <Fragment slot="head">
+      <span class="p-sev" data-p-sev></span><span data-p-title></span>
+    </Fragment>
+    <Fragment slot="body">
+      <q data-p-statement></q>
+    </Fragment>
+    <Fragment slot="foot">
+      <span data-p-source></span> · <span data-p-pos></span>
+    </Fragment>
+  </DetailPanel>
+
+  <TableFallback
+    summary={w.tableSummary}
+    caption={w.tableCaption}
+    columns={CLAIM_COLUMNS}
+    rows={rows}
+    provenance={provenance}
+  />
+
+  <p class="fd-band-legend fd-claim-attribution">{w.attribution}</p>
+  <p class="fd-room-intro">
+    <a href="/on-record" class="underline">{w.deepLink}</a>
+  </p>
+
+  <script type="application/json" data-cf-payload set:html={jsonScriptPayload(payload)} />
+</section>
+
+<style>
+  .fd-claim-attribution { margin-top: 0.6rem; }
+</style>
+
+<script>
+  import { createReadout } from '@/lib/dataviz/readout'
+  import { isOn } from '@/lib/dataviz/filter'
+  import { buildSegments, positionLabel, step } from '@/lib/dataviz/stepper'
+  import type { FocusState } from '@/lib/tour/types'
+
+  const SVG_NS = 'http://www.w3.org/2000/svg'
+
+  interface Mark {
+    key: string
+    family: string
+    label: string
+    detail: string
+    source: string
+    findingIndex?: number
+  }
+  interface Finding {
+    severity: string
+    statement: string
+    verificationUrn: string
+    recommendation: string
+    confidence: number
+    evidencePath: string
+  }
+
+  for (const root of document.querySelectorAll<HTMLElement>('[data-cf-root]')) {
+    const figure = root.querySelector<HTMLElement>('[data-cf-figure]')
+    const svgHost = root.querySelector<HTMLElement>('[data-cf-svg]')
+    const readoutEl = root.querySelector<HTMLElement>('[data-dv-readout]')
+    const panel = root.querySelector<HTMLElement>('[data-dv-panel]')
+    const payloadEl = root.querySelector<HTMLElement>('[data-cf-payload]')
+    const svg = svgHost?.querySelector<SVGSVGElement>('svg')
+    if (!figure || !svgHost || !readoutEl || !panel || !payloadEl || !svg) continue
+
+    let data: { marks: Mark[]; findings: Finding[] }
+    try {
+      data = JSON.parse(payloadEl.textContent ?? '{}') as { marks: Mark[]; findings: Finding[] }
+    } catch {
+      continue // no payload, no enhancement: the SVG's own <title>s and the table still work
+    }
+    if (!data.marks || !data.findings) continue
+
+    const byKey = new Map(data.marks.map((m) => [m.key, m]))
+    const groups = [...svg.querySelectorAll<SVGGElement>('[data-key]')]
+    const readout = createReadout(readoutEl, figure)
+
+    // the panel walks the findings by SEVERITY — one segment per severity, severest first, exactly
+    // the order claimladder.ts sorted them into
+    const segmented = buildSegments(data.findings, (f) => f.severity)
+
+    let filter: string[] = []
+    let dim: string[] = []
+    let chosen: string | null = null
+    let noteLayer: SVGGElement | null = null
+
+    /**
+     * A hover readout is a glance, not the archive. A verifier's ground runs to a paragraph and
+     * quotes two institutions inside it; shown whole, the readout covered the plate it was
+     * describing. So it carries the first sentence and an explicit ellipsis when there is more —
+     * never a silent mid-word cut, and never the only place the full text exists: the detail panel
+     * and the table below both carry it entire.
+     */
+    const glance = (text: string): string => {
+      if (text.length <= 220) return text
+      const end = text.indexOf('. ')
+      const head = end > 40 && end < 280 ? text.slice(0, end + 1) : text.slice(0, text.lastIndexOf(' ', 220))
+      return `${head} […]`
+    }
+
+    const showReadout = (m: Mark, anchorX: number, anchorY: number) => {
+      const node = document.createDocumentFragment()
+      const head = document.createElement('b')
+      head.className = 'r-head'
+      head.textContent = m.label
+      const body = document.createElement('span')
+      body.className = 'r-body'
+      body.textContent = glance(m.detail)
+      const src = document.createElement('span')
+      src.className = 'r-src'
+      src.textContent = m.source
+      node.append(head, body, src)
+      readoutEl.dataset.family = m.family
+      readout.show(node, { anchorX, anchorY })
+    }
+
+    /** Figure-local coordinates for the readout (house rule 1): the pointer for a mouse, the mark's
+     *  own box for keyboard focus — so a tabbing visitor gets the readout at the mark, not wherever
+     *  the pointer happens to rest. */
+    const anchorOf = (g: SVGGElement, ev?: MouseEvent): [number, number] => {
+      const box = figure.getBoundingClientRect()
+      if (ev) return [ev.clientX - box.left, ev.clientY - box.top]
+      const r = g.getBoundingClientRect()
+      return [r.left - box.left + r.width / 2, r.top - box.top + r.height / 2]
+    }
+
+    const setText = (sel: string, text: string) => {
+      const el = panel.querySelector<HTMLElement>(sel)
+      if (el) el.textContent = text
+    }
+
+    const openAt = (pos: number) => {
+      const f = data.findings[pos]
+      if (!f) return
+      panel.dataset.dvPos = String(pos)
+      panel.dataset.severity = f.severity
+      setText('[data-p-sev]', `${f.severity} finding`)
+      setText('[data-p-title]', `${f.recommendation} · confidence ${f.confidence.toFixed(2)}`)
+      setText('[data-p-statement]', f.statement)
+      setText('[data-p-source]', `${f.verificationUrn} — ${f.evidencePath}`)
+      setText('[data-p-pos]', positionLabel(segmented, pos))
+      panel.hidden = false
+      paint()
+    }
+
+    panel.addEventListener('dv:step', (ev) => {
+      const current = Number(panel.dataset.dvPos ?? '0')
+      const next = step(segmented, current, (ev as CustomEvent).detail.pos - current)
+      if (next !== current) openAt(next)
+    })
+    panel.addEventListener('dv:close', () => {
+      panel.hidden = true
+      chosen = null
+      paint()
+    })
+
+    // paint: filter, dim and selection are ATTRIBUTES; no mark ever moves
+    function paint() {
+      for (const g of groups) {
+        const key = g.dataset.key ?? ''
+        const m = byKey.get(key)
+        g.toggleAttribute('data-on', isOn(filter, m?.family ?? ''))
+        g.toggleAttribute('data-dim', dim.includes(key))
+        g.toggleAttribute('data-sel', chosen === key)
+      }
+    }
+
+    root.addEventListener('dv:filter', (ev) => {
+      filter = (ev as CustomEvent<{ keys: string[] }>).detail.keys
+      paint()
+    })
+
+    const choose = (m: Mark) => {
+      chosen = m.key
+      if (m.findingIndex !== undefined) openAt(m.findingIndex)
+      else paint()
+    }
+
+    for (const g of groups) {
+      const m = byKey.get(g.dataset.key ?? '')
+      if (!m) continue
+      g.addEventListener('mouseenter', (ev) => showReadout(m, ...anchorOf(g, ev as MouseEvent)))
+      g.addEventListener('mousemove', (ev) => showReadout(m, ...anchorOf(g, ev as MouseEvent)))
+      g.addEventListener('mouseleave', () => readout.hide())
+      g.addEventListener('focus', () => showReadout(m, ...anchorOf(g)))
+      g.addEventListener('blur', () => readout.hide())
+      g.addEventListener('click', () => choose(m))
+      g.addEventListener('keydown', (ev) => {
+        const k = (ev as KeyboardEvent).key
+        if (k !== 'Enter' && k !== ' ') return
+        ev.preventDefault()
+        choose(m)
+      })
+    }
+
+    // ——— the tour handshake: this figure opts in, and knows nothing about any tour ————
+    const applyAnnotations = (notes: { key: string; text: string }[]) => {
+      noteLayer?.remove()
+      noteLayer = null
+      if (!notes.length) return
+      const layer = document.createElementNS(SVG_NS, 'g')
+      for (const note of notes) {
+        const g = svg.querySelector<SVGGElement>(`[data-key="${CSS.escape(note.key)}"]`)
+        if (!g) continue
+        const box = g.getBBox()
+        const wrap = document.createElementNS(SVG_NS, 'g')
+        wrap.setAttribute('class', 'fd-note')
+        const stem = document.createElementNS(SVG_NS, 'path')
+        const cx = box.x + box.width / 2
+        stem.setAttribute('d', `M${cx} ${box.y + box.height + 4} V${box.y + box.height + 22}`)
+        const text = document.createElementNS(SVG_NS, 'text')
+        text.setAttribute('x', String(cx))
+        text.setAttribute('y', String(box.y + box.height + 38))
+        text.setAttribute('text-anchor', 'middle')
+        text.textContent = note.text
+        wrap.append(stem, text)
+        layer.append(wrap)
+      }
+      svg.append(layer)
+      noteLayer = layer
+    }
+
+    const apply = (focus: FocusState) => {
+      // `filter: null` explicitly clears; `undefined` means this scene does not touch the filter
+      if (focus.filter !== undefined) filter = focus.filter ?? []
+      dim = focus.dim ?? []
+      applyAnnotations(focus.annotate ?? [])
+      if (focus.select) {
+        const m = byKey.get(focus.select)
+        if (m) choose(m)
+      } else if (!panel.hidden) {
+        panel.hidden = true
+        chosen = null
+      }
+      paint()
+      // the legend buttons must agree with a scene-driven filter, or the visitor sees a filtered
+      // plate with an unfiltered legend and cannot tell what is going on
+      for (const b of root.querySelectorAll<HTMLButtonElement>('[data-dv-legend-key]')) {
+        b.setAttribute('aria-pressed', String(filter.includes(b.dataset.dvLegendKey ?? '')))
+      }
+    }
+
+    paint()
+    window.dispatchEvent(new CustomEvent('dv:figure-ready', { detail: { id: svg.id, apply } }))
+  }
+</script>

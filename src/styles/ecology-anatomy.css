@@ -1,0 +1,327 @@
+/* src/styles/ecology-anatomy.css — the skin for /ecology's three-cycles figure.
+ *
+ * The idiom is THREE SCORES ON ONE DESK: same paper, same ruling, three different hands. Nothing
+ * is added that would make the columns look more alike than they are — no shared accent, no
+ * connecting line between them, no summary row underneath. The frame is identical so the
+ * difference the reader sees belongs to the practices (the Triptych's rule).
+ *
+ * Scoped to .ecology-surface throughout, so it can never reach a practice's own figure — the
+ * practices share no visual grammar and this page imposes none (ADR 0010).
+ *
+ * Surface is var(--color-panel) on purpose: it resolves to #f7f8fa light and #141414 dark, the two
+ * surfaces the ecology-voices palette below was validated against. Drawing on --color-bg would
+ * take the figure off the validated surface and void the check.
+ */
+
+.ecology-surface {
+  background: var(--color-panel);
+  border: 1px solid var(--color-line);
+  border-radius: 4px;
+  padding: 1rem 0.75rem 0.5rem;
+}
+
+/* PALETTE: ecology-voices (src/lib/dataviz/palette.ts) — validated 2026-07-31 against the panel
+   surface in both modes, --pairs all: PASS (worst CVD ΔE 9.2 light / 9.4 dark, worst normal 16.3
+   both). Reused unchanged: a voice wears one hue everywhere on this site, so its column here is
+   the same colour as its door, its Partitur lane and its box on the apparatus map. Only the three
+   practices appear in this figure, so the Plenum slot and the declared neutral are not used —
+   fewer slots than the set is always safe, never the other way round. Own steps per mode, never
+   an automatic light/dark flip. No status colour: a gate is a shape, and a chain that runs long
+   is not thereby worse than a short one. */
+.ecology-surface {
+  --ec-c-atelier: #4a3aa7;
+  --ec-c-field: #2a78d6;
+  --ec-c-studio: #eb6834;
+}
+:root[data-theme='dark'] .ecology-surface {
+  --ec-c-atelier: #9085e9;
+  --ec-c-field: #256abf;
+  --ec-c-studio: #d95926;
+}
+
+.ecology-surface [data-owner='atelier'] {
+  --ec-c: var(--ec-c-atelier);
+}
+.ecology-surface [data-owner='field'] {
+  --ec-c: var(--ec-c-field);
+}
+.ecology-surface [data-owner='studio'] {
+  --ec-c: var(--ec-c-studio);
+}
+
+/* ── the figure ──────────────────────────────────────────────────────────── */
+
+.ec-figure {
+  position: relative; /* load-bearing: the readout clamps to this box */
+  margin: 0;
+}
+.ec-scroll {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+}
+.ec-svg {
+  display: block;
+  width: 100%;
+  min-width: 880px; /* below this the three columns collide; the table carries the narrow case */
+  height: auto;
+}
+
+.ec-persona {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 700;
+  fill: var(--ec-c);
+}
+.ec-house {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  fill: var(--color-fg-faint);
+}
+.ec-protocol {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  fill: var(--color-fg-muted);
+}
+
+.ec-spine {
+  fill: none;
+  stroke: var(--ec-c);
+  stroke-width: 1;
+  opacity: 0.35;
+}
+
+.ec-stage .ec-box {
+  fill: var(--color-panel-2);
+  stroke: var(--ec-c);
+  stroke-width: 1.15;
+}
+.ec-glyph {
+  fill: none;
+  stroke: var(--ec-c);
+  stroke-width: 1.3;
+}
+/* the human gate is the only filled mark in the figure — a person is standing in the chain */
+.ec-glyph[data-stage-kind='human'] {
+  fill: var(--ec-c);
+}
+.ec-glyph[data-stage-kind='work'] {
+  fill: none;
+}
+
+.ec-label {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  fill: var(--color-fg);
+}
+.ec-artefact {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  fill: var(--color-fg-faint);
+  text-anchor: end;
+}
+.ec-count {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  fill: var(--color-fg-faint);
+}
+
+/* a gate reads as a threshold: its box is drawn firmer than a working step's */
+.ec-stage[data-stage-kind='gate'] .ec-box,
+.ec-stage[data-stage-kind='human'] .ec-box {
+  stroke-width: 1.9;
+}
+.ec-stage[data-stage-kind='land'] .ec-box {
+  stroke-dasharray: 4 3;
+}
+
+.ec-stage[tabindex] {
+  cursor: pointer;
+}
+.ec-stage[tabindex]:hover .ec-box,
+.ec-stage[tabindex]:focus-visible .ec-box {
+  stroke-width: 2.6;
+}
+.ec-stage:focus-visible {
+  outline: 2px solid var(--color-fg);
+  outline-offset: 2px;
+}
+.ec-stage[data-sel] .ec-box {
+  stroke-width: 2.8;
+}
+.ec-stage {
+  transition: opacity 160ms ease;
+}
+
+/* ── the prose around it ─────────────────────────────────────────────────── */
+
+.ec-key {
+  margin: 1rem 0 0.3rem;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-fg-faint);
+}
+.ec-keys {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1.2rem;
+  margin: 0.4rem 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.8125rem;
+  color: var(--color-fg-muted);
+}
+.ec-keys li {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+}
+.ec-keys svg {
+  flex: none;
+  overflow: visible;
+}
+.ec-keys .ec-glyph {
+  stroke: var(--color-fg-muted);
+}
+.ec-keys .ec-glyph[data-stage-kind='human'] {
+  fill: var(--color-fg-muted);
+}
+
+.ec-hint,
+.ec-prov {
+  font-size: 0.8125rem;
+  color: var(--color-fg-faint);
+}
+.ec-hint {
+  margin: 0.8rem 0 0;
+}
+.ec-prov {
+  margin: 1rem 0 0;
+  padding-top: 0.7rem;
+  border-top: 1px solid var(--color-line);
+}
+
+/* a quotation from a practice's own constitution, with its source under it */
+.ec-quote {
+  margin: 0;
+  padding-left: 0.8rem;
+  border-left: 2px solid var(--color-line);
+  font-size: 0.9375rem;
+  color: var(--color-fg);
+}
+.ec-quote cite {
+  display: block;
+  margin-top: 0.3rem;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-style: normal;
+  color: var(--color-fg-faint);
+}
+.ec-list {
+  margin: 0.5rem 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.875rem;
+  color: var(--color-fg-muted);
+}
+.ec-list li {
+  padding-left: 1rem;
+  text-indent: -1rem;
+  margin-top: 0.3rem;
+}
+.ec-list li::before {
+  content: '— ';
+  color: var(--color-fg-faint);
+}
+.ec-list[data-negative] li::before {
+  content: '× ';
+}
+
+.ec-tally {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin: 0.8rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+.ec-tally div {
+  font-family: var(--font-mono);
+}
+.ec-tally b {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-fg);
+}
+.ec-tally span {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-fg-faint);
+}
+
+/* the shared primitives, skinned for this surface */
+.ecology-surface .dv-readout {
+  max-width: 42ch;
+  padding: 0.45rem 0.6rem;
+  border: 1px solid var(--color-line);
+  border-radius: 3px;
+  background: var(--color-panel-2);
+  color: var(--color-fg);
+  font-size: 0.8125rem;
+  line-height: 1.35;
+  box-shadow: 0 2px 10px rgb(0 0 0 / 0.18);
+}
+.ecology-surface .dv-panel {
+  margin-top: 0.9rem;
+  border: 1px solid var(--color-line);
+  border-radius: 3px;
+  background: var(--color-panel-2);
+  padding: 0.7rem 0.85rem;
+  font-size: 0.875rem;
+}
+.ecology-surface .dv-panel h3 {
+  font-size: 0.9375rem;
+  font-weight: 600;
+}
+.ecology-surface .dv-panel p {
+  margin-top: 0.4rem;
+}
+.ecology-surface .dv-panel b {
+  color: var(--color-fg);
+  font-weight: 600;
+}
+/* a cycle has an order, so stepping through it is meaningful — prev/next stay */
+.ecology-surface .dv-panel [data-dv-prev],
+.ecology-surface .dv-panel [data-dv-next],
+.ecology-surface .dv-panel [data-dv-close] {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--color-fg-faint);
+  background: none;
+  border: 1px solid var(--color-line);
+  border-radius: 3px;
+  padding: 0.2rem 0.55rem;
+  margin-right: 0.3rem;
+  cursor: pointer;
+}
+.ecology-surface .dv-table-fallback {
+  margin-top: 1rem;
+  font-size: 0.8125rem;
+}
+.ecology-surface .dv-prov {
+  color: var(--color-fg-faint);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ecology-surface *,
+  .ecology-surface *::before,
+  .ecology-surface *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}

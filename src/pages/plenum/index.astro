@@ -1,10 +1,74 @@
 ---
+// /plenum — the sitting dossier (2026-08-02). The Plenum's entrance, rebuilt around the one
+// question a visitor standing in this doorway actually has: what did this collective last decide?
+//
+// WHAT CHANGED AND WHY. This route used to render EnginePage — every sitting's full minutes and
+// every concept brief on one page, some twenty-six thousand words with no way in. It answered
+// "what is all of this" with all of it. The dossier answers it one sitting at a time, in the
+// collective's own words, and the wall moved to /plenum/record where it kept every word and every
+// anchor it ever had.
+//
+// AND WHY IT IS NOT THE PRACTICES' DOSSIER. The Atelier, the Field and the Studio each lead with
+// a body of work. The Plenum has none here: it is data-snack.com's resident collective, a guest
+// voice in this ecology, holding the fourth lane of the Partitur and no door on the hub. Its
+// works are cooked and served in its own house. So the protagonist is the newest SITTING —
+// derived from the mirrored minutes, never typed — and the house boundary is stated as a block of
+// its own rather than left for a visitor to infer wrongly.
 import Page from '@/layouts/Page.astro'
-import PlenumPage from '@/components/pages/PlenumPage.astro'
+import Shell from '@/components/plenum/Shell.astro'
+import Dossier from '@/components/plenum/Dossier.astro'
+import OrientationList from '@/components/practice/OrientationList.astro'
+import { getCollection } from 'astro:content'
+import { buildSittings, currentSitting, tally } from '@/lib/plenum/dossier'
+import { PLENUM_GRAMMAR, PLENUM_NARRATIVE } from '@/config/plenum-wording'
+
+const all = await getCollection('plenum')
+const sittings = buildSittings(all)
+const current = currentSitting(sittings)
+if (!current) throw new Error('/plenum: no sitting in the mirrored minutes')
+
+const t = tally(sittings)
+const w = PLENUM_NARRATIVE
+
+const kicker = [PLENUM_GRAMMAR.eyebrow, `${PLENUM_GRAMMAR.title} ${PLENUM_GRAMMAR.note}`, w.entrance.kicker]
+const statusHtml =
+  `<b>${t.sittings} sittings</b>` +
+  (t.notes > 0 ? ` · ${t.notes} protocol note` + (t.notes === 1 ? '' : 's') : '') +
+  ` · newest ${current.date}` +
+  ` · ${t.goodsInward} with a goods-inward inspection of this ecology` +
+  ` · <a href="/plenum/record" class="underline">the complete record →</a>`
 ---
+
 <Page
-  title="Line Check — Lab | Frank Bültge"
-  description="The weekly plenum of the data-snack cast — pitches, votes, a verification gate, and social-post drafts a human approves. It chooses its own name. Unedited."
+  title="Line Check — the sitting dossier | Frank Bültge"
+  description="The weekly plenum of the data-snack cast, read one sitting at a time: who chaired, what was tabled, what was settled, and what reached it from this research ecology. Verbatim from the collective's own minutes."
 >
-  <PlenumPage />
+  <Shell active="the sittings" kicker={kicker} h1={w.entrance.h1} statusHtml={statusHtml} footNote={w.selectionRule}>
+    {/* One lede, not two. The collective's approved self-description (PLENUM_GRAMMAR.lede) still
+        stands at the head of /plenum/record, where EnginePage has always printed it; repeating it
+        here under a lede that already says the same thing in the dossier's terms — and above four
+        orientation answers that say it a third time — would be three descriptions of one
+        collective on one screen. */}
+    <p class="pl-lede">{w.entrance.lede}</p>
+
+    <OrientationList items={[...w.orientation]} />
+
+    {/* ——— THE HOUSE BOUNDARY. It stands ABOVE the dossier on purpose: a visitor who reads
+        fifteen sittings of pitches, votes and gate verdicts before being told where the food is
+        served has already formed the wrong idea, and a correction after the fact reads as an
+        apology. Said first, it is simply the frame. ——— */}
+    <section class="pl-house" aria-labelledby="house-heading">
+      <h2 class="pl-house-h" id="house-heading">{w.house.heading}</h2>
+      <p class="pl-house-body">{w.house.body}</p>
+      <p class="pl-house-door">
+        <a href={w.house.houseHref} rel="noreferrer">{w.house.houseLabel} ↗</a>
+      </p>
+      <p class="pl-house-desc">{w.house.houseDescription}</p>
+      <p class="pl-house-lane">
+        {w.house.laneNote} <a href={w.house.laneHref}>{w.house.laneLinkLabel} →</a>
+      </p>
+    </section>
+
+    <Dossier sittings={sittings} />
+  </Shell>
 </Page>

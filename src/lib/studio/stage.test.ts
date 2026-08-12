@@ -19,8 +19,21 @@ describe('approved studio grammar (static formulas, test-protected)', () => {
     expect(STUDIO_GRAMMAR.gasseLabel).toBe('DIE GASSE · OFFSTAGE — VISIBLE, UNLIT')
   })
 
-  it('keeps the stage rail exactly as designed', () => {
-    expect(STUDIO_GRAMMAR.rail.map((r) => r.label)).toEqual(['this stage', 'works', 'playbill', 'apparatus'])
+  // The design session's four doors, plus 'journal' (added 2026-08-01, Etappe 2). The journal
+  // room is new: the house's unedited record used to hang at the foot of the playbill with no
+  // address of its own, which is exactly why that page had become the longest wall of text in
+  // the ecology. Both sibling practices carry this door; the studio now does too. Structural
+  // addition, not a rewording — the four approved labels are unchanged and still in order.
+  it('keeps the stage rail exactly as designed (v3 pyramid 2026-08-12: the station, then its registers)', () => {
+    // The playbill and apparatus rooms were folded into the station sheet by the v3 rebuild
+    // (docs/design_handoff_research_ecology/README.md); both routes 301 to it.
+    expect(STUDIO_GRAMMAR.rail.map((r) => r.label)).toEqual([
+      'the station',
+      'works',
+      'journal',
+      'constitution',
+      'team channel',
+    ])
     expect(STUDIO_GRAMMAR.door.label).toBe('→ the middle')
   })
 
@@ -80,9 +93,46 @@ describe('buildStageSvg', () => {
     expect(svg).not.toContain('<animate')
   })
 
-  it('refuses more strikes than the floor has taped slots (season index is a different generator)', () => {
-    const many = { ...input, kills: Array.from({ length: 11 }, (_, i) => ({ name: `K${i}`, session: 'S1', reason: 'r' })) }
-    expect(() => buildStageSvg(many)).toThrow(/season index/)
+  // Until 2026-07-31 this generator carried ten hand-placed X coordinates and THREW past them,
+  // which is a build failure scheduled for the next kill the house records (seven were already
+  // used). The slots are now derived — dataviz/geometry.ts's spiralLayout — so the floor keeps
+  // every mark at any count, which is what "the floor keeps every mark" says it does. The
+  // determinism the hand-written table used to give for free is now the thing under test.
+  it('takes an eighth, a ninth and a twentieth strike without refusing', () => {
+    for (const n of [8, 9, 20]) {
+      const many = {
+        ...input,
+        kills: Array.from({ length: n }, (_, i) => ({ name: `K${i}`, session: `S${i}`, reason: `reason ${i}` })),
+      }
+      expect(() => buildStageSvg(many)).not.toThrow()
+      expect(buildStageSvg(many).match(/class="xmark"/g) ?? []).toHaveLength(n)
+    }
+  })
+
+  it('derives the same pixels from the same data — a rebuild is never a re-layout', () => {
+    const twenty = Array.from({ length: 20 }, (_, i) => ({ name: `K${i}`, session: `S${i}`, reason: `r${i}` }))
+    expect(buildStageSvg({ ...input, kills: twenty })).toBe(buildStageSvg({ ...input, kills: [...twenty] }))
+  })
+
+  it('tapes no X outside the floor polygon and none across the lit pool', () => {
+    const many = {
+      ...input,
+      kills: Array.from({ length: 20 }, (_, i) => ({ name: `K${i}`, session: `S${i}`, reason: `r${i}` })),
+    }
+    const svg = buildStageSvg(many)
+    const centres = [...svg.matchAll(/class="xmark" d="M(-?[\d.]+) (-?[\d.]+) L/g)].map((m) => ({
+      x: Number(m[1]) + 9,
+      y: Number(m[2]) + 9,
+    }))
+    expect(centres).toHaveLength(20)
+    for (const c of centres) {
+      expect(c.x).toBeGreaterThanOrEqual(150)
+      expect(c.x).toBeLessThanOrEqual(1230)
+      expect(c.y).toBeGreaterThanOrEqual(226)
+      expect(c.y).toBeLessThanOrEqual(642)
+      // outside the spot's own ellipse (rx 300, ry 170 around 610/400)
+      expect(Math.hypot((c.x - 610) / 300, (c.y - 400) / 170)).toBeGreaterThan(1)
+    }
   })
 })
 

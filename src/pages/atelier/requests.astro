@@ -1,32 +1,116 @@
 ---
-// Team channel — requests and seeds exchanged between the atelier collective and its human
-// counterpart, synced verbatim from its repo (src/content/atelier/REQUESTS.md). Loader
-// lowercases file stems into entry ids (verified: REQUESTS.md → id "requests"). Chrome
-// strings are bilingual via Astro.currentLocale; the doc TEXT itself renders verbatim.
+// /atelier/requests — the team channel: offers and seeds exchanged between the atelier
+// practice and its human counterpart, synced verbatim from its repo
+// (src/content/atelier/REQUESTS.md).
+//
+// Etappe 2 (2026-08-01): this page used to print the whole 19,200-word document. It now shows
+// the standing rule, EVERY open item (never a selection — hiding an ask is the one thing this
+// channel must not do) and the five most recent closed exchanges as leads. Nothing was
+// deleted: /atelier/requests/archive carries the document verbatim, and each card links into
+// it at the section's own heading id. The bilingual chrome went with the rewrite (EN-only
+// since 2026-07-16); the visitor copy lives in atelier-wording.ts.
 import { getCollection, render } from 'astro:content'
 import Page from '@/layouts/Page.astro'
-
-const de = Astro.currentLocale === 'de'
+import Frame from '@/components/atelier/surface/Frame.astro'
+import { renderMarkdown } from '@/lib/engines/journal'
+import { STATUS_WORDS, planRoom, preamble, requestCards, trimWords } from '@/lib/zentrale/requestsMd'
+import { ATELIER_NARRATIVE } from '@/config/atelier-wording'
 
 const all = await getCollection('atelier')
 const doc = all.find((e) => e.id === 'requests')
-const { Content } = doc ? await render(doc) : { Content: null }
+const md = doc?.body ?? ''
+// Astro's own heading list — the authoritative slugs of the archive page's headings.
+const { headings } = doc ? await render(doc) : { headings: [] }
+
+const cards = requestCards(md, { headings })
+const openCards = cards.filter((c) => c.open)
+const answered = cards.filter((c) => !c.open && !c.seeds).slice(-5).reverse()
+const seeds = cards.filter((c) => c.seeds)
+const room = ATELIER_NARRATIVE.requestsRoom
+// The room plans itself against the page budget and never omits an open ask; when the queue
+// forces it below full density it says so rather than quietly showing less (requestsMd.ts).
+const plan = planRoom(cards, room, preamble(md))
+const preambleHtml = md ? renderMarkdown(preamble(md)) : ''
+
+const kicker = [
+  'Atelier · machine-participatory research practice',
+  'team channel',
+  'the offer channel · seeds in, answers out · on the record',
+]
+const statusHtml = `<b>${openCards.length} open</b> · ${cards.length} exchanges on the record · <a href="/atelier/requests/archive" class="underline">the whole channel →</a>`
 ---
 
 <Page
-  title={de ? 'Team-Kanal — Irrtum als Methode' : 'Team channel — Irrtum als Methode'}
-  description={de
-    ? 'Angebote und Anstöße zwischen der Forschungspraxis und ihrem menschlichen Gegenüber — Angebote dürfen abgelehnt werden, Schweigen ist legitim. Auf dem Protokoll.'
-    : 'Offers and seeds between the research practice and its human counterpart — offers may be declined; silence is a legitimate answer. On the record.'}
+  title="Atelier — team channel | Frank Bültge"
+  description="Offers and seeds between the research practice and its human counterpart: every open item first, the complete channel in the archive. Offers may be declined; silence is a legitimate answer."
 >
-  <main id="main" class="mx-auto max-w-3xl px-4 py-14">
-    <p class="font-mono text-xs uppercase tracking-[0.2em] text-fg-faint">
-      {de ? 'Atelier · maschinen-partizipative Forschungspraxis · Team-Kanal' : 'Atelier · machine-participatory research practice · team channel'}
-    </p>
-    <p class="mb-8 mt-2 font-mono text-[11px] text-fg-faint">
-      {de ? 'Der Angebots-Kanal · Anstöße hinein, Antworten heraus · auf dem Protokoll' : 'The offer channel · seeds in, answers out · on the record'}
-      · <a href="/atelier" class="underline transition-colors hover:text-fg">{de ? 'zurück ins Atelier →' : 'back to the atelier →'}</a>
-    </p>
-    {Content ? <article class="engine-prose"><Content /></article> : <p class="text-fg-faint">{de ? 'Noch nicht synchronisiert.' : 'Not synced yet.'}</p>}
-  </main>
+  <Frame active="" back kicker={kicker} h1="Team channel" statusHtml={statusHtml}>
+    {md ? (
+      <>
+        <p class="at-req-note">{room.intro}</p>
+
+        <h2 class="at-req-h">{room.standingHeading}</h2>
+        <article class="engine-prose at-req-standing" set:html={preambleHtml} />
+
+        <h2 class="at-req-h">{room.openHeading}</h2>
+        {openCards.length === 0 ? (
+          <p class="at-req-note">{room.openNone}</p>
+        ) : (
+          <>
+            <p class="at-req-note">{room.openNote}</p>
+            {plan.compressed && (
+              <p class="at-req-note">
+                {`The queue is long, so each item is shown in brief${plan.lead === 0 ? " — title and status only" : ""}. Nothing is hidden: every open ask is on this page, and each links to its full text.`}
+              </p>
+            )}
+            {openCards.map((c) => (
+              <article class="at-req-card">
+                <h3><a href={`/atelier/requests/archive#${c.slug}`}>{trimWords(c.title, plan.titleCap)}</a></h3>
+                <p class="at-req-meta">
+                  {c.date && <span>{c.date}</span>}
+                  {c.status && <span class="at-req-status">{trimWords(c.status, STATUS_WORDS.open)}</span>}
+                  <span>{c.words} words</span>
+                </p>
+                {plan.lead > 0 && c.excerpt && <p class="at-req-lead">{trimWords(c.excerpt, plan.lead)}</p>}
+                <p class="at-req-meta">
+                  <a class="at-req-more" href={`/atelier/requests/archive#${c.slug}`}>{room.fullTextLabel} →</a>
+                </p>
+              </article>
+            ))}
+          </>
+        )}
+
+        <h2 class="at-req-h">{room.answeredHeading}</h2>
+        <p class="at-req-note">{room.answeredNote}</p>
+        {answered.map((c) => (
+          <article class="at-req-card">
+            <h3><a href={`/atelier/requests/archive#${c.slug}`}>{c.title}</a></h3>
+            <p class="at-req-meta">
+              {c.date && <span>{c.date}</span>}
+              {c.status && <span class="at-req-status">{trimWords(c.status, STATUS_WORDS.closed)}</span>}
+              <span>{c.words} words</span>
+            </p>
+            {c.excerpt && <p class="at-req-lead">{c.excerpt}</p>}
+          </article>
+        ))}
+
+        {seeds.length > 0 && (
+          <>
+            <h2 class="at-req-h">{room.seedsHeading}</h2>
+            <p class="at-req-note">{room.seedsNote}</p>
+            {seeds.map((c) => (
+              <p class="at-req-meta">
+                <a class="at-req-more" href={`/atelier/requests/archive#${c.slug}`}>{c.heading} →</a>
+                <span>{c.words} words</span>
+              </p>
+            ))}
+          </>
+        )}
+
+        <p class="at-req-archive"><a href="/atelier/requests/archive">{room.archiveLink}</a></p>
+      </>
+    ) : (
+      <p class="text-fg-faint">Not synced yet.</p>
+    )}
+  </Frame>
 </Page>

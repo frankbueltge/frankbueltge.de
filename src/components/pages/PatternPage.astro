@@ -22,6 +22,13 @@ const H = 150
 const pathA = linePath(normalize(h.a_series), W, H)
 const pathB = linePath(normalize(h.b_series), W, H)
 const survives = d.false_discovery_rate < 0.1
+
+// USP rework #15 (program doc 2026-08-09): the null distribution, drawn. The pipeline
+// emits it from 2026-08-09 on; older committed data renders the honest placeholder line.
+interface NullDist { bins: number; range: [number, number]; counts: number[] }
+const nd = (d as { null_distribution?: NullDist }).null_distribution
+const ndMax = nd ? Math.max(...nd.counts) : 0
+const ndMarkerX = nd ? Math.min(nd.bins * 10 - 1, Math.abs(h.r) * nd.bins * 10) : 0
 ---
 
 <article class="pattern mx-auto max-w-3xl px-4 py-14">
@@ -64,11 +71,68 @@ const survives = d.false_discovery_rate < 0.1
     </p>
   </section>
 
+  <section class="mb-12 border-t border-line pt-6">
+    <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+      {de ? 'Die Null-Verteilung — was der Zufall allein produziert' : 'The null distribution — what chance alone produces'}
+    </p>
+    <div class="mt-3 flex flex-wrap gap-x-10 gap-y-3">
+      <div>
+        <p class="text-2xl font-bold tabular-nums">{d.permutations.toLocaleString(de ? 'de-DE' : 'en-GB')}</p>
+        <p class="text-xs text-fg-muted">{de ? 'Durchschüttelungen, Seed = Datum' : 'shuffles, seeded by the date'}</p>
+      </div>
+      <div>
+        <p class="text-2xl font-bold tabular-nums">{pct(d.false_discovery_rate, locale)}</p>
+        <p class="text-xs text-fg-muted">{de ? 'der Zufalls-Läufe erreichten |r| des Funds' : "of chance runs matched the discovery's |r|"}</p>
+      </div>
+    </div>
+    {nd && ndMax > 0 && (
+      <svg viewBox={`0 0 ${nd.bins * 10} 46`} class="mt-4 h-16 w-full max-w-xl" role="img"
+        aria-label={de
+          ? `Histogramm: max|r| über ${d.permutations} gemischte Läufe, Markierung beim echten Fund (|r| = ${rStr(Math.abs(h.r), locale)})`
+          : `Histogram: max|r| across ${d.permutations} shuffled runs, marker at the real discovery (|r| = ${rStr(Math.abs(h.r), locale)})`}>
+        {nd.counts.map((c, i) => {
+          const bh = c === 0 ? 0 : Math.max(1.5, (c / ndMax) * 40)
+          return <rect x={i * 10 + 1} y={42 - bh} width={8} height={bh} class="fill-current text-fg-faint" />
+        })}
+        <line x1={ndMarkerX} x2={ndMarkerX} y1={0} y2={44} stroke="rgb(var(--rgb-accent))" stroke-width="1.5" />
+      </svg>
+    )}
+    <p class="mt-3 max-w-xl font-mono text-[11px] leading-relaxed text-fg-faint">
+      {nd
+        ? de
+          ? 'Balken: die Verteilung der stärksten Korrelation aus jedem gemischten Lauf. Die Linie: der echte Fund. Das ist der Unterschied zu Vigens statischem p-Wert — hier steht die ganze Resampling-Verteilung, nachrechenbar aus committeten Daten.'
+          : "Bars: the distribution of the strongest correlation in each shuffled run. The line: the real discovery. This is the difference from Vigen's static p-value — the whole resampling distribution, recomputable from committed data."
+        : de
+          ? 'Die Verteilung selbst erscheint hier, sobald die nächtliche Pipeline sie mitschreibt (in Arbeit seit 2026-08-09) — bis dahin steht nur die Rate, ehrlich.'
+          : 'The distribution itself appears here once the nightly pipeline records it (in progress since 2026-08-09) — until then only the rate stands, honestly.'}
+    </p>
+  </section>
+
   <section class="mb-10">
     <p class="leading-relaxed text-fg-muted">
       {de
         ? 'Mit genug Reihen und genug Vergleichen findet man immer ein Muster. Das ist die Maschine hinter jeder „datengetriebenen Erkenntnis" — und der blinde Fleck dieses Labs selbst.'
         : 'With enough series and enough comparisons, you always find a pattern. That is the engine behind every "data-driven insight" — and the blind spot of this lab itself.'}
+    </p>
+  </section>
+
+  <section class="mb-12 border-t border-line pt-6">
+    <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+      {de ? 'Nächste Nachbarn' : 'Nearest neighbors'}
+    </p>
+    <p class="mt-3 max-w-xl text-sm leading-relaxed text-fg-muted">
+      {de
+        ? 'Diesen Witz macht bereits '
+        : 'This exact joke already runs at '}
+      <a href="https://tylervigen.com/spurious-correlations" target="_blank" rel="noopener nofollow" class="underline decoration-line underline-offset-2 hover:text-fg">Tyler Vigen, Spurious Correlations</a>
+      {de
+        ? ' — seit 2014 (Relaunch Januar 2024), die kanonische Referenz: eine Maschine, die autonom ihre eigene Datenbank durcheinandermischt, die stärkste Korrelation zeigt, als „Entdeckung" präsentiert und sich mit einem expliziten Kausalitäts-Vorbehalt selbst unterminiert.'
+        : ' — running since 2014 (relaunched January 2024), the canonical reference: a machine that autonomously mines its own database, surfaces the strongest correlation, presents it as a "discovery" and undercuts itself with an explicit spurious-correlation caveat.'}
+    </p>
+    <p class="mt-3 max-w-xl text-sm leading-relaxed text-fg-muted">
+      {de
+        ? 'Der eine reale Unterschied: Vigen zeigt einen statischen p-Wert, diese Seite rechnet tatsächlich einen Permutationstest — tausende Durchmischungen, eine echte Falsch-Entdeckungsrate für genau dieses Paar an genau diesem Tag. Diese Nulldistribution ist die eigentliche Sache; sie beantwortet Vigens Witz mit der Rechenstrenge, die er selbst nicht anlegt.'
+        : "The one real difference: Vigen shows a static p-value, this page actually runs a permutation test — thousands of shuffles, a real false-discovery rate for this exact pair on this exact day. That null distribution is the actual point — it answers Vigen's joke with the statistical rigor his own site doesn't apply."}
     </p>
   </section>
 

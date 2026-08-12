@@ -5,6 +5,9 @@ import { getRelativeLocaleUrl } from 'astro:i18n'
 import type { Locale } from '@/lib/site'
 import { getRegister, getTopicsSorted } from '@/lib/parallaxe/data'
 import { CLAIM_MARK, langLabel, omissionPercent, topicHeadline } from '@/lib/parallaxe/labels'
+// USP rework #2 (program doc 2026-08-09): the integrity panel — the process IS the
+// differentiator. Dated git-derived snapshot; scripts/parallaxe_provenance.py regenerates.
+import provenance from '@/data/parallaxe/provenance.json'
 import type { ClaimMark } from '@/lib/parallaxe/types'
 import { t } from '@/i18n/ui'
 
@@ -143,6 +146,58 @@ const cellLabel = (m: ClaimMark) => (de ? CLAIM_MARK[m].de : CLAIM_MARK[m].en)
       </section>
     )
   })}
+
+  <section class="mb-10 border-t border-line pt-6">
+    <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+      {de ? 'Das Register, nachprüfbar' : 'The register, checkable'}
+    </p>
+    <div class="mt-3 flex flex-wrap gap-x-10 gap-y-3">
+      <div>
+        <p class="text-2xl font-bold tabular-nums">{provenance.committed_revisions}</p>
+        <p class="text-xs text-fg-muted">{de ? 'committete Revisionen' : 'committed revisions'}</p>
+      </div>
+      <div>
+        <p class="text-2xl font-bold tabular-nums">{provenance.first_commit}</p>
+        <p class="text-xs text-fg-muted">{de ? 'läuft seit, ohne Rückdatierung' : 'running since, never retconned'}</p>
+      </div>
+      <div>
+        <p class="text-2xl font-bold tabular-nums">{reg.topics.length}</p>
+        <p class="text-xs text-fg-muted">{de ? 'Themen, Satz eingefroren' : 'topics, set frozen'}</p>
+      </div>
+    </div>
+    <p class="mt-3 max-w-xl font-mono text-[11px] leading-relaxed text-fg-faint">
+      {de
+        ? `Der Prozess ist das Alleinstellungsmerkmal: jede Messung ist ein Git-Commit, Korrekturen sind neue Commits, nichts wird still ersetzt. Revisionszahl als datierter Snapshot vom ${provenance.snapshot_date}, abgeleitet per `
+        : `The process is the differentiator: every measurement is a git commit, corrections are new commits, nothing is silently replaced. Revision count is a dated snapshot from ${provenance.snapshot_date}, derived via `}
+      <code class="text-[10px]">{provenance.derivation}</code>
+      {de ? ' — im Repo selbst nachrechenbar.' : ' — recomputable in the repo itself.'}
+    </p>
+  </section>
+
+  <section class="mb-10 border-t border-line pt-6">
+    <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+      {de ? 'Nächste Nachbarn' : 'Nearest neighbors'}
+    </p>
+    <ul class="mt-3 space-y-2 text-sm text-fg-muted">
+      <li>
+        <a href="https://aclanthology.org/2024.emnlp-main.384.pdf" target="_blank" rel="noopener nofollow" class="underline decoration-line underline-offset-2 hover:text-fg">INFOGAP</a>
+        {de ? ' (UBC/Johns Hopkins/UW, EMNLP 2024) — begutachteter, faktenbasierter Auslassungs-Detektor über Wikipedia-Sprachversionen, größerer Maßstab, nennt umstrittene Themen als Zielanwendung.' : ' (UBC/Johns Hopkins/UW, EMNLP 2024) — peer-reviewed, fact-level cross-lingual omission detector for Wikipedia, larger scale, names contentious topics as a target application.'}
+      </li>
+      <li>
+        <a href="https://collablab.northwestern.edu/pubs/CHI2012-BaoEtAl-Omnipedia.pdf" target="_blank" rel="noopener nofollow" class="underline decoration-line underline-offset-2 hover:text-fg">Omnipedia</a>
+        {de ? ' (Northwestern, CHI 2012) — visualisiert Gemeinsames und Eigenes über bis zu 25 Sprachversionen gleichzeitig.' : ' (Northwestern, CHI 2012) — visualizes shared vs. unique content across up to 25 language editions at once.'}
+      </li>
+      <li>
+        <a href="https://firstmonday.org/ojs/index.php/fm/article/view/3939/3382" target="_blank" rel="noopener nofollow" class="underline decoration-line underline-offset-2 hover:text-fg">Manypedia</a>
+        {de ? ' (First Monday 2013, inzwischen offline) — automatisierter Seite-an-Seite-Vergleich von Sprachperspektiven.' : ' (First Monday 2013, now defunct) — automated side-by-side "language points of view" comparison.'}
+      </li>
+    </ul>
+    <p class="mt-3 max-w-xl text-sm leading-relaxed text-fg-muted">
+      {de
+        ? 'Die Auslassungsmessung selbst ist ein gelöstes Genre — INFOGAP läuft peer-reviewed und größer. Was keiner der Nachbarn führt: ein committetes, versioniertes Tagesregister mit fest eingefrorenem, nicht kuratiertem Themensatz, das nie rückwirkend geändert wird (INFOGAP ist ein Paper/Datensatz, Omnipedia/Manypedia tote Demos).'
+        : "The omission measurement itself is a solved genre — INFOGAP runs peer-reviewed and at larger scale. What none of the neighbors keep: a committed, versioned daily register with a fixed, non-selected topic set that is never retconned (INFOGAP is a paper/dataset, Omnipedia/Manypedia are dead demos)."}
+    </p>
+  </section>
 
   <footer class="mt-12 border-t border-line pt-6 font-mono text-xs text-fg-faint">
     {reg.census && reg.census.measured < reg.census.attempted && (

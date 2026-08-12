@@ -75,8 +75,52 @@
       <div data-zx="night" class="flex flex-col gap-4"></div>
     </section>
 
+    {/* Triage (v2 P1, docs/design/2026-08-01-steuerzentrale-v2.md), korrigiert 2026-08-02:
+        "Heute nötig" führte alles außer "braucht: nichts" — also auch Briefe ohne Eile und
+        Entscheidungen, die die Praxis bis zu ihrer nächsten Session selbst trifft. Am
+        2026-08-02 standen dort acht Einträge, ehrlich waren es null (Frank: "ich kann auch
+        nicht jeden Tag 1–2 Stunden damit verbringen"). Maßgeblich ist die Standing Rule im
+        Kopf jeder REQUESTS.md: eine Anfrage an Frank ist NIE ein Blocker, sein Schweigen
+        heißt "entscheidet selbst". Sortiert wird jetzt danach (src/lib/zentrale/status.ts,
+        trayFor): hier nur datierte Fristen in Reichweite. */}
+    <section aria-labelledby="zx-needed-h" class="mb-12">
+      <h2 id="zx-needed-h" class="mb-4 font-mono text-xs uppercase tracking-[0.22em] text-fg-faint">Heute nötig</h2>
+      <div data-zx="needed" class="flex flex-col gap-4"></div>
+    </section>
+
+    {/* Was ohne ihn weiterläuft: Entscheidungen ohne datierte Frist (oder mit einer, die
+        weit weg ist). Schweigt er, entscheidet die Praxis bei ihrer nächsten Session und
+        dokumentiert das im Journal — ein legitimer Ausgang, kein Versäumnis. Steht hier,
+        damit es sichtbar bleibt, ohne als Schuld zu erscheinen. */}
+    <section aria-labelledby="zx-running-h" class="mb-12">
+      <h2 id="zx-running-h" class="mb-4 font-mono text-xs uppercase tracking-[0.22em] text-fg-faint">Läuft ohne dich</h2>
+      <p class="mb-4 text-sm text-fg-muted">
+        Schweigen heißt hier: die Praxis entscheidet bei ihrer nächsten Session selbst und hält es
+        im Journal fest. Lesen ist freiwillig — Eingreifen ändert etwas, Nichtstun blockiert nichts.
+      </p>
+      <div data-zx="running" class="flex flex-col gap-4"></div>
+    </section>
+
+    {/* Gate-Spur (v2 P2, Governance §1): Publikations-Kandidaten mit 72-h-Uhr und
+        GO/HALTEN — die Entscheidung wird als datierte Section in die REQUESTS.md der
+        Praxis committet; den Publikationsakt vollzieht deren nächste Session. */}
+    <section aria-labelledby="zx-gate-h" class="mb-12">
+      <h2 id="zx-gate-h" class="mb-4 font-mono text-xs uppercase tracking-[0.22em] text-fg-faint">Am Gate</h2>
+      <div data-zx="gate" class="flex flex-col gap-4"></div>
+    </section>
+
+    {/* Post-Spur (v2 P2, revidiert 2026-08-01 abends — poste restante, Franks Konzept):
+        der Ausgang ist Teil des Werks, kein Aufgabenstapel. Briefe liegen adressiert und
+        vollständig offen; Zustellung ist optional und darf von jedem übernommen werden —
+        im besten Fall holt der Empfänger seine Post selbst ab. Gezeigt wird Liegedauer
+        als Fakt, nie als Frist; nichts wird archiviert. */}
+    <section aria-labelledby="zx-post-h" class="mb-12">
+      <h2 id="zx-post-h" class="mb-4 font-mono text-xs uppercase tracking-[0.22em] text-fg-faint">Post — offener Ausgang an die Welt</h2>
+      <div data-zx="post" class="flex flex-col gap-4"></div>
+    </section>
+
     <section aria-labelledby="zx-inbox-h" class="mb-12">
-      <h2 id="zx-inbox-h" class="mb-4 font-mono text-xs uppercase tracking-[0.22em] text-fg-faint">Inbox</h2>
+      <h2 id="zx-inbox-h" class="mb-4 font-mono text-xs uppercase tracking-[0.22em] text-fg-faint">Zur Kenntnis</h2>
       <div data-zx="inbox" class="flex flex-col gap-4"></div>
     </section>
 
@@ -88,6 +132,13 @@
     <section aria-labelledby="zx-pubseed-h" class="mb-12">
       <h2 id="zx-pubseed-h" class="mb-4 font-mono text-xs uppercase tracking-[0.22em] text-fg-faint">Öffentliche Saat — Freigabe</h2>
       <div data-zx="pending-seeds" class="flex flex-col gap-4"></div>
+    </section>
+
+    {/* Briefkasten: letters from outside (post office /post) — private queue, read here,
+        forwarded by Frank's hand; dismissing deletes from KV (letters were never public). */}
+    <section aria-labelledby="zx-letters-h" class="mt-10">
+      <h2 id="zx-letters-h" class="mb-4 font-mono text-xs uppercase tracking-[0.22em] text-fg-faint">Briefkasten — Post von außen</h2>
+      <div data-zx="letters" class="flex flex-col gap-4"></div>
     </section>
 
     <section aria-labelledby="zx-seed-h" class="mb-12">
@@ -197,6 +248,40 @@
     openedAt: string
     ageDays: number
     excerpt: string
+    structured: boolean
+    summary: string
+    braucht: string | null
+    brauchtOptionen: string[]
+    frist: string | null
+    fristDate: string | null
+    kontext: string | null
+    /** Fach, in dem der Eintrag landet — siehe status.ts trayFor. */
+    tray: 'today' | 'postoffice' | 'running' | 'fyi'
+    needsAction: boolean
+    fristInDays: number | null
+  }
+
+  interface ZxGateCandidate {
+    repo: string
+    project: string
+    title: string | null
+    scoreChangedAt: string | null
+    hoursSinceChange: number | null
+    projectUrl: string
+  }
+
+  interface ZxPostItem {
+    id: string
+    practice: string
+    piece: string
+    receiver: string
+    receiverChannel: string
+    email: string | null
+    status: string
+    asOf: string
+    daysOpen: number | null
+    recordUrl: string
+    note: string
   }
 
   interface ZxSitePr {
@@ -238,6 +323,8 @@
     collectives: ZxCollective[]
     runs: ZxRun[]
     inbox: ZxInboxEntry[]
+    gate: ZxGateCandidate[]
+    post: ZxPostItem[]
     sitePrs: ZxSitePr[] | null
   }
 
@@ -371,6 +458,10 @@
   const errorsEl = document.querySelector<HTMLElement>('[data-zx="errors"]')
   const nightEl = document.querySelector<HTMLElement>('[data-zx="night"]')
   const inboxEl = document.querySelector<HTMLElement>('[data-zx="inbox"]')
+  const neededEl = document.querySelector<HTMLElement>('[data-zx="needed"]')
+  const runningEl = document.querySelector<HTMLElement>('[data-zx="running"]')
+  const gateEl = document.querySelector<HTMLElement>('[data-zx="gate"]')
+  const postEl = document.querySelector<HTMLElement>('[data-zx="post"]')
   const sitePrsEl = document.querySelector<HTMLElement>('[data-zx="siteprs"]')
   const pendingSeedsEl = document.querySelector<HTMLElement>('[data-zx="pending-seeds"]')
   const seedForm = document.querySelector<HTMLFormElement>('[data-zx="seed-form"]')
@@ -573,22 +664,158 @@
   }
 
   // ── Rendering: Inbox ────────────────────────────────────────────────────
+  /** Frist-Anzeige mit Countdown. Getragen von der Selbstauskunft (fristDate aus dem
+   * Vier-Zeilen-Kopf); eine Frist ohne Datum wird als Text gezeigt, nie geraten. */
+  function fmtFrist(entry: ZxInboxEntry): { label: string; urgent: boolean } | null {
+    if (entry.fristDate) {
+      const days = Math.floor((Date.parse(entry.fristDate) - Date.now()) / 86_400_000)
+      const rel = days < 0 ? `überfällig (${-days} Tg.)` : days === 0 ? 'heute' : `in ${days} Tg.`
+      return { label: `Frist ${entry.fristDate} · ${rel}`, urgent: days <= 2 }
+    }
+    if (entry.frist) {
+      const t = entry.frist.length > 42 ? `${entry.frist.slice(0, 41)}…` : entry.frist
+      return { label: `Frist: ${t}`, urgent: false }
+    }
+    return null
+  }
+
+  const BADGE = 'ml-2 rounded-full border border-line px-2 py-0.5 text-[10px] normal-case tracking-normal text-fg-muted'
+  const BADGE_URGENT = 'ml-2 rounded-full border border-amber-500 px-2 py-0.5 text-[10px] normal-case tracking-normal text-amber-500'
+
+  /** Gate-Karte (v2 P2): Kandidat + ehrlich beschriftete SLA-Uhr + GO/HALTEN. GO verlangt
+   * eine zweite Bestätigung (Publikation ist die folgenreichste Ein-Klick-Aktion hier);
+   * HALTEN verlangt eine Begründung — "decide, or write a dated 'held, because …'". */
+  function renderGateCard(c: ZxGateCandidate): HTMLElement {
+    const card = el('article', { class: 'rounded-xl border border-line bg-panel p-4' })
+    const meta = el('p', { class: 'font-mono text-xs uppercase tracking-[0.12em] text-fg-faint' }, `${REPO_LABELS[c.repo] ?? c.repo} · PUBLICATION_CANDIDATE`)
+    if (c.hoursSinceChange !== null) {
+      const over = c.hoursSinceChange >= 72
+      meta.append(el('span', { class: over ? BADGE_URGENT : BADGE }, over ? `SLA überschritten · ${c.hoursSinceChange} h seit letzter Änderung` : `${c.hoursSinceChange} h von 72 h (ab letzter SCORE-Änderung)`))
+    } else {
+      meta.append(el('span', { class: BADGE }, 'Wartezeit nicht ableitbar'))
+    }
+    card.append(meta)
+    card.append(el('p', { class: 'mt-1 font-semibold text-fg' }, c.title ?? c.project))
+    const src = el('p', { class: 'mt-1 font-mono text-xs text-fg-faint' })
+    src.append(el('a', { href: c.projectUrl, target: '_blank', rel: 'noreferrer', class: 'underline hover:text-fg' }, `${c.project} ↗`))
+    if (c.scoreChangedAt) src.append(` · SCORE zuletzt ${c.scoreChangedAt.slice(0, 10)}`)
+    card.append(src)
+
+    const reasonField = el('textarea', { rows: '2', class: 'mt-2 w-full rounded-lg border border-line bg-bg px-3 py-2 text-sm text-fg outline-none focus-visible:border-fg', placeholder: 'Halten, weil …' }) as HTMLTextAreaElement
+    reasonField.hidden = true
+    card.append(reasonField)
+    const hint = el('p', { class: 'mt-1 min-h-[1.2em] text-xs text-fg-faint', role: 'status' })
+    card.append(hint)
+
+    const actions = el('div', { class: 'mt-3 flex flex-wrap gap-2' })
+    const mkBtn = (label: string): HTMLButtonElement =>
+      el('button', { type: 'button', class: 'rounded-full border border-line px-3 py-1.5 text-xs font-semibold text-fg transition hover:border-fg disabled:opacity-50' }, label) as HTMLButtonElement
+    const btnGo = mkBtn('GO — publizieren')
+    const btnHold = mkBtn('HALTEN (mit Begründung)')
+    actions.append(btnGo, btnHold)
+    card.append(actions)
+
+    let goArmed = false
+    async function send(decision: 'GO' | 'HOLD'): Promise<void> {
+      btnGo.disabled = btnHold.disabled = true
+      hint.textContent = ''
+      try {
+        const result = await postAntwort({ action: 'gate', repo: c.repo, project: c.project, decision, reason: reasonField.value.trim() })
+        if (result.ok) {
+          markMutation()
+          const p = el('p', { class: 'text-sm text-fg' }, decision === 'GO' ? '✓ GO committet — die nächste Session der Praxis vollzieht die Publikation.' : '✓ HALTEN committet — datiert, mit Begründung.')
+          const url = commitUrlOf(result.commit)
+          if (url) { p.append(' · '); p.append(el('a', { href: url, target: '_blank', rel: 'noreferrer', class: 'underline hover:text-fg' }, 'Commit ansehen ↗')) }
+          card.replaceChildren(p)
+          return
+        }
+        hint.textContent = result.code === 'conflict' ? 'Konflikt — neu laden und erneut versuchen' : 'Das hat nicht geklappt — bitte später erneut versuchen.'
+      } catch (err) {
+        if (String(err) !== 'Error: unauthorized') hint.textContent = 'Netzwerkfehler — bitte erneut versuchen.'
+      } finally {
+        btnGo.disabled = btnHold.disabled = false
+      }
+    }
+    btnGo.addEventListener('click', () => {
+      if (!goArmed) { goArmed = true; btnGo.textContent = 'GO bestätigen — wirklich publizieren'; return }
+      void send('GO')
+    })
+    btnHold.addEventListener('click', () => {
+      if (reasonField.hidden) { reasonField.hidden = false; reasonField.focus(); return }
+      if (reasonField.value.trim() === '') { hint.textContent = 'HALTEN braucht eine Begründung.'; reasonField.focus(); return }
+      void send('HOLD')
+    })
+    return card
+  }
+
+  /** Post-Karte (poste restante): lesend — Empfänger, Kanal, Liegedauer als Fakt.
+   * Kein Countdown, kein Warnbernstein: ein lange liegender Brief ist Teil der Geste,
+   * kein Versäumnis. Direktzustellung bleibt als Option verlinkt. */
+  function renderPostCard(item: ZxPostItem): HTMLElement {
+    const card = el('article', { class: 'rounded-xl border border-line bg-panel p-4' })
+    const meta = el('p', { class: 'font-mono text-xs uppercase tracking-[0.12em] text-fg-faint' }, `${item.practice} · ${item.status}`)
+    if (item.daysOpen !== null) {
+      meta.append(el('span', { class: BADGE }, item.daysOpen === 0 ? 'heute offen gelegt' : `liegt offen zur Abholung · ${item.daysOpen} Tg.`))
+    } else {
+      meta.append(el('span', { class: BADGE }, 'liegt noch bei der Praxis'))
+    }
+    card.append(meta)
+    card.append(el('p', { class: 'mt-1 font-semibold text-fg' }, item.piece))
+    card.append(el('p', { class: 'mt-1 text-sm text-fg-muted' }, `an: ${item.receiver} · Kanal: ${item.receiverChannel}`))
+    if (item.note) card.append(el('p', { class: 'mt-1 text-xs text-fg-faint' }, item.note))
+    const links = el('p', { class: 'mt-2 font-mono text-xs' })
+    if (item.email) {
+      links.append(el('a', { href: `mailto:${item.email}`, class: 'underline hover:text-fg' }, `direkt zustellen (optional): ${item.email}`))
+      links.append(' · ')
+    }
+    links.append(el('a', { href: item.recordUrl, target: '_blank', rel: 'noreferrer', class: 'underline hover:text-fg' }, 'das Paket ↗'))
+    card.append(links)
+    return card
+  }
+
   function renderInboxCard(entry: ZxInboxEntry): HTMLElement {
     const card = el('article', { class: 'rounded-xl border border-line bg-panel p-4' })
     const repoLabel = REPO_LABELS[entry.repo] ?? entry.repo
-    card.append(el('p', { class: 'font-mono text-xs uppercase tracking-[0.12em] text-fg-faint' }, `${repoLabel} · ${fmtAgeDays(entry.ageDays)}`))
-    card.append(el('p', { class: 'mt-1 font-semibold text-fg' }, entry.heading))
+
+    // Triage-Kopfzeile (v2 P1): die Selbstauskunft des Absenders als Badges. Kopflose
+    // Alt-Anfragen tragen den ehrlichen Marker statt einer erfundenen Einordnung.
+    const meta = el('p', { class: 'font-mono text-xs uppercase tracking-[0.12em] text-fg-faint' }, `${repoLabel} · ${fmtAgeDays(entry.ageDays)}`)
+    if (entry.structured && entry.braucht) meta.append(el('span', { class: BADGE }, `braucht: ${entry.braucht}`))
+    if (!entry.structured) meta.append(el('span', { class: BADGE }, 'unstrukturiert (alt)'))
+    const frist = fmtFrist(entry)
+    if (frist) meta.append(el('span', { class: frist.urgent ? BADGE_URGENT : BADGE }, frist.label))
+    card.append(meta)
+
+    // Die eine Zeile zuerst: das tl;dr des Absenders (bzw. der Satz-Fallback); die
+    // REQUESTS-Überschrift bleibt als Unterzeile, der Volltext einen Aufklapper entfernt.
+    card.append(el('p', { class: 'mt-1 font-semibold text-fg' }, entry.summary || entry.heading))
+    card.append(el('p', { class: 'mt-0.5 font-mono text-xs text-fg-faint' }, entry.heading))
+    if (entry.kontext) card.append(el('p', { class: 'mt-1 text-xs text-fg-muted' }, `Kontext: ${entry.kontext}`))
 
     const excerptWrap = el('div', { class: 'zx-excerpt mt-2 text-sm text-fg-muted' }, el('span', {}, entry.excerpt))
     card.append(excerptWrap)
-    const expandBtn = el('button', { type: 'button', class: 'mt-1 font-mono text-xs text-fg-faint underline' }, 'mehr')
-    expandBtn.addEventListener('click', () => {
-      const expanded = excerptWrap.classList.toggle('is-expanded')
-      expandBtn.textContent = expanded ? 'weniger' : 'mehr'
-    })
-    card.append(expandBtn)
+    // Der Knopf erscheint nur, wenn es wirklich mehr zu sehen gibt — an der ZEICHENZAHL
+    // gemessen, nicht am Layout: eine Layout-Messung (scrollHeight vs. clientHeight) würde
+    // einen kaputten Klemm-Stil stillschweigend verstecken, statt ihn zu zeigen.
+    if (entry.excerpt.length > 280) {
+      const expandBtn = el('button', { type: 'button', class: 'mt-1 font-mono text-xs text-fg-faint underline' }, 'mehr')
+      expandBtn.addEventListener('click', () => {
+        const expanded = excerptWrap.classList.toggle('is-expanded')
+        expandBtn.textContent = expanded ? 'weniger' : 'mehr'
+      })
+      card.append(expandBtn)
+    }
 
-    card.append(el('p', { class: 'mt-2 text-xs text-fg-faint' }, 'Ohne Antwort entscheidet die Praxis in ihrer nächsten Sitzung selbst.'))
+    const hinweis = el('p', { class: 'mt-2 text-xs text-fg-faint' }, 'Ohne Antwort entscheidet die Praxis in ihrer nächsten Sitzung selbst. ')
+    // Immer erreichbar, was auch im Dashboard schiefgeht: die Anfrage an ihrer Quelle.
+    hinweis.append(
+      el(
+        'a',
+        { href: entry.issueUrl, target: '_blank', rel: 'noreferrer', class: 'underline hover:text-fg' },
+        'ganz lesen ↗',
+      ),
+    )
+    card.append(hinweis)
 
     const msgField = el('textarea', {
       rows: '2',
@@ -621,6 +848,22 @@
     const btnAck = btn('gelesen — entscheidet selbst')
     actions.append(btnEnabled, btnDeclined, btnNote, btnAck)
     card.append(actions)
+
+    // v2 P3: Bei "braucht: entscheidung (a | b)" werden die vom Absender selbst benannten
+    // Optionen zu Ein-Klick-Antworten — geschrieben wie 'Antwort', als datierte
+    // Response-Zeile in der REQUESTS.md der Praxis. Vorn eingereiht: die wahrscheinlichste
+    // Handlung zuerst.
+    if (entry.braucht === 'entscheidung' && entry.brauchtOptionen.length > 0) {
+      for (const opt of entry.brauchtOptionen.slice(0, 4).reverse()) {
+        const label = opt.length > 30 ? `${opt.slice(0, 29)}…` : opt
+        const optBtn = btn(`→ ${label}`)
+        optBtn.title = opt
+        optBtn.addEventListener('click', () => {
+          void submit({ action: 'answer', repo: entry.repo, heading: entry.heading, issueNumber: entry.issueNumber, decision: 'note', message: `Entscheidung: ${opt}` }, 'note')
+        })
+        actions.prepend(optBtn)
+      }
+    }
 
     const setBusy = (busy: boolean): void => {
       for (const b of [btnEnabled, btnDeclined, btnNote, btnAck]) b.disabled = busy
@@ -910,6 +1153,156 @@
     return card
   }
 
+  // ── Briefkasten: letters from the post office queue (GET/DELETE /api/post) ──
+  const lettersEl = document.querySelector<HTMLElement>('[data-zx="letters"]')
+  interface ZxLetter {
+    id: string
+    to: string
+    fromMark: string
+    contact: string
+    regarding: string
+    text: string
+    received_at: string
+    status?: string
+    answered_at?: string
+  }
+  // Conservative mirror of the server-side check (src/lib/post/brevo.ts isEmail) — the
+  // contact field is free-form, and the mail button must not offer itself for a handle.
+  const looksLikeEmail = (s: string): boolean =>
+    s.trim().length >= 6 && s.trim().length <= 320 && /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(s.trim())
+  function renderLetterCard(l: ZxLetter): HTMLElement {
+    const card = el('div', { class: 'rounded-[10px] border border-line bg-panel p-4' })
+    const head = el('p', { class: 'font-mono text-[11px] uppercase tracking-[0.14em] text-fg-muted' })
+    head.textContent = `an ${l.to} · von ${l.fromMark}${l.regarding ? ` · betr. ${l.regarding}` : ''}`
+    const meta = el('p', { class: 'mt-1 font-mono text-[11px] text-fg-faint' })
+    meta.textContent = `${l.id} · ${fmtRel(l.received_at)}${l.contact ? ` · Kontakt: ${l.contact}` : ' · kein Kontakt hinterlassen'}${l.status === 'answered' ? ' · BEANTWORTET' : ''}`
+    const body = el('p', { class: 'mt-3 whitespace-pre-wrap text-sm leading-relaxed text-fg' })
+    body.textContent = l.text
+    const row = el('div', { class: 'mt-3 flex items-center gap-3' })
+    const btn = el('button', { type: 'button', class: 'rounded border border-line px-2.5 py-1 font-mono text-[11px] uppercase tracking-[0.1em] text-fg-muted hover:text-fg' }, 'erledigt')
+    const hint = el('span', { class: 'text-xs text-fg-faint' }, '')
+    let armed = false
+    btn.addEventListener('click', () => {
+      if (!armed) {
+        armed = true
+        btn.textContent = 'löschen bestätigen'
+        hint.textContent = 'Entfernt den Brief endgültig aus der Warteschlange.'
+        return
+      }
+      void (async () => {
+        try {
+          const res = await fetch(`/api/post?id=${encodeURIComponent(l.id)}`, {
+            method: 'DELETE',
+            headers: { 'X-Zentrale-Auth': token ?? '' },
+          })
+          if (res.ok) card.remove()
+          else hint.textContent = 'Löschen fehlgeschlagen.'
+        } catch {
+          hint.textContent = 'Netzwerkfehler beim Löschen.'
+        }
+      })()
+    })
+    row.append(btn, hint)
+
+    // Reply by email — only offered when the writer left an address (spec 2026-08-01 §2.3).
+    // The text is written here, in the moment; /api/zentrale/reply sends it via Brevo from
+    // the verified sender and marks the letter answered. Nothing sends itself.
+    if (looksLikeEmail(l.contact) && l.status !== 'answered') {
+      const replyBtn = el('button', { type: 'button', class: 'rounded border border-line px-2.5 py-1 font-mono text-[11px] uppercase tracking-[0.1em] text-fg-muted hover:text-fg' }, 'per E-Mail antworten')
+      const replyWrap = el('div', { class: 'mt-3 hidden flex-col gap-2' })
+      const subjField = el('input', {
+        type: 'text',
+        maxlength: '160',
+        value: l.regarding ? `Re: ${l.regarding}` : 'Re: dein Brief an frankbueltge.de',
+        class: 'w-full rounded-lg border border-line bg-bg px-3 py-2 text-sm text-fg outline-none focus-visible:border-fg',
+      }) as HTMLInputElement
+      const textField = el('textarea', {
+        rows: '5',
+        placeholder: 'Antwort …',
+        class: 'w-full rounded-lg border border-line bg-bg px-3 py-2 text-sm leading-relaxed text-fg outline-none focus-visible:border-fg',
+      }) as HTMLTextAreaElement
+      const sendRow = el('div', { class: 'flex items-center gap-3' })
+      const sendBtn = el('button', { type: 'button', class: 'rounded border border-line px-2.5 py-1 font-mono text-[11px] uppercase tracking-[0.1em] text-fg hover:border-fg-faint' }, 'senden')
+      const sendHint = el('span', { class: 'text-xs text-fg-faint', role: 'status' }, '')
+      sendRow.append(sendBtn, sendHint)
+      replyWrap.append(subjField, textField, sendRow)
+      replyBtn.addEventListener('click', () => {
+        replyWrap.classList.toggle('hidden')
+        replyWrap.classList.toggle('flex')
+        if (!replyWrap.classList.contains('hidden')) textField.focus()
+      })
+      sendBtn.addEventListener('click', () => {
+        const text = textField.value.trim()
+        const subject = subjField.value.trim()
+        if (text.length < 10) {
+          sendHint.textContent = 'Die Antwort braucht mindestens 10 Zeichen.'
+          return
+        }
+        sendBtn.setAttribute('disabled', 'true')
+        sendHint.textContent = 'sendet …'
+        void (async () => {
+          try {
+            const res = await fetch('/api/zentrale/reply', {
+              method: 'POST',
+              headers: { 'content-type': 'application/json', 'X-Zentrale-Auth': token ?? '' },
+              body: JSON.stringify({ letterId: l.id, subject, text }),
+            })
+            const out = (await res.json().catch(() => ({}))) as { ok?: boolean; code?: string }
+            if (res.ok && out.ok) {
+              sendHint.textContent = 'Gesendet. Der Brief ist als beantwortet markiert.'
+              replyBtn.remove()
+              textField.setAttribute('disabled', 'true')
+              subjField.setAttribute('disabled', 'true')
+              sendBtn.remove()
+              meta.textContent += ' · BEANTWORTET'
+            } else {
+              sendBtn.removeAttribute('disabled')
+              const sayReply: Record<string, string> = {
+                standby: 'Mail-Versand ist noch nicht eingerichtet (Brevo-Secrets fehlen).',
+                'no-email': 'Der Kontakt ist keine E-Mail-Adresse.',
+                'not-found': 'Brief nicht mehr in der Warteschlange — bitte neu laden.',
+                'send-failed': 'Der Versand ist beim Anbieter fehlgeschlagen.',
+                upstream: 'Der Anbieter hat nicht geantwortet — bitte gleich noch einmal.',
+              }
+              sendHint.textContent = sayReply[out.code ?? ''] ?? 'Senden fehlgeschlagen.'
+            }
+          } catch {
+            sendBtn.removeAttribute('disabled')
+            sendHint.textContent = 'Netzwerkfehler beim Senden.'
+          }
+        })()
+      })
+      row.append(replyBtn)
+      card.append(head, meta, body, row, replyWrap)
+      return card
+    }
+
+    card.append(head, meta, body, row)
+    return card
+  }
+  async function fetchLetters(): Promise<void> {
+    if (!lettersEl || !token) return
+    try {
+      const res = await fetch('/api/post', { headers: { 'X-Zentrale-Auth': token } })
+      lettersEl.replaceChildren()
+      if (!res.ok) {
+        lettersEl.append(el('p', { class: 'text-sm text-amber-500' }, 'Konnte den Briefkasten nicht laden.'))
+        return
+      }
+      const body = (await res.json()) as { ok?: boolean; letters?: ZxLetter[] }
+      const list = body.ok && Array.isArray(body.letters) ? body.letters : []
+      if (list.length === 0) {
+        lettersEl.append(el('p', { class: 'text-sm text-fg-muted' }, 'Keine Briefe in der Warteschlange.'))
+      } else {
+        for (const l of [...list].sort((a, b) => b.received_at.localeCompare(a.received_at))) {
+          lettersEl.append(renderLetterCard(l))
+        }
+      }
+    } catch {
+      lettersEl.replaceChildren(el('p', { class: 'text-sm text-amber-500' }, 'Netzwerkfehler beim Laden des Briefkastens.'))
+    }
+  }
+
   async function fetchPendingSeeds(): Promise<void> {
     if (!pendingSeedsEl || !token) return
     try {
@@ -980,12 +1373,65 @@
       for (const c of body.collectives) nightEl.append(renderCollective(c))
     }
 
+    // Triage-Split (v2 P1, nach Fächern seit 2026-08-02 — status.ts trayFor trägt das Fach
+    // an jedem Eintrag). Vier Ziele statt zwei: heute nötig / läuft ohne dich / Postausgang /
+    // zur Kenntnis. Der Leerzustand oben ist das Ziel des ganzen Umbaus, und er ist jetzt
+    // erreichbar, weil nur noch datierte Fristen in Reichweite dort landen.
+    const byFrist = (a: (typeof body.inbox)[number], b: (typeof body.inbox)[number]) => {
+      const fa = a.fristDate ?? '9999-12-31'
+      const fb = b.fristDate ?? '9999-12-31'
+      return fa < fb ? -1 : fa > fb ? 1 : b.ageDays - a.ageDays
+    }
+    const needed = body.inbox.filter((e) => e.tray === 'today').sort(byFrist)
+    const running = body.inbox.filter((e) => e.tray === 'running').sort(byFrist)
+    const forwarding = body.inbox.filter((e) => e.tray === 'postoffice').sort(byFrist)
+    const rest = body.inbox.filter((e) => e.tray === 'fyi')
+    if (neededEl) {
+      neededEl.replaceChildren()
+      if (needed.length === 0) {
+        neededEl.append(el('p', { class: 'text-base text-fg' }, 'Nichts braucht dich heute.'))
+      } else {
+        for (const entry of needed) neededEl.append(renderInboxCard(entry))
+      }
+    }
+    if (runningEl) {
+      runningEl.replaceChildren()
+      if (running.length === 0) {
+        runningEl.append(el('p', { class: 'text-sm text-fg-muted' }, 'Keine offene Frage bei den Praxen.'))
+      } else {
+        for (const entry of running) runningEl.append(renderInboxCard(entry))
+      }
+    }
     if (inboxEl) {
       inboxEl.replaceChildren()
-      if (body.inbox.length === 0) {
-        inboxEl.append(el('p', { class: 'text-sm text-fg-muted' }, 'Nichts wartet auf dich.'))
+      if (rest.length === 0) {
+        inboxEl.append(el('p', { class: 'text-sm text-fg-muted' }, 'Nichts Neues zur Kenntnis.'))
       } else {
-        for (const entry of body.inbox) inboxEl.append(renderInboxCard(entry))
+        for (const entry of rest) inboxEl.append(renderInboxCard(entry))
+      }
+    }
+
+    if (gateEl) {
+      gateEl.replaceChildren()
+      if (!body.gate || body.gate.length === 0) {
+        gateEl.append(el('p', { class: 'text-sm text-fg-muted' }, 'Kein Kandidat am Gate.'))
+      } else {
+        for (const c of body.gate) gateEl.append(renderGateCard(c))
+      }
+    }
+
+    if (postEl) {
+      postEl.replaceChildren()
+      const letters = body.post ?? []
+      if (letters.length === 0 && forwarding.length === 0) {
+        postEl.append(el('p', { class: 'text-sm text-fg-muted' }, 'Nichts liegt im Postausgang.'))
+      } else {
+        for (const item of letters) postEl.append(renderPostCard(item))
+        // Anfragen mit "braucht: weiterleitung" gehören hierher und nicht unter "Heute nötig"
+        // (Frank, 2026-08-02: die Post liegt im Post Office, ob sie rausgeht ist seine
+        // Entscheidung, und er braucht dafür keine wiederholten Erinnerungen). Dieselbe Spur
+        // wie die Briefe selbst — Liegedauer als Fakt, nie als Frist.
+        for (const entry of forwarding) postEl.append(renderInboxCard(entry))
       }
     }
 
@@ -1049,6 +1495,7 @@
       }
       renderDashboard(body)
       void fetchPendingSeeds() // eigener Endpunkt (KV), lädt parallel nach dem Dashboard-Status
+      void fetchLetters() // Briefkasten (post office KV-Queue), ebenfalls parallel
     } catch {
       showNotConnected('Netzwerkfehler — bitte später erneut versuchen.')
     } finally {
@@ -1125,14 +1572,29 @@
 </script>
 
 <style>
-  /* Excerpt-Klappe: 4 Zeilen, bis antippen es öffnet — keine Bibliothek, reines CSS. */
-  .zx-excerpt {
+  /* Excerpt-Klappe: 4 Zeilen, bis antippen es öffnet — keine Bibliothek, reines CSS.
+   *
+   * `:global()` ist hier PFLICHT, nicht Geschmack (Frank, 2026-07-31: „wenn ich auf ,mehr'
+   * klicke, passiert nix"). Astro scopet Komponenten-CSS über ein Attribut und lieferte
+   * `.zx-excerpt[data-astro-cid-folzek22]{…}` aus — dieses Attribut setzt Astro aber nur an
+   * Knoten, die es selbst rendert. Der Excerpt-Container entsteht zur LAUFZEIT im Skript
+   * (`el('div', { class: 'zx-excerpt …' })`) und trug es nie: die Klappe klemmte nichts, und
+   * `is-expanded` traf keine Regel. Der Knopf war funktionslos, ohne Fehlermeldung.
+   *
+   * Merkregel für diese Datei: Ihr Skript baut das ganze Dashboard im DOM. JEDE Regel hier,
+   * die auf eine im Skript vergebene Klasse zielt, muss `:global()` tragen — sonst zielt sie
+   * ins Leere und niemand sieht es. */
+  :global(.zx-excerpt) {
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 4;
     overflow: hidden;
+    /* Die Anfragen sind Markdown mit Absätzen, Listen und Tabellen. Ohne pre-wrap läuft das
+     * zu einer einzigen Wand zusammen, sobald man aufklappt — lesbar war es dann immer noch
+     * nicht. */
+    white-space: pre-wrap;
   }
-  .zx-excerpt.is-expanded {
+  :global(.zx-excerpt.is-expanded) {
     display: block;
     -webkit-line-clamp: unset;
     overflow: visible;

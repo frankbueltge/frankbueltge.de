@@ -8,6 +8,7 @@ import { sortWorks } from '@/lib/atelier/sort'
 import { loadChronicle, entriesForWork } from '@/lib/field/chronicle'
 import { FIELD_NARRATIVE } from '@/config/field-wording'
 import { teaserFor } from '@/lib/engines/teaser'
+import RespondCta from '@/components/post/RespondCta.astro'
 
 const metas = import.meta.glob('/src/components/field/werke/*/meta.json', {
   eager: true, import: 'default',
@@ -23,15 +24,10 @@ const works = sortWorks(
 )
 
 const chronicle = loadChronicle()
-const VERDICT_LABEL: Record<string, string> = {
-  graduated: 'passed review',
-  pass: 're-verified',
-  conditions: 'passed with conditions',
-  fail: 'blocked by review',
-  discarded: 'discarded',
-  deferred: 'in progress',
-  rework: 'in rework',
-}
+// The chronicle's review vocabulary in plain language — ONE copy, shared with the entrance's
+// dossier (FIELD_NARRATIVE.dossier.verdictWords). It was declared here as well until 2026-08-01,
+// which is how a badge and a dossier start wording the same verdict two different ways.
+const VERDICT_LABEL = FIELD_NARRATIVE.dossier.verdictWords
 const withBadges = works.map((w) => {
   const hist = entriesForWork(chronicle, w.slug)
   const latest = hist[hist.length - 1]
@@ -53,13 +49,16 @@ const statusHtml = `<b>${works.length} instruments</b> · newest first · detail
 >
   <Frame active="instruments" kicker={kicker} h1="The instruments." statusHtml={statusHtml} back>
     <p class="fd-room-intro">{FIELD_NARRATIVE.rooms.instruments}</p>
+    <RespondCta variant="line" ns="field" class="fd-room-intro" />
     {withBadges.map(({ slug, meta, badge }) => (
       <article class="fd-instr-card" id={slug}>
         <h3><a href={`/field/werke/${slug}`}>{meta.title ?? slug}</a></h3>
         <p class="fd-instr-meta">{meta.date}{meta.medium && ` · ${meta.medium}`}</p>
         {/* Teaser bevorzugt (Frank, 25.07.); ohne Teaser weiter der lange embodies-Text. */}
         {(() => { const d = teaserFor('field', slug) ?? meta.embodies; return d && <p>{d}</p> })()}
-        {badge && <a class="fd-badge" href={`/field/journal#${badge.anchor}`}>{badge.label}</a>}
+        {/* Etappe 2: every session has its own page — the badge lands on the session, not on an index. */}
+        {badge && <a class="fd-badge" href={`/field/journal/${badge.anchor}/`}>{badge.label}</a>}
+        <p class="fd-instr-meta"><RespondCta ns="field" slug={slug} /></p>
       </article>
     ))}
   </Frame>

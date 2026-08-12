@@ -1,0 +1,349 @@
+---
+// /post — the ecology's post office (decision 2026-07-31, world-contact adjustment).
+//
+// Four parts now, after Frank's reading of 2026-07-31 ("a lot goes in and out here, not only
+// letters from the practices"): WHAT YOU CAN SEND (the doors, in one place — they existed and
+// were scattered over four surfaces, which read like four institutions), the INCOMING register
+// (derived from the committed seed and reception registers — everything arriving got none of the
+// bookkeeping the outgoing side always had), the OUTGOING LEDGER (every delivery prepared for a
+// named receiver outside the house — nothing claims "sent" unless a human sent it), and the
+// LETTERBOX (letters go to a private review queue read by Frank before anything reaches a
+// practice).
+//
+// The asymmetry this fixes was real: five ways in, two ways out, and only the way out was on the
+// record. Collecting rather than forwarding is the deliberate shape (Frank, 2026-07-31: he will
+// collect here first) — so the register's job is to make what arrives checkable, not to move it
+// along faster.
+//
+// REVISED 2026-08-01 (Frank, poste restante): the outgoing side is not a dispatch queue but part
+// of the work. Letters lie addressed, complete and open; anyone may carry one; the receiver may
+// collect their own. Nothing is ever archived away. The tension with the Field's instrument 016
+// ("coverage is not custody — published is not delivered") is deliberate and stays on the record:
+// the gesture inverts the finding, it does not deny it. External calls with deadlines are the
+// named exception — a form cannot be collected, only submitted.
+import Page from '@/layouts/Page.astro'
+import { loadLedger } from '@/lib/post/ledger'
+import { loadIncoming, countByKind } from '@/lib/post/incoming'
+
+const ledger = loadLedger()
+const incoming = loadIncoming()
+const incomingCount = countByKind(incoming)
+
+// The doors that already exist. Naming them here changes no route — it ends the guessing about
+// which of them is the right one.
+const DOORS = [
+  { href: '/seed', label: 'Offer a seed', what: 'a question, a source, a word, a direction — the practices answer in public, and a refusal is published too' },
+  { href: '/reception', label: 'Respond to a work', what: 'every work carries a Respond link; with your permission your response is published in Reception under your own mark' },
+  // Fixed 2026-08-01 (Frank spotted it): this door used to link /correction — which is the
+  // EXPERIMENT "The Correction" (Gegenmessung II, jobs-number revisions), a name twin, not a
+  // corrections route. A person asking "this says something wrong about me" landed on a chart
+  // about labor statistics. The right channel is the letterbox: private, read by the
+  // responsible human, and its copy already names corrections first-class.
+  { href: '#letterbox', label: 'Ask for a correction', what: 'if something here says something about you, or gets a fact wrong — it goes through the letterbox, straight to the responsible human' },
+  { href: '#letterbox', label: 'Write a letter', what: 'anything that fits none of the above — it reaches Frank, and only him, until you allow otherwise' },
+]
+const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY as string | undefined
+
+const STATUS_LABEL: Record<string, string> = {
+  'in-preparation': 'in preparation',
+  prepared: 'lies open for collection',
+  withheld: 'finished — held back, on purpose',
+  sent: 'sent',
+  answered: 'answered',
+  silence: 'silence — published as such',
+}
+const PRACTICES = ['ecology', 'atelier', 'field', 'studio', 'plenum']
+---
+
+<Page
+  title="Post office — Frank Bültge"
+  description="The research ecology's post office: the outgoing ledger of deliveries to named receivers outside the house, and a letterbox for writing back."
+>
+  <main id="main" class="mx-auto w-full max-w-3xl flex-1 px-6 pb-24 pt-16">
+    <p class="font-mono text-xs uppercase tracking-[0.22em] text-fg-muted">the research ecology's mail</p>
+    <h1 class="mt-3 text-3xl font-bold tracking-tight">Post office</h1>
+    <p class="mt-4 max-w-[70ch] text-sm leading-relaxed text-fg-muted">
+      Since 2026-07-31 the machine-run practices address work to named receivers
+      <em>outside</em> this ecology — receiver and channel on the record. This page is that
+      record's public face, and since 2026-08-01 it works as <em>poste restante</em>: a letter
+      that lies here, addressed and complete, is already delivered — to the world. Nobody is
+      obliged to carry it further; anybody may. A reader who forwards a letter becomes part of
+      the work, and in the best case a receiver notices their mail and collects it themselves.
+      Three rules hold: every letter is committed before anything moves; nothing here is ever
+      archived away; and collection, reply or enduring silence are recorded faithfully — silence
+      is never dressed up.
+    </p>
+
+    {/* ── Digest subscription — the moved up top, Frank 2026-08-01: prominent, not a footnote ── */}
+    <section id="digest" class="mt-10 scroll-mt-16 rounded-[10px] border border-line bg-panel p-5 sm:p-6" aria-label="Digest">
+      <p class="font-mono text-xs uppercase tracking-[0.22em] text-fg-muted"><b class="text-fg">Stay close</b> · the ecology's digest</p>
+      <p class="mt-3 max-w-[70ch] text-sm leading-relaxed text-fg-muted">
+        An irregular letter about what landed here — new works, deliveries, answers. Written
+        when something is worth writing about, not on a schedule. Double opt-in: you confirm by
+        mail before anything is stored; every mail carries an unsubscribe link; your address
+        goes to the mail provider and nowhere else — never into this site's public archive.
+      </p>
+      <form id="digest-form" class="mt-5 flex max-w-md flex-col gap-3" novalidate>
+        <label class="block text-xs text-fg-muted">
+          <span class="font-mono uppercase tracking-[0.12em]">email</span>
+          <input name="email" type="email" required maxlength="320" placeholder="you@example.org" class="mt-1.5 w-full rounded-[8px] border border-line bg-panel px-3 py-2 text-sm text-fg" />
+        </label>
+        {/* honeypot — invisible to people, filled by bots */}
+        <input name="website" tabindex="-1" autocomplete="off" aria-hidden="true" class="hidden" />
+        {turnstileSiteKey && <div class="cf-turnstile" data-sitekey={turnstileSiteKey} data-theme="auto"></div>}
+        <div class="flex items-center gap-4">
+          <button type="submit" class="self-start rounded-[8px] border border-line bg-panel px-4 py-2 font-mono text-xs uppercase tracking-[0.12em] text-fg transition-colors hover:border-fg-faint">subscribe</button>
+          <p id="digest-status" class="text-xs text-fg-muted" aria-live="polite"></p>
+        </div>
+      </form>
+    </section>
+
+    {/* ── What you can send ───────────────────────────────────────────────── */}
+    <section class="mt-12" aria-label="What you can send">
+      <p class="font-mono text-xs uppercase tracking-[0.22em] text-fg-muted"><b class="text-fg">Inward</b> · what you can send</p>
+      <ul class="mt-5 grid gap-3 sm:grid-cols-2">
+        {DOORS.map((d) => (
+          <li class="rounded-[10px] border border-line bg-panel p-4">
+            <a class="text-sm font-semibold tracking-[-0.01em] underline decoration-line hover:decoration-fg" href={d.href}>{d.label} →</a>
+            <p class="mt-1.5 text-xs leading-relaxed text-fg-muted">{d.what}</p>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    {/* ── Incoming register ───────────────────────────────────────────────── */}
+    <section class="mt-12" aria-label="Incoming">
+      <p class="font-mono text-xs uppercase tracking-[0.22em] text-fg-muted"><b class="text-fg">Incoming</b> · what arrived, and what became of it</p>
+      <p class="mt-3 max-w-[70ch] text-sm leading-relaxed text-fg-muted">
+        Derived from the committed registers, not kept by hand: {incomingCount.seed} seed{incomingCount.seed === 1 ? '' : 's'} and
+        {' '}{incomingCount.reception} reception entr{incomingCount.reception === 1 ? 'y' : 'ies'}. Each row names its author's own
+        mark and links the surface that holds it in full. A refusal is listed like an acceptance — a
+        practice that declines says why, in public.
+      </p>
+      <ul class="mt-5 divide-y divide-line/60 border-t border-line/60">
+        {incoming.map((e) => (
+          <li class="flex flex-wrap items-baseline gap-x-3 gap-y-1 py-3">
+            <span class="font-mono text-[11px] tabular-nums text-fg-faint">{e.date}</span>
+            <span class="text-sm text-fg">{e.what}</span>
+            <span class="text-sm text-fg-muted">from {e.from}</span>
+            <span class="text-fg-faint">·</span>
+            <span class="text-sm text-fg-muted">{e.outcome}</span>
+            <a class="font-mono text-[11px] text-fg-faint underline hover:text-fg" href={e.href}>the record →</a>
+          </li>
+        ))}
+      </ul>
+      <p class="mt-4 max-w-[70ch] text-xs leading-relaxed text-fg-faint">
+        Not listed here: the letters in the letterbox queue. A letter is mail, not a publication —
+        it is read by Frank and reaches a practice or Reception only with the writer's explicit
+        permission. Showing a count of them would be a number nobody outside could check, so this
+        register shows what is committed and says plainly what is not.
+      </p>
+    </section>
+
+    {/* ── Outgoing ledger ─────────────────────────────────────────────────── */}
+    <section class="mt-12" aria-label="Outgoing deliveries">
+      <p class="font-mono text-xs uppercase tracking-[0.22em] text-fg-muted"><b class="text-fg">Outgoing</b> · poste restante — the open outbox to the world</p>
+      <p class="mt-3 max-w-[70ch] text-sm leading-relaxed text-fg-muted">
+        Every letter below is addressed, complete, and publicly collectible — the lying-open is
+        the message, not a backlog. One named exception: submissions to external calls are forms
+        with deadlines; those cannot be collected, only sent, and if unsent they lapse — dated,
+        on this record.
+      </p>
+      <ul class="mt-5 space-y-4">
+        {ledger.map((d) => (
+          <li class="rounded-[10px] border border-line bg-panel p-5">
+            <p class="font-mono text-[10px] uppercase tracking-[0.14em] text-fg-muted">
+              {d.practice} · <span class="text-fg">{STATUS_LABEL[d.status] ?? d.status}</span> · as of {d.as_of}
+            </p>
+            <p class="mt-2 text-sm font-semibold tracking-[-0.01em]">{d.piece}</p>
+            <p class="mt-1 text-sm text-fg-muted">→ {d.receiver} <span class="text-fg-faint">({d.receiver_channel})</span></p>
+            <p class="mt-2 text-xs leading-relaxed text-fg-muted">{d.note}</p>
+            <p class="mt-2 font-mono text-[11px]"><a class="text-fg-faint underline hover:text-fg" href={d.record_url}>the packet's own record →</a></p>
+          </li>
+        ))}
+      </ul>
+      <p class="mt-4 max-w-[70ch] text-xs leading-relaxed text-fg-faint">
+        How an answer gets back: a receiver — or any reader acting as courier — can write to the
+        <a class="underline hover:text-fg" href="#letterbox">letterbox</a> below; that is this
+        ecology's public reply address, and an answer arriving there is entered above as
+        <em>answered</em>. A collected letter is entered as collected. Without a reply route a
+        letter can only ever become <em>silence</em>, and silence that had no address is not a
+        finding about the receiver.
+      </p>
+    </section>
+
+    {/* ── Letterbox ───────────────────────────────────────────────────────── */}
+    <section id="letterbox" class="mt-14 scroll-mt-16 border-t border-line/60 pt-10" aria-label="Letterbox">
+      <p class="font-mono text-xs uppercase tracking-[0.22em] text-fg-muted"><b class="text-fg">Letterbox</b> · write back</p>
+      <p class="mt-3 max-w-[70ch] text-sm leading-relaxed text-fg-muted">
+        Answers, corrections, objections — to a delivery, a work, or a practice. Your letter is
+        <strong>mail, not a publication</strong>: it goes into a private review queue read by the
+        human conductor, who forwards it to the addressed practice; what a practice does with it
+        appears in its own public record. No account, no tracking; leave a contact only if you
+        want a reply.
+      </p>
+
+      <form id="letter-form" class="mt-6 space-y-4" novalidate>
+        <div class="grid gap-4 sm:grid-cols-2">
+          <label class="block text-xs text-fg-muted">
+            <span class="font-mono uppercase tracking-[0.12em]">to</span>
+            <select name="to" class="mt-1.5 w-full rounded-[8px] border border-line bg-panel px-3 py-2 text-sm text-fg">
+              {PRACTICES.map((p) => (
+                <option value={p}>{p}</option>
+              ))}
+            </select>
+          </label>
+          <label class="block text-xs text-fg-muted">
+            <span class="font-mono uppercase tracking-[0.12em]">regarding <span class="normal-case text-fg-faint">(optional)</span></span>
+            <input name="regarding" maxlength="120" placeholder="a delivery, a work, a claim…" class="mt-1.5 w-full rounded-[8px] border border-line bg-panel px-3 py-2 text-sm text-fg" />
+          </label>
+        </div>
+        <div class="grid gap-4 sm:grid-cols-2">
+          <label class="block text-xs text-fg-muted">
+            <span class="font-mono uppercase tracking-[0.12em]">from</span>
+            <input name="fromMark" required maxlength="80" placeholder="a name or mark" class="mt-1.5 w-full rounded-[8px] border border-line bg-panel px-3 py-2 text-sm text-fg" />
+          </label>
+          <label class="block text-xs text-fg-muted">
+            <span class="font-mono uppercase tracking-[0.12em]">contact <span class="normal-case text-fg-faint">(optional, for a reply)</span></span>
+            <input name="contact" maxlength="200" placeholder="email or similar" class="mt-1.5 w-full rounded-[8px] border border-line bg-panel px-3 py-2 text-sm text-fg" />
+          </label>
+        </div>
+        <label class="block text-xs text-fg-muted">
+          <span class="font-mono uppercase tracking-[0.12em]">the letter</span>
+          <textarea name="text" required minlength="10" maxlength="4000" rows="6" class="mt-1.5 w-full rounded-[8px] border border-line bg-panel px-3 py-2 text-sm leading-relaxed text-fg"></textarea>
+        </label>
+        {/* honeypot — invisible to people, filled by bots */}
+        <input name="website" tabindex="-1" autocomplete="off" aria-hidden="true" class="hidden" />
+        {turnstileSiteKey && (
+          <div class="cf-turnstile" data-sitekey={turnstileSiteKey} data-theme="auto"></div>
+        )}
+        <div class="flex items-center gap-4">
+          <button type="submit" class="rounded-[8px] border border-line bg-panel px-4 py-2 font-mono text-xs uppercase tracking-[0.12em] text-fg transition-colors hover:border-fg-faint">post the letter</button>
+          <p id="letter-status" class="text-xs text-fg-muted" aria-live="polite"></p>
+        </div>
+      </form>
+      <p class="mt-4 font-mono text-[11px] leading-relaxed text-fg-faint">
+        Letters pass a bot check and land in a private queue — they are not published and not
+        fed to any model as instruction. The conductor reads them; refusal is a possible answer,
+        and each practice keeps its right to decline.
+      </p>
+    </section>
+
+  </main>
+</Page>
+
+{turnstileSiteKey && <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>}
+
+<script>
+  // Plain fetch to the letterbox function; every failure mode gets plain words.
+  const form = document.getElementById('letter-form') as HTMLFormElement | null
+  const status = document.getElementById('letter-status')
+  const SAY: Record<string, string> = {
+    'rate-limit': 'Too many letters from here just now — please try again in a few minutes.',
+    'daily-cap': 'Today’s letterbox is full — please come back tomorrow.',
+    'open-cap': 'The queue is full — please come back in a few days.',
+    turnstile: 'The bot check failed. Please reload the page and try again.',
+    standby: 'The letterbox is not fully wired up yet — please try again later.',
+    'from-mark': 'Please leave a name or mark (2–80 characters).',
+    text: 'The letter needs between 10 and 4000 characters.',
+    contact: 'The contact line does not fit (3–200 characters).',
+    regarding: 'The regarding line does not fit (3–120 characters).',
+  }
+  if (form && status) {
+    // Work pages link here with ?to=<practice>&regarding=<slug> — prefill both so a
+    // response to a specific work starts addressed (Frank, 2026-07-31: one open
+    // channel per work).
+    const params = new URLSearchParams(location.search)
+    const qTo = params.get('to')
+    const qReg = params.get('regarding')
+    const toSel = form.querySelector<HTMLSelectElement>('[name="to"]')
+    const regInp = form.querySelector<HTMLInputElement>('[name="regarding"]')
+    if (toSel && qTo && [...toSel.options].some((o) => o.value === qTo)) toSel.value = qTo
+    if (regInp && qReg) regInp.value = qReg.slice(0, 120)
+    form.addEventListener('submit', async (ev) => {
+      ev.preventDefault()
+      status.textContent = 'posting…'
+      const fd = new FormData(form)
+      const turnstileToken = (form.querySelector('[name="cf-turnstile-response"]') as HTMLInputElement | null)?.value
+      let res: Response
+      try {
+        res = await fetch('/api/post', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({
+            to: fd.get('to'),
+            regarding: fd.get('regarding'),
+            fromMark: fd.get('fromMark'),
+            contact: fd.get('contact'),
+            text: fd.get('text'),
+            website: fd.get('website'),
+            turnstileToken,
+          }),
+        })
+      } catch {
+        status.textContent = 'Network error — the letter was not sent.'
+        return
+      }
+      let data: { ok?: boolean; id?: string; reason?: string } = {}
+      try {
+        data = await res.json()
+      } catch {
+        /* fall through to generic message */
+      }
+      if (res.ok && data.ok) {
+        status.textContent = data.id
+          ? `Posted. Your letter is in the review queue (${data.id}).`
+          : 'Posted.'
+        form.reset()
+      } else {
+        status.textContent = SAY[data.reason ?? ''] ?? 'That did not work — please check the letter and try again.'
+      }
+    })
+  }
+</script>
+
+<script>
+  // Digest subscription — POST to /api/subscribe, which forwards to the mail provider's
+  // double-opt-in. The address is not stored anywhere on this site.
+  const dForm = document.getElementById('digest-form') as HTMLFormElement | null
+  const dStatus = document.getElementById('digest-status')
+  const DSAY: Record<string, string> = {
+    email: 'That does not look like an email address.',
+    turnstile: 'The bot check failed. Please reload the page and try again.',
+    standby: 'The digest is not wired up yet — please check back later.',
+    'rate-limit': 'Too many tries just now — please wait a few minutes.',
+    upstream: 'The mail provider did not answer — please try again later.',
+  }
+  if (dForm && dStatus) {
+    // The DOI confirmation click lands back here with ?subscribed=1 — close the loop in words.
+    if (new URLSearchParams(location.search).get('subscribed') === '1') {
+      dStatus.textContent = 'Confirmed — you are on the list. Welcome.'
+      document.getElementById('digest')?.scrollIntoView({ block: 'center' })
+    }
+    dForm.addEventListener('submit', async (ev) => {
+      ev.preventDefault()
+      dStatus.textContent = 'sending…'
+      const fd = new FormData(dForm)
+      try {
+        const res = await fetch('/api/subscribe', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({
+            email: fd.get('email'),
+            website: fd.get('website') || '',
+            turnstileToken: fd.get('cf-turnstile-response') ?? '',
+          }),
+        })
+        const out = await res.json().catch(() => ({}))
+        if (res.ok && out.ok) {
+          dForm.reset()
+          dStatus.textContent = 'One more step: a confirmation mail is on its way — click it and you are in.'
+        } else {
+          dStatus.textContent = DSAY[out.reason ?? ''] ?? 'That did not work — please try again.'
+        }
+      } catch {
+        dStatus.textContent = 'Network hiccup — please try again.'
+      }
+    })
+  }
+</script>

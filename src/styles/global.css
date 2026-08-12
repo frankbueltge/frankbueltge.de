@@ -354,11 +354,43 @@ body {
 .engine-prose strong { font-weight: 600; }
 .engine-prose em { font-style: italic; }
 .engine-prose code { font-family: ui-monospace, SFMono-Regular, monospace; font-size: 0.85em; }
+/* Fenced blocks scroll inside themselves, never the page. The engines quote shell and YAML
+   constantly and those lines are long: on a 390 px screen the requests archive pushed the
+   whole document 469 px sideways (measured 2026-08-01), which drags the practice rail and
+   every paragraph out of view with it. The table rule below has always done this; `pre` was
+   simply never given the same treatment. */
+.engine-prose pre { max-width: 100%; overflow-x: auto; }
+.engine-prose pre code { white-space: pre; }
+/* Bare URLs and inline hashes are unbreakable words. The engines cite both by the dozen
+   ("sha256:7fb77a…", "https://files.libcom.org/files/A%20Thousand%20Plateaus.pdf"), and one
+   of them is enough to push a 390 px page 242 px sideways. `anywhere` only breaks where the
+   line would otherwise overflow, so ordinary prose is untouched. */
+.engine-prose a, .engine-prose code, .engine-prose td, .engine-prose th { overflow-wrap: anywhere; }
 .engine-prose hr { border: 0; border-top: 1px solid color-mix(in srgb, currentColor 20%, transparent); margin: 1.4em 0; }
 .engine-prose blockquote { border-left: 2px solid color-mix(in srgb, currentColor 30%, transparent); padding-left: 1em; margin: 0.8em 0; opacity: 0.9; }
 .engine-prose table { width: 100%; border-collapse: collapse; font-size: 0.82em; margin: 0.9em 0; display: block; overflow-x: auto; }
 .engine-prose th, .engine-prose td { border: 1px solid color-mix(in srgb, currentColor 20%, transparent); padding: 0.35em 0.55em; text-align: left; vertical-align: top; }
 .engine-prose th { font-weight: 600; }
+
+/* Practice surfaces style their own generic `table` (ADR 0010 grammar rules — atelier-sheet.css,
+   field-plate.css, studio-stage.css). WP2 (practice-shell) began routing engine-prose pages
+   (foundation/protocol/requests) through the practice Frame, which nests engine-prose inside
+   .<practice>-surface — and `.atelier-surface table` ties `.engine-prose table` on specificity
+   (one class + one type each), so the winner would otherwise depend on stylesheet import order.
+   Pin engine-prose's own look so it never depends on that order. */
+.atelier-surface .engine-prose table,
+.field-surface .engine-prose table,
+.studio-surface .engine-prose table {
+  width: 100%; border-collapse: collapse; font-size: 0.82em; margin: 0.9em 0; display: block; overflow-x: auto;
+}
+.atelier-surface .engine-prose th, .atelier-surface .engine-prose td,
+.field-surface .engine-prose th, .field-surface .engine-prose td,
+.studio-surface .engine-prose th, .studio-surface .engine-prose td {
+  border: 1px solid color-mix(in srgb, currentColor 20%, transparent); padding: 0.35em 0.55em; text-align: left; vertical-align: top;
+}
+.atelier-surface .engine-prose th,
+.field-surface .engine-prose th,
+.studio-surface .engine-prose th { font-weight: 600; }
 
 /* Engine journal — session cards + restrained deliberation highlighting */
 .engine-session > summary { list-style: none; }

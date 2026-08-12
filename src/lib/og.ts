@@ -6,8 +6,10 @@ export const OG_PAGES: Record<string, { title: string; description: string }> = 
     title: 'Frank Bültge',
     description: 'Data Engineering & Analytics — a federated research ecology and a public field of experiments with data and AI',
   },
+  // Key = route segment, so it stays "holdings" (the URL did not change) while the visible
+  // title went back to "Experiments" (Frank, 2026-07-31).
   holdings: {
-    title: 'Holdings',
+    title: 'Experiments',
     description: "The lab's earlier experiments — The Protocol, Parallaxe, The Policy — offered as material, under conditions",
   },
   about: {
@@ -100,7 +102,7 @@ export const OG_PAGES: Record<string, { title: string; description: string }> = 
 export function ogSlug(pathname: string): keyof typeof OG_PAGES {
   const p = pathname.replace(/^\/de/, '').replace(/\/+$/, '') || '/'
   if (p === '/') return 'home'
-  if (p.startsWith('/holdings') || p.startsWith('/lab')) return 'holdings'
+  if (p.startsWith('/experiments') || p.startsWith('/lab')) return 'holdings'
   if (p.startsWith('/ueber') || p.startsWith('/about')) return 'about'
   if (p.startsWith('/work') || p.startsWith('/projekte')) return 'projects'
   if (p.startsWith('/atlas')) return 'atlas'

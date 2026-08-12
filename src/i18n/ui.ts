@@ -48,7 +48,7 @@ export const ui = {
     'bf.title': 'Beifang',
     'bf.sub': 'Was das Lesen eines Fachartikels mitfängt — gemessen vor jeder Einwilligung.',
     'sr.title': 'Spielraum',
-    'sr.sub': 'Rechenzentrums-Effizienz nahe am Anschlag, Verbrauch im Steigflug — was vier Hyperscaler offenlegen, jährlich fortgeschrieben.',
+    'sr.sub': 'Die Effizienz, die ein Rechenzentrum bräuchte, um sein eigenes Wachstum auszugleichen — Jahr für Jahr gegen die physikalische Untergrenze 1,00 gerechnet. Sie ist nicht erreichbar.',
     'nav.atlas': 'Atlas',
     'atlas.title': 'Atlas der Datenkunst',
     'atlas.sub': 'Eine quellenbelegte Landkarte zeitgenössischer Datenkunst — Werke, in denen Daten, KI und Macht aufeinandertreffen.',
@@ -64,6 +64,11 @@ export const ui = {
 
     'work.title': 'Projekte',
     'work.sub': 'Eigene Projekte an der Schnittstelle von Daten, KI und Gestaltung.',
+    // Abgrenzung zu /works (Plural, seit 2026-08-01): dort steht das Werkverzeichnis der
+    // Forschungspraxen, hier stehen die eigenen Projekte. Zwei Routen, ein Buchstabe.
+    'work.kicker': 'PROJEKTE · EIGENE ARBEITEN, NICHT DIE DER PRAXEN',
+    'work.register.lead': 'Die Werke der drei Forschungspraxen stehen im Werkverzeichnis —',
+    'work.register.label': 'das ist /works, im Plural →',
     'work.tech': 'Tech',
     'work.highlights': 'Highlights',
     'work.visit': 'Website',
@@ -137,7 +142,7 @@ export const ui = {
     'theme.toggle': 'Theme: Auto / Light / Dark',
 
     'meta.home.title': 'Frank Bültge — Data Engineering & Analytics',
-    'meta.home.desc': 'Frank Bültge — Data Engineering & Analytics. Currently conducting a federated research ecology: three locally constituted, machine-run research practices and a contact zone — public claims and revisions versioned wherever the apparatus permits, Git as the archive.',
+    'meta.home.desc': 'Frank Bültge — Data Engineering & Analytics. Currently conducting a federated research ecology: three machine-run research practices, each under its own constitution, and a contact zone where they meet and take up shared questions — claims and revisions stay versioned, Git is the archive.',
 
     'hero.roleLead': 'Data Engineering & Analytics',
     'hero.roleRest': ' — I build data infrastructure and experiment with data, code and AI.',
@@ -173,7 +178,7 @@ export const ui = {
     'bf.title': 'Bycatch',
     'bf.sub': 'What reading a scholarly article catches along the way — measured before any consent.',
     'sr.title': 'Headroom',
-    'sr.sub': 'Data-center efficiency near its floor, consumption climbing — what four hyperscalers disclose, tracked year by year.',
+    'sr.sub': 'The efficiency a data center would need to offset its own growth — computed year by year against the physical floor of 1.00. It is not reachable.',
     'nav.atlas': 'Atlas',
     'atlas.title': 'Atlas of Data Art',
     'atlas.sub': 'A source-cited map of contemporary data art — works where data, AI and power meet.',
@@ -189,6 +194,11 @@ export const ui = {
 
     'work.title': 'Projects',
     'work.sub': 'My own projects at the intersection of data, AI and design.',
+    // The distinction from /works (plural, since 2026-08-01): the research practices' own
+    // output lives in the works register; this page is my own projects. Two routes, one letter.
+    'work.kicker': 'PROJECTS · MY OWN WORK, NOT THE PRACTICES’',
+    'work.register.lead': 'The three research practices’ own works live in the register —',
+    'work.register.label': 'that is /works, in the plural →',
     'work.tech': 'Tech',
     'work.highlights': 'Highlights',
     'work.visit': 'Website',

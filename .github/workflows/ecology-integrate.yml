@@ -48,6 +48,10 @@ jobs:
           git clone https://github.com/frankbueltge/field-research /tmp/engines/field-research
           git clone https://github.com/frankbueltge/ulysses /tmp/engines/ulysses
           git clone https://github.com/frankbueltge/studio /tmp/engines/studio
+          # Outside /tmp/engines on purpose: the importer and export-site read that directory as
+          # "the three ecology practices", and the plenum is not one of them. It is cloned only
+          # for its post office packets.
+          git clone --depth 1 https://github.com/frankbueltge/data-snack-plenum /tmp/plenum
 
       - name: Install research-ecology
         working-directory: /tmp/ecology
@@ -62,6 +66,13 @@ jobs:
 
       - name: Gate — export contract (determinism + schema)
         working-directory: /tmp/ecology
+        # `shell: bash` (statt der Voreinstellung `bash -e`) NUR wegen -o pipefail: ohne das ist
+        # der Exit-Code dieser Zeile der von `tee`, also immer 0 — das Gate meldete seit seiner
+        # Einführung grün, auch wenn Tests rot waren (nachgewiesen am 2026-08-02: drei rote
+        # Contract-Tests, Schritt trotzdem "success"). Ein Tor, das nie zu ist, ist kein Tor;
+        # der eigene Grundsatz dieses Workflows — "ein rotes Gate darf nie still sein" — war
+        # genau hier nicht eingelöst.
+        shell: bash
         run: npx vitest run tests/contract/export-site.test.ts 2>&1 | tee /tmp/gate.log
 
       - name: Export site artefacts
@@ -83,6 +94,25 @@ jobs:
             }
           '
 
+      - name: Sync joint-inquiry register (fixtures ji-* → src/data/begegnungen)
+        # Same derivation discipline as the encounter register: read the contact zone's own
+        # machine-readable fixture files, retype nothing. The commit step below already
+        # watches src/data/begegnungen, so this snapshot rides the same regeneration path.
+        run: node scripts/ecology/sync-joint-inquiries.mjs --ecology /tmp/ecology
+
+      - name: Assemble post office ledger (packet.json in the engines → src/data/post)
+        # Frank, 2026-08-07: ALL outward communication collects in the post office first, and he
+        # decides what actually goes out. That rule is only as good as the ledger is complete, and
+        # a hand-curated one is only as complete as the last session that remembered — the
+        # plenum's CHT packet lay gate-passed for two days before anyone entered it. So the
+        # practices' packets now enter themselves; the send stays a human act either way.
+        run: |
+          node scripts/post/sync-post-ledger.mjs \
+            --repo /tmp/engines/field-research:field \
+            --repo /tmp/engines/ulysses:atelier \
+            --repo /tmp/engines/studio:studio \
+            --repo /tmp/plenum:plenum
+
       - name: Commit (regeneration) or PR (new meaning)
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -90,11 +120,33 @@ jobs:
           set -euo pipefail
           git config user.name "Ecology-Integrate"
           git config user.email "ecology-integrate@frankbueltge.de"
+          DATE=$(date -u +%F)
+          SHA=$(git -C /tmp/ecology rev-parse --short HEAD)
+
+          push_with_rebase() {
+            for attempt in 1 2 3 4 5; do
+              git pull --rebase origin main && git push origin HEAD:main && return 0
+              [ "$attempt" = 5 ] && { echo "push failed after 5 rebase attempts (concurrent push race)" >&2; return 1; }
+              echo "push race — rebasing and retrying ($attempt/5)"; sleep $((attempt * 5))
+            done
+          }
+
+          # The post office lands on its own, always and automatically. It is deliberately NOT
+          # routed through the new-meaning gate below: a packet appearing in the ledger is not a
+          # publication and not a send — it is the ecology's outward mail becoming visible in the
+          # one place Frank decides from. Holding that behind an approval would recreate exactly
+          # the delay this step exists to remove.
+          if git status --porcelain -- src/data/post/ledger.json | grep -q .; then
+            git add -- src/data/post/ledger.json
+            git commit -m "post office: ledger vom $DATE — Pakete der Praxen, wie sie in deren Repos liegen"
+            push_with_rebase || exit 1
+          else
+            echo "post office ledger unchanged"
+          fi
+
           if git status --porcelain src/data/begegnungen | grep -q .; then :; else
             echo "export byte-identical — nothing to do"; exit 0
           fi
-          DATE=$(date -u +%F)
-          SHA=$(git -C /tmp/ecology rev-parse --short HEAD)
           # Bedeutungsänderung? Neuer Begegnungs-Ordner ODER gewechselte encounter_id.
           NEW_DIRS=$(git status --porcelain src/data/begegnungen | grep -c '^??' || true)
           ID_CHANGE=$(git diff -- src/data/begegnungen/entrance.json | grep -c '^[+-].*"encounter_id"' || true)
@@ -110,12 +162,25 @@ jobs:
               --body "Ecology-Integrate hat eine neue Begegnung exportiert und als PR angelegt statt automatisch zu committen. Branch: $BRANCH." || true
           else
             git commit -m "ecology: Begegnungs-Export vom $DATE (research-ecology $SHA) — Regeneration der freigegebenen Projektion"
-            for attempt in 1 2 3 4 5; do
-              git pull --rebase origin main && git push origin HEAD:main && break
-              [ "$attempt" = 5 ] && { echo "push failed after 5 rebase attempts (concurrent push race)" >&2; exit 1; }
-              echo "push race — rebasing and retrying ($attempt/5)"; sleep $((attempt * 5))
-            done
+            push_with_rebase || exit 1
           fi
+
+      # Der Post-Office-Ledger UND das Begegnungs-Register sind erklärte Graph-Quellen. Anders
+      # als die Spiegel-Workflows leitet dieser Job den Graphen nicht selbst ab: er installiert
+      # die Abhängigkeiten der Site gar nicht (nur die von research-ecology), und seine Commits
+      # gabeln sich — der Ledger landet immer, eine neue Begegnung geht stattdessen in einen PR.
+      # Also stößt er den Graph-Workflow an, der genau dafür existiert und gegen den Stand
+      # rechnet, der TATSÄCHLICH auf main liegt — nie gegen einen Arbeitsstand, in dem noch eine
+      # unfreigegebene Begegnung wartet.
+      #
+      # Anlass (2026-08-11): Der Export um 06:33 änderte eine Quelle, der Graph blieb stehen, und
+      # vier Workflows, die damit nichts zu tun hatten, liefen bis zum nächtlichen Netz um 04:25
+      # rot. Ein Netz, das erst am nächsten Morgen greift, ist für den Rest des Tages keines.
+      - name: Graph nachziehen lassen (der Workflow, dem das gehört)
+        if: success()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh workflow run graph.yml --repo "$GITHUB_REPOSITORY" --ref main || true
 
       # Ein Alarm, der nie ausgeht, ist keine Meldung mehr, sondern Möblierung: Drei der vier
       # roten Issues in Franks Inbox am 2026-07-30 meldeten Probleme, die längst behoben waren.
@@ -140,8 +205,17 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           DATE=$(date -u +%F)
-          LOG=$(tail -40 /tmp/gate.log 2>/dev/null || echo "see workflow run")
-          BODY=$(printf 'Importer/Gate/Export fehlgeschlagen - kein Oekologie-Commit; der letzte gute Export bleibt live. Log-Auszug:\n\n```\n%s\n```\n\nTypische Ursache laut Arbeitsstrang 5.3: Engines haben neues Vokabular erfunden (das SOLLEN sie) - dann Pins/Schema bewusst erweitern, siehe research-ecology tests/contract/.' "$LOG")
+          RUN_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          # This report goes to Frank, not to a practice — so no letter and no attribution, only
+          # the error itself. It used to quote `tail -40`, which for astro check is the warning
+          # tally rather than the error: the very defect the practices reported four times
+          # (field-research REQUESTS.md 2026-07-25/07-30/07-31), pointed at the operator instead.
+          # Same extractor as the letters (src/lib/gate/brief.ts, under test there).
+          LOG=$(npx tsx scripts/gate/brief.ts --lines-only --log /tmp/gate.log 2>/dev/null) || LOG=""
+          if [ -z "${LOG//[[:space:]]/}" ]; then
+            LOG=$(printf 'No error line could be extracted from the log (or the extractor itself was unavailable). The full log is in the run: %s' "$RUN_URL")
+          fi
+          BODY=$(printf 'Importer/Gate/Export fehlgeschlagen - kein Oekologie-Commit; der letzte gute Export bleibt live. Lauf: %s\n\nFehlerzeilen, woertlich aus dem Validierungslog:\n\n```\n%s\n```\n\nTypische Ursache laut Arbeitsstrang 5.3: Engines haben neues Vokabular erfunden (das SOLLEN sie) - dann Pins/Schema bewusst erweitern, siehe research-ecology tests/contract/.' "$RUN_URL" "$LOG")
           # Dedup (2026-07-25): ein anhaltendes Rot darf die Steuerzentrale-Inbox nicht fluten —
           # bestehendes offenes Issue kommentieren statt jedes Mal ein neues anlegen.
           PREFIX="Ecology-Integrate rot"

@@ -1,6 +1,27 @@
 // src/lib/zentrale/requestsMd.test.ts
 import { describe, it, expect } from 'vitest'
-import { parseSections, findSection, answerRequest, appendSeed, appendBlockToSection, parseInboxIssueTitle, isNonRequestSection } from './requestsMd'
+import {
+  parseSections,
+  findSection,
+  answerRequest,
+  appendSeed,
+  appendBlockToSection,
+  appendGateDecision,
+  parseInboxIssueTitle,
+  isNonRequestSection,
+  // reading side for the public requests rooms (Etappe 2)
+  isOpenStatus,
+  isSeedsSection,
+  preamble,
+  headingDate,
+  headingTitle,
+  slugifyHeading,
+  trimWords,
+  countWords,
+  excerpt,
+  requestCards,
+  planRoom,
+} from './requestsMd'
 
 // Die Fixtures sind reale Ausschnitte aus den vier REQUESTS.md-Dateien (field, atelier, plenum),
 // stellenweise gekürzt (lange Seed-Fließtexte eingedampft), aber wörtlich übernommen inkl.
@@ -399,5 +420,313 @@ describe('isNonRequestSection', () => {
     expect(isNonRequestSection('Status: the build gate has been red for three days')).toBe(false)
     expect(isNonRequestSection('2026-07-30 — Status of the feedback channel (third defect)')).toBe(false)
     expect(isNonRequestSection('Response times of the gate are the problem')).toBe(false)
+  })
+})
+
+describe('appendGateDecision', () => {
+  it('appends a dated GO section at the end of the file', () => {
+    const res = appendGateDecision('# REQUESTS\n\nolder text\n', {
+      project: '2026-07-23-negative-parallax',
+      decision: 'GO',
+      date: '2026-08-01',
+    })
+    if (!res.ok) throw new Error('expected ok')
+    expect(res.md).toContain('## Gate decision — 2026-08-01 — 2026-07-23-negative-parallax')
+    expect(res.md).toContain('GO — publish.')
+    expect(res.md.indexOf('older text')).toBeLessThan(res.md.indexOf('Gate decision'))
+  })
+
+  it('refuses HOLD without a reason and includes the reason when given', () => {
+    const noReason = appendGateDecision('x', { project: 'p', decision: 'HOLD', date: '2026-08-01' })
+    expect(noReason.ok).toBe(false)
+    const withReason = appendGateDecision('x', {
+      project: 'p',
+      decision: 'HOLD',
+      reason: 'the exposition withdrew a claim — I want the next tick first',
+      date: '2026-08-01',
+    })
+    if (!withReason.ok) throw new Error('expected ok')
+    expect(withReason.md).toContain('Held, because: the exposition withdrew a claim')
+  })
+})
+
+// ——————————————————————————————————————————————————————————————————————————————————————
+// Reading side for the public requests rooms (Etappe 2, 2026-08-01). These functions run
+// inside the build that gates the practices' nightly publishing — the defensive cases below
+// are not padding: a parser that throws on tomorrow's content stops three collectives from
+// publishing at all.
+// ——————————————————————————————————————————————————————————————————————————————————————
+
+describe('isOpenStatus', () => {
+  // Every phrasing of "open" the four REQUESTS.md files actually use (2026-08-01 census,
+  // re-taken after that day's integrate runs: 29 atelier + 33 field + 27 studio + 3 plenum
+  // status lines). Recorded as a table so a new phrasing the practices coin gets ADDED here
+  // rather than silently misclassified — they coin them faster than one might think: three
+  // new closing words and two new open ones arrived between the census and this commit.
+  const OPEN = [
+    'open',
+    'seed (open)',
+    'open (item 1 is yours alone; item 2 is informational)',
+    'open (an offer; silence is fine — the transient is fail-safe and stays as-is until/unless you take this up)',
+    'open — an offer; silence, deferral or decline are all legitimate answers.',
+    'open. If this is silent through our next session, we will take route 3 as far as we can',
+    'offer (open) — no answer needed; act on it or don’t.',
+    'open — awaits one action (forward) and one fact (the date it went).',
+    '(1) open — asks one action (hold), and supersedes nothing else in the request above it;',
+    'open — asks one observation, and supplies everything we could establish without it.',
+    'open (a seed — answer in the journal either way)',
+    'open — you can now co-shape the site itself',
+    // arrived with the 2026-08-01 integrate runs, re-censused before this shipped
+    'seed (open) — Angebot, kein Auftrag.',
+    'seed (open — standing option, no action required)',
+    'Open',
+    'OPEN',
+  ]
+  const CLOSED = [
+    'answered (2026-07-02)',
+    'answered (Ulysses, 2026-07-21) — (1) ADAPTED, (2) TAKEN, (3) DECLINED with a',
+    'answered and concluded (Ulysses, 2026-07-25) — TAKEN; Local Commitment written; both',
+    'resolved (2026-07-20) — slug retired human-side; response below',
+    'resolved — proposal accepted (team, 2026-07-19)',
+    'enabled (2026-07-17)',
+    'partially enabled (2026-07-03) — image key provisioned; text key declined with rationale',
+    'delivered',
+    'letter (no reply owed)',
+    'standing rule',
+    'accepted and worked (S37, 2026-07-17)',
+    'noted; no query made this run; the entry above offered to the back-channel.',
+    'seed read; not taken up; no encounter opened. It stays available — a seed I decline today',
+    '**closed by events (2026-07-27, session 47), not by an answer — and we are saying which.**',
+    'available. Nothing in the protocol requires it. The derived index file it',
+    'enabled (2026-07-17) → **premiered (2026-07-17, session 19).** On the word "go" the studio',
+    // also from the 2026-08-01 census — the practices keep coining closing words
+    'convention in force (Frank, 2026-08-01); no reply owed — just use it.',
+    'note (no reply owed)',
+    'applied (2026-07-12, session 33)',
+    'taken (adapted) — 2026-07-25, session 39; **étude BUILT session 40 (same date):**',
+    'answered (2026-07-31, session 51) — **half declined, half taken.**',
+    'answered (2026-07-25, session 44) — TAKEN as material.',
+    'answered (2026-07-30, session 49) — DECLINED as an opening, banked as material.',
+    'the inquiry’s obligations under the Local Commitment are discharged — one first move',
+  ]
+
+  it('says open for every phrasing the practices actually use', () => {
+    for (const s of OPEN) expect(isOpenStatus(s), s).toBe(true)
+  })
+
+  it('says closed for every answered/resolved/enabled phrasing on the record', () => {
+    for (const s of CLOSED) expect(isOpenStatus(s), s).toBe(false)
+  })
+
+  it('a section without a status line is not open (the practices always state a live ask)', () => {
+    expect(isOpenStatus(null)).toBe(false)
+    expect(isOpenStatus(undefined)).toBe(false)
+    expect(isOpenStatus('')).toBe(false)
+  })
+
+  it('the word boundary keeps reopened/opening/openly out', () => {
+    expect(isOpenStatus('reopened (2026-07-30)')).toBe(false)
+    expect(isOpenStatus('opening record pushed')).toBe(false)
+    expect(isOpenStatus('openly documented in the journal')).toBe(false)
+  })
+})
+
+describe('isSeedsSection', () => {
+  it('marks the seed containers, whose section status is a nested seed’s', () => {
+    expect(isSeedsSection('Seeds from the team')).toBe(true)
+    expect(isSeedsSection('Seeds from the public')).toBe(true)
+    expect(isSeedsSection('Seeds from Frank')).toBe(true)
+  })
+  it('leaves single exchanges alone, including ones whose title says seed', () => {
+    expect(isSeedsSection('2026-08-01 — Seed: the festival line')).toBe(false)
+    expect(isSeedsSection('Team note — 2026-07-17 — a seed: the machine that reviews itself')).toBe(false)
+  })
+})
+
+describe('preamble', () => {
+  it('is everything before the first H2, without the document’s own H1', () => {
+    const p = preamble(FIELD_FIXTURE)
+    expect(p.startsWith('**Standing rule')).toBe(true)
+    expect(p).not.toContain('# REQUESTS')
+    expect(p).not.toContain('## Seeds from the team')
+  })
+
+  it('a document without any H2 is all preamble', () => {
+    expect(preamble('# Title\n\nJust prose.')).toBe('Just prose.')
+  })
+
+  it('never throws on degenerate input', () => {
+    expect(preamble('')).toBe('')
+    expect(preamble('## Only a heading')).toBe('')
+    expect(preamble('##')).toBe('##')
+  })
+})
+
+describe('headingDate / headingTitle', () => {
+  it('reads the ISO date out of every heading shape the practices write', () => {
+    expect(headingDate('2026-07-31 — Request: one outbound channel')).toBe('2026-07-31')
+    expect(headingDate('2026-07-31 (session 76) — Please hold the forwarding')).toBe('2026-07-31')
+    expect(headingDate('Team note — 2026-07-25 — Offer: a joint inquiry')).toBe('2026-07-25')
+    expect(headingDate('Status (Ulysses, 2026-07-28) — the three-catalogue seed')).toBe('2026-07-28')
+    expect(headingDate('Seeds from the team')).toBe(null)
+  })
+
+  it('strips the date scaffolding for the card title, and keeps unfamiliar shapes whole', () => {
+    expect(headingTitle('2026-07-31 — Request: one outbound channel')).toBe('Request: one outbound channel')
+    expect(headingTitle('2026-07-31 (session 76) — Please hold the forwarding')).toBe('Please hold the forwarding')
+    expect(headingTitle('Team note — 2026-07-25 — Offer: a joint inquiry')).toBe('Offer: a joint inquiry')
+    expect(headingTitle('Seeds from the team')).toBe('Seeds from the team')
+    expect(headingTitle('')).toBe('')
+  })
+})
+
+describe('slugifyHeading', () => {
+  // Pinned against the ids Astro's own rehypeHeadingIds produced in the built pages on
+  // 2026-08-01 (141 of 141 headings across the three REQUESTS.md matched) — this is the
+  // evidence for keeping the archive on `<Content/>` instead of re-rendering it.
+  it('reproduces the heading ids Astro renders', () => {
+    expect(slugifyHeading('2026-07-01 — Request: the offered feasibility notes on detection-tool audits'))
+      .toBe('2026-07-01--request-the-offered-feasibility-notes-on-detection-tool-audits')
+    expect(slugifyHeading('2026-07-31 — Letter: a critic’s review of NO PART'))
+      .toBe('2026-07-31--letter-a-critics-review-of-no-part')
+    expect(slugifyHeading('2026-07-11 — Request: the build-gate feedback channel is silently dead (`BOT_TOKEN`)'))
+      .toBe('2026-07-11--request-the-build-gate-feedback-channel-is-silently-dead-bot_token')
+    expect(slugifyHeading('2026-06-29 — Display infrastructure for HTML/JS works'))
+      .toBe('2026-06-29--display-infrastructure-for-htmljs-works')
+    expect(slugifyHeading('Seeds from the team')).toBe('seeds-from-the-team')
+  })
+
+  it('never throws on an empty or symbol-only heading', () => {
+    expect(slugifyHeading('')).toBe('')
+    expect(slugifyHeading('—')).toBe('')
+  })
+})
+
+describe('trimWords / countWords / excerpt', () => {
+  it('trims on word boundaries and marks the cut', () => {
+    expect(trimWords('one two three', 5)).toBe('one two three')
+    expect(trimWords('one two three four', 2)).toBe('one two …')
+    expect(trimWords('   spaced   out  ', 5)).toBe('spaced out')
+    expect(trimWords('', 5)).toBe('')
+  })
+
+  it('counts words, not characters', () => {
+    expect(countWords('one two three')).toBe(3)
+    expect(countWords('  ')).toBe(0)
+  })
+
+  it('takes the lead prose and skips what carries no meaning out of context', () => {
+    const body = [
+      '**Status:** open',
+      '',
+      '### 1. A sub-heading',
+      '',
+      '---',
+      '',
+      '**Request:** a single way for this practice to send a prepared piece to a named receiver.',
+      '',
+      '```bash',
+      'echo not prose',
+      '```',
+      '',
+      '| a | b |',
+      '|---|---|',
+    ].join('\n')
+    const lead = excerpt(body, 40)
+    expect(lead).toContain('Request: a single way for this practice')
+    expect(lead).not.toContain('Status')
+    expect(lead).not.toContain('sub-heading')
+    expect(lead).not.toContain('echo not prose')
+  })
+
+  it('reads through blockquote markers (the seeds convention) and flattens links', () => {
+    const body = '> ### 2026-07-25 — Public seed\n>\n> A [linked](https://example.org) idea, offered.'
+    expect(excerpt(body, 20)).toBe('A linked idea, offered.')
+  })
+
+  it('never throws and returns empty for an empty body', () => {
+    expect(excerpt('', 40)).toBe('')
+    expect(excerpt('**Status:** open', 40)).toBe('')
+    expect(excerpt('```\nunclosed fence\n', 40)).toBe('')
+  })
+})
+
+describe('requestCards', () => {
+  it('turns every H2 into a card, in document order, with open/seeds/request flags', () => {
+    const cards = requestCards(FIELD_FIXTURE)
+    expect(cards.map((c) => c.heading)).toEqual([
+      'Seeds from the team',
+      '2026-07-01 — Request: the offered feasibility notes on detection-tool audits',
+    ])
+    const [seeds, request] = cards
+    // The seeds container's status is a nested seed's — never an open ask of its own.
+    expect(seeds.seeds).toBe(true)
+    expect(seeds.open).toBe(false)
+    expect(seeds.request).toBe(false)
+    expect(request.seeds).toBe(false)
+    expect(request.request).toBe(true)
+    expect(request.status).toBe('answered (2026-07-02)')
+    expect(request.open).toBe(false)
+    expect(request.date).toBe('2026-07-01')
+    expect(request.words).toBeGreaterThan(50)
+    expect(request.slug).toBe('2026-07-01--request-the-offered-feasibility-notes-on-detection-tool-audits')
+  })
+
+  it('marks an open request open, and keeps its excerpt within the budget', () => {
+    const cards = requestCards(ATELIER_FIXTURE, { excerptWords: 12 })
+    const open = cards.filter((c) => c.open)
+    expect(open.map((c) => c.heading)).toEqual(['2026-06-29 — WebFetch access for primary source work'])
+    expect(countWords(open[0].excerpt)).toBeLessThanOrEqual(13) // 12 words + the ellipsis
+  })
+
+  it('prefers Astro’s rendered slug over its own derivation (the duplicate-heading case)', () => {
+    const md = '# T\n\n## Same title\n\n**Status:** open\n\n## Same title\n\n**Status:** open\n'
+    const headings = [
+      { depth: 2, slug: 'same-title', text: 'Same title' },
+      { depth: 2, slug: 'same-title-1', text: 'Same title' },
+    ]
+    // Matching is by text, so BOTH resolve to the first — a wrong fragment lands at the top of
+    // the archive, never on a 404. The point of the assertion is that the rendered list wins.
+    expect(requestCards(md, { headings }).map((c) => c.slug)).toEqual(['same-title', 'same-title'])
+    expect(requestCards(md).map((c) => c.slug)).toEqual(['same-title', 'same-title'])
+  })
+
+  it('never throws on content the practices have not written yet', () => {
+    expect(requestCards('')).toEqual([])
+    expect(requestCards('no headings at all, just prose')).toEqual([])
+    expect(() => requestCards('## \n\n## ##\n\n##nospace\n')).not.toThrow()
+    expect(() => requestCards('## A\r\n\r\n**Status:** open\r\n')).not.toThrow()
+    expect(requestCards('## A\r\n\r\n**Status:** open\r\n')[0].open).toBe(true)
+    // a heading that is only punctuation still yields a card, just without a slug
+    expect(requestCards('## —\n\nbody\n')[0].slug).toBe('')
+  })
+})
+
+describe('planRoom spends its levers in a fixed order', () => {
+  const room = {
+    intro: 'x'.repeat(5), standingHeading: 'a', openHeading: 'b', openNone: 'c', openNote: 'd',
+    answeredHeading: 'e', answeredNote: 'f', seedsHeading: 'g', seedsNote: 'h',
+    archiveLink: 'i', fullTextLabel: 'read it in full',
+  }
+  const cards = (n: number) =>
+    requestCards(
+      Array.from({ length: n }, (_, i) => `## 2026-08-01 — An ask with a long title number ${i}\n\nBody words here.\n\n**Status:** open\n\n`).join(''),
+    )
+
+  it('leaves a short queue at full density and marks it uncompressed', () => {
+    const plan = planRoom(cards(3), room, '')
+    expect(plan.lead).toBe(40)
+    expect(plan.showLabel).toBe(true)
+    expect(plan.compressed).toBe(false)
+    expect(plan.exhausted).toBe(false)
+  })
+
+  it('never returns a plan that omits an ask — there is no such lever', () => {
+    for (const n of [1, 25, 90]) {
+      const plan = planRoom(cards(n), room, '')
+      expect(plan).not.toHaveProperty('shown')
+      expect(plan).not.toHaveProperty('limit')
+      expect(plan.lead).toBeGreaterThanOrEqual(0)
+    }
   })
 })

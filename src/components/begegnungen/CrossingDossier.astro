@@ -1,0 +1,418 @@
+---
+// src/components/begegnungen/CrossingDossier.astro — /encounters' centre: one CROSSING, read.
+//
+// WHAT IT IS. Every other room of this ecology now leads with its current protagonist — the line
+// in work, the instrument in service, the work in the spotlight, the newest sitting. The Middle's
+// protagonist is a CROSSING: a shared question three practices are answering in parallel, or a
+// recorded encounter between two. They are one list because they are one thing from a visitor's
+// side — what the practices are doing with each other — and the list is ordered by what is still
+// open, so the page opens on the living one rather than on the tidiest one.
+//
+// EVERYTHING IS QUOTED. Every span a panel shows is a span of a committed record, printed beside
+// the path it was read from AND beside the rule that attached it there. That second half is the
+// point: a visitor should be able to see what kind of evidence a row is (a ledger event? the
+// register's own status line? a practice's own commitment? the contact zone's editorial
+// narration?) without taking the arrangement on trust. Same discipline as the studio's dossier,
+// which prints its attribution rule on every event for the same reason.
+//
+// NO-JS FLOOR, and why it stacks rather than paginates. Every crossing is server-rendered in
+// full, in the order the selector lists them — so without JavaScript the page is a readable stack
+// of dossiers with the open ones first, and the selector is a list of in-page links that work as
+// links. With JavaScript the selector becomes a tab list and shows one crossing at a time.
+//
+// DEEP LINKS. Each panel's id is `crossing-<anchor>`: `#crossing-model-collapse`,
+// `#crossing-enc-2026-005`. Both paths honour it — without scripts the browser scrolls to it,
+// with scripts the selector selects it.
+//
+// VOICE. This room is a contact zone kept by the conductor, not a fourth practice: the register
+// here stays documentary and stays closest to /maschinenraum's discipline. Practice voices wear
+// their recorded hues (PALETTE: ecology-voices), the conductor stays the declared neutral, and no
+// colour ever carries a meaning that a word beside it does not also carry.
+//
+// House rules this file is built around: no `is:inline` script (the CSP hashes bundled module
+// scripts), no `style=""` (silently dropped), every visitor-facing string from
+// src/config/middle-wording.ts.
+import { MIDDLE } from '@/config/middle-wording'
+import { CROSSING_RULE_LABELS, VOICES, type Crossing, type CrossingRow, type VoiceId } from '@/lib/begegnungen/crossings'
+import { STREAM_RULE_LABELS, type StreamRow } from '@/lib/begegnungen/contact-stream'
+// The records ARE markdown, and these practices use emphasis to carry meaning — a journal tick
+// opens with a whole bold sentence because that sentence is the finding. Printing the asterisks
+// shows a visitor the FILE FORMAT rather than the sentence; stripping them throws the emphasis
+// away. Rendering it adds, removes and reorders no word. Escape-first, so nothing in a record can
+// become markup (see that module's header — this is the atelier dossier's renderer, reused rather
+// than copied, because it is a text utility and not a practice's grammar).
+import { renderInline } from '@/lib/atelier/dossier'
+
+export interface Props {
+  /** every crossing, open ones first — src/lib/begegnungen/crossings.ts */
+  crossings: Crossing[]
+  /** stream rows that name exactly one crossing by id, filed with it */
+  streamByCrossing: Record<string, StreamRow[]>
+  /** how many verbatim rows a panel renders */
+  movesShown: number
+}
+
+const { crossings, streamByCrossing, movesShown } = Astro.props
+const w = MIDDLE.dossier
+const first = crossings[0]
+
+const groups = [
+  { key: 'open' as const, label: w.groups.open, mark: true },
+  { key: 'unstated' as const, label: w.groups.unstated, mark: false },
+  { key: 'concluded' as const, label: w.groups.concluded, mark: false },
+].map((g) => ({ ...g, items: crossings.filter((c) => c.standing === g.key) }))
+
+const hueClass = (v: VoiceId) => `v-${VOICES[v].hue}`
+const voiceLabel = (v: VoiceId, raw?: string | null) =>
+  v === 'unknown' && raw ? raw : VOICES[v].label
+
+/** The caveats that have to travel with the voices this crossing names — printed once per
+ *  panel, under the participants, rather than repeated on every row that mentions them. */
+const caveatsOf = (c: Crossing): { label: string; caveat: string }[] => {
+  const ids = new Set<VoiceId>([...c.voices.map((v) => v.voice), ...c.rows.map((r) => r.voice)])
+  return [...ids]
+    .map((id) => VOICES[id])
+    .filter((v) => v.caveat !== null)
+    .map((v) => ({ label: v.label, caveat: v.caveat as string }))
+}
+
+const rowsFor = (c: Crossing): CrossingRow[] => c.rows.slice(0, movesShown)
+---
+
+<section class="md-dsr-wrap" aria-labelledby="crossings-heading" id="crossings">
+  <h2 class="md-dsr-h2" id="crossings-heading">{w.heading}</h2>
+  <p class="md-dsr-lead">{w.lead}</p>
+
+  {/* The selector. Server-rendered as plain links to the panels below, which is exactly what
+      they are without JavaScript; the script upgrades them to a tab list. */}
+  <nav class="md-pick" data-mdsr-pick aria-label={w.pickLabel}>
+    <p class="md-pick-h">{w.pickLabel}</p>
+    {groups.filter((g) => g.items.length > 0).map((group) => (
+      <div class="md-pick-group">
+        <p class="md-pick-group-h">
+          {group.mark && <span class="md-pick-mark" aria-hidden="true" />}
+          {group.label} <span>{group.items.length}</span>
+        </p>
+        <ul>
+          {group.items.map((c) => (
+            <li>
+              <a
+                href={`#crossing-${c.anchor}`}
+                class="md-tab"
+                data-mdsr-tab={c.anchor}
+                aria-current={c.anchor === first?.anchor ? 'true' : undefined}
+              >
+                <span class="t-kind">{c.kind === 'joint-inquiry' ? 'shared question' : 'encounter'} · {c.id}</span>
+                <span class="t-name">{c.title}</span>
+                <span class="t-voices">
+                  {c.voices.map((v) => (
+                    <span class={`md-dot ${hueClass(v.voice)}`} aria-hidden="true" />
+                  ))}
+                  <span class="t-voices-text">{c.voices.map((v) => VOICES[v.voice].short).join(' · ')}</span>
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </nav>
+
+  {crossings.map((c) => (
+    <article
+      class="md-dsr"
+      id={`crossing-${c.anchor}`}
+      data-mdsr-panel={c.anchor}
+      aria-labelledby={`crossing-${c.anchor}-title`}
+    >
+      <header class="md-head">
+        <p class="d-state">
+          <b>{w.kinds[c.kind]}</b>
+          <span class="d-chip">{c.standing === 'open' ? w.groups.open : c.standing === 'concluded' ? w.groups.concluded : w.groups.unstated}</span>
+          <span class="d-id">{c.id}</span>
+          {c.asOf && <span class="d-asof">as of {c.asOf}</span>}
+        </p>
+        <h3 class="d-title" id={`crossing-${c.anchor}-title`}>{c.title}</h3>
+      </header>
+
+      {/* — the shared question: what the constellation was formed around, verbatim — */}
+      <div class="d-block">
+        <p class="d-h">{w.fields.question}</p>
+        {c.question ? (
+          <>
+            <p class="d-quote">{c.question.text}</p>
+            <p class="d-src">{w.labels.sourceLabel} <code>{c.question.source}</code> · {c.question.label}, {w.labels.verbatim}</p>
+          </>
+        ) : (
+          <p class="d-gap">{w.gaps.question}</p>
+        )}
+      </div>
+
+      {/* — where it stands: the record's own status words — */}
+      <div class="d-block">
+        <p class="d-h">{w.fields.status}</p>
+        {c.status ? (
+          <>
+            <p class="d-quote d-quote-sm">{c.status.text}</p>
+            <p class="d-src">{w.labels.sourceLabel} <code>{c.status.source}</code> · {c.status.label}, {w.labels.verbatim}</p>
+          </>
+        ) : (
+          <p class="d-gap">{w.gaps.status}</p>
+        )}
+      </div>
+
+      {/* — who is in it: each voice with its own account, in its own words — */}
+      {/* The long blocks fold (Frank, 2026-08-02: "ansonsten wird man von endlosen
+          textpassagen erschlagen") — native <details>, closed at rest, the heading itself is
+          the summary so nothing is added and nothing hides without a name. Question and
+          status stay open above: they are the orientation. */}
+      <details class="d-block d-fold">
+        <summary class="d-h">{w.fields.voices} {c.voices.length > 0 && <span class="d-count">{c.voices.length}</span>}</summary>
+        {c.voices.length > 0 ? (
+          <ul class="d-voices">
+            {c.voices.map((v) => (
+              <li class={`d-voice ${hueClass(v.voice)}`}>
+                <p class="v-name">
+                  <span class="md-dot" aria-hidden="true" />
+                  {voiceLabel(v.voice, v.rawVoice)}
+                  {v.role && <span class="v-role">{v.role.toLowerCase().replace(/_/g, ' ')}</span>}
+                </p>
+                {v.voice === 'unknown' && <p class="d-gap">{w.labels.unknownVoice}</p>}
+                {v.localQuestion && (
+                  <div class="v-field">
+                    <p class="v-label">{w.labels.theirQuestion}</p>
+                    <p class="d-quote d-quote-sm">{v.localQuestion.text}</p>
+                    <p class="d-src">{w.labels.sourceLabel} <code>{v.localQuestion.source}</code></p>
+                  </div>
+                )}
+                {v.headlineClaim && (
+                  <div class="v-field">
+                    <p class="v-label">{w.labels.theirClaim}</p>
+                    <p class="d-quote d-quote-sm">{v.headlineClaim.text}</p>
+                    <p class="d-src">{w.labels.sourceLabel} <code>{v.headlineClaim.source}</code></p>
+                  </div>
+                )}
+                {v.localStatus && (
+                  <div class="v-field">
+                    <p class="v-label">{w.labels.theirStatus}</p>
+                    <p class="d-quote d-quote-sm">{v.localStatus.text}</p>
+                    <p class="d-src">{w.labels.sourceLabel} <code>{v.localStatus.source}</code></p>
+                  </div>
+                )}
+                {v.output && (
+                  <p class="v-output">
+                    <a href={v.output.url} rel="noreferrer">{w.labels.theirOutput}: {v.output.title} ↗</a>
+                  </p>
+                )}
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p class="d-gap">{w.gaps.voices}</p>
+        )}
+        {caveatsOf(c).map((x) => (
+          <p class="d-caveat"><b>{x.label}</b> — {x.caveat}</p>
+        ))}
+      </details>
+
+      {/* — what is on the record: every row verbatim, newest first, each naming its own rule — */}
+      <details class="d-block d-fold">
+        <summary class="d-h">{w.fields.moves} {c.rows.length > 0 && <span class="d-count">{c.rows.length}</span>}</summary>
+        {c.rows.length > 0 ? (
+          <>
+            <ol class="d-rows">
+              {rowsFor(c).map((r) => (
+                <li class={`d-row ${hueClass(r.voice)}`}>
+                  <p class="r-head">
+                    <span class="md-dot" aria-hidden="true" />
+                    {r.date ? <time datetime={r.date}>{r.date}</time> : <span class="r-undated">{w.labels.undated}</span>}
+                    <span class="r-voice">{voiceLabel(r.voice, r.rawVoice)}</span>
+                    <span class="r-label">{r.label}</span>
+                  </p>
+                  <p class="r-text" set:html={renderInline(r.text)} />
+                  {r.attribution && <p class="r-attr">— {r.attribution}</p>}
+                  <p class="d-src">
+                    {w.labels.sourceLabel} <code>{r.source}</code> · {w.labels.attachedBy} {CROSSING_RULE_LABELS[r.by]}
+                  </p>
+                </li>
+              ))}
+            </ol>
+            <p class="d-note">{w.movesShownNote(rowsFor(c).length, c.rows.length)}</p>
+          </>
+        ) : (
+          <p class="d-gap">{w.gaps.moves}</p>
+        )}
+      </details>
+
+      {/* — preserved dissent: two readings the record refuses to resolve — */}
+      {c.divergence && (
+        <details class="d-block d-fold">
+          <summary class="d-h">{w.fields.divergence}</summary>
+          <div class="d-div">
+            <div class={`d-div-side ${hueClass(c.divergence.leftVoice)}`}>
+              <p class="v-label"><span class="md-dot" aria-hidden="true" />{c.divergence.leftLabel}</p>
+              <blockquote class="d-quote d-quote-sm">{c.divergence.leftQuote}</blockquote>
+            </div>
+            <div class={`d-div-side ${hueClass(c.divergence.rightVoice)}`}>
+              <p class="v-label"><span class="md-dot" aria-hidden="true" />{c.divergence.rightLabel}</p>
+              <blockquote class="d-quote d-quote-sm">{c.divergence.rightQuote}</blockquote>
+            </div>
+          </div>
+          {c.divergence.closing && <p class="d-div-close">{c.divergence.closing}</p>}
+          <p class="d-src">{w.labels.sourceLabel} <code>{c.divergence.source}</code>, {w.labels.verbatim}</p>
+        </details>
+      )}
+
+      {/* — a documented non-relation: a silence the record designed, never a gap — */}
+      {c.nonParticipation.length > 0 && (
+        <details class="d-block d-fold">
+          <summary class="d-h">{w.fields.silence}</summary>
+          <ul class="d-silence">
+            {c.nonParticipation.map((n) => (
+              <li>
+                <p class="v-label">{voiceLabel(n.voice, n.rawVoice)}</p>
+                <p class="d-quote d-quote-sm">{n.note}</p>
+                <p class="d-src">{w.labels.sourceLabel} <code>{n.source}</code>, {w.labels.verbatim}</p>
+              </li>
+            ))}
+          </ul>
+        </details>
+      )}
+
+      {/* — the same crossing, named elsewhere: stream rows that carry this crossing's own id — */}
+      {(streamByCrossing[c.id] ?? []).length > 0 && (
+        <details class="d-block d-fold">
+          <summary class="d-h">{w.fields.stream} <span class="d-count">{streamByCrossing[c.id].length}</span></summary>
+          <ol class="d-rows d-rows-quiet">
+            {streamByCrossing[c.id].map((r) => (
+              <li class={`d-row ${hueClass(r.voice)}`}>
+                <p class="r-head">
+                  <span class="md-dot" aria-hidden="true" />
+                  {r.date ? <time datetime={r.date}>{r.date}</time> : <span class="r-undated">{w.labels.undated}</span>}
+                  <span class="r-voice">{VOICES[r.voice].label}</span>
+                  <span class="r-label">{r.label}</span>
+                </p>
+                <p class="r-text" set:html={renderInline(r.text)} />
+                <p class="d-src">
+                  {w.labels.sourceLabel} <code>{r.source}</code> · {w.labels.attachedBy} {STREAM_RULE_LABELS[r.by]}
+                  {r.href && <> · <a href={r.href}>read the whole entry</a></>}
+                </p>
+              </li>
+            ))}
+          </ol>
+        </details>
+      )}
+
+      {/* — what the record consists of — */}
+      <details class="d-block d-record d-fold">
+        <summary class="d-h">{w.fields.record}</summary>
+        <ul class="d-files">
+          {c.sources.map((s) => (
+            <li><code>{s.path}</code> <span>{s.note}</span></li>
+          ))}
+        </ul>
+        {c.recordUrl && (
+          <p class="d-doors"><a href={c.recordUrl} rel="noreferrer">{w.labels.recordLink} ↗</a></p>
+        )}
+      </details>
+    </article>
+  ))}
+</section>
+
+<script>
+  // Upgrades the server-rendered stack into a tab list. Everything it does is additive: without
+  // this script the page is every crossing's dossier under working anchor links, which is the
+  // floor, not a degraded mode. (Same shape as plenum/Dossier.astro's — deliberately, so the two
+  // selectors on this site behave identically for a keyboard.)
+  for (const root of document.querySelectorAll<HTMLElement>('[data-mdsr-pick]')) {
+    const section = root.closest('section')
+    if (!section) continue
+    const tabs = [...root.querySelectorAll<HTMLAnchorElement>('[data-mdsr-tab]')]
+    const panels = new Map(
+      [...section.querySelectorAll<HTMLElement>('[data-mdsr-panel]')].map((el) => [
+        el.dataset.mdsrPanel ?? '',
+        el,
+      ]),
+    )
+    if (tabs.length === 0 || panels.size === 0) continue
+
+    // Roles are set HERE and not in the markup: without this script these are links to sections,
+    // and calling a link a tab in the accessibility tree when nothing tabs would be a lie told to
+    // exactly the visitors who can least afford one.
+    root.setAttribute('role', 'tablist')
+    for (const tab of tabs) {
+      tab.setAttribute('role', 'tab')
+      tab.removeAttribute('aria-current')
+    }
+    for (const [id, panel] of panels) {
+      panel.setAttribute('role', 'tabpanel')
+      panel.setAttribute('tabindex', '0')
+      const tab = tabs.find((t) => t.dataset.mdsrTab === id)
+      if (tab) {
+        if (!tab.id) tab.id = `mdsr-tab-${id}`
+        panel.setAttribute('aria-labelledby', tab.id)
+      }
+    }
+
+    let current = ''
+    const select = (id: string, focusPanel = false) => {
+      if (!panels.has(id) || id === current) return
+      current = id
+      for (const [key, panel] of panels) {
+        const on = key === id
+        panel.hidden = !on
+        panel.setAttribute('aria-hidden', on ? 'false' : 'true')
+      }
+      for (const tab of tabs) {
+        const on = tab.dataset.mdsrTab === id
+        tab.setAttribute('aria-selected', on ? 'true' : 'false')
+        // Roving tabindex: one stop for the whole selector, arrows move inside it.
+        tab.tabIndex = on ? 0 : -1
+      }
+      if (focusPanel) panels.get(id)?.focus()
+    }
+
+    const fromHash = () => {
+      const id = location.hash.replace(/^#crossing-/, '')
+      return panels.has(id) ? id : ''
+    }
+
+    select(fromHash() || tabs[0].dataset.mdsrTab || '')
+
+    for (const [i, tab] of tabs.entries()) {
+      tab.addEventListener('click', (ev) => {
+        ev.preventDefault()
+        const id = tab.dataset.mdsrTab ?? ''
+        select(id)
+        // Written, not navigated: replaceState keeps the link sendable without adding a history
+        // entry per click and without the jump a real hash change would cause.
+        history.replaceState(null, '', `#crossing-${id}`)
+      })
+      tab.addEventListener('keydown', (ev) => {
+        const delta =
+          ev.key === 'ArrowRight' || ev.key === 'ArrowDown'
+            ? 1
+            : ev.key === 'ArrowLeft' || ev.key === 'ArrowUp'
+              ? -1
+              : ev.key === 'Home'
+                ? -i
+                : ev.key === 'End'
+                  ? tabs.length - 1 - i
+                  : 0
+        if (delta === 0) return
+        ev.preventDefault()
+        const next = tabs[(i + delta + tabs.length) % tabs.length]
+        next.focus()
+        const id = next.dataset.mdsrTab ?? ''
+        select(id)
+        history.replaceState(null, '', `#crossing-${id}`)
+      })
+    }
+
+    // A hash arriving from outside — a pasted deep link or the back button — selects its crossing.
+    window.addEventListener('hashchange', () => {
+      const id = fromHash()
+      if (id) select(id, true)
+    })
+  }
+</script>

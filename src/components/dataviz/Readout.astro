@@ -1,0 +1,51 @@
+---
+// src/components/dataviz/Readout.astro — the shared hover-readout (tooltip) shell (WP3,
+// "shared dataviz primitives"). Behavior + structure only (ADR 0010: the three practices carry
+// no shared visual grammar) — ships ONLY the structural CSS a readout needs to exist and be
+// placed; content, typography and color are entirely the consumer's concern (a later port WP
+// retires ProcessFigure.astro's `.at-proc-tip`, maschinenraum/Partitur.astro's `#pt-tip`, and
+// begegnungen/ScoreFigure.astro's `#score-tip` in favor of this one shell).
+//
+// Placement math lives in src/lib/dataviz/readout.ts (placeReadout/createReadout), which also
+// documents the three house rules this shell is built to satisfy: (1) clamp to the FIGURE's own
+// box, never a scroll container or the viewport; (2) flip left/up near an edge instead of
+// clipping; (3) never a hit target (pointer-events: none below, never toggled at runtime).
+export interface Props {
+  /** id the consumer's script uses to find this element (see dataviz/readout.ts's createReadout) */
+  id: string
+  /** optional per-instance max-width (CSS length, e.g. "40ch"); applied via a CSS custom
+   *  property through a data attribute + this component's own bootstrap script — never a
+   *  style="" attribute, which the site's CSP silently drops (see runtime.ts's header comment) */
+  maxWidth?: string
+}
+const { id, maxWidth } = Astro.props
+---
+
+<div id={id} class="dv-readout" data-dv-readout data-dv-max-width={maxWidth} hidden aria-hidden="true"></div>
+
+<style>
+  .dv-readout {
+    position: absolute;
+    inset: 0 auto auto 0;
+    z-index: var(--dv-z, 10);
+    /* house rule 3: never a hit target */
+    pointer-events: none;
+    max-width: var(--dv-readout-max, 32ch);
+    will-change: transform;
+    /* the only positioning mechanism: dataviz/readout.ts's createReadout sets --dv-x/--dv-y via
+       setProperty, never an inline attribute in markup (see runtime.ts's header comment) */
+    transform: translate(var(--dv-x, 0px), var(--dv-y, 0px));
+  }
+</style>
+
+<script>
+  import { setVars } from '@/lib/dataviz/runtime'
+
+  // Applies each instance's optional maxWidth prop (carried as a data attribute — a build-time
+  // prop cannot become a style="" attribute under this site's CSP) to --dv-readout-max, once,
+  // for every Readout already in the document.
+  for (const el of document.querySelectorAll<HTMLElement>('[data-dv-readout][data-dv-max-width]')) {
+    const maxWidth = el.dataset.dvMaxWidth
+    if (maxWidth) setVars(el, { '--dv-readout-max': maxWidth })
+  }
+</script>

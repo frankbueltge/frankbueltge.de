@@ -36,8 +36,14 @@ jobs:
           # Session-/Feature-Branches sind die eigentliche Maschinen-Aktivität, 2026-07-25) —
           # dafür müssen alle Branches im Klon vorhanden sein, nicht nur main.
           SINCE=$(date -u -d '100 days ago' +%F)
-          for r in field-research ulysses studio research-ecology; do
-            git clone --no-single-branch --shallow-since="$SINCE" "https://github.com/frankbueltge/$r" "$r"
+          # machine-attention + data-snack-plenum seit 2026-08-10 (Frank: der Puls zeigt
+          # ALLE an dieser Site beteiligten Repos, nicht nur die Ökologie); error-as-method
+          # seit 2026-08-11 (die zurückgeforkte Nachtlinie).
+          # `|| true`: ein noch nicht existierendes/privates Repo darf den nächtlichen Puls
+          # nicht abbrechen — fetch-pulse.ts meldet den fehlenden Checkout und lässt ihn aus
+          # dem Snapshot, statt ihn als stille Woche zu zählen.
+          for r in field-research ulysses studio research-ecology machine-attention data-snack-plenum error-as-method; do
+            git clone --no-single-branch --shallow-since="$SINCE" "https://github.com/frankbueltge/$r" "$r" || true
           done
       - uses: actions/setup-node@v4
         with:

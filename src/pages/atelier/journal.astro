@@ -1,88 +1,69 @@
 ---
-// /atelier/journal — das Session-Register (atelier-aesthetik §5: „die Endlos-Liste
-// stirbt“). One line per journal page S1…SN, anchors #sNN, the newest night open; the
-// full text folds out per page, rendered verbatim from the committed mirror. The spine
-// (/atelier/history) is the drawn form of the same register.
+// /atelier/journal — the session register as a Level-2 register sheet (2026-08-12).
+//
+// Same rows, same per-page addresses, same anchors (s12, note-null-island-judge). The notes the
+// practice wrote under v4 stay in the register rather than in a section of their own: the sheet's
+// move column is where a row says what kind of entry it is, and "note" is exactly that.
 import { getCollection } from 'astro:content'
 import Page from '@/layouts/Page.astro'
-import Frame from '@/components/atelier/surface/Frame.astro'
-import { journalNotes, sessionRegister } from '@/lib/atelier/sessions'
-import { renderMarkdown } from '@/lib/engines/journal'
+import RegisterSheet from '@/components/ecology/RegisterSheet.astro'
+import type { RegisterRow } from '@/components/ecology/RegisterSheet.astro'
+import { buildSessionEntries } from '@/lib/atelier/sessions'
 import { ATELIER_NARRATIVE } from '@/config/atelier-wording'
 
 const all = await getCollection('atelier')
-const journal = all.filter((e) => e.id.startsWith('journal/'))
-const register = sessionRegister(journal.map((e) => e.id))
-const notes = journalNotes(journal.map((e) => e.id))
-const bodyById = new Map(journal.map((e) => [e.id, e.body ?? '']))
+const entries = buildSessionEntries(all.filter((e) => e.id.startsWith('journal/')))
+const sessions = [...entries.filter((e) => e.kind === 'session')].reverse()
+const notes = [...entries.filter((e) => e.kind === 'note')].reverse()
 
-const repo = 'https://github.com/frankbueltge/ulysses'
-const rootDocs = new Set(all.filter((e) => !e.id.includes('/')).map((e) => e.id))
-
-const foldOut = (id: string, fallbackDate: string) => {
-  const body = bodyById.get(id) ?? ''
-  const heading = body.match(/^\s*# ([^\n]+)/)?.[1]?.trim() ?? fallbackDate
-  const text = body.replace(/^\s*# [^\n]*\n?/, '')
-  return { heading, html: renderMarkdown(text, { repo, docs: rootDocs }) }
-}
-
-const entries = [...register].reverse().map((p) => ({ ...p, ...foldOut(p.id, p.date) }))
-// v4 dispatcher ticks — unnumbered, newest first, rendered as their own strand below.
-const noteEntries = [...notes].reverse().map((note) => ({ ...note, ...foldOut(note.id, note.date) }))
-
-const kicker = ['Atelier · journal', 'ulysses', `S1–S${register.length}`]
-const statusHtml =
-  `<b>${register.length} pages</b> · one line per session, the newest night open · ` +
-  `<a href="/atelier/history" class="underline">the spine — the drawn register →</a>`
+const rows: RegisterRow[] = [
+  ...sessions.map((p) => ({
+    date: p.date,
+    marker: `S${p.n}`,
+    move: 'session',
+    line: p.heading,
+    href: `/atelier/journal/${p.slug}/`,
+    anchor: p.slug,
+  })),
+  ...notes.map((note) => ({
+    date: note.date,
+    marker: 'note',
+    move: 'note',
+    line: note.heading,
+    href: `/atelier/journal/${note.slug}/`,
+    anchor: note.slug,
+  })),
+].sort((a, b) => (a.date < b.date ? 1 : -1))
 ---
 
 <Page
   title="Atelier — journal, the session register | Frank Bültge"
-  description="The nightly protocol archive (28 June – 18 July 2026) as a session register: one line per page, every session anchored, the full text mirrored verbatim."
+  description="The nightly protocol archive as a session register: one line per session, every page at its own address, the full text mirrored verbatim."
 >
-  <Frame active="journal" kicker={kicker} h1="The pages, one line each." statusHtml={statusHtml} back>
-    <p class="at-room-intro">{ATELIER_NARRATIVE.rooms.journal}</p>
-    <section>
-      {entries.map((p, i) => (
-        <details id={`s${p.n}`} class="at-page-entry" open={i === 0}>
-          <summary>
-            <span class="at-sess-no">S{p.n}</span>
-            <span class="at-sess-title">{p.heading}</span>
-            <span class="at-sess-date">{p.date}</span>
-          </summary>
-          <div class="at-prose" set:html={p.html} />
-        </details>
-      ))}
-    </section>
-    {noteEntries.length > 0 && (
-      <section class="at-notes">
-        <h2 class="at-notes-h">{ATELIER_NARRATIVE.rooms.journalNotesHeading}</h2>
-        <p class="at-room-intro">{ATELIER_NARRATIVE.rooms.journalNotes}</p>
-        {noteEntries.map((note) => (
-          <details id={`note-${note.slug}`} class="at-page-entry">
-            <summary>
-              <span class="at-sess-no">v4</span>
-              <span class="at-sess-title">{note.heading}</span>
-              <span class="at-sess-date">{note.date}</span>
-            </summary>
-            <div class="at-prose" set:html={note.html} />
-          </details>
-        ))}
-      </section>
-    )}
-  </Frame>
+  <RegisterSheet
+    id="atelier"
+    register="journal"
+    title="the journal — one line per page"
+    span={`S1–S${sessions.length} · ${entries.length} pages · ${ATELIER_NARRATIVE.rooms.journal}`}
+    rows={rows}
+    source="src/content/atelier/journal/*.md"
+  />
 </Page>
 
 <script>
-  // Deep links (#sNN) open their register entry — the same convention the engine pages used.
-  const openFromHash = () => {
-    const id = decodeURIComponent(location.hash.slice(1))
-    const el = id ? document.getElementById(id) : null
-    if (el instanceof HTMLDetailsElement) {
-      el.open = true
-      el.scrollIntoView()
-    }
+  // Legacy deep links (#s42, #note-…) used to open a fold-out on this page; each is a page of
+  // its own now. A fragment never reaches the server, so no _redirects rule can catch it —
+  // this bounce is the only place it can happen. Best-effort by design (it needs JS): without
+  // it the fragment still scrolls to the register row, which is where it always pointed.
+  import { legacyJournalHashTarget } from '@/lib/engines/journal'
+
+  const bounce = () => {
+    const target = legacyJournalHashTarget(location.hash)
+    if (!target) return
+    // Only bounce to a row this register actually served — never to a guessed 404.
+    const row = document.querySelector(`#journal-register [data-journal="${CSS.escape(target)}"]`)
+    if (row instanceof HTMLAnchorElement) location.replace(row.href)
   }
-  openFromHash()
-  addEventListener('hashchange', openFromHash)
+  bounce()
+  addEventListener('hashchange', bounce)
 </script>

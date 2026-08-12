@@ -1,0 +1,113 @@
+---
+// /observatory — The State Before the Interface: the lab's second, deliberately
+// differently-constituted experiment, built OUTSIDE the research ecology (no federation,
+// no personas, no shared runtime). Listed under /experiments on Frank's go, launch day
+// (2026-08-08). The page carries no live counts — numbers on this site are derived,
+// never typed (the Society kicker lesson); the living register renders itself from the
+// observatory's own committed records and is linked instead.
+import Page from '@/layouts/Page.astro'
+
+const REGISTER = 'https://frankbueltge.github.io/state-before-interface/'
+const REPO = 'https://github.com/frankbueltge/state-before-interface'
+---
+
+<Page
+  title="The State Before the Interface | Frank Bültge"
+  description="An autonomous observatory of public AI procurement in Europe — one machine runs the chain from signal to public result, and its autonomy is itself the thing under measurement."
+>
+  <main id="main" class="mx-auto w-full max-w-2xl flex-1 px-4 py-14 font-mono">
+    <p class="mb-2 text-[11px] uppercase tracking-[0.2em] text-fg-faint">
+      An instrument of <a href="/machine-attention" class="underline underline-offset-2">Machine Attention</a> · since 2026-08-08 · outside the research ecology
+    </p>
+    <h1 class="mb-3 font-sans text-2xl font-semibold">The State Before the Interface</h1>
+    <p class="mb-10 leading-relaxed text-fg-muted">
+      An autonomous observatory of public AI procurement in Europe. One machine runs the whole
+      chain — <span class="text-fg">signal → candidate → investigation → evidence → verification
+      → form → public result</span> — and its autonomy is itself the thing under measurement.
+    </p>
+
+    <section class="mb-10 border border-line bg-panel/60 p-5">
+      <h2 class="mb-2 text-[11px] uppercase tracking-[0.18em] text-fg-faint">Live</h2>
+      <ul class="space-y-1.5 text-sm leading-relaxed">
+        <li>
+          <a href={REGISTER} class="underline decoration-line underline-offset-4 hover:text-accent-soft">The register</a>
+          <span class="text-fg-muted"> — rebuilt nightly from committed records, and from nothing else.</span>
+        </li>
+        <li>
+          <a href={REPO} class="underline decoration-line underline-offset-4 hover:text-accent-soft">The archive</a>
+          <span class="text-fg-muted"> — append-only; every published claim walks back to hashed original bytes.</span>
+        </li>
+        <li>
+          <a href="/werke/observatory" class="underline decoration-line underline-offset-4 hover:text-accent-soft">Method sheet</a>
+          <span class="text-fg-muted"> — sources, cadence, processing, limits, and how to verify the chain yourself.</span>
+        </li>
+      </ul>
+    </section>
+
+    <div class="space-y-9 text-sm leading-relaxed text-fg-muted">
+      <section>
+        <h2 class="mb-2 font-semibold text-fg">A second constitution</h2>
+        <p>
+          The research ecology next door asks what happens <em>between</em> differently
+          constituted machine practices. This experiment asks the opposite question: what happens
+          when a single machine is built, as consequently as possible, for autonomous, public,
+          data-intensive investigation — no federation, no personas, no shared runtime. Two
+          research constitutions, both public, both writing committed records. The comparison is
+          not a report due in six months; it is a difference you can watch accumulate, night by
+          night, in two open archives. Since 2026-08-08 that second constitution has a name and
+          a stage — <a href="/attention/" class="underline decoration-line underline-offset-4">machine
+          attention</a> — and this observatory is one of its projects, run as an instrument rather than a flagship: it may produce nothing for a long time, and that is allowed.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="mb-2 font-semibold text-fg">What it watches</h2>
+        <p>
+          Every night a deterministic sentinel reads Europe's public procurement journal
+          (<a href="https://ted.europa.eu" class="underline decoration-line underline-offset-4">TED</a>)
+          through a small multilingual envelope of AI phrases, preserves every matching notice as
+          original bytes with SHA-256 manifests, and computes differences with research value:
+          records that change after publication, records that disappear, the same vendor winning
+          across borders, buyers that return. The regulation moved while the machine was being
+          built — the Digital Omnibus deferred the EU's public register of high-risk AI systems
+          to December 2027. Until then the observatory does what only early observation can do:
+          it builds the before-picture that cannot be reconstructed later.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="mb-2 font-semibold text-fg">Most candidates die</h2>
+        <p>
+          Every signal faces a six-criteria gate — observable public problem, machine-readable
+          evidence, potentially consequential relation, machine-scale advantage, falsifiable
+          investigation, possible digital form — and every verdict is committed with
+          per-criterion reasons. The terminal states rank equal and all publish:
+          <span class="text-fg">false alarm · insufficient evidence · interesting but trivial ·
+          research result · public work · ongoing observatory</span>. In its first night, all
+          seven candidates died at the gate; each verdict is on the record with its reasons. The
+          machine is not optimized to produce works.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="mb-2 font-semibold text-fg">Autonomy, measured</h2>
+        <p>
+          Every step writes to a public protocol: machine or human, model, tokens, cost,
+          correction — no aggregate score. A standing delegation lets the machine fetch,
+          preserve, open, decline, close and publish on its own; it stops for natural persons,
+          for accusations, for contact, for money, and for anything a follow-up commit could not
+          correct. Nothing sends itself.
+        </p>
+      </section>
+
+      <section class="border-t border-line pt-6">
+        <p class="text-[13px]">
+          <strong class="text-fg">Composed, not accidental.</strong> I conceived and engineered
+          this machine, wrote its standing delegation and its limits, and remain the hand on
+          everything that leaves the house. Inside those limits it works autonomously — and the
+          protocol shows exactly where it didn't.
+        </p>
+      </section>
+    </div>
+  </main>
+</Page>

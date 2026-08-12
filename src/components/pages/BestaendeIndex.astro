@@ -1,5 +1,5 @@
 ---
-// Ökologie-Neustrukturierung (Phase 3e, Branch ecology-restructure): "/holdings" widmet die
+// Ökologie-Neustrukturierung (Phase 3e, Branch ecology-restructure): "/experiments" widmet die
 // bisherigen Experimente (src/data/werke.ts, ohne die drei Engines) zu "Bestände des Labors —
 // Material, der Ökologie angeboten" um (docs/design/site-restructure-concept.md §2). Jede
 // bestehende Route bleibt unverändert erreichbar; hier ändert sich nur die Rahmung, keine
@@ -10,23 +10,35 @@
 // a-observatorium.html), keine eigene Zeichengrammatik, kein Dekor.
 import { getRelativeLocaleUrl } from 'astro:i18n'
 import type { Locale } from '@/lib/site'
-import { WERKE_CHRONO, werkTitle } from '@/data/werke'
+import { WERKE_HOLDINGS, werkTitle } from '@/data/werke'
 
 const locale = (Astro.currentLocale ?? 'en') as Locale
-// Die drei Engines (field/studio/atelier) stehen unter /praktiken, nicht hier (work order
-// phase-3e-plumbing.md §2: "ohne die drei Engines").
-const ENGINE_IDS = new Set(['field', 'studio', 'atelier'])
-const bestaende = WERKE_CHRONO.filter((w) => !ENGINE_IDS.has(w.id))
+// The exclusion set lives with the register itself (werke.ts HOLDINGS_EXCLUDED_IDS): the
+// three practice doors AND current MRR artefacts. A local filter here once let 'on-record'
+// leak in as the top entry of a page that lists the lab's earlier experiments.
+const bestaende = WERKE_HOLDINGS
+// Back to "Experiments" (Frank, 2026-07-31): the 2026-07 redesignation to "Holdings" traded a
+// word everyone understands for house vocabulary. The route /experiments is unchanged — links,
+// redirects and OG paths keep working; only the visible name goes back to the plain one.
+// "earlier work" dropped from the sub (Frank, 2026-08-08): this shelf now also lists the
+// RUNNING second experiment (The State Before the Interface) on Frank's explicit call —
+// "offered to the ecology as material" would be wrong for a piece built deliberately
+// outside the ecology, so the sentence names only what holds for every entry.
 const copy = {
   de: {
-    title: 'Bestände',
-    sub: 'Material, der Ökologie angeboten — die laufenden Instrumente des Labors, jedes mit offenen Quellen und offengelegtem Verfahren. (Umgewidmet aus „Experimente"; jede Route bleibt erreichbar, keine Pipeline endet dadurch.)',
+    title: 'Experimente',
+    sub: 'Die Experimente des Labors — laufende Instrumente, jedes mit offenen Quellen und offengelegtem Verfahren. Jede Route bleibt erreichbar, keine Pipeline endet dadurch.',
     live: 'live data',
+    field: 'Das Feld: jedes Experiment gegen die Projekte, die es schon gibt →',
   },
   en: {
-    title: 'Holdings',
-    sub: "Material, offered to the ecology — the lab's ongoing instruments, each with open sources and a disclosed method. (Redesignated from \"experiments\"; every route stays reachable, no pipeline ends because of this.)",
+    title: 'Experiments',
+    sub: "The lab's experiments — ongoing instruments, each with open sources and a disclosed method. Every route stays reachable, no pipeline ends because of this.",
     live: 'live data',
+    // 2026-08-09: the neighbour audit drawn as one figure. It sits at the top of the shelf on
+    // purpose — a visitor should be able to see what already exists near this work before
+    // reading the work's own account of itself.
+    field: 'The field: every experiment against the projects that already exist →',
   },
 }[locale]
 ---
@@ -34,6 +46,14 @@ const copy = {
 <main id="main" class="mx-auto w-full max-w-4xl flex-1 px-6 py-16 sm:py-24">
   <h1 class="text-[clamp(34px,6vw,64px)] font-bold tracking-[-0.03em]">{copy.title}</h1>
   <p class="mt-4 max-w-2xl text-fg-muted">{copy.sub}</p>
+  <p class="mt-5">
+    <a
+      href={getRelativeLocaleUrl(locale, '/experiments/neighbors')}
+      class="font-mono text-[12px] uppercase tracking-[0.14em] text-fg-faint underline underline-offset-4 transition-colors hover:text-accent-soft"
+    >
+      {copy.field}
+    </a>
+  </p>
 
   <ul class="mt-12 divide-y divide-line/60 border-t border-line/60">
     {bestaende.map((werk) => (

@@ -76,6 +76,21 @@ const datenschutzDe: LegalPage = {
         'Git ist das Archiv dieser Ökologie: Nachweise bestehen als versionierte Stände fort. Die interne Regel, committete Archivstände unverändert zu lassen, tritt hinter einem Widerspruch nach Art. 21 DSGVO zurück — ein Widerspruch wird auch im Archiv umgesetzt.',
       ],
     },
+    {
+      heading: 'Briefkasten & Kontaktformular (/post, /contact)',
+      paragraphs: [
+        'Über den Briefkasten des Postamts (/post) und das Kontaktformular (/contact) kannst du Nachrichten senden. Sie landen in einer privaten Warteschlange (Cloudflare Workers KV) und werden ausschließlich von mir gelesen — sie werden nicht veröffentlicht und nicht als Anweisung an ein KI-Modell weitergegeben. Die Angabe einer Kontaktmöglichkeit (z. B. E-Mail-Adresse) ist freiwillig und dient allein der Beantwortung deiner Nachricht (Art. 6 Abs. 1 lit. a DSGVO). Nachrichten werden nach Bearbeitung aus der Warteschlange gelöscht; eine Kontaktangabe gelangt zu keinem Zeitpunkt in das öffentliche Git-Archiv dieser Website.',
+        'Zur Begrenzung der Einsendungen wird aus IP-Adresse und User-Agent ein Hash gebildet, der nur flüchtig im Arbeitsspeicher der Funktion existiert und nie gespeichert wird (Art. 6 Abs. 1 lit. f DSGVO). Die Bot-Prüfung übernimmt Cloudflare Turnstile; dabei gelten die Datenschutzhinweise von Cloudflare.',
+        'Über den Eingang einer Nachricht wird der Betreiber per E-Mail benachrichtigt; diese Benachrichtigung enthält die Absender-Kennung und die Betreffzeile, nicht aber den Inhalt der Nachricht oder eine hinterlassene Kontaktangabe.',
+      ],
+    },
+    {
+      heading: 'E-Mail-Versand & Digest (Brevo)',
+      paragraphs: [
+        'Für den Versand von E-Mails — Antworten auf Nachrichten mit hinterlassener E-Mail-Adresse sowie den abonnierbaren Digest — nutze ich Brevo (Sendinblue GmbH, Köpenicker Str. 126, 10179 Berlin) als Auftragsverarbeiter (Art. 28 DSGVO). Die Verarbeitung findet in der EU statt.',
+        'Der Digest ist ein unregelmäßiger Newsletter über neue Arbeiten dieser Website. Die Anmeldung läuft im Double-Opt-in-Verfahren: Deine Adresse wird erst nach Bestätigung per E-Mail in die Empfängerliste aufgenommen (Art. 6 Abs. 1 lit. a DSGVO). Jede E-Mail enthält einen Abmeldelink; mit der Abmeldung wird die Adresse aus der Liste entfernt. Die Adresse wird ausschließlich bei Brevo gespeichert — nie im öffentlichen Archiv dieser Website — und nicht an Dritte weitergegeben. Über eine bestätigte Anmeldung wird der Betreiber per E-Mail benachrichtigt.',
+      ],
+    },
     { heading: 'Deine Rechte', paragraphs: ['Auskunft, Berichtigung, Löschung, Einschränkung, Datenübertragbarkeit, Widerspruch sowie Beschwerde bei einer Aufsichtsbehörde.'] },
   ],
 }
@@ -113,6 +128,21 @@ const datenschutzEn: LegalPage = {
         'Classifications are marked as classifications, not as settled fact: every statement names its source, its standing — “contested”, for instance — and the limits of the procedure it comes from. Where two reviews reach different results, the disagreement is left standing rather than averaged into one result.',
         'Anyone named here who considers a statement wrong, or who does not want their name listed, can write informally to hello@frankbueltge.de (objection under Art. 21 GDPR). Factual errors are corrected on the record with a date rather than removed quietly; on request the mention is removed.',
         'Git is this ecology’s archive: records persist as versioned states. The internal rule of leaving committed archive states unchanged yields to an objection under Art. 21 GDPR — an objection is carried out in the archive as well.',
+      ],
+    },
+    {
+      heading: 'Letterbox & contact form (/post, /contact)',
+      paragraphs: [
+        'Through the post office letterbox (/post) and the contact form (/contact) you can send messages. They land in a private queue (Cloudflare Workers KV) and are read by me alone — they are not published and not fed to any AI model as instruction. Leaving a contact detail (e.g. an email address) is voluntary and serves solely to answer your message (Art. 6(1)(a) GDPR). Messages are deleted from the queue after handling; a contact detail never enters this website’s public Git archive.',
+        'To rate-limit submissions, IP address and user agent are hashed; the hash exists only ephemerally in the function’s memory and is never stored (Art. 6(1)(f) GDPR). Bot screening is done by Cloudflare Turnstile; Cloudflare’s own privacy notice applies to that check.',
+        'The operator is notified by email when a message arrives; that notification carries the sender mark and the regarding line, but neither the message text nor any contact detail left behind.',
+      ],
+    },
+    {
+      heading: 'Email dispatch & digest (Brevo)',
+      paragraphs: [
+        'For sending email — replies to messages that left an email address, and the subscribable digest — I use Brevo (Sendinblue GmbH, Köpenicker Str. 126, 10179 Berlin) as a processor (Art. 28 GDPR). Processing takes place in the EU.',
+        'The digest is an irregular newsletter about new work on this site. Sign-up is double opt-in: your address joins the recipient list only after you confirm by email (Art. 6(1)(a) GDPR). Every mail carries an unsubscribe link; unsubscribing removes the address from the list. The address is stored at Brevo only — never in this website’s public archive — and is not shared with third parties. The operator is notified by email of a confirmed sign-up.',
       ],
     },
     { heading: 'Your rights', paragraphs: ['Access, rectification, erasure, restriction, portability, objection, and the right to lodge a complaint with a supervisory authority.'] },

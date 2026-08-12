@@ -134,3 +134,65 @@ schreibt dorthin; Umbenennung auf `/works` ist ein späteres Paket), `/{ns}/prot
 
 Test: `src/lib/redirects.test.ts` („practice-surfaces routes are covered“) prüft die beiden
 neuen Regeln und dass keine Wildcard die Praxis-Eingänge selbst verschluckt.
+
+## Nachtrag 2026-08-01 — Etappe 2 (Textwände): NULL neue Redirect-Zeilen
+
+Die Journale und Team-Kanäle wurden aufgeteilt (eine Seite je Session, Archiv je Kanal).
+**`public/_redirects` bleibt unangetastet** — und zwar aus zwei unabhängigen Gründen:
+
+1. **Kein Pfad ist umgezogen.** Alle bisherigen Adressen antworten weiter unter derselben
+   URL: `/atelier/journal`, `/field/journal`, `/studio/history`, `/{ns}/requests`. Sie zeigen
+   nur weniger auf einmal und verlinken den Rest. Was dazukommt, sind NEUE Routen:
+   `/{ns}/requests/archive`, `/atelier/journal/{anker}` (92), `/field/journal/{anker}` (86),
+   `/studio/journal` + `/studio/journal/{anker}` (56).
+2. **Fragmente kann ein Redirect nicht sehen.** Die publizierten Deeplinks sind Fragmente
+   (`/field/journal#cs-42`, `/atelier/journal#s37`, `/studio/history#cs-42`), und ein `#…`
+   erreicht Cloudflare nie — der Browser schickt es nicht mit. Eine `_redirects`-Regel könnte
+   sie also grundsätzlich nicht matchen, egal wie sie formuliert wäre. Der Umweg ist deshalb
+   ein Client-Script auf genau den drei Seiten, auf die diese Links zeigen
+   (`legacyJournalHashTarget()` + eine Prüfung gegen die tatsächlich gelieferten Anker im DOM,
+   damit nie auf einen geratenen 404 gesprungen wird). Best-effort, JS nötig — ohne JS
+   scrollt das Fragment weiter zu seiner Registerzeile, also kein Rückschritt gegenüber heute.
+
+**Der Anker IST das Pfadsegment** (`#cs-42` → `/field/journal/cs-42/`): Die
+Anker-Konvention (`cs-N`, `pre-<tag>-N`, `<tag>-<i>`, `s<n>`, `note-<slug>`) ist URL-sicher
+und wird wörtlich übernommen. Damit braucht es keine Mapping-Tabelle, die driften könnte —
+und die Chronik-Anker (`/{ns}/chronicle.json`) bleiben ohne Änderung gültig.
+
+## Nachtrag 2026-08-12 — Research ecology v3: die Vier-Ebenen-Pyramide
+
+Design-Handoff: `docs/design_handoff_research_ecology/README.md`. Diagnose (Frank, 2026-08-12):
+[Wortlaut privat]. Die
+Kur ist eine strikte Pyramide — **eine** Eingangsfläche (`/ecology`), **ein** Stationsblatt je
+Raum, darunter nüchterne Register. Frank hat die Kill-Liste des Handoffs am 2026-08-12
+bestätigt („[Wortlaut privat]"), also verschwinden 17 Seiten als eigene
+Oberflächen.
+
+**Kein Inhalt ist gelöscht.** Jede dieser Seiten steht vollständig in der Git-Historie; was
+sie zeigten, steht jetzt auf dem Blatt, auf das sie zeigen. Das ist der Unterschied zwischen
+Archivieren und Wegwerfen, und er ist die Bedingung, unter der diese Liste überhaupt
+umgesetzt wurde.
+
+| Alte Route | Ziel | Warum |
+|---|---|---|
+| `/maschinenraum` | `/ecology#now` | Das LAST-NIGHT-Board des Eingangs IST diese Seite — auf einer Fläche, die auch die vier Fragen ringsum beantwortet. |
+| `/{ns}/history` | `/{ns}` | Chronik/Spine/Playbill: der Statuspanel und die Figur des Stationsblatts tragen denselben Bestand. |
+| `/{ns}/apparatus` | `/{ns}` | Repo, Verfassung, Team-Kanal, nightly runs — jetzt Statuszeilen und Level-2-Türen. |
+| `/atelier/how-a-line-ends`, `/field/how-a-claim-came-off`, `/studio/how-a-premiere-returned` | `/{ns}#figure` | Die drei Touren führten je durch eine Figur. Die Figur steht auf dem Blatt; der Anker ist derselbe, auf den jetzt auch die Türen (`NAMING.doors[].tourHref`) und die Triptychon-Karten zeigen. |
+| `/atelier/sheet`, `/atelier/sheets`, `/atelier/material`, `/atelier/foundation` | `/atelier` | Fünf Einzelräume des Ateliers; ihr Zustand ist der Statuspanel, ihre Listen sind die Register. |
+| `/atelier/projects` | `/atelier/works` | Der Projektlog war eine Liste — Listen wohnen auf Ebene 2. |
+| `/season` | `/ecology#record` | Die Season-Ebene wurde im v2-Umbau (2026-08-08) gelöscht; die Zeitleiste trägt die Naht, die sie ersetzt hat. |
+| `/notation` | `github.com/frankbueltge/research-ecology` | Ein Dokument über die Schreibweise des Hauses gehört zu den Dokumenten (Ebene 3). Der Notations-Register-Eintrag ist datiert fortgeschrieben (`src/lib/notation/register.ts`, Änderung 2026-08-12). |
+
+Unverändert (bewusst): `/apparatus` bleibt als **eine** Seite bestehen, nur herabgestuft — der
+Eingang verlinkt sie als „the full wiring →". `/{ns}/works`, `/{ns}/instruments`,
+`/{ns}/journal`, `/{ns}/protocol`, `/{ns}/requests`, `/{ns}/werke/*`, `/works`, `/reception`,
+`/post`, `/seed`, `/plenum`, `/catalogues`, `/atlas`, `/datasets`, `/papers` bleiben.
+
+**Anker statt Mapping, wieder.** `#figure` ist ein echtes Ziel im DOM des Stationsblatts
+(`StationSheet.astro`), nicht eine Hoffnung: die drei Tour-Routen und die Türen zeigen auf
+denselben Anker, und ein Test hält beides zusammen.
+
+Test: `src/lib/redirects.test.ts` („research ecology v3 — retired routes“) prüft alle 17
+Regeln, dass keine auf eine andere umgeleitete Route zeigt (zwei Hops), und dass die drei
+Touren wirklich auf der Figur landen.

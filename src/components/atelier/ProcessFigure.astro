@@ -1,506 +1,507 @@
 ---
-// src/components/atelier/ProcessFigure.astro — „What the practice is working on":
-// Inhalt zuerst, Diagramm als Auswahl darunter.
+// src/components/atelier/ProcessFigure.astro — "The Passage": what happens to a question in this
+// practice, and what closing one costs.
 //
-// Die erste Fassung (30.07.) zeigte beim Auswählen einer Linie nur Telemetrie: Tage, Zugzahl,
-// Dateinamen. Franks Einwand traf: „Wenn ich ‚negative parallax' auswähle, erfahre ich nichts
-// über dieses Projekt und den Fortschritt oder aktuellen Stand und worum es dabei geht. Das
-// macht alles nicht übersichtlicher für jemanden, der die Website zum ersten Mal besucht,
-// sondern eher noch komplexer."
+// ARCHITECTURE, and why it is this way round (Frank, 2026-07-30, still binding): the CONTENT comes
+// first and the drawing below it is the SELECTOR for that content. The first version showed
+// telemetry on selection — days, move counts, filenames — and his objection landed: "If I select
+// 'negative parallax' I learn nothing about this project, its progress or current state, or what it
+// is about. That does not make things clearer for a first-time visitor, it makes them more
+// complex." So the card at the top carries the practice's OWN prose — the full title, what the line
+// is about (quoted from its score), why it ended (quoted from its decision), its last moves with
+// their own headings — and a click on the sheet swaps it. Nothing here is paraphrased; the practice
+// writes well enough that a second voice over it would be a falsification.
 //
-// Daraus die Umkehrung: Nicht das Diagramm ist der Gegenstand, sondern die Arbeit. Oben eine
-// Karte mit dem, was die Praxis GERADE tut — voller Titel, worum es geht (wörtlich aus der
-// Akte), wo es steht, die letzten Züge mit ihren sprechenden Überschriften. Das Diagramm
-// darunter ist die Auswahl dafür: ein Klick tauscht die Karte.
+// WHAT WP6a CHANGED, and what it deliberately did not:
+//   · PORTED onto the shared WP3 primitives — the hand-rolled tooltip becomes dataviz/Readout
+//     (which clamps to the FIGURE's box and flips at its edges instead of only clamping), the
+//     hand-rolled legend becomes dataviz/LegendFilter in MULTI mode (two outcomes can now be shown
+//     at once; single-select could only ever isolate one), the hand-rolled <details> table becomes
+//     dataviz/TableFallback, and the card becomes dataviz/DetailPanel — which is what gives it
+//     prev/next: until now a visitor could click ONE line and had to hunt for the next; the stepper
+//     walks all of them in the order they were opened, with ← and →.
+//   · GAINED the ledger gutter: beside every closed line, what closing it cost, verbatim from that
+//     line's own DECISION.md (src/lib/atelier/ledger.ts). Where the record states none, the sheet
+//     says so in words. Where a line is still running, it says nothing — a running line has not
+//     closed, so it has no closing cost to be missing.
+//   · MOVED its geometry into src/lib/atelier/passage.ts, so a guided tour can render a build-time
+//     still per scene from the SAME builder the live figure uses (a second generator would drift),
+//     and so the drawing is unit-tested rather than eyeballed.
+//   · KEPT, unchanged: the content-first order, quotes never paraphrase, the readout is never a hit
+//     target (the first draft hung the panel off `mouseleave` and its link ran away when you aimed
+//     at it — Frank, 30.07.), every line reachable by keyboard, a native <title> on every mark, the
+//     full table below, the provenance line, and the reduced-motion gate on the draw-in.
+//   · ONE duplicated rule REMOVED: the "same day / no zero moves" kicker rule used to exist twice,
+//     server-side and in the client script, with a comment warning that both had to change
+//     together. It is now computed once at build time (ATELIER_NARRATIVE.passage.kickerLine) and
+//     the client only re-prints it.
 //
-// Alle Texte sind Zitat, keine Paraphrase (src/lib/atelier/lineText.ts, unter Test). Die
-// Praxis schreibt selbst gut genug; eine zweite Stimme darüber wäre eine Verfälschung.
-import { getCollection } from 'astro:content'
-import { baueProzessbild, STATIONEN, type Ausgang } from '@/lib/atelier/process'
-import { absicht, urteil, zugTitel } from '@/lib/atelier/lineText'
+// Two house rules this file is built around, both load-bearing:
+//   · the figure container is `position: relative` (atelier-process.css `.at-proc-figure`) because
+//     the Readout is placed in the FIGURE's own coordinate space — dataviz/readout.ts house rule 1;
+//   · no `is:inline` script and no `style=""` anywhere: the site's CSP hashes bundled module
+//     scripts and silently drops style attributes, so every dynamic style goes through
+//     dataviz/runtime.ts's setVars (scripts/drift-check.mjs guards it).
+import DetailPanel from '@/components/dataviz/DetailPanel.astro'
+import LegendFilter from '@/components/dataviz/LegendFilter.astro'
+import Readout from '@/components/dataviz/Readout.astro'
+import TableFallback from '@/components/dataviz/TableFallback.astro'
+import { jsonScriptPayload } from '@/lib/dataviz/runtime'
+import {
+  buildPassageSvg,
+  dayLabel,
+  PASSAGE_COLUMNS,
+  passageRows,
+  passageViewBox,
+  type PassageModel,
+} from '@/lib/atelier/passage'
+import type { Ausgang } from '@/lib/atelier/process'
+import { ATELIER_NARRATIVE } from '@/config/atelier-wording'
 import '@/styles/atelier-process.css'
 
-const all = await getCollection('atelier')
-
-// Rohtexte der Akten — für die Prosa, die die Collection-Daten nicht hergeben.
-const scoreRaw = import.meta.glob('/src/content/atelier/projects/*/SCORE.md', {
-  eager: true, query: '?raw', import: 'default',
-}) as Record<string, string>
-const decisionRaw = import.meta.glob('/src/content/atelier/projects/*/DECISION.md', {
-  eager: true, query: '?raw', import: 'default',
-}) as Record<string, string>
-const journalRaw = import.meta.glob('/src/content/atelier/journal/*.md', {
-  eager: true, query: '?raw', import: 'default',
-}) as Record<string, string>
-
-const idAus = (pfad: string) => pfad.replace('/src/content/atelier/projects/', '').split('/')[0]
-
-const proj = new Map<string, { dateien: string[]; data: Record<string, unknown> }>()
-for (const e of all) {
-  if (!e.id.startsWith('projects/')) continue
-  const [, id, stueck] = e.id.split('/')
-  if (!id || !stueck) continue
-  const eintrag = proj.get(id) ?? { dateien: [], data: {} }
-  eintrag.dateien.push(`${stueck.toUpperCase()}.md`)
-  if (stueck.toLowerCase() === 'score') eintrag.data = (e.data ?? {}) as Record<string, unknown>
-  proj.set(id, eintrag)
+export interface Props {
+  /** the sheet, assembled from the committed records by src/lib/atelier/passage-data.ts. Passed in
+   *  rather than built here so the guided tour's build-time stills come from the same model this
+   *  figure draws — two assemblies would drift. */
+  model: PassageModel
+  /** DOM id a tour drives this figure by — must match the tour's own focus.figure */
+  id?: string
+  /** the figure's own heading; omitted renders none (a tour supplies its own title) */
+  heading?: string
+  /**
+   * Whether this instance renders the passage's own table + provenance. `false` when the figure
+   * sits inside components/dataviz/Tour.astro's figure slot: that slot is `hidden` until JS reveals
+   * it, and the table is the figure's DATA FLOOR — it must never be the thing that disappears when
+   * scripts don't run. The tour composition renders the record itself, outside the pinned column.
+   * The LEGEND and the CARD stay inside: the card is server-rendered with a real line in it, and
+   * identity on this sheet is carried by every line's own label and by that same table, never by
+   * colour alone, with or without JS.
+   */
+  withRecord?: boolean
+  /**
+   * Whether the sheet draws its ledger gutter. `false` is the ARCHIVE placement on /atelier
+   * (2026-08-01): the entrance demoted this figure to "what became of earlier lines", and the
+   * gutter — a running sentence at ~5px once the 1480-unit sheet is scaled into a page column —
+   * went with it. Frank: "next to the diagram, in mini type nobody can read, 'what closing it
+   * cost'." The same sentences now stand in each closed line's dossier at reading size. The
+   * figure keeps the gutter wherever it is the page's own subject (the guided story).
+   */
+  withGutter?: boolean
+  /** the paragraph under the heading; omitted uses the figure's own standing lead */
+  lead?: string
 }
 
-const journalIds = Object.keys(journalRaw).map((p) => p.replace('/src/content/atelier/', '').replace(/\.md$/, ''))
-const heute = new Date().toISOString().slice(0, 10)
+const {
+  model,
+  id = 'atelier-passage',
+  heading,
+  withRecord = true,
+  withGutter = true,
+  lead,
+} = Astro.props
+const w = ATELIER_NARRATIVE.passage
 
-/** Loses Collection-Schema ⇒ YAML parst `created:` zu einem Date-OBJEKT. String(date) gäbe
- * „Sat Jul 18 2026 …" und NaN in jeder Datumsrechnung — daran ist der erste Build gescheitert. */
-function alsDatum(v: unknown): string {
-  if (v instanceof Date && !Number.isNaN(v.getTime())) return v.toISOString().slice(0, 10)
-  const s = String(v ?? '').trim()
-  if (/^\d{4}-\d{2}-\d{2}/.test(s)) return s.slice(0, 10)
-  const p = Date.parse(s)
-  return Number.isNaN(p) ? '' : new Date(p).toISOString().slice(0, 10)
+const svg = buildPassageSvg(model, {
+  gapLine: w.gapLine,
+  gateLabel: w.gateLabel,
+  gutterLabel: w.gutterLabel,
+  withGutter,
+})
+
+// ————————————————————————————————— the card, the legend, the payload ——————
+const SWATCH: Record<Ausgang, string> = {
+  PUBLISH: 'var(--pr-publish)',
+  PUBLICATION_CANDIDATE: 'var(--pr-candidate)',
+  ARCHIVE_AS_STUDY: 'var(--pr-study)',
+  KILL: 'var(--pr-kill)',
+  OPEN: 'var(--pr-open)',
 }
+const legendItems = model.harbours.map((h) => ({
+  key: h.outcome,
+  label: h.label,
+  hint: h.hint,
+  count: h.count,
+  swatch: SWATCH[h.outcome],
+}))
 
-const bild = baueProzessbild(
-  [...proj.entries()].map(([id, v]) => ({
-    id,
-    title: String(v.data.title ?? id),
-    status: String(v.data.status ?? ''),
-    disposition: String(v.data.disposition ?? ''),
-    created: alsDatum(v.data.created),
-    dateien: v.dateien,
-  })),
-  journalIds,
-  heute,
+const payload = model.lines.map((l, i) => ({
+  key: l.key,
+  outcome: l.outcome,
+  title: l.title,
+  kicker: w.kickerLine({
+    harbour: l.harbour,
+    opened: dayLabel(l.opened),
+    days: l.days,
+    moves: l.moves,
+    active: l.active,
+  }),
+  about: l.about,
+  verdict: l.verdict,
+  moves: l.moveList.map((m) => [dayLabel(m.date), m.title]),
+  ledger: l.ledger ? { text: l.ledger.full, source: l.ledger.source } : null,
+  gap: l.outcome !== 'OPEN' && !l.active && !l.ledger,
+  href: `/atelier/projects#${l.key}`,
+  pos: w.positionLine(i + 1, model.lines.length),
+  /** the viewBox a tour scene re-aims the live sheet at — the band around this line. Precomputed
+   *  here because the crop maths belongs to the pure builder, not to a client script. */
+  band: passageViewBox(model, l.key, withGutter),
+}))
+
+// The opening card: the line at the gate, else the newest running one, else the newest overall.
+const startIndex = Math.max(
+  0,
+  (() => {
+    const gate = model.lines.findIndex((l) => l.outcome === 'PUBLICATION_CANDIDATE')
+    if (gate !== -1) return gate
+    const running = model.lines.map((l) => l.active).lastIndexOf(true)
+    return running !== -1 ? running : model.lines.length - 1
+  })(),
 )
+const start = payload[startIndex]
 
-// Die Hafen-Namen sagen, was geschah — nicht, wie es zu bewerten ist: „closed unfinished"
-// statt „failed", weil das Protokoll Schließen und Weitermachen gleichrangig stellt.
-const HAFEN: Record<Ausgang, { label: string; farbe: string; erklaerung: string }> = {
-  PUBLISH: { label: 'published', farbe: 'var(--pr-publish)', erklaerung: 'through the gate — a work on the site' },
-  PUBLICATION_CANDIDATE: { label: 'at the gate', farbe: 'var(--pr-candidate)', erklaerung: 'proposed as a work; the publication decision is human' },
-  ARCHIVE_AS_STUDY: { label: 'kept as study', farbe: 'var(--pr-study)', erklaerung: 'not published, not discarded — it feeds later lines' },
-  KILL: { label: 'closed unfinished', farbe: 'var(--pr-kill)', erklaerung: 'ended on purpose; closing costs what continuing costs' },
-  OPEN: { label: 'in progress', farbe: 'var(--pr-open)', erklaerung: 'no verdict yet' },
-}
+const rows = passageRows(model, w.gapLine, w.openLine)
+const provenance = `${w.provenancePrefix} ${w.provenance.join(' · ')} — ${w.scaleNote}. As of ${
+  model.asOf
+}; ${model.unattachedMoves} journal entries in this period belong to no line (sessions, protocol changes, encounters) and are not counted as moves.`
 
-// ————————————————————————————————————————— Inhalt je Linie ————————————————
-const MONATE = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-const tag = (d: string) => (/^\d{4}-\d{2}-\d{2}$/.test(d) ? `${Number(d.slice(8, 10))} ${MONATE[Number(d.slice(5, 7)) - 1]}` : d)
-
-interface Inhalt {
-  id: string
-  titel: string
-  ausgang: Ausgang
-  hafen: string
-  farbe: string
-  eroeffnet: string
-  tage: number
-  aktiv: boolean
-  worumEsGeht: string | null
-  warumSoGeendet: string | null
-  zuege: Array<{ datum: string; titel: string }>
-  zugZahl: number
-}
-
-const inhalte: Inhalt[] = bild.linien.map((l) => {
-  const scorePfad = Object.keys(scoreRaw).find((p) => idAus(p) === l.id)
-  const decPfad = Object.keys(decisionRaw).find((p) => idAus(p) === l.id)
-  const wl = (proj.get(l.id)?.data.work_line ?? {}) as Record<string, unknown>
-  // Die Überschriften der Journaleinträge lesen sich wie das Inhaltsverzeichnis der
-  // Untersuchung — sie sind der bessere Fortschrittsanzeiger als jede Zahl.
-  const zuege = Object.entries(journalRaw)
-    .map(([pfad, roh]) => {
-      const datei = pfad.split('/').pop() ?? ''
-      const m = /^(\d{4}-\d{2}-\d{2})-(.+)\.md$/.exec(datei)
-      return m && m[2].startsWith(l.name) ? { datum: m[1], titel: zugTitel(roh, datei) } : null
-    })
-    .filter((z): z is { datum: string; titel: string } => z !== null)
-    .sort((a, b) => b.datum.localeCompare(a.datum))
-
-  return {
-    id: l.id,
-    titel: l.title,
-    ausgang: l.ausgang,
-    hafen: HAFEN[l.ausgang].label,
-    farbe: HAFEN[l.ausgang].farbe,
-    eroeffnet: l.created,
-    tage: l.tage,
-    aktiv: l.aktiv,
-    worumEsGeht: scorePfad ? absicht(scoreRaw[scorePfad], wl.work_intention) : null,
-    warumSoGeendet: decPfad ? urteil(decisionRaw[decPfad]) : null,
-    zuege: zuege.slice(0, 4),
-    zugZahl: l.zuege,
-  }
-})
-
-/** Die Kopfzeile der Karte. „0 days · 0 moves" wäre wahr und trotzdem irreführend — ein am
- * selben Tag veröffentlichtes Werk hat nicht „nichts" getan, es hat nur keinen eigenen
- * Journaltakt. Also: Nulldauer heißt „same day", und eine Nullzahl an Zügen wird gar nicht
- * erst genannt. Dieselbe Regel steht unten im Skript — beide müssen zusammen geändert werden. */
-function kicker(i: { hafen: string; eroeffnet: string; tage: number; zugZahl: number; aktiv: boolean }): string {
-  const teile = [i.hafen, `opened ${tag(i.eroeffnet)}`, i.tage === 0 ? 'same day' : `${i.tage} day${i.tage === 1 ? '' : 's'}`]
-  if (i.zugZahl > 0) teile.push(`${i.zugZahl} move${i.zugZahl === 1 ? '' : 's'}`)
-  if (i.aktiv) teile.push('still running')
-  return teile.join(' · ')
-}
-
-// Startkarte: die Linie am Tor, sonst die jüngste laufende, sonst die jüngste überhaupt.
-const start =
-  inhalte.find((i) => i.ausgang === 'PUBLICATION_CANDIDATE') ??
-  [...inhalte].reverse().find((i) => i.aktiv) ??
-  inhalte[inhalte.length - 1]
-
-// ————————————————————————————————————————— Geometrie ——————————————————————
-const linien = bild.linien
-const N = Math.max(linien.length, 1)
-const ZEILE = 27
-const OBEN = 50
-const W = 1180
-const H = OBEN + N * ZEILE + 30
-const LABEL_W = 186
-const T_X0 = LABEL_W + 14
-const T_X1 = 690
-const HAFEN_X = 812
-const HAFEN_W = 174
-
-const tms = (d: string) => Date.parse(`${d}T00:00:00Z`)
-const T0 = linien.length ? Math.min(...linien.map((l) => tms(l.created))) : tms(heute)
-const T1 = Math.max(tms(bild.stand), T0 + 86_400_000)
-const xOf = (d: string) => T_X0 + ((tms(d) - T0) / (T1 - T0)) * (T_X1 - T_X0)
-
-const gesamt = linien.length || 1
-const HOEHE = N * ZEILE - 6
-let lauf = OBEN
-const haefen = bild.haefen.map((h) => {
-  const hh = Math.max(24, (h.anzahl / gesamt) * HOEHE - 6)
-  const y = lauf
-  lauf += hh + 6
-  return { ...h, y, h: hh, mitte: y + hh / 2, ...HAFEN[h.ausgang] }
-})
-const hafenVon = new Map(haefen.map((h) => [h.ausgang, h]))
-
-const platz = new Map<string, number>()
-for (const h of haefen) {
-  const drin = linien.filter((l) => l.ausgang === h.ausgang)
-  drin.forEach((l, i) => platz.set(l.id, h.y + (h.h / (drin.length + 1)) * (i + 1)))
-}
-
-const bahnen = linien.map((l, i) => {
-  const y = OBEN + i * ZEILE + ZEILE / 2
-  const x1 = xOf(l.created)
-  const x2 = Math.max(xOf(l.letzterZug ?? l.created), x1 + 7)
-  const zy = platz.get(l.id) ?? y
-  const hafen = hafenVon.get(l.ausgang)
-  const farbe = hafen?.farbe ?? 'var(--pr-open)'
-  const cx = (x2 + HAFEN_X) / 2
-  const tail = `M ${x2.toFixed(1)} ${y} C ${cx.toFixed(1)} ${y}, ${cx.toFixed(1)} ${zy.toFixed(1)}, ${HAFEN_X} ${zy.toFixed(1)}`
-  return {
-    ...l, y, x1, x2, zy, farbe, tail,
-    laenge: Math.round(x2 - x1 + (HAFEN_X - x2) * 1.15),
-    hafenLabel: hafen?.label ?? 'in progress',
-    striche: l.zugTage.map((d) => xOf(d)),
-  }
-})
-
-const kuerze = (s: string, n = 19) => (s.length > n ? `${s.slice(0, n - 1)}…` : s)
-const marken = [T0, (T0 + T1) / 2, T1]
-  .filter((ts) => Number.isFinite(ts))
-  .map((ts) => {
-    const d = new Date(ts).toISOString().slice(0, 10)
-    return { x: xOf(d), label: tag(d) }
-  })
-
-const hPub = hafenVon.get('PUBLISH')
-const hKand = hafenVon.get('PUBLICATION_CANDIDATE')
-const TOR_X = HAFEN_X + HAFEN_W + 16
-const torBogen =
-  hPub && hKand
-    ? {
-        d: `M ${TOR_X} ${hKand.mitte} C ${TOR_X + 26} ${hKand.mitte}, ${TOR_X + 26} ${hPub.mitte}, ${TOR_X + 2} ${hPub.mitte + 4}`,
-        tx: TOR_X + 8,
-        ty: (hPub.mitte + hKand.mitte) / 2 - 2,
-      }
-    : null
-
-// Die Ausbeute in einem Satz — für alle, die gar kein Diagramm lesen wollen.
-const z = (a: Ausgang) => bild.haefen.find((h) => h.ausgang === a)?.anzahl ?? 0
-const ausbeute = [
-  `${linien.length} questions opened since ${tag(linien[0]?.created ?? heute)}`,
-  z('PUBLISH') > 0 ? `${z('PUBLISH')} became a work` : null,
-  z('PUBLICATION_CANDIDATE') > 0 ? `${z('PUBLICATION_CANDIDATE')} waits at the gate` : null,
-  z('ARCHIVE_AS_STUDY') > 0 ? `${z('ARCHIVE_AS_STUDY')} kept as studies` : null,
-  z('KILL') > 0 ? `${z('KILL')} closed on purpose` : null,
-].filter(Boolean).join(' · ')
-
-const linienDaten = Object.fromEntries(
-  inhalte.map((i) => [i.id, {
-    t: i.titel, o: i.hafen, e: tag(i.eroeffnet), d: i.tage, m: i.zugZahl, a: i.aktiv,
-    c: i.farbe, ab: i.worumEsGeht, v: i.warumSoGeendet,
-    z: i.zuege.map((zg) => [tag(zg.datum), zg.titel]),
-  }]),
-)
+const titleId = `${id}-title`
+const legendLabelId = `${id}-legend-label`
 ---
 
-<section class="at-proc" aria-labelledby="proc-title" data-proc>
-  <div class="at-proc-head">
-    <h2 class="at-proc-title" id="proc-title">What the practice is working on</h2>
-  </div>
-  <p class="at-proc-lead">
-    A line begins as a question, is worked in moves, and ends in one of four ways — as a work,
-    as a candidate waiting for a human decision, as a study kept for later, or closed on
-    purpose. Pick one below to read it.
-  </p>
-
-  {/* Die Karte ist der Gegenstand; das Diagramm darunter wählt nur aus. */}
-  <article class="at-now" data-card data-color={start?.farbe ?? 'var(--color-line)'}>
-    {start && (
-      <>
-        <p class="n-kicker">
-          <span class="n-dot" aria-hidden="true"></span>
-          {kicker(start)}
-        </p>
-        <h3 class="n-title">{start.titel}</h3>
-        {start.worumEsGeht && <p class="n-about">{start.worumEsGeht}</p>}
-        {start.warumSoGeendet && <p class="n-verdict">{start.warumSoGeendet}</p>}
-        {start.zuege.length > 0 && (
-          <div class="n-moves">
-            <p class="n-moves-h">its last moves</p>
-            <ul>
-              {start.zuege.map((zg) => (
-                <li><span class="m-date">{tag(zg.datum)}</span> {zg.titel}</li>
-              ))}
-            </ul>
-          </div>
-        )}
-        <p class="n-more"><a href={`/atelier/projects#${start.id}`}>read the full record →</a></p>
-      </>
-    )}
-  </article>
-
-  <p class="at-proc-yield">{ausbeute}</p>
-
-  <ul class="at-proc-legend" data-legend>
-    {haefen.map((h) => (
-      <li>
-        <button class="at-proc-lg" type="button" aria-pressed="false" data-filter={h.ausgang} title={h.erklaerung} data-lg-color={h.farbe}>
-          <span class="dot" aria-hidden="true"></span>
-          <span>{h.label}</span>
-          <span class="n">{h.anzahl}</span>
-        </button>
-      </li>
-    ))}
-  </ul>
-
-  <figure class="at-proc-figure">
-    <div class="at-proc-scroll" data-plot>
-      <svg
-        class="at-proc-svg"
-        viewBox={`-8 0 ${W + 8} ${H}`}
-        role="img"
-        aria-label={`Every research line on a time axis: ${linien.length} opened; ${haefen.map((h) => `${h.label} ${h.anzahl}`).join(', ')}. Select a line to read it above.`}
-      >
-        <defs>
-          <marker id="pr-arrow" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-            <path d="M 0 1 L 7 4 L 0 7 z" fill="var(--color-fg-faint)" />
-          </marker>
-        </defs>
-        <g class="pr-axis">
-          <line x1={T_X0} y1={OBEN - 22} x2={T_X1} y2={OBEN - 22} />
-          {marken.map((m) => <text x={m.x} y={OBEN - 30} text-anchor="middle">{m.label}</text>)}
-        </g>
-
-        {torBogen && (
-          <g class="pr-gate">
-            <path d={torBogen.d} fill="none" marker-end="url(#pr-arrow)" />
-            <text x={torBogen.tx} y={torBogen.ty} text-anchor="start">THE GATE</text>
-            <text x={torBogen.tx} y={torBogen.ty + 13} text-anchor="start">a human decides</text>
-          </g>
-        )}
-
-        {haefen.map((h) => (
-          <g class="pr-harbour" data-harbour={h.ausgang}>
-            <title>{`${h.label} — ${h.erklaerung}`}</title>
-            <rect x={HAFEN_X} y={h.y} width={HAFEN_W} height={h.h} rx="9" fill={h.farbe} opacity="0.13" />
-            <rect x={HAFEN_X} y={h.y} width="3.5" height={h.h} rx="1.75" fill={h.farbe} />
-            <text class="h-count" x={HAFEN_X + 14} y={h.mitte - 2} fill={h.farbe}>{h.anzahl}</text>
-            <text class="h-label" x={HAFEN_X + 14} y={h.mitte + 13} fill="var(--color-fg-muted)">{h.label}</text>
-          </g>
-        ))}
-
-        {bahnen.map((b, i) => (
-          <g
-            class="pr-line"
-            tabindex="0"
-            role="button"
-            data-line={b.id}
-            data-out={b.ausgang}
-            data-title={b.title}
-            data-color={b.farbe}
-            data-harbour={b.hafenLabel}
-            aria-label={`${b.title} — ${b.hafenLabel}. Select to read it.`}
-            data-len={String(b.laenge)}
-            data-delay={`${i * 45}ms`}
-          >
-            <title>{`${b.title} — ${b.hafenLabel}`}</title>
-            <text class="pr-label" x="6" y={b.y + 4}>{kuerze(b.title)}</text>
-            <text class="pr-date" x={LABEL_W} y={b.y + 4} text-anchor="end">{b.created.slice(5)}</text>
-            <path class="pr-tail" d={b.tail} stroke={b.farbe} />
-            <line class:list={['pr-band', { 'is-open': b.ausgang === 'OPEN' }]} x1={b.x1} y1={b.y} x2={b.x2} y2={b.y} stroke={b.farbe} />
-            {b.striche.map((x) => <line class="pr-move" x1={x} y1={b.y - 3.2} x2={x} y2={b.y + 3.2} />)}
-            {b.aktiv && <circle cx={b.x2} cy={b.y} r="4.4" fill="none" stroke={b.farbe} stroke-width="1.4" opacity="0.9" />}
-            <rect class="pr-focus" x={-8} y={b.y - 12} width={W} height={24} rx="6" fill="none" stroke="none" />
-            <rect class="pr-rowhit" x={-8} y={b.y - 12} width={HAFEN_X + 8} height={24} fill="transparent" />
-          </g>
-        ))}
-      </svg>
+<section
+  class:list={['at-proc', !withGutter && 'at-proc-compact']}
+  data-proc
+  aria-labelledby={heading ? titleId : undefined}
+>
+  {heading && (
+    <div class="at-proc-head">
+      <h2 class="at-proc-title" id={titleId}>{heading}</h2>
     </div>
-    <div class="at-proc-tip" data-tip hidden aria-hidden="true"></div>
+  )}
+  {heading && <p class="at-proc-lead">{lead ?? w.lead}</p>}
+
+  <p class="at-proc-key" id={legendLabelId}>{w.legendLabel}</p>
+  <LegendFilter items={legendItems} mode="multi" labelledby={legendLabelId} />
+
+  {/* The card IS the object; the sheet below only chooses which line it shows. It is server-
+      rendered with a real line in it and opens visible, so a visitor without JS reads a whole
+      record here rather than an empty box above a drawing. */}
+  <DetailPanel id={`${id}-panel`} open pos={startIndex}>
+    <Fragment slot="head">
+      <p class="n-kicker">
+        <span class="n-dot" aria-hidden="true"></span><span data-p-kicker>{start?.kicker}</span>
+      </p>
+      <h3 class="n-title" data-p-title>{start?.title}</h3>
+    </Fragment>
+    <Fragment slot="body">
+      <p class="n-about" data-p-about hidden={!start?.about}>{start?.about}</p>
+      <p class="n-verdict" data-p-verdict hidden={!start?.verdict}>{start?.verdict}</p>
+      <div
+        class="n-ledger"
+        data-p-ledger-wrap
+        data-gap-line={w.gapLine}
+        data-gap={start?.gap ? '' : undefined}
+        hidden={!start?.ledger && !start?.gap}
+      >
+        <p class="n-ledger-h">{w.panelLedgerHeading}</p>
+        <p class="n-ledger-t" data-p-ledger>{start?.ledger ? start.ledger.text : w.gapLine}</p>
+        <p class="n-ledger-src" data-p-ledger-src>{start?.ledger?.source ?? ''}</p>
+      </div>
+      <div class="n-moves" data-p-moves-wrap hidden={!start?.moves.length}>
+        <p class="n-moves-h">{w.cardMovesHeading}</p>
+        <ul data-p-moves>
+          {start?.moves.map(([date, title]) => (
+            <li><span class="m-date">{date}</span> {title}</li>
+          ))}
+        </ul>
+      </div>
+    </Fragment>
+    <Fragment slot="foot">
+      <a class="n-more" data-p-more href={start?.href}>{w.cardMore}</a>
+      <span class="n-pos" data-p-pos>{start?.pos}</span>
+    </Fragment>
+  </DetailPanel>
+
+  <figure class="at-proc-figure" data-proc-figure>
+    <div class="at-proc-scroll">
+      <div id={id} data-proc-svg set:html={svg} />
+    </div>
+    <Readout id={`${id}-readout`} maxWidth="34ch" />
   </figure>
 
-  <details class="at-proc-table">
-    <summary>every line as a table</summary>
-    <table>
-      <thead>
-        <tr><th>line</th><th>opened</th><th>days</th><th>moves</th><th>records</th><th>outcome</th></tr>
-      </thead>
-      <tbody>
-        {linien.map((l) => (
-          <tr>
-            <td>{l.title}</td>
-            <td>{l.created}</td>
-            <td>{l.tage}</td>
-            <td>{l.zuege}</td>
-            <td>{STATIONEN.filter((s) => l.stationen[s]).join(' · ')}</td>
-            <td>{HAFEN[l.ausgang].label}</td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  </details>
+  <p class="dv-prov at-proc-hint">{w.hint}</p>
 
-  <p class="at-proc-prov">
-    Every sentence above is quoted from the practice's own records, not summarised: what a line
-    is about comes from its score, why it ended from its decision, its moves from the journal.
-    Derived at build time; {bild.ohneLinie} journal entries in this period belong to no line
-    (sessions, protocol changes, encounters) and are not counted as moves.
-  </p>
+  {withRecord && (
+    <TableFallback
+      summary={w.tableSummary}
+      caption={w.tableCaption}
+      columns={PASSAGE_COLUMNS}
+      rows={rows}
+      provenance={provenance}
+    />
+  )}
 
-  <script type="application/json" data-lines set:html={JSON.stringify(linienDaten)}></script>
+  <script type="application/json" data-proc-payload set:html={jsonScriptPayload(payload)} />
 </section>
 
 <script>
-  // Zwei Stufen: HOVER zeigt einen Tooltip am Zeiger (nichts zum Hinfahren, `pointer-events:
-  // none`), KLICK tauscht die Karte oben. Die erste Fassung hängte die Tafel an `mouseleave`
-  // — der Link darin war dadurch unerreichbar (Frank, 30.07.).
-  const wurzel = document.querySelector<HTMLElement>('[data-proc]')
-  if (wurzel) {
-    const karte = wurzel.querySelector<HTMLElement>('[data-card]')!
-    const tip = wurzel.querySelector<HTMLElement>('[data-tip]')!
-    const rahmen = wurzel.querySelector<HTMLElement>('.at-proc-figure')!
-    const daten = JSON.parse(wurzel.querySelector<HTMLElement>('[data-lines]')?.textContent ?? '{}') as Record<string, any>
-    const bahnen = [...wurzel.querySelectorAll<SVGGElement>('.pr-line')]
-    const knoepfe = [...wurzel.querySelectorAll<HTMLButtonElement>('[data-filter]')]
-    let filter: string | null = null
-    let gewaehlt: string | null = null
+  import { isOn } from '@/lib/dataviz/filter'
+  import { createReadout } from '@/lib/dataviz/readout'
+  import { reducedMotion } from '@/lib/dataviz/runtime'
+  import { buildSegments, step } from '@/lib/dataviz/stepper'
+  import { ensureFigureReadyListener } from '@/lib/tour/engine'
+  import type { FocusState } from '@/lib/tour/types'
 
-    // Die je Element wechselnden Werte kommen über `data-*` und werden hier gesetzt, NICHT
-    // als `style`-Attribut im Markup. Grund ist die CSP: `security.csp` in astro.config.mjs
-    // schreibt ein `style-src` mit Hashes, und sobald ein Hash darin steht, ignoriert der
-    // Browser das daneben stehende `'unsafe-inline'` — Style-Attribute lassen sich nicht
-    // hashen und fallen still weg. Genau das war der Befund vom 25.07. (die
-    // e2e-automation-Balken standen deshalb alle auf 100 %). Eine Zuweisung über das CSSOM
-    // ist davon nicht betroffen, weil die CSP das Parsen von Markup regelt, nicht
-    // Schreibzugriffe zur Laufzeit. `scripts/drift-check.mjs` hält die Regel in CI.
-    karte.style.setProperty('--n-color', karte.dataset.color ?? 'var(--color-line)')
-    for (const k of knoepfe) {
-      if (k.dataset.lgColor) k.style.setProperty('--lg-color', k.dataset.lgColor)
+  interface Line {
+    key: string
+    outcome: string
+    title: string
+    kicker: string
+    about: string | null
+    verdict: string | null
+    moves: [string, string][]
+    ledger: { text: string; source: string } | null
+    gap: boolean
+    href: string
+    pos: string
+    band: string
+  }
+
+  for (const root of document.querySelectorAll<HTMLElement>('[data-proc]')) {
+    const figure = root.querySelector<HTMLElement>('[data-proc-figure]')
+    const svgHost = root.querySelector<HTMLElement>('[data-proc-svg]')
+    const readoutEl = root.querySelector<HTMLElement>('[data-dv-readout]')
+    const panel = root.querySelector<HTMLElement>('[data-dv-panel]')
+    const payloadEl = root.querySelector<HTMLElement>('[data-proc-payload]')
+    const svg = svgHost?.querySelector<SVGSVGElement>('svg')
+    if (!figure || !svgHost || !readoutEl || !panel || !payloadEl || !svg) continue
+
+    let lines: Line[]
+    try {
+      lines = JSON.parse(payloadEl.textContent ?? '[]') as Line[]
+    } catch {
+      continue // no payload, no enhancement: the SVG's own <title>s and the table still work
     }
-    for (const bahn of bahnen) {
-      const { len, delay } = (bahn as unknown as SVGElement & { dataset: DOMStringMap }).dataset
-      if (len) bahn.style.setProperty('--len', len)
-      if (delay) bahn.style.setProperty('--delay', delay)
-    }
+    const wholeView = svg.getAttribute('viewBox') ?? ''
+    const byKey = new Map(lines.map((l) => [l.key, l]))
+    const groups = [...svg.querySelectorAll<SVGGElement>('[data-key]')]
+    const harbours = [...svg.querySelectorAll<SVGGElement>('.pr-harbour')]
+    const readout = createReadout(readoutEl, figure)
 
-    const esc = (s: unknown) =>
-      String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c] as string)
+    // one segment, the whole passage in the order the questions were opened — prev/next walks it
+    // end to end, which is what a visitor could not do before (one click, one line, then hunt)
+    const segmented = buildSegments(lines, () => 'the passage')
 
-    /** Spiegel der serverseitigen Regel: Nulldauer heißt „same day", Nullzüge werden nicht
-     * genannt — „0 moves" wäre wahr und trotzdem irreführend. */
-    function kicker(d: any): string {
-      const teile = [d.o, `opened ${d.e}`, d.d === 0 ? 'same day' : `${d.d} day${d.d === 1 ? '' : 's'}`]
-      if (d.m > 0) teile.push(`${d.m} move${d.m === 1 ? '' : 's'}`)
-      if (d.a) teile.push('still running')
-      return teile.join(' · ')
-    }
+    let filter: string[] = []
+    let dim: string[] = []
+    let chosen: string | null = lines[Number(panel.dataset.dvPos ?? '0')]?.key ?? null
 
-    function zeigeKarte(id: string) {
-      const d = daten[id]
-      if (!d) return
-      karte.style.setProperty('--n-color', d.c)
-      karte.innerHTML =
-        `<p class="n-kicker"><span class="n-dot" aria-hidden="true"></span>${esc(kicker(d))}</p>` +
-        `<h3 class="n-title">${esc(d.t)}</h3>` +
-        (d.ab ? `<p class="n-about">${esc(d.ab)}</p>` : '') +
-        (d.v ? `<p class="n-verdict">${esc(d.v)}</p>` : '') +
-        (d.z.length
-          ? `<div class="n-moves"><p class="n-moves-h">its last moves</p><ul>` +
-            d.z.map((zg: [string, string]) => `<li><span class="m-date">${esc(zg[0])}</span> ${esc(zg[1])}</li>`).join('') +
-            `</ul></div>`
-          : '') +
-        `<p class="n-more"><a href="/atelier/projects#${esc(id)}">read the full record →</a></p>`
-      karte.animate?.([{ opacity: 0.4 }, { opacity: 1 }], { duration: 220, easing: 'ease-out' })
-    }
-
-    function zeigeTip(g: SVGGElement, ev: MouseEvent) {
-      const d = g.dataset
-      tip.innerHTML = `<b class="t-title">${esc(d.title)}</b><span class="t-meta">${esc(d.harbour)} — click to read it</span>`
-      tip.style.setProperty('--t-color', d.color ?? 'var(--color-line)')
-      tip.hidden = false
-      const r = rahmen.getBoundingClientRect()
-      const b = tip.getBoundingClientRect()
-      const x = Math.min(Math.max(ev.clientX - r.left + 16, 8), Math.max(8, r.width - b.width - 8))
-      const y = Math.max(ev.clientY - r.top - b.height - 14, 6)
-      tip.style.transform = `translate(${x}px, ${y}px)`
+    // ——— the readout: hover and keyboard focus show the same glance ————————————————
+    const showReadout = (l: Line, anchorX: number, anchorY: number) => {
+      const node = document.createDocumentFragment()
+      const head = document.createElement('b')
+      head.className = 'r-head'
+      head.textContent = l.title
+      const meta = document.createElement('span')
+      meta.className = 'r-meta'
+      // the same first line the card carries — one wording, computed once at build time
+      meta.textContent = l.kicker
+      node.append(head, meta)
+      readoutEl.dataset.out = l.outcome
+      readout.show(node, { anchorX, anchorY })
     }
 
-    function male(vorschau: SVGGElement | null) {
-      wurzel!.toggleAttribute('data-dim', Boolean(vorschau) || Boolean(filter))
-      for (const g of bahnen) {
-        const an = vorschau ? g === vorschau : !filter || g.dataset.out === filter
-        g.toggleAttribute('data-on', an)
-        g.toggleAttribute('data-chosen', Boolean(gewaehlt) && g.dataset.line === gewaehlt)
+    /** Figure-local coordinates (readout house rule 1): the pointer for a mouse, the mark's own box
+     *  for keyboard focus — so a tabbing visitor gets the readout at the line, not wherever the
+     *  pointer happens to rest. */
+    const anchorOf = (g: SVGGElement, ev?: MouseEvent): [number, number] => {
+      const box = figure.getBoundingClientRect()
+      if (ev) return [ev.clientX - box.left, ev.clientY - box.top]
+      const r = g.getBoundingClientRect()
+      return [r.left - box.left + r.width / 2, r.top - box.top + r.height / 2]
+    }
+
+    // ——— the card: the practice's own prose, one line at a time ————————————————————
+    // The honest-gap sentence is READ OFF the server-rendered card rather than re-typed here, so
+    // the wording lives exactly once (src/config/atelier-wording.ts) and no second English string
+    // in a client script can drift away from it.
+    const ledgerWrap = panel.querySelector<HTMLElement>('[data-p-ledger-wrap]')
+    const ledgerGap = ledgerWrap?.dataset.gapLine ?? ''
+
+    const setText = (sel: string, text: string) => {
+      const el = panel.querySelector<HTMLElement>(sel)
+      if (el) el.textContent = text
+    }
+    const setBlock = (sel: string, text: string | null) => {
+      const el = panel.querySelector<HTMLElement>(sel)
+      if (!el) return
+      el.textContent = text ?? ''
+      el.hidden = !text
+    }
+
+    const openAt = (pos: number, opts: { reveal?: boolean } = {}) => {
+      const l = lines[pos]
+      if (!l) return
+      chosen = l.key
+      panel.dataset.dvPos = String(pos)
+      panel.dataset.out = l.outcome
+      setText('[data-p-kicker]', l.kicker)
+      setText('[data-p-title]', l.title)
+      setBlock('[data-p-about]', l.about)
+      setBlock('[data-p-verdict]', l.verdict)
+      setText('[data-p-pos]', l.pos)
+
+      if (ledgerWrap) {
+        // three states, and the difference matters: the record's own words, the honest gap, or —
+        // for a line still being worked — nothing at all, because it has not closed yet
+        ledgerWrap.hidden = !l.ledger && !l.gap
+        ledgerWrap.toggleAttribute('data-gap', l.gap)
+        setText('[data-p-ledger]', l.ledger ? l.ledger.text : ledgerGap)
+        setText('[data-p-ledger-src]', l.ledger ? l.ledger.source : '')
+      }
+
+      const movesWrap = panel.querySelector<HTMLElement>('[data-p-moves-wrap]')
+      const movesList = panel.querySelector<HTMLElement>('[data-p-moves]')
+      if (movesWrap && movesList) {
+        movesWrap.hidden = l.moves.length === 0
+        movesList.textContent = ''
+        for (const [date, title] of l.moves) {
+          const li = document.createElement('li')
+          const d = document.createElement('span')
+          d.className = 'm-date'
+          d.textContent = date
+          li.append(d, document.createTextNode(` ${title}`))
+          movesList.append(li)
+        }
+      }
+
+      const more = panel.querySelector<HTMLAnchorElement>('[data-p-more]')
+      if (more) more.href = l.href
+
+      panel.hidden = false
+      paint()
+      if (opts.reveal) {
+        panel.scrollIntoView({ block: 'nearest', behavior: reducedMotion() ? 'auto' : 'smooth' })
       }
     }
 
-    function waehle(id: string) {
-      if (!daten[id]) return
-      gewaehlt = id
-      zeigeKarte(id)
-      male(null)
-      karte.scrollIntoView({ block: 'nearest', behavior: 'smooth' })
+    panel.addEventListener('dv:step', (ev) => {
+      const at = Number(panel.dataset.dvPos ?? '0')
+      const next = step(segmented, at, (ev as CustomEvent).detail.pos - at)
+      if (next !== at) openAt(next, { reveal: true })
+    })
+    panel.addEventListener('dv:close', () => {
+      panel.hidden = true
+      chosen = null
+      paint()
+    })
+
+    // ——— paint: filter, dim and selection are ATTRIBUTES; no mark ever moves ————————
+    // An arrow const, like every other function in this block, and for a reason beyond house
+    // style: a hoisted `function` declaration is created before the null guard above runs, so
+    // TypeScript refuses to carry that guard's narrowing into it and `svg` reads as possibly
+    // null on the last line here. Nothing is called before this point, so the binding is safe.
+    const paint = () => {
+      for (const g of groups) {
+        const key = g.dataset.key ?? ''
+        const l = byKey.get(key)
+        g.toggleAttribute('data-on', isOn(filter, l?.outcome ?? ''))
+        g.toggleAttribute('data-dim', dim.includes(key))
+        g.toggleAttribute('data-sel', chosen === key)
+      }
+      // the harbours follow the filter too — a lit harbour above a set of ghosted lines reads as
+      // if the filter had not taken, and the count in it would be about lines that are not shown
+      for (const h of harbours) h.toggleAttribute('data-on', isOn(filter, h.dataset.out ?? ''))
+      // on the SVG, not the section: the build-time stills carry the same attribute and have no
+      // section of their own (see buildPassageSvg)
+      svg.toggleAttribute('data-filtered', filter.length > 0 || dim.length > 0)
     }
 
-    for (const g of bahnen) {
-      g.addEventListener('mouseenter', (ev) => { zeigeTip(g, ev as MouseEvent); male(g) })
-      g.addEventListener('mousemove', (ev) => zeigeTip(g, ev as MouseEvent))
-      g.addEventListener('mouseleave', () => { tip.hidden = true; male(null) })
-      g.addEventListener('focus', () => male(g))
-      g.addEventListener('blur', () => male(null))
-      g.addEventListener('click', () => waehle(g.dataset.line ?? ''))
+    root.addEventListener('dv:filter', (ev) => {
+      filter = (ev as CustomEvent<{ keys: string[] }>).detail.keys
+      paint()
+    })
+
+    for (const g of groups) {
+      const l = byKey.get(g.dataset.key ?? '')
+      if (!l) continue
+      g.addEventListener('mouseenter', (ev) => showReadout(l, ...anchorOf(g, ev as MouseEvent)))
+      g.addEventListener('mousemove', (ev) => showReadout(l, ...anchorOf(g, ev as MouseEvent)))
+      g.addEventListener('mouseleave', () => readout.hide())
+      g.addEventListener('focus', () => showReadout(l, ...anchorOf(g)))
+      g.addEventListener('blur', () => readout.hide())
+      g.addEventListener('click', () => openAt(lines.findIndex((x) => x.key === l.key), { reveal: true }))
       g.addEventListener('keydown', (ev) => {
         const k = (ev as KeyboardEvent).key
         if (k !== 'Enter' && k !== ' ') return
         ev.preventDefault()
-        waehle(g.dataset.line ?? '')
+        openAt(lines.findIndex((x) => x.key === l.key), { reveal: true })
       })
     }
 
-    for (const b of knoepfe) {
-      b.addEventListener('click', () => {
-        const wert = b.dataset.filter ?? null
-        filter = filter === wert ? null : wert
-        for (const x of knoepfe) x.setAttribute('aria-pressed', String(x.dataset.filter === filter))
-        male(null)
-      })
+    // ——— the tour handshake: this figure opts in, and knows nothing about any tour ————
+    const apply = (focus: FocusState) => {
+      // `filter: null` explicitly clears; `undefined` means this scene does not touch the filter
+      if (focus.filter !== undefined) filter = focus.filter ?? []
+      dim = focus.dim ?? []
+      applyNotes(focus.annotate ?? [])
+      const selected = focus.select ? byKey.get(focus.select) : undefined
+      if (selected) {
+        const pos = lines.findIndex((l) => l.key === selected.key)
+        // no `reveal`: a tour scrolls the page itself, and a second scroll would fight it
+        if (pos >= 0) openAt(pos)
+      }
+      // Re-aim the sheet the way the build-time stills are cropped, and by the same rule: a scene
+      // that lifts the filter (`filter: null`) is about the whole passage, every other one about
+      // one band of it. This is what keeps the ledger gutter — running text — at its designed size
+      // in a pinned column instead of being scaled down to nothing. A viewBox is an ATTRIBUTE, so
+      // the CSP has no quarrel with it.
+      const whole = focus.filter === null || !selected
+      svg.setAttribute('viewBox', whole ? wholeView : selected.band)
+      svg.dataset.view = whole ? 'whole' : 'band'
+      paint()
+      // the legend buttons must agree with a scene-driven filter, or a visitor sees a filtered
+      // sheet beside an unfiltered legend and cannot tell what is going on
+      for (const b of root.querySelectorAll<HTMLButtonElement>('[data-dv-legend-key]')) {
+        b.setAttribute('aria-pressed', String(filter.includes(b.dataset.dvLegendKey ?? '')))
+      }
     }
+
+    // A scene's call-outs are lettered as real SVG text at the line they name — the same place the
+    // build-time stills letter them — created through the DOM rather than as markup, so no
+    // innerHTML of data and nothing for the CSP to drop.
+    const SVG_NS = 'http://www.w3.org/2000/svg'
+    let noteLayer: SVGGElement | null = null
+    const applyNotes = (notes: { key: string; text: string }[]) => {
+      noteLayer?.remove()
+      noteLayer = null
+      if (!notes.length) return
+      const layer = document.createElementNS(SVG_NS, 'g')
+      for (const note of notes) {
+        const band = svg.querySelector<SVGLineElement>(`[data-key="${CSS.escape(note.key)}"] .pr-band`)
+        if (!band) continue
+        const text = document.createElementNS(SVG_NS, 'text')
+        text.setAttribute('class', 'pr-note')
+        text.setAttribute('x', band.getAttribute('x1') ?? '0')
+        text.setAttribute('y', String(Number(band.getAttribute('y1') ?? '0') - 10))
+        text.textContent = note.text
+        layer.append(text)
+      }
+      svg.append(layer)
+      noteLayer = layer
+    }
+
+    paint()
+    // The handshake, with the one guarantee the bare dispatch does not give. src/lib/tour/engine.ts
+    // documents both registration orders as safe, and they are — but ONLY once something is
+    // listening: `dv:figure-ready` is an ordinary event, so a figure whose bundle executes before
+    // any Tour's does dispatches into an empty room and is never registered at all. Calling
+    // ensureFigureReadyListener() here installs the shared (idempotent, one-per-page) listener
+    // BEFORE this figure announces itself, so the registry is populated whichever bundle runs
+    // first. This figure still knows nothing about any tour — it only makes sure the registry the
+    // contract is built on exists. (Observed, not theorised: /atelier's chunk order put this script
+    // first and every scene's focus went nowhere.)
+    ensureFigureReadyListener()
+    window.dispatchEvent(new CustomEvent('dv:figure-ready', { detail: { id: svgHost.id, apply } }))
   }
 </script>

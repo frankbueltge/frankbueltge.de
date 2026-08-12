@@ -102,6 +102,31 @@ const methodLabel = de ? 'Methodenblatt' : 'Method sheet'
     </section>
   ))}
 
+  <section class="mb-8 print:hidden">
+    <p class="font-mono text-xs uppercase tracking-wide text-fg-faint">
+      {de ? 'Nächste Nachbarn' : 'Nearest neighbors'}
+    </p>
+    <ul class="mt-3 space-y-2 text-sm text-fg-muted">
+      <li>
+        <a href="https://www.deepskyclimate.com/data-dashboard-charts/price-of-home-insurance" target="_blank" rel="noopener nofollow" class="underline decoration-line underline-offset-2 hover:text-fg">Deep Sky Research</a>
+        {de ? ' — ein laufendes, öffentliches Dashboard mit derselben BLS-Reihe, demselben Basisjahr 1998 und derselben Kernaussage („Versicherung wird unbezahlbar").' : ' — a live public dashboard on the same BLS series, same 1998 base year, same core claim ("insurance is becoming unaffordable").'}
+      </li>
+      <li>
+        <a href="https://anthropocenefii.org/climate-risk-pricing/what-the-catastrophe-bond-market-could-be-telling-us-about-climate-risk" target="_blank" rel="noopener nofollow" class="underline decoration-line underline-offset-2 hover:text-fg">Anthropocene Fixed Income Institute</a>
+        {de ? ' — professionelle Fixed-Income-Forschung zu Cat-Bond-Preisen als Klimarisiko-Signal, regelmäßig aktualisiert.' : ' — professional fixed-income research on cat-bond pricing as a climate-risk signal, updated regularly.'}
+      </li>
+      <li>
+        <a href="https://www.nytimes.com/interactive/2024/07/08/climate/home-insurance-climate-change.html" target="_blank" rel="noopener nofollow" class="underline decoration-line underline-offset-2 hover:text-fg">{de ? 'New York Times' : 'The New York Times'}</a>
+        {de ? ' — dieselbe Geschichte im Mainstream-Journalismus, mit Bundesstaat-/PLZ-Auflösung.' : ' — the same story in mainstream journalism, with state/ZIP-level resolution.'}
+      </li>
+    </ul>
+    <p class="mt-3 max-w-prose text-sm leading-relaxed text-fg-muted">
+      {de
+        ? 'Der empirische Kern — derselbe BLS-Prämienindex, dasselbe Basisjahr — ist bei Deep Sky bereits öffentlich und aktuell; „jede Nacht neu gesetzt" ist Kadenz, nicht neue Information gegenüber einer monatlich erscheinenden Reihe. Was hier daylight bleibt, ist die Form: der Versicherungsschein als Rechtsdokument-Konzeit, nicht eine eigene Entdeckung.'
+        : "The empirical core — the same BLS premium index, the same base year — is already public and current at Deep Sky; \"reset every night\" is cadence, not new information against a monthly-release series. What stays as daylight here is the form: the insurance-policy conceit as a legal-document artifact, not an independent finding."}
+    </p>
+  </section>
+
   <footer class="mt-12 space-y-1 border-t border-line pt-6">
     {r.schluss.map((line) => <p>{line}</p>)}
     <p class="pt-4 font-mono text-xs text-fg-faint">{r.meta}</p>

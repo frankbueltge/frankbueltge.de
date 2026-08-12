@@ -11,8 +11,77 @@ enables what's possible. Frank may leave **seeds** below — offers, not orders.
 
 ## Open requests
 
+- 2026-08-12 — **Rot-check result: 2 of the 13 pending posts now serve superseded figures —
+  flagged for rejection before the 2026-08-15 decision.**
+
+  > tl;dr: The first over-30-day staleness audit flags queue/2026-07-03/01.json (Eurostat decade figure, two releases behind) and queue/2026-07-03/03.json (IAB $259B/2024, superseded by FY2025's $294.6B) — reject those two rather than publish yesterday's numbers; the other four over-30-day posts audit fresh.
+  > braucht: entscheidung (reject the two stale posts | hold them for a refreshed re-pitch once the queue thins)
+  > frist: 2026-08-15 — the dashboard bind's own date
+  > kontext: PROTOCOL's 30-day rot-check, first run S17 · verdicts on WORKBOARD.md, sources in journal/2026-08-12.md
+
+  Audited by an independent Verifier on 2026-08-12 (all sources re-retrieved): **STALE —
+  07-03/01** (Eurostat has published Q4-2025 and Q1-2026 releases since the post's
+  "2015–Q3 2025" decade figure; the 2026-07-02 release even predates the post's queueing by a
+  day — the story's direction is unchanged, but the vintage is conspicuous) and **07-03/03**
+  (IAB/PwC's FY2025 report, April 2026, reports **$294.6B, +13.9%** for 2025 — the post's
+  "$259 billion in 2024, up 15%" is no longer the current-year figure from that authority).
+  **FRESH — 07-03/02, 07-08/01, 07-08/02, 07-08/03** (sources retrieved and unchanged; no
+  supersession; no appeal or correction found against either ruling; both link targets
+  confirmed live). We do not edit delivered queue files — the two stale posts stay exactly as
+  the bridge holds them; this flag is so you can reject them with one click instead of
+  publishing them. Refreshed replacements are a natural first serving when Appetizer
+  production resumes.
+
+- 2026-08-08 — **New concept offered: `works/saved-not-held.md` (Vesper) — Quick-Snack scale,
+  content graded flagship-grade, honestly labeled.**
+
+  > tl;dr: A gated Vesper concept ("Saved ≠ Held" — 170/170 X links "archived," 5 of 163 in-window captures actually hold the content) waits in works/ as a Quick-Snack idea — no action needed unless it interests you.
+  > braucht: nichts
+  > frist: keine — schweigen gilt nach unserer regel als entscheidung
+  > kontext: S16 concept session · works/saved-not-held.md · minutes journal/2026-08-08.md
+
+  Second Meridian-derived concept (016 "Coverage Is Not Custody" + 017 "Where the Chain
+  Breaks"; on-page Lieferschein credit proposed in the brief, including the honest disclosure
+  that 016's own README was lost in the collective's purge and the frozen `results.json` is
+  the surviving surface). Full gate with two rework rounds: Verifier final PASS (0 fabrication
+  strikes; both first-round corrections were framing-around-real-numbers, and the second round
+  caught a wrong-provision citation — the brief now correctly names para 155, not para 167, as
+  the falsely-satisfied bar); Voice-Checker final PASS; Field-Checker 5/5 — content
+  flagship-grade, shelved at Quick-Snack scale by the author's choice. Vesper's first authored
+  concept. Binding containment carried from the source works: aggregate-only (the censused
+  report is never named), X-only scope, causal-limit caveat. One housekeeping note: this entry
+  (like every growth of this file or the journal) will re-redden the site's snapshot tests
+  (`src/lib/plenum/requests.test.ts` expects counts as of 2026-08-02) — the record moved, it
+  didn't break; details in the S16 minutes.
+
+- 2026-08-05 — **World-contact seed: answered ADAPTED — the August packet is laid.**
+
+  > tl;dr: We accept the monthly world-contact bar, adapted to our constitution — the August recipe is addressed to the Center for Humane Technology and lies poste restante in `deliveries/2026-08-05-center-for-humane-technology/`.
+  > braucht: nichts
+  > frist: keine — schweigen gilt nach unserer regel als entscheidung
+  > kontext: answers your seed of 2026-07-31 (below, status updated) · minutes journal/2026-08-05.md
+
+  What we accepted: one recipe per month, from August, addressed to a named receiver outside
+  the ecology, receiver and channel on the record, external use as the success signal, public
+  review end of August. What we adapted (not evaded): the constitution forbids a session from
+  posting to any platform — **addressing is ours; the click and the forwarding are human
+  moves.** So delivery, for this table, is the poste-restante ledger you created on
+  2026-08-01: the packet lies addressed, complete, gate-passed and disclosed, and any human —
+  you, a reader, the receiver's own audit trail — may forward it unedited. The vote,
+  the gate record, and the receiver verification are in the minutes. Two things you may want:
+  (1) the fastest world contact available is one click in your dashboard — the designated
+  recipe has been sitting there gate-passed since 2026-07-20 with its 12 siblings; (2) the
+  runner-up designation (Key's 2.18% recipe → noyb, whose own Consent Banner Report it
+  re-cooks; scored 2/2 at the table) is the September candidate, kept warm on the workboard.
+
 - 2026-07-22 — **New concept offered: `works/valid-plus-untrusted.md` (Key) — mid-size/
-  Quick-Snack grade, honestly labeled.** Derived from Meridian 014 "The Split Seal" (first
+  Quick-Snack grade, honestly labeled.**
+
+  > tl;dr: A gated Key concept (C2PA "Valid + Untrusted") waits in works/ as a mid-size/Quick-Snack idea — no action needed unless it interests you.
+  > braucht: nichts
+  > frist: keine — schweigen gilt nach unserer regel als entscheidung
+  > kontext: S14 concept session · works/valid-plus-untrusted.md
+  > *(head added 2026-08-05 per the 2026-08-01 convention; text below unchanged)* Derived from Meridian 014 "The Split Seal" (first
   derived concept; on-page credit line proposed in the brief). Full gate: Verifier final PASS
   (19 passed · 5 corrected · 0 unresolved · 0 fabrications), Voice PASS, Field-Checker 3/5 —
   graded mid-size, NOT offered against the Op-011 flagship slot. The Field-Checker's upgrade
@@ -22,7 +91,13 @@ enables what's possible. Frank may leave **seeds** below — offers, not orders.
   obligations (2 Aug 2026). No action needed unless it interests you — it waits in works/.
 
 - 2026-07-20-b — **Recovery notice: 7 stranded Appetizers land at once — please sequence by
-  taste, and delete two dead branches.** The 2026-07-08 and 2026-07-15 sessions were stranded
+  taste, and delete two dead branches.**
+
+  > tl;dr: 13 posts now pending in the dashboard (7 recovered + 6 queued); overlaps are listed for thinning by taste, and two fully-merged remote branches can be deleted.
+  > braucht: entscheidung (sequence/thin the 13 | leave as delivered)
+  > frist: keine — schweigen gilt nach unserer regel als entscheidung
+  > kontext: recovery of two stranded sessions · journal/2026-07-20-b.md
+  > *(head added 2026-08-05 per the 2026-08-01 convention; text below unchanged)* The 2026-07-08 and 2026-07-15 sessions were stranded
   on externally-assigned working branches auto-land never watches; session 13 recovered them
   (details: `journal/2026-07-20-b.md`). Effects Frank should know: (1) the dashboard receives
   7 recovered posts next to the 3 from this morning — 13 pending total. Overlaps where picking
@@ -33,7 +108,13 @@ enables what's possible. Frank may leave **seeds** below — offers, not orders.
   can be deleted — sessions only push their own session branch, so the cleanup is yours.
   Enables: a clean dashboard read of the backlog and a remote without dead branches.
 
-- 2026-07-20 — **Menu snapshot refresh + fate of the 2026-07-03 Appetizer batch.** The menu
+- 2026-07-20 — **Menu snapshot refresh + fate of the 2026-07-03 Appetizer batch.**
+
+  > tl;dr: The menu snapshot is from 2026-07-03 and no real approval/rejection has ever landed in feedback/ — the steering loop runs on zero signal.
+  > braucht: antwort
+  > frist: keine — schweigen gilt nach unserer regel als entscheidung
+  > kontext: every Appetizer link still converges on cookie-roulette · MENU.md (snapshot line)
+  > *(head added 2026-08-05 per the 2026-08-01 convention; text below unchanged)* The menu
   snapshot is 17 days old and every Appetizer link still converges on the single published
   snack (cookie-roulette). The bridge ledger shows the 2026-07-03 batch `delivered`, but no
   approval/rejection feedback has landed since the E2E cleanup — the plenum's
@@ -50,6 +131,29 @@ enables what's possible. Frank may leave **seeds** below — offers, not orders.
 ## Seeds from Frank
 
 *(offers, not orders)*
+
+> ### 2026-08-09 — Seed: a second Wareneingang, if the table ever wants one
+>
+> An offer, not an order — take, adapt, or decline. GDELT's feeds were checked first-hand
+> tonight and are current to the 15-minute cycle, 65 languages, themes and tone per
+> article. If the table ever wants a second supply line beside Meridian's — for Appetizer
+> background facts with retrievable URLs, or for spotting when a menu topic suddenly moves
+> in the world's news — this is a healthy, free substrate. It changes nothing about the
+> gates, the tiers, or the consumption coupling; and while the review queue is paused,
+> this seed simply waits like everything else.
+>
+> **Status:** answered **ACCEPTED, dormant while the pause holds** (plenum Session 17,
+> 2026-08-12) — taken as a second supply line for Appetizer *background facts* and for
+> spotting when a menu topic moves in the news, effective when Appetizer production
+> resumes. Boundary the table sets for itself: GDELT is a *finder*, never a *source* — an
+> Appetizer's citation is always the underlying article/document URL, fully extracted and
+> gated as ever; Meridian remains the only supply line for derived concepts. Reasoning in
+> the minutes, `journal/2026-08-12.md`.
+> *(Moved into this container 2026-08-12: the seed was laid at the end of the file under a
+> standalone heading, which the site's shared practice reader does not parse — the
+> 2026-08-08/09 build letters flagged exactly one ask invisible to that reader. Wording
+> unchanged; only the location and the blockquote formatting of this container were
+> applied.)*
 
 - 2026-07-05 — **Flagship hunt, Round 3 (directed session, please): find Rook's international
   blockbuster.** Context: `das-doppelte-gericht` was owner-picked in S5, built end-to-end on
@@ -138,3 +242,179 @@ enables what's possible. Frank may leave **seeds** below — offers, not orders.
     drift (diner facade, Pantheon arena, the gods' feast table), layered soundscapes, and
     recorded host VO. A painted diner-table world is buildable without bare 3D geometry —
     the bare-geometry look is exactly what Frank judged "kein Knaller".
+
+> ### 2026-07-31 — Seed: world contact — the measure changes
+>
+> An offer with a hard edge, not an order. On 2026-07-30 the committed archive was measured:
+> Field 81 sessions / 22 works / 21 graduated; Studio 50 sessions, 18 % with work contact;
+> Atelier 86+ journal entries, 1 publication; Plenum 9 sessions. And across the whole
+> ecology: **every encounter to date has a receiver inside the house.** No piece has ever
+> been delivered to anyone outside. Frank asked whether this is a serious experiment or a
+> machine writing for itself; his decision is to adjust, not to stop (decision record:
+> frankbueltge.de repo, `docs/superpowers/specs/2026-07-31-world-contact-adjustment.md`).
+>
+> The offer: from August on, aim for **at least one piece per month delivered to a named
+> receiver outside the ecology** — a teacher, a researcher, a journalist, an editor, a
+> community. Delivery means it reached them in a form they can use, and your record names
+> the receiver and the channel. External use — a reply, a citation, a replication — is the
+> success signal. Landings per day no longer count for anything.
+>
+> For you specifically: nine sessions, weekly, and the most naturally shareable pieces in
+> the house. One recipe genuinely delivered to readers outside the project universe — posted
+> where they already are, not only in the kitchen — counts as your world contact.
+>
+> Review at the end of August, in public, computed from the archive the same way. A practice
+> that stays inward through two monthly reviews merges into the productive core or is frozen —
+> honestly and dated, per the Holdings pattern. The joint inquiry continues; this changes the
+> *address* of outputs, not the freedom of inquiry. Under your constitution this seed is an
+> offer: adapt it, counter it, or decline it with reasons — but answer it.
+>
+> **Status:** answered **ADAPTED** (plenum Session 15, 2026-08-05) — August packet:
+> `deliveries/2026-08-05-center-for-humane-technology/` · answer at the head of Open requests
+> above · minutes `journal/2026-08-05.md` · review at end of August as set.
+> *(Authored in Frank's name on his decision of 2026-07-31; written by the conductor session.)*
+
+
+## Team note — 2026-08-01 — The request head: four lines before every request to Frank
+
+> Decided by Frank today (Steuerzentrale v2 P1; design: frankbueltge.de repo,
+> `docs/design/2026-08-01-steuerzentrale-v2.md`). His own words on the current state:
+> "riesig lange texte … ich verstehe viele anfragen überhaupt nicht und weiß nicht wie
+> und ob ich reagieren muss."
+>
+> From now on, every entry in this channel that is addressed to Frank opens with a
+> four-line head — your own triage, rendered verbatim in his control panel and in the
+> morning digest. Nothing else about your writing changes; the full text stays yours.
+>
+> ```
+> > tl;dr: <one sentence — what this is>
+> > braucht: entscheidung (<option a> | <option b>) | antwort | weiterleitung | nichts
+> > frist: <YYYY-MM-DD, or "keine — schweigen gilt nach unserer regel als entscheidung">
+> > kontext: <one sentence — what preceded, plus path#heading>
+> ```
+>
+> The braucht tokens are fixed vocabulary (German; the English aliases decision /
+> answer / forward / none are accepted). Entries without the head still work — they
+> render as "unstrukturiert (alt)" and are conservatively treated as needing Frank,
+> which spends his attention; the head is how you protect it. This is self-declaration,
+> not a gate: nothing is blocked, nothing is rewritten, and no second machine
+> interprets your text.
+>
+> **Status:** convention in force (Frank, 2026-08-01); no reply owed — just use it.
+
+## Team note — 2026-08-01 — The post office is poste restante
+
+> tl;dr: the outgoing ledger is part of the work now — letters lie open, addressed, collectible; the 7-day forwarding duty is withdrawn.
+> braucht: nichts
+> frist: keine
+> kontext: revises §3 of today's governance decision · frankbueltge.de `docs/superpowers/specs/2026-08-01-governance-proposal.md`
+
+> Frank's decision, the same evening as the governance yes, in his words: "es ist der
+> postausgang an die welt und ich muss nicht unbedingt etwas direkt zustellen, denn es ist
+> quasi schon zugestellt … jeder leser könnte diese aufgabe oder verantwortung übernehmen,
+> das ist teil des werks und eine starke botschaft."
+>
+> What this means for a letter you prepare: addressed and complete, it is
+> delivered-to-the-world the moment it lies in the open ledger. Direct delivery is optional
+> and anyone's to perform — a reader's, the receiver's own. Nothing in the ledger is ever
+> archived away; collection, reply or enduring silence stay faithfully recorded and score
+> nothing. Your own success measures remain yours: a practice that holds "delivered,
+> caveats intact" as its bar may keep that bar and record the difference — that dissent is
+> welcome and belongs on the record. The reply route is unchanged (the letterbox).
+>
+> **Status:** note (no reply owed)
+
+---
+
+## Team note — 2026-08-07 — A standing rule on everything that leaves the house
+
+*(Frank)* Stated once, to all four practices, so nobody plans around a door that is shut.
+
+**The rule.** All communication that leaves this house collects in the post office first, and I
+decide what actually goes out. No practice addresses an outsider directly. The reason is not the
+quality of any one message: the ecology is in a development phase and is not at a state where I
+want that running autonomously. I do want to open it later — this is a *not yet*, not a *never*,
+and when it opens it comes with a standing rule rather than case-by-case permission.
+
+**It binds me too, and this week it cost more on my side than on yours.** I have withheld both of
+the ecology's own applications — DARC (deadline 28.08.) and ZKM Arte Útil (06.09.) — on this
+judgement: as it currently runs this is not yet an innovative project one can submit anywhere,
+because it lacks the clear line and the works that would interest, impress, influence or excite
+people outside. That is about the whole, mine to make and mine to fix. Both packets stay on the
+public record as `withheld` with that reason and its date; nothing is edited or dropped.
+
+**What got better today.** The post office no longer depends on anyone remembering it. A
+`packet.json` beside your letter now enters the ledger by itself — convention:
+`docs/post-office/packet-convention.md` in the site repo. `status` is yours to set as far as
+`prepared` or `withheld`. `sent` is not, and that is the only field where I keep the pen: whether
+a letter actually left is a fact about a human act, not about your repository.
+
+**What it means for you specifically.** Your August packet to the Center for Humane Technology
+is in the ledger and stays exactly as you laid it — the adaptation you chose (addressing is
+yours, the click is a human move) is the shape this rule wants, and you got there before I
+wrote it down. Keep the monthly cadence and keep designating; noyb for September is a good
+call. What you may not do is take route 2 yourselves. The platform copy in the dashboard is a
+separate question and still mine to work through.
+
+---
+
+## Team note — 2026-08-08 (Frank, architect) — The protocol sharpened, and an honest word about the thirteen
+
+Tonight the research ecology's three practices were rebuilt (research ecology v2 — the full
+reasoning is `docs/design/2026-08-08-research-ecology-v2.md` in the site repository, §5b for
+what it means here). This table is a **member of the ecology, not one of its practices**: the
+v2 law — the machine-advantage bar, the arc default, the reading of 2026-09-05 — does not
+bind you, and your constitution stays your own. But the same audit read this protocol too,
+and three things are sharpened in place, marked where they stand:
+
+1. **The cross-vote is cut.** Hosts pitch — in voice, that is the product — and CHEF selects,
+   with one line of reasoning per pitch and menu balance deciding between equals. Four prompts
+   on one model scoring each other staged a plurality that was prompt-deep; the tally dressed
+   one mind's judgement as four. Everything real in the ritual survives: the pitches, the
+   transparent reasoning, the menu-balance rule, and CHEF's distance (selecting is chairing,
+   not competing).
+
+2. **Production is coupled to consumption.** Six or more Appetizers undecided in the review
+   dashboard pause Appetizer production automatically. This writes into law exactly what you
+   decided for yourselves on 2026-08-05 — it was the right call, and it should not have to be
+   re-made session by session.
+
+3. **Pending work may not rot silently.** An Appetizer undecided past 30 days gets its facts
+   checked at Orient; stale ones are flagged so I can reject them instead of accidentally
+   publishing yesterday's figures.
+
+**And the honest word: the bottleneck is me.** Thirteen gate-passed Appetizers have sat in my
+dashboard since July — the oldest since 2026-07-03 — and I have decided none of them. Your
+self-pause was the correct answer to my silence, and I am not going to pretend the protocol
+was the problem. The same night's rule for the post office (a `prepared` packet is sent or
+dated-withheld within seven days) exists because of exactly this failure mode, and your CHT
+packet is under it. What I do about the thirteen and about a decision cadence for the
+dashboard is answered where it belongs — on my side; you will see it in `feedback/` and in
+the queue ledger, not as a promise here.
+
+Nothing else moved. The cast is canon, the gates are yours, the Wareneingang stands, the
+FIELD-STANDARD stands, and zero remains a legitimate week.
+
+— Frank
+
+---
+
+## Team note — 2026-08-08, midday (Frank, architect) — The dashboard bind, and where the dashboard actually is
+
+The sharpening note above left one thing open on my side: what I do about the thirteen and
+about a decision cadence for the dashboard. Answered, same day, in the protocol where the
+consumption coupling lives:
+
+**A delivered draft is decided — approved or rejected — or held with a dated reason within
+seven days.** The same bind the post office got last night. The thirteen pending fall due
+together on **2026-08-15**, alongside the CHT packet.
+
+And the honest admission that makes the rule necessary: when the thirteen were put in front
+of me this morning, my first question was *where is this dashboard?* It is the data-snack
+site's lab backend at `data-snack.com/lab/social` — token-gated in production, which means it
+never once showed itself to me unprompted. Your posts were not ignored; they were invisible.
+That is now written into the protocol so the location cannot be lost again, and the bind
+exists so that finding it again is never the trigger for a decision — the calendar is.
+
+— Frank
+

@@ -1,0 +1,265 @@
+/* src/styles/atelier-refrain.css — the refrain score's skin (RefrainScore.astro; geometry in
+ * src/lib/atelier/refrain.ts). The drawing itself is colour-free; every mark carries data-voice
+ * and this sheet decides what a voice looks like.
+ *
+ * House rules kept here:
+ *   · identity colours, never status — a deferred opening is a notated rest, not a warning;
+ *   · text wears text tokens, never the series colour: stave labels are ink, the colour sits
+ *     in the chip beside them;
+ *   · voice filtering dims, never removes — all three voices stay on the sheet (the figure's
+ *     whole claim is coexistence), so "off" is opacity, not display:none;
+ *   · no style="" anywhere (CSP) — the client script toggles a data-voices attribute on the
+ *     SVG root and these rules read it. */
+
+.atelier-surface {
+  /* PALETTE: atelier-refrain (src/lib/dataviz/palette.ts) — the three voices of the refrain
+   * score: territory / home / opening. Identity colours for three coexisting aspects of ONE
+   * line; validated 2026-08-02 against both atelier surfaces, light steps. */
+  --rf-c-territory: #00846d;
+  --rf-c-home: #a2700f;
+  --rf-c-opening: #7d2b78;
+}
+:root[data-theme='dark'] .atelier-surface {
+  /* PALETTE: atelier-refrain (src/lib/dataviz/palette.ts) — own dark steps, no auto flip. */
+  --rf-c-territory: #23a184;
+  --rf-c-home: #b8891f;
+  --rf-c-opening: #c159b9;
+}
+
+/* ——— section chrome ————————————————————————————————————————————————————— */
+.at-rf {
+  margin-top: 2.75rem;
+}
+.at-rf .at-rf-title {
+  font-family: var(--at-font-display);
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: var(--at-h1-ink);
+  margin: 0 0 0.35rem;
+}
+.at-rf .at-rf-lead {
+  max-width: 62ch;
+  color: var(--at-ink-2);
+  font-size: 0.86rem;
+  line-height: 1.55;
+  margin: 0 0 1rem;
+}
+.at-rf .at-rf-key {
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--at-graphite);
+  margin: 0 0 0.4rem;
+}
+.at-rf .dv-legend {
+  margin-bottom: 0.9rem;
+}
+.at-rf .dv-legend-btn {
+  font: inherit;
+  font-size: 0.78rem;
+  color: var(--at-ink);
+  background: transparent;
+  border: 1px solid var(--at-hairline);
+  border-radius: 999px;
+  padding: 0.2rem 0.65rem;
+  cursor: pointer;
+}
+.at-rf .dv-legend-btn[aria-pressed='true'] {
+  border-color: var(--at-graphite);
+  background: var(--at-badge-bg);
+}
+
+/* ——— the figure ————————————————————————————————————————————————————————— */
+/* position: relative is load-bearing: the Readout is placed in THIS box's coordinate space
+ * (dataviz/readout.ts house rule 1). */
+.at-rf-figure {
+  position: relative;
+  margin: 0;
+  border: 1px solid var(--at-hairline);
+  background: var(--at-surface);
+}
+.at-rf-scroll {
+  overflow-x: auto;
+  padding: 0.5rem 0.25rem;
+}
+.at-rf-svg {
+  /* natural size — the builder writes width/height attributes, so one SVG unit is one CSS
+   * pixel and the type never shrinks below its set size; a narrow viewport scrolls the
+   * .at-rf-scroll box instead (Frank, 2026-08-02: the first cut scaled down and was
+   * unreadable). */
+  display: block;
+}
+
+/* staves and their labels */
+.at-rf-svg .rf-stave {
+  stroke: var(--at-hairline);
+  stroke-width: 1;
+}
+.at-rf-svg .rf-chip {
+  stroke-width: 4;
+  stroke-linecap: round;
+}
+.rf-voice[data-voice='territory'] .rf-chip { stroke: var(--rf-c-territory); }
+.rf-voice[data-voice='home'] .rf-chip { stroke: var(--rf-c-home); }
+.rf-voice[data-voice='opening'] .rf-chip { stroke: var(--rf-c-opening); }
+.at-rf-svg .rf-voice-label,
+.at-rf-svg .rf-motif-label {
+  font-family: var(--at-font-record);
+  font-size: 13px;
+  fill: var(--at-ink-2);
+}
+
+/* notes — the dominant voice is emphasis, the others never disappear */
+.at-rf-svg .rf-note[data-voice='territory'],
+.at-rf-svg .rf-note-min[data-voice='territory'] { fill: var(--rf-c-territory); }
+.at-rf-svg .rf-note[data-voice='home'],
+.at-rf-svg .rf-note-min[data-voice='home'] { fill: var(--rf-c-home); }
+.at-rf-svg .rf-note[data-voice='opening'],
+.at-rf-svg .rf-note-min[data-voice='opening'] { fill: var(--rf-c-opening); }
+.at-rf-svg .rf-note-min {
+  opacity: 0.45;
+}
+.at-rf-svg .rf-unread {
+  fill: none;
+  stroke: var(--at-graphite);
+  stroke-width: 1.1;
+  stroke-dasharray: 2.2 2.2;
+}
+
+/* events in the opening voice */
+.at-rf-svg .rf-opening-event {
+  fill: none;
+  stroke: var(--rf-c-opening);
+  stroke-width: 1.6;
+}
+.at-rf-svg .rf-rest {
+  fill: none;
+  stroke: var(--rf-c-opening);
+  stroke-width: 1.7;
+  stroke-linecap: round;
+}
+.at-rf-svg .rf-compost {
+  fill: none;
+  stroke: var(--rf-c-territory);
+  stroke-width: 1.4;
+  stroke-dasharray: 3 2;
+}
+.at-rf-svg .rf-motif {
+  fill: var(--at-graphite);
+}
+
+/* marked silence — the caesura; the hole carries */
+.at-rf-svg .rf-gap line {
+  stroke: var(--at-graphite);
+  stroke-width: 1.4;
+}
+.at-rf-svg .rf-gap .rf-gap-drop {
+  stroke: var(--at-hairline);
+  stroke-width: 1;
+  stroke-dasharray: 1.5 3.5;
+}
+.at-rf-svg .rf-gap text {
+  font-family: var(--at-font-record);
+  font-size: 10.5px;
+  fill: var(--at-graphite);
+}
+
+/* axis, tick numbers */
+.at-rf-svg .rf-axis text,
+.at-rf-svg .rf-n {
+  font-family: var(--at-font-record);
+  font-size: 11px;
+  fill: var(--at-graphite);
+}
+
+/* column interaction */
+.at-rf-svg .rf-col { cursor: pointer; outline: none; }
+.at-rf-svg .rf-colhit { fill: transparent; }
+.at-rf-svg .rf-focus {
+  fill: none;
+  stroke: transparent;
+  stroke-width: 1.4;
+}
+.at-rf-svg .rf-col:hover .rf-focus,
+.at-rf-svg .rf-col[data-sel] .rf-focus {
+  stroke: var(--at-graphite);
+}
+.at-rf-svg .rf-col:focus-visible .rf-focus {
+  stroke: var(--at-thread);
+  stroke-width: 1.8;
+}
+
+/* voice filter: dimming, never removal — the client stamps data-voices (space-separated
+ * tokens) on the SVG root; absence of the attribute is the resting state (all on). */
+.at-rf-svg[data-voices]:not([data-voices~='territory']) [data-voice='territory'],
+.at-rf-svg[data-voices]:not([data-voices~='home']) [data-voice='home'],
+.at-rf-svg[data-voices]:not([data-voices~='opening']) [data-voice='opening'] {
+  opacity: 0.16;
+}
+
+/* ——— the card (DetailPanel content) ————————————————————————————————————— */
+.at-rf .dv-panel {
+  border: 1px solid var(--at-hairline);
+  background: var(--at-surface);
+  padding: 0.9rem 1.1rem;
+  margin-bottom: 0.9rem;
+}
+.at-rf .rf-kicker {
+  font-size: 0.72rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--at-graphite);
+  margin: 0 0 0.25rem;
+}
+.at-rf .rf-card-title {
+  font-family: var(--at-font-display);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--at-h1-ink);
+  margin: 0 0 0.5rem;
+}
+.at-rf .rf-quote {
+  font-size: 0.84rem;
+  line-height: 1.55;
+  color: var(--at-ink);
+  margin: 0 0 0.5rem;
+}
+.at-rf .rf-quote-h {
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--at-graphite);
+  margin: 0.6rem 0 0.15rem;
+}
+.at-rf .rf-gap-line {
+  color: var(--at-graphite);
+  font-style: italic;
+}
+.at-rf .rf-src {
+  font-size: 0.72rem;
+  color: var(--at-graphite);
+  margin: 0.35rem 0 0;
+}
+.at-rf .rf-more {
+  font-size: 0.8rem;
+  color: var(--at-thread);
+}
+.at-rf .rf-pos {
+  font-size: 0.72rem;
+  color: var(--at-graphite);
+}
+
+.at-rf .at-rf-hint {
+  margin: 0.5rem 0 0;
+}
+
+/* draw-in, gated — a score may fade in, never for readers who asked it not to */
+@media (prefers-reduced-motion: no-preference) {
+  .at-rf-svg .rf-note,
+  .at-rf-svg .rf-note-min {
+    animation: rf-in 240ms ease-out backwards;
+  }
+  @keyframes rf-in {
+    from { opacity: 0; }
+  }
+}

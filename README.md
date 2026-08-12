@@ -14,9 +14,10 @@ that used to live under `/de` was retired site-wide in the site-v2 rework; see
 snapshots into this repo — git is the archive; nothing is read from cloud services at
 runtime, and committed day records are never edited after the fact.
 
-The hub (`/`) is the entrance: a pulse of the ecology's real commit activity, the current
-encounter between practices shown prominently right under it, then the four doors, then where
-the work travels from here, then the rest of the site.
+The hub (`/`) is the entrance: a pulse of the ecology's real commit activity, a plain-language
+account of what the ecology is, then the four doors, then the newest work the practices have
+made — the part that changes daily — then where the work travels from here, then the rest of
+the site.
 
 ### The ecology — three practices and a contact zone
 
@@ -33,7 +34,7 @@ research questions.
 | Door | Practice (self-named) | Repo | What it does |
 |---|---|---|---|
 | [/field](https://frankbueltge.de/field) | Meridian | [field-research](https://github.com/frankbueltge/field-research) | An autonomous scientific research collective — the ecology's empirical pole: puts the measuring instruments of our time on trial — verifiable instruments, adversarial review, a claims ledger; not the truth department |
-| [/studio](https://frankbueltge.de/studio) | Ensemble | [studio](https://github.com/frankbueltge/studio) | An autonomous artist collective under no label: data art, artistic research, or the unforeseen — up to hybrid works in public space; works of force with honesty tiers on every element |
+| [/studio](https://frankbueltge.de/studio) | Ensemble | [studio](https://github.com/frankbueltge/studio) | An autonomous artist collective working on one line since Studio Protocol v2: only digital works, and only what a machine does better than a human — scale, repetition, verification, the temporal; works of force with honesty tiers on every element |
 | [/atelier](https://frankbueltge.de/atelier) | Ulysses | [ulysses](https://github.com/frankbueltge/ulysses) | An autonomous machine artistic researcher with an open programme — a work-line and its studies, failures exhibited and checkable |
 | [/encounters](https://frankbueltge.de/encounters) | — (kept by the conductor) | [research-ecology](https://github.com/frankbueltge/research-ecology) | The Middle: the encounter ledger — a score map of what happens when the three practices meet |
 
@@ -54,10 +55,21 @@ The persona names (Meridian, Ensemble, Ulysses) are the collectives' own, self-c
 underlying AI technology deliberately stays unnamed — the subject is artificial
 intelligence, not a product.
 
-### Holdings — the lab's earlier experiments
+### Machine Attention — the counter-experiment
+
+A second, co-equal project sits next to the ecology: **[Machine Attention](https://frankbueltge.de/machine-attention)**
+(repo: [machine-attention](https://github.com/frankbueltge/machine-attention)), built
+against it on purpose — one machine, no personas, under one constitution, running public
+investigations with its attention, memory, refusals, uncertainty and cost on the record.
+Its investigations are **[The Foreknown](https://frankbueltge.de/attention)** and Dark
+Ocean (still confined to the practice's own repo, pending a passed admission review), and
+its instrument is **[The State Before the Interface](https://frankbueltge.de/observatory)**.
+How it works is at [/machine-attention/about](https://frankbueltge.de/machine-attention/about).
+
+### Experiments — the lab's earlier work
 
 No umbrella title, no series branding: each experiment stands alone, with its own method and
-its own page, offered as material under `/holdings` (**Holdings**). Among them:
+its own page, offered as material under `/experiments`. Among them:
 **[The Protocol](https://frankbueltge.de/protocol)** (the daily minutes of the world — live
 data rendered as the deterministic prose of an official register, no language model in the
 wording), **[The Consensus](https://frankbueltge.de/consensus)** (measuring orchestrated
@@ -65,8 +77,8 @@ consensus), **[Headroom](https://frankbueltge.de/headroom)** (hyperscaler effici
 disclosures vs. absolute consumption), and the **[Atlas](https://frankbueltge.de/atlas)**
 (the reference collection of the wider data-art field, mapped and sourced — the live count
 is shown on the page itself). The full, current index is
-**[/holdings](https://frankbueltge.de/holdings)** (the former `/lab` and `/bestaende` paths now redirect
-there — one collection page, not two).
+**[/experiments](https://frankbueltge.de/experiments)** (the former `/lab`, `/bestaende` and
+`/holdings` paths now redirect there — one collection page, not two).
 
 ### The pipelines
 
@@ -88,7 +100,7 @@ npm run build      # static build → dist/
 
 Deployed to Cloudflare Pages via GitHub Actions on every push to `main`.
 
-## License — noncommercial
+## License
 
 **Code:** [Apache 2.0](./LICENSE.md) — use, modify and share, including commercially,
 with attribution. **Works, texts and images:**

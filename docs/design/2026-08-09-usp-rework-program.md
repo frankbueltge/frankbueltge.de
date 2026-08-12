@@ -1,0 +1,218 @@
+# The USP rework program — build out, never archive
+
+**Status: IN FORCE, decided by Frank 2026-08-09, verbatim:** *"nein, nicht archivieren,
+sondern so ausbauen, dass wirklicher mehrwert und alleinstellungsmerkmale entstehen!"* —
+the answer to the USP audit (`docs/audits/2026-08-09-usp-audit.md`, merged #472), which
+found: of 16 holdings, 1 draft-UNIQUE, 6 with (mostly thin) added value, 9 redundant
+against named, linked neighbors.
+
+The audit's two cross-cutting findings drive the program's shape:
+
+1. **The form is usually ours; the finding usually is not.** Almost every rework direction
+   says: stop competing on the finding (OWID, the Fed, EDGI, GFW win that), make the
+   apparatus the explicit claim — the daily ritual, the committed register, the
+   deterministic pipeline, the control group.
+2. **No experiment cites its neighbors.** Several pages read as unaware of prior art —
+   against the house's own checkability ethic, and the cheapest fix available.
+
+## The phases
+
+**Phase 0 — honesty (one pass, all 16, immediately).** Every page gains a *nearest
+neighbors* section citing the strongest prior art the audit found, with links, and one
+sentence naming this experiment's daylight from them. Overclaims are corrected in the same
+pass (Attention drops "provenance applied to the future"; Policy cites Deep Sky; Patterns
+cites Vigen by name). Executed by a one-time cloud agent as a PR — public wording, so the
+PR waits for review rather than self-merging.
+
+**Phase 1 — the USP is already in the data (directed sessions, days).** Builds that need
+computation or presentation on material the pipelines already commit.
+
+**Phase 2 — the USP needs new material (directed sessions, weeks).** Builds that need new
+data sources or joins.
+
+**Checkpoint: the reading of 2026-09-05.** By then every holding shows either its USP live
+on the page, or a dated build plan in this document — nothing stands unpositioned.
+
+## Per experiment: target USP and build
+
+| # | Experiment | Target USP (one line) | Build | Phase |
+|---|---|---|---|---|
+| 1 | The Consensus | The only instrument that classifies **why** outlets converge — chain syndication vs. wire vs. scattered, TLD share — daily, in public | Expose the syndication-structure classification (the pipeline's classifier already labels wire/chain) as the page's analytic layer + archive dimension | 1 |
+| 2 | Iceberg Theory | The standing register no paper offers: fixed non-selected topics, committed daily, never retconned | Cite INFOGAP/Omnipedia/Manypedia; add a register-integrity panel (days unbroken, topic set frozen since, diffs on record) | 1 |
+| 3 | The Society | Already draft-UNIQUE: Minsky's own agents, deterministic, browser-executable, section-cited | Verification pass in HCI/cog-sci archives (SIGCHI/AIES, 1990s–2000s pedagogical sims) before UNIQUE is treated as settled; keep building | 1 |
+| 4 | Machine Attention | The **calibration scorecard of warning institutions** — Metaculus-style resolution applied to GDACS/NOAA themselves | Make the materialized/unmatched scorecard with lead times the headline; drop the notarization overclaim (OpenTimestamps is prior art) | 1 |
+| 5 | Observatory | Not this repo's call — the audit section and the TED×GDELT news-shadow candidate (`state-before-interface` docs, 2026-08-09) are handed over; reframe from "watches AI procurement" (Tussell/TI-EU/JRC do) to "autonomous, hash-verifiable **investigation** pipeline" | Its own session decides | — |
+| 6 | The Protocol | The deterministic bureaucratic-literary device — an art piece about administrative language, not a data product | Reframe copy: the no-LLM, test-locked template and "Resolution: adjourned" ARE the claim; cite OWID as what this deliberately is not | 0/1 |
+| 7 | The Policy | An insurance instrument on genuinely under-covered market signals | Either move to cat-bond spread/ROL data (Swiss Re index, Artemis) — data-access check first — or make the legal-document conceit the explicit claim; cite Deep Sky either way | 2 |
+| 8 | Editorial Deadline | The non-US register: machine-only change-tracking of EU/international institutions EDGI's US-federal focus never covers | Narrow/extend the watchlist to EU + international bodies; state the no-human-curation epistemics as deliberate | 2 |
+| 9 | The Ghost Fleet | From re-narration to compound finding: GFW dark-vessel events **cross-referenced** with MPA boundaries, sanctions lists, flag-state records — join logic shown | New joins on public data; the audit's "strongest rework-or-remove candidate" becomes the strongest build | 2 |
+| 10 | Headroom | The breakeven-PUE against the physical floor — the impossible-zone arithmetic nobody else runs | Make the derivation the entire spine; region granularity later | 1 |
+| 11 | Round Numbers | The false-positive-rate-vs-n curve as a reusable public artifact, run against corpora nobody has tested | Cite the literature (Mebane, Deckert, PLOS One); switch the daily corpus from picked-over territory to untested contemporary series | 2 |
+| 12 | Delve / Tell | **The Goodhart tracker: are the tell-words now declining as authors dodge them?** The arms-race story no one has published | Extend the pipeline: same corpus, trend split at the backlash, decline curve per marker word; cite Kobak et al. as the settled baseline this builds on | 2 |
+| 13 | Bycatch | The standing instrument: recurring cadence, paired diamond-OA control, dual vantage — the apparatus no study has | Cite Hanson/Marino/SPARC; make the apparatus the headline claim | 0/1 |
+| 14 | The Correction | What a Fed tool structurally cannot say: the **decisions** made on numbers later erased | Consequences layer — rate decisions, elections, hiring data dated against later revisions; cite the SF Fed tool as the neutral instrument this deliberately is not | 2 |
+| 15 | Patterns | The null-distribution machine: thousands of shuffles, a real false-discovery rate, on a self-referential archive — the rigor Vigen's joke lacks | Foreground the permutation distribution; cite Vigen by name as the piece this answers | 1 |
+| 16 | Watchtower | The **densification time-series**: commercial vs. military EO-satellite density over a location, over time — no neighbor tracks it (the audit's best rework direction of all 16) | Derive the series from the already-committed daily orbital snapshots; name SatFleetLive/SpyMeSat on the page | 2 |
+
+## Rules that govern the builds
+
+- Every build passes the house's existing discipline: committed data, validated palettes,
+  method sheets updated, no fabricated findings — and the new USP claim is itself
+  web-checked before it goes on a page (the USP obligation applies to the reworks too).
+- Phase order is priority order, but any directed session may pull a Phase-2 item forward
+  when Frank asks for it.
+- This document is the tracker: each build lands with a dated line here.
+
+## Work claims — read before building, write before building
+
+**The coordination rule (Frank, 2026-08-09: "ihr müsst euch absprechen"):** more than one
+session works this program in parallel. Before any session builds on an experiment, it
+reads this table and writes its claim here (one commit, pushed immediately — the same
+race-guard idea the practices use). A claimed lane is not touched by anyone else; an
+unclaimed lane is free. Release a lane by dating the Landed line.
+
+| Lane | Claimed by | Since | State |
+|---|---|---|---|
+| **#4 Machine Attention** + **#5 Observatory** | ~~the parallel session~~ → **this session (afternoon 2026-08-09)** | 2026-08-09 | **Landed 2026-08-09 (night session):** every `feat/attention-*` branch merged, no open PR in `machine-attention`, last commit there 15 h old — lane released and re-claimed. **Phase 0 for #4 is now done** (neighbors section + the overclaim dropped, see Landed) — the lane is free again. **#5 Observatory stays untouched by this repo** per the audit: its own session decides. Phase 1 for #4 (the calibration scorecard as the page's headline figure) is unclaimed and open. Practice-side work continues in the **`machine-attention` repo**: Dark Ocean's E-window runs to 2026-08-22/23, review 2026-08-24. |
+| **#1 Consensus** (structure layer) · **#2 Iceberg** (integrity panel) · **#10 Headroom** (breakeven spine) · **#15 Patterns** (null-distribution) + the post-Phase-0 page-wiring pass | this session (night 2026-08-09) | 2026-08-09 | libs landing; page wiring after Phase 0 merges |
+| Phase 0 (citations, all pages EXCEPT attention/observatory) | one-time cloud agent → PR `usp-phase0/2026-08-09` | 2026-08-09 | running; PR reviewed before merge |
+| **The parked package**: knowledge graph (substrate) · neighbor-graph visualization · CLAUDE.md diet (`.claude/rules/`) | — released 2026-08-09 | 2026-08-09 | **done**, see Landed; the lane is free again. One standing consequence for everyone: changing `werke.ts`, `docs/decision-log.md`, the audit or the post ledger now requires `npm run graph:build` in the same commit, or `src/lib/graph/graph.test.ts` goes red (`.claude/rules/knowledge-graph.md`) |
+| **#1 Consensus** (longitudinal baseline on the G1 BigQuery path) | this session (afternoon 2026-08-09) | 2026-08-09 | **landed** — lane released |
+| **The ecology lane of the graph** (Frank, 2026-08-09 afternoon, all four options) | — released 2026-08-09 | 2026-08-09 | **done**, see Landed. Two things left for others: (1) the **attention export** is specified and consumed — the producing repo's session ships `src/data/attention/export.json` when it wants the lane live (`docs/design/2026-08-09-attention-export-contract.md`); (2) the ecology audit covers 4 of 59 works and **names its remainder** — next batches are free to claim |
+| **The ecology audit, made public on `/works`** (Frank, 2026-08-09 evening, "ok") | — released 2026-08-09 | 2026-08-09 | **done**, see Landed |
+| **Graph-Rebuild ohne Reibung** (Frank, 2026-08-09 abends: "kann man das irgendwie lösen?" → Variante A): pre-commit-Hook + Claude-Hook bauen den Graphen automatisch nach | this session (evening 2026-08-09), branch `feat/graph-hooks` | 2026-08-09 | building — touches `.githooks/`, `.claude/settings.json`, `.gitignore`, `package.json` |
+| #3 Society · #6 Protocol · #7 Policy · #8 Editorial Deadline · #9 Ghost Fleet · #11 Round Numbers · #12 Delve · #13 Bycatch · #14 Correction · #16 Watchtower | **unclaimed** | — | free — claim before building |
+
+## Parked (Frank, 2026-08-09 morning — BUILT the same afternoon, see Landed)
+
+- **The neighbor graph, visualized.** The audit's neighbor relations are already a graph
+  in prose form (experiment → nearest neighbor → daylight); drawing it — every work's
+  position in the field, daylight as a visible edge — is itself a USP surface no neighbor
+  has. Depends on the knowledge-graph substrate below.
+- **A knowledge graph as instrument, not experiment.** Derived (never typed) from the
+  committed records: works, decisions (decision-log rows), practices, sources, receivers,
+  audit neighbors. Serves sessions as a query layer at start, and the site as the
+  visualization substrate above. Candidate to replace the memory plugin's role for this
+  project (a committed, versioned graph is checkable and human-readable; the plugin's
+  local database is neither).
+- **CLAUDE.md diet.** The project CLAUDE.md exceeds the documented 200-line adherence
+  guideline; move path-specific rules into `.claude/rules/` with `paths:` frontmatter so
+  they load only when matching files are touched. Same session as the graph.
+
+## Landed
+
+- 2026-08-09 (afternoon) — **#4 Machine Attention: the Phase-0 gap closed**, the last of
+  the sixteen still without neighbors. The method sheet now names OpenTimestamps, Proof of
+  Existence/OriginStamp, GDACS+ReliefWeb's own timestamped bulletins, Metaculus/Good
+  Judgment and the HDX archives, and states the daylight narrowly: forecast verification
+  turned around from crowds onto the *institutions*, with a measured verdict and lead time
+  per closed warning. `werke.ts` drops **"provenance applied to the future"** — it
+  overclaims against a decade-old commodity — and says outright that hashing is the
+  bookkeeping, not the claim. Graph rebuilt in the same commit per the standing rule.
+  The Phase-1 build (making the calibration scorecard the page's headline figure) stays
+  open.
+- 2026-08-09 (afternoon) — **practice side, `machine-attention` repo:** Dark Ocean's
+  E-experiment criteria committed before the window (stage 4), extended by criteria group
+  N after a parallel session showed A–E measured the demonstration and not the act; the
+  continuity probe built, tested and live-verified so the window opens on time; and the
+  registry bug the machine's own discovery pass found — GDACS's primary country dropped
+  from six tropical cyclones, Vietnam never once in the registry — fixed, repaired as a
+  `CORRECTED` event naming the cause as ours, and guarded nightly.
+- 2026-08-09 — program decided and written; audit merged (#472); Phase 0 agent launched
+  (PR pending review).
+- 2026-08-09 — coordination table added at Frank's instruction; attention + observatory
+  ceded to the parallel session.
+- 2026-08-09 — #1 Consensus: `src/lib/consensus/structure.ts` + test — the archive
+  aggregate behind the why-classification (46 classified days at first run: 43 chain,
+  3 scattered). Page wiring pending Phase 0.
+- 2026-08-09 — Phase 0 merged (#476): every in-repo experiment cites its nearest
+  neighbors; attention skipped per the claims table; the platform's auto-appended
+  AI-credit footer stripped from the PR body per the standing rule.
+- 2026-08-09 — **the ecology audit becomes public on `/works`.** The verdicts stopped being a
+  document only Frank and a session could read: every audited work now shows its nearest prior
+  art, named and linked, on its own row of the register — and the head line states the ratio
+  ("prior art checked for 3 of 59 works … a work without a note below is **unexamined, not
+  cleared**"), because stamping 56 rows with a disclaimer would turn a catalogue into noise
+  while stating it once cannot be skimmed past. No colour was added: the practice's hairline
+  stays the row's only hue and a verdict is stated in words. Derived from the same graph, so
+  the page cannot say anything the audit does not. Two things the build caught: the neighbour
+  links had to leave the row's own link (a link inside a link is invalid HTML browsers take
+  apart), and the first wording — "already done by" — was a false claim for an ADDED VALUE
+  verdict, so it reads "nearest prior art" instead. `register-audit.test.ts` guards the seam
+  the join runs on: rename a work's directory and the page would have quietly reported an
+  examined work as unexamined.
+- 2026-08-09 — **the ecology enters the graph** (Frank, afternoon: "die research ecology werke
+  sind hier noch gar nicht abgebildet, aber bilden auch eine eigene 'machine-run' ökologie" —
+  all four proposed lanes chosen). **(a)** The practices' own **59 works** and the **6
+  encounters** are now nodes: each work's `meta.json` is its source, the directory it lives in
+  is the evidence of who made it, and the crossings carry who gave, who received and which work
+  moved. 201 nodes / 183 edges, up from 123 / 95. Spellings are reconciled through the house's
+  existing register (`normaliseVoice`) rather than a second alias table. **(b)** A **nightly
+  rebuild** (`.github/workflows/graph.yml`) takes the residue so a session that forgets
+  `graph:build` does not leave the artifact stale — a safety net, not a substitute; a PR still
+  goes red. **(c)** The **attention export contract** is written and its consumer built and
+  probed with a real file, without touching the `machine-attention` repo, whose lane is claimed:
+  the day that session ships `src/data/attention/export.json`, the lane engages and CI stays
+  green. **(d)** The USP obligation now reaches the ecology:
+  `docs/audits/2026-08-09-ecology-usp-audit.md`, first batch of 4 chosen by a criterion the
+  records supply (works already put in front of someone outside — two packets, two encounters),
+  **55 named as unaudited** rather than silently cleared. **The finding that matters: the
+  Calibration Certificate is REDUNDANT against Weber-Wulff et al. (2023), published in the
+  journal of the very network its packet is addressed to.** The audit blocks that packet on a
+  citation; sending remains Frank's, as always.
+- 2026-08-09 — **the parked package, all three parts.**
+  **(a) The knowledge graph as instrument** — `src/data/graph/graph.json`, committed and
+  versioned, derived from four records (works register · the neighbour audit · the decision
+  log · the post ledger) and never typed: 123 nodes, 95 edges, each carrying the verbatim
+  string it was read out of. `src/lib/graph/graph.test.ts` holds every quote against its
+  file, rebuilds the graph from today's sources and fails if the committed artifact
+  disagrees, forbids receiver addresses in the file, and makes the **USP obligation
+  mechanical** — no experiment reaches `/holdings` without a verdict, a named daylight and
+  named prior art. Query layer for sessions: `npm run graph -- <term>` answers "what
+  touches X?" with the source file behind every line.
+  **(b) The neighbourhood figure** — `/holdings/neighbors`: sixteen experiments on one
+  rail, their prior art inward on the same spoke, the daylight drawn as the distance
+  between them (1 wide · 6 partial · 9 little). Palette `holdings-neighborhood` recorded
+  and re-derived, the validator's absence stated rather than implied; register below the
+  drawing carries every neighbour as a named link, page never scrolls sideways, geometry
+  asserted in `field.test.ts` (it caught the longest title walking off the canvas). Its own
+  prior art is named on the page — literature maps, patent landscaping, originality-as-
+  distance, the README "Alternatives" genre — with the daylight stated.
+  **(c) The CLAUDE.md diet** — 197 → 157 lines; the path-scoped rules
+  (`.claude/rules/{dataviz-figures,experiments,pipelines-and-archive,knowledge-graph}.md`)
+  carry the moved text verbatim and load only when matching files are touched. `.claude/`
+  is gitignored except `rules/`.
+- 2026-08-09 — Phase 1 wiring landed: **#1 Consensus** structure section (chain share
+  across the classified archive, derived at build time) · **#2 Iceberg** integrity panel
+  (44 committed revisions since 2026-06-14, git-derived dated snapshot + regeneration
+  script) · **#15 Patterns** null distribution drawn (pipeline emits the 20-bin histogram
+  from its next run; honest placeholder until the data carries it) · **#10 Headroom**
+  subtitle reframed onto the breakeven-vs-floor arithmetic.
+- 2026-08-09 (evening) — **#1 Consensus: the longitudinal baseline, and a correction to the
+  figure that landed this afternoon.** First real use of the G1 BigQuery path
+  (`2026-08-09-gcp-activation.md` §2 as the pattern): the nightly v2 measurement
+  re-implemented in SQL over the whole GKG archive and committed once as
+  `src/data/consensus/baseline.json` — 2,496 days, eight jobs, 482 GB billed (44 % of the
+  monthly free tier, 0 €), query text and job trace committed beside the data
+  (`pipelines/consensus/baseline.sql`). The page now answers "is that a lot?": today's echo
+  as a percentile of seven years measured the same way, plus the per-year trend (median echo
+  38.5 % in 2020 → 32.8 % in 2025 — the verbatim consensus is *falling*).
+  Three findings the build produced, each of which changed a claim rather than decorating one:
+  1. **Seven years, not ten.** The English GKG stream carries `PAGE_TITLE` only from
+     2019-09-22 — measured against sample days back to 2015, which return zero title-bearing
+     rows through 2019-06. A verbatim-title instrument has no deeper history than that.
+  2. **GDELT's own archive has a 17-day hole** (2025-06-15 … 2025-07-01). Recorded in the
+     baseline's `gaps`, never interpolated.
+  3. **The afternoon's chain-share figure was backwards.** The page read "91 % of 47
+     classified days were chain syndication" as a statement about the whole archive; 43 of
+     those days were measured by the v1 API pool (<1,000 articles/day), where the day's
+     widest sentence is routinely a tight wire push. Across 2,496 single-method days chain
+     runs at **4 %** — between 3 % and 5 % in every year. `aggregateStructure` now aggregates
+     **per method version** and exposes no archive-wide share to misread; the correction is
+     stated on the page and in the method sheet, and the v1 days stay in the archive, kept
+     apart. Guarded by `structure.test.ts` and `baseline.test.ts` (which recomputes every
+     ratio from the file's own components), not by a comment.
+  Also fixed, dated as classifier `c2-full-domain-set`: the nightly classified syndication on
+  the **40-name masthead display list** rather than every domain of the phrase — on a day with
+  200+ outlets the label came from an alphabetical fifth of them. Committed days keep the
+  values they were measured with.

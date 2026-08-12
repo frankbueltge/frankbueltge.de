@@ -1,0 +1,226 @@
+---
+// /works — the ecology-wide works register (Frank, 2026-08-01: "there is still a page missing
+// that lists ALL works the ecology has ever brought forth").
+//
+// Every practice already keeps its own room — /atelier/works, /field/instruments,
+// /studio/works — and each of them speaks that house's language. What did not exist was the
+// plain, complete list ACROSS the three: the proof that the archive is whole. This page is that
+// list and nothing else. It is a catalogue, not a practice room: no figure, no interaction, one
+// line per work.
+//
+// Data: src/lib/engines/register.ts reads the same four committed meta.json sources the hub's
+// LATEST strip reads (src/lib/engines/latest.ts) — one derivation, so a work can never carry two
+// different dates on two surfaces. Copy: NAMING.worksRegister; no number is written into any
+// string, every count on this page is counted from the register itself.
+//
+// Honesty rules of the house, made visible here:
+//   · every row is dated, from the work's own metadata;
+//   · a WITHDRAWN work stays LISTED and MARKED, with its withdrawal quoted verbatim in the
+//     practice's own words — never a red alarm, because a withdrawal is a completed honest act
+//     (the Studio withdrew One Tap itself, in writing);
+//   · the foot names the exact directories the page was built from.
+//   · since 2026-08-09, what the ecology's neighbour audit found — the projects that already
+//     do something like a work, named and linked on the work's own row. The audit covers four
+//     works so far; the head line says how many, because a row without a note here is
+//     UNEXAMINED and must never be read as cleared (docs/audits/2026-08-09-ecology-usp-audit.md).
+import { NAMING } from '@/config/naming'
+import { descFor } from '@/lib/engines/teaser'
+import { allWorks, summarise, WORK_SOURCES } from '@/lib/engines/register'
+import { GRAPH } from '@/lib/graph/load'
+import { practiceWorkAudits } from '@/lib/graph/query'
+import { readable } from '@/lib/graph/derive'
+import { VERDICT_LEGEND } from '@/lib/graph/field'
+
+const copy = NAMING.worksRegister
+const works = allWorks().map((w) => ({ ...w, desc: descFor(w.ns, w.slug, w.blurb) }))
+const summary = summarise(works)
+
+// The audit, keyed as this register names its works. Derived from the committed graph, which is
+// derived from the audit document — so this page cannot say anything the audit does not say.
+const audits = practiceWorkAudits(GRAPH)
+const auditedCount = works.filter((w) => audits.has(`${w.ns}/${w.slug}`)).length
+// The same plain words the neighbourhood figure's legend uses, so the two surfaces speak one
+// language: "wide daylight" / "some daylight" / "little daylight".
+const daylightWord = (verdict: string): string =>
+  VERDICT_LEGEND.find((l) => l.key === verdict)?.label ?? verdict
+const auditHref =
+  'https://github.com/frankbueltge/frankbueltge.de/blob/main/docs/audits/2026-08-09-ecology-usp-audit.md'
+
+// The count line, assembled from the counts and the practices' OWN nouns: "N works · M works by
+// The Atelier · …". A practice with nothing on record drops out rather than showing a zero.
+const perPractice = copy.practices
+  .map((p) => ({ ...p, count: summary.byNs[p.ns] }))
+  .filter((p) => p.count > 0)
+
+const nsName = new Map(copy.practices.map((p) => [p.ns, p.name]))
+---
+
+<main id="main" class="wr-register mx-auto w-full max-w-4xl flex-1 px-4 py-10 sm:py-14">
+  <header class="mb-10 max-w-3xl">
+    <p class="mb-2 font-mono text-xs uppercase tracking-widest text-fg-faint">
+      <b class="text-fg-muted">{copy.kicker}</b> · {copy.kickerSub}
+    </p>
+    <h1 class="text-3xl font-semibold tracking-tight sm:text-4xl">{copy.title}</h1>
+    <p class="mt-4 text-fg-muted">{copy.intro}</p>
+    <p class="mt-3 text-fg-muted">{copy.honesty}</p>
+    {/* The one confusion this route can cause, defused where it happens: /work (singular) is
+        the conductor's own projects page and stays exactly what it was. */}
+    <p class="mt-4 font-mono text-xs text-fg-faint">
+      {copy.notThis.lead}{' '}
+      <a href={copy.notThis.href} class="underline decoration-line underline-offset-4 transition-colors hover:text-fg">{copy.notThis.label}</a>
+    </p>
+  </header>
+
+  {/* Counted, never claimed. */}
+  <p class="mb-6 font-mono text-xs leading-relaxed text-fg-muted">
+    <b class="tabular-nums text-fg">{summary.total}</b> in the register
+    {perPractice.map((p) => (
+      <>
+        {' · '}<span class="tabular-nums">{p.count}</span> {p.noun} by {p.name}
+      </>
+    ))}
+    {summary.withdrawn > 0 && (
+      <>
+        {' · '}<span class="tabular-nums">{summary.withdrawn}</span> withdrawn, still listed
+      </>
+    )}
+    {summary.first && summary.last && (
+      <span class="text-fg-faint"> · {summary.first} → {summary.last}</span>
+    )}
+  </p>
+
+  {/* The absence, said once and plainly rather than repeated as a disclaimer on 55 rows. A
+      catalogue that stamped "not checked" beside almost every line would read as noise and stop
+      being read at all; a single sentence that names the ratio cannot be skimmed past. */}
+  <p class="mb-6 max-w-[80ch] font-mono text-[11px] leading-relaxed text-fg-faint">
+    Prior art checked for <b class="tabular-nums text-fg-muted">{auditedCount}</b> of{' '}
+    <span class="tabular-nums">{summary.total}</span> works
+    (<a href={auditHref} rel="noopener" class="underline decoration-line underline-offset-4 transition-colors hover:text-fg">the audit of 2026-08-09</a>).
+    A work without a note below is <b class="text-fg-muted">unexamined, not cleared</b>.
+  </p>
+
+  <ol class="divide-y divide-line/60 overflow-hidden rounded-[10px] border border-line bg-panel">
+    {works.map((w) => {
+      const audit = audits.get(`${w.ns}/${w.slug}`)
+      return (
+      <li class="wr-row" data-voice={w.ns}>
+        <a href={w.href} class="group flex flex-wrap items-baseline gap-x-3 gap-y-1 py-3.5 pl-4 pr-4 sm:pl-6 sm:pr-6">
+          <span class="w-[6.5em] shrink-0 whitespace-nowrap font-mono text-[11px] tabular-nums text-fg-faint">{w.date}</span>
+          {/* nowrap and wide enough for the longest practice name: at 7.5em "THE ATELIER" broke
+              over two lines and pushed its own row taller than the rest of the register. */}
+          <span class="w-[8.5em] shrink-0 whitespace-nowrap font-mono text-[10px] uppercase tracking-[0.14em] text-fg-muted">{nsName.get(w.ns) ?? w.ns}</span>
+          <span class="font-semibold tracking-[-0.01em] transition-opacity group-hover:opacity-70">{w.title}</span>
+          {w.state === 'withdrawn' && (
+            <span class="wr-chip font-mono text-[10px] uppercase tracking-[0.12em] text-fg-faint">
+              {copy.withdrawnLabel}{w.withdrawnOn && ` ${w.withdrawnOn}`}
+            </span>
+          )}
+          {/* The second-line indent is in rem, not em: the two lines below run at different font
+              sizes, so an em indent would have set them a dozen pixels apart under the same title. */}
+          {w.desc && (
+            <span class="w-full text-[13px] leading-snug text-fg-muted line-clamp-2 sm:pl-[11.3rem]">{w.desc}</span>
+          )}
+          {/* The withdrawal itself, verbatim and in full — a mark the record keeps has to be
+              readable, not a tooltip somebody has to find. */}
+          {w.withdrawnNote && (
+            <span class="w-full font-mono text-[11px] leading-relaxed text-fg-faint sm:pl-[11.3rem]">{w.withdrawnNote}</span>
+          )}
+        </a>
+        {/* The neighbours, OUTSIDE the row's link: they are links of their own, and a link
+            inside a link is invalid HTML that browsers silently take apart. No colour is added
+            here — the practice's hairline is the row's only hue, and a verdict is stated in
+            words ("little daylight"), never painted. */}
+        {audit && (
+          <div class="wr-audit pb-3.5 pl-4 pr-4 sm:pl-6 sm:pr-6">
+            <p class="font-mono text-[11px] leading-relaxed text-fg-faint sm:pl-[11.3rem]">
+              <span class="wr-chip mr-2 uppercase tracking-[0.12em] text-fg-muted">{daylightWord(audit.verdict)}</span>
+              nearest prior art:{' '}
+              {audit.neighbours.map((n, i) => (
+                <>
+                  {i > 0 ? ' · ' : ''}
+                  {n.url ? (
+                    <a href={n.url} rel="noopener nofollow" class="underline decoration-line underline-offset-4 transition-colors hover:text-fg">{readable(n.label)}</a>
+                  ) : (
+                    <span>{readable(n.label)}</span>
+                  )}
+                </>
+              ))}
+            </p>
+          </div>
+        )}
+      </li>
+      )
+    })}
+  </ol>
+
+  <p class="mt-6 font-mono text-xs leading-relaxed text-fg-faint">
+    {copy.roomsLead}
+    {copy.practices.map((p, i) => (
+      <>
+        {i > 0 ? ' · ' : ' '}<a href={p.roomHref} class="underline decoration-line underline-offset-4 transition-colors hover:text-fg">{p.roomLabel}</a>
+      </>
+    ))}
+  </p>
+
+  <p class="mt-2 font-mono text-xs text-fg-faint">
+    {copy.entranceNote.lead}{' '}
+    <a href={copy.entranceNote.href} class="underline decoration-line underline-offset-4 transition-colors hover:text-fg">{copy.entranceNote.label}</a>
+  </p>
+
+  {/* Provenance: the directories this page was built from, named so the list can be checked
+      against the repository without reading the code. */}
+  <footer class="mt-10 border-t border-line/60 pt-5">
+    <p class="font-mono text-[11px] leading-relaxed text-fg-faint">
+      {copy.provenanceLead}
+      {WORK_SOURCES.map((s, i) => (
+        <>
+          {i > 0 ? ' · ' : ' '}<code class="text-fg-muted">{s.dir}/*/meta.json</code>
+        </>
+      ))}
+    </p>
+    <p class="mt-2 max-w-[80ch] font-mono text-[11px] leading-relaxed text-fg-faint">{copy.provenanceTail}</p>
+  </footer>
+</main>
+
+<style>
+  /* PALETTE: ecology-voices (src/lib/dataviz/palette.ts) — validated 2026-07-31, --pairs all,
+     against the panel surfaces this register sits on (#f7f8fa light / #141414 dark, the same
+     two the set records): PASS in both modes. Own steps per mode, never an automatic flip.
+     The same quartet the hub doors, the encounter score map and the Partitur carry, so a
+     practice never wears two colours on this site. Only the three PRACTICE slots appear here:
+     the Plenum keeps its house elsewhere and is not in this register, and The Middle is a
+     declared neutral, not a categorical slot — giving either one a rule on this page would put
+     a hue on an identity the page does not list.
+     The hue carries no information of its own: every row is DIRECT-LABELLED with the practice's
+     name in the column beside it, so the register reads identically without colour (which is
+     also why the set's light-mode contrast WARN cannot bite here — no text is ever painted in
+     these hues, only a 3px rule). */
+  :root[data-theme='light'] .wr-register {
+    --wr-c-atelier: #4a3aa7;
+    --wr-c-field: #2a78d6;
+    --wr-c-studio: #eb6834;
+  }
+  :root[data-theme='dark'] .wr-register {
+    --wr-c-atelier: #9085e9;
+    --wr-c-field: #256abf;
+    --wr-c-studio: #d95926;
+  }
+
+  /* The practice's hairline down the left edge of its row — the register's spine. Drawn as a
+     border on the row itself (not a pseudo-element on the link) so it survives wrapping rows. */
+  .wr-row {
+    border-left: 3px solid var(--wr-c, transparent);
+  }
+  .wr-row[data-voice='atelier'] { --wr-c: var(--wr-c-atelier); }
+  .wr-row[data-voice='field'] { --wr-c: var(--wr-c-field); }
+  .wr-row[data-voice='studio'] { --wr-c: var(--wr-c-studio); }
+
+  /* The withdrawal chip stays in the mono skin: a bordered mark, never a warning red. A
+     withdrawal here is a completed honest act, not an error state (CLAUDE.md: status colours
+     are out of bounds where the practice does not judge). */
+  .wr-chip {
+    border: 1px solid var(--color-line);
+    border-radius: 2px;
+    padding: 1px 7px;
+  }
+</style>

@@ -1,295 +1,84 @@
 ---
-// /studio — die Bühne (studio-aesthetik-2026-07-15.md): ONE spot on what is public now,
-// no gallery grid; the floor keeps every strike (X-marks with verbatim kill reasons); the
-// Gasse holds the refused material, visible but unlit. Data: the chronicle mirror (the
-// ship entry names the premiered work), the enc-2026-001 score export (admission
-// contract, declined case, obligation → marquee), and the hand-curated kill list
-// (src/data/studio/stage.curated.json — session-commit quotes the mirror itself does not
-// carry; provenance in the file). Replaces the old EnginePage entrance.
+// /studio — the Studio's station sheet (Level 1 of the ecology pyramid, 2026-08-12).
+//
+// Replaces, as separate surfaces: this practice's index, its history, its apparatus page and its
+// tour. The stage floor — the practice's own grammar since its first season — survives as the
+// sheet's figure, drawn from the works register and the curated strike list where every reason is
+// a verbatim quotation from the session commit that made it.
 import Page from '@/layouts/Page.astro'
-import Frame from '@/components/studio/surface/Frame.astro'
-import { loadChronicle } from '@/lib/studio/chronicle'
-import { currentScore } from '@/lib/begegnungen'
-import { buildStageSvg, type GasseEntry } from '@/lib/studio/stage'
-import { STUDIO_GRAMMAR, STUDIO_NARRATIVE } from '@/config/studio-wording'
-import stageData from '@/data/studio/stage.curated.json'
-import { numberWord } from '@/lib/atelier/sessions'
+import StationSheet from '@/components/ecology/StationSheet.astro'
+import Figure from '@/components/ecology/figures/Figure.astro'
+import StageFloorFigure from '@/components/ecology/figures/StageFloor.astro'
+import { PYRAMID } from '@/config/ecology-pyramid-wording'
+import { FIGURES } from '@/config/ecology-figure-wording'
+import pulseData from '@/data/pulse/pulse.json'
+import type { PulseSnapshot } from '@/lib/pulse/render'
+import { allWorks } from '@/lib/engines/register'
+import { buildStationSheet, splitDoorLine, type LogEntry } from '@/lib/ecology/pyramid/station'
+import { buildStageFloor } from '@/lib/ecology/pyramid/figures'
+import { recordLine, type ChronicleEntry } from '@/lib/ecology/pyramid/landings'
+import chronicle from '@/data/studio/chronicle.upstream.json'
+import stage from '@/data/studio/stage.curated.json'
 
-const chronicle = loadChronicle()
-const metas = import.meta.glob('/src/content/studio/works/*/meta.json', {
-  eager: true, import: 'default',
-}) as Record<string, { title?: string; date?: string; medium?: string }>
+const works = allWorks()
+const rows = chronicle as ChronicleEntry[]
+const studioWorks = works.filter((w) => w.ns === 'studio')
 
-// newest LIVE premiere, not just the newest ship: a premiere can be withdrawn after the
-// fact (One Tap, session 43, 2026-07-25 — the collective's own meta.json marks it
-// "WITHDRAWN … not a live premiere" after it was found to misrepresent real named sources).
-// The chronicle is oldest-first; walk from the newest ship backwards past any withdrawn one.
-const ship = [...chronicle].reverse().find((e) => {
-  if (e.move !== 'ship' || !e.works[0]) return false
-  const m = metas[`/src/content/studio/works/${e.works[0]}/meta.json`]
-  return !!m && !/^WITHDRAWN\b/i.test(m.medium ?? '')
-})
-if (!ship || !ship.works[0]) throw new Error('/studio: no live premiered work in the chronicle mirror')
-const slug = ship.works[0]
+const log: LogEntry[] = [...rows]
+  .filter((r) => r.date)
+  .sort((a, b) => (a.date! < b.date! ? 1 : -1))
+  .slice(0, 3)
+  .map((r) => ({
+    date: r.date!,
+    marker: r.collective_session ? `S${r.collective_session}` : null,
+    line: recordLine(r.move, r.summary) ?? PYRAMID.station.absent,
+  }))
 
-const meta = metas[`/src/content/studio/works/${slug}/meta.json`]
-if (!meta?.title || !meta.date) throw new Error(`/studio: premiered work ${slug} has no committed meta`)
-
-const firstSentence = ship.summary.split('. ')[0].replace(/\.+$/, '') + '.'
-
-const score = currentScore
-const admitted = score.events.find((e) => e.event_type === 'object.admitted')
-const declined = score.events.find((e) => e.event_type === 'translation.loss_declared')
-const issued = score.events.find((e) => e.event_type === 'correction.issued')
-const obligation = score.obligations.find((o) => o.id.includes('live-status'))
-
-const kills = stageData.kills as { name: string; session: string; reason: string; source: string }[]
-const gasse: GasseEntry[] = [
-  ...(declined
-    ? [{
-        name: 'the declined case',
-        sub: declined.attribution?.match(/session \d+/)?.[0] ?? declined.date,
-        note: `${'translation.loss_declared'} — “${declined.quote}” (${declined.attribution} · enc-2026-001, verbatim). The most spectacular case stays offstage, on purpose.`,
-      }]
-    : []),
-  ...(stageData.held as GasseEntry[] & { name: string; sub: string; note: string }[]),
-]
-
-const svg = buildStageSvg({
-  premiere: {
-    title: (meta.title ?? slug).toUpperCase(),
-    metaLine: `premiered ${meta.date} · session ${ship.collective_session} · “${firstSentence}”`,
-    hover: `works/${slug} — ${ship.summary}`,
-    quote: admitted?.quote ?? '',
-    attribution: admitted ? `${admitted.attribution} (enc-2026-001, verbatim)` : '',
-  },
-  marquee: obligation ? STUDIO_GRAMMAR.marquee : '',
-  kills: kills.map(({ name, session, reason }) => ({ name, session, reason })),
-  gasse,
-  strikeNote: STUDIO_GRAMMAR.strikeNote(kills.length),
-  gasseLabel: STUDIO_GRAMMAR.gasseLabel,
-  orientNote: STUDIO_NARRATIVE.orientNote,
+const sheet = buildStationSheet({
+  id: 'studio',
+  snapshot: pulseData as PulseSnapshot,
+  works,
+  log,
+  made: studioWorks.length,
 })
 
-const sessions = chronicle.map((e) => e.collective_session).filter((s): s is number => s !== null)
-const sMax = Math.max(...sessions)
-const evenings = new Set(chronicle.map((e) => e.date)).size
-const premieres = chronicle.filter((e) => e.move === 'ship').length
-
-// ——— the season band (Eingang v2, 2026-07-25): every premiere and strike on one line,
-// oldest → newest, before tonight's stage. Premieres from the chronicle's ship entries;
-// strikes from the curated kill list, dated via their session's chronicle evening (a kill
-// whose session the mirror does not carry is left off the band — the floor below keeps it).
-// Geometry via SVG attributes and compiled classes only — no inline styles (CSP).
-const sessionDate = new Map<number, string>()
-for (const e of chronicle) {
-  if (e.collective_session !== null && !sessionDate.has(e.collective_session)) {
-    sessionDate.set(e.collective_session, e.date)
-  }
-}
-const shipsAll = chronicle.filter((e) => e.move === 'ship')
-const bandT = (d: string) => Date.parse(d + 'T00:00:00Z')
-const S0 = bandT(chronicle[0].date)
-const S1 = bandT(chronicle.at(-1)!.date)
-const BW = 960, BH = 96, bPadL = 16, bPadR = 46, BY = 58
-const bandX = (ts: number) =>
-  S1 === S0 ? bPadL : bPadL + ((ts - S0) / (S1 - S0)) * (BW - bPadL - bPadR)
-interface SeasonMark {
-  x: number
-  kind: 'premiere' | 'kill'
-  label: string
-  current?: boolean
-  href?: string
-}
-const rawMarks: SeasonMark[] = [
-  ...shipsAll.map((e) => {
-    const wslug = e.works[0]
-    const m = wslug ? metas[`/src/content/studio/works/${wslug}/meta.json`] : undefined
-    return {
-      x: bandX(bandT(e.date)),
-      kind: 'premiere' as const,
-      label: `${m?.title ?? wslug ?? 'premiere'} — premiered ${e.date} · S${e.collective_session ?? '?'}`,
-      current: wslug === slug,
-      href: wslug ? `/studio/werke-html/${wslug}/` : undefined,
-    }
-  }),
-  ...kills.flatMap((k) => {
-    const n = parseInt(String(k.session).replace(/\D/g, ''), 10)
-    const d = sessionDate.get(n)
-    if (!d) return []
-    return [{
-      x: bandX(bandT(d)),
-      kind: 'kill' as const,
-      label: `${k.name} — struck ${k.session} (${d}) · ${k.reason}`,
-    }]
-  }),
-]
-// Same-evening marks fan out horizontally so none hides another (deterministic order).
-const byX = new Map<number, SeasonMark[]>()
-for (const m of rawMarks) {
-  const key = Math.round(m.x)
-  byX.set(key, [...(byX.get(key) ?? []), m])
-}
-const seasonMarks = [...byX.values()].flatMap((group) =>
-  group.map((m, i) => ({ ...m, x: m.x + (i - (group.length - 1) / 2) * 9 })),
-)
-
-const kicker = ['Studio · the stage · what is public now', 'studio (Ensemble)', `founded ${chronicle[0]?.date ?? ''}`]
-// One clear line: the stage's tally. The stage-vs-gallery rule (STUDIO_NARRATIVE.stageRule)
-// moved out of the header — it is meta, and the orientNote on the floor already says it.
-const statusHtml =
-  `<b>${premieres} premiere${premieres === 1 ? '' : 's'} · ${kills.length} kills · ${stageData.held.length} held · ` +
-  `${sMax} sessions in ${numberWord(evenings)} evenings</b>`
-
-// Stage record — every mark, uncompressed: the chronicle entries that name the premiered
-// work (verbatim search on its title), the encounter events, the standing obligation.
-interface Row { date: string; event: string; source: string }
-const rows: Row[] = [
-  ...chronicle
-    .filter((e) => e.summary.includes(meta.title!) || e.works.includes(slug))
-    .map((e) => ({
-      date: e.date,
-      event: `S${e.collective_session} — ${e.move}: ${e.summary}`,
-      source: 'chronicle, verbatim',
-    })),
-  ...(admitted
-    ? [{ date: admitted.date, event: `admission contract stated — “${admitted.quote}”`, source: `enc-2026-001 ledger, verbatim (${admitted.attribution})` }]
-    : []),
-  ...(declined
-    ? [{ date: declined.date, event: `the most spectacular case declined — “${declined.quote}”`, source: `enc-2026-001 ledger, verbatim (${declined.attribution})` }]
-    : []),
-  ...(issued
-    ? [{ date: issued.date, event: 'the correction reported upstream, delivered by the conductor', source: 'enc-2026-001 ledger' }]
-    : []),
-  ...(obligation
-    ? [{ date: `since ${admitted?.date ?? ''}`, event: `obligation ${obligation.label}`, source: 'enc-2026-001 obligations' }]
-    : []),
-].sort((a, b) => {
-  // Neueste zuerst (Frank, 16.07. abends); 'since <datum>'-Zeilen sortieren an ihrem Datum.
-  const key = (d: string) => d.replace(/^since /, '')
-  return key(b.date).localeCompare(key(a.date))
-})
+const floor = buildStageFloor(works, stage as Parameters<typeof buildStageFloor>[1])
+const door = splitDoorLine(sheet.station.description)
+const SEO = PYRAMID.stationSeo.studio
+const F = FIGURES.studio
 ---
 
-<Page
-  title="Studio — the stage | Frank Bültge"
-  description="The Studio's entry is the stage: one spotlight on what is public now, seven struck positions kept on the floor, and the refused material in the Gasse — visible, unlit."
->
-  <Frame
-    active="this stage"
-    kicker={kicker}
-    h1={STUDIO_GRAMMAR.stageHeadline(premieres, kills.length)}
-    statusHtml={statusHtml}
-    footLeft={STUDIO_NARRATIVE.provenance.stage}
-    footRight="the correction this work sent upstream lives in The Middle → enc-2026-001"
+<Page title={`${SEO.title} | Frank Bültge`} description={SEO.description}>
+  <StationSheet
+    id="studio"
+    kicker={`${sheet.station.name.toUpperCase()} · ${sheet.station.resident.toUpperCase()} · ${sheet.station.corner}`}
+    h1={door.lead}
+    sub={door.rest}
+    status={sheet.status}
+    figureColumns={1}
+    lede={sheet.lede && {
+      kicker: F.lede.kicker(sheet.lede.date),
+      title: sheet.lede.title,
+      teaser: sheet.ledeTeaser,
+      note: sheet.arc?.title ?? null,
+      noteLabel: F.lede.noteLabel,
+      links: [
+        { label: F.lede.open, href: sheet.lede.href },
+        { label: F.lede.record, href: '/studio/works' },
+      ],
+    }}
+    log={sheet.log}
+    logMore={{ label: PYRAMID.station.wholeJournal, href: '/studio/journal' }}
+    doors={sheet.doors}
   >
-    {/* Orientierung zuerst (Frank, 24.07., gleiches Muster wie /field): zwei Sätze, was das
-        Studio ist und wie die Bühne zu lesen ist, vor der Grafik. */}
-    <p class="st-room-intro">
-      The Studio is Ensemble's stage — an autonomous artist collective staging works of data
-      art in its own sessions, published unedited. The season band below shows the whole run
-      so far — every premiere, every strike, in order; then the stage as it stands tonight:
-      one spotlight on the current premiere, every struck position kept on the floor with its
-      kill reason verbatim, and the refused material in the Gasse — visible, unlit. The rail
-      above holds the rest: all works, the register, the journal, and the apparatus — how the
-      machine runs.
-    </p>
-
-    <figure class="st-season" aria-label={STUDIO_NARRATIVE.season.heading}>
-      <figcaption class="st-season-head">{STUDIO_NARRATIVE.season.heading}</figcaption>
-      <div class="st-season-scroll">
-        <svg viewBox={`0 0 ${BW} ${BH}`} role="img" aria-label={STUDIO_NARRATIVE.season.caption}>
-          <line x1={bPadL - 6} y1={BY} x2={BW - bPadR + 26} y2={BY} class="sn-line" />
-          <path d={`M ${BW - bPadR + 26} ${BY} l 9 0 m -3.5 -3 l 3.5 3 l -3.5 3`} class="sn-line" />
-          {seasonMarks.map((m) =>
-            m.kind === 'premiere' ? (
-              <a href={m.href ?? '/studio/works'} class="sn-link">
-                <title>{m.label}</title>
-                <circle cx={m.x} cy={BY} r={m.current ? 7 : 4.5} class={m.current ? 'sn-prem sn-prem-current' : 'sn-prem'} />
-                {m.current && <circle cx={m.x} cy={BY} r={11} class="sn-prem-ring" />}
-              </a>
-            ) : (
-              <g class="sn-kill-g">
-                <title>{m.label}</title>
-                <path d={`M ${m.x - 4} ${BY - 4} l 8 8 M ${m.x + 4} ${BY - 4} l -8 8`} class="sn-kill" />
-              </g>
-            ),
-          )}
-          <text x={bPadL} y={BY + 22} class="sn-cap">founded {chronicle[0].date}</text>
-          <text x={BW - bPadR} y={BY + 22} text-anchor="end" class="sn-cap">{chronicle.at(-1)!.date} · tonight's stage below</text>
-        </svg>
-      </div>
-      <figcaption class="st-season-legend">{STUDIO_NARRATIVE.season.caption}</figcaption>
-    </figure>
-
-    <figure set:html={svg} />
-
-    <aside class="st-legend" aria-label={STUDIO_NARRATIVE.stageKey.heading}>
-      <div class="lg-row"><svg class="lg-mini" viewBox="0 0 46 30"><ellipse class="spotpool" cx="23" cy="15" rx="16" ry="9"/></svg><span>{STUDIO_NARRATIVE.stageKey.spot}</span></div>
-      <div class="lg-row"><svg class="lg-mini" viewBox="0 0 46 30"><g class="lamp"><rect x="19" y="3" width="8" height="4"/></g><path class="beamline" d="M21 7 L10 26"/><path class="beamline" d="M25 7 L36 26"/></svg><span>{STUDIO_NARRATIVE.stageKey.lamp}</span></div>
-      <div class="lg-row"><svg class="lg-mini" viewBox="0 0 46 30"><path class="tapemark" d="M10 12 V6 H16"/><path class="tapemark" d="M36 18 V24 H30"/></svg><span>{STUDIO_NARRATIVE.stageKey.tape}</span></div>
-      <div class="lg-row"><svg class="lg-mini" viewBox="0 0 46 30"><path class="xmark" d="M16 8 L30 22 M30 8 L16 22"/></svg><span>{STUDIO_NARRATIVE.stageKey.xmark}</span></div>
-      <div class="lg-row"><svg class="lg-mini" viewBox="0 0 46 30"><path class="gasse" d="M23 3 V27"/></svg><span>{STUDIO_NARRATIVE.stageKey.gasse}</span></div>
-      <div class="lg-row"><svg class="lg-mini" viewBox="0 0 46 30"><path class="curtainline" d="M4 15 H42"/></svg><span>{STUDIO_NARRATIVE.stageKey.curtain}</span></div>
-    </aside>
-
-    <section class="st-record">
-      <h2>Stage record — every mark, uncompressed</h2>
-      <div class="st-tbl-wrap">
-        <table>
-          <thead><tr><th>date</th><th>event</th><th>source</th></tr></thead>
-          <tbody>
-            {rows.map((r) => (
-              <tr>
-                <td class="mono">{r.date}</td>
-                <td class="q">{r.event}</td>
-                <td class="mono">{r.source}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-      <p class="st-room-intro">
-        Every strike keeps its reason — hover the X-marks, or read the sources in
-        <a href="/studio/history" class="underline">the playbill</a>. The premiered work itself:
-        <a href="/studio/works" class="underline">works →</a>
-      </p>
-    </section>
-
-    {/* Öffentliche Saat (Design-Spec 2026-07-20-oeffentliche-saat-design.md §5, Addendum D6) */}
-    <p class="st-room-intro">
-      <a href="/seed?to=studio" class="underline">Offer this practice a seed →</a>
-    </p>
-  </Frame>
+    <Figure
+      slot="figure-main"
+      title={F.floor.title}
+      sub={F.floor.sub}
+      link={{ label: F.floor.link(sheet.made.count), href: '/studio/works' }}
+      caption={F.floor.caption(floor.pools.length, floor.strikes.length)}
+    >
+      <StageFloorFigure floor={floor} />
+    </Figure>
+  </StationSheet>
 </Page>
-
-<style>
-  .st-season { margin: 0 0 1.9rem; }
-  .st-season-head {
-    font-size: 12px;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--color-fg-faint);
-    margin-bottom: 0.35rem;
-  }
-  .st-season-scroll { overflow-x: auto; }
-  .st-season svg { width: 100%; min-width: 640px; height: auto; display: block; }
-  .sn-line { fill: none; stroke: var(--color-fg-muted); stroke-width: 1.1; }
-  .sn-prem { fill: var(--color-fg); }
-  .sn-link:hover .sn-prem, .sn-link:focus .sn-prem { fill: var(--color-fg-muted); }
-  .sn-prem-ring { fill: none; stroke: var(--color-fg-faint); stroke-width: 1; stroke-dasharray: 2 3; }
-  .sn-kill { stroke: var(--color-fg-faint); stroke-width: 1.6; fill: none; }
-  .sn-kill-g:hover .sn-kill { stroke: var(--color-fg); }
-  .sn-cap {
-    font-family: var(--font-mono, ui-monospace, monospace);
-    font-size: 10.5px;
-    fill: var(--color-fg-faint);
-  }
-  .st-season-legend {
-    font-size: 0.74rem;
-    line-height: 1.55;
-    color: var(--color-fg-faint);
-    margin-top: 0.4rem;
-    max-width: 90ch;
-  }
-</style>

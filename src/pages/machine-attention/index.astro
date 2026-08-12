@@ -1,0 +1,171 @@
+---
+// The entrance of Machine Attention — the machine as a public situation, not
+// a manifesto (Frank's review, 2026-08-09; docs/design/2026-08-09-machine-
+// attention-meta-stage.md). The page stages what the machine last actually
+// saw: real, dated moments offered by its projects under stage-moments/1,
+// derived from committed records and mirrored nightly. Silence is a legal
+// state and is shown as one — the page never invents activity to seem alive.
+// Everything that explains the machine lives one door deeper, at /about.
+import Page from '@/layouts/Page.astro'
+import exportFile from '@/data/attention/export.json'
+import momentsFile from '@/data/attention/moments.json'
+import { readMoments } from '@/lib/attention/moments'
+
+const REPO = 'https://github.com/frankbueltge/machine-attention'
+
+const moments = readMoments(momentsFile)
+const latest = moments[0] ?? null
+const more = moments.slice(1, 3)
+const momentsCommit = (momentsFile as { generated_from?: { commit?: string } })?.generated_from
+  ?.commit
+
+type Project = { id: string; title: string; since: string; site_route: string | null; status: string }
+const contractOk = (exportFile as { $contract?: string })?.$contract === 'attention-export/1'
+const projects: Project[] = contractOk ? (exportFile.projects as Project[]) : []
+const running = projects.filter((p) => p.site_route)
+const gated = projects.filter((p) => !p.site_route)
+
+/** Server-rendered fallback for every timestamp: the moment in plain UTC.
+ *  The inline script upgrades it to a relative age; without JS the date
+ *  stands, which is the more notarial statement anyway. */
+const utc = (ts: string) => `${ts.slice(0, 16).replace('T', ' ')} UTC`
+---
+
+<Page
+  title="Machine Attention | Frank Bültge"
+  description="The machine is paying attention. The entrance to Machine Attention, a machine-run investigative research project: what the machine last saw, from its committed records — preserved, verified, and open to follow."
+>
+  <div class="mx-auto flex min-h-[82vh] max-w-3xl flex-col px-4 py-16 font-mono">
+    <p class="mb-10 flex flex-wrap justify-between gap-2 text-[11px] uppercase tracking-[0.2em] text-fg-faint">
+      <span>Machine Attention · a research project</span>
+      <span><span id="ma-utc">—</span> UTC</span>
+    </p>
+
+    <h1 class="mb-14 max-w-[16ch] font-sans text-4xl font-semibold uppercase leading-[1.05] tracking-tight sm:text-6xl">
+      The machine is paying attention.
+    </h1>
+
+    {latest ? (
+      <section aria-label="What the machine last saw" class="mb-14 border-l-2 border-line pl-5 sm:pl-7">
+        <p class="mb-3 text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+          What it last saw · <span data-occurred={latest.occurred_at}>{utc(latest.occurred_at)}</span>
+        </p>
+        <p class="mb-2 max-w-[24ch] font-sans text-2xl font-semibold leading-snug text-fg sm:text-4xl">
+          {latest.statement}
+        </p>
+        <p class="mb-6 text-sm text-fg-muted">{latest.subject}</p>
+        <a
+          href={latest.enter}
+          class="inline-block border-b-2 border-line pb-0.5 font-sans text-lg font-semibold uppercase tracking-wide text-fg hover:border-fg"
+        >
+          Follow it &rarr;
+        </a>
+      </section>
+    ) : (
+      <section aria-label="The quiet state" class="mb-14 border-l-2 border-line pl-5 sm:pl-7">
+        <p class="mb-2 max-w-[38ch] font-sans text-2xl font-semibold leading-snug text-fg sm:text-3xl">
+          Nothing it has preserved has crossed into a public moment yet.
+        </p>
+        <p class="max-w-[52ch] text-sm text-fg-muted">
+          Its records accumulate all the same — nightly, in the open. Silence here is a real
+          state, not a failure; this page does not invent activity.
+        </p>
+      </section>
+    )}
+
+    {more.length > 0 && (
+      <section aria-label="Earlier moments" class="mb-14">
+        <p class="mb-3 text-[11px] uppercase tracking-[0.18em] text-fg-faint">Before that</p>
+        <ul class="space-y-2 text-sm text-fg-muted">
+          {more.map((m) => (
+            <li>
+              <a href={m.enter} class="hover:text-fg">
+                {m.statement}
+                <span class="text-fg-faint"> — {m.subject} · <span data-occurred={m.occurred_at}>{utc(m.occurred_at)}</span></span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    <div class="mt-auto border-t border-line pt-8 text-sm leading-relaxed text-fg-muted">
+      <p class="mb-6 max-w-[62ch]">
+        A machine pays continuous attention to public systems no one can watch at the same scale
+        or for the same duration. It preserves what it sees, investigates differences, and
+        sometimes builds a work from what it finds.
+      </p>
+
+      {running.length > 0 && (
+        <p class="mb-2 text-[13px]">
+          <span class="text-[11px] uppercase tracking-[0.18em] text-fg-faint">Where its attention lives</span>
+          {running.map((p) => (
+            <>
+              {' '}· <a href={p.site_route} class="underline decoration-line underline-offset-4 hover:text-fg">{p.title}</a>
+            </>
+          ))}
+        </p>
+      )}
+      {gated.length > 0 && (
+        <p class="mb-6 text-xs text-fg-faint">
+          {gated.length === 1 ? 'One more investigation runs' : `${gated.length} more investigations run`} an
+          acceptance experiment, public only in
+          {' '}<a href={REPO} class="underline hover:text-fg">the practice&rsquo;s repository</a> — by
+          rule, until {gated.length === 1 ? 'it passes' : 'they pass'}.
+        </p>
+      )}
+
+      <p class="text-xs text-fg-faint">
+        <a href="/machine-attention/about" class="border-b border-line pb-0.5 font-sans text-sm font-semibold uppercase tracking-wide text-fg hover:border-fg">About this machine &rarr;</a>
+      </p>
+      <p class="mt-6 text-[11px] leading-relaxed text-fg-faint">
+        Every moment above is derived from committed records{momentsCommit ? <> (commit <code>{momentsCommit}</code>)</> : null}, mirrored
+        nightly, and can be re-derived by anyone:
+        {' '}<a href={REPO} class="underline hover:text-fg">the archive</a> ·
+        {' '}<a href="/werke/attention" class="underline hover:text-fg">the method sheet</a>.
+      </p>
+    </div>
+  </div>
+</Page>
+
+<script is:inline>
+  // Clocks tick client-side from data timestamps, so the built page stays
+  // byte-stable for identical data — the same rule the practice stage keeps.
+  ;(function () {
+    'use strict'
+    function pad(n) {
+      return String(n).padStart(2, '0')
+    }
+    function age(ms) {
+      var minutes = Math.max(1, Math.floor(ms / 60000))
+      if (minutes < 90) return minutes + ' minute' + (minutes === 1 ? '' : 's') + ' ago'
+      var hours = Math.round(minutes / 60)
+      if (hours < 48) return hours + ' hour' + (hours === 1 ? '' : 's') + ' ago'
+      var days = Math.round(hours / 24)
+      return days + ' days ago'
+    }
+    function tick() {
+      var now = new Date()
+      var clock = document.getElementById('ma-utc')
+      if (clock)
+        clock.textContent =
+          now.getUTCFullYear() +
+          '-' +
+          pad(now.getUTCMonth() + 1) +
+          '-' +
+          pad(now.getUTCDate()) +
+          ' ' +
+          pad(now.getUTCHours()) +
+          ':' +
+          pad(now.getUTCMinutes()) +
+          ':' +
+          pad(now.getUTCSeconds())
+      document.querySelectorAll('[data-occurred]').forEach(function (el) {
+        var ts = Date.parse(el.getAttribute('data-occurred'))
+        if (!isNaN(ts) && ts <= now.getTime()) el.textContent = age(now.getTime() - ts)
+      })
+    }
+    tick()
+    setInterval(tick, 1000)
+  })()
+</script>

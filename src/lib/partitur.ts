@@ -5,6 +5,8 @@
 // each voice carries its own as-of. Pure functions; the Astro pages pass in their
 // globs and chronicles (as in maschinenraum.ts).
 
+import { dayRange as geometryDayRange } from '@/lib/dataviz/geometry'
+
 export type VoiceId = 'atelier' | 'field' | 'studio' | 'plenum'
 
 /** mark type — precedence within day clusters: fail > work > session */
@@ -50,10 +52,26 @@ export interface ScoreModel {
 }
 
 const VOICE_ORDER: VoiceId[] = ['atelier', 'field', 'studio', 'plenum']
+
+/**
+ * Who each lane is, and the room it leads into. Moved out of the score component on 2026-08-02,
+ * when the lane labels themselves became links: an href that decides where a reader lands is data,
+ * and data in this repo is testable (partitur.test.ts checks every voice has a house).
+ *
+ * `href` is the voice's OWN room, not a guided tour — the score's detail panel has always opened
+ * these ("open the log →"), and one voice must not lead two different ways from one figure.
+ * The Plenum's room is /plenum: it is a guest here (data-snack.com's resident collective), it has
+ * no door on the hub, and its lane is the one place on the entrance where its voice sounds — so
+ * the lane is where it gets linked.
+ */
+export const VOICE_META: Record<VoiceId, { label: string; short: string; href: string }> = {
+  atelier: { label: 'Atelier · Ulysses', short: 'atelier', href: '/atelier/journal' },
+  field: { label: 'Field · Meridian', short: 'field', href: '/field' },
+  studio: { label: 'Studio · Ensemble', short: 'studio', href: '/studio' },
+  plenum: { label: 'Plenum · data-snack', short: 'plenum', href: '/plenum' },
+}
 const GLYPH_RANK: Record<Glyph, number> = { fail: 2, work: 1, session: 0 }
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/
-/** guard against broken date values: more than ~a year of axis would be a data error */
-const MAX_DAYS = 400
 
 const stripMd = (s: string): string =>
   s
@@ -62,17 +80,11 @@ const stripMd = (s: string): string =>
     .replace(/`/g, '')
     .trim()
 
-/** Gapless day list [start..end]; empty list on invalid or reversed bounds. */
+/** Gapless day list [start..end]; empty list on invalid or reversed bounds. One-line wrapper
+ *  around dataviz/geometry.ts's consolidated dayRange, keeping this module's historical
+ *  contract (validate, empty on invalid/reversed, cap at 400 days) byte-identical. */
 export function dayRange(start: string, end: string): string[] {
-  if (!DATE_RE.test(start) || !DATE_RE.test(end) || start > end) return []
-  const out: string[] = []
-  const d = new Date(`${start}T00:00:00Z`)
-  const stop = new Date(`${end}T00:00:00Z`)
-  while (d <= stop && out.length <= MAX_DAYS) {
-    out.push(d.toISOString().slice(0, 10))
-    d.setUTCDate(d.getUTCDate() + 1)
-  }
-  return out
+  return geometryDayRange(start, end, { onInvalid: 'empty', maxDays: 400 })
 }
 
 /** Minimal shape of the merged chronicle entries (field/studio loadChronicle()). */
@@ -177,6 +189,43 @@ export function clampToLastDays(events: ScoreEvent[], n: number): ScoreEvent[] {
   d.setUTCDate(d.getUTCDate() - (n - 1))
   const start = d.toISOString().slice(0, 10)
   return valid.filter((e) => e.date >= start)
+}
+
+// ── Mark-cluster layout ──────────────────────────────────────────────────────
+// Shared between the server-side SVG layout (Partitur.astro's frontmatter) and the client's
+// hover/nearest-mark resolution (its inline script) — until this port these existed as two
+// hand-kept-in-sync copies, one per side.
+
+/** Within-day mark offsets for a cluster of ≤3 landings: up to three are drawn individually,
+ *  spread evenly around the day's x position; a denser cluster collapses to one face mark + ×n
+ *  instead (see `fanOffsets` for that dense case's lens-expanded, per-landing form). */
+export const MARK_OFFSETS: Record<number, number[]> = { 1: [0], 2: [-6.5, 6.5], 3: [-9, 0, 9] }
+
+/** Even spread for a fanned-out dense day (the time lens's expanded view, n > 3 landings),
+ *  centered on 0 — the dense-cluster counterpart to `MARK_OFFSETS`. */
+export function fanOffsets(n: number): number[] {
+  return Array.from({ length: n }, (_, i) => (i - (n - 1) / 2) * 11)
+}
+
+/**
+ * Resolves which mark within a cluster's offsets sits nearest a given pointer position, in the
+ * cluster's own local x frame (`localDx` = pointer x minus the cluster's own center) — the
+ * tooltip fix (Frank, 2026-07-31): "nobody hits a 9px dot reliably", so hovering ANYWHERE within
+ * a cluster's hit band resolves to the CLOSEST mark by pointer distance, never just the first.
+ * On an exact tie the earlier offset wins (strict `<`, not `<=`) — a deterministic, if arbitrary,
+ * tiebreak rather than an unspecified one.
+ */
+export function nearestMarkOffset(offsets: readonly number[], localDx: number): number {
+  let best = Infinity
+  let mi = 0
+  offsets.forEach((dx, i) => {
+    const dist = Math.abs(localDx - dx)
+    if (dist < best) {
+      best = dist
+      mi = i
+    }
+  })
+  return mi
 }
 
 /** Events → score: day clusters per voice, shared axis, honest as-ofs. */

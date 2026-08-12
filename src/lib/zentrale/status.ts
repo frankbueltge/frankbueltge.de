@@ -6,6 +6,7 @@
 // ehrliche Lücke im Dashboard schlägt einen Crash oder eine erfundene Zahl.
 
 import { parseInboxIssueTitle, isNonRequestSection } from './requestsMd'
+import { fallbackSummary, parseRequestHead } from './requestHead'
 
 export interface WorkflowRun {
   name: string
@@ -244,6 +245,55 @@ export function ageDays(fromIso: string, nowIso: string): number {
   return Math.floor((now - from) / 86_400_000)
 }
 
+/** Whole days from now until an ISO date; negative once the date has passed. */
+export function daysUntil(dateIso: string, nowIso: string): number {
+  return -ageDays(dateIso, nowIso)
+}
+
+/** Which tray an inbox entry belongs in.
+ *
+ *  · `today`      — a dated deadline within reach; Frank's silence would actually cost something
+ *  · `postoffice` — a letter to forward: only his, and explicitly without urgency
+ *  · `running`    — the practice proceeds on its own if he says nothing
+ *  · `fyi`        — declared as needing nothing at all
+ */
+export type InboxTray = 'today' | 'postoffice' | 'running' | 'fyi'
+
+/** How much runway on a dated deadline still counts as "today". Beyond this the practice is
+ *  simply working and the item is not owed an answer this morning. */
+export const FRIST_WINDOW_DAYS = 14
+
+/**
+ * Sort an entry into its tray, following the standing rule the practices are actually bound by
+ * (Frank, 2026-07-17, at the head of every REQUESTS.md): *"a request or offer addressed to Frank
+ * is never a blocker. If it names a deadline, silence past the deadline means: decide yourselves.
+ * If it names none, silence through your own next session means the same."*
+ *
+ * Until 2026-08-02 this was `braucht !== 'nichts'` — everything except an explicit "needs
+ * nothing" was rendered under "Heute nötig". That put letters with no deadline, and decisions the
+ * practice would take by its next session anyway, on a list headed as owed today; on 2026-08-02 it
+ * showed eight items as needed and the honest count was zero. The dashboard was holding Frank
+ * liable for exactly what his own rule releases him from, and the cost was his morning.
+ */
+export function trayFor(
+  head: { structured: boolean; braucht: string | null; fristDate: string | null },
+  nowIso: string,
+): InboxTray {
+  // Forwarding never enters "today", deadline or not. Frank, 2026-08-02: the post lies in the post
+  // office, whether it is sent is his decision, and he does not want repeated reminders for it.
+  if (head.braucht === 'weiterleitung') return 'postoffice'
+  if (head.structured && head.braucht === 'nichts') return 'fyi'
+  if (head.fristDate) {
+    const left = daysUntil(head.fristDate, nowIso)
+    // A deadline already past is not owed either: by the rule, that decision is theirs now.
+    if (left >= 0 && left <= FRIST_WINDOW_DAYS) return 'today'
+  }
+  // Includes the unstructured old-format requests. They used to count as possibly-needed, which
+  // is where much of the noise came from — the standing rule covers them the same way, so they
+  // run too; the UI still marks them as unstructured so a missing head stays visible.
+  return 'running'
+}
+
 export interface InboxIssue {
   number: number
   title: string
@@ -260,9 +310,32 @@ export interface InboxEntry {
   openedAt: string
   ageDays: number
   excerpt: string
+  /** Triage (Steuerzentrale v2 P1): the sender's own four-line head, parsed — or the
+   * fallback. `summary` is the tl;dr when structured, else the first sentences (the UI
+   * marks the fallback "unstrukturiert (alt)"). `needsAction` is conservative: an
+   * unstructured request counts as possibly needing Frank. */
+  structured: boolean
+  summary: string
+  braucht: string | null
+  brauchtOptionen: string[]
+  frist: string | null
+  fristDate: string | null
+  kontext: string | null
+  /** Which tray this belongs in — see trayFor(). */
+  tray: InboxTray
+  /** Kept for the UI's existing filter: true only for the `today` tray. */
+  needsAction: boolean
+  /** Days until the named deadline; null when none is named. Negative once it has passed. */
+  fristInDays: number | null
 }
 
-const EXCERPT_LEN = 600
+// Raised from 600 on 2026-07-31 (Frank: "clicking 'mehr' to read the whole message does
+// nothing"). 600 characters is roughly the first two paragraphs of a request — the "mehr"
+// toggle in the Steuerzentrale could never have shown more than that, because the rest was
+// never sent. The requests from the practices run to several thousand characters and are
+// argued end to end; a decision cannot be made from the opening. Four open issues at a few
+// kB each is nothing against a payload that already carries runs, commits and queues.
+const EXCERPT_LEN = 12000
 
 /** Baut die Inbox aus den offenen Issues, die der Bot pro Request-Section anlegt
  * (Titel "Request aus {repo}: {heading}", siehe requestsMd.parseInboxIssueTitle). Issues mit
@@ -276,6 +349,9 @@ export function buildInbox(issues: InboxIssue[], nowIso: string): InboxEntry[] {
     // Team-eigene Sections (Seeds/Team note/Team responses) sind keine Anfragen an Frank —
     // auch wenn der Watchdog sie (früher) zu Issues gemacht hat, gehören sie nicht in die Inbox.
     if (isNonRequestSection(parsed.heading)) continue
+    const body = issue.body ?? ''
+    const head = parseRequestHead(body)
+    const tray = trayFor(head, nowIso)
     out.push({
       repo: parsed.repo,
       heading: parsed.heading,
@@ -283,7 +359,17 @@ export function buildInbox(issues: InboxIssue[], nowIso: string): InboxEntry[] {
       issueUrl: issue.html_url,
       openedAt: issue.created_at,
       ageDays: ageDays(issue.created_at, nowIso),
-      excerpt: (issue.body ?? '').slice(0, EXCERPT_LEN),
+      excerpt: body.slice(0, EXCERPT_LEN),
+      structured: head.structured,
+      summary: head.structured && head.tlDr ? head.tlDr : fallbackSummary(body),
+      braucht: head.structured ? head.braucht : null,
+      brauchtOptionen: head.optionen,
+      frist: head.frist,
+      fristDate: head.fristDate,
+      kontext: head.kontext,
+      tray,
+      needsAction: tray === 'today',
+      fristInDays: head.fristDate ? daysUntil(head.fristDate, nowIso) : null,
     })
   }
   return out

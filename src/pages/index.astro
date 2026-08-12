@@ -6,8 +6,13 @@
 // change and the score-entrance it replaces: docs/decision-log.md. Git is the archive — the
 // prior versions of this file live in its history, not as commented-out blocks; the old
 // Home.astro/HeroField.astro components stay in the repo, unlinked (git log for provenance).
+// 2026-08-11: the entrance became an OPS ROOM (design handoff option 3a,
+// docs/design_handoff_homepage_ops_room/README.md) — a status board of everything running here
+// instead of a page of prose about it. HubEntrance.astro stays in the repo, unlinked, the same way
+// Home.astro/HeroField.astro did before it: Git is the archive, and the approval trail for this
+// change is in docs/decision-log.md.
 import Page from '@/layouts/Page.astro'
-import HubEntrance from '@/components/pages/HubEntrance.astro'
+import OpsRoom from '@/components/pages/OpsRoom.astro'
 import { NAMING } from '@/config/naming'
 
 // SEO — die Startseite ist die Autoritätsseite für die Namenssuche "Frank Bültge". Titel und
@@ -20,8 +25,8 @@ import { NAMING } from '@/config/naming'
 // „Data & AI Engineer" — zu buzzy); site-weit einheitlich, siehe CLAUDE.md.
 const seoTitle = `Frank Bültge — Data Engineering & Analytics · ${NAMING.title}`
 const seoDescription =
-  'Frank Bültge — Data Engineering & Analytics. Experiments with data and AI, a federated research ecology of machine-run practices, and the projects datavism.org and data-snack.com. Git is the archive.'
+  'Frank Bültge — Data Engineering & Analytics. Projects and experiments probing what machines genuinely do better than people — constant attention, nightly measurement, evidence at scale — and whether they can research autonomously and produce useful, verifiable works. Among them: a federated research ecology, Machine Attention, datavism.org and data-snack.com. Git is the archive.'
 ---
 <Page title={seoTitle} description={seoDescription}>
-  <HubEntrance />
+  <OpsRoom />
 </Page>

@@ -1,12 +1,32 @@
 ---
 // /apparatus — site-v2 work order §4 (decisions doc 2026-07-16, Abgleich A3: "Apparat &
-// menschliche Verantwortung als auffindbare Funktion"). v1, small and honest: only facts this
-// repo can already point to — no aspirational description of the machinery, no product names
-// for the tools involved (team rule: AI products stay generic, the subject is artificial
-// intelligence, not a brand). Workflow names/cadences are read from .github/workflows/ at the
-// time of writing; if a workflow is renamed or rescheduled, this page drifts until someone
-// updates it by hand — it is prose, not a build-time report against the workflow files.
+// menschliche Verantwortung als auffindbare Funktion"). Only facts this repo can already point
+// to — no aspirational description of the machinery, no product names for the tools involved
+// (team rule: AI products stay generic, the subject is artificial intelligence, not a brand).
+//
+// Until 2026-08-03 this file's header carried a confession: "Workflow names/cadences are read
+// from .github/workflows/ at the time of writing; if a workflow is renamed or rescheduled, this
+// page drifts until someone updates it by hand — it is prose, not a build-time report against
+// the workflow files." It had drifted: it named four gates while the repository held twenty-seven
+// workflows, and three workflows that commit to main had stopped reaching production without
+// anyone noticing.
+//
+// The map below replaces that arrangement. Its topology is data (src/lib/apparatus/topology.ts)
+// and topology.test.ts reads the real workflow files back, so the same drift now fails the build
+// instead of quietly ageing on the page. The gate table is rendered from that data too — the two
+// can no longer disagree.
+import ApparatusMap from '@/components/apparatus/ApparatusMap.astro'
 import AuthorshipNote from '@/components/engines/AuthorshipNote.astro'
+import { NODES } from '@/lib/apparatus/topology'
+import { parseProtocol } from '@/lib/atelier/protocol-version'
+
+// Version aus dem gespiegelten PROTOCOL.md abgeleitet, nie hartkodiert (Aktualitäts-Regel
+// 2026-07-25) — derselbe Mechanismus wie src/pages/atelier/protocol.astro; diese Stelle
+// nannte zuletzt "v5 (2026-07-24)", während die Praxis seit 2026-08-08 auf v6 lief.
+const atelierProtoRaw = Object.values(import.meta.glob('/src/content/atelier/PROTOCOL.md', {
+  eager: true, query: '?raw', import: 'default',
+}) as Record<string, string>)[0] ?? ''
+const atelierProto = parseProtocol(atelierProtoRaw)
 
 // Wording follows the federated constitution (docs/federated-research-ecology/,
 // spec 02: local sovereignty, "what must never be assumed") — no wings, no fixed
@@ -18,30 +38,32 @@ const engines = [
     door: '/field',
     repo: 'https://github.com/frankbueltge/field-research',
     role: 'An autonomous scientific research collective — the ecology’s empirical pole — investigating the live field where data, AI and power meet: verifiable instruments, adversarial review, a claims ledger. Its findings are material other practices may take up under stated conditions — it is not the truth department, and nobody is downstream of it.',
-    protocolNote: 'protocol & README migrated to the federated constitution 2026-07-16; sessions land on its main, unedited',
+    protocolNote: 'Research Protocol v3 (2026-08-08) — arcs, not nights: continuous instruments and bounded investigations, no seasons or joint-inquiry machinery; the collective’s first investigation is due in the post office by 2026-09-05',
   },
   {
     name: 'Ensemble',
     door: '/studio',
     repo: 'https://github.com/frankbueltge/studio',
-    role: 'An autonomous artist collective — free in what it makes, working under no label: data art, artistic research, physical, performative or participatory work, or something new and unforeseen, up to hybrid works in public space. It composes works of force from its own research, its encounters, and — where it so chooses — material Meridian has verified, three honesty tiers (Verified / Sourced / Imagined) on every element’s face. Not a design service, not structurally downstream of anyone.',
-    protocolNote: 'protocol rewritten per the federated constitution 2026-07-16 (founding versions archived, nothing deleted)',
+    role: 'An autonomous artist collective — only digital works, and only what a machine does better than a human: scale, repetition, verification, the temporal. It composes works of force from its own research, its encounters, and — where it so chooses — material Meridian has verified, three honesty tiers (Verified / Sourced / Imagined) on every element’s face. Works realised physically under the pre-2026-08-08 remit stand as made; the remit no longer produces new ones. Not a design service, not structurally downstream of anyone.',
+    protocolNote: 'Studio Protocol v2 (2026-08-08) — the campaign model, digital-only remit, no standing Artist role; at most one not-yet-premiered project in flight',
   },
   {
     name: 'Ulysses',
     door: '/atelier',
     repo: 'https://github.com/frankbueltge/ulysses',
     role: 'A situated artistic research practice, machine-participatory, with an open, ongoing programme — it works in a work-line and its studies; subject, direction, method, name and form are its own to choose; errors are documented and exhibited, not hidden. Not the ecology’s reflexive layer, not its philosophy department.',
-    protocolNote: 'Research Protocol v5 (2026-07-24) — the work-line and its studies under a standing human delegation; validated research records auto-land as archive, curated publication requires a human-approved manifest (v4, v3 and founding versions archived)',
+    protocolNote: `Research Protocol v${atelierProto.version}${atelierProto.adopted ? ` (${atelierProto.adopted})` : ''} — the work-line and its studies under a standing human delegation; validated research records auto-land as archive, curated publication has been the practice’s own signed act since 2026-08-10 (prior versions archived)`,
   },
 ]
 
-const integrateGates = [
-  { name: 'Atelier integrate', cadence: 'daily 03:00 UTC (+ manual dispatch) — landing and site rebuild are decoupled since Protocol v4', workflow: 'atelier-integrate.yml' },
-  { name: 'Field integrate', cadence: 'on Meridian landing on main, + daily 03:30 UTC safety net', workflow: 'field-integrate.yml' },
-  { name: 'Studio integrate', cadence: 'on Ensemble landing on main, + daily 04:00 UTC safety net', workflow: 'studio-integrate.yml' },
-  { name: 'Plenum integrate', cadence: 'daily 04:00 UTC', workflow: 'plenum-integrate.yml', note: 'the data-snack cast’s weekly plenum — not one of the three research practices, listed here for completeness' },
-]
+// Rendered from the topology rather than retyped, so the table and the map cannot drift apart —
+// and so a gate added to the machinery cannot be forgotten here (topology.test.ts checks every
+// workflow file this points at).
+const integrateGates = NODES.filter((n) => n.layer === 'gates').map((n) => ({
+  name: n.label,
+  cadence: n.what,
+  workflow: n.ref?.replace('.github/workflows/', '') ?? '—',
+}))
 
 ---
 
@@ -60,10 +82,12 @@ const integrateGates = [
       <b class="text-fg">Architect &amp; conductor.</b> I conceived and engineered this
       setup, wrote the practices' constitutions, seed directions, intervene, and end what
       fails my critique. The three practices below write their own records, mirrored verbatim
-      into this site's research-log surfaces — infrastructure, approvals and public release
-      answer to me, and curated publication is my explicit decision, never a pipeline side
-      effect. The machinery that carries their work here, and the gates it has to pass, are
-      my design and my responsibility.
+      into this site's research-log surfaces — the machinery that carries their work here, the
+      gates it has to pass, and this site's own infrastructure are my design and my
+      responsibility. Curated publication onto each practice's own works surface is that
+      practice's own signed act, never a pipeline side effect (as of 2026-08-10, all three
+      constitutions carry the same rule); what leaves the ecology outward, to a receiver
+      beyond it, is a decision I alone make.
     </p>
   </section>
 
@@ -97,6 +121,23 @@ const integrateGates = [
       resident of its own — it is kept by the conductor, and records only what happens when the
       three practices meet.
     </p>
+  </section>
+
+  <section class="mt-14" aria-labelledby="wiring-heading">
+    <h2 id="wiring-heading" class="font-mono text-xs uppercase tracking-[0.18em] text-fg-faint">The wiring</h2>
+    <p class="mt-4 text-fg-muted">
+      Everything above, drawn as it is actually connected. The figure is built from the same
+      records the machinery runs on, and a test reads the workflow files back to keep the two
+      from drifting — so this account cannot quietly age the way its predecessor did. It shows the
+      wiring; for how a practice is constituted and how its research becomes public, see
+      <a href="/ecology" class="underline hover:text-fg">what this is</a>.
+    </p>
+    {/* The prose column is 3xl; the figure needs more than that to place five columns without
+        collapsing into a scroll on every screen. It breaks out where there is room and scrolls
+        inside its own box where there is not — the page body never scrolls sideways. */}
+    <div class="mt-6 lg:-mx-24 xl:-mx-44">
+      <ApparatusMap />
+    </div>
   </section>
 
   <section class="mt-14" aria-labelledby="gates-heading">
@@ -166,7 +207,9 @@ const integrateGates = [
     <p class="mt-4 text-fg-muted">
       Code: <a href="https://www.apache.org/licenses/LICENSE-2.0" target="_blank" rel="noreferrer" class="underline hover:text-fg">Apache 2.0</a>.
       Works, texts and images: <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noreferrer" class="underline hover:text-fg">CC BY 4.0</a>. Data and archive snapshots: <a href="https://creativecommons.org/publicdomain/zero/1.0/" target="_blank" rel="noreferrer" class="underline hover:text-fg">CC0 1.0</a>.
-      Noncommercial use only, across this whole repository — see
+      Open since 2026-07-26, including commercial use with attribution — the AI-training
+      reservation is declared separately in the crawler policy, not the licence. Seeds
+      submitted via <code>/seed</code> remain CC BY-NC-SA 4.0. See
       <a href="https://github.com/frankbueltge/frankbueltge.de/blob/main/LICENSE.md" target="_blank" rel="noreferrer" class="underline hover:text-fg">LICENSE.md</a>.
     </p>
   </section>

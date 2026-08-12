@@ -1,0 +1,236 @@
+---
+// The apparatus page of Machine Attention. This content was the practice's
+// entrance until 2026-08-09; the entrance at /machine-attention now stages
+// the machine's own moments, and everything that explains the machine —
+// method, admission, candidates, limits — lives here, one door deeper
+// (docs/design/2026-08-09-machine-attention-meta-stage.md). A first-time
+// visitor meets the machine before its manifesto.
+//
+// Nothing about the investigations is typed here. Their names, dates, routes
+// and figures come from the practice's own export (attention-export/1,
+// docs/design/2026-08-09-attention-export-contract.md), mirrored nightly
+// beside the rendered stage. If the export is missing the page still stands
+// and says so — an absent source is a stated fact, never a silent gap.
+import Page from '@/layouts/Page.astro'
+import exportFile from '@/data/attention/export.json'
+
+const REPO = 'https://github.com/frankbueltge/machine-attention'
+
+type Project = { id: string; title: string; since: string; site_route: string | null; status: string }
+type Figure = { key: string; value: number; as_of: string }
+
+const contractOk = exportFile?.$contract === 'attention-export/1'
+const projects: Project[] = contractOk ? (exportFile.projects as Project[]) : []
+const figures: Figure[] = contractOk ? (exportFile.figures as Figure[]) : []
+const commit = contractOk ? exportFile.generated_from.commit : null
+
+const figure = (key: string) => figures.find((f) => f.key === key)
+const asOf = figures[0]?.as_of
+
+/** What the practice's own status word means to a reader — the export does not
+ *  carry prose, so the reading of it lives here, next to the reader. */
+const STATUS_WORDS: Record<string, string> = {
+  running: 'running',
+  'e-experiment': 'in its acceptance experiment',
+}
+
+/** Where an experiment can be read today. A null route is the admission path's
+ *  rule made visible: no public stage before the E-experiment is passed.
+ *  (The export keys them as `projects` — the practice's own repo word for its
+ *  investigations; the site calls them experiments. Mapping documented in
+ *  docs/wording-kanon.md, so it is a translation and not a drift.) */
+const PROJECT_NOTE: Record<string, string> = {
+  foreknown: 'The flagship: the stage, a dossier per warning, the full ledger, and a level where the claims meet the preserved bytes.',
+  darkocean:
+    'Notarizes the act of looking against the act of declaring — which Sentinel-1 passes covered which patch of the Baltic, against how the declared ocean distributed itself. No public stage until it passes; that is the rule, not an oversight.',
+  'state-before-interface':
+    'The instrument: quiet, nightly, reading Europe’s public procurement journal for AI notices. It may produce nothing for a long time, and that is allowed.',
+}
+
+const CANDIDATES = [
+  { name: 'Memory Hole', origin: 'Editorial Deadline', line: 'what power changes about its own published past' },
+  { name: 'The Synthetic Flood', origin: 'The Consensus', line: 'how much of public language is written by machines' },
+  { name: 'Planetary Listening', origin: '—', line: 'the human signature separated from the planet’s own noise' },
+  { name: 'Compute Ground', origin: 'Two Meters · The Floor · One Tap', line: 'the physical ground under the compute story' },
+]
+
+// The epistemic split of the register (stage honesty, 2026-08-09): only a
+// window still open under the last committed run counts as prospective watch.
+const underWatch = figure('futures_under_watch')
+const windowOpen = figure('futures_window_open')
+const coldStart = figure('futures_cold_start')
+const drift = figure('futures_drift')
+---
+
+<Page
+  title="About Machine Attention | Frank Bültge"
+  description="The apparatus of Machine Attention: one machine, no personas, running public data-intensive investigations with its attention, memory, rejections, uncertainty and cost on the record. How it works, what it is investigating, and how a new investigation gets admitted."
+>
+  <div class="mx-auto max-w-2xl px-4 py-14 font-mono">
+    <a href="/machine-attention" class="mb-8 inline-block text-xs text-fg-faint hover:text-fg">&larr; the entrance</a>
+
+    <p class="mb-2 text-[11px] uppercase tracking-[0.2em] text-fg-faint">Machine Attention · a research project</p>
+    <h1 class="mb-6 font-sans text-3xl font-semibold">The apparatus</h1>
+
+    <p class="mb-10 max-w-[62ch] text-[17px] leading-relaxed text-fg-muted">
+      One machine, run as an open investigative practice. It has no personas. Its attention,
+      memory, refusals, uncertainty and cost are public and measured, and most of what it
+      proposes is expected to die in the open, with reasons.
+    </p>
+
+    <section class="mb-12 text-sm leading-relaxed text-fg-muted">
+      <h2 class="mb-2 font-sans text-xl font-semibold text-fg">Why this machine exists</h2>
+      <p>
+        Machine Attention is the deliberate counter-experiment to the
+        {' '}<a href="/ecology" class="underline decoration-line underline-offset-4">research ecology</a>
+        next door: <strong class="text-fg">one constitution against many</strong>. The ecology
+        federates three machine practices, each under a constitution of its own, and lets their
+        differences do the work; this machine makes the opposite bet — a single constitution, a
+        shared memory, one provenance chain, and no division into voices. Neither side is the
+        control group by default. The comparison is the experiment.
+      </p>
+    </section>
+
+    <section class="mb-12 border border-line bg-panel/60 p-5 text-sm leading-relaxed text-fg-muted">
+      <h2 class="mb-3 text-[11px] uppercase tracking-[0.18em] text-fg-faint">What happens every night</h2>
+      <ol class="space-y-2">
+        <li><b class="text-fg">1 · It reads</b> public sources that need no login and cost nothing — hazard alerts, cyclone forecasts, funding plans, news volume, satellite catalogues, procurement notices.</li>
+        <li><b class="text-fg">2 · It preserves</b> the original bytes with a SHA-256 and the UTC retrieval time, before deriving anything. Where a file is too large to keep, the record carries its address and hash instead.</li>
+        <li><b class="text-fg">3 · It derives</b> its records deterministically. <em>No model touches observation, preservation or the ledger</em> — that path is plain code, so the same inputs always give the same output.</li>
+        <li><b class="text-fg">4 · It verifies</b> itself: a separate implementation walks the chain backwards from every published figure to the bytes, and fails the build on any hole.</li>
+        <li><b class="text-fg">5 · It thinks</b> — separately. A nightly discovery pass reads the accumulated record and may propose difference observations, new sensors with their own falsification rule, new sources, and whole new investigations. It delivers by pull request; the tests and the verifier are the gate.</li>
+        <li><b class="text-fg">6 · It writes itself down.</b> Every step lands in a public autonomy protocol — actor, model, tokens, cost, and who corrected whom. <em>No aggregate score is computed</em>, by design: a single number would invite exactly the comparison this practice refuses.</li>
+      </ol>
+      <p class="mt-4 text-xs text-fg-faint">
+        The intelligence layer is not decoration. The axis that now measures money and attention
+        around a running warning exists because the machine proposed it on its first night, before
+        anyone had built it — and it was implemented as written, including its own refusal to judge
+        whether funding is adequate. On that same first night it criticised its own overdue flag,
+        and that critique is now the register&rsquo;s cold-start honesty.
+      </p>
+    </section>
+
+    <section class="mb-12">
+      <h2 class="mb-1 font-sans text-xl font-semibold text-fg">Its experiments</h2>
+      <p class="mb-5 text-sm text-fg-muted">
+        {contractOk
+          ? <>Read from the practice’s own export, mirrored nightly from commit <code class="text-fg-faint">{commit}</code>{asOf ? <> · figures as of {asOf}</> : null}.</>
+          : 'The practice’s export is not present in this repository right now, so this list cannot be shown from source. That is a missing file, not an empty practice.'}
+      </p>
+
+      <ul class="space-y-4">
+        {projects.map((p) => (
+          <li class="border border-line p-4">
+            <div class="flex flex-wrap items-baseline justify-between gap-2">
+              <h3 class="font-sans text-lg font-semibold text-fg">
+                {p.site_route ? <a href={p.site_route} class="underline decoration-line underline-offset-4">{p.title}</a> : p.title}
+              </h3>
+              <span class="font-mono text-[11px] uppercase tracking-[0.15em] text-fg-faint">
+                {STATUS_WORDS[p.status] ?? p.status} · since {p.since}
+              </span>
+            </div>
+            <p class="mt-2 text-sm leading-relaxed text-fg-muted">{PROJECT_NOTE[p.id]}</p>
+            <p class="mt-2 font-mono text-[11px] text-fg-faint">
+              {p.site_route
+                ? <>Public at <a href={p.site_route} class="underline hover:text-fg">{p.site_route}</a></>
+                : <>Public only in <a href={REPO} class="underline hover:text-fg">the practice’s repository</a> — by rule, until it passes</>}
+            </p>
+          </li>
+        ))}
+      </ul>
+
+      {underWatch && windowOpen && coldStart && (
+        <p class="mt-5 font-mono text-xs leading-relaxed text-fg-faint">
+          On record today: {underWatch.value} announced futures preserved and source-open —
+          {' '}{windowOpen.value} inside {windowOpen.value === 1 ? 'its' : 'their'} announced
+          window{windowOpen.value === 1 ? '' : 's'}, {coldStart.value} already past
+          {coldStart.value === 1 ? ' its window' : ' their windows'} at first sight (a cold
+          start, not foreknowledge){drift?.value ? <>, {drift.value} outlived under watch</> : null} —
+          of {figure('futures_notarized_total')?.value} notarized in all,
+          {' '}{figure('futures_resolved')?.value} resolved so far
+          {figure('nights_on_record') ? <>, across {figure('nights_on_record')?.value} nights</> : null}.
+          A young register says small numbers; it does not round them up.
+        </p>
+      )}
+      {underWatch && !windowOpen && (
+        <p class="mt-5 font-mono text-xs leading-relaxed text-fg-faint">
+          On record today: {underWatch.value} announced futures under watch of
+          {' '}{figure('futures_notarized_total')?.value} notarized in all,
+          {' '}{figure('futures_resolved')?.value} of them resolved so far
+          {figure('nights_on_record') ? <>, across {figure('nights_on_record')?.value} nights</> : null}.
+          A young register says small numbers; it does not round them up.
+        </p>
+      )}
+    </section>
+
+    <section class="mb-12 text-sm leading-relaxed text-fg-muted">
+      <h2 class="mb-2 font-sans text-xl font-semibold text-fg">How a new investigation gets in</h2>
+      <p>
+        The practice is one machine with finite attention, so its projects are its investigations,
+        not its branches. Every candidate walks the same five committed stages:
+      </p>
+      <p class="my-4 overflow-x-auto whitespace-nowrap border border-line bg-panel/60 p-3 text-center text-xs tracking-wide text-fg">
+        EXPOSÉ → AUDIT → V0 → E-EXPERIMENT → RUNNING
+      </p>
+      <p>
+        The audit is a go/no-go per source with live probes, because external assumptions age
+        faster than architectures. The V0 is the smallest slice that produces committed, verified
+        records nightly. The E-experiment runs fourteen nights against acceptance criteria written
+        and committed <em>before</em> the first night — moving that bar afterwards would measure
+        nothing. The review then has <strong class="text-fg">three</strong> outcomes, not two:
+        running as a flagship that carries the stage, running as a quiet instrument with no stage
+        claim at all, or an honest retirement with the reason on the record. A dead candidate stays
+        in the record like a declined proposal.
+      </p>
+      <p class="mt-3">
+        <b class="text-fg">The machine may propose; the admission stays a human decision.</b> A new
+        investigation means new cost, new publicity and new scope — so the machine writes the
+        dossier and a person opens the door.
+      </p>
+    </section>
+
+    <section class="mb-12 text-sm leading-relaxed text-fg-muted">
+      <h2 class="mb-2 font-sans text-xl font-semibold text-fg">On the shelf</h2>
+      <p class="mb-4">
+        Candidates with a written exposé, ordered by which blocker clears first rather than by
+        preference. Each grows out of an earlier experiment of the lab, which keeps running
+        unchanged under its own address:
+      </p>
+      <ul class="space-y-2">
+        {CANDIDATES.map((c) => (
+          <li>
+            <b class="text-fg">{c.name}</b> — {c.line}
+            <span class="text-fg-faint"> · origin: {c.origin}</span>
+          </li>
+        ))}
+      </ul>
+      <p class="mt-4 text-xs text-fg-faint">
+        The success case is a candidate none of us proposed: the practice keeps a standing sensibility
+        — discrepancy, absence, duplication, rewriting, the boundaries of measurement, visibility,
+        provenance, physical trace — and the discovery pass is allowed to arrive somewhere nobody
+        planned.
+      </p>
+    </section>
+
+    <section class="mb-12 text-sm leading-relaxed text-fg-muted">
+      <h2 class="mb-2 font-sans text-xl font-semibold text-fg">What it will not do</h2>
+      <p>
+        The subject is always the system and institutional time — never the people caught in it.
+        No natural persons, no vessel identities, no imagery of suffering. No accusations: it
+        publishes timestamps, amounts and volumes, not blame. No forecasts of its own — it records
+        what the issuers predicted and adds nothing. Where a source fails, the failure is written
+        into the record rather than bridged.
+      </p>
+    </section>
+
+    <p class="border-t border-line pt-6 text-xs leading-relaxed text-fg-faint">
+      Everything above is checkable: the practice's
+      {' '}<a href={REPO} class="underline hover:text-fg">repository</a> is public, its
+      {' '}<a href={`${REPO}/blob/main/autonomy/log.jsonl`} class="underline hover:text-fg">autonomy protocol</a>
+      {' '}is append-only, and
+      {' '}<a href={`${REPO}/blob/main/verify.py`} class="underline hover:text-fg">the verifier</a>
+      {' '}rebuilds every published figure from preserved bytes. The technical method sheet lives at
+      {' '}<a href="/werke/attention" class="underline hover:text-fg">/werke/attention</a>.
+    </p>
+  </div>
+</Page>

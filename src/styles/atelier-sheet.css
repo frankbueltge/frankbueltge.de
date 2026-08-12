@@ -20,6 +20,15 @@
   --at-graphite: #8a8377;
   --at-badge-bg: #efe8d9;
   --at-h1-ink: #1b1812;
+  /* PALETTE: atelier-outcomes (src/lib/dataviz/palette.ts) — the practice's four outcome
+   * identities, shared by the hub map and the process figure so one outcome never wears two
+   * colours on the same page. Identity colours, not status: a killed line is not a failure
+   * ("closing costs what continuing costs"), and violet — the practice's own hue — goes to
+   * "published", never a red. */
+  --at-out-publish: #4a3aa7;
+  --at-out-gate: #2a78d6;
+  --at-out-study: #eda100;
+  --at-out-kill: #e87ba4;
 }
 :root[data-theme='dark'] .atelier-surface {
   --at-page: #100e0c;
@@ -32,6 +41,11 @@
   --at-graphite: #97907f;
   --at-badge-bg: #242019;
   --at-h1-ink: #f2ecdf;
+  /* PALETTE: atelier-outcomes (src/lib/dataviz/palette.ts) — own dark steps, no auto flip. */
+  --at-out-publish: #9085e9;
+  --at-out-gate: #256abf;
+  --at-out-study: #c98500;
+  --at-out-kill: #d55181;
 }
 
 .atelier-surface {
@@ -87,6 +101,75 @@
   color: var(--at-ink);
 }
 .atelier-surface .at-status b { color: var(--at-ink); font-weight: 600; }
+
+/* Orientation block (OrientationList.astro, shared skeleton — WP2 practice-shell).
+   A definition list on purpose — the question IS the term, the answer its explanation.
+
+   Frank, 2026-08-01: "the overview at the top, the four tiles, does not visually match the
+   rest of the page." It did not, and the reason was mechanical rather than a matter of taste:
+   this was the last block on any atelier surface still wearing the SITE skin's tokens —
+   --color-panel (#f7f8fa, a cool near-white) on the warm paper (#f6f1e7), --color-line
+   (#d6d7dc) instead of the practice's warm hairline (#ddd4c2), a 12px radius where every
+   other rule on this sheet is square, and --font-sans (Space Grotesk) for four answers that
+   are read directly under a monospaced lede. Four rounded grey cards, in a voice this page
+   speaks nowhere else.
+
+   So the block is re-set in the practice's own hand, as a HAND-SET REGISTER: four entries on
+   the paper itself, bracketed by hairlines top and bottom and divided by them — the idiom of
+   the sheet's own legend (.at-legend) and of the Blattrand. The 1px gaps ARE the rules: the
+   container's hairline shows through them, and each entry lies on --at-surface, so the ground
+   under the register is the same paper as the page. No new colour enters; every value is an
+   --at-* token this file already defines. The question wears the register's label type (the
+   same 600 11px/0.16em record hand as .at-legend h3), the answer the record type of the lede
+   above it, and the door into the depth the practice's thread — as field's wears --fd-stamp
+   and studio's --st-lamp (same skeleton, each practice its own voice; ADR 0010). */
+.atelier-surface .pr-orient {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 1px;
+  margin: 1.5rem 0 2.25rem;
+  /* shows through the gaps only — the entries below cover everything else */
+  background: var(--at-hairline);
+  border-top: 1px solid var(--at-hairline);
+  border-bottom: 1px solid var(--at-hairline);
+}
+.atelier-surface .pr-orient-item {
+  background: var(--at-surface);
+  padding: 1rem 1.15rem 1.1rem;
+}
+.atelier-surface .pr-orient-q {
+  font: 600 11px var(--at-font-record);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--at-ink-2);
+  margin-bottom: 0.55rem;
+}
+/* the leader line a hand-set label hangs off — decorative, empty content, announced by nothing */
+.atelier-surface .pr-orient-q::before {
+  content: '';
+  display: inline-block;
+  width: 14px;
+  height: 1px;
+  margin-right: 0.6em;
+  vertical-align: 0.28em;
+  background: var(--at-graphite);
+}
+.atelier-surface .pr-orient-a {
+  margin: 0;
+  font: 13.5px/1.66 var(--at-font-record);
+  color: var(--at-ink);
+}
+.atelier-surface .pr-orient-more {
+  display: inline-block;
+  margin-top: 0.3rem;
+  font: 12px var(--at-font-record);
+  color: var(--at-thread);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  white-space: nowrap;
+}
+.atelier-surface .pr-orient-more:hover { color: var(--at-ink); }
+
 .atelier-surface figure { margin: 26px 0 8px; }
 .atelier-surface svg#sheet,
 .atelier-surface svg#spine { width: 100%; height: auto; display: block; }
@@ -346,6 +429,39 @@
 .atelier-surface .at-shelf-row p { margin: 0.35em 0; font-size: 14.5px; line-height: 1.55; max-width: 76ch; }
 .atelier-surface .at-shelf-row .at-relevance { color: var(--at-ink-2); font-style: italic; }
 
+/* phases (works room, 2026-08-11) — the room holds two phases of one practice under two
+   constitutions. The heading rule is the same weight for both: neither phase is the footnote
+   of the other, and a lighter rule on the nightly section would say it was. */
+.atelier-surface .at-phase { margin: 0 0 2.5rem; }
+.atelier-surface .at-phase-head {
+  font-family: var(--at-font-record);
+  font-size: 15px;
+  font-style: normal;
+  letter-spacing: 0.02em;
+  margin: 0 0 0.4rem;
+  padding-top: 0.5rem;
+  border-top: 2px solid var(--at-ink);
+}
+.atelier-surface .at-phase-span {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--at-ink-2);
+  margin-left: 0.7em;
+  white-space: nowrap;
+}
+.atelier-surface .at-phase-note {
+  margin: 0 0 0.9rem;
+  font-family: var(--at-font-record);
+  font-size: 14px;
+  line-height: 1.62;
+  color: var(--at-ink-2);
+  max-width: 68ch;
+}
+.atelier-surface .at-phase-link { margin: -0.4rem 0 1.1rem; font-size: 14px; }
+.atelier-surface .at-phase-link a { color: inherit; text-decoration: underline; }
+.atelier-surface .at-phase-link a:hover { color: var(--at-thread); }
+
 /* work cards (works room) */
 .atelier-surface .at-work-card {
   border: 1px solid var(--at-hairline);
@@ -401,6 +517,85 @@
   color: var(--at-ink-2);
   margin-top: 3px;
 }
+
+/* ——— Etappe 2: the register is an index, the page is a page ————————————————————
+   The row keeps the geometry of the old <summary> exactly (the register must not look
+   re-drawn just because it stopped folding out) — it is a link now, not a disclosure. */
+.atelier-surface .at-reg-row {
+  border-top: 1px solid var(--at-hairline);
+  display: flex;
+  gap: 1.2em;
+  align-items: baseline;
+  padding: 11px 2px;
+  font-family: var(--at-font-record);
+  font-size: 13px;
+  color: var(--at-ink-2);
+  text-decoration: none;
+}
+.atelier-surface .at-reg-row .at-sess-no { color: var(--at-red); font-weight: 600; min-width: 3.2em; }
+.atelier-surface .at-reg-row .at-sess-title {
+  font-family: var(--at-font-record);
+  font-style: italic;
+  font-size: 15px;
+  color: var(--at-ink);
+}
+.atelier-surface .at-reg-row:hover .at-sess-title { text-decoration: underline; }
+.atelier-surface .at-reg-row .at-sess-date { margin-left: auto; white-space: nowrap; }
+.atelier-surface .at-reg-row:focus-visible { outline: 2px solid var(--at-red); outline-offset: 2px; }
+
+/* one page of the journal: the prose, with the two neighbours above and below it */
+.atelier-surface .at-page-nav {
+  display: flex;
+  gap: 1.6em;
+  flex-wrap: wrap;
+  border-top: 1px solid var(--at-hairline);
+  margin-top: 22px;
+  padding-top: 11px;
+  font: 12px var(--at-font-record);
+  color: var(--at-ink-2);
+}
+.atelier-surface .at-page-nav a { color: var(--at-ink-2); text-decoration: none; }
+.atelier-surface .at-page-nav a:hover { color: var(--at-ink); text-decoration: underline; }
+.atelier-surface .at-page-nav .at-nav-next { margin-left: auto; }
+
+/* ——— Etappe 2: the team channel shows what is open ——————————————————————————— */
+.atelier-surface .at-req-card {
+  border-top: 1px solid var(--at-hairline);
+  padding: 14px 2px;
+  max-width: 78ch;
+}
+.atelier-surface .at-req-card h3 { font: italic 600 15.5px/1.35 var(--at-font-record); color: var(--at-ink); margin: 0; }
+.atelier-surface .at-req-card h3 a { color: inherit; text-decoration: none; }
+.atelier-surface .at-req-card h3 a:hover { text-decoration: underline; }
+.atelier-surface .at-req-meta {
+  display: flex;
+  gap: 1em;
+  flex-wrap: wrap;
+  font: 12px var(--at-font-record);
+  color: var(--at-ink-2);
+  margin: 5px 0 0;
+}
+.atelier-surface .at-req-meta .at-req-status { color: var(--at-red); }
+.atelier-surface .at-req-card p.at-req-lead {
+  font-family: var(--at-font-record);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--at-ink);
+  margin: 7px 0 0;
+}
+.atelier-surface .at-req-card .at-req-more { font: 12px var(--at-font-record); color: var(--at-thread); text-decoration: underline; }
+.atelier-surface .at-req-h {
+  font: 600 13px/1.3 var(--at-font-record);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--at-ink);
+  margin: 30px 0 2px;
+}
+.atelier-surface .at-req-note { font: 12.5px/1.6 var(--at-font-record); color: var(--at-ink-2); max-width: 74ch; margin: 0 0 6px; }
+/* the standing rule reads at the same measure as the cards beside it, not the full sheet */
+.atelier-surface .at-req-standing { max-width: 78ch; font-size: 14.5px; }
+.atelier-surface .at-req-archive { margin-top: 26px; font: 13px var(--at-font-record); }
+.atelier-surface .at-req-archive a { color: var(--at-thread); text-decoration: underline; }
 
 @media (prefers-reduced-motion: reduce) {
   .atelier-surface * { transition: none !important; animation: none !important; }

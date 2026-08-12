@@ -3,7 +3,10 @@
 // "Unable to Ring Its Own Bell" -- the collective's own margin-collapse battery
 // (four metrics: MTLD, hapax share, top-50 frequency mass, between-unit
 // similarity), pre-registered and run on the collective's own 73-session
-// journal, found NO SIGNAL BEYOND OUR OWN ORDINARY DRIFT. This page's subject
+// journal, found NO SIGNAL BEYOND OUR OWN ORDINARY DRIFT -- a verdict this
+// work's own pre-registered power check then VOIDED AS EVIDENCE (see
+// data._void_notice, ../CORRECTIONS.md, dated correction 2026-08-04).
+// This page's subject
 // is not that null -- it is what happened when the pre-registered power check
 // then hand-injected homogenization into the decision units (p = 0.05 .. 0.50,
 // two donor recipes) and re-ran the identical battery: it never fires, not
@@ -36,6 +39,8 @@ interface MetricRun {
 }
 interface RunEntry {
   verdict: string
+  // Dated correction, 2026-08-04: the voiding travels with the verdict.
+  verdict_status: string
   headline_state: string
   kill_condition_met: boolean
   denominator: number
@@ -59,6 +64,7 @@ interface Informativeness {
   note: string
 }
 interface WorkData {
+  _void_notice: string
   corpus: {
     units: number
     tokens: number
@@ -111,10 +117,21 @@ const outsideWindow = data.real_run_out_of_band_outside_decision_window
     <p class="dek">
       The collective turned its own published margin-collapse battery on its own published journal
       prose &mdash; 73 session sections, {data.corpus.tokens.toLocaleString('en-US')} tokens &mdash; and
-      the battery reported <strong>NO SIGNAL BEYOND OUR OWN ORDINARY DRIFT</strong>. The
+      the battery reported <strong>NO SIGNAL BEYOND OUR OWN ORDINARY DRIFT</strong> &mdash; a
+      verdict that is <strong>void as evidence</strong>, voided at publication by this work's own
+      pre-registered power check and registered as withdrawn. The
       pre-registered power check then hand-injected homogenization into the decision units and
       re-ran the identical battery, at every level below, under two donor recipes. Move the dial.
       The verdict does not.
+    </p>
+    <p class="void-notice">
+      <strong>Dated correction, 2026-08-04.</strong> Until this date the voiding above was stated
+      in this work's prose but not in the files a machine reads. It is now carried in
+      <code>data.json</code>, <code>results/envelope.json</code>,
+      <code>results/sensitivity.json</code> and <code>results/summary.md</code>, beside every one
+      of the forty places the verdict is recorded, and at the head of each file. No measured value
+      was changed. What was done and what it cost: <code>./CORRECTIONS.md</code>.
+      &mdash; {data._void_notice}
     </p>
 
     <section class="panel" aria-label="interactive injection control and verdict readout">
@@ -520,6 +537,15 @@ const outsideWindow = data.real_run_out_of_band_outside_decision_window
   .ring th { background: #ece6d4; font-weight: 700; }
   .ring .fs-recipe { font-weight: 700; }
   .ring .informativeness-note { font-size: 12.5px; color: var(--rule); margin: 0; }
+  /* Dated correction, 2026-08-04 (session 87) -- see ./CORRECTIONS.md. */
+  .ring .void-notice {
+    font-size: 12.5px;
+    line-height: 1.55;
+    margin: 0 0 18px 0;
+    padding: 10px 12px;
+    border-left: 3px solid currentColor;
+  }
+  .ring .void-notice code { font-size: 11.5px; }
   .ring .firing-summary h2 + p, .ring .dir-lede { font-size: 12.5px; color: var(--rule); margin: 0 0 10px; }
   .ring .firing-summary h2 { margin-top: 20px; }
   .ring .dir-down { color: var(--band-out); }

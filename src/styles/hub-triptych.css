@@ -1,0 +1,184 @@
+/* src/styles/hub-triptych.css — the entrance's triptych (WP7), and the ecology quartet the whole
+   entrance is coloured by.
+ *
+ * TWO things live here, and they live TOGETHER on purpose:
+ *
+ *   1. the voice tokens (--hub-c-*). They used to sit in HubEntrance.astro's scoped <style>, which
+ *      was fine while the doors were the only thing wearing them. The triptych is a component of
+ *      its own, and Astro's scoped styles do not reach a child component's markup — so the choice
+ *      was one token block per component (two copies of four hexes, drifting from the first edit)
+ *      or one unscoped stylesheet. A colour that appears twice is a colour that will disagree with
+ *      itself; this file is the single declaration, and both the doors and the cards inherit it
+ *      from the .hub-voices class they share.
+ *
+ *   2. the card frame. Identical for all three cards — border, radius, padding, caption slot,
+ *      provenance line, call to action — because the whole claim of the arrangement is that the
+ *      difference a visitor sees between the three pictures is the PRACTICES' difference and not
+ *      the layout's. Only two things vary per card, and both are meaning: the hairline at the top
+ *      (its voice) and the paper inside the thumbnail (its house).
+ *
+ * The thumbnails themselves wear the practices' OWN stylesheets — atelier-sheet.css +
+ * atelier-process.css, field-plate.css, studio-stage.css, imported by the component and scoped by
+ * those files to .atelier-surface / .field-surface / .studio-surface. Nothing about their
+ * appearance is restated here; what IS restated is the little each of those files assumes about
+ * being a whole page (its own width, margin, padding and border), undone below so a surface can be
+ * a picture inside a card. */
+
+/* PALETTE: ecology-voices (src/lib/dataviz/palette.ts) — validated 2026-07-31 against the hub
+   panel in both modes, --pairs all: PASS. The same deliberate, gated exception to the site's
+   grayscale Mono-Skin the score map and the Partitur already carry, so one practice never wears
+   two colours on one page: the door, the triptych card and the Partitur lane of a voice are the
+   same hue. The Middle stays a DECLARED NEUTRAL outside the categorical set ("no resident — kept
+   by the conductor" — the greyness is the meaning) and is direct-labelled by its own card; the
+   validator's categorical checks cover the three practice hues plus the Plenum. Own steps per
+   mode, never an automatic light/dark flip. */
+:root[data-theme='dark'] .hub-voices {
+  --hub-c-ulysses: #9085e9;
+  --hub-c-meridian: #256abf;
+  --hub-c-ensemble: #d95926;
+  --hub-c-conductor: #77828d;
+}
+:root[data-theme='light'] .hub-voices {
+  --hub-c-ulysses: #4a3aa7;
+  --hub-c-meridian: #2a78d6;
+  --hub-c-ensemble: #eb6834;
+  --hub-c-conductor: #6b7684;
+}
+
+/* ── the three cards ─────────────────────────────────────────────────────────── */
+
+.hub-tri {
+  display: grid;
+  gap: 0.875rem;
+  margin-top: 1.75rem;
+}
+@media (min-width: 900px) {
+  .hub-tri {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.hub-tri-card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--color-line);
+  border-radius: 10px;
+  background: var(--color-panel);
+  /* the thumbnail is wider than its window and is clipped by it — the radius has to hold */
+  overflow: hidden;
+}
+
+/* the voice hairline: the same hue as this practice's door above and its Partitur lane below */
+.hub-tri-card::before {
+  content: '';
+  display: block;
+  height: 3px;
+  flex: none;
+}
+.hub-tri-card[data-voice='ulysses']::before { background: var(--hub-c-ulysses); }
+.hub-tri-card[data-voice='meridian']::before { background: var(--hub-c-meridian); }
+.hub-tri-card[data-voice='ensemble']::before { background: var(--hub-c-ensemble); }
+
+.hub-tri-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  padding: 1.05rem 1.15rem 1.2rem;
+  flex: 1;
+}
+
+.hub-tri-practice {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-fg-muted);
+  margin: 0;
+}
+
+.hub-tri-title {
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+.hub-tri-caption {
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--color-fg-muted);
+  margin: 0;
+  /* the caption slot is the SAME height on all three cards, or the frame stops being identical */
+  min-height: 6.2em;
+}
+
+.hub-tri-prov {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  line-height: 1.45;
+  color: var(--color-fg-faint);
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.hub-tri-cta {
+  margin-top: auto;
+  padding-top: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  line-height: 1.45;
+  color: var(--color-fg-muted);
+  text-decoration: underline;
+  text-decoration-color: var(--color-line);
+  text-underline-offset: 4px;
+  transition: color 0.2s;
+}
+.hub-tri-cta:hover,
+.hub-tri-cta:focus-visible {
+  color: var(--color-fg);
+}
+
+/* ── the window a practice's own figure is seen through ──────────────────────── */
+
+/* Each of the three practice stylesheets styles its surface as a PAGE: its own width, its own
+   margin, its own padding, its own border. Inside a card it is a picture instead. Two classes of
+   specificity (0,2,0) so this wins over the practice files whatever order the bundler emits. */
+.hub-thumb.atelier-surface,
+.hub-thumb.field-surface,
+.hub-thumb.studio-surface {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+}
+
+.hub-thumb {
+  border-bottom: 1px solid var(--color-line);
+}
+
+.hub-thumb-svg {
+  position: relative;
+  height: 240px;
+  overflow: hidden;
+}
+@media (max-width: 899px) {
+  .hub-thumb-svg { height: 200px; }
+}
+
+/* The figure keeps the size it was DRAWN to be read at and the window clips it, rather than the
+   window shrinking the figure until its own lettering is decorative. A fragment wider than the
+   card is centred in it, so what a visitor sees is the middle of the drawing — for the atelier's
+   sheet that is exactly where the lines curve into their harbours, which is what the sheet is
+   about. (0,4,1) so it beats `.studio-surface svg.st-sf`'s own width rule. */
+.hub-tri-card .hub-thumb .hub-thumb-svg svg {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 100%;
+  width: auto;
+  max-width: none;
+  display: block;
+}

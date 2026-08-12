@@ -1,0 +1,205 @@
+---
+// /society — The Society: a mind of mindless parts, live in the browser.
+// Prototype (2026-08-05). Launched unlisted — a new experiment shows itself before it
+// claims a shelf place — and listed in the /experiments register on Frank's go the next
+// morning (src/data/werke.ts, ranked third).
+import Page from '@/layouts/Page.astro'
+import SocietyFigure from '@/components/society/SocietyFigure.astro'
+import GrowthRecord from '@/components/society/GrowthRecord.astro'
+import { STAGES } from '@/lib/society/stages'
+import { awakeChapters, CHAPTERS } from '@/lib/society/agents'
+
+// The kicker is derived, never typed: it said "stage 2" while stage 3 was live (Frank
+// caught it, 2026-08-06). The growth record is the single source of what stage this is.
+const stages = STAGES.filter((s) => s.kind === 'stage')
+const current = stages[stages.length - 1]
+const started = STAGES[0].date
+
+// The shelf's count is derived too — it read "eleven" while twelve chapters were awake
+// the moment a stage woke one. The roster is the only place that knows.
+const WORDS = [
+  'no',
+  'one',
+  'two',
+  'three',
+  'four',
+  'five',
+  'six',
+  'seven',
+  'eight',
+  'nine',
+  'ten',
+  'eleven',
+  'twelve',
+  'thirteen',
+  'fourteen',
+  'fifteen',
+  'sixteen',
+  'seventeen',
+  'eighteen',
+  'nineteen',
+  'twenty',
+]
+const spell = (n: number) => WORDS[n] ?? String(n)
+const awakeCount = awakeChapters().size
+const asleepCount = CHAPTERS.length - awakeCount
+---
+
+<Page
+  title="The Society | Frank Bültge"
+  description="A mind of mindless parts, running live in your browser — after Marvin Minsky's The Society of Mind (1986), forty years on. It perceives you; you may silence any of its agents."
+>
+  <article class="mx-auto max-w-5xl px-4 py-14">
+    <header class="max-w-3xl">
+      <p class="text-xs uppercase tracking-widest text-fg-muted">
+        experiment · stage {current.n} — {current.title.replace(/^The /, '')} · started {started}
+      </p>
+      <h1 class="mt-2 text-3xl font-semibold">The Society</h1>
+      <p class="mt-1 text-fg-muted">a mind of mindless parts</p>
+
+      <blockquote class="mt-6 border-l-2 pl-4 text-sm leading-relaxed text-fg-muted">
+        “What magical trick makes us intelligent? The trick is that there is no trick. The
+        power of intelligence stems from our vast diversity, not from any single, perfect
+        principle.”
+        <footer class="mt-1 text-xs">
+          — Marvin Minsky, <cite>The Society of Mind</cite>, §30.8 (1986)
+        </footer>
+      </blockquote>
+
+      <p class="mt-6 text-base leading-relaxed">
+        <strong class="font-semibold">This is Minsky's book, performed.</strong> Not a
+        simulation inspired by <cite>The Society of Mind</cite> (1986) but that book as
+        working machinery: twenty-seven agents, every one small enough to read whole, every
+        one carrying the essay it steps out of. They build block towers, quarrel over a
+        single hand, and remember what worked. None of them can build. A staged reading, in
+        the sense a score is read by being played.
+      </p>
+      <p class="mt-3 text-sm leading-relaxed">
+        Forty years ago Minsky claimed a mind is a society of such mindless parts. Today's
+        machine minds bet on the opposite: one vast, opaque model. This runs the
+        counter-model in a glass case — the whole of it readable, down to the last rule.
+      </p>
+      <p class="mt-3 text-sm leading-relaxed">
+        You are in it. Your pointer is a shadow in the block world: the society notices
+        motion without ever knowing what moves, grows curious, gets bored of you, and
+        startles if you are sudden. And you may hurt it: select any agent and silence it —
+        what the whole loses is not scripted anywhere; it follows from the missing rule. A
+        reload heals everything.
+      </p>
+      <p class="mt-4 text-sm leading-relaxed text-fg-muted">
+        If you have a minute: watch until a tower stands. If you have five: silence GRASP,
+        or the censor that holds the wrecker back, and watch what a mind is without it.
+      </p>
+      {/* The room exit is linked again as of 2026-08-07, its staging done (docs/society/
+          room-brief.md). It is named as a different ADDRESS to the visitor rather than as a
+          lighter version of this page: this one explains and rewards an hour, that one shows
+          and asks for four minutes. Neither is the other's summary. */}
+      <p class="mt-4 text-sm leading-relaxed text-fg-muted">
+        Or take the other exit. <a class="underline" href="/society/room/">The room</a> is
+        the same society on one screen that plays itself — no scrolling, no paragraphs, one
+        short line at a time, and a single gesture: touch a light and that part falls silent.
+        Made for a projection or a terminal, and for the four minutes a stranger has.
+      </p>
+    </header>
+
+    <div class="mt-10">
+      <SocietyFigure />
+    </div>
+
+    <section class="mt-12 max-w-3xl" aria-label="Under proof">
+      <h2 class="text-sm font-semibold uppercase tracking-widest text-fg-muted">
+        under proof
+      </h2>
+      <p class="mt-3 text-sm leading-relaxed text-fg-muted">
+        The piece's claims are tests, not captions
+        (<code class="text-xs">src/lib/society/engine.test.ts</code>): the same seed is the
+        same morning, tick for tick · left alone, the society finishes a tower, though no
+        agent can build · an intact society wrecks only finished work; silence
+        CENSOR-WRECK and it smashes its own unfinished work · silence GRASP and no block is
+        ever placed again · silence SEE-MOTION and you become invisible to it. Stage 2, the
+        transfer (§8.6): after two towers the society turns to Minsky's arch — its
+        practiced hands carry over to the new goal, but its first move still goes to the
+        old tower site, because K-lines remember towers, not arches; what memory transfers
+        is the middle, never the plan. Silence ARCHER and this society builds towers until
+        the end of its days. Chapter and section numbers are verified against the 1986
+        edition; the thirty-chapter shelf
+        shows honestly which parts of the book live here so far — {spell(awakeCount)} chapters
+        are awake, {spell(asleepCount)} are roadmap. A full reading pass over the print
+        edition stands behind the citations
+        (<code class="text-xs">docs/society/reading-protocol.md</code>).
+      </p>
+
+      <h3 class="mt-8 text-sm font-semibold uppercase tracking-widest text-fg-muted">
+        what the attachment does not show
+      </h3>
+      <p class="mt-3 text-sm leading-relaxed text-fg-muted">
+        Hold a sign and you become a parent — but there is no attachment-figure here, only a
+        signal. Minsky's mechanism turns on the child learning to tell the parent from
+        everyone else; this society has no face, no voice, no social realm in which anyone
+        could be someone. It takes any sign as a parent's, so it cannot stage §17.2's actual
+        experiment, where the same scolding from a stranger and from a parent teach
+        different things. It feels no guilt and no shame — it only changes what it wants.
+        Attachment here redistributes worth; it never grows a goal no one wrote. You cannot
+        praise it for resting, because rest is an appetite and has no goal to make worthier
+        — a sign held then lands on nothing, and the scribe says so. And a reload heals
+        everything, which is a mercy in an artwork and a lie about attachment, whose effects
+        do not wash out. Minsky's own warning in §9.1 is aimed at us: “we have to be careful
+        not to accept those signs at their face value.” This society accepts them
+        completely. It has no censor for its parent.
+      </p>
+    </section>
+
+    <section class="mt-12 max-w-3xl" aria-label="Where this stands">
+      <h2 class="text-sm font-semibold uppercase tracking-widest text-fg-muted">
+        where this stands
+      </h2>
+      <p class="mt-3 text-sm leading-relaxed text-fg-muted">
+        The mechanisms here are borrowed, and gladly: agent societies are a deep canon in
+        art (Ian Cheng's <cite>BOB</cite>, Karl Sims, <cite>A-Volve</cite>,
+        <cite>Creatures</cite>), ablation is a standard scientific gesture (the
+        <cite>Neural Interactome</cite>, 2017, lets you shift-click a neuron out of a
+        simulated nervous system), and the book has been published interactively before —
+        the Voyager CD-ROM of 1994, made with Minsky, navigated by its chapters. What we
+        looked for and could not find is the book <em>running</em>: its own agents at work
+        and ablatable, each rule bearing the essay it comes from. Prior editions display
+        the book without implementing it; prior implementations take its ideas and drop the
+        book. And no one, in art or in science, mourns what they switch off — here every
+        silenced agent has an elegy. The searches, including everything that refuted our
+        first claims, are in <code class="text-xs">docs/society/prior-art.md</code>.
+      </p>
+    </section>
+
+    <section class="mt-12 max-w-3xl" aria-label="Nearest neighbors">
+      <h2 class="text-sm font-semibold uppercase tracking-widest text-fg-muted">
+        nearest neighbors
+      </h2>
+      <ul class="mt-3 space-y-2 text-sm leading-relaxed text-fg-muted">
+        <li>
+          <a class="underline" href="https://github.com/tsinghua-fib-lab/agentsociety" target="_blank" rel="noopener nofollow">AgentSociety</a>
+          (Tsinghua FIB Lab) — a large LLM-agent social-simulation platform: opaque neural
+          agents, not Minsky's small deterministic rule agents.
+        </li>
+        <li>
+          <a class="underline" href="https://github.com/metauto-ai/Mindstorm" target="_blank" rel="noopener nofollow">Mindstorm / NLSOM</a>
+          — invokes "Societies of Mind" by name but implements it as LLMs talking in natural
+          language, the architectural inversion of what the book describes.
+        </li>
+        <li>
+          <a class="underline" href="https://arxiv.org/abs/2505.18228" target="_blank" rel="noopener nofollow">"Implementing Agents in JavaScript"</a>
+          — precedent for static, no-backend, browser-only multi-agent simulation, not built
+          around Minsky's book.
+        </li>
+      </ul>
+      <p class="mt-3 text-sm leading-relaxed text-fg-muted">
+        Today's "Society of Mind"-branded software is almost uniformly LLM-multi-agent
+        frameworks borrowing the name loosely — the inversion this page's own copy calls
+        out above. This absence-of-evidence read is weaker than a positive neighbor would
+        make it, and stands unsettled pending one more pass through academic HCI/
+        cognitive-science venues (SIGCHI, AIES, 1990s–2000s pedagogical Society-of-Mind
+        simulations) not yet searched.
+      </p>
+    </section>
+
+    <GrowthRecord />
+  </article>
+</Page>

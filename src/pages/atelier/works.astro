@@ -9,7 +9,11 @@ import Page from '@/layouts/Page.astro'
 import Frame from '@/components/atelier/surface/Frame.astro'
 import { sortWorks } from '@/lib/atelier/sort'
 import { ATELIER_NARRATIVE } from '@/config/atelier-wording'
-import { teaserFor } from '@/lib/engines/teaser'
+import RespondCta from '@/components/post/RespondCta.astro'
+import WorkCard from '@/components/atelier/WorkCard.astro'
+import { LINE_END, PROTOCOL_LADDER } from '@/lib/engines/nightly-line'
+
+const PAIR = ATELIER_NARRATIVE.pair
 
 const all = await getCollection('atelier')
 const repo = 'https://github.com/frankbueltge/ulysses'
@@ -41,8 +45,27 @@ const mdWorksR = await Promise.all(
   mdWorks.map(async (e) => ({ id: e.id, Content: (await render(e)).Content })),
 )
 
+// Two phases, not one gallery (2026-08-11). Until now the thirty nightly works and the curated
+// work-line publications stood in one undifferentiated list under a prose note, which made the
+// most consequential fact about this room invisible: the works up to 18 July belong to a line
+// that was switched off and has since been forked back to life in its own repository, and the
+// ones after it belong to the protocol that replaced it. Same routes, same order, same data —
+// the cut is drawn where the practice's own record draws it.
+const nightlyWorks = works.filter((w) => w.date && w.date <= LINE_END)
+const worklineWorks = works.filter((w) => !w.date || w.date > LINE_END)
+
+// The phase labels name their own constitutions, derived rather than typed: the nightly phase
+// ran under the restored step of the ladder, the work-line phase from the step that ended it to
+// whatever the practice runs today. A hand-written "v4 → v6" would be wrong the day v7 lands.
+const restoredStep = PROTOCOL_LADDER.find((s) => s.restored)!
+const endedNightly = PROTOCOL_LADDER[PROTOCOL_LADDER.indexOf(restoredStep) + 1]!
+const latestStep = PROTOCOL_LADDER[PROTOCOL_LADDER.length - 1]!
+const day = (iso: string): string =>
+  new Date(`${iso}T00:00:00Z`).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' })
+const nightlyStart = day(PROTOCOL_LADDER[0]!.date)
+
 const kicker = ['Atelier · works', 'ulysses', `${works.length} works · ${mdWorksR.length} texts`]
-const statusHtml = `<b>${works.length} works</b> · newest first · detail routes stay under /atelier/werke/*`
+const statusHtml = `<b>${works.length} works</b> · ${nightlyWorks.length} nightly, ${worklineWorks.length} work-line · newest first · detail routes stay under /atelier/werke/*`
 ---
 
 <Page
@@ -51,54 +74,55 @@ const statusHtml = `<b>${works.length} works</b> · newest first · detail route
 >
   <Frame active="works" kicker={kicker} h1="The slabs, standing." statusHtml={statusHtml} back>
     <p class="at-room-intro">{ATELIER_NARRATIVE.rooms.works}</p>
+    <RespondCta variant="line" ns="atelier" class="at-room-intro" />
     <p class="at-room-intro">{ATELIER_NARRATIVE.rooms.worksPhase}</p>
 
-    <section>
-      {works.map(({ slug, kind, meta }) =>
-        kind === 'astro' ? (
-          <article class="at-work-card" id={slug}>
-            <h3>
-              <a href={`/atelier/werke/${slug}`}>{meta.title ?? slug}</a>
-              {meta.date && <span class="at-work-date">{meta.date}</span>}
-            </h3>
-            {/* Teaser bevorzugt (Frank, 25.07.): der knappe 2-Satz-Teaser aus teasers.json als
-                Karten-Intro; ohne Teaser weiter der lange embodies-Text, bis die Routine ihn nachzieht. */}
-            {(() => { const d = teaserFor('atelier', slug) ?? meta.embodies ?? meta.verkoerpert; return d && <p>{d}</p> })()}
-            <div class="at-work-links">
-              <a href={`/atelier/werke/${slug}`}>Open work →</a>
-            </div>
-          </article>
-        ) : (
-          <article class="at-work-card" id={slug}>
-            <h3>
-              {meta.title ?? slug}
-              {meta.date && <span class="at-work-date">{meta.date}</span>}
-            </h3>
-            {/* Teaser bevorzugt (Frank, 25.07.): der knappe 2-Satz-Teaser aus teasers.json als
-                Karten-Intro; ohne Teaser weiter der lange embodies-Text, bis die Routine ihn nachzieht. */}
-            {(() => { const d = teaserFor('atelier', slug) ?? meta.embodies ?? meta.verkoerpert; return d && <p>{d}</p> })()}
-            {meta.medium && <p class="at-shelf-meta">{meta.medium}{meta.seed != null && ` · Seed ${meta.seed}`}</p>}
-            {/* Exhibition model (2026-07-21): the work is a door to its full-viewport stage
-                (/atelier/werke-html/<slug>/, standalone, own CSP), not a cramped preview iframe. */}
-            <div class="at-work-actions">
-              <a class="at-work-enter" href={`/atelier/werke-html/${slug}/`}>Enter the work <span aria-hidden="true">→</span></a>
-              <a class="at-work-source" href={`${repo}/tree/main/works/${slug}`} target="_blank" rel="noreferrer">Source code ↗</a>
-            </div>
-            {Array.isArray(meta.quellen) && meta.quellen.length > 0 && (
-              <details class="mt-2">
-                <summary class="cursor-pointer select-none at-shelf-meta">Sources</summary>
-                <ul class="at-shelf-meta mt-1 list-disc pl-5">
-                  {meta.quellen.map((q: string) => <li>{q}</li>)}
-                </ul>
-              </details>
-            )}
-          </article>
-        ),
-      )}
+    {/* ——— the work-line phase: what this practice makes now ——— */}
+    <section class="at-phase">
+      <h2 class="at-phase-head">
+        The work-line phase
+        <span class="at-phase-span">
+          since {day(endedNightly.date)} · Protocol v{endedNightly.version} → v{latestStep.version}
+        </span>
+      </h2>
+      <p class="at-phase-note">{PAIR.arms.here} — each published by explicit human decision.</p>
+      {worklineWorks.map(({ slug, kind, meta }) => (
+        <WorkCard slug={slug} kind={kind} meta={meta} repo={repo} />
+      ))}
     </section>
 
+    {/* ——— the nightly phase: the line that was forked back to life ———
+         These are the works of the nightly line. They keep their addresses — this practice made
+         them and moving them would falsify its own record — but the room now says whose line
+         they are and that it did not end when this surface stopped showing new ones. */}
+    <section class="at-phase at-phase-nightly" id="at-phase-nightly">
+      <h2 class="at-phase-head">
+        The nightly phase
+        <span class="at-phase-span">
+          {nightlyStart} – {day(LINE_END)} · Protocol v{restoredStep.version}
+        </span>
+      </h2>
+      <p class="at-phase-note">{PAIR.worksNote}</p>
+      <p class="at-phase-link">
+        <a href="/error-as-method">{PAIR.link}</a>
+      </p>
+      {nightlyWorks.map(({ slug, kind, meta }) => (
+        <WorkCard slug={slug} kind={kind} meta={meta} repo={repo} />
+      ))}
+    </section>
+
+    {/* The verbatim mirror stays — it is the record, and the record is not replaced by a reading
+        of it. But these texts (the genealogy, both position papers, twenty-one error registers)
+        are the nightly line's apparatus, and since 2026-08-11 they also have rooms that make
+        their structure legible. The pointer goes here because this is where a reader who wants
+        them actually ends up. */}
     <section class="at-record mt-10">
       <h2>Texts &amp; catalogue — mirrored verbatim from the research archive</h2>
+      <p class="at-phase-note">
+        The full texts, unedited. Their structure — the genealogy's stations and dated extensions,
+        the position before and after the subtraction, the error register by type and status — is
+        laid out at <a href="/error-as-method/genealogy">the nightly line's rooms</a>.
+      </p>
       {mdWorksR.map(({ id, Content }) => (
         <article class="at-work-card at-prose" id={id.replace('works/', '').replace(/\.md$/, '')}>
           <Content />

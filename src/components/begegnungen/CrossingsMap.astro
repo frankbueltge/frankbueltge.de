@@ -1,0 +1,115 @@
+---
+// src/components/begegnungen/CrossingsMap.astro — the archive figure of /encounters: every
+// RECORDED ENCOUNTER on one map, drawn small and standing after the running work.
+//
+// IT USED TO BE THE PAGE'S HEADLINE and it is now its archive (2026-08-02). Two things changed
+// with the move and nothing else did: it lost half its scale, and it gained the lane hues the
+// rest of the ecology already wears (PALETTE: ecology-voices, declared in
+// src/styles/crossing-dossier.css — a practice reads the same colour here as in the selector and
+// in every quoted row above). What did NOT change is its sign grammar, and that is the point of
+// keeping it: source filled, receiver a ring, a bridge between the lanes an encounter joined.
+// That grammar was designed for the register's formal encounters and it is not extended to the
+// shared questions or the contact stream, which have no source and no receiver — those are above
+// this figure, in words, and the scope line under it says so.
+//
+// Interactive, secondary: each mark carries the encounter's own title and status in a <title>,
+// and the whole mark links into that encounter's dossier above (which the selector then opens).
+// No script of its own — the link and the native tooltip are the interaction, which is exactly
+// as much as an archive figure earns.
+import { MIDDLE } from '@/config/middle-wording'
+import type { CrossingsMap } from '@/lib/begegnungen/crossings-map'
+import { VOICES, type Crossing } from '@/lib/begegnungen/crossings'
+
+export interface Props {
+  model: CrossingsMap
+  /** the same encounters, for the numbered legend under the figure */
+  encounters: Crossing[]
+}
+
+const { model, encounters } = Astro.props
+const w = MIDDLE.archive
+const hue = (h: string) => `v-${h}`
+const byId = new Map(encounters.map((e) => [e.id, e]))
+---
+
+<section class="md-archive" aria-labelledby="archive-heading" id="archive">
+  <h2 class="md-sec-h2" id="archive-heading">{w.heading}</h2>
+  <p class="md-sec-lead">{w.lead}</p>
+
+  <figure class="hm-map">
+    <svg
+      viewBox={`0 0 ${model.width} ${model.height}`}
+      role="img"
+      aria-label={`${model.marks.length} recorded encounters across ${model.lanes.length} voices, in register order — filled marks are the source, rings the receiver. The numbered list below carries the same information as text.`}
+    >
+      {model.lanes.map((lane) => (
+        <g class={hue(lane.hue)}>
+          <line
+            x1={model.laneX0}
+            y1={lane.y}
+            x2={model.laneX1}
+            y2={lane.y}
+            class={lane.active ? 'hm-lane hm-lane-on' : 'hm-lane hm-lane-idle'}
+          />
+          <text x={model.laneX0 - 12} y={lane.y + 3.5} text-anchor="end" class="hm-lane-label">
+            {lane.label}
+          </text>
+        </g>
+      ))}
+
+      {model.marks.map((m) => (
+        <a href={`#crossing-${m.anchor}`} class="hm-mark">
+          <title>
+            {m.n} · {m.title}
+            {m.status ? ` — ${m.status}` : ''}
+            {m.asOf ? ` (as of ${m.asOf})` : ''}
+          </title>
+          <line x1={m.x} y1={m.yTop} x2={m.x} y2={m.yBottom} class="hm-bridge" />
+          {m.sources.map((s) => (
+            <g class={hue(s.hue)}><circle cx={m.x} cy={s.y} r={5} class="hm-src" /></g>
+          ))}
+          {m.receivers.map((r) => (
+            <g class={hue(r.hue)}><circle cx={m.x} cy={r.y} r={5} class="hm-rcv" /></g>
+          ))}
+          <circle cx={m.x} cy={m.badgeY} r={9} class="hm-badge" />
+          <text x={m.x} y={m.badgeY + 3.6} text-anchor="middle" class="hm-badge-n">{m.n}</text>
+        </a>
+      ))}
+
+      <line x1={model.laneX0} y1={model.axisY} x2={model.laneX1} y2={model.axisY} class="hm-axis-line" />
+      <text x={model.laneX0} y={model.axisLabelY} class="hm-axis">register order — earliest → now</text>
+      <text x={model.laneX1} y={model.axisLabelY} text-anchor="end" class="hm-axis">
+        {model.marks.length} recorded encounter{model.marks.length === 1 ? '' : 's'}
+      </text>
+    </svg>
+  </figure>
+
+  {/* The table rendition: the same information as text, so the figure is never the only way in
+      (the house rule for every figure on this site). */}
+  <ol class="hm-legend">
+    {model.marks.map((m) => {
+      const e = byId.get(m.crossingId)
+      return (
+        <li>
+          <span class="hm-n">{m.n}</span>
+          <div>
+            <p class="hm-line">{m.title}</p>
+            <p class="hm-meta">
+              {m.sources.map((s) => VOICES[s.voice].short).join(' + ') || '—'} →{' '}
+              {m.receivers.map((r) => VOICES[r.voice].short).join(' + ') || '—'}
+              {m.status ? ` · ${m.status}` : ''}
+              {m.asOf ? ` · as of ${m.asOf}` : ''}
+              {' · '}<a href={`#crossing-${m.anchor}`}>the dossier ↑</a>
+              {e?.recordUrl && <> · <a href={e.recordUrl} rel="noreferrer">record ↗</a></>}
+            </p>
+          </div>
+        </li>
+      )
+    })}
+  </ol>
+
+  <p class="hm-scope">{w.scope}</p>
+  <p class="hm-prov">{w.provenance}</p>
+
+  <slot />
+</section>

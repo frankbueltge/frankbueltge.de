@@ -1,44 +1,57 @@
-/* src/styles/atelier-process.css — eigene Bildsprache für das Prozessbild des Ateliers.
+/* src/styles/atelier-process.css — the atelier's own image language for The Passage
+ * (components/atelier/ProcessFigure.astro, drawn by src/lib/atelier/passage.ts).
  *
- * Frank, 2026-07-30: „[Wortlaut privat;
- * redigiert]."
- * Also: Farbe, Tiefe, Bewegung, Anfassbarkeit — aber weiter die Mono-Type der Site, damit
- * die Figur zum Haus gehört und nicht wie ein Fremdkörper wirkt.
+ * Frank, 2026-07-30: "just make it interactive and smart, not always this minimal boring
+ * monochrome — that does not fit here any more, because this is a project of its own."
+ * So: colour, depth, movement, something to take hold of.
  *
- * Die vier Farben sind KEINE Statusfarben, sondern Identitäten: Ein abgebrochenes Vorhaben
- * ist in dieser Praxis kein Fehlschlag (Protokoll: „closing costs what continuing costs").
- * Beide Sätze sind gegen ihre jeweilige Fläche geprüft (dataviz-Validator, alle sechs
- * Prüfungen bestanden): hell gegen #f7f8fa, dunkel gegen #141414 — eigene Stufen, keine
- * automatische Umkehr. */
+ * The idiom, in one line: a MEASURED DRAWING ON WARM PAPER. The atelier's own paper
+ * (--at-surface) under everything, ink hairlines, the one serif in the house
+ * (--at-font-display) on the headings, and the record type (--at-font-record) everywhere a
+ * number, a date or a quoted ledger line appears — a drawing that was set by hand, not
+ * plotted by a machine. Between Meridian's scientific grid and Ensemble's theatrical stage,
+ * which is what this practice is.
+ *
+ * WP6a: the figure moved onto the shared WP3 primitives, so this file now also skins
+ * dataviz/{Readout,LegendFilter,DetailPanel,TableFallback,Tour}.astro — those ship behaviour
+ * and structure only (ADR 0010) and carry no appearance of their own. Every dv-* rule below
+ * is scoped to .atelier-surface so it can never reach another practice's figure.
+ *
+ * The four colours are IDENTITIES, not status: a closed line is not a failure in this practice
+ * ("closing costs what continuing costs"), so "published" wears the practice's own violet and
+ * nothing wears a warning red.
+ *
+ * PALETTE: atelier-outcomes (src/lib/dataviz/palette.ts) — the values live once in
+ * atelier-sheet.css as --at-out-* and are only referenced here. Validated 2026-07-31 with the
+ * dataviz validator, --pairs all, against BOTH papers per mode (light #f6f1e7 and #f7f8fa ·
+ * dark #1b1815 and #141414): PASS. Light-mode WARNs (yellow ~1.9:1, magenta ~2.4:1 vs surface)
+ * are relieved by the direct row labels and the table view this figure ships — both still
+ * shipped after the port, and the ledger gutter adds a third direct label. The previous quartet
+ * (#a8690c/#c43a78/#0e8a6e/#1f6fd0) FAILED CVD separation — green↔magenta deutan ΔE 1.3 —
+ * despite a comment here claiming otherwise; palette.test.ts now guards the claim. */
 
-.at-proc {
-  /* hell */
-  --pr-publish: #a8690c;
-  --pr-candidate: #c43a78;
-  --pr-study: #0e8a6e;
-  --pr-kill: #1f6fd0;
-  --pr-open: var(--color-fg-muted);
-  --pr-surface: var(--color-panel);
-  --pr-glow: 0 0 0 rgba(0, 0, 0, 0);
-  margin: 2.5rem 0 2.25rem;
+.atelier-surface {
+  --pr-publish: var(--at-out-publish);
+  --pr-candidate: var(--at-out-gate);
+  --pr-study: var(--at-out-study);
+  --pr-kill: var(--at-out-kill);
+  --pr-open: var(--at-graphite);
+  /* the figure sits on the atelier's paper, not the site panel — the colours were validated
+     against that paper, so the chips, cards and gutter must lie on it too */
+  --pr-surface: var(--at-surface);
+  --pr-ink: var(--at-ink);
+  --pr-ink-2: var(--at-ink-2);
+  --pr-hairline: var(--at-hairline);
 }
+.at-proc { margin: 2.25rem 0 2rem; }
 
-:root[data-theme='dark'] .at-proc,
-:root:not([data-theme='light']) .at-proc {
-  --pr-publish: #c08420;
-  --pr-candidate: #d14a85;
-  --pr-study: #159e76;
-  --pr-kill: #4a79e4;
-}
-
-@media (prefers-color-scheme: light) {
-  :root:not([data-theme='dark']) .at-proc {
-    --pr-publish: #a8690c;
-    --pr-candidate: #c43a78;
-    --pr-study: #0e8a6e;
-    --pr-kill: #1f6fd0;
-  }
-}
+/* One selector chain, five identities: the SVG carries only `data-out`, so a mark's colour is
+   decided here and nowhere else (the builder emits no fill and no stroke at all). */
+.atelier-surface [data-out='PUBLISH'] { --pr-c: var(--pr-publish); }
+.atelier-surface [data-out='PUBLICATION_CANDIDATE'] { --pr-c: var(--pr-candidate); }
+.atelier-surface [data-out='ARCHIVE_AS_STUDY'] { --pr-c: var(--pr-study); }
+.atelier-surface [data-out='KILL'] { --pr-c: var(--pr-kill); }
+.atelier-surface [data-out='OPEN'] { --pr-c: var(--pr-open); }
 
 .at-proc-head {
   display: flex;
@@ -48,232 +61,621 @@
   margin-bottom: 0.4rem;
 }
 .at-proc-title {
-  font: 600 1.05rem/1.2 var(--font-sans);
+  font: 600 1.4rem/1.16 var(--at-font-display);
   letter-spacing: 0.01em;
   margin: 0;
-  color: var(--color-fg);
+  color: var(--at-h1-ink);
 }
-.at-proc-sub {
-  font: 11.5px/1.5 var(--font-mono);
-  color: var(--color-fg-faint);
-  margin: 0;
+.at-proc-lead {
+  font: 13.5px/1.68 var(--at-font-record);
+  color: var(--pr-ink-2);
+  margin: 0.4rem 0 1.1rem;
+  max-width: 82ch;
+}
+.at-proc-key {
+  margin: 1.1rem 0 0.35rem;
+  font: 11px var(--at-font-record);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--pr-ink-2);
+}
+.at-proc-hint,
+.at-proc-yield {
+  margin: 0.5rem 0 0;
+  font: 11.5px/1.6 var(--at-font-record);
+  color: var(--pr-ink-2);
 }
 
-/* Legende = Filter. Ein Klick isoliert einen Ausgang, ein zweiter hebt ihn auf. */
-.at-proc-legend {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-  margin: 1.1rem 0 0.5rem;
-  padding: 0;
-  list-style: none;
-}
-.at-proc-lg {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  padding: 0.3rem 0.65rem 0.3rem 0.5rem;
-  border: 1px solid var(--color-line);
-  border-radius: 999px;
-  background: var(--pr-surface);
-  color: var(--color-fg-muted);
-  font: 11.5px var(--font-mono);
-  cursor: pointer;
-  transition: border-color 0.18s, color 0.18s, transform 0.18s, background 0.18s;
-}
-.at-proc-lg:hover { color: var(--color-fg); border-color: var(--color-fg-faint); transform: translateY(-1px); }
-.at-proc-lg[aria-pressed='true'] { color: var(--color-fg); border-color: currentColor; background: color-mix(in oklab, var(--lg-color) 12%, var(--pr-surface)); }
-.at-proc-lg .dot {
-  width: 9px; height: 9px; border-radius: 3px;
-  background: var(--lg-color);
-  box-shadow: 0 0 0 2px var(--pr-surface);
-  flex: none;
-}
-.at-proc-lg .n { color: var(--color-fg); font-weight: 600; }
+/* ——— the sheet ——————————————————————————————————————————————————————————————
+   position: relative on the FIGURE, not on the scroll box: the readout is placed in the
+   figure's own coordinate space (dataviz/readout.ts house rule 1), and a scrolling box with
+   overflow-x would clip it on a narrow screen. */
+.at-proc-figure { margin: 0.9rem 0 0; position: relative; }
+.at-proc-scroll { position: static; overflow-x: auto; }
 
-.at-proc-figure { margin: 0; position: relative; }
-/* Bezugsrahmen des Tooltips ist die FIGUR, nicht der Scroll-Kasten: Der hat auf schmalen
- * Schirmen overflow-x und würde den Tooltip abschneiden. */
-.at-proc-scroll { position: static; }
-
-/* Tooltip am Zeiger. Bewusst `pointer-events: none`: Er darf nie selbst ein Ziel werden —
- * genau daran ist der erste Entwurf gescheitert, dessen anklickbarer Inhalt weglief,
- * sobald man ihn ansteuerte. Anklickbares steht ausschließlich in der Tafel unten. */
-.at-proc-tip {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 4;
-  pointer-events: none;
-  max-width: 30ch;
-  padding: 0.5rem 0.7rem;
-  border: 1px solid var(--color-line);
-  border-left: 3px solid var(--t-color, var(--color-line));
-  border-radius: 8px;
-  background: var(--color-panel);
-  box-shadow: 0 6px 22px rgb(0 0 0 / 0.28);
-  will-change: transform;
-}
-.at-proc-tip .t-title { display: block; font: 600 12.5px/1.35 var(--font-sans); color: var(--color-fg); }
-.at-proc-tip .t-meta { display: block; margin-top: 0.2rem; font: 11px/1.5 var(--font-mono); color: var(--color-fg-muted); }
-.at-proc-tip b { color: var(--color-fg); font-weight: 600; }
 .at-proc-svg {
   width: 100%;
   height: auto;
   display: block;
-  overflow: visible;
-  background: linear-gradient(180deg, color-mix(in oklab, var(--color-panel) 60%, transparent), transparent 70%);
-  border-radius: 14px;
+  /* CLIPS TO ITS OWN viewBox — the SVG default, restored 2026-08-01. It used to be `visible`,
+     which meant a re-aimed viewBox was not a crop at all: every row OUTSIDE the band went on
+     painting past the box, over the card above and the account below, until some ancestor that
+     happened to hide its overflow sliced it mid-row. That is what the owner saw as "you cannot
+     see everything" — half-rows at both edges of the pinned board, and, at 900px, each scene's
+     still painting the whole twelve-row sheet into a box the height of its band, the surplus cut
+     off by the still's own scroll box. Nothing on this sheet is drawn outside the WHOLE-sheet
+     viewBox, so the resting figure is unaffected; only the cropped states change, and they now
+     contain exactly what they show. */
+  overflow: hidden;
+  /* the paper's own tone, a shade deeper than the sheet it lies on — a drawing board */
+  background: linear-gradient(180deg, color-mix(in oklab, var(--at-badge-bg) 82%, transparent), transparent 76%);
+  border-radius: 10px;
 }
 
-/* — Bänder — */
-.pr-band { fill: none; stroke-linecap: round; stroke-width: 5.5; transition: opacity 0.2s, stroke-width 0.2s; }
-.pr-tail { fill: none; stroke-width: 5.5; opacity: 0.55; transition: opacity 0.2s, stroke-width 0.2s; }
-.pr-line { cursor: pointer; outline: none; }
-/* Die ganze Zeile ist Trefferfläche — ein 5px-Band mit der Maus zu erwischen ist Arbeit,
- * und Arbeit war hier nie gefragt. */
-.pr-line .pr-rowhit { cursor: pointer; }
-.pr-line .pr-hit { stroke: transparent; stroke-width: 22; fill: none; }
-.pr-line text.pr-label {
-  font: 11.5px var(--font-mono);
-  fill: var(--color-fg-muted);
+/* — the hand-set rules and the axis — */
+.atelier-surface .pr-rule { stroke: var(--pr-hairline); stroke-width: 0.6; opacity: 0.55; }
+.atelier-surface .pr-axis line { stroke: var(--pr-hairline); stroke-width: 1; }
+.atelier-surface .pr-axis text { font: 10px var(--at-font-record); fill: var(--pr-ink-2); }
+.atelier-surface .pr-gutter-head {
+  font: 9.5px var(--at-font-record);
+  letter-spacing: 0.18em;
+  fill: var(--pr-ink-2);
+  opacity: 0.75;
+}
+.atelier-surface .pr-gate path { stroke: var(--pr-ink-2); stroke-dasharray: 2 4; stroke-width: 1; fill: none; }
+.atelier-surface .pr-gate text { font: 10px var(--at-font-record); fill: var(--pr-ink-2); letter-spacing: 0.08em; }
+.atelier-surface .pr-arrow-head { fill: var(--pr-ink-2); }
+
+/* — the bands — */
+.atelier-surface .pr-line { cursor: pointer; outline: none; }
+.atelier-surface .pr-band {
+  fill: none;
+  stroke: var(--pr-c, var(--pr-open));
+  stroke-linecap: round;
+  stroke-width: 5.5;
+  transition: opacity 0.2s, stroke-width 0.2s;
+}
+.atelier-surface .pr-tail {
+  fill: none;
+  stroke: var(--pr-c, var(--pr-open));
+  stroke-width: 5.5;
+  opacity: 0.5;
+  transition: opacity 0.2s, stroke-width 0.2s;
+}
+/* "still running": dashed rather than pale — a state, not a demotion */
+.atelier-surface .pr-band.is-open { stroke-dasharray: 7 4; }
+.atelier-surface .pr-still-running { fill: none; stroke: var(--pr-c, var(--pr-open)); stroke-width: 1.4; opacity: 0.9; }
+/* moves: one stroke per journal entry, on the day it was written */
+.atelier-surface .pr-move { stroke: var(--pr-surface); stroke-width: 1.6; opacity: 0.85; }
+
+.atelier-surface .pr-label { font: 11.5px var(--at-font-record); fill: var(--pr-ink-2); transition: fill 0.2s; }
+.atelier-surface .pr-date { font: 10px var(--at-font-record); fill: var(--pr-ink-2); opacity: 0.7; }
+
+/* The whole row is the hit target — catching a 5px band with a mouse is work, and work was
+   never the point here. */
+.atelier-surface .pr-rowhit { fill: transparent; cursor: pointer; }
+.atelier-surface .pr-focus { fill: none; stroke: none; }
+.atelier-surface .pr-line:hover .pr-band,
+.atelier-surface .pr-line:focus-visible .pr-band { stroke-width: 7.5; }
+.atelier-surface .pr-line:hover .pr-label,
+.atelier-surface .pr-line:focus-visible .pr-label { fill: var(--pr-ink); }
+.atelier-surface .pr-line:focus-visible .pr-focus {
+  stroke: var(--pr-ink);
+  stroke-width: 1.2;
+  stroke-dasharray: 3 3;
+}
+
+/* locked in: stays raised even after the pointer has long gone elsewhere */
+.atelier-surface .pr-line[data-sel] .pr-band { stroke-width: 7.5; }
+.atelier-surface .pr-line[data-sel] .pr-label { fill: var(--pr-ink); font-weight: 600; }
+.atelier-surface .pr-line[data-sel] .pr-ledger text { fill: var(--pr-ink); }
+
+/* filtered or dimmed by a tour scene. 0.22, not the old 0.16: the sheet now carries running text
+   in its gutter, and at 0.16 the context around a focused line stopped being readable at all —
+   dimming should push a line back, not delete it. */
+.atelier-surface .at-proc-svg[data-filtered] .pr-line:not([data-on]) { opacity: 0.22; }
+.atelier-surface .at-proc-svg[data-filtered] .pr-line:not([data-on]) .pr-band { stroke-width: 4; }
+.atelier-surface .at-proc-svg[data-filtered] .pr-harbour:not([data-on]) { opacity: 0.3; }
+.atelier-surface .pr-line[data-dim] { opacity: 0.45; }
+
+/* — the ledger gutter: what closing a line cost, in the record's own words —
+   Small record type, second ink, hanging off the row it belongs to. The honest gap wears the
+   same type in italic and a notch fainter: it is a statement ABOUT the record, not from it. */
+.atelier-surface .pr-ledger text {
+  font: 10px var(--at-font-record);
+  fill: var(--pr-ink-2);
   transition: fill 0.2s;
 }
-.pr-line text.pr-date { font: 10.5px var(--font-mono); fill: var(--color-fg-faint); }
-/* Züge: ein Strich je Journaleintrag am Tag, an dem er geschrieben wurde. */
-.pr-move { stroke: var(--pr-surface); stroke-width: 1.6; opacity: 0.85; }
-
-.pr-line:hover .pr-band,
-.pr-line:focus-visible .pr-band { stroke-width: 7.5; }
-.pr-line:hover text.pr-label,
-.pr-line:focus-visible text.pr-label { fill: var(--color-fg); }
-.pr-line:focus-visible .pr-focus { stroke: var(--color-fg); stroke-width: 1.2; stroke-dasharray: 3 3; fill: none; }
-
-/* Eingerastet: bleibt hervorgehoben, auch wenn die Maus längst woanders ist. */
-.pr-line[data-chosen] .pr-band { stroke-width: 7.5; }
-.pr-line[data-chosen] text.pr-label { fill: var(--color-fg); font-weight: 600; }
-
-/* Gedimmt, wenn eine andere Linie im Vordergrund steht oder ein Filter greift. */
-.at-proc[data-dim] .pr-line:not([data-on]) { opacity: 0.16; }
-.at-proc[data-dim] .pr-line:not([data-on]) .pr-band { stroke-width: 4; }
-
-/* — Häfen — */
-.pr-harbour rect { transition: opacity 0.2s; }
-.pr-harbour text.h-label { font: 600 11.5px var(--font-mono); letter-spacing: 0.04em; }
-.pr-harbour text.h-count { font: 600 15px var(--font-mono); }
-.pr-gate line { stroke: var(--color-fg-faint); stroke-dasharray: 2 4; stroke-width: 1; }
-.pr-gate text { font: 10.5px var(--font-mono); fill: var(--color-fg-faint); letter-spacing: 0.08em; }
-.pr-axis text { font: 10.5px var(--font-mono); fill: var(--color-fg-faint); }
-.pr-axis line { stroke: var(--color-line); stroke-width: 1; }
-
-/* — Die Inhaltskarte: der eigentliche Gegenstand —
- * Erste Fassung zeigte hier Tage, Zugzahl und Dateinamen. Franks Einwand (30.07.): „Ich
- * erfahre nichts über das Projekt, den Fortschritt oder worum es geht." Jetzt steht hier
- * Prosa aus den Akten — voller Titel, Absicht, letzte Züge —, und das Diagramm darunter
- * ist nur noch die Auswahl dafür. */
-.at-proc-lead {
-  font: 13.5px/1.65 var(--font-mono);
-  color: var(--color-fg-muted);
-  margin: 0.4rem 0 1.1rem;
-  max-width: 78ch;
+.atelier-surface .pr-ledger[data-gap] text { font-style: italic; opacity: 0.62; }
+.atelier-surface .pr-note {
+  font: 10.5px var(--at-font-record);
+  font-style: italic;
+  fill: var(--pr-ink);
+  letter-spacing: 0.02em;
 }
 
-.at-now {
-  border: 1px solid var(--color-line);
-  border-left: 4px solid var(--n-color, var(--color-line));
-  border-radius: 12px;
-  background: linear-gradient(180deg, color-mix(in oklab, var(--n-color, transparent) 7%, var(--color-panel)), var(--color-panel));
-  padding: 1.15rem 1.3rem 1.25rem;
+/* — the harbours — */
+.atelier-surface .pr-harbour-bg { fill: var(--pr-c, var(--pr-open)); opacity: 0.13; }
+.atelier-surface .pr-harbour-edge { fill: var(--pr-c, var(--pr-open)); }
+.atelier-surface .pr-harbour-n {
+  font: 600 15px var(--at-font-record);
+  fill: var(--pr-c, var(--pr-open));
+}
+.atelier-surface .pr-harbour-label {
+  font: 600 11px var(--at-font-record);
+  letter-spacing: 0.05em;
+  fill: var(--pr-ink-2);
+}
+
+/* Drawing in on load — movement as a hint about direction, not as decoration. Gated on
+   prefers-reduced-motion, and the open (dashed) bands are excluded because the animation's own
+   stroke-dasharray would overwrite their dashes and make a running line look like every other. */
+@media (prefers-reduced-motion: no-preference) {
+  .at-proc-svg .pr-band:not(.is-open),
+  .at-proc-svg .pr-tail {
+    stroke-dasharray: 1400;
+    animation: pr-draw 0.9s cubic-bezier(0.25, 0.8, 0.3, 1) forwards;
+  }
+  @keyframes pr-draw {
+    from { stroke-dashoffset: 1400; }
+    to { stroke-dashoffset: 0; }
+  }
+}
+
+/* ——— the readout (dataviz/Readout.astro) ————————————————————————————————————
+   A glance at the pointer. Deliberately `pointer-events: none` in the shell: it must never
+   become a target itself — that is exactly what the first draft got wrong, whose clickable
+   content ran away the moment you aimed at it. Everything clickable lives in the card. */
+.atelier-surface .dv-readout {
+  background: var(--at-badge-bg);
+  border: 1px solid var(--at-hairline);
+  border-left: 3px solid var(--pr-c, var(--at-graphite));
+  padding: 7px 10px;
+  font: 11.5px var(--at-font-record);
+  line-height: 1.5;
+  color: var(--at-ink);
+  box-shadow: 0 6px 22px rgb(0 0 0 / 0.18);
+}
+.atelier-surface .dv-readout[data-out='PUBLISH'] { border-left-color: var(--at-out-publish); }
+.atelier-surface .dv-readout[data-out='PUBLICATION_CANDIDATE'] { border-left-color: var(--at-out-gate); }
+.atelier-surface .dv-readout[data-out='ARCHIVE_AS_STUDY'] { border-left-color: var(--at-out-study); }
+.atelier-surface .dv-readout[data-out='KILL'] { border-left-color: var(--at-out-kill); }
+.atelier-surface .dv-readout .r-head {
+  display: block;
+  font-family: var(--at-font-display);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.25;
+  margin-bottom: 3px;
+}
+.atelier-surface .dv-readout .r-meta { display: block; color: var(--at-ink-2); }
+
+/* ——— the legend, as a filter (dataviz/LegendFilter.astro) ————————————————————
+   MULTI-select since WP6a: two outcomes can be shown together, which single-select could never
+   do — it could only ever isolate one. */
+.atelier-surface .dv-legend { gap: 0.4rem; margin: 0 0 0.6rem; }
+.atelier-surface .dv-legend-btn {
+  gap: 0.45rem;
+  padding: 0.28rem 0.62rem 0.28rem 0.48rem;
+  border: 1px solid var(--at-hairline);
+  border-radius: 999px;
+  background: var(--at-surface);
+  color: var(--at-ink-2);
+  font: 11.5px var(--at-font-record);
+  cursor: pointer;
+  transition: border-color 0.18s, color 0.18s, transform 0.18s, background 0.18s;
+}
+.atelier-surface .dv-legend-btn:hover {
+  color: var(--at-ink);
+  border-color: var(--at-graphite);
+  transform: translateY(-1px);
+}
+.atelier-surface .dv-legend-btn[aria-pressed='true'] {
+  color: var(--at-ink);
+  border-color: var(--dv-swatch, currentColor);
+  background: color-mix(in oklab, var(--dv-swatch, transparent) 12%, var(--at-surface));
+}
+.atelier-surface .dv-legend-swatch {
+  width: 9px;
+  height: 9px;
+  border-radius: 3px;
+  box-shadow: 0 0 0 2px var(--at-surface);
+  flex: none;
+}
+.atelier-surface .dv-legend-count { color: var(--at-ink); font-weight: 600; }
+
+/* ——— the card = the detail panel (dataviz/DetailPanel.astro) —————————————————
+   The card is the object and the sheet below it is the selector (Frank, 2026-07-30). Since
+   WP6a it is a DetailPanel, which is what gives it prev/next: the stepper walks every line in
+   the order the questions were opened, instead of a visitor clicking one and then hunting. */
+.atelier-surface .dv-panel {
+  border: 1px solid var(--at-hairline);
+  border-left: 4px solid var(--pr-c, var(--at-graphite));
+  background: var(--at-surface);
+  padding: 1.05rem 1.2rem 1.1rem;
+  margin: 0 0 0.5rem;
+  max-width: 86ch;
   transition: border-color 0.25s;
 }
-.n-kicker {
+.atelier-surface .dv-panel[data-out='PUBLISH'] { border-left-color: var(--at-out-publish); }
+.atelier-surface .dv-panel[data-out='PUBLICATION_CANDIDATE'] { border-left-color: var(--at-out-gate); }
+.atelier-surface .dv-panel[data-out='ARCHIVE_AS_STUDY'] { border-left-color: var(--at-out-study); }
+.atelier-surface .dv-panel[data-out='KILL'] { border-left-color: var(--at-out-kill); }
+
+.atelier-surface .dv-panel .n-kicker {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  margin: 0 0 0.45rem;
-  font: 11.5px var(--font-mono);
+  margin: 0 0 0.4rem;
+  font: 11.5px var(--at-font-record);
   letter-spacing: 0.03em;
-  color: var(--color-fg-muted);
-  text-transform: lowercase;
+  color: var(--at-ink-2);
 }
-.n-dot { width: 9px; height: 9px; border-radius: 3px; background: var(--n-color, var(--color-fg-faint)); flex: none; }
-.n-title {
-  margin: 0 0 0.6rem;
-  font: 600 1.35rem/1.28 var(--font-sans);
-  letter-spacing: -0.01em;
-  color: var(--color-fg);
-  max-width: 40ch;
+.atelier-surface .dv-panel .n-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 3px;
+  background: var(--pr-c, var(--at-graphite));
+  flex: none;
 }
-.n-about {
-  margin: 0 0 0.7rem;
-  font: 15px/1.62 var(--font-sans);
-  color: var(--color-fg);
+.atelier-surface .dv-panel[data-out='PUBLISH'] .n-dot { background: var(--at-out-publish); }
+.atelier-surface .dv-panel[data-out='PUBLICATION_CANDIDATE'] .n-dot { background: var(--at-out-gate); }
+.atelier-surface .dv-panel[data-out='ARCHIVE_AS_STUDY'] .n-dot { background: var(--at-out-study); }
+.atelier-surface .dv-panel[data-out='KILL'] .n-dot { background: var(--at-out-kill); }
+
+.atelier-surface .dv-panel .n-title {
+  margin: 0;
+  font: 600 1.3rem/1.24 var(--at-font-display);
+  color: var(--at-h1-ink);
+  max-width: 46ch;
+}
+.atelier-surface .dv-panel-body { margin: 0.6rem 0 0; }
+.atelier-surface .dv-panel .n-about {
+  margin: 0 0 0.65rem;
+  font: 14.5px/1.62 var(--at-font-display);
+  color: var(--at-ink);
   max-width: 68ch;
 }
-.n-verdict {
+/* AN 11px FLOOR ON EVERY HTML STRING IN THIS FILE (2026-08-01). Frank, on the entrance: "in
+   mini type nobody can read". The offender he named was the SVG ledger gutter and that is gone
+   from the entrance's figure entirely, but the same objection applies to the labels, buttons,
+   citations and provenance lines around it, which sat at 10 and 10.5px. They are all 11px now.
+   The remaining 10px values in this file are SVG `font:` declarations — those are USER UNITS in
+   a scaled viewBox, not screen pixels, and the sheet's own measures (GUTTER_CHARS in
+   src/lib/atelier/passage.ts is derived from the gutter's 10px advance) are calibrated to them. */
+.atelier-surface .dv-panel .n-verdict {
   margin: 0 0 0.7rem;
   padding-left: 0.9rem;
-  border-left: 2px solid var(--color-line);
-  font: 13.5px/1.6 var(--font-sans);
-  color: var(--color-fg-muted);
-  max-width: 66ch;
+  border-left: 2px solid var(--at-hairline);
+  font: 13px/1.6 var(--at-font-record);
+  color: var(--at-ink-2);
+  max-width: 68ch;
 }
-.n-moves { margin: 0.9rem 0 0.8rem; }
-.n-moves-h {
-  margin: 0 0 0.35rem;
-  font: 10.5px var(--font-mono);
+/* the closing ledger, in full — the gutter beside the sheet has room for one line of it */
+.atelier-surface .dv-panel .n-ledger {
+  margin: 0.7rem 0;
+  padding: 0.6rem 0.75rem;
+  background: var(--at-badge-bg);
+  border: 1px solid var(--at-hairline);
+  max-width: 76ch;
+}
+.atelier-surface .dv-panel .n-ledger-h {
+  margin: 0 0 0.3rem;
+  font: 11px var(--at-font-record);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--at-ink-2);
+}
+.atelier-surface .dv-panel .n-ledger-t {
+  margin: 0;
+  font: 12.5px/1.6 var(--at-font-record);
+  color: var(--at-ink);
+}
+.atelier-surface .dv-panel .n-ledger[data-gap] .n-ledger-t { font-style: italic; color: var(--at-ink-2); }
+.atelier-surface .dv-panel .n-ledger-src {
+  margin: 0.3rem 0 0;
+  font: 11px var(--at-font-record);
+  color: var(--at-ink-2);
+  opacity: 0.75;
+  overflow-wrap: anywhere;
+}
+.atelier-surface .dv-panel .n-ledger-src:empty { display: none; }
+
+.atelier-surface .dv-panel .n-moves { margin: 0.8rem 0 0; }
+.atelier-surface .dv-panel .n-moves-h {
+  margin: 0 0 0.3rem;
+  font: 11px var(--at-font-record);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--at-ink-2);
+}
+.atelier-surface .dv-panel .n-moves ul { margin: 0; padding: 0; list-style: none; }
+.atelier-surface .dv-panel .n-moves li {
+  font: 12.5px/1.7 var(--at-font-record);
+  color: var(--at-ink-2);
+  padding-left: 0.85rem;
+  border-left: 1px solid var(--at-hairline);
+}
+.atelier-surface .dv-panel .n-moves li:first-child {
+  color: var(--at-ink);
+  border-left-color: var(--pr-c, var(--at-graphite));
+}
+.atelier-surface .dv-panel .m-date { display: inline-block; min-width: 4.4em; color: var(--at-ink-2); opacity: 0.75; }
+
+.atelier-surface .dv-panel-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.4rem 1.2rem;
+  margin-top: 0.7rem;
+  font: 12px var(--at-font-record);
+  color: var(--at-ink-2);
+}
+.atelier-surface .dv-panel-foot .n-more {
+  color: var(--at-ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.atelier-surface .dv-panel-foot .n-more:hover { color: var(--at-thread); }
+.atelier-surface .dv-panel-nav { margin-top: 0.75rem; gap: 8px; }
+.atelier-surface .dv-panel-nav button,
+.atelier-surface .dv-tour-steps button {
+  background: var(--at-surface);
+  border: 1px solid var(--at-hairline);
+  border-radius: 2px;
+  padding: 3px 10px;
+  font: 11px var(--at-font-record);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--at-ink-2);
+  cursor: pointer;
+}
+.atelier-surface .dv-panel-nav button:hover,
+.atelier-surface .dv-tour-steps button:hover { color: var(--at-ink); border-color: var(--at-graphite); }
+
+/* ——— the table floor (dataviz/TableFallback.astro) ———————————————————————— */
+.atelier-surface .dv-table-fallback { margin: 0.8rem 0 1.4rem; }
+.atelier-surface .dv-table-fallback > summary {
+  cursor: pointer;
+  font: 11px var(--at-font-record);
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--color-fg-faint);
+  color: var(--at-ink-2);
+  padding: 7px 0;
+  border-top: 1px solid var(--at-hairline);
 }
-.n-moves ul { margin: 0; padding: 0; list-style: none; }
-.n-moves li {
-  font: 13px/1.75 var(--font-mono);
-  color: var(--color-fg-muted);
-  padding-left: 0.9rem;
-  border-left: 1px solid var(--color-line);
+.atelier-surface .dv-table-fallback > summary:hover { color: var(--at-ink); }
+.atelier-surface .dv-table { font: 11.5px var(--at-font-record); margin-top: 0.5rem; }
+.atelier-surface .dv-table th,
+.atelier-surface .dv-table td {
+  text-align: left;
+  padding: 0.35rem 0.6rem 0.35rem 0;
+  border-bottom: 1px solid var(--at-hairline);
+  color: var(--at-ink-2);
+  vertical-align: top;
 }
-.n-moves li:first-child { color: var(--color-fg); border-left-color: var(--n-color, var(--color-line)); }
-.m-date { display: inline-block; min-width: 4.2em; color: var(--color-fg-faint); }
-.n-more { margin: 0; font: 12.5px var(--font-mono); }
-.n-more a { color: var(--color-fg); text-decoration: underline; text-underline-offset: 3px; }
-.n-more a:hover { color: var(--n-color, var(--color-fg)); }
-
-.at-proc-yield {
-  margin: 0.85rem 0 0.2rem;
-  font: 11.5px/1.6 var(--font-mono);
-  color: var(--color-fg-faint);
-}
-
-/* — Tabelle (Barrierefreiheit + zum Nachrechnen) — */
-.at-proc-table { margin-top: 0.9rem; }
-.at-proc-table summary { font: 11.5px var(--font-mono); color: var(--color-fg-faint); cursor: pointer; }
-.at-proc-table summary:hover { color: var(--color-fg); }
-.at-proc-table table { width: 100%; border-collapse: collapse; margin-top: 0.6rem; font: 11.5px var(--font-mono); }
-.at-proc-table th, .at-proc-table td { text-align: left; padding: 0.35rem 0.6rem 0.35rem 0; border-bottom: 1px solid var(--color-line); color: var(--color-fg-muted); }
-.at-proc-table th { color: var(--color-fg-faint); font-weight: 600; }
-.at-proc-table td:first-child { color: var(--color-fg); }
-.at-proc-prov { font: 10.5px/1.6 var(--font-mono); color: var(--color-fg-faint); margin: 0.7rem 0 0; max-width: 70ch; }
-
-/* Einzeichnen beim Laden — Bewegung als Hinweis auf Richtung, nicht als Dekor. */
-@media (prefers-reduced-motion: no-preference) {
-  .at-proc-svg .pr-band:not(.is-open), .at-proc-svg .pr-tail {
-    stroke-dasharray: var(--len, 1200);
-    stroke-dashoffset: var(--len, 1200);
-    animation: pr-draw 0.9s cubic-bezier(0.25, 0.8, 0.3, 1) forwards;
-    animation-delay: var(--delay, 0s);
-  }
-  @keyframes pr-draw { to { stroke-dashoffset: 0; } }
+.atelier-surface .dv-table th { color: var(--at-ink-2); font-weight: 600; opacity: 0.8; }
+.atelier-surface .dv-table td:first-child { color: var(--at-ink); }
+/* the closing-cost column carries whole sentences — give it room and let it wrap */
+.atelier-surface .dv-table td:last-child { max-width: 56ch; }
+.atelier-surface .dv-prov {
+  font: 11px/1.6 var(--at-font-record);
+  color: var(--at-ink-2);
+  opacity: 0.85;
+  max-width: 96ch;
+  margin: 0.6rem 0 0;
+  overflow-wrap: anywhere;
 }
 
-/* „läuft noch": gestrichelt statt blass — ein Zustand, keine Abwertung. Steht bewusst NACH
- * dem Einzeichen-Effekt: dessen stroke-dasharray würde die Strichelung sonst überschreiben,
- * und die laufende Linie sähe aus wie jede andere. Deshalb nimmt die Animation oben die
- * offenen Bänder auch aus. */
-.at-proc-svg .pr-band.is-open { stroke-dasharray: 7 4; }
+/* ——— the guided tour (dataviz/Tour.astro) ———————————————————————————————————
+   SINGLE COLUMN, on purpose, and against the engine's own two-column default: The Passage is a
+   wide sheet whose right-hand column is running text (the ledger gutter). At half of 1440px its
+   ten-pixel record type lands at about five — i.e. the one thing this figure was built to show
+   stops being readable. So the sheet is pinned above like a drawing board and the account runs
+   underneath it. The pinned height is kept under half the viewport so the scene the observer
+   band activates (Tour.astro observes at the viewport's middle) is never the one hidden behind
+   the board. */
+.atelier-surface .dv-tour {
+  --dv-tour-gap: 1.4rem;
+  /* flush under the site's own fixed header (40px): at 3.5rem a sixteen-pixel strip of scrolling
+     scene text ran between the header and the board */
+  --dv-tour-sticky-top: 2.5rem;
+  --dv-tour-scroll-margin: 52vh;
+  border-top: 1px solid var(--at-hairline);
+  padding-top: 1.1rem;
+  margin: 1.6rem 0 2rem;
+  outline: none;
+}
+.atelier-surface .dv-tour-body:has(.dv-tour-figure:not([hidden])) {
+  grid-template-columns: minmax(0, 1fr);
+}
+/* THE BOARD BUDGETS ITSELF (rewritten 2026-08-01, Frank: "the visualisation is not tall enough —
+   you cannot see everything").
+   What went wrong is worth stating, because the shape of the fix follows from it: the board's
+   height was capped at 46vh while the DRAWING inside it was capped, independently, at 30vh. The
+   two numbers knew nothing about each other and nothing about the chrome between them — the key
+   line, the legend, the card with its stepper and its foot came to some 250px, so at 1440×900 the
+   board's content wanted 467px inside a 414px box and the bottom 54px of the sheet were simply
+   cut off by `overflow: hidden` (109px on a 780px-tall window: two whole rows, unreachable — the
+   box does not scroll, by design). The drawing was BOTH clipped and shrunk.
+   Now the board is a column and the sheet takes what is left after the chrome, measured rather
+   than guessed, with the SVG's own preserveAspectRatio="xMidYMid meet" fitting the drawing into
+   whatever that turns out to be. Consequence to keep in mind when editing: the drawing can only
+   ever get SMALLER here, never clipped — which is the right failure mode for a figure whose
+   record also stands, whole, in the table below. */
+.atelier-surface .dv-tour-figure:not([hidden]) {
+  display: flex;
+  flex-direction: column;
+  /* The bottom EDGE is the invariant, not the height: Tour.astro activates a scene when its box
+     crosses the middle of the viewport, so a board reaching past that line is pinned over the very
+     scene it illustrates and the drawing runs one step ahead of the words. Written as the geometry
+     it actually is — half the viewport, minus wherever the board starts — instead of a 46vh that
+     happened to land near it. */
+  max-height: calc(50vh - var(--dv-tour-sticky-top));
+  /* the last-resort net only: with the column below, nothing should reach it */
+  overflow: hidden;
+  background: var(--at-surface);
+  border-bottom: 1px solid var(--at-hairline);
+  /* padding, not margin: the figure's own top margin would COLLAPSE through this box and the
+     board would stick with a transparent strip above it, through which the scenes scrolled */
+  padding: 0.5rem 0 0.5rem;
+  z-index: 2;
+}
+/* The closing scene shows the WHOLE sheet — every row, not the eight a band holds — and it is the
+   LAST scene, so there is no next one for the drawing to run ahead of and the board may reach past
+   the middle line here. Without this the whole sheet had to fit the band's budget and rendered at
+   0.53 scale: row labels at six pixels, a picture of a sheet rather than a sheet. */
+.atelier-surface .dv-tour-figure:not([hidden]):has(.at-proc-svg[data-view='whole']) {
+  max-height: calc(64vh - var(--dv-tour-sticky-top));
+}
+/* Two rows of chrome, side by side with the card, instead of stacked above it: the key line and
+   the legend used to cost the drawing a further 56px of height while sitting in a column of empty
+   paper. Same DOM, same order for a screen reader (grid areas move boxes, not markup) — the
+   drawing simply gets those pixels back. */
+.atelier-surface .dv-tour-figure .at-proc {
+  /* all four sides: the figure's own 2rem BOTTOM margin used to sit inside the board's budget and
+     cost the drawing 32px of height for nothing — only margin-top was being reset */
+  margin: 0;
+  flex: 1 1 auto;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(11rem, 21rem);
+  grid-template-rows: auto auto minmax(0, 1fr);
+  grid-template-areas:
+    'card key'
+    'card legend'
+    'sheet sheet';
+  column-gap: 1.4rem;
+}
+/* On the board, a scene shows the BAND around the line it is talking about (the figure re-aims its
+   own viewBox — see ProcessFigure's apply), which is what keeps the ledger gutter at its designed
+   size. The closing scene lifts both the filter and the crop. */
+.atelier-surface .dv-tour-figure .at-proc-figure {
+  grid-area: sheet;
+  margin: 0.4rem 0 0;
+  min-height: 0;
+}
+.atelier-surface .dv-tour-figure .at-proc-scroll,
+.atelier-surface .dv-tour-figure .at-proc-scroll > div { height: 100%; }
+/* height, not max-height: the sheet is given the row the grid left for it, and fits itself into it */
+.atelier-surface .dv-tour-figure .at-proc-svg { height: 100%; max-height: none; }
+/* The card keeps its head, its position and its stepper on the board; its long prose does not,
+   because the scenes running underneath ARE that prose, and a pinned column that repeats the
+   paragraph beside it pushes the drawing off its own board. Outside a tour the card is whole. */
+.atelier-surface .dv-tour-figure .dv-panel {
+  grid-area: card;
+  padding: 0.7rem 0.9rem 0.75rem;
+  margin-bottom: 0;
+}
+.atelier-surface .dv-tour-figure .dv-panel .n-about,
+.atelier-surface .dv-tour-figure .dv-panel .n-verdict,
+.atelier-surface .dv-tour-figure .dv-panel .n-ledger,
+.atelier-surface .dv-tour-figure .dv-panel .n-moves { display: none; }
+.atelier-surface .dv-tour-figure .dv-panel .n-title { font-size: 1.05rem; }
+.atelier-surface .dv-tour-figure .dv-panel-body { margin: 0; }
+.atelier-surface .dv-tour-figure .dv-panel-nav { margin-top: 0.45rem; }
+.atelier-surface .dv-tour-figure .at-proc-key { grid-area: key; margin: 0 0 0.35rem; }
+.atelier-surface .dv-tour-figure .dv-legend { grid-area: legend; align-content: start; margin: 0; }
+.atelier-surface .dv-tour-figure .at-proc-hint { display: none; }
+.atelier-surface .dv-tour-title {
+  font-family: var(--at-font-display);
+  font-size: clamp(24px, 3vw, 38px);
+  font-weight: 600;
+  line-height: 1.14;
+  color: var(--at-h1-ink);
+  margin: 0 0 0.3em;
+  max-width: 34ch;
+}
+.atelier-surface .dv-tour-standfirst {
+  font: 14.5px/1.62 var(--at-font-record);
+  color: var(--at-ink-2);
+  max-width: 78ch;
+  margin: 0 0 0.9rem;
+}
+.atelier-surface .dv-scene { padding: 7vh 0; max-width: 66ch; }
+.atelier-surface .dv-scene:first-child { padding-top: 3vh; }
+.atelier-surface .dv-scene-kicker {
+  font: 11px var(--at-font-record);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--at-ink-2);
+  margin: 0 0 5px;
+}
+.atelier-surface .dv-scene[aria-current='step'] .dv-scene-kicker { color: var(--at-out-kill); }
+.atelier-surface .dv-scene-heading {
+  font-family: var(--at-font-display);
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.22;
+  color: var(--at-ink);
+  margin: 0 0 8px;
+  max-width: 32ch;
+}
+.atelier-surface .dv-scene-lead {
+  font: 14.5px/1.68 var(--at-font-record);
+  color: var(--at-ink);
+  margin: 0 0 12px;
+}
+/* A quote is set as the record sets it: the serif, indented behind a red-pencil rule — the one
+   colour this practice reserves for a swerve, here for the practice quoting itself. */
+.atelier-surface .dv-scene-quote {
+  border-left: 2px solid var(--at-red);
+  margin: 12px 0;
+  padding: 2px 0 2px 15px;
+}
+.atelier-surface .dv-scene-quote p {
+  font: 15px/1.6 var(--at-font-display);
+  color: var(--at-ink);
+  margin: 0;
+}
+.atelier-surface .dv-scene-quote footer {
+  font: 11px var(--at-font-record);
+  color: var(--at-ink-2);
+  margin-top: 6px;
+  /* every citation here is a repo path, and a path offers a browser no break opportunity of its
+     own — at 390px they pushed the page wider than the viewport. The paths stay complete and
+     unabbreviated (they are the point of the citation), they just wrap. */
+  overflow-wrap: anywhere;
+}
+.atelier-surface .dv-scene-still { margin: 14px 0 0; }
+.atelier-surface .dv-scene-still svg { width: 100%; height: auto; max-height: 44vh; display: block; }
+.atelier-surface .dv-tour-steps { margin: 12px 0 4px; }
+.atelier-surface .dv-tour-jump { font: 11px var(--at-font-record); }
+.atelier-surface .dv-tour-jump a { color: var(--at-ink-2); text-decoration: none; }
+.atelier-surface .dv-tour-jump a[aria-current='true'] { color: var(--at-ink); text-decoration: underline; }
 
+/* NARROW SCREENS GIVE THE BOARD BACK. A phone has no room to pin a sheet this wide above a column
+   of prose — measured at 390px the board held the key line and the card and clipped the drawing
+   away entirely, which is the one thing it exists to show. So below 900px the live column is
+   dropped and each scene's own BUILD-TIME STILL is shown inline instead (the same cropped,
+   filtered, annotated render, from the same builder) — the presentation the no-JS floor already
+   uses, here because it is simply the better one at this width. The stills keep their full width
+   and scroll sideways rather than shrinking the ledger gutter out of legibility. */
+@media (max-width: 900px) {
+  /* `:not([hidden])` here only to MATCH the selector the board's own display is set on above —
+     without it this rule is one class less specific and the board reappears at 390px, drawing at
+     0.5 scale, which is exactly the state this media query exists to prevent. */
+  .atelier-surface .dv-tour-figure:not([hidden]) { display: none; }
+  /* The stills are un-hidden by the composition's own script, not from here: Tailwind v4's
+     preflight ships `[hidden] { display: none !important }` inside a CASCADE LAYER, and a layered
+     !important declaration outranks an unlayered one no matter how specific — so CSS cannot
+     re-show them at all. The script removes the attribute instead, which is also the correct
+     answer for assistive technology: the still becomes visible AND readable, rather than painted
+     over a still that is still marked hidden. */
+  .atelier-surface .dv-scene-still { overflow-x: auto; }
+  .atelier-surface .dv-scene-still svg { min-width: 900px; max-height: none; }
+  .atelier-surface .dv-scene { padding: 4vh 0; }
+}
 @media (max-width: 640px) {
-  .at-proc-svg { min-height: 320px; }
-  .at-proc-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-  .at-proc-scroll > svg { min-width: 640px; }
+  /* the gutter is running text — below this width the sheet scrolls rather than shrinking its
+     record type past legibility */
+  .at-proc-scroll { -webkit-overflow-scrolling: touch; }
+  .at-proc-scroll > div > svg { min-width: 1080px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .at-proc *, .atelier-surface .at-proc-svg *, .atelier-surface .dv-panel, .atelier-surface .dv-legend-btn {
+    transition: none !important;
+    animation: none !important;
+  }
 }

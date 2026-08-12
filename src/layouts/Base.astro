@@ -66,14 +66,20 @@ const workLd = work ? workJsonLd(work, locale, canonical) : null
 ---
 
 <!doctype html>
-<html lang={locale} data-skin="mono">
+{/* data-theme carries a build-time default so the promise "never absent" also holds
+    WITHOUT JavaScript: the practice surfaces define their tokens only under
+    [data-theme='light'|'dark'], and an unstamped page rendered their SVGs black-on-black
+    (WP8 finding, 2026-08-01). The anti-FOUC script below still resolves the real theme
+    before first paint and overrides this default. */}
+<html lang={locale} data-skin="mono" data-theme="dark">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
     <meta name="theme-color" content="#0a0a0a" />
     <script is:inline>
       // Anti-FOUC + auto theme. Resolve the theme BEFORE first paint and stamp it
-      // EXPLICITLY on <html> (data-theme is always 'light' or 'dark', never absent) so
+      // EXPLICITLY on <html> (data-theme is always 'light' or 'dark' — the static markup
+      // ships a dark default for the no-JS case, this script replaces it pre-paint) so
       // component styles that key off [data-theme='dark'] / [data-theme='light'] stay in
       // lockstep with the real page. That lockstep is what prevents dark-grey-on-black
       // works (e.g. transparent, theme-adaptive pieces like The Closing Loop).
@@ -134,11 +140,18 @@ const workLd = work ? workJsonLd(work, locale, canonical) : null
     {/* Cinematic vignette over everything (decorative, never blocks input). */}
     <div class="vignette" aria-hidden="true"></div>
 
-    {/* Lenis smooth scroll — site-wide nicety, disabled for reduced-motion. */}
+    {/* Lenis smooth scroll — site-wide nicety, disabled for reduced-motion.
+        allowNestedScroll is NOT optional here (Frank's finding 2026-07-31: the score's table
+        would not scroll): Lenis intercepts every wheel event and drives the page with it, so
+        without this every inner scroll container on the site is dead to the wheel — the score
+        table, the nav menu on a small screen, the reference modal. Programmatic scrolling kept
+        working, which is why it read as a CSS bug and was not. With the flag on, Lenis checks
+        whether the pointer sits inside something that can actually scroll in that direction and
+        leaves that gesture to the browser. */}
     <script>
       import Lenis from 'lenis'
       if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        const lenis = new Lenis({ duration: 1.1, smoothWheel: true })
+        const lenis = new Lenis({ duration: 1.1, smoothWheel: true, allowNestedScroll: true })
         const raf = (time: number) => { lenis.raf(time); requestAnimationFrame(raf) }
         requestAnimationFrame(raf)
       }

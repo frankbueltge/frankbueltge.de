@@ -1,0 +1,181 @@
+---
+// The station sheet (Level 1 of the pyramid, 2026-08-12) — design handoff option 3a.
+//
+// ONE condensed page per room, replacing what each practice used to spread across six to eight:
+// index, history, apparatus, tour, and the standalone sheets. Status, the running work, the
+// practice's own figure, the last few lines of its record, and four doors down to Level 2.
+//
+// The frame is identical for all four rooms ON PURPOSE. It is the same argument /ecology's anatomy
+// page made in its own way: the practices share no method and no visual grammar, so the sheet
+// around them is held constant, and what a reader notices between the Atelier's line map and the
+// Studio's stage floor is the practices' difference rather than the layout's. Everything that
+// differs — colour, vocabulary, and above all the figure — arrives through the slots.
+import { getRelativeLocaleUrl } from 'astro:i18n'
+import type { Locale } from '@/lib/site'
+import { PYRAMID } from '@/config/ecology-pyramid-wording'
+import { STATIONS, type StationId } from '@/lib/ecology/pyramid/model'
+import type { LogEntry, StatusRow, Door } from '@/lib/ecology/pyramid/station'
+import '@/styles/ecology-pyramid.css'
+import '@/styles/hub-triptych.css'
+
+interface LedeLink {
+  label: string
+  href: string
+}
+
+interface Props {
+  id: StationId
+  /** the sheet's own headline — the practice's one-liner, in its own words */
+  h1: string
+  sub: string
+  kicker: string
+  status: StatusRow[]
+  /** the practice's current lede: what it has in hand right now */
+  lede: {
+    kicker: string
+    title: string
+    teaser: string | null
+    /** the record's own closing line about it — a locked verdict, a status, a stand */
+    note?: string | null
+    noteLabel?: string
+    links: LedeLink[]
+  } | null
+  log: LogEntry[]
+  logMore: { label: string; href: string }
+  doors: Door[]
+  /** two figures side by side, or one across the full width */
+  figureColumns?: 1 | 2
+}
+
+const { id, h1, sub, kicker, status, lede, log, logMore, doors, figureColumns = 2 } = Astro.props
+
+const locale = (Astro.currentLocale ?? 'en') as Locale
+const url = (href: string) => (href.startsWith('http') ? href : getRelativeLocaleUrl(locale, href))
+
+const W = PYRAMID.station
+const here = STATIONS.find((s) => s.id === id)!
+const siblings = STATIONS.filter((s) => s.id !== id)
+const voice = `eco-voice-${here.voice}`
+---
+
+<main id="main" class={`eco hub-voices flex-1 ${voice}`} data-eco data-station={id}>
+  <div class="eco-wrap">
+    {/* ── where you are, and where else you could be ─────────────────────────────────────── */}
+    <nav class="eco-strip" aria-label="the research ecology">
+      <span>
+        <a href={url(W.crumbHome.href)}>{W.crumbHome.label}</a>
+        <span class="eco-crumb-sep">→</span>
+        <span class="eco-crumb-here">{here.name.toLowerCase()}</span>
+        <span class="eco-crumb-rule">|</span>
+        {siblings.map((s, i) => (
+          <>
+            {i > 0 && ' · '}
+            <a href={url(s.href)}>{s.name.toLowerCase()}</a>
+          </>
+        ))}
+      </span>
+      <span>{W.crumbStrip}</span>
+    </nav>
+
+    {/* ── who lives here, and how the station stands ─────────────────────────────────────── */}
+    <header class="eco-station-head">
+      <div>
+        <p class="eco-station-kicker"><span class="eco-led"></span>{kicker}</p>
+        <h1>{h1}</h1>
+        <p class="eco-station-sub">{sub}</p>
+      </div>
+      <div class="eco-panel eco-status">
+        <p class="eco-status-label">{W.statusLabel}</p>
+        <dl>
+          {status.map((row) => (
+            <div class="eco-status-row">
+              <dt>{row.key}</dt>
+              <dd class={row.live ? 'eco-live' : undefined}>{row.value}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </header>
+
+    {/* ── the practice's own figure — the one thing this frame does not hold constant ──────
+        `id="figure"` is a link target, not decoration: the three retired tours 301 to it
+        (public/_redirects), and the doors point at it, because the figure is what those tours
+        walked a reader through. */}
+    <div class="eco-figures" id="figure" data-cols={String(figureColumns)}>
+      <slot name="figure-main" />
+      <slot name="figure-side" />
+    </div>
+
+    {/* ── what it has in hand, and what its record last said ─────────────────────────────── */}
+    <div class="eco-lede">
+      {lede ? (
+        <article class="eco-panel eco-lede-card">
+          <p class="eco-lede-kicker">{lede.kicker}</p>
+          <h2>{lede.title}</h2>
+          {lede.teaser && <p class="eco-lede-teaser">{lede.teaser}</p>}
+          {/* The note is dropped when it only repeats the title: for a practice whose running work
+              IS its newest work, the two rows carry the same words, and a card that says a thing
+              twice reads as a template rather than as a record. */}
+          {lede.note && lede.note !== lede.title && (
+            <p class="eco-lede-verdict">
+              {lede.noteLabel ?? ''}<b>{lede.note}</b>
+            </p>
+          )}
+          <div class="eco-lede-links">
+            {lede.links.map((link) => (
+              <a href={url(link.href)}>{link.label}</a>
+            ))}
+          </div>
+        </article>
+      ) : (
+        <p class="eco-panel eco-lede-card eco-absent">{W.absent}</p>
+      )}
+
+      <div class="eco-panel eco-log">
+        <p class="eco-log-label">{W.lastLanded}</p>
+        <ul>
+          {log.length === 0 ? (
+            <li><span class="eco-log-entry eco-absent">{W.absent}</span></li>
+          ) : (
+            log.map((entry) => (
+              <li>
+                {entry.href ? (
+                  <a href={url(entry.href)}>
+                    <span class="eco-log-meta">{entry.date}{entry.marker ? ` · ${entry.marker}` : ''}</span>
+                    <span class="eco-log-line">{entry.line}</span>
+                  </a>
+                ) : (
+                  <span class="eco-log-entry">
+                    <span class="eco-log-meta">{entry.date}{entry.marker ? ` · ${entry.marker}` : ''}</span>
+                    <span class="eco-log-line">{entry.line}</span>
+                  </span>
+                )}
+              </li>
+            ))
+          )}
+        </ul>
+        <a class="eco-log-more" href={url(logMore.href)}>{logMore.label}</a>
+      </div>
+    </div>
+
+    {/* ── the way down to Level 2 ────────────────────────────────────────────────────────── */}
+    <ul class="eco-doors">
+      {doors.map((door) => (
+        <li>
+          <a class="eco-door" href={url(door.href)}>
+            <span class="eco-door-title"><span>{door.title}</span><span>→</span></span>
+            <span class="eco-door-sub">{door.sub}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+    <p class="eco-seed">
+      {W.doorsLead} <a href={url(W.seed.href)}>{W.seed.label}</a>
+    </p>
+
+    <div class="eco-foot">
+      <span>{id === 'middle' ? W.footLeftMiddle : W.footLeft(here.name)}</span>
+      <span>{W.footRight}</span>
+    </div>
+  </div>
+</main>

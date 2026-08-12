@@ -1,0 +1,93 @@
+---
+// /encounters/register — the Middle's Level-2 register: every crossing, and every joint inquiry.
+//
+// This page exists because the v3 rebuild removed one without replacing it. The route /encounters
+// used to BE the list of crossings; it became the Middle's station sheet, which shows the three
+// newest — and the older ones were left with no way in at all. A house whose whole claim is that
+// the record is public cannot reach its own record only through its three most recent rows.
+//
+// Every row links to the crossing's OWN committed record in the research-ecology repository,
+// because that is where a crossing lives. The site mirrors the register, not the fixtures; a row
+// pointing at a site route that was never built is worse than a row pointing outward, which is the
+// mistake this page also repairs (four such links shipped on 2026-08-12 and 404'd).
+import Page from '@/layouts/Page.astro'
+import RegisterSheet from '@/components/ecology/RegisterSheet.astro'
+import type { RegisterRow } from '@/components/ecology/RegisterSheet.astro'
+import { buildCrossings } from '@/lib/ecology/pyramid/figures'
+import { currentEntrance, shortEncounterSlug } from '@/lib/begegnungen'
+import register from '@/data/begegnungen/register.json'
+import inquiries from '@/data/begegnungen/joint-inquiries.json'
+
+interface RegisterEntry {
+  encounter_id?: string
+  title?: string
+  record_url?: string
+  status?: { as_of?: string }
+  participants?: { id?: string }[]
+}
+
+interface InquiryEntry {
+  inquiry_id?: string
+  title?: string
+  status?: string
+  updated_at?: string
+  created_at?: string
+  record_url?: string
+}
+
+const entries = register as RegisterEntry[]
+const crossings = buildCrossings(entries)
+const byId = new Map(entries.map((e) => [e.encounter_id ?? '', e]))
+
+const LANE_NAME: Record<string, string> = {
+  ulysses: 'the atelier',
+  meridian: 'the field',
+  ensemble: 'the studio',
+  plenum: 'the plenum',
+}
+
+// Exactly one crossing has a page of its own on this site — the current entrance, which
+// /encounters/[slug] builds. That page was left unreachable when the station sheet replaced the
+// old index, so the register links it here, and every other crossing goes to its own committed
+// record. Prefer the site's own page where one exists: a reader should not be sent to a
+// repository for something this site actually renders.
+const ownPage = new Map([[currentEntrance.encounter_id, `/encounters/${shortEncounterSlug(currentEntrance.encounter_id)}/`]])
+
+// Crossings first, newest dated at the top; the ones the register leaves undated sort last and say
+// so rather than being given a date to sort by.
+const crossingRows: RegisterRow[] = [...crossings]
+  .sort((a, b) => (b.date ?? '').localeCompare(a.date ?? ''))
+  .map((c) => ({
+    date: c.date ?? 'undated',
+    marker: c.id.split('-').slice(0, 3).join('-'),
+    move: 'crossing',
+    line: `${c.title} — ${c.lanes.map((l) => LANE_NAME[l]).join(' · ')}`,
+    href: ownPage.get(c.id) ?? byId.get(c.id)?.record_url,
+  }))
+
+const inquiryRows: RegisterRow[] = (inquiries as InquiryEntry[])
+  .sort((a, b) => (b.updated_at ?? '').localeCompare(a.updated_at ?? ''))
+  .map((i) => ({
+    date: i.updated_at ?? i.created_at ?? 'undated',
+    marker: i.inquiry_id ?? null,
+    move: 'joint inquiry',
+    line: `${i.title ?? 'untitled'} — ${(i.status ?? '').toLowerCase()}`,
+    href: i.record_url,
+  }))
+
+const rows = [...crossingRows, ...inquiryRows]
+---
+
+<Page
+  title="The Middle — the crossings register | Frank Bültge"
+  description="Every recorded crossing between the practices of the research ecology, and every joint inquiry, each row linking to its own committed record."
+>
+  <RegisterSheet
+    id="middle"
+    register="crossings"
+    title="the crossings — everything that passed between the practices"
+    span="Every recorded encounter and every joint inquiry. Each row links to its own committed record in the ecology's repository, which is where a crossing lives — this site mirrors the register, it does not hold the fixtures."
+    rows={rows}
+    source="src/data/begegnungen/register.json · src/data/begegnungen/joint-inquiries.json"
+  />
+</Page>

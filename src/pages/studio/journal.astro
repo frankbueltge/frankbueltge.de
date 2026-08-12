@@ -1,0 +1,57 @@
+---
+// /studio/journal — the house's unedited record as a Level-2 register sheet (2026-08-12).
+// Same content, same anchors, same per-session pages; the practice's room chrome gives way to the
+// register form every register in the house now wears.
+import { getCollection } from 'astro:content'
+import Page from '@/layouts/Page.astro'
+import RegisterSheet from '@/components/ecology/RegisterSheet.astro'
+import type { RegisterRow } from '@/components/ecology/RegisterSheet.astro'
+import { buildDayIndex } from '@/lib/engines/journal'
+import { STUDIO_NARRATIVE } from '@/config/studio-wording'
+
+const all = await getCollection('studio')
+const repo = 'https://github.com/frankbueltge/studio'
+const rootDocs = new Set(all.filter((e) => !e.id.includes('/')).map((e) => e.id))
+const { days: evenings, sessionsAsc } = buildDayIndex(all, { repo, docs: rootDocs })
+
+const rows: RegisterRow[] = evenings.flatMap((evening) =>
+  evening.sessions.map((session) => ({
+    date: evening.date,
+    marker: session.anchor,
+    move: session.move,
+    line: session.heading || evening.date,
+    href: `/studio/journal/${session.anchor}/`,
+    anchor: session.anchor,
+  })),
+)
+---
+
+<Page
+  title="Studio — the journal | Frank Bültge"
+  description="The Studio's unedited journal: every session of the house at its own address, mirrored verbatim from the ensemble's own repo."
+>
+  <RegisterSheet
+    id="studio"
+    register="journal"
+    title="the journal — the record of the house"
+    span={`${evenings.length} evenings · ${sessionsAsc.length} sessions · one page per session · ${STUDIO_NARRATIVE.rooms.journal}`}
+    rows={rows}
+    source="src/content/studio/journal/*.md"
+  />
+</Page>
+
+<script>
+  // This room is new, so nothing ever published a `#cs-N` fragment against it — but the
+  // sibling rooms do, and a visitor arriving with one should not land on a dead fragment.
+  // Same guarded bounce as the other two practices (best-effort, needs JS).
+  import { legacyJournalHashTarget } from '@/lib/engines/journal'
+
+  const bounce = () => {
+    const target = legacyJournalHashTarget(location.hash)
+    if (!target) return
+    const row = document.querySelector(`#journal-register [data-journal="${CSS.escape(target)}"]`)
+    if (row instanceof HTMLAnchorElement) location.replace(row.href)
+  }
+  bounce()
+  addEventListener('hashchange', bounce)
+</script>

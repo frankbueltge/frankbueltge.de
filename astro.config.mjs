@@ -74,9 +74,14 @@ export default defineConfig({
       // ausschließen. Mit dem Rückbau auf eine kuratierte Liste (docs/design/
       // 2026-07-27-register-rueckbau-und-scouts.md) entfallen beide — es gibt nur noch
       // /datasets selbst, und damit nichts mehr zu filtern.
+      // /werke is a redirect page (it 301s to /experiments), and a redirect listed in a sitemap
+      // is a URL submitted for indexing that can never be indexed — Search Console reports it as
+      // "Page with redirect" and it costs crawl budget for nothing. Found 2026-08-12 while
+      // auditing orphans after the ecology v3 rebuild.
       filter: (page) =>
         !/\/protocol\/\d{4}-\d{2}-\d{2}(\/|$)/.test(page) &&
-        !/\/steuerzentrale(\/|$)/.test(page),
+        !/\/steuerzentrale(\/|$)/.test(page) &&
+        !/\/werke\/?$/.test(page),
     }),
     mdx(),
   ],

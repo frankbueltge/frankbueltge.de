@@ -16,7 +16,7 @@
 // härteste Gebrauchsbeleg überhaupt — härter als ein Zitat, denn er läuft jede Nacht.
 // Die Begründung ist nicht behauptet, sie ist in Betrieb.
 //
-// Erzeugt von `pipelines/atlas-scout/src/atlas_scout/holdings.py`, committet.
+// Erzeugt von `pipelines/atlas-scout/src/atlas_scout/experiments.py`, committet.
 import eintraegeRaw from '@/data/register/datasets.json'
 
 export interface RegisterEntry {

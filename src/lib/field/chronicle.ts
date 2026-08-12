@@ -70,9 +70,25 @@ export type UpstreamEntry = z.infer<typeof upstreamEntrySchema>
  * so the pair, not the number alone, identifies a session. Anchors mirror the site's
  * uniqueSessionAnchor: first claimant keeps `cs-N`, later ones get a day suffix.
  */
+
+// The engines name journal files freely — Ensemble writes `2026-07-31-session-51.md`,
+// Meridian writes `2026-07-31.md`. A derived journal_id must resolve against the files
+// that actually exist in the mirror, not assume the bare-date convention (this broke the
+// studio integrate on 2026-07-31 and blamed the engine for a site-side assumption).
+const JOURNAL_FILES = Object.keys(
+  import.meta.glob('/src/content/field/journal/*.md'),
+).map((path) => path.split('/').pop() ?? '')
+
+export function resolveJournalId(date: string, files: string[] = JOURNAL_FILES): string {
+  if (files.includes(date + '.md')) return 'journal/' + date + '.md'
+  const match = files.filter((f) => f.startsWith(date)).sort()[0]
+  return match ? 'journal/' + match : 'journal/' + date + '.md'
+}
+
 export function mergeChronicle(
   curated: ChronicleEntry[],
   upstream: UpstreamEntry[],
+  journalFiles?: string[],
 ): ChronicleEntry[] {
   const merged = [...curated].sort((a, b) => a.seq - b.seq)
   const covered = new Set(merged.map((e) => `${e.collective_session}|${e.date}`))
@@ -99,7 +115,7 @@ export function mergeChronicle(
       works: u.works,
       verdict: u.verdict,
       fail: u.verdict === 'fail',
-      journal_id: `journal/${u.date}.md`,
+      journal_id: resolveJournalId(u.date, journalFiles),
       anchor,
       source: 'upstream',
     })

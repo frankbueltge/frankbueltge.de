@@ -23,6 +23,11 @@ export type Project = {
 }
 
 export const projects: Project[] = [
+  // The research ecology is deliberately NOT in this register (Frank, 2026-08-09, late):
+  // its /work/<slug> card page was an interstitial between the menu and the project's real
+  // page — removed with the menu entry, /work/research-ecology 301s to /ecology. The nav's
+  // "Research projects" section links front doors (/ecology, /machine-attention, /atlas),
+  // never cards. The 2026-07-31 entry lives in git history.
   {
     slug: 'data-snack',
     name: 'data-snack.com',
@@ -51,7 +56,7 @@ export const projects: Project[] = [
     },
     tech: ['Astro', 'Svelte', 'MDX', 'Firestore', 'Vercel AI SDK'],
     badge: 'live',
-    order: 1,
+    order: 2,
   },
   {
     slug: 'datavism',
@@ -75,7 +80,7 @@ export const projects: Project[] = [
     },
     tech: ['Astro', 'Svelte', 'TypeScript', 'Tailwind CSS', 'Firebase', 'Gemini'],
     badge: 'dev',
-    order: 2,
+    order: 3,
   },
   {
     slug: 'atlas',
@@ -98,7 +103,7 @@ export const projects: Project[] = [
     },
     tech: ['Astro', 'TypeScript', 'Multi-Agent Research'],
     badge: 'live',
-    order: 3,
+    order: 4,
   },
 ]
 

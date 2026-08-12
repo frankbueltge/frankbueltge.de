@@ -104,9 +104,13 @@ def als_eintrag(kandidat: dict) -> dict:
     # Zusatzangaben des Funds gehen den Rückfallwerten der Quelle vor.
     vorgaben = {**QUELLEN_VORGABEN[quelle], **(kandidat.get("zusatz") or {})}
     if quelle == "starts":
-        jahr = kandidat["herkunft"]["abfrage"].split(":")[-1]
+        # `jahr` ist bei S+T+ARTS bereits das Auszeichnungsjahr (siehe README) — robuster
+        # als `herkunft.abfrage` zu parsen, dessen Form je nach Einlassweg variiert (der
+        # direkte Adapter schreibt "starts:JAHR", `extern.py` beim Urteilsschritt aber
+        # "starts:feld-N"; Letzteres lieferte am 2026-07/08 dreißig Einträge mit
+        # "S+T+ARTS Prize feld-N (Ars Electronica)" statt eines Jahres).
         vorgaben = {**vorgaben,
-                    "venue_prize": f"S+T+ARTS Prize {jahr} (Ars Electronica)"}
+                    "venue_prize": f"S+T+ARTS Prize {kandidat['jahr']} (Ars Electronica)"}
     feld = _feld_aus_saat(kandidat["herkunft"]["ausgehend_von"])
     return {
         "title": kandidat["titel"],
