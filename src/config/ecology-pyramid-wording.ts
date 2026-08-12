@@ -199,6 +199,13 @@ export const PYRAMID = {
       made: 'on the record',
       arc: 'running work',
       constitution: 'constitution',
+      /** A practice can run more than one LINE — the Atelier has run two since 2026-08-10.
+       *  These two rows appear only where that is the case, and they appear INSIDE the station:
+       *  the pyramid keeps three stations, or the ecology grows a corner per fork and a visitor
+       *  understands nothing (canon 2026-08-12). Plural, because naming one law on a two-line
+       *  practice would leave the other line ungoverned on the page. */
+      lines: 'lines',
+      constitutions: 'constitutions',
     },
     lastLanded: 'LAST LANDED · FROM THE RECORD',
     wholeJournal: 'the whole journal →',
