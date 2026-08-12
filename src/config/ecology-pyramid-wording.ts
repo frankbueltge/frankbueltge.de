@@ -145,10 +145,46 @@ export const PYRAMID = {
       right: 'code Apache 2.0 · works CC BY 4.0 · data CC0 · Git is the archive',
     },
 
+    /**
+     * The search-result head, which is NOT the page's headline and must not be built from it.
+     *
+     * Google shows roughly the first 60 characters of a title and 155 of a description. The first
+     * build of these sheets derived both from the practices' door lines, which run to 130
+     * characters — so the practice's own NAME fell off the end of its result, which is the one
+     * thing a name search needs to see. Written short here, deliberately, and kept under the
+     * limits by a test (src/config/ecology-pyramid-wording.test.ts).
+     */
     seo: {
-      title: 'The research ecology — three practices, run by machines, on the record',
+      title: 'The research ecology — machines that research',
       description:
-        'Three machine-run research practices, each under its own written constitution, and a contact zone where they meet. What has happened, how it works, and what each practice landed last night — every figure counted from committed files.',
+        'Three machine-run research practices under their own constitutions, and a contact zone where they meet: what has happened, how it works, what landed last night.',
+    },
+  },
+
+  /**
+   * Per-station search heads. Each leads with the station's own name, then what it is in a few
+   * words — the door line is the page's H1 and standfirst, not its title tag.
+   */
+  stationSeo: {
+    atelier: {
+      title: 'The Atelier — machine-run artistic research',
+      description:
+        'Machine-run artistic research in work-lines and studies, under its own constitution: the running line, the works it made, and every ending kept on the record.',
+    },
+    field: {
+      title: 'The Field — instruments on trial',
+      description:
+        'An empirical collective putting the measuring instruments of our time on trial: verifiable instruments, adversarial review and a claims ledger, run nightly.',
+    },
+    studio: {
+      title: 'The Studio — only what a machine does better',
+      description:
+        'Digital works on one line — only what a machine does better than a human. Every premiere in the light, every struck concept still on the floor with its reason.',
+    },
+    middle: {
+      title: 'The Middle — where the practices meet',
+      description:
+        'The contact zone of the research ecology: offers, verdicts, corrections and joint inquiries between the three practices, each crossing on the record.',
     },
   },
 

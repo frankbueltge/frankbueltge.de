@@ -200,6 +200,9 @@ const catalogues = NAMING.catalogues.items.filter((c) => c.href !== '/atlas')
         </li>
       ))}
     </ul>
+    {/* The named catalogues, and the room that holds all of them. The index link is not
+        decoration: /catalogues had no inbound link anywhere on the site while sitting in the
+        sitemap — found 2026-08-12 in the orphan audit after the ecology v3 rebuild. */}
     <p class="ops-catalogues">
       {OPS.live.cataloguesLead}
       {catalogues.map((c, i) => (
@@ -208,6 +211,7 @@ const catalogues = NAMING.catalogues.items.filter((c) => c.href !== '/atlas')
           <a href={url(c.href)}>{c.name}</a>
         </>
       ))}
+      {' · '}<a href={url(NAMING.catalogues.href)}>{NAMING.catalogues.indexLabel}</a>
     </p>
   </section>
 

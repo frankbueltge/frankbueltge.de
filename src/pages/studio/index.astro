@@ -44,10 +44,11 @@ const sheet = buildStationSheet({
 
 const floor = buildStageFloor(works, stage as Parameters<typeof buildStageFloor>[1])
 const door = splitDoorLine(sheet.station.description)
+const SEO = PYRAMID.stationSeo.studio
 const F = FIGURES.studio
 ---
 
-<Page title={`${sheet.station.name} — ${door.lead} | Frank Bültge`} description={sheet.station.description}>
+<Page title={`${SEO.title} | Frank Bültge`} description={SEO.description}>
   <StationSheet
     id="studio"
     kicker={`${sheet.station.name.toUpperCase()} · ${sheet.station.resident.toUpperCase()} · ${sheet.station.corner}`}
