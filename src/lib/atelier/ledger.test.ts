@@ -152,7 +152,12 @@ describe('the real records — the ledger says what the practice wrote, or it sa
     }
   })
 
-  it('reads a closing ledger from exactly the seven records that carry one', () => {
+  // Updated 2026-08-12: negative-parallax moved from the second list to the first. It gained a
+  // "Standing" paragraph when the practice published it on its own signature under §§2.3 and 9 —
+  // a real ledger in the record, not a parser change. The pinned lists are deliberate (see
+  // ledger.ts): a record that gains or loses a ledger is meant to break a test rather than
+  // silently change a figure. This is that break, answered by correcting the list.
+  it('reads a closing ledger from exactly the eight records that carry one', () => {
     expect(Object.keys(index).sort()).toEqual([
       '2026-07-18-name-test',
       '2026-07-19-mach-ancestor',
@@ -161,15 +166,16 @@ describe('the real records — the ledger says what the practice wrote, or it sa
       '2026-07-20-vegetative-em',
       '2026-07-21-untested-second',
       '2026-07-22-unmoved-ground',
+      '2026-07-23-negative-parallax',
     ])
   })
 
-  it('leaves the four records without one absent — an honest gap, not an empty string', () => {
+  it('leaves the records without one absent — an honest gap, not an empty string', () => {
     for (const id of [
       '2026-07-18-gate-rehearsal',
-      '2026-07-23-negative-parallax',
       '2026-07-24-kartographie-statt-kopie',
       '2026-07-25-signature-in-the-world',
+      '2026-08-01-sixty-cases-blind',
     ]) {
       expect(index[id], `${id} should carry no ledger`).toBeUndefined()
     }

@@ -116,6 +116,13 @@ export function readAspect(section: string): { aspect: Voice; quote: string } | 
     /\b(territory|home|opening) aspect (?:still )?dominates\b/i,
     // "**Line status.** ACTIVE, open horizon, aspect home."
     /\baspect (territory|home|opening)\b/i,
+    // "**Aspect: territory. OUTWARD**" — the spelling the practice has used since its ticks
+    // began stating the aspect in the TRACE section rather than in SCORE §11. Added 2026-08-12:
+    // the colon meant the pattern above missed every one of them, so a record that plainly
+    // states its aspect read as an honest gap. Found when this line's trace was rotated under
+    // §8's floor and the older, differently-spelled ticks left the live file — the count fell to
+    // zero and exposed a reading that had been silently incomplete for a fortnight.
+    /\bAspect:\s*\*{0,2}(territory|home|opening)\b/i,
   ]
   for (const re of patterns) {
     const m = re.exec(section)
