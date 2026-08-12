@@ -53,6 +53,10 @@ export const WORK_META_DIRS = [
   { dir: 'src/components/atelier/werke', ns: 'atelier', hrefBase: '/atelier/werke' },
   { dir: 'src/content/atelier/works', ns: 'atelier', hrefBase: '/atelier/works' },
   { dir: 'src/content/studio/works', ns: 'studio', hrefBase: '/studio/works' },
+  // The forked nightly line, mirrored from its own repository (scripts/nightly/mirror.mjs).
+  // The Atelier's practice by descent, so the Atelier's namespace; its own address, because
+  // its works are rendered here rather than staged in public/.
+  { dir: 'src/data/nightly/works', ns: 'atelier', hrefBase: '/error-as-method' },
 ] as const
 
 /** The one OPTIONAL source: Machine Attention is the second constitution and lives in its own

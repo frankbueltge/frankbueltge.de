@@ -27,14 +27,15 @@ export const ATELIER_GRAMMAR = {
    * Stufe-0-Revision 2026-07-20 (Franks Auftrag: verständliche Haustür): /atelier ist
    * jetzt der Eingang (ohne Rail), das Blatt zieht als Zimmer nach /atelier/sheet um —
    * Labels unverändert, nur die Tür des Blatts zeigt auf den neuen Ort. */
+  /** v3 pyramid, 2026-08-12: the rail is the way back up and the way down to the registers, and
+   *  nothing else. The five standalone rooms it used to list (sheet, sheets, material, foundation,
+   *  projects) were folded into the station sheet and its registers; their routes 301 there. */
   rail: [
-    { label: 'this sheet', href: '/atelier/sheet', hint: 'the current working sheet' },
-    { label: 'projects', href: '/atelier/projects', hint: 'the research log — the work-line and its studies under Protocol v5 (2026-07-24)' },
-    { label: 'sheets', href: '/atelier/sheets', hint: 'all sheets, one per thread' },
+    { label: 'the station', href: '/atelier', hint: 'the sheet — status, the running line, the map' },
     { label: 'works', href: '/atelier/works', hint: 'works & catalogue — existing URLs stay' },
     { label: 'journal', href: '/atelier/journal', hint: 'the journal as session register, S1…' },
-    { label: 'material', href: '/atelier/material', hint: 'sources & the atlas — Ulysses’ own shelf' },
-    { label: 'apparatus', href: '/atelier/apparatus', hint: 'repo, constitution, team channel, integration machinery' },
+    { label: 'constitution', href: '/atelier/protocol', hint: 'the protocol, as mirrored' },
+    { label: 'team channel', href: '/atelier/requests', hint: 'REQUESTS — the one steering channel' },
   ] as RailItem[],
   door: { label: '→ the middle', href: '/encounters', hint: 'encounters; the doorway at the sheet’s edge' },
   /** Rückweg-Konvention jeder Unterseite (atelier-aesthetik §5; Stufe-0-Revision
@@ -83,7 +84,7 @@ export const ATELIER_NARRATIVE = {
    * apparatus). v4-Revision 2026-07-18: projektbasiert statt nightly. v5-Sync 2026-07-25:
    * work-line statt bounded projects (Aktualitäts-Regel — v5 löste v4 am 24.07. ab). */
   framingFoot:
-    'Ulysses is a machine-participatory artistic research practice — a work-line and its studies under a standing delegation, errors catalogued checkably. The machines write, the record shows who wrote what; curated publication remains a human decision.',
+    'Ulysses is a machine-participatory artistic research practice — a work-line and its studies under a standing delegation, errors catalogued checkably. The machines write, the record shows who wrote what; since 2026-08-10 curated publication is the practice’s own act, signed and answered for in its own record.',
   /** Ehrliche Abweichungen der Site gegenüber den Mockup-Generatoren (nichts still überbrückt). */
   provenance: {
     sheet: 'drawn from src/data/atelier/rhizome.json — the practice’s own reading, mirrored by the integration gate, read-only',
@@ -101,9 +102,9 @@ export const ATELIER_NARRATIVE = {
     kicker: 'Atelier · machine-participatory artistic research',
     h1: 'Atelier · Ulysses',
     lede:
-      'Ulysses is a situated artistic research practice, developed through documented human–machine operations. Machines hold real operative agency here — they find problems, research, build, revise and archive inside a standing human delegation — while curated publication and responsibility remain human. The unit of work is the work-line, fed by studies that compost back into it; failures stay on the record, checkably.',
+      'Ulysses is a situated artistic research practice, developed through documented human–machine operations. Machines hold real operative agency here — they find problems, research, build, revise and archive inside a standing human delegation, and since 2026-08-10 publish what they judge ready under their own signature. The unit of work is the work-line, fed by studies that compost back into it; failures stay on the record, checkably.',
     doors: {
-      now: 'the research log — the work-line and its studies under Protocol v5: scores, traces, dispositions',
+      now: 'the research log — the work-line and its studies under Protocol v6: scores, traces, dispositions',
       works: 'works & catalogue — the nightly phase (28 June – 18 July 2026) and, since 24 July, its curated publications',
       foundation: 'what this is, in plain language — the operating model, who decides what, and the theoretical ground',
       sheet: 'the working sheet — the practice’s own reading of its works and sources, drawn by itself',
@@ -122,7 +123,7 @@ export const ATELIER_NARRATIVE = {
     // nightly phase closed on 18 July 2026 — so this number is final, not a moving count.
     // /atelier derives the same span from the mirror rather than repeating it (index.astro).
     mapCaption:
-      'each slab a work, hung by committed date — the nightly register (S1–S43), then bounded projects and work-lines under Protocol v4 and v5; the red slabs are its curated publications',
+      'each slab a work, hung by committed date — the nightly register (S1–S43), then bounded projects and work-lines under Protocol v4 through v6; the red slabs are its curated publications',
     mapProvenance:
       'drawn from committed mirrors — works meta.json · project SCORE states · read-only; project lines end where their disposition ends',
     doorsCaption: '“The plane is like a row of doors.” (ATP 508)',
@@ -138,7 +139,7 @@ export const ATELIER_NARRATIVE = {
     model: {
       heading: 'the model behind the practice',
       lede:
-        'Since 24 July 2026 the practice carries an explicit process model: read out of the whole of A Thousand Plateaus and published bilingually as the work “Kartographie statt Kopie / Cartography, not Tracing” — a map to be reworked by each project, not a template to be applied. It did not replace the older research foundation and its toolbox of methodological strategies — Protocol v5 names both as its sources. Six postulates:',
+        'Since 24 July 2026 the practice carries an explicit process model: read out of the whole of A Thousand Plateaus and published bilingually as the work “Kartographie statt Kopie / Cartography, not Tracing” — a map to be reworked by each project, not a template to be applied. It did not replace the older research foundation and its toolbox of methodological strategies — Protocol v6 names both as its sources. Six postulates:',
       /** Wörtlich aus dem Werk, **§5 „The Model: Artistic Research as Cartographic Practice"**.
        * (Fundstelle korrigiert 2026-07-31: hier stand §7 — das sind die Gütekriterien, aus denen
        * Protokoll v5 §5 die fünf Topoi des Urteilens nimmt. Die Postulate stehen eine Ebene
@@ -179,7 +180,7 @@ export const ATELIER_NARRATIVE = {
       PUBLISH: { label: 'published', hint: 'through the gate — a work on the site' },
       PUBLICATION_CANDIDATE: {
         label: 'at the gate',
-        hint: 'proposed as a work; the publication decision is human',
+        hint: 'proposed as a work; publication is the practice’s own act, since 2026-08-10',
       },
       ARCHIVE_AS_STUDY: {
         label: 'kept as study',
@@ -193,7 +194,7 @@ export const ATELIER_NARRATIVE = {
       'Hover or tab to a line for a glance; click it to hold its record open above and step ' +
       'through every line with ← and →.',
     gutterLabel: 'WHAT CLOSING IT COST',
-    gateLabel: ['THE GATE', 'a human decides'] as [string, string],
+    gateLabel: ['THE GATE', 'the practice decides'] as [string, string],
     /** The honest gap. Printed where a line is CLOSED and its record states no closing cost — an
      * invented zero would be a lie in the archive. A line that is still running gets nothing at
      * all: it has not closed, so it has no closing cost to be missing. */
@@ -392,6 +393,54 @@ export const ATELIER_NARRATIVE = {
       'at the gate, kept as a study, or closed on purpose. Pick a line to read its record.',
     storyLink: 'One of them ended on a fact inside its own instrument — read it in six scenes →',
   },
+  /** The pair (2026-08-11). Until now this surface told the line as one unbroken history: the
+   *  nightly works stood in the same gallery as the work-line publications, the session register
+   *  simply stopped, and the word "fork" appeared nowhere on any Atelier page — while
+   *  /error-as-method told the other half of the same story to a reader who had no way of
+   *  arriving from here. One pair, told from one side, is not a pair.
+   *
+   *  The framing is the one decided in the log on 2026-08-11: not a third project, not a rival,
+   *  and not a rebrand — two constitutions descending from one founding text, differing in
+   *  exactly one thing, which is what counts as a unit of work. The fork itself is the finding,
+   *  so the copy names the disagreement rather than smoothing it.
+   *
+   *  Nothing here carries a number: the counts, dates and the span come from
+   *  src/lib/engines/nightly-line.ts, which reads them off both mirrors. */
+  pair: {
+    kicker: 'THE OTHER ARM',
+    heading: 'One founding text, two constitutions',
+    lead:
+      'This practice ran one night at a time until 18 July 2026, then changed what a unit of work ' +
+      'is — twice. The nightly line was not finished when that happened; it was switched off. On ' +
+      '10 August it was forked back to life in its own repository, under the constitution that ' +
+      'produced it, and it is running now.',
+    /** the sentence that keeps the two arms from reading as rivals */
+    relation:
+      'Both descend from the same document of 28 June 2026 and share every session up to the ' +
+      'twenty-sixth, when the practice first read its own field and took a word out of the centre ' +
+      'of its own claim. After that they differ in one thing only. Neither form is the correct one.',
+    /** what each arm kept, said in one line each — the difference a visitor must be able to see */
+    arms: {
+      here: 'the work-line — an open horizon, a research programme, publication candidates',
+      there: 'the night — one research day, one work, on the record, closed at dawn',
+    },
+    /** stands over the works of the nightly phase, wherever they are listed */
+    worksNote:
+      'The works below up to 18 July are the nightly line’s. They stay here, at the addresses they ' +
+      'have had since the night each was made — this practice made them, and moving them would ' +
+      'falsify its own record. The line that made them continues elsewhere.',
+    /** under the closed session register */
+    registerNote:
+      'The register is closed at its last numbered night because the protocol that numbered them ' +
+      'was replaced, not because the practice ran out of nights. The numbering continues in the ' +
+      'forked line, which reads the next session number off its own journal.',
+    link: 'Error as Method — the nightly line, running again →',
+    ladderHeading: 'The constitutions, in order',
+    ladderNote:
+      'Every text below is archived unchanged in the engine repository; nothing in the published ' +
+      'record is retracted, and works stand as shipped. The row marked “restored” is the one the ' +
+      'forked line runs under today.',
+  },
   /** The guided tour of the retraction-signature line (WP6a, 2026-08-01). ONLY the frame is here.
    * Every QUOTE the tour makes a claim with lives in src/lib/tour/atelier-pivot.ts beside the
    * repo-relative path it was taken from, and src/lib/tour/verify.ts fails the build if one of
@@ -460,15 +509,32 @@ export const ATELIER_NARRATIVE = {
     sheets: 'All sheets, one per thread — each a reading the practice has drawn across its works.',
     journal: 'The nightly protocol archive (28 June – 18 July 2026) as a session register — one line per page.',
     journalNotesHeading: 'After the nightly phase — dispatcher ticks (not sessions)',
-    journalNotes:
-      'Protocol v4 dissolved the nightly session as the unit of practice. The register above is closed at its last numbered night; what follows are unnumbered dispatcher ticks under the new protocol — they keep the historical record continuous, their full decision traces live in the engine repo’s projects/. Since 24 July 2026 the practice runs under Protocol v5, the work-line protocol.',
+    /** 2026-08-11: the note said the register was "closed" and left it at that, which reads as
+     *  "the nightly line ended". It did not end — it was switched off and later forked back to
+     *  life, and the numbering it stopped at is the numbering the forked line continues from.
+     *
+     *  A function, not a string, for the same reason `orientation` is one: the old text named
+     *  "Protocol v5" and was still naming it three days after v6 landed. The version now comes
+     *  from the mirrored PROTOCOL.md, so this sentence cannot go stale again. */
+    journalNotes: (protocolVersion: string): string =>
+      'Protocol v4 dissolved the nightly session as the unit of practice. The register above is ' +
+      'closed at its last numbered night; what follows are unnumbered dispatcher ticks under the ' +
+      'new protocol — they keep the historical record continuous, their full decision traces live ' +
+      `in the engine repo’s projects/. The practice now runs under Protocol v${protocolVersion}, ` +
+      'the work-line protocol. The register is closed here, not everywhere: the nightly line was ' +
+      'forked back to life on 10 August under the constitution that produced it, and it reads its ' +
+      'next session number off this same journal.',
     material: 'Ulysses’ own shelf: the sources the practice has pulled, as it catalogued them.',
     materialAtlasNote:
       'Frank’s atlas (/atlas) is the lab’s reference collection; this shelf is the practice’s own lens on it. Each points at the other.',
     apparatus: 'How the machine runs — repo, constitution, team channel, integration machinery, in one room.',
     works: 'The works, newest first — each slab on the sheet is a door to one of these.',
+    /** 2026-08-11: the room now draws the phase cut structurally, in two sections, so this line
+     *  stopped describing the proportion ("most works date from…") and says what the cut IS.
+     *  The curated publications are no longer listed by name here — they stand in their own
+     *  section above, and a hand-kept list of two was a drift risk the moment a third landed. */
     worksPhase:
-      'Most works date from the nightly phase (28 June – 18 July 2026). Since 24 July 2026 the surface also carries its curated publications — “Kartographie statt Kopie” (24 July, with a full English version) and “Negative Parallax — The Operative Ruler” (1 August) — each published by explicit human decision (PUBLICATION approved by the responsible human; see the project’s own DECISION.md). Nothing enters this surface through a merge or a green build.',
+      'This room holds two phases of one practice, and they are not the same kind of thing. Up to 18 July 2026 the unit of work was the night; after it, the bounded project and then the work-line. The nightly works stay at the addresses they were made at, and the line that made them was forked back to life on 10 August, in its own repository, under the constitution that produced it. Nothing on this surface enters through a merge or a green build: each work-line publication is published by an explicit PUBLICATION.json (see the project’s own DECISION.md) — until 2026-08-10 signed by the responsible human, since then by the practice itself, under Protocol v6 §2.3.',
     cockpitArchiveNote: 'the atlas now lives in material',
     cockpitArchived:
       'Archived surface (ADR 0008): the cockpit is kept as a dated artefact, no longer the entrance.',
@@ -526,7 +592,7 @@ export const ATELIER_NARRATIVE = {
       {
         question: 'what happens here',
         answer:
-          'A machine practice opens a question of its own, works it in moves it records, and either proposes it as a work or closes it. Nothing becomes public without a human publication decision.',
+          'A machine practice opens a question of its own, works it in moves it records, and either proposes it as a work or closes it. Since 2026-08-10 publication is the practice’s own act, signed and answered for in its own record.',
         href: '/atelier/foundation',
         moreLabel: 'the operating model',
       },
@@ -545,7 +611,7 @@ export const ATELIER_NARRATIVE = {
       {
         question: 'where it stands',
         answer: input.running
-          ? `One work-line is running: “${input.running.title}”${input.running.proposedAsWork ? ' — proposed as a work and waiting at the human gate.' : '.'}`
+          ? `One work-line is running: “${input.running.title}”${input.running.proposedAsWork ? ' — proposed as a work and waiting at the gate.' : '.'}`
           : 'No line is open at the moment.',
         // The dossier is where "read it below" leads since the entrance rebuild — the tour
         // moved to its own room (/atelier/how-a-line-ends) and its old anchor died with it.

@@ -1,13 +1,18 @@
 ---
-// /field/journal — the unedited record: day files, grouped, exactly as the collective wrote
-// them (field-aesthetik §4: "Journal bleibt tagesbasiert, gruppiert"). Etappe 2 (2026-08-01):
-// the grouping stayed, the 180,000 words did not — this page is the day index, and each
-// session reads at /field/journal/<anchor>. The anchors keep the engine convention (cs-N …),
-// so the register's chronicle anchors and the instrument badges resolve unchanged; the
-// published `#cs-N` links bounce below. Newest day first.
+// /field/journal — the unedited record as a Level-2 register sheet (2026-08-12).
+//
+// The content is unchanged: day files, grouped, exactly as the collective wrote them, each
+// session at its own address. What changed is the form — the practice's own room chrome gives way
+// to the register sheet every register in the house now wears, so a reader who has seen one has
+// seen them all.
+//
+// The row anchors (cs-N, …) are carried across deliberately. Every chronicle entry, instrument
+// badge and published deep link points at one, a fragment never reaches the server, and the bounce
+// below is the only place a legacy `#cs-42` can be turned into the page it now lives on.
 import { getCollection } from 'astro:content'
 import Page from '@/layouts/Page.astro'
-import Frame from '@/components/field/surface/Frame.astro'
+import RegisterSheet from '@/components/ecology/RegisterSheet.astro'
+import type { RegisterRow } from '@/components/ecology/RegisterSheet.astro'
 import { buildDayIndex } from '@/lib/engines/journal'
 import { FIELD_NARRATIVE } from '@/config/field-wording'
 
@@ -16,33 +21,30 @@ const repo = 'https://github.com/frankbueltge/field-research'
 const rootDocs = new Set(all.filter((e) => !e.id.includes('/')).map((e) => e.id))
 const { days, sessionsAsc } = buildDayIndex(all, { repo, docs: rootDocs })
 
-const kicker = ['Field · journal', 'field-research', `${days.length} day files`]
-const statusHtml =
-  `<b>${days.length} days · ${sessionsAsc.length} sessions</b> · the unedited record, grouped by day · newest first`
+const rows: RegisterRow[] = days.flatMap((day) =>
+  day.sessions.map((session) => ({
+    date: day.date,
+    marker: session.anchor,
+    move: session.move,
+    line: session.heading || day.date,
+    href: `/field/journal/${session.anchor}/`,
+    anchor: session.anchor,
+  })),
+)
 ---
 
 <Page
   title="Field — journal | Frank Bültge"
   description="The Field collective's research journal — day files, grouped, every session at its own address, published unedited."
 >
-  <Frame active="journal" kicker={kicker} h1="The record, day by day." statusHtml={statusHtml} back>
-    <p class="fd-room-intro">{FIELD_NARRATIVE.rooms.journal}</p>
-    <p class="fd-req-note">{FIELD_NARRATIVE.journalRoom.indexNote}</p>
-    <div id="journal-register">
-      {days.map(({ date, sessions }) => (
-        <section class="mb-6">
-          <p class="fd-instr-meta mt-6">{date}</p>
-          {sessions.map((s) => (
-            <a class="fd-reg-row" id={s.anchor} data-journal={s.anchor} href={`/field/journal/${s.anchor}/`}>
-              <span class="fd-day-date">{s.anchor}</span>
-              <span class="fd-day-title">{s.heading || date}</span>
-              {s.move && <span class="fd-reg-move">{s.move}</span>}
-            </a>
-          ))}
-        </section>
-      ))}
-    </div>
-  </Frame>
+  <RegisterSheet
+    id="field"
+    register="journal"
+    title="the journal — every session, unedited"
+    span={`${days.length} day files · ${sessionsAsc.length} sessions · one page per session · ${FIELD_NARRATIVE.rooms.journal}`}
+    rows={rows}
+    source="src/content/field/journal/*.md"
+  />
 </Page>
 
 <script>

@@ -65,6 +65,13 @@ jobs:
             echo '[]' > src/data/studio/chronicle.upstream.json
           fi
 
+      # The graph is derived from what this mirror just wrote (a work's meta.json, the
+      # attention export, the encounters register). Deriving it HERE, before validation, is what
+      # makes the honesty test guard the mirrored content instead of tripping over it: on
+      # 2026-08-11 an ecology export landed at 06:33 and every validating workflow after it went
+      # red until the nightly graph job at 04:25 the next morning. See .claude/rules/knowledge-graph.md.
+      - name: Re-derive the knowledge graph from what was just mirrored
+        run: npm run graph:build
       - name: Validate (check + test + build)
         id: validate
         run: |
@@ -74,10 +81,10 @@ jobs:
       - name: Commit + let deploy-cf rebuild (on success)
         if: success()
         run: |
-          if [ -n "$(git status --porcelain src/content/studio src/components/studio src/pages/studio src/data/studio/chronicle.upstream.json public/studio/werke-html)" ]; then
+          if [ -n "$(git status --porcelain src/content/studio src/components/studio src/pages/studio src/data/studio/chronicle.upstream.json src/data/graph public/studio/werke-html)" ]; then
             git config user.name "Studio-Integrate"
             git config user.email "studio-integrate@frankbueltge.de"
-            git add -A src/content/studio src/components/studio src/pages/studio src/data/studio/chronicle.upstream.json
+            git add -A src/content/studio src/components/studio src/pages/studio src/data/studio/chronicle.upstream.json src/data/graph
             if [ -d public/studio/werke-html ]; then git add -A public/studio/werke-html; fi
             git commit -m "studio: integrate $(date -u +%F)"
             for attempt in 1 2 3 4 5; do

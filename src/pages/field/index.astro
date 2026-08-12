@@ -1,289 +1,97 @@
 ---
-// /field — the instrument dossier, v3 (2026-08-01). The entrance leads with the instrument in
-// SERVICE and switches the whole dossier when the selection changes.
+// /field — the Field's station sheet (Level 1 of the ecology pyramid, 2026-08-12).
 //
-// WHAT THIS REPLACES, and why. v2 was one instrument's Kontrollblatt with a guided tour and a
-// claim plate stacked on top of it: a visitor who wanted any other instrument got a link off the
-// page, the tour told one week's story above whatever the page was nominally about, and three of
-// the header's four status clauses had quietly stopped rendering at all (they looked for event
-// types in "the current encounter", and the current encounter moved on). The dossier ends all
-// three problems at once — every instrument gets the same record, read out of its own committed
-// files, and the encounter ledger goes back to the instrument its own akte path names.
-//
-// THE PROTAGONIST IS A ROLE, NOT AN ACTOR. Which instrument is "in service" is derived — position
-// in the committed order (latest.ts, under test since a hardcoded slug once froze this header at
-// instrument 001). The h1 names the ROLE for the same reason: a headline carrying one
-// instrument's title would go stale the moment a visitor picked another.
-//
-// WHAT MOVED OUT: the gauntlet tour, to its own room (/field/how-a-claim-came-off), linked from
-// the dossiers of the two instruments it walks. The claim plate travels with it AND stands inside
-// the dossier of the instrument whose review left that claim contested.
-//
-// WHAT STAYED: the orientation block (first-visitor questions, above the artefact — wording
-// canon), the shelf band (now a second way into the same selection: a tick is an anchor into that
-// instrument's dossier), the Kontrollblatt (now inside each dossier, of ITS instrument, with the
-// record table under it), and the runtime room.
+// Replaces, as separate surfaces: the practice's own index, its history, its apparatus page and
+// its tour. All four told a visitor something true and none of them fitted on one screen; the
+// pyramid's answer is one condensed sheet with the doors to the registers underneath. The retired
+// pages 301 to here (public/_redirects) and their texts stay in Git.
 import Page from '@/layouts/Page.astro'
-import Frame from '@/components/field/surface/Frame.astro'
-import OrientationList from '@/components/practice/OrientationList.astro'
-import Dossier from '@/components/field/Dossier.astro'
-import { loadChronicle } from '@/lib/field/chronicle'
-import { buildFieldDossiers, type EncounterScore } from '@/lib/field/dossier'
-import { latestInstrument, orderInstruments, type InstrumentMeta } from '@/lib/field/latest'
-import { FIELD_NARRATIVE } from '@/config/field-wording'
-import { GAUNTLET_INSTRUMENTS } from '@/lib/tour/field-gauntlet'
-import { buildClaimModel, type ExportObject, type ParallaxExport } from '@/lib/field/claimladder'
-import runtimeLog from '@/data/meridian/runtime-log.json'
-import parallax from '@/data/meridian/parallax.json'
+import StationSheet from '@/components/ecology/StationSheet.astro'
+import Figure from '@/components/ecology/figures/Figure.astro'
+import GateStripFigure from '@/components/ecology/figures/GateStrip.astro'
+import GauntletFigure from '@/components/ecology/figures/Gauntlet.astro'
+import { PYRAMID } from '@/config/ecology-pyramid-wording'
+import { FIGURES } from '@/config/ecology-figure-wording'
+import pulseData from '@/data/pulse/pulse.json'
+import type { PulseSnapshot } from '@/lib/pulse/render'
+import { allWorks } from '@/lib/engines/register'
+import { buildStationSheet, splitDoorLine, type LogEntry } from '@/lib/ecology/pyramid/station'
+import { buildGateStrip, buildGauntlet } from '@/lib/ecology/pyramid/figures'
+import { recordLine, type ChronicleEntry } from '@/lib/ecology/pyramid/landings'
+import chronicle from '@/data/field/chronicle.upstream.json'
 
-const metas = import.meta.glob('/src/components/field/werke/*/meta.json', {
-  eager: true, import: 'default',
-}) as Record<string, InstrumentMeta>
-const metaBySlug = new Map(
-  Object.entries(metas).map(([p, m]) => [
-    p.replace('/src/components/field/werke/', '').replace('/meta.json', ''),
-    m,
-  ]),
-)
+const works = allWorks()
+const rows = chronicle as ChronicleEntry[]
+const fieldWorks = works.filter((w) => w.ns === 'field')
 
-// The featured instrument is Meridian's NEWEST committed work, derived live from the synced
-// mirror — NOT a hand-set pointer. Rule + fail-loud guards in lib/field/latest.ts (latest.test.ts).
-const { slug, meta, instrumentNo } = latestInstrument([...metaBySlug.entries()])
+// The record's last three sessions, in the practice's own words.
+const log: LogEntry[] = [...rows]
+  .filter((r) => r.date)
+  .sort((a, b) => (a.date! < b.date! ? 1 : -1))
+  .slice(0, 3)
+  .map((r) => ({
+    date: r.date!,
+    marker: r.collective_session ? `S${r.collective_session}` : null,
+    line: recordLine(r.move, r.summary) ?? PYRAMID.station.absent,
+  }))
 
-// Every committed encounter score, not just "the current" one: an encounter belongs to the
-// instrument its own akte path names, and that instrument is rarely the newest (dossier.ts,
-// attachment rule 2). Reading only the current encounter is what silently unwired the old
-// header's correction marks.
-const encounters = Object.values(
-  import.meta.glob('/src/data/begegnungen/*/score.json', {
-    eager: true, import: 'default',
-  }) as Record<string, EncounterScore>,
-)
-
-const dossiers = buildFieldDossiers({
-  instruments: [...metaBySlug.entries()],
-  chronicle: loadChronicle(),
-  encounters,
-  files: Object.keys(import.meta.glob('/src/components/field/werke/*/*.{json,astro}')),
-  // Attachment rule 3: the runtime's parallax export names no instrument slug anywhere, so the
-  // tie comes from the committed tour module — the instrument whose gauntlet the claim's own
-  // dissent record is drawn from — and never from a guess made here.
-  claimOf: GAUNTLET_INSTRUMENTS.i019,
-  tourOf: Object.values(GAUNTLET_INSTRUMENTS),
+const sheet = buildStationSheet({
+  id: 'field',
+  snapshot: pulseData as PulseSnapshot,
+  works,
+  log,
+  made: fieldWorks.length,
 })
 
-const exportObjects: Record<string, ExportObject> = Object.fromEntries(
-  Object.entries(
-    import.meta.glob('/src/data/meridian/export/k1t04_real_run_v2/objects/*.json', {
-      eager: true, import: 'default',
-    }) as Record<string, ExportObject>,
-  ).map(([path, body]) => [path.split('/').at(-1) ?? path, body]),
-)
-const claimModel = buildClaimModel({
-  parallax: parallax as unknown as ParallaxExport,
-  objects: exportObjects,
-})
-
-const TOUR_HREF = '/field/how-a-claim-came-off'
-
-// ——— the shelf band: every instrument on the tape, at its committed date — same total order and
-// numbering as the dossier (both go through orderInstruments), so the band and the dossier can
-// never disagree. Same-day instruments fan out around their date. Since v3 a tick is an ANCHOR
-// into that instrument's dossier rather than a jump off the page: without scripts the browser
-// scrolls to the stacked record, with them the dossier's hashchange handler selects it.
-// No inline style attributes (CSP: style hashes ignore 'unsafe-inline').
-const bandEntries = orderInstruments([...metaBySlug.entries()]).filter(([, m]) => m.date)
-const noBySlug = new Map(bandEntries.map(([s], i) => [s, String(i + 1).padStart(3, '0')]))
-const bandT = (d: string) => Date.parse(d + 'T00:00:00Z')
-const B0 = bandT(bandEntries[0][1].date!)
-const B1 = bandT(meta.date)
-const BW = 960, BH = 92, bPadL = 16, bPadR = 46, BY = 56
-const bandX = (ts: number) =>
-  B1 === B0 ? bPadL : bPadL + ((ts - B0) / (B1 - B0)) * (BW - bPadL - bPadR)
-const byDay = new Map<string, typeof bandEntries>()
-for (const e of bandEntries) {
-  const d = e[1].date!
-  byDay.set(d, [...(byDay.get(d) ?? []), e])
-}
-const bandTicks = [...byDay.entries()].flatMap(([d, group]) =>
-  group.map(([tSlug, m], i) => ({
-    slug: tSlug,
-    no: noBySlug.get(tSlug)!,
-    title: m.title ?? tSlug,
-    date: d,
-    x: bandX(bandT(d)) + (i - (group.length - 1) / 2) * 7,
-    current: tSlug === slug,
-  })),
+const strip = buildGateStrip(rows as never, works)
+const gauntlet = buildGauntlet(
+  rows.filter((r) => r.date).length,
+  fieldWorks.length,
+  fieldWorks.filter((w) => w.state !== 'withdrawn').length,
+  FIGURES.field.gauntlet.rows,
 )
 
-const kicker = ['Field · instrument dossier', 'field-research', `${dossiers.length} instruments`]
-// The header states the ROLE's current holder — a fact about the practice that stays true
-// whichever dossier a visitor opens. The selection rationale (FIELD_NARRATIVE.selectionRule) is
-// meta and lives in the provenance line under the dossier, not up here.
-const statusHtml =
-  `<b>in service since ${meta.date}</b>` +
-  ` · instrument ${instrumentNo} — ${meta.title ?? slug}` +
-  ` · ${dossiers.length} instruments on the band`
+const door = splitDoorLine(sheet.station.description)
+const F = FIGURES.field
 ---
 
 <Page
-  title="Field — the instrument dossier · Meridian | Frank Bültge"
-  description="The Field's entrance is the collective's instrument dossier: what each instrument measures, the verdict it locked, where it stands, and every move of the register that names it — the one in service leading, every quotation beside the committed file it came from."
+  title={`${sheet.station.name} — ${door.lead} | Frank Bültge`}
+  description={sheet.station.description}
 >
-  <Frame
-    active="this instrument"
-    kicker={kicker}
-    h1="The instrument in service."
-    statusHtml={statusHtml}
-    footLeft={FIELD_NARRATIVE.provenance.strip}
-    footRight="the correction’s two readings live in The Middle → enc-2026-001; each dossier keeps the local record"
+  <StationSheet
+    id="field"
+    kicker={`${sheet.station.name.toUpperCase()} · ${sheet.station.resident.toUpperCase()} · ${sheet.station.corner}`}
+    h1={door.lead}
+    sub={door.rest}
+    status={sheet.status}
+    lede={sheet.lede && {
+      kicker: F.lede.kicker(sheet.lede.date),
+      title: sheet.lede.title,
+      teaser: sheet.ledeTeaser,
+      note: sheet.arc?.title ?? null,
+      noteLabel: F.lede.noteLabel,
+      links: [
+        { label: F.lede.open, href: sheet.lede.href },
+        { label: F.lede.record, href: '/field/instruments' },
+      ],
+    }}
+    log={sheet.log}
+    logMore={{ label: PYRAMID.station.wholeJournal, href: '/field/journal' }}
+    doors={sheet.doors}
   >
-    {/* Orientation first (wording canon: a visitor is told what this is before the artefact
-        arrives) — what the field is, then the practice as a band, then the dossier itself. */}
-    <p class="fd-room-intro">{FIELD_NARRATIVE.entrance.lede}</p>
+    <Figure
+      slot="figure-main"
+      title={F.gate.title}
+      sub={F.gate.sub}
+      link={{ label: F.gate.link(sheet.made.count), href: '/field/instruments' }}
+      caption={F.gate.caption(strip.marks.length, strip.statedCount)}
+    >
+      <GateStripFigure strip={strip} />
+    </Figure>
 
-    <OrientationList items={FIELD_NARRATIVE.orientation} />
-
-    <figure class="fd-band" aria-label={FIELD_NARRATIVE.shelf.heading}>
-      <figcaption class="fd-band-head">{FIELD_NARRATIVE.shelf.heading}</figcaption>
-      <div class="fd-band-scroll">
-        <svg viewBox={`0 0 ${BW} ${BH}`} role="img" aria-label={FIELD_NARRATIVE.shelf.caption}>
-          <line x1={bPadL - 6} y1={BY} x2={BW - bPadR + 26} y2={BY} class="b-tape" />
-          <path d={`M ${BW - bPadR + 26} ${BY} l 9 0 m -3.5 -3 l 3.5 3 l -3.5 3`} class="b-tape" />
-          {bandTicks.map((tk) => (
-            <a href={`#instrument-${tk.slug}`} class="b-tick-link">
-              <title>{`instrument ${tk.no} — ${tk.title} · ${tk.date}`}</title>
-              <line x1={tk.x} y1={BY} x2={tk.x} y2={BY - (tk.current ? 30 : 17)} class={tk.current ? 'b-tick b-tick-current' : 'b-tick'} />
-              {tk.current && <circle cx={tk.x} cy={BY - 34} r={3.2} class="b-tick-head" />}
-            </a>
-          ))}
-          <text x={bPadL} y={BY + 18} class="b-cap">{bandEntries[0][1].date}</text>
-          <text x={BW - bPadR} y={BY + 18} text-anchor="end" class="b-cap">{meta.date} · in service — the dossier below</text>
-        </svg>
-      </div>
-      <figcaption class="fd-band-legend">{FIELD_NARRATIVE.shelf.caption}</figcaption>
-    </figure>
-
-    {/* ——— THE DOSSIER: the entrance's centre since 2026-08-01 ———
-         It stands here — after the four orientation questions and the band, before the runtime
-         room — because that is the order the page has to read in: what is this practice → which
-         instruments exist → WHAT IS THE ONE IN SERVICE, AND WHAT DID EACH OF THE OTHERS FIND →
-         what tool the practice built for itself. Everything in it is quoted out of the
-         instrument's own committed record, beside the path it was read from. */}
-    <Dossier dossiers={dossiers} claim={claimModel} tourHref={TOUR_HREF} />
-
-    {/* Die Runtime (2026-07-25, Zuordnung geändert 2026-08-01): Meridians eigenes Werkzeug,
-        nicht die Engineering-Linie des Architekten. Was von enc-2026-005 bleibt: wer einen
-        einzelnen Lauf gefahren hat, wird benannt. Löst zugleich die Verwaisung von
-        /on-record und /e2e-automation. */}
-    <section class="fd-record fd-runtime">
-      <h2>{FIELD_NARRATIVE.runtime.heading}</h2>
-      <p class="fd-room-intro">{FIELD_NARRATIVE.runtime.body}</p>
-      <p class="fd-runtime-links">
-        <a href="/on-record">On Record — thirteen contradictions, kept visible →</a>
-        <a href="/e2e-automation">the field survey — end-to-end AI research automation →</a>
-        <a href="https://github.com/frankbueltge/meridian-runtime" target="_blank" rel="noreferrer">meridian-runtime — the source ↗</a>
-      </p>
-
-      {/* Das Journal der Runtime-Linie (2026-07-31): /on-record zeigt EINEN Export und
-          steht bei dessen Datum still — die Ableitung ist deterministisch, kein Nightly
-          kann sie erneuern. Was die Runtime danach getan hat, trägt diese Liste nach;
-          jeder Eintrag nennt seinen Commit (Aktualitäts-Regel 2026-07-25). */}
-      <ol class="fd-runtime-log">
-        {runtimeLog.entries.map((e) => (
-          <li>
-            <p class="fd-log-head">
-              <time datetime={e.date} class="fd-log-date">{e.date}</time>
-              <span class="fd-log-title">{e.headline}</span>
-            </p>
-            <p class="fd-log-note">{e.note}</p>
-            <p class="fd-log-src">
-              <a href={e.url} target="_blank" rel="noreferrer">{e.repo} · {e.commit.slice(0, 7)} ↗</a>
-            </p>
-          </li>
-        ))}
-      </ol>
-      <p class="fd-band-legend">{FIELD_NARRATIVE.runtime.logNote}</p>
-    </section>
-
-    {/* Öffentliche Saat: eine kontextuelle Zeile — ein Seed an genau diese Praxis (?to prefill). */}
-    <p class="fd-room-intro">
-      <a href="/seed?to=field-research" class="underline">Offer this practice a seed →</a>
-    </p>
-  </Frame>
+    <Figure slot="figure-side" title={F.gauntlet.title} sub={F.gauntlet.sub} caption={F.gauntlet.caption}>
+      <GauntletFigure rows={gauntlet} />
+    </Figure>
+  </StationSheet>
 </Page>
-
-<style>
-  .fd-band { margin: 0 0 1.9rem; }
-  .fd-band-head {
-    font-size: 12px;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--color-fg-faint);
-    margin-bottom: 0.35rem;
-  }
-  .fd-band-scroll { overflow-x: auto; }
-  .fd-band svg { width: 100%; min-width: 640px; height: auto; display: block; }
-  .b-tape { fill: none; stroke: var(--color-fg-muted); stroke-width: 1.1; }
-  .b-tick { stroke: var(--color-fg-faint); stroke-width: 2; }
-  .b-tick-link:hover .b-tick, .b-tick-link:focus .b-tick { stroke: var(--color-fg); }
-  .b-tick-current { stroke: var(--color-fg); stroke-width: 2.6; }
-  .b-tick-head { fill: var(--color-fg); }
-  .b-cap {
-    font-family: var(--font-mono, ui-monospace, monospace);
-    font-size: 10.5px;
-    fill: var(--color-fg-faint);
-  }
-  .fd-band-legend {
-    font-size: 0.74rem;
-    line-height: 1.55;
-    color: var(--color-fg-faint);
-    margin-top: 0.4rem;
-    max-width: 90ch;
-  }
-  .fd-runtime-links { display: flex; flex-direction: column; gap: 0.35rem; margin-top: 0.6rem; }
-  .fd-runtime-links a {
-    font-family: var(--font-mono, ui-monospace, monospace);
-    font-size: 0.78rem;
-    text-decoration: underline;
-    text-underline-offset: 4px;
-  }
-  .fd-runtime-log {
-    list-style: none;
-    margin: 1.1rem 0 0;
-    padding: 0;
-    max-width: 90ch;
-    border-top: 1px solid var(--color-line);
-  }
-  .fd-runtime-log > li {
-    padding: 0.75rem 0;
-    border-bottom: 1px solid var(--color-line);
-  }
-  .fd-log-head {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.2rem 0.7rem;
-    align-items: baseline;
-  }
-  .fd-log-date {
-    font-family: var(--font-mono, ui-monospace, monospace);
-    font-size: 0.72rem;
-    color: var(--color-fg-faint);
-    flex: none;
-  }
-  .fd-log-title { font-weight: 600; font-size: 0.92rem; }
-  .fd-log-note {
-    font-size: 0.82rem;
-    line-height: 1.6;
-    margin-top: 0.3rem;
-    color: var(--color-fg-muted, inherit);
-  }
-  .fd-log-src { margin-top: 0.35rem; }
-  .fd-log-src a {
-    font-family: var(--font-mono, ui-monospace, monospace);
-    font-size: 0.72rem;
-    color: var(--color-fg-faint);
-    text-decoration: underline;
-    text-underline-offset: 3px;
-  }
-</style>

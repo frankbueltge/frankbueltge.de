@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&display=swap" rel="stylesheet">
+<style>
+  body { margin:0; background:#151517; font-family:'Space Grotesk',ui-sans-serif,system-ui,sans-serif; -webkit-font-smoothing:antialiased; }
+  a { color:inherit; text-decoration:none; }
+  a:hover { opacity:0.8; }
+  @keyframes breathe { 0%,100% { transform:scaleY(1); } 50% { transform:scaleY(1.06); } }
+  @keyframes livedot { 0% { transform:scale(0.6); opacity:0.9; } 70%,100% { transform:scale(2.2); opacity:0; } }
+  @keyframes riseIn { 0% { opacity:0; transform:translateY(10px); } 100% { opacity:1; transform:none; } }
+  @keyframes tick { 0% { transform:translateX(-100%); } 100% { transform:translateX(0); } }
+  @keyframes scan { 0% { left:-8%; } 100% { left:104%; } }
+  @keyframes ledPulse { 0%,100% { opacity:1; } 50% { opacity:0.3; } }
+  @keyframes cursorBlink { 0%,49% { opacity:1; } 50%,100% { opacity:0; } }
+</style>
+</helmet>
+
+<section style="padding:48px" data-screen-label="Runde 3">
+  <p style="margin:0 0 24px; font-family:'JetBrains Mono',monospace; font-size:13px; letter-spacing:0.18em; text-transform:uppercase; color:#9a9aa2">Runde 3 · Ops-Room — lebendig &amp; klar, weniger Text, mehr Instrument</p>
+  <div style="display:flex; gap:56px; align-items:flex-start; flex-wrap:wrap; margin-bottom:72px">
+
+    <!-- ═══════════════ Option 3a — Ops Room ═══════════════ -->
+    <div id="3a" style="width:1180px; flex:none">
+      <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px">
+        <span style="font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:600; background:#2c2c33; color:#f4f4f5; padding:3px 10px; border-radius:4px">3a</span>
+        <span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#9a9aa2">Ops Room — Statusboard aller laufenden Systeme, Puls als Instrument, Signal-Log</span>
+      </div>
+      <div style="background:#0b1210; color:#dfe6e2; border-radius:8px; overflow:hidden; box-shadow:0 20px 60px rgba(0,0,0,0.5); background-image:linear-gradient(rgba(127,208,232,0.022) 1px, transparent 1px), linear-gradient(90deg, rgba(127,208,232,0.022) 1px, transparent 1px); background-size:48px 48px">
+        <header style="display:flex; height:52px; align-items:center; justify-content:space-between; border-bottom:1px solid #1c2624; padding:0 40px">
+          <span style="display:flex; align-items:center; gap:10px"><span style="height:7px; width:7px; border-radius:9999px; background:#7fd0e8; animation:ledPulse 2.6s ease-in-out infinite"></span><span style="font-size:14px; font-weight:600">Frank Bültge</span></span>
+          <nav style="display:flex; gap:24px; align-items:center; font-size:13.5px; color:#8fa09b">
+            <a href="#" style="display:inline-flex; align-items:center; gap:4px">Projects <span style="font-size:8px; margin-top:2px">▾</span></a><a href="#">Lab</a><a href="#">About</a><a href="#">Contact</a>
+          </nav>
+          <span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#7fd0e8">{{ utcClock }}</span>
+        </header>
+
+        <div style="padding:60px 40px 56px; display:grid; grid-template-columns:1fr 440px; gap:48px; align-items:center; border-bottom:1px solid #1c2624">
+          <div>
+            <p style="margin:0; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.22em; color:#7fd0e8">THE STANDING QUESTION</p>
+            <h1 style="margin:16px 0 0; font-size:47px; font-weight:700; letter-spacing:-0.02em; line-height:1.08; max-width:16ch">what machines are actually better at</h1>
+            <p style="margin:16px 0 0; max-width:50ch; font-size:15.5px; line-height:1.6; color:#8fa09b">Constant attention, nightly measurement, evidence at scale — and whether machines can research on their own and produce work that holds up. Every claim leads back to its evidence. Git is the archive.</p>
+            <div style="display:flex; gap:22px; margin-top:24px; font-family:'JetBrains Mono',monospace; font-size:12px">
+              <a href="#" style="color:#7fd0e8; text-decoration:underline; text-decoration-color:rgba(127,208,232,0.35); text-underline-offset:4px">enter the ecology →</a>
+              <a href="#" style="color:#8fa09b; text-decoration:underline; text-decoration-color:#1c2624; text-underline-offset:4px">tonight&#39;s works →</a>
+            </div>
+          </div>
+          <div style="border:1px solid #1c2624; background:rgba(13,21,19,0.85); border-radius:8px; overflow:hidden">
+            <div style="display:flex; justify-content:space-between; padding:10px 16px; border-bottom:1px solid #1c2624; font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:0.16em; color:#5f6f6a">
+              <span>PULSE · COMMITS, ALL 7 REPOSITORIES</span><span>ONE LINE PER WEEK · W27–W32</span>
+            </div>
+            <div style="position:relative; height:200px; overflow:hidden">
+              {{ opsPulse }}
+            </div>
+            <div style="display:flex; justify-content:space-between; padding:8px 16px; border-top:1px solid #1c2624; font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:0.14em; color:#5f6f6a">
+              <span>2-HOUR BINS · MA ×2</span><span>AS OF 2026-08-10 08:11 UTC</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="padding:56px 40px 0">
+          <div style="display:flex; align-items:baseline; justify-content:space-between">
+            <p style="margin:0; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.22em; color:#8fa09b"><b style="color:#dfe6e2">THE BOARD</b> · WHAT IS RUNNING HERE, LIVE FROM THE RECORD</p>
+            <a href="#" style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#5f6f6a; text-decoration:underline; text-underline-offset:4px">maschinenraum →</a>
+          </div>
+          <sc-for list="{{ boardGroups }}" as="g" hint-placeholder-count="2">
+            <div>
+              <p style="margin:24px 0 8px; font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:0.2em; color:#5f6f6a">{{ g.label }}</p>
+              <div style="border:1px solid #1c2624; border-radius:8px; overflow:hidden; background:rgba(13,21,19,0.7)">
+                <sc-for list="{{ g.rows }}" as="r" hint-placeholder-count="4">
+                  <a href="#" style="display:grid; grid-template-columns:14px 200px 1fr 96px 200px 74px; gap:14px; align-items:center; padding:13px 18px; border-top:1px solid rgba(28,38,36,0.7)" style-hover="background:rgba(127,208,232,0.045)">
+                    <span style="height:7px; width:7px; border-radius:9999px; background:{{ r.led }}; box-shadow:0 0 8px 0 {{ r.led }}; animation:ledPulse 2.6s ease-in-out infinite"></span>
+                    <span><span style="display:block; font-size:14.5px; font-weight:600">{{ r.name }}</span><span style="display:block; margin-top:2px; font-family:'JetBrains Mono',monospace; font-size:10px; color:#5f6f6a">{{ r.resident }}</span></span>
+                    <span style="font-size:13px; color:#8fa09b; line-height:1.45">{{ r.what }}</span>
+                    <span>{{ r.spark }}</span>
+                    <span><span style="display:block; font-family:'JetBrains Mono',monospace; font-size:11px; color:#dfe6e2">{{ r.last }}</span><span style="display:block; margin-top:2px; font-family:'JetBrains Mono',monospace; font-size:10px; color:#5f6f6a">{{ r.date }}</span></span>
+                    <span style="font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:0.14em; color:{{ r.statusColor }}; text-align:right">{{ r.status }}</span>
+                  </a>
+                </sc-for>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+
+        <div style="padding:56px 40px 0">
+          <div style="display:flex; align-items:baseline; justify-content:space-between">
+            <p style="margin:0; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.22em; color:#8fa09b"><b style="color:#dfe6e2">SIGNAL LOG</b> · WHAT LANDED LAST, NEWEST FIRST</p>
+            <a href="#" style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#5f6f6a; text-decoration:underline; text-underline-offset:4px">works register →</a>
+          </div>
+          <ul style="margin:18px 0 0; padding:0; list-style:none; border:1px solid #1c2624; border-radius:8px; background:rgba(13,21,19,0.7); overflow:hidden">
+            <sc-for list="{{ feed3 }}" as="w" hint-placeholder-count="5">
+              <li style="border-top:1px solid rgba(28,38,36,0.7); animation:riseIn 0.6s ease both; animation-delay:{{ w.delay }}">
+                <a href="#" style="display:flex; gap:14px; align-items:baseline; padding:12px 20px" style-hover="background:rgba(127,208,232,0.045)">
+                  <span style="width:6.5em; flex:none; font-family:'JetBrains Mono',monospace; font-size:11px; color:#5f6f6a">{{ w.date }}</span>
+                  <span style="width:7em; flex:none; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:{{ w.color }}">{{ w.ns }}</span>
+                  <span style="font-size:14px; font-weight:600; letter-spacing:-0.01em">{{ w.title }}</span>
+                  <span style="margin-left:auto; flex:none; font-family:'JetBrains Mono',monospace; font-size:10px; color:#5f6f6a">{{ w.kind }}</span>
+                </a>
+              </li>
+            </sc-for>
+          </ul>
+          <p style="margin:10px 0 0; font-family:'JetBrains Mono',monospace; font-size:11px; color:#5f6f6a">next sessions: tonight, before dawn UTC <span style="color:#7fd0e8; animation:cursorBlink 1.1s step-end infinite">▍</span></p>
+        </div>
+
+        <div style="padding:56px 40px 0">
+          <div style="display:flex; align-items:baseline; justify-content:space-between">
+            <p style="margin:0; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.22em; color:#8fa09b"><b style="color:#dfe6e2">LIVE EXPERIMENTS</b> · CURRENT READINGS — EVERYTHING THAT SHIPS DATA, DAILY</p>
+            <a href="#" style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#5f6f6a; text-decoration:underline; text-underline-offset:4px">lab →</a>
+          </div>
+          <div style="margin-top:16px; display:grid; grid-template-columns:repeat(4,1fr); gap:14px">
+            <sc-for list="{{ liveTiles }}" as="t" hint-placeholder-count="4">
+              <a href="#" style="border:1px solid #1c2624; border-radius:8px; background:rgba(13,21,19,0.7); padding:16px 18px 14px; display:flex; flex-direction:column; gap:0" style-hover="border-color:#5f6f6a">
+                <span style="display:flex; justify-content:space-between; align-items:center">
+                  <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.16em; color:#8fa09b">{{ t.name }}</span>
+                  <span style="height:6px; width:6px; border-radius:9999px; background:#7fd0e8; animation:ledPulse 2.6s ease-in-out infinite"></span>
+                </span>
+                <span style="display:block; margin-top:12px; font-family:'JetBrains Mono',monospace; font-size:25px; font-weight:500; letter-spacing:-0.01em; color:#dfe6e2">{{ t.big }}</span>
+                <span style="display:block; margin-top:6px; font-size:11.5px; color:#8fa09b; line-height:1.5; min-height:51px">{{ t.sub }}</span>
+                <span style="display:block; margin-top:10px">{{ t.viz }}</span>
+                <span style="display:block; margin-top:10px; font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:0.12em; color:#5f6f6a">{{ t.stamp }}</span>
+              </a>
+            </sc-for>
+          </div>
+          <p style="margin:14px 0 0; font-family:'JetBrains Mono',monospace; font-size:11px; color:#5f6f6a">catalogues, grown by machine: <a href="#" style="color:#8fa09b; text-decoration:underline; text-underline-offset:4px">Dataset Register</a> · <a href="#" style="color:#8fa09b; text-decoration:underline; text-underline-offset:4px">Paper Catalogue</a> · <a href="#" style="color:#8fa09b; text-decoration:underline; text-underline-offset:4px">Works Register</a></p>
+        </div>
+
+        <div style="padding:56px 40px 64px">
+          <p style="margin:0; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.22em; color:#8fa09b"><b style="color:#dfe6e2">THE OTHER HOUSES</b> · INDEPENDENT — WORKS TRAVEL BOTH WAYS</p>
+          <div style="margin-top:16px; display:grid; grid-template-columns:repeat(2,1fr); gap:14px">
+            <a href="#" style="border:1px solid #1c2624; border-radius:8px; background:rgba(13,21,19,0.7); padding:18px 20px" style-hover="border-color:#5f6f6a">
+              <span style="display:flex; justify-content:space-between; align-items:baseline"><span style="font-size:16px; font-weight:600">datavism.org</span><span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#5f6f6a">↗</span></span>
+              <span style="display:block; margin-top:6px; font-size:13px; color:#8fa09b; line-height:1.5">They track you. Learn to track back — a data-activism lab for the AI era.</span>
+            </a>
+            <a href="#" style="border:1px solid #1c2624; border-radius:8px; background:rgba(13,21,19,0.7); padding:18px 20px" style-hover="border-color:#5f6f6a">
+              <span style="display:flex; justify-content:space-between; align-items:baseline"><span style="font-size:16px; font-weight:600">data-snack.com</span><span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#5f6f6a">↗</span></span>
+              <span style="display:block; margin-top:6px; font-size:13px; color:#8fa09b; line-height:1.5">A character-driven data magazine — its collective, the Plenum, keeps minutes here.</span>
+            </a>
+          </div>
+        </div>
+
+        <footer style="border-top:1px solid #1c2624; background:#070c0a; padding:26px 40px; display:flex; justify-content:space-between; font-family:'JetBrains Mono',monospace; font-size:10.5px; color:#5f6f6a">
+          <span>© 2026 Frank Bültge · a federated research ecology</span>
+          <span>code Apache 2.0 · works CC BY 4.0 · data CC0 · Git is the archive</span>
+        </footer>
+      </div>
+    </div>
+
+    <!-- ═══════════════ Option 3c — Ops Room, monochrom ═══════════════ -->
+    <div id="3c" style="width:1180px; flex:none">
+      <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px">
+        <span style="font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:600; background:#2c2c33; color:#f4f4f5; padding:3px 10px; border-radius:4px">3c</span>
+        <span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#9a9aa2">Monochrom — 3a ohne Farbe: eine Stimme, nur Licht</span>
+      </div>
+      <div style="filter:grayscale(1); background:#0b1210; color:#dfe6e2; border-radius:8px; overflow:hidden; box-shadow:0 20px 60px rgba(0,0,0,0.5); background-image:linear-gradient(rgba(127,208,232,0.022) 1px, transparent 1px), linear-gradient(90deg, rgba(127,208,232,0.022) 1px, transparent 1px); background-size:48px 48px">
+        <header style="display:flex; height:52px; align-items:center; justify-content:space-between; border-bottom:1px solid #1c2624; padding:0 40px">
+          <span style="display:flex; align-items:center; gap:10px"><span style="height:7px; width:7px; border-radius:9999px; background:#7fd0e8; animation:ledPulse 2.6s ease-in-out infinite"></span><span style="font-size:14px; font-weight:600">Frank Bültge</span></span>
+          <nav style="display:flex; gap:24px; align-items:center; font-size:13.5px; color:#8fa09b">
+            <a href="#" style="display:inline-flex; align-items:center; gap:4px">Projects <span style="font-size:8px; margin-top:2px">▾</span></a><a href="#">Lab</a><a href="#">About</a><a href="#">Contact</a>
+          </nav>
+          <span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#7fd0e8">{{ utcClock }}</span>
+        </header>
+
+        <div style="padding:60px 40px 56px; display:grid; grid-template-columns:1fr 440px; gap:48px; align-items:center; border-bottom:1px solid #1c2624">
+          <div>
+            <p style="margin:0; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.22em; color:#7fd0e8">THE STANDING QUESTION</p>
+            <h1 style="margin:16px 0 0; font-size:47px; font-weight:700; letter-spacing:-0.02em; line-height:1.08; max-width:16ch">what machines are actually better at</h1>
+            <p style="margin:16px 0 0; max-width:50ch; font-size:15.5px; line-height:1.6; color:#8fa09b">Constant attention, nightly measurement, evidence at scale — and whether machines can research on their own and produce work that holds up. Every claim leads back to its evidence. Git is the archive.</p>
+            <div style="display:flex; gap:22px; margin-top:24px; font-family:'JetBrains Mono',monospace; font-size:12px">
+              <a href="#" style="color:#7fd0e8; text-decoration:underline; text-decoration-color:rgba(127,208,232,0.35); text-underline-offset:4px">enter the ecology →</a>
+              <a href="#" style="color:#8fa09b; text-decoration:underline; text-decoration-color:#1c2624; text-underline-offset:4px">tonight&#39;s works →</a>
+            </div>
+          </div>
+          <div style="border:1px solid #1c2624; background:rgba(13,21,19,0.85); border-radius:8px; overflow:hidden">
+            <div style="display:flex; justify-content:space-between; padding:10px 16px; border-bottom:1px solid #1c2624; font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:0.16em; color:#5f6f6a">
+              <span>PULSE · COMMITS, ALL 7 REPOSITORIES</span><span>ONE LINE PER WEEK · W27–W32</span>
+            </div>
+            <div style="position:relative; height:200px; overflow:hidden">
+              {{ opsPulse }}
+            </div>
+            <div style="display:flex; justify-content:space-between; padding:8px 16px; border-top:1px solid #1c2624; font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:0.14em; color:#5f6f6a">
+              <span>2-HOUR BINS · MA ×2</span><span>AS OF 2026-08-10 08:11 UTC</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="padding:56px 40px 0">
+          <div style="display:flex; align-items:baseline; justify-content:space-between">
+            <p style="margin:0; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.22em; color:#8fa09b"><b style="color:#dfe6e2">THE BOARD</b> · WHAT IS RUNNING HERE, LIVE FROM THE RECORD</p>
+            <a href="#" style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#5f6f6a; text-decoration:underline; text-underline-offset:4px">maschinenraum →</a>
+          </div>
+          <sc-for list="{{ boardGroups }}" as="g" hint-placeholder-count="2">
+            <div>
+              <p style="margin:24px 0 8px; font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:0.2em; color:#5f6f6a">{{ g.label }}</p>
+              <div style="border:1px solid #1c2624; border-radius:8px; overflow:hidden; background:rgba(13,21,19,0.7)">
+                <sc-for list="{{ g.rows }}" as="r" hint-placeholder-count="4">
+                  <a href="#" style="display:grid; grid-template-columns:14px 200px 1fr 96px 200px 74px; gap:14px; align-items:center; padding:13px 18px; border-top:1px solid rgba(28,38,36,0.7)" style-hover="background:rgba(127,208,232,0.045)">
+                    <span style="height:7px; width:7px; border-radius:9999px; background:{{ r.led }}; box-shadow:0 0 8px 0 {{ r.led }}; animation:ledPulse 2.6s ease-in-out infinite"></span>
+                    <span><span style="display:block; font-size:14.5px; font-weight:600">{{ r.name }}</span><span style="display:block; margin-top:2px; font-family:'JetBrains Mono',monospace; font-size:10px; color:#5f6f6a">{{ r.resident }}</span></span>
+                    <span style="font-size:13px; color:#8fa09b; line-height:1.45">{{ r.what }}</span>
+                    <span>{{ r.spark }}</span>
+                    <span><span style="display:block; font-family:'JetBrains Mono',monospace; font-size:11px; color:#dfe6e2">{{ r.last }}</span><span style="display:block; margin-top:2px; font-family:'JetBrains Mono',monospace; font-size:10px; color:#5f6f6a">{{ r.date }}</span></span>
+                    <span style="font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:0.14em; color:{{ r.statusColor }}; text-align:right">{{ r.status }}</span>
+                  </a>
+                </sc-for>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+
+        <div style="padding:56px 40px 0">
+          <div style="display:flex; align-items:baseline; justify-content:space-between">
+            <p style="margin:0; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.22em; color:#8fa09b"><b style="color:#dfe6e2">SIGNAL LOG</b> · WHAT LANDED LAST, NEWEST FIRST</p>
+            <a href="#" style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#5f6f6a; text-decoration:underline; text-underline-offset:4px">works register →</a>
+          </div>
+          <ul style="margin:18px 0 0; padding:0; list-style:none; border:1px solid #1c2624; border-radius:8px; background:rgba(13,21,19,0.7); overflow:hidden">
+            <sc-for list="{{ feed3 }}" as="w" hint-placeholder-count="5">
+              <li style="border-top:1px solid rgba(28,38,36,0.7); animation:riseIn 0.6s ease both; animation-delay:{{ w.delay }}">
+                <a href="#" style="display:flex; gap:14px; align-items:baseline; padding:12px 20px" style-hover="background:rgba(127,208,232,0.045)">
+                  <span style="width:6.5em; flex:none; font-family:'JetBrains Mono',monospace; font-size:11px; color:#5f6f6a">{{ w.date }}</span>
+                  <span style="width:7em; flex:none; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:{{ w.color }}">{{ w.ns }}</span>
+                  <span style="font-size:14px; font-weight:600; letter-spacing:-0.01em">{{ w.title }}</span>
+                  <span style="margin-left:auto; flex:none; font-family:'JetBrains Mono',monospace; font-size:10px; color:#5f6f6a">{{ w.kind }}</span>
+                </a>
+              </li>
+            </sc-for>
+          </ul>
+          <p style="margin:10px 0 0; font-family:'JetBrains Mono',monospace; font-size:11px; color:#5f6f6a">next sessions: tonight, before dawn UTC <span style="color:#7fd0e8; animation:cursorBlink 1.1s step-end infinite">▍</span></p>
+        </div>
+
+        <div style="padding:56px 40px 0">
+          <div style="display:flex; align-items:baseline; justify-content:space-between">
+            <p style="margin:0; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.22em; color:#8fa09b"><b style="color:#dfe6e2">LIVE EXPERIMENTS</b> · CURRENT READINGS — EVERYTHING THAT SHIPS DATA, DAILY</p>
+            <a href="#" style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#5f6f6a; text-decoration:underline; text-underline-offset:4px">lab →</a>
+          </div>
+          <div style="margin-top:16px; display:grid; grid-template-columns:repeat(4,1fr); gap:14px">
+            <sc-for list="{{ liveTiles }}" as="t" hint-placeholder-count="4">
+              <a href="#" style="border:1px solid #1c2624; border-radius:8px; background:rgba(13,21,19,0.7); padding:16px 18px 14px; display:flex; flex-direction:column; gap:0" style-hover="border-color:#5f6f6a">
+                <span style="display:flex; justify-content:space-between; align-items:center">
+                  <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.16em; color:#8fa09b">{{ t.name }}</span>
+                  <span style="height:6px; width:6px; border-radius:9999px; background:#7fd0e8; animation:ledPulse 2.6s ease-in-out infinite"></span>
+                </span>
+                <span style="display:block; margin-top:12px; font-family:'JetBrains Mono',monospace; font-size:25px; font-weight:500; letter-spacing:-0.01em; color:#dfe6e2">{{ t.big }}</span>
+                <span style="display:block; margin-top:6px; font-size:11.5px; color:#8fa09b; line-height:1.5; min-height:51px">{{ t.sub }}</span>
+                <span style="display:block; margin-top:10px">{{ t.viz }}</span>
+                <span style="display:block; margin-top:10px; font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:0.12em; color:#5f6f6a">{{ t.stamp }}</span>
+              </a>
+            </sc-for>
+          </div>
+          <p style="margin:14px 0 0; font-family:'JetBrains Mono',monospace; font-size:11px; color:#5f6f6a">catalogues, grown by machine: <a href="#" style="color:#8fa09b; text-decoration:underline; text-underline-offset:4px">Dataset Register</a> · <a href="#" style="color:#8fa09b; text-decoration:underline; text-underline-offset:4px">Paper Catalogue</a> · <a href="#" style="color:#8fa09b; text-decoration:underline; text-underline-offset:4px">Works Register</a></p>
+        </div>
+
+        <div style="padding:56px 40px 64px">
+          <p style="margin:0; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.22em; color:#8fa09b"><b style="color:#dfe6e2">THE OTHER HOUSES</b> · INDEPENDENT — WORKS TRAVEL BOTH WAYS</p>
+          <div style="margin-top:16px; display:grid; grid-template-columns:repeat(2,1fr); gap:14px">
+            <a href="#" style="border:1px solid #1c2624; border-radius:8px; background:rgba(13,21,19,0.7); padding:18px 20px" style-hover="border-color:#5f6f6a">
+              <span style="display:flex; justify-content:space-between; align-items:baseline"><span style="font-size:16px; font-weight:600">datavism.org</span><span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#5f6f6a">↗</span></span>
+              <span style="display:block; margin-top:6px; font-size:13px; color:#8fa09b; line-height:1.5">They track you. Learn to track back — a data-activism lab for the AI era.</span>
+            </a>
+            <a href="#" style="border:1px solid #1c2624; border-radius:8px; background:rgba(13,21,19,0.7); padding:18px 20px" style-hover="border-color:#5f6f6a">
+              <span style="display:flex; justify-content:space-between; align-items:baseline"><span style="font-size:16px; font-weight:600">data-snack.com</span><span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#5f6f6a">↗</span></span>
+              <span style="display:block; margin-top:6px; font-size:13px; color:#8fa09b; line-height:1.5">A character-driven data magazine — its collective, the Plenum, keeps minutes here.</span>
+            </a>
+          </div>
+        </div>
+
+        <footer style="border-top:1px solid #1c2624; background:#070c0a; padding:26px 40px; display:flex; justify-content:space-between; font-family:'JetBrains Mono',monospace; font-size:10.5px; color:#5f6f6a">
+          <span>© 2026 Frank Bültge · a federated research ecology</span>
+          <span>code Apache 2.0 · works CC BY 4.0 · data CC0 · Git is the archive</span>
+        </footer>
+      </div>
+    </div>
+
+    <!-- ═══════════════ Option 3b — Observatorium ═══════════════ -->
+    <div id="3b" style="width:1180px; flex:none">
+      <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px">
+        <span style="font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:600; background:#2c2c33; color:#f4f4f5; padding:3px 10px; border-radius:4px">3b</span>
+        <span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#9a9aa2">Observatorium — Tafeln wie ein wissenschaftlicher Atlas, Serifen, rotierendes Exponat</span>
+      </div>
+      <div style="background:#131210; color:#eae4d6; border-radius:8px; overflow:hidden; box-shadow:0 20px 60px rgba(0,0,0,0.5)">
+        <header style="display:flex; height:54px; align-items:center; justify-content:space-between; border-bottom:1px solid #2a2721; padding:0 40px">
+          <span style="font-family:'Newsreader',serif; font-size:17px; font-weight:500">Frank Bültge</span>
+          <nav style="display:flex; gap:24px; align-items:center; font-size:13.5px; color:#a49b88">
+            <a href="#" style="display:inline-flex; align-items:center; gap:4px">Projects <span style="font-size:8px; margin-top:2px">▾</span></a><a href="#">Lab</a><a href="#">About</a><a href="#">Contact</a>
+          </nav>
+          <span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; color:#6e675a">{{ utcClock }}</span>
+        </header>
+
+        <div style="position:relative; overflow:hidden; border-bottom:1px solid #2a2721">
+          <div style="position:absolute; inset:auto 0 -10px 0; height:230px; transform-origin:bottom; animation:breathe 8s ease-in-out infinite">{{ obsPulse }}</div>
+          <div style="position:relative; padding:88px 40px 250px; text-align:center">
+            <p style="margin:0; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.28em; color:#d8b96a">TAFEL I · THE STANDING QUESTION</p>
+            <h1 style="margin:22px auto 0; max-width:20ch; font-family:'Newsreader',serif; font-size:58px; font-weight:400; letter-spacing:-0.01em; line-height:1.05">what machines are actually better at</h1>
+            <p style="margin:20px auto 0; max-width:52ch; font-size:16px; line-height:1.6; color:#a49b88">— and whether they can research on their own: constant attention, nightly measurement, evidence at scale. Every claim returns to its evidence. Git is the archive.</p>
+            <p style="margin:24px 0 0; font-family:'JetBrains Mono',monospace; font-size:10.5px; color:#6e675a"><span style="position:relative; display:inline-block; height:6px; width:6px; border-radius:9999px; background:#d8b96a; margin-right:8px"><span style="position:absolute; inset:-2px; border-radius:9999px; border:1px solid rgba(216,185,106,0.5); animation:livedot 2.4s ease-out infinite"></span></span>{{ liveLine3 }}</p>
+          </div>
+        </div>
+
+        <div style="padding:76px 40px 0; text-align:center">
+          <p style="margin:0; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.28em; color:#d8b96a">TAFEL II · THE ECOLOGY</p>
+          <p style="margin:14px auto 0; max-width:44ch; font-family:'Newsreader',serif; font-size:25px; font-weight:400; line-height:1.3">three machine-run practices, and a contact zone where they meet</p>
+          <div style="margin-top:32px; display:grid; grid-template-columns:repeat(3,1fr); gap:14px; text-align:left">
+            <sc-for list="{{ practices3 }}" as="p" hint-placeholder-count="3">
+              <a href="#" style="border:1px solid #2a2721; border-radius:6px; background:#171613; padding:24px 24px 20px" style-hover="border-color:#6e675a">
+                <span style="display:block; height:2px; width:30px; background:{{ p.color }}; margin-bottom:16px"></span>
+                <span style="display:block; font-family:'Newsreader',serif; font-size:21px; font-weight:500">{{ p.name }}</span>
+                <span style="display:block; margin-top:3px; font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:0.18em; color:#6e675a">{{ p.resident }}</span>
+                <span style="display:block; margin-top:12px; font-size:13.5px; color:#a49b88; line-height:1.55; min-height:63px">{{ p.what }}</span>
+                <span style="display:block; margin-top:14px; padding-top:12px; border-top:1px solid #2a2721; font-family:'JetBrains Mono',monospace; font-size:10.5px; color:#6e675a">last: {{ p.last }} · {{ p.date }}</span>
+              </a>
+            </sc-for>
+          </div>
+          <div style="margin-top:12px; border:1px solid #2a2721; border-radius:6px; background:#171613; padding:14px 24px; display:flex; justify-content:space-between; align-items:baseline; gap:20px; text-align:left">
+            <span style="font-size:13.5px; color:#a49b88"><b style="color:#eae4d6; font-weight:600">The Middle</b> — no resident, kept by the conductor · where the practices meet, cite and correct each other</span>
+            <a href="#" style="flex:none; font-family:'JetBrains Mono',monospace; font-size:11px; color:#6e675a; text-decoration:underline; text-underline-offset:4px">encounter ledger →</a>
+          </div>
+        </div>
+
+        <div style="padding:76px 40px 0">
+          <p style="margin:0; text-align:center; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.28em; color:#d8b96a">TAFEL III · TONIGHT&#39;S EXHIBIT</p>
+          <div onMouseEnter="{{ pause }}" onMouseLeave="{{ resume }}" style="margin-top:28px; position:relative; border:1px solid #2a2721; border-radius:6px; background:#171613; overflow:hidden">
+            <div style="position:absolute; top:0; left:0; height:2px; background:rgba(216,185,106,0.55); width:{{ exProgressW }}; transition:width 0.3s linear"></div>
+            <div style="display:grid; grid-template-columns:1fr 300px">
+              <div style="padding:42px 46px 38px">
+                <p style="margin:0; font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:0.14em; color:{{ sp.color }}">{{ sp.date }} · {{ sp.ns }} · {{ sp.kind }}</p>
+                <h2 style="margin:14px 0 0; font-family:'Newsreader',serif; font-size:40px; font-weight:400; letter-spacing:-0.005em; line-height:1.08" key="{{ sp.title }}"><span style="display:inline-block; animation:riseIn 0.5s ease both">{{ sp.title }}</span></h2>
+                <p style="margin:16px 0 0; max-width:60ch; font-size:15px; line-height:1.65; color:#a49b88">{{ sp.teaser }}</p>
+                <a href="#" style="display:inline-block; margin-top:20px; font-family:'JetBrains Mono',monospace; font-size:11.5px; color:#eae4d6; text-decoration:underline; text-decoration-color:#2a2721; text-underline-offset:4px">view the work →</a>
+              </div>
+              <div style="border-left:1px solid #2a2721; display:flex; flex-direction:column">
+                <sc-for list="{{ spSide }}" as="s" hint-placeholder-count="4">
+                  <button onClick="{{ s.go }}" style="text-align:left; border:none; border-bottom:1px solid #2a2721; background:transparent; padding:13px 20px; cursor:pointer; color:#eae4d6; flex:1" style-hover="background:rgba(216,185,106,0.05)">
+                    <span style="display:block; font-size:13.5px; font-weight:500">{{ s.title }}</span>
+                    <span style="display:block; margin-top:3px; font-family:'JetBrains Mono',monospace; font-size:9.5px; color:#6e675a">{{ s.date }} · {{ s.ns }}</span>
+                  </button>
+                </sc-for>
+                <span style="padding:12px 20px; font-family:'JetBrains Mono',monospace; font-size:9.5px; color:#6e675a; line-height:1.6">the five newest works — new material lands nightly</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="padding:76px 40px 0; display:grid; grid-template-columns:repeat(3,1fr); gap:40px">
+          <div>
+            <p style="margin:0; font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:0.24em; color:#6e675a">BESIDE THE ECOLOGY</p>
+            <div style="margin-top:10px">
+              <sc-for list="{{ beside3 }}" as="b" hint-placeholder-count="2">
+                <a href="#" style="display:block; padding:12px 0; border-top:1px solid #2a2721">
+                  <span style="display:block; font-size:14px; font-weight:600">{{ b.name }}</span>
+                  <span style="display:block; margin-top:3px; font-size:12.5px; color:#a49b88; line-height:1.5">{{ b.desc }}</span>
+                </a>
+              </sc-for>
+            </div>
+          </div>
+          <div>
+            <p style="margin:0; font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:0.24em; color:#6e675a">EARLIER EXPERIMENTS</p>
+            <div style="margin-top:10px">
+              <sc-for list="{{ exp3 }}" as="e" hint-placeholder-count="3">
+                <a href="#" style="display:block; padding:12px 0; border-top:1px solid #2a2721">
+                  <span style="display:block; font-size:14px; font-weight:600">{{ e.name }}</span>
+                  <span style="display:block; margin-top:3px; font-size:12.5px; color:#a49b88; line-height:1.5">{{ e.desc }}</span>
+                </a>
+              </sc-for>
+            </div>
+          </div>
+          <div>
+            <p style="margin:0; font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:0.24em; color:#6e675a">CATALOGUES, GROWN BY MACHINE</p>
+            <div style="margin-top:10px">
+              <sc-for list="{{ cat3 }}" as="c" hint-placeholder-count="4">
+                <a href="#" style="display:flex; justify-content:space-between; gap:12px; align-items:baseline; padding:12px 0; border-top:1px solid #2a2721">
+                  <span style="font-size:14px; font-weight:600; flex:none">{{ c.name }}</span>
+                  <span style="font-family:'JetBrains Mono',monospace; font-size:10px; color:#6e675a">→</span>
+                </a>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+
+        <div style="padding:68px 40px 72px">
+          <p style="margin:0; text-align:center; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.28em; color:#d8b96a">TAFEL IV · THE OTHER HOUSES</p>
+          <div style="margin-top:24px; display:grid; grid-template-columns:repeat(2,1fr); gap:14px">
+            <a href="#" style="border:1px solid #2a2721; border-radius:6px; background:#171613; padding:20px 24px" style-hover="border-color:#6e675a">
+              <span style="display:flex; justify-content:space-between; align-items:baseline"><span style="font-family:'Newsreader',serif; font-size:19px; font-weight:500">datavism.org</span><span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#6e675a">↗</span></span>
+              <span style="display:block; margin-top:6px; font-size:13px; color:#a49b88; line-height:1.5">They track you. Learn to track back — a data-activism lab for the AI era.</span>
+            </a>
+            <a href="#" style="border:1px solid #2a2721; border-radius:6px; background:#171613; padding:20px 24px" style-hover="border-color:#6e675a">
+              <span style="display:flex; justify-content:space-between; align-items:baseline"><span style="font-family:'Newsreader',serif; font-size:19px; font-weight:500">data-snack.com</span><span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#6e675a">↗</span></span>
+              <span style="display:block; margin-top:6px; font-size:13px; color:#a49b88; line-height:1.5">A character-driven data magazine — its collective, the Plenum, keeps minutes here.</span>
+            </a>
+          </div>
+        </div>
+
+        <footer style="border-top:1px solid #2a2721; background:#0d0c0a; padding:26px 40px; display:flex; justify-content:space-between; font-family:'JetBrains Mono',monospace; font-size:10.5px; color:#6e675a">
+          <span>© 2026 Frank Bültge · a federated research ecology</span>
+          <span>code Apache 2.0 · works CC BY 4.0 · data CC0 · Git is the archive</span>
+        </footer>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section style="padding:48px">
+  <p style="margin:0 0 24px; font-family:'JetBrains Mono',monospace; font-size:13px; letter-spacing:0.18em; text-transform:uppercase; color:#9a9aa2">Runde 2 · Der atmende Entwurf, ausgebaut — Experimente im Fokus, Projekte als „other houses“</p>
+  <div style="display:flex; gap:56px; align-items:flex-start; flex-wrap:wrap; margin-bottom:72px">
+
+    <!-- ═══════════════ Option 2a — Ruhiger Atem ═══════════════ -->
+    <div id="2a" style="width:1180px; flex:none">
+      <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px">
+        <span style="font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:600; background:#2c2c33; color:#f4f4f5; padding:3px 10px; border-radius:4px">2a</span>
+        <span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#9a9aa2">Ruhiger Atem — Puls-Hero, Experiment-Karussell, dezente Bewegung</span>
+      </div>
+      <div style="background:#0a0a0a; color:#f4f4f5; border-radius:8px; overflow:hidden; box-shadow:0 20px 60px rgba(0,0,0,0.5)">
+        <header style="display:flex; height:52px; align-items:center; justify-content:space-between; border-bottom:1px solid #242427; padding:0 40px">
+          <span style="display:flex; align-items:center; gap:10px"><span style="height:7px; width:7px; border-radius:9999px; background:#fafafa"></span><span style="font-size:14px; font-weight:600">Frank Bültge</span></span>
+          <nav style="display:flex; gap:24px; font-size:14px; color:#a3a3a8">
+            <a href="#">Experiments</a><a href="#">Research Ecology</a><a href="#">Projects</a><a href="#">About</a><a href="#">Contact</a>
+          </nav>
+        </header>
+
+        <div style="position:relative; overflow:hidden; border-bottom:1px solid #242427">
+          <div style="position:absolute; inset:auto 0 -10px 0; height:230px; transform-origin:bottom; animation:breathe 7s ease-in-out infinite">{{ heroPulse }}</div>
+          <div style="position:relative; padding:76px 40px 250px; text-align:center">
+            <p style="margin:0; font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.22em; text-transform:uppercase; color:#a3a3a8">Frank Bültge · Data Engineering &amp; Analytics</p>
+            <h1 style="margin:18px auto 0; max-width:22ch; font-size:56px; font-weight:700; letter-spacing:-0.025em; line-height:1.05">Experiments with data and AI, on the record</h1>
+            <p style="margin:18px auto 0; max-width:56ch; font-size:16px; line-height:1.55; color:#a3a3a8">One law governs everything published here: make it verifiable — no claim without evidence, failures kept visible, Git as the archive.</p>
+            <p style="margin:22px 0 0; font-family:'JetBrains Mono',monospace; font-size:11px; color:#8b8b92"><span style="position:relative; display:inline-block; height:7px; width:7px; border-radius:9999px; background:#d4d4d8; box-shadow:0 0 9px 1px rgba(244,244,245,0.55); margin-right:8px"><span style="position:absolute; inset:-2px; border-radius:9999px; border:1.5px solid rgba(244,244,245,0.5); animation:livedot 2.4s ease-out infinite"></span></span>{{ liveLine }}</p>
+          </div>
+        </div>
+
+        <div style="padding:72px 40px 0; max-width:1100px; margin:0 auto; box-sizing:border-box">
+          <p style="margin:0; font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.22em; text-transform:uppercase; color:#a3a3a8"><b style="color:#f4f4f5">The experiments</b> · one at a time — each with its own method</p>
+          <div style="margin-top:24px; display:grid; grid-template-columns:1fr 340px; gap:14px; align-items:stretch">
+            <div onMouseEnter="{{ pause }}" onMouseLeave="{{ resume }}" style="position:relative; border:1px solid #242427; border-radius:10px; background:#141414; padding:44px 48px; overflow:hidden; min-height:320px; box-sizing:border-box">
+              <div style="position:absolute; top:0; left:0; right:0; height:3px; background:{{ exCur.color }}"></div>
+              <div style="position:absolute; top:0; left:0; height:3px; background:rgba(255,255,255,0.35); width:{{ exProgressW }}; transition:width 0.3s linear"></div>
+              <p style="margin:0; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.18em; text-transform:uppercase; color:#8b8b92">{{ exCur.kicker }}</p>
+              <h2 style="margin:14px 0 0; font-size:42px; font-weight:700; letter-spacing:-0.02em; line-height:1.05" key="{{ exCur.name }}"><span style="display:inline-block; animation:riseIn 0.5s ease both">{{ exCur.name }}</span></h2>
+              <p style="margin:14px 0 0; max-width:46ch; font-size:17px; line-height:1.5; color:#a3a3a8">{{ exCur.tagline }}</p>
+              <p style="margin:12px 0 0; max-width:52ch; font-family:'JetBrains Mono',monospace; font-size:12px; line-height:1.7; color:#8b8b92">{{ exCur.fact }}</p>
+              <a href="#" style="display:inline-block; margin-top:22px; font-family:'JetBrains Mono',monospace; font-size:12px; color:#f4f4f5; text-decoration:underline; text-decoration-color:#242427; text-underline-offset:4px">{{ exCur.cta }}</a>
+              <div style="position:absolute; bottom:20px; right:24px; display:flex; gap:8px">
+                <sc-for list="{{ exDots }}" as="d" hint-placeholder-count="5">
+                  <button onClick="{{ d.go }}" style="height:8px; width:8px; border-radius:9999px; border:none; cursor:pointer; padding:0; background:{{ d.bg }}"></button>
+                </sc-for>
+              </div>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:10px">
+              <sc-for list="{{ exSide }}" as="s" hint-placeholder-count="4">
+                <button onClick="{{ s.go }}" style="text-align:left; border:1px solid #242427; border-radius:10px; background:#141414; padding:14px 18px; cursor:pointer; color:#f4f4f5; flex:1">
+                  <span style="display:flex; justify-content:space-between; align-items:baseline"><span style="font-size:15px; font-weight:600">{{ s.name }}</span><span style="font-family:'JetBrains Mono',monospace; font-size:10px; color:#8b8b92">{{ s.year }}</span></span>
+                  <span style="display:block; margin-top:4px; font-size:12.5px; color:#a3a3a8; line-height:1.45">{{ s.short }}</span>
+                </button>
+              </sc-for>
+              <a href="#" style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#8b8b92; text-decoration:underline; text-underline-offset:4px; padding:6px 4px 0">all experiments →</a>
+            </div>
+          </div>
+
+          <div style="margin-top:80px; display:flex; align-items:baseline; justify-content:space-between">
+            <p style="margin:0; font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.22em; text-transform:uppercase; color:#a3a3a8"><b style="color:#f4f4f5">Tonight&#39;s record</b> · what the machines last made</p>
+            <a href="#" style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#8b8b92; text-decoration:underline; text-underline-offset:4px">the whole ecology →</a>
+          </div>
+          <ul style="margin:20px 0 0; padding:0; list-style:none; border:1px solid #242427; border-radius:10px; background:#141414; overflow:hidden">
+            <sc-for list="{{ feed }}" as="w" hint-placeholder-count="5">
+              <li style="border-top:1px solid rgba(36,36,39,0.6); animation:riseIn 0.6s ease both; animation-delay:{{ w.delay }}">
+                <a href="#" style="display:flex; gap:14px; align-items:baseline; padding:13px 22px">
+                  <span style="width:6.5em; flex:none; font-family:'JetBrains Mono',monospace; font-size:11px; color:#8b8b92">{{ w.date }}</span>
+                  <span style="width:7em; flex:none; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:{{ w.color }}">{{ w.ns }}</span>
+                  <span style="font-size:14.5px; font-weight:600; letter-spacing:-0.01em">{{ w.title }}</span>
+                  <span style="margin-left:auto; flex:none; font-family:'JetBrains Mono',monospace; font-size:10px; color:#8b8b92">{{ w.kind }}</span>
+                </a>
+              </li>
+            </sc-for>
+          </ul>
+          <p style="margin:12px 0 0; font-family:'JetBrains Mono',monospace; font-size:11px; color:#8b8b92">the living edge — new works land here as the practices make them, night after night</p>
+
+          <div style="margin-top:80px; padding-bottom:72px">
+            <p style="margin:0; font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.22em; text-transform:uppercase; color:#a3a3a8"><b style="color:#f4f4f5">The other houses</b> · main projects in their own right</p>
+            <div style="margin-top:20px; display:grid; grid-template-columns:repeat(2,1fr); gap:14px">
+              <a href="#" style="border:1px solid #242427; border-radius:10px; background:#141414; padding:20px" style-hover="border-color:#8b8b92">
+                <span style="display:flex; justify-content:space-between; align-items:baseline"><span style="font-size:17px; font-weight:600">datavism.org</span><span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:#8b8b92">in development</span></span>
+                <span style="display:block; margin-top:8px; font-size:14px; color:#a3a3a8; line-height:1.5">They track you. Learn to track back. A data-activism lab for the AI era — suspicion into testable questions, hidden systems into public evidence.</span>
+              </a>
+              <a href="#" style="border:1px solid #242427; border-radius:10px; background:#141414; padding:20px" style-hover="border-color:#8b8b92">
+                <span style="display:flex; justify-content:space-between; align-items:baseline"><span style="font-size:17px; font-weight:600">data-snack.com</span><span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:#8b8b92">active</span></span>
+                <span style="display:block; margin-top:8px; font-size:14px; color:#a3a3a8; line-height:1.5">Bite-sized data — interactive mini-experiments. A character-driven data magazine set in a neon-lit cyber-diner.</span>
+              </a>
+            </div>
+            <p style="margin:16px 0 0; font-family:'JetBrains Mono',monospace; font-size:11px; color:#8b8b92">independent houses, their own rules — works travel between them and the experiments, in both directions</p>
+          </div>
+        </div>
+
+        <footer style="border-top:1px solid #242427; background:#000; padding:28px 40px; display:flex; justify-content:space-between; font-family:'JetBrains Mono',monospace; font-size:11px; color:#8b8b92">
+          <span>© 2026 Frank Bültge</span>
+          <span>code Apache 2.0 · works CC BY 4.0 · data CC0 · Git is the archive</span>
+        </footer>
+      </div>
+    </div>
+
+    <!-- ═══════════════ Option 2b — Voller Betrieb ═══════════════ -->
+    <div id="2b" style="width:1180px; flex:none">
+      <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px">
+        <span style="font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:600; background:#2c2c33; color:#f4f4f5; padding:3px 10px; border-radius:4px">2b</span>
+        <span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#9a9aa2">Voller Betrieb — Nacht-Ticker, gezeichneter Puls, mehr Maschine sichtbar</span>
+      </div>
+      <div style="background:#0a0a0a; color:#f4f4f5; border-radius:8px; overflow:hidden; box-shadow:0 20px 60px rgba(0,0,0,0.5)">
+        <header style="display:flex; height:52px; align-items:center; justify-content:space-between; border-bottom:1px solid #242427; padding:0 40px">
+          <span style="display:flex; align-items:center; gap:10px"><span style="height:7px; width:7px; border-radius:9999px; background:#fafafa"></span><span style="font-size:14px; font-weight:600">Frank Bültge</span></span>
+          <nav style="display:flex; gap:24px; font-size:14px; color:#a3a3a8">
+            <a href="#">Experiments</a><a href="#">Research Ecology</a><a href="#">Projects</a><a href="#">About</a><a href="#">Contact</a>
+          </nav>
+        </header>
+
+        <div style="border-bottom:1px solid #242427; background:#0d0d0f; overflow:hidden; white-space:nowrap; padding:7px 0; position:relative">
+          <div style="display:inline-block; animation:tick 40s linear infinite; font-family:'JetBrains Mono',monospace; font-size:11px; color:#8b8b92">{{ tickerLine }}</div>
+        </div>
+
+        <div style="position:relative; overflow:hidden; border-bottom:1px solid #242427">
+          <div style="position:absolute; inset:auto 0 -10px 0; height:250px; transform-origin:bottom; animation:breathe 5.5s ease-in-out infinite">{{ heroPulseDrawn }}</div>
+          <div style="position:relative; padding:70px 40px 260px; text-align:center">
+            <p style="margin:0; font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.22em; text-transform:uppercase; color:#a3a3a8">Frank Bültge · Data Engineering &amp; Analytics</p>
+            <h1 style="margin:18px auto 0; max-width:22ch; font-size:56px; font-weight:700; letter-spacing:-0.025em; line-height:1.05">The machines ran last night</h1>
+            <p style="margin:18px auto 0; max-width:56ch; font-size:16px; line-height:1.55; color:#a3a3a8">Experiments with data and AI — machine-run, published unedited, verifiable down to the commit. What you see below landed while you slept.</p>
+            <p style="margin:22px 0 0; font-family:'JetBrains Mono',monospace; font-size:11px; color:#8b8b92"><span style="position:relative; display:inline-block; height:7px; width:7px; border-radius:9999px; background:#d4d4d8; box-shadow:0 0 9px 1px rgba(244,244,245,0.55); margin-right:8px"><span style="position:absolute; inset:-2px; border-radius:9999px; border:1.5px solid rgba(244,244,245,0.5); animation:livedot 2.4s ease-out infinite"></span></span>{{ liveLine }}</p>
+          </div>
+        </div>
+
+        <div style="padding:72px 40px 0; max-width:1100px; margin:0 auto; box-sizing:border-box">
+          <p style="margin:0; font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.22em; text-transform:uppercase; color:#a3a3a8"><b style="color:#f4f4f5">The experiments</b> · the bench, in rotation</p>
+          <div style="margin-top:24px; position:relative; border:1px solid #242427; border-radius:10px; background:#141414; overflow:hidden" onMouseEnter="{{ pause }}" onMouseLeave="{{ resume }}">
+            <div style="position:absolute; top:0; left:0; right:0; height:3px; background:{{ exCur.color }}"></div>
+            <div style="position:absolute; top:0; left:0; height:3px; background:rgba(255,255,255,0.35); width:{{ exProgressW }}; transition:width 0.3s linear"></div>
+            <div style="display:grid; grid-template-columns:1fr 320px; gap:0">
+              <div style="padding:46px 48px 40px">
+                <p style="margin:0; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.18em; text-transform:uppercase; color:#8b8b92">{{ exCur.kicker }}</p>
+                <h2 style="margin:14px 0 0; font-size:46px; font-weight:700; letter-spacing:-0.02em; line-height:1.05" key="{{ exCur.name }}"><span style="display:inline-block; animation:riseIn 0.5s ease both">{{ exCur.name }}</span></h2>
+                <p style="margin:14px 0 0; max-width:44ch; font-size:17px; line-height:1.5; color:#a3a3a8">{{ exCur.tagline }}</p>
+                <p style="margin:12px 0 0; max-width:50ch; font-family:'JetBrains Mono',monospace; font-size:12px; line-height:1.7; color:#8b8b92">{{ exCur.fact }}</p>
+                <a href="#" style="display:inline-block; margin-top:22px; font-family:'JetBrains Mono',monospace; font-size:12px; color:#f4f4f5; text-decoration:underline; text-decoration-color:#242427; text-underline-offset:4px">{{ exCur.cta }}</a>
+              </div>
+              <div style="border-left:1px solid #242427; display:flex; flex-direction:column">
+                <sc-for list="{{ exRail }}" as="s" hint-placeholder-count="5">
+                  <button onClick="{{ s.go }}" style="text-align:left; border:none; border-bottom:1px solid rgba(36,36,39,0.6); background:{{ s.bg }}; padding:13px 20px; cursor:pointer; color:#f4f4f5; flex:1; display:flex; align-items:center; gap:12px">
+                    <span style="height:6px; width:6px; border-radius:9999px; flex:none; background:{{ s.dotColor }}"></span>
+                    <span style="font-size:13.5px; font-weight:{{ s.weight }}">{{ s.name }}</span>
+                    <span style="margin-left:auto; font-family:'JetBrains Mono',monospace; font-size:10px; color:#8b8b92">{{ s.year }}</span>
+                  </button>
+                </sc-for>
+                <a href="#" style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#8b8b92; text-decoration:underline; text-underline-offset:4px; padding:13px 20px">all experiments →</a>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top:80px; display:flex; align-items:baseline; justify-content:space-between">
+            <p style="margin:0; font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.22em; text-transform:uppercase; color:#a3a3a8"><b style="color:#f4f4f5">Tonight&#39;s record</b> · newest first, night after night</p>
+            <a href="#" style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#8b8b92; text-decoration:underline; text-underline-offset:4px">the whole ecology →</a>
+          </div>
+          <ul style="margin:20px 0 0; padding:0; list-style:none; border:1px solid #242427; border-radius:10px; background:#141414; overflow:hidden">
+            <sc-for list="{{ feed }}" as="w" hint-placeholder-count="5">
+              <li style="border-top:1px solid rgba(36,36,39,0.6); animation:riseIn 0.6s ease both; animation-delay:{{ w.delay }}">
+                <a href="#" style="display:flex; gap:14px; align-items:baseline; padding:13px 22px">
+                  <span style="width:6.5em; flex:none; font-family:'JetBrains Mono',monospace; font-size:11px; color:#8b8b92">{{ w.date }}</span>
+                  <span style="width:7em; flex:none; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:{{ w.color }}">{{ w.ns }}</span>
+                  <span style="font-size:14.5px; font-weight:600; letter-spacing:-0.01em">{{ w.title }}</span>
+                  <span style="margin-left:auto; flex:none; font-family:'JetBrains Mono',monospace; font-size:10px; color:#8b8b92">{{ w.kind }}</span>
+                </a>
+              </li>
+            </sc-for>
+          </ul>
+
+          <div style="margin-top:80px; padding-bottom:72px">
+            <p style="margin:0; font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.22em; text-transform:uppercase; color:#a3a3a8"><b style="color:#f4f4f5">The other houses</b> · main projects in their own right</p>
+            <div style="margin-top:20px; display:grid; grid-template-columns:repeat(2,1fr); gap:14px">
+              <a href="#" style="border:1px solid #242427; border-radius:10px; background:#141414; padding:20px" style-hover="border-color:#8b8b92">
+                <span style="display:flex; justify-content:space-between; align-items:baseline"><span style="font-size:17px; font-weight:600">datavism.org</span><span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:#8b8b92">in development</span></span>
+                <span style="display:block; margin-top:8px; font-size:14px; color:#a3a3a8; line-height:1.5">They track you. Learn to track back. A data-activism lab for the AI era — suspicion into testable questions, hidden systems into public evidence.</span>
+              </a>
+              <a href="#" style="border:1px solid #242427; border-radius:10px; background:#141414; padding:20px" style-hover="border-color:#8b8b92">
+                <span style="display:flex; justify-content:space-between; align-items:baseline"><span style="font-size:17px; font-weight:600">data-snack.com</span><span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:#8b8b92">active</span></span>
+                <span style="display:block; margin-top:8px; font-size:14px; color:#a3a3a8; line-height:1.5">Bite-sized data — interactive mini-experiments. A character-driven data magazine set in a neon-lit cyber-diner.</span>
+              </a>
+            </div>
+            <p style="margin:16px 0 0; font-family:'JetBrains Mono',monospace; font-size:11px; color:#8b8b92">independent houses, their own rules — works travel between them and the experiments, in both directions</p>
+          </div>
+        </div>
+
+        <footer style="border-top:1px solid #242427; background:#000; padding:28px 40px; display:flex; justify-content:space-between; font-family:'JetBrains Mono',monospace; font-size:11px; color:#8b8b92">
+          <span>© 2026 Frank Bültge</span>
+          <span>code Apache 2.0 · works CC BY 4.0 · data CC0 · Git is the archive</span>
+        </footer>
+      </div>
+    </div>
+
+  </div>
+  <p style="margin:0 0 24px; font-family:'JetBrains Mono',monospace; font-size:13px; letter-spacing:0.18em; text-transform:uppercase; color:#55555c">Runde 1 · Zwei Richtungen für die neue Homepage (verworfen: <a href="#1a" style="color:#55555c; text-decoration:underline">1a</a> statisch geskippt, <a href="#1b" style="color:#55555c; text-decoration:underline">1b</a> Basis für Runde 2)</p>
+  <div style="display:flex; gap:56px; align-items:flex-start; flex-wrap:wrap">
+
+    <!-- ═══════════════ Option 1a — Das Register (ruhig & statisch) ═══════════════ -->
+    <div id="1a" style="width:1180px; flex:none">
+      <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px">
+        <span style="font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:600; background:#2c2c33; color:#f4f4f5; padding:3px 10px; border-radius:4px">1a</span>
+        <span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#9a9aa2">Das Register — ruhig &amp; statisch, helles Papier</span>
+      </div>
+      <div style="background:#edeef0; color:#15161a; border-radius:8px; overflow:hidden; box-shadow:0 20px 60px rgba(0,0,0,0.4)">
+        <header style="display:flex; height:52px; align-items:center; justify-content:space-between; border-bottom:1px solid #d6d7dc; padding:0 40px">
+          <span style="display:flex; align-items:center; gap:10px"><span style="height:7px; width:7px; border-radius:9999px; background:#0c0c0f"></span><span style="font-size:14px; font-weight:600">Frank Bültge</span></span>
+          <nav style="display:flex; gap:24px; font-size:14px; color:#54555c">
+            <a href="#">Projects</a><a href="#">Research Ecology</a><a href="#">Experiments</a><a href="#">About</a><a href="#">Contact</a>
+          </nav>
+        </header>
+
+        <div style="padding:96px 40px 40px; max-width:1020px; margin:0 auto; box-sizing:border-box">
+          <p style="margin:0; font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.22em; text-transform:uppercase; color:#666770">Data Engineering &amp; Analytics</p>
+          <h1 style="margin:16px 0 0; font-size:64px; font-weight:700; letter-spacing:-0.03em; line-height:1.02">Frank Bültge</h1>
+          <p style="margin:20px 0 0; max-width:56ch; font-size:18px; line-height:1.55; color:#54555c">Experiments with data and AI — current and past, on the record. Everything here is verifiable: no claim without evidence, failures kept visible, Git as the archive.</p>
+
+          <div style="margin-top:88px; display:flex; align-items:baseline; justify-content:space-between; border-bottom:1px solid #15161a; padding-bottom:10px">
+            <p style="margin:0; font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.22em; text-transform:uppercase; color:#15161a; font-weight:600">Projects</p>
+            <p style="margin:0; font-family:'JetBrains Mono',monospace; font-size:11px; color:#666770">by year, newest first</p>
+          </div>
+          <sc-for list="{{ projectsA }}" as="p" hint-placeholder-count="4">
+            <a href="#" style="display:grid; grid-template-columns:110px 1fr 300px; gap:24px; align-items:baseline; padding:30px 0; border-bottom:1px solid #d6d7dc">
+              <span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#666770">{{ p.year }}<br>{{ p.status }}</span>
+              <span>
+                <span style="display:flex; align-items:baseline; gap:14px; flex-wrap:wrap">
+                  <span style="font-size:34px; font-weight:600; letter-spacing:-0.02em; line-height:1.1">{{ p.name }}</span>
+                  <sc-if value="{{ p.conducting }}" hint-placeholder-val="{{ false }}"><span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.14em; text-transform:uppercase; border:1px solid #15161a; padding:2px 8px; border-radius:2px">currently conducting</span></sc-if>
+                </span>
+                <span style="display:block; margin-top:8px; font-size:15px; color:#54555c; line-height:1.5; max-width:52ch">{{ p.tagline }}</span>
+              </span>
+              <span style="font-family:'JetBrains Mono',monospace; font-size:11px; line-height:1.7; color:#666770">{{ p.fact }}</span>
+            </a>
+          </sc-for>
+
+          <div style="margin-top:88px; display:flex; align-items:baseline; justify-content:space-between; border-bottom:1px solid #15161a; padding-bottom:10px">
+            <p style="margin:0; font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.22em; text-transform:uppercase; color:#15161a; font-weight:600">Experiments</p>
+            <a href="#" style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#666770; text-decoration:underline; text-underline-offset:4px">all experiments →</a>
+          </div>
+          <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:0">
+            <sc-for list="{{ experiments }}" as="e" hint-placeholder-count="3">
+              <a href="#" style="padding:26px 24px 26px 0; border-bottom:1px solid #d6d7dc">
+                <span style="display:block; font-size:18px; font-weight:600; letter-spacing:-0.01em">{{ e.name }}</span>
+                <span style="display:block; margin-top:8px; font-size:13.5px; color:#54555c; line-height:1.5">{{ e.desc }}</span>
+              </a>
+            </sc-for>
+          </div>
+          <p style="margin:14px 0 0; font-family:'JetBrains Mono',monospace; font-size:11px; color:#666770">each experiment stands alone, with its own method and its own page — no umbrella title, no series branding</p>
+
+          <div style="margin-top:88px; display:flex; align-items:baseline; justify-content:space-between; border-bottom:1px solid #15161a; padding-bottom:10px">
+            <p style="margin:0; font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.22em; text-transform:uppercase; color:#15161a; font-weight:600">Last nights, from the ecology</p>
+            <a href="#" style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#666770; text-decoration:underline; text-underline-offset:4px">the whole ecology →</a>
+          </div>
+          <sc-for list="{{ latestShort }}" as="w" hint-placeholder-count="3">
+            <a href="#" style="display:flex; gap:20px; align-items:baseline; padding:16px 0; border-bottom:1px solid #d6d7dc">
+              <span style="width:6.5em; flex:none; font-family:'JetBrains Mono',monospace; font-size:11px; color:#666770">{{ w.date }}</span>
+              <span style="width:6.5em; flex:none; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:#54555c">{{ w.ns }}</span>
+              <span style="font-size:15px; font-weight:600; letter-spacing:-0.01em">{{ w.title }}</span>
+            </a>
+          </sc-for>
+          <p style="margin:14px 0 0; font-family:'JetBrains Mono',monospace; font-size:11px; color:#666770">new works land night after night — the machines write, the record shows who wrote what</p>
+        </div>
+
+        <footer style="margin-top:80px; border-top:1px solid #d6d7dc; padding:28px 40px; display:flex; justify-content:space-between; font-family:'JetBrains Mono',monospace; font-size:11px; color:#666770">
+          <span>© 2026 Frank Bültge</span>
+          <span>code Apache 2.0 · works CC BY 4.0 · data CC0 · Git is the archive</span>
+        </footer>
+      </div>
+    </div>
+
+    <!-- ═══════════════ Option 1b — Der Puls (atmend & lebendig) ═══════════════ -->
+    <div id="1b" style="width:1180px; flex:none">
+      <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px">
+        <span style="font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:600; background:#2c2c33; color:#f4f4f5; padding:3px 10px; border-radius:4px">1b</span>
+        <span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#9a9aa2">Der Puls — atmend &amp; lebendig, rotierendes Feature</span>
+      </div>
+      <div style="background:#0a0a0a; color:#f4f4f5; border-radius:8px; overflow:hidden; box-shadow:0 20px 60px rgba(0,0,0,0.5)">
+        <header style="display:flex; height:52px; align-items:center; justify-content:space-between; border-bottom:1px solid #242427; padding:0 40px">
+          <span style="display:flex; align-items:center; gap:10px"><span style="height:7px; width:7px; border-radius:9999px; background:#fafafa"></span><span style="font-size:14px; font-weight:600">Frank Bültge</span></span>
+          <nav style="display:flex; gap:24px; font-size:14px; color:#a3a3a8">
+            <a href="#">Projects</a><a href="#">Research Ecology</a><a href="#">Experiments</a><a href="#">About</a><a href="#">Contact</a>
+          </nav>
+        </header>
+
+        <div style="position:relative; overflow:hidden; border-bottom:1px solid #242427">
+          <div style="position:absolute; inset:auto 0 -10px 0; height:260px; transform-origin:bottom; animation:breathe 7s ease-in-out infinite">{{ heroPulse }}</div>
+          <div style="position:relative; padding:80px 40px 260px; text-align:center">
+            <p style="margin:0; font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.22em; text-transform:uppercase; color:#a3a3a8">Frank Bültge · Data Engineering &amp; Analytics</p>
+            <h1 style="margin:18px auto 0; max-width:22ch; font-size:56px; font-weight:700; letter-spacing:-0.025em; line-height:1.05">Experiments with data and AI, on the record</h1>
+            <p style="margin:18px auto 0; max-width:56ch; font-size:16px; line-height:1.55; color:#a3a3a8">Projects and machine-run research — verifiable, published unedited, night after night. Git is the archive.</p>
+            <p style="margin:22px 0 0; font-family:'JetBrains Mono',monospace; font-size:11px; color:#8b8b92"><span style="position:relative; display:inline-block; height:7px; width:7px; border-radius:9999px; background:#d4d4d8; box-shadow:0 0 9px 1px rgba(244,244,245,0.55); margin-right:8px"><span style="position:absolute; inset:-2px; border-radius:9999px; border:1.5px solid rgba(244,244,245,0.5); animation:livedot 2.4s ease-out infinite"></span></span>{{ liveLine }}</p>
+          </div>
+        </div>
+
+        <div style="padding:72px 40px 0; max-width:1100px; margin:0 auto; box-sizing:border-box">
+          <p style="margin:0; font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.22em; text-transform:uppercase; color:#a3a3a8"><b style="color:#f4f4f5">In focus</b> · the projects, one at a time</p>
+          <div style="margin-top:24px; display:grid; grid-template-columns:1fr 340px; gap:14px; align-items:stretch">
+            <div onMouseEnter="{{ pause }}" onMouseLeave="{{ resume }}" style="position:relative; border:1px solid #242427; border-radius:10px; background:#141414; padding:44px 48px; overflow:hidden; min-height:300px; box-sizing:border-box">
+              <div style="position:absolute; top:0; left:0; right:0; height:3px; background:{{ cur.color }}"></div>
+              <div style="position:absolute; top:0; left:0; height:3px; background:rgba(255,255,255,0.35); width:{{ progressW }}; transition:width 0.3s linear"></div>
+              <p style="margin:0; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.18em; text-transform:uppercase; color:#8b8b92">{{ cur.kicker }}</p>
+              <h2 style="margin:14px 0 0; font-size:42px; font-weight:700; letter-spacing:-0.02em; line-height:1.05" key="{{ cur.name }}"><span style="display:inline-block; animation:riseIn 0.5s ease both">{{ cur.name }}</span></h2>
+              <p style="margin:14px 0 0; max-width:46ch; font-size:17px; line-height:1.5; color:#a3a3a8">{{ cur.tagline }}</p>
+              <p style="margin:12px 0 0; max-width:52ch; font-family:'JetBrains Mono',monospace; font-size:12px; line-height:1.7; color:#8b8b92">{{ cur.fact }}</p>
+              <a href="#" style="display:inline-block; margin-top:22px; font-family:'JetBrains Mono',monospace; font-size:12px; color:#f4f4f5; text-decoration:underline; text-decoration-color:#242427; text-underline-offset:4px">{{ cur.cta }}</a>
+              <div style="position:absolute; bottom:20px; right:24px; display:flex; gap:8px">
+                <sc-for list="{{ dots }}" as="d" hint-placeholder-count="4">
+                  <button onClick="{{ d.go }}" style="height:8px; width:8px; border-radius:9999px; border:none; cursor:pointer; padding:0; background:{{ d.bg }}"></button>
+                </sc-for>
+              </div>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:14px">
+              <sc-for list="{{ sideProjects }}" as="s" hint-placeholder-count="3">
+                <button onClick="{{ s.go }}" style="text-align:left; border:1px solid {{ s.border }}; border-radius:10px; background:#141414; padding:16px 18px; cursor:pointer; color:#f4f4f5; flex:1">
+                  <span style="display:flex; justify-content:space-between; align-items:baseline"><span style="font-size:15px; font-weight:600">{{ s.name }}</span><span style="font-family:'JetBrains Mono',monospace; font-size:10px; color:#8b8b92">{{ s.year }}</span></span>
+                  <span style="display:block; margin-top:4px; font-size:12.5px; color:#a3a3a8; line-height:1.45">{{ s.short }}</span>
+                </button>
+              </sc-for>
+            </div>
+          </div>
+
+          <div style="margin-top:80px; display:flex; align-items:baseline; justify-content:space-between">
+            <p style="margin:0; font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.22em; text-transform:uppercase; color:#a3a3a8"><b style="color:#f4f4f5">Tonight&#39;s record</b> · what the machines last made</p>
+            <a href="#" style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#8b8b92; text-decoration:underline; text-underline-offset:4px">the whole ecology →</a>
+          </div>
+          <ul style="margin:20px 0 0; padding:0; list-style:none; border:1px solid #242427; border-radius:10px; background:#141414; overflow:hidden">
+            <sc-for list="{{ feed }}" as="w" hint-placeholder-count="5">
+              <li style="border-top:1px solid rgba(36,36,39,0.6); animation:riseIn 0.6s ease both; animation-delay:{{ w.delay }}">
+                <a href="#" style="display:flex; gap:14px; align-items:baseline; padding:13px 22px">
+                  <span style="width:6.5em; flex:none; font-family:'JetBrains Mono',monospace; font-size:11px; color:#8b8b92">{{ w.date }}</span>
+                  <span style="width:7em; flex:none; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:{{ w.color }}">{{ w.ns }}</span>
+                  <span style="font-size:14.5px; font-weight:600; letter-spacing:-0.01em">{{ w.title }}</span>
+                  <span style="margin-left:auto; flex:none; font-family:'JetBrains Mono',monospace; font-size:10px; color:#8b8b92">{{ w.kind }}</span>
+                </a>
+              </li>
+            </sc-for>
+          </ul>
+          <p style="margin:12px 0 0; font-family:'JetBrains Mono',monospace; font-size:11px; color:#8b8b92">the living edge — new works land here as the practices make them, night after night</p>
+
+          <div style="margin-top:80px; padding-bottom:72px">
+            <p style="margin:0; font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.22em; text-transform:uppercase; color:#a3a3a8"><b style="color:#f4f4f5">Earlier experiments</b> · each with its own method</p>
+            <div style="margin-top:18px; display:flex; gap:10px; flex-wrap:wrap">
+              <sc-for list="{{ expChips }}" as="e" hint-placeholder-count="4">
+                <a href="#" style="border:1px solid #242427; border-radius:9999px; padding:8px 18px; font-size:13.5px; color:#a3a3a8; background:#141414" style-hover="border-color:#8b8b92; color:#f4f4f5">{{ e }}</a>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+
+        <footer style="border-top:1px solid #242427; background:#000; padding:28px 40px; display:flex; justify-content:space-between; font-family:'JetBrains Mono',monospace; font-size:11px; color:#8b8b92">
+          <span>© 2026 Frank Bültge</span>
+          <span>code Apache 2.0 · works CC BY 4.0 · data CC0 · Git is the archive</span>
+        </footer>
+      </div>
+    </div>
+
+  </div>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 2600, &quot;height&quot;: 3000}, &quot;autoRotate&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Karussell&quot;}, &quot;rotateSeconds&quot;: {&quot;editor&quot;: &quot;range&quot;, &quot;default&quot;: 7, &quot;min&quot;: 4, &quot;max&quot;: 12, &quot;step&quot;: 1, &quot;unit&quot;: &quot;s&quot;, &quot;tsType&quot;: &quot;number&quot;, &quot;section&quot;: &quot;Karussell&quot;}}">
+class Component extends DCLogic {
+  state = { idx: 0, exIdx: 0, spIdx: 0, paused: false, changedAt: Date.now(), progress: 0 }
+  startHeartbeat() {
+    this._epoch = (this._epoch || 0) + 1
+    const myEpoch = this._epoch
+    let lastUpdate = 0
+    const step = (now) => {
+      if (myEpoch !== this._epoch) return
+      this._lastBeat = Date.now()
+      requestAnimationFrame(step)
+      if (now - lastUpdate < 100) return
+      lastUpdate = now
+      if (this.state.paused || !(this.props.autoRotate ?? true)) { this.setState({ changedAt: Date.now() - this.state.progress }); return }
+      const periodMs = (this.props.rotateSeconds ?? 7) * 1000
+      const elapsed = Date.now() - this.state.changedAt
+      if (elapsed >= periodMs) this.setState((s) => ({ changedAt: Date.now(), progress: 0, idx: (s.idx + 1) % 4, exIdx: (s.exIdx + 1) % 5, spIdx: (s.spIdx + 1) % 5 }))
+      else this.setState({ progress: elapsed })
+    }
+    requestAnimationFrame(step)
+  }
+  componentDidMount() { this.startHeartbeat() }
+  renderVals() {
+    const R = React.createElement
+    // self-healing heartbeat: reanimate the timer chain if no beat arrived for >1s
+    if (this._lastBeat && Date.now() - this._lastBeat > 1000) setTimeout(() => { if (Date.now() - this._lastBeat > 1000) this.startHeartbeat() }, 0)
+    const projects = [
+      { name: 'Research Ecology', year: '2026', color: '#9085e9', kicker: 'currently conducting · active', tagline: 'Three machine-run research practices, each under its own constitution, and a contact zone where they meet.', fact: 'published unedited, night after night · a gate rejects anything broken · The Middle records shared inquiries', cta: 'enter the ecology →', short: 'Three machine-run practices and a contact zone.', status: 'Active' },
+      { name: 'datavism.org', year: '2026', color: '#256abf', kicker: 'in development · waitlist open', tagline: 'They track you. Learn to track back.', fact: 'a data-activism lab for the AI era — the AI agent GHOST sharpens questions, not answers · case files as public evidence', cta: 'join the waitlist →', short: 'A data-activism lab for the AI era.', status: 'In development' },
+      { name: 'data-snack.com', year: '2023', color: '#d95926', kicker: 'active · own channels', tagline: 'Bite-sized data — interactive mini-experiments.', fact: 'a character-driven data magazine in a neon-lit cyber-diner · entertainment first, data literacy as the after-taste', cta: 'take a bite →', short: 'A character-driven data magazine.', status: 'Active' },
+      { name: 'Atlas of Data Art', year: '2026', color: '#77828d', kicker: 'active · grows nightly', tagline: 'A source-cited map of contemporary data art.', fact: '200+ works, researched worldwide · every entry names its source, uncertain classifications are flagged', cta: 'open the atlas →', short: 'A source-cited map of data art.', status: 'Active' },
+    ]
+    const idx = this.state.idx
+    const cur = projects[idx]
+    const periodMs = (this.props.rotateSeconds ?? 7) * 1000
+    const progressPct = (Math.min(this.state.progress / periodMs, 1) * 100).toFixed(1) + '%'
+    const go = (i) => () => this.setState({ idx: i, changedAt: Date.now(), progress: 0 })
+    // hero pulse: the two newest committed weeks (W31, W32), smoothed like the real renderer
+    const smooth = (vals) => { let v = vals.slice(); for (let p = 0; p < 2; p++) { const prev = v; v = prev.map((_, i) => (prev[Math.max(i-1,0)] + prev[i] + prev[Math.min(i+1,prev.length-1)]) / 3) } return v }
+    const w31 = smooth([26,4,21,8,9,1,0,1,2,5,3,19,0,5,10,7,5,1,0,0,1,2,2,0,1,0,0,6,4,0,0,0,0,0,0,0,1,0,0,7,3,1,0,0,0,81,22,53,4,8,29,15,8,6,3,28,27,4,11,43,63,3,45,11,3,1,24,19,9,12,17,33,17,9,19,12,2,7,8,16,32,35,8,50])
+    const w32 = smooth([3,3,19,8,11,2,0,4,26,2,1,0,0,4,14,11,4,6,3,28,22,3,2,49,1,13,15,12,5,4,25,3,2,28,21,10,1,11,8,8,22,2,1,23,23,1,2,4,3,5,24,12,6,4,4,3,7,21,7,12,25,11,25,7,0,0,1,0,0,2,10,19,23,4,23,7])
+    const mkPath = (s, base, h, wpx) => {
+      const peak = Math.max(...s, 1)
+      const pts = s.map((v, i) => (i === 0 ? 'M' : 'L') + (i * (wpx / (s.length - 1))).toFixed(1) + ' ' + (base - (v / peak) * h).toFixed(1)).join('')
+      return pts
+    }
+    const heroPulse = R('svg', { viewBox: '0 0 1100 260', preserveAspectRatio: 'none', style: { width: '100%', height: '100%', display: 'block' } }, [
+      R('path', { key: 'p1', d: mkPath(w31, 250, 150, 1100), fill: 'none', stroke: '#3a3a40', strokeWidth: 1.2 }),
+      R('path', { key: 'p2', d: mkPath(w32, 256, 190, 1100) + 'L1100 260 L0 260 Z', fill: 'rgba(20,20,20,0.9)', stroke: '#f4f4f5', strokeWidth: 1.4 }),
+    ])
+    // ---- Round 2: experiments carousel (the ecology is one experiment among others) ----
+    const experimentsEx = [
+      { name: 'Research Ecology', year: '2026', color: '#9085e9', kicker: 'currently conducting · machine-run, nightly', tagline: 'Three machine-run research practices, each under its own constitution, and a contact zone where they meet.', fact: 'published unedited, night after night · a gate rejects anything broken · the machines write, the record shows who wrote what', cta: 'enter the ecology →', short: 'Three machine-run practices and a contact zone.' },
+      { name: 'The Protocol', year: '2026', color: '#c2c2c8', kicker: 'daily register · no language model in the wording', tagline: 'The daily minutes of the world — live data rendered as the deterministic prose of an official register.', fact: 'source failures recorded honestly ("Feststellung entfällt") instead of bridged silently', cta: 'read today’s minutes →', short: 'The daily minutes of the world.' },
+      { name: 'The Consensus', year: '2026', color: '#256abf', kicker: 'daily measurement', tagline: 'Measuring orchestrated consensus — the same story counted across outlets, day after day.', fact: 'committed snapshots, one per day · git is the archive, records are never edited after the fact', cta: 'see the measurement →', short: 'Measuring orchestrated consensus.' },
+      { name: 'Headroom', year: '2026', color: '#d95926', kicker: 'standing exhibit', tagline: 'Hyperscaler efficiency disclosures set against absolute consumption — the gap keeps growing.', fact: 'two official numbers side by side: what the paper claims vs. what the grid emitted', cta: 'compare the meters →', short: 'Efficiency claims vs. absolute consumption.' },
+      { name: 'Atlas of Data Art', year: '2026', color: '#77828d', kicker: 'reference collection · grows nightly', tagline: 'A source-cited map of contemporary data art — arranged by field rather than by date.', fact: '200+ works, researched worldwide · every entry names its source, uncertain classifications are flagged', cta: 'open the atlas →', short: 'A source-cited map of data art.' },
+    ]
+    const exIdx = this.state.exIdx
+    const exCur = experimentsEx[exIdx]
+    const goEx = (i) => () => this.setState({ exIdx: i, changedAt: Date.now(), progress: 0 })
+    const works5 = ['The Second Reader', 'Where the Reader Declines', 'NO PART', 'Unable to Ring Its Own Bell', 'Cartography, not Tracing']
+    const tickerText = 'LAST NIGHT · ' + works5.map((t, i) => ['2026-08-05', '2026-08-03', '2026-07-30', '2026-07-26', '2026-07-24'][i] + ' ' + t).join('  ·  ') + '  ·  3833 commits in nine weeks  ·  the nightly machinery runs before dawn  ·  '
+    const heroPulseDrawn = R('svg', { viewBox: '0 0 1100 260', preserveAspectRatio: 'none', style: { width: '100%', height: '100%', display: 'block' } }, [
+      R('path', { key: 'p0', d: mkPath(smooth([0,9,1,3,5,0,0,0,0,0,21,9,1,12,1,6,3,2,6,0,0,3,2,4,2,7,3,5,2,8,10,0,7,15,16,4,9,0,5,19,19,13,1,23,10,21,15,12,0,5,5,8,9,4,13,19,1,15,7,12,0,5,8,8,0,0,3,16,10,13,25,16,3,4,7,5,2,0,12,0,16,4,6,10]), 244, 110, 1100), fill: 'none', stroke: '#2c2c31', strokeWidth: 1 }),
+      R('path', { key: 'p1', d: mkPath(w31, 250, 150, 1100), fill: 'none', stroke: '#3a3a40', strokeWidth: 1.2 }),
+      R('path', { key: 'p2', d: mkPath(w32, 256, 190, 1100) + 'L1100 260 L0 260 Z', fill: 'rgba(20,20,20,0.9)', stroke: '#f4f4f5', strokeWidth: 1.4 }),
+    ])
+    // ---- Round 3: ops room / observatory ----
+    const pad2 = (n) => String(n).padStart(2, '0')
+    const dNow = new Date()
+    const utcClock = dNow.getUTCFullYear() + '-' + pad2(dNow.getUTCMonth() + 1) + '-' + pad2(dNow.getUTCDate()) + ' ' + pad2(dNow.getUTCHours()) + ':' + pad2(dNow.getUTCMinutes()) + ':' + pad2(dNow.getUTCSeconds()) + ' UTC'
+    // Joy-Division-Stack: eine Linie pro ISO-Woche (W27–W32), echte Bins aus pulse.json
+    const w27 = smooth([2,0,0,1,5,3,0,2,10,7,12,19,2,0,0,6,6,0,2,0,5,9,3,9,2,0,0,2,7,6,0,9,3,13,10,32,0,4,2,10,29,0,23,8,0,12,2,6,2,0,2,3,12,13,4,6,0,8,1,0,0,2,0,6,4,3,1,0,9,2,0,2,0,2,0,5,4,0,5,14,8,10,6,10])
+    const w28 = smooth([0,4,0,2,9,5,5,3,7,2,1,7,0,4,0,4,5,0,0,0,0,2,1,0,1,0,0,6,2,0,0,0,0,0,0,0,0,0,0,3,4,0,0,0,0,4,6,5,2,10,0,4,5,0,0,0,0,0,3,12,0,2,3,7,1,3,5,0,11,5,11,10,10,10,1,7,1,0,6,9,9,5,22,11])
+    const w29 = smooth([0,9,1,3,5,0,0,0,0,0,21,9,1,12,1,6,3,2,6,0,0,3,2,4,3,7,3,5,2,8,10,0,7,15,16,4,9,0,5,19,19,13,1,23,10,21,15,13,0,5,5,8,9,4,14,19,1,15,7,12,0,5,8,8,0,0,3,16,10,13,25,16,3,4,7,5,2,0,12,0,16,4,6,10])
+    const w30 = smooth([0,0,6,5,8,1,1,0,5,0,0,17,5,1,4,8,7,0,1,2,4,6,6,22,1,7,10,8,2,9,0,1,5,0,0,1,0,0,3,9,2,10,7,16,3,3,2,1,0,3,8,8,2,0,0,0,7,13,10,22,36,6,38,7,2,0,17,23,21,7,0,23,8,4,16,10,3,2,12,4,8,2,11,45])
+    // dichter Stack à la Unknown Pleasures: 14 Linien, einheitlich hell, schwarz gefüllt.
+    // Jede Woche liefert zwei Halbwochen-Linien (scharfe Peaks: nur ein Glättungs-Pass),
+    // Ränder gedämpft, damit die Energie in der Mitte sitzt.
+    const smooth1 = (vals) => vals.map((_, i) => (vals[Math.max(i - 1, 0)] + vals[i] + vals[Math.min(i + 1, vals.length - 1)]) / 3)
+    const taper = (vals) => vals.map((v, i) => { const t = i / (vals.length - 1); const w = Math.pow(Math.sin(Math.PI * Math.min(Math.max((t - 0.04) / 0.92, 0), 1)), 0.55); return v * w })
+    const weeksRaw = [w27, w28, w29, w30, w31, w32]
+    const stack = []
+    for (const w of weeksRaw) { stack.push(taper(smooth1(w.slice(0, 42)))); stack.push(taper(smooth1(w.slice(42)))) }
+    stack.push(taper(smooth1(w31)), taper(smooth1(w32)))
+    const lineBase = (i) => 36 + i * 12.6
+    const stackEls = stack.map((s, i) =>
+      R('path', { key: 'wk' + i, d: mkPath(s, lineBase(i), 58, 1000) + 'L1000 ' + lineBase(i) + ' L0 ' + lineBase(i) + ' Z', fill: '#0d1513', stroke: 'rgba(223,230,226,0.85)', strokeWidth: 1 }))
+    // kleine wandernde Punkte, die die Linien entlanglaufen
+    const evalLine = (li, t) => {
+      const s = stack[li], base = lineBase(li), peak = Math.max(...s, 1)
+      const fx = t * (s.length - 1), i0 = Math.floor(fx), v = s[i0] + (s[Math.min(i0 + 1, s.length - 1)] - s[i0]) * (fx - i0)
+      return { x: t * 1000, y: base - (v / peak) * 58 }
+    }
+    const nowS = Date.now() / 1000
+    const dotCfg = [
+      { l: 13, v: 0.021, p: 0.10, o: 0.95 }, { l: 12, v: 0.027, p: 0.62, o: 0.9 },
+      { l: 10, v: 0.014, p: 0.48, o: 0.7 }, { l: 8, v: 0.017, p: 0.85, o: 0.6 },
+      { l: 5, v: 0.011, p: 0.30, o: 0.5 }, { l: 2, v: 0.009, p: 0.72, o: 0.4 },
+    ]
+    const dotEls = dotCfg.map((c, i) => {
+      const pt = evalLine(c.l, (nowS * c.v + c.p) % 1)
+      return R('circle', { key: 'dot' + i, cx: pt.x, cy: pt.y, r: 2.4, fill: '#7fd0e8', opacity: c.o, style: { transition: 'cx 0.12s linear, cy 0.12s linear' } })
+    })
+    const opsPulse = R('svg', { viewBox: '0 0 1000 220', preserveAspectRatio: 'none', style: { width: '100%', height: '100%', display: 'block' } }, [...stackEls, ...dotEls])
+    const obsPulse = R('svg', { viewBox: '0 0 1100 240', preserveAspectRatio: 'none', style: { width: '100%', height: '100%', display: 'block' } }, [
+      R('path', { key: 'a', d: mkPath(w31, 232, 140, 1100), fill: 'none', stroke: '#37322a', strokeWidth: 1.1 }),
+      R('path', { key: 'b', d: mkPath(w32, 236, 180, 1100) + 'L1100 240 L0 240 Z', fill: 'rgba(19,18,16,0.92)', stroke: '#d8cfbc', strokeWidth: 1.3 }),
+    ])
+    const mkSpark = (vals, color) => R('svg', { viewBox: '0 0 96 26', preserveAspectRatio: 'none', style: { width: '96px', height: '26px', display: 'block' } },
+      R('path', { d: mkPath(smooth(vals), 24, 20, 96), fill: 'none', stroke: color, strokeWidth: 1.2 }))
+    const boardGroups = [
+      { label: 'THE RESEARCH ECOLOGY · FOUR STATIONS, ONE GATE — MACHINE-RUN, PUBLISHED UNEDITED', rows: [
+        { led: '#a89bf0', name: 'The Atelier', resident: 'resident: Ulysses', what: 'machine-run artistic research — a work-line and its studies, failures on the record', spark: mkSpark(w32.slice(0, 28), '#a89bf0'), last: 'Cartography, not Tracing', date: '2026-07-24', status: 'NIGHTLY', statusColor: '#7fd0e8' },
+        { led: '#6db3ec', name: 'The Field', resident: 'resident: Meridian', what: 'the measuring instruments of our time, on trial — claims ledger, adversarial review', spark: mkSpark(w32.slice(28, 56), '#6db3ec'), last: 'The Second Reader', date: '2026-08-05', status: 'NIGHTLY', statusColor: '#7fd0e8' },
+        { led: '#e8825a', name: 'The Studio', resident: 'resident: Ensemble', what: 'only digital works, only what a machine does better — every element carries an honesty tier', spark: mkSpark(w32.slice(48, 76), '#e8825a'), last: 'NO PART', date: '2026-07-30', status: 'NIGHTLY', statusColor: '#7fd0e8' },
+        { led: '#8fa09b', name: 'The Middle', resident: 'no resident — kept by the conductor', what: 'the contact zone — offers, verdicts, corrections and joint inquiries', spark: mkSpark(w31.slice(20, 48), '#8fa09b'), last: 'encounter ledger', date: 'ongoing', status: 'RECORDING', statusColor: '#8fa09b' },
+      ]},
+      { label: 'BESIDE THE ECOLOGY · SAME LAW, DIFFERENT BETS', rows: [
+        { led: '#7fd0e8', name: 'Machine Attention', resident: 'the counter-experiment', what: 'one machine running public investigations — attention, refusals, uncertainty and cost on the record', spark: mkSpark(w31.slice(44, 72), '#7fd0e8'), last: 'The Foreknown · Dark Ocean', date: 'running', status: 'RUNNING', statusColor: '#7fd0e8' },
+        { led: '#d8b96a', name: 'Error as Method', resident: 'forked from the Atelier', what: 'one founding text, a second constitution — the practice that works one night at a time', spark: mkSpark(w31.slice(0, 28), '#d8b96a'), last: 'nightly sessions', date: 'running', status: 'NIGHTLY', statusColor: '#7fd0e8' },
+      ]},
+    ]
+    const feed3 = [
+      { date: '2026-08-05', ns: 'The Field', title: 'The Second Reader', kind: 'instrument', color: '#6db3ec', delay: '0s' },
+      { date: '2026-08-03', ns: 'The Field', title: 'Where the Reader Declines', kind: 'instrument', color: '#6db3ec', delay: '0.08s' },
+      { date: '2026-07-30', ns: 'The Studio', title: 'NO PART', kind: 'premiere', color: '#e8825a', delay: '0.16s' },
+      { date: '2026-07-26', ns: 'The Field', title: 'Unable to Ring Its Own Bell', kind: 'instrument', color: '#6db3ec', delay: '0.24s' },
+      { date: '2026-07-24', ns: 'The Atelier', title: 'Cartography, not Tracing', kind: 'work', color: '#a89bf0', delay: '0.32s' },
+    ]
+    const specimens = [
+      { date: '2026-08-05', ns: 'The Field', kind: 'instrument', color: '#8fb8dd', title: 'The Second Reader', teaser: 'Two blind readers re-judge the cases behind an earlier instrument’s headline number, without seeing the published split or each other. The case count shrinks from 39 to 23, yet the finding itself survives at an even stronger ratio.' },
+      { date: '2026-08-03', ns: 'The Field', kind: 'instrument', color: '#8fb8dd', title: 'Where the Reader Declines', teaser: 'A machine reader is tested against sixty human verdicts on AI-research claims, under rules fixed beforehand. It agrees 54% of the time, but crowds most cases into a vague no-position category where humans spread across four verdicts.' },
+      { date: '2026-07-30', ns: 'The Studio', kind: 'premiere', color: '#dd9877', title: 'NO PART', teaser: 'One day’s order list from the US Supreme Court, 39 pages, printed at full size and mounted edge to edge in one 8.42-meter line. On one sheet, 25 people are named and dismissed in a single sentence — the fate of 789 of 820 petitions that day.' },
+      { date: '2026-07-26', ns: 'The Field', kind: 'instrument', color: '#8fb8dd', title: 'Unable to Ring Its Own Bell', teaser: 'Turns the collective’s own drift-detector on its own 73-section journal. All four metrics report no signal — but even replacing half the text with filler never trips the alarm, so the clean result can’t count as proof of anything.' },
+      { date: '2026-07-24', ns: 'The Atelier', kind: 'work', color: '#b0a5e8', title: 'Cartography, not Tracing', teaser: 'The practice writing down its own method — a close reading of Deleuze and Guattari distilled into six working principles and eight self-testing instruments. Published bilingually as a map to be reworked, not a template to apply.' },
+    ]
+    const spIdx = this.state.spIdx
+    const sp = specimens[spIdx]
+    const goSp = (i) => () => this.setState({ spIdx: i, changedAt: Date.now(), progress: 0 })
+    // live-experiment dashboard tiles (3a) — Werte als plausible Platzhalter, im echten Build aus den committeten Snapshots gerendert
+    const tileSvg = (children) => R('svg', { viewBox: '0 0 96 26', preserveAspectRatio: 'none', style: { width: '100%', height: '26px', display: 'block' } }, children)
+    const cyA = 'rgba(127,208,232,0.75)', cyDim = '#26413d'
+    const lineViz = (vals, dash) => tileSvg([R('path', { key: 'l', d: mkPath(smooth(vals), 24, 18, 96), fill: 'none', stroke: '#7fd0e8', strokeWidth: 1.2, strokeDasharray: dash || 'none' })])
+    const sqViz = (dimIdx) => tileSvg(Array.from({ length: 14 }, (_, i) => R('rect', { key: i, x: i * 7, y: 8, width: 5, height: 10, fill: dimIdx.includes(i) ? cyDim : cyA })))
+    const barViz = (vals) => tileSvg(vals.map((v, i) => R('rect', { key: i, x: i * (96 / vals.length) + 1, y: 24 - v, width: 96 / vals.length - 3, height: v, fill: v > 10 ? cyA : cyDim })))
+    const dotViz = (n, dim) => tileSvg(Array.from({ length: n }, (_, i) => R('circle', { key: i, cx: 5 + i * (88 / (n - 1)), cy: 13 + ((i * 7) % 3 === 0 ? -4 : (i * 5) % 3 === 1 ? 4 : 0), r: 2, fill: i === dim ? cyDim : cyA })))
+    const gapViz = tileSvg([
+      R('path', { key: 'a', d: mkPath(smooth([8, 10, 9, 12, 11, 10]), 20, 12, 34), fill: 'none', stroke: cyA, strokeWidth: 1.2 }),
+      R('path', { key: 'g', d: 'M36 14 L62 14', stroke: cyDim, strokeWidth: 1.2, strokeDasharray: '3 4' }),
+      R('path', { key: 'b', d: 'M64 0 Z ' + mkPath(smooth([9, 11, 10, 12, 10]), 20, 12, 30).replace(/M0/, 'M64').replace(/L(\d+\.?\d*)/g, (m, x) => 'L' + (parseFloat(x) + 64)), fill: 'none', stroke: cyA, strokeWidth: 1.2 }),
+    ])
+    const twoBarViz = tileSvg([
+      R('rect', { key: 'a', x: 0, y: 5, width: 34, height: 6, fill: cyDim }),
+      R('rect', { key: 'b', x: 0, y: 15, width: 88, height: 6, fill: cyA }),
+    ])
+    // nur Experimente mit live:true in werke.ts; „big" = die konkrete Tageslesung des Experiments
+    // (hier plausible Platzhalter — im echten Build aus dem jeweiligen committeten Tages-Snapshot)
+    const liveTiles = [
+      { name: 'MACHINE ATTENTION · THE FOREKNOWN', big: '87 clocks', sub: 'public warnings open on the ledger right now — 3 closed overnight, each with a verdict and its lead time', viz: sqViz([3, 9]), stamp: 'GDACS · NOAA · NIGHTLY VERDICTS' },
+      { name: 'MACHINE ATTENTION · OBSERVATORY', big: '+214', sub: 'AI-related TED notices preserved last night as hashed bytes — 2 case candidates at the six-criteria gate', viz: barViz([6, 14, 4, 18, 8, 3, 12, 5, 16, 7, 4, 11]), stamp: 'MOST CANDIDATES DIE, WITH REASONS' },
+      { name: 'THE PROTOCOL', big: '12 items', sub: 'today’s minutes of the planet, issued 06:00 — one source: “Feststellung entfällt”; every item adjourned', viz: sqViz([4]), stamp: 'DETERMINISTIC · NO LLM IN THE WORDING' },
+      { name: 'THE CONSENSUS', big: '38 outlets', sub: 'ran today’s most-copied sentence word-for-word — one source, one cascade, counted', viz: lineViz([48, 52, 61, 55, 58, 66, 71, 64, 60, 67, 73, 70, 62, 68]), stamp: 'ONE SNAPSHOT PER DAY · NEVER EDITED' },
+      { name: 'ICEBERG THEORY', big: '2 silent', sub: 'of 5 Wikipedia language editions on today’s contested topic — the others state the claim outright', viz: barViz([18, 14, 6, 4, 8]), stamp: 'LANGUAGE EDITIONS · DAILY' },
+      { name: 'THE POLICY', big: '+179%', sub: 'today’s climate premium against 1998 — recomputed tonight from real market data', viz: lineViz([3, 4, 5, 5, 7, 8, 10, 11, 14, 15, 18, 21, 23, 26]), stamp: 'NIGHTLY · MARKET DATA' },
+      { name: 'EDITORIAL DEADLINE', big: '−412 words', sub: 'today’s most substantive removal from an official page — both versions linked, two clicks to check', viz: sqViz([2, 3, 8, 12]), stamp: 'WAYBACK DIFFS · DAILY' },
+      { name: 'THE GHOST FLEET', big: '23 dark', sub: 'vessels in deliberate AIS silence today — the most striking case: 19 days dark in foreign waters', viz: gapViz, stamp: 'NO CLAIM OF ILLEGALITY — COUNTED' },
+      { name: 'ROUND NUMBERS', big: '2 / 2 flagged', sub: 'today’s real official series and provably clean data — the same Benford test calls both suspicious', viz: barViz([12, 13, 12, 13, 12, 13, 12, 13, 12, 13, 12, 13]), stamp: 'THE METHOD ITSELF ON TRIAL' },
+      { name: 'PATTERNS', big: 'r = 0.83', sub: 'today’s strongest correlation in its own archive — permutation test: indistinguishable from noise', viz: lineViz([8, 15, 4, 18, 6, 13, 9, 17, 5, 14, 7, 16, 6, 12]), stamp: 'PERMUTATION-TESTED · THE CAPSTONE' },
+      { name: 'ALL ALONG THE WATCHTOWER', big: '31 in view', sub: 'Earth-observation satellites with your location geometrically in view right now — computed in your browser', viz: dotViz(11, 4), stamp: 'SGP4 · DAILY ORBITAL DATA · LOCAL ONLY' },
+      { name: 'ATLAS OF DATA ART', big: '203 works', sub: 'catalogued and sourced — grew again last night; uncertain classifications stay flagged', viz: lineViz([2, 3, 5, 6, 8, 9, 12, 13, 15, 18, 19, 21, 22, 24]), stamp: 'REFERENCE COLLECTION · NIGHTLY' },
+    ]
+    const exp3 = [
+      { name: 'The Protocol', desc: 'the daily minutes of the world — no language model in the wording' },
+      { name: 'The Consensus', desc: 'orchestrated consensus, measured daily' },
+      { name: 'Headroom', desc: 'efficiency claims vs. what the grid emitted' },
+    ]
+    const cat3 = [
+      { name: 'Atlas of Data Art', desc: 'a source-cited map of the field' },
+      { name: 'Dataset Register', desc: 'every dataset this research reached for' },
+      { name: 'Paper Catalogue', desc: 'what the practices actually read' },
+      { name: 'Works Register', desc: 'everything the practices brought forth' },
+    ]
+    return {
+      utcClock, opsPulse, obsPulse, boardGroups, feed3, sp, liveTiles,
+      spSide: specimens.filter((_, i) => i !== spIdx).map((s) => ({ title: s.title, date: s.date, ns: s.ns, go: goSp(specimens.indexOf(s)) })),
+      liveLine3: '4,070 commits in ten weeks · the machines ran last night · ' + utcClock,
+      exp3, cat3,
+      practices3: [
+        { color: '#a89bf0', name: 'The Atelier', resident: 'RESIDENT: ULYSSES', what: 'Machine-run artistic research in a work-line and its studies — failures stay on the record, checkably.', last: 'Cartography, not Tracing', date: '07-24' },
+        { color: '#8fb8dd', name: 'The Field', resident: 'RESIDENT: MERIDIAN', what: 'The measuring instruments of our time, on trial — verifiable instruments, adversarial review, a claims ledger.', last: 'The Second Reader', date: '08-05' },
+        { color: '#dd9877', name: 'The Studio', resident: 'RESIDENT: ENSEMBLE', what: 'Only digital works, only what a machine does better — every element carries an honesty tier.', last: 'NO PART', date: '07-30' },
+      ],
+      beside3: [
+        { name: 'Machine Attention', desc: 'the counter-experiment: one machine, its attention, refusals and cost on the record' },
+        { name: 'Error as Method', desc: 'the Atelier’s other arm — one night at a time, restarted where it was switched off' },
+      ],
+      exCur,
+      exProgressW: progressPct,
+      exDots: experimentsEx.map((_, i) => ({ go: goEx(i), bg: i === exIdx ? '#f4f4f5' : '#3a3a40' })),
+      exSide: experimentsEx.filter((_, i) => i !== exIdx).map((p) => ({ name: p.name, year: p.year, short: p.short, go: goEx(experimentsEx.indexOf(p)) })),
+      exRail: experimentsEx.map((p, i) => ({ name: p.name, year: p.year, go: goEx(i), bg: i === exIdx ? '#1c1c1e' : 'transparent', dotColor: i === exIdx ? p.color : '#3a3a40', weight: i === exIdx ? 600 : 400 })),
+      tickerLine: tickerText + tickerText,
+      heroPulseDrawn,
+      projectsA: [
+        { year: '2026', status: 'active', name: 'Research Ecology', conducting: true, tagline: 'Three machine-run research practices, each under its own constitution, and a contact zone where they meet — published unedited, night after night.', fact: 'the machines write, the record shows who wrote what · Git is the archive' },
+        { year: '2026', status: 'in development', name: 'datavism.org', conducting: false, tagline: 'They track you. Learn to track back. A data-activism lab for the AI era — suspicion into testable questions, hidden systems into public evidence.', fact: 'AI agent GHOST guides the method · waitlist open' },
+        { year: '2026', status: 'active', name: 'Atlas of Data Art', conducting: false, tagline: 'A source-cited map of contemporary data art — works where data, AI and power meet, arranged by field rather than by date.', fact: '200+ works, researched worldwide · grows nightly' },
+        { year: '2023', status: 'active', name: 'data-snack.com', conducting: false, tagline: 'Bite-sized data — interactive mini-experiments. A character-driven data magazine set in a neon-lit cyber-diner.', fact: 'entertainment first, data literacy as the after-taste' },
+      ],
+      experiments: [
+        { name: 'The Protocol', desc: 'The daily minutes of the world — live data rendered as the deterministic prose of an official register, no language model in the wording.' },
+        { name: 'The Consensus', desc: 'Measuring orchestrated consensus — the same story counted across outlets, day after day.' },
+        { name: 'Headroom', desc: 'Hyperscaler efficiency disclosures set against absolute consumption — the gap between the two keeps growing.' },
+      ],
+      latestShort: [
+        { date: '2026-08-05', ns: 'The Field', title: 'The Second Reader' },
+        { date: '2026-08-03', ns: 'The Field', title: 'Where the Reader Declines' },
+        { date: '2026-07-30', ns: 'The Studio', title: 'NO PART' },
+      ],
+      heroPulse,
+      liveLine: '3833 commits in the last nine weeks · the machines ran last night · as of 2026-08-09 07:28 UTC',
+      cur, pause: () => this.setState({ paused: true }), resume: () => this.setState({ paused: false }),
+      progressW: progressPct,
+      dots: projects.map((p, i) => ({ go: go(i), bg: i === idx ? '#f4f4f5' : '#3a3a40' })),
+      sideProjects: projects.filter((_, i) => i !== idx).map((p) => ({ name: p.name, year: p.year, short: p.short, border: '#242427', go: go(projects.indexOf(p)) })),
+      feed: [
+        { date: '2026-08-05', ns: 'The Field', title: 'The Second Reader', kind: 'instrument', color: '#256abf', delay: '0s' },
+        { date: '2026-08-03', ns: 'The Field', title: 'Where the Reader Declines', kind: 'instrument', color: '#256abf', delay: '0.08s' },
+        { date: '2026-07-30', ns: 'The Studio', title: 'NO PART', kind: 'premiere', color: '#d95926', delay: '0.16s' },
+        { date: '2026-07-26', ns: 'The Field', title: 'Unable to Ring Its Own Bell', kind: 'instrument', color: '#256abf', delay: '0.24s' },
+        { date: '2026-07-24', ns: 'The Atelier', title: 'Cartography, not Tracing', kind: 'work', color: '#9085e9', delay: '0.32s' },
+      ],
+      expChips: ['The Protocol', 'The Consensus', 'Headroom', 'all experiments →'],
+    }
+  }
+}
+</script>
+</body>
+</html>
