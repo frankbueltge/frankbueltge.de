@@ -158,8 +158,15 @@ export const PRACTICES: readonly PracticeAnatomy[] = [
     // two. Since 2026-08-08 the absence is also the house's own strongest evidence: this protocol
     // has no role machinery at all, and this practice holds the largest `works/` of the three.
     cast: [],
+    // Requoted 2026-08-12. This quoted "an **open horizon**: months, not days. A work-line is
+    // never killed by a timer." — a sentence the amendment of that day struck. It was struck
+    // because it was measured: the line that used the open horizon most wrote its
+    // pre-registrations one to two per day, so the warrant it bought needs a session boundary
+    // and not a season, and what the months produced was 58 ticks and one published work. The
+    // replacement is the sentence that now carries the same place in §4, and it keeps what the
+    // old one was right about — waiting on the outside still costs a line nothing.
     castNote: {
-      text: 'an **open horizon**: months, not days. A work-line is never killed by a timer.',
+      text: 'What is bounded is how many sessions a line may **consume**, not how long it may **stand open**.',
       source: P('atelier'),
     },
     stages: [

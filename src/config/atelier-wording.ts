@@ -421,7 +421,10 @@ export const ATELIER_NARRATIVE = {
       'of its own claim. After that they differ in one thing only. Neither form is the correct one.',
     /** what each arm kept, said in one line each — the difference a visitor must be able to see */
     arms: {
-      here: 'the work-line — an open horizon, a research programme, publication candidates',
+      // "an open horizon" until 2026-08-12, when the amendment struck it: an arc now ships or
+      // closes within twelve worked sessions, renewable once. Waiting on an outside reply still
+      // costs nothing — what is bounded is what a line consumes, not how long it stands open.
+      here: 'the work-line — a chain of nights carrying one commitment, bounded at twelve worked sessions',
       there: 'the night — one research day, one work, on the record, closed at dawn',
     },
     /** stands over the works of the nightly phase, wherever they are listed */
