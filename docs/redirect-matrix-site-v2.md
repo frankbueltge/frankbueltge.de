@@ -158,3 +158,41 @@ Die Journale und Team-Kanäle wurden aufgeteilt (eine Seite je Session, Archiv j
 Anker-Konvention (`cs-N`, `pre-<tag>-N`, `<tag>-<i>`, `s<n>`, `note-<slug>`) ist URL-sicher
 und wird wörtlich übernommen. Damit braucht es keine Mapping-Tabelle, die driften könnte —
 und die Chronik-Anker (`/{ns}/chronicle.json`) bleiben ohne Änderung gültig.
+
+## Nachtrag 2026-08-12 — Research ecology v3: die Vier-Ebenen-Pyramide
+
+Design-Handoff: `docs/design_handoff_research_ecology/README.md`. Diagnose (Frank, 2026-08-12):
+zu viele Seiten, zu viel Text, niemand versteht die Ökologie ohne stundenlanges Lesen. Die
+Kur ist eine strikte Pyramide — **eine** Eingangsfläche (`/ecology`), **ein** Stationsblatt je
+Raum, darunter nüchterne Register. Frank hat die Kill-Liste des Handoffs am 2026-08-12
+bestätigt („wie im Handoff entworfen umsetzen"), also verschwinden 17 Seiten als eigene
+Oberflächen.
+
+**Kein Inhalt ist gelöscht.** Jede dieser Seiten steht vollständig in der Git-Historie; was
+sie zeigten, steht jetzt auf dem Blatt, auf das sie zeigen. Das ist der Unterschied zwischen
+Archivieren und Wegwerfen, und er ist die Bedingung, unter der diese Liste überhaupt
+umgesetzt wurde.
+
+| Alte Route | Ziel | Warum |
+|---|---|---|
+| `/maschinenraum` | `/ecology#now` | Das LAST-NIGHT-Board des Eingangs IST diese Seite — auf einer Fläche, die auch die vier Fragen ringsum beantwortet. |
+| `/{ns}/history` | `/{ns}` | Chronik/Spine/Playbill: der Statuspanel und die Figur des Stationsblatts tragen denselben Bestand. |
+| `/{ns}/apparatus` | `/{ns}` | Repo, Verfassung, Team-Kanal, nightly runs — jetzt Statuszeilen und Level-2-Türen. |
+| `/atelier/how-a-line-ends`, `/field/how-a-claim-came-off`, `/studio/how-a-premiere-returned` | `/{ns}#figure` | Die drei Touren führten je durch eine Figur. Die Figur steht auf dem Blatt; der Anker ist derselbe, auf den jetzt auch die Türen (`NAMING.doors[].tourHref`) und die Triptychon-Karten zeigen. |
+| `/atelier/sheet`, `/atelier/sheets`, `/atelier/material`, `/atelier/foundation` | `/atelier` | Fünf Einzelräume des Ateliers; ihr Zustand ist der Statuspanel, ihre Listen sind die Register. |
+| `/atelier/projects` | `/atelier/works` | Der Projektlog war eine Liste — Listen wohnen auf Ebene 2. |
+| `/season` | `/ecology#record` | Die Season-Ebene wurde im v2-Umbau (2026-08-08) gelöscht; die Zeitleiste trägt die Naht, die sie ersetzt hat. |
+| `/notation` | `github.com/frankbueltge/research-ecology` | Ein Dokument über die Schreibweise des Hauses gehört zu den Dokumenten (Ebene 3). Der Notations-Register-Eintrag ist datiert fortgeschrieben (`src/lib/notation/register.ts`, Änderung 2026-08-12). |
+
+Unverändert (bewusst): `/apparatus` bleibt als **eine** Seite bestehen, nur herabgestuft — der
+Eingang verlinkt sie als „the full wiring →". `/{ns}/works`, `/{ns}/instruments`,
+`/{ns}/journal`, `/{ns}/protocol`, `/{ns}/requests`, `/{ns}/werke/*`, `/works`, `/reception`,
+`/post`, `/seed`, `/plenum`, `/catalogues`, `/atlas`, `/datasets`, `/papers` bleiben.
+
+**Anker statt Mapping, wieder.** `#figure` ist ein echtes Ziel im DOM des Stationsblatts
+(`StationSheet.astro`), nicht eine Hoffnung: die drei Tour-Routen und die Türen zeigen auf
+denselben Anker, und ein Test hält beides zusammen.
+
+Test: `src/lib/redirects.test.ts` („research ecology v3 — retired routes“) prüft alle 17
+Regeln, dass keine auf eine andere umgeleitete Route zeigt (zwei Hops), und dass die drei
+Touren wirklich auf der Figur landen.

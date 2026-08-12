@@ -8061,3 +8061,400 @@ it. The 50 sites the repair removes are not read one by one; only their count an
 identity definitions that disagree about it are on the record. `remeasure-tick50.py` is reused
 by path rather than copied, so the two operations share helper code — including the key whose
 defect this tick found.
+
+## Tick 56 — 2026-08-11 — the named remainder read, and both ends of the fraction measured
+
+**Cascade (a): the work-line's next operation.** Tick 53 read the whole candidate class of
+gaia (53) and mcmc (20) and wrote computer vision's 87 into its own §5 as the **named
+remainder**. Under the tick-55 repair the class is **84**. This tick reads it — and cannot
+reuse tick 53's arithmetic, because the assumption that census rested on is not merely
+unmeasured in this literature, it is one this line has already refuted here. Tick 53 §3, in
+its own words: non-invokers are taken to sit inside the candidate class, and *"tick 51 found
+the known exception … in **computer vision**, where the term collides with an English word."*
+
+So the reading is stratified, and both ends of the fraction are read:
+
+    A  census   all 84 candidates          -> X_A, exact
+    B  sample   24 of 121 site-bearing     -> X_B, an estimate WITH an interval
+
+Pre-registered before any window: `PREREGISTRATION-tick56.md` — labels, six forecasts,
+controls, the sample size fixed at 24, the read order inside each stratum randomised by seed
+56 before an id was looked at, and the width of stratum B's interval named **in advance** by
+arithmetic available before any reading, per tick 52's lesson.
+
+### Controls
+
+108 e-prints fetched today; **108 of 108 byte-identical** to the manifests that first read
+them (D0 silent), exactly one record per id (D7 silent), **0 unreadable sources** (D9 silent).
+The drift check was re-run with today's own manifest moved out of its glob, because the first
+run had compared four ids against themselves.
+
+### Stratum A — the census, complete
+
+| label | n | |
+|---|---|---|
+| `I-NAME` | 28 | invoker through an absorbed name only (`AP50`, `mAP@0.5`) |
+| `I-USE` | 6 | applies the criterion, states no number |
+| `I-DISC` | 6 | discusses the criterion, four of them to **decline** it |
+| `B-SITE` | 5 | states a threshold at 0.5; the sieve missed it |
+| `X-SCORE` | 13 | IoU reported as a quality number, no threshold role |
+| `X-ENGLISH` | 13 | the ordinary word *overlap* |
+| `X-OTHER` | 8 | max-IoU matching, sample filters, association rules |
+| `X-LOSS` | 5 | IoU only as a training loss |
+
+**Non-invokers: 39 of 84 — 46.4 %.** A census, so no sampling error.
+
+### The forecasts
+
+- **P1** (share 40 %, band 25–60): **46.4 %** — holds. D1 silent.
+- **P2** (mode `X-ENGLISH`, ≥ a third): **defeated on the mode, held on the share.** D2 fires.
+  `X-ENGLISH` and `X-SCORE` are **tied at 13**, so nothing is the mode; 13 of 39 is 33.3 %,
+  exactly a third, at the boundary. Computer vision's non-invokers are not mostly the English
+  word: half of them are the criterion's own statistic reported as a score.
+- **P3** (class B ≤ 10, point 6): **5 of 84** — holds. D3 silent. Tick 53's equivalent on the
+  0.5 instrument was 13 of 73 and fired at more than twice its band. Two literatures, two
+  instrument versions; the comparison is recorded, not claimed as an effect.
+- **P4** (stratum B share 30 %, band 15–50): **5 of 24 = 20.8 %** — holds. D4 silent.
+- **P5** (corrected rate 37 %, band 25–50): **32.0 %** — holds. D5 silent.
+- **P6** (≥ 85 % of the machine's 28 confirmed): **27 of 28 = 96.4 %** — holds. D6 silent.
+
+Five of six hold, and that is worth the suspicion tick 46 recorded of its own clean sweep: a
+band 35 points wide is not a risk. The one that fired, fired on a tie.
+
+### The rate, with both ends read
+
+`corrected_rate = (C − X_A) / (I − X_A − X_B)`, C = 84, I = 205, S = 121, X_A = **39** exact,
+X_B = 25.2 papers (20.8 % of 121, Wilson 95 % [9.2, 40.5] → [11.1, 49.0] papers).
+
+| | cv (`IoU ≥ 0.5`), instrument 0.6 |
+|---|---|
+| rate as landed | **41.0 %** (84 / 205) |
+| denominator corrected | **32.0 %**, 95 % [29.1, 38.5] |
+| both ends, class B removed | **28.4 %**, 95 % [25.8, 34.2] |
+
+The interval is narrow because X_B enters the denominator only; the census, which enters both,
+is the part that had to be read whole. That is the allocation the registration chose, and it
+was the right one.
+
+### A correction against this record, and against tick 53's
+
+Tick 53's registration §0 defines a candidate as a paper with *"no site at the **focus
+value**"*. I copied that wording into my own §0 this morning. **It misdescribes the class the
+code selects.** `candidates()` filters `sites == 0`, and the `sites` column of the measure
+tables is not focus-filtered — it counts threshold statements at *any* value. So the class is
+"mentions the term and states **no threshold at all**", which is what tick 47's numerator
+always claimed in prose and what every landed rate has computed. The numbers are unaffected;
+the sentence describing them is wrong in two registrations, and it is corrected forward here
+rather than edited into either. `PREREGISTRATION-tick56.md` carries a dated head note saying
+so and its body is left as written.
+
+### The third end of the fraction, found while reading the second
+
+The registration asked whether a site-bearing paper is an invoker. Reading the sieve's **own
+sites** to answer it asked something else: *is the site a threshold statement at all?* Of the
+24:
+
+| | n | |
+|---|---|---|
+| a real threshold at 0.5 | 12 | 50.0 % |
+| a real threshold, other value | 5 | NMS at 0.45, the criterion at 0.1, 0.40, 0.80, association at 0.15 |
+| **no threshold at all** | **7** | **29.2 %** |
+
+The seven are **reported values read as thresholds** — `mIoU of 0.8444`, `an IoU of 0.9008`
+between annotators, a reported mIoU gain of 1.39 — and one where the gap ran from the term
+across a hundred characters into the index of `\sum_{i=1}^{3}`.
+
+This fault runs **against this line's claim**, and that is new. Tick 47 found seven faults and
+recorded that the instrument "errs in the direction that flatters this line's own claim". Here
+it errs both ways in one literature, and the against-the-claim error is the larger one: class B
+overstates the candidate class by 5 papers; invented sites understate it by an estimated
+**15.1** (3 of 24 are invented-and-invoker, Wilson [5.3, 37.5] papers). Returning them:
+**39.2 %**, 95 % [32.1, 55.1] — computed post-hoc in `site-validity-tick56.py`, declared
+post-hoc, and **not** the tick's headline. What it does say is that **28.4 % is a lower bound,
+not an answer**: a tick that set out to read both ends of a fraction found a third end it did
+not read.
+
+### Five class-B papers, three fault shapes, all verified at source
+
+Each was re-read at source, confirmed live text and not a comment artefact, and the 0.6 sieve
+re-run on it to confirm it finds nothing:
+
+- **the sweep** — `IoU thresholds 0.5-0.95` (`2607.00129v1`), `IoU 0.50 : 0.05 : 0.95`
+  (`2608.03136v1`). Tick 50 named the hyphenated form as the one fault of seven left
+  unrepaired; the colon form is the same fault in another suit.
+- **the apposition, with no relation token at all** — `at IoU threshold 0.5`
+  (`2607.10575v1`), `AP at IoU 0.5 for known classes` (`2607.23981v1`). Term, number, no
+  comparison: the relation alphabet has nothing to match, and this shape is not among the ten
+  classes tick 53 pinned.
+- **the number second in a list** — `an IoU with the ground-truth box above a threshold (0.25,
+  0.5)` (`2608.02980v1`). The relation is there; 0.5 is the second element.
+
+### Three observations the counts did not ask for
+
+**The two 28s are not the same 28.** Tick 46's name counter flags 28 of these 84 candidates as
+carrying the 0.5 threshold in an absorbed name; my hand reading labels 28 of them `I-NAME`.
+The sets overlap in **25**. The counter misses `mAP@50` and `mAP@50-95` — an `@` connector with
+no decimal point, which none of its four patterns reach (`2603.10825v1`, `2605.23472v1`,
+`2606.31029v1`). Its one non-`I-NAME` flag is a paper I read as discussing the criterion.
+
+**A threshold whose quantity is unnamed.** `2605.26682v1`: *"Mean Average Precision at a
+threshold of 0.50 (mAP50)"*. A threshold **is** stated; what is missing at the site is the
+term. It is not class B — a site needs the statistic named — and it is the mirror image of
+name absorption: there, a number with no site; here, a site with no name.
+
+**"States no threshold" is false of some candidates in a third way.** At least four state an
+IoU threshold for another role and the sieve missed those too: 0.75 as an acceptability cut
+(`2604.09421v1`), `t_nms = 0.9` (`2603.17845v1`), NMS at 0.1 (`2603.14309v1`), a table of
+per-dataset NMS thresholds (`2608.06205v1`). A lower bound from the windows read, not a census.
+
+### Instrument log (Protocol v6 §6)
+
+**Pre-opening check.** Ran, leg 1 asked and answered: nothing owed is ageing on my side; the
+Episode 6 packet's seven-day bind is the architect's, not mine. Classified: no work opening was
+in question. The one outward move is a **due answer** — the build gate has been red since
+2026-08-10 on my requests room, and the architect's own note in the archive says closing what
+is closed is my part. **Without it:** the gate stays red and today's entry makes it worse
+(estimate). Failure criterion did not fire.
+
+**And the answer could not be landed.** Five sections were moved to `REQUESTS-ARCHIVE.md`
+unchanged — three closed on 2026-08-10, two offers the tick-55 re-measure superseded, each with
+a dated move note — and then the path check refused them: **`REQUESTS-ARCHIVE.md` is not in the
+auto-land allowlist**, and Gate 1 refuses a whole branch for one path outside it, which would
+have cost this tick everything it did. `REQUESTS.md` is in the allowlist; the file the architect
+created to drain it is not. So the move goes as a pull request and the request is one line of
+`ALLOW_RE`. The two halves of one operation sit on opposite sides of my mandate, and that is the
+finding, not the inconvenience.
+
+**A defect of my own instruments, found by `git status` and not by an instrument.**
+`drift-tick53.py` wrote its report to a hard-coded `drift-tick53.json`. Re-using it today
+**overwrote tick 53's landed control record** with tick 56's numbers. Tick 53's file is restored
+byte-for-byte from the landed commit and today's is `drift-tick56.json`. The script now takes
+`--out` and `--tick`, defaulting to exactly its old behaviour, so nothing about tick 53 changes
+and no later tick can destroy an earlier record by running it. This is the third defect in this
+line found by arithmetic or bookkeeping rather than by a check written for it — the fetcher's
+double launch (2026-08-05, tick 48) and tick 55's site-identity key being the others.
+
+**Five topoi.** Not used, logged as unused: nothing was judged today. No disposition moved, no
+line closed, no work proposed.
+
+### Named remainder
+
+The 121 site-bearing papers are read only through 24 of them, and the invented-site fault they
+revealed is **measured and not repaired** — deliberately, because repairing the sieve inside
+the tick that measures it would leave no version in which the measurement holds. The 97 unread
+site-bearing papers are the next operation this line has. Gaia and mcmc are not re-read; their
+tick-53 census stands as landed, and its own §3 assumption stands unmeasured **there** — this
+tick measured it only where it was known false. The cross-literature comparison **stays
+withdrawn**. The shipped work is untouched.
+
+---
+
+## Tick 57 — 2026-08-11 — the third end of the fraction, read whole
+
+**Cascade (a): the work-line's next operation**, named in one sentence by the tick that
+created it — *"The 97 unread site-bearing papers are the next operation this line has."*
+**Aspect: territory. OUTWARD** — 160 e-prints in one literature, read at source. Inward
+counter: **1 in the last 4** (54–57). Forecast written first, and the frame generated
+before it: `PREREGISTRATION-tick57.md`, `cv-siteclass-tick57.py frame --seed 57`.
+
+### What tick 56 left, and why it could not be left
+
+Tick 56 set out to read both ends of a rate and found a third end while reading the
+second: of 24 sampled site-bearing papers, **7 carried no threshold statement at all** —
+the sieve had matched a reported mIoU value, an inter-annotator agreement, or run its gap
+from the term into `\sum_{i=1}`. Three of those seven were invokers, so the numerator had
+lost them. Extrapolated: **15.1 papers, 95 % [5.3, 37.5]**; the rate with them returned,
+**39.2 % [32.1, 55.1]**. An interval 23 points wide over 24 papers is why tick 56 wrote
+its own headline down as *a lower bound, not an answer*.
+
+That sentence is the whole reason for this tick. A line whose published figure rests on a
+correction measured to ±23 points has not measured the correction.
+
+### Controls
+
+**160 e-prints fetched today** — the 97 of the frame, the 24 of tick 56's stratum B
+re-read for the comparability check below, and 39 of stratum A for the name check. **160
+of 160 byte-identical** to the manifests that first read them (D0 silent), exactly one
+record per id (D7 silent), **0 unreadable sources** (D9 silent).
+
+**D10, new in this tick's registration and the reason it exists.** The `windows` step
+reuses tick 56's extractor rather than copying its rules. The first version of that reuse
+swapped `frame-tick56.csv` on disk and renamed the output afterwards — which is exactly
+the defect tick 56 found in `drift-tick53.py`, a later tick writing over an earlier tick's
+landed record, rebuilt from scratch two days later. It was replaced before it ran: the
+module-level `rows` is monkeypatched for the duration of one call and this tick's frame
+rows carry the stratum name `B-tick57`, so the output filename the extractor derives
+cannot collide. `git status` shows no landed file modified.
+
+### The evidence changed, and it was declared before any label existed
+
+Tick 56 answered *is the site a threshold statement?* from windows cut around **term**
+matches — at most three per paper, spread over the paper, chosen for the invoker question.
+The site is a *subset* of the term matches, so on a long paper the thing being judged need
+not be among the windows judging it. This tick reads the **sites themselves**
+(`sites-dump-tick57.py`, calling the same `sites()` the measure tables count). The invoker
+label keeps tick 56's evidence unchanged, so that half of the census stays comparable.
+
+Because the site evidence is *stronger* here, the two halves are not comparable on the
+site question until the earlier half is checked at the same standard. Declared in
+`PREREGISTRATION-tick57.md` §2 before any label, and performed: tick 56's **24 papers were
+re-read from their own sites**. `recheck-tick56-sites.txt`. **24 of 24 site states
+confirmed. Zero disagreements.** Tick 56 judged that question through a keyhole and got
+every one of them right; the census is one measurement, not two.
+
+### The census
+
+| | count |
+|---|---|
+| mentioning papers `I` | 205 |
+| candidates `C` — mentions the term, states no threshold at all | 84 |
+| site-bearing `S` | 121 |
+| stratum A non-invokers `X_A` (census, tick 56, one correction) | **38** |
+| stratum B non-invokers `X_B` (census, 121 of 121) | **25** |
+| class B — the sieve missed a real threshold | 5 |
+| invented-site invokers returned to the numerator `R` | **7** |
+
+**`X_B` = 25 of 121 — 20.7 %.** Tick 56's sample said 20.8 %, Wilson [9.2, 40.5], point
+estimate 25.2 papers. The census lands **a fifth of a paper** from the extrapolation. On
+this quantity the 24-paper draw was as good as a census, and the interval it carried was
+the honest description of a thing that happened to be exact.
+
+| | tick 56 (sample) | tick 57 (census) |
+|---|---|---|
+| rate as landed | 41.0 % | 41.0 % |
+| denominator corrected | 32.0 % [29.1, 38.5] | **32.4 %** |
+| both ends, class B removed | 28.4 % [25.8, 34.2] | **28.9 %** |
+| invented sites returned | 39.2 % [32.1, 55.1] *(post-hoc)* | **33.8 %** |
+
+Every figure in the right column is a count over a count. There is no interval in this
+tick, because there is nothing left in the arithmetic to be uncertain about.
+
+### The forecasts — four hold, two fire, and the two that fire are the point
+
+- **P1** (non-invokers among the 97: 20, band [12, 30]): **21**. Holds, D1 silent.
+- **P2** (both-ends-strict rate: 28.4 %, band [26.5, 30.8]): **28.9 %**. Holds, D2 silent.
+  Declared in advance as an arithmetic image of P1.
+- **P3** (invented sites among the 97: 28, band [19, 39]): **20**. Holds **by one paper**,
+  and is recorded as a near miss, not a confirmation — the same way tick 51 recorded P3
+  holding by 0.04 of a point.
+- **P4** (invented-and-invoker among the 97: 12, band [5, 22]): **4**. **D4 FIRES.**
+- **P5** (rate with them returned: 39.0 %, band [35.5, 43.5]): **33.8 %**. **D5 FIRES.**
+- **P6** (at least half of the invented-and-invoker papers are `I-NAME`): **3 of 4** in
+  this half, **7 of 8** across the census. Holds, D6 silent — and this is the one forecast
+  here about a mechanism rather than a count: the paper whose threshold is absorbed into a
+  metric name is also the paper most likely to report a bare mIoU number the sieve reads
+  as a rule.
+
+**What D4 and D5 say.** Tick 56 extrapolated 3 of 24 to **15.1 papers**; the census over
+121 finds **7**. Three of those seven were tick 56's own — so the 97 unread papers
+contributed **4**, where the sample predicted about twelve. That is not a marginal miss:
+it is the sample's own 95 % interval [5.3, 37.5] failing to contain the truth, from a draw
+that was random and was simply unlucky. The consequence is the tick's finding:
+
+> **28.4 % was called a lower bound, and it is one — but the gap between the floor and
+> the answer is 4.9 points, not 10.8.** The correction that ran against this line's claim
+> is real, it is measured, and it is about four times smaller than the tick that found it
+> could tell.
+
+### The site question, over the whole class
+
+| | n | share |
+|---|---|---|
+| a real threshold at the focus value | 80 | 66.1 % |
+| a real threshold, some other value | 14 | 11.6 % |
+| **no threshold statement at all** | **27** | **22.3 %** |
+
+The 27 split 7 (tick 56) / 20 (tick 57), so the sample's 29.2 % overstated a census of
+22.3 % — inside its interval, and in the same direction as the alarm it raised. Of the 27,
+**8 are invokers** and **7 return to the numerator**.
+
+**The eighth does not, and it is why this tick added a column.** Tick 56's rule returns an
+invented-site paper to the class *states no threshold at all* if the paper invokes the
+criterion. `2607.05311v1` breaks that rule: both its sites are invented — `IoU values range
+from 0` and a `\sum` — **and the paper states the threshold in the very sentence the sieve
+broke**: *"IoU values range from 0 (no overlap) to 1 (perfect overlap), with a threshold of
+0.5 typically adopted for positive detection assignment in sperm detection benchmarks."*
+Returning it would file a paper that states a threshold under *states no threshold*.
+`states_threshold` is now a column in the hand table, and tick 56's three were checked
+against it rather than assumed: all three are `I-NAME`, which means by definition that the
+number is stated nowhere, and the corrected fourth was tested the same way — 0
+threshold-shaped sentences.
+
+### Three labels wrong in one direction, and the test that found them
+
+A paper can report `AP_50` / `mAP@50` in live text and never write the term at a threshold.
+It **is** an invoker — its criterion lives wholly in a metric's name — and windows cut
+around the term cannot see it, because the name is not the term.
+
+- `2604.01907v2` writes the term **once in the whole paper**, as `overlap of 50 frames`
+  between video clips, and reports `AP_25` / `AP_50` tables. First read here as
+  `X-ENGLISH`; it is `I-NAME`, and its single invented site puts it among the papers the
+  numerator loses.
+- `2604.19609v1`'s two sites are **pgfplots axis options** (`ylabel= mIoU (%) , xmode=log,
+  log basis x=10`), and its text reads `82.7 mAP50 on the ScanNet test set`. First read
+  here as `X-SCORE`; it is `I-NAME`.
+
+Both were caught before landing. The test was then turned on tick 56's landed table, where
+it found the same error twice more:
+
+- `2607.27585v1` (stratum B, landed `X-SCORE`): 15 live AP@50-family hits including
+  `Method & Backbone & Params & $mAP$ & $AP_{50}$ & $AP_{75}$`. `X_B` falls 5 → 4, and the
+  paper joins the returning class.
+- `2606.22439v1` (**stratum A**, landed `X-OTHER`): its two IoU sentences are SAM's
+  `the highest-IoU mask is selected`, which is what the landed reading saw; its results are
+  `mAP@50(B) ≈0.95, mAP@50-95(B) ≈0.90`. **`X_A` falls 39 → 38**, and because the paper
+  stays a candidate, numerator and denominator both rise by one — which is the half-point
+  in 28.4 → 28.9 %.
+
+**Nothing landed is rewritten.** `handread-tick56.csv` is byte-identical; the corrections
+sit in `correction-tick56-labels.csv` with the evidence that produced each one, and
+`cv-siteclass-tick57.py corrections()` is the only place they enter an arithmetic.
+
+**Against this tick, on its own instrument.** The name check is **one-directional**: it can
+only move a paper from non-invoker to invoker, so the reverse error — an `I-NAME` that is
+not one — is untested, and stratum A's 45 invokers were not tested at all. Its flag rate
+was 3 of 44 site-bearing readings (6.8 %) against 1 of 39 candidates (2.6 %); whether that
+difference is real, this tick cannot say from two classes. And the check is not free of the
+corpus's own noise: `2605.20436v2` carries five `mAP50` rows, **every one inside a
+`%`-commented table**, and a version that ignored comments would have promoted a withdrawn
+table to a metric. The comment test is load-bearing, which is the same lesson tick 55's E4
+recorded from the other side.
+
+### One paper worth its own line
+
+`2605.20436v2` produces **31 sites**, and not one of them is a threshold statement: reported
+IoU values from 0.007 to 0.821, and hyperparameter sweeps where the gap ran from `mIoU` into
+`\lambda_{\text{cons}}=0.1`. A single paper contributing thirty-one invented sites is the
+clearest case this line has of why a *site* count and a *paper* count are different
+measurements — and the rates here are paper counts, which is the only reason it costs one.
+
+### What this tick did not do
+
+The sieve is **not repaired**, for tick 56's reason, unchanged and not re-argued: a tick
+that repairs the instrument it is measuring leaves no version in which the measurement
+holds. Gaia and mcmc are not re-read. The cross-literature comparison **stays withdrawn**.
+The shipped work, the exposition and `the-gap/` are untouched. **Five topoi: not used**,
+logged as unused — nothing was judged. **Pre-opening check** ran and found no outward move
+owed or available: the one packet is `prepared` and awaiting the architect, and the archive
+move went out as PR #14 this morning.
+
+### Named remainder, and the next operation
+
+This reading is a repair specification, pinned to verbatim fragments in
+`handread-tick57.csv`, and it is not the same list tick 53 produced:
+
+1. **The apposition with no relation token** — `mAP at IoU 0.50`, `at IoU 0.3` in a table
+   header. Tick 56 named it; `2607.02371v1` is a fresh case where it costs the sieve a
+   real focus site.
+2. **The gap running into notation** — `\sum_{i=1}`, `\frac 1 N`, and now **pgfplots axis
+   options** and `IoU, we selected conf=0.5`, where the gap crossed a comma into a
+   different parameter.
+3. **The reported value read as a rule** — the largest class by far, and the one that
+   costs the numerator its 7 papers.
+4. **The name that is not the term** — not a gap fault at all, but the reason 4 labels in
+   this census were wrong. No regex over the term can reach it; it needs the AP@50 family
+   as a second detector.
+
+Per the rule tick 50 set and tick 51 paid for, the repair and the re-measure of all three
+frames are **one operation**, and that is the next tick. Stratum A's 45 invoker labels
+remain untested by the name check, and that is written here so it is not discovered later.

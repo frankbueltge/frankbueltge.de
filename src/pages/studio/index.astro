@@ -1,245 +1,83 @@
 ---
-// /studio — die Bühne (studio-aesthetik-2026-07-15.md): ONE spot on what is public now,
-// no gallery grid; the floor keeps every strike (X-marks with verbatim kill reasons); the
-// Gasse holds the refused material, visible but unlit. Data: the chronicle mirror (the
-// ship entry names the premiered work), the enc-2026-001 score export (admission
-// contract, declined case, obligation → marquee), and the hand-curated kill list
-// (src/data/studio/stage.curated.json — session-commit quotes the mirror itself does not
-// carry; provenance in the file). Replaces the old EnginePage entrance.
+// /studio — the Studio's station sheet (Level 1 of the ecology pyramid, 2026-08-12).
 //
-// THE DOSSIER (2026-08-01) is now the centre of this page, and two things moved to make room:
-//
-//   · the season floor left its own section and became the DOSSIER'S SWITCHBOARD — same figure,
-//     same component, same record table, but every mark now opens that body's dossier and every
-//     name in the dossier's call sheet aims the floor back at its mark;
-//   · the guided One Tap tour left the entrance for its own room (/studio/how-a-premiere-returned),
-//     linked from the dossier of the work it is about. It was doing two jobs at once and both
-//     suffered: it was the entrance's front door AND the story of one withdrawn work, and because
-//     it drives the figure, a visitor who then chose a different body found the floor parked on
-//     scene one. Same diagnosis and same fix as /atelier's.
-//
-// What did NOT move is tonight's stage below the dossier. It answers a different question from the
-// floor's — the floor is the SEASON, the stage is TONIGHT — and it is the only surface carrying
-// the Gasse: the declined case from enc-2026-001 and the held concept, visible but unlit. Dropping
-// it would have deleted the refused material from the entrance entirely.
+// Replaces, as separate surfaces: this practice's index, its history, its apparatus page and its
+// tour. The stage floor — the practice's own grammar since its first season — survives as the
+// sheet's figure, drawn from the works register and the curated strike list where every reason is
+// a verbatim quotation from the session commit that made it.
 import Page from '@/layouts/Page.astro'
-import Frame from '@/components/studio/surface/Frame.astro'
-import OrientationList from '@/components/practice/OrientationList.astro'
-import { loadChronicle } from '@/lib/studio/chronicle'
-import { ledgerOf } from '@/lib/begegnungen'
-import { buildStageSvg, type GasseEntry } from '@/lib/studio/stage'
-import { buildSeasonModel, type SeasonKill } from '@/lib/studio/season'
-import SeasonFloor from '@/components/studio/SeasonFloor.astro'
-import Dossier from '@/components/studio/Dossier.astro'
-import { currentPremiere, markIndex } from '@/lib/studio/dossier'
-import { loadStudioDossiers, loadWorkMetas } from '@/lib/studio/dossier-data'
-import { STUDIO_GRAMMAR, STUDIO_NARRATIVE } from '@/config/studio-wording'
-import stageData from '@/data/studio/stage.curated.json'
-import { numberWord } from '@/lib/atelier/sessions'
+import StationSheet from '@/components/ecology/StationSheet.astro'
+import Figure from '@/components/ecology/figures/Figure.astro'
+import StageFloorFigure from '@/components/ecology/figures/StageFloor.astro'
+import { PYRAMID } from '@/config/ecology-pyramid-wording'
+import { FIGURES } from '@/config/ecology-figure-wording'
+import pulseData from '@/data/pulse/pulse.json'
+import type { PulseSnapshot } from '@/lib/pulse/render'
+import { allWorks } from '@/lib/engines/register'
+import { buildStationSheet, splitDoorLine, type LogEntry } from '@/lib/ecology/pyramid/station'
+import { buildStageFloor } from '@/lib/ecology/pyramid/figures'
+import { recordLine, type ChronicleEntry } from '@/lib/ecology/pyramid/landings'
+import chronicle from '@/data/studio/chronicle.upstream.json'
+import stage from '@/data/studio/stage.curated.json'
 
-const chronicle = loadChronicle()
-const seasonMetas = loadWorkMetas()
+const works = allWorks()
+const rows = chronicle as ChronicleEntry[]
+const studioWorks = works.filter((w) => w.ns === 'studio')
 
-// The newest LIVE premiere — derived, never typed: a premiere can be withdrawn after the fact
-// (One Tap, session 43, 2026-07-25 — the collective's own meta.json marks it "WITHDRAWN … not a
-// live premiere"). The derivation itself lives in src/lib/studio/dossier.ts, so this page and the
-// dossier's own protagonist cannot pick different works and light two spots.
-const slug = currentPremiere(chronicle, seasonMetas)
-if (!slug) throw new Error('/studio: no live premiered work in the chronicle mirror')
-const ship = [...chronicle].reverse().find((e) => e.move === 'ship' && e.works[0] === slug)
-if (!ship) throw new Error(`/studio: no ship entry for the live premiere ${slug}`)
+const log: LogEntry[] = [...rows]
+  .filter((r) => r.date)
+  .sort((a, b) => (a.date! < b.date! ? 1 : -1))
+  .slice(0, 3)
+  .map((r) => ({
+    date: r.date!,
+    marker: r.collective_session ? `S${r.collective_session}` : null,
+    line: recordLine(r.move, r.summary) ?? PYRAMID.station.absent,
+  }))
 
-const meta = seasonMetas[slug]
-if (!meta?.title || !meta.date) throw new Error(`/studio: premiered work ${slug} has no committed meta`)
-
-const firstSentence = ship.summary.split('. ')[0].replace(/\.+$/, '') + '.'
-
-// Pinned to the encounter this page's copy is actually about (it quotes enc-2026-001
-// verbatim) — "current" moved on when newer encounters gained exported ledgers
-// (2026-08-02), and a page about one encounter must never silently render another.
-const score = ledgerOf('enc-2026-001')
-const admitted = score.events.find((e) => e.event_type === 'object.admitted')
-const declined = score.events.find((e) => e.event_type === 'translation.loss_declared')
-const issued = score.events.find((e) => e.event_type === 'correction.issued')
-const obligation = score.obligations.find((o) => o.id.includes('live-status'))
-
-const kills = stageData.kills as { name: string; session: string; reason: string; source: string }[]
-const gasse: GasseEntry[] = [
-  ...(declined
-    ? [{
-        name: 'the declined case',
-        sub: declined.attribution?.match(/session \d+/)?.[0] ?? declined.date,
-        note: `${'translation.loss_declared'} — “${declined.quote}” (${declined.attribution} · enc-2026-001, verbatim). The most spectacular case stays offstage, on purpose.`,
-      }]
-    : []),
-  ...(stageData.held as GasseEntry[] & { name: string; sub: string; note: string }[]),
-]
-
-const svg = buildStageSvg({
-  premiere: {
-    title: (meta.title ?? slug).toUpperCase(),
-    metaLine: `premiered ${meta.date} · session ${ship.collective_session} · “${firstSentence}”`,
-    hover: `works/${slug} — ${ship.summary}`,
-    quote: admitted?.quote ?? '',
-    attribution: admitted ? `${admitted.attribution} (enc-2026-001, verbatim)` : '',
-  },
-  marquee: obligation ? STUDIO_GRAMMAR.marquee : '',
-  kills: kills.map(({ name, session, reason }) => ({ name, session, reason })),
-  gasse,
-  strikeNote: STUDIO_GRAMMAR.strikeNote(kills.length),
-  gasseLabel: STUDIO_GRAMMAR.gasseLabel,
-  orientNote: STUDIO_NARRATIVE.orientNote,
+const sheet = buildStationSheet({
+  id: 'studio',
+  snapshot: pulseData as PulseSnapshot,
+  works,
+  log,
+  made: studioWorks.length,
 })
 
-const sessions = chronicle.map((e) => e.collective_session).filter((s): s is number => s !== null)
-const sMax = Math.max(...sessions)
-const evenings = new Set(chronicle.map((e) => e.date)).size
-
-// ——— the season floor (WP6c, 2026-07-31): the whole season on ONE stage floor — every premiere
-// lit, every strike taped, every return of a work curving back into production, and the one
-// withdrawal as a struck spotlight. It REPLACES the thin season band that stood here from
-// 2026-07-25: the band drew every premiere and strike on a time axis, which is a strict subset of
-// what the floor now draws on the same axis, so keeping both would show a visitor the same season
-// twice — the second time worse. (Removal flagged for review in the WP6c PR; the band's own idiom
-// survives in the figure it grew into.)
-//
-// 2026-08-01: the floor now stands INSIDE the dossier as its switchboard. Same model, same
-// component, same table — what changed is that its selection is shared.
-const seasonModel = buildSeasonModel({
-  chronicle,
-  metas: seasonMetas,
-  kills: kills as SeasonKill[],
-})
-
-// ——— the dossier: one body of the house, read out of its own record ——————————————————
-// Twelve bodies — five premieres (One Tap among them, withdrawn) and the seven struck positions —
-// each with its own description verbatim, the eye's verdicts verbatim, and the file every line was
-// read from. The mark index is DERIVED from the two models, so the figure and the document are
-// keyed by the same table rather than by two hand-kept ones.
-const dossiers = loadStudioDossiers()
-const SEASON_FLOOR_ID = 'studio-season-floor'
-const dossierIndex = markIndex(dossiers, seasonModel.marks.map((m) => m.key))
-
-const kicker = ['Studio · the stage · what is public now', 'studio (Ensemble)', `founded ${chronicle[0]?.date ?? ''}`]
-// One clear line: the stage's tally. The stage-vs-gallery rule (STUDIO_NARRATIVE.stageRule)
-// moved out of the header — it is meta, and the orientNote on the floor already says it.
-//
-// WP6c correction: the tally counted every ship entry as a live premiere and read "5 premieres",
-// while the season floor right below it draws four lit positions and one struck spotlight — One Tap
-// was withdrawn on 2026-07-25 and its own meta.json says so. The counts now come from the season
-// model, which reads that state off the work itself, so the headline and the figure cannot disagree.
-const onStage = seasonModel.counts.premiered
-const withdrawn = seasonModel.counts.withdrawn
-const statusHtml =
-  `<b>${onStage} premiere${onStage === 1 ? '' : 's'} on` +
-  (withdrawn > 0 ? ` · ${withdrawn} withdrawn after premiere` : '') +
-  ` · ${kills.length} kills · ${stageData.held.length} held · ` +
-  `${sMax} sessions in ${numberWord(evenings)} evenings</b>`
-
-// Stage record — every mark, uncompressed: the chronicle entries that name the premiered
-// work (verbatim search on its title), the encounter events, the standing obligation.
-interface Row { date: string; event: string; source: string }
-const rows: Row[] = [
-  ...chronicle
-    .filter((e) => e.summary.includes(meta.title!) || e.works.includes(slug))
-    .map((e) => ({
-      date: e.date,
-      event: `S${e.collective_session} — ${e.move}: ${e.summary}`,
-      source: 'chronicle, verbatim',
-    })),
-  ...(admitted
-    ? [{ date: admitted.date, event: `admission contract stated — “${admitted.quote}”`, source: `enc-2026-001 ledger, verbatim (${admitted.attribution})` }]
-    : []),
-  ...(declined
-    ? [{ date: declined.date, event: `the most spectacular case declined — “${declined.quote}”`, source: `enc-2026-001 ledger, verbatim (${declined.attribution})` }]
-    : []),
-  ...(issued
-    ? [{ date: issued.date, event: 'the correction reported upstream, delivered by the conductor', source: 'enc-2026-001 ledger' }]
-    : []),
-  ...(obligation
-    ? [{ date: `since ${admitted?.date ?? ''}`, event: `obligation ${obligation.label}`, source: 'enc-2026-001 obligations' }]
-    : []),
-].sort((a, b) => {
-  // Neueste zuerst (Frank, 16.07. abends); 'since <datum>'-Zeilen sortieren an ihrem Datum.
-  const key = (d: string) => d.replace(/^since /, '')
-  return key(b.date).localeCompare(key(a.date))
-})
+const floor = buildStageFloor(works, stage as Parameters<typeof buildStageFloor>[1])
+const door = splitDoorLine(sheet.station.description)
+const F = FIGURES.studio
 ---
 
-<Page
-  title="Studio — the stage | Frank Bültge"
-  description="The Studio's entry is the stage: one spotlight on what is public now, seven struck positions kept on the floor, and the refused material in the Gasse — visible, unlit."
->
-  <Frame
-    active="this stage"
-    kicker={kicker}
-    h1={STUDIO_GRAMMAR.stageHeadline(onStage, kills.length)}
-    statusHtml={statusHtml}
-    footLeft={STUDIO_NARRATIVE.provenance.stage}
-    footRight="the correction this work sent upstream lives in The Middle → enc-2026-001"
+<Page title={`${sheet.station.name} — ${door.lead} | Frank Bültge`} description={sheet.station.description}>
+  <StationSheet
+    id="studio"
+    kicker={`${sheet.station.name.toUpperCase()} · ${sheet.station.resident.toUpperCase()} · ${sheet.station.corner}`}
+    h1={door.lead}
+    sub={door.rest}
+    status={sheet.status}
+    figureColumns={1}
+    lede={sheet.lede && {
+      kicker: F.lede.kicker(sheet.lede.date),
+      title: sheet.lede.title,
+      teaser: sheet.ledeTeaser,
+      note: sheet.arc?.title ?? null,
+      noteLabel: F.lede.noteLabel,
+      links: [
+        { label: F.lede.open, href: sheet.lede.href },
+        { label: F.lede.record, href: '/studio/works' },
+      ],
+    }}
+    log={sheet.log}
+    logMore={{ label: PYRAMID.station.wholeJournal, href: '/studio/journal' }}
+    doors={sheet.doors}
   >
-    {/* Orientierung zuerst (Frank, 24.07., gleiches Muster wie /field): zwei Sätze, was das
-        Studio ist und wie die Bühne zu lesen ist, vor der Grafik.
-        WP2 (2026-07-31): the lede moved into STUDIO_NARRATIVE.entrance.lede verbatim; the
-        orientation block below it is NEW drafted copy — flagged in the WP2 PR for sign-off. */}
-    <p class="st-room-intro">{STUDIO_NARRATIVE.entrance.lede}</p>
-
-    <OrientationList items={STUDIO_NARRATIVE.orientation} />
-
-    {/* ——— THE DOSSIER: the work in the spotlight, and every other body of the house ———
-        The entrance's centre since 2026-08-01. It stands here — after the four orientation
-        questions and before tonight's stage — because that is the order the page has to read in:
-        what is this house → WHAT IS ON, AND WHAT HAPPENED TO IT → what the stage looks like
-        tonight → the rest of the record. The season floor is its switchboard, in the figure slot:
-        pick a mark up there or a name in the call sheet, and the whole dossier changes. */}
-    <Dossier dossiers={dossiers} floorId={SEASON_FLOOR_ID} index={dossierIndex}>
-      <SeasonFloor
-        slot="floor"
-        model={seasonModel}
-        id={SEASON_FLOOR_ID}
-        heading={STUDIO_NARRATIVE.dossier.floorHeading}
-      />
-    </Dossier>
-
-    <h2 class="st-record-h">{STUDIO_NARRATIVE.tonight.heading}</h2>
-    <figure id="studio-stage" set:html={svg} />
-
-    <aside class="st-legend" aria-label={STUDIO_NARRATIVE.stageKey.heading}>
-      <div class="lg-row"><svg class="lg-mini" viewBox="0 0 46 30"><ellipse class="spotpool" cx="23" cy="15" rx="16" ry="9"/></svg><span>{STUDIO_NARRATIVE.stageKey.spot}</span></div>
-      <div class="lg-row"><svg class="lg-mini" viewBox="0 0 46 30"><g class="lamp"><rect x="19" y="3" width="8" height="4"/></g><path class="beamline" d="M21 7 L10 26"/><path class="beamline" d="M25 7 L36 26"/></svg><span>{STUDIO_NARRATIVE.stageKey.lamp}</span></div>
-      <div class="lg-row"><svg class="lg-mini" viewBox="0 0 46 30"><path class="tapemark" d="M10 12 V6 H16"/><path class="tapemark" d="M36 18 V24 H30"/></svg><span>{STUDIO_NARRATIVE.stageKey.tape}</span></div>
-      <div class="lg-row"><svg class="lg-mini" viewBox="0 0 46 30"><path class="xmark" d="M16 8 L30 22 M30 8 L16 22"/></svg><span>{STUDIO_NARRATIVE.stageKey.xmark}</span></div>
-      <div class="lg-row"><svg class="lg-mini" viewBox="0 0 46 30"><path class="gasse" d="M23 3 V27"/></svg><span>{STUDIO_NARRATIVE.stageKey.gasse}</span></div>
-      <div class="lg-row"><svg class="lg-mini" viewBox="0 0 46 30"><path class="curtainline" d="M4 15 H42"/></svg><span>{STUDIO_NARRATIVE.stageKey.curtain}</span></div>
-    </aside>
-
-    <section class="st-record">
-      <h2>Stage record — every mark, uncompressed</h2>
-      <div class="st-tbl-wrap">
-        <table>
-          <thead><tr><th>date</th><th>event</th><th>source</th></tr></thead>
-          <tbody>
-            {rows.map((r) => (
-              <tr>
-                <td class="mono">{r.date}</td>
-                <td class="q">{r.event}</td>
-                <td class="mono">{r.source}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-      <p class="st-room-intro">
-        Every strike keeps its reason — hover the X-marks, or read the sources in
-        <a href="/studio/history" class="underline">the playbill</a>. The premiered work itself:
-        <a href="/studio/works" class="underline">works →</a>
-      </p>
-    </section>
-
-    {/* Öffentliche Saat (Design-Spec 2026-07-20-oeffentliche-saat-design.md §5, Addendum D6) */}
-    <p class="st-room-intro">
-      <a href="/seed?to=studio" class="underline">Offer this practice a seed →</a>
-    </p>
-  </Frame>
+    <Figure
+      slot="figure-main"
+      title={F.floor.title}
+      sub={F.floor.sub}
+      link={{ label: F.floor.link(sheet.made.count), href: '/studio/works' }}
+      caption={F.floor.caption(floor.pools.length, floor.strikes.length)}
+    >
+      <StageFloorFigure floor={floor} />
+    </Figure>
+  </StationSheet>
 </Page>
-

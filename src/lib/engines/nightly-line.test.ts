@@ -6,7 +6,7 @@
 import { existsSync, readFileSync, readdirSync } from 'node:fs'
 import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
-import { LINE_END, LINE_RESUMED, forkedMeta, forkedWorks, nightlyLine } from './nightly-line'
+import { LINE_END, LINE_RESUMED, PROTOCOL_LADDER, forkedMeta, forkedWorks, nightlyLine } from './nightly-line'
 
 const FORK_WORKS_DIR = 'src/data/nightly/works'
 const FIGURES_DIR = 'public/error-as-method'
@@ -24,10 +24,17 @@ describe('the forked half of the line', () => {
     expect(forkedWorks().map((w) => w.slug).sort()).toEqual(mirroredSlugs())
   })
 
-  it('sends every forked work to a page this site actually builds', () => {
+  it('sends every forked work to something this site actually serves', () => {
+    // Two forms, one address. A text work is rendered by /error-as-method/[slug].astro from its
+    // mirrored work.md; an interactive work is the practice's own index.html, served as built
+    // from public/. Either is a page — neither being there is a 404 with a link pointing at it.
     for (const work of forkedWorks()) {
       expect(work.href).toBe(`/error-as-method/${work.slug}/`)
-      expect(existsSync(join(FORK_WORKS_DIR, work.slug, 'work.md'))).toBe(true)
+      const text = existsSync(join(FORK_WORKS_DIR, work.slug, 'work.md'))
+      const stage = existsSync(join(FIGURES_DIR, work.slug, 'index.html'))
+      expect(text || stage, `${work.slug} has neither a mirrored text nor a stage`).toBe(true)
+      // Never both: the route and the static file would fight over the same path.
+      expect(text && stage, `${work.slug} is mirrored twice, as text AND as stage`).toBe(false)
     }
   })
 
@@ -45,6 +52,7 @@ describe('the forked half of the line', () => {
     // The practice writes `![…](figure.svg)`. If the mirror ever stops putting that file beside
     // the route, the image 404s silently and the page still looks fine — so it is checked here.
     for (const slug of mirroredSlugs()) {
+      if (!existsSync(join(FORK_WORKS_DIR, slug, 'work.md'))) continue
       const body = readFileSync(join(FORK_WORKS_DIR, slug, 'work.md'), 'utf8')
       if (!/!\[[^\]]*\]\(figure\.svg\)/.test(body)) continue
       expect(existsSync(join(FIGURES_DIR, slug, 'figure.svg'))).toBe(true)
@@ -54,6 +62,40 @@ describe('the forked half of the line', () => {
   it('holds only what the fork made — the inherited works stay with the Atelier mirror', () => {
     // Mirroring them twice would put one work at two addresses and let the house count it twice.
     for (const work of forkedWorks()) expect(work.date > LINE_END).toBe(true)
+  })
+})
+
+describe('the ladder of constitutions', () => {
+  it('runs oldest first, by version and by date together', () => {
+    const versions = PROTOCOL_LADDER.map((s) => s.version)
+    const dates = PROTOCOL_LADDER.map((s) => s.date)
+    expect(versions).toEqual([...versions].sort((a, b) => a - b))
+    expect(dates).toEqual([...dates].sort())
+    expect(new Set(versions).size).toBe(versions.length)
+  })
+
+  it('marks exactly one restored constitution — the one the fork runs under', () => {
+    const restored = PROTOCOL_LADDER.filter((s) => s.restored)
+    expect(restored).toHaveLength(1)
+    // The fork restored the constitution in force on the last nightly night, so the step after
+    // it must be the one that ended nightly work.
+    const i = PROTOCOL_LADDER.findIndex((s) => s.restored)
+    expect(PROTOCOL_LADDER[i]!.date < LINE_END).toBe(true)
+    expect(PROTOCOL_LADDER[i + 1]!.date).toBe(LINE_END)
+  })
+
+  it('ends at the version the Atelier actually runs — the Aktualitäts-Regel, as a test', () => {
+    // If the practice adopts v7 and this list is not extended, the site would keep telling the
+    // ladder as if v6 were still the head. That is exactly the drift the house forbids, so it
+    // fails here rather than on a page nobody re-reads.
+    const raw = readFileSync('src/content/atelier/PROTOCOL.md', 'utf8')
+    const current = Number(raw.match(/Research Protocol v(\d+)/)![1])
+    expect(PROTOCOL_LADDER[PROTOCOL_LADDER.length - 1]!.version).toBe(current)
+  })
+
+  it('starts before the line began and never reaches past the fork', () => {
+    expect(PROTOCOL_LADDER[0]!.date <= LINE_END).toBe(true)
+    for (const step of PROTOCOL_LADDER) expect(step.date <= LINE_RESUMED).toBe(true)
   })
 })
 

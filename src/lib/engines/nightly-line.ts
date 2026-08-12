@@ -24,6 +24,52 @@ export const LINE_END = '2026-07-18'
 export const LINE_RESUMED = '2026-08-10'
 export const LINE_REPO = 'https://github.com/frankbueltge/error-as-method'
 
+/** The constitutions the practice has run under, oldest first — the one ladder both arms need,
+ *  so /atelier and /error-as-method can never tell it differently.
+ *
+ *  This is historical record, not live state: each row is a text archived in the engine repo
+ *  under `archive/protocols/`, and the dates are the ones those filenames carry. The CURRENT
+ *  version is not written here — pages read it from the mirrored PROTOCOL.md, so a protocol
+ *  change shows up without anyone editing this list.
+ *
+ *  Read it as the answer to the question the site could not answer before: v3 and v6 are not
+ *  two numbers of one thing, they are two constitutions with different units of work, and the
+ *  fork is the younger repository carrying the older line. */
+export interface ProtocolStep {
+  version: number
+  date: string
+  /** what the protocol made the unit of work */
+  unit: string
+  /** what changed, in the practice's own terms */
+  note: string
+  /** true for the constitution the forked line runs under */
+  restored?: boolean
+}
+
+export const PROTOCOL_LADDER: readonly ProtocolStep[] = [
+  {
+    version: 2,
+    date: '2026-06-28',
+    unit: 'the night',
+    note: 'the founding text — “the subject is free”, and both names provisional',
+  },
+  {
+    version: 3,
+    date: '2026-07-16',
+    unit: 'the night',
+    note: 'the nightly constitution, and the last one the nightly line ran under',
+    restored: true,
+  },
+  {
+    version: 4,
+    date: '2026-07-18',
+    unit: 'the bounded project',
+    note: 'nightly work ends — the ban is on “a routine whose reason for running is the clock itself”',
+  },
+  { version: 5, date: '2026-07-24', unit: 'the work-line', note: 'bounded projects give way to an open horizon' },
+  { version: 6, date: '2026-08-08', unit: 'the work-line', note: 'the work-line protocol sharpened, under research ecology v2' },
+]
+
 /** A forked work's metadata as the practice committed it, by slug — for the one page that shows
  *  more of it than a catalogue entry can (the register keeps only what a catalogue row needs). */
 const FORK_METAS = import.meta.glob('/src/data/nightly/works/*/meta.json', {

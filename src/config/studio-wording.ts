@@ -21,14 +21,14 @@ export const STUDIO_GRAMMAR = {
   /** Marquee-Zeile — statisch, nichts blinkt (Bestandsregel). */
   marquee: 'LIVE STATUS TRAVELS · OBLIGATION ACTIVE',
   gasseLabel: 'DIE GASSE · OFFSTAGE — VISIBLE, UNLIT',
+  /** v3 pyramid, 2026-08-12: the playbill and apparatus rooms were folded into the station sheet
+   *  (their routes 301 there), so the rail is the stage plus the registers under it. */
   rail: [
-    { label: 'this stage', href: '/studio', hint: 'what is public now' },
+    { label: 'the station', href: '/studio', hint: 'the sheet — status, the floor, what is in the light' },
     { label: 'works', href: '/studio/works', hint: 'premiered works — existing URLs stay' },
-    { label: 'playbill', href: '/studio/history', hint: 'the chronicle as an evening bill' },
-    // New rail door 2026-08-01 (Etappe 2): the journal was embedded at the foot of the
-    // playbill and had no address of its own — the sibling practices both carry this door.
     { label: 'journal', href: '/studio/journal', hint: 'the unedited record — one page per session' },
-    { label: 'apparatus', href: '/studio/apparatus', hint: 'repo, constitution, team channel, nightly runs' },
+    { label: 'constitution', href: '/studio/protocol', hint: 'the protocol, as mirrored' },
+    { label: 'team channel', href: '/studio/requests', hint: 'REQUESTS — the one steering channel' },
   ] as RailItem[],
   door: { label: '→ the middle', href: '/encounters', hint: 'enc-2026-001 — the correction this house sent upstream' },
   backToStage: '← back to the stage',

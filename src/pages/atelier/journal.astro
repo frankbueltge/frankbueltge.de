@@ -1,14 +1,13 @@
 ---
-// /atelier/journal — the session register (atelier-aesthetik §5: "the endless list dies").
-// Etappe 2 (2026-08-01): the register was already one line per page, but every one of the
-// ninety-two pages folded its full text out on THIS url — 155,000 words behind one address.
-// The lines stayed, the text moved: each row now links to /atelier/journal/<anchor>, where
-// the anchor is the DOM id the register has always carried (s12, note-null-island-judge), so
-// every published deep link keeps working — the ones with a `#` via the bounce script below.
-// The spine (/atelier/history) is the drawn form of the same register.
+// /atelier/journal — the session register as a Level-2 register sheet (2026-08-12).
+//
+// Same rows, same per-page addresses, same anchors (s12, note-null-island-judge). The notes the
+// practice wrote under v4 stay in the register rather than in a section of their own: the sheet's
+// move column is where a row says what kind of entry it is, and "note" is exactly that.
 import { getCollection } from 'astro:content'
 import Page from '@/layouts/Page.astro'
-import Frame from '@/components/atelier/surface/Frame.astro'
+import RegisterSheet from '@/components/ecology/RegisterSheet.astro'
+import type { RegisterRow } from '@/components/ecology/RegisterSheet.astro'
 import { buildSessionEntries } from '@/lib/atelier/sessions'
 import { ATELIER_NARRATIVE } from '@/config/atelier-wording'
 
@@ -17,42 +16,38 @@ const entries = buildSessionEntries(all.filter((e) => e.id.startsWith('journal/'
 const sessions = [...entries.filter((e) => e.kind === 'session')].reverse()
 const notes = [...entries.filter((e) => e.kind === 'note')].reverse()
 
-const kicker = ['Atelier · journal', 'ulysses', `S1–S${sessions.length}`]
-const statusHtml =
-  `<b>${entries.length} pages</b> · one line per session, one page per line · ` +
-  `<a href="/atelier/history" class="underline">the spine — the drawn register →</a>`
+const rows: RegisterRow[] = [
+  ...sessions.map((p) => ({
+    date: p.date,
+    marker: `S${p.n}`,
+    move: 'session',
+    line: p.heading,
+    href: `/atelier/journal/${p.slug}/`,
+    anchor: p.slug,
+  })),
+  ...notes.map((note) => ({
+    date: note.date,
+    marker: 'note',
+    move: 'note',
+    line: note.heading,
+    href: `/atelier/journal/${note.slug}/`,
+    anchor: note.slug,
+  })),
+].sort((a, b) => (a.date < b.date ? 1 : -1))
 ---
 
 <Page
   title="Atelier — journal, the session register | Frank Bültge"
-  description="The nightly protocol archive as a session register: one line per page, every page at its own address, the full text mirrored verbatim."
+  description="The nightly protocol archive as a session register: one line per session, every page at its own address, the full text mirrored verbatim."
 >
-  <Frame active="journal" kicker={kicker} h1="The pages, one line each." statusHtml={statusHtml} back>
-    <p class="at-room-intro">{ATELIER_NARRATIVE.rooms.journal}</p>
-    <p class="at-req-note">{ATELIER_NARRATIVE.journalRoom.indexNote}</p>
-    <section id="journal-register">
-      {sessions.map((p) => (
-        <a class="at-reg-row" id={p.slug} data-journal={p.slug} href={`/atelier/journal/${p.slug}/`}>
-          <span class="at-sess-no">S{p.n}</span>
-          <span class="at-sess-title">{p.heading}</span>
-          <span class="at-sess-date">{p.date}</span>
-        </a>
-      ))}
-    </section>
-    {notes.length > 0 && (
-      <section class="at-notes">
-        <h2 class="at-notes-h">{ATELIER_NARRATIVE.rooms.journalNotesHeading}</h2>
-        <p class="at-room-intro">{ATELIER_NARRATIVE.rooms.journalNotes}</p>
-        {notes.map((note) => (
-          <a class="at-reg-row" id={note.slug} data-journal={note.slug} href={`/atelier/journal/${note.slug}/`}>
-            <span class="at-sess-no">v4</span>
-            <span class="at-sess-title">{note.heading}</span>
-            <span class="at-sess-date">{note.date}</span>
-          </a>
-        ))}
-      </section>
-    )}
-  </Frame>
+  <RegisterSheet
+    id="atelier"
+    register="journal"
+    title="the journal — one line per page"
+    span={`S1–S${sessions.length} · ${entries.length} pages · ${ATELIER_NARRATIVE.rooms.journal}`}
+    rows={rows}
+    source="src/content/atelier/journal/*.md"
+  />
 </Page>
 
 <script>
@@ -66,7 +61,7 @@ const statusHtml =
     const target = legacyJournalHashTarget(location.hash)
     if (!target) return
     // Only bounce to a row this register actually served — never to a guessed 404.
-    const row = document.querySelector(`#journal-register [data-journal="${CSS.escape(target)}"], .at-notes [data-journal="${CSS.escape(target)}"]`)
+    const row = document.querySelector(`#journal-register [data-journal="${CSS.escape(target)}"]`)
     if (row instanceof HTMLAnchorElement) location.replace(row.href)
   }
   bounce()

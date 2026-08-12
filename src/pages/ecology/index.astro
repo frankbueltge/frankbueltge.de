@@ -1,189 +1,23 @@
 ---
-// /ecology — the surface that answers "what is this, and how does it work?" for the research
-// ecology as a whole. Frank asked for it on 2026-08-03: the apparatus map draws the wiring, but
-// "so hat man immer noch kein holistische visualisierung von dem, was die 'research ecology' ist
-// und wie sie funktioniert mit ihren verfassungen, protokollen, journals, works etc."
+// /ecology — the research ecology's one entrance (Level 0 of the v3 pyramid, 2026-08-12).
 //
-// It lives under Research Ecology ▾ → The apparatus, never as a new top-level nav point
-// (wording-kanon). Its order follows "Auskunft statt Poesie": what is shared, what the shared
-// layer may not do, then the artefact — the three cycles — then the contact zone and the counts.
+// What stood here before was the anatomy page of 2026-08-03: a prose account of what is shared,
+// what the shared layer may not do, the three cycles as a figure, the contact zone, the counts.
+// It answered the question it was built for and it was too long to answer the question a stranger
+// actually arrives with. Frank's diagnosis on 2026-08-12 — too many pages, too much text, nobody
+// understands the ecology without hours of reading — retires it as the entrance.
+//
+// Git is the archive: the previous surface lives in this file's history, and its components
+// (EcologyAnatomy.astro, EcologyRooms.astro) and wording (src/config/ecology-wording.ts) stay in
+// the repo, unlinked, exactly as HubEntrance.astro did when the ops room replaced it. The
+// approval trail is docs/decision-log.md, 2026-08-12.
 import Page from '@/layouts/Page.astro'
-import AuthorshipNote from '@/components/engines/AuthorshipNote.astro'
-import EcologyAnatomy from '@/components/ecology/EcologyAnatomy.astro'
-import EcologyRooms from '@/components/ecology/EcologyRooms.astro'
-import { ECOLOGY as W } from '@/config/ecology-wording'
-import { MIDDLE, PRACTICES, SHARED } from '@/lib/ecology/anatomy'
-import { allWorks, summarise } from '@/lib/engines/register'
-import register from '@/data/begegnungen/register.json'
-import fieldChronicle from '@/data/field/chronicle.upstream.json'
-import studioChronicle from '@/data/studio/chronicle.upstream.json'
+import EcologyEntrance from '@/components/ecology/EcologyEntrance.astro'
+import { PYRAMID } from '@/config/ecology-pyramid-wording'
 
-// Counted from the committed files, never written into the prose (wording-kanon). The works count
-// comes through the engines register — the site's single counting point, so this page and /works
-// cannot disagree.
-const works = summarise(allWorks())
-
-const journals = import.meta.glob('/src/content/*/journal/*.md', { eager: true, query: '?raw', import: 'default' })
-const journalCount = (ns: string): number =>
-  Object.keys(journals).filter((p) => p.startsWith(`/src/content/${ns}/journal/`)).length
-
-const highestSession = (rows: { collective_session?: number | null }[]): number =>
-  rows.reduce((m, r) => Math.max(m, r.collective_session ?? 0), 0)
-
-const tally = [
-  { n: PRACTICES.reduce((s, p) => s + journalCount(p.id), 0), label: W.records.journalLabel },
-  { n: works.total, label: W.records.worksLabel },
-  {
-    n: Math.max(highestSession(fieldChronicle), highestSession(studioChronicle)),
-    label: W.records.sessionsLabel,
-  },
-  { n: register.length, label: W.records.encountersLabel },
-]
-
-const cite = (source: string): string => source.replace(/^src\/content\//, '').replace(/^docs\//, 'docs/')
+const SEO = PYRAMID.entrance.seo
 ---
 
-<Page title={`${W.title} | Frank Bültge`} description={W.standfirst}>
-  <main id="main" class="mx-auto w-full max-w-3xl flex-1 px-6 py-16 sm:py-24">
-    <p class="font-mono text-xs uppercase tracking-[0.18em] text-fg-faint">{W.eyebrow}</p>
-    <h1 class="mt-4 text-[clamp(30px,5.5vw,52px)] font-bold tracking-[-0.03em]">{W.title}</h1>
-    <p class="mt-5 max-w-2xl text-fg-muted">{W.standfirst}</p>
-
-    {/* The project's own rooms, moved here from the homepage on 2026-08-09: this is the page
-        a visitor lands on when they want THIS project, so its inhabitants and its rhythm
-        belong here rather than on a site-wide overview. */}
-    <EcologyRooms />
-
-    <section class="mt-14" aria-labelledby="shared-heading">
-      <h2 id="shared-heading" class="font-mono text-xs uppercase tracking-[0.18em] text-fg-faint">
-        {W.shared.heading}
-      </h2>
-      <p class="mt-4 text-fg-muted">{W.shared.lead}</p>
-
-      <blockquote class="ec-quote mt-5">
-        {SHARED.noCommonSubject.text}
-        <cite>{cite(SHARED.noCommonSubject.source)}</cite>
-      </blockquote>
-
-      <p class="mt-6 font-mono text-xs uppercase tracking-[0.12em] text-fg-faint">{W.shared.unitLabel}</p>
-      <blockquote class="ec-quote mt-2">
-        {SHARED.thesis.text.replace(/\*\*/g, '')}
-        <cite>{cite(SHARED.thesis.source)}</cite>
-      </blockquote>
-
-      <p class="mt-6 font-mono text-xs uppercase tracking-[0.12em] text-fg-faint">
-        {W.shared.sovereigntyLabel}
-      </p>
-      <ul class="ec-list">{SHARED.sovereignty.map((s) => <li>{s}</li>)}</ul>
-
-      <p class="mt-6 font-mono text-xs uppercase tracking-[0.12em] text-fg-faint">
-        {W.shared.forbiddenLabel}
-      </p>
-      <p class="mt-2 text-sm text-fg-muted">{W.shared.forbiddenLead}</p>
-      <ul class="ec-list" data-negative>{SHARED.middleMustNever.map((s) => <li>{s}</li>)}</ul>
-    </section>
-
-    <section class="mt-16" aria-labelledby="cycles-heading">
-      <h2 id="cycles-heading" class="font-mono text-xs uppercase tracking-[0.18em] text-fg-faint">
-        {W.cycles.heading}
-      </h2>
-      <p class="mt-4 text-fg-muted">{W.cycles.lead}</p>
-    </section>
-  </main>
-
-  {/* The figure breaks out of the prose column: three chains side by side need more than 3xl,
-      and it scrolls inside its own box where there is not enough room. */}
-  <div class="mx-auto w-full max-w-3xl px-6 lg:max-w-none lg:px-16 xl:px-28">
-    <EcologyAnatomy />
-  </div>
-
-  <main class="mx-auto w-full max-w-3xl flex-1 px-6 pb-16">
-    <section class="mt-16" aria-labelledby="middle-heading">
-      <h2 id="middle-heading" class="font-mono text-xs uppercase tracking-[0.18em] text-fg-faint">
-        {W.middle.heading}
-      </h2>
-      <p class="mt-4 text-fg-muted">{W.middle.lead}</p>
-
-      <p class="mt-6 font-mono text-xs uppercase tracking-[0.12em] text-fg-faint">
-        {W.middle.lifecycleLabel}
-      </p>
-      <ul class="ec-list">{MIDDLE.lifecycle.map((s) => <li>{s}</li>)}</ul>
-      <p class="mt-3 text-sm text-fg-muted">{W.middle.lifecycleNote}</p>
-      <blockquote class="ec-quote mt-4">
-        {MIDDLE.refusalIsAnEvent.text}
-        <cite>{cite(MIDDLE.refusalIsAnEvent.source)}</cite>
-      </blockquote>
-
-      <p class="mt-6 font-mono text-xs uppercase tracking-[0.12em] text-fg-faint">{W.middle.jiLabel}</p>
-      <p class="mt-2 text-sm text-fg-muted">{W.middle.jiLead}</p>
-      <blockquote class="ec-quote mt-3">
-        {MIDDLE.jointInquiry.standingQuestion.text}
-        <cite>{MIDDLE.jointInquiry.standingQuestion.source}</cite>
-      </blockquote>
-
-      <p class="mt-4">
-        <a href={MIDDLE.href} class="underline decoration-line underline-offset-4 hover:text-fg">
-          {MIDDLE.house} — {MIDDLE.noResident} →
-        </a>
-      </p>
-    </section>
-
-    <section class="mt-16" aria-labelledby="records-heading">
-      <h2 id="records-heading" class="font-mono text-xs uppercase tracking-[0.18em] text-fg-faint">
-        {W.records.heading}
-      </h2>
-      <p class="mt-4 text-fg-muted">{W.records.lead}</p>
-      <ul class="ec-tally">
-        {
-          tally.map((t) => (
-            <li>
-              <div>
-                <b>{t.n}</b>
-                <span>{t.label}</span>
-              </div>
-            </li>
-          ))
-        }
-      </ul>
-      <p class="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-sm">
-        {
-          PRACTICES.map((p) => (
-            <a href={p.href} class="underline decoration-line underline-offset-4 hover:text-fg">
-              {p.house} · {p.persona} →
-            </a>
-          ))
-        }
-      </p>
-    </section>
-
-    <section class="mt-16" aria-labelledby="limits-heading">
-      <h2 id="limits-heading" class="font-mono text-xs uppercase tracking-[0.18em] text-fg-faint">
-        {W.limits.heading}
-      </h2>
-      <ul class="ec-list mt-4">{W.limits.items.map((s) => <li>{s}</li>)}</ul>
-      <p class="mt-6 text-sm text-fg-muted">
-        The machinery that carries all of this — the workflows, the gates, the deploy chain — is drawn
-        on <a href="/apparatus" class="underline decoration-line underline-offset-4 hover:text-fg">the apparatus page</a>.
-      </p>
-    </section>
-
-    <section class="mt-16" aria-labelledby="season-heading">
-      <h2 id="season-heading" class="font-mono text-xs uppercase tracking-[0.18em] text-fg-faint">
-        The season — closed 2026-08-08
-      </h2>
-      <p class="mt-4 max-w-2xl text-sm text-fg-muted">
-        From 2026-08-05 to 2026-08-08 the ecology worked in seasons — numbered episodes,
-        cross-practice, each to ship through a practice's own gates. The mechanism was deleted in
-        research ecology v2: three days of it produced negotiation records and no works, so the
-        practices' own arcs are now the line a visitor follows.
-        <a href="/season" class="underline decoration-line underline-offset-4 hover:text-fg">Season 1</a>
-        stands as a dated archive: seven episodes, zero shipped, the direction never set. Work
-        gate-passed under an episode number keeps its obligations and sheds only the number. What
-        replaces the season is not another container: the ecology's one dated obligation now is
-        the reading of 2026-09-05.
-      </p>
-    </section>
-
-    <AuthorshipNote />
-  </main>
+<Page title={`${SEO.title} | Frank Bültge`} description={SEO.description}>
+  <EcologyEntrance />
 </Page>
