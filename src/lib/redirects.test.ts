@@ -160,7 +160,9 @@ describe('practice-surfaces routes are covered', () => {
   })
 
   it('does not swallow the practice entrances themselves', () => {
-    for (const route of ['/atelier', '/field', '/studio', '/atelier/history', '/field/history', '/studio/history']) {
+    // The entrances ARE the station sheets since the v3 pyramid (2026-08-12) — they are the
+    // redirect targets, so a rule catching them would be a loop.
+    for (const route of ['/atelier', '/field', '/studio', '/encounters']) {
       expect(isCovered(route, rules)).toBe(false)
     }
   })
@@ -259,4 +261,65 @@ describe('renamed German work slugs 301 to their English canonicals', () => {
       expect(isCovered(route, rules)).toBe(true)
     },
   )
+})
+
+/**
+ * Research ecology v3 — the four-level pyramid (2026-08-12).
+ *
+ * Seventeen page files were deleted on this branch because the station sheets now carry what they
+ * carried. This block is the machine-checked half of that decision: every retired route has a
+ * rule, every rule lands on a surface that exists, and no rule points at a route this branch also
+ * deleted. Without it the deletion is a promise; with it, it is checked at every commit.
+ *
+ * The list is literal, not derived from the filesystem — after the deletion the filesystem no
+ * longer knows these routes existed, so this list and docs/redirect-matrix-site-v2.md ARE the
+ * record of what used to be here.
+ */
+describe('research ecology v3 — retired routes', () => {
+  const rules = parseRedirects(raw)
+
+  const RETIRED: [string, string][] = [
+    ['/maschinenraum', '/ecology#now'],
+    ['/atelier/history', '/atelier'],
+    ['/atelier/apparatus', '/atelier'],
+    ['/atelier/how-a-line-ends', '/atelier#figure'],
+    ['/atelier/sheet', '/atelier'],
+    ['/atelier/sheets', '/atelier'],
+    ['/atelier/material', '/atelier'],
+    ['/atelier/foundation', '/atelier'],
+    ['/atelier/projects', '/atelier/works'],
+    ['/field/history', '/field'],
+    ['/field/apparatus', '/field'],
+    ['/field/how-a-claim-came-off', '/field#figure'],
+    ['/studio/history', '/studio'],
+    ['/studio/apparatus', '/studio'],
+    ['/studio/how-a-premiere-returned', '/studio#figure'],
+    ['/season', '/ecology#record'],
+    ['/notation', 'https://github.com/frankbueltge/research-ecology'],
+  ]
+
+  it.each(RETIRED)('%s 301s to %s in one hop', (from, to) => {
+    const rule = rules.find((r) => r.from === from)
+    expect(rule?.to, `no rule for ${from}`).toBe(to)
+    expect(rule?.code).toBe('301')
+  })
+
+  // A redirect onto a redirect is two hops and a page that flickers. The targets are the surfaces
+  // this rebuild BUILT, so none of them may itself be a rule's `from`.
+  it('never points a retired route at another retired route', () => {
+    const froms = new Set(rules.map((r) => r.from))
+    for (const [, to] of RETIRED) {
+      if (to.startsWith('http')) continue
+      expect(froms.has(to.split('#')[0]), `${to} is itself redirected — that is two hops`).toBe(false)
+    }
+  })
+
+  // The three tours were the deepest-linked of the retired pages: the doors and the triptych cards
+  // both pointed at them. They now point at the figure on each station sheet, and the old routes
+  // land on the same anchor — so a published tour link and a door link reach the same place.
+  it('lands the retired tours on the anchor the doors now use', () => {
+    for (const [from, to] of RETIRED.filter(([f]) => f.includes('how-a-'))) {
+      expect(to.endsWith('#figure'), `${from} should land on the practice's figure`).toBe(true)
+    }
+  })
 })

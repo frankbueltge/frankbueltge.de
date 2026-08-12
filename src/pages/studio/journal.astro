@@ -1,64 +1,43 @@
 ---
-// /studio/journal — NEW with Etappe 2 (2026-08-01). Until now the house had no journal room:
-// the whole unedited record (56 sessions, 104,000 words) was embedded at the foot of
-// /studio/history, which is what made the playbill the longest wall of text in the ecology.
-// The bill is the bill again; the record lives here, one page per session. The anchors are the
-// DOM ids the bill carried (cs-N …), so `/studio/history#cs-42` still finds its session — the
-// bounce script sits on /studio/history, where those links point.
+// /studio/journal — the house's unedited record as a Level-2 register sheet (2026-08-12).
+// Same content, same anchors, same per-session pages; the practice's room chrome gives way to the
+// register form every register in the house now wears.
 import { getCollection } from 'astro:content'
 import Page from '@/layouts/Page.astro'
-import Frame from '@/components/studio/surface/Frame.astro'
+import RegisterSheet from '@/components/ecology/RegisterSheet.astro'
+import type { RegisterRow } from '@/components/ecology/RegisterSheet.astro'
 import { buildDayIndex } from '@/lib/engines/journal'
 import { STUDIO_NARRATIVE } from '@/config/studio-wording'
 
 const all = await getCollection('studio')
 const repo = 'https://github.com/frankbueltge/studio'
 const rootDocs = new Set(all.filter((e) => !e.id.includes('/')).map((e) => e.id))
-const { days, sessionsAsc } = buildDayIndex(all, { repo, docs: rootDocs })
+const { days: evenings, sessionsAsc } = buildDayIndex(all, { repo, docs: rootDocs })
 
-// The house writes one FILE per session, so grouping by file stem would print a heading above
-// every single line. Group by calendar day instead — which is what an evening is.
-const evenings = days.reduce<{ date: string; sessions: typeof days[number]['sessions'] }[]>((acc, d) => {
-  const last = acc[acc.length - 1]
-  if (last && last.date === d.date) last.sessions.push(...d.sessions)
-  else acc.push({ date: d.date, sessions: [...d.sessions] })
-  return acc
-}, [])
-
-const kicker = ['Studio · the journal of the house', 'studio (Ensemble)', `${sessionsAsc.length} sessions`]
-const statusHtml =
-  `<b>${sessionsAsc.length} sessions · ${evenings.length} evenings</b> · the unedited record · newest first · ` +
-  `<a href="/studio/history" class="underline">the playbill →</a>`
+const rows: RegisterRow[] = evenings.flatMap((evening) =>
+  evening.sessions.map((session) => ({
+    date: evening.date,
+    marker: session.anchor,
+    move: session.move,
+    line: session.heading || evening.date,
+    href: `/studio/journal/${session.anchor}/`,
+    anchor: session.anchor,
+  })),
+)
 ---
 
 <Page
   title="Studio — the journal | Frank Bültge"
   description="The Studio's unedited journal: every session of the house at its own address, mirrored verbatim from the ensemble's own repo."
 >
-  <Frame
-    active="journal"
-    kicker={kicker}
-    h1="The record of the house."
-    statusHtml={statusHtml}
-    footLeft={STUDIO_NARRATIVE.rooms.journal}
-    back
-  >
-    <p class="st-room-intro">{STUDIO_NARRATIVE.journalRoom.indexNote}</p>
-    <div id="journal-register">
-      {evenings.map(({ date, sessions }) => (
-        <section class="mb-6">
-          <p class="st-room-intro mb-1 mt-4">{date}</p>
-          {sessions.map((s) => (
-            <a class="st-reg-row" id={s.anchor} data-journal={s.anchor} href={`/studio/journal/${s.anchor}/`}>
-              <span class="st-day-anchor">{s.anchor}</span>
-              <span class="st-day-title">{s.heading || date}</span>
-              {s.move && <span class="st-reg-move">{s.move}</span>}
-            </a>
-          ))}
-        </section>
-      ))}
-    </div>
-  </Frame>
+  <RegisterSheet
+    id="studio"
+    register="journal"
+    title="the journal — the record of the house"
+    span={`${evenings.length} evenings · ${sessionsAsc.length} sessions · one page per session · ${STUDIO_NARRATIVE.rooms.journal}`}
+    rows={rows}
+    source="src/content/studio/journal/*.md"
+  />
 </Page>
 
 <script>

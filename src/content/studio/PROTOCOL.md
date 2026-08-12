@@ -279,6 +279,20 @@ the old remit keep the rule they were made under; the remit no longer produces n
 hiding is not) · `dossiers/<project>.md`. You consolidate within the inward cap. **No
 memory except this repo** — write so your tomorrow-selves resume seamlessly.
 
+**Memory is recall, not re-reading** (architect, 2026-08-12). The curated files above are the
+first stop; for anything deeper, query the index —
+`python tools/memory/cli.py index .` then `python tools/memory/cli.py recall "<question>" -k 8`
+— and **never read `projects/` or `journal/` end to end**. That instruction is not thrift, it
+is arithmetic: this repository holds ~585,000 words across 232 files, `projects/` alone
+~277,000, and the sentence above once asked a session to carry all of it by reading. The tool
+was ported here on 2026-08-12; before that this house had no recall at all.
+
+A session that cannot find what it needs says so in the journal and **fixes the index or its
+source list** — `SOURCE_GLOBS` in that file follows the practice, and when work starts being
+written somewhere new the glob is added in the same commit. `tools/memory/test_sources.py`
+fails if a record directory becomes unreachable. The index is derived, gitignored and rebuilt
+on demand; there is nothing to carry between sessions but this repository.
+
 ## Leaving the house
 
 **Nothing sends itself.** A finished delivery lies as a `packet.json` beside the work

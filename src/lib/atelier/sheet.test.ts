@@ -17,19 +17,19 @@ describe('approved atelier grammar (static formulas, test-protected)', () => {
     expect(ATELIER_GRAMMAR.dataEdgeLines).toEqual(['nightly register closed —', 'work continues as projects'])
   })
 
-  it('keeps the margin rail exactly as designed (Stufe-0 revision 2026-07-20: /atelier is the entrance, the sheet is a room)', () => {
+  it('keeps the margin rail exactly as designed (v3 pyramid 2026-08-12: the station, then its registers)', () => {
+    // The rail was seven rooms deep until the v3 rebuild folded five of them into the station
+    // sheet (docs/design_handoff_research_ecology/README.md). What remains is the way back up
+    // and the four Level-2 registers — and every retired label's route 301s to the sheet, so
+    // this shortening cost no address.
     expect(ATELIER_GRAMMAR.rail.map((r) => r.label)).toEqual([
-      'this sheet',
-      'projects',
-      'sheets',
+      'the station',
       'works',
       'journal',
-      'material',
-      'apparatus',
+      'constitution',
+      'team channel',
     ])
-    // Stufe 0 (2026-07-20, Franks Auftrag): the sheet moved to its own room; the rail
-    // labels stay verbatim, only the sheet's door points at the new place.
-    expect(ATELIER_GRAMMAR.rail[0].href).toBe('/atelier/sheet')
+    expect(ATELIER_GRAMMAR.rail[0].href).toBe('/atelier')
     expect(ATELIER_GRAMMAR.backToSheet).toBe('← the atelier')
     expect(ATELIER_GRAMMAR.door.label).toBe('→ the middle')
   })

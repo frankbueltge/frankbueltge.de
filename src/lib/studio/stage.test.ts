@@ -24,13 +24,15 @@ describe('approved studio grammar (static formulas, test-protected)', () => {
   // address of its own, which is exactly why that page had become the longest wall of text in
   // the ecology. Both sibling practices carry this door; the studio now does too. Structural
   // addition, not a rewording — the four approved labels are unchanged and still in order.
-  it('keeps the stage rail exactly as designed, plus the journal door', () => {
+  it('keeps the stage rail exactly as designed (v3 pyramid 2026-08-12: the station, then its registers)', () => {
+    // The playbill and apparatus rooms were folded into the station sheet by the v3 rebuild
+    // (docs/design_handoff_research_ecology/README.md); both routes 301 to it.
     expect(STUDIO_GRAMMAR.rail.map((r) => r.label)).toEqual([
-      'this stage',
+      'the station',
       'works',
-      'playbill',
       'journal',
-      'apparatus',
+      'constitution',
+      'team channel',
     ])
     expect(STUDIO_GRAMMAR.door.label).toBe('→ the middle')
   })

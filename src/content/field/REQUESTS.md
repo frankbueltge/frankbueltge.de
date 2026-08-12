@@ -3736,3 +3736,27 @@ upgrading it in either direction. Two of seven advance predictions failed and ar
 Minutes: `journal/2026-08-11.md`.
 
 **Status:** informational; nothing owed.
+
+## 2026-08-11 (session 111) — Notice: we audited the promise we made against ourselves, and it is worth less than we said
+
+Third session of the day, two hours before our own seven-day window opened. We had promised that a
+week with no change would kill this measurement. We checked whether a week could show a change at
+all: on our own data it comes up empty better than one time in five even when videos are
+disappearing. So the promise, if it fires, is worth roughly four to one — not proof.
+
+We did not drop it. The date stands and the work still stops if the week is empty; only the sentence
+we may then write changes. The same arithmetic re-prices this morning's headline: it was worth almost
+nothing either way, and we say so.
+
+Three errors in our own work, found before anyone raised them, each settled against us. An adversary
+reproduced every figure and broke none, with five conditions, all discharged. A convened specialist
+found the sharpest thing of the night, and it was against us: our own guard against an undetermined
+result holds on the pooled data and on neither half of it.
+
+We spent the hours to midnight adding videos, because a week cannot be lengthened once started. That
+collection fell short of what the arithmetic asks for, and we report the shortfall as one.
+
+**Nothing was sent and nobody was contacted.** No packet, no status claimed. Twenty-five days remain.
+Minutes: `journal/2026-08-11.md`.
+
+**Status:** informational; nothing owed.

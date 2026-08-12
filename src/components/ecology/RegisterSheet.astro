@@ -1,0 +1,158 @@
+---
+// The register sheet (Level 2 of the pyramid, 2026-08-12) — design handoff option 5a.
+//
+// The bottom of the readable pyramid: no staging, no figure, no argument. A register is the
+// holdings themselves — one row per entry, four columns, and a footer naming the committed path
+// every row was read from. If Level 0 says what the ecology is and Level 1 says how a practice
+// stands, this level exists so a reader can check both.
+//
+// The filter chips work without JavaScript by doing nothing: every row is in the markup and
+// visible, and the script below only hides rows once it runs. A register that needed a script to
+// show its holdings would have failed the one job it has.
+import { getRelativeLocaleUrl } from 'astro:i18n'
+import type { Locale } from '@/lib/site'
+import { PYRAMID } from '@/config/ecology-pyramid-wording'
+import { STATIONS, type StationId } from '@/lib/ecology/pyramid/model'
+import '@/styles/ecology-pyramid.css'
+import '@/styles/hub-triptych.css'
+
+export interface RegisterRow {
+  /** ISO date, or whatever dating the record itself uses */
+  date: string
+  /** the record's own marker: S86, tick 57, enc-2026-004 */
+  marker?: string | null
+  /** the kind of entry, in the practice's own vocabulary — also the filter key */
+  move?: string | null
+  /** the entry's own first line */
+  line: string
+  href?: string
+  /** The DOM id this row has always carried, where it carries one.
+   *
+   *  Load-bearing, not cosmetic: the practices' chronicles, badges and published deep links all
+   *  point at `/<ns>/journal#<anchor>`, and a fragment never reaches the server — no _redirects
+   *  rule can catch it. Restyling a register into this sheet without carrying its anchors across
+   *  would break every one of those links silently. */
+  anchor?: string
+}
+
+interface Props {
+  id: StationId
+  /** which register this is, in the practice's words ("journal", "instruments") */
+  register: string
+  title: string
+  /** the span line: what this register covers */
+  span: string
+  rows: RegisterRow[]
+  /** the committed path the rows were read from — the line that makes the sheet checkable */
+  source: string
+  more?: { label: string; href: string }
+}
+
+const { id, register, title, span, rows, source, more } = Astro.props
+
+const locale = (Astro.currentLocale ?? 'en') as Locale
+const url = (href: string) => (href.startsWith('http') ? href : getRelativeLocaleUrl(locale, href))
+
+const W = PYRAMID.register
+const here = STATIONS.find((s) => s.id === id)!
+
+// The filter chips are the moves the register actually contains, in the order they first appear —
+// never a fixed vocabulary, because each practice names its own moves and a chip for a move no
+// entry has is a filter that can only ever return nothing.
+//
+// And they appear ONLY where the register is really categorised. The Field's journal declares a
+// move on ten of a hundred and nineteen sessions, in a vocabulary that includes the word "the";
+// a chip row over that would tell a reader the register is sorted when it is a list. The rule:
+// two distinct moves at minimum, on at least a quarter of the rows. Below that the register is
+// what it is — a list — and says so by having no chips.
+const MIN_COVERAGE = 0.25
+const tagged = rows.filter((r) => r.move)
+const moves =
+  tagged.length >= rows.length * MIN_COVERAGE
+    ? [...new Set(tagged.map((r) => r.move as string))]
+    : []
+---
+
+<main id="main" class={`eco hub-voices flex-1 eco-voice-${here.voice}`} data-register>
+  <div class="eco-wrap">
+    <nav class="eco-strip" aria-label="the research ecology">
+      <span>
+        <a href={url(PYRAMID.station.crumbHome.href)}>{PYRAMID.station.crumbHome.label}</a>
+        <span class="eco-crumb-sep">→</span>
+        <a href={url(here.href)}>{here.name.toLowerCase()}</a>
+        <span class="eco-crumb-sep">→</span>
+        <span class="eco-crumb-here">{register}</span>
+      </span>
+      <span>{W.crumbStrip}</span>
+    </nav>
+
+    <header class="eco-register-head">
+      <div>
+        <h1>{title}</h1>
+        <p class="eco-register-span">{span}</p>
+      </div>
+      {moves.length > 1 && (
+        <div class="eco-filters" data-filters>
+          <button class="eco-filter" type="button" data-move="" aria-current="true">{W.filterAll}</button>
+          {moves.map((move) => (
+            <button class="eco-filter" type="button" data-move={move} aria-current="false">{move.toUpperCase()}</button>
+          ))}
+        </div>
+      )}
+    </header>
+
+    <ul class="eco-rows" id="journal-register">
+      {rows.length === 0 ? (
+        <li><span class="eco-register-row eco-absent">{W.empty}</span></li>
+      ) : (
+        rows.map((row) => (
+          <li data-move={row.move ?? ''}>
+            {row.href ? (
+              <a class="eco-register-row" id={row.anchor} data-journal={row.anchor} href={url(row.href)}>
+                <span class="eco-register-date">{row.date}</span>
+                <span class="eco-register-marker">{row.marker}</span>
+                <span class="eco-register-move">{row.move}</span>
+                <span class="eco-register-line">{row.line}</span>
+              </a>
+            ) : (
+              <span class="eco-register-row">
+                <span class="eco-register-date">{row.date}</span>
+                <span class="eco-register-marker">{row.marker}</span>
+                <span class="eco-register-move">{row.move}</span>
+                <span class="eco-register-line">{row.line}</span>
+              </span>
+            )}
+          </li>
+        ))
+      )}
+    </ul>
+
+    <p class="eco-register-foot">
+      {W.source(source)}
+      {more && <> — <a href={url(more.href)}>{more.label}</a></>}
+    </p>
+
+    <div class="eco-foot">
+      <span>{id === 'middle' ? PYRAMID.station.footLeftMiddle : PYRAMID.station.footLeft(here.name)}</span>
+      <span>{PYRAMID.station.footRight}</span>
+    </div>
+  </div>
+</main>
+
+<script>
+  // The register's only script. It hides rows; it never loads any. With JavaScript off the chips
+  // simply do nothing and the whole register is there — which is the correct failure mode for a
+  // page whose entire purpose is to show holdings.
+  const sheet = document.querySelector<HTMLElement>('[data-register]')
+  const chips = sheet?.querySelectorAll<HTMLButtonElement>('[data-filters] .eco-filter')
+  const rows = sheet?.querySelectorAll<HTMLElement>('.eco-rows > li')
+  if (chips && rows) {
+    for (const chip of chips) {
+      chip.addEventListener('click', () => {
+        const want = chip.dataset.move ?? ''
+        for (const other of chips) other.setAttribute('aria-current', String(other === chip))
+        for (const row of rows) row.hidden = want !== '' && row.dataset.move !== want
+      })
+    }
+  }
+</script>
