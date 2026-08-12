@@ -104,6 +104,47 @@ Seite. Ab jetzt gilt genau diese Staffel, auf der ganzen Site und in allen Repos
 | **Instrument** | Läuft leise, liefert einem Projekt zu, **kein Bühnen-Anspruch**, darf jahrelang nichts liefern. Gegenstück: **Flagship**. | The State Before the Interface · der Wissensgraph |
 | **Work / Werk** | Fertiges Stück aus einer Praxis. | die 60 Praxis-Werke |
 
+### Ergänzung 2026-08-12: **Linie** und **Verfassung** — eine Praxis kann mehrfach laufen
+
+Die Staffel hatte kein Wort für das, was seit dem 2026-08-10 existiert: **dieselbe Praxis, parallel
+unter zwei Verfassungen.** Der Fork `error-as-method` ist keine vierte Praxis — er ist das Atelier
+unter der restaurierten Protokoll v3, während das Atelier unter v6 weiterläuft. Frank, 2026-08-12:
+*„Es geht ja hier darum auch parallel mit verschiedenen Protokollen, Verfassungen oder Setups und
+Richtungen zu experimentieren. Wahrscheinlich mache ich zukünftig noch mehr Forks, auch bei den
+anderen Praxen."* Also braucht es kein Sonderwort für einen Einzelfall, sondern eine Ebene:
+
+| Wort | Was es bezeichnet | Heute |
+|---|---|---|
+| **Linie / line** | **Was läuft.** Eine verfasste Ausprägung einer Praxis. Eine Praxis führt eine oder mehrere. | Das Atelier führt **zwei**: die **nightly line** und die **work-line** |
+| **Verfassung / constitution** | **Was sie regelt und unterscheidet.** Der Text, unter dem eine Linie läuft. | *„One founding text, two constitutions"* |
+| **Protokoll vN** | Die **Nummer** einer Verfassung. Immer ausgeschrieben. | nightly line = Protokoll v3 · work-line = Protokoll v6 |
+
+**Verworfen, mit Begründung — damit es niemand nochmal vorschlägt:**
+
+- **Benennung nach dem Protokoll** („der v6-Arm"). Selbst-verfallend: Protokollnummern wandern
+  (v6 wird v7; v3 darf sich laut eigenem Text fortentwickeln), der Name wäre bei jeder
+  Verfassungsänderung falsch. Einen dauerhaften Namen an eine wandernde Zahl zu hängen baut die
+  nächste Drift ein. Einem Besucher sagt „v3 vs. v6" ohnehin nichts.
+- **„Arm".** Stand schon auf der Homepage, wäre billig gewesen — aber Anatomie statt Sache:
+  zwei Arme sind ein Körper, zwei Verfassungen sind ein **Experiment**. Von Frank verworfen.
+- **Deleuzianisches Vokabular.** Wäre keine Dekoration (das Atelier hat sein Modell aus *Tausend
+  Plateaus* abgeleitet und publiziert), trägt hier aber nicht: *Plateau* und *Multiplizität*
+  meinen nicht „parallele Ausprägung"; *Strata* benutzt v6 selbst abwertend (*„not stacked as
+  strata"*); *Agencement* trifft die Sache am besten und ist für einen Seitenbesucher
+  undurchsichtig. Ein Wort, das nur mit Fußnote funktioniert, ist an dieser Stelle Angeberei.
+- **„Ulysses v2/v3"** für eine Linie. Kollidiert dauerhaft mit **Protokoll v2**, dem Gründungstext
+  vom 28.06. Genau diese Verwechslung ist am 2026-08-12 im Gespräch passiert.
+
+**Zur Kollision mit `work-line` als Arbeitseinheit:** sie besteht nur scheinbar. Die Praxis
+unterscheidet in ihrem eigenen Text bereits durch den Artikel — *„**a** new work-line opens"* ist
+die Einheit, *„the work-line **model**"* der Strang. Die Regel folgt dem Gebrauch statt ihn zu
+korrigieren: **eine** work-line ist eine Arbeitseinheit, **die** work-line ist die Linie.
+
+**Für die Oberfläche:** die Pyramide behält **drei Stationen**. Linien leben *innerhalb* einer
+Station, nicht daneben — sonst bekommt die Ökologie mit jedem Fork eine Ecke, und ein Besucher
+versteht nichts mehr. Frank, 2026-08-12: *„das Prinzip sollte im Frontend schon beibehalten
+werden, weil sonst niemand der diese Seite besucht irgendwas versteht."*
+
 **Zurückgezogen am selben Tag: „House".** Nachmittags fehlte ein Wort für die Ebene über einer
 Praxis (die Ökologie ist drei Praxen, Machine Attention eine) — eingeführt als **House**, abends
 von Frank verworfen: *„insgesamt finde ich houses nicht so gut. und ich würde bei projekten
