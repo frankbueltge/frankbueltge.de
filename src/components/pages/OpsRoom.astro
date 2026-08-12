@@ -65,6 +65,17 @@ const catalogues = NAMING.catalogues.items.filter((c) => c.href !== '/atlas')
   {/* ── 1 · hero: the standing question, and the pulse instrument ──────────────────────── */}
   <section class="ops-hero">
     <div>
+      {/* The name, above the standing question — restored 2026-08-12.
+          This eyebrow is not decoration and not a second kicker: it is the repair Frank made in
+          July after this site lost its ranking for his own name, when site-v2 turned every title
+          and heading over to the abstract concept. The homepage's H1 is deliberately NOT his name
+          (it is the question this house asks), so the eyebrow is the only place the person stands
+          as a heading — and it is the strongest on-page signal for a query that is a person.
+          This room dropped it on 2026-08-11 without noticing, while the comment in
+          src/pages/index.astro went on explaining that it was there. The name search is contested
+          by a different, long-established Frank Bültge; on that query this site cannot afford to
+          leave its own name out of its entrance. */}
+      <p class="ops-hero-eyebrow">{NAMING.eyebrow}</p>
       <p class="ops-hero-kicker">{NAMING.focusKicker}</p>
       <h1>{NAMING.title}</h1>
       <p class="ops-hero-sub">{OPS.hero.sub}</p>
