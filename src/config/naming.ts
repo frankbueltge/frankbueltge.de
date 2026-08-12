@@ -360,6 +360,11 @@ export const NAMING = {
   catalogues: {
     kicker: 'CATALOGUES',
     title: 'what exists, catalogued by machine',
+    /** The room that holds all four. It had no inbound link anywhere on the site while standing
+     *  in the sitemap (orphan audit, 2026-08-12) — the entrance named the catalogues but never
+     *  the shelf they sit on. */
+    href: '/catalogues',
+    indexLabel: 'all four →',
     /* „Two" → „Three" am 2026-07-27: Der Paper-Katalog ist als dritter dazugekommen
      * (Frank: „datasets für das register und einen weiteren katalog für die sammlung
      * von papers"). Die Zahl steht ausnahmsweise im Text, weil sie den Satzbau trägt —
