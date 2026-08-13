@@ -173,3 +173,17 @@ GCAM + locations for **one** UTC day; join against the sourcesbycountry snapshot
 SELF/FOREIGN vectors for the top-40 countries; check (a) per-pool `n` distributions,
 (b) whether the asymmetry signal clears the co-mention noise floor, (c) dimension
 sparsity. The spike's output decides §7.1–.3 and whether the instrument is commissioned.
+
+## Addendum (2026-08-14, same night): GCAM coverage measured (answers §7.1 in part)
+
+Piggybacked on the Invoked Past spike (full day 2026-08-12, 119,263 articles), presence
+share per candidate dimension: `wc` 100 %; ANEW valence `v19.1` **99.8 %**; labMT
+happiness `v21.1` **100 %**; LIWC Sad `c5.31` 75.7 %; LIWC Anger `c5.32` 56.7 %; LIWC
+Anxiety `c5.33` 47.3 %; WordNet Affect sadness `c15.227` 35.1 %; WordNet Affect joy
+`c15.167` 23.6 %.
+
+Consequence for the v1 dimension set: ANEW + labMT as the dense continuous backbone,
+LIWC Sad/Anger/Anxiety as the discrete-emotion core (their sub-100 % presence is fine —
+absence of anxiety words is itself signal, and rates are computed over word counts, not
+presence); WordNet Affect dims are too sparse to headline and drop to v2 candidates.
+The §8 calibration spike (SELF/FOREIGN split, n distributions, noise floor) remains open.
