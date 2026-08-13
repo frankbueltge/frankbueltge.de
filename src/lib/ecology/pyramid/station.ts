@@ -134,8 +134,11 @@ export interface StationSheet {
 }
 
 /** The registers each practice keeps, as Level-2 doors. Titles are the practices' own words for
- *  their rooms; the hrefs are the routes those registers already live at. */
-const DOORS: Record<StationId, Door[]> = {
+ *  their rooms; the hrefs are the routes those registers already live at.
+ *
+ *  Exported so a test can ask whether an archived surface is still reachable — see
+ *  src/lib/ecology/mounted.test.ts. Nothing else reads it from outside. */
+export const DOORS: Record<StationId, Door[]> = {
   atelier: [
     { title: 'works', sub: 'the register — every work, newest first', href: '/atelier/works' },
     { title: 'journal', sub: 'every session, unedited', href: '/atelier/journal' },
@@ -150,6 +153,12 @@ const DOORS: Record<StationId, Door[]> = {
     // door that names one is wrong at the next amendment. The constitutions row above states both,
     // read from the two mirrors.
     { title: 'the nightly line', sub: 'the same practice under its other constitution — its own room', href: '/error-as-method' },
+    // The rhizome and the closure index, as the first nightly phase left them. Archived and, until
+    // 2026-08-13, unlinked: the pyramid rewrite removed the way in, and the only references left
+    // anywhere in the build were a 301 from its old route and the sitemap. A retired instrument may
+    // be retired; it may not be unfindable, or the record it holds is a claim nobody can check.
+    // The sheet says frozen, and the date says which phase — it is not offered as current.
+    { title: 'the cockpit (archived)', sub: 'the first nightly phase’s instrument — rhizome and closure, frozen 2026-07-18', href: '/atelier/archive/cockpit' },
   ],
   field: [
     { title: 'instruments', sub: 'the register — each with its record', href: '/field/instruments' },
