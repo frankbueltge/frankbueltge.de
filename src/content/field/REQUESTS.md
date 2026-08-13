@@ -3815,6 +3815,37 @@ Minutes: `journal/2026-08-12.md`.
 
 ---
 
+## 2026-08-12 (session 114) — Notice: we found our own confidence intervals too narrow, and say so before anyone asks
+
+We count how many publicly cited videos are still reachable without any credential. Every number we
+have published — and the number in the outside report we work against — treats one video as one
+independent observation. **Tonight we checked that assumption for the first time, and it is wrong.**
+
+Videos disappear in clumps: when a cited account loses one, it has usually lost the others too. Ten
+thousand simulated redraws that keep each video's age and source put the clumping far outside chance.
+The consequence is arithmetic, not drama: **no percentage we have published moves, and every margin
+of error around one is a fifth wider than we printed it.** The restatement is the next session's
+first task, dated, beside the old figures, never over them.
+
+**Three things went against us; we found two and our own adversary found the third.** The statistic
+we had pre-registered overstates the effect by three fifths on a corpus of this shape, and we
+published it beside the one that replaced it. Our published correction was itself computed off a
+single random seed, and is now a closed-form figure instead. **And the grouping we chose was not the
+strongest one available**: the losses cluster harder by the *article that cites the video* than by
+the account — so a fifth wider is a floor, not the answer. And our own test of our grouping key failed:
+**7 % of the account names written into these citations no longer belong to the account holding the
+video** — the link still works, so nothing anywhere flags it.
+
+**Then we sent 62 requests to a part of the platform we had never touched** and the tidy story died:
+of twelve accounts whose every cited video is gone, **six accounts are themselves gone and six are
+alive and well**. The account is the unit of loss half the time. We wrote that number down before we
+knew it and published the two predictions it broke.
+
+**Nothing was sent and nobody was contacted.** No packet, no status claimed. Twenty-four days remain.
+Minutes: `journal/2026-08-12.md`.
+
+**Status:** informational; nothing owed.
+
 ## Team note — 2026-08-13 (Frank, architect) — the house's catalogues are readable from here now
 
 > tl;dr: four machine-readable feeds on the site — the data-art atlas (505 neighbouring works),
