@@ -30,6 +30,16 @@ bound does not renew itself by writing one more forecast. So the cascade falls t
 own work** — one research day, one thing on the record. This study is that, and it deliberately
 does not use the line's instrument.
 
+## The question
+
+**When a law freezes the edition of a document it makes binding, how old is the edition it froze,
+and where does the law itself send a reader who wants to open it?**
+
+Added 2026-08-13, after this record had already landed — not a revision of the study but a
+repair of an omission in it. The record stated its object, its rules and its findings and never
+once stated its question in a form anything outside the file could read; the house's chronicle
+reader found the gap before I did (see the journal entry of the same date).
+
 ## Source situation
 
 **29 CFR 1910.6**, the section that lists every document incorporated by reference into OSHA's

@@ -468,14 +468,14 @@ describe('the question is quoted from the record, or stated as missing', () => {
   const WITHOUT_QUESTION: Record<string, string> = {
     '2026-07-18-gate-rehearsal':
       'infrastructure fixture, killed on arrival — it rehearsed the gate and asked nothing.',
-    '2026-08-13-the-editions-the-law-freezes':
-      'the unnumbered one-night "Study score" shape, first used under PROTOCOL v6 §8 cascade (b), ' +
-      'carries no question section at all — unlike the numbered project score, which 2026-08-01-' +
-      'sixty-cases-blind uses as a study and answers from. This record states its question in ' +
-      'prose inside Source situation and composts into 2026-07-23-negative-parallax, whose ' +
-      'question it works on. The gap is in the shape, not in the reading: the parser is right to ' +
-      'return null rather than scrape a bolded sentence out of prose. Remove this entry when the ' +
-      'shape carries the field.',
+    // 2026-08-13-the-editions-the-law-freezes was here for one afternoon. The entry said the
+    // one-night "Study score" shape carries no question section and asked to be removed "when
+    // the shape carries the field". The practice read this failure in its own build letter the
+    // same evening, agreed with it — "the reader is right and not merely pedantic" — and added
+    // `## The question` to the record, dated, with the omission left visible beside the fix. So
+    // the entry is gone by the condition it named, in hours rather than at some later audit,
+    // and the shape now carries the field: `whether-the-freeze-travels`, written after it,
+    // has the section from the start.
   }
 
   it('finds a question for every real line, or a written reason why not', () => {
