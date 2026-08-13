@@ -70,6 +70,7 @@ const werkNamen: Record<string, string> = {
   protokoll: 'The Protocol',
   redaction: 'Redaction',
   consensus: 'The Consensus',
+  balance: 'The Balance',
   'ghost-fleet': 'Ghost Fleet',
   beifang: 'Bycatch',
   revision: 'Correction',

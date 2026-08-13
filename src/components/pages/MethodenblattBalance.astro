@@ -1,0 +1,111 @@
+---
+/** Method sheet for The Balance (Werkgruppe §3.5 duty). Plain English, static. */
+import data from '@/data/balance/latest.json'
+import type { BalanceData } from '@/lib/balance/types'
+
+const d = data as unknown as BalanceData
+const dims = Object.entries(d.method.dimensions)
+---
+
+<article class="mx-auto max-w-3xl px-4 py-14">
+  <header class="mb-10">
+    <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">Method sheet</p>
+    <h1 class="mt-1 text-3xl font-bold tracking-[-0.02em]">The Balance</h1>
+    <p class="mt-2 text-fg-muted">
+      Method {d.method.version} since {d.method.since}. Spec and calibration record:
+      <code class="text-xs">docs/superpowers/specs/2026-08-14-the-balance-design.md</code> in the site repository.
+    </p>
+  </header>
+
+  <section class="mb-10">
+    <h2 class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">Source and pool</h2>
+    <p class="mt-3 text-sm text-fg-muted">
+      The last 24 hours of GDELT's raw 15-minute GKG 2.1 files (96 static downloads from
+      data.gdeltproject.org — no API, no key; shared fetch layer with the newspool tool). Articles
+      are deduplicated by URL. Each article's source domain maps to a country through a committed
+      snapshot of GDELT's <code>sourcesbycountry</code> lookup (37,802 domains,
+      <code>pipelines/balance/sources_by_country.csv</code>); the countries an article is
+      <em>about</em> come from its geocoded location mentions (V1LOCATIONS — a Berlin mention is
+      coverage about Germany). Articles under {d.method.min_words} words, without tone, without
+      locations, or from unmapped domains are excluded before pooling. {d.method.stream}.
+    </p>
+  </section>
+
+  <section class="mb-10">
+    <h2 class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">The two pools and the gap</h2>
+    <p class="mt-3 text-sm text-fg-muted">
+      For a country C: the <strong>self pool</strong> holds articles whose source country is C and
+      that mention C; the <strong>foreign pool</strong> holds articles about C from every other
+      source country. A country enters the daily ledger only when both pools hold at least
+      {d.method.min_pool} articles — below that the finding is withheld, never estimated. Per
+      dimension the record carries both pool means and a bootstrap 95% confidence interval of the
+      gap ({d.method.bootstrap.resamples} resamples; pools above
+      {d.method.bootstrap.subsample_cap.toLocaleString('en-US')} articles are randomly subsampled
+      to that cap first, seeded by the date so a rerun reproduces the file byte for byte). A gap is
+      called significant only when that interval excludes zero.
+    </p>
+  </section>
+
+  <section class="mb-10">
+    <h2 class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">Dimensions (fixed v1 set)</h2>
+    <div class="mt-3 overflow-x-auto">
+      <table class="w-full border-collapse text-sm">
+        <thead>
+          <tr class="border-b border-line text-left font-mono text-[11px] uppercase tracking-[0.12em] text-fg-faint">
+            <th class="py-2 pr-3 font-medium">Dimension</th>
+            <th class="py-2 pr-3 font-medium">GCAM code</th>
+            <th class="py-2 font-medium">Unit</th>
+          </tr>
+        </thead>
+        <tbody>
+          {dims.map(([key, v]) => (
+            <tr class="border-b border-line/50">
+              <td class="py-1.5 pr-3">{v.label}</td>
+              <td class="py-1.5 pr-3 font-mono text-xs">{'code' in v && v.code ? v.code : v.source ?? key}</td>
+              <td class="py-1.5 text-fg-muted">{v.unit}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <p class="mt-2 text-sm text-fg-muted">
+      Codes resolve through the
+      <a href="http://data.gdeltproject.org/documentation/GCAM-MASTER-CODEBOOK.TXT" target="_blank" rel="noopener nofollow" class="underline decoration-line underline-offset-2 hover:text-fg">GCAM master codebook</a>.
+      The set was chosen by measured coverage on a full reference day (2026-08-12: ANEW valence
+      present in 99.8% of articles, labMT in 100%, LIWC anxiety in 47%) — the selection rule and
+      numbers are in the spec's calibration addendum. Count-based dimensions are normalized to
+      matches per 1,000 words; absence of a dictionary's words in an article counts as zero, which
+      is signal, not noise.
+    </p>
+  </section>
+
+  <section class="mb-10">
+    <h2 class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">Known limits, disclosed</h2>
+    <ul class="mt-3 list-disc space-y-1.5 pl-5 text-sm text-fg-muted">
+      <li>Document-level scores: co-mentioned countries share one article tone (why pools have floors and CIs).</li>
+      <li>English-monitored stream: non-anglophone self-images are thin; the asymmetry is visible in the pool sizes, which are always published. Translation stream = named v2.</li>
+      <li>Bag-of-words dictionaries, machine-translated for ~65 languages upstream: construct validity is bounded — this instrument therefore claims portrayal, never feeling.</li>
+      <li>Secular negativity drift in news language (Rozado et&nbsp;al. 2022, PLOS ONE): absolute levels drift; anomaly scores wait for the rolling baseline this archive is accumulating.</li>
+      <li>Go/no-go calibration (2026-08-12): 61 countries qualified, 44 with a significant core-dimension gap — the pre-registered build criterion, met before this page existed.</li>
+    </ul>
+  </section>
+
+  <section class="mb-10">
+    <h2 class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">Archive and reproducibility</h2>
+    <p class="mt-3 text-sm text-fg-muted">
+      One JSON per day under <code>src/data/balance/</code>, committed nightly by the
+      counter-measurement workflow; committed day files are immutable — the pipeline refuses to
+      overwrite them, and there is no backfill. Failures surface as disclosed gaps
+      (“finding omitted”), never as quieter-looking days. Pipeline:
+      <code>pipelines/balance/refresh.py</code>, standard library only.
+    </p>
+  </section>
+
+  <footer class="border-t border-line pt-5 text-sm text-fg-muted">
+    <p>
+      Data © <a href="https://www.gdeltproject.org/" target="_blank" rel="noopener" class="underline decoration-line underline-offset-2 hover:text-fg">The GDELT Project</a>,
+      used and republished with attribution per its terms of use. Daily archive JSONs: CC0.
+      Back to <a href="/balance" class="underline decoration-line underline-offset-2 hover:text-fg">the instrument</a>.
+    </p>
+  </footer>
+</article>
