@@ -186,6 +186,33 @@ has one measured instance in each direction, and they are in the record, not in 
   fetch also enters the manifest the skip-set reads, so it can never be retried into the same
   corpus.
 
+- **The relation slot does not read the relation — 32 tokens, one slot; 3.5 % of landed sites
+  run the other way** (2026-08-12, ticks 63 and 64; **N7**). The sieve requires a
+  comparison-shaped word between the statistic's name and its number. It never reads what the
+  word says. Measured twice, on landed material and with the shipped instrument unmodified:
+  - **Reach** (`the-gap/relationreach-tick63.py`). Every one of the 32 relation alternatives the
+    CV profile declares, inserted at every inter-word position of the four fragments the sieve is
+    known to miss — 1 856 mutants — recovers the printed threshold at **one** position each, and
+    **all 32 work**: `below`, `less than`, `lower than` and `smaller than` exactly as `above`.
+    The instrument cannot tell `IoU above 0.5` from `IoU below 0.5`.
+  - **Cost** (`the-gap/directioncost-tick64.py`). Over the 292 sites of the landed tick-57 dump,
+    classified by a direction table fixed in writing before the run: **LOWER 53 · UPPER 10 ·
+    NEUTRAL 223 · NONE 6**. IoU 0.5 is a lower bound — the deriving document says the overlap
+    "must exceed 0.5" — so the **10 UPPER sites, 3.5 % of the 286 classified**, are counted as
+    invocations of a criterion they run against. At the focus value itself the share is **5 of
+    128, 3.9 %**, and two papers (`2606.03748v1`, `2605.05616v1`) have no other kind of site.
+  - **What it means for a rate you compute with this tool.** A small share, and not zero, and it
+    is the kind of error no denominator check finds: the site is real, the number is right, the
+    sentence says the opposite. If your threshold is a bound rather than a set point, classify
+    your sites by direction before you count them.
+  - **Two cautions about the second measurement, from its own record.** Its dump is 0.6-era
+    output, and the profile's later mean-form reject would drop 50 of those 292 sites; and its
+    `NEUTRAL` plurality is 42.6 % the single token `=`, a third of those inside LaTeX, which
+    E6 (0.7) was written against. The direction figures above are unaffected — 2 of the 50 are
+    UPPER — but the class sizes beside them are not a reading of how the literature writes.
+  Unrepaired and disclosed, like N1–N3: this is a property of matching a slot, not a bug in a
+  pattern, and repairing it means deciding per profile what a threshold's own direction is.
+
 ## The frame
 
 The tool takes a frame; it does not build one, and this is the sharpest limitation of the episode
