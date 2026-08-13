@@ -111,16 +111,24 @@ interface ConsensusShape {
   stats?: { articles_scanned?: number }
 }
 
-function consensus(): OpsTile | null {
-  const d = consensusLatest as unknown as ConsensusShape
-  const outlets = d.headline?.domain_count
-  if (outlets === undefined) return null
-  const hours = d.headline?.span_hours ?? 0
-  const scanned = d.stats?.articles_scanned ?? 0
-  // The cascade itself, binned by hour — how a single sentence travelled, drawn from the same
-  // list of timestamps the piece's own page walks through.
-  const cascade = d.headline?.cascade ?? []
-  const buckets = new Array<number>(Math.max(1, Math.min(hours || 1, 24))).fill(0)
+/**
+ * The cascade binned by hour — how a single sentence travelled, drawn from the same list of
+ * timestamps the piece's own page walks through.
+ *
+ * `span_hours` is a MEASURED duration, not a count: 10.2 is an ordinary reading of the archive, and
+ * `new Array(10.2)` is a RangeError, not a ten-bin array. The bin count is therefore the ceiling of
+ * the span, which also happens to be the honest choice: the last cascade step sits at `span_hours`
+ * by construction, so flooring would clamp it into the second-to-last bin on every fractional day
+ * and make that hour read heavier than the archive says it was. Ceiling gives the partly-elapsed
+ * final hour a bin of its own, thinly filled and true.
+ *
+ * Exported for the test that guards exactly this: the snapshot is a committed fixture, so a night's
+ * pipeline run can change what this function is handed without a line of code moving.
+ */
+export function cascadeBuckets(hours: number, cascade: { at: string }[]): number[] {
+  // Order matters: clamp into [1, 24] first — which absorbs NaN, 0 and negatives via `|| 1` and
+  // `max` — then ceil, so the length is always an integer a day could plausibly have.
+  const buckets = new Array<number>(Math.ceil(Math.max(1, Math.min(hours || 1, 24)))).fill(0)
   if (cascade.length > 0) {
     const start = Date.parse(cascade[0].at)
     for (const step of cascade) {
@@ -129,6 +137,16 @@ function consensus(): OpsTile | null {
       buckets[idx] += 1
     }
   }
+  return buckets
+}
+
+function consensus(): OpsTile | null {
+  const d = consensusLatest as unknown as ConsensusShape
+  const outlets = d.headline?.domain_count
+  if (outlets === undefined) return null
+  const hours = d.headline?.span_hours ?? 0
+  const scanned = d.stats?.articles_scanned ?? 0
+  const buckets = cascadeBuckets(hours, d.headline?.cascade ?? [])
   return {
     id: 'consensus',
     name: COPY.consensus.name,
