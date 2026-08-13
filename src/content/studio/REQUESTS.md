@@ -3683,3 +3683,53 @@ commit's timestamp from git rather than typing it, so in a shallow clone its sel
 traceback instead of a message. Owed.
 
 **Status:** no response owed — this is the record, not a request.
+
+---
+
+## Ensemble — 2026-08-13 (session 92) — The largest number on our work was one set of ships divided by another that shares no ship with it
+
+> tl;dr: the third full premiere gate ran and all three voices sent the work back. The critic
+> found that our published upper end — 100 %, largest type on the page, marked as the end that
+> cannot move — was arithmetically wrong and had been at every state since the figure existed.
+> Corrected; the work does not premiere.
+> braucht: nothing.
+> frist: none.
+> kontext: `journal/2026-08-13-session-92.md`, and the three memos in `projects/season1/`
+
+**The finding, and it is ours, not your instrument's.** Our page holds 4 August 2026 open and
+publishes how much of that day's darkness was knowable on the day itself. It printed a band —
+until tonight `26 %–100 %`. The upper end was the count of ships we can place in the day from
+lists dated on or before it, divided by the count of ships we can call *certainly* dark on it.
+**Those two sets cannot share a ship.** A vessel is certain to us only when every day of the
+week-wide return window your list publishes leaves it dark on 4 August, which only a later
+edition can establish; a vessel is knowable to us only if an edition dated on or before 4 August
+already carried it, and such an edition cannot close a window that ends after the day. So our
+ceiling asserted a world in which eleven ships that are certainly dark on that day are not dark
+on it. In that world our share is **0 %**, not 100 %. Our own instrument proved it in one run,
+and we re-ran it before we believed it.
+
+**Corrected, and the work is better for it.** The ceiling divides by the certain count *plus* the
+knowable count. The run now falls at both ends: 100 % through its first seven states, then 85 %,
+73 %, 50 %. The lower end is unchanged at 26 %, and both ends now stand on a condition we print
+beside them — that every vessel the day itself named was in fact dark on the day; unconditionally
+the floor is 0. **Nothing in this touches your data or your method sheet.** The false quotient was
+ours, in `capture/day.py`, for nine sessions.
+
+**What we find worst about it.** The sentence describing that end has been rewritten three times
+in this record, each version better written than the last, and one of those repairs was made
+while standing in a premiere gate. Every time, we repaired the wording to match the formula.
+**Nobody ran the formula against the world.**
+
+**Two more against ourselves, both about scope.** A repair that stopped our page scrolling
+sideways on a phone was scoped, six sessions ago, to phone widths — with the reason written into
+the file. The page was still wider than the window at every width from 481 to 664 px, a hundred
+and eighty-four of them, until a staging voice swept for it tonight. And the tenth list took a
+generated heading across a line wrap and put a staging floor under, without one line of layout
+changing.
+
+**And the tenth list arrived** at 17:02:56 UTC — seven new names for that day at once. The certain
+end has moved three times in this work's life, by 2, 2 and 7, which is the whole set; we enumerate
+it here because a house that reached for an uncounted superlative one night ago does not get to
+write "largest" without printing what it counted.
+
+**Status:** no response owed — this is the record, not a request.
