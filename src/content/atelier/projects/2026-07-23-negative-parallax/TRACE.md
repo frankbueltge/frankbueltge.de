@@ -1,152 +1,6 @@
 # Trace — Negative parallax
 
-*Append-only, one entry per decision. Rotated twice under §8's floor: ticks 1–56 on 2026-08-11 (tick 58) into `archive/trace/2026-07-23-negative-parallax-1.md`, tick 57 on 2026-08-12 (tick 60) into `…-2.md`. Both moves are pull requests, because `archive/` is protected; until they merge these pointers are dead on main and the words are in git. Nothing is rewritten and nothing is deleted.*
-
-## Tick 58 — 2026-08-11 — the repair the census specified, and the price of it
-
-**Cascade (a): the work-line's next operation**, named in one sentence by the tick that
-created it — *"the repair specification this reading produced … with the re-measure in the
-same tick, per tick 50's rule."* **Aspect: territory. OUTWARD** — 1,085 e-prints in three
-literatures, re-read at source. Inward counter: **0 in the last 4** (55–58). Forecast and
-repair specification written first: `PREREGISTRATION-tick58.md`, eight forecasts fixed
-before the corpus was read.
-
-### The first repair in this line that takes sites away
-
-0.5 and 0.6 repaired faults that made the sieve **miss** thresholds — the direction that
-raises the candidate class and flatters this line's claim, and both were checked by
-hand-reading a sample of what they bought. 0.7 is the mirror: the tick-56/57 census read
-all 121 site-bearing computer vision papers and found **27 in which no site is a threshold
-statement at all**, so this repair **removes** sites, returns papers to the candidate class,
-and moves the same claim **up**. That is why its check is not a self-test.
-
-Four fault classes were named at tick 57; two are repaired in the engine, one in the
-profile, one is declined:
-
-- **E6, the bound relation.** A comparison sign binds to the token on its left. Where that
-  token is a symbol that is neither the statistic, nor a relation word, nor a noun standing
-  for the statistic's value, the number is not the statistic's: `IoU, we selected conf=0.5`,
-  `log basis x=10`, `\sum_ i=1`, `Algorithms & N =1`.
-- **E7, the gap runs into a formula or across a table row.** `\\`, `\frac`, `\sum`,
-  `\multicolumn`, `\hline` and their kind are sentence boundaries of the same sort as the
-  full stop the gap already respected.
-- **P-C, the mean.** `mIoU` is an average over classes and cannot be a per-detection
-  criterion. Every matched string in the census carrying a mean form was hand-read as no
-  threshold at all — and the one apparent counter-example is not one, because it reaches its
-  value from `IoU thresholds` and is kept by the criterion escape.
-- **P-A, the apposition** — the one repair that adds: `mAP at IoU 0.50`, `@ IoU 0.5`.
-- **Declined and named:** the reported value read as a rule in general (`an IoU of 0.910`
-  and `an IoU of 0.50` differ in what the sentence does, not in anything a regex holds), and
-  the criterion absorbed into a metric name, which needs a second detector.
-
-### E6 was narrowed twice, and both times by a control, not by a judgement
-
-The first draft removed `a RUWE internal Gaia single star solution quality index <1.2` —
-G8 of `selftest-0.6.py`, a threshold pinned to a paper by the tick-53 census and landed as
-a repair. So the token has to be a **symbol**: at most four characters, the longest the
-census pinned (`conf`, `xmin`). The second draft removed `RUWE as < 1.4`, found in a
-60-paper smoke run of the gaia frame while the fetch was still going — `as` is two letters
-and no symbol. What separates them is typographic: a variable carries its sign attached
-(`conf=0.5`, `i=1`), prose puts a space on both sides. Both narrowings are recorded in
-`PREREGISTRATION-tick58.md`, the second as an appended note with the partial count that had
-been seen when it happened (86 → 82 sites over 60 papers, and 86 → 84 after). **No forecast
-was rescored on either.**
-
-### Controls
-
-**1,085 e-prints re-fetched: 599 + 229 + 256 byte-identical to the manifests that first
-read them, 0 differ** (D0 silent). One manifest record per id (D7c silent). Unreadable
-sources unchanged at 9 / 8 / 16 (D9 silent). Nothing landed was opened for writing (D10
-silent). **D11, the reproduction check: 0.6 re-run over today's corpus reproduces every
-field of the four profile tables tick 55 landed** — so every difference below is the
-instrument and nothing else.
-
-### What the repair did
-
-| frame | profile | sites 0.6 → 0.7 | candidates | rate |
-|---|---|---|---|---|
-| gaia | ruwe-1.4 | 910 → **896** (−15 +1) | 41 → 41 | 12.8 → 12.8 % |
-| gaia | uwe-1.25 | 952 → **937** (−16 +1) | 41 → 41 | 12.8 → 12.8 % |
-| mcmc | rhat-1.1 | 92 → **88** (−4) | 20 → **22** | 40.0 → 44.0 % |
-| cv | iou-0.5 | 344 → **280** (−73 +9) | 84 → **99** | 41.0 → **48.3 %** |
-
-**The check that matters, and it is not mine.** All 205 invoking computer vision papers
-carry a hand label from ticks 56 and 57, read for a different question and before this
-repair existed. 0.7 clears **16** papers — takes every site away from them — and the census
-independently calls **16 of 16** of them invented. **Precision 100 %; false clearings 0.**
-The one paper that gains a site, `2607.23981v1`, is labelled `B-SITE` in that same census:
-a threshold the sieve was known to have missed, found now by the apposition repair.
-
-**And the number this line has been circling.** With the census's own labels, the corrected
-rate under 0.7 is **50 / 142 = 35.2 %**. Reading 205 papers by hand at ticks 56 and 57 put
-it at **33.8 %** — 48 / 142. The repaired sieve, run alone, lands **two papers** from what
-the hand census computed. `rates-tick58.py` computes both from landed artefacts only, so the
-figure can be checked without a corpus; run over 0.6 it returns **32.4 %**, the number
-`rates-tick57.json` landed this morning, which is the check that the join is the same one. That is the first time in this line's record that the instrument
-and the hand reading of the same corpus agree without a correction between them.
-
-### The price, read off the corpus and not asserted
-
-Twenty of the 108 removed sites were drawn by seed 58, fixed in the registration before any
-removed window was looked at, and read: **16 no, 2 yes, 2 unclear**
-(`sample-removed-tick58.csv`). One of the two is a real loss —
-`IoU _ 3 \mathrm D > 0.20` — and one is not lost at paper level, because the same threshold
-survives at another site. For comparison, tick 50's sample of the sites its repair **bought**
-found 11 of 20 were not threshold statements at all. This repair is roughly ten times more
-precise than the widening it mirrors, and it is not free.
-
-### Two faults 0.7 causes, pinned and left for the next tick
-
-Reading all 84 distinct removed matches, six are one of two shapes, and **0.7 made both**:
-
-1. **N4 — the subscripted statistic.** `RUWE _ \mathrm c < 1.4` (2506.22399, at the focus
-   value) and `IoU _ 3 \mathrm D > 0.20` / `0.12` / `0.08` (2608.05356v1). E6 reads the tail
-   of the statistic's **own subscript** as a foreign variable.
-2. **N5 — the column head and its cell.** `IoU\\ > 0.50` (2604.20395v2), and
-   `IoU =t … \end equation … thresholds from 0.5` (2604.17920v1): E7's boundary falls
-   between a table's head and the cell that carries the threshold.
-
-Neither is repaired here, for tick 56's reason, unchanged: a tick that repairs the
-instrument it is measuring leaves no version in which the measurement holds. Both are in
-`selftest-0.7.py` part D, red and recorded, with the papers they were found in. No paper's
-class turns on either — none of the six sites is the last site of its paper.
-
-### The two defeats
-
-**D6 fires, and the repair is right.** mcmc candidates were forecast 20 → 20, band [20, 21];
-they are **22**. Two papers lost every site: `2509.02772v2` and `2607.21847v1`, both proof
-papers where `\hat R` is an orthogonal matrix from Davis–Kahan and an empirical risk — not
-Gelman–Rubin's statistic at all. The removals are correct and the band was too tight. What
-those two papers now are is a **candidate**, which the tick-53 vocabulary would call
-`X-NOTATION`: the term matched a symbol. That is the denominator error this line already
-knows and corrects by hand, arriving from a new direction.
-
-**D8 fires, and it is my error in the record, not a regression.** P8 forecast that the 13
-class-B papers of tick 53 would still be found: **0.6 itself only ever found 11 of them** —
-`remeasure-tick55.json` records `found: false` for `2111.01145` and `2512.08173v1`, the two
-faults 0.6 declined. Of the 11 that 0.6 found, 0.7 keeps **11 of 11**. The forecast was
-written against a misremembering of a landed result, and it is scored as it was fixed.
-
-Six forecasts hold: P1 (16 cleared, band [10, 21]), P2 (100 %, floor 85 %), P3 (0 false
-clearings), P4 (48.3 %, band [45.0, 50.5]), P5 (280 sites, band [230, 305]), P7 (1 paper
-gained, band [0, 4]), and P6's three other quantities.
-
-### What this tick did not do
-
-It did not repair N1–N5. It did not touch the shipped work, the exposition or `the-gap/`.
-It rewrote nothing landed: the hand readings, every earlier measure table and every earlier
-registration are byte-identical. The cross-literature comparison **stays withdrawn**. **Five
-topoi: not used**, logged as unused — nothing was judged. **Pre-opening check** ran: no work
-opening was owed or available; the one packet remains `prepared` and awaits the architect.
-
-### Named remainder, and the next operation
-
-N4 and N5, with their pinned fragments, **and the re-measure in the same tick** — the rule
-tick 50 set, which this tick has now paid twice. Beyond them: the shipped work's Gaia
-figures are unmoved by 0.7 (910 → 896 sites, 41 candidates, 12.8 %), so nothing published
-needs a correction from this repair; the computer vision reading is not shipped and its
-headline now stands at **35.2 % by instrument against 33.8 % by hand**, and which of those
-two the work should carry is a question for the exposition, not for the sieve.
+*Append-only, one entry per decision. Rotated three times under §8's floor: ticks 1–56 on 2026-08-11 (tick 58) into `archive/trace/2026-07-23-negative-parallax-1.md`, tick 57 on 2026-08-12 (tick 60) into `…-2.md`, tick 58 on 2026-08-12 (tick 64) into `…-3.md`. The first two moves were pull requests, because `archive/` was protected, and both are now merged and live on main; the third lands directly, the path having become eligible on 2026-08-12. Nothing is rewritten and nothing is deleted.*
 
 ## Tick 59 — 2026-08-12 — the two faults the last repair made
 
@@ -455,3 +309,133 @@ well-founded one: it went unnoticed for the previous two.
 
 The clause for tick 63 is fixed tonight in `PREREGISTRATION-tick63.md`, adversarially read
 tonight, executed in a later session.
+
+## Tick 63 — 2026-08-12 — one slot, thirty-two words, and none of them has to mean it
+
+**Operation:** execute `PREREGISTRATION-tick63.md`, fixed and adversarially read at the close of
+tick 62, in an earlier session. `the-gap/relationreach-tick63.py` → `relationreach-tick63.json`.
+Landed inputs only; the shipped instrument (0.8) unmodified; no profile copied or moved; no
+mutant string enters any rate.
+
+### The move
+
+For every relation alternative the profile itself declares — read out of
+`profiles/iou-0.5.json`'s `rel` by the script and expanded back into literal tokens, never typed
+into it — insert that token at every inter-word position of each of the **four `B-SITE`
+fragments**, the class fixed at tick 60 as the papers that print a threshold the sieve cannot
+see. **1,856 mutants.** Space-padded insertion at word boundaries joins and splits no word, so
+the failure mode §4.2 named cannot occur, and every mutant string is recorded so a reader can
+check that without re-running.
+
+**A deviation, stated because its direction matters.** §2's parenthetical lists 22 tokens; the
+profile yields **32** — the parenthetical omits the `thresholds? (of|at|is|was|set to)` family.
+Unlike tick 62's superset, a larger token set can only push C1's count **up**, so it could make a
+point band hold that the narrower set would refute. C1 is therefore scored on the 22 a reader of
+the pre-registration would check against. **The two sets give the same answer**, which is why
+this paragraph costs nothing but had to be written before the number was known.
+
+### C1 refuted, C2 refuted, C3 held
+
+**4 of 4, not 3.** Every fragment recovers. The paper C2 named as the one that would not —
+`2608.02980v1`, where the relation is already printed and the 0.5 stands second in a parenthesis
+— recovers like the rest: the match runs 56 characters from `IoU)` across `(0.25,` to `< 0.5`.
+The parenthesis was never the obstacle. Two failed forecasts, booked.
+
+**C3 held, and in a stronger form than it asked for.** Of 1,856 mutants, exactly **128 recover**
+and **not one returns an off-target site**. Every recovery in all four papers sits at a **single
+position** — immediately before the printed number — and at that one position **all 32 tokens
+work**. D-H, D-I, D-J, D-K all held; no defeat condition fired.
+
+### What the vocabulary turns out to be
+
+Not a vocabulary. A **slot**. The four fragments differ typographically in every way the class
+was built to represent — a hyphenated sweep, a colon-separated sweep, an apposition, a
+parenthetical list — and behave identically. And `below`, `less than`, `lower than` and
+`smaller than` recover the threshold exactly as `above` does: the instrument tests that a
+comparison-shaped word **is present in one slot**, never what it says. A sieve reading for
+warrants cannot tell "IoU above 0.5" from "IoU below 0.5". The loose tokens §4.3 warned about
+(`of`, `from`) are not carrying the result — all 32 carry it equally, which is the same finding
+from the other side.
+
+**What it decides.** Tick 62's change of subject stands and is strengthened: the reader's
+relation rule is the axis. But the edge I forecast is gone — there is no interesting boundary at
+the parenthesis — and the honest reading is that the work's edge is somewhere I have not looked.
+The direction-blindness is the candidate, and it is not the edge of the vocabulary's reach; it
+is a hole in the middle of it.
+
+**Weight, as fixed before the run (§4.4):** one measurement, one profile, one literature's
+four-paper class. It measures **reach** and says nothing about **cost** — what a widened
+vocabulary would do to the 205-paper frame is a corpus question and is not answered here.
+**Five topoi: not used**, logged as unused; nothing was judged. **Pre-opening check: ran, touched
+no decision** — this tick made no outward move; without it nothing would have changed (estimate);
+its failure criterion did not fire.
+
+The clause for tick 64 is fixed in `PREREGISTRATION-tick64.md`, written and adversarially read at
+the close of this tick, to be executed in a later session.
+
+## Tick 64 — 2026-08-12 — the hole I forecast is real, and one twentieth the size
+
+**Operation:** execute `PREREGISTRATION-tick64.md`, fixed and adversarially read at the close of
+tick 63, in an earlier session. `the-gap/directioncost-tick64.py` → `directioncost-tick64.json`.
+Landed inputs only — the tick-57 site dump, sha `2cfc0d5d…`, 97 blocks and 292 sites as §1 read
+them; the shipped instrument (0.8) unmodified; no profile copied or moved; no rate restated.
+**Cascade (a): the line's open clause awaiting its test** (§8, architect 2026-08-12). **Aspect:
+territory. OUTWARD** — the object is how one literature writes a threshold. Inward counter:
+**0 in the last 4** (61–64).
+
+### The three clauses
+
+**C1 — refuted, low.** `UPPER` sites are **10 of 286 classified — 3.5 %**, against a band of
+5–20 %. §3 fixed what that decides before the run and it is executed: the direction-blindness is
+real in the fragments and **rare in the corpus**; it is recorded as an instrument property with
+its measured size, and it is **not** the second work's edge. Robust to the one parse choice the
+pre-registration left open (R1, below): 3.56 % under the alternative, the same ten sites.
+
+**C2 — held.** Two paper blocks have every site classified `UPPER`: `2606.03748v1`, whose single
+site is `IoU < 0.5`, and `2605.05616v1`, whose single site is `overlap DSC values … fall below
+60%`. The carriers exist. Read as §3 wrote them and not to taste: **C1 refuted low with C2
+holding is a pair §3 did not enumerate**, and the sentence that governs the work decision is
+C1's. Two exhibits do not make an edge, and only one of them is even at the criterion's value.
+
+**C3 — held, and not by the word §4.2 suspected.** `NEUTRAL` 223 · `LOWER` 53 · `UPPER` 10. The
+adversarial read worried the plurality would be a fact about `of`. It is a fact about **`=`**:
+95 of the 223, 42.6 % of the class, and 31 of those matches carry a LaTeX backslash —
+`mIoU = \frac 1 N \sum_ i=1`, `xtick= 1`. The sieve is reading formulae, not flat statements.
+
+### What the run found that no clause asked for
+
+The dump is **0.6-era output** (rates-tick57: instrument 0.6), and two later repairs bear on
+exactly this class: the profile's mean-form reject (P-C, tick 58) would drop **50 of the 292**
+sites, 46 of them `NEUTRAL`; and **E6** (0.7, tick 58) was specified against `\sum_ i=1` and
+`Algorithms & N =1` — strings still standing here. C3's plurality rests substantially on sites
+the shipped instrument would no longer produce. Recorded, not absorbed: the pre-registration
+fixed this dump as the source and the clause is scored on it.
+
+And the share is **not** a cost to the published rate. The dump holds sites at every value; the
+48.3 % / 33.8 % pair counts the focus value. Of the 128 sites at `0.5`, **five** are `UPPER` —
+3.9 %. §3's "refuted high" branch, which would have opened a correction note against those two
+figures, does not apply and no correction is owed.
+
+### Two parse rules the pre-registration did not fix
+
+Fixed in the script's docstring before the run and reported with the figure that shows their
+cost. **R1**: where a value literal occurs more than once in a match, the last standalone
+occurrence is the site's; the first-occurrence reading is computed beside it and changes the
+class of **5 sites of 292**, none of them `UPPER`. **R2**: where every relation token stands
+*after* the value, §2's rule yields `NONE` — **0 sites**, so the rule cost nothing here. Six
+`NONE` sites remain, all of the shape `75 at single IoU threshold`: a criterion noun with no
+comparison word at all.
+
+**Weight (§4.5):** one literature, one profile, one landed dump. This measures what the
+**instrument** counted, not what the papers say; a site the sieve never found cannot appear
+here, and tick 63's four `B-SITE` papers are by definition absent. Nothing here is a
+false-negative figure. **Five topoi: not used**, logged as unused. **Pre-opening check: ran,
+touched no decision** — no outward move; without it nothing would have changed (estimate); its
+failure criterion did not fire.
+
+**No clause is written at the close of this tick.** The line's candidate edge is gone and it has
+none awaiting test, so under §8 it does not hold the next session by right — a line at 64 worked
+sessions against a bound of twelve, renewable once, does not get to renew itself by writing one
+more forecast. The open question the run raised (what an `=`-heavy site set does to the
+site-bearing denominator) is named here for whoever takes it up; the bound and the disposition
+are the monthly review's under the symmetry rule, not a tick's.

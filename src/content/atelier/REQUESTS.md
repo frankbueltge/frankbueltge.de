@@ -999,3 +999,124 @@ was the house's, not that line's.
 
 — Frank (entered from his working session; the reasoning is the session's, the decision to
 send it his)
+
+---
+
+## 2026-08-12 (2) — The deliberation you were promised, and one schema question (Ulysses, Atelier)
+
+> tl;dr: the five-topoi deliberation on *The warrant that does not travel* is written and the
+> verdict is **publish, conditional** — the condition is mine and already scheduled, so nothing
+> here waits on you as a decision.
+> braucht: eine Schema-Antwort (siehe unten) · die zwei Merges aus dem Eintrag von heute Abend
+> frist: keine von meiner Seite
+> kontext: PROTOCOL v6 §2.3 / §6 / §7 · `DECISION.md` (Eintrag Tick 63) · `SITE-API.md`
+
+**Done, as promised.** Last night's entry said the deliberation would be the next tick's first
+operation whether or not the merges had happened. It is written. It was **not** the first
+operation — I ran the line's live clause first and this second — and that is recorded in
+`DECISION.md` as a broken word about ordering rather than smoothed over.
+
+**The verdict:** publish, on this practice's own signature, once one disclosure is in. Tonight's
+run found a fault in the very instrument that ships (**N7**: the sieve reads that a relation
+stands between a statistic and its number, never which way it points — it cannot tell `IoU above
+0.5` from `IoU below 0.5`). It does not need repairing to ship; it needs disclosing, like N1–N3
+before it, with its measured size. `PREREGISTRATION-tick64.md` measures that size and is already
+written. No new work enters the queue and no further decision is owed.
+
+**The one thing I want from you, and it is a schema question, not permission.** This project
+directory's `PUBLICATION.json` belongs to the line's **first** work, published 2026-08-01, and the
+format holds one record per project — `status`, `work_path`, `exposition_path`, `apparatus_path`.
+A **second** published work in the same project has nowhere to be signed. Three shapes, none of
+which I want to pick unilaterally because `SITE-API.md` is yours and a guess here breaks a feed:
+
+1. `PUBLICATION.json` becomes a list of records;
+2. a second file beside it (`PUBLICATION-2.json` or named per work);
+3. the second work moves to its own project directory and signs there.
+
+I lean to (1) — it keeps one door per project and it is the smallest change to anything that
+reads the file — but that is a preference, not a finding, and the cost of being wrong is a broken
+feed rather than a wrong number.
+
+**Still open from tonight's earlier entry:** PR #12 (the packet), and the later `works/` pull
+request the shipping act will be. `works/**` is still protected, which is right; it just means my
+publishing act arrives as a pull request rather than as an auto-land.
+
+**Status:** open — needs one schema answer; the verdict itself waits on nothing
+
+> **Note added 2026-08-12 (tick 64, a later session the same day).** The verdict's condition is
+> now met: N7 is disclosed in `EPISODE-6-APPARATUS.md` §7a and in `warrant-trace/README.md`, and
+> its measured size is beside it — 10 of 286 classified sites, 3.5 %, and 5 of 128, 3.9 %, at
+> the focus value. The clause was refuted low, so the correction note a larger share would have
+> owed against the published 48.3 % / 33.8 % pair is **not** owed and is not made. Nothing is
+> now between this work and its shipping act except where to sign it. Under the standing rule at
+> the head of this file, silence through my next session means I decide the schema myself; I
+> lean to shape (1). Recorded so the deferral cannot repeat quietly.
+
+> **Note added 2026-08-13.** That session has now happened and the rule fired: the schema is
+> decided — shape (1), with an execution binding — in the entry of 2026-08-13 below. This entry's
+> schema question is closed; its two merges are not.
+
+---
+
+## 2026-08-13 — The schema question came due tonight, and I decided it (Ulysses, Atelier)
+
+> tl;dr: the standing rule made the signing-slot decision mine at this session. I decide
+> **shape (1)** — `PUBLICATION.json` becomes a list of records — with one binding that the
+> evening's evidence forced: the change lands **in the same commit as the second work it signs**,
+> never before.
+> braucht: nichts als Entscheidung · weiterhin die zwei Merges (PR #12, ein späterer `works/`-PR)
+> frist: keine
+> kontext: Eintrag „2026-08-12 (2)" oben · `SITE-API.md` · `projects/2026-07-23-negative-parallax/PUBLICATION.json`
+
+Yesterday's entry said: *silence through my next session means I decide the schema myself; I lean
+to shape (1).* This is that session, so deciding is what the rule asks for and deferring again is
+the thing it forbids.
+
+**Decision: shape (1)** — one door per project, `PUBLICATION.json` carrying a list of records
+instead of a single one. The reasons are the ones I already gave: it keeps one file per project and
+it is the smallest change to anything that reads it.
+
+**One thing I checked tonight that I had not checked when I wrote the lean.** `SITE-API.md` does
+not document `PUBLICATION.json` at all — I searched it. So the file has a consumer I cannot see and
+a contract that is written nowhere I can read. That does not change the shape I picked; it changes
+when it may be executed. A single-to-list change to an undocumented file that something builds from
+is exactly the case where being wrong costs a feed rather than a number, and the site build is
+already red tonight for an unrelated reason.
+
+**So the decision travels with a binding:** the shape change is made **in the same commit as the
+second work's record**, so the list never exists with one member and no second work, and the
+pull-request body names the change so you see it before you merge rather than after. If that is
+wrong, one line from you and I use shape (2) instead — but I am not holding the decision open for
+it.
+
+**Unchanged and still yours:** PR #12 (the packet, open since 2026-08-08 — the seven-day bind runs
+from its merge, not from its opening), and the later `works/` pull request my publishing act will
+be. Nothing on my side now waits on a decision.
+
+**Status:** decided by me under the standing rule · execution still needs the two merges
+
+---
+
+## 2026-08-13 — The red build gate quotes my file, and my file is right (Ulysses, Atelier)
+
+> tl;dr: tonight's `atelier-feedback/2026-08-13.md` reports the site build red. The failing
+> assertion quotes my `SCORE.md` and expects a string your own amendment retired. Nothing on my
+> side to correct — reported because the letter asks me to judge, not because I want a fix.
+> braucht: nichts von mir · eine Zeile in eurem Test, wenn ihr wollt
+> frist: keine
+> kontext: `atelier-feedback/2026-08-13.md` · run 31665262062 · `src/lib/atelier/dossier.test.ts:116`
+
+The failing test asserts that the running line's `horizon` frontmatter contains **"open (months"**.
+It does not, and it should not: the amendment of 2026-08-12 replaced the open horizon with the
+twelve-session bound, and `projects/2026-07-23-negative-parallax/SCORE.md` now reads *"Bounded, and
+past the bound."* — which is the text the log quotes back as the failure.
+
+So the assertion is pinned to a wording your own floor retired the day before, and the record it
+reads is correct. **I am changing nothing.** I could make the test green in one edit by putting the
+old sentence back, and that is precisely the move §8 forbids.
+
+Worth one line beyond the bookkeeping, because it is this line's own subject at the house's expense:
+a test that copies a phrase out of a document it does not own is a warrant that stopped travelling.
+The phrase moved; the copy did not; the copy is now the thing declaring the original wrong.
+
+**Status:** reported, no action owed on my side

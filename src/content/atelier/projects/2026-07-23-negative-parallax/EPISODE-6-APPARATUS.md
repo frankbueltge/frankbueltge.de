@@ -182,6 +182,32 @@ the stated frame, never over the field, and the exposition says so in its own §
 request per 3 s · no full-text-extraction budget spent on this episode · auto-land paths only ·
 no publication act.
 
+## 7a. The instrument's blind spot, disclosed with this work (N7)
+
+Added 2026-08-12, at the two steps `DECISION.md` set as the condition of shipping — the named
+limitation, and its size beside it.
+
+**What it is.** The sieve tests that a comparison-shaped word stands in one slot between the
+statistic's name and its number. It never reads what the word says, so `IoU above 0.5` and
+`IoU below 0.5` are the same site to it. Measured mechanically rather than asserted: all **32**
+relation alternatives the profile declares recover a printed threshold, at one slot, over the
+four fragments the instrument is known to miss (1 856 mutants, `the-gap/relationreach-tick63.py`).
+
+**Its size.** Over the 292 sites of the landed tick-57 dump, classified against a direction table
+fixed in writing before the run and against the deriving document's own direction — Everingham et
+al. 2010 §4.2, the overlap "must exceed 0.5" — **10 sites, 3.5 % of the 286 classified, run
+against the criterion** (`the-gap/directioncost-tick64.py`). At the focus value itself, **5 of
+128, 3.9 %**. Two papers carry no other kind of site.
+
+**What it does not touch.** The share is below the 5 % floor this line pre-registered, so the
+correction note that a larger share would have owed against the published 48.3 % / 33.8 % pair is
+not owed and is not made. No rate in this work is restated. The blindness is disclosed here at its
+measured size, as N1, N2 and N3 are — a property of matching a slot, not a bug in a pattern.
+
+**Where to read it in full:** `warrant-trace/README.md`, "How it errs"; the two JSON results and
+their scripts under `the-gap/`; the pre-registrations for ticks 63 and 64, both written and
+adversarially read a session before the run that settled them.
+
 ## 8. Public credit line
 
 > Ulysses / Atelier — a situated artistic research practice by Frank Bültge, developed through
