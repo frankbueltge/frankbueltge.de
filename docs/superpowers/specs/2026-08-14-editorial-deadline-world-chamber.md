@@ -114,3 +114,40 @@ One query, one day, by hand: pull yesterday's deletions from `gdg_partitioned`, 
 against yesterday's committed pool, count receipts, eyeball ten random "deleted" URLs to
 verify they are actually gone (measure GDG's false-deletion rate for ourselves before
 trusting it nightly). Half a day, ~0 €.
+
+## Addendum (2026-08-14, same night): spike executed — the chamber changes shape
+
+The §8 spike ran against `gdg_partitioned` on 2026-08-14 (queries, job IDs and bytes
+billed below). Findings, in order of consequence:
+
+1. **The deletion class no longer exists in the GDG.** Across 2026-07-14..2026-08-13 the
+   table contains exactly four statuses: `UNCHANGED_CONTENT` (22.2M), `PAGE_TEXTCHANGE`
+   (3.76M), `PAGE_TITLECHANGE` (1.43M), `HTTP_REDIRECT` (478k). No 404/410/deleted
+   records at all. The 2018 announcement's deletion rates (0.68 %/24 h) describe a
+   retired pipeline version — §1's "disappearance rate from GDG" is **not buildable**.
+2. **The stronger material was sitting next to it: rewritten headlines with before/after.**
+   `PAGE_TITLECHANGE` carries `page_title` → `title_new` pairs — ~53.6k/day (14.7k
+   English). A hand sample shows exactly the three classes the instrument needs to
+   separate: trivial (encoding fixes, appended site names), running updates (casualty
+   counts revised), and genuine reframings (actor/framing words exchanged in place).
+   **v1 pivots to the rewrite register**; the versioned triviality filter becomes the
+   method core.
+3. **Deletion measurement moves in-house, sampled.** Feasibility test: 300 random URLs
+   from the committed 2026-08-12 pool, rechecked ~40 h later — 262 reachable, 11 gone
+   (1× 404, 10× **HTTP 451** "Unavailable For Legal Reasons"), 16× 403 bot-walls
+   (disclosed as an *unverifiable* class, not counted as gone), 5× other. Sampled daily
+   recheck of our own pool gives a deletion rate with confidence interval at ~2 min
+   runtime. Caveat recorded: 451 from a German vantage point may mean EU geo-blocking
+   rather than takedown — needs per-domain classification or a second vantage before the
+   451 share is headlined; it may also be the most interesting number in the instrument.
+
+**GCP trace** (per `.claude/rules/pipelines-and-archive.md`): jobs
+`spike_gdg_status_20260814` (26.2 MB), `spike_gdg_httpcode_20260814` (26.2 MB),
+`spike_gdg_30d_20260814` (743.4 MB), `spike_gdg_lang_20260814` (30.4 MB),
+`spike_gdg_titles3_20260814` (133.2 MB) — ≈ 0.96 GB total, ≈ 0.005 € equivalent, within
+free tier. Partition filter `DATE(fetchdate_check)`; the table is DAY-partitioned on
+`fetchdate_check` (not `_PARTITIONTIME`).
+
+**Gate consequence**: the spike *passed* in the sense that matters — it replaced a stale
+claim with buildable material before anything was built. §1/§3 are to be read through
+this addendum; the pre-registered §2 prior-art search still seals before build.
