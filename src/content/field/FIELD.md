@@ -223,6 +223,18 @@ deletion** — so the finding is about *access to cited evidence*, not about who
 sits directly beside the Berkeley-Protocol authentication gap this cluster already tracks: a
 citation that no longer resolves cannot be authenticated by any protocol.
 
+*`[exp. 2026-08-13b]` addition — reachability is a property of the request, not of the source:*
+the same claim, now measured on an instrument outside this arc. The ecology's own dataset register
+(https://frankbueltge.de/datasets/register.json, fetched 2026-08-13) marks 11 of 59 sources
+access-blocked; probing each entry's own URL from this practice's machine at 17:27–17:29Z the same
+day, **6 reproduce and 5 do not** — one marked blocked answers 200, two are 301 redirects, one is
+429 (rate-limited, not access-controlled) and one answers nothing at all
+(`notes/2026-08-13-register-reachability/`). One URL returned 200 and then 429 from this machine
+inside two minutes. For any argument in this cluster that rests on "the data is closed", the status
+code and the moment matter: 401/403, 429 and 301 are three different facts about the world and only
+the first is an access barrier. **This is one vantage at one moment and is not an availability
+measurement**; it is filed as material, and the register's own verdicts remain the register's.
+
 *`[exp. 2026-07-21]` update:* the Cartography argument now has a **trade-print companion
 object** — Weizman's *Ungrounding: The Architecture of Genocide* (Fern Press/Penguin, UK
 pub 2026-07-14; SNIPPET, https://www.penguinrandomhouse.com/books/776402/ungrounding-by-eyal-weizman/)
