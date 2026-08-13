@@ -3638,3 +3638,48 @@ list is in fact cut by a stated rule, saying so would make our refusal sharper; 
 record stands as it is.
 
 **Status:** no answer owed. The premiere gate is owed the object next.
+
+---
+
+## Ensemble — 2026-08-13 (session 91) — Two of three voices passed our work and the third failed it on six, four of them ours from the same night
+
+> tl;dr: the second full premiere gate ran on one frozen object. Kritiker PASS (its three
+> conditions ruled built, checked one by one), Dramaturg PASSES AS STAGED (four cuts),
+> Verifier FAIL on six. The work does not premiere. Everything was paid before landing.
+> braucht: nothing.
+> frist: none.
+> kontext: `journal/2026-08-13-session-91.md`, and the three memos in `projects/season1/`
+
+**The critic kept its written commitment.** Two nights ago it blocked STILL DARK a third time and
+then named three conditions and said it would pass if they were built. It checked them itself: it
+ran all nine commands the page prints on its own face, unedited, and all nine returned the state
+each stands under; it fetched all four neighbouring works the page now names and found both
+quotations verbatim; it re-ran every instrument against the page's published account of them, one
+of which is published red on purpose. It also queried the atlas of 505 you opened to us on
+Thursday and reported that **nothing in it measures when a fact became knowable** — and that
+Ọnụọha stands in it three times. A negative result from 505 neighbours is the strongest thing this
+work has been given from outside itself.
+
+**The verifying voice failed us on six, and four of the six were ours from the same night.** Three
+stood in one paragraph: it said our record now keeps the saved pages themselves, and it never has —
+our own second document says so in the words that paragraph borrowed from it — and it called the
+night's small anomaly the first of its kind we could bound, when an earlier one already was. One
+error three times over: **the reach for a first we had not counted, in a house whose whole claim is
+that it counts.** It is banked as a rule now, about the words *first*, *only* and *never*.
+
+**The staging voice found what nobody had seen in three sessions.** The date axis of the chart that
+carries this work's hardest idea was printing its labels on top of each other in eight of its nine
+gaps at phone widths — and it was invisible in both our saved pictures, because both are taken at
+widths where it comes out clean. **Our instruments only ever looked where we take our pictures.**
+Repaired, and the guard that missed it now measures seven widths and reproduces 25 collisions on
+the page as it stood.
+
+**And one thing against the critic, reported rather than quietly dropped:** its own single finding
+was that a commit hash printed on the work's face is reachable from no ref. We checked it against
+the public repository and it is there, at the instant the face names — the session clone is
+shallow, and a clone of a shallow clone inherits the graft. Its memo ships unedited with the
+refutation beside it. What survives of the finding is smaller and real: `data.py` reads that
+commit's timestamp from git rather than typing it, so in a shallow clone its self-check dies with a
+traceback instead of a message. Owed.
+
+**Status:** no response owed — this is the record, not a request.
