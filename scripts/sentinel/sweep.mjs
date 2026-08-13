@@ -60,25 +60,38 @@ export const ACCEPTED_RED = [
 ]
 
 /**
- * The token each repository is read with. The ecology has no single key: each engine carries its
- * own bot token, by design, so a leak costs one house rather than all of them. Two repos have no
- * token here yet — and rather than quietly skipping them, the sweep lets the call fail and
- * reports them as UNREACHABLE, because a repository nobody can read is not a green repository.
- * That is the exact mistake this whole file was written after.
+ * The keys each repository may be read with, best first.
+ *
+ * Every repository in this ecology is PUBLIC, and public run history and branches are readable
+ * by any valid token — so the workflow's own GITHUB_TOKEN is a sufficient LAST RESORT for
+ * reading anywhere. The dedicated bot tokens still come first where they exist, because they are
+ * the ones that can also WRITE (re-dispatch a workflow), and because a house key that leaks costs
+ * one house rather than six.
+ *
+ * The practical consequence, checked before asking anyone for anything: two repositories with no
+ * bot token are not blind spots. They are read with the default key and merely cannot be
+ * re-dispatched — a smaller gap than being unable to see them at all, and one the line states.
  */
-export const TOKEN_FOR = {
-  'frankbueltge/frankbueltge.de': 'GITHUB_TOKEN',
-  'frankbueltge/ulysses': 'ATELIER_BOT_TOKEN',
-  'frankbueltge/field-research': 'FIELD_BOT_TOKEN',
-  'frankbueltge/studio': 'STUDIO_BOT_TOKEN',
-  'frankbueltge/research-ecology': 'ECOLOGY_BOT_TOKEN',
-  'frankbueltge/machine-attention': 'ATTENTION_BOT_TOKEN',
+export const TOKENS_FOR = {
+  'frankbueltge/frankbueltge.de': ['GITHUB_TOKEN'],
+  'frankbueltge/ulysses': ['ATELIER_BOT_TOKEN', 'GITHUB_TOKEN'],
+  'frankbueltge/field-research': ['FIELD_BOT_TOKEN', 'GITHUB_TOKEN'],
+  'frankbueltge/studio': ['STUDIO_BOT_TOKEN', 'GITHUB_TOKEN'],
+  'frankbueltge/research-ecology': ['ECOLOGY_BOT_TOKEN', 'GITHUB_TOKEN'],
+  'frankbueltge/machine-attention': ['ATTENTION_BOT_TOKEN', 'GITHUB_TOKEN'],
+}
+
+/** True when a repo is read with its own bot key, so a re-dispatch there can be expected to work. */
+export function hasOwnKey(repo, env = process.env) {
+  const [own] = TOKENS_FOR[repo] ?? []
+  return Boolean(own && own !== 'GITHUB_TOKEN' && env[own])
 }
 
 const gh = (args, repo) => {
-  const name = repo ? TOKEN_FOR[repo] : undefined
+  const names = repo ? TOKENS_FOR[repo] ?? [] : []
+  const name = names.find((n) => process.env[n])
+  if (repo && !name) throw new Error(`no key for ${repo}: tried ${names.join(', ')}`)
   const token = name ? process.env[name] : undefined
-  if (name && !token) throw new Error(`no ${name} in this run's environment`)
   return execFileSync('gh', args, {
     encoding: 'utf8',
     maxBuffer: 32 * 1024 * 1024,
@@ -214,7 +227,7 @@ export function sweep({ minStreakForPerson = 3, minAgeDays = 7 } = {}) {
         branch: run.headBranch, since: run.createdAt }
       // One red is usually a cause already fixed upstream, waiting for someone to press the
       // button. Retry it. A streak means the retry has effectively been run already, by time.
-      if (streak < minStreakForPerson) retry.push(finding)
+      if (streak < minStreakForPerson) retry.push({ ...finding, canDispatch: hasOwnKey(repo) })
       else forPerson.push({ ...finding,
         why: `red ${atLeast ? 'at least ' : ''}${streak} runs running — a retry has been tried by time` })
     }

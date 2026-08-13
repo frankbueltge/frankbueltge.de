@@ -82,7 +82,9 @@ jobs:
               */machine-attention) export GH_TOKEN="$ATTENTION_BOT_TOKEN" ;;
               *)                  export GH_TOKEN="$GITHUB_TOKEN" ;;
             esac
-            [ -z "$GH_TOKEN" ] && { echo "no token for $repo — skipped, and it stays red"; continue; }
+            # Every repo here is public, so the default key can READ anywhere; only a
+            # re-dispatch needs the house's own. Falling back keeps the sweep sighted.
+            [ -z "$GH_TOKEN" ] && GH_TOKEN="$GITHUB_TOKEN" && export GH_TOKEN
             if gh workflow run "$wf" --repo "$repo" --ref main 2>/dev/null; then
               echo "re-dispatched on main: $repo · $wf"
             elif gh run rerun "$id" --failed --repo "$repo" 2>/dev/null; then
