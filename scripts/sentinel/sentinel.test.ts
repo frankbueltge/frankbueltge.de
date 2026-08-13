@@ -3,7 +3,7 @@
 // point of the thing: on 2026-08-13 the ecology's plumbing consumed a day, and most of what it
 // consumed it with was already fixed and merely waiting to be pressed again.
 import { describe, expect, it } from 'vitest'
-import { ACCEPTED_RED, REPOS, failureStreak, isAccepted, latestPerWorkflow } from './sweep.mjs'
+import { ACCEPTED_RED, REPOS, TOKENS_FOR, failureStreak, hasOwnKey, isAccepted, latestPerWorkflow } from './sweep.mjs'
 import { composeIssue, composeLine } from './line.mjs'
 
 const run = (name: string, conclusion: string | null, extra: Record<string, unknown> = {}) =>
@@ -50,6 +50,24 @@ describe('every suppressed red carries its reason and the way out', () => {
     if (!known) return
     expect(isAccepted(known.repo, known.workflow)).toBe(true)
     expect(isAccepted('frankbueltge/studio', known.workflow)).toBe(false)
+  })
+})
+
+describe('a public repository needs no key of its own to be seen', () => {
+  it('gives every repository the default token as a last resort, so none is a blind spot', () => {
+    // Checked before asking anyone to mint a token: all six repos are public, and public run
+    // history is readable by any valid token. Being unable to SEE a house is a real gap; being
+    // unable to re-dispatch in it is a smaller one.
+    for (const { repo } of REPOS) {
+      expect(TOKENS_FOR[repo], repo).toBeDefined()
+      expect(TOKENS_FOR[repo].at(-1), `${repo} has no fallback key`).toBe('GITHUB_TOKEN')
+    }
+  })
+
+  it('knows where a re-dispatch can be expected to work and where it cannot', () => {
+    const env = { GITHUB_TOKEN: 'x', ATELIER_BOT_TOKEN: 'y' }
+    expect(hasOwnKey('frankbueltge/ulysses', env)).toBe(true)
+    expect(hasOwnKey('frankbueltge/machine-attention', env)).toBe(false)
   })
 })
 
