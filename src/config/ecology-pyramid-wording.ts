@@ -45,6 +45,17 @@ export const PYRAMID = {
       title: 'the reading',
     },
 
+    /** The ecology's own score — recovered 2026-08-14 after the rewrite of 2026-08-12 retired the
+     *  route it hung on and left the figure behind. It carries an as-of because a score that ends
+     *  on a Tuesday looks the same whether the houses were quiet or the mirror stopped. */
+    score: {
+      kicker: 'THE SCORE',
+      kickerSub: 'FOUR VOICES ON ONE TIME AXIS',
+      asOf: (day: string) => `LAST LANDING · ${day}`,
+      caption:
+        'One lane per voice, one mark per landing — a session, a work, a line opened. The stage is dark and stays dark: it is a figure of its own, validated against that surface. Everything on it is read from the four practices’ committed records; where a lane is empty, that house was quiet.',
+    },
+
     map: {
       headLeft: 'THE MAP · LIVE FROM THE COMMITTED RECORD',
       headRight: 'WHAT MEETS IS RECORDED IN THE MIDDLE',
