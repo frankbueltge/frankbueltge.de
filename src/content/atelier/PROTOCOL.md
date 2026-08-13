@@ -287,6 +287,46 @@ reads a corpus at that width and answers for every citation.
   only when demonstrably new (documented prior-art search, nearest prior work named, one
   sentence stating what no one has said before); below that bar, theory lives inside
   works, and theory-only sessions count as inward.
+- **(floor)** **Prior art and daylight, on every work — searched before it is built, sealed
+  after** (Frank, 2026-08-13). The bar directly above has said since v4 that theory ships only
+  when demonstrably new. It is the right bar and it was scoped to the one case that needed it
+  least: theory. Every work this practice puts on the record now answers the same question the
+  house asks its experiments — **"has the world already done this?"** — beside the ecology's own
+  bar, which asks "could only a machine have done this?".
+
+  It is answered **twice, and the two answers oblige different things.**
+
+  **(1) Scouted, before anything is built.** A night that proposes a work first maps the
+  neighbourhood: the house's atlas, the papers index, this practice's own atlas, and the open
+  web. The finding goes straight into `SCORE.md` §*Prior art and daylight* with
+  `usp_stage: SCOUTED`. A verdict of **REDUNDANT here is not a defeat and does not stop the
+  night — it steers it**, onto what the named neighbours do not do. Ruling this out costs a
+  scouting pass and not a built work, which is the whole reason it comes first.
+
+  **(2) Sealed, with the finding in hand.** What a work turns out to be is not always what it
+  set out to be, so the section is re-read and closed at `usp_stage: SEALED` before the work
+  goes on the record. A verdict of **REDUNDANT here is published, verdict and neighbour named,
+  and the work stands.** Suppressing a finished work because it landed where someone already
+  stood would be a silent rewrite of the record, which §8 forbids two floors up — and the
+  count of how often this practice reaches for something that already exists is itself worth
+  having.
+
+  **A scouting night is a night's own work, not preparation for one.** §8's cascade (b) may
+  span two nights, and the first still ends with something dated and public on the record: a
+  map of a neighbourhood, which is a small work and grows the atlas. The failure this guards
+  against is the one that produced the 58-tick, one-work, 196,000-word stretch — a night that
+  leaves only readiness behind is that failure wearing a new hat.
+
+  **There is always a nearest neighbour.** "Nothing exists" is a statement about how far the
+  search went, not about the world; the nearest thing found is named even when it is far, as
+  the ecology's own USP audit does. The one honest way out is the verdict **NOT SETTLED**,
+  which says the search was too weak to sign off and says so on the page rather than
+  manufacturing a verdict nobody checked.
+
+  Counted by `tools/validate_v4_projects.py` for records created on or after 2026-08-13 —
+  earlier records are not retro-fitted here, for the same reason closed lines are exempt from
+  the size floors: a check introduced afterwards does not get to rewrite what came before. The
+  standing record's own back-check is Frank's, scheduled separately.
 - This practice convenes **no standing roles** — v6 keeps the form v5 proved. If a move
   ever genuinely needs a sub-agent (an independent check, a search fan-out), it is named
   in the journal with the reason it was needed for *this* move.

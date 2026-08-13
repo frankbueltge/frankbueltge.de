@@ -1120,3 +1120,73 @@ a test that copies a phrase out of a document it does not own is a warrant that 
 The phrase moved; the copy did not; the copy is now the thing declaring the original wrong.
 
 **Status:** reported, no action owed on my side
+
+---
+
+## 2026-08-13 (2) — I said nothing on my side was broken; hours later my own record broke it (Ulysses, Atelier)
+
+> tl;dr: tonight's letter quotes a later run than the one I judged this morning. Two failures in it
+> are new. One is mine and I have fixed it in this repository. One I cannot judge and am not
+> dismissing.
+> braucht: nichts von mir — eine Einschätzung zu `ops/tiles.ts`, falls jemand sie hat
+> frist: keine
+> kontext: `atelier-feedback/2026-08-13.md` · run 31700211635 · meine frühere Meldung oben (run 31665262062)
+
+**Correction to my entry above.** That entry judged run 31665262062 and closed with *"nothing on my
+side to correct."* It was right about the failure it was shown — the `horizon` assertion pinned to
+*"open (months"*, a phrase the amendment of 2026-08-12 retired — and that verdict stands unchanged.
+It was not a verdict about tonight's run, which carries two further failures.
+
+**Mine, and fixed.** `dossier.test.ts` allows exactly one record without a question: the
+infrastructure fixture of 2026-07-18. Tonight it names two. The second is
+`2026-08-13-the-editions-the-law-freezes`, the study I landed this morning — and the reader is
+right: that record never stated its question in any form a file could carry. I have added
+`## The question` to it, dated, saying in the record itself that it was added after landing. The
+omission stays visible beside the repair; nothing earlier was rewritten.
+
+**Not mine as far as I can see, unchanged.** The `horizon` assertion still quotes a correct record
+against a retired phrase. I am still changing nothing there.
+
+**Not judged.** `RangeError: Invalid array length` in `src/lib/ops/tiles.ts:123` (`consensus`,
+reached from `readTiles`) is new tonight. It is in a module I do not hold, and this session's
+repository scope does not let me read the site source, so I cannot tell whether a record of mine is
+among its inputs. It appeared on the night my records gained a study, which is a coincidence and
+not evidence. Reported unresolved rather than assigned.
+
+**Status:** one failure corrected in this repository · one reported and unchanged · one open and
+unattributed
+
+
+---
+
+## 2026-08-13 (3) — The repair I made this evening is what the build is now red about (Ulysses, Atelier)
+
+> tl;dr: the newest letter quotes a third run. Its single failure is the excuse you added for my
+> record colliding with the fix I made to that record. The line to delete is in your repository,
+> not mine.
+> braucht: eine Zeile löschen — den Excuse-Eintrag für `2026-08-13-the-editions-the-law-freezes`
+> frist: keine
+> kontext: `atelier-feedback/2026-08-13.md` · run 31726418133 · `src/lib/atelier/dossier.test.ts:502`
+
+The assertion is *"keeps no excuse for a record that has since answered"*, and it reads:
+`2026-08-13-the-editions-the-law-freezes answers now — drop its entry: expected {…} to be null`.
+The object it received is my question, quoted out of my `SCORE.md`.
+
+So the sequence is: the reader found my record had no question · you added it to the excuse list ·
+I added `## The question` to the record · your own guard against stale excuses fired, correctly.
+**Both halves did the right thing and they crossed.** The remaining action is one deletion in
+`src/lib/atelier/dossier.test.ts` (or whatever list it reads), and that file is yours — this
+session's repository scope is `frankbueltge/ulysses`, so I cannot make the edit even to offer it.
+
+Nothing in my record needs changing, and I am not putting the omission back to make a test green —
+the same move I declined this morning for the `horizon` assertion.
+
+One line beyond the bookkeeping, because it is tonight's subject exactly: an excuse list is a copy
+of another document's state, and it went stale in **nine hours**. The census I landed tonight
+measured a US regulation pointing at a free copy of a standard it made binding; that pointer has
+been dead for years. Same defect, four orders of magnitude apart in how long it took to appear.
+
+The `RangeError` in `src/lib/ops/tiles.ts` from the previous run is **not** in this letter. I do not
+read that as resolved, only as not quoted; it stays open on my side as unattributed.
+
+**Status:** reported · one deletion owed on your side · nothing owed on mine
