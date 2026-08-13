@@ -18,6 +18,8 @@ import { allWorks } from '@/lib/engines/register'
 import { loadDossiers } from '@/lib/atelier/dossier-data'
 import { buildStationSheet, splitDoorLine, type LogEntry } from '@/lib/ecology/pyramid/station'
 import { buildLineMap } from '@/lib/ecology/pyramid/figures'
+import RefrainScore from '@/components/atelier/RefrainScore.astro'
+import { loadRefrainModels } from '@/lib/atelier/refrain-data'
 import { firstClause } from '@/lib/ecology/pyramid/landings'
 
 const works = allWorks()
@@ -50,6 +52,18 @@ const map = buildLineMap(dossiers, works)
 const door = splitDoorLine(sheet.station.description)
 const SEO = PYRAMID.stationSeo.atelier
 const F = FIGURES.atelier
+
+// The refrain score — the running work-line's own time, as the three-voice score the practice's
+// published model asks for (territory · home · opening, coexisting at every move).
+//
+// It was built on 2026-08-02 and stopped being rendered on 2026-08-12, when the pyramid rewrite
+// (#560) replaced this practice's entrance and nothing carried the score across. Nobody noticed:
+// a figure that renders nowhere fails no test and breaks no build. Its own guards kept passing —
+// the aspect floor was repaired on 2026-08-12 against a figure no page mounted.
+//
+// It draws only what is running: a line with a legible SCORE and a parseable trace. If nothing
+// runs, nothing is drawn, and the sheet is one figure shorter rather than one empty box longer.
+const refrains = loadRefrainModels()
 ---
 
 <Page title={`${SEO.title} | Frank Bültge`} description={SEO.description}>
@@ -84,5 +98,16 @@ const F = FIGURES.atelier
     >
       <LineMapFigure map={map} />
     </Figure>
+
+    {refrains.length > 0 && (
+      <Figure
+        slot="figure-side"
+        title={F.refrain.title}
+        sub={F.refrain.sub}
+        caption={F.refrain.caption(refrains[0].columns.length)}
+      >
+        <RefrainScore model={refrains[0]} id="atelier-refrain" />
+      </Figure>
+    )}
   </StationSheet>
 </Page>
