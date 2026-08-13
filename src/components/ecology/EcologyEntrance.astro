@@ -34,6 +34,7 @@ import { buildLandings } from '@/lib/ecology/pyramid/landings'
 import { buildTimeline, timelineGeometry, TIMELINE_BOX, weekOffset } from '@/lib/ecology/pyramid/timeline'
 import { houseCounts } from '@/lib/ecology/pyramid/counts'
 import Partitur from '@/components/maschinenraum/Partitur.astro'
+import EcologyAnatomy from '@/components/ecology/EcologyAnatomy.astro'
 import { loadEcologyScore, scoreLastLanded } from '@/lib/partitur-data'
 import '@/styles/ecology-pyramid.css'
 import '@/styles/hub-triptych.css'
@@ -308,6 +309,14 @@ const weeksOnRecord = Math.max(1, Math.ceil(weekOffset(timeline.origin, now.toIS
       </p>
     </section>
 
+
+    {/* ── 3b · the three cycles ───────────────────────────────────────────────────────────
+        Restored 2026-08-14. Section 3 above says the cycle in five words; this says it in each
+        practice's OWN words, step by step, and repeats every step in a table below. It needs no
+        model from here — it reads the practices' records itself. */}
+    <section class="eco-section" id="cycles">
+      <EcologyAnatomy />
+    </section>
     {/* ── 4 · last night — the daily view ─────────────────────────────────────────────────── */}
     <section class="eco-section" id="now">
       <div class="eco-head">
