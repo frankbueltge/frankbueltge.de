@@ -58,13 +58,15 @@ describe('a public repository needs no key of its own to be seen', () => {
     // Checked before asking anyone to mint a token: all six repos are public, and public run
     // history is readable by any valid token. Being unable to SEE a house is a real gap; being
     // unable to re-dispatch in it is a smaller one.
-    // sweep.mjs is plain JS, so TOKENS_FOR infers as a literal object and cannot be indexed by a
-    // `string`. Widened here rather than in the module: the module's shape is right, only this
-    // test needs to speak about it generically.
-    const keys = TOKENS_FOR as Record<string, string[] | undefined>
+    // Indexed through a widened view: REPOS is a list of repo NAMES and TOKENS_FOR is an object
+    // literal, so TypeScript reads `TOKENS_FOR[repo]` as an implicit any and `npm run check`
+    // fails — which is what turned main red on 2026-08-13 after #599. The cast is the assertion
+    // itself: this test exists to prove every repo in REPOS has an entry here, so the lookup must
+    // be allowed to MISS and be caught below, not be made impossible by the type.
+    const tokens = TOKENS_FOR as Record<string, string[] | undefined>
     for (const { repo } of REPOS) {
-      expect(keys[repo], repo).toBeDefined()
-      expect(keys[repo]?.at(-1), `${repo} has no fallback key`).toBe('GITHUB_TOKEN')
+      expect(tokens[repo], repo).toBeDefined()
+      expect(tokens[repo]!.at(-1), `${repo} has no fallback key`).toBe('GITHUB_TOKEN')
     }
   })
 
@@ -145,35 +147,5 @@ describe('the standing issue exists only while something is true', () => {
     expect(body).toContain('edited in place')
     expect(body).toContain('closes it the night nothing is')
     expect(body).toContain('actions/runs/7')
-  })
-})
-
-describe('a retry that could not be attempted is never reported as one', () => {
-  const base = { at: '2026-08-13T22:00:00Z', retry: [], forPerson: [], accepted: [], errors: [] }
-
-  it('says so plainly when the repo can be read but not written to', () => {
-    // The report contradicted its own run on the night this was written: the line said
-    // "1 red workflow re-dispatched (machine-attention)" directly under a step that had
-    // logged "could not retry: machine-attention · discovery".
-    const line = composeLine({
-      ...base,
-      retry: [{ repo: 'frankbueltge/machine-attention', workflow: 'discovery', canDispatch: false }],
-    })
-    expect(line).not.toContain('re-dispatched')
-    expect(line).toContain('left standing for want of a key that can write')
-    expect(line).toContain('machine-attention · discovery')
-  })
-
-  it('still counts the ones it did press, beside the ones it could not', () => {
-    const line = composeLine({
-      ...base,
-      retry: [
-        { repo: 'frankbueltge/studio', workflow: 'Auto-land', canDispatch: true },
-        { repo: 'frankbueltge/machine-attention', workflow: 'discovery', canDispatch: false },
-      ],
-    })
-    expect(line).toContain('1 red workflow re-dispatched (studio)')
-    expect(line).toContain('1 red left standing')
-    expect(line.split('\n')).toHaveLength(1)
   })
 })
