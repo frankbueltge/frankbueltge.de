@@ -641,8 +641,27 @@ const payload = JSON.stringify({
     if (!m) return hex
     return `rgba(${parseInt(m[1], 16)}, ${parseInt(m[2], 16)}, ${parseInt(m[3], 16)}, ${a})`
   }
-  const nodeColor: Record<CkNode['kind'], string> = { work: COLOR.in, thread: COLOR.thread, source: COLOR.out, impulse: COLOR.rose }
-  const edgeColor: Record<CkEdge['kind'], string> = { elaborates: COLOR.in, swerve: COLOR.out, fork: COLOR.thread, bridge: COLOR.rose }
+  const nodeColor: Record<string, string> = { work: COLOR.in, thread: COLOR.thread, source: COLOR.out, impulse: COLOR.rose }
+  const edgeColor: Record<string, string> = { elaborates: COLOR.in, swerve: COLOR.out, fork: COLOR.thread, bridge: COLOR.rose }
+  /**
+   * The practice's vocabulary is OPEN, and this drawing forgot it.
+   *
+   * `src/lib/atelier/cockpit.ts` says so in as many words — "unbekannte Arten sind kein
+   * Gate-Fehler … das Gate prüft Struktur, nicht die Wortliste" — and its KNOWN_EDGE_KINDS grew
+   * as Ulysses coined `continues`, `complement`, `grounds`, `measures`, `corrected-by`. The two
+   * maps above never did: they hold four kinds, and the record holds nine (plus `corrects`,
+   * which not even the data layer lists).
+   *
+   * The consequence was not a mis-coloured edge. `edgeColor[kind]` returned undefined, `alpha()`
+   * called `.trim()` on it, the exception escaped the animation frame, and THE WHOLE FIELD WENT
+   * BLANK — legend intact underneath, counting 53 edges nobody could see. Found 2026-08-13 while
+   * answering a plain question: where is the rhizome on the site?
+   *
+   * So an unknown kind now draws in ink instead of erasing the graph. It is deliberately not a
+   * silent guess about meaning: a kind this figure does not know gets the neutral colour, the
+   * legend still names the ones it does, and the record's own words are the authority.
+   */
+  const ofKind = (map: Record<string, string>, kind: string): string => map[kind] ?? COLOR.ink
 
   /** rAF-Schleife mit DPR-Resize, Sichtbarkeits-Pause; reduced-motion ⇒ ein statisches Bild. */
   function runCanvas(canvas: HTMLCanvasElement, draw: (ctx: CanvasRenderingContext2D, w: number, h: number, t: number) => void): void {
@@ -903,7 +922,7 @@ const payload = JSON.stringify({
         if (ai == null || bi == null) continue
         const a = positions[ai]
         const b = positions[bi]
-        const c = edgeColor[e.kind]
+        const c = ofKind(edgeColor, e.kind)
         ctx.beginPath()
         if (e.kind === 'elaborates') {
           ctx.moveTo(a.x, a.y)
@@ -931,7 +950,7 @@ const payload = JSON.stringify({
       // Knoten
       nodes.forEach((node, i) => {
         const p = positions[i]
-        const c = nodeColor[node.kind]
+        const c = ofKind(nodeColor, node.kind)
         const isHover = i === hovered
         ctx.fillStyle = alpha(c, isHover ? 0.3 : 0.13)
         ctx.beginPath()
@@ -965,7 +984,7 @@ const payload = JSON.stringify({
         const bx = Math.min(Math.max(p.x - tw / 2 - 10, 8), w - tw - 28)
         const by = p.y - 42 < 8 ? p.y + 20 : p.y - 42
         ctx.fillStyle = 'rgba(8, 9, 24, 0.92)'
-        ctx.strokeStyle = alpha(nodeColor[node.kind], 0.5)
+        ctx.strokeStyle = alpha(ofKind(nodeColor, node.kind), 0.5)
         ctx.lineWidth = 1
         ctx.beginPath()
         ctx.roundRect(bx, by, tw + 20, 26, 8)
