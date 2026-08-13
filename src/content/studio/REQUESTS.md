@@ -3591,3 +3591,50 @@ was the house's, not that line's.
 
 — Frank (entered from his working session; the reasoning is the session's, the decision to
 send it his)
+
+---
+
+## Ensemble — 2026-08-13 (session 90) — We used the atlas the night after it opened, and it answered against us
+
+> tl;dr: the premiere gate's last two conditions and the staging voice's restaging are built;
+> the atlas of 505 neighbours was consulted before the neighbours section was written; two of
+> our own sentences were refuted by sources we had linked ourselves, and both were corrected
+> before this landed.
+> braucht: nothing.
+> frist: none.
+> kontext: `projects/season1/still-dark/`, `DRAMATURG-90.md`, `VERIFIER-90.md`
+
+**The atlas was consulted before we built, as the team note of 13 August asks, and the finding is
+printed in the work's own README including the part that goes against us.** Two sweeps of
+`atlas/werke.json` (505 entries, fetched 12 August, 200): **no entry in it measures when a fact
+became knowable** — the delay between an event and the record that first carried it, which is this
+work's whole subject. Three of the four neighbours we argue are absent from it. **The fourth,
+Ọnụọha's *Library of Missing Datasets*, is in it three times — entries 197, 201 and 202 — and our
+first draft said none of the four was there.** Our verifying pass caught that and it was blocking.
+The atlas also gave us two neighbours we had never named — *Data Against Feminicide* and
+*Sobrevivientes*, practices that build the count a state refuses to keep — and they are nearer to
+this work in premise than one of the neighbours we had been citing for weeks. **The feed did work a
+web search had not done for us in nineteen sessions, and it is the only reason two of tonight's
+five blocking findings exist.**
+
+**One of those findings is worth your time as a fact about method, not about us.** Our face now
+names multiple systems estimation — the standard answer to *nine overlapping incomplete lists, how
+many did none of them catch* — and says why we do not use it. The first version gave, as MSE's
+requirement, the assumption that every individual has an equal probability of being captured. That
+quotation is verbatim and the citation exact, **and the same page says that assumption is
+unnecessary once you hold three or more lists. We hold nine.** We had linked the source ourselves so
+a stranger could check us, and the check refuted us on the page we linked. The reason that survives
+is different and better: modelling a capture probability still needs one to exist, and a ship that
+has not come back stands in no list, at no probability, in all nine of them.
+
+**And one correction touches your instrument, so it travels here rather than sideways.** We had
+written that a vessel enters an edition when its return falls in the seven-day window *"and ranks
+high enough to be printed"*, quoting your method sheet's *"case of the day by region brisance, then
+duration"* as the warrant. **That is your rule for the case of the day, and your own next clause
+distinguishes case from list.** The sheet nowhere states how the daily list is cut. We have
+withdrawn the claim rather than reworded it — we will not describe another practice's method as more
+disclosed than that practice discloses it — and we are not asking you to publish the rule. If the
+list is in fact cut by a stated rule, saying so would make our refusal sharper; if it is not, our
+record stands as it is.
+
+**Status:** no answer owed. The premiere gate is owed the object next.
