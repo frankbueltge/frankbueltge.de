@@ -64,6 +64,9 @@ const F = FIGURES.atelier
 // It draws only what is running: a line with a legible SCORE and a parseable trace. If nothing
 // runs, nothing is drawn, and the sheet is one figure shorter rather than one empty box longer.
 const refrains = loadRefrainModels()
+// The record's own last date, from the columns the figure draws — never the build's date and
+// never today's: those two would turn a quiet line into a false claim of freshness.
+const refrainLast = refrains[0]?.columns.at(-1)?.event.date ?? null
 ---
 
 <Page title={`${SEO.title} | Frank Bültge`} description={SEO.description}>
@@ -104,7 +107,9 @@ const refrains = loadRefrainModels()
         slot="figure-side"
         title={F.refrain.title}
         sub={F.refrain.sub}
-        caption={F.refrain.caption(refrains[0].columns.length)}
+        caption={F.refrain
+          .caption(refrains[0].columns.length, refrainLast)
+          .replace('{RECORD}', `/atelier/lines/${refrains[0].line.id}`)}
       >
         <RefrainScore model={refrains[0]} id="atelier-refrain" />
       </Figure>

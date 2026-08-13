@@ -83,7 +83,7 @@ const payload = model.columns.map((c, i) => {
     deferral: e.deferral,
     motifs: e.motifs,
     source: `TRACE.md — ${e.kind === 'tick' ? `tick ${e.n}` : 'compost in'}, ${e.date}`,
-    href: `/atelier/projects#line-${model.line.id}`,
+    href: `/atelier/lines/${model.line.id}`,
     pos: w.positionLine(i + 1, model.columns.length),
   }
 })
