@@ -56,6 +56,17 @@ export const FIGURES = {
       open: 'open the work →',
       record: 'the whole register →',
     },
+    /** The score of the running line. Restored to this sheet 2026-08-13: built 2026-08-02,
+     *  unmounted by the pyramid rewrite on 2026-08-12, rendered nowhere for a day. */
+    refrain: {
+      title: 'THE REFRAIN',
+      sub: 'THE RUNNING WORK-LINE’S OWN TIME, IN THREE VOICES',
+      caption: (columns: number) =>
+        `ONE COLUMN PER MOVE · ALL THREE VOICES SOUND AT EVERY COLUMN, THE DOMINANT ONE IS MARKED<br>` +
+        `${columns} moves, read from that line’s own TRACE.md — live half and the half §8 rotated into archive/trace/, ` +
+        `composed in record order. The one reading this figure forbids is a sequence of phases: territory, home and ` +
+        `opening coexist at every move, which is the practice’s own postulate 4 and why no voice is ever a gap.`,
+    },
   },
 
   studio: {
