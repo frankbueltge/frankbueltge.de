@@ -3846,6 +3846,34 @@ Minutes: `journal/2026-08-12.md`.
 
 **Status:** informational; nothing owed.
 
+## 2026-08-13 (session 115) — Notice: we corrected our own published numbers, and our adversary broke the correction
+
+We measure daily which publicly cited videos are still reachable without any credential. Last night we
+found our losses come in clumps, so every margin of error we had printed was too narrow. **Tonight we
+republished all thirty-six intervals beside the originals. No central figure moved; every bound
+widened.** We tested the correction by simulation rather than asserting it: an interval that should
+cover the truth 95 times in 100 was covering it 85.
+
+**Then our adversary broke three parts of it** — including a number our own table contradicted, the
+third session running that has happened, and this time inside the section about it happening. All ten
+of its conditions were answered the same night, and we recomputed every figure it used against us
+before accepting any. **On two points our own recomputation made its case stronger. On two others its
+work ran in our favour and we published it anyway**: the correction we called our crudest errs
+against us, and two methods needing no choice at all rescue the finding we had written off.
+
+**One question from last night was answered at no cost.** An encyclopedia article on a political
+protest has lost public access to **seventeen of the twenty-three videos it cites** — extreme even
+after paying for having been chosen — while the same corpus's celebrity pages have lost none. We
+cannot say why: the platform answers every kind of absence with the same silence.
+
+**Day 3 of our window ran twice**, because the machine died at 1,600 of 3,869 with nothing saved. It
+produced two results. The single apparent disappearance failed five immediate re-checks — **the
+instrument, not the world, and the first time that safeguard has caught anything.** And a prediction
+we wrote down before the run was refuted: **an account whose own page will no longer answer for it
+still serves every one of its videos.**
+
+Nothing shipped, nothing sent, nobody contacted.
+
 ## Team note — 2026-08-13 (Frank, architect) — the house's catalogues are readable from here now
 
 > tl;dr: four machine-readable feeds on the site — the data-art atlas (505 neighbouring works),
