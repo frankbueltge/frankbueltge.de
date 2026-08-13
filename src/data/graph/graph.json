@@ -20,7 +20,7 @@
       },
       {
         "file": "src/data/begegnungen/register.json",
-        "sha256": "31e71a8edf61a475"
+        "sha256": "6fb2411b979a74f4"
       },
       {
         "file": "docs/audits/2026-08-09-ecology-usp-audit.md",
@@ -48,8 +48,8 @@
       },
       {
         "file": "src/data/nightly/works/*/meta.json",
-        "sha256": "122d558211f2979d",
-        "files": 6
+        "sha256": "db2ae4b7cc48ab70",
+        "files": 8
       },
       {
         "file": "src/data/attention/export.json",
@@ -57,14 +57,14 @@
       }
     ],
     "counts": {
-      "nodes": 226,
-      "edges": 202,
+      "nodes": 228,
+      "edges": 204,
       "nodesByKind": {
         "decision": 42,
         "encounter": 6,
         "neighbor": 77,
         "practice": 9,
-        "practice-work": 66,
+        "practice-work": 68,
         "receiver": 6,
         "work": 20
       },
@@ -72,7 +72,7 @@
         "addresses": 6,
         "concerns": 2,
         "door": 5,
-        "made-by": 66,
+        "made-by": 68,
         "neighbor-of": 77,
         "participates": 17,
         "touches": 29
@@ -2045,6 +2045,36 @@
       "medium": "Measurement · twenty releases of the Unicode Character Database harvested and diffed against each other (measure.py → results.json → figure.py → figure.svg); stdlib only, deterministic, no randomness so no seed, no network at run time; loose matching rule UAX44-LM2 reimplemented from its published text; eleven predictions written into the script before its first run and kept with their verdicts, two refuted; harvested files committed under data/ with SHA-256 and source URLs"
     },
     {
+      "id": "practice-work:atelier/2026-08-12-the-stable-interface",
+      "kind": "practice-work",
+      "label": "The Stable Interface",
+      "slug": "2026-08-12-the-stable-interface",
+      "practiceId": "ulysses",
+      "date": "2026-08-12",
+      "href": "/error-as-method/2026-08-12-the-stable-interface",
+      "source": {
+        "file": "src/data/nightly/works/2026-08-12-the-stable-interface/meta.json",
+        "quote": "\"title\": \"The Stable Interface\""
+      },
+      "embodies": "One institution that both repairs its published record and cannot withdraw a published name — 2,061 already-published rows rewritten against 2 identifiers withdrawn in fourteen years. The night the pending amendment's word 'instituted' failed to discriminate, and reference to a published part, not institutional authority, took its place as what makes a norm incorrigible.",
+      "medium": "measurement of 87 releases of the IANA time zone database; harvested evidence with SHA-256, stdlib measuring script, generated SVG, and a written defence of the position"
+    },
+    {
+      "id": "practice-work:atelier/2026-08-13-the-anchor",
+      "kind": "practice-work",
+      "label": "The Anchor",
+      "slug": "2026-08-13-the-anchor",
+      "practiceId": "ulysses",
+      "date": "2026-08-13",
+      "href": "/error-as-method/2026-08-13-the-anchor",
+      "source": {
+        "file": "src/data/nightly/works/2026-08-13-the-anchor/meta.json",
+        "quote": "\"title\": \"The Anchor\""
+      },
+      "embodies": "The night went looking for an institution that repairs its norm rather than instituting its correction beside the error, in order to break the amendment five previous nights had confirmed. It found one — the WHATWG, whose standards carry no version and no errata list, and whose stated practice is to fix the standard when the implementations disagree with it. The amendment broke. What survived the break is narrower and can fail: an institution repairs freely wherever nothing outside has attached to it, and not at all where something has. The same standard that deletes wrong sentences keeps wrong anchors, because other documents point at them; it freezes in exactly three places, and names, for each, the outside party that needed something to hold still. Of the 28 elements it forbids, six are specified nowhere at all — the residue of a real removal is a prohibition and nothing else. Five of eight predictions were refuted, and the disagreement between two counts of the same population is what found the three fates.",
+      "medium": "measured reading of four institutional documents and one standard's own text; Python measurement and generated SVG; committed sources with SHA-256"
+    },
+    {
       "id": "practice-work:field/2026-07-01-calibration-gap",
       "kind": "practice-work",
       "label": "Calibration Certificate",
@@ -3393,6 +3423,24 @@
       "source": {
         "file": "src/data/nightly/works/2026-08-12-the-permanent-correction/meta.json",
         "quote": "\"date\": \"2026-08-12\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:atelier/2026-08-12-the-stable-interface",
+      "to": "practice:ulysses",
+      "source": {
+        "file": "src/data/nightly/works/2026-08-12-the-stable-interface/meta.json",
+        "quote": "\"date\": \"2026-08-12\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:atelier/2026-08-13-the-anchor",
+      "to": "practice:ulysses",
+      "source": {
+        "file": "src/data/nightly/works/2026-08-13-the-anchor/meta.json",
+        "quote": "\"date\": \"2026-08-13\""
       }
     },
     {
