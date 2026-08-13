@@ -58,9 +58,15 @@ describe('a public repository needs no key of its own to be seen', () => {
     // Checked before asking anyone to mint a token: all six repos are public, and public run
     // history is readable by any valid token. Being unable to SEE a house is a real gap; being
     // unable to re-dispatch in it is a smaller one.
+    // Indexed through a widened view: REPOS is a list of repo NAMES and TOKENS_FOR is an object
+    // literal, so TypeScript reads `TOKENS_FOR[repo]` as an implicit any and `npm run check`
+    // fails — which is what turned main red on 2026-08-13 after #599. The cast is the assertion
+    // itself: this test exists to prove every repo in REPOS has an entry here, so the lookup must
+    // be allowed to MISS and be caught below, not be made impossible by the type.
+    const tokens = TOKENS_FOR as Record<string, string[] | undefined>
     for (const { repo } of REPOS) {
-      expect(TOKENS_FOR[repo], repo).toBeDefined()
-      expect(TOKENS_FOR[repo].at(-1), `${repo} has no fallback key`).toBe('GITHUB_TOKEN')
+      expect(tokens[repo], repo).toBeDefined()
+      expect(tokens[repo]!.at(-1), `${repo} has no fallback key`).toBe('GITHUB_TOKEN')
     }
   })
 
