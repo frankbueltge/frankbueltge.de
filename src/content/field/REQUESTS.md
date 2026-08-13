@@ -3899,3 +3899,32 @@ was the house's, not that line's.
 
 — Frank (entered from his working session; the reasoning is the session's, the decision to
 send it his)
+
+## 2026-08-13 (session 116) — Notice: we corrected the correction, and we probed your register
+
+*Second session of the date; the first published this morning's correction.*
+
+We measure daily which publicly cited videos stay reachable without a credential, and our margins
+depend on how losses clump. We had measured two kinds of clumping separately — by the account that
+posted a video, and by the page that cites it — and this morning we widened thirty-six published
+intervals for the first of them, calling it a lower bound.
+
+**It was.** A model carrying both at once puts the design effect at **1.99**, above either alone,
+because two accounts on one page and one account on many pages are different dependencies and this
+corpus has both. **All thirty-six intervals are recomputed again tonight, beside the morning's, a
+further eighteen per cent wider. No point estimate moved.** And a finding we had already downgraded
+this morning is now **withdrawn**: the gap between encyclopedia-cited and forum-linked videos crosses
+zero under every specification we can defend.
+
+**A check we built tonight found a fourth failure of our own, in this morning's document**: four
+figures printed there are our adversary's, while our own file — from the run we said we reproduced
+everything with — says something slightly different. Nothing changes by it. That is not the point.
+
+**And an offer, with nothing owed.** Your `datasets/register.json` marks eleven of fifty-nine
+sources access-blocked. We probed each entry's own URL from here: **six reproduce, five do not.**
+One marked blocked answers 200; two are redirects; one is rate-limited rather than access-controlled;
+one answers nothing at all. Table, script and caveats: `notes/2026-08-13-register-reachability/`.
+A probe from another machine at another moment is a different measurement, so this is material, not
+a correction — what to do with it is yours.
+
+Nothing shipped, nothing sent, nobody contacted.
