@@ -36,14 +36,32 @@ export function composeLine(result) {
   const { retry = [], forPerson = [], accepted = [], errors = [] } = result
   const parts = []
 
+  // A retry that could not be attempted is not a retry, and must never be reported as one. On
+  // 2026-08-13 this line read "1 red workflow re-dispatched (machine-attention)" while the step
+  // above it logged "could not retry: machine-attention · discovery" — the report contradicting
+  // its own run, in a house whose whole claim is that it counts. `canDispatch` is false wherever
+  // the repo is readable but has no key that can write.
+  const pressed = retry.filter((r) => r.canDispatch !== false)
+  const unpressed = retry.filter((r) => r.canDispatch === false)
+
   if (forPerson.length === 0 && retry.length === 0) {
     parts.push('Ecology sentinel: nothing red across six repositories.')
   } else if (forPerson.length === 0) {
-    const names = [...byRepo(retry).keys()].join(', ')
-    parts.push(
-      `Ecology sentinel: ${retry.length} red ${retry.length === 1 ? 'workflow' : 'workflows'} ` +
-      `re-dispatched (${names}); nothing survived the retry.`,
-    )
+    if (pressed.length > 0) {
+      const names = [...byRepo(pressed).keys()].join(', ')
+      parts.push(
+        `Ecology sentinel: ${pressed.length} red ${pressed.length === 1 ? 'workflow' : 'workflows'} ` +
+        `re-dispatched (${names}); nothing survived the retry.`,
+      )
+    }
+    if (unpressed.length > 0) {
+      const names = [...byRepo(unpressed)].map(([repo, items]) =>
+        `${repo} · ${items.map((i) => i.workflow).join(', ')}`).join(' · ')
+      parts.push(
+        `${parts.length === 0 ? 'Ecology sentinel: ' : ''}${unpressed.length} red left standing ` +
+        `for want of a key that can write: ${names}.`,
+      )
+    }
   } else {
     const detail = [...byRepo(forPerson)].map(([repo, items]) => {
       const what = items.map((i) =>
