@@ -1,0 +1,147 @@
+---
+// /atelier/lines/<id> — one work-line's whole record: its score, its trace, its decision.
+//
+// The page every figure of this practice was already linking to, and which did not exist.
+// The refrain's card, the passage's card and the dossier all offered "read the full record →"
+// pointing at `/atelier/projects#line-<id>` — a route retired by the pyramid rewrite (#560),
+// which 301s to /atelier/works and drops the anchor on the way. So the one link a reader
+// follows when a figure has made them curious landed on a list of works. Frank, 2026-08-14:
+// „'read the full record' führt nicht zum record."
+//
+// Two things this page does that no other surface does:
+//
+//   · IT SHOWS THE WHOLE TRACE. Protocol v6 §8 rotates the older half of a long trace into
+//     `archive/trace/<line>-<n>.md`; the live file keeps the newest moves. Composed here in
+//     record order (src/lib/atelier/trace-record.ts), so a line that has rotated twice reads as
+//     one document — which is what it is. Reading only the live file would show five moves of
+//     sixty-five and say nothing about it.
+//   · IT DATES ITSELF. Every reading carries the day the record last moved, because a figure
+//     that stops on the 12th looks identical whether the practice was quiet or the mirror
+//     broke. The practice's own instruments carry an as-of; so does this.
+import { getCollection } from 'astro:content'
+import Page from '@/layouts/Page.astro'
+import Frame from '@/components/atelier/surface/Frame.astro'
+import { renderMarkdown } from '@/lib/engines/journal'
+import { wholeTrace } from '@/lib/atelier/trace-record'
+import { ATELIER_NARRATIVE } from '@/config/atelier-wording'
+
+const REPO = 'https://github.com/frankbueltge/ulysses'
+
+export async function getStaticPaths() {
+  const all = await getCollection('atelier')
+  const projects = all.filter((e) => e.id.startsWith('projects/'))
+  // The glob loader strips the extension and lowercases the id, so `SCORE.md` arrives as
+  // `projects/<line>/score` and a rotated part as `archive/trace/<line>-1`. The composer keys on
+  // filenames, so the suffix is put back here rather than teaching it a second shape.
+  const rotated = Object.fromEntries(
+    all
+      .filter((e) => e.id.startsWith('archive/trace/'))
+      .map((e) => [`/src/content/atelier/${e.id}.md`, e.body ?? '']),
+  )
+
+  const ids = [...new Set(projects.map((e) => e.id.split('/')[1]))].filter(Boolean)
+  return ids.map((id) => {
+    const part = (name: string) =>
+      projects.find((e) => e.id.toLowerCase() === `projects/${id}/${name}`.toLowerCase())
+    const trace = part('trace')
+    const live = trace?.body ?? ''
+    return {
+      params: { id },
+      props: {
+        id,
+        score: part('score')?.body ?? '',
+        // Frontmatter is parsed OUT of the body by the collection, so title/status/kind are read
+        // from `data` — a regex over the body finds nothing, which is how this page first
+        // rendered a line id as its own headline.
+        meta: (part('score')?.data ?? {}) as Record<string, unknown>,
+        // The composition wants keys shaped like the mirror's paths; the collection strips the
+        // leading segment, so it is put back above rather than teaching the composer two shapes.
+        trace: live ? wholeTrace(id, live, rotated) : '',
+        liveOnly: live,
+        decision: part('decision')?.body ?? '',
+      },
+    }
+  })
+}
+
+const { id, score, trace, liveOnly, decision, meta } = Astro.props
+
+const title = String(meta.title ?? id)
+const status = String(meta.status ?? '')
+const kind = String(meta.kind ?? '')
+
+// The record's own last date — not today's, and not the build's. If these differ, the line has
+// simply been quiet, and the page says which day it was quiet since.
+const dates = [...trace.matchAll(/^##[^\n]*?(\d{4}-\d{2}-\d{2})/gm)].map((m) => m[1]).sort()
+const lastMove = dates.at(-1) ?? null
+const moves = (trace.match(/^## (Tick \d+|Compost in|\d{4}-\d{2}-\d{2})/gm) ?? []).length
+const liveMoves = (liveOnly.match(/^## (Tick \d+|Compost in|\d{4}-\d{2}-\d{2})/gm) ?? []).length
+const rotatedMoves = moves - liveMoves
+
+const md = (text: string) => renderMarkdown(text, { repo: REPO, docs: new Set<string>() })
+---
+
+<Page
+  title={`${title} — the record | Frank Bültge`}
+  description={`The whole record of the Atelier's work-line “${title}”: its score, every move of its trace, and its decision — read from the committed mirror.`}
+>
+  <Frame
+    active="works"
+    kicker={['THE ATELIER', 'ONE LINE', 'THE WHOLE RECORD']}
+    h1={title}
+    statusHtml={`${kind || 'line'}${status ? ` · ${status.toLowerCase()}` : ''}${lastMove ? ` · last move ${lastMove}` : ''}`}
+    footLeft="the atelier · a practice of the research ecology"
+    footRight="read from the committed mirror · git is the archive"
+    back
+  >
+    <p class="at-lead">
+      {moves} {moves === 1 ? 'move' : 'moves'} on the record{rotatedMoves > 0 && (
+        <> — {liveMoves} in the live file, {rotatedMoves} rotated into the archive under §8 and composed back in here</>
+      )}.
+      {lastMove && <> The last one is dated <b>{lastMove}</b>; a quiet line is quiet, not missing.</>}
+      {' '}
+      <a href={`${REPO}/tree/main/projects/${id}`} rel="noopener">the record in the repository →</a>
+    </p>
+
+    {score && (
+      <section class="at-record">
+        <h2>The score</h2>
+        <div set:html={md(score)} />
+      </section>
+    )}
+
+    {decision && (
+      <section class="at-record">
+        <h2>The decision</h2>
+        <div set:html={md(decision)} />
+      </section>
+    )}
+
+    {trace && (
+      <section class="at-record">
+        <h2>The trace</h2>
+        <div set:html={md(trace)} />
+      </section>
+    )}
+  </Frame>
+</Page>
+
+<style>
+  .at-lead {
+    max-width: 72ch;
+    color: var(--at-ink-2);
+    margin: 0 0 2rem;
+  }
+  .at-record {
+    max-width: 82ch;
+    margin-bottom: 3rem;
+  }
+  .at-record h2 {
+    font-family: var(--at-font-display);
+    font-size: 1.3rem;
+    color: var(--at-h1-ink);
+    border-bottom: 1px solid var(--at-hairline);
+    padding-bottom: 0.35rem;
+    margin-bottom: 1.1rem;
+  }
+</style>

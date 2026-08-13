@@ -140,7 +140,7 @@ const payload = model.lines.map((l, i) => ({
   moves: l.moveList.map((m) => [dayLabel(m.date), m.title]),
   ledger: l.ledger ? { text: l.ledger.full, source: l.ledger.source } : null,
   gap: l.outcome !== 'OPEN' && !l.active && !l.ledger,
-  href: `/atelier/projects#${l.key}`,
+  href: `/atelier/lines/${l.key}`,
   pos: w.positionLine(i + 1, model.lines.length),
   /** the viewBox a tour scene re-aims the live sheet at — the band around this line. Precomputed
    *  here because the crop maths belongs to the pure builder, not to a client script. */
