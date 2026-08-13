@@ -969,6 +969,12 @@
   .eco-figures[data-cols='2'] {
     grid-template-columns: 1fr 340px;
   }
+  /* A figure that is wide by nature says so and takes the whole row. The grid places children in
+     ORDER, not by slot, so without this a third figure lands in the 340px column whatever slot it
+     was written into — which is how the Field's claim plate first drew itself 306px wide. */
+  .eco-figures[data-cols='2'] .eco-figure[data-full] {
+    grid-column: 1 / -1;
+  }
 }
 .eco-figure {
   display: flex;
