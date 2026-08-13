@@ -4,11 +4,11 @@
     "sources": [
       {
         "file": "src/data/werke.ts",
-        "sha256": "aa100cd8e484def8"
+        "sha256": "f416a9f84940c6fe"
       },
       {
         "file": "docs/audits/2026-08-09-usp-audit.md",
-        "sha256": "d9e52bfb05e6e497"
+        "sha256": "1d05a2cf96503c9f"
       },
       {
         "file": "docs/decision-log.md",
@@ -57,23 +57,23 @@
       }
     ],
     "counts": {
-      "nodes": 230,
-      "edges": 206,
+      "nodes": 236,
+      "edges": 211,
       "nodesByKind": {
         "decision": 42,
         "encounter": 6,
-        "neighbor": 77,
+        "neighbor": 82,
         "practice": 9,
         "practice-work": 70,
         "receiver": 6,
-        "work": 20
+        "work": 21
       },
       "edgesByKind": {
         "addresses": 6,
         "concerns": 2,
         "door": 5,
         "made-by": 70,
-        "neighbor-of": 77,
+        "neighbor-of": 82,
         "participates": 17,
         "touches": 29
       }
@@ -597,6 +597,16 @@
       "url": "https://airwars.org"
     },
     {
+      "id": "neighbor:alexeymakarin-github-io-assets-lmwz-global-media-bias-pdf",
+      "kind": "neighbor",
+      "label": "Makarin et al., \"The War of Ideas\"",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Makarin et al., \"The War of Ideas\"](https://alexeymakarin.github.io/assets/LMWZ_Global_Media_Bias.pdf) — academic proof that dyadic cross-country media tone is measurable and meaningful; a paper, not a living instrument."
+      },
+      "url": "https://alexeymakarin.github.io/assets/LMWZ_Global_Media_Bias.pdf"
+    },
+    {
       "id": "neighbor:alfred-st-louis-fed",
       "kind": "neighbor",
       "label": "ALFRED (St. Louis Fed)",
@@ -662,6 +672,16 @@
         "quote": "[\"Implementing Agents in JavaScript\"](https://arxiv.org/abs/2505.18228) — precedent for static, no-backend, browser-only multi-agent simulation as a deployment pattern, not built around Minsky's book."
       },
       "url": "https://arxiv.org/abs/2505.18228"
+    },
+    {
+      "id": "neighbor:blog-gdeltproject-org-gdelt-doc-2-0-api-debuts",
+      "kind": "neighbor",
+      "label": "GDELT DOC 2.0 API",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[GDELT DOC 2.0 API](https://blog.gdeltproject.org/gdelt-doc-2-0-api-debuts/) — per-country *tone* timeline in one URL (`timelinetone` + `sourcecountry:`); tone only, ~3-month rolling window, no emotions, no archive."
+      },
+      "url": "https://blog.gdeltproject.org/gdelt-doc-2-0-api-debuts/"
     },
     {
       "id": "neighbor:c4ads-org-reports-oil-and-water",
@@ -1010,6 +1030,16 @@
       }
     },
     {
+      "id": "neighbor:moodglobe-com",
+      "kind": "neighbor",
+      "label": "Global Mood (moodglobe.com)",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Global Mood (moodglobe.com)](https://moodglobe.com) — live GDELT tone world map, 15-min refresh; no discrete emotions, anonymous operator, no method, no archive."
+      },
+      "url": "https://moodglobe.com"
+    },
+    {
       "id": "neighbor:n2yo-com",
       "kind": "neighbor",
       "label": "N2YO.com",
@@ -1017,6 +1047,16 @@
         "file": "docs/audits/2026-08-09-usp-audit.md",
         "quote": "N2YO.com — long-running (since 2004), huge database, real-time tracking, general-purpose, server-side."
       }
+    },
+    {
+      "id": "neighbor:news-gallup-com-interactives-248240-global-emotions-aspx",
+      "kind": "neighbor",
+      "label": "Gallup Global Emotions",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Gallup Global Emotions](https://news.gallup.com/interactives/248240/global-emotions.aspx) — annual *survey* of how populations feel; different genus (people, not press) and the instrument's yearly ground-truth comparison."
+      },
+      "url": "https://news.gallup.com/interactives/248240/global-emotions.aspx"
     },
     {
       "id": "neighbor:nytimes-com-interactive-2024-07-08-climate-home-insurance-cl",
@@ -1307,6 +1347,16 @@
         "file": "docs/audits/2026-08-09-usp-audit.md",
         "quote": "WikiCompare — browser plugin comparing English vs. 8 other-language editions, flags missing info."
       }
+    },
+    {
+      "id": "neighbor:worldmoodtracker-com",
+      "kind": "neighbor",
+      "label": "World Mood Tracker",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[World Mood Tracker](https://worldmoodtracker.com) — daily happy/worried/angry/sad labels for 133+ countries; undisclosed model, 30-day memory, no download, nothing citable."
+      },
+      "url": "https://worldmoodtracker.com"
     },
     {
       "id": "practice:conductor",
@@ -2630,6 +2680,28 @@
       }
     },
     {
+      "id": "work:balance",
+      "kind": "work",
+      "label": "The Balance",
+      "werkId": "balance",
+      "href": "/balance",
+      "since": "2026-08-14",
+      "source": {
+        "file": "src/data/werke.ts",
+        "quote": "id: 'balance'"
+      },
+      "rank": 7,
+      "tier": "experiment",
+      "line": "From the “Counter-Measurement” line.",
+      "verdict": "UNIQUE",
+      "verdictLabel": "UNIQUE (as a living instrument).",
+      "daylight": "Ship the yearly Gallup-divergence record (press weather vs. surveyed population mood — nobody computes that gap publicly) and the translation-stream upgrade so non-anglophone self-images stop being thin; both are named in the spec, neither exists at any neighbor.",
+      "auditSource": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "UNIQUE (as a living instrument)."
+      }
+    },
+    {
       "id": "work:beifang",
       "kind": "work",
       "label": "Bycatch",
@@ -2640,7 +2712,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'beifang'"
       },
-      "rank": 11,
+      "rank": 12,
       "verdict": "ADDED VALUE",
       "verdictLabel": "ADDED VALUE (narrow).",
       "daylight": "Cite the prior academic literature (Hanson, Marino, SPARC) explicitly on the page — currently absent, which reads as unawareness — and make the recurring-cadence, paired-control, dual-vantage-point apparatus the headline claim, since that's the part with no existing match.",
@@ -2682,7 +2754,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'correction'"
       },
-      "rank": 12,
+      "rank": 13,
       "tier": "studie",
       "line": "From the “Counter-Measurement” line.",
       "verdict": "REDUNDANT",
@@ -2716,7 +2788,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'ghost-fleet'"
       },
-      "rank": 7,
+      "rank": 8,
       "tier": "studie",
       "line": "From the “Counter-Measurement” line.",
       "verdict": "REDUNDANT",
@@ -2791,7 +2863,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'pattern'"
       },
-      "rank": 13,
+      "rank": 14,
       "line": "Capstone of the “Counter-Measurement” line.",
       "verdict": "REDUNDANT",
       "verdictLabel": "REDUNDANT — the weakest claim to uniqueness in this audit.",
@@ -2873,7 +2945,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'round-number'"
       },
-      "rank": 9,
+      "rank": 10,
       "line": "From the “Counter-Measurement” line.",
       "verdict": "REDUNDANT",
       "verdictLabel": "REDUNDANT.",
@@ -2915,7 +2987,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'spielraum'"
       },
-      "rank": 8,
+      "rank": 9,
       "tier": "experiment",
       "line": "From the counter-measurement line.",
       "verdict": "ADDED VALUE",
@@ -2949,7 +3021,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'tell'"
       },
-      "rank": 10,
+      "rank": 11,
       "line": "From the “Counter-Measurement” line.",
       "verdict": "REDUNDANT",
       "verdictLabel": "REDUNDANT — the clearest case in this audit.",
@@ -2970,7 +3042,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'ueberflug'"
       },
-      "rank": 14,
+      "rank": 15,
       "tier": "studie",
       "verdict": "ADDED VALUE",
       "verdictLabel": "ADDED VALUE, genuine but narrow.",
@@ -3907,6 +3979,61 @@
       "source": {
         "file": "docs/audits/2026-08-09-usp-audit.md",
         "quote": "Proof of Existence / OriginStamp — the original hash-plus-blockchain-timestamp services (2013/2015) this whole mechanism descends from."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:balance",
+      "to": "neighbor:alexeymakarin-github-io-assets-lmwz-global-media-bias-pdf",
+      "note": "academic proof that dyadic cross-country media tone is measurable and meaningful; a paper, not a living instrument.",
+      "state": "UNIQUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Makarin et al., \"The War of Ideas\"](https://alexeymakarin.github.io/assets/LMWZ_Global_Media_Bias.pdf) — academic proof that dyadic cross-country media tone is measurable and meaningful; a paper, not a living instrument."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:balance",
+      "to": "neighbor:blog-gdeltproject-org-gdelt-doc-2-0-api-debuts",
+      "note": "per-country *tone* timeline in one URL (`timelinetone` + `sourcecountry:`); tone only, ~3-month rolling window, no emotions, no archive.",
+      "state": "UNIQUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[GDELT DOC 2.0 API](https://blog.gdeltproject.org/gdelt-doc-2-0-api-debuts/) — per-country *tone* timeline in one URL (`timelinetone` + `sourcecountry:`); tone only, ~3-month rolling window, no emotions, no archive."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:balance",
+      "to": "neighbor:moodglobe-com",
+      "note": "live GDELT tone world map, 15-min refresh; no discrete emotions, anonymous operator, no method, no archive.",
+      "state": "UNIQUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Global Mood (moodglobe.com)](https://moodglobe.com) — live GDELT tone world map, 15-min refresh; no discrete emotions, anonymous operator, no method, no archive."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:balance",
+      "to": "neighbor:news-gallup-com-interactives-248240-global-emotions-aspx",
+      "note": "annual *survey* of how populations feel; different genus (people, not press) and the instrument's yearly ground-truth comparison.",
+      "state": "UNIQUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Gallup Global Emotions](https://news.gallup.com/interactives/248240/global-emotions.aspx) — annual *survey* of how populations feel; different genus (people, not press) and the instrument's yearly ground-truth comparison."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:balance",
+      "to": "neighbor:worldmoodtracker-com",
+      "note": "daily happy/worried/angry/sad labels for 133+ countries; undisclosed model, 30-day memory, no download, nothing citable.",
+      "state": "UNIQUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[World Mood Tracker](https://worldmoodtracker.com) — daily happy/worried/angry/sad labels for 133+ countries; undisclosed model, 30-day memory, no download, nothing citable."
       }
     },
     {
