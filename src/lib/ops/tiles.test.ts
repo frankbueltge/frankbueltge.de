@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { readTiles } from './tiles'
+import { cascadeBuckets, readTiles } from './tiles'
 import { NAMING } from '@/config/naming'
 import type { ProtokollDay } from '@/lib/protokoll/types'
 
@@ -64,6 +64,46 @@ describe('the live dashboard reads the archive', () => {
     expect(tile.sub).toContain('Feststellung entfällt')
     // The dim cell is the source that did not answer, at its own position in the day.
     expect(tile.viz).toEqual({ kind: 'cells', count: 3, marked: [1] })
+  })
+})
+
+describe('the cascade is binned against a measured span, not a counted one', () => {
+  // Written after 2026-08-13, when a snapshot arrived with span_hours: 10.2 and took the whole
+  // house down with it — deploy, three integrates, the site frozen six hours on its last good
+  // build. The bin count had been `new Array(span)`, which is a RangeError for any span that is
+  // not a whole number, and the archive's spans are measurements: 4.2, 1.8, 23.5, 9.2. The line
+  // had survived two days only because 11.0 and 21.0 happened to land on whole hours.
+  const at = (h: number) => ({ at: new Date(Date.UTC(2026, 7, 13, h)).toISOString() })
+
+  it('accepts a fractional span, which is the ordinary case in the archive', () => {
+    for (const span of [10.2, 4.2, 1.8, 23.5, 9.2]) {
+      expect(() => cascadeBuckets(span, []), `span_hours ${span}`).not.toThrow()
+    }
+  })
+
+  it('gives the partly-elapsed last hour a bin of its own rather than folding it backwards', () => {
+    // 10.2 hours is eleven hours touched, not ten: the eleventh is real but barely begun.
+    expect(cascadeBuckets(10.2, []).length).toBe(11)
+    expect(cascadeBuckets(10.0, []).length).toBe(10)
+  })
+
+  it('keeps the final cascade step in its own hour, where the record put it', () => {
+    // The step at the end of the span is the one flooring would have mis-filed, every time.
+    const buckets = cascadeBuckets(2.5, [at(0), at(1), at(2)])
+    expect(buckets).toEqual([1, 1, 1])
+  })
+
+  it('survives a snapshot whose span is missing, zero, negative or unreadable', () => {
+    for (const span of [0, -5, NaN, Number.POSITIVE_INFINITY]) {
+      const buckets = cascadeBuckets(span, [])
+      expect(Number.isInteger(buckets.length), `span_hours ${span}`).toBe(true)
+      expect(buckets.length, `span_hours ${span}`).toBeGreaterThanOrEqual(1)
+      expect(buckets.length, `span_hours ${span}`).toBeLessThanOrEqual(24)
+    }
+  })
+
+  it('never draws more than a day of bins, however long the snapshot claims', () => {
+    expect(cascadeBuckets(400, []).length).toBe(24)
   })
 })
 
