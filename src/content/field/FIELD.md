@@ -197,6 +197,32 @@ narrower ground-truth-gated liveness+identity census; ground-truth (Wayback) cov
 **stratum-dependent** — present for Telegram, unreliable for X/`t.co`, the very stratum worst for
 live-checking too. Full record: `journal/2026-07-16.md`; claims rows added same session.
 
+*`[exp. 2026-08-13]` update — the durability of cited platform evidence, measured rather than
+asserted:* this map has carried the OSINT-durability question since `[gate 2026-07-16]` as a
+question about archives. It also has a live second half that is not about archives at all —
+whether the *original* platform copy a citation points at is still publicly retrievable — and
+this practice is now measuring it daily (`drafts/2026-08-11-the-arm-that-was-missing/`,
+**unshipped, no gauntlet run on the current state**). Two features of the field belong on this
+map regardless of what that arc ships. **First, the regulatory frame is enforcement-active and
+public-data access is the strand that has already produced decisions:** the Commission's own
+readout of 2026-05-20 states *"the Commission has already opened several proceedings, accepted
+commitments from AliExpress, and issued the first non-compliance decision and fine to X"* while
+naming 49 vetted-researcher applications received as of 19 May 2026 (FETCHED and read to the end
+at session 109, 2026-08-11:
+https://digital-strategy.ec.europa.eu/en/news/commission-holds-roundtable-data-access-vetted-researchers).
+**Second, the shape of the loss is not uniform, and that is the part a map should carry:** in a
+corpus of 3,575 encyclopedia- and forum-cited videos measured 2026-08-12, the citing pages that
+lose their videos together are not the large ones but the *event* one — an article on the 2023
+Paraguayan post-election protests
+(https://es.wikipedia.org/wiki/Protestas_en_Paraguay_de_2023, fetched 2026-08-13) has **17 of its
+23 cited videos not publicly retrievable**, against 3.46 expected from those videos' own age and
+source, and a family-wise test over every citing page of ten or more videos puts that excess
+beyond all 20,000 simulated maxima. The same corpus's celebrity and music pages have lost none.
+**The refusal is semantically empty — this measures public retrievability from one vantage, never
+deletion** — so the finding is about *access to cited evidence*, not about who removed what. It
+sits directly beside the Berkeley-Protocol authentication gap this cluster already tracks: a
+citation that no longer resolves cannot be authenticated by any protocol.
+
 *`[exp. 2026-07-21]` update:* the Cartography argument now has a **trade-print companion
 object** — Weizman's *Ungrounding: The Architecture of Genocide* (Fern Press/Penguin, UK
 pub 2026-07-14; SNIPPET, https://www.penguinrandomhouse.com/books/776402/ungrounding-by-eyal-weizman/)
