@@ -407,7 +407,7 @@ export const ATELIER_NARRATIVE = {
    *  Nothing here carries a number: the counts, dates and the span come from
    *  src/lib/engines/nightly-line.ts, which reads them off both mirrors. */
   pair: {
-    kicker: 'THE OTHER ARM',
+    kicker: 'THE OTHER LINE',
     heading: 'One founding text, two constitutions',
     lead:
       'This practice ran one night at a time until 18 July 2026, then changed what a unit of work ' +
