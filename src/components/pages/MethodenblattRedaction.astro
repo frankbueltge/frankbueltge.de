@@ -26,8 +26,14 @@ const txt = {
     : 'Daily. The machine selects on its own: the most substantive redaction of the day (salience × removed volume). On quiet days it notes that the archive took nothing back — silence is a statement, not a gap. Canonical artefact: versioned JSON in src/data/redaction/ — git is the archive.',
   s3: de ? '3. Verarbeitung' : '3. Processing',
   s3body: de
-    ? 'Pro URL: CDX-Captures holen (collapse=digest) → Löschung erkennen (Statuscode 200→4xx) oder Inhalts-Entfernung (Digest-Wechsel der beiden jüngsten 200-Captures) → beide Fassungen roh ziehen, Haupttext extrahieren, auf Satzebene diffen → entfernte Passagen + Token zählen. Hinzufügungen werden nicht gewertet (Schwärzen = Wegnehmen).'
-    : 'Per URL: fetch CDX captures (collapse=digest) → detect deletion (status 200→4xx) or content removal (digest change between the two newest 200-captures) → pull both versions raw, extract main text, diff at sentence level → count removed passages + tokens. Additions are not scored (redaction = taking away).',
+    ? 'Pro URL: CDX-Captures holen (collapse=digest) → Löschungs-Kandidat (Statuscode 200→4xx) oder Inhalts-Entfernung (Digest-Wechsel der beiden jüngsten 200-Captures) → Gültigkeitsgate vor jedem Diff → beide Fassungen roh ziehen, Haupttext extrahieren, auf Satzebene diffen → entfernte Passagen + Token zählen. Hinzufügungen werden nicht gewertet (Schwärzen = Wegnehmen).'
+    : 'Per URL: fetch CDX captures (collapse=digest) → deletion candidate (status 200→4xx) or content removal (digest change between the two newest 200-captures) → validity gate before any diff → pull both versions raw, extract main text, diff at sentence level → count removed passages + tokens. Additions are not scored (redaction = taking away).',
+  gateHead: de
+    ? 'Gültigkeitsgate & nachgeprüfte Löschungen (v3)'
+    : 'The validity gate & checked deletions (v3)',
+  gateBody: de
+    ? 'Eine Capture zählt nur als Seitenfassung, wenn sie (a) Status 200 trägt, (b) mindestens 40 Tokens Haupttext liefert, (c) keinen Challenge-Fingerabdruck zeigt („Verifying your browser", „Incident ID", „Attention Required", „Just a moment", „Checking your browser" — benannte, versionierte Liste, VALIDITY_VERSION) und (d) nicht überwiegend Consent-/Cookie-Text oder eine reine Navigationsliste ist. Alles andere ist `unverifiable`: gezählt, ausgewiesen, nie gediffed. Und ein 4xx auf der jüngsten Capture ist nur ein Löschungs-Kandidat: bevor „Löschung" im Record steht, wird die Live-URL geprüft — live 404/410 bestätigt, live 200 widerlegt (Archivfehler), 403/429 oder eine Challenge-Seite sind Bot-Wall, 451 wird getrennt geführt. Anlass: das Memory-Hole-Audit vom 2026-08-14 reproduzierte beide Falsch-Positiven.'
+    : 'A capture counts as a page version only if it (a) carries status 200, (b) yields at least 40 tokens of main text, (c) shows no challenge fingerprint ("Verifying your browser", "Incident ID", "Attention Required", "Just a moment", "Checking your browser" — a named, versioned list, VALIDITY_VERSION) and (d) is not predominantly consent/cookie text or a pure navigation pile. Everything else is `unverifiable`: counted, disclosed, never diffed. And a 4xx on the newest capture is only a deletion candidate: before the word "deletion" enters the record the live URL is rechecked — live 404/410 confirms, live 200 refutes it (an archive error), 403/429 or a challenge page is a bot-wall, 451 is reported apart. Occasion: the memory-hole audit of 2026-08-14 reproduced both false positives.',
   aiHead: de ? 'KI/ML — symbolisch, auditierbar' : 'AI/ML — symbolic, auditable',
   aiBody: de
     ? 'Das Lab experimentiert mit Daten UND KI; symbolische KI ist hier die Wahl, weil prüfbar. Die Salienz ist ein offengelegtes Regelwerk (versioniert): trägt der entfernte Text Zahlen, Daten, Eigennamen, Verneinungen oder Verpflichtungsverben („wird", „muss", „verpflichtet"), gilt er als substanziell; nur Markup/Whitespace ist kosmetisch (Score 0) und kann die Tagesschwärzung nie gewinnen. Kein LLM in v1. Optional/künftig: ein gegen den Diff verifizierter LLM-Klassifikator der Entfernungs-Art (Prompt offengelegt).'
@@ -40,6 +46,8 @@ const txt = {
         'Wayback-Erfassungsbias: gemessen wird gegen verfügbare Captures; was nie erfasst wurde, bleibt unsichtbar.',
         'Die Haupttext-Extraktion ist heuristisch (Version offengelegt) und kann Inhalt verfehlen oder fehl-segmentieren.',
         'Die Salienz-Regeln und -Gewichte sind eine gesetzte, offengelegte Wahl (SALIENCE_VERSION).',
+        'Das Gültigkeitsgate ist bewusst streng: eine echte, aber sehr kurze Seite fällt als `unverifiable` heraus. Lieber ein verschwiegener Fund als ein erfundener — die Zahl steht auf der Seite.',
+        'Die Live-Nachprüfung ist der einzige Nicht-Archiv-Abruf: Sie entscheidet nur über „gelöscht ja/nein" und wird nie als Beleg zitiert; belegt wird weiter mit Archiv-Permalinks.',
       ]
     : [
         'Rewriting is not cover-up — the instrument claims no intent; legitimate corrections are not distinguished from suppression.',
@@ -47,6 +55,8 @@ const txt = {
         'Wayback coverage bias: measured against available captures; what was never captured stays invisible.',
         'Main-text extraction is heuristic (version disclosed) and may miss or mis-segment content.',
         'The salience rules and weights are a set, disclosed choice (SALIENCE_VERSION).',
+        'The validity gate is deliberately strict: a genuine but very short page drops out as `unverifiable`. A withheld finding beats an invented one — and the number is on the page.',
+        'The live recheck is the only non-archive request: it decides "gone or not", is never cited as evidence, and the evidence stays the two archive permalinks.',
       ],
   s5: de ? '5. Compute-Fußabdruck' : '5. Compute footprint',
   s5body: de
@@ -54,10 +64,15 @@ const txt = {
     : 'A few lightweight HTTP fetches per watched page per day, no API key, no LLM. The site itself is static.',
   s6: de ? '6. Änderungsprotokoll' : '6. Change log',
   s6items: de
-    ? ['v1 (2026-06) — Erstfassung: CDX-Diff (Löschung + Entfernung), symbolische Salienz, zwei Archiv-Permalinks je Fund.']
+    ? [
+        'v1 (2026-06) — Erstfassung: CDX-Diff (Löschung + Entfernung), symbolische Salienz, zwei Archiv-Permalinks je Fund.',
+        'v2 (2026-08-14) — die World Chamber: GDG-Umschreibungsregister + hauseigene Stichproben-Löschrate (Kammer 2).',
+        'v3 (2026-08-15) — Gültigkeitsgate vor jedem Diff und live nachgeprüfte Löschungen; `unverifiable` als ausgewiesene Zahl (Schema v2). Anlass: die zwei im Memory-Hole-Audit reproduzierten Falsch-Positiven.',
+      ]
     : [
         'v1 (2026-06) — first edition: CDX diff (deletion + removal), symbolic salience, two archive permalinks per finding.',
         'v2 (2026-08-14) — the world chamber: GDG rewrite register + in-house sampled deletion rate (chamber 2, above).',
+        'v3 (2026-08-15) — validity gate before any diff and live-checked deletions; `unverifiable` as a disclosed number (schema v2). Occasion: the two false positives reproduced in the memory-hole audit.',
       ],
   toWork: de ? 'Zum Experiment' : 'To the experiment',
 }
@@ -135,6 +150,11 @@ const w2 = {
       <a href="https://github.com/frankbueltge/frankbueltge.de/tree/main/pipelines/redaction"
         class="font-mono text-xs text-fg-faint transition-colors hover:text-fg" rel="noopener">→ pipelines/redaction</a>
     </p>
+  </section>
+
+  <section class="mb-8 border-l-2 border-accent/60 pl-4">
+    <h2 class="mb-2 font-semibold">{txt.gateHead}</h2>
+    <p class="leading-relaxed text-fg-muted">{txt.gateBody}</p>
   </section>
 
   <section class="mb-8 border-l-2 border-line pl-4">
