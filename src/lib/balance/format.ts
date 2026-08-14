@@ -20,8 +20,8 @@ export function ciLabel(ci: [number, number], digits = 2): string {
 /** One human sentence for the day's headline gap direction. */
 export function directionSentence(name: string, direction: 'self_brighter' | 'world_brighter'): string {
   return direction === 'self_brighter'
-    ? `${name}'s own press writes brighter about ${name} than the world's press does.`
-    : `The world's press writes brighter about ${name} than its own press does.`
+    ? `${name}'s own press writes about ${name} in brighter language than the world's press does.`
+    : `The world's press writes about ${name} in brighter language than its own press does.`
 }
 
 /** GKG timestamp "20260812T221500Z"-ish window label -> "2026-08-12 22:15 UTC". Falls through untouched on surprises. */
