@@ -19,6 +19,10 @@ concurrency:
 jobs:
   refresh:
     runs-on: ubuntu-latest
+    env:
+      # secrets are not readable inside step `if:`s — the presence check has
+      # to travel via env (a workflow-file parse error otherwise)
+      HAS_GCP: ${{ secrets.GCP_SA_KEY != '' }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -34,7 +38,7 @@ jobs:
       # without the secret the auth step is skipped and the chamber degrades
       # honestly (gdg.available=false in the day's JSON), never silently.
       - name: GCP auth (world chamber, BigQuery G1)
-        if: ${{ secrets.GCP_SA_KEY != '' }}
+        if: env.HAS_GCP == 'true'
         uses: google-github-actions/auth@v2
         with:
           credentials_json: ${{ secrets.GCP_SA_KEY }}
