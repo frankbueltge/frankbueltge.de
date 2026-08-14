@@ -151,3 +151,44 @@ free tier. Partition filter `DATE(fetchdate_check)`; the table is DAY-partitione
 **Gate consequence**: the spike *passed* in the sense that matters — it replaced a stale
 claim with buildable material before anything was built. §1/§3 are to be read through
 this addendum; the pre-registered §2 prior-art search still seals before build.
+
+## Addendum 2 (2026-08-14, afternoon): §2 search SEALED
+
+The pre-registered nearest-neighbour search ran in full (Tavily web search, 2026-08-14,
+nine queries — the five pre-registered angles plus two the addendum's pivot made due:
+rewrite-register neighbours and HTTP-451 measurement). Query log and findings:
+
+1. *"news article deletion tracking"* — no instrument; fact-checker how-tos (Wayback,
+   archive.today) and news-archiving discourse only.
+2. *diffengine/NewsDiffs successors* — **News Sniffer (newssniffer.co.uk) is alive and
+   industrial**: 2.7M articles, 5.25M versions, updating by the minute. The 2026-08-13
+   pass had only declared NewsDiffs dead and diffengine dormant; this is the seal's most
+   consequential find. Shape: browsable per-article revision archive of a handful of UK
+   feeds — no rate, no classification, no global scale, no deletion measurement.
+3. *"stealth edit tracker news"* — diffengine lineage (DocNow) confirmed; no living
+   successor instrument.
+4. *"memory hole news archive project"* — preservation discourse (RJI's "Dodging the
+   Memory Hole" forums, ended ~2017; Russ Kick's Memory Hole sites, dead) — archiving
+   advocacy, not measurement.
+5. *News unpublishing academia ("right to be forgotten" journalism studies)* — Dwyer
+   (UNC), IJoC "Unpublishing the News" (2019), CJR "Into Oblivion": policy ethnography of
+   why newsrooms delete; no counting, no register.
+6. *Quantitative disappearance rates* — one-off studies: Pew "When Online Content
+   Disappears" (2024; 38 % of 2013's pages gone), Harvard LIL's NYT link-rot study
+   (2021). Measured once, not daily, never from a self-committed archive.
+7. *Post-publication headline-edit research* — **MediaSpin dataset (ICWSM 2026)**:
+   78,910 headline-edit pairs annotated for 13 bias types (LLM pipeline + expert
+   validation). Dataset + paper, not a living instrument; the chamber's triviality
+   filter should cite its taxonomy as the academic benchmark.
+8. *GDG-based instruments* — GDELT's own blog analyses only; no third-party surface.
+9. *HTTP-451 prevalence measurement* — RFC 7725 explicitly anticipates third-party
+   censorship statistics; no one runs a daily 451 census for news articles.
+
+**Sealed verdict** (mirrored in `docs/audits/2026-08-09-usp-audit.md` §8, which the
+knowledge graph serves): **ADDED VALUE.** The gesture (watch news revisions) is occupied
+by News Sniffer; the bias-in-edits analysis exists academically (MediaSpin); the
+instrument form — daily global rate + classified reframing register + receipt-backed,
+self-committed deletion sample with disclosed unverifiable classes — is unoccupied
+worldwide. Kill conditions: News Sniffer ships a global daily metric surface, or
+MediaSpin goes live as a public daily instrument. **Build condition met; the chamber may
+be built in the addendum-1 shape.**
