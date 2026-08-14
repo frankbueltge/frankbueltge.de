@@ -151,13 +151,16 @@ und es nicht kann. Blockiert nichts (`main` hat keinen Branch-Schutz). **Nicht d
 wrangler-Config „grün machen"** — Diagnose und der Ein-Klick-Fix:
 `docs/design/2026-08-03-two-deployers-one-project.md`.
 
-**Merge-Vollmacht (Frank, 2026-08-03, stehend, nur dieses Repo):** Frank hat das Mergen
-nach `main` dauerhaft delegiert — „[Wortlaut privat]
-[redigiert]". PRs werden also selbst gemergt, sobald die Checks stehen
-(der bekannt rote Workers Build zählt nicht dagegen); da ein Merge auf `main` hier
-automatisch nach Produktion deployt, schließt die Vollmacht den Deploy ein. Das setzt die
-Workspace-Regel „nie ohne ausdrückliches Go mergen" (`../CLAUDE.md`) für dieses Repo
-außer Kraft; in den anderen Projekten gilt sie weiter. **Nicht mitdelegiert ist alles,
-was das Haus verlässt:** Mails an reale Empfänger, Einreichungen, Bewerbungen. Das Post
-Office bleibt bei „nothing sends itself" — gesendet wird auf Franks Knopf, nie auf einen
-grünen Check.
+**Merge-Vollmacht (Frank, 2026-08-03; am 2026-08-14 auf die ganze Familie erweitert):** Frank
+hat das Mergen nach `main` dauerhaft delegiert — „[Wortlaut privat]
+also mach [redigiert]", und am 2026-08-14 verschärft: „ich sage doch eh immer
+[redigiert]". PRs werden also selbst gemergt,
+sobald die Checks stehen (der bekannt rote Workers Build zählt nicht dagegen); da ein Merge auf
+`main` hier automatisch nach Produktion deployt, schließt die Vollmacht den Deploy ein. Sie gilt
+seit 2026-08-14 **nicht mehr nur für dieses Repo**, sondern für `machine-attention`, `ulysses`,
+`field-research`, `studio` und `state-before-interface` gleichermaßen; Wortlaut, Ausnahmen und
+Reichweite stehen in `../CLAUDE.md`. **Nicht mitdelegiert:** (1) alles, was das Haus verlässt —
+Mails an reale Empfänger, Einreichungen, Bewerbungen; das Post Office bleibt bei „nothing sends
+itself". (2) **Engine-Site-PRs** (`engine-site-pr.yml`), weil `/apparatus` öffentlich behauptet,
+ein Mensch merge sie — die Behauptung ändern, bevor der Automatismus kommt. (3) Verfassungs- und
+Lizenzänderungen in den Praxis-Repos.
