@@ -59,6 +59,14 @@ def test_summarize_receipts_carry_committed_fields():
     assert receipt["class"] == GONE_404
 
 
+def test_451_receipts_carry_only_a_hash_never_the_title():
+    results = [_res(LEGAL_451, "https://x.test/legal", 451)]
+    s = summarize(results, sample_manifest=MANIFEST)
+    (receipt,) = s["receipts"]
+    assert "title" not in receipt
+    assert len(receipt["title_sha256"]) == 64
+
+
 def test_summarize_empty_denominator_is_honest():
     s = summarize([_res(BOTWALL, code=403)], sample_manifest=MANIFEST)
     assert s["gone_rate"] is None and s["decided"] == 0
