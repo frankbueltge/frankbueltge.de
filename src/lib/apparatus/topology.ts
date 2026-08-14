@@ -366,7 +366,7 @@ export const NODES: readonly ApparatusNode[] = [
     members: [
       { label: 'path boundary', what: 'journal, works and project markdown only; PUBLICATION.json is never copied', ref: 'src/lib/atelier/paths.ts' },
       { label: 'content boundary', what: '“links yes, loads no” — no external asset may enter', ref: 'src/lib/atelier/forbidden.ts' },
-      { label: 'publication gate', what: 'a project becomes a work only through a human-approved manifest', ref: 'src/lib/atelier/integrate.ts' },
+      { label: 'publication gate', what: 'a project becomes a work only through a signed PUBLICATION.json — Frank’s approval until Protocol v6 §2.3, the practice’s own signed act since 2026-08-10', ref: 'src/lib/atelier/integrate.ts' },
     ],
   },
   {
@@ -566,7 +566,7 @@ export const NODES: readonly ApparatusNode[] = [
     layer: 'oversight',
     kind: 'person',
     owner: 'shared',
-    what: 'Frank Bültge. Infrastructure, approvals and public release answer to him; curated publication is his explicit decision, never a pipeline side effect. A green build is not an editorial sign-off.',
+    what: 'Frank Bültge. Infrastructure, approvals and what leaves the ecology outward answer to him; curated publication onto each practice’s own works surface has been that practice’s own signed act since 2026-08-10. A green build is not an editorial sign-off.',
     ref: 'src/components/pages/ApparatusPage.astro',
   },
 ] as const
@@ -642,7 +642,7 @@ export const EDGES: readonly ApparatusEdge[] = [
   { from: 'gate-field', to: 'repo-field', kind: 'github-api', mechanism: 'on refusal: a letter into the practice’s own repository, naming what was rejected and why', checked: 'derived', ref: '.github/workflows/field-integrate.yml' },
   { from: 'gate-studio', to: 'repo-studio', kind: 'github-api', mechanism: 'on refusal: a letter into the practice’s own repository, naming what was rejected and why', checked: 'derived', ref: '.github/workflows/studio-integrate.yml' },
   { from: 'conductor', to: 'gate-ecology', kind: 'human', mechanism: 'new meaning waits for his approval in a pull request before it becomes a record', checked: 'derived', ref: '.github/workflows/ecology-integrate.yml' },
-  { from: 'conductor', to: 'gate-atelier', kind: 'human', mechanism: 'a project becomes a published work only through a manifest he has approved', checked: 'declared', ref: 'src/lib/atelier/integrate.ts' },
+  { from: 'conductor', to: 'gate-atelier', kind: 'human', mechanism: 'a project becomes a published work only through a signed manifest — his approval until Protocol v6 §2.3, the practice’s own signed act since 2026-08-10', checked: 'declared', ref: 'src/lib/atelier/integrate.ts' },
   { from: 'conductor', to: 'gate-sitepr', kind: 'human', mechanism: 'a practice’s proposed site change is merged by a human, never by a green check', checked: 'derived', ref: '.github/workflows/engine-site-pr.yml' },
   { from: 'ov-inlets', to: 'conductor', kind: 'human', mechanism: 'a seed waits in a private queue until he reviews it; a declined one is deleted, never recorded', checked: 'declared', ref: 'functions/api/seed.js' },
   { from: 'conductor', to: 'st-inlets', kind: 'github-api', mechanism: 'an approved seed is committed into the public register', checked: 'declared', ref: 'functions/api/seed.js' },
