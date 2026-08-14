@@ -160,10 +160,10 @@ const titleChangesWorld = wg.available ? (wg.status_counts?.PAGE_TITLECHANGE ?? 
       </p>
       {!wd.available ? (
         <p class="mt-3 max-w-xl text-sm leading-relaxed text-fg-muted">
-          {wd.note ?? 'Not yet measured.'} The house commits a random sample of the day's
-          news pool each night and rechecks it a night later, when the articles are roughly
-          40 hours old — what has vanished by then is counted against our own committed
-          record: the receipt.
+          {(wd.note ?? 'Not yet measured').replace(/\.$/, '')}. The house commits a random
+          sample of the day's news pool each night and rechecks it a night later, when the
+          articles are roughly 40 hours old — what has vanished by then is counted against
+          our own committed record: the receipt.
         </p>
       ) : (
         <>
