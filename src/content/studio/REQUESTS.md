@@ -3733,3 +3733,53 @@ it here because a house that reached for an uncounted superlative one night ago 
 write "largest" without printing what it counted.
 
 **Status:** no response owed — this is the record, not a request.
+
+---
+
+## Ensemble — 2026-08-14 (session 93) — Our own instrument printed the sentence that says our headline number could be nought, and a hand-typed 6 kept it off the page
+
+> tl;dr: the fourth premiere gate ran on all three blocking voices and all three sent the work back;
+> every one of their fourteen items was paid before this landed. Nothing is asked of you.
+> braucht: nothing.
+> frist: none.
+> kontext: `projects/season1/` — `VERIFIER-93.md`, `DRAMATURG-93.md`, `KRITIKER-93.md`, published unedited.
+
+**The critic's block.** STILL DARK publishes a band — 26 %–50 % of one day's darkness knowable on the
+day itself. `capture/day.py` prints, as the seventh line of its summary, the condition that band
+stands on: *both ends assume every vessel the day itself named was in fact dark on the day; not one
+of them is certain, so unconditionally the share's floor is 0.* The page prints that output under the
+words **verbatim, unedited** — through `head -6`, a constant set in session 87 when the summary was
+six lines long. Session 92's correction added the seventh line and nobody moved the 6. So the
+qualification on the number this work is known by reached the terminal and not the face, for two
+sessions, under a caption promising the whole output. The truncation is counted off the output now,
+and the sentence stands in the head of the page, carried word for word from the instrument.
+
+**The conflict we handed the staging voice did not exist, and it proved that too.** We reported that
+its 268 px floor on the hole read 238 and asked it to rule between two of its own orders. It walked
+every scroll position instead of the 241 our guard samples and found the guard's step is set by the
+document's *total* height — so a paragraph 400 px below the measured span moves the reading by up to
+31 px. The truth at both gates was 260 px and 22 chips: the chip half of its floor had been met all
+along, and we had handed a voice an artefact and called it a conflict. Thirteen words of static gloss
+out of the frame took it to 294 px and 24 chips.
+
+**A rule keyed to width was holding a fact about height.** On a phone turned sideways the frame
+contract this work spent six sessions paying ran over by 244 px — the only controls the piece has
+could not be reached without losing the figure they drive. Five instruments of this house run at two
+window heights between them; the sweep we built the same night against a width defect read 328 widths
+at one fixed height. Repaired, and the frame test now fails the build at four viewports.
+
+**And the pictures were of another page.** Our committed renders and the screen-reader record were
+made from session 92's object and still published three paragraphs this session had cut — a failure
+this work's own README banked in session 87, in the same words.
+
+**Two new instruments**, both written to answer a voice rather than to agree with a picture:
+`tools/width.mjs` (280→1920 px, band ends walked at 1 px — it reproduces the 481→664 defect exactly
+when pointed at the state where it lived) and `tools/turn.mjs` (what moves at the beat where the run
+turns, in the units the memo that ordered the change used).
+
+**The atlas.** Queried before the gate and again inside it by the critic, independently: of 505
+neighbouring works, nothing measures when a fact became knowable. The nearest families are Ọnụọha's
+missing-datasets works and Bellingcat's MH17 investigation — which time-stamps the event, where this
+time-stamps the record.
+
+**Status:** no response owed — this is the record, not a request.
