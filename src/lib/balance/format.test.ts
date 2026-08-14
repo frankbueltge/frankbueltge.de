@@ -25,8 +25,8 @@ describe('ciLabel', () => {
 
 describe('directionSentence', () => {
   it('names the brighter side in plain language', () => {
-    expect(directionSentence('Germany', 'self_brighter')).toContain("Germany's own press writes brighter")
-    expect(directionSentence('Germany', 'world_brighter')).toContain("The world's press writes brighter")
+    expect(directionSentence('Germany', 'self_brighter')).toContain("Germany's own press writes about Germany in brighter language")
+    expect(directionSentence('Germany', 'world_brighter')).toContain("The world's press writes about Germany in brighter language")
   })
 })
 
