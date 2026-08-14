@@ -29,10 +29,24 @@ export interface WorldGdgSection {
 export interface WorldReceipt {
   url: string
   domain: string
-  title: string
+  /** absent for 451 receipts — the day record carries only title_sha256 there */
+  title?: string
+  title_sha256?: string
   first_seen: string
   class: string
   http_code: number | null
+}
+
+/** Crime/court reporting markers (English stream). A vanished headline that
+ *  matches may name a private person whose report was deliberately removed —
+ *  the page then withholds the wording (personal-rights caution) while the
+ *  archive keeps counting. The rule is deliberately coarse and disclosed on
+ *  the method sheet; withholding too much is the safe failure mode. */
+const PERSONAL_MARKERS =
+  /\b(arrested|charged|accused|convicted|guilty|sentenced|jailed|on trial|court|suspect|murder|rape|assault|molest|abuse|fraud|paedophile|pedophile)\b/i
+
+export function withholdOnPage(title: string): boolean {
+  return PERSONAL_MARKERS.test(title)
 }
 
 export interface WorldDeletionSection {

@@ -19,6 +19,7 @@ deletion) counts as ok — the rate is a floor, and the method sheet says so.
 """
 from __future__ import annotations
 
+import hashlib
 import math
 import time
 from datetime import datetime, timezone
@@ -77,6 +78,19 @@ def wilson(k: int, n: int, z: float = 1.96) -> tuple[float, float]:
     return (max(0.0, center - half), min(1.0, center + half))
 
 
+def _receipt(r: dict) -> dict:
+    """One receipt row for the day record. 451 means a legal block — the day
+    record must not re-publish what the law removed, so it carries the title
+    only as a hash (the committed sample manifest, written before the block
+    existed, stays the untouched receipt; case-by-case erasure on a justified
+    request is the archive's answer, the count never changes)."""
+    base = {k: r[k] for k in ("url", "domain", "first_seen", "class", "http_code")}
+    if r["class"] == LEGAL_451:
+        digest = hashlib.sha256(r["title"].encode("utf-8")).hexdigest()
+        return {**base, "title_sha256": digest}
+    return {**base, "title": r["title"]}
+
+
 def recheck(items: list[dict], *, client: httpx.Client, pause: float = PAUSE) -> list[dict]:
     out = []
     for item in items:
@@ -99,11 +113,7 @@ def summarize(results: list[dict], *, sample_manifest: dict) -> dict:
     legal_lo, legal_hi = wilson(counts[LEGAL_451], decided)
 
     receipts = sorted(
-        (
-            {k: r[k] for k in ("url", "domain", "title", "first_seen", "class", "http_code")}
-            for r in results
-            if r["class"] in (GONE_404, GONE_410, LEGAL_451)
-        ),
+        (_receipt(r) for r in results if r["class"] in (GONE_404, GONE_410, LEGAL_451)),
         key=lambda r: (r["class"], r["url"]),
     )
     return {
@@ -125,6 +135,9 @@ def summarize(results: list[dict], *, sample_manifest: dict) -> dict:
         "notes": [
             "451 from a German vantage point may mean EU geo-blocking rather than "
             "takedown; it is reported apart and never folded into the gone rate.",
+            "451 receipts carry the title only as a SHA-256 — the day record does "
+            "not re-publish what the law removed; the pre-committed sample manifest "
+            "remains the receipt.",
             "403/429 bot-walls and network failures are unverifiable and excluded "
             "from the denominator, disclosed as counts.",
             "A 200 that shows different content (soft deletion) counts as ok — "
