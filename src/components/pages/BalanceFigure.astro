@@ -1,0 +1,72 @@
+---
+/** The Balance — the dumbbell figure: today's widest significant gaps between a country's
+ *  self-image and its foreign image, on one shared tone axis. Geometry from
+ *  src/lib/balance/figure.ts (unit-tested); colours from the validated 'balance-poles' set
+ *  (src/lib/dataviz/palette.ts — verdict is data, recomputed by palette.test.ts).
+ *  Interaction: native <title> per row + hover/focus sharpening; the full table below the
+ *  figure is the always-on fallback view. */
+import '../../styles/balance-figure.css'
+import type { BalanceCountry } from '@/lib/balance/types'
+import { buildFigure } from '@/lib/balance/figure'
+import { signed } from '@/lib/balance/format'
+
+interface Props {
+  countries: BalanceCountry[]
+  window: string
+}
+const { countries, window: windowText } = Astro.props
+const m = buildFigure(countries)
+---
+
+{m.rows.length > 0 && (
+  <figure class="mb-4">
+    <div class="mb-2 flex flex-wrap items-center gap-x-5 gap-y-1 font-mono text-[11px] text-fg-muted">
+      <span class="inline-flex items-center gap-1.5">
+        <span class="balf-legend-self inline-block h-2.5 w-2.5 rounded-full"></span>
+        its own press
+      </span>
+      <span class="inline-flex items-center gap-1.5">
+        <span class="balf-legend-world inline-block h-2.5 w-2.5 rounded-full"></span>
+        the world’s press
+      </span>
+      <span class="text-fg-faint">tone −100…+100 → brighter to the right</span>
+    </div>
+
+    <div class="overflow-x-auto">
+      <svg
+        viewBox={`0 0 ${m.width} ${m.height}`}
+        width="100%"
+        role="img"
+        aria-label={`Dumbbell chart: the ${m.rows.length} widest significant gaps between self-image and foreign image today, by average tone.`}
+      >
+        {m.ticks.map((t) => (
+          <>
+            <line class="balf-grid" x1={t.x} y1={m.padTop - 8} x2={t.x} y2={m.height - 18} />
+            <text class="balf-tick" x={t.x} y={m.height - 6} text-anchor="middle">{t.label}</text>
+          </>
+        ))}
+        <line class="balf-zero" x1={m.xZero} y1={m.padTop - 8} x2={m.xZero} y2={m.height - 18} />
+
+        {m.rows.map((r) => (
+          <g class="balf-row" tabindex="0">
+            <title>
+              {`${r.name}: its own press ${signed(r.self)}, the world's press ${signed(r.foreign)} — gap ${signed(r.gap)} (from ${r.nSelf.toLocaleString('en-US')} / ${r.nForeign.toLocaleString('en-US')} articles)`}
+            </title>
+            <text class="balf-name" x={m.labelWidth - 10} y={r.y + 4} text-anchor="end">{r.name}</text>
+            <line class="balf-connector" x1={r.xSelf} y1={r.y} x2={r.xForeign} y2={r.y} />
+            <circle class="balf-dot balf-dot-self" cx={r.xSelf} cy={r.y} r="5" />
+            <circle class="balf-dot balf-dot-world" cx={r.xForeign} cy={r.y} r="5" />
+            <text class="balf-value" x={r.xLabel} y={r.y + 3.5}>{signed(r.gap)}</text>
+          </g>
+        ))}
+      </svg>
+    </div>
+
+    <figcaption class="mt-2 font-mono text-[11px] text-fg-faint">
+      The {m.rows.length} widest significant gaps today, sorted by gap size; the number at each
+      row is self minus world. Source: GDELT GKG 2.1 raw files, window {windowText}; method and
+      thresholds at <a href="/werke/balance" class="underline decoration-line underline-offset-2 hover:text-fg">/werke/balance</a>.
+      Full ledger in the table below.
+    </figcaption>
+  </figure>
+)}
