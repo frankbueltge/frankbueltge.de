@@ -54,9 +54,13 @@ describe('WERKE_HOLDINGS (/experiments register)', () => {
       expect(WERKE_HOLDINGS.map((w) => w.id)).not.toContain(id)
     }
   })
-  it('renders the curated strength ranking, The Consensus first and Iceberg Theory second (Frank, 2026-08-05)', () => {
-    expect(WERKE_HOLDINGS[0].id).toBe('consensus')
-    expect(WERKE_HOLDINGS[1].id).toBe('parallaxe')
+  it('renders newest first — the curated 2026-08-05 ranking is dissolved (Frank, 2026-08-14)', () => {
+    // "[Wortlaut privat]
+    // [redigiert]" — recency order, derived from WERKE_CHRONO, no manual list to go stale.
+    expect(WERKE_HOLDINGS.map((w) => w.id)).toEqual(
+      WERKE_CHRONO.filter((w) => !HOLDINGS_EXCLUDED_IDS.has(w.id)).map((w) => w.id),
+    )
+    expect(WERKE_HOLDINGS[0].id).toBe('balance') // newest werk on top today
     expect(WERKE_HOLDINGS.map((w) => w.id)).toEqual([...HOLDINGS_RANKED])
   })
   it('keeps every non-excluded entry — ranked and register agree on the set', () => {
