@@ -18,6 +18,12 @@ const pending = d.watched_count === 0 // no nightly run yet
 const pick: Redaction | null = d.pick ? d.redactions.find((r) => r.id === d.pick) ?? null : null
 const rest = d.redactions.filter((r) => r.id !== d.pick)
 const methodUrl = getRelativeLocaleUrl(locale, '/werke/redaction')
+// Schema v2 (2026-08-15): what the validity gate and the live recheck could not
+// verify is a published number, never a silence. Days before v2 do not carry it.
+const unverifiable = d.unverifiable?.count ?? 0
+const unverifiableReasons = Object.entries(d.unverifiable?.reasons ?? {})
+  .map(([reason, n]) => `${reason.replace(/_/g, ' ')} ${n}`)
+  .join(' · ')
 const wg = w.gdg
 const wd = w.deletion
 const titleChangesWorld = wg.available ? (wg.status_counts?.PAGE_TITLECHANGE ?? 0) : 0
@@ -104,6 +110,15 @@ const titleChangesWorld = wg.available ? (wg.status_counts?.PAGE_TITLECHANGE ?? 
     </section>
   )}
   </>
+  )}
+
+  {unverifiable > 0 && (
+    <p class="mb-12 max-w-xl text-xs leading-relaxed text-fg-faint">
+      {unverifiable} of the watched pages could not be verified tonight and were never
+      diffed — a bot-wall or WAF challenge page archived as a page, text that is only a
+      consent banner, or an archived 4xx the live page contradicts. Counted here, kept out
+      of the finding: {unverifiableReasons}.
+    </p>
   )}
 
   <section class="mb-12 border-t border-line pt-8">
