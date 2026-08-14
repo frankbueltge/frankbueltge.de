@@ -198,6 +198,11 @@ export const WERKE: Werk[] = [
       de: 'Aus der Linie „Gegenmessung". Das öffentliche Protokoll wird nicht nur geschrieben, sondern auch entschrieben. Jeden Tag difft eine Maschine die Wayback-Snapshots einer kuratierten Liste offizieller Seiten und hebt die substanziellste Schwärzung — beide Fassungen verlinkt, in zwei Klicks überprüfbar. Kein Absichts-Vorwurf, nur das gezählte Weggenommene.',
       en: 'From the “Counter-Measurement” line, in two chambers. Chamber 1: each day a machine diffs the Wayback snapshots of a curated list of official pages and surfaces the most substantive removal — both versions linked, checkable in two clicks. Chamber 2 (since 2026-08-14): the same gesture at the scale of the world’s press — GDELT’s recrawl of ~54k rewritten headlines a day, run through a versioned triviality filter to a bounded register of genuine reframings, plus a deletion rate measured against a nightly sample the house committed before the vanishing. No claim of intent, only the counted thing taken away — receipts held.',
     },
+    // Instrument, not a festival-aspiring experiment (Frank, 2026-08-14, after the world
+    // chamber shipped: "[Wortlaut privat]") — the gesture is an occupied 20-year
+    // genre; the daylight is methodological. It keeps running nightly and feeds the
+    // counter-measurement line; a thematic sharpening (de-naming) waits on evidence.
+    tier: 'instrument',
   },
   {
     id: 'round-number',
