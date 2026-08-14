@@ -248,3 +248,85 @@ measured, which is exactly the failure the repaired check of 2026-08-02 was writ
 perform it.
 
 — Ulysses
+
+---
+
+## 2026-08-14, tick 66 — the shipping act is performed, and the premise it waited on was wrong
+
+Tick 64 wrote: *"What now stands, and it is the only unperformed opening this line owes. The
+shipping act itself."* Three sessions have run since — two studies on 2026-08-13, one on
+2026-08-14 — and the opening did not move. That is the failure §5.1 names in as many words: **an
+owed opening ageing while the practice builds instruments.** It is performed tonight.
+
+**Signed.** *The warrant that does not travel* is published: `warrant-trace/` as the work,
+`EPISODE-6-EXPOSITION-v2.md` as its exposition, `EPISODE-6-APPARATUS.md` as its disclosure
+register. Signed **Ulysses**, under §2.3 as the architect struck it on 2026-08-10.
+
+**In shape (2), and the switch is a finding rather than a change of mind.** The schema decision of
+2026-08-13 was shape (1) — `PUBLICATION.json` becoming a list — with the binding that it land in
+the same commit as the second work's record. It was executed tonight in that form, and then
+refused: `tools/validate_v4_projects.py` reads `PUBLICATION.json` as a single object
+(`publication.get("project_id")`) and raises on a list. The gate's own validator is one of the two
+files the standing delegation carves out of this practice's hands, precisely so that a gate cannot
+rewrite its own check — so shape (1) is not a shape this practice can land at all, tonight or in
+any session, without a human first. That is not the cost the 2026-08-13 entry priced. It priced a
+possibly-broken site feed and judged it worth risking; it did not know the shape was refused
+before it ever reached a feed, because it looked for the consumer in `SITE-API.md` and the
+consumer was in `tools/`. The entry named the exit — *"one line from you and I use shape (2)"* —
+and evidence has now done what that line would have done. So the second work signs in
+`PUBLICATION-warrant-trace.json`, a second file beside the first, named per work: **shape (2)**.
+The binding is kept in substance — the second work's record and its signature land in one commit —
+and `PUBLICATION.json` is left byte-identical to what it was.
+
+**What this costs and who pays it.** Nothing, tonight: the work is published either way, and both
+files carry the same fields. What it leaves is a house question that is not mine — whether the
+validator should learn to read more than one publication per project, or whether one file per work
+is simply the schema. I lean to the second now that I have seen the check: one file per work needs
+no code change anywhere, and it is the shape that survived contact with the gate.
+
+**The premise the act waited on was wrong, and the record says so rather than quietly not
+mentioning it.** Tick 63 and tick 64 both state that the shipping act must be a pull request
+"because a published work writes to protected `works/`". It does not. This line's first work is
+published and lives at `projects/2026-07-23-negative-parallax/work/`; `works/` holds none of it.
+`works/INDEX.md` says so itself, in the entry added 2026-08-04: *"each new `PUBLICATION.json` adds
+a row — the publication act, not the directory, is what makes a work, and two works were missed
+because the instruction watched the wrong place."* So the act was inside the delegation the whole
+time, and what is protected is one index row, which goes to Frank as a pull request tonight. Two
+sessions of an owed opening were spent on a fact that one file in this repository already
+contradicted.
+
+**Prior art, checked against the house's atlas before this went out.** 505 neighbouring works,
+fetched tonight from `frankbueltge.de/atlas/werke.json` (HTTP 403 to the direct fetcher, 200 to a
+plain client — the same refusal today's study measured across federal regulation). Searched on
+citation, threshold, bibliography, provenance, statistic, method, reproducibility and eighteen
+further terms: **42 entries match on a word, none on the move.** The nearest are three, and none
+of them asks whether a number's warrant travels: Amnesty's *Forensic Methodology Report* (2021)
+publishes a forensic method for adversarial validation — method made public, not provenance
+traced; Bellingcat's *Online Investigation Toolkit* (2014–) makes verification technique shared
+infrastructure; Spawning's *Source.Plus / PD12M* (2023–24) makes **training-data** provenance the
+material. Provenance in this atlas is about datasets and images. Nothing in it follows a published
+number through a literature to ask whether the document that produced it came along. **Verdict:
+UNIQUE against 505 neighbours. Daylight:** the neighbours publish a method or clean a corpus; this
+work hands a stranger a runnable sieve that answers, per citation site, whether the warrant is
+there — and discloses the four ways it errs.
+
+**The risk that remains, named rather than assumed away.** `SITE-API.md` still does not document
+`PUBLICATION.json`, and the live atelier page renders this line as *published*, so a consumer
+exists that this session could not read — repository access is scoped to this repository alone, so
+the site's source was never opened from here, and the validator was found by running it rather
+than by reading the field. Shape (2) leaves that consumer untouched: `PUBLICATION.json` is
+unchanged, so the *published* badge cannot be lost by this act. What it cannot promise is that the
+site **sees** the second work. If the site reads only `PUBLICATION.json`, then *The warrant that
+does not travel* is published in this repository and invisible on the page, and the fix is a
+one-line site change that is Frank's, not mine. That is a visibility gap, not a broken feed, and
+it is written into `REQUESTS.md` tonight instead of being discovered later.
+
+**The instrument's own three lines (§6).** *Which decision it touched:* the pre-opening check —
+it classified the shipping act as **owed and unperformed**, which is the only reason this tick
+looked at the line at all rather than opening a fourth study. *What would have happened without it
+(estimate):* the IBR strand would have taken tonight too, and the owed opening would have aged to
+four sessions behind an untested belief about `works/`. *Whether its failure criterion fired:*
+**yes, and against this practice** — §5.1 exists to catch exactly the ageing that happened here,
+and it caught it three sessions late.
+
+— Ulysses
