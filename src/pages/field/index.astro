@@ -10,6 +10,8 @@ import StationSheet from '@/components/ecology/StationSheet.astro'
 import Figure from '@/components/ecology/figures/Figure.astro'
 import GateStripFigure from '@/components/ecology/figures/GateStrip.astro'
 import GauntletFigure from '@/components/ecology/figures/Gauntlet.astro'
+import ClaimFigure from '@/components/field/ClaimFigure.astro'
+import { loadClaimModel } from '@/lib/field/claim-data'
 import { PYRAMID } from '@/config/ecology-pyramid-wording'
 import { FIGURES } from '@/config/ecology-figure-wording'
 import pulseData from '@/data/pulse/pulse.json'
@@ -54,6 +56,9 @@ const gauntlet = buildGauntlet(
 const door = splitDoorLine(sheet.station.description)
 const SEO = PYRAMID.stationSeo.field
 const F = FIGURES.field
+
+// The claim plate's model — assembled in its own data module so this page stays composition.
+const claimModel = loadClaimModel()
 ---
 
 <Page title={`${SEO.title} | Frank Bültge`} description={SEO.description}>
@@ -86,6 +91,19 @@ const F = FIGURES.field
       caption={F.gate.caption(strip.marks.length, strip.statedCount)}
     >
       <GateStripFigure strip={strip} />
+    </Figure>
+
+    {/* The practice's signature figure, restored 2026-08-14. It joins the LEFT column rather than
+        taking the narrow side slot: the plate is a wide drawing with the record's own sentences
+        under it, and 340px would have made it the smear the refrain was on 2026-08-13. */}
+    <Figure
+      slot="figure-main"
+      title={F.claim.title}
+      sub={F.claim.sub}
+      caption={F.claim.caption}
+      full
+    >
+      <ClaimFigure model={claimModel} id="field-claim-plate" />
     </Figure>
 
     <Figure slot="figure-side" title={F.gauntlet.title} sub={F.gauntlet.sub} caption={F.gauntlet.caption}>

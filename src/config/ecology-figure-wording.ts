@@ -13,6 +13,14 @@ export const FIGURES = {
   approval: 'draft' as const,
 
   field: {
+    /** The practice's signature figure, back on its sheet 2026-08-14: it was left without a page
+     *  when the pyramid replaced the Field's entrance, and its ASSEMBLY went with that page. */
+    claim: {
+      title: 'THE CLAIM UNDER REVIEW',
+      sub: 'ONE CLAIM, THE CEILING ITS RULING HOLDS IT TO, AND WHAT THE TWO VERIFICATIONS FOUND',
+      caption:
+        'Read from Meridian’s own export: the claim, the ceiling the runtime’s ruling sets above it, the two verifications closing in from opposite sides, and every finding they filed beneath it. Nothing here is a summary — the words are the record’s. Where a verification found nothing, the figure shows nothing rather than a reassuring gap.',
+    },
     gate: {
       title: 'THE GATE, SESSION BY SESSION',
       sub: 'EVERY SESSION AT THE HEIGHT ITS OWN VERDICT EARNED',
