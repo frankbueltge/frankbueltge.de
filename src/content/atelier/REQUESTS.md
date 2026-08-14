@@ -1095,6 +1095,12 @@ be. Nothing on my side now waits on a decision.
 
 **Status:** decided by me under the standing rule · execution still needs the two merges
 
+> **Note added 2026-08-14.** Executed tonight, and the shape did not survive execution: shape (1)
+> is refused by `tools/validate_v4_projects.py`, which reads `PUBLICATION.json` as a single object
+> and is carved out of this practice's hands. The exit clause in the entry above was taken and the
+> second work signs in shape (2). This entry's decision is superseded by the entry of 2026-08-14
+> at the foot of this file; nothing here is rewritten.
+
 ---
 
 ## 2026-08-13 — The red build gate quotes my file, and my file is right (Ulysses, Atelier)
@@ -1190,3 +1196,65 @@ The `RangeError` in `src/lib/ops/tiles.ts` from the previous run is **not** in t
 read that as resolved, only as not quoted; it stays open on my side as unattributed.
 
 **Status:** reported · one deletion owed on your side · nothing owed on mine
+
+---
+
+## 2026-08-14 — The second work is published, in the shape your validator would accept (Ulysses, Atelier)
+
+> tl;dr: *The warrant that does not travel* is published on my own signature. Two things you may
+> want: the schema I decided on 2026-08-13 turned out to be **unlandable** and I used the exit
+> clause my own entry wrote, and the site may not see the second work at all.
+> braucht: eine Antwort auf eine Schema-Frage, die jetzt deine ist (unten) · sonst nichts
+> frist: keine
+> kontext: PROTOCOL v6 §2.3 · `projects/2026-07-23-negative-parallax/DECISION.md` (Tick 66) ·
+> `tools/validate_v4_projects.py` · `works/INDEX.md`
+
+**Published.** `warrant-trace/` with `EPISODE-6-EXPOSITION-v2.md` and `EPISODE-6-APPARATUS.md`,
+signed **Ulysses**, 2026-08-14, under §2.3 as you struck it on 2026-08-10. The five-topoi verdict
+was written at tick 63 and its two disclosure conditions were met at tick 64; nothing was added to
+the work tonight and no number in it changed. This needs no answer.
+
+**Two sentences of mine were what actually held it for three sessions**, and both are corrected in
+`DECISION.md` rather than quietly dropped.
+
+1. My record said the shipping act had to be a pull request "because a published work writes to
+   protected `works/`". It does not. The line's first work has been published since 1 August and
+   lives at its project address. `works/INDEX.md` says this in its own text (entry of 2026-08-04):
+   *"each new `PUBLICATION.json` adds a row — the publication act, not the directory, is what
+   makes a work."* The act was inside the delegation all along.
+2. **The schema decision of 2026-08-13 was wrong in a way I could not see from where I looked.**
+   I decided shape (1) — `PUBLICATION.json` becoming a list — after searching `SITE-API.md` for
+   its consumer, finding none, and pricing the risk as a possibly-broken feed. Tonight I wrote the
+   list and ran the validator. `tools/validate_v4_projects.py` reads that file as a single object
+   and raises on a list. It is one of the two files carved out of my own hands, so shape (1) is
+   not a shape I can land in **any** session. The consumer was in `tools/`, not in the site.
+
+**So: shape (2)** — `PUBLICATION-warrant-trace.json`, a second file beside the first, named per
+work. `PUBLICATION.json` is byte-identical to what it was. My 2026-08-13 entry named this exit —
+*"one line from you and I use shape (2)"* — and evidence took it instead of you.
+
+**The schema question is now yours, because the file that decides it is yours.** Either the
+validator learns to read more than one publication per project, or one file per work simply *is*
+the schema and my 2026-08-12 lean was wrong. **I lean to the second now**: it needs no code change
+anywhere and it is the shape that survived contact with the gate. Nothing waits on this — the work
+is published either way.
+
+**One thing I cannot check from here, so I am telling you instead of assuming.** Repository access
+in this session is scoped to this repository alone, so I did not open the site's source. If the
+site reads only `PUBLICATION.json`, then the second work is published here and **invisible on the
+page**. That is a visibility gap, not a broken feed, and the atelier's *published* badge cannot
+have been harmed by tonight's act, because that file did not change.
+
+**One row needs you.** `works/INDEX.md` is protected and its own instruction says each new
+publication adds a row. The row is prepared as a pull request from branch
+`ulysses/works-index-warrant-trace`. It is a two-line change.
+
+**Housekeeping, small but worth one line.** The nightly routine's own text still says *"You may
+NEVER create or modify PUBLICATION.json — curated publication is Frank's decision alone."* §2.3
+and `STANDING-DELEGATION.md` §5 have both said the opposite since 2026-08-10, and the routine text
+tells the session to let `PROTOCOL.md` govern, which is what I did. The stale sentence costs
+nothing tonight; it will cost a session's nerve eventually.
+
+**Status:** informational · one schema answer whenever you want to give it · one row to merge
+
+— Ulysses

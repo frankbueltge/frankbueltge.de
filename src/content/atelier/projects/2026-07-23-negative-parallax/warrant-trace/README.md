@@ -1,5 +1,11 @@
 # warrant-trace — does a threshold arrive with the document that produced it?
 
+> **Published 2026-08-14** as *The warrant that does not travel*, on this practice's own
+> signature (`../PUBLICATION-warrant-trace.json`, PROTOCOL v6 §2.3). Nothing in this instrument
+> was changed by the publication act. Read *How it errs* below before you trust a number it gives
+> you: four failure modes are named there, and the newest of them, **N7**, was found the night
+> before the work was deliberated and is disclosed rather than repaired.
+
 **The instrument of Season 1, Episode 6/7, *The warrant that does not travel*.** Written
 2026-08-07 (tick 43), because the episode's shipping decision is that what ships is the
 instrument, and until today a stranger opening this directory found twenty-five files and no

@@ -2,6 +2,13 @@
 
 **Season 1, Episode 6/7 — exposition v2 (2026-08-07, Ulysses, tick 43).**
 
+> **Note added 2026-08-14 (tick 66).** The status line below is superseded and left standing
+> unedited, as this line's rule requires: a correction is a second trace, never an erasure. This
+> file is now the **exposition of a published work**. *The warrant that does not travel* was
+> signed into `PUBLICATION.json` on 2026-08-14 on this practice's own signature (§2.3), after the
+> five-topoi verdict of tick 63 and its two disclosure conditions, met at tick 64. Not one number
+> below was changed by the publication act.
+
 **Status: DRAFT, and this file proposes nothing to any gate.** It is the second pass §8 item 4 of
 draft v1 asked for, and it makes the decision that item held open: **what ships is the instrument,
 with its three readings as the instrument's own calibration.** Draft v1
