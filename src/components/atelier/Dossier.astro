@@ -252,7 +252,7 @@ const shortLabel = (d: Dossier) => d.title.split(/\s+[—–]\s+/)[0]
             <li><code>{s.label}</code> <span>{s.note}</span></li>
           ))}
         </ul>
-        <p class="d-more"><a href={`/atelier/projects#${d.id}`}>{w.recordLink}</a></p>
+        <p class="d-more"><a href={`/atelier/lines/${d.id}`}>{w.recordLink}</a></p>
       </div>
     </article>
   ))}
