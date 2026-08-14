@@ -184,6 +184,13 @@ rewrite-register neighbours and HTTP-451 measurement). Query log and findings:
 9. *HTTP-451 prevalence measurement* — RFC 7725 explicitly anticipates third-party
    censorship statistics; no one runs a daily 451 census for news articles.
 
+**Build-time GCP trace** (schema/dialect verification during the build, same rules as
+nightly): job `world_build_langcheck_20260814` (~26 MB — `page_lang` literal is `en`,
+13,790 en title changes on 2026-08-13); first production-shaped runs
+`world_gdg_counts_20260813` / `world_gdg_titles_20260813` (+ `_rN`/`_tN` reruns, later
+ones cache hits at 0 bytes billed) — all on the house project, all within free tier.
+The nightly step commits its own trace into every day's JSON.
+
 **Sealed verdict** (mirrored in `docs/audits/2026-08-09-usp-audit.md` §8, which the
 knowledge graph serves): **ADDED VALUE.** The gesture (watch news revisions) is occupied
 by News Sniffer; the bias-in-edits analysis exists academically (MediaSpin); the

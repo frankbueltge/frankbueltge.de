@@ -188,7 +188,7 @@ export const WERKE: Werk[] = [
     title: 'Editorial Deadline',
     subtitle: {
       de: 'Was aus dem offiziellen öffentlichen Eintrag still wieder entfernt wird',
-      en: 'What is quietly removed from the official public record',
+      en: 'What is quietly removed — from the official record, and from the record of the world’s press',
     },
     status: 'live',
     since: '2026-06-25',
@@ -196,7 +196,7 @@ export const WERKE: Werk[] = [
     href: '/redaction',
     description: {
       de: 'Aus der Linie „Gegenmessung". Das öffentliche Protokoll wird nicht nur geschrieben, sondern auch entschrieben. Jeden Tag difft eine Maschine die Wayback-Snapshots einer kuratierten Liste offizieller Seiten und hebt die substanziellste Schwärzung — beide Fassungen verlinkt, in zwei Klicks überprüfbar. Kein Absichts-Vorwurf, nur das gezählte Weggenommene.',
-      en: 'From the “Counter-Measurement” line. The public record is not only written but un-written. Each day a machine diffs the Wayback snapshots of a curated list of official pages and surfaces the most substantive removal — both versions linked, checkable in two clicks. No claim of intent, only the counted thing taken away.',
+      en: 'From the “Counter-Measurement” line, in two chambers. Chamber 1: each day a machine diffs the Wayback snapshots of a curated list of official pages and surfaces the most substantive removal — both versions linked, checkable in two clicks. Chamber 2 (since 2026-08-14): the same gesture at the scale of the world’s press — GDELT’s recrawl of ~54k rewritten headlines a day, run through a versioned triviality filter to a bounded register of genuine reframings, plus a deletion rate measured against a nightly sample the house committed before the vanishing. No claim of intent, only the counted thing taken away — receipts held.',
     },
   },
   {

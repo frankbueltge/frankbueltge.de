@@ -30,6 +30,16 @@ jobs:
         run: pip install --no-cache-dir "./pipelines/redaction[extract]"
       - name: Redaction laufen (schreibt, committet nicht)
         run: python -m redaction.run --repo-root .
+      # Chamber 2 — the world's press. BigQuery via the house project (G1 path);
+      # without the secret the auth step is skipped and the chamber degrades
+      # honestly (gdg.available=false in the day's JSON), never silently.
+      - name: GCP auth (world chamber, BigQuery G1)
+        if: ${{ secrets.GCP_SA_KEY != '' }}
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+      - name: World chamber (writes, does not commit)
+        run: python -m redaction.world.run_world --repo-root .
       - name: Committen
         run: |
           git config user.name "Gegenmessung"
