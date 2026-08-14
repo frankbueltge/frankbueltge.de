@@ -70,26 +70,35 @@ def _is_ok(status: str) -> bool:
     return status == "200"
 
 
-def _is_dead(status: str) -> bool:
-    # Only an outright 4xx (gone/forbidden/not-found) counts as a deletion.
+def _is_candidate(status: str) -> bool:
+    # A 4xx on the newest capture makes the page a deletion CANDIDATE — never a
+    # deletion on its own: it describes the crawler's night, not the page (a 403
+    # is a bot-wall, a 404 can be a mis-crawl). live.recheck decides.
     # 3xx (redirect / reorganisation) and 5xx (transient) are deliberately NOT
-    # treated as deletions — a moved page is not a redaction.
+    # candidates — a moved page is not a redaction.
     return status.startswith("4")
 
 
-def classify(caps: list[Capture]) -> tuple[str, Capture | None, Capture | None]:
-    """('deletion', last_ok, dead) | ('removal', prev_ok, last_ok) | ('none', None, None).
+DELETION_CANDIDATE = "deletion_candidate"
+REMOVAL = "removal"
+NONE = "none"
 
-    Deletion = the page is now gone (4xx) after having been OK. Removal = the two
-    most recent OK captures differ in content digest. Redirects and server errors
-    yield no finding.
+
+def classify(caps: list[Capture]) -> tuple[str, Capture | None, Capture | None]:
+    """('deletion_candidate', last_ok, dead) | ('removal', prev_ok, last_ok)
+    | ('none', None, None).
+
+    Deletion candidate = the newest capture is 4xx after the page had been OK;
+    the claim "gone" is only made after a live recheck (live.py). Removal = the
+    two most recent OK captures differ in content digest. Redirects and server
+    errors yield no finding.
     """
     if len(caps) < 2:
-        return ("none", None, None)
+        return (NONE, None, None)
     ok = [c for c in caps if _is_ok(c.status)]
     newest = caps[-1]
-    if _is_dead(newest.status) and ok:
-        return ("deletion", ok[-1], newest)
+    if _is_candidate(newest.status) and ok:
+        return (DELETION_CANDIDATE, ok[-1], newest)
     if len(ok) >= 2 and ok[-1].digest != ok[-2].digest:
-        return ("removal", ok[-2], ok[-1])
-    return ("none", None, None)
+        return (REMOVAL, ok[-2], ok[-1])
+    return (NONE, None, None)

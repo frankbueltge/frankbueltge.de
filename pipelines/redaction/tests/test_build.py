@@ -47,8 +47,40 @@ def test_rank_none_when_all_zero():
     assert rank([_red("a", 0, 100)]) is None
 
 
+def test_make_redaction_refuses_an_unchecked_deletion_candidate():
+    # Only live.recheck may turn a candidate into a deletion — build.py is the
+    # last gate: "deletion_candidate" can never reach the record.
+    r = make_redaction(
+        ITEM, "deletion_candidate",
+        Capture("20260601", "200", "A"), Capture("20260610", "403", "-"),
+        Removal(passages=[], tokens=4562),
+        Salience(50, ["number"]), ITEM.url,
+    )
+    assert r is None
+
+
 def test_day_record_shape():
     rec = day_record("2026-06-25", "2026-06-25T05:30:00Z", [], watched_count=30)
     assert rec["date"] == "2026-06-25" and rec["pick"] is None
     assert rec["watched_count"] == 30 and rec["changed_count"] == 0
     assert rec["salience_version"] and rec["schema_version"] and rec["pipeline_version"]
+    assert rec["validity_version"]
+    assert rec["unverifiable"] == {"count": 0, "reasons": {}, "items": []}
+
+
+def test_day_record_discloses_unverifiable_counts_by_reason():
+    notes = [
+        {"url": "https://b.test/2", "side": "after", "reason": "challenge", "detail": "x"},
+        {"url": "https://a.test/1", "side": "live", "reason": "archive_error", "detail": "y"},
+        {"url": "https://c.test/3", "side": "after", "reason": "challenge", "detail": "z"},
+    ]
+    rec = day_record(
+        "2026-06-25", "2026-06-25T05:30:00Z", [], watched_count=30, unverifiable=notes
+    )
+    u = rec["unverifiable"]
+    assert u["count"] == 3
+    assert u["reasons"] == {"archive_error": 1, "challenge": 2}
+    # deterministic order — a committed record must stay reproducible
+    assert [i["url"] for i in u["items"]] == [
+        "https://a.test/1", "https://b.test/2", "https://c.test/3"
+    ]

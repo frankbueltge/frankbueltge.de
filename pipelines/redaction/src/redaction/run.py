@@ -10,9 +10,9 @@ from pathlib import Path
 
 import httpx
 
-from redaction import extract, prose, salience, textdiff
+from redaction import extract, live, prose, salience, textdiff, validity
 from redaction.build import day_record, make_redaction, to_json
-from redaction.cdx import captures, classify, snapshot_url
+from redaction.cdx import DELETION_CANDIDATE, NONE, Capture, captures, classify, snapshot_url
 from redaction.watchlist import WATCHLIST, WatchItem
 
 USER_AGENT = "frankbueltge.de redaction-pipeline (hello@frankbueltge.de)"
@@ -37,35 +37,70 @@ def _recent(after_ts: str, today: date, recent_days: int) -> bool:
     return 0 <= (today - d).days <= recent_days
 
 
+def _note(item: WatchItem, cap: Capture | None, side: str, reason: str, detail: str) -> dict:
+    """One disclosure row: what could not be verified, where, and why."""
+    return {
+        "url": item.url,
+        "institution": item.institution,
+        "label": item.label,
+        "side": side,
+        "reason": reason,
+        "detail": detail,
+        "wayback_ts": cap.timestamp if cap else None,
+    }
+
+
+def _page(cap: Capture, item: WatchItem, *, client: httpx.Client) -> tuple[str, validity.Validity]:
+    """Fetch one archived capture and put it through the validity gate.
+    Returns (extracted text, verdict) — the text is used only if the verdict is ok."""
+    html = _fetch_text(snapshot_url(cap.timestamp, item.url), client=client)
+    text = extract.main_text(html)
+    return text, validity.check(cap.status, html, text)
+
+
 def _one(item: WatchItem, *, client: httpx.Client, today: date,
-         recent_days: int = RECENT_DAYS) -> dict | None:
+         recent_days: int = RECENT_DAYS,
+         live_pause: float = live.PAUSE) -> tuple[dict | None, dict | None]:
+    """(finding, disclosure) — at most one of the two is not None."""
     caps = captures(item.url, client=client)
     kind, before_cap, after_cap = classify(caps)
-    if kind == "none" or before_cap is None or after_cap is None:
-        return None
+    if kind == NONE or before_cap is None or after_cap is None:
+        return (None, None)
     # Daily instrument: ignore changes whose newest capture is not recent.
     if not _recent(after_cap.timestamp, today, recent_days):
-        return None
+        return (None, None)
 
-    if kind == "deletion":
-        before_text = extract.main_text(_fetch_text(snapshot_url(before_cap.timestamp, item.url),
-                                                     client=client))
+    if kind == DELETION_CANDIDATE:
+        # "gone" is a checked statement: the archive's 4xx is only a question.
+        v = live.recheck(item.url, client=client, pause=live_pause)
+        if v.cls != live.DELETION_CONFIRMED:
+            return (None, _note(item, after_cap, "live", v.cls, v.detail))
+        # The page is really gone — but the version it lost still has to be a page.
+        before_text, before_ok = _page(before_cap, item, client=client)
+        if not before_ok.ok:
+            return (None, _note(item, before_cap, "before", before_ok.reason, before_ok.detail))
         removal = textdiff.Removal(passages=[], tokens=len(before_text.split()))
         sal = salience.score(before_text)
-        return make_redaction(item, kind, before_cap, after_cap, removal, sal, item.url)
+        return (
+            make_redaction(item, "deletion", before_cap, after_cap, removal, sal, item.url),
+            None,
+        )
 
-    # removal
-    before_text = extract.main_text(_fetch_text(snapshot_url(before_cap.timestamp, item.url),
-                                                client=client))
-    after_text = extract.main_text(_fetch_text(snapshot_url(after_cap.timestamp, item.url),
-                                               client=client))
+    # removal — both versions must clear the gate before anything is diffed
+    before_text, before_ok = _page(before_cap, item, client=client)
+    if not before_ok.ok:
+        return (None, _note(item, before_cap, "before", before_ok.reason, before_ok.detail))
+    after_text, after_ok = _page(after_cap, item, client=client)
+    if not after_ok.ok:
+        return (None, _note(item, after_cap, "after", after_ok.reason, after_ok.detail))
+
     rem = textdiff.removed(before_text, after_text)
     passages = prose.keep_prose(rem.passages)  # drop nav/menu/link-list noise
     if not passages:
-        return None
+        return (None, None)
     rem = textdiff.Removal(passages=passages, tokens=sum(len(p.split()) for p in passages))
     sal = salience.score(" ".join(passages))
-    return make_redaction(item, kind, before_cap, after_cap, rem, sal, item.url)
+    return (make_redaction(item, "removal", before_cap, after_cap, rem, sal, item.url), None)
 
 
 def run(
@@ -75,18 +110,28 @@ def run(
     today: date,
     watchlist: list[WatchItem] = WATCHLIST,
     pause: float = 0.0,
+    live_pause: float = live.PAUSE,
 ) -> dict:
     redactions: list[dict] = []
+    unverifiable: list[dict] = []
     for item in watchlist:
         try:
-            r = _one(item, client=client, today=today)
+            r, note = _one(item, client=client, today=today, live_pause=live_pause)
             if r is not None:
                 redactions.append(r)
+            if note is not None:
+                unverifiable.append(note)
         except Exception:  # noqa: BLE001 — deliberate fault isolation
             continue
         if pause:
             time.sleep(pause)
-    return day_record(today.isoformat(), _now_iso(), redactions, watched_count=len(watchlist))
+    return day_record(
+        today.isoformat(),
+        _now_iso(),
+        redactions,
+        watched_count=len(watchlist),
+        unverifiable=unverifiable,
+    )
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -109,7 +154,8 @@ def main(argv: list[str] | None = None) -> int:
     (out_dir / "latest.json").write_text(payload, encoding="utf-8")
     print(
         f"redaction: {rec['changed_count']} change(s) of {rec['watched_count']} watched "
-        f"→ pick={rec['pick']}"
+        f"→ pick={rec['pick']} · unverifiable={rec['unverifiable']['count']} "
+        f"{rec['unverifiable']['reasons']}"
     )
     return 0
 
