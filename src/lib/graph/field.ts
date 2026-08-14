@@ -22,7 +22,8 @@ export const CENTRE = CANVAS / 2
 export const RAIL = 250
 /** first character of a work's label */
 export const LABEL_RADIUS = RAIL + 16
-/** distance between two neighbours on the same spoke */
+/** distance between two neighbours on the same spoke — the default; a deep
+ *  stack compresses evenly so it can never breach the centre clearing */
 export const NEIGHBOR_SPACING = 14
 /** nothing may come nearer the middle than this — the centre carries the figure's own count */
 export const CENTRE_CLEAR = 62
@@ -102,8 +103,17 @@ export function layoutField(entries: FieldEntry[]): FieldLayout {
     const gap = DAYLIGHT[verdict]
     const at = polar(RAIL, angle)
 
+    // A stack of n neighbours has RAIL − gap − CENTRE_CLEAR of radial run to
+    // live in. The default spacing holds until it would breach the clearing;
+    // then the whole stack compresses evenly — the daylight (the verdict's
+    // promise) is never what gives way.
+    const run = RAIL - gap - CENTRE_CLEAR
+    const spacing =
+      entry.neighbors.length > 1
+        ? Math.min(NEIGHBOR_SPACING, run / (entry.neighbors.length - 1))
+        : NEIGHBOR_SPACING
     const neighbors = entry.neighbors.map((neighbor, k) => {
-      const r = RAIL - gap - k * NEIGHBOR_SPACING
+      const r = RAIL - gap - k * spacing
       return { ...neighbor, r, ...polar(r, angle) }
     })
 

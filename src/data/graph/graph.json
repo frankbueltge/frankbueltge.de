@@ -4,7 +4,7 @@
     "sources": [
       {
         "file": "src/data/werke.ts",
-        "sha256": "68cc1f468fbce90c"
+        "sha256": "e0a3c0630a52011b"
       },
       {
         "file": "docs/audits/2026-08-09-usp-audit.md",
@@ -12,7 +12,7 @@
       },
       {
         "file": "docs/decision-log.md",
-        "sha256": "7f0be87c9843a384"
+        "sha256": "639441cbfc344333"
       },
       {
         "file": "src/data/post/ledger.json",
@@ -57,10 +57,10 @@
       }
     ],
     "counts": {
-      "nodes": 244,
-      "edges": 218,
+      "nodes": 245,
+      "edges": 219,
       "nodesByKind": {
-        "decision": 43,
+        "decision": 44,
         "encounter": 6,
         "neighbor": 88,
         "practice": 9,
@@ -75,7 +75,7 @@
         "made-by": 71,
         "neighbor-of": 88,
         "participates": 17,
-        "touches": 29
+        "touches": 30
       }
     }
   },
@@ -502,6 +502,16 @@
     },
     {
       "id": "decision:2026-08-14-1",
+      "kind": "decision",
+      "label": "Editorial Deadline bekommt die Weltkammer — §2 zuerst versiegelt, dann gebaut",
+      "date": "2026-08-14",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "Editorial Deadline bekommt die Weltkammer — §2 zuerst versiegelt, dann gebaut"
+      }
+    },
+    {
+      "id": "decision:2026-08-14-2",
       "kind": "decision",
       "label": "/experiments zeigt Neueste zuerst — das kuratierte Ranking vom 2026-08-05 ist aufgelöst",
       "date": "2026-08-14",
@@ -3010,7 +3020,7 @@
         "quote": "id: 'redaction'"
       },
       "rank": 6,
-      "line": "From the “Counter-Measurement” line.",
+      "line": "From the “Counter-Measurement” line, in two chambers.",
       "verdict": "ADDED VALUE",
       "verdictLabel": "ADDED VALUE (re-sealed 2026-08-14 with the world chamber; chamber 1 alone remains REDUNDANT).",
       "daylight": "Build the world chamber as sealed: a daily register of genuine headline reframings (GDG `PAGE_TITLECHANGE`, versioned triviality filter with the trivial / running-update / reframing classes, MediaSpin-aware) plus an in-house sampled deletion rate with confidence interval and disclosed unverifiable classes (403 bot-walls), receipts from the committed newspool — the daylight is the union: metric + register + receipts daily, at global scale, from a self-committed archive; every neighbour holds at most one of the three.",
@@ -5307,6 +5317,15 @@
       "source": {
         "file": "docs/decision-log.md",
         "quote": "/studio"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-08-14-1",
+      "to": "work:redaction",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "pipelines/redaction/src/redaction/world/"
       }
     }
   ]

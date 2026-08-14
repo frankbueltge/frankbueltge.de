@@ -167,7 +167,7 @@ export const ui = {
     'pt.title': 'Patterns',
     'pt.sub': 'A machine that finds a correlation every day — and cannot tell if it means anything.',
     'rd.title': 'Editorial Deadline',
-    'rd.sub': 'What is quietly removed from the official public record — struck through, checkable in two clicks.',
+    'rd.sub': 'What is quietly removed — from the official record, and from the record of the world’s press. Struck through, receipt in hand.',
     'rd.empty': 'The first measurement follows with the next nightly run.',
     'rn.title': 'Round Numbers',
     'rn.sub': 'A test that claims to spot faked numbers — and how often it is wrong.',

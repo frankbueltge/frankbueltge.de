@@ -3,17 +3,24 @@ import { getRelativeLocaleUrl } from 'astro:i18n'
 import { t } from '@/i18n/ui'
 import type { Locale } from '@/lib/site'
 import type { RedactionData, Redaction } from '@/lib/redaction/types'
+import type { WorldData } from '@/lib/redaction/world'
+import { pct, thousands } from '@/lib/redaction/world'
 import { tokensLabel, signalLabel, dateLabel } from '@/lib/redaction/format'
 import data from '@/data/redaction/latest.json'
+import worldData from '@/data/redaction/world/latest.json'
 
 interface Props { locale: Locale }
 const { locale } = Astro.props
 const de = locale === 'de'
 const d = data as unknown as RedactionData
+const w = worldData as unknown as WorldData
 const pending = d.watched_count === 0 // no nightly run yet
 const pick: Redaction | null = d.pick ? d.redactions.find((r) => r.id === d.pick) ?? null : null
 const rest = d.redactions.filter((r) => r.id !== d.pick)
 const methodUrl = getRelativeLocaleUrl(locale, '/werke/redaction')
+const wg = w.gdg
+const wd = w.deletion
+const titleChangesWorld = wg.available ? (wg.status_counts?.PAGE_TITLECHANGE ?? 0) : 0
 ---
 
 <article class="redaction mx-auto max-w-3xl px-4 py-14">
@@ -22,6 +29,10 @@ const methodUrl = getRelativeLocaleUrl(locale, '/werke/redaction')
     <p class="mt-2 max-w-xl text-fg-muted">{t(locale, 'rd.sub')}</p>
     <p class="mt-1 font-mono text-xs text-fg-faint">{dateLabel(d.date, locale)}</p>
   </header>
+
+  <p class="mb-6 font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+    {de ? 'Kammer 1 — der amtliche Eintrag' : 'Chamber 1 — the official record'}
+  </p>
 
   {pending ? (
     <p class="mb-12 text-fg-muted">{t(locale, 'rd.empty')}</p>
@@ -95,6 +106,101 @@ const methodUrl = getRelativeLocaleUrl(locale, '/werke/redaction')
   </>
   )}
 
+  <section class="mb-12 border-t border-line pt-8">
+    <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+      Chamber 2 — the world's press
+    </p>
+
+    {!wg.available ? (
+      <p class="mt-4 max-w-xl leading-relaxed text-fg-muted">
+        The world chamber's nightly reading is not available for {wg.day} — {wg.note ?? 'source outage'}.
+        An outage is noted, never bridged.
+      </p>
+    ) : (
+      <>
+        <div class="mt-4 flex items-baseline gap-4">
+          <p class="text-[clamp(36px,7vw,64px)] font-bold tabular-nums">{thousands(titleChangesWorld)}</p>
+          <p class="max-w-sm text-sm leading-snug text-fg-muted">
+            headlines the world's press rewrote on {wg.day}, counted by GDELT's recrawl —
+            of {thousands(wg.title_changes_en)} in the English-monitored stream,
+            the versioned filter (v{w.filter_version.replace('v', '')}) calls{' '}
+            {thousands(wg.classes?.reframing)} genuine reframings.
+          </p>
+        </div>
+        <p class="mt-2 font-mono text-xs text-fg-faint">
+          trivial {thousands(wg.classes?.trivial)} · running updates {thousands(wg.classes?.update)} ·
+          reframings {thousands(wg.classes?.reframing)} · replaced {thousands(wg.classes?.replaced)}
+        </p>
+
+        {(wg.register?.length ?? 0) > 0 && (
+          <div class="mt-6">
+            <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+              The day's reframings — selected by rule, not by hand
+            </p>
+            <ul class="mt-3 space-y-4">
+              {wg.register!.map((e) => (
+                <li class="border-l-2 border-accent/60 pl-4">
+                  <p class="leading-snug text-fg-muted line-through decoration-accent/70">{e.before}</p>
+                  <p class="mt-1 leading-snug">{e.after}</p>
+                  <p class="mt-1 font-mono text-xs text-fg-faint">
+                    {e.domain} · noticed in GDELT's {e.window === '1w' ? 'one-week' : '24-hour'} recrawl ·{' '}
+                    <a class="underline transition-colors hover:text-fg" href={e.url} target="_blank" rel="noopener nofollow">page ↗</a>
+                  </p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </>
+    )}
+
+    <div class="mt-8">
+      <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+        Deletion, measured at home
+      </p>
+      {!wd.available ? (
+        <p class="mt-3 max-w-xl text-sm leading-relaxed text-fg-muted">
+          {wd.note ?? 'Not yet measured.'} The house commits a random sample of the day's
+          news pool each night and rechecks it a night later, when the articles are roughly
+          40 hours old — what has vanished by then is counted against our own committed
+          record: the receipt.
+        </p>
+      ) : (
+        <>
+          <div class="mt-3 flex items-baseline gap-4">
+            <p class="text-[clamp(28px,5vw,44px)] font-bold tabular-nums">{pct(wd.gone_rate)}</p>
+            <p class="max-w-sm text-sm leading-snug text-fg-muted">
+              of {wd.decided} decidable articles from the {wd.pool_day} pool were gone
+              (404/410) ~40 hours later
+              {wd.gone_ci95 && ` — 95 % CI ${pct(wd.gone_ci95[0])}–${pct(wd.gone_ci95[1])}`}.
+              Legal blocks (HTTP 451): {wd.legal_451} — counted apart, never folded in:
+              from a German vantage point 451 can mean EU geo-blocking rather than takedown.
+              Unverifiable (bot-walls, network): {wd.excluded_unverifiable}, excluded and disclosed.
+            </p>
+          </div>
+          {(wd.receipts?.length ?? 0) > 0 && (
+            <ul class="mt-4 space-y-2">
+              {wd.receipts!.filter((r) => r.class.startsWith('gone')).slice(0, 3).map((r) => (
+                <li class="text-sm">
+                  <span class="text-fg-muted line-through decoration-accent/70">{r.title}</span>
+                  <span class="ml-2 font-mono text-xs text-fg-faint">
+                    {r.domain} · committed {wd.sample_drawn_at?.slice(0, 10)}, gone by {wd.checked_at?.slice(0, 10)}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          )}
+        </>
+      )}
+    </div>
+
+    <p class="mt-6 max-w-xl text-xs leading-relaxed text-fg-faint">
+      Deletion is not censorship: articles vanish for banal reasons — CMS migrations,
+      paywalling, licence clocks on agency copy. The chamber counts disappearance and holds
+      receipts; it does not assert motive. Data: <a class="underline transition-colors hover:text-fg" href="https://www.gdeltproject.org/" target="_blank" rel="noopener">The GDELT Project</a>.
+    </p>
+  </section>
+
   <section class="mb-8 border-t border-line pt-6">
     <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
       {de ? 'Nächste Nachbarn' : 'Nearest neighbors'}
@@ -112,11 +218,29 @@ const methodUrl = getRelativeLocaleUrl(locale, '/werke/redaction')
         <a href="https://changedetection.io" target="_blank" rel="noopener nofollow" class="underline decoration-line underline-offset-2 hover:text-fg">changedetection.io</a>
         {de ? ' — quelloffenes Werkzeug für geplante Erfassung, Diff und Benachrichtigung, ausdrücklich für Regierungsseiten vermarktet.' : ' — free/open-source scheduled-capture, diff and notification tool, explicitly marketed for monitoring government pages.'}
       </li>
+      <li>
+        <a href="https://www.newssniffer.co.uk" target="_blank" rel="noopener nofollow" class="underline decoration-line underline-offset-2 hover:text-fg">News Sniffer</a>
+        {' — the world chamber’s strongest living neighbour: 2.7M articles, 5.25M captured versions, minute-fresh — a browsable per-article revision archive of a handful of UK feeds; no daily rate, no classification, no global scale, no deletion measurement.'}
+      </li>
+      <li>
+        <a href="https://ojs.aaai.org/index.php/ICWSM/article/view/42794" target="_blank" rel="noopener nofollow" class="underline decoration-line underline-offset-2 hover:text-fg">MediaSpin (ICWSM 2026)</a>
+        {' — 78,910 post-publication headline-edit pairs annotated for 13 bias types; the academic proof that headline edits carry signal — a dataset and paper, not a living instrument.'}
+      </li>
+      <li>
+        <a href="https://blog.gdeltproject.org/looking-back-on-four-months-of-the-global-difference-graph" target="_blank" rel="noopener nofollow" class="underline decoration-line underline-offset-2 hover:text-fg">GDELT Global Difference Graph</a>
+        {' — publishes the recrawl data this chamber reads (~54k title rewrites/day) and one-off blog analyses; no living public surface, no filter, no archive of record.'}
+      </li>
     </ul>
     <p class="mt-3 max-w-xl text-sm leading-relaxed text-fg-muted">
-      {de
-        ? 'EDGI und Sunlight decken dasselbe Feld erprobter, mit menschlicher Prüfung und einer durchsuchbaren Datenbank — beide seit fast einem Jahrzehnt, beide auf US-föderale/umweltbezogene Seiten fokussiert. Diese Seite ist erklärt anders: vollautomatisch, ohne menschliche Kuration, ein tägliches Einzelbild statt einer Datenbank — Epistemik, nicht bloß kleinere Ausführung.'
-        : "EDGI and Sunlight cover the same ground more battle-tested, with human review and a searchable database — both nearly a decade old, both US-federal/environment-focused. This page's stated difference: fully automated, no human curation, a daily single pick instead of a database — a different epistemics, not just a smaller version."}
+      EDGI and Sunlight cover chamber 1's ground more battle-tested — human review, a
+      searchable database, both US-federal-focused; this page's stated difference there is
+      epistemics: fully automated, no curation, a daily single pick. For chamber 2 the
+      gesture "watch news revisions" is occupied (News Sniffer) and the bias-in-edits
+      analysis exists academically (MediaSpin) — what no neighbour holds is the union this
+      page runs daily: a global rate, a classified reframing register, and a deletion
+      sample with receipts from an archive the house itself committed before the
+      vanishing. Kill conditions are named in the audit: either neighbour shipping that
+      union collapses the daylight.
     </p>
   </section>
 
