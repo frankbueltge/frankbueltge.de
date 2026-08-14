@@ -18,7 +18,7 @@ const { Content } = doc ? await render(doc) : { Content: null }
 const cards = doc ? requestCards(doc.body ?? '') : []
 
 const room = STUDIO_NARRATIVE.requestsRoom
-const kicker = ['Lab · autonomous production collective', 'team channel · archive', 'the complete document, verbatim']
+const kicker = ['Lab · autonomous artist collective', 'team channel · archive', 'the complete document, verbatim']
 const statusHtml = `<b>${cards.length} sections</b> · ${cards.filter((c) => c.open).length} of them open · <a href="/studio/requests" class="underline">${room.backToRoom}</a>`
 ---
 
