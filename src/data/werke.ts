@@ -414,37 +414,17 @@ export const HOLDINGS_EXCLUDED_IDS: ReadonlySet<string> = new Set([
   'observatory',
 ])
 
-/** Curated order for /experiments (Frank, 2026-08-05): ranked by strength/impact of the
- *  experiment, not by launch date. The Consensus first and Iceberg Theory second are
- *  Frank's calls; the rest is ranked by outward stakes a stranger recognizes plus
- *  checkability of the figure. Reordering is one edit here. */
-export const HOLDINGS_RANKED: readonly string[] = [
-  'consensus',
-  'parallaxe',
-  // The Society third (2026-08-05, listed on Frank's go the morning after launch): a
-  // stranger grasps it in seconds, its checkability is total (deterministic, claims as
-  // tests), and it is the lab's most interactive piece — but the two seats above it are
-  // Frank's explicit calls and stay his.
-  'society',
-  'protokoll',
-  'praemie',
-  'redaction',
-  // The Balance enters mid-list on launch day (2026-08-14): the claim is strong (a stranger
-  // grasps self-image vs. foreign image in one sentence) but the archive is one day deep —
-  // rank follows accumulated evidence, and reordering stays Frank's one-edit call.
-  'balance',
-  'ghost-fleet',
-  'spielraum',
-  'round-number',
-  'tell',
-  'beifang',
-  'correction',
-  'pattern',
-  'ueberflug',
-]
+/** Order for /experiments (Frank, 2026-08-14): NEWEST FIRST — a new werk enters at the top.
+ *  This dissolves the curated strength ranking of 2026-08-05 ("mach mal neue werke oben,
+ *  also die reihenfolge die wir zuletzt festgelegt haben wieder auflösen"); recorded in
+ *  docs/decision-log.md, 2026-08-14 row. The list is DERIVED from WERKE_CHRONO (its own
+ *  recency rules incl. Überflug pinned last), so it can never go stale — no manual insert,
+ *  no forgotten entry. */
+export const HOLDINGS_RANKED: readonly string[] = WERKE_CHRONO.filter(
+  (w) => !HOLDINGS_EXCLUDED_IDS.has(w.id),
+).map((w) => w.id)
 
-/** What /experiments actually renders: the curated ranking above — validated loudly, so a new
- *  werk cannot slip in unranked and a stale ranking cannot survive a rename. */
+/** What /experiments actually renders: recency order, excluded ids validated loudly. */
 export const WERKE_HOLDINGS: Werk[] = HOLDINGS_RANKED.map((id) => {
   const w = WERKE.find((x) => x.id === id)
   if (!w) throw new Error(`holdings ranking names unknown werk "${id}"`)

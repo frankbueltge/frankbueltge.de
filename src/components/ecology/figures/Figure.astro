@@ -17,14 +17,19 @@ interface Props {
   link?: { label: string; href: string }
   /** the key under the drawing: what a mark means, and where the marks came from */
   caption: string
+  /** span both columns on a two-column sheet. Added 2026-08-14 for the Field's claim plate: the
+   *  grid places its children in order, not by slot, so a third figure silently landed in the
+   *  340px side column and drew itself 306px wide — the same smear the refrain was rescued from
+   *  the day before. A wide drawing has to be able to say it is wide. */
+  full?: boolean
 }
 
-const { title, sub, link, caption } = Astro.props
+const { title, sub, link, caption, full = false } = Astro.props
 const locale = (Astro.currentLocale ?? 'en') as Locale
 const url = (href: string) => (href.startsWith('http') ? href : getRelativeLocaleUrl(locale, href))
 ---
 
-<figure class="eco-panel eco-figure">
+<figure class="eco-panel eco-figure" data-full={full ? 'yes' : undefined}>
   <div class="eco-panel-strip">
     <span><b class="eco-figure-title">{title}</b> · {sub}</span>
     {link && <a href={url(link.href)}>{link.label}</a>}

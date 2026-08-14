@@ -13,6 +13,14 @@ export const FIGURES = {
   approval: 'draft' as const,
 
   field: {
+    /** The practice's signature figure, back on its sheet 2026-08-14: it was left without a page
+     *  when the pyramid replaced the Field's entrance, and its ASSEMBLY went with that page. */
+    claim: {
+      title: 'THE CLAIM UNDER REVIEW',
+      sub: 'ONE CLAIM, THE CEILING ITS RULING HOLDS IT TO, AND WHAT THE TWO VERIFICATIONS FOUND',
+      caption:
+        'Read from Meridian’s own export: the claim, the ceiling the runtime’s ruling sets above it, the two verifications closing in from opposite sides, and every finding they filed beneath it. Nothing here is a summary — the words are the record’s. Where a verification found nothing, the figure shows nothing rather than a reassuring gap.',
+    },
     gate: {
       title: 'THE GATE, SESSION BY SESSION',
       sub: 'EVERY SESSION AT THE HEIGHT ITS OWN VERDICT EARNED',
@@ -61,11 +69,19 @@ export const FIGURES = {
     refrain: {
       title: 'THE REFRAIN',
       sub: 'THE RUNNING WORK-LINE’S OWN TIME, IN THREE VOICES',
-      caption: (columns: number) =>
+      /** The last date carries the same weight as the count. A figure that stops on the 12th looks
+       *  identical whether the practice was quiet or the mirror broke, and a reader has no way to
+       *  tell — so the reading says which it is (Frank, 2026-08-14: „the refrain hört am 12.08.
+       *  auf"). It was neither stale nor broken: the line had not moved. */
+      caption: (columns: number, lastMove: string | null) =>
         `ONE COLUMN PER MOVE · ALL THREE VOICES SOUND AT EVERY COLUMN, THE DOMINANT ONE IS MARKED<br>` +
         `${columns} moves, read from that line’s own TRACE.md — live half and the half §8 rotated into archive/trace/, ` +
         `composed in record order. The one reading this figure forbids is a sequence of phases: territory, home and ` +
-        `opening coexist at every move, which is the practice’s own postulate 4 and why no voice is ever a gap.`,
+        `opening coexist at every move, which is the practice’s own postulate 4 and why no voice is ever a gap.` +
+        (lastMove
+          ? `<br>The line’s last move is dated ${lastMove} — the drawing ends where the record does, ` +
+            `not where the mirror stopped. Every move, in full: <a href="{RECORD}">the line’s record →</a>`
+          : ''),
     },
   },
 

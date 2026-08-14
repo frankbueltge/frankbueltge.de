@@ -83,6 +83,8 @@ const dims = Object.entries(d.method.dimensions)
     <h2 class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">Known limits, disclosed</h2>
     <ul class="mt-3 list-disc space-y-1.5 pl-5 text-sm text-fg-muted">
       <li>Document-level scores: co-mentioned countries share one article tone (why pools have floors and CIs).</li>
+      <li>Tone is a bag-of-words property of the language, not a stance measure: an angry defence of a country scores as dark as an attack on it. The instrument therefore never claims approval or hostility — only register.</li>
+      <li>The sourcesbycountry lookup is GDELT’s attribution and demonstrably loose (checked 2026-08-14: Iran’s 73 domains include diaspora platforms, opposition sites, bahai.org and a US think-tank project alongside state media). Self pools inherit that noise; pool sizes are always published, and a curated lookup layer is a named v2 candidate.</li>
       <li>English-monitored stream: non-anglophone self-images are thin; the asymmetry is visible in the pool sizes, which are always published. Translation stream = named v2.</li>
       <li>Bag-of-words dictionaries, machine-translated for ~65 languages upstream: construct validity is bounded — this instrument therefore claims portrayal, never feeling.</li>
       <li>Secular negativity drift in news language (Rozado et&nbsp;al. 2022, PLOS ONE): absolute levels drift; anomaly scores wait for the rolling baseline this archive is accumulating.</li>
