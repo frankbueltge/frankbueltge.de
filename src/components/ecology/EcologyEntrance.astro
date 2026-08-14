@@ -271,14 +271,16 @@ const weeksOnRecord = Math.max(1, Math.ceil(weekOffset(timeline.origin, now.toIS
         stage inside this light page on purpose: it was validated against that surface, and a
         figure that recolours itself when it moves house is the bug this house spent 2026-08-13
         fixing on the refrain. */}
+    {score && (
     <section class="eco-section" id="score">
       <div class="eco-head">
         <p class="eco-kicker"><b>{W.score.kicker}</b> · {W.score.kickerSub}</p>
         {scoreLast && <span class="eco-aside">{W.score.asOf(scoreLast)}</span>}
       </div>
-      <Partitur model={score} />
+      {score && <Partitur model={score} />}
       <p class="eco-stats">{W.score.caption}</p>
     </section>
+    )}
 
     {/* ── 3 · how it works ────────────────────────────────────────────────────────────────── */}
     <section class="eco-section" id="how">

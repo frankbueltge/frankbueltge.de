@@ -35,7 +35,7 @@ const plenumJournalsRaw = import.meta.glob('/src/content/plenum/journal/*.md', {
  * this stage would say the ecology has four practices, which is exactly the confusion the canon
  * settles. Its works reach the Atelier's own surfaces through the register.
  */
-export function loadEcologyScore(): ScoreModel {
+export function loadEcologyScore(): ScoreModel | null {
   return buildScore([
     ...journalEvents(atelierJournalsRaw, 'atelier'),
     ...scoreOpenings(scoresRaw),
@@ -47,6 +47,6 @@ export function loadEcologyScore(): ScoreModel {
 
 /** The score's own as-of: the last day of the axis, which the builder sets from the last landing
  *  it found. Never today's date and never the build's — a quiet week has to read as quiet. */
-export function scoreLastLanded(model: ScoreModel): string | null {
-  return model.end || null
+export function scoreLastLanded(model: ScoreModel | null): string | null {
+  return model?.end || null
 }
