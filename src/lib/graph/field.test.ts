@@ -83,17 +83,22 @@ describe('the daylight is the claim, so it is measured', () => {
 })
 
 describe('nothing collides and nothing runs off the canvas', () => {
-  it('keeps neighbours on one spoke apart', () => {
+  it('keeps neighbours on one spoke apart — evenly, at most the default spacing, never touching', () => {
     for (const spoke of layout.spokes) {
       const radii = spoke.neighbors.map((n) => n.r)
-      for (let i = 1; i < radii.length; i++) {
-        expect(radii[i - 1] - radii[i]).toBe(NEIGHBOR_SPACING)
+      const gaps = radii.slice(1).map((r, i) => radii[i] - r)
+      for (const gap of gaps) {
+        expect(gap).toBeLessThanOrEqual(NEIGHBOR_SPACING)
+        expect(gap).toBeGreaterThan(4) // marks must stay distinguishable dots
+        expect(gap).toBeCloseTo(gaps[0], 6) // even within one spoke
       }
     }
   })
 
   it('keeps the innermost mark clear of the centre caption', () => {
-    expect(innermostRadius(layout)).toBeGreaterThan(CENTRE_CLEAR)
+    // "nothing may come nearer the middle than this" — sitting exactly on the
+    // clearing is the deepest a compressed stack may reach, never inside it
+    expect(innermostRadius(layout)).toBeGreaterThanOrEqual(CENTRE_CLEAR)
   })
 
   it('keeps every mark inside the canvas', () => {

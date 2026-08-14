@@ -4,15 +4,15 @@
     "sources": [
       {
         "file": "src/data/werke.ts",
-        "sha256": "fc636d582be7a30d"
+        "sha256": "9b5442a56c481c89"
       },
       {
         "file": "docs/audits/2026-08-09-usp-audit.md",
-        "sha256": "1d05a2cf96503c9f"
+        "sha256": "fbf67150d6b46d87"
       },
       {
         "file": "docs/decision-log.md",
-        "sha256": "7f0be87c9843a384"
+        "sha256": "639441cbfc344333"
       },
       {
         "file": "src/data/post/ledger.json",
@@ -57,12 +57,12 @@
       }
     ],
     "counts": {
-      "nodes": 238,
-      "edges": 212,
+      "nodes": 245,
+      "edges": 219,
       "nodesByKind": {
-        "decision": 43,
+        "decision": 44,
         "encounter": 6,
-        "neighbor": 82,
+        "neighbor": 88,
         "practice": 9,
         "practice-work": 71,
         "receiver": 6,
@@ -73,9 +73,9 @@
         "concerns": 2,
         "door": 5,
         "made-by": 71,
-        "neighbor-of": 82,
+        "neighbor-of": 88,
         "participates": 17,
-        "touches": 29
+        "touches": 30
       }
     }
   },
@@ -503,6 +503,16 @@
     {
       "id": "decision:2026-08-14-1",
       "kind": "decision",
+      "label": "Editorial Deadline bekommt die Weltkammer — §2 zuerst versiegelt, dann gebaut",
+      "date": "2026-08-14",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "Editorial Deadline bekommt die Weltkammer — §2 zuerst versiegelt, dann gebaut"
+      }
+    },
+    {
+      "id": "decision:2026-08-14-2",
+      "kind": "decision",
       "label": "/experiments zeigt Neueste zuerst — das kuratierte Ranking vom 2026-08-05 ist aufgelöst",
       "date": "2026-08-14",
       "source": {
@@ -694,6 +704,16 @@
       "url": "https://blog.gdeltproject.org/gdelt-doc-2-0-api-debuts/"
     },
     {
+      "id": "neighbor:blog-gdeltproject-org-looking-back-on-four-months-of-the-glo",
+      "kind": "neighbor",
+      "label": "GDELT Global Difference Graph",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[GDELT Global Difference Graph](https://blog.gdeltproject.org/looking-back-on-four-months-of-the-global-difference-graph) — publishes the underlying recrawl data (~53.6k title rewrites/day, verified 2026-08-14) and one-off blog analyses; no living public surface, no filter, no archive of record."
+      },
+      "url": "https://blog.gdeltproject.org/looking-back-on-four-months-of-the-global-difference-graph"
+    },
+    {
       "id": "neighbor:c4ads-org-reports-oil-and-water",
       "kind": "neighbor",
       "label": "Windward AI / C4ADS \"Oil and Water\"",
@@ -871,6 +891,16 @@
       }
     },
     {
+      "id": "neighbor:github-com-docnow-diffengine",
+      "kind": "neighbor",
+      "label": "diffengine",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[diffengine](https://github.com/DocNow/diffengine) — Documenting the Now's RSS-diff lineage (with NYTDiff and the long-dead NewsDiffs): per-outlet bots posting edit screenshots to social accounts; curatorial, instance-by-instance, several dormant; no register, no rate, no classification."
+      },
+      "url": "https://github.com/DocNow/diffengine"
+    },
+    {
       "id": "neighbor:github-com-metauto-ai-mindstorm",
       "kind": "neighbor",
       "label": "Mindstorm / NLSOM",
@@ -945,6 +975,16 @@
         "quote": "[holdfastprojects.com — \"US data centre efficiency ranked by PUE\"](https://www.holdfastprojects.com/us-datacentre-pue.md-2) — maintained, continually updated leaderboard across Meta/Google/AWS/Microsoft/Oracle/others, with notes on who discloses well vs. poorly."
       },
       "url": "https://www.holdfastprojects.com/us-datacentre-pue.md-2"
+    },
+    {
+      "id": "neighbor:ijoc-org-index-php-ijoc-article-download-10786-2679-38967",
+      "kind": "neighbor",
+      "label": "\"Unpublishing the News\" (IJoC 2019)",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[\"Unpublishing the News\" (IJoC 2019)](https://ijoc.org/index.php/ijoc/article/download/10786/2679/38967) — the unpublishing/right-to-be-forgotten literature (Dwyer's newsroom-policy research, CJR's \"Into Oblivion\") studies why and how newsrooms take articles down — policy ethnography and ethics, no counting instrument, no public register."
+      },
+      "url": "https://ijoc.org/index.php/ijoc/article/download/10786/2679/38967"
     },
     {
       "id": "neighbor:ijoc-org-index-php-ijoc-article-download-9904-2777",
@@ -1069,6 +1109,16 @@
       "url": "https://news.gallup.com/interactives/248240/global-emotions.aspx"
     },
     {
+      "id": "neighbor:newssniffer-co-uk",
+      "kind": "neighbor",
+      "label": "News Sniffer",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[News Sniffer](https://www.newssniffer.co.uk) — world chamber's strongest living neighbour (found in the 2026-08-14 §2 seal; the 2026-08-13 pass had only declared NewsDiffs dead): actively monitoring 2.7M news articles with 5.25M captured versions, minute-fresh, open source — but a browsable per-article revision archive of a handful of UK feeds (BBC, Guardian), not a metric instrument: no daily rate, no triviality classification, no global/multilingual scale, no deletion measurement, no receipts."
+      },
+      "url": "https://www.newssniffer.co.uk"
+    },
+    {
       "id": "neighbor:nytimes-com-interactive-2024-07-08-climate-home-insurance-cl",
       "kind": "neighbor",
       "label": "NYT interactive — \"Here's Where Climate Change Is Driving Up Home Insurance Rates\"",
@@ -1077,6 +1127,16 @@
         "quote": "[NYT interactive — \"Here's Where Climate Change Is Driving Up Home Insurance Rates\"](https://www.nytimes.com/interactive/2024/07/08/climate/home-insurance-climate-change.html) — mainstream journalism already runs this story with state/ZIP-level granularity."
       },
       "url": "https://www.nytimes.com/interactive/2024/07/08/climate/home-insurance-climate-change.html"
+    },
+    {
+      "id": "neighbor:ojs-aaai-org-index-php-icwsm-article-view-42794",
+      "kind": "neighbor",
+      "label": "MediaSpin dataset",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[MediaSpin dataset](https://ojs.aaai.org/index.php/ICWSM/article/view/42794) — ICWSM 2026: 78,910 post-publication headline-edit pairs annotated for 13 media-bias types via an LLM-plus-expert pipeline — academic proof that headline edits carry bias signal, shipped as dataset and paper, not a living public instrument; its taxonomy is a benchmark the chamber's triviality filter should cite."
+      },
+      "url": "https://ojs.aaai.org/index.php/ICWSM/article/view/42794"
     },
     {
       "id": "neighbor:opentimestamps-org",
@@ -1097,6 +1157,16 @@
         "quote": "[Our World in Data](https://ourworldindata.org) — 14,000+ interactive charts across poverty, climate, conflict, health, energy since 2013, Oxford-affiliated, CC BY. Dwarfs The Protocol on breadth and authority; no nightly deterministic \"minutes\" ritual, no stated no-LLM constraint."
       },
       "url": "https://ourworldindata.org"
+    },
+    {
+      "id": "neighbor:pewresearch-org-data-labs-2024-05-17-when-online-content-dis",
+      "kind": "neighbor",
+      "label": "Pew Research, \"When Online Content Disappears\" (2024)",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Pew Research, \"When Online Content Disappears\" (2024)](https://www.pewresearch.org/data-labs/2024/05/17/when-online-content-disappears) — the deletion-rate neighbourhood is one-off studies (Pew: 38 % of 2013's pages unreachable a decade later; Harvard LIL's 2021 NYT link-rot/content-drift study): measured once per paper, not watched daily, none against a self-committed archive that can produce the vanished text."
+      },
+      "url": "https://www.pewresearch.org/data-labs/2024/05/17/when-online-content-disappears"
     },
     {
       "id": "neighbor:pmc-ncbi-nlm-nih-gov-articles-pmc12219543",
@@ -2950,13 +3020,13 @@
         "quote": "id: 'redaction'"
       },
       "rank": 6,
-      "line": "From the “Counter-Measurement” line.",
-      "verdict": "REDUNDANT",
-      "verdictLabel": "REDUNDANT, with a narrow honest carve-out.",
-      "daylight": "Either state outright that the no-human-curation, machine-only methodology is the point (genuinely different epistemics from EDGI/Sunlight's human review, and worth citing them as the human-curated alternative), or narrow the watched-page list to territory EDGI/Sunlight don't already cover well (they are US-federal/environment-focused) — non-US institutions or EU/international bodies, to claim real novel coverage.",
+      "line": "From the “Counter-Measurement” line, in two chambers.",
+      "verdict": "ADDED VALUE",
+      "verdictLabel": "ADDED VALUE (re-sealed 2026-08-14 with the world chamber; chamber 1 alone remains REDUNDANT).",
+      "daylight": "Build the world chamber as sealed: a daily register of genuine headline reframings (GDG `PAGE_TITLECHANGE`, versioned triviality filter with the trivial / running-update / reframing classes, MediaSpin-aware) plus an in-house sampled deletion rate with confidence interval and disclosed unverifiable classes (403 bot-walls), receipts from the committed newspool — the daylight is the union: metric + register + receipts daily, at global scale, from a self-committed archive; every neighbour holds at most one of the three.",
       "auditSource": {
         "file": "docs/audits/2026-08-09-usp-audit.md",
-        "quote": "REDUNDANT, with a narrow honest carve-out."
+        "quote": "ADDED VALUE (re-sealed 2026-08-14 with the world chamber; chamber 1 alone remains REDUNDANT)."
       }
     },
     {
@@ -4469,9 +4539,20 @@
     {
       "kind": "neighbor-of",
       "from": "work:redaction",
+      "to": "neighbor:blog-gdeltproject-org-looking-back-on-four-months-of-the-glo",
+      "note": "publishes the underlying recrawl data (~53.6k title rewrites/day, verified 2026-08-14) and one-off blog analyses; no living public surface, no filter, no archive of record.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[GDELT Global Difference Graph](https://blog.gdeltproject.org/looking-back-on-four-months-of-the-global-difference-graph) — publishes the underlying recrawl data (~53.6k title rewrites/day, verified 2026-08-14) and one-off blog analyses; no living public surface, no filter, no archive of record."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:redaction",
       "to": "neighbor:changedetection-io",
       "note": "free/open-source, off-the-shelf scheduled-capture + diff + notification tool explicitly marketed for monitoring government pages.",
-      "state": "REDUNDANT",
+      "state": "ADDED VALUE",
       "source": {
         "file": "docs/audits/2026-08-09-usp-audit.md",
         "quote": "[changedetection.io](https://changedetection.io) — free/open-source, off-the-shelf scheduled-capture + diff + notification tool explicitly marketed for monitoring government pages."
@@ -4482,7 +4563,7 @@
       "from": "work:redaction",
       "to": "neighbor:envirodatagov-org-federal-environmental-web-tracker-about-pa",
       "note": "open-source \"Scanner\" automatically diffing federal webpages between dates, publishing a public dataset of 1,500+ significant changes since 2017, continuing through 2025 (632 changes in the first 100 days of the second Trump term alone, per NPR Aug 2025).",
-      "state": "REDUNDANT",
+      "state": "ADDED VALUE",
       "source": {
         "file": "docs/audits/2026-08-09-usp-audit.md",
         "quote": "[EDGI — Federal Environmental Web Tracker](https://envirodatagov.org/federal-environmental-web-tracker-about-page) — open-source \"Scanner\" automatically diffing federal webpages between dates, publishing a public dataset of 1,500+ significant changes since 2017, continuing through 2025 (632 changes in the first 100 days of the second Trump term alone, per NPR Aug 2025)."
@@ -4491,9 +4572,64 @@
     {
       "kind": "neighbor-of",
       "from": "work:redaction",
+      "to": "neighbor:github-com-docnow-diffengine",
+      "note": "Documenting the Now's RSS-diff lineage (with NYTDiff and the long-dead NewsDiffs): per-outlet bots posting edit screenshots to social accounts; curatorial, instance-by-instance, several dormant; no register, no rate, no classification.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[diffengine](https://github.com/DocNow/diffengine) — Documenting the Now's RSS-diff lineage (with NYTDiff and the long-dead NewsDiffs): per-outlet bots posting edit screenshots to social accounts; curatorial, instance-by-instance, several dormant; no register, no rate, no classification."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:redaction",
+      "to": "neighbor:ijoc-org-index-php-ijoc-article-download-10786-2679-38967",
+      "note": "the unpublishing/right-to-be-forgotten literature (Dwyer's newsroom-policy research, CJR's \"Into Oblivion\") studies why and how newsrooms take articles down — policy ethnography and ethics, no counting instrument, no public register.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[\"Unpublishing the News\" (IJoC 2019)](https://ijoc.org/index.php/ijoc/article/download/10786/2679/38967) — the unpublishing/right-to-be-forgotten literature (Dwyer's newsroom-policy research, CJR's \"Into Oblivion\") studies why and how newsrooms take articles down — policy ethnography and ethics, no counting instrument, no public register."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:redaction",
+      "to": "neighbor:newssniffer-co-uk",
+      "note": "world chamber's strongest living neighbour (found in the 2026-08-14 §2 seal; the 2026-08-13 pass had only declared NewsDiffs dead): actively monitoring 2.7M news articles with 5.25M captured versions, minute-fresh, open source — but a browsable per-article revision archive of a handful of UK feeds (BBC, Guardian), not a metric instrument: no daily rate, no triviality classification, no global/multilingual scale, no deletion measurement, no receipts.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[News Sniffer](https://www.newssniffer.co.uk) — world chamber's strongest living neighbour (found in the 2026-08-14 §2 seal; the 2026-08-13 pass had only declared NewsDiffs dead): actively monitoring 2.7M news articles with 5.25M captured versions, minute-fresh, open source — but a browsable per-article revision archive of a handful of UK feeds (BBC, Guardian), not a metric instrument: no daily rate, no triviality classification, no global/multilingual scale, no deletion measurement, no receipts."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:redaction",
+      "to": "neighbor:ojs-aaai-org-index-php-icwsm-article-view-42794",
+      "note": "ICWSM 2026: 78,910 post-publication headline-edit pairs annotated for 13 media-bias types via an LLM-plus-expert pipeline — academic proof that headline edits carry bias signal, shipped as dataset and paper, not a living public instrument; its taxonomy is a benchmark the chamber's triviality filter should cite.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[MediaSpin dataset](https://ojs.aaai.org/index.php/ICWSM/article/view/42794) — ICWSM 2026: 78,910 post-publication headline-edit pairs annotated for 13 media-bias types via an LLM-plus-expert pipeline — academic proof that headline edits carry bias signal, shipped as dataset and paper, not a living public instrument; its taxonomy is a benchmark the chamber's triviality filter should cite."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:redaction",
+      "to": "neighbor:pewresearch-org-data-labs-2024-05-17-when-online-content-dis",
+      "note": "the deletion-rate neighbourhood is one-off studies (Pew: 38 % of 2013's pages unreachable a decade later; Harvard LIL's 2021 NYT link-rot/content-drift study): measured once per paper, not watched daily, none against a self-committed archive that can produce the vanished text.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Pew Research, \"When Online Content Disappears\" (2024)](https://www.pewresearch.org/data-labs/2024/05/17/when-online-content-disappears) — the deletion-rate neighbourhood is one-off studies (Pew: 38 % of 2013's pages unreachable a decade later; Harvard LIL's 2021 NYT link-rot/content-drift study): measured once per paper, not watched daily, none against a self-committed archive that can produce the vanished text."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:redaction",
       "to": "neighbor:pmc-ncbi-nlm-nih-gov-articles-pmc7906373",
       "note": "the same change-tracking/visualization approach on the same non-authoritative Wayback source.",
-      "state": "REDUNDANT",
+      "state": "ADDED VALUE",
       "source": {
         "file": "docs/audits/2026-08-09-usp-audit.md",
         "quote": "[\"Visualizing changes to US federal environmental agency websites, 2016–2020\"](https://pmc.ncbi.nlm.nih.gov/articles/PMC7906373), peer-reviewed — the same change-tracking/visualization approach on the same non-authoritative Wayback source."
@@ -4504,7 +4640,7 @@
       "from": "work:redaction",
       "to": "neighbor:security-force-monitor-s-wayback-cdx-methodology",
       "note": "the identical \"two captures, spot the substantive difference\" evidentiary technique, documented.",
-      "state": "REDUNDANT",
+      "state": "ADDED VALUE",
       "source": {
         "file": "docs/audits/2026-08-09-usp-audit.md",
         "quote": "Security Force Monitor's Wayback CDX methodology — the identical \"two captures, spot the substantive difference\" evidentiary technique, documented."
@@ -4515,7 +4651,7 @@
       "from": "work:redaction",
       "to": "neighbor:sunlightfoundation-com-gov404",
       "note": "monitors/catalogs federal website changes/removals since 2016 with detailed before/after documentation, feeding congressional oversight and FOIA investigations.",
-      "state": "REDUNDANT",
+      "state": "ADDED VALUE",
       "source": {
         "file": "docs/audits/2026-08-09-usp-audit.md",
         "quote": "[Sunlight Foundation / Berkman Klein — Web Integrity Project (\"Gov404\")](https://sunlightfoundation.com/gov404) — monitors/catalogs federal website changes/removals since 2016 with detailed before/after documentation, feeding congressional oversight and FOIA investigations."
@@ -5181,6 +5317,15 @@
       "source": {
         "file": "docs/decision-log.md",
         "quote": "/studio"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-08-14-1",
+      "to": "work:redaction",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "pipelines/redaction/src/redaction/world/"
       }
     }
   ]
