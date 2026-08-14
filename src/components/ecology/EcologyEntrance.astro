@@ -33,6 +33,9 @@ import { MAP_NODES, daysUntil, readingDate, type StationId } from '@/lib/ecology
 import { buildLandings } from '@/lib/ecology/pyramid/landings'
 import { buildTimeline, timelineGeometry, TIMELINE_BOX, weekOffset } from '@/lib/ecology/pyramid/timeline'
 import { houseCounts } from '@/lib/ecology/pyramid/counts'
+import Partitur from '@/components/maschinenraum/Partitur.astro'
+import EcologyAnatomy from '@/components/ecology/EcologyAnatomy.astro'
+import { loadEcologyScore, scoreLastLanded } from '@/lib/partitur-data'
 import '@/styles/ecology-pyramid.css'
 import '@/styles/hub-triptych.css'
 
@@ -48,6 +51,10 @@ const works = allWorks()
 const landings = buildLandings({ snapshot: pulseData as PulseSnapshot, works })
 const counts = houseCounts()
 const timeline = buildTimeline({ works, now, readingDate: reading, origin: counts.since })
+// The ecology's score. Assembled in its own data module (src/lib/partitur-data.ts), so this
+// component keeps to composition and the five sources stay in one place.
+const score = loadEcologyScore()
+const scoreLast = scoreLastLanded(score)
 const geo = timelineGeometry(timeline)
 const feed = buildSignalLog(works, 5)
 
@@ -254,6 +261,27 @@ const weeksOnRecord = Math.max(1, Math.ceil(weekOffset(timeline.origin, now.toIS
       )}
     </section>
 
+    {/* ── 2b · the score ──────────────────────────────────────────────────────────────────
+        The ecology's own score, four voices on one time axis, recovered 2026-08-14. It sits
+        AFTER the weeks-per-week timeline and answers a different question: the timeline counts
+        how much landed, the score shows WHO was working when and what each voice landed —
+        session, work, opening — with its own stage and its own validated palette.
+
+        It is a figure of its own project (Frank's direction call, 2026-07-30) and keeps its dark
+        stage inside this light page on purpose: it was validated against that surface, and a
+        figure that recolours itself when it moves house is the bug this house spent 2026-08-13
+        fixing on the refrain. */}
+    {score && (
+    <section class="eco-section" id="score">
+      <div class="eco-head">
+        <p class="eco-kicker"><b>{W.score.kicker}</b> · {W.score.kickerSub}</p>
+        {scoreLast && <span class="eco-aside">{W.score.asOf(scoreLast)}</span>}
+      </div>
+      {score && <Partitur model={score} />}
+      <p class="eco-stats">{W.score.caption}</p>
+    </section>
+    )}
+
     {/* ── 3 · how it works ────────────────────────────────────────────────────────────────── */}
     <section class="eco-section" id="how">
       <p class="eco-kicker"><b>{W.pipeline.kicker}</b> · {W.pipeline.kickerSub}</p>
@@ -283,6 +311,14 @@ const weeksOnRecord = Math.max(1, Math.ceil(weekOffset(timeline.origin, now.toIS
       </p>
     </section>
 
+
+    {/* ── 3b · the three cycles ───────────────────────────────────────────────────────────
+        Restored 2026-08-14. Section 3 above says the cycle in five words; this says it in each
+        practice's OWN words, step by step, and repeats every step in a table below. It needs no
+        model from here — it reads the practices' records itself. */}
+    <section class="eco-section" id="cycles">
+      <EcologyAnatomy />
+    </section>
     {/* ── 4 · last night — the daily view ─────────────────────────────────────────────────── */}
     <section class="eco-section" id="now">
       <div class="eco-head">

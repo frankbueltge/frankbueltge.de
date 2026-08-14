@@ -33,6 +33,16 @@ const atlas = atlasJson as AtlasEntry[]
 const rhizome = rhizomeJson as Rhizome
 const vitals = vitalsJson as VitalSigns
 const stats = cockpitStats(rhizome, vitals, atlas)
+
+// Three instruments, three different last dates — and until 2026-08-14 the page showed them as one
+// dashboard, so a reader could not tell a live gauge from an instrument that has been dormant for
+// four weeks. Each date is the file's OWN, never the build's: the rhizome states its `updated`, the
+// vital signs the date of their newest entry, the atlas the newest source it admitted.
+const asOf = {
+  vitals: [...(vitals.history ?? [])].map((h) => h.date).sort().at(-1) ?? null,
+  rhizome: rhizome.updated ?? null,
+  atlas: [...atlas].map((a) => a.session_read ?? '').filter(Boolean).sort().at(-1) ?? null,
+}
 const edges = edgeCounts(rhizome)
 const latest = vitals.history.length > 0 ? vitals.history[vitals.history.length - 1] : null
 
@@ -102,6 +112,9 @@ const txt = de
       gSwervesSubLive: 'Außen zugelassen',
       standbyChip: 'wartet',
       rhizomeH: '02 — Das Rhizom',
+      asOfLive: (d: string) => `letzter Eintrag ${d} — dieses Instrument läuft weiter.`,
+      asOfDormant: (d: string) =>
+        `zuletzt gezeichnet ${d} — ruhend, nicht verloren: die Praxis hat 2026-08-11 entschieden, es nicht weiterzuführen, und die nächtliche Linie baut ihr eigenes neu (/error-as-method).`,
       rhizomeIntro:
         stats.edgesTotal === 0
           ? `${stats.works} Werke stehen als Fakten im Graphen — die Kanten fehlen nicht, sie sind noch nicht gezogen. Wie sich Werke, Fäden und Quellen verbinden, ist Ulysses’ eigene Lektüre; das Seed erfindet keine Verbindungen. Baum-Kanten vertiefen das Eigene, Rhizom-Kanten holen das Außen herein — an ihrem Verhältnis wird sichtbar, ob sich die Forschung im Kreis dreht.`
@@ -208,6 +221,9 @@ const txt = de
       gSwervesSubLive: 'an outside admitted',
       standbyChip: 'waiting',
       rhizomeH: '02 — The rhizome',
+      asOfLive: (d: string) => `newest entry ${d} — this instrument is still running.`,
+      asOfDormant: (d: string) =>
+        `last drawn ${d} — dormant, not lost: the practice decided on 2026-08-11 not to carry it further, and the nightly line is building its own (/error-as-method).`,
       rhizomeIntro:
         stats.edgesTotal === 0
           ? `${stats.works} works stand in the graph as facts — the edges are not missing, they are not yet drawn. How works, threads and sources connect is Ulysses’ own reading; the seed invents no connections. Tree edges deepen what is already there, rhizome edges admit the outside — their ratio makes visible whether the research is circling.`
@@ -337,6 +353,7 @@ const payload = JSON.stringify({
     {/* ── 01 · Vitalzeichen ──────────────────────────────────────────────── */}
     <section id="ck-gauges" class="ck-section" aria-labelledby="ck-gauges-h">
       <h2 id="ck-gauges-h" class="ck-h2">{txt.gaugesH}</h2>
+      {asOf.vitals && <p class="ck-asof">{txt.asOfLive(asOf.vitals)}</p>}
       <div class="ck-gauges">
         <div class="ck-gauge" data-state={stats.closure == null ? 'standby' : 'live'}>
           <svg viewBox="0 0 120 66" class="ck-gauge-svg" aria-hidden="true">
@@ -416,6 +433,7 @@ const payload = JSON.stringify({
     {/* ── 02 · Das Rhizom ────────────────────────────────────────────────── */}
     <section class="ck-section" aria-labelledby="ck-rhizome-h">
       <h2 id="ck-rhizome-h" class="ck-h2">{txt.rhizomeH}</h2>
+      {asOf.rhizome && <p class="ck-asof ck-asof-dormant">{txt.asOfDormant(asOf.rhizome)}</p>}
       <p class="ck-intro">{txt.rhizomeIntro}</p>
 
       <div class="ck-panel ck-rhizome-panel">
@@ -1296,6 +1314,19 @@ const payload = JSON.stringify({
   .ck-section {
     margin-top: 56px;
   }
+  /* The dated line under an instrument's heading. Quiet ink, never a warning colour: a dormant
+     instrument is a decision the practice made and wrote down, not an error state. */
+  .ck-asof {
+    margin: -0.35rem 0 0.9rem;
+    font-size: 0.78rem;
+    line-height: 1.5;
+    color: var(--ck-muted, #a3a3a8);
+    max-width: 62ch;
+  }
+  .ck-asof-dormant {
+    opacity: 0.85;
+  }
+
   .ck-h2 {
     font-family: 'JetBrains Mono Variable', ui-monospace, monospace;
     font-size: 12px;
