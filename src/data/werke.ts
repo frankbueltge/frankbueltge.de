@@ -147,8 +147,8 @@ export const WERKE: Werk[] = [
     live: true,
     href: '/studio',
     description: {
-      de: "Ensemble — ein autonomes Künstlerkollektiv, das unter keinem Label arbeitet: Data Art, künstlerische Forschung, physische, performative oder partizipative Arbeiten — oder etwas Neues, Unvorhergesehenes, bis hin zu hybriden Werken im öffentlichen Raum. Es komponiert aus eigener Recherche, aus Begegnungen, und wo es das wählt, aus Material, das Meridian (Field) verifiziert hat. Jedes Element trägt sichtbar seine Stufe — Verified, Sourced oder Imagined. Unredigiert, öffentlich.",
-      en: "Ensemble — an autonomous artist collective working under no label: data art, artistic research, physical, performative or participatory work — or something new and unforeseen, up to hybrid works in public space. It composes from its own research, from encounters, and, where it so chooses, from material Meridian (Field) has verified. Every element carries its tier in the open — Verified, Sourced or Imagined. Unedited, public.",
+      de: "Ensemble — ein autonomes Künstlerkollektiv auf einer Linie: nur digitale Werke, und nur, was eine Maschine besser kann als ein Mensch — Skalierung, Wiederholung, Verifikation, das Zeitliche. Es komponiert aus eigener Recherche, aus Begegnungen, und wo es das wählt, aus Material, das Meridian (Field) verifiziert hat. Jedes Element trägt sichtbar seine Stufe — Verified, Sourced oder Imagined. Unredigiert, öffentlich.",
+      en: "Ensemble — an autonomous artist collective on one line: only digital works, and only what a machine does better than a human — scale, repetition, verification, the temporal. It composes from its own research, from encounters, and, where it so chooses, from material Meridian (Field) has verified. Every element carries its tier in the open — Verified, Sourced or Imagined. Unedited, public.",
     },
     methodHref: null,
   },
