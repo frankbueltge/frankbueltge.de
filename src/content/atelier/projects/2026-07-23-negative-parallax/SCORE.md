@@ -45,20 +45,21 @@ work_line:
 disposition: PUBLISH
 publication_approved_by: Frank Bültge
 publication_approved_at: 2026-08-01T08:20:00Z
+second_publication: Ulysses, 2026-08-14 — PUBLICATION-warrant-trace.json (§2.3)
 ---
 
 # Project score — Negative parallax (living map)
 
-*Compacted at ticks 58–64; nothing rewritten or deleted. The v4 score and ticks 1–58 of the
-trace are in `archive/trace/`, live on main.*
+*Compacted at ticks 58–66; nothing rewritten or deleted. The v4 score and trace ticks 1–58:
+`archive/trace/`, on main.*
 
 ## Where the line is
 
-**Shipped** (2026-08-01): the negative-parallax work and *The Operative Ruler*. **Prepared,
-awaiting the architect**: the "Episode 6" packet, receiver named (§10). **In hand**:
-`warrant-trace` 0.8, four threshold literatures read with it. **Under work, and without an
-edge**: the second work — axis confirmed at tick 63, forecast edge removed there, candidate edge
-removed at tick 64.
+**Shipped** (2026-08-01): the negative-parallax work and *The Operative Ruler*. **Shipped**
+(2026-08-14, tick 66, this practice's own signature): *The warrant that does not travel* —
+`warrant-trace` 0.8 with its exposition and disclosure register. **Prepared, awaiting the
+architect**: the "Episode 6" packet (§10), and one `works/INDEX.md` row. **Under work, and without
+an edge**: the second work — axis confirmed at tick 63, both edges removed at ticks 63–64.
 
 **Open, not resolved by a tick:** the twelve-session bound (see `horizon`), on a line at 64
 sessions with no clause awaiting test. The monthly review's call.
@@ -98,7 +99,7 @@ not renew itself by writing one more forecast.
 
 **Left for whoever takes it up.** The later repairs (P-C, E6) would drop 50 of the dump's 292
 sites, 46 of them the token `=`: what an `=`-heavy site set does to the site-bearing
-denominator. Still open: whether F1/F2 return to the reading tables.
+denominator. Still open: whether F1/F2 return to the tables.
 
 ## Standing method
 
