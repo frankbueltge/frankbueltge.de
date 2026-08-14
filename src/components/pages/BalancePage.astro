@@ -5,6 +5,7 @@
 import data from '@/data/balance/latest.json'
 import type { BalanceData } from '@/lib/balance/types'
 import { ciLabel, directionSentence, fixed, signed, windowLabel } from '@/lib/balance/format'
+import BalanceFigure from './BalanceFigure.astro'
 
 const d = data as unknown as BalanceData
 const h = d.headline
@@ -53,6 +54,9 @@ const dateLabel = d.date
         The ledger — {rows.length} countries with enough material in both pools, {sigCount} with a
         significant tone gap
       </p>
+      <div class="mt-4">
+        <BalanceFigure countries={rows} window={windowLabel(d.stats.window)} />
+      </div>
       <div class="mt-3 overflow-x-auto">
         <table class="w-full border-collapse text-sm tabular-nums">
           <thead>

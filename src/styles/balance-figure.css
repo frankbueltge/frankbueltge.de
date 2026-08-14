@@ -1,0 +1,50 @@
+/* The Balance — dumbbell figure styles.
+   PALETTE: balance-poles
+   Two identity colours (its own press / the world's press), validated 2026-08-14 with the
+   dataviz validator against both surfaces of each mode — verdict recorded as data in
+   src/lib/dataviz/palette.ts (palette.test.ts recomputes it; comments drift, tests do not).
+   Site default is dark; light mode opts in via data-theme. Colours live here as custom
+   properties because the site's CSP discards style="" attributes — marks wear classes. */
+
+:root {
+  --balf-self: #bd831f;
+  --balf-world: #4f8cdd;
+}
+:root[data-skin][data-theme='light'] {
+  --balf-self: #b87700;
+  --balf-world: #2a6fd0;
+}
+
+.balf-dot-self { fill: var(--balf-self); }
+.balf-dot-world { fill: var(--balf-world); }
+.balf-legend-self { background: var(--balf-self); }
+.balf-legend-world { background: var(--balf-world); }
+
+/* Connector and grid are recessive neutrals from the site's own ink tokens. */
+.balf-connector { stroke: var(--color-fg-faint); stroke-width: 2; opacity: 0.55; }
+.balf-grid { stroke: var(--color-fg-faint); stroke-width: 1; opacity: 0.18; }
+.balf-zero { stroke: var(--color-fg-muted); stroke-width: 1; opacity: 0.45; stroke-dasharray: 3 3; }
+
+/* Dots: 10px marks (r=5 as SVG attribute) with a 2px surface ring so overlapping poles
+   stay separable. */
+.balf-dot { stroke: var(--color-bg); stroke-width: 2; }
+
+/* Text wears text tokens, never the series colour. */
+.balf-name { fill: var(--color-fg-muted); font-size: 12px; }
+.balf-value { fill: var(--color-fg-faint); font-size: 10.5px; }
+.balf-tick { fill: var(--color-fg-faint); font-size: 10px; }
+
+/* Hover/focus: the row sharpens; nothing moves. */
+.balf-row { outline: none; }
+.balf-row .balf-name,
+.balf-row .balf-value { transition: fill 120ms ease, opacity 120ms ease; }
+.balf-row:hover .balf-name,
+.balf-row:focus-visible .balf-name { fill: var(--color-fg); }
+.balf-row:hover .balf-connector,
+.balf-row:focus-visible .balf-connector { opacity: 1; }
+.balf-row:focus-visible .balf-name { text-decoration: underline; }
+
+@media (prefers-reduced-motion: reduce) {
+  .balf-row .balf-name,
+  .balf-row .balf-value { transition: none; }
+}

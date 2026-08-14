@@ -567,6 +567,49 @@ export const PALETTES: readonly PaletteSet[] = [
     ],
     usedBy: ['src/styles/neighborhood.css'],
   },
+  {
+    id: 'balance-poles',
+    description:
+      'The Balance — two pole identities on the dumbbell figure: a country’s own press (amber) ' +
+      'and the world’s press (blue). Identity colours, deliberately NOT a diverging value pair: ' +
+      'the dots are entities, the gap between them is geometry. Direction carries no colour ' +
+      '(a dark self-image is not a status). Amber↔blue is the safest dichromat pair in the ' +
+      'validator’s own report; both modes pass all six checks with no contrast WARN.',
+    slots: [
+      { name: 'its own press', light: '#b87700', dark: '#bd831f' },
+      { name: 'the world’s press', light: '#2a6fd0', dark: '#4f8cdd' },
+    ],
+    surfaces: { light: ['#edeef0', '#f7f8fa'], dark: ['#0a0a0a', '#141414'] },
+    pairs: 'all',
+    validatedOn: '2026-08-14',
+    validator:
+      'dataviz skill validate_palette.js (six checks) — ALL CHECKS PASS per mode on both ' +
+      'declared surfaces of that mode; no contrast WARN in either mode. Distances recorded ' +
+      'here are the in-repo re-derivation (palette.test.ts maths); the skill validator ' +
+      'reports the same pairs ~1 ΔE lower (27.0/25.4) — both far above every threshold',
+    worst: [
+      {
+        mode: 'light',
+        cvd: 27.95,
+        cvdPair: '#2a6fd0↔#b87700',
+        cvdType: 'protan',
+        tritan: 23.2,
+        normal: 30.7,
+        normalPair: '#2a6fd0↔#b87700',
+      },
+      {
+        mode: 'dark',
+        cvd: 25.4,
+        cvdPair: '#4f8cdd↔#bd831f',
+        cvdType: 'protan',
+        tritan: 22.4,
+        normal: 26.7,
+        normalPair: '#4f8cdd↔#bd831f',
+      },
+    ],
+    warns: [],
+    usedBy: ['src/styles/balance-figure.css'],
+  },
 ]
 
 /** Lookup by id — WP6 practice packages add their sets to PALETTES and get the same guards. */
