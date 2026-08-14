@@ -30,13 +30,24 @@ def test_classify_removal_on_digest_change():
     assert kind == "removal" and before.digest == "AAA" and after.digest == "BBB"
 
 
-def test_classify_deletion_on_status_4xx_newest():
+def test_classify_4xx_newest_is_only_a_deletion_candidate():
+    # A 4xx describes the crawler's night, not the page: the verdict "deletion"
+    # is made by live.recheck, never here (memory-hole audit, finding 2).
     caps = [
         Capture("20260601000000", "200", "AAA"),
         Capture("20260610000000", "404", "-"),
     ]
     kind, before, after = classify(caps)
-    assert kind == "deletion" and before.status == "200" and after.status == "404"
+    assert kind == "deletion_candidate"
+    assert before.status == "200" and after.status == "404"
+
+
+def test_classify_403_is_a_candidate_too_not_a_deletion():
+    caps = [
+        Capture("20260810000000", "200", "AAA"),
+        Capture("20260812142910", "403", "-"),
+    ]
+    assert classify(caps)[0] == "deletion_candidate"
 
 
 def test_classify_none_when_single_capture():
