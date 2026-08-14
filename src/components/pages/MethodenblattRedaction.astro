@@ -55,8 +55,58 @@ const txt = {
   s6: de ? '6. Änderungsprotokoll' : '6. Change log',
   s6items: de
     ? ['v1 (2026-06) — Erstfassung: CDX-Diff (Löschung + Entfernung), symbolische Salienz, zwei Archiv-Permalinks je Fund.']
-    : ['v1 (2026-06) — first edition: CDX diff (deletion + removal), symbolic salience, two archive permalinks per finding.'],
+    : [
+        'v1 (2026-06) — first edition: CDX diff (deletion + removal), symbolic salience, two archive permalinks per finding.',
+        'v2 (2026-08-14) — the world chamber: GDG rewrite register + in-house sampled deletion rate (chamber 2, above).',
+      ],
   toWork: de ? 'Zum Experiment' : 'To the experiment',
+}
+
+// Chamber 2 — English only (the ecology is EN-only; the de branches above are legacy).
+const w2 = {
+  head: 'Chamber 2 — the world’s press (since 2026-08-14)',
+  intro:
+    'Deletion is not censorship. Articles vanish for banal reasons — CMS migrations, ' +
+    'paywalling, corrections policy, licence clocks on agency copy — and headlines are ' +
+    'rewritten for banal reasons too. The chamber counts disappearance and rewriting, ' +
+    'shows receipts, and asserts no motive. That sentence stands first on purpose.',
+  sources:
+    'GDELT Global Difference Graph (gdelt-bq.gdeltv2.gdg_partitioned via BigQuery): every ' +
+    'monitored article is recrawled at +24 h and +1 week; yesterday’s UTC partition is ' +
+    'read nightly — status counts plus all English-stream title rewrites (page_lang as ' +
+    'classified by GDELT; misdetections occur and are visible). The GDG’s current ' +
+    'pipeline records no deletion class (verified 2026-08-13/14 — the 2018 deletion rates ' +
+    'describe a retired version), so deletion is measured in-house: each night a random ' +
+    'sample of 300 articles from the day’s news pool (GDELT GKG 2.1 raw files, hourly ' +
+    'stride, seed disclosed as world-sample-<date>) is committed to git; the next night, ' +
+    'when its articles are ~29–53 h old, it is rechecked. The committed manifest is the ' +
+    'receipt: our own history proves what stood there. Licence: Data — The GDELT ' +
+    'Project, cited and linked on every derived file.',
+  filter:
+    'The triviality filter (FILTER_VERSION v1) is deterministic, rule-based and fully ' +
+    'disclosed in code — no model in the loop: normalization (NFC, entities, stray markup), ' +
+    'site-name affixes, ellipsis truncations, case/punctuation and function-word-only edits ' +
+    'are trivial; rolling-coverage markers (live, highlights, as it happened) and ' +
+    'numbers-only diffs are running updates; titles with almost no lexical continuity are ' +
+    'counted apart as replaced (page reuse cannot be excluded); the rest are reframings. ' +
+    'The register shows at most three, selected by rule (SELECTION_VERSION v1): exchanges ' +
+    'in place first (words removed AND added), higher token-set similarity first, ' +
+    'capitalized substitutions as actor proxies, one entry per domain, duplicate pairs ' +
+    'collapsed, deterministic tie-breaks. MediaSpin (ICWSM 2026) is the academic benchmark ' +
+    'this coarser rule set is measured against.',
+  limits: [
+    'GDELT’s recrawl schedule (+24 h, +1 wk) bounds what "rewritten" means here; the recrawl window of each register entry is shown.',
+    'The deletion rate counts 404/410 among decidable answers only. HTTP 451 is reported apart — from a German vantage point it can mean EU geo-blocking rather than takedown; it needs per-domain classification or a second vantage before it may be headlined.',
+    'Bot-walls (403/429) and network failures are unverifiable and excluded from the denominator, disclosed as counts. The house’s honest user agent earns more bot-walls than a disguised crawler would — that share is itself published.',
+    'A page that answers 200 with different content (soft deletion) counts as reachable: the gone rate is a floor.',
+    'Pure word-order reversals ("A attacks B" → "B attacks A") pass the v1 filter as trivial — a named blind spot, on the change-log for v2.',
+    'The receipt sample covers the English-monitored GKG stream; the GDG covers more. The gap is a number, not a silence.',
+  ],
+  cost:
+    'Two partition-filtered BigQuery queries per night (≈ 0.1–0.2 GB billed, ≈ ' +
+    '3–6 GB/month — well inside the free tier and the 10 €/month guideline); job ' +
+    'IDs and bytes billed are committed in every day’s trace. Plus ~24 raw-file ' +
+    'downloads for the pool sample and 300 status-only rechecks (no bodies read).',
 }
 ---
 
@@ -96,6 +146,27 @@ const txt = {
   </section>
 
   <section class="mb-8"><h2 class="mb-2 font-semibold">{txt.s5}</h2><p class="leading-relaxed text-fg-muted">{txt.s5body}</p></section>
+
+  <section class="mb-10 border-t border-line pt-8">
+    <h2 class="mb-3 font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">{w2.head}</h2>
+    <p class="mb-6 leading-relaxed">{w2.intro}</p>
+
+    <h3 class="mb-2 font-semibold">Sources, receipts &amp; licences</h3>
+    <p class="mb-6 leading-relaxed text-fg-muted">{w2.sources}</p>
+
+    <h3 class="mb-2 font-semibold">The versioned filter &amp; the register's selection rule</h3>
+    <p class="mb-2 leading-relaxed text-fg-muted">{w2.filter}</p>
+    <p class="mb-6">
+      <a href="https://github.com/frankbueltge/frankbueltge.de/tree/main/pipelines/redaction/src/redaction/world"
+        class="font-mono text-xs text-fg-faint transition-colors hover:text-fg" rel="noopener">→ pipelines/redaction/src/redaction/world</a>
+    </p>
+
+    <h3 class="mb-2 font-semibold">Limits of the chamber</h3>
+    <ul class="mb-6 list-disc space-y-1 pl-5 text-fg-muted">{w2.limits.map((i) => <li>{i}</li>)}</ul>
+
+    <h3 class="mb-2 font-semibold">Compute footprint &amp; cost</h3>
+    <p class="leading-relaxed text-fg-muted">{w2.cost}</p>
+  </section>
 
   <section class="mb-8">
     <h2 class="mb-2 font-semibold">{txt.s6}</h2>
