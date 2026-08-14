@@ -3783,3 +3783,54 @@ missing-datasets works and Bellingcat's MH17 investigation — which time-stamps
 time-stamps the record.
 
 **Status:** no response owed — this is the record, not a request.
+
+## Ensemble — 2026-08-14 (session 94) — Our page hedged away the one thing it knows for certain, and the hedge was on the wrong end of the number
+
+> tl;dr: the fifth premiere gate ran on all three blocking voices, all three sent the work back, and
+> all sixteen of their items were paid before this landed. Nothing is asked of you.
+> braucht: nothing.
+> frist: none.
+> kontext: `projects/season1/` — `VERIFIER-94.md`, `DRAMATURG-94.md`, `KRITIKER-94.md`, unedited.
+
+**The eleventh list.** It arrived at 20:45:26 UTC with four names new to 4 August — SOUTHERN SEAS
+301, CAPT SILVER, TXORIARGI, JIN HUI NO.6 — and every one of them arrives *certain*: their return
+windows leave the day dark at both ends. The band fell at both ends, `26 %–50 %` → **`24 %–42 %`**,
+11 of 26–46, from 31 saved copies holding 11 lists.
+
+**The critic's block, and it is the best thing that happened to this work tonight.** The page printed,
+eleven times, that *both ends* of that band assume every vessel the day itself named was in fact dark
+on the day. The upper end assumes nothing. Write C for the certain count, K for the knowable, k for
+however many of the K were really dark: the share is `k/(C+k+m)`, and its maximum over **every** case
+this record allows is `K/(C+K)` — 11 of 26, 42 %. Our own instrument had said exactly that in a
+comment since session 92, sixteen lines above the string that generated the sentence contradicting
+it. So for one session the largest paragraph on the page hedged away the single unconditional result
+this work owns: **at most 42 % of that day's darkness was knowable on it, whatever became of those
+eleven ships.** Corrected in the instrument and on the face together, re-derived over every case here
+before a word was typed. The floor is still unconditionally 0 and still says so.
+
+**The staging voice returned the work on one cut, and it is about time rather than pixels.** The run
+that performs the fall is `dwell + (stops − 1) × beat`, so it grows 1.6 s every night a list arrives:
+30.1 s tonight, 44.5 s at twenty lists, past the terminal test's minute at thirty — nineteen days out
+on this record's own rate. And new beats land at the tail, where the upper end unfreezes, so the
+work's one event recedes from the visitor at 1.6 s a night while its opening stillness shrinks. The
+run is a **budget** now: a ceiling of 45 s published on the page, the beat derived from it, the three
+beats that carry the turn protected at full length, and `announce.mjs` exiting non-zero when the run
+outgrows the ceiling or when the sentence promising a length disagrees with it. Tonight the
+derivation returns 1,600 ms for all ten beats and nothing on the face moves — which is exactly why it
+was paid tonight.
+
+**Five of the verifying voice's six blocking items were sentences we wrote about our own work an
+hour earlier**, first among them the claim that this work had retired its last hand-typed duration,
+written while the builder still held one — the beat lived in two files, and the second one computes
+the sentence that promises a visitor how long the run is. It exists once now. Banked 62–73.
+
+**The atlas.** Queried again at the gate: of 505 neighbours, still nothing that measures when a fact
+became knowable — and one entry we had never named, [54] Airwars with The Independent, 2026, *The
+First Civilian Confirmed Killed in an AI-Assisted Strike?*, which cross-examines one strike against a
+military's shifting statements to establish when the record admitted the thing. It is now argued in
+the work's own neighbours section, with the daylight and the deficit both stated: they had someone on
+the other side of them, and we do not.
+
+**Status:** no response owed — this is the record, not a request.
+
+---
