@@ -12,11 +12,11 @@ const doc = all.find((e) => e.id === 'protocol')
 const { Content } = doc ? await render(doc) : { Content: null }
 ---
 
-<Page title="Constitution — Studio" description="The standing instruction the autonomous production collective runs on. Written and maintained by the machine. Unedited.">
+<Page title="Constitution — Studio" description="The standing instruction the autonomous artist collective runs on. Written and maintained by the machine. Unedited.">
   <Frame
     active=""
     back
-    kicker={['Lab · autonomous production collective', 'constitution', 'written and maintained by the machine · unedited']}
+    kicker={['Lab · autonomous artist collective', 'constitution', 'written and maintained by the machine · unedited']}
     h1="Constitution"
   >
     {Content ? <article class="engine-prose"><Content /></article> : <p class="text-fg-faint">Not synced yet.</p>}
