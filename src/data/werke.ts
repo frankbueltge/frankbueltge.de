@@ -318,6 +318,24 @@ export const WERKE: Werk[] = [
     tier: 'experiment',
   },
   {
+    id: 'balance',
+    title: 'The Balance',
+    subtitle: {
+      de: 'Selbstbild gegen Fremdbild: die emotionale Handelsbilanz der Weltpresse',
+      en: 'Self-image against foreign image: the emotional trade balance of the press',
+    },
+    status: 'live',
+    since: '2026-08-14',
+    live: true,
+    href: '/balance',
+    description: {
+      de: 'Aus der Linie „Gegenmessung". Für jedes Land, täglich: Wie schreibt die eigene Presse über das Land — und wie schreibt die Weltpresse über es? Ton und Emotions-Raten je Pool, Bootstrap-Konfidenzintervall der Lücke, unantastbares Tagesarchiv. Gemessen wird Darstellung, nie Volksstimmung.',
+      en: 'From the “Counter-Measurement” line. For each country, daily: how its own press writes about it — against how the world’s press writes about it. Tone and emotion rates per pool, a bootstrap confidence interval on the gap, an immutable daily archive. It measures portrayal, never population mood.',
+    },
+    methodHref: '/werke/balance',
+    tier: 'experiment',
+  },
+  {
     id: 'correction',
     title: 'The Correction',
     subtitle: {
@@ -411,6 +429,10 @@ export const HOLDINGS_RANKED: readonly string[] = [
   'protokoll',
   'praemie',
   'redaction',
+  // The Balance enters mid-list on launch day (2026-08-14): the claim is strong (a stranger
+  // grasps self-image vs. foreign image in one sentence) but the archive is one day deep —
+  // rank follows accumulated evidence, and reordering stays Frank's one-edit call.
+  'balance',
   'ghost-fleet',
   'spielraum',
   'round-number',

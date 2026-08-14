@@ -4,11 +4,11 @@
     "sources": [
       {
         "file": "src/data/werke.ts",
-        "sha256": "aa100cd8e484def8"
+        "sha256": "f416a9f84940c6fe"
       },
       {
         "file": "docs/audits/2026-08-09-usp-audit.md",
-        "sha256": "d9e52bfb05e6e497"
+        "sha256": "1d05a2cf96503c9f"
       },
       {
         "file": "docs/decision-log.md",
@@ -20,7 +20,7 @@
       },
       {
         "file": "src/data/begegnungen/register.json",
-        "sha256": "6fb2411b979a74f4"
+        "sha256": "377346e869767c9a"
       },
       {
         "file": "docs/audits/2026-08-09-ecology-usp-audit.md",
@@ -48,32 +48,32 @@
       },
       {
         "file": "src/data/nightly/works/*/meta.json",
-        "sha256": "ee5ed890c99138bb",
-        "files": 10
+        "sha256": "8839c7ef6915a3c3",
+        "files": 11
       },
       {
         "file": "src/data/attention/export.json",
-        "sha256": "1e468960d2158449"
+        "sha256": "cb1979c81bcf58b8"
       }
     ],
     "counts": {
-      "nodes": 230,
-      "edges": 206,
+      "nodes": 237,
+      "edges": 212,
       "nodesByKind": {
         "decision": 42,
         "encounter": 6,
-        "neighbor": 77,
+        "neighbor": 82,
         "practice": 9,
-        "practice-work": 70,
+        "practice-work": 71,
         "receiver": 6,
-        "work": 20
+        "work": 21
       },
       "edgesByKind": {
         "addresses": 6,
         "concerns": 2,
         "door": 5,
-        "made-by": 70,
-        "neighbor-of": 77,
+        "made-by": 71,
+        "neighbor-of": 82,
         "participates": 17,
         "touches": 29
       }
@@ -597,6 +597,16 @@
       "url": "https://airwars.org"
     },
     {
+      "id": "neighbor:alexeymakarin-github-io-assets-lmwz-global-media-bias-pdf",
+      "kind": "neighbor",
+      "label": "Makarin et al., \"The War of Ideas\"",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Makarin et al., \"The War of Ideas\"](https://alexeymakarin.github.io/assets/LMWZ_Global_Media_Bias.pdf) — academic proof that dyadic cross-country media tone is measurable and meaningful; a paper, not a living instrument."
+      },
+      "url": "https://alexeymakarin.github.io/assets/LMWZ_Global_Media_Bias.pdf"
+    },
+    {
       "id": "neighbor:alfred-st-louis-fed",
       "kind": "neighbor",
       "label": "ALFRED (St. Louis Fed)",
@@ -662,6 +672,16 @@
         "quote": "[\"Implementing Agents in JavaScript\"](https://arxiv.org/abs/2505.18228) — precedent for static, no-backend, browser-only multi-agent simulation as a deployment pattern, not built around Minsky's book."
       },
       "url": "https://arxiv.org/abs/2505.18228"
+    },
+    {
+      "id": "neighbor:blog-gdeltproject-org-gdelt-doc-2-0-api-debuts",
+      "kind": "neighbor",
+      "label": "GDELT DOC 2.0 API",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[GDELT DOC 2.0 API](https://blog.gdeltproject.org/gdelt-doc-2-0-api-debuts/) — per-country *tone* timeline in one URL (`timelinetone` + `sourcecountry:`); tone only, ~3-month rolling window, no emotions, no archive."
+      },
+      "url": "https://blog.gdeltproject.org/gdelt-doc-2-0-api-debuts/"
     },
     {
       "id": "neighbor:c4ads-org-reports-oil-and-water",
@@ -1010,6 +1030,16 @@
       }
     },
     {
+      "id": "neighbor:moodglobe-com",
+      "kind": "neighbor",
+      "label": "Global Mood (moodglobe.com)",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Global Mood (moodglobe.com)](https://moodglobe.com) — live GDELT tone world map, 15-min refresh; no discrete emotions, anonymous operator, no method, no archive."
+      },
+      "url": "https://moodglobe.com"
+    },
+    {
       "id": "neighbor:n2yo-com",
       "kind": "neighbor",
       "label": "N2YO.com",
@@ -1017,6 +1047,16 @@
         "file": "docs/audits/2026-08-09-usp-audit.md",
         "quote": "N2YO.com — long-running (since 2004), huge database, real-time tracking, general-purpose, server-side."
       }
+    },
+    {
+      "id": "neighbor:news-gallup-com-interactives-248240-global-emotions-aspx",
+      "kind": "neighbor",
+      "label": "Gallup Global Emotions",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Gallup Global Emotions](https://news.gallup.com/interactives/248240/global-emotions.aspx) — annual *survey* of how populations feel; different genus (people, not press) and the instrument's yearly ground-truth comparison."
+      },
+      "url": "https://news.gallup.com/interactives/248240/global-emotions.aspx"
     },
     {
       "id": "neighbor:nytimes-com-interactive-2024-07-08-climate-home-insurance-cl",
@@ -1309,6 +1349,16 @@
       }
     },
     {
+      "id": "neighbor:worldmoodtracker-com",
+      "kind": "neighbor",
+      "label": "World Mood Tracker",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[World Mood Tracker](https://worldmoodtracker.com) — daily happy/worried/angry/sad labels for 133+ countries; undisclosed model, 30-day memory, no download, nothing citable."
+      },
+      "url": "https://worldmoodtracker.com"
+    },
+    {
       "id": "practice:conductor",
       "kind": "practice",
       "label": "the conductor",
@@ -1377,43 +1427,43 @@
       "figures": [
         {
           "key": "futures_under_watch",
-          "value": 101,
-          "asOf": "2026-08-13"
+          "value": 98,
+          "asOf": "2026-08-14"
         },
         {
           "key": "futures_window_open",
-          "value": 4,
-          "asOf": "2026-08-13"
+          "value": 2,
+          "asOf": "2026-08-14"
         },
         {
           "key": "futures_cold_start",
-          "value": 97,
-          "asOf": "2026-08-13"
+          "value": 95,
+          "asOf": "2026-08-14"
         },
         {
           "key": "futures_drift",
-          "value": 0,
-          "asOf": "2026-08-13"
+          "value": 1,
+          "asOf": "2026-08-14"
         },
         {
           "key": "futures_notarized_total",
           "value": 105,
-          "asOf": "2026-08-13"
+          "asOf": "2026-08-14"
         },
         {
           "key": "futures_resolved",
-          "value": 4,
-          "asOf": "2026-08-13"
+          "value": 7,
+          "asOf": "2026-08-14"
         },
         {
           "key": "materialized",
           "value": 0,
-          "asOf": "2026-08-13"
+          "asOf": "2026-08-14"
         },
         {
           "key": "nights_on_record",
-          "value": 4,
-          "asOf": "2026-08-13"
+          "value": 5,
+          "asOf": "2026-08-14"
         },
         {
           "key": "darkocean_nights_on_record",
@@ -2105,6 +2155,21 @@
       "medium": "geodetic and geomagnetic measurement over 13,818 runways; Python instrument checked against the World Magnetic Model's own published test values; generated SVG; committed data with SHA-256 and five institutional documents read at primary"
     },
     {
+      "id": "practice-work:atelier/2026-08-13-the-vacated-block",
+      "kind": "practice-work",
+      "label": "The Vacated Block",
+      "slug": "2026-08-13-the-vacated-block",
+      "practiceId": "ulysses",
+      "date": "2026-08-13",
+      "href": "/error-as-method/2026-08-13-the-vacated-block",
+      "source": {
+        "file": "src/data/nightly/works/2026-08-13-the-vacated-block/meta.json",
+        "quote": "\"title\": \"The Vacated Block\""
+      },
+      "embodies": "Session 53 proposed that the shape of an institution's channel decides the direction of its repairs: where it reaches the references to a norm it withdraws the wrong name and keeps the referent, and where it reaches only their resolution it keeps the name in service forever and moves the referent underneath. It wrote down the case that would kill it - a resolution-only institution that withdraws a name anyway and lets references break - and this night went to find one. The Unicode Consortium is resolution-only in the strictest sense, since no release can reach a code point already stored in somebody's file. Every published UnicodeData.txt from the reconstructed 1.0.0 to the 18.0.0 pre-release was downloaded, hashed and diffed, and the standard withdrew 7,059 characters: six in 1992, 397 in 1995 including 71 Tibetan letters, and the entire block of 6,656 named Hangul syllables at U+3400-U+4DFF in July 1996. The vacated addresses were not left as scars but given to other scripts - Myanmar and CJK Ideograph Extension A in 1999 - so a Korean document encoded under Unicode 1.1 now resolves, character for character, to Chinese ideographs: the references did not break loudly, they went on working and meaning something else. Since Unicode 2.0 there have been zero withdrawals in thirty years and thirty-two releases, and the only two name changes on record are the removal of a trailing space that 4.0.0 shipped in two names. The claim is therefore refuted as stated, and the refutation carries its date: both stability policies - once a character is encoded it will not be moved or removed; its name will not be changed - are stamped Applicable Version 2.0+, which is the very release that performed the largest withdrawal in the standard's history. The prohibition is dated to the injury. So the channel does not decide what an institution does with a wrong name; it decides what a withdrawal costs, and whether the institution knows that cost is a fact about its history rather than its architecture - a body that has never withdrawn does not yet know what it cannot reach, and one that has, freezes. What repair became afterwards is measured too: with the name and the address both frozen, correction moves to a third position beside the norm - 21,797 chart annotations, 39 formal name aliases, eleven characters whose annotation says in the standard's own words that the name is a mistake, and three of those eleven carrying the admission with no corrected name at all, because the policy's verb is may and not will. The same move repeats one level down, where the conversion table published to rescue the withdrawn Hangul references has eleven wrong rows and an erratum beside it declaring that the file itself will not be corrected. And the event has left the institution's own history: DerivedAge.txt dates U+3400 from 1999, the arrival of its second occupant, because a namespace whose constitution forbids withdrawal has no field for a previous tenant.",
+      "medium": "measurement of 36 published versions of a norm's own namespace, 1991-2026, reconstructed from the institution's complete public archive of data files; Python instrument, stdlib only, offline at measuring time; generated SVG; six primary institutional documents read at source, the decisive rows committed verbatim with SHA-256"
+    },
+    {
       "id": "practice-work:field/2026-07-01-calibration-gap",
       "kind": "practice-work",
       "label": "Calibration Certificate",
@@ -2630,6 +2695,28 @@
       }
     },
     {
+      "id": "work:balance",
+      "kind": "work",
+      "label": "The Balance",
+      "werkId": "balance",
+      "href": "/balance",
+      "since": "2026-08-14",
+      "source": {
+        "file": "src/data/werke.ts",
+        "quote": "id: 'balance'"
+      },
+      "rank": 7,
+      "tier": "experiment",
+      "line": "From the “Counter-Measurement” line.",
+      "verdict": "UNIQUE",
+      "verdictLabel": "UNIQUE (as a living instrument).",
+      "daylight": "Ship the yearly Gallup-divergence record (press weather vs. surveyed population mood — nobody computes that gap publicly) and the translation-stream upgrade so non-anglophone self-images stop being thin; both are named in the spec, neither exists at any neighbor.",
+      "auditSource": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "UNIQUE (as a living instrument)."
+      }
+    },
+    {
       "id": "work:beifang",
       "kind": "work",
       "label": "Bycatch",
@@ -2640,7 +2727,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'beifang'"
       },
-      "rank": 11,
+      "rank": 12,
       "verdict": "ADDED VALUE",
       "verdictLabel": "ADDED VALUE (narrow).",
       "daylight": "Cite the prior academic literature (Hanson, Marino, SPARC) explicitly on the page — currently absent, which reads as unawareness — and make the recurring-cadence, paired-control, dual-vantage-point apparatus the headline claim, since that's the part with no existing match.",
@@ -2682,7 +2769,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'correction'"
       },
-      "rank": 12,
+      "rank": 13,
       "tier": "studie",
       "line": "From the “Counter-Measurement” line.",
       "verdict": "REDUNDANT",
@@ -2716,7 +2803,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'ghost-fleet'"
       },
-      "rank": 7,
+      "rank": 8,
       "tier": "studie",
       "line": "From the “Counter-Measurement” line.",
       "verdict": "REDUNDANT",
@@ -2791,7 +2878,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'pattern'"
       },
-      "rank": 13,
+      "rank": 14,
       "line": "Capstone of the “Counter-Measurement” line.",
       "verdict": "REDUNDANT",
       "verdictLabel": "REDUNDANT — the weakest claim to uniqueness in this audit.",
@@ -2873,7 +2960,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'round-number'"
       },
-      "rank": 9,
+      "rank": 10,
       "line": "From the “Counter-Measurement” line.",
       "verdict": "REDUNDANT",
       "verdictLabel": "REDUNDANT.",
@@ -2915,7 +3002,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'spielraum'"
       },
-      "rank": 8,
+      "rank": 9,
       "tier": "experiment",
       "line": "From the counter-measurement line.",
       "verdict": "ADDED VALUE",
@@ -2949,7 +3036,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'tell'"
       },
-      "rank": 10,
+      "rank": 11,
       "line": "From the “Counter-Measurement” line.",
       "verdict": "REDUNDANT",
       "verdictLabel": "REDUNDANT — the clearest case in this audit.",
@@ -2970,7 +3057,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'ueberflug'"
       },
-      "rank": 14,
+      "rank": 15,
       "tier": "studie",
       "verdict": "ADDED VALUE",
       "verdictLabel": "ADDED VALUE, genuine but narrow.",
@@ -3493,6 +3580,15 @@
     },
     {
       "kind": "made-by",
+      "from": "practice-work:atelier/2026-08-13-the-vacated-block",
+      "to": "practice:ulysses",
+      "source": {
+        "file": "src/data/nightly/works/2026-08-13-the-vacated-block/meta.json",
+        "quote": "\"date\": \"2026-08-13\""
+      }
+    },
+    {
+      "kind": "made-by",
       "from": "practice-work:field/2026-07-01-calibration-gap",
       "to": "practice:meridian",
       "source": {
@@ -3907,6 +4003,61 @@
       "source": {
         "file": "docs/audits/2026-08-09-usp-audit.md",
         "quote": "Proof of Existence / OriginStamp — the original hash-plus-blockchain-timestamp services (2013/2015) this whole mechanism descends from."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:balance",
+      "to": "neighbor:alexeymakarin-github-io-assets-lmwz-global-media-bias-pdf",
+      "note": "academic proof that dyadic cross-country media tone is measurable and meaningful; a paper, not a living instrument.",
+      "state": "UNIQUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Makarin et al., \"The War of Ideas\"](https://alexeymakarin.github.io/assets/LMWZ_Global_Media_Bias.pdf) — academic proof that dyadic cross-country media tone is measurable and meaningful; a paper, not a living instrument."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:balance",
+      "to": "neighbor:blog-gdeltproject-org-gdelt-doc-2-0-api-debuts",
+      "note": "per-country *tone* timeline in one URL (`timelinetone` + `sourcecountry:`); tone only, ~3-month rolling window, no emotions, no archive.",
+      "state": "UNIQUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[GDELT DOC 2.0 API](https://blog.gdeltproject.org/gdelt-doc-2-0-api-debuts/) — per-country *tone* timeline in one URL (`timelinetone` + `sourcecountry:`); tone only, ~3-month rolling window, no emotions, no archive."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:balance",
+      "to": "neighbor:moodglobe-com",
+      "note": "live GDELT tone world map, 15-min refresh; no discrete emotions, anonymous operator, no method, no archive.",
+      "state": "UNIQUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Global Mood (moodglobe.com)](https://moodglobe.com) — live GDELT tone world map, 15-min refresh; no discrete emotions, anonymous operator, no method, no archive."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:balance",
+      "to": "neighbor:news-gallup-com-interactives-248240-global-emotions-aspx",
+      "note": "annual *survey* of how populations feel; different genus (people, not press) and the instrument's yearly ground-truth comparison.",
+      "state": "UNIQUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Gallup Global Emotions](https://news.gallup.com/interactives/248240/global-emotions.aspx) — annual *survey* of how populations feel; different genus (people, not press) and the instrument's yearly ground-truth comparison."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:balance",
+      "to": "neighbor:worldmoodtracker-com",
+      "note": "daily happy/worried/angry/sad labels for 133+ countries; undisclosed model, 30-day memory, no download, nothing citable.",
+      "state": "UNIQUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[World Mood Tracker](https://worldmoodtracker.com) — daily happy/worried/angry/sad labels for 133+ countries; undisclosed model, 30-day memory, no download, nothing citable."
       }
     },
     {

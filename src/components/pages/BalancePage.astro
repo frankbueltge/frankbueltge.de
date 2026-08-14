@@ -1,0 +1,174 @@
+---
+/** The Balance — the emotional trade balance of the world's press.
+ *  Measures portrayal (self-image vs. foreign image per country), never population mood.
+ *  Data: src/data/balance/latest.json, committed nightly; git is the archive. */
+import data from '@/data/balance/latest.json'
+import type { BalanceData } from '@/lib/balance/types'
+import { ciLabel, directionSentence, fixed, signed, windowLabel } from '@/lib/balance/format'
+
+const d = data as unknown as BalanceData
+const h = d.headline
+const failed = d.stats.slots_fetched === 0
+const rows = d.countries
+const sigCount = rows.filter((r) => r.dims.tone?.significant).length
+const dateLabel = d.date
+---
+
+<article class="mx-auto max-w-3xl px-4 py-14">
+  <header class="mb-10">
+    <h1 class="text-[clamp(30px,6vw,56px)] font-bold tracking-[-0.03em]">The Balance</h1>
+    <p class="mt-2 max-w-xl text-fg-muted">
+      The emotional trade balance of the world's press: how each country's own newsrooms write
+      about it — against how the world's newsrooms write about it. Daily, archived, never edited.
+    </p>
+    <p class="mt-3 font-mono text-xs uppercase tracking-[0.18em] text-fg-faint">{dateLabel}</p>
+  </header>
+
+  {failed ? (
+    <section class="mb-12 border-l-2 border-line pl-5">
+      <p class="text-fg-muted">Source unreachable — finding omitted. A gap is recorded, never bridged.</p>
+    </section>
+  ) : h ? (
+    <section class="mb-12 border-l-2 border-accent/60 pl-5">
+      <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+        Today's widest gap between self-image and foreign image
+      </p>
+      <p class="mt-3 text-[clamp(20px,3.4vw,30px)] font-semibold leading-snug">{h.name}</p>
+      <p class="mt-3 text-fg-muted">{directionSentence(h.name, h.direction)}</p>
+      <p class="mt-2 font-mono text-xs text-fg-faint">
+        Tone of its own press {signed(h.tone_self)} · tone of the world's press {signed(h.tone_foreign)} ·
+        gap {signed(h.gap)} {ciLabel(h.gap_ci95)} — from {h.n_self.toLocaleString('en-US')} articles by its
+        press about itself and {h.n_foreign.toLocaleString('en-US')} articles by everyone else.
+      </p>
+    </section>
+  ) : (
+    <section class="mb-12 border-l-2 border-line pl-5">
+      <p class="text-fg-muted">No significant tone gap above threshold today.</p>
+    </section>
+  )}
+
+  {!failed && rows.length > 0 && (
+    <section class="mb-12">
+      <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+        The ledger — {rows.length} countries with enough material in both pools, {sigCount} with a
+        significant tone gap
+      </p>
+      <div class="mt-3 overflow-x-auto">
+        <table class="w-full border-collapse text-sm tabular-nums">
+          <thead>
+            <tr class="border-b border-line text-left font-mono text-[11px] uppercase tracking-[0.12em] text-fg-faint">
+              <th class="py-2 pr-3 font-medium">Country</th>
+              <th class="py-2 pr-3 text-right font-medium" title="Articles by this country's press about itself">by itself</th>
+              <th class="py-2 pr-3 text-right font-medium" title="Articles by the rest of the world's press about it">by the world</th>
+              <th class="py-2 pr-3 text-right font-medium">tone self</th>
+              <th class="py-2 pr-3 text-right font-medium">tone world</th>
+              <th class="py-2 text-right font-medium">gap (95% CI)</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((r) => {
+              const t = r.dims.tone
+              return (
+                <tr class="border-b border-line/50">
+                  <td class="py-1.5 pr-3">{r.name}</td>
+                  <td class="py-1.5 pr-3 text-right font-mono text-xs">{r.n_self.toLocaleString('en-US')}</td>
+                  <td class="py-1.5 pr-3 text-right font-mono text-xs">{r.n_foreign.toLocaleString('en-US')}</td>
+                  {t ? (
+                    <>
+                      <td class="py-1.5 pr-3 text-right font-mono text-xs">{signed(t.self)}</td>
+                      <td class="py-1.5 pr-3 text-right font-mono text-xs">{signed(t.foreign)}</td>
+                      <td class:list={['py-1.5 text-right font-mono text-xs', t.significant ? '' : 'text-fg-faint']}>
+                        {signed(t.self - t.foreign)} {ciLabel(t.gap_ci95)}{t.significant ? '' : ' ·  n.s.'}
+                      </td>
+                    </>
+                  ) : (
+                    <td colspan="3" class="py-1.5 text-right font-mono text-xs text-fg-faint">withheld</td>
+                  )}
+                </tr>
+              )
+            })}
+          </tbody>
+        </table>
+      </div>
+      <p class="mt-2 font-mono text-[11px] text-fg-faint">
+        Tone −100…+100 (GDELT V1.5TONE, document level). Sorted by today's absolute gap. “n.s.” =
+        the bootstrap 95% interval crosses zero. Countries with fewer than {d.method.min_pool}
+        articles in either pool are withheld, never estimated.
+      </p>
+    </section>
+  )}
+
+  <section class="mb-12">
+    <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">What this measures — and what it does not</p>
+    <ul class="mt-3 space-y-2 text-sm text-fg-muted">
+      <li>
+        <strong>Portrayal, not population mood.</strong> Tone and emotion rates are properties of
+        the writing press. Nothing here says how people in a country feel; it says how newsrooms
+        write. That is the subject, not a shortcoming: the gap between self-portrayal and foreign
+        portrayal is the measurement.
+      </li>
+      <li>
+        <strong>The pool is GDELT's English-monitored stream</strong> ({(d.stats.mapping_rate * 100).toFixed(1)}%
+        of source domains mapped to a country today). Countries whose press writes mainly in other
+        languages are underrepresented on the “by itself” side — a country the world discusses
+        loudly while its own English-monitored press is nearly silent shows that asymmetry here.
+        The translation stream is the named v2 upgrade.
+      </li>
+      <li>
+        <strong>Absolute values, not anomalies.</strong> News tone drifts more negative over the
+        years (Rozado et&nbsp;al. 2022); day-vs-baseline scores need a baseline, and this archive
+        starts accumulating it today. Until then the ledger shows levels with confidence
+        intervals, nothing else.
+      </li>
+      <li>
+        <strong>Document-level scores.</strong> An article mentioning two countries contributes its
+        whole tone to both — co-mention noise is real, disclosed, and part of why pools have
+        floors and intervals.
+      </li>
+    </ul>
+  </section>
+
+  <section class="mb-12">
+    <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">Nearest neighbors</p>
+    <ul class="mt-3 space-y-2 text-sm text-fg-muted">
+      <li>
+        <a href="https://blog.gdeltproject.org/gdelt-doc-2-0-api-debuts/" target="_blank" rel="noopener nofollow" class="underline decoration-line underline-offset-2 hover:text-fg">GDELT DOC 2.0 API</a>
+        — per-country <em>tone</em> timelines in one URL; tone only, rolling ~3-month window, no archive.
+      </li>
+      <li>
+        <a href="https://moodglobe.com" target="_blank" rel="noopener nofollow" class="underline decoration-line underline-offset-2 hover:text-fg">Global Mood</a>
+        — live GDELT tone world map; no discrete emotions, no method disclosure, no archive.
+      </li>
+      <li>
+        <a href="https://worldmoodtracker.com" target="_blank" rel="noopener nofollow" class="underline decoration-line underline-offset-2 hover:text-fg">World Mood Tracker</a>
+        — daily emotion labels for 133+ countries; undisclosed model, 30-day memory, no data download.
+      </li>
+      <li>
+        <a href="https://news.gallup.com/interactives/248240/global-emotions.aspx" target="_blank" rel="noopener nofollow" class="underline decoration-line underline-offset-2 hover:text-fg">Gallup Global Emotions</a>
+        — how people actually report feeling, per country, once a year. The survey ground truth this
+        instrument will compare itself against annually — measuring the press/population divergence
+        instead of hiding it.
+      </li>
+    </ul>
+    <p class="mt-3 text-sm text-fg-muted">
+      The daylight: none of them measures the <em>asymmetry</em> — self-image against foreign
+      image, as a living, method-open, immutably archived daily ledger. That asymmetry is
+      documented as measurable in the research literature (Makarin et&nbsp;al., “The War of
+      Ideas”), and runs nowhere as a public instrument.
+    </p>
+  </section>
+
+  <footer class="border-t border-line pt-5 font-mono text-xs text-fg-faint">
+    <p>
+      Scanned {d.stats.articles_scanned.toLocaleString('en-US')} articles ·
+      {d.stats.articles_mapped.toLocaleString('en-US')} mapped to a source country ·
+      window {windowLabel(d.stats.window)} ·
+      {d.stats.slots_fetched}/{d.stats.slots_expected} files
+      {d.stats.slots_missing.length > 0 ? ` (${d.stats.slots_missing.length} gaps disclosed)` : ''}
+    </p>
+    <p class="mt-1">
+      Data: <a href={d.source.url} target="_blank" rel="noopener" class="underline decoration-line underline-offset-2 hover:text-fg">GDELT Project</a>
+      ({d.source.license.toLowerCase()}) · method sheet: <a href="/werke/balance" class="underline decoration-line underline-offset-2 hover:text-fg">/werke/balance</a>
+    </p>
+  </footer>
+</article>
