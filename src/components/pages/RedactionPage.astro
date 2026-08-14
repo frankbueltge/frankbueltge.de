@@ -4,7 +4,7 @@ import { t } from '@/i18n/ui'
 import type { Locale } from '@/lib/site'
 import type { RedactionData, Redaction } from '@/lib/redaction/types'
 import type { WorldData } from '@/lib/redaction/world'
-import { pct, thousands } from '@/lib/redaction/world'
+import { pct, thousands, withholdOnPage } from '@/lib/redaction/world'
 import { tokensLabel, signalLabel, dateLabel } from '@/lib/redaction/format'
 import data from '@/data/redaction/latest.json'
 import worldData from '@/data/redaction/world/latest.json'
@@ -180,9 +180,15 @@ const titleChangesWorld = wg.available ? (wg.status_counts?.PAGE_TITLECHANGE ?? 
           </div>
           {(wd.receipts?.length ?? 0) > 0 && (
             <ul class="mt-4 space-y-2">
-              {wd.receipts!.filter((r) => r.class.startsWith('gone')).slice(0, 3).map((r) => (
+              {wd.receipts!.filter((r) => r.class.startsWith('gone') && r.title).slice(0, 3).map((r) => (
                 <li class="text-sm">
-                  <span class="text-fg-muted line-through decoration-accent/70">{r.title}</span>
+                  {withholdOnPage(r.title!) ? (
+                    <span class="italic text-fg-faint">
+                      headline withheld — personal-rights caution (crime/court marker); counted, kept in the archive
+                    </span>
+                  ) : (
+                    <span class="text-fg-muted line-through decoration-accent/70">{r.title}</span>
+                  )}
                   <span class="ml-2 font-mono text-xs text-fg-faint">
                     {r.domain} · committed {wd.sample_drawn_at?.slice(0, 10)}, gone by {wd.checked_at?.slice(0, 10)}
                   </span>
