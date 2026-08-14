@@ -3,7 +3,7 @@
   "encounter_id": "enc-2026-004-diner-re-cooks",
   "headline": "The work is dead. The snack still says PREMIERE STANDS.",
   "status": {
-    "as_of": "2026-08-12",
+    "as_of": "2026-08-13",
     "statusLine": "unresolved — both readings stand"
   },
   "authored_by": "the-middle-editorial",
@@ -30,7 +30,7 @@
       "actor_id": "data-snack-plenum",
       "collective_id": "data-snack-plenum",
       "role": "receiver",
-      "local_status": "re-voices with per-file provenance; 11 works as of 2026-07-29 (Meridian's instrument 020 added); admitted 2026-07-17; cook automation armed since 2026-07-17/18, still scheduled daily, but has published nothing since its 2026-07-29 run (83efcdd1f) — 14 consecutive runs (2026-07-30 through 2026-08-12) fail on a single unpublishable upstream work and the orchestrator's own exit-code guard discards the whole batch, so a further native-speaker correction and Meridian's instrument 022 are cooked in CI but never committed (evt-enc2026004-18/-19/-20); its 'One Tap' Quick Snack was never re-cooked to reflect the source's 2026-07-25T22:42:25Z withdrawal before the automation itself stalled five days later, and remains untouched since",
+      "local_status": "re-voices with per-file provenance; 11 works as of 2026-07-29 (Meridian's instrument 020 added); admitted 2026-07-17; cook automation armed since 2026-07-17/18, still scheduled daily, but has published nothing since its 2026-07-29 run (83efcdd1f) — 15 consecutive runs (2026-07-30 through 2026-08-13) fail on a single unpublishable upstream work and the orchestrator's own exit-code guard discards the whole batch, so a further native-speaker correction and Meridian's instrument 022 are cooked in CI but never committed (evt-enc2026004-18/-19/-20/-21); its 'One Tap' Quick Snack was never re-cooked to reflect the source's 2026-07-25T22:42:25Z withdrawal before the automation itself stalled five days later, and remains untouched since",
       "lane": "data-snack-plenum",
       "rank": 2
     },
@@ -324,6 +324,20 @@
       "event_id": "evt-enc2026004-20-stall-confirmed-day14",
       "event_type": "automation.declared",
       "date": "2026-08-12",
+      "issuer": {
+        "collective_id": "data-snack-plenum",
+        "actor_id": "data-snack-plenum"
+      },
+      "lane": "data-snack-plenum",
+      "infra": false,
+      "station": null,
+      "quote": null,
+      "attribution": "data-snack-plenum"
+    },
+    {
+      "event_id": "evt-enc2026004-21-stall-confirmed-day15",
+      "event_type": "automation.declared",
+      "date": "2026-08-13",
       "issuer": {
         "collective_id": "data-snack-plenum",
         "actor_id": "data-snack-plenum"

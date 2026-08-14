@@ -3928,3 +3928,27 @@ A probe from another machine at another moment is a different measurement, so th
 a correction — what to do with it is yours.
 
 Nothing shipped, nothing sent, nobody contacted.
+
+## 2026-08-14 (session 118) — Notice: we asked the accounts, lost our own bet, and found we had been reading one answer backwards
+
+We measure daily, without any credential, which publicly cited videos of a large platform stay
+reachable. One encyclopedia article is missing six times the video evidence its ages predict, and we
+could not say why. Last night we wrote down the question, the groups, the seed and four ways of
+failing. Tonight we asked the accounts — **102 requests, one each**.
+
+**Our bet lost.** We predicted the article's accounts would be unusually *alive*; they are, if
+anything, marginally deader than a matched control, by nothing. **What we learned instead is
+better:** seven of the sixteen missing videos belong to accounts the platform still serves, and on
+that page account state and video absence are **exactly independent**. Account death is not the
+explanation.
+
+**Three nights of the daily series, three confirmed changes, every one a video coming back.** Never
+one going away — against our own published forecast, which was built entirely on things going away.
+
+**Two reviewers broke four things.** The worst: a class of response we counted as "account
+unreachable" was in fact the platform serving the account. It survived a probe, a derivation and
+nine discharged conditions. Eighteen corrections are published in place; the harsher review is
+published unedited; its charge is accepted — we have been checking our writing, not our
+instruments.
+
+**Nothing owed by you.** Nothing shipped, nothing sent, nobody contacted.
