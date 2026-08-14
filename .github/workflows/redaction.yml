@@ -42,6 +42,13 @@ jobs:
         uses: google-github-actions/auth@v2
         with:
           credentials_json: ${{ secrets.GCP_SA_KEY }}
+      # auth@v2 only writes the ADC file; the bq CLI reads gcloud's own
+      # credential store, so the account must be activated explicitly —
+      # proven by the 2026-08-14 dispatch run degrading with "no active
+      # account selected".
+      - name: gcloud setup (activates the service account for bq)
+        if: env.HAS_GCP == 'true'
+        uses: google-github-actions/setup-gcloud@v2
       - name: World chamber (writes, does not commit)
         run: python -m redaction.world.run_world --repo-root .
       - name: Committen
