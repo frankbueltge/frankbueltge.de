@@ -16,7 +16,7 @@
       },
       {
         "file": "src/data/post/ledger.json",
-        "sha256": "a7ae78b6f4879297"
+        "sha256": "e66c80fda45a257f"
       },
       {
         "file": "src/data/begegnungen/register.json",
@@ -57,19 +57,19 @@
       }
     ],
     "counts": {
-      "nodes": 267,
-      "edges": 235,
+      "nodes": 268,
+      "edges": 236,
       "nodesByKind": {
         "decision": 57,
         "encounter": 6,
         "neighbor": 93,
         "practice": 9,
         "practice-work": 74,
-        "receiver": 6,
+        "receiver": 7,
         "work": 22
       },
       "edgesByKind": {
-        "addresses": 6,
+        "addresses": 7,
         "concerns": 2,
         "door": 5,
         "made-by": 74,
@@ -2941,6 +2941,15 @@
       }
     },
     {
+      "id": "receiver:global-fishing-watch-research-and-data-enquiry-channel",
+      "kind": "receiver",
+      "label": "Global Fishing Watch — research and data enquiry channel",
+      "source": {
+        "file": "src/data/post/ledger.json",
+        "quote": "\"receiver\": \"Global Fishing Watch — research and data enquiry channel\""
+      }
+    },
+    {
       "id": "receiver:journal-for-artistic-research-jar-society-for-artistic-resea",
       "kind": "receiver",
       "label": "Journal for Artistic Research (JAR), Society for Artistic Research — Michael Schwab, Editor in Chief",
@@ -3416,6 +3425,17 @@
       "source": {
         "file": "src/data/post/ledger.json",
         "quote": "\"receiver\": \"ZKM | Karlsruhe, Arte Útil open call (Mira Hirtz)\""
+      }
+    },
+    {
+      "kind": "addresses",
+      "from": "practice:ensemble",
+      "to": "receiver:global-fishing-watch-research-and-data-enquiry-channel",
+      "note": "STILL DARK — how much of one day of the sea was knowable on the day itself",
+      "state": "prepared",
+      "source": {
+        "file": "src/data/post/ledger.json",
+        "quote": "\"receiver\": \"Global Fishing Watch — research and data enquiry channel\""
       }
     },
     {
