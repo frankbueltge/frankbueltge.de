@@ -146,3 +146,39 @@ runtime 235 s + analysis). Findings:
 
 **Gate consequence**: buildable, with §1 reframed to the historical scope. The 2015 wall
 goes on the method sheet as an inherited instrument property, prominently.
+
+## Addendum 2 (2026-08-15, hours after launch): the finding explains itself — v1.1
+
+**Occasion.** Frank's objection to the launched page (wording private): it is pointless to
+determine a standout year at that much effort and then not explain why it *is* the standout
+year. The objection is right, and the fault is in this spec: §4's honesty clause ("the
+instrument shows who invokes, never why") was written against unsourced interpretation and
+then applied to *every* explanation — including one that is measurable and lies in the same
+GKG rows the count comes from.
+
+**What v1.1 adds.** Beside the standout year, the day file now carries `headline.why`:
+
+- **The anniversary, as arithmetic.** The year's most-invoked exact date against the
+  record's own date. On 2026-08-15: 1947-08-15, 191 mentions, month-day equal to today. A
+  computed fact, not a lookup.
+- **What the invoking articles were about.** GDELT's theme codes (column 7), ranked by
+  **lift** — how much more common a theme is among the articles invoking this year than
+  across the day — because the commonest codes on any day are GDELT's generic ones
+  (TAX_FNCACT sits on ~90 % of all articles) and carry no information. Lift alone is not
+  enough either: unbounded it returned snow leopards and warts, each on ~23 syndicated
+  articles, so a theme needs ≥ 15 articles, ≥ 8 % of the year's articles, and lift ≥ 2. The
+  same day then returns Indians · Sovereignty · Bharat · Refugees · Citizens · Democracy.
+- **The names** GDELT extracted (columns 11 and 13), with article counts.
+- **The headlines** of up to five invoking articles, linked, with articles that named a
+  *full date* inside the year shown first — "15 August 1947" is more on the subject than a
+  passing "1947".
+
+**What v1.1 still refuses.** The instrument does not name the event. It nowhere asserts that
+1947 means Indian independence, because no committed byte supports that claim — the
+receipts are published and the naming is the reader's. That is the line between an
+instrument that shows its evidence and an oracle, and it is the only part of §4's honesty
+clause that was ever load-bearing.
+
+**Archive note.** The launch day's file was regenerated the same day to carry the evidence
+block; the finding is unchanged (1947), and `method.version` records `v1.1`. Every later
+day is written once, as the rule requires.

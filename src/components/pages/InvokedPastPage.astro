@@ -14,8 +14,10 @@ import {
   invokedByLabel,
   percent,
   standoutWindow,
+  themeLabel,
   times,
   windowLabel,
+  yearsBetween,
 } from '@/lib/invoked/format'
 import InvokedPastFigure from './InvokedPastFigure.astro'
 
@@ -26,9 +28,11 @@ const neighbourhood = standoutWindow(d.method.standout)
 const ceiling = d.stats.max_year_observed
 const scope = `${d.method.year_window[0]}–${ceiling}`
 const topYears = d.top_years.slice(0, 12)
-// The dates most often named inside the standout year — derived, never interpreted: the
-// instrument counts dates, and which anniversary a date is remains the reader's knowledge.
-const datesInStandout = h ? d.exact_dates_top.filter((e) => e.date.startsWith(`${h.year}-`)).slice(0, 3) : []
+// The evidence for the standout, published since method v1.1: themes, names and headlines
+// out of the very rows the count came from. Optional, because day files written before
+// v1.1 carry a headline without one — never because the page may skip the receipts.
+const why = h?.why ?? null
+const anniversary = why?.anniversary ?? null
 const lawTest = d.law_test
 ---
 
@@ -38,8 +42,9 @@ const lawTest = d.law_test
     <p class="mt-2 max-w-xl text-fg-muted">
       Which yesterday the world cites today. Every night the instrument reads every dated
       reference in the last 24 hours of the world's press and publishes the histogram of
-      invoked years: which pasts were made present, by whose newsrooms, and how old today's
-      memory is. Daily, archived, never edited.
+      invoked years: which pasts were made present, by whose newsrooms, how old today's memory
+      is — and, for the year that stands out, what the articles invoking it were about. Daily,
+      archived, never edited.
     </p>
     <p class="mt-3 font-mono text-xs uppercase tracking-[0.18em] text-fg-faint">{d.date}</p>
   </header>
@@ -72,17 +77,11 @@ const lawTest = d.law_test
           Invoked by {invokedByLabel(h.invoked_by, 6)} · {decimal(h.per_1000_articles, 1)} mentions per 1,000 articles
         </p>
       )}
-      {datesInStandout.length > 0 && (
-        <p class="mt-2 font-mono text-xs text-fg-faint">
-          Dates most often named inside that year: {datesInStandout.map((e, i) => (
-            <>{i > 0 ? ' · ' : ''}{humanDate(e.date)} ({count(e.mentions)})</>
-          ))}
-        </p>
-      )}
       <p class="mt-3 text-sm text-fg-muted">
-        Which anniversary this is, the instrument does not know: it counts dates, not events. And a
-        year carried overwhelmingly by one country is as often an artefact of the extractor as a
-        memory — which is why the country share stands beside the finding instead of behind it.
+        Why this year and not another is measurable, and it is measured directly below — from the same
+        rows the count came from. And a year carried overwhelmingly by one country is as often an
+        artefact of the extractor as a memory, which is why the country share stands beside the finding
+        instead of behind it.
       </p>
     </section>
   ) : (
@@ -90,6 +89,170 @@ const lawTest = d.law_test
       <p class="text-fg-muted">
         No year stood out from its neighbourhood above threshold today — a quiet day is a finding,
         and it is published as one.
+      </p>
+    </section>
+  )}
+
+  {!failed && h && why && (
+    <section class="mb-12 border-l-2 border-accent/30 pl-5">
+      <h2 class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+        Why this year — the evidence, out of the same rows
+      </h2>
+      <p class="mt-3 text-fg-muted">
+        The {count(h.mentions)} mentions of {h.year} came from {count(why.articles)} of today's
+        {' '}{count(d.stats.articles_scanned)} articles, and every one of those articles carried more than a
+        date: GDELT's theme codes, the persons and organisations it extracted, the article's own headline.
+        Those columns sit in the same rows as the count, so the reason this year stands out is measurable
+        without leaving the file — and it is measured here rather than left to the reader to guess.
+      </p>
+
+      {anniversary && (
+        <div class="mt-6">
+          <h3 class="font-mono text-[11px] uppercase tracking-[0.12em] text-fg-faint">
+            The anniversary, as arithmetic
+          </h3>
+          {anniversary.matches_today ? (
+            <p class="mt-2 text-fg-muted">
+              The exact date named most often inside {h.year} is {humanDate(anniversary.date)}
+              {' '}({count(anniversary.mentions)} mentions), and the record's own date
+              is {humanDate(anniversary.today)} — the same day of the year,
+              {' '}{count(yearsBetween(anniversary.date, anniversary.today))} years apart. Today's standout is
+              an anniversary, and that sentence is a comparison of two dates in this file, not a lookup in
+              a calendar of events.
+            </p>
+          ) : (
+            <p class="mt-2 text-fg-muted">
+              The exact date named most often inside {h.year} is {humanDate(anniversary.date)}
+              {' '}({count(anniversary.mentions)} mentions) — not the record's own day of the year
+              ({humanDate(anniversary.today)}). By this instrument's arithmetic the standout is
+              <em>not</em> an anniversary today, so it is not called one; what it is instead stands in the
+              themes and the headlines below.
+            </p>
+          )}
+          {why.top_exact_dates.length > 0 && (
+            <p class="mt-2 font-mono text-xs text-fg-faint">
+              Exact dates named inside {h.year}: {why.top_exact_dates.map((e, i) => (
+                <>{i > 0 ? ' · ' : ''}{humanDate(e.date)} ({count(e.mentions)})</>
+              ))}
+            </p>
+          )}
+        </div>
+      )}
+
+      {why.themes.length > 0 && (
+        <div class="mt-6">
+          <h3 class="font-mono text-[11px] uppercase tracking-[0.12em] text-fg-faint">
+            What the invoking articles were about
+          </h3>
+          <p class="mt-2 text-sm text-fg-muted">
+            GDELT's own theme codes, ranked by <strong>lift</strong>: how much more common a code is among the
+            {' '}{count(why.articles)} invoking articles than across the day's articles as a whole. Ranked by
+            raw frequency instead, the list returns the codes that sit on every day of the year and says
+            nothing about this one. The raw code stands beside every label — the label is a reading, the code
+            is the checkable thing.
+          </p>
+          <div class="mt-3 overflow-x-auto">
+            <table class="w-full border-collapse text-sm tabular-nums">
+              <thead>
+                <tr class="border-b border-line text-left font-mono text-[11px] uppercase tracking-[0.12em] text-fg-faint">
+                  <th class="py-2 pr-3 font-medium">Theme</th>
+                  <th class="py-2 pr-3 text-right font-medium">articles</th>
+                  <th class="py-2 pr-3 text-right font-medium" title="share of the articles that invoked the standout year">share</th>
+                  <th class="py-2 text-right font-medium" title="times more common here than across the whole day">lift</th>
+                </tr>
+              </thead>
+              <tbody>
+                {why.themes.map((t) => (
+                  <tr class="border-b border-line/50">
+                    <td class="py-1.5 pr-3">
+                      <span title={t.code}>{themeLabel(t.code)}</span>
+                      <span class="ml-2 font-mono text-[11px] text-fg-faint">{t.code}</span>
+                    </td>
+                    <td class="py-1.5 pr-3 text-right font-mono text-xs">{count(t.articles)}</td>
+                    <td class="py-1.5 pr-3 text-right font-mono text-xs">{percent(t.share)}</td>
+                    <td class="py-1.5 text-right font-mono text-xs">{times(t.lift)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p class="mt-2 font-mono text-[11px] text-fg-faint">
+            Three floors before a theme is listed: at least 15 invoking articles, at least 8% of them, and a
+            lift of at least 2 — lift on its own crowns rarity, and rarity is not relevance.
+          </p>
+        </div>
+      )}
+
+      {(why.persons.length > 0 || why.organisations.length > 0) && (
+        <div class="mt-6">
+          <h3 class="font-mono text-[11px] uppercase tracking-[0.12em] text-fg-faint">
+            The names in those articles
+          </h3>
+          <div class="mt-3 grid gap-x-8 gap-y-4 sm:grid-cols-2">
+            {why.persons.length > 0 && (
+              <div>
+                <p class="font-mono text-[11px] uppercase tracking-[0.12em] text-fg-faint">Persons</p>
+                <ul class="mt-2 space-y-1 text-sm">
+                  {why.persons.map((p) => (
+                    <li class="flex justify-between gap-3 border-b border-line/50 pb-1">
+                      <span>{p.name}</span>
+                      <span class="font-mono text-xs tabular-nums text-fg-faint">{count(p.articles)}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            {why.organisations.length > 0 && (
+              <div>
+                <p class="font-mono text-[11px] uppercase tracking-[0.12em] text-fg-faint">Organisations</p>
+                <ul class="mt-2 space-y-1 text-sm">
+                  {why.organisations.map((o) => (
+                    <li class="flex justify-between gap-3 border-b border-line/50 pb-1">
+                      <span>{o.name}</span>
+                      <span class="font-mono text-xs tabular-nums text-fg-faint">{count(o.articles)}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+          <p class="mt-2 font-mono text-[11px] text-fg-faint">
+            Counted in invoking articles, and printed exactly as the extractor listed them — lowercase, and
+            regularly holding phrases that are neither a person nor an organisation. Tidying that list would
+            be this instrument's opinion about what belongs in it.
+          </p>
+        </div>
+      )}
+
+      {why.headlines.length > 0 && (
+        <div class="mt-6">
+          <h3 class="font-mono text-[11px] uppercase tracking-[0.12em] text-fg-faint">
+            The articles themselves
+          </h3>
+          <ul class="mt-3 space-y-3">
+            {why.headlines.map((a) => (
+              <li>
+                <a
+                  href={a.url}
+                  target="_blank"
+                  rel="noopener nofollow"
+                  class="underline decoration-line underline-offset-2 hover:text-fg"
+                >{a.title}</a>
+                <span class="ml-2 font-mono text-[11px] text-fg-faint">{a.domain}</span>
+              </li>
+            ))}
+          </ul>
+          <p class="mt-3 font-mono text-[11px] text-fg-faint">
+            Up to five of the invoking articles, those naming a full date inside {h.year} first. Titles and
+            links as the source recorded them — quoted, not summarised.
+          </p>
+        </div>
+      )}
+
+      <p class="mt-6 text-sm text-fg-muted">
+        One line does not move: the instrument never names the event. It publishes what the press wrote and
+        leaves the naming to whoever reads it — showing the evidence is a measurement, supplying the answer
+        would be an oracle.
       </p>
     </section>
   )}
@@ -276,9 +439,19 @@ const lawTest = d.law_test
       </li>
       <li>
         <strong>A year is not an event.</strong> 1989 carries Tiananmen and the fall of the Wall in the same
-        bar; 1947 carries a partition and a great deal else. Year-resolution mentions are what this field
-        supplies in quantity, so the instrument reports invoked <em>years</em> and leaves the naming of events
-        to the register — which is why the register waits for an archive instead of for a good day.
+        bar, and any busy year is a container of several. Year-resolution mentions are what this field
+        supplies in quantity, so the instrument reports invoked <em>years</em>, publishes what the articles
+        invoking the standout year were about — and still leaves the naming of the event to whoever reads
+        it. The register will hold dates, not names, and only once an archive rather than a single day has
+        chosen them.
+      </li>
+      <li>
+        <strong>Lift is a statement about today, not a verdict on the year.</strong> A theme appears because
+        it is more common among the invoking articles than across the same day's articles; the comparison,
+        the three floors and the raw codes are all published, so the ranking can be recomputed from the day
+        file and disagreed with. The theme, person and organisation extraction is GDELT's own and inherits
+        the looseness of the rest of the field — a phrase that is neither a person nor an organisation
+        reaches this page unedited rather than being quietly dropped.
       </li>
       <li>
         <strong>One country can carry a year on its own.</strong> That is why the standout is scored as an

@@ -25,7 +25,11 @@ Method v1 (2026-08-15):
   4. aggregate mentions per invoked year, normalised per 1,000 articles, with the
      source-country split from the committed GDELT domain lookup that The Balance
      already carries (one snapshot, shared — no second copy),
-  5. record the age profile of the day's historical memory, descriptively.
+  5. record the age profile of the day's historical memory, descriptively,
+  6. and, for the standout year only, publish the EVIDENCE from the same rows:
+     GDELT's theme codes (column 7), the persons and organisations it extracted
+     (11, 13), the real headlines of the invoking articles (PAGE_TITLE in 26),
+     and the anniversary arithmetic. See why_block().
 
 THE 2014 WALL (inherited, not ours). GDELT's extractor emits no year >= 2015 —
 measured on the spike day as a clean cliff (2014: 1,736 mentions, 2015 and later:
@@ -45,6 +49,13 @@ founded from the first REGISTER_MIN_DAYS of archive instead, and carries the
 selection effect it cannot escape — the events were chosen *because* they were the
 founding window's most-invoked dates, so that window is excluded from any fit.
 
+WHY, WITH RECEIPTS — AND STILL NO NAMING (v1.1). v1 computed the standout year
+carefully and then said nothing about why it stood out, on the grounds that the
+instrument counts dates rather than events. That was one step too far: the reason
+is measurable and sits in the same rows. What stays refused is the naming — this
+file never asserts that 1947 means Indian independence, because no committed byte
+supports it. It publishes the headlines that say so, and lets the reader read.
+
 THE HEADLINE IS NOT THE MAXIMUM. The most-invoked year is almost always 2014, the
 ceiling: attention decays with age, so the ramp is the law rather than the news.
 The published finding is the year that BREAKS the ramp — see standout().
@@ -53,8 +64,10 @@ Output: src/data/invoked/latest.json (+ archive <date>.json). Git is the archive
 committed day files are immutable (main() refuses to overwrite).
 """
 import csv
+import html
 import io
 import json
+import re
 import sys
 import time
 import zipfile
@@ -62,8 +75,13 @@ from collections import Counter, defaultdict
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
-METHOD_VERSION = "v1"
+METHOD_VERSION = "v1.1"
 METHOD_SINCE = "2026-08-15"
+# v1.1, same day: v1 found the standout year and then refused to say anything about WHY it
+# stood out — an over-application of the no-unsourced-claims rule to evidence that lies in
+# the very same rows. The finding is unchanged; the day now also carries the themes, names
+# and headlines of the articles that did the invoking. The line that stays: this instrument
+# never NAMES the event. It shows what the press wrote, and the reader reads it.
 SLOTS_PER_DAY = 96
 YEAR_MIN = 1800           # rule (a): plausible window; below this the field is noise
 SELF_REF_DAYS = 2         # rule (b): drop the article's own publication date +/- this
@@ -72,6 +90,17 @@ REGISTER_MIN_DAYS = 30    # ... and not founded before the archive has this many
 TOP_YEARS = 40            # years carried with a source-country split
 EXACT_DATES_TOP = 200     # exact dates carried per day, so the register founding is reproducible
 MIN_COUNTRY_SHARE = 3     # a country needs this many mentions of a year to be named
+HEADLINES_PER_YEAR = 24   # evidence buffer per year; only the standout's survive into the file
+WHY_MIN_ARTICLES = 15     # absolute floor, so a thin day cannot rank on two articles
+WHY_MIN_SHARE = 0.08      # ... and a theme must reach this share of the year's articles.
+                          # Lift alone crowns rarity: on 2026-08-15 an unfiltered ranking
+                          # returned snow leopards and warts, each sitting on ~23 syndicated
+                          # articles. With the share floor the same day returns Indians,
+                          # sovereignty, Bharat, refugees, citizens, democracy.
+WHY_MIN_LIFT = 2.0        # and be at least twice as common here as across the day
+WHY_THEMES = 8            # themes, names and headlines published beside the standout
+WHY_PERSONS = 6
+WHY_HEADLINES = 5
 STANDOUT_WINDOW = 5       # +/- years of neighbours forming a year's local baseline
 STANDOUT_FLOOR = 30       # a year needs this many mentions before it can be the standout
 STANDOUT_MIN_RATIO = 2.0  # ... and must at least double its neighbourhood, or it is just a big year
@@ -85,6 +114,8 @@ STOPLIST_REASON = "empty in v1 — the 2026-08-14 false-positive review found no
 
 # Measured against live GKG 2.1 data on 2026-08-15; GDELT's own codebook numbers these
 # differently, so the mapping is stated here rather than assumed.
+PAGE_TITLE = re.compile(r"<PAGE_TITLE>(.*?)</PAGE_TITLE>", re.S)
+
 RESOLUTION = {"1": "year_only", "2": "month_year", "3": "full_date", "4": "month_day_no_year"}
 YEAR_BEARING = {"1", "2", "3"}
 
@@ -156,6 +187,11 @@ def harvest(lookup: dict) -> tuple[dict, dict]:
     exact_dates = Counter()                             # (y, m, d) -> mentions
     resolutions = Counter()
     removed = Counter()
+    themes_overall = Counter()
+    articles_with_themes = 0
+    evidence: dict[int, dict] = defaultdict(
+        lambda: {"articles": 0, "themes": Counter(), "persons": Counter(),
+                 "orgs": Counter(), "headlines": []})
     max_year_observed = 0
     articles_scanned = 0
     articles_with_dates = 0
@@ -218,6 +254,36 @@ def harvest(lookup: dict) -> tuple[dict, dict]:
                             year_by_country[year][src] += 1
                         if res == "3" and 1 <= month <= 12 and 1 <= day <= 31:
                             exact_dates[(year, month, day)] += 1
+
+                    article_themes = {t.split(",")[0] for t in cols[7].split(";") if t}
+                    if article_themes:
+                        articles_with_themes += 1
+                        themes_overall.update(article_themes)
+                    exact_years = {y for r, _, _, y in kept if r == "3"}
+
+                    # Evidence for the standout, gathered in the same pass because it lives in
+                    # the same rows: the themes, names and headlines of the articles that did
+                    # the invoking. Which year turns out to be the standout is only known at
+                    # the end, so every year carries a buffer and all but one are discarded.
+                    for year in {y for _, _, _, y in kept}:
+                        ev = evidence[year]
+                        ev["articles"] += 1
+                        for t in article_themes:
+                            ev["themes"][t] += 1
+                        for p in cols[11].split(";"):
+                            if p:
+                                ev["persons"][p] += 1
+                        for o in cols[13].split(";"):
+                            if o:
+                                ev["orgs"][o] += 1
+                        if len(ev["headlines"]) < HEADLINES_PER_YEAR:
+                            t = PAGE_TITLE.search(cols[26])
+                            if t:
+                                title = html.unescape(t.group(1)).strip()
+                                if title:
+                                    ev["headlines"].append(
+                                        {"domain": cols[3], "title": title[:180], "url": cols[4],
+                                         "exact": year in exact_years})
         if (k + 1) % 16 == 0:
             print(f"  {k + 1}/{len(slots)} slots, {sum(years.values())} mentions", file=sys.stderr)
         time.sleep(0.3)
@@ -227,6 +293,9 @@ def harvest(lookup: dict) -> tuple[dict, dict]:
         "year_by_country": year_by_country,
         "exact_dates": exact_dates,
         "resolutions": resolutions,
+        "evidence": evidence,
+        "themes_overall": themes_overall,
+        "articles_with_themes": articles_with_themes,
     }
     stats = {
         "mentions_raw": sum(resolutions.values()),
@@ -338,8 +407,12 @@ def build(agg: dict, stats: dict, names: dict, day: str, register: dict | None) 
                         "age_years": this_year - int(e["date"][:4])} for e in register["events"]],
         }
 
+    head = standout(years, agg["year_by_country"], names, per_k)
+    if head:
+        head["why"] = why_block(head["year"], agg, day)
+
     return {
-        "headline": standout(years, agg["year_by_country"], names, per_k),
+        "headline": head,
         "most_invoked": ({"year": top[0][0], "mentions": top[0][1],
                           "per_1000_articles": per_k(top[0][1])} if top else None),
         "years": [{"year": y, "mentions": n} for y, n in sorted(years.items())],
@@ -418,6 +491,79 @@ def standout(years: Counter, by_country: dict, names: dict, per_k) -> dict | Non
     }
 
 
+def why_block(year: int, agg: dict, day: str) -> dict:
+    """What the press was actually writing when it invoked this year.
+
+    Everything here is measured from the same rows as the count: GDELT's own theme codes
+    (column 7), the persons and organisations it extracted (11 and 13), and the real
+    headlines of the articles (PAGE_TITLE in column 26). The anniversary flag is arithmetic
+    — the most-invoked exact date inside the year against the record's own date — not a
+    lookup.
+
+    What this deliberately does NOT do is name the event. Calling 1947 "Indian
+    independence" would be the one claim in this file that no committed byte supports; the
+    receipts are published instead, and naming what they show is the reader's move. That is
+    the difference between an instrument that shows its evidence and an oracle.
+    """
+    ev = agg["evidence"].get(year)
+    inside = sorted(
+        (((y, m, d), n) for (y, m, d), n in agg["exact_dates"].items() if y == year),
+        key=lambda kv: (-kv[1], kv[0]),
+    )
+    top_dates = [{"date": f"{y:04d}-{m:02d}-{d:02d}", "mentions": n} for (y, m, d), n in inside[:5]]
+
+    anniversary = None
+    if top_dates:
+        (y, m, d), n = inside[0]
+        anniversary = {
+            "date": top_dates[0]["date"],
+            "mentions": n,
+            "matches_today": f"{m:02d}-{d:02d}" == day[5:],
+            "today": day,
+        }
+
+    if not ev:
+        return {"articles": 0, "top_exact_dates": top_dates, "anniversary": anniversary,
+                "themes": [], "persons": [], "organisations": [], "headlines": []}
+
+    n_art = max(1, ev["articles"])
+    return {
+        "articles": ev["articles"],
+        "top_exact_dates": top_dates,
+        "anniversary": anniversary,
+        # Ranked by LIFT, not by frequency: the commonest codes on any day are GDELT's
+        # generic ones (TAX_FNCACT and friends), which say nothing about this year. Lift
+        # asks how much MORE common a theme is among the articles invoking this year than
+        # across the day's articles overall — a measure, so no curated stoplist is needed
+        # and nothing is quietly dropped.
+        "themes": themes_by_lift(ev["themes"], agg["themes_overall"],
+                                 ev["articles"], agg["articles_with_themes"]),
+        "persons": [{"name": c, "articles": k} for c, k in ev["persons"].most_common(WHY_PERSONS)],
+        "organisations": [{"name": c, "articles": k} for c, k in ev["orgs"].most_common(WHY_PERSONS)],
+        # Articles that named a full date inside the year first: "15 August 1947" is more
+        # on the subject than a passing "1947". Order within each group stays first-seen.
+        "headlines": [{k: v for k, v in h.items() if k != "exact"}
+                      for h in sorted(ev["headlines"], key=lambda h: not h["exact"])][:WHY_HEADLINES],
+    }
+
+
+def themes_by_lift(in_year: Counter, overall: Counter, n_year: int, n_day: int) -> list[dict]:
+    """The themes that are distinctive of this year, not the ones that are everywhere."""
+    out = []
+    for code, k in in_year.items():
+        share = k / max(1, n_year)
+        base = overall.get(code, 0) / max(1, n_day)
+        if k < WHY_MIN_ARTICLES or share < WHY_MIN_SHARE or base <= 0:
+            continue
+        lift = share / base
+        if lift < WHY_MIN_LIFT:
+            continue
+        out.append({"code": code, "articles": k, "share": round(share, 3),
+                    "lift": round(lift, 1)})
+    out.sort(key=lambda t: (-t["lift"], -t["articles"], t["code"]))
+    return out[:WHY_THEMES]
+
+
 def law_test_block(register: dict | None, day: str) -> dict:
     """Candia's biexponential is the test hypothesis, and it needs a series. Saying so is
     the finding on day one; producing a number from a single day would be theatre."""
@@ -470,6 +616,11 @@ def method_block() -> dict:
             "re-measured nightly as max_year_observed). The instrument's scope is the press's "
             "memory of 1800-2014; recent-decade invocation is not available from this field and is "
             "not substituted from another population."),
+        "why": ("beside the standout year the file publishes the evidence for it, all measured "
+                "from the same rows: GDELT theme codes, extracted persons and organisations, the "
+                "headlines of the invoking articles, and the anniversary arithmetic (the year's "
+                "most-invoked exact date against the record's own date). The event is never "
+                "named here — the receipts are shown and the naming is the reader's."),
         "stream": "GDELT English-monitored GKG 2.1 (translation stream not fetched — disclosed on the page)",
     }
 

@@ -7,8 +7,10 @@ import {
   invokedByLabel,
   percent,
   standoutWindow,
+  themeLabel,
   times,
   windowLabel,
+  yearsBetween,
 } from './format'
 
 describe('count', () => {
@@ -51,6 +53,39 @@ describe('humanDate', () => {
   it('passes anything it does not recognize through untouched', () => {
     expect(humanDate('1947-08')).toBe('1947-08')
     expect(humanDate('1947-13-01')).toBe('1947-13-01')
+  })
+})
+
+describe('yearsBetween', () => {
+  it('counts the whole years between two archive days by their year components', () => {
+    expect(yearsBetween('1947-08-15', '2026-08-15')).toBe(79)
+    expect(yearsBetween('2001-09-11', '2026-09-11')).toBe(25)
+    expect(yearsBetween('2026-08-15', '2026-08-15')).toBe(0)
+  })
+})
+
+describe('themeLabel', () => {
+  it('reads a taxonomy code as its taxonomy and its term', () => {
+    expect(themeLabel('TAX_ETHNICITY_INDIANS')).toBe('ethnicity: Indians')
+    expect(themeLabel('TAX_WORLDLANGUAGES_BHARAT')).toBe('language: Bharat')
+    expect(themeLabel('TAX_ETHNICITY_INDIGENOUS')).toBe('ethnicity: Indigenous')
+  })
+  it('drops the taxonomy where the taxonomy is only a bucket', () => {
+    expect(themeLabel('TAX_FNCACT_CITIZENS')).toBe('citizens')
+    expect(themeLabel('TAX_FNCACT_PRIME_MINISTER')).toBe('prime minister')
+  })
+  it('leaves a plain theme code plain', () => {
+    expect(themeLabel('SOVEREIGNTY')).toBe('sovereignty')
+    expect(themeLabel('REFUGEES')).toBe('refugees')
+    expect(themeLabel('WB_2670_JOBS')).toBe('wb 2670 jobs')
+  })
+  it('does not guess at a taxonomy it has never seen — it names it and stops', () => {
+    expect(themeLabel('TAX_SPECIALDEITY_ALLAH')).toBe('specialdeity: allah')
+  })
+  it('survives the degenerate codes rather than printing punctuation', () => {
+    expect(themeLabel('')).toBe('')
+    expect(themeLabel('TAX_')).toBe('tax')
+    expect(themeLabel('TAX_ETHNICITY')).toBe('ethnicity')
   })
 })
 

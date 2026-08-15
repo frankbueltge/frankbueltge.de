@@ -25,6 +25,14 @@ const resolutions = Object.entries(d.method.resolution_codes)
       Method {d.method.version} since {d.method.since}. Spec and calibration record:
       <code class="text-xs">docs/superpowers/specs/2026-08-14-the-invoked-past-design.md</code> in the site repository.
     </p>
+    <p class="mt-2 text-sm text-fg-muted">
+      <strong>What changed in v1.1 (2026-08-15).</strong> v1 computed the standout year carefully and then
+      declined to say anything about why it stood out, on the grounds that the instrument counts dates and
+      not events. That was one step too far: the reason is measurable, and it sits in the same GKG rows as
+      the count. Since v1.1 the day file carries the evidence beside the finding — theme codes, extracted
+      names, real headlines, and the anniversary arithmetic. The finding itself is unchanged, and no cleaning
+      rule, floor or score moved. What the refusal now covers is naming, and only naming.
+    </p>
   </header>
 
   <section class="mb-10">
@@ -112,6 +120,52 @@ const resolutions = Object.entries(d.method.resolution_codes)
   </section>
 
   <section class="mb-10">
+    <h2 class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+      Why the standout stands out: the evidence, and where it comes from
+    </h2>
+    {d.method.why && <p class="mt-3 text-sm text-fg-muted">{d.method.why}</p>}
+    <p class="mt-3 text-sm text-fg-muted">
+      <strong>The same rows, four more columns.</strong> The evidence is not a second query: it is read in
+      the same pass over the same GKG rows the count comes from, from the columns beside the date field —
+      themes in column&nbsp;7, persons in&nbsp;11, organisations in&nbsp;13, and the article's own headline
+      from the <code class="text-xs">&lt;PAGE_TITLE&gt;</code> element in column&nbsp;26, with the source
+      domain and the document URL taken from the same row. The positions are zero-based and measured against
+      live files, the same convention as <code class="text-xs">{d.method.field}</code>; GDELT's codebook
+      numbers its columns differently, so this instrument states the mapping it uses rather than assuming
+      one. Nothing is fetched that the count did not already download, and a theme counts once per article
+      however often that article repeats it — the same per-article discipline rule&nbsp;(c) applies to dates.
+    </p>
+    <p class="mt-3 text-sm text-fg-muted">
+      <strong>Themes are ranked by lift, not by frequency.</strong> Lift is the share of the invoking
+      articles carrying a theme, divided by that theme's share across all of the day's articles that carry
+      any theme: how much more common the theme is <em>here</em> than <em>today</em>. Frequency alone returns
+      GDELT's generic codes, which are near the top on every day of the year and therefore say nothing about
+      this one. Lift alone has the opposite failure: it crowns rarity. Measured on 2026-08-15, an unfiltered
+      lift ranking led with snow leopards and warts, each sitting on roughly two dozen syndicated articles.
+      Hence three floors, all published, all recomputable from the day file: a theme needs at least
+      <strong>15 invoking articles</strong>, at least <strong>8% of them</strong>, and a lift of at least
+      <strong>2</strong>. Ties break by article count and then by code, so the ranking is total; the top
+      eight are published, each with its raw code, because the code is what a reader can check against
+      GDELT and the readable label is only a rendering of it.
+    </p>
+    <p class="mt-3 text-sm text-fg-muted">
+      <strong>Headlines are evidence, so they are quoted.</strong> Up to five of the invoking articles are
+      published with their title, their domain and their link, unmodified. Articles that named a
+      <em>full date</em> inside the standout year come first — “15 August 1947” is more on the subject than
+      a passing “1947” — and within each group the order is first-seen, which makes the selection
+      reproducible from the archive rather than editorial. The anniversary line beside them is arithmetic:
+      the most-invoked exact date inside the year, compared month-and-day against the record's own date. No
+      calendar of events is consulted, and none is needed to state that two dates fall on the same day.
+    </p>
+    <p class="mt-3 text-sm text-fg-muted">
+      <strong>And the line that does not move: the instrument never names the event.</strong> It publishes
+      the themes, the names and the headlines its source recorded, and leaves the naming to whoever reads
+      them. Naming would be the one claim in the file that no committed byte supports — showing the evidence
+      is a measurement, supplying the answer would be an oracle.
+    </p>
+  </section>
+
+  <section class="mb-10">
     <h2 class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">The {ceiling} wall</h2>
     <p class="mt-3 text-sm text-fg-muted">
       {d.method.inherited_ceiling}
@@ -141,7 +195,10 @@ const resolutions = Object.entries(d.method.resolution_codes)
     <h2 class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">Known limits, disclosed</h2>
     <ul class="mt-3 list-disc space-y-1.5 pl-5 text-sm text-fg-muted">
       <li>The date extraction is GDELT's, and every error mode of it is inherited; the four rules trim, they do not repair.</li>
-      <li>An invoked year is not an invoked event: 1989 carries Tiananmen and the Wall in one bar. Naming events is the register's job, and the register waits for an archive.</li>
+      <li>An invoked year is not an invoked event: 1989 carries Tiananmen and the Wall in one bar. Since v1.1 the file shows what the invoking articles were about; it still does not name the event, and the register that will track dates over time waits for an archive.</li>
+      <li>The theme, person and organisation extraction is GDELT's own, published unedited: the person list regularly holds phrases that are not people and the organisation list things that are not organisations. Filtering them would be this instrument's opinion, so the looseness is disclosed instead of tidied.</li>
+      <li>Lift's denominator is the day's articles that carry any theme at all — not every article scanned — so it compares like with like; it is a statement about this day's press, and says nothing about how the year is invoked in general.</li>
+      <li>Evidence is published for the standout year only. Every year's evidence is buffered during the pass and all but one is discarded, so the file stays a day file rather than a corpus.</li>
       <li>A year carried overwhelmingly by one country is as often an extraction artefact as a memory — hence the surprise score instead of a ratio, and the published country share beside every finding.</li>
       <li>English-monitored stream only: anniversaries observed mainly in other languages are underrepresented. Translation stream = named v2.</li>
       <li>Source country is the country of the newsroom, from GDELT's domain lookup ({percent(d.stats.articles_country_mapped / Math.max(1, d.stats.articles_scanned))} of today's articles mapped) — never the country a past belongs to.</li>
