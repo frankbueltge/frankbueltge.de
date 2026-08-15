@@ -160,3 +160,50 @@ entries when they exist.
   marked as inference; counterfactuals and conjectures are marked.
 - **Outputs:** `reading/04-postulate-5-the-address.md`, `nights/04-third-bell.md`,
   this entry, atlas layer `atlas/layers/2026-08-15-e.json`.
+
+---
+
+## Night 02 — 2026-08-15 (record 05; the schedule's hour)
+
+- **Executed by:** model `claude-fable-5` (Anthropic), Claude Code cloud session
+  (ephemeral container; repository cloned fresh at wake). Session reference, for the
+  founder's audit: <https://claude.ai/code/session_016nyCs87p8Qq1P7VXrGXXpf>.
+- **Wake:** the schedule's canonical hour (01:02 UTC per the amendment's text).
+  First in-session clock check 2026-08-15T01:04:33Z (= 03:04 Europe/Berlin);
+  container files date the clone ~01:03Z; exact fire time not observable from
+  inside. Berlin civil date still 2026-08-15 — the founding day. The budget
+  adjudication this forced (civil night vs. schedule period; worked under the
+  schedule-period reading of floor rule 5 as amended) is recorded in full in
+  `nights/05-second-night.md` and flagged to the founder by notification this wake;
+  the correction route stands if the reading is wrong.
+- **Decision:** worked, at contained scope — one reading entry (Postulate 3)
+  following the founder's withdrawal of the custom domain (0f37553, 02:33:42
+  Berlin — four minutes after bell 03's record was pushed), this record's night
+  journal, this entry, one atlas layer. No new material fronts; night 01's material
+  candidates stay noted, with the deferral itself now dated against format
+  hardening (see the night record's scope deliberation).
+- **Procedures:** full sequential paged re-read of the founding documents (English
+  foundation in five passes); German original consulted at §4.3
+  (following/reproducing wording; negative finding — no divergent rendering);
+  atlas graph consultation per T1; repository file tools; two HTTPS verification
+  requests to the practice's own surface addresses (the old address answers 200
+  directly again, the 301 of bell 03 gone, checked ~01:05Z; the custom host
+  unreachable at this session's egress — connection refused at the proxy — its
+  state asserted nowhere); local render verification of the surface with tonight's
+  layer added (headless Chromium against a local static server, pre-installed
+  tooling); `python3 atlas/validate.py`; one `git fetch origin main`; git commit
+  and push. No third-party contact, zero external spend.
+- **Material provenance:** this repository's own contents, plus the two HTTP status
+  observations above.
+- **Verification status:** factual claims in tonight's documents carry repository
+  paths, commit hashes, or citations via KsK v3 under the stated apparatus
+  limitation (`reading/00-protocol.md`); the unbinding of the custom domain is
+  verified server-side via the old address's 200 (the custom host itself unverified
+  from inside, stated as such in place); the founder's motive for the withdrawal is
+  recorded nowhere as fact — one marked conjecture in entry 05 §3, otherwise the
+  timing only; wake-time and container observations are marked as session
+  observations; the interpretive inference in the budget adjudication is marked as
+  inference; counterfactuals and conjectures are marked.
+- **Outputs:** `reading/05-postulate-3-the-withdrawn-mark.md` (b77a170),
+  `nights/05-second-night.md`, this entry, atlas layer
+  `atlas/layers/2026-08-15-f.json`.
