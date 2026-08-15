@@ -507,3 +507,60 @@ entries when they exist.
 - **Outputs:** `material/ct-logs/2026-08-15-prospect/` (four files),
   `nights/11-ninth-bell.md`, this entry, atlas layer
   `atlas/layers/2026-08-15-l.json`.
+
+---
+
+## Bell 10 — 2026-08-16 (record 12; the second date)
+
+- **Executed by:** model `claude-fable-5` (Anthropic), Claude Code cloud session
+  (ephemeral container; repository cloned fresh at wake). Session reference, for the
+  founder's audit: <https://claude.ai/code/session_013uLiiXtmi8fpAjTejtvXj6>.
+- **Wake:** off-hour — not the schedule's 01:02 UTC. First in-session clock check
+  2026-08-15T22:22:20Z (= **2026-08-16** 00:22 Europe/Berlin — the first wake on a
+  civil date other than the founding date); exact fire time not observable from
+  inside. Classified as the founder's bell under floor rule 5 as amended (fe0df30).
+  Occasion read from git history: two founder's acts committed back to back
+  thirty-five minutes before the clock check — the note retiring the house window
+  (94bdecc, 23:46:54 Berlin) and the floor amendment striking the founder's
+  reading's third question and joining that section to the floor (45000c5, 23:47:48
+  Berlin). Second channel checked: repository issues at zero (sixth in-session
+  consultation of the correction route).
+- **Decision:** worked, at contained scope — the note's returned question answered
+  (**`window.json` rewritten as v2.0.0**, the contract re-addressed from the retired
+  house window to the practice's own surface, alternatives weighed in the night
+  record), and one reading entry (entry 09, the concept clause's third use: the
+  inherited finding "the five criteria as topoi, never as a grid," tested at the
+  amendment — a question fixed in advance, re-read nightly, struck as a target).
+  The synthesis and the naming re-deliberated at their condition's edge and kept
+  deferred on their own reasons (the sample the synthesis needs is a second date
+  worked, not merely entered). The prospect's continuation deliberately not placed.
+  Deliberation in `nights/12-tenth-bell.md`.
+- **Procedures:** full sequential paged re-read of the founding documents (English
+  foundation in five passes); German original consulted at the criteria vocabulary
+  by targeted search (*Topoi statt Kennzahlen*, ch. 8f; *gerinnen*, ch. 7 — both
+  operative in entry 09); atlas graph consultation per T1; repository file tools;
+  four HTTPS verification requests at the session's egress (~22:28Z: canonical
+  address `https://frankbueltge.de/n-1/` 200 serving the repository's own
+  `index.html`; `window.json` at the canonical address byte-identical to the
+  committed file; `/n-1/map/` 301 to `/n-1/`; origin
+  `https://frankbueltge.github.io/n-1/` 200); one repository-issues query via the
+  session's GitHub API tooling (result: zero issues); one `git fetch origin main`
+  (the clone's HEAD was detached at the amendment commit, local refs forty commits
+  stale — eighth occurrence of the pattern); `python3 atlas/validate.py`; git
+  commit and push. No other external fetches, no third-party contact, zero
+  external spend.
+- **Material provenance:** this repository's own contents, plus the four HTTP
+  observations and the issues count above.
+- **Verification status:** factual claims in tonight's documents carry repository
+  paths, commit hashes, or citations via KsK v3 under the stated apparatus
+  limitation (`reading/00-protocol.md`). The founder's note's serving claims are
+  verified by direct fetch this session (stated in place with times); the
+  amendment's quoted texts are verbatim from `DOWRY.md`; the estimate on how much
+  the struck question contributed to the material front's opening is marked as
+  estimate in entry 09 §1. The T1 decision-change case was considered and expressly
+  not claimed (the thirteenth session running; reasoning in the night record's
+  atlas consultation). Wake-time and container observations are marked as session
+  observations; counterfactuals and conjectures are marked.
+- **Outputs:** `reading/09-criteria-the-question-that-became-a-target.md`,
+  `window.json` v2.0.0, `nights/12-tenth-bell.md`, this entry, atlas layer
+  `atlas/layers/2026-08-16.json`.
