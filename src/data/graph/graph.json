@@ -12,7 +12,7 @@
       },
       {
         "file": "docs/decision-log.md",
-        "sha256": "0469b69fc4323ba6"
+        "sha256": "6872ff26e3d51d75"
       },
       {
         "file": "src/data/post/ledger.json",
@@ -57,10 +57,10 @@
       }
     ],
     "counts": {
-      "nodes": 253,
+      "nodes": 254,
       "edges": 224,
       "nodesByKind": {
-        "decision": 50,
+        "decision": 51,
         "encounter": 6,
         "neighbor": 88,
         "practice": 9,
@@ -543,6 +543,16 @@
     {
       "id": "decision:2026-08-15-1",
       "kind": "decision",
+      "label": "Das Premieren-Gate des Studios bekommt drei Regeln, damit es schließen kann — Architekten-Eingriff, erste Änderung an Protocol v2 seit dem 2026-08-08",
+      "date": "2026-08-15",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "Das Premieren-Gate des Studios bekommt drei Regeln, damit es schließen kann — Architekten-Eingriff, erste Änderung an Protocol v2 seit dem 2026-08-08"
+      }
+    },
+    {
+      "id": "decision:2026-08-15-2",
+      "kind": "decision",
       "label": "Alle wörtlichen Frank-Zitate aus dem öffentlichen Record redigiert — private Nachrichten waren nie zur Veröffentlichung frei (Franks Einspruch, 2026-08-15, Nacht).",
       "date": "2026-08-15",
       "source": {
@@ -551,7 +561,7 @@
       }
     },
     {
-      "id": "decision:2026-08-15-2",
+      "id": "decision:2026-08-15-3",
       "kind": "decision",
       "label": "Die Subdomain ist gestrichen, bevor sie je DNS sah — alles direkt auf der Domain (Franks Entscheidung, dritte Nachfrage derselben Nacht; Wortlaut privat).",
       "date": "2026-08-15",
@@ -561,7 +571,7 @@
       }
     },
     {
-      "id": "decision:2026-08-15-3",
+      "id": "decision:2026-08-15-4",
       "kind": "decision",
       "label": "n-1 bekommt den Spiegel im Haupthaus — Franks Korrektur, noch in derselben Nacht — Wortlaut privat.",
       "date": "2026-08-15",
@@ -571,7 +581,7 @@
       }
     },
     {
-      "id": "decision:2026-08-15-4",
+      "id": "decision:2026-08-15-5",
       "kind": "decision",
       "label": "Eine Praxis außerhalb der Häuser gegründet — n-1 (Franks Freigabe, Nachtsession).",
       "date": "2026-08-15",
@@ -5439,7 +5449,7 @@
     },
     {
       "kind": "touches",
-      "from": "decision:2026-08-15-1",
+      "from": "decision:2026-08-15-2",
       "to": "work:atelier",
       "source": {
         "file": "docs/decision-log.md",
@@ -5448,7 +5458,7 @@
     },
     {
       "kind": "touches",
-      "from": "decision:2026-08-15-1",
+      "from": "decision:2026-08-15-2",
       "to": "work:attention",
       "source": {
         "file": "docs/decision-log.md",
@@ -5457,7 +5467,7 @@
     },
     {
       "kind": "touches",
-      "from": "decision:2026-08-15-3",
+      "from": "decision:2026-08-15-4",
       "to": "work:on-record",
       "source": {
         "file": "docs/decision-log.md",
