@@ -45,7 +45,8 @@ Konfiguration und Dependencies nicht anfassen kann (siehe Pfad-Grenze).
   Sperre von `main`.
 - Kein harter Zwang aufs Experiment: Ulysses *darf* erstklassige Werke bauen, **muss** nicht. HTML-
   Werke (iframe) bleiben gültig. Autonomie bleibt erhalten.
-- Keine eigene Subdomain (verworfene Alternative; Frank wählte „im Lab verwoben").
+- Keine eigene Subdomain (verworfene Alternative; Frank entschied sich am 29.06. für die
+  Verwebung ins Lab, Wortlaut privat).
 
 ## Architektur
 

@@ -11,7 +11,8 @@ day, with no line opened), and the answer was not to force the case or drop it b
 research-ecology PR #17, fixture `enc-2026-006-set-the-standard`). That event — a notation
 meeting its limit and growing a sign — is the kind of thing this register exists to hold.
 
-**Status.** Direction decided by Frank ("go, schreib die spec"). This document specifies the
+**Status.** Direction decided by Frank (2026-08-02, wording private — go ahead and write the
+spec). This document specifies the
 register; the page that renders it is a follow-up work item. Naming and placement go through
 the wording gate (`src/config/naming.ts`, `docs/wording-kanon.md`) as always.
 

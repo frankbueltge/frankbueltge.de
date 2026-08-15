@@ -138,8 +138,8 @@ export function buildStageSvg(input: StageInput): string {
   s.push('<rect class="stagefloor" x="150" y="226" width="1080" height="416"/>')
   s.push('<path class="curtainline" d="M150 226 H1230"/>')
 
-  // Der gezeichnete Lichtkegel (Umbau 2026-07-16, Franks Kritik am weichen Verlauf:
-  // "hässlicher gold glow"). Lichtplan-Geste statt Weichzeichner: eine Lampe hängt an
+  // Der gezeichnete Lichtkegel (Umbau 2026-07-16, Franks Kritik am weichen Verlauf, Wortlaut
+  // privat — der goldene Schimmer sah häßlich aus). Lichtplan-Geste statt Weichzeichner: eine Lampe hängt an
   // der Vorhangstange, zwei Strahl-Haarlinien zeichnen den Kegel, die Lichtinsel ist
   // eine harte, helle Fläche wie ein echter Verfolger — Texte darin lesen sich dunkel
   // auf hell, in beiden Themes; die Kante macht das "beleuchtet" lesbar statt diffus.

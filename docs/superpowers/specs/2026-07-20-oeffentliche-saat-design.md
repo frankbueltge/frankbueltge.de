@@ -37,7 +37,7 @@ still vergammelt.
 |---|---|---|
 | D1 | Seeds gehen auf **Ökologie-Ebene** ein: Angebot an eine wählbare Praktik **oder** „offen an alle drei" | Souveränität bleibt: jede Praxis entscheidet nach eigenem Protokoll; identische Semantik wie Franks Seeds |
 | D2 | **Turnstile ja** — bewusste Ausnahme vom Zero-Third-Party-Anspruch (gleicher Anbieter wie Hosting) | Bot-Schutz ohne eigenes Captcha-Bauprojekt; wird auf /seed offen deklariert |
-| D3 | Das **KI-Gate blockt autonom** (Franks Vorgabe: „nonsense oder violation … direkt geblockt"), jede Entscheidung mit Reason-Code, Modell + Prompt öffentlich | Harte Guardrails, aber prüfbar — Lab-Regel „kein KI-Schritt ohne Nachprüfbarkeit" |
+| D3 | Das **KI-Gate blockt autonom** (Franks Vorgabe, 2026-07-20, Wortlaut privat — Nonsens oder Verstoß werden direkt geblockt), jede Entscheidung mit Reason-Code, Modell + Prompt öffentlich | Harte Guardrails, aber prüfbar — Lab-Regel „kein KI-Schritt ohne Nachprüfbarkeit" |
 | D4 | **Stufe 1 (Register) vor Stufe 2 (E-Mail)** | Ein Register mit echten Seeds ist das beste Argument, sich später einzuschreiben |
 | D5 | Adressierbar sind die **drei Forschungspraktiken** (field, studio, atelier). Plenum (data-snack) folgt ggf. später auf data-snack.com | Die öffentliche Saat gehört zur Ökologie; Plenum hat ein anderes Publikum |
 

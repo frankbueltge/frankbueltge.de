@@ -86,13 +86,13 @@ export const NAMING = {
    *  under proof": die Festival-Linie bleibt gültig, wo sie steht, ist aber kein Hero-Anspruch. */
   focusKicker: 'the standing question',
   title: 'what machines are actually better at',
-  /** Klartext-Fassung (Frank, 24.07.: „man versteht nur bahnhof" — Verständlichkeit vor
-   * Haus-Jargon). Qualifizierte Autonomie-Sprache bleibt: teilautonom unter menschlicher
+  /** Klartext-Fassung (Frank, 24.07., Wortlaut privat — die bisherige Fassung war
+   * unverständlich; Verständlichkeit vor Haus-Jargon). Qualifizierte Autonomie-Sprache bleibt: teilautonom unter menschlicher
    * Verantwortung, versioniert ist, was der Apparat erfassen kann. */
   sub: 'One question runs through the current projects here: what can machines genuinely do better than people — hold attention for months without blinking, measure the same thing every night, read evidence at a scale no one could — and can they research autonomously, with means of their own, and produce concrete, useful works whose value can be checked? Every claim leads back to its evidence, failures stay visible, and Git is the archive.',
-  /** Seit 2026-08-10 NICHT mehr im Hero (Frank: „das kann alles weg", zusammen mit dem
-   * „how this works →"-Link, der ganz entfiel — /apparatus bleibt als Seite, verlinkt von
-   * den Ökologie-Flächen). Bleibt hier, weil /dossier die Zeile im Presse-Kontext führt. */
+  /** Seit 2026-08-10 NICHT mehr im Hero (Frank, 10.08., Wortlaut privat — die Zeile kann
+   * ganz entfallen), zusammen mit dem „how this works →"-Link, der ebenfalls entfiel;
+   * /apparatus bleibt als Seite, verlinkt von den Ökologie-Flächen. Bleibt hier, weil /dossier die Zeile im Presse-Kontext führt. */
   conductorLine: 'architect & conductor: Frank Bültge · the machines write, the record shows who wrote what',
 
   /** „What this is" — Klartext-Block direkt nach dem Puls, vor den Türen (Frank, 25.07.:

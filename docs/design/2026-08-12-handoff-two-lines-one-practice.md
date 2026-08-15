@@ -150,8 +150,9 @@ been uncovered. The atelier's integration gate was red for eight hours and went 
 fourth attempt. Wait for the thing that was actually broken, not for the check nearest to hand.
 
 **And one thing that is not a caution but a result:** the strongest arguments in this session came
-from Frank's objections, not from the analysis. *„ist das nicht zu oberflächlich?"* and *„eight
-misprints ist aber in einer session entstanden"* each turned the diagnosis — the second one
+from Frank's objections, not from the analysis. Two of them (2026-08-12, wording private) — the
+challenge that the diagnosis was staying too shallow, and the observation that *Eight Misprints*
+had after all been made in a single session — each turned the diagnosis; the second one
 reversed it. The first answer would have defended the open horizon.
 
 ---

@@ -262,7 +262,7 @@ describe('buildInbox', () => {
     })
     // Eine 650 Zeichen lange Anfrage kommt VOLLSTÄNDIG an. Früher schnitt der Bau bei 600 ab,
     // und weil der Rest nie gesendet wurde, konnte der „mehr“-Knopf im Dashboard nichts
-    // aufklappen (Frank, 2026-07-31: „passiert nix“).
+    // aufklappen (Frank, 2026-07-31, Wortlaut privat — der Knopf tat nichts).
     expect(result[0].excerpt).toBe(body)
   })
 
