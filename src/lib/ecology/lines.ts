@@ -25,31 +25,57 @@ import type { LatestWork } from '@/lib/engines/latest'
  *  for the same reason — a work must not arrive at two addresses. */
 export const NIGHTLY_ERA_END = '2026-07-18'
 
-export type LineId = 'nightly' | 'work-line'
+export type LineId = 'nightly' | 'work-line' | 'n-1'
 
-export interface LineFacts {
-  id: LineId
-  /** what the site calls it, in the canon's words */
-  label: string
-  /** the namespace whose mirrored PROTOCOL.md governs this line */
-  protocolNs: string
-  /** one clause a stranger can use — never the protocol number, which moves */
-  gloss: string
-}
+/** The lines whose output lands in the works register. n-1's does not: its repository IS its
+ *  record, mirrored whole at public/n-1/ and served as the practice's own surface at /n-1 —
+ *  the house states the line and opens a door, it never re-lists that record here. */
+export type WorkBearingLineId = Exclude<LineId, 'n-1'>
 
-/** The Atelier's two lines, in the order the record made them. */
+/** One line's facts. A union discriminated on `id`, so the type system itself refuses the two
+ *  mistakes this file exists to prevent: asking n-1 for a protocol version (its Dowry says
+ *  "this practice has no protocol document" — no version exists BY DESIGN), and counting a
+ *  work-bearing line's works anywhere but the register. */
+export type LineFacts =
+  | {
+      id: WorkBearingLineId
+      /** what the site calls it, in the canon's words */
+      label: string
+      /** the namespace whose mirrored "… Protocol vN" governs this line */
+      law: { kind: 'protocol'; ns: string }
+      /** one clause a stranger can use — never the protocol number, which moves */
+      gloss: string
+    }
+  | {
+      id: 'n-1'
+      label: string
+      law: { kind: 'founding' }
+      gloss: string
+    }
+
+/** The Atelier's three lines, in the order the record made them (the third since 2026-08-15 —
+ *  Frank's placement, wording private; descent: founded on this practice's own working paper). */
 export const ATELIER_LINES: readonly LineFacts[] = [
   {
     id: 'nightly',
     label: 'the nightly line',
-    protocolNs: 'nightly',
+    law: { kind: 'protocol', ns: 'nightly' },
     gloss: 'one night, one work or one reading — stopped 2026-07-18, restored 2026-08-10 in a fork',
   },
   {
     id: 'work-line',
     label: 'the work-line',
-    protocolNs: 'atelier',
+    law: { kind: 'protocol', ns: 'atelier' },
     gloss: 'one line of work over months, in numbered ticks, shipped or ended at its arc gate',
+  },
+  {
+    // The label is NOT hardcoded to stay: the practice's window declaration carries its current
+    // title (a working title, by its own Dowry a placeholder), and the station sheet renders
+    // that declaration via readN1Facts — this entry's label is the fallback the tests pin.
+    id: 'n-1',
+    label: 'n-1',
+    law: { kind: 'founding' },
+    gloss: 'founded on this practice’s own working paper — keeps its own record, on its own surface',
   },
 ] as const
 
@@ -66,8 +92,11 @@ export const ATELIER_LINES: readonly LineFacts[] = [
  *
  * Sniffing the href would work today and break the first time a route is renamed; the directory
  * is the fact.
+ *
+ * The return type is the WORK-BEARING lines only: nothing in this register can be n-1's,
+ * because that line's record never lands here (see WorkBearingLineId).
  */
-export function lineOfWork(work: Pick<LatestWork, 'ns' | 'date' | 'dir'>): LineId | null {
+export function lineOfWork(work: Pick<LatestWork, 'ns' | 'date' | 'dir'>): WorkBearingLineId | null {
   if (work.ns !== 'atelier') return null
   if (work.dir === NIGHTLY_FORK_DIR) return 'nightly'
   return work.date <= NIGHTLY_ERA_END ? 'nightly' : 'work-line'
@@ -82,9 +111,11 @@ export const lineLabel = (id: LineId): string =>
  *  keeping the wrong one. */
 export const lineShortLabel = (id: LineId): string => lineLabel(id).replace(/^the /, '')
 
-/** How many works each line has on the record. Counted, never carried in prose. */
-export function countByLine(works: readonly LatestWork[]): Record<LineId, number> {
-  const counts: Record<LineId, number> = { nightly: 0, 'work-line': 0 }
+/** How many works each work-bearing line has on the record. Counted, never carried in prose.
+ *  n-1 has no entry here on purpose: a zero would say "this line made nothing", when the truth
+ *  is that its record is kept elsewhere — a different statement entirely. */
+export function countByLine(works: readonly LatestWork[]): Record<WorkBearingLineId, number> {
+  const counts: Record<WorkBearingLineId, number> = { nightly: 0, 'work-line': 0 }
   for (const w of works) {
     const id = lineOfWork(w)
     if (id) counts[id] += 1

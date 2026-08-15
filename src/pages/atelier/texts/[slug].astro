@@ -1,0 +1,59 @@
+---
+// /atelier/texts/<slug> — one document of the texts & catalogue, verbatim, at its own address
+// (2026-08-15). The record is not replaced by a reading of it: the document renders whole,
+// exactly as mirrored; what this page adds is orientation — the sheet's chrome, the register
+// behind the crumb, and the committed path it was read from.
+import { getCollection, render } from 'astro:content'
+import Page from '@/layouts/Page.astro'
+import DocumentSheet from '@/components/ecology/DocumentSheet.astro'
+import { textFacts } from '@/lib/atelier/texts'
+
+export async function getStaticPaths() {
+  const all = await getCollection('atelier')
+  return all
+    .filter((e) => e.id.startsWith('works/'))
+    .map((entry) => {
+      const slug = entry.id.replace('works/', '').replace(/\.md$/, '')
+      return { params: { slug }, props: { entry, facts: textFacts(slug, entry.body ?? '') } }
+    })
+}
+
+const { entry, facts } = Astro.props
+const { Content } = await render(entry)
+
+const span = [
+  facts.move,
+  facts.date && `dated ${facts.date} by the document itself`,
+  'mirrored verbatim from the practice’s repo',
+]
+  .filter(Boolean)
+  .join(' · ')
+---
+
+<Page
+  title={`Atelier — ${facts.title} | Frank Bültge`}
+  description={`${facts.title} — one document of the Atelier's texts & catalogue, mirrored verbatim from the practice's own repository.`}
+>
+  <DocumentSheet
+    id="atelier"
+    parent={{ label: 'texts & catalogue', href: '/atelier/texts' }}
+    here={facts.marker ?? facts.slug}
+    title={facts.title}
+    span={span}
+    source={`src/content/atelier/works/${facts.slug}.md`}
+    more={{ label: 'the register →', href: '/atelier/texts' }}
+  >
+    <div class="engine-prose">
+      <Content />
+    </div>
+  </DocumentSheet>
+</Page>
+
+<style>
+  /* The sheet's H1 above already states this document's title verbatim; the mirrored document
+     opens with the same line. Hidden in presentation only — the mirror keeps every byte, and
+     the title is announced once, by the page's own H1. */
+  .engine-prose > :global(h1:first-child) {
+    display: none;
+  }
+</style>

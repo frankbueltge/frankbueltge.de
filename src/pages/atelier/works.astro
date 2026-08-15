@@ -1,26 +1,29 @@
 ---
-// /atelier/works — the works room. The slabs on the sheet are doors into this room; the
-// existing detail routes /atelier/werke/* stay untouched (Integrate machinery writes
-// there — renaming them is a LATER package). Interactive HTML works run live in the same
-// isolated sandbox the old page used; the texts & catalogue (error register, genealogy,
-// positions) render verbatim below.
-import { getCollection, render } from 'astro:content'
+// /atelier/works — the works register as a Level-2 register sheet (2026-08-15).
+//
+// Until today this room printed every work as a full card and the whole texts & catalogue
+// verbatim below them — thirty-eight cards and twenty-six documents on one URL. That is not a
+// register, it is a scroll nobody finishes (Frank's finding, wording private), and it was the
+// last big room still wearing the retired practice frame. Now: one row per work, the work
+// itself one click behind it, filter chips by line — the same sheet every register in the
+// house wears. The texts & catalogue moved to their own register at /atelier/texts, verbatim
+// pages behind it; the bounce below catches the deep links that used to land on this page.
+//
+// The detail routes are untouched: /atelier/werke/<slug> for native works, the full-viewport
+// stage at /atelier/werke-html/<slug>/ for interactive ones (exhibition model, 2026-07-21 —
+// a work is a door, never a cramped preview).
 import Page from '@/layouts/Page.astro'
-import Frame from '@/components/atelier/surface/Frame.astro'
-import { sortWorks } from '@/lib/atelier/sort'
-import { ATELIER_NARRATIVE } from '@/config/atelier-wording'
+import RegisterSheet from '@/components/ecology/RegisterSheet.astro'
+import type { RegisterRow } from '@/components/ecology/RegisterSheet.astro'
 import RespondCta from '@/components/post/RespondCta.astro'
-import WorkCard from '@/components/atelier/WorkCard.astro'
-import { LINE_END, PROTOCOL_LADDER } from '@/lib/engines/nightly-line'
+import { sortWorks } from '@/lib/atelier/sort'
+import { lineShortLabel } from '@/lib/ecology/lines'
+import { ATELIER_NARRATIVE } from '@/config/atelier-wording'
+import { LINE_END } from '@/lib/engines/nightly-line'
 
-const PAIR = ATELIER_NARRATIVE.pair
-
-const all = await getCollection('atelier')
-const repo = 'https://github.com/frankbueltge/ulysses'
-
-// Works — one chronological gallery from two sources, newest-first (unchanged data access):
-//  · kind 'html'  — interactive; HTML standalone under /atelier/werke-html/<slug>/
-//  · kind 'astro' — native Astro works at /atelier/werke/<slug> (routes stay)
+// One chronological register from two sources (unchanged data access):
+//  · kind 'html'  — interactive; its door is the standalone stage under /atelier/werke-html/
+//  · kind 'astro' — native Astro works at /atelier/werke/<slug>
 const htmlMeta = import.meta.glob('/src/content/atelier/works/*/meta.json', {
   eager: true, import: 'default',
 }) as Record<string, any>
@@ -39,95 +42,69 @@ const works = sortWorks([
   })),
 ])
 
-// Texts & catalogue (works/*.md) — newest first, rendered verbatim.
-const mdWorks = all.filter((e) => e.id.startsWith('works/')).sort((a, b) => b.id.localeCompare(a.id))
-const mdWorksR = await Promise.all(
-  mdWorks.map(async (e) => ({ id: e.id, Content: (await render(e)).Content })),
-)
+// The line, by the same cut the practice's own record draws (2026-08-11): works up to LINE_END
+// are the nightly line's, everything after it the work-line's. The chips filter on it.
+const lineOf = (date: string | undefined) =>
+  date && date <= LINE_END ? lineShortLabel('nightly') : lineShortLabel('work-line')
 
-// Two phases, not one gallery (2026-08-11). Until now the thirty nightly works and the curated
-// work-line publications stood in one undifferentiated list under a prose note, which made the
-// most consequential fact about this room invisible: the works up to 18 July belong to a line
-// that was switched off and has since been forked back to life in its own repository, and the
-// ones after it belong to the protocol that replaced it. Same routes, same order, same data —
-// the cut is drawn where the practice's own record draws it.
-const nightlyWorks = works.filter((w) => w.date && w.date <= LINE_END)
-const worklineWorks = works.filter((w) => !w.date || w.date > LINE_END)
+const rows: RegisterRow[] = works.map(({ slug, kind, date, meta }) => ({
+  date: date ?? '',
+  marker: kind === 'html' ? 'interactive' : null,
+  move: lineOf(date),
+  line: meta.title ?? slug,
+  href: kind === 'html' ? `/atelier/werke-html/${slug}/` : `/atelier/werke/${slug}`,
+  // The old page gave every work card its slug as a DOM id; the rows keep them, so a deep link
+  // that pointed at a card still lands on that work's row.
+  anchor: slug,
+}))
 
-// The phase labels name their own constitutions, derived rather than typed: the nightly phase
-// ran under the restored step of the ladder, the work-line phase from the step that ended it to
-// whatever the practice runs today. A hand-written "v4 → v6" would be wrong the day v7 lands.
-const restoredStep = PROTOCOL_LADDER.find((s) => s.restored)!
-const endedNightly = PROTOCOL_LADDER[PROTOCOL_LADDER.indexOf(restoredStep) + 1]!
-const latestStep = PROTOCOL_LADDER[PROTOCOL_LADDER.length - 1]!
-const day = (iso: string): string =>
-  new Date(`${iso}T00:00:00Z`).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' })
-const nightlyStart = day(PROTOCOL_LADDER[0]!.date)
+const counts = rows.reduce<Record<string, number>>((acc, r) => {
+  acc[r.move!] = (acc[r.move!] ?? 0) + 1
+  return acc
+}, {})
 
-const kicker = ['Atelier · works', 'ulysses', `${works.length} works · ${mdWorksR.length} texts`]
-const statusHtml = `<b>${works.length} works</b> · ${nightlyWorks.length} nightly, ${worklineWorks.length} work-line · newest first · detail routes stay under /atelier/werke/*`
+// The texts & catalogue lived on this page until 2026-08-15; a fragment never reaches the
+// server, so their old anchors are caught client-side and bounced to the pages they live on now.
+const textSlugs = Object.keys(
+  import.meta.glob('/src/content/atelier/works/*.md'),
+).map((p) => p.replace('/src/content/atelier/works/', '').replace(/\.md$/, ''))
 ---
 
 <Page
   title="Atelier — works | Frank Bültge"
-  description="The Atelier's works, newest first — interactive pieces running sandboxed, native works on their own pages, and the texts & catalogue verbatim."
+  description="The Atelier's works register — one row per work, newest first, filterable by line; each work one click behind its row, the texts & catalogue in their own register."
 >
-  <Frame active="works" kicker={kicker} h1="The slabs, standing." statusHtml={statusHtml} back>
-    <p class="at-room-intro">{ATELIER_NARRATIVE.rooms.works}</p>
-    <RespondCta variant="line" ns="atelier" class="at-room-intro" />
-    <p class="at-room-intro">{ATELIER_NARRATIVE.rooms.worksPhase}</p>
-
-    {/* ——— the work-line phase: what this practice makes now ——— */}
-    <section class="at-phase">
-      <h2 class="at-phase-head">
-        The work-line phase
-        <span class="at-phase-span">
-          since {day(endedNightly.date)} · Protocol v{endedNightly.version} → v{latestStep.version}
-        </span>
-      </h2>
-      <p class="at-phase-note">{PAIR.arms.here} — each published by explicit human decision.</p>
-      {worklineWorks.map(({ slug, kind, meta }) => (
-        <WorkCard slug={slug} kind={kind} meta={meta} repo={repo} />
-      ))}
-    </section>
-
-    {/* ——— the nightly phase: the line that was forked back to life ———
-         These are the works of the nightly line. They keep their addresses — this practice made
-         them and moving them would falsify its own record — but the room now says whose line
-         they are and that it did not end when this surface stopped showing new ones. */}
-    <section class="at-phase at-phase-nightly" id="at-phase-nightly">
-      <h2 class="at-phase-head">
-        The nightly phase
-        <span class="at-phase-span">
-          {nightlyStart} – {day(LINE_END)} · Protocol v{restoredStep.version}
-        </span>
-      </h2>
-      <p class="at-phase-note">{PAIR.worksNote}</p>
-      <p class="at-phase-link">
-        <a href="/error-as-method">{PAIR.link}</a>
-      </p>
-      {nightlyWorks.map(({ slug, kind, meta }) => (
-        <WorkCard slug={slug} kind={kind} meta={meta} repo={repo} />
-      ))}
-    </section>
-
-    {/* The verbatim mirror stays — it is the record, and the record is not replaced by a reading
-        of it. But these texts (the genealogy, both position papers, twenty-one error registers)
-        are the nightly line's apparatus, and since 2026-08-11 they also have rooms that make
-        their structure legible. The pointer goes here because this is where a reader who wants
-        them actually ends up. */}
-    <section class="at-record mt-10">
-      <h2>Texts &amp; catalogue — mirrored verbatim from the research archive</h2>
-      <p class="at-phase-note">
-        The full texts, unedited. Their structure — the genealogy's stations and dated extensions,
-        the position before and after the subtraction, the error register by type and status — is
-        laid out at <a href="/error-as-method/genealogy">the nightly line's rooms</a>.
-      </p>
-      {mdWorksR.map(({ id, Content }) => (
-        <article class="at-work-card at-prose" id={id.replace('works/', '').replace(/\.md$/, '')}>
-          <Content />
-        </article>
-      ))}
-    </section>
-  </Frame>
+  <RegisterSheet
+    id="atelier"
+    register="works"
+    title="the works — every one, newest first"
+    span={`${works.length} works · ${counts[lineShortLabel('nightly')] ?? 0} of the nightly line (to ${LINE_END}) · ${counts[lineShortLabel('work-line')] ?? 0} of the work-line · one row per work, the work itself behind it`}
+    rows={rows}
+    source="src/content/atelier/works/*/meta.json · src/components/atelier/werke/*/meta.json"
+    more={{ label: 'the texts & catalogue — its own register →', href: '/atelier/texts' }}
+  >
+    <p class="eco-doc-note">{ATELIER_NARRATIVE.rooms.worksPhase}</p>
+    <p class="eco-doc-note">
+      The third line, n-1, does not land works here: its repository is its record, on its own
+      surface — <a href="/n-1">/n-1</a>. The nightly line's room is
+      <a href="/error-as-method">/error-as-method</a>.
+    </p>
+    <RespondCta variant="line" ns="atelier" class="eco-doc-note" />
+  </RegisterSheet>
 </Page>
+
+<script type="application/json" id="atelier-text-slugs" set:html={JSON.stringify(textSlugs)} />
+<script>
+  // Legacy deep links: the genealogy, the positions and the error registers rendered on this
+  // page until 2026-08-15 and were linked as /atelier/works#<slug>. Each is a page of its own
+  // now. Best-effort by design (it needs JS); without it the fragment is simply inert and the
+  // register is there — the correct failure mode for a page whose job is to show holdings.
+  const el = document.getElementById('atelier-text-slugs')
+  const texts = new Set<string>(el ? JSON.parse(el.textContent ?? '[]') : [])
+  const bounce = () => {
+    const target = decodeURIComponent(location.hash.slice(1))
+    if (texts.has(target)) location.replace(`/atelier/texts/${target}/`)
+  }
+  bounce()
+  addEventListener('hashchange', bounce)
+</script>

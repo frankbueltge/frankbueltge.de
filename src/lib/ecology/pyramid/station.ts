@@ -19,6 +19,7 @@ import type { LatestWork } from '@/lib/engines/latest'
 import { stationById, type Station, type StationId } from './model'
 import { buildLandings, firstClause, type Arc, type Landing } from './landings'
 import { ATELIER_LINES, countByLine } from '@/lib/ecology/lines'
+import { readN1Facts } from '@/lib/ecology/n1-line'
 import type { PulseSnapshot } from '@/lib/pulse/render'
 
 /** The mirrored constitutions, raw. One glob for all four namespaces… */
@@ -153,6 +154,12 @@ export const DOORS: Record<StationId, Door[]> = {
     // door that names one is wrong at the next amendment. The constitutions row above states both,
     // read from the two mirrors.
     { title: 'the nightly line', sub: 'the same practice under its other constitution — its own room', href: '/error-as-method' },
+    // The third line's door (Frank, 2026-08-15). Like the nightly line it keeps its own room —
+    // more so: its repository is mirrored whole and served as the practice's OWN surface, never
+    // a house window, so this door is the only thing the house owns about it. The door's title
+    // is the route's name; the status rows above render whatever title the practice currently
+    // declares in its window contract.
+    { title: 'n-1 — the third line', sub: 'founded 2026-08-15 on this practice’s own paper — its own record, its own surface', href: '/n-1' },
     // The rhizome and the closure index, as the first nightly phase left them. Archived and, until
     // 2026-08-13, unlinked: the pyramid rewrite removed the way in, and the only references left
     // anywhere in the build were a 301 from its old route and the sitemap. A retired instrument may
@@ -230,18 +237,37 @@ export function buildStationSheet({ id, snapshot, works = allWorks(), log, made 
 
   // A practice that runs more than one LINE says so here, inside its own station — never as a
   // node of its own (canon 2026-08-12: the pyramid keeps three stations). Two rows carry it: what
-  // runs, and what governs each strand. A single constitution row on a two-line practice would be
-  // a lie by omission — it would name one law and leave the other line ungoverned on the page.
+  // runs, and what governs each strand. A single constitution row on a multi-line practice would
+  // be a lie by omission — it would name one law and leave the other lines ungoverned on the page.
+  //
+  // Each line states itself in its own unit. The two Ulysses-run strands land works in the
+  // register, so they are counted from it; n-1 keeps its whole record in its own mirrored
+  // repository, so its row states what the mirror states — the practice's current title (its
+  // own window declaration; the working title is a placeholder the practice will replace) and
+  // its founding date — and its law is the Dowry, which carries no version by design.
   const lines = id === 'atelier' ? ATELIER_LINES : []
   if (lines.length > 1) {
     const counts = countByLine(works)
+    const n1 = lines.some((l) => l.id === 'n-1') ? readN1Facts() : null
     status.push({
       key: K.lines,
-      value: lines.map((l) => `${l.label} · ${counts[l.id]} ${counts[l.id] === 1 ? 'work' : 'works'}`).join('  ·  '),
+      value: lines
+        .map((l) =>
+          l.id === 'n-1'
+            ? `${n1!.title} · founded ${n1!.founded} · its own record`
+            : `${l.label} · ${counts[l.id]} ${counts[l.id] === 1 ? 'work' : 'works'}`,
+        )
+        .join('  ·  '),
     })
     status.push({
       key: K.constitutions,
-      value: lines.map((l) => `${readConstitution(l.protocolNs).version} (${l.label.replace(/^the /, '')})`).join(' · '),
+      value: lines
+        .map((l) =>
+          l.id === 'n-1'
+            ? `${n1!.law} (${n1!.title})`
+            : `${readConstitution(l.law.ns).version} (${l.label.replace(/^the /, '')})`,
+        )
+        .join(' · '),
     })
   } else if (id !== 'middle') {
     // The Middle has no constitution of its own — it is the zone the practices meet in, and saying
