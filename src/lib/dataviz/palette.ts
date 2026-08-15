@@ -318,13 +318,18 @@ export const PALETTES: readonly PaletteSet[] = [
       { name: 'home — the working interior', light: '#a2700f', dark: '#b8891f' },
       { name: 'opening — the outward voice', light: '#7d2b78', dark: '#c159b9' },
     ],
-    surfaces: { light: ['#f6f1e7', '#f7f8fa'], dark: ['#1b1815', '#141414'] },
+    surfaces: { light: ['#ffffff', '#eef1f0'], dark: ['#0d1513', '#0b1210'] },
     pairs: 'all',
     validatedOn: '2026-08-02',
     validator:
-      'dataviz skill validate_palette.js (six checks, --pairs all, per mode against both ' +
-      'atelier surfaces) — ALL CHECKS PASS in both modes on both surfaces; no contrast WARN ' +
-      '(weakest 3.84:1, #a2700f on #f6f1e7)',
+      'dataviz skill validate_palette.js (six checks, --pairs all, per mode against the atelier ' +
+      'cream surfaces of the day) — ALL CHECKS PASS in both modes on both surfaces; no contrast ' +
+      'WARN (weakest then 3.84:1). SURFACES CHANGED 2026-08-16: the score moved onto the ecology ' +
+      'station sheet (its cream host chrome was retired 2026-08-15), hexes unchanged. The ' +
+      'validator was NOT re-run; CVD/normal distances are hex-only and inherited (re-derived by ' +
+      'palette.test.ts), and WCAG contrast was recomputed in-repo with the same math against the ' +
+      'eco surfaces recorded above — weakest 3.80:1 (#a2700f on #eef1f0, light), all others ≥ ' +
+      '4.09:1 light and ≥ 4.76:1 dark; no contrast WARN.',
     worst: [
       {
         mode: 'light',

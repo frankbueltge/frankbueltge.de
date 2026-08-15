@@ -67,6 +67,10 @@ const refrains = loadRefrainModels()
 // The record's own last date, from the columns the figure draws — never the build's date and
 // never today's: those two would turn a quiet line into a false claim of freshness.
 const refrainLast = refrains[0]?.columns.at(-1)?.event.date ?? null
+// Lines the practice opened AFTER the running line's last move — counted so the score's caption
+// can say that quiet on one line is not quiet in the practice (Frank read the stopped-looking
+// score as stale twice; the record shows daily studies the figure's own contract excludes).
+const linesSince = refrainLast ? dossiers.filter((d) => d.created && d.created > refrainLast).length : 0
 ---
 
 <Page title={`${SEO.title} | Frank Bültge`} description={SEO.description}>
@@ -108,7 +112,7 @@ const refrainLast = refrains[0]?.columns.at(-1)?.event.date ?? null
         title={F.refrain.title}
         sub={F.refrain.sub}
         caption={F.refrain
-          .caption(refrains[0].columns.length, refrainLast)
+          .caption(refrains[0].columns.length, refrainLast, linesSince)
           .replace('{RECORD}', `/atelier/lines/${refrains[0].line.id}`)}
       >
         <RefrainScore model={refrains[0]} id="atelier-refrain" />

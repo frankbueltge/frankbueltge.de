@@ -1084,6 +1084,96 @@
   stroke-dasharray: 3 2;
   fill: none;
 }
+/* interaction (2026-08-16): each line is a real SVG link to its record; the glance readout is
+   enhancement. Hit shapes are invisible ink around one-unit marks — a target, not a mark. */
+.eco-linemap {
+  position: relative; /* the readout is placed in this box's coordinate space */
+}
+.eco-fig-hit {
+  fill: transparent;
+}
+.eco-fig-hit-run {
+  stroke: transparent;
+  stroke-width: 14;
+  stroke-linecap: round;
+}
+.eco-fig-line {
+  cursor: pointer;
+  outline: none;
+}
+.eco-fig-line:hover .eco-fig-line-run,
+.eco-fig-line:focus-visible .eco-fig-line-run {
+  opacity: 1;
+  stroke-width: 1.8;
+}
+.eco-fig-line:hover .eco-fig-end,
+.eco-fig-line:focus-visible .eco-fig-end,
+.eco-fig-line:hover .eco-fig-end-open,
+.eco-fig-line:focus-visible .eco-fig-end-open,
+.eco-fig-line:hover .eco-fig-end-running,
+.eco-fig-line:focus-visible .eco-fig-end-running {
+  stroke-width: 2;
+}
+.eco-fig-line:focus-visible .eco-fig-line-run {
+  stroke-dasharray: none;
+}
+.eco-fig-day:hover .eco-fig-slab {
+  opacity: 1;
+}
+
+/* the shared dataviz primitives on the ecology's own ground (glance readout + table fallback —
+   they ship structure only per ADR 0010; each surface dresses its own) */
+.eco .dv-readout {
+  background: var(--eco-panel-solid);
+  border: 1px solid var(--eco-line);
+  border-left: 3px solid var(--eco-accent);
+  padding: 8px 11px;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  line-height: 1.5;
+  color: var(--eco-fg);
+}
+.eco .dv-table-fallback {
+  margin: 10px 0 0;
+}
+.eco .dv-table-fallback > summary {
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--eco-faint);
+  padding: 6px 0;
+}
+.eco .dv-table-fallback > summary:hover {
+  color: var(--eco-accent);
+}
+.eco .dv-table {
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+.eco .dv-table th,
+.eco .dv-table td {
+  border-top: 1px solid var(--eco-line);
+  padding: 6px 12px 6px 0;
+  text-align: left;
+  vertical-align: top;
+}
+.eco .dv-table th {
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--eco-muted);
+}
+.eco .dv-table td {
+  color: var(--eco-fg);
+}
+.eco .dv-prov {
+  margin: 8px 0 0;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  line-height: 1.6;
+  color: var(--eco-faint);
+}
 
 /* the Studio — the stage floor */
 .eco-fig-floor {
