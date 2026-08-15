@@ -100,8 +100,8 @@ those ticks read as an honest gap.
 
 ## 4. What is mixed up right now — the actual next job
 
-Frank, on seeing it: *„hier sind [Wortlaut privat]. Auch bei den works, die
-eigentlich reine ecology works sind."* He is right, and it is checkable:
+Frank, on seeing it (wording private): the two Ulysses lines are mixed together
+everywhere, including among works that are purely ecology works. He is right, and it is checkable:
 
 - **`/works` lists the fork as a fourth source** — atelier 32 · field 22 · studio 6 ·
   error-as-method 5. The machinery already treats it as a peer practice.

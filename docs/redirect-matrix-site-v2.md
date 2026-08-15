@@ -161,8 +161,8 @@ und die Chronik-Anker (`/{ns}/chronicle.json`) bleiben ohne Änderung gültig.
 
 ## Nachtrag 2026-08-12 — Research ecology v3: die Vier-Ebenen-Pyramide
 
-Design-Handoff: `docs/design_handoff_research_ecology/README.md`. Diagnose (Frank, 2026-08-12):
-[Wortlaut privat]. Die
+Design-Handoff: `docs/design_handoff_research_ecology/README.md`. Diagnose (Frank, 2026-08-12, Wortlaut privat): die Ökologie ist ohne stundenlanges
+Lesen nicht mehr zu erfassen. Die
 Kur ist eine strikte Pyramide — **eine** Eingangsfläche (`/ecology`), **ein** Stationsblatt je
 Raum, darunter nüchterne Register. Frank hat die Kill-Liste des Handoffs am 2026-08-12
 bestätigt (Wortlaut privat: umsetzen wie im Handoff entworfen), also verschwinden 17 Seiten als eigene

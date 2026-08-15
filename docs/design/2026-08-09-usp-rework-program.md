@@ -1,18 +1,10 @@
 # The USP rework program — build out, never archive
 
-<<<<<<< HEAD
 **Status: IN FORCE, decided by Frank 2026-08-09** (his instruction, wording private: do not
 archive the experiments — build them out until real added value and genuine distinguishing
 features exist). It answers the USP audit (`docs/audits/2026-08-09-usp-audit.md`, merged
 #472), which found: of 16 experiments, 1 draft-UNIQUE, 6 with (mostly thin) added value,
 9 redundant against named, linked neighbors.
-=======
-**Status: IN FORCE, decided by Frank 2026-08-09 (wording private):** not archiving, but
-building out until real added value and genuine distinguishing features exist —
-the answer to the USP audit (`docs/audits/2026-08-09-usp-audit.md`, merged #472), which
-found: of 16 holdings, 1 draft-UNIQUE, 6 with (mostly thin) added value, 9 redundant
-against named, linked neighbors.
->>>>>>> 7d8fcf90 (redaction: the record paraphrases Frank instead of quoting him — and the instrument index stops lying about what is built)
 
 The audit's two cross-cutting findings drive the program's shape:
 

@@ -55,13 +55,8 @@ describe('WERKE_HOLDINGS (/experiments register)', () => {
     }
   })
   it('renders newest first — the curated 2026-08-05 ranking is dissolved (Frank, 2026-08-14)', () => {
-<<<<<<< HEAD
-    // "[Wortlaut privat]
-    // [redigiert]" — recency order, derived from WERKE_CHRONO, no manual list to go stale.
-=======
     // Frank's instruction of 2026-08-14 (wording private): new works on top, dissolving the
     // curated order — recency, derived from WERKE_CHRONO, no manual list left to go stale.
->>>>>>> 49ae2ff5 (invoked-past: the instrument reads which yesterday the world cites today)
     expect(WERKE_HOLDINGS.map((w) => w.id)).toEqual(
       WERKE_CHRONO.filter((w) => !HOLDINGS_EXCLUDED_IDS.has(w.id)).map((w) => w.id),
     )

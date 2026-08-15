@@ -335,8 +335,8 @@ legible on the surface, not discoverable only by counting directories on request
 
 ### D5 — What is deliberately NOT decided here
 
-- **~~The night as the default unit.~~** *Struck 2026-08-12, on Frank's correction: „die nacht
-  [Wortlaut privat]"* This was never an open question —
+- **~~The night as the default unit.~~** *Struck 2026-08-12, on Frank's correction (wording private): the night is the
+  default unit for the fork version, not for v6.* This was never an open question —
   the fork **is** the nightly practice and v6 **is** the work-line practice, decided on
   2026-08-10. It appeared as a question in an earlier draft of this document because the author
   had folded two settled facts into one imaginary decision. There is nothing here to decide.
