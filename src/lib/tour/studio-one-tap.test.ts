@@ -10,15 +10,19 @@ import { readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { describe, expect, it } from 'vitest'
 import chronicleUpstream from '@/data/studio/chronicle.upstream.json'
-import oneTap from '@/content/studio/works/2026-07-23-one-tap/meta.json'
-import nativeSpeaker from '@/content/studio/works/2026-07-13-native-speaker/meta.json'
-import noWay from '@/content/studio/works/2026-07-17-no-way-of-knowing/meta.json'
-import recovery from '@/content/studio/works/2026-07-21-recovery/meta.json'
-import noPart from '@/content/studio/works/2026-07-30-no-part/meta.json'
 import stageData from '@/data/studio/stage.curated.json'
-import { buildSeasonModel, type SeasonKill } from '@/lib/studio/season'
+import { buildSeasonModel, type SeasonKill, type SeasonWorkMeta } from '@/lib/studio/season'
 import { verifyTourQuotes } from './verify'
 import { ONE_TAP_FIGURE, ONE_TAP_MARKS, oneTapTour } from './studio-one-tap'
+
+/** Every work the mirror carries — read off the content directory, never listed here, so the floor
+ *  this tour is checked against is the floor the site draws (2026-08-15: a hand-listed map kept
+ *  five works while the house had six, and every scene was verified against a figure nobody sees). */
+const STUDIO_METAS: Record<string, SeasonWorkMeta> = Object.fromEntries(
+  Object.entries(
+    import.meta.glob('/src/content/studio/works/*/meta.json', { eager: true, import: 'default' }),
+  ).map(([path, meta]) => [path.split('/').at(-2) as string, meta as SeasonWorkMeta]),
+)
 
 const ROOT = fileURLToPath(new URL('../../..', import.meta.url))
 const readFile = (path: string) => readFileSync(ROOT + path, 'utf8')
@@ -67,13 +71,7 @@ describe('the Studio tour is verbatim or it is not shipped', () => {
 describe('every scene focuses a mark the season floor really builds', () => {
   const model = buildSeasonModel({
     chronicle: chronicleUpstream,
-    metas: {
-      '2026-07-13-native-speaker': nativeSpeaker,
-      '2026-07-17-no-way-of-knowing': noWay,
-      '2026-07-21-recovery': recovery,
-      '2026-07-23-one-tap': oneTap,
-      '2026-07-30-no-part': noPart,
-    },
+    metas: STUDIO_METAS,
     kills: stageData.kills as SeasonKill[],
   })
   const keys = new Set(model.marks.map((m) => m.key))

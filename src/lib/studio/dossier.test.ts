@@ -2,6 +2,14 @@
 // entry by an explicit rule, and state a gap rather than fill it. Two layers, the same shape as
 // season.test.ts — the REAL committed data (so the dossiers the site actually ships are under test)
 // and small fixtures for the shapes the record does not currently contain.
+//
+// What this file READS is derived from the record — the works from the content directory, the
+// premieres from the chronicle's own `ship` entries. What it PINS is history: One Tap's three
+// returns and its withdrawal, session 28's borrowed evening, session 46's phrase. The house ships
+// again; an assertion that names whichever work happens to be newest today is not a guard but a
+// test with an expiry date on it, and on 2026-08-15 three of them expired at once.
+import { readdirSync } from 'node:fs'
+import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
 import chronicleUpstream from '@/data/studio/chronicle.upstream.json'
 import stageData from '@/data/studio/stage.curated.json'
@@ -22,16 +30,23 @@ import {
   readWithdrawal,
   type DossierChronicleEntry,
   type DossierKill,
+  type DossierWorkMeta,
   type StudioDossierInput,
 } from './dossier'
 
-const METAS = {
-  '2026-07-13-native-speaker': nativeSpeaker,
-  '2026-07-17-no-way-of-knowing': noWay,
-  '2026-07-21-recovery': recovery,
-  '2026-07-23-one-tap': oneTap,
-  '2026-07-30-no-part': noPart,
-}
+const WORKS_DIR = 'src/content/studio/works'
+
+/** Every work the mirror carries, keyed by slug — read off the content directory with the same
+ *  glob the site's own assembly uses (dossier-data.ts, `loadWorkMetas`), so this suite tests the
+ *  set of works the site actually ships. It used to be five hand-written imports: when the studio
+ *  premiered a sixth work on 2026-08-15, the map did not grow with it, the new work fell outside
+ *  every assertion here, and the integration that carries the practice onto the site failed its
+ *  gate three times in a row. A guard over the record cannot keep its own copy of the record. */
+const METAS: Record<string, DossierWorkMeta> = Object.fromEntries(
+  Object.entries(
+    import.meta.glob('/src/content/studio/works/*/meta.json', { eager: true, import: 'default' }),
+  ).map(([path, meta]) => [path.split('/').at(-2) as string, meta as DossierWorkMeta]),
+)
 
 /** The upstream mirror carries no `anchor` — the merge derives it. For these tests the derivation
  *  is not the subject, so the same rule is applied inline and the merged shape is exercised. */
@@ -50,7 +65,31 @@ const CHRONICLE_PATH = 'src/data/studio/chronicle.upstream.json'
 
 const REAL: StudioDossierInput = { chronicle: CHRONICLE, metas: METAS, kills: KILLS }
 
+/** The machine-readable head the house writes into a withdrawn work's own `medium`, re-read here
+ *  rather than imported from the module under test: the expectations below are then derived from
+ *  the committed FILES, not from the implementation that is being checked against them. */
+const WITHDRAWN_HEAD = /^WITHDRAWN\s+\d{4}-\d{2}-\d{2}/i
+
+/** Every premiere the chronicle records, newest first. */
+const SHIPS_NEWEST_FIRST = [...CHRONICLE]
+  .reverse()
+  .filter((e) => e.move === 'ship' && e.works.length > 0)
+/** The newest premiere of all, live or taken back. */
+const NEWEST_SHIP = SHIPS_NEWEST_FIRST[0]
+/** The newest premiere whose work its own meta.json does not mark WITHDRAWN — what the spotlight
+ *  has to be, computed from the two committed files instead of typed as a slug. */
+const NEWEST_LIVE_SHIP = SHIPS_NEWEST_FIRST.find(
+  (e) => METAS[e.works[0]] && !WITHDRAWN_HEAD.test(METAS[e.works[0]].medium ?? ''),
+)
+/** Every work the record shipped and the mirror carries a meta for, oldest first. */
+const SHIPPED = [
+  ...new Set(CHRONICLE.filter((e) => e.move === 'ship' && e.works.length > 0).map((e) => e.works[0])),
+].filter((slug) => slug in METAS)
+
 const ONE_TAP = '2026-07-23-one-tap'
+/** A premiered work of the record — used where an assertion needs one work by name. NOT "the
+ *  current premiere": it held that role from 2026-07-30 until 2026-08-15, and typing it here as
+ *  though it were a fixed fact is exactly what this file was rewritten to stop doing. */
 const NO_PART = '2026-07-30-no-part'
 
 describe('buildStudioDossiers over the committed record', () => {
@@ -61,28 +100,80 @@ describe('buildStudioDossiers over the committed record', () => {
     expect(JSON.stringify(buildStudioDossiers(REAL))).toBe(JSON.stringify(dossiers))
   })
 
-  it('carries one dossier per body of the house — five premieres and seven strikes', () => {
-    expect(dossiers.filter((d) => d.state === 'premiered')).toHaveLength(4)
-    expect(dossiers.filter((d) => d.state === 'withdrawn')).toHaveLength(1)
+  it('reads every work the mirror committed, from the directory itself', () => {
+    // The glob above is the only list of works this file has. If it ever matched nothing, half the
+    // assertions here would pass over an empty record, so what it found is checked against the
+    // directory the mirror writes — and against the record's newest premiere, one test below.
+    const onDisk = readdirSync(join(process.cwd(), WORKS_DIR), { withFileTypes: true })
+      .filter((d) => d.isDirectory())
+      .map((d) => d.name)
+      .sort()
+    expect(Object.keys(METAS).sort()).toEqual(onDisk)
+  })
+
+  it('carries one dossier per body of the house — one per premiere, one per strike', () => {
+    // Derived, because the house keeps shipping: the premieres are the chronicle's own `ship`
+    // entries, the strikes are the curated kill list. "Five premieres and seven strikes", typed
+    // here, was a true sentence for sixteen days and a broken gate on the seventeenth.
+    const withdrawn = SHIPPED.filter((slug) => WITHDRAWN_HEAD.test(METAS[slug].medium ?? ''))
+    expect(dossiers.filter((d) => d.state === 'premiered')).toHaveLength(
+      SHIPPED.length - withdrawn.length,
+    )
+    expect(dossiers.filter((d) => d.state === 'withdrawn')).toHaveLength(withdrawn.length)
     expect(dossiers.filter((d) => d.state === 'struck')).toHaveLength(KILLS.length)
-    expect(dossiers).toHaveLength(5 + KILLS.length)
+    expect(dossiers).toHaveLength(SHIPPED.length + KILLS.length)
+    // one body, one dossier: every premiered work has exactly one, filed under its own slug
+    for (const slug of SHIPPED) expect(byId.get(slug)?.slug, slug).toBe(slug)
+    expect(new Set(dossiers.map((d) => d.id)).size).toBe(dossiers.length)
+  })
+
+  it('carries the record’s newest premiere — which is what the mirror exists to deliver', () => {
+    // The failure this file was rewritten for: the studio premiered a new work upstream, the suite
+    // still named the premiere before it, and the practice's newest work could not reach the site.
+    const newest = NEWEST_SHIP.works[0]
+    expect(Object.keys(METAS), `${newest} shipped but the mirror carries no meta.json`).toContain(newest)
+    expect(byId.get(newest)?.id).toBe(newest)
+    expect(byId.get(newest)?.title).toBe(METAS[newest].title)
+    expect(byId.get(newest)?.date).toBe(NEWEST_SHIP.date)
   })
 
   it('leads with the current premiere, derived from the record and never typed', () => {
-    expect(dossiers[0].id).toBe(NO_PART)
+    // The expectation is computed the way the record answers the question — the newest `ship`
+    // whose work its own meta.json does not mark WITHDRAWN — so this asserts an agreement between
+    // the build and the committed files, not between the build and a slug typed here in July.
+    expect(NEWEST_LIVE_SHIP, 'the record carries no live premiere at all').toBeDefined()
+    expect(dossiers[0].id).toBe(NEWEST_LIVE_SHIP!.works[0])
     expect(dossiers[0].spotlight).toBe(true)
     expect(dossiers.filter((d) => d.spotlight)).toHaveLength(1)
+    expect(currentPremiere(CHRONICLE, METAS)).toBe(NEWEST_LIVE_SHIP!.works[0])
   })
 
   it('never puts the withdrawn work in the spotlight, however new its premiere is', () => {
-    // One Tap shipped in session 31 and was withdrawn in 43: a newest-ship rule alone would light it
-    const newestShip = [...CHRONICLE].reverse().find((e) => e.move === 'ship' && e.works.length > 0)
-    expect(newestShip?.works[0]).toBe(NO_PART)
-    expect(byId.get(ONE_TAP)?.spotlight).toBe(false)
+    // One Tap shipped in session 31 and was withdrawn in 43: a work can be lit and lose the light
+    // afterwards, which is the one thing a typed protagonist could never follow.
     expect(byId.get(ONE_TAP)?.state).toBe('withdrawn')
+    expect(byId.get(ONE_TAP)?.spotlight).toBe(false)
+    expect(WITHDRAWN_HEAD.test(oneTap.medium)).toBe(true)
+    // whichever premiere is newest on the day, the lit one is a work no meta marks withdrawn…
+    expect(isWithdrawn(METAS[dossiers[0].id])).toBe(false)
+    // …and every premiere NEWER than it is one the house itself took back — the spotlight walks
+    // backwards past withdrawals and stops at the first live work, it does not skip live ones
+    for (const e of SHIPS_NEWEST_FIRST) {
+      if (e === NEWEST_LIVE_SHIP) break
+      const meta = METAS[e.works[0]]
+      if (meta) expect(isWithdrawn(meta), `${e.works[0]} is live and newer than the spotlight`).toBe(true)
+    }
   })
 
   it('quotes each work’s own description verbatim, beside the path it came from', () => {
+    // every work the mirror carries, so a work that premiered tonight is quoted under test tonight
+    for (const d of dossiers.filter((x) => x.slug)) {
+      const meta = METAS[d.slug!]
+      expect(d.description?.text, d.id).toBe(meta.embodies)
+      expect(d.description?.source, d.id).toBe(`${WORKS_DIR}/${d.slug}/meta.json`)
+      expect(d.form?.text, d.id).toBe(meta.medium)
+    }
+    // spelled out once in full, so the path above is a real path and not this test's own template
     const d = byId.get(NO_PART)!
     expect(d.description?.text).toBe(noPart.embodies)
     expect(d.description?.source).toBe('src/content/studio/works/2026-07-30-no-part/meta.json')
@@ -305,10 +396,21 @@ describe('honesty tiers — quoted where the work declares them, absent where it
     expect(recovery.embodies).toContain(tiers[0].text)
   })
 
-  it('returns nothing where a work declares no tier — three of the five do not', () => {
+  it('returns nothing where a work declares no tier — the gap is stated, never filled', () => {
     expect(readTiers('2026-07-13-native-speaker', nativeSpeaker)).toEqual([])
     expect(readTiers('2026-07-17-no-way-of-knowing', noWay)).toEqual([])
     expect(readTiers(NO_PART, noPart)).toEqual([])
+  })
+
+  it('lifts nothing from any work in the record it cannot find verbatim in that work’s file', () => {
+    // the two named works above are the ones whose clauses are quoted word for word; this is the
+    // same rule applied to every work the mirror carries, including any that premiered tonight
+    for (const [slug, meta] of Object.entries(METAS)) {
+      for (const t of readTiers(slug, meta)) {
+        expect(`${meta.embodies ?? ''}\n${meta.medium ?? ''}`, `${slug}: ${t.text}`).toContain(t.text)
+        expect(t.source, slug).toBe(`${WORKS_DIR}/${slug}/meta.json`)
+      }
+    }
   })
 })
 
