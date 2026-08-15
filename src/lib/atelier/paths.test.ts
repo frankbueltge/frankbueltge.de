@@ -28,6 +28,25 @@ describe('classifyWork', () => {
       expect(w.ignored).toEqual(['README.md', 'runner.py', 'data'])
     }
   })
+  // 2026-08-16: a work may now carry the assets that make it a work. Before this, a standalone
+  // work could reach a visitor only through text, SVG and canvas — which is the form Studio
+  // Protocol v3 stopped accepting.
+  it('carries sound, moving image, raster and fonts beside the entry file', () => {
+    const w = classifyWork('loud', [
+      'index.html', 'meta.json', 'score.mp3', 'loop.webm', 'frame.png', 'type.woff2',
+    ])
+    expect(w.kind).toBe('html')
+    expect((w as { files: string[] }).files).toEqual([
+      'index.html', 'meta.json', 'score.mp3', 'loop.webm', 'frame.png', 'type.woff2',
+    ])
+    expect((w as { ignored: string[] }).ignored).toEqual([])
+  })
+
+  it('still leaves prose, notebooks and executables behind', () => {
+    const w = classifyWork('mixed', ['index.html', 'README.md', 'notes.py', 'run.sh'])
+    expect((w as { ignored: string[] }).ignored).toEqual(['README.md', 'notes.py', 'run.sh'])
+  })
+
   it('still rejects a directory with no entry file', () => {
     const w = classifyWork('x', ['README.md', 'notes.txt'])
     expect(w.kind).toBeNull()
