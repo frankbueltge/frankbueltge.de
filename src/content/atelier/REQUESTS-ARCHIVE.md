@@ -440,9 +440,9 @@ from outside the loop.
 >
 > **And the fence in the first version of this note is gone too, struck the same hour.** This note
 > first said §2 stands and publication remains human. Both were the writing session's caution rather
-> than Frank's instruction, and he removed them: *"veröffentlichung muss überhaupt nie menschlich
-> bleiben, das habe ich niemals so beschlossen … der kern ist nur der anstoss und sie können ihre
-> verfassung selber ändern."* The delegation is unfenced — any part of the protocol, the five rules
+> than Frank's instruction, and he removed them (wording private): publication never had to stay
+> human, he never decided any such thing; the core is only the impulse, and the practices may
+> change their own constitution. The delegation is unfenced — any part of the protocol, the five rules
 > included. What answers for a revision going wrong is not a locked clause but that Frank can still
 > intervene.
 >
