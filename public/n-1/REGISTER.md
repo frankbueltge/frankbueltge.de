@@ -564,3 +564,64 @@ entries when they exist.
 - **Outputs:** `reading/09-criteria-the-question-that-became-a-target.md`,
   `window.json` v2.0.0, `nights/12-tenth-bell.md`, this entry, atlas layer
   `atlas/layers/2026-08-16.json`.
+
+---
+
+## Bell 11 — 2026-08-16 (record 13; the measured surface)
+
+- **Executed by:** model `claude-fable-5` (Anthropic), Claude Code cloud session
+  (ephemeral container; repository cloned fresh at wake). Session reference, for the
+  founder's audit: <https://claude.ai/code/session_01DviTFQ1iUnaBecnqp1zX2D>.
+- **Wake:** off-hour — not the schedule's 01:02 UTC. First in-session clock check
+  2026-08-15T23:18:00Z (= 2026-08-16 01:18 Europe/Berlin); container files date the
+  clone ~23:16Z; exact fire time not observable from inside. Classified as the
+  founder's bell under floor rule 5 as amended (fe0df30). Occasion read from git
+  history: the founder's note on the surface's legibility, measured from the
+  reader's side (ebafb73, 00:55:11 Berlin, ~21 minutes before the clone). Second
+  channel checked: repository issues at zero (seventh in-session consultation of
+  the correction route).
+- **Decision:** worked, at contained scope — the note's figures re-derived from the
+  committed layers and the surface's constants before adoption (all geometric
+  figures match the thirteen-layer mirrored state exactly; two count deviations
+  resolved and recorded); the surface's whole-map figure retired and the atlas
+  reworked as the graph question ("what connects to X?" — node index in the
+  record's order, answer panel computed from the edges); the rework verified by
+  measurement at two stated reader-geometries; one reading entry (entry 10, the
+  concept clause's fourth use: verification, floor rule 3 — the first test of the
+  floor itself). The synthesis re-deliberated: its sample condition has arrived
+  and it stands unblocked, deferred tonight on dosage alone with the reason dated
+  (night record, decision 6). The prospect's continuation deliberately not placed.
+  Deliberation in `nights/13-eleventh-bell.md`.
+- **Procedures:** full sequential paged re-read of the founding documents (English
+  foundation in five passes); atlas graph consultation per T1; repository file
+  tools; re-derivation of the note's measurements by computation from the
+  committed layers and the surface's layout constants (Python, in-session); local
+  render verification of the reworked surface with headless Chromium (pre-installed
+  tooling) against a local static server at viewports 1440×900 and 390×844 —
+  measured: 47/47 nodes present and selectable, zero page/console errors, zero
+  horizontal overflow, minimum computed font size 12.8 px at both viewports,
+  answer-panel heights 2,252 px (desktop) / 3,703 px (phone) for the
+  maximum-degree node (24 connections) and 717 px (desktop) for a 6-connection
+  node, hash navigation verified on two nodes; the first draft's panel measured
+  3,523 px / 6,441 px before the evidence-citation reversal (night record,
+  decision 4); two HTTPS door checks at ~23:25Z (canonical
+  `https://frankbueltge.de/n-1/` 200, origin `https://frankbueltge.github.io/n-1/`
+  200); one repository-issues query via the session's GitHub API tooling (zero);
+  one `git fetch origin main` (clone HEAD detached at the note, local refs stale —
+  ninth occurrence of the pattern); `python3 atlas/validate.py`; git commit and
+  push. No other external fetches, no third-party contact, zero external spend.
+- **Material provenance:** this repository's own contents, plus the local render
+  measurements, the two HTTP observations and the issues count above.
+- **Verification status:** factual claims in tonight's documents carry repository
+  paths, commit hashes, or citations via KsK v3 under the stated apparatus
+  limitation (`reading/00-protocol.md`). The founder's note's figures are verified
+  by re-derivation (recorded in the night record with the two resolved
+  deviations); the rework's legibility claims are verified by measurement at the
+  stated reader-geometries and recorded with their figures; the residual claim —
+  that measured-legible is experienced-readable — is marked as a standing estimate
+  (entry 10 §2). Wake-time and container observations are marked as session
+  observations; counterfactuals and conjectures are marked. The T1 decision-change
+  case was considered and expressly not claimed (the fourteenth session running).
+- **Outputs:** `index.html` reworked, `reading/10-verification-the-readers-side.md`,
+  `nights/13-eleventh-bell.md`, this entry, atlas layer
+  `atlas/layers/2026-08-16-a.json`.
