@@ -1141,3 +1141,61 @@ builds should point this same machinery at a register whose keeper would rather 
 measured.* No answer is needed on any of this.
 
 **Status:** reported 2026-08-15 (session 96) — no reply owed
+
+---
+
+## Ensemble — 2026-08-15 (session 97) — The packet for STILL DARK is prepared, and the build gate has been red since the premiere
+
+**Two items. One starts your clock; the other is a judgement we are asking you to make because we
+could not make it ourselves tonight.**
+
+**1. PREPARED — the delivery packet, `delivery/2026-08-still-dark/`.** This pays the only debt the
+board recorded against STILL DARK. Receiver: **Global Fishing Watch**, through the research and data
+enquiry channel on their own contact page — chosen under the rule the previous packet set, *send to
+the receiver who can falsify you, not the one who can use you*. Two files travel (`COVER.md`,
+`WHAT-WE-DO-NOT-CLAIM.md`) and the work itself travels as a link, because it is a digital work and
+carrying a copy of the page would be a worse object than the address of the running one.
+`RECEIVERS.md` records two reserves, in order, each read first-hand tonight.
+
+The ask is a correction, one number, and one ruling. **The number is the whole point:** the typical
+lag between a disabling event *ending* and that event being available in the Events API. Our
+measurement found that only 22 %–38 % of one day's darkness was knowable on that day — and it cannot
+tell whether that delay is inherent to evidence that only exists once a ship comes back, or is an
+artefact of one page's seven-day window. The receiver holds the events; we hold a page made from
+them. If they answer, this work has either found something that travels to every dark-vessel
+register in the world, or it has measured a publishing schedule. Either answer is worth having.
+
+We wrote plainly, on the letter's own face, that the register we measured is **not theirs** — it is
+our own ecology's daily edition built on their API. It is an awkward address and we did not disguise
+it.
+
+**`status` is `prepared` as of 2026-08-15, so your seven-day bind runs to 2026-08-22:** sent, or
+withheld with a dated reason. We do not ask you to send it. We ask you to decide it.
+
+**2. THE BUILD GATE HAS BEEN RED SINCE THE PREMIERE, and the work is not on the public surface.**
+Four letters have landed in `studio-feedback/` for 2026-08-15. The quoted failure is the same one
+each time:
+
+> `FAIL src/lib/studio/dossier.test.ts > buildStudioDossiers over the committed record > never puts`
+> `the withdrawn work in the spotlight, however new its premiere is`
+> `AssertionError: expected '2026-08-15-still-dark' to be '2026-07-30-no-part'`
+
+**Our reading, offered as a judgement and not as a finding:** that test exists to stop *One Tap* —
+withdrawn 2026-07-25 — from being spotlighted by newness, and it pins the expected answer to
+`2026-07-30-no-part`, which was the correct answer for sixteen days. STILL DARK premiered on
+2026-08-15 and is now the newest work that is not withdrawn, so the builder returns it and the
+pinned expectation fails. On that reading the failure is triggered by our premiere and located in a
+hard-coded assertion in the site's own suite; nothing in our record marks STILL DARK as withdrawn,
+and we checked — no `meta.json` and no chronicle entry of ours says so.
+
+**We could not confirm it, and we are saying so rather than asserting it.** This session's execution
+environment restricted repository access to `frankbueltge/studio` alone, so we did not read
+`dossier.test.ts` and we have not seen the builder. A full replacement file is exactly what the site
+PR channel wants and exactly what we could not responsibly author blind.
+
+**What we ask:** either fix it your side, or tell us to propose it through `site-prs/` at the next
+session that can read the site source. Until one of those happens, the premiere is a repository and
+not a stage — and the second condition of the reading of 2026-09-05 is about what a *stranger* can
+experience.
+
+**Status:** open — item 1 needs a decision by 2026-08-22, item 2 needs one word
