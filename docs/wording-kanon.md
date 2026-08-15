@@ -142,13 +142,13 @@ korrigieren: **eine** work-line ist eine Arbeitseinheit, **die** work-line ist d
 
 **Für die Oberfläche:** die Pyramide behält **drei Stationen**. Linien leben *innerhalb* einer
 Station, nicht daneben — sonst bekommt die Ökologie mit jedem Fork eine Ecke, und ein Besucher
-versteht nichts mehr. Frank, 2026-08-12: *„das Prinzip sollte im Frontend schon beibehalten
-werden, weil sonst niemand der diese Seite besucht irgendwas versteht."*
+versteht nichts mehr. Frank, 2026-08-12 (Wortlaut privat): das Prinzip soll im Frontend beibehalten
+werden, sonst versteht ein Besucher dieser Seite nichts mehr.
 
 **Zurückgezogen am selben Tag: „House".** Nachmittags fehlte ein Wort für die Ebene über einer
 Praxis (die Ökologie ist drei Praxen, Machine Attention eine) — eingeführt als **House**, abends
-von Frank verworfen: *„insgesamt finde ich houses nicht so gut. und ich würde bei projekten
-bleiben, weil es projekte sind."* Die Staffel oben braucht das Sonderwort nicht: **Project** ist
+von Frank verworfen (Wortlaut privat): „houses" überzeugt ihn nicht, und das Vokabular soll
+bei *Projekten* bleiben, weil es Projekte sind. Die Staffel oben braucht das Sonderwort nicht: **Project** ist
 die oberste Ebene und enthält alles Übrige. Damit wandert auch **Project** eine Ebene nach oben —
 Foreknown und Dark Ocean heißen auf der Site jetzt **Experimente** eines Projekts, nicht Projekte
 einer Praxis. Die Zeile „Die vier/fünf Wörter" von heute Nachmittag ist damit **historisch**.
@@ -192,16 +192,16 @@ Titel heißen jetzt beide `/experiments`, siehe den Abschnitt „Die vier Wörte
 Sammlung (12.07.), jedes Experiment steht für sich.
 
 **Nachtrag (Frank, 08.08.):** `/holdings` führt seit dem 08.08. auch das **laufende** zweite
-Experiment „The State Before the Interface" (`/observatory`) — Franks Anweisung: „lege das
-als Experiment an unter Experiments". Die Fläche ist damit nicht mehr strikt „frühere
+Experiment „The State Before the Interface" (`/observatory`) — Franks Anweisung (Wortlaut privat): als
+Experiment unter Experiments anlegen. Die Fläche ist damit nicht mehr strikt „frühere
 Arbeiten", sondern das Verzeichnis der Experimente des Labors; der Untertitel der Seite
 wurde entsprechend entschärft („offered to the ecology as material" entfiel — das
 Observatorium steht bewusst außerhalb der Ökologie).
 
 **Nachtrag (Frank, 08.08. abends):** Das zweite Experiment heißt jetzt **„machine attention"** —
 eine machine investigative practice (Name von Frank bestätigt, 08.08.). Ihre Bühne lebt
-unter **`/attention`** (nächtlich gespiegelt aus `machine-attention`, Franks Anweisung:
-„[Wortlaut privat; Kern: auf frankbueltge.de veröffentlichen]"). Erstes
+unter **`/attention`** (nächtlich gespiegelt aus `machine-attention`, Franks Anweisung,
+Wortlaut privat: keine GitHub Page, sondern Veröffentlichung auf frankbueltge.de). Erstes
 Projekt: **„The Foreknown"** (Beurkundung angekündigter Zukünfte); „The State Before the
 Interface" (`/observatory`) ist seit dem 08.08. ein Projekt dieser Praxis, nicht mehr das
 Experiment selbst — ~~„Hintergrund-Observatorium"~~ heißt seit dem 2026-08-09 **Instrument**

@@ -5,19 +5,19 @@ decision list (`2026-08-09-portfolio-audit.md` §7, D6/D7). This document record
 decision, the executed G1 test with its full provenance trace, and the conditions that
 bind every future GCP step.
 
-## 1. Frank's decision, verbatim
+## 1. Frank's decision (wording private)
 
-On **G1 (BigQuery GDELT)**: *"okay, wenn das quasi nix kostet, könnten wir das gerne mal
-testen und es wird sicher auch für weitere experimente und 'machine attention' und die
-research ecology nützlich sein. und die lizensbedinungen müssen wir natürlich streng
-befolgen."* — GO for testing; license terms strictly followed; explicitly intended as
-shared infrastructure for further experiments, machine attention, and the research ecology.
+On **G1 (BigQuery GDELT)**: worth testing if it costs approximately nothing, and likely
+useful for further experiments, for machine attention and for the research ecology as
+well, with the licence terms followed strictly — GO for testing; license terms strictly
+followed; explicitly intended as shared infrastructure for further experiments, machine
+attention, and the research ecology.
 
-On **G5 (Earth Engine Sentinel-1)**: *"auch das nur, wenn keine wesentlichen Kosten
-entstehen und klar kann man auch mal Teile einer Ethik aufgeben, wenn es sinnvoll ist und
-der Sache dient"* — conditional GO: no significant costs may arise, and the documented
-reproducibility trade-off (portfolio audit §6.5) is accepted, provided it serves the work
-and is stated openly.
+On **G5 (Earth Engine Sentinel-1)**: the same, only if no material costs arise, with the
+note that parts of a stated ethic may be given up where that is sensible and serves the
+work — conditional GO: no significant costs may arise, and the documented reproducibility
+trade-off (portfolio audit §6.5) is accepted, provided it serves the work and is stated
+openly.
 
 Not activated: G2/G3 (decided with their reworks), G4/G6 (verified negatives / reserve).
 

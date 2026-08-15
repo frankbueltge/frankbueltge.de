@@ -206,7 +206,7 @@ describe('every parsed rule', () => {
   })
 })
 
-// Werk-Slugs englisch (2026-07-20, Frank: "deutsche Slugs will ich nicht") — die zuvor als
+// Werk-Slugs englisch (2026-07-20, Franks Entscheid, Wortlaut privat: keine deutschen Slugs) — die zuvor als
 // "Werk-Archivpfade" belassenen deutschen Slugs wandern auf englische Slugs (Anzeigetitel aus
 // src/i18n/ui.ts). Je Werk muss die alte Werk-Seite UND das alte Methodenblatt (/werke/<slug>)
 // aufs englische Pendant zeigen; /police zeigt jetzt direkt auf /policy (kein Doppel-Hop).

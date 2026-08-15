@@ -92,8 +92,8 @@ at the targets in this table.
 
 ## Nachtrag 2026-07-16 vormittags — Routen englisch + Interim-Akte
 
-Frank ("warum stehen da deutsche begriffe in den urls?"): der English-only-Entscheid gilt auch
-für Pfade. `/encounters` und `/holdings` sind seither die kanonischen Routen (Seiten-
+Frank hat die deutschen Begriffe in den URLs beanstandet (Wortlaut privat): der
+English-only-Entscheid gilt auch für Pfade. `/encounters` und `/holdings` sind seither die kanonischen Routen (Seiten-
 Verzeichnisse umbenannt, alle internen Links umgestellt); die bisherigen Ziele oben
 (`/bestaende`) wurden in `public/_redirects` auf `/holdings` nachgezogen, damit keine
 Zwei-Hop-Ketten entstehen.
@@ -165,7 +165,7 @@ Design-Handoff: `docs/design_handoff_research_ecology/README.md`. Diagnose (Fran
 [Wortlaut privat]. Die
 Kur ist eine strikte Pyramide — **eine** Eingangsfläche (`/ecology`), **ein** Stationsblatt je
 Raum, darunter nüchterne Register. Frank hat die Kill-Liste des Handoffs am 2026-08-12
-bestätigt („[Wortlaut privat]"), also verschwinden 17 Seiten als eigene
+bestätigt (Wortlaut privat: umsetzen wie im Handoff entworfen), also verschwinden 17 Seiten als eigene
 Oberflächen.
 
 **Kein Inhalt ist gelöscht.** Jede dieser Seiten steht vollständig in der Git-Historie; was

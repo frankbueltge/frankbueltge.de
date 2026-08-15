@@ -2,8 +2,8 @@
 
 **Occasion.** Frank asked the fair question, late on 2026-07-30: is this ecology a serious,
 useful experiment — or a bullshit generator that burns thousands of tokens daily writing for
-itself? His decision, 2026-07-31, on the assessment below: **adjust, don't abandon** ("aufgeben
-würde ich jetzt noch nicht, eher justieren"). This document records the evidence, the
+itself? His decision, 2026-07-31, on the assessment below: **adjust, don't abandon** — not giving up
+yet, but adjusting (wording private). This document records the evidence, the
 adjustment, and the seeds delivered to the practices.
 
 ## 1. Evidence (measured from the committed archive, 2026-07-30)

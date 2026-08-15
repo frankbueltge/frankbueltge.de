@@ -2,7 +2,8 @@
 
 **Date:** 2026-08-05 · **Piece:** The Society (`/society`) · **Status:** four adversarial searches, verdicts applied to the work the same day.
 
-**Occasion.** Frank, on the day of launch: *"Und wurde das so nicht schon hundert mal nachgebaut? Wo ist der Mehrwert und wow-Effekt?"* The right answer to that question is not a defence but a search. Before this document, the piece's novelty claims rested on my impression of the field — the same failure mode the reading protocol repaired for the book. This is the repair for the field.
+**Occasion.** Frank, on the day of launch (wording private): had this not been rebuilt a
+hundred times already, and where were the added value and the wow effect? The right answer to that question is not a defence but a search. Before this document, the piece's novelty claims rested on my impression of the field — the same failure mode the reading protocol repaired for the book. This is the repair for the field.
 
 **Method.** Four parallel researchers, each given a claim and the instruction to **refute** it: every genuine precursor found counts as a success, not a defeat. Fronts: (A) Society of Mind implementations and stagings; (B) the agent/a-life art canon and the literary layer; (C) ablation as interaction, plus the determinism context; (D) the verifiability apparatus. Each returned findings with closeness scores (0–3), explicit negatives (angles exhausted with nothing found), and a verdict. Synthesis, ranking and the decisions below were made centrally against the assembled evidence. Coverage caveat, stated because it bounds every negative here: English-language web search plus GitHub; non-English media-art archives (ZKM, Ars Electronica in German), Observable/CodePen/itch.io sketches and the emulated Voyager CD-ROM were not sweepable. Absence of evidence here is not proof of absence.
 

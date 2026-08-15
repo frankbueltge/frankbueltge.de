@@ -1,10 +1,12 @@
 # The Balance: the emotional trade balance of the world's press (design proposal, 2026-08-14)
 
-**Status.** Proposal, not commissioned. Written on Frank's request ("lass doch alle specs
-mal abarbeiten", 2026-08-13 late) after the GDELT capability review and two prior-art
-research passes of 2026-08-13. Nothing here is built; no werk entry, no naming decision.
-All names in this document are working titles — final wording passes the wording gate
-(`src/config/naming.ts`, `docs/wording-kanon.md`).
+**Status: BUILT AND LIVE since 2026-08-14** (updated 2026-08-15; it read "proposal, not
+commissioned" for a day after the werk had shipped). The instrument runs at `/balance` with
+its method sheet at `/werke/balance` and the werk entry `balance` in `src/data/werke.ts`;
+`/experiments` carries it. This document is now the design record the build was commissioned
+from, not a proposal. Written on Frank's request to work through all the specs, thoroughly
+and step by step (2026-08-13 late, wording private), after the GDELT capability review and
+two prior-art research passes of 2026-08-13. The working title below shipped unchanged.
 
 **Candidate landing.** Lab experiment on frankbueltge.de, counter-measurement line
 (Meridian's core remit since v2 — any engine involvement travels as a seed/offer under the
@@ -14,8 +16,8 @@ practice constitution, never as a decree from this spec).
 raw 15-minute GKG 2.1 files and currently uses 4 of 27 columns. The unused `V2GCAM` column
 carries 2,989 emotion/theme dimensions from 40 dictionaries (16 languages native, 65 more
 machine-translated); `V2ENHANCEDLOCATIONS` carries every place an article mentions. Frank's
-question — "can we draw a per-country mood picture with history?" — is answerable from data
-the house already downloads nightly. The prior-art pass showed the naive answer is taken;
+question — whether a per-country mood picture with history can be drawn (wording private)
+— is answerable from data the house already downloads nightly. The prior-art pass showed the naive answer is taken;
 this spec describes the version that is not.
 
 ## 1. The claim

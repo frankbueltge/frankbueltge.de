@@ -5,19 +5,17 @@ night of 11./12.08. **Status:** **D1, D2 and D3 approved by Frank and implemente
 (2026-08-12). D4 is not approved and not built. D5 records what is deliberately left alone.
 The measurement in §2–§3 stands as written before the decision.
 
-## 1. The question, verbatim
+## 1. The question (wording private)
 
-> „sag mal [Wortlaut privat], oder? also das sich arbeiten über
-> monate hinziehen können, ich glaube da kommt nichts sinnvoles bei raus und die routine
-> verliert sich dabei. ich glaube wir haben hier mit jedem update nicht wirklich optimiert
-> sondern einfach einen raum geschaffen in dem nur bullshit produziert werden kann."
+> Works that can stretch over months are confusing and unproductive; nothing worthwhile comes
+> out of them and the routine loses itself. Each update has not really optimised anything —
+> it has created a room in which only nonsense can be produced.
 
 And, on the first answer being too quick:
 
-> „ist das nicht zu oberflächlich? also letztendlich kommt es darauf an, was die vorarbeit zu
-> negative parallax wirklich gebracht hat und ob das selbe werk nciht auch in 1- 3 nächte
-> entstanden wäre und das kann ich nicht einschätzen, also man muss hier die qualität der
-> werke bewerten"
+> That is too superficial. What matters is what the preparatory work on negative parallax
+> actually produced, and whether the same work would not have come about in one to three
+> nights — which he cannot judge from outside. The quality of the works has to be assessed.
 
 That second question is the one this document answers first, because the answer determines
 whether the remedy is *repair* or *retreat*.
@@ -273,9 +271,9 @@ D2b is a **restoration**, not an invention: v3's "The arrangement you work insid
 the recall index as the memory carried between sessions. D2a is the repair that makes the
 restoration mean anything.
 
-**D2c — the Foundation is carried, not re-read** (added 2026-08-12 on Frank's question: [
-Wortlaut privat
-].
+**D2c — the Foundation is carried, not re-read** (added 2026-08-12 on Frank's question, wording private: this
+cannot be re-read every time — it has to live in a memory and be permanently available; was
+that solved?).
 
 It was not. The distinction the question makes is the right one, and the answer splits:
 

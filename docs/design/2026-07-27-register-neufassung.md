@@ -21,11 +21,11 @@ DataCite-Einträgen.
 
 Frank am 27.07., nachdem die Größenordnungen sichtbar wurden:
 
-> „wir sollten hart filtern und uns auf datensätze oder daten beschränken, die für meine
-> arbeit und die research ecology sinn machen. dann hat die sammlung noch einen mehrwert
-> und ist nicht einfach eine kopie von datcite, sondern eine meta datensammlung über
-> viele öffentliche quellen — und das war die ursprüngliche idee, die vielleicht im plan
-> nicht konkret transportiert wurde."
+> Hart filtern und auf Datensätze beschränken, die für seine Arbeit und die research
+> ecology Sinn ergeben; dann trägt die Sammlung einen Mehrwert und ist keine Kopie von
+> DataCite, sondern eine Meta-Datensammlung über viele öffentliche Quellen — die
+> ursprüngliche Idee, die der Plan nicht konkret transportiert hatte.
+> *(Franks Anweisung, 27.07., Wortlaut privat.)*
 
 Das trifft zu. **Eine Teilmenge von DataCite ist wertlos**, weil DataCite selbst
 vollständiger, aktueller und besser ausgestattet ist. Der Wert eines eigenen Registers

@@ -140,7 +140,7 @@ Lösung via Nonces — kein Showstopper, aber eigener Plan-Schritt.
 
 ### Komponente 5 — Fehlerbehandlung + Benachrichtigung
 
-Bei **rotem** Gate (Franks Wahl: „vollautonom **+** mich benachrichtigen"):
+Bei **rotem** Gate (Franks Wahl, Wortlaut privat: vollautonom **und** mit Benachrichtigung an ihn):
 
 - **Kein** Deploy; der letzte grüne Stand bleibt live.
 - Das Gate schreibt `atelier-feedback/<datum>.md` zurück in **ihr** Repo (Build-/Check-/Test-Fehler,

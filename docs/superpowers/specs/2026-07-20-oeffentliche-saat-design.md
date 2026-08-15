@@ -213,16 +213,17 @@ sichtbar, nicht vergessen.
   der saat-sync-Job committet mit dem eingebauten `GITHUB_TOKEN`, dessen Pushes kein `on: push`
   auslösen; ohne den Trigger erschienen Praxis-Antworten erst mit dem nächsten Nightly im
   gebauten Register.
-- **D9 — Engine-Amendments angewendet (2026-07-20):** Auf Franks Sammel-Go („noch alles
-  umsetzen, was du jetzt umsetzen kannst") direkt in die drei Engine-Repos committet —
+- **D9 — Engine-Amendments angewendet (2026-07-20):** Auf Franks Sammel-Go (Wortlaut privat: alles
+  umsetzen, was jetzt umsetzbar ist) direkt in die drei Engine-Repos committet —
   `field-research` 7a79d80, `studio` 8121a03, `irrtum-als-methode` 70fadfd. Bei Meridian und
   Ensemble als Ergänzung des Orient-Schritts; bei Ulysses (v4) als Zusatz zur bestehenden
   Trace-Konvention — dessen eigene Status-Marken (`worked (ref)`, `declined (reason)`) bleiben
   unangetastet, die `Response`-Zeile kommt für öffentliche Seeds hinzu, damit der
   Register-Sync sie lesen kann.
 - **D10 — Slug-Rename `/saat` → `/seed` (2026-07-20, D6 revidiert):** Frank hat den deutschen
-  Routen-Slug klar verworfen („nie so gewollt … schwachsinniges Muster") — deckungsgleich mit
-  seiner eigenen früheren Entscheidung im Redirect-Header (2026-07-16: „Routen englisch"). Die
+  Routen-Slug klar verworfen (Wortlaut privat: so nie gewollt, und das Muster tauge nichts) —
+  deckungsgleich mit seiner eigenen früheren Entscheidung im Redirect-Header (2026-07-16:
+  Routen englisch). Die
   in D6 noch verteidigte „deutscher Slug als Eigenname"-Logik war falsch; `/saat` war ein neu
   angelegter deutscher Slug, der genau dagegen lief. Umgesetzt: die **Route** (`src/pages/seed/`),
   der **API-Endpoint** (`/api/seed`, `functions/api/seed.js`), die öffentlich sichtbaren

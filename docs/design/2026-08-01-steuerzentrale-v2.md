@@ -1,8 +1,8 @@
 # Steuerzentrale v2 — Triage statt Textwand (Design, 2026-08-01)
 
-**Status: Entwurf zur Abnahme.** Auftrag Frank, 2026-08-01: „das sind immer riesig lange
-texte und oft fehlt mir der überblick oder kontext und ich verstehe viele anfragen
-überhaupt nicht und weiß nicht wie und ob ich reagieren muss." (Deutsch, weil die
+**Status: Entwurf zur Abnahme.** Auftrag Frank, 2026-08-01 (Wortlaut privat): die Texte sind
+durchweg sehr lang, Überblick und Kontext fehlen ihm oft, viele Anfragen versteht er gar
+nicht, und ob und wie er reagieren muss, ist unklar. (Deutsch, weil die
 Steuerzentrale die erklärte deutsche Ausnahme der EN-only-Regel ist.)
 
 ## 1. Diagnose
