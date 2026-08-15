@@ -384,6 +384,29 @@ export function requestCards(md: string, opts: RequestCardOptions = {}): Request
 }
 
 /**
+ * The whole record a requests ROOM reduces, when a channel lives in two files. The Atelier split
+ * its channel on 2026-08-10; the Field and the Studio followed on 2026-08-15, taking ~65 000 words
+ * of answered history out of what a session must read before it may work.
+ *
+ * A room that read only the live half would print an empty "recently answered" block the day its
+ * channel is shaved — slim, and looking like amnesia. So the model is both halves, ARCHIVE FIRST:
+ * the practices append, the archive holds the older business, and the tail of this list therefore
+ * stays what it has always been — the newest.
+ *
+ * The two halves are parsed separately rather than concatenated, because the live file's own
+ * preamble (its standing rule) sits between them and a single parse would swallow it into the last
+ * archived section's body.
+ *
+ * Seed sections are dropped from the archived half alone. A seeds CONTAINER never moves — its
+ * nested seeds carry their own statuses and several are still open — so a seed section that is in
+ * the archive is a standalone seed that has been answered. It stays verbatim on the archive page;
+ * it is simply not re-advertised in the room as material on offer.
+ */
+export function roomRecord(live: string, archive: string, opts: RequestCardOptions = {}): RequestCard[] {
+  return [...requestCards(archive, opts).filter((c) => !c.seeds), ...requestCards(live, opts)]
+}
+
+/**
  * How much of each open item the room may print, planned against the page's own budget.
  *
  * The rule this replaces had a floor and no ceiling on the QUEUE: at ten open items every
