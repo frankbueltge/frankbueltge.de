@@ -69,7 +69,13 @@ permissions:
   contents: read
 
 concurrency:
-  group: cf-deploy
+  # The job-level `if:` below stops a deploy after a failed cron — but the run is
+  # still CREATED, joins this group, and with cancel-in-progress kills a real
+  # deploy before skipping itself. Observed 2026-08-15: "Atelier integrate" failed,
+  # its workflow_run cancelled the push deploy of a just-merged PR (#650), and
+  # shipped nothing. Runs destined to skip therefore get a group of their own and
+  # can cancel nothing; real deploys still supersede one another.
+  group: ${{ (github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success') && 'cf-deploy' || format('cf-deploy-noop-{0}', github.run_id) }}
   cancel-in-progress: true
 
 jobs:
