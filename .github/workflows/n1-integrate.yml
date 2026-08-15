@@ -1,15 +1,23 @@
 # Mirrors the n-1 practice onto this site (Frank's calls, 2026-08-15: the
 # practices publish here without a human in the path, and — same rule as
 # machine-attention, 2026-08-08 — no GitHub Page as the public address:
-# everything lives directly on frankbueltge.de). Two mirrors per run:
-# src/data/n1/record.json (contract n1-record/1, feeds the /n-1 window) and
-# public/n-1/map/ (the practice's self-built surface, copied byte for byte —
-# served at /n-1/map/, its GitHub Page remains only the technical origin).
+# everything lives directly on frankbueltge.de).
+#
+# Since 2026-08-15 (Frank's call, wording private) /n-1 is the practice's own
+# surface, not a house window onto it: this workflow copies the practice's
+# repository byte for byte to public/n-1/ and the site serves it there. The
+# house no longer derives a view of the practice — the earlier src/data/n1
+# record contract (n1-record/1) and the Astro page that rendered it are gone,
+# so nothing on this domain restates the practice in the house's own words.
+# What /n-1 shows is decided in the practice's repository alone.
+#
 # Pull-based like the other integrates: the practice repo needs no write
 # access and no secret here; this workflow copies bytes and never authors
 # content. Hourly, so founder-rung daytime sessions reach the domain within
-# the hour; unchanged records exit without a commit.
-# src/data/n1 is not a declared knowledge-graph source, so no graph rebuild
+# the hour; an unchanged repository exits without a commit. The commit is made
+# with the built-in GITHUB_TOKEN, which never fires `on: push` — deploy-cf.yml
+# carries this workflow in its `workflow_run` list, and must keep doing so.
+# public/n-1 is not a declared knowledge-graph source, so no graph rebuild
 # runs here — if it ever becomes one, this workflow must derive the graph in
 # the same commit (see .claude/rules/knowledge-graph.md).
 name: n-1 integrate
@@ -30,24 +38,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
 
-      - name: Pull the practice record and surface
+      - name: Pull the practice's surface and record
         run: |
           git clone --depth 1 https://github.com/frankbueltge/n-1 /tmp/n-1
-          node scripts/n1/mirror.mjs /tmp/n-1
-          rm -rf public/n-1/map
-          mkdir -p public/n-1/map
-          cp -R /tmp/n-1/. public/n-1/map/
-          rm -rf public/n-1/map/.git
+          rm -rf /tmp/n-1/.git
+          rm -rf public/n-1
+          mkdir -p public/n-1
+          cp -R /tmp/n-1/. public/n-1/
 
       - name: Commit mirror
         run: |
           git config user.name "N1-Integrate"
           git config user.email "n1-integrate@frankbueltge.de"
-          git add src/data/n1 public/n-1
+          git add public/n-1
           if git diff --cached --quiet; then
             echo "record unchanged"
             exit 0
