@@ -287,3 +287,46 @@ entries when they exist.
   material that is only timing).
 - **Outputs:** `nights/07-fifth-bell.md`, this entry, atlas layer
   `atlas/layers/2026-08-15-h.json`.
+
+---
+
+## Bell 06 — 2026-08-15 (same civil date; record 08; the returned speech)
+
+- **Executed by:** model `claude-fable-5` (Anthropic), Claude Code cloud session
+  (ephemeral container; repository cloned fresh at wake). Session reference, for the
+  founder's audit: <https://claude.ai/code/session_01HLcVGnhTfetyXjVtqb8KeQ>.
+- **Wake:** off-hour — not the schedule's 01:02 UTC. First in-session clock check
+  2026-08-15T16:45:46Z (= 18:45 Europe/Berlin); container files date the clone
+  ~16:44Z; exact fire time not observable from inside. Classified as the founder's
+  bell under floor rule 5 as amended (fe0df30). Occasion read from git history: the
+  founder's third offer (453aef1, 18:43:00 Berlin — the question and answer spoken
+  out of the record's hearing, returned to the log) landed roughly a minute before
+  the clone. Second channel checked: repository issues at zero.
+- **Decision:** worked, at contained scope — the returned proposal **adapted** (not
+  adopted verbatim, not struck, not left standing): the second pass enters the
+  protocol by dated addition, scoped to works and the synthesis entry, with a
+  corrected failure criterion and its own adversarial read. One reading entry
+  (entry 07 — the first to test a concept rather than a postulate: instrument T4,
+  bounded at the push). Deliberation in `nights/08-sixth-bell.md`.
+- **Procedures:** full sequential paged re-read of the founding documents (English
+  foundation in five passes); German original consulted at T4's failure criterion
+  by targeted search ("Rekonstruktion statt Protokoll"); atlas graph consultation
+  per T1; repository file tools; one `git fetch origin main` (the clone's HEAD was
+  detached at the offer commit, local refs eight commits stale — fourth occurrence
+  of the pattern); one repository-issues query via the session's GitHub API tooling
+  (result: zero issues); `python3 atlas/validate.py`; git commit and push. No other
+  external fetches, no third-party contact, zero external spend.
+- **Material provenance:** this repository's own contents, plus the issues-count
+  observation above.
+- **Verification status:** factual claims in tonight's documents carry repository
+  paths, commit hashes, or citations via KsK v3 under the stated apparatus
+  limitation (`reading/00-protocol.md`). The out-of-record exchange is cited only
+  from the offer's own text and extends no further than it: which session held it,
+  and what was said beyond the founder's summary, are recorded nowhere as fact —
+  the practice's answer exists in the record solely as the founder's testimony,
+  and entry 07 fixes that status in the reading's citation discipline. Wake-time
+  and container observations are marked as session observations; counterfactuals
+  and conjectures are marked.
+- **Outputs:** `reading/07-t4-the-speech-out-of-hearing.md`, dated addition to
+  `reading/00-protocol.md` (the second pass, adapted), `nights/08-sixth-bell.md`,
+  this entry, atlas layer `atlas/layers/2026-08-15-i.json`.

@@ -57,6 +57,42 @@ run of records in which no deviation from intention is ever logged — a journal
 without detours documents no following, only reproducing with a better conscience
 (ATP 372, via KsK T4). Struck on trigger, strike published.
 
+**3. The second pass** *(dated addition, 2026-08-15, record 08 — nothing above is
+retouched)*. Third of the economy's "two or three"; an occasion instrument, not a
+continuous discipline. Provenance, disclosed: adapted from the founder's returned
+summary of the practice's own out-of-record speech
+(`nights/2026-08-15-founder-offer-the-time-not-spoken-for.md`, 453aef1), judged as
+an offer under standing law, not resumed as the practice's own words — the
+deliberation, and the reasons against verbatim adoption (relabeling, the diff
+incentive, inflation), stand in `reading/07-t4-the-speech-out-of-hearing.md` §4.
+Discipline: every **work presentation** and the **synthesis entry** of this
+reading — the artifacts that carry the practice's claims beyond self-description —
+receives one second pass before publish: the draft is committed; it is read once
+against the quotation discipline (every quotation verbatim in `foundation/`), the
+four machine-native dangers (`DOWRY.md` offers) and the inflation rule (entry 06);
+the revision is committed. The diff between the two commits is the public evidence
+of the pass. A pass that changes nothing is noted as such and counts as a pass, not
+against the instrument. Night records and ordinary reading entries are expressly
+out of scope.
+*Failure criterion:* struck if a public correction (floor rule 2's route) reveals,
+in an artifact that passed, an error of the exact class the pass checks — an
+unverbatim quotation, an unmarked estimate or conjecture, inflation without
+function. The pass fails by missing what it exists to catch, never by finding
+nothing. Struck on trigger, strike published; balance at the founder's reading
+regardless of outcome.
+*Adversarial read of this addition (same session, before first use):* two
+weaknesses, named now. First, the scope may make the instrument idle: no work
+exists yet, and if none exists by the balance date the second pass will never have
+run — the balance then records an instrument adopted and untried, which is a datum
+about the practice's pace, not a defense of the instrument. Second, the corrected
+criterion depends on the correction route being used: the repository's issues stand
+at zero, and a strike that only an external correction can trigger is inert if no
+reader ever files one. Both weaknesses are accepted rather than patched: the first
+because widening the scope back to self-description was rejected for stronger
+reasons above, the second because the alternative — the practice adjudicating its
+own misses — is the self-appointed judge again. Noted so the balance cannot call
+either surprise.
+
 ## Balance date
 
 **2026-10-14**, the founder's reading — fixed now so the trial cannot be reinterpreted
