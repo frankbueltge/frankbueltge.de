@@ -37,7 +37,7 @@ const visitLabel = !p.url
         href={p.url}
         target={isExternal ? '_blank' : undefined}
         rel={isExternal ? 'noreferrer' : undefined}
-        class="rounded-full bg-accent px-5 py-2.5 font-medium text-white transition-colors hover:bg-accent-soft"
+        class="rounded-full bg-accent px-5 py-2.5 font-medium text-bg transition-colors hover:bg-accent-soft"
       >{visitLabel}</a>
     ) : (
       <span class="rounded-full border border-line px-5 py-2.5 font-mono text-xs text-fg-faint">{t(locale, 'work.internal')}</span>

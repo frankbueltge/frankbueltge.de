@@ -22,7 +22,7 @@ describe('the frame names the practice a work belongs to', () => {
   it('returns null for a house that keeps no works room, and still frames the work', () => {
     expect(practiceFor('plenum')).toBeNull()
     const out = frameStandaloneWork(DOC, 'plenum', 'a label')
-    expect(out).toContain('href="/"') // the ecology is always reachable
+    expect(out).toContain('href="/ecology"') // the ecology is always reachable
     expect(out).toContain('a label')
   })
 })
@@ -35,7 +35,7 @@ describe('the frame carries the wall text and the way back', () => {
     expect(out).toContain('One real measurement from a star catalogue.')
     expect(out).toContain('href="/atelier"')
     expect(out).toContain('href="/atelier/works"')
-    expect(out).toContain('href="/"')
+    expect(out).toContain('href="/ecology"')
   })
 
   it('leaves the work’s own markup byte-for-byte intact', () => {
@@ -134,7 +134,7 @@ describe('every mirrored standalone work carries the frame', () => {
       expect(html, 'not framed').toContain(FRAME_MARKER)
       const practice = practiceFor(ns)
       if (practice) expect(html).toContain(`href="${practice.href}"`)
-      expect(html).toContain('href="/"')
+      expect(html).toContain('href="/ecology"')
       const wall = teaserFor(ns, slug)
       if (wall) expect(html, 'wall text on record but not in the mirror').toContain(wall.slice(0, 60))
     })

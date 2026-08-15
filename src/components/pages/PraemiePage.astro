@@ -54,6 +54,7 @@ const methodUrl = getRelativeLocaleUrl(locale, '/werke/policy')
 const methodLabel = de ? 'Methodenblatt' : 'Method sheet'
 ---
 
+<main id="main" class="flex-1">
 <article class="police mx-auto max-w-2xl px-4 py-14">
   <header class="mb-12 space-y-1">
     {r.kopf.map((line) => <p class="text-[15px] leading-relaxed">{line}</p>)}
@@ -135,6 +136,7 @@ const methodLabel = de ? 'Methodenblatt' : 'Method sheet'
     </nav>
   </footer>
 </article>
+</main>
 
 <style>
   /* Druckfassung: Police schwarz auf weiß, Chrome ausgeblendet (wie ProtokollDoc).

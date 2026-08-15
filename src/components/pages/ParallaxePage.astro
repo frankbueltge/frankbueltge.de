@@ -54,6 +54,7 @@ function omitCount(byLang: Record<string, ClaimMark>): number {
 const cellLabel = (m: ClaimMark) => (de ? CLAIM_MARK[m].de : CLAIM_MARK[m].en)
 ---
 
+<main id="main" class="flex-1">
 <div class="mx-auto max-w-5xl px-4 py-14">
   <header class="mb-14 max-w-3xl">
     <p class="text-lg leading-relaxed">
@@ -207,6 +208,7 @@ const cellLabel = (m: ClaimMark) => (de ? CLAIM_MARK[m].de : CLAIM_MARK[m].en)
     <a href={methodUrl} class="transition-colors hover:text-fg">{txt.method}</a>
   </footer>
 </div>
+</main>
 
 <style>
   /* Druckfassung: Matrix schwarz auf weiß, Chrome ausgeblendet (wie die anderen Werke). */
