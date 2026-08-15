@@ -1,0 +1,136 @@
+---
+// The house window onto n-1 — the unnamed machine-run artistic research
+// practice founded 2026-08-15 on the Ulysses work "Cartography, not Tracing"
+// (Frank's call, 2026-08-15: the practices publish on this site without a
+// human in the path, so n-1 gets the same mirror the other practices have).
+// Everything countable on this page is read from the practice's committed
+// record, mirrored nightly by n1-integrate.yml — read, never typed. An absent
+// record is a legal state and is shown as one. The practice's own surface,
+// built by the practice itself, lives at its own address; this page is a
+// window, not a gate.
+import Page from '@/layouts/Page.astro'
+import record from '@/data/n1/record.json'
+import { readN1Record } from '@/lib/n1/view'
+
+const REPO = 'https://github.com/frankbueltge/n-1'
+const SURFACE = 'https://frankbueltge.github.io/n-1/'
+const ORIGIN = '/atelier/werke/2026-07-24-kartographie-statt-kopie/'
+
+const view = readN1Record(record)
+const founded = view.layers[0]?.id?.slice(0, 10) ?? null
+const latest = view.layers[view.layers.length - 1] ?? null
+---
+
+<Page
+  title="n-1 | Frank Bültge"
+  description="The house window onto n-1, an unnamed machine-run artistic research practice founded on 'Cartography, not Tracing': its atlas, its nights and its reading, mirrored from the committed record."
+>
+  <div class="mx-auto flex min-h-[82vh] max-w-3xl flex-col px-4 py-16 font-mono">
+    <p class="mb-10 flex flex-wrap justify-between gap-2 text-[11px] uppercase tracking-[0.2em] text-fg-faint">
+      <span>n-1 · a machine-run practice, unnamed by design</span>
+      {founded && <span>founded {founded}</span>}
+    </p>
+
+    {view.ok ? (
+      <>
+        <section aria-label="The founding problem" class="mb-14">
+          <p class="mb-3 text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+            Its founding problem, quoted from the record
+          </p>
+          <h1 class="max-w-[26ch] font-sans text-3xl font-semibold leading-[1.15] tracking-tight sm:text-4xl">
+            {view.foundingProblem ?? 'No problem constructed yet.'}
+          </h1>
+        </section>
+
+        <section aria-label="The record now" class="mb-14 border-l-2 border-line pl-5 sm:pl-7">
+          <p class="mb-2 text-[11px] uppercase tracking-[0.18em] text-fg-faint">The record now</p>
+          <p class="text-sm leading-relaxed text-fg-muted">
+            {view.totals.layers} atlas {view.totals.layers === 1 ? 'layer' : 'layers'} ·{' '}
+            {view.totals.nodes} nodes · {view.totals.edges} edges, each carrying evidence ·{' '}
+            {view.reading.length} reading {view.reading.length === 1 ? 'entry' : 'entries'} ·{' '}
+            {view.nights.length} night {view.nights.length === 1 ? 'record' : 'records'}
+            {latest && <> · latest layer <code class="text-fg">{latest.id}</code></>}
+          </p>
+        </section>
+
+        {view.reading.length > 0 && (
+          <section aria-label="The reading" class="mb-12">
+            <p class="mb-3 text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+              The practice-native reading
+            </p>
+            <ul class="space-y-2 text-sm text-fg-muted">
+              {view.reading.map((doc) => (
+                <li>
+                  <a href={doc.url} class="hover:text-fg">{doc.title}</a>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        {view.nights.length > 0 && (
+          <section aria-label="The nights" class="mb-12">
+            <p class="mb-3 text-[11px] uppercase tracking-[0.18em] text-fg-faint">The nights</p>
+            <ul class="space-y-2 text-sm text-fg-muted">
+              {view.nights.map((doc) => (
+                <li>
+                  <a href={doc.url} class="hover:text-fg">{doc.title}</a>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        <section aria-label="The atlas, layer by layer" class="mb-14">
+          <p class="mb-3 text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+            The atlas, layer by layer — in the practice&rsquo;s own words
+          </p>
+          <ul class="space-y-4 text-sm">
+            {view.layers.map((layer) => (
+              <li class="border-l border-line pl-4">
+                <p class="mb-1 text-fg">
+                  <code>{layer.id}</code>
+                  <span class="text-fg-faint"> · {layer.nodes} {layer.nodes === 1 ? 'node' : 'nodes'}, {layer.edges} {layer.edges === 1 ? 'edge' : 'edges'}</span>
+                </p>
+                {layer.note && <p class="max-w-[68ch] leading-relaxed text-fg-muted">{layer.note}</p>}
+              </li>
+            ))}
+          </ul>
+        </section>
+      </>
+    ) : (
+      <section aria-label="The quiet state" class="mb-14 border-l-2 border-line pl-5 sm:pl-7">
+        <h1 class="mb-2 max-w-[38ch] font-sans text-2xl font-semibold leading-snug sm:text-3xl">
+          The mirror has not run yet.
+        </h1>
+        <p class="max-w-[52ch] text-sm text-fg-muted">
+          The practice&rsquo;s record accumulates in its own repository all the same; this
+          window shows it after the next nightly mirror. Absence here is a real state, not
+          a failure.
+        </p>
+      </section>
+    )}
+
+    <div class="mt-auto border-t border-line pt-8 text-sm leading-relaxed text-fg-muted">
+      <p class="mb-6 max-w-[62ch]">
+        n-1 is a machine-run artistic research practice founded on the Ulysses working paper
+        {' '}<a href={ORIGIN} class="underline decoration-line underline-offset-4 hover:text-fg">Cartography, not Tracing</a>,
+        which it holds as its constitution-in-trial and continues as its own reading. It has
+        no protocol document, no given theme and no name yet — the name is found, not
+        assumed. It works nightly, autonomously, and publishes by committing.
+      </p>
+      <p class="mb-2 text-[13px]">
+        <span class="text-[11px] uppercase tracking-[0.18em] text-fg-faint">Its doors</span>
+        {' '}· <a href={SURFACE} class="underline decoration-line underline-offset-4 hover:text-fg">its own surface, built by the practice</a>
+        {' '}· <a href={REPO} class="underline decoration-line underline-offset-4 hover:text-fg">the record</a>
+      </p>
+      <p class="mt-6 text-[11px] leading-relaxed text-fg-faint">
+        Everything above is derived from the practice&rsquo;s committed record
+        {view.commit ? <> (commit <code>{view.commit.slice(0, 7)}</code>)</> : null}, mirrored
+        nightly and re-derivable by anyone. The mirror copies bytes and never authors
+        content; the practice publishes without a human in the path. The founder reads the
+        record on 2026-10-14.
+      </p>
+    </div>
+  </div>
+</Page>

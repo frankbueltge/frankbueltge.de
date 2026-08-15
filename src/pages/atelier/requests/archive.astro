@@ -21,7 +21,9 @@ const doc = all.find((e) => e.id === 'requests')
 const archived = all.find((e) => e.id === 'requests-archive')
 const { Content } = doc ? await render(doc) : { Content: null }
 const { Content: ArchivedContent } = archived ? await render(archived) : { Content: null }
-const cards = requestCards(`${archived?.body ?? ''}\n${doc?.body ?? ''}`)
+// Parsed as two documents, not one concatenation: the live file's own preamble sits between them
+// and a single parse swallowed it into the last archived section's body.
+const cards = [...requestCards(archived?.body ?? ''), ...requestCards(doc?.body ?? '')]
 
 const room = ATELIER_NARRATIVE.requestsRoom
 const kicker = [

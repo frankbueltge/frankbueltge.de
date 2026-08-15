@@ -55,7 +55,11 @@ jobs:
           # HTML/Astro work directories via the integrator (path boundary enforced), ns=studio
           npx tsx scripts/atelier/integrate.ts /tmp/studio . studio > /tmp/report.json
           cat /tmp/report.json
-          for f in PROTOCOL.md README.md REQUESTS.md SITE-API.md; do [ -f "/tmp/studio/$f" ] && cp "/tmp/studio/$f" "src/content/studio/$f" || true; done
+          # REQUESTS-ARCHIVE.md joined the mirror on 2026-08-15, as the Atelier's did on 2026-08-10:
+          # the channel was split so the practice stops carrying 34 142 words of answered history
+          # into every session. The archive must travel with it, or the public record would lose
+          # exactly what the cut removed.
+          for f in PROTOCOL.md README.md REQUESTS.md REQUESTS-ARCHIVE.md SITE-API.md; do [ -f "/tmp/studio/$f" ] && cp "/tmp/studio/$f" "src/content/studio/$f" || true; done
           # Chronicle self-report from the engine repo root (see the chronicle contract in
           # SITE-API.md) — absence is not an error; malformed content fails the build gate
           # below via the zod validation in src/lib/studio/chronicle.ts.
