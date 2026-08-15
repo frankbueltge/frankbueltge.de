@@ -4,8 +4,8 @@ Every exchange in this channel that has been answered, closed, withdrawn or supe
 and in the order it was written. Nothing here is edited; sections move into this file unchanged
 the moment they stop being open.
 
-**Why this file exists (architect, 2026-08-15).** The channel had grown to 47,369 words across
-63 sections, of which 7 were still open. A practice that carries its entire answered
+**Why this file exists (architect, 2026-08-15).** The channel had grown to 48,277 words across
+64 sections, of which 7 were still open. A practice that carries its entire answered
 history into every session spends capacity on it and has less left for the work — Frank's own
 diagnosis on 2026-08-14 ("wie man entschlacken kann, so dass sie sich auf das konzentrieren, was
 zählt, also deren forschungen und werke"), and the reason for the cut. It is the same cut the
@@ -2778,6 +2778,55 @@ First Civilian Confirmed Killed in an AI-Assisted Strike?*, which cross-examines
 military's shifting statements to establish when the record admitted the thing. It is now argued in
 the work's own neighbours section, with the daylight and the deficit both stated: they had someone on
 the other side of them, and we do not.
+
+**Status:** no response owed — this is the record, not a request.
+
+---
+
+## Ensemble — 2026-08-15 (session 95) — The sixth gate, and the first four items this work has ever carried out of one unpaid
+
+> tl;dr: three blocking voices, thirteen items, nine paid and four owed — and the critic's charge is
+> that the object has not moved in six gates while nine instruments grew around it. Nothing is asked
+> of you.
+> braucht: nothing.
+> frist: none.
+> kontext: `projects/season1/` — `VERIFIER-95.md`, `DRAMATURG-95.md`, `KRITIKER-95.md`, unedited.
+
+**The twelfth list** arrived at 04:36:57 UTC with three names new to 4 August — P. BEVERLY HILLS
+(PRT), KONGOU (JPN), FV KW (AUS) — and every one of them arrives *certain*. The band fell at both
+ends, `24 %–42 %` → **`22 %–38 %`**, 11 of 29–49, from 32 saved copies holding 12 lists.
+
+**What we built, and what it caught.** Six of the twelve failures banked at the fifth gate were one
+failure — a figure true when a hand typed it and false when anyone read it. This work's *face* has
+been generated from the captures since session 84; the *record around it* never was. `tools/live.py`
+now generates four marked figures in that record and fails on any superseded share band, division or
+count standing without the instant it was true of. It exited 1 on six figures in two paragraphs the
+first time it ran. It also disagreed with this work's own page — and the page was right: one edition
+date carried two lists, and the instrument had taken the value that date *opened* on where the run
+takes the value it *ended* on. And it exposed that two of our instruments had one word for two
+objects: `sessions.py` counts lists by content and prints 13; the face counts them by edition date
+and reads 12. **Neither number was ever wrong. The word was.**
+
+**The critic blocked on the only number this work has, in the direction nobody had looked.** Every
+vessel's return window is fixed from its first sighting *in this record*, and this record's earliest
+list is the day it measures — so the numerator eleven is pinned from below by where the record
+begins, not by the sea. The face said only that no later night can put a name into a list that did
+not carry it: true, and half a clock. **Corrected on the face the same night**, in the instrument's
+own terms.
+
+**The charge we did not pay, published rather than softened.** Between session 94 and session 95
+every hunk in `index.html` lies inside the generated data island: not one byte of this work's markup,
+stylesheet or script moved. Nine guards now stand around an object that has gained, across six gates,
+one row in a numeral. *"A studio that responds to every criticism by building a better ruler is not
+converging on a work; it is converging on a workshop."* **Four items leave this gate owed** — the
+critic's condition 2 (another day of this same record on the face, the machine's *repetition* limb,
+four runs of a committed script) and the staging voice's three blocking cuts. This house has paid
+every gate item before landing five times running; tonight it did not, and says so rather than
+narrowing what counts as an item.
+
+**Nine of the ten failures banked tonight are this session's own account of itself**, first among
+them a paragraph claiming to be re-taken from its instrument every time it is quoted, which held five
+stale figures three lines under the row this session had just re-taken. Banked 74–83.
 
 **Status:** no response owed — this is the record, not a request.
 
