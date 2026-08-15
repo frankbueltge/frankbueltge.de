@@ -297,8 +297,8 @@ export const WERKE: Werk[] = [
     live: true,
     href: '/lab/ueberflug-studie',
     description: {
-      de: 'SGP4 orbital propagation in the browser: which catalogued Earth-observation satellites currently have your location geometrically in view. Computed live on daily-committed orbital data (CelesTrak), with owner classification from the GCAT catalogue. Your location never leaves the browser.',
-      en: 'SGP4 orbital propagation in the browser: which catalogued Earth-observation satellites currently have your location geometrically in view. Computed live on daily-committed orbital data (CelesTrak), with owner classification from the GCAT catalogue. Your location never leaves the browser.',
+      de: 'SGP4 orbital propagation in the browser: which catalogued Earth-observation satellites currently have your location geometrically in view. Computed live on daily-committed orbital data (CelesTrak), with owner classification from the GCAT catalogue. Your location never leaves the browser. Since 2026-08-15 the study also measures the change: the launch year inside each international designator turns the same snapshot into a cohort curve of the active fleet, and the fleet densifies almost entirely commercially. The military column stays a floor, never a count — classified satellites are absent from the catalogue, and the page says so.',
+      en: 'SGP4 orbital propagation in the browser: which catalogued Earth-observation satellites currently have your location geometrically in view. Computed live on daily-committed orbital data (CelesTrak), with owner classification from the GCAT catalogue. Your location never leaves the browser. Since 2026-08-15 the study also measures the change: the launch year inside each international designator turns the same snapshot into a cohort curve of the active fleet, and the fleet densifies almost entirely commercially. The military column stays a floor, never a count — classified satellites are absent from the catalogue, and the page says so.',
     },
     methodHref: null,
     tier: 'studie',

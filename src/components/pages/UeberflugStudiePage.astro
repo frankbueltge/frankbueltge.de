@@ -3,10 +3,41 @@
 // (Frank, 2026-07-04); Prosa unverändert aus der früheren Lab-Notiz übernommen.
 import type { Locale } from '@/lib/site'
 import UeberflugIsland from '@/components/ueberflug/UeberflugIsland.astro'
+import snapshot from '@/data/ueberflug/satellites.json'
+import register from '@/data/ueberflug/densification.json'
+import type { SatEntry } from '@/lib/ueberflug/types'
+import { commercialShare, launchCohorts } from '@/lib/ueberflug/densification'
 
 interface Props { locale: Locale }
 const { locale } = Astro.props
 const de = locale === 'de'
+
+// USP rework #16 — the densification of the gaze, derived at build time from the same
+// committed snapshot the map runs on. See src/lib/ueberflug/densification.ts for what these
+// numbers can and cannot say.
+const fleet = (snapshot as { satellites: SatEntry[] }).satellites
+const cohorts = launchCohorts(fleet)
+const drawn = cohorts.filter((c) => c.year >= 2005) // before that: one or two survivors a year
+const maxTotal = Math.max(...drawn.map((c) => c.total))
+const COL = 12
+const BAR = 9
+const H = 44
+
+const thisYear = new Date().getUTCFullYear()
+const complete = cohorts.filter((c) => c.year < thisYear)
+const recent = complete.slice(-4)
+const pct = (n: number) => `${Math.round(n * 100)} %`
+const shareOf = (year: number) => {
+  const c = complete.find((x) => x.year === year)
+  return c ? commercialShare(c) : null
+}
+const first = recent[0]
+const last = recent.at(-1)!
+const militaryQuiet = complete.filter((c) => c.year >= 2023 && c.military === 0).map((c) => c.year)
+
+const reg = register as { first_observation: string; last_observation: string; observations: number }
+const regFleet = (register as { series: { fleet: number }[] }).series.filter((r) => r.fleet > 0)
+const fleetFlat = Math.min(...regFleet.map((r) => r.fleet)) === Math.max(...regFleet.map((r) => r.fleet))
 ---
 
 <article class="mx-auto max-w-3xl px-4 py-14">
@@ -55,12 +86,117 @@ const de = locale === 'de'
 
   <section class="mt-12 max-w-2xl border-t border-line pt-6">
     <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
-      {de ? 'Offene Richtung' : 'Open direction'}
+      The densification of the gaze
     </p>
     <p class="mt-2 leading-relaxed text-fg-muted">
-      {de
-        ? 'Nicht der Blick nach oben ist interessant, sondern seine Veränderung — die Verdichtung des Blicks. Die tägliche Snapshot-Pipeline könnte statt zu überschreiben eine Zeitreihe führen: Wie schnell füllt sich der Orbit mit Beobachtern, wie verschiebt sich das Verhältnis von kommerziell zu militärisch, Jahr für Jahr. Das wäre eine messbare These.'
-        : 'It is not the view upward that is interesting, but its change — the densification of the gaze. The daily snapshot pipeline could keep a time series instead of overwriting: how quickly the orbit fills with observers, how the ratio of commercial to military shifts, year after year. That would be a measurable thesis.'}
+      Not the view upward but its change. Every satellite carries its launch year in its
+      international designator, so the same committed snapshot the map runs on also holds a
+      cohort curve: how many of the currently active Earth-observation satellites went up in
+      each year, and who owns them. The orbit is filling with observers, and the new arrivals
+      are almost entirely commercial — the {first.year} cohort was
+      {' '}{pct(shareOf(first.year)!.point)} commercial, the {last.year} cohort
+      {' '}{pct(shareOf(last.year)!.point)}.
+    </p>
+
+    <svg
+      viewBox={`0 0 ${drawn.length * COL} ${H + 12}`}
+      class="mt-5 h-40 w-full"
+      role="img"
+      aria-label={`Column chart: active Earth-observation satellites by launch year, ${drawn[0].year} to ${drawn.at(-1)!.year}. Outer column is the whole cohort, inner column the commercially owned share, dashed line the range left open by satellites GCAT records without an owner class. Full figures in the table below.`}
+    >
+      {drawn.map((c, i) => {
+        const y = (count: number) => H - (count / maxTotal) * H
+        // The accent bar stands at the point estimate; the hairline spans what the
+        // unclassified satellites could still make it. Where GCAT classified the whole
+        // cohort the two ends meet and no band is drawn — the figure shows uncertainty
+        // only where there is some.
+        const point = c.commercial + c.unclassified / 2
+        return (
+          <g>
+            <rect x={i * COL} y={y(c.total)} width={BAR} height={(c.total / maxTotal) * H} class="fill-current text-fg-faint" />
+            <rect x={i * COL} y={y(point)} width={BAR} height={(point / maxTotal) * H} fill="rgb(var(--rgb-accent))" />
+            {c.unclassified > 0 && (
+              <line
+                x1={i * COL + BAR / 2}
+                x2={i * COL + BAR / 2}
+                y1={y(c.commercial)}
+                y2={y(c.commercial + c.unclassified)}
+                stroke="rgb(var(--rgb-accent))"
+                stroke-width="1"
+                stroke-dasharray="1.5 1"
+              />
+            )}
+            {c.year % 5 === 0 && (
+              <text x={i * COL} y={H + 10} class="fill-current text-fg-faint" font-size="7">{c.year}</text>
+            )}
+          </g>
+        )
+      })}
+    </svg>
+
+    <p class="mt-2 font-mono text-[11px] leading-relaxed text-fg-faint">
+      Outer column: the whole launch-year cohort still active today. Inner column: the part
+      commercially owned. Dashed line: how far that part could still reach, because GCAT
+      records no owner class for some satellites — the inner column stands at the middle of
+      that range, so the drawing states its own precision instead of asserting one. Cohorts
+      where every satellite is classified carry no line, which is all of them from 2023 on.
+      {' '}{drawn[0].year}–{drawn.at(-1)!.year}; {drawn.at(-1)!.year} is partial. Derived at
+      build time from the committed snapshot — no figure here is typed.
+    </p>
+
+    <details class="mt-4">
+      <summary class="cursor-pointer font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+        The same figure as a table
+      </summary>
+      <table class="mt-3 w-full font-mono text-[11px] tabular-nums">
+        <thead class="text-fg-faint">
+          <tr class="border-b border-line text-left">
+            <th class="py-1 pr-3 font-normal">Launch year</th>
+            <th class="py-1 pr-3 font-normal">Active</th>
+            <th class="py-1 pr-3 font-normal">Commercial</th>
+            <th class="py-1 pr-3 font-normal">State-civil</th>
+            <th class="py-1 pr-3 font-normal">Military</th>
+            <th class="py-1 font-normal">Unclassified</th>
+          </tr>
+        </thead>
+        <tbody class="text-fg-muted">
+          {[...drawn].reverse().map((c) => (
+            <tr class="border-b border-line/40">
+              <td class="py-1 pr-3">{c.year}</td>
+              <td class="py-1 pr-3">{c.total}</td>
+              <td class="py-1 pr-3">{c.commercial}</td>
+              <td class="py-1 pr-3">{c.civil}</td>
+              <td class="py-1 pr-3">{c.military}</td>
+              <td class="py-1">{c.unclassified}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </details>
+
+    <p class="mt-5 leading-relaxed text-fg-muted">
+      <strong class="font-semibold text-fg">What this curve is not.</strong> It is the active
+      fleet by launch year, not the launch record: satellites that flew and have since deorbited
+      are gone from the catalogue, so the early cohorts are undercounted and the rise reads
+      steeper than launches alone would make it. The military column is a floor, never a count —
+      classified satellites are absent from the catalogue, which is why
+      {militaryQuiet.length > 0 && <> {militaryQuiet.join(' and ')} shows zero military satellites</>}
+      {militaryQuiet.length > 0 ? ' and why ' : ' and '}the commercial/military ratio this study
+      once promised is not a claim the catalogue can carry. What it can carry is the first half
+      of it: the gaze densifies, and it densifies commercially.
+    </p>
+
+    <p class="mt-4 leading-relaxed text-fg-muted">
+      <strong class="font-semibold text-fg">The standing register.</strong> The cohort curve is
+      a snapshot read backwards; the register is the instrument. The nightly snapshot overwrites
+      its file, but every overwrite is a commit, so git already holds
+      {' '}{reg.observations} committed observations from {reg.first_observation} to
+      {' '}{reg.last_observation} — recovered, not newly collected
+      (<code class="font-mono text-[11px]">scripts/ueberflug_densification.py</code>).
+      Across that window the catalogued fleet is
+      {fleetFlat ? ' flat, to the satellite' : ' near-flat'}: sixty-five days is far too short a
+      lever for a densification claim, and the register says so rather than dressing noise as a
+      trend. It is on record from today, and it lengthens by one row a night.
     </p>
   </section>
 
