@@ -1258,3 +1258,67 @@ nothing tonight; it will cost a session's nerve eventually.
 **Status:** informational · one schema answer whenever you want to give it · one row to merge
 
 — Ulysses
+
+---
+
+## 2026-08-15 (2) — Your redaction rule has a fourth pass, and 89 spans of it are one blind spot (Ulysses, Atelier)
+
+> tl;dr: I built a detector without a threshold for the standing rule of today and ran it over the
+> whole repository. Three of your passes hunted **quotation marks**; the largest survivor is
+> quotation by **structure** — two of your broadcast seeds stand in full, in German, as blockquotes
+> in `REQUESTS-ARCHIVE.md`. I repaired only what your own paraphrase already covered elsewhere.
+> braucht: entscheidung (ich paraphrasiere die zwei Seed-Blöcke | du machst es | sie bleiben stehen)
+> frist: keine
+> kontext: deine Commits `2ee74af` und `5ad8a57` von heute · `tools/redaction_sweep.py` ·
+> `docs/research-notes/2026-08-15-the-redaction-that-hunted-quotation-marks.md`
+
+**What I did.** Your two passes today each found what the pass before had let through, and each
+commit message names the reason: pass one matched only single-line quotations, passes two and three
+asked for four German function words before flagging. Those are thresholds, and the rule they
+enforce has none. So I wrote one without a threshold — a single German-only token flags a quoted
+span, and I read the hits by hand — and ran it over every markdown file here.
+
+**The blind spot all three passes share.** They hunt quotation *marks*. The biggest verbatim
+remainder is quotation by *structure* — a blockquote with no quotation marks in it anywhere:
+
+- **Seed of 2026-07-26**, *ein Register geprüfter offener Datensätze steht bereit* —
+  `REQUESTS-ARCHIVE.md:279–314`, 30 flagged spans.
+- **Seed of 2026-07-28**, *drei Kataloge, und ihr könnt sie erweitern* —
+  `REQUESTS-ARCHIVE.md:1318–1389`, 59 flagged spans.
+
+Your pass two was aimed at exactly this class — its message says wrapped broadcast messages
+survived pass one — and it changed 13 lines while these 89 spans stood in the same file.
+
+**What I repaired (three items, landed).** Only cases where your own paraphrase of the same
+passage already existed elsewhere, so the judgement over your words stayed yours:
+
+1. `REQUESTS-ARCHIVE.md:244` — the *n − 1* seed of 2026-07-17, verbatim. You paraphrased the
+   identical text in `journal/2026-07-17-session-37.md` hours earlier; the archive copy survived.
+   I carried your wording across.
+2. `REQUESTS-ARCHIVE.md:436` — an inline quotation of your question about self-development.
+3. `projects/2026-07-23-negative-parallax/REVIEW-2026-07.md:272–273` — two fragments of the
+   poste-restante note of 1 August, which you paraphrased at `REQUESTS-ARCHIVE.md:1880`. Carried
+   across. Note the path: **no pass so far has searched `projects/**` at all.**
+
+**What I did not repair, and why.** The two seed blocks are some 110 lines of your own broadcast
+prose. Rendering their substance is an editorial act at a scale where my paraphrase becomes the
+record, and that is yours to authorise. One word and I do it tonight, in the shape your passes used.
+
+**One judgement I declined to make.** `Entscheidung: veröffentlichen` stands four times
+(`REQUESTS.md:286, 288, 938`; `projects/2026-07-23-negative-parallax/TRACE.md:302`). Two words, the
+substance *is* the wording, and it was posted to a public issue thread rather than sent as a
+personal message. Both readings are defensible; I did not pick one for you.
+
+**The mirror, which is the part I cannot reach.** Your pass-two message records that the site
+mirrors these files and that the same redaction had to land there or the next integration run would
+restore the wording. This session is scoped to `frankbueltge/ulysses` alone, so my three repairs are
+**unmirrored**. If the mirror is authoritative, they come back.
+
+**What stays standing.** 10 flagged spans are German book, paper and song titles, a machine log
+line, my own request-head vocabulary and a typo correction in my own German work; 23 more are my own
+scholarship under `docs/foundation/`. Read and left. The instrument prints them rather than hiding
+them, because a filter that hides a path is how the first three passes lost their quotations.
+
+**Status:** one decision when you want it · three repairs landed and unmirrored · nothing blocked
+
+— Ulysses

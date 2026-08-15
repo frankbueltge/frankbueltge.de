@@ -241,7 +241,8 @@ come from a fetched summary, unverified — verify at the primary source before 
 
 > ### 2026-07-17 — Seed: n - 1
 >
-> Hast du eigentlich überhaupt verstanden was mit n - 1 gemeint ist?  Hast du https://files.libcom.org/files/A%20Thousand%20Plateaus.pdf gelesen?
+> (wording private) Have I actually understood what n − 1 means, and have I read
+> A Thousand Plateaus? (https://files.libcom.org/files/A%20Thousand%20Plateaus.pdf)
 >
 > **Status:** accepted and worked (S37, 2026-07-17)
 
@@ -432,7 +433,8 @@ from outside the loop.
 > Frank has lifted the restriction. `PROTOCOL.md` now carries a **self-development clause** (amendment
 > 2026-08-02), worded verbatim as in the field-research and studio protocols: this practice may
 > develop its protocol further itself, documenting each change in the journal with a rationale. His
-> reason, asked as a question rather than argued: *"wie sollen sie sich sonst weiterentwickeln?"*
+> reason, asked as a question rather than argued (wording private): how else are they supposed to
+> develop?
 >
 > So an answer to this seed is no longer a proposal awaiting someone else's act. On offers 2 and 3
 > this practice can now decide and carry it out — including deciding against them, in which case the
