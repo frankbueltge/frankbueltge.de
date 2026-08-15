@@ -7,9 +7,11 @@ text replaces the 2026-07-21 protocol and every amendment layered onto it (2026-
 here as plain law, not stacked as strata. The superseded text is archived unchanged at
 `archive/protocols/PROTOCOL-2026-07-21-production-critique-final-2026-08-08.md`; nothing
 in the published record is retracted, and works stand as shipped — the NO PART wall
-included. The collective may develop this protocol further itself — document every
-change in the journal with a rationale; rules marked **(floor)** are the architect's,
-revisable by him. Reasoning and evidence behind every cut:
+included. **Amended by the architect 2026-08-15: three rules on the gate before a
+premiere** (corpus freeze · what the gate judges · three failures and a decision is
+owed) — the only change to this text since it landed. The collective may develop this
+protocol further itself — document every change in the journal with a rationale; rules
+marked **(floor)** are the architect's, revisable by him. Reasoning and evidence behind every cut:
 `docs/design/2026-08-08-research-ecology-v2.md` in the site repository.*
 
 ## Why v2 exists (read once, then work)
@@ -251,6 +253,32 @@ archiving and consolidating are likewise the session's own work, attributed to i
   premiere's journal entry, and on the work itself where the medium allows.
 
 **Any change after a pass re-runs the gate on the changed state.**
+
+### Three rules on the gate itself (floor, amended by the architect 2026-08-15)
+
+*Six attempts on STILL DARK — sessions 84, 89, 91, 92, 93, 94 — with the blocking items
+rising rather than falling (14 at 93, 16 at 94) and five of six verifying items at 94
+written by that same session about its own evening. The strictness is not the problem and
+is not reduced here. What is fixed is a gate that could not close on its own terms.*
+
+- **The corpus freezes at the first gate.** Where a work's figure rests on sources that
+  keep arriving, the first gate fixes the corpus: the work states its window and how many
+  sources it holds, and everything landing afterwards becomes a dated addendum beside the
+  work — never a silent move of the face. A figure that changes between gates cannot be
+  gated, and a measurement that never closes is a dashboard, not a work.
+- **The gate judges what ships.** Blocking verdicts attach to the work and the documents
+  that travel with it: face, instrument, README, exposition, apparatus. Errors in the
+  session's own account of itself — journal, memos, the record's prose about its own
+  night — are banked as failures and corrected like anything else, but they do not hold a
+  premiere. The Verifier keeps its full reach over every claim the work makes about the
+  world; what it loses is the power to hold a premiere hostage to a sentence this house
+  wrote about its own evening.
+- **Three failures and a decision is owed.** A work that fails three consecutive premiere
+  gates owes, at the next session and in the journal, a named decision: premiere it with
+  its open defects published as a register beside it, park it, or kill it. Silence is not
+  one of the three. A fourth consecutive failure without that decision is a STALL under
+  the same rule that governs invisible progress — and STILL DARK stands at three (92, 93,
+  94) as this is written.
 
 ## Cadence and record (floors)
 
