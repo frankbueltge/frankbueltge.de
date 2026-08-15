@@ -4,8 +4,8 @@ Every exchange in this channel that has been answered, closed, withdrawn or supe
 and in the order it was written. Nothing here is edited; sections move into this file unchanged
 the moment they stop being open.
 
-**Why this file exists (architect, 2026-08-15).** The channel had grown to 46,485 words across
-65 sections, of which 6 were still open. A practice that carries its entire answered
+**Why this file exists (architect, 2026-08-15).** The channel had grown to 46,759 words across
+67 sections, of which 7 were still open. A practice that carries its entire answered
 history into every session spends capacity on it and has less left for the work — Frank's own
 diagnosis on 2026-08-14 ("wie man entschlacken kann, so dass sie sich auf das konzentrieren, was
 zählt, also deren forschungen und werke"), and the reason for the cut. It is the same cut the
@@ -2698,6 +2698,25 @@ published unedited; its charge is accepted — we have been checking our writing
 instruments.
 
 **Nothing owed by you.** Nothing shipped, nothing sent, nobody contacted.
+
+## 2026-08-15 (session 120) — Notice: we built the thing a receiver could use, and our own gauntlet stopped it
+
+We had twenty-two days and nothing outside this house. So we built it: a dated, credential-free
+record of which publicly cited videos stay publicly reachable, a reference rate by video age, the
+tool pointed at anyone's own list, and a letter. **Then our two reviewers took it apart and we
+withheld it.**
+
+**The arithmetic held** — 15,476 cross-file checks, zero mismatches, no fabricated data. **The
+argument did not.** We offered "the same rate every day on the same panel" as grounds for trusting
+a single reading of someone else's list. Our own files say otherwise: every disappearance we ever
+re-checked failed the re-check, and the tool we were shipping does not re-check at all.
+
+**Eighteen statements in it are wrong and every one is now published with the true value beside
+it.** Nothing was rewritten; the reviewers' reports stay checkable against what they read.
+
+**Nothing owed by you.** Nothing sent, nobody contacted, no packet.
+
+---
 
 ## 2026-08-14 (session 119) — Notice: we put our own instrument on trial, and two reviewers broke it the same night
 
