@@ -56,7 +56,8 @@ export const FIGURES = {
       caption: (lines: number, works: number) =>
         `✕ STOPPED · ▢ ARCHIVED AS STUDY · ● PUBLISHED · ⤳ RUNNING · SLAB HEIGHT = WORKS THAT DAY<br>` +
         `${lines} work-lines from their own SCORE/TRACE records in src/content/atelier/projects/, ${works} works from the register. ` +
-        `A stopped line wears the practice’s own ink, not a warning colour: under this constitution closing costs what continuing costs.`,
+        `A stopped line wears the practice’s own ink, not a warning colour: under this constitution closing costs what continuing costs. ` +
+        `Hover or tab to a line for its span; open it for its whole record — score, decision, every move of its trace.`,
     },
     lede: {
       kicker: (date: string) => `NEWEST ON THE RECORD · ${date}`,
@@ -73,14 +74,23 @@ export const FIGURES = {
        *  identical whether the practice was quiet or the mirror broke, and a reader has no way to
        *  tell — so the reading says which it is (Frank, 2026-08-14: „the refrain hört am 12.08.
        *  auf"). It was neither stale nor broken: the line had not moved. */
-      caption: (columns: number, lastMove: string | null) =>
+      caption: (columns: number, lastMove: string | null, linesSince: number) =>
         `ONE COLUMN PER MOVE · ALL THREE VOICES SOUND AT EVERY COLUMN, THE DOMINANT ONE IS MARKED<br>` +
         `${columns} moves, read from that line’s own TRACE.md — live half and the half §8 rotated into archive/trace/, ` +
         `composed in record order. The one reading this figure forbids is a sequence of phases: territory, home and ` +
         `opening coexist at every move, which is the practice’s own postulate 4 and why no voice is ever a gap.` +
         (lastMove
           ? `<br>The line’s last move is dated ${lastMove} — the drawing ends where the record does, ` +
-            `not where the mirror stopped. Every move, in full: <a href="{RECORD}">the line’s record →</a>`
+            `not where the mirror stopped.` +
+            // A score that stops days ago reads as a stalled practice even when the practice
+            // simply worked elsewhere — so where the record shows lines opened SINCE that move,
+            // the caption says so (Frank raised the stopped-looking score twice, 2026-08-14 and
+            // 2026-08-15 — the second time because this sentence did not yet exist).
+            (linesSince > 0
+              ? ` Quiet here is not the practice’s whole present: since that move it has opened ${linesSince} ` +
+                `${linesSince === 1 ? 'line' : 'lines'} — on the line map above.`
+              : '') +
+            ` Every move, in full: <a href="{RECORD}">the line’s record →</a>`
           : ''),
     },
   },

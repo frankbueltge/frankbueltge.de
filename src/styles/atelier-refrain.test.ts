@@ -1,16 +1,23 @@
-// The refrain score defines the Atelier tokens it needs on its own root, so that it renders
-// wherever it is mounted and not only inside an Atelier room. That restatement is a copy, and a
-// copy drifts — so this test holds the two files to the same values.
+// The refrain score defines the tokens it needs on its own root, so that it renders wherever it
+// is mounted and never depends on its host's grammar. That restatement is a copy, and a copy
+// drifts — so this test holds it to the ground it actually sits on.
 //
 // The bug it descends from, 2026-08-13: the score was mounted on the ecology's station sheet,
-// which carries a different grammar and none of these tokens. Nothing failed. `stroke:
-// var(--at-hairline)` with the token missing is invalid at computed-value time, so `stroke` takes
-// its initial value — and for SVG that is `none`. Every stave, tie and rest stopped being drawn.
-// An undefined custom property does not warn; it erases.
+// which carried none of its tokens. Nothing failed. `stroke: var(--at-hairline)` with the token
+// missing is invalid at computed-value time, so `stroke` takes its initial value — for SVG that
+// is `none`. Every stave, tie and rest stopped being drawn. An undefined custom property does
+// not warn; it erases.
+//
+// WHICH ground changed on 2026-08-16. Until then the copy restated atelier-sheet.css (the cream
+// rooms), held byte-identical here — but the pyramid migration of 2026-08-15 retired that chrome
+// from every Atelier room, and the score's one remaining host is the ecology's station sheet,
+// where the cream card read as last month's design (Frank's finding, wording private). The copy
+// now restates ecology-pyramid.css, and this test holds THAT pairing instead: each --at-* token
+// the score carries must equal the eco token it stands in for, per theme.
 import { describe, expect, it } from 'vitest'
 import { readFileSync } from 'node:fs'
 
-const sheet = readFileSync('src/styles/atelier-sheet.css', 'utf8')
+const eco = readFileSync('src/styles/ecology-pyramid.css', 'utf8')
 const refrain = readFileSync('src/styles/atelier-refrain.css', 'utf8')
 
 /** Every `--token: value` inside the block that follows a selector containing `needle`. */
@@ -24,18 +31,32 @@ function tokensIn(css: string, needle: string): Record<string, string> {
   return out
 }
 
-// The tokens the score actually reads. Not every token the rooms define — only what would break.
-const SHARED = ['--at-surface', '--at-ink', '--at-ink-2', '--at-h1-ink', '--at-hairline', '--at-thread', '--at-graphite', '--at-badge-bg']
+/** Which eco token each of the score's tokens stands in for. Renaming the score's own vars
+ *  wholesale would churn 300 lines of stylesheet for no reader-visible change; the mapping is
+ *  the contract instead, and it is asserted. */
+const STANDS_FOR: Record<string, string> = {
+  '--at-surface': '--eco-panel-solid',
+  '--at-ink': '--eco-fg',
+  '--at-ink-2': '--eco-muted',
+  '--at-h1-ink': '--eco-fg',
+  '--at-hairline': '--eco-line',
+  '--at-thread': '--eco-accent',
+  '--at-graphite': '--eco-faint',
+  '--at-badge-bg': '--eco-bg',
+}
 
-describe('the score’s copy of the Atelier grammar', () => {
-  for (const theme of ['light', 'dark']) {
-    it(`matches atelier-sheet.css in ${theme}`, () => {
-      const room = tokensIn(sheet, `:root[data-theme='${theme}'] .atelier-surface`)
+describe('the score’s copy of the ecology grammar', () => {
+  for (const theme of ['light', 'dark'] as const) {
+    it(`matches ecology-pyramid.css in ${theme}`, () => {
+      const ground = tokensIn(eco, `:root[data-theme='${theme}'] .eco`)
       const figure = tokensIn(refrain, `:root[data-theme='${theme}'] .at-rf`)
-      expect(Object.keys(room).length, 'the room’s token block moved — this test is reading the wrong place').toBeGreaterThan(5)
-      for (const token of SHARED) {
+      expect(Object.keys(ground).length, 'the eco token block moved — this test is reading the wrong place').toBeGreaterThan(5)
+      for (const [token, standsFor] of Object.entries(STANDS_FOR)) {
         expect(figure[token], `${token} is missing from the score in ${theme}`).toBeDefined()
-        expect(figure[token], `${token} drifted: the score would recolour itself inside its own practice’s room`).toBe(room[token])
+        expect(
+          figure[token],
+          `${token} drifted from ${standsFor}: the score would recolour itself on the station sheet it hangs on`,
+        ).toBe(ground[standsFor])
       }
     })
   }

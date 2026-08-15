@@ -249,14 +249,27 @@ export interface RefrainModel {
   motifRowY: number | null
   width: number
   height: number
+  /** the column pitch this sheet was laid out at — the marks scale with it (see buildRefrainSvg) */
+  step: number
 }
 
 // Geometry constants — a measured sheet, not a chart. The x axis is EVENT-ORDERED: one step
 // per event, plus a bounded widening where days passed in silence. Same-day clusters read
 // dense, silence reads as a hole — the irregular cadence is the data (spec §3).
-const LABEL_W = 150
-const X0 = LABEL_W + 26
-const STEP = 42
+//
+// The pitch is ADAPTIVE since 2026-08-16. The first cut (2026-08-02) scaled the whole drawing
+// down and was unreadable; the second (fixed 42-unit pitch) grew to 2 960 px by move 65 and had
+// to be scrolled sideways, which Frank rejected the day the score moved onto the station sheet's
+// panel. Neither failure was the data's: what must never shrink is the TYPE, and what must never
+// scroll is the SHEET. So the sheet keeps a fixed target width, the pitch divides it among the
+// moves (floored — a very long record scrolls rather than turning to noise), and the mark radii
+// derive from the pitch so neighbouring marks stay apart at any density. Text is never scaled.
+const LABEL_W = 88
+const X0 = LABEL_W + 8
+const STEP_MAX = 42
+const STEP_MIN = 11
+/** the sheet's target width: the station sheet's content column (eco-wrap 1180 − 2×40 padding) */
+const TARGET_W = 1100
 /** extra width per silent day, capped — a three-week hole must be visible, not dominant */
 const GAP_UNIT = 10
 const GAP_MAX_DAYS = 4
@@ -287,6 +300,21 @@ export function buildRefrainModel(source: RefrainSource): RefrainModel {
   const motifRowY = hasMotifs ? TOP + 2 * STAVE_GAP + MOTIF_GAP : null
   const height = (motifRowY ?? TOP + 2 * STAVE_GAP) + BOTTOM
 
+  // The pitch: divide the target width among the moves, after the silence-widening has taken
+  // its share — measured first, because a caesura is layout the moves must not absorb.
+  const gapDays = (a: string, b: string) => {
+    const diff = Math.round((dayMs(b) - dayMs(a)) / 86_400_000)
+    return Number.isFinite(diff) && diff > 0 ? diff : 0
+  }
+  const widenTotal = events.reduce((sum, event, i) => {
+    const gap = i > 0 ? gapDays(events[i - 1].date, event.date) : 0
+    return sum + (gap >= 2 ? Math.min(gap, GAP_MAX_DAYS) * GAP_UNIT : 0)
+  }, 0)
+  const step = Math.max(
+    STEP_MIN,
+    Math.min(STEP_MAX, Math.floor((TARGET_W - X0 - R_PAD - widenTotal) / Math.max(1, events.length))),
+  )
+
   const columns: RefrainColumn[] = []
   const gaps: { x: number; days: number }[] = []
   const axis: { x: number; label: string; row: 0 | 1 }[] = []
@@ -295,20 +323,22 @@ export function buildRefrainModel(source: RefrainSource): RefrainModel {
   let x = X0
   let prevDate: string | null = null
   events.forEach((event) => {
-    let gapBefore = 0
-    if (prevDate) {
-      const diff = Math.round((dayMs(event.date) - dayMs(prevDate)) / 86_400_000)
-      gapBefore = Number.isFinite(diff) && diff > 0 ? diff : 0
-    }
+    const gapBefore = prevDate ? gapDays(prevDate, event.date) : 0
     if (gapBefore >= 2) {
       const widen = Math.min(gapBefore, GAP_MAX_DAYS) * GAP_UNIT
-      gaps.push({ x: round(x + widen / 2 - STEP / 4), days: gapBefore })
+      gaps.push({ x: round(x + widen / 2 - step / 4), days: gapBefore })
       x += widen
     }
     if (event.date !== prevDate) {
-      const last = axis[axis.length - 1]
-      const row: 0 | 1 = last && x - last.x < LABEL_ROOM && last.row === 0 ? 1 : 0
-      axis.push({ x: round(x), label: dayLabel(event.date), row })
+      // A label takes the first ROW with room at this x; when both rows are still occupied the
+      // label is dropped rather than printed into its neighbour — at a dense pitch three dates
+      // can change within one label's width, and every date is still on the column's <title>,
+      // the readout, the panel and the table. (The old rule only looked at the immediately
+      // preceding label, which let a third close date collide with the first.)
+      const lastAt: Record<0 | 1, number> = { 0: -Infinity, 1: -Infinity }
+      for (const a of axis) lastAt[a.row] = a.x
+      const row: 0 | 1 | null = x - lastAt[0] >= LABEL_ROOM ? 0 : x - lastAt[1] >= LABEL_ROOM ? 1 : null
+      if (row !== null) axis.push({ x: round(x), label: dayLabel(event.date), row })
     }
     columns.push({
       key: event.kind === 'tick' ? `tick-${event.n}` : `compost-${event.date}-${columns.length}`,
@@ -317,7 +347,7 @@ export function buildRefrainModel(source: RefrainSource): RefrainModel {
       gapBefore,
     })
     prevDate = event.date
-    x += STEP
+    x += step
   })
 
   return {
@@ -329,6 +359,7 @@ export function buildRefrainModel(source: RefrainSource): RefrainModel {
     motifRowY,
     width: Math.ceil(x + R_PAD),
     height,
+    step,
   }
 }
 
@@ -362,6 +393,20 @@ const REST_PATH = 'M -1.8 -6 C 2.4 -3.4, -2.4 -0.6, 1.8 2.4 C -0.6 1.2, -1.4 3.6
 
 export function buildRefrainSvg(model: RefrainModel, opts: RefrainRenderOptions): string {
   const voiceOn = (v: Voice) => !opts.filter?.length || opts.filter.includes(v)
+
+  // Mark radii derive from the pitch, capped at the sizes the 42-unit sheet always used, so a
+  // dense record reads as a denser score instead of overlapping ink. The dominant/minor RATIO
+  // is kept — emphasis is the drawing's one claim per column and must survive any density.
+  const step = model.step
+  const rDom = Math.max(3.2, Math.min(6.4, step * 0.3))
+  const rMin = Math.max(1.5, Math.min(3, step * 0.14))
+  const rUnread = Math.max(2.2, Math.min(4, step * 0.19))
+  const rOpen = rDom + 3.4
+  const restScale = Math.max(0.7, Math.min(1.25, step / 33))
+  /** tick numbers need about 22 units of pitch before neighbours stop colliding; below that
+   *  the number lives in the column's <title>, the readout, the panel and the table */
+  const drawTickNumbers = step >= 22
+
   const s: string[] = []
   s.push(
     `<svg class="at-rf-svg" viewBox="${refrainViewBox(model)}" width="${model.width}" height="${model.height}" role="img"` +
@@ -373,13 +418,13 @@ export function buildRefrainSvg(model: RefrainModel, opts: RefrainRenderOptions)
   for (const stave of model.staves) {
     const on = voiceOn(stave.voice)
     s.push(`<g class="rf-voice" data-voice="${stave.voice}"${on ? ' data-on=""' : ''}>`)
-    s.push(`<line class="rf-stave" x1="${X0 - 14}" y1="${stave.y}" x2="${model.width - R_PAD + 12}" y2="${stave.y}"/>`)
-    s.push(`<line class="rf-chip" x1="6" y1="${stave.y}" x2="26" y2="${stave.y}"/>`)
-    s.push(`<text class="rf-voice-label" x="32" y="${stave.y + 3.5}">${escapeXml(opts.voiceLabels[stave.voice])}</text>`)
+    s.push(`<line class="rf-stave" x1="${X0 - 8}" y1="${stave.y}" x2="${model.width - R_PAD + 12}" y2="${stave.y}"/>`)
+    s.push(`<line class="rf-chip" x1="4" y1="${stave.y}" x2="16" y2="${stave.y}"/>`)
+    s.push(`<text class="rf-voice-label" x="20" y="${stave.y + 3.5}">${escapeXml(opts.voiceLabels[stave.voice])}</text>`)
     s.push('</g>')
   }
   if (model.motifRowY !== null && opts.motifLabel) {
-    s.push(`<text class="rf-motif-label" x="32" y="${model.motifRowY + 3.5}">${escapeXml(opts.motifLabel)}</text>`)
+    s.push(`<text class="rf-motif-label" x="20" y="${model.motifRowY + 3.5}">${escapeXml(opts.motifLabel)}</text>`)
   }
 
   // — marked silence: a caesura across the stave block, its length lettered. The hole carries.
@@ -420,15 +465,15 @@ export function buildRefrainSvg(model: RefrainModel, opts: RefrainRenderOptions)
       const cls = e.aspect === null ? 'rf-unread' : dominant ? 'rf-note' : 'rf-note-min'
       s.push(
         `<circle class="${cls}" data-voice="${stave.voice}"${voiceOn(stave.voice) ? ' data-von=""' : ''}` +
-          ` cx="${col.x}" cy="${stave.y}" r="${e.aspect === null ? 4 : dominant ? 6.4 : 3}"/>`,
+          ` cx="${col.x}" cy="${stave.y}" r="${e.aspect === null ? rUnread : dominant ? rDom : rMin}"/>`,
       )
     }
     const openingStave = model.staves[2]
     if (e.opening) {
-      s.push(`<circle class="rf-opening-event" data-voice="opening" cx="${col.x}" cy="${openingStave.y}" r="10"/>`)
+      s.push(`<circle class="rf-opening-event" data-voice="opening" cx="${col.x}" cy="${openingStave.y}" r="${rOpen}"/>`)
     }
     if (e.deferral) {
-      s.push(`<path class="rf-rest" data-voice="opening" d="${REST_PATH}" transform="translate(${col.x + 11} ${openingStave.y}) scale(1.25)"/>`)
+      s.push(`<path class="rf-rest" data-voice="opening" d="${REST_PATH}" transform="translate(${round(col.x + step * 0.26)} ${openingStave.y}) scale(${restScale})"/>`)
     }
     if (e.kind === 'compost') {
       const t = model.staves[0]
@@ -440,12 +485,12 @@ export function buildRefrainSvg(model: RefrainModel, opts: RefrainRenderOptions)
           `<title>${escapeXml(e.motifs.join(' · '))}</title></path>`,
       )
     }
-    if (e.kind === 'tick') {
+    if (e.kind === 'tick' && drawTickNumbers) {
       s.push(`<text class="rf-n" x="${col.x}" y="${model.height - 12}" text-anchor="middle">${e.n}</text>`)
     }
     if (!opts.still) {
-      s.push(`<rect class="rf-focus" x="${col.x - STEP / 2 + 3}" y="${TOP - 22}" width="${STEP - 6}" height="${(model.motifRowY ?? TOP + 2 * STAVE_GAP) - TOP + 40}" rx="5"/>`)
-      s.push(`<rect class="rf-colhit" x="${col.x - STEP / 2 + 3}" y="${TOP - 22}" width="${STEP - 6}" height="${(model.motifRowY ?? TOP + 2 * STAVE_GAP) - TOP + 40}"/>`)
+      s.push(`<rect class="rf-focus" x="${round(col.x - step / 2 + 1)}" y="${TOP - 22}" width="${step - 2}" height="${(model.motifRowY ?? TOP + 2 * STAVE_GAP) - TOP + 40}" rx="5"/>`)
+      s.push(`<rect class="rf-colhit" x="${round(col.x - step / 2 + 1)}" y="${TOP - 22}" width="${step - 2}" height="${(model.motifRowY ?? TOP + 2 * STAVE_GAP) - TOP + 40}"/>`)
     }
     s.push('</g>')
   }

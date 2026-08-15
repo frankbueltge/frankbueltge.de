@@ -12,7 +12,7 @@
       },
       {
         "file": "docs/decision-log.md",
-        "sha256": "bcac32767950c3f1"
+        "sha256": "508de252aa9cd2e7"
       },
       {
         "file": "src/data/post/ledger.json",
@@ -57,10 +57,10 @@
       }
     ],
     "counts": {
-      "nodes": 269,
-      "edges": 238,
+      "nodes": 270,
+      "edges": 239,
       "nodesByKind": {
-        "decision": 58,
+        "decision": 59,
         "encounter": 6,
         "neighbor": 93,
         "practice": 9,
@@ -75,7 +75,7 @@
         "made-by": 74,
         "neighbor-of": 93,
         "participates": 17,
-        "touches": 40
+        "touches": 41
       }
     }
   },
@@ -658,6 +658,16 @@
       "source": {
         "file": "docs/decision-log.md",
         "quote": "Alle wörtlichen Frank-Zitate aus dem öffentlichen Record redigiert — private Nachrichten waren nie zur Veröffentlichung frei (Franks Einspruch, 2026-08-15, Nacht)."
+      }
+    },
+    {
+      "id": "decision:2026-08-16-1",
+      "kind": "decision",
+      "label": "The Atelier's two figures repaired on Frank's three findings",
+      "date": "2026-08-16",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "The Atelier's two figures repaired on Frank's three findings"
       }
     },
     {
@@ -5775,6 +5785,15 @@
       "source": {
         "file": "docs/decision-log.md",
         "quote": ".github/workflows/attention-integrate.yml"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-08-16-1",
+      "to": "work:atelier",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "src/lib/atelier/refrain.ts"
       }
     }
   ]

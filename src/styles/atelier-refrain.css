@@ -11,54 +11,57 @@
  *   · no style="" anywhere (CSP) — the client script toggles a data-voices attribute on the
  *     SVG root and these rules read it. */
 
-/* THE FIGURE CARRIES ITS OWN GRAMMAR (2026-08-13).
+/* THE FIGURE CARRIES ITS OWN GRAMMAR (2026-08-13; regrounded 2026-08-16).
  *
- * These tokens were scoped to `.atelier-surface`, the wrapper every Atelier ROOM renders inside
- * (atelier-sheet.css, ADR 0010: no shared grammar between the practices). That held while the
- * score only ever appeared in such a room. On 2026-08-13 it was mounted on the ecology's station
- * sheet, which has its own grammar and none of these tokens — and the result was not an ugly
- * figure but an INVISIBLE one, which is why it took a second pair of eyes to notice:
+ * These tokens were scoped to `.atelier-surface`, the wrapper every Atelier ROOM rendered inside
+ * (atelier-sheet.css, ADR 0010). That held while the score only ever appeared in such a room. On
+ * 2026-08-13 it was mounted on the ecology's station sheet, which has its own grammar and none of
+ * these tokens — and the result was not an ugly figure but an INVISIBLE one:
  *
  *   `stroke: var(--at-hairline)` with the token missing is invalid at computed-value time, so
- *   `stroke` falls back to its initial value — and for SVG that is `none`. Every stave, tie and
- *   rest simply stopped being drawn; the notes fell back to black on a dark page. An undefined
- *   custom property does not warn. It erases.
+ *   `stroke` falls back to its initial value — and for SVG that is `none`. An undefined custom
+ *   property does not warn. It erases.
  *
- * So the figure now defines what it needs on its own root and stops depending on where it hangs.
- * Values are copied from atelier-sheet.css and must stay identical — `atelier-refrain.test.ts`
- * fails if the two drift apart, because a figure that quietly recolours itself inside its own
- * practice's room would be worse than the bug this fixes. */
+ * So the figure defines what it needs on its own root and does not depend on where it hangs.
+ * WHICH grammar it carries changed on 2026-08-16: the values used to be the Atelier rooms'
+ * cream sheet, held byte-identical to atelier-sheet.css by test — but the pyramid migration of
+ * 2026-08-15 retired that chrome from every room, and the score's one remaining host is the
+ * station sheet's panel, where a cream card read as last month's design (Frank's finding,
+ * wording private). The tokens now restate the ecology panel's values and
+ * `atelier-refrain.test.ts` holds them identical to ecology-pyramid.css instead — same
+ * self-containment, new ground. The voice palette kept its hexes; its record in
+ * src/lib/dataviz/palette.ts carries the re-measured surfaces. */
 .at-rf {
-  --at-font-display: 'Iowan Old Style', 'Palatino', Georgia, serif;
-  --at-font-record: ui-monospace, 'SF Mono', Menlo, monospace;
+  --at-font-display: var(--font-sans);
+  --at-font-record: var(--font-mono);
 }
 :root[data-theme='light'] .at-rf,
 :root:not([data-theme='dark']) .at-rf {
-  --at-surface: #f6f1e7;
-  --at-ink: #232019;
-  --at-ink-2: #5c544b;
-  --at-h1-ink: #1b1812;
-  --at-hairline: #ddd4c2;
-  --at-thread: #2c46c8;
-  --at-graphite: #8a8377;
-  --at-badge-bg: #efe8d9;
+  --at-surface: #ffffff;
+  --at-ink: #16201d;
+  --at-ink-2: #4d5b57;
+  --at-h1-ink: #16201d;
+  --at-hairline: #cfd8d5;
+  --at-thread: #10627a;
+  --at-graphite: #556260;
+  --at-badge-bg: #eef1f0;
   /* PALETTE: atelier-refrain (src/lib/dataviz/palette.ts) — the three voices of the refrain
    * score: territory / home / opening. Identity colours for three coexisting aspects of ONE
-   * line; validated 2026-08-02 against both atelier surfaces, light steps. The figure keeps
-   * that surface with it (--at-surface above), so the validated pairing travels too. */
+   * line. CVD/normal separation validated 2026-08-02 (hexes unchanged); contrast re-measured
+   * 2026-08-16 against the ecology surfaces this figure now sits on (weakest 3.80:1, no WARN). */
   --rf-c-territory: #00846d;
   --rf-c-home: #a2700f;
   --rf-c-opening: #7d2b78;
 }
 :root[data-theme='dark'] .at-rf {
-  --at-surface: #1b1815;
-  --at-ink: #e9e2d4;
-  --at-ink-2: #c0b6a8;
-  --at-h1-ink: #f2ecdf;
-  --at-hairline: #3d362f;
-  --at-thread: #5c76e6;
-  --at-graphite: #97907f;
-  --at-badge-bg: #242019;
+  --at-surface: #0d1513;
+  --at-ink: #dfe6e2;
+  --at-ink-2: #8fa09b;
+  --at-h1-ink: #dfe6e2;
+  --at-hairline: #1c2624;
+  --at-thread: #7fd0e8;
+  --at-graphite: #74847e;
+  --at-badge-bg: #0b1210;
   /* PALETTE: atelier-refrain (src/lib/dataviz/palette.ts) — own dark steps, no auto flip. */
   --rf-c-territory: #23a184;
   --rf-c-home: #b8891f;
@@ -122,21 +125,21 @@
   padding: 0.5rem 0.25rem;
 }
 .at-rf .at-rf-scroll .at-rf-svg {
-  /* natural size — the builder writes width/height attributes, so one SVG unit is one CSS
-   * pixel and the type never shrinks below its set size; a narrow viewport scrolls the
-   * .at-rf-scroll box instead (Frank, 2026-08-02: the first cut scaled down and was
-   * unreadable).
+  /* The sizing rule, third revision (2026-08-16). The first cut (2026-08-02) scaled a 2 960 px
+   * sheet down wholesale and was unreadable; the second pinned natural size and scrolled, which
+   * on the station sheet meant a figure nobody sees whole (Frank: the scroll does not fit the
+   * design). Since 2026-08-16 the GEOMETRY fits the sheet — refrain.ts divides a 1 100-unit
+   * target width among the moves — so at station width one SVG unit is one CSS pixel and
+   * nothing scrolls. Below that the drawing may shrink moderately (marks survive; the type has
+   * a floor via min-width), and only a genuinely narrow viewport scrolls the box.
    *
-   * Said three selectors deep on purpose, 2026-08-13. Mounted on the ecology's station sheet the
-   * score met `.eco-figure-body svg { width: 100%; height: auto }`, which is right for every
-   * figure drawn to fit its box and wrong for this one: a 2960 px score became 1056 px wide and
-   * 95 px tall — a legible drawing squashed into a smear, which is what "it shows nothing" looked
-   * like from outside. The fitting rule is not wrong; this figure is simply not a fitting figure,
-   * and it now says so louder than the host page does. */
+   * Said three selectors deep on purpose, 2026-08-13: the host's generic fitting rule
+   * (`.eco-figure-body svg { width: 100% }`) must not decide this figure's size — this rule does. */
   display: block;
   width: auto;
   height: auto;
-  max-width: none;
+  max-width: 100%;
+  min-width: 720px;
   flex: none;
 }
 
@@ -154,8 +157,10 @@
 .rf-voice[data-voice='opening'] .rf-chip { stroke: var(--rf-c-opening); }
 .at-rf-svg .rf-voice-label,
 .at-rf-svg .rf-motif-label {
+  /* 11px since 2026-08-16: the label gutter shrank from 150 to 88 units so the moves get the
+   * width — the direct label stays (the palette record's relief depends on it), one size down. */
   font-family: var(--at-font-record);
-  font-size: 13px;
+  font-size: 11px;
   fill: var(--at-ink-2);
 }
 
