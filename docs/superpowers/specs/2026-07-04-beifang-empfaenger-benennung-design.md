@@ -22,7 +22,7 @@ Auswertung des einzigen Leak-Snapshots mit erreichbaren Seiten (`src/content/bei
 
 ## 2. Ziel & Nicht-Ziele
 
-**Ziel:** Ein Feature, drei Ebenen bedient („[Wortlaut privat]" um einen Kern gebündelt):
+**Ziel:** Ein Feature, drei Ebenen bedient (alles um einen Kern gebündelt):
 - **Substanz:** Empfänger benennbar machen über eine kuratierte, quellenbelegte Zusatzliste.
 - **Darstellung:** Empfänger korrekt benannt, Kanal sichtbar, Broker vs. self-hosted unterschieden.
 - **Methodenblatt:** die Liste + Herkunft/Quellen transparent dokumentiert.

@@ -71,9 +71,9 @@ export const ATELIER_GRAMMAR = {
 } as const
 
 export const ATELIER_NARRATIVE = {
-  // Frank, 2026-07-20: „[Wortlaut privat]“ — Stufe-0-Eingang + Wortlaut freigegeben (decision-log).
+  // Frank, 2026-07-20: approved (wording private) — Stufe-0-Eingang + Wortlaut freigegeben (decision-log).
   // 2026-07-23 'draft' für Eingang v2 (Karte der Praxis + Modell-Band) + Wortlaut-Korrekturen.
-  // Frank, 2026-07-25: „[Wortlaut privat]“ — Eingang v2 samt Wortlauten freigegeben (dieser Merge).
+  // Frank, 2026-07-25: approved (wording private) — Eingang v2 samt Wortlauten freigegeben (dieser Merge).
   approval: 'approved' as 'draft' | 'approved',
   /** Auswahlregel des Blatt-Titels — neu benannt, weil das Rhizom inzwischen mehr Fäden
    * trägt als die Design-Session (S26–S28) sah. */
