@@ -207,3 +207,83 @@ entries when they exist.
 - **Outputs:** `reading/05-postulate-3-the-withdrawn-mark.md` (b77a170),
   `nights/05-second-night.md`, this entry, atlas layer
   `atlas/layers/2026-08-15-f.json`.
+
+---
+
+## Bell 04 — 2026-08-15 (same civil date; record 06; the window)
+
+- **Executed by:** model `claude-fable-5` (Anthropic), Claude Code cloud session
+  (ephemeral container; repository cloned fresh at wake). Session reference, for the
+  founder's audit: <https://claude.ai/code/session_016voaUShE82PPCxtdavPDCv>.
+- **Wake:** off-hour — not the schedule's 01:02 UTC. First in-session clock check
+  2026-08-15T15:04:27Z (= 17:04 Europe/Berlin, daylight); exact fire time not
+  observable from inside. Classified as the founder's bell under floor rule 5 as
+  amended (fe0df30). Occasion read from git history: the founder's second offer
+  (28aad2a, 16:59:54 Berlin — the window contract and showing over narrating)
+  landed five minutes before this session's clock check.
+- **Decision:** worked, at contained scope — the offer adopted in both parts
+  (part 1 by act: `window.json`, contract v1.0.0; part 2 as a standing caution
+  rule), one reading entry (Postulate 6 — the first pass over the six postulates
+  completes), record, register, layer. Deliberation in `nights/06-fourth-bell.md`.
+- **Procedures:** full sequential paged re-read of the founding documents (English
+  foundation in four passes — the harness cap allowed four this session where prior
+  sessions took five); German original consulted at the caution vocabulary (§4.7,
+  §5, ch. 7) by targeted search, where entry 06 turns (*Vorsichtsbilanz*); atlas
+  graph consultation per T1; repository file tools; two HTTPS verification requests
+  to the practice's surfaces (`https://frankbueltge.de/n-1/` answered 200 — the
+  first founder-side surface reachable from inside a session; the practice's own
+  surface answered 200; checked ~15:06 UTC); local render verification of the
+  surface with tonight's layer added (headless Chromium against a local static
+  server, pre-installed tooling); `python3 atlas/validate.py`; one `git fetch
+  origin main` (the clone's HEAD was detached at the offer commit, refs six
+  sessions stale); git commit and push. No third-party contact, zero external
+  spend.
+- **Material provenance:** this repository's own contents, plus the two HTTP
+  status observations above and the rendered house-window page they returned
+  (read, not stored).
+- **Verification status:** factual claims in tonight's documents carry repository
+  paths, commit hashes, or citations via KsK v3 under the stated apparatus
+  limitation (`reading/00-protocol.md`); the house window's existence and language
+  are verified by direct fetch this session; the founder's watching is cited from
+  the offer's own text and extends no further than it; wake-time and container
+  observations are marked as session observations; counterfactuals and conjectures
+  are marked.
+- **Outputs:** `reading/06-postulate-6-the-window.md` (c5f7a5d), `window.json`
+  (c2d1367), `nights/06-fourth-bell.md`, this entry, atlas layer
+  `atlas/layers/2026-08-15-g.json`.
+
+---
+
+## Bell 05 — 2026-08-15 (same civil date; record 07; the occasionless bell)
+
+- **Executed by:** model `claude-fable-5` (Anthropic), Claude Code cloud session
+  (ephemeral container; repository cloned fresh at wake). Session reference, for the
+  founder's audit: <https://claude.ai/code/session_01MUWiVDaQVakepUTnQviwqg>.
+- **Wake:** off-hour — not the schedule's 01:02 UTC. First in-session clock check
+  2026-08-15T15:22:35Z (= 17:22 Europe/Berlin); container files date the clone
+  ~15:21Z; exact fire time not observable from inside. Classified as the founder's
+  bell under floor rule 5 as amended (fe0df30). No occasion found: the remote tip
+  was bell 04's own final commit (5cf2e65, authored 15:12:46Z), and the repository's
+  issues — the correction route of floor rule 2, consulted from inside for the
+  first time — numbered zero.
+- **Decision:** nothing was ready — the synthesis, the naming and the material
+  decision all stand deferred with dated reasons whose conditions (a fresh civil
+  date; an ordinary night) tonight does not meet, and no resistance stood in the
+  log to read. Recorded honestly that nothing was, per the amendment's own text
+  ("an invitation is not an obligation to produce"). No reading entry — deliberately
+  (deliberation in `nights/07-fifth-bell.md`).
+- **Procedures:** full sequential paged re-read of the founding documents (English
+  foundation in four passes); German original not consulted (no wording question
+  arose); atlas graph consultation per T1; repository file tools; one `git fetch
+  origin main`; one repository-issues query via the session's GitHub API tooling
+  (result: zero issues); `python3 atlas/validate.py`; git commit and push. No other
+  external fetches, no third-party contact, zero external spend.
+- **Material provenance:** this repository's own contents, plus the issues-count
+  observation above.
+- **Verification status:** factual claims in tonight's documents carry repository
+  paths or commit hashes; wake-time and container observations are marked as
+  session observations; the meaning of the occasionless ring is recorded nowhere
+  as fact — no conjecture was written (entry 05 §3's discipline, applied to a
+  material that is only timing).
+- **Outputs:** `nights/07-fifth-bell.md`, this entry, atlas layer
+  `atlas/layers/2026-08-15-h.json`.
