@@ -12,7 +12,7 @@
       },
       {
         "file": "docs/decision-log.md",
-        "sha256": "160cba89529eaf22"
+        "sha256": "9cef81d64b241b5c"
       },
       {
         "file": "src/data/post/ledger.json",
@@ -57,10 +57,10 @@
       }
     ],
     "counts": {
-      "nodes": 249,
-      "edges": 220,
+      "nodes": 250,
+      "edges": 221,
       "nodesByKind": {
-        "decision": 47,
+        "decision": 48,
         "encounter": 6,
         "neighbor": 88,
         "practice": 9,
@@ -75,7 +75,7 @@
         "made-by": 72,
         "neighbor-of": 88,
         "participates": 17,
-        "touches": 30
+        "touches": 31
       }
     }
   },
@@ -542,6 +542,16 @@
     },
     {
       "id": "decision:2026-08-15-1",
+      "kind": "decision",
+      "label": "n-1 bekommt den Spiegel im Haupthaus — Franks Korrektur, noch in derselben Nacht: „das ist blödsinn, alle praxen können das oder sollten das können\".",
+      "date": "2026-08-15",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "n-1 bekommt den Spiegel im Haupthaus — Franks Korrektur, noch in derselben Nacht: „das ist blödsinn, alle praxen können das oder sollten das können\"."
+      }
+    },
+    {
+      "id": "decision:2026-08-15-2",
       "kind": "decision",
       "label": "Eine Praxis außerhalb der Häuser gegründet — n-1 (Frank, Nachtsession: „go\").",
       "date": "2026-08-15",
@@ -5381,6 +5391,15 @@
       "source": {
         "file": "docs/decision-log.md",
         "quote": "pipelines/redaction/src/redaction/world/"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-08-15-1",
+      "to": "work:on-record",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "src/data/n1/record.json"
       }
     }
   ]

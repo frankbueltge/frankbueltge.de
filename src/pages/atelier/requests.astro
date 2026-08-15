@@ -13,16 +13,24 @@ import { getCollection, render } from 'astro:content'
 import Page from '@/layouts/Page.astro'
 import Frame from '@/components/atelier/surface/Frame.astro'
 import { renderMarkdown } from '@/lib/engines/journal'
-import { STATUS_WORDS, planRoom, preamble, requestCards, trimWords } from '@/lib/zentrale/requestsMd'
+import { STATUS_WORDS, planRoom, preamble, roomRecord, trimWords } from '@/lib/zentrale/requestsMd'
 import { ATELIER_NARRATIVE } from '@/config/atelier-wording'
 
+// Two documents since the 2026-08-10 split, one record. The room's model is both halves (archive
+// first, live second — the same order the archive page prints them), because the five closed leads
+// below are the newest answered business wherever it happens to sit; reading only the live half
+// would empty this block on the day a channel is shaved. Open asks and seeds on offer can only be
+// in the live half.
 const all = await getCollection('atelier')
 const doc = all.find((e) => e.id === 'requests')
+const archived = all.find((e) => e.id === 'requests-archive')
 const md = doc?.body ?? ''
-// Astro's own heading list — the authoritative slugs of the archive page's headings.
+// Astro's own heading lists — the authoritative slugs of the archive page's headings, in the
+// order that page renders them.
 const { headings } = doc ? await render(doc) : { headings: [] }
+const { headings: archivedHeadings } = archived ? await render(archived) : { headings: [] }
 
-const cards = requestCards(md, { headings })
+const cards = roomRecord(md, archived?.body ?? '', { headings: [...archivedHeadings, ...headings] })
 const openCards = cards.filter((c) => c.open)
 const answered = cards.filter((c) => !c.open && !c.seeds).slice(-5).reverse()
 const seeds = cards.filter((c) => c.seeds)

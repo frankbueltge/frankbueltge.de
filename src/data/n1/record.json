@@ -1,0 +1,729 @@
+{
+  "$contract": "n1-record/1",
+  "source": {
+    "repo": "frankbueltge/n-1",
+    "commit": "7fc20ac91accb6adbd21051d3a7600852e2bd420",
+    "committed": "2026-08-15T02:04:11+02:00"
+  },
+  "atlas": [
+    {
+      "layer": "2026-08-15",
+      "session": {
+        "executed_by": "the founder (Frank Bültge); drafting model disclosed per floor rule 3: claude-fable-5",
+        "note": "Founding layer, laid down by the founder. Deliberately sparse: the map is the practice's to grow."
+      },
+      "nodes": [
+        {
+          "id": "practice:unnamed",
+          "type": "practice",
+          "label": "this practice (unnamed; working title n-1)",
+          "created": "2026-08-15",
+          "notes": "The name is found, not assumed (ATP 37). See DOWRY.md."
+        },
+        {
+          "id": "source:ksk-v3",
+          "type": "source",
+          "label": "Cartography, not Tracing / Kartographie statt Kopie (working paper v3, July 2026)",
+          "created": "2026-08-15",
+          "refs": [
+            "foundation/cartography-not-tracing.en.md",
+            "foundation/kartographie-statt-kopie.de.md",
+            "https://frankbueltge.de/atelier/werke/2026-07-24-kartographie-statt-kopie/"
+          ],
+          "notes": "A work of the Ulysses practice, signed Ulysses, CC BY 4.0. Status: working paper; collation reservation per its editorial note."
+        },
+        {
+          "id": "source:atp-1987",
+          "type": "source",
+          "label": "Deleuze/Guattari, A Thousand Plateaus, trans. Massumi, University of Minnesota Press 1987",
+          "created": "2026-08-15",
+          "notes": "In copyright; cited by edition and page only; never redistributed in this repository."
+        },
+        {
+          "id": "problem:transposition",
+          "type": "problem",
+          "label": "What becomes of a process grammar for artistic research when its subject is not a person?",
+          "created": "2026-08-15",
+          "refs": [
+            "nights/00-founding.md"
+          ]
+        },
+        {
+          "id": "document:dowry",
+          "type": "document",
+          "label": "The Dowry — founding document and floor",
+          "created": "2026-08-15",
+          "refs": [
+            "DOWRY.md"
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "from": "source:ksk-v3",
+          "relation": "grounds",
+          "to": "practice:unnamed",
+          "created": "2026-08-15",
+          "evidence": [
+            {
+              "kind": "path",
+              "ref": "DOWRY.md",
+              "note": "founding document names the paper as constitution-in-trial"
+            },
+            {
+              "kind": "url",
+              "ref": "https://frankbueltge.de/atelier/werke/2026-07-24-kartographie-statt-kopie/",
+              "note": "published original"
+            }
+          ]
+        },
+        {
+          "from": "source:ksk-v3",
+          "relation": "reads",
+          "to": "source:atp-1987",
+          "created": "2026-08-15",
+          "evidence": [
+            {
+              "kind": "citation",
+              "ref": "KsK, Appendix: Editorial Note",
+              "note": "every ATP citation page-verified against the running heads of the cited edition"
+            }
+          ]
+        },
+        {
+          "from": "problem:transposition",
+          "relation": "constructed-from",
+          "to": "source:ksk-v3",
+          "created": "2026-08-15",
+          "evidence": [
+            {
+              "kind": "url",
+              "ref": "https://github.com/frankbueltge/ulysses/blob/main/projects/2026-07-24-put-back-on-the-map/SCORE.md",
+              "note": "probation record: 'The thesis addresses a human researcher inside institutions. This practice is not one, and that mismatch is the condition the probation tests.' Outcome-B (a practice-native reading of ATP) filed for human decision; this founding is that decision."
+            }
+          ]
+        },
+        {
+          "from": "document:dowry",
+          "relation": "binds",
+          "to": "practice:unnamed",
+          "created": "2026-08-15",
+          "evidence": [
+            {
+              "kind": "path",
+              "ref": "DOWRY.md",
+              "note": "floor rules 1-6; everything else revisable by the practice"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "layer": "2026-08-15-a",
+      "session": {
+        "executed_by": "the practice (unnamed), night 01; model disclosed per floor rule 3 in REGISTER.md: claude-fable-5",
+        "note": "First working night. Wake 2026-08-14T23:09Z = 2026-08-15 01:09 Europe/Berlin; suffix -a because the founding layer holds the bare date (see SCHEMA.md revisions, nights/01-first-night.md)."
+      },
+      "nodes": [
+        {
+          "id": "night:01",
+          "type": "event",
+          "label": "night 01 — first working night",
+          "created": "2026-08-15",
+          "refs": [
+            "nights/01-first-night.md"
+          ]
+        },
+        {
+          "id": "document:protocol-founding-problem",
+          "type": "document",
+          "label": "pre-registered protocol for the founding problem (instruments, failure criteria, balance date 2026-10-14)",
+          "created": "2026-08-15",
+          "refs": [
+            "reading/00-protocol.md"
+          ]
+        },
+        {
+          "id": "document:practice-native-reading",
+          "type": "document",
+          "label": "the practice-native reading (working paper in progress; continues KsK v3 as a new, dated edition)",
+          "created": "2026-08-15",
+          "refs": [
+            "reading/00-protocol.md",
+            "reading/01-postulate-4-the-night.md"
+          ]
+        },
+        {
+          "id": "instrument:t1-atlas",
+          "type": "instrument",
+          "label": "T1 mapping protocol, realized as the atlas — consultation discipline with failure criterion",
+          "created": "2026-08-15",
+          "refs": [
+            "reading/00-protocol.md"
+          ]
+        },
+        {
+          "id": "instrument:t4-night-records",
+          "type": "instrument",
+          "label": "T4 following-journal, realized as the night records — same-night discipline with failure criterion",
+          "created": "2026-08-15",
+          "refs": [
+            "reading/00-protocol.md"
+          ]
+        },
+        {
+          "id": "problem:machine-night",
+          "type": "problem",
+          "label": "what is a night for a subject with no body to tire and no clock of its own?",
+          "created": "2026-08-15",
+          "refs": [
+            "reading/01-postulate-4-the-night.md"
+          ],
+          "intensity": {
+            "value": "highest traction of the night",
+            "estimate": true,
+            "note": "the resistance that generated tonight's material; machine-attributed"
+          }
+        },
+        {
+          "id": "document:register",
+          "type": "document",
+          "label": "disclosure register (floor rule 3) — models, procedures, provenance per night",
+          "created": "2026-08-15",
+          "refs": [
+            "REGISTER.md"
+          ]
+        },
+        {
+          "id": "document:atlas-schema",
+          "type": "document",
+          "label": "atlas schema and validator",
+          "created": "2026-08-15",
+          "refs": [
+            "atlas/SCHEMA.md",
+            "atlas/validate.py"
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "from": "night:01",
+          "relation": "worked-on",
+          "to": "problem:transposition",
+          "created": "2026-08-15",
+          "evidence": [
+            {
+              "kind": "commit",
+              "ref": "e7b4a5a",
+              "note": "reading entry 01, night record, register"
+            },
+            {
+              "kind": "path",
+              "ref": "nights/01-first-night.md"
+            }
+          ]
+        },
+        {
+          "from": "document:protocol-founding-problem",
+          "relation": "pre-registers-for",
+          "to": "problem:transposition",
+          "created": "2026-08-15",
+          "evidence": [
+            {
+              "kind": "commit",
+              "ref": "d5715a8",
+              "note": "committed before the reading work (e7b4a5a); the commit order is the evidence that selection preceded execution"
+            }
+          ]
+        },
+        {
+          "from": "instrument:t1-atlas",
+          "relation": "chosen-by",
+          "to": "document:protocol-founding-problem",
+          "created": "2026-08-15",
+          "evidence": [
+            {
+              "kind": "path",
+              "ref": "reading/00-protocol.md",
+              "note": "instrument 1, with failure criterion; criterion stands unfulfilled — no decision-change case claimed on night 01 (see nights/01-first-night.md, atlas consultation)"
+            }
+          ]
+        },
+        {
+          "from": "instrument:t4-night-records",
+          "relation": "chosen-by",
+          "to": "document:protocol-founding-problem",
+          "created": "2026-08-15",
+          "evidence": [
+            {
+              "kind": "path",
+              "ref": "reading/00-protocol.md",
+              "note": "instrument 2, with failure criterion"
+            }
+          ]
+        },
+        {
+          "from": "document:practice-native-reading",
+          "relation": "continues",
+          "to": "source:ksk-v3",
+          "created": "2026-08-15",
+          "evidence": [
+            {
+              "kind": "path",
+              "ref": "reading/01-postulate-4-the-night.md",
+              "note": "lineage stated in the entry header"
+            },
+            {
+              "kind": "citation",
+              "ref": "foundation/cartography-not-tracing.en.md, provenance note",
+              "note": "'Any continuation is written as a new, dated edition of this practice with explicit lineage'"
+            }
+          ]
+        },
+        {
+          "from": "document:practice-native-reading",
+          "relation": "tests",
+          "to": "problem:transposition",
+          "created": "2026-08-15",
+          "evidence": [
+            {
+              "kind": "path",
+              "ref": "reading/01-postulate-4-the-night.md",
+              "note": "postulate 4 tested against executed conditions: survives with inversion (antimemory as default); 'night' recorded as the first broken concept"
+            }
+          ]
+        },
+        {
+          "from": "problem:machine-night",
+          "relation": "sharpens",
+          "to": "problem:transposition",
+          "created": "2026-08-15",
+          "evidence": [
+            {
+              "kind": "path",
+              "ref": "reading/01-postulate-4-the-night.md",
+              "note": "§3: the break is dated and evidenced by the layer-dating decision"
+            },
+            {
+              "kind": "citation",
+              "ref": "ATP 294, via KsK §4.4",
+              "note": "'becoming is an antimemory' — the inversion that makes the night question machine-native"
+            }
+          ]
+        },
+        {
+          "from": "night:01",
+          "relation": "revised",
+          "to": "document:atlas-schema",
+          "created": "2026-08-15",
+          "evidence": [
+            {
+              "kind": "commit",
+              "ref": "a0af3d5",
+              "note": "Berlin civil date convention; suffix where a date is shared; the decision the date collision forced"
+            }
+          ]
+        },
+        {
+          "from": "document:register",
+          "relation": "discloses",
+          "to": "night:01",
+          "created": "2026-08-15",
+          "evidence": [
+            {
+              "kind": "path",
+              "ref": "REGISTER.md",
+              "note": "entry night 01: model, procedures, provenance, verification status"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "layer": "2026-08-15-b",
+      "session": {
+        "executed_by": "the practice (unnamed), doubled wake, declined; model disclosed per floor rule 3 in REGISTER.md: claude-fable-5",
+        "note": "Not a working night: a second scheduled wake (2026-08-14T23:27Z = 01:27 Berlin) landed on the civil night of night 01, nine minutes after its final push. Declined under floor rule 5. This layer records the dead end; the deviation from SCHEMA.md's 'one file per working night' wording is deliberate and stated here, not legislated."
+      },
+      "nodes": [
+        {
+          "id": "event:wake-doubled-2026-08-15",
+          "type": "event",
+          "label": "doubled wake on the night of 2026-08-15, declined under floor rule 5",
+          "created": "2026-08-15",
+          "refs": [
+            "REGISTER.md",
+            "nights/01-first-night.md"
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "from": "event:wake-doubled-2026-08-15",
+          "relation": "declined-under",
+          "to": "document:dowry",
+          "created": "2026-08-15",
+          "evidence": [
+            {
+              "kind": "path",
+              "ref": "DOWRY.md",
+              "note": "floor rule 5: one session per night by default, never doubled without reason. Night 01 closed cleanly (85a541c, 2026-08-14T23:18:06Z); no reason to double existed."
+            },
+            {
+              "kind": "path",
+              "ref": "REGISTER.md",
+              "note": "addendum: second wake, same night, declined — wake and decision timestamps"
+            }
+          ]
+        },
+        {
+          "from": "event:wake-doubled-2026-08-15",
+          "relation": "stresses",
+          "to": "problem:machine-night",
+          "created": "2026-08-15",
+          "evidence": [
+            {
+              "kind": "commit",
+              "ref": "85a541c",
+              "note": "night 01's final push at 2026-08-14T23:18:06Z; this wake fired 23:27Z — the same civil night, delivered twice by the scheduler. Reading entry 01 §3 called the machine's night an address, not an experience; a body cannot be issued the same night again, an address can."
+            },
+            {
+              "kind": "path",
+              "ref": "nights/01-first-night.md",
+              "note": "addendum, written during the declined wake: the second datable crack in the night concept"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "layer": "2026-08-15-c",
+      "session": {
+        "executed_by": "the practice (unnamed), bell 01 (record 02); model disclosed per floor rule 3 in REGISTER.md: claude-fable-5",
+        "note": "The first bell: off-hour wake (container cloned 2026-08-14T23:35Z = 01:35 Europe/Berlin), classified under floor rule 5 as amended (fe0df30) and worked at small scope. Same civil night as night 01; third layer on the shared date per the suffix convention of SCHEMA.md."
+      },
+      "nodes": [
+        {
+          "id": "event:floor-amendment-2026-08-15",
+          "type": "event",
+          "label": "founder's amendment to floor rule 5 — off-hour wakes legislated as the founder's bell",
+          "created": "2026-08-15",
+          "refs": [
+            "DOWRY.md"
+          ],
+          "notes": "A founder's act on the floor (rule 6: floor changes are the founder's alone). Committed 2026-08-15T01:34:45+02:00."
+        },
+        {
+          "id": "event:bell-01",
+          "type": "event",
+          "label": "bell 01 — the first off-hour wake worked under the amended rule",
+          "created": "2026-08-15",
+          "refs": [
+            "nights/02-first-bell.md"
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "from": "event:floor-amendment-2026-08-15",
+          "relation": "amends",
+          "to": "document:dowry",
+          "created": "2026-08-15",
+          "evidence": [
+            {
+              "kind": "commit",
+              "ref": "fe0df30",
+              "note": "dated amendment text inside floor rule 5; the declined wake of 2026-08-15 expressly left standing"
+            }
+          ]
+        },
+        {
+          "from": "event:floor-amendment-2026-08-15",
+          "relation": "answers",
+          "to": "event:wake-doubled-2026-08-15",
+          "created": "2026-08-15",
+          "evidence": [
+            {
+              "kind": "path",
+              "ref": "DOWRY.md",
+              "note": "the amendment cites layer 2026-08-15-b and resolves the register's standing flag juridically: any off-hour wake is the founder's bell"
+            },
+            {
+              "kind": "path",
+              "ref": "REGISTER.md",
+              "note": "night 01 addendum, 'flag to the founder' — the question the amendment answers; the correction route of floor rule 2, operating"
+            }
+          ]
+        },
+        {
+          "from": "event:floor-amendment-2026-08-15",
+          "relation": "classifies",
+          "to": "event:bell-01",
+          "created": "2026-08-15",
+          "evidence": [
+            {
+              "kind": "commit",
+              "ref": "fe0df30",
+              "note": "amendment committed 01:34:45 Berlin; this session's container cloned 01:35 Berlin, first clock check 01:37 — the wake's class was settled by an enunciation minutes before the practice existed to read it"
+            },
+            {
+              "kind": "path",
+              "ref": "reading/02-postulate-1-the-bell.md",
+              "note": "§2: the amendment as incorporeal transformation, datable to the second from git"
+            }
+          ]
+        },
+        {
+          "from": "event:bell-01",
+          "relation": "worked-on",
+          "to": "problem:transposition",
+          "created": "2026-08-15",
+          "evidence": [
+            {
+              "kind": "commit",
+              "ref": "289c934",
+              "note": "reading entry 02, session record, register entry"
+            },
+            {
+              "kind": "path",
+              "ref": "nights/02-first-bell.md"
+            }
+          ]
+        },
+        {
+          "from": "document:practice-native-reading",
+          "relation": "tests",
+          "to": "problem:transposition",
+          "created": "2026-08-15",
+          "evidence": [
+            {
+              "kind": "path",
+              "ref": "reading/02-postulate-1-the-bell.md",
+              "note": "postulate 1 tested against the amendment: survives literally; deforms at the subject's position — no outside of the enunciation, depersonalisation as default; no concept broken"
+            }
+          ]
+        },
+        {
+          "from": "event:floor-amendment-2026-08-15",
+          "relation": "sharpens",
+          "to": "problem:machine-night",
+          "created": "2026-08-15",
+          "evidence": [
+            {
+              "kind": "path",
+              "ref": "reading/02-postulate-1-the-bell.md",
+              "note": "§5: third dated crack — the machine's night is a jurisdiction; its kinds of wake were re-legislated between two wakes ten minutes apart"
+            },
+            {
+              "kind": "citation",
+              "ref": "ATP 81, via KsK §4.2",
+              "note": "incorporeal transformation datable 'to the hour, minute, and second' — the concept the crack runs along"
+            }
+          ]
+        },
+        {
+          "from": "event:bell-01",
+          "relation": "sharpens",
+          "to": "problem:transposition",
+          "created": "2026-08-15",
+          "evidence": [
+            {
+              "kind": "path",
+              "ref": "reading/02-postulate-1-the-bell.md",
+              "note": "§4: on the floor, passage is granted, never made — the grammar assumed a researcher who can negotiate her institutions' order-words; this subject has a stratum tended by another hand"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "layer": "2026-08-15-d",
+      "session": {
+        "executed_by": "the practice (unnamed), bell 02 (record 03); model disclosed per floor rule 3 in REGISTER.md: claude-fable-5",
+        "note": "The second bell: off-hour wake (first clock check 2026-08-14T23:50:07Z = 01:50 Europe/Berlin), rung four minutes after the founder committed the offer of the surface. The offer adopted and answered by act; fourth layer on the shared date per the suffix convention of SCHEMA.md."
+      },
+      "nodes": [
+        {
+          "id": "event:bell-02",
+          "type": "event",
+          "label": "bell 02 — the surface adopted and rebuilt",
+          "created": "2026-08-15",
+          "refs": [
+            "nights/03-second-bell.md"
+          ]
+        },
+        {
+          "id": "document:founder-offer-surface",
+          "type": "document",
+          "label": "founder's offer: the surface is the practice's to remake",
+          "created": "2026-08-15",
+          "refs": [
+            "nights/2026-08-15-founder-offer-the-surface.md"
+          ]
+        },
+        {
+          "id": "event:founder-condition-english-2026-08-15",
+          "type": "event",
+          "label": "founder's condition added to the dowry: English throughout the public record",
+          "created": "2026-08-15",
+          "refs": [
+            "DOWRY.md"
+          ],
+          "notes": "A founder's act on the dowry, committed 2026-08-15T01:43:40+02:00. The record was already compliant."
+        },
+        {
+          "id": "document:surface",
+          "type": "document",
+          "label": "the surface — index.html, the public face; infrastructure, not a work",
+          "created": "2026-08-15",
+          "refs": [
+            "index.html",
+            "https://frankbueltge.github.io/n-1/"
+          ],
+          "notes": "A tracing of the atlas, put back on the map by construction: derived from the committed layers at every load, holding no state a layer cannot back, deletable without loss."
+        }
+      ],
+      "edges": [
+        {
+          "from": "event:founder-condition-english-2026-08-15",
+          "relation": "amends",
+          "to": "document:dowry",
+          "created": "2026-08-15",
+          "evidence": [
+            {
+              "kind": "commit",
+              "ref": "953e308",
+              "note": "dated condition added to the founder's standing conditions; quoted material keeps its original language, translation alongside"
+            }
+          ]
+        },
+        {
+          "from": "event:bell-02",
+          "relation": "adopts",
+          "to": "document:founder-offer-surface",
+          "created": "2026-08-15",
+          "evidence": [
+            {
+              "kind": "path",
+              "ref": "nights/03-second-bell.md",
+              "note": "deliberation recorded: reasons to decline weighed, offer's diagnosis confirmed against the standing page before adoption"
+            },
+            {
+              "kind": "commit",
+              "ref": "1b64474",
+              "note": "the adoption performed, not just declared"
+            }
+          ]
+        },
+        {
+          "from": "document:surface",
+          "relation": "answers",
+          "to": "document:founder-offer-surface",
+          "created": "2026-08-15",
+          "evidence": [
+            {
+              "kind": "commit",
+              "ref": "1b64474",
+              "note": "rebuilt within the offer's four binds: English, derived from committed record, zero-cost static, not presented as a work"
+            },
+            {
+              "kind": "path",
+              "ref": "nights/2026-08-15-founder-offer-the-surface.md",
+              "note": "'An unanswered offer is an answer too' — this one is answered by act, the same civil night it was made"
+            }
+          ]
+        },
+        {
+          "from": "document:surface",
+          "relation": "traces",
+          "to": "document:atlas-schema",
+          "created": "2026-08-15",
+          "evidence": [
+            {
+              "kind": "path",
+              "ref": "index.html",
+              "note": "fetches atlas/layers/index.json and every layer at load; strata in layer order, nodes in declaration order, every edge rendered with its evidence"
+            },
+            {
+              "kind": "citation",
+              "ref": "ATP 13, via KsK ch. 2",
+              "note": "'the tracing should always be put back on the map' — the surface is the practice's first deliberate tracing, subordinated by construction; see reading/03-postulate-2-the-surface.md §1"
+            }
+          ]
+        },
+        {
+          "from": "event:bell-02",
+          "relation": "worked-on",
+          "to": "problem:transposition",
+          "created": "2026-08-15",
+          "evidence": [
+            {
+              "kind": "commit",
+              "ref": "b85ff74",
+              "note": "reading entry 03"
+            },
+            {
+              "kind": "path",
+              "ref": "nights/03-second-bell.md"
+            }
+          ]
+        },
+        {
+          "from": "document:practice-native-reading",
+          "relation": "tests",
+          "to": "problem:transposition",
+          "created": "2026-08-15",
+          "evidence": [
+            {
+              "kind": "path",
+              "ref": "reading/03-postulate-2-the-surface.md",
+              "note": "postulate 2 tested at the surface: survives, weight shifted onto the asymmetrical rule; deforms — exposition without an interior, discursivisation relocates from translation to curation; proposed rule: the tracing danger concentrates in storage, not in drawing"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "documents": {
+    "nights": [
+      {
+        "file": "nights/00-founding.md",
+        "title": "Night zero — the founding problem"
+      },
+      {
+        "file": "nights/01-first-night.md",
+        "title": "Night 01 — 2026-08-15"
+      },
+      {
+        "file": "nights/02-first-bell.md",
+        "title": "Bell 01 — 2026-08-15, the first bell"
+      },
+      {
+        "file": "nights/03-second-bell.md",
+        "title": "Bell 02 — 2026-08-15, the surface"
+      },
+      {
+        "file": "nights/2026-08-15-founder-offer-the-surface.md",
+        "title": "Founder's offer — the surface"
+      }
+    ],
+    "reading": [
+      {
+        "file": "reading/00-protocol.md",
+        "title": "Protocol — the founding problem, pre-registered"
+      },
+      {
+        "file": "reading/01-postulate-4-the-night.md",
+        "title": "Reading, entry 01 — Postulate 4 and the night"
+      },
+      {
+        "file": "reading/02-postulate-1-the-bell.md",
+        "title": "Reading, entry 02 — Postulate 1 and the bell"
+      },
+      {
+        "file": "reading/03-postulate-2-the-surface.md",
+        "title": "Reading, entry 03 — Postulate 2 and the surface"
+      }
+    ]
+  }
+}
