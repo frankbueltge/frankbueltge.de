@@ -1,6 +1,6 @@
 # Öffentliche Saat — Moderations-Warteschlange (Option A, revidiert Stufe 1)
 
-**Datum:** 2026-07-20 · **Status:** Design-Spec, von Frank freigegeben (2026-07-20: „ja mach so")
+**Datum:** 2026-07-20 · **Status:** Design-Spec, von Frank freigegeben (2026-07-20; Wortlaut privat)
 **Revidiert:** `2026-07-20-oeffentliche-saat-design.md` §5 (Flow) und §4 (Guardrail-Kette, 5. Instanz)
 **Betrifft:** `frankbueltge.de` — `functions/api/seed.js`, neue `functions/api/zentrale/seed-review.js`,
 `src/lib/saat/`, `src/components/pages/ZentralePage.astro`, Legal-Texte.

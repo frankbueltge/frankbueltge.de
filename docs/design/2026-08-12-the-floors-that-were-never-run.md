@@ -159,9 +159,9 @@ session**, not a season.
 
 ### D6 — The horizon closes (decided 2026-08-12)
 
-> „ja, streich den offenen horizont, wenn du das wirklich so gemessen hast und die offene
-> work-line nur nonsense produziert hat und anders genauso produktiv, korrekt und vertretbar
-> wäre" — Frank
+> Frank's instruction (wording private): strike the open horizon — conditional on the
+> measurement really showing the open work-line produced nothing of value and a bounded
+> line being just as productive, correct and defensible.
 
 **One premise in that instruction is rejected rather than accepted quietly.** The open
 work-line did **not** only produce nonsense. It produced a good, externally corresponded,
