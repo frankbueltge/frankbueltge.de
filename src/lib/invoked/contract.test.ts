@@ -87,6 +87,83 @@ describe('invoked latest.json contract', () => {
     expect(d.most_invoked.year).toBe(d.stats.max_year_observed)
   })
 
+  it('publishes the evidence for the standout whenever it publishes a standout', () => {
+    if (!d.headline) return
+    const why = d.headline.why
+    expect(why, 'method v1.1 owes every headline its why block').toBeDefined()
+    expect(d.method.why, 'the method block must describe the evidence it now carries').toMatch(/lift|theme|headline/i)
+    expect(why!.articles).toBeGreaterThan(0)
+    // Articles, not mentions: one article can carry several distinct dates in the same year,
+    // which is exactly why the page prints both numbers instead of conflating them.
+    expect(why!.articles).toBeLessThanOrEqual(d.stats.articles_scanned)
+    expect(why!.articles).toBeLessThanOrEqual(d.headline.mentions)
+  })
+
+  it('the anniversary is arithmetic on the file itself, checkable without a calendar', () => {
+    const why = d.headline?.why
+    if (!why) return
+    for (const e of why.top_exact_dates) {
+      expect(e.date.startsWith(`${d.headline!.year}-`), 'top exact dates lie inside the standout year').toBe(true)
+      expect(e.mentions).toBeGreaterThan(0)
+    }
+    expect(why.top_exact_dates.length).toBeLessThanOrEqual(5)
+    const a = why.anniversary
+    if (!a) {
+      expect(why.top_exact_dates).toHaveLength(0)
+      return
+    }
+    // The page calls this arithmetic and not a lookup, so the arithmetic is asserted:
+    // the year's most-invoked exact date, and a month-day comparison against the record's day.
+    expect(a.date).toBe(why.top_exact_dates[0].date)
+    expect(a.mentions).toBe(why.top_exact_dates[0].mentions)
+    expect(a.today).toBe(d.date)
+    expect(a.matches_today).toBe(a.date.slice(5) === d.date.slice(5))
+  })
+
+  it('themes are ranked by lift and clear the three published floors', () => {
+    const why = d.headline?.why
+    if (!why) return
+    expect(why.themes.length).toBeLessThanOrEqual(8)
+    let previous = Infinity
+    for (const t of why.themes) {
+      expect(t.code).toMatch(/^[A-Z0-9_]+$/)
+      expect(t.articles, 'floor: at least 15 invoking articles').toBeGreaterThanOrEqual(15)
+      expect(t.share, 'floor: at least 8% of the invoking articles').toBeGreaterThanOrEqual(0.08)
+      expect(t.lift, 'floor: at least twice as common as across the day').toBeGreaterThanOrEqual(2)
+      expect(t.share).toBeCloseTo(t.articles / why.articles, 2)
+      expect(t.lift, 'ranked by lift, not by frequency').toBeLessThanOrEqual(previous)
+      previous = t.lift
+    }
+  })
+
+  it('names come from the extractor, counted and in order, never tidied', () => {
+    const why = d.headline?.why
+    if (!why) return
+    for (const list of [why.persons, why.organisations]) {
+      expect(list.length).toBeLessThanOrEqual(6)
+      let previous = Infinity
+      for (const n of list) {
+        expect(n.name.length).toBeGreaterThan(0)
+        expect(n.articles).toBeGreaterThan(0)
+        expect(n.articles).toBeLessThanOrEqual(why.articles)
+        expect(n.articles).toBeLessThanOrEqual(previous)
+        previous = n.articles
+      }
+    }
+  })
+
+  it('the headlines are real articles, linkable and attributed to their domain', () => {
+    const why = d.headline?.why
+    if (!why) return
+    expect(why.headlines.length).toBeLessThanOrEqual(5)
+    for (const a of why.headlines) {
+      expect(a.title.trim().length).toBeGreaterThan(0)
+      expect(a.url).toMatch(/^https?:\/\//)
+      expect(a.domain.length).toBeGreaterThan(0)
+      expect(a.url.toLowerCase(), 'the shown domain is the one the link goes to').toContain(a.domain.toLowerCase())
+    }
+  })
+
   it('measures the wall every night instead of assuming 2014', () => {
     if (failed) {
       expect(d.stats.max_year_observed).toBe(0)

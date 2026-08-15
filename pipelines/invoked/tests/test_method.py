@@ -105,3 +105,73 @@ class TestDisclosure:
 
     def test_the_inherited_ceiling_is_declared_not_hidden(self, refresh):
         assert "2015" in refresh.method_block()["inherited_ceiling"]
+
+
+class TestWhy:
+    """v1.1: the standout is explained from the same rows it was counted in — and the
+    explanation stops short of naming the event."""
+
+    def _agg(self, refresh):
+        from collections import Counter
+        return {
+            "exact_dates": Counter({(1947, 8, 15): 191, (1947, 8, 14): 65, (1901, 1, 1): 9}),
+            "evidence": {1947: {"articles": 710,
+                                "themes": Counter({"SOVEREIGNTY": 87, "TAX_FNCACT": 639}),
+                                "persons": Counter({"a person": 229}),
+                                "orgs": Counter({"an org": 49}),
+                                "headlines": [
+                                    {"domain": "b.example", "title": "passing mention", "url": "u2", "exact": False},
+                                    {"domain": "a.example", "title": "named the full date", "url": "u1", "exact": True},
+                                ]}},
+            "themes_overall": Counter({"SOVEREIGNTY": 300, "TAX_FNCACT": 28000}),
+            "articles_with_themes": 31201,
+        }
+
+    def test_the_anniversary_is_arithmetic_on_the_record_s_own_date(self, refresh):
+        why = refresh.why_block(1947, self._agg(refresh), "2026-08-15")
+        assert why["anniversary"]["date"] == "1947-08-15"
+        assert why["anniversary"]["matches_today"] is True
+
+    def test_a_year_whose_top_date_is_not_today_is_not_an_anniversary(self, refresh):
+        why = refresh.why_block(1947, self._agg(refresh), "2026-09-02")
+        assert why["anniversary"]["matches_today"] is False
+
+    def test_only_dates_inside_the_year_are_carried(self, refresh):
+        why = refresh.why_block(1947, self._agg(refresh), "2026-08-15")
+        assert all(d["date"].startswith("1947-") for d in why["top_exact_dates"])
+
+    def test_articles_naming_a_full_date_lead_the_headlines(self, refresh):
+        why = refresh.why_block(1947, self._agg(refresh), "2026-08-15")
+        assert why["headlines"][0]["domain"] == "a.example"
+        assert "exact" not in why["headlines"][0]  # an internal flag, not published
+
+    def test_a_year_without_evidence_still_returns_a_whole_block(self, refresh):
+        why = refresh.why_block(1800, self._agg(refresh), "2026-08-15")
+        assert why["articles"] == 0 and why["themes"] == [] and why["headlines"] == []
+
+
+class TestThemesByLift:
+    def test_drops_the_ubiquitous_theme_and_keeps_the_distinctive_one(self, refresh):
+        from collections import Counter
+        # TAX_FNCACT sits on ~90% of the day's articles AND on ~90% of this year's: it is
+        # the commonest code by far and carries no information, so it does not merely rank
+        # lower, it does not appear. SOVEREIGNTY is twelve times as common here as at large.
+        out = refresh.themes_by_lift(Counter({"SOVEREIGNTY": 87, "TAX_FNCACT": 639}),
+                                     Counter({"SOVEREIGNTY": 300, "TAX_FNCACT": 28000}),
+                                     710, 31201)
+        assert [t["code"] for t in out] == ["SOVEREIGNTY"]
+        assert out[0]["lift"] > 10
+
+    def test_rarity_alone_cannot_win(self, refresh):
+        from collections import Counter
+        # The 2026-08-15 regression: an unfiltered lift ranking returned snow leopards and
+        # warts, each sitting on ~23 syndicated articles out of 710.
+        out = refresh.themes_by_lift(Counter({"TAX_WORLDMAMMALS_SNOW_LEOPARD": 23}),
+                                     Counter({"TAX_WORLDMAMMALS_SNOW_LEOPARD": 23}), 710, 31201)
+        assert out == []
+
+    def test_a_theme_no_more_common_here_than_anywhere_is_dropped(self, refresh):
+        from collections import Counter
+        out = refresh.themes_by_lift(Counter({"EVERYWHERE": 200}), Counter({"EVERYWHERE": 8800}),
+                                     710, 31201)
+        assert out == []

@@ -13,6 +13,63 @@ export interface InvokedYear {
   mentions: number
 }
 
+export interface InvokedExactDate {
+  date: string
+  mentions: number
+}
+
+/** A GDELT theme code carried by the articles that invoked the standout year, ranked by
+ *  lift rather than by frequency: `share` is the code's share of the invoking articles,
+ *  `lift` is that share divided by the code's share across the whole day. The raw `code`
+ *  is what the page must keep visible — it is the part a reader can check against GDELT. */
+export interface InvokedWhyTheme {
+  code: string
+  articles: number
+  /** fraction of the invoking articles carrying the code */
+  share: number
+  /** how many times more common the code is here than across the day */
+  lift: number
+}
+
+/** A person or organisation as GDELT's extractor listed it — lowercased, untidied, and
+ *  published that way: the extractor's misses are part of the measurement. */
+export interface InvokedWhyName {
+  name: string
+  articles: number
+}
+
+/** One of the invoking articles, quoted rather than summarised. */
+export interface InvokedWhyHeadline {
+  domain: string
+  title: string
+  url: string
+}
+
+/** Arithmetic, not a lookup: the year's most-invoked exact date against the record's own
+ *  date. `matches_today` compares the two month-day pairs and nothing else. */
+export interface InvokedAnniversary {
+  date: string
+  mentions: number
+  matches_today: boolean
+  /** the record's own day, so the comparison is checkable from the file alone */
+  today: string
+}
+
+/** Why the standout year stands out — evidence from the same GKG rows the count came from.
+ *  Present since method v1.1 (2026-08-15) whenever a headline is; day files written before
+ *  that carry a headline without it, which is why it is optional here. */
+export interface InvokedWhy {
+  /** articles that invoked the standout year (fewer than its mentions: one article can
+   *  carry several distinct dates in the same year) */
+  articles: number
+  top_exact_dates: InvokedExactDate[]
+  anniversary: InvokedAnniversary | null
+  themes: InvokedWhyTheme[]
+  persons: InvokedWhyName[]
+  organisations: InvokedWhyName[]
+  headlines: InvokedWhyHeadline[]
+}
+
 /** The day's finding: the year that most exceeds the median of the years around it.
  *  Not the most-invoked year — that one is the inherited 2014 ceiling. */
 export interface InvokedHeadline {
@@ -27,6 +84,8 @@ export interface InvokedHeadline {
    *  when none of the year's mentions could be mapped to a country at all */
   top_country_share: number | null
   invoked_by: InvokedCountry[]
+  /** the evidence for the finding, since v1.1 */
+  why?: InvokedWhy
 }
 
 /** The raw maximum. An artefact of the extractor's ceiling, published as one. */
@@ -50,11 +109,6 @@ export interface InvokedAgeBucket {
   to: number | null
   mentions: number
   share: number
-}
-
-export interface InvokedExactDate {
-  date: string
-  mentions: number
 }
 
 export interface InvokedTrackedEvents {
@@ -93,6 +147,8 @@ export interface InvokedMethod {
   register_min_days: number
   standout: string
   inherited_ceiling: string
+  /** what the evidence beside the standout is, and what it still refuses to do (v1.1) */
+  why?: string
   stream: string
 }
 
