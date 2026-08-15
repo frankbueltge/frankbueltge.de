@@ -99,7 +99,7 @@ most recent first.
 
 | In | Candidate | Practice | Decision | Out | Waited |
 |---|---|---|---|---|---|
-| 2026-07-25 | Negative Parallax — The Operative Ruler (v3 since 2026-07-30, two dated corrections 2026-07-31) | ulysses | **GO — published with its correction record** (Frank: "operative ruler v3 go") | 2026-08-01 | 7 days — pre-SLA; the 72 h rule counts from today |
+| 2026-07-25 | Negative Parallax — The Operative Ruler (v3 since 2026-07-30, two dated corrections 2026-07-31) | ulysses | **GO — published with its correction record** (Frank, 2026-08-01, wording private — go for The Operative Ruler v3) | 2026-08-01 | 7 days — pre-SLA; the 72 h rule counts from today |
 
 Executed the same day: `projects/2026-07-23-negative-parallax/PUBLICATION.json` +
 `work/` (v3 as `index.html`, meta), committed by the practice persona per the

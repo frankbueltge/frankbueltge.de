@@ -86,7 +86,8 @@ to recall.
 So the sequence is complete and mechanical: the unit of work changed; the memory layer's source
 list did not follow it; the only way left to know where a line stood was to read it end to end;
 and the constitution then stopped mentioning recall at all, removing even the instruction to
-try. That is Frank's "jede Session muss erst tausend Texte lesen", exactly, with a cause.
+try. That is exactly Frank's complaint (2026-08-12, wording private — every session first has to
+read a thousand texts), with a cause.
 
 *Correction to an earlier reading in this session:* the empty `memory/` directory is **not** the
 defect. `memory/index.jsonl` is gitignored deliberately (`.gitignore:1`) — the index is derived
@@ -170,12 +171,12 @@ approval would have thrown away the one thing worth keeping.
 
 The conditions are otherwise met, and checked:
 
-| Frank's condition | Verdict |
+| Frank's condition (2026-08-12, wording private) | Verdict |
 |---|---|
-| „wirklich so gemessen" | Yes — pre-registrations written 1–2 per day on consecutive days; 58 ticks → 1 published work |
-| „genauso korrekt" | Yes — correctness lives in the one-day cycle and the committed evidence, not in the horizon |
-| „vertretbar" | Yes, **provided the chain is resumable** — which is what D2a/D2b now make true |
-| „genauso produktiv" | Almost certainly better: 58 sessions per shipped work is the worst ratio in the house |
+| Really measured, not estimated | Yes — pre-registrations written 1–2 per day on consecutive days; 58 ticks → 1 published work |
+| A bounded line is just as correct | Yes — correctness lives in the one-day cycle and the committed evidence, not in the horizon |
+| A bounded line is defensible | Yes, **provided the chain is resumable** — which is what D2a/D2b now make true |
+| A bounded line is just as productive | Almost certainly better: 58 sessions per shipped work is the worst ratio in the house |
 
 **Two cuts, because the horizon alone would only move the bloat.** §8 read "Dispatcher ticks
 serve the work-line **by default**", and an open horizon plus that default is the mechanism by

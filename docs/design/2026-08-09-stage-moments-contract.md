@@ -12,8 +12,8 @@ by the `Attention integrate` workflow beside the export. Practice-side rationale
 `attention-export/1` promises **never individual futures, never prose** — it tells the house
 that the practice exists and what it reports, in dated scalars. The entrance at
 `/machine-attention` needs the opposite: single, real, dated events a visitor can meet before
-any explanation ("the machine as a public situation, not a manifesto" — Frank's review,
-2026-08-09). Loosening the export to carry them would break its promise; so the practice's
+any explanation — the machine should meet a visitor as a public situation rather than as a
+manifesto (Frank's review, 2026-08-09, wording private). Loosening the export to carry them would break its promise; so the practice's
 admission path activates the substrate contract it had reserved on paper
 (`machine-attention/docs/2026-08-08-projekt-aufnahme.md` §5: projects deliver the shared stage
 **moments, not cards**). Two files, two promises.

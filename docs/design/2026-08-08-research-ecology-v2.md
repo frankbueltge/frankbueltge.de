@@ -126,8 +126,8 @@ weakened).
 
 ## 5b. The Plenum — deliberately untouched, and now said so
 
-*(Added hours after execution, when Frank asked "was ist mit plenum?" — the omission was
-real.)* The Plenum is **not a practice of this house**: it is data-snack.com's resident
+*(Added hours after execution, when Frank asked what v2 meant for the Plenum (2026-08-08,
+wording private) — the omission was real.)* The Plenum is **not a practice of this house**: it is data-snack.com's resident
 collective, admitted to the ecology as a *member* on 2026-07-17, with its own constitution
 in its own repository belonging to that project. v2 rewrote this house's three
 constitutions; the Plenum's was never this rebuild's to rewrite, and the ecology-integrate
@@ -136,7 +136,8 @@ cloned only for post office packets"). What stands: the `/plenum` exhibition on 
 the post office service, the membership. What v2 changes for it anyway: **the seven-day
 bind covers its packets** — same pen, same rule — so the CHT letter lying `prepared` since
 2026-08-05 is due a send-or-withhold decision within seven days of the bind taking force.
-*(Extended the same day, midday, at Frank's instruction "so dass nichts stumm bleibt": the
+*(Extended the same day, midday, at Frank's instruction (2026-08-08, wording private — extend
+the bind so that nothing is left without an answer): the
 bind also covers the plenum's **review dashboard** — a delivered draft is approved, rejected
 or dated-held within seven days; the thirteen pending since July fall due 2026-08-15. The
 dashboard turned out to be the buried lede: it lives at `data-snack.com/lab/social`,

@@ -1,6 +1,6 @@
 # The apparatus turns outward — a restructuring proposal
 
-**Status: EXECUTED 2026-08-08.** Frank read this document and said *"setz um"*; the four
+**Status: EXECUTED 2026-08-08.** Frank read this document and gave the go to execute it (2026-08-08, wording private); the four
 questions §7 reserved for him were put to him first and are answered in §7 below, in place. What
 was built, and the two places where execution went beyond or short of this text, are recorded in
 `docs/decision-log.md` (row 2026-08-08) — that row, not this document, is the record of what is
