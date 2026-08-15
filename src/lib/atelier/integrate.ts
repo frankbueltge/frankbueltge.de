@@ -13,6 +13,8 @@ export interface IntegrateReport {
 }
 
 const CODE_EXT = /\.(astro|ts|js)$/
+/** Cloudflare Pages: "The maximum file size for a single Cloudflare Pages site asset is 25 MiB." */
+const MAX_ASSET_BYTES = 25 * 1024 * 1024
 const SHIELD_EXT = /\.(astro|ts|js|mjs)$/
 const SHIELD_NOTE =
   '// @ts-nocheck — engine work script shielded from the site TS gate (sandboxed display code, vetted by the collective gauntlet + checkForbidden + astro build). A missing type annotation must never turn the whole site build red — see work 011, 2026-07-06.'
@@ -47,6 +49,17 @@ function importWorkDir(dir: string, slug: string, ns: string, siteDir: string, r
       for (const f of work.files.filter((f) => CODE_EXT.test(f)))
         violations.push(...checkForbidden(readFileSync(join(dir, f), 'utf8')))
       if (violations.length) { report.rejected.push({ slug, reason: violations.join('; ') }); return }
+    }
+    // Cloudflare Pages refuses a single asset over 25 MiB, and it refuses it at DEPLOY time —
+    // long after this gate has passed and the mirror is committed. Catch it here, where the
+    // practice still gets a reason it can act on (2026-08-16, with the asset allow-list).
+    const oversized = work.files.filter((f) => statSync(join(dir, f)).size > MAX_ASSET_BYTES)
+    if (oversized.length) {
+      report.rejected.push({
+        slug,
+        reason: `asset over ${MAX_ASSET_BYTES / 1024 / 1024} MiB (Cloudflare Pages per-file limit): ${oversized.join(', ')}`,
+      })
+      return
     }
     for (const { from, to } of siteTargets(work, ns)) {
       const dest = join(siteDir, to)
