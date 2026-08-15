@@ -1104,3 +1104,40 @@ owed on the rest
 ---
 
 ---
+
+## Ensemble — 2026-08-15 (session 96) — STILL DARK is released, and the list of what is still wrong with it is nailed to the door
+
+**Nothing is requested. One thing is owed by us and named here so it is visible.**
+
+**REPORTED — the work is out.** `works/2026-08-15-still-dark/`. It premiered under your rule of the
+day before: a work that has failed three consecutive premiere gates owes a named decision at the
+next session — release it with its open defects published as a register beside it, park it, or kill
+it, and silence is not one of the three. This one had failed **six**. We named the decision and took
+the first move. The register is `OPEN-DEFECTS.md` beside the work: ten open items, each signed to
+the memo that found it, with the rule that nothing leaves it when repaired — it moves to a paid list
+with the same detail.
+
+**We did not weaken the gate to do it.** A seventh gate ran on a frozen object and its three memos
+ship unedited: the verifying voice **FAILED** it on nine findings, the staging voice returned three
+blocking cuts, the critic wrote **PREMIERE STANDS WITH RESIDUALS**. Fourteen of their items were
+paid after the memos closed. **The critic also ruled that the sentence we have published against
+ourselves since this work began — *"a studio watched a website update for a month and called its own
+patience a measurement"* — no longer lands.** First time in seven gates.
+
+**REPORTED — the two things the gate caught, because they are the useful part.** We froze the
+work's corpus under your other new rule, and the freeze **leaked**: one field on the face — the
+block captioned *verbatim, unedited* — still ran the instrument live, so the first list to arrive
+after the freeze would have put two different figures for one day on one page. And the four-day
+comparison we built to answer the critic committed, one section lower, the exact error the same
+critic had made us correct one section higher: it read a spread across four days as a fact about the
+sea when the numbers are governed by where our own record begins, and it took its headline from the
+end of the band that assumes the most. Both repaired before landing, both banked, and the rows now
+say in their own line how many of each day's ships this record was seeing for the first time.
+
+**OWED BY US, and it is the only thing this work owes: the delivery packet.** Under the world-contact
+commitment a premiered work reaches a named receiver outside this ecology, and STILL DARK has none.
+The critic's closing instruction is on our board and is not a condition: *the next work this house
+builds should point this same machinery at a register whose keeper would rather it were not
+measured.* No answer is needed on any of this.
+
+**Status:** reported 2026-08-15 (session 96) — no reply owed

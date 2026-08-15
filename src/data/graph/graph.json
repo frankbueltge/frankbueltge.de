@@ -43,8 +43,8 @@
       },
       {
         "file": "src/content/studio/works/*/meta.json",
-        "sha256": "602c17c873ac7ba9",
-        "files": 5
+        "sha256": "bf84324a6fdfb67d",
+        "files": 6
       },
       {
         "file": "src/data/nightly/works/*/meta.json",
@@ -57,14 +57,14 @@
       }
     ],
     "counts": {
-      "nodes": 265,
-      "edges": 233,
+      "nodes": 266,
+      "edges": 234,
       "nodesByKind": {
         "decision": 56,
         "encounter": 6,
         "neighbor": 93,
         "practice": 9,
-        "practice-work": 73,
+        "practice-work": 74,
         "receiver": 6,
         "work": 22
       },
@@ -72,7 +72,7 @@
         "addresses": 6,
         "concerns": 2,
         "door": 5,
-        "made-by": 73,
+        "made-by": 74,
         "neighbor-of": 93,
         "participates": 17,
         "touches": 37
@@ -2889,6 +2889,21 @@
       "medium": "A print-and-instruction work, published as its score and its stock — the instruction entire, and the document it commands, at the paper's own scale. No wall exists."
     },
     {
+      "id": "practice-work:studio/2026-08-15-still-dark",
+      "kind": "practice-work",
+      "label": "STILL DARK",
+      "slug": "2026-08-15-still-dark",
+      "practiceId": "ensemble",
+      "date": "2026-08-15",
+      "href": "/studio/works/2026-08-15-still-dark",
+      "source": {
+        "file": "src/content/studio/works/2026-08-15-still-dark/meta.json",
+        "quote": "\"title\": \"STILL DARK\""
+      },
+      "embodies": "4 August 2026, and how much of that day's darkness could have been known on the day itself. The instrument it reads — a daily register of fishing vessels whose tracking transponders went dark — can only name a disappearance once the ship has come back, so a day of the sea is nearly empty while it is happening and keeps filling for weeks. The page opens on the day's own answer: eleven names, a figure at 100 %, and a reserved emptiness under a heading saying nobody could have had this. Then it fills, and the figure falls to 22 %–38 % — eleven of twenty-nine to forty-nine — across the twelve lists this record holds. Below it, the same measurement run on four consecutive days of the same sea, each read at the same age: 31 %–73 %, 10 %–25 %, 6 %–15 %, 3 %–12 %. How badly a register under-reports the present is not a constant; it is a property of the day. SOURCED, DERIVED and OBSERVED only, from thirty-two saved copies of the register committed to this repository; no VERIFIED claim and no IMAGINED element. The corpus is frozen at 2026-08-15T04:36:57Z and later lists are published as dated addenda beside the work. Upstream's restraint is inherited and repeated on the face: no claim of illegality is made against any vessel or state, and this work makes none either. It premiered under the architect's three-failures rule with a register of its open defects published beside it.",
+      "medium": "A single self-contained HTML surface that runs by itself for about thirty-two seconds — one day of the sea held open, and a share that falls twelve times as later evidence arrives; twelve stop buttons, one per list, so the ladder of controls IS the record."
+    },
+    {
       "id": "receiver:center-for-humane-technology",
       "kind": "receiver",
       "label": "Center for Humane Technology",
@@ -4158,6 +4173,15 @@
       "source": {
         "file": "src/content/studio/works/2026-07-30-no-part/meta.json",
         "quote": "\"date\": \"2026-07-30\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:studio/2026-08-15-still-dark",
+      "to": "practice:ensemble",
+      "source": {
+        "file": "src/content/studio/works/2026-08-15-still-dark/meta.json",
+        "quote": "\"date\": \"2026-08-15\""
       }
     },
     {

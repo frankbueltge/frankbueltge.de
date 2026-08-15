@@ -1,0 +1,4072 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>STILL DARK — 4 August 2026</title>
+<style>
+  /* Everything scoped under .sd-root. One state — and since session 80 one element
+     inside it that runs and can be operated: the arrival at the head. The rest of the
+     page is unchanged and still has no interaction. */
+  .sd-root {
+    --sd-ink: #111;
+    --sd-bg: #fff;
+    --sd-dim: rgba(0,0,0,0.55);
+    --sd-rule: rgba(0,0,0,0.22);
+    --sd-frame: rgba(0,0,0,0.35);
+    --sd-rowfs: 0.6rem;
+    --sd-gutter: 1.4ch;
+    box-sizing: border-box;
+    font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
+                 "DejaVu Sans Mono", "Courier New", monospace;
+    font-size: 0.95rem;
+    line-height: 1.4;
+    color: var(--sd-ink);
+    background: var(--sd-bg);
+    min-height: 100vh;
+    padding: 0;
+    margin: 0;
+  }
+  .sd-root, .sd-root * { box-sizing: border-box; }
+  @media (prefers-color-scheme: dark) {
+    .sd-root {
+      --sd-ink: #e6e6e6;
+      --sd-bg: #0d0d0d;
+      --sd-dim: rgba(255,255,255,0.55);
+      --sd-rule: rgba(255,255,255,0.20);
+      --sd-frame: rgba(255,255,255,0.32);
+    }
+  }
+  :root[data-theme="dark"] .sd-root {
+    --sd-ink: #e6e6e6;
+    --sd-bg: #0d0d0d;
+    --sd-dim: rgba(255,255,255,0.55);
+    --sd-rule: rgba(255,255,255,0.20);
+    --sd-frame: rgba(255,255,255,0.32);
+  }
+  :root[data-theme="light"] .sd-root {
+    --sd-ink: #111;
+    --sd-bg: #fff;
+    --sd-dim: rgba(0,0,0,0.55);
+    --sd-rule: rgba(0,0,0,0.22);
+    --sd-frame: rgba(0,0,0,0.35);
+  }
+
+  body:has(> .sd-root) { margin: 0; background: #fff; }
+  @media (prefers-color-scheme: dark) {
+    body:has(> .sd-root) { background: #0d0d0d; }
+  }
+  :root[data-theme="dark"] body:has(> .sd-root) { background: #0d0d0d; }
+  :root[data-theme="light"] body:has(> .sd-root) { background: #fff; }
+
+  .sd-root .sd-page {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 0.8rem 1.4rem 0.8rem;
+  }
+
+  .sd-root .sd-day {
+    font-family: inherit;
+    font-size: clamp(1.5rem, 3.4vw, 2.1rem);
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    line-height: 1.1;
+    margin: 0 0 0.15rem;
+  }
+  /* The slot under the date. Session 77 put the definition's working clause here and cut
+     this sub-line; four severed readers refused the change at its own pre-registered mark
+     (PANEL-77.md, Q1, retired to commit 8b8e777), so the sub-line stands — by a rule written before the answers
+     existed, not by preference. It is not thereby endorsed: the control it belongs to
+     scored 0 of 2 on the same question, and the head is now measured broken in both
+     arrangements. The next attempt is owed a different idea, not this one again. */
+  .sd-root .sd-sub {
+    margin: 0 0 0.5rem;
+    font-size: 0.78rem;
+    letter-spacing: 0.02em;
+    color: var(--sd-dim);
+  }
+  /* THE ARRIVAL. The page's first encounter since session 80, and the one element here
+     that runs. Hairlines above and below rather than a box: it is the head of this page,
+     not a widget parked on it. */
+  .sd-root .sd-arrive {
+    margin: 0 0 0.85rem;
+    padding: 0.7rem 0 0.75rem;
+    border-top: 1px solid var(--sd-frame);
+    border-bottom: 1px solid var(--sd-frame);
+    max-width: 96ch;
+  }
+  .sd-root .sd-arrive-gloss {
+    margin: 0.1rem 0 0.45rem;
+    font-size: 0.72rem;
+    color: var(--sd-dim);
+  }
+  /* TWO FIGURES, ONE FRAME (session 87) — `DRAMATURG-85.md`'s banked prescription, built.
+     The frame was one row and is now two: the share that falls, and under it the figure the
+     list of the day printed, which is the same number at the last stop as at the first. The
+     grid exists so the second row cannot be read as a caption of the first — both rows are
+     figure-then-clause, in the same block, and the run puts the difference between them on
+     the screen instead of describing it. */
+  .sd-root .sd-arrive-headline {
+    display: grid;
+    gap: 0.3rem;
+    margin: 0 0 0.5rem;
+  }
+  .sd-root .sd-arrive-row {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.2rem 1.4ch;
+  }
+  /* The standing figure carries the mark this face has meant by CANNOT MOVE since session
+     83 — the dim ink and the body weight the fixed end of the share already wears — and it
+     is set below the falling end's size, because the one thing it must never do is compete
+     with the number the run is about. No new typographic register is introduced: a
+     disclosure that arrives as one reads as decoration, and this house has withdrawn a
+     repair for arriving that way already. */
+  .sd-root .sd-arrive-standing-fig {
+    font-size: clamp(1.1rem, 2.3vw, 1.5rem);
+    font-weight: 400;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    color: var(--sd-dim);
+    white-space: nowrap;
+  }
+  .sd-root .sd-arrive-standing-note {
+    font-size: 0.72rem;
+    line-height: 1.45;
+    color: var(--sd-dim);
+    max-width: 62ch;
+  }
+  /* THE FALLING END AS A DIVISION (session 88). Same size, same tabular numerals and same
+     line-height as the standing figure under it, so the two rows are visibly one kind of
+     thing: a numerator over a denominator, in ships. Everything else about it is the
+     opposite — the live ink and the display weight the falling percentage wears — because
+     what the run has to show is that one of these two divisions is rewritten at every
+     later stop while the other is written once. (It read "eight times" until session 92,
+     when a tenth list made it nine and the sentence was rewritten to a rule instead of a
+     tally, because a tally in a comment is a number that goes stale on a night nobody
+     is reading comments.) The mark this face has meant by CANNOT MOVE since
+     session 83 keeps its one meaning: it is on the row that does not move and off the row
+     that does. */
+  .sd-root .sd-arrive-frac {
+    font-size: clamp(1.1rem, 2.3vw, 1.5rem);
+    font-weight: 700;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+  /* THE COUNT THAT TURNS (session 90). It rides the fraction's row and it is set to be
+     read as the same kind of live thing and not as a second headline: the run's ink,
+     because a stop rewrites it; the body weight and the standing note's size, because it
+     must not compete with the numeral the run is named after; tabular, because it steps
+     0 → 2 → 4 and a digit that moves sideways as it changes is a digit the eye loses.
+     It is the third live numeral in the frame and the only one whose CHANGE is the
+     subject rather than the measure. */
+  /* DRAMATURG-92 cut 2, PAID IN ITS FIRST HALF. The memo measured this numeral at 11.52 px
+     and weight 400 on a row carrying a 24 px/700 fraction: 2,989 px² of 37,428 that move at
+     the final beat — 8.0 % of everything that changes, for the one node in twenty-nine
+     seconds that changes KIND and not degree. The reason for the old size is at :158-163 and
+     it was sound while the sequence was 0 → 2 → 4; tonight it is 0 → 2 → 4 → 11 and the run
+     is named after the wrong numeral. It takes the fraction's size and weight here. The
+     memo's second half — that the 46.4 px share give way to it — is NOT paid: that reweighs
+     the whole head, and the arithmetic correction of the same night has already reshaped
+     what this frame prints. It is owed to the voice that ordered it, on the changed state. */
+  .sd-root .sd-arrive-certain {
+    font-size: clamp(1.1rem, 2.3vw, 1.5rem);
+    font-weight: 700;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.02em;
+  }
+  /* The ceiling's own division (cut 3). Same register as the falling end's fraction and the
+     dim ink the fixed end has worn since session 83 — it is a division, not a headline. */
+  .sd-root .sd-arrive-frac-fixed {
+    font-size: clamp(1.1rem, 2.3vw, 1.5rem);
+    font-weight: 400;
+    line-height: 1;
+    color: var(--sd-dim);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+  /* The figure that runs. It carries both ends of its own band since session 81 — it is
+     the page's published share, not a new number — so it is wider and smaller than the
+     bare count it replaces, and tabular so the digits do not dance as it falls. */
+  .sd-root .sd-arrive-count {
+    font-size: clamp(1.9rem, 4.6vw, 2.9rem);
+    font-weight: 700;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+  /* MARK THE CONSTANT (session 83). Written when one end of this figure fell by tens of points
+     and the other, it was believed, could not move at all: both ends had been set in the same
+     weight, size and colour — the page's own subject rendered as a repetition — so the falling
+     end kept the display weight and the other was held in the body weight and the dim ink,
+     with the words underneath saying the same thing, because a mark the eye can read and the
+     ear cannot is this house's banked failure 12.
+     THERE IS NO CONSTANT, AND THERE NEVER WAS — session 92. The gate proved the upper end was
+     `obs / max(certain, obs)`, a quotient of two disjoint sets of ships, and the corrected end
+     falls 100 → 85 → 73 → 50. The rule below is KEPT and its meaning changes: it distinguishes
+     the end this run is named after from the end that moves more slowly and answers a different
+     question, not moving from not-moving. What the dim ink still means literally on this page is
+     `11 of 230`, the day's own printed list, which genuinely cannot move — and that figure is
+     now the only one in the frame of which it is true. */
+  .sd-root .sd-arrive-count-fixed {
+    font-weight: 400;
+    color: var(--sd-dim);
+  }
+  /* RETIRED IN SESSION 88 and kept as a marker, not as paint: the paragraph this ruled has
+     moved below the controls and wears `.sd-arrive-cap` with the rest of that prose, so no
+     element carries this class any more. It stays here, empty of declarations, because the
+     next session to look for what the ends of the figure can do should find where it went
+     and not a gap where a rule used to be. */
+  /* .sd-root .sd-arrive-constant — the paragraph itself is OFF THE PAGE since session 93
+     (`DRAMATURG-92.md` cut 4); the note above records where its rule went, and the comment
+     below the controls records where its one surviving clause went. */
+  /* The run's own line. It sits UNDER the ladder on purpose: everything above it is the
+     material, and a line that announces the performance may not push the controls the
+     performance invites you to press (DRAMATURG-81 §4, the 136 px walk). Its height is
+     reserved from the longest state it can hold, like every other held block here. */
+  .sd-root .sd-arrive-state {
+    margin: 0 0 0.5rem;
+    font-size: 0.66rem;
+    letter-spacing: 0.03em;
+    line-height: 1.5;
+    color: var(--sd-dim);
+    max-width: 84ch;
+  }
+  /* The two name blocks are told apart by their headings, which are words. This rule
+     only makes visible what the text already says. */
+  .sd-root .sd-arrive-group {
+    margin: 0 0 0.3rem;
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--sd-dim);
+  }
+  /* NOT `:empty { display: none }`, and the reason is a measurement. The block below
+     these headings grows as the run proceeds, and with `display: none` on the empty
+     state the whole of the head under it — the stop buttons included — was pushed 136 px
+     down the page between the first stop and the last, measured in the browser at 1400 px
+     wide (329 → 465). The visitor is invited to press those buttons WHILE the thing runs;
+     a control that walks out from under a resting cursor is not a control. The space both
+     blocks will need is reserved from the first stop instead, by the page measuring its
+     own last stop on load — see `reserve()` below. Nothing is typed here: an empty block
+     stays in the flow and holds height it computed for itself. */
+  .sd-root .sd-arrive-group:empty { visibility: hidden; }
+  .sd-root .sd-arrive-when {
+    font-size: clamp(0.82rem, 1.5vw, 0.98rem);
+    line-height: 1.35;
+    max-width: 44ch;
+  }
+  .sd-root .sd-arrive-names {
+    list-style: none;
+    margin: 0 0 0.55rem;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.22rem 0.5ch;
+  }
+  .sd-root .sd-arrive-names li {
+    font-size: 0.64rem;
+    letter-spacing: 0.045em;
+    padding: 0.1rem 0.55ch;
+    border: 1px solid var(--sd-rule);
+    color: var(--sd-dim);
+  }
+  /* the names the stop just added — the only thing on this page that is meant to be
+     seen changing */
+  .sd-root .sd-arrive-names li.sd-arrive-new {
+    color: var(--sd-ink);
+    border-color: var(--sd-ink);
+    font-weight: 700;
+  }
+  .sd-root .sd-arrive-ladder {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4ch;
+    margin: 0 0 0.5rem;
+  }
+  /* DRAMATURG-92 cut 8. All eleven of these measured 21 px tall at every width from 320 to
+     1920, against the 24×24 CSS px minimum of WCAG 2.2 SC 2.5.8 — and on a phone these three
+     wrapped rows are the ONLY interaction this work has. The padding is raised until the
+     measured height clears 24; nothing else about them changes. */
+  .sd-root .sd-arrive-ladder button {
+    font: inherit;
+    font-size: 0.64rem;
+    letter-spacing: 0.06em;
+    background: transparent;
+    color: var(--sd-dim);
+    border: 1px solid var(--sd-rule);
+    padding: 0.32rem 0.75ch;
+    cursor: pointer;
+  }
+  .sd-root .sd-arrive-ladder button[aria-current="true"] {
+    background: var(--sd-ink);
+    border-color: var(--sd-ink);
+    color: var(--sd-bg);
+  }
+  .sd-root .sd-arrive-ladder .sd-arrive-replay { margin-left: 1.2ch; }
+  /* OWED ITEM (y) WAS PAID HERE FOR TWO HOURS AND IS WITHDRAWN, session 84, on three
+     independent measurements of the thing this house built. Below 480 px the controls and
+     the live line were pinned to the bottom of the viewport, because at 390×844 both stood
+     below the fold while the figure fell above it. They arrived on screen by being painted
+     over the material they control: at stop 6 and scroll 0, twelve of nineteen name chips
+     sat under the band and ten were painted out — the reserved space this whole head is
+     built to reveal, covered by the repair. The art critic found it, the staging voice
+     measured 0 of 19 chips readable at 390×844 against 19 of 19 one pixel wider, the
+     verifying pass found ten visible before the repair and none after, and this house's
+     own new instrument passed it, because `tools/fold.mjs` watched the elements it was told
+     to keep on screen and never asked what they were standing on.
+     The item is owed again, with its numbers now in hand, and the staging voice's
+     prescription is banked rather than built: keep the sticky rule and, at the instant the
+     first beat ends, bring the section to the frame where the band clears the space it
+     exists to reveal (scrollY 225 at 390×844, 125 at 414×896 and 480×800). A viewport moved
+     under a reader is a mechanism this house has never shipped, and it is not being shipped
+     unjudged at the end of a session that has already published one repair it had to
+     withdraw. The wrapper below stays: it is the element that change will need, it costs a
+     reader nothing, and it changes no order the eye or the ear takes. */
+  .sd-root .sd-arrive-cap {
+    margin: 0 0 0.3rem;
+    font-size: 0.78rem;
+    line-height: 1.5;
+    max-width: 84ch;
+  }
+  /* The hedge about the NAMES, moved down beside the names it qualifies (session 82,
+     owed item (o)). It sits at the caption's size and not the foot's: a load-bearing
+     caveat reads at the prominence of the material it qualifies, which is this house's
+     own publishing condition applied to itself. */
+  /* DRAMATURG-95 CUT 1, taken. That memo measured every text block in the head and found
+     this page's own register: FULL ink is what this work gives its MATERIAL — the figure,
+     the ship names, the buttons, the proof command — and 55 % is what it gives everything
+     that TALKS ABOUT the material: the premise, both group headings, the standing note,
+     the proof lead, the run's own line. The caveat was the only commentary on this page set
+     in the material's ink, one type step ABOVE the premise it qualifies, 148 words and
+     168 px at 1400×900 — the tallest single element on the first screen, standing on the
+     lower edge of the 135 px of reserved emptiness that is this work's one image. *"The
+     emptiness is not open; it is a gap between two blocks, and the lower block is heavier
+     than the upper one."* Its trajectory: 75 px at 390 in session 92, 150 in 93, 318 at the
+     sixth gate — tripled in three sessions while three gates cut a sentence at a time.
+     It comes into the register. Not one clause is touched: the last one is the fact
+     voice's own `share_band_condition`, carried onto the face verbatim from the analysis
+     the stop was computed with, and rank is not content. */
+  .sd-root .sd-arrive-hedge {
+    margin: 0.2rem 0 0.5rem;
+    font-size: 0.72rem;
+    line-height: 1.5;
+    max-width: 84ch;
+    color: var(--sd-dim);
+  }
+  /* THE PROOF (session 90, `KRITIKER-89.md` condition 1). Set at the evidence's size and
+     in its dim ink, because that is what it is — the two strings are for a hand and a
+     terminal, not for the eye the run is staged for. The lines are `<code>` in the page's
+     ink so that what is meant to be COPIED is told apart from what is meant to be read,
+     and they break inside a token rather than pushing the page sideways: a command that
+     wraps is still a command, and a document that scrolls horizontally on a phone is a
+     document with a defect. Both strings are a fixed 20 and 78 characters at every stop,
+     so this block cannot change height under a reader while the run is going. */
+  .sd-root .sd-arrive-proof {
+    margin: 0 0 0.6rem;
+    font-size: 0.62rem;
+    line-height: 1.5;
+    color: var(--sd-dim);
+    max-width: 84ch;
+  }
+  .sd-root .sd-arrive-proof-line {
+    display: block;
+    color: var(--sd-ink);
+    overflow-wrap: anywhere;
+  }
+  /* OWED ITEM (A), session 85. The figures the list itself printed, at the weight of the
+     figure they qualify and not at the weight of a footnote: this line is the material
+     the heading above it overclaimed against for nineteen sessions, and a caveat that
+     refutes a page's own heading reads at the prominence of that heading. It is the only
+     new ink on this face tonight — the three sentences under it stand at sizes this page
+     already uses, because a disclosure that arrives as a new typographic register reads
+     as decoration and this house has withdrawn one repair for arriving that way already. */
+  .sd-root .sd-arrive-cut-figs {
+    margin: 0 0 0.35rem;
+    font-size: clamp(0.86rem, 1.7vw, 1.05rem);
+    line-height: 1.45;
+    max-width: 72ch;
+    color: var(--sd-ink);
+  }
+  .sd-root .sd-arrive-tier {
+    margin: 0 0 0.2rem;
+    font-size: 0.68rem;
+    line-height: 1.45;
+    max-width: 104ch;
+    color: var(--sd-dim);
+  }
+  /* the first sentence a cold reader meets: the whole work if they read no further */
+  .sd-root .sd-lede {
+    margin: 0 0 0.7rem;
+    font-size: clamp(1rem, 2.1vw, 1.3rem);
+    font-weight: 700;
+    line-height: 1.35;
+    max-width: 62ch;
+  }
+  .sd-root .sd-because {
+    margin: 0 0 0.6rem;
+    font-size: 0.78rem;
+    line-height: 1.5;
+    max-width: 82ch;
+    color: var(--sd-ink);
+  }
+  /* what going dark is — the first thing a stranger needs and the last thing this
+     page gave them. Set at the weight of .sd-because, above it. */
+  .sd-root .sd-define {
+    margin: 0 0 0.6rem;
+    font-size: 0.78rem;
+    line-height: 1.5;
+    max-width: 82ch;
+    color: var(--sd-ink);
+  }
+  .sd-root .sd-define-q { font-weight: 700; }
+  .sd-root .sd-define-src { color: var(--sd-dim); }
+  .sd-root .sd-define-src a { color: inherit; }
+
+  /* time field: weekly-tick scale + rows + labelled rule at 4 August.
+     One layout at every width: each row's own text line, its own bar
+     directly beneath it, all bars sharing the same field coordinates. */
+  .sd-root .sd-fieldwrap { overflow-x: auto; padding-bottom: 0.15rem; }
+  .sd-root .sd-fieldstrip {
+    font-size: var(--sd-rowfs);
+    line-height: 1.55;
+    /* The held day's labelled rule stands 1.3em above the scale row; without this the
+       wrapper's overflow cut it in half at every width. Found in session 72 by cropping
+       the render, not by reading the extracted text — where the label reads perfectly.
+       The house's second banked failure was passing an object nobody had rendered; this
+       one had been rendered and not looked at. */
+    padding-top: 1.6em;
+  }
+  @media (max-width: 1150px) { .sd-root { --sd-rowfs: 0.6rem; } }
+  @media (min-width: 1700px) { .sd-root { --sd-rowfs: 0.7rem; } }
+
+  .sd-root .sd-scale {
+    position: relative;
+    height: 1.1em;
+    margin-left: var(--sd-gutter);
+    color: var(--sd-dim);
+    letter-spacing: 0.03em;
+  }
+  .sd-root .sd-tick {
+    position: absolute;
+    top: 0;
+    transform: translateX(-50%);
+    white-space: nowrap;
+  }
+  .sd-root .sd-tick:first-child { transform: translateX(0); }
+  /* DRAMATURG-91 cut 1. Ten weekly tick labels need ~377 px of inked width; the scale is
+     337 px at 390 and 307 px at 360, so the axis overprinted itself in 8 of its 9 gaps at
+     360, 390 and 414 px — invisible in both committed renders, which are taken at 900 and
+     1400 where it comes out clean. Below 700 px only four labels are kept, spread evenly
+     across the span. The bars, the hatching and the 4 AUG rule are untouched: this cut
+     repairs the one place where this work shows instead of tells. */
+  @media (max-width: 699px) {
+    .sd-root .sd-tick-minor { display: none; }
+  }
+
+  .sd-root .sd-rowsarea { position: relative; }
+  .sd-root .sd-rules {
+    position: absolute;
+    top: 0; bottom: 0;
+    left: var(--sd-gutter);
+    right: 0;
+    border-top: 1px solid var(--sd-frame);
+    border-bottom: 1px solid var(--sd-frame);
+    z-index: 0;
+  }
+  .sd-root .sd-rule4 {
+    position: absolute;
+    top: -1.2em; bottom: 0;
+    left: calc(var(--sd-rule-pct) * 1% + var(--sd-gutter));
+    width: 1px;
+    background: var(--sd-ink);
+    z-index: 2;
+  }
+  .sd-root .sd-rule4-label {
+    position: absolute;
+    top: -1.2em;
+    left: 0.4ch;
+    font-size: var(--sd-rowfs);
+    color: var(--sd-ink);
+    white-space: nowrap;
+    letter-spacing: 0.04em;
+  }
+
+  .sd-root .sd-group { position: relative; z-index: 1; }
+  .sd-root .sd-grouphead {
+    margin: 0.5em 0 0.1em var(--sd-gutter);
+    font-size: var(--sd-rowfs);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: var(--sd-ink);
+  }
+  .sd-root .sd-group-late .sd-grouphead { color: var(--sd-ink); }
+  .sd-root .sd-groupcount { font-weight: 400; color: var(--sd-dim); letter-spacing: 0.02em; }
+
+  .sd-root .sd-rows {
+    position: relative;
+    z-index: 1;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .sd-root .sd-group-late .sd-rows { border-left: 2px solid var(--sd-frame); }
+  .sd-root .sd-group-late .sd-row { padding-left: 0.8ch; }
+  .sd-root .sd-group-late .sd-field { margin-left: calc(var(--sd-gutter) - 0.8ch); }
+  .sd-root .sd-group-late .sd-seg-mid { opacity: 0.55; }
+  .sd-root .sd-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    column-gap: 1.2ch;
+    /* Asymmetric on purpose, and the asymmetry is the repair. Owed item (c), unpaid
+       since session 74: a bar belongs to the row above it, and until tonight every bar
+       but the last stood NEARER THE LABEL BELOW IT — 7.19 px to its own name, 3.45 px
+       to the next one's, at both widths, in 16 of 17 rows. Three readers misassigned
+       them and the record could only say "~3 px" because nothing had measured it. The
+       space now goes below the bar, not above it: `node gaps.mjs` reads both distances
+       off the rendered page and exits non-zero if any bar is nearer the wrong label. */
+    padding: 0.3em 0 0.6em;
+  }
+  .sd-root .sd-row > span { white-space: nowrap; }
+  .sd-root .sd-waters, .sd-root .sd-band, .sd-root .sd-seen { white-space: normal; }
+  .sd-root .sd-name { flex: 0 0 auto; min-width: 21ch; font-weight: 700; }
+  .sd-root .sd-flag { flex: 0 0 auto; min-width: 3.4ch; }
+  .sd-root .sd-days { flex: 0 0 auto; min-width: 8ch; }
+  .sd-root .sd-flag, .sd-root .sd-days, .sd-root .sd-waters, .sd-root .sd-seen { color: var(--sd-dim); }
+  .sd-root .sd-name a { color: inherit; text-decoration: underline; text-decoration-color: var(--sd-rule); text-underline-offset: 0.15em; }
+  .sd-root .sd-name a:hover, .sd-root .sd-name a:focus-visible { text-decoration-color: currentColor; }
+  .sd-root .sd-band { font-style: normal; }
+  .sd-root .sd-seen { font-style: italic; }
+  /* the block-level form of the same line (session 79's staged cut): it sits under the
+     block head, in the same italic grey it wore on the rows, and it is not made larger
+     for being said once — a hoisted line that gains weight is a new emphasis, not a cut */
+  .sd-root .sd-seen-all {
+    margin: 0.1rem 0 0.5rem;
+    font-size: 0.78rem;
+    color: var(--sd-dim);
+    letter-spacing: 0.01em;
+  }
+
+  .sd-root .sd-field {
+    display: block;
+    position: relative;
+    flex: 1 0 100%;
+    height: 0.85em;
+    margin-top: 0.1em;
+    margin-left: var(--sd-gutter);
+  }
+  .sd-root .sd-seg { position: absolute; top: 0; height: 0.7em; margin-top: 0.05em; }
+  .sd-root .sd-seg-mid { background: currentColor; }
+  .sd-root .sd-seg-hatch {
+    background-image: repeating-linear-gradient(135deg,
+      currentColor 0, currentColor 1px, transparent 1px, transparent 4px);
+  }
+
+  /* the tier legend: the three tiers named at the columns they belong to */
+  .sd-root .sd-legend {
+    margin: 0 0 0.35rem var(--sd-gutter);
+    font-size: 0.62rem;
+    letter-spacing: 0.04em;
+    color: var(--sd-dim);
+  }
+  .sd-root .sd-legend span { display: block; }
+  .sd-root .sd-legend b { color: var(--sd-ink); font-weight: 700; }
+
+  /* THE FALL — the record's own turn, and the only place a percentage stands large */
+  .sd-root .sd-fall {
+    margin-top: 1.1rem;
+    padding-top: 0.8rem;
+    border-top: 1px solid var(--sd-frame);
+    max-width: 96ch;
+  }
+  .sd-root .sd-fall-q {
+    margin: 0 0 0.6rem;
+    font-size: clamp(1.05rem, 2.2vw, 1.45rem);
+    font-weight: 700;
+    line-height: 1.25;
+    max-width: 62ch;
+  }
+  .sd-root .sd-shares { margin: 0 0 0.7rem; }
+  .sd-root .sd-share {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    column-gap: 1.6ch;
+    padding: 0.15em 0;
+  }
+  .sd-root .sd-share-when {
+    flex: 1 1 100%;
+    min-width: 0;
+    font-size: 0.66rem;
+    color: var(--sd-dim);
+    letter-spacing: 0.02em;
+  }
+  /* THE PAGE STOPPED SCROLLING SIDEWAYS, session 86. `DRAMATURG-85.md` reported the whole
+     document 665 px wide inside a 390 px phone and no memo in this project had ever named
+     it; the cause is measured and it is this one element. `flex: 0 0 auto` on a line whose
+     text is longer than 46ch makes it take its max-content width and refuse to shrink —
+     643 px of it — and every other overflow on the page is already held inside a scroller
+     of its own, so the document's 665 px was this label's 665 px. The wide evidence table
+     below is NOT the cause and is not touched: `.sd-ledger` has scrolled inside itself
+     since it was built, which is what a table of hashes should do.
+     THE REPAIR WAS SCOPED TO PHONES AND THE BUG WENT ON LIVING NEXT DOOR — banked failure
+     55, `DRAMATURG-92.md` cut 1. The reason written here for the scope was: *"the desktop
+     line is the one the renders and every panel to date have seen, and a repair is not a
+     licence to restage what nobody complained of."* That sentence chose the width nobody
+     had complained about over the widths nobody had looked at. The document stood 665 px
+     wide at EVERY viewport from 481 to 664 px inclusive — 184 continuous widths, overflowing
+     by up to 184 px at 481 px, 38 % of the window — found by sweeping 440→1100 px in 10 px
+     steps, which is the sweep banked failure 53 said this house owed its instruments and
+     had still not given this rule. `flex: 1 1 100%; min-width: 0` is unscoped now and the
+     document holds its own width from 280 to 1920 px. */
+  @media (max-width: 480px), (max-height: 700px) {
+    /* OWED ITEM (y), AND THE THIRD ATTEMPT AT IT. `DRAMATURG-87.md` §2 ruled the choice
+       this session put to it unwinnable as posed and ordered a fourth thing: at phone
+       widths the controls stand directly under the frame, so the instrument — the figure,
+       its two clauses, the buttons, the line that says what the run is doing — is one
+       block, and the day's material fills below it. Measured by the memo with the controls
+       reparented: figure-top to controls-bottom 303 px of 844, against 951 px in the order
+       above it. The three doors this house offered instead measured 859, 864 and 868 —
+       every one of them deletes a load-bearing line AND leaves the frame red.
+       IT IS PAINT AND NOT ORDER. `order` on a flex column moves where the browser draws
+       these blocks and changes nothing about the document: a screen reader still meets the
+       caveat before the controls, exactly as it has since session 83, and the buttons are
+       the only focusable elements in this head, so nothing tabs out of sequence. The same
+       principle as the wrapper of session 84 — only the paint moves, and only where the
+       fold is real.
+       WHAT IT COSTS, in the memo's own measurements and not softened here: the reserved
+       space — the hole this whole head exists to show filling — leaves the first screen
+       entirely (it stood at 761–1011 with 83 px above the fold; under this rule it stands
+       at 885–1135 with none), and the buttons split the sentence the eye reads, arriving
+       between the figure and the names. Against that: 541 px of headroom instead of the
+       63 px the best deletion would have bought, and no sentence removed.
+       IT SAID "NOT APPLIED AT 1400. The desktop span is 554 px of 900 and the whole
+       composition already stands on one screen" UNTIL SESSION 93, and both halves of that
+       sentence were wrong — `DRAMATURG-93.md` cut 3, the one thing at this gate no
+       instrument of this house could have found. The span was 634, not 554; and *already
+       stands on one screen* was a universal quantified over the one screen this house
+       photographs, which is banked failure 55's sentence shape and banked 52's quantifier
+       in one clause. A rule keyed to WIDTH was holding a fact about HEIGHT: at every
+       viewport shorter than the head, the controls left the screen that holds the figure —
+       844×390, the house's own photographed phone turned sideways, ran OVER BY 244, and
+       740×360 by 320, 932×430 by 191, 800×600 by 53, 1400×600 by 34. That voice built the
+       one-clause repair in a scratch copy and drove it before ordering it: with
+       `(max-height: 700px)` all five HOLD — 221, 244, 231, 218, 244 — 1400×900 and 390×844
+       are untouched, no chip is occluded at any short viewport and no width overflows.
+       Five instruments of this house run at exactly two heights, 844 and 900, and that is
+       why this lived; the frame test now carries short viewports of its own. */
+    .sd-root .sd-arrive { display: flex; flex-direction: column; }
+    .sd-root .sd-arrive > * { order: 2; }
+    .sd-root .sd-arrive-gloss,
+    .sd-root .sd-arrive-headline { order: 0; }
+    .sd-root .sd-arrive-controls { order: 1; }
+  }
+  .sd-root .sd-share-fig {
+    font-size: clamp(1.1rem, 2.6vw, 1.7rem);
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    min-width: 11ch;
+  }
+  .sd-root .sd-share-of { font-size: 0.72rem; color: var(--sd-dim); }
+  /* the status word carries the retraction in TEXT. The rule below carries it in
+     paint, for the eye that never reads a word. Neither is load-bearing alone. */
+  .sd-root .sd-share-status {
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--sd-ink);
+  }
+  .sd-root .sd-share-then .sd-share-status { color: var(--sd-dim); }
+  .sd-root .sd-share-then .sd-share-fig {
+    color: var(--sd-dim);
+    text-decoration: line-through;
+    text-decoration-thickness: 2px;
+  }
+
+  /* the fall, standing between the two figures it happened between */
+  .sd-root .sd-fell {
+    margin: 0.25rem 0 0.35rem;
+    padding-left: 1.2ch;
+    border-left: 2px solid var(--sd-frame);
+  }
+  .sd-root .sd-fall-line {
+    font-size: 0.78rem;
+    line-height: 1.55;
+    max-width: 82ch;
+    margin: 0 0 0.35rem;
+  }
+  .sd-root .sd-fall-line b { font-weight: 700; }
+  /* The denominator gloss sits directly under the figures it explains and is set no
+     louder than the lines around it: it is a repair, not a new voice.
+     NOT named .sd-band: that class is already the per-vessel date band on every row of
+     the field, and a second meaning for it would have recoloured sixteen rows while the
+     edit's own diff looked like one line. */
+  .sd-root .sd-bandnote { margin-top: 0.15rem; color: var(--sd-dim); }
+  .sd-root .sd-quoted {
+    margin: 0.6rem 0 0;
+    padding-left: 1.4ch;
+    border-left: 2px solid var(--sd-frame);
+    font-size: 0.78rem;
+    line-height: 1.55;
+    max-width: 82ch;
+  }
+  .sd-root .sd-quoted-when {
+    display: block;
+    margin-top: 0.2em;
+    font-size: 0.62rem;
+    color: var(--sd-dim);
+    letter-spacing: 0.02em;
+  }
+
+  /* THE FREEZE AND THE FOUR DAYS (session 96). Two blocks, one rule between them: the
+     freeze line is commentary about this record and is set in the commentary register;
+     the four rows are MATERIAL — figures this instrument computed — and are set in the
+     page's ink, like the field rows and the ledger. Nothing new is introduced: the table
+     borrows the ledger's rules and the proof block's type, because a fifth visual idea on
+     a page this austere would be the decoration its own README forbids. */
+  .sd-root .sd-frozen {
+    margin: 1rem 0 0.2rem;
+    padding-top: 0.7rem;
+    border-top: 1px solid var(--sd-frame);
+    font-size: 0.72rem;
+    line-height: 1.55;
+    color: var(--sd-dim);
+    max-width: 82ch;
+  }
+  .sd-root .sd-compare { margin-top: 0.9rem; }
+  .sd-root .sd-compare-head {
+    font-size: 0.62rem;
+    letter-spacing: 0.04em;
+    color: var(--sd-ink);
+    font-weight: 700;
+    margin: 0 0 0.35em;
+  }
+  .sd-root .sd-compare-lead {
+    font-size: 0.72rem;
+    line-height: 1.55;
+    color: var(--sd-dim);
+    max-width: 82ch;
+    margin: 0 0 0.6rem;
+  }
+  .sd-root .sd-compare-rows { display: grid; gap: 0.45rem; }
+  .sd-root .sd-compare-row {
+    display: grid;
+    grid-template-columns: minmax(11ch, max-content) minmax(9ch, max-content) 1fr;
+    gap: 0.2rem 1.6ch;
+    align-items: baseline;
+    padding-top: 0.35rem;
+    border-top: 1px solid var(--sd-rule);
+  }
+  .sd-root .sd-compare-day { font-size: 0.72rem; color: var(--sd-ink); }
+  .sd-root .sd-compare-share {
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: var(--sd-ink);
+  }
+  .sd-root .sd-compare-frac { font-size: 0.72rem; color: var(--sd-dim); }
+  /* The published day is marked in words and not by colour or weight alone: a mark the
+     ear cannot hear is a mark half this page's readers do not get (banked failure 12). */
+  .sd-root .sd-compare-mark {
+    font-size: 0.62rem;
+    letter-spacing: 0.04em;
+    color: var(--sd-ink);
+    font-weight: 700;
+  }
+  /* What the row's numerator counts, and where this record starts relative to its day.
+     Commentary register — it talks about the material rather than being it. */
+  .sd-root .sd-compare-prov {
+    grid-column: 1 / -1;
+    font-size: 0.62rem;
+    line-height: 1.5;
+    color: var(--sd-dim);
+    max-width: 82ch;
+  }
+  .sd-root .sd-compare-check {
+    grid-column: 1 / -1;
+    font-size: 0.62rem;
+    line-height: 1.5;
+    color: var(--sd-dim);
+    overflow-wrap: anywhere;
+  }
+  .sd-root .sd-compare-check code { color: var(--sd-ink); }
+  .sd-root .sd-compare-finding {
+    margin: 0.75rem 0 0;
+    padding-left: 1.4ch;
+    border-left: 2px solid var(--sd-frame);
+    font-size: 0.78rem;
+    line-height: 1.55;
+    max-width: 82ch;
+  }
+  .sd-root .sd-compare-tier {
+    margin: 0.3rem 0 0;
+    font-size: 0.62rem;
+    line-height: 1.5;
+    color: var(--sd-dim);
+    max-width: 82ch;
+  }
+  @media (max-width: 30rem) {
+    .sd-root .sd-compare-row { grid-template-columns: 1fr auto; }
+    .sd-root .sd-compare-frac { grid-column: 1 / -1; }
+  }
+
+  /* the evidence: the command, its verbatim output, and the capture ledger */
+  .sd-root .sd-evidence { margin-top: 1rem; }
+  .sd-root .sd-cmd-line {
+    margin: 0 0 0.35em;
+    font-size: 0.62rem;
+    color: var(--sd-dim);
+  }
+  .sd-root .sd-cmd { display: block; }
+  .sd-root .sd-cmd-label { display: inline-block; min-width: 18ch; }
+  .sd-root .sd-cmd-line code { color: var(--sd-ink); }
+  .sd-root .sd-raw {
+    margin-top: 0.4rem;
+    border: 1px solid var(--sd-rule);
+  }
+  .sd-root .sd-raw pre {
+    margin: 0;
+    padding: 0.45em 0.8ch;
+    font-family: inherit;
+    font-size: 0.56rem;
+    line-height: 1.42;
+    white-space: pre;
+    overflow-x: auto;
+    color: var(--sd-ink);
+  }
+  .sd-root .sd-raw-cap {
+    font-size: 0.6rem;
+    color: var(--sd-dim);
+    margin: 0.25em 0.8ch 0.35em;
+  }
+
+  .sd-root .sd-ledger { margin: 0.9rem 0 0.4rem; overflow-x: auto; }
+  .sd-root .sd-ledger table {
+    border-collapse: collapse;
+    font-size: 0.6rem;
+    color: var(--sd-dim);
+  }
+  .sd-root .sd-ledger th, .sd-root .sd-ledger td {
+    text-align: left;
+    padding: 0.15em 1.4ch 0.15em 0;
+    white-space: nowrap;
+    border-bottom: 1px solid var(--sd-rule);
+  }
+  .sd-root .sd-ledger th { color: var(--sd-ink); letter-spacing: 0.04em; font-weight: 700; }
+  .sd-root .sd-ledger caption {
+    text-align: left;
+    font-size: 0.62rem;
+    letter-spacing: 0.04em;
+    color: var(--sd-ink);
+    font-weight: 700;
+    padding-bottom: 0.25em;
+  }
+  .sd-root .sd-ledger-cap {
+    font-size: 0.62rem;
+    color: var(--sd-dim);
+    margin: 0.3em 0 0;
+    max-width: 96ch;
+  }
+
+  .sd-root .sd-floor {
+    margin: 1.1rem 0 0;
+    padding-top: 0.8rem;
+    border-top: 1px solid var(--sd-frame);
+    font-size: clamp(0.95rem, 1.9vw, 1.15rem);
+    line-height: 1.5;
+    max-width: 62ch;
+    font-weight: 700;
+  }
+
+  .sd-root .sd-foot {
+    margin-top: 1rem;
+    padding-top: 0.6rem;
+    border-top: 1px solid var(--sd-rule);
+    font-size: 0.62rem;
+    line-height: 1.5;
+    color: var(--sd-dim);
+    word-break: break-word;
+  }
+  .sd-root .sd-foot p { margin: 0 0 0.3rem; }
+  .sd-root .sd-foot p:last-child { margin-bottom: 0; }
+  .sd-root .sd-foot a { color: inherit; }
+</style>
+</head>
+<body><style>
+.fbde-work-frame{all:initial;display:block;box-sizing:border-box;width:100%;
+ font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+ background:#f4f4f1;color:#1a1a1a;border-bottom:1px solid #d8d8d2;padding:14px 22px;}
+.fbde-work-frame--foot{border-bottom:0;border-top:1px solid #d8d8d2;margin-top:48px;}
+.fbde-work-frame *{box-sizing:border-box;font-family:inherit;}
+.fbde-work-frame .fbde-work-frame__nav{display:block;font-size:13px;line-height:1.6;margin:0;}
+.fbde-work-frame a{color:#1a1a1a;text-decoration:underline;text-underline-offset:2px;}
+.fbde-work-frame a:hover,.fbde-work-frame a:focus{color:#000;background:#e6e6e0;}
+.fbde-work-frame .fbde-work-frame__sep{color:#8a8a84;padding:0 6px;}
+.fbde-work-frame .fbde-work-frame__wall{margin:10px 0 0;max-width:64ch;font-size:15px;
+ line-height:1.65;color:#1a1a1a;}
+.fbde-work-frame .fbde-work-frame__note{margin:8px 0 0;font-size:12px;line-height:1.5;
+ color:#6b6b64;}
+@media (max-width:520px){.fbde-work-frame{padding:12px 16px;}}
+</style><header class="fbde-work-frame" role="doc-foreword"><nav class="fbde-work-frame__nav"><a href="/studio">← The Studio</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/studio/works">the studio’s premieres</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/">the research ecology</a></nav><p class="fbde-work-frame__note">Wall label and links added by the site. The work itself begins below.</p></header>
+<div class="sd-root">
+<div class="sd-page">
+
+  <script type="application/json" id="sd-data">
+{
+  "day": {
+    "iso": "2026-08-04",
+    "printed": "4 AUGUST 2026"
+  },
+  "frozen": {
+    "as_of": "2026-08-15T04:36:57Z",
+    "captures": 32,
+    "editions": 12,
+    "window": [
+      "2026-08-04",
+      "2026-08-15"
+    ],
+    "line": "This page is frozen. Its corpus is the thirty-two saved copies this record held at 2026-08-15T04:36:57Z, carrying twelve lists dated 4 August 2026 to 15 August 2026. The instrument goes on publishing daily whatever this page does; any list saved here after that instant is published as a dated addendum beside this work, in ADDENDA.md, and none of them moves a number on this face. The command that returns the live reading is printed with the others below. A figure that changes while it is being read cannot be checked against anything."
+  },
+  "compare": {
+    "heading": "THE SAME MEASUREMENT ON FOUR DAYS OF THE SAME SEA, EACH READ WHEN THIS RECORD FIRST HELD THE LIST DATED EIGHT DAYS AFTER IT",
+    "maturity_days": 8,
+    "lead": "The day above has been open for eleven days. These four are the same instrument on four consecutive days, each stopped at the same point in its own life — the instant this record first held the list dated eight days after it. Every row is a committed script and the instant printed under it, and every row says how many of its day's names this record was seeing for the first time.",
+    "rows": [
+      {
+        "day": "2026-08-04",
+        "day_printed": "4 August 2026",
+        "as_of": "2026-08-12T18:23:12Z",
+        "share": "31 %–73 %",
+        "fraction": "11 of 15–35",
+        "numerator": 11,
+        "names_in_list": 11,
+        "new_to_record": 11,
+        "provenance": "eleven names in that day's own list, all eleven new to this record — this record begins here",
+        "check": "python3 projects/season1/capture/day.py 2026-08-04 --as-of 2026-08-12T18:23:12Z",
+        "published": true
+      },
+      {
+        "day": "2026-08-05",
+        "day_printed": "5 August 2026",
+        "as_of": "2026-08-13T17:02:56Z",
+        "share": "10 %–25 %",
+        "fraction": "3 of 12–31",
+        "numerator": 3,
+        "names_in_list": 8,
+        "new_to_record": 3,
+        "provenance": "eight names in that day's own list, three of them new to this record",
+        "check": "python3 projects/season1/capture/day.py 2026-08-05 --as-of 2026-08-13T17:02:56Z",
+        "published": false
+      },
+      {
+        "day": "2026-08-06",
+        "day_printed": "6 August 2026",
+        "as_of": "2026-08-14T20:45:26Z",
+        "share": "6 %–15 %",
+        "fraction": "2 of 13–32",
+        "numerator": 2,
+        "names_in_list": 7,
+        "new_to_record": 2,
+        "provenance": "seven names in that day's own list, two of them new to this record",
+        "check": "python3 projects/season1/capture/day.py 2026-08-06 --as-of 2026-08-14T20:45:26Z",
+        "published": false
+      },
+      {
+        "day": "2026-08-07",
+        "day_printed": "7 August 2026",
+        "as_of": "2026-08-15T04:36:57Z",
+        "share": "3 %–12 %",
+        "fraction": "1 of 8–33",
+        "numerator": 1,
+        "names_in_list": 6,
+        "new_to_record": 1,
+        "provenance": "six names in that day's own list, one of them new to this record",
+        "check": "python3 projects/season1/capture/day.py 2026-08-07 --as-of 2026-08-15T04:36:57Z",
+        "published": false
+      }
+    ],
+    "finding": "These are four readings of this record, not four readings of the sea. A day's numerator counts only the names this record met for the first time in that day's own list, and 4 August 2026 is the one day here whose record begins on itself — so every name it printed counts for it, while the days after it are left with what the earlier lists had not already spent. Read that way the comparison says one thing, and says it against the page above: the day this page publishes is the most favourable day in its own archive. How much of the fall between these rows is the sea and how much is where this record opens, these captures cannot separate.",
+    "tier": "DERIVED from the OBSERVED captures by the same instrument as the figure above, at the instants printed. No new night of waiting and no new code: four runs of a committed script. The rows are exact and the comparison between them is not clean — the line above says why, and nothing here claims a factor."
+  },
+  "method": {
+    "source": "https://frankbueltge.de/werke/ghost-fleet/",
+    "edition_source": "https://frankbueltge.de/ghost-fleet/",
+    "window_quote": "Daily. Window: disabling events that ended in the last 7 days (complete vanish-and-return stories).",
+    "definition_quote": "The AIS picture of the seas looks complete. It is not — ships switch off their transponder on purpose to vanish.",
+    "definition": "The instrument this page reads counts only disabling its own source classifies as high-confidence and intentional: at least 12 hours dark, at least 50 nautical miles offshore."
+  },
+  "arrive": {
+    "subject_gloss": "dark — the ship's AIS transponder switched off, so it stops being tracked. The lists below are the daily editions of The Ghost Fleet, published at frankbueltge.de, which name a ship only once it has come back. They carry only offshore switch-offs a machine model classed as intentional, so they are never all of a day's darkness.",
+    "since_note": "This record cannot tell a ship that came back later from a ship the list did not print: a list gives a return only to the nearest seven days, so the return window of twenty-two of the thirty-eight names added since 4 August still reaches back to it. Both counts are this record's own: the names are OBSERVED in the saved copies, and how far each window reaches is DERIVED from the duration the list published. The first list that could add a name ruled out of that list is the one dated 12 August 2026, and it has arrived: sixteen of the thirty-eight are ruled out of it.",
+    "heading_then": "IN THE LIST DATED 4 AUG — the eleven names it printed",
+    "cut": {
+      "heading": "WHAT THE LIST OF 4 AUG WAS THE TOP OF",
+      "figures": "Of the 230 examined, 82 were dark inside national waters · 5,641 events in the window",
+      "said": "The instrument says so itself, in its method sheet: “The index counts all examined; the case and list show named vessels.” The share this page publishes is a share of what those lists print, not of what they count.",
+      "refused": "How the figure would move if the lists were longer is not estimated here — a longer list dated 4 August could carry names this record counts as arriving late, and longer later lists add to the total, so both ends of it grow. The method that would try has a name: multiple systems estimation, which reads the overlaps between several incomplete lists to say how many none of them caught. It needs a capture probability behind each ship, and this instrument's published rule — a list holds only returns from the last seven days — leaves a ship that is still dark at a probability of zero in every one of the twelve lists this record holds. That is why this page prints a band and no estimate.",
+      "refused_source": {
+        "text": "SOURCED — the method and its capture probabilities: Amelia Hoover Green, Human Rights Data Analysis Group, 20 March 2013, ",
+        "url": "https://hrdag.org/2013/03/20/mse-stratification-estimation/"
+      },
+      "kept": "Each of the twelve lists this record holds prints six to eleven names of the 189 to 265 disappearances it says it examined. This record has saved that block every night since the first.",
+      "tier": "SOURCED — the three figures the list published, read off the saved copies in the words the parser matched in them. The count of names, and the count of lists below, are this house's own.",
+      "standing": "11 of 230",
+      "standing_note": "SOURCED — the count of names is this house's own."
+    },
+    "stops": [
+      {
+        "as_of": "2026-08-05T04:39:32Z",
+        "check": "python3 projects/season1/capture/day.py 2026-08-04 --as-of 2026-08-05T04:39:32Z",
+        "edition": "2026-08-04",
+        "printed": "ON THE DAY",
+        "days_after": 0,
+        "total": 11,
+        "share": "100 %–100 %",
+        "share_falling": "100 %",
+        "share_fixed": "–100 %",
+        "share_falling_of": "11 of 11",
+        "share_fixed_of": "11 of 11",
+        "certain_of": "0 of them certainly dark",
+        "added": [
+          {
+            "name": "TUNAMAR",
+            "flag": "PAN"
+          },
+          {
+            "name": "MICRONESIA103",
+            "flag": "FSM"
+          },
+          {
+            "name": "ALIZE",
+            "flag": "ECU"
+          },
+          {
+            "name": "FORTICA",
+            "flag": "ECU"
+          },
+          {
+            "name": "PANOFI MASTER",
+            "flag": "GHA"
+          },
+          {
+            "name": "TRAVELER",
+            "flag": "USA"
+          },
+          {
+            "name": "VICTORIA",
+            "flag": "MEX"
+          },
+          {
+            "name": "PANOFI DISCOVERER",
+            "flag": "GHA"
+          },
+          {
+            "name": "VESTERAALEN",
+            "flag": "USA"
+          },
+          {
+            "name": "PACIFIC FURY",
+            "flag": "USA"
+          },
+          {
+            "name": "EXCELLENCE",
+            "flag": "USA"
+          }
+        ],
+        "when_fixed": "of 4 AUGUST 2026’s darkness was knowable on the day itself,",
+        "when_tail": "counting the lists up to 4 AUG.",
+        "when": "of 4 AUGUST 2026’s darkness was knowable on the day itself, counting the lists up to 4 AUG.",
+        "hedge": "A list gives a ship's return only to the nearest week, so a name counts as certain here only when every day of that week leaves it dark on this one; the rest are possible. No name this record could already have on the day itself can be certain: the earliest end of a certain name's week falls seven days before the list that first printed it, so its first list is dated at least a week after the day. And the upper end assumes nothing: whatever became of the 11 names the day itself printed, no case this record allows puts the share above 11 of 11 — that end is a ceiling over all of them. The lower end does assume every one of those 11 was in fact dark on the day; not one of them is certain, so unconditionally the share's floor is 0.",
+        "heading_since": "NAMED ONLY BY LATER LISTS — nothing yet. The space below is the part of this day that nobody could have had on it."
+      },
+      {
+        "as_of": "2026-08-05T12:54:00Z",
+        "check": "python3 projects/season1/capture/day.py 2026-08-04 --as-of 2026-08-05T12:54:00Z",
+        "edition": "2026-08-05",
+        "printed": "+1 DAY",
+        "days_after": 1,
+        "total": 14,
+        "share": "79 %–100 %",
+        "share_falling": "79 %",
+        "share_fixed": "–100 %",
+        "share_falling_of": "11 of 14",
+        "share_fixed_of": "11 of 11",
+        "certain_of": "0 of them certainly dark",
+        "added": [
+          {
+            "name": "SOUTHERN SEAS NO.302",
+            "flag": "SLB"
+          },
+          {
+            "name": "RICKY",
+            "flag": "GBR"
+          },
+          {
+            "name": "ALTAR 10",
+            "flag": "ECU"
+          }
+        ],
+        "when_fixed": "of 4 AUGUST 2026’s darkness was knowable on the day itself,",
+        "when_tail": "counting the lists up to 5 AUG, a day after the day had ended.",
+        "when": "of 4 AUGUST 2026’s darkness was knowable on the day itself, counting the lists up to 5 AUG, a day after the day had ended.",
+        "hedge": "A list gives a ship's return only to the nearest week, so a name counts as certain here only when every day of that week leaves it dark on this one; the rest are possible. No name this record could already have on the day itself can be certain: the earliest end of a certain name's week falls seven days before the list that first printed it, so its first list is dated at least a week after the day. And the upper end assumes nothing: whatever became of the 11 names the day itself printed, no case this record allows puts the share above 11 of 11 — that end is a ceiling over all of them. The lower end does assume every one of those 11 was in fact dark on the day; not one of them is certain, so unconditionally the share's floor is 0.",
+        "heading_since": "NAMED ONLY BY LATER LISTS — three ships that could have been dark on the day and that nobody could have had on it."
+      },
+      {
+        "as_of": "2026-08-06T08:16:42Z",
+        "check": "python3 projects/season1/capture/day.py 2026-08-04 --as-of 2026-08-06T08:16:42Z",
+        "edition": "2026-08-06",
+        "printed": "+2 DAYS",
+        "days_after": 2,
+        "total": 16,
+        "share": "69 %–100 %",
+        "share_falling": "69 %",
+        "share_fixed": "–100 %",
+        "share_falling_of": "11 of 16",
+        "share_fixed_of": "11 of 11",
+        "certain_of": "0 of them certainly dark",
+        "added": [
+          {
+            "name": "ALBACORA CUATRO",
+            "flag": "ESP"
+          },
+          {
+            "name": "BONAMI",
+            "flag": "KOR"
+          }
+        ],
+        "when_fixed": "of 4 AUGUST 2026’s darkness was knowable on the day itself,",
+        "when_tail": "counting the lists up to 6 AUG.",
+        "when": "of 4 AUGUST 2026’s darkness was knowable on the day itself, counting the lists up to 6 AUG.",
+        "hedge": "A list gives a ship's return only to the nearest week, so a name counts as certain here only when every day of that week leaves it dark on this one; the rest are possible. No name this record could already have on the day itself can be certain: the earliest end of a certain name's week falls seven days before the list that first printed it, so its first list is dated at least a week after the day. And the upper end assumes nothing: whatever became of the 11 names the day itself printed, no case this record allows puts the share above 11 of 11 — that end is a ceiling over all of them. The lower end does assume every one of those 11 was in fact dark on the day; not one of them is certain, so unconditionally the share's floor is 0.",
+        "heading_since": "NAMED ONLY BY LATER LISTS — five ships that could have been dark on the day and that nobody could have had on it."
+      },
+      {
+        "as_of": "2026-08-07T18:15:53Z",
+        "check": "python3 projects/season1/capture/day.py 2026-08-04 --as-of 2026-08-07T18:15:53Z",
+        "edition": "2026-08-07",
+        "printed": "+3 DAYS",
+        "days_after": 3,
+        "total": 17,
+        "share": "65 %–100 %",
+        "share_falling": "65 %",
+        "share_fixed": "–100 %",
+        "share_falling_of": "11 of 17",
+        "share_fixed_of": "11 of 11",
+        "certain_of": "0 of them certainly dark",
+        "added": [
+          {
+            "name": "WANGBIAO-8730",
+            "flag": "CHN"
+          }
+        ],
+        "when_fixed": "of 4 AUGUST 2026’s darkness was knowable on the day itself,",
+        "when_tail": "counting the lists up to 7 AUG.",
+        "when": "of 4 AUGUST 2026’s darkness was knowable on the day itself, counting the lists up to 7 AUG.",
+        "hedge": "A list gives a ship's return only to the nearest week, so a name counts as certain here only when every day of that week leaves it dark on this one; the rest are possible. No name this record could already have on the day itself can be certain: the earliest end of a certain name's week falls seven days before the list that first printed it, so its first list is dated at least a week after the day. And the upper end assumes nothing: whatever became of the 11 names the day itself printed, no case this record allows puts the share above 11 of 11 — that end is a ceiling over all of them. The lower end does assume every one of those 11 was in fact dark on the day; not one of them is certain, so unconditionally the share's floor is 0.",
+        "heading_since": "NAMED ONLY BY LATER LISTS — six ships that could have been dark on the day and that nobody could have had on it."
+      },
+      {
+        "as_of": "2026-08-08T21:37:19Z",
+        "check": "python3 projects/season1/capture/day.py 2026-08-04 --as-of 2026-08-08T21:37:19Z",
+        "edition": "2026-08-08",
+        "printed": "+4 DAYS",
+        "days_after": 4,
+        "total": 20,
+        "share": "55 %–100 %",
+        "share_falling": "55 %",
+        "share_fixed": "–100 %",
+        "share_falling_of": "11 of 20",
+        "share_fixed_of": "11 of 11",
+        "certain_of": "0 of them certainly dark",
+        "added": [
+          {
+            "name": "TUNA PESCA",
+            "flag": "PAN"
+          },
+          {
+            "name": "SAPPHIRE III",
+            "flag": "USA"
+          },
+          {
+            "name": "MONTECELO",
+            "flag": "SLV"
+          }
+        ],
+        "when_fixed": "of 4 AUGUST 2026’s darkness was knowable on the day itself,",
+        "when_tail": "counting the lists up to 8 AUG.",
+        "when": "of 4 AUGUST 2026’s darkness was knowable on the day itself, counting the lists up to 8 AUG.",
+        "hedge": "A list gives a ship's return only to the nearest week, so a name counts as certain here only when every day of that week leaves it dark on this one; the rest are possible. No name this record could already have on the day itself can be certain: the earliest end of a certain name's week falls seven days before the list that first printed it, so its first list is dated at least a week after the day. And the upper end assumes nothing: whatever became of the 11 names the day itself printed, no case this record allows puts the share above 11 of 11 — that end is a ceiling over all of them. The lower end does assume every one of those 11 was in fact dark on the day; not one of them is certain, so unconditionally the share's floor is 0.",
+        "heading_since": "NAMED ONLY BY LATER LISTS — nine ships that could have been dark on the day and that nobody could have had on it."
+      },
+      {
+        "as_of": "2026-08-09T20:36:58Z",
+        "check": "python3 projects/season1/capture/day.py 2026-08-04 --as-of 2026-08-09T20:36:58Z",
+        "edition": "2026-08-09",
+        "printed": "+5 DAYS",
+        "days_after": 5,
+        "total": 25,
+        "share": "44 %–100 %",
+        "share_falling": "44 %",
+        "share_fixed": "–100 %",
+        "share_falling_of": "11 of 25",
+        "share_fixed_of": "11 of 11",
+        "certain_of": "0 of them certainly dark",
+        "added": [
+          {
+            "name": "HAIZEA BOST",
+            "flag": "ESP"
+          },
+          {
+            "name": "CONNIE JEAN TWO",
+            "flag": "PAN"
+          },
+          {
+            "name": "CARMEN D",
+            "flag": "ECU"
+          },
+          {
+            "name": "MARIA BEATRIZ",
+            "flag": "MEX"
+          },
+          {
+            "name": "RUITAIFENG919",
+            "flag": "CHN"
+          }
+        ],
+        "when_fixed": "of 4 AUGUST 2026’s darkness was knowable on the day itself,",
+        "when_tail": "counting the lists up to 9 AUG.",
+        "when": "of 4 AUGUST 2026’s darkness was knowable on the day itself, counting the lists up to 9 AUG.",
+        "hedge": "A list gives a ship's return only to the nearest week, so a name counts as certain here only when every day of that week leaves it dark on this one; the rest are possible. No name this record could already have on the day itself can be certain: the earliest end of a certain name's week falls seven days before the list that first printed it, so its first list is dated at least a week after the day. And the upper end assumes nothing: whatever became of the 11 names the day itself printed, no case this record allows puts the share above 11 of 11 — that end is a ceiling over all of them. The lower end does assume every one of those 11 was in fact dark on the day; not one of them is certain, so unconditionally the share's floor is 0.",
+        "heading_since": "NAMED ONLY BY LATER LISTS — fourteen ships that could have been dark on the day and that nobody could have had on it."
+      },
+      {
+        "as_of": "2026-08-10T22:41:12Z",
+        "check": "python3 projects/season1/capture/day.py 2026-08-04 --as-of 2026-08-10T22:41:12Z",
+        "edition": "2026-08-10",
+        "printed": "+6 DAYS",
+        "days_after": 6,
+        "total": 31,
+        "share": "35 %–100 %",
+        "share_falling": "35 %",
+        "share_fixed": "–100 %",
+        "share_falling_of": "11 of 31",
+        "share_fixed_of": "11 of 11",
+        "certain_of": "0 of them certainly dark",
+        "added": [
+          {
+            "name": "HY928-21%-81%",
+            "flag": null
+          },
+          {
+            "name": "ATLANTIC PRINCE",
+            "flag": "BLZ"
+          },
+          {
+            "name": "GENPUKUMARU NO.18",
+            "flag": "JPN"
+          },
+          {
+            "name": "DIVA MARIA",
+            "flag": "PAN"
+          },
+          {
+            "name": "OCEAN WARRIOR",
+            "flag": "NRU"
+          },
+          {
+            "name": "ST. MARIANNE",
+            "flag": "USA"
+          }
+        ],
+        "when_fixed": "of 4 AUGUST 2026’s darkness was knowable on the day itself,",
+        "when_tail": "counting the lists up to 10 AUG.",
+        "when": "of 4 AUGUST 2026’s darkness was knowable on the day itself, counting the lists up to 10 AUG.",
+        "hedge": "A list gives a ship's return only to the nearest week, so a name counts as certain here only when every day of that week leaves it dark on this one; the rest are possible. No name this record could already have on the day itself can be certain: the earliest end of a certain name's week falls seven days before the list that first printed it, so its first list is dated at least a week after the day. And the upper end assumes nothing: whatever became of the 11 names the day itself printed, no case this record allows puts the share above 11 of 11 — that end is a ceiling over all of them. The lower end does assume every one of those 11 was in fact dark on the day; not one of them is certain, so unconditionally the share's floor is 0.",
+        "heading_since": "NAMED ONLY BY LATER LISTS — twenty ships that could have been dark on the day and that nobody could have had on it."
+      },
+      {
+        "as_of": "2026-08-11T11:19:15Z",
+        "check": "python3 projects/season1/capture/day.py 2026-08-04 --as-of 2026-08-11T11:19:15Z",
+        "edition": "2026-08-11",
+        "printed": "+7 DAYS",
+        "days_after": 7,
+        "total": 33,
+        "share": "33 %–85 %",
+        "share_falling": "33 %",
+        "share_fixed": "–85 %",
+        "share_falling_of": "11 of 33",
+        "share_fixed_of": "11 of 13",
+        "certain_of": "2 of them certainly dark",
+        "added": [
+          {
+            "name": "PANOFI FORE RUNNER",
+            "flag": "GHA"
+          },
+          {
+            "name": "HEATHER LYNN",
+            "flag": "USA"
+          }
+        ],
+        "when_fixed": "of 4 AUGUST 2026’s darkness was knowable on the day itself,",
+        "when_tail": "counting the lists up to 11 AUG.",
+        "when": "of 4 AUGUST 2026’s darkness was knowable on the day itself, counting the lists up to 11 AUG.",
+        "hedge": "A list gives a ship's return only to the nearest week, so a name counts as certain here only when every day of that week leaves it dark on this one; the rest are possible. No name this record could already have on the day itself can be certain: the earliest end of a certain name's week falls seven days before the list that first printed it, so its first list is dated at least a week after the day. And the upper end assumes nothing: whatever became of the 11 names the day itself printed, no case this record allows puts the share above 11 of 13 — that end is a ceiling over all of them. The lower end does assume every one of those 11 was in fact dark on the day; not one of them is certain, so unconditionally the share's floor is 0.",
+        "heading_since": "NAMED ONLY BY LATER LISTS — twenty-two ships that could have been dark on the day and that nobody could have had on it."
+      },
+      {
+        "as_of": "2026-08-12T18:23:12Z",
+        "check": "python3 projects/season1/capture/day.py 2026-08-04 --as-of 2026-08-12T18:23:12Z",
+        "edition": "2026-08-12",
+        "printed": "+8 DAYS",
+        "days_after": 8,
+        "total": 35,
+        "share": "31 %–73 %",
+        "share_falling": "31 %",
+        "share_fixed": "–73 %",
+        "share_falling_of": "11 of 35",
+        "share_fixed_of": "11 of 15",
+        "certain_of": "4 of them certainly dark",
+        "added": [
+          {
+            "name": "ISABELLA",
+            "flag": "USA"
+          },
+          {
+            "name": "LUCKY TJ",
+            "flag": "USA"
+          }
+        ],
+        "when_fixed": "of 4 AUGUST 2026’s darkness was knowable on the day itself,",
+        "when_tail": "counting the lists up to 12 AUG.",
+        "when": "of 4 AUGUST 2026’s darkness was knowable on the day itself, counting the lists up to 12 AUG.",
+        "hedge": "A list gives a ship's return only to the nearest week, so a name counts as certain here only when every day of that week leaves it dark on this one; the rest are possible. No name this record could already have on the day itself can be certain: the earliest end of a certain name's week falls seven days before the list that first printed it, so its first list is dated at least a week after the day. And the upper end assumes nothing: whatever became of the 11 names the day itself printed, no case this record allows puts the share above 11 of 15 — that end is a ceiling over all of them. The lower end does assume every one of those 11 was in fact dark on the day; not one of them is certain, so unconditionally the share's floor is 0.",
+        "heading_since": "NAMED ONLY BY LATER LISTS — twenty-four ships that could have been dark on the day and that nobody could have had on it."
+      },
+      {
+        "as_of": "2026-08-13T17:02:56Z",
+        "check": "python3 projects/season1/capture/day.py 2026-08-04 --as-of 2026-08-13T17:02:56Z",
+        "edition": "2026-08-13",
+        "printed": "+9 DAYS",
+        "days_after": 9,
+        "total": 42,
+        "share": "26 %–50 %",
+        "share_falling": "26 %",
+        "share_fixed": "–50 %",
+        "share_falling_of": "11 of 42",
+        "share_fixed_of": "11 of 22",
+        "certain_of": "11 of them certainly dark",
+        "added": [
+          {
+            "name": "SHILLA EXPLORER",
+            "flag": "KOR"
+          },
+          {
+            "name": "KOO'S 102",
+            "flag": "MHL"
+          },
+          {
+            "name": "KOYOMARU NO.88",
+            "flag": "JPN"
+          },
+          {
+            "name": "FUKUICHIMARU NO,83",
+            "flag": "JPN"
+          },
+          {
+            "name": "CAP.DANNY B",
+            "flag": "ECU"
+          },
+          {
+            "name": "COTSWOLD",
+            "flag": "GBR"
+          },
+          {
+            "name": "GOLDEN SAPPHIRE 88",
+            "flag": "PNG"
+          }
+        ],
+        "when_fixed": "of 4 AUGUST 2026’s darkness was knowable on the day itself,",
+        "when_tail": "counting the lists up to 13 AUG.",
+        "when": "of 4 AUGUST 2026’s darkness was knowable on the day itself, counting the lists up to 13 AUG.",
+        "hedge": "A list gives a ship's return only to the nearest week, so a name counts as certain here only when every day of that week leaves it dark on this one; the rest are possible. No name this record could already have on the day itself can be certain: the earliest end of a certain name's week falls seven days before the list that first printed it, so its first list is dated at least a week after the day. And the upper end assumes nothing: whatever became of the 11 names the day itself printed, no case this record allows puts the share above 11 of 22 — that end is a ceiling over all of them. The lower end does assume every one of those 11 was in fact dark on the day; not one of them is certain, so unconditionally the share's floor is 0.",
+        "heading_since": "NAMED ONLY BY LATER LISTS — thirty-one ships that could have been dark on the day and that nobody could have had on it."
+      },
+      {
+        "as_of": "2026-08-14T20:45:26Z",
+        "check": "python3 projects/season1/capture/day.py 2026-08-04 --as-of 2026-08-14T20:45:26Z",
+        "edition": "2026-08-14",
+        "printed": "+10 DAYS",
+        "days_after": 10,
+        "total": 46,
+        "share": "24 %–42 %",
+        "share_falling": "24 %",
+        "share_fixed": "–42 %",
+        "share_falling_of": "11 of 46",
+        "share_fixed_of": "11 of 26",
+        "certain_of": "15 of them certainly dark",
+        "added": [
+          {
+            "name": "SOUTHERN SEAS 301",
+            "flag": "SLB"
+          },
+          {
+            "name": "CAPT SILVER",
+            "flag": "USA"
+          },
+          {
+            "name": "TXORIARGI",
+            "flag": "ESP"
+          },
+          {
+            "name": "JIN HUI NO.6",
+            "flag": "CHN"
+          }
+        ],
+        "when_fixed": "of 4 AUGUST 2026’s darkness was knowable on the day itself,",
+        "when_tail": "counting the lists up to 14 AUG.",
+        "when": "of 4 AUGUST 2026’s darkness was knowable on the day itself, counting the lists up to 14 AUG.",
+        "hedge": "A list gives a ship's return only to the nearest week, so a name counts as certain here only when every day of that week leaves it dark on this one; the rest are possible. No name this record could already have on the day itself can be certain: the earliest end of a certain name's week falls seven days before the list that first printed it, so its first list is dated at least a week after the day. And the upper end assumes nothing: whatever became of the 11 names the day itself printed, no case this record allows puts the share above 11 of 26 — that end is a ceiling over all of them. The lower end does assume every one of those 11 was in fact dark on the day; not one of them is certain, so unconditionally the share's floor is 0.",
+        "heading_since": "NAMED ONLY BY LATER LISTS — thirty-five ships that could have been dark on the day and that nobody could have had on it."
+      },
+      {
+        "as_of": "2026-08-15T04:36:57Z",
+        "check": "python3 projects/season1/capture/day.py 2026-08-04 --as-of 2026-08-15T04:36:57Z",
+        "edition": "2026-08-15",
+        "printed": "+11 DAYS",
+        "days_after": 11,
+        "total": 49,
+        "share": "22 %–38 %",
+        "share_falling": "22 %",
+        "share_fixed": "–38 %",
+        "share_falling_of": "11 of 49",
+        "share_fixed_of": "11 of 29",
+        "certain_of": "18 of them certainly dark",
+        "added": [
+          {
+            "name": "P. BEVERLY HILLS",
+            "flag": "PRT"
+          },
+          {
+            "name": "KONGOU",
+            "flag": "JPN"
+          },
+          {
+            "name": "FV KW",
+            "flag": "AUS"
+          }
+        ],
+        "when_fixed": "of 4 AUGUST 2026’s darkness was knowable on the day itself,",
+        "when_tail": "counting the lists up to 15 AUG.",
+        "when": "of 4 AUGUST 2026’s darkness was knowable on the day itself, counting the lists up to 15 AUG.",
+        "hedge": "A list gives a ship's return only to the nearest week, so a name counts as certain here only when every day of that week leaves it dark on this one; the rest are possible. No name this record could already have on the day itself can be certain: the earliest end of a certain name's week falls seven days before the list that first printed it, so its first list is dated at least a week after the day. And the upper end assumes nothing: whatever became of the 11 names the day itself printed, no case this record allows puts the share above 11 of 29 — that end is a ceiling over all of them. The lower end does assume every one of those 11 was in fact dark on the day; not one of them is certain, so unconditionally the share's floor is 0.",
+        "heading_since": "NAMED ONLY BY LATER LISTS — thirty-eight ships that could have been dark on the day and that nobody could have had on it."
+      }
+    ],
+    "run_states": {
+      "waiting": "This figure runs by itself: twelve states over about thirty-two seconds. Any button above holds a state and stops the run.",
+      "started": "The run has started: the figure is falling from the day's own answer to the last one this page publishes.",
+      "done": "The run has finished. The figure now standing is the last this page publishes, {figure} — press any button to go back through it.",
+      "stopped": "You stopped the run at {stop}, {figure}. Press “{replay}” to see it whole.",
+      "held": "Holding {stop}, {figure}. Nothing is playing; press “{replay}” to run it.",
+      "rest": "Your machine asks for no motion, so nothing runs: this is the day's own answer, and each button above holds a later state."
+    },
+    "tier": "DERIVED — this share, and the count of names certainly dark beside it, are worked out here, from saved copies of those lists. Nobody publishes either.",
+    "restraint": "“Intentional” is a machine estimate by Global Fishing Watch — a probability, not proof; the instrument makes no claim of illegality against any vessel or state, and neither do we.",
+    "replay": "run it again",
+    "proof": "OBSERVED — the instant in the line below is when this record first held every name this stop adds, read off the captures and not chosen. Run the line and this stop's share comes back:",
+    "first_dwell_ms": 14118,
+    "first_dwell_note": "56 words at 238 wpm (Brysbaert 2019, mean adult silent reading of non-fiction English)",
+    "beat_ms": 1600,
+    "run_ceiling_ms": 45000,
+    "beats_ms": [
+      1600,
+      1600,
+      1600,
+      1600,
+      1600,
+      1600,
+      1600,
+      1600,
+      1600,
+      1600,
+      1600
+    ],
+    "protected_beats": [
+      5,
+      9,
+      10
+    ],
+    "ends_ms": 30118,
+    "done_ms": 31718,
+    "run_seconds": 32
+  },
+  "lede": "Eleven of the ships this record can place in 4 August 2026 stood in the list dated 4 August itself. Thirty-eight arrived later — thirty-three of them after this page had printed its figure. All three counts are DERIVED: worked out here, from saved copies of those lists.",
+  "field": [
+    {
+      "edition": "2026-08-04",
+      "edition_printed": "4 August 2026",
+      "days_after": 0,
+      "label": "IN THE LIST OF 4 AUG — the day itself",
+      "count": 11,
+      "seen_all": "this page first saw all eleven on 5 AUG",
+      "rows": [
+        {
+          "name": "TUNAMAR",
+          "flag": "PAN",
+          "days_dark": 56,
+          "waters": "Ecuadorian EEZ (Galapagos)",
+          "went_dark_between": [
+            "2026-06-02",
+            "2026-06-09"
+          ],
+          "resurfaced_between": [
+            "2026-07-28",
+            "2026-08-04"
+          ],
+          "band_text": "dark 2–9 Jun → back 28 Jul–4 Aug",
+          "gfw_url": "https://globalfishingwatch.org/map/vessel/7d0bafe28-8ec3-ab8e-fb15-3ce152f3974f",
+          "seen": ""
+        },
+        {
+          "name": "MICRONESIA103",
+          "flag": "FSM",
+          "days_dark": 39,
+          "waters": "Marshallese EEZ",
+          "went_dark_between": [
+            "2026-06-19",
+            "2026-06-26"
+          ],
+          "resurfaced_between": [
+            "2026-07-28",
+            "2026-08-04"
+          ],
+          "band_text": "dark 19–26 Jun → back 28 Jul–4 Aug",
+          "gfw_url": "https://globalfishingwatch.org/map/vessel/44e937b38-8d12-ce29-5110-ee36398d904c",
+          "seen": ""
+        },
+        {
+          "name": "ALIZE",
+          "flag": "ECU",
+          "days_dark": 31,
+          "waters": "Ecuadorian EEZ",
+          "went_dark_between": [
+            "2026-06-27",
+            "2026-07-04"
+          ],
+          "resurfaced_between": [
+            "2026-07-28",
+            "2026-08-04"
+          ],
+          "band_text": "dark 27 Jun–4 Jul → back 28 Jul–4 Aug",
+          "gfw_url": "https://globalfishingwatch.org/map/vessel/db5cd7a2a-a9dd-4c52-00ac-4c6980d9a029",
+          "seen": ""
+        },
+        {
+          "name": "FORTICA",
+          "flag": "ECU",
+          "days_dark": 26,
+          "waters": "Ecuadorian EEZ",
+          "went_dark_between": [
+            "2026-07-02",
+            "2026-07-09"
+          ],
+          "resurfaced_between": [
+            "2026-07-28",
+            "2026-08-04"
+          ],
+          "band_text": "dark 2–9 Jul → back 28 Jul–4 Aug",
+          "gfw_url": "https://globalfishingwatch.org/map/vessel/ed76e5578-8f7d-2e31-1af3-cc129d6ae7b9",
+          "seen": ""
+        },
+        {
+          "name": "PANOFI MASTER",
+          "flag": "GHA",
+          "days_dark": 22,
+          "waters": "Ghanaian EEZ",
+          "went_dark_between": [
+            "2026-07-06",
+            "2026-07-13"
+          ],
+          "resurfaced_between": [
+            "2026-07-28",
+            "2026-08-04"
+          ],
+          "band_text": "dark 6–13 Jul → back 28 Jul–4 Aug",
+          "gfw_url": "https://globalfishingwatch.org/map/vessel/7b4c7f97f-f297-3a81-22a7-5d210ca4d71e",
+          "seen": ""
+        },
+        {
+          "name": "TRAVELER",
+          "flag": "USA",
+          "days_dark": 18,
+          "waters": "United States EEZ (Alaska)",
+          "went_dark_between": [
+            "2026-07-10",
+            "2026-07-17"
+          ],
+          "resurfaced_between": [
+            "2026-07-28",
+            "2026-08-04"
+          ],
+          "band_text": "dark 10–17 Jul → back 28 Jul–4 Aug",
+          "gfw_url": "https://globalfishingwatch.org/map/vessel/6c2fe0c33-3bec-8532-7d04-6c6e8aca5d32",
+          "seen": ""
+        },
+        {
+          "name": "VICTORIA",
+          "flag": "MEX",
+          "days_dark": 17,
+          "waters": "Mexican EEZ",
+          "went_dark_between": [
+            "2026-07-11",
+            "2026-07-18"
+          ],
+          "resurfaced_between": [
+            "2026-07-28",
+            "2026-08-04"
+          ],
+          "band_text": "dark 11–18 Jul → back 28 Jul–4 Aug",
+          "gfw_url": "https://globalfishingwatch.org/map/vessel/ef787e860-0064-bc54-31e7-63a593778d42",
+          "seen": ""
+        },
+        {
+          "name": "PANOFI DISCOVERER",
+          "flag": "GHA",
+          "days_dark": 17,
+          "waters": "Ghanaian EEZ",
+          "went_dark_between": [
+            "2026-07-11",
+            "2026-07-18"
+          ],
+          "resurfaced_between": [
+            "2026-07-28",
+            "2026-08-04"
+          ],
+          "band_text": "dark 11–18 Jul → back 28 Jul–4 Aug",
+          "gfw_url": "https://globalfishingwatch.org/map/vessel/2781849c8-849b-ce64-e1e3-3ed0ae3cd66a",
+          "seen": ""
+        },
+        {
+          "name": "VESTERAALEN",
+          "flag": "USA",
+          "days_dark": 17,
+          "waters": "United States EEZ (Alaska)",
+          "went_dark_between": [
+            "2026-07-11",
+            "2026-07-18"
+          ],
+          "resurfaced_between": [
+            "2026-07-28",
+            "2026-08-04"
+          ],
+          "band_text": "dark 11–18 Jul → back 28 Jul–4 Aug",
+          "gfw_url": "https://globalfishingwatch.org/map/vessel/b6a3440c9-9f83-d1f6-378d-e70f7db7184b",
+          "seen": ""
+        },
+        {
+          "name": "PACIFIC FURY",
+          "flag": "USA",
+          "days_dark": 17,
+          "waters": "United States EEZ (Alaska)",
+          "went_dark_between": [
+            "2026-07-11",
+            "2026-07-18"
+          ],
+          "resurfaced_between": [
+            "2026-07-28",
+            "2026-08-04"
+          ],
+          "band_text": "dark 11–18 Jul → back 28 Jul–4 Aug",
+          "gfw_url": "https://globalfishingwatch.org/map/vessel/455a51563-3a2e-18c6-cf12-9ac5b75ab0a6",
+          "seen": ""
+        },
+        {
+          "name": "EXCELLENCE",
+          "flag": "USA",
+          "days_dark": 16,
+          "waters": "United States EEZ (Alaska)",
+          "went_dark_between": [
+            "2026-07-12",
+            "2026-07-19"
+          ],
+          "resurfaced_between": [
+            "2026-07-28",
+            "2026-08-04"
+          ],
+          "band_text": "dark 12–19 Jul → back 28 Jul–4 Aug",
+          "gfw_url": "https://globalfishingwatch.org/map/vessel/f4c37b1e1-14cd-40b6-80ad-9a41580169fd",
+          "seen": ""
+        }
+      ]
+    },
+    {
+      "edition": "2026-08-05",
+      "edition_printed": "5 August 2026",
+      "days_after": 1,
+      "label": "ADDED BY THE LIST OF 5 AUG — one day after the day",
+      "count": 3,
+      "seen_all": "this page first saw all three on 5 AUG",
+      "rows": [
+        {
+          "name": "SOUTHERN SEAS NO.302",
+          "flag": "SLB",
+          "days_dark": 29,
+          "waters": "Micronesian EEZ",
+          "went_dark_between": [
+            "2026-06-30",
+            "2026-07-07"
+          ],
+          "resurfaced_between": [
+            "2026-07-29",
+            "2026-08-05"
+          ],
+          "band_text": "dark 30 Jun–7 Jul → back 29 Jul–5 Aug",
+          "gfw_url": "https://globalfishingwatch.org/map/vessel/fbdba1e34-41d3-d737-11df-022bb7f0db73",
+          "seen": ""
+        },
+        {
+          "name": "RICKY",
+          "flag": "GBR",
+          "days_dark": 28,
+          "waters": "Ecuadorian EEZ (Galapagos)",
+          "went_dark_between": [
+            "2026-07-01",
+            "2026-07-08"
+          ],
+          "resurfaced_between": [
+            "2026-07-29",
+            "2026-08-05"
+          ],
+          "band_text": "dark 1–8 Jul → back 29 Jul–5 Aug",
+          "gfw_url": "https://globalfishingwatch.org/map/vessel/99a1e9d7c-cc99-0a64-8794-918241e3e1b5",
+          "seen": ""
+        },
+        {
+          "name": "ALTAR 10",
+          "flag": "ECU",
+          "days_dark": 18,
+          "waters": "Ecuadorian EEZ (Galapagos)",
+          "went_dark_between": [
+            "2026-07-11",
+            "2026-07-18"
+          ],
+          "resurfaced_between": [
+            "2026-07-29",
+            "2026-08-05"
+          ],
+          "band_text": "dark 11–18 Jul → back 29 Jul–5 Aug",
+          "gfw_url": "https://globalfishingwatch.org/map/vessel/0a0229027-76e4-3f79-a61c-d9c9362459b4",
+          "seen": ""
+        }
+      ]
+    },
+    {
+      "edition": "2026-08-06",
+      "edition_printed": "6 August 2026",
+      "days_after": 2,
+      "label": "ADDED BY THE LIST OF 6 AUG — two days after the day",
+      "count": 2,
+      "seen_all": "this page first saw all two on 6 AUG",
+      "rows": [
+        {
+          "name": "ALBACORA CUATRO",
+          "flag": "ESP",
+          "days_dark": 37,
+          "waters": "Seychellois EEZ",
+          "went_dark_between": [
+            "2026-06-23",
+            "2026-06-30"
+          ],
+          "resurfaced_between": [
+            "2026-07-30",
+            "2026-08-06"
+          ],
+          "band_text": "dark 23–30 Jun → back 30 Jul–6 Aug",
+          "gfw_url": "https://globalfishingwatch.org/map/vessel/31f3807c8-8763-fae4-d474-a445d6fc0eec",
+          "seen": ""
+        },
+        {
+          "name": "BONAMI",
+          "flag": "KOR",
+          "days_dark": 22,
+          "waters": "Marshallese EEZ",
+          "went_dark_between": [
+            "2026-07-08",
+            "2026-07-15"
+          ],
+          "resurfaced_between": [
+            "2026-07-30",
+            "2026-08-06"
+          ],
+          "band_text": "dark 8–15 Jul → back 30 Jul–6 Aug",
+          "gfw_url": "https://globalfishingwatch.org/map/vessel/0c912612b-bec9-e0fb-af7e-e7d52e7d2304",
+          "seen": ""
+        }
+      ]
+    },
+    {
+      "edition": "2026-08-07",
+      "edition_printed": "7 August 2026",
+      "days_after": 3,
+      "label": "ADDED BY THE LIST OF 7 AUG — three days after the day",
+      "count": 1,
+      "seen_all": "this page first saw it on 7 AUG",
+      "rows": [
+        {
+          "name": "WANGBIAO-8730",
+          "flag": "CHN",
+          "days_dark": 19,
+          "waters": "Tuvaluan EEZ",
+          "went_dark_between": [
+            "2026-07-12",
+            "2026-07-19"
+          ],
+          "resurfaced_between": [
+            "2026-07-31",
+            "2026-08-07"
+          ],
+          "band_text": "dark 12–19 Jul → back 31 Jul–7 Aug",
+          "gfw_url": "https://globalfishingwatch.org/map/vessel/0c20b9a08-80de-4ba9-52f7-561ae5f7c705",
+          "seen": ""
+        }
+      ]
+    },
+    {
+      "edition": "2026-08-08",
+      "edition_printed": "8 August 2026",
+      "days_after": 4,
+      "label": "ADDED BY THE LIST OF 8 AUG — four days after the day",
+      "count": 3,
+      "seen_all": "this page first saw all three on 8 AUG",
+      "rows": [
+        {
+          "name": "TUNA PESCA",
+          "flag": "PAN",
+          "days_dark": 39,
+          "waters": "Ecuadorian EEZ (Galapagos)",
+          "went_dark_between": [
+            "2026-06-23",
+            "2026-06-30"
+          ],
+          "resurfaced_between": [
+            "2026-08-01",
+            "2026-08-08"
+          ],
+          "band_text": "dark 23–30 Jun → back 1–8 Aug",
+          "gfw_url": "https://globalfishingwatch.org/map/vessel/d08d825cc-c571-e467-9929-3c1c843919ee",
+          "seen": ""
+        },
+        {
+          "name": "SAPPHIRE III",
+          "flag": "USA",
+          "days_dark": 27,
+          "waters": "United States EEZ (Hawaii)",
+          "went_dark_between": [
+            "2026-07-05",
+            "2026-07-12"
+          ],
+          "resurfaced_between": [
+            "2026-08-01",
+            "2026-08-08"
+          ],
+          "band_text": "dark 5–12 Jul → back 1–8 Aug",
+          "gfw_url": "https://globalfishingwatch.org/map/vessel/9b67dbf5a-aee8-9d6e-4d15-b7e3db8926e6",
+          "seen": ""
+        },
+        {
+          "name": "MONTECELO",
+          "flag": "SLV",
+          "days_dark": 15,
+          "waters": "Ghanaian EEZ",
+          "went_dark_between": [
+            "2026-07-17",
+            "2026-07-24"
+          ],
+          "resurfaced_between": [
+            "2026-08-01",
+            "2026-08-08"
+          ],
+          "band_text": "dark 17–24 Jul → back 1–8 Aug",
+          "gfw_url": "https://globalfishingwatch.org/map/vessel/4bb1068b0-07b4-134f-87ed-a7ea92c038e9",
+          "seen": ""
+        }
+      ]
+    },
+    {
+      "edition": "2026-08-09",
+      "edition_printed": "9 August 2026",
+      "days_after": 5,
+      "label": "ADDED BY THE LIST OF 9 AUG — five days after the day",
+      "count": 5,
+      "seen_all": "this page first saw all five on 9 AUG",
+      "rows": [
+        {
+          "name": "HAIZEA BOST",
+          "flag": "ESP",
+          "days_dark": 34,
+          "waters": "Seychellois EEZ",
+          "went_dark_between": [
+            "2026-06-29",
+            "2026-07-06"
+          ],
+          "resurfaced_between": [
+            "2026-08-02",
+            "2026-08-09"
+          ],
+          "band_text": "dark 29 Jun–6 Jul → back 2–9 Aug",
+          "gfw_url": "https://globalfishingwatch.org/map/vessel/65f4d3fcc-c7c5-2d21-2507-0828fc41cd1e",
+          "seen": ""
+        },
+        {
+          "name": "CONNIE JEAN TWO",
+          "flag": "PAN",
+          "days_dark": 33,
+          "waters": "Ecuadorian EEZ",
+          "went_dark_between": [
+            "2026-06-30",
+            "2026-07-07"
+          ],
+          "resurfaced_between": [
+            "2026-08-02",
+            "2026-08-09"
+          ],
+          "band_text": "dark 30 Jun–7 Jul → back 2–9 Aug",
+          "gfw_url": "https://globalfishingwatch.org/map/vessel/e9281cbbc-c453-a79c-a008-1b061cfd1678",
+          "seen": ""
+        },
+        {
+          "name": "CARMEN D",
+          "flag": "ECU",
+          "days_dark": 32,
+          "waters": "Ecuadorian EEZ (Galapagos)",
+          "went_dark_between": [
+            "2026-07-01",
+            "2026-07-08"
+          ],
+          "resurfaced_between": [
+            "2026-08-02",
+            "2026-08-09"
+          ],
+          "band_text": "dark 1–8 Jul → back 2–9 Aug",
+          "gfw_url": "https://globalfishingwatch.org/map/vessel/93b926961-1535-a027-db16-c28a7bd86533",
+          "seen": ""
+        },
+        {
+          "name": "MARIA BEATRIZ",
+          "flag": "MEX",
+          "days_dark": 18,
+          "waters": "Mexican EEZ",
+          "went_dark_between": [
+            "2026-07-15",
+            "2026-07-22"
+          ],
+          "resurfaced_between": [
+            "2026-08-02",
+            "2026-08-09"
+          ],
+          "band_text": "dark 15–22 Jul → back 2–9 Aug",
+          "gfw_url": "https://globalfishingwatch.org/map/vessel/b8d7708cf-f408-f907-4419-cabec0d541fd",
+          "seen": ""
+        },
+        {
+          "name": "RUITAIFENG919",
+          "flag": "CHN",
+          "days_dark": 17,
+          "waters": "Guinean EEZ",
+          "went_dark_between": [
+            "2026-07-16",
+            "2026-07-23"
+          ],
+          "resurfaced_between": [
+            "2026-08-02",
+            "2026-08-09"
+          ],
+          "band_text": "dark 16–23 Jul → back 2–9 Aug",
+          "gfw_url": "https://globalfishingwatch.org/map/vessel/af5e575fa-a507-62a3-4916-438ddce53510",
+          "seen": ""
+        }
+      ]
+    },
+    {
+      "edition": "2026-08-10",
+      "edition_printed": "10 August 2026",
+      "days_after": 6,
+      "label": "ADDED BY THE LIST OF 10 AUG — six days after the day",
+      "count": 6,
+      "seen_all": "this page first saw all six on 10 AUG",
+      "rows": [
+        {
+          "name": "HY928-21%-81%",
+          "flag": null,
+          "days_dark": 50,
+          "waters": "Kiribati EEZ (Gilbert Islands)",
+          "went_dark_between": [
+            "2026-06-14",
+            "2026-06-21"
+          ],
+          "resurfaced_between": [
+            "2026-08-03",
+            "2026-08-10"
+          ],
+          "band_text": "dark 14–21 Jun → back 3–10 Aug",
+          "gfw_url": "https://globalfishingwatch.org/map/vessel/6a7f84a0c-cefb-3542-818c-a815ed9a04e2",
+          "seen": ""
+        },
+        {
+          "name": "ATLANTIC PRINCE",
+          "flag": "BLZ",
+          "days_dark": 39,
+          "waters": "Ivorian EEZ",
+          "went_dark_between": [
+            "2026-06-25",
+            "2026-07-02"
+          ],
+          "resurfaced_between": [
+            "2026-08-03",
+            "2026-08-10"
+          ],
+          "band_text": "dark 25 Jun–2 Jul → back 3–10 Aug",
+          "gfw_url": "https://globalfishingwatch.org/map/vessel/a8fa13d03-3876-ae64-a357-4823082c2984",
+          "seen": ""
+        },
+        {
+          "name": "GENPUKUMARU NO.18",
+          "flag": "JPN",
+          "days_dark": 32,
+          "waters": "Micronesian EEZ",
+          "went_dark_between": [
+            "2026-07-02",
+            "2026-07-09"
+          ],
+          "resurfaced_between": [
+            "2026-08-03",
+            "2026-08-10"
+          ],
+          "band_text": "dark 2–9 Jul → back 3–10 Aug",
+          "gfw_url": "https://globalfishingwatch.org/map/vessel/ac00d8361-1918-00cf-c451-21541b31ef61",
+          "seen": ""
+        },
+        {
+          "name": "DIVA MARIA",
+          "flag": "PAN",
+          "days_dark": 28,
+          "waters": "Ecuadorian EEZ (Galapagos)",
+          "went_dark_between": [
+            "2026-07-06",
+            "2026-07-13"
+          ],
+          "resurfaced_between": [
+            "2026-08-03",
+            "2026-08-10"
+          ],
+          "band_text": "dark 6–13 Jul → back 3–10 Aug",
+          "gfw_url": "https://globalfishingwatch.org/map/vessel/d5540ee68-8265-6a88-f861-f59bc4abdc0b",
+          "seen": ""
+        },
+        {
+          "name": "OCEAN WARRIOR",
+          "flag": "NRU",
+          "days_dark": 23,
+          "waters": "Kiribati EEZ (Line Group)",
+          "went_dark_between": [
+            "2026-07-11",
+            "2026-07-18"
+          ],
+          "resurfaced_between": [
+            "2026-08-03",
+            "2026-08-10"
+          ],
+          "band_text": "dark 11–18 Jul → back 3–10 Aug",
+          "gfw_url": "https://globalfishingwatch.org/map/vessel/fa750f73c-c76d-1036-3655-692739b178ac",
+          "seen": ""
+        },
+        {
+          "name": "ST. MARIANNE",
+          "flag": "USA",
+          "days_dark": 23,
+          "waters": "United States EEZ (Hawaii)",
+          "went_dark_between": [
+            "2026-07-11",
+            "2026-07-18"
+          ],
+          "resurfaced_between": [
+            "2026-08-03",
+            "2026-08-10"
+          ],
+          "band_text": "dark 11–18 Jul → back 3–10 Aug",
+          "gfw_url": "https://globalfishingwatch.org/map/vessel/6c16015c4-4e84-8aef-1b6d-ff66d1e7a561",
+          "seen": ""
+        }
+      ]
+    },
+    {
+      "edition": "2026-08-11",
+      "edition_printed": "11 August 2026",
+      "days_after": 7,
+      "label": "ADDED BY THE LIST OF 11 AUG — seven days after the day",
+      "count": 2,
+      "seen_all": "this page first saw all two on 11 AUG",
+      "rows": [
+        {
+          "name": "PANOFI FORE RUNNER",
+          "flag": "GHA",
+          "days_dark": 27,
+          "waters": "Ghanaian EEZ",
+          "went_dark_between": [
+            "2026-07-08",
+            "2026-07-15"
+          ],
+          "resurfaced_between": [
+            "2026-08-04",
+            "2026-08-11"
+          ],
+          "band_text": "dark 8–15 Jul → back 4–11 Aug",
+          "gfw_url": "https://globalfishingwatch.org/map/vessel/04b95cb83-31d8-06e7-0845-8691696643f5",
+          "seen": ""
+        },
+        {
+          "name": "HEATHER LYNN",
+          "flag": "USA",
+          "days_dark": 21,
+          "waters": "United States EEZ",
+          "went_dark_between": [
+            "2026-07-14",
+            "2026-07-21"
+          ],
+          "resurfaced_between": [
+            "2026-08-04",
+            "2026-08-11"
+          ],
+          "band_text": "dark 14–21 Jul → back 4–11 Aug",
+          "gfw_url": "https://globalfishingwatch.org/map/vessel/395358792-2ac0-d275-16a9-bd8cad811778",
+          "seen": ""
+        }
+      ]
+    },
+    {
+      "edition": "2026-08-12",
+      "edition_printed": "12 August 2026",
+      "days_after": 8,
+      "label": "ADDED BY THE LIST OF 12 AUG — eight days after the day",
+      "count": 2,
+      "seen_all": "this page first saw all two on 12 AUG",
+      "rows": [
+        {
+          "name": "ISABELLA",
+          "flag": "USA",
+          "days_dark": 27,
+          "waters": "Ecuadorian EEZ (Galapagos)",
+          "went_dark_between": [
+            "2026-07-09",
+            "2026-07-16"
+          ],
+          "resurfaced_between": [
+            "2026-08-05",
+            "2026-08-12"
+          ],
+          "band_text": "dark 9–16 Jul → back 5–12 Aug",
+          "gfw_url": "https://globalfishingwatch.org/map/vessel/cbcf2936a-af57-4c61-2723-ae67baecb0a9",
+          "seen": ""
+        },
+        {
+          "name": "LUCKY TJ",
+          "flag": "USA",
+          "days_dark": 22,
+          "waters": "United States EEZ (Hawaii)",
+          "went_dark_between": [
+            "2026-07-14",
+            "2026-07-21"
+          ],
+          "resurfaced_between": [
+            "2026-08-05",
+            "2026-08-12"
+          ],
+          "band_text": "dark 14–21 Jul → back 5–12 Aug",
+          "gfw_url": "https://globalfishingwatch.org/map/vessel/60a877daa-a23b-e4cc-18bc-3ed151267b0a",
+          "seen": ""
+        }
+      ]
+    },
+    {
+      "edition": "2026-08-13",
+      "edition_printed": "13 August 2026",
+      "days_after": 9,
+      "label": "ADDED BY THE LIST OF 13 AUG — nine days after the day",
+      "count": 7,
+      "seen_all": "this page first saw all seven on 13 AUG",
+      "rows": [
+        {
+          "name": "SHILLA EXPLORER",
+          "flag": "KOR",
+          "days_dark": 53,
+          "waters": "Kiribati EEZ (Gilbert Islands)",
+          "went_dark_between": [
+            "2026-06-14",
+            "2026-06-21"
+          ],
+          "resurfaced_between": [
+            "2026-08-06",
+            "2026-08-13"
+          ],
+          "band_text": "dark 14–21 Jun → back 6–13 Aug",
+          "gfw_url": "https://globalfishingwatch.org/map/vessel/02f164fce-e769-80f9-7686-cf0c8ce164a9",
+          "seen": ""
+        },
+        {
+          "name": "KOO'S 102",
+          "flag": "MHL",
+          "days_dark": 37,
+          "waters": "United States EEZ (Jarvis Islands)",
+          "went_dark_between": [
+            "2026-06-30",
+            "2026-07-07"
+          ],
+          "resurfaced_between": [
+            "2026-08-06",
+            "2026-08-13"
+          ],
+          "band_text": "dark 30 Jun–7 Jul → back 6–13 Aug",
+          "gfw_url": "https://globalfishingwatch.org/map/vessel/a4dec7178-8b0e-cd07-ee00-f71426dd9d6f",
+          "seen": ""
+        },
+        {
+          "name": "KOYOMARU NO.88",
+          "flag": "JPN",
+          "days_dark": 34,
+          "waters": "Micronesian EEZ",
+          "went_dark_between": [
+            "2026-07-03",
+            "2026-07-10"
+          ],
+          "resurfaced_between": [
+            "2026-08-06",
+            "2026-08-13"
+          ],
+          "band_text": "dark 3–10 Jul → back 6–13 Aug",
+          "gfw_url": "https://globalfishingwatch.org/map/vessel/fc9fe39ce-e742-0195-9af2-c41408fcc742",
+          "seen": ""
+        },
+        {
+          "name": "FUKUICHIMARU NO,83",
+          "flag": "JPN",
+          "days_dark": 28,
+          "waters": "Micronesian EEZ",
+          "went_dark_between": [
+            "2026-07-09",
+            "2026-07-16"
+          ],
+          "resurfaced_between": [
+            "2026-08-06",
+            "2026-08-13"
+          ],
+          "band_text": "dark 9–16 Jul → back 6–13 Aug",
+          "gfw_url": "https://globalfishingwatch.org/map/vessel/f40900f52-2e21-a727-f6d8-27fc24d1bcb2",
+          "seen": ""
+        },
+        {
+          "name": "CAP.DANNY B",
+          "flag": "ECU",
+          "days_dark": 16,
+          "waters": "Ecuadorian EEZ (Galapagos)",
+          "went_dark_between": [
+            "2026-07-21",
+            "2026-07-28"
+          ],
+          "resurfaced_between": [
+            "2026-08-06",
+            "2026-08-13"
+          ],
+          "band_text": "dark 21–28 Jul → back 6–13 Aug",
+          "gfw_url": "https://globalfishingwatch.org/map/vessel/bf2cb12da-adec-c006-fa10-0aa9c1070242",
+          "seen": ""
+        },
+        {
+          "name": "COTSWOLD",
+          "flag": "GBR",
+          "days_dark": 16,
+          "waters": "South African EEZ",
+          "went_dark_between": [
+            "2026-07-21",
+            "2026-07-28"
+          ],
+          "resurfaced_between": [
+            "2026-08-06",
+            "2026-08-13"
+          ],
+          "band_text": "dark 21–28 Jul → back 6–13 Aug",
+          "gfw_url": "https://globalfishingwatch.org/map/vessel/96347344c-c145-bc32-13de-8438d7c3ccf8",
+          "seen": ""
+        },
+        {
+          "name": "GOLDEN SAPPHIRE 88",
+          "flag": "PNG",
+          "days_dark": 16,
+          "waters": "Papua New Guinean EEZ",
+          "went_dark_between": [
+            "2026-07-21",
+            "2026-07-28"
+          ],
+          "resurfaced_between": [
+            "2026-08-06",
+            "2026-08-13"
+          ],
+          "band_text": "dark 21–28 Jul → back 6–13 Aug",
+          "gfw_url": "https://globalfishingwatch.org/map/vessel/1292f6c01-1806-a6b7-ef4c-88e2b8bcc4c0",
+          "seen": ""
+        }
+      ]
+    },
+    {
+      "edition": "2026-08-14",
+      "edition_printed": "14 August 2026",
+      "days_after": 10,
+      "label": "ADDED BY THE LIST OF 14 AUG — ten days after the day",
+      "count": 4,
+      "seen_all": "this page first saw all four on 14 AUG",
+      "rows": [
+        {
+          "name": "SOUTHERN SEAS 301",
+          "flag": "SLB",
+          "days_dark": 26,
+          "waters": "Kiribati EEZ (Gilbert Islands)",
+          "went_dark_between": [
+            "2026-07-12",
+            "2026-07-19"
+          ],
+          "resurfaced_between": [
+            "2026-08-07",
+            "2026-08-14"
+          ],
+          "band_text": "dark 12–19 Jul → back 7–14 Aug",
+          "gfw_url": "https://globalfishingwatch.org/map/vessel/6bb65b849-9722-5238-4a08-0ff4df3afa24",
+          "seen": ""
+        },
+        {
+          "name": "CAPT SILVER",
+          "flag": "USA",
+          "days_dark": 23,
+          "waters": "United States EEZ (Hawaii)",
+          "went_dark_between": [
+            "2026-07-15",
+            "2026-07-22"
+          ],
+          "resurfaced_between": [
+            "2026-08-07",
+            "2026-08-14"
+          ],
+          "band_text": "dark 15–22 Jul → back 7–14 Aug",
+          "gfw_url": "https://globalfishingwatch.org/map/vessel/4be614f17-7da8-acd5-6493-6f701714c315",
+          "seen": ""
+        },
+        {
+          "name": "TXORIARGI",
+          "flag": "ESP",
+          "days_dark": 22,
+          "waters": "Seychellois EEZ",
+          "went_dark_between": [
+            "2026-07-16",
+            "2026-07-23"
+          ],
+          "resurfaced_between": [
+            "2026-08-07",
+            "2026-08-14"
+          ],
+          "band_text": "dark 16–23 Jul → back 7–14 Aug",
+          "gfw_url": "https://globalfishingwatch.org/map/vessel/b6ffe9fc7-7bfe-5990-72eb-390901d2fda5",
+          "seen": ""
+        },
+        {
+          "name": "JIN HUI NO.6",
+          "flag": "CHN",
+          "days_dark": 20,
+          "waters": "Kiribati EEZ (Gilbert Islands)",
+          "went_dark_between": [
+            "2026-07-18",
+            "2026-07-25"
+          ],
+          "resurfaced_between": [
+            "2026-08-07",
+            "2026-08-14"
+          ],
+          "band_text": "dark 18–25 Jul → back 7–14 Aug",
+          "gfw_url": "https://globalfishingwatch.org/map/vessel/759843c06-619e-7e23-bb09-021116e0956a",
+          "seen": ""
+        }
+      ]
+    },
+    {
+      "edition": "2026-08-15",
+      "edition_printed": "15 August 2026",
+      "days_after": 11,
+      "label": "ADDED BY THE LIST OF 15 AUG — eleven days after the day",
+      "count": 3,
+      "seen_all": "this page first saw all three on 15 AUG",
+      "rows": [
+        {
+          "name": "P. BEVERLY HILLS",
+          "flag": "PRT",
+          "days_dark": 19,
+          "waters": "United States EEZ",
+          "went_dark_between": [
+            "2026-07-20",
+            "2026-07-27"
+          ],
+          "resurfaced_between": [
+            "2026-08-08",
+            "2026-08-15"
+          ],
+          "band_text": "dark 20–27 Jul → back 8–15 Aug",
+          "gfw_url": "https://globalfishingwatch.org/map/vessel/a9f21973b-b996-ef5a-6a02-a765a669bd4d",
+          "seen": ""
+        },
+        {
+          "name": "KONGOU",
+          "flag": "JPN",
+          "days_dark": 18,
+          "waters": "United States EEZ (Hawaii)",
+          "went_dark_between": [
+            "2026-07-21",
+            "2026-07-28"
+          ],
+          "resurfaced_between": [
+            "2026-08-08",
+            "2026-08-15"
+          ],
+          "band_text": "dark 21–28 Jul → back 8–15 Aug",
+          "gfw_url": "https://globalfishingwatch.org/map/vessel/d460e39ea-acdb-598f-c994-f3e351db17f9",
+          "seen": ""
+        },
+        {
+          "name": "FV KW",
+          "flag": "AUS",
+          "days_dark": 15,
+          "waters": "Australian EEZ",
+          "went_dark_between": [
+            "2026-07-24",
+            "2026-07-31"
+          ],
+          "resurfaced_between": [
+            "2026-08-08",
+            "2026-08-15"
+          ],
+          "band_text": "dark 24–31 Jul → back 8–15 Aug",
+          "gfw_url": "https://globalfishingwatch.org/map/vessel/ac5ff7e93-33ff-8388-6349-f348c2e17104",
+          "seen": ""
+        }
+      ]
+    }
+  ],
+  "fall": {
+    "then": {
+      "status": "SUPERSEDED",
+      "figure": "69 %–100 %",
+      "figure_falling": "69 %",
+      "figure_fixed": "–100 %",
+      "fraction_falling": "11 of 16",
+      "fraction_fixed": "11 of 11",
+      "of": "11 of 11–16",
+      "editions": 3,
+      "captures": 5
+    },
+    "now": {
+      "status": "PUBLISHED",
+      "figure": "22 %–38 %",
+      "figure_falling": "22 %",
+      "figure_fixed": "–38 %",
+      "fraction_falling": "11 of 49",
+      "fraction_fixed": "11 of 29",
+      "of": "11 of 29–49",
+      "editions": 12,
+      "captures": 32
+    },
+    "as_of": "2026-08-06T08:36:39Z",
+    "band": "Forty-nine ships could have been dark on 4 August 2026 and eighteen of them certainly, because the instrument publishes a return only as a week-wide window — so the total is written 18–49, and the share runs from 11 of 49 to 11 of 29 — the 29 being the eighteen ships this record can call certainly dark and the eleven the day itself named, which are the only ships the day could have known about.",
+    "held": "The eleven did not move, and cannot: no later night can put a name into a list that did not carry it. Earlier nights are another matter. This record's first list is the day itself, so the eleven is fixed from below by where this record begins — not by the sea.",
+    "moved": "It fell forty-seven points. What grew was the total: WANGBIAO-8730 with the list of 7 AUG, three days after the day; TUNA PESCA, SAPPHIRE III and MONTECELO with the list of 8 AUG, four days after the day; HAIZEA BOST, CONNIE JEAN TWO, CARMEN D, MARIA BEATRIZ and RUITAIFENG919 with the list of 9 AUG, five days after the day; HY928-21%-81%, ATLANTIC PRINCE, GENPUKUMARU NO.18, DIVA MARIA, OCEAN WARRIOR and ST. MARIANNE with the list of 10 AUG, six days after the day; PANOFI FORE RUNNER and HEATHER LYNN with the list of 11 AUG, seven days after the day; ISABELLA and LUCKY TJ with the list of 12 AUG, eight days after the day; SHILLA EXPLORER, KOO'S 102, KOYOMARU NO.88, FUKUICHIMARU NO,83, CAP.DANNY B, COTSWOLD and GOLDEN SAPPHIRE 88 with the list of 13 AUG, nine days after the day; SOUTHERN SEAS 301, CAPT SILVER, TXORIARGI and JIN HUI NO.6 with the list of 14 AUG, ten days after the day; and P. BEVERLY HILLS, KONGOU and FV KW with the list of 15 AUG, eleven days after the day — thirty-three ships this record did not hold when the law below was printed.",
+    "published": "A ceiling that can only fall. A further night can add a ship to a past day. It can never remove one, and it can never put a name into an edition that did not carry it.",
+    "published_when": "printed on this page 6 August 2026 at 08:36 UTC, in commit 91ee19b — before the capture that made it fall",
+    "then_published": "at 08:36 UTC on 6 August"
+  },
+  "ledger": {
+    "rows": [
+      {
+        "fetched_at_utc": "2026-08-05T04:39:32Z",
+        "http_status": 200,
+        "bytes": 35473,
+        "sha256": "ed3e54ec",
+        "content_sha256": "ee555746",
+        "edition_date_printed": "4 August 2026",
+        "vessels": 11,
+        "examined": 230
+      },
+      {
+        "fetched_at_utc": "2026-08-05T12:54:00Z",
+        "http_status": 200,
+        "bytes": 35485,
+        "sha256": "17c07fc3",
+        "content_sha256": "47338b03",
+        "edition_date_printed": "5 August 2026",
+        "vessels": 8,
+        "examined": 236
+      },
+      {
+        "fetched_at_utc": "2026-08-05T19:17:55Z",
+        "http_status": 200,
+        "bytes": 35485,
+        "sha256": "17c07fc3",
+        "content_sha256": "47338b03",
+        "edition_date_printed": "5 August 2026",
+        "vessels": 8,
+        "examined": 236
+      },
+      {
+        "fetched_at_utc": "2026-08-06T04:36:19Z",
+        "http_status": 200,
+        "bytes": 35485,
+        "sha256": "aed92f4f",
+        "content_sha256": "47338b03",
+        "edition_date_printed": "5 August 2026",
+        "vessels": 8,
+        "examined": 236
+      },
+      {
+        "fetched_at_utc": "2026-08-06T08:16:42Z",
+        "http_status": 200,
+        "bytes": 35517,
+        "sha256": "f673e2f7",
+        "content_sha256": "53114dfe",
+        "edition_date_printed": "6 August 2026",
+        "vessels": 7,
+        "examined": 234
+      },
+      {
+        "fetched_at_utc": "2026-08-06T14:22:17Z",
+        "http_status": 200,
+        "bytes": 35517,
+        "sha256": "f673e2f7",
+        "content_sha256": "53114dfe",
+        "edition_date_printed": "6 August 2026",
+        "vessels": 7,
+        "examined": 234
+      },
+      {
+        "fetched_at_utc": "2026-08-06T15:28:00Z",
+        "http_status": 200,
+        "bytes": 35517,
+        "sha256": "f673e2f7",
+        "content_sha256": "53114dfe",
+        "edition_date_printed": "6 August 2026",
+        "vessels": 7,
+        "examined": 234
+      },
+      {
+        "fetched_at_utc": "2026-08-07T04:38:28Z",
+        "http_status": 200,
+        "bytes": 36071,
+        "sha256": "74f093f7",
+        "content_sha256": "53114dfe",
+        "edition_date_printed": "6 August 2026",
+        "vessels": 7,
+        "examined": 234
+      },
+      {
+        "fetched_at_utc": "2026-08-07T18:15:53Z",
+        "http_status": 200,
+        "bytes": 36065,
+        "sha256": "4f4413b0",
+        "content_sha256": "988267cf",
+        "edition_date_printed": "7 August 2026",
+        "vessels": 6,
+        "examined": 242
+      },
+      {
+        "fetched_at_utc": "2026-08-08T00:44:58Z",
+        "http_status": 200,
+        "bytes": 36065,
+        "sha256": "4f4413b0",
+        "content_sha256": "988267cf",
+        "edition_date_printed": "7 August 2026",
+        "vessels": 6,
+        "examined": 242
+      },
+      {
+        "fetched_at_utc": "2026-08-08T04:36:25Z",
+        "http_status": 200,
+        "bytes": 36065,
+        "sha256": "4f4413b0",
+        "content_sha256": "988267cf",
+        "edition_date_printed": "7 August 2026",
+        "vessels": 6,
+        "examined": 242
+      },
+      {
+        "fetched_at_utc": "2026-08-08T21:37:19Z",
+        "http_status": 200,
+        "bytes": 36059,
+        "sha256": "4110d2b0",
+        "content_sha256": "5c89d9ec",
+        "edition_date_printed": "8 August 2026",
+        "vessels": 6,
+        "examined": 250
+      },
+      {
+        "fetched_at_utc": "2026-08-08T23:57:35Z",
+        "http_status": 200,
+        "bytes": 36059,
+        "sha256": "4110d2b0",
+        "content_sha256": "5c89d9ec",
+        "edition_date_printed": "8 August 2026",
+        "vessels": 6,
+        "examined": 250
+      },
+      {
+        "fetched_at_utc": "2026-08-09T00:00:53Z",
+        "http_status": 200,
+        "bytes": 36059,
+        "sha256": "4110d2b0",
+        "content_sha256": "5c89d9ec",
+        "edition_date_printed": "8 August 2026",
+        "vessels": 6,
+        "examined": 250
+      },
+      {
+        "fetched_at_utc": "2026-08-09T04:37:35Z",
+        "http_status": 200,
+        "bytes": 37901,
+        "sha256": "680c1c71",
+        "content_sha256": "5c89d9ec",
+        "edition_date_printed": "8 August 2026",
+        "vessels": 6,
+        "examined": 250
+      },
+      {
+        "fetched_at_utc": "2026-08-09T20:36:58Z",
+        "http_status": 200,
+        "bytes": 36897,
+        "sha256": "8bf3c1ff",
+        "content_sha256": "aa53ae8b",
+        "edition_date_printed": "9 August 2026",
+        "vessels": 9,
+        "examined": 227
+      },
+      {
+        "fetched_at_utc": "2026-08-10T04:36:45Z",
+        "http_status": 200,
+        "bytes": 32189,
+        "sha256": "95c28f17",
+        "content_sha256": "aa53ae8b",
+        "edition_date_printed": "9 August 2026",
+        "vessels": 9,
+        "examined": 227
+      },
+      {
+        "fetched_at_utc": "2026-08-10T17:47:21Z",
+        "http_status": 200,
+        "bytes": 32240,
+        "sha256": "90bd7aec",
+        "content_sha256": "7b3444ad",
+        "edition_date_printed": "10 August 2026",
+        "vessels": 10,
+        "examined": 213
+      },
+      {
+        "fetched_at_utc": "2026-08-10T22:04:56Z",
+        "http_status": 200,
+        "bytes": 32240,
+        "sha256": "90bd7aec",
+        "content_sha256": "7b3444ad",
+        "edition_date_printed": "10 August 2026",
+        "vessels": 10,
+        "examined": 213
+      },
+      {
+        "fetched_at_utc": "2026-08-10T22:41:12Z",
+        "http_status": 200,
+        "bytes": 32240,
+        "sha256": "90bd7aec",
+        "content_sha256": "423c17df",
+        "edition_date_printed": "10 August 2026",
+        "vessels": 11,
+        "examined": 213
+      },
+      {
+        "fetched_at_utc": "2026-08-11T04:39:04Z",
+        "http_status": 200,
+        "bytes": 32348,
+        "sha256": "e5ddbb89",
+        "content_sha256": "423c17df",
+        "edition_date_printed": "10 August 2026",
+        "vessels": 11,
+        "examined": 213
+      },
+      {
+        "fetched_at_utc": "2026-08-11T04:47:45Z",
+        "http_status": 200,
+        "bytes": 32348,
+        "sha256": "e5ddbb89",
+        "content_sha256": "423c17df",
+        "edition_date_printed": "10 August 2026",
+        "vessels": 11,
+        "examined": 213
+      },
+      {
+        "fetched_at_utc": "2026-08-11T11:19:15Z",
+        "http_status": 200,
+        "bytes": 32333,
+        "sha256": "a3107ddd",
+        "content_sha256": "a7ab0eb1",
+        "edition_date_printed": "11 August 2026",
+        "vessels": 11,
+        "examined": 189
+      },
+      {
+        "fetched_at_utc": "2026-08-11T21:58:00Z",
+        "http_status": 200,
+        "bytes": 32441,
+        "sha256": "e506a522",
+        "content_sha256": "a7ab0eb1",
+        "edition_date_printed": "11 August 2026",
+        "vessels": 11,
+        "examined": 189
+      },
+      {
+        "fetched_at_utc": "2026-08-12T04:36:39Z",
+        "http_status": 200,
+        "bytes": 31631,
+        "sha256": "e21f57d8",
+        "content_sha256": "a7ab0eb1",
+        "edition_date_printed": "11 August 2026",
+        "vessels": 11,
+        "examined": 189
+      },
+      {
+        "fetched_at_utc": "2026-08-12T18:23:12Z",
+        "http_status": 200,
+        "bytes": 31635,
+        "sha256": "14ddeb5c",
+        "content_sha256": "005c4e9f",
+        "edition_date_printed": "12 August 2026",
+        "vessels": 10,
+        "examined": 257
+      },
+      {
+        "fetched_at_utc": "2026-08-12T23:21:00Z",
+        "http_status": 200,
+        "bytes": 31635,
+        "sha256": "14ddeb5c",
+        "content_sha256": "005c4e9f",
+        "edition_date_printed": "12 August 2026",
+        "vessels": 10,
+        "examined": 257
+      },
+      {
+        "fetched_at_utc": "2026-08-13T04:36:40Z",
+        "http_status": 200,
+        "bytes": 31635,
+        "sha256": "1a3e76fe",
+        "content_sha256": "005c4e9f",
+        "edition_date_printed": "12 August 2026",
+        "vessels": 10,
+        "examined": 257
+      },
+      {
+        "fetched_at_utc": "2026-08-13T17:02:56Z",
+        "http_status": 200,
+        "bytes": 31661,
+        "sha256": "f226ab8c",
+        "content_sha256": "96fc683e",
+        "edition_date_printed": "13 August 2026",
+        "vessels": 11,
+        "examined": 265
+      },
+      {
+        "fetched_at_utc": "2026-08-14T04:36:51Z",
+        "http_status": 200,
+        "bytes": 31715,
+        "sha256": "ac75fe92",
+        "content_sha256": "96fc683e",
+        "edition_date_printed": "13 August 2026",
+        "vessels": 11,
+        "examined": 265
+      },
+      {
+        "fetched_at_utc": "2026-08-14T20:45:26Z",
+        "http_status": 200,
+        "bytes": 31891,
+        "sha256": "c5727d4c",
+        "content_sha256": "53015a07",
+        "edition_date_printed": "14 August 2026",
+        "vessels": 11,
+        "examined": 249
+      },
+      {
+        "fetched_at_utc": "2026-08-15T04:36:57Z",
+        "http_status": 200,
+        "bytes": 31882,
+        "sha256": "4009e3b6",
+        "content_sha256": "04309879",
+        "edition_date_printed": "15 August 2026",
+        "vessels": 11,
+        "examined": 233
+      }
+    ],
+    "caption": "Eight lists came back in more than one set of bytes each while every field this page reads stayed identical — a copy's fingerprint is not the list's identity, which is why the table carries both. The “ships in that list” column counts the ships in each saved list, not the ships this page can place in 4 August 2026: every list holds only the seven days before its own date, so a ship leaves the list as that window moves past it. It never leaves the day. “Disappearances examined” is what that same copy says the instrument examined to produce those ships — a figure this record has saved every night since the first."
+  },
+  "commands": [
+    {
+      "label": "the day",
+      "cmd": "python3 projects/season1/capture/day.py 2026-08-04 --as-of 2026-08-15T04:36:57Z | head -7"
+    },
+    {
+      "label": "every ship, and when it arrived",
+      "cmd": "python3 projects/season1/capture/day.py 2026-08-04 --as-of 2026-08-15T04:36:57Z"
+    },
+    {
+      "label": "the same day live — this page does not publish this",
+      "cmd": "python3 projects/season1/capture/day.py 2026-08-04"
+    },
+    {
+      "label": "the night before",
+      "cmd": "python3 projects/season1/capture/day.py 2026-08-04 --as-of 2026-08-06T08:36:39Z"
+    }
+  ],
+  "output": "day 2026-08-04  ·  32 capture(s) read, 12 distinct edition(s), 13 distinct content(s), 21 distinct bod(y/ies)\n  vessels dark on that day .......... 18–49 (certain–possible)\n  knowable on the day, DERIVED ...... 11\n  knowable on the day, OBSERVED ..... 11\n  SHARE knowable on the day ......... 22%–38%  (11 of 29–49)\n    (a ceiling from 12 edition(s), 32 capture(s): further nights can only add vessels to this day, so this share can only fall)\n    (the upper end assumes nothing: whatever became of the 11 names the day itself printed, no case this record allows puts the share above 11 of 29 — that end is a ceiling over all of them. The lower end does assume every one of those 11 was in fact dark on the day; not one of them is certain, so unconditionally the share's floor is 0.)\n",
+  "floor": "No number closes this. A method that counts a disappearance only when the ship comes back cannot see the ships that never come back. Forty-nine is what this record can place in 4 August 2026, not what was on the sea that day."
+}
+  </script>
+
+  <h1 class="sd-day" id="sd-day">4 AUGUST 2026</h1>
+  <p class="sd-sub">one day of the sea, and how much of it was knowable on the day itself</p>
+
+  <!-- THE ARRIVAL — owed item (k), and the first thing this page DOES rather than says.
+       Session 79 measured the sentence below this block for the first time, by removing
+       everything after it from the rendered document, and it failed 0 of 2: both severed
+       readers got the lateness and neither named the mechanism, and both took the page to
+       be about ships that were PRESENT on the day. The item stopped being a question
+       about sentences that night. This is the answer: the day runs forward. The question
+       stays fixed on one finished day while the list answering it moves through every
+       edition this record holds.
+
+       RESTAGED IN SESSION 81, on DRAMATURG-80 §5 and on the panel that agreed with it
+       from the other direction. Until tonight the number that ran was the COUNT, and it
+       climbed: a page about ships switching themselves off had given itself a head in
+       which ships switch themselves on, an accretion loop shaped exactly like a progress
+       bar, which finishes and thereby says the day is now fully known. Tonight the number
+       that runs is the SHARE, and it falls — the same figure the body of this page
+       publishes and strikes. The names are in two blocks with headings that are text and
+       not paint: what the day itself held, which cannot grow, and what only later lists
+       could give, which is the hole. The resting state is the FIRST stop, not the last, so
+       a reader who is given no motion is given the day's own answer and five buttons, and
+       the delay is something they do rather than watch. -->
+  <section class="sd-arrive" id="sd-arrive">
+    <!-- THE SUBJECT LINE IS GONE — `DRAMATURG-89.md` cut 6. It read HOW MUCH OF 4 AUGUST
+         2026 WAS KNOWABLE ON 4 AUGUST 2026, and it was the third printing of one thesis
+         inside the first 353 px of a phone screen: the `<h1>` above it prints the day, the
+         `.sd-sub` under that prints "one day of the sea, and how much of it was knowable on
+         the day itself", and then this line said it a third time in capitals. Nothing is
+         claimed for its height against any frame measurement — the staging voice ordered it
+         for economy and named banked failure 48 in advance if the house booked the pixels. -->
+    <p class="sd-arrive-gloss" id="sd-arrive-gloss"></p>
+    <div class="sd-arrive-headline">
+      <div class="sd-arrive-row">
+        <span class="sd-arrive-count" id="sd-arrive-count"><span
+          class="sd-arrive-count-falling" id="sd-arrive-count-falling"></span><span
+          class="sd-arrive-count-fixed" id="sd-arrive-count-fixed"></span></span>
+        <span class="sd-arrive-when" id="sd-arrive-when"><span
+          id="sd-arrive-when-fixed"></span> <span id="sd-arrive-when-tail"></span></span>
+      </div>
+      <!-- OWED ITEM (A)'s STAGING, and the build owed since session 84 for item (y).
+           `DRAMATURG-85.md` ruled the three-paragraph block that stood between the two name
+           lists annotation and not staging — it counted the block's mutations across a run
+           and found none — and banked a build rather than a cut. Its own words, at :245 and
+           :257 of that memo: *"Take the four fixed paragraphs out of the run's spine and put
+           the disclosure inside the numeral"*, and *"`230` standing still in the same frame
+           as `35 %–100 %` while it falls."* Two paraphrases stood here in quotation marks
+           until `VERIFIER-87.md` §9 grepped for them and found neither in the file they
+           named. Nothing about the build changed; the marks did, and they had to.
+           The second row is written once on load and never touched by a stop, and that is
+           the whole point of it: at stop 0 the two figures read 100 %–100 % and 11 of 230,
+           at stop 7 they read 33 %–100 % and 11 of 230.
+           AND THE STAGING VOICE OF SESSION 87 RETURNED IT ANYWAY, on a measurement neither
+           the prescription nor this build had made: the two figures share no term. The
+           falling one speaks in percent and the standing one in ships, and no state of the
+           run prints `11`, so the relation between them is carried by the 11.52 px sentence
+           beside the numeral and not by the run. Its prescription — the falling figure
+           printing `11 of 11 → 11 of 33` beside the standing `11 of 230` — is what is owed
+           on this item now, and it is BUILT IN SESSION 88 — the row immediately below.
+           The frame is three rows from tonight: the percentage, the division that
+           percentage is, and the division the day's own list is. The middle row is the
+           only thing added; the bottom row lost the sentence the middle row now performs
+           — *"No stop moves this figure"* — and had the rest of it rewritten, including
+           the attribution clause that went out and came back the same night on a blocking
+           finding (`VERIFIER-88.md` §3). It said "lost one sentence" here for one hour,
+           which understated exactly the part that was blocking. -->
+      <!-- THE FALLING END, IN SHIPS. `DRAMATURG-87.md:105-110`, ruling on its own
+           built prescription: *"Placement was never the problem; units were … the falling
+           figure must print its own fraction, not only its percentage, so that the run
+           shows `11 of 11 → 11 of 33` while `11 of 230` stands underneath. Then the
+           numerator repeats down the column, the denominators diverge, the run does the
+           arguing, and the 11.52 px sentence can go."* This is that row. It is set in the
+           standing figure's size and its tabular numerals — the same species of object,
+           deliberately — and in the LIVE ink and the display weight, because the one
+           difference between the two rows is the one the run exists to show: this numeral
+           is rewritten at every stop and the one under it is written once.
+           AND IT STANDS WITHOUT A CLAUSE, by the order of the voice that prescribed it.
+           A clause was written under this numeral and deleted the same night:
+           `DRAMATURG-88.md` §§3–4 measured it at 86 of the 104 px the row cost a phone frame
+           found it re-telling the sentence this session had deleted three lines lower,
+           printing `11 of 11` twice at stop 0 for two different ends, and standing as 92 px
+           of grey between the two fractions it was written to join. What says what this
+           division is, is the division under it and the run rewriting one of them. -->
+      <!-- THE RESTAGING OF SESSION 90, and it is one span on an existing row.
+           `DRAMATURG-89.md` returned the premiere gate in one sentence: *"the head's frame
+           prints how much of the day was knowable and never prints how much of it is known,
+           and knowing is the only thing in this run that turns."* Across the nine stops the
+           run then had, the share falls by degrees eight times; exactly one node changes kind — *not one of
+           these names is certainly dark* → *two* → *four* (the run's shape on the night that
+           memo was written; a tenth list has since taken it to *eleven*) — and it was body prose 861 px
+           under the figure, off a phone screen at every stop and at every scroll position
+           that also holds the figure. The count now stands on the fraction's own row, in
+           the run's live ink, rewritten at every stop like the two numerals above it: at
+           stop 0 it reads `0 of them certainly dark` beside `11 of 11`, and at the last
+           stop `4 of them certainly dark` beside `11 of 35` — the last stop as the run stood
+           that night. What it reads on the last stop of any later night is whatever the
+           captures make it: the string is generated, and a tally typed into a comment is a
+           number that goes stale on a night nobody is reading comments. (It said `11 of
+           them certainly dark` beside `11 of 42` until session 94, when the eleventh list
+           made it 15 and 46 — the second comment in this file to be cured of the same
+           habit, the first at line 147 of this file — two and a half thousand lines above,
+           not the "four hundred" this sentence claimed for one night, which pointed into the
+           middle of the data island where no comment stands at all: `VERIFIER-94` blocking 3.)
+           WHY ON THIS ROW AND NOT ON ITS OWN. A fourth row pushes the reserved space down
+           by its own height, and the span measuring how much of that space shares a frame
+           with the whole figure is floored at 268 px by that same memo's Cut 1 — the item
+           it restated precisely so that the work's subject would stop paying for staging.
+           A row bought with the hole would be that mistake one night after it was named. -->
+      <!-- DRAMATURG-92 cut 3, AND THE CORRECTION OF SESSION 92 MADE IT COMPULSORY. The memo
+           found `share_fixed_of` computed at all ten stops and rendered nowhere: the figure
+           printed two ends and gave a denominator to only one. That was a staging fault while
+           the upper end was a constant 100 %. The same night the gate proved the upper end was
+           never a constant — it was `obs / max(certain, obs)`, a quotient of two disjoint sets
+           of ships — and the corrected end falls 100 → 85 → 73 → 50. An end that moves and
+           prints no division is the exact defect this frame was built in session 88 to end. -->
+      <div class="sd-arrive-row">
+        <span class="sd-arrive-frac" id="sd-arrive-frac"></span>
+        <span class="sd-arrive-frac-fixed" id="sd-arrive-frac-fixed"></span>
+        <span class="sd-arrive-certain" id="sd-arrive-certain"></span>
+      </div>
+      <div class="sd-arrive-row">
+        <span class="sd-arrive-standing-fig" id="sd-arrive-standing-fig"></span>
+        <span class="sd-arrive-standing-note" id="sd-arrive-standing-note"></span>
+      </div>
+    </div>
+    <!-- WHAT THE ENDS OF THE FIGURE CAN DO LEFT THE SPINE IN SESSION 88, and it is not
+         deleted: it stands below the controls with this head's other prose, where nothing
+         measures a fold, exactly as the confession and the range went down there in 85.
+         `DRAMATURG-88.md` §4 priced this paragraph at 87 px of a phone frame and ruled
+         three of its four clauses now performed by the three rows above — the run shows one
+         end falling seven times and the other holding, and a sentence saying so is the run
+         described to a reader who is watching it. What no run can show is the CONDITION on
+         the other end, and that sentence — this house's most expensive, twice published
+         false and twice repaired — travels whole. The law it opens with is already printed
+         in the body beside the struck figure, with the commit and the minute it was
+         published in. -->
+    <p class="sd-arrive-group" id="sd-arrive-head-then"></p>
+    <ul class="sd-arrive-names" id="sd-arrive-names-then"></ul>
+    <!-- THE LAST THREE FIXED PARAGRAPHS LEFT THIS SPINE IN SESSION 87, and what replaced
+         them is two rows in the frame above, not silence: the numeral `11 of 230` stands in
+         the head's own frame at every stop and the three aggregates the list published
+         stand below the controls with the rest of this head's prose. `DRAMATURG-85.md`
+         priced what they cost here — of the 250 px this face is over a phone frame, this
+         block was 151 of them — and ruled them annotation, because nothing in them moved
+         between stops. Nothing is withdrawn: every figure and every word of the tier line
+         is below, and the numeral above carries its own tier in its own clause. -->
+    <p class="sd-arrive-group" id="sd-arrive-head-since"></p>
+    <ul class="sd-arrive-names" id="sd-arrive-names-since"></ul>
+    <p class="sd-arrive-hedge" id="sd-arrive-hedge"></p>
+    <!-- CONDITION 1 OF THE PREMIERE GATE (`KRITIKER-89.md`), built here. The critic drove
+         every stop, re-derived the published share from the captures in code of its own,
+         and then wrote that the one thing only this machinery gives — a state re-derivable
+         from committed bytes at an arbitrary past moment — cost it a terminal every time,
+         because the page computed the proof for each stop and threw it away at render.
+         Both strings have been in the data island since session 84. They are on the face
+         now, rewritten by every stop: the instant the stop IS, and the line that returns
+         that stop's share. A stranger presses a button, copies the line, runs it, and
+         meets the number they are looking at.
+         IT STANDS BELOW THE RESERVED SPACE. Above it, it would push the hole down and be
+         paid for out of the 268 px `DRAMATURG-89.md` floored — the work's subject buying
+         the work's evidence, which is the trade that memo restated the instrument to
+         stop. -->
+    <!-- ONE LINE, NOT TWO. The instant stood on a line of its own above the command until
+         `DRAMATURG-90.md` cut 1 measured what that cost: the instant is a byte-exact
+         substring of the command at all nine stops the run then had, so the face printed the same twenty
+         characters twice, fifteen pixels apart, for a third of this block's payload. The
+         instant is still on the face — inside the line that uses it. -->
+    <p class="sd-arrive-proof" id="sd-arrive-proof">
+      <span id="sd-arrive-proof-lead"></span>
+      <code class="sd-arrive-proof-line" id="sd-arrive-proof-cmd"></code>
+    </p>
+    <!-- OWED ITEM (y), paid in session 84. The wrapper is the whole repair and it adds no
+         word, no element the reader hears, and nothing at all above 480 px: it exists so
+         that the two things a phone was losing — the buttons that drive the run and the
+         line that says what the run is doing — are painted directly under the frame at
+         phone widths while the block above them fills. IT SAID "held to the bottom of the
+         viewport" UNTIL SESSION 92 AND THAT WAS FALSE — `DRAMATURG-92.md` cut 9. The
+         mechanism is a flex `order` swap at ≤480 px; it reorders paint and pins nothing, and
+         `tools/fold.mjs` exits 1 on this page because the ladder and the state line leave a
+         390×844 viewport as soon as a reader scrolls to the thing they scrolled for. The
+         instrument was red and the comment beside it claimed the defect solved. The red
+         stays published, in the work's own guard table, at the number the instrument
+         returns. `DRAMATURG-83.md` §4 measured the loss at
+         390×844: figure at y=248 and visible, ladder at y=938, state line at y=991, both
+         below an 844 px fold. A reader on a phone therefore watched the number fall with
+         the controls and the announcement off-screen — the piece staging its own argument
+         against itself for the second time in two sessions.
+         DOM order is untouched, so the order a screen reader takes is the order it always
+         took; only the paint moves, and only where the fold is real. -->
+    <div class="sd-arrive-controls" id="sd-arrive-controls">
+      <div class="sd-arrive-ladder" id="sd-arrive-ladder"></div>
+      <!-- The run, said. One line, under the buttons it is about, in a region that announces
+           its own changes. Session 83, owed items (s) and (t). It is deliberately NOT the
+           mutating head: the figure, the headings and the name list stay silent, and this
+           line speaks for them twice in a run.
+           IT CLAIMED THE TWO VISITORS ARE "told the same thing in the same words at the same
+           moment" UNTIL SESSION 92, and that was false — `DRAMATURG-92.md` cut 7 measured
+           three spoken sentences carrying zero numbers against nine figure rewrites on the
+           screen. The spoken lines now carry the stop's own published share, so a visitor who
+           cannot see the figure is told what it says at the end of the run and at every stop
+           they hold. They are still not told the eight states in between: the screen shows
+           ten and the region speaks three, and this comment no longer claims otherwise. -->
+      <p class="sd-arrive-state" id="sd-arrive-state" role="status" aria-live="polite"></p>
+    </div>
+    <!-- TWO PARAGRAPHS STOOD HERE UNTIL SESSION 93 AND BOTH ARE GONE, by two cuts of
+         `DRAMATURG-92.md` this house owed on the changed state.
+         `#sd-arrive-cap` (cut 6) printed the mechanism a third time, 1,241 px from the
+         first printing. It is printed twice still: in the gloss at the top of the head and
+         in `.sd-because` below the run.
+         `#sd-arrive-constant` (cut 4) was *what the ends of the figure can do* — 112 px of a
+         390 px phone frame, 1,072 px below the numeral it governed, and given by that memo
+         the choice of moving into the reserved frame or coming off. It comes off: inside the
+         frame it would push the hole down, and the same memo's floor on the hole is already
+         under. Three of its four clauses are now performed by the corrected run — both ends
+         fall, and the causes differ — and the fourth, that the two counts the upper end
+         divides are disjoint sets of ships, is the finding no run can perform and it is now
+         in `#sd-arrive-hedge`, in the sentence that defines *certain*.
+         Both strings are gone from the island with their elements: see the two blocks in
+         `data.py` where their keys stood. -->
+    <!-- MOVED HERE FROM THE SPINE, session 85, on the staging voice's measurements. The
+         second limb of (A) — this record cannot tell a ship that came back later from a
+         ship the list did not print — and, with it, the confession, the range across the
+         seven lists and the refusal to say which way the share would move if the lists
+         were longer. All four were true where they stood and all four were between the
+         eleven names and the space that fills under them, which is the one comparison this
+         piece has. Nothing measures a fold down here. -->
+    <!-- THE THREE FIGURES THE LIST PUBLISHED, moved down here in session 87 from between
+         the two name lists, with the tier line that covers them and the sentence that turns
+         them into the finding. They are not demoted: `.sd-arrive-cut-figs` keeps the size it
+         was given in 85, at the weight of the figure they qualify. What changed is where
+         they stand — out of the run's spine, into the block of this head's prose, because
+         the frame above now carries the one of them the run needs. -->
+    <p class="sd-arrive-group" id="sd-arrive-cut-head"></p>
+    <p class="sd-arrive-cut-figs" id="sd-arrive-cut-figs"></p>
+    <p class="sd-arrive-cap" id="sd-arrive-cut-said"></p>
+    <p class="sd-arrive-tier" id="sd-arrive-cut-tier"></p>
+    <p class="sd-arrive-cap" id="sd-arrive-since-note"></p>
+    <p class="sd-arrive-cap" id="sd-arrive-cut-kept"></p>
+    <p class="sd-arrive-tier" id="sd-arrive-cut-refused"></p>
+    <!-- The address of the requirement quoted one line up. A SOURCED sentence about a named
+         third party's method carries its retrievable URL on the face that prints it, in the
+         self-contained file that travels — this house has already shipped one claim whose
+         only address was a code comment and banked it. -->
+    <p class="sd-arrive-tier" id="sd-arrive-cut-refused-src"></p>
+    <p class="sd-arrive-tier" id="sd-arrive-tier"></p>
+    <p class="sd-arrive-tier" id="sd-arrive-restraint"></p>
+  </section>
+
+  <p class="sd-lede" id="sd-lede"></p>
+
+  <p class="sd-define" id="sd-define"></p>
+
+  <p class="sd-because">A ship's disappearance reaches the instrument's daily list only when the
+  ship comes back. So a day of the sea is nearly empty on the day itself and keeps filling for
+  weeks afterwards. This page holds one day open and publishes how much of its darkness could be
+  placed in it on the day, and how much arrived later.</p>
+  <!-- The second method-sheet quotation stood here — "Daily. Window: disabling events that
+       ended in the last 7 days" — and was cut in session 77 (DRAMATURG-76 §3), because the
+       page said the seven-day window three times. The cut was not taken on judgement: it
+       was question 2 of that night's frozen pre-registration, and it held. Both readers of
+       the arm without it gave the window and quoted the ledger's caption for it, 2 of 2 at
+       the pass mark — and both readers of the arm that still HAD it quoted the caption too,
+       unprompted. All four found the window where it does work. The source is still on this
+       face, linked, in the definition above. (PANEL-77.md, Q2, retired to commit 8b8e777.) -->
+
+  <p class="sd-legend" id="sd-legend"></p>
+
+  <div class="sd-fieldwrap">
+    <div class="sd-fieldstrip">
+      <div class="sd-scale" id="sd-scale"></div>
+      <div class="sd-rowsarea" id="sd-rowsarea">
+        <div class="sd-rules" aria-hidden="true"></div>
+        <div class="sd-rule4" id="sd-rule4" aria-hidden="true"><span class="sd-rule4-label" id="sd-rule4-label"></span></div>
+      </div>
+    </div>
+  </div>
+
+  <section class="sd-fall">
+    <p class="sd-fall-q" id="sd-fall-q"></p>
+    <div class="sd-shares" id="sd-shares"></div>
+    <!-- The gloss on the denominator, ordered by DRAMATURG-74 §A and placed here, below
+         the figures, because a reader does not want a definition before they know they
+         have a problem. -->
+    <p class="sd-fall-line sd-bandnote" id="sd-bandnote"></p>
+    <p class="sd-fall-line" id="sd-held"></p>
+    <blockquote class="sd-quoted" id="sd-quoted"></blockquote>
+  </section>
+
+  <!-- KRITIKER-95 CONDITION 2, built here, and the corpus freeze that had to come with it.
+       The critic's block: this work publishes one day, and the one day it publishes is the
+       single day in its own record whose measurement argues its own thesis least well —
+       because the numerator is pinned from below by where the record BEGINS. Four days of
+       the same sea, each read at the same age, differ by a factor of ten, and every one of
+       them was already sitting in `../captures/` reachable by a script this house wrote
+       three weeks ago. This is the machine's REPETITION limb, ruled failing at two gates.
+       It costs four runs of a committed instrument and not one night of new waiting.
+       The freeze stands above it because the freeze is what makes the comparison readable:
+       a page whose corpus grows every night has no fixed age to compare anything at. -->
+  <p class="sd-frozen" id="sd-frozen"></p>
+
+  <section class="sd-compare">
+    <p class="sd-compare-head" id="sd-compare-head"></p>
+    <p class="sd-compare-lead" id="sd-compare-lead"></p>
+    <div class="sd-compare-rows" id="sd-compare-rows"></div>
+    <p class="sd-compare-finding" id="sd-compare-finding"></p>
+    <p class="sd-compare-tier" id="sd-compare-tier"></p>
+  </section>
+
+  <section class="sd-evidence">
+    <p class="sd-ledger-cap" id="sd-ledger-cap"></p>
+    <div class="sd-ledger" id="sd-ledger"></div>
+    <!-- The caption stands ABOVE its table from session 76 (DRAMATURG-76 §3). Below it,
+         it read perfectly and reached nobody's eye: a reader of the wide render answered
+         the panel's question on it correctly and for an invented reason, having already
+         learned the wrong model from the column head three inches higher. A load-bearing
+         correction does not sit downstream of the misreading it exists to prevent. -->
+    <p class="sd-cmd-line" id="sd-cmds"></p>
+    <div class="sd-raw">
+      <pre id="sd-raw-pre"></pre>
+      <p class="sd-raw-cap">verbatim, unedited</p>
+    </div>
+  </section>
+
+  <!-- DRAMATURG-91 cuts 2 and 3. The source line stands ABOVE the floor now: it is owed and
+       keeps its place on the face, but nothing may stand between the floor and the bottom of
+       the page. A work whose last sentence is "not what was on the sea that day" does not end
+       on a URL. The restraint's second printing (`#sd-restraint`, fed from data.method.restraint)
+       is struck entirely — it was byte-identical to `#sd-arrive-restraint` 5,313 px earlier. -->
+  <div class="sd-foot">
+    <p>Vessel names, flags, waters, durations and edition dates as printed by
+    <a href="https://frankbueltge.de/ghost-fleet/">https://frankbueltge.de/ghost-fleet/</a>, linked name by name.</p>
+  </div>
+
+  <p class="sd-floor" id="sd-floor"></p>
+
+</div>
+</div>
+<script>
+(function () {
+  "use strict";
+
+  var data = JSON.parse(document.getElementById("sd-data").textContent);
+
+  function parseDay(s) {
+    var p = s.split("-");
+    return new Date(Date.UTC(+p[0], +p[1] - 1, +p[2]));
+  }
+  function addDays(dt, n) { return new Date(dt.getTime() + n * 86400000); }
+  function diffDays(a, b) { return Math.round((b.getTime() - a.getTime()) / 86400000); }
+  var MONTHS = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
+  function tickLabel(dt) { return dt.getUTCDate() + " " + MONTHS[dt.getUTCMonth()]; }
+
+  var allRows = data.field.reduce(function (acc, g) { return acc.concat(g.rows); }, []);
+
+  // the field's own bounds, taken from the data itself: earliest possible
+  // dark-start across every row, latest possible resurfacing across every row
+  var fieldStart = allRows.reduce(function (min, r) {
+    var d = parseDay(r.went_dark_between[0]);
+    return d < min ? d : min;
+  }, parseDay(allRows[0].went_dark_between[0]));
+  var dataEnd = allRows.reduce(function (max, r) {
+    var d = parseDay(r.resurfaced_between[1]);
+    return d > max ? d : max;
+  }, parseDay(allRows[0].resurfaced_between[1]));
+  // the drawing surface runs a few unlabelled days past the last real date, so
+  // the rule and the latest bars stand inside the field instead of on its
+  // border — a margin, like any chart's, not a claim about any further day
+  var RIGHT_MARGIN_DAYS = 6;
+  var layoutEnd = addDays(dataEnd, RIGHT_MARGIN_DAYS);
+  var layoutDays = diffDays(fieldStart, layoutEnd);
+  var heldDay = parseDay(data.day.iso);
+
+  function pct(dt) { return (diffDays(fieldStart, dt) / layoutDays) * 100; }
+
+  document.getElementById("sd-day").textContent = data.day.printed;
+
+  // ── THE ARRIVAL ───────────────────────────────────────────────────────────────────
+  // Owed item (k). The stops are the field's own blocks with a running total; nothing
+  // is computed here that the body of the page does not already print. Three ways in,
+  // and all three land on the same state: it runs once on load; every stop is a button;
+  // a reader who has asked their machine for no motion is given the last stop and the
+  // same buttons, because the point is operable, not merely watchable.
+  var arrive = data.arrive;
+  var stops = arrive.stops;
+  var countEl = document.getElementById("sd-arrive-count");
+  var countFallEl = document.getElementById("sd-arrive-count-falling");
+  var countFixedEl = document.getElementById("sd-arrive-count-fixed");
+  var fracEl = document.getElementById("sd-arrive-frac");
+  var stateEl = document.getElementById("sd-arrive-state");
+  var whenFixedEl = document.getElementById("sd-arrive-when-fixed");
+  var whenTailEl = document.getElementById("sd-arrive-when-tail");
+  var thenHeadEl = document.getElementById("sd-arrive-head-then");
+  var thenEl = document.getElementById("sd-arrive-names-then");
+  var sinceHeadEl = document.getElementById("sd-arrive-head-since");
+  var sinceEl = document.getElementById("sd-arrive-names-since");
+  var ladderEl = document.getElementById("sd-arrive-ladder");
+  // THE CAVEAT IS A STOP'S OWN STRING FROM SESSION 87. It was written once on load and
+  // stood under every stop saying the same thing; both voices convened tonight measured it
+  // false against its own screen at seven of the eight. It is written by `showStop` now,
+  // from the band that stop computed, and its height is reserved with the other held
+  // blocks below so that a caveat which grows by four words cannot walk the controls down
+  // the page under a resting finger.
+  var hedgeEl = document.getElementById("sd-arrive-hedge");
+  // Session 90: the count that turns, and the two strings that prove the stop it turns at.
+  var certainEl = document.getElementById("sd-arrive-certain");
+  var fracFixedEl = document.getElementById("sd-arrive-frac-fixed");
+  var proofCmdEl = document.getElementById("sd-arrive-proof-cmd");
+  document.getElementById("sd-arrive-proof-lead").textContent = arrive.proof;
+  thenHeadEl.textContent = arrive.heading_then;
+  document.getElementById("sd-arrive-gloss").textContent = arrive.subject_gloss;
+  // OWED ITEM (A), session 85 — written once, never touched by the run. Everything the
+  // stops rewrite is below or above it; this block is the fixed statement the falling
+  // figure is a figure OF.
+  // THE SECOND FIGURE (session 87). Written once, never touched by a stop — like the block
+  // it replaces, and unlike it, standing in the frame the run happens in. That is the whole
+  // difference between annotation and staging here: a fixed figure below the material is a
+  // note about the piece; the same figure beside the falling one, holding still for the
+  // length of the run, is the piece.
+  document.getElementById("sd-arrive-standing-fig").textContent = arrive.cut.standing;
+  document.getElementById("sd-arrive-standing-note").textContent = arrive.cut.standing_note;
+  document.getElementById("sd-arrive-cut-head").textContent = arrive.cut.heading;
+  document.getElementById("sd-arrive-cut-figs").textContent = arrive.cut.figures;
+  document.getElementById("sd-arrive-cut-said").textContent = arrive.cut.said;
+  document.getElementById("sd-arrive-cut-tier").textContent = arrive.cut.tier;
+  // Below the controls, with the caption: the prose the staging voice took out of the
+  // run's spine tonight. Same strings, same island, different place on the page.
+  document.getElementById("sd-arrive-cut-kept").textContent = arrive.cut.kept;
+  document.getElementById("sd-arrive-cut-refused").textContent = arrive.cut.refused;
+  // The quoted requirement's own address, as a link, beside the claim it licenses.
+  var refSrc = document.getElementById("sd-arrive-cut-refused-src");
+  refSrc.textContent = arrive.cut.refused_source.text;
+  var refLink = document.createElement("a");
+  refLink.href = arrive.cut.refused_source.url;
+  refLink.textContent = arrive.cut.refused_source.url;
+  refSrc.appendChild(refLink);
+  document.getElementById("sd-arrive-since-note").textContent = arrive.since_note;
+  // One sentence, not the paragraph that was cut: it carries the tier word for the figure
+  // above it and says what the figure is worked out FROM, and it does not move between
+  // stops. Put back the same night the cut was made, on a blocking verifying pass — the
+  // cut had left this page's largest number unlabelled by this page's own labelling law.
+  whenFixedEl.textContent = stops[0].when_fixed;
+  document.getElementById("sd-arrive-tier").textContent = arrive.tier;
+  document.getElementById("sd-arrive-restraint").textContent = arrive.restraint;
+
+  var stopButtons = [];
+  var timer = null;
+  var beat = null;
+
+  // Two handles since session 82, because the run now has two clocks: one beat the length
+  // of the premise, then the steps. A `halt()` that cleared only the interval would leave
+  // the first beat armed, and a visitor who pressed a button during it would be overwritten
+  // by the page a moment later — which is banked failure 22's cousin, a control that is a
+  // control in name only.
+  function halt() {
+    // `clearTimeout` since session 94: the run is a chain of timeouts, one per beat, because
+    // the beats are no longer all the same length. (The two clear functions are
+    // interchangeable in every browser this ships to, and the name is still worth being
+    // true — a reader of this file should not have to check.)
+    if (timer) { clearTimeout(timer); timer = null; }
+    if (beat) { clearTimeout(beat); beat = null; }
+  }
+
+  // OWED ITEMS (s) AND (t), session 83 — the run says what it is doing, once at each end
+  // of itself and whenever the visitor takes it over. `stateEl` is the page's only live
+  // region: the figure, the headings and the name list are rewritten silently, so a
+  // screen-reader user gets two announcements across the whole run and not six DOM
+  // rewrites narrated at 1.6 s intervals. The identical-string guard exists because a
+  // region that is reassigned the same sentence announces it again in some readers.
+  function isRunning() { return !!(timer || beat); }
+  function say(text) {
+    if (stateEl.textContent === text) return;
+    stateEl.textContent = text;
+  }
+  // DRAMATURG-92 cut 7. Over a full run this region wrote four sentences, spoke three, and
+  // spoke NOT ONE NUMBER: a visitor who cannot see the screen was told a run had started and
+  // that it had finished, and never told 100 %, never 26 %, never the turn. `announce.mjs`
+  // called that green because it counts announcements and not their content. `{figure}` is
+  // the repair, and it is the stop's own published share — the same string the frame prints,
+  // never a second one.
+  function fill(tpl, stop, figure) {
+    return tpl
+      .split("{stop}").join(stop)
+      .split("{replay}").join(arrive.replay)
+      .split("{figure}").join(figure == null ? "" : figure);
+  }
+  // The first sentence this region ever holds is written AFTER the load event, from a
+  // timer, so that it lands as a change to an empty region and is spoken. Everything the
+  // visitor triggers later goes through `say` directly: by then the region is established
+  // and a press is its own cue. The delay is a quarter-second — long enough to be a change,
+  // short enough that the line is standing before anyone has finished the title.
+  function announce(text) {
+    if (document.readyState === "complete") { setTimeout(function () { say(text); }, 250); }
+    else { window.addEventListener("load", function () { setTimeout(function () { say(text); }, 250); }); }
+  }
+
+  // WHAT THE LIST PRINTS WHERE IT PRINTS NO FLAG. Session 86, on a defect
+  // `DRAMATURG-85.md` found on the running face and this house then split in two. One
+  // chip read `HY928-21%-81% · null`, and the two halves of that string have different
+  // owners. The `null` was ours: a JSON null concatenated into a chip, a value from a
+  // parser leaking onto a face. It is repaired here, and repaired to what the edition
+  // actually prints in that position — an em dash — not to a word of ours.
+  // THE NAME IS NOT OURS AND IS NOT REPAIRED. `HY928-21%-81%` is the string the
+  // instrument publishes; it stood in the live page again tonight, fetched first-hand
+  // (2026-08-11T11:19:15Z, 200, 32,333 bytes), and it is the case of the day there. This
+  // house does not patch an upstream string sideways into something that reads better:
+  // the list is the whole evidence, and a record that tidies its evidence is not one. It
+  // is reported through the channel that publishes it and printed here as printed.
+  function flagText(f) {
+    return (f === null || f === undefined || f === "") ? "—" : f;
+  }
+
+  function names(into, added, fresh) {
+    added.forEach(function (v) {
+      var li = document.createElement("li");
+      li.textContent = v.name + " · " + flagText(v.flag);
+      if (fresh) li.className = "sd-arrive-new";
+      into.appendChild(li);
+    });
+  }
+
+  function showStop(i) {
+    var s = stops[i];
+    // The share, not the count — the one figure on this head that moves, and it moves
+    // down. It is built by the same function that builds the law's two rows below, so
+    // the head and the face cannot drift apart.
+    // Two spans, one figure: the end that falls and the end that cannot. Both strings are
+    // built by `data.py` from the same arithmetic that builds the joined one, so the head
+    // cannot print a share the page did not compute (session 83).
+    countFallEl.textContent = s.share_falling;
+    countFixedEl.textContent = s.share_fixed;
+    // The same end, said in ships (session 88). Two numerals now move together at every
+    // beat and they are the same quotient in two notations — one the page has printed since
+    // it had a head, one the eye can hold against the figure standing under it.
+    fracEl.textContent = s.share_falling_of;
+    // The count that turns (session 90). Third live numeral in the frame, and the only one
+    // that changes KIND rather than degree: 0 at stops 0–6, 2 at stop 7, 4 at stop 8. It
+    // is written from the stop's own band, like every other figure a stop owns.
+    // IT PRINTS ONLY WHERE IT DIFFERS — `DRAMATURG-93.md` cut 5, against that voice's own
+    // cut 3 of the session before. Built at every stop, the ceiling's division stood beside
+    // the falling one at stops 0–6 — `11 of 11` and `11 of 11`, 8 px apart, identical to the
+    // byte, one bold and one dim, for the whole 14-second opening dwell and 49 % of the run.
+    // That is the doubling `DRAMATURG-90.md` cut 1 struck when the instant was printed twice
+    // fifteen pixels apart, restored at the piece's opening image. Of the two ends that memo
+    // offered, this is the one that makes the run better: the second division ARRIVES at
+    // 23,655 ms, in the same frame as the end that has just come off 100 % and the count
+    // that has just left nought, so the beat where this work turns gains a fourth thing
+    // that moves instead of a fourth thing that repeats. Nothing is hidden: at stops 0–6 the
+    // two ends of the share are equal, and the division that is printed IS both of them.
+    fracFixedEl.textContent =
+      s.share_fixed_of === s.share_falling_of ? "" : s.share_fixed_of;
+    certainEl.textContent = s.certain_of;
+    // And the instant this stop IS, with the line that returns it (`KRITIKER-89.md`
+    // condition 1). Both were computed for every stop since session 84 and thrown away at
+    // render; nothing here is new arithmetic, only arithmetic that stops being discarded.
+    proofCmdEl.textContent = s.check;
+    // Only the tail is rewritten: the clause that says what the figure means is the same
+    // at every stop and it stood still on the page while being replaced six times in
+    // eighteen seconds (session 83, `DRAMATURG-82.md` §3). It is written once, on load.
+    whenTailEl.textContent = s.when_tail;
+    // The day's own list is the fixed block: it is redrawn identically at every stop
+    // because it is the numerator, and the numerator cannot grow.
+    thenEl.textContent = "";
+    names(thenEl, stops[0].added, false);
+    // Everything a later list gave, and since session 82 the block is HEADED at the first
+    // stop too, where it holds nothing: the room the page reserves for it stood as three
+    // rows of unexplained nothing above the buttons, and a stranger cannot tell the shape
+    // of a hole from a page that failed to load unless the page says which it is.
+    sinceEl.textContent = "";
+    sinceHeadEl.textContent = s.heading_since || "";
+    hedgeEl.textContent = s.hedge;
+    for (var j = 1; j <= i; j++) {
+      names(sinceEl, stops[j].added, j === i);
+    }
+    stopButtons.forEach(function (b, k) {
+      b.setAttribute("aria-current", k === i ? "true" : "false");
+    });
+  }
+
+  // The first beat is as long as its own premise; the rest are 1.6 s (session 82, owed
+  // item (p), first limb). DRAMATURG-81 §5 asked for it and §1 said why: the run stepped
+  // from load, so the definition was still being read when the figure it explains began to
+  // fall — the plainest available account of two panels that got the lateness and missed
+  // the mechanism. The length is not chosen here: `data.py` divides the gloss's own word
+  // count by 238 wpm, the mean adult silent-reading rate for non-fiction English in a
+  // meta-analysis of 190 studies and 18,573 participants: Marc Brysbaert, "How many words
+  // do we read per minute? A review and meta-analysis of reading rate", Journal of Memory
+  // and Language 109 (2019) — https://biblio.ugent.be/publication/8647789 . The URL stands
+  // HERE, in the file making the claim. It said "the page's README cites it" for one build
+  // and the README did not, which left this work's one new SOURCED figure with no
+  // retrievable address anywhere in the single self-contained file that ships. Found by the
+  // verifying pass the same night. The island carries the arithmetic in `first_dwell_note`.
+  // It is a MEAN — most adults fall
+  // between 175 and 300 wpm, and children, older adults and non-native readers are slower
+  // — so this beat is too short for many of the people it is set for. What it buys them is
+  // not enough time; it is a first state that stands still long enough to be a state.
+  // THE BEAT IS NOT WRITTEN HERE — SESSION 94. It was the literal `1600` on this line, and
+  // `data.py` held a second copy in the line that computes the sentence promising a visitor
+  // how long the run is. Session 94 announced that duplicate retired in the same paragraph
+  // that created it, and both blocking voices found it: `VERIFIER-94` blocking 1 and
+  // `DRAMATURG-94` cut 3. It is read off the island now — one number, in the builder, on the
+  // face and in every instrument that measures this run. `beats_ms` carries one duration per
+  // beat, because the run is budgeted against a published ceiling rather than multiplied out
+  // of a constant (`data.py`, "THE RUN IS A BUDGET NOW").
+  var BEAT_MS = arrive.beat_ms;
+  var BEATS = arrive.beats_ms;
+  function run() {
+    halt();
+    var i = 0;
+    showStop(0);
+    // Said before the stillness, not after it. `DRAMATURG-82.md` §1: eleven seconds of a
+    // page that gives no held-ness signal *"reads as an invitation"* to press a button —
+    // and a button pressed there killed the run for good and said nothing. The line names
+    // the run, its length and what a button costs, in the same breath.
+    // NOT `say(...)` — `announce(...)`. This one line is the difference between a repair and
+    // a sentence that looks like one, and this house did not find it: the staging voice drove
+    // the built object and measured the state line carrying text at 103.8 ms against
+    // DOMContentLoaded at 107.0 ms. A live region does not announce the content it is BORN
+    // with; it announces what CHANGES in it. So the one sentence written tonight to tell a
+    // screen-reader user that a performance exists was the one sentence no screen reader
+    // would ever have spoken — and this house's own instrument called it an announcement,
+    // because it counted DOM writes and named them announcements. Re-measured here first-hand
+    // before the fix: filled at 75 ms, DOMContentLoaded at 109 ms. Banked failure 32.
+    announce(arrive.run_states.waiting);
+    // A beat, then the run — so the premise is never overwritten by its own consequence.
+    beat = setTimeout(function () {
+      beat = null;
+      // The run's beginning, said. Until the staging voice drove this object it was the
+      // one event in the piece with no words: the beat ended, the figure began to fall,
+      // and a visitor who could not see it was told nothing until it was over.
+      say(arrive.run_states.started);
+      // One timeout per beat rather than one interval for all of them, because the beats are
+      // no longer all the same length: the beat that reveals the first certainly-dark ship,
+      // the beat that reveals the last state and the beat that ends the run hold their full
+      // length whatever the ceiling costs the others.
+      var step = function () {
+        i += 1;
+        if (i >= stops.length) {
+          halt();
+          say(fill(arrive.run_states.done, stops[stops.length - 1].printed,
+                   stops[stops.length - 1].share));
+          return;
+        }
+        showStop(i);
+        // `BEATS[k]` is the interval that follows stop k+1, so after showing stop i the
+        // next one is `BEATS[i-1]`; the last of them ends the run.
+        timer = setTimeout(step, BEATS[i - 1] || BEAT_MS);
+      };
+      i = 1;
+      showStop(1);
+      timer = setTimeout(step, BEATS[0] || BEAT_MS);
+    }, arrive.first_dwell_ms);
+  }
+  // SESSION 94. The beat was the literal `1600` here and the house's own instrument carried
+  // its own literal `30000` for how long to watch. Every list this record saves adds a beat,
+  // so the run outgrew that window: the sentence this run ends on — the one that speaks the
+  // live figure to a screen reader — is scheduled at 30,118 ms, 118 ms past the constant,
+  // and the instrument reported it as not happening. Banked failure 56 in a third costume.
+  // The run publishes its own shape here, so an instrument derives its window instead of
+  // typing one — and, since `DRAMATURG-94` cut 1, publishes the CEILING it is budgeted
+  // against, so an instrument can go red about the run's length instead of following it.
+  // (This comment said "the last place in this work where two files held the same number by
+  // hand" and that was false when it was written: `data.py` still held the beat. Struck.)
+  window.__sdRun = {
+    first_dwell_ms: arrive.first_dwell_ms,
+    beat_ms: BEAT_MS,
+    beats_ms: BEATS,
+    ceiling_ms: arrive.run_ceiling_ms,
+    protected_beats: arrive.protected_beats,
+    stops: stops.length,
+    // When the last state lands, and when the closing sentence is said — summed from the
+    // beats themselves, so a beat the ceiling shortens is inside both figures. Stop 0 stands
+    // at load and stop 1 lands when the first dwell ends; `beats_ms[k]` follows stop k+1.
+    // Written as a multiplication first, and one beat late in both — caught by running the
+    // instrument against the milliseconds it had just printed.
+    ends_ms: arrive.first_dwell_ms + BEATS.slice(0, -1).reduce(function (a, b) { return a + b; }, 0),
+    done_ms: arrive.first_dwell_ms + BEATS.reduce(function (a, b) { return a + b; }, 0),
+  };
+
+  stops.forEach(function (s, i) {
+    var b = document.createElement("button");
+    b.type = "button";
+    b.textContent = s.printed;
+    // A press during the run is not a fault and is not undone — the visitor takes the
+    // object over, which is what the buttons are for. What was wrong until tonight is that
+    // it happened in silence: the only authored sequence this object has died under a
+    // finger inside an eleven-second window, and nothing on the page said so or said how
+    // to get it back. The line now distinguishes the two presses a visitor can make.
+    b.addEventListener("click", function () {
+      var wasRunning = isRunning();
+      halt();
+      showStop(i);
+      say(fill(
+        wasRunning ? arrive.run_states.stopped : arrive.run_states.held,
+        s.printed,
+        s.share
+      ));
+    });
+    ladderEl.appendChild(b);
+    stopButtons.push(b);
+  });
+  var replay = document.createElement("button");
+  replay.type = "button";
+  replay.className = "sd-arrive-replay";
+  replay.textContent = arrive.replay;
+  replay.addEventListener("click", run);
+  ladderEl.appendChild(replay);
+
+  // The head reserves the room its own last stop needs, before it takes its first. It is
+  // a repair and it was found by measuring, not by looking: DRAMATURG-81 §4 named the
+  // button row as walking down the page during the run, and the browser put 136 px on it
+  // (329 → 465 at 1400 px wide, over six stops). Every stop is a button and a visitor is
+  // invited to press one WHILE the run continues; a target that moves under a resting
+  // cursor is a control in name only. The page measures its own last stop and holds that
+  // height from the first — no constant is typed, and the reservation is recomputed on
+  // resize because the block wraps differently at every width.
+  // The headline is reserved with them: the last stop is the only one whose line under
+  // the figure says which end of it moves, and that one extra sentence was worth 42 px
+  // of the 136 on its own. Measuring caught it; reading the markup had not.
+  //
+  // SESSION 82 corrects this measurement, and the correction was created by tonight's own
+  // change. Until tonight it measured the LAST stop and held that, which was right only
+  // because the last stop was the tallest of every held element — the block grows, and at
+  // stop 0 its heading did not exist. Tonight stop 0 is headed, with a longer sentence than
+  // any later stop carries, so the last stop is no longer the maximum and reserving it
+  // would have put the buttons back on the walk this repair exists to stop. It now measures
+  // EVERY stop and holds the largest — which is what "reserve the room the head needs"
+  // always meant, and the old code was a coincidence that happened to hold.
+  var headlineEl = document.querySelector(".sd-arrive-headline");
+  function reserve() {
+    var held = [headlineEl, sinceHeadEl, sinceEl, hedgeEl];
+    held.forEach(function (el) { el.style.minHeight = ""; });
+    var max = held.map(function () { return 0; });
+    for (var s = 0; s < stops.length; s++) {
+      showStop(s);
+      held.forEach(function (el, k) {
+        if (el.offsetHeight > max[k]) max[k] = el.offsetHeight;
+      });
+    }
+    held.forEach(function (el, k) { el.style.minHeight = max[k] + "px"; });
+    // The run's line is reserved the same way and for the same reason (session 83): it
+    // holds five different sentences of different lengths, and the caption, the tier line
+    // and the whole body below them may not step up and down as the run talks. Measured
+    // over the states themselves, so no length is typed.
+    var was = stateEl.textContent;
+    var tallest = 0;
+    stateEl.style.minHeight = "";
+    Object.keys(arrive.run_states).forEach(function (k) {
+      stateEl.textContent = fill(arrive.run_states[k], stops[stops.length - 1].printed,
+                                 stops[stops.length - 1].share);
+      if (stateEl.offsetHeight > tallest) tallest = stateEl.offsetHeight;
+    });
+    stateEl.textContent = was;
+    stateEl.style.minHeight = tallest + "px";
+  }
+  reserve();
+  var reflow = null;
+  window.addEventListener("resize", function () {
+    if (reflow) clearTimeout(reflow);
+    reflow = setTimeout(function () {
+      var at = stopButtons.findIndex(function (b) {
+        return b.getAttribute("aria-current") === "true";
+      });
+      reserve();
+      showStop(at < 0 ? 0 : at);
+    }, 120);
+  });
+
+  // DRAMATURG-80 §5, and the whole of what changed about who gets what: the resting
+  // state is the FIRST stop, not the last. A reader given no motion is given the day's
+  // own answer — the eleven names it held and the hundred per cent it therefore believed
+  // — and the buttons that take it apart. The delay becomes something the reader does.
+  // Nothing is withheld by it: every name and every figure the run reaches stands in the
+  // body of this page, which is the same computation.
+  var noMotion = window.matchMedia &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (noMotion) {
+    showStop(0);
+    // Said, not implied: a resting page that carries a line about a run nobody is being
+    // shown would be a page lying to the visitor it took the most care over. It goes
+    // through the same door as the run's own first sentence, for the same reason.
+    announce(arrive.run_states.rest);
+  } else {
+    run();
+  }
+
+  // The one handle this house's own instruments hold on the running element: render.mjs
+  // drives it to a named stop so a still frame of a moving thing is a chosen frame and
+  // not whatever the clock happened to be showing. It is a check's door, not a feature.
+  window.__sdArrive = {
+    stops: stops.length,
+    show: function (i) {
+      halt();
+      showStop(i);
+      // A driven frame says it is held, so a still of a moving thing does not carry a
+      // line describing a run that is not playing in it (session 83).
+      say(fill(arrive.run_states.held, stops[i].printed));
+    },
+    // The house's own instruments, not the work: what is announced and how often, so
+    // owed item (t) can be measured rather than asserted the next time anyone asks.
+    liveRegions: function () {
+      return document.querySelectorAll("[aria-live],[role=status],[role=alert]").length;
+    },
+  };
+
+  document.getElementById("sd-lede").textContent = data.lede;
+
+  // what going dark is: the instrument's own sentence first, then the plain gloss.
+  // Owed item (e) — the face carried no definition of its own subject, and the word
+  // "transponder" stood nowhere on it.
+  var defEl = document.getElementById("sd-define");
+  var dq = document.createElement("span");
+  dq.className = "sd-define-q";
+  dq.textContent = "“" + data.method.definition_quote + "”";
+  defEl.appendChild(dq);
+  var dsrc = document.createElement("span");
+  dsrc.className = "sd-define-src";
+  dsrc.appendChild(document.createTextNode(" — method sheet, The Ghost Fleet, "));
+  var dlink = document.createElement("a");
+  dlink.href = data.method.source;
+  dlink.textContent = "frankbueltge.de";
+  dsrc.appendChild(dlink);
+  dsrc.appendChild(document.createTextNode(". "));
+  defEl.appendChild(dsrc);
+  defEl.appendChild(document.createTextNode(data.method.definition));
+
+  // weekly ticks across the field's real (labelled) span only — the margin
+  // past dataEnd carries no tick, because nothing is known to mark there
+  var scaleEl = document.getElementById("sd-scale");
+  var scaleTicks = [];
+  var rulePct = pct(heldDay);
+  var d = fieldStart;
+  while (d <= dataEnd) {
+    // a weekly tick landing on the held day would print its label twice, on top of
+    // the rule's own — the rule wins, because it is the thing being looked at
+    if (Math.abs(pct(d) - rulePct) > 2) {
+      var tick = document.createElement("span");
+      tick.className = "sd-tick";
+      tick.style.left = pct(d) + "%";
+      tick.textContent = tickLabel(d);
+      scaleEl.appendChild(tick);
+      scaleTicks.push(tick);
+    }
+    d = addDays(d, 7);
+  }
+  // DRAMATURG-91 cut 1: keep four labels below 700 px, evenly spread across however many
+  // the span produced, and mark the rest minor for the media query above to drop. The kept
+  // set is computed from the rendered ticks, not typed, so it survives a span that grows.
+  var KEPT = 4;
+  var keep = {};
+  if (scaleTicks.length > KEPT) {
+    for (var k = 0; k < KEPT; k++) {
+      keep[Math.round(k * (scaleTicks.length - 1) / (KEPT - 1))] = true;
+    }
+    for (var t = 0; t < scaleTicks.length; t++) {
+      if (!keep[t]) { scaleTicks[t].className = "sd-tick sd-tick-minor"; }
+    }
+  }
+
+  // labelled vertical rule at the held day. The held day sits near the right end of
+  // the field, so its label goes to the LEFT of the rule when there is not room for
+  // it on the right — at 900px the right-hand placement was clipped to nonsense.
+  document.getElementById("sd-rule4").style.setProperty("--sd-rule-pct", rulePct);
+  var ruleLabel = document.getElementById("sd-rule4-label");
+  ruleLabel.textContent = tickLabel(heldDay);
+  if (rulePct > 78) {
+    ruleLabel.style.left = "auto";
+    ruleLabel.style.right = "0.4ch";
+  }
+
+  // the tier legend: three lines, each naming the columns it covers
+  // the three tiers, each earning its word on a plain verb phrase before the word is used
+  // anywhere else on the face (DRAMATURG-72 §A: the tier words are law and stay; the
+  // house's filing nouns are not law and go)
+  var LEGEND = [
+    // Session 83, on the verifying pass, blocking: the OBSERVED ledger's own caption
+    // covered two columns that are not this house's observation at all — the list's
+    // printed edition date and the number of ships in it are UPSTREAM's values, read off
+    // the saved copy. The legend named no dates on the SOURCED side, so the wrong tier
+    // word was the visible one. Failure 25's shape again: a legend that does not cover a
+    // published value lets the face carry a tier it did not earn.
+    // Session 85, owed item (A): the face began printing three aggregate figures the lists
+    // themselves publish, and a legend that does not cover a published value is failure 25
+    // waiting to happen a fourth time. Corrected the same night on `VERIFIER-85.md` §8,
+    // which found the first version two of the three short — and which found, in the same
+    // line, an older error this house had never noticed: the SHIP COUNT is not printed by
+    // the instrument. Upstream prints names; this house counts them. It moves to the
+    // DERIVED line, where it belongs, and the SOURCED line names only what upstream prints.
+    // AND THE TIER LINE NOW SAYS WHAT "AS PRINTED" COSTS, session 86. The list of 10 AUG
+    // named its case of the day `HY928-21%-81%` and printed no flag for it; the list of
+    // 11 AUG prints the same string again. Nothing on this face repairs it. A legend that
+    // says these values are printed by the instrument, on a page carrying one that is
+    // visibly damaged, owes the reader the sentence that this is not our damage and not
+    // ours to mend — otherwise the reader charges it here, and the next reader trusts the
+    // repair we would have made instead of the list we actually hold.
+    ["SOURCED", "name · flag · days dark · waters · each list's own date · what each list " +
+                "says it examined, how many of those were inside national waters, and how " +
+                "many events were in its window — printed by the instrument, and printed " +
+                "here unrepaired: one name arrives with a machine's percentages inside it " +
+                "and no flag, and “—” is what the list shows in that place"],
+    // "every date on this page" was false and blurred two tiers: the list dates are
+    // SOURCED and the fetch times OBSERVED. Corrected after the panel, on the Verifier's
+    // blocking pass (VERIFIER-72 D1); the readers saw the over-broad line.
+    // Session 82, on the verifying pass, blocking: this line named the spans and NOT the
+    // share, so when the head's own tier paragraph was cut the same night, the largest
+    // number on this page was left with no tier word anywhere on the face. The legend now
+    // names the figure it always covered and never said it covered.
+    ["DERIVED", "the dark-and-return spans, this page's share, and the count of names in each list — worked out here, both ends printed"],
+    ["OBSERVED", "what this page saw, and when it first saw it"]
+  ];
+  var legendEl = document.getElementById("sd-legend");
+  LEGEND.forEach(function (l) {
+    var line = document.createElement("span");
+    var b = document.createElement("b");
+    b.textContent = l[0];
+    line.appendChild(b);
+    line.appendChild(document.createTextNode("  " + l[1]));
+    legendEl.appendChild(line);
+  });
+
+  function buildRow(r) {
+    var li = document.createElement("li");
+    li.className = "sd-row";
+
+    var name = document.createElement("span");
+    name.className = "sd-name";
+    var a = document.createElement("a");
+    a.href = r.gfw_url;
+    a.textContent = r.name;
+    name.appendChild(a);
+    li.appendChild(name);
+
+    var flag = document.createElement("span");
+    flag.className = "sd-flag";
+    // Session 86: the same absence, in the table. Here it painted nothing at all — a
+    // blank the eye reads as a column that happens to be empty rather than as a flag the
+    // list did not print. Both places now say the one thing that is true of it.
+    flag.textContent = flagText(r.flag);
+    li.appendChild(flag);
+
+    var days = document.createElement("span");
+    days.className = "sd-days";
+    days.textContent = r.days_dark + " d dark";
+    li.appendChild(days);
+
+    var waters = document.createElement("span");
+    waters.className = "sd-waters";
+    waters.textContent = r.waters || "";
+    li.appendChild(waters);
+
+    var band = document.createElement("span");
+    band.className = "sd-band";
+    band.textContent = r.band_text;
+    li.appendChild(band);
+
+    // An empty `seen` means the block above states it once for all its rows (session
+    // 79's staged cut, owed item (l)). The row prints nothing rather than an empty
+    // element: a blank italic span is ink that says nothing, which is the defect the
+    // cut exists to remove.
+    if (r.seen) {
+      var seen = document.createElement("span");
+      seen.className = "sd-seen";
+      seen.textContent = r.seen;
+      li.appendChild(seen);
+    }
+
+    var field = document.createElement("span");
+    field.className = "sd-field";
+    field.setAttribute("aria-hidden", "true");
+
+    var d1lo = parseDay(r.went_dark_between[0]);
+    var d1hi = parseDay(r.went_dark_between[1]);
+    var d2lo = parseDay(r.resurfaced_between[0]);
+    var d2hi = parseDay(r.resurfaced_between[1]);
+    var left = pct(d1lo);
+    var hatchLeftW = pct(d1hi) - pct(d1lo);
+    var midW = pct(d2lo) - pct(d1hi);
+    var hatchRightW = pct(d2hi) - pct(d2lo);
+
+    var segL = document.createElement("span");
+    segL.className = "sd-seg sd-seg-hatch";
+    segL.style.left = left + "%";
+    segL.style.width = hatchLeftW + "%";
+    field.appendChild(segL);
+
+    if (midW > 0) {
+      var segM = document.createElement("span");
+      segM.className = "sd-seg sd-seg-mid";
+      segM.style.left = (left + hatchLeftW) + "%";
+      segM.style.width = midW + "%";
+      field.appendChild(segM);
+    }
+
+    var segR = document.createElement("span");
+    segR.className = "sd-seg sd-seg-hatch";
+    segR.style.left = (left + hatchLeftW + midW) + "%";
+    segR.style.width = hatchRightW + "%";
+    field.appendChild(segR);
+
+    li.appendChild(field);
+    return li;
+  }
+
+  // the field, in the groups that made the number what it is: the edition of the
+  // day itself, then every edition that added to the day afterwards
+  var area = document.getElementById("sd-rowsarea");
+  data.field.forEach(function (g) {
+    var wrap = document.createElement("div");
+    wrap.className = "sd-group" + (g.days_after > 0 ? " sd-group-late" : "");
+    var head = document.createElement("p");
+    head.className = "sd-grouphead";
+    head.appendChild(document.createTextNode(g.label + " "));
+    var count = document.createElement("span");
+    count.className = "sd-groupcount";
+    count.textContent = "(" + g.count + " ship" + (g.count === 1 ? "" : "s") + ")";
+    head.appendChild(count);
+    wrap.appendChild(head);
+    // the OBSERVED date the whole block shares, said once — present only when the build
+    // was run with --cuts AND every row in the block carried the same date
+    if (g.seen_all) {
+      var seenAll = document.createElement("p");
+      seenAll.className = "sd-seen sd-seen-all";
+      seenAll.textContent = g.seen_all;
+      wrap.appendChild(seenAll);
+    }
+    var ol = document.createElement("ol");
+    ol.className = "sd-rows";
+    g.rows.forEach(function (r) { ol.appendChild(buildRow(r)); });
+    wrap.appendChild(ol);
+    area.appendChild(wrap);
+  });
+
+  // ---- the fall: the record's own turn ------------------------------------
+  // THE TIER WORD STANDS INSIDE THIS SECTION SINCE SESSION 84, and it is here because an
+  // instrument built the same night said it was missing. `tools/tiers.mjs` enumerates every
+  // figure this page prints and asks whether a tier word stands in the same <section>; it
+  // exited 1 on nine figures, and the nine included this page's live headline share and the
+  // struck one above it. The legend three blocks up was the only thing marking them, exactly
+  // as in session 82, when a cut removed a mark and left this page's largest number bare —
+  // the cardinal sin by subtraction, and the reason that instrument was written. A figure
+  // that needs a legend in another section to say what it is, is a figure a reader can meet
+  // unmarked.
+  document.getElementById("sd-fall-q").textContent =
+    "The share of this day's darkness that was knowable on the day itself — DERIVED, " +
+    "worked out here from the saved copies below, by the command beneath them:";
+
+  var sharesEl = document.getElementById("sd-shares");
+  function shareRow(s, when, cls) {
+    var row = document.createElement("div");
+    row.className = "sd-share " + cls;
+    var w = document.createElement("span");
+    w.className = "sd-share-when";
+    // the status word is TEXT, so the retraction survives into anything that takes
+    // the words and leaves the paint — a screen reader, an extraction, a quotation
+    var st = document.createElement("span");
+    st.className = "sd-share-status";
+    st.textContent = s.status;
+    w.appendChild(st);
+    w.appendChild(document.createTextNode(" · " + when));
+    // and the struck figure is struck in the MARKUP as well as in the stylesheet:
+    // <s> is the element for a statement no longer accurate, and it survives a page
+    // read without its CSS, which text-decoration alone does not
+    var f = document.createElement(s.status === "SUPERSEDED" ? "s" : "span");
+    f.className = "sd-share-fig";
+    f.textContent = s.figure;
+    var o = document.createElement("span");
+    o.className = "sd-share-of";
+    o.textContent = s.of;
+    row.appendChild(w);
+    row.appendChild(f);
+    row.appendChild(o);
+    return row;
+  }
+  function from(s) {
+    return "from " + s.captures + " saved copies of " + s.editions + " list" +
+      (s.editions === 1 ? "" : "s");
+  }
+  // The struck figure is dated by when the page PUBLISHED it, not by the last saved copy
+  // it was computed from: "until <as-of>" read as though the page had published a figure
+  // 21 minutes before it printed it (VERIFIER-72 D2). The as-of instant is not lost — it
+  // is the argument of the third command below, which reproduces this row.
+  sharesEl.appendChild(shareRow(
+    data.fall.then,
+    "as this page published it " + data.fall.then_published + ", " + from(data.fall.then) + " —",
+    "sd-share-then"
+  ));
+  // the fall itself, BETWEEN the two figures — where the event happens. It stood three
+  // paragraphs downstream until session 76, so the page's one dramatic turn was staged
+  // as two rows of bookkeeping and a reader was left to do the subtraction (DRAMATURG-76 §2).
+  var fellEl = document.createElement("p");
+  fellEl.className = "sd-fall-line sd-fell";
+  fellEl.textContent = data.fall.moved;
+  sharesEl.appendChild(fellEl);
+  // WAS "as this record measures it now" until the gate of session 96. `VERIFIER-96`
+  // finding 4: this page's corpus is frozen, so what stands here is what this record
+  // measured AT the freeze, and from the thirteenth list onward "now" is false — while
+  // eleven lines below, `#sd-frozen` says the page is frozen. The two sentences could not
+  // both be true for long, and the one with the fuse in it is this one.
+  sharesEl.appendChild(shareRow(
+    data.fall.now,
+    "as this page publishes it, frozen, " + from(data.fall.now) + " —",
+    "sd-share-now"
+  ));
+
+  document.getElementById("sd-bandnote").textContent = data.fall.band;
+  document.getElementById("sd-held").textContent = data.fall.held;
+
+  var q = document.getElementById("sd-quoted");
+  q.appendChild(document.createTextNode("“" + data.fall.published + "”"));
+  var when = document.createElement("span");
+  when.className = "sd-quoted-when";
+  when.textContent = data.fall.published_when + ".";
+  q.appendChild(when);
+
+  // ---- the freeze, and the four days --------------------------------------
+  // Every string and every figure below comes out of the island; nothing is composed
+  // here. The mark on the published day is a WORD and not a colour, so a reader who
+  // hears this page is told which row is the one above (banked failure 12).
+  document.getElementById("sd-frozen").textContent = data.frozen.line;
+  document.getElementById("sd-compare-head").textContent = data.compare.heading;
+  document.getElementById("sd-compare-lead").textContent = data.compare.lead;
+  var cmpEl = document.getElementById("sd-compare-rows");
+  data.compare.rows.forEach(function (r) {
+    var row = document.createElement("div");
+    row.className = "sd-compare-row";
+    var day = document.createElement("span");
+    day.className = "sd-compare-day";
+    day.textContent = r.day_printed;
+    var share = document.createElement("span");
+    share.className = "sd-compare-share";
+    share.textContent = r.share;
+    var frac = document.createElement("span");
+    frac.className = "sd-compare-frac";
+    frac.textContent = r.fraction;
+    // DRAMATURG-96 BLOCKING CUT 1: the mark stood at the END of the fraction, so a reader
+    // met the day, the band and the fraction before learning which row was the page's own
+    // — and in the screen-reader record it arrived after all three. It marks the DAY now,
+    // where identity belongs, and it is a word rather than a weight so the ear gets it too.
+    if (r.published) {
+      var mark = document.createElement("span");
+      mark.className = "sd-compare-mark";
+      mark.textContent = " — THE DAY THIS PAGE PUBLISHES";
+      day.appendChild(mark);
+    }
+    // VERIFIER-96 finding 2, built into the row rather than answered in prose: what the
+    // numerator of this row actually counts, and whether this record began before its day.
+    var prov = document.createElement("span");
+    prov.className = "sd-compare-prov";
+    prov.textContent = r.provenance;
+    var chk = document.createElement("span");
+    chk.className = "sd-compare-check";
+    var code = document.createElement("code");
+    code.textContent = "$ " + r.check;
+    chk.appendChild(code);
+    row.appendChild(day);
+    row.appendChild(share);
+    row.appendChild(frac);
+    row.appendChild(prov);
+    row.appendChild(chk);
+    cmpEl.appendChild(row);
+  });
+  document.getElementById("sd-compare-finding").textContent = data.compare.finding;
+  document.getElementById("sd-compare-tier").textContent = data.compare.tier;
+
+  // ---- the evidence -------------------------------------------------------
+  var cmdsEl = document.getElementById("sd-cmds");
+  data.commands.forEach(function (c) {
+    var l = document.createElement("span");
+    l.className = "sd-cmd";
+    var lab = document.createElement("span");
+    lab.className = "sd-cmd-label";
+    // the non-breaking space survives innerText extraction, so the label and the
+    // command do not run together in what a screen reader (or a panel) receives
+    lab.textContent = c.label + " · ";
+    var code = document.createElement("code");
+    code.textContent = "$ " + c.cmd;
+    l.appendChild(lab);
+    l.appendChild(code);
+    cmdsEl.appendChild(l);
+  });
+  document.getElementById("sd-raw-pre").textContent = data.output;
+
+  var wrap = document.getElementById("sd-ledger");
+  var t = document.createElement("table");
+  var cap = document.createElement("caption");
+  cap.textContent = "OBSERVED — every saved copy this page holds";
+  t.appendChild(cap);
+  var head = document.createElement("tr");
+  // "vessels" counted the ships in each SAVED LIST, four inches under a quotation
+  // saying a night can never remove one — and the column falls. Two panels reported
+  // it as a contradiction; both were reading the header, which named neither what is
+  // counted nor where. The column is unchanged; the head now says what it holds.
+  // OWED ITEM (A) — session 85. The last header is new and it is the disclosure this
+  // table has been one column short of since the first night: beside the ships a copy
+  // printed stands what the same copy says the instrument examined to print them.
+  ["fetched (UTC)", "status", "bytes", "body sha256", "content", "edition",
+   "ships in that list", "disappearances examined"]
+    .forEach(function (h) {
+      var th = document.createElement("th");
+      th.textContent = h;
+      head.appendChild(th);
+    });
+  t.appendChild(head);
+  data.ledger.rows.forEach(function (c) {
+    var tr = document.createElement("tr");
+    [
+      c.fetched_at_utc,
+      String(c.http_status),
+      c.bytes.toLocaleString("en-US"),
+      c.sha256 + "…",
+      c.content_sha256 + "…",
+      c.edition_date_printed,
+      String(c.vessels),
+      // An em dash where a copy carries no aggregate block, never a nought: a figure this
+      // record does not hold is not a figure this record read as zero.
+      c.examined === null || c.examined === undefined ? "—" : c.examined.toLocaleString("en-US")
+    ].forEach(function (v) {
+      var td = document.createElement("td");
+      td.textContent = v;
+      tr.appendChild(td);
+    });
+    t.appendChild(tr);
+  });
+  wrap.appendChild(t);
+  document.getElementById("sd-ledger-cap").textContent = data.ledger.caption;
+
+  document.getElementById("sd-floor").textContent = data.floor;
+})();
+</script>
+<footer class="fbde-work-frame fbde-work-frame--foot"><p class="fbde-work-frame__note">Leave the work:</p><nav class="fbde-work-frame__nav"><a href="/studio">← The Studio</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/studio/works">the studio’s premieres</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/">the research ecology</a></nav></footer></body>
+</html>
