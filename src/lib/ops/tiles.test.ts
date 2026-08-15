@@ -3,18 +3,73 @@ import { cascadeBuckets, readTiles } from './tiles'
 import { NAMING } from '@/config/naming'
 import type { ProtokollDay } from '@/lib/protokoll/types'
 
+import consensusLatest from '@/data/consensus/latest.json'
+import police from '@/data/praemie/police.json'
+import redactionLatest from '@/data/redaction/latest.json'
+import ghostFleetLatest from '@/data/ghost-fleet/latest.json'
+import roundNumberLatest from '@/data/round-number/latest.json'
+import patternLatest from '@/data/pattern/latest.json'
+import atlasWorks from '@/data/atlas/werke.json'
+
 const tiles = readTiles()
 
+// Whether each guarded piece's committed record can answer today. Each entry mirrors that
+// piece's own `return null` condition in tiles.ts — deliberately, so the guard below can tell
+// the two absences apart: a derivation that broke while its record still carries a reading
+// (a defect) from a piece that steps back because its record is honestly empty (rule 2 of
+// tiles.ts, "a tile with no reading is not rendered"). Keep an entry in step with its
+// derivation when that condition moves.
+//
+// Cast rather than read off the import: these snapshots are rewritten nightly, so their
+// inferred literal types shift with the day's data — `pick: null` and `redactions: []` infer
+// as `null` and `never[]` on an empty night and as string and object[] on a full one. The
+// shapes here are the stable contract the guard needs.
+const ANSWERS_TODAY: Record<string, () => boolean> = {
+  consensus: () =>
+    (consensusLatest as unknown as { headline?: { domain_count?: number } }).headline
+      ?.domain_count !== undefined,
+  policy: () =>
+    (police as unknown as { premium?: { change_pct_since_base?: number; base_year?: number } })
+      .premium?.change_pct_since_base !== undefined,
+  redaction: () => {
+    const d = redactionLatest as unknown as { pick?: string | null; redactions?: { id: string }[] }
+    return Boolean(d.pick) && (d.redactions ?? []).some((r) => r.id === d.pick)
+  },
+  ghostFleet: () => ((ghostFleetLatest as unknown as { events?: unknown[] }).events ?? []).length > 0,
+  // The control series (ids prefixed with "_") are references, not defendants; the tile counts
+  // the real official series, so those are what decides whether the piece can speak.
+  roundNumbers: () =>
+    ((roundNumberLatest as unknown as { series?: { id: string }[] }).series ?? []).some(
+      (s) => !s.id.startsWith('_'),
+    ),
+  patterns: () =>
+    (patternLatest as unknown as { headline?: { r?: number } }).headline?.r !== undefined,
+  atlas: () => (atlasWorks as unknown as unknown[]).length > 0,
+}
+
 describe('the live dashboard reads the archive', () => {
-  it('renders a tile for every experiment whose snapshot answers today', () => {
-    // Not an exact number: tiles come and go with the snapshots, and pinning the count would make
-    // this test a chore rather than a guard. What must hold is that the room is not empty and that
-    // the pieces with committed daily data are all present.
-    expect(tiles.length).toBeGreaterThanOrEqual(9)
+  it('renders a tile for every experiment whose record answers today', () => {
+    // Asks the snapshots, not a hard-coded list of ids. A piece whose record carries a reading
+    // must be on the board; a piece whose record is empty must NOT be — absent, never blank.
+    //
+    // Written after 2026-08-15, the first zero the redaction watch ever recorded: no change on
+    // any of its 32 watched pages, three of them unverifiable and recorded as such. redaction()
+    // returned null, exactly as tiles.ts requires, and this guard — which demanded a tile for a
+    // fixed list of ids — failed the run instead: the deploy and both engine integrates red, the
+    // site frozen on its 06:00 build. A day with nothing to report is a reading, not a fault.
     const ids = tiles.map((t) => t.id)
-    for (const id of ['consensus', 'policy', 'redaction', 'ghostFleet', 'roundNumbers', 'patterns', 'atlas']) {
-      expect(ids, `${id} has a committed snapshot and must have a tile`).toContain(id)
+    for (const [id, answers] of Object.entries(ANSWERS_TODAY)) {
+      if (answers()) {
+        expect(ids, `${id}'s record carries a reading and must have a tile`).toContain(id)
+      } else {
+        expect(ids, `${id}'s record is empty today and must not be rendered blank`).not.toContain(id)
+      }
     }
+    // The floor is derived, not typed. Pinning a count made this test a chore that pretended to
+    // be a guard, and it is the count that took the house down on the first honest empty night.
+    const answering = Object.values(ANSWERS_TODAY).filter((answers) => answers()).length
+    expect(tiles.length, 'the room must not be empty').toBeGreaterThan(0)
+    expect(tiles.length).toBeGreaterThanOrEqual(answering)
   })
 
   it('never renders an empty or placeholder reading', () => {
