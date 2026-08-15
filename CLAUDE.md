@@ -119,6 +119,15 @@ alles umgezogen). Was wo liegt:
 
 ## Experimente — was in jeder Session gilt
 
+- **Franks Nachrichten sind privat (standing, 2026-08-15, nach Franks Einspruch):**
+  Wörtliche Zitate aus Franks Prompts/Arbeitsnachrichten erscheinen **nie** in
+  Repo-Inhalten, Commits, PR-Texten, Issues oder Workflow-Kommentaren — egal wie
+  „dokumentarisch" gemeint. Entscheidungen werden neutral und datiert paraphrasiert
+  („Franks Anweisung, Wortlaut privat"). Am 2026-08-15 mussten deshalb wörtliche
+  Zitate im gesamten öffentlichen Record redigiert werden; das passiert kein
+  zweites Mal. Zitierfähig bleiben nur Texte, die Frank ausdrücklich zur
+  Veröffentlichung freigegeben hat.
+
 - **EN-only gilt auch im Code (Frank, 2026-07-31):** Die gesamte research ecology ist
   English-only — das schließt Code-Kommentare, Testnamen/-beschreibungen und
   Commit-Messages in diesem Repo ein, nicht nur die Site-Oberflächen. Neue Beiträge
@@ -152,9 +161,8 @@ wrangler-Config „grün machen"** — Diagnose und der Ein-Klick-Fix:
 `docs/design/2026-08-03-two-deployers-one-project.md`.
 
 **Merge-Vollmacht (Frank, 2026-08-03; am 2026-08-14 auf die ganze Familie erweitert):** Frank
-hat das Mergen nach `main` dauerhaft delegiert — „ich will nicht immer merge schreiben müssen,
-also mach das in Zukunft einfach selber", und am 2026-08-14 verschärft: „ich sage doch eh immer
-merge, weil ich 50 % der Sachen oft gar nicht mehr überschaue". PRs werden also selbst gemergt,
+hat das Mergen nach `main` dauerhaft mündlich delegiert (Wortlaute privat; Kern: er gibt ohnehin
+immer das Merge-Go und will nicht mehr gefragt werden). PRs werden also selbst gemergt,
 sobald die Checks stehen (der bekannt rote Workers Build zählt nicht dagegen); da ein Merge auf
 `main` hier automatisch nach Produktion deployt, schließt die Vollmacht den Deploy ein. Sie gilt
 seit 2026-08-14 **nicht mehr nur für dieses Repo**, sondern für `machine-attention`, `ulysses`,

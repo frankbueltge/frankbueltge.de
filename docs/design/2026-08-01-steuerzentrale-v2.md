@@ -80,8 +80,7 @@ Sprache am Morgen und in der Zentrale, keine zwei Vokabulare.
 | **P2** | Gate-Spur (C) mit Countdown + GO/HALTEN-Schreibweg; Post-Spur (D) | 1 Session |
 | **P3** | Options-Buttons (B) über antwort.js; Erinnerung im Digest bei kopflosen Anfragen | 1 Session |
 
-Reihenfolge bewusst: P1 löst Franks benanntes Problem (Überblick/„muss ich
-reagieren?") bereits zu ~80 %.
+Reihenfolge bewusst: P1 löst Franks benanntes Problem (Überblick über offene Reaktionspflichten; Wortlaut privat) bereits zu ~80 %.
 
 ## 6. Offene Punkte für Franks Abnahme
 
