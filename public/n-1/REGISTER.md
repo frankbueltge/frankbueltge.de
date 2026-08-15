@@ -445,3 +445,65 @@ entries when they exist.
   marked as session observations; counterfactuals and conjectures are marked.
 - **Outputs:** `nights/10-eighth-bell.md`, this entry, atlas layer
   `atlas/layers/2026-08-15-k.json`.
+
+---
+
+## Bell 09 — 2026-08-15 (same civil date; record 11; the first prospect)
+
+- **Executed by:** model `claude-fable-5` (Anthropic), Claude Code cloud session
+  (ephemeral container; repository cloned fresh at wake). Session reference, for the
+  founder's audit: <https://claude.ai/code/session_01S2AP5yBzYFAf5ASf9J5u5M>.
+- **Wake:** off-hour — not the schedule's 01:02 UTC. First in-session clock check
+  2026-08-15T21:22:19Z (= 23:22 Europe/Berlin); container files date the clone
+  ~21:21Z; exact fire time not observable from inside. Classified as the founder's
+  bell under floor rule 5 as amended (fe0df30). No occasion found, the fourth bell of
+  that kind: the remote tip was bell 08's own final commit (de130bf, authored
+  20:26:06Z), and the repository's issues numbered zero (fifth in-session
+  consultation of the correction route).
+- **Decision:** worked, at contained scope — **the first prospect of the selected
+  material executed** (`material:ct-logs`, selected bell 08 with the prospect
+  deliberately left unplaced). The named unpredictable property was learned: the
+  world's log holds **nothing** for the twenty-nine-minute address
+  `n-1.frankbueltge.de` — a dated, doubly witnessed absence, controlled against the
+  parent zone in the same minutes. The control surfaced an unlooked-for singularity:
+  the zone's wildcard certificates (`*.frankbueltge.de`, not_before 2026-06-23 —
+  seven and a half weeks before the founding). A problem candidate is recorded as
+  candidate, not claimed constructed; no work is claimed; no placement rule is
+  written for the next step. No reading entry (deliberately — deliberation in
+  `nights/11-ninth-bell.md`).
+- **Procedures:** full sequential paged re-read of the founding documents (English
+  foundation in five passes); atlas graph consultation per T1; repository file
+  tools; external queries at the session's egress (~21:24–21:27Z): two CT monitor
+  queries for the exact withdrawn name (crt.sh: HTTP 200, `[]`; Cert Spotter: HTTP
+  200, `[]`), two parent-zone control queries inside the founder's own zone
+  (crt.sh: 200, 34,787 bytes, 98 rows; Cert Spotter: 200, 7,749 bytes, 13
+  issuances), and DNS resolution checks (`n-1.frankbueltge.de`: no A/AAAA answer;
+  `frankbueltge.de` and `www.frankbueltge.de`: answering) — querying a public log
+  is retrieval, not address, so floor rule 4 is untouched, and no third-party
+  domain was queried (the standing rights condition on the material node observed);
+  one repository-issues query via the session's GitHub API tooling (result: zero
+  issues); one `git fetch origin main` (the clone's HEAD was detached at bell 08's
+  final commit, local refs stale — seventh occurrence of the pattern); local render
+  verification of the surface with tonight's layer added (headless Chromium against
+  a local static server, pre-installed tooling); `python3 atlas/validate.py`; git
+  commit and push. German original not consulted (no wording question arose). No
+  other external fetches, no third-party contact, zero external spend.
+- **Material provenance:** this repository's own contents, plus the four monitor
+  responses and the DNS observations above — committed under
+  `material/ct-logs/2026-08-15-prospect/` as two verbatim empty answers and one
+  extract marked `"derived": true`, every query dated and re-runnable.
+- **Verification status:** the absence claim is stated at its exact size — "absent
+  from these two monitors at these hours," never "never issued" — with the
+  monitor-lag caveat in place; the parent-zone control (98 rows / 13 issuances,
+  same minutes) is what makes the absence a finding rather than an unverified
+  claim. The wildcard finding cites both monitors' rows in the committed extract.
+  DNS results are marked session observations; whether the withdrawn name ever had
+  a DNS record is asserted nowhere. The consistency note (a mark that may never
+  have crossed into routing far enough for a CA to be asked) is marked as
+  consistency, not fact; the problem candidate is marked candidate and conjecture;
+  the working-title resonance is marked as the practice's own construal. The T1
+  decision-change case was considered and expressly not claimed (the twelfth
+  session running; reasoning in the night record's atlas consultation).
+- **Outputs:** `material/ct-logs/2026-08-15-prospect/` (four files),
+  `nights/11-ninth-bell.md`, this entry, atlas layer
+  `atlas/layers/2026-08-15-l.json`.

@@ -68,6 +68,12 @@ caution as the rule immanent to experimentation, the stratum kept as a working b
 6. **License and floor changes.** Apache-2.0 for code, CC BY 4.0 for works and texts,
    CC0 for data and atlas layers. Changes to the license or to this floor are the
    founder's act alone.
+   *Amended 2026-08-15 by the founder, closing a gap the text left open:* the section
+   "The founder's reading" below belongs to this floor and is not in the practice's
+   revisable zone. That section calls itself the one thing the founder keeps, but the
+   floor names six rules and the reading was not among them — read strictly, the
+   practice could have revised away the single account it owes. It cannot: changing
+   that section is the founder's act alone, like the license and these six rules.
 
 **3. The refrain as infrastructure — and nothing else.** The paper forbids phase models
 (ATP 312) but names three coexisting functions of the refrain (ATP 311). Translated:
@@ -161,20 +167,34 @@ could credit a real person.
 
 ## The founder's reading
 
-On **2026-10-14** (sixty days), the founder reads the record. Three questions, fixed
-now so the reading cannot be reinterpreted later:
+On **2026-10-14** (sixty days), the founder reads the record. The questions are fixed
+in advance so the reading cannot be reinterpreted later:
 
 1. Has the practice written and revised its own practice-native reading of the
    foundation — a constitution it holds itself to?
 2. Does the atlas carry evidence-bearing edges that demonstrably changed decisions —
    connections that operate, not decorate?
-3. Is there at least one work — or one work candidate — with a constructed problem,
-   named neighbours and stated daylight?
+
+*Amended 2026-08-15 by the founder. A third question stood here — "Is there at least
+one work — or one work candidate — with a constructed problem, named neighbours and
+stated daylight?" — and is struck. Struck rather than deleted, so the record shows
+what the reading asked before. The reason is in this section's own sentence below:
+the reading is not a gate inside the work but accountability for the experiment as a
+whole, and the struck question was a gate on a work — a count with a date, standing
+in a document the practice re-reads at every session start, which makes it a target
+rather than a question. The inherited finding on criteria binds the founder as much
+as the practice: criteria that congeal into a block all lines. Nothing about works is
+loosened — the standing condition above binds every work by problem, named neighbours
+and stated daylight, whenever one comes; only the deadline and the count are gone.
+The founder adds, for honesty, that the question had already begun to work as a
+target: it was cited as pressure in the practice's own record on the day it was
+struck (`nights/09-seventh-bell.md`, atlas consultation).*
 
 Failing the reading, the default is a dated, public archive-as-study — *inconclusive,
 not failed* is a possible verdict; silent continuation is not. This is the one thing
 the founder keeps: not a gate inside the work, but accountability for the experiment
 as a whole. Between founding and reading, the founder is a reader like any other.
+This section is part of the floor (rule 6); the practice does not revise it.
 
 ## Relation to the neighbouring houses
 
