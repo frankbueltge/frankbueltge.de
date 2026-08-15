@@ -21,8 +21,11 @@
 import { getCollection } from 'astro:content'
 import Page from '@/layouts/Page.astro'
 import DocumentSheet from '@/components/ecology/DocumentSheet.astro'
+import RefrainScore from '@/components/atelier/RefrainScore.astro'
 import { renderMarkdown } from '@/lib/engines/journal'
+import { loadRefrainModels } from '@/lib/atelier/refrain-data'
 import { wholeTrace } from '@/lib/atelier/trace-record'
+import { ATELIER_NARRATIVE } from '@/config/atelier-wording'
 
 const REPO = 'https://github.com/frankbueltge/ulysses'
 
@@ -78,6 +81,12 @@ const liveMoves = (liveOnly.match(/^## (Tick \d+|Compost in|\d{4}-\d{2}-\d{2})/g
 const rotatedMoves = moves - liveMoves
 
 const md = (text: string) => renderMarkdown(text, { repo: REPO, docs: new Set<string>() })
+
+// The refrain score, ON the record it draws (moved here from the station sheet 2026-08-16,
+// Frank's decision): the station keeps the whole-practice line map; the score is one line's own
+// time and belongs to that line's page. It renders only where a model exists — a running
+// work-line with a legible SCORE/TRACE — which is exactly loadRefrainModels' contract.
+const refrain = loadRefrainModels().find((m) => m.line.id === id) ?? null
 ---
 
 <Page
@@ -99,6 +108,8 @@ const md = (text: string) => renderMarkdown(text, { repo: REPO, docs: new Set<st
       )}.
       {lastMove && <> The last one is dated <b>{lastMove}</b>; a quiet line is quiet, not missing.</>}
     </p>
+
+    {refrain && <RefrainScore model={refrain} id={`refrain-${id}`} heading={ATELIER_NARRATIVE.refrain.heading} />}
 
     {score && (
       <section>

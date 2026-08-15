@@ -9,7 +9,7 @@ import { daysUntil, readingDate, STATIONS, PRACTICE_STATIONS, MAP_NODES } from '
 import { firstClause, recordLine, newestCrossing, runningInquiry } from './landings'
 import { seamsFrom, worksPerWeek, weekOffset, buildTimeline, timelineGeometry } from './timeline'
 import { classifyVerdict, buildGauntlet, buildCrossings, LANES } from './figures'
-import { readConstitution, splitDoorLine, buildStationSheet } from './station'
+import { readConstitution, splitDoorLine, buildStationSheet, windowDoor } from './station'
 import { readN1Facts } from '@/lib/ecology/n1-line'
 import { PYRAMID } from '@/config/ecology-pyramid-wording'
 import { ATELIER_LINES } from '@/lib/ecology/lines'
@@ -296,5 +296,20 @@ describe('the station sheet', () => {
     const keys = sheetOf('field').status.map((r) => r.key)
     expect(keys).toContain(PYRAMID.station.statusKeys.constitution)
     expect(keys).not.toContain(PYRAMID.station.statusKeys.lines)
+  })
+
+  // ——— the practice's own window (2026-08-16) ——————————————————————————————————————————
+  // The n-1 model carried to the practices: a window/ dir in the practice's repo, mirrored
+  // verbatim. The door must exist exactly when the mirror carries an entry page — a door onto
+  // nothing promises a surface the practice has not built, and a missing door hides one it has.
+  it('opens the window door only where the mirror carries an entry page', () => {
+    const has = (path: string) => path === 'public/field/window/index.html'
+    expect(windowDoor('field', has)).toMatchObject({ href: '/field/window/' })
+    expect(windowDoor('atelier', has)).toBeNull()
+    expect(windowDoor('studio', () => false)).toBeNull()
+  })
+
+  it('gives the Middle no window — it is not a practice', () => {
+    expect(windowDoor('middle', () => true)).toBeNull()
   })
 })

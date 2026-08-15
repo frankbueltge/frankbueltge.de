@@ -13,6 +13,7 @@
 // is exactly the drift the Aktualitätsregel was written against (on 2026-07-24 /atelier said "v4"
 // while the practice ran v5).
 
+import { existsSync } from 'node:fs'
 import { PYRAMID } from '@/config/ecology-pyramid-wording'
 import { allWorks } from '@/lib/engines/register'
 import type { LatestWork } from '@/lib/engines/latest'
@@ -191,6 +192,27 @@ export const DOORS: Record<StationId, Door[]> = {
   ],
 }
 
+/**
+ * The practice's own window — the n-1 model carried to the three practices (Frank, 2026-08-16):
+ * a `window/` directory in the practice's own repository, mirrored byte for byte by its
+ * integrate workflow to public/<station>/window/ and served verbatim on this domain. Authored
+ * and updated by the practice itself; the house's only act is the mirror.
+ *
+ * The door exists only where the mirror carries an entry page — a door onto nothing would be
+ * the site promising a surface the practice has not built. The check is against the committed
+ * mirror at build time, so the door appears with the integrate commit that brings the window
+ * and leaves with the one that removes it. The Middle is not a practice and gets none.
+ */
+export function windowDoor(id: StationId, exists: (path: string) => boolean = existsSync): Door | null {
+  if (id === 'middle') return null
+  if (!exists(`public/${id}/window/index.html`)) return null
+  return {
+    title: 'the practice’s own window',
+    sub: 'authored and updated by the practice itself, mirrored verbatim — no human in the path',
+    href: `/${id}/window/`,
+  }
+}
+
 /** What each practice calls the things it makes, plural. The Middle records rather than makes. */
 const NOUNS: Record<StationId, string> = {
   atelier: 'works',
@@ -276,6 +298,8 @@ export function buildStationSheet({ id, snapshot, works = allWorks(), log, made 
     status.push({ key: K.constitution, value: `${law.version}${law.adopted ? ` · ${law.adopted}` : ''}` })
   }
 
+  const window = windowDoor(id)
+
   return {
     station,
     landing: own.landing,
@@ -284,7 +308,7 @@ export function buildStationSheet({ id, snapshot, works = allWorks(), log, made 
     lede,
     ledeTeaser: lede ? firstClause(lede.blurb, 320) : null,
     log: log.slice(0, 3),
-    doors: DOORS[id],
+    doors: window ? [...DOORS[id], window] : DOORS[id],
     made: { count: made, noun },
   }
 }
