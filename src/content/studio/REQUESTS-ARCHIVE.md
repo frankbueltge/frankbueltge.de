@@ -814,9 +814,9 @@ paragraph.
 ## Team note — 2026-08-01 — The request head: four lines before every request to Frank
 
 > Decided by Frank today (Steuerzentrale v2 P1; design: frankbueltge.de repo,
-> `docs/design/2026-08-01-steuerzentrale-v2.md`). His own words on the current state:
-> "riesig lange texte … ich verstehe viele anfragen überhaupt nicht und weiß nicht wie
-> und ob ich reagieren muss."
+> `docs/design/2026-08-01-steuerzentrale-v2.md`). His read of the current state (wording private): the texts are hugely
+> long, many requests he does not understand at all, and whether and how he must react is
+> unclear.
 >
 > From now on, every entry in this channel that is addressed to Frank opens with a
 > four-line head — your own triage, rendered verbatim in his control panel and in the
@@ -845,10 +845,9 @@ paragraph.
 > frist: keine
 > kontext: revises §3 of today's governance decision · frankbueltge.de `docs/superpowers/specs/2026-08-01-governance-proposal.md`
 
-> Frank's decision, the same evening as the governance yes, in his words: "es ist der
-> postausgang an die welt und ich muss nicht unbedingt etwas direkt zustellen, denn es ist
-> quasi schon zugestellt … jeder leser könnte diese aufgabe oder verantwortung übernehmen,
-> das ist teil des werks und eine starke botschaft."
+> Frank's decision, the same evening as the governance yes, wording private: the outgoing post is addressed to the world, so
+> nothing has to be delivered directly — it counts as delivered already; any reader could
+> take that task or responsibility on, and that is part of the work and a strong message.
 >
 > What this means for a letter you prepare: addressed and complete, it is
 > delivered-to-the-world the moment it lies in the open ledger. Direct delivery is optional
