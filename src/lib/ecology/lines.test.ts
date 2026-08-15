@@ -43,7 +43,16 @@ describe('the wording is the canon’s', () => {
       expect(l.label).not.toMatch(/v\d/)
       expect(l.gloss.length).toBeGreaterThan(20)
     }
-    expect(ATELIER_LINES.map((l) => l.label)).toEqual(['the nightly line', 'the work-line'])
+    expect(ATELIER_LINES.map((l) => l.label)).toEqual(['the nightly line', 'the work-line', 'n-1'])
+  })
+
+  it('gives n-1 a founding law and no protocol namespace — no version exists by design', () => {
+    // The Dowry says "this practice has no protocol document"; a protocolNs here would make some
+    // surface eventually try to read a version out of a document that refuses to carry one.
+    const n1 = ATELIER_LINES.find((l) => l.id === 'n-1')!
+    expect(n1.law).toEqual({ kind: 'founding' })
+    // And the other two keep theirs — the union exists to separate the cases, not to loosen them.
+    for (const l of ATELIER_LINES.filter((x) => x.id !== 'n-1')) expect(l.law.kind).toBe('protocol')
   })
 
   it('drops the article for a chip, keeps it for a sentence', () => {

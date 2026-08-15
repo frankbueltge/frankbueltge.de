@@ -1,20 +1,22 @@
 ---
-// Constitution — the standing instruction the atelier collective runs on, synced verbatim
-// from its repo (src/content/atelier/PROTOCOL.md). Loader lowercases file stems into entry
-// ids (verified: PROTOCOL.md → id "protocol"). Chrome strings are bilingual via
-// Astro.currentLocale; the doc TEXT itself renders verbatim, untranslated.
+// /atelier/protocol — the work-line's constitution, verbatim, in the pyramid's document sheet
+// (2026-08-15; until then this page still wore the retired practice frame). The doc TEXT renders
+// untouched; the version in the span is parsed out of the mirror, never hardcoded
+// (Aktualitätsregel 2026-07-25 — on 2026-07-24 this page said "v4" while the practice ran v5).
+//
+// This is ONE of the practice's three laws: the nightly line's constitution lives in its own
+// room (/error-as-method), and n-1's Dowry lives with its own record (/n-1). The station's
+// constitutions row states all three.
 import { getCollection, render } from 'astro:content'
 import Page from '@/layouts/Page.astro'
-import Frame from '@/components/atelier/surface/Frame.astro'
+import DocumentSheet from '@/components/ecology/DocumentSheet.astro'
 import { parseProtocol } from '@/lib/atelier/protocol-version'
-
-const de = Astro.currentLocale === 'de'
 
 const all = await getCollection('atelier')
 const doc = all.find((e) => e.id === 'protocol')
 const { Content } = doc ? await render(doc) : { Content: null }
 
-// Version aus dem Spiegel abgeleitet, nie hartkodiert (Aktualitäts-Regel 2026-07-25).
+// Version derived from the mirror, never typed (Aktualitätsregel 2026-07-25).
 const protoRaw = Object.values(import.meta.glob('/src/content/atelier/PROTOCOL.md', {
   eager: true, query: '?raw', import: 'default',
 }) as Record<string, string>)[0] ?? ''
@@ -22,17 +24,17 @@ const proto = parseProtocol(protoRaw)
 ---
 
 <Page
-  title={de ? 'Verfassung — Atelier · Ulysses' : 'Constitution — Atelier · Ulysses'}
-  description={de
-    ? `Forschungsprotokoll v${proto.version} — die Standardanweisung der Praxis. Vom Verantwortlichen verabschiedet und seit 2026-08-02 von der Praxis selbst weiterentwickelbar (protokolliert); wörtlich aus dem Engine-Repo gespiegelt.`
-    : `Research Protocol v${proto.version} — the standing instruction the practice runs on. Adopted by the responsible human and, since 2026-08-02, self-amendable by the practice (journalled); mirrored verbatim from the engine repo.`}
+  title="Atelier — constitution | Frank Bültge"
+  description={`Research Protocol v${proto.version} — the standing instruction the work-line runs on. Adopted by the responsible human and, since 2026-08-02, self-amendable by the practice (journalled); mirrored verbatim from the engine repo.`}
 >
-  <Frame
-    active=""
-    back
-    kicker={['Atelier · machine-participatory research practice', 'constitution', 'adopted by the responsible human · mirrored verbatim']}
-    h1="Constitution"
+  <DocumentSheet
+    id="atelier"
+    here="constitution"
+    title={`Research Protocol v${proto.version}`}
+    span="the work-line’s standing instruction — adopted by the responsible human, self-amendable by the practice since 2026-08-02 (journalled), mirrored verbatim"
+    source="src/content/atelier/PROTOCOL.md"
+    more={{ label: 'the nightly line’s constitution →', href: '/error-as-method' }}
   >
-    {Content ? <article class="engine-prose"><Content /></article> : <p class="text-fg-faint">{de ? 'Noch nicht synchronisiert.' : 'Not synced yet.'}</p>}
-  </Frame>
+    {Content ? <div class="engine-prose"><Content /></div> : <p class="eco-doc-note">Not synced yet.</p>}
+  </DocumentSheet>
 </Page>

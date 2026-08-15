@@ -20,10 +20,9 @@
 //     broke. The practice's own instruments carry an as-of; so does this.
 import { getCollection } from 'astro:content'
 import Page from '@/layouts/Page.astro'
-import Frame from '@/components/atelier/surface/Frame.astro'
+import DocumentSheet from '@/components/ecology/DocumentSheet.astro'
 import { renderMarkdown } from '@/lib/engines/journal'
 import { wholeTrace } from '@/lib/atelier/trace-record'
-import { ATELIER_NARRATIVE } from '@/config/atelier-wording'
 
 const REPO = 'https://github.com/frankbueltge/ulysses'
 
@@ -85,63 +84,41 @@ const md = (text: string) => renderMarkdown(text, { repo: REPO, docs: new Set<st
   title={`${title} — the record | Frank Bültge`}
   description={`The whole record of the Atelier's work-line “${title}”: its score, every move of its trace, and its decision — read from the committed mirror.`}
 >
-  <Frame
-    active="works"
-    kicker={['THE ATELIER', 'ONE LINE', 'THE WHOLE RECORD']}
-    h1={title}
-    statusHtml={`${kind || 'line'}${status ? ` · ${status.toLowerCase()}` : ''}${lastMove ? ` · last move ${lastMove}` : ''}`}
-    footLeft="the atelier · a practice of the research ecology"
-    footRight="read from the committed mirror · git is the archive"
-    back
+  <DocumentSheet
+    id="atelier"
+    parent={{ label: 'works', href: '/atelier/works' }}
+    here={id}
+    title={title}
+    span={`${kind || 'line'}${status ? ` · ${status.toLowerCase()}` : ''}${lastMove ? ` · last move ${lastMove}` : ''} — one work-line’s whole record: score, decision, trace`}
+    source={`src/content/atelier/projects/${id}/* · src/content/atelier/archive/trace/${id}-*.md`}
+    more={{ label: 'the record in the repository ↗', href: `${REPO}/tree/main/projects/${id}` }}
   >
-    <p class="at-lead">
+    <p class="eco-doc-note">
       {moves} {moves === 1 ? 'move' : 'moves'} on the record{rotatedMoves > 0 && (
         <> — {liveMoves} in the live file, {rotatedMoves} rotated into the archive under §8 and composed back in here</>
       )}.
       {lastMove && <> The last one is dated <b>{lastMove}</b>; a quiet line is quiet, not missing.</>}
-      {' '}
-      <a href={`${REPO}/tree/main/projects/${id}`} rel="noopener">the record in the repository →</a>
     </p>
 
     {score && (
-      <section class="at-record">
-        <h2>The score</h2>
-        <div set:html={md(score)} />
+      <section>
+        <h2 class="eco-doc-part">The score</h2>
+        <div class="engine-prose" set:html={md(score)} />
       </section>
     )}
 
     {decision && (
-      <section class="at-record">
-        <h2>The decision</h2>
-        <div set:html={md(decision)} />
+      <section>
+        <h2 class="eco-doc-part">The decision</h2>
+        <div class="engine-prose" set:html={md(decision)} />
       </section>
     )}
 
     {trace && (
-      <section class="at-record">
-        <h2>The trace</h2>
-        <div set:html={md(trace)} />
+      <section>
+        <h2 class="eco-doc-part">The trace</h2>
+        <div class="engine-prose" set:html={md(trace)} />
       </section>
     )}
-  </Frame>
+  </DocumentSheet>
 </Page>
-
-<style>
-  .at-lead {
-    max-width: 72ch;
-    color: var(--at-ink-2);
-    margin: 0 0 2rem;
-  }
-  .at-record {
-    max-width: 82ch;
-    margin-bottom: 3rem;
-  }
-  .at-record h2 {
-    font-family: var(--at-font-display);
-    font-size: 1.3rem;
-    color: var(--at-h1-ink);
-    border-bottom: 1px solid var(--at-hairline);
-    padding-bottom: 0.35rem;
-    margin-bottom: 1.1rem;
-  }
-</style>

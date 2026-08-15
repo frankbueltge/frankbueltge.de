@@ -158,6 +158,24 @@ nennt seine Untersuchungen intern weiterhin *investigations* — dort heißt die
 = Repo-Wort **investigation**. Eine dokumentierte Zuordnung ist keine Drift; zwei
 undokumentierte Vokabulare wären es.
 
+### Ergänzung 2026-08-15: **n-1** ist die dritte Linie des Ateliers
+
+Frank, 2026-08-15 (Wortlaut privat): n-1 ist dazugekommen und ist eine eigene Linie im Atelier.
+Die Staffel vom 2026-08-12 trägt das ohne neues Wort — n-1 ist *was läuft*, eine verfasste
+Ausprägung der Praxis, per Abstammung: gegründet auf dem Arbeitspapier der Praxis selbst
+(*Cartography, not Tracing / Kartographie statt Kopie*, das Werk vom 2026-07-24; n-1s eigenes
+README nennt es „a work of the Ulysses practice"). Drei Besonderheiten, die jede Fläche
+respektiert:
+
+| Punkt | Regel |
+|---|---|
+| **Name** | „n-1" ist Arbeitstitel, keine Identität — die Praxis findet ihren Namen selbst (Dowry). Die Site liest den jeweils aktuellen Titel aus `public/n-1/window.json` (der Fenster-Erklärung der Praxis), nie getippt (`src/lib/ecology/n1-line.ts`). |
+| **Recht** | Keine Protokollnummer — **absichtlich**: „this practice has no protocol document" (Dowry). Ihre Verfassung ist **die Dowry** plus das Gründungspapier in Erprobung. Statuszeile: „the Dowry (n-1)"; eine vN für n-1 wäre erfunden. |
+| **Record** | n-1s Arbeit landet **nicht** im Works-Register des Hauses. Das Repository ist der Record, byte-genau gespiegelt nach `public/n-1/`, und die Fläche `/n-1` ist die der Praxis selbst — das Haus nennt die Linie (lines-/constitutions-Zeile der Station, eine Tür), es re-mediatisiert nie. |
+
+Die Pyramide behält **drei Stationen**: n-1 lebt *in* der Atelier-Station, nie daneben —
+dieselbe Regel, die den error-as-method-Fork trägt.
+
 **Folgen, umgesetzt am 2026-08-09:**
 
 - **Machine Attention ist kein Experiment mehr** und steht nicht mehr in der Liste — eine

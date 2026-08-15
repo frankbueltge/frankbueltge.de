@@ -10,6 +10,7 @@ import { firstClause, recordLine, newestCrossing, runningInquiry } from './landi
 import { seamsFrom, worksPerWeek, weekOffset, buildTimeline, timelineGeometry } from './timeline'
 import { classifyVerdict, buildGauntlet, buildCrossings, LANES } from './figures'
 import { readConstitution, splitDoorLine, buildStationSheet } from './station'
+import { readN1Facts } from '@/lib/ecology/n1-line'
 import { PYRAMID } from '@/config/ecology-pyramid-wording'
 import { ATELIER_LINES } from '@/lib/ecology/lines'
 import pulse from '@/data/pulse/pulse.json'
@@ -268,18 +269,27 @@ describe('the station sheet', () => {
     )
   })
 
-  it('states both lines with their own counts, read from the register', () => {
+  it('states each line in its own unit, read from its own record', () => {
     const value = sheetOf('atelier').status.find((r) => r.key === PYRAMID.station.statusKeys.lines)!.value
-    for (const line of ATELIER_LINES) expect(value).toContain(line.label)
+    // The two work-bearing lines by their canon labels and register counts…
+    for (const line of ATELIER_LINES.filter((l) => l.id !== 'n-1')) expect(value).toContain(line.label)
     // Counted, never carried in prose — a typed number is the drift this house spent 2026-08-12 on.
     expect(value).toMatch(/\d+ works?/)
+    // …and the third by what its own mirror declares: its current title and founding date. Its
+    // record is not in the register, so a works count here would be the wrong statement entirely.
+    const n1 = readN1Facts()
+    expect(value).toContain(n1.title)
+    expect(value).toContain(`founded ${n1.founded}`)
   })
 
-  it('reads both constitutions out of their mirrors, and they differ', () => {
+  it('reads every law out of its mirror — two versions that differ, and one law with none', () => {
     const value = sheetOf('atelier').status.find((r) => r.key === PYRAMID.station.statusKeys.constitutions)!.value
     const versions = [...value.matchAll(/v(\d+)/g)].map((m) => m[1])
     expect(versions).toHaveLength(2)
     expect(new Set(versions).size, 'two lines reading the same version means one mirror is wrong').toBe(2)
+    // n-1's law is the Dowry, which carries no version BY DESIGN — a vN attributed to it would
+    // mean some surface invented one.
+    expect(value).toContain(readN1Facts().law)
   })
 
   it('leaves a one-line practice with its single constitution row', () => {

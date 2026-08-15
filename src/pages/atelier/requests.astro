@@ -1,124 +1,77 @@
 ---
-// /atelier/requests — the team channel: offers and seeds exchanged between the atelier
-// practice and its human counterpart, synced verbatim from its repo
-// (src/content/atelier/REQUESTS.md).
+// /atelier/requests — the team channel as a Level-2 register sheet (2026-08-15).
 //
-// Etappe 2 (2026-08-01): this page used to print the whole 19,200-word document. It now shows
-// the standing rule, EVERY open item (never a selection — hiding an ask is the one thing this
-// channel must not do) and the five most recent closed exchanges as leads. Nothing was
-// deleted: /atelier/requests/archive carries the document verbatim, and each card links into
-// it at the section's own heading id. The bilingual chrome went with the rewrite (EN-only
-// since 2026-07-16); the visitor copy lives in atelier-wording.ts.
+// The channel's one hard rule survives every redesign: EVERY open item is on this page, never a
+// selection — hiding an ask is the one thing this surface must not do. What changed is the form:
+// one row per exchange instead of stacked cards, open items first, everything one click from its
+// full wording in the archive. The register is denser than any card plan could be, so the
+// page-budget machinery (planRoom) retires with the cards — a row cannot outgrow a page the way
+// forty-word leads did on 2026-08-10.
+//
+// Two documents since the 2026-08-10 split, one record: the archive holds what is done, the live
+// file what is open. The rows are both halves (roomRecord), because the newest answered business
+// sits wherever the last shave left it.
 import { getCollection, render } from 'astro:content'
 import Page from '@/layouts/Page.astro'
-import Frame from '@/components/atelier/surface/Frame.astro'
+import RegisterSheet from '@/components/ecology/RegisterSheet.astro'
+import type { RegisterRow } from '@/components/ecology/RegisterSheet.astro'
 import { renderMarkdown } from '@/lib/engines/journal'
-import { STATUS_WORDS, planRoom, preamble, roomRecord, trimWords } from '@/lib/zentrale/requestsMd'
+import { preamble, roomRecord } from '@/lib/zentrale/requestsMd'
 import { ATELIER_NARRATIVE } from '@/config/atelier-wording'
 
-// Two documents since the 2026-08-10 split, one record. The room's model is both halves (archive
-// first, live second — the same order the archive page prints them), because the five closed leads
-// below are the newest answered business wherever it happens to sit; reading only the live half
-// would empty this block on the day a channel is shaved. Open asks and seeds on offer can only be
-// in the live half.
 const all = await getCollection('atelier')
 const doc = all.find((e) => e.id === 'requests')
 const archived = all.find((e) => e.id === 'requests-archive')
 const md = doc?.body ?? ''
+
 // Astro's own heading lists — the authoritative slugs of the archive page's headings, in the
 // order that page renders them.
 const { headings } = doc ? await render(doc) : { headings: [] }
 const { headings: archivedHeadings } = archived ? await render(archived) : { headings: [] }
 
 const cards = roomRecord(md, archived?.body ?? '', { headings: [...archivedHeadings, ...headings] })
-const openCards = cards.filter((c) => c.open)
-const answered = cards.filter((c) => !c.open && !c.seeds).slice(-5).reverse()
+const open = cards.filter((c) => c.open)
+const answered = cards.filter((c) => !c.open && !c.seeds).reverse()
 const seeds = cards.filter((c) => c.seeds)
 const room = ATELIER_NARRATIVE.requestsRoom
-// The room plans itself against the page budget and never omits an open ask; when the queue
-// forces it below full density it says so rather than quietly showing less (requestsMd.ts).
-const plan = planRoom(cards, room, preamble(md))
-const preambleHtml = md ? renderMarkdown(preamble(md)) : ''
 
-const kicker = [
-  'Atelier · machine-participatory research practice',
-  'team channel',
-  'the offer channel · seeds in, answers out · on the record',
+// Open first (oldest ask first, as the room always ordered them — the practice's own queue),
+// then everything answered, newest first, then the seeds on offer.
+const row = (c: (typeof cards)[number], move: string): RegisterRow => ({
+  date: c.date ?? '',
+  marker: `${c.words} words`,
+  move,
+  line: c.title,
+  href: `/atelier/requests/archive#${c.slug}`,
+})
+const rows: RegisterRow[] = [
+  ...open.map((c) => row(c, 'open')),
+  ...answered.map((c) => row(c, 'answered')),
+  ...seeds.map((c) => row(c, 'seeds')),
 ]
-const statusHtml = `<b>${openCards.length} open</b> · ${cards.length} exchanges on the record · <a href="/atelier/requests/archive" class="underline">the whole channel →</a>`
+
+const preambleHtml = md ? renderMarkdown(preamble(md)) : ''
 ---
 
 <Page
   title="Atelier — team channel | Frank Bültge"
-  description="Offers and seeds between the research practice and its human counterpart: every open item first, the complete channel in the archive. Offers may be declined; silence is a legitimate answer."
+  description="Offers and seeds between the research practice and its human counterpart: every open item first, the complete channel verbatim in the archive. Offers may be declined; silence is a legitimate answer."
 >
-  <Frame active="" back kicker={kicker} h1="Team channel" statusHtml={statusHtml}>
-    {md ? (
+  <RegisterSheet
+    id="atelier"
+    register="team channel"
+    title="the team channel — offers and seeds, on the record"
+    span={`${open.length} open · ${cards.length} exchanges on the record · every open item is on this page, never a selection · the full wording of each is one click behind its row`}
+    rows={rows}
+    source="src/content/atelier/REQUESTS.md · src/content/atelier/REQUESTS-ARCHIVE.md"
+    more={{ label: room.archiveLink, href: '/atelier/requests/archive' }}
+  >
+    <p class="eco-doc-note">{room.intro}</p>
+    {preambleHtml && (
       <>
-        <p class="at-req-note">{room.intro}</p>
-
-        <h2 class="at-req-h">{room.standingHeading}</h2>
-        <article class="engine-prose at-req-standing" set:html={preambleHtml} />
-
-        <h2 class="at-req-h">{room.openHeading}</h2>
-        {openCards.length === 0 ? (
-          <p class="at-req-note">{room.openNone}</p>
-        ) : (
-          <>
-            <p class="at-req-note">{room.openNote}</p>
-            {plan.compressed && (
-              <p class="at-req-note">
-                {`The queue is long, so each item is shown in brief${plan.lead === 0 ? " — title and status only" : ""}. Nothing is hidden: every open ask is on this page, and each links to its full text.`}
-              </p>
-            )}
-            {openCards.map((c) => (
-              <article class="at-req-card">
-                <h3><a href={`/atelier/requests/archive#${c.slug}`}>{trimWords(c.title, plan.titleCap)}</a></h3>
-                <p class="at-req-meta">
-                  {c.date && <span>{c.date}</span>}
-                  {c.status && <span class="at-req-status">{trimWords(c.status, STATUS_WORDS.open)}</span>}
-                  <span>{c.words} words</span>
-                </p>
-                {plan.lead > 0 && c.excerpt && <p class="at-req-lead">{trimWords(c.excerpt, plan.lead)}</p>}
-                <p class="at-req-meta">
-                  <a class="at-req-more" href={`/atelier/requests/archive#${c.slug}`}>{room.fullTextLabel} →</a>
-                </p>
-              </article>
-            ))}
-          </>
-        )}
-
-        <h2 class="at-req-h">{room.answeredHeading}</h2>
-        <p class="at-req-note">{room.answeredNote}</p>
-        {answered.map((c) => (
-          <article class="at-req-card">
-            <h3><a href={`/atelier/requests/archive#${c.slug}`}>{c.title}</a></h3>
-            <p class="at-req-meta">
-              {c.date && <span>{c.date}</span>}
-              {c.status && <span class="at-req-status">{trimWords(c.status, STATUS_WORDS.closed)}</span>}
-              <span>{c.words} words</span>
-            </p>
-            {c.excerpt && <p class="at-req-lead">{c.excerpt}</p>}
-          </article>
-        ))}
-
-        {seeds.length > 0 && (
-          <>
-            <h2 class="at-req-h">{room.seedsHeading}</h2>
-            <p class="at-req-note">{room.seedsNote}</p>
-            {seeds.map((c) => (
-              <p class="at-req-meta">
-                <a class="at-req-more" href={`/atelier/requests/archive#${c.slug}`}>{c.heading} →</a>
-                <span>{c.words} words</span>
-              </p>
-            ))}
-          </>
-        )}
-
-        <p class="at-req-archive"><a href="/atelier/requests/archive">{room.archiveLink}</a></p>
+        <h2 class="eco-doc-part">{room.standingHeading}</h2>
+        <div class="eco-doc engine-prose" set:html={preambleHtml} />
       </>
-    ) : (
-      <p class="text-fg-faint">Not synced yet.</p>
     )}
-  </Frame>
+  </RegisterSheet>
 </Page>

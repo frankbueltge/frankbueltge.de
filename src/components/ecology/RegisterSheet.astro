@@ -127,6 +127,8 @@ const moves =
       )}
     </ul>
 
+    <slot />
+
     <p class="eco-register-foot">
       {W.source(source)}
       {more && <> — <a href={url(more.href)}>{more.label}</a></>}
@@ -153,6 +155,12 @@ const moves =
         for (const other of chips) other.setAttribute('aria-current', String(other === chip))
         for (const row of rows) row.hidden = want !== '' && row.dataset.move !== want
       })
+    }
+    // A link may arrive pre-filtered: #move-<move> presses that chip on load. Best-effort by
+    // design — without JS the fragment is inert and the whole register is simply there.
+    const wanted = decodeURIComponent(location.hash.replace(/^#move-/, ''))
+    if (location.hash.startsWith('#move-')) {
+      for (const chip of chips) if (chip.dataset.move === wanted) chip.click()
     }
   }
 </script>

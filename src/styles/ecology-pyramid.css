@@ -1443,6 +1443,73 @@ a.eco-register-row:hover {
   color: var(--eco-accent);
 }
 
+/* ── the document sheet (2026-08-15) ────────────────────────────────────────────────────────── */
+/* The register sheet's sibling for holdings that are texts rather than lists: a constitution, a
+   journal page, a line's record, the channel's verbatim archive. The document renders through
+   the global .engine-prose grammar, which is colour-agnostic (currentColor throughout), so on
+   this ground it inherits the panel's own ink — nothing is restated here except the measure. */
+.eco-doc {
+  max-width: 82ch;
+  padding: 20px 0 8px;
+  font-size: 14.5px;
+  line-height: 1.66;
+  color: var(--eco-fg);
+}
+.eco-doc a {
+  color: var(--eco-fg);
+  text-decoration-color: var(--eco-underline);
+}
+.eco-doc a:hover {
+  color: var(--eco-accent);
+}
+/* An orientation note above or inside a document — the sheet's own voice, visibly not the
+   record's. Mono and faint, the way every other aside on these surfaces speaks. */
+.eco-doc-note {
+  margin: 0 0 16px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1.7;
+  color: var(--eco-faint);
+}
+.eco-doc-note a {
+  color: var(--eco-muted);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+/* A document section head, where one sheet composes several parts of a record (score · decision
+   · trace). Hairline under, mono over — the same grammar as the register head, one size down.
+   Not scoped under .eco-doc: a register sheet's slot uses it too. */
+.eco .eco-doc-part {
+  margin: 28px 0 12px;
+  border-bottom: 1px solid var(--eco-line);
+  padding-bottom: 6px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--eco-muted);
+}
+/* Page-to-page navigation at a document's foot (journal: previous session · register · next). */
+.eco-doc-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  margin: 28px 0 0;
+  border-top: 1px solid var(--eco-line);
+  padding-top: 12px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+.eco-doc-nav a {
+  color: var(--eco-muted);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.eco-doc-nav a:hover {
+  color: var(--eco-accent);
+}
+
 /* ── motion, refused ────────────────────────────────────────────────────────────────────────── */
 /* The LEDs hold lit — the fact that a practice runs stays, the breathing goes. The map's nodes
    stop breathing and its dots stop travelling (the SMIL animations are removed from the markup
