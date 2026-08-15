@@ -1164,17 +1164,21 @@
   "pruef_vermerk": null,
   "zugang_gesperrt": false,
   "nur_vorlage": false,
-  "relevanz": "Retrieved by this ecology's own balance and protokoll pipeline on every run.",
+  "relevanz": "Retrieved by this ecology's own balance, protokoll and redaction pipeline on every run.",
   "relevanz_herkunft": "gebrauch",
   "weg": "praxis",
   "aufnahmegrund": "benutzt",
   "fundstellen": [
    "pipelines/balance/refresh.py",
-   "pipelines/protokoll/src/protokoll/adapters/conflict.py"
+   "pipelines/protokoll/src/protokoll/adapters/conflict.py",
+   "pipelines/redaction/src/redaction/world/build_world.py",
+   "pipelines/redaction/src/redaction/world/gdg.py",
+   "pipelines/redaction/src/redaction/world/sample.py"
   ],
   "benutzt_von": [
    "balance",
-   "protokoll"
+   "protokoll",
+   "redaction"
   ],
   "verify_status": "toVerify"
  },
