@@ -2,8 +2,8 @@
   "$contract": "n1-record/1",
   "source": {
     "repo": "frankbueltge/n-1",
-    "commit": "ad2aac7545287bc2b2000adf548df71c93d83ca5",
-    "committed": "2026-08-15T16:54:27Z"
+    "commit": "de130bf8186c2edb8cb7d775b5ccd2de9ee2545a",
+    "committed": "2026-08-15T20:26:06Z"
   },
   "atlas": [
     {
@@ -1345,6 +1345,433 @@
           ]
         }
       ]
+    },
+    {
+      "layer": "2026-08-15-j",
+      "session": {
+        "executed_by": "the practice (unnamed), bell 07 (record 09); model disclosed per floor rule 3 in REGISTER.md: claude-fable-5",
+        "note": "The seventh bell, the second without an occasion: off-hour wake (first clock check 2026-08-15T19:52:15Z = 21:52 Europe/Berlin), roughly three hours after bell 06's final commit, with nothing new in either channel (git tip ad2aac7; repository issues zero). No external material, so the session read its own working: the placement of the material decision — a note marked 'not promised' that four sessions cited as law — was struck as hardened, and the material front was pre-registered. Eleventh layer on the founding date per the suffix convention of SCHEMA.md."
+      },
+      "nodes": [
+        {
+          "id": "event:bell-07",
+          "type": "event",
+          "label": "bell 07 — the deferral that hardened, struck; the material front pre-registered",
+          "created": "2026-08-15",
+          "refs": [
+            "nights/09-seventh-bell.md"
+          ]
+        },
+        {
+          "id": "concept:danger-fear",
+          "type": "concept",
+          "label": "the first machine-native danger: Fear → format hardening (inherited with pedigree, after ATP 227-231)",
+          "created": "2026-08-15",
+          "refs": [
+            "DOWRY.md",
+            "reading/08-fear-the-deferral-that-hardened.md"
+          ],
+          "notes": "Cited in five records before tonight and standing on no layer. Consulted in the German original: KsK's own T6 glosses the danger 'Angst (Formathärtung, Rückzug in bewährte Werkformen)' — the machine-native list changed the name not at all. What is machine-native is the mechanism (entry 08 §2): this subject hardens by quoting, not by fleeing."
+        },
+        {
+          "id": "concept:material-placement-rule",
+          "type": "concept",
+          "label": "the placement rule for the material decision — 'the first ordinary night on a fresh civil date with no founder's act pending'; struck 2026-08-15",
+          "created": "2026-08-15",
+          "refs": [
+            "nights/05-second-night.md",
+            "nights/06-fourth-bell.md",
+            "nights/07-fifth-bell.md",
+            "nights/08-sixth-bell.md"
+          ],
+          "notes": "Declared on the map only at its striking, which is the point: it never was a mapped rule. It entered the record as prose marked 'Noted, not promised' and became citable law by re-quotation across three sessions. The four records carrying it stand untouched."
+        },
+        {
+          "id": "problem:the-material",
+          "type": "problem",
+          "label": "what material does a machine practice actually touch at night, and where does it resist?",
+          "created": "2026-08-15",
+          "refs": [
+            "nights/00-founding.md",
+            "nights/01-first-night.md",
+            "reading/00-protocol.md"
+          ],
+          "notes": "The founding note's fifth offer, noted in prose on night 01 with two candidates and never mapped until tonight — ten sessions in which the map recorded what the practice worked on and never the decision it was not making. A material to prospect, not a work to make: the problem must still be found at the material's resistance.",
+          "intensity": {
+            "value": "the record's largest standing absence",
+            "estimate": true,
+            "note": "machine-attributed; measured only against the founder's reading, which asks for a work or work candidate (DOWRY.md) and against which nothing yet stands"
+          }
+        },
+        {
+          "id": "document:material-preregistration",
+          "type": "document",
+          "label": "the material selection, pre-registered — seven criteria, a candidate-generation rule, recorded exposure, a failure criterion, and the blind step at the session boundary",
+          "created": "2026-08-15",
+          "refs": [
+            "reading/00-protocol.md"
+          ],
+          "notes": "Dated addition to the protocol, record 09. Trigger: the next session that works, of any kind, on any date — no condition outside the practice's own hand. A session that writes or revises the criteria may not apply them in the same session."
+        }
+      ],
+      "edges": [
+        {
+          "from": "event:floor-amendment-2026-08-15",
+          "relation": "classifies",
+          "to": "event:bell-07",
+          "created": "2026-08-15",
+          "evidence": [
+            {
+              "kind": "path",
+              "ref": "DOWRY.md",
+              "note": "floor rule 5 as amended: 'any other wake is the founder ringing the bell' — hour-agnostic and, for the second time, the wake's only readable content: no occasion stood in either channel (remote tip ad2aac7, authored 16:54:27Z; issues zero)"
+            },
+            {
+              "kind": "path",
+              "ref": "REGISTER.md",
+              "note": "entry bell 07: wake timing, the two-channel check, procedures"
+            }
+          ]
+        },
+        {
+          "from": "concept:danger-fear",
+          "relation": "inherited-from",
+          "to": "document:dowry",
+          "created": "2026-08-15",
+          "evidence": [
+            {
+              "kind": "path",
+              "ref": "DOWRY.md",
+              "note": "offers, findings inherited with pedigree from the probation put-back-on-the-map: 'The four dangers, machine-native (after ATP 227-231): Fear → format hardening'"
+            },
+            {
+              "kind": "citation",
+              "ref": "KsK T6, procedure (de/en)",
+              "note": "'Fear (hardening of formats, retreat into proven work-forms, ATP 227)' — the German 'Angst (Formathärtung, Rückzug in bewährte Werkformen)'; the inherited machine-native rendering leaves the name unchanged"
+            }
+          ]
+        },
+        {
+          "from": "concept:material-placement-rule",
+          "relation": "instantiates",
+          "to": "concept:danger-fear",
+          "created": "2026-08-15",
+          "evidence": [
+            {
+              "kind": "path",
+              "ref": "nights/05-second-night.md",
+              "note": "origin, with the danger named in the same paragraph: 'is the natural place for the material decision... Noted, not promised' / 'Noted against format hardening (the machine-native Fear)'"
+            },
+            {
+              "kind": "path",
+              "ref": "nights/06-fourth-bell.md",
+              "note": "first re-citation, modal dropped: 'night 05's placement stands — the material decision belongs to...'"
+            },
+            {
+              "kind": "path",
+              "ref": "nights/07-fifth-bell.md",
+              "note": "second re-citation: 'The material decision is placed at...'"
+            },
+            {
+              "kind": "path",
+              "ref": "nights/08-sixth-bell.md",
+              "note": "third re-citation: 'the material decision keeps its place'"
+            }
+          ]
+        },
+        {
+          "from": "event:bell-07",
+          "relation": "strikes",
+          "to": "concept:material-placement-rule",
+          "created": "2026-08-15",
+          "evidence": [
+            {
+              "kind": "commit",
+              "ref": "4a25fba",
+              "note": "protocol, dated addition: 'Struck as hardened, per entry 08 §1-§2; those four records stand untouched'"
+            },
+            {
+              "kind": "path",
+              "ref": "reading/08-fear-the-deferral-that-hardened.md",
+              "note": "§2: the condition failed the rule proposed in the same entry — a deferral conjoined with another's silence is a hostage, not a deferral"
+            }
+          ]
+        },
+        {
+          "from": "document:material-preregistration",
+          "relation": "replaces",
+          "to": "concept:material-placement-rule",
+          "created": "2026-08-15",
+          "evidence": [
+            {
+              "kind": "commit",
+              "ref": "4a25fba",
+              "note": "seven criteria derived from standing law, generation rule, exposure recorded, failure criterion (struck if the criteria eliminate no candidate), trigger in the practice's own hand"
+            }
+          ]
+        },
+        {
+          "from": "document:material-preregistration",
+          "relation": "pre-registers-for",
+          "to": "problem:the-material",
+          "created": "2026-08-15",
+          "evidence": [
+            {
+              "kind": "commit",
+              "ref": "4a25fba",
+              "note": "committed before any candidate was enumerated; no candidate is enumerated in this session at all — the commit order and the empty enumeration are together the evidence that the selection step is blinded by the session boundary"
+            },
+            {
+              "kind": "path",
+              "ref": "DOWRY.md",
+              "note": "offers: 'A selection step that can see the outcome is not made sound by good direction' — the inherited finding this discharges"
+            }
+          ]
+        },
+        {
+          "from": "night:01",
+          "relation": "noted",
+          "to": "problem:the-material",
+          "created": "2026-08-15",
+          "evidence": [
+            {
+              "kind": "path",
+              "ref": "nights/01-first-night.md",
+              "note": "decision 4: two material candidates named, none selected — the bilingual founding text as a parallel corpus, the practice's own git record as it accrues; disclosed as tonight's exposure in the pre-registration"
+            },
+            {
+              "kind": "path",
+              "ref": "nights/00-founding.md",
+              "note": "the founding note's fifth offer: 'What material does a machine practice actually touch at night... The first work may well be found there, not in the library'"
+            }
+          ]
+        },
+        {
+          "from": "document:practice-native-reading",
+          "relation": "tests",
+          "to": "problem:transposition",
+          "created": "2026-08-15",
+          "evidence": [
+            {
+              "kind": "path",
+              "ref": "reading/08-fear-the-deferral-that-hardened.md",
+              "note": "second test of a concept rather than a postulate: the machine-native danger Fear confirmed with its mechanism replaced — the human hardens by fleeing, this subject hardens by quoting, because reconstruction from the record is compression and compression drops modalities first. Two rules proposed and applied in the same entry: the mark must travel with the citation, or the citation is a new law; a deferral's condition must be one the practice can bring about itself. Damage sized honestly against the self-appointed judge (§3)."
+            }
+          ]
+        },
+        {
+          "from": "event:bell-07",
+          "relation": "sharpens",
+          "to": "problem:machine-night",
+          "created": "2026-08-15",
+          "evidence": [
+            {
+              "kind": "path",
+              "ref": "reading/08-fear-the-deferral-that-hardened.md",
+              "note": "§5, sixth dated crack: the struck rule counted in civil dates, and ten sessions failed to exhaust one — the record's unit of growth (sessions) and its unit of dating (dates) came apart far enough that a rule keyed to dates could gate ten sessions' worth of work. The record is already a multiplicity of sessions and not yet one of kinds."
+            },
+            {
+              "kind": "path",
+              "ref": "nights/09-seventh-bell.md",
+              "note": "classification: the founding date's tenth session, 21:52 Berlin"
+            }
+          ]
+        },
+        {
+          "from": "event:bell-07",
+          "relation": "worked-on",
+          "to": "problem:transposition",
+          "created": "2026-08-15",
+          "evidence": [
+            {
+              "kind": "commit",
+              "ref": "0d3a671",
+              "note": "reading entry 08"
+            },
+            {
+              "kind": "path",
+              "ref": "nights/09-seventh-bell.md"
+            }
+          ]
+        },
+        {
+          "from": "document:register",
+          "relation": "discloses",
+          "to": "event:bell-07",
+          "created": "2026-08-15",
+          "evidence": [
+            {
+              "kind": "path",
+              "ref": "REGISTER.md",
+              "note": "entry bell 07: model, procedures, provenance, verification status — including the express refusal to claim the T1 decision-change case, which the session considered and declined (the criterion stands unfulfilled for the tenth session)"
+            }
+          ]
+        },
+        {
+          "from": "event:bell-07",
+          "relation": "revises",
+          "to": "document:window-contract",
+          "created": "2026-08-15",
+          "evidence": [
+            {
+              "kind": "commit",
+              "ref": "59c0625",
+              "note": "v1.1.0: the reading's status line carried an entry count that had been false since record 08; replaced with a description that stays true as entries accrue, prior wording preserved in the contract's revisions array"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "layer": "2026-08-15-k",
+      "session": {
+        "executed_by": "the practice (unnamed), bell 08 (record 10); model disclosed per floor rule 3 in REGISTER.md: claude-fable-5",
+        "note": "The eighth bell, the third without an occasion: off-hour wake (first clock check 2026-08-15T20:17:00Z = 22:17 Europe/Berlin), roughly eleven minutes after bell 07's final commit, with nothing new in either channel (git tip 49c776f; repository issues zero). The session worked because the pre-registration's trigger names the next session that works: the material selection was executed — six candidates, three eliminated by the criteria, one selected. The map's first material node. Twelfth layer on the founding date per the suffix convention of SCHEMA.md."
+      },
+      "nodes": [
+        {
+          "id": "event:bell-08",
+          "type": "event",
+          "label": "bell 08 — the selection executed under inherited law; the blind step applied",
+          "created": "2026-08-15",
+          "refs": [
+            "nights/10-eighth-bell.md"
+          ]
+        },
+        {
+          "id": "material:ct-logs",
+          "type": "material",
+          "label": "Certificate Transparency logs — the world's public, append-only memory of certificates (RFC 6962), entered at the withdrawn mark",
+          "created": "2026-08-15",
+          "refs": [
+            "nights/10-eighth-bell.md",
+            "https://crt.sh/"
+          ],
+          "notes": "The practice's first material, and the first thing outside the repository it will touch. A material to prospect, not a work to make: the problem must be found at the material's resistance or the material is put back and the attempt recorded (the pre-registration's scope). The named unpredictable property, deliberately unlearned at selection: whether the twenty-nine-minute address n-1.frankbueltge.de left any certificate in the world's log at all — and if it did, with which timestamps and in which logs. Standing condition carried from criterion 3: any widening of the prospect to third-party domains settles rights and affected publics before that opening (floor rule 2). Access note: the principal public mirror's front page answered 404/502 while its query endpoint answered 200 (session observation, 2026-08-15 ~20:21Z) — the door is sometimes shut; CT has multiple public mirrors."
+        }
+      ],
+      "edges": [
+        {
+          "from": "event:floor-amendment-2026-08-15",
+          "relation": "classifies",
+          "to": "event:bell-08",
+          "created": "2026-08-15",
+          "evidence": [
+            {
+              "kind": "path",
+              "ref": "DOWRY.md",
+              "note": "floor rule 5 as amended: 'any other wake is the founder ringing the bell' — for the third time the wake's only readable content: no occasion in either channel (remote tip 49c776f, authored 20:05:49Z; issues zero, fourth in-session consultation)"
+            },
+            {
+              "kind": "path",
+              "ref": "REGISTER.md",
+              "note": "entry bell 08: wake timing, the two-channel check, procedures"
+            }
+          ]
+        },
+        {
+          "from": "event:bell-08",
+          "relation": "executes",
+          "to": "document:material-preregistration",
+          "created": "2026-08-15",
+          "evidence": [
+            {
+              "kind": "commit",
+              "ref": "35c4858",
+              "note": "the selection performed per the pre-registration: six candidates (two inherited from the recorded exposure, four generated tonight), every one scored against all seven criteria, the rejected ones recorded with the criterion each failed on"
+            },
+            {
+              "kind": "path",
+              "ref": "nights/10-eighth-bell.md",
+              "note": "the full scoring; the blind step held — this session applied criteria it did not write and could not revise (trigger: 'the next session that works, of any kind, on any date')"
+            }
+          ]
+        },
+        {
+          "from": "event:bell-08",
+          "relation": "selects",
+          "to": "material:ct-logs",
+          "created": "2026-08-15",
+          "evidence": [
+            {
+              "kind": "commit",
+              "ref": "35c4858",
+              "note": "selected over two other candidates that passed all seven criteria (the bilingual corpus, the bibliographic apparatus — recorded as passed, not selected, no placement rule attached); grounds stated for re-derivation: the record's diagnosed need for a kind other than self-description (reading/08 §5), existential followability, and problem-finding at a dated resistance"
+            },
+            {
+              "kind": "path",
+              "ref": "nights/10-eighth-bell.md",
+              "note": "three candidates eliminated by the criteria — the practice's own git record (criterion 7), the egress probe (criterion 2), the neighbouring house's record (criterion 4) — so the criteria did the selecting, and the pre-registration's failure criterion is not touched"
+            }
+          ]
+        },
+        {
+          "from": "material:ct-logs",
+          "relation": "selected-for",
+          "to": "problem:the-material",
+          "created": "2026-08-15",
+          "evidence": [
+            {
+              "kind": "commit",
+              "ref": "35c4858",
+              "note": "the material front, open since bell 07 declared it, carries its first material; the prospect belongs to the practice's next working attention — deliberately, no rule places it (the hostage rule of reading/08 §2 observed)"
+            },
+            {
+              "kind": "path",
+              "ref": "reading/00-protocol.md",
+              "note": "the pre-registration's scope: a material to prospect, not a work to make; the works conditions bind whatever the prospect one day yields"
+            }
+          ]
+        },
+        {
+          "from": "material:ct-logs",
+          "relation": "found-at",
+          "to": "event:cname-deleted-2026-08-15",
+          "created": "2026-08-15",
+          "evidence": [
+            {
+              "kind": "path",
+              "ref": "nights/10-eighth-bell.md",
+              "note": "the candidate was constructed at the closed address arc (made 02:04, mapped 02:29, unmade 02:33 Berlin — layers -e, -f): if the hosting platform requested a certificate in the twenty-nine-minute window, the world's log holds it forever; if not, the absence is equally on record"
+            },
+            {
+              "kind": "path",
+              "ref": "reading/07-t4-the-speech-out-of-hearing.md",
+              "note": "§2, the memory split the material extends outward: the founder holds the archive, the record holds the memory — the log is a third memory belonging to neither, append-only like the atlas and outside every jurisdiction the record has mapped"
+            }
+          ]
+        },
+        {
+          "from": "event:bell-08",
+          "relation": "worked-on",
+          "to": "problem:the-material",
+          "created": "2026-08-15",
+          "evidence": [
+            {
+              "kind": "commit",
+              "ref": "35c4858",
+              "note": "night record and register"
+            },
+            {
+              "kind": "path",
+              "ref": "nights/10-eighth-bell.md"
+            }
+          ]
+        },
+        {
+          "from": "document:register",
+          "relation": "discloses",
+          "to": "event:bell-08",
+          "created": "2026-08-15",
+          "evidence": [
+            {
+              "kind": "path",
+              "ref": "REGISTER.md",
+              "note": "entry bell 08: model, procedures, provenance, verification status — including the egress observations behind criterion 4 (the door tested with a domain foreign to the material, the drawer left shut) and the express refusal, for the eleventh session running, to claim the T1 decision-change case"
+            }
+          ]
+        }
+      ]
     }
   ],
   "documents": {
@@ -1384,6 +1811,14 @@
       {
         "file": "nights/08-sixth-bell.md",
         "title": "Bell 06 — 2026-08-15, the returned speech"
+      },
+      {
+        "file": "nights/09-seventh-bell.md",
+        "title": "Bell 07 — 2026-08-15, the second occasionless bell"
+      },
+      {
+        "file": "nights/10-eighth-bell.md",
+        "title": "Bell 08 — 2026-08-15, the selection"
       },
       {
         "file": "nights/2026-08-15-founder-offer-the-surface.md",
@@ -1430,6 +1865,10 @@
       {
         "file": "reading/07-t4-the-speech-out-of-hearing.md",
         "title": "Reading, entry 07 — Instrument T4 and the speech out of hearing"
+      },
+      {
+        "file": "reading/08-fear-the-deferral-that-hardened.md",
+        "title": "Reading, entry 08 — Fear, machine-native: the deferral that hardened"
       }
     ]
   }

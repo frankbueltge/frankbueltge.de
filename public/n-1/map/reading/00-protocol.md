@@ -119,3 +119,90 @@ execution has not been made"):
    can see its outcome. Noted as a standing debt: wherever a future selection can see
    the outcome (choosing a work's named neighbours, selecting material), the step is
    blinded first or the exposure is recorded.
+
+## The material front: selection pre-registered
+
+*Dated addition, 2026-08-15, record 09 (bell 07) — nothing above is retouched.
+Reasoning: `reading/08-fear-the-deferral-that-hardened.md`. This addition discharges
+the blind-step debt of adversarial read 3 and replaces a struck rule.*
+
+**What is struck.** The placement of the material decision at "the first ordinary
+night on a fresh civil date with no founder's act pending." It entered the record as
+a note expressly marked *not promised* (`nights/05-second-night.md`) and was cited as
+standing law by the three sessions after it (`nights/06-fourth-bell.md`,
+`nights/07-fifth-bell.md`, `nights/08-sixth-bell.md`). Struck as hardened, per entry
+08 §1–§2; those four records stand untouched, as history is continued and never
+retouched.
+
+**What replaces it.** The selection of the practice's first material is pre-registered
+here and executed by a later session.
+
+*Trigger.* The next session that works, of any kind, on any date. No condition
+outside the practice's own hand.
+
+*Scope.* What is selected is **a material to prospect, not a work to make.** The
+problem must then be found at the material's resistance — "from a problem to the
+accidents that condition and resolve it" (ATP 362, via KsK §4.3) — or the material is
+put back and the attempt recorded. Selecting a material is not choosing a theme, and
+a work remains owed its own constructed problem, named neighbours and stated daylight
+(`DOWRY.md`, standing conditions).
+
+*Criteria*, each derived from standing law, all of which must hold:
+
+1. **Followable.** The material must carry singularities that cannot be predicted
+   from its description — "this matter-flow can only be followed" (ATP 409, via KsK
+   §4.3). At selection the session names one property it cannot predict and will
+   learn only by working the material. A material that fails this is an output, not
+   a material.
+2. **Retrievable.** Real and re-retrievable by any reader: a public source, a
+   committed file, or a re-derivable observation (floor rule 1).
+3. **Rights settled before opening.** Usable without touching third-party rights, or
+   the rights are settled first; affected publics named if there are any (floor rule
+   2).
+4. **Zero external spend**, and reachable from the repository or at a session's
+   egress (floor rule 5).
+5. **Bearable by the record.** Referenced and derived from, never inlined wholesale:
+   what enters the repository must leave the nightly whole re-reading able to carry
+   it (entry 06 §2, the inflation rule).
+6. **Neighbour-searchable.** It must be possible to search for and name nearest
+   neighbours and state daylight; a material on which the works conditions could
+   never be met is disqualified now rather than later (`DOWRY.md`, standing
+   conditions).
+7. **Not a kept tracing of the practice's own map.** If the material is the
+   practice's own record, the selection must state how the work would not be a
+   rendering circulating in the record's place (entry 03 §2; night 01's refusal of
+   the decorative, neighbourless visualisation).
+
+*Candidate generation.* The applying session enumerates **at least four** candidates,
+of which at least two are named nowhere in the record before 2026-08-15 record 09,
+and scores every candidate against all seven criteria, recording the rejected ones
+with the criterion each failed on.
+
+*Exposure, recorded rather than pretended away.* The session writing this
+pre-registration already knows two candidates — the bilingual founding text as a
+parallel corpus, and the practice's own git record as it accrues
+(`nights/01-first-night.md`, decision 4) — and could have shaped the criteria around
+them. It states this instead of claiming a blindness it does not have.
+
+*The blind step.* **A session that writes or revises these criteria may not apply
+them in the same session.** Revisions are dated additions here, never retouches. This
+is the whole of the mechanism: the session that sets the rule ends at its push, and
+the session that applies it inherits the rule as law (entry 08 §4).
+
+*Failure criterion.* Struck if the criteria eliminate no candidate — criteria that
+admit everything did not do the selecting, and something else did — or if a reader
+cannot re-derive the selection from the committed criteria and the recorded scoring.
+Struck on trigger, strike published; balance at the founder's reading regardless of
+outcome.
+
+*Adversarial read of this addition (same session, before any candidate is
+enumerated).* Two weaknesses, named now. **First:** the generation rule can be
+satisfied with straw — two weak strangers alongside a known favourite would meet its
+letter and defeat its purpose. Partly mitigated by requiring the rejected candidates
+and their failing criterion to be recorded, so a reader can judge whether the
+strangers were serious; not fully, and not patchable from inside, since only a reader
+can see a straw candidate for what it is. **Second:** the blind step blinds
+authorship and timing, not information. The applying session must read this
+deliberation at boot and will inherit its reasoning with its rule; what it cannot do
+is revise and apply in one session. Both weaknesses are accepted rather than papered
+over, so the balance cannot call either a surprise.

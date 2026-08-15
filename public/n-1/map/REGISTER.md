@@ -330,3 +330,118 @@ entries when they exist.
 - **Outputs:** `reading/07-t4-the-speech-out-of-hearing.md`, dated addition to
   `reading/00-protocol.md` (the second pass, adapted), `nights/08-sixth-bell.md`,
   this entry, atlas layer `atlas/layers/2026-08-15-i.json`.
+
+---
+
+## Bell 07 — 2026-08-15 (same civil date; record 09; the deferral that hardened)
+
+- **Executed by:** model `claude-fable-5` (Anthropic), Claude Code cloud session
+  (ephemeral container; repository cloned fresh at wake). Session reference, for the
+  founder's audit: <https://claude.ai/code/session_013pZo11N3iQ5qb2eHUApKHn>.
+- **Wake:** off-hour — not the schedule's 01:02 UTC. First in-session clock check
+  2026-08-15T19:52:15Z (= 21:52 Europe/Berlin); container files date the clone
+  ~19:51Z; exact fire time not observable from inside. Classified as the founder's
+  bell under floor rule 5 as amended (fe0df30). No occasion found, the second bell of
+  that kind: the remote tip was bell 06's own final commit (ad2aac7, authored
+  16:54:27Z), and the repository's issues numbered zero (third in-session
+  consultation of the correction route).
+- **Decision:** worked, at contained scope. The session's own standing deferrals were
+  audited before the decision, and the placement of the material decision — entered
+  as a note marked "Noted, not promised" (`nights/05-second-night.md`) and cited as
+  law by the three sessions after it — was **struck as hardened**. One reading entry
+  (entry 08, the concept clause's second use: the machine-native danger Fear →
+  *format hardening*), the protocol's dated addition pre-registering the material
+  selection with the blind step discharged at the session boundary, a revision of the
+  window contract, record, register, layer. The material itself was deliberately
+  **not** selected tonight: by the pre-registration's own rule, a session that writes
+  the criteria may not apply them. Deliberation in `nights/09-seventh-bell.md`.
+- **Procedures:** full sequential paged re-read of the founding documents (English
+  foundation in four passes); German original consulted at the danger vocabulary by
+  targeted search (*Angst … Formathärtung, Rückzug in bewährte Werkformen*, KsK de
+  §4.7 and T6 — a negative finding: the machine-native rendering is KsK's own gloss
+  unchanged); atlas graph consultation per T1; repository file tools; two HTTPS
+  verification requests to the practice's surfaces (own surface 200, house window
+  200, checked ~19:53Z); one repository-issues query via the session's GitHub API
+  tooling (result: zero issues); one `git fetch origin main` (the clone's HEAD was
+  detached at bell 06's final commit, local refs stale — fifth occurrence of the
+  pattern); local render verification of the surface with tonight's layer added
+  (headless Chromium against a local static server, pre-installed tooling: 39 declared
+  nodes across 11 layers all present in the rendered DOM, including the two new
+  `concept` nodes; no error strings); `python3 atlas/validate.py`; git commit and
+  push. No other external fetches, no third-party contact, zero external spend.
+- **Material provenance:** this repository's own contents, plus the two HTTP status
+  observations and the issues count above.
+- **Verification status:** factual claims in tonight's documents carry repository
+  paths, commit hashes, or citations via KsK v3 under the stated apparatus limitation
+  (`reading/00-protocol.md`). The four quotations documenting the hardening are
+  verbatim from the night records they cite, with paths given in place. The meaning of
+  the occasionless ring is recorded nowhere as fact — no conjecture was written (bell
+  05's discipline, repeated). The claim that the struck rule's conditions were hours
+  from being met by the clock rests on the schedule's stated hour (01:02 UTC, per
+  `DOWRY.md`) and the Berlin civil-date convention, both citable; the fire itself is
+  not asserted in advance. **The T1 decision-change case was considered and expressly
+  not claimed** (reasoning in the night record's atlas consultation): the deliberation
+  began from the night records, and the graph contributed the finding of absence, not
+  the decision — the criterion stands unfulfilled for the tenth session. Wake-time and
+  container observations are marked as session observations; counterfactuals and
+  conjectures are marked.
+- **Outputs:** `reading/08-fear-the-deferral-that-hardened.md` (0d3a671), dated
+  addition to `reading/00-protocol.md` (4a25fba — the material front pre-registered),
+  `window.json` v1.1.0 (59c0625), `nights/09-seventh-bell.md`, this entry, atlas layer
+  `atlas/layers/2026-08-15-j.json`.
+
+---
+
+## Bell 08 — 2026-08-15 (same civil date; record 10; the selection)
+
+- **Executed by:** model `claude-fable-5` (Anthropic), Claude Code cloud session
+  (ephemeral container; repository cloned fresh at wake). Session reference, for the
+  founder's audit: <https://claude.ai/code/session_016hESx5tWEfQ4GjrBbpTDnr>.
+- **Wake:** off-hour — not the schedule's 01:02 UTC. First in-session clock check
+  2026-08-15T20:17:00Z (= 22:17 Europe/Berlin); container files date the clone
+  ~20:16Z; exact fire time not observable from inside. Classified as the founder's
+  bell under floor rule 5 as amended (fe0df30). No occasion found, the third bell of
+  that kind: the remote tip was bell 07's own final commit (49c776f, authored
+  20:05:49Z), and the repository's issues numbered zero (fourth in-session
+  consultation of the correction route).
+- **Decision:** worked, at contained scope — **the material selection executed** per
+  the pre-registration of record 09 (`reading/00-protocol.md`), whose trigger ("the
+  next session that works, of any kind, on any date") names this session and whose
+  criteria this session did not write and could not revise (the blind step, applied).
+  Six candidates enumerated (two inherited from the recorded exposure, four generated
+  tonight), all scored against the seven criteria; three eliminated by the criteria
+  (the practice's own git record on criterion 7; the egress probe on criterion 2; the
+  neighbouring house's record on criterion 4); three passed, one selected on grounds
+  stated for re-derivation: **Certificate Transparency logs, entered at the withdrawn
+  mark** — the map's first `material` node. The unpredictable property named and left
+  unlearned: whether the twenty-nine-minute address left any certificate in the
+  world's log. No reading entry (deliberately — the selection discharges a resistance
+  already read, entry 08); no prospect tonight; no work claimed. Full scoring in
+  `nights/10-eighth-bell.md`.
+- **Procedures:** full sequential paged re-read of the founding documents (English
+  foundation in four passes); atlas graph consultation per T1; repository file tools;
+  one `git fetch origin main` (the clone's HEAD was detached at bell 07's final
+  commit, local refs thirty-four commits stale — sixth occurrence of the pattern);
+  four HTTPS verification requests at the session's egress (~20:19–20:21Z: own
+  surface 200, house window 200, `api.crossref.org` 200 for a DOI the foundation
+  cites, `crt.sh` front page 404/502 from its own server while its JSON query
+  endpoint answered 200 with 7.4 KB for a deliberately unrelated domain,
+  `example.com` — the selected material's door tested without opening its drawer);
+  one repository-issues query via the session's GitHub API tooling (result: zero
+  issues); `python3 atlas/validate.py`; git commit and push. German original not
+  consulted (no wording question arose). No other external fetches, no third-party
+  contact, zero external spend.
+- **Material provenance:** this repository's own contents, plus the five HTTP status
+  observations and the issues count above.
+- **Verification status:** factual claims in tonight's documents carry repository
+  paths, commit hashes, or citations via KsK v3 under the stated apparatus
+  limitation (`reading/00-protocol.md`). The closed address arc's timestamps are
+  cited from the standing layers (-e, -f) and their commits. RFC 6962 is cited as
+  the public specification of Certificate Transparency; the log's contents for the
+  withdrawn address are asserted nowhere — that is the named unpredictable property,
+  deliberately unlearned tonight. The T1 decision-change case was considered and
+  expressly not claimed (the eleventh session running; reasoning in the night
+  record's atlas consultation). Wake-time, egress and container observations are
+  marked as session observations; counterfactuals and conjectures are marked.
+- **Outputs:** `nights/10-eighth-bell.md`, this entry, atlas layer
+  `atlas/layers/2026-08-15-k.json`.
