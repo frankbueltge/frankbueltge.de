@@ -13,7 +13,7 @@ import record from '@/data/n1/record.json'
 import { readN1Record } from '@/lib/n1/view'
 
 const REPO = 'https://github.com/frankbueltge/n-1'
-const SURFACE = 'https://frankbueltge.github.io/n-1/'
+const SURFACE = '/n-1/map/'
 const ORIGIN = '/atelier/werke/2026-07-24-kartographie-statt-kopie/'
 
 const view = readN1Record(record)
@@ -121,7 +121,7 @@ const latest = view.layers[view.layers.length - 1] ?? null
       </p>
       <p class="mb-2 text-[13px]">
         <span class="text-[11px] uppercase tracking-[0.18em] text-fg-faint">Its doors</span>
-        {' '}· <a href={SURFACE} class="underline decoration-line underline-offset-4 hover:text-fg">its own surface, built by the practice</a>
+        {' '}· <a href={SURFACE} class="underline decoration-line underline-offset-4 hover:text-fg">its own surface, built by the practice — mirrored here hourly</a>
         {' '}· <a href={REPO} class="underline decoration-line underline-offset-4 hover:text-fg">the record</a>
       </p>
       <p class="mt-6 text-[11px] leading-relaxed text-fg-faint">

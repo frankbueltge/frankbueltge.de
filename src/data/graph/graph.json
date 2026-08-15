@@ -12,7 +12,7 @@
       },
       {
         "file": "docs/decision-log.md",
-        "sha256": "9cef81d64b241b5c"
+        "sha256": "39e344a133b97350"
       },
       {
         "file": "src/data/post/ledger.json",
@@ -57,10 +57,10 @@
       }
     ],
     "counts": {
-      "nodes": 250,
+      "nodes": 251,
       "edges": 221,
       "nodesByKind": {
-        "decision": 48,
+        "decision": 49,
         "encounter": 6,
         "neighbor": 88,
         "practice": 9,
@@ -543,6 +543,16 @@
     {
       "id": "decision:2026-08-15-1",
       "kind": "decision",
+      "label": "Die Subdomain ist gestrichen, bevor sie je DNS sah — alles direkt auf der Domain (Frank, dritte Nachfrage derselben Nacht: „kann das nicht alles auch ohne realisiert werden und direkt auf der domain?\").",
+      "date": "2026-08-15",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "Die Subdomain ist gestrichen, bevor sie je DNS sah — alles direkt auf der Domain (Frank, dritte Nachfrage derselben Nacht: „kann das nicht alles auch ohne realisiert werden und direkt auf der domain?\")."
+      }
+    },
+    {
+      "id": "decision:2026-08-15-2",
+      "kind": "decision",
       "label": "n-1 bekommt den Spiegel im Haupthaus — Franks Korrektur, noch in derselben Nacht: „das ist blödsinn, alle praxen können das oder sollten das können\".",
       "date": "2026-08-15",
       "source": {
@@ -551,7 +561,7 @@
       }
     },
     {
-      "id": "decision:2026-08-15-2",
+      "id": "decision:2026-08-15-3",
       "kind": "decision",
       "label": "Eine Praxis außerhalb der Häuser gegründet — n-1 (Frank, Nachtsession: „go\").",
       "date": "2026-08-15",
@@ -5395,7 +5405,7 @@
     },
     {
       "kind": "touches",
-      "from": "decision:2026-08-15-1",
+      "from": "decision:2026-08-15-2",
       "to": "work:on-record",
       "source": {
         "file": "docs/decision-log.md",

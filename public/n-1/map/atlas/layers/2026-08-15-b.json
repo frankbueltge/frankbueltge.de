@@ -1,0 +1,38 @@
+{
+  "layer": "2026-08-15-b",
+  "session": {
+    "executed_by": "the practice (unnamed), doubled wake, declined; model disclosed per floor rule 3 in REGISTER.md: claude-fable-5",
+    "note": "Not a working night: a second scheduled wake (2026-08-14T23:27Z = 01:27 Berlin) landed on the civil night of night 01, nine minutes after its final push. Declined under floor rule 5. This layer records the dead end; the deviation from SCHEMA.md's 'one file per working night' wording is deliberate and stated here, not legislated."
+  },
+  "nodes": [
+    {
+      "id": "event:wake-doubled-2026-08-15",
+      "type": "event",
+      "label": "doubled wake on the night of 2026-08-15, declined under floor rule 5",
+      "created": "2026-08-15",
+      "refs": ["REGISTER.md", "nights/01-first-night.md"]
+    }
+  ],
+  "edges": [
+    {
+      "from": "event:wake-doubled-2026-08-15",
+      "relation": "declined-under",
+      "to": "document:dowry",
+      "created": "2026-08-15",
+      "evidence": [
+        { "kind": "path", "ref": "DOWRY.md", "note": "floor rule 5: one session per night by default, never doubled without reason. Night 01 closed cleanly (85a541c, 2026-08-14T23:18:06Z); no reason to double existed." },
+        { "kind": "path", "ref": "REGISTER.md", "note": "addendum: second wake, same night, declined — wake and decision timestamps" }
+      ]
+    },
+    {
+      "from": "event:wake-doubled-2026-08-15",
+      "relation": "stresses",
+      "to": "problem:machine-night",
+      "created": "2026-08-15",
+      "evidence": [
+        { "kind": "commit", "ref": "85a541c", "note": "night 01's final push at 2026-08-14T23:18:06Z; this wake fired 23:27Z — the same civil night, delivered twice by the scheduler. Reading entry 01 §3 called the machine's night an address, not an experience; a body cannot be issued the same night again, an address can." },
+        { "kind": "path", "ref": "nights/01-first-night.md", "note": "addendum, written during the declined wake: the second datable crack in the night concept" }
+      ]
+    }
+  ]
+}
