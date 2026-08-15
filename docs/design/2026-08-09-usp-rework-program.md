@@ -165,6 +165,53 @@ unclaimed lane is free. Release a lane by dating the Landed line.
 
 ## Landed
 
+- 2026-08-15 — **#16 Watchtower: the densification of the gaze, built out of material that
+  was already lying there.** The audit called this the strongest rework direction of all
+  sixteen, and the row had been sitting in Phase 2 because it looked like it needed a new
+  pipeline. It did not — the row's premise was simply wrong (see the 2026-08-15 reading), and
+  once that was checked, two materials turned up in data the site has been committing since
+  June:
+  **(a) The launch year was inside the data all along.** Every satellite carries its
+  international designator (`2014-029A`), so the *current* snapshot is already a cohort curve:
+  how many of today's active Earth-observation satellites went up in each year, and who owns
+  them. The finding is sharp — the active fleet's yearly cohorts run 11 (2022) → 29 → 37 → 50
+  (2025), and the commercial share of those arrivals goes from **1 of 11 to 33 of 50**. The
+  gaze densifies, and it densifies commercially.
+  **(b) Git was the time series.** `src/data/ueberflug/satellites.json` is overwritten nightly,
+  which is why the row assumed no history existed; but every overwrite is a commit, so the
+  archive was already there — 56 observations since 2026-06-11, recovered by
+  `scripts/ueberflug_densification.py` into `src/data/ueberflug/densification.json`. The house's
+  own premise (*git is the archive*) applied to a file nobody had read backwards.
+  **What the build refused to claim.** The row promised *commercial vs. military* density.
+  The catalogue cannot carry the military half: classified satellites are absent, so 2024 and
+  2025 read **zero** military — a fact about the catalogue, not the sky. The page states that
+  the military column is a floor and drops the ratio claim rather than presenting a hole as a
+  finding. It also states that the curve is the *active* fleet by launch year, not the launch
+  record, so deorbited satellites make early cohorts look thinner than they were. And the
+  56-day register is reported as **flat** — sixty-five days is far too short a lever for a
+  densification claim, which is exactly why the standing register is the instrument and the
+  cohort curve is the finding.
+  **The one judgement in the build was put to Frank and decided (2026-08-15): the midpoint.**
+  How satellites GCAT leaves unclassified enter the commercial share is not bookkeeping — the
+  unclassified rate is above 50 % in some 2005–2011 cohorts and **zero from 2023 on**, so the
+  rule changes the shape of the curve. Counting them as non-commercial would have made the old
+  cohorts look maximally state-owned and so exaggerated the very flip the page claims; dropping
+  them would have rested the early years on a handful of satellites. The midpoint claims
+  nothing about them either way, and the figure **draws the band it sits in** — a dashed line
+  spanning what the unclassified could still make the share — so the width of the claim is
+  visible rather than asserted. Cohorts GCAT classified completely carry no line at all, which
+  is every cohort from 2023 on, so the headline numbers never depended on the rule.
+  Guarded by `src/lib/ueberflug/densification.test.ts` (11 tests), including one that forbids
+  the page from stating a share its own band does not contain, and one that checks the failed
+  night of 2026-06-12 is still on the record instead of dropped.
+- 2026-08-15 — **the tracker's own guards, repaired.** Two tests in the house were failing at
+  random inside the full suite and passing alone — the worst state a gate can be in, because it
+  teaches everyone to re-run until green. Both were timeouts at the 5 s default, not real
+  defects: `consensus/baseline.test.ts` made ~10,000 `expect()` calls walking 2,496 archive days
+  (now one assertion per rule over the whole archive — same coverage, and a failure now names
+  every offending day instead of the first), and `society/engine.test.ts` runs simulations of up
+  to 12,000 ticks (cost declared with an explicit 60 s timeout rather than hidden by shortening
+  the simulations). Full suite: 2,721 tests, 136 files, green.
 - 2026-08-09 (afternoon) — **#4 Machine Attention: the Phase-0 gap closed**, the last of
   the sixteen still without neighbors. The method sheet now names OpenTimestamps, Proof of
   Existence/OriginStamp, GDACS+ReliefWeb's own timestamped bulletins, Metaculus/Good

@@ -5,7 +5,7 @@
 // checkable claims, so they are checked here — the same reason palette verdicts moved from
 // CSS comments into palette.test.ts.
 
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import {
   bodySnapshot,
   makeSociety,
@@ -19,6 +19,13 @@ import {
 } from './engine'
 import type { WorldEvent } from './world'
 import { AGENTS, awakeChapters, CHAPTERS } from './agents'
+
+// Several claims here need thousands of ticks before the society reaches the stage they are
+// about — the transfer to the arch does not happen in five seconds of wall clock. Under the
+// 5 s default these tests passed alone and failed at random inside the full suite, which is
+// the worst state a guard can be in: it trains everyone to re-run until green. The cost is
+// real, so it is declared rather than hidden by shortening the simulations (2026-08-15).
+vi.setConfig({ testTimeout: 60_000 })
 
 const SEED = 20260805
 
