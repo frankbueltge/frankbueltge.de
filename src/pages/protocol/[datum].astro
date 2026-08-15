@@ -13,5 +13,7 @@ const locale = 'en' as const
 const { day } = Astro.props as { day: ProtokollDay }
 ---
 <Page title={`${t(locale, 'prot.title')} ${day.date} | Frank Bültge`} description={t(locale, 'prot.sub')} noindex>
+  <main id="main" class="flex-1">
   <ProtokollDoc day={day} locale={locale} />
+  </main>
 </Page>

@@ -462,7 +462,7 @@ export const NAMING = {
     standaloneFrame: {
       note: 'Wall label and links added by the site. The work itself begins below.',
       backPrefix: '←',
-      ecology: { label: 'the research ecology', href: '/' },
+      ecology: { label: 'the research ecology', href: '/ecology' },
       /** shown when a work has no wall text yet: the gap stays visible, never papered over
        *  with `embodies` — the same rule renderWrapperPage follows */
       footLead: 'Leave the work:',
@@ -470,7 +470,7 @@ export const NAMING = {
     withdrawnLabel: 'withdrawn',
     entranceNote: {
       lead: 'The newest of these also stand on the entrance, under LATEST —',
-      label: 'the ecology’s front door →',
+      label: 'the site’s front door →',
       href: '/#latest',
     },
     provenanceLead: 'Read at build time from the works’ own committed metadata:',

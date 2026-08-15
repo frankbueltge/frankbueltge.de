@@ -30,6 +30,7 @@ const bw = rec.length ? W / rec.length : W
 const bars = rec.map((r, i) => ({ x: i * bw, h: (Math.abs(r.delta) / maxAbs) * (H - top - 2) }))
 ---
 
+<main id="main" class="flex-1">
 <article class="correction mx-auto max-w-3xl px-4 py-14">
   <header class="mb-10">
     <h1 class="text-[clamp(30px,6vw,56px)] font-bold tracking-[-0.03em]">The Correction</h1>
@@ -118,3 +119,4 @@ const bars = rec.map((r, i) => ({ x: i * bw, h: (Math.abs(r.delta) / maxAbs) * (
     </nav>
   </footer>
 </article>
+</main>

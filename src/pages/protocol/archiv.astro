@@ -9,6 +9,7 @@ const days = await getProtokollDays()
 const years = [...new Set(days.map((d) => d.date.slice(0, 4)))]
 ---
 <Page title={`${t(locale, 'prot.archive')} — ${t(locale, 'prot.title')} | Frank Bültge`} description={t(locale, 'prot.sub')}>
+  <main id="main" class="flex-1">
   <div class="mx-auto max-w-2xl px-4 py-14">
     <h1 class="mb-8 text-xl font-semibold">{t(locale, 'prot.title')} — {t(locale, 'prot.archive')}</h1>
     {days.length === 0 && <p class="text-fg-muted">{t(locale, 'prot.empty')}</p>}
@@ -27,4 +28,5 @@ const years = [...new Set(days.map((d) => d.date.slice(0, 4)))]
       </section>
     ))}
   </div>
+  </main>
 </Page>

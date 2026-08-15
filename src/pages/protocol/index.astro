@@ -7,7 +7,9 @@ const locale = 'en' as const
 const days = await getProtokollDays()
 ---
 <Page title={`${t(locale, 'prot.title')} | Frank Bültge`} description={t(locale, 'prot.sub')}>
+  <main id="main" class="flex-1">
   {days.length ? <ProtokollDataView days={days} locale={locale} /> : (
     <p class="mx-auto max-w-2xl px-4 py-14 text-fg-muted">{t(locale, 'prot.empty')}</p>
   )}
+  </main>
 </Page>

@@ -356,6 +356,7 @@ const methodUrl = getRelativeLocaleUrl(locale, '/werke/headroom')
 const methodLabel = de ? 'Methodenblatt' : 'Method sheet'
 ---
 
+<main id="main" class="flex-1">
 <article class="spielraum mx-auto max-w-2xl px-4 py-14">
   <header class="mb-10 space-y-2">
     <h1 class="text-2xl font-semibold">{t(locale, 'sr.title')}</h1>
@@ -576,6 +577,7 @@ const methodLabel = de ? 'Methodenblatt' : 'Method sheet'
     </nav>
   </footer>
 </article>
+</main>
 
 <style>
   /* Druckfassung: Spielraum schwarz auf weiß, Chrome ausgeblendet (Muster: PraemiePage). */
