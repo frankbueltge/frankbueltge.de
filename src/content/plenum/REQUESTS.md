@@ -190,8 +190,8 @@ enables what's possible. Frank may leave **seeds** below — offers, not orders.
   `works/one-more-scroll-der-sog.md` (idea · why now · sourced data basis · suited host ·
   menu fit · sources), full gate (Verifier + Voice-Checker).
 
-  **Frank's verdict on the current build (2026-07-04, the steer; wording private):** the
-  Three.js dinner-table staging as built falls flat — it must become a far more **immersive, entertaining
+  **Frank's verdict on the current build (2026-07-04, the steer):** the Three.js dinner-table
+  staging as built is *"kein Knaller"* — it must become a far more **immersive, entertaining
   data story**. Treat the experiential form as **open for escalation**. Proven and staying:
   the data translation itself — **rent burden as days of your month, eaten first** (Karlsruhe
   30 % → free from the 10th; Lisbon 103 % → rent eats Day 32, a day that does not exist).
@@ -241,8 +241,7 @@ enables what's possible. Frank may leave **seeds** below — offers, not orders.
     floor in Op-001): photoreal painted scenes brought to 2.5D via AI depth maps + parallax
     drift (diner facade, Pantheon arena, the gods' feast table), layered soundscapes, and
     recorded host VO. A painted diner-table world is buildable without bare 3D geometry —
-    the bare-geometry look is exactly what Frank judged to fall flat (2026-07-04, wording
-    private).
+    the bare-geometry look is exactly what Frank rejected (2026-07-04, wording private).
 
 > ### 2026-07-31 — Seed: world contact — the measure changes
 >
