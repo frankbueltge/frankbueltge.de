@@ -133,8 +133,10 @@ export function firstSentence(text: string): string {
 // ————————————————————————————————————————————————— honesty tiers ————————————
 //
 // The house's own vocabulary for what a work stands on. It writes them as a labelled clause —
-// "SOURCED spine: …", "IMAGINED: …" — and only two of the five works declare any, which is itself
-// worth showing: the dossier says so rather than inventing a tier for the other three.
+// "SOURCED spine: …", "IMAGINED: …" — and only some of the works declare any, which is itself
+// worth showing: the dossier says so rather than inventing a tier for the ones that do not. (The
+// count used to stand here as "two of the five"; the house keeps shipping, so the prose says what
+// the rule is and the test counts.)
 //
 // The colon is load-bearing. One Tap's description ALSO contains the sentence "The SOURCED spine
 // below is unaffected and was never in question", inside its correction notice; that is a claim

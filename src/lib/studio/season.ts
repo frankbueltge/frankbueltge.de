@@ -127,6 +127,9 @@ const PROD_Y = 644
 
 const POOL_RY = 36
 const STRIKE_R = 30
+/** the top edge of the lamp the light hangs from — the highest thing on the stage, and therefore
+ *  the lowest a crop window's top edge may sit if the fragment is still to read as a stage */
+const LAMP_TOP = FLOOR.y0 - 28
 
 /** Didone capitals at 15px, measured against the glyph widths this figure actually uses: a pool is
  *  as wide as the name it lights, never a fixed box a long title spills out of. */
@@ -612,10 +615,17 @@ function cropView(model: SeasonModel, cropTo?: string, box?: { width: number; he
   if (box) {
     // A named window: centred on the mark in both axes and clamped to the figure, so a window
     // larger than the stage simply becomes the stage rather than a viewBox reaching past it.
+    //
+    // The top edge is clamped once more, to the lamp the light hangs from: a window centred on a
+    // mark that sits low on the floor would open BELOW the bar and the fragment would stop reading
+    // as a stage — the one thing the hub's card claims about it. The rule was always the intent of
+    // this crop (see the comment above) and was only ever satisfied by accident: it held while the
+    // lit pools happened to sit high enough, and broke by 3.5px the first evening a sixth premiere
+    // pushed the newest pool down (2026-08-15).
     const cw = Math.min(box.width, W)
     const ch = Math.min(box.height, H)
     const bx = Math.min(Math.max(m.x - cw / 2, 0), W - cw)
-    const by = Math.min(Math.max(m.y - ch / 2, 0), H - ch)
+    const by = Math.min(Math.max(m.y - ch / 2, 0), H - ch, LAMP_TOP)
     return `${round(bx)} ${round(by)} ${round(cw)} ${round(ch)}`
   }
   const cw = 1040
