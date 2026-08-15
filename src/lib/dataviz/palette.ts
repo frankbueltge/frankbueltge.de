@@ -610,6 +610,63 @@ export const PALETTES: readonly PaletteSet[] = [
     warns: [],
     usedBy: ['src/styles/balance-figure.css'],
   },
+  {
+    id: 'invoked-memory',
+    description:
+      'The Invoked Past — two identities on the year histogram: the day’s STANDOUT year ' +
+      '(ember) and the NEIGHBOURHOOD BASELINE it towers over (azure), the median of the ±5 ' +
+      'years around it drawn as a rule across exactly those years. Identity colours, ' +
+      'emphatically not status: a year standing 8× above its neighbourhood is a finding ' +
+      'about what the press invoked today, never an alarm — which is why the ember is a ' +
+      'burnt earth tone and not a warning red, the same reasoning that keeps a closed ' +
+      'atelier line and a "redundant" USP verdict out of red. Everything else in the figure ' +
+      'is deliberately OUTSIDE the set and wears the site’s own ink tokens: the ~215 ordinary ' +
+      'year bars (the press’s memory as such carries no identity — the point is the one year ' +
+      'that leaves the ramp), and the hatched band over the years the source never emits, ' +
+      'because an absence has no identity colour. The azure is balance-poles’ world-press ' +
+      'blue unchanged, on the same two surfaces — cross-page hue reuse is legal; one hue may ' +
+      'never mean two things on ONE page. Redundant encoding throughout: the standout is the ' +
+      'only bar with a direct label and a plumb line to it, the baseline rule is dashed and ' +
+      'spans a named year range, and every number in the figure repeats in the tables below it.',
+    slots: [
+      { name: 'the standout — the year that most exceeds its neighbourhood', light: '#b8410e', dark: '#e2691f' },
+      { name: 'the neighbourhood baseline — the median of the ±5 years around it', light: '#2a6fd0', dark: '#4f8cdd' },
+    ],
+    surfaces: { light: ['#edeef0', '#f7f8fa'], dark: ['#0a0a0a', '#141414'] },
+    pairs: 'all',
+    validatedOn: '2026-08-15',
+    validator:
+      'validate_palette.js was NOT available in this session, and this record says so rather ' +
+      'than implying a run: the distances below were re-derived in-repo with palette.test.ts’s ' +
+      'own maths (sRGB → linear → Machado 2009 protan/deutan → OKLab ΔE ×100; WCAG contrast ' +
+      'against both declared surfaces of each mode), which is what the test then re-checks. ' +
+      'Half the set is inherited rather than new: the azure is the world-press blue of ' +
+      'balance-poles, whose six-check run of 2026-08-14 passed on exactly these two surfaces. ' +
+      'No contrast WARN in either mode — weakest 4.22:1 (azure on #edeef0), and neither hue is ' +
+      'ever used as text. Tritan derived with the same matrices, informational only.',
+    worst: [
+      {
+        mode: 'light',
+        cvd: 27.37,
+        cvdPair: '#b8410e↔#2a6fd0',
+        cvdType: 'protan',
+        tritan: 35.88,
+        normal: 31.06,
+        normalPair: '#b8410e↔#2a6fd0',
+      },
+      {
+        mode: 'dark',
+        cvd: 25.36,
+        cvdPair: '#e2691f↔#4f8cdd',
+        cvdType: 'protan',
+        tritan: 33.98,
+        normal: 29.9,
+        normalPair: '#e2691f↔#4f8cdd',
+      },
+    ],
+    warns: [],
+    usedBy: ['src/styles/invoked-figure.css'],
+  },
 ]
 
 /** Lookup by id — WP6 practice packages add their sets to PALETTES and get the same guards. */

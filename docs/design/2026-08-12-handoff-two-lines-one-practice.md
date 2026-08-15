@@ -9,11 +9,10 @@ was corrected while it ran, and reading it in order would mean learning the wron
 
 ---
 
-## 1. What was decided, in Frank's words
+## 1. What was decided (Frank, wording private)
 
-> „Es geht ja hier darum auch parallel mit verschiedenen Protokollen, Verfassungen oder Setups und
-> Richtungen zu experimentieren. Wahrscheinlich mache ich zukünftig noch mehr Forks, auch bei den
-> anderen Praxen."
+> The point is to experiment in parallel with different protocols, constitutions, setups and
+> directions; more forks are to be expected, of the other practices too.
 
 `error-as-method` is **not a fourth practice**. It is the Atelier running under a second
 constitution. The ecology is meant to grow this way — more forks, of the other practices too.

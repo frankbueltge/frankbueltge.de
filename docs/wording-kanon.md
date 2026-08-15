@@ -108,10 +108,9 @@ Seite. Ab jetzt gilt genau diese Staffel, auf der ganzen Site und in allen Repos
 
 Die Staffel hatte kein Wort für das, was seit dem 2026-08-10 existiert: **dieselbe Praxis, parallel
 unter zwei Verfassungen.** Der Fork `error-as-method` ist keine vierte Praxis — er ist das Atelier
-unter der restaurierten Protokoll v3, während das Atelier unter v6 weiterläuft. Frank, 2026-08-12:
-*„Es geht ja hier darum auch parallel mit verschiedenen Protokollen, Verfassungen oder Setups und
-Richtungen zu experimentieren. Wahrscheinlich mache ich zukünftig noch mehr Forks, auch bei den
-anderen Praxen."* Also braucht es kein Sonderwort für einen Einzelfall, sondern eine Ebene:
+unter der restaurierten Protokoll v3, während das Atelier unter v6 weiterläuft. Frank, 2026-08-12 (Wortlaut privat):
+Es gehe darum, parallel mit verschiedenen Protokollen, Verfassungen, Setups und Richtungen zu
+experimentieren; weitere Forks seien absehbar, auch bei den anderen Praxen. Also braucht es kein Sonderwort für einen Einzelfall, sondern eine Ebene:
 
 | Wort | Was es bezeichnet | Heute |
 |---|---|---|

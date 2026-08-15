@@ -1,0 +1,54 @@
+/* The Invoked Past — year-histogram figure styles.
+   PALETTE: invoked-memory
+   Two identity colours only — the day's standout year (ember) and the neighbourhood
+   baseline it towers over (azure) — validated 2026-08-15 against both surfaces of both
+   modes; the verdict is recorded as data in src/lib/dataviz/palette.ts and re-derived by
+   palette.test.ts (comments drift, tests do not). The ~215 ordinary year bars and the band
+   over the years the source never emits stay on the site's own ink tokens on purpose: the
+   press's memory as such carries no identity, and an absence carries none either. No
+   warning red anywhere — a year that leaves the ramp is a finding, not an alarm.
+   Site default is dark; light mode opts in via data-theme. Colours live here as custom
+   properties because the site's CSP discards style="" attributes — marks wear classes. */
+
+:root {
+  --invf-standout: #e2691f;
+  --invf-baseline: #4f8cdd;
+}
+:root[data-skin][data-theme='light'] {
+  --invf-standout: #b8410e;
+  --invf-baseline: #2a6fd0;
+}
+
+/* Bars: the day's histogram. Ordinary years wear recessive ink, the standout wears the
+   only identity colour on the drawing — which is also the only bar carrying a label. */
+.invf-bar { fill: var(--color-fg-faint); opacity: 0.5; transition: opacity 120ms ease; }
+.invf-bar:hover,
+.invf-bar:focus-visible { opacity: 1; }
+.invf-bar-standout { fill: var(--invf-standout); opacity: 1; }
+
+/* The baseline the finding is measured against: dashed, so it reads as a derived
+   quantity rather than as a measured year of its own. */
+.invf-baseline-rule { stroke: var(--invf-baseline); stroke-width: 2; stroke-dasharray: 5 3; }
+.invf-baseline-cap { stroke: var(--invf-baseline); stroke-width: 2; }
+
+/* The plumb line from the standout's label to its bar: the identity colour, thinned. */
+.invf-leader { stroke: var(--invf-standout); stroke-width: 1; opacity: 0.7; }
+
+/* Axis furniture and the wall are recessive neutrals from the site's own ink tokens. */
+.invf-grid { stroke: var(--color-fg-faint); stroke-width: 1; opacity: 0.16; }
+.invf-axis { stroke: var(--color-fg-muted); stroke-width: 1; opacity: 0.5; }
+.invf-wall { stroke: var(--color-fg-muted); stroke-width: 1.5; stroke-dasharray: 3 3; opacity: 0.75; }
+.invf-hatch-line { stroke: var(--color-fg-faint); stroke-width: 1; opacity: 0.28; }
+
+/* Text wears text tokens, never a series colour. */
+.invf-tick { fill: var(--color-fg-faint); font-size: 10px; }
+.invf-callout { fill: var(--color-fg); font-size: 11.5px; }
+.invf-gap-label { fill: var(--color-fg-faint); font-size: 10px; letter-spacing: 0.04em; }
+
+/* Legend swatches: the same two hues, on the same two identities. */
+.invf-legend-standout { background: var(--invf-standout); }
+.invf-legend-baseline { background: var(--invf-baseline); }
+
+@media (prefers-reduced-motion: reduce) {
+  .invf-bar { transition: none; }
+}

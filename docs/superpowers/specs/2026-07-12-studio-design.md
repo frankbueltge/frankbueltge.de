@@ -98,8 +98,9 @@ Franks Entscheidung und unabhängig davon.
 
 ## 6. Entscheidungen (Frank, 2026-07-12)
 
-1. **Namen:** Repo `studio`, Surface `/studio` — „studio ist nicht international; wenn es
-   kein englisches Wort gibt, das genauso gut passt, nehmen wir studio." Anmerkung zur
+1. **Namen:** Repo `studio`, Surface `/studio` — Franks Begründung (Wortlaut privat):
+   „studio" ist nicht spezifisch deutsch, und solange kein englisches Wort ebenso gut passt,
+   bleibt es dabei. Anmerkung zur
    Atelier-Nähe: akzeptiert — die Surfaces unterscheiden Solo-Künstler (Atelier) und
    Produktionskollektiv (Studio).
 2. **Öffentliches Repo:** ja (wie field-research; die Verfassung setzt es voraus).

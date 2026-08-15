@@ -1,0 +1,133 @@
+---
+/** The Invoked Past — the day's year histogram: one bar per year the world's press invoked,
+ *  the standout year marked and labelled, the median of its neighbourhood ruled across
+ *  exactly the years that median came from, and the stretch the source never emits drawn as
+ *  an empty hatched band rather than left off the axis. Geometry from src/lib/invoked/figure.ts
+ *  (unit-tested); colours from the validated 'invoked-memory' set (src/lib/dataviz/palette.ts —
+ *  the verdict is data, recomputed by palette.test.ts).
+ *  Interaction: a native <title> on every bar plus hover/focus sharpening; the tables below the
+ *  figure are the always-on fallback view. */
+import '../../styles/invoked-figure.css'
+import type { InvokedData } from '@/lib/invoked/types'
+import { buildFigure, figureInput } from '@/lib/invoked/figure'
+import { count, decimal, times } from '@/lib/invoked/format'
+
+interface Props {
+  data: InvokedData
+}
+const { data: d } = Astro.props
+const m = buildFigure(figureInput(d))
+const h = d.headline
+const calloutText = h ? `${h.year} · ${count(h.mentions)} mentions · ${times(h.times_its_neighbourhood)} its neighbourhood` : ''
+---
+
+{!m.empty && (
+  <figure class="mb-4">
+    <div class="mb-2 flex flex-wrap items-center gap-x-5 gap-y-1 font-mono text-[11px] text-fg-muted">
+      <span class="inline-flex items-center gap-1.5">
+        <span class="invf-legend-standout inline-block h-2.5 w-2.5"></span>
+        the day’s standout year
+      </span>
+      {m.neighbourhood && (
+        <span class="inline-flex items-center gap-1.5">
+          <span class="invf-legend-baseline inline-block h-[3px] w-4"></span>
+          median of the {m.neighbourhood.from}–{m.neighbourhood.to} neighbourhood
+        </span>
+      )}
+      <span class="text-fg-faint">bars: mentions per invoked year, linear scale</span>
+    </div>
+
+    <div class="overflow-x-auto">
+      <svg
+        class="min-w-[560px]"
+        viewBox={`0 0 ${m.width} ${m.height}`}
+        width="100%"
+        role="img"
+        aria-label={`Histogram of the years today's press invoked, ${d.method.year_window[0]} to ${d.stats.max_year_observed}, with mentions on the vertical axis.${h ? ` ${h.year} stands ${times(h.times_its_neighbourhood)} above the median of the years around it.` : ''} The years after ${d.stats.max_year_observed} are drawn as an empty band: the source emits none of them.`}
+      >
+        <defs>
+          <pattern id="invf-hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+            <line class="invf-hatch-line" x1="0" y1="0" x2="0" y2="6" />
+          </pattern>
+        </defs>
+
+        {m.yTicks.map((t) => (
+          <>
+            <line class="invf-grid" x1={m.plotLeft} y1={t.y} x2={m.plotRight} y2={t.y} />
+            <text class="invf-tick" x={m.plotLeft - 6} y={t.y + 3.5} text-anchor="end">{count(t.value)}</text>
+          </>
+        ))}
+
+        {m.gap && (
+          <g>
+            <title>
+              {`${m.gap.from}–${m.gap.to}: the source emits no year in this range — the instrument's ceiling, not the world's memory`}
+            </title>
+            <rect x={m.gap.x} y={m.plotTop} width={m.gap.width} height={m.plotBottom - m.plotTop} fill="url(#invf-hatch)" />
+            <text
+              class="invf-gap-label"
+              x={m.gap.labelX}
+              y={m.gap.labelY}
+              text-anchor="start"
+              transform={`rotate(-90 ${m.gap.labelX} ${m.gap.labelY})`}
+            >
+              no year ≥ {m.gap.from} emitted
+            </text>
+          </g>
+        )}
+
+        {m.bars.map((b) => (
+          <rect
+            class:list={['invf-bar', b.standout && 'invf-bar-standout']}
+            x={b.x}
+            y={b.y}
+            width={b.width}
+            height={b.height}
+            tabindex={b.standout ? '0' : undefined}
+          >
+            <title>{`${b.year} — ${count(b.mentions)} mention${b.mentions === 1 ? '' : 's'}`}</title>
+          </rect>
+        ))}
+
+        {m.neighbourhood && (
+          <g>
+            <title>
+              {`Median of the ${m.neighbourhood.from}–${m.neighbourhood.to} neighbourhood: ${decimal(m.neighbourhood.median, 1)} mentions`}
+            </title>
+            <line class="invf-baseline-rule" x1={m.neighbourhood.x1} y1={m.neighbourhood.y} x2={m.neighbourhood.x2} y2={m.neighbourhood.y} />
+            <line class="invf-baseline-cap" x1={m.neighbourhood.x1} y1={m.neighbourhood.y - 3} x2={m.neighbourhood.x1} y2={m.neighbourhood.y + 3} />
+            <line class="invf-baseline-cap" x1={m.neighbourhood.x2} y1={m.neighbourhood.y - 3} x2={m.neighbourhood.x2} y2={m.neighbourhood.y + 3} />
+          </g>
+        )}
+
+        {m.wall && (
+          <>
+            <line class="invf-wall" x1={m.wall.x} y1={m.plotTop} x2={m.wall.x} y2={m.plotBottom} />
+            <text class="invf-tick" x={m.wall.x} y={m.plotBottom + 16} text-anchor="middle">{m.wall.year}</text>
+          </>
+        )}
+
+        <line class="invf-axis" x1={m.plotLeft} y1={m.plotBottom} x2={m.plotRight} y2={m.plotBottom} />
+        {m.xTicks.map((t) => (
+          <text class="invf-tick" x={t.x} y={m.plotBottom + 16} text-anchor="middle">{t.year}</text>
+        ))}
+
+        {m.callout && (
+          <>
+            <line class="invf-leader" x1={m.callout.x} y1={m.callout.leaderY1} x2={m.callout.x} y2={m.callout.leaderY2} />
+            <text class="invf-callout" x={m.callout.labelX} y={m.callout.labelY} text-anchor={m.callout.anchor}>{calloutText}</text>
+          </>
+        )}
+      </svg>
+    </div>
+
+    <figcaption class="mt-2 font-mono text-[11px] text-fg-faint">
+      Every dated reference the instrument could resolve to a year, in {count(d.stats.articles_scanned)} articles
+      of the last 24 hours. The horizontal axis runs to {d.date.slice(0, 4)}; the hatched band is the
+      stretch GDELT's extractor never emits ({m.gap ? `${m.gap.from}–${m.gap.to}` : 'none today'}) — a
+      ceiling of the source, not a silence of the press. Method and thresholds at
+      <a href="/werke/invoked-past" class="underline decoration-line underline-offset-2 hover:text-fg">/werke/invoked-past</a>.
+      Every number repeats in the tables below.
+    </figcaption>
+  </figure>
+)}

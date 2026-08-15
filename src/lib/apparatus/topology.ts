@@ -233,7 +233,7 @@ export const NODES: readonly ApparatusNode[] = [
     what: 'Counter-measurement: the instruments that measure what power leaves in the dark.',
     commitsAs: 'Gegenmessung <gegenmessung@frankbueltge.de>',
     members: [
-      { label: 'Gegenmessung nightly', what: 'Consensus and Pattern daily; Tell and Correction on Mondays', ref: '.github/workflows/gegenmessung.yml', workflowName: 'Gegenmessung nightly', cron: ['0 6 * * *'] },
+      { label: 'Gegenmessung nightly', what: 'Consensus, Balance, The Invoked Past and Pattern daily; Tell and Correction on Mondays', ref: '.github/workflows/gegenmessung.yml', workflowName: 'Gegenmessung nightly', cron: ['0 6 * * *'] },
       { label: 'Redaction nightly', what: 'what was quietly removed from public pages', ref: '.github/workflows/redaction.yml', workflowName: 'Redaction nightly', cron: ['30 5 * * *'] },
       { label: 'Round Number nightly', what: 'the digits institutions round to', ref: '.github/workflows/round-number.yml', workflowName: 'Round Number nightly' },
       { label: 'Ghost Fleet nightly', what: 'vessels that go dark', ref: '.github/workflows/ghost-fleet.yml', workflowName: 'Ghost Fleet nightly', cron: ['0 4 * * *'], secrets: ['GFW_TOKEN'] },

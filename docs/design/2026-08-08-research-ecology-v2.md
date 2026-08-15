@@ -8,8 +8,8 @@ execution: the rebuild could begin directly, without negotiating with the practi
 real rebuild that deletes and replaces whatever no longer leads anywhere, a research
 ecology v2. The frame he corrected mid-execution, and which governs this document: **the
 three practices stay** — three different ways of researching and delivering in the field of
-tension between art, science and philosophy/artistic research — *"genau das muss geschärft
-und optimiert werden"*. No new repos; the existing repos, constitutions, protocols and
+tension between art, science and philosophy/artistic research, and precisely that is what
+had to be sharpened and optimised (wording private). No new repos; the existing repos, constitutions, protocols and
 prompts are what got rebuilt.
 
 Executed the same night: all three engine protocols rewritten clean (ulysses `adb63f4`,

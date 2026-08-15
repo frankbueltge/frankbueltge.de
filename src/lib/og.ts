@@ -56,6 +56,10 @@ export const OG_PAGES: Record<string, { title: string; description: string }> = 
     title: 'The Balance',
     description: 'Self-image against foreign image — the emotional trade balance of the world’s press, daily',
   },
+  'invoked-past': {
+    title: 'The Invoked Past',
+    description: 'Which yesterday the world cites today — every dated reference in the daily press, counted',
+  },
   correction: {
     title: 'The Correction',
     description: 'The number you reacted to was inflated — then quietly revised down',
@@ -118,6 +122,7 @@ export function ogSlug(pathname: string): keyof typeof OG_PAGES {
   if (p.startsWith('/policy') || p.startsWith('/police') || p.startsWith('/werke/policy')) return 'policy'
   if (p.startsWith('/consensus') || p.startsWith('/werke/consensus')) return 'consensus'
   if (p.startsWith('/balance') || p.startsWith('/werke/balance')) return 'balance'
+  if (p.startsWith('/invoked-past') || p.startsWith('/werke/invoked-past')) return 'invoked-past'
   if (p.startsWith('/correction') || p.startsWith('/werke/correction')) return 'correction'
   if (p.startsWith('/tell') || p.startsWith('/werke/tell')) return 'tell'
   if (p.startsWith('/pattern') || p.startsWith('/werke/pattern')) return 'pattern'

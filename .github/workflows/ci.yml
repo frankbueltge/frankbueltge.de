@@ -65,6 +65,23 @@ jobs:
       - run: pip install -e ".[dev]"
       - run: pytest -q
 
+  invoked:
+    name: Invoked Past pipeline (pytest)
+    runs-on: ubuntu-latest
+    # Single-file pipeline (no package): the tests load refresh.py through conftest.py.
+    # What is tested is the METHOD — the cleaning rules and the standout measure — because
+    # the page claims both are disclosed and stable; a silent change is a different finding.
+    defaults:
+      run:
+        working-directory: pipelines/invoked
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install pytest
+      - run: pytest -q
+
   # Meridian/MRR: KEIN Nightly — refresh.py ist deterministisch ("no network, no clock,
   # no model") und leitet nur aus dem committeten Export ab; ein nächtlicher Lauf erzeugte
   # ewig byte-identischen Output. Der reale Fehlerfall ist ein anderer: ein neuer Export

@@ -1,7 +1,7 @@
 // src/lib/society/score.ts — the room's score: what a stranger is shown, and in what order.
 //
-// Frank, 2026-08-06, on the reading exit: "stell dir vor du bist besucher im zkm … du hast
-// 3–5 minuten zeit … und möchtest ganz sicher keine romane lesen." He is right. The web
+// Frank, 2026-08-06, on the reading exit (wording private): picture a visitor at the ZKM with
+// three to five minutes, who certainly does not want to read essays. He is right. The web
 // page explains; a room cannot. So the room says ONE short line at a time, over a society
 // that is doing the thing the line is about, and it says nothing at all in between.
 //

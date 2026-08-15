@@ -123,8 +123,8 @@ class TestZusammenfuehrung:
 
 
 class TestBelegpflicht:
-    """Frank, 2026-07-28: „alles muss geprüft und annotiert werden, woher was kommt und
-    warum es in die kataloge/register aufgenommen wurde."
+    """Franks Vorgabe, 2026-07-28 (Wortlaut privat): alles muss geprüft und annotiert sein —
+    woher es kommt und warum es in Kataloge und Register aufgenommen wurde.
 
     Diese Prüfungen halten die Pflicht fest. Ein Eintrag ohne Weg, ohne Aufnahmegrund
     oder ohne Fundstelle ist kein Katalogeintrag, sondern eine Behauptung.

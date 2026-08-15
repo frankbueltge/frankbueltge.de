@@ -252,12 +252,14 @@ der Datenmenge, sondern des Verfahrens.
 
 Frank hat den Auftrag in drei Schritten präzisiert, und jeder hat etwas verändert:
 
-1. „auch Datensätze oder Paper, die **potentiell relevant** sind" → die Scouts suchen
-   nach außen, nicht nur ab, was schon zitiert ist.
-2. „**alle** Zitate **ALLER** Praxen sollen im Paper-Katalog landen" → Vollständigkeit
-   gegenüber den Praxen, nicht nur gegenüber auflösbaren Kennungen.
-3. „alles muss **geprüft und annotiert** werden, woher was kommt und **warum** es
-   aufgenommen wurde" → Belegpflicht als Pflichtfeld, nicht als gute Absicht.
+*(Franks Vorgaben, Wortlaut privat, sinngemäß:)*
+
+1. Auch **potentiell relevante** Datensätze und Paper → die Scouts suchen nach außen, nicht
+   nur ab, was schon zitiert ist.
+2. **Alle** Zitate **aller** Praxen gehören in den Paper-Katalog → Vollständigkeit gegenüber
+   den Praxen, nicht nur gegenüber auflösbaren Kennungen.
+3. Alles muss **geprüft und annotiert** sein — woher es kommt und **warum** es aufgenommen
+   wurde → Belegpflicht als Pflichtfeld, nicht als gute Absicht.
 
 ### Was steht
 

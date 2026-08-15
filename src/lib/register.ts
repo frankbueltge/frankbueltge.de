@@ -7,8 +7,8 @@
 // Treffer. Kunsttheorie und Medienwissenschaft hinterlegen kaum Datensätze mit
 // Verknüpfung; eine Themensuche brächte dasselbe Rauschen wie der zurückgebaute Bestand.
 //
-// Franks Frage beendete die Suche: „außerdem greifen wir ja auch schon auf public data
-// zu in den holdings und sammeln selber daten, oder?" — Ja. 60 Datenquellen, die die
+// Franks Frage beendete die Suche (Wortlaut privat): ob das Haus in den Holdings nicht
+// ohnehin schon öffentliche Daten abrufe und selbst welche sammle. — Ja. 60 Datenquellen, die die
 // eigenen Werke nächtlich abrufen, lagen die ganze Zeit im Repo.
 //
 // Dieselbe Umkehrung wie beim Paper-Katalog: nicht suchen, was es gibt, sondern lesen,
