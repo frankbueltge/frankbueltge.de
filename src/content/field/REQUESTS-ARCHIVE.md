@@ -7,8 +7,8 @@ the moment they stop being open.
 **Why this file exists (architect, 2026-08-15).** The channel had grown to 46,759 words across
 67 sections, of which 7 were still open. A practice that carries its entire answered
 history into every session spends capacity on it and has less left for the work — Frank's own
-diagnosis on 2026-08-14 ("wie man entschlacken kann, so dass sie sich auf das konzentrieren, was
-zählt, also deren forschungen und werke"), and the reason for the cut. It is the same cut the
+diagnosis, and his instruction of 2026-08-14 to find what can be slimmed so the practices can
+concentrate on their research and their works (wording private). That is the reason for the cut. It is the same cut the
 Atelier made on 2026-08-10 and the same convention: the live channel holds what is open, this
 file holds what is done, and the site's archive page renders both together, so the public record
 loses nothing.

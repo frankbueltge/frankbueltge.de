@@ -6,14 +6,27 @@ at full length, and the corrections are what matters.
 
 **Status:** everything in §3 is DONE, on `main` and deployed. §1 is the job. §2 is the evidence.
 
+**Status, 2026-08-15 (the session after):** **§2 is done** — all four routine prompts, both
+channels, both boards. 119,505 words left the orientation path (field-research 94,698 → 46,260,
+studio 96,891 → 25,824); the measurement is now a loop at `scripts/orientation-cost.py` and the
+numbers are in the decision log. §2's "one thing NOT to do" was not done. Of §5, items 2–4 are
+still open, and one thing §2 did not know about is now the largest item in the path: the Field's
+`memory/` is 113,075 words across four files that its constitution names as "curated first"
+reading — `claims.md` alone is 56,971. That is the practice's working knowledge rather than its
+correspondence, so it was measured and named, not cut.
+
 ---
 
-## 1. The job, in Frank's words
+## 1. The job
 
-> „die praxen sollen ja nicht hundert texte lesen bevor sie arbeiten … sie sollen sich auf die
-> arbeit konzentrieren … bevor wir denen noch mehr material oder text aufdrängen sollten wir eher
-> überlegen, wie man entschlacken kann, so dass sie sich auf das konzentrieren, was zählt, also
-> deren forschungen und werke."
+**Frank's instruction, 2026-08-14 (wording private).** The practices should not have to read a
+hundred texts before they work; they should be able to concentrate on the work itself. Before
+anyone pushes more material or more text at them, the question is what can be slimmed away so
+that what is left is what counts — their research and their works.
+
+*(This section quoted him verbatim until 2026-08-15. Redacted the same day under the standing
+rule set that night: Frank's working messages are private and are never reproduced word for word,
+only paraphrased neutrally and dated. See the decision log, 2026-08-15.)*
 
 **Cut what a session must read before it may work.** Not by summarising — by moving what is
 finished out of the way, the way the Atelier already did on 2026-08-10.
