@@ -7,6 +7,22 @@
 /atelier/werke-html/*
   Content-Security-Policy: default-src 'none'; script-src 'unsafe-inline' 'self'; style-src 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:
 
+# The practices' own windows (2026-08-16, the n-1 model carried to the practices): pages the
+# practices author and update themselves, mirrored verbatim — served under the same
+# self-contained sandbox their interactive works already live under (no fetch/connect, assets
+# from this origin only; style-src also 'self' for a built stylesheet).
+/atelier/window/*
+  Content-Security-Policy: default-src 'none'; script-src 'unsafe-inline' 'self'; style-src 'unsafe-inline' 'self'; img-src 'self' data:; font-src 'self' data:
+
+/field/window/*
+  Content-Security-Policy: default-src 'none'; script-src 'unsafe-inline' 'self'; style-src 'unsafe-inline' 'self'; img-src 'self' data:; font-src 'self' data:
+
+# The Studio's window carries the same widened policy as its works (media + connect-to-self,
+# Franks Freigabe 2026-08-16, see the studio werke-html block below): a practice whose form
+# floor demands exhibitable sound and time behaviour gets them in its own window too.
+/studio/window/*
+  Content-Security-Policy: default-src 'none'; script-src 'unsafe-inline' 'self'; style-src 'unsafe-inline' 'self'; img-src 'self' data:; font-src 'self' data:; media-src 'self' data:; connect-src 'self'
+
 /field/werke-html/*
   Content-Security-Policy: default-src 'none'; script-src 'unsafe-inline' 'self'; style-src 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:
 
@@ -15,8 +31,19 @@
 
 # style-src zusätzlich 'self': Werkstatt-Werke des Studios (SITE-API "Built works") liefern
 # ein gebautes style.css als eigene Datei statt nur Inline-Styles.
+#
+# media-src und connect-src ergänzt am 2026-08-16 (Franks Freigabe) — Bedingung des
+# Formbodens von Studio-Protokoll v3: ein Werk muss ausstellbar sein und darf Ton,
+# Bewegtbild, Zeitverhalten oder Livedaten tragen. Beides war zuvor unmöglich, nicht schwer:
+# `default-src 'none'` ohne media-src spielt keinen Ton ab, auch nicht als data:-URI.
+#
+# Bewusst eng: connect-src erlaubt NUR 'self'. Ein Werk erreicht damit die committeten
+# Daten dieser Domain (die ohnehin öffentlich sind), aber keinen fremden Host — der
+# Exfiltrations-Kanal, um dessentwillen die Sperre 2026-07-21 überhaupt kam, bleibt zu.
+# wasm-unsafe-eval bleibt NICHT gesetzt: erst wenn ein Konzept es nachweislich braucht.
+# Gilt nur für das Studio; Atelier, Field und Plenum behalten die engere Policy.
 /studio/werke-html/*
-  Content-Security-Policy: default-src 'none'; script-src 'unsafe-inline' 'self'; style-src 'unsafe-inline' 'self'; img-src 'self' data:; font-src 'self' data:
+  Content-Security-Policy: default-src 'none'; script-src 'unsafe-inline' 'self'; style-src 'unsafe-inline' 'self'; img-src 'self' data:; font-src 'self' data:; media-src 'self' data:; connect-src 'self'
 
 # Öffentlicher Chronik-Feed des Field-Projekts: bewusst offener CORS (read-only JSON,
 # konsumiert von data-snack.com "Wareneingang" und datavism.org — eine Quelle, drei Flächen).

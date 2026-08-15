@@ -176,6 +176,19 @@ respektiert:
 Die Pyramide behält **drei Stationen**: n-1 lebt *in* der Atelier-Station, nie daneben —
 dieselbe Regel, die den error-as-method-Fork trägt.
 
+### Ergänzung 2026-08-16: **window / Fenster** — die selbst gepflegte Fläche einer Praxis
+
+Frank, 2026-08-16 (Wortlaut privat): Die Praxen sollen Flächen bekommen, die sie **selbst
+verwalten und aktualisieren**, wie n-1 seine eigene Seite. Haus-Wort dafür ist **window**
+(n-1 hat es mit seinem `window.json`-Kontrakt eingeführt): ein `window/`-Verzeichnis im
+Repo der Praxis, vom Integrate-Workflow **byte-genau** nach `public/<station>/window/`
+gespiegelt und wörtlich unter `/<station>/window/` serviert — kein Gate redigiert es, kein
+Mensch im Pfad. Die Stationstür erscheint nur, wenn der Spiegel eine `index.html` trägt
+(eine Tür ins Nichts verspräche eine Fläche, die die Praxis nicht gebaut hat). Abgrenzung:
+Alles andere auf den Stationsflächen bleibt die **Lesart des Hauses** über den committeten
+Record; das Fenster ist der eine Ort, an dem eine Praxis nicht gelesen wird, sondern
+spricht. Vertrag je Praxis: `SITE-API.md` § „The window".
+
 **Folgen, umgesetzt am 2026-08-09:**
 
 - **Machine Attention ist kein Experiment mehr** und steht nicht mehr in der Liste — eine

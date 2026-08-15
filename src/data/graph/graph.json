@@ -12,7 +12,7 @@
       },
       {
         "file": "docs/decision-log.md",
-        "sha256": "508de252aa9cd2e7"
+        "sha256": "7794e598c9ab5af4"
       },
       {
         "file": "src/data/post/ledger.json",
@@ -57,10 +57,10 @@
       }
     ],
     "counts": {
-      "nodes": 270,
-      "edges": 239,
+      "nodes": 271,
+      "edges": 241,
       "nodesByKind": {
-        "decision": 59,
+        "decision": 60,
         "encounter": 6,
         "neighbor": 93,
         "practice": 9,
@@ -75,7 +75,7 @@
         "made-by": 74,
         "neighbor-of": 93,
         "participates": 17,
-        "touches": 41
+        "touches": 43
       }
     }
   },
@@ -662,6 +662,16 @@
     },
     {
       "id": "decision:2026-08-16-1",
+      "kind": "decision",
+      "label": "The refrain moves onto its line's record page, and every practice gets a window it runs itself",
+      "date": "2026-08-16",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "The refrain moves onto its line's record page, and every practice gets a window it runs itself"
+      }
+    },
+    {
+      "id": "decision:2026-08-16-2",
       "kind": "decision",
       "label": "The Atelier's two figures repaired on Frank's three findings",
       "date": "2026-08-16",
@@ -5790,6 +5800,24 @@
     {
       "kind": "touches",
       "from": "decision:2026-08-16-1",
+      "to": "work:atelier",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "src/pages/atelier/lines/"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-08-16-1",
+      "to": "work:studio",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "/studio"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-08-16-2",
       "to": "work:atelier",
       "source": {
         "file": "docs/decision-log.md",

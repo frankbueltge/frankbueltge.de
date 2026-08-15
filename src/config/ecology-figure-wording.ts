@@ -65,34 +65,9 @@ export const FIGURES = {
       open: 'open the work →',
       record: 'the whole register →',
     },
-    /** The score of the running line. Restored to this sheet 2026-08-13: built 2026-08-02,
-     *  unmounted by the pyramid rewrite on 2026-08-12, rendered nowhere for a day. */
-    refrain: {
-      title: 'THE REFRAIN',
-      sub: 'THE RUNNING WORK-LINE’S OWN TIME, IN THREE VOICES',
-      /** The last date carries the same weight as the count. A figure that stops on the 12th looks
-       *  identical whether the practice was quiet or the mirror broke, and a reader has no way to
-       *  tell — so the reading says which it is (Frank, 2026-08-14: „the refrain hört am 12.08.
-       *  auf"). It was neither stale nor broken: the line had not moved. */
-      caption: (columns: number, lastMove: string | null, linesSince: number) =>
-        `ONE COLUMN PER MOVE · ALL THREE VOICES SOUND AT EVERY COLUMN, THE DOMINANT ONE IS MARKED<br>` +
-        `${columns} moves, read from that line’s own TRACE.md — live half and the half §8 rotated into archive/trace/, ` +
-        `composed in record order. The one reading this figure forbids is a sequence of phases: territory, home and ` +
-        `opening coexist at every move, which is the practice’s own postulate 4 and why no voice is ever a gap.` +
-        (lastMove
-          ? `<br>The line’s last move is dated ${lastMove} — the drawing ends where the record does, ` +
-            `not where the mirror stopped.` +
-            // A score that stops days ago reads as a stalled practice even when the practice
-            // simply worked elsewhere — so where the record shows lines opened SINCE that move,
-            // the caption says so (Frank raised the stopped-looking score twice, 2026-08-14 and
-            // 2026-08-15 — the second time because this sentence did not yet exist).
-            (linesSince > 0
-              ? ` Quiet here is not the practice’s whole present: since that move it has opened ${linesSince} ` +
-                `${linesSince === 1 ? 'line' : 'lines'} — on the line map above.`
-              : '') +
-            ` Every move, in full: <a href="{RECORD}">the line’s record →</a>`
-          : ''),
-    },
+    // The refrain's station strings left with the figure on 2026-08-16 (Frank's decision): the
+    // score of ONE line lives with that line's record at /atelier/lines/<id> now, framed by the
+    // wording it always carried in ATELIER_NARRATIVE.refrain. The station keeps the line map.
   },
 
   studio: {

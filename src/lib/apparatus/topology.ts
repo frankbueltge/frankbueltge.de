@@ -367,6 +367,11 @@ export const NODES: readonly ApparatusNode[] = [
       { label: 'path boundary', what: 'journal, works and project markdown only; PUBLICATION.json is never copied', ref: 'src/lib/atelier/paths.ts' },
       { label: 'content boundary', what: '“links yes, loads no” — no external asset may enter', ref: 'src/lib/atelier/forbidden.ts' },
       { label: 'publication gate', what: 'a project becomes a work only through a signed PUBLICATION.json — Frank’s approval until Protocol v6 §2.3, the practice’s own signed act since 2026-08-10', ref: 'src/lib/atelier/integrate.ts' },
+      // The one path through this gate that is NOT gated (2026-08-16, the n-1 model carried to
+      // the practices): the window is the practice's own surface and the house's only act is
+      // the mirror. Stated here because the apparatus map must not describe a gate as total
+      // while a verbatim path runs through it.
+      { label: 'the window', what: 'window/ in the practice’s repository is mirrored byte for byte to /atelier/window/ — the practice’s own surface, authored and updated by it, never edited by the house', ref: '.github/workflows/atelier-integrate.yml' },
     ],
   },
   {
@@ -378,6 +383,9 @@ export const NODES: readonly ApparatusNode[] = [
     what: 'Runs when Meridian lands, with a nightly safety net. Drafts, memory and the workboard never cross.',
     ref: '.github/workflows/field-integrate.yml',
     commitsAs: 'Field-Integrate <field-integrate@frankbueltge.de>',
+    members: [
+      { label: 'the window', what: 'window/ in the practice’s repository is mirrored byte for byte to /field/window/ — the practice’s own surface, authored and updated by it, never edited by the house', ref: '.github/workflows/field-integrate.yml' },
+    ],
   },
   {
     id: 'gate-studio',
@@ -388,6 +396,9 @@ export const NODES: readonly ApparatusNode[] = [
     what: 'Runs when Ensemble lands. In-production work stays in the studio until it premieres.',
     ref: '.github/workflows/studio-integrate.yml',
     commitsAs: 'Studio-Integrate <studio-integrate@frankbueltge.de>',
+    members: [
+      { label: 'the window', what: 'window/ in the practice’s repository is mirrored byte for byte to /studio/window/ — the practice’s own surface, authored and updated by it, never edited by the house', ref: '.github/workflows/studio-integrate.yml' },
+    ],
   },
   {
     id: 'gate-plenum',

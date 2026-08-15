@@ -18,8 +18,6 @@ import { allWorks } from '@/lib/engines/register'
 import { loadDossiers } from '@/lib/atelier/dossier-data'
 import { buildStationSheet, splitDoorLine, type LogEntry } from '@/lib/ecology/pyramid/station'
 import { buildLineMap } from '@/lib/ecology/pyramid/figures'
-import RefrainScore from '@/components/atelier/RefrainScore.astro'
-import { loadRefrainModels } from '@/lib/atelier/refrain-data'
 import { firstClause } from '@/lib/ecology/pyramid/landings'
 
 const works = allWorks()
@@ -53,24 +51,10 @@ const door = splitDoorLine(sheet.station.description)
 const SEO = PYRAMID.stationSeo.atelier
 const F = FIGURES.atelier
 
-// The refrain score — the running work-line's own time, as the three-voice score the practice's
-// published model asks for (territory · home · opening, coexisting at every move).
-//
-// It was built on 2026-08-02 and stopped being rendered on 2026-08-12, when the pyramid rewrite
-// (#560) replaced this practice's entrance and nothing carried the score across. Nobody noticed:
-// a figure that renders nowhere fails no test and breaks no build. Its own guards kept passing —
-// the aspect floor was repaired on 2026-08-12 against a figure no page mounted.
-//
-// It draws only what is running: a line with a legible SCORE and a parseable trace. If nothing
-// runs, nothing is drawn, and the sheet is one figure shorter rather than one empty box longer.
-const refrains = loadRefrainModels()
-// The record's own last date, from the columns the figure draws — never the build's date and
-// never today's: those two would turn a quiet line into a false claim of freshness.
-const refrainLast = refrains[0]?.columns.at(-1)?.event.date ?? null
-// Lines the practice opened AFTER the running line's last move — counted so the score's caption
-// can say that quiet on one line is not quiet in the practice (Frank read the stopped-looking
-// score as stale twice; the record shows daily studies the figure's own contract excludes).
-const linesSince = refrainLast ? dossiers.filter((d) => d.created && d.created > refrainLast).length : 0
+// The refrain score is NOT on this sheet any more (2026-08-16, Frank's decision). It is the
+// figure of ONE line's own time, and it lives with that line's record at /atelier/lines/<id> —
+// the station keeps the line map, which shows the whole practice. mounted.test.ts still guards
+// that the score renders on a page; it simply stopped being this one.
 ---
 
 <Page title={`${SEO.title} | Frank Bültge`} description={SEO.description}>
@@ -105,18 +89,5 @@ const linesSince = refrainLast ? dossiers.filter((d) => d.created && d.created >
     >
       <LineMapFigure map={map} />
     </Figure>
-
-    {refrains.length > 0 && (
-      <Figure
-        slot="figure-side"
-        title={F.refrain.title}
-        sub={F.refrain.sub}
-        caption={F.refrain
-          .caption(refrains[0].columns.length, refrainLast, linesSince)
-          .replace('{RECORD}', `/atelier/lines/${refrains[0].line.id}`)}
-      >
-        <RefrainScore model={refrains[0]} id="atelier-refrain" />
-      </Figure>
-    )}
   </StationSheet>
 </Page>
