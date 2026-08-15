@@ -30,8 +30,8 @@ describe('byRecency (newest first, stable ties)', () => {
 })
 
 describe('WERKE_CHRONO', () => {
-  it('leads with the newest experiment (The Balance, since 2026-08-14)', () => {
-    expect(WERKE_CHRONO[0].id).toBe('balance')
+  it('leads with the newest experiment (The Invoked Past, since 2026-08-15)', () => {
+    expect(WERKE_CHRONO[0].id).toBe('invoked-past')
   })
   it('ends with Überflug (placed last)', () => {
     expect(WERKE_CHRONO[WERKE_CHRONO.length - 1].id).toBe('ueberflug')
@@ -55,12 +55,12 @@ describe('WERKE_HOLDINGS (/experiments register)', () => {
     }
   })
   it('renders newest first — the curated 2026-08-05 ranking is dissolved (Frank, 2026-08-14)', () => {
-    // "[Wortlaut privat]
-    // [redigiert]" — recency order, derived from WERKE_CHRONO, no manual list to go stale.
+    // Frank's instruction of 2026-08-14 (wording private): new works on top, dissolving the
+    // curated order — recency, derived from WERKE_CHRONO, no manual list left to go stale.
     expect(WERKE_HOLDINGS.map((w) => w.id)).toEqual(
       WERKE_CHRONO.filter((w) => !HOLDINGS_EXCLUDED_IDS.has(w.id)).map((w) => w.id),
     )
-    expect(WERKE_HOLDINGS[0].id).toBe('balance') // newest werk on top today
+    expect(WERKE_HOLDINGS[0].id).toBe('invoked-past') // newest werk on top today
     expect(WERKE_HOLDINGS.map((w) => w.id)).toEqual([...HOLDINGS_RANKED])
   })
   it('keeps every non-excluded entry — ranked and register agree on the set', () => {

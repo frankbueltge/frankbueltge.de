@@ -1,9 +1,9 @@
 // src/lib/atelier/lineText.ts — die lesbare Substanz einer Forschungslinie aus ihren Akten.
 //
-// Warum (Frank, 2026-07-30, zweiter Anlauf): „Wenn ich ‚negative parallax' auswähle,
-// erfahre ich nichts über dieses Projekt und den Fortschritt oder aktuellen Stand und
-// worum es dabei geht. Das macht alles nicht übersichtlicher für jemanden, der die Website
-// zum ersten Mal besucht, sondern eher noch komplexer."
+// Warum (Frank, 2026-07-30, zweiter Anlauf, Wortlaut privat): Wer eine Linie wie ‚negative
+// parallax' auswählt, erfährt nichts über das Projekt, seinen Fortschritt oder seinen Stand
+// und nichts darüber, worum es geht — für einen Erstbesucher der Website wird es dadurch
+// nicht übersichtlicher, sondern komplexer.
 //
 // Er hat recht: Die erste Fassung zeigte Tageszahlen, Zugzahlen und Dateinamen — Telemetrie.
 // In den Akten steht aber Prosa, die von selbst erklärt, worum es geht. Diese Datei holt

@@ -1,9 +1,8 @@
 #!/usr/bin/env node
 // scripts/sentinel/sweep.mjs — the ecology's own plumbing, watched by something other than Frank.
 //
-// Why this exists, in the words of the day it was ordered (2026-08-13): "kann diese scheiss
-// ecology nicht mal 2 tage laufen ohne dass wir tausend sachen fixen und ich hundert sachen
-// entscheiden oder manuell machen muss."
+// Why this exists (ordered 2026-08-13, wording private): the ecology could not run two days
+// without a thousand fixes and a hundred decisions or manual steps falling to Frank.
 //
 // He is right, and the diagnosis is narrower than it looks. The PRACTICES ran fine — three
 // houses worked through the night, refuted their own published figures and corrected themselves

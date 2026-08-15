@@ -1,13 +1,13 @@
 # USP audit — the ecology's own works
 
 **Date:** 2026-08-09. **Ordered by:** Frank, afternoon session, extending the USP obligation of
-the same morning from the Holdings shelf to the practices' own production ("und die research
-ecology werke sind hier noch gar nicht abgebildet, aber bilden auch eine eigene 'machine-run'
-ökologie").
+the same morning from the Holdings shelf to the practices' own production (wording private:
+the ecology's own works were not represented there at all, though they form a machine-run
+ecology of their own).
 
-**Rule under audit, verbatim (Frank, 2026-08-09):** *"jedes experiment auf frankbueltge.de was
-keinen nachweisbaren mehrwert hat oder nicht einzigartig ist … kann eigentlich weg bzw. müsste
-überarbeitet werden"* — provable added value or uniqueness, checkable by web research.
+**Rule under audit (Frank, 2026-08-09, wording private):** any experiment on frankbueltge.de
+without demonstrable added value, or that is not unique, can go or must be reworked —
+provable added value or uniqueness, checkable by web research.
 
 **This document is a set of DRAFTS, not decisions**, exactly like the Holdings audit it
 extends. Keep / rework / archive calls are Frank's.

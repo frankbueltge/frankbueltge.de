@@ -2,11 +2,11 @@
 
 **Occasion.** Frank's goal, stated 2026-07-31 late session: make the research ecology strong
 enough as a data-art project to submit to transmediale / Ars Electronica / ZKM within 1–2
-years — "genau das ist das ziel". Basis of this document: a full-ecology review (deep surveys
+years; he confirmed that as the goal (wording private). Basis of this document: a full-ecology review (deep surveys
 of all three practice repos, the contact zone, the site, and MRR; first-hand verification of
 the load-bearing works; festival facts checked against primary sources on 2026-08-01).
 
-**Status.** Direction decided by Frank ("ja, das können wir gerne machen, von a bis c").
+**Status.** Direction decided by Frank (wording private): the line is cleared, end to end.
 Site-wording changes stay behind the wording gate (`src/config/naming.ts`, wording-kanon);
 changes to practice constitutions travel as **seeds/offers** under each constitution, never
 as decrees. Frank's role line stays "Data Engineering & Analytics"; "data artist" stays

@@ -1,7 +1,15 @@
 # The Invoked Past: which yesterday the world cites today (design proposal, 2026-08-14)
 
-**Status.** Proposal, not commissioned. From the 2026-08-13 brainstorm ("Verwandlungen"
-set) and its dedicated prior-art pass. Working title; wording gate applies.
+**Status: BUILT AND LIVE since 2026-08-15** (updated the same day). The instrument runs at
+`/invoked-past` with its method sheet at `/werke/invoked-past`, the werk entry `invoked-past`
+in `src/data/werke.ts`, and a nightly step in `gegenmessung.yml`; USP audit §18 records the
+verdict. The working title shipped unchanged. Two things the build decided against this
+document, both in the decision log's 2026-08-15 row: the published finding is the year that
+breaks the decay ramp rather than the most-invoked year (which is the inherited ceiling), and
+the tracked-event register of §3 is founded from 30 archived days rather than from the spike
+day — founding it on 15 August would have frozen one anniversary's dates as canon. §7's three
+open questions are answered accordingly. Originally from the 2026-08-13 brainstorm
+("Verwandlungen" set) and its dedicated prior-art pass.
 
 **Candidate landing.** Lab experiment. Of all candidates this is the cheapest to build
 (zero new data sources) and the one with the widest verified daylight — recommended first

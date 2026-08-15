@@ -9,11 +9,10 @@ was corrected while it ran, and reading it in order would mean learning the wron
 
 ---
 
-## 1. What was decided, in Frank's words
+## 1. What was decided (Frank, wording private)
 
-> „Es geht ja hier darum auch parallel mit verschiedenen Protokollen, Verfassungen oder Setups und
-> Richtungen zu experimentieren. Wahrscheinlich mache ich zukünftig noch mehr Forks, auch bei den
-> anderen Praxen."
+> The point is to experiment in parallel with different protocols, constitutions, setups and
+> directions; more forks are to be expected, of the other practices too.
 
 `error-as-method` is **not a fourth practice**. It is the Atelier running under a second
 constitution. The ecology is meant to grow this way — more forks, of the other practices too.
@@ -101,8 +100,8 @@ those ticks read as an honest gap.
 
 ## 4. What is mixed up right now — the actual next job
 
-Frank, on seeing it: *„hier sind [Wortlaut privat]. Auch bei den works, die
-eigentlich reine ecology works sind."* He is right, and it is checkable:
+Frank, on seeing it (wording private): the two Ulysses lines are mixed together
+everywhere, including among works that are purely ecology works. He is right, and it is checkable:
 
 - **`/works` lists the fork as a fourth source** — atelier 32 · field 22 · studio 6 ·
   error-as-method 5. The machinery already treats it as a peer practice.

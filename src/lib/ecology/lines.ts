@@ -14,7 +14,7 @@
 // Why it is needed: from 2026-08-10 the Atelier runs in two repositories at once, and the works
 // register carries both under one namespace — correctly, because they ARE one practice by
 // descent. The cost was that the two lines became indistinguishable on the surfaces, which is
-// what Frank saw: „hier sind [Wortlaut privat]."
+// what Frank saw (wording private): the two lines are mixed together everywhere.
 
 import { NIGHTLY_FORK_DIR } from '@/lib/engines/register'
 import type { LatestWork } from '@/lib/engines/latest'

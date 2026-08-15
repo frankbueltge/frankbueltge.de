@@ -1,7 +1,7 @@
 """Das Dataset Register aus dem, was die eigenen Werke abrufen.
 
-Frank, 2026-07-28: „außerdem greifen wir ja auch schon auf public data zu in den holdings
-und sammeln selber daten, oder?" — Ja. Und das ist die Antwort auf die Frage, wie man
+Frank, 2026-07-28 (Wortlaut privat): ob das Haus nicht in den Holdings ohnehin schon
+öffentliche Daten abrufe und selbst welche sammle. — Ja. Und das ist die Antwort auf die Frage, wie man
 gezielt nach passenden Datensätzen sucht: **gar nicht suchen.**
 
 Am 27.07. wurde das Register auf Null zurückgebaut, weil 16.516 gesammelte Einträge mit

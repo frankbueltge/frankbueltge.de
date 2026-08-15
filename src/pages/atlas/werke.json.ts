@@ -3,8 +3,8 @@
 // /studio/chronicle.json and /field/chronicle.json: static at build time, Git is the archive,
 // no runtime reads.
 //
-// Why this exists (2026-08-13, Frank's question — "[Wortlaut privat]
-// der data art?"): the four research lines of this house run as cloud sessions with their own
+// Why this exists (2026-08-13, Frank's question, wording private: can the practices reach
+// the atlas of data art?): the four research lines of this house run as cloud sessions with their own
 // repository and the open web, and NONE of them holds this repository — by design (they publish
 // through `site-prs/` and a human-merged gate, `engine-site-pr.yml`). So the atlas, which is
 // this house's "has the world already done this?" corpus and therefore the evidence base of the

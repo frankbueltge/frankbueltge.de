@@ -1,9 +1,20 @@
 # Editorial Deadline, second chamber: the world's deletions (extension proposal, 2026-08-14)
 
-**Status.** Proposal, not commissioned. Extends an **existing werk** — Editorial Deadline
-(`/redaction`, `pipelines/redaction/`) — rather than founding a new one. Frank's own read
-(2026-08-13): "v3 haben wir doch ähnlich schon als experiment … das könnte man einfach
-erweitern/ergänzen." This spec is that extension, made concrete.
+**Status: BUILT since 2026-08-14** (updated 2026-08-15; the header still said "proposal, not
+commissioned" a day after the chamber went in). Chamber 2 runs as a nightly BigQuery step in
+the `redaction` workflow (`pipelines/redaction/src/redaction/world/`, 84 pipeline tests) and
+renders on `/redaction` with method sheet v2; its §2 prior-art search was sealed before the
+build, as this spec required, and the audit verdict is ADDED VALUE with named kill
+conditions (decision-log 2026-08-14, addendum 2 below).
+
+**Still open, and it needs Frank's hand:** the GitHub secret `GCP_SA_KEY` — a service
+account with BigQuery Job User on the house project. Until it exists, the chamber degrades
+honestly (`gdg.available=false`) and the deletion measurement runs without GCP.
+
+Extends an **existing werk** — Editorial Deadline (`/redaction`, `pipelines/redaction/`) —
+rather than founding a new one. Frank's own read (2026-08-13, wording private): something
+similar already exists as an experiment, so this could simply be extended rather than
+founded anew. This spec is that extension, made concrete.
 
 ## 1. What exists, and what the chamber adds
 

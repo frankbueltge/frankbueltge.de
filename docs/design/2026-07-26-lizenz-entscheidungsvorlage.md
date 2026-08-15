@@ -10,8 +10,8 @@ Grund eher stärkt: **Zitieren war nie verboten** (Zitatrecht, §51 UrhG). NC bl
 vollständige Übernahme in kommerziellem Zusammenhang — also genau die Multiplikatoren, die
 Reichweite erzeugen. **Hinweis:** CC-Lizenzen sind unwiderruflich; wer ein Werk unter CC BY
 erhalten hat, behält diese Rechte dauerhaft.
-**Anlass:** Frank, 2026-07-26: „die Entscheidung für non-commercial war damals aus dem
-Bauch heraus und ich weiß gar nicht, ob das überhaupt sinnvoll ist."
+**Anlass:** Frank, 2026-07-26 (Wortlaut privat): die Entscheidung für non-commercial sei
+damals aus dem Bauch gefallen, und ob sie überhaupt sinnvoll ist, sei ihm unklar.
 **Kein Rechtsrat.** Das hier ist eine strukturierte Abwägung, keine anwaltliche Auskunft.
 
 ## 1. Ist-Stand (erhoben am 2026-07-26)

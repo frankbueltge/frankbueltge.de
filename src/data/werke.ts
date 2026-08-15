@@ -199,7 +199,7 @@ export const WERKE: Werk[] = [
       en: 'From the “Counter-Measurement” line, in two chambers. Chamber 1: each day a machine diffs the Wayback snapshots of a curated list of official pages and surfaces the most substantive removal — both versions linked, checkable in two clicks. Chamber 2 (since 2026-08-14): the same gesture at the scale of the world’s press — GDELT’s recrawl of ~54k rewritten headlines a day, run through a versioned triviality filter to a bounded register of genuine reframings, plus a deletion rate measured against a nightly sample the house committed before the vanishing. No claim of intent, only the counted thing taken away — receipts held.',
     },
     // Instrument, not a festival-aspiring experiment (Frank, 2026-08-14, after the world
-    // chamber shipped: "[Wortlaut privat]") — the gesture is an occupied 20-year
+    // chamber shipped, wording private: make an instrument of it) — the gesture is an occupied 20-year
     // genre; the daylight is methodological. It keeps running nightly and feeds the
     // counter-measurement line; a thematic sharpening (de-naming) waits on evidence.
     tier: 'instrument',
@@ -323,6 +323,24 @@ export const WERKE: Werk[] = [
     tier: 'experiment',
   },
   {
+    id: 'invoked-past',
+    title: 'The Invoked Past',
+    subtitle: {
+      de: 'Welches Gestern die Weltpresse heute zitiert',
+      en: 'Which yesterday the world cites today',
+    },
+    status: 'live',
+    since: '2026-08-15',
+    live: true,
+    href: '/invoked-past',
+    description: {
+      de: 'Jeden Tag liest eine Maschine jede Datumsnennung in rund 95.000 Nachrichtenartikeln und veröffentlicht das Histogramm der angerufenen Jahre — samt dem Jahr, das aus dem glatten Gedächtnis-Zerfall herausragt, und in wessen Presse. GDELT hat das Feld 2015 für Jahrestags-Analysen gebaut und nie ein Instrument daraus gemacht.',
+      en: 'Each day a machine reads every dated reference in some 95,000 news articles and publishes the histogram of invoked years — with the year that breaks the smooth decay of memory, and whose press is doing the invoking. GDELT built the field in 2015 for anniversary analysis and never built the instrument.',
+    },
+    methodHref: '/werke/invoked-past',
+    tier: 'experiment',
+  },
+  {
     id: 'balance',
     title: 'The Balance',
     subtitle: {
@@ -420,8 +438,8 @@ export const HOLDINGS_EXCLUDED_IDS: ReadonlySet<string> = new Set([
 ])
 
 /** Order for /experiments (Frank, 2026-08-14): NEWEST FIRST — a new werk enters at the top.
- *  This dissolves the curated strength ranking of 2026-08-05 ("[Wortlaut privat]
- *  [redigiert] [redigiert]"); recorded in
+ *  This dissolves the curated strength ranking of 2026-08-05 (Frank's instruction, wording
+ *  private: new works on top, the curated order dissolved); recorded in
  *  docs/decision-log.md, 2026-08-14 row. The list is DERIVED from WERKE_CHRONO (its own
  *  recency rules incl. Überflug pinned last), so it can never go stale — no manual insert,
  *  no forgotten entry. */
