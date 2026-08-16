@@ -89,5 +89,17 @@
 
 # The machine-attention practice stage: separate CSS/JS files, embedded fonts,
 # no inline scripts, no network calls (clocks tick from data attributes).
+#
+# media-src und connect-src ergänzt 2026-08-16 (Franks Freigabe), aus demselben Grund wie bei
+# den Praxen: eine Decke, die niemand beschlossen hatte. Die Bühne KONNTE keine Daten zur
+# Laufzeit holen und keinen Ton abspielen — auch nicht von der eigenen Domain, auch nicht als
+# data:-URI. Vorsorglich, nicht korrigierend: anders als bei Atelier und Field gibt es kein
+# Anzeichen, dass die Grenze drückt.
+#
+# script-src und style-src bleiben BEWUSST bei 'self' ohne 'unsafe-inline' — anders als bei
+# den vier Werk-Policies. Das ist die strengere Form, und diese Praxis hält sie nachweislich
+# ein: stage.js und style.css liegen als eigene Dateien, null Inline-Skripte. Sie hier
+# aufzuweichen, damit alle Blöcke gleich aussehen, wäre eine Verschlechterung ohne Gewinn.
+# Das Prinzip ist „keine Decke, die niemand beschlossen hat" — nicht „alle Regeln wortgleich".
 /attention/*
-  Content-Security-Policy: default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'
+  Content-Security-Policy: default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; media-src 'self' data:; connect-src 'self'
