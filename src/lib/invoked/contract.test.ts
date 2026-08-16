@@ -76,15 +76,19 @@ describe('invoked latest.json contract', () => {
     }
   })
 
-  it('the headline is NOT the raw maximum — the maximum is the ceiling artefact', () => {
+  it('the headline is NOT the raw maximum — and the maximum is derived, never typed', () => {
     if (!d.headline || !d.most_invoked) return
     const maximum = d.years.reduce((m, y) => (y.mentions > m.mentions ? y : m), d.years[0])
     expect(d.most_invoked.year).toBe(maximum.year)
     expect(d.most_invoked.mentions).toBe(maximum.mentions)
-    // The page presents most_invoked as an artefact of the wall; that framing is only honest
-    // while the maximum really does sit at the wall. If a run ever breaks this, the page's
-    // sentence must change with it — which is what this assertion is for.
-    expect(d.most_invoked.year).toBe(d.stats.max_year_observed)
+    // Until 2026-08-16 this also pinned most_invoked.year === max_year_observed: the page
+    // framed the maximum as "the ceiling artefact", and that framing was only honest while
+    // the maximum really sat at the wall — the pin was the tripwire. It fired: on 2026-08-16
+    // the press invoked 1992 harder than the wall's default (1,081 mentions against 2014's
+    // 882). The page frames the maximum conditionally now (InvokedPastPage.astro, maxIsWall),
+    // so the contract keeps only what must hold structurally: the wall is the highest year
+    // the day's histogram contains, whoever wins the count.
+    expect(Math.max(...d.years.map((y) => y.year))).toBe(d.stats.max_year_observed)
   })
 
   it('publishes the evidence for the standout whenever it publishes a standout', () => {

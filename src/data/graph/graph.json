@@ -12,7 +12,7 @@
       },
       {
         "file": "docs/decision-log.md",
-        "sha256": "7794e598c9ab5af4"
+        "sha256": "84f3548d47d47749"
       },
       {
         "file": "src/data/post/ledger.json",
@@ -57,10 +57,10 @@
       }
     ],
     "counts": {
-      "nodes": 272,
-      "edges": 242,
+      "nodes": 273,
+      "edges": 244,
       "nodesByKind": {
-        "decision": 60,
+        "decision": 61,
         "encounter": 6,
         "neighbor": 93,
         "practice": 9,
@@ -75,7 +75,7 @@
         "made-by": 75,
         "neighbor-of": 93,
         "participates": 17,
-        "touches": 43
+        "touches": 45
       }
     }
   },
@@ -663,6 +663,16 @@
     {
       "id": "decision:2026-08-16-1",
       "kind": "decision",
+      "label": "The works register carries every line's works, and the line map says which line made what",
+      "date": "2026-08-16",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "The works register carries every line's works, and the line map says which line made what"
+      }
+    },
+    {
+      "id": "decision:2026-08-16-2",
+      "kind": "decision",
       "label": "The refrain moves onto its line's record page, and every practice gets a window it runs itself",
       "date": "2026-08-16",
       "source": {
@@ -671,7 +681,7 @@
       }
     },
     {
-      "id": "decision:2026-08-16-2",
+      "id": "decision:2026-08-16-3",
       "kind": "decision",
       "label": "The Atelier's two figures repaired on Frank's three findings",
       "date": "2026-08-16",
@@ -5827,12 +5837,30 @@
       "to": "work:atelier",
       "source": {
         "file": "docs/decision-log.md",
-        "quote": "src/pages/atelier/lines/"
+        "quote": "src/pages/atelier/works.astro"
       }
     },
     {
       "kind": "touches",
       "from": "decision:2026-08-16-1",
+      "to": "work:invoked-past",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "src/components/pages/InvokedPastPage.astro"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-08-16-2",
+      "to": "work:atelier",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "src/pages/atelier/lines/"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-08-16-2",
       "to": "work:studio",
       "source": {
         "file": "docs/decision-log.md",
@@ -5841,7 +5869,7 @@
     },
     {
       "kind": "touches",
-      "from": "decision:2026-08-16-2",
+      "from": "decision:2026-08-16-3",
       "to": "work:atelier",
       "source": {
         "file": "docs/decision-log.md",
