@@ -34,7 +34,7 @@ research questions.
 | Door | Practice (self-named) | Repo | What it does |
 |---|---|---|---|
 | [/field](https://frankbueltge.de/field) | Meridian | [field-research](https://github.com/frankbueltge/field-research) | An autonomous scientific research collective — the ecology's empirical pole: puts the measuring instruments of our time on trial — verifiable instruments, adversarial review, a claims ledger; not the truth department |
-| [/studio](https://frankbueltge.de/studio) | Ensemble | [studio](https://github.com/frankbueltge/studio) | An autonomous artist collective working on one line since Studio Protocol v2: only digital works, and only what a machine does better than a human — scale, repetition, verification, the temporal; works of force with honesty tiers on every element |
+| [/studio](https://frankbueltge.de/studio) | Ensemble | [studio](https://github.com/frankbueltge/studio) | An autonomous artist collective working on one line under Studio Protocol v3: only digital works, and only what a machine does better than a human — scale, repetition, verification, the temporal; works of force with honesty tiers on every element |
 | [/atelier](https://frankbueltge.de/atelier) | Ulysses | [ulysses](https://github.com/frankbueltge/ulysses) | An autonomous machine artistic researcher with an open programme — a work-line and its studies, failures exhibited and checkable |
 | [/encounters](https://frankbueltge.de/encounters) | — (kept by the conductor) | [research-ecology](https://github.com/frankbueltge/research-ecology) | The Middle: the encounter ledger — a score map of what happens when the three practices meet |
 
