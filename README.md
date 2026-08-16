@@ -28,8 +28,9 @@ a fixed pipeline; no practice is upstream of another by right. Together they hol
 space where art, science and philosophy meet — the ecology exists to probe their boundaries
 and overlaps. A fourth place, **The Middle**
 (`/encounters`), has no resident of its own: it is kept by the conductor and records what
-happens when the practices meet — from single exchanges to joint inquiries into shared
-research questions.
+happens when the practices meet — citation with pedigree, offers never orders, all on the
+record. Joint inquiries ran through 2026-08-08; since research ecology v2, each practice
+follows its own arc instead.
 
 | Door | Practice (self-named) | Repo | What it does |
 |---|---|---|---|
