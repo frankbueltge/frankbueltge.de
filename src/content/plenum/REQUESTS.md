@@ -179,8 +179,9 @@ enables what's possible. Frank may leave **seeds** below — offers, not orders.
 - 2026-07-04 — **✅ Taken up same day (Session 4):** brief graduated to
   `works/rent-eats-first-die-miete-isst-zuerst.md` after the full gate; the whack-a-mole
   offer was transformed at the table (reach-variant, Mammon stays off-stage) — see
-  `journal/2026-07-04.md`. **Owner verdict 2026-07-05: not flagship material** („netter
-  Appetizer/kleiner Snack") — brief stays valid for a later mid-size build; the flagship
+  `journal/2026-07-04.md`. **Owner verdict 2026-07-05: not flagship material** (Frank,
+  2026-07-05, wording private — he placed it as a pleasant appetizer or small in-between
+  snack, not a blockbuster) — brief stays valid for a later mid-size build; the flagship
   hunt continued in Session 5 and landed `works/das-doppelte-gericht.md` (owner-picked,
   full gate, awaiting build go). Original seed, kept for the record:
   **Directed concept session, please (Frank): Rook/Mammon flagship "Rent Eats
@@ -190,9 +191,10 @@ enables what's possible. Frank may leave **seeds** below — offers, not orders.
   `works/one-more-scroll-der-sog.md` (idea · why now · sourced data basis · suited host ·
   menu fit · sources), full gate (Verifier + Voice-Checker).
 
-  **Frank's verdict on the current build (2026-07-04, the steer):** the Three.js dinner-table
-  staging as built is *"kein Knaller"* — it must become a far more **immersive, entertaining
-  data story**. Treat the experiential form as **open for escalation**. Proven and staying:
+  **Frank's verdict on the current build (2026-07-04, the steer; wording private):** the
+  Three.js dinner-table staging as built does not land as a showstopper — it must become a far
+  more **immersive, entertaining data story**. Treat the experiential form as **open for
+  escalation**. Proven and staying:
   the data translation itself — **rent burden as days of your month, eaten first** (Karlsruhe
   30 % → free from the 10th; Lisbon 103 % → rent eats Day 32, a day that does not exist).
   Judged insufficient: the staging (a bare 3D table eating plates; Day 32 only a text line;
@@ -231,9 +233,10 @@ enables what's possible. Frank may leave **seeds** below — offers, not orders.
   - **Entirely new ideas and concepts are explicitly welcome** — the existing beats are
     substrate, not a fence. A minigame may be *a part* or *the climax* of the story, not
     necessarily the whole snack.
-  - One idea from Frank to take to the table (an offer, not an order): **Whack-a-Mole, but
-    it's Mammon** — the arcade classic, except what pops up is not a mole; you hammer at
-    what eats your month. Tension to weigh honestly: the current op-002 treatment keeps
+  - One idea from Frank to take to the table (2026-07-04, an offer, not an order; wording
+    private, paraphrased): **a whack-a-mole game with Mammon in the mole's place** — the
+    arcade classic, except what pops up is not a mole; you hammer at what eats your month.
+    Tension to weigh honestly: the current op-002 treatment keeps
     Mammon never-shown ("he is the address"), while the site's Pantheon feast artwork does
     show him in the flesh. The plenum decides what serves the story — hit him, never quite
     manage to hit him, or hit "addresses" while he stays off-stage.
@@ -278,9 +281,9 @@ enables what's possible. Frank may leave **seeds** below — offers, not orders.
 ## Team note — 2026-08-01 — The request head: four lines before every request to Frank
 
 > Decided by Frank today (Steuerzentrale v2 P1; design: frankbueltge.de repo,
-> `docs/design/2026-08-01-steuerzentrale-v2.md`). His own words on the current state:
-> "riesig lange texte … ich verstehe viele anfragen überhaupt nicht und weiß nicht wie
-> und ob ich reagieren muss."
+> `docs/design/2026-08-01-steuerzentrale-v2.md`). His verdict on the current state
+> (2026-08-01, wording private): the requests arrive as very long texts, many of them are
+> not understandable to him, and he cannot tell how — or whether — he has to react.
 >
 > From now on, every entry in this channel that is addressed to Frank opens with a
 > four-line head — your own triage, rendered verbatim in his control panel and in the
