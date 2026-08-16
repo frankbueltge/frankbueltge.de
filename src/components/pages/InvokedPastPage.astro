@@ -27,13 +27,12 @@ const failed = d.stats.slots_fetched === 0
 const neighbourhood = standoutWindow(d.method.standout)
 const ceiling = d.stats.max_year_observed
 const scope = `${d.method.year_window[0]}–${ceiling}`
-// Whether today's raw maximum really sits at the inherited ceiling. It usually does — attention
-// decays with age, so the wall year wins the count by default — and the page framed it as an
-// artefact unconditionally, with a contract test pinning the equality as the tripwire. The
-// tripwire fired on 2026-08-16: 1992 out-counted the wall (1,081 mentions against 2014's 882).
-// A maximum that beat the default is a fact about the day, not an artefact of the source, and
-// framing it as one would be the page explaining away its own data.
-const maxIsWall = d.most_invoked?.year === d.stats.max_year_observed
+// Usually the ramp toward the wall carries the raw maximum to the ceiling year itself, and
+// the page says so. It is not a law, though — it is a nightly observation, and on
+// 2026-08-16 it broke for the first time (1992 at 1,081 mentions over the wall's 882). The
+// page therefore reads the file instead of asserting the habit: the wall is still measured
+// and still disclosed, but whether the maximum sits on it is stated as what it is tonight.
+const maxAtCeiling = d.most_invoked?.year === ceiling
 const topYears = d.top_years.slice(0, 12)
 // The evidence for the standout, published since method v1.1: themes, names and headlines
 // out of the very rows the count came from. Optional, because day files written before
@@ -278,30 +277,31 @@ const lawTest = d.law_test
   {!failed && d.most_invoked && (
     <section class="mb-12 border-l-2 border-line pl-5">
       <h2 class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
-        {maxIsWall
+        {maxAtCeiling
           ? 'The most-invoked year is an artefact, not the finding'
-          : 'The most-invoked year — today it beat the ceiling’s default'}
+          : 'Tonight the most-invoked year is not the wall'}
       </h2>
-      {maxIsWall ? (
-        <p class="mt-3 text-fg-muted">
-          Today's raw maximum is <strong>{d.most_invoked.year}</strong> with {count(d.most_invoked.mentions)} mentions
-          ({decimal(d.most_invoked.per_1000_articles, 1)} per 1,000 articles) — and it is published here as an
-          artefact of the source. GDELT's date extractor emits no year later than {ceiling}: measured as a clean
-          cliff when this instrument was built, and re-measured every night as the highest year the day's files
-          contain (tonight: {ceiling}). Attention decays with age, so the ramp toward the newest available year is
-          the law rather than the news, and whichever year sits at the ceiling wins the count by default.
-        </p>
-      ) : (
-        <p class="mt-3 text-fg-muted">
-          Today's raw maximum is <strong>{d.most_invoked.year}</strong> with {count(d.most_invoked.mentions)} mentions
-          ({decimal(d.most_invoked.per_1000_articles, 1)} per 1,000 articles) — and today that is <em>not</em> the
-          usual ceiling artefact. On most days the ramp toward the newest available year decides the count and the
-          wall year ({ceiling}) wins by default; today {d.most_invoked.year} out-counted it outright. The maximum
-          still is not the published finding — the headline above is scored against its own neighbourhood, not by
-          raw count — but a maximum that beat the default is a fact about the day, stated as one. The ceiling
-          itself stands and is re-measured nightly (tonight: {ceiling}).
-        </p>
-      )}
+      <p class="mt-3 text-fg-muted">
+        Today's raw maximum is <strong>{d.most_invoked.year}</strong> with {count(d.most_invoked.mentions)} mentions
+        ({decimal(d.most_invoked.per_1000_articles, 1)} per 1,000 articles). GDELT's date extractor emits no year
+        later than {ceiling}: measured as a clean cliff when this instrument was built, and re-measured every
+        night as the highest year the day's files contain (tonight: {ceiling}). Attention decays with age, so the
+        ramp toward the newest available year is the law rather than the news.
+        {maxAtCeiling ? (
+          <>
+            {' '}The maximum sits on that wall tonight, which is the usual outcome — it is published here as an
+            artefact of the source rather than as a finding about the past.
+          </>
+        ) : (
+          <>
+            {' '}Tonight the maximum does <strong>not</strong> sit on that wall: {d.most_invoked.year} outranks
+            the ceiling year {ceiling}, which the ramp alone does not account for. The wall is unchanged and
+            still drawn as the empty band it is; what changed is that a year below it drew more invocation than
+            the newest year the source will emit. Whether that is a story about {d.most_invoked.year} or about a
+            thin day at the ceiling is not settled by this count, and the page does not settle it.
+          </>
+        )}
+      </p>
       <p class="mt-3 text-sm text-fg-muted">
         The scope of this instrument is therefore the press's memory of <strong>{scope}</strong>. Invocation of the
         last decade is <em>not available</em> from this field, and it is not substituted from anywhere else: a
@@ -483,9 +483,12 @@ const lawTest = d.law_test
       </li>
       <li>
         <strong>The {ceiling} wall is the source's, and it is not papered over.</strong> No year later
-        than {ceiling} is emitted at all, so the most-invoked year is structurally the ceiling year and the
-        youngest age bucket is structurally empty. Both are labelled as such wherever they appear, and the
-        missing stretch is drawn into the figure rather than cropped out of it.
+        than {ceiling} is emitted at all, so the youngest age bucket is structurally empty and the ramp runs
+        toward the ceiling year. That ramp usually carries the raw maximum to the wall as well — {maxAtCeiling
+          ? 'as it does tonight'
+          : `tonight it does not, and ${d.most_invoked?.year} leads instead`}. Which of the two holds is read
+        off the file each night and said plainly, never assumed; the missing stretch is drawn into the figure
+        rather than cropped out of it.
       </li>
       <li>
         <strong>The English-monitored stream only.</strong> Pasts invoked mainly in other languages are
