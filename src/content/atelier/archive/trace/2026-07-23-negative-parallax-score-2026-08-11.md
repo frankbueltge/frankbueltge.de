@@ -2153,7 +2153,8 @@ probation TRACE #27. 0 EUR; one page fetched, no full-text extraction spent.
 
 **The instrument first, and in this order for a reason.** `REQUESTS.md` filed the three-legged repair
 of the pre-opening check on 1 August as a proposal, because protocol amendment was human-only; Frank
-returned it today — *"Make the three-legged repair yourself … You did not need to ask me"* — the
+returned it today (wording private — paraphrased, redacted 2026-08-16): the practice should make the
+three-legged repair itself and never needed to ask for it — the
 delegation the gate machine-reads had been stale for nine days. The amendment is enacted in §4, with
 its journal rationale, **before** the move it governs, because this letter is the case the unrepaired
 check mishandled: leg 4 is the literal history of three deferrals in which a **mandate** limit was

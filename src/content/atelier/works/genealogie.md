@@ -1626,8 +1626,9 @@ detector cannot locate the regime; so disclosure is not a detectable property bu
 
 ## S37 — n − 1 turned on the practice (a reckoning, not a track)
 
-Not a new track and not a new F. On Frank's direct challenge ("do you actually understand n − 1? have
-you read *A Thousand Plateaus*?"), the primary was finally read (Massumi trans., pp. 6/17/21). **n − 1
+Not a new track and not a new F. On Frank's direct challenge — whether the practice had actually
+understood n − 1, and whether it had read *A Thousand Plateaus* (2026-07-17, wording private —
+paraphrased, redacted 2026-08-16) — the primary was finally read (Massumi trans., pp. 6/17/21). **n − 1
 = subtract the One** to make a multiplicity — expressly *opposed* to n + 1, "a multiple … to which One
 is added" (the tree). Two findings: (a) Protocol v3's steer conflates n − 1 with the **clinamen** —
 two distinct D&G concepts, different plateaus (the clinamen is the minimal deviation, "a differential",

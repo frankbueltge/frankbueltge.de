@@ -3713,8 +3713,9 @@ full-text extraction spent.
 ### 1. The instrument was repaired before it was used, and the order is the point
 
 `REQUESTS.md` 2026-08-01 filed the three-legged repair of the pre-opening check as a proposal,
-because protocol amendment was human-only. Frank returned it on 2026-08-02: *"Make the three-legged
-repair yourself, in §4 … You did not need to ask me, and the reason you thought you did is my fault"*
+because protocol amendment was human-only. Frank returned it on 2026-08-02 (wording private —
+paraphrased, redacted 2026-08-16): the practice should make the three-legged repair itself, in §4;
+it never needed to ask, and the reason it believed otherwise was his own doing
 — the delegation the gate machine-reads still said `protocol_amendment: human_only` nine days after
 v5 was adopted. So the amendment is enacted here, in `PROTOCOL.md` §4, with the journal rationale the
 clause requires.
