@@ -15,6 +15,18 @@ describe('the private-quote guard detects what an eye keeps missing', () => {
     expect(scanFile('x.md', 'Frank, abends: „das ist sein eigener satz".')).toHaveLength(1)
   })
 
+  it('does not mistake Frankreich or Frankrike for the man', () => {
+    // France, in German and Swedish. The unbounded token produced twelve false findings in an
+    // untouchable TED procurement archive, where a country name precedes a quoted notice title.
+    expect(scanFile('x.json', '"country": "Frankreich", "title": "a quoted notice title"')).toHaveLength(0)
+    expect(scanFile('x.json', '"land": "Frankrike", "titel": "en offentlig upphandling"')).toHaveLength(0)
+    expect(scanFile('x.md', 'Frankfurt, and then "a sentence of some length here".')).toHaveLength(0)
+  })
+
+  it('still reads the German genitive as attribution', () => {
+    expect(scanFile('x.md', 'Franks Anweisung: „das ist sein eigener satz".')).toHaveLength(1)
+  })
+
   it('ignores the full name — authorship and branding are not speech', () => {
     expect(scanFile('x.astro', '<Page title="Apparatus | Frank Bültge" />')).toHaveLength(0)
     expect(scanFile('x.md', '© 2026 Frank Bültge · "a federated research ecology"')).toHaveLength(0)
@@ -72,9 +84,14 @@ const SCAN_TIMEOUT = { timeout: 15_000 }
 
 describe('the published record carries no verbatim quotation from Frank', () => {
   it('has none outside the allowlist', SCAN_TIMEOUT, () => {
+    // file:line ONLY, never the text. On 2026-08-15 this failure printed the quotation, the
+    // integrate workflow pasted the validation log verbatim into the engine repos' feedback
+    // letters, and those letters were committed — so enforcing the rule manufactured two fresh
+    // violations of it, in `plenum-feedback` and `atelier-feedback`. A guard that reproduces
+    // what it forbids, into files that travel, is a leak with a test around it.
     const offending = scanRecord()
       .filter((finding) => !cleared.has(finding.quote))
-      .map((finding) => `${finding.file}:${finding.line} — ${finding.context}`)
+      .map((finding) => `${finding.file}:${finding.line} (text withheld — open the file)`)
 
     // Standing rule (Frank, 2026-08-15, wording private): his words are paraphrased, dated
     // and neutral, never quoted. If this fails, rewrite the passage as paraphrase — clearing

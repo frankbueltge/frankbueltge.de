@@ -55,8 +55,15 @@ const QUOTE = /(?:„[^"„“]{6,}?["“]|"[^"]{6,}?"|«[^»]{6,}?»|“[^”]{
 /**
  * The attribution token. `Frank Bültge` is excluded on purpose: the full name is authorship
  * and branding (page titles, footers, licence lines), never the introduction of speech.
+ *
+ * Word-bounded since 2026-08-16, because it was not: the bare `Frank` matched **Frankreich**
+ * and **Frankrike** — France, in German and Swedish — and produced twelve false findings in
+ * the state-before-interface repo's TED procurement snapshots, where a country name sits a few
+ * characters before a quoted notice title. A guard that accuses an untouchable archive of
+ * leaking its owner's private speech is worse than no guard. `Franks` (the German genitive)
+ * still matches.
  */
-const ATTRIBUTION = /Frank(?!\s+Bültge)/g
+const ATTRIBUTION = /\bFranks?\b(?!\s+Bültge)/g
 
 /** How far after the name a quotation still reads as attributed to it. */
 const ATTRIBUTION_RANGE = 120
