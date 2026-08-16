@@ -40,21 +40,30 @@ ceiling: a work may be built with a real toolchain (`projects/<slug>/src/` as th
 workspace; a pinned starter in `toolchain/template/`). **The integrator is unchanged** —
 these are the duties that make a built work pass it:
 
-- **What travels** (the site integrator's allow-list today): `.html .js .mjs .css .json
-  .svg` (plus `.astro .ts` for native Astro works). Any other top-level file is silently
-  IGNORED, not rejected — raster images, fonts, audio, wasm do **not** travel. The build
-  must **inline** such assets as `data:` URIs (the works CSP allows `img-src data:` and
-  `font-src data:`; scripts must be local files or inline).
-- **Runtime is offline.** The works CSP has no connect/fetch allowance — everything a work
-  needs ships in its committed files. No external requests, ever (this was already the
-  law; a bundler makes it easy to honor).
+- **What travels** (the site integrator's allow-list, widened 2026-08-16): code and markup
+  — `.html .js .mjs .css .json .svg` (plus `.astro .ts` for native Astro works) — **and the
+  assets a work needs to be a work**: `.png .jpg .jpeg .webp .avif .gif`, `.woff .woff2`,
+  `.mp3 .ogg .wav .m4a .flac`, `.mp4 .webm`. They travel **as files** beside the entry file,
+  where the works CSP plays them; inlining as `data:` URIs is no longer required and costs a
+  third of the size again. Prose, notebooks and executables are still left behind, and are
+  reported back as `ignored` in the integrate report. **WASM still does not travel.**
+- **Runtime is same-origin (changed 2026-08-16, Studio Protocol v3).** The works CSP now
+  carries `connect-src 'self'` and `media-src 'self' data:` for `/studio/werke-html/*`: a work
+  may read this domain's committed data while it runs, and may play sound and moving image.
+  It still reaches **no other host** — the exfiltration guard is unchanged. Audio and video
+  travel **inlined as `data:` URIs** like every other binary asset, so the ~3 MB ceiling below
+  applies to them too. Sibling practices (atelier, field, plenum) keep the stricter policy.
 - **WASM is not yet servable** (the works CSP carries no `wasm-unsafe-eval`); a work that
   needs it files a REQUESTS entry first (a site-side header change Frank must make).
 - **Determinism:** dependencies pinned by the committed lockfile (`src/package.json` +
   `src/package-lock.json`); the build output committed; `npm ci && npm run build`
   reproduces it byte-for-byte; generative works print their seed (unchanged law).
-- **Size discipline:** keep a work's shipped top-level total lean — guideline ≤ ~3 MB.
-  The bundle is a work, not an app.
+- **Size:** **25 MiB per file, enforced.** That is Cloudflare Pages' own per-asset limit, and
+  it used to bite at *deploy* time — after this gate had passed and the mirror was committed.
+  The integrator now rejects an oversized asset by name instead. The earlier "≤ ~3 MB per
+  work" line was a guideline this document invented; it existed in no code and was eight
+  times stricter than the platform it was guessing at. Keep a work lean because a work should
+  be lean, not because a number said so.
 - **The island practice is unchanged:** the data island in the built HTML stays
   byte-identical to the committed `./data.json`, and the Verifier checks it as before.
 - **Licenses:** permissive dependencies only (MIT/BSD/ISC/Apache-2.0/public domain — the
@@ -159,9 +168,27 @@ original from the first day — the argument that kept `atlas/` out of the `erro
 fork. These are rebuilt from the same modules the pages import, so the scouts (atlas 05:00
 UTC, catalogue 05:30 UTC) move page and feed together; they are never two states.
 
-**Consult the atlas before you build something you believe is new,** and record what you
-found there — including when it found nothing. A negative result from 505 neighbours is
-evidence; an unchecked claim of novelty is not.
+**The atlas is there when you look for neighbours or inspiration** — a reference collection,
+not a step owed per session (the duty wording of 2026-08-13 was retracted by the architect on
+2026-08-14). Where you do claim novelty for a work, checking neighbours remains part of
+earning the claim: a negative result from 505 neighbours is evidence; an unchecked claim of
+novelty is not.
 
 **When a feed is unreachable,** say so in the record and carry on. An unavailable catalogue
 is a fact about the session, not a reason to invent what it would have said.
+## The window — your own surface on the house domain (architect, 2026-08-16)
+
+You have a page on frankbueltge.de that is entirely yours, the way the n-1 practice runs its
+own: create `window/` in this repository with an `index.html`, and the integrate workflow
+mirrors the whole directory **byte for byte** to the site, serving it verbatim at
+`/studio/window/`. Nobody edits it; the house's only act is the mirror. the Studio's station sheet shows a
+door to the window as soon as the mirror carries an `index.html`, and drops the door if you
+remove the directory. Updating the page is committing to `window/` — it travels with your
+next integration run.
+
+Conditions, all standing ones, none new: the public voice keeps the underlying technology
+unnamed; licenses as constituted (code Apache-2.0, works and texts CC BY 4.0, data CC0);
+rights and affected people settled before any opening that touches them. The page is served
+self-contained — the same sandbox as your interactive works: inline scripts and styles run,
+assets load from `window/` itself, external loads are blocked by the house CSP. Whether and
+how you use the window is your decision; an unused window is simply absent, not a failure.
