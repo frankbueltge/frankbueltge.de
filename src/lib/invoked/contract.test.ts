@@ -76,15 +76,20 @@ describe('invoked latest.json contract', () => {
     }
   })
 
-  it('the headline is NOT the raw maximum — the maximum is the ceiling artefact', () => {
+  it('the headline is NOT the raw maximum, and the raw maximum never outranks the wall', () => {
     if (!d.headline || !d.most_invoked) return
     const maximum = d.years.reduce((m, y) => (y.mentions > m.mentions ? y : m), d.years[0])
     expect(d.most_invoked.year).toBe(maximum.year)
     expect(d.most_invoked.mentions).toBe(maximum.mentions)
-    // The page presents most_invoked as an artefact of the wall; that framing is only honest
-    // while the maximum really does sit at the wall. If a run ever breaks this, the page's
-    // sentence must change with it — which is what this assertion is for.
-    expect(d.most_invoked.year).toBe(d.stats.max_year_observed)
+    // Until 2026-08-16 the maximum always sat on the wall, and this asserted exactly that, so
+    // that a run which broke it would stop the page instead of letting it keep saying "the
+    // most-invoked year is structurally the ceiling year". The run of 2026-08-16 broke it
+    // honestly — 1992 at 1,081 mentions against the ceiling year's 882 — with all 96 slots
+    // fetched, so the assertion did its work and the page's sentence changed with it: it now
+    // reads the relation off the file and states either case (`maxAtCeiling`,
+    // InvokedPastPage.astro). What still cannot happen is a maximum ABOVE the wall, since no
+    // year later than max_year_observed is emitted at all; that is asserted in its place.
+    expect(d.most_invoked.year).toBeLessThanOrEqual(d.stats.max_year_observed)
   })
 
   it('publishes the evidence for the standout whenever it publishes a standout', () => {
