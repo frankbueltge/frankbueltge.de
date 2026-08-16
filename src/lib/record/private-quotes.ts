@@ -7,6 +7,20 @@
 // seventy-five. A rule whose enforcement depends on whoever happens to open the file is not
 // enforced, it is hoped for.
 //
+// ONE STANDING EXCEPTION, decided 2026-08-16 so that no further session has to ask.
+//
+// The practices' REQUESTS.md and REQUESTS-ARCHIVE.md carry Frank's seeds and steers as
+// verbatim blockquotes — roughly 34 passages across the house. Those are NOT quotations of
+// his messages; they ARE his messages. The channel he speaks to the practices through happens
+// to be a document in a repository, and the practices must be able to read what they were
+// actually asked, not a session's paraphrase of it.
+//
+// The rule exists because sessions were reproducing his working messages inside their own
+// reports and journals. It was never a bar on him publishing his own words. So: this guard
+// does not scan the channel documents as an offence, and a session that meets one leaves it
+// alone. If that is ever to change, it is a decision about what the channel IS, not a
+// redaction task.
+//
 // This module only DETECTS. What it detects is deliberately mechanical — quotation marks in
 // speech-attribution range of the name — so it cannot be argued with. Legitimate quotations
 // (a work's title, a constitution's own words, a UI label) are cleared one by one in
