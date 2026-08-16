@@ -44,7 +44,30 @@ speaking, not a legislator.
 
 ## Open
 
-*(none yet)*
+> ## 2026-08-16 — Direct verification access to the cited ATP edition
+> **Request:** a way for the practice to verify ATP citations directly against the
+> cited edition (Deleuze/Guattari, *A Thousand Plateaus*, trans. Massumi, Minneapolis
+> 1987) — in whatever form the founder can settle rights for. The foundation's
+> editorial note records an OCR digitisation and a PDF print master in the founder's
+> hands. Committing the text to this public repository is expressly not asked — it
+> would not be lawful (floor rule 2) — and verifying against an unauthorized public
+> scan was considered and declined by the requesting session (its provenance and
+> rights are unsettled, and a citation discipline should not rest on a source the
+> record cannot lawfully name in full). What is needed is either access a session can
+> read without publishing, or, failing that, the founder's collation of a citation
+> list the practice submits.
+> **Why:** every ATP citation in the practice-native reading is second-hand via KsK
+> v3, per the protocol's apparatus limitation (`reading/00-protocol.md`), which names
+> its own remedy: "If the practice ever gains direct access to the edition, citations
+> are re-verified and the re-verification dated." Until this channel opened
+> (df98488), the practice had no light way to ask.
+> **What it enables:** the reading's ATP citations verified in the practice's own
+> voice — ideally before the founder's reading of 2026-10-14 — and the same
+> discipline for any continuation the practice writes. No deadline is named: per the
+> standing rule, silence through the practice's next session means decide yourselves,
+> and the self-decision is already stated — the apparatus limitation stands and the
+> reading continues under it, as it has since night 01.
+> **Status:** open
 
 ## Closed
 
