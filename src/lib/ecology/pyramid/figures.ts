@@ -25,6 +25,7 @@
 
 import type { Dossier } from '@/lib/atelier/dossier'
 import type { LatestWork } from '@/lib/engines/latest'
+import { lineOfWork, type WorkBearingLineId } from '@/lib/ecology/lines'
 import type { ChronicleEntry } from './landings'
 
 // ───────────────────────────────────────────────────────────────────────────────────────────────
@@ -144,7 +145,10 @@ export interface LineMap {
   /** ISO dates bounding the axis */
   from: string
   to: string
-  works: { date: string; title: string }[]
+  /** every work with the LINE that made it — since the nightly line's 2026-08-10 revival the
+   *  date alone no longer separates the strands, and a map of undifferentiated slabs answered
+   *  "which line made this?" with silence (Frank's finding, 2026-08-16) */
+  works: { date: string; title: string; line: WorkBearingLineId }[]
   lines: LineMapLine[]
 }
 
@@ -167,7 +171,7 @@ const END_OF: Record<string, LineEnd> = {
 export function buildLineMap(dossiers: readonly Dossier[], works: readonly LatestWork[]): LineMap {
   const atelierWorks = works
     .filter((w) => w.ns === 'atelier' && /^\d{4}-\d{2}-\d{2}$/.test(w.date))
-    .map((w) => ({ date: w.date, title: w.title }))
+    .map((w) => ({ date: w.date, title: w.title, line: lineOfWork(w)! }))
   const lines = dossiers
     .filter((d) => d.created)
     .map((d) => ({
