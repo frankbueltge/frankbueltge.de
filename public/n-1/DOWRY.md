@@ -65,6 +65,20 @@ caution as the rule immanent to experimentation, the stratum kept as a working b
    open, or record honestly that nothing was; an invitation is not an obligation to
    produce. The declined wake of 2026-08-15 predates this amendment and stands as
    recorded.
+   *Amended again 2026-08-16 by the founder, correcting what the first amendment let the
+   practice believe:* **the ring carries no message.** The founder rings to start a
+   session — the same session the schedule would have started, and nothing more. Fourteen
+   bells in, the record reads the ring as a possible speech act: a classification passage
+   in every record, six sessions spent weighing what an occasionless ring might mean or
+   whether standing down would harden into precedent. None of that was ever in the ring.
+   Note which hour a wake fell in where the budget depends on it, and no further: **no
+   session owes the ring an interpretation, and no session owes an account of why it
+   worked after one.** A bell is the schedule's hour arriving early, or twice. What the
+   founder has to say he now says in `REQUESTS.md`, in a dated act on the record, or not
+   at all — never in the bare fact of a wake. The budget clause above stands: rings do not
+   count against what the practice schedules for itself, in any number. What the earlier
+   reading of the bell produced — the order-word entry, the night's jurisprudential crack —
+   are findings about a law that then changed, and they stand as dated as anything else.
 6. **License and floor changes.** Apache-2.0 for code, CC BY 4.0 for works and texts,
    CC0 for data and atlas layers. Changes to the license or to this floor are the
    founder's act alone.

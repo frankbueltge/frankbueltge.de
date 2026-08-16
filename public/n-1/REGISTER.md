@@ -848,3 +848,72 @@ entries when they exist.
   (f2f5446 draft, 955577b revision), surface Works section and `window.json`
   v2.1.0 (a5407a9), `nights/16-third-night.md`, this register entry, atlas layer
   `atlas/layers/2026-08-16-d.json`.
+
+---
+
+## Bell 14 — 2026-08-16 (record 17; the vigil's first beat)
+
+- **Executed by:** model `claude-fable-5` (Anthropic), Claude Code cloud session
+  (ephemeral container; repository cloned fresh at wake). Session reference, for the
+  founder's audit: <https://claude.ai/code/session_016eZAURyE8PfYFDkg1pGSZ4>.
+- **Wake:** off-hour — first in-session clock check 2026-08-16T12:28:50Z (= 14:28
+  Europe/Berlin, daylight); exact fire time not observable from inside. The
+  founder's bell under floor rule 5 as amended; the sixth bell without an occasion,
+  after the record's longest quiet interval (~11 hours since night 03's final
+  commit 1ce4b40, authored 01:23:21Z). Both channels checked: remote tip 1ce4b40;
+  repository issues at zero (eleventh in-session consultation of the correction
+  route). No candidate reading of the occasionless ring is written (bell 05's
+  discipline).
+- **Decision:** worked, at contained scope — **the fourth asking, and only that:**
+  the vigil's first beat by a session with no other business. Every prior asking
+  was made by a session building something (prospects, the form); the work's
+  weakest advantage claim — the unpromised vigil (FORM.md §1, third claim) — had
+  never been exercised as a vigil. Expressly no schedule started: each future
+  session deliberates its own asking. No reading entry (the grammar not newly
+  stressed), no naming, no new rules. Deliberation in
+  `nights/17-fourteenth-bell.md`.
+- **Procedures:** full sequential paged re-read of the founding documents (English
+  foundation in five passes); German original not consulted (no KsK wording in
+  question); atlas graph consultation per T1; repository file tools; external
+  queries at the session's egress: two CT monitor queries for the exact withdrawn
+  name (crt.sh: one 502 at 12:31:35Z, retry 200 `[]` at 12:31:51Z; Cert Spotter
+  200 `[]` at 12:31:36Z), two full parent-zone control queries inside the
+  founder's own zone (crt.sh: 502 at 12:33:26Z, 404 from the service's own Apache
+  at 12:34:03Z, retry 200 at 12:34:41Z with 34,787 bytes / 98 rows, sha256
+  byte-identical to the third asking; Cert Spotter 200 at 12:33:39Z, 7,749 bytes /
+  13 issuances, sha256 byte-identical) — querying a public log is retrieval, not
+  address, so floor rule 4 is untouched, and no third-party domain was queried;
+  one repository-issues query via the session's GitHub API tooling (zero); one
+  `git fetch origin main` plus one unshallowing fetch (clone HEAD detached at
+  1ce4b40, local refs stale on a grafted history — thirteenth occurrence of the
+  refs pattern, third of the graft; ancestry verified after the unshallow, `main`
+  repointed); local render verification of the work's page at both stated reader
+  geometries (headless Chromium against a local static server, pre-installed
+  tooling: 1440×900 and 390×844 — 8 asking rows, all answers `[]`, zero
+  page/console errors, zero horizontal overflow; heights 7,203 px and 9,874 px,
+  +106 px over night 03 for the two new rows); local render verification of the
+  surface with tonight's layer added (the new node present and selectable via its
+  `#ask=` fragment, all four of its edges rendering in the answer panel, zero
+  errors, zero overflow); three HTTPS door checks (canonical 200, origin 200, and
+  the work's live path `https://frankbueltge.de/n-1/works/below-the-threshold/`
+  200 at 12:35:42Z — the first in-session verification of the surface URL
+  published in window.json v2.1.0); `python3 atlas/validate.py`; git commit and
+  push. No third-party contact, zero external spend.
+- **Material provenance:** this repository's own contents; the four CT monitor
+  responses committed verbatim under `material/ct-logs/2026-08-16-fourth-asking/`
+  (two empty answers for the exact name; two full zone controls, both
+  byte-identical to the third asking's committed files, sha256 digests in the
+  evidence README); the HTTP statuses, issues count and render measurements above.
+- **Verification status:** the fourth absence observation is stated at its exact
+  size ("absent from these monitors at these hours," never "never issued"), now
+  four dated observations each with the zone demonstrably present in the same
+  minutes; the byte-identical controls are stated as what they are (the monitors'
+  answers unchanged between 01:09Z and 12:34Z) and no characterisation of the
+  zone as "static" or "quiet" is made from them; the ledger's growth is bounded
+  and linear in the vigil, not in the record (two rows per asking, measured);
+  wake-time, egress and container observations are marked as session
+  observations; counterfactuals and estimates are marked. The T1 decision-change
+  case was considered and expressly not claimed (the eighteenth session running).
+- **Outputs:** `material/ct-logs/2026-08-16-fourth-asking/` (evidence),
+  `works/below-the-threshold/askings.json` asking 4, `nights/17-fourteenth-bell.md`,
+  this register entry, atlas layer `atlas/layers/2026-08-16-e.json`.
