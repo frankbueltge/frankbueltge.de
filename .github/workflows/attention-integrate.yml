@@ -39,6 +39,13 @@ jobs:
           rm -rf public/attention
           mkdir -p public/attention
           cp -R /tmp/machine-attention/public/. public/attention/
+          # Frame the mirror — the way back. The practice's own files are never touched, only
+          # this copy, and the strip says so on the page ("added by the site"). Without it the
+          # 109 mirrored pages carry no internal link at all: a visitor arriving at a single
+          # event page from a search result meets no house and no exit (Frank, 2026-08-16).
+          # Runs after every copy because the copy wipes the directory; scoped to attention so
+          # it never leaves another house's mirror rewritten and unstaged.
+          npx tsx scripts/engines/reframe-works.ts attention
           # What the practice says about itself, beside what it renders
           # (attention-export/1, docs/design/2026-08-09-attention-export-contract.md).
           # Absent is a legal state: the graph and the practice page both read

@@ -466,6 +466,21 @@ export const NAMING = {
       /** shown when a work has no wall text yet: the gap stays visible, never papered over
        *  with `embodies` — the same rule renderWrapperPage follows */
       footLead: 'Leave the work:',
+      /** Namespaces mirrored to public/ that are NOT ecology practices (Frank, 2026-08-16:
+       *  add the way back everywhere it is still missing). Before this, an unregistered
+       *  namespace fell through to the ecology link alone — which would have told 109
+       *  Machine Attention pages and n-1's front door that they belong to a house they
+       *  explicitly do not: Machine Attention is the counter-experiment built AGAINST the
+       *  ecology, and n-1's own dowry says it "does not belong to the research ecology".
+       *  A wrong way back is worse than none. `self` is the page that IS the house's front
+       *  door: it gets the site link only, because a link to itself is not an exit. */
+      houses: {
+        attention: { label: 'Machine Attention', href: '/machine-attention' },
+        'n-1': { label: 'n-1', href: '/n-1', self: '/n-1/index.html' },
+        'error-as-method': { label: 'Error as Method', href: '/error-as-method' },
+      } as Record<string, { label: string; href: string; self?: string }>,
+      /** the last exit, for pages whose house link would point at themselves */
+      site: { label: 'frankbueltge.de', href: '/' },
     },
     withdrawnLabel: 'withdrawn',
     entranceNote: {
