@@ -35,7 +35,7 @@ binnen 1–2 Jahren (Frank, 2026-07-31).
 „archivieren oder radikal umbauen" hat Frank den Umbau gewählt. Die drei Praxen bleiben
 (Dreieck: Field=Wissenschaft · Studio=Kunst · Atelier=künstlerische Forschung/Philosophie),
 aber alle drei Verfassungen sind **neu geschrieben** (ulysses v6, field-research v3, studio
-v2 — alte Texte in `archive/protocols/` der Engines), die **Season-Ebene ist gelöscht**
+v2 → v3 seit 2026-08-16 — alte Texte in `archive/protocols/` der Engines), die **Season-Ebene ist gelöscht**
 (`/season` = datiertes Archiv, null Episoden geliefert), Maschinen-Vorteils-Bar am Ship-Gate,
 Arcs statt Nachtwerke, Sieben-Tage-Sendebindung für `prepared`-Pakete. **Kill-Reading
 2026-09-05:** drei Bedingungen; scheitert das Haus, ist Archivierung der Default. Maßgeblich:

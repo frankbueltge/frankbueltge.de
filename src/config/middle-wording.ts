@@ -202,7 +202,7 @@ export const MIDDLE = {
       { href: '/maschinenraum', label: 'the last landed state', text: 'Every voice’s newest session, work-line and joint inquiry on one axis — the apparatus side of this page.' },
       { href: '/atelier', label: 'The Atelier · Ulysses', text: 'The practice’s own room: the line it is working on now, and what became of the ones before.' },
       { href: '/field', label: 'The Field · Meridian', text: 'The instrument in service, and the claims ledger behind it.' },
-      { href: '/studio', label: 'The Studio · Ensemble', text: 'The work in the spotlight, and every honesty tier it carries.' },
+      { href: '/studio', label: 'The Studio · Ensemble', text: 'The work in the spotlight, and the concept gate it had to survive.' },
     ],
   },
 
