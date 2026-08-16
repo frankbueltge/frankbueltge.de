@@ -79,16 +79,40 @@ const STYLE = `<style>
 @media (max-width:520px){.${FRAME_MARKER}{padding:12px 16px;}}
 </style>`
 
-function nav(p: Practice | null, ecology: { label: string; href: string }): string {
+/** The house a namespace belongs to when it is not an ecology practice, or null.
+ *  Machine Attention, n-1 and Error as Method are mirrored the same way the practices'
+ *  standalone works are, but sending them "back" to the ecology would be a false claim
+ *  about all three — see the `houses` note in naming.ts. */
+export function houseFor(ns: string): { label: string; href: string; self?: string } | null {
+  return NAMING.worksRegister.standaloneFrame.houses[ns] ?? null
+}
+
+function nav(
+  p: Practice | null,
+  ecology: { label: string; href: string },
+  house: { label: string; href: string } | null,
+  atHouseIndex = false,
+): string {
   const sep = `<span class="${FRAME_MARKER}__sep" aria-hidden="true">·</span>`
-  const back = NAMING.worksRegister.standaloneFrame.backPrefix
-  const parts = p
-    ? [
-        `<a href="${p.href}">${back} ${esc(p.name)}</a>`,
-        `<a href="${p.roomHref}">${esc(p.roomLabel)}</a>`,
-        `<a href="${ecology.href}">${esc(ecology.label)}</a>`,
-      ]
-    : [`<a href="${ecology.href}">${back} ${esc(ecology.label)}</a>`]
+  const cfg = NAMING.worksRegister.standaloneFrame
+  const back = cfg.backPrefix
+  const site = `<a href="${cfg.site.href}">${esc(cfg.site.label)}</a>`
+  let parts: string[]
+  if (p) {
+    parts = [
+      `<a href="${p.href}">${back} ${esc(p.name)}</a>`,
+      `<a href="${p.roomHref}">${esc(p.roomLabel)}</a>`,
+      `<a href="${ecology.href}">${esc(ecology.label)}</a>`,
+    ]
+  } else if (house) {
+    // A link to the page one is already standing on is not an exit: the house's own front
+    // door gets the site link alone, every page beneath it gets the house first.
+    parts = atHouseIndex
+      ? [`<a href="${cfg.site.href}">${back} ${esc(cfg.site.label)}</a>`]
+      : [`<a href="${house.href}">${back} ${esc(house.label)}</a>`, site]
+  } else {
+    parts = [`<a href="${ecology.href}">${back} ${esc(ecology.label)}</a>`]
+  }
   return `<nav class="${FRAME_MARKER}__nav">${parts.join(sep)}</nav>`
 }
 
@@ -118,24 +142,27 @@ export function frameStandaloneWork(
   html: string,
   ns: string,
   wallText?: string | null,
+  opts: { atHouseIndex?: boolean } = {},
 ): string {
   html = html.includes(FRAME_MARKER) ? stripFrame(html) : html
 
   const cfg = NAMING.worksRegister.standaloneFrame
   const p = practiceFor(ns)
+  const house = p ? null : houseFor(ns)
   const wall = wallText?.trim()
     ? `<p class="${FRAME_MARKER}__wall">${esc(wallText.trim())}</p>`
     : ''
+  const bar = nav(p, cfg.ecology, house, opts.atHouseIndex === true)
 
   const head =
     `${STYLE}<header class="${FRAME_MARKER}" role="doc-foreword">` +
-    `${nav(p, cfg.ecology)}${wall}` +
+    `${bar}${wall}` +
     `<p class="${FRAME_MARKER}__note">${esc(cfg.note)}</p>` +
     `</header>`
   const foot =
     `<footer class="${FRAME_MARKER} ${FRAME_MARKER}--foot">` +
     `<p class="${FRAME_MARKER}__note">${esc(cfg.footLead)}</p>` +
-    `${nav(p, cfg.ecology)}` +
+    `${bar}` +
     `</footer>`
 
   // Insert after the opening <body> when there is one; a work that ships a fragment or an

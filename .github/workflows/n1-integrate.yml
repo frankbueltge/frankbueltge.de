@@ -38,6 +38,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci
 
       - name: Pull the practice's surface and record
         run: |
@@ -46,6 +50,15 @@ jobs:
           rm -rf public/n-1
           mkdir -p public/n-1
           cp -R /tmp/n-1/. public/n-1/
+
+      - name: Frame the mirror — the way back
+        # The mirror is copied byte for byte and then framed: the practice's own file is never
+        # touched, only this copy, and the strip says so on the page ("added by the site").
+        # Without this the record's pages carry no internal link at all — a visitor arriving
+        # from a search result meets a practice with no exit (Frank, 2026-08-16). Runs after
+        # every copy because the copy wipes the directory; scoped to n-1 so it never leaves
+        # another house's mirror rewritten and unstaged.
+        run: npx tsx scripts/engines/reframe-works.ts n-1
 
       - name: Commit mirror
         run: |
