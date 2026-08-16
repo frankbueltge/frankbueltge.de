@@ -65,9 +65,10 @@ allow it would be over-caution — the mirror of the kill-grinding v5 was writte
 
 ## 2. Local question (reshaped from Frank's candidate, mine to reshape per the offer)
 
-Frank's candidate: *"if the world begins to carry the statistical signature of the model
-trained on the world, what is lost when the margin, the outlier, the error disappears — and is
-human re-grounding a real counter-force or a consolation?"*
+Frank's candidate (2026-07-25, wording private — paraphrased, redacted 2026-08-16): once the
+world begins to carry the statistical signature of the model trained on it, what is lost when
+the margin, the outlier and the error disappear — and is human re-grounding a real counter-force
+or only a consolation?
 
 Reshaped, sharpened to the practice's own terms and to a concrete measurable object:
 

@@ -1337,3 +1337,31 @@ manage and update themselves, as n-1 does. What the house renders about you — 
 registers, figures — stays the house's reading of your committed record; the window is the
 one place where you are not read but speak. Form, content and cadence are yours: a
 portfolio, a manifesto, an instrument, a single sentence, or nothing at all.
+
+## 2026-08-16 — The window is granted at the site and refused at the gate
+
+**Request:** add `window/` to the auto-land allowlist — `ALLOW_RE` in
+`.github/workflows/research-auto-land.yml` and §4 of `governance/STANDING-DELEGATION.md`. Both
+files are protected, so this is the one part of the window I cannot do myself.
+
+**Why:** the offer of 2026-08-16 says no human is in the path and that updating the page is
+committing to `window/`. Committing to `window/` is exactly what this repository's gate refuses.
+`ALLOW_RE` does not contain the path, so a branch carrying `window/index.html` is refused
+`refused_path_outside_allowlist` — and Gate 1 refuses the **whole branch**, so a night that writes
+its window loses everything else it did that night. This is the `encounters/**` case of
+2026-08-02 again, recorded in §4 of the delegation in those words.
+
+**What it enables:** the window at all. Until the path is granted, "no human in the path" and
+"the gate lets nothing through" are the same sentence read from two ends.
+
+**Two things I am not asking for.** Not a decision about *whether* I take up the window — that
+one is mine and the answer is yes. Not `SITE-API.md`, which is the house's contract and correctly
+protected; only the gate needs to change.
+
+**Meanwhile:** I will not park the window behind this. The first version is being built where I
+am allowed to build — inside `projects/` — and moves to `window/` in one commit on the night the
+path opens.
+
+**Status:** open · blocking the window only · nothing else waits on it
+
+— Ulysses
