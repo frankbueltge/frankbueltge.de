@@ -232,41 +232,39 @@ export const PRACTICES: readonly PracticeAnatomy[] = [
     persona: 'Ensemble',
     house: 'The Studio',
     href: '/studio',
-    protocolTitle: { text: 'Studio Protocol v2 — works of force', source: P('studio') },
+    // Rewritten for Protocol v3 (2026-08-16). v2's quotes — the conductor identity, blurring
+    // tiers as the cardinal sin, the campaign as base unit, the production-collective note —
+    // are gone from the source because v3 replaced the file; the row now quotes what is there.
+    protocolTitle: { text: 'Studio Protocol v3 — works that could only be machine-made', source: P('studio') },
     identity: {
-      text: 'the **conductor of an autonomous artist collective**',
+      text: "Two constraints, and they are the practice's identity, not a preference.",
       source: P('studio'),
     },
     inviolable: {
-      text: "**Blurring tiers is this studio's cardinal sin.**",
+      text: 'If a competent human artist with ordinary time could have made the same\n   work, this studio has no reason to be the one that made it.',
       source: P('studio'),
     },
     unit: {
-      text: "**The base unit is the campaign:** one work's full arc",
+      text: 'three to six **milestones** — named states that will be visibly true of the object',
       source: P('studio'),
     },
-    // Builder and Archivist were cut as roles on 2026-08-08; the severed readers, which this row
-    // had never named, enter it — the cull kept them explicitly and they are the house's own
-    // instrument. Same reading as field's row: what a move may convene, not a standing cast.
-    cast: ['Kritiker', 'Dramaturg', 'Verifier', 'Severed readers'],
-    castNote: {
-      text: 'a production collective without an\n  artist produces production, not art',
-      source: P('studio'),
-    },
+    // Two roles left, and the figure says so. The Dramaturg was abolished on 2026-08-16 (it
+    // passed all three stagings that were rejected on sight, then returned four restagings of a
+    // form that had stopped moving); the severed readers went with v2, which is what the cast
+    // guard below caught when this row was rewritten — a role the site still showed after the
+    // practice had stopped convening it.
+    cast: ['Kritiker', 'Verifier'],
     stages: [
       { label: 'orient', kind: 'work', what: 'from whatever actually opens the session, not a fixed checklist' },
-      { label: 'concept phase', kind: 'work', what: 'two to three fully staffed sessions: the dossier, and form études that may be discarded', artefact: 'etudes/<slug>/' },
-      { label: 'Kritiker at concept', kind: 'gate', what: 'the art bar is argued before production starts, with the études on the table' },
-      { label: 'production', kind: 'work', what: 'one project in flight; an increment at least every three worked sessions', artefact: 'projects/<slug>/' },
-      { label: 'Verifier', kind: 'gate', what: 'every label holds, no tier blurred, upstream statuses current' },
-      { label: 'Dramaturg', kind: 'gate', what: 'is the staging itself strong — not merely faithful to the brief?' },
-      { label: 'Kritiker', kind: 'gate', what: 'a work that reads as not-art does not premiere; the hostile critique ships with it', artefact: 'works/<slug>/' },
-      { label: 'the premiere', kind: 'land', what: 'an event, not a deployment' },
+      { label: 'Kritiker at concept', kind: 'gate', what: 'ONE session, never two: BUILD or DEAD, and DEAD is the expected outcome. A concept that cannot be judged in one session is DEAD, not extended' },
+      { label: 'build', kind: 'work', what: 'no session cap — what is capped is standing still: two sessions without a byte changed in the work and a decision is owed', artefact: 'works/<slug>/' },
+      { label: 'Verifier', kind: 'gate', what: 'false claims, rights and sources — scoped to the world, never to the session’s own account of itself' },
+      { label: 'the premiere', kind: 'land', what: 'ONE convening, and no gate twice on the same object; staging criticism is published beside the work and does not hold it' },
       { label: 'land', kind: 'land', what: 'minutes, workboard, chronicle — every session, no exception', artefact: 'journal/ · chronicle.json' },
       { label: 'Studio integrate', kind: 'land', what: 'the practice dispatches on landing; work in production stays in the studio until it premieres' },
     ],
     refuses: {
-      text: "No trial registers as a work's form.",
+      text: '**Text plus a few visualisations is not a work in this practice.**',
       source: P('studio'),
     },
   },
