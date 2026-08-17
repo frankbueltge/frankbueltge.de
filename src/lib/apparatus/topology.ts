@@ -496,7 +496,7 @@ export const NODES: readonly ApparatusNode[] = [
     layer: 'archive',
     kind: 'store',
     owner: 'shared',
-    what: 'The Middle’s record: what happened when the practices met, and the joint inquiries they now run together.',
+    what: 'The Middle’s record: what happened when the practices met — crossings, and the joint inquiries that ran until 2026-08-08.',
     ref: 'src/data/begegnungen',
   },
   {
