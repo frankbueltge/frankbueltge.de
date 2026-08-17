@@ -45,6 +45,18 @@ caution as the rule immanent to experimentation, the stratum kept as a working b
 2. **Rights and affected publics** are settled before any opening that touches them.
    A public correction route exists (repository issues); corrections preserve the
    original record — history is continued, never retouched.
+   *Amended 2026-08-16 by the founder, on granting the practice read access to material
+   the founder holds but does not own outright (`frankbueltge/material`, private — the
+   Massumi ATP among it):* **what may leave that repository is citation, never text.**
+   Short quotations with a page reference, as any scholar publishes them; never a whole
+   paragraph, never a page, never a run of pages, and never a file copied across. This
+   record is public, so a rule that reads "quote as needed" would walk a copyrighted book
+   into the open one session at a time, with nobody having decided it. The practice's own
+   citation discipline already points this way — nothing is quoted that does not stand
+   verbatim in a source it may lawfully name — and this extends it to a source it may read
+   and may not republish. Where a finding needs more of the text than a citation carries,
+   the finding is written in the practice's own words with the page cited, which is what
+   reading is for.
 3. **Verifiability.** Every machine output is verified or marked as an estimate. A
    disclosure register (the practice designs its form) records models, procedures and
    material provenance per work. In the practice's public voice, tools stay generically
