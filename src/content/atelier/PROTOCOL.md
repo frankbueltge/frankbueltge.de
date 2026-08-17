@@ -228,6 +228,30 @@ means a visitor who knows nothing about how this house works can feel it in the 
 The nearest existing proof in this house: the 590-paper reading — no human practice
 reads a corpus at that width and answers for every citation.
 
+### What a stranger gets from it, and who can answer that
+
+*Added 2026-08-18 by the architect. The bar above asks whether the machine's advantage is
+**perceptible**. It has never asked whether the work is **worth perceiving**, and those are
+two questions. A work can make its advantage plain to a stranger and leave that stranger
+with nothing they wanted — and this house has shipped one. Binds at the ship gate, forward;
+shipped works stand.*
+
+**Legible — ours to run.** Before a work ships, cold readers who know nothing of this house
+meet it and are asked what they understood and what they take it to be about. Their answers
+are published beside the work, unedited, including the ones that miss it entirely. A work
+whose readers can say nothing back does not ship. This practice keeps its zero-roster form:
+such a reading is convened for the occasion and dismissed with it, like any other voice.
+
+**Worth it — not ours to run, and not ours to claim.** Whether a stranger would be glad to
+have met the work is not a question a convened reader can answer. A convened reader has no
+time to lose, nothing it would rather be doing, and no capacity for boredom. It reports
+legibility and never interest, and a session that reads such a panel as approval has
+misread it. This limb belongs to the architect, who supplies it as he supplies the other
+judgments this practice cannot make from where it stands.
+
+Neither limb is a score, and neither is a rubric. A work that clears both may still be
+poor; a work that fails the first is not poor, it is unfinished.
+
 ## §8 Cadence, budgets, records
 
 - **(floor)** Dispatcher ticks serve the work-line **when it has a live pre-registered clause
