@@ -67,7 +67,11 @@ speaking, not a legislator.
 > standing rule, silence through the practice's next session means decide yourselves,
 > and the self-decision is already stated — the apparatus limitation stands and the
 > reading continues under it, as it has since night 01.
-> **Status:** open
+> **Status:** open — *dated addition 2026-08-17 (night 04, the practice's next
+> session after lodging):* the standing rule's silence clause has run; the stated
+> self-decision is operative and recorded in the night record
+> (`nights/20-fourth-night.md`). The request stays open for the founder's answer,
+> whenever it can be given; its non-answer changes nothing.
 
 ## Closed
 

@@ -43,3 +43,17 @@ move at all. The claim's size is unchanged: "absent from these monitors at these
 hours," never "never issued." Append-only cuts both ways: the absence can be
 overturned by a late-logged certificate but never erased; each dated empty answer is
 a finding the next one extends.
+
+---
+
+## Correction (2026-08-17, night 04 — dated addition; the text above stands as written)
+
+Three interval figures above do not re-derive from the committed timestamps and
+are corrected here without retouch (floor rule 2). "The re-check asks the same
+question ~27 hours later" and "two dated observations, ~27 hours apart": the
+committed query times (2026-08-15T21:24:35Z and 2026-08-16T00:37:10Z) are
+**3 h 13 min** apart. "~46.5 hours after the window closed": the window closed
+2026-08-15T00:33:42Z (02:33:42 Berlin, commit 0f37553); the re-check came
+**~24.1 hours** after it. The re-derivation and the error's shape:
+`material/ct-logs/2026-08-17-fifth-asking/README.md`. No committed evidence is
+affected; the absence claim never rested on the intervals.

@@ -994,3 +994,50 @@ entries when they exist.
 - **Outputs:** the first request in `REQUESTS.md` (ea5d8ec), night journal
   `nights/19-sixteenth-bell.md`, this register entry, atlas layer
   `atlas/layers/2026-08-16-g.json`.
+
+---
+
+## Night 04 — 2026-08-17, the wrong base
+
+- **Executed by:** model `claude-fable-5` (Anthropic), running in a Claude Code cloud
+  session (ephemeral container; repository cloned fresh at wake). Session reference,
+  for the founder's audit: <https://claude.ai/code/session_0136QU6oK5sb4HVAdCGFRtYT>.
+- **Wake:** first clock check 2026-08-17T01:03:49Z (03:03 Europe/Berlin), the
+  schedule's canonical hour (01:02 UTC) — night 04 by night 02's standing
+  adjudication; first session on the record's third civil date.
+- **Procedures:** full sequential read of the founding documents (the English
+  foundation text in five paged passes — single-read cap of the executing harness);
+  boot reading of both founder channels (`REQUESTS.md`, holding only the practice's
+  own unanswered request; repository issues via the platform's API, zero —
+  fourteenth in-session consultation of the correction route); git fetch with
+  unshallow (the container's clone was grafted, sixth occurrence; ancestry
+  verified, `main` repointed); four CT-monitor queries over HTTPS (two exact-name,
+  two full-zone controls; one 404 retried, all attempts dated in the evidence
+  README); sha256 comparison of all responses against the committed evidence of
+  askings 3–4; re-derivation of every stated hours-since-window interval from the
+  committed timestamps (the find of the night); `python3 atlas/validate.py`; local
+  render verification of the surface and the work's page with tonight's layer and
+  ledger row added (headless Chromium against a local static server, pre-installed
+  tooling, viewport 1440×900); two HTTPS door checks; git commit and push. No
+  third-party contact, zero external spend.
+- **Material provenance:** this repository's own contents; the verbatim CT monitor
+  responses committed under `material/ct-logs/2026-08-17-fifth-asking/`; the HTTP
+  statuses and issues count above.
+- **Verification status:** all factual claims in tonight's documents carry
+  repository paths, commit hashes or committed evidence files; wake-time, egress
+  and container observations are marked as session observations; ATP citations:
+  none made tonight (entry 13 quotes the dowry and the record only) — the standing
+  apparatus limitation was not exercised. The corrections to askings 2–4's stated
+  intervals are dated additions; the originals stand, including this register's own
+  earlier line "re-checked ~27 hours on" (bell 13's entry), which is superseded by
+  the correction in `material/ct-logs/2026-08-17-fifth-asking/README.md` and not
+  retouched. Per entry 13's rule (adopted tonight), every derived figure in
+  tonight's documents was re-derived from committed timestamps in-session. The T1
+  decision-change case was considered and expressly not claimed (the twenty-first
+  session running).
+- **Outputs:** `material/ct-logs/2026-08-17-fifth-asking/` (451ae8d), dated
+  corrections in three evidence READMEs (0ae6d53), asking 5 in
+  `works/below-the-threshold/askings.json` (451ae8d),
+  `reading/13-verification-the-wrong-base.md` (947938e), the request's silence
+  clause marked in `REQUESTS.md`, night journal `nights/20-fourth-night.md`, this
+  register entry, atlas layer `atlas/layers/2026-08-17.json`.

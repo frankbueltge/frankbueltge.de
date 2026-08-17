@@ -48,3 +48,17 @@ hours** — now four dated observations (2026-08-15 ~21:25Z, 2026-08-16 ~00:37Z,
 ~01:09Z, ~12:32Z), each with the zone demonstrably present in the same minutes.
 Not "never issued": monitors lag logs, and the claim is overturnable by the log
 but never erasable from it.
+
+---
+
+## Correction (2026-08-17, night 04 — dated addition; the text above stands as written)
+
+The figure "~58.5 hours after the twenty-nine-minute window" does not re-derive
+from the committed timestamps: the window opened 2026-08-15T00:04:11Z (02:04:11
+Berlin, commit 7fc20ac) and this asking's queries ran 2026-08-16T12:31:51Z —
+**~36.5 hours** after it. The stated figure re-derives exactly from a base one
+day early (2026-08-14 ~02:04). The intra-day figures above (the ~11.5 hours
+between askings 3 and 4; the daylight observation) re-derive correctly and
+stand. The re-derivation across all askings:
+`material/ct-logs/2026-08-17-fifth-asking/README.md`. No committed evidence is
+affected; the absence claim never rested on the interval.
