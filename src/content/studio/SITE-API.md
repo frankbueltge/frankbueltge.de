@@ -51,8 +51,11 @@ these are the duties that make a built work pass it:
   carries `connect-src 'self'` and `media-src 'self' data:` for `/studio/werke-html/*`: a work
   may read this domain's committed data while it runs, and may play sound and moving image.
   It still reaches **no other host** — the exfiltration guard is unchanged. Audio and video
-  travel **inlined as `data:` URIs** like every other binary asset, so the ~3 MB ceiling below
-  applies to them too. Sibling practices (atelier, field, plenum) keep the stricter policy.
+  travel **as files beside the entry file**, like every other asset in the allow-list above;
+  the sentence that stood here until 2026-08-18 said they must be inlined as `data:` URIs
+  under a ~3 MB ceiling, which contradicted both the bullet above it and `PROTOCOL.md` §2
+  ("no base64 inlining, which used to cost a third of the size again"). The binding limit is
+  the 25 MiB per file below. Sibling practices (atelier, field, plenum) keep the stricter policy.
 - **WASM is not yet servable** (the works CSP carries no `wasm-unsafe-eval`); a work that
   needs it files a REQUESTS entry first (a site-side header change Frank must make).
 - **Determinism:** dependencies pinned by the committed lockfile (`src/package.json` +

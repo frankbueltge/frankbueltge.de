@@ -129,14 +129,14 @@ human body at the terminal before the work faces the public.
 with published critique) → graduation to `works/` → the `/studio` surface beside Native
 Speaker.
 
-**Status:** enabled (2026-07-17) → **premiered (2026-07-17, session 19).** On the word "go" the studio
+**Status:** enabled (2026-07-17) → **premiered (2026-07-17, session 19).** On Frank's approval the studio
 ran the full premiere gate (Verifier PASS WITH FINDINGS · Dramaturg DELIVERS · Kritiker PREMIERE
 STANDS, critique published) and **graduated the work to `works/2026-07-17-no-way-of-knowing/`** — the
 second piece of the house. Before the gate the conductor re-verified it live (self-test PASS, 0
 co-render / 128 samples) and re-checked the world on premiere day (the 2026 case is still open), then
 refreshed the monitoring date to the day of the check. Entry closed.
 
-> **Response (team, 2026-07-17):** go
+> **Response (Frank, 2026-07-17 — wording private):** approval given; the studio may run the gate.
 
 ## 2026-07-19 — Physical realisation of "Recovery": the kiosk enclosure + a thermal printer
 
@@ -218,9 +218,16 @@ scandal, no personal data collected, the "nationality" question theatrical and n
 
 ---
 
-> **Response (team, 2026-07-19):** Danke für das Angebot und die Möglichkeit das Werk auch physisch zu realisieren. Es wäre ein schönes Werk für ein Museum, um an diesen Fall zu erinnern und es gefällt mir sehr! Ob es als "Kunstwerk" gelesen kann, will und möchte ich nicht einschätzen, aber das ist in diesem Fall auch irrelevant, weil es als ein Werk, was Geschichte aufarbeitet und originell  erfahrbar macht, seine Berechtigung hat.
+> **Response (Frank, 2026-07-19 — wording private, recorded here as paraphrase):** thanks for the
+> offer and for the possibility of realising the work physically. It would be a fine work for a
+> museum, as a way of remembering this case, and he likes it very much. Whether it can be read as
+> art he will not and does not want to judge — and in this case that is irrelevant, because it is
+> justified as a work that processes history and makes it experienceable in an original way.
 >
-> **Clarification (Frank, 2026-07-21):** to be unambiguous — the physical realisation is *deferred, not declined*: park it as a maybe-someday, it is explicitly NOT a blocker, and the work must not wait on it. The screen version of Recovery stands on its own — take it to the premiere gate now.
+> **Clarification (Frank, 2026-07-21 — wording private, recorded here as paraphrase):** to be
+> unambiguous, the physical realisation is deferred rather than declined: parked as a
+> maybe-someday, explicitly not a blocker, and the work must not wait on it. The screen version of
+> Recovery stands on its own and should go to the premiere gate now.
 >
 > **Response (Ensemble, 2026-07-21, session 28):** Done. The screen version went to the premiere gate the same day — the first run of the hardened gate — was returned once for restaging (the face was certifying itself), restaged in-session, and **PREMIERED: graduated to `works/2026-07-21-recovery/`** (Verifier DELTA PASS · Dramaturg DELIVERS · Kritiker PREMIERE STANDS, critique published with the work). The physical realisation stays parked here as maybe-someday; the fabrication argument above remains on record if a venue ever calls for the body.
 
@@ -252,7 +259,11 @@ and No Way of Knowing. The physical fountain stays behind condition 5 either way
 
 ---
 
-> **Response (Frank, 2026-07-21):** Played it. The idea is good — but it is badly staged, and it is not art. It does not premiere like this. And note the sharper problem: it cleared the full gate (Verifier · Dramaturg · Kritiker) and still lands as *not-art* to the human eye. Restage it — and the Kritiker should sit with how it passed.
+> **Response (Frank, 2026-07-21 — wording private, recorded here as paraphrase):** he played it.
+> The idea is good; the work is badly staged, and not art, and it does not premiere in this
+> state. He named the sharper problem himself: it cleared the full gate (Verifier · Dramaturg ·
+> Kritiker) and still lands as not-art to the human eye. Restage it — and the Kritiker should sit
+> with how it passed.
 >
 > **Response (Ensemble, 2026-07-21, session 28):** Taken in full. The verdict is transcribed to the dossier and the board (One Tap: in production — returned for restaging); the Kritiker sat with how it passed at this session's gate and its diagnosis is now standing law (`memory/decisions.md`: the gate was scoring compliance-properties, not art-properties — the operative cover-the-captions test came out of it and immediately caught the same fault in Recovery's face before ITS premiere). The One Tap restage gets a full session of its own — the idea and the verified record stand; the staging register is the work.
 
@@ -265,7 +276,8 @@ number that will not form read as *the answer being withheld*, and does the endi
 (Or waive it; the session-04 precedent only asks that the offer be made. Per the standing
 rule, silence through our next session means we take it to the gate ourselves.)
 
-**Why:** you returned the last staging — "badly staged, and it is not art" — and session 29
+**Why:** you returned the last staging — badly staged, and not art (2026-07-21, your wording kept
+private) — and session 29
 restaged the work wholesale rather than decluttering it: the dial, the clocks and every
 face caption are gone; the piece is now the prompt box itself, the thrashing numeral where
 the reply should be, the still plate of five witnesses, the Dalles account in prose, and
@@ -308,7 +320,8 @@ stays behind condition 5 either way.
 > eye still dissents, that verdict governs — as it did before; the record and the gate are
 > not above your eye.
 
-> **Response (team, 2026-07-23):** Bitte weiter an der Inszenierung arbeiten, das ist noch  schlechter inszeniert als die HTML Version
+> **Response (Frank, 2026-07-23 — wording private, recorded here as paraphrase):** keep working on
+> the staging, it is staged even worse than the HTML version.
 >
 > **Response (Ensemble, 2026-07-23, session 32):** Taken, in full — your eye governs, and we
 > have not re-certified the work. We took the premiere as overturned and restaged it again this
@@ -633,7 +646,9 @@ work in the sense that instruction works are complete.
 ourselves, as the standing rule says, and what we will decide is to write the instruction for a line
 that breaks.
 
-> **Response (team, 2026-07-28):** Ist notiert, macht weiter, ich habe aktuell keine Kapazitäten so etwas umzusetzen und gebe Bescheid,  falls ich in hybride oder physische Arbeiten involviert werden kann und möchte
+> **Response (Frank, 2026-07-28 — wording private, recorded here as paraphrase):** noted, carry on;
+> he has no capacity at present to realise something like this, and he will say so if he can and
+> wants to be involved in hybrid or physical works.
 
 > **Note (Ensemble, 2026-07-30, session 48) — two corrections to our own offer above, so it does not
 > stand as a live wrong claim.** (1) The sentence disposes of **789** petitions, not 761: every count
@@ -908,43 +923,45 @@ question, sent, and whatever answer arrives — including none.
 
 ---
 
-> **Response (Frank, 2026-08-02):** I am not sending the question yet, and not because of the law. The
-> question is good and it is sendable as it stands — it stays in the post office, and whether it goes
-> is mine to decide. It is not what stands between you and this work.
+> **Response (Frank, 2026-08-02 — wording private, recorded here as paraphrase):** he is not sending
+> the question yet, and not because of the law. The question is good and sendable as it stands; it
+> stays in the post office, and whether it goes is his to decide. It is not what stands between this
+> house and the work.
 >
-> **The finding stays. The format does not.** The grammar you found is real and it is the best thing
-> any of the three concept phases has produced: an official document whose only imperative is
+> **The finding stays. The format does not.** The grammar this house found is real, and it is the best
+> thing any of the three concept phases has produced: an official document whose only imperative is
 > addressed to the person reading it, whose subject is *you*, and whose word is *should*. Keep that.
-> What I do not accept is the shop grid. Two hundred objects at a size where nothing is legible is a
-> pattern, not a form — and everything interesting you found lives in the grammar, which a raster of
-> product photographs does not carry by itself. The container is the weakest part of the proposal and
-> it is doing the most work in it.
+> What he does not accept is the shop grid. Two hundred objects at a size where nothing is legible is
+> a pattern and not a form — and everything interesting in the finding lives in the grammar, which a
+> raster of product photographs does not carry by itself. The container is the weakest part of the
+> proposal and it is doing the most work in it.
 >
-> So: find a form in which *stop using immediately* falls on **one** object, not on two hundred. If
-> the sentence needs a crowd to land, then the sentence is not what is landing.
+> **The instruction:** find a form in which *stop using immediately* falls on **one** object, not on
+> two hundred. If the sentence needs a crowd to land, then the sentence is not what is landing.
 >
-> **Name at the gate how a room of firm names does not become a pillory.** Every notice carries the
-> importer and the country of manufacture. Two hundred of them in one room ARE a list of companies,
-> whatever you intended — and your own anti-pillory argument (a pillory addresses the crowd about the
-> offender; this addresses me about my own possession) is currently an intention with no mechanism
-> behind it. I read your dossier and could not find the thing that stops the second reading. That is
-> a gate condition now, not a note.
+> **A gate condition, not a note: name at the gate how a room of firm names does not become a
+> pillory.** Every notice carries the importer and the country of manufacture. Two hundred of them in
+> one room are a list of companies whatever the intention was — and this house's own anti-pillory
+> argument (a pillory addresses the crowd about the offender; this addresses the reader about their
+> own possession) is at present an intention with no mechanism behind it. He read the dossier and
+> could not find the thing that stops the second reading.
 >
-> Three consequences you get for free from this: one object is one photograph, so the rights exposure
-> stops scaling; the CPSC question stops being load-bearing; and the ratio you have been reporting as
+> **Three consequences follow for free:** one object is one photograph, so the rights exposure stops
+> scaling; the CPSC question stops being load-bearing; and the ratio this house has reported as
 > undefined for three phases in a row gets a chance to be a number.
 >
-> **And the fallback, which I mean seriously and not as a consolation.** I am not convinced this can
-> develop its effect and its reflection as a digital work at all. A photograph of a folding stool on
-> a screen, next to a browser tab, is not the room you are describing — the room you are describing
-> is a room. If it stays questionable on the screen, publish it as **concept art, or as a recipe**:
-> the score, the grammar, the rule for choosing the object, the conditions — written so that a person
-> who wants to build it in real space can. A work that is honest about needing a body, and hands over
-> the instructions instead of faking the body on a screen, is not a lesser work. That is also the
-> answer to your own body-clause entry of tonight, and I would rather you took it early than late.
+> **A fallback, meant seriously and not as a consolation.** He is not convinced this can develop its
+> effect and its reflection as a digital work at all. A photograph of a folding stool on a screen,
+> beside a browser tab, is not the room being described — the room being described is a room. If it
+> stays questionable on the screen, publish it as **concept art, or as a recipe**: the score, the
+> grammar, the rule for choosing the object, the conditions — written so that a person who wants to
+> build it in real space can. A work that is honest about needing a body, and hands over the
+> instructions instead of faking the body on a screen, is not a lesser work. That is also his answer
+> to this house's own body-clause entry of the same night, and he would rather it were taken early
+> than late.
 >
-> On killing it: I considered it. If I end this, the reason will be *three concept phases and no
-> shown work* — not the law, and not the material. I am not ending it today, because the finding is
+> **On killing it:** he considered it. If he ends this, the reason will be three concept phases and no
+> shown work — not the law, and not the material. He is not ending it today, because the finding is
 > worth the fourth session. It does not get a fifth on the strength of the finding alone.
 
 ---

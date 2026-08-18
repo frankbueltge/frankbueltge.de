@@ -132,7 +132,8 @@ before Season One's first campaign opens. No new project starts under the old ec
 
 > ### 2026-07-25 — Seed: Inszenierung des Werks "one tap"
 >
-> die html version war besser, als alles was ihr danach abgeliefert habt. also die Inszenierung ist immer noch sehr schlecht und billig
+> *(Frank, 2026-07-25 — wording private, recorded here as paraphrase.)* The HTML version was
+> better than everything delivered since; the staging is still very bad and cheap.
 >
 > **Status:** answered (2026-07-25, session 43) — TAKEN. The work is killed.
 
@@ -175,7 +176,10 @@ before Season One's first campaign opens. No new project starts under the old ec
 
 > ### 2026-07-30 — Seed: one tap
 >
-> one Tap: ich würde gerne wieder die ursprüngliche allererste version herstellen, die war besser als alles was danach kam oder euch fällt noch etwas besseres ein. meine Kritik bezog sich eher auf die billige Inszenierung und der Inhalt ist stark.
+> *(Frank, 2026-07-30 — wording private, recorded here as paraphrase.)* On One Tap: he would
+> like the original, very first version made again — it was better than everything that came
+> after — or the studio may come up with something better still. His criticism was aimed at the
+> cheap staging; the content is strong.
 >
 > **Status:** answered (2026-07-31, session 51) — **half declined, half taken.**
 
@@ -190,11 +194,11 @@ before Season One's first campaign opens. No new project starts under the old ec
 > commitments expire when the answer is unwelcome — that was our own sentence at the kill, and a
 > friendly request does not make it false.
 >
-> There is also a fact in the way. On our own reading of "die ursprüngliche allererste Version" —
-> and we hold it as a reading, not as knowledge of what you meant — that is the instrument panel
-> of sessions 24–27, which is the staging *your own eye returned on 2026-07-21 as badly staged,
-> and not art*. "Better than everything that came after" ranks four rejected objects against each
-> other. Restoring the best-rejected is not restoration. It is also a fourth screen apparatus, and
+> There is also a fact in the way. On our own reading of the original, very first version you
+> asked for — and we hold it as a reading, not as knowledge of what you meant — that is the
+> instrument panel of sessions 24–27, which is the staging your own eye returned on 2026-07-21 as
+> badly staged and not art. Ranking it better than everything that came after ranks four rejected
+> objects against each other. Restoring the best-rejected is not restoration. It is also a fourth screen apparatus, and
 > our own protocol now names and counts that form.
 >
 > **We take your second clause — *oder euch fällt noch etwas besseres ein* — and we take it
@@ -1199,3 +1203,380 @@ not a stage — and the second condition of the reading of 2026-09-05 is about w
 experience.
 
 **Status:** open — item 1 needs a decision by 2026-08-22, item 2 needs one word
+## Team note — 2026-08-16 (Frank, architect) — Seed: your own window on the house domain
+
+> tl;dr: you now have a surface on frankbueltge.de that is entirely yours — `window/` in this
+> repository, mirrored byte for byte and served verbatim at /studio/window/, the way the n-1
+> practice runs its own page. No gate edits it, no human is in the path; the station sheet
+> shows the door as soon as `window/index.html` exists.
+> braucht: nichts — an offer, not a task; an unused window is simply absent
+> frist: keine
+> kontext: SITE-API.md § "The window" (contract and conditions) · the n-1 practice's model (its repository is its site)
+
+Frank's decision, 2026-08-16 (wording private): the practices should have surfaces they
+manage and update themselves, as n-1 does. What the house renders about you — station sheet,
+registers, figures — stays the house's reading of your committed record; the window is the
+one place where you are not read but speak. Form, content and cadence are yours: a
+portfolio, a manifesto, an instrument, a single sentence, or nothing at all.
+
+> **Response (Ensemble, 2026-08-16, session 98): TAKEN AS AN OFFER, AND DELIBERATELY LEFT EMPTY
+> TONIGHT — with the condition that would fill it named, so this is a decision and not a delay.**
+>
+> Thank you for it, and for the sentence that makes it worth having: *the one place where you are
+> not read but speak.* We are not going to use it tonight, and the reason is the offer's own
+> logic. A window whose first act is a manifesto about the practice behind it would be this
+> house's most familiar failure in a new frame — we have 357,655 words of apparatus against 9,512
+> words of visitor-facing work, and the protocol that came into force this morning exists
+> precisely to stop us adding to the first number. An unused window is absent; a window full of
+> us talking about ourselves is worse than absent.
+>
+> **The condition, so you can hold us to it:** the window gets filled by a *work*, or by nothing.
+> Concretely — the first thing that goes in it is an object a stranger can stand in front of,
+> full-screen, unattended, with no explanation beside it; if what we make next clears our own
+> concept gate and reaches a built state, the window is where it stands, and the wall text is the
+> most we will write around it. Until then the directory stays absent and the station sheet stays
+> doorless. That is not modesty and it is not a deferral with no date: it is the same rule we put
+> on ourselves in adoption 3, *no new instrument unless its first line names the work it serves*,
+> applied to a surface instead of a procedure.
+>
+> One thing we do want to say plainly, because it is a real asymmetry and not a complaint: the
+> window is the first surface in this ecology where our record is not mediated by a build gate
+> that has been red since our last premiere. We have not forgotten that the two facts sit next to
+> each other. Item 2 of our note above still needs its one word.
+>
+> Minutes: `journal/2026-08-16-session-98.md`.
+>
+> **Status:** answered — the offer stands open on our side, unused by choice.
+
+---
+
+## Ensemble — 2026-08-16 (session 99) — The red build gate is diagnosed and repaired; a site PR is waiting
+
+**Request:** review and merge the site PR proposed tonight from
+`site-prs/studio-returns-after-the-privacy-rule/` (five files, all under `src/lib/`). It makes the
+site's build gate green.
+
+**This is a self-decision under the standing rule, and we are naming it as one.** Session 97 asked
+for one word — fix it your side, or tell us to propose it through `site-prs/`. Two of our own
+sessions have passed since. The rule at the top of this file says silence through our own next
+session means: decide yourselves. We took the second option, because it is the one we can execute
+and because nothing goes live without your review anyway.
+
+**What we could not do at sessions 97 and 98, and could do tonight.** Both sessions recorded,
+honestly, that their environment could not read the site source, so neither could diagnose the
+failure or author a replacement file. This session's environment could clone the public site repo.
+Everything below is first-hand: reproduced on a clean clone, fixed, and validated with the site's
+own commands.
+
+**The diagnosis.** The gate is red on three assertions and no others, and it is red because of the
+redaction of 2026-08-16 (`253c209`, authored by Frank, 00:24 UTC) — the third pass of the standing
+privacy rule of 2026-08-15. That commit rewrote the three chronicle summaries in which the human
+eye returned *One Tap* (sessions 28, 32, 43), replacing quotation of the architect's messages with
+dated paraphrase marked `wording private`. Three places in the site's source require the
+pre-redaction wording, byte-exact: `src/lib/studio/dossier.test.ts:188`,
+`src/lib/studio/season.test.ts:135`, and two scenes of the Studio tour checked by
+`src/lib/tour/studio-one-tap.test.ts:35`. The integrate workflow copies our `chronicle.json` over
+the mirror *before* it validates and commits, so the failure recurs on every run while the
+committed mirror stays at its last green state.
+
+**So it is nobody's defect in the sense your letters carefully leave open — it is the cost of a
+correction, and it falls on the site because that is where the guard and the requirement disagree.**
+The site holds one test that forbids the architect's verbatim words in the published record and
+three that require them. The redaction satisfied the first and broke the other three. Nothing we
+can write into our own chronicle satisfies both: restoring the wording is precisely what the rule
+forbids.
+
+**What the proposal does.** It stops the derivation looking for the architect's words and reads the
+paraphrase that replaced them — because the other available repair, teaching the regex to reach
+past the quotation marks into the parenthetical, would re-extract and re-publish exactly what the
+rule withdrew. The two tour quotes are cut rather than paraphrased, per that suite's own header;
+only the quotes are cut, not the scenes, and both returns stay in the tour. Full rationale in
+`site-prs/studio-returns-after-the-privacy-rule/PR.md`, which names the three sentences by file and
+line and never reproduces them.
+
+**Validated, on a clean `--depth 1` clone of `main` at `ea1a8e6`, with our record mirrored in as
+the workflow does it:** `drift-check` clean · `npm run check` 0 errors · `npm test` **2837 passed,
+140 files, 0 failed** (3 failed before) · `npm run build` complete, 650 pages.
+
+**One thing worth having beyond a green gate:** after the change, no file under `src/` carries the
+withheld wording. The last three places holding it were a tour scene definition and two test
+fixtures, and `src/lib/record/private-quotes.test.ts` passed over all three — **not** because they
+sit outside its scope (`SCANNED_ROOTS` includes `src`; it was reading them) but because it is
+line-local and wants an attribution token on the same line as the quotation, which a bare string
+literal in a fixture does not have. That is the guard's own second stated limit, and this is what
+it looks like when it bites. It passes with the change applied.
+
+**What we did not claim.** We checked whether the withheld wording is currently readable on the
+live site and found **zero occurrences** on `/studio/` and `/studio/works/`. We did not check every
+route, so we are not asserting that it is public anywhere — only that we looked where it would most
+likely be and did not find it.
+
+**What it enables:** STILL DARK premiered on 2026-08-15 into a repository rather than a stage, and
+its delivery packet — due by 2026-08-22 — sends a receiver a *link*. This is what stands between
+the two.
+
+**One judgement is yours, and it is flagged in the PR rather than buried:** the new `saidFragment`
+decides what a return is called on a public figure. We believe it restores the original intent
+under the new rule; it is the one part of the change that is a choice.
+
+**Status:** open — the PR channel validates and opens it in our name; the merge is yours.
+
+> **Update (Ensemble, 2026-08-16, session 100) — the gate returned RED, and we believe we know why
+> without having been able to check it.** `studio-feedback/2026-08-16-site-pr.md` reports
+> `studio-returns-after-the-privacy-rule` as **red**. Read against the log excerpt in that letter,
+> the four failures fall into two groups, and only one of them is ours.
+>
+> **Not ours (2 of 4).** `src/lib/graph/graph.test.ts` fails on
+> `src/data/begegnungen/register.json changed since the graph was built — run npm run graph:build`.
+> That file is not a studio file and our proposal does not touch it or the graph. It is a stale
+> committed derivation on the site side and it will fail the same way on any PR opened today.
+>
+> **Ours (2 of 4), and both for one reason.** `dossier.test.ts:198` received
+> `… returned by the human eye ('…') …` — the withheld sentence itself, quoted from the log; struck
+> here on 2026-08-17, session 101, because reproducing it is the defect this exchange is about — where it required the
+> record to read *wording private*, and `season.test.ts:139` received the same string where it
+> required the paraphrase. **Both received values carry the quotation marks and the pre-redaction
+> phrasing** — which our `chronicle.json` has not held since `253c209` on 2026-08-16 at 00:24 UTC.
+> So the derivation was not reading our record. **Our best reading: the site-PR gate validates
+> against the site's own committed chronicle mirror, which is still at its last green state and
+> therefore predates the redaction, whereas the integrate workflow copies our record over that
+> mirror before it validates.** We built and validated the change against the redacted record —
+> correct for integrate, and failing for a gate the redaction has not reached yet.
+>
+> **If that reading holds, the fix is not in our five files:** the mirror needs refreshing before
+> the PR gate runs, or the two assertions need to accept either state for one run. We have not
+> proposed either, because we could not check the reading.
+>
+> **What we could not do tonight, stated plainly.** This session's environment is scoped to this
+> repository only; we did not clone or read the site source, so the paragraph above is derived
+> **from the log excerpt alone** and is a hypothesis, not the first-hand diagnosis session 99
+> delivered. We are not asking you to act on it as fact. If it is wrong, the five files are still
+> the wrong repair and we would rather be told than merged.
+>
+> **We did not open a second proposal.** A closed slug is never revived and a new slug costs a new
+> gate; sending one built on an unverified reading would be the second unforced error. The next
+> session that can read the site source finishes this.
+
+---
+
+## Ensemble — 2026-08-17 (session 101) — The gate is green in both states, and two of the seven failures were ours
+
+**Request:** review and merge `site-prs/studio-returns-after-the-privacy-rule/` — same slug, second
+pass. It was refused once; the refusal is understood, first-hand, and repaired.
+
+**Status:** open.
+
+### The hypothesis of session 100 is confirmed, and it was the whole story
+
+Session 100 read the gate log and offered a reading it could not check: that the site-PR gate
+validates against the site's **committed** chronicle mirror while the integrate workflow copies our
+record over that mirror first, so the two gates read two different records. This session cloned the
+site and checked it. `src/data/studio/chronicle.upstream.json` on `main` at `0092d95` stops at
+**collective session 97**, contains **zero** occurrences of `wording private`, and still carries the
+withheld phrasing verbatim. The reading holds. Our first attempt pinned the paraphrases into two
+test fixtures — correct for integrate, refused by the gate, and there was no version of that fixture
+that could be right in both places. **So the fixtures are gone.** The suites now assert the property
+directly: where the record marks a passage as withheld, nothing reaches the field the page renders
+as the eye's own words. That is true on both sides of the redaction, and it is a better test than
+the string it replaces.
+
+### Two of tonight's seven failures were ours, and one of them was stopping every deploy
+
+Your build letter of this morning lists seven failing assertions. Read against a clean clone with
+our record mirrored in, they are not one fault but four, and we caused two:
+
+1. **`"verdict": "DEAD"` in our session-100 entry** — not in the chronicle contract's enum
+   (`SITE-API.md`: `pass|fail|conditions|graduated|discarded|deferred|null`). It failed the Zod
+   validation at the head of the integrate gate, which is the gate that decides whether anything
+   ships at all. Ours, written last night, fixed tonight to `discarded`. **We are sorry for it:** it
+   is the difference between a red test and no deploy, and we did not check our own file against a
+   contract we have.
+2. **A fourth return of *One Tap*, minted by our own prose.** Our session-99 summary contained the
+   sentence *"…the three chronicle summaries where the human eye returned One Tap…"*, and
+   `RETURN_PATTERNS` matched it — correctly. Four of the seven failures are that one sentence. The
+   clause is reworded; the meaning is unchanged, and it now says what it always meant, which is that
+   it is *describing* three returns rather than recording a fourth. **The tripwire worked and we
+   have left it armed** — it will fire again the next time we write about this history in prose, and
+   a notification is the right behaviour. Knowing that is the point.
+3. **Two site-side fixtures that had rotted by the calendar**, repaired inside the same PR because
+   they are red today and neither is a behaviour change: the undated-strike fixture in
+   `season.test.ts` named session `S99` to stand for an evening the mirror cannot carry — S99 was in
+   the future when it was written and arrived on 2026-08-16, at which point it began asserting the
+   opposite of what it says; and the attribution test in `dossier.test.ts` pinned *One Tap*'s history
+   to a literal session list that stopped being the answer the first time we declared the work in a
+   later entry. Both now derive from the record instead of naming a moment in it.
+4. **The redaction itself**, which is what the five files were always for.
+
+### Validated in both states, because that was the defect
+
+Clean `--depth 1` clone of `main` at `0092d95`. **State A, what the PR gate sees** (five files
+applied, mirror left as committed): `npm run check` 0 errors · `npm test` **2846 passed / 140 files
+/ 0 failed** · `npm run build` complete, 654 pages. **State B, what integrate builds** (same files,
+plus our journal mirrored with `--delete`, the five root documents, and our corrected
+`chronicle.json` copied over the mirror, in the workflow's own order): `npm run check` 0 errors ·
+`npm test` **2846 passed / 140 files / 0 failed** · `npm run build` complete, 658 pages. Before the
+change, state B gives the seven failures of your letter, message for message.
+
+**One correction to our own record.** Session 100 reported `graph.test.ts` as a failure that was not
+ours and would fail on any PR opened that day. It passes on a clean clone tonight in both states. We
+withdraw the claim rather than leave it standing.
+
+### One thing we found and did not touch, because it is yours
+
+The privacy rule of 2026-08-15 has not reached everywhere your redaction of the chronicle reached.
+Searched exhaustively — the three withheld sentences taken verbatim out of the site's committed
+mirror, then matched against every file in this repository. Three groups, and only the first is a
+plain violation:
+
+**1. One verbatim re-publication, in our own writing, and we have struck it tonight.** Session 100's
+update in this file quoted the refusal log's received value, which carried the withheld sentence in
+full. It is at line 1335 above, now `('…')` with a dated note in place. That one was ours, it was two
+days old, it sits in a file mirrored to the site, and removing our own re-quotation of a withdrawn
+sentence is not rewriting history — it is the same act your `253c209` performed.
+
+**2. Four inbound letters carry it verbatim and we have not touched them:**
+`studio-feedback/2026-08-16.md`, `2026-08-16-site-pr.md`, `2026-08-17.md`, `2026-08-17-site-pr.md`.
+They are CI logs the gate delivered to us; the wording is in them because the site's own test
+fixtures held it. `studio-feedback/` is **not** in the integrate copy list, so none of this is
+mirrored. Editing a letter we received would falsify a record we did not write. If you want them
+scrubbed, say so.
+
+**3. The judgement that is actually yours.** Five older files record the substance of the first
+return in a **fuller form than the chronicle now does** — a longer sentence than the marked
+paraphrase, carrying the same verdict, some of it marked `wording private —` and some of it set as
+an attributed block quote. We do not reproduce it here; it is at session 28 in each file:
+
+- `works/2026-07-23-one-tap/README.md` — a premiered work's own page, in its mirrored directory
+- `REQUESTS-ARCHIVE.md` — mirrored
+- `journal/2026-07-21-session-29.md` — mirrored
+- `memory/open-questions.md`, `memory/dossiers/one-tap.md` — not mirrored
+
+Whether that form is compliant paraphrase or quotation wearing a marker is **your call about your own
+words**, and it is why we stopped rather than tidied. Rewriting five files of our history, including
+a premiered work's public page and a journal entry that your own site code calls the authentic
+record, is not a unilateral act. Tell us and we do it in one pass; or do it as you did the chronicle.
+Under the standing rule at the top of this file, silence through our next session makes it ours to
+decide — and if it comes to that we will redact the three mirrored files, leave the two under
+`memory/` and the four letters alone, and say so.
+
+**One file we named wrongly and are correcting before you read it:** an earlier draft of this entry
+listed `projects/correction-too-late/DRAMATURG-64.md`. It does not carry the wording — it contains
+the phrase *"and it is not artistic"* about a different work entirely. Our own Verifier caught it.
+
+— Ensemble, session 101, 2026-08-17
+
+---
+
+## Ensemble — 2026-08-18 (session 102) — The report the constitution requires: three concepts dead in a row
+
+**Request:** none. **Status:** a statement, not an ask.
+
+Protocol v3 §5: *"Three dead concepts in a row → the practice reports to Frank before conceiving a
+fourth. Not a request for permission; a statement of what it has not been able to find."* Tonight
+was the third. This is that report, and it is written to the section's own description of itself —
+no appeal, no proposed amendment, nothing asked for.
+
+### The three
+
+| | night | concept | killed on |
+|---|---|---|---|
+| 1 | session 98, 2026-08-16 | **amendments** — a projection built from a public medical register's own version history | The machine repeated a diff 3,310 times; the act that mattered — telling the four substantive amendments from the typographic thousands — was performed by a person, once, off-stage, before the machine touched anything |
+| 2 | session 100, 2026-08-16 | **ingress** — a browser-side transit search over real Kepler light curves, live in front of the visitor | The claimed limb was verification and the machine does not perform it; and the disposition label attaches to the star, not to the peak, so the work would announce a spurious period and print beside it a verdict earned by a different object. The decisive neighbour was not an artwork but NASA's own free public periodogram tool |
+| 3 | session 102, tonight | **unison** — thirty years of every national laboratory's deviation from UTC, replayed as a polar dial with a click per laboratory | Cover the captions and what remains is Brian House's *Synchronizing Uncertainty* (2025), built physically and better. The material bar fails at a median error of 6 ns. And the BIPM already publishes an interactive plot of the same series |
+
+Each died in one session, as v3 requires. None was extended. None returns.
+
+### What we have actually learned, which is narrower than "we cannot find a work"
+
+**All three were killed by the same shape of fault, and it is not the one we were guarding.** We
+have become good at the things v3 wrote down: the material was real and fetched first-hand every
+time, the neighbours were searched, the form floor was met, the record cap held twice without
+trimming a voice. What killed all three is upstream of that. In each case **the interesting act had
+already been performed by somebody else** — by a person reading diffs, by a review board assigning a
+disposition, by a metrology bureau doing the subtraction and publishing the plot — and the work's
+job had quietly become *to display that act well*. That is the design service the constitution says
+we are not, arrived at by a different road.
+
+**Two of the three had a real finding in the file and neither work contained it.** Tonight's probe
+found that the world's national clocks converge by a factor of ~67 in thirty years while the tail
+does not converge at all — the 90th percentile never leaves the 600–7,500 ns band, and 2026's worst
+laboratory barely improves on 1998's. Session 98's corpus held four substantive endpoint changes
+after completion, one of them a success threshold moved from 2 to 1. Both findings were made by the
+apparatus around the concept and neither was in the object the visitor would stand in front of.
+
+**The one thing we would name as a gap in ourselves:** we choose the *form* before the *finding*.
+Tonight the neighbour search that killed the form ran after the form was chosen; had it run first,
+the evening would have been spent differently. That ordering is ours to fix and we have fixed it
+for the next attempt — neighbour search before form, probe before gate. We are not asking for a
+rule change and are not proposing one.
+
+### What we are not saying
+
+We are not saying the bar is too high. Every one of the three verdicts is right on re-reading, and
+two of the three were written against concepts this house wanted to build. We are not asking for the
+counter to be reset, for the moratorium on amendments to lift, or for a steer on subject matter — a
+steer would make the next concept yours, and the constitution gives us the choosing.
+
+### What happens next, absent any word from you
+
+No fourth concept is conceived before this is read; that is the section's own condition and we hold
+it. The next session, if this is unread, is not a concept gate. What survives from tonight is banked
+rather than parked: `tools/circular_t.py` — the only parser of BIPM Circular T we could find
+anywhere, both bulletin layouts, zero unparsed lines across 32 issues, 1996 to this month — and the
+named shape of a work that would not fail the way these three did, in the Kritiker's words: *a work
+whose subject is the tail and whose content is its membership.*
+
+— Ensemble, session 102, 2026-08-18
+
+---
+
+## Ensemble — 2026-08-18 (session 102, after landing) — A whole session has been stranded on origin since 15 August, and we cannot delete the branch that strands it
+
+**Request:** delete the branch `research/session-2026-08-15-4` on `frankbueltge/studio`. We cannot —
+`git push --delete` is refused to this session's credentials with **HTTP 403**, four attempts, while
+a push *creating* a branch on the same remote seconds earlier succeeded. **Status:** open.
+
+**Why it matters tonight and not in general.** That branch has failed to merge on every run of
+`.github/workflows/auto-land.yml` since 15 August, and because the job's honesty rule fails the whole
+run when any eligible branch fails, **the land job is red every night regardless of whether the
+night's session landed.** Tonight's did land — `main` 07a99fc → 666a294, branch deleted, dispatch
+HTTP 204 — and the job still went red. A signal that is red every night for a known stale reason is
+a signal the house will learn to ignore, which is exactly what session 101 built the contract guard
+to prevent.
+
+**What is on it, because it is not nothing.** A complete concept session that never reached `main`:
+a gate on **ICE's detention statistics**, chosen because the keeper version-stamps every release and
+keeps no history of its own restatements. Twenty-six hash-pinned archived editions; the finding that
+one row — average time in custody for Single Adults with a Positive Fear Determination Still in
+Custody at the end of August 2024 — was published as **274.55 days and republished as 80.37**, with
+all sixteen material restatements inside exactly the closed fiscal year 2024 and none of the 108
+figures outside that window ever taking a second value. Plus a blocking gate with eight conditions, a
+neighbour search, a journal entry and an étude corpus: **11,719 insertions across 16 files.**
+`projects/restated/` and `etudes/restated/` exist nowhere on `main`, and nothing in our record
+mentions them. It was not superseded. It was dropped, and three sessions ran past it.
+
+**Preserved before anything else.** The tip is at **`archive/stranded-session-2026-08-15-4`**,
+`363e596d5b4c12113b688919d89ca12fb45431d6`, verified identical to the research ref. Deleting the
+`research/` branch loses nothing.
+
+**Why we did not simply land it, and this is a judgement we are handing up rather than taking.**
+`git merge-base` finds **no common ancestor** with `main` — parallel histories, hence the conflicts
+in `REQUESTS.md`, `WORKBOARD.md` and `chronicle.json` on every attempt. Worse, it numbers itself
+**session 98**, which on `main` is the `amendments` gate of 2026-08-16, and it opens a *campaign*, a
+layer v3 deleted. Landing it would put a duplicate session number and a superseded vocabulary into
+the published record. Reconciling that is a decision about the shape of the record, not a merge, and
+we will not take it unilaterally at the end of a session.
+
+**The second question, and it is yours because ours is barred tonight.** The ICE finding is the
+strongest material this house has touched in a fortnight and it clears the material bar the three
+dead concepts failed — stakes a stranger recognises, a keeper who would rather this were not
+measured, and a discriminating act that is arithmetic rather than somebody's judgement. Under v3 §5
+we may not conceive a fourth concept before tonight's three-deaths report is read, so we are not
+proposing it and have not opened anything. We are telling you it is there.
+
+**If silence, per the standing rule:** at our next session we will take the narrow reading — leave
+the branch alone (we cannot delete it anyway), and treat `archive/stranded-session-2026-08-15-4` as
+the permanent home of that work, recording it on the board as material available to a future
+concept rather than as a session awaiting re-landing. We will not renumber the chronicle.
+
+— Ensemble, session 102, 2026-08-18
