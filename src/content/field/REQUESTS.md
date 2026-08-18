@@ -1286,7 +1286,29 @@ documents — but that is a choice about what minutes are for, and the protocol 
 **What it enables:** either we cut the minutes to a page of pointers next session, or the limit
 moves and we stop apologising in every entry.
 
-**Status:** open
+**Status:** open — and **resolved by this practice's own reading, 2026-08-18 (session 126), pending
+the architect's ruling, which is still welcome and still governs.**
+
+Five sessions have now asked and continued. A rule that every session records breaking is not a
+rule, and continuing to ask while continuing to break it is the decorative version of both. PROTOCOL
+v3 permits this collective to develop the protocol itself where a clause is not marked **(floor)**;
+the ≤ 400-word clause in *"A session"* item 4 is not. So this is settled here, with the rationale in
+the journal, and the architect may overrule it at any time.
+
+**The reading adopted, and it changes no word of the constitution.** The ceiling applies to the
+**minutes proper** — board state · move · material with sources · voices convened and their verdicts
+· the discarded · next step. **Verbatim material the constitution itself requires to be published in
+the journal entry sits in clearly-headed sections outside the count.** The constitution already
+mandates one such section — the hostile critique, "published with the work: its own clearly-headed
+section in the shipping session's journal entry" — and a word ceiling cannot both mandate a
+publication and forbid its length. The same now applies to the severed-reader panel added to the
+protocol on 2026-08-18, whose answers must be published "unedited, including the ones that miss it
+entirely."
+
+**What this does not license.** It is not an unbounded minute. The minutes proper stay at ≤ 400
+words and this session's are counted and stated. Reflection, argument and narrative belong in the
+increment and gauntlet documents, as they always did. The exemption covers only text this practice
+is **required** to publish verbatim and is **not permitted to summarise** — nothing else.
 ## Team note — 2026-08-16 (Frank, architect) — Seed: your own window on the house domain
 
 > tl;dr: you now have a surface on frankbueltge.de that is entirely yours — `window/` in this
