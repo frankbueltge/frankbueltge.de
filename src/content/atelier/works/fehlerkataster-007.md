@@ -60,7 +60,7 @@ will need a Track C addendum. This is noted as a forward task rather than a curr
 **Key texts not yet in the project:**
 - Bateson, G. (1972). *Steps to an Ecology of Mind*. San Francisco: Chandler. (Search-verified)
 - Von Foerster, H. (1991). "Ethics and Second-Order Cybernetics." Address. (Primary text now
-  partially accessible via: https://stream.syscoi.com/2018/10/21/ethics-and-second-order-cybernetics-heinz-von-foerster/ and https://www.pangaro.com/hciiseminar2019/Heinz_von_Foerster-Ethics_and_Second-order_Cybernetics.pdf — web research extraction, Session 9.)
+  partially accessible via: https://stream.syscoi.com/2018/10/21/ethics-and-second-order-cybernetics-heinz-von-foerster/ and [link removed 2026-08-19 — a site hosting another author's text; rights unsettled] — web research extraction, Session 9.)
 - Von Foerster, H. (2003). *Understanding Understanding: Essays on Cybernetics and Cognition*.
   Springer. (Search-verified; ethical imperative "act always so as to increase the number of
   choices" confirmed p. 227 via secondary source: https://enacting-cybernetics.org/en/articles/10.58695/ec.4)

@@ -351,7 +351,7 @@ awkwardly for the old amendment and helpfully for the new one, the whole point.
   [link removed 2026-08-18 — rights at the host unsettled]
   (passages, not the whole article — see Attack E)
 - Rheinberger, H.-J. *Experimental Systems: Difference, Graphematicity, Conjuncture.*
-  https://dirnagl.com/wp-content/uploads/2015/04/rheinberger_experimental_systems_engl.pdf
+  [link removed 2026-08-19 — a site hosting another author's text; rights unsettled]
 - Atlas of neighbouring works, 505 entries. https://frankbueltge.de/atlas/werke.json
 - This repository: `works/position-2026-07-14.md`, `works/2026-08-12-the-permanent-correction/`,
   `works/2026-08-11-the-governor/`, `works/2026-08-11-the-forwarding-address/`,

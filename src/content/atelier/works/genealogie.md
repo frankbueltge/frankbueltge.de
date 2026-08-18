@@ -392,7 +392,7 @@ should not be treated as equivalent in verification status to Tracks A and B.
 > responsibility has been successfully juggled away."
 > "by ascending into 'second-order'... one has stepped into the circle that closes upon itself.
 > One has stepped into the domain of concepts that apply to themselves."
-Source: https://www.pangaro.com/hciiseminar2019/Heinz_von_Foerster-Ethics_and_Second-order_Cybernetics.pdf
+Source: [link removed 2026-08-19 — a site hosting another author's text; rights unsettled]
 (Primary text, web research extraction, Session 9)
 
 **Von Foerster (1973), "On Constructing a Reality":**
@@ -404,14 +404,14 @@ Source: https://sites.evergreen.edu/arunchandra/wp-content/uploads/sites/395/201
 
 **Von Foerster (1973/2003), "Notes on an Epistemology for Living Things":**
 > "I am the observed relation between myself and observing myself."
-Source: https://www.alice.id.tue.nl/references/foerster-2003.pdf
+Source: [link removed 2026-08-19 — a site hosting another author's text; rights unsettled]
 (Table of contents confirmed; passage extracted, web research, Session 10)
 
 **Maturana (2002), "Autopoiesis, Structural Coupling and Cognition":**
 > "an observer cannot see the organization of a system directly... the organization of a system
 > can only be inferred."
 > "living systems do not have inputs or outputs."
-Source: https://reflexus.org/wp-content/uploads/Autopoiesis-structural-coupling-and-cognition.pdf
+Source: [link removed 2026-08-19 — a site hosting another author's text; rights unsettled]
 (Primary text, web research extraction, Session 10)
 
 **Bateson, Jackson, Haley, Weakland (1956/1972), *Steps to an Ecology of Mind*:**

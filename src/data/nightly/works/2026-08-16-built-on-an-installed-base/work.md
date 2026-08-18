@@ -345,7 +345,7 @@ All retrieved or re-read 2026-08-16. The two PDFs are in `sources/` with their S
   https://www.ncbi.nlm.nih.gov/books/NBK543687/
 - **Bowker, G. C. & Star, S. L. (1999).** *Sorting Things Out: Classification and Its Consequences.*
   MIT Press — introduction read.
-  https://museumofdata.org/wp-content/uploads/2019/03/Bowker_and_Star_-_Sorting_Things_Out_Intro.pdf
+  [link removed 2026-08-19 — a site hosting another author's text; rights unsettled]
 - **Pinch, T. & Bijker, W. (1984).** *The Social Construction of Facts and Artefacts.* Social Studies
   of Science 14(3). Abstract and secondary accounts only — the full article was not opened; §6's
   claim about STS "closure" is held at that strength.

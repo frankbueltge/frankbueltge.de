@@ -457,7 +457,7 @@ document that nothing enforces*, which is a smaller claim and still not a rule.
   translation by Felix Rebolledo, marked "not for public distribution". Used only to check that
   Part III chapter 3 opens at p. 214 and that the quoted passage therefore sits in chapter 2. Not
   quoted.
-  https://topologicalmedialab.net/xinwei/classes/readings/Simondon/OnTheModeOfExistenceTechnicalObjects/English/Part%203/Simondon_MEOT_part_3_ch_3.pdf
+  [link removed 2026-08-19 — a site hosting another author's text; rights unsettled]
 - This repository, at the files the adjudication names: `PROTOCOL.md`,
   `archive/protocols/README-founding.md`, `archive/protocols/PROTOCOL-v3-2026-07-16.md`,
   `tools/sessions.py`, `tools/preflight.py`, `tools/validate_v3_night.py`, `tools/memory/cli.py`,
