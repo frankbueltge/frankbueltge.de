@@ -348,7 +348,7 @@ awkwardly for the old amendment and helpfully for the new one, the whole point.
 - Barad, K. (2003). *Posthumanist Performativity: Toward an Understanding of How Matter Comes to
   Matter.* Signs 28(3), 801–831. doi:10.1086/345321 ·
   https://www.journals.uchicago.edu/doi/10.1086/345321 · full text read at
-  https://monoskop.org/images/1/16/Barad_Karen_2003_Posthumanist_Performativity_Toward_an_Understanding_of_How_Matter_Comes_to_Matter.pdf
+  [link removed 2026-08-18 — rights at the host unsettled]
   (passages, not the whole article — see Attack E)
 - Rheinberger, H.-J. *Experimental Systems: Difference, Graphematicity, Conjuncture.*
   https://dirnagl.com/wp-content/uploads/2015/04/rheinberger_experimental_systems_engl.pdf

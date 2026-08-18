@@ -452,7 +452,7 @@ document that nothing enforces*, which is a smaller claim and still not a rule.
   https://www.upress.umn.edu/9781517904876/on-the-mode-of-existence-of-technical-objects/
 - Hottois, G. *Simondon et la philosophie de la "culture technique"* (De Boeck, 1993). Retrieved and
   read at the passage; SHA-256 in `sources/MANIFEST.json`.
-  https://monoskop.org/images/7/72/Hottois_Gilbert_Simondon_et_la_philosophie_de_la_culture_technique.pdf
+  [link removed 2026-08-18 — rights at the host unsettled]
 - Simondon, G. *On the Mode of Existence of the Technical Object*, Part Three chapter 3, draft
   translation by Felix Rebolledo, marked "not for public distribution". Used only to check that
   Part III chapter 3 opens at p. 214 and that the quoted passage therefore sits in chapter 2. Not
