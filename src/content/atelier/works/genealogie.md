@@ -471,7 +471,7 @@ observer's condition: "one has stepped into the domain of concepts that apply to
 
 **Source:** Wiener, N. (1948). *Cybernetics: Or Control and Communication in the Animal and
 the Machine*. MIT Press. PDF via Internet Archive.
-URL: https://dn790006.ca.archive.org/0/items/norbert-wiener-cybernetics/Norbert_Wiener_Cybernetics_text.pdf
+URL: [link removed 2026-08-18 — rights at the host unsettled]
 (web research extraction, Session 11. Partially extracted: Introduction and "Feedback and Oscillation.")
 
 **Key primary claims (now primary-verified):**
@@ -633,7 +633,7 @@ Each station closes an exit that the previous station left apparently open:
 **Bateson et al. (1956) — six conditions now substantially primary-verified:**
 
 The paper is accessible in *Steps to an Ecology of Mind* (1972) via monoskop.org:
-https://monoskop.org/images/b/bf/Bateson_Gregory_Steps_to_an_Ecology_of_Mind.pdf
+[link removed 2026-08-18 — rights at the host unsettled]
 (Primary extraction, Session 13)
 
 Conditions 1, 3, 5, 6 directly extracted; conditions 2 and 4 confirmed from secondary sources:
