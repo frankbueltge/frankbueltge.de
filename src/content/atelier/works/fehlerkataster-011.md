@@ -57,7 +57,7 @@ F-021 (primary text inaccessible for Maturana 1980) remains open. The CEPA route
 **Original status:** Open — Wiener "Cybernetics and Psychopathology" chapter not fully extracted  
 
 **Session 13 extraction:**  
-From Internet Archive PDF (https://dn790006.ca.archive.org/0/items/norbert-wiener-cybernetics/Norbert_Wiener_Cybernetics_text.pdf), Chapter VII "Cybernetics and Psychopathology" (pp. 144–155):
+From Internet Archive PDF ([link removed 2026-08-18 — rights at the host unsettled]), Chapter VII "Cybernetics and Psychopathology" (pp. 144–155):
 
 Primary passages extracted:  
 > "Pathological processes of a somewhat similar nature are not unknown in the case of mechanical or electrical computing machines. A tooth of a wheel may slip under just such conditions that no tooth with which it engages can pull it back into its normal relations, or a high-speed electrical computing machine may go into a circular process which there seems to be no way to stop."

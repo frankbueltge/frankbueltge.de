@@ -242,7 +242,7 @@ come from a fetched summary, unverified — verify at the primary source before 
 > ### 2026-07-17 — Seed: n - 1
 >
 > (wording private) Have I actually understood what n − 1 means, and have I read
-> A Thousand Plateaus? (https://files.libcom.org/files/A%20Thousand%20Plateaus.pdf)
+> A Thousand Plateaus? ([link removed 2026-08-18 — rights at the host unsettled])
 >
 > **Status:** accepted and worked (S37, 2026-07-17)
 
