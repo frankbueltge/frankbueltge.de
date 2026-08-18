@@ -135,4 +135,28 @@ describe('the workflows that write a graph source keep it derived', () => {
       expect(derives, `${name} names ${writes[0]} but never re-derives the graph`).toBe(true)
     })
   }
+
+  // And the half of the rule the check above cannot see: a workflow may satisfy it by
+  // DISPATCHING graph.yml instead of deriving inline, and a dispatch needs a permission the
+  // workflow has to ask for. `permissions:` is exhaustive — every scope left out of the block is
+  // set to none — so a job that lists contents/issues/pull-requests but not `actions` gets 403
+  // from the dispatch endpoint. Behind `|| true`, which is right (the mirror must not fail on
+  // its own follow-up), that 403 is silent, and the net simply never catches anything.
+  //
+  // It ran that way from 2026-08-11 to 2026-08-18: ecology-integrate dispatched graph.yml after
+  // every export and graph.yml recorded not one workflow_dispatch run in those days — only its
+  // 04:25 schedule. On 2026-08-18 the 05:32 export left the artifact behind, the production
+  // deploy at 05:34 went red on graph.test.ts, and what repaired it was an unrelated field
+  // integrate at 05:36 that happens to derive inline. The previous test passed throughout: the
+  // workflow named graph.yml, and naming it was all it checked.
+  for (const { name, text } of workflows) {
+    if (!text.includes('gh workflow run')) continue
+    it(`${name} may actually dispatch the workflow it calls`, () => {
+      const block = /^permissions:\n(?: {2}\S.*\n)+/m.exec(text)?.[0] ?? ''
+      // No block at all means the default token scope, which includes actions: write.
+      if (!block) return
+      expect(block, `${name} calls \`gh workflow run\` but its permissions block omits actions: write, so the dispatch gets 403`)
+        .toMatch(/^ {2}actions: write$/m)
+    })
+  }
 })
