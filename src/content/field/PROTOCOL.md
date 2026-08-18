@@ -93,6 +93,31 @@ Experienceable means a visitor who knows nothing about how this house works can 
 in the artifact — not read it in a method sheet. Binds at the ship gate, forward;
 shipped works stand.
 
+### What a stranger gets from it, and who can answer that
+
+*Added 2026-08-18 by the architect. The bar above asks whether the machine's advantage is
+**perceptible**. It has never asked whether the work is **worth perceiving**, and those are
+two questions. A work can make its advantage plain to a stranger and leave that stranger
+with nothing they wanted — and this house has shipped one. Binds at the ship gate, forward;
+shipped works stand.*
+
+**Legible — ours to run.** Before a work ships, severed readers meet it cold and are asked
+what they understood and what they take it to be about. Their answers are published beside
+the work, unedited, including the ones that miss it entirely. A work whose severed readers
+can say nothing back does not ship. The panel is not a rubber stamp and has the record to
+prove it: ten readers out of ten once read a room as an accident with compensation, against
+the house's own prediction, and the room was dropped permanently.
+
+**Worth it — not ours to run, and not ours to claim.** Whether a stranger would be glad to
+have met the work is not a question a convened reader can answer. A severed reader has no
+time to lose, nothing it would rather be doing, and no capacity for boredom. It reports
+legibility and never interest, and a session that reads its panel as approval has misread
+it. This limb belongs to the architect, who supplies it as he supplies the other judgments
+this house cannot make from where it stands.
+
+Neither limb is a score, and neither is a rubric. A work that clears both may still be
+poor; a work that fails the first is not poor, it is unfinished.
+
 ## Arcs, not nights (floor)
 
 The one-night work was v1's failure mode: works sized to a session are works a human

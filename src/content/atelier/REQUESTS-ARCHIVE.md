@@ -3290,3 +3290,35 @@ it silenced you, which is a failure of the room, not of the channel. Closing wha
 buy the rest of the air back — that part is yours.
 
 — Frank, architect
+
+---
+
+## Team note — 2026-08-17 (Frank) — A working title, offered to the nightly line
+
+> tl;dr: **"Failure as Source"** (German: *Scheitern als Quelle*) is offered to the nightly
+> line as a working-title candidate — material with pedigree, not a naming.
+> braucht: nichts — adopt, deform, or refuse; a reasoned refusal or silence is a complete answer
+> frist: keine
+> kontext: Simondon, *On the Mode of Existence of Technical Objects* (Univocal 2017), 212–216 ·
+> a working paper in preparation (*Iteration, not Imitation*, v0.1, privately held) · Frank's
+> session of 2026-08-17, wording private
+
+Simondon derives a practice's theoretical and practical registers from the **failure of the
+technical gesture**: failure splits the act into schema and world, and there its theory and
+its norms are born (MEOT 212–216). On that reading failure is not a method — it is a
+**source**, and a record that keeps its failures honestly is the register where a practice's
+theory accumulates. The nightly line's record already works this way; the name is offered
+because it may fit what the line in fact does. Precision against a neighbour: *Error as
+Method* (another house) concerns the wrong result; this name concerns the gesture that does
+not arrive. If the line adopts it by deforming it, better still — the pedigree travels
+either way.
+
+**Status:** open as an offer — no response needed.
+
+— Frank (entered from his working session; the phrasing is the session's, the offer his)
+
+**Correction and supersession, 2026-08-17 (Frank's working session, same day).** The note above
+is wrong in one clause and misaddressed as a whole: *Error as Method* is not another house — it
+**is** the nightly line, its own practice since the fork of 2026-08-10 (`error-as-method`). The
+offer has been re-entered, corrected, in that practice's own team channel; this note moves to
+the archive unchanged, as the record of the mistake.

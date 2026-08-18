@@ -11,57 +11,38 @@
 //
 // The detail routes are untouched: /atelier/werke/<slug> for native works, the full-viewport
 // stage at /atelier/werke-html/<slug>/ for interactive ones (exhibition model, 2026-07-21 —
-// a work is a door, never a cramped preview).
+// a work is a door, never a cramped preview), and the revived nightly line's works at their
+// own stages under /error-as-method/<slug>/.
 import Page from '@/layouts/Page.astro'
 import RegisterSheet from '@/components/ecology/RegisterSheet.astro'
 import type { RegisterRow } from '@/components/ecology/RegisterSheet.astro'
 import RespondCta from '@/components/post/RespondCta.astro'
-import { sortWorks } from '@/lib/atelier/sort'
-import { lineShortLabel } from '@/lib/ecology/lines'
+import { allWorks } from '@/lib/engines/register'
+import { countByLine, lineOfWork, lineShortLabel } from '@/lib/ecology/lines'
 import { ATELIER_NARRATIVE } from '@/config/atelier-wording'
-import { LINE_END } from '@/lib/engines/nightly-line'
 
-// One chronological register from two sources (unchanged data access):
-//  · kind 'html'  — interactive; its door is the standalone stage under /atelier/werke-html/
-//  · kind 'astro' — native Astro works at /atelier/werke/<slug>
-const htmlMeta = import.meta.glob('/src/content/atelier/works/*/meta.json', {
-  eager: true, import: 'default',
-}) as Record<string, any>
-const nativeMeta = import.meta.glob('/src/components/atelier/werke/*/meta.json', {
-  eager: true, import: 'default',
-}) as Record<string, any>
+// EVERY work of this practice, from the same source the station's status rows count —
+// src/lib/engines/register.ts, which reads all three of the Atelier's mirrors: the native
+// works, the interactive works, and the revived nightly line's works from its own repository
+// (mirrored to src/data/nightly/works, staged at /error-as-method/<slug>/). Until 2026-08-16
+// this page re-globbed only the first two, so everything the nightly line has made since its
+// 2026-08-10 revival was missing here while the station counted it (Frank's finding) — two
+// surfaces reading two sources is exactly the drift one source exists to prevent.
+const works = allWorks().filter((w) => w.ns === 'atelier')
+const counts = countByLine(works)
 
-const works = sortWorks([
-  ...Object.entries(htmlMeta).map(([path, meta]) => ({
-    slug: path.replace('/src/content/atelier/works/', '').replace('/meta.json', ''),
-    kind: 'html' as const, date: meta.date as string | undefined, meta,
-  })),
-  ...Object.entries(nativeMeta).map(([path, meta]) => ({
-    slug: path.replace('/src/components/atelier/werke/', '').replace('/meta.json', ''),
-    kind: 'astro' as const, date: meta.date as string | undefined, meta,
-  })),
-])
-
-// The line, by the same cut the practice's own record draws (2026-08-11): works up to LINE_END
-// are the nightly line's, everything after it the work-line's. The chips filter on it.
-const lineOf = (date: string | undefined) =>
-  date && date <= LINE_END ? lineShortLabel('nightly') : lineShortLabel('work-line')
-
-const rows: RegisterRow[] = works.map(({ slug, kind, date, meta }) => ({
-  date: date ?? '',
-  marker: kind === 'html' ? 'interactive' : null,
-  move: lineOf(date),
-  line: meta.title ?? slug,
-  href: kind === 'html' ? `/atelier/werke-html/${slug}/` : `/atelier/werke/${slug}`,
+const rows: RegisterRow[] = works.map((w) => ({
+  date: w.date,
+  // A withdrawal is part of the record and outranks the medium in the marker column; the
+  // work's own page carries the full withdrawal note verbatim.
+  marker: w.state === 'withdrawn' ? 'withdrawn' : w.kind === 'html' ? 'interactive' : null,
+  move: lineShortLabel(lineOfWork(w)!),
+  line: w.title,
+  href: w.href,
   // The old page gave every work card its slug as a DOM id; the rows keep them, so a deep link
   // that pointed at a card still lands on that work's row.
-  anchor: slug,
+  anchor: w.slug,
 }))
-
-const counts = rows.reduce<Record<string, number>>((acc, r) => {
-  acc[r.move!] = (acc[r.move!] ?? 0) + 1
-  return acc
-}, {})
 
 // The texts & catalogue lived on this page until 2026-08-15; a fragment never reaches the
 // server, so their old anchors are caught client-side and bounced to the pages they live on now.
@@ -78,16 +59,17 @@ const textSlugs = Object.keys(
     id="atelier"
     register="works"
     title="the works — every one, newest first"
-    span={`${works.length} works · ${counts[lineShortLabel('nightly')] ?? 0} of the nightly line (to ${LINE_END}) · ${counts[lineShortLabel('work-line')] ?? 0} of the work-line · one row per work, the work itself behind it`}
+    span={`${works.length} works · ${counts.nightly} of the nightly line — its first era and everything since its 2026-08-10 revival · ${counts['work-line']} of the work-line · one row per work, the work itself behind it`}
     rows={rows}
-    source="src/content/atelier/works/*/meta.json · src/components/atelier/werke/*/meta.json"
+    source="src/content/atelier/works/*/meta.json · src/components/atelier/werke/*/meta.json · src/data/nightly/works/*/meta.json"
     more={{ label: 'the texts & catalogue — its own register →', href: '/atelier/texts' }}
   >
     <p class="eco-doc-note">{ATELIER_NARRATIVE.rooms.worksPhase}</p>
     <p class="eco-doc-note">
-      The third line, n-1, does not land works here: its repository is its record, on its own
-      surface — <a href="/n-1">/n-1</a>. The nightly line's room is
-      <a href="/error-as-method">/error-as-method</a>.
+      The revived nightly line's works keep their own stages under
+      <a href="/error-as-method">/error-as-method</a> — the rows above link there directly. The
+      third line, n-1, does not land works here: its repository is its record, on its own
+      surface — <a href="/n-1">/n-1</a>.
     </p>
     <RespondCta variant="line" ns="atelier" class="eco-doc-note" />
   </RegisterSheet>
