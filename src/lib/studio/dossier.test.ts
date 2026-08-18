@@ -26,6 +26,7 @@ import {
   firstSentence,
   isWithdrawn,
   markIndex,
+  PRIVATE_MARKER,
   readTiers,
   readWithdrawal,
   type DossierChronicleEntry,
@@ -180,18 +181,34 @@ describe('buildStudioDossiers over the committed record', () => {
     expect(d.form?.text).toBe(noPart.medium)
   })
 
-  it('carries the eye’s three returns of One Tap, in order, with its own words', () => {
+  // 2026-08-16: this test used to pin the eye's own words for all three returns. The studio's
+  // standing privacy rule of 2026-08-15 — the architect's messages are recorded as dated
+  // paraphrase, never quoted verbatim — reached its chronicle, so those three sentences are gone
+  // from the record on purpose and are not coming back.
+  //
+  // 2026-08-17: and this test must not pin the paraphrase that replaced them either. It runs
+  // against whatever `chronicle.upstream.json` is COMMITTED at the time, and that file crosses the
+  // redaction on its own schedule: the site-PR gate reads the mirror as committed — still at its
+  // last green state, which predates the redaction — while the integrate workflow copies the
+  // studio's current record over it before validating. A fixture pinned to either side of that
+  // line is red on the other, which is exactly how the first attempt at this repair failed. So
+  // what is pinned is the property that holds on both sides: the three returns are found, in
+  // order, at their sessions; and no quote is ever lifted out of a passage the record marks as
+  // withheld.
+  it('carries the eye’s three returns of One Tap, in order, and lifts no withheld wording', () => {
     const d = byId.get(ONE_TAP)!
     expect(d.returns.map((r) => r.ordinal)).toEqual([1, 2, 3])
     expect(d.returns.map((r) => r.ordinalRoman)).toEqual(['I', 'II', 'III'])
     expect(d.returns.map((r) => r.session)).toEqual(['S28', 'S32', 'S43'])
-    expect(d.returns[0].quote).toBe('badly staged, and it is not art')
-    expect(d.returns[1].quote).toBe(
-      'keep working on the staging; this is even worse staged than the HTML version.',
-    )
-    expect(d.returns[2].quote).toBe(
-      'the html version was better than everything you delivered afterwards; the staging is still very bad and cheap',
-    )
+    // where the record marks the wording as withheld, nothing reaches `quote` — the field
+    // Dossier.astro renders as a blockquote of the eye's own words
+    for (const r of d.returns) {
+      if (PRIVATE_MARKER.test(r.text)) expect(r.quote).toBeUndefined()
+    }
+    // and the substance still travels, in the house's own words, verbatim from the summary: the
+    // second return's record reaches past the sentence that only announces it
+    expect(d.returns[1].text).toContain('The human eye returned One Tap a second time.')
+    expect(d.returns[1].text).toContain('Frank played the premiered restage and returned it')
   })
 
   it('every return record is really a span of the chronicle it names', () => {
@@ -307,9 +324,24 @@ describe('attribution — an entry that cannot be attached is omitted, never mis
       (e) => e.summary.includes('One Tap') && !e.works.includes(ONE_TAP),
     )
     expect(mentionsOneTap.length).toBeGreaterThan(10)
+
+    // Only the sessions the record itself names, plus the returns its prose states outright.
+    // 2026-08-17: this used to be the literal list ['S28','S31','S32','S43'], which was that
+    // sentence's answer on the day it was written and stopped being it the first time the studio
+    // declared the work in a later entry — S99, whose evening was spent on this very derivation.
+    // A pinned list turns a working attribution rule into a red build; the rule's own two inputs,
+    // read off the same committed record, do not rot.
+    const label = (e: (typeof CHRONICLE)[number]) => `S${e.collective_session}`
+    const declared = CHRONICLE.filter((e) => e.works.includes(ONE_TAP)).map(label)
+    const statedOutright = CHRONICLE.filter((e) =>
+      /the human eye returned One Tap|One Tap returned by the human eye/i.test(e.summary),
+    ).map(label)
+    const expected = [...new Set([...declared, ...statedOutright])].sort()
+    // the two rules really do reach different evenings — otherwise this proves nothing
+    expect(declared.length).toBeGreaterThan(0)
+    expect(statedOutright.some((s) => !declared.includes(s))).toBe(true)
     const oneTapSessions = new Set(byId.get(ONE_TAP)!.events.map((e) => e.session))
-    // only the sessions the record itself names, plus the first return the prose states outright
-    expect([...oneTapSessions].sort()).toEqual(['S28', 'S31', 'S32', 'S43'])
+    expect([...oneTapSessions].sort()).toEqual(expected)
   })
 
   it('gives one chronicle entry one row, however many rules reach it', () => {
@@ -508,5 +540,42 @@ describe('shapes the committed record does not currently contain', () => {
 
   it('keeps a whole sentence that has no boundary to cut at', () => {
     expect(firstSentence('no boundary here')).toBe('no boundary here')
+  })
+
+  // The withheld-wording path, proven here and not against the record. The guard in the suite's
+  // first half runs only where the committed mirror actually marks a passage as withheld, and
+  // which side of the 2026-08-16 redaction that file is on changes under this suite — the site-PR
+  // gate reads it as committed, the integrate workflow copies the studio's current record over it
+  // first. So on the gate's side that guard is a no-op today, which a hostile reading of this
+  // proposal proved by deleting the suppression from `quotedFragment` and watching every test
+  // still pass. These two always run. (2026-08-17.)
+  const returned = (parenthetical: string) => {
+    const metas = { widget: { title: 'Widget', date: '2026-01-01', medium: 'a live thing' } }
+    const chronicle = [
+      entry({ date: '2026-01-01', collective_session: 1, move: 'ship', works: ['widget'], anchor: 'cs-1' }),
+      entry({
+        date: '2026-01-05',
+        collective_session: 2,
+        anchor: 'cs-2',
+        works: ['widget'],
+        summary: `The human eye returned Widget (${parenthetical}). Work continued afterwards.`,
+      }),
+    ]
+    return buildStudioDossiers({ chronicle, metas, kills: [] }).find((d) => d.id === 'widget')!
+  }
+
+  it('lifts no quote out of a passage the record marks as withheld', () => {
+    const r = returned('2026-01-05, wording private — the staging is still wrong').returns[0]
+    expect(r).toBeDefined()
+    expect(r.text).toMatch(PRIVATE_MARKER)
+    // `quote` is what Dossier.astro renders as a blockquote of the eye's own words. Paraphrase
+    // placed there is the withdrawn quotation put back by a regex.
+    expect(r.quote).toBeUndefined()
+  })
+
+  it('still lifts a quotation where the record marks nothing as withheld', () => {
+    const r = returned("2026-01-05, 'the staging is still wrong'").returns[0]
+    expect(r).toBeDefined()
+    expect(r.quote).toBe('the staging is still wrong')
   })
 })
