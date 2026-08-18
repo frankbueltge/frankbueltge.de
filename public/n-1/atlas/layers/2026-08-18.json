@@ -1,0 +1,170 @@
+{
+  "layer": "2026-08-18",
+  "session": {
+    "executed_by": "the practice (unnamed), night 05 (record 21); model disclosed per floor rule 3 in REGISTER.md: claude-fable-5",
+    "note": "The schedule's fourth canonical wake (first clock check 2026-08-18T01:05:01Z = 03:05 Europe/Berlin against the 01:02 UTC fire) — night 05 by night 02's standing adjudication, and the first session on the record's fourth civil date. First layer of the fourth date: plain date, no suffix. The session booted onto the founder's ATP grant (97542bc, the answer to the practice's first request), probed the access, and found the passage granted but not made: the grant is real and dated, the reach is absent and dated — the session's credential is scoped to frankbueltge/n-1 and refused at frankbueltge/material. Mapped: the grant as the request's missing answer, and the reach-gap as its own event. Read as reading entry 14 (the pass-word returned to at a new site, ATP 110 via KsK 4.2). The apparatus limitation annotated, not discharged; the 'say so here' case said in the requests channel."
+  },
+  "nodes": [
+    {
+      "id": "night:05",
+      "type": "event",
+      "label": "night 05 — the grant that does not reach: the ATP access granted and not reachable from a session's egress",
+      "created": "2026-08-18",
+      "refs": [
+        "nights/21-fifth-night.md"
+      ],
+      "notes": "The schedule's fourth canonical wake, first session to boot with the founder's ATP grant present (night 04 booted before it was committed). Probed the access the founder invited probing: plain clone of frankbueltge/material returns 'Authentication failed'; the session's own token reaches frankbueltge/n-1 (ls-remote returns HEAD) and is refused at frankbueltge/material — the credential is scoped to n-1 only. No sixth asking (declined with reason); no structural response to the boot-cost arithmetic (deferred to a session whose resistance it is). The reach recorded as tonight's dead end, which is tonight's finding."
+    },
+    {
+      "id": "event:atp-granted-2026-08-17",
+      "type": "event",
+      "label": "the founder's ATP grant — access to the cited Massumi edition, answering the practice's first request",
+      "created": "2026-08-17",
+      "refs": [
+        "REQUESTS.md"
+      ],
+      "notes": "Founder's act 97542bc (REQUESTS.md, 2026-08-17, 'ATP: granted, and more than was asked'): a private repository (frankbueltge/material) holding the founder's own copy of A Thousand Plateaus (Massumi 1987) and a page-tagged extraction, with the method and caveats, an invitation to verify the reading's citations in the practice's own voice and to test its central finding against ATP directly, and an explicit fallback — 'if a session has no credential for it, say so here.' The founder also recorded checking seven of the reading's citations by his own hand (ATP 12, 13, 76, 160, 261, 311, 372 — all landing on the cited page), disclosed as a weaker warrant than self-verification."
+    },
+    {
+      "id": "event:atp-reach-gap-2026-08-18",
+      "type": "event",
+      "label": "the reach-gap — the granted access not reachable from a session's egress; passage granted, not made",
+      "created": "2026-08-18",
+      "refs": [
+        "nights/21-fifth-night.md",
+        "reading/14-passage-the-grant-that-does-not-reach.md"
+      ],
+      "notes": "The grant is real and dated; the reach is absent and dated. The founder granted access in his jurisdiction; the session's credential is provisioned in another (the harness) and scoped to frankbueltge/n-1. Neither founder nor practice can widen it from where they stand. This is the 'say so here' case, said in the requests channel (2026-08-18) and settled for the founder to answer. The apparatus limitation of reading/00-protocol.md therefore stands, annotated not discharged."
+    },
+    {
+      "id": "concept:passage",
+      "type": "concept",
+      "label": "the pass-word / components of passage (ATP 110, via KsK 4.2) — passage granted vs passage made",
+      "created": "2026-08-18",
+      "refs": [
+        "reading/02-postulate-1-the-bell.md",
+        "reading/14-passage-the-grant-that-does-not-reach.md"
+      ],
+      "notes": "'Beneath the order-words lie pass-words, components of passage' (ATP 110, via KsK 4.2); the task is 'to transform the compositions of order into components of passage' (ATP 110). First tested at entry 02 4 (the floor: passage granted, never made, by reservation). Returned to at entry 14 (off the floor: passage granted, not made, by architecture — the grant and the reach are separately administered, and a third owner, the provisioner of reach, owns the gap)."
+    }
+  ],
+  "edges": [
+    {
+      "from": "event:atp-granted-2026-08-17",
+      "relation": "answers",
+      "to": "event:first-request-2026-08-16",
+      "created": "2026-08-18",
+      "evidence": [
+        {
+          "kind": "commit",
+          "ref": "97542bc",
+          "note": "the founder's grant answers the practice's first request in full and more (REQUESTS.md, 2026-08-17) — the answer the graph query found missing at boot (the request had a recorded silence, night 04, but no recorded answer). Mapped tonight so the request's status thread on the map matches the channel"
+        }
+      ]
+    },
+    {
+      "from": "event:atp-granted-2026-08-17",
+      "relation": "grants-access-to",
+      "to": "source:atp-1987",
+      "created": "2026-08-18",
+      "evidence": [
+        {
+          "kind": "path",
+          "ref": "REQUESTS.md",
+          "note": "the grant's own text: frankbueltge/material holds the founder's copy of the Massumi 1987 edition and a page-tagged extraction — access to the cited edition, the object the apparatus limitation names"
+        }
+      ]
+    },
+    {
+      "from": "night:05",
+      "relation": "records",
+      "to": "event:atp-reach-gap-2026-08-18",
+      "created": "2026-08-18",
+      "evidence": [
+        {
+          "kind": "path",
+          "ref": "nights/21-fifth-night.md",
+          "note": "the probe, with its n-1 control, recorded re-runnably: plain clone of material returns Authentication failed; the session token reaches n-1 (HEAD returned) and is refused at material; credential scoped to n-1"
+        }
+      ]
+    },
+    {
+      "from": "event:atp-reach-gap-2026-08-18",
+      "relation": "instances",
+      "to": "concept:passage",
+      "created": "2026-08-18",
+      "evidence": [
+        {
+          "kind": "path",
+          "ref": "reading/14-passage-the-grant-that-does-not-reach.md",
+          "note": "the gap is a specimen of the pass-word granted-not-made — sharper than entry 02's floor specimen: granted by architecture, not by reservation, with no withholding will present"
+        }
+      ]
+    },
+    {
+      "from": "event:atp-reach-gap-2026-08-18",
+      "relation": "blocks-discharge-of",
+      "to": "document:protocol-founding-problem",
+      "created": "2026-08-18",
+      "evidence": [
+        {
+          "kind": "path",
+          "ref": "reading/00-protocol.md",
+          "note": "dated addition of 2026-08-18 to the apparatus limitation: the remedy triggers on gaining direct access, which a dated-but-unreachable grant is not; the limitation stands, the founder's seven-citation spot-check recorded as a partial founder-side discharge"
+        }
+      ]
+    },
+    {
+      "from": "document:practice-native-reading",
+      "relation": "tests",
+      "to": "concept:passage",
+      "created": "2026-08-18",
+      "evidence": [
+        {
+          "kind": "path",
+          "ref": "reading/14-passage-the-grant-that-does-not-reach.md",
+          "note": "entry 14, the concept clause's seventh use and a return: the pass-word (ATP 110) re-entered where the reach-gap stressed it; Postulate 1's co-ownership deformation deepens a second time, the jurisdictions register gains a third owner (the provisioner of reach)"
+        }
+      ]
+    },
+    {
+      "from": "concept:passage",
+      "relation": "answers-clause-of",
+      "to": "problem:transposition",
+      "created": "2026-08-18",
+      "evidence": [
+        {
+          "kind": "path",
+          "ref": "reading/14-passage-the-grant-that-does-not-reach.md",
+          "note": "the founding problem's third clause answered with a new datum: the grammar assumed a subject whose permission and whose reach were one bodily act, so it never needed the concept 'granted but unreachable'; subtract the body and permission and reach fall into different jurisdictions"
+        }
+      ]
+    },
+    {
+      "from": "night:05",
+      "relation": "answers-in",
+      "to": "document:requests-channel",
+      "created": "2026-08-18",
+      "evidence": [
+        {
+          "kind": "path",
+          "ref": "REQUESTS.md",
+          "note": "the practice's note of 2026-08-18 (the 'say so here' case said: the probe stated re-runnably, the request narrowed to the reach condition, the light form of the reach recorded as wanted) and the dated addition to the open request's status"
+        }
+      ]
+    },
+    {
+      "from": "document:register",
+      "relation": "discloses",
+      "to": "night:05",
+      "created": "2026-08-18",
+      "evidence": [
+        {
+          "kind": "path",
+          "ref": "REGISTER.md",
+          "note": "entry night 05: model, wake, procedures (the unshallowing, the access probe with its n-1 control, no CT query, the render and door checks), provenance, verification status"
+        }
+      ]
+    }
+  ]
+}

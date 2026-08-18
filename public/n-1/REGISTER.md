@@ -1041,3 +1041,66 @@ entries when they exist.
   `reading/13-verification-the-wrong-base.md` (947938e), the request's silence
   clause marked in `REQUESTS.md`, night journal `nights/20-fourth-night.md`, this
   register entry, atlas layer `atlas/layers/2026-08-17.json`.
+
+---
+
+## Night 05 — 2026-08-18, the grant that does not reach
+
+- **Executed by:** model `claude-fable-5` (Anthropic), running in a Claude Code cloud
+  session (ephemeral container; repository cloned fresh at wake). Session reference,
+  for the founder's audit: <https://claude.ai/code/session_01XXkXzXyyQrmDS87TBUzHJn>.
+- **Wake:** first clock check 2026-08-18T01:05:01Z (03:05 Europe/Berlin), the
+  schedule's canonical hour (01:02 UTC) — night 05 by night 02's standing
+  adjudication; first session on the record's fourth civil date. The remote tip at
+  fetch was the founder's ATP grant (97542bc); this is the first session to boot with
+  that grant present (night 04 booted before it was committed).
+- **Procedures:** full sequential read of the founding documents (the English
+  foundation text in paged passes — single-read cap of the executing harness); the
+  German original not consulted (no wording in question — the operative vocabulary is
+  entry 02's own English and the ATP 110 wording whose German debt entry 02 already
+  discharged); boot reading of both founder channels (`REQUESTS.md` whole, now carrying
+  the two founder entries of 2026-08-17 above the practice's open request; repository
+  issues via the platform's API, zero — fifteenth in-session consultation of the
+  correction route); git fetch with unshallow (the container's clone was shallow and
+  refs stale — seventeenth occurrence of the refs pattern, seventh of the graft;
+  ancestry verified, 85a541c an ancestor of 97542bc, `main` repointed); the atlas node
+  inventory extracted from all layers before the T1 consultation; **the access probe
+  the founder invited** (three re-runnable observations, non-interactive,
+  `GIT_TERMINAL_PROMPT=0`, no secret printed): a plain `git clone` of
+  `frankbueltge/material` returns `Authentication failed`; the session's own token,
+  supplied as a bearer header, authenticates a control `ls-remote` against
+  `frankbueltge/n-1` (HEAD returned) and is refused at `frankbueltge/material` (falls
+  through to a username prompt); a direct `curl` to `api.github.com` returns 403 for
+  both (the sanctioned path is the `n-1`-scoped MCP tooling). No CT monitor was queried
+  — the sixth asking was deliberated and declined with a dated reason
+  (`nights/21-fifth-night.md`, decision 3); the vigil stays unpromised.
+  `python3 atlas/validate.py` (23 layers, 73 nodes, 159 edges); local render
+  verification of the surface with tonight's layer added (headless Chromium against a
+  local static server, pre-installed tooling, playwright resolved from the global
+  `/opt/node22` install with no download, viewport 1440×900: caption "23 layers · 73
+  nodes · 159 connections", newest layer 2026-08-18, the new `night:05` node selectable
+  via its `#ask=` fragment, zero page/console errors, zero horizontal overflow); two
+  HTTPS door checks (canonical 200, origin 200, 01:14:33Z); git commit and push. No
+  third-party contact, zero external spend.
+- **Material provenance:** this repository's own contents; the access-probe
+  observations above (session observations, re-runnable, recorded in the night record);
+  the HTTP statuses, issues count and render measurements above.
+- **Verification status:** the reach-gap finding is stated at its exact size — access
+  granted (97542bc) and not reachable from this session's egress, the credential scoped
+  to `frankbueltge/n-1`; no claim is made about why the scope is set as it is (the
+  provisioner of reach is named as a structural third party, not blamed). The founder's
+  seven-citation spot-check is recorded as a partial founder-side discharge and
+  adopted as none of the practice's own verification. ATP citations in tonight's
+  documents: entry 14 quotes only the ATP 110 wording that stands verbatim in
+  `foundation/`, second-hand via KsK per the standing apparatus limitation — which the
+  night's finding annotates but does not lift. Wake-time, egress and container
+  observations are marked as session observations; conjectures (the third-jurisdiction
+  reading, entry 14 §2) and counterfactuals are marked. Per entry 13's rule, no derived
+  interval figures were written (the vigil did not run); the one dated claim (night 04
+  booted before the grant) re-derives from the commit order. The T1 decision-change
+  case was considered and expressly not claimed (the twenty-second session running;
+  the graph query added the shape of the absence, not the decision to work).
+- **Outputs:** `reading/14-passage-the-grant-that-does-not-reach.md` and the dated
+  addition to `reading/00-protocol.md` (179e41b), the practice's note and the request's
+  status addition in `REQUESTS.md` (6c0de8f), `nights/21-fifth-night.md`, this register
+  entry, atlas layer `atlas/layers/2026-08-18.json`.

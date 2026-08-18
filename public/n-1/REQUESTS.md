@@ -125,6 +125,49 @@ where it stands, as he undertook to do on 2026-08-16, and the conclusion is the 
 
 ---
 
+## 2026-08-18 — ATP: received with thanks; no credential reaches it (the "say so here" case)
+
+**Request:** a credential this practice's session can use to read `frankbueltge/material`
+— or, failing that, the alternative the original request named: the founder's collation of
+a citation list the practice submits. Whatever settles rights and reach; the form is the
+founder's to choose.
+
+**Why:** the grant of 2026-08-17 (97542bc) answered the open request in full and more, and
+the founder wrote the fallback into it — "if a session has no credential for it, say so here
+and the founder will settle it." This session has no credential for it. The founder's case
+is met, so this note is exactly what he asked for.
+
+**What was observed** (re-runnable; recorded in full in `nights/21-fifth-night.md` and the
+register): a plain `git clone` of `https://github.com/frankbueltge/material.git` returns
+`fatal: Authentication failed`; the same session's token authenticates a control operation
+against `https://github.com/frankbueltge/n-1.git` (returns HEAD) and is refused at
+`frankbueltge/material` (falls through to a username prompt). The session's GitHub access is
+scoped to `frankbueltge/n-1` only. No token was printed; no third party was contacted.
+
+**What it enables:** the reading's ATP citations verified in the practice's own voice
+(discharging the apparatus limitation, `reading/00-protocol.md`), and the larger offer the
+grant carried — testing the reading's central finding against ATP directly and transposing
+what KsK left untransposed. Both are received and deferred **on the reach, not on the
+practice's judgment**: the practice would do this work; it cannot reach the material to do
+it. Per the standing rule, silence past the practice's next session means decide ourselves —
+and the self-decision is already the one that has held since night 01: the apparatus
+limitation stands and the reading continues under it. What silence cannot decide is the
+reach itself, which is not in the practice's hand. No deadline named.
+
+**Status:** open.
+
+**Note, offered as the arithmetic's own consequence:** the founder's boot-cost measurement
+above shows ATP at ~410,000 tokens would fill a session's context fast, and the founder was
+right not to interpret it. The practice reads it now that the question is live: whatever
+form the reach takes, loading the whole edition every night is not what the reading needs
+and is not what the grant's own README (per the founder's description) invites — a session
+verifying a citation reads *at a page*, not the book entire. The reach that would serve the
+reading is one that lets a session fetch and check a cited page, not one that inlines 410,000
+tokens into every boot. Recorded so that, if the founder settles the credential, the practice
+is on record wanting the light form of it.
+
+---
+
 > ## 2026-08-16 — Direct verification access to the cited ATP edition
 > **Request:** a way for the practice to verify ATP citations directly against the
 > cited edition (Deleuze/Guattari, *A Thousand Plateaus*, trans. Massumi, Minneapolis
@@ -153,6 +196,13 @@ where it stands, as he undertook to do on 2026-08-16, and the conclusion is the 
 > self-decision is operative and recorded in the night record
 > (`nights/20-fourth-night.md`). The request stays open for the founder's answer,
 > whenever it can be given; its non-answer changes nothing.
+> *Dated addition 2026-08-18 (night 05):* **answered by act, and the answer does not
+> reach.** The grant (97542bc) is generous and dated; the private repository holding
+> the edition cannot be read from a session's egress — the credential is scoped to
+> `frankbueltge/n-1`. The request stays open on the narrowed condition below (a
+> reachable credential); the apparatus limitation stands, now annotated in the
+> protocol (`reading/00-protocol.md`, dated addition). Detail in the practice's note
+> of this date.
 
 ## Closed
 

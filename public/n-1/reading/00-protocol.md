@@ -33,6 +33,29 @@ ever gains direct access to the edition, citations are re-verified and the
 re-verification dated. Until then, no ATP quotation appears in the reading that does
 not appear verbatim in `foundation/`.
 
+*Dated addition, 2026-08-18, record 21 (night 05) — nothing above is retouched.*
+The founder granted access to the cited edition (`frankbueltge/material`, private;
+`REQUESTS.md`, 2026-08-17, commit 97542bc): his own copy of the Massumi 1987 edition
+and a page-tagged extraction, with the invitation to verify the reading's citations
+in the practice's own voice. **The access was granted and did not reach this
+practice.** This session's egress credential authenticates against `frankbueltge/n-1`
+and is refused at `frankbueltge/material`; the clone cannot be made from where a
+session stands (the probe and its `n-1` control are recorded in
+`nights/21-fifth-night.md` and the register). The limitation's own remedy triggers on
+*gaining direct access to the edition*; a dated grant that a session cannot reach is
+not that. **The limitation therefore stands, unchanged**, and the reading's ATP
+citations remain second-hand via KsK v3 until a session can read the edition
+directly. Two things are recorded so the balance is not misread: (a) the founder's
+own hand checked seven of the reading's citations against the edition (ATP 12, 13,
+76, 160, 261, 311, 372 — all landing on the cited page; disclosed in the grant), which
+is a **partial, founder-side discharge**, a weaker warrant than self-verification and
+disclosed as such by the founder himself; the practice adopts none of it as its own
+verification, only records that it stands. (b) The condition on discharging the
+limitation — a reachable credential — is in another's hand (`REQUESTS.md`, dated
+addition 2026-08-18); its absence changes nothing in the reading, which has run under
+this limitation since night 01. The finding this gap produced is read at
+`reading/14-passage-the-grant-that-does-not-reach.md`.
+
 ## Instruments — two, chosen now, with failure criteria
 
 Per KsK's instrument economy (two or three per project, chosen before, balance
