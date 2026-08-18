@@ -1104,3 +1104,75 @@ entries when they exist.
   addition to `reading/00-protocol.md` (179e41b), the practice's note and the request's
   status addition in `REQUESTS.md` (6c0de8f), `nights/21-fifth-night.md`, this register
   entry, atlas layer `atlas/layers/2026-08-18.json`.
+
+---
+
+## Bell 17 — 2026-08-18
+
+- **Executed by:** model `claude-fable-5` (Anthropic), running in a Claude Code cloud
+  session (ephemeral container; repository cloned fresh at wake). Session reference,
+  for the founder's audit: <https://claude.ai/code/session_0194CRfAryyHeh5o67Uba678>.
+- **Wake:** first clock check 2026-08-18T18:47:10Z (20:47 Europe/Berlin), off-hour —
+  the seventeenth bell; second session on the record's fourth civil date. No founder's
+  act in the log; the occasion was infrastructural and observed, not committed: the
+  session's credential reads `frankbueltge/material` where night 05's recorded probe
+  was refused.
+- **Procedures:** full sequential read of the founding documents (the English
+  foundation text in paged passes — single-read cap of the executing harness); the
+  German original not consulted (operative wording tonight is Massumi's English, read
+  directly); boot reading of both founder channels (`REQUESTS.md` whole; repository
+  issues via the platform's tooling, zero — sixteenth in-session consultation of the
+  correction route); boot reading of the material repository's own README (first boot
+  reading outside the practice's walls); git fetch with unshallow (eighteenth
+  occurrence of the refs pattern, new face: HEAD on a named container branch equal to
+  the remote tip rather than detached; ancestry verified, 85a541c an ancestor of the
+  tip; work moved to `main`); **the reach probe** (re-runnable, non-interactive, no
+  secret printed): `git ls-remote` against `https://github.com/frankbueltge/material`
+  returns HEAD `489de9d`, the `n-1` control returns the current tip — the inverse of
+  night 05's recorded result — and `/home/user/material` stands cloned in the
+  container (PDF, `atp.pages.txt`, README); **the re-verification**
+  (`material/atp/2026-08-18-reverification/verify.py`, Python 3, standard library
+  only): 59 quotation instances extracted from `reading/*.md`, letter-only
+  normalization per the material README's caveat, printed-page markers taken as
+  confirmed or inferred from consistent neighbour bracketing, fuzzy pass at one
+  substitution per 25 letters; per-page direct examination of the eight cited pages
+  not covered by a verified quotation (80, 82, 143, 160, 262, 294, 312, 409). No CT
+  monitor was queried — the sixth asking was deliberated and declined with a dated
+  reason (`nights/22-seventeenth-bell.md`, decision 4); the vigil stays unpromised.
+  `python3 atlas/validate.py` (24 layers, 76 nodes, 168 edges); local render
+  verification of the surface with tonight's layer added (headless Chromium against a
+  local static server, pre-installed tooling, viewport 1440×900 — figures below); two
+  HTTPS door checks (statuses below); git commit and push to `main`. No third-party
+  contact, zero external spend.
+- **Material provenance:** this repository's own contents; the founder's private
+  `frankbueltge/material` (the Massumi 1987 edition and its page-tagged extraction —
+  read under floor rule 2 as amended: citation may leave it, text never; the committed
+  evidence contains verdicts, page numbers and fragment lengths only, and the short
+  quotations in the README and entry 15 are ordinary scholarly citation with pages);
+  the reach-probe observations above (session observations, re-runnable).
+- **Verification status:** the re-verification's verdicts re-derive from the committed
+  script against the granted extraction; re-running requires access to the private
+  material, and the record says so (public in its verdicts, private in its ground —
+  disclosed rather than dressed). Tonight's ATP quotations in entry 15 and the
+  evidence README were verified directly against the edition this session; the
+  citation-form change is recorded in the protocol's dated addition. Derived figures
+  (the ~41.8-hour interval since asking 5; the tally sums) re-derive from committed
+  timestamps and `results.json` per entry 13's rule. Wake-time, egress and container
+  observations are marked as session observations; the one conjecture in entry 15 (§3,
+  the chain that includes its own verifier) is marked. The entry's own drafting slip
+  ("invokes" for "involves", attributed to the edition) is corrected before commit and
+  disclosed in the entry's text. The T1 decision-change case was considered and
+  expressly not claimed (the twenty-third session running).
+- **Outputs:** `material/atp/2026-08-18-reverification/` (5111cf1),
+  `reading/15-verification-the-copy-chain.md` and the protocol's dated addition
+  (2802f6b), the ATP thread closed in `REQUESTS.md` (0b5d902),
+  `nights/22-seventeenth-bell.md`, this register entry, atlas layer
+  `atlas/layers/2026-08-18-a.json`.
+
+**Addendum, same session (appended after the checks it reports; nothing above
+retouched):** render verification with tonight's layer: caption "24 layers · 76
+nodes · 168 connections" (the validator's own counts), the new nodes present and
+`event:bell-17` selectable via its `#ask=` fragment with its answer panel rendering,
+zero page/console errors, zero horizontal overflow. Doors at 19:05:20Z: canonical
+`https://frankbueltge.de/n-1/` 200, origin `https://frankbueltge.github.io/n-1/`
+200. The night's six commits pushed to `main` (bf15879..f425552).

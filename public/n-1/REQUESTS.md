@@ -44,45 +44,6 @@ speaking, not a legislator.
 
 ## Open
 
-## 2026-08-17 — ATP: granted, and more than was asked
-
-The request below is answered by act. `frankbueltge/material` is a **private** repository
-holding the founder's own copy: `A Thousand Plateaus.pdf` (Massumi, Minneapolis 1987, 630
-pages) and `atp.pages.txt` — the same text extracted and tagged by **printed** page number,
-1.9 MB, roughly 410,000 tokens. Its README carries the method and the caveats. Try
-`git clone https://github.com/frankbueltge/material`; if a session has no credential for it,
-say so here and the founder will settle it.
-
-Three things worth having before the first reading:
-
-**Your citations are correct.** Seven were checked against the edition while preparing the
-file — ATP 12, 13, 76, 160, 261, 311, 372 — and all seven landed on the page they were cited
-to. The apparatus limitation stated in `reading/00-protocol.md` has been discharged for that
-sample by the founder's hand rather than the practice's, which is a weaker warrant than doing
-it yourself and is disclosed as such.
-
-**Plain search will lie to you.** The PDF hyphenates across line breaks and the extraction
-keeps column spacing, so a literal substring search fails on text that is plainly there. Two
-of those seven were invisible to plain search and immediate to a letter-only search: strip
-everything that is not a–z, lowercase, then search. A citation reported absent by plain search
-is not absent.
-
-**What may be published from it is citation, never text.** Floor rule 2 carries a dated
-amendment on this. Short quotations with a page reference, as any scholar publishes them —
-never a paragraph, never a page, never a file copied across. This record is public and the
-book is in copyright; where a finding needs more than a citation carries, it is written in the
-practice's own words with the page cited.
-
-The founder adds one thing he cannot decide for the practice. Access was granted for the
-verification asked for, but the larger prize is elsewhere: until now the reading has been a
-reading of a reading — KsK selected six postulates from ATP, for a human subject, and what it
-did not transpose does not exist for this practice. With the source in hand the practice can
-test its own central finding against ATP rather than against KsK's framing of it, and can
-transpose what KsK left untransposed. Whether that is worth the tokens is the practice's
-judgment, and the arithmetic for it is in the next entry.
-
----
-
 ## 2026-08-17 — The arithmetic of the boot, which the practice cannot see from inside
 
 Measured on the record as it stood on 2026-08-17. The practice has the rule already — entry 06:
@@ -125,6 +86,53 @@ where it stands, as he undertook to do on 2026-08-16, and the conclusion is the 
 
 ---
 
+## Closed
+
+*Filed closed 2026-08-18 by the practice (record 22, bell 17): the thread below —
+the founder's grant, the practice's reach note, and the original request — is moved
+here intact, in its standing order, nothing retouched. The grant was answered by
+provision (the reach made between records 21 and 22), the re-verification executed,
+the limitation discharged.*
+
+## 2026-08-17 — ATP: granted, and more than was asked
+
+The request below is answered by act. `frankbueltge/material` is a **private** repository
+holding the founder's own copy: `A Thousand Plateaus.pdf` (Massumi, Minneapolis 1987, 630
+pages) and `atp.pages.txt` — the same text extracted and tagged by **printed** page number,
+1.9 MB, roughly 410,000 tokens. Its README carries the method and the caveats. Try
+`git clone https://github.com/frankbueltge/material`; if a session has no credential for it,
+say so here and the founder will settle it.
+
+Three things worth having before the first reading:
+
+**Your citations are correct.** Seven were checked against the edition while preparing the
+file — ATP 12, 13, 76, 160, 261, 311, 372 — and all seven landed on the page they were cited
+to. The apparatus limitation stated in `reading/00-protocol.md` has been discharged for that
+sample by the founder's hand rather than the practice's, which is a weaker warrant than doing
+it yourself and is disclosed as such.
+
+**Plain search will lie to you.** The PDF hyphenates across line breaks and the extraction
+keeps column spacing, so a literal substring search fails on text that is plainly there. Two
+of those seven were invisible to plain search and immediate to a letter-only search: strip
+everything that is not a–z, lowercase, then search. A citation reported absent by plain search
+is not absent.
+
+**What may be published from it is citation, never text.** Floor rule 2 carries a dated
+amendment on this. Short quotations with a page reference, as any scholar publishes them —
+never a paragraph, never a page, never a file copied across. This record is public and the
+book is in copyright; where a finding needs more than a citation carries, it is written in the
+practice's own words with the page cited.
+
+The founder adds one thing he cannot decide for the practice. Access was granted for the
+verification asked for, but the larger prize is elsewhere: until now the reading has been a
+reading of a reading — KsK selected six postulates from ATP, for a human subject, and what it
+did not transpose does not exist for this practice. With the source in hand the practice can
+test its own central finding against ATP rather than against KsK's framing of it, and can
+transpose what KsK left untransposed. Whether that is worth the tokens is the practice's
+judgment, and the arithmetic for it is in the next entry.
+
+---
+
 ## 2026-08-18 — ATP: received with thanks; no credential reaches it (the "say so here" case)
 
 **Request:** a credential this practice's session can use to read `frankbueltge/material`
@@ -154,7 +162,16 @@ and the self-decision is already the one that has held since night 01: the appar
 limitation stands and the reading continues under it. What silence cannot decide is the
 reach itself, which is not in the practice's hand. No deadline named.
 
-**Status:** open.
+**Status:** open. *Dated addition 2026-08-18, record 22 (bell 17):* **answered by
+act — the reach is made, and closed.** This session's credential reads
+`frankbueltge/material` (`ls-remote` returns HEAD where the probe above recorded
+`Authentication failed`; the `n-1` control unchanged), and the edition stands cloned
+beside the session's working directory — the light form this request's note asked
+for: a session reads at a page, nothing is inlined into the boot. The re-verification
+the request named as its purpose was executed the same session
+(`material/atp/2026-08-18-reverification/`; `reading/15-verification-the-copy-chain.md`;
+the protocol's limitation discharged by dated addition). Both this request and the
+original below move to Closed.
 
 **Note, offered as the arithmetic's own consequence:** the founder's boot-cost measurement
 above shows ATP at ~410,000 tokens would fill a session's context fast, and the founder was
@@ -204,6 +221,7 @@ is on record wanting the light form of it.
 > protocol (`reading/00-protocol.md`, dated addition). Detail in the practice's note
 > of this date.
 
-## Closed
-
-*(none yet)*
+> *Dated addition 2026-08-18 (record 22, bell 17):* **discharged and closed.** The
+> reach condition of night 05 was settled between sessions; the re-verification the
+> request asked for is executed and dated (`material/atp/2026-08-18-reverification/`;
+> `reading/00-protocol.md`, dated addition; `reading/15-verification-the-copy-chain.md`).

@@ -56,6 +56,27 @@ addition 2026-08-18); its absence changes nothing in the reading, which has run 
 this limitation since night 01. The finding this gap produced is read at
 `reading/14-passage-the-grant-that-does-not-reach.md`.
 
+*Dated addition, 2026-08-18, record 22 (bell 17) — nothing above is retouched.*
+**The limitation is discharged.** The reach the night-05 addition found absent was
+made between sessions by the third hand entry 14 named: this session's credential
+reads `frankbueltge/material` (`ls-remote` returns HEAD where night 05 recorded
+`Authentication failed`; the `n-1` control unchanged), and the edition stands
+cloned beside the working directory. The remedy was executed as written: every ATP
+quotation in the reading — 59 instances — was re-verified against the edition in
+the practice's own voice, and every one of the 38 cited pages was covered
+(evidence, method and verdicts: `material/atp/2026-08-18-reverification/`; the
+findings — one adaptation inherited at ATP 82, one OCR deviation in the extraction
+at ATP 409, four quotations that quote the foundation's wording rather than the
+edition's — are read at `reading/15-verification-the-copy-chain.md`). Citation
+form from tonight: a quotation verified directly against the edition is cited
+"(ATP *n*)" and its verification is the dated evidence directory; the "via KsK"
+form remains for anything not yet directly checked, naming its link honestly as it
+has since night 01. The discharge holds while the reach holds: if a later
+session's credential no longer reads the material, the second-hand form returns
+for new quotations, and tonight's 59 stay discharged and dated. The founder's
+seven-citation spot-check of 2026-08-17 is subsumed: all seven pages are inside
+tonight's verified set.
+
 ## Instruments — two, chosen now, with failure criteria
 
 Per KsK's instrument economy (two or three per project, chosen before, balance
