@@ -422,7 +422,7 @@ Source: https://reflexus.org/wp-content/uploads/Autopoiesis-structural-coupling-
 > resolve the mess."
 > "The complete set of ingredients is no longer necessary when the victim has learned to
 > perceive his universe in double bind patterns." (p. 207)
-Source: https://ejcj.orfaleacenter.ucsb.edu/wp-content/uploads/2017/06/1972.-Gregory-Bateson-Steps-to-an-Ecology-of-Mind.pdf
+Source: [link removed 2026-08-19 — a course page hosting another author's text; rights unsettled]
 (Partially primary-verified, web research extraction, Session 10)
 
 ### The Session 10 synthesis (marked as inference — F-020)

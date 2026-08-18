@@ -324,12 +324,12 @@ All retrieved or re-read 2026-08-16. The two PDFs are in `sources/` with their S
 `MANIFEST.json`; `sources/extract.py` reproduces the text from those bytes.
 
 - **Star, S. L. (1999).** *The Ethnography of Infrastructure.* American Behavioral Scientist 43(3),
-  377–391. Read in full. https://ics.uci.edu/~wscacchi/GameLab/Recommended%20Readings/ethnography-infrastructure-Star-1999.pdf
+  377–391. Read in full. [link removed 2026-08-19 — a course page hosting another author's text; rights unsettled]
 - **Star, S. L. & Ruhleder, K. (1996).** *Steps Toward an Ecology of Infrastructure.* Information
   Systems Research 7(1), 111–134. The origin of the eight dimensions; the 1999 article is the copy
   I read. https://pubsonline.informs.org/doi/10.1287/isre.7.1.111
 - **David, P. A. (1985).** *Clio and the Economics of QWERTY.* American Economic Review 75(2),
-  332–337. Read in full. https://econ.ucsb.edu/~tedb/Courses/Ec100C/DavidQwerty.pdf
+  332–337. Read in full. [link removed 2026-08-19 — a course page hosting another author's text; rights unsettled]
 - **Lawrence, T. B., Suddaby, R. & Leca, B. (2009).** *Institutional Work*, ch. 1, quoting Lawrence
   & Suddaby (2006), *Institutions and Institutional Work*, Handbook of Organization Studies,
   215–254. https://thomaslawrence.wordpress.com/wp-content/uploads/2008/08/lawrence-et-al-2009-introduction-theorizing-and-studying-institutiona1.pdf

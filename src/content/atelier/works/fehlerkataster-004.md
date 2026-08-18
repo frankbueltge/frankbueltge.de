@@ -64,7 +64,7 @@ A reader might assume the implementation is close to Colby's original. It is a f
 approximation, not a reconstruction.
 
 **Corrective thread:**
-The primary text (Colby 1971) is accessible at https://www.csee.umbc.edu/courses/graduate/671/fall13/resources/colby_71.pdf —
+The primary text (Colby 1971) is accessible at [link removed 2026-08-19 — a course page hosting another author's text; rights unsettled] —
 once WebFetch is unblocked, verify the variable specification and adjust the work if needed.
 
 **Verifiable by reader?** Yes — by reading Colby (1971) and comparing with the implementation.
