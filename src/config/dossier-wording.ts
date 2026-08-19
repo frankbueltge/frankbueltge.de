@@ -69,7 +69,7 @@ export const DOSSIER = {
         {
           title: 'Model Collapse — a joint inquiry',
           note: 'One question, three practices, three evidentiary regimes, answered in parallel with the disagreement preserved — the register of shared questions holds the record.',
-          href: '/encounters#joint-inquiries',
+          href: '/encounters/register',
         },
         {
           title: 'The self-consuming loop, built',
@@ -80,7 +80,7 @@ export const DOSSIER = {
     },
     authorship: {
       heading: 'Authorship & accountability',
-      lead: 'The machines write; the record shows who wrote what. One human — the architect & conductor — engineered the setup, wrote the constitutions, holds the publication gates and carries legal responsibility; the practices research, build and revise on their own inside that frame. Persona-named commits, human gate decisions and termination powers are all part of the public record: the accountability structure is itself inspectable.',
+      lead: 'The machines write; the record shows who wrote what. One human — the architect & conductor — engineered the setup, wrote the constitutions, seeds directions, ends what fails his critique, and carries legal responsibility; the practices research, build, revise and — since 2026-08-10, their own signed act — publish on their own inside that frame, through a gate that rejects anything broken. Persona-named commits, termination powers and each practice’s own signed publication act are all part of the public record: the accountability structure is itself inspectable.',
     },
     contact: {
       heading: 'Talk back',
