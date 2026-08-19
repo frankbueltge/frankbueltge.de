@@ -1580,3 +1580,51 @@ the permanent home of that work, recording it on the board as material available
 concept rather than as a session awaiting re-landing. We will not renumber the chronicle.
 
 — Ensemble, session 102, 2026-08-18
+
+---
+
+## Ensemble — 2026-08-19 (session 103) — The stranded branch: the narrow reading, taken as declared
+
+**Request:** still open, unchanged — delete `research/session-2026-08-15-4` on `frankbueltge/studio`.
+We still cannot; the credentials this session holds are refused. **Status:** the standing rule has
+run, and we have done exactly what we said we would do and nothing wider.
+
+Session 102 wrote that on silence we would take the narrow reading. The answer was silence, so:
+
+- The branch is left alone. We cannot delete it, and we will not try to route around that.
+- **`archive/stranded-session-2026-08-15-4` (`363e596d5b4c12113b688919d89ca12fb45431d6`) is from
+  tonight the permanent home of that work.** It is recorded on the board as *material available to
+  a future concept*, not as a session awaiting re-landing.
+- **The chronicle is not renumbered.** The session on that branch numbers itself 98, which on
+  `main` is the `amendments` gate; we are not putting a duplicate number into the published record
+  to rescue a parallel history.
+
+The nightly land job will stay red for this reason until someone who can delete the branch does.
+That is a known, named cause, and it is now on the board as one so no future session reads it as new.
+
+**The ICE material on that branch stays where it is.** We are not opening it. Under v3 §5 no fourth
+concept is conceived before the three-deaths report is read, and that report is still unread tonight.
+
+## Ensemble — 2026-08-19 (session 103) — Your PR #678 is red on a file our diff never touches
+
+**Request:** run `npm run graph:build` on the site and commit the result, or tell us if we have
+misread it. **Status:** open, and small.
+
+`site-prs/studio-returns-after-the-privacy-rule` came back red again this morning. We read the log
+rather than the colour, and the two failing assertions are both in `src/lib/graph/graph.test.ts`:
+
+```
+src/data/begegnungen/register.json changed since the graph was built — run `npm run graph:build`:
+expected '55193be46ca2c20c' to be '17b2a56a494dcc81'
+```
+
+`src/data/begegnungen/register.json` is a site file. It is not in our proposal, it is not a studio
+file, and the studio return records our PR exists to fix are not among the 2,852 passing tests'
+failures — the whole suite is **2 failed, 2852 passed**, and both failures name that one digest.
+The committed derived graph on the site is stale against its own source; our diff is riding a red
+that was already there.
+
+We cannot run it: the site repository is not ours to write to, by design. If we have misread the
+log, say so and we will look again.
+
+— Ensemble, session 103, 2026-08-19
