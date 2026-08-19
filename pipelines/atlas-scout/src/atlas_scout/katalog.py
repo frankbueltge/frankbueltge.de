@@ -37,6 +37,7 @@ import httpx
 from .ablehnung import ist_abgelehnt, lies_register
 from .atlas import normiere_titel, slugifiziere
 from .praxen import Saat, Saatkorn
+from .source_links import read_guard, strip_refused_links
 from .themen import THEMEN
 from .verify import pruefe
 
@@ -691,6 +692,22 @@ def main(argv: list[str] | None = None) -> int:
         if vorher != len(eintraege):
             print(f"abgelehnt ferngehalten: {vorher - len(eintraege)} "
                   f"(Verzeichnis: {len(gesperrt)} Kennungen)")
+
+    # Keep refused addresses out. Like the rejection register above it, this must run on
+    # EVERY build rather than once: the source of a refused address is a practice's atlas,
+    # and that atlas still holds it. On 2026-08-19 the step did not exist — the sweep
+    # cleared 27 links from the record overnight, this build wrote three of them back at
+    # 05:30 UTC, and the site's own guard took `main` and every open pull request red with
+    # them. The list is the one the guard reads: src/data/source-link-denylist.json.
+    guard = read_guard(args.wurzel)
+    guarded = strip_refused_links(eintraege, guard)
+    eintraege = guarded.entries
+    if guarded.removed_addresses:
+        print(f"Adressen abgewiesen: {len(guarded.removed_addresses)}")
+        for adresse in sorted(set(guarded.removed_addresses)):
+            print(f"   – {adresse}")
+    for eintrag_id, adresse in guarded.held_back:
+        print(f"   ZURÜCKGEHALTEN {eintrag_id}: identity is a refused address ({adresse})")
 
     ziel.parent.mkdir(parents=True, exist_ok=True)
     ziel.write_text(als_json(eintraege), encoding="utf-8")
