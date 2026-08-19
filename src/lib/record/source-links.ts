@@ -24,9 +24,17 @@
 // where the host is the rightsholder, the author, or a repository holding it by deposit —
 // and otherwise the work is cited and not linked. A citation costs a reader one search. A
 // link to an unlicensed copy costs the practice its footing.
+//
+// THE LIST LIVES BESIDE THIS FILE, NOT IN IT (2026-08-19, the morning after). The guard
+// only ever read the record; the nightly katalog-scout WRITES it, from the practices'
+// citations, and knew nothing of the list — so it put three refused links back the same
+// night the sweep removed them, and the site stopped deploying. Both readers now take
+// their hosts and paths from `src/data/source-link-denylist.json`, so a host added here
+// is a host the builder keeps out tomorrow.
 import { readFileSync, readdirSync, statSync } from 'node:fs'
 import { join } from 'node:path'
 import allowlist from '@/data/source-link-allowlist.json'
+import denylist from '@/data/source-link-denylist.json'
 
 /** Where the published record lives in this repository, mirrors included. */
 export const SCANNED_ROOTS = ['src/content', 'src/data', 'src/components', 'public', 'docs']
@@ -39,20 +47,7 @@ const EXTENSIONS = ['.md', '.json', '.astro', '.ts', '.txt', '.html', '.css']
  * these are the personal sites of respected researchers, which is the point: the question is
  * never what kind of site it is, only whether it holds someone else's work.
  */
-export const DENIED_HOSTS = [
-  'monoskop.org',
-  'files.libcom.org',
-  'odradeksjourney.files.wordpress.com',
-  'dn790006.ca.archive.org',
-  'dirnagl.com',
-  'www.pangaro.com',
-  'transaestheticsfoundation.org',
-  'reflexus.org',
-  'www.alice.id.tue.nl',
-  'topologicalmedialab.net',
-  'museumofdata.org',
-  'ejcj.orfaleacenter.ucsb.edu',
-]
+export const DENIED_HOSTS: string[] = denylist.hosts
 
 /**
  * Paths that mark a teaching copy whatever the host carries. This catches what a host list
@@ -60,8 +55,10 @@ export const DENIED_HOSTS = [
  * sweep's three stages had all walked past, because the domain was neither a university nor
  * an archive.
  */
-export const TEACHING_PATHS =
-  /\/(courses?|classes|readings?|teaching|lectures?|seminars?|kurs|vorlesung)\//i
+export const TEACHING_PATHS = new RegExp(
+  `/(${denylist.teachingPathSegments.join('|')})/`,
+  'i',
+)
 
 const CLEARED = new Set((allowlist as { cleared: { url: string }[] }).cleared.map((c) => c.url))
 

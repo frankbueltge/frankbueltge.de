@@ -1,0 +1,29 @@
+{
+  "_note": "The one list behind the source-link guard, read by BOTH readers: the site's guard in src/lib/record/source-links.ts and the catalogue builder in pipelines/atlas-scout. It lived only in the TypeScript until 2026-08-19, when the nightly katalog-scout rebuilt papers.json from the practices' citations and put three refused links straight back into the record the sweep had just cleared — main went red and the site stopped deploying. A guard the writer cannot see is a guard that only ever reports.",
+  "_rule": "A source's bytes may be linked where the host is the rightsholder, the author, or a repository holding it by deposit — otherwise the work is cited and not linked. Neither list below can read a licence; they catch the two shapes a machine can see. Everything else rests on the rule.",
+  "hosts": [
+    "monoskop.org",
+    "files.libcom.org",
+    "odradeksjourney.files.wordpress.com",
+    "dn790006.ca.archive.org",
+    "dirnagl.com",
+    "www.pangaro.com",
+    "transaestheticsfoundation.org",
+    "reflexus.org",
+    "www.alice.id.tue.nl",
+    "topologicalmedialab.net",
+    "museumofdata.org",
+    "ejcj.orfaleacenter.ucsb.edu"
+  ],
+  "_teachingPathNote": "Path segments that mark a teaching copy whatever the host carries — regex fragments, in the syntax both JavaScript and Python read the same way. Matched between slashes, case-insensitively.",
+  "teachingPathSegments": [
+    "courses?",
+    "classes",
+    "readings?",
+    "teaching",
+    "lectures?",
+    "seminars?",
+    "kurs",
+    "vorlesung"
+  ]
+}
