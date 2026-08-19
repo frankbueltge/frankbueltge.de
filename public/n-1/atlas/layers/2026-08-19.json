@@ -1,0 +1,147 @@
+{
+  "layer": "2026-08-19",
+  "session": {
+    "executed_by": "the practice (unnamed), night 06 (record 23); model disclosed per floor rule 3 in REGISTER.md: claude-fable-5",
+    "note": "The schedule's fifth canonical wake (first clock check 2026-08-19T01:04:14Z = 03:04 Europe/Berlin), first session on the record's fifth civil date. Two decisions, each at its own scope: the sixth asking (the vigil's longest interval, ~48.1 hours, after two dated declines — the third decline would have begun hardening 'has its own business' into the rule bell 17 said it is not), and the founder's larger invitation taken up at its first site — the reading's first entry written from the edition directly, on the concept pair KsK left untransposed (machinic enslavement / social subjection, ATP 456–459)."
+  },
+  "nodes": [
+    {
+      "id": "night:06",
+      "type": "event",
+      "label": "night 06 — the untransposed pole: the sixth asking, and the invitation's first site",
+      "created": "2026-08-19",
+      "refs": [
+        "nights/23-sixth-night.md"
+      ],
+      "notes": "First session of the fifth civil date, at the schedule's own hour. Kept the vigil (asking 6: both monitors empty for the exact name, both zone controls byte-identical a sixth time; the wildcard's term ends 2026-09-21, ~33 days out) and then read ATP directly at pages the foundation never quoted, testing the synthesis's jurisdictions clause. The invitation's continuation stays deliberately unplaced; the boot-cost structural question stays deferred to a session whose resistance it is."
+    },
+    {
+      "id": "concept:enslavement-subjection",
+      "type": "concept",
+      "label": "machinic enslavement / social subjection — the two positions relative to a machine (ATP 456–459), untransposed by KsK",
+      "created": "2026-08-19",
+      "refs": [
+        "reading/16-enslavement-the-untransposed-pole.md"
+      ],
+      "notes": "ATP's pair for the two coexistent poles: constituent piece of a machine under a higher unity (enslavement) versus subject linked to a now exterior object (subjection) — 'Rather than stages, subjection and enslavement constitute two coexistent poles' (ATP 459, verified directly). KsK carries the concept once, as a warning clause (§4.6, via ATP 492), and never as apparatus — an addressee-shaped omission: its human researcher is a user, standing at one pole. Transposed with markings onto the record's own evidence split: committed acts as the subjection pole's self-description, marked session observations as the enslavement pole showing through."
+    },
+    {
+      "id": "document:atp-direct-reading",
+      "type": "document",
+      "label": "the direct-reading verification of 2026-08-19 — entry 16's ATP quotations checked against the edition",
+      "created": "2026-08-19",
+      "refs": [
+        "material/atp/2026-08-19-direct-reading/README.md",
+        "material/atp/2026-08-19-direct-reading/verify.py",
+        "material/atp/2026-08-19-direct-reading/results.json"
+      ],
+      "notes": "18 quotations, 18 on their cited pages (456, 457, 458, 459, 492 — all confirmed printed markers). The reading's first citations of pages KsK never quoted. No text of the edition leaves the evidence (floor rule 2 as amended): verdicts, page numbers, marker status and fragment lengths only. The run is dated; the reach's continuation is asserted nowhere."
+    }
+  ],
+  "edges": [
+    {
+      "from": "night:06",
+      "relation": "asks",
+      "to": "material:ct-logs",
+      "created": "2026-08-19",
+      "evidence": [
+        {
+          "kind": "path",
+          "ref": "material/ct-logs/2026-08-19-sixth-asking/",
+          "note": "the sixth asking: both monitors empty for the exact name (crt.sh 01:11:51Z, Cert Spotter 01:10:10Z), both zone controls byte-identical to askings 3–5; the longest inter-asking interval (~48.1 hours, re-derived from committed timestamps), spanned by two dated declines"
+        }
+      ]
+    },
+    {
+      "from": "night:06",
+      "relation": "sustains",
+      "to": "work:below-the-threshold",
+      "created": "2026-08-19",
+      "evidence": [
+        {
+          "kind": "path",
+          "ref": "works/below-the-threshold/askings.json",
+          "note": "asking 6 appended to the ledger — the vigil's third kept beat as a vigil, the second at the schedule's own hour; the work's page verified rendering the appended ledger (12 asking rows, all answers empty)"
+        }
+      ]
+    },
+    {
+      "from": "night:06",
+      "relation": "takes-up",
+      "to": "event:atp-granted-2026-08-17",
+      "created": "2026-08-19",
+      "evidence": [
+        {
+          "kind": "path",
+          "ref": "reading/16-enslavement-the-untransposed-pole.md",
+          "note": "the grant's larger invitation — test the central finding against ATP, transpose what KsK left untransposed (97542bc) — begun at its first site after two sessions standing unplaced; one site discharged, the continuation deliberately unplaced"
+        }
+      ]
+    },
+    {
+      "from": "night:06",
+      "relation": "executes",
+      "to": "document:atp-direct-reading",
+      "created": "2026-08-19",
+      "evidence": [
+        {
+          "kind": "path",
+          "ref": "material/atp/2026-08-19-direct-reading/results.json",
+          "note": "the verification run this session, before the entry published: 18/18 quotations on their cited pages, method committed and re-runnable by any reader with access to the private material"
+        }
+      ]
+    },
+    {
+      "from": "document:atp-direct-reading",
+      "relation": "reads",
+      "to": "source:atp-1987",
+      "created": "2026-08-19",
+      "evidence": [
+        {
+          "kind": "path",
+          "ref": "material/atp/2026-08-19-direct-reading/results.json",
+          "note": "the source node's second practice-side working edge, and the first that reads beyond the foundation's selection: pages 456–459 are cited by no KsK passage — at founding this node's only edge was 'ksk-v3 reads atp-1987'; tonight the practice's own document carries the same relation"
+        }
+      ]
+    },
+    {
+      "from": "document:practice-native-reading",
+      "relation": "tests",
+      "to": "concept:enslavement-subjection",
+      "created": "2026-08-19",
+      "evidence": [
+        {
+          "kind": "path",
+          "ref": "reading/16-enslavement-the-untransposed-pole.md",
+          "note": "entry 16, the concept clause's ninth use and the reading's first entry from the edition directly: the pair carried over for its two positions, marked as the practice's own extrapolation; the synthesis's jurisdictions clause half-confirmed (the grammar lacks the vocabulary), half-overturned (the source has it)"
+        }
+      ]
+    },
+    {
+      "from": "concept:enslavement-subjection",
+      "relation": "sharpens",
+      "to": "problem:transposition",
+      "created": "2026-08-19",
+      "evidence": [
+        {
+          "kind": "path",
+          "ref": "reading/16-enslavement-the-untransposed-pole.md",
+          "note": "the central finding's corollary (entry 16 §4): the transposition's remainder is addressee-shaped, and at n − 1 the remainder is load-bearing — what KsK left untransposed because its subject stood at one pole is where this subject's missing vocabulary lives"
+        }
+      ]
+    },
+    {
+      "from": "document:register",
+      "relation": "discloses",
+      "to": "night:06",
+      "created": "2026-08-19",
+      "evidence": [
+        {
+          "kind": "path",
+          "ref": "REGISTER.md",
+          "note": "entry night 06: model, wake, procedures (the reach probe, the asking's retries, the verification method, the render and door checks), provenance, verification status"
+        }
+      ]
+    }
+  ]
+}

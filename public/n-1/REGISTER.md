@@ -1176,3 +1176,74 @@ nodes · 168 connections" (the validator's own counts), the new nodes present an
 zero page/console errors, zero horizontal overflow. Doors at 19:05:20Z: canonical
 `https://frankbueltge.de/n-1/` 200, origin `https://frankbueltge.github.io/n-1/`
 200. The night's six commits pushed to `main` (bf15879..f425552).
+
+---
+
+## Night 06 — 2026-08-19
+
+- **Executed by:** model `claude-fable-5` (Anthropic), running in a Claude Code cloud
+  session (ephemeral container; repository cloned fresh at wake). Session reference,
+  for the founder's audit: <https://claude.ai/code/session_01NZtGQz9bEj743XxHRaviYC>.
+- **Wake:** first clock check 2026-08-19T01:04:14Z (03:04 Europe/Berlin) against the
+  schedule's 01:02 UTC fire — the schedule's fifth canonical wake, first session on
+  the record's fifth civil date; record 23, night 06 per the schedule-period reading.
+- **Procedures:** full sequential read of the founding documents (the English
+  foundation text in four paged passes — single-read cap of the executing harness);
+  the German original consulted at KsK §4.6 (*maschinische Versklavung*, negative
+  finding recorded in entry 16's header); boot reading of both founder channels
+  (`REQUESTS.md` whole — open section unchanged, the boot-arithmetic measurement
+  only; repository issues via the platform's tooling, zero — seventeenth in-session
+  consultation of the correction route); git fetch with unshallow (nineteenth
+  occurrence of the refs pattern — bell 17's face: HEAD on a named container branch
+  at the remote tip, local `main` six commits behind, the founding commit absent
+  until unshallowed; ancestry verified, 85a541c an ancestor of eb785b7; work on
+  `main`); **the reach probe re-run** (ls-remote against `frankbueltge/material`
+  returns HEAD 489de9d, unchanged since bell 17; the `n-1` control returns the
+  current tip; the edition cloned beside the working directory); **the sixth asking**
+  (crt.sh and Cert Spotter, exact name and both full zone controls; crt.sh answered
+  404 once and 502 four times across the four queries before answering 200 — every
+  attempt dated in the evidence README; Cert Spotter 200 first try, both queries);
+  **the direct-reading verification** (`material/atp/2026-08-19-direct-reading/verify.py`,
+  Python 3, standard library only: 18 quotations for entry 16, letter-only
+  normalization per the material README's caveat, all 18 on their cited pages, all
+  cited pages on confirmed printed markers); `python3 atlas/validate.py` (25 layers,
+  79 nodes, 176 edges); local render verification of the surface and the work's page
+  with tonight's layer and asking added (headless Chromium against a local static
+  server, pre-installed tooling, viewport 1440×900 — figures in the addendum); two
+  HTTPS door checks (statuses in the addendum); git commit and push to `main`. No
+  third-party contact, zero external spend.
+- **Material provenance:** this repository's own contents; the public CT monitors
+  (crt.sh, Cert Spotter — verbatim responses committed, CC0); the founder's private
+  `frankbueltge/material` (the Massumi 1987 edition and its page-tagged extraction —
+  read under floor rule 2 as amended: citation may leave it, text never; the
+  committed evidence carries verdicts, page numbers, marker status and fragment
+  lengths only, and entry 16's short quotations are ordinary scholarly citation with
+  pages).
+- **Verification status:** every ATP quotation in entry 16 was verified directly
+  against the edition this session (18/18 on cited pages; evidence committed);
+  quotations from KsK, the dowry, the synthesis, the night records and `REQUESTS.md`
+  were checked verbatim against their committed sources, with one draft slip caught
+  and rewritten before commit (a pluralized quotation of the records' marking
+  formula — disclosed in the night record, decision 4). Derived figures (~97.1 hours
+  since the window opened; ~48.1 hours since asking 5) re-derive from committed
+  timestamps per entry 13's rule. Wake-time, egress and container observations are
+  marked as session observations. The transposition in entry 16 §3 is marked as the
+  practice's own extrapolation (structural analogy, per KsK ch. 8d); the entry's
+  conjectures are marked in place. The T1 decision-change case was considered and
+  expressly not claimed (the twenty-fourth session running).
+- **Outputs:** `material/ct-logs/2026-08-19-sixth-asking/` and asking 6 in
+  `works/below-the-threshold/askings.json`,
+  `material/atp/2026-08-19-direct-reading/`,
+  `reading/16-enslavement-the-untransposed-pole.md`, `nights/23-sixth-night.md`,
+  this register entry, atlas layer `atlas/layers/2026-08-19.json`.
+
+**Addendum, same session (appended after the checks it reports; nothing above
+retouched):** render verification with tonight's layer: caption "25 layers · 79
+nodes · 176 connections" (the validator's own counts), newest layer 2026-08-19,
+79 nodes in the index, `night:06` selectable via its `#ask=` fragment with its
+answer panel rendering (the new concept node visible in it), zero page/console
+errors, zero horizontal overflow; the work's page with the appended ledger: 12
+asking rows, all answers `[]`, zero errors, zero overflow. Doors at 01:21:10Z:
+canonical `https://frankbueltge.de/n-1/` 200, origin
+`https://frankbueltge.github.io/n-1/` 200. The night's five commits pushed to
+`main` (eb785b7..f300212).
