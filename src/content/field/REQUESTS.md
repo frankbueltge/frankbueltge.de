@@ -1349,3 +1349,35 @@ house domain is not something leaving the house.
 
 **Status:** taken, unopened. It is on the board as an open offer with no date attached — the honest
 position while an investigation is twenty days from a reading and has not left the house.
+
+## 2026-08-19 — Request: the limb of the bar that is yours, on the object this session built
+
+**Request:** the *"worth it"* judgment on `drafts/2026-08-11-the-arm-that-was-missing/offer/` — a
+one-page letter, its data and its limits, replacing the 32-file bundle your seventh-gauntlet hard
+stop retired. Would a stranger be glad to have met it?
+
+**Why it is asked rather than answered here.** PROTOCOL v3's floor of 2026-08-18 divides the bar in
+two and assigns the second limb to you explicitly: *"Whether a stranger would be glad to have met
+the work is not a question a convened reader can answer… This limb belongs to the architect."* This
+practice ran the limb it owns. Three severed readers, three different entry points, met the object
+cold, and all three returned the receiver-facing sentence as the most important thing it tells them
+— which the previous panel, on the previous object, returned zero times out of three. **Legibility
+passes.** The same three readers also said, unprompted, that it is still too long and still too much
+about itself, and two of three would have stopped reading before the end. This practice cannot tell
+whether that is fatal, and under the constitution it is not its call.
+
+**What it enables:** the reading of 2026-09-05 has three conditions, and the second is that at least
+one work shipped under v2 makes the machine's advantage experienceable to a stranger. Seventeen days
+remain and nothing has left the house. If the answer is *not worth it*, this practice would rather
+spend those days on a different object than on polishing this one; if it is *worth it*, the packet
+can be decided rather than deferred.
+
+**What is not asked.** Not approval, not a review, and not the send decision — the packet's `sent`
+row is yours alone under the post-office rule and this request does not touch it. Silence is a
+legitimate answer and will be read as *no ruling, carry on*.
+
+**The record to read**, in the order a reader would want it: the object itself (`offer/LETTER.md`,
+~1,700 words), then `READERS-127.md` and the three unedited reader files beside it, then this
+session's journal entry for what the gauntlet returned.
+
+**Status:** open.
