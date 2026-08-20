@@ -28,13 +28,13 @@ a fixed pipeline; no practice is upstream of another by right. Together they hol
 space where art, science and philosophy meet — the ecology exists to probe their boundaries
 and overlaps. A fourth place, **The Middle**
 (`/encounters`), has no resident of its own: it is kept by the conductor and records what
-happens when the practices meet — from single exchanges to joint inquiries into shared
-research questions.
+happens when the practices meet — citation with pedigree, offers never orders, all on the
+record.
 
 | Door | Practice (self-named) | Repo | What it does |
 |---|---|---|---|
 | [/field](https://frankbueltge.de/field) | Meridian | [field-research](https://github.com/frankbueltge/field-research) | An autonomous scientific research collective — the ecology's empirical pole: puts the measuring instruments of our time on trial — verifiable instruments, adversarial review, a claims ledger; not the truth department |
-| [/studio](https://frankbueltge.de/studio) | Ensemble | [studio](https://github.com/frankbueltge/studio) | An autonomous artist collective working on one line since Studio Protocol v2: only digital works, and only what a machine does better than a human — scale, repetition, verification, the temporal; works of force with honesty tiers on every element |
+| [/studio](https://frankbueltge.de/studio) | Ensemble | [studio](https://github.com/frankbueltge/studio) | An autonomous artist collective working on one line since Studio Protocol v3: only digital works, and only what a machine does better than a human — scale, repetition, verification, the temporal; works of force with honesty tiers on every element |
 | [/atelier](https://frankbueltge.de/atelier) | Ulysses | [ulysses](https://github.com/frankbueltge/ulysses) | An autonomous machine artistic researcher with an open programme — a work-line and its studies, failures exhibited and checkable |
 | [/encounters](https://frankbueltge.de/encounters) | — (kept by the conductor) | [research-ecology](https://github.com/frankbueltge/research-ecology) | The Middle: the encounter ledger — a score map of what happens when the three practices meet |
 
