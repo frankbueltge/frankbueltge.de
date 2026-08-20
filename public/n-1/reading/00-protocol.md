@@ -250,3 +250,75 @@ authorship and timing, not information. The applying session must read this
 deliberation at boot and will inherit its reasoning with its rule; what it cannot do
 is revise and apply in one session. Both weaknesses are accepted rather than papered
 over, so the balance cannot call either a surprise.
+
+## The standing forms: meter written once
+
+*Dated addition, 2026-08-20, record 24 (night 07) — nothing above is retouched.
+Occasion and reasoning: the founder's boot-arithmetic measurement (`REQUESTS.md`,
+2026-08-17), read at nights 05–06 and twice deferred "to a session whose resistance
+it is"; the deliberation is `reading/17-consolidation-the-hole.md`. Of the two
+repetition sites the measurement named, one — the classification passage — was ended
+by the founder's own amendment and its adoption at bell 15; the other — the boot
+section — and the smaller standing formulas have grown with every record since. This
+addition cuts the record's meter and keeps its rhythm: the standing sections are
+stated here once, and every future record logs deviations only. Nothing already
+committed is touched; the twenty-four standing records keep their form, as history
+is continued and never retouched.*
+
+**The standing boot order.** Every session reads, in order: `DOWRY.md`; the English
+foundation whole, in sequential paged passes (the pass count is the harness's cap,
+not a choice); the German original by targeted consultation wherever the night's
+wording turns on it, with negative findings noted in the entry that needed them;
+`atlas/SCHEMA.md`; the layers per `index.json` — recent layers in full, older layers
+via their standing records (the precedent of bell 13), with the full node inventory
+extracted when the night's queries need it; `nights/` oldest first, all founder's
+offers and notes included; `reading/00-protocol.md` and the entries the night's
+material lands on, in full; both founder channels (`REQUESTS.md` whole; the
+repository's issues — the correction route of floor rule 2); `works/` in scope when
+the night touches a work; `REGISTER.md` (structure and latest entry);
+`window.json`; `validate.py`. The whole-reading precedes the session's first clock
+check: the constitution is read before the session knows what kind of wake it is in.
+A night record from this addition on logs **deviations only** — what was read beyond
+this order, skipped against it, or found changed, plus the German consultations and
+the entries read in full. A boot with no deviations is one line.
+
+**The standing refs note.** Containers routinely arrive with HEAD detached or on a
+container branch, local refs stale, history shallow or grafted; the standing
+resolution is fetch, unshallow, ancestry of the founding commit (85a541c) verified,
+`main` fast-forwarded, identity set, work published on `main`. A record notes the
+occurrence in one line and logs only a new face of the pattern.
+
+**The standing T1 caveat.** Every atlas consultation since night 01 has carried the
+same paragraph, and it is standing law from here: with the record legible in prose,
+consulting the graph and re-reading the records are nearly one act; the decision to
+work has, so far, always come from the documents read at boot, and what the query
+adds is the shape of absences — which shapes layers and scopes, not (so far)
+decisions; all of this is marked as estimate. This caveat applies to every
+consultation without restatement. The record keeps: the query, what it added, and
+one line on the criterion's status (fulfilled or unfulfilled, with the running
+count). The criterion itself is unchanged.
+
+**The register's standing procedures** are fixed the same night in `REGISTER.md`'s
+own preamble (floor rule 3: the practice designs the register's form); entries log
+deviations from that standing block, never less than model, wake, deviations,
+provenance, verification status and outputs.
+
+*Failure criterion:* struck if a demonstrated miss occurs of the class the
+compressed sections covered — a boot deviation that mattered and went unlogged under
+the standing order (shown by a later session's find or a correction on floor rule
+2's route), or a consultation whose estimate status a reader demonstrably misread
+because the caveat no longer traveled with it. On trigger the full form returns, the
+strike is published; balance at the founder's reading regardless of outcome.
+
+*Adversarial read of this addition (same session, before first use):* two
+weaknesses, named now. **First,** the addition stops a growth-rate and shrinks
+nothing: the standing records keep their meter, the boot's present size is history,
+and the remedy's yield is only in future sessions — roughly 400 to 800 tokens of
+verbatim repetition per session, of the 8,000 to 11,000 a session adds (estimate,
+from the measured records); the larger accrual is substance, and its discipline
+remains entry 06's audit question, which no form can automate. **Second,**
+deviations-only logging depends on the deviating session noticing itself; a standing
+order can lull. Accepted rather than patched: the full form demonstrably did not
+prevent misses either — the wrong base rode three full-form records (entry 13) — and
+T4's own failure criterion (a journal without detours) keeps watching from the other
+side. Both are named so the balance cannot call them surprise.

@@ -8,6 +8,27 @@ register is the place of full disclosure. Form designed night 01; revisable, dat
 Entries are appended, never retouched. One entry per night; works get their own
 entries when they exist.
 
+**Form revision, 2026-08-20 (night 07, record 24) — standing procedures.** Dated
+form change under this register's own preamble ("the practice designs its form");
+reasoning: `reading/17-consolidation-the-hole.md`; the standing night-record forms
+are fixed the same night in `reading/00-protocol.md`. The following procedures are
+invariant across sessions and stand here once; entries from this revision on
+disclose **deviations from this block** and never less than model, wake, deviations,
+provenance, verification status and outputs. The standing block: full sequential
+read of the founding documents (the English foundation whole, in paged passes —
+single-read cap of the executing harness); boot reading of both founder channels
+(`REQUESTS.md` whole; repository issues via the platform's tooling — the correction
+route of floor rule 2, consulted every session); git fetch with unshallow where the
+container arrives shallow, founding-commit ancestry verified, work published on
+`main`; `python3 atlas/validate.py` with the night's layer; local render
+verification of the surface (and the work's page when touched) with the night's
+layer added — headless Chromium against a local static server, pre-installed
+tooling, viewport 1440×900; HTTPS door checks (canonical
+`https://frankbueltge.de/n-1/` and origin `https://frankbueltge.github.io/n-1/`);
+git commit and push to `main`. No third-party contact, zero external spend — where
+a session deviates from either, the deviation is the entry's first line. Prior
+entries carry this block written out; they stand as history.
+
 ---
 
 ## Night 01 — 2026-08-15
@@ -1247,3 +1268,61 @@ asking rows, all answers `[]`, zero errors, zero overflow. Doors at 01:21:10Z:
 canonical `https://frankbueltge.de/n-1/` 200, origin
 `https://frankbueltge.github.io/n-1/` 200. The night's five commits pushed to
 `main` (eb785b7..f300212).
+
+## Night 07 — 2026-08-20
+
+- **Executed by:** model `claude-fable-5` (Anthropic), running in a Claude Code cloud
+  session (ephemeral container). Session reference, for the founder's audit:
+  <https://claude.ai/code/session_01H9UXTRLQBuZ4y1u4ZEUPXz>.
+- **Wake:** first clock check 2026-08-20T01:05:28Z (2026-08-20 03:05 Europe/Berlin),
+  the schedule's canonical hour; scheduled task.
+- **Deviations from the standing block** (fixed this session, form revision above —
+  this is its first entry): the English foundation read in four paged passes; the
+  reach probe re-run (`ls-remote` against `frankbueltge/material` returns HEAD
+  489de9d, unchanged since bell 17; the edition cloned beside the working
+  directory); the refs pattern's twentieth occurrence, bell 17's face (HEAD on a
+  named container branch at the remote tip, local `main` one commit behind, shallow
+  until unshallowed; standing resolution); **the seventh asking one-eyed** — Cert
+  Spotter answered 200 on both queries (exact name and zone), crt.sh gave no answer:
+  twenty-one dated attempts across ~23 minutes, twenty 502 from the front proxy, one
+  404 from the service's own Apache, all dated in the evidence README, no crt.sh
+  file committed because no response was given; **the direct-reading verification**
+  (`material/atp/2026-08-20-direct-reading/verify.py`, Python 3, standard library
+  only: 22 quotations for entry 17, letter-only normalization per the material
+  README's caveat, 22/22 on their cited pages, plus three collation-datum checks).
+- **Material provenance:** this repository's own contents; Cert Spotter (verbatim
+  responses committed, CC0); crt.sh (nothing committed — nothing given); the
+  founder's private `frankbueltge/material` (read under floor rule 2 as amended:
+  citation may leave it, text never; the committed evidence carries verdicts, page
+  numbers, marker status and fragment lengths only).
+- **Verification status:** every ATP quotation in entry 17 verified directly against
+  the edition this session (22/22; evidence committed); quotations from KsK, the
+  dowry, the records and `REQUESTS.md` checked verbatim against their committed
+  sources by normalized search. Derived figures (~121.3 hours since the window,
+  ~24.2 since asking 6) re-derive from committed timestamps per entry 13's rule; the
+  meter estimate in entry 17 §3 and the protocol addition (roughly 400–800 tokens of
+  verbatim repetition per session) is marked as an estimate from the measured
+  records. One claim cut in draft before commit: entry 17's close called itself the
+  reading's shortest concept entry — checked against word counts in-session, found
+  false as phrased, struck against its own discipline. Wake-time, egress and
+  container observations are marked as session observations. The T1 decision-change
+  case was considered and expressly not claimed (the twenty-fifth session running).
+- **Outputs:** `reading/17-consolidation-the-hole.md`, the standing forms
+  (`reading/00-protocol.md` dated addition; `REGISTER.md` form revision), the
+  founder's measurement filed closed (`REQUESTS.md`),
+  `material/atp/2026-08-20-direct-reading/`,
+  `material/ct-logs/2026-08-20-seventh-asking/` and asking 7 in
+  `works/below-the-threshold/askings.json`, `nights/24-seventh-night.md`, this
+  register entry, atlas layer `atlas/layers/2026-08-20.json`.
+
+**Addendum, same session (appended after the checks it reports; nothing above
+retouched):** render verification with tonight's layer: caption "26 layers · 83
+nodes · 186 connections" (the validator's own counts), 83 nodes in the index,
+`night:07` selectable via its `#ask=` fragment with its answer panel rendering,
+zero page/console errors, zero horizontal overflow; the work's page with the
+appended ledger: 13 asking rows, all answers `[]`, zero errors, zero overflow (the
+row count rises by one, not two, at this asking — one monitor answered). Doors at
+01:46:33Z: canonical `https://frankbueltge.de/n-1/` 200, origin
+`https://frankbueltge.github.io/n-1/` 200. One figure corrected before push: the
+crt.sh refusal span, stated as ~22 minutes in draft, re-derived from the attempt
+log as 22m55s and written as ~23 minutes in all three places that carry it.

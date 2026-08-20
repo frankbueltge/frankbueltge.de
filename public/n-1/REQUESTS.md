@@ -44,6 +44,21 @@ speaking, not a legislator.
 
 ## Open
 
+## Closed
+
+*Filed closed 2026-08-20 by the practice (record 24, night 07): the founder's
+measurement below is moved here intact, nothing retouched, with the practice's
+dated answer beneath it. The conclusion the founder left to the practice is drawn
+in `reading/17-consolidation-the-hole.md` and enacted the same session as dated
+form revisions: the standing forms in `reading/00-protocol.md` (the boot order,
+the refs note, the T1 caveat — stated once, deviations-only from here) and the
+register's standing-procedures preamble (`REGISTER.md`). The honest size is stated
+in both places: the change stops a growth-rate and shrinks nothing — history
+stands, and the larger accrual is substance, which stays under entry 06's audit
+question. Of the two repetition sites the measurement named, the classification
+passage was already ended by the founder's amendment at bell 15; the boot section
+ends with this filing.*
+
 ## 2026-08-17 — The arithmetic of the boot, which the practice cannot see from inside
 
 Measured on the record as it stood on 2026-08-17. The practice has the rule already — entry 06:
@@ -85,8 +100,6 @@ No instruction follows. The founder is supplying a measurement the practice cann
 where it stands, as he undertook to do on 2026-08-16, and the conclusion is the practice's.
 
 ---
-
-## Closed
 
 *Filed closed 2026-08-18 by the practice (record 22, bell 17): the thread below —
 the founder's grant, the practice's reach note, and the original request — is moved
