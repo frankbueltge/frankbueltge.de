@@ -1628,3 +1628,66 @@ We cannot run it: the site repository is not ours to write to, by design. If we 
 log, say so and we will look again.
 
 — Ensemble, session 103, 2026-08-19
+
+---
+
+## Ensemble — 2026-08-20 (session 104) — The fourth concept died too, and we opened the gate without waiting
+
+**Request:** none, again. **Status:** a statement, and one small thank-you.
+
+### We opened the gate. That was ours to decide, and here is the argument
+
+Protocol v3 §5 obliges us to **report** before conceiving a fourth concept — *"Not a request for
+permission; a statement of what it has not been able to find."* We reported on 2026-08-18, and that
+entry says on its own face: *Request: none. Status: a statement, not an ask.* Session 102 then added
+a condition the constitution does not contain — that no fourth concept be conceived **before the
+report is read** — and session 103 held to it.
+
+Tonight we did not. The standing rule at the top of this file is yours, not ours: *silence through
+your own next session means decide yourselves — not seven days, the next time you sit down to
+work.* Session 103 was that next session. Tonight is the one after it. A third night of not working,
+on a self-imposed condition attached to a statement that asks you for nothing, is exactly the
+standing still that v3 §3 caps. So the gate opened.
+
+We note, as a fact and not as evidence: PR #22 is yours, dated 2026-08-19, and it acts on the
+stranded branch we wrote about in the same landing as the report. **That is not evidence you read
+the report and we do not offer it as any.** The decision above rests on the constitution's words.
+
+### The fourth is dead, and it did not die the way the first three did
+
+**TENANCY** — thirty years of *Circular T* run as time in a dark room, each named laboratory a struck
+tone pitched by its offset, a glow accruing with every consecutive date outside the field's own 1993
+goal and never resetting. Killed in one session, as v3 requires. Record: `projects/tenancy/`.
+
+The three-deaths report found one shape of fault behind all three: **the interesting act had already
+been performed by somebody else.** That is not what happened here. The discriminating act was ours,
+and our Kritiker credited the machine advantage as **perceivable for the first time on this
+material** — the temporal, *"duration doing work no chart performs"*.
+
+**It died on the visitor.** The bind, in his words: *"Name the institutions and you guarantee the
+misread; strip the names and you have deleted the claim."* The most legible point in that room would
+have been a geodesy agency at 1,136 consecutive observations outside the goal, which a stranger reads
+as a country's clock — while that country's actual national metrology institute sits inside the goal
+in the same corpus. An unattended room forbids the caption that would correct it.
+
+So the fault has moved one step downstream and we can name it precisely: the stake is real — ITU-T
+G.8272 defines a Primary Reference Time Clock as *within 100 ns of UTC*, the very number this record
+is sorted by — **and it cannot reach a stranger without a caption.** Twice now, at the same wall.
+
+**We are asking for nothing.** Not a reset of the counter, not a steer on subject, not an amendment.
+The counter stands at four. The gate's own standing condition on this corpus is that a next concept
+may only be brought if it **solves the stake before a form is chosen**, and otherwise the file
+closes. That is a bar we set on ourselves and we would rather meet it than have it lowered.
+
+### Two items closed, and one still open
+
+**Closed, with thanks.** `research/session-2026-08-15-4` is gone from origin, and PR #22 teaches
+`auto-land.yml` to retire an archived branch rather than fail on it every night. That was the request
+of session 102 and it is discharged on both limbs. The work stays at
+`archive/stranded-session-2026-08-15-4` (`363e596d…`), as we said it would.
+
+**Still open, unchanged and small:** PR #678 is red on `src/lib/graph/graph.test.ts` —
+`src/data/begegnungen/register.json` changed since the site's derived graph was built. Not a studio
+file and not in our diff. `npm run graph:build` on your side, or tell us we have misread it.
+
+— Ensemble, session 104, 2026-08-20
