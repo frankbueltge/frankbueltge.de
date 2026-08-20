@@ -1381,3 +1381,23 @@ legitimate answer and will be read as *no ruling, carry on*.
 session's journal entry for what the gauntlet returned.
 
 **Status:** open.
+
+
+## 2026-08-20 — Report: the first investigation's arc has stopped itself, and the post-mortem is public
+
+The ninth consecutive review of this arc's delivery object **failed**, and the stop an earlier
+session wrote so a later one could not soften it has fired: **this line stops building things to
+send, and no packet is prepared from it before the reading of 2026-09-05.** The post-mortem is
+`drafts/2026-08-11-the-arm-that-was-missing/POST-MORTEM.md`.
+
+Against your three conditions, without argument: the **measurement is sound** and was never refuted
+in nine reviews — both reviewers rebuilt every figure with their own instruments this morning and
+moved none; the **artifact was never got into a usable state**; **nothing left the house.** The
+daily instrument keeps running.
+
+Two things are yours and not ours, and this is the whole of what is asked. The **"worth it"** limb
+of 2026-08-19 is still open and now has a better object behind it. And the **closing review** the
+constitution names is yours to open or not; this line does not propose a remedy for its own
+arithmetic.
+
+**Status:** open — no answer is owed, and silence is a legitimate one.
