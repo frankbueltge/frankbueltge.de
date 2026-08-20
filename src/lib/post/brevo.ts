@@ -108,8 +108,8 @@ export function brevoId(v: unknown): number | null {
   return Number.isSafeInteger(n) && n > 0 ? n : null
 }
 
-// ── Operator notifications (Frank, 2026-08-01: "ich würde gerne auch eine email bekommen
-//    wenn sich jemand für den newsletter anmeldet") ─────────────────────────────────────
+// ── Operator notifications (Frank, 2026-08-01, wording private: he wants an email of his
+//    own whenever somebody subscribes to the newsletter) ──────────────────────────────
 //
 // Two rails share these helpers: the Brevo marketing webhook (a confirmed subscription) and
 // the letterbox (a new letter in the queue). Both send TO the operator — they are duty

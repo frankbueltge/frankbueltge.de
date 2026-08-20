@@ -133,8 +133,10 @@ export function firstSentence(text: string): string {
 // ————————————————————————————————————————————————— honesty tiers ————————————
 //
 // The house's own vocabulary for what a work stands on. It writes them as a labelled clause —
-// "SOURCED spine: …", "IMAGINED: …" — and only two of the five works declare any, which is itself
-// worth showing: the dossier says so rather than inventing a tier for the other three.
+// "SOURCED spine: …", "IMAGINED: …" — and only some of the works declare any, which is itself
+// worth showing: the dossier says so rather than inventing a tier for the ones that do not. (The
+// count used to stand here as "two of the five"; the house keeps shipping, so the prose says what
+// the rule is and the test counts.)
 //
 // The colon is load-bearing. One Tap's description ALSO contains the sentence "The SOURCED spine
 // below is unaffected and was never in question", inside its correction notice; that is a claim
@@ -207,20 +209,37 @@ export function recordAround(summary: string, re: RegExp): string {
   const firstEnd = summary.indexOf('. ', at)
   if (firstEnd < 0) return summary.slice(from).trim()
   let to = firstEnd + 1
-  if (!hasQuote(summary.slice(from, to))) {
+  if (!carriesTheSaying(summary.slice(from, to))) {
     const secondEnd = summary.indexOf('. ', to + 1)
     const next = summary.slice(to, secondEnd < 0 ? summary.length : secondEnd + 1)
-    if (hasQuote(next)) to = secondEnd < 0 ? summary.length : secondEnd + 1
+    if (carriesTheSaying(next)) to = secondEnd < 0 ? summary.length : secondEnd + 1
   }
   return summary.slice(from, to).trim()
 }
 
-const hasQuote = (s: string) => /[“"]/.test(s)
+/** The marker the studio writes where it has withheld the architect's own wording. Its privacy rule
+ *  of 2026-08-15 — his messages are recorded as dated paraphrase, never quoted — reached the
+ *  chronicle on 2026-08-16, so from that date a return is written up with no quotation mark in it
+ *  at all. Both derivations below have to know that, or they read the new record as a record that
+ *  says nothing. */
+export const PRIVATE_MARKER = /wording private/i
 
-/** The eye's own words inside a record, where the record carries them. All three pairings occur in
- *  the committed chronicle (S43 uses “…”, S32 uses "…", S28 uses '…'). Returns '' when there is
- *  nothing quoted to find — the caller then keeps the whole sentence and nothing is invented. */
+/** Does this sentence carry WHAT WAS SAID — as a quotation, or as a paraphrase the record itself
+ *  marks as standing in for withheld wording? Before 2026-08-15 only the first case existed. */
+const carriesTheSaying = (s: string) => /[“"]/.test(s) || PRIVATE_MARKER.test(s)
+
+/** The eye's own words inside a record, where the record still carries them. All three pairings
+ *  occur in the chronicle as it was written before the privacy rule (S43 used “…”, S32 "…", S28
+ *  '…'). Returns '' when there is nothing quoted to find — the caller then keeps the whole
+ *  sentence and nothing is invented.
+ *
+ *  A passage marked `wording private` yields NOTHING, deliberately: what stands in it is this
+ *  house's paraphrase, and paraphrase lifted into a field named `quote` — rendered by
+ *  Dossier.astro as a blockquote of the eye's own words — would put back, as a regex, exactly what
+ *  the rule removed. The suppression is deliberately whole-passage: a real quotation of someone
+ *  else sharing a sentence with a withheld one is dropped too, which is the safe direction. */
 export function quotedFragment(text: string): string {
+  if (PRIVATE_MARKER.test(text)) return ''
   for (const re of [/“([^”]{8,}?)”/, /"([^"]{8,}?)"/, /'([^']{8,}?)'/]) {
     const m = re.exec(text)
     if (m) return m[1]

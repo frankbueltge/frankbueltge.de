@@ -1,10 +1,10 @@
 # The USP rework program — build out, never archive
 
-**Status: IN FORCE, decided by Frank 2026-08-09, verbatim:** *"nein, nicht archivieren,
-sondern so ausbauen, dass wirklicher mehrwert und alleinstellungsmerkmale entstehen!"* —
-the answer to the USP audit (`docs/audits/2026-08-09-usp-audit.md`, merged #472), which
-found: of 16 holdings, 1 draft-UNIQUE, 6 with (mostly thin) added value, 9 redundant
-against named, linked neighbors.
+**Status: IN FORCE, decided by Frank 2026-08-09** (his instruction, wording private: do not
+archive the experiments — build them out until real added value and genuine distinguishing
+features exist). It answers the USP audit (`docs/audits/2026-08-09-usp-audit.md`, merged
+#472), which found: of 16 experiments, 1 draft-UNIQUE, 6 with (mostly thin) added value,
+9 redundant against named, linked neighbors.
 
 The audit's two cross-cutting findings drive the program's shape:
 
@@ -30,8 +30,68 @@ computation or presentation on material the pipelines already commit.
 **Phase 2 — the USP needs new material (directed sessions, weeks).** Builds that need new
 data sources or joins.
 
-**Checkpoint: the reading of 2026-09-05.** By then every holding shows either its USP live
+**Checkpoint: the reading of 2026-09-05.** By then every experiment shows either its USP live
 on the page, or a dated build plan in this document — nothing stands unpositioned.
+
+*(Route note, 2026-08-15: `/holdings` is now `/experiments`. Paths written `/holdings` in the
+dated Landed entries below are left as they were — they record what the route was called when
+the work landed, and the old path 301s.)*
+
+## Where the program stands — read 2026-08-15, three weeks before the checkpoint
+
+Measured against the repo, not against memory (row-by-row evidence gathered 2026-08-15):
+
+| | Count | Rows |
+|---|---|---|
+| **USP live on the page** | 5 | #1 Consensus · #2 Iceberg · #6 Protocol · #10 Headroom · #15 Patterns |
+| **Partial** — prior art cited, the build itself open | 7 | #4 Attention · #7 Policy · #8 Editorial Deadline · #11 Round Numbers · #12 Delve · #13 Bycatch · #14 Correction |
+| **Untouched** | 3 | #3 Society · #5 Observatory (by design, its own session) · #9 Ghost Fleet |
+| **In build** | 1 | #16 Watchtower (this session, 2026-08-15) |
+
+**The finding this reading produced: the program stalled on 2026-08-09.** All five live USPs
+landed on the day the program was written. In the six days since, exactly two things moved —
+Patterns' null-distribution histogram filled with real data (2026-08-15, the placeholder is
+gone), and Editorial Deadline received a large build that **is not the one this tracker
+describes** (see #8 below). Everything else stands where 2026-08-09 left it. Three weeks
+remain. Nothing about that is fatal — Phase 0 did the honesty work everywhere, so no page is
+currently overclaiming — but "partial" here means *the neighbours are cited and the daylight
+is still only asserted*, which is precisely the state the audit called out.
+
+Three corrections this reading forced on the table below:
+
+1. **#16 Watchtower's build premise was wrong.** The row said "derive the series from the
+   already-committed daily orbital snapshots" — but `src/data/ueberflug/satellites.json` is a
+   single file the nightly job overwrites; there is no directory of snapshots. The row was
+   written as if there were. It is buildable anyway, from two materials nobody had read: the
+   **git history** of that one file (56 committed observations — git is the archive, which is
+   this house's own premise), and the **launch year already inside every satellite's
+   international designator**, which turns today's snapshot into a multi-year cohort curve
+   without any new pipeline at all.
+2. **#8 Editorial Deadline diverged.** The tracker asked for an EU/international watchlist;
+   what was built on 2026-08-14/15 is the "world chamber" over GDELT's Global Difference Graph
+   (`docs/superpowers/specs/2026-08-14-editorial-deadline-world-chamber.md`), and the work was
+   reclassified `tier: 'instrument'`. `pipelines/redaction/src/redaction/watchlist.py` has not
+   changed since 2026-06-25. The divergence is not a fault — the world chamber is the stronger
+   instrument, and **the audit already recorded it** (scoreboard row 8, sealed 2026-08-14).
+   Only this tracker row was left describing work nobody is doing, and a tracker that does
+   that is decoration.
+3. **#13 Bycatch cites the wrong neighbours.** The row named Hanson/Marino/SPARC; the page
+   cites Stop Tracking Science and those three names appear nowhere. The apparatus *is* the
+   headline claim, so half the row is done — the citation half is not.
+
+**The audit is ahead of this tracker; the registry is ahead of both.** The audit has kept
+itself current — it now runs to **17 sections**: The Balance was added on 2026-08-14 with a
+launch-day prior-art pass (verdict **UNIQUE as a living instrument**), and #8's scoreboard row
+already records the world chamber. So the drift is not in the audit, it is here: **this
+document still has sixteen build rows and no row for The Balance.** A work with a verdict and
+no build lane is exactly what the coordination table exists to prevent.
+
+`src/data/werke.ts` meanwhile holds 21 entries and carries a `tier` field (`project` /
+`instrument` / `experiment` / `studie`) that postdates this document. Four registry entries sit
+outside the audit's seventeen — `on-record`, `field`, `studio`, `atelier` — and `n-1` (live
+since 2026-08-15) is a practice mirror not in `werke.ts` at all. The USP obligation is
+test-enforced for `/experiments`, so nothing here is unguarded; the gap is bookkeeping, and
+bookkeeping is what a checkpoint reads.
 
 ## Per experiment: target USP and build
 
@@ -44,7 +104,7 @@ on the page, or a dated build plan in this document — nothing stands unpositio
 | 5 | Observatory | Not this repo's call — the audit section and the TED×GDELT news-shadow candidate (`state-before-interface` docs, 2026-08-09) are handed over; reframe from "watches AI procurement" (Tussell/TI-EU/JRC do) to "autonomous, hash-verifiable **investigation** pipeline" | Its own session decides | — |
 | 6 | The Protocol | The deterministic bureaucratic-literary device — an art piece about administrative language, not a data product | Reframe copy: the no-LLM, test-locked template and "Resolution: adjourned" ARE the claim; cite OWID as what this deliberately is not | 0/1 |
 | 7 | The Policy | An insurance instrument on genuinely under-covered market signals | Either move to cat-bond spread/ROL data (Swiss Re index, Artemis) — data-access check first — or make the legal-document conceit the explicit claim; cite Deep Sky either way | 2 |
-| 8 | Editorial Deadline | The non-US register: machine-only change-tracking of EU/international institutions EDGI's US-federal focus never covers | Narrow/extend the watchlist to EU + international bodies; state the no-human-curation epistemics as deliberate | 2 |
+| 8 | Editorial Deadline | The non-US register: machine-only change-tracking of EU/international institutions EDGI's US-federal focus never covers | **Superseded 2026-08-14/15 — see the reading above.** What was built is the "world chamber" over GDELT's Global Difference Graph (spec `2026-08-14-editorial-deadline-world-chamber.md`), and the work is now `tier: 'instrument'`. The watchlist itself is unchanged since 2026-06-25. Still owed from this row: the no-human-curation epistemics stated as deliberate (half-done, `RedactionPage.astro`) | 2 |
 | 9 | The Ghost Fleet | From re-narration to compound finding: GFW dark-vessel events **cross-referenced** with MPA boundaries, sanctions lists, flag-state records — join logic shown | New joins on public data; the audit's "strongest rework-or-remove candidate" becomes the strongest build | 2 |
 | 10 | Headroom | The breakeven-PUE against the physical floor — the impossible-zone arithmetic nobody else runs | Make the derivation the entire spine; region granularity later | 1 |
 | 11 | Round Numbers | The false-positive-rate-vs-n curve as a reusable public artifact, run against corpora nobody has tested | Cite the literature (Mebane, Deckert, PLOS One); switch the daily corpus from picked-over territory to untested contemporary series | 2 |
@@ -52,7 +112,8 @@ on the page, or a dated build plan in this document — nothing stands unpositio
 | 13 | Bycatch | The standing instrument: recurring cadence, paired diamond-OA control, dual vantage — the apparatus no study has | Cite Hanson/Marino/SPARC; make the apparatus the headline claim | 0/1 |
 | 14 | The Correction | What a Fed tool structurally cannot say: the **decisions** made on numbers later erased | Consequences layer — rate decisions, elections, hiring data dated against later revisions; cite the SF Fed tool as the neutral instrument this deliberately is not | 2 |
 | 15 | Patterns | The null-distribution machine: thousands of shuffles, a real false-discovery rate, on a self-referential archive — the rigor Vigen's joke lacks | Foreground the permutation distribution; cite Vigen by name as the piece this answers | 1 |
-| 16 | Watchtower | The **densification time-series**: commercial vs. military EO-satellite density over a location, over time — no neighbor tracks it (the audit's best rework direction of all 16) | Derive the series from the already-committed daily orbital snapshots; name SatFleetLive/SpyMeSat on the page | 2 |
+| 17 | The Balance | *(row added 2026-08-15; audited 2026-08-14, verdict **UNIQUE as a living instrument** — the only UNIQUE-outright verdict in the register)* Self-image against foreign image as a **standing** instrument: daily, archived, with a bootstrap CI — where GDELT's own API gives tone on a 3-month rolling window and the mood dashboards keep no archive at all | To be written by whoever claims the lane. A UNIQUE verdict is the one case where the build is not "find the daylight" but **"keep the daylight"** — the neighbours close this gap by adding an archive, so the standing-register property is the thing to defend and make visible | — |
+| 16 | Watchtower | The **densification of the gaze**: how the active EO fleet grows and who owns the new arrivals — no neighbor tracks it (the audit's best rework direction of all 16). ~~commercial vs. military density over a location~~ — **the military half is not a claim the catalogue can carry** (classified satellites are absent; a military count is a floor, and 2024/2025 read zero) | ~~Derive the series from the already-committed daily orbital snapshots~~ — **there are none; the nightly job overwrites one file** (corrected 2026-08-15). Built instead from (a) the **git history** of that file — 56 committed observations since 2026-06-11, recovered by `scripts/ueberflug_densification.py`, the standing register; (b) the **launch year in each international designator**, which makes today's snapshot a 2005–2026 cohort curve with no new pipeline. SatFleetLive/SpyMeSat already named on the page | 1 (was 2 — no new material needed) |
 
 ## Rules that govern the builds
 
@@ -65,7 +126,8 @@ on the page, or a dated build plan in this document — nothing stands unpositio
 
 ## Work claims — read before building, write before building
 
-**The coordination rule (Frank, 2026-08-09: "ihr müsst euch absprechen"):** more than one
+**The coordination rule (Frank, 2026-08-09, wording private — sessions must coordinate with
+each other):** more than one
 session works this program in parallel. Before any session builds on an experiment, it
 reads this table and writes its claim here (one commit, pushed immediately — the same
 race-guard idea the practices use). A claimed lane is not touched by anyone else; an
@@ -79,9 +141,11 @@ unclaimed lane is free. Release a lane by dating the Landed line.
 | **The parked package**: knowledge graph (substrate) · neighbor-graph visualization · CLAUDE.md diet (`.claude/rules/`) | — released 2026-08-09 | 2026-08-09 | **done**, see Landed; the lane is free again. One standing consequence for everyone: changing `werke.ts`, `docs/decision-log.md`, the audit or the post ledger now requires `npm run graph:build` in the same commit, or `src/lib/graph/graph.test.ts` goes red (`.claude/rules/knowledge-graph.md`) |
 | **#1 Consensus** (longitudinal baseline on the G1 BigQuery path) | this session (afternoon 2026-08-09) | 2026-08-09 | **landed** — lane released |
 | **The ecology lane of the graph** (Frank, 2026-08-09 afternoon, all four options) | — released 2026-08-09 | 2026-08-09 | **done**, see Landed. Two things left for others: (1) the **attention export** is specified and consumed — the producing repo's session ships `src/data/attention/export.json` when it wants the lane live (`docs/design/2026-08-09-attention-export-contract.md`); (2) the ecology audit covers 4 of 59 works and **names its remainder** — next batches are free to claim |
-| **The ecology audit, made public on `/works`** (Frank, 2026-08-09 evening, "ok") | — released 2026-08-09 | 2026-08-09 | **done**, see Landed |
-| **Graph-Rebuild ohne Reibung** (Frank, 2026-08-09 abends: "kann man das irgendwie lösen?" → Variante A): pre-commit-Hook + Claude-Hook bauen den Graphen automatisch nach | this session (evening 2026-08-09), branch `feat/graph-hooks` | 2026-08-09 | building — touches `.githooks/`, `.claude/settings.json`, `.gitignore`, `package.json` |
-| #3 Society · #6 Protocol · #7 Policy · #8 Editorial Deadline · #9 Ghost Fleet · #11 Round Numbers · #12 Delve · #13 Bycatch · #14 Correction · #16 Watchtower | **unclaimed** | — | free — claim before building |
+| **The ecology audit, made public on `/works`** (Frank, 2026-08-09 evening, approved) | — released 2026-08-09 | 2026-08-09 | **done**, see Landed |
+| **Graph rebuild without friction** (Frank, 2026-08-09 evening, wording private — asked whether the friction could be removed; variant A chosen): a pre-commit hook plus a Claude hook rebuild the graph automatically | this session (evening 2026-08-09), branch `feat/graph-hooks` | 2026-08-09 | building — touches `.githooks/`, `.claude/settings.json`, `.gitignore`, `package.json` |
+| **#16 Watchtower** (densification: git-derived register + launch-year cohort curve) | this session (afternoon 2026-08-15) | 2026-08-15 | building — touches `scripts/ueberflug_densification.py`, `src/lib/ueberflug/densification.ts`, `src/data/ueberflug/densification.json`, `UeberflugStudiePage.astro` |
+| #3 Society · #6 Protocol · #7 Policy · #8 Editorial Deadline · #9 Ghost Fleet · #11 Round Numbers · #12 Delve · #13 Bycatch · #14 Correction | **unclaimed** | — | free — claim before building |
+| **#17 The Balance** | **unclaimed** | — | audited 2026-08-14 (**UNIQUE as a living instrument**), but has no build row in the table above — the tracker never grew to seventeen. Whoever claims it writes the row first |
 
 ## Parked (Frank, 2026-08-09 morning — BUILT the same afternoon, see Landed)
 
@@ -101,6 +165,53 @@ unclaimed lane is free. Release a lane by dating the Landed line.
 
 ## Landed
 
+- 2026-08-15 — **#16 Watchtower: the densification of the gaze, built out of material that
+  was already lying there.** The audit called this the strongest rework direction of all
+  sixteen, and the row had been sitting in Phase 2 because it looked like it needed a new
+  pipeline. It did not — the row's premise was simply wrong (see the 2026-08-15 reading), and
+  once that was checked, two materials turned up in data the site has been committing since
+  June:
+  **(a) The launch year was inside the data all along.** Every satellite carries its
+  international designator (`2014-029A`), so the *current* snapshot is already a cohort curve:
+  how many of today's active Earth-observation satellites went up in each year, and who owns
+  them. The finding is sharp — the active fleet's yearly cohorts run 11 (2022) → 29 → 37 → 50
+  (2025), and the commercial share of those arrivals goes from **1 of 11 to 33 of 50**. The
+  gaze densifies, and it densifies commercially.
+  **(b) Git was the time series.** `src/data/ueberflug/satellites.json` is overwritten nightly,
+  which is why the row assumed no history existed; but every overwrite is a commit, so the
+  archive was already there — 56 observations since 2026-06-11, recovered by
+  `scripts/ueberflug_densification.py` into `src/data/ueberflug/densification.json`. The house's
+  own premise (*git is the archive*) applied to a file nobody had read backwards.
+  **What the build refused to claim.** The row promised *commercial vs. military* density.
+  The catalogue cannot carry the military half: classified satellites are absent, so 2024 and
+  2025 read **zero** military — a fact about the catalogue, not the sky. The page states that
+  the military column is a floor and drops the ratio claim rather than presenting a hole as a
+  finding. It also states that the curve is the *active* fleet by launch year, not the launch
+  record, so deorbited satellites make early cohorts look thinner than they were. And the
+  56-day register is reported as **flat** — sixty-five days is far too short a lever for a
+  densification claim, which is exactly why the standing register is the instrument and the
+  cohort curve is the finding.
+  **The one judgement in the build was put to Frank and decided (2026-08-15): the midpoint.**
+  How satellites GCAT leaves unclassified enter the commercial share is not bookkeeping — the
+  unclassified rate is above 50 % in some 2005–2011 cohorts and **zero from 2023 on**, so the
+  rule changes the shape of the curve. Counting them as non-commercial would have made the old
+  cohorts look maximally state-owned and so exaggerated the very flip the page claims; dropping
+  them would have rested the early years on a handful of satellites. The midpoint claims
+  nothing about them either way, and the figure **draws the band it sits in** — a dashed line
+  spanning what the unclassified could still make the share — so the width of the claim is
+  visible rather than asserted. Cohorts GCAT classified completely carry no line at all, which
+  is every cohort from 2023 on, so the headline numbers never depended on the rule.
+  Guarded by `src/lib/ueberflug/densification.test.ts` (11 tests), including one that forbids
+  the page from stating a share its own band does not contain, and one that checks the failed
+  night of 2026-06-12 is still on the record instead of dropped.
+- 2026-08-15 — **the tracker's own guards, repaired.** Two tests in the house were failing at
+  random inside the full suite and passing alone — the worst state a gate can be in, because it
+  teaches everyone to re-run until green. Both were timeouts at the 5 s default, not real
+  defects: `consensus/baseline.test.ts` made ~10,000 `expect()` calls walking 2,496 archive days
+  (now one assertion per rule over the whole archive — same coverage, and a failure now names
+  every offending day instead of the first), and `society/engine.test.ts` runs simulations of up
+  to 12,000 ticks (cost declared with an explicit 60 s timeout rather than hidden by shortening
+  the simulations). Full suite: 2,721 tests, 136 files, green.
 - 2026-08-09 (afternoon) — **#4 Machine Attention: the Phase-0 gap closed**, the last of
   the sixteen still without neighbors. The method sheet now names OpenTimestamps, Proof of
   Existence/OriginStamp, GDACS+ReliefWeb's own timestamped bulletins, Metaculus/Good
@@ -141,9 +252,10 @@ unclaimed lane is free. Release a lane by dating the Landed line.
   verdict, so it reads "nearest prior art" instead. `register-audit.test.ts` guards the seam
   the join runs on: rename a work's directory and the page would have quietly reported an
   examined work as unexamined.
-- 2026-08-09 — **the ecology enters the graph** (Frank, afternoon: "die research ecology werke
-  sind hier noch gar nicht abgebildet, aber bilden auch eine eigene 'machine-run' ökologie" —
-  all four proposed lanes chosen). **(a)** The practices' own **59 works** and the **6
+- 2026-08-09 — **the ecology enters the graph** (Frank, afternoon, wording private — he noted
+  that the research ecology's works were missing from the graph although they form a
+  machine-run ecology of their own; all four proposed lanes chosen). **(a)** The practices'
+  own **59 works** and the **6
   encounters** are now nodes: each work's `meta.json` is its source, the directory it lives in
   is the evidence of who made it, and the crossings carry who gave, who received and which work
   moved. 201 nodes / 183 edges, up from 123 / 95. Spellings are reconciled through the house's

@@ -3,13 +3,22 @@ from __future__ import annotations
 
 import json
 
-from redaction import PIPELINE_VERSION, SALIENCE_VERSION, SCHEMA_VERSION
+from redaction import (
+    PIPELINE_VERSION,
+    SALIENCE_VERSION,
+    SCHEMA_VERSION,
+    VALIDITY_VERSION,
+)
 from redaction.cdx import Capture, permalink
 from redaction.salience import Salience
 from redaction.textdiff import Removal
 from redaction.watchlist import WatchItem
 
 MIN_REMOVED_TOKENS = 8
+
+# The only kinds that may be published as findings. "deletion_candidate" is a
+# question, not an answer — it never reaches the record (see live.py).
+PUBLISHABLE_KINDS = ("deletion", "removal")
 
 SOURCE = {
     "name": "Internet Archive — Wayback Machine (CDX)",
@@ -32,6 +41,8 @@ def make_redaction(
     salience: Salience,
     original_url: str,
 ) -> dict | None:
+    if kind not in PUBLISHABLE_KINDS:
+        return None
     if kind == "removal" and removal.tokens < MIN_REMOVED_TOKENS:
         return None
     return {
@@ -75,8 +86,25 @@ def rank(redactions: list[dict]) -> str | None:
     return best_id
 
 
+def unverifiable_section(notes: list[dict]) -> dict:
+    """Honest disclosure, chamber 2's discipline: what the pipeline could not
+    verify is a published number with its reasons, never a silent gap."""
+    reasons: dict[str, int] = {}
+    for n in notes:
+        reasons[n["reason"]] = reasons.get(n["reason"], 0) + 1
+    return {
+        "count": len(notes),
+        "reasons": dict(sorted(reasons.items())),
+        "items": sorted(notes, key=lambda n: (n["url"], n["reason"], n["side"])),
+    }
+
+
 def day_record(
-    date_iso: str, generated_at: str, redactions: list[dict], watched_count: int
+    date_iso: str,
+    generated_at: str,
+    redactions: list[dict],
+    watched_count: int,
+    unverifiable: list[dict] | None = None,
 ) -> dict:
     return {
         "date": date_iso,
@@ -84,8 +112,10 @@ def day_record(
         "schema_version": SCHEMA_VERSION,
         "pipeline_version": PIPELINE_VERSION,
         "salience_version": SALIENCE_VERSION,
+        "validity_version": VALIDITY_VERSION,
         "watched_count": watched_count,
         "changed_count": len(redactions),
+        "unverifiable": unverifiable_section(unverifiable or []),
         "removed_tokens_total": sum(r["removed_tokens"] for r in redactions),
         "pick": rank(redactions),
         "redactions": sorted(

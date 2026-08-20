@@ -1,0 +1,159 @@
+{
+  "date": "2026-08-19",
+  "deletion": {
+    "available": true,
+    "checked_at": "2026-08-19T06:04:09Z",
+    "counts": {
+      "botwall": 21,
+      "gone_404": 2,
+      "gone_410": 1,
+      "legal_451": 0,
+      "ok": 275,
+      "other": 0,
+      "server_error": 0,
+      "unreachable": 1
+    },
+    "decided": 278,
+    "excluded_unverifiable": 22,
+    "gone": 3,
+    "gone_ci95": [
+      0.0037,
+      0.0312
+    ],
+    "gone_rate": 0.0108,
+    "legal_451": 0,
+    "legal_451_ci95": [
+      0.0,
+      0.0136
+    ],
+    "legal_451_rate": 0.0,
+    "notes": [
+      "451 from a German vantage point may mean EU geo-blocking rather than takedown; it is reported apart and never folded into the gone rate.",
+      "451 receipts carry the title only as a SHA-256 — the day record does not re-publish what the law removed; the pre-committed sample manifest remains the receipt.",
+      "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
+      "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
+    ],
+    "pool_day": "2026-08-17",
+    "receipts": [
+      {
+        "class": "gone_404",
+        "domain": "roarmag.org",
+        "first_seen": "20260817040000",
+        "http_code": 404,
+        "title": "Bass Nut Electic Bass  Blank - Flat - S-2610 5 String Bass Nut",
+        "url": "https://roarmag.org/Electic-Bass-Bass-Nut-Blank-Flat-S-b-1054899"
+      },
+      {
+        "class": "gone_404",
+        "domain": "bbc.co.uk",
+        "first_seen": "20260817060000",
+        "http_code": 404,
+        "title": "BBC News - 06:00 Gaza talks, Rosebank, Hayden Panettiere",
+        "url": "https://www.bbc.co.uk/sounds/play/curation/m001bm45/p0p4x7sg"
+      },
+      {
+        "class": "gone_410",
+        "domain": "itweb.co.za",
+        "first_seen": "20260817100000",
+        "http_code": 410,
+        "title": "Harambee's new Breaking Barriers report: A gender lens to the analysis of SA's youth employment challenge",
+        "url": "https://www.itweb.co.za/article/harambees-new-breaking-barriers-report-a-gender-lens-to-the-analysis-of-sas-youth-employment-challenge/VgZeyvJlBwxMdjX9"
+      }
+    ],
+    "sample_drawn_at": "2026-08-18T06:21:00Z",
+    "sample_size": 300
+  },
+  "filter_version": "v1",
+  "gdg": {
+    "available": true,
+    "classes": {
+      "reframing": 5657,
+      "replaced": 5710,
+      "trivial": 1245,
+      "update": 576
+    },
+    "day": "2026-08-18",
+    "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
+    "register": [
+      {
+        "added": [
+          "Three",
+          "Houthi",
+          "attack"
+        ],
+        "after": "Houthi Attack: Three Pakistanis, one Indonesian killed in Houthi attack on cargo ship in Bab el-Mandeb",
+        "before": "Two Pakistanis, one Indonesian killed in Houthi attack on cargo ship in Bab el-Mandeb",
+        "detected": "2026-08-18T11:32:47Z",
+        "domain": "indiatimes.com",
+        "removed": [
+          "Two"
+        ],
+        "similarity": 0.867,
+        "url": "https://timesofindia.indiatimes.com/world/middle-east/two-pakistanis-one-indonesian-killed-in-houthi-attack-on-cargo-ship-in-bab-el-mandeb/articleshow/133151038.cms",
+        "weight": 7,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "Africa"
+        ],
+        "after": "Africa: An Attack On Healthcare Every Six Hours, and No One Held to Account",
+        "before": "Congo-Kinshasa: An Attack On Healthcare Every Six Hours, and No One Held to Account",
+        "detected": "2026-08-18T07:18:06Z",
+        "domain": "allafrica.com",
+        "removed": [
+          "Congo",
+          "Kinshasa"
+        ],
+        "similarity": 0.812,
+        "url": "https://allafrica.com/stories/202608170062.html",
+        "weight": 6,
+        "window": "24h"
+      },
+      {
+        "added": [
+          "St"
+        ],
+        "after": "Wall St traders fork out $100,000 a month for early access to Trump's social media posts",
+        "before": "Wall Street traders fork out $100,000 a month for early access to Donald Trump's social media posts",
+        "detected": "2026-08-18T17:02:37Z",
+        "domain": "dailymail.com",
+        "removed": [
+          "Street",
+          "Donald"
+        ],
+        "similarity": 0.85,
+        "url": "https://www.dailymail.com/money/markets/article-16044171/Wall-Street-traders-fork-100-000-month-early-access-Donald-Trumps-social-media-posts.html",
+        "weight": 6,
+        "window": "1w"
+      }
+    ],
+    "status_counts": {
+      "HTTP_REDIRECT": 17009,
+      "PAGE_TEXTCHANGE": 128551,
+      "PAGE_TITLECHANGE": 50598,
+      "UNCHANGED_CONTENT": 736802
+    },
+    "title_changes_en": 13188,
+    "trace": [
+      {
+        "bytes_billed": 25165824,
+        "created": "1787119195803",
+        "job_id": "world_gdg_counts_20260818",
+        "project": "gen-lang-client-0843427097"
+      },
+      {
+        "bytes_billed": 233832448,
+        "created": "1787119202114",
+        "job_id": "world_gdg_titles_20260818",
+        "project": "gen-lang-client-0843427097"
+      }
+    ]
+  },
+  "generated_at": "2026-08-19T06:04:09Z",
+  "pipeline_version": "0.1.0",
+  "register_bound": 3,
+  "sample_committed": "src/data/redaction/world/samples/2026-08-18.json",
+  "schema_version": "1",
+  "selection_version": "v1"
+}

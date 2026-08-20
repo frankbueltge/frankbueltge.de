@@ -1,0 +1,48 @@
+---
+// /atelier/texts — the texts & catalogue as a Level-2 register sheet (2026-08-15).
+//
+// The nightly line's apparatus: the genealogy, the positions, twenty-one error registers, the
+// index. Until today they rendered verbatim at the bottom of /atelier/works — twenty-six whole
+// documents under thirty-eight work cards, which is how that page became a scroll nobody
+// finishes. The mirror is not gone and not shortened: each document is a page of its own now,
+// verbatim, one click behind its row. The readings of this material (stations, positions,
+// the register by type) stay at the nightly line's own rooms under /error-as-method.
+import { getCollection } from 'astro:content'
+import Page from '@/layouts/Page.astro'
+import RegisterSheet from '@/components/ecology/RegisterSheet.astro'
+import type { RegisterRow } from '@/components/ecology/RegisterSheet.astro'
+import { textFacts, sortTexts } from '@/lib/atelier/texts'
+
+const all = await getCollection('atelier')
+const texts = sortTexts(
+  all
+    .filter((e) => e.id.startsWith('works/'))
+    .map((e) => textFacts(e.id.replace('works/', '').replace(/\.md$/, ''), e.body ?? '')),
+)
+
+const rows: RegisterRow[] = texts.map((t) => ({
+  date: t.date,
+  marker: t.marker,
+  move: t.move,
+  line: t.title,
+  href: `/atelier/texts/${t.slug}/`,
+  anchor: t.slug,
+}))
+
+const registers = texts.filter((t) => t.move === 'error register').length
+---
+
+<Page
+  title="Atelier — texts & catalogue | Frank Bültge"
+  description="The Atelier's texts & catalogue — the genealogy, the theoretical positions and every error register, each mirrored verbatim on its own page."
+>
+  <RegisterSheet
+    id="atelier"
+    register="texts & catalogue"
+    title="the texts & catalogue — the nightly line’s apparatus"
+    span={`${texts.length} documents · ${registers} error registers · mirrored verbatim, each on its own page · their structure is laid out at the nightly line’s rooms`}
+    rows={rows}
+    source="src/content/atelier/works/*.md"
+    more={{ label: 'the nightly line’s rooms →', href: '/error-as-method' }}
+  />
+</Page>

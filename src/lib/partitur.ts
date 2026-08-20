@@ -210,7 +210,8 @@ export function fanOffsets(n: number): number[] {
 /**
  * Resolves which mark within a cluster's offsets sits nearest a given pointer position, in the
  * cluster's own local x frame (`localDx` = pointer x minus the cluster's own center) — the
- * tooltip fix (Frank, 2026-07-31): "nobody hits a 9px dot reliably", so hovering ANYWHERE within
+ * tooltip fix (Frank, 2026-07-31, wording private — a 9px dot is too small to hit reliably), so
+ * hovering ANYWHERE within
  * a cluster's hit band resolves to the CLOSEST mark by pointer distance, never just the first.
  * On an exact tie the earlier offset wins (strict `<`, not `<=`) — a deterministic, if arbitrary,
  * tiebreak rather than an unspecified one.

@@ -22,7 +22,7 @@ const shortUrn = (u: string) => u.replace(/^urn:mrr:[a-z-]+:/, '')
 const pubDate = exp.date_published?.slice(0, 10)
 ---
 
-<main class="mx-auto max-w-3xl px-4 py-12 font-mono text-fg sm:py-16">
+<main id="main" class="mx-auto max-w-3xl px-4 py-12 font-mono text-fg sm:py-16 flex-1">
   <!-- masthead -->
   <p class="mb-4 text-xs uppercase tracking-[0.2em] text-fg-faint">
     Meridian Research Runtime · claim-rooted export · read-only projection

@@ -30,6 +30,7 @@ import { GRAPH } from '@/lib/graph/load'
 import { practiceWorkAudits } from '@/lib/graph/query'
 import { readable } from '@/lib/graph/derive'
 import { VERDICT_LEGEND } from '@/lib/graph/field'
+import { lineOfWork, lineShortLabel } from '@/lib/ecology/lines'
 
 const copy = NAMING.worksRegister
 const works = allWorks().map((w) => ({ ...w, desc: descFor(w.ns, w.slug, w.blurb) }))
@@ -53,6 +54,16 @@ const perPractice = copy.practices
   .filter((p) => p.count > 0)
 
 const nsName = new Map(copy.practices.map((p) => [p.ns, p.name]))
+
+// Which LINE of its practice a work belongs to. Only the Atelier has run more than one (two
+// since 2026-08-10, under two constitutions), so every other row gets null and shows nothing —
+// a marker on a practice that runs one line is noise.
+//
+// This is what Frank saw missing on 2026-08-12: „hier sind beide Ulysses Linien überall
+// vermischt." The register had just been repaired in the other direction — the fork used to
+// appear here as a FOURTH practice, which was worse — and the repair made the two lines
+// indistinguishable. Both are the Atelier; only one of them keeps the nights.
+const lineOf = (w: (typeof works)[number]) => lineOfWork(w)
 ---
 
 <main id="main" class="wr-register mx-auto w-full max-w-4xl flex-1 px-4 py-10 sm:py-14">
@@ -110,6 +121,12 @@ const nsName = new Map(copy.practices.map((p) => [p.ns, p.name]))
               over two lines and pushed its own row taller than the rest of the register. */}
           <span class="w-[8.5em] shrink-0 whitespace-nowrap font-mono text-[10px] uppercase tracking-[0.14em] text-fg-muted">{nsName.get(w.ns) ?? w.ns}</span>
           <span class="font-semibold tracking-[-0.01em] transition-opacity group-hover:opacity-70">{w.title}</span>
+          {/* The line, where a practice runs more than one. It sits AFTER the title rather than in
+              the practice column: the column is fixed-width so that titles align down the whole
+              register, and a second word in it would have pushed every title of every practice. */}
+          {lineOf(w) && (
+            <span class="wr-line font-mono text-[10px] uppercase tracking-[0.12em] text-fg-faint">{lineShortLabel(lineOf(w)!)}</span>
+          )}
           {w.state === 'withdrawn' && (
             <span class="wr-chip font-mono text-[10px] uppercase tracking-[0.12em] text-fg-faint">
               {copy.withdrawnLabel}{w.withdrawnOn && ` ${w.withdrawnOn}`}
@@ -222,5 +239,16 @@ const nsName = new Map(copy.practices.map((p) => [p.ns, p.name]))
     border: 1px solid var(--color-line);
     border-radius: 2px;
     padding: 1px 7px;
+  }
+
+  /* The line marker is NOT a chip. A chip is a state the record put on a work — withdrawn,
+     little daylight — and a line is neither a state nor a judgement: it is which strand of the
+     practice made the thing. So it wears the practice's own hairline as a leading rule and no
+     box, which also keeps it from reading as a second withdrawal mark two words further along
+     the same row. */
+  .wr-line {
+    border-left: 2px solid var(--wr-c, var(--color-line));
+    padding-left: 6px;
+    white-space: nowrap;
   }
 </style>

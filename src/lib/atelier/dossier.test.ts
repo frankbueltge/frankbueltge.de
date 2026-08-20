@@ -113,11 +113,17 @@ describe('the frontmatter reader handles the shapes the records actually use', (
     expect(np.disposition).toMatch(/^[A-Z_]+$/)
     expect(np.intention?.text).toContain('three-level displacement of error')
     expect(np.territory?.text).toContain('negative-parallax population')
-    expect(np.horizon).toContain('open (months')
+    // The horizon is read, not pinned, for the same reason the disposition is. It was an
+    // 'open (months; §8 phase budgets…)' scalar until 2026-08-12, when the architect bounded the
+    // line under §4 — twelve worked sessions, renewable once, against 64 already spent — and it
+    // became a folded block saying so. Pinning its words had made this test fail on a record
+    // telling the truth about itself, which is the one thing a reader of records must not do.
+    expect(np.horizon?.trim()).toBeTruthy()
     // The refrain is read, not pinned — it moved from 'home' to 'territory' as the line worked.
     expect(np.refrain?.value).toBeTruthy()
-    // The folded block is one paragraph, not the record's hard wraps.
+    // The folded blocks are one paragraph each, not the record's hard wraps.
     expect(np.intention?.text).not.toContain('\n')
+    expect(np.horizon).not.toContain('\n')
   })
 })
 
@@ -451,12 +457,55 @@ describe('the question is quoted from the record, or stated as missing', () => {
     expect(readQuestion('## 1. Source situation\n\nA fixture.', 'src/x/SCORE.md')).toBeNull()
   })
 
-  it('finds a question for every real line but the infrastructure fixture', () => {
-    const without = real.filter((d) => d.question === null).map((d) => d.id)
-    expect(without).toEqual(['2026-07-18-gate-rehearsal'])
+  /**
+   * The records that carry no readable question, each with the reason it does not.
+   *
+   * A bare list of ids reads as a fact about the archive when it is really a list of known gaps,
+   * and a gap nobody wrote down is indistinguishable from an oversight. Every entry here states
+   * why, so that removing one is a decision and not a cleanup. A line absent from this map and
+   * absent a question is the failure this test exists for.
+   */
+  const WITHOUT_QUESTION: Record<string, string> = {
+    '2026-07-18-gate-rehearsal':
+      'infrastructure fixture, killed on arrival — it rehearsed the gate and asked nothing.',
+    // 2026-08-13-the-editions-the-law-freezes was here for one afternoon. The entry said the
+    // one-night "Study score" shape carries no question section and asked to be removed "when
+    // the shape carries the field". The practice read this failure in its own build letter the
+    // same evening, agreed with it — "the reader is right and not merely pedantic" — and added
+    // `## The question` to the record, dated, with the omission left visible beside the fix. So
+    // the entry is gone by the condition it named, in hours rather than at some later audit,
+    // and the shape now carries the field: `whether-the-freeze-travels`, written after it,
+    // has the section from the start.
+  }
+
+  it('finds a question for every real line, or a written reason why not', () => {
+    for (const d of real) {
+      if (d.question !== null) continue
+      expect(
+        WITHOUT_QUESTION[d.id],
+        `${d.id} carries no question and no reason for it — write one or fix the record`,
+      ).toBeTruthy()
+    }
     // Every quoted question carries the path it was read from — the house honesty rule.
     for (const d of real) {
       if (d.question) expect(d.question.source).toBe(`src/content/atelier/projects/${d.id}/SCORE.md`)
+    }
+  })
+
+  it('keeps no excuse for a record that has since answered', () => {
+    // Deliberately not an equality check against the id list. The practice's repository leads and
+    // the site follows on integrate, so an excuse written for a record not mirrored here yet is
+    // early, not stale — and an equality check would make main red until the mirror caught up.
+    // What must not survive is an excuse for a record that is here and does answer.
+    for (const id of Object.keys(WITHOUT_QUESTION)) {
+      const d = real.find((x) => x.id === id)
+      if (d) expect(d.question, `${id} answers now — drop its entry`).toBeNull()
+    }
+  })
+
+  it('states a reason for every record it excuses, so no gap passes as an oversight', () => {
+    for (const [id, why] of Object.entries(WITHOUT_QUESTION)) {
+      expect(why.trim().length, id).toBeGreaterThan(40)
     }
   })
 })

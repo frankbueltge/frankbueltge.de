@@ -55,7 +55,11 @@ jobs:
           # HTML/Astro work directories via the integrator (path boundary enforced), ns=studio
           npx tsx scripts/atelier/integrate.ts /tmp/studio . studio > /tmp/report.json
           cat /tmp/report.json
-          for f in PROTOCOL.md README.md REQUESTS.md SITE-API.md; do [ -f "/tmp/studio/$f" ] && cp "/tmp/studio/$f" "src/content/studio/$f" || true; done
+          # REQUESTS-ARCHIVE.md joined the mirror on 2026-08-15, as the Atelier's did on 2026-08-10:
+          # the channel was split so the practice stops carrying 34 142 words of answered history
+          # into every session. The archive must travel with it, or the public record would lose
+          # exactly what the cut removed.
+          for f in PROTOCOL.md README.md REQUESTS.md REQUESTS-ARCHIVE.md SITE-API.md; do [ -f "/tmp/studio/$f" ] && cp "/tmp/studio/$f" "src/content/studio/$f" || true; done
           # Chronicle self-report from the engine repo root (see the chronicle contract in
           # SITE-API.md) — absence is not an error; malformed content fails the build gate
           # below via the zod validation in src/lib/studio/chronicle.ts.
@@ -64,6 +68,13 @@ jobs:
           else
             echo '[]' > src/data/studio/chronicle.upstream.json
           fi
+          # The practice's own window (2026-08-16, Frank's decision — the n-1 model carried to
+          # the practices): whatever the collective keeps under window/ in its repository is
+          # mirrored byte for byte and served verbatim at /studio/window/. Authored and updated
+          # by the practice itself — the house never edits it. No window/ in the repo, no window
+          # on the site: the station's door renders only where this mirror carries an index.html.
+          rm -rf public/studio/window
+          if [ -d /tmp/studio/window ]; then mkdir -p public/studio/window && cp -R /tmp/studio/window/. public/studio/window/; fi
 
       # The graph is derived from what this mirror just wrote (a work's meta.json, the
       # attention export, the encounters register). Deriving it HERE, before validation, is what
@@ -81,11 +92,14 @@ jobs:
       - name: Commit + let deploy-cf rebuild (on success)
         if: success()
         run: |
-          if [ -n "$(git status --porcelain src/content/studio src/components/studio src/pages/studio src/data/studio/chronicle.upstream.json src/data/graph public/studio/werke-html)" ]; then
+          if [ -n "$(git status --porcelain src/content/studio src/components/studio src/pages/studio src/data/studio/chronicle.upstream.json src/data/graph public/studio/werke-html public/studio/window)" ]; then
             git config user.name "Studio-Integrate"
             git config user.email "studio-integrate@frankbueltge.de"
             git add -A src/content/studio src/components/studio src/pages/studio src/data/studio/chronicle.upstream.json src/data/graph
             if [ -d public/studio/werke-html ]; then git add -A public/studio/werke-html; fi
+            # `|| true`: the add must survive all three states — window present, window removed
+            # (tracked entries record the deletion), and window never present (unmatched pathspec).
+            git add -A public/studio/window 2>/dev/null || true
             git commit -m "studio: integrate $(date -u +%F)"
             for attempt in 1 2 3 4 5; do
               git pull --rebase --autostash origin main && git push && break

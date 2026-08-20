@@ -1,0 +1,135 @@
+name: Ecology sentinel
+
+# The ecology's plumbing, watched by something other than Frank (his order, 2026-08-13, after a
+# day in which the pipes cost him an evening while all three practices ran fine on their own).
+#
+# The six watchdogs before this one each OPEN AN ISSUE when they find something. Six streams of
+# issues is the load being complained about, not relief from it. This one inverts the rule:
+#
+#   nothing red                    → one line in the run summary, no issue
+#   red, and a retry settled it    → one line, still no issue: a thing that fixed itself is the
+#                                    system working, and it is exactly the class that ate the day
+#   red, and it survived a retry   → one line, and ONE standing issue, edited in place, closed
+#                                    again the night it is empty
+#
+# It does not repair code, and that limit is deliberate: a deterministic script cannot know what a
+# novel failure means, and one that guessed at repairs would add a worse class of problem than it
+# removes. It retries, it counts, it names. What survives is small in number and real.
+
+on:
+  schedule:
+    # After the practices' nightly sessions have landed (field auto-lands 04:00–06:30 UTC) and
+    # before the morning digest at 07:58 UTC, so the digest reads a settled house.
+    - cron: '45 6 * * *'
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  actions: write
+  issues: write
+
+concurrency:
+  group: ecology-sentinel
+  cancel-in-progress: false
+
+jobs:
+  sweep:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Sweep the ecology
+        id: sweep
+        env:
+          # One token per house, by design: a leak costs one repository, not all six. A repo
+          # whose token is missing is reported UNREACHABLE by the sweep itself — never as green.
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ATELIER_BOT_TOKEN: ${{ secrets.ATELIER_BOT_TOKEN }}
+          FIELD_BOT_TOKEN: ${{ secrets.FIELD_BOT_TOKEN }}
+          STUDIO_BOT_TOKEN: ${{ secrets.STUDIO_BOT_TOKEN }}
+          ECOLOGY_BOT_TOKEN: ${{ secrets.ECOLOGY_BOT_TOKEN }}
+          ATTENTION_BOT_TOKEN: ${{ secrets.ATTENTION_BOT_TOKEN }}
+        run: |
+          set -o pipefail
+          node scripts/sentinel/sweep.mjs > "$RUNNER_TEMP/sweep.json"
+          echo "--- findings ---"
+          jq '{retry: (.retry|length), forPerson: (.forPerson|length), accepted: (.accepted|length), errors: (.errors|length)}' "$RUNNER_TEMP/sweep.json"
+
+      - name: Re-dispatch what one retry can settle
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ATELIER_BOT_TOKEN: ${{ secrets.ATELIER_BOT_TOKEN }}
+          FIELD_BOT_TOKEN: ${{ secrets.FIELD_BOT_TOKEN }}
+          STUDIO_BOT_TOKEN: ${{ secrets.STUDIO_BOT_TOKEN }}
+          ECOLOGY_BOT_TOKEN: ${{ secrets.ECOLOGY_BOT_TOKEN }}
+          ATTENTION_BOT_TOKEN: ${{ secrets.ATTENTION_BOT_TOKEN }}
+        run: |
+          # A fresh dispatch on main is tried FIRST, and `gh run rerun` only as the fallback:
+          # rerunning replays the original commit, so a workflow that failed on a bug since fixed
+          # would fail again at the old SHA and the retry would prove nothing.
+          jq -c '.retry[]' "$RUNNER_TEMP/sweep.json" | while read -r row; do
+            repo=$(echo "$row" | jq -r .repo)
+            wf=$(echo "$row"  | jq -r .workflow)
+            id=$(echo "$row"  | jq -r .runId)
+            case "$repo" in
+              */ulysses)          export GH_TOKEN="$ATELIER_BOT_TOKEN" ;;
+              */field-research)   export GH_TOKEN="$FIELD_BOT_TOKEN" ;;
+              */studio)           export GH_TOKEN="$STUDIO_BOT_TOKEN" ;;
+              */research-ecology) export GH_TOKEN="$ECOLOGY_BOT_TOKEN" ;;
+              */machine-attention) export GH_TOKEN="$ATTENTION_BOT_TOKEN" ;;
+              *)                  export GH_TOKEN="$GITHUB_TOKEN" ;;
+            esac
+            # Every repo here is public, so the default key can READ anywhere; only a
+            # re-dispatch needs the house's own. Falling back keeps the sweep sighted.
+            [ -z "$GH_TOKEN" ] && GH_TOKEN="$GITHUB_TOKEN" && export GH_TOKEN
+            if gh workflow run "$wf" --repo "$repo" --ref main 2>/dev/null; then
+              echo "re-dispatched on main: $repo · $wf"
+            elif gh run rerun "$id" --failed --repo "$repo" 2>/dev/null; then
+              echo "re-ran at its own commit (no workflow_dispatch): $repo · $wf"
+            else
+              echo "could not retry: $repo · $wf — next sweep will see the streak and escalate"
+            fi
+          done
+
+      - name: The line
+        id: line
+        run: |
+          LINE=$(node scripts/sentinel/line.mjs < "$RUNNER_TEMP/sweep.json")
+          echo "$LINE"
+          echo "$LINE" >> "$GITHUB_STEP_SUMMARY"
+          echo "line=$LINE" >> "$GITHUB_OUTPUT"
+
+      - name: The one standing issue — opened, edited or closed
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          REPO=frankbueltge/frankbueltge.de
+          TITLE="Ecology sentinel — what survived a retry"
+          COUNT=$(jq '.forPerson | length' "$RUNNER_TEMP/sweep.json")
+          NUM=$(gh issue list --repo "$REPO" --state open --search "$TITLE in:title" \
+                  --json number,title --jq "[.[] | select(.title == \"$TITLE\")][0].number // empty")
+
+          if [ "$COUNT" -eq 0 ]; then
+            # Nothing real: the issue must not exist. An open issue should mean an open problem,
+            # and today it meant "a night happened".
+            if [ -n "$NUM" ]; then
+              gh issue close "$NUM" --repo "$REPO" \
+                --comment "Nothing survived a retry tonight. $(cat "$RUNNER_TEMP/sweep.json" | jq -r '.at')"
+              echo "closed #$NUM"
+            else
+              echo "nothing to report, and no issue exists"
+            fi
+            exit 0
+          fi
+
+          node scripts/sentinel/line.mjs --issue < "$RUNNER_TEMP/sweep.json" > "$RUNNER_TEMP/body.md"
+          if [ -n "$NUM" ]; then
+            gh issue edit "$NUM" --repo "$REPO" --body-file "$RUNNER_TEMP/body.md"
+            echo "edited #$NUM in place"
+          else
+            gh issue create --repo "$REPO" --title "$TITLE" --body-file "$RUNNER_TEMP/body.md"
+          fi

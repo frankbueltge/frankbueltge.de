@@ -1,0 +1,150 @@
+{
+  "derived": true,
+  "derivation": "Compact extract of two Certificate Transparency monitor responses for the parent zone frankbueltge.de, kept as the control evidence behind the dated-absence finding for n-1.frankbueltge.de. Full responses re-derivable from the queries below; only counts, the wildcard-bearing issuances, and the newest rows are kept here.",
+  "queries": [
+    {
+      "monitor": "crt.sh",
+      "url": "https://crt.sh/?q=frankbueltge.de&output=json",
+      "queried_utc": "2026-08-15T21:25:25Z",
+      "http_status": 200,
+      "bytes": 34787,
+      "rows": 98
+    },
+    {
+      "monitor": "Cert Spotter (SSLMate)",
+      "url": "https://api.certspotter.com/v1/issuances?domain=frankbueltge.de&include_subdomains=true&expand=dns_names&expand=issuer",
+      "queried_utc": "2026-08-15T21:25:44Z",
+      "http_status": 200,
+      "bytes": 7749,
+      "rows": 13
+    }
+  ],
+  "names_seen_in_zone": [
+    "*.frankbueltge.de",
+    "frankbueltge.de",
+    "stats.frankbueltge.de",
+    "www.frankbueltge.de"
+  ],
+  "wildcard_issuances": {
+    "crt_sh": [
+      {
+        "crtsh_id": 27429534409,
+        "entry_timestamp": "2026-06-23T18:25:50.898",
+        "not_before": "2026-06-23T17:24:42",
+        "not_after": "2026-09-21T18:20:03",
+        "issuer_name": "C=US, O=Google Trust Services, CN=WE1",
+        "name_value": [
+          "*.frankbueltge.de",
+          "frankbueltge.de"
+        ]
+      },
+      {
+        "crtsh_id": 27429548167,
+        "entry_timestamp": "2026-06-23T18:24:43.532",
+        "not_before": "2026-06-23T17:24:42",
+        "not_after": "2026-09-21T18:20:03",
+        "issuer_name": "C=US, O=Google Trust Services, CN=WE1",
+        "name_value": [
+          "*.frankbueltge.de",
+          "frankbueltge.de"
+        ]
+      },
+      {
+        "crtsh_id": 27429354926,
+        "entry_timestamp": "2026-06-23T18:14:41.014",
+        "not_before": "2026-06-23T18:04:39",
+        "not_after": "2026-09-21T18:12:20",
+        "issuer_name": "C=US, O=SSL Corporation, CN=Cloudflare TLS Issuing ECC CA 4",
+        "name_value": [
+          "*.frankbueltge.de",
+          "frankbueltge.de"
+        ]
+      }
+    ],
+    "certspotter": [
+      {
+        "certspotter_id": "15533795174",
+        "not_before": "2026-06-23T18:04:39Z",
+        "not_after": "2026-09-21T18:12:20Z",
+        "issuer": "SSL.com",
+        "dns_names": [
+          "*.frankbueltge.de",
+          "frankbueltge.de"
+        ]
+      },
+      {
+        "certspotter_id": "15533905233",
+        "not_before": "2026-06-23T17:24:42Z",
+        "not_after": "2026-09-21T18:20:03Z",
+        "issuer": "Google Trust Services",
+        "dns_names": [
+          "*.frankbueltge.de",
+          "frankbueltge.de"
+        ]
+      }
+    ]
+  },
+  "newest_rows": {
+    "crt_sh_by_entry_timestamp": [
+      {
+        "crtsh_id": 27857707349,
+        "entry_timestamp": "2026-07-11T17:04:31.502",
+        "not_before": "2026-07-11T16:06:01",
+        "not_after": "2026-10-09T16:06:00",
+        "issuer_name": "C=US, O=Let's Encrypt, CN=YR2",
+        "name_value": [
+          "stats.frankbueltge.de"
+        ]
+      },
+      {
+        "crtsh_id": 27857723478,
+        "entry_timestamp": "2026-07-11T17:05:02.585",
+        "not_before": "2026-07-11T16:06:33",
+        "not_after": "2026-10-09T16:06:32",
+        "issuer_name": "C=US, O=Let's Encrypt, CN=YR1",
+        "name_value": [
+          "stats.frankbueltge.de"
+        ]
+      },
+      {
+        "crtsh_id": 27857709023,
+        "entry_timestamp": "2026-07-11T17:05:04.363",
+        "not_before": "2026-07-11T16:06:33",
+        "not_after": "2026-10-09T16:06:32",
+        "issuer_name": "C=US, O=Let's Encrypt, CN=YR1",
+        "name_value": [
+          "stats.frankbueltge.de"
+        ]
+      }
+    ],
+    "certspotter_by_not_before": [
+      {
+        "certspotter_id": "15799214643",
+        "not_before": "2026-07-11T16:06:01Z",
+        "not_after": "2026-10-09T16:06:00Z",
+        "issuer": "Let's Encrypt",
+        "dns_names": [
+          "stats.frankbueltge.de"
+        ]
+      },
+      {
+        "certspotter_id": "16262366480",
+        "not_before": "2026-07-11T16:06:01Z",
+        "not_after": "2026-10-09T16:06:00Z",
+        "issuer": "Let's Encrypt",
+        "dns_names": [
+          "stats.frankbueltge.de"
+        ]
+      },
+      {
+        "certspotter_id": "15799220394",
+        "not_before": "2026-07-11T16:06:33Z",
+        "not_after": "2026-10-09T16:06:32Z",
+        "issuer": "Let's Encrypt",
+        "dns_names": [
+          "stats.frankbueltge.de"
+        ]
+      }
+    ]
+  }
+}

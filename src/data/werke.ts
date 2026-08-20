@@ -147,8 +147,8 @@ export const WERKE: Werk[] = [
     live: true,
     href: '/studio',
     description: {
-      de: "Ensemble — ein autonomes Künstlerkollektiv, das unter keinem Label arbeitet: Data Art, künstlerische Forschung, physische, performative oder partizipative Arbeiten — oder etwas Neues, Unvorhergesehenes, bis hin zu hybriden Werken im öffentlichen Raum. Es komponiert aus eigener Recherche, aus Begegnungen, und wo es das wählt, aus Material, das Meridian (Field) verifiziert hat. Jedes Element trägt sichtbar seine Stufe — Verified, Sourced oder Imagined. Unredigiert, öffentlich.",
-      en: "Ensemble — an autonomous artist collective working under no label: data art, artistic research, physical, performative or participatory work — or something new and unforeseen, up to hybrid works in public space. It composes from its own research, from encounters, and, where it so chooses, from material Meridian (Field) has verified. Every element carries its tier in the open — Verified, Sourced or Imagined. Unedited, public.",
+      de: "Ensemble — ein autonomes Künstlerkollektiv auf einer Linie: nur digitale Werke, und nur, was eine Maschine besser kann als ein Mensch — Skalierung, Wiederholung, Verifikation, das Zeitliche. Es komponiert aus eigener Recherche, aus Begegnungen, und wo es das wählt, aus Material, das Meridian (Field) verifiziert hat. Jedes Element trägt sichtbar seine Stufe — Verified, Sourced oder Imagined. Unredigiert, öffentlich.",
+      en: "Ensemble — an autonomous artist collective on one line: only digital works, and only what a machine does better than a human — scale, repetition, verification, the temporal. It composes from its own research, from encounters, and, where it so chooses, from material Meridian (Field) has verified. Every element carries its tier in the open — Verified, Sourced or Imagined. Unedited, public.",
     },
     methodHref: null,
   },
@@ -188,7 +188,7 @@ export const WERKE: Werk[] = [
     title: 'Editorial Deadline',
     subtitle: {
       de: 'Was aus dem offiziellen öffentlichen Eintrag still wieder entfernt wird',
-      en: 'What is quietly removed from the official public record',
+      en: 'What is quietly removed — from the official record, and from the record of the world’s press',
     },
     status: 'live',
     since: '2026-06-25',
@@ -196,8 +196,13 @@ export const WERKE: Werk[] = [
     href: '/redaction',
     description: {
       de: 'Aus der Linie „Gegenmessung". Das öffentliche Protokoll wird nicht nur geschrieben, sondern auch entschrieben. Jeden Tag difft eine Maschine die Wayback-Snapshots einer kuratierten Liste offizieller Seiten und hebt die substanziellste Schwärzung — beide Fassungen verlinkt, in zwei Klicks überprüfbar. Kein Absichts-Vorwurf, nur das gezählte Weggenommene.',
-      en: 'From the “Counter-Measurement” line. The public record is not only written but un-written. Each day a machine diffs the Wayback snapshots of a curated list of official pages and surfaces the most substantive removal — both versions linked, checkable in two clicks. No claim of intent, only the counted thing taken away.',
+      en: 'From the “Counter-Measurement” line, in two chambers. Chamber 1: each day a machine diffs the Wayback snapshots of a curated list of official pages and surfaces the most substantive removal — both versions linked, checkable in two clicks. Chamber 2 (since 2026-08-14): the same gesture at the scale of the world’s press — GDELT’s recrawl of ~54k rewritten headlines a day, run through a versioned triviality filter to a bounded register of genuine reframings, plus a deletion rate measured against a nightly sample the house committed before the vanishing. No claim of intent, only the counted thing taken away — receipts held.',
     },
+    // Instrument, not a festival-aspiring experiment (Frank, 2026-08-14, after the world
+    // chamber shipped, wording private: make an instrument of it) — the gesture is an occupied 20-year
+    // genre; the daylight is methodological. It keeps running nightly and feeds the
+    // counter-measurement line; a thematic sharpening (de-naming) waits on evidence.
+    tier: 'instrument',
   },
   {
     id: 'round-number',
@@ -292,8 +297,8 @@ export const WERKE: Werk[] = [
     live: true,
     href: '/lab/ueberflug-studie',
     description: {
-      de: 'SGP4 orbital propagation in the browser: which catalogued Earth-observation satellites currently have your location geometrically in view. Computed live on daily-committed orbital data (CelesTrak), with owner classification from the GCAT catalogue. Your location never leaves the browser.',
-      en: 'SGP4 orbital propagation in the browser: which catalogued Earth-observation satellites currently have your location geometrically in view. Computed live on daily-committed orbital data (CelesTrak), with owner classification from the GCAT catalogue. Your location never leaves the browser.',
+      de: 'SGP4 orbital propagation in the browser: which catalogued Earth-observation satellites currently have your location geometrically in view. Computed live on daily-committed orbital data (CelesTrak), with owner classification from the GCAT catalogue. Your location never leaves the browser. Since 2026-08-15 the study also measures the change: the launch year inside each international designator turns the same snapshot into a cohort curve of the active fleet, and the fleet densifies almost entirely commercially. The military column stays a floor, never a count — classified satellites are absent from the catalogue, and the page says so.',
+      en: 'SGP4 orbital propagation in the browser: which catalogued Earth-observation satellites currently have your location geometrically in view. Computed live on daily-committed orbital data (CelesTrak), with owner classification from the GCAT catalogue. Your location never leaves the browser. Since 2026-08-15 the study also measures the change: the launch year inside each international designator turns the same snapshot into a cohort curve of the active fleet, and the fleet densifies almost entirely commercially. The military column stays a floor, never a count — classified satellites are absent from the catalogue, and the page says so.',
     },
     methodHref: null,
     tier: 'studie',
@@ -315,6 +320,42 @@ export const WERKE: Werk[] = [
     },
     // Back in the experiments row (Frank, 2026-08-05): ranked first on /experiments; the
     // 44-day committed archive and the evidence track ended its 'studie' demotion.
+    tier: 'experiment',
+  },
+  {
+    id: 'invoked-past',
+    title: 'The Invoked Past',
+    subtitle: {
+      de: 'Welches Gestern die Weltpresse heute zitiert',
+      en: 'Which yesterday the world cites today',
+    },
+    status: 'live',
+    since: '2026-08-15',
+    live: true,
+    href: '/invoked-past',
+    description: {
+      de: 'Jeden Tag liest eine Maschine jede Datumsnennung in rund 95.000 Nachrichtenartikeln und veröffentlicht das Histogramm der angerufenen Jahre — samt dem Jahr, das aus dem glatten Gedächtnis-Zerfall herausragt, und in wessen Presse. GDELT hat das Feld 2015 für Jahrestags-Analysen gebaut und nie ein Instrument daraus gemacht.',
+      en: 'Each day a machine reads every dated reference in some 95,000 news articles and publishes the histogram of invoked years — with the year that breaks the smooth decay of memory, and whose press is doing the invoking. GDELT built the field in 2015 for anniversary analysis and never built the instrument.',
+    },
+    methodHref: '/werke/invoked-past',
+    tier: 'experiment',
+  },
+  {
+    id: 'balance',
+    title: 'The Balance',
+    subtitle: {
+      de: 'Selbstbild gegen Fremdbild: die emotionale Handelsbilanz der Weltpresse',
+      en: 'Self-image against foreign image: the emotional trade balance of the press',
+    },
+    status: 'live',
+    since: '2026-08-14',
+    live: true,
+    href: '/balance',
+    description: {
+      de: 'Aus der Linie „Gegenmessung". Für jedes Land, täglich: Wie schreibt die eigene Presse über das Land — und wie schreibt die Weltpresse über es? Ton und Emotions-Raten je Pool, Bootstrap-Konfidenzintervall der Lücke, unantastbares Tagesarchiv. Gemessen wird Darstellung, nie Volksstimmung.',
+      en: 'From the “Counter-Measurement” line. For each country, daily: how its own press writes about it — against how the world’s press writes about it. Tone and emotion rates per pool, a bootstrap confidence interval on the gap, an immutable daily archive. It measures portrayal, never population mood.',
+    },
+    methodHref: '/werke/balance',
     tier: 'experiment',
   },
   {
@@ -396,33 +437,17 @@ export const HOLDINGS_EXCLUDED_IDS: ReadonlySet<string> = new Set([
   'observatory',
 ])
 
-/** Curated order for /experiments (Frank, 2026-08-05): ranked by strength/impact of the
- *  experiment, not by launch date. The Consensus first and Iceberg Theory second are
- *  Frank's calls; the rest is ranked by outward stakes a stranger recognizes plus
- *  checkability of the figure. Reordering is one edit here. */
-export const HOLDINGS_RANKED: readonly string[] = [
-  'consensus',
-  'parallaxe',
-  // The Society third (2026-08-05, listed on Frank's go the morning after launch): a
-  // stranger grasps it in seconds, its checkability is total (deterministic, claims as
-  // tests), and it is the lab's most interactive piece — but the two seats above it are
-  // Frank's explicit calls and stay his.
-  'society',
-  'protokoll',
-  'praemie',
-  'redaction',
-  'ghost-fleet',
-  'spielraum',
-  'round-number',
-  'tell',
-  'beifang',
-  'correction',
-  'pattern',
-  'ueberflug',
-]
+/** Order for /experiments (Frank, 2026-08-14): NEWEST FIRST — a new werk enters at the top.
+ *  This dissolves the curated strength ranking of 2026-08-05 (Frank's instruction, wording
+ *  private: new works on top, the curated order dissolved); recorded in
+ *  docs/decision-log.md, 2026-08-14 row. The list is DERIVED from WERKE_CHRONO (its own
+ *  recency rules incl. Überflug pinned last), so it can never go stale — no manual insert,
+ *  no forgotten entry. */
+export const HOLDINGS_RANKED: readonly string[] = WERKE_CHRONO.filter(
+  (w) => !HOLDINGS_EXCLUDED_IDS.has(w.id),
+).map((w) => w.id)
 
-/** What /experiments actually renders: the curated ranking above — validated loudly, so a new
- *  werk cannot slip in unranked and a stale ranking cannot survive a rename. */
+/** What /experiments actually renders: recency order, excluded ids validated loudly. */
 export const WERKE_HOLDINGS: Werk[] = HOLDINGS_RANKED.map((id) => {
   const w = WERKE.find((x) => x.id === id)
   if (!w) throw new Error(`holdings ranking names unknown werk "${id}"`)

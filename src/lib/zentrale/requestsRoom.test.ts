@@ -16,7 +16,7 @@
 import { existsSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
-import { ROOM_BUDGET, countWords, planRoom, preamble, requestCards, roomWords } from './requestsMd'
+import { ROOM_BUDGET, countWords, planRoom, preamble, requestCards, roomRecord, roomWords } from './requestsMd'
 import { ATELIER_NARRATIVE } from '@/config/atelier-wording'
 import { FIELD_NARRATIVE } from '@/config/field-wording'
 import { STUDIO_NARRATIVE } from '@/config/studio-wording'
@@ -49,16 +49,20 @@ const read = (ns: string) => readFileSync(join(process.cwd(), 'src/content', ns,
  *  room against the shrunken half and failed, calling a 1337-word room too large for a 6 438-word
  *  file. The rule it stands for ("the room is a real reduction, not a cosmetic one") was always
  *  about the whole record, which is now in two files. */
-const readWhole = (ns: string): string => {
+const readArchive = (ns: string): string => {
   const archive = join(process.cwd(), 'src/content', ns, 'REQUESTS-ARCHIVE.md')
-  return read(ns) + (existsSync(archive) ? readFileSync(archive, 'utf-8') : '')
+  return existsSync(archive) ? readFileSync(archive, 'utf-8') : ''
 }
+const readWhole = (ns: string): string => read(ns) + readArchive(ns)
 
 describe('the requests rooms fit on a page', () => {
   for (const [ns, room] of ROOMS) {
     it(`${ns}: under ${ROOM_BUDGET} words, with every open item shown`, () => {
       const md = read(ns)
-      const cardList = requestCards(md)
+      // The page's own model since the Field and the Studio split their channels too
+      // (2026-08-15): both halves, archive first — see roomRecord. Measuring only the live half
+      // would understate the page, because its five closed leads come out of the archive.
+      const cardList = roomRecord(md, readArchive(ns))
       const open = cardList.filter((c) => c.open).length
       const cards = cardList.length
       const plan = planRoom(cardList, room, preamble(md))

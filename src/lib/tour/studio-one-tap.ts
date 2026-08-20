@@ -85,11 +85,11 @@ export const oneTapTour: Tour = {
           source: CHRONICLE,
           locator: 'collective session 32, 2026-07-23 — summary',
         },
-        {
-          text: 'keep working on the staging; this is even worse staged than the HTML version.',
-          source: CHRONICLE,
-          locator: 'collective session 32 — the eye’s own words, quoted in the summary',
-        },
+        // CUT 2026-08-16: this scene quoted the eye's own words out of the summary. The studio's
+        // standing privacy rule of 2026-08-15 took verbatim quotation of the architect's messages
+        // out of its record, so the sentence this scene named is no longer in the file it named.
+        // A quote that cannot be verified is cut, never paraphrased — the two that remain are the
+        // house's own sentences and are still byte-exact, and the return itself is unchanged.
         {
           text: 'Session 31 had bound the studio: if the eye still dissents, that verdict governs, the record and the gate are not above it.',
           source: CHRONICLE,
@@ -113,11 +113,7 @@ export const oneTapTour: Tour = {
           source: CHRONICLE,
           locator: 'collective session 43, 2026-07-25 — summary',
         },
-        {
-          text: 'the html version was better than everything you delivered afterwards; the staging is still very bad and cheap',
-          source: CHRONICLE,
-          locator: 'collective session 43 — the eye’s own words, quoted in the summary',
-        },
+        // CUT 2026-08-16, same reason as the second return's quote above.
         {
           text: 'and the studio kept the promise it had put in writing after the second return: no fourth restage, no self-certification, the answer said plainly.',
           source: CHRONICLE,

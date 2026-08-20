@@ -1,0 +1,555 @@
+---
+/** The Invoked Past — which yesterday the world cites today.
+ *  Reads every dated reference in ~24 h of the world's press and publishes the histogram of
+ *  invoked years. The published finding is the STANDOUT year, never the maximum: the maximum
+ *  is the source's own 2014 ceiling and is labelled as the artefact it is.
+ *  Data: src/data/invoked/latest.json, committed nightly; git is the archive. */
+import data from '@/data/invoked/latest.json'
+import type { InvokedData } from '@/lib/invoked/types'
+import {
+  ageBucketLabel,
+  count,
+  decimal,
+  humanDate,
+  invokedByLabel,
+  percent,
+  standoutWindow,
+  themeLabel,
+  times,
+  windowLabel,
+  yearsBetween,
+} from '@/lib/invoked/format'
+import InvokedPastFigure from './InvokedPastFigure.astro'
+
+const d = data as unknown as InvokedData
+const h = d.headline
+const failed = d.stats.slots_fetched === 0
+const neighbourhood = standoutWindow(d.method.standout)
+const ceiling = d.stats.max_year_observed
+const scope = `${d.method.year_window[0]}–${ceiling}`
+// Usually the ramp toward the wall carries the raw maximum to the ceiling year itself, and
+// the page says so. It is not a law, though — it is a nightly observation, and on
+// 2026-08-16 it broke for the first time (1992 at 1,081 mentions over the wall's 882). The
+// page therefore reads the file instead of asserting the habit: the wall is still measured
+// and still disclosed, but whether the maximum sits on it is stated as what it is tonight.
+const maxAtCeiling = d.most_invoked?.year === ceiling
+const topYears = d.top_years.slice(0, 12)
+// The evidence for the standout, published since method v1.1: themes, names and headlines
+// out of the very rows the count came from. Optional, because day files written before
+// v1.1 carry a headline without one — never because the page may skip the receipts.
+const why = h?.why ?? null
+const anniversary = why?.anniversary ?? null
+const lawTest = d.law_test
+---
+
+<article class="mx-auto max-w-3xl px-4 py-14">
+  <header class="mb-10">
+    <h1 class="text-[clamp(30px,6vw,56px)] font-bold tracking-[-0.03em]">The Invoked Past</h1>
+    <p class="mt-2 max-w-xl text-fg-muted">
+      Which yesterday the world cites today. Every night the instrument reads every dated
+      reference in the last 24 hours of the world's press and publishes the histogram of
+      invoked years: which pasts were made present, by whose newsrooms, how old today's memory
+      is — and, for the year that stands out, what the articles invoking it were about. Daily,
+      archived, never edited.
+    </p>
+    <p class="mt-3 font-mono text-xs uppercase tracking-[0.18em] text-fg-faint">{d.date}</p>
+  </header>
+
+  {failed ? (
+    <section class="mb-12 border-l-2 border-line pl-5">
+      <p class="text-fg-muted">Source unreachable — finding omitted. A gap is recorded, never bridged.</p>
+      {d.note && <p class="mt-2 font-mono text-xs text-fg-faint">{d.note}</p>}
+    </section>
+  ) : h ? (
+    <section class="mb-12 border-l-2 border-accent/60 pl-5">
+      <h2 class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+        Today's standout year — the one that most exceeds its own neighbourhood
+      </h2>
+      <p class="mt-3 text-[clamp(20px,3.4vw,30px)] font-semibold leading-snug tabular-nums">{h.year}</p>
+      <p class="mt-3 text-fg-muted">
+        {count(h.mentions)} of today's dated references point at the year {h.year} —
+        {' '}{times(h.times_its_neighbourhood)} the median of the {2 * neighbourhood} years around it
+        ({decimal(h.neighbourhood_median, 0)} mentions), an excess of {decimal(h.surprise, 1)} times the square
+        root of that baseline.
+        {h.top_country_share !== null && h.invoked_by.length > 0 && (
+          <>
+            {' '}Of the mentions that could be traced to a source country, {percent(h.top_country_share)} came
+            from {h.invoked_by[0].name}.
+          </>
+        )}
+      </p>
+      {h.invoked_by.length > 0 && (
+        <p class="mt-2 font-mono text-xs text-fg-faint">
+          Invoked by {invokedByLabel(h.invoked_by, 6)} · {decimal(h.per_1000_articles, 1)} mentions per 1,000 articles
+        </p>
+      )}
+      <p class="mt-3 text-sm text-fg-muted">
+        Why this year and not another is measurable, and it is measured directly below — from the same
+        rows the count came from. And a year carried overwhelmingly by one country is as often an
+        artefact of the extractor as a memory, which is why the country share stands beside the finding
+        instead of behind it.
+      </p>
+    </section>
+  ) : (
+    <section class="mb-12 border-l-2 border-line pl-5">
+      <p class="text-fg-muted">
+        No year stood out from its neighbourhood above threshold today — a quiet day is a finding,
+        and it is published as one.
+      </p>
+    </section>
+  )}
+
+  {!failed && h && why && (
+    <section class="mb-12 border-l-2 border-accent/30 pl-5">
+      <h2 class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+        Why this year — the evidence, out of the same rows
+      </h2>
+      <p class="mt-3 text-fg-muted">
+        The {count(h.mentions)} mentions of {h.year} came from {count(why.articles)} of today's
+        {' '}{count(d.stats.articles_scanned)} articles, and every one of those articles carried more than a
+        date: GDELT's theme codes, the persons and organisations it extracted, the article's own headline.
+        Those columns sit in the same rows as the count, so the reason this year stands out is measurable
+        without leaving the file — and it is measured here rather than left to the reader to guess.
+      </p>
+
+      {anniversary && (
+        <div class="mt-6">
+          <h3 class="font-mono text-[11px] uppercase tracking-[0.12em] text-fg-faint">
+            The anniversary, as arithmetic
+          </h3>
+          {anniversary.matches_today ? (
+            <p class="mt-2 text-fg-muted">
+              The exact date named most often inside {h.year} is {humanDate(anniversary.date)}
+              {' '}({count(anniversary.mentions)} mentions), and the record's own date
+              is {humanDate(anniversary.today)} — the same day of the year,
+              {' '}{count(yearsBetween(anniversary.date, anniversary.today))} years apart. Today's standout is
+              an anniversary, and that sentence is a comparison of two dates in this file, not a lookup in
+              a calendar of events.
+            </p>
+          ) : (
+            <p class="mt-2 text-fg-muted">
+              The exact date named most often inside {h.year} is {humanDate(anniversary.date)}
+              {' '}({count(anniversary.mentions)} mentions) — not the record's own day of the year
+              ({humanDate(anniversary.today)}). By this instrument's arithmetic the standout is
+              <em>not</em> an anniversary today, so it is not called one; what it is instead stands in the
+              themes and the headlines below.
+            </p>
+          )}
+          {why.top_exact_dates.length > 0 && (
+            <p class="mt-2 font-mono text-xs text-fg-faint">
+              Exact dates named inside {h.year}: {why.top_exact_dates.map((e, i) => (
+                <>{i > 0 ? ' · ' : ''}{humanDate(e.date)} ({count(e.mentions)})</>
+              ))}
+            </p>
+          )}
+        </div>
+      )}
+
+      {why.themes.length > 0 && (
+        <div class="mt-6">
+          <h3 class="font-mono text-[11px] uppercase tracking-[0.12em] text-fg-faint">
+            What the invoking articles were about
+          </h3>
+          <p class="mt-2 text-sm text-fg-muted">
+            GDELT's own theme codes, ranked by <strong>lift</strong>: how much more common a code is among the
+            {' '}{count(why.articles)} invoking articles than across the day's articles as a whole. Ranked by
+            raw frequency instead, the list returns the codes that sit on every day of the year and says
+            nothing about this one. The raw code stands beside every label — the label is a reading, the code
+            is the checkable thing.
+          </p>
+          <div class="mt-3 overflow-x-auto">
+            <table class="w-full border-collapse text-sm tabular-nums">
+              <thead>
+                <tr class="border-b border-line text-left font-mono text-[11px] uppercase tracking-[0.12em] text-fg-faint">
+                  <th class="py-2 pr-3 font-medium">Theme</th>
+                  <th class="py-2 pr-3 text-right font-medium">articles</th>
+                  <th class="py-2 pr-3 text-right font-medium" title="share of the articles that invoked the standout year">share</th>
+                  <th class="py-2 text-right font-medium" title="times more common here than across the whole day">lift</th>
+                </tr>
+              </thead>
+              <tbody>
+                {why.themes.map((t) => (
+                  <tr class="border-b border-line/50">
+                    <td class="py-1.5 pr-3">
+                      <span title={t.code}>{themeLabel(t.code)}</span>
+                      <span class="ml-2 font-mono text-[11px] text-fg-faint">{t.code}</span>
+                    </td>
+                    <td class="py-1.5 pr-3 text-right font-mono text-xs">{count(t.articles)}</td>
+                    <td class="py-1.5 pr-3 text-right font-mono text-xs">{percent(t.share)}</td>
+                    <td class="py-1.5 text-right font-mono text-xs">{times(t.lift)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p class="mt-2 font-mono text-[11px] text-fg-faint">
+            Three floors before a theme is listed: at least 15 invoking articles, at least 8% of them, and a
+            lift of at least 2 — lift on its own crowns rarity, and rarity is not relevance.
+          </p>
+        </div>
+      )}
+
+      {(why.persons.length > 0 || why.organisations.length > 0) && (
+        <div class="mt-6">
+          <h3 class="font-mono text-[11px] uppercase tracking-[0.12em] text-fg-faint">
+            The names in those articles
+          </h3>
+          <div class="mt-3 grid gap-x-8 gap-y-4 sm:grid-cols-2">
+            {why.persons.length > 0 && (
+              <div>
+                <p class="font-mono text-[11px] uppercase tracking-[0.12em] text-fg-faint">Persons</p>
+                <ul class="mt-2 space-y-1 text-sm">
+                  {why.persons.map((p) => (
+                    <li class="flex justify-between gap-3 border-b border-line/50 pb-1">
+                      <span>{p.name}</span>
+                      <span class="font-mono text-xs tabular-nums text-fg-faint">{count(p.articles)}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            {why.organisations.length > 0 && (
+              <div>
+                <p class="font-mono text-[11px] uppercase tracking-[0.12em] text-fg-faint">Organisations</p>
+                <ul class="mt-2 space-y-1 text-sm">
+                  {why.organisations.map((o) => (
+                    <li class="flex justify-between gap-3 border-b border-line/50 pb-1">
+                      <span>{o.name}</span>
+                      <span class="font-mono text-xs tabular-nums text-fg-faint">{count(o.articles)}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+          <p class="mt-2 font-mono text-[11px] text-fg-faint">
+            Counted in invoking articles, and printed exactly as the extractor listed them — lowercase, and
+            regularly holding phrases that are neither a person nor an organisation. Tidying that list would
+            be this instrument's opinion about what belongs in it.
+          </p>
+        </div>
+      )}
+
+      {why.headlines.length > 0 && (
+        <div class="mt-6">
+          <h3 class="font-mono text-[11px] uppercase tracking-[0.12em] text-fg-faint">
+            The articles themselves
+          </h3>
+          <ul class="mt-3 space-y-3">
+            {why.headlines.map((a) => (
+              <li>
+                <a
+                  href={a.url}
+                  target="_blank"
+                  rel="noopener nofollow"
+                  class="underline decoration-line underline-offset-2 hover:text-fg"
+                >{a.title}</a>
+                <span class="ml-2 font-mono text-[11px] text-fg-faint">{a.domain}</span>
+              </li>
+            ))}
+          </ul>
+          <p class="mt-3 font-mono text-[11px] text-fg-faint">
+            Up to five of the invoking articles, those naming a full date inside {h.year} first. Titles and
+            links as the source recorded them — quoted, not summarised.
+          </p>
+        </div>
+      )}
+
+      <p class="mt-6 text-sm text-fg-muted">
+        One line does not move: the instrument never names the event. It publishes what the press wrote and
+        leaves the naming to whoever reads it — showing the evidence is a measurement, supplying the answer
+        would be an oracle.
+      </p>
+    </section>
+  )}
+
+  {!failed && d.years.length > 0 && (
+    <section class="mb-12">
+      <h2 class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+        The day's memory, year by year
+      </h2>
+      <div class="mt-4">
+        <InvokedPastFigure data={d} />
+      </div>
+    </section>
+  )}
+
+  {!failed && d.most_invoked && (
+    <section class="mb-12 border-l-2 border-line pl-5">
+      <h2 class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+        {maxAtCeiling
+          ? 'The most-invoked year is an artefact, not the finding'
+          : 'Tonight the most-invoked year is not the wall'}
+      </h2>
+      <p class="mt-3 text-fg-muted">
+        Today's raw maximum is <strong>{d.most_invoked.year}</strong> with {count(d.most_invoked.mentions)} mentions
+        ({decimal(d.most_invoked.per_1000_articles, 1)} per 1,000 articles). GDELT's date extractor emits no year
+        later than {ceiling}: measured as a clean cliff when this instrument was built, and re-measured every
+        night as the highest year the day's files contain (tonight: {ceiling}). Attention decays with age, so the
+        ramp toward the newest available year is the law rather than the news.
+        {maxAtCeiling ? (
+          <>
+            {' '}The maximum sits on that wall tonight, which is the usual outcome — it is published here as an
+            artefact of the source rather than as a finding about the past.
+          </>
+        ) : (
+          <>
+            {' '}Tonight the maximum does <strong>not</strong> sit on that wall: {d.most_invoked.year} outranks
+            the ceiling year {ceiling}, which the ramp alone does not account for. The wall is unchanged and
+            still drawn as the empty band it is; what changed is that a year below it drew more invocation than
+            the newest year the source will emit. Whether that is a story about {d.most_invoked.year} or about a
+            thin day at the ceiling is not settled by this count, and the page does not settle it.
+          </>
+        )}
+      </p>
+      <p class="mt-3 text-sm text-fg-muted">
+        The scope of this instrument is therefore the press's memory of <strong>{scope}</strong>. Invocation of the
+        last decade is <em>not available</em> from this field, and it is not substituted from anywhere else: a
+        title-level extraction would be a different population, and blending populations is how instruments start
+        lying. The wall is inherited, disclosed, and drawn into the figure as the empty band it is.
+      </p>
+    </section>
+  )}
+
+  {!failed && d.age_profile.length > 0 && (
+    <section class="mb-12">
+      <h2 class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+        How old is today's memory
+      </h2>
+      <div class="mt-3 overflow-x-auto">
+        <table class="w-full border-collapse text-sm tabular-nums">
+          <thead>
+            <tr class="border-b border-line text-left font-mono text-[11px] uppercase tracking-[0.12em] text-fg-faint">
+              <th class="py-2 pr-3 font-medium">Age of the invoked year</th>
+              <th class="py-2 pr-3 text-right font-medium">mentions</th>
+              <th class="py-2 text-right font-medium">share of the day</th>
+            </tr>
+          </thead>
+          <tbody>
+            {d.age_profile.map((b) => (
+              <tr class="border-b border-line/50">
+                <td class="py-1.5 pr-3">{ageBucketLabel(b)}</td>
+                <td class="py-1.5 pr-3 text-right font-mono text-xs">{count(b.mentions)}</td>
+                <td class="py-1.5 text-right font-mono text-xs">{percent(b.share)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      {d.age_profile[0] && d.age_profile[0].mentions === 0 && (
+        <p class="mt-2 font-mono text-[11px] text-fg-faint">
+          The youngest bucket is empty because of the {ceiling} wall, not because the press stopped citing the
+          last decade: nothing after {ceiling} reaches this instrument at all.
+        </p>
+      )}
+    </section>
+  )}
+
+  {!failed && topYears.length > 0 && (
+    <section class="mb-12">
+      <h2 class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+        Today's most invoked years — a count, not a finding
+      </h2>
+      <div class="mt-3 overflow-x-auto">
+        <table class="w-full border-collapse text-sm tabular-nums">
+          <thead>
+            <tr class="border-b border-line text-left font-mono text-[11px] uppercase tracking-[0.12em] text-fg-faint">
+              <th class="py-2 pr-3 font-medium">Year</th>
+              <th class="py-2 pr-3 text-right font-medium">mentions</th>
+              <th class="py-2 pr-3 text-right font-medium" title="mentions per 1,000 articles scanned">per 1,000</th>
+              <th class="py-2 pr-3 text-right font-medium">share</th>
+              <th class="py-2 font-medium">invoked by</th>
+            </tr>
+          </thead>
+          <tbody>
+            {topYears.map((t) => (
+              <tr class="border-b border-line/50">
+                <td class:list={['py-1.5 pr-3', h && t.year === h.year ? 'font-semibold' : '']}>
+                  {t.year}{h && t.year === h.year ? ' — the standout' : ''}{t.year === ceiling ? ' — at the wall' : ''}
+                </td>
+                <td class="py-1.5 pr-3 text-right font-mono text-xs">{count(t.mentions)}</td>
+                <td class="py-1.5 pr-3 text-right font-mono text-xs">{decimal(t.per_1000_articles, 1)}</td>
+                <td class="py-1.5 pr-3 text-right font-mono text-xs">{percent(t.share)}</td>
+                <td class="py-1.5 font-mono text-xs text-fg-faint">{invokedByLabel(t.invoked_by, 3)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="mt-2 font-mono text-[11px] text-fg-faint">
+        Ranked by today's mentions; the newest years sit highest because the source's ceiling ends there, which
+        is why this table is a count and not a finding. “Invoked by” names the three largest source countries of
+        that year's mentions — source country, not subject: it says whose newsrooms wrote, never whose past it is.
+      </p>
+    </section>
+  )}
+
+  <section class="mb-12">
+    <h2 class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+      The decay law: still pending, and saying so
+    </h2>
+    <p class="mt-3 text-fg-muted">
+      The test hypothesis of this instrument is the biexponential decay of collective memory —
+      <a href="https://www.nature.com/articles/s41562-018-0474-5" target="_blank" rel="noopener nofollow" class="underline decoration-line underline-offset-2 hover:text-fg">Candia et&nbsp;al. 2019</a>:
+      attention to an event falls in two phases, a fast communicative one and a slow cultural one. Testing it
+      needs a time series of tracked events, and this archive does not have one yet.
+    </p>
+    <div class="mt-4 border-l-2 border-line pl-5">
+      <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">Status</p>
+      <p class="mt-2 font-mono text-sm">{lawTest.status}</p>
+      {lawTest.hypothesis && <p class="mt-2 text-sm text-fg-muted">Hypothesis: {lawTest.hypothesis}.</p>}
+      <p class="mt-2 text-sm text-fg-muted">Why not yet: {lawTest.reason}.</p>
+      {lawTest.register_days_needed !== undefined && (
+        <p class="mt-2 font-mono text-xs text-fg-faint">
+          Archived days: {count(lawTest.register_days_have ?? 0)} of {count(lawTest.register_days_needed)} ·
+          first possible fit: {lawTest.first_possible ?? 'not datable until the register exists'}
+        </p>
+      )}
+      {lawTest.valid_days_so_far !== undefined && (
+        <p class="mt-2 font-mono text-xs text-fg-faint">
+          Valid observation days since founding: {count(lawTest.valid_days_so_far)} ·
+          first possible fit: {lawTest.first_possible ?? '—'}
+        </p>
+      )}
+    </div>
+    {d.tracked_events === null ? (
+      <p class="mt-4 text-sm text-fg-muted">
+        The tracked-event register — the {d.method.register_size} exact dates whose decay this instrument will
+        follow — is deliberately <strong>not founded</strong> yet. Founding it today would freeze whatever this
+        one day happens to commemorate as the world's canon; the first run of this instrument fell on 15 August,
+        and a single-day rule would have written one country's anniversaries into the register forever. It is
+        founded instead from the first {d.method.register_min_days} archived days, and it will carry the
+        selection effect it cannot escape: those events are chosen <em>because</em> they were the founding
+        window's most-invoked dates, so that window is excluded from any fit and the series starts the day after.
+      </p>
+    ) : (
+      <div class="mt-4 overflow-x-auto">
+        <p class="font-mono text-[11px] text-fg-faint">
+          Register founded {d.tracked_events.founded}{d.tracked_events.founding_day_excluded ? ' — founding day excluded from any fit by its own selection effect' : ''}
+        </p>
+        <table class="mt-2 w-full border-collapse text-sm tabular-nums">
+          <thead>
+            <tr class="border-b border-line text-left font-mono text-[11px] uppercase tracking-[0.12em] text-fg-faint">
+              <th class="py-2 pr-3 font-medium">Event date</th>
+              <th class="py-2 pr-3 text-right font-medium">age</th>
+              <th class="py-2 text-right font-medium">mentions today</th>
+            </tr>
+          </thead>
+          <tbody>
+            {d.tracked_events.events.map((e) => (
+              <tr class="border-b border-line/50">
+                <td class="py-1.5 pr-3">{humanDate(e.date)}</td>
+                <td class="py-1.5 pr-3 text-right font-mono text-xs">{count(e.age_years)} y</td>
+                <td class="py-1.5 text-right font-mono text-xs">{count(e.mentions)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    )}
+  </section>
+
+  <section class="mb-12">
+    <h2 class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">What this measures — and what it does not</h2>
+    <ul class="mt-3 space-y-2 text-sm text-fg-muted">
+      <li>
+        <strong>The extraction is inherited, and its error modes with it.</strong> The instrument does not read
+        text: it reads GDELT's own date field, {d.method.field}. Whatever that extractor mistakes for a date,
+        this instrument counts as one. Four versioned cleaning rules run on top of it, and each reports what it
+        removed, every night, in the day file — but no cleaning rule can repair a sensor from outside it.
+      </li>
+      <li>
+        <strong>A year is not an event.</strong> 1989 carries Tiananmen and the fall of the Wall in the same
+        bar, and any busy year is a container of several. Year-resolution mentions are what this field
+        supplies in quantity, so the instrument reports invoked <em>years</em>, publishes what the articles
+        invoking the standout year were about — and still leaves the naming of the event to whoever reads
+        it. The register will hold dates, not names, and only once an archive rather than a single day has
+        chosen them.
+      </li>
+      <li>
+        <strong>Lift is a statement about today, not a verdict on the year.</strong> A theme appears because
+        it is more common among the invoking articles than across the same day's articles; the comparison,
+        the three floors and the raw codes are all published, so the ranking can be recomputed from the day
+        file and disagreed with. The theme, person and organisation extraction is GDELT's own and inherits
+        the looseness of the rest of the field — a phrase that is neither a person nor an organisation
+        reaches this page unedited rather than being quietly dropped.
+      </li>
+      <li>
+        <strong>One country can carry a year on its own.</strong> That is why the standout is scored as an
+        excess over its neighbourhood in units of that baseline's square root, and not as a plain ratio: on the
+        first day of measurement the plain ratio preferred 1810, 65 of whose 73 mentions came from a single
+        country. A Poisson-style surprise cannot be won by a thin neighbourhood alone, and the winner's country
+        share is published beside it so a reader can discount it without being told to.
+      </li>
+      <li>
+        <strong>The {ceiling} wall is the source's, and it is not papered over.</strong> No year later
+        than {ceiling} is emitted at all, so the youngest age bucket is structurally empty and the ramp runs
+        toward the ceiling year. That ramp usually carries the raw maximum to the wall as well — {maxAtCeiling
+          ? 'as it does tonight'
+          : `tonight it does not, and ${d.most_invoked?.year} leads instead`}. Which of the two holds is read
+        off the file each night and said plainly, never assumed; the missing stretch is drawn into the figure
+        rather than cropped out of it.
+      </li>
+      <li>
+        <strong>The English-monitored stream only.</strong> Pasts invoked mainly in other languages are
+        underrepresented — a country that observes an anniversary loudly in its own language and quietly in
+        English shows up here as the second thing. The source-country split additionally inherits GDELT's own
+        domain-to-country attribution, which is demonstrably loose. The translation stream is the named v2
+        upgrade.
+      </li>
+      <li>
+        <strong>The v1 stoplist is empty on purpose.</strong> A false-positive review of the day before launch
+        found no systematic offender worth a blanket rule — so nothing is quietly removed. An empty list that is
+        published is a measurement; an unpublished one is a habit.
+      </li>
+    </ul>
+  </section>
+
+  <section class="mb-12">
+    <h2 class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">Nearest neighbors</h2>
+    <ul class="mt-3 space-y-2 text-sm text-fg-muted">
+      <li>
+        <a href="https://blog.gdeltproject.org/gdelt-2-0-our-global-world-in-realtime/" target="_blank" rel="noopener nofollow" class="underline decoration-line underline-offset-2 hover:text-fg">GDELT's own <code class="text-xs">V2.1ENHANCEDDATES</code></a>
+        — the sensor, added in 2015 explicitly for anniversary analysis. It has been emitting ever since; the
+        legacy Analysis Service's anniversary visualiser that once read it is retired, and no living instrument
+        took its place.
+      </li>
+      <li>
+        <a href="https://www.nature.com/articles/s41562-018-0474-5" target="_blank" rel="noopener nofollow" class="underline decoration-line underline-offset-2 hover:text-fg">Candia et&nbsp;al. 2019, “The universal decay of collective memory and attention”</a>
+        — Nature Human Behaviour. The decay law itself, on papers, patents, songs and films. A static paper, and
+        this instrument's test hypothesis rather than its competitor.
+      </li>
+      <li>
+        <a href="https://www.science.org/doi/10.1126/science.1199644" target="_blank" rel="noopener nofollow" class="underline decoration-line underline-offset-2 hover:text-fg">Michel et&nbsp;al. 2011, culturomics</a>
+        — fame and its decay measured in Google Books. A historical corpus of what was printed, not a daily
+        reading of what is being cited now.
+      </li>
+      <li>
+        <a href="https://en.wikipedia.org/wiki/Wikipedia:On_this_day" target="_blank" rel="noopener nofollow" class="underline decoration-line underline-offset-2 hover:text-fg">Wikipedia's “On this day”</a>
+        — which anniversaries an editorial community decides to mark today. Curation, and a fine one; the
+        opposite of a measurement of what the press actually invoked.
+      </li>
+    </ul>
+    <p class="mt-3 text-sm text-fg-muted">
+      The daylight: no living instrument of the press's invoked past exists. The nearest neighbours are a 2019
+      paper and a retired visualiser — a sensor that has run for a decade with nothing reading it daily, no
+      archive of what it saw, and no published method for calling one year a finding and another the ceiling.
+    </p>
+  </section>
+
+  <footer class="border-t border-line pt-5 font-mono text-xs text-fg-faint">
+    <p>
+      Scanned {count(d.stats.articles_scanned)} articles ·
+      {count(d.stats.articles_with_dates)} carried a dated reference ({percent(d.stats.articles_with_dates_share)}) ·
+      {count(d.stats.mentions_kept)} of {count(d.stats.mentions_raw)} mentions kept after the four rules ·
+      window {windowLabel(d.stats.window)} ·
+      {d.stats.slots_fetched}/{d.stats.slots_expected} files
+      {d.stats.slots_missing.length > 0 ? ` (${d.stats.slots_missing.length} gaps disclosed)` : ''}
+    </p>
+    <p class="mt-1">
+      Data: <a href={d.source.url} target="_blank" rel="noopener" class="underline decoration-line underline-offset-2 hover:text-fg">GDELT Project</a>
+      ({d.source.license.toLowerCase()}) · method {d.method.version} since {d.method.since} ·
+      method sheet: <a href="/werke/invoked-past" class="underline decoration-line underline-offset-2 hover:text-fg">/werke/invoked-past</a>
+    </p>
+  </footer>
+</article>

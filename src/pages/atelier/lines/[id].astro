@@ -1,0 +1,135 @@
+---
+// /atelier/lines/<id> — one work-line's whole record: its score, its trace, its decision.
+//
+// The page every figure of this practice was already linking to, and which did not exist.
+// The refrain's card, the passage's card and the dossier all offered "read the full record →"
+// pointing at `/atelier/projects#line-<id>` — a route retired by the pyramid rewrite (#560),
+// which 301s to /atelier/works and drops the anchor on the way. So the one link a reader
+// follows when a figure has made them curious landed on a list of works. Frank, 2026-08-14:
+// „'read the full record' führt nicht zum record."
+//
+// Two things this page does that no other surface does:
+//
+//   · IT SHOWS THE WHOLE TRACE. Protocol v6 §8 rotates the older half of a long trace into
+//     `archive/trace/<line>-<n>.md`; the live file keeps the newest moves. Composed here in
+//     record order (src/lib/atelier/trace-record.ts), so a line that has rotated twice reads as
+//     one document — which is what it is. Reading only the live file would show five moves of
+//     sixty-five and say nothing about it.
+//   · IT DATES ITSELF. Every reading carries the day the record last moved, because a figure
+//     that stops on the 12th looks identical whether the practice was quiet or the mirror
+//     broke. The practice's own instruments carry an as-of; so does this.
+import { getCollection } from 'astro:content'
+import Page from '@/layouts/Page.astro'
+import DocumentSheet from '@/components/ecology/DocumentSheet.astro'
+import RefrainScore from '@/components/atelier/RefrainScore.astro'
+import { renderMarkdown } from '@/lib/engines/journal'
+import { loadRefrainModels } from '@/lib/atelier/refrain-data'
+import { wholeTrace } from '@/lib/atelier/trace-record'
+import { ATELIER_NARRATIVE } from '@/config/atelier-wording'
+
+const REPO = 'https://github.com/frankbueltge/ulysses'
+
+export async function getStaticPaths() {
+  const all = await getCollection('atelier')
+  const projects = all.filter((e) => e.id.startsWith('projects/'))
+  // The glob loader strips the extension and lowercases the id, so `SCORE.md` arrives as
+  // `projects/<line>/score` and a rotated part as `archive/trace/<line>-1`. The composer keys on
+  // filenames, so the suffix is put back here rather than teaching it a second shape.
+  const rotated = Object.fromEntries(
+    all
+      .filter((e) => e.id.startsWith('archive/trace/'))
+      .map((e) => [`/src/content/atelier/${e.id}.md`, e.body ?? '']),
+  )
+
+  const ids = [...new Set(projects.map((e) => e.id.split('/')[1]))].filter(Boolean)
+  return ids.map((id) => {
+    const part = (name: string) =>
+      projects.find((e) => e.id.toLowerCase() === `projects/${id}/${name}`.toLowerCase())
+    const trace = part('trace')
+    const live = trace?.body ?? ''
+    return {
+      params: { id },
+      props: {
+        id,
+        score: part('score')?.body ?? '',
+        // Frontmatter is parsed OUT of the body by the collection, so title/status/kind are read
+        // from `data` — a regex over the body finds nothing, which is how this page first
+        // rendered a line id as its own headline.
+        meta: (part('score')?.data ?? {}) as Record<string, unknown>,
+        // The composition wants keys shaped like the mirror's paths; the collection strips the
+        // leading segment, so it is put back above rather than teaching the composer two shapes.
+        trace: live ? wholeTrace(id, live, rotated) : '',
+        liveOnly: live,
+        decision: part('decision')?.body ?? '',
+      },
+    }
+  })
+}
+
+const { id, score, trace, liveOnly, decision, meta } = Astro.props
+
+const title = String(meta.title ?? id)
+const status = String(meta.status ?? '')
+const kind = String(meta.kind ?? '')
+
+// The record's own last date — not today's, and not the build's. If these differ, the line has
+// simply been quiet, and the page says which day it was quiet since.
+const dates = [...trace.matchAll(/^##[^\n]*?(\d{4}-\d{2}-\d{2})/gm)].map((m) => m[1]).sort()
+const lastMove = dates.at(-1) ?? null
+const moves = (trace.match(/^## (Tick \d+|Compost in|\d{4}-\d{2}-\d{2})/gm) ?? []).length
+const liveMoves = (liveOnly.match(/^## (Tick \d+|Compost in|\d{4}-\d{2}-\d{2})/gm) ?? []).length
+const rotatedMoves = moves - liveMoves
+
+const md = (text: string) => renderMarkdown(text, { repo: REPO, docs: new Set<string>() })
+
+// The refrain score, ON the record it draws (moved here from the station sheet 2026-08-16,
+// Frank's decision): the station keeps the whole-practice line map; the score is one line's own
+// time and belongs to that line's page. It renders only where a model exists — a running
+// work-line with a legible SCORE/TRACE — which is exactly loadRefrainModels' contract.
+const refrain = loadRefrainModels().find((m) => m.line.id === id) ?? null
+---
+
+<Page
+  title={`${title} — the record | Frank Bültge`}
+  description={`The whole record of the Atelier's work-line “${title}”: its score, every move of its trace, and its decision — read from the committed mirror.`}
+>
+  <DocumentSheet
+    id="atelier"
+    parent={{ label: 'works', href: '/atelier/works' }}
+    here={id}
+    title={title}
+    span={`${kind || 'line'}${status ? ` · ${status.toLowerCase()}` : ''}${lastMove ? ` · last move ${lastMove}` : ''} — one work-line’s whole record: score, decision, trace`}
+    source={`src/content/atelier/projects/${id}/* · src/content/atelier/archive/trace/${id}-*.md`}
+    more={{ label: 'the record in the repository ↗', href: `${REPO}/tree/main/projects/${id}` }}
+  >
+    <p class="eco-doc-note">
+      {moves} {moves === 1 ? 'move' : 'moves'} on the record{rotatedMoves > 0 && (
+        <> — {liveMoves} in the live file, {rotatedMoves} rotated into the archive under §8 and composed back in here</>
+      )}.
+      {lastMove && <> The last one is dated <b>{lastMove}</b>; a quiet line is quiet, not missing.</>}
+    </p>
+
+    {refrain && <RefrainScore model={refrain} id={`refrain-${id}`} heading={ATELIER_NARRATIVE.refrain.heading} />}
+
+    {score && (
+      <section>
+        <h2 class="eco-doc-part">The score</h2>
+        <div class="engine-prose" set:html={md(score)} />
+      </section>
+    )}
+
+    {decision && (
+      <section>
+        <h2 class="eco-doc-part">The decision</h2>
+        <div class="engine-prose" set:html={md(decision)} />
+      </section>
+    )}
+
+    {trace && (
+      <section>
+        <h2 class="eco-doc-part">The trace</h2>
+        <div class="engine-prose" set:html={md(trace)} />
+      </section>
+    )}
+  </DocumentSheet>
+</Page>

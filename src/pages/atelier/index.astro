@@ -50,6 +50,11 @@ const map = buildLineMap(dossiers, works)
 const door = splitDoorLine(sheet.station.description)
 const SEO = PYRAMID.stationSeo.atelier
 const F = FIGURES.atelier
+
+// The refrain score is NOT on this sheet any more (2026-08-16, Frank's decision). It is the
+// figure of ONE line's own time, and it lives with that line's record at /atelier/lines/<id> —
+// the station keeps the line map, which shows the whole practice. mounted.test.ts still guards
+// that the score renders on a page; it simply stopped being this one.
 ---
 
 <Page title={`${SEO.title} | Frank Bültge`} description={SEO.description}>

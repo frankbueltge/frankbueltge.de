@@ -5,7 +5,7 @@
 // deep links the sheets, the spine and the works published keep resolving.
 import { getCollection } from 'astro:content'
 import Page from '@/layouts/Page.astro'
-import Frame from '@/components/atelier/surface/Frame.astro'
+import DocumentSheet from '@/components/ecology/DocumentSheet.astro'
 import { buildSessionEntries, type JournalEntry } from '@/lib/atelier/sessions'
 import { renderMarkdown } from '@/lib/engines/journal'
 import { ATELIER_NARRATIVE } from '@/config/atelier-wording'
@@ -41,25 +41,26 @@ const { entry, html, prev, next, total, position } = Astro.props as {
 }
 const room = ATELIER_NARRATIVE.journalRoom
 const label = entry.kind === 'session' ? `S${entry.n}` : 'v4'
-const kicker = ['Atelier · journal', 'ulysses', `${label} · ${entry.date}`]
-const statusHtml =
-  `<b>${label}</b> · ${entry.date} · page ${position} of ${total} · ` +
-  `<a href="/atelier/journal" class="underline">the register →</a>`
 ---
 
 <Page
   title={`Atelier — ${label}: ${entry.heading} | Frank Bültge`}
   description={`${entry.date} — one page of the Atelier's journal, mirrored verbatim from the practice's own repo.`}
 >
-  <Frame active="journal" kicker={kicker} h1={entry.heading} statusHtml={statusHtml} back>
-    <p class="at-req-note">
-      {entry.kind === 'note' ? `${room.noteKicker} — ${room.pageNote}` : room.pageNote}
-    </p>
-    <div class="at-prose" set:html={html} />
-    <nav class="at-page-nav" aria-label="Journal pages">
-      {prev && <a class="at-nav-prev" href={`/atelier/journal/${prev.slug}/`}>← {room.prevLabel}: {prev.kind === 'session' ? `S${prev.n}` : prev.date}</a>}
+  <DocumentSheet
+    id="atelier"
+    parent={{ label: 'journal', href: '/atelier/journal' }}
+    here={label}
+    title={entry.heading}
+    span={`${label} · ${entry.date} · page ${position} of ${total} · ${entry.kind === 'note' ? `${room.noteKicker} — ${room.pageNote}` : room.pageNote}`}
+    source="src/content/atelier/journal/*.md"
+    more={{ label: 'the register →', href: '/atelier/journal' }}
+  >
+    <div class="engine-prose" set:html={html} />
+    <nav class="eco-doc-nav" aria-label="Journal pages">
+      {prev && <a href={`/atelier/journal/${prev.slug}/`}>← {room.prevLabel}: {prev.kind === 'session' ? `S${prev.n}` : prev.date}</a>}
       <a href="/atelier/journal">{room.backToRegister}</a>
-      {next && <a class="at-nav-next" href={`/atelier/journal/${next.slug}/`}>{room.nextLabel}: {next.kind === 'session' ? `S${next.n}` : next.date} →</a>}
+      {next && <a href={`/atelier/journal/${next.slug}/`}>{room.nextLabel}: {next.kind === 'session' ? `S${next.n}` : next.date} →</a>}
     </nav>
-  </Frame>
+  </DocumentSheet>
 </Page>

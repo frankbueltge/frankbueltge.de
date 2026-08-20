@@ -2,15 +2,14 @@
 
 **Status: IN FORCE, decided and executed 2026-08-08 (night session 07./08.08.).** Frank put
 the real question on the table himself — archive the ecology, or rebuild it radically — and
-chose the rebuild, in his own words: *"retten und weiterentwickeln wäre aber konsequent und
-mir natürlich lieber, weil ich dieses experiment liebe und schätze"*, and on execution:
-*"du kannst von mir aus auch direkt mit dem umbau beginnen"* … *"hier geht es auch nicht um
-verhandlung mit den praxen sondern einen echten umbau und das löschen und ersetzen von all
-dem scheiss den man nicht mehr braucht, weil er zu nichts führt … also quasi research
-ecology v2"*. The frame he corrected mid-execution, and which governs this document: **the
+chose the rebuild (wording private throughout): saving and developing it further was the
+consequent course and the one he preferred, because he values this experiment. On
+execution: the rebuild could begin directly, without negotiating with the practices — a
+real rebuild that deletes and replaces whatever no longer leads anywhere, a research
+ecology v2. The frame he corrected mid-execution, and which governs this document: **the
 three practices stay** — three different ways of researching and delivering in the field of
-tension between art, science and philosophy/artistic research — *"genau das muss geschärft
-und optimiert werden"*. No new repos; the existing repos, constitutions, protocols and
+tension between art, science and philosophy/artistic research, and precisely that is what
+had to be sharpened and optimised (wording private). No new repos; the existing repos, constitutions, protocols and
 prompts are what got rebuilt.
 
 Executed the same night: all three engine protocols rewritten clean (ulysses `adb63f4`,
@@ -21,8 +20,8 @@ this document, and the site follow-through.
 
 ## 1. The verdict, differentiated
 
-Frank's diagnosis, verbatim: after weeks, *"nur belangloser dünnschiss produziert worden,
-den kein mensch da draußen interessiert oder beeindruckt"* — no work of the practices is
+Frank's diagnosis (wording private): after weeks, the output had been inconsequential and
+interested or impressed nobody outside the house — no work of the practices is
 progressive or innovative enough to interest artists, researchers, critics or festivals,
 and the house had already applied to festivals without being able to deliver (both
 applications withheld 2026-08-07, his own judgment).
@@ -84,7 +83,7 @@ in every protocol, with the siblings' corners beside them:
   architect's new bind — `prepared` is sent or dated-withheld within seven days.**
 - **The reading of 2026-09-05** (§6 below).
 
-## 4. Deleted (the "scheiss", each with its reason)
+## 4. Deleted (what no longer led anywhere, each with its reason)
 
 1. **The season/episode layer, entirely.** Rule 8, SEASON.md (closed in all three repos),
    slots, direction negotiation, The Middle's season bookkeeping. Three days old as a
@@ -127,8 +126,8 @@ weakened).
 
 ## 5b. The Plenum — deliberately untouched, and now said so
 
-*(Added hours after execution, when Frank asked "was ist mit plenum?" — the omission was
-real.)* The Plenum is **not a practice of this house**: it is data-snack.com's resident
+*(Added hours after execution, when Frank asked what v2 meant for the Plenum (2026-08-08,
+wording private) — the omission was real.)* The Plenum is **not a practice of this house**: it is data-snack.com's resident
 collective, admitted to the ecology as a *member* on 2026-07-17, with its own constitution
 in its own repository belonging to that project. v2 rewrote this house's three
 constitutions; the Plenum's was never this rebuild's to rewrite, and the ecology-integrate
@@ -137,7 +136,8 @@ cloned only for post office packets"). What stands: the `/plenum` exhibition on 
 the post office service, the membership. What v2 changes for it anyway: **the seven-day
 bind covers its packets** — same pen, same rule — so the CHT letter lying `prepared` since
 2026-08-05 is due a send-or-withhold decision within seven days of the bind taking force.
-*(Extended the same day, midday, at Frank's instruction "so dass nichts stumm bleibt": the
+*(Extended the same day, midday, at Frank's instruction (2026-08-08, wording private — extend
+the bind so that nothing is left without an answer): the
 bind also covers the plenum's **review dashboard** — a delivered draft is approved, rejected
 or dated-held within seven days; the thirteen pending since July fall due 2026-08-15. The
 dashboard turned out to be the buried lede: it lives at `data-snack.com/lab/social`,

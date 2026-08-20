@@ -14,10 +14,10 @@ wenn passende Dateien angefasst werden). Inhalt unverändert — was hier steht,
 in jeder Session und gilt jetzt in jeder Session, die eine Figur oder ein Stylesheet
 berührt.
 
-- **Visualisierungen der Praxen dürfen eigene Bildsprache haben (Frank, 2026-07-30):**
-  Die Mono-Skin gilt für die Site, aber **nicht als Zwang zur kargen Einlinien-Grafik**.
-  Franks Wortlaut: „[Wortlaut privat;
-  redigiert]."
+- **Visualisierungen der Praxen dürfen eigene Bildsprache haben (Frank, 2026-07-30;
+  Wortlaut privat):** Die Mono-Skin gilt für die Site, aber **nicht als Zwang zur kargen
+  Einlinien-Grafik** — Franks Anweisung: interaktiv und ansprechend statt minimaler
+  Monochromie, weil die Praxen eigene Projekte sind.
   Für Atelier/Field/Studio also: Farbe, Tiefe, Interaktion (Hover/Fokus/Filter),
   Detailtafel — solange die Figur aus committeten Daten abgeleitet und nachprüfbar ist.
   Verbindlich bleibt das Handwerk: **Palette gegen die jeweilige Fläche validieren**

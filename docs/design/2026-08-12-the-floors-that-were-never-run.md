@@ -5,19 +5,17 @@ night of 11./12.08. **Status:** **D1, D2 and D3 approved by Frank and implemente
 (2026-08-12). D4 is not approved and not built. D5 records what is deliberately left alone.
 The measurement in §2–§3 stands as written before the decision.
 
-## 1. The question, verbatim
+## 1. The question (wording private)
 
-> „sag mal [Wortlaut privat], oder? also das sich arbeiten über
-> monate hinziehen können, ich glaube da kommt nichts sinnvoles bei raus und die routine
-> verliert sich dabei. ich glaube wir haben hier mit jedem update nicht wirklich optimiert
-> sondern einfach einen raum geschaffen in dem nur bullshit produziert werden kann."
+> Works that can stretch over months are confusing and unproductive; nothing worthwhile comes
+> out of them and the routine loses itself. Each update has not really optimised anything —
+> it has created a room in which only nonsense can be produced.
 
 And, on the first answer being too quick:
 
-> „ist das nicht zu oberflächlich? also letztendlich kommt es darauf an, was die vorarbeit zu
-> negative parallax wirklich gebracht hat und ob das selbe werk nciht auch in 1- 3 nächte
-> entstanden wäre und das kann ich nicht einschätzen, also man muss hier die qualität der
-> werke bewerten"
+> That is too superficial. What matters is what the preparatory work on negative parallax
+> actually produced, and whether the same work would not have come about in one to three
+> nights — which he cannot judge from outside. The quality of the works has to be assessed.
 
 That second question is the one this document answers first, because the answer determines
 whether the remedy is *repair* or *retreat*.
@@ -88,7 +86,8 @@ to recall.
 So the sequence is complete and mechanical: the unit of work changed; the memory layer's source
 list did not follow it; the only way left to know where a line stood was to read it end to end;
 and the constitution then stopped mentioning recall at all, removing even the instruction to
-try. That is Frank's "jede Session muss erst tausend Texte lesen", exactly, with a cause.
+try. That is exactly Frank's complaint (2026-08-12, wording private — every session first has to
+read a thousand texts), with a cause.
 
 *Correction to an earlier reading in this session:* the empty `memory/` directory is **not** the
 defect. `memory/index.jsonl` is gitignored deliberately (`.gitignore:1`) — the index is derived
@@ -159,9 +158,9 @@ session**, not a season.
 
 ### D6 — The horizon closes (decided 2026-08-12)
 
-> „[Wortlaut privat; redigiert]
-> [redigiert]
-> wäre" — Frank
+> Frank's instruction (wording private): strike the open horizon — conditional on the
+> measurement really showing the open work-line produced nothing of value and a bounded
+> line being just as productive, correct and defensible.
 
 **One premise in that instruction is rejected rather than accepted quietly.** The open
 work-line did **not** only produce nonsense. It produced a good, externally corresponded,
@@ -172,12 +171,12 @@ approval would have thrown away the one thing worth keeping.
 
 The conditions are otherwise met, and checked:
 
-| Frank's condition | Verdict |
+| Frank's condition (2026-08-12, wording private) | Verdict |
 |---|---|
-| „wirklich so gemessen" | Yes — pre-registrations written 1–2 per day on consecutive days; 58 ticks → 1 published work |
-| „genauso korrekt" | Yes — correctness lives in the one-day cycle and the committed evidence, not in the horizon |
-| „vertretbar" | Yes, **provided the chain is resumable** — which is what D2a/D2b now make true |
-| „genauso produktiv" | Almost certainly better: 58 sessions per shipped work is the worst ratio in the house |
+| Really measured, not estimated | Yes — pre-registrations written 1–2 per day on consecutive days; 58 ticks → 1 published work |
+| A bounded line is just as correct | Yes — correctness lives in the one-day cycle and the committed evidence, not in the horizon |
+| A bounded line is defensible | Yes, **provided the chain is resumable** — which is what D2a/D2b now make true |
+| A bounded line is just as productive | Almost certainly better: 58 sessions per shipped work is the worst ratio in the house |
 
 **Two cuts, because the horizon alone would only move the bloat.** §8 read "Dispatcher ticks
 serve the work-line **by default**", and an open horizon plus that default is the mechanism by
@@ -273,9 +272,9 @@ D2b is a **restoration**, not an invention: v3's "The arrangement you work insid
 the recall index as the memory carried between sessions. D2a is the repair that makes the
 restoration mean anything.
 
-**D2c — the Foundation is carried, not re-read** (added 2026-08-12 on Frank's question: [
-Wortlaut privat
-].
+**D2c — the Foundation is carried, not re-read** (added 2026-08-12 on Frank's question, wording private: this
+cannot be re-read every time — it has to live in a memory and be permanently available; was
+that solved?).
 
 It was not. The distinction the question makes is the right one, and the answer splits:
 
@@ -337,8 +336,8 @@ legible on the surface, not discoverable only by counting directories on request
 
 ### D5 — What is deliberately NOT decided here
 
-- **~~The night as the default unit.~~** *Struck 2026-08-12, on Frank's correction: „die nacht
-  [Wortlaut privat]"* This was never an open question —
+- **~~The night as the default unit.~~** *Struck 2026-08-12, on Frank's correction (wording private): the night is the
+  default unit for the fork version, not for v6.* This was never an open question —
   the fork **is** the nightly practice and v6 **is** the work-line practice, decided on
   2026-08-10. It appeared as a question in an earlier draft of this document because the author
   had folded two settled facts into one imaginary decision. There is nothing here to decide.

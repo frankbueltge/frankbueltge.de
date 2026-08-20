@@ -10,14 +10,14 @@ import stageData from '@/data/studio/stage.curated.json'
 import meta018 from '@/components/field/werke/2026-07-25-no-signal-to-extend/meta.json'
 import meta019 from '@/components/field/werke/2026-07-26-unable-to-ring-its-own-bell/meta.json'
 import parallax from '@/data/meridian/parallax.json'
-import nativeSpeaker from '@/content/studio/works/2026-07-13-native-speaker/meta.json'
-import noWay from '@/content/studio/works/2026-07-17-no-way-of-knowing/meta.json'
-import recovery from '@/content/studio/works/2026-07-21-recovery/meta.json'
-import oneTap from '@/content/studio/works/2026-07-23-one-tap/meta.json'
-import noPart from '@/content/studio/works/2026-07-30-no-part/meta.json'
 import { gauntletPlate, gauntletTour, type GauntletChronicleEntry } from '@/lib/tour/field-gauntlet'
 import { buildControlSvg, type ControlInput } from '@/lib/field/strip'
-import { buildSeasonModel, buildSeasonFloorSvg, type SeasonKill } from '@/lib/studio/season'
+import {
+  buildSeasonModel,
+  buildSeasonFloorSvg,
+  type SeasonKill,
+  type SeasonWorkMeta,
+} from '@/lib/studio/season'
 import { buildPassageModel, buildPassageSvg, type PassageInput, type PassageModel } from '@/lib/atelier/passage'
 import {
   ATELIER_THUMB_PROVENANCE,
@@ -34,15 +34,18 @@ import {
 } from './triptych'
 
 // ——— the real season, and the real gauntlet plate ————————————————————————————————
+// The works are read off the content directory, never listed here: this card claims to show the
+// NEWEST fragment the studio has, and a hand-kept map of five works would have gone on proving
+// that claim about the newest of five while the house had six (2026-08-15).
+const studioMetas: Record<string, SeasonWorkMeta> = Object.fromEntries(
+  Object.entries(
+    import.meta.glob('/src/content/studio/works/*/meta.json', { eager: true, import: 'default' }),
+  ).map(([path, meta]) => [path.split('/').at(-2) as string, meta as SeasonWorkMeta]),
+)
+
 const seasonModel = buildSeasonModel({
   chronicle: studioChronicle,
-  metas: {
-    '2026-07-13-native-speaker': nativeSpeaker,
-    '2026-07-17-no-way-of-knowing': noWay,
-    '2026-07-21-recovery': recovery,
-    '2026-07-23-one-tap': oneTap,
-    '2026-07-30-no-part': noPart,
-  },
+  metas: studioMetas,
   kills: stageData.kills as SeasonKill[],
 })
 

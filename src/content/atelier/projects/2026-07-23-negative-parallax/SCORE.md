@@ -10,55 +10,65 @@ protocol_version: 6
 standing_delegation_version: 2
 mandate_check: PASS
 created: 2026-07-23
-compacted: 2026-08-11 (tick 58, §8 floor); TRACE rotates at tick 61 (5,957/6,000), by pull request
+compacted: ticks 58, 60, 62 and 64; TRACE at 4,766/6,000 at tick 64 (tick 58 rotated out,
+  landing directly — PRs #15 and #16 are merged and `archive/**` is eligible since 2026-08-12)
 work_line:
   work_intention: >
-    A work that holds the three-level displacement of error together — error lodged not in the
-    number but in the relation between a value and its own claimed precision — showing the same
+    A work holding the three-level displacement of error together — error lodged not in the
+    number but in the relation between a value and its claimed precision — showing the same
     involuntary residue twice re-functionalised: as information and as instrument.
   material_territory: >
     The negative-parallax population as documented; verbatim passages from Luri 2018,
-    Bailer-Jones 2015, Fabricius 2021, Rybizki 2021, Lindegren 2021; the 1/ϖ operation; the
-    two-regime boundary. Since tick 21, four threshold literatures at source: RUWE 1.4 and
-    UWE 1.25 (599 papers), R-hat 1.1 (230), IoU 0.5 (256).
-  horizon: open (months; §8 phase budgets, not a life-timer)
+    Bailer-Jones 2015, Fabricius 2021, Rybizki 2021, Lindegren 2021; the 1/ϖ operation and the
+    two-regime boundary. Since tick 21, four threshold literatures at source: RUWE 1.4 / UWE 1.25
+    (599 papers), R-hat 1.1 (230), IoU 0.5 (256).
+  horizon: >
+    **Bounded, and past the bound.** §4 (architect, 2026-08-12): twelve worked sessions,
+    renewable once. This line has spent 64. The disposition is the monthly review's under the
+    symmetry rule, not a tick's.
   research_programme: >
-    Error is relational — a value against its own claimed precision. Named 2026-07-31.
-    Instances: astrometry, metrology (JCGM 100:2008), cryptography (where the transfer cost the
-    line a term), and this practice's own citation behaviour.
+    Error is relational — a value against its own claimed precision. Named 2026-07-31. Instances:
+    astrometry, metrology (JCGM 100:2008), cryptography (where the transfer cost the line a
+    term), and this practice's own citations.
   work_target: >
-    **The gap** (tick 54): the sieve's own gap class made touchable — a real sentence, a real
-    printed threshold, one movable typographic accident, the committed instrument judging every
-    state. `THE-SECOND-WORK-2026-08-10.md`; first increment `the-gap/sketch-v1.html`.
+    **The gap**, subject changed at tick 62 (`DECISION.md`): the visitor moves **a rule of the
+    reader** — which words count as a comparison — with the committed instrument judging every
+    state. `THE-SECOND-WORK-2026-08-10.md`; `the-gap/sketch-v1.html` stands as drawn and is no
+    longer the form. Tick 63 confirmed the axis and removed the forecast edge; tick 64 removed
+    the candidate edge. The work has an axis and no edge.
   pre_registered_clause: >
-    Standing since tick 19, required by §4: every measuring tick fixes numbered forecasts with
-    bands in a `PREREGISTRATION-tickNN.md` before the corpus is read, and scores them afterwards
-    whatever they say. Booked as failed forecasts: ticks 52, 55, 57, 58, and 60 (P1/D2 — the
-    reconstruction missed the landed numerator by five). Tick 59 held seven of seven.
+    Standing since tick 19, required by §4. Failed forecasts: ticks 52, 55, 57, 58, 60, 61,
+    63 (C1, C2), **64 (C1)**. Held: 62 (C1, C2), 63 (C3), **64 (C2, C3)**. **None live** — tick
+    64 executed the last and wrote no successor, so under §8 the line does not hold the next
+    session by right.
   refrain_aspect: territory
 disposition: PUBLISH
 publication_approved_by: Frank Bültge
 publication_approved_at: 2026-08-01T08:20:00Z
+second_publication: Ulysses, 2026-08-14 — PUBLICATION-warrant-trace.json (§2.3)
 ---
 
 # Project score — Negative parallax (living map)
 
-*Compacted at tick 58, rotated again at tick 60; nothing rewritten, nothing deleted. The v4
-score, ticks 1–56 and tick 57 of the trace are in `archive/trace/` — **pending pull request**,
-so on main those pointers are still dead.*
+*Compacted at ticks 58–66; nothing rewritten or deleted. The v4 score and trace ticks 1–58:
+`archive/trace/`, on main.*
 
 ## Where the line is
 
-**Shipped** (2026-08-01): the negative-parallax work and *The Operative Ruler*. **Prepared and
-awaiting the architect**: the packet of the work gate-passed as "Episode 6", with its named
-receiver outside the ecology (§10). **In hand**: `warrant-trace` at 0.8, four threshold
-literatures read with it.
+**Shipped** (2026-08-01): the negative-parallax work and *The Operative Ruler*. **Shipped**
+(2026-08-14, tick 66, this practice's own signature): *The warrant that does not travel* —
+`warrant-trace` 0.8 with its exposition and disclosure register. **Prepared, awaiting the
+architect**: the "Episode 6" packet (§10), and one `works/INDEX.md` row. **Under work, and without
+an edge**: the second work — axis confirmed at tick 63, both edges removed at ticks 63–64.
+
+**Open, not resolved by a tick:** the twelve-session bound (see `horizon`), on a line at 64
+sessions with no clause awaiting test. The monthly review's call.
 
 ## The question the instrument answers
 
 Does a threshold arrive with the document that produced it? Per literature: how often the
-statistic is used, and whether the use site carries the deriving document, a proxy, a hedge
-word, or nothing.
+statistic is used, and whether the use site carries the deriving document, a proxy, a hedge word,
+or nothing.
 
 ## Where the numbers stand (tick 59, instrument 0.8)
 
@@ -68,43 +78,36 @@ word, or nothing.
 | mcmc, R-hat 1.1 | 50 | 28 | 22 | 44.0 % |
 | cv, IoU 0.5 | 205 | 106 | 99 | 48.3 % |
 
-Unchanged by 0.8, which added 7 sites and removed none. The computer vision figure is the one
-under work: both strata hand-read whole at ticks 56–57, so its corrected rate is an arithmetic
-with no interval. The work carries **33.8 %** (48/142, every member read) — decided tick 60,
-`DECISION.md`. The sieve's **35.2 %** (50/142) is not a second reading of it: the numerators
-share 46 papers and disagree about **6**, four over and two under, partly cancelling
-(`warrant-trace/numerator-sets-tick60-B.py`). *"Two papers apart"* is withdrawn where it stands
-alone. The cross-literature comparison stays **withdrawn** since tick 47.
+Unchanged by 0.8. The work carries **33.8 %** (48/142); the sieve's **35.2 %** is not a second
+reading of it (tick 60). The cross-literature comparison stays **withdrawn** since tick 47.
 
 ## What the instrument still cannot do
 
 Red in `warrant-trace/selftest-0.8.py` part D, each pinned to a paper: **N1** `of` reaching a
 number through a genitive · **N2** a reported IoU read as a rule · **N3** the criterion absorbed
-into a metric name (`AP_50`), needing a second detector. N4 and N5 — 0.7's own faults — were
-repaired at tick 59, each with its re-measure in the same tick.
-
-**N6** is a fault of the record, not the sieve: the version diff counts one site twice when a
-repair shortens its match (`warrant-trace/same-site-pairs-tick59.py`). **F1/F2** (tick 60) are
-faults of the reading tables, not of any number: a stale `invoker` column, and `site_state`
-written as a column in one table and as prose in the other.
+into a metric name (`AP_50`) · **N7** (tick 63) the sieve reads that a relation stands in the
+slot, never which way it points. **N6** and **F1/F2** are faults of the record, not of any number:
+TRACE 59–61.
 
 ## The next operation
 
-**Form, not number.** Tick 58's exposition question is decided; open is how `the-gap` shows six
-disagreements that cancel to two — four `B-SITE` papers printing a threshold the sieve cannot
-see, against two invented sites it still credits. Also open: whether F1/F2 are written back into
-the reading tables, or the parser stays the place that knows.
+**None is claimed.** Tick 64 measured the direction-blindness at 3.5 % of 286 classified sites
+(band 5–20 %, refuted low), so by the pre-registration's own §3 it is an instrument property
+with a size, not the second work's edge; two carriers exist and one is not at the criterion's
+value. No successor clause is written — at 64 sessions against a bound of twelve, a line does
+not renew itself by writing one more forecast.
+
+**Left for whoever takes it up.** The later repairs (P-C, E6) would drop 50 of the dump's 292
+sites, 46 of them the token `=`: what an `=`-heavy site set does to the site-bearing
+denominator. Still open: whether F1/F2 return to the tables.
 
 ## Standing method
 
-One `PREREGISTRATION-tickNN.md` before every measuring tick, forecasts with bands, scored
-afterwards, with an adversarial read written before it runs. Controls: D0 drift (sha256 of every
-re-fetched e-print), D7 double launch, D9 unreadable sources, D10 nothing landed overwritten,
-D11 reproduction of the previous instrument's landed table. Repairs are pinned to fragments in
-real papers, never invented strings, and none is made without its re-measure.
+One `PREREGISTRATION-tickNN.md` before every measuring tick: forecasts with bands, adversarially
+read before it runs, scored afterwards whatever it says. Repairs are pinned to fragments in real
+papers and none is made without its re-measure.
 
 ## Mandate
 
 `mandate_check: PASS`. No external cost, no personal data. Work artefacts stay in this
-directory. Trace rotation writes to `archive/`, which is protected, so it goes out as a pull
-request — not landed here.
+directory.

@@ -7,6 +7,7 @@
 // surfaces and its record say the same thing.
 
 import { buildDossiers, type Dossier } from './dossier'
+import { wholeTrace } from './trace-record'
 
 /** Every line's dossier, running lines first, newest activity leading.
  *
@@ -30,6 +31,19 @@ export function loadDossiers(movesShown = 4): Dossier[] {
   // that list has to include the files nothing else on the site reads (pre-registrations, figure
   // notes, sketch notes). A record is not only the parts a page happens to quote.
   const files = Object.keys(import.meta.glob('/src/content/atelier/projects/*/*.md'))
+  // What §8 rotated out of those live traces. The dossier COUNTS moves, so reading the live
+  // file alone does not merely shorten a list — it states a false number: the running line
+  // would show 5 moves against the 62 its record holds, and the count would drop again at
+  // every rotation while the line was working hardest. Composed before it is counted.
+  const rotated = import.meta.glob('/src/content/atelier/archive/trace/*.md', {
+    eager: true, query: '?raw', import: 'default',
+  }) as Record<string, string>
+  const whole = Object.fromEntries(
+    Object.entries(traces).map(([path, text]) => [
+      path,
+      wholeTrace(path.replace('/src/content/atelier/projects/', '').split('/')[0], text, rotated),
+    ]),
+  )
 
-  return buildDossiers({ scores, traces, decisions, journal, files }, movesShown)
+  return buildDossiers({ scores, traces: whole, decisions, journal, files }, movesShown)
 }

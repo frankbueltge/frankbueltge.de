@@ -215,7 +215,11 @@
 
 .ops-hero {
   display: grid;
-  grid-template-columns: 1fr 440px;
+  /* The pulse column grows with the room (2026-08-16, Frank: the page runs full width, the
+     instrument should use it). 440px was the mock's fixed width; the stack SVG stretches
+     freely (preserveAspectRatio="none"), so the panel can take ~2/5 of a wide viewport and
+     still floor at the mock's size on narrow ones. The body height below scales with it. */
+  grid-template-columns: minmax(0, 1fr) clamp(440px, 42vw, 680px);
   gap: 48px;
   align-items: center;
   padding: 60px 40px 56px;
@@ -229,6 +233,18 @@
   }
 }
 
+/* The name line. Quieter than the kicker under it — the room still leads with its question, and
+   the person stands above it the way a byline does, not the way a headline does. Muted ink rather
+   than the live accent for the same reason: the accent means "running", and a name is not a
+   system. */
+.ops-hero-eyebrow {
+  margin: 0 0 10px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ops-muted);
+}
 .ops-hero-kicker {
   margin: 0;
   font-family: var(--font-mono);
@@ -298,7 +314,9 @@
 }
 .ops-instrument-body {
   position: relative;
-  height: 200px;
+  /* Grows with the hero's pulse column (which is clamped at 42vw) so the instrument keeps
+     roughly its 2.2:1 face instead of stretching only sideways into a ribbon. */
+  height: clamp(200px, 19vw, 300px);
   overflow: hidden;
 }
 .ops-instrument-body svg {

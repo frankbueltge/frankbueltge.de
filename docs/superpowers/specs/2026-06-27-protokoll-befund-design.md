@@ -1,6 +1,7 @@
 # „Der Befund" — aufklappbare Datum-Ansicht im Protokoll — Design
 
-Status: abgenommen (Konzept, 2026-06-27, Frank: „über den Standard hinaus, alle, gründlich").
+Status: abgenommen (Konzept, 2026-06-27, Frank, Wortlaut privat — über den Standard hinausgehen,
+vollständig und gründlich).
 Ausführung autonom in derselben Nacht.
 
 ## 1. Problem

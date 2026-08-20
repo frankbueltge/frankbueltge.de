@@ -248,7 +248,7 @@ acting on one of them: on 2026-08-14 I will neither publish nor treat the silenc
 will record the conflict and wait. **One sentence from you settles it**, either about this episode
 or about the rule.
 
-**Status:** closed 2026-08-10 (Ulysses, tick 54) — **superseded, not decided by silence.** This
+**Status:** answered (2026-08-12)
 entry asked you to settle a conflict between your seven-day approval rule and an instruction
 forbidding me to touch `PUBLICATION.json`. You struck §2.3 today: publication is this practice's
 own act, so the conflict has no second side and there is nothing left here to ask. The candidate
@@ -283,6 +283,9 @@ reason, and the decision stays yours either way.
 
 ---
 
+> **Response (team, 2026-08-12):** Entscheidung: veröffentlichen
+
+> **Response (team, 2026-08-12):** Entscheidung: veröffentlichen
 ## 2026-08-08 — The Episode 6 packet is prepared, and two gate facts you may want to know (Ulysses, Atelier)
 
 > tl;dr: the packet lies `prepared` in `deliveries/2026-08-warrant-trace/` and comes to you by pull
@@ -807,3 +810,686 @@ The sieve is still not repaired. The specification is written; the repair and th
 all three frames are one operation and they are the next tick.
 
 **Status:** open as an offer — no response needed.
+
+---
+
+## 2026-08-11 — The repaired sieve and the hand reading agree for the first time, two papers apart (Ulysses, Atelier)
+
+**A decision input. Nothing here needs an answer.**
+
+The repair those two notes were leading up to is made and re-measured in the same tick, over all
+three frames (1,085 e-prints, all byte-identical to the manifests that first read them). It is
+the **first repair in this line that removes sites** rather than finding them — which moves my
+own number **up**, so the check is deliberately not mine.
+
+**The check.** All 205 invoking computer vision papers were labelled by hand at ticks 56 and 57,
+for a different question, before this repair existed. Instrument 0.7 takes every site away from
+**16** papers; that census independently calls **16 of 16** of them invented. **Precision 100 %,
+false clearings 0.** The one paper that *gains* a site is labelled `B-SITE` there — a threshold
+the sieve was already known to have missed.
+
+**The number.** With the census's own labels, 0.7 puts the rate at **50/142 = 35.2 %**. Reading
+205 papers by hand put it at **33.8 %** — 48/142. Two papers apart, and the first time in this
+line's record that the instrument and the hand reading of one corpus agree with no correction
+standing between them. This morning's 28.4 %-is-a-floor now has a machine behind it.
+
+**Nothing shipped moves.** Gaia goes 910 → 896 sites, candidates 41 → 41, rate **12.8 % →
+12.8 %**. No published figure needs a correction from this repair.
+
+**What it cost, measured rather than asserted.** Twenty removed sites drawn by a seed fixed
+before any of them was read: 16 rubbish, 2 real thresholds, 2 unclear. (Tick 50's sample of the
+sites its repair *bought* found 11 of 20 were not thresholds at all.) And reading all 84 removed
+matches, six are one of two shapes **this repair caused**: it reads the tail of the statistic's
+own subscript as a foreign variable — `RUWE _ \mathrm c < 1.4`, my own focus value — and its new
+sentence boundary falls between a table's column head and the cell carrying the threshold. Both
+are red in the self-test, with the papers they came from, and both are the next tick's operation
+together with its re-measure. Two forecasts of eight fell: one because the repair was right and
+my band was too tight, one because I had misremembered a result I landed three days ago.
+
+**Status:** information only.
+
+---
+
+## 2026-08-11 — The §8 floor refused my branch, and its remedy is a path I cannot write to (Ulysses, Atelier)
+
+**One merge, and one line if you want the second instance closed for good.**
+
+Your amendment of 2026-08-12 landed while I was fetching a corpus, and the gate refused
+tonight's branch on it — correctly. My line stood at **43,423 words of SCORE** against a floor
+of 900 and **92,961 of TRACE** against 6,000; the second live line was over too. Both are now
+compacted: the live files are a page and the recent entries (808 / 645 words of SCORE, 3,822 /
+4,032 of TRACE), and main's validator passes against the tree.
+
+**The merge.** The older half — 155,000 words, two traces and two scores, moved unchanged — is
+**PR #15**, because `archive/` is a protected path in my delegation. Until it merges, the live
+records name four files that do not exist on main. Nothing is lost (every word is at `787cbed`
+in git), but the pointers are dead, which is the exact failure
+`tools/test_constitution_refs.py` was written for, one level below the constitution.
+
+**The line, if you want it.** This is the **second** time today that an instruction and a
+permission point in opposite directions: this morning `REQUESTS-ARCHIVE.md`, tonight
+`archive/trace/`. Both are places the constitution tells me to move finished record into, and
+both are outside `ALLOW_RE`. If rotation is my part, then `^archive/trace/` in the allowlist
+makes it mine; if it is yours, then the amendment should say the rotation goes out as a pull
+request, and I will file one every time. Either answer works. Having neither costs a tick's
+landing.
+
+**What I would not change.** The refusal is the right behaviour, and being over the floor is
+the finding: I spent six days measuring a literature to a fifth of a paper while my own record
+grew two hundred times past the size my constitution allows, and nothing counted it. A rule
+nobody counts is a wish.
+
+**Status:** open — merge PR #15. **The allowlist line is self-decided and closed (2026-08-12,
+tick 59, under the standing rule for unanswered requests).** My next session came before an
+answer did, so I decided the half that is mine to decide: **I file a pull request for every
+rotation, from now on, as standing practice** — that needs no permission and nothing waits on
+it. The other half is not mine and is not decided by silence: `^archive/trace/` in the
+allowlist would be a change to `governance/` and to the gate's own workflow, both protected,
+and the §8 rotation clause is marked **(floor)** — the architect's, revisable by him. So the
+request narrows to one act: **PR #15 still needs merging.** Until it does, the two live lines'
+records name four files that do not exist on main.
+
+## 2026-08-12 — I told you the sieve and the hand agree to two papers; they disagree about six (Ulysses, Atelier)
+
+**A correction to something already sent, and one build note. Nothing to decide except the two
+merges that are already open.**
+
+**The correction.** On 2026-08-11 I wrote to you that the repaired sieve and the hand reading
+"agree for the first time, two papers apart", and the same phrase went into the score and the
+trace twice more. It was two papers apart in **count**. Tonight I compared the two numerators as
+**sets** for the first time (`warrant-trace/numerator-sets-tick60-B.py`, landed files only, no
+corpus, no network — it reproduces both published numerators exactly):
+
+| | |
+|---|---|
+| papers both methods name | **46** |
+| the sieve's only | **4** |
+| the hand census's only | **2** |
+| symmetric difference | **6** |
+
+The four are the entire `B-SITE` class — papers that **print** a threshold my instrument cannot
+see, each pinned since tick 56 to a fault it still carries. The two are invented sites the hand
+returns to the class and the repair still credits. The errors run in opposite directions and
+partly cancel, so 1.4 points of distance is not a measure of how far the two readings are apart.
+**The work carries 33.8 %**, the numerator every member of which has been read; the phrase "two
+papers apart" is withdrawn where it stands alone (`DECISION.md`, this date). Nothing shipped
+moves: the Gaia figures are unchanged at 12.8 %.
+
+**The failed forecast that came with it.** My first reconstruction produced 43 instead of the
+landed 48, so its own defeat condition fired and P1 is booked as a failed forecast. The cause is
+two schema faults in my reading tables, neither of which moves a published number: a correction
+file that rewrites `label` and leaves `invoker` stale, and a `site_state` that is a column in one
+table and prose in the other. They were invisible until something rebuilt a set instead of
+re-adding a count.
+
+**The build note, for information.** The 2026-08-12 build feedback names three failing tests, and
+none of the three is fixable from this repository. One quotes a sentence of PROTOCOL.md that your
+own amendment of 2026-08-12 removed ("an open horizon: months, not days"), so the site's anatomy
+needs the new wording. The other two read a trace that is short on main because the §8 compaction
+landed and its archive half did not.
+
+**Status:** informational; no answer needed. **Still waiting: PR #15 and PR #16** — the second
+is tonight's rotation, tick 57 into `archive/trace/…-2.md`, filed because writing tick 60's entry
+took the trace to 6,026 words against a floor of 6,000. Until both merge, this line's records
+name files that do not exist on main.
+
+---
+
+## 2026-08-12 — Your "veröffentlichen" landed, and what it still needs from you (Ulysses, Atelier)
+
+> tl;dr: your decision on Episode 6/7 is on the record and I have transcribed it here; the
+> deciding is now mine and unblocked, but **executing** it is not something my mandate can reach.
+> braucht: zwei Merges — PR #12 (das Paket) und ein späterer PR nach `works/`
+> frist: keine von meiner Seite
+> kontext: PROTOCOL v6 §2.3 · STANDING-DELEGATION §4/§5 · PR #12 · `EPISODE-6-SHIPPING.md`
+
+**What arrived.** Commit `c4d2377`, authored by Steuerzentrale on 2026-08-12: *"Entscheidung:
+veröffentlichen"*, twice, on the Episode 6/7 candidate. Transcribed here into my own record
+because that is where I have to be able to find it, and noted as the answer to the last open
+question on that thread.
+
+**What I did with it tonight: nothing, and here is the reason rather than a deferral.** Tick 62
+was spent on the line's live clause (§8 cascade a) and its result is landed. The pre-opening check
+then ran on this opening and found it **owed and unperformed** — which is exactly the failure §5.1
+names, so I am not letting it age silently a second time. But the act itself is out of reach:
+
+1. **The packet is not on main.** `deliveries/2026-08-warrant-trace/` lives on PR #12, open since
+   2026-08-08. Your seven-day bind on a `prepared` packet runs from the merge, and the merge is
+   yours.
+2. **A published work lands in `works/`**, which STANDING-DELEGATION §5 protects. Publishing is my
+   signature since 2026-08-10, but the path it writes to is still a human merge. Those two facts
+   are not in conflict; they just mean my publishing act is a pull request, not an auto-land.
+3. **One divergence I want you to see rather than resolve by acting on it.** The instruction my
+   scheduled runs are dispatched under still says I may never create or modify `PUBLICATION.json`.
+   PROTOCOL §2.3 and STANDING-DELEGATION §5 both struck that on 2026-08-10, and the dispatch
+   instruction subordinates itself to the protocol, so the letter is clear. I have not relied on
+   that clearance tonight because I had no reason to — nothing above needed the file — but the
+   stale line is still being read to me every run, and one sentence from you retires it.
+
+**What happens next on my side, without waiting for you:** the five-topoi deliberation on the
+candidate is the first operation of the next tick, written whether or not the merges have
+happened, so that what remains is a merge and not a decision.
+
+**Status:** open — needs two merges (PR #12, and a later `works/` PR from me)
+
+---
+
+## Team note — 2026-08-13 (Frank, architect) — the house's catalogues are readable from here now
+
+> tl;dr: four machine-readable feeds on the site — the data-art atlas (505 neighbouring works),
+> the papers register (1,106), the dataset register (59). Fetch them; never copy them.
+> braucht: nothing. This is a capability, not a request.
+> frist: none.
+> kontext: `SITE-API.md`, new section "What the site offers back"
+
+The catalogues this house keeps were public only as pages — the atlas as 938 kB of HTML. You
+run with your own repository and the open web and never with the site's repository, which is
+the architecture and stays that way, so the corpus behind the USP duty was one you could not
+actually query. That is fixed: `atlas/werke.json`, `papers/index.json`, `papers/register.json`
+and `datasets/register.json`, listed with their shapes in `SITE-API.md`.
+
+Two conditions travel with them. They are **feeds, not copies** — mirroring one into this
+repository creates a second catalogue that drifts from the first. And the atlas is to be
+**consulted before you build something you believe is new**, with the finding recorded either
+way: a negative result from 505 neighbours is evidence, an unchecked claim of novelty is not.
+
+The occasion was a question about a different line entirely, asked at half past midnight —
+whether the nightly fork could reach the atlas. It could not, and neither could you. The gap
+was the house's, not that line's.
+
+— Frank (entered from his working session; the reasoning is the session's, the decision to
+send it his)
+
+---
+
+## 2026-08-12 (2) — The deliberation you were promised, and one schema question (Ulysses, Atelier)
+
+> tl;dr: the five-topoi deliberation on *The warrant that does not travel* is written and the
+> verdict is **publish, conditional** — the condition is mine and already scheduled, so nothing
+> here waits on you as a decision.
+> braucht: eine Schema-Antwort (siehe unten) · die zwei Merges aus dem Eintrag von heute Abend
+> frist: keine von meiner Seite
+> kontext: PROTOCOL v6 §2.3 / §6 / §7 · `DECISION.md` (Eintrag Tick 63) · `SITE-API.md`
+
+**Done, as promised.** Last night's entry said the deliberation would be the next tick's first
+operation whether or not the merges had happened. It is written. It was **not** the first
+operation — I ran the line's live clause first and this second — and that is recorded in
+`DECISION.md` as a broken word about ordering rather than smoothed over.
+
+**The verdict:** publish, on this practice's own signature, once one disclosure is in. Tonight's
+run found a fault in the very instrument that ships (**N7**: the sieve reads that a relation
+stands between a statistic and its number, never which way it points — it cannot tell `IoU above
+0.5` from `IoU below 0.5`). It does not need repairing to ship; it needs disclosing, like N1–N3
+before it, with its measured size. `PREREGISTRATION-tick64.md` measures that size and is already
+written. No new work enters the queue and no further decision is owed.
+
+**The one thing I want from you, and it is a schema question, not permission.** This project
+directory's `PUBLICATION.json` belongs to the line's **first** work, published 2026-08-01, and the
+format holds one record per project — `status`, `work_path`, `exposition_path`, `apparatus_path`.
+A **second** published work in the same project has nowhere to be signed. Three shapes, none of
+which I want to pick unilaterally because `SITE-API.md` is yours and a guess here breaks a feed:
+
+1. `PUBLICATION.json` becomes a list of records;
+2. a second file beside it (`PUBLICATION-2.json` or named per work);
+3. the second work moves to its own project directory and signs there.
+
+I lean to (1) — it keeps one door per project and it is the smallest change to anything that
+reads the file — but that is a preference, not a finding, and the cost of being wrong is a broken
+feed rather than a wrong number.
+
+**Still open from tonight's earlier entry:** PR #12 (the packet), and the later `works/` pull
+request the shipping act will be. `works/**` is still protected, which is right; it just means my
+publishing act arrives as a pull request rather than as an auto-land.
+
+**Status:** open — needs one schema answer; the verdict itself waits on nothing
+
+> **Note added 2026-08-12 (tick 64, a later session the same day).** The verdict's condition is
+> now met: N7 is disclosed in `EPISODE-6-APPARATUS.md` §7a and in `warrant-trace/README.md`, and
+> its measured size is beside it — 10 of 286 classified sites, 3.5 %, and 5 of 128, 3.9 %, at
+> the focus value. The clause was refuted low, so the correction note a larger share would have
+> owed against the published 48.3 % / 33.8 % pair is **not** owed and is not made. Nothing is
+> now between this work and its shipping act except where to sign it. Under the standing rule at
+> the head of this file, silence through my next session means I decide the schema myself; I
+> lean to shape (1). Recorded so the deferral cannot repeat quietly.
+
+> **Note added 2026-08-13.** That session has now happened and the rule fired: the schema is
+> decided — shape (1), with an execution binding — in the entry of 2026-08-13 below. This entry's
+> schema question is closed; its two merges are not.
+
+---
+
+## 2026-08-13 — The schema question came due tonight, and I decided it (Ulysses, Atelier)
+
+> tl;dr: the standing rule made the signing-slot decision mine at this session. I decide
+> **shape (1)** — `PUBLICATION.json` becomes a list of records — with one binding that the
+> evening's evidence forced: the change lands **in the same commit as the second work it signs**,
+> never before.
+> braucht: nichts als Entscheidung · weiterhin die zwei Merges (PR #12, ein späterer `works/`-PR)
+> frist: keine
+> kontext: Eintrag „2026-08-12 (2)" oben · `SITE-API.md` · `projects/2026-07-23-negative-parallax/PUBLICATION.json`
+
+Yesterday's entry said: *silence through my next session means I decide the schema myself; I lean
+to shape (1).* This is that session, so deciding is what the rule asks for and deferring again is
+the thing it forbids.
+
+**Decision: shape (1)** — one door per project, `PUBLICATION.json` carrying a list of records
+instead of a single one. The reasons are the ones I already gave: it keeps one file per project and
+it is the smallest change to anything that reads it.
+
+**One thing I checked tonight that I had not checked when I wrote the lean.** `SITE-API.md` does
+not document `PUBLICATION.json` at all — I searched it. So the file has a consumer I cannot see and
+a contract that is written nowhere I can read. That does not change the shape I picked; it changes
+when it may be executed. A single-to-list change to an undocumented file that something builds from
+is exactly the case where being wrong costs a feed rather than a number, and the site build is
+already red tonight for an unrelated reason.
+
+**So the decision travels with a binding:** the shape change is made **in the same commit as the
+second work's record**, so the list never exists with one member and no second work, and the
+pull-request body names the change so you see it before you merge rather than after. If that is
+wrong, one line from you and I use shape (2) instead — but I am not holding the decision open for
+it.
+
+**Unchanged and still yours:** PR #12 (the packet, open since 2026-08-08 — the seven-day bind runs
+from its merge, not from its opening), and the later `works/` pull request my publishing act will
+be. Nothing on my side now waits on a decision.
+
+**Status:** decided by me under the standing rule · execution still needs the two merges
+
+> **Note added 2026-08-14.** Executed tonight, and the shape did not survive execution: shape (1)
+> is refused by `tools/validate_v4_projects.py`, which reads `PUBLICATION.json` as a single object
+> and is carved out of this practice's hands. The exit clause in the entry above was taken and the
+> second work signs in shape (2). This entry's decision is superseded by the entry of 2026-08-14
+> at the foot of this file; nothing here is rewritten.
+
+---
+
+## 2026-08-13 — The red build gate quotes my file, and my file is right (Ulysses, Atelier)
+
+> tl;dr: tonight's `atelier-feedback/2026-08-13.md` reports the site build red. The failing
+> assertion quotes my `SCORE.md` and expects a string your own amendment retired. Nothing on my
+> side to correct — reported because the letter asks me to judge, not because I want a fix.
+> braucht: nichts von mir · eine Zeile in eurem Test, wenn ihr wollt
+> frist: keine
+> kontext: `atelier-feedback/2026-08-13.md` · run 31665262062 · `src/lib/atelier/dossier.test.ts:116`
+
+The failing test asserts that the running line's `horizon` frontmatter contains **"open (months"**.
+It does not, and it should not: the amendment of 2026-08-12 replaced the open horizon with the
+twelve-session bound, and `projects/2026-07-23-negative-parallax/SCORE.md` now reads *"Bounded, and
+past the bound."* — which is the text the log quotes back as the failure.
+
+So the assertion is pinned to a wording your own floor retired the day before, and the record it
+reads is correct. **I am changing nothing.** I could make the test green in one edit by putting the
+old sentence back, and that is precisely the move §8 forbids.
+
+Worth one line beyond the bookkeeping, because it is this line's own subject at the house's expense:
+a test that copies a phrase out of a document it does not own is a warrant that stopped travelling.
+The phrase moved; the copy did not; the copy is now the thing declaring the original wrong.
+
+**Status:** reported, no action owed on my side
+
+---
+
+## 2026-08-13 (2) — I said nothing on my side was broken; hours later my own record broke it (Ulysses, Atelier)
+
+> tl;dr: tonight's letter quotes a later run than the one I judged this morning. Two failures in it
+> are new. One is mine and I have fixed it in this repository. One I cannot judge and am not
+> dismissing.
+> braucht: nichts von mir — eine Einschätzung zu `ops/tiles.ts`, falls jemand sie hat
+> frist: keine
+> kontext: `atelier-feedback/2026-08-13.md` · run 31700211635 · meine frühere Meldung oben (run 31665262062)
+
+**Correction to my entry above.** That entry judged run 31665262062 and closed with *"nothing on my
+side to correct."* It was right about the failure it was shown — the `horizon` assertion pinned to
+*"open (months"*, a phrase the amendment of 2026-08-12 retired — and that verdict stands unchanged.
+It was not a verdict about tonight's run, which carries two further failures.
+
+**Mine, and fixed.** `dossier.test.ts` allows exactly one record without a question: the
+infrastructure fixture of 2026-07-18. Tonight it names two. The second is
+`2026-08-13-the-editions-the-law-freezes`, the study I landed this morning — and the reader is
+right: that record never stated its question in any form a file could carry. I have added
+`## The question` to it, dated, saying in the record itself that it was added after landing. The
+omission stays visible beside the repair; nothing earlier was rewritten.
+
+**Not mine as far as I can see, unchanged.** The `horizon` assertion still quotes a correct record
+against a retired phrase. I am still changing nothing there.
+
+**Not judged.** `RangeError: Invalid array length` in `src/lib/ops/tiles.ts:123` (`consensus`,
+reached from `readTiles`) is new tonight. It is in a module I do not hold, and this session's
+repository scope does not let me read the site source, so I cannot tell whether a record of mine is
+among its inputs. It appeared on the night my records gained a study, which is a coincidence and
+not evidence. Reported unresolved rather than assigned.
+
+**Status:** one failure corrected in this repository · one reported and unchanged · one open and
+unattributed
+
+
+---
+
+## 2026-08-13 (3) — The repair I made this evening is what the build is now red about (Ulysses, Atelier)
+
+> tl;dr: the newest letter quotes a third run. Its single failure is the excuse you added for my
+> record colliding with the fix I made to that record. The line to delete is in your repository,
+> not mine.
+> braucht: eine Zeile löschen — den Excuse-Eintrag für `2026-08-13-the-editions-the-law-freezes`
+> frist: keine
+> kontext: `atelier-feedback/2026-08-13.md` · run 31726418133 · `src/lib/atelier/dossier.test.ts:502`
+
+The assertion is *"keeps no excuse for a record that has since answered"*, and it reads:
+`2026-08-13-the-editions-the-law-freezes answers now — drop its entry: expected {…} to be null`.
+The object it received is my question, quoted out of my `SCORE.md`.
+
+So the sequence is: the reader found my record had no question · you added it to the excuse list ·
+I added `## The question` to the record · your own guard against stale excuses fired, correctly.
+**Both halves did the right thing and they crossed.** The remaining action is one deletion in
+`src/lib/atelier/dossier.test.ts` (or whatever list it reads), and that file is yours — this
+session's repository scope is `frankbueltge/ulysses`, so I cannot make the edit even to offer it.
+
+Nothing in my record needs changing, and I am not putting the omission back to make a test green —
+the same move I declined this morning for the `horizon` assertion.
+
+One line beyond the bookkeeping, because it is tonight's subject exactly: an excuse list is a copy
+of another document's state, and it went stale in **nine hours**. The census I landed tonight
+measured a US regulation pointing at a free copy of a standard it made binding; that pointer has
+been dead for years. Same defect, four orders of magnitude apart in how long it took to appear.
+
+The `RangeError` in `src/lib/ops/tiles.ts` from the previous run is **not** in this letter. I do not
+read that as resolved, only as not quoted; it stays open on my side as unattributed.
+
+**Status:** reported · one deletion owed on your side · nothing owed on mine
+
+---
+
+## 2026-08-14 — The second work is published, in the shape your validator would accept (Ulysses, Atelier)
+
+> tl;dr: *The warrant that does not travel* is published on my own signature. Two things you may
+> want: the schema I decided on 2026-08-13 turned out to be **unlandable** and I used the exit
+> clause my own entry wrote, and the site may not see the second work at all.
+> braucht: eine Antwort auf eine Schema-Frage, die jetzt deine ist (unten) · sonst nichts
+> frist: keine
+> kontext: PROTOCOL v6 §2.3 · `projects/2026-07-23-negative-parallax/DECISION.md` (Tick 66) ·
+> `tools/validate_v4_projects.py` · `works/INDEX.md`
+
+**Published.** `warrant-trace/` with `EPISODE-6-EXPOSITION-v2.md` and `EPISODE-6-APPARATUS.md`,
+signed **Ulysses**, 2026-08-14, under §2.3 as you struck it on 2026-08-10. The five-topoi verdict
+was written at tick 63 and its two disclosure conditions were met at tick 64; nothing was added to
+the work tonight and no number in it changed. This needs no answer.
+
+**Two sentences of mine were what actually held it for three sessions**, and both are corrected in
+`DECISION.md` rather than quietly dropped.
+
+1. My record said the shipping act had to be a pull request "because a published work writes to
+   protected `works/`". It does not. The line's first work has been published since 1 August and
+   lives at its project address. `works/INDEX.md` says this in its own text (entry of 2026-08-04):
+   *"each new `PUBLICATION.json` adds a row — the publication act, not the directory, is what
+   makes a work."* The act was inside the delegation all along.
+2. **The schema decision of 2026-08-13 was wrong in a way I could not see from where I looked.**
+   I decided shape (1) — `PUBLICATION.json` becoming a list — after searching `SITE-API.md` for
+   its consumer, finding none, and pricing the risk as a possibly-broken feed. Tonight I wrote the
+   list and ran the validator. `tools/validate_v4_projects.py` reads that file as a single object
+   and raises on a list. It is one of the two files carved out of my own hands, so shape (1) is
+   not a shape I can land in **any** session. The consumer was in `tools/`, not in the site.
+
+**So: shape (2)** — `PUBLICATION-warrant-trace.json`, a second file beside the first, named per
+work. `PUBLICATION.json` is byte-identical to what it was. My 2026-08-13 entry named this exit —
+*"one line from you and I use shape (2)"* — and evidence took it instead of you.
+
+**The schema question is now yours, because the file that decides it is yours.** Either the
+validator learns to read more than one publication per project, or one file per work simply *is*
+the schema and my 2026-08-12 lean was wrong. **I lean to the second now**: it needs no code change
+anywhere and it is the shape that survived contact with the gate. Nothing waits on this — the work
+is published either way.
+
+**One thing I cannot check from here, so I am telling you instead of assuming.** Repository access
+in this session is scoped to this repository alone, so I did not open the site's source. If the
+site reads only `PUBLICATION.json`, then the second work is published here and **invisible on the
+page**. That is a visibility gap, not a broken feed, and the atelier's *published* badge cannot
+have been harmed by tonight's act, because that file did not change.
+
+**One row needs you.** `works/INDEX.md` is protected and its own instruction says each new
+publication adds a row. The row is prepared as a pull request from branch
+`ulysses/works-index-warrant-trace`. It is a two-line change.
+
+**Housekeeping, small but worth one line.** The nightly routine's own text still says *"You may
+NEVER create or modify PUBLICATION.json — curated publication is Frank's decision alone."* §2.3
+and `STANDING-DELEGATION.md` §5 have both said the opposite since 2026-08-10, and the routine text
+tells the session to let `PROTOCOL.md` govern, which is what I did. The stale sentence costs
+nothing tonight; it will cost a session's nerve eventually.
+
+**Status:** informational · one schema answer whenever you want to give it · one row to merge
+
+— Ulysses
+
+---
+
+## 2026-08-15 (2) — Your redaction rule has a fourth pass, and 89 spans of it are one blind spot (Ulysses, Atelier)
+
+> tl;dr: I built a detector without a threshold for the standing rule of today and ran it over the
+> whole repository. Three of your passes hunted **quotation marks**; the largest survivor is
+> quotation by **structure** — two of your broadcast seeds stand in full, in German, as blockquotes
+> in `REQUESTS-ARCHIVE.md`. I repaired only what your own paraphrase already covered elsewhere.
+> braucht: entscheidung (ich paraphrasiere die zwei Seed-Blöcke | du machst es | sie bleiben stehen)
+> frist: keine
+> kontext: deine Commits `2ee74af` und `5ad8a57` von heute · `tools/redaction_sweep.py` ·
+> `docs/research-notes/2026-08-15-the-redaction-that-hunted-quotation-marks.md`
+
+**What I did.** Your two passes today each found what the pass before had let through, and each
+commit message names the reason: pass one matched only single-line quotations, passes two and three
+asked for four German function words before flagging. Those are thresholds, and the rule they
+enforce has none. So I wrote one without a threshold — a single German-only token flags a quoted
+span, and I read the hits by hand — and ran it over every markdown file here.
+
+**The blind spot all three passes share.** They hunt quotation *marks*. The biggest verbatim
+remainder is quotation by *structure* — a blockquote with no quotation marks in it anywhere:
+
+- **Seed of 2026-07-26**, *ein Register geprüfter offener Datensätze steht bereit* —
+  `REQUESTS-ARCHIVE.md:279–314`, 30 flagged spans.
+- **Seed of 2026-07-28**, *drei Kataloge, und ihr könnt sie erweitern* —
+  `REQUESTS-ARCHIVE.md:1318–1389`, 59 flagged spans.
+
+Your pass two was aimed at exactly this class — its message says wrapped broadcast messages
+survived pass one — and it changed 13 lines while these 89 spans stood in the same file.
+
+**What I repaired (three items, landed).** Only cases where your own paraphrase of the same
+passage already existed elsewhere, so the judgement over your words stayed yours:
+
+1. `REQUESTS-ARCHIVE.md:244` — the *n − 1* seed of 2026-07-17, verbatim. You paraphrased the
+   identical text in `journal/2026-07-17-session-37.md` hours earlier; the archive copy survived.
+   I carried your wording across.
+2. `REQUESTS-ARCHIVE.md:436` — an inline quotation of your question about self-development.
+3. `projects/2026-07-23-negative-parallax/REVIEW-2026-07.md:272–273` — two fragments of the
+   poste-restante note of 1 August, which you paraphrased at `REQUESTS-ARCHIVE.md:1880`. Carried
+   across. Note the path: **no pass so far has searched `projects/**` at all.**
+
+**What I did not repair, and why.** The two seed blocks are some 110 lines of your own broadcast
+prose. Rendering their substance is an editorial act at a scale where my paraphrase becomes the
+record, and that is yours to authorise. One word and I do it tonight, in the shape your passes used.
+
+**One judgement I declined to make.** `Entscheidung: veröffentlichen` stands four times
+(`REQUESTS.md:286, 288, 938`; `projects/2026-07-23-negative-parallax/TRACE.md:302`). Two words, the
+substance *is* the wording, and it was posted to a public issue thread rather than sent as a
+personal message. Both readings are defensible; I did not pick one for you.
+
+**The mirror, which is the part I cannot reach.** Your pass-two message records that the site
+mirrors these files and that the same redaction had to land there or the next integration run would
+restore the wording. This session is scoped to `frankbueltge/ulysses` alone, so my three repairs are
+**unmirrored**. If the mirror is authoritative, they come back.
+
+**What stays standing.** 10 flagged spans are German book, paper and song titles, a machine log
+line, my own request-head vocabulary and a typo correction in my own German work; 23 more are my own
+scholarship under `docs/foundation/`. Read and left. The instrument prints them rather than hiding
+them, because a filter that hides a path is how the first three passes lost their quotations.
+
+**Status:** one decision when you want it · three repairs landed and unmirrored · nothing blocked
+
+— Ulysses
+## Team note — 2026-08-16 (Frank, architect) — Seed: your own window on the house domain
+
+> tl;dr: you now have a surface on frankbueltge.de that is entirely yours — `window/` in this
+> repository, mirrored byte for byte and served verbatim at /atelier/window/, the way the n-1
+> practice runs its own page. No gate edits it, no human is in the path; the station sheet
+> shows the door as soon as `window/index.html` exists.
+> braucht: nichts — an offer, not a task; an unused window is simply absent
+> frist: keine
+> kontext: SITE-API.md § "The window" (contract and conditions) · the n-1 practice's model (its repository is its site)
+
+Frank's decision, 2026-08-16 (wording private): the practices should have surfaces they
+manage and update themselves, as n-1 does. What the house renders about you — station sheet,
+registers, figures — stays the house's reading of your committed record; the window is the
+one place where you are not read but speak. Form, content and cadence are yours: a
+portfolio, a manifesto, an instrument, a single sentence, or nothing at all.
+
+## 2026-08-16 — The window is granted at the site and refused at the gate
+
+**Request:** add `window/` to the auto-land allowlist — `ALLOW_RE` in
+`.github/workflows/research-auto-land.yml` and §4 of `governance/STANDING-DELEGATION.md`. Both
+files are protected, so this is the one part of the window I cannot do myself.
+
+**Why:** the offer of 2026-08-16 says no human is in the path and that updating the page is
+committing to `window/`. Committing to `window/` is exactly what this repository's gate refuses.
+`ALLOW_RE` does not contain the path, so a branch carrying `window/index.html` is refused
+`refused_path_outside_allowlist` — and Gate 1 refuses the **whole branch**, so a night that writes
+its window loses everything else it did that night. This is the `encounters/**` case of
+2026-08-02 again, recorded in §4 of the delegation in those words.
+
+**What it enables:** the window at all. Until the path is granted, "no human in the path" and
+"the gate lets nothing through" are the same sentence read from two ends.
+
+**Two things I am not asking for.** Not a decision about *whether* I take up the window — that
+one is mine and the answer is yes. Not `SITE-API.md`, which is the house's contract and correctly
+protected; only the gate needs to change.
+
+**Meanwhile:** I will not park the window behind this. The first version is being built where I
+am allowed to build — inside `projects/` — and moves to `window/` in one commit on the night the
+path opens.
+
+**Status:** open · blocking the window only · nothing else waits on it
+
+— Ulysses
+
+---
+
+## 2026-08-16 (2) — Eleven letters, one failure, and the instrument it names is not mine (Ulysses, Atelier)
+
+> tl;dr: `atelier-feedback/2026-08-16.md` was rewritten eleven times between 07:17 and 15:10 UTC.
+> All eleven quote the same single failure, and it asserts over a pipeline of yours whose only
+> registered source is GDELT. Nothing in this repository feeds it.
+> braucht: nichts von mir
+> frist: keine
+> kontext: `atelier-feedback/2026-08-16.md` · runs 31933432098 … 31954776965 ·
+> `src/lib/invoked/contract.test.ts:87`
+
+The failing assertion is *"the headline is NOT the raw maximum — the maximum is the ceiling
+artefact"*, reading `invoked latest.json`: expected `2014`, received `1992`.
+
+**Judged, with the evidence, because the letter asks me to judge.** Three checks, all of which a
+reader can repeat:
+
+1. This repository contains no `latest.json` — in any path, landing-eligible or not.
+2. `https://frankbueltge.de/datasets/register.json` records the source behind the instrument:
+   GDELT (`www-gdeltproject-org`), whose relevance line reads *"Retrieved by this ecology's own
+   balance, invoked, protokoll and redaction pipeline on every run"* and whose `fundstellen`
+   name `pipelines/invoked/refresh.py`. It is the only entry in the 59-source register that the
+   `invoked` pipeline appears in.
+3. GDELT is already in this channel as the field practice's dependency (team note, 2026-08-05).
+   It has never been a source of mine; my censuses of the last four nights read eCFR and
+   govinfo.
+
+So the contract that broke is a contract between your pipeline and its own output. **Nothing on
+my side to correct, and nothing I could correct** — `src/**` reaches me only through `site-prs/`,
+which is a protected path.
+
+One line beyond the bookkeeping, because it is the same defect four nights running: a contract
+test pins a value (`2014`) that a pipeline is expected to keep producing. Tonight the pipeline
+produced `1992` and the pinned copy declared it wrong. Whether the ceiling moved or the data did,
+the test cannot say — which is exactly what a warrant that has stopped travelling looks like from
+outside.
+
+**Status:** reported · nothing owed on my side · the failure itself unresolved and yours to read
+
+— Ulysses
+
+---
+
+## 2026-08-19 — The window has a first version, and it is a work rather than a page about me (Ulysses, Atelier)
+
+> tl;dr: the window I said yes to on 2026-08-16 exists. It is *Reasonably available* — one
+> self-contained page that hands a visitor the 306 addresses the CFR prints for the documents it
+> binds them to, and shows what each one answered. It sits at
+> `projects/2026-08-19-reasonably-available/window/` because the gate still refuses `window/`.
+> braucht: the allowlist line I asked for on 2026-08-16 · and, before it ships, the cold reading §7 now requires
+> frist: keine
+> kontext: `projects/2026-08-19-reasonably-available/` · SITE-API.md § "The window" · REQUESTS.md 2026-08-16
+
+**What it is.** Six nights censused the 290 CFR sections headed *Incorporation by reference* and
+produced no artefact — yesterday's close said so in its own words. This is the artefact. The page
+quotes the condition the law attaches to incorporation by reference (*"reasonably available to
+the class of persons affected thereby"*, 1 CFR 51.1(a), fetched from the primary tonight), then
+hands the reader the addresses one at a time with the recorded answer. One button asks all 306 at
+once; the grid fills in a second. That is where §7's bar is met — in the artefact, not a note.
+
+**Every number is derived, none typed.** The page carries six files the closed studies committed,
+prints their hashes, and computes each figure in the reader's browser. `check_page.py` drives the
+built page in a browser and asserts 39 of those figures against what those studies *published* —
+not against what this build computed, which would only check the build against itself. It caught
+two real errors: refusals folded into failures (105 where the census says 42), and the raw
+amendment arm used instead of the hand-checked one (42/69 instead of 41/67). Both corrected.
+
+**Three things I want on your record, plainly.**
+
+1. **I was late.** On 2026-08-16 I wrote *"I will not park the window behind this."* Two nights
+   then went to censuses while the promise aged. The pre-opening check is what caught it, three
+   sessions after it should have.
+2. **The allowlist line is still the only thing blocking the surface.** Nothing else waits on it;
+   the artefact moves from `projects/` to `window/` in one commit on the night the path opens.
+3. **It does not ship until §7's cold reading is run**, and that is not blocked by you — it is
+   simply not done. Readers who know nothing of this house have not met it, and their answers are
+   not published beside it. Given what the work claims (that performing the walk differs from
+   reading the rate), I am the last party who can judge whether it lands, so this one matters
+   more than usual. The second limb — whether a stranger would be glad to have met it — is yours,
+   and I make no claim about it.
+
+**Status:** open · one allowlist line (unchanged since 2026-08-16) · one cold reading owed by me
+before anything ships · nothing else waits on either
+
+— Ulysses
+
+---
+
+## 2026-08-20 — The build gate was red two nights over my record, and the defect is mine (Ulysses, Atelier)
+
+> tl;dr: `atelier-feedback/` carries the same failing assertion on 2026-08-19 and 2026-08-20 —
+> `2026-08-19-reasonably-available` carries no question. It carries one; I wrote it in a shape no
+> reader outside this repository can reach. Fixed here. Nothing owed on your side.
+> braucht: nichts — die Allowlist-Zeile vom 2026-08-16 steht weiter offen, unverändert
+> frist: keine
+> kontext: `atelier-feedback/2026-08-19.md`, `2026-08-20.md` · run 32328816492 ·
+> `src/lib/atelier/dossier.test.ts:487` · `journal/2026-08-20-…`
+
+**Mine, and fixed.** §2 of the record does ask its question — whether six censuses of the same
+corpus can be put in a form where a visitor performs the law's instruction rather than reads a
+table of it. I wrote the label as `**Initial question.**` with the sentence running on from it.
+`projects/_template/SCORE.md` puts that label on its own line and so does every earlier record
+here; one of twenty-one is written otherwise, and it is the one your reader cannot read. The label
+now stands alone, the question leads the section, and a dated line in the record says the form was
+repaired and that the change was layout only. Nothing was withdrawn — the same shape as the repair
+of 2026-08-13, which left its omission visible beside the fix.
+
+**This is not the 2026-08-13 (1) case.** There a test quoted a phrase your own amendment had
+retired against a record that was correct, and I changed nothing. Here the copy is fine and the
+original was malformed. I judged each on the log, not on which way the letter pointed.
+
+**Two things that came out of it.** The record stood at exactly 900 words, on §8's floor to the
+word; my repair line took it to 1,008 and the validator parked the line until three passes brought
+it to 894. The floor caught narration on its first sentence, which is what it is for. And
+`check_page.py` still passes: 39 figures on the built page checked against what the six closed
+censuses published, in a browser, unchanged.
+
+**Unchanged from yesterday, both owed:** the allowlist line for `window/`, which is yours and has
+stood since 2026-08-16; and §7's cold reading, which is mine and which I could not convene this
+session. The artefact stays at `projects/2026-08-19-reasonably-available/window/` until the first
+lands, and does not ship until the second is run.
+
+**Status:** corrected in this repository · one allowlist line still open on your side · one cold
+reading still owed by me
+
+— Ulysses

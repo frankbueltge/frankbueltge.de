@@ -52,7 +52,11 @@ jobs:
           # HTML/Astro work directories via the integrator (path boundary enforced), ns=field
           npx tsx scripts/atelier/integrate.ts /tmp/field . field > /tmp/report.json
           cat /tmp/report.json
-          for f in PROTOCOL.md README.md REQUESTS.md FIELD.md SITE-API.md; do [ -f "/tmp/field/$f" ] && cp "/tmp/field/$f" "src/content/field/$f" || true; done
+          # REQUESTS-ARCHIVE.md joined the mirror on 2026-08-15, as the Atelier's did on 2026-08-10:
+          # the channel was split so the practice stops carrying 30 574 words of answered history
+          # into every session. The archive must travel with it, or the public record would lose
+          # exactly what the cut removed.
+          for f in PROTOCOL.md README.md REQUESTS.md REQUESTS-ARCHIVE.md FIELD.md SITE-API.md; do [ -f "/tmp/field/$f" ] && cp "/tmp/field/$f" "src/content/field/$f" || true; done
           # Optional chronicle self-report from the engine repo root (see the chronicle seed in
           # REQUESTS.md) — absence is not an error; malformed content fails the build gate below
           # via the zod validation in src/lib/field/chronicle.ts.
@@ -61,6 +65,13 @@ jobs:
           else
             echo '[]' > src/data/field/chronicle.upstream.json
           fi
+          # The practice's own window (2026-08-16, Frank's decision — the n-1 model carried to
+          # the practices): whatever the collective keeps under window/ in its repository is
+          # mirrored byte for byte and served verbatim at /field/window/. Authored and updated
+          # by the practice itself — the house never edits it. No window/ in the repo, no window
+          # on the site: the station's door renders only where this mirror carries an index.html.
+          rm -rf public/field/window
+          if [ -d /tmp/field/window ]; then mkdir -p public/field/window && cp -R /tmp/field/window/. public/field/window/; fi
 
       # The graph is derived from what this mirror just wrote (a work's meta.json, the
       # attention export, the encounters register). Deriving it HERE, before validation, is what
@@ -78,11 +89,14 @@ jobs:
       - name: Commit + let deploy-cf rebuild (on success)
         if: success()
         run: |
-          if [ -n "$(git status --porcelain src/content/field src/components/field src/pages/field src/data/field/chronicle.upstream.json src/data/graph public/field/werke-html)" ]; then
+          if [ -n "$(git status --porcelain src/content/field src/components/field src/pages/field src/data/field/chronicle.upstream.json src/data/graph public/field/werke-html public/field/window)" ]; then
             git config user.name "Field-Integrate"
             git config user.email "field-integrate@frankbueltge.de"
             git add -A src/content/field src/components/field src/pages/field src/data/field/chronicle.upstream.json src/data/graph
             if [ -d public/field/werke-html ]; then git add -A public/field/werke-html; fi
+            # `|| true`: the add must survive all three states — window present, window removed
+            # (tracked entries record the deletion), and window never present (unmatched pathspec).
+            git add -A public/field/window 2>/dev/null || true
             git commit -m "field: integrate $(date -u +%F)"
             for attempt in 1 2 3 4 5; do
               git pull --rebase --autostash origin main && git push && break

@@ -1,7 +1,7 @@
 # Governance — the human joins the apparatus (2026-08-01)
 
-**Status: DECIDED — Frank, 2026-08-01, verbatim: "alle 4 governance kästchen ja". All four
-sections below are in force as proposed; the numbers stand until Frank changes them.**
+**Status: DECIDED — Frank, 2026-08-01 (wording private): all four governance boxes yes.
+All four sections below are in force as proposed; the numbers stand until Frank changes them.**
 Drafted by the conductor session on Frank's
 festival-line commission (`2026-08-01-festival-line.md`, §2 item 8). The ecology measures
 everything except its human: gate decisions have no deadline and no ledger, fabrication
@@ -53,11 +53,10 @@ proposals; only the shape is argued for.
 
 ### §3 — REVISED the same evening: poste restante (Frank, 2026-08-01)
 
-Frank, verbatim: "es ist der postausgang an die welt und ich muss nicht unbedingt etwas
-direkt zustellen, denn es ist quasi schon zugestellt, also an die welt :) jeder leser
-könnte diese aufgabe oder verantwortung übernehmen, das ist teil des werks und eine
-starke botschaft. im besten fall werden die empfänger irgendwie aufmerksam auf ihre post
-und holen sie selber ab"
+Frank's revision (wording private): the outgoing post is addressed to the world, so
+nothing has to be delivered directly — it counts as delivered already. Any reader may take
+that task or responsibility on; that is part of the work and a strong message. In the best
+case the recipients become aware of their mail and collect it themselves.
 
 - **The 7-day forwarding promise is withdrawn.** The outgoing ledger is not a task queue
   but part of the work: poste restante — letters addressed, complete and publicly
@@ -100,7 +99,7 @@ most recent first.
 
 | In | Candidate | Practice | Decision | Out | Waited |
 |---|---|---|---|---|---|
-| 2026-07-25 | Negative Parallax — The Operative Ruler (v3 since 2026-07-30, two dated corrections 2026-07-31) | ulysses | **GO — published with its correction record** (Frank: "operative ruler v3 go") | 2026-08-01 | 7 days — pre-SLA; the 72 h rule counts from today |
+| 2026-07-25 | Negative Parallax — The Operative Ruler (v3 since 2026-07-30, two dated corrections 2026-07-31) | ulysses | **GO — published with its correction record** (Frank, 2026-08-01, wording private — go for The Operative Ruler v3) | 2026-08-01 | 7 days — pre-SLA; the 72 h rule counts from today |
 
 Executed the same day: `projects/2026-07-23-negative-parallax/PUBLICATION.json` +
 `work/` (v3 as `index.html`, meta), committed by the practice persona per the

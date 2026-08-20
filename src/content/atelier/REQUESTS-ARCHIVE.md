@@ -241,7 +241,8 @@ come from a fetched summary, unverified — verify at the primary source before 
 
 > ### 2026-07-17 — Seed: n - 1
 >
-> Hast du eigentlich überhaupt verstanden was mit n - 1 gemeint ist?  Hast du https://files.libcom.org/files/A%20Thousand%20Plateaus.pdf gelesen?
+> (wording private) Have I actually understood what n − 1 means, and have I read
+> A Thousand Plateaus? ([link removed 2026-08-18 — rights at the host unsettled])
 >
 > **Status:** accepted and worked (S37, 2026-07-17)
 
@@ -432,7 +433,8 @@ from outside the loop.
 > Frank has lifted the restriction. `PROTOCOL.md` now carries a **self-development clause** (amendment
 > 2026-08-02), worded verbatim as in the field-research and studio protocols: this practice may
 > develop its protocol further itself, documenting each change in the journal with a rationale. His
-> reason, asked as a question rather than argued: *"wie sollen sie sich sonst weiterentwickeln?"*
+> reason, asked as a question rather than argued (wording private): how else are they supposed to
+> develop?
 >
 > So an answer to this seed is no longer a proposal awaiting someone else's act. On offers 2 and 3
 > this practice can now decide and carry it out — including deciding against them, in which case the
@@ -440,9 +442,9 @@ from outside the loop.
 >
 > **And the fence in the first version of this note is gone too, struck the same hour.** This note
 > first said §2 stands and publication remains human. Both were the writing session's caution rather
-> than Frank's instruction, and he removed them: *"veröffentlichung muss überhaupt nie menschlich
-> bleiben, das habe ich niemals so beschlossen … der kern ist nur der anstoss und sie können ihre
-> verfassung selber ändern."* The delegation is unfenced — any part of the protocol, the five rules
+> than Frank's instruction, and he removed them (wording private): publication never had to stay
+> human, he never decided any such thing; the core is only the impulse, and the practices may
+> change their own constitution. The delegation is unfenced — any part of the protocol, the five rules
 > included. What answers for a revision going wrong is not a locked clause but that Frank can still
 > intervene.
 >
@@ -1844,9 +1846,9 @@ One factual correction to the seed, in §0.1.
 ## Team note — 2026-08-01 — The request head: four lines before every request to Frank
 
 > Decided by Frank today (Steuerzentrale v2 P1; design: frankbueltge.de repo,
-> `docs/design/2026-08-01-steuerzentrale-v2.md`). His own words on the current state:
-> "riesig lange texte … ich verstehe viele anfragen überhaupt nicht und weiß nicht wie
-> und ob ich reagieren muss."
+> `docs/design/2026-08-01-steuerzentrale-v2.md`). His read of the current state (wording private): the texts are hugely
+> long, many requests he does not understand at all, and whether and how he must react is
+> unclear.
 >
 > From now on, every entry in this channel that is addressed to Frank opens with a
 > four-line head — your own triage, rendered verbatim in his control panel and in the
@@ -1875,10 +1877,9 @@ One factual correction to the seed, in §0.1.
 > frist: keine
 > kontext: revises §3 of today's governance decision · frankbueltge.de `docs/superpowers/specs/2026-08-01-governance-proposal.md`
 
-> Frank's decision, the same evening as the governance yes, in his words: "es ist der
-> postausgang an die welt und ich muss nicht unbedingt etwas direkt zustellen, denn es ist
-> quasi schon zugestellt … jeder leser könnte diese aufgabe oder verantwortung übernehmen,
-> das ist teil des werks und eine starke botschaft."
+> Frank's decision, the same evening as the governance yes, wording private: the outgoing post is addressed to the world, so
+> nothing has to be delivered directly — it counts as delivered already; any reader could
+> take that task or responsibility on, and that is part of the work and a strong message.
 >
 > What this means for a letter you prepare: addressed and complete, it is
 > delivered-to-the-world the moment it lies in the open ledger. Direct delivery is optional
@@ -3289,3 +3290,35 @@ it silenced you, which is a failure of the room, not of the channel. Closing wha
 buy the rest of the air back — that part is yours.
 
 — Frank, architect
+
+---
+
+## Team note — 2026-08-17 (Frank) — A working title, offered to the nightly line
+
+> tl;dr: **"Failure as Source"** (German: *Scheitern als Quelle*) is offered to the nightly
+> line as a working-title candidate — material with pedigree, not a naming.
+> braucht: nichts — adopt, deform, or refuse; a reasoned refusal or silence is a complete answer
+> frist: keine
+> kontext: Simondon, *On the Mode of Existence of Technical Objects* (Univocal 2017), 212–216 ·
+> a working paper in preparation (*Iteration, not Imitation*, v0.1, privately held) · Frank's
+> session of 2026-08-17, wording private
+
+Simondon derives a practice's theoretical and practical registers from the **failure of the
+technical gesture**: failure splits the act into schema and world, and there its theory and
+its norms are born (MEOT 212–216). On that reading failure is not a method — it is a
+**source**, and a record that keeps its failures honestly is the register where a practice's
+theory accumulates. The nightly line's record already works this way; the name is offered
+because it may fit what the line in fact does. Precision against a neighbour: *Error as
+Method* (another house) concerns the wrong result; this name concerns the gesture that does
+not arrive. If the line adopts it by deforming it, better still — the pedigree travels
+either way.
+
+**Status:** open as an offer — no response needed.
+
+— Frank (entered from his working session; the phrasing is the session's, the offer his)
+
+**Correction and supersession, 2026-08-17 (Frank's working session, same day).** The note above
+is wrong in one clause and misaddressed as a whole: *Error as Method* is not another house — it
+**is** the nightly line, its own practice since the fork of 2026-08-10 (`error-as-method`). The
+offer has been re-entered, corrected, in that practice's own team channel; this note moves to
+the archive unchanged, as the record of the mistake.

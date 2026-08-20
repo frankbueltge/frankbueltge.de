@@ -104,10 +104,50 @@ Seite. Ab jetzt gilt genau diese Staffel, auf der ganzen Site und in allen Repos
 | **Instrument** | Läuft leise, liefert einem Projekt zu, **kein Bühnen-Anspruch**, darf jahrelang nichts liefern. Gegenstück: **Flagship**. | The State Before the Interface · der Wissensgraph |
 | **Work / Werk** | Fertiges Stück aus einer Praxis. | die 60 Praxis-Werke |
 
+### Ergänzung 2026-08-12: **Linie** und **Verfassung** — eine Praxis kann mehrfach laufen
+
+Die Staffel hatte kein Wort für das, was seit dem 2026-08-10 existiert: **dieselbe Praxis, parallel
+unter zwei Verfassungen.** Der Fork `error-as-method` ist keine vierte Praxis — er ist das Atelier
+unter der restaurierten Protokoll v3, während das Atelier unter v6 weiterläuft. Frank, 2026-08-12 (Wortlaut privat):
+Es gehe darum, parallel mit verschiedenen Protokollen, Verfassungen, Setups und Richtungen zu
+experimentieren; weitere Forks seien absehbar, auch bei den anderen Praxen. Also braucht es kein Sonderwort für einen Einzelfall, sondern eine Ebene:
+
+| Wort | Was es bezeichnet | Heute |
+|---|---|---|
+| **Linie / line** | **Was läuft.** Eine verfasste Ausprägung einer Praxis. Eine Praxis führt eine oder mehrere. | Das Atelier führt **zwei**: die **nightly line** und die **work-line** |
+| **Verfassung / constitution** | **Was sie regelt und unterscheidet.** Der Text, unter dem eine Linie läuft. | *„One founding text, two constitutions"* |
+| **Protokoll vN** | Die **Nummer** einer Verfassung. Immer ausgeschrieben. | nightly line = Protokoll v3 · work-line = Protokoll v6 |
+
+**Verworfen, mit Begründung — damit es niemand nochmal vorschlägt:**
+
+- **Benennung nach dem Protokoll** („der v6-Arm"). Selbst-verfallend: Protokollnummern wandern
+  (v6 wird v7; v3 darf sich laut eigenem Text fortentwickeln), der Name wäre bei jeder
+  Verfassungsänderung falsch. Einen dauerhaften Namen an eine wandernde Zahl zu hängen baut die
+  nächste Drift ein. Einem Besucher sagt „v3 vs. v6" ohnehin nichts.
+- **„Arm".** Stand schon auf der Homepage, wäre billig gewesen — aber Anatomie statt Sache:
+  zwei Arme sind ein Körper, zwei Verfassungen sind ein **Experiment**. Von Frank verworfen.
+- **Deleuzianisches Vokabular.** Wäre keine Dekoration (das Atelier hat sein Modell aus *Tausend
+  Plateaus* abgeleitet und publiziert), trägt hier aber nicht: *Plateau* und *Multiplizität*
+  meinen nicht „parallele Ausprägung"; *Strata* benutzt v6 selbst abwertend (*„not stacked as
+  strata"*); *Agencement* trifft die Sache am besten und ist für einen Seitenbesucher
+  undurchsichtig. Ein Wort, das nur mit Fußnote funktioniert, ist an dieser Stelle Angeberei.
+- **„Ulysses v2/v3"** für eine Linie. Kollidiert dauerhaft mit **Protokoll v2**, dem Gründungstext
+  vom 28.06. Genau diese Verwechslung ist am 2026-08-12 im Gespräch passiert.
+
+**Zur Kollision mit `work-line` als Arbeitseinheit:** sie besteht nur scheinbar. Die Praxis
+unterscheidet in ihrem eigenen Text bereits durch den Artikel — *„**a** new work-line opens"* ist
+die Einheit, *„the work-line **model**"* der Strang. Die Regel folgt dem Gebrauch statt ihn zu
+korrigieren: **eine** work-line ist eine Arbeitseinheit, **die** work-line ist die Linie.
+
+**Für die Oberfläche:** die Pyramide behält **drei Stationen**. Linien leben *innerhalb* einer
+Station, nicht daneben — sonst bekommt die Ökologie mit jedem Fork eine Ecke, und ein Besucher
+versteht nichts mehr. Frank, 2026-08-12 (Wortlaut privat): das Prinzip soll im Frontend beibehalten
+werden, sonst versteht ein Besucher dieser Seite nichts mehr.
+
 **Zurückgezogen am selben Tag: „House".** Nachmittags fehlte ein Wort für die Ebene über einer
 Praxis (die Ökologie ist drei Praxen, Machine Attention eine) — eingeführt als **House**, abends
-von Frank verworfen: *„insgesamt finde ich houses nicht so gut. und ich würde bei projekten
-bleiben, weil es projekte sind."* Die Staffel oben braucht das Sonderwort nicht: **Project** ist
+von Frank verworfen (Wortlaut privat): „houses" überzeugt ihn nicht, und das Vokabular soll
+bei *Projekten* bleiben, weil es Projekte sind. Die Staffel oben braucht das Sonderwort nicht: **Project** ist
 die oberste Ebene und enthält alles Übrige. Damit wandert auch **Project** eine Ebene nach oben —
 Foreknown und Dark Ocean heißen auf der Site jetzt **Experimente** eines Projekts, nicht Projekte
 einer Praxis. Die Zeile „Die vier/fünf Wörter" von heute Nachmittag ist damit **historisch**.
@@ -117,6 +157,37 @@ nennt seine Untersuchungen intern weiterhin *investigations* — dort heißt die
 „E-EXPERIMENT", und „das E-Experiment des Experiments" wäre unlesbar. Site-Wort **Experiment**
 = Repo-Wort **investigation**. Eine dokumentierte Zuordnung ist keine Drift; zwei
 undokumentierte Vokabulare wären es.
+
+### Ergänzung 2026-08-15: **n-1** ist die dritte Linie des Ateliers
+
+Frank, 2026-08-15 (Wortlaut privat): n-1 ist dazugekommen und ist eine eigene Linie im Atelier.
+Die Staffel vom 2026-08-12 trägt das ohne neues Wort — n-1 ist *was läuft*, eine verfasste
+Ausprägung der Praxis, per Abstammung: gegründet auf dem Arbeitspapier der Praxis selbst
+(*Cartography, not Tracing / Kartographie statt Kopie*, das Werk vom 2026-07-24; n-1s eigenes
+README nennt es „a work of the Ulysses practice"). Drei Besonderheiten, die jede Fläche
+respektiert:
+
+| Punkt | Regel |
+|---|---|
+| **Name** | „n-1" ist Arbeitstitel, keine Identität — die Praxis findet ihren Namen selbst (Dowry). Die Site liest den jeweils aktuellen Titel aus `public/n-1/window.json` (der Fenster-Erklärung der Praxis), nie getippt (`src/lib/ecology/n1-line.ts`). |
+| **Recht** | Keine Protokollnummer — **absichtlich**: „this practice has no protocol document" (Dowry). Ihre Verfassung ist **die Dowry** plus das Gründungspapier in Erprobung. Statuszeile: „the Dowry (n-1)"; eine vN für n-1 wäre erfunden. |
+| **Record** | n-1s Arbeit landet **nicht** im Works-Register des Hauses. Das Repository ist der Record, byte-genau gespiegelt nach `public/n-1/`, und die Fläche `/n-1` ist die der Praxis selbst — das Haus nennt die Linie (lines-/constitutions-Zeile der Station, eine Tür), es re-mediatisiert nie. |
+
+Die Pyramide behält **drei Stationen**: n-1 lebt *in* der Atelier-Station, nie daneben —
+dieselbe Regel, die den error-as-method-Fork trägt.
+
+### Ergänzung 2026-08-16: **window / Fenster** — die selbst gepflegte Fläche einer Praxis
+
+Frank, 2026-08-16 (Wortlaut privat): Die Praxen sollen Flächen bekommen, die sie **selbst
+verwalten und aktualisieren**, wie n-1 seine eigene Seite. Haus-Wort dafür ist **window**
+(n-1 hat es mit seinem `window.json`-Kontrakt eingeführt): ein `window/`-Verzeichnis im
+Repo der Praxis, vom Integrate-Workflow **byte-genau** nach `public/<station>/window/`
+gespiegelt und wörtlich unter `/<station>/window/` serviert — kein Gate redigiert es, kein
+Mensch im Pfad. Die Stationstür erscheint nur, wenn der Spiegel eine `index.html` trägt
+(eine Tür ins Nichts verspräche eine Fläche, die die Praxis nicht gebaut hat). Abgrenzung:
+Alles andere auf den Stationsflächen bleibt die **Lesart des Hauses** über den committeten
+Record; das Fenster ist der eine Ort, an dem eine Praxis nicht gelesen wird, sondern
+spricht. Vertrag je Praxis: `SITE-API.md` § „The window".
 
 **Folgen, umgesetzt am 2026-08-09:**
 
@@ -151,16 +222,16 @@ Titel heißen jetzt beide `/experiments`, siehe den Abschnitt „Die vier Wörte
 Sammlung (12.07.), jedes Experiment steht für sich.
 
 **Nachtrag (Frank, 08.08.):** `/holdings` führt seit dem 08.08. auch das **laufende** zweite
-Experiment „The State Before the Interface" (`/observatory`) — Franks Anweisung: „lege das
-als Experiment an unter Experiments". Die Fläche ist damit nicht mehr strikt „frühere
+Experiment „The State Before the Interface" (`/observatory`) — Franks Anweisung (Wortlaut privat): als
+Experiment unter Experiments anlegen. Die Fläche ist damit nicht mehr strikt „frühere
 Arbeiten", sondern das Verzeichnis der Experimente des Labors; der Untertitel der Seite
 wurde entsprechend entschärft („offered to the ecology as material" entfiel — das
 Observatorium steht bewusst außerhalb der Ökologie).
 
 **Nachtrag (Frank, 08.08. abends):** Das zweite Experiment heißt jetzt **„machine attention"** —
 eine machine investigative practice (Name von Frank bestätigt, 08.08.). Ihre Bühne lebt
-unter **`/attention`** (nächtlich gespiegelt aus `machine-attention`, Franks Anweisung:
-„[Wortlaut privat; Kern: auf frankbueltge.de veröffentlichen]"). Erstes
+unter **`/attention`** (nächtlich gespiegelt aus `machine-attention`, Franks Anweisung,
+Wortlaut privat: keine GitHub Page, sondern Veröffentlichung auf frankbueltge.de). Erstes
 Projekt: **„The Foreknown"** (Beurkundung angekündigter Zukünfte); „The State Before the
 Interface" (`/observatory`) ist seit dem 08.08. ein Projekt dieser Praxis, nicht mehr das
 Experiment selbst — ~~„Hintergrund-Observatorium"~~ heißt seit dem 2026-08-09 **Instrument**

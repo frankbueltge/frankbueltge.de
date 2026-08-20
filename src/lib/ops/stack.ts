@@ -133,9 +133,16 @@ const polyline = (pts: { x: number; y: number }[]): string =>
  *   · an invisible `.ops-track` twin carrying only the open polyline, which the dot script walks
  *     with getPointAtLength. The ridge path cannot serve as the track because its `d` closes back
  *     along the baseline, and a dot walking that closing segment would slide along the floor.
+ *
+ * The dots are interleaved into that same back-to-front paint order (2026-08-16, Frank's
+ * finding — until then all six were appended after the last ridge and floated in front of
+ * everything, including lines physically in front of their own): each dot renders directly
+ * after the ridge it walks, so every nearer ridge occludes it exactly as it occludes the line
+ * itself. Occlusion is the figure's one law, and the dots live under it too.
  */
 export function buildStackSvg(snapshot: PulseSnapshot): string {
   const lines = buildStackLines(snapshot)
+  const dots = buildDots(lines)
   const parts: string[] = []
 
   lines.forEach((line, i) => {
@@ -143,9 +150,8 @@ export function buildStackSvg(snapshot: PulseSnapshot): string {
     const closed = `${open}L${fmt(line.points.at(-1)!.x)} ${fmt(line.base)}L${fmt(line.points[0].x)} ${fmt(line.base)}Z`
     parts.push(`<path class="ops-ridge" d="${closed}"/>`)
     parts.push(`<path class="ops-track" id="ops-track-${i}" d="${open}"/>`)
+    parts.push(...dots.filter((d) => d.track === i).map((d) => d.svg))
   })
-
-  parts.push(...buildDots(lines))
 
   const label =
     `The commit pulse of all ${snapshot.repos.length} repositories behind this site, ` +
@@ -170,8 +176,12 @@ export function buildStackSvg(snapshot: PulseSnapshot): string {
  *
  * The speeds are deliberately unrelated (0.009–0.027 cycles/s, no common divisor): dots that share
  * a period fall into formation after a minute and start to look like a loading animation.
+ *
+ * Returned with the track index rather than as bare markup, because WHERE a dot renders is not
+ * this function's call: buildStackSvg interleaves each dot behind the ridges in front of its
+ * line, so the stack's occlusion applies to the dots too.
  */
-function buildDots(lines: readonly StackLine[]): string[] {
+function buildDots(lines: readonly StackLine[]): { track: number; svg: string }[] {
   if (lines.length === 0) return []
   const cfg = [
     { at: 0.95, speed: 0.021, phase: 0.1, opacity: 0.95 },
@@ -186,10 +196,12 @@ function buildDots(lines: readonly StackLine[]): string[] {
     // the dots stay spread however many lines the snapshot produced.
     const track = Math.min(lines.length - 1, Math.round(d.at * (lines.length - 1)))
     const p = pointAt(lines[track], d.phase)
-    return (
-      `<circle class="ops-dot" id="ops-dot-${i}" data-track="${track}" data-speed="${d.speed}" ` +
-      `data-phase="${d.phase}" r="2.4" opacity="${d.opacity}" cx="${fmt(p.x)}" cy="${fmt(p.y)}"/>`
-    )
+    return {
+      track,
+      svg:
+        `<circle class="ops-dot" id="ops-dot-${i}" data-track="${track}" data-speed="${d.speed}" ` +
+        `data-phase="${d.phase}" r="2.4" opacity="${d.opacity}" cx="${fmt(p.x)}" cy="${fmt(p.y)}"/>`,
+    }
   })
 }
 

@@ -13,19 +13,35 @@
 // is exactly the drift the Aktualitätsregel was written against (on 2026-07-24 /atelier said "v4"
 // while the practice ran v5).
 
+import { existsSync } from 'node:fs'
 import { PYRAMID } from '@/config/ecology-pyramid-wording'
 import { allWorks } from '@/lib/engines/register'
 import type { LatestWork } from '@/lib/engines/latest'
 import { stationById, type Station, type StationId } from './model'
 import { buildLandings, firstClause, type Arc, type Landing } from './landings'
+import { ATELIER_LINES, countByLine } from '@/lib/ecology/lines'
+import { readN1Facts } from '@/lib/ecology/n1-line'
 import type { PulseSnapshot } from '@/lib/pulse/render'
 
-/** The mirrored constitutions, raw. One glob for all four namespaces. */
+/** The mirrored constitutions, raw. One glob for all four namespaces… */
 const PROTOCOLS = import.meta.glob('/src/content/*/PROTOCOL.md', {
   eager: true,
   query: '?raw',
   import: 'default',
 }) as Record<string, string>
+
+/** …and one for the nightly line's, which lives with the rest of that line's mirror in
+ *  src/data/nightly rather than in the content tree (SITE-API.md in the practice's repository
+ *  names the path). It is a second CONSTITUTION of the same practice, not a fourth practice —
+ *  read exactly like the others so that neither version is ever typed into a config. */
+const NIGHTLY_PROTOCOL = import.meta.glob('/src/data/nightly/PROTOCOL.md', {
+  eager: true,
+  query: '?raw',
+  import: 'default',
+}) as Record<string, string>
+
+const protocolFor = (ns: string, protocols: Record<string, string>): string | undefined =>
+  ns === 'nightly' ? NIGHTLY_PROTOCOL['/src/data/nightly/PROTOCOL.md'] : protocols[`/src/content/${ns}/PROTOCOL.md`]
 
 export interface Constitution {
   /** the version the mirror's own H1 states */
@@ -49,7 +65,7 @@ export interface Constitution {
  * quiet default (the rule src/lib/atelier/protocol-version.ts already sets for the Atelier).
  */
 export function readConstitution(ns: string, protocols: Record<string, string> = PROTOCOLS): Constitution {
-  const raw = protocols[`/src/content/${ns}/PROTOCOL.md`]
+  const raw = protocolFor(ns, protocols)
   if (!raw) throw new Error(`ecology/pyramid: no mirrored PROTOCOL.md for "${ns}" — mirror missing`)
   const heading = /^#\s+(.*?Protocol v(\d+))\s*(?:[—–-]\s*(.*))?$/m.exec(raw)
   if (!heading) {
@@ -120,13 +136,37 @@ export interface StationSheet {
 }
 
 /** The registers each practice keeps, as Level-2 doors. Titles are the practices' own words for
- *  their rooms; the hrefs are the routes those registers already live at. */
-const DOORS: Record<StationId, Door[]> = {
+ *  their rooms; the hrefs are the routes those registers already live at.
+ *
+ *  Exported so a test can ask whether an archived surface is still reachable — see
+ *  src/lib/ecology/mounted.test.ts. Nothing else reads it from outside. */
+export const DOORS: Record<StationId, Door[]> = {
   atelier: [
     { title: 'works', sub: 'the register — every work, newest first', href: '/atelier/works' },
     { title: 'journal', sub: 'every session, unedited', href: '/atelier/journal' },
     { title: 'constitution', sub: 'the protocol, as mirrored', href: '/atelier/protocol' },
     { title: 'team channel', sub: 'REQUESTS — the one steering channel', href: '/atelier/requests' },
+    // The one door here that is not a register: it leads to this practice's OTHER line, which
+    // keeps its own room because it keeps its own record and its own constitution. Until now the
+    // sheet's only trace of it was a link to whichever work it made last night — a visitor could
+    // read this whole page and never learn that the practice runs two lines at once, which is
+    // precisely what Frank saw on 2026-08-12. A door, not a station: the pyramid keeps three.
+    // No protocol number in this string: the numbers move (v3 may develop, v6 becomes v7), and a
+    // door that names one is wrong at the next amendment. The constitutions row above states both,
+    // read from the two mirrors.
+    { title: 'the nightly line', sub: 'the same practice under its other constitution — its own room', href: '/error-as-method' },
+    // The third line's door (Frank, 2026-08-15). Like the nightly line it keeps its own room —
+    // more so: its repository is mirrored whole and served as the practice's OWN surface, never
+    // a house window, so this door is the only thing the house owns about it. The door's title
+    // is the route's name; the status rows above render whatever title the practice currently
+    // declares in its window contract.
+    { title: 'n-1 — the third line', sub: 'founded 2026-08-15 on this practice’s own paper — its own record, its own surface', href: '/n-1' },
+    // The rhizome and the closure index, as the first nightly phase left them. Archived and, until
+    // 2026-08-13, unlinked: the pyramid rewrite removed the way in, and the only references left
+    // anywhere in the build were a 301 from its old route and the sitemap. A retired instrument may
+    // be retired; it may not be unfindable, or the record it holds is a claim nobody can check.
+    // The sheet says frozen, and the date says which phase — it is not offered as current.
+    { title: 'the cockpit (archived)', sub: 'the first nightly phase’s instrument — rhizome and closure, frozen 2026-07-18', href: '/atelier/archive/cockpit' },
   ],
   field: [
     { title: 'instruments', sub: 'the register — each with its record', href: '/field/instruments' },
@@ -150,6 +190,27 @@ const DOORS: Record<StationId, Door[]> = {
     { title: 'reception', sub: 'what came back from outside the house', href: '/reception' },
     { title: 'seeds', sub: 'what visitors offered the practices', href: '/seed' },
   ],
+}
+
+/**
+ * The practice's own window — the n-1 model carried to the three practices (Frank, 2026-08-16):
+ * a `window/` directory in the practice's own repository, mirrored byte for byte by its
+ * integrate workflow to public/<station>/window/ and served verbatim on this domain. Authored
+ * and updated by the practice itself; the house's only act is the mirror.
+ *
+ * The door exists only where the mirror carries an entry page — a door onto nothing would be
+ * the site promising a surface the practice has not built. The check is against the committed
+ * mirror at build time, so the door appears with the integrate commit that brings the window
+ * and leaves with the one that removes it. The Middle is not a practice and gets none.
+ */
+export function windowDoor(id: StationId, exists: (path: string) => boolean = existsSync): Door | null {
+  if (id === 'middle') return null
+  if (!exists(`public/${id}/window/index.html`)) return null
+  return {
+    title: 'the practice’s own window',
+    sub: 'authored and updated by the practice itself, mirrored verbatim — no human in the path',
+    href: `/${id}/window/`,
+  }
 }
 
 /** What each practice calls the things it makes, plural. The Middle records rather than makes. */
@@ -196,12 +257,48 @@ export function buildStationSheet({ id, snapshot, works = allWorks(), log, made 
     { key: K.arc, value: own.arc ? shorten(own.arc.title, 52) : PYRAMID.station.absent },
   ]
 
-  // The Middle has no constitution of its own — it is the zone the practices meet in, and saying
-  // otherwise would make it a fourth practice. Its sheet simply has one row fewer.
-  if (id !== 'middle') {
+  // A practice that runs more than one LINE says so here, inside its own station — never as a
+  // node of its own (canon 2026-08-12: the pyramid keeps three stations). Two rows carry it: what
+  // runs, and what governs each strand. A single constitution row on a multi-line practice would
+  // be a lie by omission — it would name one law and leave the other lines ungoverned on the page.
+  //
+  // Each line states itself in its own unit. The two Ulysses-run strands land works in the
+  // register, so they are counted from it; n-1 keeps its whole record in its own mirrored
+  // repository, so its row states what the mirror states — the practice's current title (its
+  // own window declaration; the working title is a placeholder the practice will replace) and
+  // its founding date — and its law is the Dowry, which carries no version by design.
+  const lines = id === 'atelier' ? ATELIER_LINES : []
+  if (lines.length > 1) {
+    const counts = countByLine(works)
+    const n1 = lines.some((l) => l.id === 'n-1') ? readN1Facts() : null
+    status.push({
+      key: K.lines,
+      value: lines
+        .map((l) =>
+          l.id === 'n-1'
+            ? `${n1!.title} · founded ${n1!.founded} · its own record`
+            : `${l.label} · ${counts[l.id]} ${counts[l.id] === 1 ? 'work' : 'works'}`,
+        )
+        .join('  ·  '),
+    })
+    status.push({
+      key: K.constitutions,
+      value: lines
+        .map((l) =>
+          l.id === 'n-1'
+            ? `${n1!.law} (${n1!.title})`
+            : `${readConstitution(l.law.ns).version} (${l.label.replace(/^the /, '')})`,
+        )
+        .join(' · '),
+    })
+  } else if (id !== 'middle') {
+    // The Middle has no constitution of its own — it is the zone the practices meet in, and saying
+    // otherwise would make it a fourth practice. Its sheet simply has one row fewer.
     const law = readConstitution(id)
     status.push({ key: K.constitution, value: `${law.version}${law.adopted ? ` · ${law.adopted}` : ''}` })
   }
+
+  const window = windowDoor(id)
 
   return {
     station,
@@ -211,7 +308,7 @@ export function buildStationSheet({ id, snapshot, works = allWorks(), log, made 
     lede,
     ledeTeaser: lede ? firstClause(lede.blurb, 320) : null,
     log: log.slice(0, 3),
-    doors: DOORS[id],
+    doors: window ? [...DOORS[id], window] : DOORS[id],
     made: { count: made, noun },
   }
 }

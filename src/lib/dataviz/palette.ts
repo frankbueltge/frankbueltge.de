@@ -318,13 +318,18 @@ export const PALETTES: readonly PaletteSet[] = [
       { name: 'home — the working interior', light: '#a2700f', dark: '#b8891f' },
       { name: 'opening — the outward voice', light: '#7d2b78', dark: '#c159b9' },
     ],
-    surfaces: { light: ['#f6f1e7', '#f7f8fa'], dark: ['#1b1815', '#141414'] },
+    surfaces: { light: ['#ffffff', '#eef1f0'], dark: ['#0d1513', '#0b1210'] },
     pairs: 'all',
     validatedOn: '2026-08-02',
     validator:
-      'dataviz skill validate_palette.js (six checks, --pairs all, per mode against both ' +
-      'atelier surfaces) — ALL CHECKS PASS in both modes on both surfaces; no contrast WARN ' +
-      '(weakest 3.84:1, #a2700f on #f6f1e7)',
+      'dataviz skill validate_palette.js (six checks, --pairs all, per mode against the atelier ' +
+      'cream surfaces of the day) — ALL CHECKS PASS in both modes on both surfaces; no contrast ' +
+      'WARN (weakest then 3.84:1). SURFACES CHANGED 2026-08-16: the score moved onto the ecology ' +
+      'station sheet (its cream host chrome was retired 2026-08-15), hexes unchanged. The ' +
+      'validator was NOT re-run; CVD/normal distances are hex-only and inherited (re-derived by ' +
+      'palette.test.ts), and WCAG contrast was recomputed in-repo with the same math against the ' +
+      'eco surfaces recorded above — weakest 3.80:1 (#a2700f on #eef1f0, light), all others ≥ ' +
+      '4.09:1 light and ≥ 4.76:1 dark; no contrast WARN.',
     worst: [
       {
         mode: 'light',
@@ -566,6 +571,106 @@ export const PALETTES: readonly PaletteSet[] = [
       },
     ],
     usedBy: ['src/styles/neighborhood.css'],
+  },
+  {
+    id: 'balance-poles',
+    description:
+      'The Balance — two pole identities on the dumbbell figure: a country’s own press (amber) ' +
+      'and the world’s press (blue). Identity colours, deliberately NOT a diverging value pair: ' +
+      'the dots are entities, the gap between them is geometry. Direction carries no colour ' +
+      '(a dark self-image is not a status). Amber↔blue is the safest dichromat pair in the ' +
+      'validator’s own report; both modes pass all six checks with no contrast WARN.',
+    slots: [
+      { name: 'its own press', light: '#b87700', dark: '#bd831f' },
+      { name: 'the world’s press', light: '#2a6fd0', dark: '#4f8cdd' },
+    ],
+    surfaces: { light: ['#edeef0', '#f7f8fa'], dark: ['#0a0a0a', '#141414'] },
+    pairs: 'all',
+    validatedOn: '2026-08-14',
+    validator:
+      'dataviz skill validate_palette.js (six checks) — ALL CHECKS PASS per mode on both ' +
+      'declared surfaces of that mode; no contrast WARN in either mode. Distances recorded ' +
+      'here are the in-repo re-derivation (palette.test.ts maths); the skill validator ' +
+      'reports the same pairs ~1 ΔE lower (27.0/25.4) — both far above every threshold',
+    worst: [
+      {
+        mode: 'light',
+        cvd: 27.95,
+        cvdPair: '#2a6fd0↔#b87700',
+        cvdType: 'protan',
+        tritan: 23.2,
+        normal: 30.7,
+        normalPair: '#2a6fd0↔#b87700',
+      },
+      {
+        mode: 'dark',
+        cvd: 25.4,
+        cvdPair: '#4f8cdd↔#bd831f',
+        cvdType: 'protan',
+        tritan: 22.4,
+        normal: 26.7,
+        normalPair: '#4f8cdd↔#bd831f',
+      },
+    ],
+    warns: [],
+    usedBy: ['src/styles/balance-figure.css'],
+  },
+  {
+    id: 'invoked-memory',
+    description:
+      'The Invoked Past — two identities on the year histogram: the day’s STANDOUT year ' +
+      '(ember) and the NEIGHBOURHOOD BASELINE it towers over (azure), the median of the ±5 ' +
+      'years around it drawn as a rule across exactly those years. Identity colours, ' +
+      'emphatically not status: a year standing 8× above its neighbourhood is a finding ' +
+      'about what the press invoked today, never an alarm — which is why the ember is a ' +
+      'burnt earth tone and not a warning red, the same reasoning that keeps a closed ' +
+      'atelier line and a "redundant" USP verdict out of red. Everything else in the figure ' +
+      'is deliberately OUTSIDE the set and wears the site’s own ink tokens: the ~215 ordinary ' +
+      'year bars (the press’s memory as such carries no identity — the point is the one year ' +
+      'that leaves the ramp), and the hatched band over the years the source never emits, ' +
+      'because an absence has no identity colour. The azure is balance-poles’ world-press ' +
+      'blue unchanged, on the same two surfaces — cross-page hue reuse is legal; one hue may ' +
+      'never mean two things on ONE page. Redundant encoding throughout: the standout is the ' +
+      'only bar with a direct label and a plumb line to it, the baseline rule is dashed and ' +
+      'spans a named year range, and every number in the figure repeats in the tables below it.',
+    slots: [
+      { name: 'the standout — the year that most exceeds its neighbourhood', light: '#b8410e', dark: '#e2691f' },
+      { name: 'the neighbourhood baseline — the median of the ±5 years around it', light: '#2a6fd0', dark: '#4f8cdd' },
+    ],
+    surfaces: { light: ['#edeef0', '#f7f8fa'], dark: ['#0a0a0a', '#141414'] },
+    pairs: 'all',
+    validatedOn: '2026-08-15',
+    validator:
+      'validate_palette.js was NOT available in this session, and this record says so rather ' +
+      'than implying a run: the distances below were re-derived in-repo with palette.test.ts’s ' +
+      'own maths (sRGB → linear → Machado 2009 protan/deutan → OKLab ΔE ×100; WCAG contrast ' +
+      'against both declared surfaces of each mode), which is what the test then re-checks. ' +
+      'Half the set is inherited rather than new: the azure is the world-press blue of ' +
+      'balance-poles, whose six-check run of 2026-08-14 passed on exactly these two surfaces. ' +
+      'No contrast WARN in either mode — weakest 4.22:1 (azure on #edeef0), and neither hue is ' +
+      'ever used as text. Tritan derived with the same matrices, informational only.',
+    worst: [
+      {
+        mode: 'light',
+        cvd: 27.37,
+        cvdPair: '#b8410e↔#2a6fd0',
+        cvdType: 'protan',
+        tritan: 35.88,
+        normal: 31.06,
+        normalPair: '#b8410e↔#2a6fd0',
+      },
+      {
+        mode: 'dark',
+        cvd: 25.36,
+        cvdPair: '#e2691f↔#4f8cdd',
+        cvdType: 'protan',
+        tritan: 33.98,
+        normal: 29.9,
+        normalPair: '#e2691f↔#4f8cdd',
+      },
+    ],
+    warns: [],
+    usedBy: ['src/styles/invoked-figure.css'],
   },
 ]
 

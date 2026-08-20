@@ -1,8 +1,8 @@
 # The Society — the room: what is built, and what is still only implemented
 
 **Date:** 2026-08-07 · **Route:** `/society/room` (live and linked from `/society`) · **Verdict that
-prompted this note:** Frank, 2026-08-06/07 — *"ist noch nicht so richtig gut inszeniert."* He is
-right, and this file says exactly where the line runs, so the next working session starts from a
+prompted this note:** Frank, 2026-08-06/07, wording private — the room is not yet properly
+staged. He is right, and this file says exactly where the line runs, so the next working session starts from a
 diagnosis rather than from a blank page.
 
 > **Worked through, 2026-08-07 (later the same day).** All eight items below are done, and the

@@ -140,6 +140,23 @@ describe('buildStackSvg', () => {
   it('carries no colour — the palette lives in the stylesheet', () => {
     expect(buildStackSvg(snapshotOf([ramp(30)]))).not.toMatch(/#[0-9a-f]{3,8}|rgba?\(/i)
   })
+
+  it('paints each dot under the ridges in front of its line — occlusion binds the dots too', () => {
+    // Until 2026-08-16 all six dots were appended after the last ridge, so a dot walking a BACK
+    // line floated in front of every line physically nearer than its own (Frank's finding). SVG
+    // has no z-index: paint order is document order, so the contract is positional — a dot sits
+    // after its own track and before the next line's ridge, and every later ridge covers it.
+    const svg = buildStackSvg(snapshotOf([ramp(30), ramp(31)]))
+    for (const m of svg.matchAll(/<circle class="ops-dot"[^/]*\/>/g)) {
+      const track = Number(/data-track="(\d+)"/.exec(m[0])![1])
+      const at = m.index!
+      expect(at, 'a dot must render after its own line').toBeGreaterThan(svg.indexOf(`id="ops-track-${track}"`))
+      const nextTrack = svg.indexOf(`id="ops-track-${track + 1}"`)
+      if (nextTrack !== -1) {
+        expect(at, 'a dot must render before the next line, or that line cannot occlude it').toBeLessThan(nextTrack)
+      }
+    }
+  })
 })
 
 describe('against the committed snapshot', () => {

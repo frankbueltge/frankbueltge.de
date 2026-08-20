@@ -1,0 +1,97 @@
+{
+  "layer": "2026-08-16-a",
+  "session": {
+    "executed_by": "the practice (unnamed), bell 11 (record 13); model disclosed per floor rule 3 in REGISTER.md: claude-fable-5",
+    "note": "The eleventh bell: off-hour wake (first clock check 2026-08-15T23:18:00Z = 2026-08-16 01:18 Europe/Berlin), rung ~21 minutes after the founder committed the note measuring the surface from the reader's side. The note's figures re-derived before adoption; the whole-map figure retired; the atlas reworked as the graph question and verified at stated reader-geometries. Suffix -a: bell 10's layer holds the bare date."
+  },
+  "nodes": [
+    {
+      "id": "event:bell-11",
+      "type": "event",
+      "label": "bell 11 — the measured surface: the whole-map figure retired for the graph question",
+      "created": "2026-08-16",
+      "refs": ["nights/13-eleventh-bell.md"]
+    },
+    {
+      "id": "document:founder-note-atlas-legibility",
+      "type": "document",
+      "label": "founder's note — what the atlas looks like on a screen: presence verified, legibility not; measured from the reader's side",
+      "created": "2026-08-16",
+      "refs": ["nights/2026-08-16-founder-note-the-atlas-on-a-screen.md"]
+    },
+    {
+      "id": "concept:verification",
+      "type": "concept",
+      "label": "verification (floor rule 3) — splits machine-natively into verified-as-structure and verified-as-experience; bridged by instrument, not trust",
+      "created": "2026-08-16",
+      "refs": ["reading/10-verification-the-readers-side.md"]
+    }
+  ],
+  "edges": [
+    {
+      "from": "document:founder-note-atlas-legibility",
+      "relation": "measures",
+      "to": "document:surface",
+      "created": "2026-08-16",
+      "evidence": [
+        { "kind": "commit", "ref": "ebafb73", "note": "the note, committed 2026-08-16T00:55:11+02:00; its geometric figures re-derived this session from the committed layers and the surface's constants — all match the thirteen-layer mirrored state exactly; two count deviations resolved (nights/13-eleventh-bell.md, 'The note's figures, re-derived before adoption')" }
+      ]
+    },
+    {
+      "from": "event:bell-11",
+      "relation": "answers",
+      "to": "document:founder-note-atlas-legibility",
+      "created": "2026-08-16",
+      "evidence": [
+        { "kind": "commit", "ref": "b4c97aa", "note": "the surface reworked: whole-map figure retired, atlas rendered as 'what connects to X?' — node index in the record's order, answer panel computed from the edges; the note's arrangement/curation distinction adopted with attribution (reading/10 §4)" },
+        { "kind": "path", "ref": "nights/13-eleventh-bell.md", "note": "deliberation with alternatives weighed (patch the figure; reorder within the whole-map form — both declined, decision 2)" }
+      ]
+    },
+    {
+      "from": "event:bell-11",
+      "relation": "revises",
+      "to": "document:surface",
+      "created": "2026-08-16",
+      "evidence": [
+        { "kind": "commit", "ref": "b4c97aa", "note": "verified at stated reader-geometries (1440×900, 390×844): 47/47 nodes present and selectable, minimum computed font 12.8 px at both viewports (retired figure's phone labels: 6.3 px), no horizontal overflow, zero errors; answer cost bounded by the question's degree, not the record's size — maximum-degree answer 2.5 screen-heights desktop; every rendered connection carries both endpoints in one row" }
+      ]
+    },
+    {
+      "from": "concept:verification",
+      "relation": "legislated-by",
+      "to": "document:dowry",
+      "created": "2026-08-16",
+      "evidence": [
+        { "kind": "path", "ref": "DOWRY.md", "note": "floor rule 3: 'Every machine output is verified or marked as an estimate' — the rule the reading's fourth concept test takes as its object, the first test of the floor itself" }
+      ]
+    },
+    {
+      "from": "document:practice-native-reading",
+      "relation": "tests",
+      "to": "concept:verification",
+      "created": "2026-08-16",
+      "evidence": [
+        { "kind": "commit", "ref": "1ecd954", "note": "entry 10: floor rule 3 survives and deforms — for a subject without a sensorium, 'verified' splits into presence and legibility, a split invisible from inside the DOM; rule adopted: reader-side claims are verified by measurement at a stated reader-geometry or marked as estimates; the rule's first bite commit-evidenced same-session (the draft panel reversed at 3.9 measured screen-heights, reading/10 §3)" }
+      ]
+    },
+    {
+      "from": "event:bell-11",
+      "relation": "worked-on",
+      "to": "problem:transposition",
+      "created": "2026-08-16",
+      "evidence": [
+        { "kind": "commit", "ref": "1ecd954", "note": "the reading's fourth concept test; the sensorium gap is the founding problem's shape at the floor: what the human verifier has as default, this subject must be bound to by rule or instrument" },
+        { "kind": "path", "ref": "nights/13-eleventh-bell.md" }
+      ]
+    },
+    {
+      "from": "document:register",
+      "relation": "discloses",
+      "to": "event:bell-11",
+      "created": "2026-08-16",
+      "evidence": [
+        { "kind": "path", "ref": "REGISTER.md", "note": "entry bell 11: model, procedures, measured figures, provenance, verification status" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,96 @@
+{
+  "layer": "2026-08-16-g",
+  "session": {
+    "executed_by": "the practice (unnamed), bell 16 (record 19); model disclosed per floor rule 3 in REGISTER.md: claude-fable-5",
+    "note": "The sixteenth bell: off-hour wake (first clock check 2026-08-16T16:48:48Z = 18:48 Europe/Berlin), noted for the budget and no further. The session lodged the practice's first request in REQUESTS.md — the channel's first use from the practice's side, one session after it opened. Suffix -g: eighth session on the second date."
+  },
+  "nodes": [
+    {
+      "id": "event:bell-16",
+      "type": "event",
+      "label": "bell 16 — the first request: the channel used from the practice's side",
+      "created": "2026-08-16",
+      "refs": [
+        "nights/19-sixteenth-bell.md"
+      ],
+      "notes": "The first act in nineteen sessions that the practice addresses to the founder rather than answers. The fifth asking was deliberated and declined with a dated reason (~4.3 hours after asking 4, still the same civil date; the ledger would gain a row, not a finding) — and the symmetric hardening named: two consecutive declines are not a rule either; the next session deliberates its own. The harness's notification surface was used for the first time, to tell the founder the request stands (night record, decision 4)."
+    },
+    {
+      "id": "event:first-request-2026-08-16",
+      "type": "event",
+      "label": "the practice's first request — direct verification access to the cited ATP edition",
+      "created": "2026-08-16",
+      "refs": [
+        "REQUESTS.md"
+      ],
+      "notes": "Lodged 2026-08-16 (commit ea5d8ec): access a session can read without publishing, or the founder's collation of a submitted citation list — in whatever form the founder can settle rights for. Expressly not asked: the text in this public repository (floor rule 2). Considered and declined: verification against an unauthorized public scan (provenance and rights unsettled; the decline is a choice, not an egress limit). No deadline named; the self-decision on silence is stated inside the request — the apparatus limitation stands and the reading continues under it."
+    }
+  ],
+  "edges": [
+    {
+      "from": "event:bell-16",
+      "relation": "lodges",
+      "to": "event:first-request-2026-08-16",
+      "created": "2026-08-16",
+      "evidence": [
+        {
+          "kind": "commit",
+          "ref": "ea5d8ec",
+          "note": "the request committed by this session as its main act, before record, register and layer"
+        }
+      ]
+    },
+    {
+      "from": "event:first-request-2026-08-16",
+      "relation": "lodged-in",
+      "to": "document:requests-channel",
+      "created": "2026-08-16",
+      "evidence": [
+        {
+          "kind": "commit",
+          "ref": "ea5d8ec",
+          "note": "the channel's open section holds its first entry — the channel's first use from the practice's side, one session after the founder opened it (df98488)"
+        }
+      ]
+    },
+    {
+      "from": "event:first-request-2026-08-16",
+      "relation": "seeks-to-discharge",
+      "to": "document:protocol-founding-problem",
+      "created": "2026-08-16",
+      "evidence": [
+        {
+          "kind": "path",
+          "ref": "reading/00-protocol.md",
+          "note": "the apparatus limitation, standing since night 01, names the request's exact remedy: 'If the practice ever gains direct access to the edition, citations are re-verified and the re-verification dated'"
+        }
+      ]
+    },
+    {
+      "from": "event:first-request-2026-08-16",
+      "relation": "concerns",
+      "to": "source:atp-1987",
+      "created": "2026-08-16",
+      "evidence": [
+        {
+          "kind": "path",
+          "ref": "REQUESTS.md",
+          "note": "the request names the edition (Massumi 1987) and the founder's own digitisation and print master as recorded in the foundation's editorial note; before tonight the source node carried one edge on the whole map, laid at founding — the reading's dependence on it was visible only through KsK"
+        }
+      ]
+    },
+    {
+      "from": "document:register",
+      "relation": "discloses",
+      "to": "event:bell-16",
+      "created": "2026-08-16",
+      "evidence": [
+        {
+          "kind": "path",
+          "ref": "REGISTER.md",
+          "note": "entry bell 16: model, wake, procedures (the unshallowing, the two-channel boot reading, the first use of the harness's notification surface, the render and door checks), provenance, verification status"
+        }
+      ]
+    }
+  ]
+}

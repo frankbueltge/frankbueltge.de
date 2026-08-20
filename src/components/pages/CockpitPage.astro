@@ -33,6 +33,16 @@ const atlas = atlasJson as AtlasEntry[]
 const rhizome = rhizomeJson as Rhizome
 const vitals = vitalsJson as VitalSigns
 const stats = cockpitStats(rhizome, vitals, atlas)
+
+// Three instruments, three different last dates — and until 2026-08-14 the page showed them as one
+// dashboard, so a reader could not tell a live gauge from an instrument that has been dormant for
+// four weeks. Each date is the file's OWN, never the build's: the rhizome states its `updated`, the
+// vital signs the date of their newest entry, the atlas the newest source it admitted.
+const asOf = {
+  vitals: [...(vitals.history ?? [])].map((h) => h.date).sort().at(-1) ?? null,
+  rhizome: rhizome.updated ?? null,
+  atlas: [...atlas].map((a) => a.session_read ?? '').filter(Boolean).sort().at(-1) ?? null,
+}
 const edges = edgeCounts(rhizome)
 const latest = vitals.history.length > 0 ? vitals.history[vitals.history.length - 1] : null
 
@@ -80,7 +90,7 @@ const txt = de
   ? {
       eyebrow: 'Atelier · Irrtum als Methode',
       title: 'Cockpit',
-      lede: 'Das Instrument der nächtlichen Phase (28. Juni – 18. Juli 2026). Jede Nacht forschte hier eine KI — und ihr Gegenstand war die Schleife, in der sie selbst steckte: Frisst ein System nur den eigenen Output, kollabiert es; ein echter Punkt von außen stoppt den Kollaps. Das Cockpit zeigt den Zustand dieser Schleife — Atmung, Rhizom und das Außen. Seit Protokoll v4 arbeitet die Praxis in umgrenzten Projekten.',
+      lede: 'Das Instrument der ERSTEN nächtlichen Phase (28. Juni – 18. Juli 2026). Jede Nacht forschte hier eine KI — und ihr Gegenstand war die Schleife, in der sie selbst steckte: Frisst ein System nur den eigenen Output, kollabiert es; ein echter Punkt von außen stoppt den Kollaps. Das Cockpit zeigt den Zustand dieser Schleife — Atmung, Rhizom und das Außen. Es wurde stillgelegt, als die Praxis zu Werklinien überging. Die Nächte selbst nicht: am 10. August 2026 wurde die nächtliche Linie in einer zweiten Linie derselben Praxis fortgesetzt, unter der Verfassung, die hier galt — ihr Record liegt unter /error-as-method.',
       hudClosure: 'closure',
       hudUnmeasured: 'noch keine Selbstmessung',
       hudScale: '0 = nach außen gegründet · 1 = reiner Selbstbezug (Kollaps)',
@@ -102,6 +112,9 @@ const txt = de
       gSwervesSubLive: 'Außen zugelassen',
       standbyChip: 'wartet',
       rhizomeH: '02 — Das Rhizom',
+      asOfLive: (d: string) => `letzter Eintrag ${d} — dieses Instrument läuft weiter.`,
+      asOfDormant: (d: string) =>
+        `zuletzt gezeichnet ${d} — ruhend, nicht verloren: die Praxis hat 2026-08-11 entschieden, es nicht weiterzuführen, und die nächtliche Linie baut ihr eigenes neu (/error-as-method).`,
       rhizomeIntro:
         stats.edgesTotal === 0
           ? `${stats.works} Werke stehen als Fakten im Graphen — die Kanten fehlen nicht, sie sind noch nicht gezogen. Wie sich Werke, Fäden und Quellen verbinden, ist Ulysses’ eigene Lektüre; das Seed erfindet keine Verbindungen. Baum-Kanten vertiefen das Eigene, Rhizom-Kanten holen das Außen herein — an ihrem Verhältnis wird sichtbar, ob sich die Forschung im Kreis dreht.`
@@ -181,7 +194,12 @@ const txt = de
   : {
       eyebrow: 'Atelier · Error as Method',
       title: 'Cockpit',
-      lede: 'The instrument of the nightly phase (28 June – 18 July 2026). Every night an AI researched here — and its subject was the loop it was itself caught in: a system fed only its own output collapses; one real point from outside stops the collapse. The cockpit shows the state of that loop — breath, rhizome, and the outside. Since Protocol v4 (now superseded by v5’s work-line protocol) the nightly cadence is history.',
+      // Corrected 2026-08-13. This sheet said "the nightly cadence is history" and named v5 as
+      // current — and by then neither was true: the constitution had moved to v6, and the nightly
+      // cadence had RESUMED on 2026-08-10 in a second line of the same practice, which has run
+      // every night since. An archived surface may be out of date about itself; it may not tell a
+      // visitor the opposite of what the house is doing. Dated rather than quietly rewritten.
+      lede: 'The instrument of the FIRST nightly phase (28 June – 18 July 2026). Every night an AI researched here — and its subject was the loop it was itself caught in: a system fed only its own output collapses; one real point from outside stops the collapse. The cockpit shows the state of that loop — breath, rhizome, and the outside. It was retired when the practice moved to work-lines. The nights themselves were not: on 10 August 2026 the nightly line was restored in a second line of the same practice, under the constitution that governed it here, and it keeps its own record at /error-as-method. What this page shows is the first phase, frozen — the instrument that measured it fell dormant on 18 July 2026 and is being rebuilt over there, not here.',
       hudClosure: 'closure',
       hudUnmeasured: 'no self-measurement yet',
       hudScale: '0 = grounded in the outside · 1 = pure self-reference (collapse)',
@@ -203,6 +221,9 @@ const txt = de
       gSwervesSubLive: 'an outside admitted',
       standbyChip: 'waiting',
       rhizomeH: '02 — The rhizome',
+      asOfLive: (d: string) => `newest entry ${d} — this instrument is still running.`,
+      asOfDormant: (d: string) =>
+        `last drawn ${d} — dormant, not lost: the practice decided on 2026-08-11 not to carry it further, and the nightly line is building its own (/error-as-method).`,
       rhizomeIntro:
         stats.edgesTotal === 0
           ? `${stats.works} works stand in the graph as facts — the edges are not missing, they are not yet drawn. How works, threads and sources connect is Ulysses’ own reading; the seed invents no connections. Tree edges deepen what is already there, rhizome edges admit the outside — their ratio makes visible whether the research is circling.`
@@ -332,6 +353,7 @@ const payload = JSON.stringify({
     {/* ── 01 · Vitalzeichen ──────────────────────────────────────────────── */}
     <section id="ck-gauges" class="ck-section" aria-labelledby="ck-gauges-h">
       <h2 id="ck-gauges-h" class="ck-h2">{txt.gaugesH}</h2>
+      {asOf.vitals && <p class="ck-asof">{txt.asOfLive(asOf.vitals)}</p>}
       <div class="ck-gauges">
         <div class="ck-gauge" data-state={stats.closure == null ? 'standby' : 'live'}>
           <svg viewBox="0 0 120 66" class="ck-gauge-svg" aria-hidden="true">
@@ -411,6 +433,7 @@ const payload = JSON.stringify({
     {/* ── 02 · Das Rhizom ────────────────────────────────────────────────── */}
     <section class="ck-section" aria-labelledby="ck-rhizome-h">
       <h2 id="ck-rhizome-h" class="ck-h2">{txt.rhizomeH}</h2>
+      {asOf.rhizome && <p class="ck-asof ck-asof-dormant">{txt.asOfDormant(asOf.rhizome)}</p>}
       <p class="ck-intro">{txt.rhizomeIntro}</p>
 
       <div class="ck-panel ck-rhizome-panel">
@@ -636,8 +659,27 @@ const payload = JSON.stringify({
     if (!m) return hex
     return `rgba(${parseInt(m[1], 16)}, ${parseInt(m[2], 16)}, ${parseInt(m[3], 16)}, ${a})`
   }
-  const nodeColor: Record<CkNode['kind'], string> = { work: COLOR.in, thread: COLOR.thread, source: COLOR.out, impulse: COLOR.rose }
-  const edgeColor: Record<CkEdge['kind'], string> = { elaborates: COLOR.in, swerve: COLOR.out, fork: COLOR.thread, bridge: COLOR.rose }
+  const nodeColor: Record<string, string> = { work: COLOR.in, thread: COLOR.thread, source: COLOR.out, impulse: COLOR.rose }
+  const edgeColor: Record<string, string> = { elaborates: COLOR.in, swerve: COLOR.out, fork: COLOR.thread, bridge: COLOR.rose }
+  /**
+   * The practice's vocabulary is OPEN, and this drawing forgot it.
+   *
+   * `src/lib/atelier/cockpit.ts` says so in as many words — "unbekannte Arten sind kein
+   * Gate-Fehler … das Gate prüft Struktur, nicht die Wortliste" — and its KNOWN_EDGE_KINDS grew
+   * as Ulysses coined `continues`, `complement`, `grounds`, `measures`, `corrected-by`. The two
+   * maps above never did: they hold four kinds, and the record holds nine (plus `corrects`,
+   * which not even the data layer lists).
+   *
+   * The consequence was not a mis-coloured edge. `edgeColor[kind]` returned undefined, `alpha()`
+   * called `.trim()` on it, the exception escaped the animation frame, and THE WHOLE FIELD WENT
+   * BLANK — legend intact underneath, counting 53 edges nobody could see. Found 2026-08-13 while
+   * answering a plain question: where is the rhizome on the site?
+   *
+   * So an unknown kind now draws in ink instead of erasing the graph. It is deliberately not a
+   * silent guess about meaning: a kind this figure does not know gets the neutral colour, the
+   * legend still names the ones it does, and the record's own words are the authority.
+   */
+  const ofKind = (map: Record<string, string>, kind: string): string => map[kind] ?? COLOR.ink
 
   /** rAF-Schleife mit DPR-Resize, Sichtbarkeits-Pause; reduced-motion ⇒ ein statisches Bild. */
   function runCanvas(canvas: HTMLCanvasElement, draw: (ctx: CanvasRenderingContext2D, w: number, h: number, t: number) => void): void {
@@ -898,7 +940,7 @@ const payload = JSON.stringify({
         if (ai == null || bi == null) continue
         const a = positions[ai]
         const b = positions[bi]
-        const c = edgeColor[e.kind]
+        const c = ofKind(edgeColor, e.kind)
         ctx.beginPath()
         if (e.kind === 'elaborates') {
           ctx.moveTo(a.x, a.y)
@@ -926,7 +968,7 @@ const payload = JSON.stringify({
       // Knoten
       nodes.forEach((node, i) => {
         const p = positions[i]
-        const c = nodeColor[node.kind]
+        const c = ofKind(nodeColor, node.kind)
         const isHover = i === hovered
         ctx.fillStyle = alpha(c, isHover ? 0.3 : 0.13)
         ctx.beginPath()
@@ -960,7 +1002,7 @@ const payload = JSON.stringify({
         const bx = Math.min(Math.max(p.x - tw / 2 - 10, 8), w - tw - 28)
         const by = p.y - 42 < 8 ? p.y + 20 : p.y - 42
         ctx.fillStyle = 'rgba(8, 9, 24, 0.92)'
-        ctx.strokeStyle = alpha(nodeColor[node.kind], 0.5)
+        ctx.strokeStyle = alpha(ofKind(nodeColor, node.kind), 0.5)
         ctx.lineWidth = 1
         ctx.beginPath()
         ctx.roundRect(bx, by, tw + 20, 26, 8)
@@ -1272,6 +1314,19 @@ const payload = JSON.stringify({
   .ck-section {
     margin-top: 56px;
   }
+  /* The dated line under an instrument's heading. Quiet ink, never a warning colour: a dormant
+     instrument is a decision the practice made and wrote down, not an error state. */
+  .ck-asof {
+    margin: -0.35rem 0 0.9rem;
+    font-size: 0.78rem;
+    line-height: 1.5;
+    color: var(--ck-muted, #a3a3a8);
+    max-width: 62ch;
+  }
+  .ck-asof-dormant {
+    opacity: 0.85;
+  }
+
   .ck-h2 {
     font-family: 'JetBrains Mono Variable', ui-monospace, monospace;
     font-size: 12px;

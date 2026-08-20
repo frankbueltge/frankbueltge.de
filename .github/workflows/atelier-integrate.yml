@@ -63,6 +63,14 @@ jobs:
           # Markdown-Akten (SCORE/TRACE/DECISION/…), nie PUBLICATION.json, nie _template
           mkdir -p src/content/atelier/projects
           rsync -a --delete --exclude='_template' --include='*/' --include='*.md' --exclude='*' /tmp/atelier/projects/ src/content/atelier/projects/ 2>/dev/null || true
+          # Die aus jenen TRACE.md herausrotierten Hälften. Protokoll v6 §8 (ergänzt 2026-08-12)
+          # lässt eine Linie ab der Größengrenze rotieren: die älteren Ticks wandern unverändert
+          # nach `archive/trace/<line>-<n>.md`. Der Record wird dadurch nicht kleiner — er liegt
+          # an zwei Orten, und ein Spiegel, der nur den lebenden Teil holt, zeigt eine 62-Tick-
+          # Linie als 5-Tick-Linie und zählt bei jeder Rotation erneut herunter. Zusammengesetzt
+          # wird erst beim Lesen (src/lib/atelier/trace-record.ts); hier wird nur gespiegelt.
+          mkdir -p src/content/atelier/archive/trace
+          rsync -a --delete --include='*.md' --exclude='*' /tmp/atelier/archive/trace/ src/content/atelier/archive/trace/ 2>/dev/null || true
           # Markdown-Werke (fehlerkataster, genealogie, parry-problem …)
           cp /tmp/atelier/works/*.md src/content/atelier/works/ 2>/dev/null || true
           # HTML-/Astro-Werk-Verzeichnisse via Integrator (Pfad-Grenze erzwungen)
@@ -77,6 +85,13 @@ jobs:
           # Daten-Spine fürs Cockpit (Atlas + Puls) — read-only-Spiegel committeter Engine-JSONs
           mkdir -p src/data/atelier
           cp /tmp/atelier/atlas/atlas.json /tmp/atelier/pulse/*.json src/data/atelier/ 2>/dev/null || true
+          # The practice's own window (2026-08-16, Frank's decision — the n-1 model carried to
+          # the practices): whatever the practice keeps under window/ in its repository is
+          # mirrored byte for byte and served verbatim at /atelier/window/. Authored and updated
+          # by the practice itself — the house never edits it. No window/ in the repo, no window
+          # on the site: the station's door renders only where this mirror carries an index.html.
+          rm -rf public/atelier/window
+          if [ -d /tmp/atelier/window ]; then mkdir -p public/atelier/window && cp -R /tmp/atelier/window/. public/atelier/window/; fi
 
       # The graph is derived from what this mirror just wrote (a work's meta.json, the
       # attention export, the encounters register). Deriving it HERE, before validation, is what
@@ -94,11 +109,14 @@ jobs:
       - name: Commit + let deploy-cf rebuild (on success)
         if: success()
         run: |
-          if [ -n "$(git status --porcelain src/content/atelier src/components/atelier src/pages/atelier src/data/atelier src/data/graph public/atelier/werke-html)" ]; then
+          if [ -n "$(git status --porcelain src/content/atelier src/components/atelier src/pages/atelier src/data/atelier src/data/graph public/atelier/werke-html public/atelier/window)" ]; then
             git config user.name "Atelier-Integrate"
             git config user.email "atelier-integrate@frankbueltge.de"
             git add -A src/content/atelier src/components/atelier src/pages/atelier src/data/atelier src/data/graph
             if [ -d public/atelier/werke-html ]; then git add -A public/atelier/werke-html; fi
+            # `|| true`: the add must survive all three states — window present, window removed
+            # (tracked entries record the deletion), and window never present (unmatched pathspec).
+            git add -A public/atelier/window 2>/dev/null || true
             git commit -m "atelier: integrate $(date -u +%F)"
             for attempt in 1 2 3 4 5; do
               git pull --rebase --autostash origin main && git push && break

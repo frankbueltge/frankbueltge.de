@@ -166,3 +166,28 @@ describe('integrate — v4 publication gate', () => {
     expect(r.rejected.find((x) => x.slug === '_template')).toBeUndefined()
   })
 })
+
+describe('assets a work needs to be a work (2026-08-16)', () => {
+  it('copies media beside the entry file, where the works CSP can play it', () => {
+    mkdirSync(join(src, 'works/loud'), { recursive: true })
+    writeFileSync(join(src, 'works/loud/index.html'), '<p>hear</p>')
+    writeFileSync(join(src, 'works/loud/meta.json'), JSON.stringify({ title: 'Loud' }))
+    writeFileSync(join(src, 'works/loud/score.mp3'), 'not really audio, but a file')
+    const r = integrate({ sourceDir: src, siteDir: site })
+    expect(r.rejected.map((x) => x.slug)).not.toContain('loud')
+    expect(existsSync(join(site, 'public/atelier/werke-html/loud/score.mp3'))).toBe(true)
+  })
+
+  it('rejects an asset over the deploy limit, with a reason, instead of failing at deploy', () => {
+    // Cloudflare Pages refuses a single asset over 25 MiB — after the mirror is committed.
+    mkdirSync(join(src, 'works/heavy'), { recursive: true })
+    writeFileSync(join(src, 'works/heavy/index.html'), '<p>heavy</p>')
+    writeFileSync(join(src, 'works/heavy/meta.json'), JSON.stringify({ title: 'Heavy' }))
+    writeFileSync(join(src, 'works/heavy/film.mp4'), Buffer.alloc(26 * 1024 * 1024))
+    const r = integrate({ sourceDir: src, siteDir: site })
+    const rejected = r.rejected.find((x) => x.slug === 'heavy')
+    expect(rejected?.reason).toContain('film.mp4')
+    expect(rejected?.reason).toContain('25 MiB')
+    expect(existsSync(join(site, 'public/atelier/werke-html/heavy/film.mp4'))).toBe(false)
+  })
+})

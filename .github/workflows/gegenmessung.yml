@@ -34,6 +34,8 @@ jobs:
           DOW=$(date -u +%u) # 1 = Montag … 7 = Sonntag
           run () { echo "::group::$1"; python "$1" || echo "::warning::$1 fehlgeschlagen — übersprungen"; echo "::endgroup::"; }
           run pipelines/consensus/refresh.py
+          run pipelines/balance/refresh.py
+          run pipelines/invoked/refresh.py
           run pipelines/pattern/refresh.py
           if [ "$DOW" = "1" ]; then
             run pipelines/tell/refresh.py
@@ -43,7 +45,7 @@ jobs:
         run: |
           git config user.name "Gegenmessung"
           git config user.email "gegenmessung@frankbueltge.de"
-          git add src/data/consensus src/data/pattern src/data/tell src/data/revision 2>/dev/null || true
+          git add src/data/consensus src/data/balance src/data/invoked src/data/pattern src/data/tell src/data/revision 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "Keine Änderungen."
             exit 0

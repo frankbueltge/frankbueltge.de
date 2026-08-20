@@ -1,0 +1,78 @@
+# Mirrors the n-1 practice onto this site (Frank's calls, 2026-08-15: the
+# practices publish here without a human in the path, and — same rule as
+# machine-attention, 2026-08-08 — no GitHub Page as the public address:
+# everything lives directly on frankbueltge.de).
+#
+# Since 2026-08-15 (Frank's call, wording private) /n-1 is the practice's own
+# surface, not a house window onto it: this workflow copies the practice's
+# repository byte for byte to public/n-1/ and the site serves it there. The
+# house no longer derives a view of the practice — the earlier src/data/n1
+# record contract (n1-record/1) and the Astro page that rendered it are gone,
+# so nothing on this domain restates the practice in the house's own words.
+# What /n-1 shows is decided in the practice's repository alone.
+#
+# Pull-based like the other integrates: the practice repo needs no write
+# access and no secret here; this workflow copies bytes and never authors
+# content. Hourly, so founder-rung daytime sessions reach the domain within
+# the hour; an unchanged repository exits without a commit. The commit is made
+# with the built-in GITHUB_TOKEN, which never fires `on: push` — deploy-cf.yml
+# carries this workflow in its `workflow_run` list, and must keep doing so.
+# public/n-1 is not a declared knowledge-graph source, so no graph rebuild
+# runs here — if it ever becomes one, this workflow must derive the graph in
+# the same commit (see .claude/rules/knowledge-graph.md).
+name: n-1 integrate
+
+on:
+  schedule:
+    - cron: "45 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: n1-integrate
+
+jobs:
+  pull-record:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci
+
+      - name: Pull the practice's surface and record
+        run: |
+          git clone --depth 1 https://github.com/frankbueltge/n-1 /tmp/n-1
+          rm -rf /tmp/n-1/.git
+          rm -rf public/n-1
+          mkdir -p public/n-1
+          cp -R /tmp/n-1/. public/n-1/
+
+      - name: Frame the mirror — the way back
+        # The mirror is copied byte for byte and then framed: the practice's own file is never
+        # touched, only this copy, and the strip says so on the page ("added by the site").
+        # Without this the record's pages carry no internal link at all — a visitor arriving
+        # from a search result meets a practice with no exit (Frank, 2026-08-16). Runs after
+        # every copy because the copy wipes the directory; scoped to n-1 so it never leaves
+        # another house's mirror rewritten and unstaged.
+        run: npx tsx scripts/engines/reframe-works.ts n-1
+
+      - name: Commit mirror
+        run: |
+          git config user.name "N1-Integrate"
+          git config user.email "n1-integrate@frankbueltge.de"
+          git add public/n-1
+          if git diff --cached --quiet; then
+            echo "record unchanged"
+            exit 0
+          fi
+          git commit -m "n-1: mirror the practice record of $(date -u +%F)"
+          for attempt in 1 2 3 4 5; do
+            if git push; then exit 0; fi
+            git pull --rebase
+          done
+          echo "push failed after 5 attempts" >&2
+          exit 1

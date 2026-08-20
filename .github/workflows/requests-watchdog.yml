@@ -41,6 +41,29 @@ jobs:
           from datetime import date, timedelta
 
           CUTOFF = date.today() - timedelta(days=10)
+          # Claims only (Frank, 2026-08-12, second pass — the first fix kept a 3-day window
+          # and at ~8 sections a day that alone held two dozen cards): a claim on Frank's
+          # attention NAMES a future deadline or is a forwarding. Everything else runs
+          # without him by his standing rule (2026-07-17, at the head of every REQUESTS.md:
+          # "silence means: decide yourselves") — it gets NO issue, and existing issues for
+          # it are closed. Mirrors the claims-only filter in src/lib/zentrale/status.ts
+          # buildInbox — change both.
+          # A forwarding request never expires: the post lies in the post office until Frank
+          # sends or discards it (same exemption as the Zentrale's tray).
+          FORWARD_LINE = re.compile(r"^(?:\s*>?\s*)\**(?:braucht|needs)\**\s*:\s*\**\s*(weiterleitung|forward)", re.I | re.M)
+          # First ISO date on a frist/deadline head line, if the section names one.
+          FRIST_LINE = re.compile(r"^(?:\s*>?\s*)\**(?:frist|deadline)\**\s*:\s*(.*)$", re.I | re.M)
+
+          def section_claim(body):
+              """A future frist date or a forwarding — the only two claims on Frank."""
+              if FORWARD_LINE.search(body):
+                  return "weiterleitung"
+              fm = FRIST_LINE.search(body)
+              if fm:
+                  fd = re.search(r"\d{4}-\d{2}-\d{2}", fm.group(1))
+                  if fd and date(*map(int, fd.group(0).split("-"))) >= date.today():
+                      return f"frist {fd.group(0)}"
+              return None
           REPOS = ["ulysses", "field-research", "studio", "data-snack-plenum"]
           # Spiegel von NON_REQUEST_SECTION_RE (src/lib/zentrale/requestsMd.ts): Sections, die
           # keine Anfrage an Frank sind — BEIDE Gesprächsrichtungen. Seeds/Team note/Team
@@ -84,6 +107,18 @@ jobs:
           open_by_title = {i["title"]: i["number"] for i in json.loads(open_issues.stdout or "[]")}
           closed = 0
 
+          def close_issue(number, note, label):
+              global closed
+              sh(["gh", "issue", "comment", str(number),
+                  "--repo", "frankbueltge/frankbueltge.de", "--body", note])
+              done = sh(["gh", "issue", "close", str(number),
+                         "--repo", "frankbueltge/frankbueltge.de", "--reason", "completed"])
+              if done.returncode == 0:
+                  closed += 1
+                  print(f"GESCHLOSSEN #{number} — {label}")
+              else:
+                  print(f"FEHLER beim Schliessen #{number}: {done.stderr.strip()[:160]}")
+
           for repo in REPOS:
               url = f"https://raw.githubusercontent.com/frankbueltge/{repo}/main/REQUESTS.md"
               try:
@@ -93,6 +128,7 @@ jobs:
                   continue
               # Abschnitte: '## <heading>' bis zur nächsten ##-Überschrift
               parts = re.split(r"^## ", text, flags=re.M)[1:]
+              seen_titles = set()
               for part in parts:
                   heading, _, body = part.partition("\n")
                   heading = heading.strip()
@@ -100,6 +136,7 @@ jobs:
                   if TEAM_SECTION.match(heading):
                       continue
                   title = f"Request aus {repo}: {heading}"[:200]
+                  seen_titles.add(title)
 
                   # Rückweg VOR dem Bestandsschutz: der CUTOFF soll verhindern, dass alte
                   # Anfragen neu alarmieren — nicht, dass ein längst beantwortetes Issue
@@ -116,15 +153,22 @@ jobs:
                               f"Automatisch geschlossen vom Requests-Watchdog, weil die Section "
                               f"ihren eigenen Abschluss trägt. Quelle: "
                               f"https://github.com/frankbueltge/{repo}/blob/main/REQUESTS.md")
-                      sh(["gh", "issue", "comment", str(number),
-                          "--repo", "frankbueltge/frankbueltge.de", "--body", note])
-                      done = sh(["gh", "issue", "close", str(number),
-                                 "--repo", "frankbueltge/frankbueltge.de", "--reason", "completed"])
-                      if done.returncode == 0:
-                          closed += 1
-                          print(f"{repo}: GESCHLOSSEN #{number} — {heading[:60]} ({status[:40]})")
-                      else:
-                          print(f"{repo}: FEHLER beim Schliessen #{number}: {done.stderr.strip()[:160]}")
+                      close_issue(number, note, f"{repo}: {heading[:60]} ({status[:40]})")
+                      continue
+
+                  # Anspruchs-Schluss (claims only, seit 2026-08-12): keine kommende Frist
+                  # und keine Weiterleitung → die Section erhebt keinen Anspruch auf Frank.
+                  # Sie läuft ohne ihn — per stehender Regel („Schweigen heißt: entscheidet
+                  # selbst") — und ihr Issue wird geschlossen, egal wie frisch sie ist.
+                  if title in open_by_title and section_claim(body) is None:
+                      number = open_by_title.pop(title)
+                      note = (f"Kein Anspruch an Frank: die Section nennt keine kommende Frist und ist "
+                              f"keine Weiterleitung — sie läuft ohne ihn, so wie es die stehende Regel "
+                              f"im Kopf jeder REQUESTS.md vorsieht („Schweigen heißt: entscheidet selbst“). "
+                              f"Wer sein Wort wirklich braucht, nennt eine Frist. Die Section in "
+                              f"`{repo}/REQUESTS.md` bleibt das Archiv.\n\n"
+                              f"Automatisch geschlossen vom Requests-Watchdog (claims only, 2026-08-12).")
+                      close_issue(number, note, f"{repo}: kein Anspruch — {heading[:60]}")
                       continue
 
                   # Bestandsschutz: führendes Datum älter als CUTOFF → nicht mehr NEU alarmieren
@@ -132,6 +176,11 @@ jobs:
                   if m and date(*map(int, m.groups())) < CUTOFF:
                       continue
                   if title in known_titles:
+                      continue
+                  # Claims only: eine Section ohne kommende Frist und ohne Weiterleitung
+                  # erhebt keinen Anspruch auf Frank — für sie entsteht gar kein Issue.
+                  # Die REQUESTS.md der Praxis ist die Akte; der Tagesüberblick liest sie.
+                  if section_claim(body) is None:
                       continue
                   known_titles.add(title)
                   excerpt = "\n".join(body.strip().splitlines()[:40])
@@ -144,7 +193,20 @@ jobs:
                              "--title", title, "--body", issue_body])
                   print(f"{repo}: {'ISSUE ' + made.stdout.strip() if made.returncode == 0 else 'FEHLER ' + made.stderr.strip()} — {heading[:60]}")
 
-          print(f"\nRequests-Watchdog: {closed} beantwortete Anfrage(n) geschlossen.")
+              # Orphan close: an open issue whose section no longer exists in REQUESTS.md was
+              # archived (or renamed) by the practice itself — settled at the source. Only runs
+              # when this repo's REQUESTS.md was actually fetched (we are inside the success
+              # path), so a network failure can never trigger a mass close.
+              prefix = f"Request aus {repo}: "
+              for title in [t for t in open_by_title if t.startswith(prefix) and t not in seen_titles]:
+                  number = open_by_title.pop(title)
+                  note = (f"Die Section zu dieser Anfrage steht nicht mehr in `{repo}/REQUESTS.md` — "
+                          f"die Praxis hat sie selbst archiviert oder abgeschlossen. Erledigt an der "
+                          f"Quelle; das Archiv der Praxis bleibt die Spur.\n\n"
+                          f"Automatisch geschlossen vom Requests-Watchdog (Section archiviert).")
+                  close_issue(number, note, f"{repo}: Section archiviert — {title[:80]}")
+
+          print(f"\nRequests-Watchdog: {closed} Anfrage(n) geschlossen (Status/Fenster/Archiv).")
           PYEOF
 
   saat-sync:

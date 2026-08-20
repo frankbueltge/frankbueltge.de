@@ -18,8 +18,10 @@ import {
   VOICES,
   type RefrainSource,
 } from './refrain'
+import { wholeTrace } from './trace-record'
 
 const PROJECTS = fileURLToPath(new URL('../../content/atelier/projects', import.meta.url))
+const ROTATED = fileURLToPath(new URL('../../content/atelier/archive/trace', import.meta.url))
 
 const WORDING = {
   unreadLine: 'no aspect reading in this move’s record',
@@ -229,6 +231,19 @@ describe('the real records — the score says what the practice wrote, or it say
         })
     : []
 
+  // A line's record is its live TRACE.md PLUS whatever §8 rotated out of it (trace-record.ts).
+  // Reading the live file alone tests the parser against however much of the record happens to
+  // be in one file today, and calls that the practice's record.
+  const rotatedRaw: Record<string, string> = existsSync(ROTATED)
+    ? Object.fromEntries(
+        readdirSync(ROTATED)
+          .filter((f) => f.endsWith('.md'))
+          .map((f) => [`${ROTATED}/${f}`, readFileSync(`${ROTATED}/${f}`, 'utf8')]),
+      )
+    : {}
+  const wholeTraceOf = (id: string) =>
+    wholeTrace(id, readFileSync(`${PROJECTS}/${id}/TRACE.md`, 'utf8'), rotatedRaw)
+
   it('finds at least the first work-line (the transition clause’s own declaration)', () => {
     expect(lines).toContain('2026-07-23-negative-parallax')
   })
@@ -274,7 +289,7 @@ describe('the real records — the score says what the practice wrote, or it say
 
   it('the first work-line reads as the record states: aspects present, deferrals found', () => {
     if (!lines.includes('2026-07-23-negative-parallax')) return
-    const trace = readFileSync(`${PROJECTS}/2026-07-23-negative-parallax/TRACE.md`, 'utf8')
+    const trace = wholeTraceOf('2026-07-23-negative-parallax')
     const events = parseTrace(trace, ['ϖ/σ_ϖ'])
     const withAspect = events.filter((e) => e.aspect !== null)
     // What this guards, in the words of the version that broke: "if the parser suddenly reads
@@ -292,45 +307,26 @@ describe('the real records — the score says what the practice wrote, or it say
     // not in the TRACE section this parser reads — and from tick 42 the line states it where the
     // parser looks (ulysses, TRACE.md ticks 39 and 42, 2026-08-06/07). That is the practice's
     // finding to land, not a number for this gate to enforce on it.
-    // 2026-08-12 — THE PREMISE ABOVE NO LONGER HOLDS, and it was broken deliberately.
+    // 2026-08-12 — the premise broke in the morning and was repaired the same night.
     //
-    // "A TRACE is append-only" was true when this floor was written. Protocol v6 §8 was amended
-    // on 2026-08-12 to make its own size floors countable, and a line over the floor now ROTATES:
-    // the older half of its trace moves to `archive/trace/<line>-<n>.md`. This line rotated twice
-    // within the hour — 87,240 words to 3,849, ticks 1–57 out — so a floor of 19 aspects now
-    // measures how much of the record happens to be in the live file, which is exactly the drift
-    // this guard was built to be immune to.
+    // "A TRACE is append-only" held when this floor was written. Protocol v6 §8, amended on
+    // 2026-08-12 to make its own size floors countable, makes a line over the floor ROTATE: the
+    // older half of its trace moves to `archive/trace/<line>-<n>.md`. This line rotated twice
+    // within the hour — 87,240 words to 3,849, 57 of its 62 ticks out — and for one morning
+    // this floor measured how recently it had rotated, which is exactly the drift the floor was
+    // built to be immune to. It was weakened to what the fragment could still carry, and the
+    // weakening was marked as such rather than dressed up.
     //
-    // The record is NOT smaller; it is in two places. But `archive/` is a protected path in the
-    // engine repository, so the rotation lands as pull requests that have not merged, and the
-    // site mirrors only `projects/`. Until the rotated halves reach this repository the whole
-    // record cannot be counted here, and no honest number over the live file alone can stand in
-    // for it.
-    //
-    // So the floor is applied where its premise still holds, and the rotated case asserts what
-    // remains verifiable: that the parser reads an aspect from every tick that states one. That
-    // is weaker, and it is marked as weaker rather than dressed up — the debt is the mirror's,
-    // and it is recorded in the decision log for 2026-08-12.
-    const rotated = /Rotated .*under §8/i.test(trace.replace(/\s+/g, ' '))
-    if (!rotated) {
-      expect(withAspect.length).toBeGreaterThanOrEqual(19)
-      // Presence of the other three readings, over the whole record.
-      expect(events.some((e) => e.deferral !== null)).toBe(true)
-      expect(events.some((e) => e.motifs.length > 0)).toBe(true)
-      expect(events.some((e) => e.opening)).toBe(true)
-    } else {
-      // A rotated live file holds only the newest ticks — three, at the time of writing. Whether
-      // the line has ever deferred, sounded a motif or opened is a fact about the WHOLE record,
-      // and half of it is in `archive/trace/`, which this repository does not yet mirror. Those
-      // three assertions are therefore not made here rather than made against a fragment: an
-      // assertion that would fail on a healthy record is worse than no assertion.
-      //
-      // What is still fully verifiable is that the parser reads the live file. Every tick this
-      // line writes states its aspect, so this is a real floor and not a formality — it was 0
-      // an hour before this was written, because the parser did not know the practice's newer
-      // spelling ("Aspect: territory") and read a stating record as silent.
-      expect(events.length, 'the trace parsed to nothing — the parser broke, not the record').toBeGreaterThan(0)
-      expect(withAspect.length, 'no tick states an aspect — the parser broke').toBe(events.length)
-    }
+    // The record was never smaller; it was in two places, and neither half could reach this
+    // repository: `archive/` was a protected path in the engine, so the rotations sat in pull
+    // requests nobody could merge, and the mirror copied `projects/` only. Both halves are now
+    // fixed — the gate opened the path (ulysses, governance/STANDING-DELEGATION.md §4,
+    // 2026-08-12) and `atelier-integrate.yml` rsyncs `archive/trace/` — so `wholeTraceOf` reads
+    // what the practice actually wrote and the floor stands again, unconditional.
+    expect(withAspect.length).toBeGreaterThanOrEqual(19)
+    // Presence of the other three readings, over the whole record.
+    expect(events.some((e) => e.deferral !== null)).toBe(true)
+    expect(events.some((e) => e.motifs.length > 0)).toBe(true)
+    expect(events.some((e) => e.opening)).toBe(true)
   })
 })

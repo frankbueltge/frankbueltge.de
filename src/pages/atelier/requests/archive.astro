@@ -1,45 +1,50 @@
 ---
-// /atelier/requests/archive — the team channel COMPLETE, verbatim (Etappe 2, 2026-08-01).
+// /atelier/requests/archive — the team channel COMPLETE, verbatim (Etappe 2, 2026-08-01;
+// pyramid chrome since 2026-08-15).
 //
-// This is what /atelier/requests printed until today: `<Content/>`, the whole synced document,
-// nothing reordered and nothing shortened. It stayed on the `<Content/>` path deliberately —
-// Astro's markdown pipeline already runs `rehypeHeadingIds`, so the deep links the room in
-// front of this page builds resolve without re-rendering the document through markdown-it
-// (verified: 141 of 141 heading ids identical to a github-slugger derivation).
-import { getCollection, render } from 'astro:content'
-import Page from '@/layouts/Page.astro'
-import Frame from '@/components/atelier/surface/Frame.astro'
-import { requestCards } from '@/lib/zentrale/requestsMd'
-import { ATELIER_NARRATIVE } from '@/config/atelier-wording'
-
+// This page is the one place in the atelier where length is the point: it IS the record, both
+// halves of it, nothing reordered and nothing shortened. It stays on the `<Content/>` path
+// deliberately — Astro's markdown pipeline already runs `rehypeHeadingIds`, so the deep links
+// the register in front of this page builds resolve without re-rendering the document through
+// markdown-it (verified: 141 of 141 heading ids identical to a github-slugger derivation).
+//
 // Two documents since 2026-08-10, one record. The channel was split so the practice stops
 // carrying 36 000 words of answered history into every session; the archive holds what is done
 // and the live channel what is open. This page prints both, archive first, so the public record
 // is exactly as complete as it was before the cut — the counts below are of both together.
+import { getCollection, render } from 'astro:content'
+import Page from '@/layouts/Page.astro'
+import DocumentSheet from '@/components/ecology/DocumentSheet.astro'
+import { requestCards } from '@/lib/zentrale/requestsMd'
+import { ATELIER_NARRATIVE } from '@/config/atelier-wording'
+
 const all = await getCollection('atelier')
 const doc = all.find((e) => e.id === 'requests')
 const archived = all.find((e) => e.id === 'requests-archive')
 const { Content } = doc ? await render(doc) : { Content: null }
 const { Content: ArchivedContent } = archived ? await render(archived) : { Content: null }
-const cards = requestCards(`${archived?.body ?? ''}\n${doc?.body ?? ''}`)
+// Parsed as two documents, not one concatenation: the live file's own preamble sits between them
+// and a single parse swallowed it into the last archived section's body.
+const cards = [...requestCards(archived?.body ?? ''), ...requestCards(doc?.body ?? '')]
 
 const room = ATELIER_NARRATIVE.requestsRoom
-const kicker = [
-  'Atelier · machine-participatory research practice',
-  'team channel · archive',
-  'the complete channel, verbatim — answered first, open last',
-]
-const statusHtml = `<b>${cards.length} sections</b> · ${cards.filter((c) => c.open).length} of them open · <a href="/atelier/requests" class="underline">${room.backToRoom}</a>`
 ---
 
 <Page
   title="Atelier — team channel, complete | Frank Bültge"
   description="The Atelier's team channel in full: every offer, seed and answer, verbatim and in the order it was written."
 >
-  <Frame active="" back kicker={kicker} h1={room.archiveHeadline} statusHtml={statusHtml}>
-    <p class="at-req-note">{room.archiveNote}</p>
-    {ArchivedContent && <article class="engine-prose"><ArchivedContent /></article>}
-    {Content ? <article class="engine-prose"><Content /></article> : <p class="text-fg-faint">Not synced yet.</p>}
-    <p class="at-req-archive"><a href="/atelier/requests">{room.backToRoom}</a></p>
-  </Frame>
+  <DocumentSheet
+    id="atelier"
+    parent={{ label: 'team channel', href: '/atelier/requests' }}
+    here="archive"
+    title={room.archiveHeadline}
+    span={`${cards.length} sections · ${cards.filter((c) => c.open).length} of them open · both halves of the split channel, archive first`}
+    source="src/content/atelier/REQUESTS-ARCHIVE.md · src/content/atelier/REQUESTS.md"
+    more={{ label: room.backToRoom, href: '/atelier/requests' }}
+  >
+    <p class="eco-doc-note">{room.archiveNote}</p>
+    {ArchivedContent && <div class="engine-prose"><ArchivedContent /></div>}
+    {Content ? <div class="engine-prose"><Content /></div> : <p class="eco-doc-note">Not synced yet.</p>}
+  </DocumentSheet>
 </Page>

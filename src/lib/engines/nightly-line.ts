@@ -67,7 +67,12 @@ export const PROTOCOL_LADDER: readonly ProtocolStep[] = [
     note: 'nightly work ends — the ban is on “a routine whose reason for running is the clock itself”',
   },
   { version: 5, date: '2026-07-24', unit: 'the work-line', note: 'bounded projects give way to an open horizon' },
-  { version: 6, date: '2026-08-08', unit: 'the work-line', note: 'the work-line protocol sharpened, under research ecology v2' },
+  {
+    version: 6,
+    date: '2026-08-08',
+    unit: 'the work-line',
+    note: 'the work-line protocol sharpened — and amended on 2026-08-12, when the horizon closed at twelve worked sessions',
+  },
 ]
 
 /** A forked work's metadata as the practice committed it, by slug — for the one page that shows

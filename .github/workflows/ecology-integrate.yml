@@ -29,6 +29,11 @@ permissions:
   contents: write
   issues: write
   pull-requests: write
+  # For `gh workflow run graph.yml` below. A `permissions:` block is exhaustive — every scope it
+  # omits is set to none — so without this line the dispatch endpoint answers 403, and the
+  # `|| true` there swallows it. That is how it ran from 2026-08-11 to 2026-08-18: graph.yml
+  # recorded no workflow_dispatch run at all in those days, only its 04:25 cron.
+  actions: write
 
 concurrency:
   group: ecology-integrate

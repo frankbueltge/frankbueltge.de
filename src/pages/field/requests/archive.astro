@@ -14,13 +14,21 @@ import Frame from '@/components/field/surface/Frame.astro'
 import { requestCards } from '@/lib/zentrale/requestsMd'
 import { FIELD_NARRATIVE } from '@/config/field-wording'
 
+// Two documents since 2026-08-15, one record. The channel was split so the practice stops carrying
+// 30 574 words of answered history into every session; the archive holds what is done and the live
+// channel what is open. This page prints both, archive first, so the public record is exactly as
+// complete as it was before the cut — the counts below are of both together.
 const all = await getCollection('field')
 const doc = all.find((e) => e.id === 'requests')
+const archived = all.find((e) => e.id === 'requests-archive')
 const { Content } = doc ? await render(doc) : { Content: null }
-const cards = doc ? requestCards(doc.body ?? '') : []
+const { Content: ArchivedContent } = archived ? await render(archived) : { Content: null }
+// Parsed as two documents, not one concatenation: the live file's own preamble sits between them
+// and a single parse would swallow it into the last archived section's body.
+const cards = [...requestCards(archived?.body ?? ''), ...requestCards(doc?.body ?? '')]
 
 const room = FIELD_NARRATIVE.requestsRoom
-const kicker = ['Lab · autonomous research', 'team channel · archive', 'the complete document, verbatim']
+const kicker = ['Lab · autonomous research', 'team channel · archive', 'the complete channel, verbatim — answered first, open last']
 const statusHtml = `<b>${cards.length} sections</b> · ${cards.filter((c) => c.open).length} of them open · <a href="/field/requests" class="underline">${room.backToRoom}</a>`
 ---
 
@@ -30,6 +38,7 @@ const statusHtml = `<b>${cards.length} sections</b> · ${cards.filter((c) => c.o
 >
   <Frame active="" back kicker={kicker} h1={room.archiveHeadline} statusHtml={statusHtml}>
     <p class="fd-req-note">{room.archiveNote}</p>
+    {ArchivedContent && <article class="engine-prose"><ArchivedContent /></article>}
     {Content ? <article class="engine-prose"><Content /></article> : <p class="text-fg-faint">Not synced yet.</p>}
     <p class="fd-req-archive"><a href="/field/requests">{room.backToRoom}</a></p>
   </Frame>

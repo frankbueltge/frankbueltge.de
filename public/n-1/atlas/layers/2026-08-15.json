@@ -1,0 +1,88 @@
+{
+  "layer": "2026-08-15",
+  "session": {
+    "executed_by": "the founder (Frank Bültge); drafting model disclosed per floor rule 3: claude-fable-5",
+    "note": "Founding layer, laid down by the founder. Deliberately sparse: the map is the practice's to grow."
+  },
+  "nodes": [
+    {
+      "id": "practice:unnamed",
+      "type": "practice",
+      "label": "this practice (unnamed; working title n-1)",
+      "created": "2026-08-15",
+      "notes": "The name is found, not assumed (ATP 37). See DOWRY.md."
+    },
+    {
+      "id": "source:ksk-v3",
+      "type": "source",
+      "label": "Cartography, not Tracing / Kartographie statt Kopie (working paper v3, July 2026)",
+      "created": "2026-08-15",
+      "refs": [
+        "foundation/cartography-not-tracing.en.md",
+        "foundation/kartographie-statt-kopie.de.md",
+        "https://frankbueltge.de/atelier/werke/2026-07-24-kartographie-statt-kopie/"
+      ],
+      "notes": "A work of the Ulysses practice, signed Ulysses, CC BY 4.0. Status: working paper; collation reservation per its editorial note."
+    },
+    {
+      "id": "source:atp-1987",
+      "type": "source",
+      "label": "Deleuze/Guattari, A Thousand Plateaus, trans. Massumi, University of Minnesota Press 1987",
+      "created": "2026-08-15",
+      "notes": "In copyright; cited by edition and page only; never redistributed in this repository."
+    },
+    {
+      "id": "problem:transposition",
+      "type": "problem",
+      "label": "What becomes of a process grammar for artistic research when its subject is not a person?",
+      "created": "2026-08-15",
+      "refs": ["nights/00-founding.md"]
+    },
+    {
+      "id": "document:dowry",
+      "type": "document",
+      "label": "The Dowry — founding document and floor",
+      "created": "2026-08-15",
+      "refs": ["DOWRY.md"]
+    }
+  ],
+  "edges": [
+    {
+      "from": "source:ksk-v3",
+      "relation": "grounds",
+      "to": "practice:unnamed",
+      "created": "2026-08-15",
+      "evidence": [
+        { "kind": "path", "ref": "DOWRY.md", "note": "founding document names the paper as constitution-in-trial" },
+        { "kind": "url", "ref": "https://frankbueltge.de/atelier/werke/2026-07-24-kartographie-statt-kopie/", "note": "published original" }
+      ]
+    },
+    {
+      "from": "source:ksk-v3",
+      "relation": "reads",
+      "to": "source:atp-1987",
+      "created": "2026-08-15",
+      "evidence": [
+        { "kind": "citation", "ref": "KsK, Appendix: Editorial Note", "note": "every ATP citation page-verified against the running heads of the cited edition" }
+      ]
+    },
+    {
+      "from": "problem:transposition",
+      "relation": "constructed-from",
+      "to": "source:ksk-v3",
+      "created": "2026-08-15",
+      "evidence": [
+        { "kind": "url", "ref": "https://github.com/frankbueltge/ulysses/blob/main/projects/2026-07-24-put-back-on-the-map/SCORE.md", "note": "probation record: 'The thesis addresses a human researcher inside institutions. This practice is not one, and that mismatch is the condition the probation tests.' Outcome-B (a practice-native reading of ATP) filed for human decision; this founding is that decision." }
+      ]
+    },
+    {
+      "from": "document:dowry",
+      "relation": "binds",
+      "to": "practice:unnamed",
+      "created": "2026-08-15",
+      "evidence": [
+        { "kind": "path", "ref": "DOWRY.md", "note": "floor rules 1-6; everything else revisable by the practice" }
+      ]
+    }
+  ]
+}

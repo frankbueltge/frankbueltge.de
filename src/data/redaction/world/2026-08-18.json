@@ -1,0 +1,147 @@
+{
+  "date": "2026-08-18",
+  "deletion": {
+    "available": true,
+    "checked_at": "2026-08-18T06:24:47Z",
+    "counts": {
+      "botwall": 38,
+      "gone_404": 1,
+      "gone_410": 0,
+      "legal_451": 0,
+      "ok": 261,
+      "other": 0,
+      "server_error": 0,
+      "unreachable": 0
+    },
+    "decided": 262,
+    "excluded_unverifiable": 38,
+    "gone": 1,
+    "gone_ci95": [
+      0.0007,
+      0.0213
+    ],
+    "gone_rate": 0.0038,
+    "legal_451": 0,
+    "legal_451_ci95": [
+      0.0,
+      0.0145
+    ],
+    "legal_451_rate": 0.0,
+    "notes": [
+      "451 from a German vantage point may mean EU geo-blocking rather than takedown; it is reported apart and never folded into the gone rate.",
+      "451 receipts carry the title only as a SHA-256 — the day record does not re-publish what the law removed; the pre-committed sample manifest remains the receipt.",
+      "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
+      "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
+    ],
+    "pool_day": "2026-08-16",
+    "receipts": [
+      {
+        "class": "gone_404",
+        "domain": "kfru.com",
+        "first_seen": "20260816100000",
+        "http_code": 404,
+        "title": "Unstoppable: Sam Fender and Olivia Dean Push UK Chart Record Further with 21st Week at the Top",
+        "url": "https://www.kfru.com/2026/08/16/unstoppable-sam-fender-and-olivia-dean-push-uk-chart-record-further-with-21st-week-at-the-top/"
+      }
+    ],
+    "sample_drawn_at": "2026-08-17T06:17:29Z",
+    "sample_size": 300
+  },
+  "filter_version": "v1",
+  "gdg": {
+    "available": true,
+    "classes": {
+      "reframing": 4219,
+      "replaced": 4480,
+      "trivial": 1368,
+      "update": 447
+    },
+    "day": "2026-08-17",
+    "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
+    "register": [
+      {
+        "added": [
+          "Featured"
+        ],
+        "after": "History made! Malawi's Scorchers stun Ghana to book place at World Cup for the very first time – as nation erupts in wild celebration - Featured News Malawi",
+        "before": "History made! Malawi's Scorchers stun Ghana to book place at World Cup for the very first time – as nation erupts in wild celebration - Malawi News | Breaking News, Politics, Business & Sports",
+        "detected": "2026-08-17T00:18:17Z",
+        "domain": "nyasatimes.com",
+        "removed": [
+          "Breaking",
+          "News",
+          "Politics",
+          "Business",
+          "Sports"
+        ],
+        "similarity": 0.833,
+        "url": "https://www.nyasatimes.com/history-made-malawis-scorchers-stun-ghana-to-book-place-at-world-cup-for-the-very-first-time-as-nation-erupts-in-wild-celebration/",
+        "weight": 12,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "RGD"
+        ],
+        "after": "MAIRE awarded EPC contract for ADNOC's $4.3-B RGD Phase 3 NGL project in the UAE",
+        "before": "MAIRE awarded EPC contract for ADNOC's $4.3-B Rich Gas Development Phase 3 NGL project in the UAE",
+        "detected": "2026-08-17T15:47:04Z",
+        "domain": "hydrocarbonprocessing.com",
+        "removed": [
+          "Rich",
+          "Gas",
+          "Development"
+        ],
+        "similarity": 0.8,
+        "url": "https://www.hydrocarbonprocessing.com/news/2026/08/maire-awarded-epc-contract-for-adnocs-43-b-rich-gas-development-phase-3-ngl-project-in-the-uae/",
+        "weight": 8,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "BTech",
+          "Pradesh"
+        ],
+        "after": "BTech student from Arunachal Pradesh found dead in Kerala; Minister promises probe as students blame credits-based 'year back' system",
+        "before": "B.Tech student from Arunachal found dead in Kerala; Minister promises probe as students blame credits-based 'year back' system",
+        "detected": "2026-08-17T08:16:58Z",
+        "domain": "thehindu.com",
+        "removed": [
+          "B",
+          "Tech"
+        ],
+        "similarity": 0.818,
+        "url": "https://www.thehindu.com/news/national/kerala/btech-student-from-arunachal-found-dead-in-kerala-minister-promises-probe-as-students-blame-credits-based-year-back-system/article71352107.ece",
+        "weight": 8,
+        "window": "24h"
+      }
+    ],
+    "status_counts": {
+      "HTTP_REDIRECT": 14631,
+      "PAGE_TEXTCHANGE": 103506,
+      "PAGE_TITLECHANGE": 42267,
+      "UNCHANGED_CONTENT": 610918
+    },
+    "title_changes_en": 10514,
+    "trace": [
+      {
+        "bytes_billed": 20971520,
+        "created": "1787033985975",
+        "job_id": "world_gdg_counts_20260817",
+        "project": "gen-lang-client-0843427097"
+      },
+      {
+        "bytes_billed": 192937984,
+        "created": "1787033992191",
+        "job_id": "world_gdg_titles_20260817",
+        "project": "gen-lang-client-0843427097"
+      }
+    ]
+  },
+  "generated_at": "2026-08-18T06:24:47Z",
+  "pipeline_version": "0.1.0",
+  "register_bound": 3,
+  "sample_committed": "src/data/redaction/world/samples/2026-08-17.json",
+  "schema_version": "1",
+  "selection_version": "v1"
+}

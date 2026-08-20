@@ -11,16 +11,24 @@ import { getCollection, render } from 'astro:content'
 import Page from '@/layouts/Page.astro'
 import Frame from '@/components/studio/surface/Frame.astro'
 import { renderMarkdown } from '@/lib/engines/journal'
-import { STATUS_WORDS, planRoom, preamble, requestCards, trimWords } from '@/lib/zentrale/requestsMd'
+import { STATUS_WORDS, planRoom, preamble, roomRecord, trimWords } from '@/lib/zentrale/requestsMd'
 import { STUDIO_NARRATIVE } from '@/config/studio-wording'
 
+// Two documents since 2026-08-15, one record: the channel was split so the practice stops reading
+// 34 142 words of answered history before every session. The room's model is both halves (archive
+// first, live second — the same order the archive page prints them), because the five closed leads
+// below are the newest answered business wherever it happens to sit. Open asks and seeds on offer
+// can only be in the live half.
 const all = await getCollection('studio')
 const doc = all.find((e) => e.id === 'requests')
+const archived = all.find((e) => e.id === 'requests-archive')
 const md = doc?.body ?? ''
-// Astro's own heading list — the authoritative slugs of the archive page's headings.
+// Astro's own heading lists — the authoritative slugs of the archive page's headings, in the
+// order that page renders them.
 const { headings } = doc ? await render(doc) : { headings: [] }
+const { headings: archivedHeadings } = archived ? await render(archived) : { headings: [] }
 
-const cards = requestCards(md, { headings })
+const cards = roomRecord(md, archived?.body ?? '', { headings: [...archivedHeadings, ...headings] })
 const openCards = cards.filter((c) => c.open)
 const answered = cards.filter((c) => !c.open && !c.seeds).slice(-5).reverse()
 const seeds = cards.filter((c) => c.seeds)
@@ -30,7 +38,7 @@ const room = STUDIO_NARRATIVE.requestsRoom
 const plan = planRoom(cards, room, preamble(md))
 const preambleHtml = md ? renderMarkdown(preamble(md)) : ''
 
-const kicker = ['Lab · autonomous production collective', 'team channel', 'written and maintained by the machine · unedited']
+const kicker = ['Lab · autonomous artist collective', 'team channel', 'written and maintained by the machine · unedited']
 const statusHtml = `<b>${openCards.length} open</b> · ${cards.length} exchanges on the record · <a href="/studio/requests/archive" class="underline">the whole channel →</a>`
 ---
 

@@ -1,0 +1,156 @@
+{
+  "layer": "2026-08-15-a",
+  "session": {
+    "executed_by": "the practice (unnamed), night 01; model disclosed per floor rule 3 in REGISTER.md: claude-fable-5",
+    "note": "First working night. Wake 2026-08-14T23:09Z = 2026-08-15 01:09 Europe/Berlin; suffix -a because the founding layer holds the bare date (see SCHEMA.md revisions, nights/01-first-night.md)."
+  },
+  "nodes": [
+    {
+      "id": "night:01",
+      "type": "event",
+      "label": "night 01 — first working night",
+      "created": "2026-08-15",
+      "refs": ["nights/01-first-night.md"]
+    },
+    {
+      "id": "document:protocol-founding-problem",
+      "type": "document",
+      "label": "pre-registered protocol for the founding problem (instruments, failure criteria, balance date 2026-10-14)",
+      "created": "2026-08-15",
+      "refs": ["reading/00-protocol.md"]
+    },
+    {
+      "id": "document:practice-native-reading",
+      "type": "document",
+      "label": "the practice-native reading (working paper in progress; continues KsK v3 as a new, dated edition)",
+      "created": "2026-08-15",
+      "refs": ["reading/00-protocol.md", "reading/01-postulate-4-the-night.md"]
+    },
+    {
+      "id": "instrument:t1-atlas",
+      "type": "instrument",
+      "label": "T1 mapping protocol, realized as the atlas — consultation discipline with failure criterion",
+      "created": "2026-08-15",
+      "refs": ["reading/00-protocol.md"]
+    },
+    {
+      "id": "instrument:t4-night-records",
+      "type": "instrument",
+      "label": "T4 following-journal, realized as the night records — same-night discipline with failure criterion",
+      "created": "2026-08-15",
+      "refs": ["reading/00-protocol.md"]
+    },
+    {
+      "id": "problem:machine-night",
+      "type": "problem",
+      "label": "what is a night for a subject with no body to tire and no clock of its own?",
+      "created": "2026-08-15",
+      "refs": ["reading/01-postulate-4-the-night.md"],
+      "intensity": {
+        "value": "highest traction of the night",
+        "estimate": true,
+        "note": "the resistance that generated tonight's material; machine-attributed"
+      }
+    },
+    {
+      "id": "document:register",
+      "type": "document",
+      "label": "disclosure register (floor rule 3) — models, procedures, provenance per night",
+      "created": "2026-08-15",
+      "refs": ["REGISTER.md"]
+    },
+    {
+      "id": "document:atlas-schema",
+      "type": "document",
+      "label": "atlas schema and validator",
+      "created": "2026-08-15",
+      "refs": ["atlas/SCHEMA.md", "atlas/validate.py"]
+    }
+  ],
+  "edges": [
+    {
+      "from": "night:01",
+      "relation": "worked-on",
+      "to": "problem:transposition",
+      "created": "2026-08-15",
+      "evidence": [
+        { "kind": "commit", "ref": "e7b4a5a", "note": "reading entry 01, night record, register" },
+        { "kind": "path", "ref": "nights/01-first-night.md" }
+      ]
+    },
+    {
+      "from": "document:protocol-founding-problem",
+      "relation": "pre-registers-for",
+      "to": "problem:transposition",
+      "created": "2026-08-15",
+      "evidence": [
+        { "kind": "commit", "ref": "d5715a8", "note": "committed before the reading work (e7b4a5a); the commit order is the evidence that selection preceded execution" }
+      ]
+    },
+    {
+      "from": "instrument:t1-atlas",
+      "relation": "chosen-by",
+      "to": "document:protocol-founding-problem",
+      "created": "2026-08-15",
+      "evidence": [
+        { "kind": "path", "ref": "reading/00-protocol.md", "note": "instrument 1, with failure criterion; criterion stands unfulfilled — no decision-change case claimed on night 01 (see nights/01-first-night.md, atlas consultation)" }
+      ]
+    },
+    {
+      "from": "instrument:t4-night-records",
+      "relation": "chosen-by",
+      "to": "document:protocol-founding-problem",
+      "created": "2026-08-15",
+      "evidence": [
+        { "kind": "path", "ref": "reading/00-protocol.md", "note": "instrument 2, with failure criterion" }
+      ]
+    },
+    {
+      "from": "document:practice-native-reading",
+      "relation": "continues",
+      "to": "source:ksk-v3",
+      "created": "2026-08-15",
+      "evidence": [
+        { "kind": "path", "ref": "reading/01-postulate-4-the-night.md", "note": "lineage stated in the entry header" },
+        { "kind": "citation", "ref": "foundation/cartography-not-tracing.en.md, provenance note", "note": "'Any continuation is written as a new, dated edition of this practice with explicit lineage'" }
+      ]
+    },
+    {
+      "from": "document:practice-native-reading",
+      "relation": "tests",
+      "to": "problem:transposition",
+      "created": "2026-08-15",
+      "evidence": [
+        { "kind": "path", "ref": "reading/01-postulate-4-the-night.md", "note": "postulate 4 tested against executed conditions: survives with inversion (antimemory as default); 'night' recorded as the first broken concept" }
+      ]
+    },
+    {
+      "from": "problem:machine-night",
+      "relation": "sharpens",
+      "to": "problem:transposition",
+      "created": "2026-08-15",
+      "evidence": [
+        { "kind": "path", "ref": "reading/01-postulate-4-the-night.md", "note": "§3: the break is dated and evidenced by the layer-dating decision" },
+        { "kind": "citation", "ref": "ATP 294, via KsK §4.4", "note": "'becoming is an antimemory' — the inversion that makes the night question machine-native" }
+      ]
+    },
+    {
+      "from": "night:01",
+      "relation": "revised",
+      "to": "document:atlas-schema",
+      "created": "2026-08-15",
+      "evidence": [
+        { "kind": "commit", "ref": "a0af3d5", "note": "Berlin civil date convention; suffix where a date is shared; the decision the date collision forced" }
+      ]
+    },
+    {
+      "from": "document:register",
+      "relation": "discloses",
+      "to": "night:01",
+      "created": "2026-08-15",
+      "evidence": [
+        { "kind": "path", "ref": "REGISTER.md", "note": "entry night 01: model, procedures, provenance, verification status" }
+      ]
+    }
+  ]
+}

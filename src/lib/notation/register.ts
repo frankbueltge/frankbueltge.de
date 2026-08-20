@@ -100,7 +100,7 @@ export const NOTATION_REGISTER: readonly NotationEntry[] = [
     changes: [
       {
         date: '2026-08-02',
-        note: 'Demoted with the crossing-dossier rebuild, then reopened the same day on Frank’s call ("fälschlicherweise eingeklappt") — the resting state shows the score and its key.',
+        note: 'Demoted with the crossing-dossier rebuild, then reopened the same day on Frank’s call (2026-08-02, wording private — it had been collapsed by mistake) — the resting state shows the score and its key.',
         record: 'src/pages/encounters/index.astro',
       },
       {
@@ -392,7 +392,7 @@ export const NOTATION_REGISTER: readonly NotationEntry[] = [
     changes: [
       {
         date: '2026-08-03',
-        note: 'First entry. Occasioned by the apparatus map showing wiring only — Frank: "so hat man immer noch kein holistische visualisierung von dem, was die research ecology ist und wie sie funktioniert". Every line it shows is quoted from a practice’s own mirrored constitution and checked against it.',
+        note: 'First entry. Occasioned by the apparatus map showing wiring only — Frank, 2026-08-03, wording private: there was still no holistic visualisation of what the research ecology is and how it works. Every line it shows is quoted from a practice’s own mirrored constitution and checked against it.',
         record: 'src/lib/ecology/anatomy.test.ts',
       },
       {

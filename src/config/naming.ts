@@ -86,13 +86,13 @@ export const NAMING = {
    *  under proof": die Festival-Linie bleibt gültig, wo sie steht, ist aber kein Hero-Anspruch. */
   focusKicker: 'the standing question',
   title: 'what machines are actually better at',
-  /** Klartext-Fassung (Frank, 24.07.: „man versteht nur bahnhof" — Verständlichkeit vor
-   * Haus-Jargon). Qualifizierte Autonomie-Sprache bleibt: teilautonom unter menschlicher
+  /** Klartext-Fassung (Frank, 24.07., Wortlaut privat — die bisherige Fassung war
+   * unverständlich; Verständlichkeit vor Haus-Jargon). Qualifizierte Autonomie-Sprache bleibt: teilautonom unter menschlicher
    * Verantwortung, versioniert ist, was der Apparat erfassen kann. */
   sub: 'One question runs through the current projects here: what can machines genuinely do better than people — hold attention for months without blinking, measure the same thing every night, read evidence at a scale no one could — and can they research autonomously, with means of their own, and produce concrete, useful works whose value can be checked? Every claim leads back to its evidence, failures stay visible, and Git is the archive.',
-  /** Seit 2026-08-10 NICHT mehr im Hero (Frank: „das kann alles weg", zusammen mit dem
-   * „how this works →"-Link, der ganz entfiel — /apparatus bleibt als Seite, verlinkt von
-   * den Ökologie-Flächen). Bleibt hier, weil /dossier die Zeile im Presse-Kontext führt. */
+  /** Seit 2026-08-10 NICHT mehr im Hero (Frank, 10.08., Wortlaut privat — die Zeile kann
+   * ganz entfallen), zusammen mit dem „how this works →"-Link, der ebenfalls entfiel;
+   * /apparatus bleibt als Seite, verlinkt von den Ökologie-Flächen. Bleibt hier, weil /dossier die Zeile im Presse-Kontext führt. */
   conductorLine: 'architect & conductor: Frank Bültge · the machines write, the record shows who wrote what',
 
   /** „What this is" — Klartext-Block direkt nach dem Puls, vor den Türen (Frank, 25.07.:
@@ -165,7 +165,7 @@ export const NAMING = {
         id: 'nightly-line',
         kindLabel: 'Practice',
         title: 'Error as Method',
-        line: 'The other arm of the Atelier: one founding text, one shared position, and from 2026-07-18 a second constitution — the practice that works one night at a time, restarted where it was switched off.',
+        line: 'The other line of the Atelier: one founding text, one shared position, and from 2026-07-18 a second constitution — the practice that works one night at a time, restarted where it was switched off.',
         href: '/error-as-method',
         meta: 'nightly · forked from the Atelier, same origin',
       },
@@ -462,15 +462,30 @@ export const NAMING = {
     standaloneFrame: {
       note: 'Wall label and links added by the site. The work itself begins below.',
       backPrefix: '←',
-      ecology: { label: 'the research ecology', href: '/' },
+      ecology: { label: 'the research ecology', href: '/ecology' },
       /** shown when a work has no wall text yet: the gap stays visible, never papered over
        *  with `embodies` — the same rule renderWrapperPage follows */
       footLead: 'Leave the work:',
+      /** Namespaces mirrored to public/ that are NOT ecology practices (Frank, 2026-08-16:
+       *  add the way back everywhere it is still missing). Before this, an unregistered
+       *  namespace fell through to the ecology link alone — which would have told 109
+       *  Machine Attention pages and n-1's front door that they belong to a house they
+       *  explicitly do not: Machine Attention is the counter-experiment built AGAINST the
+       *  ecology, and n-1's own dowry says it "does not belong to the research ecology".
+       *  A wrong way back is worse than none. `self` is the page that IS the house's front
+       *  door: it gets the site link only, because a link to itself is not an exit. */
+      houses: {
+        attention: { label: 'Machine Attention', href: '/machine-attention' },
+        'n-1': { label: 'n-1', href: '/n-1', self: '/n-1/index.html' },
+        'error-as-method': { label: 'Error as Method', href: '/error-as-method' },
+      } as Record<string, { label: string; href: string; self?: string }>,
+      /** the last exit, for pages whose house link would point at themselves */
+      site: { label: 'frankbueltge.de', href: '/' },
     },
     withdrawnLabel: 'withdrawn',
     entranceNote: {
       lead: 'The newest of these also stand on the entrance, under LATEST —',
-      label: 'the ecology’s front door →',
+      label: 'the site’s front door →',
       href: '/#latest',
     },
     provenanceLead: 'Read at build time from the works’ own committed metadata:',

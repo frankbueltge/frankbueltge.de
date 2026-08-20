@@ -45,7 +45,8 @@ Konfiguration und Dependencies nicht anfassen kann (siehe Pfad-Grenze).
   Sperre von `main`.
 - Kein harter Zwang aufs Experiment: Ulysses *darf* erstklassige Werke bauen, **muss** nicht. HTML-
   Werke (iframe) bleiben gültig. Autonomie bleibt erhalten.
-- Keine eigene Subdomain (verworfene Alternative; Frank wählte „im Lab verwoben").
+- Keine eigene Subdomain (verworfene Alternative; Frank entschied sich am 29.06. für die
+  Verwebung ins Lab, Wortlaut privat).
 
 ## Architektur
 
@@ -140,7 +141,7 @@ Lösung via Nonces — kein Showstopper, aber eigener Plan-Schritt.
 
 ### Komponente 5 — Fehlerbehandlung + Benachrichtigung
 
-Bei **rotem** Gate (Franks Wahl: „vollautonom **+** mich benachrichtigen"):
+Bei **rotem** Gate (Franks Wahl, Wortlaut privat: vollautonom **und** mit Benachrichtigung an ihn):
 
 - **Kein** Deploy; der letzte grüne Stand bleibt live.
 - Das Gate schreibt `atelier-feedback/<datum>.md` zurück in **ihr** Repo (Build-/Check-/Test-Fehler,

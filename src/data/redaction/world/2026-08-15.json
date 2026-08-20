@@ -1,0 +1,142 @@
+{
+  "date": "2026-08-15",
+  "deletion": {
+    "available": true,
+    "checked_at": "2026-08-15T06:02:38Z",
+    "counts": {
+      "botwall": 26,
+      "gone_404": 0,
+      "gone_410": 0,
+      "legal_451": 0,
+      "ok": 270,
+      "other": 0,
+      "server_error": 0,
+      "unreachable": 4
+    },
+    "decided": 270,
+    "excluded_unverifiable": 30,
+    "gone": 0,
+    "gone_ci95": [
+      0.0,
+      0.014
+    ],
+    "gone_rate": 0.0,
+    "legal_451": 0,
+    "legal_451_ci95": [
+      0.0,
+      0.014
+    ],
+    "legal_451_rate": 0.0,
+    "notes": [
+      "451 from a German vantage point may mean EU geo-blocking rather than takedown; it is reported apart and never folded into the gone rate.",
+      "451 receipts carry the title only as a SHA-256 — the day record does not re-publish what the law removed; the pre-committed sample manifest remains the receipt.",
+      "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
+      "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
+    ],
+    "pool_day": "2026-08-13",
+    "receipts": [],
+    "sample_drawn_at": "2026-08-14T13:27:03Z",
+    "sample_size": 300
+  },
+  "filter_version": "v1",
+  "gdg": {
+    "available": true,
+    "classes": {
+      "reframing": 5320,
+      "replaced": 5779,
+      "trivial": 1390,
+      "update": 501
+    },
+    "day": "2026-08-14",
+    "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
+    "register": [
+      {
+        "added": [
+          "How",
+          "Reduce",
+          "Mobile",
+          "Addiction",
+          "In",
+          "Kids",
+          "to"
+        ],
+        "after": "How To Reduce Mobile Addiction In Kids: \"I told my son to sit and watch the sunset but he could't\": Jaaved Jaaferi on why today's children are losing patience; and what parents can do about screen time",
+        "before": "Jaaved Jaaferi: \"I told my son to sit and watch the sunset but he could't\": Jaaved Jaaferi on why today's children are losing patience; and what parents can do about screen time",
+        "detected": "2026-08-14T21:34:06Z",
+        "domain": "indiatimes.com",
+        "removed": [
+          "Jaaved",
+          "Jaaferi"
+        ],
+        "similarity": 0.838,
+        "url": "https://timesofindia.indiatimes.com/life-style/parenting/moments/i-told-my-son-to-sit-and-watch-the-sunset-but-he-couldt-jaaved-jaaferi-on-why-todays-children-are-losing-patience-and-what-parents-can-do-about-screen-time/articleshow/133034444.cms",
+        "weight": 14,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "Never",
+          "mind",
+          "barbecue"
+        ],
+        "after": "RICHARD LITTLEJOHN: Never mind the barbecue ban and start mowing Britain's dangerously overgrown verges and parks. It's time to admit it's tree huggers and eco-zealots who are truly destroying the environment",
+        "before": "RICHARD LITTLEJOHN: Forget the BBQ ban and start mowing Britain's dangerously overgrown verges and parks. It's time to admit it's tree huggers and eco-zealots who are truly destroying the environment",
+        "detected": "2026-08-14T16:50:44Z",
+        "domain": "dailymail.com",
+        "removed": [
+          "Forget",
+          "BBQ"
+        ],
+        "similarity": 0.839,
+        "url": "https://www.dailymail.com/columnists/article-16050497/LITTLEJOHN-BBQ-Britains-eco-zealots.html",
+        "weight": 8,
+        "window": "24h"
+      },
+      {
+        "added": [
+          "Dr",
+          "Suresh"
+        ],
+        "after": "Southern Hills Hospital names Dr. Suresh Ponnada new chief medical officer | People On The Move | Business",
+        "before": "Southern Hills Hospital & Medical Center names Ponnada new chief medical officer | People On The Move | Business",
+        "detected": "2026-08-14T19:03:00Z",
+        "domain": "reviewjournal.com",
+        "removed": [
+          "Center",
+          "medical"
+        ],
+        "similarity": 0.824,
+        "url": "https://www.reviewjournal.com/business/vegas-business/people-on-the-move/southern-hills-hospital-medical-center-names-chief-medical-officer-3860694/",
+        "weight": 7,
+        "window": "1w"
+      }
+    ],
+    "status_counts": {
+      "HTTP_REDIRECT": 15035,
+      "PAGE_TEXTCHANGE": 125623,
+      "PAGE_TITLECHANGE": 49958,
+      "UNCHANGED_CONTENT": 762567
+    },
+    "title_changes_en": 12990,
+    "trace": [
+      {
+        "bytes_billed": 26214400,
+        "created": "1786773473216",
+        "job_id": "world_gdg_counts_20260814",
+        "project": "gen-lang-client-0843427097"
+      },
+      {
+        "bytes_billed": 238026752,
+        "created": "1786773478017",
+        "job_id": "world_gdg_titles_20260814",
+        "project": "gen-lang-client-0843427097"
+      }
+    ]
+  },
+  "generated_at": "2026-08-15T06:02:38Z",
+  "pipeline_version": "0.1.0",
+  "register_bound": 3,
+  "sample_committed": "src/data/redaction/world/samples/2026-08-14.json",
+  "schema_version": "1",
+  "selection_version": "v1"
+}

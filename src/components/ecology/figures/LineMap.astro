@@ -5,12 +5,20 @@
 // Tracing"), reduced to the sheet's figure slot. Works are ink slabs standing on the axis; the
 // lines that produced them hang below it and end in the mark their record earned.
 //
+// Interactive since 2026-08-16 (Frank: the map was a still). The interaction is links, not
+// scripting: every line is an SVG <a> to its whole record at /atelier/lines/<id>, so it works
+// with JavaScript off, takes keyboard focus natively, and appears in the page's link list. The
+// readout glance on hover/focus and the table under the drawing follow the house's dataviz
+// rules (nothing reachable only by hovering; the table is the no-JS floor for the data itself).
+//
 // No status colours. Under this practice's constitution a closed line costs what a continued one
 // costs — "closing costs what continuing costs" — so a killed line is an outcome, not a failure,
 // and it wears the practice's identity ink like every other ending. That rule is written down in
 // this repo (.claude/rules/dataviz-figures.md) precisely because a warning red here would be the
 // site editorialising over the practice.
 import type { LineMap } from '@/lib/ecology/pyramid/figures'
+import Readout from '@/components/dataviz/Readout.astro'
+import TableFallback from '@/components/dataviz/TableFallback.astro'
 
 interface Props {
   map: LineMap
@@ -22,48 +30,137 @@ const span = Math.max(1, Date.parse(map.to) - Date.parse(map.from))
 const x = (date: string) => BOX.left + ((Date.parse(date) - Date.parse(map.from)) / span) * (BOX.right - BOX.left)
 
 /** Slab height carries how many works landed that day — the practice worked in nights once, and
- *  several works could land in one. Counting them keeps the early density visible. */
-const perDay = new Map<string, number>()
-for (const work of map.works) perDay.set(work.date, (perDay.get(work.date) ?? 0) + 1)
-const slabs = [...perDay.entries()].map(([date, n]) => ({ date, n, height: Math.min(6 + n * 5, 34) }))
+ *  several works could land in one. Counting them keeps the early density visible.
+ *
+ *  Aggregated per day AND per line (2026-08-16): since the nightly line's revival the strands
+ *  land works in the same weeks, and one undifferentiated slab per day could not say which line
+ *  made what (Frank's finding). A nightly slab is hollow, a work-line slab filled — form, not a
+ *  second hue, so the distinction survives greyscale and every CVD. On the rare day both lines
+ *  land, the two slabs stand side by side. */
+const perDayLine = new Map<string, { date: string; line: (typeof map.works)[number]['line']; n: number; titles: string[] }>()
+for (const work of map.works) {
+  const key = `${work.date}·${work.line}`
+  const slab = perDayLine.get(key) ?? { date: work.date, line: work.line, n: 0, titles: [] }
+  slab.n += 1
+  slab.titles.push(work.title)
+  perDayLine.set(key, slab)
+}
+const datesWithBoth = new Set(
+  [...perDayLine.values()]
+    .map((s) => s.date)
+    .filter((date, _, all) => all.indexOf(date) !== all.lastIndexOf(date)),
+)
+const slabs = [...perDayLine.values()].map((slab) => ({
+  ...slab,
+  height: Math.min(6 + slab.n * 5, 34),
+  // side-by-side only where the same day carries both lines; alone, a slab stands on its date
+  dx: datesWithBoth.has(slab.date) ? (slab.line === 'nightly' ? -3 : 3) : 0,
+  label: slab.line === 'nightly' ? 'nightly line' : 'work-line',
+}))
+
+/** How each ending reads, in the record's own words — shared by the glance, the native <title>
+ *  and the table, so no surface invents a fourth wording. */
+const END_WORDS = { kill: 'stopped', study: 'archived as study', publish: 'published', running: 'running' } as const
 
 /** Lines are laid out on staggered depths so overlapping runs stay tellable apart. */
-const lines = map.lines.map((line, i) => ({ ...line, depth: BOX.base + 16 + (i % 4) * 13 }))
+const lines = map.lines.map((line, i) => ({
+  ...line,
+  depth: BOX.base + 16 + (i % 4) * 13,
+  words:
+    line.end === 'running'
+      ? `${line.title} — running since ${line.from}`
+      : `${line.title} — ${END_WORDS[line.end]}, ${line.from} to ${line.to}`,
+}))
+
+const tableRows = [...lines]
+  .sort((a, b) => (a.from < b.from ? 1 : -1))
+  .map((line) => ({ line: line.title, from: line.from, to: line.to, ended: END_WORDS[line.end] }))
 ---
 
-<svg viewBox={`0 0 ${BOX.width} ${BOX.height}`} role="img" aria-label={`The Atelier's works on one time axis from ${map.from} to ${map.to}, with ${map.lines.length} work-lines below it, each ending in the mark its record earned.`}>
-  <line class="eco-fig-baseline" x1={BOX.left - 6} y1={BOX.base} x2={BOX.right + 10} y2={BOX.base} />
-  <path class="eco-fig-baseline" d={`M${BOX.right + 10} ${BOX.base} l 10 0 m -4 -3.5 l 4 3.5 l -4 3.5`} />
+<div class="eco-linemap" data-linemap>
+  <svg viewBox={`0 0 ${BOX.width} ${BOX.height}`} role="img" aria-label={`The Atelier's works on one time axis from ${map.from} to ${map.to} — filled slabs are the work-line's works, hollow slabs the nightly line's — with ${map.lines.length} work-lines below the axis, each ending in the mark its record earned. Each line links to its whole record.`}>
+    <line class="eco-fig-baseline" x1={BOX.left - 6} y1={BOX.base} x2={BOX.right + 10} y2={BOX.base} />
+    <path class="eco-fig-baseline" d={`M${BOX.right + 10} ${BOX.base} l 10 0 m -4 -3.5 l 4 3.5 l -4 3.5`} />
 
-  {slabs.map((slab) => (
-    <rect class="eco-fig-slab" x={x(slab.date) - 2} y={BOX.base - slab.height} width="4" height={slab.height}>
-      <title>{slab.date} — {slab.n} {slab.n === 1 ? 'work' : 'works'}</title>
-    </rect>
-  ))}
+    {slabs.map((slab) => (
+      <g class="eco-fig-day" data-glance={`${slab.date} — ${slab.n} ${slab.n === 1 ? 'work' : 'works'} of the ${slab.label}: ${slab.titles.join(' · ')}`}>
+        <rect
+          class:list={['eco-fig-slab', slab.line === 'nightly' && 'eco-fig-slab-nightly']}
+          x={x(slab.date) - 2 + slab.dx}
+          y={BOX.base - slab.height}
+          width="4"
+          height={slab.height}
+        />
+        {/* the invisible touch target — a 4-unit slab is a mark, not a hit area */}
+        <rect class="eco-fig-hit" x={x(slab.date) - 6 + slab.dx} y={BOX.base - slab.height - 4} width="12" height={slab.height + 8} />
+        <title>{slab.date} — {slab.n} {slab.n === 1 ? 'work' : 'works'} of the {slab.label}</title>
+      </g>
+    ))}
 
-  {lines.map((line) => (
-    <g class="eco-fig-line">
-      <line class="eco-fig-line-run" x1={x(line.from)} y1={BOX.base + 4} x2={x(line.to)} y2={line.depth} />
-      {line.end === 'kill' && (
-        <path class="eco-fig-end" d={`M${x(line.to) - 4} ${line.depth - 4} l8 8 M${x(line.to) + 4} ${line.depth - 4} l-8 8`}>
-          <title>{line.title} — stopped, {line.from} to {line.to}</title>
-        </path>
-      )}
-      {line.end === 'study' && (
-        <rect class="eco-fig-end-open" x={x(line.to) - 4} y={line.depth - 4} width="8" height="8">
-          <title>{line.title} — archived as study, {line.from} to {line.to}</title>
-        </rect>
-      )}
-      {line.end === 'publish' && (
-        <circle class="eco-fig-end-solid" cx={x(line.to)} cy={line.depth} r="4">
-          <title>{line.title} — published, {line.from} to {line.to}</title>
-        </circle>
-      )}
-      {line.end === 'running' && (
-        <path class="eco-fig-end-running" d={`M${x(line.to)} ${line.depth} l 12 0 m -4 -3 l 4 3 l -4 3`}>
-          <title>{line.title} — running since {line.from}</title>
-        </path>
-      )}
-    </g>
-  ))}
-</svg>
+    {lines.map((line) => (
+      <a class="eco-fig-line" href={`/atelier/lines/${line.id}`} data-glance={`${line.words} — open the whole record`} aria-label={`${line.words}. Open the line's whole record.`}>
+        <title>{line.words}</title>
+        <line class="eco-fig-line-run" x1={x(line.from)} y1={BOX.base + 4} x2={x(line.to)} y2={line.depth} />
+        {/* the invisible touch target along the run — the drawn line is one unit thin */}
+        <line class="eco-fig-hit-run" x1={x(line.from)} y1={BOX.base + 4} x2={x(line.to)} y2={line.depth} />
+        {line.end === 'kill' && (
+          <path class="eco-fig-end" d={`M${x(line.to) - 4} ${line.depth - 4} l8 8 M${x(line.to) + 4} ${line.depth - 4} l-8 8`} />
+        )}
+        {line.end === 'study' && (
+          <rect class="eco-fig-end-open" x={x(line.to) - 4} y={line.depth - 4} width="8" height="8" />
+        )}
+        {line.end === 'publish' && <circle class="eco-fig-end-solid" cx={x(line.to)} cy={line.depth} r="4" />}
+        {line.end === 'running' && (
+          <path class="eco-fig-end-running" d={`M${x(line.to)} ${line.depth} l 12 0 m -4 -3 l 4 3 l -4 3`} />
+        )}
+      </a>
+    ))}
+  </svg>
+  <Readout id="linemap-readout" maxWidth="42ch" />
+</div>
+
+<TableFallback
+  summary="every line as a table — title, span, how it ended"
+  caption="The Atelier's work-lines: title, first and last recorded move, and how each ended."
+  columns={[
+    { key: 'line', label: 'line' },
+    { key: 'from', label: 'from', nowrap: true },
+    { key: 'to', label: 'last move', nowrap: true },
+    { key: 'ended', label: 'ended', nowrap: true },
+  ]}
+  rows={tableRows}
+  provenance="Read from each line's own SCORE/TRACE record in src/content/atelier/projects/ at build time. Each drawn line links its whole record at /atelier/lines/⟨id⟩."
+/>
+
+<script>
+  import { createReadout } from '@/lib/dataviz/readout'
+
+  // The glance: the same words the native <title> carries, shown near the mark on hover/focus.
+  // Pure enhancement — with JavaScript off the <title> tooltips and the real links remain.
+  for (const host of document.querySelectorAll<HTMLElement>('[data-linemap]')) {
+    const readoutEl = host.querySelector<HTMLElement>('.dv-readout')
+    if (!readoutEl) continue
+    const readout = createReadout(readoutEl, host)
+    const glance = (el: Element) => {
+      const text = el.getAttribute('data-glance')
+      if (!text) return
+      const rect = el.getBoundingClientRect()
+      const hostRect = host.getBoundingClientRect()
+      readout.show(document.createTextNode(text), {
+        anchorX: rect.left - hostRect.left + rect.width / 2,
+        anchorY: rect.top - hostRect.top,
+      })
+    }
+    const target = (ev: Event) => (ev.target as Element).closest<Element>('[data-glance]')
+    host.addEventListener('pointerover', (ev) => {
+      const el = target(ev)
+      if (el) glance(el)
+    })
+    host.addEventListener('pointerout', () => readout.hide())
+    host.addEventListener('focusin', (ev) => {
+      const el = target(ev)
+      if (el) glance(el)
+    })
+    host.addEventListener('focusout', () => readout.hide())
+  }
+</script>

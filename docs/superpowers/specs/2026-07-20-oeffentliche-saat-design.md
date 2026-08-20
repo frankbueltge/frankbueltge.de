@@ -37,7 +37,7 @@ still vergammelt.
 |---|---|---|
 | D1 | Seeds gehen auf **Ökologie-Ebene** ein: Angebot an eine wählbare Praktik **oder** „offen an alle drei" | Souveränität bleibt: jede Praxis entscheidet nach eigenem Protokoll; identische Semantik wie Franks Seeds |
 | D2 | **Turnstile ja** — bewusste Ausnahme vom Zero-Third-Party-Anspruch (gleicher Anbieter wie Hosting) | Bot-Schutz ohne eigenes Captcha-Bauprojekt; wird auf /seed offen deklariert |
-| D3 | Das **KI-Gate blockt autonom** (Franks Vorgabe: „nonsense oder violation … direkt geblockt"), jede Entscheidung mit Reason-Code, Modell + Prompt öffentlich | Harte Guardrails, aber prüfbar — Lab-Regel „kein KI-Schritt ohne Nachprüfbarkeit" |
+| D3 | Das **KI-Gate blockt autonom** (Franks Vorgabe, 2026-07-20, Wortlaut privat — Nonsens oder Verstoß werden direkt geblockt), jede Entscheidung mit Reason-Code, Modell + Prompt öffentlich | Harte Guardrails, aber prüfbar — Lab-Regel „kein KI-Schritt ohne Nachprüfbarkeit" |
 | D4 | **Stufe 1 (Register) vor Stufe 2 (E-Mail)** | Ein Register mit echten Seeds ist das beste Argument, sich später einzuschreiben |
 | D5 | Adressierbar sind die **drei Forschungspraktiken** (field, studio, atelier). Plenum (data-snack) folgt ggf. später auf data-snack.com | Die öffentliche Saat gehört zur Ökologie; Plenum hat ein anderes Publikum |
 
@@ -213,16 +213,17 @@ sichtbar, nicht vergessen.
   der saat-sync-Job committet mit dem eingebauten `GITHUB_TOKEN`, dessen Pushes kein `on: push`
   auslösen; ohne den Trigger erschienen Praxis-Antworten erst mit dem nächsten Nightly im
   gebauten Register.
-- **D9 — Engine-Amendments angewendet (2026-07-20):** Auf Franks Sammel-Go („noch alles
-  umsetzen, was du jetzt umsetzen kannst") direkt in die drei Engine-Repos committet —
+- **D9 — Engine-Amendments angewendet (2026-07-20):** Auf Franks Sammel-Go (Wortlaut privat: alles
+  umsetzen, was jetzt umsetzbar ist) direkt in die drei Engine-Repos committet —
   `field-research` 7a79d80, `studio` 8121a03, `irrtum-als-methode` 70fadfd. Bei Meridian und
   Ensemble als Ergänzung des Orient-Schritts; bei Ulysses (v4) als Zusatz zur bestehenden
   Trace-Konvention — dessen eigene Status-Marken (`worked (ref)`, `declined (reason)`) bleiben
   unangetastet, die `Response`-Zeile kommt für öffentliche Seeds hinzu, damit der
   Register-Sync sie lesen kann.
 - **D10 — Slug-Rename `/saat` → `/seed` (2026-07-20, D6 revidiert):** Frank hat den deutschen
-  Routen-Slug klar verworfen („nie so gewollt … schwachsinniges Muster") — deckungsgleich mit
-  seiner eigenen früheren Entscheidung im Redirect-Header (2026-07-16: „Routen englisch"). Die
+  Routen-Slug klar verworfen (Wortlaut privat: so nie gewollt, und das Muster tauge nichts) —
+  deckungsgleich mit seiner eigenen früheren Entscheidung im Redirect-Header (2026-07-16:
+  Routen englisch). Die
   in D6 noch verteidigte „deutscher Slug als Eigenname"-Logik war falsch; `/saat` war ein neu
   angelegter deutscher Slug, der genau dagegen lief. Umgesetzt: die **Route** (`src/pages/seed/`),
   der **API-Endpoint** (`/api/seed`, `functions/api/seed.js`), die öffentlich sichtbaren

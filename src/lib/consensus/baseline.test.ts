@@ -23,23 +23,33 @@ describe('the committed echo baseline', () => {
   })
 
   it('recomputes every echo_index from the day\'s own components — the ratio is not asserted', () => {
-    for (const d of b.days) {
-      expect(d.echoed).toBeLessThanOrEqual(d.articles)
-      expect(d.articles).toBeGreaterThan(0)
-      expect(d.echo_index).toBeCloseTo(Number((d.echoed / d.articles).toFixed(3)), 10)
-    }
+    // Aggregated for the same reason as the label check below: one assertion per rule.
+    expect(b.days.filter((d) => d.echoed > d.articles).map((d) => d.date)).toEqual([])
+    expect(b.days.filter((d) => d.articles <= 0).map((d) => d.date)).toEqual([])
+    expect(
+      b.days
+        .filter((d) => Math.abs(d.echo_index - Number((d.echoed / d.articles).toFixed(3))) > 1e-10)
+        .map((d) => `${d.date}: ${d.echo_index} ≠ ${d.echoed}/${d.articles}`),
+    ).toEqual([])
   })
 
+  // One assertion per rule over the whole archive, not four per day. Same coverage, but the
+  // 2,496-day loop no longer makes ~10,000 expect() calls: it was timing out at the 5 s
+  // default under parallel load, which made this guard fail at random (2026-08-15). A gate
+  // that flickers teaches everyone to re-run until green.
   it('carries only known labels, and TLD shares within [0,1]', () => {
     const known = new Set([CHAIN_LABEL, 'scattered placement', 'mixed', 'unknown'])
-    for (const d of b.days) {
-      expect(known.has(d.label), `unknown label "${d.label}" on ${d.date}`).toBe(true)
-      if (d.tld_share !== undefined) {
-        expect(d.tld_share).toBeGreaterThanOrEqual(0)
-        expect(d.tld_share).toBeLessThanOrEqual(1)
-      }
-      if (d.phrase !== undefined) expect(d.phrase.split(' ')).toHaveLength(6)
-    }
+    expect(b.days.filter((d) => !known.has(d.label)).map((d) => `${d.date}: ${d.label}`)).toEqual([])
+    expect(
+      b.days
+        .filter((d) => d.tld_share !== undefined && (d.tld_share < 0 || d.tld_share > 1))
+        .map((d) => `${d.date}: ${d.tld_share}`),
+    ).toEqual([])
+    expect(
+      b.days
+        .filter((d) => d.phrase !== undefined && d.phrase.split(' ').length !== 6)
+        .map((d) => `${d.date}: ${d.phrase}`),
+    ).toEqual([])
   })
 
   it('discloses its gap instead of interpolating it — the missing days are really missing', () => {

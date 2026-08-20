@@ -30,8 +30,8 @@ describe('byRecency (newest first, stable ties)', () => {
 })
 
 describe('WERKE_CHRONO', () => {
-  it('leads with the newest experiment (Machine Attention, since 2026-08-08)', () => {
-    expect(WERKE_CHRONO[0].id).toBe('attention')
+  it('leads with the newest experiment (The Invoked Past, since 2026-08-15)', () => {
+    expect(WERKE_CHRONO[0].id).toBe('invoked-past')
   })
   it('ends with Überflug (placed last)', () => {
     expect(WERKE_CHRONO[WERKE_CHRONO.length - 1].id).toBe('ueberflug')
@@ -54,9 +54,13 @@ describe('WERKE_HOLDINGS (/experiments register)', () => {
       expect(WERKE_HOLDINGS.map((w) => w.id)).not.toContain(id)
     }
   })
-  it('renders the curated strength ranking, The Consensus first and Iceberg Theory second (Frank, 2026-08-05)', () => {
-    expect(WERKE_HOLDINGS[0].id).toBe('consensus')
-    expect(WERKE_HOLDINGS[1].id).toBe('parallaxe')
+  it('renders newest first — the curated 2026-08-05 ranking is dissolved (Frank, 2026-08-14)', () => {
+    // Frank's instruction of 2026-08-14 (wording private): new works on top, dissolving the
+    // curated order — recency, derived from WERKE_CHRONO, no manual list left to go stale.
+    expect(WERKE_HOLDINGS.map((w) => w.id)).toEqual(
+      WERKE_CHRONO.filter((w) => !HOLDINGS_EXCLUDED_IDS.has(w.id)).map((w) => w.id),
+    )
+    expect(WERKE_HOLDINGS[0].id).toBe('invoked-past') // newest werk on top today
     expect(WERKE_HOLDINGS.map((w) => w.id)).toEqual([...HOLDINGS_RANKED])
   })
   it('keeps every non-excluded entry — ranked and register agree on the set', () => {
@@ -87,11 +91,12 @@ describe('tier split (Experimente vs. Studien)', () => {
         WERKE_INSTRUMENTS.length,
     ).toBe(WERKE.length)
   })
-  it('keeps the research project and its instrument out of the experiments row (Frank, 2026-08-09)', () => {
+  it('keeps the research project and the instruments out of the experiments row (Frank, 2026-08-09; redaction reclassified 2026-08-14)', () => {
     expect(WERKE_PROJECTS.map((w) => w.id)).toEqual(['attention'])
-    expect(WERKE_INSTRUMENTS.map((w) => w.id)).toEqual(['observatory'])
+    expect(WERKE_INSTRUMENTS.map((w) => w.id).sort()).toEqual(['observatory', 'redaction'])
     const experiments = WERKE_EXPERIMENTE.map((w) => w.id)
     expect(experiments).not.toContain('attention')
     expect(experiments).not.toContain('observatory')
+    expect(experiments).not.toContain('redaction')
   })
 })

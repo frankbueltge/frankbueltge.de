@@ -1,5 +1,6 @@
 // src/lib/atelier/cockpit.test.ts
 import { describe, it, expect } from 'vitest'
+import { readFileSync } from 'node:fs'
 import {
   domainOf,
   groupAtlas,
@@ -10,6 +11,8 @@ import {
   hash01,
   starLayout,
   type AtlasEntry,
+  KNOWN_EDGE_KINDS,
+  type KnownEdgeKind,
   type Rhizome,
   type VitalSigns,
 } from './cockpit'
@@ -197,5 +200,32 @@ describe('hash01 + starLayout (deterministisch)', () => {
       expect(s.y).toBeGreaterThanOrEqual(0)
       expect(s.y).toBeLessThanOrEqual(640)
     }
+  })
+})
+
+// ——— the drawing survives a vocabulary it does not know (2026-08-13) ————————————————————
+//
+// The rhizome field on /atelier/archive/cockpit rendered as an EMPTY BOX, with its own legend
+// counting 53 edges underneath it. Not dormant data — a crash: the canvas script kept its own
+// four-key colour map (elaborates/swerve/fork/bridge) while Ulysses coined `continues`,
+// `complement`, `grounds`, `measures`, `corrected-by` and `corrects`. An unknown kind returned
+// undefined, `alpha()` called `.trim()` on it, and the exception escaped the animation frame.
+//
+// This module's own comment had already stated the rule the drawing broke: the vocabulary is
+// OPEN, unknown kinds are not a gate error. So the check belongs here, next to the rule.
+describe('the open vocabulary, as the drawing has to survive it', () => {
+  const page = readFileSync('src/components/pages/CockpitPage.astro', 'utf8')
+
+  it('the record really does carry kinds the figure never listed', () => {
+    // If this ever becomes false the test above is theatre — so it is asserted, not assumed.
+    const kinds = new Set((rhizomeJson as unknown as Rhizome).edges.map((e) => e.kind))
+    const unlisted = [...kinds].filter((k) => !KNOWN_EDGE_KINDS.includes(k as KnownEdgeKind))
+    expect(unlisted.length, 'no unlisted kind left in the record — check whether the practice’s vocabulary moved').toBeGreaterThan(0)
+  })
+
+  it('the canvas never indexes a colour map without a fallback', () => {
+    expect(page).not.toMatch(/=\s*edgeColor\[/)
+    expect(page).not.toMatch(/=\s*nodeColor\[/)
+    expect(page, 'the fallback helper is gone — an unknown kind will erase the whole field again').toMatch(/ofKind\(/)
   })
 })

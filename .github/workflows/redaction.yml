@@ -19,6 +19,10 @@ concurrency:
 jobs:
   refresh:
     runs-on: ubuntu-latest
+    env:
+      # secrets are not readable inside step `if:`s — the presence check has
+      # to travel via env (a workflow-file parse error otherwise)
+      HAS_GCP: ${{ secrets.GCP_SA_KEY != '' }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -30,6 +34,23 @@ jobs:
         run: pip install --no-cache-dir "./pipelines/redaction[extract]"
       - name: Redaction laufen (schreibt, committet nicht)
         run: python -m redaction.run --repo-root .
+      # Chamber 2 — the world's press. BigQuery via the house project (G1 path);
+      # without the secret the auth step is skipped and the chamber degrades
+      # honestly (gdg.available=false in the day's JSON), never silently.
+      - name: GCP auth (world chamber, BigQuery G1)
+        if: env.HAS_GCP == 'true'
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+      # auth@v2 only writes the ADC file; the bq CLI reads gcloud's own
+      # credential store, so the account must be activated explicitly —
+      # proven by the 2026-08-14 dispatch run degrading with "no active
+      # account selected".
+      - name: gcloud setup (activates the service account for bq)
+        if: env.HAS_GCP == 'true'
+        uses: google-github-actions/setup-gcloud@v2
+      - name: World chamber (writes, does not commit)
+        run: python -m redaction.world.run_world --repo-root .
       - name: Committen
         run: |
           git config user.name "Gegenmessung"

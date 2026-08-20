@@ -127,6 +127,9 @@ const PROD_Y = 644
 
 const POOL_RY = 36
 const STRIKE_R = 30
+/** the top edge of the lamp the light hangs from — the highest thing on the stage, and therefore
+ *  the lowest a crop window's top edge may sit if the fragment is still to read as a stage */
+const LAMP_TOP = FLOOR.y0 - 28
 
 /** Didone capitals at 15px, measured against the glyph widths this figure actually uses: a pool is
  *  as wide as the name it lights, never a fixed box a long title spills out of. */
@@ -162,15 +165,24 @@ function recordAround(summary: string, re: RegExp): string {
   const firstEnd = summary.indexOf('. ', at)
   if (firstEnd < 0) return summary.slice(from).trim()
   let to = firstEnd + 1
-  if (!hasQuote(summary.slice(from, to))) {
+  if (!carriesTheSaying(summary.slice(from, to))) {
     const secondEnd = summary.indexOf('. ', to + 1)
     const next = summary.slice(to, secondEnd < 0 ? summary.length : secondEnd + 1)
-    if (hasQuote(next)) to = secondEnd < 0 ? summary.length : secondEnd + 1
+    if (carriesTheSaying(next)) to = secondEnd < 0 ? summary.length : secondEnd + 1
   }
   return summary.slice(from, to).trim()
 }
 
-const hasQuote = (s: string) => /[“"]/.test(s)
+/** The marker the studio writes where it has withheld the architect's own wording (privacy rule of
+ *  2026-08-15, in its chronicle from 2026-08-16). Kept in step with dossier.ts, which carries the
+ *  same three helpers over the same committed entries. */
+const PRIVATE_MARKER = /wording private/i
+
+/** Does this sentence carry WHAT WAS SAID — as a quotation, or as a paraphrase the record marks as
+ *  standing in for withheld wording? Without the second case the record for One Tap's second
+ *  return stops at "The human eye returned One Tap a second time." and announces a verdict without
+ *  carrying it. */
+const carriesTheSaying = (s: string) => /[“"]/.test(s) || PRIVATE_MARKER.test(s)
 
 /** The quoted fragment inside a record — the eye's own words, when the record carries them. All
  *  three pairings occur in the committed chronicle (S43 uses “…”, S32 uses "…", S28 uses '…'), so
@@ -178,11 +190,41 @@ const hasQuote = (s: string) => /[“"]/.test(s)
  *  Returns '' when there is nothing quoted to find: the caller then keeps the whole sentence, and
  *  nothing is ever invented to fill the gap. */
 function quotedFragment(text: string): string {
+  if (PRIVATE_MARKER.test(text)) return ''
   for (const re of [/“([^”]{8,}?)”/, /"([^"]{8,}?)"/, /'([^']{8,}?)'/]) {
     const m = re.exec(text)
     if (m) return m[1]
   }
   return ''
+}
+
+/** THE SHORT NAMING OF WHAT A RETURN SAID — the mark's label on the floor's hover readout.
+ *
+ *  Until 2026-08-16 this was simply the eye's quoted words, and the fallback (`|| record`) was a
+ *  path the committed data never took. The privacy rule took the quotation marks out of the
+ *  chronicle, every return fell through to that fallback at once, and two of the three labels
+ *  became a whole 330-character sentence about an entire evening.
+ *
+ *  So where the record marks the wording as withheld, the label is the paraphrase the record puts
+ *  in its place. That paraphrase is this house's own writing, not the architect's — which is the
+ *  point of the rule — and it is a byte-exact span of the mirror, which is what the figure's
+ *  honesty test requires of every label. Nothing here is authored: both branches quote the
+ *  committed file, and where neither matches the caller still falls back to the whole record. */
+function saidFragment(text: string): string {
+  const quoted = quotedFragment(text)
+  if (quoted) return quoted
+  const m = /wording private\s*[—–-]\s*([^)]{8,})\)/i.exec(text)
+  if (!m) return ''
+  const said = m[1].trim()
+  // The capture stops at the FIRST ')', so a paraphrase carrying its own parenthetical would be
+  // cut mid-clause and then printed on a public figure as though it were whole — and it would sit
+  // inside every length bound a test could reasonably set, so nothing downstream would notice. A
+  // span that opens a bracket it never closes is not a whole saying; a span that has swallowed a
+  // second withheld passage is not one either. Both fall back to the record, which is long and
+  // obviously the record, rather than publishing a truncation that reads like a sentence.
+  // (2026-08-17, after a hostile reading found the nested-parenthesis case.)
+  if (said.includes('(') || PRIVATE_MARKER.test(said)) return ''
+  return said
 }
 
 // ---------------------------------------------------------------- builder
@@ -261,7 +303,7 @@ export function buildSeasonModel(input: SeasonInput): SeasonModel {
       returns.push({
         key: `returned:${slug}:${ordinal}`,
         state: 'returned',
-        label: quotedFragment(record) || record,
+        label: saidFragment(record) || record,
         date: c.date,
         session: c.collective_session === null ? '' : `S${c.collective_session}`,
         record,
@@ -612,10 +654,17 @@ function cropView(model: SeasonModel, cropTo?: string, box?: { width: number; he
   if (box) {
     // A named window: centred on the mark in both axes and clamped to the figure, so a window
     // larger than the stage simply becomes the stage rather than a viewBox reaching past it.
+    //
+    // The top edge is clamped once more, to the lamp the light hangs from: a window centred on a
+    // mark that sits low on the floor would open BELOW the bar and the fragment would stop reading
+    // as a stage — the one thing the hub's card claims about it. The rule was always the intent of
+    // this crop (see the comment above) and was only ever satisfied by accident: it held while the
+    // lit pools happened to sit high enough, and broke by 3.5px the first evening a sixth premiere
+    // pushed the newest pool down (2026-08-15).
     const cw = Math.min(box.width, W)
     const ch = Math.min(box.height, H)
     const bx = Math.min(Math.max(m.x - cw / 2, 0), W - cw)
-    const by = Math.min(Math.max(m.y - ch / 2, 0), H - ch)
+    const by = Math.min(Math.max(m.y - ch / 2, 0), H - ch, LAMP_TOP)
     return `${round(bx)} ${round(by)} ${round(cw)} ${round(ch)}`
   }
   const cw = 1040

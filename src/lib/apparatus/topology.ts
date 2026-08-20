@@ -233,7 +233,7 @@ export const NODES: readonly ApparatusNode[] = [
     what: 'Counter-measurement: the instruments that measure what power leaves in the dark.',
     commitsAs: 'Gegenmessung <gegenmessung@frankbueltge.de>',
     members: [
-      { label: 'Gegenmessung nightly', what: 'Consensus and Pattern daily; Tell and Correction on Mondays', ref: '.github/workflows/gegenmessung.yml', workflowName: 'Gegenmessung nightly', cron: ['0 6 * * *'] },
+      { label: 'Gegenmessung nightly', what: 'Consensus, Balance, The Invoked Past and Pattern daily; Tell and Correction on Mondays', ref: '.github/workflows/gegenmessung.yml', workflowName: 'Gegenmessung nightly', cron: ['0 6 * * *'] },
       { label: 'Redaction nightly', what: 'what was quietly removed from public pages', ref: '.github/workflows/redaction.yml', workflowName: 'Redaction nightly', cron: ['30 5 * * *'] },
       { label: 'Round Number nightly', what: 'the digits institutions round to', ref: '.github/workflows/round-number.yml', workflowName: 'Round Number nightly' },
       { label: 'Ghost Fleet nightly', what: 'vessels that go dark', ref: '.github/workflows/ghost-fleet.yml', workflowName: 'Ghost Fleet nightly', cron: ['0 4 * * *'], secrets: ['GFW_TOKEN'] },
@@ -318,7 +318,7 @@ export const NODES: readonly ApparatusNode[] = [
     layer: 'practices',
     kind: 'repo',
     owner: 'studio',
-    what: 'An artist collective under no label, staging works of data art in autonomous sessions.',
+    what: 'An artist collective on one line — only digital works, and only what a machine does better than a human.',
     ref: 'https://github.com/frankbueltge/studio',
     commitsAs: 'Ensemble <ensemble@studio.invalid>',
   },
@@ -366,7 +366,12 @@ export const NODES: readonly ApparatusNode[] = [
     members: [
       { label: 'path boundary', what: 'journal, works and project markdown only; PUBLICATION.json is never copied', ref: 'src/lib/atelier/paths.ts' },
       { label: 'content boundary', what: '“links yes, loads no” — no external asset may enter', ref: 'src/lib/atelier/forbidden.ts' },
-      { label: 'publication gate', what: 'a project becomes a work only through a human-approved manifest', ref: 'src/lib/atelier/integrate.ts' },
+      { label: 'publication gate', what: 'a project becomes a work only through a signed PUBLICATION.json — Frank’s approval until Protocol v6 §2.3, the practice’s own signed act since 2026-08-10', ref: 'src/lib/atelier/integrate.ts' },
+      // The one path through this gate that is NOT gated (2026-08-16, the n-1 model carried to
+      // the practices): the window is the practice's own surface and the house's only act is
+      // the mirror. Stated here because the apparatus map must not describe a gate as total
+      // while a verbatim path runs through it.
+      { label: 'the window', what: 'window/ in the practice’s repository is mirrored byte for byte to /atelier/window/ — the practice’s own surface, authored and updated by it, never edited by the house', ref: '.github/workflows/atelier-integrate.yml' },
     ],
   },
   {
@@ -378,6 +383,9 @@ export const NODES: readonly ApparatusNode[] = [
     what: 'Runs when Meridian lands, with a nightly safety net. Drafts, memory and the workboard never cross.',
     ref: '.github/workflows/field-integrate.yml',
     commitsAs: 'Field-Integrate <field-integrate@frankbueltge.de>',
+    members: [
+      { label: 'the window', what: 'window/ in the practice’s repository is mirrored byte for byte to /field/window/ — the practice’s own surface, authored and updated by it, never edited by the house', ref: '.github/workflows/field-integrate.yml' },
+    ],
   },
   {
     id: 'gate-studio',
@@ -388,6 +396,9 @@ export const NODES: readonly ApparatusNode[] = [
     what: 'Runs when Ensemble lands. In-production work stays in the studio until it premieres.',
     ref: '.github/workflows/studio-integrate.yml',
     commitsAs: 'Studio-Integrate <studio-integrate@frankbueltge.de>',
+    members: [
+      { label: 'the window', what: 'window/ in the practice’s repository is mirrored byte for byte to /studio/window/ — the practice’s own surface, authored and updated by it, never edited by the house', ref: '.github/workflows/studio-integrate.yml' },
+    ],
   },
   {
     id: 'gate-plenum',
@@ -485,7 +496,7 @@ export const NODES: readonly ApparatusNode[] = [
     layer: 'archive',
     kind: 'store',
     owner: 'shared',
-    what: 'The Middle’s record: what happened when the practices met, and the joint inquiries they now run together.',
+    what: 'The Middle’s record: what happened when the practices met — crossings, and the joint inquiries that ran until 2026-08-08.',
     ref: 'src/data/begegnungen',
   },
   {
@@ -566,7 +577,7 @@ export const NODES: readonly ApparatusNode[] = [
     layer: 'oversight',
     kind: 'person',
     owner: 'shared',
-    what: 'Frank Bültge. Infrastructure, approvals and public release answer to him; curated publication is his explicit decision, never a pipeline side effect. A green build is not an editorial sign-off.',
+    what: 'Frank Bültge. Infrastructure, approvals and what leaves the ecology outward answer to him; curated publication onto each practice’s own works surface has been that practice’s own signed act since 2026-08-10. A green build is not an editorial sign-off.',
     ref: 'src/components/pages/ApparatusPage.astro',
   },
 ] as const
@@ -642,7 +653,7 @@ export const EDGES: readonly ApparatusEdge[] = [
   { from: 'gate-field', to: 'repo-field', kind: 'github-api', mechanism: 'on refusal: a letter into the practice’s own repository, naming what was rejected and why', checked: 'derived', ref: '.github/workflows/field-integrate.yml' },
   { from: 'gate-studio', to: 'repo-studio', kind: 'github-api', mechanism: 'on refusal: a letter into the practice’s own repository, naming what was rejected and why', checked: 'derived', ref: '.github/workflows/studio-integrate.yml' },
   { from: 'conductor', to: 'gate-ecology', kind: 'human', mechanism: 'new meaning waits for his approval in a pull request before it becomes a record', checked: 'derived', ref: '.github/workflows/ecology-integrate.yml' },
-  { from: 'conductor', to: 'gate-atelier', kind: 'human', mechanism: 'a project becomes a published work only through a manifest he has approved', checked: 'declared', ref: 'src/lib/atelier/integrate.ts' },
+  { from: 'conductor', to: 'gate-atelier', kind: 'human', mechanism: 'a project becomes a published work only through a signed manifest — his approval until Protocol v6 §2.3, the practice’s own signed act since 2026-08-10', checked: 'declared', ref: 'src/lib/atelier/integrate.ts' },
   { from: 'conductor', to: 'gate-sitepr', kind: 'human', mechanism: 'a practice’s proposed site change is merged by a human, never by a green check', checked: 'derived', ref: '.github/workflows/engine-site-pr.yml' },
   { from: 'ov-inlets', to: 'conductor', kind: 'human', mechanism: 'a seed waits in a private queue until he reviews it; a declined one is deleted, never recorded', checked: 'declared', ref: 'functions/api/seed.js' },
   { from: 'conductor', to: 'st-inlets', kind: 'github-api', mechanism: 'an approved seed is committed into the public register', checked: 'declared', ref: 'functions/api/seed.js' },

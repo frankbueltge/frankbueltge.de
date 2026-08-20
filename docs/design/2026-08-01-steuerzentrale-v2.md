@@ -1,8 +1,8 @@
 # Steuerzentrale v2 — Triage statt Textwand (Design, 2026-08-01)
 
-**Status: Entwurf zur Abnahme.** Auftrag Frank, 2026-08-01: „das sind immer riesig lange
-texte und oft fehlt mir der überblick oder kontext und ich verstehe viele anfragen
-überhaupt nicht und weiß nicht wie und ob ich reagieren muss." (Deutsch, weil die
+**Status: Entwurf zur Abnahme.** Auftrag Frank, 2026-08-01 (Wortlaut privat): die Texte sind
+durchweg sehr lang, Überblick und Kontext fehlen ihm oft, viele Anfragen versteht er gar
+nicht, und ob und wie er reagieren muss, ist unklar. (Deutsch, weil die
 Steuerzentrale die erklärte deutsche Ausnahme der EN-only-Regel ist.)
 
 ## 1. Diagnose
@@ -80,8 +80,7 @@ Sprache am Morgen und in der Zentrale, keine zwei Vokabulare.
 | **P2** | Gate-Spur (C) mit Countdown + GO/HALTEN-Schreibweg; Post-Spur (D) | 1 Session |
 | **P3** | Options-Buttons (B) über antwort.js; Erinnerung im Digest bei kopflosen Anfragen | 1 Session |
 
-Reihenfolge bewusst: P1 löst Franks benanntes Problem (Überblick; [Wortlaut privat
-reagieren?") bereits zu ~80 %.
+Reihenfolge bewusst: P1 löst Franks benanntes Problem (Überblick über offene Reaktionspflichten; Wortlaut privat) bereits zu ~80 %.
 
 ## 6. Offene Punkte für Franks Abnahme
 

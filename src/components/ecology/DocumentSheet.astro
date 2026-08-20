@@ -1,0 +1,96 @@
+---
+// The document sheet — the pyramid's chrome for a single document (2026-08-15).
+//
+// The register sheet (Level 2) is for holdings that are lists; this is its sibling for holdings
+// that are TEXTS: a constitution, one journal page, a work-line's record, the team channel's
+// verbatim archive. Same strip, same head, same foot as the register sheet, so a reader who
+// descends from a station into a document stays in the same room — until 2026-08-15 these pages
+// still wore the retired practice frame, and every click off /atelier landed in last month's
+// design (Frank's finding, wording private; see docs/design/2026-08-15-atelier-top-down.md).
+//
+// The document itself renders in the slot, verbatim where it mirrors a record. The sheet never
+// summarises: what it adds is orientation (where am I, what is this, where was it read from),
+// which is exactly what a verbatim mirror cannot carry itself.
+import { getRelativeLocaleUrl } from 'astro:i18n'
+import type { Locale } from '@/lib/site'
+import { PYRAMID } from '@/config/ecology-pyramid-wording'
+import { STATIONS, type StationId } from '@/lib/ecology/pyramid/model'
+import '@/styles/ecology-pyramid.css'
+import '@/styles/hub-triptych.css'
+
+interface Props {
+  id: StationId
+  /** the register this document belongs to, as a crumb back to it — omitted where the document
+   *  hangs directly off the station (the constitution does; a journal page does not) */
+  parent?: { label: string; href: string }
+  /** this document's own crumb — short, in the practice's words ("constitution", "S12") */
+  here: string
+  title: string
+  /** the span line under the H1: what this document is, dated where the record dates it */
+  span?: string
+  /** the committed path the document was read from — the line that makes the sheet checkable */
+  source: string
+  more?: { label: string; href: string }
+  /** the right-hand strip label; the default names the one thing every document here shares */
+  strip?: string
+}
+
+const {
+  id,
+  parent,
+  here,
+  title,
+  span,
+  source,
+  more,
+  strip = 'READ FROM THE COMMITTED MIRROR · UNEDITED',
+} = Astro.props
+
+const locale = (Astro.currentLocale ?? 'en') as Locale
+const url = (href: string) => (href.startsWith('http') ? href : getRelativeLocaleUrl(locale, href))
+
+const W = PYRAMID.register
+const station = STATIONS.find((s) => s.id === id)!
+---
+
+<main id="main" class={`eco hub-voices flex-1 eco-voice-${station.voice}`}>
+  <div class="eco-wrap">
+    <nav class="eco-strip" aria-label="the research ecology">
+      <span>
+        <a href={url(PYRAMID.station.crumbHome.href)}>{PYRAMID.station.crumbHome.label}</a>
+        <span class="eco-crumb-sep">→</span>
+        <a href={url(station.href)}>{station.name.toLowerCase()}</a>
+        {parent && (
+          <>
+            <span class="eco-crumb-sep">→</span>
+            <a href={url(parent.href)}>{parent.label}</a>
+          </>
+        )}
+        <span class="eco-crumb-sep">→</span>
+        <span class="eco-crumb-here">{here}</span>
+      </span>
+      <span>{strip}</span>
+    </nav>
+
+    <header class="eco-register-head">
+      <div>
+        <h1>{title}</h1>
+        {span && <p class="eco-register-span">{span}</p>}
+      </div>
+    </header>
+
+    <article class="eco-doc">
+      <slot />
+    </article>
+
+    <p class="eco-register-foot">
+      {W.source(source)}
+      {more && <> — <a href={url(more.href)}>{more.label}</a></>}
+    </p>
+
+    <div class="eco-foot">
+      <span>{id === 'middle' ? PYRAMID.station.footLeftMiddle : PYRAMID.station.footLeft(station.name)}</span>
+      <span>{PYRAMID.station.footRight}</span>
+    </div>
+  </div>
+</main>

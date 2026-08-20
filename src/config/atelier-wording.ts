@@ -71,9 +71,9 @@ export const ATELIER_GRAMMAR = {
 } as const
 
 export const ATELIER_NARRATIVE = {
-  // Frank, 2026-07-20: „[Wortlaut privat]“ — Stufe-0-Eingang + Wortlaut freigegeben (decision-log).
+  // Frank, 2026-07-20: approved (wording private) — Stufe-0-Eingang + Wortlaut freigegeben (decision-log).
   // 2026-07-23 'draft' für Eingang v2 (Karte der Praxis + Modell-Band) + Wortlaut-Korrekturen.
-  // Frank, 2026-07-25: „[Wortlaut privat]“ — Eingang v2 samt Wortlauten freigegeben (dieser Merge).
+  // Frank, 2026-07-25: approved (wording private) — Eingang v2 samt Wortlauten freigegeben (dieser Merge).
   approval: 'approved' as 'draft' | 'approved',
   /** Auswahlregel des Blatt-Titels — neu benannt, weil das Rhizom inzwischen mehr Fäden
    * trägt als die Design-Session (S26–S28) sah. */
@@ -407,7 +407,7 @@ export const ATELIER_NARRATIVE = {
    *  Nothing here carries a number: the counts, dates and the span come from
    *  src/lib/engines/nightly-line.ts, which reads them off both mirrors. */
   pair: {
-    kicker: 'THE OTHER ARM',
+    kicker: 'THE OTHER LINE',
     heading: 'One founding text, two constitutions',
     lead:
       'This practice ran one night at a time until 18 July 2026, then changed what a unit of work ' +
@@ -421,7 +421,10 @@ export const ATELIER_NARRATIVE = {
       'of its own claim. After that they differ in one thing only. Neither form is the correct one.',
     /** what each arm kept, said in one line each — the difference a visitor must be able to see */
     arms: {
-      here: 'the work-line — an open horizon, a research programme, publication candidates',
+      // "an open horizon" until 2026-08-12, when the amendment struck it: an arc now ships or
+      // closes within twelve worked sessions, renewable once. Waiting on an outside reply still
+      // costs nothing — what is bounded is what a line consumes, not how long it stands open.
+      here: 'the work-line — a chain of nights carrying one commitment, bounded at twelve worked sessions',
       there: 'the night — one research day, one work, on the record, closed at dawn',
     },
     /** stands over the works of the nightly phase, wherever they are listed */

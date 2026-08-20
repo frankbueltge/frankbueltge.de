@@ -9,7 +9,12 @@ import { daysUntil, readingDate, STATIONS, PRACTICE_STATIONS, MAP_NODES } from '
 import { firstClause, recordLine, newestCrossing, runningInquiry } from './landings'
 import { seamsFrom, worksPerWeek, weekOffset, buildTimeline, timelineGeometry } from './timeline'
 import { classifyVerdict, buildGauntlet, buildCrossings, LANES } from './figures'
-import { readConstitution, splitDoorLine } from './station'
+import { readConstitution, splitDoorLine, buildStationSheet, windowDoor } from './station'
+import { readN1Facts } from '@/lib/ecology/n1-line'
+import { PYRAMID } from '@/config/ecology-pyramid-wording'
+import { ATELIER_LINES } from '@/lib/ecology/lines'
+import pulse from '@/data/pulse/pulse.json'
+import type { PulseSnapshot } from '@/lib/pulse/render'
 import type { LatestWork } from '@/lib/engines/latest'
 
 const work = (date: string, ns: LatestWork['ns'] = 'atelier'): LatestWork => ({
@@ -245,5 +250,66 @@ describe('the station sheet', () => {
 
   it('keeps a door line whole when it has no joint', () => {
     expect(splitDoorLine('One clause only.')).toEqual({ lead: 'One clause only.', rest: '' })
+  })
+
+  // ——— the two lines of the Atelier ————————————————————————————————————————————————————
+  // A practice that runs two lines under two constitutions must say both, INSIDE its station.
+  // One constitution row on a two-line practice names one law and leaves the other line
+  // ungoverned on the page; a second station would break the pyramid's three (canon 2026-08-12).
+  const sheetOf = (id: 'atelier' | 'field') =>
+    buildStationSheet({ id, snapshot: pulse as PulseSnapshot, log: [], made: 1 })
+
+  it('gives the Atelier a lines row and a plural constitutions row', () => {
+    const rows = sheetOf('atelier').status
+    const keys = rows.map((r) => r.key)
+    expect(keys).toContain(PYRAMID.station.statusKeys.lines)
+    expect(keys).toContain(PYRAMID.station.statusKeys.constitutions)
+    expect(keys, 'the singular row would name one law and hide the other').not.toContain(
+      PYRAMID.station.statusKeys.constitution,
+    )
+  })
+
+  it('states each line in its own unit, read from its own record', () => {
+    const value = sheetOf('atelier').status.find((r) => r.key === PYRAMID.station.statusKeys.lines)!.value
+    // The two work-bearing lines by their canon labels and register counts…
+    for (const line of ATELIER_LINES.filter((l) => l.id !== 'n-1')) expect(value).toContain(line.label)
+    // Counted, never carried in prose — a typed number is the drift this house spent 2026-08-12 on.
+    expect(value).toMatch(/\d+ works?/)
+    // …and the third by what its own mirror declares: its current title and founding date. Its
+    // record is not in the register, so a works count here would be the wrong statement entirely.
+    const n1 = readN1Facts()
+    expect(value).toContain(n1.title)
+    expect(value).toContain(`founded ${n1.founded}`)
+  })
+
+  it('reads every law out of its mirror — two versions that differ, and one law with none', () => {
+    const value = sheetOf('atelier').status.find((r) => r.key === PYRAMID.station.statusKeys.constitutions)!.value
+    const versions = [...value.matchAll(/v(\d+)/g)].map((m) => m[1])
+    expect(versions).toHaveLength(2)
+    expect(new Set(versions).size, 'two lines reading the same version means one mirror is wrong').toBe(2)
+    // n-1's law is the Dowry, which carries no version BY DESIGN — a vN attributed to it would
+    // mean some surface invented one.
+    expect(value).toContain(readN1Facts().law)
+  })
+
+  it('leaves a one-line practice with its single constitution row', () => {
+    const keys = sheetOf('field').status.map((r) => r.key)
+    expect(keys).toContain(PYRAMID.station.statusKeys.constitution)
+    expect(keys).not.toContain(PYRAMID.station.statusKeys.lines)
+  })
+
+  // ——— the practice's own window (2026-08-16) ——————————————————————————————————————————
+  // The n-1 model carried to the practices: a window/ dir in the practice's repo, mirrored
+  // verbatim. The door must exist exactly when the mirror carries an entry page — a door onto
+  // nothing promises a surface the practice has not built, and a missing door hides one it has.
+  it('opens the window door only where the mirror carries an entry page', () => {
+    const has = (path: string) => path === 'public/field/window/index.html'
+    expect(windowDoor('field', has)).toMatchObject({ href: '/field/window/' })
+    expect(windowDoor('atelier', has)).toBeNull()
+    expect(windowDoor('studio', () => false)).toBeNull()
+  })
+
+  it('gives the Middle no window — it is not a practice', () => {
+    expect(windowDoor('middle', () => true)).toBeNull()
   })
 })

@@ -1,7 +1,7 @@
 # Beifang schärfen: Die Empfänger benennen
 
 **Datum:** 2026-07-04
-**Status:** Design abgenommen (Frank, „passt zieh durch")
+**Status:** Design abgenommen (Frank, 2026-07-04, Wortlaut privat — Freigabe zur Umsetzung)
 **Werkgruppe:** Gegenmessung / Counter-Measurement — Instrument „Der Beifang"
 **Vorläufer-Specs:** `2026-07-01-beifang-design.md`, `2026-07-02-beifang-leak-audit-design.md`
 
@@ -22,7 +22,7 @@ Auswertung des einzigen Leak-Snapshots mit erreichbaren Seiten (`src/content/bei
 
 ## 2. Ziel & Nicht-Ziele
 
-**Ziel:** Ein Feature, drei Ebenen bedient („[Wortlaut privat]" um einen Kern gebündelt):
+**Ziel:** Ein Feature, drei Ebenen bedient (alles um einen Kern gebündelt):
 - **Substanz:** Empfänger benennbar machen über eine kuratierte, quellenbelegte Zusatzliste.
 - **Darstellung:** Empfänger korrekt benannt, Kanal sichtbar, Broker vs. self-hosted unterschieden.
 - **Methodenblatt:** die Liste + Herkunft/Quellen transparent dokumentiert.

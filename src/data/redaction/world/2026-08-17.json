@@ -1,0 +1,165 @@
+{
+  "date": "2026-08-17",
+  "deletion": {
+    "available": true,
+    "checked_at": "2026-08-17T06:21:15Z",
+    "counts": {
+      "botwall": 29,
+      "gone_404": 3,
+      "gone_410": 0,
+      "legal_451": 0,
+      "ok": 263,
+      "other": 0,
+      "server_error": 0,
+      "unreachable": 5
+    },
+    "decided": 266,
+    "excluded_unverifiable": 34,
+    "gone": 3,
+    "gone_ci95": [
+      0.0038,
+      0.0326
+    ],
+    "gone_rate": 0.0113,
+    "legal_451": 0,
+    "legal_451_ci95": [
+      0.0,
+      0.0142
+    ],
+    "legal_451_rate": 0.0,
+    "notes": [
+      "451 from a German vantage point may mean EU geo-blocking rather than takedown; it is reported apart and never folded into the gone rate.",
+      "451 receipts carry the title only as a SHA-256 — the day record does not re-publish what the law removed; the pre-committed sample manifest remains the receipt.",
+      "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
+      "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
+    ],
+    "pool_day": "2026-08-15",
+    "receipts": [
+      {
+        "class": "gone_404",
+        "domain": "ktbb.com",
+        "first_seen": "20260815130000",
+        "http_code": 404,
+        "title": "Multiple shooters and people shot at Virginia State University – KTBB News, Weather, Talk",
+        "url": "https://ktbb.com/post/?p=1532905"
+      },
+      {
+        "class": "gone_404",
+        "domain": "roarmag.org",
+        "first_seen": "20260815070000",
+        "http_code": 404,
+        "title": "Fake Flowers In Vase 20 Pcs Tulips Artifical Flowers Real Touch Faux Tulip Stems PU Tulip Artificial Tulips That Look Real",
+        "url": "https://roarmag.org/Tulips-Artifical-Flowers-Real-Touch-Faux-Tulip-Stems-PU-Tulip-b-1074589"
+      },
+      {
+        "class": "gone_404",
+        "domain": "wmac-am.com",
+        "first_seen": "20260815130000",
+        "http_code": 404,
+        "title": "Lionel Richie Jokes About Chris Brown's Legal Past During Concert",
+        "url": "https://www.wmac-am.com/2026/08/15/lionel-richie-jokes-about-chris-browns-legal-past-during-concert/"
+      }
+    ],
+    "sample_drawn_at": "2026-08-16T05:58:17Z",
+    "sample_size": 300
+  },
+  "filter_version": "v1",
+  "gdg": {
+    "available": true,
+    "classes": {
+      "reframing": 3145,
+      "replaced": 3730,
+      "trivial": 771,
+      "update": 480
+    },
+    "day": "2026-08-16",
+    "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
+    "register": [
+      {
+        "added": [
+          "Thomson",
+          "Thomson",
+          "Thomson",
+          "Thomson"
+        ],
+        "after": "Thomson Andrews (Cocktail 2 Singer) Exclusive | Exclusive! Cocktail 2 Singer Thomson Andrews Lends His Voice To Akshay Kumar Haiwaan; Calls His New Single 'O Haseen' Close To His Heart | Singer Thomson Andrews New O Haseen | Monsoon Special Hindi Romantic Song O Haseen; Latest Single By Cocktail 2 Singer Thomson Andrews",
+        "before": "Thomas Andrews (Cocktail 2 Singer) Exclusive | Exclusive! Cocktail 2 Singer Thomas Andrews Lends His Voice To Akshay Kumar Haiwaan; Calls His New Single 'O Haseen' Close To His Heart | Singer Thomas Andrews New O Haseen | Monsoon Special Hindi Romantic Song O Haseen; Latest Single By Cocktail 2 Singer Thomas Andrews",
+        "detected": "2026-08-16T11:31:29Z",
+        "domain": "filmibeat.com",
+        "removed": [
+          "Thomas",
+          "Thomas",
+          "Thomas",
+          "Thomas"
+        ],
+        "similarity": 0.929,
+        "url": "https://www.filmibeat.com/bollywood/news/2026/cocktail-2-singer-thomas-andrews-joins-akshay-kumar-haiwaan-new-song-monsoon-special-o-haseen-excl-527231.html",
+        "weight": 16,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "VIDEO",
+          "PHOTOS"
+        ],
+        "after": "West Seattle Blog… | VIDEO, PHOTOS: 2026 Duwamish River Festival x SOPASUPA make it a South Park Saturday to remember",
+        "before": "West Seattle Blog… | HAPPENING NOW: 2026 Duwamish River Festival x SOPASUPA make it a South Park Saturday to remember",
+        "detected": "2026-08-16T01:31:43Z",
+        "domain": "westseattleblog.com",
+        "removed": [
+          "HAPPENING",
+          "NOW"
+        ],
+        "similarity": 0.81,
+        "url": "https://westseattleblog.com/2026/08/happening-now-duwamish-river-festival-x-sopasupa-making-it-a-south-park-saturday-to-remember/",
+        "weight": 8,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "Richmond",
+          "Park"
+        ],
+        "after": "Zendaya and Tom Holland take a drive around Richmond Park in their 'wedding gift' 1970 Jaguar E-type just days after throwing star-studded party to celebrate tying the knot",
+        "before": "Zendaya and Tom Holland take a drive around south London in their 'wedding gift' 1970 Jaguar E-type just days after throwing star-studded party to celebrate tying the knot",
+        "detected": "2026-08-16T00:31:15Z",
+        "domain": "dailymail.com",
+        "removed": [
+          "south",
+          "London"
+        ],
+        "similarity": 0.875,
+        "url": "https://www.dailymail.com/tvshowbiz/article-16038813/Zendaya-Tom-Holland-drive-south-London-wedding-gift-1970-Jaguar-E-type-just-days-throwing-star-studded-party-celebrate-tying-knot.html",
+        "weight": 7,
+        "window": "1w"
+      }
+    ],
+    "status_counts": {
+      "HTTP_REDIRECT": 10464,
+      "PAGE_TEXTCHANGE": 80340,
+      "PAGE_TITLECHANGE": 33327,
+      "UNCHANGED_CONTENT": 522804
+    },
+    "title_changes_en": 8126,
+    "trace": [
+      {
+        "bytes_billed": 17825792,
+        "created": "1786947430622",
+        "job_id": "world_gdg_counts_20260816",
+        "project": "gen-lang-client-0843427097"
+      },
+      {
+        "bytes_billed": 161480704,
+        "created": "1786947436341",
+        "job_id": "world_gdg_titles_20260816",
+        "project": "gen-lang-client-0843427097"
+      }
+    ]
+  },
+  "generated_at": "2026-08-17T06:21:15Z",
+  "pipeline_version": "0.1.0",
+  "register_bound": 3,
+  "sample_committed": "src/data/redaction/world/samples/2026-08-16.json",
+  "schema_version": "1",
+  "selection_version": "v1"
+}

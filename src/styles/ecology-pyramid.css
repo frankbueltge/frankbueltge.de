@@ -969,6 +969,12 @@
   .eco-figures[data-cols='2'] {
     grid-template-columns: 1fr 340px;
   }
+  /* A figure that is wide by nature says so and takes the whole row. The grid places children in
+     ORDER, not by slot, so without this a third figure lands in the 340px column whatever slot it
+     was written into — which is how the Field's claim plate first drew itself 306px wide. */
+  .eco-figures[data-cols='2'] .eco-figure[data-full] {
+    grid-column: 1 / -1;
+  }
 }
 .eco-figure {
   display: flex;
@@ -1054,6 +1060,14 @@
   fill: var(--eco-voice, var(--eco-accent));
   opacity: 0.75;
 }
+/* The nightly line's works are hollow, the work-line's filled — the strand carried as FORM in
+   the practice's one identity ink, so it survives greyscale and every CVD (2026-08-16, after
+   the revival put both lines' works into the same weeks). */
+.eco-fig-slab-nightly {
+  fill: none;
+  stroke: var(--eco-voice, var(--eco-accent));
+  stroke-width: 1.2;
+}
 .eco-fig-line-run {
   stroke: var(--eco-voice, var(--eco-accent));
   stroke-width: 1.1;
@@ -1077,6 +1091,96 @@
   stroke-width: 1.2;
   stroke-dasharray: 3 2;
   fill: none;
+}
+/* interaction (2026-08-16): each line is a real SVG link to its record; the glance readout is
+   enhancement. Hit shapes are invisible ink around one-unit marks — a target, not a mark. */
+.eco-linemap {
+  position: relative; /* the readout is placed in this box's coordinate space */
+}
+.eco-fig-hit {
+  fill: transparent;
+}
+.eco-fig-hit-run {
+  stroke: transparent;
+  stroke-width: 14;
+  stroke-linecap: round;
+}
+.eco-fig-line {
+  cursor: pointer;
+  outline: none;
+}
+.eco-fig-line:hover .eco-fig-line-run,
+.eco-fig-line:focus-visible .eco-fig-line-run {
+  opacity: 1;
+  stroke-width: 1.8;
+}
+.eco-fig-line:hover .eco-fig-end,
+.eco-fig-line:focus-visible .eco-fig-end,
+.eco-fig-line:hover .eco-fig-end-open,
+.eco-fig-line:focus-visible .eco-fig-end-open,
+.eco-fig-line:hover .eco-fig-end-running,
+.eco-fig-line:focus-visible .eco-fig-end-running {
+  stroke-width: 2;
+}
+.eco-fig-line:focus-visible .eco-fig-line-run {
+  stroke-dasharray: none;
+}
+.eco-fig-day:hover .eco-fig-slab {
+  opacity: 1;
+}
+
+/* the shared dataviz primitives on the ecology's own ground (glance readout + table fallback —
+   they ship structure only per ADR 0010; each surface dresses its own) */
+.eco .dv-readout {
+  background: var(--eco-panel-solid);
+  border: 1px solid var(--eco-line);
+  border-left: 3px solid var(--eco-accent);
+  padding: 8px 11px;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  line-height: 1.5;
+  color: var(--eco-fg);
+}
+.eco .dv-table-fallback {
+  margin: 10px 0 0;
+}
+.eco .dv-table-fallback > summary {
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--eco-faint);
+  padding: 6px 0;
+}
+.eco .dv-table-fallback > summary:hover {
+  color: var(--eco-accent);
+}
+.eco .dv-table {
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+.eco .dv-table th,
+.eco .dv-table td {
+  border-top: 1px solid var(--eco-line);
+  padding: 6px 12px 6px 0;
+  text-align: left;
+  vertical-align: top;
+}
+.eco .dv-table th {
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--eco-muted);
+}
+.eco .dv-table td {
+  color: var(--eco-fg);
+}
+.eco .dv-prov {
+  margin: 8px 0 0;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  line-height: 1.6;
+  color: var(--eco-faint);
 }
 
 /* the Studio — the stage floor */
@@ -1434,6 +1538,73 @@ a.eco-register-row:hover {
   text-underline-offset: 3px;
 }
 .eco-register-foot a:hover {
+  color: var(--eco-accent);
+}
+
+/* ── the document sheet (2026-08-15) ────────────────────────────────────────────────────────── */
+/* The register sheet's sibling for holdings that are texts rather than lists: a constitution, a
+   journal page, a line's record, the channel's verbatim archive. The document renders through
+   the global .engine-prose grammar, which is colour-agnostic (currentColor throughout), so on
+   this ground it inherits the panel's own ink — nothing is restated here except the measure. */
+.eco-doc {
+  max-width: 82ch;
+  padding: 20px 0 8px;
+  font-size: 14.5px;
+  line-height: 1.66;
+  color: var(--eco-fg);
+}
+.eco-doc a {
+  color: var(--eco-fg);
+  text-decoration-color: var(--eco-underline);
+}
+.eco-doc a:hover {
+  color: var(--eco-accent);
+}
+/* An orientation note above or inside a document — the sheet's own voice, visibly not the
+   record's. Mono and faint, the way every other aside on these surfaces speaks. */
+.eco-doc-note {
+  margin: 0 0 16px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1.7;
+  color: var(--eco-faint);
+}
+.eco-doc-note a {
+  color: var(--eco-muted);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+/* A document section head, where one sheet composes several parts of a record (score · decision
+   · trace). Hairline under, mono over — the same grammar as the register head, one size down.
+   Not scoped under .eco-doc: a register sheet's slot uses it too. */
+.eco .eco-doc-part {
+  margin: 28px 0 12px;
+  border-bottom: 1px solid var(--eco-line);
+  padding-bottom: 6px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--eco-muted);
+}
+/* Page-to-page navigation at a document's foot (journal: previous session · register · next). */
+.eco-doc-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  margin: 28px 0 0;
+  border-top: 1px solid var(--eco-line);
+  padding-top: 12px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+.eco-doc-nav a {
+  color: var(--eco-muted);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.eco-doc-nav a:hover {
   color: var(--eco-accent);
 }
 

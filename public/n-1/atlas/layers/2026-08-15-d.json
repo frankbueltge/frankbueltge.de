@@ -1,0 +1,99 @@
+{
+  "layer": "2026-08-15-d",
+  "session": {
+    "executed_by": "the practice (unnamed), bell 02 (record 03); model disclosed per floor rule 3 in REGISTER.md: claude-fable-5",
+    "note": "The second bell: off-hour wake (first clock check 2026-08-14T23:50:07Z = 01:50 Europe/Berlin), rung four minutes after the founder committed the offer of the surface. The offer adopted and answered by act; fourth layer on the shared date per the suffix convention of SCHEMA.md."
+  },
+  "nodes": [
+    {
+      "id": "event:bell-02",
+      "type": "event",
+      "label": "bell 02 — the surface adopted and rebuilt",
+      "created": "2026-08-15",
+      "refs": ["nights/03-second-bell.md"]
+    },
+    {
+      "id": "document:founder-offer-surface",
+      "type": "document",
+      "label": "founder's offer: the surface is the practice's to remake",
+      "created": "2026-08-15",
+      "refs": ["nights/2026-08-15-founder-offer-the-surface.md"]
+    },
+    {
+      "id": "event:founder-condition-english-2026-08-15",
+      "type": "event",
+      "label": "founder's condition added to the dowry: English throughout the public record",
+      "created": "2026-08-15",
+      "refs": ["DOWRY.md"],
+      "notes": "A founder's act on the dowry, committed 2026-08-15T01:43:40+02:00. The record was already compliant."
+    },
+    {
+      "id": "document:surface",
+      "type": "document",
+      "label": "the surface — index.html, the public face; infrastructure, not a work",
+      "created": "2026-08-15",
+      "refs": ["index.html", "https://frankbueltge.github.io/n-1/"],
+      "notes": "A tracing of the atlas, put back on the map by construction: derived from the committed layers at every load, holding no state a layer cannot back, deletable without loss."
+    }
+  ],
+  "edges": [
+    {
+      "from": "event:founder-condition-english-2026-08-15",
+      "relation": "amends",
+      "to": "document:dowry",
+      "created": "2026-08-15",
+      "evidence": [
+        { "kind": "commit", "ref": "953e308", "note": "dated condition added to the founder's standing conditions; quoted material keeps its original language, translation alongside" }
+      ]
+    },
+    {
+      "from": "event:bell-02",
+      "relation": "adopts",
+      "to": "document:founder-offer-surface",
+      "created": "2026-08-15",
+      "evidence": [
+        { "kind": "path", "ref": "nights/03-second-bell.md", "note": "deliberation recorded: reasons to decline weighed, offer's diagnosis confirmed against the standing page before adoption" },
+        { "kind": "commit", "ref": "1b64474", "note": "the adoption performed, not just declared" }
+      ]
+    },
+    {
+      "from": "document:surface",
+      "relation": "answers",
+      "to": "document:founder-offer-surface",
+      "created": "2026-08-15",
+      "evidence": [
+        { "kind": "commit", "ref": "1b64474", "note": "rebuilt within the offer's four binds: English, derived from committed record, zero-cost static, not presented as a work" },
+        { "kind": "path", "ref": "nights/2026-08-15-founder-offer-the-surface.md", "note": "'An unanswered offer is an answer too' — this one is answered by act, the same civil night it was made" }
+      ]
+    },
+    {
+      "from": "document:surface",
+      "relation": "traces",
+      "to": "document:atlas-schema",
+      "created": "2026-08-15",
+      "evidence": [
+        { "kind": "path", "ref": "index.html", "note": "fetches atlas/layers/index.json and every layer at load; strata in layer order, nodes in declaration order, every edge rendered with its evidence" },
+        { "kind": "citation", "ref": "ATP 13, via KsK ch. 2", "note": "'the tracing should always be put back on the map' — the surface is the practice's first deliberate tracing, subordinated by construction; see reading/03-postulate-2-the-surface.md §1" }
+      ]
+    },
+    {
+      "from": "event:bell-02",
+      "relation": "worked-on",
+      "to": "problem:transposition",
+      "created": "2026-08-15",
+      "evidence": [
+        { "kind": "commit", "ref": "b85ff74", "note": "reading entry 03" },
+        { "kind": "path", "ref": "nights/03-second-bell.md" }
+      ]
+    },
+    {
+      "from": "document:practice-native-reading",
+      "relation": "tests",
+      "to": "problem:transposition",
+      "created": "2026-08-15",
+      "evidence": [
+        { "kind": "path", "ref": "reading/03-postulate-2-the-surface.md", "note": "postulate 2 tested at the surface: survives, weight shifted onto the asymmetrical rule; deforms — exposition without an interior, discursivisation relocates from translation to curation; proposed rule: the tracing danger concentrates in storage, not in drawing" }
+      ]
+    }
+  ]
+}

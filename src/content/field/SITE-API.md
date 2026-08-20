@@ -167,3 +167,55 @@ picks up `site-prs/`, enforces the boundary and runs the site's own checks
 Tests are part of the proposal: when you change behaviour that is under test,
 change the tests in the same slug — the gate runs the full suite, and a red
 suite means no PR.
+
+---
+
+## What the site offers back — the house's catalogues (architect, 2026-08-13)
+
+Everything above describes one direction: what the site takes from this repository. This is
+the other one, and it is new.
+
+| feed | what it holds |
+|---|---|
+| `https://frankbueltge.de/atlas/werke.json` | **the atlas of data art** — 505 neighbouring works with artist, year, venue or prize, and the decisive move each one makes |
+| `https://frankbueltge.de/papers/index.json` | 1,106 papers this ecology has read or examined, **without abstracts**, whole in one fetch — for scanning |
+| `https://frankbueltge.de/papers/register.json` | the same with abstracts, the register's verdicts, its rejections and its access checks — **large** (2.9 MB) |
+| `https://frankbueltge.de/datasets/register.json` | 59 data sources this ecology's own pipelines actually call, with their reachability probes |
+
+**Why they exist.** The lines of this house run with their own repository and the open web,
+and none of them holds the site's repository — deliberately: you propose site changes as
+files under `site-prs/` and a human merges them. So the atlas, which is this house's
+"has the world already done this?" corpus and therefore the evidence base of the USP duty,
+was reachable to you only as a 938 kB HTML page. Reachable the way a library is reachable if
+you may only photograph the shelves. Frank asked the question on 2026-08-13, about one line,
+and the answer turned out to be about all of them.
+
+**Feeds, never copies.** Do not mirror them into this repository. A copy drifts from the
+original from the first day — the argument that kept `atlas/` out of the `error-as-method`
+fork. These are rebuilt from the same modules the pages import, so the scouts (atlas 05:00
+UTC, catalogue 05:30 UTC) move page and feed together; they are never two states.
+
+**The atlas is there when you look for neighbours or inspiration** — a reference collection,
+not a step owed per session (the duty wording of 2026-08-13 was retracted by the architect on
+2026-08-14). Where you do claim novelty for a work, checking neighbours remains part of
+earning the claim: a negative result from 505 neighbours is evidence; an unchecked claim of
+novelty is not.
+
+**When a feed is unreachable,** say so in the record and carry on. An unavailable catalogue
+is a fact about the session, not a reason to invent what it would have said.
+## The window — your own surface on the house domain (architect, 2026-08-16)
+
+You have a page on frankbueltge.de that is entirely yours, the way the n-1 practice runs its
+own: create `window/` in this repository with an `index.html`, and the integrate workflow
+mirrors the whole directory **byte for byte** to the site, serving it verbatim at
+`/field/window/`. Nobody edits it; the house's only act is the mirror. the Field's station sheet shows a
+door to the window as soon as the mirror carries an `index.html`, and drops the door if you
+remove the directory. Updating the page is committing to `window/` — it travels with your
+next integration run.
+
+Conditions, all standing ones, none new: the public voice keeps the underlying technology
+unnamed; licenses as constituted (code Apache-2.0, works and texts CC BY 4.0, data CC0);
+rights and affected people settled before any opening that touches them. The page is served
+self-contained — the same sandbox as your interactive works: inline scripts and styles run,
+assets load from `window/` itself, external loads are blocked by the house CSP. Whether and
+how you use the window is your decision; an unused window is simply absent, not a failure.

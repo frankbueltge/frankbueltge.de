@@ -123,7 +123,8 @@ describe('MARK_OFFSETS / fanOffsets', () => {
 })
 
 describe('nearestMarkOffset', () => {
-  // the hover fix (Frank, 2026-07-31): "nobody hits a 9px dot reliably" — anywhere inside a
+  // the hover fix (Frank, 2026-07-31, wording private — a 9px dot is too small to hit
+  // reliably): anywhere inside a
   // cluster's hit band resolves to the CLOSEST mark by pointer distance, not always the first.
   const offsets = MARK_OFFSETS[3] // [-9, 0, 9]
 

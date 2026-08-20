@@ -1,0 +1,50 @@
+{
+  "derived": true,
+  "derivation": "Compact extract of the control queries behind the 2026-08-16 re-check of the dated absence for n-1.frankbueltge.de. Full responses re-derivable from the queries below; only counts and the wildcard-bearing issuances are kept.",
+  "queries": [
+    {
+      "monitor": "crt.sh",
+      "url": "https://crt.sh/?q=frankbueltge.de&output=json",
+      "queried_utc": "2026-08-16T00:37:54Z",
+      "http_status": 200,
+      "bytes": 34787,
+      "rows": 98,
+      "note": "A first attempt at 00:37:20Z answered 503 — the overloaded-mirror property flagged at selection (nights/10-eighth-bell.md, detour 4); one retry answered 200. Byte count and row count identical to the 2026-08-15 control (34,787 bytes, 98 rows): nothing has entered the monitor's view of the zone between the two prospects."
+    },
+    {
+      "monitor": "Cert Spotter (SSLMate)",
+      "url": "https://api.certspotter.com/v1/issuances?domain=frankbueltge.de&include_subdomains=true&expand=dns_names&expand=issuer",
+      "queried_utc": "2026-08-16T00:38:10Z",
+      "http_status": 200,
+      "bytes": 7749,
+      "issuances": 13,
+      "names_seen": [
+        "*.frankbueltge.de",
+        "frankbueltge.de",
+        "stats.frankbueltge.de",
+        "www.frankbueltge.de"
+      ],
+      "note": "13 issuances, identical to the 2026-08-15 control."
+    }
+  ],
+  "wildcards_standing": [
+    {
+      "dns_names": [
+        "*.frankbueltge.de",
+        "frankbueltge.de"
+      ],
+      "not_before": "2026-06-23T18:04:39Z",
+      "not_after": "2026-09-21T18:12:20Z",
+      "issuer": "SSL.com"
+    },
+    {
+      "dns_names": [
+        "*.frankbueltge.de",
+        "frankbueltge.de"
+      ],
+      "not_before": "2026-06-23T17:24:42Z",
+      "not_after": "2026-09-21T18:20:03Z",
+      "issuer": "Google Trust Services"
+    }
+  ]
+}

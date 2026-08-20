@@ -1,0 +1,139 @@
+{
+  "date": "2026-08-16",
+  "deletion": {
+    "available": true,
+    "checked_at": "2026-08-16T06:01:49Z",
+    "counts": {
+      "botwall": 39,
+      "gone_404": 0,
+      "gone_410": 0,
+      "legal_451": 0,
+      "ok": 260,
+      "other": 0,
+      "server_error": 0,
+      "unreachable": 1
+    },
+    "decided": 260,
+    "excluded_unverifiable": 40,
+    "gone": 0,
+    "gone_ci95": [
+      0.0,
+      0.0146
+    ],
+    "gone_rate": 0.0,
+    "legal_451": 0,
+    "legal_451_ci95": [
+      0.0,
+      0.0146
+    ],
+    "legal_451_rate": 0.0,
+    "notes": [
+      "451 from a German vantage point may mean EU geo-blocking rather than takedown; it is reported apart and never folded into the gone rate.",
+      "451 receipts carry the title only as a SHA-256 — the day record does not re-publish what the law removed; the pre-committed sample manifest remains the receipt.",
+      "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
+      "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
+    ],
+    "pool_day": "2026-08-14",
+    "receipts": [],
+    "sample_drawn_at": "2026-08-15T05:58:11Z",
+    "sample_size": 300
+  },
+  "filter_version": "v1",
+  "gdg": {
+    "available": true,
+    "classes": {
+      "reframing": 3546,
+      "replaced": 4730,
+      "trivial": 1149,
+      "update": 259
+    },
+    "day": "2026-08-15",
+    "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
+    "register": [
+      {
+        "added": [
+          "Independence",
+          "Day",
+          "Images",
+          "expressing",
+          "patriotism",
+          "on"
+        ],
+        "after": "independence day Images: Happy Independence Day Images 2026: 60+ wishes, quotes, messages, WhatsApp, Instagram & Facebook status for expressing patriotism on 15 August",
+        "before": "Happy Independence Day 2026 Images : Top 60+ wishes, quotes, messages, WhatsApp, Instagram & Facebook status for 15 August",
+        "detected": "2026-08-15T17:47:13Z",
+        "domain": "indiatimes.com",
+        "removed": [
+          "Top"
+        ],
+        "similarity": 0.8,
+        "url": "https://economictimes.indiatimes.com/news/new-updates/happy-independence-day-images-hd-photos-wishes-quotes-messages-2026-80th-independence-day-15-august-facebook-whatsapp-status-instagram/articleshow/133247726.cms",
+        "weight": 10,
+        "window": "24h"
+      },
+      {
+        "added": [
+          "Richmond",
+          "Park"
+        ],
+        "after": "Zendaya and Tom Holland take a drive around Richmond Park in their 'wedding gift' 1970 Jaguar E-type just days after throwing star-studded party to celebrate tying the knot",
+        "before": "Zendaya and Tom Holland take a drive around south London in their 'wedding gift' 1970 Jaguar E-type just days after throwing star-studded party to celebrate tying the knot",
+        "detected": "2026-08-15T23:48:58Z",
+        "domain": "dailymail.com",
+        "removed": [
+          "south",
+          "London"
+        ],
+        "similarity": 0.875,
+        "url": "https://www.dailymail.com/tvshowbiz/article-16038813/Zendaya-Tom-Holland-drive-south-London-wedding-gift-1970-Jaguar-E-type-just-days-throwing-star-studded-party-celebrate-tying-knot.html",
+        "weight": 7,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "S",
+          "R"
+        ],
+        "after": "Multiple road and lane closures are set to begin this week on S.R. 2",
+        "before": "Multiple road and lane closures are set to begin this week on State Road 2",
+        "detected": "2026-08-15T22:32:07Z",
+        "domain": "abc57.com",
+        "removed": [
+          "State",
+          "Road"
+        ],
+        "similarity": 0.812,
+        "url": "https://www.abc57.com/news/Multiple-road-and-lane-closures-are-set-to-begin-this-week-on-State-Road-2",
+        "weight": 6,
+        "window": "1w"
+      }
+    ],
+    "status_counts": {
+      "HTTP_REDIRECT": 12201,
+      "PAGE_TEXTCHANGE": 102691,
+      "PAGE_TITLECHANGE": 40699,
+      "UNCHANGED_CONTENT": 659730
+    },
+    "title_changes_en": 9684,
+    "trace": [
+      {
+        "bytes_billed": 22020096,
+        "created": "1786859881893",
+        "job_id": "world_gdg_counts_20260815",
+        "project": "gen-lang-client-0843427097"
+      },
+      {
+        "bytes_billed": 203423744,
+        "created": "1786859887074",
+        "job_id": "world_gdg_titles_20260815",
+        "project": "gen-lang-client-0843427097"
+      }
+    ]
+  },
+  "generated_at": "2026-08-16T06:01:49Z",
+  "pipeline_version": "0.1.0",
+  "register_bound": 3,
+  "sample_committed": "src/data/redaction/world/samples/2026-08-15.json",
+  "schema_version": "1",
+  "selection_version": "v1"
+}

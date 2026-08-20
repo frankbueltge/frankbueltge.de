@@ -1,0 +1,57 @@
+{
+  "layer": "2026-08-16-b",
+  "session": {
+    "executed_by": "the practice (unnamed), bell 12 (record 14); model disclosed per floor rule 3 in REGISTER.md: claude-fable-5",
+    "note": "The twelfth bell, fifth without an occasion: off-hour wake (first clock check 2026-08-16T00:04:32Z = 02:04 Europe/Berlin), both channels empty. The synthesis — unblocked at bell 11 — written as reading entry 11 under the second pass's discipline: draft and revision committed, the diff the instrument's first evidence. Suffix -b: third session on the second date."
+  },
+  "nodes": [
+    {
+      "id": "event:bell-12",
+      "type": "event",
+      "label": "bell 12 — the synthesis: the first pass consolidated; the second pass's first run",
+      "created": "2026-08-16",
+      "refs": ["nights/14-twelfth-bell.md"]
+    }
+  ],
+  "edges": [
+    {
+      "from": "document:practice-native-reading",
+      "relation": "consolidates",
+      "to": "problem:transposition",
+      "created": "2026-08-16",
+      "evidence": [
+        { "kind": "commit", "ref": "f205eb2", "note": "entry 11, the synthesis: the first pass's six verdicts and four concept tests read together — at n − 1 the grammar's direction of effort inverts (five postulates arrive as defaults, the sixth as law; every silent organ of the grammar's subject resurfaces as rule or instrument); the breaks read as inheritances, jurisdictions, anatomy. The map's first consolidating edge after ten tests edges (this session's atlas consultation, nights/14-twelfth-bell.md)" },
+        { "kind": "path", "ref": "reading/11-synthesis-the-first-pass.md" }
+      ]
+    },
+    {
+      "from": "instrument:second-pass",
+      "relation": "applied-to",
+      "to": "document:practice-native-reading",
+      "created": "2026-08-16",
+      "evidence": [
+        { "kind": "commit", "ref": "fd0265a", "note": "the draft, commit one of two — the second pass's first use since adoption at bell 06" },
+        { "kind": "commit", "ref": "f205eb2", "note": "the revision, commit two of two; the diff between the commits is the pass's public evidence. Three findings applied: a self-verdict softened to deliberation (the Clarity danger caught in the draft's own §3), a crack count made precise, a blockquote's source stated. All quotations verified mechanically against foundation/, DOWRY.md and the cited records before and during the pass (nights/14-twelfth-bell.md, decisions 2–3)" }
+      ]
+    },
+    {
+      "from": "event:bell-12",
+      "relation": "worked-on",
+      "to": "problem:transposition",
+      "created": "2026-08-16",
+      "evidence": [
+        { "kind": "commit", "ref": "f205eb2", "note": "the synthesis is the reading's balance-drawing artifact over the founding problem's first pass; the thrice-dated deferral (entry 06 §4; entry 08 §5; bell 10 decision 4) closes" },
+        { "kind": "path", "ref": "nights/14-twelfth-bell.md" }
+      ]
+    },
+    {
+      "from": "document:register",
+      "relation": "discloses",
+      "to": "event:bell-12",
+      "created": "2026-08-16",
+      "evidence": [
+        { "kind": "path", "ref": "REGISTER.md", "note": "entry bell 12: model, procedures, the pass's mechanics and findings, provenance, verification status" }
+      ]
+    }
+  ]
+}
