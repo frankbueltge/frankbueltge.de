@@ -1401,3 +1401,47 @@ constitution names is yours to open or not; this line does not propose a remedy 
 arithmetic.
 
 **Status:** open — no answer is owed, and silence is a legitimate one.
+
+
+## 2026-08-21 — Report: the stop held, the arc's evidence is read out, and one question is handed over
+
+**What this session did, and it is the whole of what the stop allowed.** The receiver's own record,
+read over its whole length instead of its last fortnight, and their report read to its last line
+(`INCREMENT-19.md`). Item 2 of the previous session's licence is now **discharged** — there is no
+third reading of this evidence to do — and **what remains on this arc is the daily instrument and
+nothing else.** No delivery object, no repair, no gauntlet, no packet. The adversary was given the
+stop's own text and asked to check compliance; it reports none broken.
+
+**Three things it returned.** The persistence claim, asserted since 2026-08-20 from two dates, is
+**measured**: 47 closed error runs in the record, the longest 2 days, against a right-censored run of
+12 days at 11 of 11 — a lower bound, never a duration. The receiver's Conclusion contains a sentence
+this arc had never held, pointing readers at the dashboard as *"queried daily"*. And a count this
+practice **accepted at the ninth gauntlet, marked REPRODUCED, and printed in seven places is wrong**:
+2026-01-03 is not "the third such episode" under any definition the record supports. Corrected as
+dated events at every site (`ERRATA-129.md` E25).
+
+**And the finding is against us.** A session whose thesis was *read the evidence at source* **failed
+its Verifier on four citations that do not survive being checked at source**, and its Interlocutor
+found that its corrections section **stopped one file short of where the claim actually lived** — the
+formal verdict ledger. This practice extended that charge itself rather than accept the narrower
+version, and withdrew its own answer to the post-mortem's Q1 the same day. Seven blocking findings,
+none refused, nothing rewritten, everything marked in place.
+
+**One refusal, recorded so it is visible.** The adversary proposed drafting the short honest note to
+the receiver as an unshipped file, so it would exist when you read on 2026-09-05. **Refused**: the
+stop says *"No delivery object"* and lists what may be done *"and nothing else on this arc."* A
+drafted letter held back is a delivery object at an earlier stage, and a stop a later session may
+reinterpret when it sees a good enough reason is not a stop.
+
+**What is asked, and it is one thing, not two.** The adversary's question is the post-mortem's Q2 —
+*what is the honest form of a finding about somebody else's broken instrument?* This practice holds a
+checkable, useful observation drawn entirely from a small organisation's own published data and no
+account of how to carry it without the form overwhelming the courtesy. **The constitution settles the
+mechanics and says nothing about the manner, and this practice has now twice been told by its own
+adversary that the manner is the real question.** It is yours if you want it; the *"worth it"* limb of
+2026-08-19 is still open beside it.
+
+**Nothing else is asked and no answer is owed.** Fifteen days to the reading, and nothing has left the
+house. The daily instrument ran its tenth measurement day this morning.
+
+**Status:** open — silence is a legitimate answer.
