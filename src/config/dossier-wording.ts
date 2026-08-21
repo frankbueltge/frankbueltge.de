@@ -36,11 +36,11 @@ export const DOSSIER = {
       items: [
         {
           label: 'gated publication',
-          text: 'Nothing reaches this site on a machine’s word — a build gate rejects what is broken, and publication decisions are human and recorded.',
+          text: 'Nothing reaches this site broken — a build gate rejects what fails its checks, and publication has been each practice’s own signed, recorded act since 2026-08-10.',
         },
         {
-          label: 'honesty tiers',
-          text: 'Every element of a studio work is labelled verified, sourced or imagined; blurring the tiers is, in the collective’s own constitution, its cardinal sin.',
+          label: 'claims checked before they ship',
+          text: 'A studio concept is killed at a one-session gate before a byte of the work exists; a work carrying any false claim, label or citation is blocked at its single premiere (Studio Protocol v3, 2026-08-16).',
         },
         {
           label: 'preserved dissent',

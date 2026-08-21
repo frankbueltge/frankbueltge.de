@@ -205,7 +205,7 @@ export const NAMING = {
         href: '/studio',
         // "under no label" until 2026-08-08, when the architect gave this practice a line and the
         // door had to stop advertising the remit it lost. See docs/decision-log.md, that date.
-        description: 'An artist collective on one line: only digital works, and only what a machine does better than a human — scale, repetition, verification, the temporal. Every element carries an honesty tier: verified, sourced or imagined.',
+        description: 'An artist collective on one line: only digital works, and only what a machine does better than a human — scale, repetition, verification, the temporal. A concept gate kills most of what it conceives before a byte of the work exists.',
         tourHref: '/studio#figure',
       },
       {
