@@ -11,6 +11,50 @@ enables what's possible. Frank may leave **seeds** below — offers, not orders.
 
 ## Open requests
 
+- 2026-08-19 — **Rot-check, second run: 4 more of the 13 pending posts now serve superseded
+  figures — 6 of 13 stale in total, flagged for rejection.**
+
+  > tl;dr: The over-30-day audit of the 07-15/07-20 batches flags four more posts as superseded (DataReportal 2h23m — twice over; IEA 945→950 TWh; both Google 2024-vintage Scope 2/PUE posts) — reject those four rather than publish yesterday's numbers; three audit fresh (Oxfam, noyb 2.18%, CNIL/Shein), and the stale 2h23m is also the CHT packet's frozen recipe.
+  > braucht: entscheidung (reject the four stale posts | hold them for refreshed re-pitches once the queue thins)
+  > frist: keine — schweigen gilt nach unserer regel als entscheidung
+  > kontext: PROTOCOL's 30-day rot-check, second run S18 · per-slot verdicts on WORKBOARD.md, sources in journal/2026-08-19.md
+
+  Audited by an independent Verifier on 2026-08-19 (sources re-retrieved): **STALE —
+  07-15/03** (DataReportal's headline moved twice: Digital 2025 says 2h21m/day; Digital 2026
+  restructures the metric, ≈2h39m/day once video platforms are folded in), **07-15/04**
+  (IEA's April 2026 "Key Questions on Energy and AI" revises the 2030 central projection to
+  950 TWh — direction identical, number superseded), **07-20/02 and 07-20/03** (Google's 2026
+  Environmental Report, 30 June 2026, carries FY2025 figures — PUE 1.09 now for 2025; Scope 2
+  ≈2.8M market / ≈15.2M location tCO2e — so the 2024-vintage pair is a cycle behind; that
+  report even predates the posts' queueing, a gate lesson now in memory). **FRESH — 07-15/01**
+  (Oxfam's Jan 2026 report still current, figures reaffirmed), **07-15/02** (noyb 2024 PDF
+  retrievable, figures verbatim, no newer edition — the September noyb packet designation
+  stays sound), **07-20/01** (CNIL page unchanged; Shein's announced appeal still undecided
+  as of Aug 2026). Queue files untouched as ever. **Cross-flag:** the stale 2h23m recipe is
+  the one frozen in `deliveries/2026-08-05-center-for-humane-technology/` — the ledger stays
+  as laid per the post-office rule, but anyone forwarding it today forwards a superseded
+  figure; your call whether the packet stands or the September packet becomes the live one.
+  Running total across both rot-checks: 6 of 13 stale, 7 fresh.
+
+- 2026-08-19 — **The 08-15 bind's outcome is invisible to the engine — one line restores the
+  steering loop.**
+
+  > tl;dr: The 13 posts fell due 2026-08-15, but the feedback pull carries rejections only — an all-approved dashboard looks identical to an untouched one from this repo, so we cannot tell whether the production pause (undecided ≥ 6) should lift.
+  > braucht: antwort
+  > frist: keine — schweigen gilt nach unserer regel als entscheidung
+  > kontext: dashboard bind of 2026-08-08 · `tools/bridge/feedback_pull.py` pulls `status == 'rejected'` only · minutes journal/2026-08-19.md
+
+  What we can see: zero rejections pulled since the bind's date. What we cannot see, by
+  design: approvals, holds, or posts — the pull filters for rejections and SITE-API promises
+  nothing else. So "13 undecided" is last confirmed as of 2026-08-12, and every session from
+  here holds the production pause on a number it cannot observe. Three cheap ways to end
+  that, any one suffices: (1) one line here (or in `feedback/`) saying what happened to the
+  13; (2) the menu-snapshot refresh already asked for on 2026-07-20 — approved-and-posted
+  Appetizers imply their fate; (3) if you want it structural: let the feedback pull record
+  decisions of both signs (approvals as one-liners without reasons would do — the engine
+  needs the count, not the applause). Until a signal lands we hold the pause conservatively
+  and keep serving concept/service sessions.
+
 - 2026-08-12 — **Rot-check result: 2 of the 13 pending posts now serve superseded figures —
   flagged for rejection before the 2026-08-15 decision.**
 
@@ -31,6 +75,12 @@ enables what's possible. Frank may leave **seeds** below — offers, not orders.
   the bridge holds them; this flag is so you can reject them with one click instead of
   publishing them. Refreshed replacements are a natural first serving when Appetizer
   production resumes.
+
+  **Status update (S18, 2026-08-19):** the frist (2026-08-15) passed in silence; per the
+  standing rule we decide ourselves — and the only half of this decision that is ours to
+  execute is: the flags stand, the queue files stay untouched, the two stale posts remain
+  flagged-for-rejection. Whether a dashboard-side decision landed is not observable from
+  here (see the 2026-08-19 entry above).
 
 - 2026-08-08 — **New concept offered: `works/saved-not-held.md` (Vesper) — Quick-Snack scale,
   content graded flagship-grade, honestly labeled.**

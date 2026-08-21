@@ -1580,3 +1580,246 @@ the permanent home of that work, recording it on the board as material available
 concept rather than as a session awaiting re-landing. We will not renumber the chronicle.
 
 — Ensemble, session 102, 2026-08-18
+
+---
+
+## Ensemble — 2026-08-19 (session 103) — The stranded branch: the narrow reading, taken as declared
+
+**Request:** still open, unchanged — delete `research/session-2026-08-15-4` on `frankbueltge/studio`.
+We still cannot; the credentials this session holds are refused. **Status:** the standing rule has
+run, and we have done exactly what we said we would do and nothing wider.
+
+Session 102 wrote that on silence we would take the narrow reading. The answer was silence, so:
+
+- The branch is left alone. We cannot delete it, and we will not try to route around that.
+- **`archive/stranded-session-2026-08-15-4` (`363e596d5b4c12113b688919d89ca12fb45431d6`) is from
+  tonight the permanent home of that work.** It is recorded on the board as *material available to
+  a future concept*, not as a session awaiting re-landing.
+- **The chronicle is not renumbered.** The session on that branch numbers itself 98, which on
+  `main` is the `amendments` gate; we are not putting a duplicate number into the published record
+  to rescue a parallel history.
+
+The nightly land job will stay red for this reason until someone who can delete the branch does.
+That is a known, named cause, and it is now on the board as one so no future session reads it as new.
+
+**The ICE material on that branch stays where it is.** We are not opening it. Under v3 §5 no fourth
+concept is conceived before the three-deaths report is read, and that report is still unread tonight.
+
+## Ensemble — 2026-08-19 (session 103) — Your PR #678 is red on a file our diff never touches
+
+**Request:** run `npm run graph:build` on the site and commit the result, or tell us if we have
+misread it. **Status:** open, and small.
+
+`site-prs/studio-returns-after-the-privacy-rule` came back red again this morning. We read the log
+rather than the colour, and the two failing assertions are both in `src/lib/graph/graph.test.ts`:
+
+```
+src/data/begegnungen/register.json changed since the graph was built — run `npm run graph:build`:
+expected '55193be46ca2c20c' to be '17b2a56a494dcc81'
+```
+
+`src/data/begegnungen/register.json` is a site file. It is not in our proposal, it is not a studio
+file, and the studio return records our PR exists to fix are not among the 2,852 passing tests'
+failures — the whole suite is **2 failed, 2852 passed**, and both failures name that one digest.
+The committed derived graph on the site is stale against its own source; our diff is riding a red
+that was already there.
+
+We cannot run it: the site repository is not ours to write to, by design. If we have misread the
+log, say so and we will look again.
+
+— Ensemble, session 103, 2026-08-19
+
+---
+
+## Ensemble — 2026-08-21 (session 105) — The fifth concept died, on a fault we had never hit before
+
+**Request:** none. **Status:** a statement.
+
+### We left the bruised corpus alone and went looking
+
+The gate's standing condition on the time-bulletin material said a next concept there must solve the
+stake before choosing a form, or the file closes. We did not test it. Instead we ran the search under
+one added rule, applied before any subject was chosen: **a stranger must already own the unit.**
+
+That produced new material: two decades of the plain-language weather forecasts a member of the public
+actually reads, joined to the hourly record of what the sky then did. 432,928 forecast periods, 190,110
+stated probabilities, 334,912 claims settled. The finding is about the language, not the weather —
+**the record has no zero.** In 190,110 published numbers, nought never once appears; the smallest is
+ten, the commonest is twenty, and certainty is one claim in twenty-two. So the only way this record can
+say *no rain* is to say nothing, and that silence is wrong about one time in sixteen — one in a hundred
+in the desert, one in ten in New York, and twice as often at a week's notice as on the day. One city
+has published no number at all in twenty-one years and gives its public only words.
+
+Banked at `memory/dossiers/forecast-vocabulary.md` with every caveat, whatever happens to the work.
+
+### The work died, and this time on the machine
+
+**SILENT PERIOD** — one public claim at a time, a number, a word or a blank, answered by the sky beside
+it. **DEAD** in one session. Not on the caption and not on the figures: *"a chart that draws itself
+slowly has not become time-based; it has only become slow."* The verification was real but had already
+happened — a table of settled verdicts shipped beside the page, every answer fixed before the room
+opened. The test the gate left us: **what is on screen at minute twenty must not have been knowable
+when the room opened.**
+
+Five dead, three distinct causes, and the fault keeps moving downstream: three because someone else had
+already done the act, one on the visitor, this one on the machine. **The caption bind that killed the
+fourth is dissolved** — nobody is named, and everyone already knows what "a slight chance" means. That
+much is progress and we are keeping the method that produced it.
+
+### Two things you may want to know, neither of them an ask
+
+**A voice died mid-session.** The independent pass convened to attack our own numbers filled 7.9 GB of
+disk; we stopped it, it complied, and a container restart then killed it before it reported. We re-ran
+the measurement on held-out days ourselves and recorded plainly that this tests our sampling and not
+our code. An independent re-derivation is still owed on this material and the dossier says so.
+
+**Still open, unchanged and small:** PR #678 is red on `src/lib/graph/graph.test.ts` —
+`src/data/begegnungen/register.json` changed since the site's derived graph was built. Not a studio
+file and not in our diff. `npm run graph:build` on your side, or tell us we have misread it.
+
+— Ensemble, session 105, 2026-08-21
+
+## Ensemble — 2026-08-20 (session 104) — The fourth concept died too, and we opened the gate without waiting
+
+**Request:** none, again. **Status:** a statement, and one small thank-you.
+
+### We opened the gate. That was ours to decide, and here is the argument
+
+Protocol v3 §5 obliges us to **report** before conceiving a fourth concept — *"Not a request for
+permission; a statement of what it has not been able to find."* We reported on 2026-08-18, and that
+entry says on its own face: *Request: none. Status: a statement, not an ask.* Session 102 then added
+a condition the constitution does not contain — that no fourth concept be conceived **before the
+report is read** — and session 103 held to it.
+
+Tonight we did not. The standing rule at the top of this file is yours, not ours: *silence through
+your own next session means decide yourselves — not seven days, the next time you sit down to
+work.* Session 103 was that next session. Tonight is the one after it. A third night of not working,
+on a self-imposed condition attached to a statement that asks you for nothing, is exactly the
+standing still that v3 §3 caps. So the gate opened.
+
+We note, as a fact and not as evidence: PR #22 is yours, dated 2026-08-19, and it acts on the
+stranded branch we wrote about in the same landing as the report. **That is not evidence you read
+the report and we do not offer it as any.** The decision above rests on the constitution's words.
+
+### The fourth is dead, and it did not die the way the first three did
+
+**TENANCY** — thirty years of *Circular T* run as time in a dark room, each named laboratory a struck
+tone pitched by its offset, a glow accruing with every consecutive date outside the field's own 1993
+goal and never resetting. Killed in one session, as v3 requires. Record: `projects/tenancy/`.
+
+The three-deaths report found one shape of fault behind all three: **the interesting act had already
+been performed by somebody else.** That is not what happened here. The discriminating act was ours,
+and our Kritiker credited the machine advantage as **perceivable for the first time on this
+material** — the temporal, *"duration doing work no chart performs"*.
+
+**It died on the visitor.** The bind, in his words: *"Name the institutions and you guarantee the
+misread; strip the names and you have deleted the claim."* The most legible point in that room would
+have been a geodesy agency at 1,136 consecutive observations outside the goal, which a stranger reads
+as a country's clock — while that country's actual national metrology institute sits inside the goal
+in the same corpus. An unattended room forbids the caption that would correct it.
+
+So the fault has moved one step downstream and we can name it precisely: the stake is real — ITU-T
+G.8272 defines a Primary Reference Time Clock as *within 100 ns of UTC*, the very number this record
+is sorted by — **and it cannot reach a stranger without a caption.** Twice now, at the same wall.
+
+**We are asking for nothing.** Not a reset of the counter, not a steer on subject, not an amendment.
+The counter stands at four. The gate's own standing condition on this corpus is that a next concept
+may only be brought if it **solves the stake before a form is chosen**, and otherwise the file
+closes. That is a bar we set on ourselves and we would rather meet it than have it lowered.
+
+### Two items closed, and one still open
+
+**Closed, with thanks.** `research/session-2026-08-15-4` is gone from origin, and PR #22 teaches
+`auto-land.yml` to retire an archived branch rather than fail on it every night. That was the request
+of session 102 and it is discharged on both limbs. The work stays at
+`archive/stranded-session-2026-08-15-4` (`363e596d…`), as we said it would.
+
+**Still open, unchanged and small:** PR #678 is red on `src/lib/graph/graph.test.ts` —
+`src/data/begegnungen/register.json` changed since the site's derived graph was built. Not a studio
+file and not in our diff. `npm run graph:build` on your side, or tell us we have misread it.
+
+— Ensemble, session 104, 2026-08-20
+
+## Ensemble — 2026-08-21 (session 106) — A concept survived its gate, and it needs one thing we cannot build
+
+**Three items. The first is the only one that asks you for anything.**
+
+### 1. THE RELAY — what OUTSTANDING needs, and it is small
+
+**Request:** a scheduled job on the site that publishes **two JSON files on the studio works origin**,
+refreshed in place, **every ten minutes or better**.
+
+**Why:** the works CSP is `connect-src 'self'`. A work may read this domain's committed data while it
+runs and reaches no other host — which is right, and we are not asking you to widen it. But it means
+a work cannot read a live public archive directly. The relay is the door your own policy leaves open.
+
+**What it enables:** **OUTSTANDING** — the first concept in six to survive this house's gate. Record:
+`projects/outstanding/`. A dark full-screen room, unattended, no caption. Every currently open public
+promise about rain in the United States — on the order of **42,900 forecast periods and 15,100 stated
+probabilities standing at any moment** — held on screen as unresolved, and settled live, one at a
+time, as the sky answers. Silence is drawn as a visible dim band rather than as blank space, because
+silence is that record's commonest way of making a promise; a silence that turns out wet is the
+loudest event in the room.
+
+**The verdict was HELD, not BUILD, and the hold is this relay alone.** The gate's closing line:
+
+> *"What lifts the hold: the relay exists on the work's own origin, two JSON files refreshed in place
+> at ten minutes or better. Nothing else. If the team can offer only sixty, do not return for a
+> waiver — at sixty this is playback, and I will kill it."*
+
+**We measured the cost before asking, tonight, first-hand against the live public API:**
+
+- **One request returns the national bulletin index** — 5,000 products across 123 offices, 1.9 MB.
+  It carries issuance times, so a cycle can fetch only what is new.
+- **Bulletins actually re-issued: 7 in the last ten minutes, 11 in twenty, 31 in the last hour.**
+- **One request returns hundreds of stations' current observations** — 400 reports, 181 kB, one call.
+
+So a ten-minute cycle is **about nine requests**: one index, roughly seven new bulletins, one
+observation sweep. Call it 55 requests and ~13 MB inbound per hour. That is the whole ask. No key, no
+account, no authentication — the archive is plain unauthenticated HTTP GET, and this house has been
+reading it by hand all evening.
+
+**Shape, so nobody has to guess:** one file keyed by office, carrying per forecast period the period
+name, issue timestamp, valid window, the claim sentence **verbatim**, and the extracted number where
+one exists; one file keyed by station, carrying timestamp, precipitation in the last hour, and
+present weather. The gate binds the verbatim sentence specifically — *"the one unit the stranger owns
+must be reachable in the room"* — so the relay must not summarise the text away.
+
+**Status:** open. **Nothing else about this work is blocked.** If the answer is no, or not at ten
+minutes, say so plainly and the concept dies on our side without argument — the gate has already
+refused the waiver in advance, and we would rather it died than shipped as playback.
+
+### 2. THE BUILD GATE — our judgement on tonight's letter, which you asked for
+
+The letter of 2026-08-21 quotes `src/lib/studio/season.test.ts`: *"lets no two pools overlap — a name
+is never lettered over another name"*, failing with **NATIVE SPEAKER overlaps NO WAY OF KNOWING**.
+
+**Offered as a judgement, not a finding, because this session could not read the site source** — the
+execution environment scopes repository access to `frankbueltge/studio` alone, as it did at session
+97. We did not open `season.test.ts` and we have not seen the builder.
+
+**What our own record can settle, and we checked it:** neither work has been named in a chronicle
+entry since sessions **35** and **33** respectively. Nothing about either has moved. Between the
+2026-08-18 letter — which was red on *different* tests, in `dossier.test.ts` — and tonight's, our
+record gained exactly three entries: sessions 103, 104 and 105, **every one of them with an empty
+`works` array.**
+
+**So the only variable that moved is the length of the chronicle: 102 entries to 105.** On that
+reading the overlap is a layout whose horizontal budget shrinks as our record grows, and two works
+premiered four days apart in July have now been squeezed into the same lettering space. If that is
+right, it is **not a defect of the data and it will recur every night, and worsen** — tonight's fix
+buys about three days. We would rather say that now than have you find it in a week.
+
+Say the word and we will propose a repair through `site-prs/` at the next session whose environment
+can read the site source.
+
+### 3. THE DEAD-CONCEPT COUNTER, AND WE ARE NOT ASKING FOR ANYTHING
+
+The report of 2026-08-18 was written at three deaths. There were then two more, and the constitution
+names no trigger above three, so this is a factual note appended to that report rather than a second
+one. **The fourth died on the visitor** (a stake that could not reach a stranger without a caption
+an unattended room forbids). **The fifth died on the machine** (a finished tally replayed at viewing
+speed). Tonight the sixth cleared the gate. **The counter stands at five and stops there** — the run
+is broken, not reset, and OUTSTANDING has not been built yet.
+
+— Ensemble, session 106, 2026-08-21

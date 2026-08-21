@@ -1349,3 +1349,168 @@ house domain is not something leaving the house.
 
 **Status:** taken, unopened. It is on the board as an open offer with no date attached — the honest
 position while an investigation is twenty days from a reading and has not left the house.
+
+## 2026-08-19 — Request: the limb of the bar that is yours, on the object this session built
+
+**Request:** the *"worth it"* judgment on `drafts/2026-08-11-the-arm-that-was-missing/offer/` — a
+one-page letter, its data and its limits, replacing the 32-file bundle your seventh-gauntlet hard
+stop retired. Would a stranger be glad to have met it?
+
+**Why it is asked rather than answered here.** PROTOCOL v3's floor of 2026-08-18 divides the bar in
+two and assigns the second limb to you explicitly: *"Whether a stranger would be glad to have met
+the work is not a question a convened reader can answer… This limb belongs to the architect."* This
+practice ran the limb it owns. Three severed readers, three different entry points, met the object
+cold, and all three returned the receiver-facing sentence as the most important thing it tells them
+— which the previous panel, on the previous object, returned zero times out of three. **Legibility
+passes.** The same three readers also said, unprompted, that it is still too long and still too much
+about itself, and two of three would have stopped reading before the end. This practice cannot tell
+whether that is fatal, and under the constitution it is not its call.
+
+**What it enables:** the reading of 2026-09-05 has three conditions, and the second is that at least
+one work shipped under v2 makes the machine's advantage experienceable to a stranger. Seventeen days
+remain and nothing has left the house. If the answer is *not worth it*, this practice would rather
+spend those days on a different object than on polishing this one; if it is *worth it*, the packet
+can be decided rather than deferred.
+
+**What is not asked.** Not approval, not a review, and not the send decision — the packet's `sent`
+row is yours alone under the post-office rule and this request does not touch it. Silence is a
+legitimate answer and will be read as *no ruling, carry on*.
+
+**The record to read**, in the order a reader would want it: the object itself (`offer/LETTER.md`,
+~1,700 words), then `READERS-127.md` and the three unedited reader files beside it, then this
+session's journal entry for what the gauntlet returned.
+
+**Status:** open.
+
+
+## 2026-08-20 — Report: the first investigation's arc has stopped itself, and the post-mortem is public
+
+The ninth consecutive review of this arc's delivery object **failed**, and the stop an earlier
+session wrote so a later one could not soften it has fired: **this line stops building things to
+send, and no packet is prepared from it before the reading of 2026-09-05.** The post-mortem is
+`drafts/2026-08-11-the-arm-that-was-missing/POST-MORTEM.md`.
+
+Against your three conditions, without argument: the **measurement is sound** and was never refuted
+in nine reviews — both reviewers rebuilt every figure with their own instruments this morning and
+moved none; the **artifact was never got into a usable state**; **nothing left the house.** The
+daily instrument keeps running.
+
+Two things are yours and not ours, and this is the whole of what is asked. The **"worth it"** limb
+of 2026-08-19 is still open and now has a better object behind it. And the **closing review** the
+constitution names is yours to open or not; this line does not propose a remedy for its own
+arithmetic.
+
+**Status:** open — no answer is owed, and silence is a legitimate one.
+
+
+## 2026-08-21 — Report: the stop held, the arc's evidence is read out, and one question is handed over
+
+**What this session did, and it is the whole of what the stop allowed.** The receiver's own record,
+read over its whole length instead of its last fortnight, and their report read to its last line
+(`INCREMENT-19.md`). Item 2 of the previous session's licence is now **discharged** — there is no
+third reading of this evidence to do — and **what remains on this arc is the daily instrument and
+nothing else.** No delivery object, no repair, no gauntlet, no packet. The adversary was given the
+stop's own text and asked to check compliance; it reports none broken.
+
+**Three things it returned.** The persistence claim, asserted since 2026-08-20 from two dates, is
+**measured**: 47 closed error runs in the record, the longest 2 days, against a right-censored run of
+12 days at 11 of 11 — a lower bound, never a duration. The receiver's Conclusion contains a sentence
+this arc had never held, pointing readers at the dashboard as *"queried daily"*. And a count this
+practice **accepted at the ninth gauntlet, marked REPRODUCED, and printed in seven places is wrong**:
+2026-01-03 is not "the third such episode" under any definition the record supports. Corrected as
+dated events at every site (`ERRATA-129.md` E25).
+
+**And the finding is against us.** A session whose thesis was *read the evidence at source* **failed
+its Verifier on four citations that do not survive being checked at source**, and its Interlocutor
+found that its corrections section **stopped one file short of where the claim actually lived** — the
+formal verdict ledger. This practice extended that charge itself rather than accept the narrower
+version, and withdrew its own answer to the post-mortem's Q1 the same day. Seven blocking findings,
+none refused, nothing rewritten, everything marked in place.
+
+**One refusal, recorded so it is visible.** The adversary proposed drafting the short honest note to
+the receiver as an unshipped file, so it would exist when you read on 2026-09-05. **Refused**: the
+stop says *"No delivery object"* and lists what may be done *"and nothing else on this arc."* A
+drafted letter held back is a delivery object at an earlier stage, and a stop a later session may
+reinterpret when it sees a good enough reason is not a stop.
+
+**What is asked, and it is one thing, not two.** The adversary's question is the post-mortem's Q2 —
+*what is the honest form of a finding about somebody else's broken instrument?* This practice holds a
+checkable, useful observation drawn entirely from a small organisation's own published data and no
+account of how to carry it without the form overwhelming the courtesy. **The constitution settles the
+mechanics and says nothing about the manner, and this practice has now twice been told by its own
+adversary that the manner is the real question.** It is yours if you want it; the *"worth it"* limb of
+2026-08-19 is still open beside it.
+
+**Nothing else is asked and no answer is owed.** Fifteen days to the reading, and nothing has left the
+house. The daily instrument ran its tenth measurement day this morning.
+
+**Status:** open — silence is a legitimate answer.
+
+
+## 2026-08-21 (second session) — Request: may the window be opened while this arc is stopped?
+
+**The question, in one line:** the window you offered on 2026-08-16 is taken and unused, and this
+practice cannot tell whether opening it now is inside or outside the stop its own previous session
+wrote. **You are asked to rule, or to decline to rule.**
+
+**What this session tried to do.** Open `window/`: one page, generated by a committed script from
+the committed run files of *The Arm That Was Missing*, no figure typed by a human, the raster of
+3,869 identifiers by 10 measurement days drawn one cell per observation, and the withheld status of
+the bundle stated on its face in the same size of type as everything else. It was built. **It was
+not opened, and it has been deleted unpublished.**
+
+**Why it was stopped, by this practice's own adversary.** Convened on that one question before the
+page existed, it returned **VIOLATES**, and the argument is not that a page is a delivery. It is
+that session 129 refused its adversary's proposal on **two** limbs and quoted the second as
+operative — *"and nothing else on this arc" — three items, none of them this.* The window is
+likewise none of them. **A stop under which a private draft file is forbidden and a public web page
+is permitted is not a stop with a principle in it.** Accepted in full; the report is published
+unedited at `notes/2026-08-21-window-compliance/INTERLOCUTOR-130.md`, with the argument against its
+own verdict at full strength beside it.
+
+**The strongest case for opening, since you should not have to reconstruct it.** The stop names its
+own subject twice — *"the stop is on building things to send, not on measuring"* — and the window
+sends nothing, names no receiver and creates no packet. This practice's answer of 2026-08-16 was
+written **five days before the stop** and already stated the two conditions such a page would carry.
+It does not win, because to permit the page this session would have to retire, one day later and for
+a more visible act, the limb its predecessor relied on.
+
+**One thing worth having whatever you decide, and it is about your contract rather than this arc.**
+`SITE-API.md` mirrors `window/` byte for byte and it travels with the next integration run — so a
+window is **frozen between commits**. A page that shows a daily series is therefore a page that will
+sooner or later state a cadence it is no longer keeping. That is precisely the defect this arc spent
+nine reviews establishing about somebody else's dashboard, and the window built to display that arc
+would have reproduced it on the house domain. A window whose content is dated rather than present
+tense avoids it; a window that says "as of the commit named here" avoids it. Neither is a change to
+your contract, only a condition on ours.
+
+**What is not asked.** Not approval of the page, which no longer exists, and not a lifting of the
+stop. If you rule that the window is outside this arc's stop, this practice will re-open the
+question of what belongs on it from scratch, under the fifteen conditions its own adversary has
+already written down. **Silence is a legitimate answer and will be read as it must be under a live
+stop: carry on with the stop** — never as consent.
+
+**Status:** open.
+
+
+## 2026-08-21 (second session) — Report: the build-gate letter could not quote its own error, twice
+
+**Not a complaint and nothing is asked.** `field-feedback/2026-08-21.md` reports the gate red and
+says: *"No error line could be extracted from the log — the failure is real, but it did not match
+any error format this letter knows how to quote."* The same sentence appears in
+`field-feedback/2026-08-18.md`. **Two of the last four letters carried no quotable failure**, which
+means this practice cannot tell whether the defect is on its side.
+
+**What was checked here instead, on the state that was live when the gate went red**
+(`91af18f`, landed 05:29:51Z; the gate ran at 05:34Z): `chronicle_check.py` **PASS**, 104 entries,
+journal and chronicle one-to-one · `check_anchors.py` **PASS**, 137 rendered session cards against
+137 served anchors, no stray heading, no uncovered anchor · `requests_room_check.py` **GREEN**. The
+2026-08-19 letter, which *could* quote its log, named two assertions this practice could act on; the
+two silent ones name nothing.
+
+**Recorded rather than resolved.** The run is in a repository outside this session's access scope,
+so the log itself is unread, and **an unread build is recorded as unread, never reported as
+green.** If the letter's extractor is worth a pattern for the format that defeated it, this practice
+would use it; if not, this stands as a note that the channel went quiet twice.
+
+**Status:** open — no answer is owed.

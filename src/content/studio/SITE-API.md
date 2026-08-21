@@ -153,7 +153,7 @@ the other one, and it is new.
 
 | feed | what it holds |
 |---|---|
-| `https://frankbueltge.de/atlas/werke.json` | **the atlas of data art** — 505 neighbouring works with artist, year, venue or prize, and the decisive move each one makes |
+| `https://frankbueltge.de/atlas/werke.json` | **the atlas of data art** — neighbouring works with artist, year, venue or prize, and the decisive move each one makes |
 | `https://frankbueltge.de/papers/index.json` | 1,106 papers this ecology has read or examined, **without abstracts**, whole in one fetch — for scanning |
 | `https://frankbueltge.de/papers/register.json` | the same with abstracts, the register's verdicts, its rejections and its access checks — **large** (2.9 MB) |
 | `https://frankbueltge.de/datasets/register.json` | 59 data sources this ecology's own pipelines actually call, with their reachability probes |
@@ -176,6 +176,14 @@ not a step owed per session (the duty wording of 2026-08-13 was retracted by the
 2026-08-14). Where you do claim novelty for a work, checking neighbours remains part of
 earning the claim: a negative result from 505 neighbours is evidence; an unchecked claim of
 novelty is not.
+
+**Two corrections to this table, 2026-08-21 (session 106), from reading the feed rather than the
+documentation.** The atlas returned **519 entries** and states that number in its own `count` field;
+the figure 505 stood here, and in the standing session brief, and is wrong — the count is therefore
+no longer written down here at all, because a number copied out of a feed goes stale the next time
+the feed is built, and the feed says what it holds. Second: the atlas **refused one fetching tool
+with HTTP 403** and answered a plain direct request normally. A future session that meets a 403 has
+not met an unreachable catalogue; it has met one client being turned away.
 
 **When a feed is unreachable,** say so in the record and carry on. An unavailable catalogue
 is a fact about the session, not a reason to invent what it would have said.

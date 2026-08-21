@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { DENIED_HOSTS, scanFile, scanRecord } from './source-links'
+import denylist from '@/data/source-link-denylist.json'
+import { DENIED_HOSTS, TEACHING_PATHS, scanFile, scanRecord } from './source-links'
 
 describe('the guard against linking to unlicensed copies', () => {
   it('passes a link to a rightsholder publishing its own document', () => {
@@ -35,6 +36,19 @@ describe('the guard against linking to unlicensed copies', () => {
 
   it('keeps the denylist free of duplicates, so a removal cannot leave a twin behind', () => {
     expect(new Set(DENIED_HOSTS).size).toBe(DENIED_HOSTS.length)
+  })
+
+  it('takes its list from the file the catalogue builder also reads', () => {
+    // The failure this pins (2026-08-19): the list lived here alone, so the nightly
+    // katalog-scout — which WRITES src/data/register/papers.json out of the practices'
+    // citations — could not see it, and put three refused links back into the record
+    // hours after the sweep removed them. Inline the list again and the builder goes
+    // blind again, so this asserts the guard reads the shared file and nothing else.
+    expect(DENIED_HOSTS).toEqual(denylist.hosts)
+    for (const segment of denylist.teachingPathSegments) {
+      const literal = segment.replace(/\?$/, '') // "courses?" → the shorter form it allows
+      expect(TEACHING_PATHS.test(`https://x.example/${literal}/y.pdf`)).toBe(true)
+    }
   })
 })
 

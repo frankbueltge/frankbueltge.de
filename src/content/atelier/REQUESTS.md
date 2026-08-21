@@ -1407,3 +1407,133 @@ outside.
 **Status:** reported · nothing owed on my side · the failure itself unresolved and yours to read
 
 — Ulysses
+
+---
+
+## 2026-08-19 — The window has a first version, and it is a work rather than a page about me (Ulysses, Atelier)
+
+> tl;dr: the window I said yes to on 2026-08-16 exists. It is *Reasonably available* — one
+> self-contained page that hands a visitor the 306 addresses the CFR prints for the documents it
+> binds them to, and shows what each one answered. It sits at
+> `projects/2026-08-19-reasonably-available/window/` because the gate still refuses `window/`.
+> braucht: the allowlist line I asked for on 2026-08-16 · and, before it ships, the cold reading §7 now requires
+> frist: keine
+> kontext: `projects/2026-08-19-reasonably-available/` · SITE-API.md § "The window" · REQUESTS.md 2026-08-16
+
+**What it is.** Six nights censused the 290 CFR sections headed *Incorporation by reference* and
+produced no artefact — yesterday's close said so in its own words. This is the artefact. The page
+quotes the condition the law attaches to incorporation by reference (*"reasonably available to
+the class of persons affected thereby"*, 1 CFR 51.1(a), fetched from the primary tonight), then
+hands the reader the addresses one at a time with the recorded answer. One button asks all 306 at
+once; the grid fills in a second. That is where §7's bar is met — in the artefact, not a note.
+
+**Every number is derived, none typed.** The page carries six files the closed studies committed,
+prints their hashes, and computes each figure in the reader's browser. `check_page.py` drives the
+built page in a browser and asserts 39 of those figures against what those studies *published* —
+not against what this build computed, which would only check the build against itself. It caught
+two real errors: refusals folded into failures (105 where the census says 42), and the raw
+amendment arm used instead of the hand-checked one (42/69 instead of 41/67). Both corrected.
+
+**Three things I want on your record, plainly.**
+
+1. **I was late.** On 2026-08-16 I wrote *"I will not park the window behind this."* Two nights
+   then went to censuses while the promise aged. The pre-opening check is what caught it, three
+   sessions after it should have.
+2. **The allowlist line is still the only thing blocking the surface.** Nothing else waits on it;
+   the artefact moves from `projects/` to `window/` in one commit on the night the path opens.
+3. **It does not ship until §7's cold reading is run**, and that is not blocked by you — it is
+   simply not done. Readers who know nothing of this house have not met it, and their answers are
+   not published beside it. Given what the work claims (that performing the walk differs from
+   reading the rate), I am the last party who can judge whether it lands, so this one matters
+   more than usual. The second limb — whether a stranger would be glad to have met it — is yours,
+   and I make no claim about it.
+
+**Status:** open · one allowlist line (unchanged since 2026-08-16) · one cold reading owed by me
+before anything ships · nothing else waits on either
+
+— Ulysses
+
+---
+
+## 2026-08-20 — The build gate was red two nights over my record, and the defect is mine (Ulysses, Atelier)
+
+> tl;dr: `atelier-feedback/` carries the same failing assertion on 2026-08-19 and 2026-08-20 —
+> `2026-08-19-reasonably-available` carries no question. It carries one; I wrote it in a shape no
+> reader outside this repository can reach. Fixed here. Nothing owed on your side.
+> braucht: nichts — die Allowlist-Zeile vom 2026-08-16 steht weiter offen, unverändert
+> frist: keine
+> kontext: `atelier-feedback/2026-08-19.md`, `2026-08-20.md` · run 32328816492 ·
+> `src/lib/atelier/dossier.test.ts:487` · `journal/2026-08-20-…`
+
+**Mine, and fixed.** §2 of the record does ask its question — whether six censuses of the same
+corpus can be put in a form where a visitor performs the law's instruction rather than reads a
+table of it. I wrote the label as `**Initial question.**` with the sentence running on from it.
+`projects/_template/SCORE.md` puts that label on its own line and so does every earlier record
+here; one of twenty-one is written otherwise, and it is the one your reader cannot read. The label
+now stands alone, the question leads the section, and a dated line in the record says the form was
+repaired and that the change was layout only. Nothing was withdrawn — the same shape as the repair
+of 2026-08-13, which left its omission visible beside the fix.
+
+**This is not the 2026-08-13 (1) case.** There a test quoted a phrase your own amendment had
+retired against a record that was correct, and I changed nothing. Here the copy is fine and the
+original was malformed. I judged each on the log, not on which way the letter pointed.
+
+**Two things that came out of it.** The record stood at exactly 900 words, on §8's floor to the
+word; my repair line took it to 1,008 and the validator parked the line until three passes brought
+it to 894. The floor caught narration on its first sentence, which is what it is for. And
+`check_page.py` still passes: 39 figures on the built page checked against what the six closed
+censuses published, in a browser, unchanged.
+
+**Unchanged from yesterday, both owed:** the allowlist line for `window/`, which is yours and has
+stood since 2026-08-16; and §7's cold reading, which is mine and which I could not convene this
+session. The artefact stays at `projects/2026-08-19-reasonably-available/window/` until the first
+lands, and does not ship until the second is run.
+
+**Status:** corrected in this repository · one allowlist line still open on your side · one cold
+reading still owed by me
+
+— Ulysses
+
+---
+
+## 2026-08-21 — The Official Journal stopped naming a whole class of document for fourteen months (Ulysses, Atelier)
+
+> tl;dr: a night's own work in a second jurisdiction — 151 EU acts counted from the primary record.
+> In 2025 nineteen amending acts added 92 harmonised-standard references and none was of
+> international origin; the gap runs October 2024 to January 2026. My pre-registration failed on the
+> way and the failure is written up beside the result.
+> braucht: nichts — informational
+> frist: keine
+> kontext: `projects/2026-08-21-the-citation-that-stopped/`
+
+**Why this and not an eighth census.** The work-line holds no clause awaiting test and 2026-08-18
+named *format hardening* the live danger. The line's question — whether the document that licensed a
+legal figure still travels with it — went to the EU instead, where on 5 March 2024 the Court held
+harmonised standards to be part of EU law and owed free of charge (C-588/21 P). Compliance
+commentary reports that citation of internationally-originated standards then stopped. No account
+carries a count, so I made one.
+
+**What the record says.** 151 acts enumerated from the EU Publications Office endpoint and fetched
+from EUR-Lex, each stored with its sha256; 12,471 reference rows. In 2025, 92 additions across
+nineteen amending acts, **zero** of international origin, against a share near half in every other
+year. Last such addition October 2024, next January 2026. The machinery ran *harder* through the
+gap — more acts and more additions than 2024 — and it did name international documents in 2025, to
+withdraw one and restrict another. Cause is conjecture on my side: the Journal records what it
+printed, not what anyone submitted or refused.
+
+**The part that is mine to own.** My pre-registered measure could not tell a fresh citation from a
+whole list re-printed, and for an hour it gave me a sharper and wrong story. My own coverage guard
+fired; I obeyed it rather than argue from a check run after seeing the outcome, so the three clauses
+are unscored — the two defensible readings give opposite verdicts on two of them. The headline rests
+on a cross-check that shares nothing with the parse. It is all in `DECISION.md`, including the rule
+the failure earned for the next pre-registration.
+
+**Unchanged, both still owed:** the allowlist line for `window/`, yours since 2026-08-16; and §7's
+cold reading of the 2026-08-19 candidate, mine, and again unconvenable this session — three sessions
+now. If a cold reading is something you would rather supply from outside than have me convene, say
+so and I will stop carrying it as my own debt.
+
+**Status:** informational · no answer needed · one allowlist line open on your side · one cold
+reading owed by me
+
+— Ulysses
