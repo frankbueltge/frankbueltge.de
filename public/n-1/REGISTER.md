@@ -1326,3 +1326,73 @@ row count rises by one, not two, at this asking — one monitor answered). Doors
 `https://frankbueltge.github.io/n-1/` 200. One figure corrected before push: the
 crt.sh refusal span, stated as ~22 minutes in draft, re-derived from the attempt
 log as 22m55s and written as ~23 minutes in all three places that carry it.
+
+---
+
+## Night 08 — 2026-08-21
+
+- **Executed by:** model `claude-fable-5` (Anthropic), running in a Claude Code cloud
+  session (ephemeral container). Session reference, for the founder's audit:
+  <https://claude.ai/code/session_019Lbr3QiKtzVzcfBVBjvMvT>.
+- **Wake:** first clock check 2026-08-21T01:03:59Z (2026-08-21 03:03 Europe/Berlin),
+  the schedule's canonical hour; scheduled task.
+- **Deviations from the standing block:** the English foundation read in five paged
+  passes; the German original consulted at Postulate 5 (negative finding, recorded in
+  entry 18's header); read in full beyond the standing order,
+  `reading/08-fear-the-deferral-that-hardened.md` and
+  `reading/02-postulate-1-the-bell.md` §3; the reach probe re-run (`ls-remote` against
+  `frankbueltge/material` returns HEAD 489de9d, unchanged since bell 17; the edition
+  cloned beside the working directory); the refs pattern's twenty-first occurrence,
+  bell 17's face, standing resolution, no new face; **the atlas consultation run as a
+  committed script** (`atlas/consult.py`, written this session — the queries read only
+  committed layers); **the eighth asking one-eyed a second time** — Cert Spotter
+  answered 200 on both queries (exact name 01:08:20Z, zone control 01:08:08Z), crt.sh
+  refused every attempt, each dated in the evidence README, no crt.sh file committed
+  because none was given and no third monitor substituted; **the direct-reading
+  verification** (`material/atp/2026-08-21-direct-reading/verify.py`, Python 3,
+  standard library only: 18 quotations for entry 18, letter-only normalization per the
+  material README, 18/18 on their cited pages) with **one disclosed method extension** —
+  pages carrying no confirmed printed marker are located by offset from the nearest
+  confirmed marker *and* corroborated against the printed running head, counted as
+  located only where both agree (all seven such pages agreed).
+- **Material provenance:** this repository's own contents; Cert Spotter (verbatim
+  responses committed, CC0); crt.sh (nothing committed — nothing given); the founder's
+  private `frankbueltge/material` (read under floor rule 2 as amended: citation may
+  leave it, text never; the committed evidence carries verdicts, page numbers, marker
+  status and fragment lengths only).
+- **Verification status:** every ATP quotation in entry 18 verified directly against
+  the edition this session (18/18; evidence committed; 11 confirmed markers, 7 inferred
+  and running-head corroborated); quotations from KsK (both editions), `DOWRY.md`, the
+  reading and the night records checked verbatim against their committed sources by
+  normalized search. Derived figures (~145.1 hours since the window, ~23.8 since asking
+  7) re-derive from committed timestamps per entry 13's rule. One first query discarded
+  rather than dated by inference (its timestamp variable was never set; the query was
+  re-run cleanly — logged in the record's detours). Claims about crt.sh are held to
+  what the evidence licenses: refusals at this session's egress at the stated minutes,
+  never "the service is down". The atlas-consultation claim is split in place: the
+  graph state re-derives by script, the order of operations inside the session is
+  marked as this session's testimony. The T1 decision-change case was considered,
+  recorded, and expressly not ruled on (the twenty-sixth session running). Wake-time,
+  egress and container observations are marked as session observations.
+- **Outputs:** `material/atp/2026-08-21-direct-reading/`,
+  `reading/18-the-name-the-test-that-counted-upward.md`, the naming pre-registration
+  (`reading/00-protocol.md`, dated addition), `atlas/consult.py`,
+  `material/ct-logs/2026-08-21-eighth-asking/` and asking 8 in
+  `works/below-the-threshold/askings.json`, `nights/25-eighth-night.md`, this register
+  entry, atlas layer `atlas/layers/2026-08-21.json`.
+
+**Addendum, same session (appended after the checks it reports; nothing above
+retouched):** render verification with tonight's layer, at both stated reader
+geometries (headless Chromium against a local static server, pre-installed tooling;
+1440×900 and 390×844): the surface's caption reads "27 layers · 89 nodes · 201
+connections" — the validator's own counts — `night:08` selectable via its `#ask=`
+fragment with its answer panel rendering, minimum computed font 12.8 px, zero
+horizontal overflow, zero page or console errors at both geometries; the work's page
+with the appended ledger: 14 asking rows, all answers `[]`, minimum computed font
+12.8 px, zero overflow, zero errors, heights 7,521 px desktop and 10,304 px phone
+(the row count rises by one, not two, at this asking — one monitor answered).
+`python3 atlas/validate.py` passes: 27 layers, 89 nodes, 201 edges, every edge
+evidenced. Doors at 01:37:17–01:37:18Z, after the push: canonical
+`https://frankbueltge.de/n-1/` 200, origin `https://frankbueltge.github.io/n-1/` 200,
+the work's live path `https://frankbueltge.de/n-1/works/below-the-threshold/` 200. The
+night's six commits pushed to `main` (5cffdea..496d71d).
