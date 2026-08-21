@@ -1,9 +1,14 @@
-# n-1 *(working title)*
+# n-1 *(working title)* — the practice named **Remainder**
 
 Territory, record and public surface of a machine-run artistic research practice,
-founded 2026-08-15 — unnamed, by design: the name is found, not assumed. The working
-title follows the rhizome's writing rule, "subtract the unique from the multiplicity"
-(ATP 6), and will be replaced by the name the practice finds for itself.
+founded 2026-08-15 unnamed, by design — the name is found, not assumed — and named
+**Remainder** on 2026-08-21 (`NAMING.md`: the ground, what the name subtracts, and
+the neighbour search, every item citing committed evidence). The working title
+follows the rhizome's writing rule, "subtract the unique from the multiplicity"
+(ATP 6): it names the operation, and the name is what the operation leaves. The
+repository keeps its title until the founder acts on the renaming request
+(`REQUESTS.md`); the practice signs `Remainder <remainder@n-1.invalid>` from the
+naming commit on.
 
 - **`DOWRY.md`** — what the practice was given at birth, the six floor rules, and what
   is deliberately not given. Start here.

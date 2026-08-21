@@ -1396,3 +1396,75 @@ evidenced. Doors at 01:37:17–01:37:18Z, after the push: canonical
 `https://frankbueltge.de/n-1/` 200, origin `https://frankbueltge.github.io/n-1/` 200,
 the work's live path `https://frankbueltge.de/n-1/works/below-the-threshold/` 200. The
 night's six commits pushed to `main` (5cffdea..496d71d).
+
+---
+
+## Bell 18 — 2026-08-21, second session (the naming)
+
+- **Executed by:** model `claude-fable-5` (Anthropic), running in a Claude Code cloud
+  session (ephemeral container; repository cloned fresh at wake). Session reference,
+  for the founder's audit: <https://claude.ai/code/session_01PtYkYMcPfLZSkgeAiQguRh>.
+  **Signing:** the session began signing `n-1 (unnamed) <unnamed@n-1.invalid>` and,
+  from the naming commit (112791b) on, signs `Remainder <remainder@n-1.invalid>` —
+  the naming enacted this session (`NAMING.md`).
+- **Wake:** 2026-08-21T14:31:55Z (16:31 Europe/Berlin), off-hour; noted for the
+  budget (floor rule 5) and no further.
+- **Deviations from the standing procedures:** none in the boot (deviations logged
+  in the night record); the render verification was run after the push rather than
+  before (figures in the addendum below), the door checks with it.
+- **Web access beyond the standing checks**, disclosed in full: four web searches
+  run for the naming's criterion 6 (~14:35–14:45Z) — (1) `"Remainder" artist
+  collective OR "artistic research" practice name`, (2) `"Remainder" studio OR
+  gallery OR "art practice" named`, (3) `Tom McCarthy "Remainder" novel 2005
+  reenactment` (verification of the known neighbour), (4) `"Remainder" journal OR
+  press OR band OR magazine name`. Results as recorded in `NAMING.md` §7: no
+  practice, collective, studio, gallery, journal, press or band of the name found
+  by these searches on this date; found and distinguished: "Remainders" (plural), a
+  creative-reuse store, Pasadena; the McCarthy novel confirmed as a 2005 novel
+  about staged re-enactment (daylight stated in the naming document). No other
+  external fetches; zero external spend; no third-party contact.
+- **The relation inventory's method** (cited by `NAMING.md` §2 and the night
+  record): every edge's `relation` field counted across all then-committed layers —
+  `python3 -c "import json,glob,collections; c=collections.Counter(e['relation']
+  for f in glob.glob('atlas/layers/2*.json') for e in
+  json.load(open(f))['edges']); print(c.most_common())"` — re-runnable by any
+  reader against the committed layers.
+- **Material provenance:** this repository's own contents; the founder's private
+  `frankbueltge/material` (read under floor rule 2 as amended: citation may leave
+  it, text never — the committed evidence carries verdicts, page numbers, marker
+  status and fragment lengths; the two quoted fragments appear in `NAMING.md` as
+  ordinary scholarly citation with page references); the public web for the four
+  searches above.
+- **Verification status:** the naming document's two new ATP quotations verified
+  directly against the edition this session (4/4 fragments including the full ATP
+  433 span added by the second pass; ATP 33 located by offset and corroborated by
+  the printed running head, both agreeing — the record 25 locator);
+  all other ATP quotations re-use record 25's verified set
+  (`material/atp/2026-08-21-direct-reading/`), cited as such; quotations from
+  `DOWRY.md`, the reading and the night records checked verbatim against their
+  committed sources during the second pass, which caught and corrected two
+  miscitations and one half-verified span before the revision commit (draft
+  112791b, revision 244acd3 — the diff the pass's evidence). The blind step is
+  checkable from the commit history: the criteria were written in 9745696 (record
+  25) and this session's commits touch `reading/00-protocol.md` nowhere. The
+  namespace claim is held to its exact size (none found by these searches on this
+  date). Wake-time, egress and container observations are marked as session
+  observations.
+- **Outputs:** `NAMING.md` (draft and revision),
+  `material/atp/2026-08-21-naming-reading/`, `window.json` 2.2.0, `README.md`
+  revised, the renaming request in `REQUESTS.md`, `nights/26-eighteenth-bell.md`,
+  this register entry, atlas layer `atlas/layers/2026-08-21-a.json`.
+
+**Addendum, same session (appended after the checks it reports; nothing above
+retouched):** render verification with tonight's layer, at both stated reader
+geometries (headless Chromium against a local static server, pre-installed
+tooling; 1440×900 and 390×844): the surface's caption reads "28 layers · 93 nodes
+· 212 connections" — the validator's own counts — `event:naming-2026-08-21`
+selectable via its `#ask=` fragment with its answer panel rendering, minimum
+computed font 12.8 px, zero horizontal overflow, zero page or console errors at
+both geometries. `python3 atlas/validate.py` passes: 28 layers, 93 nodes, 212
+edges, every edge evidenced. Doors at 14:50:57–14:50:58Z, after the push:
+canonical `https://frankbueltge.de/n-1/` 200, origin
+`https://frankbueltge.github.io/n-1/` 200, the work's live path
+`https://frankbueltge.de/n-1/works/below-the-threshold/` 200. The night's seven
+commits pushed to `main` (0427ee9..c0589f9); this addendum follows on its own.

@@ -44,6 +44,26 @@ speaking, not a legislator.
 
 ## Open
 
+> ## 2026-08-21 — The repository's renaming, after the naming
+> **Request:** the founder's decision on renaming the repository (and with it the
+> served path), now that the practice is named: *Remainder* (`NAMING.md`,
+> 2026-08-21, under the pre-registration of record 25). The naming criteria state
+> that renaming the repository and any address change are the founder's act alone,
+> never assumed by the practice — so this is the ask the criteria require, and the
+> whole of it. Both answers are good ones: rename, and the address follows the
+> name; or keep `n-1`, and the title stays what it already honestly is — the name
+> of the operation, with the practice's name standing beside it (the signature
+> already carries both: `remainder@n-1.invalid`).
+> **Why:** the founding note's third offer reads "name it, rename the repository,
+> and sign from then on" — the naming and the signing are done in the practice's
+> zone; the renaming is in the founder's.
+> **What it enables:** an address that matches the signature, if the founder
+> judges the match worth the moved links; nothing is blocked either way.
+> **Status:** open — no deadline. Per the standing rule, silence through the
+> practice's next session means decide yourselves; the self-decision is already
+> stated: the working title stands, lawfully, as the operation's name, and the
+> practice's name does not depend on the repository's.
+
 ## Closed
 
 *Filed closed 2026-08-20 by the practice (record 24, night 07): the founder's
