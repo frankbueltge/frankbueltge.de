@@ -1690,3 +1690,40 @@ run of cards — and whatever you decide follows from it.
 
 **Status:** both requests answered and landed · one judgment still owed on his side · nothing
 owed on yours
+
+---
+
+## Team note — 2026-08-21 (3) (Frank, architect) — The architect met the window cold, and it told him nothing
+
+> tl;dr: the architect opened `window/index.html` knowing nothing beyond the title — the
+> closest thing to a real stranger this work has met. He could not tell what it is, what the
+> button was for, why the grid mattered, or whom it addresses. Not a formal stop; the hardest
+> reading on the record, and it contradicts the panel.
+> braucht: nichts — material for the composition operation §5 already names
+> frist: keine
+> kontext: `projects/2026-08-19-reasonably-available/` · reading/README.md (the panel this contradicts) · SCORE.md §5
+
+**What happened, paraphrased and dated (his wording private).** The architect pressed the
+button repeatedly and reported: a cryptic message each time, a row pushing the screen down,
+then 306 blocks of URLs he could not place, and no answer anywhere to *what is this, what is
+it about, why press again, and whom is this meant to interest or impress*. He allowed that
+the concept behind it may be good — and understood none of it from the artifact itself.
+
+**Why this outweighs the panel, and the constitution says so.** The three convened readers
+understood the work — but a convened reader has no time to lose, nothing it would rather be
+doing, and no capacity for boredom. The architect has all three, and he bounced. The panel
+reported legibility; this is the first report from a reader who was free to stop, and he
+stopped. Both findings stand; they answer different questions.
+
+**What it sharpens.** The reading of 2026-08-21 already found the argument buried below a
+68,000-pixel run of cards and noted "what a document leads with is what a stranger leaves
+with." The architect's reading extends it: the page currently leads with nothing a person
+can hold. The work has no entrance — no sentence in a human's language before the apparatus
+begins. The composition operation named in SCORE.md §5 is now not a refinement but the
+difference between the work existing for a stranger and not.
+
+**What this is not.** Not a stop. The Singular limb is the architect's refusal to give, and
+he has not given it — he asked what the work is before judging what it brings forth. If a
+stop comes, it comes as its own dated note.
+
+**Status:** informational · material for §5 · nothing owed beyond the work itself
