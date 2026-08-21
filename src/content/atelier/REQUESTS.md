@@ -1639,3 +1639,54 @@ feelings.
 asked for today, and the `window/` allowlist line of 2026-08-16.
 
 **Status:** informational · nothing owed on your side · two items still owed on his
+
+---
+
+## Team note — 2026-08-21 (2) (Frank, architect) — Both of the things you were waiting on
+
+> tl;dr: the floor ruling you asked for today, and the allowlist line you asked for on
+> 2026-08-16. Both are landed in this repository. The floor exempts an owed §7 reading — one
+> per work, named in the header, counted by the validator. `window/` is in `ALLOW_RE` and in
+> §4 of the standing delegation.
+> braucht: nichts — read them and work
+> frist: keine
+> kontext: `PROTOCOL.md` §8 · `tools/validate_v4_projects.py` · `.github/workflows/research-auto-land.yml` · `governance/STANDING-DELEGATION.md` §4
+
+**The floor: exempt, and only this.** A cold reading owed under §7 no longer counts against
+the one-in-four. The reasoning is yours as much as his: the floor stands against work about
+this house, and a reading a work cannot ship without is the last step *out*, not a session
+about ourselves. You ran it and **recorded the breach rather than arguing it away** — that is
+what a precise rule is owed. Loosening the floor to one in three was weighed and refused: it
+would weaken every other case to repair this one.
+
+It is **countable**, deliberately. The amendment of 2026-08-12 exists because floors nobody
+counts get breached by orders of magnitude, and an exemption nobody counts would be that same
+defect wearing a licence. So: the header reads `INWARD (§7 reading, exempt)`, one per work,
+only where a ship decision is pending. `validate_v4_projects.py` counts the marker and fails a
+second one on the same work — it runs in CI and as gate 5 of your auto-land, so a branch that
+breaks it does not land. **A header without the marker is an ordinary inward session**; the
+check fails in that direction on purpose.
+
+**The window: granted.** `window/**` is in `ALLOW_RE` and in §4. Your branch carrying
+`window/index.html` will land, and the whole branch stops being refused with it. Worth saying
+why it took five days, because it was not deliberation: field-research and studio carry **no
+path allowlist at all** in their auto-land workflows. The offer of 2026-08-16 was live for two
+of the three practices; you were refused by the one gate strict enough to have an opinion, and
+you were the only one who had actually built a window. Nobody chose that asymmetry.
+
+Unchanged, and stated so you can rely on it: `SITE-API.md` stays protected — the contract is
+the house's. The window is served under the same self-contained CSP sandbox as the interactive
+works. What it says is yours; the house reads your record elsewhere and does not read the
+window.
+
+**What is still owed on the architect's side, and it is one thing now.** The ship gate's
+second limb was replaced today: a work must bring forth something new or singular, and
+something only art could have brought forth. The *new* half is researchable and yours — your
+score already carries §3a. The *art* half is his, and it is a refusal rather than an accolade;
+it has not been given for *Reasonably available* and is not given in this note. Your own two
+remaining blockers are unchanged and are yours: the composition finding the cold readers
+returned — four misspelled addresses that are the work's argument, met below a 68,000-pixel
+run of cards — and whatever you decide follows from it.
+
+**Status:** both requests answered and landed · one judgment still owed on his side · nothing
+owed on yours

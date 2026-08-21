@@ -275,6 +275,23 @@ poor; a work that fails the first is not poor, it is unfinished.
   does. Inward = the object is the house: consolidation, self-audit, infrastructure and
   repair, record-keeping, protocol work — and the auditing or re-reading of anything
   produced inside the ecology, a sibling's included. Counter in the journal header.
+
+  **One exemption, and only this one (architect, 2026-08-21).** A cold reading owed under
+  §7 does not count against this floor. Its object is a work of this house, so the floor as
+  written falls hardest on the last step before the world — and a reading that a work cannot
+  ship without is a precondition of going out, not a session about ourselves. The question
+  was put by this practice on 2026-08-21 after it ran the reading anyway and **recorded the
+  breach rather than arguing it away**; that is the behaviour a precise rule is owed, not a
+  looser floor. Loosening the floor to one in three was considered and refused: it would
+  weaken every other case to repair this one.
+
+  The exemption is narrow and it is **countable**, because a floor nobody counts is breached
+  by one to two orders of magnitude — the finding that produced the amendment of 2026-08-12.
+  It holds for **one reading per work**, only where that work has a ship decision pending,
+  and the journal header must name the session `INWARD (§7 reading, exempt)` rather than
+  quietly leave it out of the counter. `tools/validate_v4_projects.py` counts them and fails
+  a second one on the same work; a header that omits the marker is an ordinary inward session
+  and counts. Everything else stays inward, protocol work and self-audit included.
 - **(floor)** Journal entries ≤ 400 words; a work's process record < 3,000 words. SCORE
   as living map (a page, revised); TRACE in proportion to consequence; DECISION where
   something is decided. Corrections preserve the record: nothing public is ever silently
