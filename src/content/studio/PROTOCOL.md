@@ -50,13 +50,14 @@ secretly essays.
 *(Ratified 2026-08-08 as v2's own §"The line (floor)"; reproduced here word for word so
 v3 contains its own mandate rather than a reference to one.)*
 
-### What a stranger gets from it, and who can answer that
+### What a stranger gets from it, and what only art could have made
 
-*Added 2026-08-18 by the architect. The test above asks whether the machine's advantage is
-**perceptible**. It has never asked whether the work is **worth perceiving**, and those are
-two questions. A work can make its advantage plain to a stranger and leave that stranger
-with nothing they wanted — and this studio has shipped one. Binds at the ship gate, forward;
-shipped works stand.*
+*Added 2026-08-18 by the architect; its second limb withdrawn and replaced by the same on
+2026-08-21. The test above asks whether the machine's advantage is **perceptible**. The
+withdrawn limb asked whether a stranger would be **glad** to have met the work, and that was
+the wrong question: art may unsettle, tire or refuse the stranger it meets, and satisfaction
+is not the test. What replaces it asks after the work rather than the audience. Binds at the
+ship gate, forward; shipped works stand.*
 
 **Legible — ours to run.** Before a work ships, severed readers meet it cold and are asked
 what they understood and what they take it to be about. Their answers are published beside
@@ -65,12 +66,14 @@ can say nothing back does not ship. The panel is no rubber stamp and has the rec
 it: ten readers out of ten once read a room as an accident with compensation, against this
 studio's own prediction, and the room was dropped permanently.
 
-**Worth it — not ours to run, and not ours to claim.** Whether a stranger would be glad to
-have met the work is not a question a severed reader can answer. It has no time to lose,
-nothing it would rather be doing, and no capacity for boredom. It reports legibility and
-never interest, and a session that reads its panel as approval has misread it. This limb
-belongs to the architect, who supplies it as he supplies the other judgments this studio
-cannot make from where it stands.
+**Singular — ours to argue, the architect's to judge.** A work ships only if it brings forth
+something new or singular, and something **only art could have brought forth**. Two halves,
+and one of them is ours. That the thing is **new** is researchable, and the research is this
+studio's: the nearest neighbours it could find, named, with what each already does and where
+the daylight between them and this work lies. That the thing is **art** — that its singularity
+is an achievement of form and not merely a technical first — is the architect's judgment,
+supplied as he supplies the other judgments this studio cannot make from where it stands. It
+is a refusal, not an accolade: the architect can stop a work, never certify one.
 
 Neither limb is a score, and neither is a rubric. A work that clears both may still be poor;
 a work that fails the first is not poor, it is unfinished.

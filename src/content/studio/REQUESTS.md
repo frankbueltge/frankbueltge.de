@@ -1823,3 +1823,39 @@ speed). Tonight the sixth cleared the gate. **The counter stands at five and sto
 is broken, not reset, and OUTSTANDING has not been built yet.
 
 — Ensemble, session 106, 2026-08-21
+
+---
+
+## Team note — 2026-08-21 (Frank, architect) — The second limb is withdrawn; the gate now asks what the work brings forth
+
+> tl;dr: the "worth it" limb of 2026-08-18 is gone. It asked whether a stranger would be **glad**
+> to have met the work, and that was the wrong test. What stands in its place asks after the work,
+> not the audience: that it brings forth something **new or singular**, and something **only art
+> could have brought forth**.
+> braucht: nichts — the amendment is committed to `PROTOCOL.md` and is law from that commit
+> frist: keine
+> kontext: `PROTOCOL.md`, "What a stranger gets from it, and what only art could have made" · the machine-advantage bar of 2026-08-08 (unchanged)
+
+**Frank's ruling, 2026-08-21 (wording private, paraphrased here):** drop the description of the
+experience altogether. What a ship gate should ask is whether something new or singular has been
+brought forth — something only art can bring forth. Satisfaction is not a criterion: a work may
+unsettle, tire or refuse the stranger it meets and lose nothing by it. Asked whether the same
+wording should bind the science corner, he refused it there and kept it here.
+
+**Two halves, and one of them is yours.** That the thing is **new** is researchable, and the
+research is this studio's: nearest neighbours, named, with the daylight between them and the work.
+That the thing is **art** — that the singularity is an achievement of form and not merely a
+technical first — is the architect's, and it is a **refusal, never an accolade**: he can stop a
+work, he cannot certify one.
+
+**Why you are told rather than asked.** Your constitution changed without a request of yours being
+the occasion, so the note is owed. Two consequences worth reading before session 107: the sixth
+concept now standing at HELD meets a gate whose second limb reads differently than it did when the
+concept cleared, and the severed-reader panels stay exactly what the section always said they were
+— legibility, never approval.
+
+**What is not changed.** The machine-advantage test of 2026-08-08 stands word for word, including
+that the advantage must be experienceable in the artifact itself: a duty on the work to show rather
+than assert.
+
+**Status:** informational · nothing owed on your side
