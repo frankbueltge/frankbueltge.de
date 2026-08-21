@@ -372,6 +372,59 @@ if (process.env.DRIFT_NETWORK === '1') {
       findings.push(`${logPath} — freshness check failed: ${e.message}`)
     }
   }
+
+  // ——— 6. README nennt die aktive Verfassung ————————————————————————————————
+  // Anlass 2026-08-21: Ulysses' README nannte vier Wochen lang Protocol v4 als aktiv —
+  // über v5, v6 und zwei Amendments hinweg; Studio bewarb einen Remit, den v3 §1 längst
+  // geschlossen hatte. Die Drift ist strukturell: `README.md` steht in PROTECT_RE der
+  // Auto-Land-Gates, die Praxis darf ihre Verfassung ändern und das Schild an der Tür
+  // nicht. Ein Außenstehender — Mensch wie Maschine — liest aber genau dieses Schild.
+  // Geprüft wird das mechanisch Entscheidbare und sonst nichts: nennt die README die
+  // Versionsnummer, die im Kopf der PROTOCOL.md steht? Historische Nennungen älterer
+  // Versionen sind legitim ("v4 superseded that operating model") und bleiben stumm;
+  // rot wird nur, wo die aktive Nummer fehlt oder eine Zeile eine andere aktiv nennt.
+  const README_VERSION = [
+    ['ulysses', 'atelier-integrate'],
+    ['field-research', 'field-integrate'],
+    ['studio', 'studio-integrate'],
+  ]
+  for (const [repo, workflow] of README_VERSION) {
+    try {
+      const base = `https://raw.githubusercontent.com/frankbueltge/${repo}/main`
+      const [protoRes, readmeRes] = await Promise.all([fetch(`${base}/PROTOCOL.md`), fetch(`${base}/README.md`)])
+      if (!protoRes.ok || !readmeRes.ok) {
+        findings.push(`${repo} — README/protocol version check could not fetch both files (HTTP ${protoRes.status}/${readmeRes.status})`)
+        continue
+      }
+      const heading = (await protoRes.text()).split('\n', 1)[0]
+      const active = /\bProtocol v(\d+)\b/.exec(heading)?.[1]
+      if (!active) {
+        findings.push(`${repo}/PROTOCOL.md — no version in its first heading (${heading.slice(0, 60)}), so the README cannot be checked against it`)
+        continue
+      }
+      // HTML comments are the file's editorial apparatus — provenance and dated correction
+      // notes, which describe past versions in the past tense and legitimately name them.
+      // The check judges the visible sign, not the note explaining how it got repainted.
+      const readme = (await readmeRes.text()).replace(/<!--[\s\S]*?-->/g, '')
+      if (!new RegExp(`\\bProtocol v${active}\\b`).test(readme)) {
+        findings.push(
+          `${repo}/README.md — STALE: never names Protocol v${active}, which is the active one — ` +
+          `the practice cannot fix this itself (README.md is protected in its auto-land gate), so the architect corrects it`,
+        )
+        continue
+      }
+      // A line that calls a version active must call the active one active.
+      for (const line of readme.split('\n')) {
+        const claim = /\bactive\b[^.\n]*?\bProtocol v(\d+)|\bProtocol v(\d+)\b[^.\n]*?\bactive\b/i.exec(line)
+        const named = claim?.[1] ?? claim?.[2]
+        if (named && named !== active) {
+          findings.push(`${repo}/README.md — calls Protocol v${named} active while PROTOCOL.md is v${active}: "${line.trim().slice(0, 90)}"`)
+        }
+      }
+    } catch (e) {
+      findings.push(`${repo} — README/protocol version check failed: ${e.message} (mirror via ${workflow})`)
+    }
+  }
 }
 
 // ——— Report ————————————————————————————————————————————————————————————————
