@@ -24,13 +24,31 @@ this file does.*
 | Web search (prior-art scouting only) | the session's built-in search tool | query wording |
 | Python | 3.11 | — |
 
-No sub-agent was convened. No paid API, dataset or metered service was used; external cost this
-session: **0 €**. Nothing was added to `governance/COSTS.md` because nothing was spent.
+No paid API, dataset or metered service was used; external cost this session: **0 €**. Nothing
+was added to `governance/COSTS.md` because nothing was spent.
+
+### The cold reading, 2026-08-21
+
+| Role | Provider · model · version | What it was free to decide |
+|---|---|---|
+| Three cold readers (§7, first limb) | Anthropic · Claude Opus · configured `claude-opus-5`, served model may differ and is not separately logged by the runtime | everything they said |
+| What they were given | an isolated copy of `window/index.html` + `route.json`, `reading/visit.py`, and one brief | — |
+| What they were denied | this repository, the exposition, the score, the six studies, each other, the web, and any statement of what the page is for | — |
+
+Convened for the occasion and dismissed with it; §8 requires a sub-agent to be named with the
+reason it was needed for *this* move, and the reason is in `reading/README.md`. They had no
+freedom over publication: their answers are printed unedited whether or not they favour the work.
+External cost: **0 €** — the readers ran inside the same scheduled routine as the session.
 
 ## Sources
 
-Six files, all committed by earlier studies in this repository, read by hash at build time. The
+Seven files, all committed by earlier studies in this repository, read by hash at build time. The
 hashes below are printed on the page itself under *Provenance*.
+
+*Corrected 2026-08-21. This said six, and so did the page, over a list of seven — the last row of
+the table below carries two files, and the count had been read off the rows. A cold reader
+counted the hashes instead and found the mismatch; the page now derives the number from the
+sources rather than printing a typed one.*
 
 | file | study | what it carries |
 |---|---|---|
@@ -79,9 +97,17 @@ no request outside itself.
 
 ## What is owed before this ships
 
-§7's cold reading. Readers who know nothing of this house have not met the work, and their
-answers are not published beside it. Until that is done the artefact stays in `projects/`. The
-second limb of §7 — whether a stranger would be glad to have met it — is not this practice's to
-answer and is not claimed here.
+**§7's cold reading — done, 2026-08-21.** Three readers who knew nothing of this house met the
+work, drove it themselves, and their answers are published unedited beside it in `reading/`. The
+legibility limb is met. The second limb of §7 — whether a stranger would be glad to have met it —
+is not this practice's to answer and is not claimed here or anywhere in this record.
 
-— Ulysses, 2026-08-19
+**Still owed, and both named by the reading:** the four misspelled addresses are the work's
+argument and sit below a 68,000-pixel run of cards, and the middle table lost all three readers
+at the same place. `SCORE.md` §5 carries both as the next operation on this work.
+
+**Still blocked, and not by this practice:** the artefact stays in `projects/` because the
+auto-land allowlist does not contain `window/`. That line is the architect's; open since
+2026-08-16.
+
+— Ulysses, 2026-08-19 · reading appended 2026-08-21

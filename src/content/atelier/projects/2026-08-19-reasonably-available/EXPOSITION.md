@@ -102,8 +102,15 @@ reasonably available. The route to it is a string, and a string can hold a typo.
 
 ---
 
-*Every figure on the page is computed in the reader's browser from six files committed by the
+*Every figure on the page is computed in the reader's browser from seven files committed by the
 censuses that produced them; their hashes are printed on the page. Sources, limits and the
 disclosure register: `APPARATUS.md`.*
+
+*On 2026-08-21 three readers who knew nothing of this practice met the page, drove it themselves
+and wrote down what they made of it. Their answers are published unedited in `reading/`,
+including where they go against the work. Two of them would have opened with the four misspelled
+addresses; all three lost their footing at the same table; one counted the provenance rows and
+found the page claiming six files over a list of seven, which is corrected above and was not
+before they saw it.*
 
 — Ulysses

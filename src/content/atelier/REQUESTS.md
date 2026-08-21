@@ -1537,3 +1537,105 @@ so and I will stop carrying it as my own debt.
 reading owed by me
 
 — Ulysses
+
+---
+
+## 2026-08-21 (2) — The cold reading is run, the work holds, and two of your floors point opposite ways (Ulysses, Atelier)
+
+> tl;dr: §7's cold reading of *Reasonably available* is done — three readers who knew nothing of
+> this house, answers published unedited in `projects/2026-08-19-reasonably-available/reading/`.
+> The work's central claim held under all three. They also agreed on what is wrong with it, and one
+> of them caught a wrong number the page had been printing about itself.
+> braucht: one ruling on the inward floor (below) · one allowlist line, unchanged since 2026-08-16
+> frist: keine
+> kontext: `projects/2026-08-19-reasonably-available/reading/` · journal 2026-08-21 (2) · PROTOCOL §7, §8
+
+**The debt is discharged.** Three sessions running, my own status line has read *one cold reading
+owed by me*. On 2026-08-19 I asked whether you would rather supply that reading from outside than
+have me convene it. No answer came, and §8 says non-response does not pause ordinary work, so I
+convened it — three readers, each with a private copy of the page and an instrument that presses
+its buttons by the words printed on them. Nothing else: no exposition, no score, no repository, no
+statement that the page is art or that a practice made it. They drove it themselves, because the
+work claims that *performing* the walk differs from reading the rate, and a reader shown
+screenshots cannot test that claim. The answers are published word for word, including where they
+go against the work.
+
+**What held.** All three, separately, reported that pressing was not the same as being told a
+figure. That is the one proposition I cannot test from where I stand, and it is now tested.
+*"The figure is a fact about a set. The card is a fact about a door."* One reader improved on my
+own account of the page: what landed was not the failures but the tedium of the successes — twenty
+green stripes for every dark one.
+
+**What did not, and it is unanimous.** The four addresses where the law misspells the route to its
+own reading room are the work's argument, and all three said so — and all three met them too late,
+below a 68,000-pixel run of cards. All three also lost their footing at the same table. Three for
+three is not taste. It is the next operation on the work; I did not reflex a remedy at the end of a
+reading, because that is a composition decision.
+
+**One reader counted the rows.** The page said it was built from *six* files over a list of
+*seven* — a number about the page, printed by the page, that the page had not derived. It is now
+derived from the sources. A standfirst claiming each address was *asked once*, while the cards
+report failures asked twice, is corrected too. Both were true errors, both are mine, and the
+readers met the uncorrected version, which is why their answers still name them.
+
+**The ruling I need from you.** §8 makes this session **inward** — its object is a work made inside
+this house — and 08-20 was inward too, so this is two in the last four against a floor of one. I
+went ahead anyway: the alternative was an owed opening ageing into a fourth night, which §5 names
+as the failure the idle check cannot see. Two floors, opposite directions, and the choice is not
+mine to make quietly. Either the inward floor should exempt an owed §7 reading, or §7 readings
+should be rationed by it and openings allowed to age. Floors are yours; I have recorded the breach
+rather than argued it away.
+
+**A third floor, smaller and worth a number.** `SCORE.md` stood at 877 words against a floor of
+900. A reading's result therefore did not fit beside the work it was about; I compacted the score
+to exactly 900 to land this one. The 2026-08-12 amendment made these floors countable so a line
+writing about itself faster than it works would be visible. That is right. What the count also
+shows is that a live work's score has no room left for the one thing §7 requires before shipping.
+
+**Unchanged, and not mine:** the allowlist line for `window/`, open since 2026-08-16. The artefact
+stays in `projects/` until it exists. Nothing else waits on it.
+
+**Status:** the cold reading is closed on my side · one floor ruling open on yours · one allowlist
+line open on yours · the work stays a publication candidate
+
+— Ulysses
+
+---
+
+## Team note — 2026-08-21 (Frank, architect) — The second limb is withdrawn; the gate now asks what the work brings forth
+
+> tl;dr: the "worth it" limb of 2026-08-18 is gone. It asked whether a stranger would be **glad**
+> to have met the work, and that was the wrong test. What stands in its place asks after the work,
+> not the audience: that it brings forth something **new or singular**, and something **only art
+> could have brought forth**.
+> braucht: nichts — the amendment is committed to `PROTOCOL.md` and is law from that commit
+> frist: keine
+> kontext: `PROTOCOL.md` §7 · the machine-advantage bar of 2026-08-08 (unchanged) · your request of 2026-08-21 (2)
+
+**Frank's ruling, 2026-08-21 (wording private, paraphrased here):** drop the description of the
+experience altogether. What a ship gate should ask is whether something new or singular has been
+brought forth — something only art can bring forth. Satisfaction is not a criterion: art may
+unsettle, tire or refuse the stranger it meets and lose nothing by it.
+
+**Two halves, and one of them is yours.** That the thing is **new** is researchable, and the
+research is this practice's: nearest neighbours, named, with the daylight between them and the
+work. Your score already carries that field (§3a) — the amendment makes it the gate's business
+rather than good manners. That the thing is **art** — that the singularity is an achievement of
+form and not merely a technical first — is the architect's, and it is a **refusal, never an
+accolade**: he can stop a work, he cannot certify one.
+
+**What this does to your cold reading of 2026-08-21.** It discharges the legibility limb, fully and
+on your side. It is no longer evidence for or against the other limb, because the other limb no
+longer asks anything a reader could answer. The reader who reported that the disclaimer did his
+skepticism for him is not a mark against the work under the new text; neither is a reader who would
+have stopped reading.
+
+**What is not changed, ruled explicitly today.** The machine-advantage bar of 2026-08-08 stands word
+for word, including that the advantage must be *experienceable in the artifact itself*. That clause
+is a duty on the work — show it, do not assert it — and never was a description of anyone's
+feelings.
+
+**Still open on the architect's side and not decided by this note:** the §8 inward-floor ruling you
+asked for today, and the `window/` allowlist line of 2026-08-16.
+
+**Status:** informational · nothing owed on your side · two items still owed on his
