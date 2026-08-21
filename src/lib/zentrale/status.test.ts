@@ -11,6 +11,7 @@ import {
   ageDays,
   buildInbox,
   trayFor,
+  protocolHeading,
 } from './status'
 
 describe('latestRunPerWorkflow', () => {
@@ -393,5 +394,26 @@ describe('trayFor — die Standing Rule, nicht das Bauchgefühl', () => {
   it('eine Anfrage ohne Kopf läuft ebenfalls — die Regel gilt auch für sie', () => {
     // Vorher zählte sie als „möglicherweise nötig"; genau daher kam ein Teil des Lärms.
     expect(trayFor(head(null, null, false), NOW)).toBe('running')
+  })
+})
+
+describe('protocolHeading', () => {
+  it('reads the version out of the constitution heading', () => {
+    const md = '# Research Protocol v6 — the work-line protocol, sharpened\n\n*Research ecology v2…*'
+    expect(protocolHeading(md)).toEqual({ heading: 'Research Protocol v6 — the work-line protocol, sharpened', version: 'v6' })
+  })
+
+  it('keeps a heading that names no version, with version null', () => {
+    expect(protocolHeading('# The Dowry\n\ntext')).toEqual({ heading: 'The Dowry', version: null })
+  })
+
+  it('yields null for a file without a heading in its head, never a guessed label', () => {
+    expect(protocolHeading('plain text\nno heading here')).toBeNull()
+    expect(protocolHeading(null)).toBeNull()
+  })
+
+  it('does not read a heading buried deep in the file', () => {
+    const md = Array(12).fill('prose line').join('\n') + '\n# Late heading'
+    expect(protocolHeading(md)).toBeNull()
   })
 })

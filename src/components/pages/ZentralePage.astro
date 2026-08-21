@@ -1,216 +1,302 @@
 ---
-// Steuerzentrale — Franks private Übersicht nach dem nächtlichen Run: was ist gelaufen (Die
-// Nacht), was wartet auf Antwort (Inbox), und ein Kanal, um selbst etwas anzustoßen (Saat).
-// Sober mit Absicht (Design-Notiz §Architektur): keine KPI-Deko, keine Animation — dieselben
-// Tailwind-Tokens wie der Rest der Site (text-fg-muted, border-line, bg-panel), nur Grün/Rot/
-// Amber als echte Signalfarben für Status (Tailwind-Kernpalette, Präzedenz: LegalPage.astro).
+// Steuerzentrale v3 — the ops room (2026-08-21, Frank's ask, wording private: one glance over
+// everything, interactive, a professional operator surface — v2's plain text sections read as
+// a printout). The room wears the entrance's instrument-panel language: ops-room.css supplies
+// ground, grid and tokens (scoped to .ops-room on <main>), hub-triptych.css the three practice
+// identity colours, zentrale-ops.css this page's own furniture. No new identity hexes — see
+// that file's header for the colour provenance.
 //
-// Alles unten ist ein statisches, leeres Gerüst — Inhalt kommt ausschließlich aus dem Skript
-// gegen GET/POST /api/zentrale/* (Contract: X-Zentrale-Auth-Header, Token aus localStorage).
-// Server-seitig gibt es hier nichts zu rendern (kein committetes JSON, anders als sonst im
-// Lab) — daher kein no-JS-Fallback wie bei anderen Seiten, nur ein <noscript>-Hinweis.
+// The data model and every action flow are v2's, unchanged: content comes exclusively from the
+// script below against GET/POST /api/zentrale/* (contract: X-Zentrale-Auth header, token from
+// localStorage). Nothing renders server-side except the static frame and the knob register —
+// there is no committed JSON behind this page (the one sanctioned exception to "Git ist das
+// Archiv", docs/design/2026-07-17-steuerzentrale.md). Hence no no-JS fallback, only <noscript>.
 //
-// Skript-Muster folgt CockpitPage.astro 1:1: kein is:inline (Astro bündelt/hasht es selbst,
-// erlaubt durch script-src 'self' in astro.config.mjs — kein neuer CSP-Hash nötig), ein
-// generischer el()-Baustein, der Kind-Strings ausschließlich über DOM-Textknoten einfügt
-// (nie innerHTML mit rohen API-Daten), und eine deutsche Fehlercode→Text-Map wie Cockpits
-// Ventil (vErrors).
+// Script pattern follows CockpitPage.astro: no is:inline (Astro bundles and hashes it, allowed
+// by script-src 'self'), a generic el() builder that inserts strings exclusively as DOM text
+// nodes (never innerHTML — commit messages, issue excerpts and seeds are foreign text), and
+// German error-code→text maps.
+//
+// Fixed on the way (2026-08-21): the access section and the gate lane both carried
+// data-zx="gate" since v2 — querySelector resolved both constants to the FIRST match, so every
+// publication-candidate card was appended into the hidden access section and the visible "Am
+// Gate" lane stayed empty forever. The lane hook is now data-zx="gatelane".
+import '@/styles/ops-room.css'
+import '@/styles/hub-triptych.css'
+import '@/styles/zentrale-ops.css'
+
+// The knob register (static by design): the levers Frank actually has, one row per unit, each
+// chip linking the exact file that IS the lever. Rendered server-side because the register is
+// knowledge about the house, not live state — it changes by decision, with this file.
+const GH = 'https://github.com/frankbueltge'
+const KNOBS: { name: string; voice: string | null; links: [string, string][] }[] = [
+  {
+    name: 'Atelier · Ulysses',
+    voice: 'ulysses',
+    links: [
+      ['Verfassung (v6)', `${GH}/ulysses/blob/main/PROTOCOL.md`],
+      ['Delegation §4', `${GH}/ulysses/blob/main/governance/STANDING-DELEGATION.md`],
+      ['Kanal', `${GH}/ulysses/blob/main/REQUESTS.md`],
+      ['Gate', `${GH}/ulysses/blob/main/.github/workflows/research-auto-land.yml`],
+      ['Validator', `${GH}/ulysses/blob/main/tools/validate_v4_projects.py`],
+    ],
+  },
+  {
+    name: 'Field · Meridian',
+    voice: 'meridian',
+    links: [
+      ['Verfassung (v3)', `${GH}/field-research/blob/main/PROTOCOL.md`],
+      ['Kanal', `${GH}/field-research/blob/main/REQUESTS.md`],
+      ['Feldkarte', `${GH}/field-research/blob/main/FIELD.md`],
+      ['Gate', `${GH}/field-research/blob/main/.github/workflows/auto-land.yml`],
+    ],
+  },
+  {
+    name: 'Studio · Ensemble',
+    voice: 'ensemble',
+    links: [
+      ['Verfassung (v3)', `${GH}/studio/blob/main/PROTOCOL.md`],
+      ['Workboard', `${GH}/studio/blob/main/WORKBOARD.md`],
+      ['Kanal', `${GH}/studio/blob/main/REQUESTS.md`],
+      ['Gate', `${GH}/studio/blob/main/.github/workflows/auto-land.yml`],
+    ],
+  },
+  {
+    name: 'Nightly line',
+    voice: null,
+    links: [
+      ['Verfassung', `${GH}/error-as-method/blob/main/PROTOCOL.md`],
+      ['Kanal', `${GH}/error-as-method/blob/main/REQUESTS.md`],
+      ['Workflows', `${GH}/error-as-method/tree/main/.github/workflows`],
+    ],
+  },
+  {
+    name: 'n-1 · Remainder',
+    voice: null,
+    links: [
+      ['Mitgift (der Boden)', `${GH}/n-1/blob/main/DOWRY.md`],
+      ['Foundation', `${GH}/n-1/tree/main/foundation`],
+      ['Kanal', `${GH}/n-1/blob/main/REQUESTS.md`],
+      ['Register', `${GH}/n-1/blob/main/REGISTER.md`],
+    ],
+  },
+  {
+    name: 'Machine Attention',
+    voice: null,
+    links: [
+      ['README (Verfassungsort)', `${GH}/machine-attention/blob/main/README.md`],
+      ['Kanal', `${GH}/machine-attention/blob/main/REQUESTS.md`],
+      ['Sensor-Vorschläge', `${GH}/machine-attention/tree/main/foreknown/proposals`],
+      ['Autonomie-Log', `${GH}/machine-attention/blob/main/autonomy/log.jsonl`],
+    ],
+  },
+  {
+    name: 'Das Haus (Site)',
+    voice: null,
+    links: [
+      ['Decision-Log', `${GH}/frankbueltge.de/blob/main/docs/decision-log.md`],
+      ['Drift-Wächter', `${GH}/frankbueltge.de/blob/main/scripts/drift-check.mjs`],
+      ['Workflows', `${GH}/frankbueltge.de/tree/main/.github/workflows`],
+      ['Wording-Kanon', `${GH}/frankbueltge.de/blob/main/docs/wording-kanon.md`],
+    ],
+  },
+]
 ---
 
-<main id="main" class="mx-auto w-full max-w-3xl flex-1 px-4 py-14 sm:px-6">
-  {/* ── Zugang ─────────────────────────────────────────────────────────── */}
-  <section data-zx="gate" class="mx-auto max-w-sm">
-    <p class="font-mono text-xs uppercase tracking-[0.22em] text-fg-faint">Steuerzentrale</p>
-    <h1 class="mt-2 text-2xl font-bold tracking-tight text-fg">Zugang</h1>
-    <p class="mt-3 text-sm text-fg-muted">Privates Operator-Werkzeug — nur mit Zugangstoken.</p>
-    <form data-zx="gate-form" class="mt-6 flex flex-col gap-3">
-      <label for="zx-token" class="font-mono text-xs uppercase tracking-[0.12em] text-fg-faint">Zugangstoken</label>
-      <input
-        id="zx-token"
-        name="token"
-        type="password"
-        autocomplete="off"
-        required
-        class="rounded-lg border border-line bg-panel px-3 py-2 text-sm text-fg outline-none focus-visible:border-fg"
-      />
-      <button
-        type="submit"
-        class="self-start rounded-full bg-fg px-5 py-2 text-sm font-semibold text-bg transition hover:opacity-90"
-      >
-        Öffnen
-      </button>
-      <p data-zx="gate-error" class="min-h-[1.2em] text-sm text-amber-500" role="status"></p>
+<main id="main" class="zx-ops ops-room hub-voices">
+  {/* ── access ─────────────────────────────────────────────────────────── */}
+  <section data-zx="gate" class="zx-narrow">
+    <p class="zx-eyebrow">Steuerzentrale</p>
+    <h1 class="zx-title">Zugang</h1>
+    <p class="zx-card-body">Privates Operator-Werkzeug — nur mit Zugangstoken.</p>
+    <form data-zx="gate-form" class="zx-field">
+      <label for="zx-token" class="zx-label">Zugangstoken</label>
+      <input id="zx-token" name="token" type="password" autocomplete="off" required class="zx-input" />
+      <div class="zx-actions">
+        <button type="submit" class="zx-btn zx-btn--primary">Öffnen</button>
+      </div>
+      <p data-zx="gate-error" class="zx-status zx-status--warn" role="status"></p>
     </form>
   </section>
 
-  {/* ── Laden ──────────────────────────────────────────────────────────── */}
-  <p data-zx="loading" class="mx-auto max-w-sm text-sm text-fg-muted" hidden>Lädt …</p>
+  {/* ── waiting states ─────────────────────────────────────────────────── */}
+  <p data-zx="loading" class="zx-narrow zx-empty" hidden>Lädt …</p>
+  <p data-zx="notconnected" class="zx-narrow zx-empty" hidden></p>
 
-  {/* ── Nicht verbunden ────────────────────────────────────────────────── */}
-  <p data-zx="notconnected" class="mx-auto max-w-sm text-sm text-fg-muted" hidden></p>
-
-  {/* ── Dashboard ──────────────────────────────────────────────────────── */}
-  <div data-zx="dashboard" hidden>
-    <header class="mb-10 flex flex-wrap items-baseline justify-between gap-3 border-b border-line pb-4">
+  {/* ── the room ───────────────────────────────────────────────────────── */}
+  <div data-zx="dashboard" class="zx-shell" hidden>
+    <header class="zx-topbar">
       <div>
-        <p class="font-mono text-xs uppercase tracking-[0.22em] text-fg-faint">Steuerzentrale</p>
-        <h1 class="mt-1 text-2xl font-bold tracking-tight text-fg">Übersicht</h1>
+        <p class="zx-eyebrow">Steuerzentrale</p>
+        <h1 class="zx-title">Opsroom</h1>
       </div>
-      <div class="flex items-center gap-3">
-        <span data-zx="stamp" class="font-mono text-xs text-fg-muted">—</span>
-        <button
-          type="button"
-          data-zx="refresh"
-          class="rounded-full border border-line px-3 py-1.5 text-xs font-semibold text-fg transition hover:border-fg"
-        >
-          Aktualisieren
-        </button>
+      <div class="zx-topbar-right">
+        <span class="zx-chip"><span data-zx="liveled" class="zx-led"></span><span data-zx="stamp">—</span></span>
+        <button type="button" data-zx="refresh" class="zx-btn">Aktualisieren</button>
       </div>
     </header>
 
-    <p data-zx="errors" class="mb-8 border-l-2 border-amber-500 pl-3 text-sm text-amber-500" hidden></p>
+    {/* The two dates that govern the house right now. The day counts are filled by the
+        script; the dates themselves stand in markup, so nothing here can drift silently. */}
+    <div class="zx-counts">
+      <div class="zx-count" data-zx-date="2026-09-05">
+        <span class="zx-count-n" data-zx="countn">–</span>
+        <span class="zx-count-what">
+          <span class="zx-count-label">Lesung der Ecology</span>
+          <span class="zx-count-sub">05.09. · drei Bedingungen · Archiv ist Default</span>
+        </span>
+      </div>
+      <div class="zx-count" data-zx-date="2026-10-14">
+        <span class="zx-count-n" data-zx="countn">–</span>
+        <span class="zx-count-what">
+          <span class="zx-count-label">Founder’s Reading n-1 · Freeze-Ende</span>
+          <span class="zx-count-sub">14.10.</span>
+        </span>
+      </div>
+    </div>
 
-    <section aria-labelledby="zx-night-h" class="mb-12">
-      <h2 id="zx-night-h" class="mb-4 font-mono text-xs uppercase tracking-[0.22em] text-fg-faint">Die Nacht</h2>
-      <div data-zx="night" class="flex flex-col gap-4"></div>
+    <p data-zx="errors" class="zx-partial" hidden></p>
+
+    <section aria-labelledby="zx-night-h">
+      <h2 id="zx-night-h" class="zx-h">Praxis-Board — die Nacht</h2>
+      <div data-zx="night" class="zx-board"></div>
     </section>
 
-    {/* Triage (v2 P1, docs/design/2026-08-01-steuerzentrale-v2.md), korrigiert 2026-08-02:
-        "Heute nötig" führte alles außer "braucht: nichts" — also auch Briefe ohne Eile und
-        Entscheidungen, die die Praxis bis zu ihrer nächsten Session selbst trifft. Am
-        2026-08-02 standen dort acht Einträge, ehrlich waren es null (Frank: "ich kann auch
-        nicht jeden Tag 1–2 Stunden damit verbringen"). Maßgeblich ist die Standing Rule im
-        Kopf jeder REQUESTS.md: eine Anfrage an Frank ist NIE ein Blocker, sein Schweigen
-        heißt "entscheidet selbst". Sortiert wird jetzt danach (src/lib/zentrale/status.ts,
-        trayFor): hier nur datierte Fristen in Reichweite. */}
-    <section aria-labelledby="zx-needed-h" class="mb-12">
-      <h2 id="zx-needed-h" class="mb-4 font-mono text-xs uppercase tracking-[0.22em] text-fg-faint">Heute nötig</h2>
-      <div data-zx="needed" class="flex flex-col gap-4"></div>
-    </section>
+    <div class="zx-cols">
+      {/* ── left column: what asks for a decision ────────────────────── */}
+      <div class="zx-col">
+        {/* Triage (v2 P1, claims-only since 2026-08-12): only dated deadlines in reach and
+            forwardings arrive here at all — the standing rule at the head of every
+            REQUESTS.md makes everything else the practice's own call. */}
+        <section aria-labelledby="zx-needed-h">
+          <h2 id="zx-needed-h" class="zx-h">Heute nötig</h2>
+          <div data-zx="needed" class="zx-lane"></div>
+        </section>
 
-    {/* "Läuft ohne dich" und "Zur Kenntnis" gab es hier bis 2026-08-12. Beide wuchsen nur
-        (die Praxen schreiben ~8 Sections am Tag), und Franks Antwort war beide Male
-        dieselbe: was ohne ihn läuft, ist kein Posteingang. Die Linie ist jetzt der
-        frist-Mechanismus der Praxen selbst: ein Anspruch an Frank nennt eine kommende
-        Frist oder ist eine Weiterleitung — alles andere ist Akte (REQUESTS.md der Praxis),
-        und der Requests-Watchdog legt dafür gar kein Issue mehr an. */}
+        {/* Gate lane (v2 P2, Governance §1): publication candidates with the honest 72h
+            clock and GO/HALTEN — the decision commits as a dated section into the
+            practice's REQUESTS.md; its next session performs the publication. */}
+        <section aria-labelledby="zx-gatelane-h">
+          <h2 id="zx-gatelane-h" class="zx-h">Am Gate</h2>
+          <div data-zx="gatelane" class="zx-lane"></div>
+        </section>
 
-    {/* Gate-Spur (v2 P2, Governance §1): Publikations-Kandidaten mit 72-h-Uhr und
-        GO/HALTEN — die Entscheidung wird als datierte Section in die REQUESTS.md der
-        Praxis committet; den Publikationsakt vollzieht deren nächste Session. */}
-    <section aria-labelledby="zx-gate-h" class="mb-12">
-      <h2 id="zx-gate-h" class="mb-4 font-mono text-xs uppercase tracking-[0.22em] text-fg-faint">Am Gate</h2>
-      <div data-zx="gate" class="flex flex-col gap-4"></div>
-    </section>
+        <section aria-labelledby="zx-siteprs-h">
+          <h2 id="zx-siteprs-h" class="zx-h">Site-PRs</h2>
+          <div data-zx="siteprs" class="zx-lane"></div>
+        </section>
 
-    {/* Post-Spur (v2 P2, revidiert 2026-08-01 abends — poste restante, Franks Konzept):
-        der Ausgang ist Teil des Werks, kein Aufgabenstapel. Briefe liegen adressiert und
-        vollständig offen; Zustellung ist optional und darf von jedem übernommen werden —
-        im besten Fall holt der Empfänger seine Post selbst ab. Gezeigt wird Liegedauer
-        als Fakt, nie als Frist; nichts wird archiviert. */}
-    <section aria-labelledby="zx-post-h" class="mb-12">
-      <h2 id="zx-post-h" class="mb-4 font-mono text-xs uppercase tracking-[0.22em] text-fg-faint">Post — offener Ausgang an die Welt</h2>
-      <div data-zx="post" class="flex flex-col gap-4"></div>
-    </section>
+        <section aria-labelledby="zx-pubseed-h">
+          <h2 id="zx-pubseed-h" class="zx-h">Öffentliche Saat — Freigabe</h2>
+          <div data-zx="pending-seeds" class="zx-lane"></div>
+        </section>
 
+        {/* Letters from outside (post office /post) — private queue, read here, forwarded
+            by Frank's hand; dismissing deletes from KV (letters were never public). */}
+        <section aria-labelledby="zx-letters-h">
+          <h2 id="zx-letters-h" class="zx-h">Briefkasten — Post von außen</h2>
+          <div data-zx="letters" class="zx-lane"></div>
+        </section>
+      </div>
 
-    <section aria-labelledby="zx-siteprs-h" class="mb-12">
-      <h2 id="zx-siteprs-h" class="mb-4 font-mono text-xs uppercase tracking-[0.22em] text-fg-faint">Site-PRs</h2>
-      <div data-zx="siteprs" class="flex flex-col gap-4"></div>
-    </section>
+      {/* ── right column: outgoing, levers, machinery ────────────────── */}
+      <div class="zx-col">
+        {/* Post lane (poste restante, Frank's concept): the outgoing tray is part of the
+            work, not a task pile. Days lying open are a fact, never a deadline. */}
+        <section aria-labelledby="zx-post-h">
+          <h2 id="zx-post-h" class="zx-h">Post — offener Ausgang</h2>
+          <div data-zx="post" class="zx-lane"></div>
+        </section>
 
-    <section aria-labelledby="zx-pubseed-h" class="mb-12">
-      <h2 id="zx-pubseed-h" class="mb-4 font-mono text-xs uppercase tracking-[0.22em] text-fg-faint">Öffentliche Saat — Freigabe</h2>
-      <div data-zx="pending-seeds" class="flex flex-col gap-4"></div>
-    </section>
+        <section aria-labelledby="zx-seed-h">
+          <h2 id="zx-seed-h" class="zx-h">Saat legen</h2>
+          <form data-zx="seed-form" class="zx-card">
+            <div class="zx-field">
+              <label for="zx-seed-repo" class="zx-label">Kollektiv</label>
+              <select id="zx-seed-repo" name="repo" class="zx-select">
+                <option value="field-research">Field · Meridian</option>
+                <option value="studio">Studio · Ensemble</option>
+                <option value="ulysses">Atelier · Ulysses</option>
+                <option value="data-snack-plenum">Plenum</option>
+              </select>
+            </div>
+            <div class="zx-field">
+              <label for="zx-seed-title" class="zx-label">Titel</label>
+              <input id="zx-seed-title" name="title" type="text" required maxlength="140" class="zx-input" />
+            </div>
+            <div class="zx-field">
+              <label for="zx-seed-body" class="zx-label">Text</label>
+              <textarea id="zx-seed-body" name="body" rows="4" required class="zx-textarea"></textarea>
+            </div>
+            <div class="zx-actions">
+              <button type="submit" data-zx="seed-submit" class="zx-btn zx-btn--primary">In REQUESTS.md legen</button>
+            </div>
+            <p data-zx="seed-msg" class="zx-status" role="status"></p>
+            <p class="zx-card-note">Ein Seed ist ein Angebot, kein Auftrag — die Praxis antwortet im Journal.</p>
+          </form>
+        </section>
 
-    {/* Briefkasten: letters from outside (post office /post) — private queue, read here,
-        forwarded by Frank's hand; dismissing deletes from KV (letters were never public). */}
-    <section aria-labelledby="zx-letters-h" class="mt-10">
-      <h2 id="zx-letters-h" class="mb-4 font-mono text-xs uppercase tracking-[0.22em] text-fg-faint">Briefkasten — Post von außen</h2>
-      <div data-zx="letters" class="flex flex-col gap-4"></div>
-    </section>
+        <section aria-labelledby="zx-knobs-h">
+          <h2 id="zx-knobs-h" class="zx-h">Maschinenraum — die Stellschrauben</h2>
+          <div class="zx-knobs">
+            {
+              KNOBS.map((k) => (
+                <div class={`zx-knob-row${k.voice ? ` zx-knob-row--${k.voice}` : ''}`}>
+                  <p class="zx-knob-name">{k.name}</p>
+                  <div class="zx-knob-links">
+                    {k.links.map(([label, href]) => (
+                      <a href={href} target="_blank" rel="noreferrer">
+                        {label} ↗
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              ))
+            }
+          </div>
+          <p class="zx-knob-foot">
+            Verfassungs-Floors und alles, was das Haus verlässt, bleiben bewusst ohne Schalter: sie werden als
+            datierte Entscheidung geschrieben, nicht als Setting geklickt. Die Routine-Prompts der Nacht-Sessions
+            liegen in der Trigger-API, nicht in Git — der eine Hebel ohne Link.
+          </p>
+        </section>
 
-    <section aria-labelledby="zx-seed-h" class="mb-12">
-      <h2 id="zx-seed-h" class="mb-4 font-mono text-xs uppercase tracking-[0.22em] text-fg-faint">Saat</h2>
-      <form data-zx="seed-form" class="flex flex-col gap-3 rounded-xl border border-line bg-panel p-4">
-        <label for="zx-seed-repo" class="font-mono text-xs uppercase tracking-[0.12em] text-fg-faint">Kollektiv</label>
-        <select
-          id="zx-seed-repo"
-          name="repo"
-          class="rounded-lg border border-line bg-bg px-3 py-2 text-sm text-fg"
-        >
-          <option value="field-research">Field · Meridian</option>
-          <option value="studio">Studio · Ensemble</option>
-          <option value="ulysses">Atelier · Ulysses</option>
-          <option value="data-snack-plenum">Plenum</option>
-        </select>
-
-        <label for="zx-seed-title" class="font-mono text-xs uppercase tracking-[0.12em] text-fg-faint">Titel</label>
-        <input
-          id="zx-seed-title"
-          name="title"
-          type="text"
-          required
-          maxlength="140"
-          class="rounded-lg border border-line bg-bg px-3 py-2 text-sm text-fg outline-none focus-visible:border-fg"
-        />
-
-        <label for="zx-seed-body" class="font-mono text-xs uppercase tracking-[0.12em] text-fg-faint">Text</label>
-        <textarea
-          id="zx-seed-body"
-          name="body"
-          rows="4"
-          required
-          class="rounded-lg border border-line bg-bg px-3 py-2 text-sm text-fg outline-none focus-visible:border-fg"
-        ></textarea>
-
-        <button
-          type="submit"
-          data-zx="seed-submit"
-          class="self-start rounded-full bg-fg px-5 py-2 text-sm font-semibold text-bg transition hover:opacity-90 disabled:opacity-50"
-        >
-          In REQUESTS.md legen
-        </button>
-        <p data-zx="seed-msg" class="min-h-[1.2em] text-sm text-fg" role="status"></p>
-        <p class="text-xs text-fg-faint">Ein Seed ist ein Angebot, kein Auftrag — die Praxis antwortet im Journal.</p>
-      </form>
-    </section>
-
-    <section aria-labelledby="zx-runs-h">
-      <details data-zx="runs-details">
-        <summary id="zx-runs-h" class="cursor-pointer font-mono text-xs uppercase tracking-[0.22em] text-fg-faint">
-          Alle Läufe
-        </summary>
-        <div data-zx="runs" class="mt-4 flex flex-col"></div>
-      </details>
-    </section>
+        <section aria-labelledby="zx-runs-h" class="zx-runs">
+          <details data-zx="runs-details">
+            <summary id="zx-runs-h">Alle Läufe</summary>
+            <div data-zx="runs" class="zx-field"></div>
+          </details>
+        </section>
+      </div>
+    </div>
   </div>
 
   <noscript>
-    <p class="mx-auto max-w-sm text-sm text-fg-muted">Die Steuerzentrale braucht JavaScript.</p>
+    <p class="zx-narrow zx-empty">Die Steuerzentrale braucht JavaScript.</p>
   </noscript>
 </main>
 
 <script>
-  // Steuerzentrale — Zustandsmaschine: gate → loading → dashboard | notconnected. Alles unten
-  // ist reines DOM, kein Framework (CockpitPage-Muster). Jede API-gelieferte Zeichenkette geht
-  // ausschließlich über el()/Text-Kinder ins DOM (nie innerHTML) — auch Commit-Messages und
-  // Issue-Excerpts sind Kollektiv-Text, keine vertrauenswürdige Auszeichnung.
+  // State machine: gate → loading → dashboard | notconnected. Pure DOM, no framework
+  // (CockpitPage pattern). Every API-supplied string enters the DOM exclusively through
+  // el()/text children (never innerHTML) — commit messages and issue excerpts are the
+  // collectives' text, not trusted markup.
   const TOKEN_KEY = 'zentraleToken'
-  // Zeitstempel der letzten schreibenden Aktion (Antwort, Ack, PR mergen/schließen). Der
-  // Status-Endpunkt cacht drei Minuten; ohne diese Marke zeigt ein Reload direkt nach dem
-  // Abarbeiten die erledigte Sache wieder als offen an. localStorage, nicht sessionStorage —
-  // die Marke muss auch in einem frisch geöffneten Tab gelten. Siehe cacheIsUsable().
+  // Timestamp of the last writing action (answer, ack, PR merge/close). The status endpoint
+  // caches for three minutes; without this mark a reload right after finishing something
+  // would show it as open again. localStorage, not sessionStorage — the mark must hold in a
+  // freshly opened tab too. See cacheIsUsable().
   const MUTATED_KEY = 'zentraleMutatedAt'
 
   interface ZxCollective {
     repo: string
     label: string
-    commitsLast24h: number
+    voice: 'ulysses' | 'meridian' | 'ensemble' | null
+    commitsLast24h: number | null
     lastCommit: { sha: string; message: string; date: string } | null
+    protocol: { heading: string; version: string | null } | null
     integrate: {
-      workflow: string
+      workflow: string | null
       conclusion: 'success' | 'failure' | null
       at: string | null
       runUrl: string | null
@@ -339,8 +425,11 @@
   const REPO_LABELS: Record<string, string> = {
     'field-research': 'Field · Meridian',
     studio: 'Studio · Ensemble',
-    'ulysses': 'Atelier · Ulysses',
-    'irrtum-als-methode': 'Atelier · Ulysses', // historischer Repo-Name (bis 2026-07-23) — alte Pulse-Einträge behalten ihr Label
+    ulysses: 'Atelier · Ulysses',
+    'irrtum-als-methode': 'Atelier · Ulysses', // historischer Repo-Name (bis 2026-07-23)
+    'error-as-method': 'Nightly line',
+    'n-1': 'n-1 · Remainder',
+    'machine-attention': 'Machine Attention',
     'data-snack-plenum': 'Plenum',
   }
 
@@ -373,8 +462,8 @@
     upstream: 'GitHub antwortet gerade nicht — bitte später erneut versuchen.',
   }
 
-  /** Minimaler DOM-Baustein: Kinder gehen nur über Element.append() ins Dokument — der
-   * native String→Text-Node-Weg, nie innerHTML. Fremdtext bleibt so immer bloßer Text. */
+  /** Minimal DOM builder: children enter only via Element.append() — the native string→text
+   * node path, never innerHTML. Foreign text therefore always stays plain text. */
   function el<K extends keyof HTMLElementTagNameMap>(
     tag: K,
     attrs: Record<string, string> = {},
@@ -395,7 +484,7 @@
     return new Intl.DateTimeFormat('de-DE', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Berlin' }).format(d)
   }
 
-  /** Relative Zeit aus einem ISO-Zeitstempel — für Commits, Integrate-Läufe, Workflow-Runs. */
+  /** Relative time from an ISO stamp — commits, integrate runs, workflow runs. */
   function fmtRel(iso: string | null): string {
     if (!iso) return '—'
     const then = new Date(iso).getTime()
@@ -409,8 +498,7 @@
     return `vor ${d} ${d === 1 ? 'Tag' : 'Tagen'}`
   }
 
-  /** Die Inbox liefert ageDays fertig (ganze Tage, server-seitig gerundet) statt eines
-   * Zeitstempels — hier nur noch in Text übersetzt, kein zweites Runden. */
+  /** Die Inbox liefert ageDays fertig (ganze Tage, server-seitig gerundet). */
   function fmtAgeDays(n: number): string {
     if (n <= 0) return 'heute'
     if (n === 1) return 'vor 1 Tag'
@@ -421,8 +509,8 @@
     return n.toFixed(2).replace('.', ',')
   }
 
-  // 'YYYY-MM-DD' → '26.07.'. Bewusst nicht fmtRel: ein Tagesdatum trägt keine Uhrzeit, und
-  // "vor 5 h" würde eine Genauigkeit vortäuschen, die in der Quelle nicht steht.
+  // 'YYYY-MM-DD' → '26.07.'. Deliberately not fmtRel: a day-date carries no clock time, and
+  // "vor 5 h" would fake a precision the source does not hold.
   function fmtDay(date: string | null): string {
     if (!date) return '—'
     const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(date)
@@ -436,7 +524,7 @@
     return Math.floor((Date.now() - then) / 86_400_000)
   }
 
-  // ── DOM-Referenzen ──────────────────────────────────────────────────────
+  // ── DOM references ──────────────────────────────────────────────────────
   const gateSection = document.querySelector<HTMLElement>('[data-zx="gate"]')
   const gateForm = document.querySelector<HTMLFormElement>('[data-zx="gate-form"]')
   const gateError = document.querySelector<HTMLElement>('[data-zx="gate-error"]')
@@ -444,11 +532,12 @@
   const notConnected = document.querySelector<HTMLElement>('[data-zx="notconnected"]')
   const dashboard = document.querySelector<HTMLElement>('[data-zx="dashboard"]')
   const stampEl = document.querySelector<HTMLElement>('[data-zx="stamp"]')
+  const liveLed = document.querySelector<HTMLElement>('[data-zx="liveled"]')
   const refreshBtn = document.querySelector<HTMLButtonElement>('[data-zx="refresh"]')
   const errorsEl = document.querySelector<HTMLElement>('[data-zx="errors"]')
   const nightEl = document.querySelector<HTMLElement>('[data-zx="night"]')
   const neededEl = document.querySelector<HTMLElement>('[data-zx="needed"]')
-  const gateEl = document.querySelector<HTMLElement>('[data-zx="gate"]')
+  const gateLaneEl = document.querySelector<HTMLElement>('[data-zx="gatelane"]')
   const postEl = document.querySelector<HTMLElement>('[data-zx="post"]')
   const sitePrsEl = document.querySelector<HTMLElement>('[data-zx="siteprs"]')
   const pendingSeedsEl = document.querySelector<HTMLElement>('[data-zx="pending-seeds"]')
@@ -456,6 +545,16 @@
   const seedSubmit = document.querySelector<HTMLButtonElement>('[data-zx="seed-submit"]')
   const seedMsg = document.querySelector<HTMLElement>('[data-zx="seed-msg"]')
   const runsEl = document.querySelector<HTMLElement>('[data-zx="runs"]')
+
+  // ── countdown tiles: days remaining, from the dates printed in markup ──
+  for (const tile of document.querySelectorAll<HTMLElement>('[data-zx-date]')) {
+    const date = tile.getAttribute('data-zx-date')
+    const n = tile.querySelector<HTMLElement>('[data-zx="countn"]')
+    if (!date || !n) continue
+    const days = Math.ceil((new Date(`${date}T00:00:00+02:00`).getTime() - Date.now()) / 86_400_000)
+    n.textContent = days >= 0 ? String(days) : `+${-days}`
+    if (days >= 0 && days <= 7) tile.classList.add('zx-count--near')
+  }
 
   let token: string | null = null
   try {
@@ -469,16 +568,16 @@
     try {
       localStorage.removeItem(TOKEN_KEY)
     } catch {
-      /* private mode etc. — token bleibt im Speicher schon null */
+      /* private mode etc. — token is already null in memory */
     }
   }
 
-  /** Nach jeder erfolgreichen schreibenden Aktion aufzurufen. */
+  /** To call after every successful writing action. */
   function markMutation(): void {
     try {
       localStorage.setItem(MUTATED_KEY, String(Date.now()))
     } catch {
-      /* private mode — dann bleibt es beim Cache-Verhalten; „Aktualisieren“ hilft weiterhin */
+      /* private mode — cache behaviour stays; "Aktualisieren" still helps */
     }
   }
 
@@ -515,8 +614,8 @@
     }
   }
 
-  /** POST-Wrapper für Antworten/Saat — 401 räumt global den Token weg und zeigt das Gate,
-   * damit keine Karte einzeln improvisiert, was ein abgelaufenes Token bedeutet. */
+  /** POST wrapper for answers/seeds — 401 clears the token globally and shows the gate, so
+   * no card improvises its own idea of an expired token. */
   async function postAntwort(payload: Record<string, unknown>): Promise<ZxAntwortResult> {
     const res = await fetch('/api/zentrale/antwort', {
       method: 'POST',
@@ -537,8 +636,7 @@
     return typeof url === 'string' ? url : null
   }
 
-  /** POST-Wrapper für Site-PR-Entscheidungen (merge/close) — 401 räumt wie bei postAntwort
-   * global den Token weg und zeigt das Gate. */
+  /** POST wrapper for site-PR decisions (merge/close). */
   async function postSitePr(payload: Record<string, unknown>): Promise<ZxSitePrResult> {
     const res = await fetch('/api/zentrale/site-pr', {
       method: 'POST',
@@ -553,8 +651,7 @@
     return (await res.json()) as ZxSitePrResult
   }
 
-  /** POST-Wrapper für die Freigabe-Entscheidung öffentlicher Seeds (approve/reject) — 401 räumt
-   * wie überall global den Token weg und zeigt das Gate. */
+  /** POST wrapper for public-seed review decisions (approve/reject). */
   async function postSeedReview(payload: Record<string, unknown>): Promise<ZxSeedReviewResult> {
     const res = await fetch('/api/zentrale/seed-review', {
       method: 'POST',
@@ -569,81 +666,75 @@
     return (await res.json()) as ZxSeedReviewResult
   }
 
-  // ── Rendering: Die Nacht ────────────────────────────────────────────────
+  // ── rendering: the board ────────────────────────────────────────────────
   function renderCollective(c: ZxCollective): HTMLElement {
-    const card = el('article', { class: 'rounded-xl border border-line bg-panel p-4' })
-    card.append(el('p', { class: 'font-semibold text-fg' }, c.label))
+    const card = el('article', { class: `zx-unit${c.voice ? ` zx-unit--${c.voice}` : ''}` })
 
-    const sessionLine = c.commitsLast24h > 0 ? `Session: ${c.commitsLast24h} Commits (24 h)` : 'keine Session'
-    card.append(el('p', { class: 'mt-1 text-sm text-fg-muted' }, sessionLine))
-
-    if (c.lastCommit) {
-      card.append(
-        el('p', { class: 'mt-1 text-sm text-fg-muted' }, `Letzter Commit: „${c.lastCommit.message}“ · ${fmtRel(c.lastCommit.date)}`),
-      )
+    // Head row: LED (integrate state) + name + protocol version chip.
+    const head = el('div', { class: 'zx-unit-head' })
+    const conclusion = c.integrate?.conclusion ?? null
+    const ledCls = conclusion === 'success' ? 'zx-led zx-led--ok' : conclusion === 'failure' ? 'zx-led zx-led--red' : 'zx-led'
+    const ledWord = conclusion === 'success' ? 'grün' : conclusion === 'failure' ? 'rot' : 'kein Lauf'
+    head.append(el('span', { class: ledCls, role: 'img', 'aria-label': `Integrate ${ledWord}` }))
+    head.append(el('h3', { class: 'zx-unit-name' }, c.label))
+    if (c.protocol?.version) {
+      const chip = el('span', { class: 'zx-chip zx-chip--accent', title: c.protocol.heading }, c.protocol.version)
+      head.append(chip)
     }
+    card.append(head)
 
-    if (c.integrate) {
-      const conclusion = c.integrate.conclusion
-      const word = conclusion === 'success' ? 'grün' : conclusion === 'failure' ? 'rot' : 'offen'
-      const cls = conclusion === 'success' ? 'text-green-500' : conclusion === 'failure' ? 'text-red-500' : 'text-fg-faint'
-      const line = el('p', { class: 'mt-2 text-sm text-fg-muted' })
-      line.append(el('span', { class: `font-semibold ${cls}` }, `integrate ${word}`))
-      if (c.integrate.runUrl) {
-        line.append(' · ')
-        line.append(el('a', { href: c.integrate.runUrl, target: '_blank', rel: 'noreferrer', class: 'underline hover:text-fg' }, 'Lauf ansehen ↗'))
-      }
-      if (c.integrate.redIssue) {
-        line.append(' · ')
-        line.append(
-          el(
-            'a',
-            { href: c.integrate.redIssue.url, target: '_blank', rel: 'noreferrer', class: 'text-red-500 underline hover:opacity-80' },
-            `Issue #${c.integrate.redIssue.number}`,
-          ),
-        )
-      }
-      card.append(line)
-    }
+    // The needle: commits in the last 24h.
+    const stat = el('div', { class: 'zx-unit-stat' })
+    stat.append(el('span', { class: 'zx-unit-stat-n' }, c.commitsLast24h === null ? '–' : String(c.commitsLast24h)))
+    stat.append(el('span', { class: 'zx-unit-stat-label' }, 'Commits · 24 h'))
+    card.append(stat)
 
+    // The practice's own last sentence: chronicle (field/studio) or journal (atelier, nightly).
     if (c.chronicle) {
       const quote = c.chronicle.verdict ? `„${c.chronicle.summary}“ — ${c.chronicle.verdict}` : `„${c.chronicle.summary}“`
-      card.append(el('p', { class: 'mt-2 text-sm italic text-fg-muted' }, quote))
+      card.append(el('p', { class: 'zx-unit-quote', title: quote }, quote))
+    }
+    if (c.journal) {
+      const line = el('p', { class: 'zx-unit-quote' }, `„${c.journal.title}“`)
+      card.append(line)
+      const meta = el('p', { class: 'zx-unit-line' }, `Journal ${fmtDay(c.journal.date)}`)
+      if (c.journal.url) {
+        meta.append(' · ')
+        meta.append(el('a', { href: c.journal.url, target: '_blank', rel: 'noreferrer' }, 'lesen ↗'))
+      }
+      card.append(meta)
     }
 
-    // Das Atelier führt keine Chronik — sein tägliches Lebenszeichen ist der Journaleintrag.
-    // Gleiche Optik wie das Chronik-Zitat, damit die Karte nicht als die stille unter vieren
-    // dasteht, obwohl die Praxis arbeitet.
-    if (c.journal) {
-      const line = el('p', { class: 'mt-2 text-sm italic text-fg-muted' }, `„${c.journal.title}“`)
-      const meta = el('span', { class: 'not-italic text-fg-faint' }, ` · Journal ${fmtDay(c.journal.date)}`)
-      if (c.journal.url) {
-        meta.append(' ')
-        meta.append(el('a', { href: c.journal.url, target: '_blank', rel: 'noreferrer', class: 'underline hover:text-fg' }, 'lesen ↗'))
+    if (c.lastCommit) {
+      card.append(el('p', { class: 'zx-unit-line' }, `„${c.lastCommit.message}“ · ${fmtRel(c.lastCommit.date)}`))
+    }
+
+    // Integrate line with run link — the LED above carries the state, this line the receipt.
+    if (c.integrate && (c.integrate.runUrl || c.integrate.redIssue)) {
+      const line = el('p', { class: 'zx-unit-line' })
+      if (c.integrate.runUrl) {
+        line.append(el('a', { href: c.integrate.runUrl, target: '_blank', rel: 'noreferrer' }, `Integrate ${ledWord} · ${fmtRel(c.integrate.at)} ↗`))
       }
-      line.append(meta)
+      if (c.integrate.redIssue) {
+        if (c.integrate.runUrl) line.append(' · ')
+        line.append(el('a', { href: c.integrate.redIssue.url, target: '_blank', rel: 'noreferrer' }, `Issue #${c.integrate.redIssue.number}`))
+      }
       card.append(line)
     }
 
-    // Vitalzeichen: bleiben sichtbar, aber DATIERT. Die Zahl stammt aus Protokoll v4; unter v5
-    // schreibt Ulysses sie nicht mehr fort. Eine undatierte, eingefrorene Kennzahl liest sich
-    // wie ein aktueller Messwert — genau das soll die Zentrale nicht tun.
+    // Vital signs stay visible but DATED — a frozen v4 metric must never read as current.
     if (c.vitalSigns && typeof c.vitalSigns.closure === 'number') {
       const age = daysSince(c.vitalSigns.date)
-      const line = el(
-        'p',
-        { class: 'mt-2 font-mono text-xs text-fg-faint' },
-        `closure ${fmtClosure(c.vitalSigns.closure)} · Stand ${fmtDay(c.vitalSigns.date)}`,
-      )
+      const line = el('p', { class: 'zx-unit-line' }, `closure ${fmtClosure(c.vitalSigns.closure)} · Stand ${fmtDay(c.vitalSigns.date)}`)
       if (age !== null && age > 2) line.append(` — seit ${age} Tagen unverändert (v4-Kennzahl)`)
       card.append(line)
     }
 
     if (c.strandedIssues.length > 0) {
-      const warn = el('p', { class: 'mt-2 text-sm text-amber-500' }, 'Offen geblieben: ')
+      const warn = el('p', { class: 'zx-unit-alert' }, 'Offen geblieben: ')
       c.strandedIssues.forEach((issue, i) => {
         if (i > 0) warn.append(', ')
-        warn.append(el('a', { href: issue.url, target: '_blank', rel: 'noreferrer', class: 'underline' }, `#${issue.number} ${issue.title}`))
+        warn.append(el('a', { href: issue.url, target: '_blank', rel: 'noreferrer' }, `#${issue.number} ${issue.title}`))
       })
       card.append(warn)
     }
@@ -651,9 +742,8 @@
     return card
   }
 
-  // ── Rendering: Inbox ────────────────────────────────────────────────────
-  /** Frist-Anzeige mit Countdown. Getragen von der Selbstauskunft (fristDate aus dem
-   * Vier-Zeilen-Kopf); eine Frist ohne Datum wird als Text gezeigt, nie geraten. */
+  // ── rendering: inbox ────────────────────────────────────────────────────
+  /** Deadline display with countdown — carried by the sender's own four-line head. */
   function fmtFrist(entry: ZxInboxEntry): { label: string; urgent: boolean } | null {
     if (entry.fristDate) {
       const days = Math.floor((Date.parse(entry.fristDate) - Date.now()) / 86_400_000)
@@ -667,39 +757,35 @@
     return null
   }
 
-  const BADGE = 'ml-2 rounded-full border border-line px-2 py-0.5 text-[10px] normal-case tracking-normal text-fg-muted'
-  const BADGE_URGENT = 'ml-2 rounded-full border border-amber-500 px-2 py-0.5 text-[10px] normal-case tracking-normal text-amber-500'
-
-  /** Gate-Karte (v2 P2): Kandidat + ehrlich beschriftete SLA-Uhr + GO/HALTEN. GO verlangt
-   * eine zweite Bestätigung (Publikation ist die folgenreichste Ein-Klick-Aktion hier);
-   * HALTEN verlangt eine Begründung — "decide, or write a dated 'held, because …'". */
+  /** Gate card (v2 P2): candidate + honestly labelled SLA clock + GO/HALTEN. GO takes a
+   * second confirming click (publication is the most consequential one-click action here);
+   * HALTEN takes a reason — "decide, or write a dated 'held, because …'". */
   function renderGateCard(c: ZxGateCandidate): HTMLElement {
-    const card = el('article', { class: 'rounded-xl border border-line bg-panel p-4' })
-    const meta = el('p', { class: 'font-mono text-xs uppercase tracking-[0.12em] text-fg-faint' }, `${REPO_LABELS[c.repo] ?? c.repo} · PUBLICATION_CANDIDATE`)
+    const card = el('article', { class: 'zx-card' })
+    const meta = el('p', { class: 'zx-card-meta' }, `${REPO_LABELS[c.repo] ?? c.repo} · PUBLICATION_CANDIDATE`)
     if (c.hoursSinceChange !== null) {
       const over = c.hoursSinceChange >= 72
-      meta.append(el('span', { class: over ? BADGE_URGENT : BADGE }, over ? `SLA überschritten · ${c.hoursSinceChange} h seit letzter Änderung` : `${c.hoursSinceChange} h von 72 h (ab letzter SCORE-Änderung)`))
+      if (over) card.classList.add('zx-card--urgent')
+      meta.append(el('span', { class: over ? 'zx-chip zx-chip--urgent' : 'zx-chip' }, over ? `SLA überschritten · ${c.hoursSinceChange} h seit letzter Änderung` : `${c.hoursSinceChange} h von 72 h (ab letzter SCORE-Änderung)`))
     } else {
-      meta.append(el('span', { class: BADGE }, 'Wartezeit nicht ableitbar'))
+      meta.append(el('span', { class: 'zx-chip' }, 'Wartezeit nicht ableitbar'))
     }
     card.append(meta)
-    card.append(el('p', { class: 'mt-1 font-semibold text-fg' }, c.title ?? c.project))
-    const src = el('p', { class: 'mt-1 font-mono text-xs text-fg-faint' })
-    src.append(el('a', { href: c.projectUrl, target: '_blank', rel: 'noreferrer', class: 'underline hover:text-fg' }, `${c.project} ↗`))
+    card.append(el('p', { class: 'zx-card-title' }, c.title ?? c.project))
+    const src = el('p', { class: 'zx-card-sub' })
+    src.append(el('a', { href: c.projectUrl, target: '_blank', rel: 'noreferrer' }, `${c.project} ↗`))
     if (c.scoreChangedAt) src.append(` · SCORE zuletzt ${c.scoreChangedAt.slice(0, 10)}`)
     card.append(src)
 
-    const reasonField = el('textarea', { rows: '2', class: 'mt-2 w-full rounded-lg border border-line bg-bg px-3 py-2 text-sm text-fg outline-none focus-visible:border-fg', placeholder: 'Halten, weil …' }) as HTMLTextAreaElement
+    const reasonField = el('textarea', { rows: '2', class: 'zx-textarea zx-field', placeholder: 'Halten, weil …' }) as HTMLTextAreaElement
     reasonField.hidden = true
     card.append(reasonField)
-    const hint = el('p', { class: 'mt-1 min-h-[1.2em] text-xs text-fg-faint', role: 'status' })
+    const hint = el('p', { class: 'zx-status', role: 'status' })
     card.append(hint)
 
-    const actions = el('div', { class: 'mt-3 flex flex-wrap gap-2' })
-    const mkBtn = (label: string): HTMLButtonElement =>
-      el('button', { type: 'button', class: 'rounded-full border border-line px-3 py-1.5 text-xs font-semibold text-fg transition hover:border-fg disabled:opacity-50' }, label) as HTMLButtonElement
-    const btnGo = mkBtn('GO — publizieren')
-    const btnHold = mkBtn('HALTEN (mit Begründung)')
+    const actions = el('div', { class: 'zx-actions' })
+    const btnGo = el('button', { type: 'button', class: 'zx-btn zx-btn--go' }, 'GO — publizieren') as HTMLButtonElement
+    const btnHold = el('button', { type: 'button', class: 'zx-btn' }, 'HALTEN (mit Begründung)') as HTMLButtonElement
     actions.append(btnGo, btnHold)
     card.append(actions)
 
@@ -711,9 +797,9 @@
         const result = await postAntwort({ action: 'gate', repo: c.repo, project: c.project, decision, reason: reasonField.value.trim() })
         if (result.ok) {
           markMutation()
-          const p = el('p', { class: 'text-sm text-fg' }, decision === 'GO' ? '✓ GO committet — die nächste Session der Praxis vollzieht die Publikation.' : '✓ HALTEN committet — datiert, mit Begründung.')
+          const p = el('p', { class: 'zx-done' }, decision === 'GO' ? '✓ GO committet — die nächste Session der Praxis vollzieht die Publikation.' : '✓ HALTEN committet — datiert, mit Begründung.')
           const url = commitUrlOf(result.commit)
-          if (url) { p.append(' · '); p.append(el('a', { href: url, target: '_blank', rel: 'noreferrer', class: 'underline hover:text-fg' }, 'Commit ansehen ↗')) }
+          if (url) { p.append(' · '); p.append(el('a', { href: url, target: '_blank', rel: 'noreferrer' }, 'Commit ansehen ↗')) }
           card.replaceChildren(p)
           return
         }
@@ -736,57 +822,59 @@
     return card
   }
 
-  /** Post-Karte (poste restante): lesend — Empfänger, Kanal, Liegedauer als Fakt.
-   * Kein Countdown, kein Warnbernstein: ein lange liegender Brief ist Teil der Geste,
-   * kein Versäumnis. Direktzustellung bleibt als Option verlinkt. */
+  /** Post card (poste restante): read-only — receiver, channel, days lying open as a fact.
+   * No countdown, no warning amber: a long-lying letter is part of the gesture. */
   function renderPostCard(item: ZxPostItem): HTMLElement {
-    const card = el('article', { class: 'rounded-xl border border-line bg-panel p-4' })
-    const meta = el('p', { class: 'font-mono text-xs uppercase tracking-[0.12em] text-fg-faint' }, `${item.practice} · ${item.status}`)
+    const card = el('article', { class: 'zx-card' })
+    const meta = el('p', { class: 'zx-card-meta' }, `${item.practice} · ${item.status}`)
     if (item.daysOpen !== null) {
-      meta.append(el('span', { class: BADGE }, item.daysOpen === 0 ? 'heute offen gelegt' : `liegt offen zur Abholung · ${item.daysOpen} Tg.`))
+      meta.append(el('span', { class: 'zx-chip' }, item.daysOpen === 0 ? 'heute offen gelegt' : `liegt offen zur Abholung · ${item.daysOpen} Tg.`))
     } else {
-      meta.append(el('span', { class: BADGE }, 'liegt noch bei der Praxis'))
+      meta.append(el('span', { class: 'zx-chip' }, 'liegt noch bei der Praxis'))
     }
     card.append(meta)
-    card.append(el('p', { class: 'mt-1 font-semibold text-fg' }, item.piece))
-    card.append(el('p', { class: 'mt-1 text-sm text-fg-muted' }, `an: ${item.receiver} · Kanal: ${item.receiverChannel}`))
-    if (item.note) card.append(el('p', { class: 'mt-1 text-xs text-fg-faint' }, item.note))
-    const links = el('p', { class: 'mt-2 font-mono text-xs' })
+    card.append(el('p', { class: 'zx-card-title' }, item.piece))
+    card.append(el('p', { class: 'zx-card-body' }, `an: ${item.receiver} · Kanal: ${item.receiverChannel}`))
+    if (item.note) card.append(el('p', { class: 'zx-card-note' }, item.note))
+    const links = el('p', { class: 'zx-card-sub' })
     if (item.email) {
-      links.append(el('a', { href: `mailto:${item.email}`, class: 'underline hover:text-fg' }, `direkt zustellen (optional): ${item.email}`))
+      links.append(el('a', { href: `mailto:${item.email}` }, `direkt zustellen (optional): ${item.email}`))
       links.append(' · ')
     }
-    links.append(el('a', { href: item.recordUrl, target: '_blank', rel: 'noreferrer', class: 'underline hover:text-fg' }, 'das Paket ↗'))
+    links.append(el('a', { href: item.recordUrl, target: '_blank', rel: 'noreferrer' }, 'das Paket ↗'))
     card.append(links)
     return card
   }
 
   function renderInboxCard(entry: ZxInboxEntry): HTMLElement {
-    const card = el('article', { class: 'rounded-xl border border-line bg-panel p-4' })
+    const card = el('article', { class: 'zx-card' })
     const repoLabel = REPO_LABELS[entry.repo] ?? entry.repo
 
-    // Triage-Kopfzeile (v2 P1): die Selbstauskunft des Absenders als Badges. Kopflose
-    // Alt-Anfragen tragen den ehrlichen Marker statt einer erfundenen Einordnung.
-    const meta = el('p', { class: 'font-mono text-xs uppercase tracking-[0.12em] text-fg-faint' }, `${repoLabel} · ${fmtAgeDays(entry.ageDays)}`)
-    if (entry.structured && entry.braucht) meta.append(el('span', { class: BADGE }, `braucht: ${entry.braucht}`))
-    if (!entry.structured) meta.append(el('span', { class: BADGE }, 'unstrukturiert (alt)'))
+    // Triage head (v2 P1): the sender's self-declaration as chips. Headless legacy
+    // requests carry the honest marker instead of an invented classification.
+    const meta = el('p', { class: 'zx-card-meta' }, `${repoLabel} · ${fmtAgeDays(entry.ageDays)}`)
+    if (entry.structured && entry.braucht) meta.append(el('span', { class: 'zx-chip' }, `braucht: ${entry.braucht}`))
+    if (!entry.structured) meta.append(el('span', { class: 'zx-chip' }, 'unstrukturiert (alt)'))
     const frist = fmtFrist(entry)
-    if (frist) meta.append(el('span', { class: frist.urgent ? BADGE_URGENT : BADGE }, frist.label))
+    if (frist) {
+      if (frist.urgent) card.classList.add('zx-card--urgent')
+      meta.append(el('span', { class: frist.urgent ? 'zx-chip zx-chip--urgent' : 'zx-chip' }, frist.label))
+    }
     card.append(meta)
 
-    // Die eine Zeile zuerst: das tl;dr des Absenders (bzw. der Satz-Fallback); die
-    // REQUESTS-Überschrift bleibt als Unterzeile, der Volltext einen Aufklapper entfernt.
-    card.append(el('p', { class: 'mt-1 font-semibold text-fg' }, entry.summary || entry.heading))
-    card.append(el('p', { class: 'mt-0.5 font-mono text-xs text-fg-faint' }, entry.heading))
-    if (entry.kontext) card.append(el('p', { class: 'mt-1 text-xs text-fg-muted' }, `Kontext: ${entry.kontext}`))
+    // The one line first: the sender's tl;dr (or the sentence fallback); the REQUESTS
+    // heading stays as a subline, the full text one expander away.
+    card.append(el('p', { class: 'zx-card-title' }, entry.summary || entry.heading))
+    card.append(el('p', { class: 'zx-card-sub' }, entry.heading))
+    if (entry.kontext) card.append(el('p', { class: 'zx-card-note' }, `Kontext: ${entry.kontext}`))
 
-    const excerptWrap = el('div', { class: 'zx-excerpt mt-2 text-sm text-fg-muted' }, el('span', {}, entry.excerpt))
+    const excerptWrap = el('div', { class: 'zx-excerpt' }, el('span', {}, entry.excerpt))
     card.append(excerptWrap)
-    // Der Knopf erscheint nur, wenn es wirklich mehr zu sehen gibt — an der ZEICHENZAHL
-    // gemessen, nicht am Layout: eine Layout-Messung (scrollHeight vs. clientHeight) würde
-    // einen kaputten Klemm-Stil stillschweigend verstecken, statt ihn zu zeigen.
+    // The button appears only when there really is more — measured by CHARACTER COUNT, not
+    // layout: a scrollHeight probe would silently hide a broken clamp style instead of
+    // showing it.
     if (entry.excerpt.length > 280) {
-      const expandBtn = el('button', { type: 'button', class: 'mt-1 font-mono text-xs text-fg-faint underline' }, 'mehr')
+      const expandBtn = el('button', { type: 'button', class: 'zx-more' }, 'mehr')
       expandBtn.addEventListener('click', () => {
         const expanded = excerptWrap.classList.toggle('is-expanded')
         expandBtn.textContent = expanded ? 'weniger' : 'mehr'
@@ -794,26 +882,15 @@
       card.append(expandBtn)
     }
 
-    const hinweis = el('p', { class: 'mt-2 text-xs text-fg-faint' }, 'Ohne Antwort entscheidet die Praxis in ihrer nächsten Sitzung selbst. ')
-    // Immer erreichbar, was auch im Dashboard schiefgeht: die Anfrage an ihrer Quelle.
-    hinweis.append(
-      el(
-        'a',
-        { href: entry.issueUrl, target: '_blank', rel: 'noreferrer', class: 'underline hover:text-fg' },
-        'ganz lesen ↗',
-      ),
-    )
+    const hinweis = el('p', { class: 'zx-card-note' }, 'Ohne Antwort entscheidet die Praxis in ihrer nächsten Sitzung selbst. ')
+    hinweis.append(el('a', { href: entry.issueUrl, target: '_blank', rel: 'noreferrer' }, 'ganz lesen ↗'))
     card.append(hinweis)
 
-    const msgField = el('textarea', {
-      rows: '2',
-      class: 'mt-2 w-full rounded-lg border border-line bg-bg px-3 py-2 text-sm text-fg outline-none focus-visible:border-fg',
-      placeholder: 'Nachricht …',
-    }) as HTMLTextAreaElement
+    const msgField = el('textarea', { rows: '2', class: 'zx-textarea zx-field', placeholder: 'Nachricht …' }) as HTMLTextAreaElement
     msgField.hidden = true
     card.append(msgField)
 
-    const hint = el('p', { class: 'mt-1 min-h-[1.2em] text-xs text-fg-faint', role: 'status' })
+    const hint = el('p', { class: 'zx-status', role: 'status' })
     card.append(hint)
 
     let revealed = false
@@ -823,12 +900,8 @@
       msgField.focus()
     }
 
-    const actions = el('div', { class: 'mt-3 flex flex-wrap gap-2' })
-    const btn = (label: string): HTMLButtonElement =>
-      el('button', {
-        type: 'button',
-        class: 'rounded-full border border-line px-3 py-1.5 text-xs font-semibold text-fg transition hover:border-fg disabled:opacity-50',
-      }, label) as HTMLButtonElement
+    const actions = el('div', { class: 'zx-actions' })
+    const btn = (label: string): HTMLButtonElement => el('button', { type: 'button', class: 'zx-btn' }, label) as HTMLButtonElement
 
     const btnEnabled = btn('enabled')
     const btnDeclined = btn('declined')
@@ -837,10 +910,9 @@
     actions.append(btnEnabled, btnDeclined, btnNote, btnAck)
     card.append(actions)
 
-    // v2 P3: Bei "braucht: entscheidung (a | b)" werden die vom Absender selbst benannten
-    // Optionen zu Ein-Klick-Antworten — geschrieben wie 'Antwort', als datierte
-    // Response-Zeile in der REQUESTS.md der Praxis. Vorn eingereiht: die wahrscheinlichste
-    // Handlung zuerst.
+    // v2 P3: "braucht: entscheidung (a | b)" turns the sender's own options into one-click
+    // answers — written like 'Antwort', as a dated response line in the practice's
+    // REQUESTS.md. Prepended: likeliest action first.
     if (entry.braucht === 'entscheidung' && entry.brauchtOptionen.length > 0) {
       for (const opt of entry.brauchtOptionen.slice(0, 4).reverse()) {
         const label = opt.length > 30 ? `${opt.slice(0, 29)}…` : opt
@@ -865,38 +937,28 @@
         if (result.ok) {
           markMutation()
           if (decision === 'enabled') {
-            const p = el('p', { class: 'text-sm text-fg' }, '✓ enabled — committet')
+            const p = el('p', { class: 'zx-done' }, '✓ enabled — committet')
             const url = commitUrlOf(result.commit)
             if (url) {
               p.append(' · ')
-              p.append(el('a', { href: url, target: '_blank', rel: 'noreferrer', class: 'underline hover:text-fg' }, 'Commit ansehen ↗'))
+              p.append(el('a', { href: url, target: '_blank', rel: 'noreferrer' }, 'Commit ansehen ↗'))
             }
-            if (result.warning) p.append(el('span', { class: 'block text-xs text-amber-500' }, result.warning))
+            if (result.warning) p.append(el('span', { class: 'zx-status zx-status--warn' }, result.warning))
             card.replaceChildren(p)
           } else {
-            const p = el('p', { class: 'text-sm text-fg' }, '✓ geschlossen')
-            if (result.warning) p.append(el('span', { class: 'block text-xs text-amber-500' }, result.warning))
+            const p = el('p', { class: 'zx-done' }, '✓ geschlossen')
+            if (result.warning) p.append(el('span', { class: 'zx-status zx-status--warn' }, result.warning))
             card.replaceChildren(p)
           }
           return
         }
-        // Die Anfrage steht nicht mehr in REQUESTS.md: Die Praxis hat sie selbst abgeräumt,
-        // Franks Antwort wurde NICHT geschrieben. Der Text sagt beides — die halbe Wahrheit
-        // („Praxis hat entschieden“) ließe offen, ob die Antwort nun drinsteht oder nicht.
+        // The request is gone from REQUESTS.md: the practice cleared it itself, Frank's
+        // answer was NOT written. The text says both — the half-truth would leave open
+        // whether the answer is in there or not.
         if (result.code === 'not-found') {
           if (result.issueClosed) markMutation()
-          const p = el(
-            'p',
-            { class: 'text-sm text-fg-muted' },
-            'Nicht mehr in REQUESTS.md — die Praxis hat die Stelle selbst abgeräumt. Deine Antwort wurde nicht geschrieben.',
-          )
-          p.append(
-            el(
-              'span',
-              { class: 'block text-xs' },
-              result.issueClosed ? '✓ Issue geschlossen' : 'Issue konnte nicht geschlossen werden — auf GitHub erledigen.',
-            ),
-          )
+          const p = el('p', { class: 'zx-empty' }, 'Nicht mehr in REQUESTS.md — die Praxis hat die Stelle selbst abgeräumt. Deine Antwort wurde nicht geschrieben.')
+          p.append(el('span', { class: 'zx-status' }, result.issueClosed ? '✓ Issue geschlossen' : 'Issue konnte nicht geschlossen werden — auf GitHub erledigen.'))
           card.replaceChildren(p)
           return
         }
@@ -914,11 +976,10 @@
       }
     }
 
-    // enabled/declined/Antwort teilen sich das Nachrichtenfeld: der erste Klick auf eine der
-    // drei öffnet es nur (Chance, etwas zu schreiben, bevor irgendetwas verschickt wird);
-    // jeder weitere Klick validiert und sendet. Für declined/Antwort ist eine leere Nachricht
-    // eine gültige "öffnen"-Aktion und wird als Hinweis beantwortet statt stillschweigend
-    // gesendet zu werden.
+    // enabled/declined/Antwort share the message field: the first click on any of the three
+    // only opens it (a chance to write before anything is sent); every further click
+    // validates and sends. For declined/Antwort an empty message is a valid "open" action
+    // and is answered with a hint instead of being sent silently.
     const attemptAnswer = (decision: 'enabled' | 'declined' | 'note'): void => {
       if (!revealed) {
         reveal()
@@ -943,25 +1004,25 @@
     return card
   }
 
-  // ── Rendering: Site-PRs ─────────────────────────────────────────────────
-  // Vorschläge der PR-Schleuse an der Site selbst. Zwei Entscheidungen: mergen (geht live —
-  // deploy-cf baut neu) oder ablehnen (schließen, endgültig). Mergen ist eine Live-Aktion und
-  // verlangt darum einen zweiten, bestätigenden Klick; ablehnen öffnet zuerst ein optionales
-  // Begründungsfeld (die Engine liest den Kommentar), der zweite Klick schließt.
+  // ── rendering: site PRs ─────────────────────────────────────────────────
+  // Proposals of the PR sluice at the site itself. Two decisions: merge (goes live —
+  // deploy-cf rebuilds) or decline (close, final). Merging is a live action and therefore
+  // takes a second confirming click; declining first opens an optional reason field (the
+  // engine reads the comment), the second click closes.
   function renderSitePrCard(pr: ZxSitePr): HTMLElement {
-    const card = el('article', { class: 'rounded-xl border border-line bg-panel p-4' })
+    const card = el('article', { class: 'zx-card' })
 
-    const head = el('p', { class: 'font-mono text-xs uppercase tracking-[0.12em] text-fg-faint' })
+    const head = el('p', { class: 'zx-card-meta' })
     head.append(`${pr.label} · #${pr.number} · ${fmtRel(pr.createdAt)}`)
     card.append(head)
 
-    card.append(el('p', { class: 'mt-1 font-semibold text-fg' }, pr.title))
-    card.append(el('p', { class: 'mt-0.5 font-mono text-xs text-fg-faint' }, `site-prs/${pr.slug}`))
+    card.append(el('p', { class: 'zx-card-title' }, pr.title))
+    card.append(el('p', { class: 'zx-card-sub' }, `site-prs/${pr.slug}`))
 
     if (pr.excerpt) {
-      const excerptWrap = el('div', { class: 'zx-excerpt mt-2 text-sm text-fg-muted' }, el('span', {}, pr.excerpt))
+      const excerptWrap = el('div', { class: 'zx-excerpt' }, el('span', {}, pr.excerpt))
       card.append(excerptWrap)
-      const expandBtn = el('button', { type: 'button', class: 'mt-1 font-mono text-xs text-fg-faint underline' }, 'mehr')
+      const expandBtn = el('button', { type: 'button', class: 'zx-more' }, 'mehr')
       expandBtn.addEventListener('click', () => {
         const expanded = excerptWrap.classList.toggle('is-expanded')
         expandBtn.textContent = expanded ? 'weniger' : 'mehr'
@@ -969,32 +1030,20 @@
       card.append(expandBtn)
     }
 
-    const links = el('p', { class: 'mt-2 text-sm' })
-    links.append(el('a', { href: pr.url, target: '_blank', rel: 'noreferrer', class: 'underline hover:text-fg' }, 'PR ansehen ↗'))
+    const links = el('p', { class: 'zx-card-sub' })
+    links.append(el('a', { href: pr.url, target: '_blank', rel: 'noreferrer' }, 'PR ansehen ↗'))
     card.append(links)
 
-    // Begründungsfeld — sichtbar erst, wenn „ablehnen“ das erste Mal geklickt wird (Kommentar
-    // an die Engine ist optional, aber die Chance dazu kommt vor dem Schließen).
-    const msgField = el('textarea', {
-      rows: '2',
-      class: 'mt-3 w-full rounded-lg border border-line bg-bg px-3 py-2 text-sm text-fg outline-none focus-visible:border-fg',
-      placeholder: 'Begründung an die Engine (optional) …',
-    }) as HTMLTextAreaElement
+    const msgField = el('textarea', { rows: '2', class: 'zx-textarea zx-field', placeholder: 'Begründung an die Engine (optional) …' }) as HTMLTextAreaElement
     msgField.hidden = true
     card.append(msgField)
 
-    const hint = el('p', { class: 'mt-1 min-h-[1.2em] text-xs text-fg-faint', role: 'status' })
+    const hint = el('p', { class: 'zx-status', role: 'status' })
     card.append(hint)
 
-    const actions = el('div', { class: 'mt-3 flex flex-wrap gap-2' })
-    const btnMerge = el('button', {
-      type: 'button',
-      class: 'rounded-full border border-green-600 px-3 py-1.5 text-xs font-semibold text-green-500 transition hover:bg-green-600 hover:text-bg disabled:opacity-50',
-    }, 'mergen (geht live)') as HTMLButtonElement
-    const btnClose = el('button', {
-      type: 'button',
-      class: 'rounded-full border border-line px-3 py-1.5 text-xs font-semibold text-fg transition hover:border-fg disabled:opacity-50',
-    }, 'ablehnen') as HTMLButtonElement
+    const actions = el('div', { class: 'zx-actions' })
+    const btnMerge = el('button', { type: 'button', class: 'zx-btn zx-btn--go' }, 'mergen (geht live)') as HTMLButtonElement
+    const btnClose = el('button', { type: 'button', class: 'zx-btn' }, 'ablehnen') as HTMLButtonElement
     actions.append(btnMerge, btnClose)
     card.append(actions)
 
@@ -1011,8 +1060,8 @@
         if (result.ok) {
           markMutation()
           const text = kind === 'merge' ? '✓ gemergt — Deploy läuft' : '✓ abgelehnt (geschlossen)'
-          const p = el('p', { class: 'text-sm text-fg' }, text)
-          if (result.warning) p.append(el('span', { class: 'block text-xs text-amber-500' }, result.warning))
+          const p = el('p', { class: 'zx-done' }, text)
+          if (result.warning) p.append(el('span', { class: 'zx-status zx-status--warn' }, result.warning))
           card.replaceChildren(p)
           return
         }
@@ -1024,7 +1073,7 @@
       }
     }
 
-    // Mergen: erster Klick bestätigt (Live-Aktion), zweiter Klick führt aus.
+    // Merge: first click confirms (live action), second executes.
     let mergeArmed = false
     btnMerge.addEventListener('click', () => {
       if (!mergeArmed) {
@@ -1036,7 +1085,7 @@
       void submit({ number: pr.number, action: 'merge' }, 'merge')
     })
 
-    // Ablehnen: erster Klick öffnet das Begründungsfeld, zweiter Klick schließt.
+    // Decline: first click opens the reason field, second closes.
     let closeArmed = false
     btnClose.addEventListener('click', () => {
       if (!closeArmed) {
@@ -1054,40 +1103,33 @@
     return card
   }
 
-  // ── Rendering: Öffentliche Saat — Freigabe ──────────────────────────────
+  // ── rendering: public seeds awaiting review ─────────────────────────────
   function addresseeLabel(a: string): string {
     if (a === 'open') return 'offen (alle drei)'
     return REPO_LABELS[a] ?? a
   }
 
   function renderPendingSeedCard(seed: ZxPendingSeed): HTMLElement {
-    const card = el('article', { class: 'rounded-xl border border-line bg-panel p-4' })
+    const card = el('article', { class: 'zx-card' })
 
-    const head = el('p', { class: 'font-mono text-xs uppercase tracking-[0.12em] text-fg-faint' })
+    const head = el('p', { class: 'zx-card-meta' })
     head.append(`${KIND_LABELS[seed.kind] ?? seed.kind} · an ${addresseeLabel(seed.addressed_to)} · ${fmtRel(seed.ts)}`)
     card.append(head)
 
-    // Seed-Text: rohe Besuchereingabe — geht AUSSCHLIESSLICH als Text-Node ins DOM (el() nutzt
-    // append, nie innerHTML), damit fremder Text nie als Markup interpretiert wird.
-    card.append(el('p', { class: 'mt-2 whitespace-pre-wrap text-fg' }, seed.text))
-    card.append(el('p', { class: 'mt-1 font-mono text-xs text-fg-faint' }, `— „${seed.author_mark}“`))
+    // Seed text: raw visitor input — enters the DOM EXCLUSIVELY as a text node.
+    card.append(el('p', { class: 'zx-card-body zx-pre' }, seed.text))
+    card.append(el('p', { class: 'zx-card-sub' }, `— „${seed.author_mark}“`))
 
     if (seed.gate) {
-      card.append(el('p', { class: 'mt-1 font-mono text-xs text-fg-faint' }, `Gate: ${seed.gate.verdict} (${seed.gate.model})`))
+      card.append(el('p', { class: 'zx-card-sub' }, `Gate: ${seed.gate.verdict} (${seed.gate.model})`))
     }
 
-    const hint = el('p', { class: 'mt-1 min-h-[1.2em] text-xs text-fg-faint', role: 'status' })
+    const hint = el('p', { class: 'zx-status', role: 'status' })
     card.append(hint)
 
-    const actions = el('div', { class: 'mt-3 flex flex-wrap gap-2' })
-    const btnApprove = el('button', {
-      type: 'button',
-      class: 'rounded-full border border-green-600 px-3 py-1.5 text-xs font-semibold text-green-500 transition hover:bg-green-600 hover:text-bg disabled:opacity-50',
-    }, 'freigeben (geht live)') as HTMLButtonElement
-    const btnReject = el('button', {
-      type: 'button',
-      class: 'rounded-full border border-line px-3 py-1.5 text-xs font-semibold text-fg transition hover:border-fg disabled:opacity-50',
-    }, 'ablehnen') as HTMLButtonElement
+    const actions = el('div', { class: 'zx-actions' })
+    const btnApprove = el('button', { type: 'button', class: 'zx-btn zx-btn--go' }, 'freigeben (geht live)') as HTMLButtonElement
+    const btnReject = el('button', { type: 'button', class: 'zx-btn' }, 'ablehnen') as HTMLButtonElement
     actions.append(btnApprove, btnReject)
     card.append(actions)
 
@@ -1103,7 +1145,7 @@
         const result = await postSeedReview({ id: seed.id, decision })
         if (result.ok) {
           const text = decision === 'approve' ? '✓ freigegeben — öffentlich im Register' : '✓ abgelehnt (verworfen)'
-          card.replaceChildren(el('p', { class: 'text-sm text-fg' }, text))
+          card.replaceChildren(el('p', { class: 'zx-done' }, text))
           return
         }
         hint.textContent = SEEDREVIEW_ERR[result.code ?? ''] ?? 'Das hat nicht geklappt — bitte später erneut versuchen.'
@@ -1114,7 +1156,6 @@
       }
     }
 
-    // Freigeben: erster Klick bewaffnet (Live-Aktion — der Seed geht öffentlich), zweiter führt aus.
     let approveArmed = false
     btnApprove.addEventListener('click', () => {
       if (!approveArmed) {
@@ -1126,7 +1167,6 @@
       void submit('approve')
     })
 
-    // Ablehnen: erster Klick bewaffnet, zweiter verwirft endgültig (nur aus KV, nie in Git).
     let rejectArmed = false
     btnReject.addEventListener('click', () => {
       if (!rejectArmed) {
@@ -1141,7 +1181,7 @@
     return card
   }
 
-  // ── Briefkasten: letters from the post office queue (GET/DELETE /api/post) ──
+  // ── letters from the post office queue (GET/DELETE /api/post) ───────────
   const lettersEl = document.querySelector<HTMLElement>('[data-zx="letters"]')
   interface ZxLetter {
     id: string
@@ -1159,16 +1199,16 @@
   const looksLikeEmail = (s: string): boolean =>
     s.trim().length >= 6 && s.trim().length <= 320 && /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(s.trim())
   function renderLetterCard(l: ZxLetter): HTMLElement {
-    const card = el('div', { class: 'rounded-[10px] border border-line bg-panel p-4' })
-    const head = el('p', { class: 'font-mono text-[11px] uppercase tracking-[0.14em] text-fg-muted' })
+    const card = el('article', { class: 'zx-card' })
+    const head = el('p', { class: 'zx-card-meta' })
     head.textContent = `an ${l.to} · von ${l.fromMark}${l.regarding ? ` · betr. ${l.regarding}` : ''}`
-    const meta = el('p', { class: 'mt-1 font-mono text-[11px] text-fg-faint' })
+    const meta = el('p', { class: 'zx-card-sub' })
     meta.textContent = `${l.id} · ${fmtRel(l.received_at)}${l.contact ? ` · Kontakt: ${l.contact}` : ' · kein Kontakt hinterlassen'}${l.status === 'answered' ? ' · BEANTWORTET' : ''}`
-    const body = el('p', { class: 'mt-3 whitespace-pre-wrap text-sm leading-relaxed text-fg' })
+    const body = el('p', { class: 'zx-card-body zx-pre' })
     body.textContent = l.text
-    const row = el('div', { class: 'mt-3 flex items-center gap-3' })
-    const btn = el('button', { type: 'button', class: 'rounded border border-line px-2.5 py-1 font-mono text-[11px] uppercase tracking-[0.1em] text-fg-muted hover:text-fg' }, 'erledigt')
-    const hint = el('span', { class: 'text-xs text-fg-faint' }, '')
+    const row = el('div', { class: 'zx-actions' })
+    const btn = el('button', { type: 'button', class: 'zx-btn' }, 'erledigt')
+    const hint = el('span', { class: 'zx-status' }, '')
     let armed = false
     btn.addEventListener('click', () => {
       if (!armed) {
@@ -1196,28 +1236,24 @@
     // The text is written here, in the moment; /api/zentrale/reply sends it via Brevo from
     // the verified sender and marks the letter answered. Nothing sends itself.
     if (looksLikeEmail(l.contact) && l.status !== 'answered') {
-      const replyBtn = el('button', { type: 'button', class: 'rounded border border-line px-2.5 py-1 font-mono text-[11px] uppercase tracking-[0.1em] text-fg-muted hover:text-fg' }, 'per E-Mail antworten')
-      const replyWrap = el('div', { class: 'mt-3 hidden flex-col gap-2' })
+      const replyBtn = el('button', { type: 'button', class: 'zx-btn' }, 'per E-Mail antworten')
+      const replyWrap = el('div', { class: 'zx-field' })
+      replyWrap.hidden = true
       const subjField = el('input', {
         type: 'text',
         maxlength: '160',
         value: l.regarding ? `Re: ${l.regarding}` : 'Re: dein Brief an frankbueltge.de',
-        class: 'w-full rounded-lg border border-line bg-bg px-3 py-2 text-sm text-fg outline-none focus-visible:border-fg',
+        class: 'zx-input',
       }) as HTMLInputElement
-      const textField = el('textarea', {
-        rows: '5',
-        placeholder: 'Antwort …',
-        class: 'w-full rounded-lg border border-line bg-bg px-3 py-2 text-sm leading-relaxed text-fg outline-none focus-visible:border-fg',
-      }) as HTMLTextAreaElement
-      const sendRow = el('div', { class: 'flex items-center gap-3' })
-      const sendBtn = el('button', { type: 'button', class: 'rounded border border-line px-2.5 py-1 font-mono text-[11px] uppercase tracking-[0.1em] text-fg hover:border-fg-faint' }, 'senden')
-      const sendHint = el('span', { class: 'text-xs text-fg-faint', role: 'status' }, '')
+      const textField = el('textarea', { rows: '5', placeholder: 'Antwort …', class: 'zx-textarea zx-field' }) as HTMLTextAreaElement
+      const sendRow = el('div', { class: 'zx-actions' })
+      const sendBtn = el('button', { type: 'button', class: 'zx-btn zx-btn--primary' }, 'senden')
+      const sendHint = el('span', { class: 'zx-status', role: 'status' }, '')
       sendRow.append(sendBtn, sendHint)
       replyWrap.append(subjField, textField, sendRow)
       replyBtn.addEventListener('click', () => {
-        replyWrap.classList.toggle('hidden')
-        replyWrap.classList.toggle('flex')
-        if (!replyWrap.classList.contains('hidden')) textField.focus()
+        replyWrap.hidden = !replyWrap.hidden
+        if (!replyWrap.hidden) textField.focus()
       })
       sendBtn.addEventListener('click', () => {
         const text = textField.value.trim()
@@ -1274,20 +1310,20 @@
       const res = await fetch('/api/post', { headers: { 'X-Zentrale-Auth': token } })
       lettersEl.replaceChildren()
       if (!res.ok) {
-        lettersEl.append(el('p', { class: 'text-sm text-amber-500' }, 'Konnte den Briefkasten nicht laden.'))
+        lettersEl.append(el('p', { class: 'zx-status zx-status--warn' }, 'Konnte den Briefkasten nicht laden.'))
         return
       }
       const body = (await res.json()) as { ok?: boolean; letters?: ZxLetter[] }
       const list = body.ok && Array.isArray(body.letters) ? body.letters : []
       if (list.length === 0) {
-        lettersEl.append(el('p', { class: 'text-sm text-fg-muted' }, 'Keine Briefe in der Warteschlange.'))
+        lettersEl.append(el('p', { class: 'zx-empty' }, 'Keine Briefe in der Warteschlange.'))
       } else {
         for (const l of [...list].sort((a, b) => b.received_at.localeCompare(a.received_at))) {
           lettersEl.append(renderLetterCard(l))
         }
       }
     } catch {
-      lettersEl.replaceChildren(el('p', { class: 'text-sm text-amber-500' }, 'Netzwerkfehler beim Laden des Briefkastens.'))
+      lettersEl.replaceChildren(el('p', { class: 'zx-status zx-status--warn' }, 'Netzwerkfehler beim Laden des Briefkastens.'))
     }
   }
 
@@ -1302,22 +1338,22 @@
       }
       pendingSeedsEl.replaceChildren()
       if (!res.ok) {
-        pendingSeedsEl.append(el('p', { class: 'text-sm text-amber-500' }, 'Konnte die Warteschlange nicht laden.'))
+        pendingSeedsEl.append(el('p', { class: 'zx-status zx-status--warn' }, 'Konnte die Warteschlange nicht laden.'))
         return
       }
       const body = (await res.json()) as { ok: boolean; pending?: ZxPendingSeed[] }
       const list = body.ok && Array.isArray(body.pending) ? body.pending : []
       if (list.length === 0) {
-        pendingSeedsEl.append(el('p', { class: 'text-sm text-fg-muted' }, 'Keine wartenden Besucher-Seeds.'))
+        pendingSeedsEl.append(el('p', { class: 'zx-empty' }, 'Keine wartenden Besucher-Seeds.'))
       } else {
         for (const s of list) pendingSeedsEl.append(renderPendingSeedCard(s))
       }
     } catch {
-      pendingSeedsEl.replaceChildren(el('p', { class: 'text-sm text-amber-500' }, 'Netzwerkfehler beim Laden der Warteschlange.'))
+      pendingSeedsEl.replaceChildren(el('p', { class: 'zx-status zx-status--warn' }, 'Netzwerkfehler beim Laden der Warteschlange.'))
     }
   }
 
-  // ── Rendering: Alle Läufe ───────────────────────────────────────────────
+  // ── rendering: all runs ─────────────────────────────────────────────────
   function renderRuns(runs: ZxRun[]): void {
     if (!runsEl) return
     runsEl.replaceChildren()
@@ -1327,17 +1363,17 @@
       return byRank !== 0 ? byRank : a.workflow.localeCompare(b.workflow)
     })
     for (const r of sorted) {
-      const dotCls = r.conclusion === 'success' ? 'bg-green-500' : r.conclusion === 'failure' ? 'bg-red-500' : 'bg-fg-faint'
-      const row = el('div', { class: 'flex items-center gap-2 border-b border-line py-1.5 text-sm' })
-      row.append(el('span', { class: `inline-block h-2 w-2 shrink-0 rounded-full ${dotCls}`, 'aria-hidden': 'true' }))
-      row.append(el('span', { class: 'flex-1 text-fg' }, r.workflow))
-      row.append(el('span', { class: 'font-mono text-xs text-fg-faint' }, fmtRel(r.at)))
-      row.append(el('a', { href: r.url, target: '_blank', rel: 'noreferrer', class: 'font-mono text-xs text-fg-faint underline hover:text-fg' }, '↗'))
+      const ledCls = r.conclusion === 'success' ? 'zx-led zx-led--ok' : r.conclusion === 'failure' ? 'zx-led zx-led--red' : 'zx-led'
+      const row = el('div', { class: 'zx-run-row' })
+      row.append(el('span', { class: ledCls, 'aria-hidden': 'true' }))
+      row.append(el('span', { class: 'zx-run-name' }, r.workflow))
+      row.append(el('span', { class: 'zx-mono' }, fmtRel(r.at)))
+      row.append(el('a', { href: r.url, target: '_blank', rel: 'noreferrer', class: 'zx-mono' }, '↗'))
       runsEl.append(row)
     }
   }
 
-  // ── Rendering: Dashboard-Kopf ───────────────────────────────────────────
+  // ── rendering: the dashboard ────────────────────────────────────────────
   function renderDashboard(body: ZxStatus): void {
     if (gateSection) gateSection.hidden = true
     if (loadingEl) loadingEl.hidden = true
@@ -1345,6 +1381,12 @@
     if (dashboard) dashboard.hidden = false
 
     if (stampEl) stampEl.textContent = `Stand ${fmtStamp(body.generatedAt)}${body.cached ? ' (Cache)' : ''}`
+    // The top LED judges the whole board at once: red anywhere → red; else green.
+    if (liveLed) {
+      const anyRed = body.collectives.some((c) => c.integrate?.conclusion === 'failure')
+      liveLed.className = anyRed ? 'zx-led zx-led--red' : 'zx-led zx-led--ok'
+      liveLed.setAttribute('aria-label', anyRed ? 'mindestens ein Integrate rot' : 'alle Integrates grün')
+    }
 
     if (errorsEl) {
       if (body.errors.length > 0) {
@@ -1361,10 +1403,9 @@
       for (const c of body.collectives) nightEl.append(renderCollective(c))
     }
 
-    // Triage-Split (v2 P1; claims-only seit 2026-08-12): der Server schickt nur noch
-    // Ansprüche — datierte Fristen in Reichweite ('today') und Weiterleitungen
-    // ('postoffice'). Was ohne Frank läuft, kommt gar nicht mehr an (status.ts buildInbox);
-    // die früheren Fächer "Läuft ohne dich" und "Zur Kenntnis" sind ersatzlos weg.
+    // Triage split (v2 P1; claims-only since 2026-08-12): the server only sends claims —
+    // dated deadlines in reach ('today') and forwardings ('postoffice'). What runs without
+    // Frank never arrives (status.ts buildInbox).
     const byFrist = (a: (typeof body.inbox)[number], b: (typeof body.inbox)[number]) => {
       const fa = a.fristDate ?? '9999-12-31'
       const fb = b.fristDate ?? '9999-12-31'
@@ -1375,18 +1416,18 @@
     if (neededEl) {
       neededEl.replaceChildren()
       if (needed.length === 0) {
-        neededEl.append(el('p', { class: 'text-base text-fg' }, 'Nichts braucht dich heute.'))
+        neededEl.append(el('p', { class: 'zx-empty' }, 'Nichts braucht dich heute.'))
       } else {
         for (const entry of needed) neededEl.append(renderInboxCard(entry))
       }
     }
 
-    if (gateEl) {
-      gateEl.replaceChildren()
+    if (gateLaneEl) {
+      gateLaneEl.replaceChildren()
       if (!body.gate || body.gate.length === 0) {
-        gateEl.append(el('p', { class: 'text-sm text-fg-muted' }, 'Kein Kandidat am Gate.'))
+        gateLaneEl.append(el('p', { class: 'zx-empty' }, 'Kein Kandidat am Gate.'))
       } else {
-        for (const c of body.gate) gateEl.append(renderGateCard(c))
+        for (const c of body.gate) gateLaneEl.append(renderGateCard(c))
       }
     }
 
@@ -1394,13 +1435,11 @@
       postEl.replaceChildren()
       const letters = body.post ?? []
       if (letters.length === 0 && forwarding.length === 0) {
-        postEl.append(el('p', { class: 'text-sm text-fg-muted' }, 'Nichts liegt im Postausgang.'))
+        postEl.append(el('p', { class: 'zx-empty' }, 'Nichts liegt im Postausgang.'))
       } else {
         for (const item of letters) postEl.append(renderPostCard(item))
-        // Anfragen mit "braucht: weiterleitung" gehören hierher und nicht unter "Heute nötig"
-        // (Frank, 2026-08-02: die Post liegt im Post Office, ob sie rausgeht ist seine
-        // Entscheidung, und er braucht dafür keine wiederholten Erinnerungen). Dieselbe Spur
-        // wie die Briefe selbst — Liegedauer als Fakt, nie als Frist.
+        // Requests with "braucht: weiterleitung" belong here, not under "Heute nötig"
+        // (Frank, 2026-08-02) — same lane as the letters: days lying open as a fact.
         for (const entry of forwarding) postEl.append(renderInboxCard(entry))
       }
     }
@@ -1408,10 +1447,10 @@
     if (sitePrsEl) {
       sitePrsEl.replaceChildren()
       if (body.sitePrs === null) {
-        // Teilfetch ausgefallen (steht in errors) — ehrlich sagen, nicht als „leer“ tarnen.
-        sitePrsEl.append(el('p', { class: 'text-sm text-amber-500' }, 'Konnte die offenen Vorschläge nicht laden.'))
+        // Partial fetch failed (named in errors) — say so, never disguise as "empty".
+        sitePrsEl.append(el('p', { class: 'zx-status zx-status--warn' }, 'Konnte die offenen Vorschläge nicht laden.'))
       } else if (body.sitePrs.length === 0) {
-        sitePrsEl.append(el('p', { class: 'text-sm text-fg-muted' }, 'Keine offenen Vorschläge.'))
+        sitePrsEl.append(el('p', { class: 'zx-empty' }, 'Keine offenen Vorschläge.'))
       } else {
         for (const pr of body.sitePrs) sitePrsEl.append(renderSitePrCard(pr))
       }
@@ -1420,7 +1459,7 @@
     renderRuns(body.runs)
   }
 
-  // ── Laden ───────────────────────────────────────────────────────────────
+  // ── loading ─────────────────────────────────────────────────────────────
   async function fetchStatus(refresh: boolean): Promise<void> {
     if (!token) {
       showGate()
@@ -1433,8 +1472,8 @@
       refreshBtn.textContent = 'Aktualisiert …'
     }
     try {
-      // Ohne erzwungenen Abruf wird der Zeitstempel der letzten schreibenden Aktion
-      // mitgeschickt: Der Server verwirft damit einen Cache-Eintrag, der älter ist als sie.
+      // Without a forced fetch, the timestamp of the last writing action travels along:
+      // the server discards a cache entry older than it.
       const params = new URLSearchParams()
       if (refresh) params.set('refresh', '1')
       else {
@@ -1464,8 +1503,8 @@
         return
       }
       renderDashboard(body)
-      void fetchPendingSeeds() // eigener Endpunkt (KV), lädt parallel nach dem Dashboard-Status
-      void fetchLetters() // Briefkasten (post office KV-Queue), ebenfalls parallel
+      void fetchPendingSeeds() // own endpoint (KV), loads in parallel after the status
+      void fetchLetters() // post office KV queue, likewise parallel
     } catch {
       showNotConnected('Netzwerkfehler — bitte später erneut versuchen.')
     } finally {
@@ -1484,7 +1523,7 @@
     try {
       localStorage.setItem(TOKEN_KEY, value)
     } catch {
-      /* private mode etc. — Token gilt nur für diese Seitenladung */
+      /* private mode etc. — token holds for this page load only */
     }
     token = value
     void fetchStatus(false)
@@ -1504,12 +1543,12 @@
     if (!seedMsg) return
     if (!title || !bodyText) {
       seedMsg.textContent = 'Titel und Text sind Pflicht.'
-      seedMsg.className = 'min-h-[1.2em] text-sm text-amber-500'
+      seedMsg.className = 'zx-status zx-status--warn'
       return
     }
     seedSubmit.disabled = true
     seedMsg.textContent = ''
-    seedMsg.className = 'min-h-[1.2em] text-sm text-fg'
+    seedMsg.className = 'zx-status'
     void (async () => {
       try {
         const result = await postAntwort({ action: 'seed', repo, title, body: bodyText })
@@ -1518,18 +1557,18 @@
           const url = commitUrlOf(result.commit)
           if (url) {
             seedMsg.append(' ')
-            seedMsg.append(el('a', { href: url, target: '_blank', rel: 'noreferrer', class: 'underline hover:text-fg' }, 'Commit ansehen ↗'))
+            seedMsg.append(el('a', { href: url, target: '_blank', rel: 'noreferrer' }, 'Commit ansehen ↗'))
           }
-          if (result.warning) seedMsg.append(el('span', { class: 'block text-xs text-amber-500' }, result.warning))
+          if (result.warning) seedMsg.append(el('span', { class: 'zx-status zx-status--warn' }, result.warning))
           seedForm.reset()
         } else {
           seedMsg.textContent = ANTWORT_ERR[result.code ?? ''] ?? 'Das hat nicht geklappt — bitte später erneut versuchen.'
-          seedMsg.className = 'min-h-[1.2em] text-sm text-amber-500'
+          seedMsg.className = 'zx-status zx-status--warn'
         }
       } catch (err) {
         if (String(err) !== 'Error: unauthorized') {
           seedMsg.textContent = 'Netzwerkfehler — bitte erneut versuchen.'
-          seedMsg.className = 'min-h-[1.2em] text-sm text-amber-500'
+          seedMsg.className = 'zx-status zx-status--warn'
         }
       } finally {
         seedSubmit.disabled = false
@@ -1540,33 +1579,3 @@
   if (token) void fetchStatus(false)
   else showGate()
 </script>
-
-<style>
-  /* Excerpt-Klappe: 4 Zeilen, bis antippen es öffnet — keine Bibliothek, reines CSS.
-   *
-   * `:global()` ist hier PFLICHT, nicht Geschmack (Frank, 2026-07-31: „wenn ich auf ,mehr'
-   * klicke, passiert nix"). Astro scopet Komponenten-CSS über ein Attribut und lieferte
-   * `.zx-excerpt[data-astro-cid-folzek22]{…}` aus — dieses Attribut setzt Astro aber nur an
-   * Knoten, die es selbst rendert. Der Excerpt-Container entsteht zur LAUFZEIT im Skript
-   * (`el('div', { class: 'zx-excerpt …' })`) und trug es nie: die Klappe klemmte nichts, und
-   * `is-expanded` traf keine Regel. Der Knopf war funktionslos, ohne Fehlermeldung.
-   *
-   * Merkregel für diese Datei: Ihr Skript baut das ganze Dashboard im DOM. JEDE Regel hier,
-   * die auf eine im Skript vergebene Klasse zielt, muss `:global()` tragen — sonst zielt sie
-   * ins Leere und niemand sieht es. */
-  :global(.zx-excerpt) {
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 4;
-    overflow: hidden;
-    /* Die Anfragen sind Markdown mit Absätzen, Listen und Tabellen. Ohne pre-wrap läuft das
-     * zu einer einzigen Wand zusammen, sobald man aufklappt — lesbar war es dann immer noch
-     * nicht. */
-    white-space: pre-wrap;
-  }
-  :global(.zx-excerpt.is-expanded) {
-    display: block;
-    -webkit-line-clamp: unset;
-    overflow: visible;
-  }
-</style>

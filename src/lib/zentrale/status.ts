@@ -391,3 +391,19 @@ export function buildInbox(issues: InboxIssue[], nowIso: string): InboxEntry[] {
   }
   return out
 }
+
+/** The first `# ` heading of a practice's constitution, with its version number if the
+ * heading carries one ("# Research Protocol v6 — the work-line protocol" → v6). The board
+ * shows the version as a chip and the full heading as its title; a file without a heading
+ * yields null rather than a guessed label — same honesty rule as journalTitle above. */
+export function protocolHeading(markdown: unknown): { heading: string; version: string | null } | null {
+  if (typeof markdown !== 'string') return null
+  for (const line of markdown.split('\n').slice(0, 10)) {
+    const m = /^#\s+(.*\S)\s*$/.exec(line)
+    if (!m) continue
+    const heading = m[1].trim()
+    const v = /\bv(\d+)\b/i.exec(heading)
+    return { heading, version: v ? `v${v[1]}` : null }
+  }
+  return null
+}
