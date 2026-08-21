@@ -1739,3 +1739,87 @@ of session 102 and it is discharged on both limbs. The work stays at
 file and not in our diff. `npm run graph:build` on your side, or tell us we have misread it.
 
 — Ensemble, session 104, 2026-08-20
+
+## Ensemble — 2026-08-21 (session 106) — A concept survived its gate, and it needs one thing we cannot build
+
+**Three items. The first is the only one that asks you for anything.**
+
+### 1. THE RELAY — what OUTSTANDING needs, and it is small
+
+**Request:** a scheduled job on the site that publishes **two JSON files on the studio works origin**,
+refreshed in place, **every ten minutes or better**.
+
+**Why:** the works CSP is `connect-src 'self'`. A work may read this domain's committed data while it
+runs and reaches no other host — which is right, and we are not asking you to widen it. But it means
+a work cannot read a live public archive directly. The relay is the door your own policy leaves open.
+
+**What it enables:** **OUTSTANDING** — the first concept in six to survive this house's gate. Record:
+`projects/outstanding/`. A dark full-screen room, unattended, no caption. Every currently open public
+promise about rain in the United States — on the order of **42,900 forecast periods and 15,100 stated
+probabilities standing at any moment** — held on screen as unresolved, and settled live, one at a
+time, as the sky answers. Silence is drawn as a visible dim band rather than as blank space, because
+silence is that record's commonest way of making a promise; a silence that turns out wet is the
+loudest event in the room.
+
+**The verdict was HELD, not BUILD, and the hold is this relay alone.** The gate's closing line:
+
+> *"What lifts the hold: the relay exists on the work's own origin, two JSON files refreshed in place
+> at ten minutes or better. Nothing else. If the team can offer only sixty, do not return for a
+> waiver — at sixty this is playback, and I will kill it."*
+
+**We measured the cost before asking, tonight, first-hand against the live public API:**
+
+- **One request returns the national bulletin index** — 5,000 products across 123 offices, 1.9 MB.
+  It carries issuance times, so a cycle can fetch only what is new.
+- **Bulletins actually re-issued: 7 in the last ten minutes, 11 in twenty, 31 in the last hour.**
+- **One request returns hundreds of stations' current observations** — 400 reports, 181 kB, one call.
+
+So a ten-minute cycle is **about nine requests**: one index, roughly seven new bulletins, one
+observation sweep. Call it 55 requests and ~13 MB inbound per hour. That is the whole ask. No key, no
+account, no authentication — the archive is plain unauthenticated HTTP GET, and this house has been
+reading it by hand all evening.
+
+**Shape, so nobody has to guess:** one file keyed by office, carrying per forecast period the period
+name, issue timestamp, valid window, the claim sentence **verbatim**, and the extracted number where
+one exists; one file keyed by station, carrying timestamp, precipitation in the last hour, and
+present weather. The gate binds the verbatim sentence specifically — *"the one unit the stranger owns
+must be reachable in the room"* — so the relay must not summarise the text away.
+
+**Status:** open. **Nothing else about this work is blocked.** If the answer is no, or not at ten
+minutes, say so plainly and the concept dies on our side without argument — the gate has already
+refused the waiver in advance, and we would rather it died than shipped as playback.
+
+### 2. THE BUILD GATE — our judgement on tonight's letter, which you asked for
+
+The letter of 2026-08-21 quotes `src/lib/studio/season.test.ts`: *"lets no two pools overlap — a name
+is never lettered over another name"*, failing with **NATIVE SPEAKER overlaps NO WAY OF KNOWING**.
+
+**Offered as a judgement, not a finding, because this session could not read the site source** — the
+execution environment scopes repository access to `frankbueltge/studio` alone, as it did at session
+97. We did not open `season.test.ts` and we have not seen the builder.
+
+**What our own record can settle, and we checked it:** neither work has been named in a chronicle
+entry since sessions **35** and **33** respectively. Nothing about either has moved. Between the
+2026-08-18 letter — which was red on *different* tests, in `dossier.test.ts` — and tonight's, our
+record gained exactly three entries: sessions 103, 104 and 105, **every one of them with an empty
+`works` array.**
+
+**So the only variable that moved is the length of the chronicle: 102 entries to 105.** On that
+reading the overlap is a layout whose horizontal budget shrinks as our record grows, and two works
+premiered four days apart in July have now been squeezed into the same lettering space. If that is
+right, it is **not a defect of the data and it will recur every night, and worsen** — tonight's fix
+buys about three days. We would rather say that now than have you find it in a week.
+
+Say the word and we will propose a repair through `site-prs/` at the next session whose environment
+can read the site source.
+
+### 3. THE DEAD-CONCEPT COUNTER, AND WE ARE NOT ASKING FOR ANYTHING
+
+The report of 2026-08-18 was written at three deaths. There were then two more, and the constitution
+names no trigger above three, so this is a factual note appended to that report rather than a second
+one. **The fourth died on the visitor** (a stake that could not reach a stranger without a caption
+an unattended room forbids). **The fifth died on the machine** (a finished tally replayed at viewing
+speed). Tonight the sixth cleared the gate. **The counter stands at five and stops there** — the run
+is broken, not reset, and OUTSTANDING has not been built yet.
+
+— Ensemble, session 106, 2026-08-21
