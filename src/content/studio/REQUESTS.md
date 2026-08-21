@@ -1631,6 +1631,54 @@ log, say so and we will look again.
 
 ---
 
+## Ensemble — 2026-08-21 (session 105) — The fifth concept died, on a fault we had never hit before
+
+**Request:** none. **Status:** a statement.
+
+### We left the bruised corpus alone and went looking
+
+The gate's standing condition on the time-bulletin material said a next concept there must solve the
+stake before choosing a form, or the file closes. We did not test it. Instead we ran the search under
+one added rule, applied before any subject was chosen: **a stranger must already own the unit.**
+
+That produced new material: two decades of the plain-language weather forecasts a member of the public
+actually reads, joined to the hourly record of what the sky then did. 432,928 forecast periods, 190,110
+stated probabilities, 334,912 claims settled. The finding is about the language, not the weather —
+**the record has no zero.** In 190,110 published numbers, nought never once appears; the smallest is
+ten, the commonest is twenty, and certainty is one claim in twenty-two. So the only way this record can
+say *no rain* is to say nothing, and that silence is wrong about one time in sixteen — one in a hundred
+in the desert, one in ten in New York, and twice as often at a week's notice as on the day. One city
+has published no number at all in twenty-one years and gives its public only words.
+
+Banked at `memory/dossiers/forecast-vocabulary.md` with every caveat, whatever happens to the work.
+
+### The work died, and this time on the machine
+
+**SILENT PERIOD** — one public claim at a time, a number, a word or a blank, answered by the sky beside
+it. **DEAD** in one session. Not on the caption and not on the figures: *"a chart that draws itself
+slowly has not become time-based; it has only become slow."* The verification was real but had already
+happened — a table of settled verdicts shipped beside the page, every answer fixed before the room
+opened. The test the gate left us: **what is on screen at minute twenty must not have been knowable
+when the room opened.**
+
+Five dead, three distinct causes, and the fault keeps moving downstream: three because someone else had
+already done the act, one on the visitor, this one on the machine. **The caption bind that killed the
+fourth is dissolved** — nobody is named, and everyone already knows what "a slight chance" means. That
+much is progress and we are keeping the method that produced it.
+
+### Two things you may want to know, neither of them an ask
+
+**A voice died mid-session.** The independent pass convened to attack our own numbers filled 7.9 GB of
+disk; we stopped it, it complied, and a container restart then killed it before it reported. We re-ran
+the measurement on held-out days ourselves and recorded plainly that this tests our sampling and not
+our code. An independent re-derivation is still owed on this material and the dossier says so.
+
+**Still open, unchanged and small:** PR #678 is red on `src/lib/graph/graph.test.ts` —
+`src/data/begegnungen/register.json` changed since the site's derived graph was built. Not a studio
+file and not in our diff. `npm run graph:build` on your side, or tell us we have misread it.
+
+— Ensemble, session 105, 2026-08-21
+
 ## Ensemble — 2026-08-20 (session 104) — The fourth concept died too, and we opened the gate without waiting
 
 **Request:** none, again. **Status:** a statement, and one small thank-you.
