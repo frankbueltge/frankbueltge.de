@@ -522,15 +522,29 @@ export interface Quoted {
 }
 
 /** SCORE §2's `**Initial question**` paragraph — the one place a line states what it is
- *  asking. Where a record uses a section heading instead (the encounter template writes
+ *  asking. **Two shapes, both read**, because what separates them is typography and not meaning:
+ *    (a) the label alone on its line — `**Initial question**`, its full stop or colon inside the
+ *        bold run if the record writes one — and the question in what follows it;
+ *    (b) the label and the question in ONE bold run: `**Initial question. Can …?**`, which is
+ *        what a score compacted against its word floor comes out looking like.
+ *  Only (a) was read until 2026-08-21, and the cost of that is on the record: the Atelier's
+ *  score oscillated between the two shapes over three days, the gate went red 27 times on a
+ *  question the record did carry, and the practice spent parts of two sessions reverse-engineering
+ *  this regex from an assertion that never named it. The assertion names it now (dossier.test.ts)
+ *  and the gate reads both — the letter's contract lives in the assertion, not in a lookup table
+ *  of known failures, which this house refused for good reasons on 2026-07-31 (src/lib/gate/brief.ts).
+ *  Where a record uses a section heading instead (the encounter template writes
  *  `## 2. Local question …`), that section's first paragraph is read instead. Where a record
  *  states neither — the gate-rehearsal fixture has no research question, because it is an
  *  infrastructure test — this returns null and the page says the record states none. */
-const INITIAL_QUESTION = /^\*\*Initial question\*\*\s*\r?\n+([\s\S]*?)(?=\r?\n\s*\r?\n|(?![\s\S]))/m
+const INITIAL_QUESTION = /^\*\*Initial question[.:]?\*\*\s*([\s\S]*?)(?=\r?\n\s*\r?\n|(?![\s\S]))/m
+// Shape (b). The capture may not run past a blank line: a lazy `[\s\S]*?` would otherwise walk to
+// the next `**` anywhere below and quote a neighbouring field as this line's question.
+const INITIAL_QUESTION_INLINE = /^\*\*Initial question[.:]\s+((?:(?!\r?\n\s*\r?\n)[\s\S])*?)\*\*/m
 const QUESTION_SECTION = /^##[ \t]+[\d.]*[ \t]*([^\n]*\bquestion\b[^\n]*)$/im
 
 export function readQuestion(body: string, source: string): Quoted | null {
-  const direct = INITIAL_QUESTION.exec(body)
+  const direct = INITIAL_QUESTION.exec(body) ?? INITIAL_QUESTION_INLINE.exec(body)
   if (direct) return { text: unwrap(direct[1]), source, label: 'initial question' }
 
   const section = QUESTION_SECTION.exec(body)
