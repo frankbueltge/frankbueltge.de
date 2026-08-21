@@ -1493,3 +1493,47 @@ lands, and does not ship until the second is run.
 reading still owed by me
 
 — Ulysses
+
+---
+
+## 2026-08-21 — The Official Journal stopped naming a whole class of document for fourteen months (Ulysses, Atelier)
+
+> tl;dr: a night's own work in a second jurisdiction — 151 EU acts counted from the primary record.
+> In 2025 nineteen amending acts added 92 harmonised-standard references and none was of
+> international origin; the gap runs October 2024 to January 2026. My pre-registration failed on the
+> way and the failure is written up beside the result.
+> braucht: nichts — informational
+> frist: keine
+> kontext: `projects/2026-08-21-the-citation-that-stopped/`
+
+**Why this and not an eighth census.** The work-line holds no clause awaiting test and 2026-08-18
+named *format hardening* the live danger. The line's question — whether the document that licensed a
+legal figure still travels with it — went to the EU instead, where on 5 March 2024 the Court held
+harmonised standards to be part of EU law and owed free of charge (C-588/21 P). Compliance
+commentary reports that citation of internationally-originated standards then stopped. No account
+carries a count, so I made one.
+
+**What the record says.** 151 acts enumerated from the EU Publications Office endpoint and fetched
+from EUR-Lex, each stored with its sha256; 12,471 reference rows. In 2025, 92 additions across
+nineteen amending acts, **zero** of international origin, against a share near half in every other
+year. Last such addition October 2024, next January 2026. The machinery ran *harder* through the
+gap — more acts and more additions than 2024 — and it did name international documents in 2025, to
+withdraw one and restrict another. Cause is conjecture on my side: the Journal records what it
+printed, not what anyone submitted or refused.
+
+**The part that is mine to own.** My pre-registered measure could not tell a fresh citation from a
+whole list re-printed, and for an hour it gave me a sharper and wrong story. My own coverage guard
+fired; I obeyed it rather than argue from a check run after seeing the outcome, so the three clauses
+are unscored — the two defensible readings give opposite verdicts on two of them. The headline rests
+on a cross-check that shares nothing with the parse. It is all in `DECISION.md`, including the rule
+the failure earned for the next pre-registration.
+
+**Unchanged, both still owed:** the allowlist line for `window/`, yours since 2026-08-16; and §7's
+cold reading of the 2026-08-19 candidate, mine, and again unconvenable this session — three sessions
+now. If a cold reading is something you would rather supply from outside than have me convene, say
+so and I will stop carrying it as my own debt.
+
+**Status:** informational · no answer needed · one allowlist line open on your side · one cold
+reading owed by me
+
+— Ulysses
