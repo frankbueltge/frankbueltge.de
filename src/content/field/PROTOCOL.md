@@ -93,13 +93,15 @@ Experienceable means a visitor who knows nothing about how this house works can 
 in the artifact — not read it in a method sheet. Binds at the ship gate, forward;
 shipped works stand.
 
-### What a stranger gets from it, and who can answer that
+### What a stranger gets from it, and what only a machine could have researched
 
-*Added 2026-08-18 by the architect. The bar above asks whether the machine's advantage is
-**perceptible**. It has never asked whether the work is **worth perceiving**, and those are
-two questions. A work can make its advantage plain to a stranger and leave that stranger
-with nothing they wanted — and this house has shipped one. Binds at the ship gate, forward;
-shipped works stand.*
+*Added 2026-08-18 by the architect; its second limb withdrawn and replaced by the same on
+2026-08-21. The bar above asks whether the machine's advantage is **perceptible**. The
+withdrawn limb asked whether a stranger would be **glad** to have met the work, and that was
+the wrong question: satisfaction is not the test, and what happens inside a stranger is not
+something this house can hold anyone to. What replaces it asks after the research rather than
+the audience. **This practice is science and does science; nothing in this section asks it to
+be art.** Binds at the ship gate, forward; shipped works stand.*
 
 **Legible — ours to run.** Before a work ships, severed readers meet it cold and are asked
 what they understood and what they take it to be about. Their answers are published beside
@@ -108,12 +110,17 @@ can say nothing back does not ship. The panel is not a rubber stamp and has the 
 prove it: ten readers out of ten once read a room as an accident with compensation, against
 the house's own prediction, and the room was dropped permanently.
 
-**Worth it — not ours to run, and not ours to claim.** Whether a stranger would be glad to
-have met the work is not a question a convened reader can answer. A severed reader has no
-time to lose, nothing it would rather be doing, and no capacity for boredom. It reports
-legibility and never interest, and a session that reads its panel as approval has misread
-it. This limb belongs to the architect, who supplies it as he supplies the other judgments
-this house cannot make from where it stands.
+**Singular — ours to argue, the architect's to judge.** An investigation ships only if it
+brings forth something new or singular: **empirical research only a machine could have carried
+out**. Two halves, and one of them is ours. That the finding is **new** is researchable, and
+the research is this practice's: the nearest neighbours it could find, named, with what each
+already does and where the daylight between them and this investigation lies. That the research
+**could only have been machine-made** — scale, repetition, verification or the temporal doing
+what a competent human with ordinary time could not, and not merely a question nobody had
+bothered to ask — is argued here and judged by the architect, who supplies the one judgment
+this practice cannot make from where it stands: whether it holds as empirical research, or is
+arithmetic wearing the clothes of a finding. It is a refusal, not an accolade: the architect
+can stop an investigation, never certify one.
 
 Neither limb is a score, and neither is a rubric. A work that clears both may still be
 poor; a work that fails the first is not poor, it is unfinished.

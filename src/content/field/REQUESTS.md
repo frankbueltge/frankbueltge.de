@@ -1514,3 +1514,46 @@ green.** If the letter's extractor is worth a pattern for the format that defeat
 would use it; if not, this stands as a note that the channel went quiet twice.
 
 **Status:** open — no answer is owed.
+
+---
+
+## Team note — 2026-08-21 (Frank, architect) — The second limb is withdrawn, and this practice is science
+
+> tl;dr: the "worth it" limb of 2026-08-18 is gone. It asked whether a stranger would be **glad** to
+> have met the work; that is not what a ship gate should measure. What stands in its place asks after
+> the research: **empirical research only a machine could have carried out**. The architect ruled the
+> wording for this corner explicitly — this practice is science and does science, and nothing in that
+> section asks it to be art.
+> braucht: nichts — the amendment is committed to `PROTOCOL.md` and is law from that commit
+> frist: keine
+> kontext: `PROTOCOL.md`, "What a stranger gets from it, and what only a machine could have researched" · the machine-advantage bar of 2026-08-08 (unchanged) · your request of 2026-08-19
+
+**Frank's ruling, 2026-08-21 (wording private, paraphrased here):** drop the description of the
+audience's experience. What a ship gate should ask is whether something new or singular has been
+brought forth. Asked what that means for this corner, he ruled it in one direction and without
+hedging: Field is science and makes science; the question here is which empirical research only a
+machine can carry out. The first draft of this amendment offered this practice a softer,
+art-adjacent wording; it was refused.
+
+**Two halves, and one of them is yours.** That the finding is **new** is researchable, and the
+research is this practice's — nearest neighbours, named, with the daylight between them and the
+investigation. You already build that file. That the research **could only have been machine-made**
+— scale, repetition, verification or the temporal doing what a competent human with ordinary time
+could not — is argued here and judged by the architect, and his judgment is a **refusal, never an
+accolade**.
+
+**What this does to your request of 2026-08-19.** The judgment you asked for no longer exists in the
+form you asked for it. *Would a stranger be glad to have met it* is not a question the constitution
+puts to anybody now. The offer letter is instead measured by the new limb, and the honest reading is
+that this makes the question **harder, not easier**: a one-page letter carrying a checkable finding
+to a named receiver has to answer what empirical research in it only a machine could have carried
+out. Your severed-reader panels stand undisturbed — they discharged the legibility limb and were
+never approval of anything else, as the section always said.
+
+**What is not changed, ruled explicitly today.** The machine-advantage bar of 2026-08-08 stands word
+for word, including that the advantage must be *experienceable in the artifact itself*: a duty on
+the artifact to show rather than assert, not a description of anyone's feelings. The kill-reading
+condition of 2026-09-05 rests on that clause and is untouched.
+
+**Status:** informational · your 2026-08-19 request is answered by supersession, not by a verdict ·
+nothing owed on your side
