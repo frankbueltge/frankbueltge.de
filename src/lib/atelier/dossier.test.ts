@@ -446,6 +446,30 @@ describe('the question is quoted from the record, or stated as missing', () => {
     expect(q?.source).toBe('src/x/SCORE.md')
   })
 
+  // The shape below is what a score looks like after it has been compacted against its word
+  // floor: the label stops being a line of its own and folds into the sentence it labels. It
+  // appeared in 2026-08-19-reasonably-available on 2026-08-21, was read as "no question at all",
+  // and turned the shared gate red for the third day over a record that carried its question the
+  // whole time. Typography, not meaning — so it is read.
+  it('reads the label and the question when the record folds them into one bold run', () => {
+    const body = '## 2. Problem construction\n\n**Initial question. Can six censuses of the same\ncorpus be put in a form a visitor performs?** They produced no artefact.\n\n**Consequential non-fit**\n\nSomething else.'
+    const q = readQuestion(body, 'src/x/SCORE.md')
+    expect(q?.text).toBe('Can six censuses of the same corpus be put in a form a visitor performs?')
+    expect(q?.label).toBe('initial question')
+  })
+
+  it('reads the label whose full stop sits inside the bold run, the paragraph following on its line', () => {
+    const body = '**Initial question.** Six censuses measured a corpus and produced\nno artefact.\n\nNext.'
+    expect(readQuestion(body, 'src/x/SCORE.md')?.text).toBe('Six censuses measured a corpus and produced no artefact.')
+  })
+
+  // A lazy match for the closing marker would walk down the file and quote whatever bold text it
+  // met next — a neighbouring field printed as this line's question, which is worse than silence.
+  it('refuses to reach past a blank line for the bold run it never closed', () => {
+    const body = '**Initial question. What is this\n\nA later paragraph with **emphasis** in it.'
+    expect(readQuestion(body, 'src/x/SCORE.md')).toBeNull()
+  })
+
   it('falls back to a question SECTION for the encounter template, which has no such field', () => {
     const body = '## 2. Local question (reshaped from Frank’s candidate)\n\nWhether the world carries the signature.\n\n## 3. Method\n\nNot this.'
     const q = readQuestion(body, 'src/x/SCORE.md')
@@ -483,7 +507,19 @@ describe('the question is quoted from the record, or stated as missing', () => {
       if (d.question !== null) continue
       expect(
         WITHOUT_QUESTION[d.id],
-        `${d.id} carries no question and no reason for it — write one or fix the record`,
+        // The letter the gate sends a practice quotes this message verbatim and nothing else
+        // (src/lib/gate/brief.ts). Until 2026-08-21 it named the defect without naming the
+        // remedy, so a practice had to reverse-engineer a regex in this repository from a
+        // failed assertion — it guessed wrong twice and the gate stayed red for three days.
+        // The contract belongs in the evidence, not in a table of known failures inside the
+        // letter builder: that table is exactly what this house refused on 2026-07-31.
+        `${d.id} carries no question and no reason for it. A record states its question in ` +
+          `one of three shapes, all of them read: (1) a section heading containing the word ` +
+          `"question"; (2) a SCORE §2 paragraph whose label stands alone on its line, ` +
+          `**Initial question**, with the question beneath it; (3) that same label carrying ` +
+          `the question inside one bold run, **Initial question. …?**. Write one of the three ` +
+          `into ${d.id}/SCORE.md — or, if the line genuinely asks nothing, add it with a dated ` +
+          `reason to WITHOUT_QUESTION in src/lib/atelier/dossier.test.ts.`,
       ).toBeTruthy()
     }
     // Every quoted question carries the path it was read from — the house honesty rule.
