@@ -29,6 +29,7 @@ import {
   newestJournalEntry,
   journalTitle,
   buildInbox,
+  protocolHeading,
 } from '../../../src/lib/zentrale/status'
 import { enginePrs } from '../../../src/lib/zentrale/sitePrs'
 import { checkToken } from '../../../src/lib/zentrale/auth'
@@ -53,16 +54,29 @@ const UA = 'frankbueltge.de steuerzentrale'
 // Journal, das Ulysses nachweislich täglich schreibt. Die tote Kennzahl wird nicht versteckt,
 // sondern in der Anzeige datiert — überholte Strukturen sichtbar und datiert, nie unauffällig
 // als aktuell (CLAUDE.md, Aktualitäts-Regel).
+// Extended 2026-08-21 from four units to the whole family (opsroom design,
+// docs/design/2026-08-21-steuerzentrale-opsroom.md): the board is only a Lagebild if it
+// shows every unit that works at night. `workflow` is the integrate workflow's exact name
+// (this repo's .github/workflows/*.yml `name:`); `redPrefix` is the alarm-issue prefix for
+// units whose integrate opens one (n-1 and attention integrate never do — an absent alarm
+// there is a fact about the workflow, not about the practice). `journalDir`/`protocolPath`
+// name what each repo actually carries; absent means the repo has no such file, and the
+// board stays honestly empty at that spot. n-1 keeps `protocolPath: null` on purpose: its
+// constitution is the Dowry plus the Foundation, and stamping either as "the protocol"
+// would invent a version the practice never declared.
 const COLLECTIVES = [
-  { repo: 'field-research', label: 'Field · Meridian', integrate: 'Field-Integrate', chronicle: true },
-  { repo: 'studio', label: 'Studio · Ensemble', integrate: 'Studio-Integrate', chronicle: true },
-  { repo: 'ulysses', label: 'Atelier · Ulysses', integrate: 'Atelier-Integrate', vitalSigns: true, journal: true },
-  { repo: 'data-snack-plenum', label: 'Plenum', integrate: 'Plenum-Integrate' },
+  { repo: 'ulysses', label: 'Atelier · Ulysses', voice: 'ulysses', workflow: 'Atelier integrate', redPrefix: 'Atelier', vitalSigns: true, journalDir: 'journal', protocolPath: 'PROTOCOL.md' },
+  { repo: 'field-research', label: 'Field · Meridian', voice: 'meridian', workflow: 'Field integrate', redPrefix: 'Field', chronicle: true, protocolPath: 'PROTOCOL.md' },
+  { repo: 'studio', label: 'Studio · Ensemble', voice: 'ensemble', workflow: 'Studio integrate', redPrefix: 'Studio', chronicle: true, protocolPath: 'PROTOCOL.md' },
+  { repo: 'error-as-method', label: 'Nightly line', voice: null, workflow: 'Nightly line integrate', redPrefix: 'Nightly', journalDir: 'journal', protocolPath: 'PROTOCOL.md' },
+  { repo: 'n-1', label: 'n-1 · Remainder', voice: null, workflow: 'n-1 integrate', redPrefix: null, protocolPath: null },
+  { repo: 'machine-attention', label: 'Machine Attention', voice: null, workflow: 'Attention integrate', redPrefix: null, protocolPath: null },
+  { repo: 'data-snack-plenum', label: 'Plenum', voice: null, workflow: 'Plenum integrate', redPrefix: 'Plenum', protocolPath: null },
 ]
 
-// "Field-Integrate red" / "Field-Integrate rot" — der Bot legt bei rotem Lauf ein Issue mit
-// diesem Titelmuster an; Gruppe 1 ist der Präfix, der auf ein Kollektiv gemappt wird.
-const RED_ISSUE_RE = /^(Field|Studio|Atelier|Plenum)-Integrate (red|rot)/i
+// "Field-Integrate red" / "Field-Integrate rot" / "Nightly-Integrate rot" — the integrate
+// bots open an issue with this title pattern on a red run; group 1 maps to a redPrefix.
+const RED_ISSUE_RE = /^(Field|Studio|Atelier|Plenum|Nightly)-Integrate (red|rot)/i
 
 const CACHE_TTL_MS = 3 * 60 * 1000
 
@@ -118,9 +132,9 @@ async function rawText(url) {
 // Wirft nie: das Journal ist ein ergänzendes Signal wie Chronik/Vitalzeichen, kein
 // Kernstatus. Fehlt es, bleibt die Karte an dieser Stelle ehrlich leer — die restliche
 // Antwort darf davon nicht abhängen (siehe Ausfall-Politik oben).
-async function journalSignal(token, repo) {
+async function journalSignal(token, repo, dir) {
   try {
-    const listing = await ghGet(token, `/repos/frankbueltge/${repo}/contents/journal`)
+    const listing = await ghGet(token, `/repos/frankbueltge/${repo}/contents/${dir}`)
     const newest = newestJournalEntry(listing)
     if (!newest) return null
     // Nur der Kopf wird gebraucht; die Einträge sind lange Prosa, der Titel steht oben.
@@ -169,9 +183,9 @@ async function gateCandidates(token, repo, nowIso) {
 // Matcht Workflow-Namen wie "Field integrate" oder "Field-Integrate" case-insensitiv gegen
 // den Kollektiv-Präfix — die Actions-Workflow-Namen im Repo trennen Präfix und "integrate"
 // mit einem Leerzeichen, die Kollektiv-Config selbst mit einem Bindestrich; beides zulassen.
-function matchesIntegrate(workflowName, prefix) {
-  const re = new RegExp(`^${prefix}[\\s-]+integrate$`, 'i')
-  return re.test((workflowName || '').trim())
+function matchesIntegrate(workflowName, wanted) {
+  const name = (workflowName || '').trim().toLowerCase()
+  return name === wanted.trim().toLowerCase()
 }
 
 async function buildPayload(token) {
@@ -191,7 +205,18 @@ async function buildPayload(token) {
     { name: 'chronicle:field-research', run: () => rawJson('frankbueltge/field-research', 'chronicle.json') },
     { name: 'chronicle:studio', run: () => rawJson('frankbueltge/studio', 'chronicle.json') },
     { name: 'vitalSigns:ulysses', run: () => rawJson('frankbueltge/ulysses', 'pulse/vital-signs.json') },
-    { name: 'journal:ulysses', run: () => journalSignal(token, 'ulysses') },
+    ...COLLECTIVES.filter((c) => c.journalDir).map((c) => ({
+      name: `journal:${c.repo}`,
+      run: () => journalSignal(token, c.repo, c.journalDir),
+    })),
+    // Constitution heading per unit (raw read, never throws): the board's version chip.
+    ...COLLECTIVES.filter((c) => c.protocolPath).map((c) => ({
+      name: `protocol:${c.repo}`,
+      run: async () => {
+        const md = await rawText(`https://raw.githubusercontent.com/frankbueltge/${c.repo}/main/${c.protocolPath}`)
+        return protocolHeading(md)
+      },
+    })),
     // Nur das Atelier kennt heute den Kandidaten-Mechanismus (Protokoll v5 + human gate);
     // weitere Praxen kommen hier dazu, sobald ihre Verfassungen einen Kandidaten-Status tragen.
     { name: 'gate:ulysses', run: () => gateCandidates(token, 'ulysses', nowIso) },
@@ -234,26 +259,27 @@ async function buildPayload(token) {
       .map((i) => ({ number: i.number, title: i.title, url: i.html_url }))
 
   const collectives = COLLECTIVES.map((c) => {
-    const prefix = c.integrate.split('-')[0]
-    const runMatch = runsSummary ? runsSummary.find((r) => matchesIntegrate(r.workflow, prefix)) : null
+    const runMatch = runsSummary ? runsSummary.find((r) => matchesIntegrate(r.workflow, c.workflow)) : null
     const commitsResult = results[`commits:${c.repo}`]
     const commits = Array.isArray(commitsResult) ? summarizeCommits(commitsResult, sinceIso) : null
 
     return {
       repo: c.repo,
       label: c.label,
+      voice: c.voice ?? null,
       commitsLast24h: commits ? commits.count : null,
       lastCommit: commits ? commits.last : null,
+      protocol: c.protocolPath ? (results[`protocol:${c.repo}`] ?? null) : null,
       integrate: {
         workflow: runMatch ? runMatch.workflow : null,
         conclusion: runMatch ? runMatch.conclusion : null,
         at: runMatch ? runMatch.at : null,
         runUrl: runMatch ? runMatch.url : null,
-        redIssue: redIssueFor(prefix),
+        redIssue: c.redPrefix ? redIssueFor(c.redPrefix) : null,
       },
       chronicle: c.chronicle ? chronicleLast(results[`chronicle:${c.repo}`]) : null,
       vitalSigns: c.vitalSigns ? vitalSignsLast(results[`vitalSigns:${c.repo}`]) : null,
-      journal: c.journal ? (results[`journal:${c.repo}`] ?? null) : null,
+      journal: c.journalDir ? (results[`journal:${c.repo}`] ?? null) : null,
       strandedIssues: strandedFor(c.repo),
     }
   })
