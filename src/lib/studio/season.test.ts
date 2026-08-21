@@ -189,6 +189,46 @@ describe('buildSeasonModel over the committed record', () => {
     }
   })
 
+  // The guard above only fires once the committed record has ALREADY collided — which is how the
+  // site spent 2026-08-21 refusing every studio integration: the chronicle reached a new day, the
+  // time axis compressed to fit it, and two premieres four days apart were pushed into each other.
+  // The axis compresses a little further every night the season runs, so the pressure is a function
+  // of the season's LENGTH, and that can be applied here directly instead of waited for.
+  it('keeps the pools apart however far the season stretches past its premieres', () => {
+    // Every premiere on the record, then a closing entry a year out: the six pools are squeezed
+    // into the left edge of the axis, the worst case the real record walks towards one day at a
+    // time. A layout that only just fits today fails here.
+    for (const lastDay of ['2026-09-01', '2026-12-01', '2027-08-21', '2030-01-01']) {
+      const stretched = [
+        ...chronicleUpstream,
+        {
+          collective_session: Math.max(...chronicleUpstream.map((e) => e.collective_session)) + 1,
+          date: lastDay,
+          move: 'steer',
+          summary: 'A later evening, so the axis must hold every premiere in less room.',
+          works: [],
+        },
+      ]
+      const m = buildSeasonModel({ ...REAL, chronicle: stretched })
+      const pools = m.marks.filter((k) => k.state === 'premiered' || k.state === 'withdrawn')
+      expect(pools.length, lastDay).toBe(SHIPPED.length)
+      for (let i = 0; i < pools.length; i++) {
+        for (let j = i + 1; j < pools.length; j++) {
+          const a = pools[i]
+          const b = pools[j]
+          const overlapX = Math.abs(a.x - b.x) < a.rx + b.rx
+          const overlapY = Math.abs(a.y - b.y) < a.ry + b.ry
+          expect(overlapX && overlapY, `${lastDay}: ${a.label} overlaps ${b.label}`).toBe(false)
+        }
+      }
+      // …and no pool is pushed off the floor to buy that clearance
+      for (const p of pools) {
+        expect(p.x - p.rx, `${lastDay}: ${p.label} runs off the left`).toBeGreaterThanOrEqual(96)
+        expect(p.x + p.rx, `${lastDay}: ${p.label} runs off the right`).toBeLessThanOrEqual(1344)
+      }
+    }
+  })
+
   it('steps chronologically, and a work is premiered before it can be returned', () => {
     const order = seasonOrder(model.marks)
     const dates = order.map((m) => m.date)

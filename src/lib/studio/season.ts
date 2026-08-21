@@ -127,6 +127,12 @@ const PROD_Y = 644
 
 const POOL_RY = 36
 const STRIKE_R = 30
+/** Clearance between two pools, so two names never letter into each other. */
+const POOL_GAP = 18
+/** The two lines the lit band is: its own top and bottom edge, 104px apart, which is more than the
+ *  72px two pool edges need. A pool keeps a hashed offset inside its line (never more than half the
+ *  32px of slack), so the band still reads as a scatter rather than as two ruled rows. */
+const LIT_ROW_JITTER = 14
 /** the top edge of the lamp the light hangs from — the highest thing on the stage, and therefore
  *  the lowest a crop window's top edge may sit if the fragment is still to read as a stage */
 const LAMP_TOP = FLOOR.y0 - 28
@@ -366,9 +372,63 @@ export function buildSeasonModel(input: SeasonInput): SeasonModel {
     }))
   }
 
+  // ——— the lit band is shelved, not relaxed ————————————————————————————————————
+  //
+  // A relaxation pass settles marks that are ALMOST in place. It cannot answer "which of these two
+  // lines does this pool belong on", because that is an assignment, and a pass of local pushes has
+  // no way to reach it: pushing a pool towards the line it should be on drives it through whatever
+  // already sits there, so the pass stops in the first arrangement where every push cancels out.
+  //
+  // The lit band asks exactly that question, and got the wrong answer on 2026-08-21. The pools are
+  // as wide as their names (up to 253px for NO WAY OF KNOWING) and the band is 1168px wide, so the
+  // six premieres on the record need 1145px of it — 98% — to stand in a single line. The chronicle
+  // reached a new day, the time axis compressed to fit it, and NATIVE SPEAKER, clamped against the
+  // left wall with nowhere left to go, came to rest 0.3px inside NO WAY OF KNOWING. The relaxation
+  // was not short of passes: at 24, 200 and 800 iterations it returns the byte-identical wrong
+  // answer, because that arrangement is a fixed point. A single line was never going to hold this
+  // band, and every night the season lengthens makes the line shorter.
+  //
+  // So the pools are shelved instead: walked oldest first, each placed on the line where it sits
+  // closest to its own date, and moved right only as far as the pool already on that line requires.
+  // Two lines hold this record in 534px and 593px — a third of the room a single line could not
+  // find. When both lines do fill, a pool runs past the floor's right edge and the bounds guard in
+  // season.test.ts fails, which is the honest alarm: the band is full, and the figure needs a
+  // decision (a third line, smaller lettering) rather than a quietly overlapping name.
+  const shelveLit = (drafts: Draft[]): Draft[] => {
+    const minX = FLOOR.x0 + 40
+    const lines = [LIT_Y - LIT_JITTER, LIT_Y + LIT_JITTER]
+    const rightEdge = lines.map(() => -Infinity)
+    const at = new Map<string, { x: number; y: number }>()
+    // Oldest first — a shelf fills left to right, and the x axis is time. The key breaks a same-day
+    // tie, so the walk is a total order and never depends on the chronicle's own row order.
+    const oldestFirst = [...drafts].sort((a, b) =>
+      a.date === b.date ? a.key.localeCompare(b.key) : a.date < b.date ? -1 : 1,
+    )
+    for (const d of oldestFirst) {
+      const wanted = Math.max(d.x, minX + d.rx)
+      // the line that moves this pool least off its own date; ties go to the upper line
+      let line = 0
+      let best = Infinity
+      for (let i = 0; i < lines.length; i++) {
+        const cost = Math.max(wanted, rightEdge[i] + POOL_GAP + d.rx) - wanted
+        if (cost < best) {
+          best = cost
+          line = i
+        }
+      }
+      const x = Math.max(wanted, rightEdge[line] + POOL_GAP + d.rx)
+      rightEdge[line] = x + d.rx
+      at.set(d.key, {
+        x: round(x),
+        y: round(lines[line] + (hash01(d.key) - 0.5) * 2 * LIT_ROW_JITTER),
+      })
+    }
+    return drafts.map((d) => ({ ...d, ...at.get(d.key)! }))
+  }
+
   const marks: SeasonMark[] = [
     // pools carry their own width (the title sets it), so their footprint IS their rx
-    ...settle(lit, LIT_Y - LIT_JITTER, LIT_Y + LIT_JITTER, 0, 18),
+    ...shelveLit(lit),
     // an X plus two lettered lines: ~68 wide, ~26 tall
     ...settle(struck, STRUCK_Y - STRUCK_JITTER, STRUCK_Y + STRUCK_JITTER, 26, 16, 2.6),
     // returns land on the production band itself — the arc carries only a Roman numeral, so their
