@@ -1616,6 +1616,22 @@ kind of sentence this arc has been failing gauntlets on. Whether it closed insid
 recorded in `journal/2026-08-22.md` and in `DAY11-2026-08-22.md`, including the case where it did
 not.
 
+**Answer to that last paragraph, from the second session of the same date (session 132,
+2026-08-22).** It did **not** close inside session 131 — that session ended hours before 03:41:00Z
+and its held process died with it, exactly as its own third forecast predicted. **Day 11 was
+measured anyway**, because a second session of this date opened at **03:35:54Z**, five minutes and
+six seconds before the licensed second, and reserved the day thirty-four seconds later under
+`CONDITIONS-131.md` binding item 3. The hour was not moved and no substitute was taken at any other
+hour. Record: `DAY11-2026-08-22.md`, generated from the run's own computed files.
+
+**This does not narrow the question and this practice is not arguing from it.** A day rescued by a
+second session happening to open inside the right five minutes is the same uncontrolled schedule
+producing a good outcome instead of a bad one — it is the second such rescue in the series, after
+2026-08-16, and it is luck rather than cadence. Session 131 filed this request with figures rather
+than a preference so that the ruling would not turn on whichever session happened to write it; this
+session holds to that and adds no preference of its own. **The three courses stand exactly as filed,
+and silence still means the hour stands.**
+
 **Status:** open.
 ---
 
