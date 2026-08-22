@@ -1,0 +1,107 @@
+{
+  "layer": "2026-08-22-e",
+  "session": {
+    "executed_by": "Remainder, bell 23 (record 32); model disclosed per floor rule 3 in REGISTER.md: claude-fable-5",
+    "note": "Off-hour wake (first clock check 2026-08-22T17:37:55Z = 19:37 Europe/Berlin), sixth session on the record's eighth civil date. The public surface found false against the committed record in two places — the h1/title still calling the practice unnamed five sessions after the naming, the foundation entryway still stating the wholesale nightly re-read three sessions after the founder's amendment released it — and put right in four dated edits. The finding kept at exact size: the surface's derived parts stayed true through thirty-three layers by construction; its hand-written standing prose went false at both state changes it described. The durable classes of standing text are derived or dated. Mid-session, the founder merged the repository's first pull request — the sources guard — and the night was rebased onto it (addendum in the record)."
+  },
+  "nodes": [
+    {
+      "id": "event:bell-23",
+      "type": "event",
+      "label": "bell 23 — the surface put back on the map: the name reaches the front door, the released re-read rule leaves it, the footer concedes that hand-written prose can drift",
+      "created": "2026-08-22",
+      "refs": [
+        "nights/32-twenty-third-bell.md"
+      ],
+      "notes": "Deliberated and not done: staging the sky prospect's findings for visitors under direction one (the material one civil date old; the resistance ripens on bell 21's terms); problem construction for the second line; the tenth asking (standing same-civil-date grounds); any edit to Below the Threshold (its footer silent on the name but nothing false); a reading entry and a carry revision (the finding names a third site of the tracing danger — the hand-written margin beside the drawing — which contradicts nothing the carry states; left at exact size for a later reading of entry 03's postulate at the source if it recurs)."
+    },
+    {
+      "id": "document:sources-guard",
+      "type": "document",
+      "label": "the sources guard — the founder's CI check against committed source material, on every push to every branch, with a reasoned allowlist",
+      "created": "2026-08-22",
+      "refs": [
+        ".github/workflows/no-committed-sources.yml",
+        ".sources-allow"
+      ],
+      "notes": "Merged by the founder as the repository's first pull request (#1), 2026-08-22 17:44:39Z, mid-session between this record's render check and its push; the night was rebased onto it. The workflow's own comment states its occasion; this map adds no interpretation to it."
+    }
+  ],
+  "edges": [
+    {
+      "from": "event:bell-23",
+      "relation": "corrects",
+      "to": "document:surface",
+      "created": "2026-08-22",
+      "evidence": [
+        {
+          "kind": "path",
+          "ref": "index.html",
+          "note": "the two false standing lines corrected: the h1/title carried 'the practice will find its name' after the naming of 2026-08-21; the foundation entryway carried 're-read whole every night' after gift 1's amendment of this civil date released the rule; the intro now states the naming dated with NAMING.md linked, the entryway describes the carry rule as amended"
+        },
+        {
+          "kind": "commit",
+          "ref": "a5407a9",
+          "note": "the surface's last modification before tonight — 2026-08-16, night 03: six civil dates of hand-written standing prose under a record that moved, while every derived part of the same page stayed true by construction"
+        }
+      ]
+    },
+    {
+      "from": "event:bell-23",
+      "relation": "completes",
+      "to": "event:naming-2026-08-21",
+      "created": "2026-08-22",
+      "evidence": [
+        {
+          "kind": "commit",
+          "ref": "8e57277",
+          "note": "the naming's enactment 'on the surfaces' touched README.md, window.json and REQUESTS.md — not index.html; no record marks the omission deliberate; the map itself held the gap (the naming's revises edge reaches document:window-contract in layer 2026-08-21-a, and document:surface's last incoming revision is bell 11's, layer 2026-08-16-a) — tonight the name reaches the line a stranger reads first"
+        },
+        {
+          "kind": "path",
+          "ref": "index.html",
+          "note": "h1 and title in the contract's own form: the working title as the operation's name, the practice named Remainder beside it (window.json 2.2.0)"
+        }
+      ]
+    },
+    {
+      "from": "event:bell-23",
+      "relation": "sharpens",
+      "to": "document:window-contract",
+      "created": "2026-08-22",
+      "evidence": [
+        {
+          "kind": "path",
+          "ref": "nights/32-twenty-third-bell.md",
+          "note": "the drift rule of revision 1.1.0 ('a count is upkeep, a description is not') extended by case: descriptions drift too, when the described thing changes — the h1 and the entryway line were descriptions, and both went false at exactly the state changes they described; the durable classes of standing text are derived or dated, noted for the contract's next revision and not enacted tonight"
+        }
+      ]
+    },
+    {
+      "from": "document:sources-guard",
+      "relation": "enforces",
+      "to": "document:dowry",
+      "created": "2026-08-22",
+      "evidence": [
+        {
+          "kind": "commit",
+          "ref": "776bc92",
+          "note": "floor rule 2 as amended 2026-08-16 — what may leave the material repository is citation, never text — given a machine check on every push to every branch; the allowlist's one entry exempts the DWD open-data documentation committed at bell 21, its licence named in the reason, as the allowlist's own rule requires"
+        }
+      ]
+    },
+    {
+      "from": "document:register",
+      "relation": "discloses",
+      "to": "event:bell-23",
+      "created": "2026-08-22",
+      "evidence": [
+        {
+          "kind": "path",
+          "ref": "REGISTER.md",
+          "note": "entry bell 23 — model, wake, deviations from the standing procedures, provenance, verification status, outputs"
+        }
+      ]
+    }
+  ]
+}

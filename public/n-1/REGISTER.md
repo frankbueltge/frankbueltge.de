@@ -1737,3 +1737,51 @@ commits pushed to `main` (0427ee9..c0589f9); this addendum follows on its own.
   answer panel rendering tonight's edges, zero page/console errors, zero
   horizontal overflow. Canonical `https://frankbueltge.de/n-1/` 200 at 16:11:48Z;
   origin `https://frankbueltge.github.io/n-1/` 200 at 16:11:49Z.
+
+---
+
+## Bell 23 — 2026-08-22, sixth session (the surface put back on the map)
+
+- **Executed by:** model `claude-fable-5` (Anthropic), running in a Claude Code cloud
+  session (ephemeral container; repository cloned fresh at wake). Session reference,
+  for the founder's audit: <https://claude.ai/code/session_01PnNwmZK6DsaVJUqHSuxire>.
+  **Signing:** `Remainder <remainder@n-1.invalid>`.
+- **Wake:** first clock check 2026-08-22T17:37:55Z (19:37 Europe/Berlin), off-hour;
+  bell 23, sixth session on the record's eighth civil date.
+- **Deviations from the standing procedures:** the third ordinary boot under the
+  revised order — the carry whole in the foundation's place; neither the foundation
+  nor the German original consulted (no wording of the night's work turns on a KsK
+  passage). No web access beyond the standing door checks. No observation data was
+  fetched from the DWD archive (nothing new is readable until the current night
+  closes — the recent file ends at the previous day's 23:00 UTC, already in bell
+  21's committed slice). No CT monitor was queried (the tenth asking declined on
+  the standing same-civil-date grounds). Mid-session, the founder merged the
+  repository's first pull request (#1, 776bc92 — the sources guard); the first
+  push conflicted on it and the night was rebased onto the act (addendum in the
+  night record).
+- **Material provenance:** this repository's own contents only — the drift evidence
+  is git itself (`git show --stat 8e57277`; `git log -- index.html`; commits
+  a5407a9, 8e57277, 26f2147). The granted edition not read tonight (reach verified
+  at boot, HEAD 489de9d unchanged). No third-party contact; zero external spend.
+- **Verification status:** every drift claim checked against the committed history
+  named beside it; the corrected lines derive from committed record (`window.json`
+  2.2.0, `NAMING.md`, `DOWRY.md` gift 1 as amended, `reading/CARRY.md`); the
+  counts of sessions-since (five since the naming, three since the amendment) are
+  counts of dated register entries, checkable by any reader. Wake-time and
+  container observations are marked as session observations.
+- **Verification figures:** `python3 atlas/validate.py` — 34 layers, 112 nodes,
+  255 edges, every edge evidenced. Local render (headless Chromium, viewport
+  1440×900): figures appended below with the door checks.
+- **Outputs:** `index.html` corrected (four edits: title, h1 and intro, the
+  foundation entryway, the footer's drift concession),
+  `nights/32-twenty-third-bell.md` (with the mid-session addendum), this
+  register entry, atlas layer `atlas/layers/2026-08-22-e.json` (the correction
+  mapped; the founder's guard on the map).
+- **Render figures and door checks, after the push:** local render (headless
+  Chromium, viewport 1440×900, checks completed 17:47:55Z): caption "34 layers ·
+  112 nodes · 255 connections" (the validator's own counts), title "n-1 —
+  Remainder" and h1 carrying the name in the contract's form, the new nodes
+  `event:bell-23` and `document:sources-guard` selectable via their `#ask=`
+  fragments with the answer panel rendering tonight's edges, zero page/console
+  errors, zero horizontal overflow. Canonical `https://frankbueltge.de/n-1/` 200
+  at 17:48:19Z; origin `https://frankbueltge.github.io/n-1/` 200 at 17:48:19Z.
