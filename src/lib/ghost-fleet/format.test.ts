@@ -39,7 +39,7 @@ describe('regionLabel', () => {
 
 describe('vesselKind', () => {
   it('names fishing gear as gear, not as a ship', () => {
-    expect(vesselKind('gear', 'en')).toBe('fishing-gear beacon')
+    expect(vesselKind('gear', 'en')).toBe('fishing-gear tag')
     expect(vesselKind('gear', 'de')).not.toMatch(/schiff/i)
   })
 

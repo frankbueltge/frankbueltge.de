@@ -39,7 +39,7 @@ export function vesselKind(type: string, locale: Locale): string {
     case 'fishing':
       return de ? 'Fischereischiff' : 'fishing vessel'
     case 'gear':
-      return de ? 'Fischereigerät mit eigenem AIS-Sender' : 'fishing-gear beacon'
+      return de ? 'Fischereigerät mit eigener AIS-Kennung' : 'fishing-gear tag'
     case 'cargo':
       return de ? 'Frachtschiff' : 'cargo ship'
     case 'passenger':
