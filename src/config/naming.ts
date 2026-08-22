@@ -155,7 +155,7 @@ export const NAMING = {
         title: 'Machine Attention',
         line: 'The counter-experiment, built against the ecology on purpose: one machine running public investigations, its attention, refusals, uncertainty and cost on the record.',
         href: '/machine-attention',
-        meta: 'experiments: The Foreknown · Dark Ocean · one instrument',
+        meta: 'one experiment on the stage · three lines running nightly',
       },
       {
         // Forked 2026-08-11 (decision log): shown beside the ecology rather than inside it, and

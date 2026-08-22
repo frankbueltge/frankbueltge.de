@@ -1,8 +1,20 @@
 ---
-// Gegenmessung IV (Capstone) — „The Pattern".
-// Die Maschine findet täglich blind die stärkste Korrelation im eigenen Protokoll-Archiv —
-// und kann nicht sagen, ob sie etwas bedeutet. Nur der Permutationstest trennt Signal von
-// Rauschen, und selbst der wird von Trends getäuscht. Daten: src/data/pattern/latest.json.
+// Counter-measurement IV (capstone) — "Patterns".
+// Each day the machine blindly finds the strongest correlation in the house's own Protocol
+// archive — and cannot say whether it means anything. Only the permutation test separates signal
+// from noise, and even it is fooled by trends. Data: src/data/pattern/latest.json.
+//
+// Two illustrations left the confession paragraph on 2026-08-22 (currency audit), because the
+// archive refutes both. "The sea warms, the ice melts" described the sea-ice ↔ sea-surface-
+// temperature pair, which won on 2 of 64 committed days; on the rest the pick was sea ice ↔ world
+// population. And "tomorrow it will pair earthquakes with football" advertised a promiscuity the
+// instrument does not have: 64 snapshots produced three distinct pairs, 48 of them the same one.
+// What stays is the clause that was always true and always load-bearing — this test is fooled by
+// trends — now with the reason it is. The open question the audit raised, whether a permutation
+// test that has never once fired still carries the work's thesis, is issue #724 and the
+// architect's to answer; this page does not answer it in passing.
+// Note for the next editor: keep such notes HERE. An HTML comment in the template below ships
+// into dist/ and would quote the retired phrasing to every visitor who reads the source.
 import { getRelativeLocaleUrl } from 'astro:i18n'
 import { t } from '@/i18n/ui'
 import type { Locale } from '@/lib/site'
@@ -67,8 +79,8 @@ const ndMarkerX = nd ? Math.min(nd.bins * 10 - 1, Math.abs(h.r) * nd.bins * 10) 
     </p>
     <p class="mt-3 leading-relaxed text-fg-muted">
       {de
-        ? `Nur ein Test trennt Signal von Rauschen: die Daten ${d.permutations.toLocaleString('de-DE')}-mal durchschütteln und zählen, wie oft der Zufall allein ein ebenso starkes Muster erzeugt. Hier: ${pct(d.false_discovery_rate, locale)} der Durchläufe. ${survives ? 'Das macht reinen Zufall unwahrscheinlich — es könnte echt sein (das Meer erwärmt sich, das Eis schmilzt). Aber die Maschine hatte Glück: morgen paart sie Erdbeben mit Fußball, mit derselben Überzeugung.' : 'Mit anderen Worten: reines Rauschen — der Zufall produziert das ständig.'} Und selbst dieser Test wird von Trends getäuscht.`
-        : `Only one test separates signal from noise: shuffle the data ${d.permutations.toLocaleString('en-GB')} times and count how often chance alone produces a pattern this strong. Here: ${pct(d.false_discovery_rate, locale)} of runs. ${survives ? 'That makes pure chance unlikely — it might be real (the sea warms, the ice melts). But the machine got lucky: tomorrow it will pair earthquakes with football, with the same conviction.' : 'In other words, pure noise — chance manufactures this all the time.'} And even this test is fooled by trends.`}
+        ? `Nur ein Test trennt Signal von Rauschen: die Daten ${d.permutations.toLocaleString('de-DE')}-mal durchschütteln und zählen, wie oft der Zufall allein ein ebenso starkes Muster erzeugt. Hier: ${pct(d.false_discovery_rate, locale)} der Durchläufe. ${survives ? 'Das macht reinen Zufall unwahrscheinlich — nach diesem Test.' : 'Mit anderen Worten: reines Rauschen — der Zufall produziert das ständig.'} Und selbst dieser Test wird von Trends getäuscht: zwei Reihen, die nur in eine Richtung laufen, bringt kein Durchschütteln auseinander.`
+        : `Only one test separates signal from noise: shuffle the data ${d.permutations.toLocaleString('en-GB')} times and count how often chance alone produces a pattern this strong. Here: ${pct(d.false_discovery_rate, locale)} of runs. ${survives ? 'That makes pure chance unlikely — by this test.' : 'In other words, pure noise — chance manufactures this all the time.'} And even this test is fooled by trends: no amount of shuffling pulls apart two series that only ever move one way.`}
     </p>
   </section>
 
@@ -104,8 +116,8 @@ const ndMarkerX = nd ? Math.min(nd.bins * 10 - 1, Math.abs(h.r) * nd.bins * 10) 
           ? 'Balken: die Verteilung der stärksten Korrelation aus jedem gemischten Lauf. Die Linie: der echte Fund. Das ist der Unterschied zu Vigens statischem p-Wert — hier steht die ganze Resampling-Verteilung, nachrechenbar aus committeten Daten.'
           : "Bars: the distribution of the strongest correlation in each shuffled run. The line: the real discovery. This is the difference from Vigen's static p-value — the whole resampling distribution, recomputable from committed data."
         : de
-          ? 'Die Verteilung selbst erscheint hier, sobald die nächtliche Pipeline sie mitschreibt (in Arbeit seit 2026-08-09) — bis dahin steht nur die Rate, ehrlich.'
-          : 'The distribution itself appears here once the nightly pipeline records it (in progress since 2026-08-09) — until then only the rate stands, honestly.'}
+          ? 'Für diesen Tag hat die Pipeline keine Verteilung mitgeschrieben — dann steht nur die Rate, ehrlich.'
+          : 'For this day the pipeline recorded no distribution — then only the rate stands, honestly.'}
     </p>
   </section>
 
