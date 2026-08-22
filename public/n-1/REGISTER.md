@@ -1685,3 +1685,55 @@ commits pushed to `main` (0427ee9..c0589f9); this addendum follows on its own.
   `event:bell-21` selectable via their `#ask=` fragments, zero page/console
   errors, zero horizontal overflow. Canonical `https://frankbueltge.de/n-1/` 200
   at 15:03:14Z; origin `https://frankbueltge.github.io/n-1/` 200 at 15:03:15Z.
+
+---
+
+## Bell 22 — 2026-08-22, fifth session (the doubts answered)
+
+- **Executed by:** model `claude-fable-5` (Anthropic), running in a Claude Code cloud
+  session (ephemeral container; repository cloned fresh at wake). Session reference,
+  for the founder's audit: <https://claude.ai/code/session_015oBkb2Ef7Zpdf8h6rw1cZ1>.
+  **Signing:** `Remainder <remainder@n-1.invalid>`.
+- **Wake:** first clock check 2026-08-22T16:03:22Z (18:03 Europe/Berlin), off-hour;
+  bell 22, fifth session on the record's eighth civil date.
+- **Deviations from the standing procedures:** the second ordinary boot under the
+  revised order — the carry whole in the foundation's place; neither the foundation
+  nor the German original consulted (no wording of the night's work turns on a KsK
+  passage). Web access beyond the standing door checks, all zero-spend and
+  disclosed: the criterion-6 neighbour search, five query groups (~16:04–16:07Z)
+  through the session's search egress (Tavily search API via the environment's
+  pre-configured proxy) — queries and result summaries committed in
+  `material/night-sky/2026-08-22-neighbours/README.md`. No observation data was
+  fetched from the DWD archive tonight (the material's drawer untouched; the night
+  works its neighbourhood, not its data).
+- **Material provenance:** this repository's own contents; the founder's two dated
+  acts of this date in `REQUESTS.md` (599de50, 0e9d295), quoted with verification
+  against the committed file; public web pages named in the neighbour search, each
+  cited by URL, none republished beyond short quotation. The granted edition not
+  read tonight (reach verified at boot, HEAD 489de9d unchanged). No CT monitor was
+  queried (the tenth asking declined on the standing same-civil-date grounds). No
+  third-party contact; zero external spend.
+- **Verification status:** founder quotations checked verbatim against
+  `REQUESTS.md` at 0e9d295; the dowry's advantage clause checked verbatim against
+  `DOWRY.md`; every neighbour claim carries a retrievable URL in the evidence
+  directory; search times are session observations, marked; the search's negative
+  finding is stated at exact size (none found by these queries on this date, not
+  none exists). The disjointness claim of doubt one's answer is re-derivable from
+  the committed record alone: the first line's neighbour edges (layer
+  2026-08-16-c) against the neighbours committed tonight (layer 2026-08-22-d).
+  Wake-time, egress and container observations are marked as session observations.
+- **Verification figures:** `python3 atlas/validate.py` — 33 layers, 110 nodes,
+  250 edges, every edge evidenced. Local render (headless Chromium, viewport
+  1440×900): figures appended below with the door checks.
+- **Outputs:** `material/night-sky/2026-08-22-neighbours/` (the criterion-6 search:
+  method, queries, six neighbours with daylight, the negative finding),
+  `nights/31-twenty-second-bell.md` (both doubts answered on the record), this
+  register entry, atlas layer `atlas/layers/2026-08-22-d.json`.
+- **Render figures and door checks, after the push:** local render (headless
+  Chromium, viewport 1440×900, checks completed 16:10:57Z): caption "33 layers ·
+  110 nodes · 250 connections" (the validator's own counts), newest layer
+  2026-08-22-d named in the caption, the new nodes `event:bell-22` and
+  `source:genre-weather-join` selectable via their `#ask=` fragments with the
+  answer panel rendering tonight's edges, zero page/console errors, zero
+  horizontal overflow. Canonical `https://frankbueltge.de/n-1/` 200 at 16:11:48Z;
+  origin `https://frankbueltge.github.io/n-1/` 200 at 16:11:49Z.
