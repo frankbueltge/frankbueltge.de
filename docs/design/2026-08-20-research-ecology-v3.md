@@ -197,3 +197,64 @@ Spur-1/Spur-2 separation (2026-08-18).
    bar, score work, executor mode, passio register, adoption reading).
 4. Dossier cross-link and knowledge-graph rebuild (`npm run graph:build`) after the
    decision-log row lands.
+
+## 8. The Stage — the technical means of staging (addendum, 2026-08-22)
+
+*Added by a working session on the founder's direction of 2026-08-21/22 (wording private;
+the substance: the practices are to stage their works with the means the technology
+actually offers — minimal or maximal, whatever the work needs — and a work that had been
+born staged would be a large step). This section is the infrastructure half of "art first";
+Moves 1–5 are the artistic half. Like everything in this draft: nothing here is in force
+until the founder decides.*
+
+**The evidence this section stands on.** On 2026-08-21/22 the same committed census
+(Ulysses' `2026-08-19-reasonably-available`, byte-identical `route.json`) was staged three
+ways in one evening: the shipped card-grid; a curated single page (~100 KB, entrance
+sentence, the four misspellings as exhibits, a wall that fills); and a walkable WebGL hall
+(three.js bundled via esbuild, ~772 KB, synthesized sound, one committed file, no fetch,
+CSP-clean). The information was identical; what changed was what a stranger experiences.
+Decisive fact: **the hall passes today's window contract unchanged.** The ceiling on
+staging was never Astro or GitHub — it was four decisions nobody had made: works are
+hand-written HTML by convention; the practice repos carry no build step; no session ever
+looks at its own page as a picture; night-session economics. All four are policy.
+
+**What stays law at every level below** — staging never buys out of the honesty discipline:
+source and lockfile committed beside any built bundle (a bundle without its source is an
+oracle); every figure a surface prints derived from the committed record at load, never
+typed; provenance line on the artifact; no external request at runtime except through a
+declared organ (level 3); corrections dated, never silent.
+
+**Level 1 — the bundle clause (costs one sentence).** A work may ship as a built artifact.
+`SITE-API.md` § window and the works contracts state: a committed bundle with committed
+source, lockfile and build command is a legitimate work surface. Effective immediately on
+adoption; the demonstration is the existence proof.
+
+**Level 2 — toolchain and the render loop (costs a CI step and a floor).** Practice repos
+get node + esbuild in their session environment and CI; the site mirrors built output as it
+mirrors everything else. With it, the one floor this draft adds to staging: **no
+visitor-facing surface ships unseen** — the shipping session renders its own page and
+commits the screenshots to the record. The staging failures on this house's record (the
+argument buried below 68,000 px; the architect meeting a work cold and understanding
+nothing) were loop failures, not skill failures: three render-look-fix passes caught and
+fixed a glitch light-strip and an unreadable hall in the demonstration, and no gate in any
+constitution had ever asked for a single look.
+
+**Level 3 — runtime organs (a live work is allowed to be alive).** For works that measure
+now, persist visitor traces, or share state: Cloudflare Workers/KV/Durable Objects — the
+stack the Steuerzentrale already runs on. Conditions: the organ's code is committed; its
+endpoints are declared in the work's manifest; its state is snapshotted nightly into the
+archive (Git stays the archive — the organ is a limb, not a second memory); a dead organ
+degrades the work to its last snapshot, visibly and dated, never silently.
+
+**Level 4 — compute (the GCP line, extended from pipelines to works).** Training,
+simulation, rendering beyond a CI runner, under the 2026-08-09 conditions unchanged: trace,
+licence notice, cost discipline, never at site runtime.
+
+**What this section refuses.** A shared "engine" or house framework the works must use —
+the means are chosen per work, and a practice that ships a plain page because the work
+needs a plain page meets the bar (Move 2.3 governs: form motivated to necessity). And no
+CDN dependencies at runtime: "the page fetches nothing" stays true at every level below 3.
+
+**Execution (folds into §7):** level 1 with the constitutional rewrites; level 2 in the
+same week (toolchain PR per practice repo + the render-loop floor in each constitution);
+levels 3–4 per work, on the work's own manifest, first uses reviewed by the founder.
