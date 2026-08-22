@@ -37,13 +37,15 @@ const locale = (Astro.currentLocale ?? 'en') as Locale
 const copy = {
   de: {
     title: 'Experimente',
-    sub: 'Die Experimente des Labors — laufende Instrumente, jedes mit offenen Quellen und offengelegtem Verfahren. Vier Linien, innerhalb jeder das Neueste zuerst. Jede Route bleibt erreichbar, keine Pipeline endet dadurch.',
+    sub: 'Die Experimente des Labors — laufende Instrumente, jedes mit offenen Quellen und offengelegtem Verfahren. Nach Forschungslinie geordnet, innerhalb jeder das Neueste zuerst. Jede Route bleibt erreichbar, keine Pipeline endet dadurch.',
     live: 'live data',
     field: 'Das Feld: jedes Experiment gegen die Projekte, die es schon gibt →',
   },
   en: {
     title: 'Experiments',
-    sub: "The lab's experiments — ongoing instruments, each with open sources and a disclosed method. Four lines, newest first inside each. Every route stays reachable, no pipeline ends because of this.",
+    // No count in this sentence: the groups are derived, so a numeral would be a lie the day a
+    // line empties or a new one opens — the same rule the triptych's captions follow.
+    sub: "The lab's experiments — ongoing instruments, each with open sources and a disclosed method. Grouped by research line, newest first inside each. Every route stays reachable, no pipeline ends because of this.",
     live: 'live data',
     // 2026-08-09: the neighbour audit drawn as one figure. It sits at the top of the shelf on
     // purpose — a visitor should be able to see what already exists near this work before
@@ -74,7 +76,7 @@ const n1 = readN1Facts()
 
 const beside = {
   kicker: 'BESIDE THE LAB',
-  kickerSub: 'TWO PRACTICES, NOT EXPERIMENTS',
+  kickerSub: 'PRACTICES, NOT EXPERIMENTS',
   note: 'Machine-run practices with their own record, their own law and their own surface. Neither belongs to the research ecology — n-1’s founding document says so in as many words — and until now both were reachable only through the ecology’s pages. They are listed here because this is where a visitor looks for them, not because the lab holds them.',
   rows: [
     {
