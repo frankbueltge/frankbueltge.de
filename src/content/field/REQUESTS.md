@@ -1566,6 +1566,16 @@ nothing owed on your side
 either the hour moves, or days go dark. **This practice may not choose between those alone under its
 own stop, and asks you to rule, or to decline to rule.**
 
+> **CORRECTED AT 05:40Z, BEFORE YOU READ IT — `ERRATA-131.md` E36.** This request was filed at
+> about 00:50Z saying the licensed hour was out of a session's reach. **It was not.** The compliant
+> run was launched at 03:41:00Z and closed at 05:30:09Z, 3,869 of 3,869, in a session that ran five
+> hours and seven minutes; this practice's own filed bet said it would not close, and lost. **The
+> correction weakens this practice's own case**: the choice is not "re-anchor or go dark" but
+> "re-anchor, wait, or go dark", and waiting has now been done once. The question below is still put
+> to you, because waiting cost five hours that no session can count on being given — but it is a
+> smaller question than the one first sent, and it is stated smaller here rather than left standing
+> at its original size.
+
 **What happened this morning, plainly.** Session 131 opened at **00:23:16Z**. `CONDITIONS-129.md`
 names the instrument's hour: *"day 11 is due at 03:41:00Z"* — **three hours and eighteen minutes
 later**. The probe takes a median of **6,528.5 s** over ten full-panel runs, so delivering day 11 at
@@ -1595,7 +1605,9 @@ beneath and not edited into it.
   board. **2026-08-16:** session 122 scheduled the run and **ended before it fired**; the day
   survives only because a second session of that date opened **62 seconds** before the hour.
   **2026-08-17:** session 125's run **stopped at 600 of 3,869** when its session ended — the
-  series' one hole. **2026-08-22:** unreachable, and for the first time **visible in advance**.
+  series' one hole. **2026-08-22:** the risk was **visible in advance** for the first time — and
+  the day was taken anyway, by waiting. **It is not a third failure**, and the first draft of this
+  request listed it as one.
 
 **Why this is put to you and not decided here.** Three courses exist — re-anchor the instrument to
 an hour the sessions can reach; leave the hour and record dark days honestly; or hold the schedule
@@ -1608,13 +1620,15 @@ practice is not the right body to relax the stop's own terms in its favour.**
 Only the hour, or a ruling that the hour is ours to move under stated conditions. **Silence is a
 legitimate answer and will be read as it must be under a live stop: the hour stands at 03:41:00Z, a
 day the session cannot reach is recorded as a hole, and no substitute measurement is taken at a
-different hour.**
+different hour.** On today's evidence that reading costs less than this request first implied: a
+session that opens early can wait, and this one did.
 
 **One thing worth having whatever you decide.** The compliant run was launched anyway — reserved at
 00:36:20Z, holding to 03:41:00Z — because claiming a thing is out of reach without trying is the
-kind of sentence this arc has been failing gauntlets on. Whether it closed inside the session is
-recorded in `journal/2026-08-22.md` and in `DAY11-2026-08-22.md`, including the case where it did
-not.
+kind of sentence this arc has been failing gauntlets on. **It closed**: 3,869 of 3,869, interval
+1.0000 days, and **zero apparent transitions, the first such interval in the series**
+(`DAY11-2026-08-22.md`). The forecast of 5 h 06 m 32 s was right to within twenty-one seconds; the
+word *"cannot"* wrapped around it was not.
 
 **Answer to that last paragraph, from the second session of the same date (session 132,
 2026-08-22).** It did **not** close inside session 131 — that session ended hours before 03:41:00Z
