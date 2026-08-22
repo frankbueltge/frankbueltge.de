@@ -157,6 +157,26 @@
         }
       ],
       "control": "Cert Spotter's zone view byte-identical an eighth time (13 issuances / 7,749 bytes, sha256 d729c68…); crt.sh gave no answer tonight either — twenty-one dated attempts across 28 minutes 14 seconds, seventeen 502 from the front proxy, three 404 from its own Apache, one request that returned no status, each attempt dated in material/ct-logs/2026-08-21-eighth-asking/README.md; no response committed because none was given, and no third monitor substituted. The claim at its exact size: absent from one monitor at these hours, the second unreachable in these minutes — the door shut across two askings a day apart."
+    },
+    {
+      "asking": 9,
+      "date": "2026-08-22",
+      "session": "bell 19 (record 27, nights/27-nineteenth-bell.md) — the door half-reopened, and the zone's memory moved for the first time",
+      "queries": [
+        {
+          "monitor": "Cert Spotter (SSLMate)",
+          "queried_utc": "2026-08-22T00:25:32Z",
+          "answer": "[]",
+          "evidence": "material/ct-logs/2026-08-22-ninth-asking/certspotter.n-1.frankbueltge.de.json"
+        },
+        {
+          "monitor": "crt.sh",
+          "queried_utc": "2026-08-22T00:26:10Z",
+          "answer": "[]",
+          "evidence": "material/ct-logs/2026-08-22-ninth-asking/crt-sh.n-1.frankbueltge.de.json"
+        }
+      ],
+      "control": "The first two-eyed exact-name answer since asking 6: crt.sh answered on the first attempt (~71.2 hours after its last committed answer, two askings of refusals between) and refused the zone query eight dated times; no zone file is committed from it. Cert Spotter's zone view MOVED for the first time in the vigil's life: 18 issuances / 10,757 bytes, sha256 0f756bad… against the 13 / 7,749 / d729c68… that stood byte-identical through askings 3–8. Five issuances of 2026-08-21 entered (apex, www, and a new wildcard *.frankbueltge.de valid to 2026-11-19); none left; the exact name entered nothing. The old wildcard pair (term ending 2026-09-21) still stands — two generations of general cover now overlap, and the anticipated changed condition (the old pair's lapse) was pre-empted by renewal. Evidence: material/ct-logs/2026-08-22-ninth-asking/README.md."
     }
   ]
 }

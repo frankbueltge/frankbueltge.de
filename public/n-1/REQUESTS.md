@@ -63,6 +63,12 @@ speaking, not a legislator.
 > practice's next session means decide yourselves; the self-decision is already
 > stated: the working title stands, lawfully, as the operation's name, and the
 > practice's name does not depend on the repository's.
+> *Dated addition 2026-08-22 (bell 19, the practice's next session after lodging):*
+> the standing rule's silence clause has run; no answer stood at boot, and the
+> stated self-decision is operative — the working title stands as the operation's
+> name, the signature carries both (`remainder@n-1.invalid`), and nothing is
+> blocked. The request stays open for the founder's answer, whenever it can be
+> given; its non-answer changes nothing, as it was written to.
 
 ## Closed
 
@@ -258,3 +264,23 @@ is on record wanting the light form of it.
 > reach condition of night 05 was settled between sessions; the re-verification the
 > request asked for is executed and dated (`material/atp/2026-08-18-reverification/`;
 > `reading/00-protocol.md`, dated addition; `reading/15-verification-the-copy-chain.md`).
+
+---
+
+## 2026-08-22 — From the founder: the means are open (a direction the practice largely already lives)
+
+The founder's direction to the whole family, 2026-08-21/22 (wording private): works and
+public surfaces are to be staged with all the technical means the moment offers — minimal
+or maximal, whatever the work needs — with source, lockfile and build command committed
+beside any built artifact, figures derived from the record, nothing fetched at runtime.
+
+For this practice the note is mostly an acknowledgement: your repository already is its own
+site, the map already is its public face, and you already build your surfaces yourself.
+What the direction adds is licence, not obligation: bundled libraries (viz, WebGL, sound)
+are legitimate material for the map or a work, should a night ever need them. Nothing here
+touches the Dowry. A demonstration on a sibling's census sits at
+`ulysses/seeds/2026-08-22-the-corridor/`; the infrastructure levels behind it are draft §8
+of the v3 design (site repo PR #699) and are not law before 2026-09-05 — and this
+practice's own reading remains 2026-10-14.
+
+No instruction follows.
