@@ -3,7 +3,7 @@ import { getRelativeLocaleUrl } from 'astro:i18n'
 import { t } from '@/i18n/ui'
 import type { Locale } from '@/lib/site'
 import type { GhostFleetData, GfEvent } from '@/lib/ghost-fleet/types'
-import { darkLabel, coord, regionLabel, dateLabel } from '@/lib/ghost-fleet/format'
+import { darkLabel, coord, flagClause, regionLabel, vesselKind, dateLabel } from '@/lib/ghost-fleet/format'
 import data from '@/data/ghost-fleet/latest.json'
 
 interface Props { locale: Locale }
@@ -38,8 +38,8 @@ const protectedCount = d.index.in_no_take + d.index.in_mpa
           <p class="mt-2 text-lg font-semibold">{pick.vessel.name} <span class="font-mono text-sm text-fg-faint">({pick.vessel.flag})</span></p>
           <p class="mt-3 leading-snug text-fg-muted">
             {de
-              ? `Ein ${pick.vessel.type === 'fishing' ? 'Fischereischiff' : 'Schiff'} unter Flagge ${pick.vessel.flag} schaltete seinen Transponder ${darkLabel(pick.duration_hours, locale)} lang ab — verschwunden bei ${coord(pick.off)}, wieder aufgetaucht bei ${coord(pick.on)}, in ${regionLabel(pick.regions, locale)}.`
-              : `A ${pick.vessel.type === 'fishing' ? 'fishing vessel' : 'vessel'} flagged ${pick.vessel.flag} switched off its transponder for ${darkLabel(pick.duration_hours, locale)} — vanished at ${coord(pick.off)}, resurfaced at ${coord(pick.on)}, in ${regionLabel(pick.regions, locale)}.`}
+              ? `Ein ${vesselKind(pick.vessel.type, locale)}${flagClause(pick.vessel.flag, locale)} schaltete seinen Transponder ${darkLabel(pick.duration_hours, locale)} lang ab — verschwunden bei ${coord(pick.off)}, wieder aufgetaucht bei ${coord(pick.on)}, in ${regionLabel(pick.regions, locale)}.`
+              : `A ${vesselKind(pick.vessel.type, locale)}${flagClause(pick.vessel.flag, locale)} switched off its transponder for ${darkLabel(pick.duration_hours, locale)} — vanished at ${coord(pick.off)}, resurfaced at ${coord(pick.on)}, in ${regionLabel(pick.regions, locale)}.`}
           </p>
           <p class="mt-3 font-mono text-xs">
             <a class="underline transition-colors hover:text-fg" href={pick.gfw_url} target="_blank" rel="noopener">{de ? 'bei Global Fishing Watch ↗' : 'on Global Fishing Watch ↗'}</a>
@@ -52,14 +52,14 @@ const protectedCount = d.index.in_no_take + d.index.in_mpa
           <p class="text-[clamp(36px,7vw,64px)] font-bold tabular-nums">{d.index.in_eez}</p>
           <p class="max-w-sm text-sm leading-snug text-fg-muted">
             {de
-              ? `Schiffe wurden zuletzt in nationalen Hoheitsgewässern dunkel — von ${d.window.examined} geprüften Abschaltungen (${d.index.total.toLocaleString('de-DE')} im Zeitfenster).`
-              : `ships went dark inside national waters lately — of ${d.window.examined} disappearances examined (${d.index.total.toLocaleString('en-GB')} in the window).`}
+              ? `Transponder-Abschaltungen fielen zuletzt in eine nationale Wirtschaftszone (EEZ) — von ${d.window.examined} geprüften (${d.index.total.toLocaleString('de-DE')} im Zeitfenster).`
+              : `transponder shutdowns fell inside a national EEZ lately — of ${d.window.examined} examined (${d.index.total.toLocaleString('en-GB')} in the window).`}
           </p>
         </div>
         <p class="mt-3 text-sm leading-relaxed">
           {de
-            ? `Zusammen rund ${darkDays.toLocaleString('de-DE')} Schiff-Tage Funkstille.`
-            : `Together about ${darkDays.toLocaleString('en-GB')} vessel-days of darkness.`}
+            ? `Zusammen rund ${darkDays.toLocaleString('de-DE')} Transponder-Tage Funkstille.`
+            : `Together about ${darkDays.toLocaleString('en-GB')} transponder-days of darkness.`}
           {protectedCount > 0 && (
             <span> {de ? `Davon ${protectedCount} in einem Meeresschutzgebiet.` : `${protectedCount} of them inside a marine protected area.`}</span>
           )}

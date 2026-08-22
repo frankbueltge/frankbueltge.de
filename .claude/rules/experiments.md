@@ -25,6 +25,16 @@ das Werkeverzeichnis, eine Experiment-Seite oder eine Spec/ein Audit angefasst w
   lässt kein Experiment auf `/experiments`, das im Audit kein Verdikt, kein benanntes Daylight
   und keine benannte Nachbarschaft hat. Wer ein Werk auf die Rangliste setzt, ergänzt das
   Audit — sonst ist die Suite rot.
+- **Währungs-Pflicht, seit 2026-08-22 ebenfalls ein Test:** Ein Audit aller sechzehn
+  Beschreibungen gegen die committeten Snapshots fand dreizehn Befunde — sieben harte
+  Widersprüche, und **sechs davon Zahlen, die beim Tippen stimmten** und vom Weiterlaufen der
+  Arbeit gebrochen wurden (zwölf Quellen wurden dreizehn, 25 Agenten wurden 29, Googles 27 %
+  wurden 37 %). `src/data/werke.currency.test.ts` prüft darum die Register-Prosa gegen die
+  Snapshots und wird rot, wenn eine Beschreibung behauptet, was die Daten widerlegen.
+  Praktische Konsequenz beim Schreiben eines Eintrags: **eine Regel statt eines Digits**
+  („unter 9 % Spielraum, und mehr Wachstum als das in jedem berichteten Jahr" statt „27 % in
+  einem Jahr"), und gar keine Zahl, wo die Werkseite sie ohnehin abgeleitet rendert. Wer eine
+  Zahl trotzdem braucht, ergänzt den passenden Wächter im Test — sonst altert sie unbemerkt.
 - **Spec:** `docs/superpowers/specs/2026-06-11-werkgruppe-design.md` (Substanz-Kriterien
   in §2 sind das Gate für jedes neue Experiment; Methodenblatt-Pflicht in §3.5).
   Rahmung/Wortlaut: `2026-08-01-festival-line.md` („artistic research, under proof");

@@ -1,6 +1,6 @@
 ---
-// Studie „Überflug" — All Along the Watchtower. Experiment-Layout statt Blog-Artikel
-// (Frank, 2026-07-04); Prosa unverändert aus der früheren Lab-Notiz übernommen.
+// Study "Überflug" — All Along the Watchtower. Experiment layout instead of a blog article
+// (Frank, 2026-07-04); the opening prose was carried over from the earlier lab note.
 import type { Locale } from '@/lib/site'
 import UeberflugIsland from '@/components/ueberflug/UeberflugIsland.astro'
 import snapshot from '@/data/ueberflug/satellites.json'
@@ -93,8 +93,9 @@ const fleetFlat = Math.min(...regFleet.map((r) => r.fleet)) === Math.max(...regF
       Not the view upward but its change. Every satellite carries its launch year in its
       international designator, so the same committed snapshot the map runs on also holds a
       cohort curve: how many of the currently active Earth-observation satellites went up in
-      each year, and who owns them. The orbit is filling with observers, and the new arrivals
-      are almost entirely commercial — the {first.year} cohort was
+      each year, and who owns them. The orbit is filling with observers, and ownership turned
+      over as it filled: the newest cohorts are majority commercial where the older ones were
+      state-civil — the {first.year} cohort was
       {' '}{pct(shareOf(first.year)!.point)} commercial, the {last.year} cohort
       {' '}{pct(shareOf(last.year)!.point)}.
     </p>

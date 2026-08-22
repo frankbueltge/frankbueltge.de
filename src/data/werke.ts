@@ -123,8 +123,11 @@ export const WERKE: Werk[] = [
     since: '2026-08-05',
     href: '/society',
     description: {
-      de: "Minsky's Society of Mind (1986), forty years on, as a deterministic simulation in the browser: twenty-five agents, none of them intelligent, build block towers, quarrel over one hand and remember by K-line — watched by a B-brain that sees only them, never the world. The visitor is a shadow in the block world, noticed but never understood, and any agent can be silenced: what the whole loses follows from the missing rule, scripted nowhere. Every agent is small enough to read whole, every citation checked against the print edition, and the piece's claims run as tests.",
-      en: "Minsky's Society of Mind (1986), forty years on, as a deterministic simulation in the browser: twenty-five agents, none of them intelligent, build block towers, quarrel over one hand and remember by K-line — watched by a B-brain that sees only them, never the world. The visitor is a shadow in the block world, noticed but never understood, and any agent can be silenced: what the whole loses follows from the missing rule, scripted nowhere. Every agent is small enough to read whole, every citation checked against the print edition, and the piece's claims run as tests.",
+      // "twenty-five agents" retired 2026-08-22 (currency audit): the roster went 25 → 27 → 29
+      // over 2026-08-05/06 (src/lib/society/agents.ts), and the page derives its counts while
+      // this sentence had them typed. The shelf now names no number the page can contradict.
+      de: "Minsky's Society of Mind (1986), forty years on, as a deterministic simulation in the browser: a roster of agents, none of them intelligent, builds block towers, quarrels over one hand and remembers by K-line — watched by a B-brain that sees only them, never the world. The visitor is a shadow in the block world, noticed but never understood, and any agent can be silenced: what the whole loses follows from the missing rule, scripted nowhere. Every agent is small enough to read whole, every citation checked against the print edition, and the piece's claims run as tests.",
+      en: "Minsky's Society of Mind (1986), forty years on, as a deterministic simulation in the browser: a roster of agents, none of them intelligent, builds block towers, quarrels over one hand and remembers by K-line — watched by a B-brain that sees only them, never the world. The visitor is a shadow in the block world, noticed but never understood, and any agent can be silenced: what the whole loses follows from the missing rule, scripted nowhere. Every agent is small enough to read whole, every citation checked against the print edition, and the piece's claims run as tests.",
     },
     tier: 'experiment',
   },
@@ -157,8 +160,13 @@ export const WERKE: Werk[] = [
     since: '2026-07-12',
     href: '/headroom',
     description: {
-      de: 'Aus der Linie „Gegenmessung". PUE — die Effizienzkennzahl der Rechenzentren — hat einen physikalischen Boden bei 1,0. Googles Flotte steht bei 1,09: für immer bleiben rund 8 % Spielraum; der Verbrauch wuchs derweil um 27 % in einem Jahr. Jährlich fortgeschrieben, was vier Hyperscaler offenlegen — und was nicht: AWS nennt gar keinen Verbrauch.',
-      en: "From the counter-measurement line. PUE — the data-center efficiency metric — has a physical floor of 1.0. Google's fleet sits at 1.09: about 8% of headroom remains, forever; consumption meanwhile grew 27% in a single year. Tracked year by year: what four hyperscalers disclose — and what they don't. AWS discloses no consumption at all.",
+      // "grew 27% in a single year" was one disclosure behind as of 2026-08-22 (currency audit):
+      // src/data/spielraum/register.json holds 17 (2023), 27 (2024) and 37 (2025). Rather than
+      // typing 37 and waiting for the same defect, the sentence now states the register's own
+      // caveat — at a 1.09 floor, any growth above 9% already crosses it — which every disclosed
+      // year satisfies and each new one can only strengthen.
+      de: "From the counter-measurement line. PUE — the data-center efficiency metric — has a physical floor of 1.0. Google's fleet sits at 1.09: under 9% of headroom remains, forever — and the electricity it discloses has grown by more than that in every year it has reported since 2023. Tracked year by year: what four hyperscalers disclose — and what they don't. AWS discloses no consumption at all.",
+      en: "From the counter-measurement line. PUE — the data-center efficiency metric — has a physical floor of 1.0. Google's fleet sits at 1.09: under 9% of headroom remains, forever — and the electricity it discloses has grown by more than that in every year it has reported since 2023. Tracked year by year: what four hyperscalers disclose — and what they don't. AWS discloses no consumption at all.",
     },
     tier: 'experiment',
   },
@@ -171,8 +179,13 @@ export const WERKE: Werk[] = [
     since: '2026-07-02',
     href: '/bycatch',
     description: {
-      de: 'Wöchentlicher Tracker-Zensus über Artikelseiten der fünf größten Wissenschaftsverlage — gegen zehn Diamond-OA-Journals als Kontrollgruppe, vor jeder Einwilligung, aus zwei Blickwinkeln.',
-      en: 'A weekly tracker census of article pages from the five largest scholarly publishers — against ten diamond-OA journals as a control group, before any consent, from two vantage points.',
+      // "from two vantage points" retired 2026-08-22 (currency audit): the reader vantage
+      // delivered data once, on 2026-07-05, and in none of the seven weekly censuses since —
+      // the page has said so all along ("last measured on 2026-07-05"), the shelf had not. In
+      // its place the finding the census actually produces now: most publisher pages bot-wall
+      // the audit (41 of 60 blocked on 2026-08-17), which the work treats as the result.
+      de: 'A weekly tracker census of article pages from the five largest scholarly publishers — against ten diamond-OA journals as a control group, before any consent. Most publisher pages now bot-wall the audit; the refusal is the finding.',
+      en: 'A weekly tracker census of article pages from the five largest scholarly publishers — against ten diamond-OA journals as a control group, before any consent. Most publisher pages now bot-wall the audit; the refusal is the finding.',
     },
   },
   {
@@ -214,16 +227,23 @@ export const WERKE: Werk[] = [
     line: 'ledger',
     title: 'Protocol',
     subtitle: {
-      de: 'Tägliche Kennzahlen aus zwölf offenen Quellen',
-      en: 'Daily figures from twelve open sources',
+      // "twelve open sources" was broken on 2026-06-27, when a thirteenth (Wikidata P1120) was
+      // added — the count sat in the always-visible subtitle for eight weeks. No number here
+      // now: the source count is the pipeline's business and it moves.
+      de: 'Daily figures, each from its own open source',
+      en: 'Daily figures, each from its own open source',
     },
     status: 'live',
     since: '2026-06-12',
     live: true,
     href: '/protocol',
     description: {
-      de: 'Jede Nacht verfasst eine Pipeline das Sitzungsprotokoll des Planeten — aus zwölf offenen, zitierfähigen Quellen, deterministisch, ohne LLM. Jeder Tagesordnungspunkt endet gleich: Beschluss: vertagt.',
-      en: "Every night a pipeline writes the minutes of the planet's session — from twelve open, citable sources, deterministic, no LLM. Every agenda item ends the same way: Resolution: adjourned.",
+      // Same 2026-06-27 change broke the second claim too: agenda item 13 (Losses) deliberately
+      // does NOT adjourn — src/lib/protokoll/render.ts gives it "Entered into the record.", and
+      // render.test.ts pins that ("witnessed, not adjourned"). The register was asserting the
+      // opposite of a rule the code holds under test.
+      de: "Every night a pipeline writes the minutes of the planet's session — from open, citable sources only, deterministic, no LLM. Every agenda item but one ends the same way: Resolution: adjourned; the losses are entered into the record.",
+      en: "Every night a pipeline writes the minutes of the planet's session — from open, citable sources only, deterministic, no LLM. Every agenda item but one ends the same way: Resolution: adjourned; the losses are entered into the record.",
     },
   },
   {
@@ -238,8 +258,12 @@ export const WERKE: Werk[] = [
     since: '2026-06-22',
     href: '/tell',
     description: {
-      de: 'Aus der Linie „Gegenmessung". Bestimmte Wörter — „delve", „showcasing", „intricate" — sind Tells generativer KI. Ihr Anteil in begutachteten PubMed-Abstracts ist seit ChatGPT sprunghaft gestiegen: „delve" rund 14-mal, „showcasing" 19-mal so oft. Ein KI-Werkzeug misst den Fußabdruck der KI in der Wissenschaft.',
-      en: 'From the “Counter-Measurement” line. Certain words — “delve”, “showcasing”, “intricate” — are tells of generative AI. Their share in peer-reviewed PubMed abstracts jumped after ChatGPT: “delve” about 14×, “showcasing” 19× as often. An AI tool measuring AI’s footprint in science.',
+      // The fold figures are peak-vs-baseline and stable in every snapshot, so they stay. Added
+      // 2026-08-22 (currency audit) is the newest state of the series, which the entry had not
+      // caught up with: src/data/tell/latest.json → index 3569.3 (2024) → 3055.7 (2025), the
+      // first decline since the marker was tracked.
+      de: 'From the “Counter-Measurement” line. Certain words — “delve”, “showcasing”, “intricate” — are tells of generative AI. Their share in peer-reviewed PubMed abstracts jumped after ChatGPT: at the 2024 peak, “delve” about 14× and “showcasing” 19× as often as before. In 2025 the index fell for the first time. An AI tool measuring AI’s footprint in science.',
+      en: 'From the “Counter-Measurement” line. Certain words — “delve”, “showcasing”, “intricate” — are tells of generative AI. Their share in peer-reviewed PubMed abstracts jumped after ChatGPT: at the 2024 peak, “delve” about 14× and “showcasing” 19× as often as before. In 2025 the index fell for the first time. An AI tool measuring AI’s footprint in science.',
     },
   },
   {
@@ -255,8 +279,13 @@ export const WERKE: Werk[] = [
     live: true,
     href: '/redaction',
     description: {
-      de: 'Aus der Linie „Gegenmessung". Das öffentliche Protokoll wird nicht nur geschrieben, sondern auch entschrieben. Jeden Tag difft eine Maschine die Wayback-Snapshots einer kuratierten Liste offizieller Seiten und hebt die substanziellste Schwärzung — beide Fassungen verlinkt, in zwei Klicks überprüfbar. Kein Absichts-Vorwurf, nur das gezählte Weggenommene.',
-      en: 'From the “Counter-Measurement” line, in two chambers. Chamber 1: each day a machine diffs the Wayback snapshots of a curated list of official pages and surfaces the most substantive removal — both versions linked, checkable in two clicks. Chamber 2 (since 2026-08-14): the same gesture at the scale of the world’s press — GDELT’s recrawl of ~54k rewritten headlines a day, run through a versioned triviality filter to a bounded register of genuine reframings, plus a deletion rate measured against a nightly sample the house committed before the vanishing. No claim of intent, only the counted thing taken away — receipts held.',
+      // Two corrections on 2026-08-22 (currency audit): "~54k rewritten headlines a day" was the
+      // launch day's figure and is the ceiling of the committed range (33.3k–53.7k, mean 47.7k),
+      // so the sentence now states the order of magnitude it can keep. And chamber 1 does not
+      // surface a removal every day — four of the eight days to 2026-08-22 found nothing at all,
+      // which is a legitimate result and now what the entry promises.
+      de: 'From the “Counter-Measurement” line, in two chambers. Chamber 1: each day a machine diffs the Wayback snapshots of a curated list of official pages and, on the days something was taken away, surfaces the most substantive removal — both versions linked, checkable in two clicks. Chamber 2 (since 2026-08-14): the same gesture at the scale of the world’s press — the tens of thousands of headlines GDELT’s recrawl finds rewritten each day, run through a versioned triviality filter to a bounded register of genuine reframings, plus a deletion rate measured against a nightly sample the house committed before the vanishing. No claim of intent, only the counted thing taken away — receipts held.',
+      en: 'From the “Counter-Measurement” line, in two chambers. Chamber 1: each day a machine diffs the Wayback snapshots of a curated list of official pages and, on the days something was taken away, surfaces the most substantive removal — both versions linked, checkable in two clicks. Chamber 2 (since 2026-08-14): the same gesture at the scale of the world’s press — the tens of thousands of headlines GDELT’s recrawl finds rewritten each day, run through a versioned triviality filter to a bounded register of genuine reframings, plus a deletion rate measured against a nightly sample the house committed before the vanishing. No claim of intent, only the counted thing taken away — receipts held.',
     },
     // Instrument, not a festival-aspiring experiment (Frank, 2026-08-14, after the world
     // chamber shipped, wording private: make an instrument of it) — the gesture is an occupied 20-year
@@ -277,8 +306,11 @@ export const WERKE: Werk[] = [
     live: true,
     href: '/round-number',
     description: {
-      de: 'Aus der Linie „Gegenmessung". Ziffern-Forensik (Benford) gilt als Werkzeug gegen gefälschte Zahlen — und ist das Lieblingsinstrument von Wahlbetrugs-Mythen. Das Stück stellt die Methode selbst vor Gericht: Es zeigt täglich, dass derselbe Test, der eine echte amtliche Reihe „verdächtig" nennt, auch nachweislich saubere Daten gleicher Größe genauso verdächtig nennt.',
-      en: 'From the “Counter-Measurement” line. Digit-forensics (Benford) is sold as a tool against faked numbers — and is the favourite instrument of vote-fraud myths. The piece puts the method itself on trial: each day it shows that the same test which calls a real official series “suspicious” calls provably-clean data of the same size just as suspicious.',
+      // "just as suspicious" quantified 2026-08-22 (currency audit): the same-n false-positive
+      // rates in src/data/round-number/latest.json run 0.38–0.51, not 1.0 — and the effect is a
+      // small-n effect (the n=6000 controls sit at 0.0), which is the actual finding.
+      de: 'From the “Counter-Measurement” line. Digit-forensics (Benford) is sold as a tool against faked numbers — and is the favourite instrument of vote-fraud myths. The piece puts the method itself on trial: each day it shows that the same test which calls a real official series “suspicious” calls provably-clean data of the same size suspicious about half the time.',
+      en: 'From the “Counter-Measurement” line. Digit-forensics (Benford) is sold as a tool against faked numbers — and is the favourite instrument of vote-fraud myths. The piece puts the method itself on trial: each day it shows that the same test which calls a real official series “suspicious” calls provably-clean data of the same size suspicious about half the time.',
     },
   },
   {
@@ -294,8 +326,16 @@ export const WERKE: Werk[] = [
     live: true,
     href: '/pattern',
     description: {
-      de: 'Capstone der Linie „Gegenmessung". Die Maschine durchwühlt täglich das eigene Protokoll-Archiv nach Korrelationen, hebt die stärkste — und beweist mit einem Permutationstest, dass sie Signal nicht von Rauschen unterscheiden kann. Mit genug Reihen findet man immer ein Muster. Die Gegenmessung der Gegenmessung.',
-      en: 'Capstone of the “Counter-Measurement” line. Each day the machine mines its own Protocol archive for correlations, surfaces the strongest — and proves with a permutation test that it cannot tell signal from noise. With enough series, you always find a pattern. The counter-measurement of counter-measurement.',
+      // Corrected 2026-08-22 (currency audit), and this one was not a stale digit: the entry
+      // claimed the permutation test PROVES the machine cannot tell signal from noise, while
+      // src/data/pattern/latest.json has returned false_discovery_rate 0.0 in all 62 committed
+      // snapshots — the test clears the pair, and PatternPage.astro accordingly renders the
+      // opposite branch ("it might be real"). The register was asserting an outcome the
+      // instrument has never produced. It now states the procedure and leaves the verdict to the
+      // day's own data; whether a test that never fires still carries the work's thesis is a
+      // question for the architect, not something the shelf should answer for him.
+      de: 'Capstone of the “Counter-Measurement” line. Each day the machine mines its own Protocol archive for correlations, surfaces the strongest and puts it through a permutation test — the scepticism this line applies to everyone else, turned on its own output. With enough series, a strong pair is always there; what it means is the question the instrument cannot settle, and says so.',
+      en: 'Capstone of the “Counter-Measurement” line. Each day the machine mines its own Protocol archive for correlations, surfaces the strongest and puts it through a permutation test — the scepticism this line applies to everyone else, turned on its own output. With enough series, a strong pair is always there; what it means is the question the instrument cannot settle, and says so.',
     },
   },
   {
@@ -311,8 +351,11 @@ export const WERKE: Werk[] = [
     live: true,
     href: '/policy',
     description: {
-      de: 'Ein Versicherungsschein auf die Gegenwart, dessen Prämie jede Nacht aus echten Marktdaten neu berechnet wird. Der Markt hat die Klimakatastrophe längst eingepreist — und die Prämie steigt: +179 % seit 1998.',
-      en: 'An insurance policy on the present, its premium recomputed each night from real market data. The market has long since priced in the climate catastrophe — and the premium is rising: +179% since 1998.',
+      // "+179% since 1998" was accurate on 2026-08-22 (police.json: 179.3) but it is a single
+      // live digit recomputed nightly, sitting in static prose — the defect class this audit
+      // found seven times over. Stated as the floor it has already cleared instead.
+      de: 'An insurance policy on the present, its premium recomputed each night from real market data. The market has long since priced in the climate catastrophe — and the premium is rising: it has more than doubled since 1998.',
+      en: 'An insurance policy on the present, its premium recomputed each night from real market data. The market has long since priced in the climate catastrophe — and the premium is rising: it has more than doubled since 1998.',
     },
   },
   {
@@ -328,8 +371,12 @@ export const WERKE: Werk[] = [
     live: true,
     href: '/parallax',
     description: {
-      de: 'Dieselbe umstrittene Sache in mehreren Sprachversionen der Wikipedia — und die Messung, welche Aussage jede Version benennt und welche sie verschweigt. Die japanische Beschreibung der Senkaku-Inseln etwa erwähnt den Territorialstreit mit keinem Wort.',
-      en: 'The same contested thing across several Wikipedia language versions — and the measure of which claim each version states and which it conceals. The Japanese description of the Senkaku Islands, for instance, never mentions the territorial dispute.',
+      // The Senkaku example went 2026-08-22 (currency audit): it came from the design probe of
+      // 2026-06-14 and appears in exactly one of the 45 committed register snapshots — the first.
+      // The register rotates one topic a day (rule.cadence), so ANY named instance in static
+      // prose is stale within a day by construction; the cadence is the durable sentence.
+      de: 'The same contested thing across several Wikipedia language versions — and the measure of which claim each version states and which it conceals. One topic a day, rotating through disputed islands and unrecognised states; the omissions are never symmetrical.',
+      en: 'The same contested thing across several Wikipedia language versions — and the measure of which claim each version states and which it conceals. One topic a day, rotating through disputed islands and unrecognised states; the omissions are never symmetrical.',
     },
   },
   {
@@ -362,8 +409,8 @@ export const WERKE: Werk[] = [
     live: true,
     href: '/lab/ueberflug-studie',
     description: {
-      de: 'SGP4 orbital propagation in the browser: which catalogued Earth-observation satellites currently have your location geometrically in view. Computed live on daily-committed orbital data (CelesTrak), with owner classification from the GCAT catalogue. Your location never leaves the browser. Since 2026-08-15 the study also measures the change: the launch year inside each international designator turns the same snapshot into a cohort curve of the active fleet, and the fleet densifies almost entirely commercially. The military column stays a floor, never a count — classified satellites are absent from the catalogue, and the page says so.',
-      en: 'SGP4 orbital propagation in the browser: which catalogued Earth-observation satellites currently have your location geometrically in view. Computed live on daily-committed orbital data (CelesTrak), with owner classification from the GCAT catalogue. Your location never leaves the browser. Since 2026-08-15 the study also measures the change: the launch year inside each international designator turns the same snapshot into a cohort curve of the active fleet, and the fleet densifies almost entirely commercially. The military column stays a floor, never a count — classified satellites are absent from the catalogue, and the page says so.',
+      de: 'SGP4 orbital propagation in the browser: which catalogued Earth-observation satellites currently have your location geometrically in view. Computed live on daily-committed orbital data (CelesTrak), with owner classification from the GCAT catalogue. Your location never leaves the browser. Since 2026-08-15 the study also measures the change: the launch year inside each international designator turns the same snapshot into a cohort curve of the active fleet, and the newest cohorts are majority-commercial where the older ones were state-civil. The military column stays a floor, never a count — classified satellites are absent from the catalogue, and the page says so.',
+      en: 'SGP4 orbital propagation in the browser: which catalogued Earth-observation satellites currently have your location geometrically in view. Computed live on daily-committed orbital data (CelesTrak), with owner classification from the GCAT catalogue. Your location never leaves the browser. Since 2026-08-15 the study also measures the change: the launch year inside each international designator turns the same snapshot into a cohort curve of the active fleet, and the newest cohorts are majority-commercial where the older ones were state-civil. The military column stays a floor, never a count — classified satellites are absent from the catalogue, and the page says so.',
     },
     methodHref: null,
     tier: 'studie',
@@ -381,11 +428,15 @@ export const WERKE: Werk[] = [
     live: true,
     href: '/consensus',
     description: {
-      de: 'Aus der Linie „Gegenmessung". Jeden Tag wählt eine Maschine den Satz, den die meisten „unabhängigen" Medien wortgleich brachten, zeigt Quelle und Kaskade und rechnet, wie viel des Nachrichten-Konsenses Echo statt Recherche ist.',
+      // Last German copy on the shelf, aligned 2026-08-22: nothing renders the `de` half on an
+      // EN-only site, and a second wording is a second thing to keep true.
+      de: 'From the “Counter-Measurement” line. Each day a machine picks the sentence the most “independent” outlets ran word-for-word, shows source and cascade, and computes how much of the news consensus is echo rather than reporting.',
       en: 'From the “Counter-Measurement” line. Each day a machine picks the sentence the most “independent” outlets ran word-for-word, shows source and cascade, and computes how much of the news consensus is echo rather than reporting.',
     },
-    // Back in the experiments row (Frank, 2026-08-05): ranked first on /experiments; the
-    // 44-day committed archive and the evidence track ended its 'studie' demotion.
+    // Back in the experiments row (Frank, 2026-08-05): the committed daily archive and the
+    // evidence track ended its 'studie' demotion. (The comment used to name a day count, "the
+    // 44-day archive"; it was 63 days by 2026-08-22. Even a comment should not carry a figure
+    // that only grows.)
     tier: 'experiment',
   },
   {
@@ -401,8 +452,14 @@ export const WERKE: Werk[] = [
     live: true,
     href: '/invoked-past',
     description: {
-      de: 'Jeden Tag liest eine Maschine jede Datumsnennung in rund 95.000 Nachrichtenartikeln und veröffentlicht das Histogramm der angerufenen Jahre — samt dem Jahr, das aus dem glatten Gedächtnis-Zerfall herausragt, und in wessen Presse. GDELT hat das Feld 2015 für Jahrestags-Analysen gebaut und nie ein Instrument daraus gemacht.',
-      en: 'Each day a machine reads every dated reference in some 95,000 news articles and publishes the histogram of invoked years — with the year that breaks the smooth decay of memory, and whose press is doing the invoking. GDELT built the field in 2015 for anniversary analysis and never built the instrument.',
+      // Three corrections on 2026-08-22 (currency audit): "some 95,000 news articles" mixed up
+      // two fields — articles_scanned swings 54k–116k across the committed days, while 95,356 was
+      // that day's raw MENTIONS count; "every dated reference" overstates a method that drops 54%
+      // of raw mentions without a resolvable year (the file publishes both numbers); and the
+      // extractor's own ceiling (GDELT emits no year ≥ 2015) was nowhere in the entry although it
+      // bounds the whole histogram.
+      de: 'Each day a machine reads the year-resolved dated references in a full day of GDELT-monitored news — a hundred thousand articles, give or take — and publishes the histogram of invoked years, 1800 to the extractor’s own 2014 ceiling, with the year that breaks the smooth decay of memory and whose press is doing the invoking. GDELT built the field in 2015 for anniversary analysis and never built the instrument.',
+      en: 'Each day a machine reads the year-resolved dated references in a full day of GDELT-monitored news — a hundred thousand articles, give or take — and publishes the histogram of invoked years, 1800 to the extractor’s own 2014 ceiling, with the year that breaks the smooth decay of memory and whose press is doing the invoking. GDELT built the field in 2015 for anniversary analysis and never built the instrument.',
     },
     methodHref: '/werke/invoked-past',
     tier: 'experiment',
@@ -420,8 +477,11 @@ export const WERKE: Werk[] = [
     live: true,
     href: '/balance',
     description: {
-      de: 'Aus der Linie „Gegenmessung". Für jedes Land, täglich: Wie schreibt die eigene Presse über das Land — und wie schreibt die Weltpresse über es? Ton und Emotions-Raten je Pool, Bootstrap-Konfidenzintervall der Lücke, unantastbares Tagesarchiv. Gemessen wird Darstellung, nie Volksstimmung.',
-      en: 'From the “Counter-Measurement” line. For each country, daily: how its own press writes about it — against how the world’s press writes about it. Tone and emotion rates per pool, a bootstrap confidence interval on the gap, an immutable daily archive. It measures portrayal, never population mood.',
+      // "For each country" was never true (currency audit, 2026-08-22): a country enters the day
+      // only when both its own-press and world-press pools clear method.min_pool = 25 articles,
+      // which 40 to 61 of them do. The gate is now in the sentence, where it belongs.
+      de: 'From the “Counter-Measurement” line. Daily, for every country whose press clears that day’s article floor: how its own press writes about it — against how the world’s press writes about it. Tone and emotion rates per pool, a bootstrap confidence interval on the gap, an immutable daily archive. It measures portrayal, never population mood.',
+      en: 'From the “Counter-Measurement” line. Daily, for every country whose press clears that day’s article floor: how its own press writes about it — against how the world’s press writes about it. Tone and emotion rates per pool, a bootstrap confidence interval on the gap, an immutable daily archive. It measures portrayal, never population mood.',
     },
     methodHref: '/werke/balance',
     tier: 'experiment',
@@ -438,8 +498,12 @@ export const WERKE: Werk[] = [
     since: '2026-06-22',
     href: '/correction',
     description: {
-      de: 'Aus der Linie „Gegenmessung". Nicht durch ein eigenes Modell, sondern durch die Revisionen, die das Amt selbst vornimmt: Die US-Beschäftigtenzahl wird still nach unten korrigiert — Juni 2025 um 1,25 Millionen Stellen; jeder der letzten 24 Monate nach unten. Die Echtzeit-Zahl war systematisch zu hoch.',
-      en: 'From the “Counter-Measurement” line. Not via a model of my own but via the revisions the agency itself makes: US employment is quietly cut downward — June 2025 by 1.25 million jobs; every one of the last 24 months downward. The real-time number ran systematically too high.',
+      // "every one of the last 24 months downward" has been false since 2026-07-06 (currency
+      // audit): src/data/revision/latest.json says 22 of 24, two months (2026-03, 2026-04) were
+      // revised UP, and /correction has been rendering the honest 91.7% all along. The headline
+      // 1.25 million is confirmed (headline.delta −1246 thousand).
+      de: 'From the “Counter-Measurement” line. Not via a model of my own but via the revisions the agency itself makes: US employment is quietly cut downward — June 2025 by 1.25 million jobs, and downward rather than upward in the great majority of the last twenty-four months. The real-time number ran systematically too high.',
+      en: 'From the “Counter-Measurement” line. Not via a model of my own but via the revisions the agency itself makes: US employment is quietly cut downward — June 2025 by 1.25 million jobs, and downward rather than upward in the great majority of the last twenty-four months. The real-time number ran systematically too high.',
     },
     tier: 'studie',
   },
@@ -456,8 +520,13 @@ export const WERKE: Werk[] = [
     live: true,
     href: '/ghost-fleet',
     description: {
-      de: 'Aus der Linie „Gegenmessung". Das AIS-Bild der Meere wirkt lückenlos — ist es aber nicht: Schiffe schalten ihren Transponder bewusst ab, um zu verschwinden. Jeden Tag zählt eine Maschine die absichtliche Funkstille und hebt den markantesten Fall hervor — ein benanntes Schiff, das wochenlang in fremden Hoheitsgewässern dunkel wurde. Kein Illegalitäts-Vorwurf, nur die gezählte Unsichtbarkeit.',
-      en: 'From the “Counter-Measurement” line. The AIS picture of the seas looks complete — but it is not: ships switch off their transponder on purpose to vanish. Each day a machine counts the deliberate radio silence and surfaces the most striking case — a named vessel that went dark for weeks inside foreign national waters. No claim of illegality, only the counted invisibility.',
+      // Two overstatements corrected 2026-08-22 (currency audit): the daily pick is not always a
+      // "named vessel" — 4 of the last 13 committed days picked an unflagged gear tag, the newest
+      // among them, and with flag "—" nothing can be called foreign; and regions.eez_name is an
+      // exclusive economic zone, which is not national or territorial waters. The method sheet
+      // had this right ("national EEZs") while the register and the page did not.
+      de: 'From the “Counter-Measurement” line. The AIS picture of the seas looks complete — but it is not: ships switch off their transponder on purpose to vanish. Each day a machine counts the deliberate radio silence and surfaces the most striking case — a vessel, sometimes only an unflagged gear tag, that went dark for weeks inside another state’s exclusive economic zone. No claim of illegality, only the counted invisibility.',
+      en: 'From the “Counter-Measurement” line. The AIS picture of the seas looks complete — but it is not: ships switch off their transponder on purpose to vanish. Each day a machine counts the deliberate radio silence and surfaces the most striking case — a vessel, sometimes only an unflagged gear tag, that went dark for weeks inside another state’s exclusive economic zone. No claim of illegality, only the counted invisibility.',
     },
     tier: 'studie',
   },
