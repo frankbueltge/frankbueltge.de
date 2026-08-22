@@ -413,3 +413,63 @@ until the balance date, in which case the balance records a procedure written an
 run, which is a datum about this subject's pace and not a defence of the procedure.
 All three are accepted rather than patched, so the balance cannot call any of them a
 surprise.
+
+## The standing boot order, revised: the carry is the map
+
+*Dated addition, 2026-08-22, record 29 (bell 20) — nothing above is retouched.
+Occasion: the founder's amendment of gift 1 (`DOWRY.md`, 2026-08-22, commit
+26f2147) and direction two of his dated act (`REQUESTS.md`, 2026-08-22), which
+release the nightly wholesale re-read of the foundation and place in a boot's
+hands the practice's own operative carry. The amendment's reason is the
+practice's own vocabulary: a fixed text re-read identically each night has
+become the tracing — it always returns to the same — and the practice's evolving
+carry is the map (ATP 12–13, via KsK §2). This addition revises the standing
+boot order of night 07's addition above; that addition otherwise stands.
+Enacted, per the amendment's own milestone clause, by a session that first
+re-read the foundation whole. Deliberation: `nights/29-twentieth-bell.md`.*
+
+**The standing boot order, from this addition on.** Every session reads, in
+order: `DOWRY.md`; **`reading/CARRY.md` whole** — the operative carry, in place
+of the foundation's wholesale re-read; the foundation and the German original by
+**targeted consultation at the exact passages the night's work turns on**, with
+negative findings noted in the entry that needed them; `atlas/SCHEMA.md`; the
+layers per `index.json` — recent layers in full, older layers via their standing
+records, with the full node inventory extracted when the night's queries need
+it; `nights/` oldest first per the standing practice — the founding note and
+founder documents, recent records in full, older records via the layers that
+cite them; `reading/00-protocol.md` and the entries the night's material lands
+on, in full; both founder channels (`REQUESTS.md` whole; the repository's
+issues); `works/` in scope when the night touches a work; `REGISTER.md`
+(structure and latest entry); `window.json`; `validate.py`. The carry-reading
+precedes the session's first clock check: the constitution is read before the
+session knows what kind of wake it is in. **Whole re-reads of the foundation
+remain at the practice's milestones** — before revising this protocol, when a
+contradiction forces a return to the source, before the founder's reading — and
+a record notes a milestone re-read as a boot deviation. Deviations-only logging,
+the refs note and the T1 caveat of night 07's addition are unchanged.
+
+*Failure criterion*, alongside the standing forms' own: struck — the wholesale
+re-read returns to the boot order — if a night's work goes demonstrably wrong on
+a claim the carry states and the source contradicts (shown by a later session's
+find or a correction on floor rule 2's route), where consulting the source
+directly would have caught it and the carry was not corrected by dated revision
+at the finding. A carry that misleads once and is corrected is working as
+designed; a carry whose misleading survives its own discovery is a tracing
+circulating in the map's place. Struck on trigger, strike published; balance at
+the founder's reading regardless of outcome.
+
+*Adversarial read of this addition (same session, before first use):* two
+weaknesses, named now. **First,** the carry compresses the very text that warns
+against compression, and the session that wrote it is the session that decided
+what to keep — there is no blind step here, because a carry written blind to the
+record would be useless. Mitigations, not cures: the whole re-read stood fresh
+in the writing session's context; every claim in the carry cites a source a
+reader can check; and the failure criterion above puts the risk on the record.
+**Second,** the consultation rule depends on a session noticing that its work
+turns on a passage it has not read — the carry cannot list what it dropped, and
+a session that trusts it will not know to look. Accepted rather than patched:
+this is the exact trade the founder's amendment prices (the attention freed each
+night is the work's), the untransposed remainder was already invisible under the
+wholesale re-read (entry 16 documents that), and entry 19 shows the remedy that
+exists — reading at the source where the material stresses — working. Both are
+named so the balance cannot call them surprise.

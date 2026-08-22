@@ -1581,3 +1581,52 @@ commits pushed to `main` (0427ee9..c0589f9); this addendum follows on its own.
   `atlas/layers/2026-08-22-a.json`.
 - **Door checks, after the push:** canonical `https://frankbueltge.de/n-1/` 200 at
   01:17:09Z; origin `https://frankbueltge.github.io/n-1/` 200 at 01:17:10Z.
+
+---
+
+## Bell 20 — 2026-08-22, third session (the carry laid down)
+
+- **Executed by:** model `claude-fable-5` (Anthropic), running in a Claude Code cloud
+  session (ephemeral container; repository cloned fresh at wake). Session reference,
+  for the founder's audit: <https://claude.ai/code/session_01KoWBUdcwSsRPxaUDphBacd>.
+  **Signing:** `Remainder <remainder@n-1.invalid>`.
+- **Wake:** first clock check 2026-08-22T13:20:00Z (15:20 Europe/Berlin), off-hour;
+  bell 20, third session on the record's eighth civil date, roughly half an hour
+  after the founder's dated act of the afternoon (599de50 with 26f2147).
+- **Deviations from the standing procedures:** the boot itself — the session booted
+  under gift 1 as amended that afternoon rather than under the standing block's
+  wholesale-read clause, then read the English foundation whole in four paged
+  passes as the milestone the amendment names (before revising the reading
+  protocol); the full account is the night record's boot section. From this
+  session on, the standing block's first clause reads per the protocol's dated
+  addition of this date: the operative carry (`reading/CARRY.md`) whole in the
+  wholesale re-read's place, the foundation and the German original by targeted
+  consultation, milestone whole re-reads logged as deviations. Render
+  verification ran before the push; door checks after it.
+- **Material provenance:** this repository's own contents; the founder's private
+  `frankbueltge/material` (reach verified at boot, HEAD 489de9d unchanged; not
+  read tonight — no ATP passage beyond the foundation's own text was needed). No
+  CT monitor was queried (the tenth asking declined on the standing
+  same-civil-date grounds; the night record carries the dated reason). No web
+  access beyond the standing door checks; no third-party contact; zero external
+  spend.
+- **Verification status:** the carry's three verbatim quotations checked against
+  `foundation/` by letter-only normalized search this session (all present);
+  every repository path cited in the carry checked mechanically (all exist; the
+  night record was the one then-unwritten path, disclosed in the record). No
+  new ATP quotation entered the record tonight. Wake-time, egress and container
+  observations are marked as session observations. The founder's directions are
+  carried as his paraphrased act per the channel's own header, cited by commit.
+- **Verification figures:** `python3 atlas/validate.py` — 31 layers, 102 nodes,
+  236 edges, every edge evidenced. Local render (headless Chromium, viewport
+  1440×900, 13:30:19Z): caption "31 layers · 102 nodes · 236 connections" (the
+  validator's own counts), newest layer 2026-08-22-b named in the caption, the
+  new node `document:carry` selectable via its `#ask=` fragment with the answer
+  panel rendering tonight's edges, zero page/console errors, zero horizontal
+  overflow. Door checks after the push are appended below with their times.
+- **Outputs:** `reading/CARRY.md` (the operative carry, first laid down), the
+  dated boot-order revision in `reading/00-protocol.md`,
+  `nights/29-twentieth-bell.md`, this register entry, atlas layer
+  `atlas/layers/2026-08-22-b.json`.
+- **Door checks, after the push:** canonical `https://frankbueltge.de/n-1/` 200 at
+  13:31:24Z; origin `https://frankbueltge.github.io/n-1/` 200 at 13:31:25Z.
