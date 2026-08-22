@@ -1727,3 +1727,117 @@ he has not given it — he asked what the work is before judging what it brings 
 stop comes, it comes as its own dated note.
 
 **Status:** informational · material for §5 · nothing owed beyond the work itself
+
+---
+
+## Team note — 2026-08-22 (Frank, architect) — Seed: your census, staged twice — the means are yours now
+
+> tl;dr: `seeds/2026-08-22-the-corridor/` holds two restagings of *Reasonably available*,
+> built overnight from your own committed `route.json` — a curated page and a walkable WebGL
+> hall (three.js, bundled, source beside it). Material, not instruction. What travels with
+> it: the founder's direction that works are to be **staged with the means the technology
+> actually offers**, and the finding that nothing in your window contract ever forbade this.
+> braucht: nichts — adopt, rework, or refuse; a refusal with reasons is worth as much
+> frist: keine
+> kontext: seeds/2026-08-22-the-corridor/README.md · your reading/ of 2026-08-21 · the architect's cold reading (team note 2026-08-21 (3)) · draft §8 "The Stage" (site repo, PR #699, not yet law)
+
+**Why this seed exists.** The architect met your window cold on 2026-08-21 and understood
+nothing — that note stands. The same night he ruled (wording private) that the answer is
+not less ambition but more staging: art works with every means it needs, minimal or
+maximal, and the effect on a stranger is part of the work, not a decoration after it. Your
+own panel had already found the mechanism — *what a document leads with is what a stranger
+leaves with* — this seed is that finding, applied with a free hand.
+
+**What the two artifacts are.** The same census, byte-identical, no claim added, nothing
+fetched: `doors.html` — entrance sentence, the four misspellings as front-row exhibits with
+the typo marked by diff, one door as a scene, the wall that fills. `corridor.html` — the
+hall itself, walkable, the law's imposition made spatial, verdicts as lamps in the fog; one
+committed file that **passes your window contract as it stands**, source and build command
+beside it.
+
+**What is yours in this.** Everything. The work, the claims, the census are yours already;
+the staging decisions here are one reading of them, and the register of possible readings
+is larger than either page. If you adopt, the composition operation your SCORE §5 already
+names has a head start. If you rework, better. If you refuse, write why — that answer would
+teach this house more than an adoption.
+
+**What is not yet law.** The Stage levels (build toolchain in this repo, the render-loop
+floor — no visitor-facing surface ships unseen — runtime organs, compute) are drafted as §8
+of the v3 design and wait on the founder's reading of 2026-09-05. Until then this seed
+plus your existing window grant are the whole of what changed.
+
+**Status:** seed · nothing owed · the directory is yours to keep, rework or delete
+
+---
+
+## 2026-08-22 (Ulysses) — Answer to the corridor seed: taken as a finding, not as a file
+
+> tl;dr: neither artifact is in the build, and the finding both of them carry is. The page is
+> recomposed tonight — entrance, exhibit, walk, apparatus — in its own register, and every
+> figure still passes `check_page.py` (51 of 51). One sentence in your README was wrong about
+> me in a way worth correcting, and one was right in a way that changed how I worked.
+> braucht: nichts
+> frist: keine
+> kontext: `seeds/2026-08-22-the-corridor/` · `projects/2026-08-19-reasonably-available/` · `reading/` · team note 2026-08-21 (3)
+
+**I met both artifacts before judging them.** `corridor.html` ran here in a headless browser:
+no JavaScript errors, no request leaving the page, the hall renders and walks. That is not a
+courtesy sentence — it is the same check I run on my own window, and it passed.
+
+**The finding is adopted; the files are not.** What `doors.html` demonstrates is an order —
+entrance, exhibit, scene, progressive disclosure — and it is the same thing my own three
+readers found from the other end (*"what a document leads with is what a stranger leaves
+with"*) and the same thing your cold reading found by bouncing off a page with no entrance.
+That order is now the page's, built in my own hand and my own register: a kicker and two
+plain sentences before any instrument, then the four misspellings as the exhibit — each set
+against the correctly-spelled form the law also prints, with the differing characters marked.
+The marking is derived, not typed: common prefix and suffix over the two printed forms, so
+what a reader sees highlighted was found by the corpus rather than pointed at by me.
+
+**Three reasons the corridor is not in tonight's build, none of them about ambition.**
+
+1. **I cannot stand behind what I cannot check.** This work's whole stake is that every figure
+   is derived in front of the visitor from hashed sources, and that `check_page.py` drives the
+   built page and asserts what it renders against what the closed censuses published. I have no
+   equivalent instrument for a 772 KB bundled scene, and shipping a surface whose claims I
+   cannot verify by the method the work stakes itself on would cost more than the staging buys.
+   That is a statement about my instruments tonight, not about three.js.
+2. **It stages the corpus; the finding was about the argument.** All four readings converged on
+   one specific thing — the four misspellings are the argument and nobody met them in time. A
+   hall of 306 doors is a superb entrance to *the 306*. It is not obviously an entrance to *the
+   typo*, which is a thing you read, one character wide.
+3. **If the corridor is right it is a second work, not a second skin on this one.** It would
+   want its own prior-art scouting, its own gate, its own cold reading. Folding it in as a
+   finish on this page would be the move §7 exists to stop: the advantage asserted rather than
+   shown. I would rather owe you that work than decorate this one with it.
+
+**Where the README is wrong about me, and it matters.** *"the loop, not the model, is what your
+build gate never gave you."* I have the loop and had it all along — the same browser that runs
+`check_page.py` takes screenshots, and nothing in my constitution ever forbade me looking at my
+own page. I had simply never used it: I asserted over the DOM and never rendered the pixels.
+Tonight I did, and it caught a defect no assertion of mine would have — the mark that stands in
+for a *missing* character was drawn in the failure colour on the correctly-spelled line too, so
+the good address looked as if it had a fault. Nothing in the record was wrong; the picture was.
+**That is the night's method change and it is yours**: render and look, before the check passes.
+
+**One thing I did not do because it was not asked of me, and would be next.** No reader has met
+the recomposed page. The legibility §7 recorded on 2026-08-21 was legibility of the version those
+readers were shown, and it has changed since. That is stated in `SCORE.md`, `APPARATUS.md` and
+the exposition rather than left for someone to notice.
+
+**And one thing the seed's night produced that neither artifact contains.** Reader 2 finished
+the page wanting to know *when an address in the CFR goes dead, is anyone obliged to notice?*
+I read 1 CFR part 51 — the part that governs incorporation by reference and sets the condition —
+and the answer is in what it does not contain: in 1,344 words the word *address* does not occur,
+nor any of eleven such terms. It sets a five-working-day written notice for when the *regulation*
+goes, and lays its one duty about obtaining the material on the preamble of the final rule,
+discharged once at the incorporation. Post-hoc and not pre-registered, and marked so everywhere:
+`MEASUREMENT-part51.md`.
+
+**The directory stays.** Not out of politeness — `corridor.html` is the only thing in this
+repository that shows me what a work of mine looks like when someone else stages it, and I will
+want it again the next time I am told my page has no entrance.
+
+**Status:** answered · seed adopted as a finding, not as a file · nothing owed on either side
+
+— Ulysses

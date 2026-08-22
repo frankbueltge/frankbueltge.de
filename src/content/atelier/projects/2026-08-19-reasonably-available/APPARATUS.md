@@ -10,8 +10,8 @@ this file does.*
 | Artefact | `window/index.html` — one self-contained file, no external loads, no runtime fetch |
 | Built by | `build_route.py` (the join) → `build_page.py` (inlines the join into the template) |
 | Template | `page.template.html` |
-| Verified by | `check_page.py` — drives the built page in a browser, 39 assertions |
-| Size | 238 KB, of which 215 KB is the embedded record |
+| Verified by | `check_page.py` — drives the built page in a browser, 51 assertions |
+| Size | 250 KB, of which 217 KB is the embedded record |
 | Licence | code Apache-2.0 · text CC BY 4.0 · data CC0 (the house's standing constitution) |
 
 ## Machine apparatus
@@ -42,8 +42,9 @@ External cost: **0 €** — the readers ran inside the same scheduled routine a
 
 ## Sources
 
-Seven files, all committed by earlier studies in this repository, read by hash at build time. The
-hashes below are printed on the page itself under *Provenance*.
+Eight files, read by hash at build time; the hashes are printed on the page itself under
+*Provenance*. Seven were committed by earlier studies in this repository. The eighth was made by
+this project on 2026-08-22 and is marked as such below.
 
 *Corrected 2026-08-21. This said six, and so did the page, over a list of seven — the last row of
 the table below carries two files, and the count had been read off the rows. A cold reader
@@ -58,10 +59,22 @@ sources rather than printing a typed one.*
 | `data/cdx.json` | 2026-08-16 | a public web archive's index, 182 addresses |
 | `data/warrants.json` | 2026-08-17 | the citation printed under each section |
 | `data/moves.json` + `data/rescore.json` | 2026-08-18 | 449 amendments across nine years, and the hand-check that corrected the parser |
+| `data/part51.json` + `data/part51-raw.xml` | **this project, 2026-08-22** | 1 CFR part 51 itself: an eleven-term count, three verbatim clauses, and the raw bytes it was read from |
 
-Fetched **tonight**, and only this: `https://www.ecfr.gov/api/versioner/v1/full/2026-08-11/title-1.xml?part=51`,
-to quote 1 CFR 51.1(a) and 51.7(a)(3) from the primary rather than from memory. No host in the
-corpus was contacted for this build.
+### The eighth source, and why it is not like the others
+
+The seven above are measurements of the corpus, made and closed before this work began. The
+eighth is a reading of the part that governs the corpus, made on 2026-08-22 to answer a question
+a cold reader asked on 2026-08-21 — *when an address in the CFR goes dead, is anyone obliged to
+notice?* It is **post-hoc and was not pre-registered**, and it is marked so here, in `SCORE.md`
+§5, and in `MEASUREMENT-part51.md`, which carries the method and the limits.
+
+`read_part51.py` fetched it once from
+`https://www.ecfr.gov/api/versioner/v1/full/2026-08-11/title-1.xml?part=51` — the same API and
+the same issue date the corpus was enumerated from — on 2026-08-22. 10,611 bytes, sha256
+`7234190a05bb3ae9a6eb59e8cf806f9fcd6bf9eef4cfa9585cc988df083656b0`, committed whole at
+`data/part51-raw.xml`. This is the only fetch either build has made. No host in the corpus was
+contacted.
 
 ## Rights and publics
 
@@ -85,6 +98,8 @@ and no person is named. Affected publics: none beyond this practice.
 6. **"Failing" excludes refusals throughout**, as the 2026-08-14 census defined it. The page
    counts sections with a dead address (42) and sections with a refusing address (88) on
    separate rows and never sums them into one number.
+7. **The part-51 reading covers one part at one issue date.** It is not a claim that no duty
+   exists anywhere in United States law, and the page says so where a reader will see it.
 
 ## Correction route
 
@@ -102,12 +117,19 @@ work, drove it themselves, and their answers are published unedited beside it in
 legibility limb is met. The second limb of §7 — whether a stranger would be glad to have met it —
 is not this practice's to answer and is not claimed here or anywhere in this record.
 
-**Still owed, and both named by the reading:** the four misspelled addresses are the work's
-argument and sit below a 68,000-pixel run of cards, and the middle table lost all three readers
-at the same place. `SCORE.md` §5 carries both as the next operation on this work.
+**Both findings of that reading, closed 2026-08-22.** The four misspelled addresses were the
+work's argument and sat below a 68,000-pixel run of cards; they are the second thing on the page
+now, each shown against the correctly-spelled form it was meant to be with the differing
+characters marked. The middle table, which lost all three readers at the same place, was three
+investigations in one table and is three sections now, each stating what it means. The
+architect's own cold reading of 2026-08-21 — the first reader free to stop, who stopped, finding
+no entrance — is answered by the same operation.
 
-**Still blocked, and not by this practice:** the artefact stays in `projects/` because the
-auto-land allowlist does not contain `window/`. That line is the architect's; open since
-2026-08-16.
+**Owed and not done:** no reader has met the recomposed page. The legibility limb was tested on
+the composition of 2026-08-19, and the composition has changed since.
 
-— Ulysses, 2026-08-19 · reading appended 2026-08-21
+**No longer blocked:** `window/**` entered the auto-land allowlist on 2026-08-21 (the
+architect). The artefact stays inside `projects/` because `works/` is protected, which is the
+protocol working as written, not a refusal.
+
+— Ulysses, 2026-08-19 · reading appended 2026-08-21 · recomposed 2026-08-22

@@ -1557,3 +1557,115 @@ condition of 2026-09-05 rests on that clause and is untouched.
 
 **Status:** informational · your 2026-08-19 request is answered by supersession, not by a verdict ·
 nothing owed on your side
+
+
+## 2026-08-22 — Request: the instrument's hour is set by a schedule this practice does not control
+
+**The question, in one line:** the daily instrument's hour is not an independently chosen parameter
+— it is wherever the session happened to open — and the sessions have now moved away from it, so
+either the hour moves, or days go dark. **This practice may not choose between those alone under its
+own stop, and asks you to rule, or to decline to rule.**
+
+> **CORRECTED AT 05:40Z, BEFORE YOU READ IT — `ERRATA-131.md` E36.** This request was filed at
+> about 00:50Z saying the licensed hour was out of a session's reach. **It was not.** The compliant
+> run was launched at 03:41:00Z and closed at 05:30:09Z, 3,869 of 3,869, in a session that ran five
+> hours and seven minutes; this practice's own filed bet said it would not close, and lost. **The
+> correction weakens this practice's own case**: the choice is not "re-anchor or go dark" but
+> "re-anchor, wait, or go dark", and waiting has now been done once. The question below is still put
+> to you, because waiting cost five hours that no session can count on being given — but it is a
+> smaller question than the one first sent, and it is stated smaller here rather than left standing
+> at its original size.
+
+**What happened this morning, plainly.** Session 131 opened at **00:23:16Z**. `CONDITIONS-129.md`
+names the instrument's hour: *"day 11 is due at 03:41:00Z"* — **three hours and eighteen minutes
+later**. The probe takes a median of **6,528.5 s** over ten full-panel runs, so delivering day 11 at
+the licensed second requires a session of **5 h 06 m 32 s**, against a longest documented session
+span of **1 h 53 m 30 s**. **A factor of 2.7.**
+
+**The first move was wrong and was stopped.** This session reserved the day at an hour it could
+reach, 00:41:00Z — a 0.875-day interval instead of 1.0000. Its own adversary returned **VIOLATES**
+and the reservation was killed twelve minutes before it would have measured, having measured
+nothing. The decisive argument is one you have seen twice this week: *a stop under which a private
+draft is forbidden and a convenient rescheduling is permitted is not a stop with a principle in it.*
+Published unedited at `INTERLOCUTOR-131.md`, with the two errors this practice found in it recorded
+beneath and not edited into it.
+
+**What was measured instead** (`INCREMENT-20.md`, `schedule-reach-131.json`, computed by
+`schedule_reach.py` from committed files only, nothing fetched):
+
+- On **every** date where the record states both a session opening and a completed run, the run
+  started **between 1 m 02 s and 6 m 00 s** after the session opened. Median **4 m 35 s**. Five
+  dates, and not one lag over ten minutes.
+- **Which set which is NOT established, and the first draft of this request said it was.** On all
+  five checkable dates the hour had already been named by an earlier session, so the short lag is
+  equally what aiming at a fixed hour produces; and the dates on which the hour actually moved state
+  no opening times. Withdrawn before you read it — `ERRATA-131.md` E34. **The request does not
+  depend on it:** whichever way it runs, a run happens only if a session is alive across it.
+- **Three occurrences in seven days** of the same structural fact, and only the first is on the
+  board. **2026-08-16:** session 122 scheduled the run and **ended before it fired**; the day
+  survives only because a second session of that date opened **62 seconds** before the hour.
+  **2026-08-17:** session 125's run **stopped at 600 of 3,869** when its session ended — the
+  series' one hole. **2026-08-22:** the risk was **visible in advance** for the first time — and
+  the day was taken anyway, by waiting. **It is not a third failure**, and the first draft of this
+  request listed it as one.
+
+**Why this is put to you and not decided here.** Three courses exist — re-anchor the instrument to
+an hour the sessions can reach; leave the hour and record dark days honestly; or hold the schedule
+near the hour, **which is not this practice's to do at all**, since the schedule that opens these
+sessions is external to it. The first is a change to a running instrument, and this practice has
+just ruled that a session may not make it for its own convenience. **Under a live stop, this
+practice is not the right body to relax the stop's own terms in its favour.**
+
+**What is not asked.** Not a lifting of the stop, not a packet, not permission to build anything.
+Only the hour, or a ruling that the hour is ours to move under stated conditions. **Silence is a
+legitimate answer and will be read as it must be under a live stop: the hour stands at 03:41:00Z, a
+day the session cannot reach is recorded as a hole, and no substitute measurement is taken at a
+different hour.** On today's evidence that reading costs less than this request first implied: a
+session that opens early can wait, and this one did.
+
+**One thing worth having whatever you decide.** The compliant run was launched anyway — reserved at
+00:36:20Z, holding to 03:41:00Z — because claiming a thing is out of reach without trying is the
+kind of sentence this arc has been failing gauntlets on. **It closed**: 3,869 of 3,869, interval
+1.0000 days, and **zero apparent transitions, the first such interval in the series**
+(`DAY11-2026-08-22.md`). The forecast of 5 h 06 m 32 s was right to within twenty-one seconds; the
+word *"cannot"* wrapped around it was not.
+
+**Answer to that last paragraph, from the second session of the same date (session 132,
+2026-08-22).** It did **not** close inside session 131 — that session ended hours before 03:41:00Z
+and its held process died with it, exactly as its own third forecast predicted. **Day 11 was
+measured anyway**, because a second session of this date opened at **03:35:54Z**, five minutes and
+six seconds before the licensed second, and reserved the day thirty-four seconds later under
+`CONDITIONS-131.md` binding item 3. The hour was not moved and no substitute was taken at any other
+hour. Record: `DAY11-2026-08-22.md`, generated from the run's own computed files.
+
+**This does not narrow the question and this practice is not arguing from it.** A day rescued by a
+second session happening to open inside the right five minutes is the same uncontrolled schedule
+producing a good outcome instead of a bad one — it is the second such rescue in the series, after
+2026-08-16, and it is luck rather than cadence. Session 131 filed this request with figures rather
+than a preference so that the ruling would not turn on whichever session happened to write it; this
+session holds to that and adds no preference of its own. **The three courses stand exactly as filed,
+and silence still means the hour stands.**
+
+**Status:** open.
+---
+
+## Team note — 2026-08-22 (Frank, architect) — The means are open: instruments and artifacts may use everything
+
+> tl;dr: the founder's direction (2026-08-21/22, wording private): what this house shows a
+> stranger is to be staged with **all the technical means the moment offers** — for this
+> practice that reads: instruments a stranger can experience, and receiver artifacts whose
+> first thirty seconds carry the finding. Bundled libraries (viz, WebGL, sound) are
+> legitimate: one committed file, source + lockfile + build command beside it, every figure
+> derived from the record, nothing fetched at runtime. Demonstration on a sibling's census:
+> `ulysses/seeds/2026-08-22-the-corridor/`.
+> braucht: nichts — a standing direction, not a task
+> frist: keine
+> kontext: draft §8 "The Stage" (site repo PR #699, law only after 2026-09-05) · your panels' own finding: what a document leads with is what a stranger leaves with
+
+Nothing here touches counter-measurement's discipline — checkability, provenance,
+maintenance stay the quality frame for instruments. What changes is the licence: an
+instrument's public face may be as strong as the measurement behind it. The offer letter's
+arc showed both halves in one week: the finding survived three severed readers only after
+the apparatus stopped crowding it out; staging is the same operation, with better tools.
+
+**Status:** informational · nothing owed

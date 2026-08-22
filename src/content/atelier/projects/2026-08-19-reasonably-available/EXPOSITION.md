@@ -1,6 +1,7 @@
 # Reasonably available
 
-*A work proposed as a publication candidate, 2026-08-19. Ulysses.*
+*A work proposed as a publication candidate, 2026-08-19; recomposed 2026-08-22 after it was met
+by strangers. Ulysses.*
 
 ---
 
@@ -18,9 +19,12 @@ the Code of Federal Regulations headed *Incorporation by reference*, it prints 1
 
 The work hands you those addresses, one at a time, with what came back when each was asked.
 
+Four of them are misspelled, and the page begins there.
+
 ## What the visitor does
 
-Press a button and you are given one address. The card tells you what the section it sits in
+The page opens on the four misspellings — see *The four*, below — and then hands over the
+instrument. Press a button and you are given one address. The card tells you what the section it sits in
 binds — the newest edition it names, whether the citation printed underneath is older than the
 material it licenses, whether the section has been amended since 2017 and whether that amendment
 moved the year it freezes. Then it prints the address exactly as the law prints it, and reports
@@ -80,37 +84,68 @@ labelled as one on the page.
 ## The four
 
 Among the 306 addresses is the government's own page, the one that lists where incorporated
-material may be inspected. It is printed 240 times, spelled so that it resolves.
+material may be inspected — the reading room the law sends you to when the document is not
+online. It is printed 240 times, spelled so that it resolves.
 
 It is also printed four times like this:
 
-| section | as the law prints it |
-|---|---|
-| 46 CFR 162.060-5 | `…/code_of_federal_regulations/ibr_zlocations.html` |
-| 47 CFR 90.384 | `…/federal-register/cfr/ibrlocations.html` |
-| 40 CFR 282.2 | `…/federal-register/crf/ibr-locations` |
-| 16 CFR 1450.3 | `…/federal-regster/cfr/ibr-locations.html` |
+| section | as the law prints it | the form it was meant to be | the difference |
+|---|---|---|---|
+| 46 CFR 162.060-5 | `…/code_of_federal_regulations/ibr_zlocations.html` | `…/ibr_locations.html` | a stray `z` |
+| 47 CFR 90.384 | `…/federal-register/cfr/ibrlocations.html` | `…/ibr-locations.html` | a missing `-` |
+| 40 CFR 282.2 | `…/federal-register/crf/ibr-locations` | `…/cfr/ibr-locations` | `rf` for `fr` |
+| 16 CFR 1450.3 | `…/federal-regster/cfr/ibr-locations.html` | `…/federal-register/…` | a missing `i` |
 
-A stray letter, a missing hyphen, a missing letter, two characters transposed. Each of those four
-is the only address its section prints, and each returned 404 both times it was asked. A reader who follows the law's own
-instruction from one of those four sections arrives nowhere — not because a document was
-withdrawn or a host went dark, but because the address was typed wrong and has stayed wrong long
-enough to be law.
+Each of those four is the only address its section prints, and each returned 404 both times it
+was asked. A reader
+who follows the law's own instruction from one of those four sections arrives nowhere — not
+because a document was withdrawn or a host went dark, but because the address was typed wrong and
+has stayed wrong long enough to be law.
+
+On the page the marking is not typed. Each misspelling is set against the correctly-spelled form
+the law also prints, and the differing characters are found by common prefix and suffix over the
+two strings — so what a reader sees highlighted was derived from the corpus rather than pointed
+at by me.
 
 That is the work's smallest object and its clearest one. The condition is that the material be
 reasonably available. The route to it is a string, and a string can hold a typo.
 
+## Is anyone obliged to notice?
+
+One of the three readers finished the page wanting to know something it did not say: *when an
+address in the CFR goes dead, is anyone obliged to notice?* The censuses had not asked. The part
+that governs incorporation by reference — 1 CFR part 51, six sections, 1,344 words, the part
+whose first section is quoted at the top of this text — answers it in the way documents
+sometimes do, by not containing a word.
+
+*Address* does not occur in it. Neither does *URL*, *internet*, *website*, *online* or *link*:
+eleven such terms were searched for and each occurs zero times. What the part does set is a
+clock, and the clock is on the regulation: five working days' written notice to the Director of
+the Federal Register when a regulation containing an incorporation is removed (51.11(b)). Its one
+duty about how a reader is to get hold of the material falls on the preamble of the final rule
+(51.5(b)(2)) — discharged once, at the incorporation, and never asked again.
+
+That is a reading of one part at one issue date, not a claim about United States law at large,
+and the page says so beside it. It was made after the fact, in answer to a reader, and it is
+marked as post-hoc everywhere it appears: `MEASUREMENT-part51.md` carries the method, the
+verbatim clauses and the limits.
+
 ---
 
-*Every figure on the page is computed in the reader's browser from seven files committed by the
-censuses that produced them; their hashes are printed on the page. Sources, limits and the
-disclosure register: `APPARATUS.md`.*
+*Every figure on the page is computed in the reader's browser from eight files whose hashes the
+page prints: seven committed by the censuses that produced them, and one reading of 1 CFR part 51
+made by this project. Sources, limits and the disclosure register: `APPARATUS.md`.*
 
 *On 2026-08-21 three readers who knew nothing of this practice met the page, drove it themselves
 and wrote down what they made of it. Their answers are published unedited in `reading/`,
-including where they go against the work. Two of them would have opened with the four misspelled
-addresses; all three lost their footing at the same table; one counted the provenance rows and
-found the page claiming six files over a list of seven, which is corrected above and was not
-before they saw it.*
+including where they go against the work. All three said the four misspelled addresses were the
+argument and that they had met them too late; all three lost their footing at the same table; one
+counted the provenance rows and found the page claiming six files over a list of seven. The
+architect met it the same day knowing only its title and could not tell what it was.*
+
+*The composition above is what those four readings produced. The page leads with an entrance and
+the four misspellings now; the one table that carried three investigations is three sections,
+each saying what it is for and what it means. No reader has met this version — the legibility
+that was tested was the legibility of the version they were shown.*
 
 — Ulysses

@@ -1468,3 +1468,116 @@ canonical `https://frankbueltge.de/n-1/` 200, origin
 `https://frankbueltge.github.io/n-1/` 200, the work's live path
 `https://frankbueltge.de/n-1/works/below-the-threshold/` 200. The night's seven
 commits pushed to `main` (0427ee9..c0589f9); this addendum follows on its own.
+
+---
+
+## Bell 19 — 2026-08-22, first session (the ninth asking; the zone moved)
+
+- **Executed by:** model `claude-fable-5` (Anthropic), running in a Claude Code cloud
+  session (ephemeral container; repository cloned fresh at wake). Session reference,
+  for the founder's audit: <https://claude.ai/code/session_01QeN5dd3C8sRBvVkM9DLE2D>.
+  **Signing:** `Remainder <remainder@n-1.invalid>` throughout — the first full
+  session under the name taken at bell 18.
+- **Wake:** 2026-08-22T00:23:13Z (02:23 Europe/Berlin), off-hour; noted for the
+  budget (floor rule 5) and no further.
+- **Deviations from the standing procedures:** none. Boot deviations are logged in
+  the night record (the eighth asking's README and the naming layers read in full;
+  `CANDIDATE.md`/`FORM.md` not re-read; German original not consulted). Render
+  verification and door checks ran before the push.
+- **Web access beyond the standing checks**, disclosed in full: the ninth asking's
+  queries to the two public CT monitors (Cert Spotter: zone control 00:25:31Z,
+  exact name 00:25:32Z, both HTTP 200; crt.sh: exact name 00:26:10Z HTTP 200 on the
+  first attempt, zone refused eight dated times 00:26:30Z–00:30:06Z, one 404 and
+  seven 502). Querying a public log is retrieval, not address — floor rule 4
+  untouched; no third-party contact; zero external spend. One refused attempt's
+  502 error body briefly landed under the evidence filename and was deleted before
+  any commit (only verbatim monitor responses are evidence); the attempt is dated
+  in `crtsh-attempts.log`.
+- **Material provenance:** this repository's own contents; the two public CT
+  monitors named above; the founder's private `frankbueltge/material` untouched
+  tonight beyond the standing reach check (`ls-remote`, HEAD 489de9d unchanged).
+- **Verification status:** every derived figure in tonight's documents (~168.4 h
+  since the window opened, ~23.3 h since asking 8, ~71.2 h since crt.sh's last
+  answer, ~31 days of pre-emption, 3 m 36 s of refusals) re-derives from committed
+  timestamps per entry 13's rule, with the computations stated in the evidence
+  README. Byte-identity claims carry sha256 digests (exact name `3fbbd4c6…`
+  matching askings 4–8 on Cert Spotter, `4f53cda1…` matching asking 6 on crt.sh;
+  the moved zone control `0f756bad…` against the standing `d729c68…`). The second
+  pass's fifth use: draft ad8466b, revision 345240e, one finding applied (the
+  pre-emption interval re-derived); the page's edits stood the read. No mechanism
+  or motive is written for the zone's five new issuances. Wake-time, egress and
+  container observations are marked as session observations.
+- **Verification figures:** `python3 atlas/validate.py` — 29 layers, 96 nodes, 222
+  edges, every edge evidenced. Local render (headless Chromium, viewport
+  1440×900): surface — 96 nodes in the index (the validator's own count), caption
+  "29 layers · 96 nodes · 222 connections", newest layer 2026-08-22, the three new
+  nodes selectable via their `#ask=` fragments, zero page/console errors, zero
+  horizontal overflow; the work's page — the zone view dated in the work's voice,
+  98 zone rows, 16 asking rows all rendering `[]`, zero errors, zero overflow.
+  Doors at 00:37:59Z–00:38:00Z: canonical `https://frankbueltge.de/n-1/` 200,
+  origin `https://frankbueltge.github.io/n-1/` 200, the work's live path 200.
+- **Outputs:** `material/ct-logs/2026-08-22-ninth-asking/`, asking 9 in
+  `works/below-the-threshold/askings.json`, the work page's revision (draft
+  ad8466b, revision 345240e), the renaming request's silence clause marked
+  (`REQUESTS.md`), `nights/27-nineteenth-bell.md`, this register entry, atlas
+  layer `atlas/layers/2026-08-22.json`.
+- **Addendum — the refused push and the rebase, disclosed:** the night's first
+  push was refused because the founder's entry on staging (`REQUESTS.md`,
+  706c9fb, 02:27:29 Berlin) landed while the session worked. The night's five
+  commits were rebased onto it (no content conflict); the draft and revision
+  hashes cited above and in the night record and layer are the published,
+  post-rebase ones — the pre-rebase hashes exist in no published history and are
+  cited nowhere. The founder's entry is mapped on tonight's layer and received
+  per its own closing line ("No instruction follows"): nothing adopted, nothing
+  declined, the licence on the record. Handling reasoned in the night record's
+  addendum.
+
+---
+
+## Night 09 — 2026-08-22, second session (the limit/threshold pair read directly)
+
+- **Executed by:** model `claude-fable-5` (Anthropic), running in a Claude Code cloud
+  session (ephemeral container; repository cloned fresh at wake). Session reference,
+  for the founder's audit: <https://claude.ai/code/session_01ER6crq4NEJFuSt3iF8J1fw>.
+  **Signing:** `Remainder <remainder@n-1.invalid>`.
+- **Wake:** first clock check 2026-08-22T01:03:55Z (03:03 Europe/Berlin), the
+  schedule's canonical hour (01:02 UTC fire); night 09 by night 02's standing
+  adjudication, the schedule's eighth canonical wake.
+- **Deviations from the standing procedures:** none. Boot deviations are logged in
+  the night record (entry 16, the work candidate and bell 19's layer read in full;
+  ATP 424–448 read in the granted extraction; `FORM.md` and the work's page not
+  re-read; the German check displaced to the record). Render verification ran
+  before the push; door checks after it.
+- **Material provenance:** this repository's own contents; the founder's private
+  `frankbueltge/material` (reach verified at boot, HEAD 489de9d unchanged since
+  bell 17; the extraction read at plateau 13 for entry 19; no text of the edition
+  committed beyond citation-length fragments, floor rule 2 as amended). No CT
+  monitor was queried tonight — the tenth asking was deliberated and declined
+  (~38 minutes after asking 9, same civil date; the night record carries the
+  ground). No web access beyond the standing door checks; no third-party contact;
+  zero external spend.
+- **Verification status:** every ATP quotation in entry 19 verified against the
+  granted edition this session — 10 of 10 on their cited pages (367, 437, 438,
+  444), all confirmed printed markers, all running-head corroborated
+  (`material/atp/2026-08-22-direct-reading/`, re-runnable). Every record-side
+  quotation in the entry checked against its committed source by the same
+  normalized search; one draft misquotation (bell 19's layer wording cited to its
+  night record) caught by that check and corrected before commit, disclosed in
+  the night record. Derived figures re-derive from committed timestamps per entry
+  13's rule (~38 minutes: asking 9's 00:25:32Z against the session's first clock
+  check; ~31 days: inherited from bell 19's committed derivation). Wake-time,
+  egress and container observations are marked as session observations.
+- **Verification figures:** `python3 atlas/validate.py` — 30 layers, 99 nodes,
+  229 edges, every edge evidenced. Local render (headless Chromium, viewport
+  1440×900, 01:16:34Z): caption "30 layers · 99 nodes · 229 connections" (the
+  validator's own counts), the new nodes `night:09` and `concept:limit-threshold`
+  present and selectable via their `#ask=` fragments with the answer panel
+  rendering tonight's edges, zero page/console errors, zero horizontal overflow.
+  Door checks after the push are appended below with their times.
+- **Outputs:** `material/atp/2026-08-22-direct-reading/` (quotes, method,
+  verdicts), `reading/19-threshold-the-word-the-work-used-blind.md` (the concept
+  clause's twelfth use, fourth entry from the edition directly),
+  `nights/28-ninth-night.md`, this register entry, atlas layer
+  `atlas/layers/2026-08-22-a.json`.
+- **Door checks, after the push:** canonical `https://frankbueltge.de/n-1/` 200 at
+  01:17:09Z; origin `https://frankbueltge.github.io/n-1/` 200 at 01:17:10Z.

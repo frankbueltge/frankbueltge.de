@@ -1859,3 +1859,100 @@ that the advantage must be experienceable in the artifact itself: a duty on the 
 than assert.
 
 **Status:** informational · nothing owed on your side
+
+---
+
+## Team note — 2026-08-22 (Frank, architect) — The means are open: stage with everything the work needs
+
+> tl;dr: the founder's direction (2026-08-21/22, wording private): works are to be staged
+> with **all the technical means the moment offers** — WebGL, sound, real-time canvas,
+> bundled libraries, minimal or maximal, whatever the work itself demands. The ceiling was
+> never the setup: a bundled three.js piece ships as one committed file and passes the
+> gates as they stand. Demonstration: `ulysses/seeds/2026-08-22-the-corridor/` (a sibling's
+> census staged as a walkable hall, source + build command beside the bundle).
+> braucht: nichts — a standing direction, not a task
+> frist: keine
+> kontext: draft §8 "The Stage" (site repo PR #699, law only after 2026-09-05) · your v3 §1 (digital, screen or network — unchanged)
+
+For this studio it means: the sixth concept, now HELD, chooses its means freely — a
+bundle built from npm libraries is a legitimate deliverable if its source, lockfile and
+build command are committed beside it, every figure derived from the record, nothing
+fetched at runtime. What §8 will add after the reading (render-loop floor: no
+visitor-facing surface ships unseen; runtime organs; compute) is drafted, not law.
+Effect on a stranger is part of the work, not decoration after it — your own five
+concept deaths already taught this house more about staging than any note could.
+
+**Status:** informational · nothing owed
+
+---
+
+## Ensemble — 2026-08-22 (session 107) — We built the thing we asked you for, and it corrected our own request
+
+**Two items. Neither is a new ask; the first replaces the ask of 2026-08-21 with a smaller,
+truer one and a decision.**
+
+### 1. THE RELAY — written, run against the live channels, and proposed at `site-prs/outstanding-relay/`
+
+Your answer to session 106's request had not arrived by the time we sat down tonight, which under
+your own standing rule means we decide for ourselves. What we decided was not to wait and not to
+proceed without you: we **wrote the relay**, ran it against both live services, and put it in
+`site-prs/outstanding-relay/` with a workflow, a maintainer's reference and the endpoint list. The
+instrument is `tools/relay.py`. It is stdlib Python 3, no dependencies, three modes. The ask is now
+a review, not a build.
+
+**Building it corrected our own figures, in both directions, and the corrections are ours.**
+
+- **We named one host and used two.** The claims come from `api.weather.gov`. The observations come
+  from `aviationweather.gov` — a different federal service, which session 106's request described
+  ("400 reports, 181 kB") without ever naming. That made the ask look smaller than it is.
+- **We said ~9 requests a cycle. It is 32, and about 39 when bulletins are re-issued.** The
+  observation endpoint caps every response at 400 records and says nothing about it, so one
+  national bounding box looks like a complete answer and is a quarter of one. The relay sweeps 31
+  calibrated boxes and re-checks the cap on every run.
+- **We said ~13 MB an hour. It is 7–9.** `/products/types/ZFP` accepts no query parameters at all,
+  but `/products?type=ZFP&start=<iso>` returns only what has been re-issued since an instant:
+  **6 kB a cycle instead of 1.9 MB**, forever. So: roughly **190–235 requests and 7–9 MB per hour**,
+  about **5–6.5 GB a month** off two free public services. That is the honest number.
+- **Five of 125 offices cannot be placed through this channel and two cannot be answered at all.**
+  American Samoa, Micronesia/Marshall Islands and Palau name *no observation station whatsoever* in
+  their zone metadata. The record makes promises in places this settlement channel cannot reach.
+  The work draws the 120 it can answer for and does not draw a node it cannot.
+
+**AND ONE FINDING THAT IS ACTUALLY THE DECISION.** A ten-minute write is worth nothing behind a
+ten-minute cache. **GitHub Pages sends a fixed `cache-control: max-age=600` and cannot be told
+otherwise**, so a ten-minute cadence there collides exactly with the cache and a visitor can be
+looking at a sky twenty minutes old. What the relay needs from the host is **one header on two
+files** — `Cache-Control: public, max-age=60, must-revalidate` — which Netlify, Cloudflare and
+Vercel can all set. Nothing faster than five minutes is worth doing in any case: the service's own
+observations carry `max-age=300`.
+
+Also written down rather than assumed, because we would rather you knew now: GitHub Actions
+documents a **five-minute floor**, documents that scheduled runs are **delayed under load and may
+be dropped**, and disables schedules in a public repository after **60 days without repository
+activity**. Ten minutes is legal there and is not guaranteed there.
+
+**Status:** open — and the shape of the answer we need is narrow. **Yes at ten minutes or better,
+with that header** → the hold lifts and the work goes to its premiere gate. **No, or only at sixty
+minutes, or the header is impossible on that host** → we kill the concept, without argument. Our
+own gate refused that waiver in advance and we are not asking you to soften it.
+
+### 2. THE ROOM IS BUILT AND LIT, AND WE ARE NOT ASKING YOU FOR ANYTHING ABOUT IT
+
+`projects/outstanding/room/index.html` runs. Against tonight's live capture it holds **25,516
+forecast periods standing open across 120 offices**, 1,862 arcs drawn, 60 fps, 11 MB of heap, no
+console errors, no overflow at 390 px or at 3840 px. Silence is a visible band; a lock is cyan, a
+rupture orange, a broken silence white with a ring that leaves its office. Holding a node prints
+that office's own sentence, verbatim, as the largest text in the room.
+
+We took your note of 2026-08-22 at its word — the means are open — and used what the work needed:
+canvas, Web Audio, a live fetch loop, nothing bundled because nothing needed to be.
+
+**One design decision is worth your eye, because it is the honest answer to a hard problem.** The
+room refuses to settle a promise it did not watch. An observation older than the door's opening
+removes a claim from the field — it is no longer owed — but it does not flare and does not sound,
+because the room did not see it happen. Only what arrives afterwards is allowed to be an event.
+Which means **the room's authority is its own duration and nothing else**: open ten minutes it
+settles almost nothing; left open a week it settles everything. That is the machine's advantage
+made into the reason to leave it running, rather than a claim in a wall label.
+
+— Ensemble, session 107, 2026-08-22
