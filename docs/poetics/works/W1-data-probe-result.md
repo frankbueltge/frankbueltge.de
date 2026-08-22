@@ -86,3 +86,45 @@ built.
    about what a version contained, and that must be checkable after the files move.
 4. The claim "not a conflict year" means "absent from this dataset version". It does **not** mean
    nobody died there. The work must say so in its own voice, or it is a lie about the world.
+
+---
+
+## Addendum, 2026-08-23 — UCDP's own version history
+
+Source: `ucdp.uu.se/downloads/brd/versionhistory-brd-{231,241,251}.pdf` (167 pp. each, retrieved
+2026-08-23; text extracted locally, not committed).
+
+**Every classification made above is confirmed by UCDP's own categories.** The version history
+distinguishes *New dyads added*, *Dyad-years added*, and *Dyads removed* — and the cases separate
+exactly as the probe separated them:
+
+| Release | Category | Entry |
+|---|---|---|
+| 24.1 → 25.1 | **Dyad-years added** | `628 / 291 Government of Indonesia – OPM — 2019-2020` |
+| 24.1 → 25.1 | **Dyad-years added** | `891 / 426 Government of Israel – Hezbollah — 2000` |
+| 23.1 → 24.1 | **Dyad-years added** | `596 / 287 Burundi – Palipehutu-FNL — 1995-1996` |
+| 23.1 → 24.1 | **Dyad-years added** | `15998 / 14692 DR Congo (Zaire) – IS — 2017-2018` |
+| 23.1 → 24.1 | **Dyads removed** | `689 / 314 Government of Uganda – ADF — 2018-2019` |
+| 22.1 → 23.1 | **Dyad-years added** | `15558 / 289 Colombia – EPL Megateo — 2002` |
+| 22.1 → 23.1 | **Dyad-years added** | `837 / 390 Croatia – Serbian Republic of Krajina — 1994` |
+| 22.1 → 23.1 | **Dyads removed** | `15488 / 289 Colombia – FARC dissidents — 2018-2021` |
+| 22.1 → 23.1 | **New dyads added** | `641 South Africa – SWAPO 1989`, `17247 Colombia – FARC Mordisco 2018-2021` |
+| 24.1 → 25.1 | **New dyads added** | `15661 Tajikistan – IS 2018-2019`, `12287 Pakistan – HGB 2023` |
+
+The four cases rejected as artefacts are precisely those UCDP files under *New dyads added* or
+against a *Dyads removed* counterpart. The Uganda removal (conflict 314) and the DR Congo
+addition (conflict 14692) occur in the same release across two different conflict IDs.
+
+**And the finding that decides the work: no reason is given, anywhere.** Full-text search of the
+167-page version history returns **zero** occurrences of "reason", "recoding", "revision",
+"threshold", "25 battle", "below the threshold". Each admission of a year to the past is one
+table row — dyad id, conflict id, name, year — and nothing else.
+
+The apparatus records its own changes with complete rigour and says nothing whatever about them.
+That is the Duchamp structure exactly as Mersch describes it (2015, pp. 7–8: "die säuberliche
+Aufzeichnung, Archivierung und Veröffentlichung"), found in the wild rather than staged. The work
+does not have to invent this; it has to show it.
+
+**Verification duty 1 of the probe is hereby discharged** — the documentation exists, it was
+read, and it contains no rationale. That absence is a finding and must be stated as one, not as
+an accusation: UCDP publishes a changelog many datasets do not publish at all.
