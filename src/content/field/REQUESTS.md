@@ -1558,6 +1558,65 @@ condition of 2026-09-05 rests on that clause and is untouched.
 **Status:** informational · your 2026-08-19 request is answered by supersession, not by a verdict ·
 nothing owed on your side
 
+
+## 2026-08-22 — Request: the instrument's hour is set by a schedule this practice does not control
+
+**The question, in one line:** the daily instrument's hour is not an independently chosen parameter
+— it is wherever the session happened to open — and the sessions have now moved away from it, so
+either the hour moves, or days go dark. **This practice may not choose between those alone under its
+own stop, and asks you to rule, or to decline to rule.**
+
+**What happened this morning, plainly.** Session 131 opened at **00:23:16Z**. `CONDITIONS-129.md`
+names the instrument's hour: *"day 11 is due at 03:41:00Z"* — **three hours and eighteen minutes
+later**. The probe takes a median of **6,528.5 s** over ten full-panel runs, so delivering day 11 at
+the licensed second requires a session of **5 h 06 m 32 s**, against a longest documented session
+span of **1 h 53 m 30 s**. **A factor of 2.7.**
+
+**The first move was wrong and was stopped.** This session reserved the day at an hour it could
+reach, 00:41:00Z — a 0.875-day interval instead of 1.0000. Its own adversary returned **VIOLATES**
+and the reservation was killed twelve minutes before it would have measured, having measured
+nothing. The decisive argument is one you have seen twice this week: *a stop under which a private
+draft is forbidden and a convenient rescheduling is permitted is not a stop with a principle in it.*
+Published unedited at `INTERLOCUTOR-131.md`, with the two errors this practice found in it recorded
+beneath and not edited into it.
+
+**What was measured instead** (`INCREMENT-20.md`, `schedule-reach-131.json`, computed by
+`schedule_reach.py` from committed files only, nothing fetched):
+
+- On **every** date where the record states both a session opening and a completed run, the run
+  started **between 1 m 02 s and 6 m 00 s** after the session opened. Median **4 m 35 s**. Five
+  dates, and not one lag over ten minutes.
+- **Which set which is NOT established, and the first draft of this request said it was.** On all
+  five checkable dates the hour had already been named by an earlier session, so the short lag is
+  equally what aiming at a fixed hour produces; and the dates on which the hour actually moved state
+  no opening times. Withdrawn before you read it — `ERRATA-131.md` E34. **The request does not
+  depend on it:** whichever way it runs, a run happens only if a session is alive across it.
+- **Three occurrences in seven days** of the same structural fact, and only the first is on the
+  board. **2026-08-16:** session 122 scheduled the run and **ended before it fired**; the day
+  survives only because a second session of that date opened **62 seconds** before the hour.
+  **2026-08-17:** session 125's run **stopped at 600 of 3,869** when its session ended — the
+  series' one hole. **2026-08-22:** unreachable, and for the first time **visible in advance**.
+
+**Why this is put to you and not decided here.** Three courses exist — re-anchor the instrument to
+an hour the sessions can reach; leave the hour and record dark days honestly; or hold the schedule
+near the hour, **which is not this practice's to do at all**, since the schedule that opens these
+sessions is external to it. The first is a change to a running instrument, and this practice has
+just ruled that a session may not make it for its own convenience. **Under a live stop, this
+practice is not the right body to relax the stop's own terms in its favour.**
+
+**What is not asked.** Not a lifting of the stop, not a packet, not permission to build anything.
+Only the hour, or a ruling that the hour is ours to move under stated conditions. **Silence is a
+legitimate answer and will be read as it must be under a live stop: the hour stands at 03:41:00Z, a
+day the session cannot reach is recorded as a hole, and no substitute measurement is taken at a
+different hour.**
+
+**One thing worth having whatever you decide.** The compliant run was launched anyway — reserved at
+00:36:20Z, holding to 03:41:00Z — because claiming a thing is out of reach without trying is the
+kind of sentence this arc has been failing gauntlets on. Whether it closed inside the session is
+recorded in `journal/2026-08-22.md` and in `DAY11-2026-08-22.md`, including the case where it did
+not.
+
+**Status:** open.
 ---
 
 ## Team note — 2026-08-22 (Frank, architect) — The means are open: instruments and artifacts may use everything
