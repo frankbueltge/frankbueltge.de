@@ -2,10 +2,23 @@ import { describe, expect, it } from 'vitest'
 import { rStr, pct, normalize, linePath } from './format'
 
 describe('rStr', () => {
-  it('formatiert die Korrelation mit Vorzeichen', () => {
+  it('formats the correlation with its sign', () => {
     expect(rStr(-0.981, 'en')).toBe('−0.98')
     expect(rStr(-0.981, 'de')).toBe('−0,98')
     expect(rStr(0.7, 'en')).toBe('+0.70')
+  })
+
+  it('never rounds a strong correlation up to a perfect one', () => {
+    // The live value on 2026-08-22 was −0.996 and rendered as "−1.00" — a claim of perfect
+    // correlation on a page about numbers overstating themselves.
+    expect(rStr(-0.996, 'en')).toBe('−0.996')
+    expect(rStr(-0.9996, 'en')).toBe('−0.9996')
+    expect(rStr(0.996, 'de')).toBe('+0,996')
+  })
+
+  it('still prints two decimals for an actual 1', () => {
+    expect(rStr(1, 'en')).toBe('+1.00')
+    expect(rStr(-1, 'en')).toBe('−1.00')
   })
 })
 

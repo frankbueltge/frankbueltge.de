@@ -89,7 +89,7 @@ export const ui = {
     'lab.onlyLang': 'Dieser Beitrag liegt aktuell nur auf Englisch vor.',
 
     'prot.title': 'Protocol',
-    'prot.sub': 'Tägliche Kennzahlen aus zwölf offenen Quellen, jede Nacht neu.',
+    'prot.sub': 'Tägliche Kennzahlen, jede aus ihrer eigenen offenen Quelle, jede Nacht neu.',
     'prot.archive': 'Archiv',
     'prot.method': 'Methodenblatt',
     'prot.empty': 'Das erste Protokoll folgt mit dem nächsten nächtlichen Lauf.',
@@ -219,7 +219,7 @@ export const ui = {
     'lab.onlyLang': 'This post is currently only available in German.',
 
     'prot.title': 'Protocol',
-    'prot.sub': 'Daily figures from twelve open sources, refreshed each night.',
+    'prot.sub': 'Daily figures, each from its own open source, refreshed each night.',
     'prot.archive': 'Archive',
     'prot.method': 'Method sheet',
     'prot.empty': 'The first minutes will follow with the next nightly run.',

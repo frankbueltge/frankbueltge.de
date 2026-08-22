@@ -3,7 +3,7 @@
 The Pattern — Gegenmessung IV (Capstone).
 
 Richtet die Linse auf die Datenwissenschaft selbst. Die Maschine durchwühlt täglich alle
-Zeitreihen des eigenen Protokoll-Archivs (zwölf offene Quellen), hebt die auffälligste
+Zeitreihen des eigenen Protokoll-Archivs, hebt die auffälligste
 Korrelation — und beweist dann mit einem Permutationstest, dass dieser „Fund" mit
 überwältigender Wahrscheinlichkeit reines Rauschen ist.
 
@@ -136,9 +136,9 @@ def main() -> int:
             "b_series": [round(series[b][d], 4) for d in days],
         },
         "source": {
-            "name": "Eigenes Protokoll-Archiv (zwölf offene Tagesquellen)",
+            "name": "The house's own Protocol archive",
             "url": "https://github.com/frankbueltge/frankbueltge.de/tree/main/src/content/protokoll",
-            "license": "siehe Quellen des Protokolls",
+            "license": "see the Protocol's own sources",
             "retrieved": now.strftime("%Y-%m-%d"),
         },
     }
