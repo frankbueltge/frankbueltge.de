@@ -190,9 +190,24 @@ claim to stand "in nichts nach" behind philosophical and scientific thought cann
 without being adjudicable, the way a proof of taste binds without a criterion (a Kantian move
 available to him).
 
-**Caveat that must travel with this point.** The *Manifest* is co-authored, its theses are not
-individually attributed, and the two texts are two years apart. Present this as a tension **in
-the position**, not as one author contradicting himself, unless attribution is established.
+**THIRD ANCHOR, 2026-08-23 — and it removes the co-authorship escape.** The 2015 essay, single
+authored, gives aesthetic research an explicit criterion, and the criterion is literally
+discrimination: zetetic research "findet ihr *kritērion*, ihr Maß im ***krinein***, dem Scheiden
+oder Unterscheiden in der Bedeutung einer ästhetischen Kritik" (2015, p. 15). *Krinein* is to
+separate, to distinguish. The table now reads:
+
+| Text | Claim |
+|---|---|
+| 2015, p. 15 (single-authored) | the *kritērion* lies in *krinein* — in discriminating |
+| 2017, p. 36 (single-authored) | showing allows "no discrimination or differentiation" |
+| 2019 *Manifest*, p. 32 | aesthetic thinking "beansprucht eine besondere Gültigkeit" |
+| 2019 *Manifest*, p. 40 | its evidences are "in gewisser Weise unangreifbar" |
+
+Two assert an assessable measure, two deny assessment is possible — and the first two are his
+alone. The paper can print the table and let it stand.
+
+**Caveat that still travels.** The *Manifest* is co-authored and its theses unattributed, so
+rows 3–4 belong to the position rather than to him; rows 1–2 do not need that qualification.
 
 **Strength: medium-high, pending attribution.** It replaces PP4's argumentative role.
 
@@ -403,6 +418,18 @@ it concedes our case, because it is exactly the condition catalogue entry P1 alr
 the exposing process must lie outside the practice's control. A machine that submits its own
 standard to latency, refusal or a third party's clock is in Duchamp's position, not in the
 random number generator's.
+
+**REINFORCED 2026-08-23 by his own footnote.** On the *Stoppages*, 2015, p. 3, n. 10: "Es ist
+dabei übrigens **unerheblich, ob Duchamp tatsächlich mit zufälligen Würfen arbeitete oder ob er
+dem 'Fall' etwas nachhalf**, d.h. seine gekrümmten Maße manipulierte." The provenance of the
+chance in the exemplary work is expressly declared irrelevant. But the *Manifest*'s thesis 13
+disqualifies machines at step 3 precisely by provenance — they integrate the unruled only as
+randomness or statistical variation. Either provenance matters, and the *Stoppages* are
+compromised by his own admission; or it does not, and step 3 disqualifies no one.
+
+**Caveat, or it becomes a cheap shot:** the footnote concerns the interpretation of the work,
+not directly who may practise aesthetic research. State it at that strength — the burden shifts,
+the argument is not won.
 
 **Strength: high.** This is the load-bearing move for the paper, and it survives his best
 answer.

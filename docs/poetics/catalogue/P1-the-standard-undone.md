@@ -14,6 +14,13 @@
    beside the original they were calibrated against.
 5. **Keep the series small, finite and unrepeated.** Duchamp dropped three threads and never
    dropped a fourth to improve the result.
+6. **Stage the apparatus, not only the result** — added 2026-08-23 from Mersch 2015, pp. 7–8.
+   The calibration, the exact settings, the meticulous recording and archiving and publication
+   are not the work's backstage; they are its material. They must be overdone until "dessen
+   instituierendes Pathos … zur Karikatur gerät". A standard exposed with a discreet apparatus
+   is a demonstration; a standard exposed with its whole instituting pathos on show is the
+   work. The operation is auto-referential: an experiment about experimenting, which "weist auf
+   uns selbst zurück" rather than at a fact outside us.
 
 ## Provenance
 
@@ -24,7 +31,13 @@ measurement. Mersch, *Kritik der Kunstphilosophie* (2012), pp. 14–15: "Die Ind
 des Resultats diskreditiert das metrische System als Willkür", and the practice conducts
 itself as "ein Stück Wissenschaftskritik, die sich dezidiert ästhetischer Verfahren bedient,
 nicht nur, um deren Methodologie auf den Prüfstand zu stellen, sondern um sie zu unterlaufen".
-Lineage: Jarry's 'pataphysics, the science of the exception (ibid., p. 15).
+Lineage: Jarry's 'pataphysics, the science of the exception (ibid., p. 15). And Mersch, *Was
+heißt, im Ästhetischen forschen?* (2015), pp. 7–8, where the same work is read as a
+**meta-experiment**: Duchamp "inszenierte das Penible jeder Versuchsanordnung, die Genauigkeit
+des Settings … wie gleichermaßen die säuberliche Aufzeichnung, Archivierung und Veröffentlichung
+der Wurfresultate" — an inventory of this house's own apparatus, read as the artistic move.
+Note also 2015, p. 3, n. 10: whether the falls were genuinely chance or helped along is
+"unerheblich" — the work does not rest on the purity of its randomness.
 
 ## Machine translation
 
@@ -62,6 +75,8 @@ the measuring, **without a wall text**. (Criterion 4 of T1.01: showing, not sayi
   series (v3 Move 2.6: flawless execution proves nothing).
 - **Harmless target.** If undoing the standard costs the practice no authority, nothing was
   wagered.
+- **Discreet apparatus.** If the calibration and the record-keeping stay backstage, step 6 was
+  skipped and the piece is a demonstration of variance with good provenance.
 - **Instrument creep.** If the result is then used as a measurement of the world, the work has
   turned back into an instrument and inherits the instrument's obligations instead of the
   work bar.
