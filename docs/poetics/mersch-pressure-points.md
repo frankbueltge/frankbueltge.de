@@ -280,10 +280,43 @@ It also cuts at the 2017 anthropological condition: the *Manifest* decentres the
 abhängig davon, was die … Künstler denken") where the essay re-centres it ("transform his or her
 being-in-the-world").
 
-**Their reply.** That "jede Praxis" ranges over human practices, the practitioner being presumed
-throughout — a reading the text permits but does not state.
+**UPGRADED 2026-08-23, on finishing the *Manifest*.** This is no longer a tension between two
+theses. The closing section states, as a methodological requirement (p. 61), that the actor
+question is *out of scope*:
 
-**Strength: high, and it is the cleanest opening the corpus offers.**
+> "Es geht nicht darum, welche Arten von Objekten oder Performanzen die Kunst heute definieren,
+> welche Räume sie besetzt oder **wer an ihr zu partizipieren vermag**. Sondern es geht darum,
+> **wie Figuren oder Verfahren aussehen können** …"
+
+and, same page: "Vielmehr kommt man einem Kern ästhetischen Denkens erst dann näher, wenn man
+**die Frage nach der Kunst und ihrem auktorialen Gestus wie nach den jeweiligen Akteuren
+aussetzt**."
+
+And p. 62 adds the blunter one: "**Man kann folglich auch nicht festlegen, was das ästhetische
+Denken ist** … Man kann nur **von Fall zu Fall** entscheiden." Thesis 13 *is* such a
+determination, fixed in advance for a whole class — stated ten pages earlier than the sentence
+that declares such determinations impossible.
+
+**Their reply.** That "jede Praxis" ranges over human practices, the practitioner presumed
+throughout — a reading the text permits but nowhere states, and which the p. 61 suspension of the
+actor question makes harder rather than easier.
+
+**Strength: highest in the corpus. This is the spine.** The claim is not that they are wrong
+about machines; it is that the exclusion is unsupported by the position it appears in, and that
+what a machine practice may ask for is precisely what the book prescribes — a case-by-case
+decision on the *how*: radicality of stake, what is brought to appearance, how the practice
+thematises itself.
+
+## PP14 — Self-criticism as a criterion a machine practice can meet demonstrably
+
+Not an objection; a criterion worth accepting. Thesis 14 (p. 60) makes aesthetic thinking "eine
+anhaltende Praxis der Selbstkritik", and p. 61 calls it "eine **ununterbrochene Kette der
+Selbstkritik**"; thesis 15 (p. 63) adds doubt as "ein Produktionsprinzip".
+
+A dated, committed record of a practice's own corrections, retractions and failures is an
+unbroken chain of self-criticism in the most literal sense available to anyone — including the
+retractions logged in this very document. Where thesis 13 doubts a machine can reflect on its own
+limits, this criterion is the place to answer with evidence rather than argument.
 
 ## H1 — novelty retracted
 
@@ -435,10 +468,11 @@ restriction, and a machine practice is the case that makes both visible.**
 
 1. Acquire and read *Epistemologies of Aesthetics* (Diaphanes 2015). Every citation above
    must be re-anchored there or in another published venue.
-2. ~~Read the *Manifest*~~ — **done for pp. 1–35, theses 1–8** (`readings/T1-04`, `T1-05`).
-   It refuted PP1's institutional half, then qualified PP4 down to a remark, and supplied PP9,
-   PP10 and PP11. Pages 36–64 remain: do not cite the *Manifest* as a whole until they are read.
-   **Establish whether its theses are individually attributed** — PP9 depends on it.
+2. ~~Read the *Manifest*~~ — **done in full 2026-08-23, 15 theses, pp. 1–64**
+   (`readings/T1-04` … `T1-07`). It may now be cited as a whole. It refuted PP1's institutional
+   half, qualified PP4 to a remark, resolved PP10 against us, and supplied PP9, PP11, PP12, PP13
+   and PP14. **Use the English version for an English paper** — the colophon records one.
+   **Still open: whether its theses are individually attributed** — PP9 depends on it.
 3. Read *Was heißt, im Ästhetischen forschen* (2015) and *Aesthetic Difference* in full.
 4. Retrieve the two blocked critical texts (between-science-and-art; the PhilArchive paper
    "Thinking Otherwise: Art as Epistemic Practice in Dieter Mersch") and Busch's *Artistic
