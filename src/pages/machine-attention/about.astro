@@ -32,6 +32,12 @@ const asOf = figures[0]?.as_of
 const STATUS_WORDS: Record<string, string> = {
   running: 'running',
   'e-experiment': 'in its acceptance experiment',
+  // 2026-08-22: an acceptance experiment can end without a stage. `instrument`
+  // is what Dark Ocean became when its own criteria said the measurement holds
+  // and the form does not; `v0` is a project that runs nightly but has not
+  // entered its window yet.
+  instrument: 'a running instrument',
+  v0: 'at v0, before its window',
 }
 
 /** Where an experiment can be read today. A null route is the admission path's
@@ -42,16 +48,22 @@ const STATUS_WORDS: Record<string, string> = {
 const PROJECT_NOTE: Record<string, string> = {
   foreknown: 'The flagship: the stage, a dossier per warning, the full ledger, and a level where the claims meet the preserved bytes.',
   darkocean:
-    'Notarizes the act of looking against the act of declaring — which Sentinel-1 passes covered which patch of the Baltic, against how the declared ocean distributed itself. No public stage until it passes; that is the rule, not an oversight.',
+    'Notarizes the act of looking against the act of declaring — which Sentinel-1 passes covered which patch of the Baltic, against how the declared ocean distributed itself. Its acceptance experiment did not pass, reviewed 2026-08-22: two nights were lost to a deadlock in the practice’s own machinery, which put the sample-hour criterion out of reach, and the per-moment declared source never answered in 13 nights. What runs on is narrower than the project was — the nightly notary that asks a public archive whether it still says what it said.',
+  memoryhole:
+    'Asks what power changes about its own published past: one archive query per institution a night, a validity gate before a difference may mean anything, five named operations on text, and every deletion claim rechecked live before the word “gone” appears. Its criteria were committed 2026-08-22; three build conditions stand between it and night 1.',
   'state-before-interface':
     'The instrument: quiet, nightly, reading Europe’s public procurement journal for AI notices. It may produce nothing for a long time, and that is allowed.',
 }
 
+// Memory Hole left this shelf on 2026-08-15 and the shelf was not told until
+// 2026-08-22 — it is a project in the export now. The three that remain each
+// stand on one named blocker, re-read 2026-08-22: one has fallen (Planetary
+// Listening, by a pattern the practice built for a different project), two
+// have not.
 const CANDIDATES = [
-  { name: 'Memory Hole', origin: 'Editorial Deadline', line: 'what power changes about its own published past' },
-  { name: 'The Synthetic Flood', origin: 'Consensus', line: 'how much of public language is written by machines' },
-  { name: 'Planetary Listening', origin: '—', line: 'the human signature separated from the planet’s own noise' },
-  { name: 'Compute Ground', origin: 'Two Meters · The Floor · One Tap', line: 'the physical ground under the compute story' },
+  { name: 'Planetary Listening', origin: '—', line: 'the human signature separated from the planet’s own noise', standing: 'recommended for audit — its storage blocker fell' },
+  { name: 'The Synthetic Flood', origin: 'Consensus', line: 'how much of public language is written by machines', standing: 'parked on a verified negative' },
+  { name: 'Compute Ground', origin: 'Two Meters · The Floor · One Tap', line: 'the physical ground under the compute story', standing: 'parked until a form thesis exists, not until more data appears' },
 ]
 
 // The epistemic split of the register (stage honesty, 2026-08-09): only a
@@ -134,11 +146,21 @@ const drift = figure('futures_drift')
             <p class="mt-2 font-mono text-[11px] text-fg-faint">
               {p.site_route
                 ? <>Public at <a href={p.site_route} class="underline hover:text-fg">{p.site_route}</a></>
-                : <>Public only in <a href={REPO} class="underline hover:text-fg">the practice’s repository</a> — by rule, until it passes</>}
+                : <>Public only in <a href={REPO} class="underline hover:text-fg">the practice’s repository</a>{p.status === 'instrument' ? ' — and now by rule, permanently' : ' — by rule, until it passes'}</>}
             </p>
           </li>
         ))}
       </ul>
+
+      {figure('darkocean_continuity_rechecks') && (
+        <p class="mt-5 font-mono text-xs leading-relaxed text-fg-faint">
+          Dark Ocean&rsquo;s notary, since its acceptance experiment closed without a stage:
+          {' '}{figure('darkocean_continuity_rechecks')?.value.toLocaleString('en-US')} catalog rows
+          re-asked over {figure('darkocean_nights_on_record')?.value} nights,
+          {' '}{figure('darkocean_continuity_divergences')?.value} divergences. The archive has not
+          yet changed its mind — which is the finding, not the absence of one.
+        </p>
+      )}
 
       {underWatch && windowOpen && coldStart && (
         <p class="mt-5 font-mono text-xs leading-relaxed text-fg-faint">
@@ -195,13 +217,15 @@ const drift = figure('futures_drift')
       <p class="mb-4">
         Candidates with a written exposé, ordered by which blocker clears first rather than by
         preference. Each grows out of an earlier experiment of the lab, which keeps running
-        unchanged under its own address:
+        unchanged under its own address. Re-read on 2026-08-22, two weeks after the exposés were
+        written: a blocker can clear without anyone noticing, and one had —
       </p>
       <ul class="space-y-2">
         {CANDIDATES.map((c) => (
           <li>
             <b class="text-fg">{c.name}</b> — {c.line}
             <span class="text-fg-faint"> · origin: {c.origin}</span>
+            <span class="block font-mono text-[11px] text-fg-faint">{c.standing}</span>
           </li>
         ))}
       </ul>

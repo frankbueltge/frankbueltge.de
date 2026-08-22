@@ -12,7 +12,7 @@
       },
       {
         "file": "docs/decision-log.md",
-        "sha256": "a9145c60226a5ce4"
+        "sha256": "a6e334d00f21d0c6"
       },
       {
         "file": "src/data/post/ledger.json",
@@ -53,18 +53,18 @@
       },
       {
         "file": "src/data/attention/export.json",
-        "sha256": "1a61a30c31fa49c7"
+        "sha256": "42a3645e33ea33ad"
       }
     ],
     "counts": {
-      "nodes": 285,
-      "edges": 250,
+      "nodes": 287,
+      "edges": 252,
       "nodesByKind": {
-        "decision": 66,
+        "decision": 67,
         "encounter": 6,
         "neighbor": 93,
         "practice": 9,
-        "practice-work": 82,
+        "practice-work": 83,
         "receiver": 7,
         "work": 22
       },
@@ -72,10 +72,10 @@
         "addresses": 7,
         "concerns": 2,
         "door": 5,
-        "made-by": 82,
+        "made-by": 83,
         "neighbor-of": 93,
         "participates": 17,
-        "touches": 44
+        "touches": 45
       }
     }
   },
@@ -723,6 +723,16 @@
     {
       "id": "decision:2026-08-22-1",
       "kind": "decision",
+      "label": "Machine Attention: zwei Abnahme-Fenster abgerechnet, die vierte Linie sichtbar gemacht",
+      "date": "2026-08-22",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "Machine Attention: zwei Abnahme-Fenster abgerechnet, die vierte Linie sichtbar gemacht"
+      }
+    },
+    {
+      "id": "decision:2026-08-22-2",
+      "kind": "decision",
       "label": "Das Regal wird überschaubar — und dreizehn Beschreibungen stimmten nicht mehr",
       "date": "2026-08-22",
       "source": {
@@ -731,7 +741,7 @@
       }
     },
     {
-      "id": "decision:2026-08-22-2",
+      "id": "decision:2026-08-22-3",
       "kind": "decision",
       "label": "Das Lab bekommt Kategorien, und die zwei Praxen daneben ihren Platz",
       "date": "2026-08-22",
@@ -1806,6 +1816,11 @@
           "asOf": "2026-08-22"
         },
         {
+          "key": "futures_resolved_under_watch",
+          "value": 2,
+          "asOf": "2026-08-22"
+        },
+        {
           "key": "materialized",
           "value": 0,
           "asOf": "2026-08-22"
@@ -1818,6 +1833,21 @@
         {
           "key": "darkocean_nights_on_record",
           "value": 13,
+          "asOf": "2026-08-21"
+        },
+        {
+          "key": "darkocean_continuity_rechecks",
+          "value": 3571,
+          "asOf": "2026-08-21"
+        },
+        {
+          "key": "darkocean_continuity_divergences",
+          "value": 0,
+          "asOf": "2026-08-21"
+        },
+        {
+          "key": "memoryhole_nights_on_record",
+          "value": 8,
           "asOf": "2026-08-21"
         }
       ]
@@ -3017,6 +3047,19 @@
       "source": {
         "file": "src/data/attention/export.json",
         "quote": "\"id\": \"darkocean\""
+      }
+    },
+    {
+      "id": "practice-work:machine-attention/memoryhole",
+      "kind": "practice-work",
+      "label": "Memory Hole",
+      "slug": "memoryhole",
+      "practiceId": "machine-attention",
+      "date": "2026-08-15",
+      "href": "",
+      "source": {
+        "file": "src/data/attention/export.json",
+        "quote": "\"id\": \"memoryhole\""
       }
     },
     {
@@ -4436,10 +4479,20 @@
       "kind": "made-by",
       "from": "practice-work:machine-attention/darkocean",
       "to": "practice:machine-attention",
-      "state": "e-experiment",
+      "state": "instrument",
       "source": {
         "file": "src/data/attention/export.json",
         "quote": "\"id\": \"darkocean\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:machine-attention/memoryhole",
+      "to": "practice:machine-attention",
+      "state": "v0",
+      "source": {
+        "file": "src/data/attention/export.json",
+        "quote": "\"id\": \"memoryhole\""
       }
     },
     {
@@ -6083,6 +6136,15 @@
       "source": {
         "file": "docs/decision-log.md",
         "quote": "src/lib/atelier/refrain.ts"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-08-22-1",
+      "to": "work:attention",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "src/pages/machine-attention/about.astro"
       }
     }
   ]
