@@ -1,7 +1,7 @@
 ---
-// Werk „Spielraum" (EN: „Headroom") — Gegenmessung-Linie. PUE hat einen physikalischen
-// Boden bei 1,0; vier Hyperscaler legen unterschiedlich tief offen, wie nah sie ihm sind
-// und ob ihr Verbrauchswachstum die Kennzahl überhaupt hätte halten können.
+// Work "Spielraum" (EN: "Headroom") — counter-measurement line. PUE has a physical floor
+// at 1.0; four hyperscalers disclose to different depths how close they are to it, and
+// whether their consumption growth could have held the metric at all.
 import { getRelativeLocaleUrl } from 'astro:i18n'
 import { t } from '@/i18n/ui'
 import type { Locale } from '@/lib/site'
@@ -17,8 +17,8 @@ const { locale } = Astro.props
 const de = locale === 'de'
 const localeTag = de ? 'de-DE' : 'en-GB'
 
-// JSON-Import wird von TS strukturell zu eng inferiert — Cast über unknown ist hier der
-// korrekte Weg (Muster: praemie/police.json, spielraum/compute.test.ts).
+// TS infers the JSON import too narrowly structurally — casting through unknown is the
+// correct route here (pattern: praemie/police.json, spielraum/compute.test.ts).
 const reg = registerJson as unknown as SpielraumRegister
 
 interface WatchSourceState {
@@ -55,39 +55,48 @@ function firstSentence(s: string): string {
   return idx === -1 ? s : s.slice(0, idx + 1)
 }
 
-// Lange Zitate in der Tabelle kürzen — der volle Wortlaut bleibt per title-Attribut
-// und über den Quell-Link zugänglich; das Register führt ihn ungekürzt.
+// Shorten long quotes in the table — the full wording stays reachable via the title
+// attribute and the source link; the register carries it unabridged.
 function shortQuote(s: string, max = 160): string {
   return s.length <= max ? s : s.slice(0, max - 1).trimEnd() + '…'
 }
 
-// --- Kopf & Lede ------------------------------------------------------------------
+// --- Head & lede ------------------------------------------------------------------
+// Never a named year: showcase, caption and lede all read the NEWEST period the register
+// carries, so the next disclosure moves the page by itself. A sentence that hard-codes
+// which round it describes starts lying the first night the register grows.
 const google = reg.companies.google
 const googleRounds = buildRounds(google, reg.floor)
-const google2024Round = googleRounds.find((r) => r.period === '2024') ?? null
-const showcaseValue = google2024Round ? fmtRatio(google2024Round.requiredPue, locale) : '—'
+const googleLatestRound = googleRounds.length > 0 ? googleRounds[googleRounds.length - 1] : null
+const showcasePeriod = googleLatestRound?.period ?? null
+const showcaseValue = googleLatestRound ? fmtRatio(googleLatestRound.requiredPue, locale) : '—'
+const showcaseLabel = de
+  ? `Erforderlicher Breakeven-PUE — Google${showcasePeriod ? ` ${showcasePeriod}` : ''}`
+  : `Required breakeven PUE — Google${showcasePeriod ? ` ${showcasePeriod}` : ''}`
 const showcaseCaption = de
-  ? 'Der PUE, den Google 2024 gebraucht hätte, um sein Verbrauchswachstum auszugleichen. Die Skala endet bei 1,00 — darunter ist physikalisch unmöglich.'
-  : 'The PUE Google would have needed in 2024 to offset its consumption growth. The scale ends at 1.00 — below that is physically impossible.'
+  ? `Der PUE, den Google ${showcasePeriod ?? 'zuletzt'} gebraucht hätte, um sein Verbrauchswachstum auszugleichen. Die Skala endet bei ${fmtRatio(reg.floor, locale)} — darunter ist physikalisch unmöglich.`
+  : `The PUE Google would have needed in ${showcasePeriod ?? 'the latest disclosed period'} to offset its consumption growth. The scale ends at ${fmtRatio(reg.floor, locale)} — below that is physically impossible.`
 
-const googlePue2024 = google.pue.series.find((e) => e.period === '2024') ?? null
-const googleHeadroom = googlePue2024 ? headroomPct(googlePue2024.figure) : null
-const googleGrowth2024 =
-  hasDisclosure(google.consumption) && google.consumption.form === 'growth_pct'
-    ? (google.consumption.growth_pct.find((g) => g.period === '2024') ?? null)
-    : null
+// Headroom from the newest reported PUE (headroomPct stays the only place that formula
+// lives); growth from the newest round, which also carries the register's own scope
+// wording. The scope travels WITH the figure: the 2026 report states its growth for
+// "total electricity", broader than the 2025 report's "total data center electricity"
+// (Google caveat 3), so a bare percentage would silently compare two different scopes.
+const googleLatestPue = latestPue(google)
+const googleHeadroom = googleLatestPue ? headroomPct(googleLatestPue.figure) : null
+const ledeScope = googleLatestRound ? (de ? googleLatestRound.scopeDe : googleLatestRound.scopeEn) : undefined
 
 const pueExplainer = firstSentence(de ? reg.floor_note_de : reg.floor_note_en)
 const ledeFloor = de ? `Der Boden liegt bei ${fmtRatio(reg.floor, locale)}.` : `The floor sits at ${fmtRatio(reg.floor, locale)}.`
 const ledeNumbers =
-  googleHeadroom !== null && googleGrowth2024
+  googleHeadroom !== null && googleLatestRound
     ? de
-      ? `Googles Flotte behält für immer rund ${fmtPct(googleHeadroom, locale, 0)} % Spielraum — ihr Verbrauch wuchs ${fmtPct(googleGrowth2024.value, locale, 0)} % in einem Jahr.`
-      : `Google's fleet retains about ${fmtPct(googleHeadroom, locale, 0)} % of headroom, forever — its consumption grew ${fmtPct(googleGrowth2024.value, locale, 0)} % in a single year.`
+      ? `Googles Flotte behält für immer rund ${fmtPct(googleHeadroom, locale, 0)} % Spielraum — ihr Verbrauch wuchs ${fmtPct(googleLatestRound.growthPct, locale, 0)} % in einem Jahr (${googleLatestRound.period})${ledeScope ? `, ausgewiesen für ${ledeScope}` : ''}.`
+      : `Google's fleet retains about ${fmtPct(googleHeadroom, locale, 0)} % of headroom, forever — its consumption grew ${fmtPct(googleLatestRound.growthPct, locale, 0)} % in a single year (${googleLatestRound.period})${ledeScope ? `, disclosed for ${ledeScope}` : ''}.`
     : ''
 const ledeText = [pueExplainer, ledeFloor, ledeNumbers].filter(Boolean).join(' ')
 
-// --- Chart-Geometrie (gemeinsames, fixes Domain über alle vier Panels) -------------
+// --- Chart geometry (one fixed domain shared by all four panels) -------------------
 const DOMAIN: Domain = [0.75, 1.2]
 const AXIS_Y = 66
 const ZONE_TOP = 6
@@ -218,7 +227,7 @@ function buildPanel(key: CompanyKey): Panel {
 }
 const panels = COMPANY_ORDER.map(buildPanel)
 
-// --- Zahlentabelle: jede Registerziffer eine Zeile ---------------------------------
+// --- Figures table: one row per register figure ------------------------------------
 interface PrimaryRow {
   company: string
   kind: string
@@ -337,7 +346,7 @@ for (const key of COMPANY_ORDER) {
   }
 }
 
-// --- Berichtslage (watch.json) ------------------------------------------------------
+// --- Reporting status (watch.json) --------------------------------------------------
 const watchSources = Object.values(watch.sources)
 const checkedDates = watchSources.map((s) => s.last_checked).filter((d): d is string => d !== null)
 const allUnchecked = checkedDates.length === 0
@@ -365,9 +374,7 @@ const methodLabel = de ? 'Methodenblatt' : 'Method sheet'
   </header>
 
   <section class="mb-12 print:hidden">
-    <p class="font-mono text-xs uppercase tracking-wide text-fg-faint">
-      {de ? 'Erforderlicher Breakeven-PUE — Google 2024' : 'Required breakeven PUE — Google 2024'}
-    </p>
+    <p class="font-mono text-xs uppercase tracking-wide text-fg-faint">{showcaseLabel}</p>
     <p class="py-1 text-[clamp(48px,9vw,96px)] font-bold leading-none tracking-tight tabular-nums">{showcaseValue}</p>
     <p class="max-w-prose text-sm text-fg-muted">{showcaseCaption}</p>
   </section>
@@ -580,7 +587,7 @@ const methodLabel = de ? 'Methodenblatt' : 'Method sheet'
 </main>
 
 <style>
-  /* Druckfassung: Spielraum schwarz auf weiß, Chrome ausgeblendet (Muster: PraemiePage). */
+  /* Print edition: headroom black on white, chrome hidden (pattern: PraemiePage). */
   @media print {
     .spielraum { max-width: none; padding: 0; color: #000; }
     :global(body > header), :global(body > footer) { display: none !important; }
