@@ -12,7 +12,7 @@
       },
       {
         "file": "docs/decision-log.md",
-        "sha256": "39d6d71b04f9aec7"
+        "sha256": "6b90496d8b10e029"
       },
       {
         "file": "src/data/post/ledger.json",
@@ -57,10 +57,10 @@
       }
     ],
     "counts": {
-      "nodes": 288,
-      "edges": 253,
+      "nodes": 289,
+      "edges": 254,
       "nodesByKind": {
-        "decision": 68,
+        "decision": 69,
         "encounter": 6,
         "neighbor": 93,
         "practice": 9,
@@ -75,7 +75,7 @@
         "made-by": 83,
         "neighbor-of": 93,
         "participates": 17,
-        "touches": 46
+        "touches": 47
       }
     }
   },
@@ -723,6 +723,16 @@
     {
       "id": "decision:2026-08-22-1",
       "kind": "decision",
+      "label": "The static corset was never decided — works may hold runtime state",
+      "date": "2026-08-22",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "The static corset was never decided — works may hold runtime state"
+      }
+    },
+    {
+      "id": "decision:2026-08-22-2",
+      "kind": "decision",
       "label": "Nachtrag zu #624: das Gate war gebaut, die Zeile fehlte — und was das für 50 Nächte davor heißt.",
       "date": "2026-08-22",
       "source": {
@@ -731,7 +741,7 @@
       }
     },
     {
-      "id": "decision:2026-08-22-2",
+      "id": "decision:2026-08-22-3",
       "kind": "decision",
       "label": "Machine Attention: zwei Abnahme-Fenster abgerechnet, die vierte Linie sichtbar gemacht",
       "date": "2026-08-22",
@@ -741,7 +751,7 @@
       }
     },
     {
-      "id": "decision:2026-08-22-3",
+      "id": "decision:2026-08-22-4",
       "kind": "decision",
       "label": "Das Regal wird überschaubar — und dreizehn Beschreibungen stimmten nicht mehr",
       "date": "2026-08-22",
@@ -751,7 +761,7 @@
       }
     },
     {
-      "id": "decision:2026-08-22-4",
+      "id": "decision:2026-08-22-5",
       "kind": "decision",
       "label": "Das Lab bekommt Kategorien, und die zwei Praxen daneben ihren Platz",
       "date": "2026-08-22",
@@ -6154,12 +6164,21 @@
       "to": "work:redaction",
       "source": {
         "file": "docs/decision-log.md",
-        "quote": "pipelines/redaction/src/redaction/{validity,live}.py"
+        "quote": "src/data/redaction/world/"
       }
     },
     {
       "kind": "touches",
       "from": "decision:2026-08-22-2",
+      "to": "work:redaction",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "pipelines/redaction/src/redaction/{validity,live}.py"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-08-22-3",
       "to": "work:attention",
       "source": {
         "file": "docs/decision-log.md",

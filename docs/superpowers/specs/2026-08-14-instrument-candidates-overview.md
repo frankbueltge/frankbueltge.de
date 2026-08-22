@@ -26,7 +26,7 @@ data at all** — they read more columns from files the house already fetches ni
 |---|---|---|---|---|
 | `2026-08-14-the-balance-design.md` | Self-image vs. foreign image per country, per emotion, daily | Lab, counter-measurement | Daylight (dyadic ledger unclaimed; naive tone map is taken) | **BUILT** — live at `/balance` |
 | `2026-08-14-the-unwitnessed-design.md` | Attention per casualty; the register of uncovered crises | Lab, counter-measurement | Daylight (annual NGO PDFs exist; no living instrument) | Open |
-| `2026-08-14-editorial-deadline-world-chamber.md` | The world's news deletions, with house-held receipts | **Extension of existing werk** `/redaction` | Provisional daylight — §2 search pre-registered, seals before build | **BUILT** — chamber 2 of `/redaction`; §2 sealed first; awaits `GCP_SA_KEY` |
+| `2026-08-14-editorial-deadline-world-chamber.md` | The world's news deletions, with house-held receipts | **Extension of existing werk** `/redaction` | Provisional daylight — §2 search pre-registered, seals before build | **BUILT** — chamber 2 of `/redaction`; §2 sealed first; running nightly with BigQuery traces since 2026-08-14 |
 | `2026-08-14-the-front-design.md` | Half-life of a story on 50k front pages | Lab | Provisional daylight — same condition | Open — §2 seal still owed |
 | `2026-08-14-the-invoked-past-design.md` | Which past the press summons today; memory decay under proof | Lab | **Widest verified daylight** (GDELT built the field, never the tool) | **BUILT** — live at `/invoked-past` |
 | `2026-08-14-tomorrows-names-proposal.md` | Cert birth vs. news birth: the future's head start | **Offer to Machine Attention** (sister chamber to The Foreknown) | Clearest novelty of the set | Open — handover not yet made |
@@ -41,7 +41,8 @@ Three of the ten have shipped, all from the recommended order as it originally s
 
 - **Editorial Deadline, world chamber** (was #2) — the §2 search was sealed before the
   build, as the condition required; verdict ADDED VALUE with named kill conditions. Runs
-  nightly; `GCP_SA_KEY` still outstanding.
+  nightly, with `GCP_SA_KEY` in place since the first night and a BigQuery trace in every
+  record (corrected 2026-08-22; this line said the secret was outstanding for eight days).
 - **The Balance** (was #3) — live at `/balance` with its method sheet.
 - **The Invoked Past** (was #1, 2026-08-15) — live at `/invoked-past`, and now leading
   `/experiments` by recency. Its spike had already run on 2026-08-14, so what remained was

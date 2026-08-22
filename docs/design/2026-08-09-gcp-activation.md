@@ -93,6 +93,11 @@ is the template every future BigQuery step follows.
 - Nothing changes at site runtime: pipelines commit derived JSON to git as before; the
   site never reads from BigQuery. **Git stays the archive.**
 
+  > **Annotation 2026-08-22.** This sentence is accurate as written — it is about BigQuery
+  > and about pipelines. It was later generalised into `CLAUDE.md` as "nie zur Laufzeit der
+  > Site", which was never Frank's decision and is withdrawn; the site does have a runtime
+  > and always did. See `2026-08-22-runtime-state-for-works.md` §2.
+
 ## 4. G5 — recorded conditions (no build tonight)
 
 - **Zero-cost bound:** Earth Engine use stays on the noncommercial/Community tier

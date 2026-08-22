@@ -31,7 +31,10 @@ wenn eine Pipeline, ein Archiv-JSON, ein Skript oder ein Workflow angefasst wird
 ## GCP — Bedingungen je Schritt (Frank, 2026-08-09)
 
 Batch-Schritte der Pipelines dürfen GCP-Dienste nutzen, wo sie nachweisbaren Mehrwert
-stiften — **nie zur Laufzeit der Site: Git bleibt das Archiv.** Karte & Begründung:
+stiften. **Die Archivpflicht bindet Befunde: nachrechenbar aus committeten Daten, nie
+abhängig davon, dass eine Quelle heute antwortet.** Für Laufzeit-Zustand von *Werken* gilt
+`.claude/rules/runtime-and-works.md` (Frank, 2026-08-22) — die frühere Fassung dieser Zeile
+verbot ihn, was nie beschlossen war. Karte & Begründung:
 `docs/design/2026-08-09-portfolio-audit.md` §6, Aktivierung: `2026-08-09-gcp-activation.md`.
 Bedingungen je GCP-Schritt: Trace committen (Query-Text, Job-ID, Bytes billed — zur
 Laufzeit erfassen, Job-Historie verfällt nach 180 Tagen), Lizenz-Notice der Quelle beachten
