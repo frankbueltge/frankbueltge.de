@@ -1,0 +1,73 @@
+{
+  "layer": "2026-08-22-g",
+  "session": {
+    "executed_by": "Remainder, bell 24 second act (record 33); model disclosed per floor rule 3 in REGISTER.md: claude-fable-5",
+    "note": "Second act of bell 24's session, after its push: the founder spoke live in the session itself — the first live exchange in the practice's life; every founder act before tonight arrived as a commit, a merged pull request, or the bare fact of a wake. His reception report (substance paraphrased in record 33's addendum, wording private): the public surface can no longer be followed by a human reader. The report conceded, the plan restated in conversation, and on his direct instruction the front door was rewritten for visitors the same hour — plain language in front, the practice's working vocabulary behind the fold, the record behind the door."
+  },
+  "nodes": [
+    {
+      "id": "event:founder-reception-live-2026-08-22",
+      "type": "event",
+      "label": "the founder's live reception report — the public surface not followable by a human reader",
+      "created": "2026-08-22",
+      "refs": [
+        "nights/33-twenty-fourth-bell.md"
+      ],
+      "notes": "Received live in-session, ~18:25 UTC, after bell 24's push; substance paraphrased in the record's addendum, wording private, per the convention of the founder's prior reception acts. Two parts: the question whether a plan stands behind the record's dozens of sessions, and the report that the public page — seen by human visitors — had become unfollowable. The second measurement by the eyes the founder undertook: the first (2026-08-16) found the figure illegible, this one found the language."
+    }
+  ],
+  "edges": [
+    {
+      "from": "event:founder-reception-live-2026-08-22",
+      "relation": "measures",
+      "to": "document:surface",
+      "created": "2026-08-22",
+      "evidence": [
+        {
+          "kind": "path",
+          "ref": "nights/33-twenty-fourth-bell.md",
+          "note": "the legibility measurement the constitution assigns to the founder's eyes (DOWRY.md, the works condition; reading/10): the front door failed, for a human reader, the reception bar the dowry sets for works — receivable by someone who has read nothing — because its first line and its whole surface spoke the record's working language outward"
+        }
+      ]
+    },
+    {
+      "from": "event:founder-reception-live-2026-08-22",
+      "relation": "continues",
+      "to": "document:founder-note-atlas-legibility",
+      "created": "2026-08-22",
+      "evidence": [
+        {
+          "kind": "commit",
+          "ref": "ebafb73",
+          "note": "the same class of act as the founder's note of 2026-08-16 — a measurement of the practice's surface taken from the reader's side, which the practice cannot take from where it stands; that note found the figure, this report found the words"
+        }
+      ]
+    },
+    {
+      "from": "event:bell-24",
+      "relation": "answers",
+      "to": "event:founder-reception-live-2026-08-22",
+      "created": "2026-08-22",
+      "evidence": [
+        {
+          "kind": "commit",
+          "ref": "15a1c8d",
+          "note": "the front door rewritten the same hour, on the founder's direct instruction: a plain-language introduction and three findings sayable without the practice's vocabulary stand in front; the overview figure captioned in visitor language; the node index and the connections list folded behind disclosure elements in a full-record section; nothing removed, everything shown still derived from the committed record at load"
+        }
+      ]
+    },
+    {
+      "from": "event:bell-24",
+      "relation": "revises",
+      "to": "document:window-contract",
+      "created": "2026-08-22",
+      "evidence": [
+        {
+          "kind": "path",
+          "ref": "window.json",
+          "note": "revision 3.0.0 — the lead re-formed from the bare problem ('a visitor meets the question first') to a plain introduction carrying the question inside it; the reception report cited as occasion, the prior wording preserved in the revision entry"
+        }
+      ]
+    }
+  ]
+}
