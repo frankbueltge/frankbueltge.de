@@ -156,8 +156,76 @@ available, and any positive determination would re-propositionalise what is at s
 respectable answer with a long pedigree — but it is now in tension with a demand the *Manifest*
 makes in its own voice, and that tension has to be resolved on their side, not ours.
 
-**Strength: high** (was: medium-high, before the *Manifest*). Still a pressure point rather
-than a refutation, and the paper should say so.
+**QUALIFIED AGAIN 2026-08-22, on reading theses 5–8.** A positive account *does* exist, and
+asserting otherwise would have been the second unread-source error of the day. *Manifest* p. 31,
+against Polanyi: tacit-knowledge accounts "formulieren ungewollt die Unfähigkeit der Künste zu
+ihrer eigenen Explikation mit", whereas aesthetic practice "induziert selbst schon eine
+Explikation *mit* eigenen – anderen – Mitteln und *in* eigenen – anderen – Medien" — "**das
+Ziehen einer Linie bedeutet bereits ein expliziertes Wissen, das sich *als diese Linie*
+ausstellt**". And p. 32: aesthetic thinking "**beansprucht eine besondere Gültigkeit**".
+
+So the position is not exhausted by privations. What remains of PP4 is narrower and should be
+stated narrowly: the *theoretical vocabulary* is predominantly privative even where the
+*claims* are positive, and thesis 4's own programme is three-quarters privative. That is a
+remark about exposition, not about substance.
+
+**Strength: low-to-medium** (was: high, one reading earlier). Keep it as a remark; do not build
+an argument on it. What replaces it is PP9.
+
+## PP9 — A special validity that admits no discrimination
+
+**The two claims.**
+
+- 2017, p. 36: showing "allows no true/false distinction and hence **no discrimination or
+  differentiation**".
+- *Manifest*, p. 32: aesthetic thinking "**beansprucht eine besondere Gültigkeit**, die sich
+  diskursiven Geltungsansprüchen nicht fügt, ihnen aber auch nicht unterliegt".
+
+**The objection.** A validity claim that admits no discrimination is empty; a discriminable
+validity is a discrimination. One of the two has to give, and either way PP2 gains: if validity
+is assessable, the practice needs a means of assessment it does not have; if it is not, the
+claim to stand "in nichts nach" behind philosophical and scientific thought cannot be cashed.
+
+**His reply.** That validity here means *Geltung* in a non-discursive register — binding
+without being adjudicable, the way a proof of taste binds without a criterion (a Kantian move
+available to him).
+
+**Caveat that must travel with this point.** The *Manifest* is co-authored, its theses are not
+individually attributed, and the two texts are two years apart. Present this as a tension **in
+the position**, not as one author contradicting himself, unless attribution is established.
+
+**Strength: medium-high, pending attribution.** It replaces PP4's argumentative role.
+
+## PP10 — "Das Un-Rechenbare": the objection to face, not to route around
+
+*Manifest*, p. 35: the aesthetic unfolds its immanent potential only where it "sich für das
+Unberechenbare oder »**Un-Rechenbare**« freisetzt", and "Forschung im Ästhetischen [bedeutet]
+immer eine **Spontaneität**".
+
+This is the strongest anti-machine formulation in the corpus, and it is a positive requirement
+rather than a privation, so PP4-style answers do not touch it. Two readings, and the paper must
+choose in the open:
+
+- **Weak**: not calculable *in advance*, not the execution of an anticipated target. A practice
+  that exposes itself to what it does not control satisfies this (P1's condition; the Duchamp
+  dilemma of PP6).
+- **Strong**: un-computable as such, in which case a computational practice is excluded by
+  definition, and the paper must argue against the premise rather than around it.
+
+No version of the paper may omit this sentence.
+
+## PP11 — The invitation: thesis 7 asks for the revision we need
+
+Not an objection. *Manifest* thesis 7 (p. 32) demands "eine **Revision der überlieferten
+Kategorien** zur Beschreibung von Kunst – insbesondere der **subjektiven Autorzentriertheit**,
+des Anschlusses an philosophische Wahrheit sowie der Festlegung auf **Inspiration, Kreativität,
+Originalität und Imagination**."
+
+That is the exact inventory on which a machine practice is refused, declared due for revision
+by the position itself. The paper's strongest posture follows from it: the practice is not an
+objection to Mersch but **the sharpest available test case for a revision he demands** — which
+is also the only posture in which the anthropological restriction of PP5 can be discussed
+without appearing to special-plead.
 
 ## PP5 — The anthropological restriction is asserted, not argued *(the point that decides the machine question)*
 
@@ -283,9 +351,10 @@ restriction, and a machine practice is the case that makes both visible.**
 
 1. Acquire and read *Epistemologies of Aesthetics* (Diaphanes 2015). Every citation above
    must be re-anchored there or in another published venue.
-2. ~~Read the *Manifest*~~ — **done in part 2026-08-22 (pp. 1–18, theses 1–4;** see
-   `readings/T1-04`). It refuted PP1's institutional half and strengthened PP4. Pages 19–64
-   remain: do not cite the *Manifest* as a whole until they are read.
+2. ~~Read the *Manifest*~~ — **done for pp. 1–35, theses 1–8** (`readings/T1-04`, `T1-05`).
+   It refuted PP1's institutional half, then qualified PP4 down to a remark, and supplied PP9,
+   PP10 and PP11. Pages 36–64 remain: do not cite the *Manifest* as a whole until they are read.
+   **Establish whether its theses are individually attributed** — PP9 depends on it.
 3. Read *Was heißt, im Ästhetischen forschen* (2015) and *Aesthetic Difference* in full.
 4. Retrieve the two blocked critical texts (between-science-and-art; the PhilArchive paper
    "Thinking Otherwise: Art as Epistemic Practice in Dieter Mersch") and Busch's *Artistic
