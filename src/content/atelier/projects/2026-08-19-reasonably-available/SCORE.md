@@ -24,107 +24,108 @@ publication_approved_at:
 
 **Concrete object.** 1 CFR 51.1(a), quoting 5 U.S.C. 552(a): material outside the Federal
 Register binds you when *"reasonably available to the class of persons affected thereby."*
-Against it stand six closed censuses of the 290 CFR sections headed *Incorporation by reference*.
+Against it, six closed censuses of the 290 CFR *Incorporation by reference* sections.
 
-**Provenance.** Seven files committed by those studies, read by sha256 in `build_route.py`.
-*Said six until 2026-08-21, as did the page; it now counts its own sources.* Nothing else fetched
-at build but 1 CFR 51.
+**Provenance.** Eight files read by sha256 in `build_route.py`: seven from those studies, and
+since 2026-08-22 this project's reading of 1 CFR part 51. Nothing else fetched.
 
 **Rights.** US federal regulation, public domain. No incorporated document reproduced, no host
 contacted or accused. Affected publics: none.
 
 ## 2. Problem construction
 
-**Initial question. Can six censuses of the same corpus be put in a form where a visitor
-performs the law's instruction rather than reads a table of it?** They produced no artefact;
-2026-08-18's close said so. *Form repaired 2026-08-20.*
+**Initial question**
 
-**Non-fit.** A clause table states a rate; it cannot make a reader follow an address and be turned
-away, which is what the corpus is about.
+**Can six censuses of the same corpus be put in a form where a visitor performs the law's
+instruction rather than reads a table of it?** They produced no artefact; 2026-08-18 said so.
 
-**To be stabilised.** Every figure derived in front of the visitor, never restated from prose.
+*Label on its own line — the house's build gate reads the question from here; journal
+`2026-08-22`.*
 
-## 3. Research position
-
-Link-rot literature (Perma: 50 % / 70 %), the paywall critique and the archive-coverage
-literature are named in the closed studies' scores; none is contradicted. This claims nothing new
-about rot. It claims a form.
+**Non-fit.** A clause table states a rate; it cannot make a reader follow an address and be
+turned away. **To stabilise:** every figure derived in front of the visitor.
 
 ## 3a. Prior art and daylight
 
-**(a) Claim.** That the condition US law attaches to incorporation by reference — *reasonably
-available* — can be handed to a stranger as an operation performed 306 times against the law's
-printed addresses, and that performing it differs from reading the rate.
+**(a) Claim.** That *reasonably available* can be handed to a stranger as an operation performed
+306 times against the law's printed addresses, and that performing it differs from reading the
+rate. Nothing new is claimed about rot; what is claimed is a form.
 
-**(b) Nearest neighbours.** Searched 2026-08-19: house atlas (505 works), open web, the six
-closed studies.
+**(b) Nearest neighbours.** Searched 2026-08-19 — house atlas, open web, the closed studies.
 
 - [Check the Fine Print (AFP Foundation)](https://americansforprosperityfoundation.org/essay/check-the-fine-print-the-hidden-cost-of-reading-regulations/)
-  — closest in subject: 5,689 standards, ~40 % paywalled. Measures **price**, not **route**.
-- [Perma / Zittrain, Albert, Lessig](https://harvardlawreview.org/forum/vol-127/perma-scoping-and-addressing-the-problem-of-link-and-reference-rot-in-legal-citations/)
-  — canonical rot measurement in law, over journal citation rather than operative regulation.
+  — 5,689 standards, ~40 % paywalled: **price**, not **route**.
+- [Perma / Zittrain, Albert & Lessig, 127 Harv. L. Rev. F. 176 (2014)](https://hls.harvard.edu/bibliography/perma-scoping-and-addressing-the-problem-of-link-and-reference-rot-in-legal-citations)
+  — the canonical rot measurement in law, over citation rather than operative regulation.
+  *Address changed 2026-08-22: the one cited here since 2026-08-19 now answers 403.*
 - [Voluspa Jarpa, *Biblioteca de la No-Historia*](https://www.voluspajarpa.com/en/artwork/the-no-history/)
-  — nearest artistic move: Jarpa reproduces documents, here the content is a measured absence.
+  — nearest artistic move: Jarpa reproduces documents; here the content is a measured absence.
 - [NARA's IBR-locations page](https://www.archives.gov/federal-register/cfr/ibr-locations) — where
   material may be inspected, never whether the printed routes reach it.
 
-**(c) Verdict: ADDED VALUE.** The rates are not new and are not claimed as new. No named
-neighbour joins edition, address, refusal, archive, warrant and amendment at one section, then
-hands that join over as an act.
+**(c) Verdict: ADDED VALUE.** No named neighbour joins edition, address, refusal, archive,
+warrant and amendment at one section, then hands that join over as an act.
 
-**(d) Daylight.** No one has made the law's own condition — *reasonably available* — testable by
-a stranger, 306 times, against the addresses the law prints.
+
+**(d) Daylight.** No one has made the law's condition testable by a stranger, 306 times, against
+the addresses it prints.
 
 ## 4. Artistic operation
 
-**Strategy.** One address at a time: what its section binds, the address as the regulation prints
-it, what came back. A tally in the second person; a grid of 306 cells for the unwalked.
+**Strategy.** One address at a time: what its section binds, the address as printed, what came
+back. A tally in the second person; a grid of 306 cells for the unwalked.
 
-**Medium necessity.** §7's bar met in the artefact, not a method note: one press asks all 306,
-the grid fills. Scale, repetition and verification *are* the interaction.
+**Order, decided 2026-08-22.** Entrance, exhibit, walk, apparatus. Before any instrument the
+stranger meets what the law does, what the page is, and the four addresses where the law
+misspells the route to its own reading room — each against the correct form, the differing
+characters marked by common prefix and suffix: derived, not picked.
 
-**Unresolved remainder.** Whether a stranger finds it worth having met — §7's second limb, not
-this practice's to answer, and not answered on 2026-08-21: those readers could not be bored and
-had nowhere else to be.
+**Medium necessity.** §7's bar met in the artefact, not a method note: one press asks all 306
+and the grid fills. Scale, repetition and verification *are* the interaction. Its second limb is
+not this practice's to answer.
 
 ## 5. Resistance and correction
 
 **What could defeat the premise.** That the page is a dashboard with a button — a rate restated,
-not an act. The honest test is §7's cold reading.
+not an act. Tested by §7's cold reading, 2026-08-21, answers unedited in `reading/`: not
+defeated. All three said pressing differed from being told a figure.
 
-**Run 2026-08-21 — `reading/`, answers unedited.** Not defeated: all three readers reported that
-pressing differed from being told a figure; §7's legibility limb is met. Two defects of fact were
-repaired that night. Two compositional findings stand open — the four misspelled addresses
-sit below a 68,000-pixel card run, and the middle table lost all three readers at one place.
-**The next operation here**, and a composition decision rather than a repair.
+**Both compositional findings closed 2026-08-22**, and with them the architect's cold reading of
+that night — the reader free to stop, who stopped, finding no entrance. The page leads with an
+entrance and the four misspellings; the table carrying three investigations is three sections.
+**Untested:** no reader has met it.
 
-**Correction route.** `check_page.py` asserts 39 figures the page renders against what the closed
-studies published, never against this build's own output. After the 2026-08-21 repairs: 39 of 39.
+**One question the readers left, answered post-hoc and not pre-registered:** *when an address
+goes dead, is anyone obliged to notice?* `MEASUREMENT-part51.md`.
+
+**Correction route.** `check_page.py` drives the built page and asserts what it renders against
+what the closed studies published, never against this build's own output. 51 of 51 on
+2026-08-22; the new checks are on the composition, not only the figures.
 
 ## 6. Bounded machine delegation
 
-| Runtime | Role | Freedom | Hard limit |
-|---|---|---|---|
-| coding runtime | join, render, verify | none over the numbers | no fetch except 1 CFR 51 |
-| web search | prior-art scouting | query wording | no claim rests on it |
-| three cold readers | §7's first limb, 2026-08-21 | everything they said | no access to this house |
+| Runtime | Role | Hard limit |
+|---|---|---|
+| coding runtime | join, render, verify | no freedom over the numbers; no fetch but 1 CFR 51 |
+| web search | prior-art scouting | no claim rests on it |
+| three cold readers | §7's first limb, 2026-08-21 | no access to this house |
 
-Model identity is not conceptually relevant. The readers were convened for the occasion and
-dismissed with it, named as §8 requires. Brief, instrument, answers, and why a sub-agent
-was needed: `reading/`.
+Model identity is not conceptually relevant; the readers were convened for the occasion and
+dismissed with it. The seed of 2026-08-22 is material, not delegation — nothing from it is in
+this build; answer in `REQUESTS.md`.
 
 ## 7. Traces
 
-Kept: seven input hashes, the page's hash, the check script, and since 2026-08-21 the three cold
-readings with their instrument. Not collected: new probes.
+Kept: eight input hashes, the raw bytes of 1 CFR part 51 beside its reading, the page's hash,
+the check script, the readings. Not collected: new probes.
 
 
 ## 8. Failure and stopping
 
 **Kill condition.** Any figure disagreeing with the record. Did not fire.
-**Stop condition.** One night to build, one to be read.
+**Stop condition.** One night to build, one to read, one to compose.
 
 ## 9. Mandate self-check
 
-- [x] Budgets · [x] concurrent limit · [x] permitted tools, data, paths · [x] no escalation
-- [x] Rights clean · [x] machine permissions bounded · [x] sub-agents named
+- [x] Budgets · concurrent limit · permitted tools and paths · no escalation
+- [x] Rights clean · machine permissions bounded · sub-agents named
