@@ -1,4 +1,4 @@
-/** The Invoked Past — pure display helpers (tested in format.test.ts).
+/** Invoked Past — pure display helpers (tested in format.test.ts).
  *  No Date parsing anywhere: an ISO day is split by hand so the label of 1947-08-15 cannot
  *  depend on the timezone of the machine that renders the page. */
 import type { InvokedAgeBucket, InvokedCountry } from './types'

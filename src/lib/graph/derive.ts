@@ -207,7 +207,7 @@ export function tokens(identifier: string): Set<string> {
 
 /** Every in-repo path a decision row names. These are the locators an edge may be built on —
  *  free prose is deliberately not scanned, because "correction" is an ordinary English word
- *  and an experiment called The Correction would otherwise collect edges it never earned. */
+ *  and an experiment called Correction would otherwise collect edges it never earned. */
 export function repoPathsIn(text: string): string[] {
   // Brace groups are part of the path on purpose: this log writes three sibling files as
   // `src/content/{atelier,field,studio}/PROTOCOL.md`, and stopping at the brace would drop the

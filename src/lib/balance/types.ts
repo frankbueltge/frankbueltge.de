@@ -1,4 +1,4 @@
-/** The Balance — data contract for src/data/balance/*.json (pipeline: pipelines/balance/refresh.py). */
+/** Balance — data contract for src/data/balance/*.json (pipeline: pipelines/balance/refresh.py). */
 
 export interface BalanceDim {
   self: number

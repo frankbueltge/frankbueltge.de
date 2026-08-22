@@ -1,5 +1,5 @@
 /**
- * The Consensus — chronicle of the committed daily measurements.
+ * Consensus — chronicle of the committed daily measurements.
  *
  * Git is the archive: pipelines/consensus/ commits one JSON per day under
  * src/data/consensus/<YYYY-MM-DD>.json. This module turns that committed set

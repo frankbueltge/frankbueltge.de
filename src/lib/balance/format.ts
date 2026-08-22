@@ -1,4 +1,4 @@
-/** The Balance — pure display helpers (tested in format.test.ts). */
+/** Balance — pure display helpers (tested in format.test.ts). */
 
 /** Signed fixed-decimal number: 1.234 -> "+1.23", -0.5 -> "−0.50" (typographic minus). */
 export function signed(n: number, digits = 2): string {

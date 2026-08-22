@@ -1,5 +1,5 @@
 ---
-// src/components/society/Room.astro — the room exit of The Society.
+// src/components/society/Room.astro — the room exit of the Society.
 //
 // The reading exit (/society) is a page: it explains, cites, concedes, and rewards an hour.
 // This is the other exit, for a projection or a terminal where a stranger has four minutes
@@ -167,7 +167,7 @@ const payload = AGENTS.map((a) => ({ id: a.id, name: a.name, elegy: a.elegy }))
   </div>
 
   <p class="room-credit">
-    The Society · after Marvin Minsky, The Society of Mind (1986) · frankbueltge.de/society
+    Society · after Marvin Minsky, The Society of Mind (1986) · frankbueltge.de/society
   </p>
 
   <script type="application/json" id="room-agents" set:html={jsonScriptPayload(payload)} />

@@ -253,7 +253,7 @@ describe('renamed German work slugs 301 to their English canonicals', () => {
     expect(rules.find((r) => r.from === '/police')?.to).toBe('/policy')
   })
 
-  // The Protocol carries sub-paths (RSS feed, archive, dated minutes) — the /protokoll/* wildcard
+  // Protocol carries sub-paths (RSS feed, archive, dated minutes) — the /protokoll/* wildcard
   // must cover them so old bookmarks and RSS subscribers land on /protocol/* in one hop.
   it.each(['/protokoll/feed.xml', '/protokoll/archiv', '/protokoll/2026-07-15'])(
     'covers %s via the /protokoll/* wildcard',

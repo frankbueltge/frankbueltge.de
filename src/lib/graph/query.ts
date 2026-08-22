@@ -40,7 +40,7 @@ export function relationsOf(graph: KnowledgeGraph, id: string): Relation[] {
 /** Loose lookup for a human at a terminal: id, label or (for works) route and werk id.
  *
  *  Ranked, because unranked it was useless in practice: `graph -- society` answered with three
- *  of the audit's neighbours and a journal before reaching The Society. What a session asks
+ *  of the audit's neighbours and a journal before reaching the Society. What a session asks
  *  about is almost always one of this house's own things, and almost always by its name. */
 export function search(graph: KnowledgeGraph, term: string): GraphNode[] {
   const needle = term.trim().toLowerCase()

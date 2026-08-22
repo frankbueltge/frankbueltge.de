@@ -8,15 +8,25 @@
 // "gleiche Familie, eine Stufe ruhiger" als der Site-Eingang (/) — derselbe Typo-Kanon
 // (Kicker/Mono-Notate/Hairlines/Registertabellen aus docs/design/variants-2026-07-15/
 // a-observatorium.html), keine eigene Zeichengrammatik, kein Dekor.
+//
+// 2026-08-22 — the shelf gets categories, and two neighbours (Frank):
+//   · the sixteen entries are grouped by RESEARCH LINE (src/data/werke.ts: EXPERIMENT_LINES,
+//     WERKE_BY_LINE). Chosen over a by-subject and a by-rank cut because this one is the works'
+//     own claim: nine of them already said "from the counter-measurement line" in their own
+//     description while the page showed no line at all. Recency order (2026-08-14) survives
+//     inside each group because the grouping is derived from WERKE_HOLDINGS.
+//   · below them, the two machine practices that are NOT part of the research ecology and were
+//     reachable only through ecology surfaces until now: the Atelier's nightly line and n-1.
+//     They are listed APART and never among the experiments — neither is a piece of the lab,
+//     and the USP gate (graph.test.ts) rightly demands an audit verdict from every experiment
+//     on this shelf, which a practice does not have.
 import { getRelativeLocaleUrl } from 'astro:i18n'
 import type { Locale } from '@/lib/site'
-import { WERKE_HOLDINGS, werkTitle } from '@/data/werke'
+import { WERKE_BY_LINE, werkTitle } from '@/data/werke'
+import { NAMING } from '@/config/naming'
+import { readN1Facts } from '@/lib/ecology/n1-line'
 
 const locale = (Astro.currentLocale ?? 'en') as Locale
-// The exclusion set lives with the register itself (werke.ts HOLDINGS_EXCLUDED_IDS): the
-// three practice doors AND current MRR artefacts. A local filter here once let 'on-record'
-// leak in as the top entry of a page that lists the lab's earlier experiments.
-const bestaende = WERKE_HOLDINGS
 // Back to "Experiments" (Frank, 2026-07-31): the 2026-07 redesignation to "Holdings" traded a
 // word everyone understands for house vocabulary. The route /experiments is unchanged — links,
 // redirects and OG paths keep working; only the visible name goes back to the plain one.
@@ -27,13 +37,13 @@ const bestaende = WERKE_HOLDINGS
 const copy = {
   de: {
     title: 'Experimente',
-    sub: 'Die Experimente des Labors — laufende Instrumente, jedes mit offenen Quellen und offengelegtem Verfahren. Jede Route bleibt erreichbar, keine Pipeline endet dadurch.',
+    sub: 'Die Experimente des Labors — laufende Instrumente, jedes mit offenen Quellen und offengelegtem Verfahren. Vier Linien, innerhalb jeder das Neueste zuerst. Jede Route bleibt erreichbar, keine Pipeline endet dadurch.',
     live: 'live data',
     field: 'Das Feld: jedes Experiment gegen die Projekte, die es schon gibt →',
   },
   en: {
     title: 'Experiments',
-    sub: "The lab's experiments — ongoing instruments, each with open sources and a disclosed method. Every route stays reachable, no pipeline ends because of this.",
+    sub: "The lab's experiments — ongoing instruments, each with open sources and a disclosed method. Four lines, newest first inside each. Every route stays reachable, no pipeline ends because of this.",
     live: 'live data',
     // 2026-08-09: the neighbour audit drawn as one figure. It sits at the top of the shelf on
     // purpose — a visitor should be able to see what already exists near this work before
@@ -41,6 +51,48 @@ const copy = {
     field: 'The field: every experiment against the projects that already exist →',
   },
 }[locale]
+
+// The tier a piece carries is stated where it has one that is NOT "experiment": three studies
+// out of the series and one instrument sit on this shelf, and before the grouping the page
+// showed them as peers of the experiments without a word. The register has held the field
+// since 2026-08-09; only now does the page say it.
+const TIER_LABEL: Record<string, string> = {
+  studie: 'study, out of series',
+  instrument: 'instrument',
+}
+
+// The nightly line reads its title, sentence and route from the homepage's own card
+// (NAMING.overview.items) rather than restating them — the read-never-restate arrangement the
+// ops-room board uses, so a reworded card moves this section with it.
+const nightly = NAMING.overview.items.find((i) => i.id === 'nightly-line')
+if (!nightly?.href) throw new Error('/experiments: NAMING.overview.items has no "nightly-line" card to read')
+
+// n-1 states its own facts in its own mirrored record: the working title it declares, the day
+// its Dowry says it was founded, and — since 2026-08-21 — the name the practice took for
+// itself. Read, never typed: the day the practice renames itself, this row follows.
+const n1 = readN1Facts()
+
+const beside = {
+  kicker: 'BESIDE THE LAB',
+  kickerSub: 'TWO PRACTICES, NOT EXPERIMENTS',
+  note: 'Machine-run practices with their own record, their own law and their own surface. Neither belongs to the research ecology — n-1’s founding document says so in as many words — and until now both were reachable only through the ecology’s pages. They are listed here because this is where a visitor looks for them, not because the lab holds them.',
+  rows: [
+    {
+      title: nightly.title ?? 'Error as Method',
+      href: nightly.href,
+      meta: nightly.meta,
+      line: nightly.line,
+    },
+    {
+      title: n1.title,
+      href: '/n-1',
+      meta: `founded ${n1.founded} · ${n1.law} instead of a protocol`,
+      line: `A practice founded on the Atelier’s own working paper and given no protocol document by design; it holds itself to that paper’s trial discipline and rewrites it where it proves too small. Its repository is mirrored whole and served as the practice’s own surface — the house keeps no window on it.${
+        n1.name ? ` It has since named itself ${n1.name} (2026-08-21); the working title stands until the founder acts on the renaming request.` : ''
+      }`,
+    },
+  ],
+}
 ---
 
 <main id="main" class="mx-auto w-full max-w-4xl flex-1 px-6 py-16 sm:py-24">
@@ -55,21 +107,58 @@ const copy = {
     </a>
   </p>
 
-  <ul class="mt-12 divide-y divide-line/60 border-t border-line/60">
-    {bestaende.map((werk) => (
-      <li class="py-7">
-        <a href={getRelativeLocaleUrl(locale, werk.href)} class="group block">
-          <h2 class="text-lg font-semibold transition-colors group-hover:text-accent-soft">
-            {werkTitle(werk, locale)}<span class="font-normal text-fg-faint"> — {werk.subtitle[locale]}</span>
-            {werk.live && (
-              <span class="ml-2 align-middle font-mono text-[10px] uppercase tracking-wider text-fg-faint">
-                <span class="dot-live mr-0.5 inline-block h-[5px] w-[5px] rounded-full align-middle"></span>{copy.live}
-              </span>
+  {WERKE_BY_LINE.map((group) => (
+    <section class="mt-16 first:mt-14">
+      <div class="flex items-baseline justify-between gap-4 border-b border-line/60 pb-2">
+        <h2 class="font-mono text-[12px] uppercase tracking-[0.16em] text-fg-faint">{group.line.label}</h2>
+        <span class="font-mono text-[11px] tracking-[0.14em] text-fg-faint">{group.werke.length}</span>
+      </div>
+      <p class="mt-4 max-w-2xl text-sm leading-relaxed text-fg-muted">{group.line.blurb[locale]}</p>
+
+      <ul class="mt-6 divide-y divide-line/60 border-t border-line/60">
+        {group.werke.map((werk) => (
+          <li class="py-7">
+            <a href={getRelativeLocaleUrl(locale, werk.href)} class="group block">
+              <h3 class="text-lg font-semibold transition-colors group-hover:text-accent-soft">
+                {werkTitle(werk, locale)}<span class="font-normal text-fg-faint"> — {werk.subtitle[locale]}</span>
+                {werk.live && (
+                  <span class="ml-2 align-middle font-mono text-[10px] uppercase tracking-wider text-fg-faint">
+                    <span class="dot-live mr-0.5 inline-block h-[5px] w-[5px] rounded-full align-middle"></span>{copy.live}
+                  </span>
+                )}
+                {werk.tier && TIER_LABEL[werk.tier] && (
+                  <span class="ml-2 align-middle font-mono text-[10px] uppercase tracking-wider text-fg-faint">
+                    {TIER_LABEL[werk.tier]}
+                  </span>
+                )}
+              </h3>
+              <p class="mt-1.5 text-sm leading-relaxed text-fg-muted">{werk.description[locale]}</p>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  ))}
+
+  <section class="mt-20">
+    <div class="flex items-baseline justify-between gap-4 border-b border-line/60 pb-2">
+      <h2 class="font-mono text-[12px] uppercase tracking-[0.16em] text-fg-faint">{beside.kicker}</h2>
+      <span class="font-mono text-[11px] tracking-[0.14em] text-fg-faint">{beside.kickerSub}</span>
+    </div>
+    <p class="mt-4 max-w-2xl text-sm leading-relaxed text-fg-muted">{beside.note}</p>
+
+    <ul class="mt-6 divide-y divide-line/60 border-t border-line/60">
+      {beside.rows.map((row) => (
+        <li class="py-7">
+          <a href={getRelativeLocaleUrl(locale, row.href)} class="group block">
+            <h3 class="text-lg font-semibold transition-colors group-hover:text-accent-soft">{row.title}</h3>
+            {row.line && <p class="mt-1.5 text-sm leading-relaxed text-fg-muted">{row.line}</p>}
+            {row.meta && (
+              <p class="mt-2 font-mono text-[10px] uppercase tracking-wider text-fg-faint">{row.meta}</p>
             )}
-          </h2>
-          <p class="mt-1.5 text-sm leading-relaxed text-fg-muted">{werk.description[locale]}</p>
-        </a>
-      </li>
-    ))}
-  </ul>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
 </main>

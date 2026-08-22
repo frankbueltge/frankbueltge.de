@@ -1,4 +1,4 @@
-// src/lib/society/engine.ts — the deterministic tick of The Society.
+// src/lib/society/engine.ts — the deterministic tick of the Society.
 //
 // One rule of construction, and it is the piece's honesty clause: every behavioural block
 // below is headed by the id of the agent whose card-code (agents.ts) it implements. The card

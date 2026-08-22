@@ -100,7 +100,7 @@ Seite. Ab jetzt gilt genau diese Staffel, auf der ganzen Site und in allen Repos
 |---|---|---|
 | **Project** | Das große, laufende Vorhaben mit eigenem Zuhause. Enthält Praxen, Experimente, Instrumente und Werke. | The research ecology · Machine Attention · datavism.org · data-snack.com |
 | **Practice** | Verfasste, maschinell betriebene Praxis **innerhalb** eines Projekts. Bringt Werke hervor; ist selbst keins. | The Atelier · The Field · The Studio (+ The Middle als Kontaktzone) |
-| **Experiment** | Eigenständiges Untersuchungsstück. | die 14 auf `/experiments` · The Foreknown · Dark Ocean |
+| **Experiment** | Eigenständiges Untersuchungsstück. | die sechzehn auf `/experiments`, seit 2026-08-22 in vier Linien · The Foreknown · Dark Ocean |
 | **Instrument** | Läuft leise, liefert einem Projekt zu, **kein Bühnen-Anspruch**, darf jahrelang nichts liefern. Gegenstück: **Flagship**. | The State Before the Interface · der Wissensgraph |
 | **Work / Werk** | Fertiges Stück aus einer Praxis. | die 60 Praxis-Werke |
 
@@ -219,7 +219,8 @@ Die früheren Arbeiten des Labors heißen wieder **„Experiments"** (dt. „Exp
 Klartext vor Haus-Vokabular; die Umwidmung zu „Holdings"/„Bestände" (Juli 2026) ist damit
 zurückgenommen. ~~**Die Route bleibt `/holdings`**~~ — **überholt am 2026-08-09:** Route und
 Titel heißen jetzt beide `/experiments`, siehe den Abschnitt „Die vier Wörter" oben. Bleibt gültig: es gibt **keinen Dachtitel** für die
-Sammlung (12.07.), jedes Experiment steht für sich.
+Sammlung (12.07.), jedes Experiment steht für sich — seit dem 2026-08-22 aber **in vier
+Linien geordnet**, siehe den Abschnitt „Die vier Linien des Labs" unten.
 
 **Nachtrag (Frank, 08.08.):** `/holdings` führt seit dem 08.08. auch das **laufende** zweite
 Experiment „The State Before the Interface" (`/observatory`) — Franks Anweisung (Wortlaut privat): als
@@ -237,6 +238,42 @@ Interface" (`/observatory`) ist seit dem 08.08. ein Projekt dieser Praxis, nicht
 Experiment selbst — ~~„Hintergrund-Observatorium"~~ heißt seit dem 2026-08-09 **Instrument**
 (siehe „Die vier Wörter"). Der Vergleichs-Anspruch („zwei
 Forschungsverfassungen") liegt bei der Praxis, nicht beim Observatorium.
+
+## Die vier Linien des Labs (Frank, 2026-08-22, VERBINDLICH)
+
+`/experiments` ist seit dem 2026-08-22 nach **Forschungslinien** geordnet statt als flache
+Liste. Kanonisch sind die Linien in `src/data/werke.ts` (`EXPERIMENT_LINES`, Feld `line` je
+Werk); die Labels heißen auf der Seite genau so:
+
+| Linie | Was sie fragt | Heute |
+|---|---|---|
+| **COUNTER-MEASUREMENT** | Messen, was Macht im Dunkeln lässt — nachprüfbar, auch gegen die eigene Methode. | 9 Werke; Meridians Kern-Remit in der Ökologie |
+| **NIGHTLY LEDGER** | Instrumente, die jede Nacht einen datierten Eintrag schreiben und keinen revidieren. | Protocol · Policy |
+| **REPRESENTATION & MEMORY** | Was ein Record sagt und was er auslässt. | Invoked Past · Society · Iceberg Theory |
+| **SURVEILLANCE, COUNTED** | Wer beobachtet — gezählt aus den Katalogen der Beobachter. | Bycatch · All Along the Watchtower |
+
+Zwei Regeln dazu, die nicht verhandelbar sind:
+
+- **Die Zuordnung ist abgeleitet, nicht getippt.** Die Gruppen kommen aus `WERKE_HOLDINGS`,
+  also gilt die Aktualitäts-Reihenfolge (2026-08-14) **innerhalb** jeder Gruppe weiter, und
+  eine Linie ohne Einträge erscheint nicht. Wer ein Werk aufnimmt, gibt ihm eine Linie —
+  sonst ist `werke.test.ts` rot.
+- **Kein Dachtitel.** Die Linien ordnen, sie überschreiben nicht: die Sammlung bekommt keinen
+  Gesamttitel (Regel vom 12.07., ausdrücklich bestätigt).
+
+**Titel ohne bestimmten Artikel (gleicher Tag):** Die Experimente heißen **Society · Protocol ·
+Policy · Consensus · Invoked Past · Balance · Correction · Ghost Fleet** — das führende „The"
+ist aus den Titeln gestrichen, in Seiten-Titeln, H1s, OG-Bildern, Register- und Nav-Labels und
+Methodenblättern. In **Prosa** bleibt der kleingeschriebene Artikel, wo die Grammatik ihn
+braucht („die Nächte des Protocol", „the Consensus archive"). **Nicht betroffen:** Titel
+anderer Häuser — „The Measuring Field", „The State Before the Interface", „The Foreknown" —
+und die gespiegelten Texte der Praxen; fremde Werktitel werden hier nicht umbenannt.
+
+**Neben dem Lab, nicht darin:** Die Seite führt unter **„BESIDE THE LAB"** die zwei
+maschinellen Praxen, die **nicht** zur research ecology gehören und bis dahin nur über
+Ökologie-Oberflächen erreichbar waren: die **Nachtlinie** (`/error-as-method`) und **n-1**
+(`/n-1`). Sie stehen ausdrücklich *neben* den Experimenten, nie unter ihnen — eine Praxis ist
+kein Peer eines Einzelstücks (dieselbe Regel wie bei Machine Attention, 2026-08-09).
 
 ## Menü, Hero, About — kein Projekt im Fokus (Frank, 2026-08-09 spät, VERBINDLICH)
 

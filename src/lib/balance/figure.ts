@@ -1,4 +1,4 @@
-/** The Balance figure — pure geometry for the dumbbell (gap) chart.
+/** Balance figure — pure geometry for the dumbbell (gap) chart.
  *  Build-time only; unit-tested so the drawing is derived, not eyeballed. */
 import type { BalanceCountry } from './types'
 

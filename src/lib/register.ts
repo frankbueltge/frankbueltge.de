@@ -67,10 +67,10 @@ export const zugangLabel = (e: RegisterEntry): string => {
 
 /** Anzeigename eines Werks. Unbekannte Schlüssel zeigen sich wörtlich. */
 const werkNamen: Record<string, string> = {
-  protokoll: 'The Protocol',
+  protokoll: 'Protocol',
   redaction: 'Redaction',
-  consensus: 'The Consensus',
-  balance: 'The Balance',
+  consensus: 'Consensus',
+  balance: 'Balance',
   'ghost-fleet': 'Ghost Fleet',
   beifang: 'Bycatch',
   revision: 'Correction',

@@ -1,4 +1,4 @@
-/** The Invoked Past — data contract for src/data/invoked/*.json (pipeline: pipelines/invoked/refresh.py).
+/** Invoked Past — data contract for src/data/invoked/*.json (pipeline: pipelines/invoked/refresh.py).
  *  Every field the page renders is declared here; a field the record may omit on a failed
  *  fetch is optional here, so the failure branch type-checks instead of being assumed away. */
 

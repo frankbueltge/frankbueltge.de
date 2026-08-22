@@ -1,5 +1,5 @@
 ---
-// The Consensus — archive view: one row per committed day since 2026-06-21.
+// Consensus — archive view: one row per committed day since 2026-06-21.
 // Data: every src/data/consensus/<YYYY-MM-DD>.json (nightly, pipelines/consensus/).
 // Git is the archive; failures stay failures and uncommitted days render as gaps.
 import { chronicle } from '@/lib/consensus/archive'
@@ -53,7 +53,7 @@ const dateLabel = (iso: string) =>
 <article class="mx-auto max-w-3xl px-4 py-14">
   <header class="mb-10">
     <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
-      <a href="/consensus" class="transition-colors hover:text-fg">The Consensus</a> · Archive
+      <a href="/consensus" class="transition-colors hover:text-fg">Consensus</a> · Archive
     </p>
     <h1 class="mt-2 text-[clamp(30px,6vw,56px)] font-bold tracking-[-0.03em]">
       {measured.length} days, {measured.length} sentences

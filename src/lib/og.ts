@@ -10,7 +10,7 @@ export const OG_PAGES: Record<string, { title: string; description: string }> = 
   // title went back to "Experiments" (Frank, 2026-07-31).
   holdings: {
     title: 'Experiments',
-    description: "The lab's earlier experiments — The Protocol, Parallaxe, The Policy — offered as material, under conditions",
+    description: "The lab's earlier experiments — Protocol, Parallaxe, Policy — offered as material, under conditions",
   },
   about: {
     title: 'Frank Bültge',
@@ -37,7 +37,7 @@ export const OG_PAGES: Record<string, { title: string; description: string }> = 
     description: 'What the three research practices actually read — each entry here because a practice reached for it, with the record of that use attached.',
   },
   protocol: {
-    title: 'The Protocol',
+    title: 'Protocol',
     description: 'The daily minutes of the world — deterministic register prose from open sources, no language model in the wording',
   },
   parallax: {
@@ -45,23 +45,23 @@ export const OG_PAGES: Record<string, { title: string; description: string }> = 
     description: 'How Wikipedia language versions differ over contested topics',
   },
   policy: {
-    title: 'The Policy',
+    title: 'Policy',
     description: 'Climate costs, priced from market data as a premium',
   },
   consensus: {
-    title: 'The Consensus',
+    title: 'Consensus',
     description: 'How much "independent" news consensus is one source, copied many times over',
   },
   balance: {
-    title: 'The Balance',
+    title: 'Balance',
     description: 'Self-image against foreign image — the emotional trade balance of the world’s press, daily',
   },
   'invoked-past': {
-    title: 'The Invoked Past',
+    title: 'Invoked Past',
     description: 'Which yesterday the world cites today — every dated reference in the daily press, counted',
   },
   correction: {
-    title: 'The Correction',
+    title: 'Correction',
     description: 'The number you reacted to was inflated — then quietly revised down',
   },
   tell: {
@@ -81,7 +81,7 @@ export const OG_PAGES: Record<string, { title: string; description: string }> = 
     description: 'A test that claims to detect faked figures — and how often it errs',
   },
   'ghost-fleet': {
-    title: 'The Ghost Fleet',
+    title: 'Ghost Fleet',
     description: 'Ships that switch off their transponders on purpose, counted',
   },
   bycatch: {

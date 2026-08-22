@@ -615,7 +615,7 @@ export const NAMING = {
             `public warnings held open on the ledger — ${p.resolved} closed with a verdict so far, across ${p.nights} nights on the record`,
         },
         protocol: {
-          name: 'THE PROTOCOL',
+          name: 'PROTOCOL',
           stamp: 'DETERMINISTIC · NO LLM IN THE WORDING',
           sub: (p: { unavailable: number }) =>
             p.unavailable === 0
@@ -623,7 +623,7 @@ export const NAMING = {
               : `agenda items in today’s minutes of the planet — ${p.unavailable} source${p.unavailable === 1 ? '' : 's'}: “Feststellung entfällt”; every item adjourned`,
         },
         consensus: {
-          name: 'THE CONSENSUS',
+          name: 'CONSENSUS',
           stamp: 'ONE SNAPSHOT PER DAY · NEVER EDITED',
           sub: (p: { scanned: number; hours: number }) =>
             `ran today’s most-copied sentence word-for-word — one source, one cascade of ${p.hours} hours, counted across ${p.scanned.toLocaleString('en-GB')} articles`,
@@ -637,7 +637,7 @@ export const NAMING = {
             `Wikipedia language editions conceal more than average about ${p.topic} — the furthest-apart topic in the register today; the rest state the contested claim outright`,
         },
         policy: {
-          name: 'THE POLICY',
+          name: 'POLICY',
           stamp: 'NIGHTLY · MARKET DATA',
           sub: (p: { baseYear: number; latest: string }) =>
             `today’s climate premium against ${p.baseYear} — recomputed from real market data, latest reading ${p.latest}`,
@@ -649,7 +649,7 @@ export const NAMING = {
             `taken out of a page of the ${p.institution} — the most substantive of ${p.changed} changes across ${p.watched} watched pages, both versions linked`,
         },
         ghostFleet: {
-          name: 'THE GHOST FLEET',
+          name: 'GHOST FLEET',
           stamp: 'NO CLAIM OF ILLEGALITY — COUNTED',
           sub: (p: { value: number; unit: 'hours' | 'days' }) =>
             `vessels in deliberate AIS silence today — the longest of them dark for ${p.value} ${p.unit}, in waters that are named`,
