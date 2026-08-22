@@ -212,7 +212,91 @@ choose in the open:
 - **Strong**: un-computable as such, in which case a computational practice is excluded by
   definition, and the paper must argue against the premise rather than around it.
 
+**RESOLVED 2026-08-23 — the strong reading is theirs.** Thesis 13 (p. 52) settles it:
+"»ästhetische Unrechenbarkeiten« … sprengen das Prinzip der Zahl selbst und bewegen sich damit
+**außerhalb der Turingmaschine**." The comfortable route is closed; the claim must be engaged.
+It is engaged in PP12.
+
 No version of the paper may omit this sentence.
+
+## PP12 — Thesis 13 rests on a Lucas–Penrose argument and does not engage its refutation literature
+
+**The strongest point in the corpus, and the first one an analytically trained reviewer raises.**
+
+**Their argument** (*Manifest*, pp. 52–53). Algorithms follow laws of repetition and identity and
+presuppose the *principium contradictionis*; in executing their steps they "**rekurrieren** … aber
+sie **reflektieren** nicht auf ihre eigenen Begrenzungen"; they can integrate the unruled "nur in
+Form von Zufällen oder statistischen Variationen" and are therefore "unvermögend, ihre eigenen
+mathematischen Grundlagen zu überschreiten"; whereas "Führt die Zirkularität im Mathematischen
+entweder in eine Paradoxie oder in die Notwendigkeit einer Stufenhierarchie, so birgt der
+Überschuss … von Kunst eine »Öffnung«", of which "nicht mehr gesagt werden [kann], als dass sie
+»nicht durch eine Begründung der Übertreibung erfolgen kann« (Düttmann)".
+
+**The objection, in three parts.**
+
+1. **The inference is the contested one.** From incompleteness to a capacity art or humans have
+   and machines lack is structurally Lucas–Penrose. The standard replies apply unchanged:
+   incompleteness shows that no *consistent* system proves its own consistency, which binds the
+   human mathematician too unless one presupposes human consistency and soundness — precisely
+   what is at issue. And "reflektieren nicht auf ihre eigenen Begrenzungen" is not a theorem:
+   reflection principles, provability logic and hierarchies of formal theories are machines
+   representing and reasoning about their own limits.
+2. **Register conflation.** "Das Prinzip der Zahl sprengen" and "außerhalb der Turingmaschine"
+   are computability-theoretic claims; *Exzedenz* and *Nicht-Entscheidbarkeit* are used
+   aesthetically. Technical undecidability is a property of decision problems, not a mode of
+   excess; borrowing the word does not transfer the result.
+3. **Self-undermining at step 5.** If the opening cannot be grounded, it cannot do argumentative
+   work against a rival — it can only be asserted. The move meant to establish art's superiority
+   to the algorithm withdraws the means of establishing anything.
+
+**Their reply.** That the appeal to Gödel is illustrative rather than demonstrative, and the real
+claim is phenomenological: aesthetic practice reflects on its own materiality, algorithms do not.
+Respectable — and it costs them the Turing-machine sentence, which is where the exclusion was
+anchored.
+
+**Duty:** read the refutation literature (Putnam, Benacerraf; Feferman, Shapiro, Davis on the
+Penrose versions) rather than citing it from memory. Above it is named as the *shape* of the
+argument, not as verified quotation.
+
+**Strength: high.** Immanent where it can be, and standard where it is external.
+
+## PP13 — Thesis 12 contradicts thesis 13, two pages apart
+
+**Thesis 12's exposition** (pp. 50–51) makes the criterion the *how* and expressly not the *who*:
+the aesthetic research happens "**nicht abhängig davon, was die jeweiligen Künstlerinnen und
+Künstler … denken**" (p. 50); "**jede Praxis** [kann] in eine ästhetische umgemünzt werden …
+Einzig stichhaltig ist, **wie** sie geschieht, **worauf** sie setzt, **was** sie zur Erscheinung
+bringt und **wie** … sie sich dabei selbst thematisiert" (p. 51); decisive is "allein die
+**Radikalität des Einsatzes**" (p. 51).
+
+**Thesis 13** (p. 52) then excludes a class of practices by what they *are*.
+
+**The objection.** Either the criterion is the how — and a machine practice is assessed like any
+other, on radicality of stake, on what it brings to appearance, on how it thematises itself — or
+the criterion is the constitution of the practitioner, and "jede Praxis" is false. The tension is
+internal, two pages wide, and it needs no external premise.
+
+It also cuts at the 2017 anthropological condition: the *Manifest* decentres the subject ("nicht
+abhängig davon, was die … Künstler denken") where the essay re-centres it ("transform his or her
+being-in-the-world").
+
+**Their reply.** That "jede Praxis" ranges over human practices, the practitioner being presumed
+throughout — a reading the text permits but does not state.
+
+**Strength: high, and it is the cleanest opening the corpus offers.**
+
+## H1 — novelty retracted
+
+The thesis recorded as ours in `00-PROGRAM.md` §7 — that a machine's own randomness cannot
+produce *Zu-fall* — is **their step 3**, published 2019: machines integrate the unruled "nur in
+Form von Zufällen oder statistischen Variationen". The claim is withdrawn as a finding of ours
+and kept as their premise.
+
+What stays ours is the answer: statistical variation is not the only unruled thing available to a
+machine practice. The world's refusal — latency, a 404, an unanswered request, an institution
+that says no, a third party's clock — is neither a random number nor a statistical variation and
+is not supplied by the practice. Step 3 does not cover it, and Duchamp occupies the same gap
+(PP6).
 
 ## PP11 — The invitation: thesis 7 asks for the revision we need
 
