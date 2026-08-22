@@ -96,7 +96,7 @@ describe('the live dashboard reads the archive', () => {
     }
   })
 
-  it('omits The Protocol when no day file is handed in — absent, never blank', () => {
+  it('omits Protocol when no day file is handed in — absent, never blank', () => {
     const ids = readTiles({}).map((t) => t.id)
     expect(ids).not.toContain('protocol')
   })

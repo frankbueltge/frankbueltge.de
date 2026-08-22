@@ -1,4 +1,4 @@
-/** The Invoked Past figure — pure geometry for the year histogram.
+/** Invoked Past figure — pure geometry for the year histogram.
  *  Build-time only; unit-tested so the drawing is derived, not eyeballed.
  *
  *  The figure carries three facts at once, which is why it exists at all:

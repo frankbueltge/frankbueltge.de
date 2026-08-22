@@ -1,5 +1,5 @@
 ---
-// Gegenmessung II — „The Correction".
+// Gegenmessung II — „Correction".
 // Misst die Lüge der offiziellen Zahl über die Revisionen, die das Amt selbst vornimmt.
 // Daten: src/data/revision/latest.json (Philadelphia Fed RTDSM; pipelines/revision/).
 import { getRelativeLocaleUrl } from 'astro:i18n'
@@ -33,7 +33,7 @@ const bars = rec.map((r, i) => ({ x: i * bw, h: (Math.abs(r.delta) / maxAbs) * (
 <main id="main" class="flex-1">
 <article class="correction mx-auto max-w-3xl px-4 py-14">
   <header class="mb-10">
-    <h1 class="text-[clamp(30px,6vw,56px)] font-bold tracking-[-0.03em]">The Correction</h1>
+    <h1 class="text-[clamp(30px,6vw,56px)] font-bold tracking-[-0.03em]">Correction</h1>
     <p class="mt-2 max-w-xl text-fg-muted">{t(locale, 'cr.sub')}</p>
   </header>
 

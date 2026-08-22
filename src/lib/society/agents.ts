@@ -1,4 +1,4 @@
-// src/lib/society/agents.ts — the roster of The Society: twenty-seven agents, none of them
+// src/lib/society/agents.ts — the roster of the Society: twenty-seven agents, none of them
 // intelligent, after Marvin Minsky, The Society of Mind (Simon & Schuster, 1986).
 //
 // Every agent carries:

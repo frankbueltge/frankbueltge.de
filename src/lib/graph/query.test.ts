@@ -3,7 +3,7 @@
 // The graph's first purpose is to be asked things by a session at work ("what touches X?").
 // That only pays off if the answer arrives at the top of the list, so the ranking is asserted
 // here rather than left to chance — the unranked first version answered `society` with three
-// prior-art projects and a journal before it reached The Society.
+// prior-art projects and a journal before it reached the Society.
 
 import { readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'

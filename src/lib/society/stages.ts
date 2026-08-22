@@ -1,4 +1,4 @@
-// src/lib/society/stages.ts — the growth record of The Society.
+// src/lib/society/stages.ts — the growth record of the Society.
 //
 // The piece grows in public, dated stages, and this file is the record the page renders:
 // stages ADD — nothing is silently overwritten; corrections are entries of their own, dated,

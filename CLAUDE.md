@@ -48,10 +48,17 @@ und nachprüfbar machen. Erstes Instrument „The Consensus" misst orchestrierte
 Meridians Kern-Remit (zwei Formen: laufende Instrumente + FA-Form-Untersuchungen); die
 erste Untersuchung ist Meridian direkt zugewiesen, fällig im Post Office 2026-09-05.
 
-**Die Experimente sind bewusst eine lose Sammlung** (Frank, 2026-07-12): kein Dachtitel —
-„Die Akte der Gegenwart" ist als Gruppierung zurückgezogen; eine künftige Neuordnung ist
-offene Frage, bis dahin steht jedes Experiment für sich (Index: `/experiments`; das frühere
-`/lab` 301t dorthin).
+**Die Experimente: kein Dachtitel, aber vier Linien** (Frank, 2026-07-12 / 2026-08-22):
+„Die Akte der Gegenwart" bleibt als Gruppierung zurückgezogen, und einen Gesamttitel bekommt
+die Sammlung nicht. Die am 2026-07-12 offen gelassene Neuordnung ist seit dem **2026-08-22**
+entschieden: `/experiments` ordnet nach **Forschungslinie** (COUNTER-MEASUREMENT · NIGHTLY
+LEDGER · REPRESENTATION & MEMORY · SURVEILLANCE, COUNTED — kanonisch in `src/data/werke.ts`,
+Feld `line`), und die Titel der Experimente tragen **keinen bestimmten Artikel** mehr
+(Society, Protocol, Policy, Consensus, Invoked Past, Balance, Correction, Ghost Fleet).
+Darunter verlinkt die Seite die zwei Praxen **neben** dem Lab, die nicht zur Ökologie
+gehören: die Nachtlinie (`/error-as-method`) und n-1 (`/n-1`). Details:
+`docs/wording-kanon.md`, Abschnitt „Die vier Linien des Labs" (Index: `/experiments`; das
+frühere `/lab` 301t dorthin).
 
 **Lizenz (alle Lab-Repos, 2026-07-26): offen** — Apache 2.0 für Code, CC BY 4.0 für
 Werke/Texte, CC0 für Daten und Archiv-Snapshots (ersetzt die noncommercial-Linie vom

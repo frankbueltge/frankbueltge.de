@@ -1,6 +1,8 @@
 // src/data/werke.test.ts
 import { describe, it, expect } from 'vitest'
 import {
+  EXPERIMENT_LINES,
+  WERKE_BY_LINE,
   WERKE_PROJECTS,
   WERKE_INSTRUMENTS,
   HOLDINGS_EXCLUDED_IDS,
@@ -11,6 +13,7 @@ import {
   WERKE_HOLDINGS,
   WERKE_STUDIEN,
   byRecency,
+  werkTitle,
 } from './werke'
 
 describe('byRecency (newest first, stable ties)', () => {
@@ -30,7 +33,7 @@ describe('byRecency (newest first, stable ties)', () => {
 })
 
 describe('WERKE_CHRONO', () => {
-  it('leads with the newest experiment (The Invoked Past, since 2026-08-15)', () => {
+  it('leads with the newest experiment (Invoked Past, since 2026-08-15)', () => {
     expect(WERKE_CHRONO[0].id).toBe('invoked-past')
   })
   it('ends with Überflug (placed last)', () => {
@@ -77,7 +80,7 @@ describe('WERKE_HOLDINGS (/experiments register)', () => {
 })
 
 describe('tier split (Experimente vs. Studien)', () => {
-  it('lists the three studies, newest first (The Consensus rejoined the experiments row, Frank 2026-08-05)', () => {
+  it('lists the three studies, newest first (Consensus rejoined the experiments row, Frank 2026-08-05)', () => {
     expect(WERKE_STUDIEN.map((w) => w.id)).toEqual(['ghost-fleet', 'correction', 'ueberflug'])
   })
   it('keeps studies out of the experiments list', () => {
@@ -98,5 +101,83 @@ describe('tier split (Experimente vs. Studien)', () => {
     expect(experiments).not.toContain('attention')
     expect(experiments).not.toContain('observatory')
     expect(experiments).not.toContain('redaction')
+  })
+})
+
+describe('research lines — the shelf’s categories (Frank, 2026-08-22)', () => {
+  it('lists the four lines in the decided order', () => {
+    expect(EXPERIMENT_LINES.map((l) => l.id)).toEqual([
+      'counter-measurement',
+      'ledger',
+      'memory',
+      'watchers',
+    ])
+  })
+
+  it('groups every shelf entry exactly once — nothing lost between register and page', () => {
+    const grouped = WERKE_BY_LINE.flatMap((g) => g.werke.map((w) => w.id))
+    expect(new Set(grouped).size).toBe(grouped.length)
+    expect([...grouped].sort()).toEqual([...WERKE_HOLDINGS.map((w) => w.id)].sort())
+  })
+
+  it('keeps recency order inside every group (Frank’s 2026-08-14 rule survives the grouping)', () => {
+    for (const group of WERKE_BY_LINE) {
+      expect(group.werke.map((w) => w.id)).toEqual(
+        WERKE_CHRONO.filter((w) => w.line === group.line.id).map((w) => w.id),
+      )
+    }
+  })
+
+  it('prints no heading over an empty line', () => {
+    for (const group of WERKE_BY_LINE) expect(group.werke.length).toBeGreaterThan(0)
+  })
+
+  it('gives the practice doors and the other houses no line — they are not on this shelf', () => {
+    for (const id of HOLDINGS_EXCLUDED_IDS) {
+      expect(WERKE.find((w) => w.id === id)?.line).toBeUndefined()
+    }
+  })
+
+  it('files every werk that claims the counter-measurement line in its own words under it', () => {
+    // This is why the by-line cut was chosen over a by-subject one: the works had already said
+    // it themselves, and the page showed none of it. A werk that starts claiming the line — or
+    // stops — must move with its own description, so this reads the description, not a list.
+    for (const werk of WERKE_HOLDINGS) {
+      if (/counter-measurement.{0,3} line|Linie „Gegenmessung/i.test(werk.description.en)) {
+        expect(werk.line, `${werk.id} claims the line in its description`).toBe('counter-measurement')
+      }
+    }
+  })
+
+  it('gives every line a blurb and a label without a leading article', () => {
+    for (const line of EXPERIMENT_LINES) {
+      expect(line.label).not.toMatch(/^THE\s/)
+      expect(line.blurb.en.length).toBeGreaterThan(60)
+      expect(line.blurb.de).toBe(line.blurb.en) // EN-only site; the Locale duality is legacy
+    }
+  })
+})
+
+describe('titles carry no leading article (Frank, 2026-08-22)', () => {
+  // Eight titles lost their "The" on 2026-08-22. The rule holds for the shelf only: the
+  // practice doors and the other houses' pieces ("The Measuring Field", "The State Before the
+  // Interface") are named by their own houses, and this register does not rename them.
+  it('no experiment on /experiments starts with "The"', () => {
+    for (const werk of WERKE_HOLDINGS) {
+      expect(werkTitle(werk, 'en'), werk.id).not.toMatch(/^The\s/)
+      expect(werkTitle(werk, 'de'), werk.id).not.toMatch(/^The\s/)
+    }
+  })
+
+  it('keeps the eight renamed titles', () => {
+    const byId = new Map(WERKE.map((w) => [w.id, werkTitle(w, 'en')]))
+    expect(byId.get('society')).toBe('Society')
+    expect(byId.get('protokoll')).toBe('Protocol')
+    expect(byId.get('praemie')).toBe('Policy')
+    expect(byId.get('consensus')).toBe('Consensus')
+    expect(byId.get('invoked-past')).toBe('Invoked Past')
+    expect(byId.get('balance')).toBe('Balance')
+    expect(byId.get('correction')).toBe('Correction')
+    expect(byId.get('ghost-fleet')).toBe('Ghost Fleet')
   })
 })

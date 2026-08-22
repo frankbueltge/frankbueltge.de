@@ -16,7 +16,61 @@ export interface Werk {
   methodHref?: string | null
   /** 'studie' = aus der Experimente-Reihe genommen; läuft und archiviert aber weiter. */
   tier?: 'experiment' | 'studie' | 'project' | 'instrument'
+  /** Research line this experiment belongs to (Frank, 2026-08-22) — the shelf's categories.
+   *  Mandatory for everything /experiments renders, absent for the practice doors and the
+   *  other houses' entries; werke.test.ts holds both halves of that rule. */
+  line?: ExperimentLineId
 }
+
+/** The four lines of the shelf (Frank, 2026-08-22 — chosen over a by-subject and a by-rank
+ *  cut, because this one is the works' OWN claim: nine of the sixteen already say "from the
+ *  counter-measurement line" in their own description, and the page showed none of it).
+ *  Order here is the order on /experiments. */
+export type ExperimentLineId = 'counter-measurement' | 'ledger' | 'memory' | 'watchers'
+
+export interface ExperimentLine {
+  id: ExperimentLineId
+  /** kicker label — no leading article, like the titles since 2026-08-22 */
+  label: string
+  /** what the line asks. States a rule, never today's instance — the currency rule applied
+   *  to a heading: a blurb naming the newest entry would be a lie by the next one. */
+  blurb: Record<Locale, string>
+}
+
+/** English-only site since 2026-07-16; the Locale duality in this file is legacy, so both keys
+ *  of every blurb carry the same sentence rather than a German string nobody renders. */
+const bilingual = (s: string): Record<Locale, string> => ({ de: s, en: s })
+
+export const EXPERIMENT_LINES: readonly ExperimentLine[] = [
+  {
+    id: 'counter-measurement',
+    label: 'COUNTER-MEASUREMENT',
+    blurb: bilingual(
+      "Measure what power leaves in the dark, and make the measurement checkable — including when it turns on the method itself. The lab's named line, and the one Meridian carries into the ecology as a standing remit.",
+    ),
+  },
+  {
+    id: 'ledger',
+    label: 'NIGHTLY LEDGER',
+    blurb: bilingual(
+      "Instruments that write one dated entry every night and never revise it: the minutes of the planet's session, and a premium on the present. The series is the finding, never a single night.",
+    ),
+  },
+  {
+    id: 'memory',
+    label: 'REPRESENTATION & MEMORY',
+    blurb: bilingual(
+      "What a record states and what it leaves out — across Wikipedia's language editions, across the years the world's press invokes, and inside a mind assembled from parts that understand nothing.",
+    ),
+  },
+  {
+    id: 'watchers',
+    label: 'SURVEILLANCE, COUNTED',
+    blurb: bilingual(
+      "Who is watching, counted from the watchers' own catalogues: trackers on the article pages of scholarly publishers, satellites with your location geometrically in view.",
+    ),
+  },
+]
 
 /** Verzeichnis der Experimente. Reihenfolge unten = redaktionelle Feinordnung bei Datums-
  *  Gleichstand; die öffentliche Sortierung ist chronologisch über `WERKE_CHRONO`. */
@@ -59,7 +113,8 @@ export const WERKE: Werk[] = [
   },
   {
     id: 'society',
-    title: 'The Society',
+    line: 'memory',
+    title: 'Society',
     subtitle: {
       de: 'A mind of mindless parts, running live in the browser',
       en: 'A mind of mindless parts, running live in the browser',
@@ -92,6 +147,7 @@ export const WERKE: Werk[] = [
   },
   {
     id: 'spielraum',
+    line: 'counter-measurement',
     title: { de: 'Spielraum', en: 'Headroom' },
     subtitle: {
       de: 'Rechenzentrums-Effizienz nahe am Anschlag, Verbrauch im Steigflug',
@@ -108,6 +164,7 @@ export const WERKE: Werk[] = [
   },
   {
     id: 'beifang',
+    line: 'watchers',
     title: { de: 'Beifang', en: 'Bycatch' },
     subtitle: { de: 'Science-Tracking, gemessen', en: 'Science tracking, measured' },
     status: 'live',
@@ -154,7 +211,8 @@ export const WERKE: Werk[] = [
   },
   {
     id: 'protokoll',
-    title: 'The Protocol',
+    line: 'ledger',
+    title: 'Protocol',
     subtitle: {
       de: 'Tägliche Kennzahlen aus zwölf offenen Quellen',
       en: 'Daily figures from twelve open sources',
@@ -170,6 +228,7 @@ export const WERKE: Werk[] = [
   },
   {
     id: 'tell',
+    line: 'counter-measurement',
     title: 'Delve into the intricate realm',
     subtitle: {
       de: 'Die Fingerabdrücke der Maschine in der Wissenschaft',
@@ -185,6 +244,7 @@ export const WERKE: Werk[] = [
   },
   {
     id: 'redaction',
+    line: 'counter-measurement',
     title: 'Editorial Deadline',
     subtitle: {
       de: 'Was aus dem offiziellen öffentlichen Eintrag still wieder entfernt wird',
@@ -206,6 +266,7 @@ export const WERKE: Werk[] = [
   },
   {
     id: 'round-number',
+    line: 'counter-measurement',
     title: 'Round Numbers',
     subtitle: {
       de: 'Ein Test, der angeblich gefälschte Zahlen erkennt — und wie oft er sich irrt',
@@ -222,6 +283,7 @@ export const WERKE: Werk[] = [
   },
   {
     id: 'pattern',
+    line: 'counter-measurement',
     title: 'Patterns',
     subtitle: {
       de: 'Eine Maschine, die jeden Tag ein Muster findet — und nicht weiß, ob es etwas bedeutet',
@@ -238,7 +300,8 @@ export const WERKE: Werk[] = [
   },
   {
     id: 'praemie',
-    title: 'The Policy',
+    line: 'ledger',
+    title: 'Policy',
     subtitle: {
       de: 'Klimakosten, aus Marktdaten als „Prämie" gerechnet',
       en: 'Climate cost, computed from market data as a “premium”',
@@ -254,6 +317,7 @@ export const WERKE: Werk[] = [
   },
   {
     id: 'parallaxe',
+    line: 'memory',
     title: 'Iceberg Theory',
     subtitle: {
       de: 'Wie sich Wikipedia-Sprachversionen über umstrittene Themen unterscheiden',
@@ -287,6 +351,7 @@ export const WERKE: Werk[] = [
   },
   {
     id: 'ueberflug',
+    line: 'watchers',
     title: 'All Along the Watchtower',
     subtitle: {
       de: 'Which Earth-observation satellites have your location in view right now',
@@ -305,7 +370,8 @@ export const WERKE: Werk[] = [
   },
   {
     id: 'consensus',
-    title: 'The Consensus',
+    line: 'counter-measurement',
+    title: 'Consensus',
     subtitle: {
       de: 'Wie viel „unabhängiger" Nachrichten-Konsens eine Quelle ist, x-fach kopiert',
       en: 'How much “independent” news consensus is one source, copied',
@@ -324,7 +390,8 @@ export const WERKE: Werk[] = [
   },
   {
     id: 'invoked-past',
-    title: 'The Invoked Past',
+    line: 'memory',
+    title: 'Invoked Past',
     subtitle: {
       de: 'Welches Gestern die Weltpresse heute zitiert',
       en: 'Which yesterday the world cites today',
@@ -342,7 +409,8 @@ export const WERKE: Werk[] = [
   },
   {
     id: 'balance',
-    title: 'The Balance',
+    line: 'counter-measurement',
+    title: 'Balance',
     subtitle: {
       de: 'Selbstbild gegen Fremdbild: die emotionale Handelsbilanz der Weltpresse',
       en: 'Self-image against foreign image: the emotional trade balance of the press',
@@ -360,7 +428,8 @@ export const WERKE: Werk[] = [
   },
   {
     id: 'correction',
-    title: 'The Correction',
+    line: 'counter-measurement',
+    title: 'Correction',
     subtitle: {
       de: 'Die Jobzahl war aufgebläht — und wird millionenweise gestrichen',
       en: 'The jobs number was inflated — and is cut by the million',
@@ -376,7 +445,8 @@ export const WERKE: Werk[] = [
   },
   {
     id: 'ghost-fleet',
-    title: 'The Ghost Fleet',
+    line: 'counter-measurement',
+    title: 'Ghost Fleet',
     subtitle: {
       de: 'Schiffe, die ihren Transponder bewusst abschalten, um zu verschwinden',
       en: 'Ships that switch off their transponder on purpose to vanish',
@@ -457,6 +527,32 @@ export const WERKE_HOLDINGS: Werk[] = HOLDINGS_RANKED.map((id) => {
 for (const w of WERKE) {
   if (!HOLDINGS_EXCLUDED_IDS.has(w.id) && !HOLDINGS_RANKED.includes(w.id)) {
     throw new Error(`werk "${w.id}" is neither ranked for /experiments nor excluded`)
+  }
+}
+
+export interface ExperimentGroup {
+  line: ExperimentLine
+  werke: Werk[]
+}
+
+/** /experiments by research line (Frank, 2026-08-22 — the shelf had no categories at all,
+ *  while nine of its entries already named their line in their own description).
+ *
+ *  DERIVED from WERKE_HOLDINGS, never listed by hand: recency order (2026-08-14) therefore
+ *  survives inside every group, a new werk appears the moment it names a line, and the ranking
+ *  cannot go stale. A line with no entries drops out rather than printing a heading over
+ *  nothing — an empty category claims a line the lab is not running. */
+export const WERKE_BY_LINE: readonly ExperimentGroup[] = EXPERIMENT_LINES.map((line) => ({
+  line,
+  werke: WERKE_HOLDINGS.filter((w) => w.line === line.id),
+})).filter((g) => g.werke.length > 0)
+
+/** Every entry the shelf renders belongs to a line — otherwise it would silently vanish from a
+ *  page that now shows nothing but groups. The mirror rule (an excluded werk carries no line)
+ *  is enforced in werke.test.ts, where it can fail with a readable name. */
+for (const w of WERKE_HOLDINGS) {
+  if (!w.line) {
+    throw new Error(`werk "${w.id}" renders on /experiments but names no research line`)
   }
 }
 

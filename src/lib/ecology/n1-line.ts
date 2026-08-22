@@ -26,6 +26,11 @@ export interface N1Facts {
   founded: string
   /** the practice's own name for its law, from the Dowry's H1 */
   law: string
+  /** The name the practice has taken for ITSELF, if it has taken one — distinct from `title`,
+   *  which is the repository's working title. Optional on purpose: a practice that has not
+   *  named itself yet is a normal state, not a broken mirror, so this stays undefined instead
+   *  of failing loud like the three facts above. */
+  name?: string
 }
 
 const DOWRY_PATH = 'public/n-1/DOWRY.md'
@@ -46,10 +51,14 @@ export function readN1Facts(
   const founded = /Founded\s+(\d{4}-\d{2}-\d{2})/.exec(dowry)?.[1]
   if (!founded) throw new Error(`ecology/n1-line: ${DOWRY_PATH} states no "Founded YYYY-MM-DD" — mirror broken or format changed`)
 
-  const title = (JSON.parse(windowJson) as { title?: { text?: string } }).title?.text
+  const declared = (JSON.parse(windowJson) as {
+    title?: { text?: string; name?: { text?: string } }
+  }).title
+  const title = declared?.text
   if (!title) throw new Error(`ecology/n1-line: ${WINDOW_PATH} declares no title — window contract broken or format changed`)
+  const name = declared?.name?.text
 
   // "The Dowry" reads as a title; in a status row it reads as a word. The article drops its
   // capital the way lineShortLabel drops the article — presentation, not renaming.
-  return { title, founded, law: heading.replace(/^The\b/, 'the') }
+  return { title, founded, law: heading.replace(/^The\b/, 'the'), name }
 }

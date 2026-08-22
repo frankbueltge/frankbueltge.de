@@ -5,7 +5,7 @@
 // Three rules this module exists to keep:
 //
 //   1. No number is ever written down. Every `big` is computed from a snapshot in src/data/ (or,
-//      for The Protocol, from the committed day file in src/content/protokoll/). Change the
+//      for the Protocol, from the committed day file in src/content/protokoll/). Change the
 //      snapshot, the tile changes; delete it, the tile disappears.
 //   2. A tile with no reading is not rendered. `readTiles` returns only what it could derive —
 //      the handoff's rule, and the reason the design's observatory tile is absent: its register

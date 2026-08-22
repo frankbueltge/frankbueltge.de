@@ -157,7 +157,7 @@ export const NODES: readonly ApparatusNode[] = [
     what: 'What the world is fighting about and looking at — the no-GCP replacement for BigQuery reads GDELT as raw files over plain HTTP.',
     members: [
       { label: 'GDELT raw files', what: 'the conflict item of the protocol agenda', ref: 'pipelines/protokoll/src/protokoll/adapters/conflict.py' },
-      { label: 'GDELT GKG raw files', what: 'orchestrated consensus, measured by The Consensus (DOC API until 2026-08-05)', ref: 'pipelines/consensus/refresh.py' },
+      { label: 'GDELT GKG raw files', what: 'orchestrated consensus, measured by Consensus (DOC API until 2026-08-05)', ref: 'pipelines/consensus/refresh.py' },
       { label: 'Wikimedia REST', what: 'most-read articles, the attention item', ref: 'pipelines/protokoll/src/protokoll/adapters/attention.py' },
     ],
   },
@@ -175,7 +175,7 @@ export const NODES: readonly ApparatusNode[] = [
       { label: 'UN WPP', what: 'world population (bundled, not fetched)', ref: 'pipelines/protokoll/src/protokoll/adapters/population.py' },
       { label: 'UNHCR', what: 'global displacement', ref: 'pipelines/protokoll/src/protokoll/adapters/refugees.py' },
       { label: 'World Bank', what: 'indicators behind Round Number', ref: 'pipelines/round-number' },
-      { label: 'Philadelphia Fed', what: 'real-time revisions behind The Correction', ref: 'pipelines/revision/refresh.py' },
+      { label: 'Philadelphia Fed', what: 'real-time revisions behind Correction', ref: 'pipelines/revision/refresh.py' },
       { label: 'Hyperscaler reports', what: 'the efficiency figures Headroom watches', ref: 'pipelines/protokoll/src/protokoll/spielraum' },
     ],
   },
@@ -233,7 +233,7 @@ export const NODES: readonly ApparatusNode[] = [
     what: 'Counter-measurement: the instruments that measure what power leaves in the dark.',
     commitsAs: 'Gegenmessung <gegenmessung@frankbueltge.de>',
     members: [
-      { label: 'Gegenmessung nightly', what: 'Consensus, Balance, The Invoked Past and Pattern daily; Tell and Correction on Mondays', ref: '.github/workflows/gegenmessung.yml', workflowName: 'Gegenmessung nightly', cron: ['0 6 * * *'] },
+      { label: 'Gegenmessung nightly', what: 'Consensus, Balance, Invoked Past and Pattern daily; Tell and Correction on Mondays', ref: '.github/workflows/gegenmessung.yml', workflowName: 'Gegenmessung nightly', cron: ['0 6 * * *'] },
       { label: 'Redaction nightly', what: 'what was quietly removed from public pages', ref: '.github/workflows/redaction.yml', workflowName: 'Redaction nightly', cron: ['30 5 * * *'] },
       { label: 'Round Number nightly', what: 'the digits institutions round to', ref: '.github/workflows/round-number.yml', workflowName: 'Round Number nightly' },
       { label: 'Ghost Fleet nightly', what: 'vessels that go dark', ref: '.github/workflows/ghost-fleet.yml', workflowName: 'Ghost Fleet nightly', cron: ['0 4 * * *'], secrets: ['GFW_TOKEN'] },

@@ -8,7 +8,7 @@ import { latestWorks, type EngineWorkMeta } from '@/lib/engines/latest'
 
 interface Props { locale: Locale }
 const { locale } = Astro.props
-// Chronologisch, jüngstes zuerst — keine Sonderstellung (The Protocol steht als ältestes mit drin).
+// Chronologisch, jüngstes zuerst — keine Sonderstellung (Protocol steht als ältestes mit drin).
 const liveWerke = WERKE_EXPERIMENTE.filter((w) => w.status === 'live')
 
 const fieldMeta = import.meta.glob('/src/components/field/werke/*/meta.json', { eager: true, import: 'default' }) as Record<string, EngineWorkMeta>

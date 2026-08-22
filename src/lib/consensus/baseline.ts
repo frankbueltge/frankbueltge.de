@@ -1,4 +1,4 @@
-// src/lib/consensus/baseline.ts — the longitudinal layer of The Consensus.
+// src/lib/consensus/baseline.ts — the longitudinal layer of the Consensus.
 //
 // USP rework program, Phase 1 (docs/design/2026-08-09-usp-rework-program.md, row 1),
 // on the G1 BigQuery path activated 2026-08-09 (docs/design/2026-08-09-gcp-activation.md).

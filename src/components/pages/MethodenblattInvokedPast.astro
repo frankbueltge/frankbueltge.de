@@ -1,5 +1,5 @@
 ---
-/** Method sheet for The Invoked Past (Werkgruppe §3.5 duty). Plain English, static. */
+/** Method sheet for Invoked Past (Werkgruppe §3.5 duty). Plain English, static. */
 import data from '@/data/invoked/latest.json'
 import type { InvokedData } from '@/lib/invoked/types'
 import { count, percent, standoutWindow } from '@/lib/invoked/format'
@@ -20,7 +20,7 @@ const resolutions = Object.entries(d.method.resolution_codes)
 <article class="mx-auto max-w-3xl px-4 py-14">
   <header class="mb-10">
     <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">Method sheet</p>
-    <h1 class="mt-1 text-3xl font-bold tracking-[-0.02em]">The Invoked Past</h1>
+    <h1 class="mt-1 text-3xl font-bold tracking-[-0.02em]">Invoked Past</h1>
     <p class="mt-2 text-fg-muted">
       Method {d.method.version} since {d.method.since}. Spec and calibration record:
       <code class="text-xs">docs/superpowers/specs/2026-08-14-the-invoked-past-design.md</code> in the site repository.
@@ -39,7 +39,7 @@ const resolutions = Object.entries(d.method.resolution_codes)
     <h2 class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">Source and field</h2>
     <p class="mt-3 text-sm text-fg-muted">
       The last 24 hours of GDELT's raw 15-minute GKG 2.1 files ({d.stats.slots_expected} static downloads from
-      data.gdeltproject.org — no API, no key; the shared fetch layer The Balance already uses). The sensor is
+      data.gdeltproject.org — no API, no key; the shared fetch layer the Balance already uses). The sensor is
       <code class="text-xs">{d.method.field}</code>: for every article, the dates its text refers to, each as a
       block of <code class="text-xs">resolution#month#day#year#offset</code>. The field was added to GKG 2.1 in
       2015 explicitly for anniversary analysis. The instrument reads it; it does not re-implement it.
