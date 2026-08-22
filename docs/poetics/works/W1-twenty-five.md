@@ -24,56 +24,62 @@ took the house's own logs as their subject.
 > standard used for comparison (EM-DAT's ten deaths / hundred affected; GDACS alert levels;
 > IPC phase thresholds).
 
-## 2. The fall
+## 2. The fall — revised 2026-08-23 after the data probe
 
-The threshold is exact. The quantity it measures is not.
+*The form first specified here is dead. The probe found no event whose toll crosses the line in
+both directions; see `W1-data-probe-result.md`. What it found instead is the material below, and
+it is better.*
 
-Death tolls are revised — upward, downward, months later, by sources that disagree with each
-other and with themselves. So the same event crosses the line more than once, in both
-directions, at times nobody chooses. An event is not a conflict at twenty-four, is one at
-twenty-six, and was neither for the eleven weeks in between during which the counting had not
-finished.
+The threshold is exact and it is applied late. Years are **admitted to the past** — a year that
+was not a war becomes one, sometimes decades afterwards, when the counting is redone. And the
+dataset contains **nothing below 25 in any version**: those who failed the line are not recorded
+as failing it, they are absent. The only visible trace of the excluded is the few later let in.
 
-**That is the fall, and the practice does not supply it.** Not a random number, not a statistical
-variation, not a simulated perturbation — the world's own revising, which nobody in this house
-controls. It is *Zu-fall* in the only sense available to a machine practice: what befalls.
-(Mersch, 2013, p. 10; and his own footnote that the purity of Duchamp's chance is "unerheblich",
-2015, p. 3 n. 10.)
+That admission is the fall, and this practice supplies none of it. Uppsala revises; we do not.
 
-## 3. The form
+## 3. The three cases — decided 2026-08-23
 
-**Three measuring sticks.** One per event. Three, and never a fourth to improve the result.
+Three, and never a fourth. Each is one row of UCDP's own version history, filed by Uppsala under
+*Dyad-years added*, and each shows something the other two do not. All three sit within nine of
+the threshold: these are the ones who barely got in.
 
-Each is a rule whose edge is not straight: its curvature is the revision history of one event's
-death toll against the threshold — the line bending above and below twenty-five as the counting
-changed hands and dates. The rule is mute. It measures nothing usable. It is a measure with a
-curved edge, and it is the only thing the work asserts.
+| # | Case | Year(s) | Deaths | Admitted in | What it shows |
+|---|---|---|---|---|---|
+| 1 | Government of Israel – Hezbollah (dyad 891, conflict 426) | **2000** | **27** | v25.1 | **The longest delay.** 1990–1999 and 2006 were present from the start. A single missing year inside a fully documented conflict — not war for a quarter of a century, two deaths above the line since 2025. |
+| 2 | Government of Indonesia – OPM (dyad 628, conflict 291) | **2019–2020** | **34 / 31** | v25.1 | **The hole.** 2018 and 2021 were there all along. West Papua had two years in between during which the canonical record showed no war. |
+| 3 | Government of Colombia – EPL Megateo (dyad 15558, conflict 289) | **2002** | **exactly 25** | v23.1 | **The line itself.** Admitted at the precise threshold value. One death fewer and it would not exist. |
 
-Beside them, the dossier — and the dossier is not documentation, it is the second half of the
-work (Mersch 2015, pp. 7–8: what Duchamp staged was "das Penible jeder Versuchsanordnung, die
-Genauigkeit des Settings … wie gleichermaßen die säuberliche Aufzeichnung, Archivierung und
-Veröffentlichung der Wurfresultate"). Every retrieval timestamped to the second; every source
-quoted with its own revision date; every query, every hash, every byte count; the calibration
-stated to a precision the object cannot bear. **The apparatus is overdone until its instituting
-pathos shows** — a laboratory of absolute rigour, measuring a number the world cannot state to
-within a hundred.
+Rejected, with reasons in `W1-data-probe-result.md`: Uganda–ADF, Colombia–FARC dissidents,
+Tajikistan–IS, South Africa–SWAPO — re-attributions and new dyads, which Uppsala files under
+different headings, not admissions.
 
-That gap — the precision of the apparatus against the imprecision of the dead — is the wound.
-Nothing in the work says so.
+## 4. The form — decided 2026-08-23: a score work with its page
 
-## 4. What the work refuses
+The curved rule is gone with the two-directional crossing. What the data shows is not a bend but
+a **gap in a series**: 2018 present, 2019 and 2020 absent, 2021 present — then, in 2025, filled.
 
-- **It does not update.** Fixed at three events, on a stated date, and never again. If a toll is
-  revised the day after publication, the rule stays as it was and the revision is not shown.
-  The work is an attempt without return (Mersch 2013, p. 7); a live instrument is the opposite
-  of one.
-- **It does not correct.** Where sources contradict, both stay. No reconciliation, no best
-  estimate, no "most reliable source". Averaging is the identity procedure the work exists
-  against.
-- **It names no headline figure.** There is no "X events were miscounted". The aggregate is what
-  erases the singular; supplying one would undo the work in its own last line.
-- **It does not explain itself.** No wall text. A curved measuring rule beside a threshold and a
-  dossier of absurd exactitude either shows what it shows or fails.
+So the object is **a pair of rules per case**: the record as it stood, and the record as it
+stands — the same conflict measured twice, with the graduations of the missing years absent from
+the first and present from the second. Three pairs. Six rules. The difference between two rulers
+of the same object, one of them made twenty-five years late.
+
+**Fabrication mode: score work** (v3 Move 5a). The practice authors and publishes the executable
+score — pinned dataset versions with hashes, the derivation, dimensions, toolpath — with full
+provenance, and **never claims the object**. Anyone may fabricate. This is chosen deliberately
+over executor mode: it asks nothing of the founder's hands, and it is the native mode of a
+machine practice ("the idea becomes a machine that makes the art").
+
+**And the page is the second half, not documentation** — H1, reliquary pairs: the rules are mute,
+the page speaks. It carries the four dataset versions with their hashes and retrieval times, the
+version-history rows quoted verbatim, the re-derivation anyone can run, and the one sentence the
+whole work turns on: **that no reason is recorded anywhere for any of the three admissions.**
+Zero occurrences of "reason", "recoding", "revision" or "threshold" across 167 pages of
+changelog.
+
+**The screenshot test, answered honestly:** a screenshot of the page destroys the
+re-derivability and the pairing with the object, and nothing else. That is why the work is not a
+screen work but a hybrid — the print gives it the body, the page gives it the falsifiability.
+Forcing it onto a screen alone would have been availability, not necessity.
 
 ## 5. The debtor
 
@@ -123,9 +129,9 @@ right open question.
    building. *Current honest answer: little.* This may be a print or a score work rather than a
    screen work — the fifth line is screen **and hybrid** works, and forcing it onto a screen
    would be availability, not necessity. Decide after the probe, not before.
-3. **The data probe.** Can three events be found whose tolls actually crossed the threshold in
-   both directions, with citable revision histories? **If not, the work does not exist.** This is
-   the gate: one day of work, and it fails cleanly.
+3. ~~**The data probe.**~~ **RUN 2026-08-23. Failed as specified, passed in the revised form** —
+   see `W1-data-probe-result.md` and its addendum. The three cases of §3 are confirmed against
+   UCDP's own version history.
 4. **Pre-registration.** The three events, the sources, the retrieval dates and the mapping are
    fixed and hashed *before* the first rule is drawn — not as a scientific credential (Mersch,
    2012, p. 20: works are their own hypothesis) but so that the choice of events cannot be
