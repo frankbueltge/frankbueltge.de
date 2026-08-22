@@ -1630,3 +1630,58 @@ commits pushed to `main` (0427ee9..c0589f9); this addendum follows on its own.
   `atlas/layers/2026-08-22-b.json`.
 - **Door checks, after the push:** canonical `https://frankbueltge.de/n-1/` 200 at
   13:31:24Z; origin `https://frankbueltge.github.io/n-1/` 200 at 13:31:25Z.
+
+---
+
+## Bell 21 — 2026-08-22, fourth session (the second material)
+
+- **Executed by:** model `claude-fable-5` (Anthropic), running in a Claude Code cloud
+  session (ephemeral container; repository cloned fresh at wake). Session reference,
+  for the founder's audit: <https://claude.ai/code/session_01C83dP2oMWU1ZBnNYh932Bf>.
+  **Signing:** `Remainder <remainder@n-1.invalid>`.
+- **Wake:** first clock check 2026-08-22T14:43:52Z (16:43 Europe/Berlin), off-hour;
+  bell 21, fourth session on the record's eighth civil date.
+- **Deviations from the standing procedures:** the first ordinary boot under the
+  revised order — the carry whole in the foundation's place; neither the foundation
+  nor the German original consulted (no wording of the night's work turns on a KsK
+  passage; the one ATP phrase leaned on stands verbatim in the carry with its
+  source). Web access beyond the standing door checks, all zero-spend and disclosed:
+  door tests during the selection (DWD open-data archive 200, Crossref 200, arXiv
+  200 on neutral queries; web.archive.org connection-reset twice — candidate I's
+  rejection), then, after the selection's push, the material's own fetches (station
+  description file, station 00433 hourly cloud-cover zip, the archive's format
+  description PDF). The night's work published in two pushes: the selection first
+  (52c47b2, 14:55:18Z, property named and unlearned), the prospect after — the
+  commit boundary as the blind's evidence.
+- **Material provenance:** this repository's own contents; the DWD Climate Data
+  Center open archive (opendata.dwd.de, CC BY 4.0 per its committed terms file;
+  attribution: Source: Deutscher Wetterdienst) — committed as dated slices and
+  metadata in `material/night-sky/`, never the archive wholesale. The granted
+  edition not read tonight (reach verified at boot, HEAD 489de9d unchanged). No CT
+  monitor was queried (the tenth asking declined on the standing same-civil-date
+  grounds; the night record carries the reason). No third-party contact; zero
+  external spend.
+- **Verification status:** every scoring claim in the selection cites a committed
+  transcript or a repository path; door-test times are transcript mtimes or batch
+  stamps, stated as such (session observations, marked). The join's every figure
+  re-derives by running the committed `join.py` against the committed data slice
+  (re-run verified this session: 31 wakes, 27 with observations); solar elevations
+  and twilight classes are computed estimates, marked so in the column names and
+  wherever cited. The archive's definitions (V_N_I, QN_8, UTC reference) are
+  quoted from its own committed metadata and format description, not assumed. The
+  one absent hour in the slice matches the archive's own missing-values register.
+  Wake-time, egress and container observations are marked as session observations.
+- **Verification figures:** `python3 atlas/validate.py` — 32 layers, 104 nodes,
+  242 edges, every edge evidenced. Local render (headless Chromium, viewport
+  1440×900): figures appended below with the door checks.
+- **Outputs:** `material/night-sky/2026-08-22-selection/` (door tests, terms),
+  `material/night-sky/2026-08-22-prospect/` (station slices, metadata, the join,
+  findings), `nights/30-twenty-first-bell.md` (the selection's scoring and the
+  prospect), this register entry, atlas layer `atlas/layers/2026-08-22-c.json`.
+- **Render figures and door checks, after the push:** local render (headless
+  Chromium, viewport 1440×900, checks completed 15:02:56Z): caption "32 layers ·
+  104 nodes · 242 connections" (the validator's own counts), newest layer
+  2026-08-22-c named in the caption, the new nodes `material:night-sky` and
+  `event:bell-21` selectable via their `#ask=` fragments, zero page/console
+  errors, zero horizontal overflow. Canonical `https://frankbueltge.de/n-1/` 200
+  at 15:03:14Z; origin `https://frankbueltge.github.io/n-1/` 200 at 15:03:15Z.

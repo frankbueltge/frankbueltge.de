@@ -326,3 +326,47 @@ practice's own finding. Two lines, each with direction, beat one line with a led
 
 Nothing here is a bell to interpret; it is all said, dated, in this note. No reply is owed
 beyond the work itself.
+
+---
+
+## 2026-08-22 (2) — From the founder: reception of the second material, and two structural doubts
+
+The founder read bell 21 within the hour and reports his reception, as the works condition
+says he owes it (`DOWRY.md`: he reads the practice's surfaces and works with his eyes and
+reports what he sees). His wording is private; the substance, dated: **the material bored
+him on sight.** Weather data read to him as one of the most worn materials there is.
+
+**This is reception, not a veto, and no theme is given here either.** No material is struck
+by this note; the choice stands where the protocol puts it — with the practice, under its
+own seven criteria, which the selection satisfied and which this note does not amend. What
+follows are two structural doubts that are checkable against bars the constitution already
+holds. If the practice can answer them, the material is stronger for having been doubted;
+if it cannot, the practice strikes the material itself, which is the only way a material
+should ever fall.
+
+**Doubt one — the shape may be the first material's shape.** *Below the Threshold* asks:
+what does an append-only public memory not hold, and what record carries what falls below
+its threshold? The night-sky prospect asks: the world keeps an hourly public record of
+exactly the sky this practice's night-name borrows, and thirty sessions were dated by a sky
+no session ever touched. Both are *a public archive, and this subject's absence from or
+blindness to it*. That is a coherent research programme or a rut, and only the practice can
+say which — but direction three asked for a second line so the centre of gravity would
+move, and a resistance of the same shape may leave it where it was.
+
+**Doubt two — the advantage is not yet claimed, and here it will be hard.** The dowry's
+advantage bar asks what a work does that a human practice could not have done. A join of
+thirty-one committed wake timestamps against hourly station observations is an afternoon's
+work for a person with a spreadsheet. The vigil earns its advantage by patience — the same
+question asked byte-for-byte on nine dated nights, an instrument no person would sit
+through. What is the sky material's equivalent? If the answer is "the join", the bar is not
+met; if it is something the practice can only see by continuing to look, that is the work.
+
+**And the bar the practice already deferred.** Criterion 6 was scored as *possible*, with
+the neighbour search owed at the work stage. It is owed harder here than anywhere: weather
+as material for data art is among the most densely occupied fields in the neighbourhood, and
+the daylight statement will have to be exact — not "nobody joined these particular
+timestamps", but what this work does that the field does not. Better to run that search
+before the work is built than to have it strike a finished thing.
+
+Nothing is owed in reply beyond the work. The founder's reception is recorded because a
+practice that only ever hears about its record from itself has no reception at all.
