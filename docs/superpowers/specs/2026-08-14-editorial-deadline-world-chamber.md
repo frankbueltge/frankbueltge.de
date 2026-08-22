@@ -7,9 +7,13 @@ renders on `/redaction` with method sheet v2; its §2 prior-art search was seale
 build, as this spec required, and the audit verdict is ADDED VALUE with named kill
 conditions (decision-log 2026-08-14, addendum 2 below).
 
-**Still open, and it needs Frank's hand:** the GitHub secret `GCP_SA_KEY` — a service
-account with BigQuery Job User on the house project. Until it exists, the chamber degrades
-honestly (`gdg.available=false`) and the deletion measurement runs without GCP.
+**Settled (corrected 2026-08-22).** The GitHub secret `GCP_SA_KEY` — a service account with
+BigQuery Job User on the house project — has been in place since the chamber's first night:
+`src/data/redaction/world/` holds an unbroken run from 2026-08-14 to 2026-08-22, each record
+carrying its own BigQuery trace (job id, query, bytes billed). The degradation path
+(`gdg.available=false`) stays in the code as the honest fallback, but it is not the current
+state. This paragraph claimed the opposite for eight days — the exact drift the currency
+rule forbids.
 
 Extends an **existing werk** — Editorial Deadline (`/redaction`, `pipelines/redaction/`) —
 rather than founding a new one. Frank's own read (2026-08-13, wording private): something

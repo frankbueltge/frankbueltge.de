@@ -1,7 +1,13 @@
 # Runtime state for works — the static corset was never decided (2026-08-22)
 
-**Status: DECISION PAPER. Nothing in force.** Written for the founder's ruling; it proposes
-edits and executes none.
+**Status: RULED AND EXECUTED (2026-08-22).** Frank's decision, same day (wording private):
+dynamic works are allowed under the §6 duties; state lives on **Cloudflare D1 / Durable
+Objects**, and Durable Objects are to be tested on the free tier. Verified against
+Cloudflare's pricing page the same day: DO **is** available on the Workers Free plan with
+the SQLite backend — 100,000 requests/day, 13,000 GB-s/day, 5 M rows read, 100,000 rows
+written, 5 GB stored, daily reset at 00:00 UTC, and exceeding a limit **fails the operation
+rather than billing for it**. The §7 edits are executed, and the duties now live as a
+path-bound rule at `.claude/rules/runtime-and-works.md`.
 
 **Occasion.** The founder objected on 2026-08-22 (paraphrased, wording private): he never
 consciously imposed the static constraint, has repeatedly proposed a Hetzner VM or GCP to

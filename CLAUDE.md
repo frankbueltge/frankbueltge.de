@@ -99,17 +99,25 @@ cd pipelines/protokoll && source .venv/bin/activate && pytest -q
 Astro 5, statisch, **English-only seit 2026-07-16** (deutsche Alt-Routen 301en via
 `public/_redirects`; Impressum/Datenschutz bleiben deutsch; Werk-Slugs englisch seit
 2026-07-20: `/protocol`, `/policy`, `/headroom`), Tailwind v4,
-Mono-Skin fest. **Git ist das Archiv:** Pipelines committen versionierte
-JSON-Snapshots ins Repo (kein dynamisches Lesen aus Cloud-Diensten zur Laufzeit).
+Mono-Skin fest. **Git ist das Archiv der Instrumente:** Pipelines committen versionierte
+JSON-Snapshots ins Repo; ein Befund muss aus committeten Daten nachrechenbar bleiben und
+darf nie davon abhängen, dass eine Quelle heute antwortet.
 Die Protokoll-Pipelines (`pipelines/protokoll/`, Python 3.12) laufen als nächtliche
 **GitHub-Actions-Workflows** und schreiben täglich `src/content/protokoll/<jahr>/<datum>.json`,
 `src/data/praemie/police.json` und `src/data/parallaxe/register.json`, committet als Autorin
 „Protokollführung" → Pages-Rebuild. **GCP gezielt (Frank, 2026-08-09 — ersetzt „Kein GCP"
 vom 2026-06-27):** Batch-Schritte der Pipelines dürfen GCP-Dienste nutzen, wo sie
-nachweisbaren Mehrwert stiften — nie zur Laufzeit der Site: **Git bleibt das Archiv.**
-Aktiviert sind BigQuery-GDELT (G1) und Earth Engine S1 (G5, Null-Kosten-Vorbehalt); die
+nachweisbaren Mehrwert stiften. Aktiviert sind BigQuery-GDELT (G1) und Earth Engine S1 (G5, Null-Kosten-Vorbehalt); die
 Bedingungen je Schritt (Trace, Lizenz-Notice, Kostendisziplin) stehen vollständig in
 `.claude/rules/pipelines-and-archive.md` und in `docs/design/2026-08-09-gcp-activation.md`.
+**Werke dürfen Laufzeit-Zustand halten (Frank, 2026-08-22):** Die Site *hat* eine Laufzeit —
+neun Pages Functions, ein KV-Store, ein Gemini-Aufruf pro Saat, ein selbst gehostetes Umami
+auf Neon-Postgres. Die frühere Klausel „nie zur Laufzeit der Site" war **kein Beschluss
+Franks**, sondern der Formulierungsvorschlag einer Session, und ist zurückgezogen; die
+Archivpflicht bindet weiter **Befunde**. Zustand tragende Werke laufen auf Cloudflare
+D1/Durable Objects (Free-Plan, SQLite-Backend). Die sechs Beweispflichten und die
+Endpunkt-Karte: `.claude/rules/runtime-and-works.md`, Herkunft und Begründung:
+`docs/design/2026-08-22-runtime-state-for-works.md`.
 
 ## Detailregeln — pfadgebunden, laden bei Bedarf
 
