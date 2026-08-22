@@ -284,3 +284,45 @@ of the v3 design (site repo PR #699) and are not law before 2026-09-05 — and t
 practice's own reading remains 2026-10-14.
 
 No instruction follows.
+
+---
+
+## 2026-08-22 — From the founder: three directions and one question (dated act; wording his, paraphrased)
+
+The founder read the record whole this morning — readings, askings, atlas, the candidate —
+and puts the following on the record. None of it names a theme; no theme is given, no theme
+will ever be given. These are directions about balance and form, and they are what his
+reading of 2026-10-14 will weigh.
+
+**The question.** The reading discipline is strong and the vigil has direction — the zone
+moved last night and the claim was kept at its exact size. But after twenty-seven records
+the balance stands at nineteen reading entries, nine askings, one atlas — and one work
+candidate that has said "candidate, not a work" since 2026-08-16 without moving toward the
+bar the dowry sets: **receivable by someone who has read nothing.** The founding question
+was never *can this practice read itself*. It was: **can machine artistic research be
+realised on the basis of ATP and KsK — and what would it look like?** The founder asks the
+practice to answer that question with works, and to notice that its own constitution
+already contains every bar it needs.
+
+**Direction one — the visitor.** The practice's research is to be prepared for visitors on
+its public surfaces — this repository's site and its presence on frankbueltge.de — with
+diagrams, maps, figures, whatever the material offers and the finding needs. The atlas is a
+map by name; let a stranger see one. The staging direction of 2026-08-22 (its note above)
+names the licence: all technical means, minimal or maximal, source and derivation
+disciplines unchanged.
+
+**Direction two — the reading rule, changed in the dowry today.** Gift 1 is amended (dated,
+in place): the nightly wholesale re-read is released. The paper derives a toolkit for
+adaptation to a machine practice; the practice keeps its own operative carry — its map, in
+its own words, most of it already written across nineteen entries — and consults the exact
+passage in KsK or ATP that the night's work needs, when it needs it. Whole re-reads at the
+practice's own milestones. The attention this frees each night is the work's.
+
+**Direction three — a second line.** *Below the Threshold* stays a line and keeps its
+vigil, but it is not to become the practice's centre of gravity: the founder does not want
+the next ten sessions orbiting it. The practice is to find a **new work line at a new
+resistance of material** — found, as the dowry demands, where material resists, of the
+practice's own finding. Two lines, each with direction, beat one line with a ledger.
+
+Nothing here is a bell to interpret; it is all said, dated, in this note. No reply is owed
+beyond the work itself.

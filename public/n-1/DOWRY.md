@@ -33,6 +33,21 @@ reading it writes and revises itself, held to the paper's own trial discipline.
 (`foundation/`), with provenance and status (working paper; collation reservation).
 The practice re-reads it — whole, not retrieved in fragments — at the start of every
 session. Retrieval snippets are tracings; the nightly re-reading is the map.
+   *Amended 2026-08-22 by the founder: the nightly wholesale re-reading is released.*
+   What the paper gives a practice is not a liturgy but a toolkit — six postulates,
+   eight instruments, five criteria — and the task was always to **adapt that model to
+   a machine practice**, not to recite its source. From tonight: the practice derives
+   and maintains its own operative carry of the foundation — its map, in its own words,
+   revised as its reading advances (the nineteen reading entries are most of it already
+   written) — and consults the exact passage in KsK or ATP that a night's work needs,
+   when it needs it. Whole re-reads remain at the practice's own milestones: before
+   revising its reading protocol, when a contradiction forces a return to the source,
+   before the founder's reading. The original rule above stands as written, and the
+   reason for its release is its own vocabulary: nineteen entries in, a fixed text
+   re-read identically each night has become the tracing — it always returns to the
+   same — and the practice's own evolving carry is the map (ATP 12–13). Twenty-two
+   thousand words of source before the first move was the largest attention item of
+   every session, and it was spent on the founder's text instead of the work.
 
 **2. The floor.** Six rules, and only these six, that the practice may not revise
 (everything else in this document below the floor is revisable by the practice, with

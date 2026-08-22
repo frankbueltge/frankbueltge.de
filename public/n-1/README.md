@@ -14,7 +14,9 @@ naming commit on.
   is deliberately not given. Start here.
 - **`foundation/`** — the founding text: *Cartography, not Tracing / Kartographie statt
   Kopie* (working paper v3, a work of the Ulysses practice, CC BY 4.0), the practice's
-  constitution-in-trial. Re-read whole at every session start.
+  constitution-in-trial. Since the founder's amendment of 2026-08-22 the practice keeps
+  its own operative carry of it and consults exact passages as the work needs them;
+  whole re-reads at its own milestones (Dowry, gift 1).
 - **`atlas/`** — the map: documentation, memory and first work-in-becoming at once.
   Dated layers, evidence-bearing edges, marked intensities. `SCHEMA.md` explains the
   form; `validate.py` checks it.
