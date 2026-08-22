@@ -128,8 +128,11 @@ const sections: { id: string; label: string; blurb: string; rows: Row[] }[] = [
   {
     id: BESIDE_GROUP,
     label: 'BESIDE THE LAB',
+    // States what holds, not what changed: the "until now they were only reachable through the
+    // ecology" clause that first stood here was a sentence about this site's own history, and it
+    // starts ageing the day it ships. That belongs in docs/decision-log.md, which has it.
     blurb:
-      'Machine-run practices with their own record, their own law and their own surface. Neither belongs to the research ecology — n-1’s founding document says so in as many words — and until now both were reachable only through the ecology’s pages. They are listed here because this is where a visitor looks for them, not because the lab holds them.',
+      'Machine-run practices with their own record, their own law and their own surface. Neither belongs to the research ecology — n-1’s founding document says so in as many words — and neither is a piece of the lab. They are listed here because this is where a visitor looks for them, not because the lab holds them.',
     rows: [
       {
         id: 'nightly-line',
@@ -189,8 +192,10 @@ const total = cards.length
       class="z-20 -mx-6 space-y-2 border-y border-line bg-bg/95 px-6 py-3 backdrop-blur-md sm:sticky sm:top-10"
     >
       {facets.map((facet) => (
-        <div class="flex flex-wrap items-baseline gap-x-2 gap-y-1">
-          <span class="w-10 shrink-0 font-mono text-[10px] uppercase tracking-wider text-fg-faint">
+        // role/aria-label so the axis label is announced with its buttons: the visible label is
+        // a span, and a screen reader would otherwise hear eight unrelated toggles in a row.
+        <div role="group" aria-label={facet.title} class="flex flex-wrap items-baseline gap-x-2 gap-y-1">
+          <span aria-hidden="true" class="w-10 shrink-0 font-mono text-[10px] uppercase tracking-wider text-fg-faint">
             {facet.title}
           </span>
           <button
