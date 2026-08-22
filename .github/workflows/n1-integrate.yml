@@ -13,8 +13,17 @@
 #
 # Pull-based like the other integrates: the practice repo needs no write
 # access and no secret here; this workflow copies bytes and never authors
-# content. Hourly, so founder-rung daytime sessions reach the domain within
-# the hour; an unchanged repository exits without a commit. The commit is made
+# content.
+#
+# Every five minutes since 2026-08-22, and cheap when there is nothing to do:
+# the first step asks `git ls-remote` for the practice's HEAD and compares it
+# with the sha this mirror last carried (.github/state/n1-mirror-head). Equal
+# means exit in seconds — no node, no npm ci, no wipe. The cadence matters
+# because the practice's own surface contract names this domain `canonical`
+# and github.io merely `origin`, and on 2026-08-22 the founder retired that
+# origin: the GitHub Page is switched off, so this mirror is now the practice's
+# ONLY public address. A surface that is the only one may not lag an hour
+# behind the record it serves. The commit is made
 # with the built-in GITHUB_TOKEN, which never fires `on: push` — deploy-cf.yml
 # carries this workflow in its `workflow_run` list, and must keep doing so.
 # public/n-1 is not a declared knowledge-graph source, so no graph rebuild
@@ -24,7 +33,7 @@ name: n-1 integrate
 
 on:
   schedule:
-    - cron: "45 * * * *"
+    - cron: "*/5 * * * *"
   workflow_dispatch:
 
 permissions:
@@ -38,20 +47,41 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      - name: Anything new upstream?
+        id: check
+        run: |
+          remote=$(git ls-remote https://github.com/frankbueltge/n-1 HEAD | cut -f1)
+          have=$(cat .github/state/n1-mirror-head 2>/dev/null || echo none)
+          echo "remote=$remote" >> "$GITHUB_OUTPUT"
+          if [ "$remote" = "$have" ]; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "record unchanged at $remote — nothing to mirror"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            echo "upstream $remote, mirror carries $have"
+          fi
+
       - uses: actions/setup-node@v4
+        if: steps.check.outputs.changed == 'true'
         with:
           node-version: 22
       - run: npm ci
+        if: steps.check.outputs.changed == 'true'
 
       - name: Pull the practice's surface and record
+        if: steps.check.outputs.changed == 'true'
         run: |
           git clone --depth 1 https://github.com/frankbueltge/n-1 /tmp/n-1
           rm -rf /tmp/n-1/.git
           rm -rf public/n-1
           mkdir -p public/n-1
           cp -R /tmp/n-1/. public/n-1/
+          mkdir -p .github/state
+          printf '%s\n' "${{ steps.check.outputs.remote }}" > .github/state/n1-mirror-head
 
       - name: Frame the mirror — the way back
+        if: steps.check.outputs.changed == 'true'
         # The mirror is copied byte for byte and then framed: the practice's own file is never
         # touched, only this copy, and the strip says so on the page ("added by the site").
         # Without this the record's pages carry no internal link at all — a visitor arriving
@@ -61,10 +91,11 @@ jobs:
         run: npx tsx scripts/engines/reframe-works.ts n-1
 
       - name: Commit mirror
+        if: steps.check.outputs.changed == 'true'
         run: |
           git config user.name "N1-Integrate"
           git config user.email "n1-integrate@frankbueltge.de"
-          git add public/n-1
+          git add public/n-1 .github/state/n1-mirror-head
           if git diff --cached --quiet; then
             echo "record unchanged"
             exit 0
