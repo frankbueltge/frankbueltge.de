@@ -20,9 +20,24 @@
 //     They are listed APART and never among the experiments — neither is a piece of the lab,
 //     and the USP gate (graph.test.ts) rightly demands an audit verdict from every experiment
 //     on this shelf, which a practice does not have.
+//
+// 2026-08-22, second pass — a page a visitor can survey (Frank: a menu or a filter, and less
+// endless scrolling):
+//   · every row COLLAPSES to one line — title, its own subtitle, and its stamps. The subtitle
+//     is already each piece's own one-line teaser, so nothing had to be written to make the
+//     compact state readable. The full description opens in place (native <details>, so it
+//     works without JavaScript and stays in the page for search engines).
+//   · a STICKY FILTER BAR over three axes — line, kind, data — in the same data-attribute
+//     idiom as /papers and /atlas (one filter pattern in this repo, not three). Without
+//     JavaScript the complete list simply stands, which is why the bar is a set of buttons and
+//     not a form: no empty screen as the failure state.
+//   · the practices beside the lab are a value of the SAME line axis, not a section outside it.
+//     Filtering to one line therefore hides them too, instead of leaving a headless section
+//     behind — and the shelf's counts stay one arithmetic (src/lib/experiments/shelf.ts).
 import { getRelativeLocaleUrl } from 'astro:i18n'
 import type { Locale } from '@/lib/site'
 import { WERKE_BY_LINE, werkTitle } from '@/data/werke'
+import { BESIDE_GROUP, KIND_LABEL, kindOf, shelfFacets, type ShelfCard, type ShelfKind } from '@/lib/experiments/shelf'
 import { NAMING } from '@/config/naming'
 import { readN1Facts } from '@/lib/ecology/n1-line'
 
@@ -37,31 +52,34 @@ const locale = (Astro.currentLocale ?? 'en') as Locale
 const copy = {
   de: {
     title: 'Experimente',
-    sub: 'Die Experimente des Labors — laufende Instrumente, jedes mit offenen Quellen und offengelegtem Verfahren. Nach Forschungslinie geordnet, innerhalb jeder das Neueste zuerst. Jede Route bleibt erreichbar, keine Pipeline endet dadurch.',
+    sub: 'Die Experimente des Labors — laufende Instrumente, jedes mit offenen Quellen und offengelegtem Verfahren. Nach Forschungslinie geordnet, innerhalb jeder das Neueste zuerst.',
     live: 'live data',
     field: 'Das Feld: jedes Experiment gegen die Projekte, die es schon gibt →',
+    shown: 'sichtbar',
+    reset: 'zurücksetzen',
+    all: 'alle',
+    open: 'zum Experiment →',
+    method: 'Methodenblatt →',
+    opened: 'eröffnet ',
+    empty: 'Kein Eintrag passt auf diese Auswahl.',
   },
   en: {
     title: 'Experiments',
-    // No count in this sentence: the groups are derived, so a numeral would be a lie the day a
-    // line empties or a new one opens — the same rule the triptych's captions follow.
-    sub: "The lab's experiments — ongoing instruments, each with open sources and a disclosed method. Grouped by research line, newest first inside each. Every route stays reachable, no pipeline ends because of this.",
+    sub: "The lab's experiments — ongoing instruments, each with open sources and a disclosed method. Grouped by research line, newest first inside each.",
     live: 'live data',
     // 2026-08-09: the neighbour audit drawn as one figure. It sits at the top of the shelf on
     // purpose — a visitor should be able to see what already exists near this work before
     // reading the work's own account of itself.
     field: 'The field: every experiment against the projects that already exist →',
+    shown: 'shown',
+    reset: 'reset',
+    all: 'all',
+    open: 'open the experiment →',
+    method: 'method sheet →',
+    opened: 'opened ',
+    empty: 'No entry matches this selection.',
   },
 }[locale]
-
-// The tier a piece carries is stated where it has one that is NOT "experiment": three studies
-// out of the series and one instrument sit on this shelf, and before the grouping the page
-// showed them as peers of the experiments without a word. The register has held the field
-// since 2026-08-09; only now does the page say it.
-const TIER_LABEL: Record<string, string> = {
-  studie: 'study, out of series',
-  instrument: 'instrument',
-}
 
 // The nightly line reads its title, sentence and route from the homepage's own card
 // (NAMING.overview.items) rather than restating them — the read-never-restate arrangement the
@@ -74,93 +92,287 @@ if (!nightly?.href) throw new Error('/experiments: NAMING.overview.items has no 
 // itself. Read, never typed: the day the practice renames itself, this row follows.
 const n1 = readN1Facts()
 
-const beside = {
-  kicker: 'BESIDE THE LAB',
-  kickerSub: 'PRACTICES, NOT EXPERIMENTS',
-  note: 'Machine-run practices with their own record, their own law and their own surface. Neither belongs to the research ecology — n-1’s founding document says so in as many words — and until now both were reachable only through the ecology’s pages. They are listed here because this is where a visitor looks for them, not because the lab holds them.',
-  rows: [
-    {
-      title: nightly.title ?? 'Error as Method',
-      href: nightly.href,
-      meta: nightly.meta,
-      line: nightly.line,
-    },
-    {
-      title: n1.title,
-      href: '/n-1',
-      meta: `founded ${n1.founded} · ${n1.law} instead of a protocol`,
-      line: `A practice founded on the Atelier’s own working paper and given no protocol document by design; it holds itself to that paper’s trial discipline and rewrites it where it proves too small. Its repository is mirrored whole and served as the practice’s own surface — the house keeps no window on it.${
-        n1.name ? ` It has since named itself ${n1.name} (2026-08-21); the working title stands until the founder acts on the renaming request.` : ''
-      }`,
-    },
-  ],
+interface Row {
+  id: string
+  title: string
+  /** the piece's own one-liner; the compact row leans on it, so it is never invented here */
+  subtitle?: string
+  description: string
+  href: string
+  methodHref?: string | null
+  kind: ShelfKind
+  live: boolean
+  /** short mono note on the right of the collapsed row */
+  stamp?: string
+  /** longer mono note, shown only when the row is open */
+  meta?: string
 }
+
+const sections: { id: string; label: string; blurb: string; rows: Row[] }[] = [
+  ...WERKE_BY_LINE.map((group) => ({
+    id: group.line.id,
+    label: group.line.label,
+    blurb: group.line.blurb[locale],
+    rows: group.werke.map((werk) => ({
+      id: werk.id,
+      title: werkTitle(werk, locale),
+      subtitle: werk.subtitle[locale],
+      description: werk.description[locale],
+      href: werk.href,
+      methodHref: werk.methodHref,
+      kind: kindOf(werk),
+      live: Boolean(werk.live),
+      stamp: werk.since,
+    })),
+  })),
+  {
+    id: BESIDE_GROUP,
+    label: 'BESIDE THE LAB',
+    blurb:
+      'Machine-run practices with their own record, their own law and their own surface. Neither belongs to the research ecology — n-1’s founding document says so in as many words — and until now both were reachable only through the ecology’s pages. They are listed here because this is where a visitor looks for them, not because the lab holds them.',
+    rows: [
+      {
+        id: 'nightly-line',
+        title: nightly.title ?? 'Error as Method',
+        description: nightly.line ?? '',
+        href: nightly.href,
+        kind: 'practice',
+        live: false,
+        meta: nightly.meta,
+      },
+      {
+        id: 'n-1',
+        title: n1.title,
+        description: `A practice founded on the Atelier’s own working paper and given no protocol document by design; it holds itself to that paper’s trial discipline and rewrites it where it proves too small. Its repository is mirrored whole and served as the practice’s own surface — the house keeps no window on it.${
+          n1.name ? ` It has since named itself ${n1.name} (2026-08-21); the working title stands until the founder acts on the renaming request.` : ''
+        }`,
+        href: '/n-1',
+        kind: 'practice',
+        live: false,
+        meta: `founded ${n1.founded} · ${n1.law} instead of a protocol`,
+      },
+    ],
+  },
+]
+
+const cards: ShelfCard[] = sections.flatMap((s) =>
+  s.rows.map((r) => ({ id: r.id, group: s.id, kind: r.kind, live: r.live })),
+)
+const facets = shelfFacets(
+  cards,
+  new Map(sections.map((s) => [s.id, s.label])),
+  sections.map((s) => s.id),
+)
+const total = cards.length
 ---
 
-<main id="main" class="mx-auto w-full max-w-4xl flex-1 px-6 py-16 sm:py-24">
-  <h1 class="text-[clamp(34px,6vw,64px)] font-bold tracking-[-0.03em]">{copy.title}</h1>
-  <p class="mt-4 max-w-2xl text-fg-muted">{copy.sub}</p>
-  <p class="mt-5">
+<main id="main" class="mx-auto w-full max-w-4xl flex-1 px-6 py-12 sm:py-16">
+  <h1 class="text-[clamp(30px,5.5vw,56px)] font-bold tracking-[-0.03em]">{copy.title}</h1>
+  <p class="mt-3 max-w-2xl text-sm leading-relaxed text-fg-muted sm:text-base">{copy.sub}</p>
+  <p class="mt-4">
     <a
       href={getRelativeLocaleUrl(locale, '/experiments/neighbors')}
-      class="font-mono text-[12px] uppercase tracking-[0.14em] text-fg-faint underline underline-offset-4 transition-colors hover:text-accent-soft"
+      class="font-mono text-[11px] uppercase tracking-[0.14em] text-fg-faint underline underline-offset-4 transition-colors hover:text-accent-soft"
     >
       {copy.field}
     </a>
   </p>
 
-  {WERKE_BY_LINE.map((group) => (
-    <section class="mt-16 first:mt-14">
-      <div class="flex items-baseline justify-between gap-4 border-b border-line/60 pb-2">
-        <h2 class="font-mono text-[12px] uppercase tracking-[0.16em] text-fg-faint">{group.line.label}</h2>
-        <span class="font-mono text-[11px] tracking-[0.14em] text-fg-faint">{group.werke.length}</span>
-      </div>
-      <p class="mt-4 max-w-2xl text-sm leading-relaxed text-fg-muted">{group.line.blurb[locale]}</p>
-
-      <ul class="mt-6 divide-y divide-line/60 border-t border-line/60">
-        {group.werke.map((werk) => (
-          <li class="py-7">
-            <a href={getRelativeLocaleUrl(locale, werk.href)} class="group block">
-              <h3 class="text-lg font-semibold transition-colors group-hover:text-accent-soft">
-                {werkTitle(werk, locale)}<span class="font-normal text-fg-faint"> — {werk.subtitle[locale]}</span>
-                {werk.live && (
-                  <span class="ml-2 align-middle font-mono text-[10px] uppercase tracking-wider text-fg-faint">
-                    <span class="dot-live mr-0.5 inline-block h-[5px] w-[5px] rounded-full align-middle"></span>{copy.live}
-                  </span>
-                )}
-                {werk.tier && TIER_LABEL[werk.tier] && (
-                  <span class="ml-2 align-middle font-mono text-[10px] uppercase tracking-wider text-fg-faint">
-                    {TIER_LABEL[werk.tier]}
-                  </span>
-                )}
-              </h3>
-              <p class="mt-1.5 text-sm leading-relaxed text-fg-muted">{werk.description[locale]}</p>
-            </a>
-          </li>
-        ))}
-      </ul>
-    </section>
-  ))}
-
-  <section class="mt-20">
-    <div class="flex items-baseline justify-between gap-4 border-b border-line/60 pb-2">
-      <h2 class="font-mono text-[12px] uppercase tracking-[0.16em] text-fg-faint">{beside.kicker}</h2>
-      <span class="font-mono text-[11px] tracking-[0.14em] text-fg-faint">{beside.kickerSub}</span>
-    </div>
-    <p class="mt-4 max-w-2xl text-sm leading-relaxed text-fg-muted">{beside.note}</p>
-
-    <ul class="mt-6 divide-y divide-line/60 border-t border-line/60">
-      {beside.rows.map((row) => (
-        <li class="py-7">
-          <a href={getRelativeLocaleUrl(locale, row.href)} class="group block">
-            <h3 class="text-lg font-semibold transition-colors group-hover:text-accent-soft">{row.title}</h3>
-            {row.line && <p class="mt-1.5 text-sm leading-relaxed text-fg-muted">{row.line}</p>}
-            {row.meta && (
-              <p class="mt-2 font-mono text-[10px] uppercase tracking-wider text-fg-faint">{row.meta}</p>
-            )}
-          </a>
-        </li>
+  <section data-shelf class="mt-8">
+    <!-- Filter. Client-side over data attributes, in the /papers idiom; with no JavaScript the
+         full list stands (never an empty screen as the failure state).
+         Sticky from sm upward only: at 390px the three axes wrap to six rows, and a sticky
+         block that tall eats a third of the viewport for the whole scroll — worse than the
+         scrolling it was meant to spare. On a phone it stays at the top of the shelf, where
+         you set it once; on wider screens it follows under the TopBar (h-10 there). -->
+    <div
+      class="z-20 -mx-6 space-y-2 border-y border-line bg-bg/95 px-6 py-3 backdrop-blur-md sm:sticky sm:top-10"
+    >
+      {facets.map((facet) => (
+        <div class="flex flex-wrap items-baseline gap-x-2 gap-y-1">
+          <span class="w-10 shrink-0 font-mono text-[10px] uppercase tracking-wider text-fg-faint">
+            {facet.title}
+          </span>
+          <button
+            type="button"
+            data-filter={facet.group}
+            data-value="all"
+            aria-pressed="true"
+            class="rounded border border-line px-2 py-0.5 font-mono text-[11px] text-fg-faint transition-colors aria-pressed:border-fg-faint aria-pressed:text-fg hover:text-fg"
+          >{copy.all}</button>
+          {facet.options.map((option) => (
+            <button
+              type="button"
+              data-filter={facet.group}
+              data-value={option.value}
+              aria-pressed="false"
+              class="rounded border border-line px-2 py-0.5 font-mono text-[11px] text-fg-faint transition-colors aria-pressed:border-fg-faint aria-pressed:text-fg hover:text-fg"
+            >{option.label} <span class="tabular-nums opacity-60">{option.n}</span></button>
+          ))}
+        </div>
       ))}
-    </ul>
+
+      <div class="flex items-center gap-3 pt-0.5">
+        <p class="font-mono text-[11px] text-fg-faint">
+          <span data-count class="tabular-nums">{total}</span> / <span class="tabular-nums">{total}</span> {copy.shown}
+        </p>
+        <button
+          type="button"
+          data-reset
+          class="hidden rounded border border-line px-2 py-0.5 font-mono text-[11px] text-fg-faint transition-colors hover:text-fg"
+        >{copy.reset}</button>
+      </div>
+    </div>
+
+    {sections.map((section) => (
+      <section data-group={section.id} id={section.id} class="mt-10 scroll-mt-28">
+        <div class="flex items-baseline justify-between gap-4 border-b border-line/60 pb-2">
+          <h2 class="font-mono text-[12px] uppercase tracking-[0.16em] text-fg-faint">{section.label}</h2>
+          <span data-group-count class="font-mono text-[11px] tabular-nums tracking-[0.14em] text-fg-faint">
+            {section.rows.length}
+          </span>
+        </div>
+        <p class="mt-3 max-w-2xl text-sm leading-relaxed text-fg-muted">{section.blurb}</p>
+
+        <ul class="mt-4 divide-y divide-line/60 border-t border-line/60">
+          {section.rows.map((row) => (
+            <li data-card data-group={section.id} data-kind={row.kind} data-live={row.live ? 'live' : 'static'}>
+              <details class="group">
+                <summary
+                  class="flex cursor-pointer list-none items-baseline gap-3 py-3.5 transition-colors hover:text-accent-soft [&::-webkit-details-marker]:hidden"
+                >
+                  <span
+                    aria-hidden="true"
+                    class="mt-[2px] shrink-0 font-mono text-[10px] text-fg-faint motion-safe:transition-transform group-open:rotate-90"
+                  >▸</span>
+                  <span class="min-w-0 flex-1">
+                    {/* The title is a link inside the summary: one click still goes to the
+                        work, exactly as on the flat list this page replaced, while a click
+                        anywhere else on the row opens the description in place. Two clicks to
+                        reach a piece would make a routing shelf worse, not tidier. */}
+                    <a
+                      href={getRelativeLocaleUrl(locale, row.href)}
+                      class="font-semibold underline decoration-transparent underline-offset-4 transition-colors hover:decoration-current"
+                    >{row.title}</a>
+                    {row.subtitle && <span class="text-fg-faint"> — {row.subtitle}</span>}
+                  </span>
+                  <span class="flex shrink-0 items-center gap-1.5 font-mono text-[10px] uppercase tracking-wider text-fg-faint">
+                    {row.live && (
+                      <span class="whitespace-nowrap">
+                        <span class="dot-live mr-1 inline-block h-[5px] w-[5px] rounded-full align-middle"></span>{copy.live}
+                      </span>
+                    )}
+                    {row.kind !== 'experiment' && (
+                      <>
+                        {row.live && <span aria-hidden="true" class="opacity-40">·</span>}
+                        <span>{KIND_LABEL[row.kind]}</span>
+                      </>
+                    )}
+                    {row.stamp && (
+                      <>
+                        {/* separator only where something precedes it — a leading "·" in front
+                            of the date is a hairline pointing at nothing */}
+                        {(row.live || row.kind !== 'experiment') && (
+                          <span aria-hidden="true" class="hidden opacity-40 sm:inline">·</span>
+                        )}
+                        <span class="hidden tabular-nums sm:inline">
+                          <span class="sr-only">{copy.opened}</span>{row.stamp}
+                        </span>
+                      </>
+                    )}
+                  </span>
+                </summary>
+
+                <div class="pb-5 pl-6 pr-1">
+                  <p class="max-w-2xl text-sm leading-relaxed text-fg-muted">{row.description}</p>
+                  {row.meta && (
+                    <p class="mt-2 font-mono text-[10px] uppercase tracking-wider text-fg-faint">{row.meta}</p>
+                  )}
+                  <p class="mt-3 flex flex-wrap gap-x-5 gap-y-1 font-mono text-[11px]">
+                    <a
+                      href={getRelativeLocaleUrl(locale, row.href)}
+                      class="text-fg-faint underline underline-offset-4 transition-colors hover:text-accent-soft"
+                    >{copy.open}</a>
+                    {row.methodHref && (
+                      <a
+                        href={getRelativeLocaleUrl(locale, row.methodHref)}
+                        class="text-fg-faint underline underline-offset-4 transition-colors hover:text-accent-soft"
+                      >{copy.method}</a>
+                    )}
+                  </p>
+                </div>
+              </details>
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))}
+
+    <p data-empty hidden class="mt-10 font-mono text-xs text-fg-faint">{copy.empty}</p>
   </section>
 </main>
+
+<script>
+  // The /papers and /atlas filter pattern, third occurrence — one idiom in this repo, not
+  // three. All three axes are single-valued (a row has one line, one kind, one data state), so
+  // equality is enough; no multi-value splitting is needed here.
+  //
+  // What this adds over the /papers script: a section whose every row is filtered away is
+  // hidden with its heading and its blurb. A kicker over nothing states a line that has
+  // nothing in it — the same reason WERKE_BY_LINE drops empty lines at build time.
+  const root = document.querySelector<HTMLElement>('[data-shelf]')
+  if (root) {
+    const cards = Array.from(root.querySelectorAll<HTMLElement>('[data-card]'))
+    const groups = Array.from(root.querySelectorAll<HTMLElement>('section[data-group]'))
+    const countEl = root.querySelector<HTMLElement>('[data-count]')
+    const resetEl = root.querySelector<HTMLButtonElement>('[data-reset]')
+    const emptyEl = root.querySelector<HTMLElement>('[data-empty]')
+    const state: Record<string, string> = { group: 'all', kind: 'all', live: 'all' }
+
+    const apply = () => {
+      let shown = 0
+      for (const card of cards) {
+        const visible = Object.entries(state).every(
+          ([axis, value]) => value === 'all' || (card.dataset[axis] ?? '') === value,
+        )
+        card.hidden = !visible
+        if (visible) shown++
+      }
+
+      for (const group of groups) {
+        const rows = Array.from(group.querySelectorAll<HTMLElement>('[data-card]'))
+        const visible = rows.filter((r) => !r.hidden)
+        group.hidden = visible.length === 0
+        const groupCount = group.querySelector<HTMLElement>('[data-group-count]')
+        // The section count follows the filter: "9" over three shown rows would be a number
+        // the page contradicts two lines further down.
+        if (groupCount) groupCount.textContent = String(visible.length)
+      }
+
+      if (countEl) countEl.textContent = String(shown)
+      if (emptyEl) emptyEl.hidden = shown > 0
+      resetEl?.classList.toggle('hidden', !Object.values(state).some((v) => v !== 'all'))
+    }
+
+    resetEl?.addEventListener('click', () => {
+      for (const axis of Object.keys(state)) state[axis] = 'all'
+      root.querySelectorAll<HTMLButtonElement>('[data-filter]').forEach((b) => {
+        b.setAttribute('aria-pressed', String(b.dataset.value === 'all'))
+      })
+      apply()
+    })
+
+    root.querySelectorAll<HTMLButtonElement>('[data-filter]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const axis = btn.dataset.filter ?? ''
+        state[axis] = btn.dataset.value ?? 'all'
+        root
+          .querySelectorAll<HTMLButtonElement>(`[data-filter="${axis}"]`)
+          .forEach((b) => b.setAttribute('aria-pressed', String(b === btn)))
+        apply()
+      })
+    })
+
+    apply()
+  }
+</script>
