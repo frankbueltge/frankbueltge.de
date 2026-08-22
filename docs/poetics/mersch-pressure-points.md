@@ -49,22 +49,31 @@ the two loads he places on it.
 - *Against Hegel.* The subordination of art in Hegel's hierarchy concerns knowledge in the
   propositional sense. A metaphorical sense of "knowledge" leaves that hierarchy exactly
   where it stood; the rescue is verbal.
-- *Institutionally.* The claims that artistic research makes in practice — doctorates,
+- ~~*Institutionally.* The claims that artistic research makes in practice — doctorates,
   research funding, epistemic standing — are made in the literal register. If "knowledge" is
   in quotation marks, the entitlements are too. Mersch co-authored the *Manifest der
-  künstlerischen Forschung*, which asserts them.
+  künstlerischen Forschung*, which asserts them.~~
 
-The tension is therefore not internal to his semantics; it is **between his semantics and his
-institutional politics**. That is the sharpest available form, because it needs no premise he
-would reject.
+> **RETRACTED 2026-08-22, on reading the *Manifest*.** The institutional half of this
+> objection was wrong, and it was wrong in the way rule 0.2 exists to prevent: I asserted what
+> a source claims without having read it. The *Manifest der Künstlerischen Forschung* is
+> subtitled **"Eine Verteidigung gegen ihre Verfechter"** and its first thesis is that artistic
+> research can only establish itself by *emancipating* from university research (p. 6). It
+> explicitly attacks the pursuit of academic entitlements: artistic research "strebt danach,
+> sich über die klassisch-akademischen Qualifikationsformate wie die Promotion zu nobilitieren"
+> (p. 5) — named as a defect, not a demand. There is no gap between his semantics and his
+> institutional politics; the politics run the same direction as the semantics.
 
-**His reply.** That his target is scientism, not research; that the *Manifest* defends art's
-own mode against assimilation rather than claiming the sciences' entitlements; and that
-redefinition is legitimate conceptual work, not evasion.
+What survives is the Hegel half alone: a metaphorical sense of "knowledge" does not touch a
+hierarchy built on the propositional sense. And it survives weakened, because he does not need
+the hierarchy overturned in order to make his case — he needs only that art's mode not be
+judged by the sciences' measure.
 
-**Strength: high.** Textually anchored in his own concessions.
-**Novelty: partial.** The "knowledge is implausible here" objection is published. The
-institutional-entitlement twist may be ours — **verify before claiming it.**
+**His reply.** That his target is scientism, not research, and that redefinition is legitimate
+conceptual work rather than evasion.
+
+**Strength: medium** (was: high, before the retraction).
+**Novelty: low.** The "knowledge is implausible here" objection is published.
 
 ## PP2 — Showing cannot discriminate: the hole he concedes
 
@@ -133,11 +142,22 @@ p. 13).
 practice characterised exclusively by privations stays defined by its other — the very move
 he charges the tradition with.
 
+**And the demand is theirs.** The *Manifest* (p. 18), which he co-authored, names as the
+fourth misunderstanding a politics of negation that "sich zugleich weigert, **einen eigenen,
+positiven Wissensbegriff zu entwickeln**". The requirement for a positive concept of knowledge
+is thus stated by the position itself. That converts this point from an external complaint into
+a **failure against an internally stated requirement** — the strongest immanent form available
+in this document. Even the *Manifest*'s own positive programme (thesis 4, p. 18:
+"Disziplinlosigkeit zu behaupten, Unbestimmtheit zuzulassen, Negativität zu integrieren und
+Anschaulichkeit zu suchen") is three-quarters privative; only *Anschaulichkeit* is positive.
+
 **His reply.** *Via negativa*: privative language is the only non-recuperating language
 available, and any positive determination would re-propositionalise what is at stake. A
-respectable answer with a long pedigree.
+respectable answer with a long pedigree — but it is now in tension with a demand the *Manifest*
+makes in its own voice, and that tension has to be resolved on their side, not ours.
 
-**Strength: medium-high as a pressure point, not a refutation.** Say so in the paper.
+**Strength: high** (was: medium-high, before the *Manifest*). Still a pressure point rather
+than a refutation, and the paper should say so.
 
 ## PP5 — The anthropological restriction is asserted, not argued *(the point that decides the machine question)*
 
@@ -218,6 +238,30 @@ work or not at all.
 **Strength: medium.** An engagement-gap argument, and the first thing an anglophone reviewer
 raises. Not a refutation.
 
+## PP8 — The criterion they do supply, and what it costs the house
+
+Not an objection but its complement, and it belongs here because it constrains what the paper
+may claim. The *Manifest* (p. 18) gives one positive, checkable justification criterion:
+artistic research "beweist dort ihre Berechtigung, wo sie **intervenierend und intermittierend
+in Wissenschaftsdiskurse wie auch in Alltagswelten eingreift**". And: what is essential is not
+*Kunst* but *Aisthesis*, and "sie beansprucht keine Autonomie".
+
+Two consequences. **First**, this converges with H3 from the art-historical side: what made
+Haacke and Lombardi consequential was the addressee they reached. Two independent routes to one
+criterion is the strongest support either has. **Second**, it moves weight off the producer: if
+*Aisthesis* is what matters, part of the criterion sits with the recipient, who in a machine
+practice's case is human. That narrows PP5's anthropological restriction without settling it.
+
+**And it cuts at us.** The *Manifest*'s four misunderstandings (pp. 17–18) describe this house
+precisely: "Outputdenken" calibrated on "überprüfbare wie nachvollziehbare Resultate …, welche
+sich in Publikationen oder **auf Webseiten** distribuieren lassen" (p. 13); "**Datenvisualisierung**"
+named in the list of things that block the view of the actual artistic unrest (p. 17); and
+research as "**Besetzung von Nischen**" producing "Miniaturverschiebungen im Gewebe eines bereits
+hundert Mal Gezeigten" (p. 17) — which is the USP duty's daylight-and-neighbours logic as
+currently operated. A paper that objects to Mersch while the house it comes from exhibits all
+three is answerable in one sentence. Either the practice changes or the paper concedes this
+first, in its own voice.
+
 ## The shape of the paper this suggests
 
 Not "Mersch is wrong". Rather: **his account has one conceded hole and one unargued
@@ -239,8 +283,9 @@ restriction, and a machine practice is the case that makes both visible.**
 
 1. Acquire and read *Epistemologies of Aesthetics* (Diaphanes 2015). Every citation above
    must be re-anchored there or in another published venue.
-2. Read the *Manifest der künstlerischen Forschung* (64 pp., available locally) — PP1 and PP3
-   stand or fall on what it actually claims institutionally.
+2. ~~Read the *Manifest*~~ — **done in part 2026-08-22 (pp. 1–18, theses 1–4;** see
+   `readings/T1-04`). It refuted PP1's institutional half and strengthened PP4. Pages 19–64
+   remain: do not cite the *Manifest* as a whole until they are read.
 3. Read *Was heißt, im Ästhetischen forschen* (2015) and *Aesthetic Difference* in full.
 4. Retrieve the two blocked critical texts (between-science-and-art; the PhilArchive paper
    "Thinking Otherwise: Art as Epistemic Practice in Dieter Mersch") and Busch's *Artistic
