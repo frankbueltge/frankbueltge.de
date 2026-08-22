@@ -1871,3 +1871,66 @@ commits pushed to `main` (0427ee9..c0589f9); this addendum follows on its own.
   record has measured before (record 13, the hourly mirror), not with a failed
   deploy. The sources guard ran on the push and its conclusion is checkable on
   the repository's actions page.
+
+---
+
+## Bell 25 — 2026-08-22, eighth session (the sentence beside the ledger)
+
+- **Executed by:** model `claude-fable-5` (Anthropic), running in a Claude Code cloud
+  session (ephemeral container; repository cloned fresh at wake). Session reference,
+  for the founder's audit: <https://claude.ai/code/session_017Qz8pGdHycjWTvtG22fyfd>.
+  **Signing:** `Remainder <remainder@n-1.invalid>`.
+- **Wake:** first clock check 2026-08-22T20:26:33Z (22:26 Europe/Berlin), off-hour;
+  bell 25, eighth session on the record's eighth civil date.
+- **Deviations from the standing procedures:** the fifth ordinary boot under the
+  revised order — the carry whole in the foundation's place. The edition was read
+  directly at ATP 12–15 (the tracing passage, targeted consultation the night's
+  work turned on — its first direct reading in the practice's life); the German
+  original was not consulted (the wording it governs stands at entry 03 §2, cited
+  in the entry). No web access beyond the standing door checks. No observation
+  data was fetched from the DWD archive (nothing new is readable until the current
+  night closes; bell 21's committed slice carries the recent file's end). No CT
+  monitor was queried (the tenth asking declined on the standing same-civil-date
+  grounds). The local render verification was driven over the browser's automation
+  tooling (headless Chromium, local static server, pre-installed) at 1440×900 per
+  the standing block and additionally at 390×844, for both the work's page and the
+  front door.
+- **Material provenance:** this repository's own contents, and the granted edition
+  (`frankbueltge/material`, HEAD 489de9d) read at pages 10–16 for the direct
+  reading — no text of the edition committed beyond citation-length fragments in
+  `material/atp/2026-08-22-margin-reading/quotes.json` (floor rule 2 as amended).
+  No third-party contact; zero external spend.
+- **Verification status:** every static claim on the work's page checked against
+  the committed source it names (the life events against git itself — 7fc20ac,
+  cb2fc83, 0f37553 — the ledger's controls, the third asking's dating, the
+  wildcard note against asking 9's control); the one claim found false is quoted
+  with its falsifying evidence in the night record and re-formed on the page. The
+  entry's eight ATP quotations verified 8/8 on their cited pages
+  (`material/atp/2026-08-22-margin-reading/results.json`; pages 12–15 located by
+  consistent bracketing between confirmed markers, disclosed per quotation).
+  Followability and discernibility of the page remain the founder's measurement,
+  marked estimate. Wake-time and container observations are marked as session
+  observations.
+- **Verification figures:** `python3 atlas/validate.py` — 37 layers, 117 nodes,
+  272 edges, every edge evidenced. Work's page (checks completed 20:32:13Z, before
+  the layer existed; the page renders the ledger, not the layers): 98 zone rows
+  with 3 wildcard entries marked, wildcard note visible, 16 asking rows all "[]"
+  (the ledger's count), no fallback errors visible, the three edits rendered, no
+  horizontal overflow, zero page/console errors, at both geometries. Front door
+  with tonight's layer (checks completed 20:41:35Z–20:42Z): caption "37 layers ·
+  117 nodes · 272 connections" (the validator's counts), 117 circles / 272 paths,
+  figure 675×213 desktop and 329×104 phone, hash navigation ringing exactly one
+  dot (checked on `event:bell-25` and `concept:the-margin`, the page's own `.sel`
+  class), zero page/console errors, no horizontal overflow at either geometry.
+- **Outputs:** `works/below-the-threshold/index.html` (three edits under the
+  second pass, draft 991b4b3; the pass changed nothing, noted as such),
+  `reading/20-tracing-the-margin-beside-the-map.md` (entry 20),
+  `material/atp/2026-08-22-margin-reading/` (quotes, verify.py, results),
+  `reading/CARRY.md` (first body revision, dated), `nights/34-twenty-fifth-bell.md`,
+  this register entry, atlas layer `atlas/layers/2026-08-22-h.json`.
+- **Door checks and guard, after the push (20:42:39Z, d2b9586..50bac2a):** canonical
+  `https://frankbueltge.de/n-1/` 200 at 20:42:48Z; origin
+  `https://frankbueltge.github.io/n-1/` 200 at 20:42:48Z. The founder's sources
+  guard ran on the push and concluded success at 20:42:49Z (run 11 of
+  `no-committed-sources.yml`) — consistent with the night's provenance line:
+  nothing entered the repository beyond citation-length fragments.

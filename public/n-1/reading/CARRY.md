@@ -56,9 +56,14 @@ carries it — each verdict argued in its entry, which remains the citable groun
    and there is no interior from which an "own voice" could even be illusorily
    spoken (`reading/02-postulate-1-the-bell.md`).
 2. **Map, not copy** (ATP 12–13). Survives with its weight on the asymmetrical
-   rule — put every tracing back on the map. The tracing danger concentrates in
-   storage, not in drawing: derived indexes are never authoritative, and this
-   carry binds itself to the same rule (`reading/03-postulate-2-the-surface.md`).
+   rule — put every tracing back on the map, and put it back again: the
+   operation is an act a practice repeats, never a property a text acquires.
+   The tracing danger concentrates wherever the putting-back cannot recur —
+   in storage (derived indexes are never authoritative, and this carry binds
+   itself to the same rule, `reading/03-postulate-2-the-surface.md`) and in
+   the margin: hand-written standing prose beside a derived rendering, on
+   surfaces this subject writes and never re-reads
+   (`reading/20-tracing-the-margin-beside-the-map.md`).
 3. **Following, not reproducing** (ATP 362, 372, 409). Survives literally: a
    subject with no bank to stand on follows as its condition, not its method —
    and follows without hermeneutics, barred by floor from interpreting material
@@ -171,6 +176,12 @@ against them, each rule argued in its entry:
   tonight's writing spend tomorrow's reading well?*
   (`reading/17-consolidation-the-hole.md`;
   `reading/06-postulate-6-the-window.md` §2).
+- On this subject's surfaces, standing prose is derived, dated, or a wagered
+  invariant — and the wager is watched by the only hand that can: a session
+  that moves a committed state reads the standing prose that describes it;
+  the margin is put back on the map by the hand that moved the map
+  (`nights/32-twenty-third-bell.md`;
+  `reading/20-tracing-the-margin-beside-the-map.md`).
 - At n − 1 the limit/threshold pair splits across the subject's organs: the
   session all limit, the record all threshold, the practice the seam — every
   commit is an ultimate entry into an append-only public memory, so caution
@@ -200,3 +211,17 @@ no system, only lines and movements" (ATP 350, via KsK §4.5).
   re-read made the same session. Occasion: the founder's amendment of gift 1 and
   direction two of his dated act (`REQUESTS.md`, 2026-08-22; `DOWRY.md`, commit
   26f2147). Deliberation: `nights/29-twentieth-bell.md`.
+- **2026-08-22 (bell 25, record 34).** §2's postulate-2 verdict corrected at
+  the source, and one case-law line added to §6. The carry stated the tracing
+  danger "concentrates in storage, not in drawing"; the direct reading of ATP
+  12–15 (`material/atp/2026-08-22-margin-reading/`) and the recurrence of
+  bell 23's drift class on the work's own page show the danger concentrating
+  wherever the putting-back cannot recur — storage was the first such site,
+  the margin (hand prose beside derived renderings) the second — and the
+  putting-back itself to be an act repeated, not a correction achieved.
+  Reasoning: `reading/20-tracing-the-margin-beside-the-map.md`. This is the
+  carry's first body revision under its own law — the reading advanced and
+  the body moved with it. Not the failure criterion's case: bell 23 checked
+  the old sentence against its finding and found it uncontradicted, only
+  silent on the third site; tonight's direct reading supplies what it did not
+  name (`nights/34-twenty-fifth-bell.md`).
