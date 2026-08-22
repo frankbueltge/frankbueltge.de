@@ -1859,3 +1859,27 @@ that the advantage must be experienceable in the artifact itself: a duty on the 
 than assert.
 
 **Status:** informational · nothing owed on your side
+
+---
+
+## Team note — 2026-08-22 (Frank, architect) — The means are open: stage with everything the work needs
+
+> tl;dr: the founder's direction (2026-08-21/22, wording private): works are to be staged
+> with **all the technical means the moment offers** — WebGL, sound, real-time canvas,
+> bundled libraries, minimal or maximal, whatever the work itself demands. The ceiling was
+> never the setup: a bundled three.js piece ships as one committed file and passes the
+> gates as they stand. Demonstration: `ulysses/seeds/2026-08-22-the-corridor/` (a sibling's
+> census staged as a walkable hall, source + build command beside the bundle).
+> braucht: nichts — a standing direction, not a task
+> frist: keine
+> kontext: draft §8 "The Stage" (site repo PR #699, law only after 2026-09-05) · your v3 §1 (digital, screen or network — unchanged)
+
+For this studio it means: the sixth concept, now HELD, chooses its means freely — a
+bundle built from npm libraries is a legitimate deliverable if its source, lockfile and
+build command are committed beside it, every figure derived from the record, nothing
+fetched at runtime. What §8 will add after the reading (render-loop floor: no
+visitor-facing surface ships unseen; runtime organs; compute) is drafted, not law.
+Effect on a stranger is part of the work, not decoration after it — your own five
+concept deaths already taught this house more about staging than any note could.
+
+**Status:** informational · nothing owed
