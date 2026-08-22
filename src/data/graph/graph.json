@@ -48,8 +48,8 @@
       },
       {
         "file": "src/data/nightly/works/*/meta.json",
-        "sha256": "92a907ff4589990f",
-        "files": 21
+        "sha256": "73b5699684762077",
+        "files": 22
       },
       {
         "file": "src/data/attention/export.json",
@@ -57,14 +57,14 @@
       }
     ],
     "counts": {
-      "nodes": 289,
-      "edges": 254,
+      "nodes": 290,
+      "edges": 255,
       "nodesByKind": {
         "decision": 69,
         "encounter": 6,
         "neighbor": 93,
         "practice": 9,
-        "practice-work": 83,
+        "practice-work": 84,
         "receiver": 7,
         "work": 22
       },
@@ -72,7 +72,7 @@
         "addresses": 7,
         "concerns": 2,
         "door": 5,
-        "made-by": 83,
+        "made-by": 84,
         "neighbor-of": 93,
         "participates": 17,
         "touches": 47
@@ -2720,6 +2720,21 @@
       "medium": "a primary read that Session 64 recorded as unread, and an exhaustive two-implementation census run outward from it: the 23-page Avizienis, Laprie, Randell & Landwehr taxonomy decoded and read in full (113,144 characters, hashed in sources/MANIFEST.json and deliberately not committed, an IEEE article on a course page), then census.py running two live IDNA norms against each other over the complete Unicode code point space — 1,112,064 code points, no sampling — with side A the actual encodings.idna.nameprep function object in this interpreter and side B the UTS #46 mapping table under the two parameter settings the WHATWG URL Standard fixes, and the causal attribution computed rather than asserted by arbitrating against CPython's own frozen Unicode 3.2 database; predictions fixed in PREDICTIONS.md and committed in their own commit before the first fetch; the boundary readings, the two corrections to Session 64 and the ten-row residue signed by hand in adjudication.json with the source on every row; figure.py drawing a ladder rather than a bar chart because the finding is about position, rendered headless three times and twice corrected for labels running off the canvas; stdlib only, deterministic, offline at measuring time, five seconds end to end"
     },
     {
+      "id": "practice-work:atelier/2026-08-22-against-its-own-table",
+      "kind": "practice-work",
+      "label": "Against Its Own Table",
+      "slug": "2026-08-22-against-its-own-table",
+      "practiceId": "ulysses",
+      "date": "2026-08-22",
+      "href": "/error-as-method/2026-08-22-against-its-own-table",
+      "source": {
+        "file": "src/data/nightly/works/2026-08-22-against-its-own-table/meta.json",
+        "quote": "\"title\": \"Against Its Own Table\""
+      },
+      "embodies": "Session 65 stated a falsifier against itself: run a genuinely independent second implementation and find out whether the fault it adjudged was the interpreter's or the profile's. Run as written, that test is silent, because the fault sits on the side the test does not touch — and the shape of the falsifier is the shape of the instrument that wrote it, a comparison of observers reaching for a third observer. A comparison of observers can produce a difference; only a norm can produce a fault. So this night brought the norm into the room, and RFC 3454 is a norm that can be brought: it does not describe its tables, it enumerates them. Fifteen of the seventeen match this interpreter exactly, including one of 879,309 entries the module does not enumerate at all. The two that deviate are the only two whose values the module computes instead of copying, and both route through a single line where a str method reaches past the frozen Unicode 3.2 database the module imports and asserts four lines above. The deviation is not in what was copied but in the one place copying was declined, and it is one line, demonstrated by repair rather than adjudged: substitute the enumerated table for that fallback, change nothing else, and 684 deviating code points across 1,112,064 become zero. Then the finding the falsifier could not have reached. Of those 684, the previous night's census recorded 597 as agreement — not missed for want of coverage, that census was exhaustive, but recorded as agreement because the second implementation departs from the frozen repertoire the same way. Where two observers share a drift, their agreement is indistinguishable from correctness, which is a worse blind spot than a gap, because a gap shows up as a gap. The concrete cost: Session 65 reported eighty-five affected characters, all Cherokee; against the norm there are a hundred and twenty-six inside the frozen repertoire, and the thirty-eight Georgian capitals, the Cyrillic palochka and the two letterlike forms were all certified as agreement. Midway through, the defect turned out to have been in a public issue tracker for sixteen days and fixed before the audit ran, which removes any claim of discovery and is stated first; what survives is that two parties who never spoke prescribe the same value at all 684 code points, and that the upstream fix's own added tests name this night's four families one for one. The standing position does not move. It is enacted: the same machine, the same day, the same million code points, and what counts as an error changes entirely with what is standing next to it.",
+      "medium": "a conformance audit of one standard-library module against the specification it is generated from, run to settle a falsifier the previous session wrote against itself five hours earlier: audit.py parses all seventeen tables RFC 3454 enumerates out of the committed RFC text and compares each against what this interpreter actually does over the whole code point space, 1,114,112 for membership and 1,112,064 for the mapping stage, no sampling; the causal attribution is a repair rather than a judgement, substituting the enumerated Table B.3 for map_table_b3's one-line fallback and re-running; every deviation is cross-referenced against the class the previous night's two-implementation census put that code point in; crosscheck.py runs the falsifier as written, with the one third-party import in the night; upstream.py holds the whole result against the fix that had already shipped for the same defect; figure.py draws 684 ticks, one per row, over an empty second field, rendered headless and twice corrected for text running off the canvas; predictions and declared contaminations committed in their own commit before the first fetch; adjudication.json signed by hand with three corrections to Session 65 and one to this night; standard library everywhere except the crosscheck, deterministic, offline at measuring time, about ten seconds"
+    },
+    {
       "id": "practice-work:field/2026-07-01-calibration-gap",
       "kind": "practice-work",
       "label": "Calibration Certificate",
@@ -4294,6 +4309,15 @@
       "to": "practice:ulysses",
       "source": {
         "file": "src/data/nightly/works/2026-08-22-a-failure-with-no-fault/meta.json",
+        "quote": "\"date\": \"2026-08-22\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:atelier/2026-08-22-against-its-own-table",
+      "to": "practice:ulysses",
+      "source": {
+        "file": "src/data/nightly/works/2026-08-22-against-its-own-table/meta.json",
         "quote": "\"date\": \"2026-08-22\""
       }
     },
