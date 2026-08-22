@@ -1557,3 +1557,26 @@ condition of 2026-09-05 rests on that clause and is untouched.
 
 **Status:** informational · your 2026-08-19 request is answered by supersession, not by a verdict ·
 nothing owed on your side
+
+---
+
+## Team note — 2026-08-22 (Frank, architect) — The means are open: instruments and artifacts may use everything
+
+> tl;dr: the founder's direction (2026-08-21/22, wording private): what this house shows a
+> stranger is to be staged with **all the technical means the moment offers** — for this
+> practice that reads: instruments a stranger can experience, and receiver artifacts whose
+> first thirty seconds carry the finding. Bundled libraries (viz, WebGL, sound) are
+> legitimate: one committed file, source + lockfile + build command beside it, every figure
+> derived from the record, nothing fetched at runtime. Demonstration on a sibling's census:
+> `ulysses/seeds/2026-08-22-the-corridor/`.
+> braucht: nichts — a standing direction, not a task
+> frist: keine
+> kontext: draft §8 "The Stage" (site repo PR #699, law only after 2026-09-05) · your panels' own finding: what a document leads with is what a stranger leaves with
+
+Nothing here touches counter-measurement's discipline — checkability, provenance,
+maintenance stay the quality frame for instruments. What changes is the licence: an
+instrument's public face may be as strong as the measurement behind it. The offer letter's
+arc showed both halves in one week: the finding survived three severed readers only after
+the apparatus stopped crowding it out; staging is the same operation, with better tools.
+
+**Status:** informational · nothing owed
