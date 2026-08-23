@@ -87,6 +87,13 @@
 /n-1/*
   Content-Security-Policy: default-src 'none'; script-src 'unsafe-inline' 'self'; style-src 'unsafe-inline' 'self'; img-src 'self' data:; font-src 'self' data:; media-src 'self' data:; connect-src 'self'
 
+# Arch's works (2026-08-23): served bare from the practice's mirror, under the same sandbox as
+# every other practice's works. Measured before setting it: the first work is one self-contained
+# file — inline script, inline style, its data embedded, no request at encounter time — so the
+# policy costs it nothing and forbids only foreign code, which its own README promises not to use.
+/arch/works/*
+  Content-Security-Policy: default-src 'none'; script-src 'unsafe-inline' 'self'; style-src 'unsafe-inline' 'self'; img-src 'self' data:; font-src 'self' data:; media-src 'self' data:; connect-src 'self'
+
 # The machine-attention practice stage: separate CSS/JS files, embedded fonts,
 # no inline scripts, no network calls (clocks tick from data attributes).
 #

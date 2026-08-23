@@ -83,13 +83,19 @@ describe('the board says what the rooms say', () => {
     expect(middle.last!.meta).toMatch(/^\d+ crossings on the record$/)
   })
 
-  it('gives the four ecology stations their voice and the two beside it none', () => {
+  it('gives the four ecology stations their voice and the three beside it none', () => {
     expect(rows.filter((r) => r.voice !== null).map((r) => r.voice)).toEqual([
       'ulysses', 'meridian', 'ensemble', 'conductor',
     ])
-    // Four is the measured ceiling for a categorical set in this repo (palette.test.ts); the two
+    // Four is the measured ceiling for a categorical set in this repo (palette.test.ts); the
     // rows beside the ecology wear the room's live accent and are told apart by name.
-    expect(rows.filter((r) => r.voice === null).map((r) => r.id)).toEqual(['attention', 'nightly-line'])
+    expect(rows.filter((r) => r.voice === null).map((r) => r.id)).toEqual(['attention', 'nightly-line', 'arch'])
+  })
+
+  it('reads Arch’s last landed output from Arch’s own record, never from another practice', () => {
+    const arch = rows.find((r) => r.id === 'arch')!
+    expect(arch.last).not.toBeNull()
+    expect(arch.last!.href).toMatch(/^\/arch\/read\/record\//)
   })
 
   it('never leaves a cell silently empty', () => {

@@ -43,6 +43,9 @@ const REPOS = [
   // pulse counts it like the other machine-run repos — and the ops room's board draws its
   // sparkline from this repo's own bins.
   'error-as-method',
+  // Arch, founded 2026-08-22 beside the ecology under its own dowry; its sessions commit to
+  // this repository, so the ops room's board draws its sparkline from these bins.
+  'arch',
   'frankbueltge.de',
 ]
 

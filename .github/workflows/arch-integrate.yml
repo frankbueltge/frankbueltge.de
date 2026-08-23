@@ -1,0 +1,99 @@
+# Mirrors the Arch practice onto this site (Frank's go, 2026-08-23; the practice's own
+# channel carries the dated go-ahead for its works to leave the house).
+#
+# Same arrangement as n-1: the practice's repository is copied byte for byte to
+# public/arch/ and served there. Nothing on this domain restates the practice in the
+# house's own words — the room at /arch reads the mirror (src/lib/arch/facts.ts) and adds
+# only the three things the practice may not award itself: the trial's frame, the
+# reception question, and the standing of its failure registers. Its works under
+# public/arch/works/ are served BARE — the reframe step skips them on purpose
+# (NAMING.worksRegister.standaloneFrame.houses.arch.bare), because the practice's
+# reception test meets the work with no paratext at all.
+#
+# Pull-based: the practice repo needs no write access and no secret here; this workflow
+# copies bytes and never authors content. Cheap when there is nothing to do: the first
+# step compares the practice's HEAD with the sha this mirror last carried
+# (.github/state/arch-mirror-head) and exits in seconds when they match. Every ten
+# minutes because this mirror is the works' only public address during the practice's
+# pre-registered window, and a surface that is the only one may not lag an hour behind
+# the record it serves. The commit is made with the built-in GITHUB_TOKEN, which never
+# fires `on: push` — deploy-cf.yml carries this workflow in its `workflow_run` list, and
+# must keep doing so. public/arch is not a declared knowledge-graph source, so no graph
+# rebuild runs here (see .claude/rules/knowledge-graph.md).
+name: Arch integrate
+
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: arch-integrate
+
+jobs:
+  pull-record:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Anything new upstream?
+        id: check
+        run: |
+          remote=$(git ls-remote https://github.com/frankbueltge/arch HEAD | cut -f1)
+          have=$(cat .github/state/arch-mirror-head 2>/dev/null || echo none)
+          echo "remote=$remote" >> "$GITHUB_OUTPUT"
+          if [ "$remote" = "$have" ]; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "record unchanged at $remote — nothing to mirror"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            echo "upstream $remote, mirror carries $have"
+          fi
+
+      - uses: actions/setup-node@v4
+        if: steps.check.outputs.changed == 'true'
+        with:
+          node-version: 22
+      - run: npm ci
+        if: steps.check.outputs.changed == 'true'
+
+      - name: Pull the practice's record
+        if: steps.check.outputs.changed == 'true'
+        run: |
+          git clone --depth 1 https://github.com/frankbueltge/arch /tmp/arch
+          # .git is not the record; .github is the practice's own CI (the source-file
+          # guard), which must not run as this site's workflow
+          rm -rf /tmp/arch/.git /tmp/arch/.github
+          rm -rf public/arch
+          mkdir -p public/arch
+          cp -R /tmp/arch/. public/arch/
+          mkdir -p .github/state
+          printf '%s\n' "${{ steps.check.outputs.remote }}" > .github/state/arch-mirror-head
+
+      - name: Frame the mirror — the way back, except the works
+        if: steps.check.outputs.changed == 'true'
+        # Every mirrored .html gets the site's strip except what the house config names bare:
+        # the works. Scoped to arch so the run never leaves another mirror rewritten and
+        # unstaged.
+        run: npx tsx scripts/engines/reframe-works.ts arch
+
+      - name: Commit mirror
+        if: steps.check.outputs.changed == 'true'
+        run: |
+          git config user.name "Arch-Integrate"
+          git config user.email "arch-integrate@frankbueltge.de"
+          git add public/arch .github/state/arch-mirror-head
+          if git diff --cached --quiet; then
+            echo "record unchanged"
+            exit 0
+          fi
+          git commit -m "arch: mirror the practice record of $(date -u +%F)"
+          for attempt in 1 2 3 4 5; do
+            if git push; then exit 0; fi
+            git pull --rebase
+          done
+          echo "push failed after 5 attempts" >&2
+          exit 1
