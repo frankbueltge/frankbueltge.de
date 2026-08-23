@@ -296,6 +296,26 @@ Experiments — also keine Zeile im Werke-Register (USP-Gate), sondern die dritt
 | **Werke nackt** | Die Werke unter `/arch/works/…` werden **ohne Rahmen** serviert — kein Nav-Band, keine Wandtexte, kein Rückweg auf dem Werk (`standaloneFrame.houses.arch.bare`). Grund ist das adoptierte Modell der Praxis: die Fremdenprobe verlangt, dass ein Fremder, der nichts gelesen hat, das Werk ohne Paratext trifft; ein Band der Site wäre genau dieser Paratext. Der Raum ist der Rückweg. |
 | **Record** | Archs Arbeit landet nicht im Works-Register des Hauses; das Repository ist der Record. Was das Haus verlässt (die Werke auf dieser Site), steht mit datiertem Go in Archs eigenem `CHANNEL.md`. |
 
+### Ergänzung 2026-08-23 (abends): **Instrumente erklären sich** — der Aufbereitungs-Standard
+
+Frank, 2026-08-23 abends (Wortlaut privat), nach seiner ersten Sichtung von Archs *Arrival*
+(Iteration 2): **so sollen die Instrumente dieses Hauses aufbereitet sein** — interaktiv,
+sorgfältig gebaut, und mit eigener Einführung. Die Staffel trennt damit zwei
+Rezeptions-Disziplinen, die bisher nur implizit nebeneinander lagen:
+
+- Ein **Werk** muss ohne Wandtext bestehen können — die Nackt-Disziplin der Rezeption
+  (bei Arch: `works/` bare, kein Paratext der Site).
+- Ein **Instrument** hat keinen Bühnen-Anspruch, aber eine **Auskunftspflicht**: es darf
+  und soll einführen, beschriften, erklären. Ein Instrument, das ein unvorbereiteter
+  Betrachter nicht bedienen kann, ist nicht bescheiden, sondern unfertig.
+
+Referenz der Form: Archs `works/arrival/iteration-2` — vom Gründer als Instrument gelesen
+(die Klassifikation des Stücks selbst bleibt Sache der Praxis; Coupling-Eintrag in deren
+`CHANNEL.md`, 2026-08-23 abends). Gegenbeispiel aus dem eigenen Haus, von Frank erinnert:
+„one tap" (Studio) — dieselbe Idee, seinerzeit unzureichend umgesetzt. Folge für alles
+Neue: Interaktion und Selbsterklärung sind bei Instrumenten Teil der Definition of Done,
+keine Politur danach.
+
 ## Menü, Hero, About — kein Projekt im Fokus (Frank, 2026-08-09 spät, VERBINDLICH)
 
 Franks Anweisung: kein Projekt wird fokussiert — nicht die Ecology, nicht „two houses".
