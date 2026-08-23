@@ -9,8 +9,9 @@ Project · Instrument · Experiment im Wording-Kanon):
 Forschungspraktiken und eine Kontaktzone: The Atelier (Ulysses, `/atelier`), The Field
 (Meridian, `/field`), The Studio (Ensemble, `/studio`), The Middle (`/encounters`);
 **(2) Machine Attention** (`/machine-attention`) — das Gegen-Experiment: EINE Maschine unter
-EINER Verfassung, mit den Untersuchungen The Foreknown (`/attention`), Dark Ocean (nur im
-Praxis-Repo bis zum bestandenen E-Experiment) und dem Instrument The State Before the
+EINER Verfassung, mit den Untersuchungen The Foreknown (`/attention`), Dark Ocean (E-Experiment
+am 2026-08-22 nicht bestanden — bleibt dauerhaft nur im Praxis-Repo, läuft als Instrument
+weiter, keine Bühne mehr in Aussicht) und dem Instrument The State Before the
 Interface (`/observatory`). Eigenes Repo: `../machine-attention`.
 **Wording: `docs/wording-kanon.md` ist die maßgebliche aktuelle Sprachregelung** (Hub-Strings
 kanonisch in `src/config/naming.ts`); Engine-READMEs/alte Configs sind KEINE Quelle für
@@ -22,8 +23,9 @@ Session, die Site oder Engines berührt, prüft aktiv auf Drift („erzählt die
 aktuellen Stand?"). Überholte Strukturen werden sichtbar und datiert archiviert, nie
 unauffällig als aktuell stehen gelassen. (Warnbeispiel: /atelier beschrieb am 24.07. noch
 Protocol v4, während die Praxis auf v5 lief.) Daneben die früheren Experimente des Labs
-als **Experiments** (`/experiments`, vormals `/holdings`): The Protocol, Parallaxe, The Policy, die
-Gegenmessung-Instrumente — erste Annäherungen, praxisbasiert. Das gestaltete Arbeiten lebt
+als **Experiments** (`/experiments`, vormals `/holdings`): Protocol, Parallaxe, Policy, die
+Gegenmessung-Instrumente — erste Annäherungen, praxisbasiert (Titel seit 2026-08-22 ohne
+bestimmten Artikel, s. u.). Das gestaltete Arbeiten lebt
 in den Projekten (datavism.org, data-snack.com).
 Positionierung: `docs/superpowers/specs/2026-08-01-festival-line.md` — „artistic research,
 under proof": Anspruch mit Beweispflicht statt Anspruchs-Verzicht; löst die „ehrliche
@@ -43,7 +45,7 @@ Arcs statt Nachtwerke, Sieben-Tage-Sendebindung für `prepared`-Pakete. **Kill-R
 Ältere Beschreibungen der Ecology (Seasons, Rollen-Roster, Episode-Slots) sind historisch.
 
 **Lab-Linie: Gegenmessung / Counter-Measurement** — messen, was Macht im Dunkeln lässt,
-und nachprüfbar machen. Erstes Instrument „The Consensus" misst orchestrierten Konsens
+und nachprüfbar machen. Erstes Instrument „Consensus" misst orchestrierten Konsens
 (`docs/superpowers/specs/2026-06-22-gegenmessung-echo-design.md`). Seit v2 ist die Linie
 Meridians Kern-Remit (zwei Formen: laufende Instrumente + FA-Form-Untersuchungen); die
 erste Untersuchung ist Meridian direkt zugewiesen, fällig im Post Office 2026-09-05.
