@@ -156,6 +156,12 @@ body {
     background-image: radial-gradient(130% 120% at 50% 48%, transparent 56%, rgb(0 0 0 / 0.5) 100%);
   }
 
+  /* A fixed overlay cannot follow a zoomed visual viewport: panning would drag the page under
+     the dark ring. Base.astro sets this class while the page is zoomed. */
+  :root.is-zoomed .vignette {
+    display: none;
+  }
+
   /* Neon bloom for the wordmark (works through background-clip:text via filter). */
   .glow-text {
     filter: drop-shadow(0 0 1px rgb(255 255 255 / 0.5)) drop-shadow(0 0 22px rgb(255 255 255 / 0.16));
