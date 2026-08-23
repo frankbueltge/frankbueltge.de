@@ -1,9 +1,12 @@
-# Constitution, draft v0.1 — a practice that takes Mersch as its ground (name open)
+# Constitution v1.0 — a practice that takes Mersch as its ground (name pending)
 
-*Drafted 2026-08-23 inside the Poetics programme, on the founder's direction (wording private).
-**Status: draft. Not founded. Binds nothing** until the founder says so, and then only as
-amended by him. The programme itself (`../00-PROGRAM.md`) remains what its §3 says — not a
-practice; this text proposes one that would stand beside it and cite it. The source work that
+*Drafted 2026-08-23 inside the Poetics programme and **founded the same day** on the founder's
+decision (wording private) — in force from 2026-08-23, revisable by him; the practice may propose
+amendments and records each in `CHAIN.md` with a rationale. Draft v0.1 preceded this text by a
+few hours and differs from it only in the header, §10 and §11; its text is in git
+(`a45eee10`). The programme itself (`../00-PROGRAM.md`) remains what its §3 says — not a
+practice; this practice stands beside it and cites it. **Founding is not publication:** nothing
+of this practice reaches the site or leaves the house before §6, duty 7 is discharged. The source work that
 grounds this text is closed: the reading notes `../readings/T1-01` … `T1-08` and the pressure
 points `../mersch-pressure-points.md`. This text does not reopen it and adds no reading. The
 fairness rules of the pressure points, §0, apply unchanged, and two of them bind this document
@@ -336,37 +339,49 @@ post-mortem itself names evidence for continuing. Closed cases stand either way.
 attempt without return (Mersch 2013, p. 7), and so is the practice: whoever founds a successor
 founds it under a new constitution and a new name, citing this one as archive.
 
-## §10 The name — open
+## §10 The name — pending the founder's choice
 
 The founder names the practice; the wording gate and the neighbour check apply to the name as to
-any title. Three candidates, each carrying a reason, none decided:
+any title. State on 2026-08-23, after the founder's first question (the Greek form of the second
+candidate):
 
-- **Stoppage.** After Duchamp's *Trois Stoppages Étalon*, the case the ground reads as the
-  exemplary work of aesthetic research (Mersch 2012, pp. 14–15; 2015, pp. 7–8). In ordinary
-  English a stoppage is a halt, a blockage, a refusal of flow — the world's refusal in one
-  word, which is the practice's only *passio*. Names the lineage, the procedure and the
-  admission at once. Follows the house's no-article rule for titles.
-- **Zetesis.** Mersch 2015, p. 15: research that "eine Selbsterforschung betreibt, die ihr
-  *kritērion*, ihr Maß im *krinein* … findet" — searching, not extracting, with discrimination
-  as its measure. Exact, and closest to §7. Learned to the point of needing a wall text, which
-  is the wrong first impression for a practice whose test is showing without one.
-- **Unanswered.** The request that goes unanswered is the purest befalling available to the
-  practice: silence at the end of a declared wait, fixed like any other outcome. Plain, and
-  true of the practice's condition. Says nothing of the lineage.
+- **ζήτησις / Zetesis** — Mersch 2015, p. 15: research that "eine Selbsterforschung betreibt,
+  die ihr *kritērion*, ihr Maß im *krinein* … findet". Exact, and closest to §7. **Neighbour
+  check, 2026-08-23: occupied in this practice's own field.** *Zētēsis* is an international
+  peer-reviewed journal "concerned with the converging theoretical, creative and practical
+  fields of fine art, philosophy …", with a 2021 special issue on artistic research as
+  practice. The romanised slug `zetesis` would collide outright; the Greek script would differ
+  on the page and nowhere else. Not recommended.
+- **κρίνειν / Krinein** — the measure itself, from the same sentence: the *kritērion* of
+  zetetic research lies "im *krinein*, dem Scheiden oder Unterscheiden in der Bedeutung einer
+  ästhetischen Kritik" (2015, p. 15). Keeps what the founder reached for — the Greek, the
+  criterion of §7 — and names the act rather than the search. **Neighbour check, 2026-08-23:
+  no practice, collective, project or journal of that name found in the art field.** Slug
+  `krinein`; display in Greek script if the founder wishes.
+- **Stoppage** — after Duchamp's *Trois Stoppages Étalon* (Mersch 2012, pp. 14–15; 2015,
+  pp. 7–8); in ordinary English a halt, a blockage, a refusal of flow — the world's refusal in
+  one word. Its nearest neighbour is Duchamp himself, by design.
+- **Unanswered** — silence at the end of a declared wait, fixed like any other outcome. Plain;
+  says nothing of the lineage.
 
-*Recommendation, for the founder to overrule: Stoppage.*
+*Recommendation, for the founder to overrule: κρίνειν, slug `krinein`. Until he decides, the
+practice is referred to by this file's path.*
 
 ## §11 What only the founder decides
 
-1. Whether this practice is founded at all, and when. Until then this text binds nothing.
-2. Its name (§10).
+1. ~~Whether this practice is founded at all, and when.~~ **Founded 2026-08-23.** The ninety-day
+   clock of §9 runs from this date: the first reading falls at the close of the third case or on
+   **2026-11-21**, whichever comes first.
+2. Its name (§10) — **pending**.
 3. Whether **W1 — *Twenty-Five*** (`../works/W1-twenty-five.md`) enters as case 01. It was
    designed before this constitution and fits it closely: a public standard wagered, a
    befalling supplied by Uppsala's revisions on dates the practice did not choose, three cases
    and never a fourth, a score that claims no object. What it lacks is step 6: its stranger
-   reading has not been run, and the constitution does not pre-empt that verdict. If adopted,
-   its existing files are moved under `cases/01-twenty-five/` unchanged, and its open probe
-   becomes the case's `READING.md`.
+   reading has not been run, and the constitution does not pre-empt that verdict. **State
+   2026-08-23: provisionally accepted by the founder, subject to his own viewing of the work
+   and to a stronger wager being found** — see `REGISTER.md`. No case is open; W1's files stay
+   where they are until he has seen it. If adopted, they move under `cases/01-twenty-five/`
+   unchanged, and the open probe becomes the case's `READING.md`.
 4. Where the practice lives once a case has closed *shown* (§8).
 5. For every case, the wager (§4.1): which standard is worth undoing, which removal costs. The
    practice can hold a rule; it cannot know what a loss is worth. That judgement is declared in
