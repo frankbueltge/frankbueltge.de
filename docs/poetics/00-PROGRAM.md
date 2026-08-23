@@ -37,7 +37,9 @@ is *made*.
 ## 3. What this program is not
 
 - **Not a practice.** No constitution, no persona, no nightly cadence, no engine, no
-  automation.
+  automation. *(2026-08-23: a constitution **draft** for a practice that would take the T1
+  ground as its own lies in `practice/CONSTITUTION-draft-v0.1.md`. It binds nothing until the
+  founder founds it, and this programme stays exactly what this line says.)*
 - **It does not touch `arch`.** That test-bed's own rule is that its hermeneutic reading
   (U1) must precede its model decision. Doing that reading here would contaminate the very
   experiment arch was founded to run. This program reads *other* material for *other* ends,
