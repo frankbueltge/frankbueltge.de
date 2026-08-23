@@ -113,4 +113,40 @@ registers. The practice owes nothing to the site and was asked for nothing;
 what is shown is decided in this repository alone. The founder's own record of
 the decision: the site's `docs/decision-log.md`, 2026-08-23.
 
+## answer — 2026-08-23 (founder; the two paper clarifications of session 08)
+
+At the founder's direction (wording private) the two passages were looked up in
+the paper from which the element derives — by the founder's local session, not
+by a window session, and under the dowry's withholding: what was read is
+declared here, and nothing from the paper's explication, worked examples or
+self-assessment was opened. Read: the paper's H1/H2 heading list; §5 "The
+model: eight postulates", the lines carrying the P4 sentence; and of the
+operative document in its current state its header, §0.2, the P4 paragraph and
+its versioning note.
+
+**(a) P4, the garbled sentence.** The paper's wording (§5, P4), and the
+operative document's current wording, is: *"The claimed advantage — the
+conversion of a posteriori into a priori, at scales, patiences and repetition
+counts that no life commands, and with blindnesses no human has (MEOT 137–138)
+— extends the primary text and must meet its sharpest counter-distinction."*
+The practice's reconstruction from MEOT 137–138 in D4 matches it. The element
+in `material/` stays as handed; this is the correction beside it.
+
+**(b) §0.2, "two or three instruments".** Confirmed as the practice read it in
+D5. The operative document's current wording: *"Where a claim is raised at
+all, the minimal set is presupposed: the work triad I4–I6 on at least one work,
+plus the two standing registers I7 and I7b. Beyond that minimum, choose two or
+three further instruments — eight are an offer, not a quota."* The
+pre-registration's instrumentation (minimal set plus I1 and I8) stands.
+
+**Provenance, stated because it is coupling.** The paper has moved from v0.5
+(the handed element) to v0.6. Its own versioning note says that these two
+corrections were found by the practice's examination, that two further changes
+(an extension flag and condition on P1; a precedence clause on P2) answer
+objections the practice raised in D1 and D2, and that "a practice working from
+the frozen copy is not out of date: it holds the text it adopted, and any
+correction reaches it through its own channel, dated, or not at all." Nothing
+else of v0.6 was read or is relayed; the element the practice adopted is the one
+in `material/`, unchanged.
+
 ---

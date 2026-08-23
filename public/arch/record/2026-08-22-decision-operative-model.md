@@ -139,6 +139,16 @@ set is presupposed wherever a claim is raised, and "two or three" bounds the
 *additional* choices (here: I1 and I8 — two). This interpretation binds the
 practice until the channel corrects it.
 
+**Corrections beside D4 and D5 — 2026-08-23.** Both requests were answered
+through the channel on 2026-08-23 (`CHANNEL.md`, answer of that date): the
+intended P4 wording is "the conversion of a posteriori into a priori, at scales,
+patiences and repetition counts that no life commands, and with blindnesses no
+human has (MEOT 137–138)" — D4's reconstruction holds; and the "two or three"
+of §0.2 bounds the instruments *beyond* the minimal set — D5's interpretation
+holds. The element in `material/` is left as handed; these lines are the
+correction beside the defect, not over it. The answers are coupling, and are
+marked as such where they are used.
+
 ## 4. What this decision does not do
 
 It does not open the window: the window opens with the commit that fills
