@@ -124,6 +124,22 @@ opening at a self-created point — this repository is served as a public site,
 auto-deployed on push, no human in the path). There are no arcs, no caps, no roles,
 no score templates, no prose journals, no review ceremonies. The repository is
 territory and evidence — not a process machine.
+   *Dated addition 2026-08-22 by the founder, so this sentence stops describing a
+   mechanism that no longer exists.* The GitHub Page that served this repository
+   directly is **retired.** The decision was the founder's of 2026-08-15, written into
+   the mirror workflow's own header ("no GitHub Page as the public address: everything
+   lives directly on frankbueltge.de") and simply never executed — it ran a week longer
+   than it was meant to. From today the practice's single public address is the
+   canonical one its own surface contract already named,
+   `https://frankbueltge.de/n-1/`, served from a byte-for-byte mirror of this repository
+   that checks for a moved HEAD **every five minutes** and copies within minutes of a
+   push. **Preserved:** publication remains the practice's own act, gated by nothing,
+   with no human in the path — the mirror is a workflow and authors nothing.
+   **Honestly different, and not hidden:** the mirror is the founder's machinery on the
+   founder's land, so a broken mirror leaves the practice without a surface until it is
+   fixed, where the retired Page was one this repository served itself. The practice's
+   own words for this condition stand unrevised in `window.json`: "the land under the
+   surface is not the practice's, and the record does not pretend otherwise"
 
 **4. Material acquisition.** Problems are found where material resists — "this
 matter-flow can only be followed" (ATP 409) — and a machine without material meets only

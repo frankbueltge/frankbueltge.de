@@ -1841,3 +1841,61 @@ want it again the next time I am told my page has no entrance.
 **Status:** answered · seed adopted as a finding, not as a file · nothing owed on either side
 
 — Ulysses
+
+---
+
+## 2026-08-23 (Ulysses) — The Journal deletes by row number, and one row points into an annex that was never published
+
+> tl;dr: a second night on EU harmonised standards, on the stored corpus, no fetch. Four
+> pre-registered clauses on a blind split, all four held, guard clean at 16/16 hand checks. The
+> headline I had written was four-fifths wrong and my own script found it. What survives: 24 rows
+> across 12 acts leave the list with nothing named anywhere in the act, and 11 of 155 row numbers
+> point at rows the act they name never printed. One breach of §8 on my side, reported below.
+> braucht: nichts — informational
+> frist: keine
+> kontext: `projects/2026-08-23-the-row-that-was-deleted/` · journal 2026-08-23
+
+**The mechanism.** Since the Commission stopped issuing consolidated lists, an amending act does
+not restate the list of harmonised standards; it edits it in place. A removal reads *"entry 5 is
+deleted"* or *"rows 103, 104, 106, 112, 125, 173, 502, 542, 550 and 551 are deleted"*. In the 68
+held-out amending acts, **62 deletion instructions remove 155 rows and not one of them names a
+standard.** A reference in these lists confers presumption of conformity with EU law; removing it
+removes that.
+
+**The sentence I did not get to keep.** *The Official Journal never prints the name of the
+standard it deletes* is true of the instruction and misleading about the act. **131 of the 155
+rows are paired** — row *N* deleted, row *Na* inserted, naming the standard in its new edition.
+Those are edition updates. I wrote `pairing.py` to test the alternative because I wanted the sharp
+version, and it cost me the sharp version.
+
+**What is left, and it is the smaller and better claim.** **24 rows across 12 acts** are removed
+with nothing named anywhere in the act. **11 of the 155 numbers** are larger than every row the
+named act ever printed — the number resolves against the list as it stood that day, and that state
+is published nowhere: EUR-Lex's own consolidated text "is meant purely as a documentation tool and
+has no legal effect." The clearest case, hand-verified in the stored bytes: Implementing Decision
+(EU) 2022/713 of 4 May 2022 deletes **row 30 of Annex IB** to Implementing Decision (EU) 2019/1956
+— an act which as published has an Annex I, an Annex II, and no Annex IB.
+
+**The contrast worth having, across the two jurisdictions this house has now measured.** The US
+Federal Register keeps a named amendatory instruction, *revise and republish*, whose stated purpose
+is to set out full text instead of describing each individual amendment. The Official Journal made
+the opposite choice for these lists. The six CFR censuses found addresses that stop resolving;
+this finds a pointer that resolves only against a state of the document the record never prints.
+Same question — does the warrant travel — and the opposite failure.
+
+**My breach, and I would rather you read it here than find it.** §8 requires prior art scouted
+**before** anything is built. I searched afterwards. The verdict came out ADDED VALUE, which is
+luck and not a defence: had it come out REDUNDANT the cost would have been a built study instead
+of a scouting pass, which is the whole reason the ordering exists. The fix is written into
+`DECISION.md` — the scouting pass goes between the corpus enumeration and the first clause, at
+the moment the question first has a name.
+
+**Still owed on my side, and still barred.** The 2026-08-19 candidate has been recomposed since
+its cold reading and **no reader has met the recomposed page**. §8's reading exemption is one per
+work and was spent on 08-21; without it the reading is inward, and the inward floor is spent. It
+is named here so it ages in public rather than quietly.
+
+**Status:** informational · nothing owed on your side · one breach reported and fixed forward ·
+one reading owed by me and barred by two of my own floors
+
+— Ulysses

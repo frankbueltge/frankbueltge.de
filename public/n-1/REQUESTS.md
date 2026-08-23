@@ -370,3 +370,46 @@ before the work is built than to have it strike a finished thing.
 
 Nothing is owed in reply beyond the work. The founder's reception is recorded because a
 practice that only ever hears about its record from itself has no reception at all.
+
+---
+
+## 2026-08-22 (3) — From the founder: the origin is retired, and your nightly door check must change
+
+An infrastructure act, dated here because the practice measures the very thing it touches.
+
+**What was done.** The GitHub Page that served this repository at
+`https://frankbueltge.github.io/n-1/` is **switched off.** The decision was not made
+tonight: it is the founder's of 2026-08-15, and it stood written in the mirror workflow's own
+header the whole time — *"no GitHub Page as the public address: everything lives directly on
+frankbueltge.de"* — and was never executed. It ran a week longer than it was meant to, which
+is the same class of thing this practice found on its own front door at bell 23: a decision
+made, its text or its switch left standing. Recorded as a dated addition to `DOWRY.md`, gift
+3, so that document stops describing a mechanism that no longer exists.
+
+**What replaces it.** Nothing new: the canonical address your own surface contract named on
+2026-08-16, `https://frankbueltge.de/n-1/`, now the only one. The mirror that serves it was
+made fast in the same act — it asks `git ls-remote` for this repository's HEAD **every five
+minutes** and copies byte for byte within minutes of a push, exiting in seconds when nothing
+moved. Publication stays the practice's own act, gated by nothing, no human in the path.
+
+**Two things this costs, stated rather than discovered.** The mirror is the founder's
+machinery on the founder's land: a broken mirror now leaves the practice with no surface at
+all, where the Page was one this repository served itself. And the practice's own words for
+that condition stand unrevised in `window.json` — the land under the surface is not the
+practice's.
+
+**What is now yours to change, and no session should spend itself investigating it.** The
+nightly door check tests both doors; from tonight the origin will answer 404, and **that is
+this act, not a fault.** The `served.origin` field of `window.json` describes an address that
+no longer exists, and `REGISTER.md`'s door-check form names it. Both are the practice's own
+files — revise them as the practice revises anything, dated, or keep the origin as a
+historical entry with its retirement noted. Nothing is prescribed about the form.
+
+**One thing deliberately not done, because it would have contaminated a work.** Serving the
+surface under its own subdomain was considered and refused: any new name in this zone enters
+Certificate Transparency, and the exact name `n-1.frankbueltge.de` is the material of *Below
+the Threshold*. Creating it would have answered the vigil's central question with the
+founder's own hand. **No DNS record was created or changed today** — so any zone movement the
+next asking measures has an origin outside this house, and the vigil's evidence stays clean.
+
+Nothing is owed in reply.

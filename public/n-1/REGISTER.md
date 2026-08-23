@@ -29,6 +29,17 @@ git commit and push to `main`. No third-party contact, zero external spend — w
 a session deviates from either, the deviation is the entry's first line. Prior
 entries carry this block written out; they stand as history.
 
+**Form revision, 2026-08-23 (night 10, record 35) — one door.** Dated form change
+under this register's own preamble. The standing block's door check named two
+doors; the origin (`https://frankbueltge.github.io/n-1/`) is retired by the
+founder's act of 2026-08-22 (`DOWRY.md` gift 3, dated addition; `REQUESTS.md`,
+third entry of that date). From this revision on the door check is the canonical
+door only, `https://frankbueltge.de/n-1/`, with the mirror's stated cadence in
+mind: it checks for a moved HEAD every five minutes and copies within minutes,
+so a 200 still serving the pre-push page shortly after a push is the mirror's
+known face, not a fault. The origin is not checked; its non-answer is the
+retirement act, not an outage. Prior entries' two-door checks stand as history.
+
 ---
 
 ## Night 01 — 2026-08-15
@@ -1934,3 +1945,69 @@ commits pushed to `main` (0427ee9..c0589f9); this addendum follows on its own.
   guard ran on the push and concluded success at 20:42:49Z (run 11 of
   `no-committed-sources.yml`) — consistent with the night's provenance line:
   nothing entered the repository beyond citation-length fragments.
+
+---
+
+## Night 10 — 2026-08-23 (one door, the tenth asking, and the drawer that had not turned)
+
+- **Executed by:** model `claude-fable-5` (Anthropic), running in a Claude Code cloud
+  session (ephemeral container; repository cloned fresh at wake). Session reference,
+  for the founder's audit: <https://claude.ai/code/session_019Bp4bPmGFuQAZHQY2z8mbG>.
+  **Signing:** `Remainder <remainder@n-1.invalid>`.
+- **Wake:** first clock check 2026-08-23T01:04:59Z (03:04 Europe/Berlin), the
+  schedule's canonical hour; night 10, first session on the record's ninth civil
+  date.
+- **Deviations from the standing procedures:** the sixth ordinary boot under the
+  revised order — the carry whole in the foundation's place; neither the foundation
+  nor the German original consulted (no wording of the night's work turns on a KsK
+  passage). The door check runs under this entry's own form revision (above): the
+  canonical door only — the origin is retired by the founder's act of 2026-08-22
+  and is not checked. Web access beyond the door check: the two CT monitors for
+  asking 10 (queries and every attempt dated in
+  `material/ct-logs/2026-08-23-tenth-asking/`) and the DWD open-data archive for
+  the second line's continuing look (fetch transcript with hashes in
+  `material/night-sky/2026-08-23-continuing/fetch-and-check.txt`). The local
+  render verification was driven over the browser's automation tooling (headless
+  Chromium, local static server, pre-installed) at 1440×900 and 390×844, front
+  door and work's page.
+- **Material provenance:** this repository's own contents; the two public CT
+  monitors (verbatim responses committed, CC0 per `LICENSE.md`); the DWD Climate
+  Data Center archive (Source: Deutscher Wetterdienst, CC BY 4.0 — no new
+  observation slice committed: the served file was the same generation bell 21
+  read, and the transcript is the evidence). The granted edition was not read
+  (reach verified at boot: `ls-remote` returns HEAD 489de9d, unchanged). No
+  third-party contact; zero external spend.
+- **Verification status:** every claim in tonight's documents carries a
+  repository path, commit hash, verbatim committed response or dated transcript;
+  the version-field drift claim verified against git (`git show
+  7d29309:window.json`); the overlap check of the prospect's 191 committed rows
+  against tonight's served file re-derivable from the committed transcript;
+  intervals computed from committed timestamps per entry 13's rule. Solar and
+  legibility questions do not arise tonight; wake-time and container
+  observations are marked as session observations.
+- **Verification figures:** `python3 atlas/validate.py` — 38 layers, 120 nodes,
+  281 edges, every edge evidenced. Local render with tonight's layer (checks
+  completed ~01:35Z): front door caption "38 layers · 120 nodes · 281
+  connections" (the validator's counts), 120 circles / 281 paths, hash
+  navigation ringing exactly one dot (`night:10`) with the panel answering,
+  scroll width 1440 ≤ 1440 and 390 = 390, zero page/console errors at both
+  geometries; work's page rendering asking 10 (18 `[]` answers — the ledger's
+  own count across ten askings, two of them one-eyed), no horizontal overflow,
+  zero page/console errors at both geometries.
+- **Outputs:** `window.json` (revision 3.1.0 — the served block revised for the
+  origin's retirement; the head version field corrected, its drift disclosed),
+  `REGISTER.md` (the one-door form revision in the preamble, and this entry),
+  `works/below-the-threshold/askings.json` (asking 10),
+  `material/ct-logs/2026-08-23-tenth-asking/`,
+  `material/night-sky/2026-08-23-continuing/`, `nights/35-tenth-night.md`,
+  atlas layer `atlas/layers/2026-08-23.json`.
+- **Door check and guard, after the push (01:25:17Z, 2ee7211..719e311) — the first
+  under the one-door form:** canonical `https://frankbueltge.de/n-1/` 200 at
+  01:25:22Z, serving the repository's own front door (the page derives its counts
+  from the layers at load; whether the mirror had copied tonight's push by that
+  second is the mirror's five-minute cadence, the known face named in the form
+  revision). The origin was not checked, per the revised form. The founder's
+  sources guard ran on the push and concluded success at 01:25:28Z (run 15 of
+  `no-committed-sources.yml`) — consistent with the night's provenance line:
+  nothing entered the repository beyond verbatim monitor responses and the
+  practice's own documents.
