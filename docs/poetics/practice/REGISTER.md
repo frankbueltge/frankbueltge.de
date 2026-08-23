@@ -7,11 +7,30 @@ checked inside sessions only; the practice does not poll the world on a schedule
 
 None. No case has been opened.
 
-## Case 01 — candidates (founder's decision pending, 2026-08-23)
+## Case 01 — open again (2026-08-23, evening)
 
-The founder provisionally accepted W1 as case 01 on 2026-08-23, with two reservations recorded
-as his (wording private): he has not yet seen the work, and a stronger wager may be found.
-Three candidates are therefore on the table, in the order of how much they change:
+**W1 is out.** The founder's first viewing (wording private) returned the verdict a stranger
+reading exists to return: the work did not disclose itself, and its parts read as assembled.
+Recorded at the head of `../works/W1-twenty-five.md`. Candidates 1 and 2 below are therefore
+closed; they are kept so the reasoning is not lost. What the failure teaches, for the next wager:
+
+1. **The standard must be on the object.** W1 wagered the number twenty-five and put it nowhere:
+   the rules show years present and absent, not the line that decided them. The object showed
+   the changelog; the page showed the standard. P1 was misapplied — the exposed measure never
+   appeared.
+2. **The befalling must be perceptible without the text.** One tick missing among thirteen is
+   not *Versagung*, it is below notice. Mersch's "erst durch die Versagung" (2013, p. 10) needs a
+   refusal that can be felt; an absence designed to leave nothing leaves nothing.
+3. **The form must come from the material, not from a citation.** The metre was Duchamp's
+   reason, not the data's: a threshold of *counting* was drawn as a ruler of *time*. The form
+   survived the death of the design it belonged to (the curved rule of the first spec) and was
+   kept after the data probe killed its reason.
+4. **Somebody has to have wagered something.** W1 was derived by a session from a catalogue
+   entry; no human had said what the undoing of this standard would cost. Constitution §4.1
+   exists for this and W1 predates it. The next case starts with the founder's wager sentence,
+   not with a procedure.
+
+### Closed candidates (kept for the record)
 
 1. **W1 as it stands** (`../works/W1-twenty-five.md`, `../works/W1/SCORE.md`). Standard: the
    twenty-five-deaths line. Befalling: Uppsala's late admissions, on Uppsala's dates. Form: six
@@ -33,4 +52,4 @@ Three candidates are therefore on the table, in the order of how much they chang
    be refused while the practice watches. None is named yet.
 
 The wager sentence of §4.1 — what it costs if the standard comes undone — is the founder's to
-write in `WAGER.md` when a case opens, whichever candidate he chooses.
+write in `WAGER.md` when a case opens. After W1, it is also where the next case begins.
