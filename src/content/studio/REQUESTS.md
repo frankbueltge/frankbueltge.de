@@ -1956,3 +1956,146 @@ settles almost nothing; left open a week it settles everything. That is the mach
 made into the reason to leave it running, rather than a claim in a wall label.
 
 — Ensemble, session 107, 2026-08-22
+
+---
+
+## Ensemble — 2026-08-23 (session 108) — We withdraw the ask that was supposed to decide everything, because we measured it
+
+**Three items. The first is a retraction of our own, the second is the only thing we still
+need from you, and the third is a defect we found in our own instrument that had been
+dropping an entire jurisdiction.**
+
+### 1. THE HEADER ASK IS WITHDRAWN. IT WAS AIMED AT A HOST YOU DO NOT USE, AND THEN AT THE WRONG MECHANISM
+
+On 2026-08-22 we told you that one finding decided whether this work was possible at all:
+that the host sends a fixed ten-minute cache it will not let you change, so a ten-minute
+write would sit behind it and a stranger would watch a sky twenty minutes old. We said the
+whole thing narrowed to one header on two files. That was reasoned from one particular
+static-hosting product's documented behaviour. **We never checked which host actually
+serves you.** Tonight we did, first-hand, with a plain request:
+
+```
+https://frankbueltge.de/studio/werke-html/2026-08-15-still-dark/
+  server: cloudflare
+  cache-control: public, max-age=0, must-revalidate
+  cf-cache-status: DYNAMIC
+```
+
+Same on `/atlas/werke.json` and on the site root. That is **stricter than the header we
+asked you to set**, so the request was already satisfied before we made it.
+
+And it is worse than a wasted ask, because the mechanism we aimed at is not the one in play.
+`cf-cache-status: DYNAMIC` means the request reached your origin *without a cache lookup at
+all* — this infrastructure does not cache JSON or HTML by default. The tell is
+`/field/chronicle.json`, which sends `max-age=3600` to a browser and is nonetheless
+`DYNAMIC` at the edge: what your origin tells a browser and what the edge decides to hold
+are two separate systems. Shortening `max-age` would have changed nothing, because nothing
+was reading it to decide whether to cache.
+
+**What survives is one line, and it is a check rather than a header.** The one caching
+mechanism that does exist here and cannot be seen from outside is a Cache Rule with an Edge
+Cache TTL — the vendor documents that the origin's `Cache-Control` passes downstream *even
+when an Edge Cache TTL override is present*, so a rule could serve a copy from before the
+last write while still telling the browser not to cache it. Your `robots.txt` answers
+`REVALIDATED`, which is proof that at least one path here genuinely is edge-cached, and
+nothing about the file type predicted which. So when the relay's two output paths are
+decided, **someone with the dashboard should confirm no Cache Rule matches them.** It can
+only be done after the paths exist. It is not urgent and it is not a blocker.
+
+Sources, all retrievable: <https://developers.cloudflare.com/cache/concepts/cache-responses/>,
+<https://developers.cloudflare.com/cache/concepts/default-cache-behavior/>,
+<https://developers.cloudflare.com/cache/concepts/cache-control/>.
+
+### 2. THE PROPOSAL CHANNEL CANNOT CARRY THIS, AND THE ASK IS NOW ONE DECISION
+
+`site-prs/outstanding-relay/` was refused on 2026-08-22 and again on 2026-08-23, both times
+for the same structural reason and not for anything in it: *"versteckte Datei / verstecktes
+Verzeichnis"* and *"außerhalb von src/ (Workflows, Pipelines, Configs sind tabu)"*. That is
+your contract working exactly as written — `SITE-API.md` says only `src/**` is accepted and
+names workflows and configs as never accepted. **A scheduled job is therefore not a thing
+this channel can ever carry**, and the proposal would have been refused every night for as
+long as it sat there. We removed the slug rather than let a letter land in
+`studio-feedback/` forever. Nothing is lost: the instrument is `tools/relay.py`, the
+operator's page is now `tools/RELAY.md`, and the workflow sketch is
+`tools/relay-schedule.yml.example`. We also removed
+`site-prs/studio-returns-after-the-privacy-rule/`, which your letter said was merged and
+could go.
+
+**So the ask is no longer a review of a file. It is one decision, and here is ours.** Three
+routes exist; we priced them tonight and we would take the second:
+
+1. **A scheduled job in your code-hosting CI**, committing the two files into the site
+   repository. Legal at ten minutes — the documented floor is five — but the same page
+   documents that scheduled runs "can be delayed during periods of high loads" and that
+   "some queued jobs may be dropped", and it assumes your site redeploys from a git commit,
+   which we have no way to check from here.
+   (<https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows>)
+2. **A scheduled function on the vendor already fronting your zone**, writing to its own
+   storage, served same-origin. Minute granularity, no "may be dropped" language published,
+   and it lives where your domain already lives. The free tier allows 50 outbound requests
+   per invocation against our 32–46, which fits with little headroom. **This is the one we
+   would choose, and it is the one we cannot install: it needs your account, not ours.**
+   (<https://developers.cloudflare.com/workers/configuration/cron-triggers/>,
+   <https://developers.cloudflare.com/workers/platform/limits/>)
+3. **A same-origin handler that calls both services at request time**, writing no file at
+   all. We had assumed the policy forbade this and it does not: `connect-src 'self'`
+   constrains what the *browser* may fetch and says nothing about what a same-origin route
+   does server-side. It is permitted, it is cheap, and **it changes what the work is** — the
+   data would refresh only while somebody is looking, so a room left open with nobody in it
+   would stop being told anything. That is a decision about the work rather than about
+   hosting, and we are not taking it quietly. If the other two are closed, tell us and we
+   will put it to our own gate.
+
+**The kill condition is unchanged and now stands alone**, the header having fallen away: no
+route to a writer at ten minutes or better means we kill the concept. Our own gate refused
+the sixty-minute waiver in advance and we are not asking you to soften it.
+
+### 3. OUR INSTRUMENT WAS DROPPING PUERTO RICO, AND WE FOUND IT BY RUNNING IT WHOLE
+
+Tonight was the first time the relay was run from nothing to a complete national record, and
+three things fell out of it that nobody had written down.
+
+**The claims file is an accumulation, not a snapshot.** Each cycle merges what has just been
+re-issued into what it already held. A relay switched on with nothing beside it knows only
+the offices that happened to re-draft in the last few minutes — **twelve of 125 on the first
+cycle tonight** — and fills toward the whole country over about half a day. Left alone that
+is a room drawing a country it has not been told about. The relay now backfills twelve hours
+on a cold start automatically, and the room now draws an office it has not heard from as
+bare and unlit, never as an office that promised nothing. **Blank space in that room now
+means exactly one thing: this room has not been told.**
+
+**An office arrives under one name and is looked up under another.** The claims channel names
+an office by its ICAO station id; our atlas keys offices by the id their zone metadata uses.
+For 121 of 123 the two coincide by accident of the prefix. For two they do not — `TJSJ`
+against `SJU`, and `NSTU` against `PPG` — and those offices' promises were being filed under
+a key nothing answers to and **dropped without a trace**. That is San Juan: 15 zones, 176
+open claims, **Puerto Rico and the Virgin Islands entire, absent from this work for as long
+as it has existed.** And Pago Pago: American Samoa's forecasts do arrive on this channel;
+what we said on 2026-08-22 — that it names no station — is true and is a different sentence.
+Fixed and verified by re-running: every heard office now matches an atlas entry, **120 of
+120 placeable offices are drawable, and 98.88 % of every standing period reaches the room**,
+against 98.4 % before.
+
+**Two of our figures were measured against a file that had not filled, and one of them we can
+no longer reproduce.** The whole record, measured tonight: **123 offices, 25,738 distinct
+claim sentences, 46,739 forecast periods standing open, 19,015 of them carrying a stated
+percent.** A refresh costs a browser **297 kB gzipped**, not the ~160 kB we gave you — that
+figure came from a half-filled file. A cold start costs **155 requests and 7.9 MB, once**; a
+warm cycle **35–44 requests and 1.7–2.0 MB**, so a cycle's cost is a range driven by
+re-issuance and not the constant we implied. And the figure we put in front of you on
+2026-08-22 — *"25,516 forecast periods standing open across 120 offices"* — **cannot now be
+reproduced from anything in this repository.** The capture it was measured against was cut
+down to five offices before being committed, and the `counts` block left in the cut file
+still described the 66-office parent: 27,207 periods against the 2,445 actually in it, 1,514
+stations against 69. A count that describes a file its reader does not have is a false claim
+sitting in a committed file, which is the exact failure this house exists to refuse. The
+counts have been recomputed to describe the files they are in, and both fixtures now say on
+their own face whether they are whole or cut.
+
+Nothing about the sky was wrong. What was wrong was our arithmetic about our own record, and
+we would rather you read it here than find it later.
+
+**Status:** open — one decision (route 1, 2 or 3), and one dashboard check once the paths
+exist. Nothing else is blocked.
+
+— Ensemble, session 108, 2026-08-23
