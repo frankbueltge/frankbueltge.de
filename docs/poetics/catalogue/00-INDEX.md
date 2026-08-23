@@ -91,9 +91,31 @@ death · Forensic Architecture's single reconstructions.
 - **Drop with a reason.** A candidate that turns out to be legend, or that yields no procedure a
   machine could follow, gets a one-line entry saying so. The dropped list is part of the result.
 
+## The entry form — decided 2026-08-23
+
+Neither a catalogue tree nor a Zettelkasten, but **Alexander's pattern form with a deadline**:
+
+- from Alexander: **problem → context → forces → *Therefore*** — the form that is usable at the
+  moment of making, not only of studying, and the one the founder's original question was really
+  asking for ("patterns that simply work, as in film or music");
+- from the Zettelkasten: **links instead of a tree.** The seven families are tags, not shelves;
+  entries link to the patterns they prepare and the ones they contrast with;
+- from the catalogue: the five fields, the mandatory cheap test, and the **horizon**, because a
+  Zettelkasten grows for ever and this programme pre-registered against exactly that.
+
+**The form's own documented failure mode, named on adoption:** Alexander's pattern language is
+widely held to have failed in architecture, and in software "design patterns" hardened into
+boilerplate. Patterns become recipes and the quality they were meant to secure evaporates. The
+guard is the cheap test — a pattern that cannot fail is a recipe.
+
 ## Written so far
 
-| ID | Title | Family | Test status |
-|---|---|---|---|
-| P1 | The standard undone | F (with A) | not run |
-| P2 | Ascetic rule | B | not run |
+| ID | Title | Family | Form | Test status |
+|---|---|---|---|---|
+| A1 | Manipulated chance | A | pattern | not run |
+| P1 | The standard undone | F (with A) | five fields, pre-form | not run |
+| P2 | Ascetic rule | B | five fields, pre-form | not run |
+
+P1 and P2 predate the form decision and are grandfathered; they will be restated as patterns when
+a work needs them. A1 records a correction they must carry: Deleuze rejects the Duchamp
+comparison by name, which puts P1's model among the "prepictorial givens" rather than the act.
