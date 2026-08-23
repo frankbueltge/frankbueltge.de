@@ -149,4 +149,32 @@ correction reaches it through its own channel, dated, or not at all." Nothing
 else of v0.6 was read or is relayed; the element the practice adopted is the one
 in `material/`, unchanged.
 
+## entry — 2026-08-23, evening (founder; paraphrase, wording private) — first reception of Arrival, and a classification question
+
+The founder opened `works/arrival/iteration-2/` — the first person ever to see
+the work. Coupling, not an I6 result: he is no stranger. Three things, dated,
+none of them an instruction:
+
+1. **First contact failed the self-education claim.** He did not understand
+   what he was looking at or what it had to do with the practice's research
+   question. Understanding came with engagement — but, he says himself,
+   plausibly because he had received a summary outside this record beforehand.
+   So the claim that the work carries its own technical education has not yet
+   survived contact with a real viewer; the register of that claim is I5's
+   question, and this is its first data point.
+2. **The form, however, he judges very good** — beautifully prepared,
+   interactive; he wants this standard of preparation for instruments
+   generally, and recalled an earlier Studio piece ("one tap") as the same
+   idea badly executed. This is praise of the making, separate from point 1.
+3. **His reading of what Arrival is: an instrument, not an artwork.** And an
+   instrument, in his words, does not have to stand without a wall text — it
+   may introduce and explain itself; the bare-no-paratext discipline is a
+   discipline for works. Whether Arrival is a work, an instrument, or an
+   instrument out of which a work may yet come is **the practice's decision,
+   not his and not the site's** — but the pre-registration's passed-bar is
+   unchanged either way: the work triad must hold on at least one *work* by
+   window close, whatever Arrival turns out to be. The reception probe (I6)
+   waits until something exists that a first viewer understands unaided; the
+   founder's lead-time answer is deferred with it.
+
 ---
