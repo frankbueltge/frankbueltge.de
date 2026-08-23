@@ -132,11 +132,54 @@ a **living, public, checkable instrument** that records the revisions as they la
 instrument gap rather than an argument gap — which is exactly the kind this house is equipped to
 fill, and exactly the kind that does not need to be art.
 
-## Duties before building
+## Duties before building — discharged 2026-08-23
 
-1. Read *Assessing Reporting Delays in ACLED* (arXiv 2026) in full. It is the one paper that
-   could close the gap.
-2. Check whether Our World in Data, which republishes UCDP, documents version-to-version changes
-   for its readers. If it does, the instrument is partly redundant.
-3. Ask whether the same watch is worth running on a second record, since one source makes a
-   finding and two make an instrument.
+**1. Read *Assessing Reporting Delays in ACLED Conflict Event Data* (arXiv 2603.25964). Done.
+The gap does not close; it sharpens.**
+
+The paper measures "delays between event occurrence and **first inclusion** in the database",
+over "ACLED's weekly releases from June 30, 2024, to June 1, 2025", with grouped proportional
+hazards models. It uses versioned releases only to date an entry's **first appearance**. It does
+not compare what a published version contained against what a later one contains, does not look
+at entries crossing an inclusion threshold retroactively, and proposes no ongoing instrument —
+it ends by offering "an empirical foundation for developing nowcasting approaches to correct
+short-term underreporting".
+
+Two edges of one problem, and they are different edges:
+
+| | ACLED delay paper (2026) | This instrument |
+|---|---|---|
+| Measures | how long until an event **first appears** | what happens to entries **already in** the record |
+| Direction | forward — correcting the present | backward — the past being rewritten |
+| Object | the front edge of the record | revisions, removals, threshold crossings years later |
+| Output | a model, and a foundation for nowcasting | a standing, dated, checkable register |
+| Reason for change | not in scope | **whether one was published at all** |
+
+The paper is the strongest possible neighbour: it establishes that the timing of a conflict
+record is a serious, measurable object worth a study — and it leaves the back edge untouched.
+
+**2. Does Our World in Data surface version-to-version changes? No.** OWID republishes UCDP
+across several charts and explains how the major sources collect their data, but the changes
+between releases live only in UCDP's own version-history document — 167 pages, a bare ledger of
+dyad id, conflict id, name and year, with no rationale anywhere. A reader meeting these numbers
+where most people meet them sees a figure that changed silently, with nothing to indicate that
+it did.
+
+That is the sharpest form of the case: **the numbers are republished widely and the revisions are
+invisible at the point of use.**
+
+**3. A second record, so that one source makes a finding and two make an instrument.** Still
+open, and it is the remaining design question rather than a blocker. Candidates worth testing for
+the same behaviour — a published threshold, versioned releases, silent retroactive change:
+EM-DAT (disaster entry criteria), IPC famine phase classifications, GDACS alert levels, and any
+national statistical office that revises a headline series without a public diff.
+
+## Verdict after the duties
+
+**Daylight confirmed, narrow and specific.** Not "nobody has criticised conflict data" — several
+have, in political science, and well. What was not found is a living, public, checkable register
+of what an authoritative record admitted to or removed from its own past, when, at what
+magnitude, and whether a reason was given.
+
+It is an instrument, not a work; its neighbours are scholarly, not artistic; and it does not
+require anyone to decide whether a machine can make art.
