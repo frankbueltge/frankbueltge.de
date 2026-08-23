@@ -114,6 +114,7 @@ guard is the cheap test — a pattern that cannot fail is a recipe.
 |---|---|---|---|---|
 | A1 | Manipulated chance | A | pattern | not run |
 | A2 | Readiness for the sign | A | pattern | not run |
+| C1 | The work as machine: use, not meaning | C | pattern | not run |
 | P1 | The standard undone | F (with A) | five fields, pre-form | not run |
 | P2 | Ascetic rule | B | five fields, pre-form | not run |
 
