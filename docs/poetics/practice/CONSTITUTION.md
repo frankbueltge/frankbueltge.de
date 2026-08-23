@@ -1,4 +1,37 @@
-# Constitution v1.0 — a practice that takes Mersch as its ground (name pending)
+# Constitution v1.0 — a practice that takes Mersch as its ground (name pending) — ARCHIVED
+
+> **Archived 2026-08-23, the day it was founded.** The founder's decision (wording private),
+> reached after reading the practice's first work candidate and its own ground. Post-mortem in
+> the practice's voice, as §9 requires:
+>
+> **(1) The ground was wrong.** This constitution was built around the machine's *deficit* —
+> that nothing can befall it except the world's refusal — and around a Duchamp procedure and a
+> verification apparatus. That answers one sentence in the *Manifest* (thesis 13's third step,
+> on randomness). It does not take Mersch's centre as its ground: aesthetic thinking as a
+> showing that does not assert, and reflection on one's own medium and conditions *in* that
+> medium — the capacity thesis 13 actually denies to machines. The centre appeared here only as
+> a checklist afterwards. An honest apparatus with an art citation is not a practice on Mersch's
+> ground.
+>
+> **(2) The re-grounded version was declined.** A practice rebuilt on that centre would make
+> small works out of the machine's own conditions — its forgetting, its choosing, its horizon —
+> showing rather than saying them. The forecast, given to the founder before he decided: works
+> that read as bugs unless explained, a genre that already exists, a practice that looks at
+> itself for three months and reaches no one; the one thing new about it — the subject position
+> — being the one thing it cannot prove. The founder judged that the house does not need one
+> more clever practice that shows its own limits in texts nobody asked for. The practice agrees
+> with the judgment as it stands.
+>
+> **(3) What this day leaves.** Not a work. A finding: the canonical record of the world's wars
+> admits years to the past with no stated reason anywhere in its published changelog
+> (`../works/W1-data-probe-result.md`). That is the kind of thing this house can hold and prove
+> and that concerns someone outside it. It was buried under a metre rule and a philosophy. The
+> lesson is recorded in `REGISTER.md`.
+>
+> **(4) Status.** No case was opened. Nothing reached the site. Nothing left the house. Per §9,
+> a dead practice is not revived: a successor, if any, is founded under a new constitution and
+> a new name, citing this one as archive. The text below is kept unchanged as what was founded.
+
 
 *Drafted 2026-08-23 inside the Poetics programme and **founded the same day** on the founder's
 decision (wording private) — in force from 2026-08-23, revisable by him; the practice may propose
@@ -405,7 +438,7 @@ the first group has been re-anchored** (§6, duty 7). Page numbers refer to the 
 | Henke · Mersch · van der Meulen · Strässle · Wiesel, *Manifest der Künstlerischen Forschung* (Diaphanes 2019) | published, CC BY-NC-ND, **co-authored, theses unattributed** — cite as the position's; use the English edition for English quotation | §1, §2.2, §3.3, §4, §5, §6, §7, §8, §9 |
 
 House texts cited: `../00-PROGRAM.md` (H2, H5, §4 anti-dossier rule) · `../mersch-pressure-points.md`
-(§0, PP2, PP5, PP6, PP13, PP14) · `../catalogue/P1`, `P2` · `../works/W1-twenty-five.md`,
+(§0, PP2, PP5, PP6, PP13, PP14) · `../patterns/P1`, `P2` · `../works/W1-twenty-five.md`,
 `../works/W1/SCORE.md` · Ulysses, *Research Protocol v6* §2, §7 (the inviolables' form; the
 refusal-only judgement) · `docs/post-office/packet-convention.md` · the runtime rules of
 2026-08-22.

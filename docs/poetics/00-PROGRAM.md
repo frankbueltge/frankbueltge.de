@@ -37,10 +37,12 @@ is *made*.
 ## 3. What this program is not
 
 - **Not a practice.** No constitution, no persona, no nightly cadence, no engine, no
-  automation. *(2026-08-23: a practice that takes the T1 ground as its own was **founded** the
-  same day, on the founder's decision — constitution in `practice/CONSTITUTION.md`, name pending.
-  It stands beside this programme and cites it; this programme stays exactly what this line
-  says, and its own failure criterion of §5 is untouched.)*
+  automation. *(2026-08-23: a practice that took the T1 ground as its own was **founded and
+  archived the same day** on the founder's decision — `practice/CONSTITUTION.md`, post-mortem at
+  its head. Its first candidate, W1, failed the founder's reading; its ground was found to be
+  the machine's deficit rather than Mersch's centre; the re-grounded version was declined as one
+  more practice showing its own limits to no one. This programme stays exactly what this line
+  says. Its §5 criterion is open again: W1 no longer counts as the named work candidate.)*
 - **It does not touch `arch`.** That test-bed's own rule is that its hermeneutic reading
   (U1) must precede its model decision. Doing that reading here would contaminate the very
   experiment arch was founded to run. This program reads *other* material for *other* ends,
@@ -51,8 +53,8 @@ is *made*.
 
 ## 4. Deliverable format — the anti-dossier rule
 
-The output is a **procedure catalogue** in the format Ulysses' toolbox already uses, one
-file per procedure in `catalogue/`. Every entry carries all five fields:
+The output is a **pattern language** in the format Ulysses' toolbox already uses, one
+file per procedure in `patterns/`. Every entry carries all five fields:
 
 1. **Operational core** — what is actually done, in steps a machine could follow.
 2. **Provenance** — who, when, and the source with page number.

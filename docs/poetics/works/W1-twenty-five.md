@@ -14,7 +14,7 @@
 > one's.
 
 **Status: design proposal. Not commissioned, nothing built.** Working title; the wording gate
-applies. First work candidate of the Poetics programme, derived from catalogue entry P1 (the
+applies. First work candidate of the Poetics programme, derived from pattern P1 (the
 standard undone) with P2's ascetic condition folded in.
 
 ---

@@ -414,7 +414,7 @@ to be refused qualifies on the same terms; or it does not, in which case the *Tr
 
 **His reply, and why it helps us.** He can distinguish *arranging the conditions* from
 *determining the outcome*: Duchamp fixed the height, not the figure. That reply is good — and
-it concedes our case, because it is exactly the condition catalogue entry P1 already imposes:
+it concedes our case, because it is exactly the condition pattern P1 already imposes:
 the exposing process must lie outside the practice's control. A machine that submits its own
 standard to latency, refusal or a third party's clock is in Duchamp's position, not in the
 random number generator's.

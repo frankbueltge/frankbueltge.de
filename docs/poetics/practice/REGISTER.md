@@ -1,4 +1,8 @@
-# Register — standing exposures and the case ahead
+# Register — standing exposures and the case ahead — ARCHIVED 2026-08-23
+
+*The practice was archived the day it was founded; see the head of `CONSTITUTION.md`. This
+register closes with no standing exposure and no case. Kept for the four lessons below, which
+outlive the practice.*
 
 *Kept per Constitution §8. Standing exposures are listed with the date they were placed and are
 checked inside sessions only; the practice does not poll the world on a schedule.*

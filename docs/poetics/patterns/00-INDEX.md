@@ -1,4 +1,4 @@
-# The procedure catalogue — index and harvest discipline
+# The pattern language — index and harvest discipline
 
 *Opened 2026-08-23, on the founder's correction: Bacon was one example, the goal is a catalogue.*
 

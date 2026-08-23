@@ -107,7 +107,7 @@ Deleuze rejects the Duchamp comparison by name, and it lands on this house:
 > them exactly where they fell; but for Bacon, **this is nothing more than a set of probabilistic,
 > prepictorial givens, which are not part of the act of painting**" (p. 95).
 
-Catalogue entry **P1 (the standard undone)** is built on precisely that Duchamp model — expose,
+Pattern **P1 (the standard undone)** is built on precisely that Duchamp model — expose,
 fix uncorrected, publish the deviation. By Bacon's criterion P1 stops at the givens. And **W1
 *Twenty-Five*** inherits the same limit: it fixes the fall (the admissions), stages the apparatus,
 and refuses to update — but nothing in it is *reinjected and answered*. The rules record; they do
