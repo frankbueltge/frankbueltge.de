@@ -188,3 +188,30 @@ export function lastArchProtocol(facts: ArchFacts = readArchFacts()): { title: s
   if (!last) return null
   return { title: last.title, meta: last.date, href: `/arch/read/${last.path.replace(/\.md$/, '')}` }
 }
+
+/** A README that describes a shelf: at the mirror root, or directly inside one of its sections. */
+function isScaffoldReadme(rel: string): boolean {
+  return rel.endsWith('README.md') && rel.split('/').length <= 2
+}
+
+/**
+ * Which markdown files of the mirror get a rendered page at /arch/read/<path>.
+ *
+ * Directory READMEs stay out — they describe the room's shelves to a git visitor, and the room
+ * itself is this site's. But only the scaffold ones: a README deeper in, like a work's own
+ * `works/<name>/README.md`, is the practice's account of how that work is rebuilt, it is linked
+ * from /arch, and it must therefore have a page. Excluding every file called README.md is what
+ * sent each of those links nowhere until 2026-08-23.
+ */
+export function archReadPaths(root: string = ARCH_MIRROR): string[] {
+  const out: string[] = []
+  const walk = (dir: string) => {
+    for (const entry of readdirSync(join(root, dir), { withFileTypes: true })) {
+      const rel = dir ? `${dir}/${entry.name}` : entry.name
+      if (entry.isDirectory()) walk(rel)
+      else if (entry.name.endsWith('.md') && !isScaffoldReadme(rel)) out.push(rel)
+    }
+  }
+  walk('')
+  return out.sort()
+}

@@ -3,25 +3,15 @@
 // record without a git client, with the raw bytes one click away at /arch/<path>. The site
 // renders; it does not edit: no excerpting, no reordering, no note of its own on the page
 // beyond the strip that says where the file came from.
-import { readFileSync, readdirSync } from 'node:fs'
+import { readFileSync } from 'node:fs'
 import { join, posix } from 'node:path'
 import MarkdownIt from 'markdown-it'
 import Page from '@/layouts/Page.astro'
-import { ARCH_MIRROR } from '@/lib/arch/facts'
+import { ARCH_MIRROR, archReadPaths } from '@/lib/arch/facts'
 
 export function getStaticPaths() {
-  // every .md in the mirror, minus the directory READMEs (they describe the room's shelves to a
-  // git visitor; the room itself is this site's) and the practice's own gitignore
-  const out: { params: { path: string }; props: { rel: string } }[] = []
-  const walk = (dir: string) => {
-    for (const entry of readdirSync(join(ARCH_MIRROR, dir), { withFileTypes: true })) {
-      const rel = dir ? `${dir}/${entry.name}` : entry.name
-      if (entry.isDirectory()) walk(rel)
-      else if (entry.name.endsWith('.md') && entry.name !== 'README.md') out.push({ params: { path: rel.replace(/\.md$/, '') }, props: { rel } })
-    }
-  }
-  walk('')
-  return out
+  // Which files get a page is a rule with a test, not a line in a loop: see archReadPaths.
+  return archReadPaths().map((rel) => ({ params: { path: rel.replace(/\.md$/, '') }, props: { rel } }))
 }
 
 const { rel } = Astro.props as { rel: string }
