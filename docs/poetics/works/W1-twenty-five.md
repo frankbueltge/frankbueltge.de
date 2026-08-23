@@ -1,7 +1,20 @@
 # W1 — *Twenty-Five* (design, 2026-08-23)
 
+> **First reading, 2026-08-23 — the founder's (wording private).** Shown the six rules first and
+> the page after, he reported that the work did not disclose itself to him, did not impress him,
+> and that its elements — the metre, the threshold, the changelog, the Duchamp reference — read
+> as assembled rather than necessary. That is criterion 4 (shows rather than says) failed at the
+> first viewing, and the "reads as a chart / discreet apparatus" risks of §9 confirmed from the
+> outside. **W1 is not adopted as case 01 of the practice.** It stays in the record as what it
+> is: the programme's first work candidate, with its probe, its score and this verdict. The
+> diagnosis of *why* it failed is in `../practice/REGISTER.md` (2026-08-23) — the standard
+> wagered (twenty-five deaths) is nowhere on the object; the difference between the rules lies
+> below perception and reads as nothing rather than as refusal; the metre's reason is a
+> citation, not a necessity of the material; and nobody had wagered anything — the loss was no
+> one's.
+
 **Status: design proposal. Not commissioned, nothing built.** Working title; the wording gate
-applies. First work candidate of the Poetics programme, derived from catalogue entry P1 (the
+applies. First work candidate of the Poetics programme, derived from pattern P1 (the
 standard undone) with P2's ascetic condition folded in.
 
 ---

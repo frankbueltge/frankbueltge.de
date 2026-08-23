@@ -59,7 +59,7 @@ caricature**.
 
 This is stronger than the position reached in T1.02. There, the apparatus was material for a
 work; here it is the material of the *exemplary* work, and the operation is named precisely:
-overdo the rigour until the rigour is what one sees. Catalogue entry **P1 is refined
+overdo the rigour until the rigour is what one sees. Pattern **P1 is refined
 accordingly** — the standard must not merely be exposed, its apparatus must be staged.
 
 Related, p. 4: the artistic experiment is "eine ganz andere Art von Experiment als das

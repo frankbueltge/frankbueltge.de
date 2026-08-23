@@ -152,9 +152,9 @@ and per T1.01 the only *Zu-fall* available to a machine is the world's refusal.
 ## 9. Procedures extracted for the catalogue
 
 - **P1 — The standard undone** (Duchamp's *Stoppages*): submit your own measure to a lawless
-  real process, fix the deviation, let it stand as the new standard. → `catalogue/P1`.
+  real process, fix the deviation, let it stand as the new standard. → `patterns/P1`.
 - **P2 — Ascetic rule use** (negative rules, Oulipo's lipogram): make by removing, against
-  the machine's own facility for production. → `catalogue/P2`.
+  the machine's own facility for production. → `patterns/P2`.
 - **P3 — Inframince exposition**: work at thresholds below human resolution or beyond human
   patience. Draft after T2.
 - **P4 — Katastrophé / medium against medium**: constellate so that the relation does not
