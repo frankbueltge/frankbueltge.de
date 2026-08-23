@@ -1,0 +1,14 @@
+{
+  "name": "reader",
+  "private": true,
+  "type": "module",
+  "description": "A reader on Mersch's published criteria. Run: npx tsx reader.ts <url|path|house>",
+  "scripts": {
+    "read": "tsx reader.ts"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "latest",
+    "playwright-core": "1.62.1",
+    "tsx": "^4"
+  }
+}
