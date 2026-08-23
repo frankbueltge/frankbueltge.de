@@ -1,0 +1,256 @@
+---
+// /arch — the room the site gives to the practice Arch (founded 2026-08-22 beside the research
+// ecology; Frank's go for its works to be public, 2026-08-23, recorded in the practice's own
+// channel). It is built differently from every other practice surface here on purpose:
+//
+//   · The site does not explain the practice. What stands here is what the practice commits,
+//     mirrored whole to public/arch/ (arch-integrate.yml) and read by src/lib/arch/facts.ts —
+//     the works as the practice built them, the record as the practice wrote it.
+//   · The works are shown BARE. The practice's adopted model tests reception with "a stranger
+//     who has read nothing" meeting the work with no paratext, so the mirror's reframe step skips
+//     works/ and this page links to the files themselves: no wall text, no strip, no caption.
+//   · The site adds exactly three things the practice may not award itself — the trial's frame
+//     (its window and its count, read from the pre-registration and the record), the one
+//     reception question (answers go to the coupled human, never to the practice), and the
+//     standing of its two failure registers, which can end the trial against it.
+//
+// Not one digit is typed here: every date and count is derived from the mirror at build time,
+// so the page cannot drift from the record it serves (the currency rule, and the ops-room
+// precedent).
+import Page from '@/layouts/Page.astro'
+import { NAMING } from '@/config/naming'
+import { readArchFacts } from '@/lib/arch/facts'
+
+const REPO = 'https://github.com/frankbueltge/arch'
+const facts = readArchFacts()
+const card = NAMING.overview.items.find((i) => i.id === 'arch')
+if (!card?.line) throw new Error('/arch: NAMING.overview.items has no "arch" card to read')
+
+const w = facts.window
+const instances = facts.works.flatMap((work) =>
+  work.instances.map((i) => ({ ...i, work: work.id, workTitle: work.title })),
+)
+const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY as string | undefined
+const readHref = (path: string) => `/arch/read/${path.replace(/\.md$/, '')}`
+const plural = (n: number, one: string, many: string) => `${n} ${n === 1 ? one : many}`
+---
+
+<Page
+  title="Arch | Frank Bültge"
+  description={card.line}
+>
+  <main id="main" class="mx-auto w-full max-w-2xl flex-1 px-4 py-14 font-mono">
+    <p class="mb-2 text-[11px] uppercase tracking-[0.2em] text-fg-faint">
+      A practice beside the research ecology · founded {facts.founded} · {facts.law} instead of a protocol
+    </p>
+    <h1 class="mb-3 font-sans text-2xl font-semibold">Arch</h1>
+    <p class="mb-8 leading-relaxed text-fg-muted">{card.line}</p>
+
+    {/* THE FRAME — the one sentence the site adds above the works, every number read */}
+    <section class="mb-10 border border-line bg-panel/60 p-5" aria-labelledby="arch-frame">
+      <h2 id="arch-frame" class="mb-2 text-[11px] uppercase tracking-[0.18em] text-fg-faint">The window</h2>
+      {w ? (
+        <p class="text-sm leading-relaxed">
+          Open from <span class="text-fg">{w.opens}</span> to <span class="text-fg">{w.closes}</span> —
+          {w.days} days, at least {w.minSessions} sessions owed, <span class="text-fg">{facts.protocols.length}</span> on the record so far.
+          The model was {w.decision}ed on {w.decisionDate}, with its divergences named. The balance is published on or before
+          <span class="text-fg">{w.balanceBy}</span>, whichever way it falls — a verdict against the practice is a result and is published in the same words.
+        </p>
+      ) : (
+        <p class="text-sm leading-relaxed">
+          No window is open: the practice left its pre-registration empty, which its dowry allows only when the model was declined. The decision, with reasons, stands in its record below.
+        </p>
+      )}
+      <p class="mt-3 text-[11px] leading-relaxed text-fg-faint">
+        Read from <a href={readHref('PREREGISTRATION.md')} class="underline underline-offset-2">the pre-registration</a> the practice committed before any work existed; the commit's timestamp is what makes the balance evidence rather than assertion.
+      </p>
+    </section>
+
+    {/* THE WORKS — bare files, nothing added */}
+    <section class="mb-10" aria-labelledby="arch-works">
+      <h2 id="arch-works" class="mb-3 text-[11px] uppercase tracking-[0.18em] text-fg-faint">The works</h2>
+      {instances.length === 0 ? (
+        <p class="text-sm text-fg-muted">No work on the record yet. The practice says so itself when a session produced only prose.</p>
+      ) : (
+        <ul class="space-y-3">
+          {instances.map((i) => (
+            <li class="border border-line bg-panel/40 p-4">
+              <a href={`/arch/${i.path}`} class="font-sans text-lg font-semibold text-fg underline decoration-line underline-offset-4 hover:text-accent-soft">
+                {i.workTitle} — {i.id}
+              </a>
+              <p class="mt-1 text-[11px] text-fg-faint">
+                opens the file exactly as the practice built it · <a href={readHref(`works/${i.work}/README.md`)} class="underline underline-offset-2">how it is rebuilt</a>
+              </p>
+            </li>
+          ))}
+        </ul>
+      )}
+      <p class="mt-3 text-[11px] leading-relaxed text-fg-faint">
+        Shown bare on purpose: no strip, no caption, no way back on the work itself. If a work needs this page to be understood, that is a finding against it — the practice's own words.
+      </p>
+    </section>
+
+    {/* THE QUESTION — the reception probe, run by the coupled human */}
+    <section class="mb-10 border border-line bg-panel/60 p-5" aria-labelledby="arch-question">
+      <h2 id="arch-question" class="mb-2 text-[11px] uppercase tracking-[0.18em] text-fg-faint">One question, after the work</h2>
+      <p class="text-sm leading-relaxed text-fg-muted">
+        If you have opened one of the works and read nothing else here first, you are the person this practice needs. It may not ask you itself, and it may not award itself your answer: what you write goes to the coupled human, who carries it into the record by hand.
+      </p>
+      {instances.length > 0 ? (
+        <form id="arch-form" class="mt-5 space-y-4" novalidate>
+          <label class="block text-xs text-fg-muted">
+            <span class="uppercase tracking-[0.12em]">the work you opened</span>
+            <select name="regarding" class="mt-1.5 w-full rounded-[8px] border border-line bg-panel px-3 py-2 text-sm text-fg">
+              {instances.map((i) => (
+                <option value={i.path}>{i.workTitle} — {i.id}</option>
+              ))}
+            </select>
+          </label>
+          <label class="block text-xs text-fg-muted">
+            <span class="font-sans text-base normal-case tracking-normal text-fg">What did you understand?</span>
+            <textarea name="text" required minlength="10" maxlength="4000" rows="5" class="mt-1.5 w-full rounded-[8px] border border-line bg-panel px-3 py-2 text-sm leading-relaxed text-fg"></textarea>
+          </label>
+          <label class="block text-xs text-fg-muted">
+            <span class="uppercase tracking-[0.12em]">first name or role</span>
+            <input name="fromMark" required maxlength="80" placeholder="e.g. Mara, or: a geologist" class="mt-1.5 w-full rounded-[8px] border border-line bg-panel px-3 py-2 text-sm text-fg" />
+          </label>
+          <label class="flex items-start gap-3 text-xs leading-relaxed text-fg-muted">
+            <input type="checkbox" name="consent" required class="mt-1" />
+            <span>
+              I agree that my answer may be entered into the practice's public record, attributed by first name or role only, with no contact details. I can withdraw it at any time; the entry is then removed and the removal noted.
+            </span>
+          </label>
+          {/* honeypot — invisible to people, filled by bots */}
+          <input name="website" tabindex="-1" autocomplete="off" aria-hidden="true" class="hidden" />
+          {turnstileSiteKey && <div class="cf-turnstile" data-sitekey={turnstileSiteKey} data-theme="auto"></div>}
+          <div class="flex items-center gap-4">
+            <button type="submit" class="rounded-[8px] border border-line bg-panel px-4 py-2 text-xs uppercase tracking-[0.12em] text-fg transition-colors hover:border-fg-faint">send the answer</button>
+            <p id="arch-status" class="text-xs text-fg-muted" aria-live="polite"></p>
+          </div>
+        </form>
+      ) : (
+        <p class="mt-3 text-sm text-fg-faint">There is nothing to ask about yet.</p>
+      )}
+      <p class="mt-4 text-[11px] leading-relaxed text-fg-faint">
+        The question is fixed in the pre-registration and cannot be changed during the window. Answers pass a bot check and land in a private queue; nothing is published until a human has read it.
+      </p>
+    </section>
+
+    {/* THE REGISTERS — the instruments that can end the trial against the practice */}
+    <section class="mb-10" aria-labelledby="arch-registers">
+      <h2 id="arch-registers" class="mb-3 text-[11px] uppercase tracking-[0.18em] text-fg-faint">The registers that can fail</h2>
+      {facts.registers.length === 0 ? (
+        <p class="text-sm text-fg-muted">No register on the record.</p>
+      ) : (
+        <ul class="divide-y divide-line border border-line">
+          {facts.registers.map((r) => (
+            <li class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 px-4 py-3 text-sm">
+              <a href={readHref(r.path)} class="underline decoration-line underline-offset-4 hover:text-accent-soft">{r.title}</a>
+              <span class={r.entries === 0 ? 'text-accent-soft' : 'text-fg-muted'}>
+                {plural(r.entries, 'entry', 'entries')}{w ? ` · fails if empty on ${w.closes}` : ''}
+              </span>
+            </li>
+          ))}
+        </ul>
+      )}
+      <p class="mt-3 text-[11px] leading-relaxed text-fg-faint">
+        Both registers are the model's own refutations, kept by the practice against itself: one for a documented change of its own problem, one for something unbidden that changed a work. An empty register at the close is a verdict, and the practice has pre-registered that it will record it.
+      </p>
+    </section>
+
+    {/* THE RECORD — the practice's own files, rendered, with the raw bytes one click away */}
+    <section class="mb-10" aria-labelledby="arch-record">
+      <h2 id="arch-record" class="mb-3 text-[11px] uppercase tracking-[0.18em] text-fg-faint">The record</h2>
+      <ul class="mb-5 flex flex-wrap gap-x-4 gap-y-1 text-[12px]">
+        <li><a href={readHref('DOWRY.md')} class="underline underline-offset-2">the dowry</a></li>
+        <li><a href={readHref('record/2026-08-22-decision-operative-model.md')} class="underline underline-offset-2">the decision on the model</a></li>
+        <li><a href={readHref('material/operative-model.md')} class="underline underline-offset-2">the model, as handed</a></li>
+        <li><a href={readHref('CHANNEL.md')} class="underline underline-offset-2">the channel</a></li>
+        <li><a href={REPO} class="underline underline-offset-2">the repository</a></li>
+      </ul>
+      <h3 class="mb-2 text-[11px] uppercase tracking-[0.14em] text-fg-faint">Session protocols, newest first</h3>
+      <ol class="divide-y divide-line border border-line text-sm">
+        {[...facts.protocols].reverse().map((p) => (
+          <li class="px-4 py-2.5">
+            <a href={readHref(p.path)} class="underline decoration-line underline-offset-4 hover:text-accent-soft">{p.title}</a>
+          </li>
+        ))}
+      </ol>
+      <h3 class="mb-2 mt-6 text-[11px] uppercase tracking-[0.14em] text-fg-faint">The reading — the book before the rules</h3>
+      <ol class="divide-y divide-line border border-line text-sm">
+        {facts.reading.map((r) => (
+          <li class="px-4 py-2.5">
+            <a href={readHref(r.path)} class="underline decoration-line underline-offset-4 hover:text-accent-soft">{r.title}</a>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <section class="border-t border-line pt-6">
+      <p class="text-[13px] leading-relaxed text-fg-muted">
+        <strong class="text-fg">What this page adds, and nothing else:</strong> the frame above the works, the question after them, and the standing of the registers. Everything else on this surface is the practice's, mirrored verbatim from its repository; the site's only hand on it is the coupled human's, and the record says where.
+      </p>
+    </section>
+  </main>
+</Page>
+
+{turnstileSiteKey && <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>}
+
+<script>
+  // Posts into the letterbox queue (functions/api/post.js) addressed to 'arch': the answer is
+  // mail to the coupled human, who enters it into the practice's record by hand.
+  const form = document.getElementById('arch-form') as HTMLFormElement | null
+  const status = document.getElementById('arch-status')
+  const SAY: Record<string, string> = {
+    'rate-limit': 'Too many answers from here just now — please try again in a few minutes.',
+    'daily-cap': 'Today’s letterbox is full — please come back tomorrow.',
+    'open-cap': 'The queue is full — please come back in a few days.',
+    turnstile: 'The bot check failed. Please reload the page and try again.',
+    standby: 'The letterbox is not fully wired up yet — please try again later.',
+    'from-mark': 'Please leave a first name or a role (2–80 characters).',
+    text: 'The answer needs between 10 and 4000 characters.',
+  }
+  if (form && status) {
+    form.addEventListener('submit', async (ev) => {
+      ev.preventDefault()
+      const fd = new FormData(form)
+      if (!fd.get('consent')) {
+        status.textContent = 'The answer can only be carried into a public record with your agreement — please tick the box.'
+        return
+      }
+      status.textContent = 'sending…'
+      const turnstileToken = (form.querySelector('[name="cf-turnstile-response"]') as HTMLInputElement | null)?.value
+      let res: Response
+      try {
+        res = await fetch('/api/post', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({
+            to: 'arch',
+            regarding: fd.get('regarding'),
+            fromMark: fd.get('fromMark'),
+            contact: '',
+            text: fd.get('text'),
+            website: fd.get('website'),
+            turnstileToken,
+          }),
+        })
+      } catch {
+        status.textContent = 'Network error — the answer was not sent.'
+        return
+      }
+      let data: { ok?: boolean; id?: string; reason?: string } = {}
+      try {
+        data = await res.json()
+      } catch {
+        /* fall through to generic message */
+      }
+      if (res.ok && data.ok) {
+        status.textContent = 'Sent. A human will read it before anything reaches the record.'
+        form.reset()
+      } else {
+        status.textContent = SAY[data.reason ?? ''] ?? 'That did not work — please check the answer and try again.'
+      }
+    })
+  }
+</script>

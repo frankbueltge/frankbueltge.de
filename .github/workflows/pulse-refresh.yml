@@ -42,7 +42,8 @@ jobs:
           # `|| true`: ein noch nicht existierendes/privates Repo darf den nächtlichen Puls
           # nicht abbrechen — fetch-pulse.ts meldet den fehlenden Checkout und lässt ihn aus
           # dem Snapshot, statt ihn als stille Woche zu zählen.
-          for r in field-research ulysses studio research-ecology machine-attention data-snack-plenum error-as-method; do
+          # arch seit 2026-08-23 (die Praxis neben der Ökologie, eigene Dowry, eigene Sessions).
+          for r in field-research ulysses studio research-ecology machine-attention data-snack-plenum error-as-method arch; do
             git clone --no-single-branch --shallow-since="$SINCE" "https://github.com/frankbueltge/$r" "$r" || true
           done
       - uses: actions/setup-node@v4

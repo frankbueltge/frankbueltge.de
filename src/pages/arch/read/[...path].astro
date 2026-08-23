@@ -1,0 +1,83 @@
+---
+// /arch/read/<path> — one markdown file of the Arch mirror, rendered so a visitor can read the
+// record without a git client, with the raw bytes one click away at /arch/<path>. The site
+// renders; it does not edit: no excerpting, no reordering, no note of its own on the page
+// beyond the strip that says where the file came from.
+import { readFileSync, readdirSync } from 'node:fs'
+import { join, posix } from 'node:path'
+import MarkdownIt from 'markdown-it'
+import Page from '@/layouts/Page.astro'
+import { ARCH_MIRROR } from '@/lib/arch/facts'
+
+export function getStaticPaths() {
+  // every .md in the mirror, minus the directory READMEs (they describe the room's shelves to a
+  // git visitor; the room itself is this site's) and the practice's own gitignore
+  const out: { params: { path: string }; props: { rel: string } }[] = []
+  const walk = (dir: string) => {
+    for (const entry of readdirSync(join(ARCH_MIRROR, dir), { withFileTypes: true })) {
+      const rel = dir ? `${dir}/${entry.name}` : entry.name
+      if (entry.isDirectory()) walk(rel)
+      else if (entry.name.endsWith('.md') && entry.name !== 'README.md') out.push({ params: { path: rel.replace(/\.md$/, '') }, props: { rel } })
+    }
+  }
+  walk('')
+  return out
+}
+
+const { rel } = Astro.props as { rel: string }
+const source = readFileSync(join(ARCH_MIRROR, rel), 'utf8')
+const title = /^#\s+(.+?)\s*$/m.exec(source)?.[1] ?? rel
+
+const md = new MarkdownIt({ html: false, linkify: true })
+// Relative links inside the record point at other files of the repository. Resolved against this
+// file's directory: markdown lands on its rendered page, anything else on the raw mirror.
+const here = posix.dirname(rel)
+const resolve = (href: string): string => {
+  if (/^(https?:|mailto:|#|\/)/.test(href)) return href
+  const target = posix.normalize(posix.join(here === '.' ? '' : here, href))
+  if (target.startsWith('..')) return href
+  return target.endsWith('.md') ? `/arch/read/${target.replace(/\.md$/, '')}` : `/arch/${target}`
+}
+const defaultLink = md.renderer.rules.link_open ?? ((tokens, idx, opts, _env, self) => self.renderToken(tokens, idx, opts))
+md.renderer.rules.link_open = (tokens, idx, opts, env, self) => {
+  const href = tokens[idx].attrGet('href')
+  if (href) tokens[idx].attrSet('href', resolve(href))
+  return defaultLink(tokens, idx, opts, env, self)
+}
+const html = md.render(source)
+---
+
+<Page title={`${title} — Arch | Frank Bültge`} description={`From the record of the practice Arch: ${rel}, mirrored verbatim.`}>
+  <main id="main" class="mx-auto w-full max-w-2xl flex-1 px-4 py-14">
+    <p class="mb-6 font-mono text-[11px] uppercase tracking-[0.2em] text-fg-faint">
+      <a href="/arch" class="underline underline-offset-2">Arch</a> · {rel} · <a href={`/arch/${rel}`} class="underline underline-offset-2">raw file</a>
+    </p>
+    <article class="arch-md" set:html={html} />
+    <p class="mt-10 border-t border-line pt-4 font-mono text-[11px] leading-relaxed text-fg-faint">
+      Rendered from the practice's repository as mirrored; the site changed nothing but the links, which point into this mirror. Quoted passages remain with their rights holders, cited by edition and page.
+    </p>
+  </main>
+</Page>
+
+<style>
+  /* The record is prose the practice wrote in a repository; it reads best as a document, not as
+     a card. Scoped here so the site's own components keep their grammar. */
+  .arch-md { font-size: 15px; line-height: 1.7; }
+  .arch-md :global(h1) { font-size: 1.6rem; font-weight: 600; line-height: 1.25; margin: 0 0 1.25rem; letter-spacing: -0.02em; }
+  .arch-md :global(h2) { font-size: 1.15rem; font-weight: 600; margin: 2rem 0 0.6rem; }
+  .arch-md :global(h3) { font-size: 1rem; font-weight: 600; margin: 1.5rem 0 0.4rem; }
+  .arch-md :global(p) { margin: 0 0 1rem; }
+  .arch-md :global(ul), .arch-md :global(ol) { margin: 0 0 1rem 1.4rem; }
+  .arch-md :global(ul) { list-style: disc; }
+  .arch-md :global(ol) { list-style: decimal; }
+  .arch-md :global(li) { margin: 0.25rem 0; }
+  .arch-md :global(blockquote) { margin: 0 0 1rem; padding: 0.2rem 0 0.2rem 1rem; border-left: 2px solid var(--color-line, #8884); color: var(--color-fg-muted, inherit); }
+  .arch-md :global(pre) { overflow-x: auto; padding: 0.75rem 1rem; margin: 0 0 1rem; font-size: 12.5px; line-height: 1.55; border: 1px solid var(--color-line, #8884); }
+  .arch-md :global(code) { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.92em; }
+  .arch-md :global(a) { text-decoration: underline; text-underline-offset: 3px; }
+  .arch-md :global(table) { border-collapse: collapse; margin: 0 0 1rem; font-size: 13.5px; display: block; overflow-x: auto; }
+  .arch-md :global(th), .arch-md :global(td) { border: 1px solid var(--color-line, #8884); padding: 0.35rem 0.6rem; text-align: left; vertical-align: top; }
+  .arch-md :global(hr) { border: 0; border-top: 1px solid var(--color-line, #8884); margin: 1.5rem 0; }
+  .arch-md :global(em) { font-style: italic; }
+  .arch-md :global(strong) { font-weight: 600; }
+</style>

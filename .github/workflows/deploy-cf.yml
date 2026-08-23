@@ -38,6 +38,9 @@ on:
       - Attention integrate
       # Same mechanism for the n-1 record mirror (added 2026-08-15).
       - n-1 integrate
+      # And for the Arch mirror (added 2026-08-23): during the practice's pre-registered
+      # window this site is its works' only public address.
+      - Arch integrate
       # Renamed 2026-08-02 when the cadence changed (parallaxe.yml declares `name: Parallaxe
       # weekly`). GitHub matches workflow_run by the declared name, so the stale entry silently
       # matched nothing and the Monday register commit never reached production.

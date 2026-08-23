@@ -83,7 +83,7 @@ const STYLE = `<style>
  *  Machine Attention, n-1 and Error as Method are mirrored the same way the practices'
  *  standalone works are, but sending them "back" to the ecology would be a false claim
  *  about all three — see the `houses` note in naming.ts. */
-export function houseFor(ns: string): { label: string; href: string; self?: string } | null {
+export function houseFor(ns: string): { label: string; href: string; self?: string; bare?: string[] } | null {
   return NAMING.worksRegister.standaloneFrame.houses[ns] ?? null
 }
 

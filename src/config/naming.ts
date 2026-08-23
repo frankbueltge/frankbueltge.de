@@ -169,6 +169,19 @@ export const NAMING = {
         href: '/error-as-method',
         meta: 'nightly · forked from the Atelier, same origin',
       },
+      {
+        // Founded 2026-08-22 (decision log 2026-08-23): a practice that read one book before it
+        // read its rules, adopted a model derived from that book with its divergences named, and
+        // runs a pre-registered trial with failure criteria fixed before any work existed. The
+        // site keeps no window on it in the house's words — the room at /arch shows what the
+        // practice commits, and adds only what the practice may not award itself.
+        id: 'arch',
+        kindLabel: 'Practice',
+        title: 'Arch',
+        line: 'A practice named after a sentence in the book it read: stable only once it is finished. It adopted a model of machine-run artistic research with its divergences stated, and runs it in a pre-registered window whose failure criteria were written before any work existed — the balance is published whichever way it falls.',
+        href: '/arch',
+        meta: 'under pre-registration · works shown bare · the balance is published regardless',
+      },
       { id: 'consensus', kindLabel: 'Experiment' },
       { id: 'society', kindLabel: 'Experiment' },
       { id: 'parallaxe', kindLabel: 'Experiment' },
@@ -478,7 +491,13 @@ export const NAMING = {
         attention: { label: 'Machine Attention', href: '/machine-attention' },
         'n-1': { label: 'n-1', href: '/n-1', self: '/n-1/index.html' },
         'error-as-method': { label: 'Error as Method', href: '/error-as-method' },
-      } as Record<string, { label: string; href: string; self?: string }>,
+        /** Arch (2026-08-23): its record is mirrored whole, but its works stay BARE — no strip,
+         *  no way back, nothing added by the site. The practice's adopted model makes the
+         *  reception test "a stranger who has read nothing" meeting the work with no paratext
+         *  (material/operative-model.md, I5/I6 in the mirror); a nav band above the work would
+         *  be exactly the paratext the test forbids. The room at /arch is the way back. */
+        arch: { label: 'Arch', href: '/arch', bare: ['works/'] },
+      } as Record<string, { label: string; href: string; self?: string; bare?: string[] }>,
       /** the last exit, for pages whose house link would point at themselves */
       site: { label: 'frankbueltge.de', href: '/' },
     },
@@ -577,6 +596,9 @@ export const NAMING = {
           rows: [
             { card: 'attention', repo: 'machine-attention', status: 'RUNNING', resident: 'the counter-experiment' },
             { card: 'nightly-line', repo: 'error-as-method', status: 'NIGHTLY', resident: 'forked from the Atelier' },
+            /* `status` is the practice's own word for its current condition: a window is what its
+               pre-registration calls the bounded trial it is in (public/arch/PREREGISTRATION.md). */
+            { card: 'arch', repo: 'arch', status: 'WINDOW', resident: 'under pre-registration' },
           ],
         },
       ],

@@ -66,6 +66,11 @@ for (const [ns, house] of Object.entries(HOUSES)) {
   const root = join('public', ns)
   if (!existsSync(root)) continue
   for (const file of htmlUnder(root)) {
+    // `bare` names the paths under a house that get NO frame at all (Arch's works: the
+    // practice's reception test needs the work met without paratext — see naming.ts). Left
+    // exactly as mirrored; the house's room is their way back.
+    const rel = file.split(sep).join('/').replace(/^public\/[^/]+\//, '')
+    if (house.bare?.some((prefix) => rel.startsWith(prefix))) continue
     const before = readFileSync(file, 'utf8')
     // `self` is the page that IS this house's front door: a link to itself is not an exit.
     const atHouseIndex = house.self === '/' + file.split(sep).join('/').replace(/^public\//, '')

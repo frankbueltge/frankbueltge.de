@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Arrival</title>
+<style>
+  :root{
+    --bg:#0b0c0e; --ink:#e8e6e1; --dim:#7d8288; --line:#21242a;
+    --machine:#e0a33e; --body:#6fb3c9; --hot:#f4f2ee;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--bg);color:var(--ink)}
+  body{
+    font:14px/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+    padding:26px clamp(14px,3vw,40px) 40px;
+  }
+  header{border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:18px}
+  h1{font-size:15px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;margin:0 0 8px}
+  .ident{color:var(--dim);font-size:12.5px;word-spacing:.08em}
+  .ident b{color:var(--ink);font-weight:600}
+  figure{margin:0}
+  svg{display:block;width:100%;height:auto;overflow:visible;touch-action:manipulation}
+  .grid{stroke:var(--line);stroke-width:1}
+  .axis{stroke:#3a3f46;stroke-width:1}
+  .tick{fill:var(--dim);font-size:11px}
+  .axlabel{fill:var(--dim);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase}
+  .sta{fill:var(--machine);fill-opacity:.72;stroke:none;cursor:pointer}
+  .sta:hover{fill-opacity:1}
+  .sta.on{fill:var(--hot);fill-opacity:1}
+  .halo{fill:none;stroke:var(--hot);stroke-width:1.5}
+  .chord{stroke:var(--hot);stroke-width:1.5;stroke-dasharray:5 4}
+  .felt{fill:var(--body);fill-opacity:.75}
+  .feltband{fill:var(--body);fill-opacity:.16}
+  .leader{stroke:var(--body);stroke-width:1;stroke-opacity:.22}
+  .wedge{fill:var(--body);fill-opacity:.05;stroke:none}
+  .insetbox{fill:none;stroke:var(--body);stroke-opacity:.45;stroke-width:1}
+  .inlabel{fill:var(--body);font-size:11px;letter-spacing:.1em}
+  .tip{fill:var(--hot);font-size:12px}
+  .tipbg{fill:#000;fill-opacity:.82}
+  footer{margin-top:22px;border-top:1px solid var(--line);padding-top:12px;
+         color:var(--dim);font-size:11.5px;line-height:1.7}
+  footer a{color:var(--dim)}
+  .bar{display:flex;flex-wrap:wrap;gap:10px 26px;align-items:baseline;
+       margin:14px 0 4px;font-size:12.5px}
+  .key{display:flex;align-items:center;gap:7px;color:var(--dim)}
+  .dot{width:9px;height:9px;border-radius:50%;display:inline-block}
+  .prompt{color:var(--hot);margin-left:auto;letter-spacing:.06em}
+  .out{margin-top:16px;border-top:1px solid var(--line);padding-top:14px;
+       display:grid;grid-template-columns:minmax(260px,1.1fr) minmax(240px,1fr);
+       gap:18px 34px}
+  .now{font-size:13px;line-height:1.85}
+  .now .big{font-size:26px;color:var(--hot);letter-spacing:.01em}
+  .now .sub{color:var(--dim)}
+  .log{font-size:12px;color:var(--dim);line-height:1.9}
+  .log div{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .log b{color:var(--ink);font-weight:600}
+  .log .v{color:var(--machine)}
+  @media (max-width:640px){ .out{grid-template-columns:1fr} }
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+const D = {"id":"us6000tmta","place":"4 km N of Toride, Japan","mag":5.8,"origin":"2026-08-22T17:00:39.472Z","lat":35.9375,"lon":140.0778,"depth":61,"kmPerDeg":111.195,"stations":[{"sta":"IM.MJAR","deg":1.6267,"t":28.45,"ph":"Pn"},{"sta":"IU.MAJO","deg":1.6318,"t":28.3,"ph":"Pn"},{"sta":"JP.JGF","deg":2.2397,"t":37.18,"ph":"Pn"},{"sta":"G.INU","deg":2.5514,"t":41.07,"ph":"Pn"},{"sta":"JP.JTM","deg":4.906,"t":71.64,"ph":"Pn"},{"sta":"JP.JMN","deg":5.5544,"t":81.2,"ph":"Pn"},{"sta":"II.ERM","deg":6.525,"t":91.58,"ph":"Pn"},{"sta":"JP.JKA","deg":8.3956,"t":117.57,"ph":"Pn"},{"sta":"JP.JTU","deg":8.8521,"t":126.28,"ph":"Pn"},{"sta":"JP.JSU","deg":9.1509,"t":131.61,"ph":"Pn"},{"sta":"IM.KS31","deg":9.9082,"t":141.27,"ph":"Pn"},{"sta":"IM.KSAR","deg":9.9082,"t":141.38,"ph":"Pn"},{"sta":"IM.HILR","deg":20.1151,"t":265.9,"ph":"P"},{"sta":"TW.TPUB","deg":21.0338,"t":276.81,"ph":"P"},{"sta":"IM.PEA0B","deg":21.1745,"t":280.45,"ph":"P"},{"sta":"MI.FLX","deg":21.2425,"t":280.69,"ph":"P"},{"sta":"TW.KMNB","deg":21.9072,"t":285.47,"ph":"P"},{"sta":"IU.ULN","deg":27.1071,"t":336.09,"ph":"P"},{"sta":"IM.SONM","deg":27.531,"t":339.54,"ph":"P"},{"sta":"IM.LZAB","deg":29.3479,"t":356.36,"ph":"P"},{"sta":"IM.LZDM","deg":29.3479,"t":356.74,"ph":"P"},{"sta":"IM.PDYAR","deg":29.7241,"t":359.31,"ph":"P"},{"sta":"AV.AMKA","deg":31.8612,"t":379.24,"ph":"P"},{"sta":"AV.GAKI","deg":33.0494,"t":390.51,"ph":"P"},{"sta":"AV.KIWB","deg":34.1232,"t":399.3,"ph":"P"},{"sta":"IU.ADK","deg":34.413,"t":402.26,"ph":"P"},{"sta":"AK.ATKA","deg":35.9805,"t":414.95,"ph":"P"},{"sta":"IU.MIDW","deg":36.6413,"t":420.82,"ph":"P"},{"sta":"TM.CRAI","deg":38.0798,"t":432.39,"ph":"P"},{"sta":"PS.JAY","deg":38.2572,"t":434.49,"ph":"P"},{"sta":"GE.FAKI","deg":39.3423,"t":443.28,"ph":"P"},{"sta":"IU.CHTO","deg":39.9791,"t":448.19,"ph":"P"},{"sta":"IM.CMAR","deg":40.1786,"t":450.22,"ph":"P"},{"sta":"IM.CM31","deg":40.1786,"t":449.88,"ph":"P"},{"sta":"TM.MHIT","deg":40.4793,"t":452.22,"ph":"P"},{"sta":"GE.BNDI","deg":41.3623,"t":459.34,"ph":"P"},{"sta":"IM.ZAA0B","deg":41.8692,"t":463.44,"ph":"P"},{"sta":"IM.ZALV","deg":41.8692,"t":463.25,"ph":"P"},{"sta":"QZ.ZSN","deg":41.979,"t":465.19,"ph":"P"},{"sta":"MY.SBM","deg":42.1296,"t":464.88,"ph":"P"},{"sta":"IM.MKAR","deg":43.7982,"t":479.59,"ph":"P"},{"sta":"AK.M14K","deg":43.911,"t":482.21,"ph":"P"},{"sta":"IU.MAKZ","deg":44.0099,"t":481.36,"ph":"P"},{"sta":"AK.O14K","deg":44.0965,"t":482.98,"ph":"P"},{"sta":"II.KAPI","deg":44.9773,"t":487.94,"ph":"P"},{"sta":"IU.PMG","deg":45.5897,"t":493.86,"ph":"P"},{"sta":"II.KURK","deg":45.7693,"t":494.55,"ph":"P"},{"sta":"AV.PLBL","deg":46.3636,"t":498.23,"ph":"P"},{"sta":"AK.R18K","deg":47.6405,"t":509.22,"ph":"P"},{"sta":"II.KDAK","deg":48.6316,"t":517.68,"ph":"P"},{"sta":"II.AAK","deg":50.0671,"t":528.9,"ph":"P"},{"sta":"GE.JAGI","deg":50.4691,"t":529.52,"ph":"P"},{"sta":"II.BORK","deg":50.557,"t":531.95,"ph":"P"},{"sta":"IU.COLA","deg":50.5723,"t":533.02,"ph":"P"},{"sta":"IM.ILAR","deg":50.9931,"t":535.22,"ph":"P"},{"sta":"IM.KKAR","deg":52.746,"t":548.42,"ph":"P"},{"sta":"AU.CN1H","deg":52.8292,"t":549.5,"ph":"P"},{"sta":"IM.BCAR","deg":53.4029,"t":554.72,"ph":"P"},{"sta":"II.NIL","deg":53.9246,"t":557.71,"ph":"P"},{"sta":"II.JZAX","deg":55.7069,"t":569.54,"ph":"P"},{"sta":"II.WRAB","deg":55.8288,"t":570.31,"ph":"P"},{"sta":"IM.WRA","deg":55.8397,"t":570.55,"ph":"P"},{"sta":"IU.CTAO","deg":56.0247,"t":572.16,"ph":"P"},{"sta":"HV.MLOD","deg":58.4679,"t":590.52,"ph":"P"},{"sta":"IM.ASAR","deg":59.5672,"t":596.96,"ph":"P"},{"sta":"IU.MBWA","deg":59.9651,"t":599.59,"ph":"P"},{"sta":"CN.DLBC","deg":60.148,"t":602.75,"ph":"P"},{"sta":"IM.PSA00","deg":60.3197,"t":601.91,"ph":"P"},{"sta":"AU.PSA00","deg":60.3197,"t":602.04,"ph":"P"},{"sta":"GE.MALK","deg":60.5368,"t":604.59,"ph":"P"},{"sta":"CN.MOBC","deg":61.0634,"t":607.58,"ph":"P"},{"sta":"II.PALK","deg":61.0793,"t":608.24,"ph":"P"},{"sta":"II.ALE","deg":61.2664,"t":608.75,"ph":"P"},{"sta":"IM.SPITS","deg":61.3867,"t":608.94,"ph":"P"},{"sta":"CN.RUBB","deg":61.5546,"t":611.36,"ph":"P"},{"sta":"IU.KBS","deg":61.5564,"t":610.75,"ph":"P"},{"sta":"CN.JEDB","deg":61.822,"t":612.88,"ph":"P"},{"sta":"QZ.FDRN","deg":61.987,"t":613.3,"ph":"P"},{"sta":"DK.NOR","deg":62.0694,"t":613.48,"ph":"P"},{"sta":"CN.KUKN","deg":62.5032,"t":616.94,"ph":"P"},{"sta":"AU.GIRL","deg":63.1881,"t":622.45,"ph":"P"},{"sta":"AU.INKA","deg":63.3407,"t":622.53,"ph":"P"},{"sta":"CN.RES","deg":63.9246,"t":626.16,"ph":"P"},{"sta":"OI.FNUL","deg":64.0317,"t":628.48,"ph":"P"},{"sta":"IU.KEV","deg":64.0824,"t":627.15,"ph":"P"},{"sta":"II.MSVF","deg":64.3644,"t":630.83,"ph":"P"},{"sta":"IM.ARCES","deg":64.6402,"t":630.79,"ph":"P"},{"sta":"AU.FORT","deg":67.319,"t":648.06,"ph":"P"},{"sta":"AU.BBOO","deg":68.4935,"t":655.56,"ph":"P"},{"sta":"IM.FINES","deg":69.2779,"t":659.95,"ph":"P"},{"sta":"IU.COR","deg":70.0044,"t":664.43,"ph":"P"},{"sta":"II.UOSS","deg":71.1131,"t":671.47,"ph":"P"},{"sta":"IU.NWAO","deg":71.7673,"t":675.49,"ph":"P"},{"sta":"IM.AKASG","deg":74.4994,"t":691.35,"ph":"P"},{"sta":"IU.KIEV","deg":74.4994,"t":690.94,"ph":"P"},{"sta":"IM.NC3","deg":74.543,"t":691.29,"ph":"P"},{"sta":"II.FFC","deg":75.2051,"t":695.97,"ph":"P"},{"sta":"IU.KONO","deg":76.3581,"t":702.21,"ph":"P"},{"sta":"IM.NVAR","deg":76.5073,"t":704.83,"ph":"P"},{"sta":"IU.SFJD","deg":77.0621,"t":706.45,"ph":"P"},{"sta":"IM.BRTR","deg":78.7647,"t":716.25,"ph":"P"},{"sta":"IM.PDAR","deg":79.2007,"t":718.97,"ph":"P"},{"sta":"IM.PD31","deg":79.2007,"t":719.06,"ph":"P"},{"sta":"II.RAYN","deg":80.0678,"t":723.21,"ph":"P"},{"sta":"II.PFO","deg":80.5485,"t":726.66,"ph":"P"},{"sta":"IU.RSSD","deg":81.3608,"t":730.31,"ph":"P"},{"sta":"IM.GERES","deg":83.0663,"t":738.36,"ph":"P"},{"sta":"IU.GRFO","deg":83.473,"t":741.22,"ph":"P"},{"sta":"IM.EKA","deg":83.7964,"t":741.63,"ph":"P"},{"sta":"II.ESK","deg":83.8235,"t":742.54,"ph":"P"},{"sta":"NZ.LBZ","deg":84.4885,"t":746.38,"ph":"P"},{"sta":"IU.TUC","deg":85.0933,"t":750.2,"ph":"P"},{"sta":"II.BFO","deg":85.7228,"t":751.95,"ph":"P"},{"sta":"GS.ASLAR","deg":86.1152,"t":755.61,"ph":"P"},{"sta":"IU.ANMO","deg":86.1163,"t":755.35,"ph":"P"},{"sta":"II.MSEY","deg":88.347,"t":765.96,"ph":"P"},{"sta":"IM.TXAR","deg":91.643,"t":781.18,"ph":"P"},{"sta":"IU.CCM","deg":92.388,"t":783.94,"ph":"P"},{"sta":"IU.WCI","deg":94.6404,"t":794.46,"ph":"P"},{"sta":"IU.WVT","deg":95.5883,"t":798.41,"ph":"P"},{"sta":"IU.HKT","deg":95.9854,"t":801.02,"ph":"P"},{"sta":"IU.HRV","deg":96.7507,"t":804.41,"ph":"P"},{"sta":"IU.PAB","deg":98.0394,"t":809.1,"ph":"P"}],"felt":[{"km":62.0,"cdi":3.4,"n":2},{"km":63.0,"cdi":5.4,"n":1},{"km":63.0,"cdi":5.3,"n":1},{"km":63.0,"cdi":4.8,"n":1},{"km":63.0,"cdi":3.8,"n":1},{"km":65.0,"cdi":3.1,"n":1},{"km":66.0,"cdi":4.1,"n":1},{"km":67.0,"cdi":4.2,"n":2},{"km":67.0,"cdi":3.8,"n":1},{"km":67.0,"cdi":3.4,"n":1},{"km":69.0,"cdi":3.8,"n":1},{"km":69.0,"cdi":3.4,"n":1},{"km":70.0,"cdi":5.6,"n":1},{"km":70.0,"cdi":5.3,"n":1},{"km":70.0,"cdi":4.8,"n":1},{"km":70.0,"cdi":4.6,"n":1},{"km":70.0,"cdi":4.3,"n":1},{"km":70.0,"cdi":4.3,"n":1},{"km":70.0,"cdi":4.3,"n":2},{"km":71.0,"cdi":4.1,"n":1},{"km":71.0,"cdi":3.9,"n":2},{"km":71.0,"cdi":2.7,"n":1},{"km":72.0,"cdi":4.3,"n":1},{"km":72.0,"cdi":4.1,"n":1},{"km":72.0,"cdi":3.8,"n":1},{"km":72.0,"cdi":3.4,"n":1},{"km":72.0,"cdi":3.4,"n":1},{"km":72.0,"cdi":3.4,"n":1},{"km":73.0,"cdi":4.7,"n":1},{"km":73.0,"cdi":4.6,"n":1},{"km":73.0,"cdi":4.3,"n":1},{"km":73.0,"cdi":3.8,"n":1},{"km":73.0,"cdi":3.4,"n":1},{"km":74.0,"cdi":5.4,"n":1},{"km":74.0,"cdi":4.7,"n":2},{"km":74.0,"cdi":4.3,"n":1},{"km":74.0,"cdi":3.6,"n":2},{"km":74.0,"cdi":3.4,"n":3},{"km":75.0,"cdi":4.1,"n":1},{"km":75.0,"cdi":4.1,"n":1},{"km":75.0,"cdi":4.0,"n":3},{"km":75.0,"cdi":3.4,"n":1},{"km":76.0,"cdi":5.4,"n":2},{"km":76.0,"cdi":4.6,"n":1},{"km":76.0,"cdi":4.3,"n":1},{"km":76.0,"cdi":3.8,"n":1},{"km":76.0,"cdi":2.0,"n":1},{"km":77.0,"cdi":4.3,"n":1},{"km":77.0,"cdi":4.1,"n":1},{"km":77.0,"cdi":4.1,"n":1},{"km":77.0,"cdi":3.8,"n":1},{"km":77.0,"cdi":3.8,"n":1},{"km":78.0,"cdi":3.4,"n":1},{"km":79.0,"cdi":4.1,"n":1},{"km":79.0,"cdi":3.8,"n":1},{"km":80.0,"cdi":3.4,"n":1},{"km":82.0,"cdi":3.8,"n":1},{"km":83.0,"cdi":3.4,"n":1},{"km":84.0,"cdi":3.8,"n":1},{"km":84.0,"cdi":3.8,"n":1},{"km":84.0,"cdi":3.4,"n":1},{"km":85.0,"cdi":4.1,"n":1},{"km":85.0,"cdi":3.4,"n":1},{"km":86.0,"cdi":4.3,"n":1},{"km":90.0,"cdi":2.7,"n":1},{"km":91.0,"cdi":4.6,"n":1},{"km":92.0,"cdi":2.7,"n":1},{"km":93.0,"cdi":4.1,"n":1},{"km":93.0,"cdi":2.2,"n":1},{"km":94.0,"cdi":5.0,"n":1},{"km":94.0,"cdi":3.4,"n":1},{"km":95.0,"cdi":3.4,"n":1},{"km":95.0,"cdi":3.4,"n":1},{"km":99.0,"cdi":4.8,"n":1},{"km":100.0,"cdi":3.1,"n":1},{"km":101.0,"cdi":4.1,"n":1},{"km":101.0,"cdi":3.8,"n":1},{"km":101.0,"cdi":2.0,"n":1},{"km":104.0,"cdi":3.8,"n":1},{"km":108.0,"cdi":3.4,"n":1},{"km":140.0,"cdi":3.1,"n":1},{"km":142.0,"cdi":2.9,"n":1},{"km":158.0,"cdi":3.4,"n":1},{"km":165.0,"cdi":3.8,"n":1},{"km":245.0,"cdi":2.2,"n":1},{"km":261.0,"cdi":2.0,"n":1}],"sources":{"detail":"https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&eventid=us6000tmta","phase":"https://earthquake.usgs.gov/product/phase-data/us6000tmta/us/1787420801040/quakeml.xml","felt":"https://earthquake.usgs.gov/product/dyfi/us6000tmta/us/1787441682954/dyfi_geo_1km.geojson"},"built":"2026-08-22"};
+
+const S = D.stations, F = D.felt, KMD = D.kmPerDeg;
+const maxDeg = S[S.length-1].deg, maxT = S[S.length-1].t;
+const feltKm = F.length ? F[F.length-1].km : 0;
+const feltDeg = feltKm / KMD;
+
+// ---- plot frame -----------------------------------------------------------
+const W=1200, H=690, M={t:34,r:34,b:74,l:92};
+const xMax = Math.ceil(maxDeg/10)*10, yMax = Math.ceil(maxT/100)*100;
+const px = d => M.l + (d/xMax)*(W-M.l-M.r);
+const py = t => H-M.b - (t/yMax)*(H-M.t-M.b);
+
+const esc = s => String(s).replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+let svg = '';
+
+// grid + axes
+for(let d=0; d<=xMax; d+=10){
+  svg += `<line class="grid" x1="${px(d)}" y1="${M.t}" x2="${px(d)}" y2="${H-M.b}"/>`;
+  svg += `<text class="tick" x="${px(d)}" y="${H-M.b+20}" text-anchor="middle">${d}°</text>`;
+}
+for(let t=0; t<=yMax; t+=100){
+  svg += `<line class="grid" x1="${M.l}" y1="${py(t)}" x2="${W-M.r}" y2="${py(t)}"/>`;
+  svg += `<text class="tick" x="${M.l-12}" y="${py(t)+4}" text-anchor="end">${t}</text>`;
+}
+svg += `<line class="axis" x1="${M.l}" y1="${H-M.b}" x2="${W-M.r}" y2="${H-M.b}"/>`;
+svg += `<line class="axis" x1="${M.l}" y1="${M.t}" x2="${M.l}" y2="${H-M.b}"/>`;
+svg += `<text class="axlabel" x="${(M.l+W-M.r)/2}" y="${H-M.b+48}" text-anchor="middle">distance from hypocentre</text>`;
+svg += `<text class="axlabel" transform="translate(${M.l-62},${(M.t+H-M.b)/2}) rotate(-90)" text-anchor="middle">seconds after origin</text>`;
+
+// the sliver of the axis in which a human body reported anything
+if(feltKm){
+  svg += `<rect class="feltband" x="${px(0)}" y="${M.t}" width="${Math.max(px(feltDeg)-px(0),2)}" height="${H-M.b-M.t}"/>`;
+}
+
+// ---- inset: the human reports, magnified out of the sliver they occupy ----
+if(F.length){
+  const I={x:px(xMax*0.075), y:M.t+30, w:(W-M.l-M.r)*0.38, h:186};
+  const cdiMax = Math.max(6, Math.ceil(Math.max(...F.map(f=>f.cdi))));
+  const ix = km => I.x + (km/feltKm)*I.w;
+  const iy = c  => I.y + I.h - ((c-1)/(cdiMax-1))*I.h;
+  // the magnification wedge: this box is that sliver, opened out
+  svg += `<polygon class="wedge" points="${I.x},${I.y+I.h} ${I.x+I.w},${I.y+I.h} ${px(feltDeg)},${H-M.b} ${px(0)},${H-M.b}"/>`;
+  svg += `<line class="leader" x1="${I.x}" y1="${I.y+I.h}" x2="${px(0)}" y2="${H-M.b}"/>`;
+  svg += `<line class="leader" x1="${I.x+I.w}" y1="${I.y+I.h}" x2="${px(feltDeg)}" y2="${H-M.b}"/>`;
+  svg += `<rect class="insetbox" x="${I.x}" y="${I.y}" width="${I.w}" height="${I.h}"/>`;
+  for(const f of F){
+    svg += `<circle class="felt" cx="${ix(f.km).toFixed(1)}" cy="${iy(f.cdi).toFixed(1)}" r="${(2.4+Math.min(f.n,12)*0.42).toFixed(1)}"><title>${f.n} report${f.n>1?'s':''} at ${f.km} km — intensity ${f.cdi}</title></circle>`;
+  }
+  svg += `<text class="inlabel" x="${I.x}" y="${I.y-22}">felt reports — intensity by distance</text>`;
+  svg += `<text class="inlabel" x="${I.x}" y="${I.y-8}" opacity=".72">this box is the shaded sliver below, magnified — it is ${(feltDeg/xMax*100).toFixed(1)}% of the axis</text>`;
+  svg += `<text class="inlabel" x="${I.x}" y="${I.y+I.h+15}">0 km</text>`;
+  svg += `<text class="inlabel" x="${I.x+I.w}" y="${I.y+I.h+15}" text-anchor="end">${feltKm} km = ${feltDeg.toFixed(2)}°</text>`;
+  svg += `<text class="inlabel" x="${I.x-8}" y="${iy(cdiMax)+4}" text-anchor="end">${cdiMax}</text>`;
+  svg += `<text class="inlabel" x="${I.x-8}" y="${iy(1)+4}" text-anchor="end">1</text>`;
+}
+
+// ---- the stations ---------------------------------------------------------
+svg += `<g id="stations">`;
+S.forEach((s,i) => {
+  svg += `<circle class="sta" data-i="${i}" cx="${px(s.deg).toFixed(1)}" cy="${py(s.t).toFixed(1)}" r="4.2"/>`;
+});
+svg += `</g><g id="marks"></g><g id="tip"></g>`;
+
+// ---- page -----------------------------------------------------------------
+document.getElementById('app').innerHTML = `
+<header>
+  <h1>Arrival</h1>
+  <div class="ident"><b>${esc(D.id)}</b> &nbsp;M&thinsp;${D.mag} &nbsp;${esc(D.place)}
+   &nbsp;&middot;&nbsp; origin ${esc(D.origin)} &nbsp;&middot;&nbsp; depth ${D.depth}&thinsp;km
+   &nbsp;&middot;&nbsp; ${D.lat.toFixed(4)}, ${D.lon.toFixed(4)}</div>
+</header>
+<figure><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="First-arrival time of one earthquake at ${S.length} seismometers, against distance."> ${svg} </svg></figure>
+<div class="bar">
+  <span class="key"><i class="dot" style="background:var(--machine)"></i>${S.length} seismometers &mdash; first arrival</span>
+  <span class="key"><i class="dot" style="background:var(--body)"></i>${F.reduce((a,f)=>a+f.n,0)} human reports in ${F.length} blocks &mdash; felt intensity</span>
+  <span class="prompt" id="prompt">click any two seismometers</span>
+</div>
+<div class="out">
+  <div class="now" id="now"><span class="sub">no pair selected</span></div>
+  <div class="log" id="log"></div>
+</div>
+<footer>
+  Built ${D.built} from public USGS data, unauthenticated, and pinned into this file &mdash; it makes no network request when you open it.<br>
+  event &nbsp;${esc(D.sources.detail)}<br>
+  arrivals &nbsp;${esc(D.sources.phase)}<br>
+  ${D.sources.felt ? 'felt reports &nbsp;'+esc(D.sources.felt)+'<br>' : ''}
+  1&thinsp;degree = ${KMD}&thinsp;km along the surface.
+</footer>`;
+
+// ---- selection ------------------------------------------------------------
+const marks = document.getElementById('marks');
+const tipg  = document.getElementById('tip');
+const nowEl = document.getElementById('now');
+const logEl = document.getElementById('log');
+let sel = [], history = [];
+
+function draw(){
+  marks.innerHTML = '';
+  document.querySelectorAll('.sta').forEach(c => c.classList.remove('on'));
+  sel.forEach(i => {
+    const s = S[i];
+    document.querySelector(`.sta[data-i="${i}"]`).classList.add('on');
+    marks.insertAdjacentHTML('beforeend',
+      `<circle class="halo" cx="${px(s.deg)}" cy="${py(s.t)}" r="10"/>`);
+  });
+  if(sel.length === 2){
+    const [a,b] = sel.map(i => S[i]);
+    marks.insertAdjacentHTML('afterbegin',
+      `<line class="chord" x1="${px(a.deg)}" y1="${py(a.t)}" x2="${px(b.deg)}" y2="${py(b.t)}"/>`);
+  }
+}
+
+function report(){
+  if(sel.length < 2){
+    const s = sel.length ? S[sel[0]] : null;
+    nowEl.innerHTML = s
+      ? `<b>${esc(s.sta)}</b> &nbsp;<span class="sub">${s.deg}° &middot; ${s.t} s &middot; ${esc(s.ph)}</span><br><span class="sub">now pick a second one</span>`
+      : `<span class="sub">no pair selected</span>`;
+    return;
+  }
+  let [a,b] = sel.map(i => S[i]);
+  if(a.deg > b.deg) [a,b] = [b,a];
+  const dd = b.deg - a.deg, dkm = dd*KMD, dt = b.t - a.t;
+  const v = dt !== 0 ? dkm/dt : NaN;
+  nowEl.innerHTML =
+    `<span class="big">${isFinite(v) ? v.toFixed(2) : '—'}&thinsp;km/s</span>
+     <span class="sub">apparent speed across the surface, between these two</span><br>
+     <b>${esc(a.sta)}</b> <span class="sub">${a.deg}° &middot; ${a.t} s</span>
+     &nbsp;→&nbsp; <b>${esc(b.sta)}</b> <span class="sub">${b.deg}° &middot; ${b.t} s</span><br>
+     <span class="sub">${dd.toFixed(3)}° = ${dkm.toFixed(0)} km further, ${dt.toFixed(2)} s later</span>`;
+  if(isFinite(v)){
+    history.unshift({mid:(a.deg+b.deg)/2, v, a:a.sta, b:b.sta});
+    history = history.slice(0,9);
+    logEl.innerHTML = history.map(h =>
+      `<div><span class="v">${h.v.toFixed(2)}&thinsp;km/s</span> &nbsp;<b>${esc(h.a)}–${esc(h.b)}</b> &nbsp;around ${h.mid.toFixed(1)}°</div>`
+    ).join('');
+    document.getElementById('prompt').textContent =
+      history.length > 1 ? 'now try a pair much further out' : 'click any two seismometers';
+  }
+}
+
+document.getElementById('stations').addEventListener('click', e => {
+  const c = e.target.closest('.sta');
+  if(!c) return;
+  const i = +c.dataset.i;
+  if(sel.length >= 2) sel = [];
+  if(!sel.includes(i)) sel.push(i);
+  draw(); report();
+});
+
+document.getElementById('stations').addEventListener('pointermove', e => {
+  const c = e.target.closest('.sta');
+  if(!c){ tipg.innerHTML=''; return; }
+  const s = S[+c.dataset.i];
+  const t = `${s.sta}  ${s.deg}°  ${s.t}s  ${s.ph}`;
+  let x = px(s.deg)+14, y = py(s.t)-14;
+  const w = t.length*7.1+14;
+  if(x+w > W-M.r) x = px(s.deg)-14-w;
+  tipg.innerHTML =
+    `<rect class="tipbg" x="${x}" y="${y-14}" width="${w}" height="21" rx="2"/>
+     <text class="tip" x="${x+7}" y="${y+1}">${esc(t)}</text>`;
+});
+document.getElementById('stations').addEventListener('pointerleave', () => tipg.innerHTML='');
+</script>
+</body>
+</html>

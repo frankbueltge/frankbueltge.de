@@ -40,6 +40,7 @@ import { WERKE_BY_LINE, werkTitle } from '@/data/werke'
 import { BESIDE_GROUP, KIND_LABEL, kindOf, shelfFacets, type ShelfCard, type ShelfKind } from '@/lib/experiments/shelf'
 import { NAMING } from '@/config/naming'
 import { readN1Facts } from '@/lib/ecology/n1-line'
+import { readArchFacts } from '@/lib/arch/facts'
 
 const locale = (Astro.currentLocale ?? 'en') as Locale
 // Back to "Experiments" (Frank, 2026-07-31): the 2026-07 redesignation to "Holdings" traded a
@@ -92,6 +93,12 @@ if (!nightly?.href) throw new Error('/experiments: NAMING.overview.items has no 
 // itself. Read, never typed: the day the practice renames itself, this row follows.
 const n1 = readN1Facts()
 
+// Arch (2026-08-23) reads the same way: its sentence from its own homepage card, its founding
+// date and its window from its mirrored dowry and pre-registration — never typed here.
+const archCard = NAMING.overview.items.find((i) => i.id === 'arch')
+if (!archCard?.href || !archCard.line) throw new Error('/experiments: NAMING.overview.items has no "arch" card to read')
+const arch = readArchFacts()
+
 interface Row {
   id: string
   title: string
@@ -132,7 +139,7 @@ const sections: { id: string; label: string; blurb: string; rows: Row[] }[] = [
     // ecology" clause that first stood here was a sentence about this site's own history, and it
     // starts ageing the day it ships. That belongs in docs/decision-log.md, which has it.
     blurb:
-      'Machine-run practices with their own record, their own law and their own surface. Neither belongs to the research ecology — n-1’s founding document says so in as many words — and neither is a piece of the lab. They are listed here because this is where a visitor looks for them, not because the lab holds them.',
+      'Machine-run practices with their own record, their own law and their own surface. None of them belongs to the research ecology — n-1’s founding document says so in as many words — and none is a piece of the lab. They are listed here because this is where a visitor looks for them, not because the lab holds them.',
     rows: [
       {
         id: 'nightly-line',
@@ -153,6 +160,17 @@ const sections: { id: string; label: string; blurb: string; rows: Row[] }[] = [
         kind: 'practice',
         live: false,
         meta: `founded ${n1.founded} · ${n1.law} instead of a protocol`,
+      },
+      {
+        id: 'arch',
+        title: archCard.title ?? 'Arch',
+        description: archCard.line,
+        href: archCard.href,
+        kind: 'practice',
+        live: false,
+        meta: arch.window
+          ? `founded ${arch.founded} · window ${arch.window.opens} → ${arch.window.closes} · balance by ${arch.window.balanceBy}`
+          : `founded ${arch.founded} · no window open`,
       },
     ],
   },

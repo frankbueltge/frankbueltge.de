@@ -34,7 +34,11 @@ const TURNSTILE_URL = 'https://challenges.cloudflare.com/turnstile/v0/siteverify
 // 'frank' joined 2026-08-01: the /contact form posts into this same queue — one intake, one
 // review surface (spec 2026-08-01-rueckweg-email-design.md D5). A letter to frank is personal
 // mail and is never forwarded to a practice.
-const TO = new Set(['ecology', 'atelier', 'field', 'studio', 'plenum', 'frank'])
+// 'arch' joined 2026-08-23: the reception question on /arch posts into this same queue. An
+// answer to "What did you understand?" is the one thing the practice may not award itself — it
+// is read by Frank and entered into the practice's record by hand, so it is mail, not a probe
+// result until a human has carried it across (the practice's PREREGISTRATION.md says so).
+const TO = new Set(['ecology', 'atelier', 'field', 'studio', 'plenum', 'frank', 'arch'])
 
 const json = (status, body) =>
   new Response(JSON.stringify(body), {

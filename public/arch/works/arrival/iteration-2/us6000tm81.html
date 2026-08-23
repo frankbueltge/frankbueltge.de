@@ -1,0 +1,349 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Arrival</title>
+<style>
+  :root{
+    --bg:#0b0c0e; --ink:#e8e6e1; --dim:#7d8288; --line:#21242a;
+    --machine:#e0a33e; --body:#6fb3c9; --hot:#f4f2ee;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--bg);color:var(--ink)}
+  body{
+    font:14px/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+    padding:26px clamp(14px,3vw,40px) 40px;
+  }
+  header{border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:16px}
+  h1{font-size:15px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;margin:0 0 8px}
+  .ident{color:var(--dim);font-size:12.5px;word-spacing:.08em}
+  .ident b{color:var(--ink);font-weight:600}
+  figure{margin:0}
+  svg{display:block;width:100%;height:auto;overflow:visible;touch-action:manipulation}
+  .grid{stroke:var(--line);stroke-width:1}
+  .axis{stroke:#4a5058;stroke-width:1}
+  .tick{fill:var(--dim);font-size:11px}
+  .axlabel{fill:var(--dim);font-size:11.5px;letter-spacing:.13em;text-transform:uppercase}
+  .note{fill:var(--dim);font-size:11px}
+  .sta{fill:var(--machine);fill-opacity:.72;stroke:none}
+  .sta.on{fill:var(--hot);fill-opacity:1}
+  .halo{fill:none;stroke:var(--hot);stroke-width:1.5}
+  .chord{stroke:var(--hot);stroke-width:1.5;stroke-dasharray:5 4}
+  .stair{fill:none;stroke:var(--body);stroke-width:1.6}
+  .stairdrop{stroke:var(--body);stroke-width:1;stroke-opacity:.35}
+  .cut{fill:var(--body);fill-opacity:.06}
+  .reach{stroke-width:1.5}
+  .reachm{stroke:var(--machine)}
+  .reachb{stroke:var(--body)}
+  .rlabel{font-size:11.5px}
+  .rlm{fill:var(--machine)} .rlb{fill:var(--body)}
+  .span{stroke:var(--dim);stroke-width:1;stroke-dasharray:2 3}
+  .spanlabel{fill:var(--hot);font-size:12.5px;letter-spacing:.04em}
+  .tip{fill:var(--hot);font-size:12px}
+  .tipbg{fill:#000;fill-opacity:.85}
+  .hit{fill:transparent;cursor:crosshair}
+  footer{margin-top:20px;border-top:1px solid var(--line);padding-top:12px;
+         color:var(--dim);font-size:11.5px;line-height:1.7;word-break:break-all}
+  .ctl{display:flex;flex-wrap:wrap;gap:12px 30px;align-items:center;
+       margin:14px 0 2px;font-size:12.5px}
+  .ctl .grp{display:flex;align-items:center;gap:8px;color:var(--dim)}
+  .ctl .grp b{color:var(--ink);font-weight:600;letter-spacing:.04em}
+  button{font:inherit;background:#15171b;color:var(--ink);border:1px solid #2e3238;
+         border-radius:3px;padding:2px 9px;cursor:pointer;line-height:1.4}
+  button:hover{border-color:var(--body)}
+  button[disabled]{opacity:.32;cursor:default;border-color:#2e3238}
+  .val{color:var(--body);min-width:2.4em;display:inline-block;text-align:center}
+  .key{display:flex;align-items:center;gap:7px;color:var(--dim)}
+  .dot{width:9px;height:9px;border-radius:50%;display:inline-block}
+  .out{margin-top:14px;border-top:1px solid var(--line);padding-top:14px;
+       display:grid;grid-template-columns:minmax(260px,1.1fr) minmax(240px,1fr);
+       gap:18px 34px}
+  .now{font-size:13px;line-height:1.85}
+  .now .big{font-size:26px;color:var(--hot);letter-spacing:.01em}
+  .now .sub{color:var(--dim)}
+  .log{font-size:12px;color:var(--dim);line-height:1.9}
+  .log div{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .log b{color:var(--ink);font-weight:600}
+  .log .v{color:var(--machine)}
+  @media (max-width:640px){ .out{grid-template-columns:1fr} }
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+const D = {"id":"us6000tm81","place":"31 km NW of Aniso, Peru","mag":6.7,"origin":"2026-08-20T18:00:18.626Z","lat":-14.6414,"lon":-73.5236,"depth":99,"kmPerDeg":111.195,"stations":[{"sta":"II.NNA","deg":4.1705,"t":58.08,"ph":"Pn"},{"sta":"C1.AP01","deg":4.8025,"t":68.64,"ph":"Pn"},{"sta":"CX.PB18","deg":4.8677,"t":72.63,"ph":"Pn"},{"sta":"CX.PB16","deg":5.3224,"t":77.77,"ph":"Pn"},{"sta":"GT.LPAZ","deg":5.4514,"t":81.22,"ph":"Pn"},{"sta":"C1.TA02","deg":6.4665,"t":90.02,"ph":"Pn"},{"sta":"C.GO01","deg":6.4893,"t":91.89,"ph":"Pn"},{"sta":"CX.PATCX","deg":6.9337,"t":95.51,"ph":"Pn"},{"sta":"CX.PB01","deg":7.4363,"t":102.33,"ph":"Pn"},{"sta":"CX.PB02","deg":7.4847,"t":103.14,"ph":"Pn"},{"sta":"CX.PB03","deg":8.1902,"t":112.41,"ph":"Pn"},{"sta":"CX.PB09","deg":8.1962,"t":114.0,"ph":"Pn"},{"sta":"CX.PB06","deg":8.8514,"t":121.17,"ph":"Pn"},{"sta":"CX.PB10","deg":9.2603,"t":125.98,"ph":"Pn"},{"sta":"C1.AF01","deg":9.6907,"t":133.73,"ph":"Pn"},{"sta":"BV.SOEV","deg":9.8642,"t":138.04,"ph":"Pn"},{"sta":"C.GO02","deg":11.0999,"t":152.64,"ph":"Pn"},{"sta":"C1.AC07","deg":12.672,"t":173.62,"ph":"Pn"},{"sta":"EC.ARNL","deg":12.7725,"t":173.83,"ph":"Pn"},{"sta":"C1.AC06","deg":12.9926,"t":177.19,"ph":"Pn"},{"sta":"EC.COHC","deg":13.3563,"t":182.35,"ph":"Pn"},{"sta":"C1.AC04","deg":13.6874,"t":186.09,"ph":"Pn"},{"sta":"EC.MILO","deg":13.7357,"t":187.19,"ph":"Pn"},{"sta":"EC.PUYO","deg":13.8007,"t":187.97,"ph":"Pn"},{"sta":"IU.LCO","deg":14.5373,"t":197.97,"ph":"Pn"},{"sta":"EC.VCES","deg":14.5668,"t":199.32,"ph":"Pn"},{"sta":"EC.SLOR","deg":14.6709,"t":200.7,"ph":"Pn"},{"sta":"EC.CASC","deg":15.1581,"t":205.0,"ph":"Pn"},{"sta":"EC.PULU","deg":15.379,"t":209.66,"ph":"Pn"},{"sta":"EC.SNLR","deg":16.6857,"t":225.69,"ph":"P"},{"sta":"BR.SALV","deg":17.2487,"t":232.93,"ph":"P"},{"sta":"BL.AQDB","deg":17.9517,"t":241.59,"ph":"P"},{"sta":"C1.VA03","deg":18.2432,"t":246.07,"ph":"P"},{"sta":"C1.VA01","deg":18.379,"t":247.9,"ph":"P"},{"sta":"G.PEL","deg":18.6012,"t":250.34,"ph":"P"},{"sta":"C1.MT02","deg":18.6616,"t":250.62,"ph":"P"},{"sta":"C1.MT05","deg":18.8382,"t":253.16,"ph":"P"},{"sta":"C1.MT16","deg":18.9015,"t":254.16,"ph":"P"},{"sta":"C1.MT08","deg":18.9328,"t":255.37,"ph":"P"},{"sta":"C1.MT03","deg":18.9673,"t":254.84,"ph":"P"},{"sta":"C1.VA05","deg":19.0112,"t":254.21,"ph":"P"},{"sta":"GT.CPUP","deg":19.0896,"t":254.64,"ph":"P"},{"sta":"RI.LPCA","deg":19.1375,"t":255.03,"ph":"P"},{"sta":"BL.AMBA","deg":19.3704,"t":258.28,"ph":"P"},{"sta":"IM.ROSC","deg":19.3763,"t":259.16,"ph":"P"},{"sta":"C1.BO02","deg":20.2165,"t":266.95,"ph":"P"},{"sta":"CM.RUS","deg":20.4055,"t":269.98,"ph":"P"},{"sta":"CM.HEL","deg":20.7927,"t":272.8,"ph":"P"},{"sta":"C1.ML02","deg":21.1174,"t":276.12,"ph":"P"},{"sta":"BL.ITQB","deg":21.5994,"t":281.61,"ph":"P"},{"sta":"IU.PAYG","deg":21.6146,"t":281.77,"ph":"P"},{"sta":"BR.SNDB","deg":21.7924,"t":283.93,"ph":"P"},{"sta":"BL.PTGB","deg":22.5706,"t":291.29,"ph":"P"},{"sta":"BL.ITAB","deg":23.537,"t":300.34,"ph":"P"},{"sta":"IU.SDV","deg":23.5479,"t":301.59,"ph":"P"},{"sta":"BL.FRTB","deg":24.2238,"t":307.48,"ph":"P"},{"sta":"BR.PRPB","deg":24.7687,"t":312.81,"ph":"P"},{"sta":"CM.SMAR","deg":25.6479,"t":320.45,"ph":"P"},{"sta":"BR.SMTB","deg":26.0193,"t":324.68,"ph":"P"},{"sta":"GT.PLCA","deg":26.124,"t":324.17,"ph":"P"},{"sta":"CM.URI","deg":26.2173,"t":323.54,"ph":"P"},{"sta":"II.JTS","deg":27.2394,"t":336.06,"ph":"P"},{"sta":"G.MPG","deg":28.5251,"t":346.29,"ph":"P"},{"sta":"CM.PRV","deg":28.8992,"t":351.17,"ph":"P"},{"sta":"SV.PAVA","deg":32.0378,"t":378.05,"ph":"P"},{"sta":"WI.DHS","deg":32.8544,"t":384.29,"ph":"P"},{"sta":"PR.GCPR","deg":33.5534,"t":390.05,"ph":"P"},{"sta":"PR.STVI","deg":33.8552,"t":393.24,"ph":"P"},{"sta":"II.RPN","deg":35.5605,"t":407.23,"ph":"P"},{"sta":"C1.VA02","deg":35.6552,"t":407.75,"ph":"P"},{"sta":"IU.TEIG","deg":37.5631,"t":424.75,"ph":"P"},{"sta":"IU.RCBR","deg":37.9931,"t":429.56,"ph":"P"},{"sta":"II.EFI","deg":38.972,"t":436.31,"ph":"P"},{"sta":"N4.060A","deg":41.9572,"t":461.33,"ph":"P"},{"sta":"G.UNM","deg":42.1584,"t":463.13,"ph":"P"},{"sta":"IU.DWPF","deg":43.1836,"t":470.36,"ph":"P"},{"sta":"IU.BBSR","deg":47.5036,"t":504.55,"ph":"P"},{"sta":"II.HOPE","deg":48.9641,"t":517.58,"ph":"P"},{"sta":"IU.HKT","deg":49.2901,"t":518.63,"ph":"P"},{"sta":"IU.PMSA","deg":50.4996,"t":528.55,"ph":"P"},{"sta":"IU.WVT","deg":52.2762,"t":539.33,"ph":"P"},{"sta":"IM.TXAR","deg":52.5214,"t":542.21,"ph":"P"},{"sta":"TX.SGCY","deg":53.3216,"t":548.31,"ph":"P"},{"sta":"AI.SMAI","deg":53.6112,"t":551.15,"ph":"P"},{"sta":"IU.WCI","deg":53.9377,"t":551.65,"ph":"P"},{"sta":"PE.PAGS","deg":54.6689,"t":558.79,"ph":"P"},{"sta":"IU.CCM","deg":54.9942,"t":559.5,"ph":"P"},{"sta":"N4.M63A","deg":55.7773,"t":566.44,"ph":"P"},{"sta":"MX.SRIG","deg":56.1335,"t":569.14,"ph":"P"},{"sta":"IU.HRV","deg":56.8911,"t":573.9,"ph":"P"},{"sta":"N4.K62A","deg":57.0333,"t":574.94,"ph":"P"},{"sta":"II.SACV","deg":57.4583,"t":579.26,"ph":"P"},{"sta":"II.ASCN","deg":58.2706,"t":585.37,"ph":"P"},{"sta":"IU.ANMO","deg":58.3892,"t":585.19,"ph":"P"},{"sta":"GS.ASLAR","deg":58.39,"t":585.12,"ph":"P"},{"sta":"IU.TUC","deg":58.7533,"t":587.55,"ph":"P"},{"sta":"CN.GBN","deg":60.7481,"t":600.97,"ph":"P"},{"sta":"II.PFO","deg":63.0613,"t":617.11,"ph":"P"},{"sta":"CI.PALA","deg":63.2717,"t":617.78,"ph":"P"},{"sta":"G.SOK","deg":63.4349,"t":620.77,"ph":"P"},{"sta":"CN.SJNN","deg":64.7009,"t":626.66,"ph":"P"},{"sta":"IU.RSSD","deg":64.7662,"t":627.38,"ph":"P"},{"sta":"II.SHEL","deg":65.1165,"t":633.54,"ph":"P"},{"sta":"CI.OSI","deg":65.1342,"t":630.82,"ph":"P"},{"sta":"IM.PDAR","deg":66.0174,"t":635.48,"ph":"P"},{"sta":"IM.NVAR","deg":67.4099,"t":645.53,"ph":"P"},{"sta":"BK.HAS2","deg":68.0438,"t":649.7,"ph":"P"},{"sta":"II.CMLA","deg":68.8918,"t":655.75,"ph":"P"},{"sta":"IU.MACI","deg":69.7195,"t":661.94,"ph":"P"},{"sta":"G.PPTF","deg":72.6536,"t":678.99,"ph":"P"},{"sta":"II.FFC","deg":73.1986,"t":679.29,"ph":"P"},{"sta":"IU.COR","deg":74.2832,"t":687.45,"ph":"P"},{"sta":"GE.ACRG","deg":75.4026,"t":693.62,"ph":"P"},{"sta":"IM.MD01","deg":80.8293,"t":724.03,"ph":"P"},{"sta":"IU.SBA","deg":81.7305,"t":728.11,"ph":"P"},{"sta":"IU.SFJD","deg":83.139,"t":734.08,"ph":"P"},{"sta":"IU.PAB","deg":83.8685,"t":740.25,"ph":"P"},{"sta":"IU.XMAS","deg":84.6339,"t":743.43,"ph":"P"},{"sta":"II.SUR","deg":85.8734,"t":750.86,"ph":"P"},{"sta":"IU.TSUM","deg":86.3051,"t":752.43,"ph":"P"},{"sta":"II.BORG","deg":88.4184,"t":762.59,"ph":"P"},{"sta":"G.CCD","deg":89.8275,"t":767.54,"ph":"P"},{"sta":"II.ESK","deg":91.1319,"t":773.47,"ph":"P"},{"sta":"HV.OFU","deg":92.2576,"t":782.14,"ph":"P"},{"sta":"IM.BCAR","deg":93.4611,"t":784.03,"ph":"P"},{"sta":"IU.AFI","deg":94.3025,"t":791.03,"ph":"P"},{"sta":"II.BFO","deg":95.4823,"t":793.26,"ph":"P"},{"sta":"IM.ILAR","deg":96.2101,"t":795.72,"ph":"P"},{"sta":"IM.BMAR","deg":96.3393,"t":797.33,"ph":"P"},{"sta":"II.KDAK","deg":96.5284,"t":797.11,"ph":"P"},{"sta":"IU.COLA","deg":96.6366,"t":797.42,"ph":"P"},{"sta":"IU.LSZ","deg":97.1144,"t":803.31,"ph":"P"},{"sta":"II.ALE","deg":97.14,"t":802.59,"ph":"P"},{"sta":"NZ.LBZ","deg":97.6032,"t":803.94,"ph":"P"},{"sta":"IU.GRFO","deg":97.6672,"t":804.09,"ph":"P"},{"sta":"IU.KONO","deg":99.0618,"t":811.88,"ph":"P"},{"sta":"IM.GERES","deg":99.0687,"t":810.11,"ph":"P"},{"sta":"IU.CASY","deg":99.2583,"t":811.11,"ph":"P"},{"sta":"IM.IMAR","deg":99.3186,"t":809.29,"ph":"P"}],"felt":[{"km":147.0,"cdi":4.3,"n":1},{"km":187.0,"cdi":5.2,"n":1},{"km":204.0,"cdi":4.1,"n":1},{"km":205.0,"cdi":3.0,"n":1},{"km":218.0,"cdi":2.7,"n":1},{"km":226.0,"cdi":1.0,"n":1},{"km":229.0,"cdi":3.4,"n":1},{"km":230.0,"cdi":3.3,"n":10},{"km":230.0,"cdi":2.2,"n":1},{"km":232.0,"cdi":2.7,"n":1},{"km":234.0,"cdi":3.4,"n":1},{"km":246.0,"cdi":4.7,"n":1},{"km":264.0,"cdi":4.1,"n":1},{"km":269.0,"cdi":3.4,"n":1},{"km":305.0,"cdi":2.6,"n":3},{"km":365.0,"cdi":2.9,"n":1},{"km":462.0,"cdi":2.2,"n":1},{"km":473.0,"cdi":2.0,"n":1},{"km":474.0,"cdi":3.1,"n":1},{"km":474.0,"cdi":2.2,"n":1},{"km":475.0,"cdi":3.8,"n":1},{"km":476.0,"cdi":3.3,"n":1},{"km":476.0,"cdi":3.1,"n":1},{"km":476.0,"cdi":2.0,"n":1},{"km":477.0,"cdi":4.1,"n":1},{"km":477.0,"cdi":3.4,"n":1},{"km":478.0,"cdi":2.7,"n":1},{"km":478.0,"cdi":2.0,"n":1},{"km":479.0,"cdi":2.2,"n":1},{"km":479.0,"cdi":2.1,"n":2},{"km":479.0,"cdi":1.0,"n":1},{"km":480.0,"cdi":2.2,"n":1},{"km":481.0,"cdi":2.8,"n":3},{"km":481.0,"cdi":2.7,"n":1},{"km":481.0,"cdi":2.0,"n":1},{"km":483.0,"cdi":3.4,"n":1},{"km":484.0,"cdi":2.5,"n":1},{"km":485.0,"cdi":3.8,"n":1},{"km":485.0,"cdi":2.8,"n":5},{"km":485.0,"cdi":2.7,"n":1},{"km":486.0,"cdi":2.7,"n":1},{"km":486.0,"cdi":2.0,"n":1},{"km":486.0,"cdi":2.0,"n":1},{"km":489.0,"cdi":2.2,"n":1},{"km":489.0,"cdi":2.0,"n":1},{"km":490.0,"cdi":2.0,"n":1},{"km":491.0,"cdi":2.0,"n":2},{"km":493.0,"cdi":3.1,"n":1},{"km":495.0,"cdi":2.2,"n":1},{"km":514.0,"cdi":2.2,"n":1},{"km":723.0,"cdi":2.0,"n":1},{"km":728.0,"cdi":2.0,"n":1},{"km":944.0,"cdi":1.0,"n":1}],"sources":{"detail":"https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&eventid=us6000tm81","phase":"https://earthquake.usgs.gov/product/phase-data/us6000tm81/us/1787252065040/quakeml.xml","felt":"https://earthquake.usgs.gov/product/dyfi/us6000tm81/us/1787316340220/dyfi_geo_1km.geojson"},"rev":{"phase":1787252065040,"felt":1787316340220},"built":"2026-08-23"};
+
+const S = D.stations, F = D.felt, KMD = D.kmPerDeg;
+const instReach = S[S.length-1].deg;
+
+// One axis is shared by the two networks, and it is the only thing they share:
+// the instruments publish an instant, the felt reports publish no time at all.
+// So distance is drawn once, logarithmically, identically for both halves.
+const allDeg = S.map(s=>s.deg).concat(F.map(f=>f.km/KMD));
+const dLo = Math.min(...allDeg)*0.75, dHi = Math.max(...allDeg)*1.12;
+const L = Math.log10, span = L(dHi)-L(dLo);
+
+const W=1200, H=700, M={l:96,r:150,t:30,b:66};
+const AX = 452;                       // the shared axis, in figure coordinates
+const upTop = M.t+26, loBot = H-M.b;  // the two half-planes
+const px = d => M.l + (L(Math.max(d,dLo))-L(dLo))/span*(W-M.l-M.r);
+
+const tMax = Math.ceil(S[S.length-1].t/100)*100;
+const py = t => AX-24 - (t/tMax)*(AX-24-upTop);
+
+const esc = s => String(s).replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+const fmtDeg = d => d<10 ? d.toFixed(2) : d.toFixed(1);
+
+// ---- static frame ---------------------------------------------------------
+let f = '';
+const decades = [];
+for(let e=-2; e<=3; e++){
+  for(const m of [1,2,5]){
+    const v = m*Math.pow(10,e);
+    if(v>=dLo && v<=dHi) decades.push(v);
+  }
+}
+for(const v of decades){
+  f += `<line class="grid" x1="${px(v).toFixed(1)}" y1="${upTop}" x2="${px(v).toFixed(1)}" y2="${loBot}"/>`;
+  f += `<text class="tick" x="${px(v).toFixed(1)}" y="${loBot+19}" text-anchor="middle">${v<1?v:v}°</text>`;
+}
+for(let t=0; t<=tMax; t+=100){
+  f += `<line class="grid" x1="${M.l}" y1="${py(t).toFixed(1)}" x2="${W-M.r}" y2="${py(t).toFixed(1)}"/>`;
+  f += `<text class="tick" x="${M.l-11}" y="${(py(t)+4).toFixed(1)}" text-anchor="end">${t}</text>`;
+}
+f += `<line class="axis" x1="${M.l}" y1="${AX}" x2="${W-M.r}" y2="${AX}"/>`;
+f += `<text class="axlabel" x="${(M.l+W-M.r)/2}" y="${loBot+45}" text-anchor="middle">distance from hypocentre — logarithmic, one scale for both networks</text>`;
+f += `<text class="axlabel" transform="translate(${M.l-64},${(upTop+AX)/2}) rotate(-90)" text-anchor="middle">seconds after origin</text>`;
+f += `<text class="axlabel" transform="translate(${M.l-64},${(AX+loBot)/2}) rotate(-90)" text-anchor="middle">felt reports within</text>`;
+f += `<text class="note" x="${M.l}" y="${upTop-10}">${S.length} seismometers — each one instant, published to 10 ms</text>`;
+f += `<text class="note" x="${M.l}" y="${AX+18}">${F.reduce((a,x)=>a+x.n,0)} felt reports in ${F.length} blocks — no arrival time is published for any of them, so this half counts, it does not clock</text>`;
+
+// a label beside a marker near the right edge is placed on its left instead
+function beside(x, text, cls, y){
+  const w = text.length*6.4;
+  return x+8+w > W
+    ? `<text class="rlabel ${cls}" x="${(x-8).toFixed(1)}" y="${y}" text-anchor="end">${text}</text>`
+    : `<text class="rlabel ${cls}" x="${(x+8).toFixed(1)}" y="${y}">${text}</text>`;
+}
+
+// the instrument network's reach: no threshold applies to it
+f += `<line class="reach reachm" x1="${px(instReach).toFixed(1)}" y1="${upTop-4}" x2="${px(instReach).toFixed(1)}" y2="${AX}"/>`;
+f += beside(px(instReach), `${fmtDeg(instReach)}° — farthest seismometer`, 'rlm', upTop+8);
+
+// stations
+f += `<g id="stations">`;
+S.forEach((s,i) => {
+  f += `<circle class="sta" data-i="${i}" cx="${px(s.deg).toFixed(1)}" cy="${py(s.t).toFixed(1)}" r="4"/>`;
+});
+f += `</g><g id="felt"></g><g id="marks"></g>`;
+f += `<rect class="hit" id="hit" x="${M.l}" y="${upTop-8}" width="${W-M.l-M.r}" height="${AX-upTop+8}"/>`;
+f += `<g id="tip"></g>`;
+
+// ---- page -----------------------------------------------------------------
+document.getElementById('app').innerHTML = `
+<header>
+  <h1>Arrival</h1>
+  <div class="ident"><b>${esc(D.id)}</b> &nbsp;M&thinsp;${D.mag} &nbsp;${esc(D.place)}
+   &nbsp;&middot;&nbsp; origin ${esc(D.origin)} &nbsp;&middot;&nbsp; depth ${D.depth}&thinsp;km
+   &nbsp;&middot;&nbsp; ${D.lat.toFixed(4)}, ${D.lon.toFixed(4)}</div>
+</header>
+<figure><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="One earthquake as two networks recorded it: ${S.length} seismometers with arrival times, and ${F.length} blocks of human felt reports, on a shared logarithmic distance axis."> ${f} </svg></figure>
+<div class="ctl">
+  <span class="grp"><b>what counts as a felt report</b></span>
+  <span class="grp">at least <button id="nDn">&minus;</button><span class="val" id="nVal">1</span><button id="nUp">+</button> report${''} in the block</span>
+  <span class="grp">intensity at least <button id="cDn">&minus;</button><span class="val" id="cVal">1</span><button id="cUp">+</button></span>
+  <span class="grp"><button id="rst">reset</button></span>
+</div>
+<div class="ctl">
+  <span class="key"><i class="dot" style="background:var(--machine)"></i>click any two seismometers</span>
+  <span class="key"><i class="dot" style="background:var(--body)"></i>felt reports accepted: <span class="val" id="acc"></span></span>
+</div>
+<div class="out">
+  <div class="now" id="now"><span class="sub">no pair selected</span></div>
+  <div class="log" id="log"></div>
+</div>
+<footer>
+  Built ${D.built} from public USGS data, unauthenticated, and pinned into this file &mdash; it makes no network request when you open it.<br>
+  event &nbsp;${esc(D.sources.detail)}<br>
+  arrivals &nbsp;${esc(D.sources.phase)}${D.rev && D.rev.phase ? ' &nbsp;(revision '+esc(D.rev.phase)+')' : ''}<br>
+  ${D.sources.felt ? 'felt reports &nbsp;'+esc(D.sources.felt)+(D.rev&&D.rev.felt?' &nbsp;(revision '+esc(D.rev.felt)+')':'')+'<br>' : ''}
+  1&thinsp;degree = ${KMD}&thinsp;km along the surface. Travel time is the only derived quantity: arrival instant minus origin instant. Nothing is smoothed, fitted or interpolated.
+</footer>`;
+
+const feltG = document.getElementById('felt');
+const marks = document.getElementById('marks');
+const tipg  = document.getElementById('tip');
+const nowEl = document.getElementById('now');
+const logEl = document.getElementById('log');
+
+// ---- the lower half: it retracts under the threshold ----------------------
+let minN = 1, minC = 1, sel = [], history = [];
+const fullTotal = F.reduce((a,x)=>a+x.n, 0);
+
+function drawFelt(){
+  const kept = F.filter(x => x.n >= minN && x.cdi >= minC);
+  const total = kept.reduce((a,x)=>a+x.n,0);
+  document.getElementById('acc').textContent = total;
+  document.getElementById('nVal').textContent = minN;
+  document.getElementById('cVal').textContent = minC;
+
+  let g = '';
+  if(!kept.length){
+    g = `<text class="rlabel rlb" x="${M.l+8}" y="${(AX+loBot)/2}">no block passes this threshold — the human network has no reach here</text>`;
+    feltG.innerHTML = g;
+    document.getElementById('now').dataset.reach = '';
+    drawSpan(null);
+    return;
+  }
+  // the vertical scale is fixed to the unfiltered population, so that raising
+  // the threshold shrinks the staircase in both directions instead of
+  // renormalising the loss away
+  const reach = kept[kept.length-1].km/KMD;
+  const yTop = AX+34, yBot = loBot-8;
+  const cy = c => yBot - (c/fullTotal)*(yBot-yTop);
+
+  // the shaded region is what the threshold cut away
+  g += `<rect class="cut" x="${px(reach).toFixed(1)}" y="${yTop}" width="${(W-M.r-px(reach)).toFixed(1)}" height="${yBot-yTop}"/>`;
+
+  // cumulative responses within distance — a count, not a clock
+  let acc = 0, pts = [[px(kept[0].km/KMD), cy(0)]];
+  for(const x of kept){
+    const X = px(x.km/KMD);
+    pts.push([X, cy(acc)]);
+    acc += x.n;
+    pts.push([X, cy(acc)]);
+    g += `<line class="stairdrop" x1="${X.toFixed(1)}" y1="${cy(acc).toFixed(1)}" x2="${X.toFixed(1)}" y2="${yBot}"><title>${x.n} report${x.n>1?'s':''} at ${x.km} km = ${fmtDeg(x.km/KMD)}° — intensity ${x.cdi}</title></line>`;
+  }
+  pts.push([px(reach), cy(total)]);
+  g += `<polyline class="stair" points="${pts.map(p=>p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ')}"/>`;
+  g += `<line class="grid" x1="${M.l}" y1="${cy(fullTotal).toFixed(1)}" x2="${W-M.r}" y2="${cy(fullTotal).toFixed(1)}"/>`;
+  g += `<text class="tick" x="${M.l-11}" y="${(cy(fullTotal)+4).toFixed(1)}" text-anchor="end">${fullTotal}</text>`;
+  g += `<text class="tick" x="${M.l-11}" y="${(cy(0)+4).toFixed(1)}" text-anchor="end">0</text>`;
+  if(total < fullTotal){
+    g += `<text class="rlabel rlb" x="${M.l-11}" y="${(cy(total)+4).toFixed(1)}" text-anchor="end">${total}</text>`;
+  }
+  g += `<line class="reach reachb" x1="${px(reach).toFixed(1)}" y1="${AX}" x2="${px(reach).toFixed(1)}" y2="${loBot+4}"/>`;
+  g += beside(px(reach), `${fmtDeg(reach)}° = ${Math.round(reach*KMD)} km — farthest accepted report`, 'rlb', loBot-2);
+  feltG.innerHTML = g;
+  drawSpan(reach);
+}
+
+// the gap between the two reaches, drawn on the shared axis and read as a ratio
+function drawSpan(reach){
+  const el = document.getElementById('spanG');
+  if(el) el.remove();
+  if(reach === null) return;
+  const a = px(reach), b = px(instReach), y = AX-9;
+  const g = document.createElementNS('http://www.w3.org/2000/svg','g');
+  g.setAttribute('id','spanG');
+  g.innerHTML =
+    `<line class="span" x1="${a.toFixed(1)}" y1="${y}" x2="${b.toFixed(1)}" y2="${y}"/>` +
+    `<text class="spanlabel" x="${((a+b)/2).toFixed(1)}" y="${y-7}" text-anchor="middle">× ${(instReach/reach).toFixed(1)}</text>`;
+  document.querySelector('svg').appendChild(g);
+}
+
+// ---- the upper half: the instruments' own operation ------------------------
+function draw(){
+  marks.innerHTML = '';
+  document.querySelectorAll('.sta').forEach(c => c.classList.remove('on'));
+  sel.forEach(i => {
+    const s = S[i];
+    document.querySelector(`.sta[data-i="${i}"]`).classList.add('on');
+    marks.insertAdjacentHTML('beforeend',
+      `<circle class="halo" cx="${px(s.deg).toFixed(1)}" cy="${py(s.t).toFixed(1)}" r="9.5"/>`);
+  });
+  if(sel.length === 2){
+    const [a,b] = sel.map(i => S[i]);
+    marks.insertAdjacentHTML('afterbegin',
+      `<line class="chord" x1="${px(a.deg).toFixed(1)}" y1="${py(a.t).toFixed(1)}" x2="${px(b.deg).toFixed(1)}" y2="${py(b.t).toFixed(1)}"/>`);
+  }
+}
+
+function report(){
+  if(sel.length < 2){
+    const s = sel.length ? S[sel[0]] : null;
+    nowEl.innerHTML = s
+      ? `<b>${esc(s.sta)}</b> &nbsp;<span class="sub">${fmtDeg(s.deg)}° &middot; ${s.t} s &middot; ${esc(s.ph)}</span><br><span class="sub">pick a second one</span>`
+      : `<span class="sub">no pair selected</span>`;
+    return;
+  }
+  let [a,b] = sel.map(i => S[i]);
+  if(a.deg > b.deg) [a,b] = [b,a];
+  const dd = b.deg-a.deg, dkm = dd*KMD, dt = b.t-a.t;
+  const v = dt !== 0 ? dkm/dt : NaN;
+  nowEl.innerHTML =
+    `<span class="big">${isFinite(v) ? v.toFixed(2) : '—'}&thinsp;km/s</span>
+     <span class="sub">apparent speed across the surface, between these two</span><br>
+     <b>${esc(a.sta)}</b> <span class="sub">${fmtDeg(a.deg)}° &middot; ${a.t} s</span>
+     &nbsp;→&nbsp; <b>${esc(b.sta)}</b> <span class="sub">${fmtDeg(b.deg)}° &middot; ${b.t} s</span><br>
+     <span class="sub">${dd.toFixed(3)}° = ${dkm.toFixed(0)} km further, ${dt.toFixed(2)} s later</span>`;
+  if(isFinite(v)){
+    history.unshift({mid:(a.deg+b.deg)/2, v, a:a.sta, b:b.sta});
+    history = history.slice(0,9);
+    logEl.innerHTML = history.map(h =>
+      `<div><span class="v">${h.v.toFixed(2)}&thinsp;km/s</span> &nbsp;<b>${esc(h.a)}–${esc(h.b)}</b> &nbsp;around ${fmtDeg(h.mid)}°</div>`
+    ).join('');
+  }
+}
+
+// nearest station to the pointer — the far field is crowded on a log axis,
+// and a click there should still choose something rather than nothing
+function nearest(evt){
+  const svg = document.querySelector('svg');
+  const r = svg.getBoundingClientRect();
+  const x = (evt.clientX-r.left)/r.width*W, y = (evt.clientY-r.top)/r.height*H;
+  let best = -1, bd = 1e9;
+  S.forEach((s,i) => {
+    const dx = px(s.deg)-x, dy = py(s.t)-y, d = dx*dx+dy*dy;
+    if(d < bd){ bd = d; best = i; }
+  });
+  return bd <= 26*26 ? best : -1;
+}
+
+const hit = document.getElementById('hit');
+hit.addEventListener('click', e => {
+  const i = nearest(e);
+  if(i < 0) return;
+  if(sel.length >= 2) sel = [];
+  if(!sel.includes(i)) sel.push(i);
+  draw(); report();
+});
+hit.addEventListener('pointermove', e => {
+  const i = nearest(e);
+  if(i < 0){ tipg.innerHTML=''; return; }
+  const s = S[i];
+  const t = `${s.sta}  ${fmtDeg(s.deg)}°  ${s.t}s  ${s.ph}`;
+  let x = px(s.deg)+13, y = py(s.t)-13;
+  const w = t.length*7.1+14;
+  if(x+w > W-M.r) x = px(s.deg)-13-w;
+  tipg.innerHTML =
+    `<rect class="tipbg" x="${x.toFixed(1)}" y="${(y-14).toFixed(1)}" width="${w.toFixed(1)}" height="21" rx="2"/>
+     <text class="tip" x="${(x+7).toFixed(1)}" y="${(y+1).toFixed(1)}">${esc(t)}</text>`;
+});
+hit.addEventListener('pointerleave', () => tipg.innerHTML='');
+
+// ---- the threshold ---------------------------------------------------------
+const maxN = Math.max(...F.map(x=>x.n), 1);
+const maxC = Math.max(...F.map(x=>Math.floor(x.cdi)), 1);
+function limits(){
+  document.getElementById('nDn').disabled = minN <= 1;
+  document.getElementById('nUp').disabled = minN >= maxN;
+  document.getElementById('cDn').disabled = minC <= 1;
+  document.getElementById('cUp').disabled = minC >= maxC;
+}
+function step(dn, dc){
+  minN = Math.min(maxN, Math.max(1, minN+dn));
+  minC = Math.min(maxC, Math.max(1, minC+dc));
+  drawFelt(); limits();
+}
+document.getElementById('nUp').onclick = () => step(+1,0);
+document.getElementById('nDn').onclick = () => step(-1,0);
+document.getElementById('cUp').onclick = () => step(0,+1);
+document.getElementById('cDn').onclick = () => step(0,-1);
+document.getElementById('rst').onclick = () => { minN=1; minC=1; step(0,0); };
+
+drawFelt(); limits(); report();
+</script>
+</body>
+</html>

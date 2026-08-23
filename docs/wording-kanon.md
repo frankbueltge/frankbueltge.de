@@ -275,6 +275,27 @@ maschinellen Praxen, die **nicht** zur research ecology gehören und bis dahin n
 (`/n-1`). Sie stehen ausdrücklich *neben* den Experimenten, nie unter ihnen — eine Praxis ist
 kein Peer eines Einzelstücks (dieselbe Regel wie bei Machine Attention, 2026-08-09).
 
+### Ergänzung 2026-08-23: **Arch** — die dritte Praxis neben dem Lab, und ein Raum statt einer Bühne
+
+Frank, 2026-08-23 (Wortlaut privat; Kern: nicht inszenieren wie die anderen, etwas Neues
+machen; die Werke sofort öffentlich). **Arch** ist eine maschinell betriebene Praxis mit eigenem
+Repository (`frankbueltge/arch`), gegründet 2026-08-22 unter einer **Dowry** (kein Protokoll,
+dieselbe Regel wie n-1), die zuerst ein Buch gelesen hat (Simondon, *On the Mode of Existence
+of Technical Objects*, zitiert nach Seite) und dann über ein daraus abgeleitetes Modell
+entschieden hat — adoptiert, mit fünf benannten Divergenzen. Sie läuft in einem
+**vorregistrierten Fenster** mit Fehlerkriterien, die vor dem ersten Werk festgeschrieben
+wurden; die Bilanz wird unabhängig vom Ausgang veröffentlicht. In der Staffel: **Practice**,
+neben der Ökologie, kein Projekt, kein Haus (das Wort ist zurückgezogen), kein Peer eines
+Experiments — also keine Zeile im Werke-Register (USP-Gate), sondern die dritte Zeile unter
+„BESIDE THE LAB", eine Karte auf der Startseite, eine Zeile auf dem Board.
+
+| Punkt | Regel |
+|---|---|
+| **Name** | „Arch", großgeschrieben, nie „the arch" — auf `/experiments` spricht das Experiment *Society* in Minsky-Vokabular von *tower · arch · wreck*; das ist eine Figur des Experiments, nicht die Praxis. Wo beides auf einer Fläche steht, heißt die Praxis „the practice Arch". |
+| **Raum, nicht Bühne** | `/arch` erklärt die Praxis nicht. Die Site zeigt, was die Praxis committet (Byte-Spiegel nach `public/arch/`, Markdown gerendert unter `/arch/read/…`, Rohdatei daneben) und fügt **genau drei Dinge** hinzu, die die Praxis sich nicht selbst zusprechen darf: den Rahmen des Trials (Fenster, Zähler — gelesen aus Preregistration und Record, nie getippt; `src/lib/arch/facts.ts`), die **eine** vorregistrierte Rezeptionsfrage („What did you understand?", Antwort geht als Brief an den gekoppelten Menschen, der sie per Hand in den Record trägt — nie an die Praxis), und den Stand der zwei Register, die den Trial gegen die Praxis entscheiden können. |
+| **Werke nackt** | Die Werke unter `/arch/works/…` werden **ohne Rahmen** serviert — kein Nav-Band, keine Wandtexte, kein Rückweg auf dem Werk (`standaloneFrame.houses.arch.bare`). Grund ist das adoptierte Modell der Praxis: die Fremdenprobe verlangt, dass ein Fremder, der nichts gelesen hat, das Werk ohne Paratext trifft; ein Band der Site wäre genau dieser Paratext. Der Raum ist der Rückweg. |
+| **Record** | Archs Arbeit landet nicht im Works-Register des Hauses; das Repository ist der Record. Was das Haus verlässt (die Werke auf dieser Site), steht mit datiertem Go in Archs eigenem `CHANNEL.md`. |
+
 ## Menü, Hero, About — kein Projekt im Fokus (Frank, 2026-08-09 spät, VERBINDLICH)
 
 Franks Anweisung: kein Projekt wird fokussiert — nicht die Ecology, nicht „two houses".

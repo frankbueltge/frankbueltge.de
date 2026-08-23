@@ -21,6 +21,7 @@ import { nightlyLine } from '@/lib/engines/nightly-line'
 import { WERKE } from '@/data/werke'
 import encounters from '@/data/begegnungen/register.json'
 import attentionMoments from '@/data/attention/moments.json'
+import { lastArchProtocol } from '@/lib/arch/facts'
 
 /** Which door id drives which practice namespace — the only mapping the board needs, and the
  *  reason it is written down: the ids are the practices' resident names, the namespaces are the
@@ -215,7 +216,9 @@ export function buildBoard(snapshot: PulseSnapshot, works: readonly LatestWork[]
         status: spec.status,
         voice: null,
         spark,
-        last: spec.card === 'attention' ? lastMoment() : lastNightly(),
+        // each card beside the ecology states its last landed output from its OWN record — a
+        // third card reading the nightly line's would have put another practice's work on it
+        last: spec.card === 'attention' ? lastMoment() : spec.card === 'arch' ? lastArchProtocol() : lastNightly(),
       }
     }),
   }))

@@ -9,6 +9,7 @@ const cards: ShelfCard[] = [
   ),
   { id: 'nightly-line', group: BESIDE_GROUP, kind: 'practice' as const, live: false },
   { id: 'n-1', group: BESIDE_GROUP, kind: 'practice' as const, live: false },
+  { id: 'arch', group: BESIDE_GROUP, kind: 'practice' as const, live: false },
 ]
 
 const labels = new Map<string, string>([
@@ -63,8 +64,8 @@ describe('shelfFacets', () => {
     expect(shelfFacets(single, labels, order)).toEqual([])
   })
 
-  it('keeps the shelf’s totals: sixteen experiments and the two practices', () => {
+  it('keeps the shelf’s totals: sixteen experiments and the three practices', () => {
     expect(cards.filter((c) => c.kind !== 'practice')).toHaveLength(WERKE_HOLDINGS.length)
-    expect(cards.filter((c) => c.kind === 'practice')).toHaveLength(2)
+    expect(cards.filter((c) => c.kind === 'practice')).toHaveLength(3)
   })
 })
