@@ -139,6 +139,20 @@ const workLd = work ? workJsonLd(work, locale, canonical) : null
 
     {/* Cinematic vignette over everything (decorative, never blocks input). */}
     <div class="vignette" aria-hidden="true"></div>
+    <script is:inline>
+      // The vignette is `position: fixed`, so it is anchored to the LAYOUT viewport and does not
+      // follow a pinch or a smart zoom. Zoom in and pan, and the page slides under its dark ring
+      // until most of what you are reading sits in the shadow — reported 2026-08-23 as "the
+      // content jumps left and only a quarter is left". While the visual viewport is zoomed, the
+      // decoration steps aside; at 1:1 nothing changes.
+      ;(() => {
+        const vv = window.visualViewport
+        if (!vv) return
+        const sync = () => document.documentElement.classList.toggle('is-zoomed', vv.scale > 1.01)
+        vv.addEventListener('resize', sync)
+        sync()
+      })()
+    </script>
 
     {/* Lenis smooth scroll — site-wide nicety, disabled for reduced-motion.
         allowNestedScroll is NOT optional here (Frank's finding 2026-07-31: the score's table
