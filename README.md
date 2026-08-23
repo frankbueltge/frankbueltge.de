@@ -70,9 +70,9 @@ How it works is at [/machine-attention/about](https://frankbueltge.de/machine-at
 
 No umbrella title, no series branding: each experiment stands alone, with its own method and
 its own page, offered as material under `/experiments`. Among them:
-**[The Protocol](https://frankbueltge.de/protocol)** (the daily minutes of the world — live
+**[Protocol](https://frankbueltge.de/protocol)** (the daily minutes of the world — live
 data rendered as the deterministic prose of an official register, no language model in the
-wording), **[The Consensus](https://frankbueltge.de/consensus)** (measuring orchestrated
+wording), **[Consensus](https://frankbueltge.de/consensus)** (measuring orchestrated
 consensus), **[Headroom](https://frankbueltge.de/headroom)** (hyperscaler efficiency
 disclosures vs. absolute consumption), and the **[Atlas](https://frankbueltge.de/atlas)**
 (the reference collection of the wider data-art field, mapped and sourced — the live count
