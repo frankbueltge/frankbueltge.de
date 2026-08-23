@@ -3,7 +3,7 @@
 // record without a git client, with the raw bytes one click away at /arch/<path>. The site
 // renders; it does not edit: no excerpting, no reordering, no note of its own on the page
 // beyond the strip that says where the file came from.
-import { readFileSync, readdirSync } from 'node:fs'
+import { readFileSync } from 'node:fs'
 import { join, posix } from 'node:path'
 import MarkdownIt from 'markdown-it'
 import Page from '@/layouts/Page.astro'
