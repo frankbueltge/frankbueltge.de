@@ -113,6 +113,7 @@ guard is the cheap test — a pattern that cannot fail is a recipe.
 | ID | Title | Family | Form | Test status |
 |---|---|---|---|---|
 | A1 | Manipulated chance | A | pattern | not run |
+| A2 | Readiness for the sign | A | pattern | not run |
 | P1 | The standard undone | F (with A) | five fields, pre-form | not run |
 | P2 | Ascetic rule | B | five fields, pre-form | not run |
 
