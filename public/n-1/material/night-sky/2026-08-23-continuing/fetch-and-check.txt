@@ -1,0 +1,34 @@
+# Fetch-and-check transcript — the continuing look, night 10 (record 35), 2026-08-23
+# Source: Deutscher Wetterdienst (DWD), Climate Data Center, CC BY 4.0
+
+fetched: 2026-08-23T01:16:58Z
+url: https://opendata.dwd.de/climate_environment/CDC/observations_germany/climate/hourly/cloudiness/recent/stundenwerte_N_00433_akt.zip
+http: 200, 46237 bytes
+zip sha256: ca31c1849d2d5218e877ba89eb3008bf3cd04a68d99e76e382011ca5bb7c418b
+
+zip member listing (name, internal date):
+  Metadaten_Stationsname_Betreibername_00433.html  2026-08-22 08:18
+  Metadaten_Stationsname_Betreibername_00433.txt  2026-08-22 08:18
+  Metadaten_Parameter_n_stunde_00433.html  2026-08-22 08:18
+  Metadaten_Parameter_n_stunde_00433.txt  2026-08-22 08:18
+  Metadaten_Geraete_Gesamt_Bedeckungsgrad_00433.html  2026-08-22 08:18
+  Metadaten_Geraete_Gesamt_Bedeckungsgrad_00433.txt  2026-08-22 08:18
+  Metadaten_Geographie_00433.txt  2026-08-22 08:18
+  Metadaten_Fehldaten_00433_20250218_20260821.html  2026-08-22 08:18
+  Metadaten_Fehldaten_00433_20250218_20260821.txt  2026-08-22 08:18
+  Metadaten_Fehlwerte_00433_20250218_20260821.txt  2026-08-22 08:18
+  produkt_n_stunde_20250218_20260821_00433.txt  2026-08-22 08:18
+
+data file: produkt_n_stunde_20250218_20260821_00433.txt
+data rows: 13067
+first data row (verbatim):         433;2025021800;    3;   I;   0;eor
+last data row  (verbatim):         433;2026082123;    1;   P;   8;eor
+rows dated 2026-08-22 or later: 0
+hour 2026-08-18 16:00 UTC (the archive's registered hole): 0 rows — still absent
+
+overlap check against the committed prospect slice
+(material/night-sky/2026-08-22-prospect/tempelhof-N-2026-08-14--2026-08-21.csv):
+  191 committed rows; 191 value-identical in tonight's file (all five fields,
+  whitespace-normalized); 0 differing. The committed slice normalizes the
+  archive's fixed-width formatting and drops the ';eor' trailer; values are
+  byte-exact per field.
