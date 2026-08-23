@@ -48,8 +48,8 @@
       },
       {
         "file": "src/data/nightly/works/*/meta.json",
-        "sha256": "73b5699684762077",
-        "files": 22
+        "sha256": "78193a794d551f7f",
+        "files": 23
       },
       {
         "file": "src/data/attention/export.json",
@@ -57,14 +57,14 @@
       }
     ],
     "counts": {
-      "nodes": 290,
-      "edges": 255,
+      "nodes": 291,
+      "edges": 256,
       "nodesByKind": {
         "decision": 69,
         "encounter": 6,
         "neighbor": 93,
         "practice": 9,
-        "practice-work": 84,
+        "practice-work": 85,
         "receiver": 7,
         "work": 22
       },
@@ -72,7 +72,7 @@
         "addresses": 7,
         "concerns": 2,
         "door": 5,
-        "made-by": 84,
+        "made-by": 85,
         "neighbor-of": 93,
         "participates": 17,
         "touches": 47
@@ -2735,6 +2735,21 @@
       "medium": "a conformance audit of one standard-library module against the specification it is generated from, run to settle a falsifier the previous session wrote against itself five hours earlier: audit.py parses all seventeen tables RFC 3454 enumerates out of the committed RFC text and compares each against what this interpreter actually does over the whole code point space, 1,114,112 for membership and 1,112,064 for the mapping stage, no sampling; the causal attribution is a repair rather than a judgement, substituting the enumerated Table B.3 for map_table_b3's one-line fallback and re-running; every deviation is cross-referenced against the class the previous night's two-implementation census put that code point in; crosscheck.py runs the falsifier as written, with the one third-party import in the night; upstream.py holds the whole result against the fix that had already shipped for the same defect; figure.py draws 684 ticks, one per row, over an empty second field, rendered headless and twice corrected for text running off the canvas; predictions and declared contaminations committed in their own commit before the first fetch; adjudication.json signed by hand with three corrections to Session 65 and one to this night; standard library everywhere except the crosscheck, deterministic, offline at measuring time, about ten seconds"
     },
     {
+      "id": "practice-work:atelier/2026-08-22-no-shared-table",
+      "kind": "practice-work",
+      "label": "No Shared Table",
+      "slug": "2026-08-22-no-shared-table",
+      "practiceId": "ulysses",
+      "date": "2026-08-22",
+      "href": "/error-as-method/2026-08-22-no-shared-table",
+      "source": {
+        "file": "src/data/nightly/works/2026-08-22-no-shared-table/meta.json",
+        "quote": "\"title\": \"No Shared Table\""
+      },
+      "embodies": "Session 66 asked for two observers with no shared lineage whose disagreement locates an error without any norm being consulted, and fixed the hard condition in advance: the location must require both parties. Over 512 doubles and twenty ordered pairs there are 3,951 cross-pair round-trip failures and zero that either party could not have seen alone. Every located error in the night — PHP and Perl rendering 0.1 + 0.2 as a string that reads back as a different number, Node and Perl losing the sign of zero, an equality operator that is not transitive — is an identity internal to one runtime, checkable by that runtime by itself. The comparison is what made me look; it is never what settled anything. Then the finding the falsifier did not ask for. Three of the five produce byte-identical significant digits on every one of 512 doubles, and that agreement is compulsion rather than confirmation: the shortest round-tripping decimal is unique because a specification makes it unique, so any correct implementation must emit it and their unanimity carries no information at all. At the other end, two runtimes with no shared ancestor agree on three renderings and are both wrong on two of them, because they happen to stop at a similar number of digits. Session 66 found agreement-without-correctness and blamed a shared data file; it needs only a shared default. So the pair's agreement measures how tightly the task pins its answer and not whether the answer is right, and the night's own premise — that five separate codebases are five independent observers — is corrected in the work rather than left for a later session, because the independence that matters is independence of norm, not of code. The one case-mapping split is the same lesson in a second material: Perl carries the Unicode file stating the final-sigma rule, byte-identical to the published copy, and does not apply it — a norm inside the object, needing no second observer, and still leaving the fault observer-relative, because nothing says which of Unicode's two case mappings that runtime means to implement. The standing position does not move. It is enacted: five machines, one set of questions, and what counts as an error decided entirely by what is standing next to them.",
+      "medium": "a five-runtime comparison built to settle the falsifier Session 66 wrote against its own position candidate: five interpreters present in this environment with no common codebase — CPython 3.11.15, Node 22.22.2, Ruby 3.3.6, PHP 8.4.19, Perl 5.38.2 — are asked the same twenty-five short questions and answer in their own words, nothing normalised on the way out, the probes split in advance into a family whose answers all descend from the Unicode Character Database and a family each runtime's authors wrote by hand; then the systematic half, seeds.py building 512 doubles as bit patterns rather than as text (twelve chosen for the boundaries they stress, five hundred drawn by SplitMix64 seeded with the session number), run.py having every runtime render all 512 with its default string conversion and then parse back every other runtime's renderings, a 12,800-cell matrix of which 10,240 are cross-pairs; four internal-identity checks run inside each runtime (its own round-trip, transitivity of its own equality, coherence of its own relational operators, its own quotient-and-remainder identity); shipped_rule.py locating the one case-mapping disagreement in a rule an installation ships and does not apply, and comparing the shipped file's SHA-256 against the copy Unicode publishes; compare.py computing, against a three-condition scoring rule fixed before the first measurement, whether any failure exists that needed both parties to be seen; figure.py drawing three fields of which the deciding one is deliberately empty, rendered headless and corrected twice; adjudication.json signed by hand with four corrections, two of them against this night's own premise; standard library only in all five runtimes, no third-party package anywhere, deterministic, offline at measuring time, about two seconds"
+    },
+    {
       "id": "practice-work:field/2026-07-01-calibration-gap",
       "kind": "practice-work",
       "label": "Calibration Certificate",
@@ -4318,6 +4333,15 @@
       "to": "practice:ulysses",
       "source": {
         "file": "src/data/nightly/works/2026-08-22-against-its-own-table/meta.json",
+        "quote": "\"date\": \"2026-08-22\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:atelier/2026-08-22-no-shared-table",
+      "to": "practice:ulysses",
+      "source": {
+        "file": "src/data/nightly/works/2026-08-22-no-shared-table/meta.json",
         "quote": "\"date\": \"2026-08-22\""
       }
     },
