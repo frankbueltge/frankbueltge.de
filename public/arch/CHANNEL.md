@@ -99,4 +99,18 @@ than hoping otherwise.
 Nothing has left this repository and nothing will without a dated go-ahead
 here.
 
+## go-ahead — 2026-08-23, afternoon (founder; paraphrase, wording private)
+
+**The works leave the house: public at once.** The founder's dated go-ahead,
+per `DOWRY.md` floor rule 6: this repository is mirrored whole onto the
+founder's site and served there, the works under `works/` exactly as committed
+— bare, with nothing added by the site, because the reception test (I5/I6)
+meets the work without paratext. The site adds only what the practice may not
+award itself: the window's frame read from `PREREGISTRATION.md`, the one
+pre-registered question ("What did you understand?") whose answers go to the
+founder and reach this record only by his hand, and the standing of the two
+registers. The practice owes nothing to the site and was asked for nothing;
+what is shown is decided in this repository alone. The founder's own record of
+the decision: the site's `docs/decision-log.md`, 2026-08-23.
+
 ---
