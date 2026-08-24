@@ -6,14 +6,76 @@
       "keeper": "Uppsala Conflict Data Program, Uppsala University",
       "threshold": "25 battle-related deaths per dyad per calendar year",
       "licence_notice": "UCDP data, cited under the terms at ucdp.uu.se. Derived counts only; no source rows are redistributed here.",
-      "key": ["dyad_id", "year"],
+      "key": [
+        "dyad_id",
+        "year"
+      ],
       "magnitude": "bd_best",
-      "label": ["side_a", "side_b", "location_inc"],
+      "label": [
+        "side_a",
+        "side_b",
+        "location_inc"
+      ],
       "versions": [
-        { "tag": "22.1", "data": "https://ucdp.uu.se/downloads/brd/ucdp-brd-dyadic-221-csv.zip", "history": "https://ucdp.uu.se/downloads/brd/versionhistory-brd-231.pdf" },
-        { "tag": "23.1", "data": "https://ucdp.uu.se/downloads/brd/ucdp-brd-dyadic-231-csv.zip", "history": "https://ucdp.uu.se/downloads/brd/versionhistory-brd-231.pdf" },
-        { "tag": "24.1", "data": "https://ucdp.uu.se/downloads/brd/ucdp-brd-dyadic-241-csv.zip", "history": "https://ucdp.uu.se/downloads/brd/versionhistory-brd-241.pdf" },
-        { "tag": "25.1", "data": "https://ucdp.uu.se/downloads/brd/ucdp-brd-dyadic-251-csv.zip", "history": "https://ucdp.uu.se/downloads/brd/versionhistory-brd-251.pdf" }
+        {
+          "tag": "22.1",
+          "data": "https://ucdp.uu.se/downloads/brd/ucdp-brd-dyadic-221-csv.zip",
+          "history": "https://ucdp.uu.se/downloads/brd/versionhistory-brd-231.pdf",
+          "suffix": "zip"
+        },
+        {
+          "tag": "23.1",
+          "data": "https://ucdp.uu.se/downloads/brd/ucdp-brd-dyadic-231-csv.zip",
+          "history": "https://ucdp.uu.se/downloads/brd/versionhistory-brd-231.pdf",
+          "suffix": "zip"
+        },
+        {
+          "tag": "24.1",
+          "data": "https://ucdp.uu.se/downloads/brd/ucdp-brd-dyadic-241-csv.zip",
+          "history": "https://ucdp.uu.se/downloads/brd/versionhistory-brd-241.pdf",
+          "suffix": "zip"
+        },
+        {
+          "tag": "25.1",
+          "data": "https://ucdp.uu.se/downloads/brd/ucdp-brd-dyadic-251-csv.zip",
+          "history": "https://ucdp.uu.se/downloads/brd/versionhistory-brd-251.pdf",
+          "suffix": "zip"
+        }
+      ],
+      "year_index": 1,
+      "history_published": true
+    },
+    {
+      "id": "emdat",
+      "name": "EM-DAT, the international disaster database (archive)",
+      "keeper": "CRED, UCLouvain",
+      "threshold": "10 deaths OR 100 affected OR declaration of emergency OR call for international assistance — disjunctive, so the record has no single censoring floor",
+      "licence_notice": "EM-DAT Archive, CRED / UCLouvain, DOI 10.14428/DVN/I0LTPH, CC BY-NC-ND 4.0. No source rows are redistributed here: only derived counts and identifiers, which are statements of fact about the material rather than an adaptation of it.",
+      "key": [
+        "DisNo."
+      ],
+      "year_index": null,
+      "magnitude": "Total Deaths",
+      "label": [
+        "Disaster Type",
+        "Country",
+        "Location"
+      ],
+      "history_published": false,
+      "note": "Dataverse versions the dataset itself. v1.0 and v1.1 ship the same data file — only the documentation changed — so exactly one comparable pair exists today, and the container changed from .tab to .xlsx between them.",
+      "versions": [
+        {
+          "tag": "2024-12",
+          "data": "https://dataverse.uclouvain.be/api/access/datafile/28130?format=tab",
+          "suffix": "tab",
+          "history": null
+        },
+        {
+          "tag": "2026-04",
+          "data": "https://dataverse.uclouvain.be/api/access/datafile/38893",
+          "suffix": "xlsx",
+          "history": null
+        }
       ]
     }
   ]
