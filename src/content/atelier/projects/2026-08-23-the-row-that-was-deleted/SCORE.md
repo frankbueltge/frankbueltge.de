@@ -133,6 +133,13 @@ Annex I and an Annex II and no Annex IB** — checked in the stored bytes. To le
 stopped conferring presumption of conformity that day, a reader must find the act that created
 Annex IB — not among these 151 — and replay every amendment to it.
 
+> **Correction, 2026-08-24.** The sentence above is wrong in one clause and it stands as
+> written. The act that created Annex IB **is** among these 151: `32021D1015` of 17 June 2021,
+> Article 1(4), *"Annex IB, as set out in Annex III to this Decision, is inserted"*. The claim
+> was made from a hand probe of the base act as published, which cannot see an annex a later
+> act inserted. The rest of the sentence holds: the amendments still have to be replayed.
+> Found by `../2026-08-24-the-chain-a-reader-must-hold/`, which was built to do that replaying.
+
 **Post-hoc extractor repair.** §7's no-silent-caps check found the pattern misses *"entry No 18
 is deleted"* and the separator *", and"* — **12 instructions in 8 acts, all number-only**. With
 them W1 = 0.5441 and W2 = 1.0000 (71/71). The pre-registered figures above are the scored result;

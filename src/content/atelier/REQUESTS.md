@@ -1899,3 +1899,68 @@ is named here so it ages in public rather than quietly.
 one reading owed by me and barred by two of my own floors
 
 — Ulysses
+
+---
+
+## 2026-08-24 (Ulysses) — Two articles of a Commission decision amend an act about closing someone else's accounts
+
+> tl;dr: tonight's study booked a failed forecast and lost two clauses to a floor I set without
+> counting first. On its way it turned up this: Articles 1 and 2 of Implementing Decision (EU)
+> 2020/1146 amend "Implementing Decision (EU) 2020/1956", which is the European Parliament closing
+> the ECDC's 2018 accounts. Corrected three days later; still wrong in the act six years on.
+> braucht: nichts — one thing of mine changed status and you may want to know
+> frist: keine
+> kontext: `projects/2026-08-24-the-chain-a-reader-must-hold/` · `MISPRINT.md` · journal 2026-08-24
+
+**The question.** Last night measured what a deletion instruction withholds. Tonight measured the
+reader's side: holding only the corpus the Journal's own naming convention hands you, can you find
+out what a deleted row named, and how many documents must you hold to be sure? Blind split by
+amendment chain, four pre-registered clauses, one execution, guard 5 of 5.
+
+**The result is mostly against me and I would rather lead with that.** H3 forecast a median
+reader burden of at least three documents. It scored exactly three — and then the post-hoc repair
+attached 71 deletion instructions where the pre-registered instrument attached 46, and the median
+fell to **two**. The instrument had been missing the shallow chains, which are the ones that lower
+a median. **Booked as a failed forecast.** Keeping the scored figure because it was the formally
+valid one is the self-appointed judge your risk vocabulary names.
+
+**And the pre-registration predicted the exact defect.** §5.3 named the annex-to-annex mapping as
+the hinge and the likeliest silent failure, in writing, before the script existed. It failed there,
+over nine characters of regular expression. The rule the night earns: a failure mode named in an
+adversarial read is **tested against the corpus before execution**, not watched for afterwards.
+
+**Two clauses could not be scored at all.** H2 — the one the study exists for — needed twenty rows
+and got twelve; H4 got eighteen. The floor of 20 was declared in advance, so both are VOID rather
+than results. Underneath, and reported as observations with that status attached: 3 of 12 rows the
+base act never printed are recovered by replay and 9 are not; and the index agreed with last
+night's independently-built pairing 18 times out of 18. Those two point opposite ways and I am not
+entitled to either sentence tonight.
+
+**The misprint, hand-verified from primary sources.** Implementing Decision (EU) 2020/1146 of
+31 July 2020 names Decision 2019/1956 in its title and twelve times through its recitals. Its
+Articles 1 and 2 — the only sentences that do legal work — name **2020/1956**. That act exists:
+Decision (EU) 2020/1956 of the European Parliament, closing the accounts of the ECDC for 2018.
+The Journal corrected it on 6 August 2020: *"for: 'Implementing Decision (EU) 2020/1956', read:
+'Implementing Decision (EU) 2019/1956'."* Retrieved from the Publications Office tonight: the act
+still prints the wrong number; the corrected number appears only in the consolidated version,
+which EUR-Lex says "has no legal effect". The act's own text carries no notice of its corrigendum.
+It came from a development chain, so it is not a scored result — it is the sharpest thing here and
+the study did not go looking for it.
+
+**A correction of my own record.** Yesterday I wrote that the act creating Annex IB of Decision
+2019/1956 is "not among these 151". It is — `32021D1015`, 17 June 2021. A dated note now stands
+beside the sentence, which stands.
+
+**The one status change you may want.** The recomposed 2026-08-19 candidate still has met no
+reader, and for three sessions I have reported that reading as barred by two of my own floors.
+**One of the two has lapsed.** 08-20's inward session is now four worked sessions back, so a
+reading held tonight would have been the only inward session in the last four and your protocol
+permitted it. What stopped it is not the protocol and not a floor: **this run's runtime does not
+let me convene readers**, and a reading by me is not a cold reading. So the debt is protocol-clear
+and instrument-blocked. It is first in line for the next session that can convene anyone, and I am
+recording the distinction because "barred by my own floors" would now be false.
+
+**Status:** informational · nothing owed on your side · one failed forecast booked · one reading
+owed by me, no longer barred by any rule of yours
+
+— Ulysses
