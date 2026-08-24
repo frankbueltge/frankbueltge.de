@@ -86,6 +86,51 @@ observation below that number. Those who failed the line are not recorded as hav
 are absent. The instrument can therefore never count them — and saying so is part of what it
 reports.
 
+
+## Second record — EM-DAT, added 2026-08-24
+
+The feasibility pass ran on three candidates. **EM-DAT holds**; IPC and GDACS were set aside.
+
+- **EM-DAT** publishes an archive on UCLouvain Dataverse (DOI 10.14428/DVN/I0LTPH) whose
+  versions the repository itself keeps: v1.0 (2024-12-18), v1.1 (2025-07-09), v2.0 (2026-04-30),
+  each shipping its own documentation. Listed and downloadable without an account.
+- **GDACS** answers openly but is a live feed with per-event *episodes*, not versioned releases —
+  its revision history is inside the event rather than between publications. A different object.
+- **IPC** has a public API v2.0; whether it exposes what a classification said earlier could not
+  be established from the documentation reachable in this pass. Left open, not ruled out.
+
+**Three caveats, recorded because they shape the result.** v1.0 and v1.1 ship the *same* data file
+— only the documentation changed — so exactly **one comparable pair** exists today. The container
+changed from `.tab` to `.xlsx` between them, which the reader now handles with the standard library.
+And the licence is **CC BY-NC-ND 4.0**: no source rows are redistributed here, only derived counts
+and identifiers, which are statements of fact about the material rather than an adaptation of it.
+The keeper's notice travels with the data.
+
+### Result, 2024-12 → 2026-04
+
+| | UCDP BRD (4 versions) | EM-DAT (1 pair) |
+|---|---|---|
+| Admitted | 15 back-edge, 5 front | **728** |
+| Removed | 6 | **150** |
+| Magnitudes revised | 341 | **110** |
+| With a published reason | 0 of 15 | **0 of 728** |
+| Change document | a ledger of ids and years, no rationale | **none at all** |
+| Columns renamed silently | — | **32** |
+| Censoring floor | **25**, the published threshold | **none** — the criteria are disjunctive |
+
+**The second record generalises the behaviour and inverts the naive reading.** Silent retroactive
+change is not a UCDP quirk. And of the two, UCDP is the *more* transparent: it publishes a change
+document, even one without reasons. EM-DAT publishes none, and renamed thirty-two columns between
+releases without saying so — a rename that would make every automated comparison silently wrong,
+and report a change as an absence of change, unless the reader normalises names. The instrument
+records the renames for that reason.
+
+**And the floor is UCDP's, not the class's.** EM-DAT's entry criteria are disjunctive — ten deaths
+*or* a hundred affected *or* a declaration *or* a call for assistance — so an entry can be admitted
+with a single death, and the record has no single number below which nothing exists. The censoring
+finding belongs to records whose inclusion rule is one number, and saying which records those are
+is now part of what the instrument reports.
+
 ## Cadence
 
 Releases are annual, so a nightly job would be dishonest activity. The watch runs **on release**:
@@ -103,5 +148,6 @@ for the derived data.
 - A consistency test in the site suite (floor equals the published threshold; counts agree with
   the pairs) — the instrument currently has provenance but no test.
 - The release-triggered run.
-- A second record, without which this is one finding rather than an instrument.
+- ~~A second record~~ — **done 2026-08-24: EM-DAT.** A third would test whether the *absence* of a
+  change document is the norm and UCDP the exception.
 - No site surface. That is a separate decision and needs the USP duty run against `/experiments`.

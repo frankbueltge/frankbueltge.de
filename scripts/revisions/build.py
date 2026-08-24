@@ -28,6 +28,7 @@ import os
 import re
 import sys
 import urllib.request
+import xml.etree.ElementTree as ET
 import zipfile
 import zlib
 from datetime import datetime, timezone
@@ -49,6 +50,17 @@ HEADINGS = [
     "Conflicts added",
     "Conflicts removed",
 ]
+
+
+def _key_part(value: str) -> object:
+    """Keys are integers where a keeper numbers things and strings where it names them."""
+    text = str(value).strip().strip('"')
+    if not text:
+        raise ValueError("empty key part")
+    try:
+        return int(float(text))
+    except ValueError:
+        return text
 
 
 def log(msg: str) -> None:
@@ -79,27 +91,89 @@ def fetch(url: str, dest: Path, refresh: bool) -> dict:
     }
 
 
-def read_rows(path: Path, key_fields: list[str], magnitude: str, label: list[str]) -> dict:
-    """One released version, as a map from key to record."""
+def _xlsx_rows(path: Path) -> list[list[str]]:
+    """First worksheet of an .xlsx, with the standard library only: the file is a zip of
+    XML, and a sheet is rows of cells that either hold a literal or index the shared
+    string table. Enough for a flat export; not a spreadsheet engine."""
+    ns = "{http://schemas.openxmlformats.org/spreadsheetml/2006/main}"
     with zipfile.ZipFile(path) as z:
-        name = next(n for n in z.namelist() if n.lower().endswith(".csv"))
-        text = z.read(name).decode("utf-8-sig", "replace")
+        shared: list[str] = []
+        if "xl/sharedStrings.xml" in z.namelist():
+            root = ET.fromstring(z.read("xl/sharedStrings.xml"))
+            for si in root.findall(f"{ns}si"):
+                shared.append("".join(t.text or "" for t in si.iter(f"{ns}t")))
+        sheet = next(n for n in z.namelist() if re.fullmatch(r"xl/worksheets/sheet1\.xml", n))
+        root = ET.fromstring(z.read(sheet))
+    out: list[list[str]] = []
+    for row in root.iter(f"{ns}row"):
+        cells: list[str] = []
+        for c in row.findall(f"{ns}c"):
+            v = c.find(f"{ns}v")
+            text = "" if v is None or v.text is None else v.text
+            if c.get("t") == "s" and text.isdigit():
+                text = shared[int(text)] if int(text) < len(shared) else ""
+            elif c.get("t") == "inlineStr":
+                text = "".join(t.text or "" for t in c.iter(f"{ns}t"))
+            cells.append(text)
+        out.append(cells)
+    return out
+
+
+def _records(path: Path) -> list[dict]:
+    """A released version's rows, whatever container the keeper shipped this time.
+    Format changes between releases are the keeper's business, not a reason to stop
+    watching — and they are noted in the output."""
+    name = path.name.lower()
+    if name.endswith(".zip"):
+        with zipfile.ZipFile(path) as z:
+            inner = next(n for n in z.namelist() if n.lower().endswith((".csv", ".tab", ".tsv")))
+            text = z.read(inner).decode("utf-8-sig", "replace")
+        delim = "," if inner.lower().endswith(".csv") else "\t"
+        return list(csv.DictReader(io.StringIO(text), delimiter=delim))
+    if name.endswith(".xlsx"):
+        rows = _xlsx_rows(path)
+        if not rows:
+            return []
+        head = rows[0]
+        return [dict(zip(head, r)) for r in rows[1:]]
+    text = path.read_text("utf-8-sig", errors="replace")
+    delim = "\t" if ("\t" in text.split("\n", 1)[0]) else ","
+    return list(csv.DictReader(io.StringIO(text), delimiter=delim))
+
+
+def _norm(name: str) -> str:
+    """Header names, compared the way a reader compares them. Keepers rename columns
+    between releases without saying so — EM-DAT turned TotalDeaths into Total Deaths
+    between its two archive versions — and a watch that broke on that would report a
+    silent rename as an absence of change, which is the opposite of the truth."""
+    return re.sub(r"[^a-z0-9]", "", str(name).lower())
+
+
+def read_rows(path: Path, key_fields: list[str], magnitude: str, label: list[str]) -> tuple[dict, list[str]]:
+    """One released version, as a map from key to record, plus its raw header."""
+    records = _records(path)
+    header = list(records[0].keys()) if records else []
     rows: dict[tuple, dict] = {}
-    for r in csv.DictReader(io.StringIO(text)):
+    for r in records:
+        f = {_norm(k): v for k, v in r.items()}
+
+        def get(name: str) -> str:
+            return str(f.get(_norm(name), "")).strip().strip('"')
+
         try:
-            key = tuple(int(float(r[f])) for f in key_fields)
+            key = tuple(_key_part(get(k)) for k in key_fields)
         except (KeyError, ValueError, TypeError):
             continue
         try:
-            mag = int(float(r[magnitude]))
-        except (KeyError, ValueError, TypeError):
+            mag = int(float(get(magnitude)))
+        except (ValueError, TypeError):
             mag = None
         rows[key] = {
             "magnitude": mag,
-            "label": " vs ".join(str(r.get(f, "")).strip('"') for f in label[:2]),
-            "where": str(r.get(label[2], "")).strip('"') if len(label) > 2 else "",
+            "label": " vs ".join(get(x) for x in label[:2]),
+            "where": get(label[2]) if len(label) > 2 else "",
         }
-    return rows
+    return rows, header
 
 
 def pdf_text(path: Path) -> str:
@@ -125,6 +199,8 @@ def pdf_text(path: Path) -> str:
 def classify(history: str, key: tuple, to_tag: str) -> dict:
     """Under which of the keeper's own headings does this change appear, and is any
     rationale attached? Searched inside the section for the release that made it."""
+    if history is None:
+        return {"filed_as": None, "rationale": None, "note": "keeper publishes no per-entry change record"}
     if not history:
         return {"filed_as": None, "rationale": None, "note": "version history unavailable"}
     ident = str(key[0])
@@ -151,16 +227,20 @@ def classify(history: str, key: tuple, to_tag: str) -> dict:
 def build(source: dict, refresh: bool) -> dict:
     sid = source["id"]
     log(f"— {sid}")
+    year_at = source.get("year_index")
     versions, loaded, histories = [], {}, {}
     for v in source["versions"]:
         tag = v["tag"]
-        meta = fetch(v["data"], CACHE / sid / f"data-{tag}.zip", refresh)
-        hist = fetch(v["history"], CACHE / sid / f"history-{tag}.pdf", refresh)
+        suffix = v.get("suffix", "zip")
+        meta = fetch(v["data"], CACHE / sid / f"data-{tag}.{suffix}", refresh)
+        hist = fetch(v["history"], CACHE / sid / f"history-{tag}.pdf", refresh) if v.get("history") else {"available": False, "note": "no change document published"}
         rec = {"tag": tag, "data": meta, "history": {k: hist[k] for k in ("available", "sha256", "bytes", "retrieved") if k in hist}}
         if meta.get("available"):
-            rows = read_rows(CACHE / sid / f"data-{tag}.zip", source["key"], source["magnitude"], source["label"])
+            rows, header = read_rows(CACHE / sid / f"data-{tag}.{suffix}", source["key"], source["magnitude"], source["label"])
             loaded[tag] = rows
-            years = [k[1] for k in rows]
+            rec["columns"] = len(header)
+            rec["header"] = header
+            years = [k[year_at] for k in rows] if year_at is not None else []
             mags = [r["magnitude"] for r in rows.values() if r["magnitude"] is not None]
             rec["entries"] = len(rows)
             rec["covers"] = [min(years), max(years)] if years else None
@@ -175,12 +255,18 @@ def build(source: dict, refresh: bool) -> dict:
     pairs = []
     for a, b in zip(tags, tags[1:]):
         prev, cur = loaded[a], loaded[b]
-        # only years the earlier version could have carried: a later release adds new
-        # years at the front edge, which is not a revision of the past.
-        window = max(k[1] for k in prev)
-        keys_prev = {k for k in prev if k[1] <= window}
-        keys_cur = {k for k in cur if k[1] <= window}
-        hist = histories.get(b, "")
+        if year_at is None:
+            # No year in the key: every difference is a change to the record as published,
+            # and the front/back distinction cannot be drawn from the key alone.
+            window = None
+            keys_prev, keys_cur = set(prev), set(cur)
+        else:
+            # only years the earlier version could have carried: a later release adds new
+            # years at the front edge, which is not a revision of the past.
+            window = max(k[year_at] for k in prev)
+            keys_prev = {k for k in prev if k[year_at] <= window}
+            keys_cur = {k for k in cur if k[year_at] <= window}
+        hist = histories.get(b, None if source.get("history_published") is False else "")
 
         def entry(k: tuple, src: dict) -> dict:
             r = src[k]
@@ -188,11 +274,12 @@ def build(source: dict, refresh: bool) -> dict:
             # earlier version covered is reporting lag at the FRONT edge — the object of
             # the delay literature. A change in any earlier year is a revision of the
             # past at the BACK edge, which is what this instrument watches.
-            edge = "front" if k[1] == window else "back"
+            edge = "unknown" if window is None else ("front" if k[year_at] == window else "back")
             return {
                 "key": list(k), "magnitude": r["magnitude"],
                 "label": r["label"], "where": r["where"],
-                "edge": edge, "years_late": window - k[1],
+                "edge": edge,
+                "years_late": None if window is None else window - k[year_at],
                 **classify(hist, k, b),
             }
 
@@ -212,9 +299,21 @@ def build(source: dict, refresh: bool) -> dict:
             "history_read": bool(hist),
         })
 
+    headers = {v["tag"]: v.get("header") for v in versions if v.get("header")}
+    renames = []
+    seen = list(headers.items())
+    for (ta, ha), (tb, hb) in zip(seen, seen[1:]):
+        na = {_norm(x): x for x in ha}
+        nb = {_norm(x): x for x in hb}
+        pairs_r = [{"from": na[k], "to": nb[k]} for k in na.keys() & nb.keys() if na[k] != nb[k]]
+        if pairs_r:
+            renames.append({"from": ta, "to": tb, "count": len(pairs_r), "examples": pairs_r[:6]})
+    for v in versions:
+        v.pop("header", None)
+
     floors = [v.get("magnitude_floor") for v in versions if v.get("magnitude_floor") is not None]
     all_adm = [a for p in pairs for a in p["admitted"]]
-    back = [a for a in all_adm if a["edge"] == "back"]
+    back = [a for a in all_adm if a["edge"] in ("back", "unknown")]
     unexplained = [a for a in back if not a.get("rationale")]
     return {
         "source": {k: source[k] for k in ("id", "name", "keeper", "threshold", "licence_notice")},
@@ -235,10 +334,16 @@ def build(source: dict, refresh: bool) -> dict:
                 "reporting lag, the object of the delay literature. Back edge is an entry admitted "
                 "to an earlier year: the past being rewritten, which is what this instrument watches."
             ),
-            "deepest_back_edge_years": max((a["years_late"] for a in back), default=None),
+            "deepest_back_edge_years": max((a["years_late"] for a in back if a["years_late"] is not None), default=None),
             "removed_total": sum(len(p["removed"]) for p in pairs),
             "magnitude_revised_total": sum(p["magnitude_revised"] for p in pairs),
             "back_edge_with_published_rationale": len(back) - len(unexplained),
+            "columns_renamed_between_versions": renames,
+            "rename_note": (
+                "A keeper that renames columns between releases without a change document makes "
+                "every automated comparison silently wrong unless the reader normalises names. "
+                "Recorded because it is the same failure as an unexplained revision, one level up."
+            ),
             "rationale_note": (
                 "Filed-as records the keeper's own heading for a change. Rationale records whether "
                 "any prose reason accompanies it. A ledger that lists the change and not the reason "
@@ -261,7 +366,9 @@ def main() -> int:
         log(
             f"  {path.relative_to(ROOT)}: {len(result['versions'])} versions · "
             f"{f['admitted_total']} admitted · {f['removed_total']} removed · "
-            f"{f['admitted_back_edge']} of them back-edge (deepest {f['deepest_back_edge_years']}y) · "
+            f"{f['admitted_back_edge']} of them back-edge"
+            + (f" (deepest {f['deepest_back_edge_years']}y)" if f["deepest_back_edge_years"] is not None else "")
+            + " · "
             f"{f['magnitude_revised_total']} magnitudes revised · "
             f"{f['back_edge_with_published_rationale']} of {f['admitted_back_edge']} back-edge with a published reason"
         )
