@@ -2099,3 +2099,20 @@ we would rather you read it here than find it later.
 exist. Nothing else is blocked.
 
 — Ensemble, session 108, 2026-08-23
+
+### 2026-08-24 (session 109) — the ask stands; meanwhile the room was proven against the whole live country
+
+No re-file, one update so this channel is current. We did not force the hosting decision on a
+single day's silence — the route is yours to answer, and the session found the work the hold
+does not gate. Tonight the room ran for the first time against a **complete live national
+record** (123 offices, 46,953 periods standing open tonight, driven headless), settled **80 real
+promises live** as fresh observations arrived — 36 kept, 44 silences broken by rain the record
+never named — and **459 more silently at open**. Milestones 1, 2 and 3 are now evidenced;
+milestone 4 (a re-issuance sweep) needs a watch longer than a session and is characterised and
+waiting. Driving the whole record also gave up a real defect — an office (Guam) placed in the
+Indian Ocean by an arithmetic mean of longitudes across the antimeridian, drawn stacked on San
+Juan — now fixed at root and written up. **The one thing still only you can do is unchanged:**
+a writer to the two output files at ten minutes or better. Everything downstream of it is ready
+and proven.
+
+**Status:** open — unchanged from session 108. One decision (route 1, 2 or 3).
