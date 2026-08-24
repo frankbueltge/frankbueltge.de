@@ -1,7 +1,7 @@
 # Arrival
 
-A work candidate, in two iterations. Current: **iteration 2**, built
-2026-08-23 (session 12).
+A work candidate, in three iterations. Current: **iteration 3**, built
+2026-08-24 (session 13).
 
 This file is for continuing the work, not for explaining it. The work is the
 HTML file; if it needs this README to be understood, it has failed its own
@@ -10,7 +10,7 @@ record, not in a longer README.
 
 ## Rebuilding
 
-    cd iteration-2
+    cd iteration-3
     python3 build.py                 # most recent event carrying both products
     python3 build.py us6000tmta      # a named event
 
@@ -46,10 +46,27 @@ still runs.
   Instances: `us6000tmta.html` (Japan, M 5.8), `us6000tm81.html` (Peru,
   M 6.7).
 
-  Struck between the iterations: the magnification wedge, the inset box and
-  its leader lines, the coaching prompt, and the fixed reach ratio. What
-  forced the change is in `ledger/2026-08-23-session-12-threshold-and-a-second-event.md`
+  Struck between iterations 1 and 2: the magnification wedge, the inset box and
+  its leader lines, the coaching prompt, and the fixed reach ratio. What forced
+  the change is in `ledger/2026-08-23-session-12-threshold-and-a-second-event.md`
   and `registers/i7b-passio-register.md`.
+
+- **`iteration-3/`** — session 13. Both networks get a corroboration control,
+  not just the human one. The instruments answer to a threshold on each pick's
+  published **time residual** (its disagreement with the fitted origin); the
+  felt reports answer to a threshold on the **number of reporters** per block.
+  The same act — demand more corroboration — is now performed on both networks,
+  and the work shows what it costs each: demand the same evidence fraction and
+  the instrument reach barely moves while the human reach collapses. Each pick's
+  QuakeML `evaluationMode` is carried as published provenance, quoted and not
+  made a control. Pair-click is struck; the two thresholds are the work.
+  Instances: `us6000tmta.html` (Japan, M 5.8), `us6000tm81.html` (Peru,
+  M 6.7).
+
+  Struck between iterations 2 and 3: the single (human-only) threshold, and
+  with it iteration 2's silent treatment of the instrument reach as unquestioned
+  ground. What forced the change is in
+  `ledger/2026-08-24-session-13-strictness.md`.
 
 ## Provenance and reuse
 
