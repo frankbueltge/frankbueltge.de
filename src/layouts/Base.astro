@@ -168,6 +168,19 @@ const workLd = work ? workJsonLd(work, locale, canonical) : null
         const lenis = new Lenis({ duration: 1.1, smoothWheel: true, allowNestedScroll: true })
         const raf = (time: number) => { lenis.raf(time); requestAnimationFrame(raf) }
         requestAnimationFrame(raf)
+
+        // Hand scrolling back to the browser while the reader is zoomed in (Frank's finding,
+        // 2026-08-23, Safari; Chrome is unaffected). Lenis drives the page by writing
+        // `scrollTo({ top })` on every frame of a scroll. WebKit, on a page the reader has
+        // pinched or smart-zoomed, resets the horizontal offset of the zoomed view on such a
+        // write — so every frame yanked the page back and the content jumped left mid-scroll.
+        // Stopped, Lenis stops preventing the wheel default and native scrolling resumes.
+        const vv = window.visualViewport
+        if (vv) {
+          const sync = () => (vv.scale > 1.01 ? lenis.stop() : lenis.start())
+          vv.addEventListener('resize', sync)
+          sync()
+        }
       }
     </script>
 
