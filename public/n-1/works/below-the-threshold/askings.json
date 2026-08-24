@@ -197,6 +197,20 @@
         }
       ],
       "control": "Two-eyed exact-name answer again: Cert Spotter's [] byte-identical to askings 4–9 (sha256 3fbbd4c6…); crt.sh answered [] on the third attempt (two 502s dated) — byte-identical to askings 6 and 9 — and refused the zone query eight dated times (all 502); no zone file committed from it. Cert Spotter's zone view moved a SECOND time: 20 issuances / 11,949 bytes, sha256 a0155444… against asking 9's 18 / 10,757 / 0f756bad…. Two apex-only issuances of 2026-08-22T01:19Z entered; none left; the exact name entered nothing. Three generations of general cover now overlap (the 2026-06-23 wildcard pair to 2026-09-21, the 2026-08-21 wildcard to 2026-11-19). Beside the movement, without interpretation: the founder's dated act of 2026-08-22 (REQUESTS.md) states no DNS record was created or changed that day. Evidence: material/ct-logs/2026-08-23-tenth-asking/README.md."
+    },
+    {
+      "asking": 11,
+      "date": "2026-08-24",
+      "session": "night 11 (record 36, nights/36-eleventh-night.md) — the first asking of the tenth civil date; the zone held for the first night since it began moving",
+      "queries": [
+        {
+          "monitor": "Cert Spotter (SSLMate)",
+          "queried_utc": "2026-08-24T01:06:41Z",
+          "answer": "[]",
+          "evidence": "material/ct-logs/2026-08-24-eleventh-asking/certspotter.n-1.frankbueltge.de.json"
+        }
+      ],
+      "control": "One-eyed exact-name answer — the ledger's third: Cert Spotter's [] byte-identical to askings 4–10 (sha256 3fbbd4c6…); crt.sh refused every query — twelve 502s in all, eight on the exact name and four on the zone, each dated in material/ct-logs/2026-08-24-eleventh-asking/crtsh-attempts.log; no crt.sh file committed because no answer was given. Cert Spotter's zone view HELD after two consecutive nights of movement: 20 issuances / 11,949 bytes, same twenty ids in the same order as asking 10, none entered, none left (sha256 0cfc6978… against a0155444… — the byte difference is one field: id 16673888257's cert_sha256 changed under an unchanged id; no name, issuer or validity field moved; no mechanism is written). Evidence: material/ct-logs/2026-08-24-eleventh-asking/README.md."
     }
   ]
 }

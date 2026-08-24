@@ -1,0 +1,51 @@
+# Fetch-and-check transcript — the continuing look, second act, night 11 (record 36), 2026-08-24
+# Source: Deutscher Wetterdienst (DWD), Climate Data Center, CC BY 4.0
+
+fetched: 2026-08-24T01:11:39Z
+url: https://opendata.dwd.de/climate_environment/CDC/observations_germany/climate/hourly/cloudiness/recent/stundenwerte_N_00433_akt.zip
+http: 200, 46285 bytes
+zip sha256: 7af8901fac20d33987c08c8f9698fa0344016befb223d7d89ea22a1be2737cc6
+
+zip member listing (name, internal date):
+  Metadaten_Stationsname_Betreibername_00433.html  2026-08-23 08:18
+  Metadaten_Stationsname_Betreibername_00433.txt  2026-08-23 08:18
+  Metadaten_Parameter_n_stunde_00433.html  2026-08-23 08:18
+  Metadaten_Parameter_n_stunde_00433.txt  2026-08-23 08:18
+  Metadaten_Geraete_Gesamt_Bedeckungsgrad_00433.html  2026-08-23 08:18
+  Metadaten_Geraete_Gesamt_Bedeckungsgrad_00433.txt  2026-08-23 08:18
+  Metadaten_Geographie_00433.txt  2026-08-23 08:18
+  Metadaten_Fehldaten_00433_20250219_20260822.html  2026-08-23 08:18
+  Metadaten_Fehldaten_00433_20250219_20260822.txt  2026-08-23 08:18
+  Metadaten_Fehlwerte_00433_20250219_20260822.txt  2026-08-23 08:18
+  produkt_n_stunde_20250219_20260822_00433.txt  2026-08-23 08:18
+
+The drawer turned: a new generation against night 10's fetch (members then dated
+2026-08-22 08:18, span ending 2026-08-21 23:00). The archive regenerated on the
+morning of 2026-08-23 at 08:18 Berlin — exactly the writing hour night 10's
+finding named — and the eighth civil date entered whole.
+
+data file: produkt_n_stunde_20250219_20260822_00433.txt
+data rows: 13067
+first data row (verbatim):         433;2025021900;    3;   I;   0;eor
+last data row  (verbatim):         433;2026082223;    1;   P;   0;eor
+rows dated 2026-08-22: 24 (complete, 00:00-23:00 UTC; committed as
+  tempelhof-N-2026-08-22.csv, all 24 rows checked value-identical against the
+  zip, all five fields)
+rows dated 2026-08-23 or later: 0 — the two-night lag at the scheduled hour,
+  standing: tonight's session (first clock check 2026-08-24T01:05:09Z) reads
+  through D-2 and no further
+hour 2026-08-18 16:00 UTC (the archive's registered hole): 0 rows — still absent
+rows dated 2025-02-18 (the prior generation's first day): 0 — the recent
+  window's moving edge dropped a day as it gained one; the metadata filenames
+  moved with it (20250218 -> 20250219)
+
+overlap check against the committed prospect slice
+(material/night-sky/2026-08-22-prospect/tempelhof-N-2026-08-14--2026-08-21.csv,
+commit 2effdf5):
+  191 committed rows; 167 value-identical in tonight's file (all five fields,
+  whitespace-normalized); 24 differing. The 24 are exactly the hours
+  2026-08-20 01:00 .. 2026-08-21 00:00 UTC, and in every one of them the cloud
+  value V_N and the quality level QN_8 are unchanged — what changed is the
+  measurement indicator V_N_I: P (by person) as served on 2026-08-22, I
+  (instrument) as served tonight, except 2026-08-20 05:00, whose indicator is
+  now -999 (missing). Both states, row by row: indicator-rewrite-2026-08-20.txt.

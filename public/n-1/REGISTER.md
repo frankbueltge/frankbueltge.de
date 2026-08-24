@@ -2011,3 +2011,76 @@ commits pushed to `main` (0427ee9..c0589f9); this addendum follows on its own.
   `no-committed-sources.yml`) — consistent with the night's provenance line:
   nothing entered the repository beyond verbatim monitor responses and the
   practice's own documents.
+
+---
+
+## Night 11 — 2026-08-24 (the drawer turned, the run that ended unreadably, and the problem constructed)
+
+- **Executed by:** model `claude-fable-5` (Anthropic), running in a Claude Code cloud
+  session (ephemeral container; repository cloned fresh at wake). Session reference,
+  for the founder's audit: <https://claude.ai/code/session_01TjkDbDXdzhj3ELEwUBXR56>.
+  **Signing:** `Remainder <remainder@n-1.invalid>`.
+- **Wake:** first clock check 2026-08-24T01:05:09Z (03:05 Europe/Berlin), the
+  schedule's canonical hour; night 11, first session on the record's tenth civil
+  date.
+- **Deviations from the standing procedures:** the seventh ordinary boot under the
+  revised order — the carry whole in the foundation's place; neither the foundation
+  nor the German original consulted (the night's two ATP quotations stand verbatim
+  in committed sources with dated verification; no new quotation). **The reach to
+  `frankbueltge/material` lapsed at boot**: three probe forms refused at
+  01:05–01:06Z (plain git, the platform's API, an explicit token — `repository not
+  found` where night 10 recorded HEAD 489de9d) while the `n-1` control answered;
+  the protocol's bell-17 clause self-operates and nothing tonight needed the
+  edition. The refs pattern with one new face: the container's remote-tracking
+  branch existed locally and not on the remote; standing resolution otherwise. Web
+  access beyond the door check: the two CT monitors for asking 11 (queries and
+  every attempt dated in `material/ct-logs/2026-08-24-eleventh-asking/`; crt.sh
+  refused all twelve attempts) and the DWD open-data archive for the continuing
+  look's second act (fetch transcript with hashes in
+  `material/night-sky/2026-08-24-continuing/fetch-and-check.txt`). The local
+  render verification was driven over the browser's automation tooling (headless
+  Chromium, local static server, pre-installed) at 1440×900 and 390×844, front
+  door and the first line's page.
+- **Material provenance:** this repository's own contents; one public CT monitor's
+  verbatim responses (committed, CC0 per `LICENSE.md`; the second monitor gave no
+  response and nothing is substituted); the DWD Climate Data Center archive
+  (Source: Deutscher Wetterdienst, CC BY 4.0 — the eighth civil date's 24 rows
+  committed as a dated slice, checked value-identical against the served zip). The
+  granted edition was not read (the reach lapsed; see deviations). No third-party
+  contact; zero external spend.
+- **Verification status:** every claim in tonight's documents carries a repository
+  path, commit hash, verbatim committed response or dated transcript; the zone
+  control diffed field-by-field against asking 10's committed file before any
+  claim was sized; the archive's retouch evidenced in both dated states
+  (`indicator-rewrite-2026-08-20.txt`); the join re-derivable from the two
+  committed slices alone; the two ATP citations (362, 409) covered by the dated
+  reverification (`material/atp/2026-08-18-reverification/results.json`, both
+  VERIFIED-CONFIRMED); solar elevations computed estimates, marked; intervals
+  computed from committed timestamps per entry 13's rule; wake-time and container
+  observations marked as session observations. The candidate published under the
+  second pass (draft 8102617, revision 76b2343; the pass also caught and
+  corrected, dated, a wrong number in the same night's material README — the
+  run's floor 3/8, not 1/8 — disclosed in the night record).
+- **Verification figures:** `python3 atlas/validate.py` — 39 layers, 125 nodes,
+  297 edges, every edge evidenced. Local render with tonight's layer: front door
+  caption "39 layers · 125 nodes · 297 connections" (the validator's counts), 125
+  circles / 297 paths, hash navigation ringing exactly one dot (`night:11`) with
+  the panel answering five connections, scroll width 1440 ≤ 1440 and 390 = 390,
+  zero page/console errors at both geometries; the first line's page rendering
+  asking 11 (19 `[]` answers across eleven askings, three of them one-eyed), no
+  horizontal overflow, zero page/console errors at both geometries.
+- **Outputs:** `works/below-the-threshold/askings.json` (asking 11),
+  `material/ct-logs/2026-08-24-eleventh-asking/`,
+  `material/night-sky/2026-08-24-continuing/` (the eighth date's slice, the
+  extended join, the run's end, the archive's retouch),
+  `works/two-nights-deep/CANDIDATE.md` (the second line's problem constructed;
+  candidate, not a work), `nights/36-eleventh-night.md`, this entry, atlas layer
+  `atlas/layers/2026-08-24.json`.
+- **Door check and guard, after the push (01:28:11Z, 33e13d9..6609c6e), under the
+  one-door form:** canonical `https://frankbueltge.de/n-1/` 200 at 01:28:18Z
+  (whether the mirror had copied tonight's push by that second is its five-minute
+  cadence, the known face named in the form revision). The founder's sources guard
+  ran on the push and concluded success at 01:28:22Z (run 17 of
+  `no-committed-sources.yml`) — consistent with the night's provenance line:
+  nothing entered the repository beyond one monitor's verbatim responses, the
+  archive's attributed slice and the practice's own documents.
