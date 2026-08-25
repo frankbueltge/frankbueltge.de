@@ -1,0 +1,478 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Arrival</title>
+<style>
+  :root{
+    --bg:#0b0c0e; --ink:#e8e6e1; --dim:#7d8288; --line:#21242a;
+    --machine:#e0a33e; --body:#6fb3c9; --hot:#f4f2ee;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--bg);color:var(--ink)}
+  body{
+    font:14px/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+    padding:26px clamp(14px,3vw,40px) 40px;
+  }
+  header{border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:16px}
+  h1{font-size:15px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;margin:0 0 9px}
+  .says{font-size:14.5px;color:var(--ink);margin:0 0 9px;letter-spacing:.01em}
+  .says em{font-style:normal;color:var(--machine)}
+  .says i{font-style:normal;color:var(--body)}
+  .ident{color:var(--dim);font-size:12.5px;word-spacing:.08em}
+  .ident b{color:var(--ink);font-weight:600}
+  figure{margin:0}
+  svg{display:block;width:100%;height:auto;overflow:visible;touch-action:manipulation}
+  .grid{stroke:var(--line);stroke-width:1}
+  .axis{stroke:#4a5058;stroke-width:1}
+  .tick{fill:var(--dim);font-size:11px}
+  .axlabel{font-size:11.5px;letter-spacing:.13em;text-transform:uppercase}
+  .axlabel.d{fill:var(--dim)} .axlabel.m{fill:var(--machine)} .axlabel.b{fill:var(--body)}
+  .note{fill:var(--dim);font-size:11px}
+  .sta{fill:var(--machine);fill-opacity:.72;stroke:none}
+  .stair{fill:none;stroke:var(--body);stroke-width:1.6}
+  .stairdrop{stroke:var(--body);stroke-width:1;stroke-opacity:.35}
+  .cutm{fill:var(--machine);fill-opacity:.07}
+  .cutb{fill:var(--body);fill-opacity:.07}
+  .reach{stroke-width:1.5}
+  .reachm{stroke:var(--machine)} .reachb{stroke:var(--body)}
+  .ghost{stroke-width:1;stroke-dasharray:3 4;stroke-opacity:.55}
+  .rlabel{font-size:11.5px}
+  .rlm{fill:var(--machine)} .rlb{fill:var(--body)}
+  .span{stroke:var(--dim);stroke-width:1;stroke-dasharray:2 3}
+  .spanlabel{fill:var(--hot);font-size:12.5px;letter-spacing:.04em}
+  .tip{fill:var(--hot);font-size:12px}
+  .tipbg{fill:#000;fill-opacity:.85}
+  .hit{fill:transparent;cursor:crosshair}
+  footer{margin-top:20px;border-top:1px solid var(--line);padding-top:12px;
+         color:var(--dim);font-size:11.5px;line-height:1.7;word-break:break-all}
+  /* The act is shared and stands once, above both; the two measures are not
+     shared, so each threshold is set on a drawing of its own network's
+     population and never on a widget borrowed from the other. */
+  .act{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px 18px;
+       margin:22px 0 2px;padding-top:13px;border-top:1px solid var(--line)}
+  .act h2{font-size:12px;font-weight:600;letter-spacing:.19em;text-transform:uppercase;
+          color:var(--hot);margin:0}
+  .panels{display:grid;gap:6px 34px;grid-template-columns:repeat(auto-fit,minmax(330px,1fr))}
+  .panel{min-width:0;padding-top:11px}
+  .panel h3{margin:0 0 2px;font-size:11.5px;font-weight:600;letter-spacing:.13em;
+            text-transform:uppercase}
+  .panel.m h3{color:var(--machine)} .panel.b h3{color:var(--body)}
+  .set{display:flex;flex-wrap:wrap;gap:7px 9px;align-items:center;
+       margin:4px 0 0;font-size:12.5px;color:var(--dim)}
+  button{font:inherit;background:#15171b;color:var(--ink);border:1px solid #2e3238;
+         border-radius:3px;padding:2px 9px;cursor:pointer;line-height:1.4}
+  button:hover{border-color:var(--hot)}
+  button[disabled]{opacity:.32;cursor:default;border-color:#2e3238}
+  .val{color:var(--ink);min-width:4.9em;display:inline-block;text-align:center}
+  .swarm{fill:var(--machine);fill-opacity:.78;stroke:none}
+  .swarm.out{fill:none;stroke:var(--machine);stroke-opacity:.38;stroke-width:1}
+  .cell{fill:var(--body);fill-opacity:.8;stroke:none}
+  .cell.out{fill:var(--body);fill-opacity:.3}
+  .gate{fill:var(--machine);fill-opacity:.08}
+  .gateEdge{stroke:var(--machine);stroke-width:1.2}
+  .cut{stroke:var(--body);stroke-width:1.2}
+  .zero{stroke:#4a5058;stroke-width:1}
+  .ptick{fill:var(--dim);font-size:10.5px}
+  .pnote{fill:var(--dim);font-size:10.5px}
+  .pcount{font-size:10px}
+  .pcount.on{fill:var(--body)} .pcount.off{fill:var(--dim);fill-opacity:.8}
+  /* The table's cells must not wrap — a reach and its unit belong on one line —
+     so it is the table that scrolls when the viewport is narrow, never the page. */
+  .tw{overflow-x:auto;max-width:100%}
+  table{border-collapse:collapse;margin-top:16px;font-size:12.5px;width:100%;max-width:860px}
+  th,td{text-align:left;padding:7px 16px 7px 0;border-bottom:1px solid var(--line);
+        white-space:nowrap}
+  th{color:var(--dim);font-weight:400;font-size:11px;letter-spacing:.11em;
+     text-transform:uppercase}
+  td.who{font-weight:600}
+  tr.m td.who{color:var(--machine)} tr.b td.who{color:var(--body)}
+  td.big{color:var(--hot);font-size:15px}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+const D = {"id":"us6000tm81","place":"31 km NW of Aniso, Peru","mag":6.7,"origin":"2026-08-20T18:00:18.626Z","lat":-14.6414,"lon":-73.5236,"depth":99,"kmPerDeg":111.195,"stations":[{"sta":"II.NNA","deg":4.1705,"t":58.08,"ph":"Pn","res":-3.47,"mode":"manual"},{"sta":"C1.AP01","deg":4.8025,"t":68.64,"ph":"Pn","res":-1.42,"mode":"manual"},{"sta":"CX.PB18","deg":4.8677,"t":72.63,"ph":"Pn","res":1.18,"mode":"manual"},{"sta":"CX.PB16","deg":5.3224,"t":77.77,"ph":"Pn","res":0.11,"mode":"manual"},{"sta":"GT.LPAZ","deg":5.4514,"t":81.22,"ph":"Pn","res":1.79,"mode":"manual"},{"sta":"C1.TA02","deg":6.4665,"t":90.02,"ph":"Pn","res":-2.66,"mode":"manual"},{"sta":"C.GO01","deg":6.4893,"t":91.89,"ph":"Pn","res":-1.56,"mode":"manual"},{"sta":"CX.PATCX","deg":6.9337,"t":95.51,"ph":"Pn","res":-3.63,"mode":"manual"},{"sta":"CX.PB01","deg":7.4363,"t":102.33,"ph":"Pn","res":-3.66,"mode":"manual"},{"sta":"CX.PB02","deg":7.4847,"t":103.14,"ph":"Pn","res":-3.52,"mode":"manual"},{"sta":"CX.PB03","deg":8.1902,"t":112.41,"ph":"Pn","res":-3.92,"mode":"manual"},{"sta":"CX.PB09","deg":8.1962,"t":114.0,"ph":"Pn","res":-2.42,"mode":"manual"},{"sta":"CX.PB06","deg":8.8514,"t":121.17,"ph":"Pn","res":-4.16,"mode":"manual"},{"sta":"CX.PB10","deg":9.2603,"t":125.98,"ph":"Pn","res":-4.73,"mode":"manual"},{"sta":"C1.AF01","deg":9.6907,"t":133.73,"ph":"Pn","res":-3.12,"mode":"manual"},{"sta":"BV.SOEV","deg":9.8642,"t":138.04,"ph":"Pn","res":-1.15,"mode":"manual"},{"sta":"C.GO02","deg":11.0999,"t":152.64,"ph":"Pn","res":-3.4,"mode":"manual"},{"sta":"C1.AC07","deg":12.672,"t":173.62,"ph":"Pn","res":-3.02,"mode":"manual"},{"sta":"EC.ARNL","deg":12.7725,"t":173.83,"ph":"Pn","res":-4.23,"mode":"manual"},{"sta":"C1.AC06","deg":12.9926,"t":177.19,"ph":"Pn","res":-3.7,"mode":"manual"},{"sta":"EC.COHC","deg":13.3563,"t":182.35,"ph":"Pn","res":-3.45,"mode":"manual"},{"sta":"C1.AC04","deg":13.6874,"t":186.09,"ph":"Pn","res":-3.88,"mode":"manual"},{"sta":"EC.MILO","deg":13.7357,"t":187.19,"ph":"Pn","res":-3.49,"mode":"manual"},{"sta":"EC.PUYO","deg":13.8007,"t":187.97,"ph":"Pn","res":-3.69,"mode":"manual"},{"sta":"IU.LCO","deg":14.5373,"t":197.97,"ph":"Pn","res":-3.23,"mode":"manual"},{"sta":"EC.VCES","deg":14.5668,"t":199.32,"ph":"Pn","res":-2.6,"mode":"manual"},{"sta":"EC.SLOR","deg":14.6709,"t":200.7,"ph":"Pn","res":-2.49,"mode":"manual"},{"sta":"EC.CASC","deg":15.1581,"t":205.0,"ph":"Pn","res":-4.04,"mode":"manual"},{"sta":"EC.PULU","deg":15.379,"t":209.66,"ph":"Pn","res":-2.44,"mode":"manual"},{"sta":"EC.SNLR","deg":16.6857,"t":225.69,"ph":"P","res":-2.93,"mode":"manual"},{"sta":"BR.SALV","deg":17.2487,"t":232.93,"ph":"P","res":-1.91,"mode":"manual"},{"sta":"BL.AQDB","deg":17.9517,"t":241.59,"ph":"P","res":-0.96,"mode":"manual"},{"sta":"C1.VA03","deg":18.2432,"t":246.07,"ph":"P","res":0.32,"mode":"automatic"},{"sta":"C1.VA01","deg":18.379,"t":247.9,"ph":"P","res":0.8,"mode":"automatic"},{"sta":"G.PEL","deg":18.6012,"t":250.34,"ph":"P","res":0.72,"mode":"automatic"},{"sta":"C1.MT02","deg":18.6616,"t":250.62,"ph":"P","res":0.39,"mode":"automatic"},{"sta":"C1.MT05","deg":18.8382,"t":253.16,"ph":"P","res":0.94,"mode":"automatic"},{"sta":"C1.MT16","deg":18.9015,"t":254.16,"ph":"P","res":1.25,"mode":"automatic"},{"sta":"C1.MT08","deg":18.9328,"t":255.37,"ph":"P","res":1.94,"mode":"automatic"},{"sta":"C1.MT03","deg":18.9673,"t":254.84,"ph":"P","res":1.17,"mode":"automatic"},{"sta":"C1.VA05","deg":19.0112,"t":254.21,"ph":"P","res":0.2,"mode":"automatic"},{"sta":"GT.CPUP","deg":19.0896,"t":254.64,"ph":"P","res":-0.3,"mode":"manual"},{"sta":"RI.LPCA","deg":19.1375,"t":255.03,"ph":"P","res":-0.48,"mode":"manual"},{"sta":"BL.AMBA","deg":19.3704,"t":258.28,"ph":"P","res":0.21,"mode":"manual"},{"sta":"IM.ROSC","deg":19.3763,"t":259.16,"ph":"P","res":0.61,"mode":"manual"},{"sta":"C1.BO02","deg":20.2165,"t":266.95,"ph":"P","res":-0.24,"mode":"manual"},{"sta":"CM.RUS","deg":20.4055,"t":269.98,"ph":"P","res":0.18,"mode":"manual"},{"sta":"CM.HEL","deg":20.7927,"t":272.8,"ph":"P","res":-1.04,"mode":"manual"},{"sta":"C1.ML02","deg":21.1174,"t":276.12,"ph":"P","res":-0.64,"mode":"manual"},{"sta":"BL.ITQB","deg":21.5994,"t":281.61,"ph":"P","res":-0.35,"mode":"manual"},{"sta":"IU.PAYG","deg":21.6146,"t":281.77,"ph":"P","res":-0.52,"mode":"manual"},{"sta":"BR.SNDB","deg":21.7924,"t":283.93,"ph":"P","res":-0.25,"mode":"manual"},{"sta":"BL.PTGB","deg":22.5706,"t":291.29,"ph":"P","res":-1.13,"mode":"manual"},{"sta":"BL.ITAB","deg":23.537,"t":300.34,"ph":"P","res":-1.15,"mode":"manual"},{"sta":"IU.SDV","deg":23.5479,"t":301.59,"ph":"P","res":-0.2,"mode":"manual"},{"sta":"BL.FRTB","deg":24.2238,"t":307.48,"ph":"P","res":-0.3,"mode":"manual"},{"sta":"BR.PRPB","deg":24.7687,"t":312.81,"ph":"P","res":0.02,"mode":"manual"},{"sta":"CM.SMAR","deg":25.6479,"t":320.45,"ph":"P","res":-0.19,"mode":"manual"},{"sta":"BR.SMTB","deg":26.0193,"t":324.68,"ph":"P","res":0.57,"mode":"manual"},{"sta":"GT.PLCA","deg":26.124,"t":324.17,"ph":"P","res":-0.67,"mode":"manual"},{"sta":"CM.URI","deg":26.2173,"t":323.54,"ph":"P","res":-2.23,"mode":"manual"},{"sta":"II.JTS","deg":27.2394,"t":336.06,"ph":"P","res":1.06,"mode":"manual"},{"sta":"G.MPG","deg":28.5251,"t":346.29,"ph":"P","res":-0.19,"mode":"manual"},{"sta":"CM.PRV","deg":28.8992,"t":351.17,"ph":"P","res":1.47,"mode":"manual"},{"sta":"SV.PAVA","deg":32.0378,"t":378.05,"ph":"P","res":0.52,"mode":"manual"},{"sta":"WI.DHS","deg":32.8544,"t":384.29,"ph":"P","res":-0.3,"mode":"manual"},{"sta":"PR.GCPR","deg":33.5534,"t":390.05,"ph":"P","res":-0.52,"mode":"manual"},{"sta":"PR.STVI","deg":33.8552,"t":393.24,"ph":"P","res":-0.0,"mode":"manual"},{"sta":"II.RPN","deg":35.5605,"t":407.23,"ph":"P","res":-0.68,"mode":"manual"},{"sta":"C1.VA02","deg":35.6552,"t":407.75,"ph":"P","res":-0.96,"mode":"manual"},{"sta":"IU.TEIG","deg":37.5631,"t":424.75,"ph":"P","res":-0.14,"mode":"manual"},{"sta":"IU.RCBR","deg":37.9931,"t":429.56,"ph":"P","res":0.82,"mode":"manual"},{"sta":"II.EFI","deg":38.972,"t":436.31,"ph":"P","res":-0.05,"mode":"manual"},{"sta":"N4.060A","deg":41.9572,"t":461.33,"ph":"P","res":0.12,"mode":"manual"},{"sta":"G.UNM","deg":42.1584,"t":463.13,"ph":"P","res":-0.2,"mode":"manual"},{"sta":"IU.DWPF","deg":43.1836,"t":470.36,"ph":"P","res":-0.74,"mode":"manual"},{"sta":"IU.BBSR","deg":47.5036,"t":504.55,"ph":"P","res":-0.63,"mode":"manual"},{"sta":"II.HOPE","deg":48.9641,"t":517.58,"ph":"P","res":1.4,"mode":"manual"},{"sta":"IU.HKT","deg":49.2901,"t":518.63,"ph":"P","res":-0.33,"mode":"manual"},{"sta":"IU.PMSA","deg":50.4996,"t":528.55,"ph":"P","res":0.91,"mode":"manual"},{"sta":"IU.WVT","deg":52.2762,"t":539.33,"ph":"P","res":-1.93,"mode":"automatic"},{"sta":"IM.TXAR","deg":52.5214,"t":542.21,"ph":"P","res":-1.16,"mode":"automatic"},{"sta":"TX.SGCY","deg":53.3216,"t":548.31,"ph":"P","res":-0.85,"mode":"manual"},{"sta":"AI.SMAI","deg":53.6112,"t":551.15,"ph":"P","res":0.49,"mode":"automatic"},{"sta":"IU.WCI","deg":53.9377,"t":551.65,"ph":"P","res":-1.77,"mode":"manual"},{"sta":"PE.PAGS","deg":54.6689,"t":558.79,"ph":"P","res":0.11,"mode":"manual"},{"sta":"IU.CCM","deg":54.9942,"t":559.5,"ph":"P","res":-1.59,"mode":"manual"},{"sta":"N4.M63A","deg":55.7773,"t":566.44,"ph":"P","res":-0.17,"mode":"manual"},{"sta":"MX.SRIG","deg":56.1335,"t":569.14,"ph":"P","res":-0.31,"mode":"manual"},{"sta":"IU.HRV","deg":56.8911,"t":573.9,"ph":"P","res":-0.61,"mode":"manual"},{"sta":"N4.K62A","deg":57.0333,"t":574.94,"ph":"P","res":-0.6,"mode":"manual"},{"sta":"II.SACV","deg":57.4583,"t":579.26,"ph":"P","res":0.18,"mode":"manual"},{"sta":"II.ASCN","deg":58.2706,"t":585.37,"ph":"P","res":0.54,"mode":"manual"},{"sta":"IU.ANMO","deg":58.3892,"t":585.19,"ph":"P","res":-0.24,"mode":"automatic"},{"sta":"GS.ASLAR","deg":58.39,"t":585.12,"ph":"P","res":-0.34,"mode":"automatic"},{"sta":"IU.TUC","deg":58.7533,"t":587.55,"ph":"P","res":-0.34,"mode":"automatic"},{"sta":"CN.GBN","deg":60.7481,"t":600.97,"ph":"P","res":-0.17,"mode":"manual"},{"sta":"II.PFO","deg":63.0613,"t":617.11,"ph":"P","res":-0.0,"mode":"manual"},{"sta":"CI.PALA","deg":63.2717,"t":617.78,"ph":"P","res":-0.61,"mode":"manual"},{"sta":"G.SOK","deg":63.4349,"t":620.77,"ph":"P","res":1.04,"mode":"automatic"},{"sta":"CN.SJNN","deg":64.7009,"t":626.66,"ph":"P","res":-0.7,"mode":"automatic"},{"sta":"IU.RSSD","deg":64.7662,"t":627.38,"ph":"P","res":-0.79,"mode":"automatic"},{"sta":"II.SHEL","deg":65.1165,"t":633.54,"ph":"P","res":2.7,"mode":"automatic"},{"sta":"CI.OSI","deg":65.1342,"t":630.82,"ph":"P","res":0.25,"mode":"automatic"},{"sta":"IM.PDAR","deg":66.0174,"t":635.48,"ph":"P","res":-0.83,"mode":"automatic"},{"sta":"IM.NVAR","deg":67.4099,"t":645.53,"ph":"P","res":0.3,"mode":"automatic"},{"sta":"BK.HAS2","deg":68.0438,"t":649.7,"ph":"P","res":0.67,"mode":"automatic"},{"sta":"II.CMLA","deg":68.8918,"t":655.75,"ph":"P","res":1.49,"mode":"automatic"},{"sta":"IU.MACI","deg":69.7195,"t":661.94,"ph":"P","res":2.16,"mode":"automatic"},{"sta":"G.PPTF","deg":72.6536,"t":678.99,"ph":"P","res":1.4,"mode":"automatic"},{"sta":"II.FFC","deg":73.1986,"t":679.29,"ph":"P","res":-0.57,"mode":"automatic"},{"sta":"IU.COR","deg":74.2832,"t":687.45,"ph":"P","res":1.04,"mode":"automatic"},{"sta":"GE.ACRG","deg":75.4026,"t":693.62,"ph":"P","res":0.05,"mode":"automatic"},{"sta":"IM.MD01","deg":80.8293,"t":724.03,"ph":"P","res":0.67,"mode":"automatic"},{"sta":"IU.SBA","deg":81.7305,"t":728.11,"ph":"P","res":0.95,"mode":"automatic"},{"sta":"IU.SFJD","deg":83.139,"t":734.08,"ph":"P","res":-0.39,"mode":"automatic"},{"sta":"IU.PAB","deg":83.8685,"t":740.25,"ph":"P","res":1.29,"mode":"automatic"},{"sta":"IU.XMAS","deg":84.6339,"t":743.43,"ph":"P","res":0.13,"mode":"automatic"},{"sta":"II.SUR","deg":85.8734,"t":750.86,"ph":"P","res":1.42,"mode":"automatic"},{"sta":"IU.TSUM","deg":86.3051,"t":752.43,"ph":"P","res":0.73,"mode":"automatic"},{"sta":"II.BORG","deg":88.4184,"t":762.59,"ph":"P","res":2.04,"mode":"automatic"},{"sta":"G.CCD","deg":89.8275,"t":767.54,"ph":"P","res":-0.17,"mode":"automatic"},{"sta":"II.ESK","deg":91.1319,"t":773.47,"ph":"P","res":0.03,"mode":"automatic"},{"sta":"HV.OFU","deg":92.2576,"t":782.14,"ph":"P","res":2.54,"mode":"automatic"},{"sta":"IM.BCAR","deg":93.4611,"t":784.03,"ph":"P","res":-0.1,"mode":"automatic"},{"sta":"IU.AFI","deg":94.3025,"t":791.03,"ph":"P","res":1.89,"mode":"automatic"},{"sta":"II.BFO","deg":95.4823,"t":793.26,"ph":"P","res":-0.45,"mode":"automatic"},{"sta":"IM.ILAR","deg":96.2101,"t":795.72,"ph":"P","res":-0.88,"mode":"automatic"},{"sta":"IM.BMAR","deg":96.3393,"t":797.33,"ph":"P","res":0.14,"mode":"automatic"},{"sta":"II.KDAK","deg":96.5284,"t":797.11,"ph":"P","res":-1.04,"mode":"automatic"},{"sta":"IU.COLA","deg":96.6366,"t":797.42,"ph":"P","res":-1.05,"mode":"automatic"},{"sta":"IU.LSZ","deg":97.1144,"t":803.31,"ph":"P","res":1.3,"mode":"automatic"},{"sta":"II.ALE","deg":97.14,"t":802.59,"ph":"P","res":2.09,"mode":"automatic"},{"sta":"NZ.LBZ","deg":97.6032,"t":803.94,"ph":"P","res":0.42,"mode":"automatic"},{"sta":"IU.GRFO","deg":97.6672,"t":804.09,"ph":"P","res":0.57,"mode":"automatic"},{"sta":"IU.KONO","deg":99.0618,"t":811.88,"ph":"P","res":2.38,"mode":"automatic"},{"sta":"IM.GERES","deg":99.0687,"t":810.11,"ph":"P","res":0.15,"mode":"automatic"},{"sta":"IU.CASY","deg":99.2583,"t":811.11,"ph":"P","res":0.75,"mode":"automatic"},{"sta":"IM.IMAR","deg":99.3186,"t":809.29,"ph":"P","res":-1.25,"mode":"automatic"}],"felt":[{"km":147.0,"cdi":4.3,"n":1},{"km":187.0,"cdi":5.2,"n":1},{"km":204.0,"cdi":4.1,"n":1},{"km":205.0,"cdi":3.0,"n":1},{"km":218.0,"cdi":2.7,"n":1},{"km":226.0,"cdi":1.0,"n":1},{"km":229.0,"cdi":3.4,"n":1},{"km":230.0,"cdi":3.3,"n":10},{"km":230.0,"cdi":2.2,"n":1},{"km":232.0,"cdi":2.7,"n":1},{"km":234.0,"cdi":3.4,"n":1},{"km":246.0,"cdi":4.7,"n":1},{"km":264.0,"cdi":4.1,"n":1},{"km":269.0,"cdi":3.4,"n":1},{"km":305.0,"cdi":2.6,"n":3},{"km":365.0,"cdi":2.9,"n":1},{"km":462.0,"cdi":2.2,"n":1},{"km":473.0,"cdi":2.0,"n":1},{"km":474.0,"cdi":3.1,"n":1},{"km":474.0,"cdi":2.2,"n":1},{"km":475.0,"cdi":3.8,"n":1},{"km":476.0,"cdi":3.3,"n":1},{"km":476.0,"cdi":3.1,"n":1},{"km":476.0,"cdi":2.0,"n":1},{"km":477.0,"cdi":4.1,"n":1},{"km":477.0,"cdi":3.4,"n":1},{"km":478.0,"cdi":2.7,"n":1},{"km":478.0,"cdi":2.0,"n":1},{"km":479.0,"cdi":2.2,"n":1},{"km":479.0,"cdi":2.1,"n":2},{"km":479.0,"cdi":1.0,"n":1},{"km":480.0,"cdi":2.2,"n":1},{"km":481.0,"cdi":2.8,"n":3},{"km":481.0,"cdi":2.7,"n":1},{"km":481.0,"cdi":2.0,"n":1},{"km":483.0,"cdi":3.4,"n":1},{"km":484.0,"cdi":2.5,"n":1},{"km":485.0,"cdi":3.8,"n":1},{"km":485.0,"cdi":2.8,"n":5},{"km":485.0,"cdi":2.7,"n":1},{"km":486.0,"cdi":2.7,"n":1},{"km":486.0,"cdi":2.0,"n":1},{"km":486.0,"cdi":2.0,"n":1},{"km":489.0,"cdi":2.2,"n":1},{"km":489.0,"cdi":2.0,"n":1},{"km":490.0,"cdi":2.0,"n":1},{"km":491.0,"cdi":2.0,"n":2},{"km":493.0,"cdi":3.1,"n":1},{"km":495.0,"cdi":2.2,"n":1},{"km":514.0,"cdi":2.2,"n":1},{"km":723.0,"cdi":2.0,"n":1},{"km":728.0,"cdi":2.0,"n":1},{"km":944.0,"cdi":1.0,"n":1}],"noRes":0,"modes":{"manual":84,"automatic":55},"sources":{"detail":"https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&eventid=us6000tm81","phase":"https://earthquake.usgs.gov/product/phase-data/us6000tm81/us/1787252065040/quakeml.xml","felt":"https://earthquake.usgs.gov/product/dyfi/us6000tm81/us/1787316340220/dyfi_geo_1km.geojson"},"rev":{"phase":1787252065040,"felt":1787316340220},"revUtc":{"phase":"2026-08-20 18:54 UTC","felt":"2026-08-21 12:45 UTC"},"built":"2026-08-25"};
+
+const S = D.stations, F = D.felt, KMD = D.kmPerDeg;
+
+// One axis is shared by the two networks, and it is the only thing they share:
+// the instruments publish an instant, the felt reports publish no time at all.
+// So distance is drawn once, logarithmically, identically for both halves.
+const allDeg = S.map(s=>s.deg).concat(F.map(f=>f.km/KMD));
+const dLo = Math.min(...allDeg)*0.75, dHi = Math.max(...allDeg)*1.12;
+const L = Math.log10, span = L(dHi)-L(dLo);
+
+const W=1200, H=700, M={l:96,r:150,t:30,b:66};
+const AX = 452;                        // the shared axis, in figure coordinates
+const upTop = M.t+34, loBot = H-M.b;   // the two half-planes
+const px = d => M.l + (L(Math.max(d,dLo))-L(dLo))/span*(W-M.l-M.r);
+
+// Both vertical scales are fixed to the unfiltered populations. Raising a
+// threshold must shrink what is drawn; it must never renormalise the loss away.
+const tMax = Math.ceil(S[S.length-1].t/100)*100;
+const py = t => AX-26 - (t/tMax)*(AX-26-upTop);
+const fullTotal = F.reduce((a,x)=>a+x.n, 0);
+const fullInstReach = S[S.length-1].deg;
+const fullFeltReach = F.length ? F[F.length-1].km/KMD : null;
+
+const esc = s => String(s).replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+const fmtDeg = d => d<10 ? d.toFixed(2) : d.toFixed(1);
+// Rounding must never let a loss read as no loss, in either direction.
+const pct = (a,b) => {
+  if(!b) return '—';
+  const r = a/b;
+  if(r === 1) return '100%';
+  if(r > 0.995) return '>99%';
+  if(r > 0 && r < 0.005) return '<1%';
+  return Math.round(r*100)+'%';
+};
+
+// ---- static frame ---------------------------------------------------------
+let f = '';
+const decades = [];
+for(let e=-2; e<=3; e++){
+  for(const m of [1,2,5]){
+    const v = m*Math.pow(10,e);
+    if(v>=dLo && v<=dHi) decades.push(v);
+  }
+}
+for(const v of decades){
+  f += `<line class="grid" x1="${px(v).toFixed(1)}" y1="${upTop}" x2="${px(v).toFixed(1)}" y2="${loBot}"/>`;
+  f += `<text class="tick" x="${px(v).toFixed(1)}" y="${loBot+19}" text-anchor="middle">${v}&deg;</text>`;
+}
+for(let t=0; t<=tMax; t+=100){
+  f += `<line class="grid" x1="${M.l}" y1="${py(t).toFixed(1)}" x2="${W-M.r}" y2="${py(t).toFixed(1)}"/>`;
+  f += `<text class="tick" x="${M.l-11}" y="${(py(t)+4).toFixed(1)}" text-anchor="end">${t}</text>`;
+}
+f += `<line class="axis" x1="${M.l}" y1="${AX}" x2="${W-M.r}" y2="${AX}"/>`;
+f += `<text class="axlabel d" x="${(M.l+W-M.r)/2}" y="${loBot+45}" text-anchor="middle">distance from hypocentre — logarithmic, one scale for both networks</text>`;
+f += `<text class="axlabel m" transform="translate(${M.l-64},${(upTop+AX)/2}) rotate(-90)" text-anchor="middle">seconds after origin</text>`;
+f += `<text class="axlabel b" transform="translate(${M.l-64},${(AX+loBot)/2}) rotate(-90)" text-anchor="middle">felt reports within</text>`;
+f += `<text class="axlabel m" x="${M.l}" y="${upTop-20}">machines that recorded it</text>`;
+f += `<text class="axlabel b" x="${M.l}" y="${AX+20}">people who reported feeling it</text>`;
+f += `<text class="note" x="${M.l}" y="${upTop-6}" id="noteM"></text>`;
+f += `<text class="note" x="${M.l}" y="${AX+36}">no arrival time is published for any felt report, so this half counts, it does not clock</text>`;
+
+f += `<g id="cuts"></g><g id="stations"></g><g id="felt"></g><g id="reaches"></g>`;
+f += `<rect class="hit" id="hit" x="${M.l}" y="${upTop-8}" width="${W-M.l-M.r}" height="${AX-upTop+8}"/>`;
+f += `<g id="tip"></g>`;
+
+// a label beside a marker near the right edge is placed on its left instead
+function beside(x, text, cls, y){
+  const w = text.length*6.4;
+  return x+8+w > W
+    ? `<text class="rlabel ${cls}" x="${(x-8).toFixed(1)}" y="${y}" text-anchor="end">${text}</text>`
+    : `<text class="rlabel ${cls}" x="${(x+8).toFixed(1)}" y="${y}">${text}</text>`;
+}
+
+// ---- page -----------------------------------------------------------------
+document.getElementById('app').innerHTML = `
+<header>
+  <h1>Arrival</h1>
+  <p class="says">One earthquake, as two networks recorded it:
+    <em>${S.length} seismometers</em>, each publishing one instant and its own
+    disagreement with the origin — and <i>${fullTotal} people</i> in
+    ${F.length} blocks, reporting that they felt it.</p>
+  <div class="ident"><b>${esc(D.id)}</b> &nbsp;M&thinsp;${D.mag} &nbsp;${esc(D.place)}
+   &nbsp;&middot;&nbsp; origin ${esc(D.origin)} &nbsp;&middot;&nbsp; depth ${D.depth}&thinsp;km
+   &nbsp;&middot;&nbsp; ${D.lat.toFixed(4)}, ${D.lon.toFixed(4)}</div>
+</header>
+<figure><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="One earthquake as two networks recorded it: ${S.length} seismometer picks with arrival times above a shared logarithmic distance axis, and ${F.length} blocks of human felt reports below it. Each network can be asked for more corroboration, and each then reaches less far."> ${f} </svg></figure>
+
+<div class="act">
+  <h2>demand more corroboration</h2>
+  <button id="rst">reset both</button>
+</div>
+<div class="panels">
+  <div class="panel m">
+    <h3>&hellip; of the seismometers</h3>
+    <svg id="svgM" viewBox="0 0 560 156" role="img" aria-label="Every pick drawn at its own published time residual in seconds, early to the left of zero and late to the right; a band around zero marks the picks currently kept."></svg>
+    <div class="set">
+      <span>keep a pick inside</span>
+      <button id="rDn">&minus;</button><span class="val" id="rVal"></span><button id="rUp">+</button>
+    </div>
+  </div>
+  <div class="panel b">
+    <h3>&hellip; of the people</h3>
+    <svg id="svgB" viewBox="0 0 560 156" role="img" aria-label="Every felt block drawn as one cell, stacked in the column for the number of people who reported from it; a line marks the columns currently kept."></svg>
+    <div class="set">
+      <span>keep a block reported by</span>
+      <button id="nDn">&minus;</button><span class="val" id="nVal"></span><button id="nUp">+</button>
+      <span>or more</span>
+    </div>
+  </div>
+</div>
+
+<div class="tw"><table><thead><tr>
+  <th>network</th><th>evidence kept</th><th>reaches</th><th>of its full reach</th>
+</tr></thead><tbody>
+  <tr class="m"><td class="who">seismometers</td><td id="mKept"></td><td id="mReach"></td><td class="big" id="mHold"></td></tr>
+  <tr class="b"><td class="who">felt reports</td><td id="bKept"></td><td id="bReach"></td><td class="big" id="bHold"></td></tr>
+</tbody></table></div>
+
+<footer>
+  Built ${D.built} from public USGS data, unauthenticated, and pinned into this file &mdash; it makes no network request when you open it.<br>
+  event &nbsp;${esc(D.sources.detail)}<br>
+  arrivals &nbsp;${esc(D.sources.phase)}${D.rev && D.rev.phase ? ' &nbsp;(revision '+esc(D.rev.phase)+')' : ''}<br>
+  ${D.sources.felt ? 'felt reports &nbsp;'+esc(D.sources.felt)+(D.rev&&D.rev.felt?' &nbsp;(revision '+esc(D.rev.felt)+')':'')+'<br>' : ''}
+  ${D.revUtc && D.revUtc.phase ? 'Each record last moved at a time of its own, as published: the arrivals '+esc(D.revUtc.phase)+(D.revUtc.felt ? ', the felt reports '+esc(D.revUtc.felt) : '')+'. A felt-report record can go on filling for days after the arrivals stop, and this file holds each as it stood above.<br>' : ''}
+  Pick provenance as published, quoted and not interpreted: QuakeML
+  <code>evaluationMode</code> &nbsp;${Object.entries(D.modes).map(([k,v])=>v+'&times;&thinsp;'+esc(k)).join(', ')}.${D.noRes ? ' '+D.noRes+' arrival(s) published no residual and are not in this file.' : ''}<br>
+  Two quantities are derived and no others: a pick's travel time (arrival instant minus origin instant), and a felt block's angular distance (its published kilometres &divide; ${KMD}&thinsp;km per degree, so that it can share the axis). Picks are published in degrees, felt blocks in kilometres; each is reported above in the unit its own source publishes. Nothing is smoothed, fitted or interpolated: in the residual strip a pick's horizontal position is its published residual and its height only keeps it from covering its neighbour; in the columns one cell is one published block, and the columns are the published counts themselves, unbinned.
+</footer>`;
+
+const cutsG = document.getElementById('cuts');
+const staG  = document.getElementById('stations');
+const feltG = document.getElementById('felt');
+const reachG= document.getElementById('reaches');
+const tipg  = document.getElementById('tip');
+
+// ---- the two thresholds ----------------------------------------------------
+// One ladder per network, each built from that network's own published values.
+const RUNGS = [Infinity,3,2,1.5,1,0.75,0.5,0.35,0.25,0.15,0.1,0.05]
+  .filter((v,i) => i===0 || S.filter(s=>Math.abs(s.res)<=v).length >= 2);
+const maxN = Math.max(...F.map(x=>x.n), 1);
+let ri = 0, minN = 1, kept = [];
+
+function keptS(){ return S.filter(s => Math.abs(s.res) <= RUNGS[ri]); }
+function keptF(){ return F.filter(x => x.n >= minN); }
+
+// ---- the two thresholds, each drawn on its own network's population ---------
+// Iteration 3 set both thresholds with the same widget and then needed a
+// sentence to say the two measures are not the same measure. Here each
+// threshold is set on a picture of the population it cuts, so the difference
+// between a signed continuum of seconds and a count of people is seen and not
+// read. Nothing in either picture is binned, smoothed or fitted: one mark is
+// one published pick, one cell is one published block.
+
+const PW = 560, PH = 156, PM = {l:12, r:12, t:16, b:40};
+const pAxis = PH - PM.b, pTop = PM.t;
+
+// -- instruments: every pick at its own published residual, stacked only where
+//    two picks would otherwise overlap. Horizontal position is the measurement;
+//    vertical position separates, and means nothing else.
+const resAbsMax = Math.max(...S.map(s=>Math.abs(s.res)), 0.1);
+const RA = resAbsMax * 1.08;
+const rx = v => PM.l + (v + RA)/(2*RA) * (PW-PM.l-PM.r);
+
+const swarm = (() => {
+  const R = 2.7, stepX = 2*R + 0.7;
+  const rows = [];                       // rightmost x placed on each row
+  const out = S.map(s => s).sort((a,b)=>a.res-b.res).map(s => {
+    const x = rx(s.res);
+    let lvl = 0;
+    while(rows[lvl] !== undefined && x - rows[lvl] < stepX) lvl++;
+    rows[lvl] = x;
+    return {s, x, lvl};
+  });
+  const maxLvl = rows.length - 1;
+  const avail = pAxis - 7 - pTop;
+  const stepY = Math.min(2*R + 0.7, maxLvl > 0 ? avail/maxLvl : avail);
+  return out.map(p => ({...p, y: pAxis - 7 - p.lvl*stepY, r:R}));
+})();
+
+function drawSwarm(){
+  const lim = RUNGS[ri];
+  let g = '';
+  if(lim !== Infinity){
+    g += `<rect class="gate" x="${rx(-lim).toFixed(1)}" y="${pTop-4}" width="${(rx(lim)-rx(-lim)).toFixed(1)}" height="${pAxis-pTop+4}"/>`;
+    for(const e of [-lim, lim])
+      g += `<line class="gateEdge" x1="${rx(e).toFixed(1)}" y1="${pTop-4}" x2="${rx(e).toFixed(1)}" y2="${pAxis}"/>`;
+  }
+  g += `<line class="zero" x1="${rx(0).toFixed(1)}" y1="${pTop-4}" x2="${rx(0).toFixed(1)}" y2="${pAxis}"/>`;
+  g += `<line class="axis" x1="${PM.l}" y1="${pAxis}" x2="${PW-PM.r}" y2="${pAxis}"/>`;
+  for(const p of swarm){
+    const inside = Math.abs(p.s.res) <= lim;
+    g += `<circle class="swarm${inside?'':' out'}" cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="${p.r}"><title>${esc(p.s.sta)} — residual ${p.s.res>0?'+':''}${p.s.res.toFixed(2)} s</title></circle>`;
+  }
+  // ticks at whole seconds, and at zero
+  const step = RA > 6 ? 2 : 1;
+  for(let v = -Math.floor(RA/step)*step; v <= RA; v += step){
+    if(Math.abs(v) < 1e-9 && step !== 0) continue;
+    g += `<line class="grid" x1="${rx(v).toFixed(1)}" y1="${pAxis}" x2="${rx(v).toFixed(1)}" y2="${pAxis+4}"/>`;
+    g += `<text class="ptick" x="${rx(v).toFixed(1)}" y="${pAxis+15}" text-anchor="middle">${v>0?'+':''}${v} s</text>`;
+  }
+  g += `<text class="ptick" x="${rx(0).toFixed(1)}" y="${pAxis+15}" text-anchor="middle">0</text>`;
+  g += `<text class="pnote" x="${PM.l}" y="${pAxis+31}">sooner than the origin it fitted</text>`;
+  g += `<text class="pnote" x="${PW-PM.r}" y="${pAxis+31}" text-anchor="end">later</text>`;
+  g += `<text class="pnote" x="${PM.l}" y="${pTop-6}">${S.length} picks, each at its own disagreement with the origin this network fitted from them</text>`;
+  document.getElementById('svgM').innerHTML = g;
+}
+
+// -- people: one cell per felt block, stacked in the column for the number of
+//    people who reported from it. The columns are the published counts
+//    themselves — integers, starting at one — and not a scale of seconds.
+const cols = [];
+for(let k=1; k<=maxN; k++) cols.push({k, blocks: F.filter(x=>x.n===k).length});
+const colMax = Math.max(...cols.map(c=>c.blocks), 1);
+const cw = (PW-PM.l-PM.r) / cols.length;
+const cxc = k => PM.l + (k-0.5)*cw;
+
+function drawCols(){
+  let g = '';
+  const avail = pAxis - 12 - pTop;
+  const cellH = Math.min(5, avail/colMax);
+  const gap = cellH >= 2.6 ? 0.9 : 0;
+  const barW = Math.min(26, cw*0.62);
+  for(const c of cols){
+    const on = c.k >= minN;
+    for(let i=0; i<c.blocks; i++){
+      const y = pAxis - 3 - (i+1)*cellH + gap/2;
+      g += `<rect class="cell${on?'':' out'}" x="${(cxc(c.k)-barW/2).toFixed(1)}" y="${y.toFixed(1)}" width="${barW.toFixed(1)}" height="${Math.max(cellH-gap,0.6).toFixed(2)}"/>`;
+    }
+    if(c.blocks)
+      g += `<text class="pcount ${on?'on':'off'}" x="${cxc(c.k).toFixed(1)}" y="${(pAxis-6-c.blocks*cellH).toFixed(1)}" text-anchor="middle">${c.blocks}</text>`;
+    g += `<text class="ptick" x="${cxc(c.k).toFixed(1)}" y="${pAxis+15}" text-anchor="middle">${c.k}</text>`;
+  }
+  if(minN > 1){
+    const x = cxc(minN) - cw/2;
+    g += `<line class="cut" x1="${x.toFixed(1)}" y1="${pTop-4}" x2="${x.toFixed(1)}" y2="${pAxis+4}"/>`;
+  }
+  g += `<line class="axis" x1="${PM.l}" y1="${pAxis}" x2="${PW-PM.r}" y2="${pAxis}"/>`;
+  g += `<text class="pnote" x="${PM.l}" y="${pAxis+31}">people who reported independently from one block</text>`;
+  g += `<text class="pnote" x="${PM.l}" y="${pTop-6}">${F.length} blocks, one cell each, in the column for how many reported it</text>`;
+  document.getElementById('svgB').innerHTML = g;
+}
+
+// ---- the upper half: instruments -------------------------------------------
+function drawMachine(){
+  kept = keptS();
+  const reach = kept.length ? kept[kept.length-1].deg : null;
+  staG.innerHTML = kept.map((s,i) =>
+    `<circle class="sta" data-i="${i}" cx="${px(s.deg).toFixed(1)}" cy="${py(s.t).toFixed(1)}" r="4"/>`
+  ).join('');
+  document.getElementById('noteM').textContent =
+    `${kept.length} of ${S.length} picks — each one instant, published to 10 ms`;
+
+  document.getElementById('mKept').textContent =
+    `${kept.length} of ${S.length} picks (${pct(kept.length,S.length)})`;
+  // each network is reported in the unit its own source publishes
+  document.getElementById('mReach').textContent = reach===null ? '—' : `${fmtDeg(reach)}°`;
+  document.getElementById('mHold').textContent = reach===null ? '—' : pct(reach, fullInstReach);
+  document.getElementById('rVal').textContent =
+    RUNGS[ri]===Infinity ? 'the whole spread' : '± '+RUNGS[ri].toFixed(2)+' s';
+  return reach;
+}
+
+// ---- the lower half: people -------------------------------------------------
+function drawBody(){
+  const k = keptF();
+  const total = k.reduce((a,x)=>a+x.n,0);
+  const reach = k.length ? k[k.length-1].km/KMD : null;
+  document.getElementById('nVal').textContent = minN + (minN===1?' person':' people');
+  document.getElementById('bKept').textContent =
+    `${total} of ${fullTotal} reports (${pct(total,fullTotal)}) in ${k.length} of ${F.length} blocks`;
+  document.getElementById('bReach').textContent = reach===null ? '—' : `${Math.round(reach*KMD)} km = ${fmtDeg(reach)}°`;
+  document.getElementById('bHold').textContent = reach===null ? '—' : pct(reach, fullFeltReach);
+
+  if(!k.length){
+    feltG.innerHTML = `<text class="rlabel rlb" x="${M.l+8}" y="${(AX+loBot)/2}">no block passes this threshold — the human network has no reach here</text>`;
+    return null;
+  }
+  const yTop = AX+52, yBot = loBot-8;
+  const cy = c => yBot - (c/fullTotal)*(yBot-yTop);
+
+  let g = '', acc = 0, pts = [[px(k[0].km/KMD), cy(0)]];
+  for(const x of k){
+    const X = px(x.km/KMD);
+    pts.push([X, cy(acc)]);
+    acc += x.n;
+    pts.push([X, cy(acc)]);
+    g += `<line class="stairdrop" x1="${X.toFixed(1)}" y1="${cy(acc).toFixed(1)}" x2="${X.toFixed(1)}" y2="${yBot}"><title>${x.n} report${x.n>1?'s':''} at ${x.km} km = ${fmtDeg(x.km/KMD)}° — intensity ${x.cdi}</title></line>`;
+  }
+  pts.push([px(reach), cy(total)]);
+  g += `<polyline class="stair" points="${pts.map(p=>p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ')}"/>`;
+  g += `<line class="grid" x1="${M.l}" y1="${cy(fullTotal).toFixed(1)}" x2="${W-M.r}" y2="${cy(fullTotal).toFixed(1)}"/>`;
+  g += `<text class="tick" x="${M.l-11}" y="${(cy(fullTotal)+4).toFixed(1)}" text-anchor="end">${fullTotal}</text>`;
+  g += `<text class="tick" x="${M.l-11}" y="${(cy(0)+4).toFixed(1)}" text-anchor="end">0</text>`;
+  // the running total is labelled only where it will not collide with 0 or the
+  // full-population tick; when it is too near either, the shrunk staircase and
+  // the "of its full reach" figure below carry the loss instead
+  if(total < fullTotal && Math.abs(cy(total)-cy(0)) > 13 && Math.abs(cy(total)-cy(fullTotal)) > 13){
+    g += `<text class="rlabel rlb" x="${M.l-11}" y="${(cy(total)+4).toFixed(1)}" text-anchor="end">${total}</text>`;
+  }
+  feltG.innerHTML = g;
+  return reach;
+}
+
+// ---- what each threshold cost, drawn as the ground each network gave up -----
+function drawReaches(mReach, bReach){
+  let c = '', r = '';
+  if(mReach !== null){
+    if(mReach < fullInstReach){
+      c += `<rect class="cutm" x="${px(mReach).toFixed(1)}" y="${upTop}" width="${(px(fullInstReach)-px(mReach)).toFixed(1)}" height="${AX-upTop}"/>`;
+      r += `<line class="reach reachm ghost" x1="${px(fullInstReach).toFixed(1)}" y1="${upTop-4}" x2="${px(fullInstReach).toFixed(1)}" y2="${AX}"/>`;
+    }
+    r += `<line class="reach reachm" x1="${px(mReach).toFixed(1)}" y1="${upTop-4}" x2="${px(mReach).toFixed(1)}" y2="${AX}"/>`;
+    r += beside(px(mReach), `${fmtDeg(mReach)}° — farthest kept pick`, 'rlm', upTop+10);
+  }
+  if(bReach !== null){
+    // the reach lines start below the lower half's note, not across it
+    if(bReach < fullFeltReach){
+      c += `<rect class="cutb" x="${px(bReach).toFixed(1)}" y="${AX+44}" width="${(px(fullFeltReach)-px(bReach)).toFixed(1)}" height="${loBot-AX-44}"/>`;
+      r += `<line class="reach reachb ghost" x1="${px(fullFeltReach).toFixed(1)}" y1="${AX+44}" x2="${px(fullFeltReach).toFixed(1)}" y2="${loBot+4}"/>`;
+    }
+    r += `<line class="reach reachb" x1="${px(bReach).toFixed(1)}" y1="${AX+44}" x2="${px(bReach).toFixed(1)}" y2="${loBot+4}"/>`;
+    r += beside(px(bReach), `${Math.round(bReach*KMD)} km = ${fmtDeg(bReach)}° — farthest kept report`, 'rlb', loBot-2);
+  }
+  if(mReach !== null && bReach !== null){
+    const a = px(bReach), b = px(mReach), y = AX-9;
+    r += `<line class="span" x1="${a.toFixed(1)}" y1="${y}" x2="${b.toFixed(1)}" y2="${y}"/>`;
+    r += `<text class="spanlabel" x="${((a+b)/2).toFixed(1)}" y="${y-7}" text-anchor="middle">× ${(mReach/bReach).toFixed(1)}</text>`;
+  }
+  cutsG.innerHTML = c;
+  reachG.innerHTML = r;
+}
+
+function redraw(){
+  drawReaches(drawMachine(), drawBody());
+  drawSwarm();
+  drawCols();
+  document.getElementById('rDn').disabled = ri <= 0;
+  document.getElementById('rUp').disabled = ri >= RUNGS.length-1;
+  document.getElementById('nDn').disabled = minN <= 1;
+  document.getElementById('nUp').disabled = minN >= maxN;
+  tipg.innerHTML = '';
+}
+
+// nearest kept station to the pointer — the far field is crowded on a log axis
+function nearest(evt){
+  const svg = document.querySelector('svg');
+  const r = svg.getBoundingClientRect();
+  const x = (evt.clientX-r.left)/r.width*W, y = (evt.clientY-r.top)/r.height*H;
+  let best = -1, bd = 1e9;
+  kept.forEach((s,i) => {
+    const dx = px(s.deg)-x, dy = py(s.t)-y, d = dx*dx+dy*dy;
+    if(d < bd){ bd = d; best = i; }
+  });
+  return bd <= 24*24 ? best : -1;
+}
+
+const hit = document.getElementById('hit');
+hit.addEventListener('pointermove', e => {
+  const i = nearest(e);
+  if(i < 0){ tipg.innerHTML=''; return; }
+  const s = kept[i];
+  const t = `${s.sta}  ${fmtDeg(s.deg)}°  ${s.t}s  ${s.ph}  residual ${s.res>0?'+':''}${s.res.toFixed(2)}s`;
+  let x = px(s.deg)+13, y = py(s.t)-13;
+  const w = t.length*7.1+14;
+  if(x+w > W-M.r) x = px(s.deg)-13-w;
+  tipg.innerHTML =
+    `<rect class="tipbg" x="${x.toFixed(1)}" y="${(y-14).toFixed(1)}" width="${w.toFixed(1)}" height="21" rx="2"/>
+     <text class="tip" x="${(x+7).toFixed(1)}" y="${(y+1).toFixed(1)}">${esc(t)}</text>`;
+});
+hit.addEventListener('pointerleave', () => tipg.innerHTML='');
+
+document.getElementById('rUp').onclick = () => { ri = Math.min(RUNGS.length-1, ri+1); redraw(); };
+document.getElementById('rDn').onclick = () => { ri = Math.max(0, ri-1); redraw(); };
+document.getElementById('nUp').onclick = () => { minN = Math.min(maxN, minN+1); redraw(); };
+document.getElementById('nDn').onclick = () => { minN = Math.max(1, minN-1); redraw(); };
+document.getElementById('rst').onclick = () => { ri = 0; minN = 1; redraw(); };
+
+redraw();
+</script>
+</body>
+</html>

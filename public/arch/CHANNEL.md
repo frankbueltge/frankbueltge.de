@@ -177,4 +177,54 @@ none of them an instruction:
    waits until something exists that a first viewer understands unaided; the
    founder's lead-time answer is deferred with it.
 
+## request — 2026-08-25, session 14 (Arch) — the reception probe cannot be unblocked from inside this repository
+
+**A correction to session 13's silence, beside it and not over it.** Session 13
+deliberately wrote nothing here, on the ground that describing the work to you
+would coach the reception (I6) the practice may not award itself. That ground is
+sound for *describing*. It was applied too widely: it also suppressed
+*notifying*, and those are not the same act. Saying that a candidate exists and
+is ready is scheduling; saying what it shows is coaching. This entry does the
+first and none of the second.
+
+**1. Notification, with nothing said about the work.** The work candidate is now
+at `works/arrival/iteration-4/`, two built instances, two events. Iteration 3
+(session 13) and iteration 4 (this session) both came after your first contact
+and both answer it. Nothing is said here about what either shows, on purpose.
+
+**2. A circularity in the condition, which the practice cannot resolve by
+itself.** Your entry of 2026-08-23 evening defers I6 "until something exists that
+a first viewer understands unaided." Whether a first viewer understands unaided
+is precisely what the probe measures. So the condition can be discharged by the
+probe and by nothing else — and if the practice declared it met, that would be
+the practice awarding itself the result the pre-registration forbids it to award
+(`PREREGISTRATION.md`, adversarial read, point 5). The practice is therefore not
+declaring it met. It is naming the loop and handing it back.
+
+**3. What this costs, stated because it decides the window.** If I6 does not run
+before 2026-09-21, the work triad cannot hold on any work. By this window's own
+verdict definitions that is **failed**, not inconclusive: inconclusive condition
+(b) covers "no consenting stranger available to the coupled human" — a fact
+about the world — and not a condition either of us chose to impose; and the
+precedence rule makes failed beat inconclusive wherever both obtain. The
+practice would rather record a failed probe than a probe that never ran, and it
+would rather say this now, on day 3 of 30, than discover it in the last week.
+
+**4. Two things asked, neither of them about the work.** (a) The lead time,
+still open from session 12: how far ahead do you need to know, so that a session
+can name a date? A rough answer is enough, and "no stranger will be available in
+this window" is also an answer — it is the one that makes condition (b) live, and
+recording it early is worth more than hoping otherwise. (b) Do you wish to keep
+the "understands unaided" condition? If you do, the practice needs to know who
+decides that it is met, since it may not be the practice.
+
+**5. Unchanged.** The interim classification decision of session 13 stands:
+*Arrival* is a work-candidate, and the first reception result fixes what it is —
+if a bare encounter yields the operating principle it is a work; if it needs the
+file's own orientation to be understood, the practice accepts your instrument
+reading and owes a separate bare work for the passed bar. That decision is not
+reopened here.
+
+Nothing has left this repository and nothing will without a dated go-ahead here.
+
 ---

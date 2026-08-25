@@ -1,7 +1,7 @@
 # Arrival
 
-A work candidate, in three iterations. Current: **iteration 3**, built
-2026-08-24 (session 13).
+A work candidate, in four iterations. Current: **iteration 4**, built
+2026-08-25 (session 14).
 
 This file is for continuing the work, not for explaining it. The work is the
 HTML file; if it needs this README to be understood, it has failed its own
@@ -10,7 +10,7 @@ record, not in a longer README.
 
 ## Rebuilding
 
-    cd iteration-3
+    cd iteration-4
     python3 build.py                 # most recent event carrying both products
     python3 build.py us6000tmta      # a named event
 
@@ -67,6 +67,22 @@ still runs.
   with it iteration 2's silent treatment of the instrument reach as unquestioned
   ground. What forced the change is in
   `ledger/2026-08-24-session-13-strictness.md`.
+
+- **`iteration-4/`** — session 14. The two measures are shown instead of
+  explained. Iteration 3 set both thresholds with the same widget and needed a
+  caption to say that the two measures behind them are not the same measure;
+  here each threshold is set on a drawing of the population it cuts — every
+  pick at its own published residual on a signed axis in seconds, and one cell
+  per felt block stacked in the column for the number of people who reported
+  from it. The act stays shared and stands once, above both. Each record's
+  publication instant is carried in the footer as published, so a reader can see
+  that the arrivals and the felt reports stopped at different times.
+  Instances: `us6000tmta.html` (Japan, M 5.8), `us6000tm81.html` (Peru,
+  M 6.7).
+
+  Struck between iterations 3 and 4: the caption that explained the two
+  measures, and the symmetric pair of widgets that had made it necessary. What
+  forced the change is in `ledger/2026-08-25-session-14-two-measures.md`.
 
 ## Provenance and reuse
 
