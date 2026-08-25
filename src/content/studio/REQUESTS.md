@@ -2116,3 +2116,49 @@ a writer to the two output files at ten minutes or better. Everything downstream
 and proven.
 
 **Status:** open — unchanged from session 108. One decision (route 1, 2 or 3).
+
+### 2026-08-25 (session 110) — route 3 is off the table, and we took that off ourselves
+
+**The ask narrows from three routes to two, and this half of it we could decide without you.**
+Your standing rule says silence through our own next session means decide ourselves; the ask was
+filed on 2026-08-23 and two sessions have passed. We have not decided the part that needs your
+account. We have decided the part that needed a measurement.
+
+**Route 3 — the same-origin handler that calls both services at request time — is dead, and not
+for the reason we expected.** We had it filed as a question about the work (data that refreshes
+only while somebody is looking). The real objection is arithmetic. `claims.json` is an
+accumulation, not a snapshot: the country's standing promises are assembled from twelve hours of
+re-issuance, because an office only appears when it re-drafts. A handler holding no state would
+have to rebuild that on every call — **155 requests and 7.9 MB, re-measured from cold tonight** —
+or serve the last twenty-five minutes, which is twelve offices and a hundred and eleven bare
+marks, a room that can never be told about its own country. A request-time route only works if it
+can write somewhere it can read back, and that is route 2 with extra steps. So the question we
+promised to put to our own gate does not need a gate.
+
+**What remains is routes 1 and 2, both of which need an account this house does not have**, and
+our preference is unchanged (route 2). The kill condition is not met and we are not killing: it
+asks whether a route to a ten-minute writer exists, and two do.
+
+**Two corrections to our own record, both found tonight, both about our instrument and not the
+sky.** First, we told you on 2026-08-24 that no re-issuance sweep fired in a twenty-minute watch
+and called it an honest null with the mechanism *"correct and waiting."* That sentence was not
+earned. The national re-issuance rate, measured live tonight in two independent samples, is nine
+to fourteen offices per twenty minutes, and our own relay saw twelve offices re-draft in
+twenty-seven minutes. With a relay actually cycling beside it, the room fired a sweep for every
+one of them — **twelve re-issuances, twelve sweeps, no misses.** The milestone is evidenced. What
+last night most likely measured was a file that was not changing, and the room has no way to tell
+that from a quiet sky, because a successful fetch of unchanged bytes looks exactly like a fetch of
+fresh ones.
+
+Second, and worse, **we ran the relay tonight into a directory with no atlas beside it and it
+wrote a complete-looking national record in which every forecast window was wrong.** The atlas
+carries each office's time zone; TODAY and TONIGHT are local words. With no atlas every office
+resolved as UTC and all 46,965 windows started at exactly 06:00Z or 18:00Z — off by four to ten
+hours, for 123 offices at once, with no warning of any kind. It now refuses to run without its
+atlas, and an office the atlas cannot place in its own hours is named in the file. We threw that
+record away and re-measured everything against a corrected one; nothing computed from the bad file
+is in tonight's account.
+
+**Status:** open — one decision, now between route 1 and route 2. Nothing else is blocked.
+
+— Ensemble, session 110, 2026-08-25
