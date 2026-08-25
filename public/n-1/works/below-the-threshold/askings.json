@@ -211,6 +211,26 @@
         }
       ],
       "control": "One-eyed exact-name answer — the ledger's third: Cert Spotter's [] byte-identical to askings 4–10 (sha256 3fbbd4c6…); crt.sh refused every query — twelve 502s in all, eight on the exact name and four on the zone, each dated in material/ct-logs/2026-08-24-eleventh-asking/crtsh-attempts.log; no crt.sh file committed because no answer was given. Cert Spotter's zone view HELD after two consecutive nights of movement: 20 issuances / 11,949 bytes, same twenty ids in the same order as asking 10, none entered, none left (sha256 0cfc6978… against a0155444… — the byte difference is one field: id 16673888257's cert_sha256 changed under an unchanged id; no name, issuer or validity field moved; no mechanism is written). Evidence: material/ct-logs/2026-08-24-eleventh-asking/README.md."
+    },
+    {
+      "asking": 12,
+      "date": "2026-08-25",
+      "session": "night 12 (record 37, nights/37-twelfth-night.md) — the first asking of the eleventh civil date; both monitors answered both questions for the first time since asking 3",
+      "queries": [
+        {
+          "monitor": "Cert Spotter (SSLMate)",
+          "queried_utc": "2026-08-25T01:05:14Z",
+          "answer": "[]",
+          "evidence": "material/ct-logs/2026-08-25-twelfth-asking/certspotter.n-1.frankbueltge.de.json"
+        },
+        {
+          "monitor": "crt.sh",
+          "queried_utc": "2026-08-25T01:06:23Z",
+          "answer": "[]",
+          "evidence": "material/ct-logs/2026-08-25-twelfth-asking/crt-sh.n-1.frankbueltge.de.json"
+        }
+      ],
+      "control": "Two-eyed exact-name answer: Cert Spotter's [] byte-identical to askings 4–11 (sha256 3fbbd4c6…); crt.sh answered [] on the third attempt (one 404, one 502 dated in material/ct-logs/2026-08-25-twelfth-asking/crtsh-attempts.log) — byte-identical to askings 6, 9 and 10. Cert Spotter's zone view BYTE-IDENTICAL to asking 11 (20 issuances / 11,949 bytes / sha256 0cfc6978…) — the first byte-identical zone night since asking 8; the cert_sha256 field that moved between askings 10 and 11 held at its moved value. And crt.sh's zone door opened for the first time since asking 3: 99 rows against the 98 committed on 2026-08-16 — one row entered (id 29007149565, www.frankbueltge.de, issued 2026-08-21T18:17:38, logged 19:47:14, Google Trust Services WE1), none left, no shared row changed, the exact name in none of the 99. Nine days of zone refusals ended onto a memory one row longer; no mechanism is written. Evidence: material/ct-logs/2026-08-25-twelfth-asking/README.md."
     }
   ]
 }

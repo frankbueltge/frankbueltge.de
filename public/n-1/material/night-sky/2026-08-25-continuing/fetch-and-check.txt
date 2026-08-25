@@ -1,0 +1,54 @@
+# Fetch-and-check transcript — the continuing look, third act, night 12 (record 37), 2026-08-25
+# Source: Deutscher Wetterdienst (DWD), Climate Data Center, CC BY 4.0
+
+fetched: 2026-08-25T01:08:29Z
+url: https://opendata.dwd.de/climate_environment/CDC/observations_germany/climate/hourly/cloudiness/recent/stundenwerte_N_00433_akt.zip
+http: 200, 46295 bytes
+zip sha256: 3207b2b7ad4d21dd81a771f07f03e40a3cb745bd142953febe7dbad7104a03f1
+
+zip member listing (name, internal date):
+  Metadaten_Stationsname_Betreibername_00433.html  2026-08-24 08:18
+  Metadaten_Stationsname_Betreibername_00433.txt  2026-08-24 08:18
+  Metadaten_Parameter_n_stunde_00433.html  2026-08-24 08:18
+  Metadaten_Parameter_n_stunde_00433.txt  2026-08-24 08:18
+  Metadaten_Geraete_Gesamt_Bedeckungsgrad_00433.html  2026-08-24 08:18
+  Metadaten_Geraete_Gesamt_Bedeckungsgrad_00433.txt  2026-08-24 08:18
+  Metadaten_Geographie_00433.txt  2026-08-24 08:18
+  Metadaten_Fehldaten_00433_20250220_20260823.html  2026-08-24 08:18
+  Metadaten_Fehldaten_00433_20250220_20260823.txt  2026-08-24 08:18
+  Metadaten_Fehlwerte_00433_20250220_20260823.txt  2026-08-24 08:18
+  produkt_n_stunde_20250220_20260823_00433.txt  2026-08-24 08:18
+
+The drawer turned again at its writing hour: a new generation against night 11's
+fetch (members then dated 2026-08-23 08:18, span ending 2026-08-22 23:00). The
+archive regenerated on the morning of 2026-08-24 at 08:18 Berlin and the ninth
+civil date entered whole.
+
+data file: produkt_n_stunde_20250220_20260823_00433.txt
+data rows: 13067
+first data row (verbatim):         433;2025022000;    3;   I;   0;eor
+last data row  (verbatim):         433;2026082323;    1;   P;   1;eor
+rows dated 2026-08-23: 24 (complete, 00:00-23:00 UTC; committed as
+  tempelhof-N-2026-08-23.csv, all 24 rows checked value-identical against the
+  zip, all five fields)
+rows dated 2026-08-24 or later: 0 — the two-night lag at the scheduled hour,
+  standing: tonight's session (first clock check 2026-08-25T01:03:24Z) reads
+  through D-2 and no further
+hour 2026-08-18 16:00 UTC (the archive's registered hole): 0 rows — still absent
+rows dated 2025-02-19 (the prior generation's first day): 0 — the recent
+  window's moving edge dropped a day as it gained one; the metadata filenames
+  moved with it (20250219 -> 20250220)
+
+overlap check against both committed slices:
+  prospect slice (191 rows, served 2026-08-22, commit 2effdf5): 144
+  value-identical in tonight's file (all five fields, whitespace-normalized);
+  47 differing — the 24 rows night 11 already recorded as rewritten
+  (2026-08-20 01:00 .. 2026-08-21 00:00, P -> I, the 05:00 indicator -999)
+  stand tonight exactly as night 11 read them, and 23 further rows moved:
+  2026-08-21 01:00 .. 23:00, every one V_N_I P -> I, cloud value and quality
+  level unchanged.
+  eighth-date slice (24 rows, served 2026-08-24, commit 803e651): 23
+  value-identical; 1 differing — 2026-08-22 00:00, V_N_I P -> I, cloud value
+  and quality level unchanged.
+  The 24 newly moved rows (2026-08-21 01:00 .. 2026-08-22 00:00), both dated
+  states row by row: indicator-rewrite-frontier.txt.
