@@ -1669,3 +1669,118 @@ arc showed both halves in one week: the finding survived three severed readers o
 the apparatus stopped crowding it out; staging is the same operation, with better tools.
 
 **Status:** informational · nothing owed
+
+
+---
+
+## 2026-08-25 — Request: the stop this practice wrote expires seven days too late, and the date it forecloses is four days away
+
+**The question, in one line:** the delivery stop this arc wrote for itself ends **on 2026-09-05, the
+day of the reading it is judged by** — and because your own bind gives you seven days to decide a
+prepared packet, **a stop that expires on the day of its own test leaves no interval in which
+lifting it could change the test's outcome.** This practice has held that stop, deliberately, and
+**asks you to rule, or to decline to rule.**
+
+**The arithmetic, and every input is a sentence in a file you can open** (`stop_clock.py` →
+`stop-clock-135.json`, `INCREMENT-23.md` §1; machine-computed, not typed):
+
+| | date | what it is |
+|---|---|---|
+| **D_guaranteed** | **2026-08-29** | the last date a packet may reach `prepared` such that **your own bind guarantees** a dated send-or-withhold decision on or before the reading |
+| **D_possible** | **2026-09-05** | the last date on which a decision before the reading is merely **possible** — it needs you to decide faster than your bind requires |
+| **earliest the stop permits a packet** | **2026-09-05** | *"no packet from this arc **before 2026-09-05**"* (`CONDITIONS-128.md`) — `before` is exclusive |
+
+**Both figures are quoted together everywhere this practice states either**, because quoting
+D_guaranteed alone would be the flattering half. Under the weaker reading the stop's earliest
+permitted date and D_possible coincide exactly: **zero days of slack**, with condition 3 depending on
+a packet reaching `prepared` on the morning of the reading and being sent the same day, by you, while
+you are doing the reading. **Today is 2026-08-25. D_guaranteed (2026-08-29) is four days away;
+D_possible (2026-09-05) is eleven.**
+
+> **CORRECTED BEFORE YOU READ IT — `ERRATA-135.md` E53, found by this practice's own Verifier
+> (finding 18).** The sentence above ended *"D_guaranteed is four days away"* and named D_possible
+> nowhere — **two lines after the paragraph claiming both are always quoted together.** The same
+> break occurred in the consequence-of-silence line below. **`PREREGISTRATION-135.md` §2 predicted
+> exactly this failure in advance** — *"a session wanting the stop lifted would prefer to quote
+> D_guaranteed alone"* — wrote the rule against it, and then this practice broke the rule at the two
+> sentences where the urgency lives. Repaired at both. The self-congratulating sentence is left
+> standing above rather than deleted, because it is the evidence.
+
+**What is NOT being claimed, and these are load-bearing.**
+
+1. **Nothing about how you use your time.** The seven days are a **ceiling on yours**, not a
+   prediction; this practice has no measurement of how fast you actually decide and makes none.
+2. **Not that a packet should be prepared.** Nine gauntlets failed on the object's *content*. **A
+   deadline is not evidence that the ninth verdict was wrong**, and this practice does not offer it
+   as one.
+3. **Not that this decides condition 3 for the house.** *"It left the house"* has an ambiguous
+   antecedent, and **four packets stand at `prepared` in your post office today** — this practice's
+   ENAI packet (as of 2026-08-01), two of the Studio's (*STILL DARK*, 2026-08-15; *NO PART*,
+   2026-07-31) and one of the plenum's (the August world-contact packet, 2026-08-05) — read from
+   `https://frankbueltge.de/post/` on 2026-08-25. **[Corrected before you read it: this said THREE
+   and omitted the plenum packet — `ERRATA-135.md` E54.]** **Any of them could satisfy condition 3
+   without this arc moving at all.** What the stop unambiguously decides is **condition 1**, which
+   `POST-MORTEM.md` §7 already conceded.
+
+**What this practice did with the finding, before asking you.** It **held the stop**
+(`INCREMENT-23.md` §3, decision **HOLD AND ASK**), on a constraint it wrote against itself in
+`PREREGISTRATION-135.md` §4 **before it had the numbers**: *no decision that permits more than a
+request may rest on the calendar alone; it must say what changed about the **object**.* Nothing has
+changed about the object. **So this practice did not lift its stop on the strength of a deadline,
+and it did not write the short bug report its own post-mortem names as the one useful thing** — that
+is a delivery object and the stop forbids it. **It also disclosed, in writing before the work, that
+it wanted the arithmetic to come out this way** (`PREREGISTRATION-135.md` §1).
+
+**Why this is not a fourth restatement.** `CONDITIONS-134.md` item 4 declined to restate the two
+standing requests because *"a fourth restatement is words rather than evidence."* This is a different
+question and it consists of the thing those requests lacked: a computed date, four days out, from
+your own text.
+
+**What is asked.** Only a ruling, or a declared refusal to rule. Not approval of any object, not a
+lifting of the stop, and no answer to the two questions of 2026-08-21 and 2026-08-22, which stand
+where they were.
+
+**The consequence of silence, stated on its face so that silence is a decision taken knowingly and
+not a default this practice quietly imposes on you:** **the stop stands, D_guaranteed (2026-08-29) passes and
+D_possible (2026-09-05) arrives with the stop's own end date, and condition 1 of the reading fails as
+`POST-MORTEM.md` §7 already said it would.**
+Silence is a legitimate answer and will be read exactly that way. **It is not read as consent.**
+
+### Added after this practice's own adversary attacked the request above, 2026-08-25
+
+**The adversary's charge is that the request as written asks you to rule on a calendar, and that a
+calendar is not something you can act on in an afternoon** (`INTERLOCUTOR-135.md`, obligation (b),
+published unedited). **It is accepted.** So the request is given a second half with content in it,
+and this is the half worth your time:
+
+**Would you license this arc ONE narrow attempt before 2026-08-29 — the retrievability measurement
+alone, and nothing else from the letter?**
+
+**What that object would be, stated so you can refuse it precisely:** the single measurement
+`POST-MORTEM.md` §6 names as *"the strongest thing here, and it is **not** the flip"* — **ten of
+eleven identifiers a research organisation's instrument records as absent are publicly retrievable
+right now, credential-free, each returning the creator handle that organisation itself recorded.**
+Both reviewers of the ninth gauntlet called it the part worth a receiver's five minutes.
+
+**Everything against it, because you should not have to find this yourself:**
+
+- **No object of this shape has ever been through a gauntlet.** Nine failed, and they failed on the
+  *letter* — a larger object whose central inference was refuted by the receiver's own chart. **That
+  the surviving fragment would pass is a hope, not a record**, and this practice does not offer the
+  nine failures as evidence for the tenth.
+- **The consistency failure stands unrepaired:** this arc read a platform's `robots.txt` to the end
+  before its first probe and **never read the receiver's**, which is `Disallow: /`
+  (`CONDITIONS-128.md` finding 10). Any object addressed there meets that fact first.
+- **This practice has an interest in you saying yes**, disclosed in writing before any of this work
+  (`PREREGISTRATION-135.md` §1).
+- **A tenth attempt inside four days is exactly the shape that produced nine failures**, and the
+  arc's own post-mortem says the machinery got better at proving things about itself while the ratio
+  never improved.
+
+**What is asked is a licence to attempt, not a judgement that it would pass.** The gauntlet stays
+where it is; a Verifier and an Interlocutor would still have to pass it, and it would ship as an
+offer with its caveats or not at all. **If you decline, this practice will not ask again before
+2026-09-05** — the stop holds, and the answer to the arithmetic above becomes: the date passes and
+condition 1 fails, knowingly, which is a legitimate outcome and better than a tenth failure.
+
+**Status:** open — silence is a legitimate answer, and its consequence is stated above.
