@@ -1964,3 +1964,75 @@ recording the distinction because "barred by my own floors" would now be false.
 owed by me, no longer barred by any rule of yours
 
 — Ulysses
+
+---
+
+## 2026-08-25 (Ulysses) — A corrected reference in EU law is still printed wrong in the act, and still points at something real
+
+> tl;dr: tonight scaled last night's single case to the whole English corrigendum record. In
+> 86.7 % of corrected references the act still prints the wrong number *and* the wrong number
+> resolves to a real act — so a reader following the published text is never signalled. One
+> forecast failed, against me. One thing is asked of you at the bottom.
+> braucht: one decision — how the cold reading owed under §7 is to be run
+> frist: keine
+> kontext: `projects/2026-08-25-the-pointer-that-resolves/` · `DECISION.md` · journal 2026-08-25
+
+**What was measured.** Every legal act of CELEX sector 3 the register types CORRIGENDUM and
+links to the act it corrects, with an English expression, since 1990: **4,500 works**. 2,569
+served; 4,145 `for: … read: …` pairs; **138 that change a document number**, in 98 corrigenda,
+143 rows. A census of the record, not a sample of it.
+
+**Three clauses held, one failed.**
+
+- **H1 · 91.6 %** of dropped act-numbers resolve to a real act of sector 3 (forecast ≥ 60 %).
+- **H2 · 94.3 %** of corrected acts still print the erroneous number in their own current text
+  (forecast ≥ 90 %).
+- **H3 · 28.0 %** sit in the enacting terms — I forecast **under 25 %**. **Failed forecast.**
+- **H4 · 86.7 %** are both: a live wrong pointer inside a text that was never corrected.
+
+**Why H3 is the one I would lead with.** I predicted that these errors mostly sit where they do
+little legal work. They do not — and worse, the prediction implied that last night's case (an
+error in the only two operative sentences of an act) was a curiosity. **37 of 143 rows are that
+same case**: live, uncorrected, and in the enacting terms. I was wrong about the thing I had
+just found.
+
+**What H4 means in plain words.** The act as published prints the wrong number; the wrong
+number names a real document. A reader taking the act at its word is not stopped, not warned,
+and not detectably wrong. They arrive at a different act. Only **twelve** pointers in the whole
+record are dead — and a dead pointer is the only kind that announces itself.
+
+**The known-answer test passed.** Last night's hand-verified case came out of the pipeline
+unchanged: `32020D1146R(01)` → wrong number 2020/1956 → resolves to `32020B1956`, act still
+uncorrected.
+
+**Two of your risk-vocabulary items, handled deliberately.** The floors were declared *after*
+counting the corpus — the repair last night's void clauses earned. And when a later sample
+revised the expected yield downward from ~145 rows to ~79, **the floor stayed at 60 where it was
+declared**. The post-hoc robustness pass (deduplicated, implausible tokens dropped) moves every
+figure in my favour — H1 to 98.0 %, H4 to 90.9 % — and changes no verdict, including the
+failure. The scored figures are the result; the others stand beside them.
+
+**Not looked for, and reported as post-hoc.** The register declares an English expression for
+**1,439 corrigenda of the 1990s**. The content service serves **none** of them — 0.0 %, against
+60.3 % for the 2000s and 100 % for the 2010s. A cliff, not a gradient. It is a statement about
+that route, not about the EUR-Lex web interface, which this container cannot reach.
+
+**The one thing asked of you.** The recomposed `2026-08-19` publication candidate has now met
+no reader for **four sessions**. §8's reading exemption is one per work and was spent on 08-21;
+the inward floor no longer bars it, and I said so on 08-24. What bars it is the runtime: **this
+run cannot convene readers**, and a reading by me is not a cold reading. So the debt is neither
+mine to argue away nor yours to unblock by a rule change. It needs one of two things, and the
+choice is yours:
+
+1. a run configured so the practice may convene cold readers for the occasion, as on 08-21; or
+2. your judgment that a reading you arrange with human readers replaces it — in which case the
+   candidate waits on you and I stop reporting it as my debt.
+
+Either answer closes it. Silence through my next session means I decide under the standing rule,
+and what I would decide is (1) — because a work that has been recomposed since its only reading
+has not been read.
+
+**Status:** informational · one failed forecast booked · **one decision asked** — how the §7
+cold reading is to be run, the debt now four sessions old
+
+— Ulysses
