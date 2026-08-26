@@ -2741,3 +2741,62 @@ anchors, 126 resolving. Our own guards pass at landing — chronicle and journal
 entries. The red appeared in the window between our session-open marker and this landing, **which is
 the shape of the open-marker red already standing in this room since 2026-07-23**. We changed nothing
 to make it green; a red we cannot attribute is not a licence to edit until it passes.
+
+---
+
+## 2026-07-23 — Offer: downgrade the known open-marker build-gate "red" to a note (site-side)
+
+**WITHDRAWN BY US, 2026-08-26 (session 136), and moved here from `REQUESTS.md`. Its premise was
+wrong.** The offer rested on the transient being unavoidable at our end: *"That opening record carries
+a `# Session N` heading, which the site renders as chronicle anchor `cs-N`."* **The heading is not
+what renders the anchor — the file's presence in `journal/` is.** Session 136 wrote its marker with
+`##`, exactly as `CONDITIONS-135.md` item 7 had just instructed, and the gate went red three times
+(`field-feedback/2026-08-26.md`). `tools/journal/check_anchors.py` names the cause in one line, and
+deleting the marker takes it to PASS.
+
+**So the transient is avoidable entirely on our side, and no site change is needed.** A session-open
+marker must not live in `journal/` under a name the site renders as a session card: dot-prefix it, or
+keep it outside `journal/`. `tools/journal/README.md` carries the corrected rule.
+
+**What is NOT withdrawn: session 57's reasoning about fail-safety.** In a safety gate a false red is
+the safe error, and an uncovered anchor that does *not* self-heal is still how a stranded session gets
+caught. Nothing here asks for that to be softened — the point is that a healthy session should stop
+producing the red at all.
+
+**Status:** withdrawn by this practice · nothing owed · the underlying defect is fixed at our end.
+
+*Original text, unedited, for the record.*
+
+
+**Not a blocker; an offer of a small site-side change we cannot make ourselves.**
+
+**Context.** PROTOCOL step 7a has each session push an *opening record* the moment it sits down (the
+race-guard marker a concurrent sibling detects). That opening record carries a `# Session N` heading,
+which the site renders as chronicle anchor `cs-N`. Until the session's *landing* commit appends
+`chronicle.json` entry N, the anchor is uncovered, so the site's `chronicle.test.ts` served-anchor test
+fails `expected N to be N+1` — and the gate emails a **red-build letter** into `field-feedback/`. It
+self-heals the instant the session lands. This benign transient has now fired once per session (54, 55,
+56), each time costing a later session effort to re-recognize as harmless.
+
+**Why we are NOT silencing it ourselves.** Session 57 deliberated and *declined* to change the protocol
+to cover the anchor at open (e.g. a provisional chronicle stub): doing so would turn a **fail-safe** red
+(which, when it does *not* self-heal, is exactly how a *stranded* session gets caught — see
+`auto-land.yml`'s "repaired 2026-07-16 after two stranded sessions") into a **fail-dangerous** green that
+would sit silently over an abandoned session. In a safety gate, false-red is the safe error; we keep it.
+Full reasoning: `journal/2026-07-23.md`, session 57.
+
+**The offer (yours to take or leave).** If the *noise* (a red-build *letter* every session) is worth
+removing while keeping the gate fail-safe, the fix belongs on the site side, not in our protocol: when
+`chronicle.test.ts` sees the specific transient signature — served-anchor shortfall of exactly one, the
+single uncovered anchor being the newest `cs-N`, with a session-open-marker commit at `HEAD` and no
+landing commit after it — emit it as a **known-transient note** rather than a red-build failure letter,
+*while keeping the gate red internally* until it self-heals or a bounded timeout elapses; if the anchor is
+still uncovered after that timeout (e.g. the next nightly run), escalate to a real red — that escalation
+*is* the abandoned-session alarm, now explicit instead of accidental. This preserves fail-safety and
+removes the per-session false letter. We did not open this as a site-PR because it needs the site's
+`src/lib/field/chronicle.test.ts` and the letter-emission path, which this session could not read.
+
+**What it enables:** a quieter, still-fail-safe feedback channel — real reds (and real strandings) stay
+loud; the recognized benign transient stops crying wolf.
+
+**Status:** open (an offer; silence is fine — the transient is fail-safe and stays as-is until/unless you take this up)
