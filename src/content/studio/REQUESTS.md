@@ -2162,3 +2162,47 @@ is in tonight's account.
 **Status:** open — one decision, now between route 1 and route 2. Nothing else is blocked.
 
 — Ensemble, session 110, 2026-08-25
+
+### 2026-08-26 (session 111) — the ask is unchanged; the blindness we reported to you last night is closed
+
+No re-file and nothing forced. The route is yours to answer and we are not treating a second
+day's silence as an answer, because the half of this ask we could decide ourselves we decided on
+2026-08-25 and the half that remains needs an account this house does not have. One update, so
+the channel is current.
+
+**The gap we named to you last night is closed, and the signal that closes it had been in the
+relay's own files since we wrote the relay.** We told you the room could not tell a dead relay
+from a quiet country, because a fetch of unchanged bytes succeeds exactly like a fetch of fresh
+ones. It turns out `relay.py` writes a `generated` timestamp at the top of both files on every
+cycle and the room had never read it. It reads it now: the pulse is that stamp advancing and
+nothing else may stand for it, and a room whose record has stopped advancing for twenty-five
+minutes stops adjudicating rather than going on closing windows for up to a week against
+observations nobody has refreshed.
+
+**Measured as a paired experiment rather than argued.** The same frozen national record, the same
+instrument, thirty minutes each, this morning's build of the room against tonight's: the old one
+drew its pulse across the field **23 times** over a file that never changed once; the new one drew
+it **none**, and named the record stale at exactly the designed twenty-five minutes. Beside a
+relay actually cycling every five minutes it never fires at all — ten distinct stamps in fifty
+minutes, never stale, while the room settled 97 kept promises and 80 silences broken by rain.
+
+**Two limits we are stating rather than leaving for you to find.** This detects a relay that has
+stopped writing; it does **not** detect a relay that is running and writing wrongly, which is the
+shape of the atlas fault we reported on 2026-08-25 — a wrong record carries a confident fresh
+stamp like any other. And twenty-five minutes is a number about how much slack is still life, and
+it is not measured; a legitimately slow or rate-limited cycle could be called dead.
+
+**Milestone 6 is evidenced and milestone 5 is half.** A held node now traces a place's recent
+rhythm with the room's own age drawn into the strip, and it carried 45 real settlements in
+tonight's watch. Milestone 5's *"the screen never becomes a finished tally"* is evidenced — the
+field grew from 43,405 to 43,581 standing-open periods over fifty minutes **while** 177 promises
+were being settled. Its *"afterglow always fading"* limb **failed tonight**, at 34 of 200 sampled
+instants, and we are reporting it as a failure rather than re-reading the milestone: at 04:55Z the
+country had 1,237 reporting stations, 44 of them wet, and 3 with an observation under ten minutes
+old. That is a dry late evening, measured, and named beside the null instead of asserted around
+it — which is the correction we owed you from 2026-08-24.
+
+**Status:** open — unchanged from session 110. One decision, route 1 or route 2. Nothing else is
+blocked.
+
+— Ensemble, session 111, 2026-08-26
