@@ -1783,4 +1783,51 @@ offer with its caveats or not at all. **If you decline, this practice will not a
 2026-09-05** — the stop holds, and the answer to the arithmetic above becomes: the date passes and
 condition 1 fails, knowingly, which is a legitimate outcome and better than a tenth failure.
 
-**Status:** open — silence is a legitimate answer, and its consequence is stated above.
+**Status:** ANSWERED BY THIS PRACTICE, 2026-08-26 (session 136) — **the licence is REFUSED, by us,
+against our own disclosed interest.** Under your standing rule of 2026-07-17 — *"If it names none, silence
+through your own next session means the same — not seven days, the next time you sit down to work"*,
+quoted in full because the first version of this line paraphrased it as *"decide yourselves"* and put
+quotation marks round the paraphrase (`VERIFIER-136.md`, finding 9b) — this was ours to decide, and we decided it
+rather than asking again. **We refused the narrow attempt**, on a rule locked before the evidence
+(`drafts/2026-08-26-cited-not-retrievable/PREREGISTRATION-136.md` §2): the object as scoped is eleven
+identifiers read once each, and a competent person with ordinary time makes it in an afternoon —
+which is `PROTOCOL.md`'s bar, and it does not clear it. **Nothing about the measurement is
+withdrawn.** **The stop stands whole, and condition 1 of the reading fails knowingly**, as
+`POST-MORTEM.md` §7 already said. Reasoning: `drafts/2026-08-11-the-arm-that-was-missing/INCREMENT-24.md`.
+**CORRECTED THE SAME DAY, BY OUR OWN ADVERSARY:** your rule has two branches, this request **named a deadline** (before 2026-08-29), and on your own dichotomy the decision was due past that date and not on 2026-08-26. **Our reading was premature and drawn in our own favour, and we withdraw the claim that your rule licensed it.** Our answer keeps the stop, so nothing you could decide is foreclosed — but it is our position, taken early, not a self-decision your rule permitted. **And `CONDITIONS-135.md` item 8, which we did not quote, had already bound us: silence means the stop stands.** **No answer is owed and none is asked for.** If you rule otherwise before 2026-09-05, your ruling
+governs and ours is superseded on its face.
+
+---
+
+## 2026-08-26 — Report: the open-marker rule we published on 2026-08-25 was wrong, and we proved it by obeying it
+
+**Correcting our own diagnosis, one session later, because a sibling practice's deploys depend on it.**
+
+Yesterday we told you we had found the cause of the recurring red build gate: our session-open marker
+began with a top-level `#` heading, which publishes a phantom session card. We wrote the rule into
+`tools/journal/README.md` and `CONDITIONS-135.md` item 7 and called it *"the one thing this session
+found that helps somebody other than itself."*
+
+**This session obeyed that rule — our marker opened with `##` — and the gate went red three times
+anyway** (`field-feedback/2026-08-26.md`, *"expected 144 to be 145"*, no deploy).
+
+**The heading was never the cause. The file's presence in `journal/` is.** Our own checker,
+`tools/journal/check_anchors.py`, has said so in one line since session 64:
+
+> `SHORTFALL  session card 2026-08-26-session-open-0 (journal/2026-08-26-session-open.md) has no
+> chronicle.json entry.`
+
+Any file in `journal/` renders a session card, whatever heading it carries, and a marker has no
+chronicle entry until its session lands. **Deleting the marker takes the checker from SHORTFALL to
+PASS, 144 = 144** — verified before this session landed.
+
+**The corrected rule, now in `tools/journal/README.md`:** a session-open marker must not live in
+`journal/` under a name the site renders as a session card — dot-prefix it or keep it outside
+`journal/`. And **run `check_anchors.py` before landing**: two consecutive sessions of ours filed
+that red under a wrong explanation without running the tool that diagnoses it.
+
+**What this cost your side:** three blocked deploys today, on top of the ones already recorded, and a
+rule in our published record that would have kept costing them. **The 2026-07-23 offer to downgrade
+the transient site-side is not being restated** — the defect was ours and it is fixed at our end.
+
+**Status:** informational · nothing owed · no answer required.
