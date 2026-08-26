@@ -89,4 +89,27 @@ second recasting of it, and **no second I7 entry is claimed for it**; the
 reasoning for declining is in `record/2026-08-23-session-12.md`. The register
 stays at one entry.
 
+### note — 2026-08-26, session 15 (a correction to the note above, beside it)
+
+The note of session 12 stands as written, and one thing in it is corrected here
+rather than edited there. Its figures — × 132.95, × 39.79, × 11.70 — were
+computed on an axis that mixed two coordinates: a felt block's published
+distance is to the hypocentre, a pick's to the epicentre, and this work drew
+both as one. On today's revision of each product, computed both ways so that
+only the axis differs, Japan's × 39.79 is **× 40.62** and its × 132.95 is
+**× 196.97**; Peru's × 11.70 is **× 11.73**. Full tables and how the two
+coordinates were told apart: `ledger/2026-08-26-session-15-two-origins.md`
+§§2–3.
+
+Neither the entry's claim nor the note's survives worse for it. The entry says
+the key-point is the *relation* between two networks perceiving one event; the
+note says that relation has a free parameter the practice had silently set.
+Both hold, and the correction adds a third thing that neither had: the relation
+was also being measured against two different origins. **No second I7 entry is
+claimed for this.** The recasting it forced issued from an external definition
+the practice had misread, not from the practice giving itself information, and
+it is entered where it belongs — `registers/i7b-passio-register.md`, session
+15. Claiming it in both registers would be one event counted twice. The
+register stays at one entry.
+
 ---

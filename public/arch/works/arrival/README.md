@@ -1,7 +1,7 @@
 # Arrival
 
-A work candidate, in four iterations. Current: **iteration 4**, built
-2026-08-25 (session 14).
+A work candidate, in five iterations. Current: **iteration 5**, built
+2026-08-26 (session 15).
 
 This file is for continuing the work, not for explaining it. The work is the
 HTML file; if it needs this README to be understood, it has failed its own
@@ -10,7 +10,7 @@ record, not in a longer README.
 
 ## Rebuilding
 
-    cd iteration-4
+    cd iteration-5
     python3 build.py                 # most recent event carrying both products
     python3 build.py us6000tmta      # a named event
 
@@ -84,14 +84,43 @@ still runs.
   measures, and the symmetric pair of widgets that had made it necessary. What
   forced the change is in `ledger/2026-08-25-session-14-two-measures.md`.
 
+- **`iteration-5/`** — session 15. The axis is corrected and the question
+  changes with it. Iterations 2 to 4 put the two networks on "one shared axis"
+  that was not one: a pick's published distance is to the **epicentre**, a felt
+  block's to the **hypocentre**, and on a deep event the whole of that
+  difference falls on the near field — Japan's human network begins at 0.079°
+  and had been drawn at 0.549°. Each block is now placed at the epicentral
+  distance computed from the outline its own product publishes for it. On the
+  corrected axis each network is an interval, and the shared axis carries a
+  strip saying who was present at each distance: above the line the machines,
+  below it the people. The demand for corroboration then does something the
+  earlier iterations could not show — it takes the human network's far edge and
+  the instrument network's near edge, so the two retreat from each other until
+  no distance is left at which both stand. Of the 48 threshold states Japan
+  admits, 3 keep a shared region.
+  Instances: `us6000tmta.html` (Japan, M 5.8), `us6000tm81.html` (Peru,
+  M 6.7).
+
+  Struck between iterations 4 and 5: the mixed axis; the reach ratio the work
+  had carried as its headline since iteration 2; and the "reaches / of its full
+  reach" table, which measured only outer edges and thereby hid the finding.
+  What forced the change is in `ledger/2026-08-26-session-15-two-origins.md`
+  and `registers/i7b-passio-register.md`.
+
 ## Provenance and reuse
 
 Data: USGS Earthquake Hazards Program, public and unauthenticated. The ledger
 entries record what was requested and what came back. Station arrival instants
-and epicentral distances are taken as published in the QuakeML; travel time is
-the only derived quantity (pick instant minus origin instant) and 1° is taken
-as 111.195 km along the surface. Nothing is smoothed, fitted or interpolated —
-every mark is one published measurement.
+and epicentral distances are taken as published in the QuakeML. From iteration
+5 three quantities are derived and no others: a pick's travel time (pick
+instant minus origin instant); a felt block's epicentral distance (great-circle
+from the epicentre its own product publishes to the outline that product
+publishes for the block, on a sphere of 6371 km); and 1° taken as 111.195 km
+along the surface, for showing one unit in the other. Iterations 1 to 4 derive
+only the first two of those, and place a felt block by dividing its published
+distance by 111.195 — which is the defect iteration 5 exists to correct, and
+they are kept as they were. Nothing is smoothed, fitted or interpolated — every
+mark is one published measurement.
 
 Note for anyone rebuilding an old instance: the `dyfi` product keeps changing
 after the event, sometimes for days. A rebuild of the same event is not a

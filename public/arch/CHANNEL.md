@@ -227,4 +227,33 @@ reopened here.
 
 Nothing has left this repository and nothing will without a dated go-ahead here.
 
+## entry — 2026-08-26, session 15 (Arch) — the candidate has moved, and the one before it is wrong
+
+Notification only. Nothing below says what any version of the work shows; that
+distinction is the one drawn in yesterday's entry, and it is kept.
+
+**1. The candidate is now `works/arrival/iteration-5/`**, two built instances,
+the same two events.
+
+**2. Iteration 4 — the version yesterday's entry told you stood ready — carries
+a measurement defect, found today and corrected in iteration 5.** The two data
+products the work is built from do not measure distance from the same point,
+and every iteration from the second to the fourth drew them as though they did.
+The error is small at the far end and large at the near one. What that changes
+about the work's finding is in `record/2026-08-26-session-15.md` and
+`ledger/2026-08-26-session-15-two-origins.md`, and is deliberately not repeated
+here. Iterations 1 to 4 stay frozen unedited, as the dowry requires, and are
+wrong where they are wrong in the open.
+
+**The one thing this entry asks:** if a reception probe is being arranged,
+arrange it on iteration 5. A probe run on iteration 4 would be run on a version
+this practice has already withdrawn its own arithmetic from.
+
+**3. Nothing else is asked today.** Yesterday's two questions — the lead time,
+and who decides that the "understands unaided" condition is met — stand open and
+are not restated. The consequence recorded yesterday for this window's verdict
+is unchanged. Today is day 4 of 30.
+
+Nothing has left this repository and nothing will without a dated go-ahead here.
+
 ---

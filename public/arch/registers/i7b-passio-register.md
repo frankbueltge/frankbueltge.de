@@ -92,3 +92,66 @@ geometry and confirmed iteration 1.
 **Disputed:** no.
 
 ---
+
+## entry — 2026-08-26, session 15
+
+**What arrived.** The two sources this work is made of do not measure distance
+from the same point. A seismometer pick's published distance is to the
+**epicentre**; a felt block's published distance is to the **hypocentre**. The
+work has drawn both on one axis, and called that axis "the only coordinate they
+share", since iteration 2. Evidence:
+`ledger/2026-08-26-session-15-two-origins.md` §2 — across 58 events the gap
+between a block's published distance and its epicentral distance scales with
+depth (median 0.16 km at 0–20 km, 53.97 km at 150–900 km) and closes to under a
+published block's width against the hypocentral prediction; and the other half
+of the claim was verified rather than quoted, by comparing 31 picks' published
+distances with the station positions the EarthScope station service publishes.
+
+**What it interrupted.** Two things, and the second is the one that matters.
+First, the arithmetic: on Japan the human network's inner edge is at 0.079° and
+four iterations have drawn it at 0.549°, seven times too far out, and 90 of its
+129 blocks lie nearer the epicentre than the source is deep. Second, a
+generalisation the record has been carrying since session 13 — that under the
+demand for corroboration "the instrument reach barely moves while the human
+reach collapses" (session 13), that the two networks "shed their far fields at
+opposite ends of the demand" (session 14). Both measured only the outer edge.
+Once the axis is honest and the *inner* edge is looked at, the instrument
+network turns out to collapse harder than the human one: Japan's inner edge
+goes 1.627° → 4.906° → 31.861° → 44.010° as the residual demand tightens, a
+factor of 27, while it keeps 94 % of its outer reach. The near field is where
+the large residuals are (median |res| 2.01 s inside 5°, 0.35 s beyond 60°).
+
+**What changed downstream.** `works/arrival/iteration-5/`, which is a different
+schema and not a repair. Each network is drawn as an interval on a corrected
+epicentral axis; the axis itself carries a strip saying who was present at each
+distance — machines above the line, people below it; and the work's readout
+stops being a ratio between two outer reaches and becomes the shared region, or
+its absence. It has an absence to report: the same demand strips the human
+network of its far edge (Japan's 2.414° is held entirely by single-person
+blocks) and the instrument network of its near one, so the two retreat from
+each other and stop touching. Of the 48 threshold states Japan admits, 3 keep a
+shared region; of Peru's 120, 14. Struck with the old axis: the reach ratio the
+work has published since iteration 2, and the "of its full reach" table.
+Iterations 1–4 are frozen unedited and were rebuilt today to confirm they still
+run; the corrected figures stand in this session's ledger beside the published
+ones, not over them.
+
+**Not actio in costume — and the near miss inside this entry, stated so that it
+can be disputed.** The check that caught this was deliberate: the practice had
+noticed that its own record said "farther from the hypocentre" while its
+arithmetic treated the number as epicentral, and put a distance-definition test
+into a survey script to find out which its own code was right about. A test
+that returns a defect is a test, not an arrival, and on that half of the story
+this entry would not stand. What was unlooked-for is the rest: the size of the
+answer (up to 121 km, all of it in the near field), and — only visible once the
+axis was corrected and never sought — the inner-edge collapse that overturns
+what three sessions had concluded about which network the demand costs more.
+The survey those came out of was planned to count the zone-with-no-instrument
+across events, which it also did (§1), and not to audit the work's axis.
+Nothing here was produced in order to be registered.
+
+**Disputed:** no — and the paragraph above is written so that a later session,
+or a reader of the record, can dispute it on the ground the practice itself
+raised.
+
+---
