@@ -45,7 +45,7 @@ literature.
 
 ## How it is built
 
-`scripts/revisions/build.py`, Python standard library only, no network at read time.
+`scripts/admissions/build.py`, Python standard library only, no network at read time.
 
 1. Fetch each configured version archive and its version-history document once into `.cache/`
    (git-ignored); record **SHA-256**, byte count and retrieval date for every file.
@@ -56,9 +56,9 @@ literature.
 4. Extract the keeper's version-history text and locate each change under its own headings, so
    the classification is **derived rather than typed** — the house rule that a surface prints no
    figure it did not derive applies to the classification too.
-5. Write `src/data/revisions/<source>.json` plus an index. Committed; the archive is git.
+5. Write `src/data/admissions/<source>.json` plus an index. Committed; the archive is git.
 
-A second record is a config entry in `scripts/revisions/sources.json`, not a rewrite. The fields
+A second record is a config entry in `scripts/admissions/sources.json`, not a rewrite. The fields
 a candidate needs: a published inclusion threshold, versioned public releases, and a change
 document to read. Candidates named and untested: EM-DAT, IPC famine phases, GDACS alert levels,
 and national statistical offices that revise a headline series without a public diff.
@@ -135,7 +135,7 @@ is now part of what the instrument reports.
 
 Releases are annual, so a nightly job would be activity rather than watching. `check.py` asks the
 prior question — has a keeper published a version nobody told us about? — and runs **weekly**
-(`.github/workflows/revisions.yml`, Mondays). Discovery is per source, because keepers publish
+(`.github/workflows/admissions.yml`, Mondays). Discovery is per source, because keepers publish
 differently: UCDP carries the version in the archive URL, so the next tags can be probed and a 404
 means not yet; EM-DAT's repository keeps the versions and will list them. A newly published
 version is a fact about the world, not a change of method: appending it and rebuilding leaves the
@@ -188,7 +188,7 @@ for the derived data.
 
 ## Not yet done
 
-- ~~A consistency test~~ — **done 2026-08-27**, `src/lib/revisions/consistency.test.ts`, nineteen
+- ~~A consistency test~~ — **done 2026-08-27**, `src/lib/admissions/consistency.test.ts`, nineteen
   assertions. Written against the two failures the reader has actually had rather than imagined
   ones, and **verified by breaking the data on purpose**: setting every `filed_as` to null while
   the change document reads as read makes the extractor guard fire; zeroing the revision count on

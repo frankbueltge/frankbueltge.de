@@ -16,7 +16,7 @@ import { join } from 'node:path'
 // have been caught by adding numbers up, so most of what follows checks that the reader
 // still reaches the material at all.
 
-const DIR = join(process.cwd(), 'src', 'data', 'revisions')
+const DIR = join(process.cwd(), 'src', 'data', 'admissions')
 const ISO = /^\d{4}-\d{2}-\d{2}$/
 const SHA256 = /^[0-9a-f]{64}$/
 
@@ -63,7 +63,7 @@ const reports: [string, Report][] = readdirSync(DIR)
   .filter((f) => f.endsWith('.json') && f !== 'index.json')
   .map((f) => [f, JSON.parse(readFileSync(join(DIR, f), 'utf8')) as Report])
 
-describe('the revisions watch does not contradict itself', () => {
+describe('the admissions watch does not contradict itself', () => {
   it('has something to check', () => {
     expect(reports.length).toBeGreaterThan(0)
   })
