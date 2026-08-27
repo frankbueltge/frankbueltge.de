@@ -320,6 +320,28 @@ def build(source: dict, refresh: bool) -> dict:
     for v in versions:
         v.pop("header", None)
 
+    # How many entries did each version hold for each year? That is the question a reader
+    # actually asks — how many wars were there in 2011 — and the answer is not stable.
+    # Derived here rather than on the page, so no figure is ever typed.
+    year_series = []
+    if year_at is not None:
+        per_year = {}
+        for tag, rows in loaded.items():
+            counts = {}
+            for k in rows:
+                counts[k[year_at]] = counts.get(k[year_at], 0) + 1
+            per_year[tag] = counts
+        for y in sorted({y for c in per_year.values() for y in c}):
+            seq = [{"version": t, "count": c[y]} for t, c in per_year.items() if y in c]
+            values = [s["count"] for s in seq]
+            if len(values) > 1:
+                year_series.append({
+                    "year": y, "series": seq,
+                    "changed": len(set(values)) > 1,
+                    "spread": max(values) - min(values),
+                    "first": values[0], "last": values[-1],
+                })
+
     floors = [v.get("magnitude_floor") for v in versions if v.get("magnitude_floor") is not None]
     all_adm = [a for p in pairs for a in p["admitted"]]
     back = [a for a in all_adm if a["edge"] in ("back", "unknown")]
@@ -329,6 +351,7 @@ def build(source: dict, refresh: bool) -> dict:
         "generated": datetime.now(timezone.utc).strftime("%Y-%m-%d"),
         "versions": versions,
         "pairs": pairs,
+        "per_year": year_series,
         "findings": {
             "magnitude_floor_across_versions": min(floors) if floors else None,
             "floor_note": (
@@ -347,6 +370,13 @@ def build(source: dict, refresh: bool) -> dict:
             "removed_total": sum(len(p["removed"]) for p in pairs),
             "magnitude_revised_total": sum(p["magnitude_revised"] for p in pairs),
             "back_edge_with_published_rationale": len(back) - len(unexplained),
+            "years_counted": len(year_series),
+            "years_whose_count_changed": sum(1 for y in year_series if y["changed"]),
+            "largest_count_change": max((y["spread"] for y in year_series), default=0),
+            "count_note": (
+                "How many entries each released version holds for each year. A reader asking how "
+                "many wars there were in a given year is asking this, and the answer moves."
+            ),
             "columns_renamed_between_versions": renames,
             "rename_note": (
                 "A keeper that renames columns between releases without a change document makes "

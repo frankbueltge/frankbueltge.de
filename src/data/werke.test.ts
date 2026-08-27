@@ -33,8 +33,12 @@ describe('byRecency (newest first, stable ties)', () => {
 })
 
 describe('WERKE_CHRONO', () => {
-  it('leads with the newest experiment (Invoked Past, since 2026-08-15)', () => {
-    expect(WERKE_CHRONO[0].id).toBe('invoked-past')
+  // Pinned to a name until 2026-08-27, when registering Admissions broke it — the pin was a
+  // digit in the sense the currency doctrine warns about: true when typed, false as soon as the
+  // work continued. Asserting the rule instead cannot go stale.
+  it('is ordered newest first, with the newest entry at the head', () => {
+    const dates = WERKE_CHRONO.filter((w) => w.id !== 'ueberflug').map((w) => w.since)
+    expect([...dates].sort().reverse()).toEqual(dates)
   })
   it('ends with Überflug (placed last)', () => {
     expect(WERKE_CHRONO[WERKE_CHRONO.length - 1].id).toBe('ueberflug')
@@ -96,11 +100,12 @@ describe('tier split (Experimente vs. Studien)', () => {
   })
   it('keeps the research project and the instruments out of the experiments row (Frank, 2026-08-09; redaction reclassified 2026-08-14)', () => {
     expect(WERKE_PROJECTS.map((w) => w.id)).toEqual(['attention'])
-    expect(WERKE_INSTRUMENTS.map((w) => w.id).sort()).toEqual(['observatory', 'redaction'])
+    expect(WERKE_INSTRUMENTS.map((w) => w.id).sort()).toEqual(['admissions', 'observatory', 'redaction'])
     const experiments = WERKE_EXPERIMENTE.map((w) => w.id)
     expect(experiments).not.toContain('attention')
     expect(experiments).not.toContain('observatory')
     expect(experiments).not.toContain('redaction')
+    expect(experiments).not.toContain('admissions')
   })
 })
 
