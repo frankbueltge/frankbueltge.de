@@ -131,11 +131,54 @@ with a single death, and the record has no single number below which nothing exi
 finding belongs to records whose inclusion rule is one number, and saying which records those are
 is now part of what the instrument reports.
 
-## Cadence
+## Cadence and the watch itself
 
-Releases are annual, so a nightly job would be dishonest activity. The watch runs **on release**:
-a check for a new version, and a rebuild when one appears. Until that is wired, it is run by hand
-and the run date is in the output.
+Releases are annual, so a nightly job would be activity rather than watching. `check.py` asks the
+prior question — has a keeper published a version nobody told us about? — and runs **weekly**
+(`.github/workflows/revisions.yml`, Mondays). Discovery is per source, because keepers publish
+differently: UCDP carries the version in the archive URL, so the next tags can be probed and a 404
+means not yet; EM-DAT's repository keeps the versions and will list them. A newly published
+version is a fact about the world, not a change of method: appending it and rebuilding leaves the
+comparison rule untouched and the new finding visible in the diff. Method changes stay manual.
+
+The workflow is deliberately **not** in `deploy-cf.yml`'s `workflow_run` list. No surface reads
+this data, so a commit here has nothing to deploy; it goes in the same PR as the surface or not at
+all.
+
+### What the first watch run found, 2026-08-27
+
+**UCDP 26.1 was already published and we did not hold it.** Folded in on the first run — which is
+the difference between a finding with a date on it and a watch.
+
+What 26.1 did to the past: **nine back-edge admissions**, deepest sixteen years. Four Yemen dyads
+gained the years 2008–2011, among them Ansarallah **2009 at 1,318 deaths** — a conflict-year
+entering the canonical record of wars in 2026. Colombia–ELN **2017** arrived seven years late.
+Three entries were **removed**, including Senegal–MFDC **2001**: a conflict-year deleted from the
+past twenty-five years after it. And 122 death tolls were revised.
+
+## The reader has broken twice, both times the same way
+
+Recorded because it is the instrument's own failure mode and the reason it can be trusted only as
+far as it is checked.
+
+1. **EM-DAT renamed thirty-two columns** between releases (`TotalDeaths` → `Total Deaths`). The
+   first run read 110 revisions as **zero** — a silent rename reported as an absence of change.
+   Fixed by normalising header names; the renames are now a finding.
+2. **UCDP reformatted its change document.** The 26.1 version history interleaves an `en-US`
+   language marker before every token, gluing it to the identifier that follows and defeating a
+   word-boundary search. The first run therefore reported nine documented changes as **unlisted**
+   — the opposite of the truth, and precisely the accusation an instrument must never make by
+   accident. Fixed by stripping the markers and matching identifiers on digit boundaries.
+
+Both were presentation changes in the source that silently inverted a finding. The lesson is
+built into the output rather than into a resolution: `filed_as` and `rationale` are separate
+fields, `history.available` records whether the document was read at all, and a claim that
+something is undocumented is only as good as the last time someone checked the extractor against
+the source.
+
+**With the extractor fixed, the accurate finding is sharper than the first one:** 30 of 31 changes
+across five UCDP versions **are** filed under one of the keeper's own headings. UCDP documents
+*what* changed. It never documents *why* — 0 of 24 back-edge admissions carry a rationale.
 
 ## Licence and citation
 
@@ -146,8 +189,10 @@ for the derived data.
 ## Not yet done
 
 - A consistency test in the site suite (floor equals the published threshold; counts agree with
-  the pairs) — the instrument currently has provenance but no test.
-- The release-triggered run.
+  the pairs) — the instrument currently has provenance but no test. **This is now the only
+  structural gap**, and the two reader failures above are the argument for it.
+- ~~The release-triggered run~~ — **done 2026-08-27**, weekly, and it found UCDP 26.1 on its first
+  run.
 - ~~A second record~~ — **done 2026-08-24: EM-DAT.** A third would test whether the *absence* of a
   change document is the norm and UCDP the exception.
 - No site surface. That is a separate decision and needs the USP duty run against `/experiments`.

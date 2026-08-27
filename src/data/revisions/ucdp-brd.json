@@ -6,7 +6,7 @@
     "threshold": "25 battle-related deaths per dyad per calendar year",
     "licence_notice": "UCDP data, cited under the terms at ucdp.uu.se. Derived counts only; no source rows are redistributed here."
   },
-  "generated": "2026-08-24",
+  "generated": "2026-08-27",
   "versions": [
     {
       "tag": "22.1",
@@ -101,6 +101,30 @@
       "covers": [
         1989,
         2024
+      ],
+      "magnitude_floor": 25
+    },
+    {
+      "tag": "26.1",
+      "data": {
+        "url": "https://ucdp.uu.se/downloads/brd/ucdp-brd-dyadic-261-csv.zip",
+        "available": true,
+        "file": "data-26.1.zip",
+        "bytes": 43607,
+        "sha256": "114d6c97eb7e90d95d5420025f0c4bf6d8b164fd18372ac17e2d446ce2093d1f",
+        "retrieved": "2026-08-27"
+      },
+      "history": {
+        "available": true,
+        "sha256": "1f056cce4137494cea022fba13f83485f8bc69fdb69b4856b7468c65bbc224bb",
+        "bytes": 2922324,
+        "retrieved": "2026-08-27"
+      },
+      "columns": 25,
+      "entries": 2081,
+      "covers": [
+        1989,
+        2025
       ],
       "magnitude_floor": 25
     }
@@ -697,18 +721,285 @@
         }
       ],
       "history_read": true
+    },
+    {
+      "from": "25.1",
+      "to": "26.1",
+      "window_to": 2024,
+      "admitted": [
+        {
+          "key": [
+            481,
+            2024
+          ],
+          "magnitude": 27,
+          "label": "Government of Israel vs PRC",
+          "where": "Israel",
+          "edge": "front",
+          "years_late": 0,
+          "filed_as": "Dyad-years added",
+          "rationale": null
+        },
+        {
+          "key": [
+            624,
+            2017
+          ],
+          "magnitude": 44,
+          "label": "Government of Colombia vs ELN",
+          "where": "Colombia",
+          "edge": "back",
+          "years_late": 7,
+          "filed_as": "Dyad-years added",
+          "rationale": null
+        },
+        {
+          "key": [
+            10855,
+            2008
+          ],
+          "magnitude": 33,
+          "label": "Government of Yemen (North Yemen) vs Ansarallah",
+          "where": "Yemen (North Yemen)",
+          "edge": "back",
+          "years_late": 16,
+          "filed_as": "Dyad-years added",
+          "rationale": null
+        },
+        {
+          "key": [
+            10855,
+            2009
+          ],
+          "magnitude": 1318,
+          "label": "Government of Yemen (North Yemen) vs Ansarallah",
+          "where": "Yemen (North Yemen)",
+          "edge": "back",
+          "years_late": 15,
+          "filed_as": "Dyad-years added",
+          "rationale": null
+        },
+        {
+          "key": [
+            10855,
+            2010
+          ],
+          "magnitude": 492,
+          "label": "Government of Yemen (North Yemen) vs Ansarallah",
+          "where": "Yemen (North Yemen)",
+          "edge": "back",
+          "years_late": 14,
+          "filed_as": "Dyad-years added",
+          "rationale": null
+        },
+        {
+          "key": [
+            10855,
+            2011
+          ],
+          "magnitude": 69,
+          "label": "Government of Yemen (North Yemen) vs Ansarallah",
+          "where": "Yemen (North Yemen)",
+          "edge": "back",
+          "years_late": 13,
+          "filed_as": "Dyad-years added",
+          "rationale": null
+        },
+        {
+          "key": [
+            10857,
+            2011
+          ],
+          "magnitude": 185,
+          "label": "Government of Yemen (North Yemen) vs Free Yemeni Army",
+          "where": "Yemen (North Yemen)",
+          "edge": "back",
+          "years_late": 13,
+          "filed_as": "New dyads added",
+          "rationale": null
+        },
+        {
+          "key": [
+            11758,
+            2011
+          ],
+          "magnitude": 97,
+          "label": "Government of Yemen (North Yemen) vs Islah",
+          "where": "Yemen (North Yemen)",
+          "edge": "back",
+          "years_late": 13,
+          "filed_as": "New dyads added",
+          "rationale": null
+        },
+        {
+          "key": [
+            17474,
+            2011
+          ],
+          "magnitude": 155,
+          "label": "Government of Yemen (North Yemen) vs Alliance of Yemeni Tribes",
+          "where": "Yemen (North Yemen)",
+          "edge": "back",
+          "years_late": 13,
+          "filed_as": "New dyads added",
+          "rationale": null
+        },
+        {
+          "key": [
+            18806,
+            2023
+          ],
+          "magnitude": 37,
+          "label": "Government of Israel vs Palestinian Mujahideen Movement",
+          "where": "Israel",
+          "edge": "back",
+          "years_late": 1,
+          "filed_as": "New dyads added",
+          "rationale": null
+        },
+        {
+          "key": [
+            18806,
+            2024
+          ],
+          "magnitude": 30,
+          "label": "Government of Israel vs Palestinian Mujahideen Movement",
+          "where": "Israel",
+          "edge": "front",
+          "years_late": 0,
+          "filed_as": "New dyads added",
+          "rationale": null
+        }
+      ],
+      "removed": [
+        {
+          "key": [
+            806,
+            2001
+          ],
+          "magnitude": 33,
+          "label": "Government of Senegal vs MFDC",
+          "where": "Senegal",
+          "edge": "back",
+          "years_late": 23,
+          "filed_as": "Dyad-years removed",
+          "rationale": null
+        },
+        {
+          "key": [
+            15077,
+            2024
+          ],
+          "magnitude": 30,
+          "label": "Government of Somalia vs IS",
+          "where": "Somalia",
+          "edge": "front",
+          "years_late": 0,
+          "filed_as": "Dyad-years removed",
+          "rationale": null
+        },
+        {
+          "key": [
+            18169,
+            2024
+          ],
+          "magnitude": 75,
+          "label": "Government of Somalia vs Jubaland State of Somalia",
+          "where": "Somalia",
+          "edge": "front",
+          "years_late": 0,
+          "filed_as": "Dyads removed",
+          "rationale": null
+        }
+      ],
+      "magnitude_revised": 122,
+      "magnitude_revised_examples": [
+        {
+          "key": [
+            411,
+            2022
+          ],
+          "from": 166,
+          "to": 167,
+          "label": "Government of Philippines vs CPP"
+        },
+        {
+          "key": [
+            428,
+            2023
+          ],
+          "from": 189,
+          "to": 191,
+          "label": "Government of Myanmar (Burma) vs KNU"
+        },
+        {
+          "key": [
+            428,
+            2024
+          ],
+          "from": 165,
+          "to": 177,
+          "label": "Government of Myanmar (Burma) vs KNU"
+        },
+        {
+          "key": [
+            453,
+            2024
+          ],
+          "from": 325,
+          "to": 326,
+          "label": "Government of India vs CPI-Maoist"
+        },
+        {
+          "key": [
+            459,
+            2009
+          ],
+          "from": 94,
+          "to": 95,
+          "label": "Government of Yemen (North Yemen) vs AQAP"
+        },
+        {
+          "key": [
+            459,
+            2010
+          ],
+          "from": 175,
+          "to": 224,
+          "label": "Government of Yemen (North Yemen) vs AQAP"
+        },
+        {
+          "key": [
+            459,
+            2011
+          ],
+          "from": 1143,
+          "to": 1193,
+          "label": "Government of Yemen (North Yemen) vs AQAP"
+        },
+        {
+          "key": [
+            459,
+            2012
+          ],
+          "from": 2366,
+          "to": 2450,
+          "label": "Government of Yemen (North Yemen) vs AQAP"
+        }
+      ],
+      "history_read": true
     }
   ],
   "findings": {
     "magnitude_floor_across_versions": 25,
     "floor_note": "No entry below the published threshold exists in any version: an entry that failed the line is not recorded as having failed, it is absent.",
-    "admitted_total": 20,
-    "admitted_back_edge": 15,
-    "admitted_front_edge": 5,
+    "admitted_total": 31,
+    "admitted_back_edge": 24,
+    "admitted_front_edge": 7,
     "edge_note": "Front edge is an entry admitted for the last year the earlier version covered — reporting lag, the object of the delay literature. Back edge is an entry admitted to an earlier year: the past being rewritten, which is what this instrument watches.",
     "deepest_back_edge_years": 32,
-    "removed_total": 6,
-    "magnitude_revised_total": 341,
+    "removed_total": 9,
+    "magnitude_revised_total": 463,
     "back_edge_with_published_rationale": 0,
     "columns_renamed_between_versions": [],
     "rename_note": "A keeper that renames columns between releases without a change document makes every automated comparison silently wrong unless the reader normalises names. Recorded because it is the same failure as an unexplained revision, one level up.",
