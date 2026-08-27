@@ -4,9 +4,9 @@ name: Admissions watch
 # appends it and rebuilds. Releases are annual, so the cadence is honest rather than busy:
 # a nightly run would be activity, not watching.
 #
-# No secrets: every source is public. Deliberately NOT in deploy-cf.yml's workflow_run list —
-# no site surface reads this data yet, so a commit here has nothing to deploy. Add it there in
-# the same PR that adds the surface, not before.
+# No secrets: every source is public. Listed in deploy-cf.yml's workflow_run since 2026-08-27,
+# when /admissions started reading this data — a commit made with the built-in token never fires
+# `on: push`, so without that entry a newly found release would sit undeployed.
 
 on:
   schedule:

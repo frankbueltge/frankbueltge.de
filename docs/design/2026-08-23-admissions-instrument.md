@@ -141,9 +141,10 @@ means not yet; EM-DAT's repository keeps the versions and will list them. A newl
 version is a fact about the world, not a change of method: appending it and rebuilding leaves the
 comparison rule untouched and the new finding visible in the diff. Method changes stay manual.
 
-The workflow is deliberately **not** in `deploy-cf.yml`'s `workflow_run` list. No surface reads
-this data, so a commit here has nothing to deploy; it goes in the same PR as the surface or not at
-all.
+The workflow is in `deploy-cf.yml`'s `workflow_run` list **since 2026-08-27**, added in the same
+change as the surface. Before that it was deliberately absent: a commit with nothing to deploy
+needs no trigger. It needs one now, because commits made with the built-in token never fire
+`on: push`, and a newly found release would otherwise sit undeployed until an unrelated push.
 
 ### What the first watch run found, 2026-08-27
 
@@ -200,6 +201,11 @@ for the derived data.
   leaking into a CC BY-NC-ND commit.
 - ~~The release-triggered run~~ — **done 2026-08-27**, weekly, and it found UCDP 26.1 on its first
   run.
-- ~~A second record~~ — **done 2026-08-24: EM-DAT.** A third would test whether the *absence* of a
-  change document is the norm and UCDP the exception.
-- No site surface. That is a separate decision and needs the USP duty run against `/experiments`.
+- ~~A second record~~ — **done 2026-08-24: EM-DAT.** ~~A third~~ — **looked for 2026-08-27 and
+  there is none**, which turned out to be the finding: the binding scarcity is retrievable past
+  versions, not change documents, and almost no keeper publishes them. See the niche audit's
+  addendum.
+- ~~No site surface~~ — **done 2026-08-27: `/admissions`.** Its own page rather than `/experiments`,
+  because that shelf ranks experiments by research line and an instrument has none. Reasons and the
+  two rejected placements are in `docs/audits/2026-08-27-admissions-usp.md`.
+

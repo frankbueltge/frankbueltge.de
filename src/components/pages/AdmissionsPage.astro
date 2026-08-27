@@ -1,0 +1,164 @@
+---
+// Admissions — a register, not a work. Working title; the wording gate applies.
+//
+// It watches records that rewrite their own past: what was admitted to an earlier year,
+// what was removed from one, and whether the keeper published a reason. Data comes from
+// src/data/admissions/*.json, built by scripts/admissions/build.py and discovered weekly
+// by check.py. Every figure below is derived here at build time; none is typed. Method
+// sheet: docs/design/2026-08-23-admissions-instrument.md.
+import type { Locale } from '@/lib/site'
+import ucdp from '@/data/admissions/ucdp-brd.json'
+import emdat from '@/data/admissions/emdat.json'
+
+interface Props { locale: Locale }
+const { locale: _locale } = Astro.props
+
+type Change = {
+  key: (number | string)[]
+  magnitude: number | null
+  label: string
+  where: string
+  edge: 'front' | 'back' | 'unknown'
+  years_late: number | null
+  filed_as: string | null
+  rationale: string | null
+}
+type Report = {
+  source: { id: string; name: string; keeper: string; threshold: string; licence_notice: string }
+  generated: string
+  versions: { tag: string; data: { available: boolean; sha256?: string }; entries?: number; magnitude_floor?: number | null }[]
+  pairs: { from: string; to: string; admitted: Change[]; removed: Change[]; magnitude_revised: number; history_read: boolean }[]
+  findings: Record<string, unknown>
+}
+
+const reports = [ucdp, emdat] as unknown as Report[]
+
+const nf = new Intl.NumberFormat('en-GB')
+const back = (r: Report) => r.pairs.flatMap((p) => p.admitted).filter((c) => c.edge !== 'front')
+const removed = (r: Report) => r.pairs.flatMap((p) => p.removed)
+const num = (r: Report, k: string) => (r.findings[k] as number | null) ?? 0
+
+// The register's own headline: the reason column, across everything watched.
+const totalBack = reports.reduce((n, r) => n + back(r).length, 0)
+const totalWithReason = reports.reduce((n, r) => n + num(r, 'back_edge_with_published_rationale'), 0)
+const generated = reports.map((r) => r.generated).sort().at(-1)
+
+// Deepest admissions overall — the entries are the point, not the totals.
+const deepest = reports
+  .flatMap((r) => back(r).map((c) => ({ ...c, source: r.source.name, keeper: r.source.keeper })))
+  .filter((c) => c.years_late !== null)
+  .sort((a, b) => (b.years_late ?? 0) - (a.years_late ?? 0))
+  .slice(0, 10)
+---
+
+<main id="main" class="flex-1">
+<article class="mx-auto max-w-3xl px-4 py-14">
+
+  <header class="mb-10">
+    <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">A register · an instrument, not a work</p>
+    <h1 class="mt-3 text-[clamp(30px,6vw,56px)] font-bold tracking-[-0.03em]">Admissions</h1>
+    <p class="mt-3 max-w-xl text-fg-muted">
+      Records of the world's wars and disasters rewrite their own past. This watch holds every
+      released version at once and keeps the account: what was admitted to an earlier year, what
+      was removed from one, what changed size — and whether the keeper published a reason.
+    </p>
+  </header>
+
+  <section class="mb-14">
+    <p class="text-[clamp(40px,8vw,72px)] font-bold leading-none tabular-nums">
+      {nf.format(totalWithReason)} <span class="text-fg-faint">of</span> {nf.format(totalBack)}
+    </p>
+    <p class="mt-3 max-w-xl text-sm leading-relaxed text-fg-muted">
+      Entries admitted to an earlier year that carry a published reason. Across every release this
+      watch holds, the reason column has stayed empty — the keepers record <em>that</em> the past
+      changed, never <em>why</em>.
+    </p>
+  </section>
+
+  <section class="mb-14">
+    <h2 class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">The deepest admissions</h2>
+    <p class="mt-3 max-w-xl text-sm text-fg-muted">
+      A year that was not a war, or not a disaster, and became one — long afterwards. Depth is
+      measured against the last year the earlier release could have carried, so reporting lag at
+      the front edge is excluded.
+    </p>
+    <div class="mt-5 overflow-x-auto">
+      <table class="w-full min-w-[34rem] text-sm">
+        <thead>
+          <tr class="border-b border-fg-faint text-left font-mono text-[10px] uppercase tracking-[0.14em] text-fg-faint">
+            <th class="py-2 pr-4">Late by</th>
+            <th class="py-2 pr-4">Entry</th>
+            <th class="py-2 pr-4 text-right">Size</th>
+            <th class="py-2">Filed by the keeper as</th>
+          </tr>
+        </thead>
+        <tbody>
+          {deepest.map((c) => (
+            <tr class="border-b border-line align-top">
+              <td class="py-2 pr-4 font-mono tabular-nums whitespace-nowrap">{c.years_late}&thinsp;y</td>
+              <td class="py-2 pr-4">
+                <span class="text-fg">{c.label}</span>
+                <span class="text-fg-faint"> · {c.key.at(-1)}</span>
+              </td>
+              <td class="py-2 pr-4 text-right font-mono tabular-nums">{c.magnitude === null ? '—' : nf.format(c.magnitude)}</td>
+              <td class="py-2 font-mono text-xs text-fg-muted">{c.filed_as ?? 'not listed'}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  {reports.map((r) => (
+    <section class="mb-12 border-t border-line pt-6">
+      <h2 class="text-lg font-bold">{r.source.name}</h2>
+      <p class="mt-1 font-mono text-xs text-fg-faint">{r.source.keeper}</p>
+      <p class="mt-3 max-w-xl text-sm text-fg-muted">
+        <span class="text-fg">Inclusion rule:</span> {r.source.threshold}
+      </p>
+      <dl class="mt-5 grid grid-cols-2 gap-x-6 gap-y-4 sm:grid-cols-4">
+        {[
+          ['Versions held', nf.format(r.versions.length)],
+          ['Admitted to an earlier year', nf.format(back(r).length)],
+          ['Removed from one', nf.format(removed(r).length)],
+          ['Sizes revised', nf.format(num(r, 'magnitude_revised_total'))],
+        ].map(([k, v]) => (
+          <div>
+            <dt class="font-mono text-[10px] uppercase tracking-[0.14em] text-fg-faint">{k}</dt>
+            <dd class="mt-1 text-2xl font-bold tabular-nums">{v}</dd>
+          </div>
+        ))}
+      </dl>
+      <p class="mt-5 max-w-xl text-sm leading-relaxed text-fg-muted">
+        {r.findings.magnitude_floor_across_versions === null
+          ? 'The inclusion rule is disjunctive, so no single number exists below which this record is empty.'
+          : `No entry below ${nf.format(r.findings.magnitude_floor_across_versions as number)} exists in any version held. An entry that failed the line is not recorded as having failed — it is absent, and this watch can never count it.`}
+      </p>
+      <p class="mt-3 font-mono text-[11px] leading-relaxed text-fg-faint">
+        {r.versions.map((v) => `${v.tag}${v.data.sha256 ? ` · ${v.data.sha256.slice(0, 12)}` : ' · unavailable'}`).join('   ')}
+      </p>
+      <p class="mt-2 font-mono text-[11px] text-fg-faint">{r.source.licence_notice}</p>
+    </section>
+  ))}
+
+  <section class="mb-12 border-t border-line pt-6">
+    <h2 class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">What this is not</h2>
+    <ul class="mt-3 max-w-xl space-y-2 text-sm leading-relaxed text-fg-muted">
+      <li><span class="text-fg">Absent from a version does not mean nobody died.</span> It means that release did not hold that entry. This is about a record and its line, never about the dead being untrue.</li>
+      <li><span class="text-fg">No accusation of error.</span> Both keepers publish more than most: one a change ledger, the other its own past versions. The empty reason column is a finding about how records are kept.</li>
+      <li><span class="text-fg">Two keepers is the whole set.</span> Almost no keeper publishes retrievable past versions, so for the rest the question cannot be asked from outside at all. This is a register of where the behaviour is visible, not a survey of how public records behave.</li>
+      <li><span class="text-fg">A missing reason is a missing published reason.</span> One may exist in correspondence or in a paper. This reads what is public.</li>
+    </ul>
+  </section>
+
+  <footer class="mt-12 border-t border-line pt-6">
+    <p class="max-w-xl font-mono text-xs leading-relaxed text-fg-faint">
+      Every figure on this page is derived from committed JSON at build time; none is typed.
+      The archives are held by SHA-256, so the claim — which is only about what each released
+      version contained — is checkable by anyone who downloads the same files. Last built {generated}.
+      The watch asks weekly whether a keeper has published a version it does not hold; on its first
+      run it found one.
+    </p>
+  </footer>
+</article>
+</main>

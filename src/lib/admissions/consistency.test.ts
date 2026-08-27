@@ -170,3 +170,57 @@ describe('the admissions watch does not contradict itself', () => {
     })
   }
 })
+
+// The page at /admissions is not ranked on /experiments, so neither the graph test nor the
+// currency test guards it. That rigour is kept voluntarily here instead: the page states two
+// things in prose that the data could falsify, and if the data changes the prose must change
+// with it rather than ageing unnoticed.
+describe('the /admissions page says nothing the data refutes', () => {
+  const page = readFileSync(
+    join(process.cwd(), 'src', 'components', 'pages', 'AdmissionsPage.astro'),
+    'utf8',
+  )
+
+  it('claims the reason column is empty only while it is', () => {
+    const withReason = reports.reduce(
+      (n, [, r]) => n + ((r.findings.back_edge_with_published_rationale as number) ?? 0),
+      0,
+    )
+    if (withReason > 0) {
+      expect(
+        page.includes('the reason column has stayed empty'),
+        `${withReason} admission(s) now carry a published reason. The page still says the reason ` +
+          'column has stayed empty. Rewrite that sentence — this is the currency discipline, ' +
+          'not a data problem.',
+      ).toBe(false)
+    } else {
+      expect(page).toContain('the reason column has stayed empty')
+    }
+  })
+
+  it('claims two keepers only while there are two', () => {
+    if (reports.length !== 2) {
+      expect(
+        page.includes('Two keepers is the whole set'),
+        `${reports.length} records are now watched. The page still says two keepers are the whole ` +
+          'set. Rewrite it.',
+      ).toBe(false)
+    }
+  })
+
+  it('has something for the deepest-admissions table to show', () => {
+    const deep = reports
+      .flatMap(([, r]) => r.pairs.flatMap((p) => p.admitted))
+      .filter((c) => c.edge !== 'front' && c.years_late !== null)
+    expect(deep.length, 'the table would render empty').toBeGreaterThan(0)
+  })
+
+  it('types no figure the page could derive', () => {
+    // Prose digits age; derived ones cannot. Numerals are allowed inside the frontmatter
+    // (the derivation itself) but not in the markup below it.
+    const markup = page.slice(page.indexOf('<main'))
+    const prose = markup.replace(/\{[^}]*\}/g, '').replace(/class="[^"]*"/g, '')
+    const digits = prose.match(/(?<![\w-])\d[\d,.]*(?![\w-])/g) ?? []
+    expect(digits, `numerals typed into the markup: ${digits.join(', ')}`).toEqual([])
+  })
+})
