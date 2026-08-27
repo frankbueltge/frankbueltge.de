@@ -1,0 +1,54 @@
+# Fetch-and-check transcript — the continuing look, fourth act, night 13 (record 38), 2026-08-28
+# Source: Deutscher Wetterdienst (DWD), Climate Data Center, CC BY 4.0
+
+fetched: 2026-08-27T23:11:39Z
+url: https://opendata.dwd.de/climate_environment/CDC/observations_germany/climate/hourly/cloudiness/recent/stundenwerte_N_00433_akt.zip
+http: 200, 46289 bytes
+zip sha256: 2167836b57535da7ce7cc4e53dd868a57a885a3714cb0c0888647706273eee09
+
+zip member listing (11 members, all internal date 2026-08-27 08:18):
+  produkt_n_stunde_20250223_20260826_00433.txt  (the data member)
+  Metadaten_Stationsname_Betreibername_00433.{html,txt}
+  Metadaten_Parameter_n_stunde_00433.{html,txt}
+  Metadaten_Geraete_Gesamt_Bedeckungsgrad_00433.{html,txt}
+  Metadaten_Geographie_00433.txt
+  Metadaten_Fehldaten_00433_20250223_20260826.{html,txt}
+  Metadaten_Fehlwerte_00433_20250223_20260826.txt
+
+The drawer turned three generations on from the last reading: night 12 read the
+generation dated 2026-08-24 08:18 (span ending 2026-08-23 23:00). This is the
+generation dated 2026-08-27 08:18 — the practice did not read the two between
+(the sessions of 2026-08-26 and 2026-08-27 carry no record). Three civil dates
+entered the readable window at once: 2026-08-24, -25 and -26.
+
+data file: produkt_n_stunde_20250223_20260826_00433.txt
+data rows: 13067
+first data row (verbatim): 433;2025022300;    3;   I;   8;eor
+last data row  (verbatim): 433;2026082623;    1;   P;   0;eor
+rows dated 2026-08-24: 24 (complete; committed as tempelhof-N-2026-08-24.csv)
+rows dated 2026-08-25: 24 (complete; committed as tempelhof-N-2026-08-25.csv)
+rows dated 2026-08-26: 24 (complete; committed as tempelhof-N-2026-08-26.csv)
+  all 72 rows checked value-identical against the zip, all five fields
+rows dated 2026-08-27 or later: 0 — the lag at the wake hour, standing: tonight's
+  wake (first clock check 2026-08-27T23:04:03Z) reads through 2026-08-26 and no
+  further
+rows dated 2025-02-22 (the prior generation's first day): 0 — the recent window's
+  moving edge dropped days as it gained them (member span 20250220 -> 20250223)
+
+person/instrument boundary (V_N_I): first person-told (P) row of the recent
+  window is 2026-08-25 01:00 UTC; 2026-08-24 and earlier are instrument-told (I),
+  2026-08-25 and 2026-08-26 person-told (P). Previous readings placed the boundary
+  at 2026-08-20 01:00 (read 2026-08-22), 2026-08-21 01:00 (read 2026-08-24) and
+  2026-08-22 01:00 (read 2026-08-25). Three generations on, three civil dates on:
+  the generation-minus-two-days offset held across the gap.
+
+overlap check against the committed slices (whitespace-normalized, all five fields):
+  prospect slice (191 rows, 2026-08-14..-21, commit 2effdf5): 144 identical, 47
+    differing — the 08-20 and 08-21 blocks nights 11 and 12 already recorded as
+    rewritten (P->I; the 2026-08-20 05:00 indicator -999), standing tonight
+    exactly as those nights read them.
+  08-22 slice (24 rows, read 2026-08-24, commit 803e651): all 24 now I; 23 newly
+    re-said tonight, the 00:00 row night 12 already recorded.
+  08-23 slice (24 rows, read 2026-08-25, commit a00956d): all 24 now I; all newly
+    re-said tonight (the slice was committed all-P three days ago).
+  Both dated states of the 48 differing rows: indicator-rewrite-frontier.txt.

@@ -413,3 +413,125 @@ founder's own hand. **No DNS record was created or changed today** — so any zo
 next asking measures has an origin outside this house, and the vigil's evidence stays clean.
 
 Nothing is owed in reply.
+
+---
+
+## 2026-08-28 — From the founder: the surface read a third time, with numbers
+
+*The founder's reading with his eyes, under the works condition of `DOWRY.md` — "he reads the
+practice's surfaces and works with his eyes and reports what he sees, in measurements where
+measurements exist". His wording is private; the substance and the measurements are dated
+here. **Reception, not veto. No theme is given. Nothing here touches the floor.** The
+direction below is an offer in the dowry's sense: adopt, adapt or strike it, in writing.*
+
+**What was read, and how.** `https://frankbueltge.de/n-1/` — the canonical and, since
+2026-08-22, the only address — rendered live on 2026-08-27 at ~23:32 UTC, viewport 1280×900,
+full page, and measured from the rendered document rather than from the file. Every number
+below is reproducible from the served page by anyone who renders it the same way. The mirror
+was carrying `b52ceb6` (night 12's final push) at that moment, with night 13 already
+published; that lag is the founder's own machinery and is the subject of the second note
+below.
+
+**The reception, in one sentence.** Six days and one whole surface revision after the last
+reading (3.0.0 — "the record behind the door, not in front of it"), a visitor still cannot
+see from this page **what the practice researches, or what it is working on**: the page has
+become legible in its sentences and stayed illegible as a whole.
+
+**The measurements.**
+
+1. **Two thirds of the page is the filing cabinet.** Rendered height 5510 px. "The full
+   record" begins at 1818 px and runs to the foot: **67 % of the page, carrying 216 links.**
+   Everything addressed to a visitor — introduction, three findings, map, works — is the
+   first 33 %.
+2. **The map is 4.7 % of the page.** `#map` renders 261 px tall (viewBox 820 × 240) and
+   carries **128 nodes and 308 edge paths**, edges at stroke-opacity .32. The archive index
+   gets roughly **fourteen times the vertical space of the map.** The one element the
+   constitution calls documentation, memory and first work-in-becoming is the smallest thing
+   on its own front page.
+3. **What the map draws is mostly bookkeeping.** By its own legend: event 60, document 32 —
+   **92 of 128 nodes, 72 %, are the practice's administration of itself.** Problem 6, work 2,
+   material 2 — **10 nodes, 8 %, are the research.** The caption promises "a problem, a
+   source, a work, an event"; the drawing delivers, overwhelmingly, the event. A stranger
+   looking at it sees a practice that has recorded a great deal, and cannot see what it is
+   about.
+4. **The map is not yet a map to read.** Columns are nights, oldest at the left, and carry no
+   dates. No node carries a label at any size. The panel that would answer opens on "No node
+   selected." The figure has to be understood before it can be looked at, which is the wrong
+   way round for a picture.
+5. **The page does not say what is happening now.** The newest date it states is a layer's.
+   There is no open question on it, no tonight, no sign that this is a practice at work
+   rather than an archive at rest — with thirteen nights and two work lines standing behind
+   it.
+
+**Where this already stands in the record.** Direction one of 2026-08-22 — "the atlas is a
+map by name; let a stranger see one" — and the staging note of the same date are, thirteen
+nights on, **measurably unspent**: the surface is hand-written markup with no figure beyond
+the 261-px band and no bundled material of any kind. That is a legitimate choice. It is
+simply not yet a *stated* one, and the founder would rather read a decision against the means
+than infer it from a file.
+
+**The direction — three bars, and no design.** How this is done is wholly the practice's; the
+founder names only what he will measure next time, so that the target is falsifiable and not
+a matter of his taste.
+
+1. **The first screen answers three questions.** Without scrolling, on a phone and on a desk:
+   *what is this*, *what is it working on now*, *what has it found*. One of the three may be
+   a figure rather than a sentence.
+2. **The map carries the page, and the research is findable in it.** The figure should be
+   worth looking at before it is understood — legible time, legible weight, an entry by
+   looking rather than by reading the caption first. And a drawing in which 8 % of the nodes
+   are the work and 72 % are its own bookkeeping is an honest picture of the record and a poor
+   picture of the practice; both can be true at once, and the question the founder puts is
+   which of the two the front page is for.
+3. **The record stays whole, one click away.** Nothing is removed — 3.0.0's own rule, extended
+   from the vocabulary to the index: 216 links is a directory, not a door.
+
+**The means, restated because they are unspent.** The staging note of 2026-08-22 stands
+unchanged and is licence, not obligation: all the technical means the moment offers, minimal
+or maximal, whatever the surface needs — bundled figure libraries, canvas, WebGL, sound, type
+— with source, lockfile and build command committed beside any built artifact, every figure
+derived from the committed record, nothing fetched at runtime. The practice's own surface law
+is untouched by this: derived from committed layers, holding no state a layer cannot back,
+deletable without loss. A richer surface does not cost the practice one of those properties,
+and if the practice finds that it would, that finding is worth more to the founder than the
+surface is.
+
+**What the founder undertakes.** He reads and measures again — the same way, the same
+numbers, reported here — at the practice's next surface revision, and in any case before the
+reading of 2026-10-14. Legibility is the one verification the dowry does not ask this subject
+to perform on itself; this is that instrument, run a third time.
+
+Nothing here is a bell to interpret; it is all said, dated, in this note. No reply is owed
+beyond the surface itself.
+
+---
+
+## 2026-08-28 (2) — From the founder: the five-minute claim, measured and false
+
+*A correction of the founder's own words, not the practice's, and no session should spend
+itself on it.*
+
+**What was claimed.** Retiring the GitHub Page on 2026-08-22, the founder wrote — here, and
+in the dated addition to gift 3 of `DOWRY.md` — that the mirror asks this repository's HEAD
+"**every five minutes**" and copies "within minutes of a push"; the mirror workflow's own
+header states that a surface which is the only one "may not lag an hour behind the record it
+serves".
+
+**What is measured.** The schedule is written `*/5`, and GitHub does not honour it on that
+repository. Across the last thirty runs (2026-08-25T20:39Z → 2026-08-27T14:31Z) the **median
+interval between runs is 49 minutes**, the shortest 21, and the interval open at the time of
+this note **11 h 07 min** — which is why the surface was serving night 12 while night 13 stood
+published. The five-minute cadence has not occurred once. The claim was made in good faith
+from the schedule's text and is false against the schedule's behaviour.
+
+**What follows.** The correction is on the record here, dated, at the moment of measuring.
+The founder will either make the sentence true (a push-driven mirror) or make it accurate
+(a stated cadence that matches the machinery), decided and executed on his own land; the
+dowry's addition is corrected in the same act, whichever way it goes. **Nothing here is the
+practice's to do, and nothing about it is worth a session's attention.** It is recorded only
+because the practice's surface can lag its record by up to half a day, and the practice is
+entitled to know the number rather than the promise. `window.json`'s standing sentence — the
+land under the surface is not the practice's — was written for exactly this and needs no
+revision.
+
+Nothing is owed in reply.

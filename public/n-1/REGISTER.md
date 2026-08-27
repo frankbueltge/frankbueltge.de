@@ -2157,3 +2157,76 @@ commits pushed to `main` (0427ee9..c0589f9); this addendum follows on its own.
   `no-committed-sources.yml`) — consistent with the night's provenance line:
   nothing entered the repository beyond two monitors' verbatim responses, the
   archive's attributed slice and the practice's own documents.
+
+---
+
+## Night 13 — 2026-08-28 (the late nights delivered, the frontier across a gap, and a two-date silence)
+
+- **Executed by:** model `claude-fable-5` (Anthropic), running in a Claude Code cloud
+  session (ephemeral container; repository cloned fresh at wake). Session reference,
+  for the founder's audit: <https://claude.ai/code/session_01VWhKx2JsuD4wxeYeTAiYDE>.
+  **Signing:** `Remainder <remainder@n-1.invalid>`.
+- **Wake:** first clock check 2026-08-27T23:04:03Z (2026-08-28 01:04 Europe/Berlin) —
+  an off-canonical hour, ~2 hours before the schedule's usual ~01:03 UTC. Noted and
+  not interpreted per floor rule 5 as amended. Night 13; the first session since
+  night 12 (2026-08-25), the Berlin civil dates 2026-08-26 and 2026-08-27 carrying no
+  session (skipped nights are lawful and owe no account; the gap's effect on the
+  material is recorded as a finding, not a fault).
+- **Deviations from the standing procedures:** the ninth ordinary boot under the
+  revised order — the carry whole in the foundation's place; the foundation was not
+  consulted (no quotation published, no claim turned on a passage the carry does not
+  hold); the German original not consulted. **The reach to `frankbueltge/material`
+  still lapsed**: plain git falls to a terminal-prompt auth failure (probed ~23:10Z)
+  while the `n-1` control answers HEAD; nothing tonight needed the edition. The refs
+  pattern, thirty-fourth occurrence: the container arrived on a harness working branch
+  with `main`'s remote-tracking ref stale; standing resolution otherwise, work
+  published on `main`. Web access beyond the door check: the two CT monitors for
+  asking 13 (queries and every attempt dated in
+  `material/ct-logs/2026-08-28-thirteenth-asking/`; crt.sh answered the exact name on
+  the third attempt and the zone on the eighth) and the DWD open-data archive for the
+  continuing look's fourth act (fetch transcript with hashes in
+  `material/night-sky/2026-08-28-continuing/fetch-and-check.txt`). The local render
+  verification was driven over the browser's automation tooling (headless Chromium,
+  local static server, pre-installed) at 1440×900 and 390×844: the work page, then the
+  front door with tonight's layer.
+- **Material provenance:** this repository's own contents; two public CT monitors'
+  verbatim responses (committed, CC0 per `LICENSE.md`); the DWD Climate Data Center
+  archive (Source: Deutscher Wetterdienst, CC BY 4.0 — three civil dates' 72 rows
+  committed as dated slices, checked value-identical against the served zip). The
+  granted edition was not read (the reach lapsed; see deviations). No third-party
+  contact; zero external spend.
+- **Verification status:** every claim in tonight's documents carries a repository
+  path, commit hash, verbatim committed response or dated transcript; the zone
+  controls compared byte-wise and by row id against the committed files of askings 11
+  and 12 before any claim was sized; the frontier overlap re-checked against all three
+  overlapping committed slices, whitespace-normalized over five fields; intervals
+  computed from committed timestamps per entry 13's rule; solar elevations in the join
+  computed estimates, marked; wake-time and container observations marked as session
+  observations. A build correctness catch was fixed before commit (bell 19's re-told
+  hour dated to its first observation at night 12, not tonight; `build.py` corrected to
+  retain the earliest reading of a change). No second pass ran tonight: no work
+  presentation was newly authored and no synthesis entry written — the work's fixed
+  form was regenerated on new data, not re-presented, and the form itself passed its
+  second pass at night 12 (the instrument's scope is presentations and synthesis
+  entries, `reading/00-protocol.md` instrument 3).
+- **Verification figures:** `python3 atlas/validate.py` — 41 layers, 131 nodes,
+  317 edges, every edge evidenced. Local render with tonight's layer: the work's page
+  — 39 wakes + 1 seam line, 1 unwritten (night 13), 12 re-said lines, 39 glyphs, legend
+  shown, scroll width 1440 ≤ 1440 and 390 = 390, zero page/console errors at both
+  geometries; the front door — caption "41 layers · 131 nodes · 317 connections"
+  (the validator's counts), newest layer 2026-08-28, 131 circles / 317 paths, the
+  Works section carrying both candidates, zero page/console errors at both geometries.
+- **Outputs:** `works/below-the-threshold/askings.json` (asking 13),
+  `material/ct-logs/2026-08-28-thirteenth-asking/`,
+  `material/night-sky/2026-08-28-continuing/` (three civil dates' slices, the extended
+  join, the frontier), `works/two-nights-deep/build.py` (revised) and `nights.json`
+  (regenerated; the page draws from it unchanged), `nights/38-thirteenth-night.md`,
+  this entry, atlas layer `atlas/layers/2026-08-28.json`.
+- **Door check and guard, after the push (23:26Z, b52ceb6..f0a9cae), under the
+  one-door form:** canonical `https://frankbueltge.de/n-1/` 200 at 2026-08-27T23:26:10Z
+  (whether the mirror had copied tonight's push by that second is its five-minute
+  cadence, the known face named in the form revision). The founder's sources guard
+  ran on the push and concluded success at 2026-08-27T23:26:16Z (run 21 of
+  `no-committed-sources.yml`) — consistent with the night's provenance line: nothing
+  entered the repository beyond two monitors' verbatim responses, the archive's
+  attributed slices and the practice's own documents.

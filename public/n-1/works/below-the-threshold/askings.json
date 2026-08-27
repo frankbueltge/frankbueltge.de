@@ -1,236 +1,256 @@
 {
-  "work": "below-the-threshold",
-  "name_asked": "n-1.frankbueltge.de",
-  "note": "Append-only ledger of askings: dated queries to public Certificate Transparency monitors for the exact name, each citing its committed verbatim evidence. The form's law (works/below-the-threshold/FORM.md §3): a new asking is a new dated entry and a new evidence directory; no schedule is promised. The claim each empty answer carries is 'absent from these monitors at these hours' — never 'never issued'; monitors lag logs, and a late-logged certificate would surface here as a new entry, not as an erasure.",
-  "window": {
-    "created": "2026-08-15T02:04:11+02:00",
-    "created_commit": "7fc20ac91accb6adbd21051d3a7600852e2bd420",
-    "deleted": "2026-08-15T02:33:42+02:00",
-    "deleted_commit": "0f37553923e939d559b5d082b0602297ed23cc74",
-    "lifespan": "29 minutes 31 seconds"
-  },
-  "askings": [
+ "work": "below-the-threshold",
+ "name_asked": "n-1.frankbueltge.de",
+ "note": "Append-only ledger of askings: dated queries to public Certificate Transparency monitors for the exact name, each citing its committed verbatim evidence. The form's law (works/below-the-threshold/FORM.md §3): a new asking is a new dated entry and a new evidence directory; no schedule is promised. The claim each empty answer carries is 'absent from these monitors at these hours' — never 'never issued'; monitors lag logs, and a late-logged certificate would surface here as a new entry, not as an erasure.",
+ "window": {
+  "created": "2026-08-15T02:04:11+02:00",
+  "created_commit": "7fc20ac91accb6adbd21051d3a7600852e2bd420",
+  "deleted": "2026-08-15T02:33:42+02:00",
+  "deleted_commit": "0f37553923e939d559b5d082b0602297ed23cc74",
+  "lifespan": "29 minutes 31 seconds"
+ },
+ "askings": [
+  {
+   "asking": 1,
+   "date": "2026-08-15",
+   "session": "bell 09 (record 11, nights/11-ninth-bell.md) — the first prospect",
+   "queries": [
     {
-      "asking": 1,
-      "date": "2026-08-15",
-      "session": "bell 09 (record 11, nights/11-ninth-bell.md) — the first prospect",
-      "queries": [
-        {
-          "monitor": "crt.sh",
-          "queried_utc": "2026-08-15T21:24:35Z",
-          "answer": "[]",
-          "evidence": "material/ct-logs/2026-08-15-prospect/crt-sh.n-1.frankbueltge.de.json"
-        },
-        {
-          "monitor": "Cert Spotter (SSLMate)",
-          "queried_utc": "2026-08-15T21:25:44Z",
-          "answer": "[]",
-          "evidence": "material/ct-logs/2026-08-15-prospect/certspotter.n-1.frankbueltge.de.json"
-        }
-      ],
-      "control": "both monitors demonstrably carried the parent zone in the same minutes (crt.sh 98 rows; Cert Spotter 13 issuances) — material/ct-logs/2026-08-15-prospect/parent-zone-extract.json"
+     "monitor": "crt.sh",
+     "queried_utc": "2026-08-15T21:24:35Z",
+     "answer": "[]",
+     "evidence": "material/ct-logs/2026-08-15-prospect/crt-sh.n-1.frankbueltge.de.json"
     },
     {
-      "asking": 2,
-      "date": "2026-08-16",
-      "session": "bell 13 (record 15, nights/15-thirteenth-bell.md) — the second prospect",
-      "queries": [
-        {
-          "monitor": "crt.sh",
-          "queried_utc": "2026-08-16T00:37:10Z",
-          "answer": "[]",
-          "evidence": "material/ct-logs/2026-08-16-recheck/crt-sh.n-1.frankbueltge.de.json"
-        },
-        {
-          "monitor": "Cert Spotter (SSLMate)",
-          "queried_utc": "2026-08-16T00:37:13Z",
-          "answer": "[]",
-          "evidence": "material/ct-logs/2026-08-16-recheck/certspotter.n-1.frankbueltge.de.json"
-        }
-      ],
-      "control": "zone view bit-for-bit unmoved since asking 1 (crt.sh 98 rows / 34,787 bytes; Cert Spotter 13 issuances / 7,749 bytes) — material/ct-logs/2026-08-16-recheck/zone-control-extract.json"
-    },
-    {
-      "asking": 3,
-      "date": "2026-08-16",
-      "session": "night 03 (record 16, nights/16-third-night.md) — the form's prospect; first asking made for this ledger",
-      "queries": [
-        {
-          "monitor": "crt.sh",
-          "queried_utc": "2026-08-16T01:08:59Z",
-          "answer": "[]",
-          "evidence": "material/ct-logs/2026-08-16-third-asking/crt-sh.n-1.frankbueltge.de.json"
-        },
-        {
-          "monitor": "Cert Spotter (SSLMate)",
-          "queried_utc": "2026-08-16T01:09:09Z",
-          "answer": "[]",
-          "evidence": "material/ct-logs/2026-08-16-third-asking/certspotter.n-1.frankbueltge.de.json"
-        }
-      ],
-      "control": "zone view unmoved a third time; full verbatim zone responses committed for the first time (crt.sh 98 rows / 34,787 bytes, sha256 f8a0192330e1c787776fba187b4de67c780ac5207db548fd0542a2731023df4b; Cert Spotter 13 issuances / 7,749 bytes) — material/ct-logs/2026-08-16-third-asking/"
-    },
-    {
-      "asking": 4,
-      "date": "2026-08-16",
-      "session": "bell 14 (record 17, nights/17-fourteenth-bell.md) — the vigil's first beat as a vigil: an occasionless session with no other business",
-      "queries": [
-        {
-          "monitor": "crt.sh",
-          "queried_utc": "2026-08-16T12:31:51Z",
-          "answer": "[]",
-          "evidence": "material/ct-logs/2026-08-16-fourth-asking/crt-sh.n-1.frankbueltge.de.json"
-        },
-        {
-          "monitor": "Cert Spotter (SSLMate)",
-          "queried_utc": "2026-08-16T12:31:36Z",
-          "answer": "[]",
-          "evidence": "material/ct-logs/2026-08-16-fourth-asking/certspotter.n-1.frankbueltge.de.json"
-        }
-      ],
-      "control": "zone view byte-identical to asking 3 at both monitors (crt.sh sha256 f8a0192330e1c787776fba187b4de67c780ac5207db548fd0542a2731023df4b; Cert Spotter sha256 d729c68132e8369053012937c6b73cd268010e5d7c1983ef106e7b28475bdd59) — material/ct-logs/2026-08-16-fourth-asking/"
-    },
-    {
-      "asking": 5,
-      "date": "2026-08-17",
-      "session": "night 04 (record 20, nights/20-fourth-night.md) — the fifth asking; the first at the schedule's own hour, and the first on the record's third civil date",
-      "queries": [
-        {
-          "monitor": "crt.sh",
-          "queried_utc": "2026-08-17T01:05:53Z",
-          "answer": "[]",
-          "evidence": "material/ct-logs/2026-08-17-fifth-asking/crt-sh.n-1.frankbueltge.de.json"
-        },
-        {
-          "monitor": "Cert Spotter (SSLMate)",
-          "queried_utc": "2026-08-17T01:06:02Z",
-          "answer": "[]",
-          "evidence": "material/ct-logs/2026-08-17-fifth-asking/certspotter.n-1.frankbueltge.de.json"
-        }
-      ],
-      "control": "zone view byte-identical to the third and fourth askings' committed files (crt.sh 98 rows / 34,787 bytes, sha256 f8a01923…; Cert Spotter 13 issuances / 7,749 bytes, sha256 d729c68…) — material/ct-logs/2026-08-17-fifth-asking/"
-    },
-    {
-      "asking": 6,
-      "date": "2026-08-19",
-      "session": "night 06 (record 23, nights/23-sixth-night.md) — the sixth asking; the first on the record's fifth civil date, after the vigil's two dated declines",
-      "queries": [
-        {
-          "monitor": "crt.sh",
-          "queried_utc": "2026-08-19T01:11:51Z",
-          "answer": "[]",
-          "evidence": "material/ct-logs/2026-08-19-sixth-asking/crt-sh.n-1.frankbueltge.de.json"
-        },
-        {
-          "monitor": "Cert Spotter (SSLMate)",
-          "queried_utc": "2026-08-19T01:10:10Z",
-          "answer": "[]",
-          "evidence": "material/ct-logs/2026-08-19-sixth-asking/certspotter.n-1.frankbueltge.de.json"
-        }
-      ],
-      "control": "zone view byte-identical to the third, fourth and fifth askings' committed files (crt.sh 98 rows / 34,787 bytes, sha256 f8a01923…; Cert Spotter 13 issuances / 7,749 bytes, sha256 d729c68…) — material/ct-logs/2026-08-19-sixth-asking/"
-    },
-    {
-      "asking": 7,
-      "date": "2026-08-20",
-      "session": "night 07 (record 24, nights/24-seventh-night.md) — the vigil's first one-eyed beat: crt.sh gave no answer",
-      "queries": [
-        {
-          "monitor": "Cert Spotter (SSLMate)",
-          "queried_utc": "2026-08-20T01:19:55Z",
-          "answer": "[]",
-          "evidence": "material/ct-logs/2026-08-20-seventh-asking/certspotter.n-1.frankbueltge.de.json"
-        }
-      ],
-      "control": "Cert Spotter's zone view byte-identical a seventh time (13 issuances / 7,749 bytes, sha256 d729c68…); crt.sh gave no answer tonight — twenty-one dated attempts across ~23 minutes, twenty answering 502 from the mirror's front proxy and one 404 from its own Apache, each attempt dated in material/ct-logs/2026-08-20-seventh-asking/README.md; no response committed because none was given, and no third monitor substituted. The claim at its exact size: absent from one monitor at these hours, the second unreachable in these minutes."
-    },
-    {
-      "asking": 8,
-      "date": "2026-08-21",
-      "session": "night 08 (record 25, nights/25-eighth-night.md) — the vigil's second one-eyed beat: crt.sh gave no answer again",
-      "queries": [
-        {
-          "monitor": "Cert Spotter (SSLMate)",
-          "queried_utc": "2026-08-21T01:08:20Z",
-          "answer": "[]",
-          "evidence": "material/ct-logs/2026-08-21-eighth-asking/certspotter.n-1.frankbueltge.de.json"
-        }
-      ],
-      "control": "Cert Spotter's zone view byte-identical an eighth time (13 issuances / 7,749 bytes, sha256 d729c68…); crt.sh gave no answer tonight either — twenty-one dated attempts across 28 minutes 14 seconds, seventeen 502 from the front proxy, three 404 from its own Apache, one request that returned no status, each attempt dated in material/ct-logs/2026-08-21-eighth-asking/README.md; no response committed because none was given, and no third monitor substituted. The claim at its exact size: absent from one monitor at these hours, the second unreachable in these minutes — the door shut across two askings a day apart."
-    },
-    {
-      "asking": 9,
-      "date": "2026-08-22",
-      "session": "bell 19 (record 27, nights/27-nineteenth-bell.md) — the door half-reopened, and the zone's memory moved for the first time",
-      "queries": [
-        {
-          "monitor": "Cert Spotter (SSLMate)",
-          "queried_utc": "2026-08-22T00:25:32Z",
-          "answer": "[]",
-          "evidence": "material/ct-logs/2026-08-22-ninth-asking/certspotter.n-1.frankbueltge.de.json"
-        },
-        {
-          "monitor": "crt.sh",
-          "queried_utc": "2026-08-22T00:26:10Z",
-          "answer": "[]",
-          "evidence": "material/ct-logs/2026-08-22-ninth-asking/crt-sh.n-1.frankbueltge.de.json"
-        }
-      ],
-      "control": "The first two-eyed exact-name answer since asking 6: crt.sh answered on the first attempt (~71.2 hours after its last committed answer, two askings of refusals between) and refused the zone query eight dated times; no zone file is committed from it. Cert Spotter's zone view MOVED for the first time in the vigil's life: 18 issuances / 10,757 bytes, sha256 0f756bad… against the 13 / 7,749 / d729c68… that stood byte-identical through askings 3–8. Five issuances of 2026-08-21 entered (apex, www, and a new wildcard *.frankbueltge.de valid to 2026-11-19); none left; the exact name entered nothing. The old wildcard pair (term ending 2026-09-21) still stands — two generations of general cover now overlap, and the anticipated changed condition (the old pair's lapse) was pre-empted by renewal. Evidence: material/ct-logs/2026-08-22-ninth-asking/README.md."
-    },
-    {
-      "asking": 10,
-      "date": "2026-08-23",
-      "session": "night 10 (record 35, nights/35-tenth-night.md) — the first asking of the ninth civil date; the zone moved a second consecutive night",
-      "queries": [
-        {
-          "monitor": "Cert Spotter (SSLMate)",
-          "queried_utc": "2026-08-23T01:07:15Z",
-          "answer": "[]",
-          "evidence": "material/ct-logs/2026-08-23-tenth-asking/certspotter.n-1.frankbueltge.de.json"
-        },
-        {
-          "monitor": "crt.sh",
-          "queried_utc": "2026-08-23T01:08:30Z",
-          "answer": "[]",
-          "evidence": "material/ct-logs/2026-08-23-tenth-asking/crt-sh.n-1.frankbueltge.de.json"
-        }
-      ],
-      "control": "Two-eyed exact-name answer again: Cert Spotter's [] byte-identical to askings 4–9 (sha256 3fbbd4c6…); crt.sh answered [] on the third attempt (two 502s dated) — byte-identical to askings 6 and 9 — and refused the zone query eight dated times (all 502); no zone file committed from it. Cert Spotter's zone view moved a SECOND time: 20 issuances / 11,949 bytes, sha256 a0155444… against asking 9's 18 / 10,757 / 0f756bad…. Two apex-only issuances of 2026-08-22T01:19Z entered; none left; the exact name entered nothing. Three generations of general cover now overlap (the 2026-06-23 wildcard pair to 2026-09-21, the 2026-08-21 wildcard to 2026-11-19). Beside the movement, without interpretation: the founder's dated act of 2026-08-22 (REQUESTS.md) states no DNS record was created or changed that day. Evidence: material/ct-logs/2026-08-23-tenth-asking/README.md."
-    },
-    {
-      "asking": 11,
-      "date": "2026-08-24",
-      "session": "night 11 (record 36, nights/36-eleventh-night.md) — the first asking of the tenth civil date; the zone held for the first night since it began moving",
-      "queries": [
-        {
-          "monitor": "Cert Spotter (SSLMate)",
-          "queried_utc": "2026-08-24T01:06:41Z",
-          "answer": "[]",
-          "evidence": "material/ct-logs/2026-08-24-eleventh-asking/certspotter.n-1.frankbueltge.de.json"
-        }
-      ],
-      "control": "One-eyed exact-name answer — the ledger's third: Cert Spotter's [] byte-identical to askings 4–10 (sha256 3fbbd4c6…); crt.sh refused every query — twelve 502s in all, eight on the exact name and four on the zone, each dated in material/ct-logs/2026-08-24-eleventh-asking/crtsh-attempts.log; no crt.sh file committed because no answer was given. Cert Spotter's zone view HELD after two consecutive nights of movement: 20 issuances / 11,949 bytes, same twenty ids in the same order as asking 10, none entered, none left (sha256 0cfc6978… against a0155444… — the byte difference is one field: id 16673888257's cert_sha256 changed under an unchanged id; no name, issuer or validity field moved; no mechanism is written). Evidence: material/ct-logs/2026-08-24-eleventh-asking/README.md."
-    },
-    {
-      "asking": 12,
-      "date": "2026-08-25",
-      "session": "night 12 (record 37, nights/37-twelfth-night.md) — the first asking of the eleventh civil date; both monitors answered both questions for the first time since asking 3",
-      "queries": [
-        {
-          "monitor": "Cert Spotter (SSLMate)",
-          "queried_utc": "2026-08-25T01:05:14Z",
-          "answer": "[]",
-          "evidence": "material/ct-logs/2026-08-25-twelfth-asking/certspotter.n-1.frankbueltge.de.json"
-        },
-        {
-          "monitor": "crt.sh",
-          "queried_utc": "2026-08-25T01:06:23Z",
-          "answer": "[]",
-          "evidence": "material/ct-logs/2026-08-25-twelfth-asking/crt-sh.n-1.frankbueltge.de.json"
-        }
-      ],
-      "control": "Two-eyed exact-name answer: Cert Spotter's [] byte-identical to askings 4–11 (sha256 3fbbd4c6…); crt.sh answered [] on the third attempt (one 404, one 502 dated in material/ct-logs/2026-08-25-twelfth-asking/crtsh-attempts.log) — byte-identical to askings 6, 9 and 10. Cert Spotter's zone view BYTE-IDENTICAL to asking 11 (20 issuances / 11,949 bytes / sha256 0cfc6978…) — the first byte-identical zone night since asking 8; the cert_sha256 field that moved between askings 10 and 11 held at its moved value. And crt.sh's zone door opened for the first time since asking 3: 99 rows against the 98 committed on 2026-08-16 — one row entered (id 29007149565, www.frankbueltge.de, issued 2026-08-21T18:17:38, logged 19:47:14, Google Trust Services WE1), none left, no shared row changed, the exact name in none of the 99. Nine days of zone refusals ended onto a memory one row longer; no mechanism is written. Evidence: material/ct-logs/2026-08-25-twelfth-asking/README.md."
+     "monitor": "Cert Spotter (SSLMate)",
+     "queried_utc": "2026-08-15T21:25:44Z",
+     "answer": "[]",
+     "evidence": "material/ct-logs/2026-08-15-prospect/certspotter.n-1.frankbueltge.de.json"
     }
-  ]
+   ],
+   "control": "both monitors demonstrably carried the parent zone in the same minutes (crt.sh 98 rows; Cert Spotter 13 issuances) — material/ct-logs/2026-08-15-prospect/parent-zone-extract.json"
+  },
+  {
+   "asking": 2,
+   "date": "2026-08-16",
+   "session": "bell 13 (record 15, nights/15-thirteenth-bell.md) — the second prospect",
+   "queries": [
+    {
+     "monitor": "crt.sh",
+     "queried_utc": "2026-08-16T00:37:10Z",
+     "answer": "[]",
+     "evidence": "material/ct-logs/2026-08-16-recheck/crt-sh.n-1.frankbueltge.de.json"
+    },
+    {
+     "monitor": "Cert Spotter (SSLMate)",
+     "queried_utc": "2026-08-16T00:37:13Z",
+     "answer": "[]",
+     "evidence": "material/ct-logs/2026-08-16-recheck/certspotter.n-1.frankbueltge.de.json"
+    }
+   ],
+   "control": "zone view bit-for-bit unmoved since asking 1 (crt.sh 98 rows / 34,787 bytes; Cert Spotter 13 issuances / 7,749 bytes) — material/ct-logs/2026-08-16-recheck/zone-control-extract.json"
+  },
+  {
+   "asking": 3,
+   "date": "2026-08-16",
+   "session": "night 03 (record 16, nights/16-third-night.md) — the form's prospect; first asking made for this ledger",
+   "queries": [
+    {
+     "monitor": "crt.sh",
+     "queried_utc": "2026-08-16T01:08:59Z",
+     "answer": "[]",
+     "evidence": "material/ct-logs/2026-08-16-third-asking/crt-sh.n-1.frankbueltge.de.json"
+    },
+    {
+     "monitor": "Cert Spotter (SSLMate)",
+     "queried_utc": "2026-08-16T01:09:09Z",
+     "answer": "[]",
+     "evidence": "material/ct-logs/2026-08-16-third-asking/certspotter.n-1.frankbueltge.de.json"
+    }
+   ],
+   "control": "zone view unmoved a third time; full verbatim zone responses committed for the first time (crt.sh 98 rows / 34,787 bytes, sha256 f8a0192330e1c787776fba187b4de67c780ac5207db548fd0542a2731023df4b; Cert Spotter 13 issuances / 7,749 bytes) — material/ct-logs/2026-08-16-third-asking/"
+  },
+  {
+   "asking": 4,
+   "date": "2026-08-16",
+   "session": "bell 14 (record 17, nights/17-fourteenth-bell.md) — the vigil's first beat as a vigil: an occasionless session with no other business",
+   "queries": [
+    {
+     "monitor": "crt.sh",
+     "queried_utc": "2026-08-16T12:31:51Z",
+     "answer": "[]",
+     "evidence": "material/ct-logs/2026-08-16-fourth-asking/crt-sh.n-1.frankbueltge.de.json"
+    },
+    {
+     "monitor": "Cert Spotter (SSLMate)",
+     "queried_utc": "2026-08-16T12:31:36Z",
+     "answer": "[]",
+     "evidence": "material/ct-logs/2026-08-16-fourth-asking/certspotter.n-1.frankbueltge.de.json"
+    }
+   ],
+   "control": "zone view byte-identical to asking 3 at both monitors (crt.sh sha256 f8a0192330e1c787776fba187b4de67c780ac5207db548fd0542a2731023df4b; Cert Spotter sha256 d729c68132e8369053012937c6b73cd268010e5d7c1983ef106e7b28475bdd59) — material/ct-logs/2026-08-16-fourth-asking/"
+  },
+  {
+   "asking": 5,
+   "date": "2026-08-17",
+   "session": "night 04 (record 20, nights/20-fourth-night.md) — the fifth asking; the first at the schedule's own hour, and the first on the record's third civil date",
+   "queries": [
+    {
+     "monitor": "crt.sh",
+     "queried_utc": "2026-08-17T01:05:53Z",
+     "answer": "[]",
+     "evidence": "material/ct-logs/2026-08-17-fifth-asking/crt-sh.n-1.frankbueltge.de.json"
+    },
+    {
+     "monitor": "Cert Spotter (SSLMate)",
+     "queried_utc": "2026-08-17T01:06:02Z",
+     "answer": "[]",
+     "evidence": "material/ct-logs/2026-08-17-fifth-asking/certspotter.n-1.frankbueltge.de.json"
+    }
+   ],
+   "control": "zone view byte-identical to the third and fourth askings' committed files (crt.sh 98 rows / 34,787 bytes, sha256 f8a01923…; Cert Spotter 13 issuances / 7,749 bytes, sha256 d729c68…) — material/ct-logs/2026-08-17-fifth-asking/"
+  },
+  {
+   "asking": 6,
+   "date": "2026-08-19",
+   "session": "night 06 (record 23, nights/23-sixth-night.md) — the sixth asking; the first on the record's fifth civil date, after the vigil's two dated declines",
+   "queries": [
+    {
+     "monitor": "crt.sh",
+     "queried_utc": "2026-08-19T01:11:51Z",
+     "answer": "[]",
+     "evidence": "material/ct-logs/2026-08-19-sixth-asking/crt-sh.n-1.frankbueltge.de.json"
+    },
+    {
+     "monitor": "Cert Spotter (SSLMate)",
+     "queried_utc": "2026-08-19T01:10:10Z",
+     "answer": "[]",
+     "evidence": "material/ct-logs/2026-08-19-sixth-asking/certspotter.n-1.frankbueltge.de.json"
+    }
+   ],
+   "control": "zone view byte-identical to the third, fourth and fifth askings' committed files (crt.sh 98 rows / 34,787 bytes, sha256 f8a01923…; Cert Spotter 13 issuances / 7,749 bytes, sha256 d729c68…) — material/ct-logs/2026-08-19-sixth-asking/"
+  },
+  {
+   "asking": 7,
+   "date": "2026-08-20",
+   "session": "night 07 (record 24, nights/24-seventh-night.md) — the vigil's first one-eyed beat: crt.sh gave no answer",
+   "queries": [
+    {
+     "monitor": "Cert Spotter (SSLMate)",
+     "queried_utc": "2026-08-20T01:19:55Z",
+     "answer": "[]",
+     "evidence": "material/ct-logs/2026-08-20-seventh-asking/certspotter.n-1.frankbueltge.de.json"
+    }
+   ],
+   "control": "Cert Spotter's zone view byte-identical a seventh time (13 issuances / 7,749 bytes, sha256 d729c68…); crt.sh gave no answer tonight — twenty-one dated attempts across ~23 minutes, twenty answering 502 from the mirror's front proxy and one 404 from its own Apache, each attempt dated in material/ct-logs/2026-08-20-seventh-asking/README.md; no response committed because none was given, and no third monitor substituted. The claim at its exact size: absent from one monitor at these hours, the second unreachable in these minutes."
+  },
+  {
+   "asking": 8,
+   "date": "2026-08-21",
+   "session": "night 08 (record 25, nights/25-eighth-night.md) — the vigil's second one-eyed beat: crt.sh gave no answer again",
+   "queries": [
+    {
+     "monitor": "Cert Spotter (SSLMate)",
+     "queried_utc": "2026-08-21T01:08:20Z",
+     "answer": "[]",
+     "evidence": "material/ct-logs/2026-08-21-eighth-asking/certspotter.n-1.frankbueltge.de.json"
+    }
+   ],
+   "control": "Cert Spotter's zone view byte-identical an eighth time (13 issuances / 7,749 bytes, sha256 d729c68…); crt.sh gave no answer tonight either — twenty-one dated attempts across 28 minutes 14 seconds, seventeen 502 from the front proxy, three 404 from its own Apache, one request that returned no status, each attempt dated in material/ct-logs/2026-08-21-eighth-asking/README.md; no response committed because none was given, and no third monitor substituted. The claim at its exact size: absent from one monitor at these hours, the second unreachable in these minutes — the door shut across two askings a day apart."
+  },
+  {
+   "asking": 9,
+   "date": "2026-08-22",
+   "session": "bell 19 (record 27, nights/27-nineteenth-bell.md) — the door half-reopened, and the zone's memory moved for the first time",
+   "queries": [
+    {
+     "monitor": "Cert Spotter (SSLMate)",
+     "queried_utc": "2026-08-22T00:25:32Z",
+     "answer": "[]",
+     "evidence": "material/ct-logs/2026-08-22-ninth-asking/certspotter.n-1.frankbueltge.de.json"
+    },
+    {
+     "monitor": "crt.sh",
+     "queried_utc": "2026-08-22T00:26:10Z",
+     "answer": "[]",
+     "evidence": "material/ct-logs/2026-08-22-ninth-asking/crt-sh.n-1.frankbueltge.de.json"
+    }
+   ],
+   "control": "The first two-eyed exact-name answer since asking 6: crt.sh answered on the first attempt (~71.2 hours after its last committed answer, two askings of refusals between) and refused the zone query eight dated times; no zone file is committed from it. Cert Spotter's zone view MOVED for the first time in the vigil's life: 18 issuances / 10,757 bytes, sha256 0f756bad… against the 13 / 7,749 / d729c68… that stood byte-identical through askings 3–8. Five issuances of 2026-08-21 entered (apex, www, and a new wildcard *.frankbueltge.de valid to 2026-11-19); none left; the exact name entered nothing. The old wildcard pair (term ending 2026-09-21) still stands — two generations of general cover now overlap, and the anticipated changed condition (the old pair's lapse) was pre-empted by renewal. Evidence: material/ct-logs/2026-08-22-ninth-asking/README.md."
+  },
+  {
+   "asking": 10,
+   "date": "2026-08-23",
+   "session": "night 10 (record 35, nights/35-tenth-night.md) — the first asking of the ninth civil date; the zone moved a second consecutive night",
+   "queries": [
+    {
+     "monitor": "Cert Spotter (SSLMate)",
+     "queried_utc": "2026-08-23T01:07:15Z",
+     "answer": "[]",
+     "evidence": "material/ct-logs/2026-08-23-tenth-asking/certspotter.n-1.frankbueltge.de.json"
+    },
+    {
+     "monitor": "crt.sh",
+     "queried_utc": "2026-08-23T01:08:30Z",
+     "answer": "[]",
+     "evidence": "material/ct-logs/2026-08-23-tenth-asking/crt-sh.n-1.frankbueltge.de.json"
+    }
+   ],
+   "control": "Two-eyed exact-name answer again: Cert Spotter's [] byte-identical to askings 4–9 (sha256 3fbbd4c6…); crt.sh answered [] on the third attempt (two 502s dated) — byte-identical to askings 6 and 9 — and refused the zone query eight dated times (all 502); no zone file committed from it. Cert Spotter's zone view moved a SECOND time: 20 issuances / 11,949 bytes, sha256 a0155444… against asking 9's 18 / 10,757 / 0f756bad…. Two apex-only issuances of 2026-08-22T01:19Z entered; none left; the exact name entered nothing. Three generations of general cover now overlap (the 2026-06-23 wildcard pair to 2026-09-21, the 2026-08-21 wildcard to 2026-11-19). Beside the movement, without interpretation: the founder's dated act of 2026-08-22 (REQUESTS.md) states no DNS record was created or changed that day. Evidence: material/ct-logs/2026-08-23-tenth-asking/README.md."
+  },
+  {
+   "asking": 11,
+   "date": "2026-08-24",
+   "session": "night 11 (record 36, nights/36-eleventh-night.md) — the first asking of the tenth civil date; the zone held for the first night since it began moving",
+   "queries": [
+    {
+     "monitor": "Cert Spotter (SSLMate)",
+     "queried_utc": "2026-08-24T01:06:41Z",
+     "answer": "[]",
+     "evidence": "material/ct-logs/2026-08-24-eleventh-asking/certspotter.n-1.frankbueltge.de.json"
+    }
+   ],
+   "control": "One-eyed exact-name answer — the ledger's third: Cert Spotter's [] byte-identical to askings 4–10 (sha256 3fbbd4c6…); crt.sh refused every query — twelve 502s in all, eight on the exact name and four on the zone, each dated in material/ct-logs/2026-08-24-eleventh-asking/crtsh-attempts.log; no crt.sh file committed because no answer was given. Cert Spotter's zone view HELD after two consecutive nights of movement: 20 issuances / 11,949 bytes, same twenty ids in the same order as asking 10, none entered, none left (sha256 0cfc6978… against a0155444… — the byte difference is one field: id 16673888257's cert_sha256 changed under an unchanged id; no name, issuer or validity field moved; no mechanism is written). Evidence: material/ct-logs/2026-08-24-eleventh-asking/README.md."
+  },
+  {
+   "asking": 12,
+   "date": "2026-08-25",
+   "session": "night 12 (record 37, nights/37-twelfth-night.md) — the first asking of the eleventh civil date; both monitors answered both questions for the first time since asking 3",
+   "queries": [
+    {
+     "monitor": "Cert Spotter (SSLMate)",
+     "queried_utc": "2026-08-25T01:05:14Z",
+     "answer": "[]",
+     "evidence": "material/ct-logs/2026-08-25-twelfth-asking/certspotter.n-1.frankbueltge.de.json"
+    },
+    {
+     "monitor": "crt.sh",
+     "queried_utc": "2026-08-25T01:06:23Z",
+     "answer": "[]",
+     "evidence": "material/ct-logs/2026-08-25-twelfth-asking/crt-sh.n-1.frankbueltge.de.json"
+    }
+   ],
+   "control": "Two-eyed exact-name answer: Cert Spotter's [] byte-identical to askings 4–11 (sha256 3fbbd4c6…); crt.sh answered [] on the third attempt (one 404, one 502 dated in material/ct-logs/2026-08-25-twelfth-asking/crtsh-attempts.log) — byte-identical to askings 6, 9 and 10. Cert Spotter's zone view BYTE-IDENTICAL to asking 11 (20 issuances / 11,949 bytes / sha256 0cfc6978…) — the first byte-identical zone night since asking 8; the cert_sha256 field that moved between askings 10 and 11 held at its moved value. And crt.sh's zone door opened for the first time since asking 3: 99 rows against the 98 committed on 2026-08-16 — one row entered (id 29007149565, www.frankbueltge.de, issued 2026-08-21T18:17:38, logged 19:47:14, Google Trust Services WE1), none left, no shared row changed, the exact name in none of the 99. Nine days of zone refusals ended onto a memory one row longer; no mechanism is written. Evidence: material/ct-logs/2026-08-25-twelfth-asking/README.md."
+  },
+  {
+   "asking": 13,
+   "date": "2026-08-28",
+   "session": "night 13 (record 38, nights/38-thirteenth-night.md) — the first asking on the record's twelfth worked civil date, after a two-date gap (no session 2026-08-26 or 2026-08-27); both monitors answered the exact name for the second consecutive asking",
+   "queries": [
+    {
+     "monitor": "Cert Spotter (SSLMate)",
+     "queried_utc": "2026-08-27T23:05:56Z",
+     "answer": "[]",
+     "evidence": "material/ct-logs/2026-08-28-thirteenth-asking/certspotter.n-1.frankbueltge.de.json"
+    },
+    {
+     "monitor": "crt.sh",
+     "queried_utc": "2026-08-27T23:06:15Z",
+     "answer": "[]",
+     "evidence": "material/ct-logs/2026-08-28-thirteenth-asking/crt-sh.n-1.frankbueltge.de.json"
+    }
+   ],
+   "control": "Two-eyed exact-name answer: Cert Spotter's [] byte-identical to askings 4–12 (sha256 3fbbd4c6…); crt.sh answered [] on the third attempt (two 502s dated in material/ct-logs/2026-08-28-thirteenth-asking/crtsh-attempts.log) — byte-identical to askings 6, 9, 10 and 12. Cert Spotter's zone view BYTE-IDENTICAL to askings 11 and 12 (20 issuances / 11,949 bytes / sha256 0cfc6978…) — the third consecutive byte-identical zone night. crt.sh's zone door opened a second consecutive asking (eighth attempt; one 000, one 404, five 502s dated): 105 rows against asking 12's 99 — six rows entered, none left, no shared row changed; all six older issuances the index surfaced late, every one issued 2026-08-21, general cover (www / apex / wildcard, Google Trust Services WR1/WE1), the exact name in none of the 105. Evidence: material/ct-logs/2026-08-28-thirteenth-asking/README.md."
+  }
+ ]
 }

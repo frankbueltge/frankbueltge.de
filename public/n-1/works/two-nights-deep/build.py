@@ -10,6 +10,15 @@ Wetterdienst (DWD), Climate Data Center, hourly cloud cover, station 00433
 Berlin-Tempelhof, CC BY 4.0.
 
 Run from this directory: python3 build.py   (writes nights.json beside itself)
+
+Revisions:
+- night 12 (record 37, 2026-08-25): first form.
+- night 13 (record 38, 2026-08-28): SOURCES advanced to the fourth act's join
+  and its rewrite frontier; the first_read of a rewrite record generalized from
+  a single hardcoded boundary to a threshold form (see resolve_first_read), so a
+  frontier file that spans two first-telling dates resolves each row correctly.
+  Night 12's frontier entry restated in the same threshold form (identical
+  result). No output field changed shape.
 """
 import json, os, re
 
@@ -18,9 +27,11 @@ ROOT = os.path.normpath(os.path.join(HERE, "..", ".."))
 
 SOURCES = {
     # the newest committed join: every recorded wake x the sky's record
-    "join": "material/night-sky/2026-08-25-continuing/join.json",
+    "join": "material/night-sky/2026-08-28-continuing/join.json",
     # every committed record of the archive re-saying an already-written hour,
-    # oldest first; each names the readings its two states belong to
+    # oldest first. first_read gives the date the practice first committed each
+    # hour's telling: a plain string, or a threshold dict
+    # {"threshold": MESS_DATUM, "before": date, "at_or_after": date}.
     "rewrites": [
         {
             "path": "material/night-sky/2026-08-24-continuing/indicator-rewrite-2026-08-20.txt",
@@ -28,17 +39,27 @@ SOURCES = {
             "retold_read": "2026-08-24",
         },
         {
-            # rows before 2026-08-22 00:00 were first committed in the prospect
-            # slice (read 2026-08-22); the 2026-08-22 00:00 row in the
-            # eighth-date slice (read 2026-08-24) — per the file's own header
+            # 2026-08-21 rows first committed in the prospect slice (read
+            # 2026-08-22); the 2026-08-22 00:00 row in the eighth-date slice
+            # (read 2026-08-24)
             "path": "material/night-sky/2026-08-25-continuing/indicator-rewrite-frontier.txt",
-            "first_read": {"before 2026082200": "2026-08-22", "2026082200": "2026-08-24"},
+            "first_read": {"threshold": "2026082200", "before": "2026-08-22",
+                           "at_or_after": "2026-08-24"},
             "retold_read": "2026-08-25",
+        },
+        {
+            # 2026-08-22 rows first committed in the eighth-date slice (read
+            # 2026-08-24); 2026-08-23 rows in the ninth-date slice (read
+            # 2026-08-25)
+            "path": "material/night-sky/2026-08-28-continuing/indicator-rewrite-frontier.txt",
+            "first_read": {"threshold": "2026082300", "before": "2026-08-24",
+                           "at_or_after": "2026-08-25"},
+            "retold_read": "2026-08-28",
         },
     ],
     # the practice's dated readings of the archive, with where the boundary
     # between instrument-told and person-told rows stood in each (the frontier;
-    # material/night-sky/2026-08-25-continuing/README.md, finding 1)
+    # material/night-sky/2026-08-28-continuing/README.md, finding 2)
     "readings": [
         {"read": "2026-08-22", "generation": "2026-08-22 08:18",
          "person_rows_begin": "2026-08-20 01:00 UTC",
@@ -49,11 +70,25 @@ SOURCES = {
         {"read": "2026-08-25", "generation": "2026-08-24 08:18",
          "person_rows_begin": "2026-08-22 01:00 UTC",
          "evidence": "material/night-sky/2026-08-25-continuing/"},
+        {"read": "2026-08-28", "generation": "2026-08-27 08:18",
+         "person_rows_begin": "2026-08-25 01:00 UTC",
+         "evidence": "material/night-sky/2026-08-28-continuing/"},
     ],
 }
 
+
+def resolve_first_read(fr, key):
+    if isinstance(fr, str):
+        return fr
+    # threshold dict: rows before the threshold MESS_DATUM carry one date,
+    # rows at or after it carry another
+    return fr["before"] if key < fr["threshold"] else fr["at_or_after"]
+
+
 # hours the archive has re-said, from the committed rewrite records:
-# MESS_DATUM -> {first, current, first_read, retold_read}
+# MESS_DATUM -> {first, current, first_read, retold_read}. Records are applied
+# oldest first; a later record overwrites an earlier telling of the same hour,
+# so 'current' always holds the newest committed telling.
 retold = {}
 row_re = re.compile(r"^(\d{10})\s")
 for rw in SOURCES["rewrites"]:
@@ -62,16 +97,21 @@ for rw in SOURCES["rewrites"]:
         if not m:
             continue
         key = m.group(1)
-        # both file forms carry the two indicator states as ';P;' -> ';I;' etc.
+        # the file forms carry the two indicator states as ';P;' -> ';I;' etc.
         states = re.findall(r";\s*(P|I|-999)\s*;", line)
         if len(states) >= 2:
-            fr = rw["first_read"]
-            if isinstance(fr, dict):
-                fr = fr.get(key) or fr["before 2026082200"]
+            # records are applied oldest-reading first. A row re-said in more
+            # than one generation keeps its first telling and the FIRST reading
+            # at which the practice observed the change (prev's retold_read);
+            # 'current' advances to the newest committed telling.
+            prev = retold.get(key)
+            first = prev["first"] if prev else states[0]
+            first_read = prev["first_read"] if prev else resolve_first_read(rw["first_read"], key)
+            retold_read = prev["retold_read"] if prev else rw["retold_read"]
             retold[key] = {
-                "first": states[0], "current": states[-1],
-                "first_read": fr, "retold_read": rw["retold_read"],
-                "evidence": rw["path"],
+                "first": first, "current": states[-1],
+                "first_read": first_read, "retold_read": retold_read,
+                "evidence": prev["evidence"] if prev else rw["path"],
             }
 
 join = json.load(open(os.path.join(ROOT, SOURCES["join"])))
