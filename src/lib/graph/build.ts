@@ -94,6 +94,10 @@ function needlesFor(werk: Werk): Set<string> {
   return new Set([...tokens(raw)].filter((t) => t.length >= 4))
 }
 
+// The quote must be the bytes as the file holds them, not the parsed value: a receiver whose
+// own name carries quotation marks is stored escaped, so interpolating the parsed string builds
+// a needle that can never be found. Fixed 2026-08-28 after it turned main red — the check was
+// reporting a provenance failure for a line that was there all along.
 const provenance = (file: string, quote: string): Provenance => ({ file, quote })
 
 export function buildGraph(sources: RawSources): KnowledgeGraph {
@@ -391,7 +395,7 @@ export function buildGraph(sources: RawSources): KnowledgeGraph {
       id: receiverId,
       kind: 'receiver',
       label: packet.receiver,
-      source: provenance(LEDGER_FILE, `"receiver": "${packet.receiver}"`),
+      source: provenance(LEDGER_FILE, `"receiver": ${JSON.stringify(packet.receiver)}`),
     })
     edges.push({
       kind: 'addresses',
@@ -399,7 +403,7 @@ export function buildGraph(sources: RawSources): KnowledgeGraph {
       to: receiverId,
       note: packet.piece,
       state: packet.status,
-      source: provenance(LEDGER_FILE, `"receiver": "${packet.receiver}"`),
+      source: provenance(LEDGER_FILE, `"receiver": ${JSON.stringify(packet.receiver)}`),
     })
   }
 

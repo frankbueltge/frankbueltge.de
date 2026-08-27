@@ -181,21 +181,33 @@ describe('the /admissions page says nothing the data refutes', () => {
     'utf8',
   )
 
-  it('claims the reason column is empty only while it is', () => {
+  it('claims no keeper gives per-change reasons only while none does', () => {
     const withReason = reports.reduce(
       (n, [, r]) => n + ((r.findings.back_edge_with_published_rationale as number) ?? 0),
       0,
     )
     if (withReason > 0) {
       expect(
-        page.includes('the reason column has stayed empty'),
-        `${withReason} admission(s) now carry a published reason. The page still says the reason ` +
-          'column has stayed empty. Rewrite that sentence — this is the currency discipline, ' +
-          'not a data problem.',
+        page.includes('Neither publishes a reason for an individual change'),
+        `${withReason} admission(s) now carry a published reason. The page still says neither ` +
+          'keeper publishes one. Rewrite that sentence — currency discipline, not a data problem.',
       ).toBe(false)
     } else {
-      expect(page).toContain('the reason column has stayed empty')
+      expect(page).toContain('Neither publishes a reason for an individual change')
     }
+  })
+
+  it('has years to show for the count table, or the headline is empty', () => {
+    // Not by position: readdir is alphabetical, and only a record whose key carries a year
+    // has a per-year series at all.
+    const withYears = reports
+      .map(([, r]) => (r as unknown as { per_year?: { changed: boolean }[] }).per_year ?? [])
+      .find((series) => series.length > 0) ?? []
+    const changed = withYears
+    expect(
+      changed.filter((y) => y.changed).length,
+      'the page leads with years whose count changed; there are none to render',
+    ).toBeGreaterThan(0)
   })
 
   it('claims two keepers only while there are two', () => {

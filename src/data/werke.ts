@@ -94,6 +94,23 @@ export const WERKE: Werk[] = [
     tier: 'project',
   },
   {
+    id: 'admissions',
+    title: 'Admissions',
+    subtitle: {
+      de: 'The record of the world’s wars keeps changing its own past.',
+      en: 'The record of the world’s wars keeps changing its own past.',
+    },
+    status: 'live',
+    since: '2026-08-27',
+    href: '/admissions',
+    description: {
+      de: "An instrument, not a work. Two organisations keep the canonical lists of the world's wars and disasters, and both rewrite their own past: years gain a conflict long after the fact, entries are removed from them, death tolls move. This watch holds every released version at once and keeps the account — what was admitted to an earlier year, what was taken out of one, what changed size, and under which of the keeper's own headings each change is filed. The part a reader can check without trusting anyone: ask how many armed conflicts a given year held, and the answer is not fixed — while the places that republish these figures show no version history at all. It can only watch keepers who publish their own past versions, which is almost nobody, and it says so on its face.",
+      en: "An instrument, not a work. Two organisations keep the canonical lists of the world's wars and disasters, and both rewrite their own past: years gain a conflict long after the fact, entries are removed from them, death tolls move. This watch holds every released version at once and keeps the account — what was admitted to an earlier year, what was taken out of one, what changed size, and under which of the keeper's own headings each change is filed. The part a reader can check without trusting anyone: ask how many armed conflicts a given year held, and the answer is not fixed — while the places that republish these figures show no version history at all. It can only watch keepers who publish their own past versions, which is almost nobody, and it says so on its face.",
+    },
+    live: true,
+    tier: 'instrument',
+  },
+  {
     id: 'observatory',
     title: 'The State Before the Interface',
     subtitle: {
@@ -574,6 +591,11 @@ export const HOLDINGS_EXCLUDED_IDS: ReadonlySet<string> = new Set([
   // observatory is an instrument of that project, not an experiment of the lab.
   'attention',
   'observatory',
+  // Admissions (2026-08-27): an instrument of the counter-measurement line, and the register
+  // already separates the two — `tier: 'instrument'` puts it in WERKE_INSTRUMENTS, while
+  // /experiments stays what it says it is, a shelf of experiments grouped by research line.
+  // Registered so it is findable, excluded so it is not miscalled an experiment.
+  'admissions',
 ])
 
 /** Order for /experiments (Frank, 2026-08-14): NEWEST FIRST — a new werk enters at the top.
