@@ -61,6 +61,10 @@ on:
       - Beifang weekly
       - Katalog-Scout nightly # committet src/data/register/papers.json mit GITHUB_TOKEN
       - Spielraum watch
+      # The admissions watch commits when a keeper publishes a version it did not hold. Added
+      # 2026-08-27 together with /admissions — until that page existed a commit here had nothing
+      # to deploy, which is why the entry was deliberately absent before.
+      - Admissions watch
       - Requests watchdog # saat-sync committet register.json mit GITHUB_TOKEN → kein on:push
       - Atlas-Scout nightly # commits src/data/atlas/werke.json with GITHUB_TOKEN → no on:push
       - Puls nightly refresh # commits src/data/pulse/pulse.json with GITHUB_TOKEN → no on:push

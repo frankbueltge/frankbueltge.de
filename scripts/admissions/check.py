@@ -15,8 +15,8 @@ A newly published version is a fact about the world, not a change of method: app
 it to `sources.json` and rebuilding leaves the comparison rule untouched and the new
 finding visible in the diff. Method changes stay manual.
 
-    python3 scripts/revisions/check.py          # report only
-    python3 scripts/revisions/check.py --apply  # append what was found, then rebuild
+    python3 scripts/admissions/check.py          # report only
+    python3 scripts/admissions/check.py --apply  # append what was found, then rebuild
 
 Exit 0 when nothing new, 10 when a new release was found. Network failures are reported
 and exit 1 — an unreachable keeper is not the same as a keeper that published nothing.
@@ -34,7 +34,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 CONFIG = HERE / "sources.json"
-UA = "frankbueltge.de revisions watch (contact: f.bueltge@gmail.com)"
+UA = "frankbueltge.de admissions watch (contact: f.bueltge@gmail.com)"
 
 
 def log(msg: str) -> None:

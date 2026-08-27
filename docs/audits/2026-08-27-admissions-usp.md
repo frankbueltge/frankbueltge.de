@@ -1,4 +1,10 @@
-# USP assessment — Revisions (working title), 2026-08-27
+# USP assessment — Admissions (working title), 2026-08-27
+
+*Renamed from "Revisions" on 2026-08-27. The house already runs an instrument called **Correction**
+whose data sits in `src/data/revision/` — one letter from the `src/data/revisions/` this one had
+taken. Two instruments on adjacent objects with adjacent paths is a trap for every later reader,
+including a later session. "Admissions" is also the more exact word: the object is who is admitted
+to the past, not how far a number moved.*
 
 Run because a site surface was asked about, and the USP duty is a test rather than an intention:
 `src/lib/graph/graph.test.ts` lets nothing onto `/experiments` without a **verdict**, a **named
@@ -15,7 +21,10 @@ the one that is not testable and is the founder's.
 **UNIQUE (as a living instrument), with a stated boundary.**
 
 Not unique as a subject: the threshold critique and the undercounting critique exist in political
-science and are good. Unique as a **standing, dated, checkable register** of what an authoritative
+science and are good — and the house itself already watches revisions of an official number (see
+**Correction** in §(c), which this assessment initially failed to name; the omission is recorded
+rather than quietly fixed, because a USP pass that misses an in-house neighbour is the failure mode
+the duty exists against). Unique as a **standing, dated, checkable register** of what an authoritative
 record admitted to or removed from its own past, at what magnitude, and whether a reason was
 published. No such register was found.
 
@@ -45,6 +54,7 @@ reformatting its change document — each of which had silently inverted a findi
 | *Uncounted Dead* (J. Global Security Studies, 2025) · *The underreported death toll of wars* (arXiv, 2024) | statist bias and undercounting in conflict data | argue about the numbers; neither registers what a release did to an earlier release |
 | **Our World in Data** | republishes UCDP where most readers meet it | surfaces **no** version changes at all — which is the reason the register has an audience |
 | lakeFS, DVC and kin | data version control | version **your own** data for reproducibility; nobody in that literature watches someone else's |
+| **Correction** (this house, live since 2026-06-22, counter-measurement) | the **magnitude** of an official number across vintages — US employment via the Philadelphia Fed's real-time dataset; its finding is directional bias, 22 of the last 24 months revised downward | **the nearest neighbour of all, and it is in-house.** Correction asks *how wrong was the number*; this asks *who was admitted to the past* — categorical membership against a published inclusion threshold, plus whether a reason was given. Siblings: Correction holds the magnitude half, this the membership half. Neither subsumes the other, and the empty reason column has no counterpart in Correction. |
 
 ## (d) The daylight, named
 
@@ -86,7 +96,27 @@ So there are three placements and none of them is mine to pick:
 3. **Its own small surface**, outside the shelf — a page that is a register and says so. Costs: a
    new route and no precedent for it.
 
-**What shipping would concretely require**, in whichever case: an entry in `src/data/werke.ts`
+## Decision, 2026-08-27 — its own surface
+
+The founder delegated the placement. Chosen: **its own small surface at `/admissions`.**
+
+- **Against waiting for v3:** it makes visibility depend on a constitutional decision that is not
+  arriving by itself, and this session's own lesson is that what waits does not happen — the first
+  work candidate failed in part because nothing had been shown to anyone until it was too late.
+- **Against `/experiments`:** that shelf ranks experiments *by research line*, so placing an
+  instrument there requires asserting it has a line, i.e. that it is an experiment. That is the
+  category error the v3 draft's first move exists to end, committed in the very surface that
+  blurs it.
+- **For its own page:** honest about the category, needs no decision from anyone, leaves
+  `werke.ts` and the line taxonomy untouched, and commits the house to nothing it would have to
+  unwind if v3 lands differently.
+
+The page therefore does not claim to be a work, is not ranked, and says on its face that it is a
+register. The rigour the `/experiments` tests would have enforced is kept voluntarily: every figure
+derived from the committed JSON at build time, none typed, and a test guarding the page's claims
+against the data.
+
+**What shipping requires**, in whichever case: an entry in `src/data/werke.ts`
 with a `line`, a route, this audit's (a)/(c)/(d) folded into `docs/audits/` so the graph test finds
 a verdict, named daylight and prior art, the description above (or its successor) under the
 currency test, `npm run graph:build`, and the watch workflow added to `deploy-cf.yml`'s

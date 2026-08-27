@@ -1,0 +1,11 @@
+---
+import Page from '@/layouts/Page.astro'
+import AdmissionsPage from '@/components/pages/AdmissionsPage.astro'
+const locale = 'en' as const
+---
+<Page
+  title="Admissions | Frank Bültge"
+  description="A register of what authoritative records admitted to or removed from their own past — and whether a reason was published."
+>
+  <AdmissionsPage {locale} />
+</Page>

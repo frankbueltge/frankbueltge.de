@@ -1,12 +1,12 @@
-name: Revisions watch
+name: Admissions watch
 
 # Asks weekly whether a watched keeper has published a version we do not hold, and if so
 # appends it and rebuilds. Releases are annual, so the cadence is honest rather than busy:
 # a nightly run would be activity, not watching.
 #
-# No secrets: every source is public. Deliberately NOT in deploy-cf.yml's workflow_run list —
-# no site surface reads this data yet, so a commit here has nothing to deploy. Add it there in
-# the same PR that adds the surface, not before.
+# No secrets: every source is public. Listed in deploy-cf.yml's workflow_run since 2026-08-27,
+# when /admissions started reading this data — a commit made with the built-in token never fires
+# `on: push`, so without that entry a newly found release would sit undeployed.
 
 on:
   schedule:
@@ -30,27 +30,27 @@ jobs:
         id: check
         run: |
           set +e
-          python3 scripts/revisions/check.py --apply
+          python3 scripts/admissions/check.py --apply
           code=$?
           set -e
           # 0 nothing new · 10 a new release was found and folded in · anything else is a fault
           echo "code=$code" >> "$GITHUB_OUTPUT"
           if [ "$code" -ne 0 ] && [ "$code" -ne 10 ]; then
-            echo "::error::revisions watch failed with exit $code"
+            echo "::error::admissions watch failed with exit $code"
             exit "$code"
           fi
 
       - name: Commit what the keeper changed
         if: steps.check.outputs.code == '10'
         run: |
-          git config user.name  'Revisions Watch'
-          git config user.email 'revisions@frankbueltge.de.invalid'
-          git add scripts/revisions/sources.json src/data/revisions
+          git config user.name  'Admissions Watch'
+          git config user.email 'admissions@frankbueltge.de.invalid'
+          git add scripts/admissions/sources.json src/data/admissions
           if git diff --cached --quiet; then
             echo 'A new version was found but nothing in the output changed.'
             exit 0
           fi
-          git commit -m "revisions: a keeper published a version we did not hold ($(date -u +%Y-%m-%d))
+          git commit -m "admissions: a keeper published a version we did not hold ($(date -u +%Y-%m-%d))
 
           Found by the weekly watch and folded in: the new release is appended to
           sources.json and the comparison rebuilt. The rule is untouched; only the set of

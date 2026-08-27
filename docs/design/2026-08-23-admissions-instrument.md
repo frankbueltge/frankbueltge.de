@@ -45,7 +45,7 @@ literature.
 
 ## How it is built
 
-`scripts/revisions/build.py`, Python standard library only, no network at read time.
+`scripts/admissions/build.py`, Python standard library only, no network at read time.
 
 1. Fetch each configured version archive and its version-history document once into `.cache/`
    (git-ignored); record **SHA-256**, byte count and retrieval date for every file.
@@ -56,9 +56,9 @@ literature.
 4. Extract the keeper's version-history text and locate each change under its own headings, so
    the classification is **derived rather than typed** — the house rule that a surface prints no
    figure it did not derive applies to the classification too.
-5. Write `src/data/revisions/<source>.json` plus an index. Committed; the archive is git.
+5. Write `src/data/admissions/<source>.json` plus an index. Committed; the archive is git.
 
-A second record is a config entry in `scripts/revisions/sources.json`, not a rewrite. The fields
+A second record is a config entry in `scripts/admissions/sources.json`, not a rewrite. The fields
 a candidate needs: a published inclusion threshold, versioned public releases, and a change
 document to read. Candidates named and untested: EM-DAT, IPC famine phases, GDACS alert levels,
 and national statistical offices that revise a headline series without a public diff.
@@ -135,15 +135,16 @@ is now part of what the instrument reports.
 
 Releases are annual, so a nightly job would be activity rather than watching. `check.py` asks the
 prior question — has a keeper published a version nobody told us about? — and runs **weekly**
-(`.github/workflows/revisions.yml`, Mondays). Discovery is per source, because keepers publish
+(`.github/workflows/admissions.yml`, Mondays). Discovery is per source, because keepers publish
 differently: UCDP carries the version in the archive URL, so the next tags can be probed and a 404
 means not yet; EM-DAT's repository keeps the versions and will list them. A newly published
 version is a fact about the world, not a change of method: appending it and rebuilding leaves the
 comparison rule untouched and the new finding visible in the diff. Method changes stay manual.
 
-The workflow is deliberately **not** in `deploy-cf.yml`'s `workflow_run` list. No surface reads
-this data, so a commit here has nothing to deploy; it goes in the same PR as the surface or not at
-all.
+The workflow is in `deploy-cf.yml`'s `workflow_run` list **since 2026-08-27**, added in the same
+change as the surface. Before that it was deliberately absent: a commit with nothing to deploy
+needs no trigger. It needs one now, because commits made with the built-in token never fire
+`on: push`, and a newly found release would otherwise sit undeployed until an unrelated push.
 
 ### What the first watch run found, 2026-08-27
 
@@ -188,7 +189,7 @@ for the derived data.
 
 ## Not yet done
 
-- ~~A consistency test~~ — **done 2026-08-27**, `src/lib/revisions/consistency.test.ts`, nineteen
+- ~~A consistency test~~ — **done 2026-08-27**, `src/lib/admissions/consistency.test.ts`, nineteen
   assertions. Written against the two failures the reader has actually had rather than imagined
   ones, and **verified by breaking the data on purpose**: setting every `filed_as` to null while
   the change document reads as read makes the extractor guard fire; zeroing the revision count on
@@ -200,6 +201,11 @@ for the derived data.
   leaking into a CC BY-NC-ND commit.
 - ~~The release-triggered run~~ — **done 2026-08-27**, weekly, and it found UCDP 26.1 on its first
   run.
-- ~~A second record~~ — **done 2026-08-24: EM-DAT.** A third would test whether the *absence* of a
-  change document is the norm and UCDP the exception.
-- No site surface. That is a separate decision and needs the USP duty run against `/experiments`.
+- ~~A second record~~ — **done 2026-08-24: EM-DAT.** ~~A third~~ — **looked for 2026-08-27 and
+  there is none**, which turned out to be the finding: the binding scarcity is retrievable past
+  versions, not change documents, and almost no keeper publishes them. See the niche audit's
+  addendum.
+- ~~No site surface~~ — **done 2026-08-27: `/admissions`.** Its own page rather than `/experiments`,
+  because that shelf ranks experiments by research line and an instrument has none. Reasons and the
+  two rejected placements are in `docs/audits/2026-08-27-admissions-usp.md`.
+

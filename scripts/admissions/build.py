@@ -14,8 +14,8 @@ Everything the instrument claims is derived here and committed: source archives 
 SHA-256, coverage windows, the filing heading each change carries in the keeper's own
 version history. Nothing is typed by hand. Stdlib only; no network at read time.
 
-    python3 scripts/revisions/build.py            # use cache, fetch what is missing
-    python3 scripts/revisions/build.py --refresh  # re-fetch every archive
+    python3 scripts/admissions/build.py            # use cache, fetch what is missing
+    python3 scripts/admissions/build.py --refresh  # re-fetch every archive
 """
 
 from __future__ import annotations
@@ -36,9 +36,9 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 CONFIG = Path(__file__).resolve().parent / "sources.json"
-CACHE = ROOT / ".cache" / "revisions"
-OUT = ROOT / "src" / "data" / "revisions"
-UA = "frankbueltge.de revisions watch (contact: f.bueltge@gmail.com)"
+CACHE = ROOT / ".cache" / "admissions"
+OUT = ROOT / "src" / "data" / "admissions"
+UA = "frankbueltge.de admissions watch (contact: f.bueltge@gmail.com)"
 
 # The keeper's own filing headings. A change found under one of these is classified
 # by the keeper; a change found under none is unexplained in its own record.
