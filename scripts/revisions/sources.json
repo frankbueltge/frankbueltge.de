@@ -40,10 +40,19 @@
           "data": "https://ucdp.uu.se/downloads/brd/ucdp-brd-dyadic-251-csv.zip",
           "history": "https://ucdp.uu.se/downloads/brd/versionhistory-brd-251.pdf",
           "suffix": "zip"
+        },
+        {
+          "tag": "26.1",
+          "data": "https://ucdp.uu.se/downloads/brd/ucdp-brd-dyadic-261-csv.zip",
+          "suffix": "zip",
+          "history": "https://ucdp.uu.se/downloads/brd/versionhistory-brd-261.pdf"
         }
       ],
       "year_index": 1,
-      "history_published": true
+      "history_published": true,
+      "discover": {
+        "kind": "url_pattern"
+      }
     },
     {
       "id": "emdat",
@@ -76,7 +85,12 @@
           "suffix": "xlsx",
           "history": null
         }
-      ]
+      ],
+      "discover": {
+        "kind": "dataverse",
+        "doi": "doi:10.14428/DVN/I0LTPH",
+        "file_contains": "archive"
+      }
     }
   ]
 }
