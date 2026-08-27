@@ -183,3 +183,59 @@ magnitude, and whether a reason was given.
 
 It is an instrument, not a work; its neighbours are scholarly, not artistic; and it does not
 require anyone to decide whether a machine can make art.
+
+---
+
+## Addendum, 2026-08-27 — the third record, and why there isn't one
+
+The instrument's own list asked for a third record to test whether the *absence* of a change
+document is the norm and UCDP the exception. The pass found no third watchable record, and the
+reason reframes the instrument rather than weakening it.
+
+**NOAA Billion-Dollar Weather and Climate Disasters — rejected on three grounds.** Its shape is
+ideal: an explicit monetary threshold, discrete events, retroactive revision. But it was
+**retired in May 2025** with no updates beyond calendar year 2024, so there is nothing left to
+watch; no retrievable versioned data file was found at its public paths; and it sits inside a live
+political dispute over climate data — Pielke's *npj Natural Hazards* critique, the retirement,
+congressional letters opposing it. An instrument about record-keeping would import that fight
+without being equipped to carry it, and its own findings would be read as a position in it.
+
+**The web archive is not a substitute for a keeper's versioning.** The obvious workaround — where
+the keeper keeps no vintages, take them from the Internet Archive — was tested and **fails on the
+thing that matters**. Wayback holds *pages*: IPC's tool page has snapshots, and so does UCDP's
+download index. It holds neither Our World in Data's grapher CSV endpoints nor the World Bank's
+API responses. **The archive keeps the shop window, not the goods.** For a data watch that is
+decisive, because what must be compared is the file behind the download button, not the page
+around it.
+
+**IPC — undetermined, not ruled out.** Its public API v2.0 exists, and famine phases are exactly
+the right shape of threshold. Whether it exposes what a classification said earlier could not be
+read from the raw HTML of its documentation, which is client-rendered. It needs a rendered read
+before any verdict.
+
+### The reframing
+
+The question was answered from the other direction. **The binding scarcity is not change
+documents; it is retrievable past versions.**
+
+| Keeper | Publishes its own vintages | Publishes a change document | Publishes reasons |
+|---|---|---|---|
+| UCDP | **yes** | **yes** — a ledger of ids and years | no |
+| EM-DAT | **yes**, via Dataverse | no | no |
+| NOAA (retired) | not found | — | — |
+| Our World in Data | no | no | no |
+| World Bank, IPC, others examined | not found / undetermined | cannot be asked | cannot be asked |
+
+Of the candidates examined, **two** keepers publish their own past versions. For everyone else the
+question of whether they document their revisions **cannot be asked from outside at all**, because
+there is nothing to compare against.
+
+Which makes UCDP not the problem case but the **most transparent member of a set of two** — and it
+explains why nobody runs this instrument: not because the object is uninteresting, but because
+**almost nobody can be watched.** That is a finding about the infrastructure of public record-
+keeping, and it is stronger than the one the third record was supposed to produce.
+
+**Consequence for scope, stated plainly:** the watch covers what can be watched, and its output
+names the boundary. It is not a survey of how public records behave; it is a register of the two
+places where the behaviour is visible. A third record enters the moment a keeper starts publishing
+vintages — and the weekly watch would notice.
