@@ -158,8 +158,10 @@ body {
 
   /* A fixed overlay cannot follow a zoomed visual viewport: panning would drag the page under
      the dark ring. Base.astro sets this class while the page is zoomed. */
+  /* `opacity`, not `display`: the layer stays in the tree, so nothing is torn down and
+     rebuilt when the state flips. */
   :root.is-zoomed .vignette {
-    display: none;
+    opacity: 0;
   }
 
   /* Neon bloom for the wordmark (works through background-clip:text via filter). */
