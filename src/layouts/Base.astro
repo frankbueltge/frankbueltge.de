@@ -140,17 +140,28 @@ const workLd = work ? workJsonLd(work, locale, canonical) : null
     {/* Cinematic vignette over everything (decorative, never blocks input). */}
     <div class="vignette" aria-hidden="true"></div>
     <script is:inline>
-      // The vignette is `position: fixed`, so it is anchored to the LAYOUT viewport and does not
-      // follow a pinch or a smart zoom. Zoom in and pan, and the page slides under its dark ring
-      // until most of what you are reading sits in the shadow — reported 2026-08-23 as "the
-      // content jumps left and only a quarter is left". While the visual viewport is zoomed, the
-      // decoration steps aside; at 1:1 nothing changes.
+      // Zoom state, published only once the viewport has SETTLED, and never during the gesture.
+      // Two findings behind that: a `position: fixed` overlay is anchored to the layout viewport
+      // and does not follow a pinch or smart zoom, so panning drags the page under its dark ring
+      // (2026-08-23); and doing layout work while `visualViewport` is still firing costs the
+      // gesture itself — on iOS two-finger zoom stopped working (2026-08-27). So: no class
+      // changes, no library calls, nothing at all while the fingers are moving.
       ;(() => {
         const vv = window.visualViewport
         if (!vv) return
-        const sync = () => document.documentElement.classList.toggle('is-zoomed', vv.scale > 1.01)
-        vv.addEventListener('resize', sync)
-        sync()
+        let zoomed = false
+        let timer = 0
+        const publish = () => {
+          const now = vv.scale > 1.01
+          if (now === zoomed) return
+          zoomed = now
+          document.documentElement.classList.toggle('is-zoomed', now)
+          document.dispatchEvent(new CustomEvent('zoomchange', { detail: { zoomed: now } }))
+        }
+        vv.addEventListener('resize', () => {
+          clearTimeout(timer)
+          timer = window.setTimeout(publish, 200)
+        })
       })()
     </script>
 
@@ -175,12 +186,13 @@ const workLd = work ? workJsonLd(work, locale, canonical) : null
         // pinched or smart-zoomed, resets the horizontal offset of the zoomed view on such a
         // write — so every frame yanked the page back and the content jumped left mid-scroll.
         // Stopped, Lenis stops preventing the wheel default and native scrolling resumes.
-        const vv = window.visualViewport
-        if (vv) {
-          const sync = () => (vv.scale > 1.01 ? lenis.stop() : lenis.start())
-          vv.addEventListener('resize', sync)
-          sync()
-        }
+        // The signal comes from the settled publisher above: waiting is deliberate, because the
+        // bug this guards against needs a SCROLL, which comes after the gesture, never during it.
+        document.addEventListener('zoomchange', (event) => {
+          const { zoomed } = (event as CustomEvent<{ zoomed: boolean }>).detail
+          if (zoomed) lenis.stop()
+          else lenis.start()
+        })
       }
     </script>
 
