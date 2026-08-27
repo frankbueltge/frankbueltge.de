@@ -193,7 +193,16 @@ def pdf_text(path: Path) -> str:
         parts = re.findall(rb"\((?:\\.|[^()\\])*\)", chunk)
         if parts:
             out.append(b"".join(p[1:-1] for p in parts))
-    return re.sub(r"\s+", " ", b"\n".join(out).decode("latin-1", "replace"))
+    text = re.sub(r"\s+", " ", b"\n".join(out).decode("latin-1", "replace"))
+    # Keepers reformat their own change documents. UCDP's 26.1 history interleaves an
+    # `en-US` language marker before every token, which glues it to the identifier that
+    # follows and defeats a word-boundary search — the reader would then report a change
+    # the keeper did list as unlisted. Strip the markers, and match ids on digit
+    # boundaries rather than word boundaries. Both are recorded here because this is the
+    # same failure as the renamed columns in EM-DAT: a presentation change in the source
+    # silently inverting a finding.
+    text = re.sub(r"\b[a-z]{2}-[A-Z]{2}(?=\S)", "", text)
+    return re.sub(r"\s{2,}", " ", text)
 
 
 def classify(history: str, key: tuple, to_tag: str) -> dict:
@@ -211,7 +220,7 @@ def classify(history: str, key: tuple, to_tag: str) -> dict:
     found = None
     for h in HEADINGS:
         hm = re.search(re.escape(h) + r"(.*?)(?=" + "|".join(re.escape(x) for x in HEADINGS) + r"|Misc\. Changes|$)", sec, re.S)
-        if hm and re.search(rf"\b{ident}\b", hm.group(1)):
+        if hm and re.search(rf"(?<!\d){ident}(?!\d)", hm.group(1)):
             found = h
             break
     # a rationale would be prose; the ledger is columns. Look for any sentence near the id.
