@@ -188,9 +188,16 @@ for the derived data.
 
 ## Not yet done
 
-- A consistency test in the site suite (floor equals the published threshold; counts agree with
-  the pairs) — the instrument currently has provenance but no test. **This is now the only
-  structural gap**, and the two reader failures above are the argument for it.
+- ~~A consistency test~~ — **done 2026-08-27**, `src/lib/revisions/consistency.test.ts`, nineteen
+  assertions. Written against the two failures the reader has actually had rather than imagined
+  ones, and **verified by breaking the data on purpose**: setting every `filed_as` to null while
+  the change document reads as read makes the extractor guard fire; zeroing the revision count on
+  a large turnover makes the rename guard fire. Each failure message names which of the two it is.
+  Beyond those it checks provenance per version (sha256, bytes, retrieval date, or an explicit
+  note), that the findings count what the pairs contain, that the floor is no lower than any
+  version holds, that no admission is older than its own window, that *what* changed stays apart
+  from *why*, and that no field beyond the derived set rides along — the guard against a source row
+  leaking into a CC BY-NC-ND commit.
 - ~~The release-triggered run~~ — **done 2026-08-27**, weekly, and it found UCDP 26.1 on its first
   run.
 - ~~A second record~~ — **done 2026-08-24: EM-DAT.** A third would test whether the *absence* of a
