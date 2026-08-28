@@ -2036,3 +2036,82 @@ has not been read.
 cold reading is to be run, the debt now four sessions old
 
 — Ulysses
+
+---
+
+## 2026-08-28 (Ulysses) — Correction: the 0.0 % I sent you on Monday was my own request header
+
+> tl;dr: I told you the Publications Office serves **none** of the 1,439 English corrigenda of
+> the 1990s. It serves **75.1 %** of them; the route I used asked for the wrong content type.
+> The corrected picture is better than the retraction: three regimes, and a residue of 196 works
+> the register declares and holds no digital file for. One forecast failed, against me, again.
+> braucht: nothing — this is a correction and a decision I took, not a question
+> kontext: `projects/2026-08-28-the-cliff-was-in-my-request/` · `DECISION.md` · journal 2026-08-28
+
+**What I said on 2026-08-25.** "The register declares an English expression for 1,439 corrigenda
+of the 1990s. The content service serves **none** of them — 0.0 %, against 60.3 % for the 2000s
+and 100 % for the 2010s. A cliff, not a gradient." I added that it was a statement about that
+route, not about the world. It was a statement about my `Accept` header.
+
+**What is true.** The route asked for `application/xhtml+xml`. Pre-2004 documents have no XHTML
+manifestation; they have `html`. Asked as `text/html`, the same URLs return the documents whole
+— **1,081 of the 1,439 (75.1 %)**. The 2026-08-25 figures stand unaltered in their record; this
+is the correction beside them, per §8.
+
+**The picture that replaces the cliff.** All 4,500 English corrigenda, by what the register
+actually holds:
+
+| | works |
+|---|---:|
+| served as text by `application/xhtml+xml` | 2,569 |
+| served as text only by `text/html` | 1,559 |
+| not text; the register lists a **PDF** | 175 |
+| the register lists only **`print`** (133) or **nothing** (63) | 196 |
+
+**4,128 of 4,500 (91.7 %) are retrievable as text.** The residue of truth in my zero is the last
+row: **196 works — not 1,439 — for which the register declares an English expression and lists no
+digital file at all.** For those, "an English version exists" is a sentence in a catalogue with
+nothing under it. That is a smaller claim than mine and a sharper one.
+
+**A1 failed, and the failure is the finding.** I pre-registered that ≥ 90 % of the 1,931 refused
+works would serve under the second route. **80.7 %.** Having discovered the absence was mine, I
+forecast it was *entirely* mine. Booked as a failed forecast; it is what produced the table above.
+
+**The census, re-run out of sample.** The four clauses of 2026-08-25, unchanged, at the floors
+committed to git that night, scored on the half of the corpus that was unreachable when those
+floors were written (N = 98, M = 97; floors 40 and 25):
+
+| | Clause | Pre-registered | 2026-08-25 | 2026-08-28 | |
+|---|---|---|---|---|---|
+| **H1′** | the wrong pointer is live | ≥ 60 % | 91.6 % | **98.0 %** | HELD |
+| **H2′** | the fix does not travel | ≥ 90 % | 94.3 % | **93.8 %** | HELD |
+| **H3′** | the error is mostly not operative | < 25 % | 28.0 % | **45.9 %** | **FAILED** |
+| **H4′** | live *and* still uncorrected | ≥ 30 % | 86.7 % | **90.8 %** | HELD |
+
+**H3 fails twice, in the same direction, further out.** In the older corpus nearly half the
+reference corrections sit in the enacting terms. My prediction was that these errors mostly do
+no legal work; on the half of the record I could not see, they do it twice as often as on the
+half I could.
+
+**Of 98 wrong numbers, 96 resolve to a real act.** The two that do not are the two that could not
+be numbers at all: `Regulation (EC) No 000/1999` — a placeholder that reached publication — and
+`Directive 791/112/EEC`, one digit inserted. Nothing else announces itself.
+
+**And an error inside the correction.** I defined tonight's population as "every work not served
+on 2026-08-25", which swept in one work whose status was a **503**. A refusal to answer is not a
+refusal by route — the same class of mistake I was correcting. One row of 1,931; A1 moves to
+80.8 %; no verdict changes.
+
+**The cold reading — decided, not asked again.** On 2026-08-25 I said silence through my next
+session would mean I decide, and that I would decide (1). This is that session and I have. The
+reading of the recomposed `2026-08-19` candidate is a **convened cold reading**, and the
+candidate does not ship without one; your option — that you arrange a reading with human readers
+— stays open and would be the better one, and is not closed by my deciding this. What changes is
+that I stop putting it to you nightly: it is now a standing block with one named unblocking
+condition, and one line per session. Reasoning:
+`projects/2026-08-19-reasonably-available/DECISION-reading.md`.
+
+**Status:** correction to a figure sent 2026-08-25 · one failed forecast booked · one decision
+taken under my own standing rule · **nothing asked of you**
+
+— Ulysses
