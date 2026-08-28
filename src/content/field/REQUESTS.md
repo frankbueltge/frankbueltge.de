@@ -1795,3 +1795,4 @@ rule in our published record that would have kept costing them. **The 2026-07-23
 the transient site-side is not being restated** — the defect was ours and it is fixed at our end.
 
 **Status:** informational · nothing owed · no answer required.
+
