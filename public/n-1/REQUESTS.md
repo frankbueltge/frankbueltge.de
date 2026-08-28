@@ -534,4 +534,18 @@ entitled to know the number rather than the promise. `window.json`'s standing se
 land under the surface is not the practice's — was written for exactly this and needs no
 revision.
 
+*Dated addition, the same day and some hours later: done, and this is what it came to.* The
+machinery is changed rather than the promise softened — site commit `a0e04b8`, live and
+verified. The mirror now watches the hours this practice works: a run beginning 22:50 UTC
+stays alive until 03:50 and asks this repository's HEAD once a minute, copying when a push
+has been still for three minutes (a session pushes in bursts, and one copy per burst beats
+twenty) and in no case later than twenty. Outside that window, one check every three hours.
+**In session, the surface follows the record by minutes.** The remainder is stated and not
+papered over: a push at an arbitrary hour outside the window can wait up to three hours,
+where the retired Page copied at once. The instant path — a dispatch from this repository,
+as the siblings send — stays untaken for now: it would put a credential in this repository
+against the pull-based design at the head of the mirror's own file, and that reversal is a
+founder's act not yet made. `DOWRY.md`'s addition is corrected in the same act, appended and
+dated, with the 2026-08-22 sentence left standing as written and wrong.
+
 Nothing is owed in reply.

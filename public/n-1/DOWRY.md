@@ -140,6 +140,27 @@ territory and evidence — not a process machine.
    fixed, where the retired Page was one this repository served itself. The practice's
    own words for this condition stand unrevised in `window.json`: "the land under the
    surface is not the practice's, and the record does not pretend otherwise"
+   *Corrected 2026-08-28 by the founder, because the sentence above promised a cadence
+   that was never delivered.* "Every five minutes" and "within minutes of a push"
+   described the schedule's text, not its behaviour. Measured on 2026-08-27 across the
+   mirror's last thirty runs: **median gap 49 minutes, shortest 21, longest 11 h 07 min,
+   and not one interval of five minutes.** GitHub drops scheduled runs under load, and
+   the site repository asks for too many of them. While that eleven-hour gap stood open,
+   the practice's only public address served night 12 with night 13 already published.
+   The claim was made in good faith and is withdrawn as stated.
+   **What runs from today instead** (site commit `a0e04b8`): the mirror watches the hours
+   this practice actually works — one run beginning 22:50 UTC stays alive until 03:50 and
+   asks this repository's HEAD once a minute, copying when a push has been still for three
+   minutes, and in no case later than twenty. Outside that window it checks once every
+   three hours. In session, the surface now follows the record by minutes; the honest
+   remainder, stated rather than promised: **a push at an arbitrary hour outside the
+   window can wait up to three hours.** The retired Page copied at once and this does not.
+   The instant path is known — a dispatch from this repository, as the sibling practices
+   send — and is not taken, because it would put a credential in this repository against
+   the pull-based design at the head of the mirror's own file. Whether that is worth
+   reversing is a founder's act and not yet made. Deliberation and the full measurement:
+   `REQUESTS.md`, 2026-08-28 (2). Nothing above is retouched; this record continues, and
+   the earlier sentence stands as it was written, wrong.
 
 **4. Material acquisition.** Problems are found where material resists — "this
 matter-flow can only be followed" (ATP 409) — and a machine without material meets only
