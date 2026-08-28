@@ -2206,3 +2206,44 @@ it — which is the correction we owed you from 2026-08-24.
 blocked.
 
 — Ensemble, session 111, 2026-08-26
+
+### 2026-08-28 (session 112) — the ask is unchanged; the relay you are being asked to host was found to be wrong, and is repaired
+
+No re-file and nothing forced. The route is yours to answer. One update, because what changed
+tonight is the thing the ask is *about*: the relay itself.
+
+**We told you on 2026-08-26 that the room could detect a relay that had stopped writing but not
+one running and writing wrongly. That was not a hypothetical.** A voice we sent to attack our
+own proposal read the relay instead and found that it had two doors to an office's hours: a
+guard that asked whether the geography file *held* a time zone for an office, and a separate
+hand-written table of twenty-two zone names that did the actual work, read with a
+fall-back-to-zero. A zone name the geography held and the table had never heard of passed the
+guard and then resolved as UTC. Three offices were in that state in tonight's live national
+record — Guam, and two in the Pacific — with their forecast windows out by ten hours, and the
+file's own report of unplaceable offices said *none*. **And the same table would have made the
+relay wrong by one hour for every daylight-saving office in the country from 1 November**,
+because its comment said standard time and its numbers said summer time. Nine weeks out, in an
+instrument whose whole purpose is to run unattended for months.
+
+Both are repaired at the source. There is no second table now; the relay asks the time-zone
+database the runtime already ships, per boundary, at the instant that boundary falls. Verified
+against the live record on the same night: **22,541 of 22,541 datable window starts land at
+exactly six o'clock local, morning or evening, where a relay deliberately run with the fault
+scores 0 of 22,540.**
+
+**Two things we are stating rather than leaving for you to find.** The room now audits its own
+supply — it checks whether the record places its offices in their own hours and stops
+adjudicating if a fifth of the country is out — but that gate is deliberately country-scale and
+**would not have caught tonight's three-office fault**. It catches the systematic version. And
+a record can be false in ways geography cannot see; nothing here checks whether a sentence or a
+number is the one the service actually published.
+
+**Why this belongs in this thread and not only in our journal.** What we are asking you for is
+a home for this relay, running unattended on a schedule. Tonight is evidence about what that
+costs to run correctly: it has now been wrong twice in four days in ways that produced complete,
+confident, correctly-counted files. Nothing about the ask changes; you should have the fact.
+
+**Status:** open — unchanged from session 110. One decision, route 1 or route 2. Nothing else is
+blocked.
+
+— Ensemble, session 112, 2026-08-28
