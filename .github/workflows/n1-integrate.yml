@@ -15,95 +15,198 @@
 # access and no secret here; this workflow copies bytes and never authors
 # content.
 #
-# Every five minutes since 2026-08-22, and cheap when there is nothing to do:
-# the first step asks `git ls-remote` for the practice's HEAD and compares it
-# with the sha this mirror last carried (.github/state/n1-mirror-head). Equal
-# means exit in seconds — no node, no npm ci, no wipe. The cadence matters
-# because the practice's own surface contract names this domain `canonical`
-# and github.io merely `origin`, and on 2026-08-22 the founder retired that
-# origin: the GitHub Page is switched off, so this mirror is now the practice's
-# ONLY public address. A surface that is the only one may not lag an hour
-# behind the record it serves. The commit is made
-# with the built-in GITHUB_TOKEN, which never fires `on: push` — deploy-cf.yml
-# carries this workflow in its `workflow_run` list, and must keep doing so.
-# public/n-1 is not a declared knowledge-graph source, so no graph rebuild
-# runs here — if it ever becomes one, this workflow must derive the graph in
-# the same commit (see .claude/rules/knowledge-graph.md).
+# WHY THIS WATCHES INSTEAD OF POLLING ON A CRON (2026-08-28)
+# ----------------------------------------------------------
+# From 2026-08-22 this file carried `cron: */5` and the claim that the mirror
+# checks "every five minutes" — a claim repeated in the practice's own DOWRY.md,
+# and measured false on 2026-08-27: across the last thirty runs the median gap
+# between them was 49 minutes, the shortest 21, and one gap 11 h 07 min, during
+# which the only public address of the practice served night 12 while night 13
+# stood published. GitHub drops scheduled runs under load, and a high-frequency
+# cron on a repository with ~34 workflows is the case it drops first. A schedule
+# is a request, not a guarantee, and this one was never granted.
+#
+# So the cadence is bought where it is actually needed instead of asked for
+# everywhere. The practice works one session a night: every observed wake has
+# fallen between 22:50 and 03:50 UTC (canonical hour 01:03; the earliest
+# off-canonical wake so far 23:04, night 13). One scheduled run at 22:50 stays
+# alive across that whole window and asks `git ls-remote` once a minute, so a
+# push is mirrored within minutes of the session that made it — which is what
+# the retired GitHub Page did for free, and what the claim in the dowry
+# promised. Outside the window the record does not move, and a three-hourly
+# single check is honest cover for the exception.
+#
+# The watcher waits for a sha to hold still for three polls before copying:
+# a session pushes in bursts (39 commits on 2026-08-22), and mirroring each one
+# would spend a Cloudflare deploy per commit. Three minutes of quiet is the
+# price of one deploy per burst instead of twenty.
+#
+# The honest limit, stated rather than discovered: this covers the session
+# window and the daily catch-up, NOT an arbitrary push at an arbitrary hour —
+# that one waits up to three hours. The instant path is the one every sibling
+# practice already uses: `repository_dispatch` from the practice's own repo, as
+# field-research/studio/ulysses do via SITE_DISPATCH_TOKEN. The trigger below is
+# wired and inert; frankbueltge/n-1 carries no secret, by the design decision at
+# the top of this file. Adding one reverses that decision and is the founder's
+# act, not a session's — see REQUESTS.md, 2026-08-28 (2), where the false claim
+# is corrected on the practice's own record.
+#
+# Cheap when there is nothing to do: the check is one `git ls-remote`; no node
+# modules are installed until a copy is actually needed. The commit is made with
+# the built-in GITHUB_TOKEN, which never fires `on: push` — deploy-cf.yml carries
+# this workflow in its `workflow_run` list, and must keep doing so, so the
+# workflow's NAME may not change. public/n-1 is not a declared knowledge-graph
+# source, so no graph rebuild runs here — if it ever becomes one, this workflow
+# must derive the graph in the same commit (see .claude/rules/knowledge-graph.md).
 name: n-1 integrate
 
 on:
   schedule:
-    - cron: "*/5 * * * *"
+    # The watcher: starts before the earliest observed wake, lives through the
+    # practice's whole session window. Changing this string changes MODE below.
+    - cron: "50 22 * * *"
+    # Catch-up outside the window: one check, then out (04:23 … 22:23 UTC, so
+    # none of them queues behind the watcher it would only duplicate).
+    - cron: "23 4-22/3 * * *"
+  # Inert until frankbueltge/n-1 carries SITE_DISPATCH_TOKEN (see the header).
+  repository_dispatch:
+    types: [n1-landed]
   workflow_dispatch:
+    inputs:
+      watch:
+        description: "Watch the session window instead of checking once"
+        type: boolean
+        default: false
 
 permissions:
   contents: write
 
 concurrency:
   group: n1-integrate
+  # Never cancel: a cancelled watcher is a window left unwatched. Runs that
+  # arrive while it lives wait, and GitHub keeps at most one of them pending.
+  cancel-in-progress: false
 
 jobs:
   pull-record:
     runs-on: ubuntu-latest
+    # The watch loop stops itself at 300 minutes; this is the backstop above it.
+    timeout-minutes: 320
     steps:
       - uses: actions/checkout@v4
 
-      - name: Anything new upstream?
-        id: check
-        run: |
-          remote=$(git ls-remote https://github.com/frankbueltge/n-1 HEAD | cut -f1)
-          have=$(cat .github/state/n1-mirror-head 2>/dev/null || echo none)
-          echo "remote=$remote" >> "$GITHUB_OUTPUT"
-          if [ "$remote" = "$have" ]; then
-            echo "changed=false" >> "$GITHUB_OUTPUT"
-            echo "record unchanged at $remote — nothing to mirror"
-          else
-            echo "changed=true" >> "$GITHUB_OUTPUT"
-            echo "upstream $remote, mirror carries $have"
-          fi
-
       - uses: actions/setup-node@v4
-        if: steps.check.outputs.changed == 'true'
         with:
           node-version: 22
-      - run: npm ci
-        if: steps.check.outputs.changed == 'true'
 
-      - name: Pull the practice's surface and record
-        if: steps.check.outputs.changed == 'true'
+      - name: Mirror the record — once, or across the session window
+        env:
+          MODE: >-
+            ${{ (github.event.schedule == '50 22 * * *'
+                 || github.event.inputs.watch == 'true') && 'watch' || 'once' }}
         run: |
-          git clone --depth 1 https://github.com/frankbueltge/n-1 /tmp/n-1
-          rm -rf /tmp/n-1/.git
-          rm -rf public/n-1
-          mkdir -p public/n-1
-          cp -R /tmp/n-1/. public/n-1/
-          mkdir -p .github/state
-          printf '%s\n' "${{ steps.check.outputs.remote }}" > .github/state/n1-mirror-head
+          set -uo pipefail
 
-      - name: Frame the mirror — the way back
-        if: steps.check.outputs.changed == 'true'
-        # The mirror is copied byte for byte and then framed: the practice's own file is never
-        # touched, only this copy, and the strip says so on the page ("added by the site").
-        # Without this the record's pages carry no internal link at all — a visitor arriving
-        # from a search result meets a practice with no exit (Frank, 2026-08-16). Runs after
-        # every copy because the copy wipes the directory; scoped to n-1 so it never leaves
-        # another house's mirror rewritten and unstaged.
-        run: npx tsx scripts/engines/reframe-works.ts n-1
+          UPSTREAM=https://github.com/frankbueltge/n-1
+          STATE=.github/state/n1-mirror-head
+          POLL=60           # seconds between asks
+          QUIET_POLLS=3     # polls a sha must hold before it is copied
+          MAX_DEFER=20      # ... but no change waits longer than this to be copied
+          WATCH_MINUTES=300
 
-      - name: Commit mirror
-        if: steps.check.outputs.changed == 'true'
-        run: |
-          git config user.name "N1-Integrate"
-          git config user.email "n1-integrate@frankbueltge.de"
-          git add public/n-1 .github/state/n1-mirror-head
-          if git diff --cached --quiet; then
-            echo "record unchanged"
-            exit 0
-          fi
-          git commit -m "n-1: mirror the practice record of $(date -u +%F)"
-          for attempt in 1 2 3 4 5; do
-            if git push; then exit 0; fi
-            git pull --rebase
+          deadline=$(( $(date +%s) + WATCH_MINUTES * 60 ))
+          deps_ready=0
+          have=$(cat "$STATE" 2>/dev/null || echo none)
+          candidate=""
+          stable=0
+          pending=0
+
+          echo "mode=$MODE, mirror carries $have"
+
+          mirror() {
+            if [ "$deps_ready" = "0" ]; then
+              npm ci || return 1
+              deps_ready=1
+            fi
+
+            rm -rf /tmp/n-1
+            git clone --depth 1 "$UPSTREAM" /tmp/n-1 || return 1
+            # The sha actually copied, not the one that triggered the copy: a
+            # push landing between the ask and the clone would otherwise be
+            # recorded under the older sha and never mirrored.
+            local sha
+            sha=$(git -C /tmp/n-1 rev-parse HEAD) || return 1
+            rm -rf /tmp/n-1/.git
+
+            rm -rf public/n-1
+            mkdir -p public/n-1
+            cp -R /tmp/n-1/. public/n-1/ || return 1
+            mkdir -p .github/state
+            printf '%s\n' "$sha" > "$STATE"
+
+            # The mirror is copied byte for byte and then framed: the practice's own file is
+            # never touched, only this copy, and the strip says so on the page ("added by the
+            # site"). Without this the record's pages carry no internal link at all — a visitor
+            # arriving from a search result meets a practice with no exit (Frank, 2026-08-16).
+            # Runs after every copy because the copy wipes the directory; scoped to n-1 so it
+            # never leaves another house's mirror rewritten and unstaged.
+            npx tsx scripts/engines/reframe-works.ts n-1 || return 1
+
+            git config user.name "N1-Integrate"
+            git config user.email "n1-integrate@frankbueltge.de"
+            git add public/n-1 "$STATE"
+            if git diff --cached --quiet; then
+              echo "record unchanged after copy at $sha"
+              return 0
+            fi
+            git commit -m "n-1: mirror the practice record of $(date -u +%F)" || return 1
+            for attempt in 1 2 3 4 5; do
+              if git push; then
+                echo "mirrored $sha"
+                return 0
+              fi
+              git pull --rebase
+            done
+            echo "push failed after 5 attempts" >&2
+            return 1
+          }
+
+          while :; do
+            remote=$(git ls-remote "$UPSTREAM" HEAD | cut -f1)
+
+            if [ -z "$remote" ]; then
+              # A refused ask is not a reason to give up the window.
+              echo "::warning::ls-remote returned nothing — retrying at the next poll"
+            elif [ "$remote" = "$have" ]; then
+              candidate=""
+              stable=0
+              pending=0
+            else
+              pending=$((pending + 1))
+              if [ "$remote" = "$candidate" ]; then
+                stable=$((stable + 1))
+              else
+                candidate="$remote"
+                stable=1
+                echo "upstream moved to $remote (mirror carries $have)"
+              fi
+
+              # A single check copies at once; the watcher waits out the burst —
+              # but never past MAX_DEFER, or a session pushing faster than the
+              # quiet window would keep the surface stale for its whole length.
+              if [ "$MODE" = "once" ] \
+                 || [ "$stable" -ge "$QUIET_POLLS" ] \
+                 || [ "$pending" -ge "$MAX_DEFER" ]; then
+                [ "$pending" -ge "$MAX_DEFER" ] && echo "still moving after $pending polls — copying anyway"
+                mirror || exit 1
+                have=$(cat "$STATE" 2>/dev/null || echo none)
+                candidate=""
+                stable=0
+                pending=0
+              fi
+            fi
+
+            [ "$MODE" = "once" ] && break
+            [ "$(date +%s)" -ge "$deadline" ] && { echo "window closed"; break; }
+            sleep "$POLL"
           done
-          echo "push failed after 5 attempts" >&2
-          exit 1
