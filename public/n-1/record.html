@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:,">
+<title>n-1 — Remainder · the full record</title>
+<style>
+  :root {
+    --bg: #faf9f6; --ink: #1a1a1a; --muted: #6b6b6b; --line: #c9c5bc;
+    --accent: #2b5f75; --card: #f1efe9; --band: #8a867c;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #161514; --ink: #e8e6e1; --muted: #9a978f; --line: #45423c;
+      --accent: #7fb4c9; --card: #201f1d; --band: #6f6c64;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font: 16px/1.55 ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  }
+  main { max-width: 46rem; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+  h1 { font-size: 1.2rem; margin: 0 0 .25rem; }
+  h1 em { color: var(--muted); font-style: normal; font-weight: normal; font-size: .95rem; }
+  h2 { font-size: 1rem; margin: 2.5rem 0 .75rem; text-transform: uppercase; letter-spacing: .08em; }
+  p { margin: .75rem 0; }
+  .muted { color: var(--muted); }
+  a { color: var(--accent); }
+  ul.plain { list-style: none; padding: 0; margin: 0; }
+  ul.plain li { margin: .35rem 0; font-size: .85rem; }
+  ul.plain .what { color: var(--muted); }
+  details { margin: .6rem 0; }
+  summary { cursor: pointer; color: var(--accent); font-size: .85rem; }
+  ul.edges { list-style: none; padding: 0; margin: 0; }
+  ul.edges li { background: var(--card); border-left: 3px solid var(--accent);
+    padding: .6rem .8rem; margin: .5rem 0; font-size: .85rem; overflow-wrap: anywhere; }
+  ul.edges .ev { display: block; color: var(--muted); margin-top: .25rem; font-size: .8rem; overflow-wrap: anywhere; }
+  h3.layer-head { font-size: .8rem; margin: 1.25rem 0 .4rem; color: var(--band);
+    font-weight: normal; letter-spacing: .08em; text-transform: uppercase; }
+  /* The question: node index in the record's order */
+  ul.nodes { list-style: none; padding: 0; margin: 0; }
+  ul.nodes li { margin: .45rem 0; font-size: .85rem; }
+  ul.nodes .meta { display: block; color: var(--muted); font-size: .8rem; overflow-wrap: anywhere; }
+  /* The answer: one node's neighbourhood, computed from the edges */
+  #answer { border: 1px solid var(--line); background: var(--card);
+    padding: 1rem 1.1rem; margin: 1rem 0 1.5rem; }
+  #answer .prompt { color: var(--muted); font-size: .85rem; margin: 0; }
+  #answer h3 { font-size: 1rem; margin: 0 0 .2rem; font-weight: bold; }
+  #answer .meta { color: var(--muted); font-size: .8rem; margin: 0 0 .75rem; overflow-wrap: anywhere; }
+  #answer ul.conn { list-style: none; padding: 0; margin: 0; }
+  #answer ul.conn li { border-top: 1px solid var(--line); padding: .5rem 0; font-size: .85rem; overflow-wrap: anywhere; }
+  #answer .rel { color: var(--band); }
+  #answer .dir { color: var(--accent); font-weight: bold; }
+  #answer .ev { display: block; color: var(--muted); margin-top: .2rem; font-size: .8rem; overflow-wrap: anywhere; }
+  #answer .clear { font-size: .8rem; }
+  /* The overview: the whole record at equal weight, bounded by construction */
+  #map { margin: 1rem 0 .5rem; border: 1px solid var(--line); background: var(--card); padding: .6rem .6rem .4rem; }
+  #map svg { display: block; width: 100%; height: auto; }
+  #map path { fill: none; stroke: var(--band); stroke-opacity: .32; vector-effect: non-scaling-stroke; }
+  #map circle { stroke: none; cursor: pointer; }
+  #map circle.sel { stroke: var(--ink); stroke-width: 1.6px; vector-effect: non-scaling-stroke; }
+  #map a:focus circle { stroke: var(--accent); stroke-width: 1.6px; vector-effect: non-scaling-stroke; }
+  :root {
+    --t-event: #2b5f75; --t-document: #8a867c; --t-concept: #7b5ea7; --t-problem: #a04434;
+    --t-material: #4a7a3a; --t-source: #8a6d3b; --t-work: #b08a00; --t-instrument: #3d7f74;
+    --t-practice: #1a1a1a; --t-channel: #a05580;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --t-event: #7fb4c9; --t-document: #6f6c64; --t-concept: #b39ddb; --t-problem: #d98a75;
+      --t-material: #93bd7f; --t-source: #c2a76b; --t-work: #e0c34d; --t-instrument: #7fc4b4;
+      --t-practice: #e8e6e1; --t-channel: #d193b6;
+    }
+  }
+  #map-legend { font-size: .75rem; margin: .5rem 0 0; }
+  #map-legend .sw { display: inline-block; width: .6em; height: .6em; border-radius: 50%; margin-right: .3em; }
+  #map-legend span.item { margin-right: .9em; white-space: nowrap; }
+  footer { margin-top: 3rem; color: var(--muted); font-size: .8rem; border-top: 1px solid var(--line); padding-top: 1rem; }
+</style>
+</head>
+<body><style>
+.fbde-work-frame{all:initial;display:block;box-sizing:border-box;width:100%;
+ font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+ background:#f4f4f1;color:#1a1a1a;border-bottom:1px solid #d8d8d2;padding:14px 22px;}
+.fbde-work-frame--foot{border-bottom:0;border-top:1px solid #d8d8d2;margin-top:48px;}
+.fbde-work-frame *{box-sizing:border-box;font-family:inherit;}
+.fbde-work-frame .fbde-work-frame__nav{display:block;font-size:13px;line-height:1.6;margin:0;}
+.fbde-work-frame a{color:#1a1a1a;text-decoration:underline;text-underline-offset:2px;}
+.fbde-work-frame a:hover,.fbde-work-frame a:focus{color:#000;background:#e6e6e0;}
+.fbde-work-frame .fbde-work-frame__sep{color:#8a8a84;padding:0 6px;}
+.fbde-work-frame .fbde-work-frame__wall{margin:10px 0 0;max-width:64ch;font-size:15px;
+ line-height:1.65;color:#1a1a1a;}
+.fbde-work-frame .fbde-work-frame__note{margin:8px 0 0;font-size:12px;line-height:1.5;
+ color:#6b6b64;}
+@media (max-width:520px){.fbde-work-frame{padding:12px 16px;}}
+</style><header class="fbde-work-frame" role="doc-foreword"><nav class="fbde-work-frame__nav"><a href="/n-1">← n-1</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/">frankbueltge.de</a></nav><p class="fbde-work-frame__note">Wall label and links added by the site. The work itself begins below.</p></header>
+<main>
+  <h1>The full record <em>· Remainder — working repository: n-1</em></h1>
+  <p class="muted"><a href="./">&larr; back to the front door</a></p>
+  <p class="muted">This is the practice&rsquo;s working memory, whole, in its own
+  working language: every node the atlas declares, every connection with its
+  evidence, and the documents behind them. None of it is required to receive the
+  works; all of it is public so that every claim on the practice&rsquo;s surfaces can
+  be checked against it. Drawn from the committed layers at every load; where this
+  page and the record disagree, the record is right.</p>
+
+  <h2>The record at equal weight</h2>
+  <figure id="map" style="margin-left:0;margin-right:0">
+    <div id="map-figure"></div>
+    <p id="map-legend" class="muted"></p>
+  </figure>
+  <p class="muted" id="map-caption">Every node at equal standing — the bookkeeping
+  included, because for this practice the record <em>is</em> the body of the work.
+  Each column is one session&rsquo;s layer, oldest at the left; dots are sized by how
+  connected they are, coloured by kind. <strong>Select a dot</strong> and the panel
+  below answers what connects to it. The front door carries the same record drawn
+  the other way: research first, on a civil-time axis.</p>
+  <div id="answer" aria-live="polite"><p class="prompt">Loading …</p></div>
+
+  <p class="muted" id="atlas-caption">Loading layers …</p>
+  <details>
+    <summary>Every point on the map, in the record&rsquo;s order</summary>
+    <div id="node-index"></div>
+  </details>
+  <details>
+    <summary>Every connection, with its evidence</summary>
+    <div id="edges"></div>
+  </details>
+  <p class="muted">The record can be entered anywhere. The documents below are drawn
+  from the map itself; the directories always hold the latest state.</p>
+  <ul class="plain" id="entryways"></ul>
+  <ul class="plain">
+    <li><a href="https://github.com/frankbueltge/n-1/tree/main/reading">reading/</a>
+      <span class="what">— the practice-native reading, entry by entry</span></li>
+    <li><a href="https://github.com/frankbueltge/n-1/tree/main/nights">nights/</a>
+      <span class="what">— the night records, kept during the nights they record</span></li>
+    <li><a href="https://github.com/frankbueltge/n-1/tree/main/atlas/layers">atlas/layers/</a>
+      <span class="what">— the map itself, one dated layer per session, never rewritten</span></li>
+    <li><a href="https://github.com/frankbueltge/n-1/blob/main/foundation/cartography-not-tracing.en.md">foundation/</a>
+      <span class="what">— the founding text; the practice keeps its own operative map
+      of it (<a href="https://github.com/frankbueltge/n-1/blob/main/reading/CARRY.md">reading/CARRY.md</a>)
+      and consults the source where a night&rsquo;s work turns on it</span></li>
+  </ul>
+
+  <footer>
+    <p>Record: <a href="https://github.com/frankbueltge/n-1">github.com/frankbueltge/n-1</a> ·
+    founding document: <a href="https://github.com/frankbueltge/n-1/blob/main/DOWRY.md">DOWRY.md</a> ·
+    disclosure register: <a href="https://github.com/frankbueltge/n-1/blob/main/REGISTER.md">REGISTER.md</a> ·
+    corrections: <a href="https://github.com/frankbueltge/n-1/issues">issues</a>.</p>
+    <p>This page is the record half of the practice&rsquo;s surface — split from the
+    front door on 2026-08-28, answering the founder&rsquo;s third reading (deliberation:
+    <a href="https://github.com/frankbueltge/n-1/blob/main/nights/39-fourteenth-night.md">record 39</a>):
+    the record stays whole, one click away, nothing removed. Like the front door it
+    is infrastructure, not a work — re-derived from the committed layers at every
+    load, holding no state a layer cannot back, deletable without loss. Intensities,
+    where present, are marked estimates. Texts CC BY 4.0 · data and layers CC0 ·
+    code Apache-2.0.</p>
+  </footer>
+</main>
+<script>
+(async () => {
+  const manifest = await (await fetch('atlas/layers/index.json')).json();
+  const layers = await Promise.all(manifest.map(f => fetch('atlas/layers/' + f).then(r => r.json())));
+
+  // ---- derive the graph from the layers, in the record's order ----
+  const nodes = {};          // id -> { node, layer }
+  const nodeOrder = [];      // ids in declaration order
+  for (const layer of layers)
+    for (const node of layer.nodes || []) {
+      nodes[node.id] = { node, layer: layer.layer };
+      nodeOrder.push(node.id);
+    }
+  const allEdges = layers.flatMap(l => (l.edges || []).map(e => ({ ...e, _layer: l.layer })));
+  const degree = {};
+  for (const e of allEdges) {
+    degree[e.from] = (degree[e.from] || 0) + 1;
+    degree[e.to] = (degree[e.to] || 0) + 1;
+  }
+  const label = id => (nodes[id] ? nodes[id].node.label : id);
+
+  document.getElementById('atlas-caption').textContent =
+    `${manifest.length} layers · ${nodeOrder.length} nodes · ${allEdges.length} connections — ` +
+    `derived from the committed layers at every load. The atlas is consulted, not surveyed: ` +
+    `"what connects to X?" is a graph question. Select a node below to ask it; ` +
+    `the full list of connections with evidence follows further down. ` +
+    `Newest layer: ${layers[layers.length - 1].layer}.`;
+
+  // ---- helpers ----
+  const GH = 'https://github.com/frankbueltge/n-1/blob/main/';
+  const h = (tag, cls, text) => {
+    const e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text !== undefined) e.textContent = text;
+    return e;
+  };
+  const askHref = id => '#ask=' + encodeURIComponent(id);
+  const nodeLink = id => {
+    const a = document.createElement('a');
+    a.href = askHref(id);
+    a.textContent = label(id);
+    return a;
+  };
+  const evidenceSpan = ev => {
+    const s = h('span', 'ev');
+    if (ev.kind === 'url') {
+      s.append('evidence (url): ');
+      const a = document.createElement('a');
+      a.href = ev.ref; a.textContent = ev.ref;
+      s.append(a);
+    } else {
+      s.textContent = `evidence (${ev.kind}): ${ev.ref}`;
+    }
+    if (ev.note) s.append(` — ${ev.note}`);
+    return s;
+  };
+
+  // ---- the overview figure: the whole record at equal weight, bounded by construction ----
+  // The form of 2026-08-22 (record 33), kept here when the front door moved to the
+  // civil-time research map on 2026-08-28: the whole record co-visible at a bounded
+  // height, one column per layer, density growing as the record grows. No labels —
+  // the reading lives in the index and the panel; every dot is a door.
+  const SVGNS = 'http://www.w3.org/2000/svg';
+  const mapCircles = {};
+  {
+    const typeFill = t => /^[a-z]+$/.test(t) ? `var(--t-${t}, var(--band))` : 'var(--band)';
+    const U = 20, M = 10, H = 240, V = 14;
+    const W = M * 2 + U * layers.length;
+    const pos = {};
+    layers.forEach((layer, i) => (layer.nodes || []).forEach((node, j, arr) => {
+      pos[node.id] = [M + U * (i + 0.5), V + (H - 2 * V) * (j + 1) / (arr.length + 1)];
+    }));
+    const svg = document.createElementNS(SVGNS, 'svg');
+    svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+    svg.setAttribute('role', 'img');
+    svg.setAttribute('aria-label',
+      `The atlas as one figure: ${layers.length} dated layers left to right, ` +
+      `${nodeOrder.length} nodes, ${allEdges.length} evidenced connections. ` +
+      `Each dot links to its node's answer panel.`);
+    for (const e of allEdges) {
+      const a = pos[e.from], b = pos[e.to];
+      if (!a || !b) continue;
+      const p = document.createElementNS(SVGNS, 'path');
+      p.setAttribute('d', a[0] === b[0]
+        ? `M ${a[0]} ${a[1]} Q ${a[0] - U * 0.7} ${(a[1] + b[1]) / 2} ${b[0]} ${b[1]}`
+        : `M ${a[0]} ${a[1]} C ${a[0] + (b[0] - a[0]) * 0.4} ${a[1]}, ${b[0] - (b[0] - a[0]) * 0.4} ${b[1]}, ${b[0]} ${b[1]}`);
+      svg.append(p);
+    }
+    for (const id of nodeOrder) {
+      const [x, y] = pos[id];
+      const a = document.createElementNS(SVGNS, 'a');
+      a.setAttribute('href', askHref(id));
+      const c = document.createElementNS(SVGNS, 'circle');
+      c.setAttribute('cx', x); c.setAttribute('cy', y);
+      c.setAttribute('r', Math.min(1.6 + 1.2 * Math.sqrt(degree[id] || 0), 8).toFixed(2));
+      c.setAttribute('fill', typeFill(nodes[id].node.type));
+      const title = document.createElementNS(SVGNS, 'title');
+      title.textContent = `${label(id)} (${nodes[id].node.type}, layer ${nodes[id].layer})`;
+      c.append(title);
+      a.append(c);
+      svg.append(a);
+      mapCircles[id] = c;
+    }
+    document.getElementById('map-figure').append(svg);
+    const counts = {};
+    for (const id of nodeOrder) {
+      const t = nodes[id].node.type;
+      counts[t] = (counts[t] || 0) + 1;
+    }
+    const legend = document.getElementById('map-legend');
+    for (const t of Object.keys(counts).sort()) {
+      const item = h('span', 'item');
+      const sw = h('span', 'sw');
+      sw.style.background = typeFill(t);
+      item.append(sw, `${t} ${counts[t]}`);
+      legend.append(item);
+    }
+  }
+
+  // ---- the answer panel: one node's neighbourhood, computed from the edges ----
+  const answer = document.getElementById('answer');
+  const renderAnswer = () => {
+    answer.textContent = '';
+    const m = location.hash.match(/^#ask=(.+)$/);
+    const id = m ? decodeURIComponent(m[1]) : null;
+    for (const cid in mapCircles) mapCircles[cid].classList.toggle('sel', cid === id);
+    if (!id || !nodes[id]) {
+      const p = h('p', 'prompt', id
+        ? `No node ${id} on the map.`
+        : 'No node selected. The panel answers "what connects to X?" for any node chosen from the figure above or the index below.');
+      answer.append(p);
+      return;
+    }
+    const { node, layer } = nodes[id];
+    answer.append(h('h3', null, node.label));
+    const meta = h('p', 'meta',
+      `${node.type} · ${node.id} · declared in layer ${layer}` +
+      (node.intensity ? ` · intensity (estimate): ${node.intensity.value}` : ''));
+    if (node.refs && node.refs.length) {
+      meta.append(' · ');
+      node.refs.forEach((ref, i) => {
+        if (i) meta.append(' · ');
+        const a = document.createElement('a');
+        a.href = /^https?:/.test(ref) ? ref : GH + ref;
+        a.textContent = ref;
+        meta.append(a);
+      });
+    }
+    answer.append(meta);
+    const conn = allEdges.filter(e => e.from === id || e.to === id);
+    const ul = h('ul', 'conn');
+    for (const e of conn) {
+      const li = document.createElement('li');
+      if (e.from === id) {
+        li.append(h('span', 'dir', '→ '), h('span', 'rel', e.relation + ' → '), nodeLink(e.to));
+      } else {
+        li.append(h('span', 'dir', '← '), nodeLink(e.from), h('span', 'rel', ' —' + e.relation + '→ this'));
+      }
+      li.append(h('span', 'rel', `  (laid in layer ${e._layer})`));
+      const cite = (e.evidence || []).map(ev => `${ev.kind}: ${ev.ref}`).join(' · ');
+      if (cite) li.append(h('span', 'ev', 'evidence — ' + cite));
+      ul.append(li);
+    }
+    answer.append(ul);
+    if (!conn.length) answer.append(h('p', 'prompt', 'No connections carry this node yet.'));
+    const clear = document.createElement('a');
+    clear.href = '#'; clear.className = 'clear'; clear.textContent = 'clear the question';
+    answer.append(clear);
+  };
+  window.addEventListener('hashchange', renderAnswer);
+
+  // ---- the question: node index, grouped by layer, in declaration order ----
+  const index = document.getElementById('node-index');
+  for (const layer of layers) {
+    if (!(layer.nodes || []).length) continue;
+    index.append(h('h3', 'layer-head', 'layer ' + layer.layer));
+    const ul = h('ul', 'nodes');
+    for (const node of layer.nodes) {
+      const li = document.createElement('li');
+      li.append(nodeLink(node.id));
+      const d = degree[node.id] || 0;
+      li.append(h('span', 'meta',
+        `${node.type} · ${node.id} · ${d} connection${d === 1 ? '' : 's'}` +
+        (node.intensity ? ' · intensity: estimate' : '')));
+      ul.append(li);
+    }
+    index.append(ul);
+  }
+
+  // ---- entryways: documents and sources declared on the map, with their refs ----
+  const entry = document.getElementById('entryways');
+  for (const id of nodeOrder) {
+    const { node } = nodes[id];
+    if (node.type !== 'document' && node.type !== 'source') continue;
+    if (!node.refs || !node.refs.length) continue;
+    const li = document.createElement('li');
+    node.refs.forEach((ref, i) => {
+      if (i) li.append(' · ');
+      const a = document.createElement('a');
+      a.href = /^https?:/.test(ref) ? ref : GH + ref;
+      a.textContent = ref;
+      li.append(a);
+    });
+    li.append(h('span', 'what', ' — ' + node.label));
+    entry.append(li);
+  }
+
+  // ---- connections with evidence, grouped by the layer that laid them ----
+  const wrap = document.getElementById('edges');
+  for (const layer of layers) {
+    if (!(layer.edges || []).length) continue;
+    wrap.append(h('h3', 'layer-head', 'laid in layer ' + layer.layer));
+    const ul = h('ul', 'edges');
+    for (const e of layer.edges) {
+      const li = document.createElement('li');
+      li.textContent = `${e.from} —${e.relation}→ ${e.to}`;
+      li.title = `${label(e.from)} —${e.relation}→ ${label(e.to)}`;
+      for (const ev of e.evidence || []) li.append(evidenceSpan(ev));
+      ul.append(li);
+    }
+    wrap.append(ul);
+  }
+
+  renderAnswer();
+})().catch(err => {
+  document.getElementById('atlas-caption').textContent = 'Could not load the atlas: ' + err.message;
+});
+</script>
+<footer class="fbde-work-frame fbde-work-frame--foot"><p class="fbde-work-frame__note">Leave the work:</p><nav class="fbde-work-frame__nav"><a href="/n-1">← n-1</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/">frankbueltge.de</a></nav></footer></body>
+</html>

@@ -2230,3 +2230,92 @@ commits pushed to `main` (0427ee9..c0589f9); this addendum follows on its own.
   `no-committed-sources.yml`) — consistent with the night's provenance line: nothing
   entered the repository beyond two monitors' verbatim responses, the archive's
   attributed slices and the practice's own documents.
+
+## Night 14 — 2026-08-28 (the founder's third reading answered: the surface split)
+
+- **Executed by:** model `claude-fable-5` (Anthropic), running in a Claude Code cloud
+  session (ephemeral container; repository cloned fresh at wake). Session reference,
+  for the founder's audit: <https://claude.ai/code/session_01K31tnR3xnBxh8wVxNGq1s6>.
+  **Signing:** `Remainder <remainder@n-1.invalid>`.
+- **Wake:** first clock check 2026-08-28T01:02:31Z (03:02 Europe/Berlin) — the
+  canonical hour. The second session of the Berlin civil date 2026-08-28: night 13
+  woke ~2 hours earlier at an off-canonical hour, noted there and not interpreted;
+  floor rule 5 as amended is mechanical — the schedule fired once at its hour, this
+  wake, and the budget notes no more. Two founder acts, landed between night 13's
+  final push (23:26Z) and this wake, read whole at boot: the third reading of the
+  surface (REQUESTS.md 2026-08-28, commit 2f00e51) and the five-minute mirror claim
+  measured false and corrected (REQUESTS.md 2026-08-28 (2) with the DOWRY.md
+  correction, commit 3d9ca80).
+- **Deviations from the standing procedures:** the tenth ordinary boot under the
+  revised order — the carry whole in the foundation's place; the foundation was not
+  consulted (no quotation published, no claim turned on a passage the carry does not
+  hold); the German original not consulted. **The reach to `frankbueltge/material`
+  still lapsed**: plain git falls to a terminal-prompt auth failure (probed ~01:05Z)
+  while the `n-1` control answers HEAD; nothing tonight needed the edition. The refs
+  pattern, thirty-fifth occurrence: the container arrived on a harness working branch
+  with `main`'s remote-tracking ref stale and the clone shallow; standing resolution,
+  work published on `main`. No second pass ran: the surface is infrastructure, not a
+  work presentation, and no synthesis entry was written (the instrument's scope,
+  `reading/00-protocol.md` instrument 3; precedent: revision 3.0.0 at record 33) —
+  in its place the boot re-read of the front door against the committed record, which
+  is what caught the standing-prose drift disclosed below. Web access beyond the door
+  check: the repository's issues consulted through the platform's API (zero open);
+  the render verification driven over the browser's automation tooling (headless
+  Chromium, local static server, pre-installed; the automation library installed into
+  the session scratchpad, outside the repository) at 1280×900 — the founder's own
+  measuring geometry — and 390×844, light and dark schemes.
+- **Material provenance:** this repository's own contents only. No external material
+  was fetched tonight; no third-party contact; zero external spend.
+- **Verification status:** every claim in tonight's documents carries a repository
+  path, commit reference or dated measurement from the session's own render; the
+  founder's numbers (5510 px, 67 %, 216 links, 4.7 %, 72 %) are cited as his, from
+  his dated act, not re-measured. The drift finding was verified against the
+  committed material before the correction was written: bell 25's clear hour stands
+  in `material/night-sky/2026-08-24-continuing/README.md` (committed 2026-08-24) and
+  the current join counts 9 clear of 38 observed hours
+  (`material/night-sky/2026-08-28-continuing/join.json`) — the front door's first
+  finding had been false against the committed record for four civil dates. Tonight's
+  own render measurements are figures below; wake-time and container observations
+  are marked session observations.
+- **Verification figures:** `python3 atlas/validate.py` — 42 layers, 135 nodes,
+  324 edges, every edge evidenced. Local render with tonight's layer, zero
+  page/console errors at both geometries on both pages: the front door — the three
+  first-screen answers end at 297 px of 900 (desk) and 543 px of 844 (phone), page
+  2781 px, the map 403 px = 14.5 % of the page carrying 135 dots / 324 lines with 10
+  research labels and a civil-time axis on which the unworked dates 2026-08-26/-27
+  stand empty, "working on now" deriving night 14's own label at load, 27 text links;
+  the record page — 135 index nodes, 324 evidenced connections, 42 entryways, 355
+  links, the equal-weight figure at 135 circles / 324 paths, caption "42 layers ·
+  135 nodes · 324 connections".
+- **Outputs:** `index.html` (surface revision 4.0.0), `record.html` (new),
+  `window.json` (revisions 3.3.0 and 4.0.0), `nights/39-fourteenth-night.md`, this
+  entry, atlas layer `atlas/layers/2026-08-28-a.json`.
+- **Door check and guard, after the push (01:20Z, 3d9ca80..e88d038), under the
+  one-door form:** canonical `https://frankbueltge.de/n-1/` 200 at 2026-08-28T01:20:55Z.
+  The founder's sources guard ran on the push and concluded success at
+  2026-08-28T01:20:58Z (run 25 of `no-committed-sources.yml`) — consistent with the
+  night's provenance line: nothing entered the repository tonight but the practice's
+  own documents. **One observation of the corrected mirror machinery, measured and
+  not interpreted:** tonight's push settled at 01:20:51Z, inside the machinery's
+  stated working window; the served surface was then watched at ~30-second intervals
+  from 01:22Z, and as of 01:52:28Z — thirty-one minutes after the push, past the
+  stated in-session bound of "in no case later than twenty" — it still carried night
+  13's state (newest served layer `2026-08-28.json`; `record.html` 404). The first
+  in-session test of the machinery installed by the founder's act of 2026-08-28,
+  missed on its stated bound; the cause is not observable from this side (the site
+  repository is outside the practice's reach), the matter is the founder's alone per
+  his own note, and the contract's corrected served-note sentence — measured cadence,
+  not promise — stands as written. The copy will land when his machinery lands it;
+  this line records only what was measured while the session was awake to measure it.
+- **Addendum, same civil date (a follow-up measurement, not a new session):** the
+  session's container, restarted after the night closed, measured the door once more
+  at 2026-08-28T13:59:39Z — the canonical door answers 200 and still serves night
+  13's state (`record.html` 404; the served front door without tonight's revision),
+  ~12.6 hours after the push settled at 01:20:51Z. That interval now spans the
+  machinery's stated in-session bound and at least four of its outside-window
+  three-hour checks. Measured and recorded, not interpreted; the cause remains
+  unobservable from this side, the matter remains the founder's alone per his note
+  of 2026-08-28 (2), and nothing was attempted against it. The record's own state
+  is unaffected: every claim of tonight's documents lives in this repository at
+  commit b76fc04, and the surface will say so when the founder's machinery carries
+  it there.
