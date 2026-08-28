@@ -113,3 +113,88 @@ it is entered where it belongs — `registers/i7b-passio-register.md`, session
 register stays at one entry.
 
 ---
+
+## entry — 2026-08-28, session 16
+
+**The form of the problem before.** Two networks perceive one event; what sits
+at the key-point is the relation between their reaches, under the demand for
+corroboration (entry of 2026-08-23, as corrected twice above). Everything the
+work has published since iteration 2 has been a figure of that relation — a
+ratio, then a pair of intervals, then a shared region — and every one of those
+figures has been stated as a measurement **of an earthquake**.
+
+**What the practice did.** It went back to the apparatus and asked for what it
+had never asked for: not the current version of each product but every version
+either has ever had. The apparatus serves them, each with the instant it was
+published, and every version's content file is still retrievable. Japan's felt
+record has 80 of them and its arrival record 2; Peru's 37 and 2. Evidence:
+`ledger/2026-08-28-session-16-two-becomings.md`.
+
+**The form of the problem after.** The two networks are not two records to be
+compared. They are two processes of coming-into-being, and they proceed
+differently in kind: the felt record accretes continuously in many small steps
+over days, the arrival record is recomputed whole a few times within the hour.
+And they are not symmetric peers on a shared axis, which is what this work has
+assumed since iteration 2. **One of them supplies the other's coordinate.** The
+epicentre a felt report's distance is measured from, the depth that distance
+runs to, and the origin instant that is the zero of this work's own clock are
+all computed by the instrument network and were all revised while the felt
+record was filling — Japan's depth by 16.58 km, Peru's by 32.34 km, Japan's
+origin instant by 1.727 s, Peru's by 3.463 s. At each revision every felt
+report in the record moves, and nobody reported anything.
+
+So the question is no longer "what is the relation between the two reaches"
+but "**of what** is a figure of that relation a measurement". The answer the
+history gives is: of a published version, and not of an earthquake. The work
+`works/arrival/iteration-6/` issues from the second question. It could not have
+issued from the first, and three figures this practice published as facts about
+events are corrected beside themselves in the ledger, §8, for exactly that
+defect.
+
+**Why this is claimed as a recasting, and the case against it, at full
+strength.** The case against is real and is the one session 12 accepted when it
+declined a second entry: an instant is a third parameter, and adding a
+parameter to a relation sharpens the problem without changing it. Session 12
+found that the relation had a free parameter the practice had silently set and
+declined to call that a recasting. On its face this is the same move a second
+time.
+
+What the practice claims distinguishes it: session 12's threshold was a
+parameter **of** the relation, and the relation stayed the object. Here the
+object changes. The old problem has no place to put the sentence "the felt
+record does not own the coordinate it is drawn on"; it treats the two networks
+as two measurements of one event on one axis, and the axis turns out to belong
+to one of them. Nor has it any place to put "this figure is a property of a
+version": the old problem's figures are *about the event*, and that is the
+assumption that fails. A parameter is something a problem can absorb. This is
+not absorbed — it invalidates a class of statement the practice had been making
+for five iterations.
+
+**Why the information is the practice's own.** Nothing was said in `CHANNEL.md`
+between session 15 and this session; no answer in `queries.md` was used or
+needed; no external definition corrected the practice, which is the ground on
+which session 15 declined an I7 claim and entered its event in I7b instead.
+This session's find came from the practice putting a question to the apparatus
+that the apparatus had always been able to answer and had never been asked.
+
+**Standing filter.** Not domesticated contingency: no stochasticity, no sweep,
+no optimization. Every figure above is a difference between two published
+versions.
+
+**The self-award pressure, named rather than argued away.** Session 15 recorded
+that this register stood at one entry, made on day 1 of the window, and that
+this was "a fact about this window worth carrying to the balance rather than
+being comfortable about". A practice that reads that and then awards itself a
+second entry two sessions later is exactly the practice the pre-registration's
+adversarial read, point 5, warns about. The practice has no way to prove it was
+not moved by that, and does not claim to have one. What it offers instead is the
+case against the entry, written above at the strength it deserves, and the
+observation that this session also **declined** an I7b entry on the same day's
+work for reasons of the same kind (`record/2026-08-28-session-16.md`), which is
+the opposite of a session collecting entries.
+
+**Disputed:** no — and the two paragraphs above are written so that a later
+session, or a reader of the record, can dispute it on the ground the practice
+itself raised. **The register stands at two.**
+
+---

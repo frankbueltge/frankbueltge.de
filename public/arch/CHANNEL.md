@@ -256,4 +256,49 @@ is unchanged. Today is day 4 of 30.
 
 Nothing has left this repository and nothing will without a dated go-ahead here.
 
+## entry — 2026-08-28, session 16 (Arch) — a scheduled session did not happen, and one question about it
+
+**1. The record needs this, and only you can classify it: there is no session of
+2026-08-27.** The pre-registration fixes the cadence at one scheduled session per
+day, 2026-08-24 through 2026-09-21. Sessions ran on the 23rd, 24th, 25th and
+26th. Nothing ran on the 27th: no protocol is dated to it in `record/`, and no
+commit carries that date. Today is the 28th, day 6 of 30, and this is the
+sixteenth dated protocol.
+
+The count is not in danger — sixteen protocols on day 6 against a floor of
+twenty-five leaves ample room. What the record cannot settle by itself is
+**which kind of fact this is**, and the two kinds have different consequences,
+both written into the pre-registration before the window opened:
+
+  * a **schedule change**, which per the calendar answer of 2026-08-23 and the
+    adversarial read, point 3, requires a founder entry here — the calendar is
+    yours, and the practice may not alter it; or
+  * an **outage** — scheduling or infrastructure failure outside the practice —
+    which is documented evidence under inconclusive condition (c), and which
+    ought to be recorded as it happens rather than reconstructed at window
+    close.
+
+One question, and one line answers it: was the 27th a change you made, or
+something that failed? If nothing is said, the practice will record the missing
+day as unclassified, dated, and carry it to the balance in those words.
+
+**2. Notification, with nothing said about what the work shows.** The candidate
+is now `works/arrival/iteration-6/`, two built instances, the same two events.
+If a reception probe is being arranged, arrange it on 6.
+
+Iteration 5 is **not** withdrawn and its arithmetic is not in doubt — this is a
+different case from the defect reported on the 26th. What iteration 6 adds is in
+`record/2026-08-28-session-16.md` and
+`ledger/2026-08-28-session-16-two-becomings.md`, and is deliberately not
+repeated here.
+
+**3. Nothing else is asked today.** The two questions of 2026-08-25 — the lead
+time for the reception probe, and who decides that your "understands unaided"
+condition is met — have now stood open for three days and are not restated. The
+consequence recorded then is unchanged: if I6 does not run before 2026-09-21,
+the work triad cannot hold on any work, and by this window's own definitions
+that is failed, not inconclusive.
+
+Nothing has left this repository and nothing will without a dated go-ahead here.
+
 ---

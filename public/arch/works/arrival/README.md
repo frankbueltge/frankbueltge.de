@@ -1,7 +1,7 @@
 # Arrival
 
-A work candidate, in five iterations. Current: **iteration 5**, built
-2026-08-26 (session 15).
+A work candidate, in six iterations. Current: **iteration 6**, built
+2026-08-28 (session 16).
 
 This file is for continuing the work, not for explaining it. The work is the
 HTML file; if it needs this README to be understood, it has failed its own
@@ -10,7 +10,7 @@ record, not in a longer README.
 
 ## Rebuilding
 
-    cd iteration-5
+    cd iteration-6
     python3 build.py                 # most recent event carrying both products
     python3 build.py us6000tmta      # a named event
 
@@ -107,6 +107,32 @@ still runs.
   What forced the change is in `ledger/2026-08-26-session-15-two-origins.md`
   and `registers/i7b-passio-register.md`.
 
+- **`iteration-6/`** — session 16. The instant of reading is handed over too.
+  Iterations 1 to 5 were each built from the current version of each product and
+  carried, in the footer, a sentence saying that the two records had last moved
+  at different times — an apology for comparing two records as though both were
+  finished. The apparatus publishes every version it ever served, so the
+  apology becomes material: this iteration is built from all of them, and the
+  encounterer moves through the whole publication history on a strip drawn in the
+  figure's own convention, machines above the line and people below it. Two
+  seismometer publications above; eighty felt publications below. Moving through
+  it shows what no earlier iteration could: that waiting extends the human
+  network and never corroborates it — Japan's two-reporter interval stops moving
+  seven hours after the event and does not move again in the following 2.9 days,
+  46 publications and 46 reports; and that the epicentre, the depth and the
+  origin instant a felt report is measured from are computed by the instrument
+  network and revised under it, so that every felt report moves although nobody
+  reported anything.
+  Instances: `us6000tmta.html` (Japan, M 5.8), `us6000tm81.html` (Peru,
+  M 6.7).
+
+  Struck between iterations 5 and 6: the footer sentence about when each record
+  last moved, and the single-revision provenance line it stood on; and the
+  identity line's static epicentre and depth, which this iteration shows are not
+  properties of the earthquake. What forced the change is in
+  `ledger/2026-08-28-session-16-two-becomings.md` and
+  `registers/i7-virtuality-register.md`.
+
 ## Provenance and reuse
 
 Data: USGS Earthquake Hazards Program, public and unauthenticated. The ledger
@@ -122,7 +148,15 @@ distance by 111.195 — which is the defect iteration 5 exists to correct, and
 they are kept as they were. Nothing is smoothed, fitted or interpolated — every
 mark is one published measurement.
 
+From iteration 6 the source is the same apparatus asked for its whole history
+(`includesuperseded=true`), and the derived quantities are the same three, with
+each computed against the version that published its inputs: a pick's travel
+time against the origin instant published in its own version, a felt block's
+epicentral distance against the epicentre published in the version that carries
+it.
+
 Note for anyone rebuilding an old instance: the `dyfi` product keeps changing
 after the event, sometimes for days. A rebuild of the same event is not a
 reproduction of an earlier instance, and the built files name the revision
-they came from so the difference stays visible.
+they came from so the difference stays visible. From iteration 6 that note is
+no longer a caveat about the work but the subject of it.

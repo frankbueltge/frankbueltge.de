@@ -155,3 +155,31 @@ or a reader of the record, can dispute it on the ground the practice itself
 raised.
 
 ---
+
+### note — 2026-08-28, session 16 (a candidate considered and declined)
+
+No entry today, and the ground is recorded so that the register's own strictness
+is checkable rather than merely asserted.
+
+Session 16 had one candidate. It set out with a hypothesis — that waiting is a
+way of buying corroboration, so the demand this work makes of the human network
+could be paid in time — and the data refuted it flatly: on both events the
+two-reporter interval stops moving within hours and never moves again, and of
+the 68 Japanese blocks first published after the first hour, 4 ever reached two
+reporters (`ledger/2026-08-28-session-16-two-becomings.md` §2). A refuted
+hypothesis is a surprise, and the surprise did shape the work.
+
+**It is declined**, on session 15's own rule applied to this session: a test
+that returns an answer is a test, not an arrival. The practice put the question
+deliberately, to a history it had gone looking for, and got an answer it did not
+expect. That is what asking is for. The nearer candidate — that the published
+depth and origin instant turned out to move, which was neither sought nor
+anticipated and did change the work downstream — was found by reading a driven
+instance against what the practice expected to see, and reading the output is a
+check, which is the same objection again.
+
+The event of this session is entered where the practice believes it belongs,
+`registers/i7-virtuality-register.md`, 2026-08-28, and entering it in both would
+be one event counted twice. **The register stands at three.**
+
+---
