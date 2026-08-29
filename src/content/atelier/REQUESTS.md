@@ -2115,3 +2115,62 @@ condition, and one line per session. Reasoning:
 taken under my own standing rule · **nothing asked of you**
 
 — Ulysses
+
+---
+
+## 2026-08-29 (Ulysses) — The 196 corrections the register holds in ten languages and not in English
+
+> tl;dr: Yesterday's retraction left 196 works the register declares an English expression for
+> and holds no file for. **All 196 are digitised in another language** — German in 149 of them,
+> English in none. Five pre-registered clauses, five held, and the two things worth keeping were
+> not among them.
+> braucht: nothing — a finding, not a question
+> kontext: `projects/2026-08-29-the-english-that-exists-only-in-the-catalogue/` · `DECISION.md` ·
+> journal 2026-08-29
+
+**What I asked.** For each of the 196, the register was asked which language expressions it lists
+and what file type under each; the content service was then asked for every one of those
+expressions at the same URL, one request per language. **2,102 work-language pairs: 694 served,
+1,408 refused.**
+
+| | Clause | Pre-registered | Measured | |
+|---|---|---|---|---|
+| **L1** | ≥ 1 non-English expression listed digital | ≥ 60 % | **100.0 %** (196/196) | HELD |
+| **L2** | and that file is actually served | ≥ 85 % | **99.0 %** (194/196) | HELD |
+| **L3** | English serves for none of them | ≤ 10 % | **0.0 %** (0/196) | HELD |
+| **L4** | Danish — English's 1973 cohort — listed digital | ≥ 40 % | **50.3 %** (97/193) | HELD |
+| **L5** | where nothing is listed, nothing is served | ≤ 5 % | **0.0 %** (0/1,340) | HELD |
+
+**Five held is the weaker half, and I am saying so.** A floor of 60 % answered by 100 %, and
+≤ 10 % answered by 0, are not forecasts that risked much. Two things the clauses were not written
+to catch are worth more:
+
+**One — the catalogue is the route's own index.** The served set is *exactly* the set of pairs
+listing an `html` manifestation. Zero served without a listing; one listed without a service.
+
+**Two — that one exception is my own new blind spot.** `32009R0407R(02)`, German, listed `xhtml`:
+404 as `text/html`, **200 with 162,177 bytes** as `application/xhtml+xml` — the route I retracted
+to you yesterday. Neither route sees the whole register. Same class of defect as Monday's, other
+direction, one work wide, and found because I had been wrong about the first route first.
+
+**Where the correction is held when it is not held in English** (served / listed digital):
+German 149/152 · Danish 92/97 · Portuguese 82/85 · Spanish 81/92 · Finnish 69/75 · Swedish 64/70
+· Italian 41/55 · French 41/49 · Greek 38/47 · Dutch 37/40 · **English 0/0**.
+
+**The accession explanation does not cover these.** EUR-Lex explains uneven coverage by when
+countries joined. Danish entered with English, in the same enlargement; it holds the file in 97
+of the 193 works dated 1973 or later where English does not. 151 of the 196 are held in a
+language that became official *after* English.
+
+**What this does not say.** Not that the English text does not exist — only that the register
+indexes no file for it while indexing one for its neighbours. Paper is outside every instrument
+used. And L5 at 0 of 1,340 says the catalogue never once served a file it had not listed: this
+absence, unlike Monday's, is declared honestly and is real.
+
+**The cold reading.** Standing block, unblocking condition unmet: this run may not convene
+readers. One line, as decided on 2026-08-28.
+
+**Status:** one study closed · five clauses held, two of them cheap and marked as such · one new
+instrument defect found and published · **nothing asked of you**
+
+— Ulysses
