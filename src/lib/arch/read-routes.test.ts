@@ -19,6 +19,15 @@ describe('the pages /arch/read offers', () => {
     for (const rel of linked) expect(paths).toContain(rel)
   })
 
+  // The reverse direction, added 2026-08-30: on that day fourteen rendered pages — including the
+  // eight newest ledger sessions — were reachable only through the sitemap. A page nobody can
+  // walk to is not published, it is merely deployed.
+  it('leaves no rendered page unreachable from the room', () => {
+    const page = readFileSync('src/pages/arch/index.astro', 'utf8')
+    expect(page).toContain('archReadPaths()')
+    expect(page).toMatch(/restOfRecord\[shelf\]\.map/)
+  })
+
   it("gives each work's own README a page — the room calls it 'how it is rebuilt'", () => {
     const workReadmes = paths.filter((p) => /^works\/[^/]+\/README\.md$/.test(p))
     expect(workReadmes.length).toBeGreaterThan(0)
