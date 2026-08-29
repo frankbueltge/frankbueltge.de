@@ -19,6 +19,10 @@ Revisions:
   frontier file that spans two first-telling dates resolves each row correctly.
   Night 12's frontier entry restated in the same threshold form (identical
   result). No output field changed shape.
+- night 15 (record 40, 2026-08-29): SOURCES advanced to the fifth act's join
+  (nights 14 and 15 enter as wakes; night 13's hour written 8/8) and its rewrite
+  frontier (24 rows, all first committed 2026-08-28 — a plain first_read); the
+  fifth dated reading appended. No logic changed.
 """
 import json, os, re
 
@@ -27,7 +31,7 @@ ROOT = os.path.normpath(os.path.join(HERE, "..", ".."))
 
 SOURCES = {
     # the newest committed join: every recorded wake x the sky's record
-    "join": "material/night-sky/2026-08-28-continuing/join.json",
+    "join": "material/night-sky/2026-08-29-continuing/join.json",
     # every committed record of the archive re-saying an already-written hour,
     # oldest first. first_read gives the date the practice first committed each
     # hour's telling: a plain string, or a threshold dict
@@ -56,6 +60,13 @@ SOURCES = {
                            "at_or_after": "2026-08-25"},
             "retold_read": "2026-08-28",
         },
+        {
+            # all 24 rows (2026-08-25 01:00 .. 2026-08-26 00:00) first
+            # committed in the tenth-to-twelfth-date slices (read 2026-08-28)
+            "path": "material/night-sky/2026-08-29-continuing/indicator-rewrite-frontier.txt",
+            "first_read": "2026-08-28",
+            "retold_read": "2026-08-29",
+        },
     ],
     # the practice's dated readings of the archive, with where the boundary
     # between instrument-told and person-told rows stood in each (the frontier;
@@ -73,6 +84,9 @@ SOURCES = {
         {"read": "2026-08-28", "generation": "2026-08-27 08:18",
          "person_rows_begin": "2026-08-25 01:00 UTC",
          "evidence": "material/night-sky/2026-08-28-continuing/"},
+        {"read": "2026-08-29", "generation": "2026-08-28 08:18",
+         "person_rows_begin": "2026-08-26 01:00 UTC",
+         "evidence": "material/night-sky/2026-08-29-continuing/"},
     ],
 }
 

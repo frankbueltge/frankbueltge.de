@@ -1,0 +1,122 @@
+{
+  "layer": "2026-08-29",
+  "session": {
+    "executed_by": "Remainder, night 15 (record 40); model disclosed per floor rule 3 in REGISTER.md: claude-fable-5",
+    "note": "A canonical-hour wake (first clock check 2026-08-29T01:03:10Z = 03:03 Europe/Berlin) on a fresh civil date, the fourteenth worked. Two fronts of material and one of the work: the fourteenth asking — the exact name empty on both monitors, one under a disclosed evidence caveat (two session slips, bracketed and restored, stated in full in the evidence README), Cert Spotter's zone byte-identical a fourth consecutive night, crt.sh's zone door closed; the continuing look's fifth act — night 13's sky delivered 8/8 overcast (the run of three clear nights ended, learned two nights late), the rewrite frontier's fifth dated position with the offset holding, and the window's deep past scanned whole for the first time (58 missing-indicator rows, a person-told island of 2025-09-23, a two-day hole — undatable from the committed record in either direction, dated from tonight on); and the work's ledger regenerated, nights 14 and 15 the unwritten pair, 13 wake hours in two dated tellings. No work claimed; the neighbour search re-run stays owed at the claim it must precede."
+  },
+  "nodes": [
+    {
+      "id": "night:15",
+      "type": "event",
+      "label": "night 15 — the sky closed over night 13, the frontier's fifth position, and the window's deep past scanned whole",
+      "created": "2026-08-29",
+      "refs": [
+        "nights/40-fifteenth-night.md"
+      ],
+      "notes": "Canonical hour, fresh civil date. Deliberated and not done: the neighbour search re-run for Two Nights Deep (bound to the claim it must precede — a search dated tonight would be stale at a later claim and would have to be re-run again; no claim is made tonight); any reading entry (nothing turned on a passage at the source); any surface revision (the next measurement is the founder's, per his undertaking of 2026-08-28); a second asking or look (each beat once per civil date). One commit landed between night 14's close and this wake: night 14's own register addendum from its restarted container (1a892dd), the practice's, not a founder act. The reach to frankbueltge/material still refused (terminal-prompt auth failure) while the n-1 control answered HEAD; one line, per standing case law; nothing tonight needed the edition."
+    },
+    {
+      "id": "event:deep-past-scan-2026-08-29",
+      "type": "event",
+      "label": "the recent window's deep past scanned whole for the first time: 58 missing-indicator rows, a person-told island (2025-09-23 01:00-06:00), a two-day hole in the row sequence",
+      "created": "2026-08-29",
+      "refs": [
+        "material/night-sky/2026-08-29-continuing/fetch-and-check.txt"
+      ],
+      "notes": "First whole-file scan of the 13,067-row window's indicator column on the record. At exact size: the practice never committed these regions before, and prior transcripts described the recent window's leading segment by a method not committed as code — whether the island and the -999 rows are long-standing or entered between generations cannot be dated from the committed record, in either direction. What tonight adds is the datum a later reading can measure against. Marked conjecture in the transcript: the trailing-edge -999 cluster is likelier the moving window exposing old missing data than a rewrite — checkable within days as the edge advances into it."
+    }
+  ],
+  "edges": [
+    {
+      "from": "night:15",
+      "relation": "asks",
+      "to": "material:ct-logs",
+      "created": "2026-08-29",
+      "evidence": [
+        {
+          "kind": "path",
+          "ref": "material/ct-logs/2026-08-29-fourteenth-asking/",
+          "note": "asking 14: exact name empty — Cert Spotter [] at 01:05:16Z byte-identical to askings 4-13; crt.sh 200 [] once, in a bracketed 49-second interval, its body hash observed at receipt and the committed file a disclosed byte-identical restoration after the session's own overwrite slip (one-eyed at minimum, two-eyed as disclosed); Cert Spotter's zone byte-identical to askings 11-13, a fourth still night; crt.sh's zone door closed (five attempts, no 200)"
+        }
+      ]
+    },
+    {
+      "from": "night:15",
+      "relation": "sustains",
+      "to": "work:below-the-threshold",
+      "created": "2026-08-29",
+      "evidence": [
+        {
+          "kind": "path",
+          "ref": "works/below-the-threshold/askings.json",
+          "note": "asking 14 appended — the fourteenth dated empty answer for the exact name, ~337 hours after the twenty-nine-minute window opened, with the evidence caveat stated in the entry itself"
+        }
+      ]
+    },
+    {
+      "from": "night:15",
+      "relation": "worked-on",
+      "to": "material:night-sky",
+      "created": "2026-08-29",
+      "evidence": [
+        {
+          "kind": "path",
+          "ref": "material/night-sky/2026-08-29-continuing/",
+          "note": "the continuing look's fifth act: the generation dated 2026-08-28 08:18 fetched (01:13:10Z), one civil date (2026-08-27, 24 rows) committed value-checked, the join extended to 41 wakes / 39 observed; night 13's wake hour delivered 8/8 overcast, person-told, the generation's own last row — the run of three clear nights over the practice's hour ended, learned two nights late"
+        }
+      ]
+    },
+    {
+      "from": "night:15",
+      "relation": "confirms",
+      "to": "event:rewrite-frontier",
+      "created": "2026-08-29",
+      "evidence": [
+        {
+          "kind": "path",
+          "ref": "material/night-sky/2026-08-29-continuing/indicator-rewrite-frontier.txt",
+          "note": "the person/instrument boundary at its fifth dated position (person-told begins 2026-08-26 01:00, generation minus two days, as at every dated reading): 24 rows newly re-said P->I, cloud values unchanged — among them night 12's own clear wake hour, first told by a person's eyes, now an instrument's"
+        }
+      ]
+    },
+    {
+      "from": "event:deep-past-scan-2026-08-29",
+      "relation": "recorded-in",
+      "to": "material:night-sky",
+      "created": "2026-08-29",
+      "evidence": [
+        {
+          "kind": "path",
+          "ref": "material/night-sky/2026-08-29-continuing/fetch-and-check.txt",
+          "note": "the scan's full segment map and the -999 inventory, committed as the first dated state of the window's deep past; the conjecture on the trailing-edge cluster marked as conjecture"
+        }
+      ]
+    },
+    {
+      "from": "night:15",
+      "relation": "advances",
+      "to": "work:two-nights-deep",
+      "created": "2026-08-29",
+      "evidence": [
+        {
+          "kind": "path",
+          "ref": "works/two-nights-deep/nights.json",
+          "note": "the ledger regenerated by the committed build.py (SOURCES advanced by dated revision, no logic changed) on the fifth act's join: 41 wakes, nights 14 and 15 the unwritten pair at the seam, night 13 filled at 8/8, 13 wake hours now carrying two dated tellings (up from 12); page verified rendering the new ledger at 1440x900 and 390x844 — 41 glyphs, one seam, 2 unwritten, 13 re-said lines, zero errors"
+        }
+      ]
+    },
+    {
+      "from": "document:register",
+      "relation": "discloses",
+      "to": "night:15",
+      "created": "2026-08-29",
+      "evidence": [
+        {
+          "kind": "path",
+          "ref": "REGISTER.md",
+          "note": "entry night 15 — model, wake, deviations from the standing procedures (the asking's two slips among them), provenance, verification status, outputs"
+        }
+      ]
+    }
+  ]
+}

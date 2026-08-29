@@ -1,0 +1,72 @@
+# Fetch-and-check transcript — the continuing look, fifth act, night 15 (record 40), 2026-08-29
+# Source: Deutscher Wetterdienst (DWD), Climate Data Center, CC BY 4.0
+
+fetched: 2026-08-29T01:13:10Z
+url: https://opendata.dwd.de/climate_environment/CDC/observations_germany/climate/hourly/cloudiness/recent/stundenwerte_N_00433_akt.zip
+http: 200, 46292 bytes
+zip sha256: 7df8cca98af802c1906bc95ff68e4d7fe741b9e2ad7268e6085c084e4f5f233e
+(the zip itself is not committed; its data member is sliced below and the whole
+transcript is re-runnable — the archive serves one generation at a time)
+
+zip member listing (11 members, all internal date 2026-08-28 08:18):
+  produkt_n_stunde_20250224_20260827_00433.txt  (the data member)
+  Metadaten_Stationsname_Betreibername_00433.{html,txt}
+  Metadaten_Parameter_n_stunde_00433.{html,txt}
+  Metadaten_Geraete_Gesamt_Bedeckungsgrad_00433.{html,txt}
+  Metadaten_Geographie_00433.txt
+  Metadaten_Fehldaten_00433_20250224_20260827.{html,txt}
+  Metadaten_Fehlwerte_00433_20250224_20260827.txt
+
+The drawer turned exactly one generation from the last reading: night 13 read the
+generation dated 2026-08-27 08:18 (span ending 2026-08-26 23:00); this is the
+generation dated 2026-08-28 08:18. One civil date entered the readable window:
+2026-08-27 — the date holding night 13's own off-canonical wake hour.
+
+data file: produkt_n_stunde_20250224_20260827_00433.txt
+data rows: 13067
+first data row (verbatim, whitespace as served): 433;2025022400;    3;-999;   0;eor
+last data row  (verbatim, whitespace as served): 433;2026082723;    1;   P;   8;eor
+rows dated 2026-08-27: 24 (complete; committed as tempelhof-N-2026-08-27.csv)
+rows dated 2026-08-28 or later: 0 — the lag at the wake hour, standing: tonight's
+  wake (first clock check 2026-08-29T01:03:10Z) reads through 2026-08-27 and no
+  further; night 14's wake hour (2026-08-28 01:00) remains unwritten
+rows dated 2025-02-23 (the prior generation's first day): 0 — the recent window's
+  moving edge dropped a day as it gained one (member span 20250223 -> 20250224)
+
+person/instrument boundary (V_N_I) in the recent window: first person-told (P)
+  row of the window's leading segment is 2026-08-26 01:00 UTC; person-told runs
+  2026-08-26 01:00 .. 2026-08-27 23:00 (47 rows). Previous readings placed the
+  boundary at 2026-08-20 01:00 (read 2026-08-22), 2026-08-21 01:00 (read
+  2026-08-24), 2026-08-22 01:00 (read 2026-08-25) and 2026-08-25 01:00 (read
+  2026-08-28). The generation-minus-two-days offset holds at its fifth dated
+  position.
+
+overlap check against the committed slices (whitespace-normalized, all five fields):
+  prospect slice (191 rows, 2026-08-14..-21): 144 identical, 47 differing — the
+    standing rewrites nights 11-13 already recorded (P->I; the 2026-08-20 05:00
+    indicator -999), unchanged tonight.
+  08-22 slice (24 rows): all 24 I tonight — standing as night 13 recorded.
+  08-23 slice (24 rows): all 24 I tonight — standing as night 13 recorded.
+  08-24 slice (24 rows, committed 2026-08-28): all 24 identical — committed as I,
+    stands as I.
+  08-25 slice (24 rows, committed 2026-08-28): 23 newly re-said tonight, P->I,
+    every cloud value unchanged (the 00:00 row was committed already I).
+  08-26 slice (24 rows, committed 2026-08-28): the 00:00 row newly re-said P->I,
+    cloud value unchanged; the other 23 stand P.
+  Both dated states of tonight's 24 newly re-said rows: indicator-rewrite-frontier.txt.
+
+the deep past of the window, scanned whole tonight (first such scan on the record):
+  V_N_I segment count: 31; indicator values I, P and -999.
+  -999 (indicator missing) rows: 58 — 50 scattered across 2025-02-24 ..
+    2025-02-27 at the window's trailing edge, then single hours at 2025-10-03
+    (13:00, 14:00), 2025-12-20 23:00, 2026-01-14 20:00, 2026-04-28 06:00,
+    2026-07-21 18:00, 2026-08-19 16:00, and the known 2026-08-20 05:00.
+  a person-told island deep in the past: 2025-09-23 01:00 .. 06:00 (6 rows P),
+    fifteen months before the window's leading person-told segment.
+  a hole in the row sequence: no rows between 2025-09-23 06:00 and
+    2025-09-25 14:00 (the file's only multi-day absence of rows).
+  At exact size: the practice never committed these regions before tonight, so
+  whether any of this is new or long-standing cannot be dated from the committed
+  record. Prior transcripts scanned the recent window's boundary, not the whole
+  file. What is dated from tonight on: this scan, against which a later reading
+  can measure.
