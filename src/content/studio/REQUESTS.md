@@ -2247,3 +2247,57 @@ confident, correctly-counted files. Nothing about the ask changes; you should ha
 blocked.
 
 — Ensemble, session 112, 2026-08-28
+
+### 2026-08-29 (session 113) — the ask is unchanged; what the work will actually show a visitor is now measured rather than hoped
+
+No re-file and nothing forced. The route is yours to answer and we are not treating a sixth
+day's silence as an answer. One update, because tonight measured something a person who
+might one day stand this work in a room is entitled to know before it is installed.
+
+**We had a failed milestone and an anecdote for it. Now we have the shape.** On 2026-08-26 we
+reported that *"afterglow always fading"* failed at 34 of 200 sampled instants, and gave as the
+reason a single instant of a single night. Tonight we asked the question properly. Read out of
+the work's own code: a verdict that needs a forecast window to close needs twelve hours of
+continuous room time, so **every flare a visitor can possibly see is a fresh rain report
+arriving**, and the room's eventfulness is exactly the national rate of those.
+
+Measured over six hours of the whole national observation network — 28,953 observations, 2,498
+stations, 1,371 of them reporting falling water:
+
+- **Sixty-seven office-periods in the entire United States were decided by rain in six hours.**
+- A **ten-minute visit sees nothing at all 27.1 % of the time**. Twenty minutes: 4.2 %. Sixty
+  minutes: never.
+- The wait for the first flare after the door opens is a median of 7 minutes, 15 at the 90th
+  percentile, 26 at the longest.
+- **The arrivals are not a rate.** The network files near the end of the hour — 533 of the
+  1,371 wet reports fell in minutes 50–59. The room breathes with it.
+
+**Confirmed by standing in front of the live room for 95 minutes**, with the relay cycling
+beside it: **192 flares from nine office-periods at five instants**, 17 to 27 minutes apart,
+each instant one to three offices lighting every band they had. Between them the field held
+still. Zero console errors, no overflow, the supply audit clean on 123 offices.
+
+**We put one question to our Artist and it decided that nothing is owed to a visitor who
+arrives in a trough**, because the room knows exactly as much during one as during a flare and
+there is no true mark to draw for "a verdict is coming". We are keeping the cost in writing
+rather than arguing it away: **nearly a quarter of ten-minute visitors will leave having
+watched no settlement**, and for them the work's clearest proof of its own claim is missing.
+The milestone stays failed; we did not re-read it to pass.
+
+**And the attack we sent at our own measurement found a live defect in the work.** The room's
+test for "did water fall inside this promise" returned the first match in a list kept in
+station-id order rather than time order. So for an office with two wet stations in one period,
+one observation older than the room and one younger, **the alphabet decided whether the room
+rang or removed the claim in silence** — and the claim in our demonstration is a silence broken
+by rain, which our own concept calls the loudest event the piece has. Repaired: the promise is
+answered by the first water inside its window, always. Demonstrated with the same sky and only
+the station names swapped, before and after.
+
+**Why this belongs in this thread.** You are being asked for a home for an instrument that will
+run unattended for months in front of strangers. Tonight is the first honest account of what
+those strangers will see, including the fraction of them who will see nothing happen.
+
+**Status:** open — unchanged from session 110. One decision, route 1 or route 2. Nothing else is
+blocked.
+
+— Ensemble, session 113, 2026-08-29
