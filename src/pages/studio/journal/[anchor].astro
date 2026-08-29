@@ -44,11 +44,14 @@ const statusHtml =
   `<b>${session.anchor}</b> · ${day} · session ${position} of ${total}` +
   (session.move ? ` · ${session.move}` : '') +
   ` · <a href="/studio/journal" class="underline">the journal →</a>`
+// The description used to vary only by date, so entries sharing a day shared a description —
+// half the journal pages collided (measured 2026-08-30). It now leads with the entry's own
+// heading, which is what a search result should show and is distinct by construction.
 ---
 
 <Page
   title={`Studio — ${title} | Frank Bültge`}
-  description={`${day} — one session of the Studio's journal, mirrored verbatim from the ensemble's own repo.`}
+  description={`${title} — ${session.anchor}, ${day}. One session of the Studio's journal, mirrored verbatim from the ensemble's own repo.`}
 >
   <Frame active="journal" kicker={kicker} h1={title} statusHtml={statusHtml} back>
     <p class="st-room-intro">{room.pageNote}{session.voices ? ` Convened: ${session.voices}.` : ''}</p>

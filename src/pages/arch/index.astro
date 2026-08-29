@@ -19,7 +19,7 @@
 // precedent).
 import Page from '@/layouts/Page.astro'
 import { NAMING } from '@/config/naming'
-import { readArchFacts } from '@/lib/arch/facts'
+import { archReadPaths, readArchFacts } from '@/lib/arch/facts'
 
 const REPO = 'https://github.com/frankbueltge/arch'
 const facts = readArchFacts()
@@ -32,6 +32,29 @@ const instances = facts.works.flatMap((work) =>
 )
 const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY as string | undefined
 const readHref = (path: string) => `/arch/read/${path.replace(/\.md$/, '')}`
+
+// Every markdown file of the mirror gets a page; this room used to link a hand-picked few, and
+// on 2026-08-30 fourteen of them — including the eight newest ledger sessions — were reachable
+// only through the sitemap. The remainder is therefore DERIVED from the same function that makes
+// the routes, so the index and the route set cannot drift apart again.
+const namedPaths = new Set<string>([
+  'PREREGISTRATION.md', 'DOWRY.md', 'CHANNEL.md',
+  'record/2026-08-22-decision-operative-model.md', 'material/operative-model.md',
+  ...facts.protocols.map((x) => x.path),
+  ...facts.reading.map((x) => x.path),
+  ...instances.map((i) => `works/${i.work}/README.md`),
+  ...facts.registers.map((r) => r.path).filter(Boolean),
+])
+const restOfRecord = archReadPaths()
+  .filter((rel) => !namedPaths.has(rel))
+  .reduce<Record<string, string[]>>((acc, rel) => {
+    const shelf = rel.includes('/') ? rel.slice(0, rel.indexOf('/')) : 'root'
+    ;(acc[shelf] ??= []).push(rel)
+    return acc
+  }, {})
+const shelves = Object.keys(restOfRecord).sort()
+const titleOf = (rel: string) =>
+  rel.replace(/\.md$/, '').split('/').pop()!.replace(/^\d{4}-\d{2}-\d{2}-/, '').replace(/-/g, ' ')
 const plural = (n: number, one: string, many: string) => `${n} ${n === 1 ? one : many}`
 ---
 
@@ -176,6 +199,26 @@ const plural = (n: number, one: string, many: string) => `${n} ${n === 1 ? one :
           </li>
         ))}
       </ol>
+      {shelves.length > 0 && (
+        <>
+          <h3 class="mb-2 mt-6 text-[11px] uppercase tracking-[0.14em] text-fg-faint">The rest of the mirror</h3>
+          <p class="mb-3 text-[11px] leading-relaxed text-fg-faint">
+            Everything else the practice has committed and this room renders — listed from the same
+            source the pages are built from, so nothing can sit here unreachable.
+          </p>
+          {shelves.map((shelf) => (
+            <div class="mb-4">
+              <p class="mb-1 font-mono text-[10px] uppercase tracking-[0.14em] text-fg-faint">{shelf}</p>
+              <ul class="flex flex-wrap gap-x-4 gap-y-1 text-[12px]">
+                {restOfRecord[shelf].map((rel) => (
+                  <li><a href={readHref(rel)} class="underline underline-offset-2">{titleOf(rel)}</a></li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </>
+      )}
+
       <h3 class="mb-2 mt-6 text-[11px] uppercase tracking-[0.14em] text-fg-faint">The reading — the book before the rules</h3>
       <ol class="divide-y divide-line border border-line text-sm">
         {facts.reading.map((r) => (

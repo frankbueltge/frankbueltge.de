@@ -46,9 +46,29 @@ interface Props {
   /** the committed path the rows were read from — the line that makes the sheet checkable */
   source: string
   more?: { label: string; href: string }
+  /** Break the rows into years, with a jump list in the header. Opt-in, because a register of
+   *  requests or works is a list of things and not a chronicle — only the journals are read by
+   *  year. The rows themselves are untouched: same order, same anchors, same addresses. */
+  groupByYear?: boolean
 }
 
-const { id, register, title, span, rows, source, more } = Astro.props
+const { id, register, title, span, rows, source, more, groupByYear = false } = Astro.props
+
+// A year heading is emitted before the first row of each year. Rows keep their order; nothing is
+// regrouped, because the order IS the record.
+const yearOf = (row: RegisterRow) => (row.date ?? '').slice(0, 4)
+const firstOfYear = new Map<string, number>()
+if (groupByYear) {
+  rows.forEach((row, i) => {
+    const y = yearOf(row)
+    if (y && !firstOfYear.has(y)) firstOfYear.set(y, i)
+  })
+}
+// A register that spans one year has nothing to group: a lone heading over everything is noise,
+// not navigation. The grouping therefore switches itself on when a second year appears, which for
+// practices founded in 2026 will be January.
+const years = [...firstOfYear.keys()]
+const showYears = groupByYear && years.length > 1
 
 const locale = (Astro.currentLocale ?? 'en') as Locale
 const url = (href: string) => (href.startsWith('http') ? href : getRelativeLocaleUrl(locale, href))
@@ -91,6 +111,11 @@ const moves =
         <h1>{title}</h1>
         <p class="eco-register-span">{span}</p>
       </div>
+      {showYears && (
+        <nav class="eco-years" aria-label="by year">
+          {years.map((y) => <a href={`#year-${y}`}>{y}</a>)}
+        </nav>
+      )}
       {moves.length > 1 && (
         <div class="eco-filters" data-filters>
           <button class="eco-filter" type="button" data-move="" aria-current="true">{W.filterAll}</button>
@@ -105,7 +130,11 @@ const moves =
       {rows.length === 0 ? (
         <li><span class="eco-register-row eco-absent">{W.empty}</span></li>
       ) : (
-        rows.map((row) => (
+        rows.map((row, i) => (
+          <>
+          {showYears && firstOfYear.get(yearOf(row)) === i && (
+            <li class="eco-register-year" id={`year-${yearOf(row)}`}><span>{yearOf(row)}</span></li>
+          )}
           <li data-move={row.move ?? ''}>
             {row.href ? (
               <a class="eco-register-row" id={row.anchor} data-journal={row.anchor} href={url(row.href)}>
@@ -123,6 +152,7 @@ const moves =
               </span>
             )}
           </li>
+          </>
         ))
       )}
     </ul>

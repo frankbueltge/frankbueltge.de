@@ -41,11 +41,14 @@ const { entry, html, prev, next, total, position } = Astro.props as {
 }
 const room = ATELIER_NARRATIVE.journalRoom
 const label = entry.kind === 'session' ? `S${entry.n}` : 'v4'
+// The description used to vary only by date, so entries sharing a day shared a description —
+// half the journal pages collided (measured 2026-08-30). It now leads with the entry's own
+// heading, which is what a search result should show and is distinct by construction.
 ---
 
 <Page
   title={`Atelier — ${label}: ${entry.heading} | Frank Bültge`}
-  description={`${entry.date} — one page of the Atelier's journal, mirrored verbatim from the practice's own repo.`}
+  description={`${entry.heading} — ${label}, ${entry.date}. One page of the Atelier's journal, mirrored verbatim from the practice's own repo.`}
 >
   <DocumentSheet
     id="atelier"
