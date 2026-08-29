@@ -28,6 +28,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          # Not the SHA the event pinned. These runs are serialised by the concurrency
+          # group above, so one queued behind a sibling starts only after that sibling
+          # has pushed its own mirror commit — and then builds from a base that no
+          # longer is main. On 2026-08-29 that produced an add/add conflict on the very
+          # journal file both runs generate, and the push never landed (run 33236253015).
+          ref: main
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -103,6 +110,11 @@ jobs:
             git commit -m "studio: integrate $(date -u +%F)"
             for attempt in 1 2 3 4 5; do
               git pull --rebase --autostash origin main && git push && break
+              # A conflicted `pull --rebase` stops mid-rebase and leaves unmerged files
+              # behind. Without clearing them every later attempt dies at once on
+              # "Pulling is not possible because you have unmerged files", and the loop
+              # retries nothing: run 33236253015 advertised five attempts and got one.
+              git rebase --abort 2>/dev/null || true
               [ "$attempt" = 5 ] && { echo "push failed after 5 rebase attempts (concurrent push race)" >&2; exit 1; }
               echo "push race — rebasing and retrying ($attempt/5)"; sleep $((attempt * 5))
             done
