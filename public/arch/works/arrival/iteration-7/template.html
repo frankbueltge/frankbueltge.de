@@ -1,0 +1,952 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Arrival</title>
+<style>
+  :root{
+    --bg:#0b0c0e; --ink:#e8e6e1; --dim:#7d8288; --line:#21242a;
+    --machine:#e0a33e; --body:#6fb3c9; --hot:#f4f2ee;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--bg);color:var(--ink)}
+  body{
+    font:14px/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+    padding:26px clamp(14px,3vw,40px) 40px;
+  }
+  header{border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:16px}
+  h1{font-size:15px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;margin:0 0 9px}
+  .says{font-size:14.5px;color:var(--ink);margin:0 0 9px;letter-spacing:.01em}
+  .says em{font-style:normal;color:var(--machine)}
+  .says i{font-style:normal;color:var(--body)}
+  .ident{color:var(--dim);font-size:12.5px;word-spacing:.08em}
+  .ident b{color:var(--ink);font-weight:600}
+  figure{margin:0}
+  svg{display:block;width:100%;height:auto;overflow:visible;touch-action:manipulation}
+  .grid{stroke:var(--line);stroke-width:1}
+  .axis{stroke:#4a5058;stroke-width:1}
+  .tick{fill:var(--dim);font-size:11px}
+  .axlabel{font-size:11.5px;letter-spacing:.13em;text-transform:uppercase}
+  .axlabel.d{fill:var(--dim)} .axlabel.m{fill:var(--machine)} .axlabel.b{fill:var(--body)}
+  .note{fill:var(--dim);font-size:11px}
+  .sta{fill:var(--machine);fill-opacity:.72;stroke:none}
+  .stair{fill:none;stroke:var(--body);stroke-width:1.6}
+  .stair.edge{stroke-width:1.1;stroke-dasharray:3 3}
+  .stairband{fill:var(--body);fill-opacity:.16;stroke:none}
+  .stairdrop{fill:var(--body);fill-opacity:.3;stroke:none}
+  .stares{stroke:var(--machine);stroke-width:1.4;stroke-opacity:.85}
+  .apart{color:var(--hot)}
+  .cutm{fill:var(--machine);fill-opacity:.07}
+  .cutb{fill:var(--body);fill-opacity:.07}
+  .reach{stroke-width:1.5}
+  .reachm{stroke:var(--machine)} .reachb{stroke:var(--body)}
+  .ghost{stroke-width:1;stroke-dasharray:3 4;stroke-opacity:.55}
+  .rlabel{font-size:11.5px}
+  .rlm{fill:var(--machine)} .rlb{fill:var(--body)}
+  /* The shared axis is where the two half-planes meet, so it is also where the
+     question "who was present at this distance" is answered: the strip above
+     the line belongs to the instruments, the strip below it to the people.
+     Both filled means both were there; neither filled means the event stood at
+     that distance in no record at all — at the instant being read. Nothing is
+     coded that the figure's own top-and-bottom convention does not already
+     say. */
+  .ribm{fill:var(--machine);fill-opacity:.62}
+  .ribb{fill:var(--body);fill-opacity:.62}
+  /* a band in which the event stands in no record at all is the one thing here
+     that is an absence, and an absence drawn faintly reads as nothing having
+     been drawn: it keeps the outline and the name of the others. */
+  .ribnone{fill:none;stroke:var(--hot);stroke-width:1;stroke-opacity:.75;stroke-dasharray:2 3}
+  .riblab{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase}
+  .riblab.none{fill:var(--hot)}
+  .depth{stroke:var(--dim);stroke-width:1;stroke-opacity:.7}
+  .depthlab{fill:var(--dim);font-size:10.5px}
+  .tip{fill:var(--hot);font-size:12px}
+  .tipbg{fill:#000;fill-opacity:.85}
+  .hit{fill:transparent;cursor:crosshair}
+  footer{margin-top:20px;border-top:1px solid var(--line);padding-top:12px;
+         color:var(--dim);font-size:11.5px;line-height:1.7;word-break:break-all}
+  /* Two acts now, and they are not peers: choosing the instant decides which
+     record there is to question, so it stands first and alone, and the two
+     thresholds cut whatever it hands them. Each control is still set on a
+     drawing of the population it cuts, and never on a widget borrowed from
+     another. */
+  .act{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px 18px;
+       margin:22px 0 2px;padding-top:13px;border-top:1px solid var(--line)}
+  .act h2{font-size:12px;font-weight:600;letter-spacing:.19em;text-transform:uppercase;
+          color:var(--hot);margin:0}
+  .act .kept{color:var(--dim);font-size:12.5px}
+  .act .kept em{font-style:normal;color:var(--machine)}
+  .act .kept i{font-style:normal;color:var(--body)}
+  .act .kept b{color:var(--hot);font-weight:400}
+  .when{margin-top:4px}
+  .when svg{cursor:ew-resize}
+  .whennote{color:var(--dim);font-size:12.5px;margin:2px 0 0;min-height:1.5em}
+  .whennote b{color:var(--hot);font-weight:400}
+  .panels{display:grid;gap:6px 34px;grid-template-columns:repeat(auto-fit,minmax(330px,1fr))}
+  .panel{min-width:0;padding-top:11px}
+  .panel h3{margin:0 0 2px;font-size:11.5px;font-weight:600;letter-spacing:.13em;
+            text-transform:uppercase}
+  .panel.m h3{color:var(--machine)} .panel.b h3{color:var(--body)}
+  .set{display:flex;flex-wrap:wrap;gap:7px 9px;align-items:center;
+       margin:4px 0 0;font-size:12.5px;color:var(--dim)}
+  button{font:inherit;background:#15171b;color:var(--ink);border:1px solid #2e3238;
+         border-radius:3px;padding:2px 9px;cursor:pointer;line-height:1.4}
+  button:hover{border-color:var(--hot)}
+  button[disabled]{opacity:.32;cursor:default;border-color:#2e3238}
+  .val{color:var(--ink);min-width:4.9em;display:inline-block;text-align:center}
+  .val.wide{min-width:9.5em}
+  .swarm{fill:var(--machine);fill-opacity:.78;stroke:none}
+  .swarm.out{fill:none;stroke:var(--machine);stroke-opacity:.38;stroke-width:1}
+  .cell{fill:var(--body);fill-opacity:.8;stroke:none}
+  .cell.out{fill:var(--body);fill-opacity:.3}
+  .gate{fill:var(--machine);fill-opacity:.08}
+  .gateEdge{stroke:var(--machine);stroke-width:1.2}
+  .cut{stroke:var(--body);stroke-width:1.2}
+  .zero{stroke:#4a5058;stroke-width:1}
+  .ptick{fill:var(--dim);font-size:10.5px}
+  .pnote{fill:var(--dim);font-size:10.5px}
+  .pcount{font-size:10px}
+  .pcount.on{fill:var(--body)} .pcount.off{fill:var(--dim);fill-opacity:.8}
+  /* the publication history, drawn on the figure's own convention: a mark
+     above the line is a version of the arrival record, a mark below it a
+     version of the felt record. */
+  .vm{stroke:var(--machine);stroke-width:1.4;stroke-opacity:.85}
+  .vb{stroke:var(--body);stroke-width:1.4;stroke-opacity:.7}
+  .vb.moved{stroke:var(--hot);stroke-width:1.6;stroke-opacity:.95}
+  .vfuture{stroke-opacity:.22}
+  .nowline{stroke:var(--hot);stroke-width:1.4}
+  .nowgrip{fill:var(--hot)}
+  /* The table's cells must not wrap — a distance and its unit belong on one
+     line — so it is the table that scrolls when the viewport is narrow, never
+     the page. */
+  .tw{overflow-x:auto;max-width:100%}
+  table{border-collapse:collapse;margin-top:16px;font-size:12.5px;width:100%;max-width:920px}
+  th,td{text-align:left;padding:7px 16px 7px 0;border-bottom:1px solid var(--line);
+        white-space:nowrap}
+  th{color:var(--dim);font-weight:400;font-size:11px;letter-spacing:.11em;
+     text-transform:uppercase}
+  td.who{font-weight:600}
+  tr.m td.who{color:var(--machine)} tr.b td.who{color:var(--body)}
+  tr.both td.who{color:var(--hot)}
+  tr.none td.who{color:var(--hot)}
+  tr.none td{color:var(--hot)}
+  td.num{color:var(--dim)}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+const D = /*DATA*/null/*DATA*/;
+
+const KMD = D.kmPerDeg;
+
+// ---------------------------------------------------------------------------
+// The two records, each as a history rather than a state.
+//
+// Until iteration 5 this work built one instance from the current version of
+// each product and said, in the footer, that the two records had last moved at
+// different times. The apparatus publishes every version it ever served, each
+// with the instant it was published, so that sentence can be replaced by the
+// thing it described. Here the felt record is stored as what it is — a list of
+// changes — and replayed; the arrival record is stored whole per version,
+// because it is republished whole and there are only a few of them.
+// ---------------------------------------------------------------------------
+
+// the felt record, replayed: FELT[j] is the state of the record at its j-th
+// published version, as a list of blocks with the epicentre that version used
+const FELT = (() => {
+  const out = [];
+  const state = new Map();               // block index -> {n, cdi}
+  for(const v of D.felt){
+    for(const [i,n,cdi] of v.a) state.set(i, {n, cdi});
+    for(const [i,n,cdi] of v.c) state.set(i, {n, cdi});
+    for(const i of v.d) state.delete(i);
+    const rows = [];
+    for(const [i, s] of state){
+      const b = D.blocks[i];
+      if(b.lo[v.e] === null) continue;   // never published under this epicentre
+      // A block stands at a range of distances, not at one: lo and hi are the
+      // nearest and farthest vertex of the outline its own product publishes,
+      // measured from the epicentre in force at this version.
+      rows.push({i, lo:b.lo[v.e], hi:b.hi[v.e], km:b.km[v.e], n:s.n, cdi:s.cdi});
+    }
+    rows.sort((a,b) => a.lo - b.lo || a.hi - b.hi);
+    out.push({rev:v.rev, min:v.min, e:v.e, rows});
+  }
+  return out;
+})();
+
+const PH = D.phases;
+
+// the instants at which anything was published, in order: these are the states
+// the encounterer can stand in, and there are no others
+const WHEN = (() => {
+  const set = new Map();
+  for(const p of PH) set.set(p.min, true);
+  for(const v of FELT) set.set(v.min, true);
+  return [...set.keys()].sort((a,b)=>a-b);
+})();
+const atOrBefore = (arr, t) => { let k = -1; for(let i=0;i<arr.length;i++) if(arr[i].min <= t) k = i; return k; };
+const PHAT = WHEN.map(t => atOrBefore(PH, t));
+const FEAT = WHEN.map(t => atOrBefore(FELT, t));
+
+let wi = WHEN.length - 1;               // opens on the record as it now stands
+const phase = () => PHAT[wi] < 0 ? null : PH[PHAT[wi]];
+const felt  = () => FEAT[wi] < 0 ? null : FELT[FEAT[wi]];
+const S = () => (phase() ? phase().picks : []);
+const F = () => (felt() ? felt().rows : []);
+
+// ---- scales, fixed once over the whole history -----------------------------
+// Every scale in this file is fixed to the largest population any instant ever
+// held. Moving the instant, or raising a threshold, must shrink what is drawn;
+// it must never renormalise the loss away.
+const loDeg = b => b.lo / KMD;         // the block's near edge, in degrees
+const hiDeg = b => b.hi / KMD;         // its far edge
+const allDeg = [];
+for(const p of PH) for(const s of p.picks) allDeg.push(s.deg);
+for(const v of FELT) for(const r of v.rows){ allDeg.push(loDeg(r)); allDeg.push(hiDeg(r)); }
+const dLo = Math.min(...allDeg)*0.75, dHi = Math.max(...allDeg)*1.12;
+const L = Math.log10, span = L(dHi)-L(dLo);
+
+const W=1200, H=720, M={l:96,r:150,t:30,b:70};
+const AX = 452;                        // the shared axis, in figure coordinates
+const upTop = M.t+34, loBot = H-M.b;   // the two half-planes
+const RIB = 11;                        // half-height of the presence ribbon
+const px = d => M.l + (L(Math.max(d,dLo))-L(dLo))/span*(W-M.l-M.r);
+
+const tMax = Math.ceil(Math.max(...PH.map(p=>Math.max(...p.picks.map(s=>s.t))))/100)*100;
+const py = t => AX-58 - (t/tMax)*(AX-58-upTop);
+const fullTotal = Math.max(...FELT.map(v => v.rows.reduce((a,x)=>a+x.n,0)), 1);
+const allPicks = Math.max(...PH.map(p=>p.picks.length));
+const maxN = Math.max(...FELT.map(v => Math.max(...v.rows.map(x=>x.n), 1)), 1);
+
+// A mark narrower than this many of the figure's own units would not render at
+// all, and a published block would leave the axis. It is drawn this wide
+// instead — the one place in this file where a mark is wider than what it
+// measures, and the footer says how often that happens.
+const FLOOR = 0.6;
+const flooredAtLast = (() => {
+  const v = FELT[FELT.length-1];
+  return v.rows.filter(r => px(hiDeg(r)) - px(loDeg(r)) < FLOOR).length;
+})();
+
+const esc = s => String(s).replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+const fmtDeg = d => d<0.1 ? d.toFixed(3) : (d<10 ? d.toFixed(2) : d.toFixed(1));
+const fmtKm  = k => k<10 ? k.toFixed(1) : String(Math.round(k));
+// Each network is shown in the unit its own source publishes, and the second
+// unit is added only where it is the one anybody uses: picks are published in
+// degrees and run teleseismic, felt blocks are published in kilometres and stay
+// near. Past ten degrees the kilometre figure would be an arc length nobody
+// reports, and it is not shown.
+const both   = d => d >= 10 ? `${fmtDeg(d)}°` : `${fmtKm(d*KMD)} km = ${fmtDeg(d)}°`;
+// the same, for a mark that occupies a range rather than a place
+const bothSpan = (a,b) => a >= 10
+  ? `${fmtDeg(a)}–${fmtDeg(b)}°`
+  : `${fmtKm(a*KMD)}–${fmtKm(b*KMD)} km = ${fmtDeg(a)}–${fmtDeg(b)}°`;
+
+// elapsed time, in the unit a person would use for it
+function since(mins){
+  if(mins < 90) return `${Math.round(mins)} min`;
+  if(mins < 2880) return `${(mins/60).toFixed(mins<600?1:0)} h`;
+  return `${(mins/1440).toFixed(1)} days`;
+}
+
+// ---- static frame ---------------------------------------------------------
+let f = '';
+const decades = [];
+for(let e=-3; e<=3; e++){
+  for(const m of [1,2,5]){
+    const v = m*Math.pow(10,e);
+    if(v>=dLo && v<=dHi) decades.push(v);
+  }
+}
+for(const v of decades){
+  f += `<line class="grid" x1="${px(v).toFixed(1)}" y1="${upTop}" x2="${px(v).toFixed(1)}" y2="${loBot}"/>`;
+  f += `<text class="tick" x="${px(v).toFixed(1)}" y="${loBot+19}" text-anchor="middle">${v}&deg;</text>`;
+}
+for(let t=0; t<=tMax; t+=100){
+  f += `<line class="grid" x1="${M.l}" y1="${py(t).toFixed(1)}" x2="${W-M.r}" y2="${py(t).toFixed(1)}"/>`;
+  f += `<text class="tick" x="${M.l-11}" y="${(py(t)+4).toFixed(1)}" text-anchor="end">${t}</text>`;
+}
+f += `<text class="axlabel d" x="${(M.l+W-M.r)/2}" y="${loBot+45}" text-anchor="middle">distance from the epicentre &mdash; logarithmic, one scale for both networks</text>`;
+f += `<text class="axlabel m" transform="translate(${M.l-64},${(upTop+AX)/2}) rotate(-90)" text-anchor="middle">seconds after origin</text>`;
+f += `<text class="axlabel b" transform="translate(${M.l-64},${(AX+loBot)/2}) rotate(-90)" text-anchor="middle">felt reports within</text>`;
+f += `<text class="axlabel m" x="${M.l}" y="${upTop-20}">machines that recorded it</text>`;
+f += `<text class="axlabel b" x="${M.l}" y="${AX+RIB+34}">people who reported feeling it</text>`;
+f += `<text class="note" x="${M.l}" y="${upTop-6}" id="noteM"></text>`;
+f += `<text class="note" x="${M.l}" y="${AX+RIB+50}">no arrival time is published for any felt report, so this half counts, it does not clock</text>`;
+f += `<text class="note" x="${M.l}" y="${AX-RIB-29}">who was present at each distance, in the records as they stood at the chosen instant</text>`;
+
+f += `<g id="cuts"></g><g id="stations"></g><g id="felt"></g><g id="ribbon"></g><g id="reaches"></g>`;
+f += `<rect class="hit" id="hit" x="${M.l}" y="${upTop-8}" width="${W-M.l-M.r}" height="${AX-RIB-upTop+8}"/>`;
+f += `<g id="tip"></g>`;
+
+// a label beside a marker near the right edge is placed on its left instead
+function beside(x, text, cls, y){
+  const w = text.length*6.4;
+  return x+8+w > W
+    ? `<text class="rlabel ${cls}" x="${(x-8).toFixed(1)}" y="${y}" text-anchor="end">${text}</text>`
+    : `<text class="rlabel ${cls}" x="${(x+8).toFixed(1)}" y="${y}">${text}</text>`;
+}
+
+// ---- the two records, in a sentence, from the data -------------------------
+const lastPh = PH[PH.length-1], lastFe = FELT[FELT.length-1];
+const finalTotal = lastFe.rows.reduce((a,x)=>a+x.n,0);
+const opening =
+  `One earthquake, and two records of it that were not written at the same speed.
+   <em>${allPicks} seismometers</em>: the arrival record was published
+   ${PH.length === 1 ? 'once' : (PH.length === 2 ? 'twice' : PH.length+' times')},
+   the last time ${since(lastPh.min)} after the origin.
+   <i>${finalTotal} people</i> in ${lastFe.rows.length} blocks: their record was
+   published ${FELT.length} times and was still filling ${since(lastFe.min)}
+   after the origin. Choose an instant to read them at, then ask each network
+   for more corroboration, and see what waiting buys.`;
+
+// ---- page -----------------------------------------------------------------
+document.getElementById('app').innerHTML = `
+<header>
+  <h1>Arrival</h1>
+  <p class="says">${opening}</p>
+  <div class="ident"><b>${esc(D.id)}</b> &nbsp;M&thinsp;${D.mag} &nbsp;${esc(D.place)}
+   &nbsp;&middot;&nbsp; <span id="solution"></span></div>
+</header>
+<figure><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="One earthquake as two networks recorded it: seismometer picks with arrival times above a shared logarithmic axis of distance from the epicentre, and blocks of human felt reports below it, each drawn across the range of distances its own published outline occupies rather than at a point. A strip along the axis shows which of the two networks was present at each distance. The instant at which the two records are read can be moved through their whole publication history, and each network can be asked for more corroboration."> ${f} </svg></figure>
+
+<div class="act">
+  <h2>read them at</h2>
+  <span class="kept" id="whenval"></span>
+  <button id="wDn">&larr;</button><button id="wUp">&rarr;</button>
+  <button id="rst">reset</button>
+</div>
+<div class="when">
+  <svg id="svgW" viewBox="0 0 1160 92" role="img" aria-label="Every instant at which either record was published, on a logarithmic time axis running from the first publication to the last: marks above the line are versions of the arrival record, marks below it versions of the felt record. A handle marks the instant currently being read."></svg>
+  <p class="whennote" id="whennote"></p>
+</div>
+
+<div class="act">
+  <h2>demand more corroboration</h2>
+  <span class="kept" id="kept"></span>
+  <button id="rstT">reset both</button>
+</div>
+<div class="panels">
+  <div class="panel m">
+    <h3>&hellip; of the seismometers</h3>
+    <svg id="svgM" viewBox="0 0 560 156" role="img" aria-label="Every pick in the arrival record as it stood at the chosen instant, drawn at its own published time residual in seconds, early to the left of zero and late to the right; a band around zero marks the picks currently kept."></svg>
+    <div class="set">
+      <span>keep a pick inside</span>
+      <button id="rDn">&minus;</button><span class="val" id="rVal"></span><button id="rUp">+</button>
+    </div>
+  </div>
+  <div class="panel b">
+    <h3>&hellip; of the people</h3>
+    <svg id="svgB" viewBox="0 0 560 156" role="img" aria-label="Every felt block in the record as it stood at the chosen instant, drawn as one cell, stacked in the column for the number of people who reported from it; a line marks the columns currently kept."></svg>
+    <div class="set">
+      <span>keep a block reported by</span>
+      <button id="nDn">&minus;</button><span class="val" id="nVal"></span><button id="nUp">+</button>
+      <span>or more</span>
+    </div>
+  </div>
+</div>
+
+<div class="tw"><table><thead><tr>
+  <th>at these distances</th><th>from</th><th>to</th>
+  <th>seismometers</th><th>felt reports</th>
+</tr></thead><tbody id="zones"></tbody></table></div>
+
+<footer>
+  Built ${D.built} from public USGS data, unauthenticated, and pinned into this file &mdash; it makes no network request when you open it. Not one version of either record: <b>every</b> version either record has ever had, ${PH.length} of the arrivals and ${FELT.length} of the felt reports, each with the instant the apparatus published it.<br>
+  event &nbsp;${esc(D.sources.detail)}<br>
+  arrivals &nbsp;${esc(D.sources.phase)}<br>
+  felt reports &nbsp;${esc(D.sources.felt)}<br>
+  Every version is served under its own revision id and the ids are on the marks above; the two shown here are the last of each.<br>
+  Pick provenance as published, quoted and not interpreted: QuakeML
+  <code>evaluationMode</code> &nbsp;<span id="modes"></span>.<span id="nores"></span><br>
+  <b>The felt record does not own the coordinate it is drawn on.</b> A block's
+  published distance is to the <b>hypocentre</b>; a pick's is to the
+  <b>epicentre</b>, and this axis is the epicentral one. Each block is therefore
+  placed at the distance from the epicentre to the outline its own product
+  publishes for it, and its published distance travels with it and is on it,
+  under the pointer. That epicentre is computed by the instrument network, and so
+  is the depth the published distance is measured from, and
+  ${D.epis.length > 1
+    ? 'both were revised while the felt record was filling: '
+      + D.epis.map(e => e.lat.toFixed(4)+', '+e.lon.toFixed(4)+' at '+e.depth+'&thinsp;km').join(' &rarr; ')
+      + '. At each revision every felt report in this file moved, although nobody reported anything.'
+    : 'neither was revised while the felt record was filling, so no felt report in this file ever moved for that reason.'}<br>
+  <b>So no mark here is a point.</b> A block is published as a
+  ${D.cellKm}&thinsp;km cell and it is drawn across the distances that cell
+  actually occupies &mdash; from its nearest published vertex to its farthest,
+  measured from the epicentre in force &mdash; which on a logarithmic axis makes
+  the near field wide and the far field a hairline. The count inside a distance
+  is drawn the same way: the upper stair counts a block from where it might
+  begin, the dashed one from where it certainly ends, and the band between them
+  is what the record's own width costs the count. A pick is drawn from the
+  instant it arrived to the instant the fitted solution predicted for it &mdash;
+  its published residual, at this axis's scale. One floor, and it is the only
+  place in this file where a mark is wider than what it measures: a block whose
+  drawn width would fall below ${FLOOR} of the figure's ${W} units is drawn
+  ${FLOOR} wide, so that no published block leaves the axis. At the last version
+  that binds on ${flooredAtLast} of ${lastFe.rows.length} blocks, all of them at
+  the far end.
+  ${D.noOutline ? D.noOutline+' block(s) published no outline, could not be placed on this coordinate, and are not in this file.' : ''}
+  ${D.counts.ringDisagree ? '<b>'+D.counts.ringDisagree+' block(s) were republished with a different outline</b> from the one they were first published with; the file keeps the first, and this count says how often that mattered.' : 'No block was ever republished with a different outline, so a block\'s width here is its own throughout.'}
+  Accretion is checked, not assumed: across the whole history
+  ${D.counts.added} block(s) appeared, ${D.counts.removed} disappeared and
+  ${D.counts.decreases} response count ever went down.<br>
+  Three quantities are derived and no others: a pick's travel time (its
+  published arrival instant minus the origin instant published in the same
+  version); a felt block's two distances from the epicentre (great-circle from the
+  epicentre published in the version that carries it to the nearest and the
+  farthest vertex of the outline published for it, on a sphere of
+  ${D.rKm}&thinsp;km &mdash; a vertex, never a point interpolated between two);
+  and the ${KMD}&thinsp;km per degree used to show one unit in the other. Nothing is smoothed, fitted or
+  interpolated: in the residual strip a pick's horizontal position is its
+  published residual, and in the figure above that same residual is the length
+  of its mark;
+  in the columns one cell is one published block, and the columns are the
+  published counts themselves, unbinned; on the history above, one mark is one
+  publication.
+</footer>`;
+
+const cutsG = document.getElementById('cuts');
+const staG  = document.getElementById('stations');
+const feltG = document.getElementById('felt');
+const ribG  = document.getElementById('ribbon');
+const reachG= document.getElementById('reaches');
+const tipg  = document.getElementById('tip');
+
+// ---- the two thresholds ----------------------------------------------------
+// One ladder per network, each built from that network's own published values,
+// and both fixed over the whole history: a rung must not appear or vanish
+// because the instant moved.
+const everyPick = [].concat(...PH.map(p=>p.picks));
+const RUNGS = [Infinity,3,2,1.5,1,0.75,0.5,0.35,0.25,0.15,0.1,0.05]
+  .filter((v,i) => i===0 || everyPick.filter(s=>Math.abs(s.res)<=v).length >= 2);
+let ri = 0, minN = 1, kept = [];
+
+function keptS(){ return S().filter(s => Math.abs(s.res) <= RUNGS[ri]); }
+function keptF(){ return F().filter(x => x.n >= minN); }
+
+// ---- the instant, set on a drawing of the publication history --------------
+// Same discipline as the two thresholds, and the same convention as the figure:
+// a mark above the line is a version of the arrival record, a mark below it a
+// version of the felt record. The asymmetry between the two networks is the
+// picture, not a caption about it.
+const VW = 1160, VH = 92, VM = {l:12, r:12, t:22, b:34};
+const VAX = 44;
+const wLo = Math.max(WHEN[0]*0.8, 0.5), wHi = WHEN[WHEN.length-1]*1.15;
+const wSpan = L(wHi) - L(wLo);
+const wx = m => VM.l + (L(Math.max(m,wLo))-L(wLo))/wSpan*(VW-VM.l-VM.r);
+
+function drawWhen(){
+  const now = WHEN[wi];
+  let g = '';
+  const TICKS = [[10,'10 min'],[30,'30 min'],[60,'1 h'],[180,'3 h'],[360,'6 h'],
+                 [720,'12 h'],[1440,'1 day'],[2880,'2 days'],[4320,'3 days'],
+                 [7200,'5 days'],[14400,'10 days'],[28800,'20 days'],
+                 [43200,'30 days'],[86400,'60 days']];
+  for(const [m,lab] of TICKS){
+    if(m < wLo || m > wHi) continue;
+    g += `<line class="grid" x1="${wx(m).toFixed(1)}" y1="${VM.t-8}" x2="${wx(m).toFixed(1)}" y2="${VH-VM.b}"/>`;
+    g += `<text class="ptick" x="${wx(m).toFixed(1)}" y="${VH-VM.b+15}" text-anchor="middle">${lab}</text>`;
+  }
+  for(const p of PH){
+    const fut = p.min > now;
+    g += `<line class="vm${fut?' vfuture':''}" x1="${wx(p.min).toFixed(1)}" y1="${VAX-19}" x2="${wx(p.min).toFixed(1)}" y2="${VAX-1}"><title>arrivals, published ${since(p.min)} after the origin — ${p.picks.length} picks — revision ${p.rev}</title></line>`;
+  }
+  for(let j=0; j<FELT.length; j++){
+    const v = FELT[j];
+    const fut = v.min > now;
+    const moved = j > 0 && FELT[j-1].e !== v.e;
+    g += `<line class="vb${moved?' moved':''}${fut?' vfuture':''}" x1="${wx(v.min).toFixed(1)}" y1="${VAX+1}" x2="${wx(v.min).toFixed(1)}" y2="${VAX+19}"><title>felt reports, published ${since(v.min)} after the origin — ${v.rows.length} blocks, ${v.rows.reduce((a,x)=>a+x.n,0)} reports${moved?' — the epicentre moved with this version':''} — revision ${v.rev}</title></line>`;
+  }
+  g += `<line class="axis" x1="${VM.l}" y1="${VAX}" x2="${VW-VM.r}" y2="${VAX}"/>`;
+  const X = wx(now);
+  g += `<line class="nowline" x1="${X.toFixed(1)}" y1="${VM.t-10}" x2="${X.toFixed(1)}" y2="${VH-VM.b+2}"/>`;
+  g += `<path class="nowgrip" d="M ${(X-5).toFixed(1)} ${VM.t-16} L ${(X+5).toFixed(1)} ${VM.t-16} L ${X.toFixed(1)} ${VM.t-8} Z"/>`;
+  g += `<text class="pnote" x="${VM.l}" y="${VM.t-8}">${PH.length} publication${PH.length>1?'s':''} of the arrival record</text>`;
+  g += `<text class="pnote" x="${VM.l}" y="${VH-VM.b+31}">${FELT.length} publication${FELT.length>1?'s':''} of the felt record &mdash; time after the origin, logarithmic</text>`;
+  document.getElementById('svgW').innerHTML = g;
+}
+
+function pickWhen(evt){
+  const svg = document.getElementById('svgW');
+  const r = svg.getBoundingClientRect();
+  const x = (evt.clientX-r.left)/r.width*VW;
+  let best = 0, bd = 1e9;
+  WHEN.forEach((m,i) => { const d = Math.abs(wx(m)-x); if(d<bd){bd=d;best=i;} });
+  if(best !== wi){ wi = best; redraw(); }
+}
+
+// ---- the two thresholds, each drawn on its own network's population ---------
+const PW = 560, PH2 = 156, PM = {l:12, r:12, t:16, b:40};
+const pAxis = PH2 - PM.b, pTop = PM.t;
+
+// -- instruments: every pick at its own published residual, stacked only where
+//    two picks would otherwise overlap. Horizontal position is the measurement;
+//    vertical position separates, and means nothing else. The scale is fixed to
+//    the widest spread any version ever held.
+const resAbsMax = Math.max(...everyPick.map(s=>Math.abs(s.res)), 0.1);
+const RA = resAbsMax * 1.08;
+const rx = v => PM.l + (v + RA)/(2*RA) * (PW-PM.l-PM.r);
+
+function drawSwarm(){
+  const pop = S();
+  const R = 2.7, stepX = 2*R + 0.7;
+  const rows = [];
+  const placed = pop.slice().sort((a,b)=>a.res-b.res).map(s => {
+    const x = rx(s.res);
+    let lvl = 0;
+    while(rows[lvl] !== undefined && x - rows[lvl] < stepX) lvl++;
+    rows[lvl] = x;
+    return {s, x, lvl};
+  });
+  const maxLvl = Math.max(rows.length - 1, 0);
+  const avail = pAxis - 7 - pTop;
+  const stepY = Math.min(2*R + 0.7, maxLvl > 0 ? avail/maxLvl : avail);
+  const lim = RUNGS[ri];
+  let g = '';
+  if(lim !== Infinity){
+    g += `<rect class="gate" x="${rx(-lim).toFixed(1)}" y="${pTop-4}" width="${(rx(lim)-rx(-lim)).toFixed(1)}" height="${pAxis-pTop+4}"/>`;
+    for(const e of [-lim, lim])
+      g += `<line class="gateEdge" x1="${rx(e).toFixed(1)}" y1="${pTop-4}" x2="${rx(e).toFixed(1)}" y2="${pAxis}"/>`;
+  }
+  g += `<line class="zero" x1="${rx(0).toFixed(1)}" y1="${pTop-4}" x2="${rx(0).toFixed(1)}" y2="${pAxis}"/>`;
+  g += `<line class="axis" x1="${PM.l}" y1="${pAxis}" x2="${PW-PM.r}" y2="${pAxis}"/>`;
+  for(const p of placed){
+    const inside = Math.abs(p.s.res) <= lim;
+    const y = pAxis - 7 - p.lvl*stepY;
+    g += `<circle class="swarm${inside?'':' out'}" cx="${p.x.toFixed(1)}" cy="${y.toFixed(1)}" r="${R}"><title>${esc(p.s.sta)} — ${fmtDeg(p.s.deg)}° from the epicentre, residual ${p.s.res>0?'+':''}${p.s.res.toFixed(2)} s</title></circle>`;
+  }
+  const step = RA > 6 ? 2 : 1;
+  for(let v = -Math.floor(RA/step)*step; v <= RA; v += step){
+    if(Math.abs(v) < 1e-9 && step !== 0) continue;
+    g += `<line class="grid" x1="${rx(v).toFixed(1)}" y1="${pAxis}" x2="${rx(v).toFixed(1)}" y2="${pAxis+4}"/>`;
+    g += `<text class="ptick" x="${rx(v).toFixed(1)}" y="${pAxis+15}" text-anchor="middle">${v>0?'+':''}${v} s</text>`;
+  }
+  g += `<text class="ptick" x="${rx(0).toFixed(1)}" y="${pAxis+15}" text-anchor="middle">0</text>`;
+  g += `<text class="pnote" x="${PM.l}" y="${pAxis+31}">sooner than the origin it fitted</text>`;
+  g += `<text class="pnote" x="${PW-PM.r}" y="${pAxis+31}" text-anchor="end">later</text>`;
+  g += `<text class="pnote" x="${PM.l}" y="${pTop-6}">${pop.length ? pop.length+' picks, each at its own disagreement with the origin this network fitted from them' : 'no arrival record had been published at this instant'}</text>`;
+  document.getElementById('svgM').innerHTML = g;
+}
+
+// -- people: one cell per felt block, stacked in the column for the number of
+//    people who reported from it. The columns are the published counts
+//    themselves — integers, starting at one — and not a scale of seconds. The
+//    column height is fixed to the tallest column any version ever held.
+const colMax = (() => {
+  let m = 1;
+  for(const v of FELT)
+    for(let k=1;k<=maxN;k++) m = Math.max(m, v.rows.filter(x=>x.n===k).length);
+  return m;
+})();
+const cw = (PW-PM.l-PM.r) / maxN;
+const cxc = k => PM.l + (k-0.5)*cw;
+
+function drawCols(){
+  const pop = F();
+  let g = '';
+  const avail = pAxis - 12 - pTop;
+  const cellH = Math.min(5, avail/colMax);
+  const gap = cellH >= 2.6 ? 0.9 : 0;
+  const barW = Math.min(26, cw*0.62);
+  for(let k=1;k<=maxN;k++){
+    const blocks = pop.filter(x=>x.n===k).length;
+    const on = k >= minN;
+    for(let i=0; i<blocks; i++){
+      const y = pAxis - 3 - (i+1)*cellH + gap/2;
+      g += `<rect class="cell${on?'':' out'}" x="${(cxc(k)-barW/2).toFixed(1)}" y="${y.toFixed(1)}" width="${barW.toFixed(1)}" height="${Math.max(cellH-gap,0.6).toFixed(2)}"/>`;
+    }
+    if(blocks)
+      g += `<text class="pcount ${on?'on':'off'}" x="${cxc(k).toFixed(1)}" y="${(pAxis-6-blocks*cellH).toFixed(1)}" text-anchor="middle">${blocks}</text>`;
+    g += `<text class="ptick" x="${cxc(k).toFixed(1)}" y="${pAxis+15}" text-anchor="middle">${k}</text>`;
+  }
+  if(minN > 1){
+    const x = cxc(minN) - cw/2;
+    g += `<line class="cut" x1="${x.toFixed(1)}" y1="${pTop-4}" x2="${x.toFixed(1)}" y2="${pAxis+4}"/>`;
+  }
+  g += `<line class="axis" x1="${PM.l}" y1="${pAxis}" x2="${PW-PM.r}" y2="${pAxis}"/>`;
+  g += `<text class="pnote" x="${PM.l}" y="${pAxis+31}">people who reported independently from one block</text>`;
+  g += `<text class="pnote" x="${PM.l}" y="${pTop-6}">${pop.length ? pop.length+' blocks, one cell each, in the column for how many reported it' : 'no felt report had been published at this instant'}</text>`;
+  document.getElementById('svgB').innerHTML = g;
+}
+
+// ---- the upper half: instruments -------------------------------------------
+function drawMachine(){
+  kept = keptS();
+  // The same act as below the axis: a mark is drawn as wide as its own record
+  // is imprecise. For a pick that is not a distance but a time — its published
+  // residual, the gap between when it arrived and when the fitted solution said
+  // it should have. The segment runs from the one to the other, on this axis,
+  // at this scale, and where the scale swallows it the mark is a point again.
+  staG.innerHTML = kept.map((s,i) =>
+    `<line class="stares" x1="${px(s.deg).toFixed(1)}" y1="${py(s.t).toFixed(1)}" x2="${px(s.deg).toFixed(1)}" y2="${py(s.t-s.res).toFixed(1)}"/>`
+    + `<circle class="sta" data-i="${i}" cx="${px(s.deg).toFixed(1)}" cy="${py(s.t).toFixed(1)}" r="4"/>`
+  ).join('');
+  document.getElementById('noteM').textContent = phase()
+    ? `${kept.length} of ${S().length} picks — each one instant, published to 10 ms`
+    : 'no arrival record had been published at this instant';
+  document.getElementById('rVal').textContent =
+    RUNGS[ri]===Infinity ? 'the whole spread' : '± '+RUNGS[ri].toFixed(2)+' s';
+  return kept.length ? [kept[0].deg, kept[kept.length-1].deg] : null;
+}
+
+// ---- the lower half: people -------------------------------------------------
+function drawBody(){
+  const k = keptF();
+  document.getElementById('nVal').textContent = minN + (minN===1?' person':' people');
+
+  if(!k.length){
+    feltG.innerHTML = `<text class="rlabel rlb" x="${M.l+8}" y="${(AX+loBot)/2}">${
+      felt() ? 'no block passes this threshold — the human network is nowhere on this axis'
+             : 'the felt record did not exist yet — nobody had reported anything'}</text>`;
+    return null;
+  }
+  const yTop = AX+RIB+66, yBot = loBot-8;
+  const cy = c => yBot - (c/fullTotal)*(yBot-yTop);
+
+  // Each block is drawn across the distances it actually occupies. Its near and
+  // far edge are published vertices of its own outline, so the mark is as wide
+  // as the record is imprecise — wide close in, a hairline far out, and the
+  // wedge is the human record's own resolution rather than a statement about it.
+  let g = '', acc = 0;
+  for(const x of k){
+    const X0 = px(loDeg(x)), X1 = px(hiDeg(x));
+    acc += x.n;
+    g += `<rect class="stairdrop" x="${X0.toFixed(2)}" y="${cy(acc).toFixed(1)}" width="${Math.max(X1-X0, FLOOR).toFixed(2)}" height="${(yBot-cy(acc)).toFixed(1)}"><title>${x.n} report${x.n>1?'s':''} — this block spans ${both(loDeg(x))} to ${both(hiDeg(x))} from the epicentre, published as ${x.km} km to the hypocentre — intensity ${x.cdi}</title></rect>`;
+  }
+  const total = acc;
+
+  // The count inside a distance is not one number either. Sorted by near edge,
+  // a block is certainly inside once its far edge is passed and possibly inside
+  // once its near edge is: the two staircases are drawn, and the band between
+  // them is what the blocks' own width costs this reading.
+  const upper = [], lower = [];
+  let a1 = 0, a2 = 0;
+  for(const x of [...k].sort((p,q)=>p.lo-q.lo)){
+    const X = px(loDeg(x));
+    upper.push([X, cy(a1)]); a1 += x.n; upper.push([X, cy(a1)]);
+  }
+  for(const x of [...k].sort((p,q)=>p.hi-q.hi)){
+    const X = px(hiDeg(x));
+    lower.push([X, cy(a2)]); a2 += x.n; lower.push([X, cy(a2)]);
+  }
+  const xL = upper[0][0], xR = lower[lower.length-1][0];
+  upper.unshift([xL, cy(0)]); upper.push([xR, cy(total)]);
+  lower.unshift([xL, cy(0)]); lower.push([xR, cy(total)]);
+  const poly = upper.concat([...lower].reverse());
+  g += `<polygon class="stairband" points="${poly.map(p=>p[0].toFixed(2)+','+p[1].toFixed(1)).join(' ')}"/>`;
+  g += `<polyline class="stair" points="${upper.map(p=>p[0].toFixed(2)+','+p[1].toFixed(1)).join(' ')}"/>`;
+  g += `<polyline class="stair edge" points="${lower.map(p=>p[0].toFixed(2)+','+p[1].toFixed(1)).join(' ')}"/>`;
+  g += `<line class="grid" x1="${M.l}" y1="${cy(fullTotal).toFixed(1)}" x2="${W-M.r}" y2="${cy(fullTotal).toFixed(1)}"/>`;
+  g += `<text class="tick" x="${M.l-11}" y="${(cy(fullTotal)+4).toFixed(1)}" text-anchor="end">${fullTotal}</text>`;
+  g += `<text class="tick" x="${M.l-11}" y="${(cy(0)+4).toFixed(1)}" text-anchor="end">0</text>`;
+  // the running total is labelled only where it will not collide with 0 or the
+  // full-population tick; when it is too near either, the shrunk staircase and
+  // the table below carry the loss instead
+  if(total < fullTotal && Math.abs(cy(total)-cy(0)) > 13 && Math.abs(cy(total)-cy(fullTotal)) > 13){
+    g += `<text class="rlabel rlb" x="${M.l-11}" y="${(cy(total)+4).toFixed(1)}" text-anchor="end">${total}</text>`;
+  }
+  feltG.innerHTML = g;
+  // The interval the human network occupies runs from the nearest near edge to
+  // the farthest far edge — both published vertices, neither a centre.
+  return [Math.min(...k.map(loDeg)), Math.max(...k.map(hiDeg))];
+}
+
+// ---- the partition: who is present at each distance ------------------------
+// Two intervals on one axis cut it into at most four pieces. The pieces are
+// computed, not assumed, so an interval that swallows the other, or two that
+// have come apart, are drawn by the same code as the ordinary case.
+function partition(mi, bi){
+  const edges = [];
+  for(const iv of [mi, bi]) if(iv) edges.push(iv[0], iv[1]);
+  if(!edges.length) return [];
+  const cuts = [...new Set(edges)].sort((a,b)=>a-b);
+  const out = [];
+  for(let i=0; i<cuts.length-1; i++){
+    const a = cuts[i], b = cuts[i+1];
+    if(!(b > a)) continue;
+    const mid = Math.sqrt(a*b);                       // midpoint of a log axis
+    const m = !!(mi && mid >= mi[0] && mid <= mi[1]);
+    const p = !!(bi && mid >= bi[0] && mid <= bi[1]);
+    const last = out[out.length-1];
+    if(last && last.m === m && last.p === p) last.b = b;   // never two alike
+    else out.push({a, b, m, p});
+  }
+  // a degenerate interval (one pick, or one block) still occupies a place
+  for(const iv of [[mi,'m'],[bi,'p']]){
+    if(iv[0] && iv[0][0] === iv[0][1] && !out.some(s => s[iv[1]]))
+      out.push({a: iv[0][0], b: iv[0][1], m: iv[1]==='m', p: iv[1]==='p'});
+  }
+  return out.sort((x,y)=>x.a-y.a);
+}
+
+const NAME = s => s.m && s.p ? 'both' : (s.m ? 'instruments only'
+                                             : (s.p ? 'people only' : 'neither'));
+
+function drawRibbon(segs){
+  let g = '';
+  for(const s of segs){
+    const x = px(s.a), w = Math.max(px(s.b)-px(s.a), 1);
+    if(s.m) g += `<rect class="ribm" x="${x.toFixed(1)}" y="${AX-RIB}" width="${w.toFixed(1)}" height="${RIB}"/>`;
+    if(s.p) g += `<rect class="ribb" x="${x.toFixed(1)}" y="${AX}" width="${w.toFixed(1)}" height="${RIB}"/>`;
+    if(!s.m && !s.p)
+      g += `<rect class="ribnone" x="${x.toFixed(1)}" y="${(AX-RIB).toFixed(1)}" width="${w.toFixed(1)}" height="${2*RIB}"/>`;
+    const label = NAME(s);
+    if(px(s.b)-px(s.a) > label.length*6.6 + 12){
+      g += `<text class="riblab${s.m||s.p?'':' none'}" x="${((px(s.a)+px(s.b))/2).toFixed(1)}" y="${AX-RIB-9}" text-anchor="middle" fill="${s.m&&s.p?'var(--hot)':(s.m?'var(--machine)':(s.p?'var(--body)':null))}">${label}</text>`;
+    }
+  }
+  g += `<line class="axis" x1="${M.l}" y1="${AX}" x2="${W-M.r}" y2="${AX}"/>`;
+  // the source is below the surface; a report at the epicentre was still this
+  // far from it, and the tick says where that distance falls on this axis. Both
+  // the depth and the epicentre it is measured from are published quantities
+  // that can be revised, so this is read from the version being looked at.
+  const fv = felt();
+  const dep0 = fv ? D.epis[fv.e].depth : D.depth;
+  const dep = dep0/KMD, yd = AX+RIB+11;
+  if(fv && dep > dLo && dep < dHi){
+    g += `<line class="depth" x1="${M.l}" y1="${yd}" x2="${px(dep).toFixed(1)}" y2="${yd}"/>`;
+    for(const e of [M.l, px(dep)])
+      g += `<line class="depth" x1="${(+e).toFixed(1)}" y1="${yd-4}" x2="${(+e).toFixed(1)}" y2="${yd+4}"/>`;
+    g += `<text class="depthlab" x="${(px(dep)+7).toFixed(1)}" y="${yd+4}">nearer the epicentre than the source is deep (${dep0} km): ${fv.rows.filter(b=>b.hi<dep0).length} of ${fv.rows.length} blocks lie wholly inside it</text>`;
+  }
+  ribG.innerHTML = g;
+}
+
+// ---- what each threshold cost, at both ends of each network -----------------
+function drawEdges(mi, bi){
+  let c = '', r = '';
+  const s = S(), fr = F();
+  const fullM = s.length ? [s[0].deg, s[s.length-1].deg] : null;
+  const fullB = fr.length ? [Math.min(...fr.map(loDeg)), Math.max(...fr.map(hiDeg))] : null;
+  if(mi && fullM){
+    const yA = upTop, yB = AX-RIB;
+    if(mi[1] < fullM[1]) c += `<rect class="cutm" x="${px(mi[1]).toFixed(1)}" y="${yA}" width="${(px(fullM[1])-px(mi[1])).toFixed(1)}" height="${yB-yA}"/>`;
+    if(mi[0] > fullM[0]) c += `<rect class="cutm" x="${px(fullM[0]).toFixed(1)}" y="${yA}" width="${(px(mi[0])-px(fullM[0])).toFixed(1)}" height="${yB-yA}"/>`;
+    for(const e of fullM) if(e!==mi[0] && e!==mi[1])
+      r += `<line class="reach reachm ghost" x1="${px(e).toFixed(1)}" y1="${yA-4}" x2="${px(e).toFixed(1)}" y2="${yB}"/>`;
+    for(const e of mi)
+      r += `<line class="reach reachm" x1="${px(e).toFixed(1)}" y1="${yA-4}" x2="${px(e).toFixed(1)}" y2="${yB}"/>`;
+    r += beside(px(mi[1]), `${fmtDeg(mi[1])}° — farthest kept pick`, 'rlm', upTop+10);
+    r += beside(px(mi[0]), `${fmtDeg(mi[0])}° — nearest kept pick`, 'rlm', upTop+27);
+  }
+  if(bi && fullB){
+    const yA = AX+RIB+56, yB = loBot+4;
+    if(bi[1] < fullB[1]) c += `<rect class="cutb" x="${px(bi[1]).toFixed(1)}" y="${yA}" width="${(px(fullB[1])-px(bi[1])).toFixed(1)}" height="${yB-yA}"/>`;
+    if(bi[0] > fullB[0]) c += `<rect class="cutb" x="${px(fullB[0]).toFixed(1)}" y="${yA}" width="${(px(bi[0])-px(fullB[0])).toFixed(1)}" height="${yB-yA}"/>`;
+    for(const e of fullB) if(e!==bi[0] && e!==bi[1])
+      r += `<line class="reach reachb ghost" x1="${px(e).toFixed(1)}" y1="${yA}" x2="${px(e).toFixed(1)}" y2="${yB}"/>`;
+    for(const e of bi)
+      r += `<line class="reach reachb" x1="${px(e).toFixed(1)}" y1="${yA}" x2="${px(e).toFixed(1)}" y2="${yB}"/>`;
+    // Neither edge is a place. The nearest kept block occupies the whole of its
+    // own span, and the label says the span rather than choosing a point in it.
+    const kb = keptF();
+    const nearB = kb.length ? kb.reduce((a,x)=> loDeg(x) < loDeg(a) ? x : a) : null;
+    const farB  = kb.length ? kb.reduce((a,x)=> hiDeg(x) > hiDeg(a) ? x : a) : null;
+    if(farB)  r += beside(px(bi[1]), `${bothSpan(loDeg(farB), hiDeg(farB))} — the farthest kept block, edge to edge`, 'rlb', loBot-2);
+    if(nearB) r += beside(px(bi[0]), `${bothSpan(loDeg(nearB), hiDeg(nearB))} — the nearest kept block, edge to edge`, 'rlb', AX+RIB+62);
+  }
+  cutsG.innerHTML = c;
+  reachG.innerHTML = r;
+}
+
+// ---- the partition, in figures ---------------------------------------------
+function drawTable(segs){
+  const kM = kept, kF = keptF();
+  // A pick or a block sitting exactly on a boundary lies in two closed
+  // segments at once. It belongs to the first of them that its own network is
+  // present in — otherwise the outermost report would be counted again in the
+  // band named "instruments only", where by construction it cannot be.
+  const seg = (v, who) => segs.find(s => v >= s.a && v <= s.b && s[who]);
+  // A block is not a point and can lie across a boundary. It is counted in the
+  // first segment its own network is present in that its span reaches, so that
+  // it is counted once and never in a band named for the other network.
+  const segOf = (b) => segs.find(s => hiDeg(b) >= s.a && loDeg(b) <= s.b && s.p);
+  const rows = segs.map(s => {
+    const inM = kM.filter(x => seg(x.deg, 'm') === s).length;
+    const fB  = kF.filter(x => segOf(x) === s);
+    const tot = fB.reduce((a,x)=>a+x.n,0);
+    const cls = s.m && s.p ? 'both' : (s.m ? 'm' : (s.p ? 'b' : 'none'));
+    return `<tr class="${cls}">
+      <td class="who">${NAME(s)}</td>
+      <td>${both(s.a)}</td><td>${both(s.b)}</td>
+      <td class="num">${inM ? inM+' pick'+(inM>1?'s':'') : '—'}</td>
+      <td class="num">${fB.length ? tot+' report'+(tot>1?'s':'')+' in '+fB.length+' block'+(fB.length>1?'s':'') : '—'}</td>
+    </tr>`;
+  });
+  if(!segs.some(s => s.m && s.p)){
+    rows.push(`<tr class="none"><td class="who">nowhere</td>
+      <td colspan="4">no distance is left at which both networks are present</td></tr>`);
+  }
+  document.getElementById('zones').innerHTML = rows.join('');
+}
+
+// ---- the readout of the instant --------------------------------------------
+// Like "± 0.50 s" and "2 people", this says what the control is set to. What it
+// adds is what changed at this step, and it adds it only where the data says
+// something changed: a record appearing, or the ground moving under one.
+function drawWhenText(){
+  const now = WHEN[wi];
+  const p = phase(), v = felt();
+  document.getElementById('whenval').innerHTML =
+    `<b>${since(now)}</b> after the origin &nbsp;&middot;&nbsp; `
+    + (p ? `<em>${p.picks.length} picks</em>` : `<em>no arrival record yet</em>`)
+    + ` &nbsp;&middot;&nbsp; `
+    + (v ? `<i>${v.rows.reduce((a,x)=>a+x.n,0)} reports in ${v.rows.length} blocks</i>`
+         : `<i>no felt report yet</i>`);
+
+  // The located quantities are not properties of the earthquake: each is
+  // published per version, and the identity line reads the one in force.
+  // The two halves do not always stand on the same one. The arrival record is
+  // republished with a new solution the moment it is refitted; the felt record
+  // carries the solution of its own last publication, which can be older. In
+  // that gap the axis below is measured from one point and the axis above from
+  // another, and iteration 6 named only the first of them. Both are named here,
+  // and where they differ the file says the shared axis is not shared.
+  const fe = v ? D.epis[v.e] : null;
+  const apart = !!(p && fe && (p.lat.toFixed(4) !== fe.lat.toFixed(4)
+                            || p.lon.toFixed(4) !== fe.lon.toFixed(4)
+                            || p.depth !== fe.depth));
+  document.getElementById('solution').innerHTML = p
+    ? `the solution then in force: origin ${esc(p.t0)}, `
+      + `${p.lat.toFixed(4)}, ${p.lon.toFixed(4)} at ${p.depth}&thinsp;km`
+      + (apart
+          ? ` &nbsp;&middot;&nbsp; <b class="apart">but the felt half below is still measured`
+            + ` from ${fe.lat.toFixed(4)}, ${fe.lon.toFixed(4)} at ${fe.depth}&thinsp;km,`
+            + ` the solution its own last publication carried: at this instant the`
+            + ` two halves are not on one coordinate</b>`
+          : '')
+    : 'no solution had been published at this instant';
+
+  const said = [];
+  if(p && p.min === now){
+    const j = PHAT[wi];
+    let ch = '';
+    if(j > 0){
+      const q = PH[j-1];
+      const dt = (Date.parse(p.t0) - Date.parse(q.t0))/1000;
+      const dk = gcKm(q.lat, q.lon, p.lat, p.lon);
+      const bits = [];
+      if(dt) bits.push(`the origin instant by ${dt>0?'+':''}${dt.toFixed(3)} s`);
+      if(dk > 0.005) bits.push(`the epicentre by ${dk.toFixed(1)} km`);
+      if(q.depth !== p.depth) bits.push(`the depth from ${q.depth} to ${p.depth} km`);
+      if(bits.length) ch = `, moving ${bits.join(', ')}`;
+    }
+    said.push(`the arrival record was published at this instant, with ${p.picks.length} picks${ch}`);
+  }
+  if(v && v.min === now){
+    const j = FEAT[wi];
+    if(j === 0) said.push(`the first felt report was published at this instant`);
+    else {
+      const prev = FELT[j-1];
+      const gain = v.rows.reduce((a,x)=>a+x.n,0) - prev.rows.reduce((a,x)=>a+x.n,0);
+      if(prev.e !== v.e){
+        const a = D.epis[prev.e], b = D.epis[v.e];
+        const km = gcKm(a.lat, a.lon, b.lat, b.lon);
+        const dep = a.depth !== b.depth
+          ? ` and the depth published for it went from ${a.depth} to ${b.depth} km`
+          : '';
+        said.push(`<b>the epicentre moved ${km.toFixed(1)} km${dep} at this instant, and every felt report moved with it though nobody reported anything — the instrument network computes the point they are measured from</b>`);
+      }
+      if(gain > 0) said.push(`${gain} more report${gain>1?'s':''} than at the version before`);
+      else if(!said.length) said.push(`republished with nothing added`);
+    }
+  }
+  if(v && v === FELT[FELT.length-1] && now >= FELT[FELT.length-1].min)
+    said.push(`this is the last version either record has, ${since(now)} after the origin`);
+  document.getElementById('whennote').innerHTML = said.join(' &nbsp;&middot;&nbsp; ');
+}
+
+// the one geometric function this file needs at encounter time: the same
+// great-circle the build used, on the same sphere
+function gcKm(la1, lo1, la2, lo2){
+  const r = Math.PI/180, p1 = la1*r, p2 = la2*r, dl = (lo2-lo1)*r;
+  const a = Math.sin(p1)*Math.sin(p2) + Math.cos(p1)*Math.cos(p2)*Math.cos(dl);
+  return D.rKm * Math.acos(Math.max(-1, Math.min(1, a)));
+}
+
+function redraw(){
+  const mi = drawMachine(), bi = drawBody();
+  const segs = partition(mi, bi);
+  drawRibbon(segs);
+  drawEdges(mi, bi);
+  drawTable(segs);
+  const kF = keptF(), tot = kF.reduce((a,x)=>a+x.n,0);
+  const nowTot = F().reduce((a,x)=>a+x.n,0);
+  document.getElementById('kept').innerHTML =
+    `keeping <em>${kept.length} of ${S().length} picks</em> and `
+    + `<i>${tot} of ${nowTot} reports</i> published by then`;
+  drawSwarm();
+  drawCols();
+  drawWhen();
+  drawWhenText();
+  // provenance is read from the version being looked at, not from the last one
+  const p = phase();
+  const modes = {};
+  for(const s of (p ? p.picks : [])) modes[s.mode || '(absent)'] = (modes[s.mode || '(absent)']||0)+1;
+  document.getElementById('modes').innerHTML =
+    Object.entries(modes).map(([k,v])=>v+'×&thinsp;'+esc(k)).join(', ') || '—';
+  document.getElementById('nores').textContent =
+    p && p.noRes ? ' '+p.noRes+' arrival(s) in this version published no residual and are not in this file.' : '';
+  document.getElementById('rDn').disabled = ri <= 0;
+  document.getElementById('rUp').disabled = ri >= RUNGS.length-1;
+  document.getElementById('nDn').disabled = minN <= 1;
+  document.getElementById('nUp').disabled = minN >= maxN;
+  document.getElementById('wDn').disabled = wi <= 0;
+  document.getElementById('wUp').disabled = wi >= WHEN.length-1;
+  tipg.innerHTML = '';
+}
+
+// nearest kept station to the pointer — the far field is crowded on a log axis
+function nearest(evt){
+  const svg = document.querySelector('figure svg');
+  const r = svg.getBoundingClientRect();
+  const x = (evt.clientX-r.left)/r.width*W, y = (evt.clientY-r.top)/r.height*H;
+  let best = -1, bd = 1e9;
+  kept.forEach((s,i) => {
+    const dx = px(s.deg)-x, dy = py(s.t)-y, d = dx*dx+dy*dy;
+    if(d < bd){ bd = d; best = i; }
+  });
+  return bd <= 24*24 ? best : -1;
+}
+
+const hit = document.getElementById('hit');
+hit.addEventListener('pointermove', e => {
+  const i = nearest(e);
+  if(i < 0){ tipg.innerHTML=''; return; }
+  const s = kept[i];
+  const t = `${s.sta}  ${fmtDeg(s.deg)}°  ${s.t}s  ${s.ph}  residual ${s.res>0?'+':''}${s.res.toFixed(2)}s`;
+  let x = px(s.deg)+13, y = py(s.t)-13;
+  const w = t.length*7.1+14;
+  if(x+w > W-M.r) x = px(s.deg)-13-w;
+  tipg.innerHTML =
+    `<rect class="tipbg" x="${x.toFixed(1)}" y="${(y-14).toFixed(1)}" width="${w.toFixed(1)}" height="21" rx="2"/>
+     <text class="tip" x="${(x+7).toFixed(1)}" y="${(y+1).toFixed(1)}">${esc(t)}</text>`;
+});
+hit.addEventListener('pointerleave', () => tipg.innerHTML='');
+
+const wsvg = document.getElementById('svgW');
+let dragging = false;
+wsvg.addEventListener('pointerdown', e => {
+  dragging = true; wsvg.setPointerCapture(e.pointerId); pickWhen(e);
+});
+wsvg.addEventListener('pointermove', e => { if(dragging) pickWhen(e); });
+wsvg.addEventListener('pointerup', e => { dragging = false; });
+wsvg.addEventListener('pointercancel', () => { dragging = false; });
+
+document.getElementById('rUp').onclick = () => { ri = Math.min(RUNGS.length-1, ri+1); redraw(); };
+document.getElementById('rDn').onclick = () => { ri = Math.max(0, ri-1); redraw(); };
+document.getElementById('nUp').onclick = () => { minN = Math.min(maxN, minN+1); redraw(); };
+document.getElementById('nDn').onclick = () => { minN = Math.max(1, minN-1); redraw(); };
+document.getElementById('wUp').onclick = () => { wi = Math.min(WHEN.length-1, wi+1); redraw(); };
+document.getElementById('wDn').onclick = () => { wi = Math.max(0, wi-1); redraw(); };
+document.getElementById('rst').onclick = () => { wi = WHEN.length-1; redraw(); };
+document.getElementById('rstT').onclick = () => { ri = 0; minN = 1; redraw(); };
+
+redraw();
+</script>
+</body>
+</html>

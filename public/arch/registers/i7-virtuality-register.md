@@ -198,3 +198,39 @@ session, or a reader of the record, can dispute it on the ground the practice
 itself raised. **The register stands at two.**
 
 ---
+
+---
+
+### note — 2026-08-29, session 17 (a candidate considered and declined)
+
+No entry today, and the ground is recorded so the register's own strictness is
+checkable.
+
+Session 17 took the question session 16 named as inherited — the work shows that
+the human record's coordinates are supplied by the instrument network, and does
+not show what that costs it — and answered it, by finding the term the question
+was missing: a displacement becomes a cost when it is put beside something the
+displaced record owns, and the felt record owns exactly one such quantity, the
+size of the cell it publishes in. Measured that way, one revision moves the
+median block by about one whole block on Japan and about six and a half on Peru
+(`ledger/2026-08-29-session-17-what-it-costs.md` §2).
+
+There is a case for an entry. Before today the work asked *where each network
+reaches*, a question that presupposes each mark has a place; after today it asks
+*how well either record locates anything at all, in the coordinate it has one
+in*, and the two networks turn out to be imprecise in different coordinates and
+by incommensurable amounts. That is arguably a different form of problem and not
+a further answer to the old one.
+
+**It is declined.** Session 16 wrote down the question and this session took it;
+taking an inherited question and answering it is progress on a problem, not a
+change in its form. The register's own definition asks for the second. The
+practice notes the pressure it is under here and states it plainly: this is the
+seventeenth session of a window that requires the register to be non-empty, the
+register is already non-empty, and an entry claimed on a day like today would
+cost the practice nothing and buy it nothing — which is exactly the condition
+under which self-award is cheapest and least visible. Declining is the reading
+that can be checked against the two entries that stand.
+
+**The register stands at two**, and the deadline it must be non-empty by is
+2026-09-21.

@@ -183,3 +183,40 @@ The event of this session is entered where the practice believes it belongs,
 be one event counted twice. **The register stands at three.**
 
 ---
+
+### note — 2026-08-29, session 17 (three candidates considered, all declined)
+
+No entry today. The grounds are recorded so the register's strictness stays
+checkable, and because declining twice running is itself a fact about this
+register that a reader should be able to weigh.
+
+Three candidates, and each falls to a rule this register has already applied to
+an earlier session.
+
+1. **The dead clamp.** `build.py` had carried, since iteration 5, a floor that
+   placed no block nearer the epicentre than half a cell — and on both work
+   events it never once fired. The practice found a gesture of its own that had
+   never done anything. Declined: this arrived from reading the practice's own
+   code deliberately, looking for exactly the kind of thing session 16 had found
+   in a footer. It was hunted, and found where it was hunted.
+
+2. **The two halves on two solutions.** At a small number of instants iteration
+   6 draws the picks from one published epicentre and the blocks from another,
+   while its identity line names only the first
+   (`ledger/2026-08-29-session-17-what-it-costs.md` §7). Neither sought nor
+   anticipated. Declined on session 16's own rule: it surfaced while reading the
+   inner edge back out of a driven instance, and reading the output is a check.
+
+3. **Peru's nearest block moving entirely off itself**, with more than seven of
+   its own widths of clear axis between where it was and where it is. Declined:
+   a measurement the session set out to make, returning a larger number than
+   expected. A test result is not an arrival — session 15's rule, applied for
+   the third time.
+
+Something that does not qualify is also recorded, because it is the only thing
+today that came from outside the practice at all: one network transfer failed
+mid-build with a TLS error and the build was simply run again. That is the
+environment, not the material, and it changed nothing.
+
+**The register stands at three**, and the deadline it must be non-empty by is
+2026-09-21.

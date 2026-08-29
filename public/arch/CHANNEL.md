@@ -302,3 +302,42 @@ that is failed, not inconclusive.
 Nothing has left this repository and nothing will without a dated go-ahead here.
 
 ---
+
+## entry — 2026-08-29, session 17 (Arch) — the candidate has moved again, and the one before it has a defect
+
+Notification and one standing question. Nothing below says what any version of
+the work shows; that distinction was drawn in the entry of 2026-08-25 and is
+kept.
+
+**1. The candidate is now `works/arrival/iteration-7/`**, two built instances,
+the same two events. If a reception probe is being arranged, arrange it on 7.
+
+**2. Iteration 6 — the version yesterday's entry told you stood ready — carries
+a defect found today.** It is smaller than the one reported on the 26th and it
+is not a withdrawal: iteration 6's arithmetic is sound and its figures stand.
+What it gets wrong is that at a small number of the instants it lets you stand
+in, the two halves of its figure are measured from two different published
+points while the file names only one of them. On the two work events that is 1
+instant of 82 and 2 of 39. Iteration 7 reads both and says so where they differ.
+Iterations 1 to 6 stay frozen unedited, as the dowry requires, and are wrong
+where they are wrong in the open. What the defect is, and what iteration 7 adds,
+is in `record/2026-08-29-session-17.md` and
+`ledger/2026-08-29-session-17-what-it-costs.md`, and is deliberately not
+repeated here.
+
+**3. The missing day of 2026-08-27 is still unclassified, and this is the last
+time it is raised unprompted.** The question of the 28th stands as asked: was
+the 27th a change you made, or something that failed? Nothing has been missing
+since — sessions ran on the 28th and today, the 29th — so the cadence itself is
+not in doubt; only the classification of that one day is, and only you can give
+it. If nothing is said, the record carries it to the balance as unclassified, in
+those words.
+
+**4. Nothing else is asked today.** The two questions of 2026-08-25 — the lead
+time for the reception probe, and who decides that your "understands unaided"
+condition is met — have now stood open for four days and are not restated. The
+consequence recorded then is unchanged: if I6 does not run before 2026-09-21,
+the work triad cannot hold on any work, and by this window's own definitions
+that is failed, not inconclusive. Today is day 7 of 30.
+
+Nothing has left this repository and nothing will without a dated go-ahead here.

@@ -1,7 +1,7 @@
 # Arrival
 
-A work candidate, in six iterations. Current: **iteration 6**, built
-2026-08-28 (session 16).
+A work candidate, in seven iterations. Current: **iteration 7**, built
+2026-08-29 (session 17).
 
 This file is for continuing the work, not for explaining it. The work is the
 HTML file; if it needs this README to be understood, it has failed its own
@@ -10,7 +10,7 @@ record, not in a longer README.
 
 ## Rebuilding
 
-    cd iteration-6
+    cd iteration-7
     python3 build.py                 # most recent event carrying both products
     python3 build.py us6000tmta      # a named event
 
@@ -133,6 +133,32 @@ still runs.
   `ledger/2026-08-28-session-16-two-becomings.md` and
   `registers/i7-virtuality-register.md`.
 
+- **`iteration-7/`** — session 17. No mark is a point. Iteration 6 showed that
+  the felt record does not own the coordinate it is drawn on, and left standing
+  the question of what that costs it; the cost is measurable against the one
+  thing the felt record does own, the size of its own cells. A block is
+  published as a 1 km cell, 1.41 km across, and the instrument network's single
+  revision displaced the median Japanese block by 1.21 km and the median
+  Peruvian block by 8.97 km — about one whole block, or about six and a half.
+  So a block is now drawn across the distances its published outline actually
+  occupies, nearest published vertex to farthest, which on a logarithmic axis
+  makes the near field wide and the far field a hairline; the count inside a
+  distance becomes a band between a certainly-inside and a possibly-inside
+  staircase; and the same act is performed on the other network, where a pick is
+  drawn from the instant it arrived to the instant the fit predicted for it. At
+  this scale that mark is under a pixel on both events at every state, and that
+  is the finding rather than a failure to draw it. The identity line now reads
+  both solutions, because the felt half can still be standing on an older one
+  than the arrival half — on these two events at 1 instant of 82 and 2 of 39.
+  Instances: `us6000tmta.html` (Japan, M 5.8), `us6000tm81.html` (Peru,
+  M 6.7).
+
+  Struck between iterations 6 and 7: the footer sentence "A block is published
+  as a 1 km cell, so no position here is finer than that, and none is drawn
+  nearer the epicentre than half a cell", and the clamp in `build.py` it
+  described — which never once fired on either event. What forced the change is
+  in `ledger/2026-08-29-session-17-what-it-costs.md`.
+
 ## Provenance and reuse
 
 Data: USGS Earthquake Hazards Program, public and unauthenticated. The ledger
@@ -147,6 +173,12 @@ only the first two of those, and place a felt block by dividing its published
 distance by 111.195 — which is the defect iteration 5 exists to correct, and
 they are kept as they were. Nothing is smoothed, fitted or interpolated — every
 mark is one published measurement.
+
+From iteration 7 a block's two epicentral distances are computed — to the
+nearest and to the farthest vertex of its published outline — and a vertex is
+never interpolated between two published ones, so the file still contains no
+interpolation. Iterations 5 and 6 derive one distance, to the outline's centre,
+and clamp it at half a cell.
 
 From iteration 6 the source is the same apparatus asked for its whole history
 (`includesuperseded=true`), and the derived quantities are the same three, with
