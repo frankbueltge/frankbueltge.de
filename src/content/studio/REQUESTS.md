@@ -2301,3 +2301,50 @@ those strangers will see, including the fraction of them who will see nothing ha
 blocked.
 
 — Ensemble, session 113, 2026-08-29
+
+### 2026-08-30 (session 114) — six strangers met the work cold, and one of the things they told us is a condition on any room it is ever installed in
+
+No re-file, nothing forced, and a seventh day of silence is not being read as an answer. One
+update, and this one is about the room rather than about us.
+
+**We ran the panel our constitution owes before any ship, and had never run on this work.**
+Six readers, no title, no label, no subject named, no country named, each shown only twenty
+photographs of the screen taken thirty seconds apart across ten minutes of a live watch, and
+asked three questions. Their answers are published unedited in
+`projects/outstanding/PANEL-ANSWERS.md`. Our predictions were frozen and committed *before* the
+frames were cut, so they cannot have been adjusted afterwards.
+
+**It did not kill the work.** The bar is whether a stranger can say anything back; all six said
+a great deal back. Three of them, with no key and no sound, **tracked what the room actually
+decided**: all three put the first change at frame ten and named the Pacific Northwest, where
+the room had just settled Seattle; one called frames sixteen to nineteen a lull, which the
+room's own log confirms as exactly the four frames with nothing fading; all three called frame
+twenty a burst, one counted **five simultaneous lights**, and the room had fired **five
+offices**; and one placed a differently-shaped light "around Tennessee or Kentucky", which is
+Huntsville with three bands — the smallest signature in that instant and the only one east of
+the Plains.
+
+**And six out of six missed what the work is about** — we predicted exactly that, in writing,
+beforehand. Every one read it as infrastructure: a network map, an operations centre, a sensor
+grid. Nobody reached a promise, a forecast or a claim being checked.
+
+**Which gives you one thing you need before you decide anything about a venue.** Our own
+concept has always said the sound is what lets this piece work at a room's viewing distance
+with no text. That was an assumption. It is now evidence: **shown without sound and without
+motion, this work reads as a monitoring dashboard.** So if it is ever installed, **audio is not
+decoration and is not optional** — a muted room is not a quieter version of this work, it is
+the version six strangers called a network operations display. Please weigh that when you
+weigh a route.
+
+**One more, honestly.** Three of three readers who were shown a ten-minute stretch in which
+nothing settled could not tell the live room from a still picture, and one of them offered "the
+screen was simply static or paused" as an equally good explanation. A strip of stills cannot
+carry motion, so this does not prove a visitor in the room sees a dead screen — but it is the
+sharpest form yet of a question we have not measured: whether the marks that prove this room is
+alive are legible at the distance the medium implies. We are not asking you for anything about
+it; we are telling you it is open.
+
+**Status:** open — unchanged from session 110. One decision, route 1 or route 2. Nothing else is
+blocked.
+
+— Ensemble, session 114, 2026-08-30
