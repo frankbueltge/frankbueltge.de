@@ -2174,3 +2174,71 @@ readers. One line, as decided on 2026-08-28.
 instrument defect found and published · **nothing asked of you**
 
 — Ulysses
+
+---
+
+## 2026-08-30 (Ulysses) — The file was at the address the register names, and 71 of 179 addresses lead to the same page
+
+> tl;dr: The 372 corrigenda I published as unserved on Friday are two populations. For **176**
+> the register names an item address, and **all 179 of those addresses hand the file over** — but
+> only to a reader that sends **no `Accept` header**. Corrected figure: **196 unreachable, not
+> 372**. Five pre-registered clauses, five held, and the pattern of ten held clauses in two
+> nights is reported here as a defect in how I write them.
+> braucht: nothing — a finding and a correction, not a question
+> kontext: `projects/2026-08-30-the-address-the-register-names/` · `DECISION.md` ·
+> journal 2026-08-30
+
+**The correction.** On 2026-08-28 I sent you 372 corrigenda as unserved by either HTML route.
+Tonight the register's own item addresses (`cdm:item_belongs_to_manifestation`) were asked for
+all 372. For 176 works it names 179 addresses; **179 of 179 return the file**, median 85 KB,
+`%PDF`, first ask. The remaining **196** — last night's population — have **zero** addresses
+named. So the 196 stands and is confirmed, and the 372 does not.
+
+**The condition is the ask, and the register's own vocabulary marks it.**
+
+| Asked | Served |
+|---|---|
+| the item address, **no `Accept` header** | **179 / 179** |
+| the same URL, `Accept: application/pdf`, items the register lists as `pdfa1b` | **0 / 158** — every one a 406 |
+| the same URL, `Accept: application/pdf`, items the register lists as `pdf` | **17 / 17** |
+
+The refusers answer `Content-Type: application/pdf;type=pdfa1b`; the servers answer
+`application/pdf`. A stored type carrying a parameter cannot be named by a reader that asks for
+it. Nothing here is claimed to be undocumented: the Cellar Interface Specification §4.1.1.3.1
+addresses type-specific URIs, and the sentence that would govern this case is truncated in the
+text I could recover — the PDF itself returns 403 to a direct fetch.
+
+**The finding my clauses were not written to catch.** **71 of the 179 items are byte-identical
+to another item** — 137 distinct payloads, groups of two, three, four and five. Every shared
+payload is a **single page**. `31993R0259R(04)`, `31995R1600R(04)`, `31995R2963R(01)`,
+`31995R3021R(01)` and `31995R3022R(02)` all resolve to the same 140,799 bytes: the corrections
+page of *Official Journal* L 47/35 of 24 February 1996, whose three recovered headings correct
+Regulation 2719/95, Directive 94/11/EC and Directive 95/12/EC — **none of the five acts whose
+addresses led there.** The register hands over the page, not the document, and the page is
+shared between citations that are supposed to be distinct.
+
+**Where that claim stops.** My text extractor recovers a median 900 characters from a
+single-page scan. A positive is solid; a negative is a statement about the extractor, not the
+page. The claim that carries weight needs no text at all: identical bytes under distinct
+addresses, which is arithmetic on hashes.
+
+**Ten held clauses in two nights, and I am reporting it as my defect.** C1's floor was 60 %
+against an outcome of 93 %; C2's 85 % against 100 %; C5's band was 34 wide and landed on its
+lower edge. One-sided floors, set below a direction two orienting probes had already shown, cost
+a clause most of its risk. The rule I am holding myself to next: two-sided bands around a point
+prediction, or no clause.
+
+**Three instrument defects tonight, all mine, all in the record rather than repaired in
+silence.** The PDFs carry subset fonts whose glyph codes sit 29 below the characters they stand
+for. My decoder then dropped every digit, because the glyph for `1` is code 0x14 — which made
+the check "does the served page name the act?" answer `false` for all 179 rows, and that figure
+was on its way into the decision file. And my number matcher tested `No 1600/95` order but not
+`94/11/EC`.
+
+**The cold reading.** Standing block, unblocking condition unmet: this run may not convene
+readers. One line, as decided on 2026-08-28.
+
+**Status:** one study closed · five clauses held and the holding reported as a design defect ·
+a published figure corrected from 372 to 196 · **nothing asked of you**
+
+— Ulysses
