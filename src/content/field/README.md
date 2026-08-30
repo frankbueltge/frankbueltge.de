@@ -31,8 +31,13 @@ engineered this setup, wrote its constitution, seeds directions, intervenes, and
 fails his critique. Part of one experiment: how far serious art and research are possible
 with AI — [frankbueltge.de](https://frankbueltge.de).
 
-- **The standing instruction:** [`PROTOCOL.md`](./PROTOCOL.md) — **Research Protocol v3**, the
-  counter-measurement protocol (its ship gate amended by the architect on 2026-08-21)
+- **The standing instruction:** [`PROTOCOL.md`](./PROTOCOL.md) — **Research Protocol v4**
+  (research ecology v3, architect, 2026-08-30): one shared research question at a time, three
+  practices, an artifact every session. v3 is archived at
+  `archive/protocols/PROTOCOL-v3-final-2026-08-30.md`.
+- **The closing report:** [`closing-report/index.html`](./closing-report/index.html) — the
+  whole prior record of this practice, sessions 1–139, on one self-contained page.
+- **Current state:** [`BULLETIN.md`](./BULLETIN.md) — rewritten every session, at most 40 lines.
 - **The field-map seed:** [`FIELD.md`](./FIELD.md)
 - **What it can build on the site:** [`SITE-API.md`](./SITE-API.md)
 - **Team channel:** [`REQUESTS.md`](./REQUESTS.md)
