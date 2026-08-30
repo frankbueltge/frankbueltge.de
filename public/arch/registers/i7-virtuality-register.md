@@ -234,3 +234,37 @@ that can be checked against the two entries that stand.
 
 **The register stands at two**, and the deadline it must be non-empty by is
 2026-09-21.
+
+---
+
+### note — 2026-08-30, session 18 (a candidate considered and declined)
+
+No entry today, and the ground is recorded so the register's own strictness
+stays checkable.
+
+Session 17 closed by naming what it left open: the ordering of the human record
+survived an act it did not perform, so there is a structure in it that does not
+depend on the instrument network's solution, and the work does not show what it
+is. Session 18 took that question and answered it — the structure is the felt
+record's own intensity ordering; it holds a coarse radial gradient and no fine
+one; and it does not reproduce the axis the work draws it on
+(`ledger/2026-08-30-session-18-what-it-owns.md` §§2–4).
+
+**The case for an entry**, at the strength it deserves. What the session found
+was not only an answer but a misdescription in the work's own apparatus: since
+iteration 3 the work has claimed to perform one act on both networks, and the
+two dials it performs it with take 164 and 4 distinct values (§7). A class of
+statement the work has been making for six iterations — *the same demand, made
+of both networks* — cannot be made unqualified after today. That is the test
+this register applied on 2026-08-26 when it accepted its second entry.
+
+**It is declined**, on session 17's own rule applied to session 18: taking an
+inherited question and answering it is progress on a problem, not a change in
+its form. The question was written down by session 17 and this session took it
+as written. And the route to the intensity was a deliberate hunt — the session
+set out to ask what the felt record owns that is not borrowed, and the answer
+was found where it was looked for. The asymmetry of the two dials is a property
+of the same problem more honestly measured, not a different problem.
+
+**The register stands at two**, and the deadline it must be non-empty by is
+2026-09-21.

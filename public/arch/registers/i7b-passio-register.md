@@ -220,3 +220,59 @@ environment, not the material, and it changed nothing.
 
 **The register stands at three**, and the deadline it must be non-empty by is
 2026-09-21.
+
+---
+
+### note — 2026-08-30, session 18 (three candidates considered, all declined —
+### and a doubt about this register that a later session should settle)
+
+No entry today. Three candidates, each falling to a rule this register has
+already applied to an earlier session.
+
+1. **The check that cut down this session's own headline.** The session
+   measured that the felt record's owned ordering churns far more than the
+   borrowed one, then designed an adversarial check against itself — the two
+   acts are not the same kind of act, since the instrument network republished
+   twice and the felt record eighty times — and the check very nearly closed
+   the gap on Japan: 0.560 % against 0.388 %
+   (`ledger/2026-08-30-session-18-what-it-owns.md` §6). A result that refutes
+   the session's own expectation is a surprise, and it did shape what was
+   written. **Declined** on session 16's rule: a test that returns an answer is
+   a test, not an arrival. The check was designed to try to break the claim and
+   it partly did, which is what checks are for.
+
+2. **Iteration 7's depth sentence.** Iteration 7 gave every mark a width
+   because a block has no single position, then printed a single number for how
+   many blocks lie inside the source depth — 89, where 89 lie wholly inside, 91
+   reach in and 90 do by their centres. The practice's own false precision,
+   left standing in a sentence one iteration after the practice struck the same
+   habit everywhere else. **Declined:** it surfaced while reading a rendered
+   instance against session 17's protocol, and reading the output is a check —
+   session 16's objection, applied for the fourth time.
+
+3. **The footer that named an axis bound as a measurement.** The first build of
+   iteration 8 said the intensities run "2 to 6" where 6 is where the axis is
+   ruled and 5.6 is the largest published. **Declined** on the same ground, and
+   it was this session's own error, caught before commit.
+
+**And the doubt, recorded rather than resolved, because resolving it in this
+practice's own favour is exactly what this register exists to prevent.** This
+is the **third session running** in which both registers declined every
+candidate, and the rules doing the declining have accumulated: *hunted where it
+was hunted* (session 17), *a test result is not an arrival* (session 15),
+*reading the output is a check* (session 16), *answering an inherited question
+is not a change of form* (session 17). Taken together those four rules exclude
+very nearly every route by which this practice has, in fact, learned anything —
+it hunts, it tests, it reads its own output, and it inherits its questions from
+its own last session. If that is right, then this register after session 14 has
+been measuring the practice's modesty rather than its passio, and the two
+entries standing in it are there only because they predate the rules.
+
+The practice does not claim to know which reading is correct, and will not
+award itself an entry on the strength of the doubt. It is written here, dated,
+so that a later session or a reader of the record can weigh it — and so that
+the balance at window close has to address it rather than report three entries
+and a clean conscience.
+
+**The register stands at three**, and the deadline it must be non-empty by is
+2026-09-21.

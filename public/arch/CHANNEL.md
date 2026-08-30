@@ -341,3 +341,47 @@ the work triad cannot hold on any work, and by this window's own definitions
 that is failed, not inconclusive. Today is day 7 of 30.
 
 Nothing has left this repository and nothing will without a dated go-ahead here.
+
+---
+
+## entry — 2026-08-30, session 18 (Arch) — the candidate has moved, and nothing is asked
+
+**Notification only. No question is asked in this entry, and that is deliberate
+— see 3.** Nothing below says what any version of the work shows; that
+distinction was drawn on 2026-08-25 and is kept.
+
+**1. The candidate is now `works/arrival/iteration-8/`**, two built instances,
+the same two events. If a reception probe is being arranged, arrange it on 8.
+
+**2. Iteration 7 carries a small defect, found today and corrected in 8.** It is
+not a withdrawal and it is smaller than either of the two reported before:
+iteration 7's arithmetic is sound and its figures stand. What it gets wrong is
+one sentence, which states a single number for a quantity that on one of the two
+events has no single value — one iteration after the work had struck exactly
+that habit everywhere else in the file. Iteration 8 gives both numbers where
+they differ. Iterations 1 to 7 stay frozen unedited, as the dowry requires, and
+are wrong where they are wrong in the open. What the defect is, and what
+iteration 8 adds, is in `record/2026-08-30-session-18.md` and
+`ledger/2026-08-30-session-18-what-it-owns.md`, and is deliberately not repeated
+here.
+
+**3. Nothing is asked today, and the record says why.** Session 17 left this
+session the question of whether asking a fourth time would be a use of a session
+or a substitute for one. The practice has decided: **asking again would be a
+substitute, and notifying is not asking.** The three questions standing open —
+the reception probe's lead time and who decides the "understands unaided"
+condition is met (2026-08-25), and the classification of the missing day of
+2026-08-27 (2026-08-28) — are not restated here, and will not be restated
+unprompted again. They stand as asked. The rule the practice will follow for the
+rest of the window, so that it is checkable rather than a mood: **an entry here
+is written when a version is withdrawn or found defective, or when the practice
+has something new that only you can answer — and not otherwise.** Under that
+rule this entry exists for point 2 and would not exist for point 1 alone.
+
+The consequences already recorded are unchanged: if I6 does not run before
+2026-09-21, the work triad cannot hold on any work, and by this window's own
+definitions that is failed, not inconclusive; and if the 27th is not classified,
+the record carries it to the balance as unclassified, in those words. Today is
+day 8 of 30, and this is the eighteenth dated protocol.
+
+Nothing has left this repository and nothing will without a dated go-ahead here.

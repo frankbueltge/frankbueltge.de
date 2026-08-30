@@ -1,7 +1,7 @@
 # Arrival
 
-A work candidate, in seven iterations. Current: **iteration 7**, built
-2026-08-29 (session 17).
+A work candidate, in eight iterations. Current: **iteration 8**, built
+2026-08-30 (session 18).
 
 This file is for continuing the work, not for explaining it. The work is the
 HTML file; if it needs this README to be understood, it has failed its own
@@ -10,7 +10,7 @@ record, not in a longer README.
 
 ## Rebuilding
 
-    cd iteration-7
+    cd iteration-8
     python3 build.py                 # most recent event carrying both products
     python3 build.py us6000tmta      # a named event
 
@@ -159,6 +159,38 @@ still runs.
   described — which never once fired on either event. What forced the change is
   in `ledger/2026-08-29-session-17-what-it-costs.md`.
 
+- **`iteration-8/`** — session 18. Below the axis, a measurement instead of a
+  census. Session 17 found that the instrument network's revision barely
+  disturbs the human record's ordering, and left standing the question of what
+  structure the human record has that it does not borrow. It has one: the felt
+  record publishes three things per block that owe the instrument network
+  nothing — the outline, the number of people who reported, and the intensity
+  they reported — and the last of those is an ordering it makes of itself. That
+  ordering is not the borrowed one: "nearer the epicentre is stronger" holds on
+  66.3 % of untied pairs on Japan and 70.0 % on Peru, and between blocks within
+  a quarter of each other's distance it holds on 52.7 % and 56.2 %, which is no
+  ordering at all. The felt record resolves the radial structure at about a
+  factor of three in distance and no finer, on an axis ruled to its own 1.4 km.
+  So the lower half stops counting records inside a distance and draws what the
+  people published: a block stands at its own published intensity, spanning the
+  distances its outline occupies as in iteration 7. Both halves are then a
+  measurement its own network made — seconds above the line, intensity below —
+  and the figure shows, without a caption, that one of them lies near a curve
+  and the other does not. The footer says why: a solution was fitted to put the
+  arrivals there, and nothing is fitted to the intensities. `build.py` is
+  unchanged apart from its header: the intensity has been fetched, parsed and
+  written into every instance since iteration 1 and was drawn nowhere.
+  Instances: `us6000tmta.html` (Japan, M 5.8), `us6000tm81.html` (Peru,
+  M 6.7).
+
+  Struck between iterations 7 and 8: the cumulative-count staircase, the
+  possibly-inside/certainly-inside band it was drawn as, and the axis label
+  "felt reports within". Corrected in 8: iteration 7's depth tick printed a
+  single number for how many blocks lie inside the source depth, one iteration
+  after the work struck that same false precision everywhere else — on Japan 89
+  lie wholly inside, 91 reach in, 90 do by their centres. What forced the change
+  is in `ledger/2026-08-30-session-18-what-it-owns.md`.
+
 ## Provenance and reuse
 
 Data: USGS Earthquake Hazards Program, public and unauthenticated. The ledger
@@ -179,6 +211,14 @@ nearest and to the farthest vertex of its published outline — and a vertex is
 never interpolated between two published ones, so the file still contains no
 interpolation. Iterations 5 and 6 derive one distance, to the outline's centre,
 and clamp it at half a cell.
+
+Iteration 8 derives nothing further. It draws a block's published intensity,
+which every iteration since the first has carried into the file and none has
+drawn. Neither quantity now drawn as a mark's height is raw, and neither is
+this practice's: a pick's residual is computed by whoever fitted the solution,
+a block's intensity by whoever runs the questionnaire. Each is taken as its own
+record published it, unrounded and unbinned, exactly as the arrival instants
+and the outlines are.
 
 From iteration 6 the source is the same apparatus asked for its whole history
 (`includesuperseded=true`), and the derived quantities are the same three, with
