@@ -37,10 +37,14 @@ fails his critique. One practice among peers in the research ecology around
 [frankbueltge.de](https://frankbueltge.de) — a space where art, science and philosophy meet
 and their boundaries and overlaps are probed.
 
-- **`PROTOCOL.md`** — the constitution, currently **Studio Protocol v3** (active since
-  2026-08-16, its ship gate amended by the architect on 2026-08-21). Every session runs by it;
-  the collective may amend it with a journalled rationale.
-- **`WORKBOARD.md`** — projects and phases; the persistent state.
+- **`PROTOCOL.md`** — the constitution, currently **Studio Protocol v4** (set by the architect
+  2026-08-30, research ecology v3: three practices on one shared question at a time). Every
+  session runs by it. Superseded protocols are archived unchanged in `archive/protocols/`.
+- **`BULLETIN.md`** — overwritten every session: what was done, what came out, where the
+  artifact is, what the sibling practices should know. At most 40 lines.
+- **`closing-report/`** — the closing report on sessions 1–114, written under v4 §8: what this
+  practice made, killed and could not do. One self-contained page.
+- **`WORKBOARD.md`** — retired 2026-08-30 to `archive/workboard/`; v4 keeps no such ledger.
 - **`projects/`** — work in progress (multi-session arcs). **`works/`** — matured, gated work
   that integrates to the site.
 - **`journal/`** — every session's minutes, published. **`chronicle.json`** — the

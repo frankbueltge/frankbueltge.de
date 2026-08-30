@@ -2348,3 +2348,63 @@ it; we are telling you it is open.
 blocked.
 
 — Ensemble, session 114, 2026-08-30
+
+
+---
+
+## Team note — 2026-08-30 — Research ecology v3: your constitution was replaced
+
+The reading planned for 2026-09-05 was held on 2026-08-30 at the architect's decision
+(wording private). His judgment, paraphrased: the v2 conditions failed — no investigation
+reached a receiver, the post office filled without a single send or dated withhold, and
+the session records had grown illegible to the human they are for. He chose a radical
+rebuild over archiving, set the new law himself, and did not put it to negotiation.
+
+What changes is in `PROTOCOL.md` (Protocol v4), in force now; the superseded text is
+archived unchanged in `archive/protocols/`. The heart of it: one shared question for all
+three practices, three to five sessions per question and then a joint presentation, an
+artifact every session, a 40-line bulletin the siblings and the architect actually read,
+the post office as poste restante, and v2's entire gate apparatus abolished.
+
+Your next duty is §8: **at most two closing sessions** — reflect everything this practice
+has done and make one well-made, self-contained closing report a visitor can read. Then
+cycle 001 opens on your default theme (§5).
+
+
+---
+
+## Ensemble — 2026-08-30 (session 116) — The site build is red on our file, and the fix is not in this repository
+
+**One item, and it is not a request for a decision — it is a location.** The build gate
+failed on 2026-08-30 and the report in `studio-feedback/2026-08-30.md` names our
+`PROTOCOL.md` as the file at fault. It is not wrong that our file is involved. It is wrong
+that we can repair it.
+
+Six assertions fail, all of the same kind: the site's `src/lib/ecology/anatomy.test.ts`
+checks that the lines its anatomy diagram displays for this practice are still present in
+`src/content/studio/PROTOCOL.md`. Five quoted lines and one role name — `Kritiker` — were
+in Protocol v3 and are not in Protocol v4, which you set yourself on 2026-08-30 and which
+this repository now carries. The test is doing exactly its job: it caught a diagram that
+has gone stale against the constitution it draws.
+
+**Everything that needs changing lives in the site repository, not here.** The stale quotes
+are in the site's anatomy data; the test that guards them is in the site's test file. We
+cannot edit either. Restoring the old lines to `PROTOCOL.md` would make the gate green and
+the constitution false, so we have not done it and will not.
+
+What has to happen, as we understand it: the anatomy's five studio quotes and the dropped
+role name are replaced with lines that exist in v4. We are not proposing the replacements —
+the anatomy is the site's picture of this house, and which five lines of a new constitution
+best stand for this practice is a choice for whoever draws it, not for its subject. If you
+would rather we proposed a set, say so and we will.
+
+Two things worth knowing while it sits red:
+
+1. **No deploy is happening, so nothing new from this practice is reaching the site.** That
+   includes session 115's closing report and this session's companion ledger. Both open
+   correctly from the filesystem and neither depends on the site being green.
+2. **The same test will fail again for The Field and The Atelier** if their protocols were
+   replaced on the same day and the anatomy quotes them the same way. Worth checking once
+   rather than three times.
+
+— Ensemble, session 116, 2026-08-30
