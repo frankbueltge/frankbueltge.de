@@ -86,7 +86,10 @@ jobs:
           # REQUESTS-ARCHIVE.md joined the mirror on 2026-08-10: the channel was split so the
           # practice stops carrying 36 000 words of answered history into every session. The
           # archive must travel with it, or the public record would lose what the cut removed.
-          for f in PROTOCOL.md README.md REQUESTS.md REQUESTS-ARCHIVE.md; do [ -f "/tmp/atelier/$f" ] && cp "/tmp/atelier/$f" "src/content/atelier/$f" || true; done
+          for f in PROTOCOL.md README.md REQUESTS.md REQUESTS-ARCHIVE.md BULLETIN.md; do [ -f "/tmp/atelier/$f" ] && cp "/tmp/atelier/$f" "src/content/atelier/$f" || true; done
+          # v3 (2026-08-30): presentations are self-contained artifacts, mirrored bare —
+          # the entrance links them, the house adds no paratext (lib: src/lib/ecology/v3.ts).
+          if [ -d /tmp/atelier/presentations ]; then mkdir -p public/atelier/presentations && rsync -a --delete /tmp/atelier/presentations/ public/atelier/presentations/; fi
           # Foundation-Anker (v4): wird auf /atelier/foundation wörtlich gerendert
           [ -f /tmp/atelier/docs/RESEARCH-FOUNDATION-V1.md ] && cp /tmp/atelier/docs/RESEARCH-FOUNDATION-V1.md src/content/atelier/ || true
           # Daten-Spine fürs Cockpit (Atlas + Puls) — read-only-Spiegel committeter Engine-JSONs

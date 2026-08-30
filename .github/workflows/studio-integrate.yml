@@ -66,7 +66,10 @@ jobs:
           # the channel was split so the practice stops carrying 34 142 words of answered history
           # into every session. The archive must travel with it, or the public record would lose
           # exactly what the cut removed.
-          for f in PROTOCOL.md README.md REQUESTS.md REQUESTS-ARCHIVE.md SITE-API.md; do [ -f "/tmp/studio/$f" ] && cp "/tmp/studio/$f" "src/content/studio/$f" || true; done
+          for f in PROTOCOL.md README.md REQUESTS.md REQUESTS-ARCHIVE.md SITE-API.md BULLETIN.md; do [ -f "/tmp/studio/$f" ] && cp "/tmp/studio/$f" "src/content/studio/$f" || true; done
+          # v3 (2026-08-30): presentations are self-contained artifacts, mirrored bare —
+          # the entrance links them, the house adds no paratext (lib: src/lib/ecology/v3.ts).
+          if [ -d /tmp/studio/presentations ]; then mkdir -p public/studio/presentations && rsync -a --delete /tmp/studio/presentations/ public/studio/presentations/; fi
           # Chronicle self-report from the engine repo root (see the chronicle contract in
           # SITE-API.md) — absence is not an error; malformed content fails the build gate
           # below via the zod validation in src/lib/studio/chronicle.ts.
