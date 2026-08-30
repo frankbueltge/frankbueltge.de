@@ -36,19 +36,24 @@ describe('chronicle.curated.json', () => {
     const dir = join(process.cwd(), 'src/content/field/journal')
     const files = readdirSync(dir).filter((f) => f.endsWith('.md')).sort() // chronological
     const used = new Set<string>()
+    // v3 boundary (2026-08-30, research ecology v3): Protocol v4 abolished the practice's
+    // chronicle duty, so sessions from that day on may honestly lack a self-report and are
+    // exempt from the coverage-equality below (anchor resolution still binds them).
+    const V3 = '2026-08-30'
+    let usedPreV3 = 0
     for (const f of files) {
       const day = f.replace(/\.md$/, '')
-      splitSessions(readFileSync(join(dir, f), 'utf-8')).forEach((s, i) =>
-        uniqueSessionAnchor(used, s.heading, day, i),
-      )
+      const sessions = splitSessions(readFileSync(join(dir, f), 'utf-8'))
+      sessions.forEach((s, i) => uniqueSessionAnchor(used, s.heading, day, i))
+      if (day < V3) usedPreV3 += sessions.length
     }
     for (const e of served) {
       expect(used, `anchor ${e.anchor} (seq ${e.seq}) not rendered on /field`).toContain(e.anchor)
     }
     // and the served chronicle covers every rendered session (drift alarm in the other
-    // direction): a session with NEITHER a curated entry NOR an upstream self-report
-    // still fails the gate loudly.
-    expect(served.length).toBe(used.size)
+    // direction) — bounded to the v2 era per the V3 boundary above.
+    const servedPreV3 = served.filter((e) => e.date < V3)
+    expect(servedPreV3.length).toBe(usedPreV3)
   })
 
   it('every referenced journal_id exists', () => {

@@ -44,7 +44,10 @@ const url = (href: string) => (href.startsWith('http') ? href : getRelativeLocal
 
 const W = PYRAMID.entrance
 const now = new Date()
-const reading = readingDate()
+// This surface was retired as the entrance on 2026-08-30 (research ecology v3) and renders
+// nowhere; readingDate() is null since the reading was held, so the last true value is
+// frozen here only to keep the archived component compiling.
+const reading = readingDate() ?? '2026-09-05'
 const daysToReading = daysUntil(reading, now)
 
 const works = allWorks()

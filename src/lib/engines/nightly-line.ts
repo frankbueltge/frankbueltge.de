@@ -72,6 +72,11 @@ export const PROTOCOL_LADDER: readonly ProtocolStep[] = [
     date: '2026-08-08',
     unit: 'the work-line',
     note: 'the work-line protocol sharpened — and amended on 2026-08-12, when the horizon closed at twelve worked sessions',
+  },  {
+    version: 7,
+    date: '2026-08-30',
+    unit: 'the shared question',
+    note: 'research ecology v3 — one question for all three practices, set at the reading held that day',
   },
 ]
 

@@ -43,9 +43,14 @@ describe('the stations', () => {
 })
 
 describe('the reading', () => {
-  it('reads the date out of the practices’ own constitutions', () => {
-    expect(readingDate()).toMatch(/^\d{4}-\d{2}-\d{2}$/)
+  it('returns null since the reading was held — the v3 constitutions carry no reading section', () => {
+    // Until 2026-08-30 every constitution carried "## The reading of 2026-09-05" and this
+    // test read the date out of the files. The reading was held early on 2026-08-30
+    // (docs/design/2026-08-30-research-ecology-v3.md); the v4/v7/v4 texts carry no reading
+    // section, and the honest derivation is null, not a thrown build.
+    expect(readingDate()).toBeNull()
   })
+
 
   it('fails loudly when the practices disagree about when they are read', () => {
     // The alternative — picking one silently — would put a date on the entrance that no
@@ -58,8 +63,8 @@ describe('the reading', () => {
     ).toThrow(/disagree/)
   })
 
-  it('fails loudly when no constitution carries the reading at all', () => {
-    expect(() => readingDate({ '/src/content/a/PROTOCOL.md': '# Research Protocol v6' })).toThrow(/no mirrored constitution/)
+  it('returns null when no constitution carries a reading — absence is a state, not a failure', () => {
+    expect(readingDate({ '/src/content/a/PROTOCOL.md': '# Research Protocol v6' })).toBeNull()
   })
 
   it('does not ask the Plenum, whose own protocol says the reading does not cover it', () => {
