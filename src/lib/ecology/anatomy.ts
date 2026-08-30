@@ -1,3 +1,10 @@
+// RETIRED WITH THE PYRAMID ENTRANCE (2026-08-30, research ecology v3). This module quoted
+// the v1/v2 constitutions line by line for /ecology's anatomy surface, and its test held
+// every quote against the mirrored files. The v3 rebuild replaced those constitutions
+// (ulysses v7, field-research v4, studio v4) and the entrance that displayed this anatomy
+// (decision: docs/design/2026-08-30-research-ecology-v3.md). The quotes below freeze at
+// their last true state and are NO LONGER held against the mirrors — the test went with the
+// surface. Nothing imports this module except the archived EcologyAnatomy.astro.
 // src/lib/ecology/anatomy.ts — what the research ecology IS and how it works, as data.
 //
 // The apparatus map (src/lib/apparatus/) draws the wiring: repositories, workflows, deploy hops.
