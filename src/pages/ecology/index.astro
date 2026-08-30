@@ -1,23 +1,21 @@
 ---
-// /ecology — the research ecology's one entrance (Level 0 of the v3 pyramid, 2026-08-12).
+// /ecology — the research ecology's one entrance (v3, 2026-08-30 — the shared question).
 //
-// What stood here before was the anatomy page of 2026-08-03: a prose account of what is shared,
-// what the shared layer may not do, the three cycles as a figure, the contact zone, the counts.
-// It answered the question it was built for and it was too long to answer the question a stranger
-// actually arrives with. Frank's diagnosis on 2026-08-12 — too many pages, too much text, nobody
-// understands the ecology without hours of reading — retires it as the entrance.
+// What stood here before was the pyramid entrance of 2026-08-12 (EcologyEntrance.astro).
+// Research ecology v3 retired the order that surface narrated — seasons of gates, the
+// machine-advantage bar, the reading countdown — so keeping it as the entrance would have
+// been the site telling yesterday's story (the drift the Aktualitäts-Regel forbids).
 //
-// Git is the archive: the previous surface lives in this file's history, and its components
-// (EcologyAnatomy.astro, EcologyRooms.astro) and wording (src/config/ecology-wording.ts) stay in
-// the repo, unlinked, exactly as HubEntrance.astro did when the ops room replaced it. The
-// approval trail is docs/decision-log.md, 2026-08-12.
+// Git is the archive: EcologyEntrance.astro and its wording stay in the repo, unlinked,
+// exactly as the anatomy page did when the pyramid replaced it. The approval trail is
+// docs/decision-log.md, 2026-08-30, and docs/design/2026-08-30-research-ecology-v3.md.
 import Page from '@/layouts/Page.astro'
-import EcologyEntrance from '@/components/ecology/EcologyEntrance.astro'
-import { PYRAMID } from '@/config/ecology-pyramid-wording'
+import EcologyV3Entrance from '@/components/ecology/EcologyV3Entrance.astro'
+import { ECOLOGY_V3 } from '@/config/ecology-v3-wording'
 
-const SEO = PYRAMID.entrance.seo
+const SEO = ECOLOGY_V3.seo
 ---
 
 <Page title={`${SEO.title} | Frank Bültge`} description={SEO.description}>
-  <EcologyEntrance />
+  <EcologyV3Entrance />
 </Page>

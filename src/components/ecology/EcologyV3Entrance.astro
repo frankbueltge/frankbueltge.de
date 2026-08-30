@@ -1,0 +1,167 @@
+---
+// The v3 ecology entrance (research ecology v3, 2026-08-30 — the shared question).
+//
+// One surface, four moves, and it stops: what this is · where the house clock stands (the
+// cycle) · what each practice just did (the three bulletins, verbatim) · what the cycles have
+// produced (the presentations). Properties kept from the surface it replaces:
+//
+//   · NO NUMBER IS TYPED — cycle, dates, line counts and file counts come from
+//     src/lib/ecology/v3.ts, which reads only committed files. Copy that wraps a number is a
+//     function in ECOLOGY_V3 taking that number as its argument.
+//   · NO CLIENT DATA FETCHING — static output, nothing moves.
+//   · ABSENCE IS DRAWN — a practice without a bulletin says so in its own panel; an empty
+//     presentation shelf says why it is empty. No placeholder stands in for a missing record.
+//   · THE RECORD IS QUOTED, NOT PARAPHRASED — bulletins render verbatim (truncation is
+//     declared), because the bulletin IS the practice's public sentence under this order.
+import { getRelativeLocaleUrl } from 'astro:i18n'
+import type { Locale } from '@/lib/site'
+import { ECOLOGY_V3 } from '@/config/ecology-v3-wording'
+import {
+  BULLETIN_DISPLAY_MAX,
+  loadBulletin,
+  loadCycle,
+  loadPresentations,
+  PRACTICES,
+  PRACTICE_REPO,
+} from '@/lib/ecology/v3'
+
+const locale = (Astro.currentLocale ?? 'en') as Locale
+const url = (href: string) => (href.startsWith('http') ? href : getRelativeLocaleUrl(locale, href))
+
+const W = ECOLOGY_V3
+const cycle = loadCycle()
+const phase = W.cycle.phase[cycle.phase]
+const bulletins = PRACTICES.map((id) => ({ id, ...W.practices[id], bulletin: loadBulletin(id) }))
+const presentations = loadPresentations()
+
+const kicker = 'font-mono text-xs uppercase tracking-[0.22em] text-fg-muted'
+---
+
+<article class="mx-auto max-w-5xl px-4 pb-20 pt-10 sm:px-6">
+  {/* ── Head ─────────────────────────────────────────────────────────────── */}
+  <header>
+    <p class={kicker}>{W.head.kicker}</p>
+    <h1 class="mt-3 text-3xl font-semibold tracking-tight text-fg sm:text-4xl">{W.head.title}</h1>
+    <p class="mt-4 max-w-3xl leading-relaxed text-fg-muted">{W.head.intro}</p>
+    <p class="mt-3 font-mono text-xs text-fg-faint">
+      {W.head.orderLine}
+      {' '}<a class="underline decoration-line underline-offset-4 hover:text-fg" href={W.head.decisionHref}>{W.head.decisionLabel}</a>
+      {' '}· <a class="underline decoration-line underline-offset-4 hover:text-fg" href={url(W.head.seedHref)}>{W.head.seedLabel}</a>
+    </p>
+  </header>
+
+  {/* ── The cycle ────────────────────────────────────────────────────────── */}
+  <section class="mt-12 rounded-sm border border-line bg-panel p-5 sm:p-6" aria-label="Current cycle">
+    <div class="flex flex-wrap items-baseline gap-x-4 gap-y-1">
+      <h2 class="font-mono text-sm uppercase tracking-[0.18em] text-fg">{W.cycle.label(cycle.cycle)}</h2>
+      <span class="font-mono text-xs uppercase tracking-[0.18em] text-accent">{phase.badge}</span>
+      <span class="font-mono text-xs text-fg-faint">{W.cycle.openedLine(cycle.opened)}</span>
+    </div>
+    <p class="mt-3 max-w-3xl leading-relaxed text-fg-muted">{phase.copy}</p>
+    {
+      (
+        <div class="mt-5 border-t border-line pt-4">
+          {cycle.source === 'seed' && cycle.question ? (
+            <>
+              <p class={kicker}>{W.cycle.seededQuestionKicker}</p>
+              <p class="mt-2 text-lg leading-snug text-fg">{cycle.question}</p>
+            </>
+          ) : (
+            <>
+              <p class={kicker}>{cycle.phase === 'closing' ? W.cycle.nextCycleKicker(cycle.cycle + 1) : W.cycle.defaultsKicker}</p>
+              <ul class="mt-2 space-y-1.5">
+                {PRACTICES.map((id) => (
+                  <li class="leading-relaxed text-fg-muted">
+                    <span class="font-mono text-xs uppercase tracking-[0.14em] text-fg">{W.practices[id].name}</span>
+                    <span class="text-fg-faint"> — </span>
+                    {cycle.defaults[id]}
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
+          <p class="mt-3 font-mono text-xs text-fg-faint">{W.cycle.rhythm(cycle.sessionsPerPractice)}</p>
+        </div>
+      )
+    }
+  </section>
+
+  {/* ── The three bulletins ──────────────────────────────────────────────── */}
+  <section class="mt-12" aria-label="The three practices and their latest bulletins">
+    <div class="grid gap-5 md:grid-cols-3">
+      {
+        bulletins.map((p) => (
+          <div class="flex flex-col rounded-sm border border-line bg-panel">
+            <div class="border-b border-line p-4">
+              <p class={kicker}>{p.corner}</p>
+              <h3 class="mt-1.5 text-lg font-semibold text-fg">
+                <a class="hover:underline" href={url(p.href)}>{p.name}</a>
+                <span class="ml-2 font-mono text-xs font-normal text-fg-faint">{p.persona}</span>
+              </h3>
+              <p class="mt-2 text-sm leading-relaxed text-fg-muted">{p.role}</p>
+            </div>
+            <div class="flex-1 p-4">
+              <p class={kicker}>{W.bulletin.kicker}</p>
+              {
+                p.bulletin.present ? (
+                  <>
+                    <pre class="mt-3 overflow-x-auto whitespace-pre-wrap break-words font-mono text-[13px] leading-relaxed text-fg-muted">{p.bulletin.text}</pre>
+                    {p.bulletin.truncated && (
+                      <p class="mt-2 font-mono text-xs text-fg-faint">
+                        {W.bulletin.truncatedNote(p.bulletin.lines, BULLETIN_DISPLAY_MAX)}
+                      </p>
+                    )}
+                  </>
+                ) : (
+                  <p class="mt-3 text-sm leading-relaxed text-fg-faint">{W.bulletin.absent}</p>
+                )
+              }
+            </div>
+            <div class="border-t border-line p-4">
+              <a
+                class="font-mono text-xs text-fg-faint underline decoration-line underline-offset-4 hover:text-fg"
+                href={`https://github.com/frankbueltge/${PRACTICE_REPO[p.id]}/blob/main/BULLETIN.md`}
+              >{W.bulletin.sourceLabel}</a>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  {/* ── Presentations ────────────────────────────────────────────────────── */}
+  <section class="mt-12" aria-label="Presentations">
+    <p class={kicker}>{W.presentations.kicker}</p>
+    <p class="mt-2 max-w-3xl text-sm leading-relaxed text-fg-muted">{W.presentations.intro}</p>
+    {
+      presentations.length === 0 ? (
+        <p class="mt-4 rounded-sm border border-dashed border-line p-4 text-sm leading-relaxed text-fg-faint">
+          {W.presentations.empty}
+        </p>
+      ) : (
+        <ul class="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {presentations.map((e) => (
+            <li class="rounded-sm border border-line bg-panel p-4">
+              <a class="text-fg hover:underline" href={e.href.startsWith('http') ? e.href : url(e.href)}>
+                {W.presentations.entryLabel(e.cycle, W.practices[e.practice].name)}
+              </a>
+              <p class="mt-1 font-mono text-xs text-fg-faint">{W.presentations.fileCount(e.files)}</p>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </section>
+
+  {/* ── Lineage + doors ──────────────────────────────────────────────────── */}
+  <footer class="mt-14 border-t border-line pt-6">
+    <p class="max-w-3xl text-sm leading-relaxed text-fg-faint">{W.foot.lineage}</p>
+    <nav class="mt-4 flex flex-wrap gap-x-5 gap-y-2" aria-label="Ecology doors">
+      {
+        W.foot.links.map((l) => (
+          <a class="font-mono text-xs text-fg-muted underline decoration-line underline-offset-4 hover:text-fg" href={url(l.href)}>{l.label}</a>
+        ))
+      }
+    </nav>
+  </footer>
+</article>

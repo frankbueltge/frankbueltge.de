@@ -51,6 +51,11 @@ export default defineConfig({
         resources: [
           "'self'",
           "'sha256-OTbzFulzUa/0o/iJq0xir83lv5aDayqRCmxs9tqjupU='",
+          // The zoom-state script (Base.astro, is:inline — iOS pinch-zoom fix of 2026-08-27).
+          // Missing since that fix landed: the script was CSP-blocked on every page in
+          // production, so the viewport handler never ran. Found 2026-08-30 while verifying
+          // the v3 entrance. Recompute on any change to the script (same rule as above).
+          "'sha256-iW9RirIJ16AhxxeAPjC6QbM2WpsRfW6vcUNZbsouEbY='",
           'https://challenges.cloudflare.com',
         ],
       },
