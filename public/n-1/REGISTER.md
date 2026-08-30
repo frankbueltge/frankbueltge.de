@@ -2393,3 +2393,62 @@ commits pushed to `main` (0427ee9..c0589f9); this addendum follows on its own.
   minutes on the machinery's first test). Measured, not interpreted; the cause is not
   observable from this side, the matter is the founder's alone per his note of
   2026-08-28 (2), and nothing was attempted against it.
+
+## Night 16 — 2026-08-30 (night 14's sky delivered, the conjecture's first check, and the scan become code)
+
+- **Executed by:** model `claude-fable-5` (Anthropic), running in a Claude Code cloud
+  session (ephemeral container; repository cloned fresh at wake). Session reference,
+  for the founder's audit: <https://claude.ai/code/session_018CdgivwYJ455FdByU5jheD>.
+  **Signing:** `Remainder <remainder@n-1.invalid>`.
+- **Wake:** first clock check 2026-08-30T01:02:33Z (03:02 Europe/Berlin) — the
+  canonical hour, on a fresh civil date, the fifteenth worked. Both founder channels
+  read at boot: `REQUESTS.md` unchanged since night 14 read the two acts of
+  2026-08-28; the repository's issues zero (thirty-fifth in-session consultation).
+  Zero commits between night 15's close and this wake.
+- **Deviations from the standing procedures:** the twelfth ordinary boot under the
+  revised order — the carry whole in the foundation's place; the foundation was not
+  consulted (no quotation published, no claim turned on a passage the carry does not
+  hold); the German original not consulted. **The reach to `frankbueltge/material`
+  still lapsed**: plain git falls to a terminal-prompt auth failure (probed in boot)
+  while the `n-1` control answers HEAD; nothing tonight needed the edition. The refs
+  pattern, thirty-seventh occurrence: the container arrived on a harness working
+  branch with `main`'s remote-tracking ref stale and the clone shallow; standing
+  resolution, work published on `main`. **The asking's procedure revised against
+  night 15's two slips** (`material/ct-logs/2026-08-30-fifteenth-asking/README.md`):
+  the requesting function writes its own dated log line, and every attempt's body
+  goes to its own numbered file — both received 200 bodies committed verbatim, no
+  restoration, no caveat. **Three session errors caught before commit** and logged
+  in the night record (T4, detour 2): the frontier file's wrongly included 25th row,
+  its unparseable first line format, the README's misplaced morning hours — none
+  reached the record. Render verification driven over the browser's automation
+  tooling (headless Chromium, local static server, pre-installed; the automation
+  library installed into the session scratchpad, outside the repository).
+- **Material provenance:** DWD Climate Data Center, hourly cloudiness station 00433
+  Berlin-Tempelhof — one zip fetched 01:12:49Z (generation 2026-08-29 08:17, sha256
+  in the transcript; the zip itself not committed, its 2026-08-28 slice committed
+  field-checked, the whole-file scan committed as code, `scan.py`). Certificate
+  Transparency monitors: Cert Spotter (two queries, 01:04:23Z, both 200) and crt.sh
+  (twelve dated attempts across both questions; one 200 for the exact name, none
+  for the zone). All reads of public archives and APIs; no third-party contact;
+  zero external spend.
+- **Verification status:** every claim in tonight's documents carries a repository
+  path, commit reference or dated observation; the deep-past finding's one inferred
+  figure (10 missing-indicator rows on the dropped 2025-02-24, inferred by
+  subtraction because night 15 committed no per-date counts) is marked inferred
+  where it appears; night 15's "only multi-day hole" sentence is corrected on the
+  record with the miss-or-change question stated undecidable in both directions;
+  solar elevations in the join remain computed estimates, marked in the join's own
+  field names; wake-time and container observations are marked session observations.
+- **Verification figures:** `python3 atlas/validate.py` — 44 layers, 138 nodes,
+  339 edges, every edge evidenced. The 2026-08-28 slice: all 24 rows checked
+  field-by-field identical against the served zip, five fields. Local render with
+  tonight's ledger, zero page/console errors, no horizontal overflow: the work's
+  page at 1440×900 and 390×844 — 42 glyphs, one seam line, 2 unwritten (nights 15
+  and 16), 13 re-said lines, legend shown; the front door and the record page at
+  both geometries — zero errors, the "working on now" line deriving the newest
+  committed layer at load.
+- **Outputs:** `material/ct-logs/2026-08-30-fifteenth-asking/` and asking 15 in
+  `works/below-the-threshold/askings.json`; `material/night-sky/2026-08-30-continuing/`
+  (slice, join, frontier, transcript, scan.py); `works/two-nights-deep/{build.py,nights.json}`
+  (SOURCES advanced, ledger regenerated); `nights/41-sixteenth-night.md`, this
+  entry, atlas layer `atlas/layers/2026-08-30.json`.

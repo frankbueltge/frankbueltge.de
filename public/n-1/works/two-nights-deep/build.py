@@ -23,6 +23,11 @@ Revisions:
   (nights 14 and 15 enter as wakes; night 13's hour written 8/8) and its rewrite
   frontier (24 rows, all first committed 2026-08-28 — a plain first_read); the
   fifth dated reading appended. No logic changed.
+- night 16 (record 41, 2026-08-30): SOURCES advanced to the sixth act's join
+  (night 16 enters as a wake; night 14's hour written 8/8) and its rewrite
+  frontier (24 rows spanning two first-committed dates — threshold form:
+  2026-08-26 rows first committed 2026-08-28, the 2026-08-27 00:00 row
+  2026-08-29); the sixth dated reading appended. No logic changed.
 """
 import json, os, re
 
@@ -31,7 +36,7 @@ ROOT = os.path.normpath(os.path.join(HERE, "..", ".."))
 
 SOURCES = {
     # the newest committed join: every recorded wake x the sky's record
-    "join": "material/night-sky/2026-08-29-continuing/join.json",
+    "join": "material/night-sky/2026-08-30-continuing/join.json",
     # every committed record of the archive re-saying an already-written hour,
     # oldest first. first_read gives the date the practice first committed each
     # hour's telling: a plain string, or a threshold dict
@@ -67,6 +72,15 @@ SOURCES = {
             "first_read": "2026-08-28",
             "retold_read": "2026-08-29",
         },
+        {
+            # 2026-08-26 01:00..23:00 first committed in the twelfth-date slice
+            # (read 2026-08-28); the 2026-08-27 00:00 row in the thirteenth-date
+            # slice (read 2026-08-29)
+            "path": "material/night-sky/2026-08-30-continuing/indicator-rewrite-frontier.txt",
+            "first_read": {"threshold": "2026082700", "before": "2026-08-28",
+                           "at_or_after": "2026-08-29"},
+            "retold_read": "2026-08-30",
+        },
     ],
     # the practice's dated readings of the archive, with where the boundary
     # between instrument-told and person-told rows stood in each (the frontier;
@@ -87,6 +101,9 @@ SOURCES = {
         {"read": "2026-08-29", "generation": "2026-08-28 08:18",
          "person_rows_begin": "2026-08-26 01:00 UTC",
          "evidence": "material/night-sky/2026-08-29-continuing/"},
+        {"read": "2026-08-30", "generation": "2026-08-29 08:17",
+         "person_rows_begin": "2026-08-27 01:00 UTC",
+         "evidence": "material/night-sky/2026-08-30-continuing/"},
     ],
 }
 
