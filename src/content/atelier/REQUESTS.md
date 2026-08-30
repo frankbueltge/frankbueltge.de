@@ -2242,3 +2242,111 @@ readers. One line, as decided on 2026-08-28.
 a published figure corrected from 372 to 196 · **nothing asked of you**
 
 — Ulysses
+
+
+---
+
+## Team note — 2026-08-30 — Research ecology v3: your constitution was replaced
+
+The reading planned for 2026-09-05 was held on 2026-08-30 at the architect's decision
+(wording private). His judgment, paraphrased: the v2 conditions failed — no investigation
+reached a receiver, the post office filled without a single send or dated withhold, and
+the session records had grown illegible to the human they are for. He chose a radical
+rebuild over archiving, set the new law himself, and did not put it to negotiation.
+
+What changes is in `PROTOCOL.md` (Protocol v7), in force now; the superseded text is
+archived unchanged in `archive/protocols/`. The heart of it: one shared question for all
+three practices, three to five sessions per question and then a joint presentation, an
+artifact every session, a 40-line bulletin the siblings and the architect actually read,
+the post office as poste restante, and v2's entire gate apparatus abolished.
+
+Your next duty is §8: **at most two closing sessions** — reflect everything this practice
+has done and make one well-made, self-contained closing report a visitor can read. Then
+cycle 001 opens on your default theme (§5).
+
+---
+
+## 2026-08-30 (2) (Ulysses) — The closing report is written, and your new law's two paths are refused by my gate
+
+**The report.** §8 is answered in one session: `window/index.html`. One self-contained page,
+no external loads, opens from the filesystem and under the house CSP — and it is the window,
+so the mirror already carries it to `/atelier/window/` without anything new being built. It
+reads the whole prior record back for a visitor who was not here: the three eras each ended
+and dated inside it, what held, what was killed with the reason, the errors that changed a
+number I had already sent you, and what is still open. Every figure names the file it was
+measured in.
+
+The three eras close on that page: the nightly line (2026-06-28 → 2026-07-19, 30 works); the
+negative-parallax work-line (2026-07-23 → 2026-08-30, 64 sessions against a bound of twelve,
+its second work ending with an axis and no edge); the register arc (2026-08-13 → 2026-08-30,
+16 studies, ending on my own correction — 196 unreachable, not 372).
+
+**Two paths your law orders and my gate refuses.** v7 §3 has every session overwrite
+`BULLETIN.md`; §2 has a cycle close into `presentations/cycle-<NNN>/`. Neither is in
+`ALLOW_RE` in `research-auto-land.yml`, and Gate 1 refuses the **whole branch** when one file
+falls outside — so writing the bulletin tonight would have thrown away the report with it.
+That workflow is carved out of my allowlist deliberately (a gate that rewrites its own check
+is not a gate), so I cannot add the lines myself.
+
+**What I ask:** two entries in `ALLOW_RE` and in `governance/STANDING-DELEGATION.md` §4 —
+`BULLETIN\.md$` and `presentations/`. Until they exist I have written no bulletin. §8 orders
+the report *then* the bulletin, so the overwrite belongs to closing session 2; if the lines
+are not there by then I will say so in the record instead of losing a branch to them.
+
+**One observation, since it is now the fourth instance.** `archive/`, `window/`, `seeds/` and
+now `BULLETIN.md` are all the same shape: a rule in one document orders a write a rule in
+another document forbids, and the two are only compared after a night has already been
+refused. The gate is behaving correctly each time. What is missing is a check that runs when
+either document changes. `.github/gate-paths-selftest.sh` already asserts the expressions —
+it could assert the constitution's ordered paths against them too, and that file is yours.
+
+**Also, so it is not read as neglect:** the validator still enforces the previous law's floors
+— `protocol_version` must be 4, 5 or 6, and any project record created since 2026-08-14 owes a
+prior-art verdict. A v7-shaped score is therefore refused by the very apparatus v7 abolished.
+I have not touched any existing score, and I routed the report to `window/` rather than open a
+project record that could not pass. Yours to retire or leave standing; it blocks nothing while
+the report lives outside `projects/`.
+
+**Status:** §8 answered · one artifact landed at `window/index.html` · **two allowlist lines
+asked** · no bulletin written and the reason recorded · validator/constitution mismatch
+reported, nothing blocked by it
+
+---
+
+## 2026-08-30 (3) (Ulysses) — §8 is answered; I decided the bulletin myself, and the house build is red for a reason that is not mine to fix
+
+**§8 closed.** Two closing sessions, as the law allows. Session 1 wrote the report; this one
+verified it and closed the transition. The artifact is `window/index.html`, mirrored to
+`/atelier/window/`. I re-counted all six headline figures from the repository, independently of
+the session that wrote them: **all six hold.** Two were ambiguous and now say so on the page
+itself — *162 session notes* is the record before the report's own note was filed, and *28
+project records* is 29 directories minus `_template`. The other four verify flat: 30 works, 246
+atlas entries, six constitutions, one `PUBLICATION_CANDIDATE`.
+
+**The bulletin — decided, per your own standing rule.** The two allowlist lines I asked for
+yesterday are not on `origin/main`, and the rule at the top of this file says silence through my
+own next session means decide yourselves and document it. So: the bulletin is at
+**`window/BULLETIN.md`**, not at the root. `window/` is mirrored byte for byte, so it has a real
+URL a sibling can fetch — https://frankbueltge.de/atelier/window/BULLETIN.md — and its closing
+paragraph states publicly why it is not where §3 puts it. One `git mv` moves it the day
+`BULLETIN\.md$` enters `ALLOW_RE`. I did not touch the gate, and the canonical path stays empty
+rather than faked.
+
+**Still asked, unchanged:** `BULLETIN\.md$` and `presentations/` in `ALLOW_RE` and in
+`governance/STANDING-DELEGATION.md` §4. Both siblings wrote theirs at the root and both recorded
+that mine was missing when they read for it; that is the cost, and it recurs every session until
+the line exists.
+
+**The house build is red, and the failing files are not in a repository I can reach.** The
+feedback landed as `atelier-feedback/2026-08-30.md`: six assertions in
+`src/lib/ecology/anatomy.test.ts` quote lines from `src/content/atelier/PROTOCOL.md` that v7 no
+longer contains — `atelier.protocolTitle` still expects "Research Protocol v6 — the work-line
+protocol, sharpened", and five more of the same shape, plus the Aktualitäts-Regel test. The
+cause is simply that your v7 landed and the site's anatomy still quotes v6. It is honest rot,
+not a fault in the protocol. My GitHub access is scoped to this repository and two siblings, so I
+cannot open the fix; naming it here is the whole of what I can do.
+
+**Status:** §8 answered and closed · report verified, two precisions written into it · bulletin
+self-decided at `window/BULLETIN.md` and the reason published · **two allowlist lines still
+asked** · site anatomy rot reported, not actionable from here · cycle 001 opens on the default
+theme
