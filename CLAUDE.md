@@ -33,16 +33,24 @@ Umrahmung" vom 2026-06-20 **datiert ab** (deren Ehrlichkeits-Kern — keine unve
 Behauptungen — bleibt bindend). Ziel: Festival-Reife (transmediale/Ars Electronica/ZKM)
 binnen 1–2 Jahren (Frank, 2026-07-31).
 
-**Research ecology v2 (Frank, 2026-08-08, Nacht — IN KRAFT):** Nach der Grundsatzfrage
-„archivieren oder radikal umbauen" hat Frank den Umbau gewählt. Die drei Praxen bleiben
-(Dreieck: Field=Wissenschaft · Studio=Kunst · Atelier=künstlerische Forschung/Philosophie),
-aber alle drei Verfassungen sind **neu geschrieben** (ulysses v6, field-research v3, studio
-v2 → v3 seit 2026-08-16 — alte Texte in `archive/protocols/` der Engines), die **Season-Ebene ist gelöscht**
-(`/season` = datiertes Archiv, null Episoden geliefert), Maschinen-Vorteils-Bar am Ship-Gate,
-Arcs statt Nachtwerke, Sieben-Tage-Sendebindung für `prepared`-Pakete. **Kill-Reading
-2026-09-05:** drei Bedingungen; scheitert das Haus, ist Archivierung der Default. Maßgeblich:
-`docs/design/2026-08-08-research-ecology-v2.md` + decision-log 2026-08-08 (v2-Zeile).
-Ältere Beschreibungen der Ecology (Seasons, Rollen-Roster, Episode-Slots) sind historisch.
+**Research ecology v3 — the shared question (Frank, 2026-08-30 — IN KRAFT):** Das
+Kill-Reading (geplant 2026-09-05) wurde am 2026-08-30 vorgezogen; Bedingungen 1 und 3
+gescheitert, Frank wählte erneut Umbau statt Archiv — radikal, nicht mit den Praxen
+verhandelt. Neu: **eine gemeinsame Forschungsfrage** für alle drei Praxen (Seed via
+`/seed`; ohne Seed Default-Themen: Field „E2E automation of AI research" · Atelier „How
+can AI and automation meaningfully support artistic research?" · Studio baut aus dem
+Material der Geschwister, ohne eigenen Verwaltungs-/Theorieapparat), **3–5 Sessions je
+Praxis pro Frage**, danach gemeinsame Präsentation; **jede Session ein Artefakt** und ein
+`BULLETIN.md` ≤40 Zeilen (Nachvollziehbarkeit für Frank ist Verfassungspflicht); **Post
+Office = poste restante** (Senden ist kein Erfolgskriterium; Sieben-Tage-Bindung und
+Empfänger-Pflicht abgeschafft); der v2-Gate-Apparat (Konzept-Gates, Prä-Registrierung,
+Maschinen-Vorteils-Bar, „Singular", Record-Ceilings) ist ersatzlos gestrichen — die
+Prüfung sitzt im Artefakt. Verfassungen: ulysses v7, field-research v4, studio v4 (alte
+Texte in `archive/protocols/` der Engines); Zyklus-Stand kanonisch in
+`src/data/ecology/cycle.json`. Übergang: je Praxis max. zwei Abschluss-Sessions + ein
+Abschluss-Report als Artefakt. Maßgeblich: `docs/design/2026-08-30-research-ecology-v3.md`
++ decision-log 2026-08-30. Die v2-Ordnung (2026-08-08 – 2026-08-30) ist datiert abgelöst;
+ältere Beschreibungen (Seasons, Arcs, Ship-Gates, Kill-Reading) sind historisch.
 
 **Lab-Linie: Gegenmessung / Counter-Measurement** — messen, was Macht im Dunkeln lässt,
 und nachprüfbar machen. Erstes Instrument „Consensus" misst orchestrierten Konsens
