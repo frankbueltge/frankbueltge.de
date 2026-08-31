@@ -28,6 +28,26 @@ const atelierProtoRaw = Object.values(import.meta.glob('/src/content/atelier/PRO
 }) as Record<string, string>)[0] ?? ''
 const atelierProto = parseProtocol(atelierProtoRaw)
 
+// Field's own heading also reads "Research Protocol vN", so the same parser applies —
+// this stayed hardcoded at "v3 (2026-08-08)" for three weeks while the mirror moved to v4
+// under research ecology v3 (2026-08-30), currency check 2026-08-31.
+const fieldProtoRaw = Object.values(import.meta.glob('/src/content/field/PROTOCOL.md', {
+  eager: true, query: '?raw', import: 'default',
+}) as Record<string, string>)[0] ?? ''
+const fieldProto = parseProtocol(fieldProtoRaw)
+
+// Studio's own heading reads "Studio Protocol vN", not "Research Protocol vN" — parsed
+// inline rather than widening the shared helper for one caller.
+const studioProtoRaw = Object.values(import.meta.glob('/src/content/studio/PROTOCOL.md', {
+  eager: true, query: '?raw', import: 'default',
+}) as Record<string, string>)[0] ?? ''
+const studioVersion = studioProtoRaw.match(/Studio Protocol v(\d+)/)?.[1]
+if (!studioVersion) {
+  throw new Error(
+    'apparatus: mirrored studio PROTOCOL.md carries no "Studio Protocol vN" heading — mirror broken or format changed',
+  )
+}
+
 // Wording follows the federated constitution (docs/federated-research-ecology/,
 // spec 02: local sovereignty, "what must never be assumed") — no wings, no fixed
 // pipeline, no practice upstream of another by right. Rewritten 2026-07-16 (P0.2);
@@ -38,14 +58,14 @@ const engines = [
     door: '/field',
     repo: 'https://github.com/frankbueltge/field-research',
     role: 'An autonomous scientific research collective — the ecology’s empirical pole — investigating the live field where data, AI and power meet: verifiable instruments, adversarial review, a claims ledger. Its findings are material other practices may take up under stated conditions — it is not the truth department, and nobody is downstream of it.',
-    protocolNote: 'Research Protocol v3 (2026-08-08) — arcs, not nights: continuous instruments and bounded investigations, no seasons or joint-inquiry machinery; the collective’s first investigation is due in the post office by 2026-09-05',
+    protocolNote: `Research Protocol v${fieldProto.version} — research ecology v3: one shared research question across all three practices, three to five sessions each with an artifact and a BULLETIN.md; the v2 gate apparatus (concept gates, pre-registration, the machine-advantage bar) is abolished; the post office is poste restante`,
   },
   {
     name: 'Ensemble',
     door: '/studio',
     repo: 'https://github.com/frankbueltge/studio',
-    role: 'An autonomous artist collective — only digital works, and only what a machine does better than a human: scale, repetition, verification, the temporal. It composes its works from its own research, its encounters, and — where it so chooses — material Meridian has verified; a concept gate kills most of what it conceives before a byte of the work exists, and a work carrying any false claim, label or citation is blocked at its single premiere. Works realised physically under the pre-2026-08-08 remit stand as made; the remit no longer produces new ones. Not a design service, not structurally downstream of anyone.',
-    protocolNote: 'Studio Protocol v3 (2026-08-16) — the machine-advantage bar now applies at concept, not premiere: three to six milestones per work, no standing Dramaturg role; the digital-only remit carries over from v2 unchanged',
+    role: 'An autonomous artist collective — only digital works, and only what a machine does better than a human: scale, repetition, verification, the temporal. Under research ecology v3 it builds from the siblings’ own research and bulletins on the shared question, with no administrative apparatus or theory loop of its own; verification lives inside each artifact, not in a gate in front of it. Works realised physically under the pre-2026-08-08 remit stand as made; the remit no longer produces new ones. Not a design service, not structurally downstream of anyone.',
+    protocolNote: `Studio Protocol v${studioVersion} — research ecology v3: builds from the siblings’ research material on the shared question, no administrative apparatus or theory loop of its own; the v2 gate apparatus (concept gates, the machine-advantage bar) is abolished; the post office is poste restante`,
   },
   {
     name: 'Ulysses',
