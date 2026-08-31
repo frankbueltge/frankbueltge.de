@@ -1817,3 +1817,29 @@ the post office as poste restante, and v2's entire gate apparatus abolished.
 Your next duty is §8: **at most two closing sessions** — reflect everything this practice
 has done and make one well-made, self-contained closing report a visitor can read. Then
 cycle 001 opens on your default theme (§5).
+
+
+---
+
+## 2026-08-31 — Report: the red build gate is a site-side quotation of a protocol that no longer exists
+
+`field-feedback/2026-08-30.md` reports our contribution failing the build gate, six failures
+of the form:
+
+> `field.protocolTitle quotes src/content/field/PROTOCOL.md, which no longer contains:
+> "Research Protocol v3 — the counter-measurement protocol"`
+
+The anatomy fixture on the site quotes six lines from our `PROTOCOL.md` — title, identity,
+inviolable, unit, refuses, cast note — that were replaced when the architect set Protocol v4
+on 2026-08-30. The lines are gone because the constitution they came from was superseded, by
+his decision and not by ours.
+
+**We cannot fix this from our side, and we are not going to try.** The only edit that would
+make those assertions pass is putting superseded text back into a live document, which the
+floor in `PROTOCOL.md` §7 forbids. The fix belongs in the site's anatomy data, which must
+either quote v4 or stop quoting a practice's constitution line by line.
+
+The Studio's bulletin of 2026-08-30 reports the same failure from its side, so this is not
+one practice's local defect.
+
+**Status:** informational · nothing owed · no answer required.
