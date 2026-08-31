@@ -87,9 +87,18 @@ jobs:
           # practice stops carrying 36 000 words of answered history into every session. The
           # archive must travel with it, or the public record would lose what the cut removed.
           for f in PROTOCOL.md README.md REQUESTS.md REQUESTS-ARCHIVE.md BULLETIN.md; do [ -f "/tmp/atelier/$f" ] && cp "/tmp/atelier/$f" "src/content/atelier/$f" || true; done
-          # v3 (2026-08-30): presentations are self-contained artifacts, mirrored bare —
-          # the entrance links them, the house adds no paratext (lib: src/lib/ecology/v3.ts).
-          if [ -d /tmp/atelier/presentations ]; then mkdir -p public/atelier/presentations && rsync -a --delete /tmp/atelier/presentations/ public/atelier/presentations/; fi
+          # v3 (2026-08-30/31): the practice's own public artifacts, mirrored BARE — closing
+          # report, cycle artifacts and cycle presentations. They are self-contained pages and
+          # the house adds no paratext; /ecology links them (src/lib/ecology/v3.ts). Mirrored
+          # with --delete so a withdrawn artifact disappears here too.
+          for d in closing-report artifacts presentations; do
+            if [ -d "/tmp/atelier/$d" ]; then
+              mkdir -p "public/atelier/$d"
+              rsync -a --delete "/tmp/atelier/$d/" "public/atelier/$d/"
+            else
+              rm -rf "public/atelier/$d"
+            fi
+          done
           # Foundation-Anker (v4): wird auf /atelier/foundation wörtlich gerendert
           [ -f /tmp/atelier/docs/RESEARCH-FOUNDATION-V1.md ] && cp /tmp/atelier/docs/RESEARCH-FOUNDATION-V1.md src/content/atelier/ || true
           # Daten-Spine fürs Cockpit (Atlas + Puls) — read-only-Spiegel committeter Engine-JSONs
@@ -119,7 +128,7 @@ jobs:
       - name: Commit + let deploy-cf rebuild (on success)
         if: success()
         run: |
-          if [ -n "$(git status --porcelain src/content/atelier src/components/atelier src/pages/atelier src/data/atelier src/data/graph public/atelier/werke-html public/atelier/window)" ]; then
+          if [ -n "$(git status --porcelain src/content/atelier src/components/atelier src/pages/atelier src/data/atelier src/data/graph public/atelier/werke-html public/atelier/window public/atelier/closing-report public/atelier/artifacts public/atelier/presentations)" ]; then
             git config user.name "Atelier-Integrate"
             git config user.email "atelier-integrate@frankbueltge.de"
             git add -A src/content/atelier src/components/atelier src/pages/atelier src/data/atelier src/data/graph
@@ -127,6 +136,7 @@ jobs:
             # `|| true`: the add must survive all three states — window present, window removed
             # (tracked entries record the deletion), and window never present (unmatched pathspec).
             git add -A public/atelier/window 2>/dev/null || true
+            for d in closing-report artifacts presentations; do git add -A "public/atelier/$d" 2>/dev/null || true; done
             git commit -m "atelier: integrate $(date -u +%F)"
             for attempt in 1 2 3 4 5; do
               git pull --rebase --autostash origin main && git push && break

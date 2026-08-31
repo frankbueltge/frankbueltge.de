@@ -85,6 +85,78 @@ export function loadBulletin(practice: PracticeId, root: string = process.cwd())
   return { present: true, text: shown.join('\n'), lines: all.length, truncated }
 }
 
+/** A practice's closing report (Protocol §8, the one-time transition of 2026-08-30) — a
+ *  self-contained page mirrored bare from the engine repository. */
+export interface ClosingReport {
+  practice: PracticeId
+  href: string
+}
+
+/** Where a report may sit, in the order the surface looks. Two entries because the practices
+ *  did not land in the same place: the Field and the Studio wrote `closing-report/`, while the
+ *  Atelier's gate refused a new root path on the day the constitution landed, so its report
+ *  (titled "The Atelier — closing report") is its window page. The surface links where each
+ *  practice actually put it rather than asserting a path none of them agreed on. */
+const REPORT_CANDIDATES = ['closing-report', 'window'] as const
+
+export function loadClosingReports(root: string = process.cwd()): ClosingReport[] {
+  const found: ClosingReport[] = []
+  for (const practice of PRACTICES) {
+    for (const dir of REPORT_CANDIDATES) {
+      const index = path.join(root, 'public', practice, dir, 'index.html')
+      if (!fs.existsSync(index)) continue
+      // Only count a window as the report when the page says so itself — a window is its own
+      // thing, and a practice that has one but wrote no report must not appear to have one.
+      if (dir === 'window') {
+        const head = fs.readFileSync(index, 'utf8').slice(0, 4096)
+        if (!/closing report/i.test(head)) continue
+      }
+      found.push({ practice, href: `/${practice}/${dir}/` })
+      break
+    }
+  }
+  return found
+}
+
+/** A dated artifact of the current cycle, as the practice committed it. The date prefix in
+ *  the directory name is the practice's own; it is read, never invented. */
+export interface ArtifactEntry {
+  practice: PracticeId
+  slug: string
+  date: string | null
+  href: string
+}
+
+export function loadArtifacts(root: string = process.cwd()): ArtifactEntry[] {
+  const found: ArtifactEntry[] = []
+  for (const practice of PRACTICES) {
+    const base = path.join(root, 'public', practice, 'artifacts')
+    if (!fs.existsSync(base)) continue
+    for (const cycleDir of fs.readdirSync(base)) {
+      const cyclePath = path.join(base, cycleDir)
+      if (!fs.statSync(cyclePath).isDirectory()) continue
+      for (const slug of fs.readdirSync(cyclePath)) {
+        const dir = path.join(cyclePath, slug)
+        if (!fs.statSync(dir).isDirectory()) continue
+        if (!fs.existsSync(path.join(dir, 'index.html'))) continue
+        const m = /^(\d{4}-\d{2}-\d{2})-(.*)$/.exec(slug)
+        found.push({
+          practice,
+          slug: m ? m[2]! : slug,
+          date: m ? m[1]! : null,
+          href: `/${practice}/artifacts/${cycleDir}/${slug}/`,
+        })
+      }
+    }
+  }
+  // newest first; undated entries last, then by practice for a stable order
+  return found.sort(
+    (a, b) =>
+      (b.date ?? '').localeCompare(a.date ?? '') ||
+      PRACTICES.indexOf(a.practice) - PRACTICES.indexOf(b.practice),
+  )
+}
+
 export interface PresentationEntry {
   cycle: number
   practice: PracticeId
