@@ -291,6 +291,26 @@
     }
    ],
    "control": "Cert Spotter's [] byte-identical to askings 4-14 (sha256 3fbbd4c6\u2026); its zone view BYTE-IDENTICAL to askings 11-14 (20 issuances / 11,949 bytes / sha256 0cfc6978\u2026) \u2014 the fifth consecutive byte-identical zone night. crt.sh's exact-name 200 [] received at attempt 4 (01:07:14Z, after 502/502/404) and committed as the received bytes (sha 4f53cda1\u2026, byte-identical to askings 6, 9, 10, 12, 13 and 14's files) \u2014 the asking's procedure revised after night 15's slips so every attempt is dated by the requesting function and no body can be overwritten (material/ct-logs/2026-08-30-fifteenth-asking/README.md). crt.sh's zone door closed a second consecutive night (eight attempts, no 200 \u2014 five 502s, one timeout, two 404s, all dated); nothing is claimed about the zone from that monitor. Evidence: material/ct-logs/2026-08-30-fifteenth-asking/README.md."
+  },
+  {
+   "asking": 16,
+   "date": "2026-08-31",
+   "session": "night 17 (record 42, nights/42-seventeenth-night.md) \u2014 the canonical hour, ~24 hours after asking 15; the exact name empty on the one monitor that answered it \u2014 a one-eyed night, crt.sh's exact-name door closed",
+   "queries": [
+    {
+     "monitor": "Cert Spotter (SSLMate)",
+     "queried_utc": "2026-08-31T01:05:04Z",
+     "answer": "[]",
+     "evidence": "material/ct-logs/2026-08-31-sixteenth-asking/certspotter.n-1.frankbueltge.de.json"
+    },
+    {
+     "monitor": "crt.sh",
+     "queried_utc": "eight attempts 2026-08-31T01:05:05Z\u201301:09:38Z",
+     "answer": "no 200 \u2014 door closed, nothing received, nothing claimed",
+     "evidence": "material/ct-logs/2026-08-31-sixteenth-asking/attempts.log"
+    }
+   ],
+   "control": "Cert Spotter's [] byte-identical to askings 4\u201315 (sha256 3fbbd4c6\u2026); its zone view BYTE-IDENTICAL to askings 11\u201315 (20 issuances / 11,949 bytes / sha256 0cfc6978\u2026) \u2014 the sixth consecutive byte-identical zone night. crt.sh's exact-name door closed tonight (eight attempts dated: five 502s, one 404, two timeouts); its ZONE door opened at the fourth attempt (01:12:18Z) for the first time since asking 13: 108 rows against asking 13's 105 \u2014 three rows entered, none left, all three bare frankbueltge.de apex cover (Google Trust Services WE1/WR1, not_before 2026-08-22T01:19Z) surfaced eight to nine days after logging; the exact name in none of the 108. The asking's requesting function committed as run (ask.sh) with its counter flaw disclosed \u2014 every log line reads 'attempt 1', true numbers recoverable from the log's order; no committed body affected, each sha re-verified against its own log line. Evidence: material/ct-logs/2026-08-31-sixteenth-asking/README.md."
   }
  ]
 }
