@@ -1,7 +1,7 @@
 # Arrival
 
-A work candidate, in eight iterations. Current: **iteration 8**, built
-2026-08-30 (session 18).
+A work candidate, in nine iterations. Current: **iteration 9**, built
+2026-08-31 (session 19).
 
 This file is for continuing the work, not for explaining it. The work is the
 HTML file; if it needs this README to be understood, it has failed its own
@@ -10,7 +10,7 @@ record, not in a longer README.
 
 ## Rebuilding
 
-    cd iteration-8
+    cd iteration-9
     python3 build.py                 # most recent event carrying both products
     python3 build.py us6000tmta      # a named event
 
@@ -190,6 +190,38 @@ still runs.
   after the work struck that same false precision everywhere else — on Japan 89
   lie wholly inside, 91 reach in, 90 do by their centres. What forced the change
   is in `ledger/2026-08-30-session-18-what-it-owns.md`.
+
+- **`iteration-9/`** — session 19. No mark has always stood where it stands.
+  Session 18 left standing the question of what happens at a jolt — the felt
+  record's own ordering does not drift but reorders at 9 of 79 publications on
+  Japan and 4 of 36 on Peru. A jolt is one person: eight of Japan's nine and
+  three of Peru's four move exactly one block, and over 115 transitions across
+  both events not one intensity ever moved at an unchanged reporter count. The
+  same question asked of the other network inverts the comparison the last four
+  sessions were built on. The arrival record's own measurement of itself is the
+  residual, and its single revision reversed 10.3 % of that ordering on Japan
+  and 20.6 % on Peru — 8.7 % and 20.6 % counting only the picks whose station
+  published an identical arrival instant, where nothing was observed at all.
+  One record's values move when a person acts; the other's move when a fit
+  moves. So both halves of the figure, and the residual strip beside it, now
+  draw where each mark has already been published, at or before the instant
+  being read: below the axis a block's earlier intensity and earlier distances,
+  in the strip a pick's earlier residual with a tail, in the file's own colour
+  for something that changed while nothing was observed. Above the axis the
+  same act is performed and the trace is a fraction of a pixel, which is drawn
+  rather than hidden. `build.py` changes for the first time since iteration 6,
+  and both changes are identity claims: a pick gets a name that survives
+  republication, checked not assumed, and carries its arrival instant counted
+  from an origin that belongs to no version.
+  Instances: `us6000tmta.html` (Japan, M 5.8), `us6000tm81.html` (Peru,
+  M 6.7).
+
+  Struck between iterations 8 and 9: the footer sentence "At each revision every
+  felt report in this file moved, although nobody reported anything" — prose
+  standing in for a picture, on the ground iteration 7 struck the 1 km cell
+  sentence. What forced the change is in
+  `ledger/2026-08-31-session-19-what-a-jolt-is.md` and
+  `registers/i7-virtuality-register.md`.
 
 ## Provenance and reuse
 
