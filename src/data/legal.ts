@@ -67,6 +67,16 @@ const datenschutzDe: LegalPage = {
       ],
     },
     {
+      heading: 'Forschungsnachweise und Werke der Praxen (u. a. /on-record, /atelier, /field, /studio, /encounters)',
+      paragraphs: [
+        'Die Praxen dieser Ökologie veröffentlichen ihre Arbeit als nachprüfbare Nachweise. Darin werden öffentlich vorgestellte Werke, Veröffentlichungen und Vorhaben benannt und methodisch eingeordnet — jeweils mit Titel, Urheberinnen und Urhebern und der Fundstelle, aus der die Angabe stammt.',
+        'Damit werden personenbezogene Daten verarbeitet: die Namen der Personen, deren öffentlich vorgestellte Arbeit besprochen wird. Rechtsgrundlage ist das berechtigte Interesse an nachprüfbarer Forschung und an der öffentlichen Auseinandersetzung mit ihr (Art. 6 Abs. 1 lit. f DSGVO). Verarbeitet werden ausschließlich Angaben, die die Betroffenen selbst im beruflichen oder öffentlichen Zusammenhang vorgestellt haben; sie werden nicht angereichert, nicht mit anderen Quellen verknüpft und nicht zu Profilen verdichtet.',
+        'Einordnungen sind als Einordnungen gekennzeichnet, nicht als feststehende Tatsachen: Jede Aussage nennt ihre Quelle, ihren Stand — etwa „strittig" — und die Grenzen des Verfahrens, aus dem sie stammt. Wo zwei Prüfungen zu verschiedenen Ergebnissen kommen, bleibt der Widerspruch stehen und wird nicht zu einem Ergebnis verrechnet.',
+        'Wer hier genannt ist und eine Angabe für falsch hält oder die Nennung des eigenen Namens nicht wünscht, kann sich formlos per E-Mail an hello@frankbueltge.de wenden (Widerspruch nach Art. 21 DSGVO). Sachliche Fehler werden datiert richtiggestellt statt stillschweigend entfernt; auf Wunsch wird die Nennung entfernt.',
+        'Git ist das Archiv dieser Ökologie: Nachweise bestehen als versionierte Stände fort. Die interne Regel, committete Archivstände unverändert zu lassen, tritt hinter einem Widerspruch nach Art. 21 DSGVO zurück — ein Widerspruch wird auch im Archiv umgesetzt.',
+      ],
+    },
+    {
       heading: 'Briefkasten & Kontaktformular (/post, /contact)',
       paragraphs: [
         'Über den Briefkasten des Postamts (/post) und das Kontaktformular (/contact) kannst du Nachrichten senden. Sie landen in einer privaten Warteschlange (Cloudflare Workers KV) und werden ausschließlich von mir gelesen — sie werden nicht veröffentlicht und nicht als Anweisung an ein KI-Modell weitergegeben. Die Angabe einer Kontaktmöglichkeit (z. B. E-Mail-Adresse) ist freiwillig und dient allein der Beantwortung deiner Nachricht (Art. 6 Abs. 1 lit. a DSGVO). Nachrichten werden nach Bearbeitung aus der Warteschlange gelöscht; eine Kontaktangabe gelangt zu keinem Zeitpunkt in das öffentliche Git-Archiv dieser Website.',
@@ -108,6 +118,16 @@ const datenschutzEn: LegalPage = {
         'This means personal data is processed: the names of people involved in a publication. The legal basis is the legitimate interest in a verifiable scholarly record (Art. 6(1)(f) GDPR). The information was published by those people themselves in a scholarly context; it is reproduced unchanged, not enriched, not linked with other sources, and not compiled into profiles.',
         'Anyone who does not want their name listed can object to the processing (Art. 21 GDPR) — informally by email to hello@frankbueltge.de, naming the entry. The entry will then be removed. The same applies to reports of incorrect entries or entries that do not belong there.',
         'Earlier states were published as versioned snapshots in the public dataset-hub repository and remain there, including its version history. A removal takes effect for future states; an objection under Art. 21 GDPR is carried out in the archive as well.',
+      ],
+    },
+    {
+      heading: 'Research records and works of the practices (incl. /on-record, /atelier, /field, /studio, /encounters)',
+      paragraphs: [
+        'The practices of this ecology publish their work as checkable records. Those records name publicly presented works, publications and undertakings and classify them methodically — each with title, creators and the source the statement is drawn from.',
+        'This means personal data is processed: the names of people whose publicly presented work is discussed. The legal basis is the legitimate interest in verifiable research and in public engagement with it (Art. 6(1)(f) GDPR). Only information those people have themselves presented in a professional or public context is processed; it is not enriched, not linked with other sources, and not compiled into profiles.',
+        'Classifications are marked as classifications, not as settled fact: every statement names its source, its standing — “contested”, for instance — and the limits of the procedure it comes from. Where two reviews reach different results, the disagreement is left standing rather than averaged into one result.',
+        'Anyone named here who considers a statement wrong, or who does not want their name listed, can write informally to hello@frankbueltge.de (objection under Art. 21 GDPR). Factual errors are corrected on the record with a date rather than removed quietly; on request the mention is removed.',
+        'Git is this ecology’s archive: records persist as versioned states. The internal rule of leaving committed archive states unchanged yields to an objection under Art. 21 GDPR — an objection is carried out in the archive as well.',
       ],
     },
     {
