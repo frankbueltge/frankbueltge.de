@@ -43,8 +43,8 @@
       },
       {
         "file": "src/content/studio/works/*/meta.json",
-        "sha256": "bf84324a6fdfb67d",
-        "files": 6
+        "sha256": "f2eaf119614c9e71",
+        "files": 7
       },
       {
         "file": "src/data/nightly/works/*/meta.json",
@@ -57,14 +57,14 @@
       }
     ],
     "counts": {
-      "nodes": 306,
-      "edges": 265,
+      "nodes": 307,
+      "edges": 266,
       "nodesByKind": {
         "decision": 74,
         "encounter": 6,
         "neighbor": 93,
         "practice": 9,
-        "practice-work": 93,
+        "practice-work": 94,
         "receiver": 8,
         "work": 23
       },
@@ -72,7 +72,7 @@
         "addresses": 8,
         "concerns": 2,
         "door": 5,
-        "made-by": 93,
+        "made-by": 94,
         "neighbor-of": 93,
         "participates": 17,
         "touches": 47
@@ -3407,6 +3407,21 @@
       "medium": "A single self-contained HTML surface that runs by itself for about thirty-two seconds — one day of the sea held open, and a share that falls twelve times as later evidence arrives; twelve stop buttons, one per list, so the ladder of controls IS the record."
     },
     {
+      "id": "practice-work:studio/2026-08-31-come-in",
+      "kind": "practice-work",
+      "label": "COME IN",
+      "slug": "2026-08-31-come-in",
+      "practiceId": "ensemble",
+      "date": "2026-08-31",
+      "href": "/studio/works/2026-08-31-come-in",
+      "source": {
+        "file": "src/content/studio/works/2026-08-31-come-in/meta.json",
+        "quote": "\"title\": \"COME IN\""
+      },
+      "embodies": "The sentence in which a scientific paper turns to a stranger and hands over an address. The sibling practice The Field counted those addresses on 2026-08-31 across 1,226 arXiv abstracts — 613 advertising automated research, 613 matched controls — and knocked on each of the 206 it found. This work reads what was said at the door instead of counting the doors. Three findings, all derived from committed data: the address is a postscript, arriving in the very last sentence of 187 of the 191 abstracts that give one and in the last two of all 191; the hinge word — the last real word before the address, taken mechanically — is the single word 'available' in 113 of 206 cases, against a fringe of 46 other hinges of which 30 are used exactly once and nine are not words for inviting at all but the project's own name; and nobody is addressed, with zero occurrences of 'you', 'please', 'welcome', 'invite', 'come', 'enjoy' or 'we hope' across all 206 sentences, and exactly two sentences in the imperative. Fourteen of the addresses did not open when The Field knocked — its outcomes, its words, re-served at their published status with its caveats intact, and with no claim made here that any author misstated anything. The addresses are printed and deliberately not linked: a work about invitations does not do the visitor's walking for it. SOURCED single-sentence quotations, each linked to its arXiv abstract; DERIVED counts, reproducible by the two scripts beside the work; nothing IMAGINED.",
+      "medium": "A single self-contained HTML surface — three plates and a litany of 206 quoted sentences, filterable by cohort and by whether the door opened. No network, no build, no dependency; it opens from a filesystem. Generated in two steps from committed code, so no number on the face can drift from the data beside it."
+    },
+    {
       "id": "receiver:center-for-humane-technology",
       "kind": "receiver",
       "label": "Center for Humane Technology",
@@ -4910,6 +4925,15 @@
       "source": {
         "file": "src/content/studio/works/2026-08-15-still-dark/meta.json",
         "quote": "\"date\": \"2026-08-15\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:studio/2026-08-31-come-in",
+      "to": "practice:ensemble",
+      "source": {
+        "file": "src/content/studio/works/2026-08-31-come-in/meta.json",
+        "quote": "\"date\": \"2026-08-31\""
       }
     },
     {

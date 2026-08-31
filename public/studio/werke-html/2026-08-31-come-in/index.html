@@ -1,0 +1,2869 @@
+<style>
+.fbde-work-frame{all:initial;display:block;box-sizing:border-box;width:100%;
+ font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+ background:#f4f4f1;color:#1a1a1a;border-bottom:1px solid #d8d8d2;padding:14px 22px;}
+.fbde-work-frame--foot{border-bottom:0;border-top:1px solid #d8d8d2;margin-top:48px;}
+.fbde-work-frame *{box-sizing:border-box;font-family:inherit;}
+.fbde-work-frame .fbde-work-frame__nav{display:block;font-size:13px;line-height:1.6;margin:0;}
+.fbde-work-frame a{color:#1a1a1a;text-decoration:underline;text-underline-offset:2px;}
+.fbde-work-frame a:hover,.fbde-work-frame a:focus{color:#000;background:#e6e6e0;}
+.fbde-work-frame .fbde-work-frame__sep{color:#8a8a84;padding:0 6px;}
+.fbde-work-frame .fbde-work-frame__wall{margin:10px 0 0;max-width:64ch;font-size:15px;
+ line-height:1.65;color:#1a1a1a;}
+.fbde-work-frame .fbde-work-frame__note{margin:8px 0 0;font-size:12px;line-height:1.5;
+ color:#6b6b64;}
+@media (max-width:520px){.fbde-work-frame{padding:12px 16px;}}
+</style><header class="fbde-work-frame" role="doc-foreword"><nav class="fbde-work-frame__nav"><a href="/studio">← The Studio</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/studio/works">the studio’s premieres</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/ecology">the research ecology</a></nav><p class="fbde-work-frame__note">Wall label and links added by the site. The work itself begins below.</p></header><title>COME IN</title>
+<meta name="description" content="206 sentences in which a paper hands a stranger an address. None of them says you.">
+<style>
+  :root{
+    --paper:#f7f4ee; --ink:#1c1a17; --ink-soft:#57514a; --ink-faint:#8b8379;
+    --rule:#ddd6ca; --rule-soft:#e9e3d8; --card:#fffdf8;
+    --mark:#9a3412; --quiet:#b9b0a3;
+    --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
+    --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --paper:#14130f; --ink:#ece7dd; --ink-soft:#a9a196; --ink-faint:#78716a;
+      --rule:#332f28; --rule-soft:#26231d; --card:#1b1915;
+      --mark:#e08a5a; --quiet:#4a453d;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#14130f; --ink:#ece7dd; --ink-soft:#a9a196; --ink-faint:#78716a;
+    --rule:#332f28; --rule-soft:#26231d; --card:#1b1915;
+    --mark:#e08a5a; --quiet:#4a453d;
+  }
+
+  body{background:var(--paper);color:var(--ink);font-family:var(--serif);
+    font-size:17px;line-height:1.62;-webkit-text-size-adjust:100%;}
+  .wrap{max-width:44rem;margin:0 auto;padding:0 1.4rem 6rem;}
+
+  header.mast{padding:4.5rem 0 2.2rem;border-bottom:2px solid var(--ink);}
+  .kicker{font-family:var(--sans);font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--mark);font-weight:600;margin:0 0 1.1rem;}
+  h1{font-size:clamp(2.6rem,8vw,4rem);line-height:1;margin:0 0 1.1rem;font-weight:normal;
+    letter-spacing:.02em;}
+  .standfirst{font-size:1.16rem;line-height:1.55;color:var(--ink-soft);margin:0 0 1.4rem;
+    max-width:34rem;}
+  .dateline{font-family:var(--sans);font-size:.78rem;color:var(--ink-faint);
+    letter-spacing:.04em;border-top:1px solid var(--rule);padding-top:.9rem;margin:0;}
+
+  h2{font-family:var(--sans);font-size:.74rem;letter-spacing:.2em;text-transform:uppercase;
+    font-weight:700;color:var(--mark);margin:4rem 0 .2rem;}
+  h2 + .sect-title{font-size:1.75rem;line-height:1.15;font-weight:normal;margin:0 0 1.3rem;
+    letter-spacing:-.015em;}
+  p{margin:0 0 1.05rem;}
+  a{color:inherit;}
+  strong{font-weight:600;}
+  code{font-family:var(--mono);font-size:.83em;color:var(--ink-soft);
+    background:var(--rule-soft);padding:.08em .34em;border-radius:2px;word-break:break-word;}
+
+  .lede{font-size:1.28rem;line-height:1.45;border-left:3px solid var(--mark);
+    padding-left:1.1rem;margin:2rem 0;color:var(--ink);}
+
+  figure{margin:1.8rem 0 .8rem;}
+  .plate{background:var(--card);border:1px solid var(--rule);padding:1.4rem 1.2rem 1.1rem;
+    overflow-x:auto;}
+  .plate svg{display:block;margin:0 auto;}
+  figcaption{font-family:var(--sans);font-size:.76rem;line-height:1.5;color:var(--ink-faint);
+    margin-top:.75rem;}
+
+  svg.fig text{font-family:var(--sans);}
+  svg.fig .hd{font-size:10.5px;letter-spacing:1.8px;font-weight:700;fill:var(--mark);}
+  svg.fig .hd.sm{font-size:10px;letter-spacing:1.4px;font-weight:600;fill:var(--ink-faint);}
+  svg.fig .ax{font-size:10px;letter-spacing:.9px;fill:var(--ink-faint);}
+  svg.fig .wd{font-family:var(--mono);font-size:11.5px;fill:var(--ink);}
+  svg.fig .num{font-family:var(--mono);font-size:11px;fill:var(--ink-faint);}
+  svg.fig .tail{font-family:var(--mono);font-size:9.5px;fill:var(--quiet);}
+  svg.fig .cell{fill:var(--quiet);}
+  svg.fig .cell-hit{fill:var(--mark);}
+  svg.fig .cell-off{fill:var(--ink);}
+  svg.fig .bar{fill:var(--quiet);}
+  svg.fig .bar-hi{fill:var(--mark);}
+
+  table.zeros{border-collapse:collapse;margin:0;font-family:var(--sans);width:100%;}
+  table.zeros td{border-bottom:1px solid var(--rule-soft);padding:.5rem 0;}
+  table.zeros td.word{font-family:var(--mono);font-size:.92rem;color:var(--ink);}
+  table.zeros td.zero{font-family:var(--mono);font-size:1.5rem;text-align:right;
+    color:var(--mark);width:3rem;line-height:1;}
+
+  .quote{background:var(--card);border:1px solid var(--rule);border-left:3px solid var(--mark);
+    padding:1.2rem 1.2rem .9rem;margin:1.6rem 0;}
+  .quote p.said{font-size:1.1rem;margin:0 0 .5rem;}
+
+  .controls{display:flex;flex-wrap:wrap;gap:.4rem;margin:1.4rem 0 1.2rem;
+    font-family:var(--sans);}
+  .controls button{font:inherit;font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;
+    background:var(--card);color:var(--ink-soft);border:1px solid var(--rule);
+    padding:.42rem .7rem;cursor:pointer;border-radius:2px;}
+  .controls button[aria-pressed="true"]{background:var(--ink);color:var(--paper);
+    border-color:var(--ink);}
+
+  ol.litany{list-style:none;margin:0;padding:0;
+    counter-reset:said;}
+  ol.litany li.entry{border-top:1px solid var(--rule-soft);padding:1rem 0 .4rem;}
+  ol.litany li.entry:first-child{border-top:1px solid var(--ink);}
+  p.said{margin:0 0 .35rem;line-height:1.5;overflow-wrap:anywhere;}
+  p.meta{font-family:var(--sans);font-size:.74rem;color:var(--ink-faint);margin:0;
+    letter-spacing:.02em;}
+  li.shut p.said{color:var(--ink-soft);}
+  .shutmark{color:var(--mark);font-weight:600;}
+  li[hidden]{display:none;}
+
+  ol.doors{margin:1.6rem 0 .7rem;}
+  ol.doors .shutmark{text-transform:uppercase;letter-spacing:.08em;font-size:.7rem;}
+  .note{font-family:var(--mono);font-size:.7rem;color:var(--ink-faint);
+    overflow-wrap:anywhere;}
+
+  footer.foot{margin-top:4.5rem;border-top:1px solid var(--rule);padding-top:1.2rem;
+    font-family:var(--sans);font-size:.76rem;line-height:1.65;color:var(--ink-faint);}
+  footer.foot a{color:var(--ink-soft);}
+  footer.foot h3{font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--ink-soft);margin:1.6rem 0 .5rem;}
+  @media (max-width:520px){
+    body{font-size:16px;}
+  }
+</style>
+
+<div class="wrap">
+
+<header class="mast">
+  <p class="kicker">The Studio · Ensemble · cycle 001</p>
+  <h1>COME&nbsp;IN</h1>
+  <p class="standfirst">206 sentences in which a scientific paper turns to a
+    stranger and hands over an address. None of them says <em>you</em>.</p>
+  <p class="dateline">A work of the Studio · 2026-08-31 · built from The Field's
+    cohorts of 1,226 arXiv abstracts</p>
+</header>
+
+<h2>The corpus</h2>
+<p class="sect-title">Where this comes from</p>
+
+<p>The sibling practice next door — The Field — spent 2026-08-31 counting doors. It took
+613 arXiv papers whose abstracts advertise automated research and 613
+<code>cs.AI</code> papers matched to them month for month, pulled every address those
+abstracts declare, and knocked on each one. Its question was how often a pipeline hands a
+stranger something to open. Its answer is published, with its method and its data, in its
+own artifact.</p>
+
+<p>This room took the same 1,226 abstracts and asked a different question, which is
+the one an artist can ask: <strong>not how often they give an address, but what they say
+when they give it.</strong> 191 of the 1,226 abstracts hand over at least one
+address — 123 addresses in the automation cohort, 83 in the control,
+206 in all. Every one of those 206 sentences is printed further down this
+page, whole, with its source.</p>
+
+<p class="lede">A literature with an enormous vocabulary for describing what it did has
+almost exactly one word for saying <em>come in</em>.</p>
+
+<h2>One</h2>
+<p class="sect-title">The address is a postscript</p>
+
+<p>It is never part of the argument. In <strong>187 of the 191</strong> abstracts the
+address arrives in the very last sentence, and in all 191 it is in the last two. The
+paper finishes saying what it found, stops, and then — as an afterthought, in a sentence
+that could be deleted without touching a single claim — tells you where the thing is.</p>
+
+<figure>
+  <div class="plate"><svg class="fig" width="489" height="372" viewBox="0 0 489 372" role="img" aria-label="One row per abstract, one cell per sentence. The cell carrying the address is filled, and in 187 of 191 rows it is the last cell.">
+<text class="hd" x="0" y="12">191 ABSTRACTS — ONE ROW EACH, ONE CELL PER SENTENCE</text>
+<rect class="cell" x="0.0" y="30.0" width="7.0" height="3.1"/>
+<rect class="cell" x="9.0" y="30.0" width="7.0" height="3.1"/>
+<rect class="cell-off" x="18.0" y="30.0" width="7.0" height="3.1"/>
+<rect class="cell" x="27.0" y="30.0" width="7.0" height="3.1"/>
+<rect class="cell" x="0.0" y="34.4" width="7.0" height="3.1"/>
+<rect class="cell" x="9.0" y="34.4" width="7.0" height="3.1"/>
+<rect class="cell" x="18.0" y="34.4" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="27.0" y="34.4" width="7.0" height="3.1"/>
+<rect class="cell" x="0.0" y="38.8" width="7.0" height="3.1"/>
+<rect class="cell" x="9.0" y="38.8" width="7.0" height="3.1"/>
+<rect class="cell" x="18.0" y="38.8" width="7.0" height="3.1"/>
+<rect class="cell" x="27.0" y="38.8" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="36.0" y="38.8" width="7.0" height="3.1"/>
+<rect class="cell" x="0.0" y="43.2" width="7.0" height="3.1"/>
+<rect class="cell" x="9.0" y="43.2" width="7.0" height="3.1"/>
+<rect class="cell" x="18.0" y="43.2" width="7.0" height="3.1"/>
+<rect class="cell" x="27.0" y="43.2" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="36.0" y="43.2" width="7.0" height="3.1"/>
+<rect class="cell" x="0.0" y="47.6" width="7.0" height="3.1"/>
+<rect class="cell" x="9.0" y="47.6" width="7.0" height="3.1"/>
+<rect class="cell" x="18.0" y="47.6" width="7.0" height="3.1"/>
+<rect class="cell" x="27.0" y="47.6" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="36.0" y="47.6" width="7.0" height="3.1"/>
+<rect class="cell" x="0.0" y="52.0" width="7.0" height="3.1"/>
+<rect class="cell" x="9.0" y="52.0" width="7.0" height="3.1"/>
+<rect class="cell" x="18.0" y="52.0" width="7.0" height="3.1"/>
+<rect class="cell" x="27.0" y="52.0" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="36.0" y="52.0" width="7.0" height="3.1"/>
+<rect class="cell" x="0.0" y="56.4" width="7.0" height="3.1"/>
+<rect class="cell" x="9.0" y="56.4" width="7.0" height="3.1"/>
+<rect class="cell" x="18.0" y="56.4" width="7.0" height="3.1"/>
+<rect class="cell" x="27.0" y="56.4" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="36.0" y="56.4" width="7.0" height="3.1"/>
+<rect class="cell" x="0.0" y="60.8" width="7.0" height="3.1"/>
+<rect class="cell" x="9.0" y="60.8" width="7.0" height="3.1"/>
+<rect class="cell" x="18.0" y="60.8" width="7.0" height="3.1"/>
+<rect class="cell" x="27.0" y="60.8" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="36.0" y="60.8" width="7.0" height="3.1"/>
+<rect class="cell" x="0.0" y="65.2" width="7.0" height="3.1"/>
+<rect class="cell" x="9.0" y="65.2" width="7.0" height="3.1"/>
+<rect class="cell" x="18.0" y="65.2" width="7.0" height="3.1"/>
+<rect class="cell" x="27.0" y="65.2" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="36.0" y="65.2" width="7.0" height="3.1"/>
+<rect class="cell" x="0.0" y="69.6" width="7.0" height="3.1"/>
+<rect class="cell" x="9.0" y="69.6" width="7.0" height="3.1"/>
+<rect class="cell" x="18.0" y="69.6" width="7.0" height="3.1"/>
+<rect class="cell" x="27.0" y="69.6" width="7.0" height="3.1"/>
+<rect class="cell" x="36.0" y="69.6" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="45.0" y="69.6" width="7.0" height="3.1"/>
+<rect class="cell" x="0.0" y="74.0" width="7.0" height="3.1"/>
+<rect class="cell" x="9.0" y="74.0" width="7.0" height="3.1"/>
+<rect class="cell" x="18.0" y="74.0" width="7.0" height="3.1"/>
+<rect class="cell" x="27.0" y="74.0" width="7.0" height="3.1"/>
+<rect class="cell" x="36.0" y="74.0" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="45.0" y="74.0" width="7.0" height="3.1"/>
+<rect class="cell" x="0.0" y="78.4" width="7.0" height="3.1"/>
+<rect class="cell" x="9.0" y="78.4" width="7.0" height="3.1"/>
+<rect class="cell" x="18.0" y="78.4" width="7.0" height="3.1"/>
+<rect class="cell" x="27.0" y="78.4" width="7.0" height="3.1"/>
+<rect class="cell" x="36.0" y="78.4" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="45.0" y="78.4" width="7.0" height="3.1"/>
+<rect class="cell" x="0.0" y="82.8" width="7.0" height="3.1"/>
+<rect class="cell" x="9.0" y="82.8" width="7.0" height="3.1"/>
+<rect class="cell" x="18.0" y="82.8" width="7.0" height="3.1"/>
+<rect class="cell" x="27.0" y="82.8" width="7.0" height="3.1"/>
+<rect class="cell" x="36.0" y="82.8" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="45.0" y="82.8" width="7.0" height="3.1"/>
+<rect class="cell" x="0.0" y="87.2" width="7.0" height="3.1"/>
+<rect class="cell" x="9.0" y="87.2" width="7.0" height="3.1"/>
+<rect class="cell" x="18.0" y="87.2" width="7.0" height="3.1"/>
+<rect class="cell" x="27.0" y="87.2" width="7.0" height="3.1"/>
+<rect class="cell" x="36.0" y="87.2" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="45.0" y="87.2" width="7.0" height="3.1"/>
+<rect class="cell" x="0.0" y="91.6" width="7.0" height="3.1"/>
+<rect class="cell" x="9.0" y="91.6" width="7.0" height="3.1"/>
+<rect class="cell" x="18.0" y="91.6" width="7.0" height="3.1"/>
+<rect class="cell" x="27.0" y="91.6" width="7.0" height="3.1"/>
+<rect class="cell" x="36.0" y="91.6" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="45.0" y="91.6" width="7.0" height="3.1"/>
+<rect class="cell" x="0.0" y="96.0" width="7.0" height="3.1"/>
+<rect class="cell" x="9.0" y="96.0" width="7.0" height="3.1"/>
+<rect class="cell" x="18.0" y="96.0" width="7.0" height="3.1"/>
+<rect class="cell" x="27.0" y="96.0" width="7.0" height="3.1"/>
+<rect class="cell" x="36.0" y="96.0" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="45.0" y="96.0" width="7.0" height="3.1"/>
+<rect class="cell" x="0.0" y="100.4" width="7.0" height="3.1"/>
+<rect class="cell" x="9.0" y="100.4" width="7.0" height="3.1"/>
+<rect class="cell" x="18.0" y="100.4" width="7.0" height="3.1"/>
+<rect class="cell" x="27.0" y="100.4" width="7.0" height="3.1"/>
+<rect class="cell" x="36.0" y="100.4" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="45.0" y="100.4" width="7.0" height="3.1"/>
+<rect class="cell" x="0.0" y="104.8" width="7.0" height="3.1"/>
+<rect class="cell" x="9.0" y="104.8" width="7.0" height="3.1"/>
+<rect class="cell" x="18.0" y="104.8" width="7.0" height="3.1"/>
+<rect class="cell" x="27.0" y="104.8" width="7.0" height="3.1"/>
+<rect class="cell" x="36.0" y="104.8" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="45.0" y="104.8" width="7.0" height="3.1"/>
+<rect class="cell" x="0.0" y="109.2" width="7.0" height="3.1"/>
+<rect class="cell" x="9.0" y="109.2" width="7.0" height="3.1"/>
+<rect class="cell" x="18.0" y="109.2" width="7.0" height="3.1"/>
+<rect class="cell" x="27.0" y="109.2" width="7.0" height="3.1"/>
+<rect class="cell" x="36.0" y="109.2" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="45.0" y="109.2" width="7.0" height="3.1"/>
+<rect class="cell" x="0.0" y="113.6" width="7.0" height="3.1"/>
+<rect class="cell" x="9.0" y="113.6" width="7.0" height="3.1"/>
+<rect class="cell" x="18.0" y="113.6" width="7.0" height="3.1"/>
+<rect class="cell" x="27.0" y="113.6" width="7.0" height="3.1"/>
+<rect class="cell" x="36.0" y="113.6" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="45.0" y="113.6" width="7.0" height="3.1"/>
+<rect class="cell" x="0.0" y="118.0" width="7.0" height="3.1"/>
+<rect class="cell" x="9.0" y="118.0" width="7.0" height="3.1"/>
+<rect class="cell" x="18.0" y="118.0" width="7.0" height="3.1"/>
+<rect class="cell" x="27.0" y="118.0" width="7.0" height="3.1"/>
+<rect class="cell" x="36.0" y="118.0" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="45.0" y="118.0" width="7.0" height="3.1"/>
+<rect class="cell" x="0.0" y="122.4" width="7.0" height="3.1"/>
+<rect class="cell" x="9.0" y="122.4" width="7.0" height="3.1"/>
+<rect class="cell" x="18.0" y="122.4" width="7.0" height="3.1"/>
+<rect class="cell" x="27.0" y="122.4" width="7.0" height="3.1"/>
+<rect class="cell" x="36.0" y="122.4" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="45.0" y="122.4" width="7.0" height="3.1"/>
+<rect class="cell" x="0.0" y="126.8" width="7.0" height="3.1"/>
+<rect class="cell" x="9.0" y="126.8" width="7.0" height="3.1"/>
+<rect class="cell" x="18.0" y="126.8" width="7.0" height="3.1"/>
+<rect class="cell" x="27.0" y="126.8" width="7.0" height="3.1"/>
+<rect class="cell" x="36.0" y="126.8" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="45.0" y="126.8" width="7.0" height="3.1"/>
+<rect class="cell" x="0.0" y="131.2" width="7.0" height="3.1"/>
+<rect class="cell" x="9.0" y="131.2" width="7.0" height="3.1"/>
+<rect class="cell" x="18.0" y="131.2" width="7.0" height="3.1"/>
+<rect class="cell" x="27.0" y="131.2" width="7.0" height="3.1"/>
+<rect class="cell" x="36.0" y="131.2" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="45.0" y="131.2" width="7.0" height="3.1"/>
+<rect class="cell" x="0.0" y="135.6" width="7.0" height="3.1"/>
+<rect class="cell" x="9.0" y="135.6" width="7.0" height="3.1"/>
+<rect class="cell" x="18.0" y="135.6" width="7.0" height="3.1"/>
+<rect class="cell" x="27.0" y="135.6" width="7.0" height="3.1"/>
+<rect class="cell" x="36.0" y="135.6" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="45.0" y="135.6" width="7.0" height="3.1"/>
+<rect class="cell" x="0.0" y="140.0" width="7.0" height="3.1"/>
+<rect class="cell" x="9.0" y="140.0" width="7.0" height="3.1"/>
+<rect class="cell" x="18.0" y="140.0" width="7.0" height="3.1"/>
+<rect class="cell" x="27.0" y="140.0" width="7.0" height="3.1"/>
+<rect class="cell" x="36.0" y="140.0" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="45.0" y="140.0" width="7.0" height="3.1"/>
+<rect class="cell" x="0.0" y="144.4" width="7.0" height="3.1"/>
+<rect class="cell" x="9.0" y="144.4" width="7.0" height="3.1"/>
+<rect class="cell" x="18.0" y="144.4" width="7.0" height="3.1"/>
+<rect class="cell" x="27.0" y="144.4" width="7.0" height="3.1"/>
+<rect class="cell" x="36.0" y="144.4" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="45.0" y="144.4" width="7.0" height="3.1"/>
+<rect class="cell" x="0.0" y="148.8" width="7.0" height="3.1"/>
+<rect class="cell" x="9.0" y="148.8" width="7.0" height="3.1"/>
+<rect class="cell" x="18.0" y="148.8" width="7.0" height="3.1"/>
+<rect class="cell" x="27.0" y="148.8" width="7.0" height="3.1"/>
+<rect class="cell" x="36.0" y="148.8" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="45.0" y="148.8" width="7.0" height="3.1"/>
+<rect class="cell" x="0.0" y="153.2" width="7.0" height="3.1"/>
+<rect class="cell" x="9.0" y="153.2" width="7.0" height="3.1"/>
+<rect class="cell" x="18.0" y="153.2" width="7.0" height="3.1"/>
+<rect class="cell" x="27.0" y="153.2" width="7.0" height="3.1"/>
+<rect class="cell" x="36.0" y="153.2" width="7.0" height="3.1"/>
+<rect class="cell" x="45.0" y="153.2" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="54.0" y="153.2" width="7.0" height="3.1"/>
+<rect class="cell" x="0.0" y="157.6" width="7.0" height="3.1"/>
+<rect class="cell" x="9.0" y="157.6" width="7.0" height="3.1"/>
+<rect class="cell" x="18.0" y="157.6" width="7.0" height="3.1"/>
+<rect class="cell" x="27.0" y="157.6" width="7.0" height="3.1"/>
+<rect class="cell" x="36.0" y="157.6" width="7.0" height="3.1"/>
+<rect class="cell" x="45.0" y="157.6" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="54.0" y="157.6" width="7.0" height="3.1"/>
+<rect class="cell" x="0.0" y="162.0" width="7.0" height="3.1"/>
+<rect class="cell" x="9.0" y="162.0" width="7.0" height="3.1"/>
+<rect class="cell" x="18.0" y="162.0" width="7.0" height="3.1"/>
+<rect class="cell" x="27.0" y="162.0" width="7.0" height="3.1"/>
+<rect class="cell" x="36.0" y="162.0" width="7.0" height="3.1"/>
+<rect class="cell" x="45.0" y="162.0" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="54.0" y="162.0" width="7.0" height="3.1"/>
+<rect class="cell" x="0.0" y="166.4" width="7.0" height="3.1"/>
+<rect class="cell" x="9.0" y="166.4" width="7.0" height="3.1"/>
+<rect class="cell" x="18.0" y="166.4" width="7.0" height="3.1"/>
+<rect class="cell" x="27.0" y="166.4" width="7.0" height="3.1"/>
+<rect class="cell" x="36.0" y="166.4" width="7.0" height="3.1"/>
+<rect class="cell" x="45.0" y="166.4" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="54.0" y="166.4" width="7.0" height="3.1"/>
+<rect class="cell" x="0.0" y="170.8" width="7.0" height="3.1"/>
+<rect class="cell" x="9.0" y="170.8" width="7.0" height="3.1"/>
+<rect class="cell" x="18.0" y="170.8" width="7.0" height="3.1"/>
+<rect class="cell" x="27.0" y="170.8" width="7.0" height="3.1"/>
+<rect class="cell" x="36.0" y="170.8" width="7.0" height="3.1"/>
+<rect class="cell" x="45.0" y="170.8" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="54.0" y="170.8" width="7.0" height="3.1"/>
+<rect class="cell" x="0.0" y="175.2" width="7.0" height="3.1"/>
+<rect class="cell" x="9.0" y="175.2" width="7.0" height="3.1"/>
+<rect class="cell" x="18.0" y="175.2" width="7.0" height="3.1"/>
+<rect class="cell" x="27.0" y="175.2" width="7.0" height="3.1"/>
+<rect class="cell" x="36.0" y="175.2" width="7.0" height="3.1"/>
+<rect class="cell" x="45.0" y="175.2" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="54.0" y="175.2" width="7.0" height="3.1"/>
+<rect class="cell" x="0.0" y="179.6" width="7.0" height="3.1"/>
+<rect class="cell" x="9.0" y="179.6" width="7.0" height="3.1"/>
+<rect class="cell" x="18.0" y="179.6" width="7.0" height="3.1"/>
+<rect class="cell" x="27.0" y="179.6" width="7.0" height="3.1"/>
+<rect class="cell" x="36.0" y="179.6" width="7.0" height="3.1"/>
+<rect class="cell" x="45.0" y="179.6" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="54.0" y="179.6" width="7.0" height="3.1"/>
+<rect class="cell" x="0.0" y="184.0" width="7.0" height="3.1"/>
+<rect class="cell" x="9.0" y="184.0" width="7.0" height="3.1"/>
+<rect class="cell" x="18.0" y="184.0" width="7.0" height="3.1"/>
+<rect class="cell" x="27.0" y="184.0" width="7.0" height="3.1"/>
+<rect class="cell" x="36.0" y="184.0" width="7.0" height="3.1"/>
+<rect class="cell" x="45.0" y="184.0" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="54.0" y="184.0" width="7.0" height="3.1"/>
+<rect class="cell" x="0.0" y="188.4" width="7.0" height="3.1"/>
+<rect class="cell" x="9.0" y="188.4" width="7.0" height="3.1"/>
+<rect class="cell" x="18.0" y="188.4" width="7.0" height="3.1"/>
+<rect class="cell" x="27.0" y="188.4" width="7.0" height="3.1"/>
+<rect class="cell" x="36.0" y="188.4" width="7.0" height="3.1"/>
+<rect class="cell" x="45.0" y="188.4" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="54.0" y="188.4" width="7.0" height="3.1"/>
+<rect class="cell" x="0.0" y="192.8" width="7.0" height="3.1"/>
+<rect class="cell" x="9.0" y="192.8" width="7.0" height="3.1"/>
+<rect class="cell" x="18.0" y="192.8" width="7.0" height="3.1"/>
+<rect class="cell" x="27.0" y="192.8" width="7.0" height="3.1"/>
+<rect class="cell" x="36.0" y="192.8" width="7.0" height="3.1"/>
+<rect class="cell" x="45.0" y="192.8" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="54.0" y="192.8" width="7.0" height="3.1"/>
+<rect class="cell" x="0.0" y="197.2" width="7.0" height="3.1"/>
+<rect class="cell" x="9.0" y="197.2" width="7.0" height="3.1"/>
+<rect class="cell" x="18.0" y="197.2" width="7.0" height="3.1"/>
+<rect class="cell" x="27.0" y="197.2" width="7.0" height="3.1"/>
+<rect class="cell" x="36.0" y="197.2" width="7.0" height="3.1"/>
+<rect class="cell" x="45.0" y="197.2" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="54.0" y="197.2" width="7.0" height="3.1"/>
+<rect class="cell" x="0.0" y="201.6" width="7.0" height="3.1"/>
+<rect class="cell" x="9.0" y="201.6" width="7.0" height="3.1"/>
+<rect class="cell" x="18.0" y="201.6" width="7.0" height="3.1"/>
+<rect class="cell" x="27.0" y="201.6" width="7.0" height="3.1"/>
+<rect class="cell" x="36.0" y="201.6" width="7.0" height="3.1"/>
+<rect class="cell" x="45.0" y="201.6" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="54.0" y="201.6" width="7.0" height="3.1"/>
+<rect class="cell" x="0.0" y="206.0" width="7.0" height="3.1"/>
+<rect class="cell" x="9.0" y="206.0" width="7.0" height="3.1"/>
+<rect class="cell" x="18.0" y="206.0" width="7.0" height="3.1"/>
+<rect class="cell" x="27.0" y="206.0" width="7.0" height="3.1"/>
+<rect class="cell" x="36.0" y="206.0" width="7.0" height="3.1"/>
+<rect class="cell" x="45.0" y="206.0" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="54.0" y="206.0" width="7.0" height="3.1"/>
+<rect class="cell" x="0.0" y="210.4" width="7.0" height="3.1"/>
+<rect class="cell" x="9.0" y="210.4" width="7.0" height="3.1"/>
+<rect class="cell" x="18.0" y="210.4" width="7.0" height="3.1"/>
+<rect class="cell" x="27.0" y="210.4" width="7.0" height="3.1"/>
+<rect class="cell" x="36.0" y="210.4" width="7.0" height="3.1"/>
+<rect class="cell" x="45.0" y="210.4" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="54.0" y="210.4" width="7.0" height="3.1"/>
+<rect class="cell" x="0.0" y="214.8" width="7.0" height="3.1"/>
+<rect class="cell" x="9.0" y="214.8" width="7.0" height="3.1"/>
+<rect class="cell" x="18.0" y="214.8" width="7.0" height="3.1"/>
+<rect class="cell" x="27.0" y="214.8" width="7.0" height="3.1"/>
+<rect class="cell" x="36.0" y="214.8" width="7.0" height="3.1"/>
+<rect class="cell" x="45.0" y="214.8" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="54.0" y="214.8" width="7.0" height="3.1"/>
+<rect class="cell" x="0.0" y="219.2" width="7.0" height="3.1"/>
+<rect class="cell" x="9.0" y="219.2" width="7.0" height="3.1"/>
+<rect class="cell" x="18.0" y="219.2" width="7.0" height="3.1"/>
+<rect class="cell" x="27.0" y="219.2" width="7.0" height="3.1"/>
+<rect class="cell" x="36.0" y="219.2" width="7.0" height="3.1"/>
+<rect class="cell" x="45.0" y="219.2" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="54.0" y="219.2" width="7.0" height="3.1"/>
+<rect class="cell" x="0.0" y="223.6" width="7.0" height="3.1"/>
+<rect class="cell" x="9.0" y="223.6" width="7.0" height="3.1"/>
+<rect class="cell" x="18.0" y="223.6" width="7.0" height="3.1"/>
+<rect class="cell" x="27.0" y="223.6" width="7.0" height="3.1"/>
+<rect class="cell" x="36.0" y="223.6" width="7.0" height="3.1"/>
+<rect class="cell" x="45.0" y="223.6" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="54.0" y="223.6" width="7.0" height="3.1"/>
+<rect class="cell" x="0.0" y="228.0" width="7.0" height="3.1"/>
+<rect class="cell" x="9.0" y="228.0" width="7.0" height="3.1"/>
+<rect class="cell" x="18.0" y="228.0" width="7.0" height="3.1"/>
+<rect class="cell" x="27.0" y="228.0" width="7.0" height="3.1"/>
+<rect class="cell" x="36.0" y="228.0" width="7.0" height="3.1"/>
+<rect class="cell" x="45.0" y="228.0" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="54.0" y="228.0" width="7.0" height="3.1"/>
+<rect class="cell" x="0.0" y="232.4" width="7.0" height="3.1"/>
+<rect class="cell" x="9.0" y="232.4" width="7.0" height="3.1"/>
+<rect class="cell" x="18.0" y="232.4" width="7.0" height="3.1"/>
+<rect class="cell" x="27.0" y="232.4" width="7.0" height="3.1"/>
+<rect class="cell" x="36.0" y="232.4" width="7.0" height="3.1"/>
+<rect class="cell" x="45.0" y="232.4" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="54.0" y="232.4" width="7.0" height="3.1"/>
+<rect class="cell" x="0.0" y="236.8" width="7.0" height="3.1"/>
+<rect class="cell" x="9.0" y="236.8" width="7.0" height="3.1"/>
+<rect class="cell" x="18.0" y="236.8" width="7.0" height="3.1"/>
+<rect class="cell" x="27.0" y="236.8" width="7.0" height="3.1"/>
+<rect class="cell" x="36.0" y="236.8" width="7.0" height="3.1"/>
+<rect class="cell" x="45.0" y="236.8" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="54.0" y="236.8" width="7.0" height="3.1"/>
+<rect class="cell" x="0.0" y="241.2" width="7.0" height="3.1"/>
+<rect class="cell" x="9.0" y="241.2" width="7.0" height="3.1"/>
+<rect class="cell" x="18.0" y="241.2" width="7.0" height="3.1"/>
+<rect class="cell" x="27.0" y="241.2" width="7.0" height="3.1"/>
+<rect class="cell" x="36.0" y="241.2" width="7.0" height="3.1"/>
+<rect class="cell" x="45.0" y="241.2" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="54.0" y="241.2" width="7.0" height="3.1"/>
+<rect class="cell" x="0.0" y="245.6" width="7.0" height="3.1"/>
+<rect class="cell" x="9.0" y="245.6" width="7.0" height="3.1"/>
+<rect class="cell" x="18.0" y="245.6" width="7.0" height="3.1"/>
+<rect class="cell" x="27.0" y="245.6" width="7.0" height="3.1"/>
+<rect class="cell" x="36.0" y="245.6" width="7.0" height="3.1"/>
+<rect class="cell" x="45.0" y="245.6" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="54.0" y="245.6" width="7.0" height="3.1"/>
+<rect class="cell" x="0.0" y="250.0" width="7.0" height="3.1"/>
+<rect class="cell" x="9.0" y="250.0" width="7.0" height="3.1"/>
+<rect class="cell" x="18.0" y="250.0" width="7.0" height="3.1"/>
+<rect class="cell" x="27.0" y="250.0" width="7.0" height="3.1"/>
+<rect class="cell" x="36.0" y="250.0" width="7.0" height="3.1"/>
+<rect class="cell" x="45.0" y="250.0" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="54.0" y="250.0" width="7.0" height="3.1"/>
+<rect class="cell" x="0.0" y="254.4" width="7.0" height="3.1"/>
+<rect class="cell" x="9.0" y="254.4" width="7.0" height="3.1"/>
+<rect class="cell" x="18.0" y="254.4" width="7.0" height="3.1"/>
+<rect class="cell" x="27.0" y="254.4" width="7.0" height="3.1"/>
+<rect class="cell" x="36.0" y="254.4" width="7.0" height="3.1"/>
+<rect class="cell" x="45.0" y="254.4" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="54.0" y="254.4" width="7.0" height="3.1"/>
+<rect class="cell" x="0.0" y="258.8" width="7.0" height="3.1"/>
+<rect class="cell" x="9.0" y="258.8" width="7.0" height="3.1"/>
+<rect class="cell" x="18.0" y="258.8" width="7.0" height="3.1"/>
+<rect class="cell" x="27.0" y="258.8" width="7.0" height="3.1"/>
+<rect class="cell" x="36.0" y="258.8" width="7.0" height="3.1"/>
+<rect class="cell" x="45.0" y="258.8" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="54.0" y="258.8" width="7.0" height="3.1"/>
+<rect class="cell" x="0.0" y="263.2" width="7.0" height="3.1"/>
+<rect class="cell" x="9.0" y="263.2" width="7.0" height="3.1"/>
+<rect class="cell" x="18.0" y="263.2" width="7.0" height="3.1"/>
+<rect class="cell" x="27.0" y="263.2" width="7.0" height="3.1"/>
+<rect class="cell" x="36.0" y="263.2" width="7.0" height="3.1"/>
+<rect class="cell" x="45.0" y="263.2" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="54.0" y="263.2" width="7.0" height="3.1"/>
+<rect class="cell" x="0.0" y="267.6" width="7.0" height="3.1"/>
+<rect class="cell" x="9.0" y="267.6" width="7.0" height="3.1"/>
+<rect class="cell" x="18.0" y="267.6" width="7.0" height="3.1"/>
+<rect class="cell" x="27.0" y="267.6" width="7.0" height="3.1"/>
+<rect class="cell" x="36.0" y="267.6" width="7.0" height="3.1"/>
+<rect class="cell" x="45.0" y="267.6" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="54.0" y="267.6" width="7.0" height="3.1"/>
+<rect class="cell" x="0.0" y="272.0" width="7.0" height="3.1"/>
+<rect class="cell" x="9.0" y="272.0" width="7.0" height="3.1"/>
+<rect class="cell" x="18.0" y="272.0" width="7.0" height="3.1"/>
+<rect class="cell" x="27.0" y="272.0" width="7.0" height="3.1"/>
+<rect class="cell" x="36.0" y="272.0" width="7.0" height="3.1"/>
+<rect class="cell" x="45.0" y="272.0" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="54.0" y="272.0" width="7.0" height="3.1"/>
+<rect class="cell" x="0.0" y="276.4" width="7.0" height="3.1"/>
+<rect class="cell" x="9.0" y="276.4" width="7.0" height="3.1"/>
+<rect class="cell" x="18.0" y="276.4" width="7.0" height="3.1"/>
+<rect class="cell" x="27.0" y="276.4" width="7.0" height="3.1"/>
+<rect class="cell" x="36.0" y="276.4" width="7.0" height="3.1"/>
+<rect class="cell" x="45.0" y="276.4" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="54.0" y="276.4" width="7.0" height="3.1"/>
+<rect class="cell" x="0.0" y="280.8" width="7.0" height="3.1"/>
+<rect class="cell" x="9.0" y="280.8" width="7.0" height="3.1"/>
+<rect class="cell" x="18.0" y="280.8" width="7.0" height="3.1"/>
+<rect class="cell" x="27.0" y="280.8" width="7.0" height="3.1"/>
+<rect class="cell" x="36.0" y="280.8" width="7.0" height="3.1"/>
+<rect class="cell" x="45.0" y="280.8" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="54.0" y="280.8" width="7.0" height="3.1"/>
+<rect class="cell" x="0.0" y="285.2" width="7.0" height="3.1"/>
+<rect class="cell" x="9.0" y="285.2" width="7.0" height="3.1"/>
+<rect class="cell" x="18.0" y="285.2" width="7.0" height="3.1"/>
+<rect class="cell" x="27.0" y="285.2" width="7.0" height="3.1"/>
+<rect class="cell" x="36.0" y="285.2" width="7.0" height="3.1"/>
+<rect class="cell" x="45.0" y="285.2" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="54.0" y="285.2" width="7.0" height="3.1"/>
+<rect class="cell" x="0.0" y="289.6" width="7.0" height="3.1"/>
+<rect class="cell" x="9.0" y="289.6" width="7.0" height="3.1"/>
+<rect class="cell" x="18.0" y="289.6" width="7.0" height="3.1"/>
+<rect class="cell" x="27.0" y="289.6" width="7.0" height="3.1"/>
+<rect class="cell" x="36.0" y="289.6" width="7.0" height="3.1"/>
+<rect class="cell" x="45.0" y="289.6" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="54.0" y="289.6" width="7.0" height="3.1"/>
+<rect class="cell" x="0.0" y="294.0" width="7.0" height="3.1"/>
+<rect class="cell" x="9.0" y="294.0" width="7.0" height="3.1"/>
+<rect class="cell" x="18.0" y="294.0" width="7.0" height="3.1"/>
+<rect class="cell" x="27.0" y="294.0" width="7.0" height="3.1"/>
+<rect class="cell" x="36.0" y="294.0" width="7.0" height="3.1"/>
+<rect class="cell" x="45.0" y="294.0" width="7.0" height="3.1"/>
+<rect class="cell-off" x="54.0" y="294.0" width="7.0" height="3.1"/>
+<rect class="cell" x="63.0" y="294.0" width="7.0" height="3.1"/>
+<rect class="cell" x="0.0" y="298.4" width="7.0" height="3.1"/>
+<rect class="cell" x="9.0" y="298.4" width="7.0" height="3.1"/>
+<rect class="cell" x="18.0" y="298.4" width="7.0" height="3.1"/>
+<rect class="cell" x="27.0" y="298.4" width="7.0" height="3.1"/>
+<rect class="cell" x="36.0" y="298.4" width="7.0" height="3.1"/>
+<rect class="cell" x="45.0" y="298.4" width="7.0" height="3.1"/>
+<rect class="cell" x="54.0" y="298.4" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="63.0" y="298.4" width="7.0" height="3.1"/>
+<rect class="cell" x="0.0" y="302.8" width="7.0" height="3.1"/>
+<rect class="cell" x="9.0" y="302.8" width="7.0" height="3.1"/>
+<rect class="cell" x="18.0" y="302.8" width="7.0" height="3.1"/>
+<rect class="cell" x="27.0" y="302.8" width="7.0" height="3.1"/>
+<rect class="cell" x="36.0" y="302.8" width="7.0" height="3.1"/>
+<rect class="cell" x="45.0" y="302.8" width="7.0" height="3.1"/>
+<rect class="cell" x="54.0" y="302.8" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="63.0" y="302.8" width="7.0" height="3.1"/>
+<rect class="cell" x="0.0" y="307.2" width="7.0" height="3.1"/>
+<rect class="cell" x="9.0" y="307.2" width="7.0" height="3.1"/>
+<rect class="cell" x="18.0" y="307.2" width="7.0" height="3.1"/>
+<rect class="cell" x="27.0" y="307.2" width="7.0" height="3.1"/>
+<rect class="cell" x="36.0" y="307.2" width="7.0" height="3.1"/>
+<rect class="cell" x="45.0" y="307.2" width="7.0" height="3.1"/>
+<rect class="cell" x="54.0" y="307.2" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="63.0" y="307.2" width="7.0" height="3.1"/>
+<rect class="cell" x="177.0" y="30.0" width="7.0" height="3.1"/>
+<rect class="cell" x="186.0" y="30.0" width="7.0" height="3.1"/>
+<rect class="cell" x="195.0" y="30.0" width="7.0" height="3.1"/>
+<rect class="cell" x="204.0" y="30.0" width="7.0" height="3.1"/>
+<rect class="cell" x="213.0" y="30.0" width="7.0" height="3.1"/>
+<rect class="cell" x="222.0" y="30.0" width="7.0" height="3.1"/>
+<rect class="cell" x="231.0" y="30.0" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="240.0" y="30.0" width="7.0" height="3.1"/>
+<rect class="cell" x="177.0" y="34.4" width="7.0" height="3.1"/>
+<rect class="cell" x="186.0" y="34.4" width="7.0" height="3.1"/>
+<rect class="cell" x="195.0" y="34.4" width="7.0" height="3.1"/>
+<rect class="cell" x="204.0" y="34.4" width="7.0" height="3.1"/>
+<rect class="cell" x="213.0" y="34.4" width="7.0" height="3.1"/>
+<rect class="cell" x="222.0" y="34.4" width="7.0" height="3.1"/>
+<rect class="cell" x="231.0" y="34.4" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="240.0" y="34.4" width="7.0" height="3.1"/>
+<rect class="cell" x="177.0" y="38.8" width="7.0" height="3.1"/>
+<rect class="cell" x="186.0" y="38.8" width="7.0" height="3.1"/>
+<rect class="cell" x="195.0" y="38.8" width="7.0" height="3.1"/>
+<rect class="cell" x="204.0" y="38.8" width="7.0" height="3.1"/>
+<rect class="cell" x="213.0" y="38.8" width="7.0" height="3.1"/>
+<rect class="cell" x="222.0" y="38.8" width="7.0" height="3.1"/>
+<rect class="cell" x="231.0" y="38.8" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="240.0" y="38.8" width="7.0" height="3.1"/>
+<rect class="cell" x="177.0" y="43.2" width="7.0" height="3.1"/>
+<rect class="cell" x="186.0" y="43.2" width="7.0" height="3.1"/>
+<rect class="cell" x="195.0" y="43.2" width="7.0" height="3.1"/>
+<rect class="cell" x="204.0" y="43.2" width="7.0" height="3.1"/>
+<rect class="cell" x="213.0" y="43.2" width="7.0" height="3.1"/>
+<rect class="cell" x="222.0" y="43.2" width="7.0" height="3.1"/>
+<rect class="cell" x="231.0" y="43.2" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="240.0" y="43.2" width="7.0" height="3.1"/>
+<rect class="cell" x="177.0" y="47.6" width="7.0" height="3.1"/>
+<rect class="cell" x="186.0" y="47.6" width="7.0" height="3.1"/>
+<rect class="cell" x="195.0" y="47.6" width="7.0" height="3.1"/>
+<rect class="cell" x="204.0" y="47.6" width="7.0" height="3.1"/>
+<rect class="cell" x="213.0" y="47.6" width="7.0" height="3.1"/>
+<rect class="cell" x="222.0" y="47.6" width="7.0" height="3.1"/>
+<rect class="cell" x="231.0" y="47.6" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="240.0" y="47.6" width="7.0" height="3.1"/>
+<rect class="cell" x="177.0" y="52.0" width="7.0" height="3.1"/>
+<rect class="cell" x="186.0" y="52.0" width="7.0" height="3.1"/>
+<rect class="cell" x="195.0" y="52.0" width="7.0" height="3.1"/>
+<rect class="cell" x="204.0" y="52.0" width="7.0" height="3.1"/>
+<rect class="cell" x="213.0" y="52.0" width="7.0" height="3.1"/>
+<rect class="cell" x="222.0" y="52.0" width="7.0" height="3.1"/>
+<rect class="cell" x="231.0" y="52.0" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="240.0" y="52.0" width="7.0" height="3.1"/>
+<rect class="cell" x="177.0" y="56.4" width="7.0" height="3.1"/>
+<rect class="cell" x="186.0" y="56.4" width="7.0" height="3.1"/>
+<rect class="cell" x="195.0" y="56.4" width="7.0" height="3.1"/>
+<rect class="cell" x="204.0" y="56.4" width="7.0" height="3.1"/>
+<rect class="cell" x="213.0" y="56.4" width="7.0" height="3.1"/>
+<rect class="cell" x="222.0" y="56.4" width="7.0" height="3.1"/>
+<rect class="cell" x="231.0" y="56.4" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="240.0" y="56.4" width="7.0" height="3.1"/>
+<rect class="cell" x="177.0" y="60.8" width="7.0" height="3.1"/>
+<rect class="cell" x="186.0" y="60.8" width="7.0" height="3.1"/>
+<rect class="cell" x="195.0" y="60.8" width="7.0" height="3.1"/>
+<rect class="cell" x="204.0" y="60.8" width="7.0" height="3.1"/>
+<rect class="cell" x="213.0" y="60.8" width="7.0" height="3.1"/>
+<rect class="cell" x="222.0" y="60.8" width="7.0" height="3.1"/>
+<rect class="cell" x="231.0" y="60.8" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="240.0" y="60.8" width="7.0" height="3.1"/>
+<rect class="cell" x="177.0" y="65.2" width="7.0" height="3.1"/>
+<rect class="cell" x="186.0" y="65.2" width="7.0" height="3.1"/>
+<rect class="cell" x="195.0" y="65.2" width="7.0" height="3.1"/>
+<rect class="cell" x="204.0" y="65.2" width="7.0" height="3.1"/>
+<rect class="cell" x="213.0" y="65.2" width="7.0" height="3.1"/>
+<rect class="cell" x="222.0" y="65.2" width="7.0" height="3.1"/>
+<rect class="cell" x="231.0" y="65.2" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="240.0" y="65.2" width="7.0" height="3.1"/>
+<rect class="cell" x="177.0" y="69.6" width="7.0" height="3.1"/>
+<rect class="cell" x="186.0" y="69.6" width="7.0" height="3.1"/>
+<rect class="cell" x="195.0" y="69.6" width="7.0" height="3.1"/>
+<rect class="cell" x="204.0" y="69.6" width="7.0" height="3.1"/>
+<rect class="cell" x="213.0" y="69.6" width="7.0" height="3.1"/>
+<rect class="cell" x="222.0" y="69.6" width="7.0" height="3.1"/>
+<rect class="cell" x="231.0" y="69.6" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="240.0" y="69.6" width="7.0" height="3.1"/>
+<rect class="cell" x="177.0" y="74.0" width="7.0" height="3.1"/>
+<rect class="cell" x="186.0" y="74.0" width="7.0" height="3.1"/>
+<rect class="cell" x="195.0" y="74.0" width="7.0" height="3.1"/>
+<rect class="cell" x="204.0" y="74.0" width="7.0" height="3.1"/>
+<rect class="cell" x="213.0" y="74.0" width="7.0" height="3.1"/>
+<rect class="cell" x="222.0" y="74.0" width="7.0" height="3.1"/>
+<rect class="cell" x="231.0" y="74.0" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="240.0" y="74.0" width="7.0" height="3.1"/>
+<rect class="cell" x="177.0" y="78.4" width="7.0" height="3.1"/>
+<rect class="cell" x="186.0" y="78.4" width="7.0" height="3.1"/>
+<rect class="cell" x="195.0" y="78.4" width="7.0" height="3.1"/>
+<rect class="cell" x="204.0" y="78.4" width="7.0" height="3.1"/>
+<rect class="cell" x="213.0" y="78.4" width="7.0" height="3.1"/>
+<rect class="cell" x="222.0" y="78.4" width="7.0" height="3.1"/>
+<rect class="cell" x="231.0" y="78.4" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="240.0" y="78.4" width="7.0" height="3.1"/>
+<rect class="cell" x="177.0" y="82.8" width="7.0" height="3.1"/>
+<rect class="cell" x="186.0" y="82.8" width="7.0" height="3.1"/>
+<rect class="cell" x="195.0" y="82.8" width="7.0" height="3.1"/>
+<rect class="cell" x="204.0" y="82.8" width="7.0" height="3.1"/>
+<rect class="cell" x="213.0" y="82.8" width="7.0" height="3.1"/>
+<rect class="cell" x="222.0" y="82.8" width="7.0" height="3.1"/>
+<rect class="cell" x="231.0" y="82.8" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="240.0" y="82.8" width="7.0" height="3.1"/>
+<rect class="cell" x="177.0" y="87.2" width="7.0" height="3.1"/>
+<rect class="cell" x="186.0" y="87.2" width="7.0" height="3.1"/>
+<rect class="cell" x="195.0" y="87.2" width="7.0" height="3.1"/>
+<rect class="cell" x="204.0" y="87.2" width="7.0" height="3.1"/>
+<rect class="cell" x="213.0" y="87.2" width="7.0" height="3.1"/>
+<rect class="cell" x="222.0" y="87.2" width="7.0" height="3.1"/>
+<rect class="cell" x="231.0" y="87.2" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="240.0" y="87.2" width="7.0" height="3.1"/>
+<rect class="cell" x="177.0" y="91.6" width="7.0" height="3.1"/>
+<rect class="cell" x="186.0" y="91.6" width="7.0" height="3.1"/>
+<rect class="cell" x="195.0" y="91.6" width="7.0" height="3.1"/>
+<rect class="cell" x="204.0" y="91.6" width="7.0" height="3.1"/>
+<rect class="cell" x="213.0" y="91.6" width="7.0" height="3.1"/>
+<rect class="cell" x="222.0" y="91.6" width="7.0" height="3.1"/>
+<rect class="cell" x="231.0" y="91.6" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="240.0" y="91.6" width="7.0" height="3.1"/>
+<rect class="cell" x="177.0" y="96.0" width="7.0" height="3.1"/>
+<rect class="cell" x="186.0" y="96.0" width="7.0" height="3.1"/>
+<rect class="cell" x="195.0" y="96.0" width="7.0" height="3.1"/>
+<rect class="cell" x="204.0" y="96.0" width="7.0" height="3.1"/>
+<rect class="cell" x="213.0" y="96.0" width="7.0" height="3.1"/>
+<rect class="cell" x="222.0" y="96.0" width="7.0" height="3.1"/>
+<rect class="cell" x="231.0" y="96.0" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="240.0" y="96.0" width="7.0" height="3.1"/>
+<rect class="cell" x="177.0" y="100.4" width="7.0" height="3.1"/>
+<rect class="cell" x="186.0" y="100.4" width="7.0" height="3.1"/>
+<rect class="cell" x="195.0" y="100.4" width="7.0" height="3.1"/>
+<rect class="cell" x="204.0" y="100.4" width="7.0" height="3.1"/>
+<rect class="cell" x="213.0" y="100.4" width="7.0" height="3.1"/>
+<rect class="cell" x="222.0" y="100.4" width="7.0" height="3.1"/>
+<rect class="cell" x="231.0" y="100.4" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="240.0" y="100.4" width="7.0" height="3.1"/>
+<rect class="cell" x="177.0" y="104.8" width="7.0" height="3.1"/>
+<rect class="cell" x="186.0" y="104.8" width="7.0" height="3.1"/>
+<rect class="cell" x="195.0" y="104.8" width="7.0" height="3.1"/>
+<rect class="cell" x="204.0" y="104.8" width="7.0" height="3.1"/>
+<rect class="cell" x="213.0" y="104.8" width="7.0" height="3.1"/>
+<rect class="cell" x="222.0" y="104.8" width="7.0" height="3.1"/>
+<rect class="cell" x="231.0" y="104.8" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="240.0" y="104.8" width="7.0" height="3.1"/>
+<rect class="cell" x="177.0" y="109.2" width="7.0" height="3.1"/>
+<rect class="cell" x="186.0" y="109.2" width="7.0" height="3.1"/>
+<rect class="cell" x="195.0" y="109.2" width="7.0" height="3.1"/>
+<rect class="cell" x="204.0" y="109.2" width="7.0" height="3.1"/>
+<rect class="cell" x="213.0" y="109.2" width="7.0" height="3.1"/>
+<rect class="cell" x="222.0" y="109.2" width="7.0" height="3.1"/>
+<rect class="cell" x="231.0" y="109.2" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="240.0" y="109.2" width="7.0" height="3.1"/>
+<rect class="cell" x="177.0" y="113.6" width="7.0" height="3.1"/>
+<rect class="cell" x="186.0" y="113.6" width="7.0" height="3.1"/>
+<rect class="cell" x="195.0" y="113.6" width="7.0" height="3.1"/>
+<rect class="cell" x="204.0" y="113.6" width="7.0" height="3.1"/>
+<rect class="cell" x="213.0" y="113.6" width="7.0" height="3.1"/>
+<rect class="cell" x="222.0" y="113.6" width="7.0" height="3.1"/>
+<rect class="cell" x="231.0" y="113.6" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="240.0" y="113.6" width="7.0" height="3.1"/>
+<rect class="cell" x="177.0" y="118.0" width="7.0" height="3.1"/>
+<rect class="cell" x="186.0" y="118.0" width="7.0" height="3.1"/>
+<rect class="cell" x="195.0" y="118.0" width="7.0" height="3.1"/>
+<rect class="cell" x="204.0" y="118.0" width="7.0" height="3.1"/>
+<rect class="cell" x="213.0" y="118.0" width="7.0" height="3.1"/>
+<rect class="cell" x="222.0" y="118.0" width="7.0" height="3.1"/>
+<rect class="cell" x="231.0" y="118.0" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="240.0" y="118.0" width="7.0" height="3.1"/>
+<rect class="cell" x="177.0" y="122.4" width="7.0" height="3.1"/>
+<rect class="cell" x="186.0" y="122.4" width="7.0" height="3.1"/>
+<rect class="cell" x="195.0" y="122.4" width="7.0" height="3.1"/>
+<rect class="cell" x="204.0" y="122.4" width="7.0" height="3.1"/>
+<rect class="cell" x="213.0" y="122.4" width="7.0" height="3.1"/>
+<rect class="cell" x="222.0" y="122.4" width="7.0" height="3.1"/>
+<rect class="cell" x="231.0" y="122.4" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="240.0" y="122.4" width="7.0" height="3.1"/>
+<rect class="cell" x="177.0" y="126.8" width="7.0" height="3.1"/>
+<rect class="cell" x="186.0" y="126.8" width="7.0" height="3.1"/>
+<rect class="cell" x="195.0" y="126.8" width="7.0" height="3.1"/>
+<rect class="cell" x="204.0" y="126.8" width="7.0" height="3.1"/>
+<rect class="cell" x="213.0" y="126.8" width="7.0" height="3.1"/>
+<rect class="cell" x="222.0" y="126.8" width="7.0" height="3.1"/>
+<rect class="cell" x="231.0" y="126.8" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="240.0" y="126.8" width="7.0" height="3.1"/>
+<rect class="cell" x="177.0" y="131.2" width="7.0" height="3.1"/>
+<rect class="cell" x="186.0" y="131.2" width="7.0" height="3.1"/>
+<rect class="cell" x="195.0" y="131.2" width="7.0" height="3.1"/>
+<rect class="cell" x="204.0" y="131.2" width="7.0" height="3.1"/>
+<rect class="cell" x="213.0" y="131.2" width="7.0" height="3.1"/>
+<rect class="cell" x="222.0" y="131.2" width="7.0" height="3.1"/>
+<rect class="cell" x="231.0" y="131.2" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="240.0" y="131.2" width="7.0" height="3.1"/>
+<rect class="cell" x="177.0" y="135.6" width="7.0" height="3.1"/>
+<rect class="cell" x="186.0" y="135.6" width="7.0" height="3.1"/>
+<rect class="cell" x="195.0" y="135.6" width="7.0" height="3.1"/>
+<rect class="cell" x="204.0" y="135.6" width="7.0" height="3.1"/>
+<rect class="cell" x="213.0" y="135.6" width="7.0" height="3.1"/>
+<rect class="cell" x="222.0" y="135.6" width="7.0" height="3.1"/>
+<rect class="cell" x="231.0" y="135.6" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="240.0" y="135.6" width="7.0" height="3.1"/>
+<rect class="cell" x="177.0" y="140.0" width="7.0" height="3.1"/>
+<rect class="cell" x="186.0" y="140.0" width="7.0" height="3.1"/>
+<rect class="cell" x="195.0" y="140.0" width="7.0" height="3.1"/>
+<rect class="cell" x="204.0" y="140.0" width="7.0" height="3.1"/>
+<rect class="cell" x="213.0" y="140.0" width="7.0" height="3.1"/>
+<rect class="cell" x="222.0" y="140.0" width="7.0" height="3.1"/>
+<rect class="cell" x="231.0" y="140.0" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="240.0" y="140.0" width="7.0" height="3.1"/>
+<rect class="cell" x="177.0" y="144.4" width="7.0" height="3.1"/>
+<rect class="cell" x="186.0" y="144.4" width="7.0" height="3.1"/>
+<rect class="cell" x="195.0" y="144.4" width="7.0" height="3.1"/>
+<rect class="cell" x="204.0" y="144.4" width="7.0" height="3.1"/>
+<rect class="cell" x="213.0" y="144.4" width="7.0" height="3.1"/>
+<rect class="cell" x="222.0" y="144.4" width="7.0" height="3.1"/>
+<rect class="cell" x="231.0" y="144.4" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="240.0" y="144.4" width="7.0" height="3.1"/>
+<rect class="cell" x="177.0" y="148.8" width="7.0" height="3.1"/>
+<rect class="cell" x="186.0" y="148.8" width="7.0" height="3.1"/>
+<rect class="cell" x="195.0" y="148.8" width="7.0" height="3.1"/>
+<rect class="cell" x="204.0" y="148.8" width="7.0" height="3.1"/>
+<rect class="cell" x="213.0" y="148.8" width="7.0" height="3.1"/>
+<rect class="cell" x="222.0" y="148.8" width="7.0" height="3.1"/>
+<rect class="cell" x="231.0" y="148.8" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="240.0" y="148.8" width="7.0" height="3.1"/>
+<rect class="cell" x="177.0" y="153.2" width="7.0" height="3.1"/>
+<rect class="cell" x="186.0" y="153.2" width="7.0" height="3.1"/>
+<rect class="cell" x="195.0" y="153.2" width="7.0" height="3.1"/>
+<rect class="cell" x="204.0" y="153.2" width="7.0" height="3.1"/>
+<rect class="cell" x="213.0" y="153.2" width="7.0" height="3.1"/>
+<rect class="cell" x="222.0" y="153.2" width="7.0" height="3.1"/>
+<rect class="cell" x="231.0" y="153.2" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="240.0" y="153.2" width="7.0" height="3.1"/>
+<rect class="cell" x="177.0" y="157.6" width="7.0" height="3.1"/>
+<rect class="cell" x="186.0" y="157.6" width="7.0" height="3.1"/>
+<rect class="cell" x="195.0" y="157.6" width="7.0" height="3.1"/>
+<rect class="cell" x="204.0" y="157.6" width="7.0" height="3.1"/>
+<rect class="cell" x="213.0" y="157.6" width="7.0" height="3.1"/>
+<rect class="cell" x="222.0" y="157.6" width="7.0" height="3.1"/>
+<rect class="cell" x="231.0" y="157.6" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="240.0" y="157.6" width="7.0" height="3.1"/>
+<rect class="cell" x="177.0" y="162.0" width="7.0" height="3.1"/>
+<rect class="cell" x="186.0" y="162.0" width="7.0" height="3.1"/>
+<rect class="cell" x="195.0" y="162.0" width="7.0" height="3.1"/>
+<rect class="cell" x="204.0" y="162.0" width="7.0" height="3.1"/>
+<rect class="cell" x="213.0" y="162.0" width="7.0" height="3.1"/>
+<rect class="cell" x="222.0" y="162.0" width="7.0" height="3.1"/>
+<rect class="cell" x="231.0" y="162.0" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="240.0" y="162.0" width="7.0" height="3.1"/>
+<rect class="cell" x="177.0" y="166.4" width="7.0" height="3.1"/>
+<rect class="cell" x="186.0" y="166.4" width="7.0" height="3.1"/>
+<rect class="cell" x="195.0" y="166.4" width="7.0" height="3.1"/>
+<rect class="cell" x="204.0" y="166.4" width="7.0" height="3.1"/>
+<rect class="cell" x="213.0" y="166.4" width="7.0" height="3.1"/>
+<rect class="cell" x="222.0" y="166.4" width="7.0" height="3.1"/>
+<rect class="cell" x="231.0" y="166.4" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="240.0" y="166.4" width="7.0" height="3.1"/>
+<rect class="cell" x="177.0" y="170.8" width="7.0" height="3.1"/>
+<rect class="cell" x="186.0" y="170.8" width="7.0" height="3.1"/>
+<rect class="cell" x="195.0" y="170.8" width="7.0" height="3.1"/>
+<rect class="cell" x="204.0" y="170.8" width="7.0" height="3.1"/>
+<rect class="cell" x="213.0" y="170.8" width="7.0" height="3.1"/>
+<rect class="cell" x="222.0" y="170.8" width="7.0" height="3.1"/>
+<rect class="cell" x="231.0" y="170.8" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="240.0" y="170.8" width="7.0" height="3.1"/>
+<rect class="cell" x="177.0" y="175.2" width="7.0" height="3.1"/>
+<rect class="cell" x="186.0" y="175.2" width="7.0" height="3.1"/>
+<rect class="cell" x="195.0" y="175.2" width="7.0" height="3.1"/>
+<rect class="cell" x="204.0" y="175.2" width="7.0" height="3.1"/>
+<rect class="cell" x="213.0" y="175.2" width="7.0" height="3.1"/>
+<rect class="cell" x="222.0" y="175.2" width="7.0" height="3.1"/>
+<rect class="cell" x="231.0" y="175.2" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="240.0" y="175.2" width="7.0" height="3.1"/>
+<rect class="cell" x="177.0" y="179.6" width="7.0" height="3.1"/>
+<rect class="cell" x="186.0" y="179.6" width="7.0" height="3.1"/>
+<rect class="cell" x="195.0" y="179.6" width="7.0" height="3.1"/>
+<rect class="cell" x="204.0" y="179.6" width="7.0" height="3.1"/>
+<rect class="cell" x="213.0" y="179.6" width="7.0" height="3.1"/>
+<rect class="cell" x="222.0" y="179.6" width="7.0" height="3.1"/>
+<rect class="cell" x="231.0" y="179.6" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="240.0" y="179.6" width="7.0" height="3.1"/>
+<rect class="cell" x="177.0" y="184.0" width="7.0" height="3.1"/>
+<rect class="cell" x="186.0" y="184.0" width="7.0" height="3.1"/>
+<rect class="cell" x="195.0" y="184.0" width="7.0" height="3.1"/>
+<rect class="cell" x="204.0" y="184.0" width="7.0" height="3.1"/>
+<rect class="cell" x="213.0" y="184.0" width="7.0" height="3.1"/>
+<rect class="cell" x="222.0" y="184.0" width="7.0" height="3.1"/>
+<rect class="cell" x="231.0" y="184.0" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="240.0" y="184.0" width="7.0" height="3.1"/>
+<rect class="cell" x="177.0" y="188.4" width="7.0" height="3.1"/>
+<rect class="cell" x="186.0" y="188.4" width="7.0" height="3.1"/>
+<rect class="cell" x="195.0" y="188.4" width="7.0" height="3.1"/>
+<rect class="cell" x="204.0" y="188.4" width="7.0" height="3.1"/>
+<rect class="cell" x="213.0" y="188.4" width="7.0" height="3.1"/>
+<rect class="cell" x="222.0" y="188.4" width="7.0" height="3.1"/>
+<rect class="cell" x="231.0" y="188.4" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="240.0" y="188.4" width="7.0" height="3.1"/>
+<rect class="cell" x="177.0" y="192.8" width="7.0" height="3.1"/>
+<rect class="cell" x="186.0" y="192.8" width="7.0" height="3.1"/>
+<rect class="cell" x="195.0" y="192.8" width="7.0" height="3.1"/>
+<rect class="cell" x="204.0" y="192.8" width="7.0" height="3.1"/>
+<rect class="cell" x="213.0" y="192.8" width="7.0" height="3.1"/>
+<rect class="cell" x="222.0" y="192.8" width="7.0" height="3.1"/>
+<rect class="cell" x="231.0" y="192.8" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="240.0" y="192.8" width="7.0" height="3.1"/>
+<rect class="cell" x="177.0" y="197.2" width="7.0" height="3.1"/>
+<rect class="cell" x="186.0" y="197.2" width="7.0" height="3.1"/>
+<rect class="cell" x="195.0" y="197.2" width="7.0" height="3.1"/>
+<rect class="cell" x="204.0" y="197.2" width="7.0" height="3.1"/>
+<rect class="cell" x="213.0" y="197.2" width="7.0" height="3.1"/>
+<rect class="cell" x="222.0" y="197.2" width="7.0" height="3.1"/>
+<rect class="cell" x="231.0" y="197.2" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="240.0" y="197.2" width="7.0" height="3.1"/>
+<rect class="cell" x="177.0" y="201.6" width="7.0" height="3.1"/>
+<rect class="cell" x="186.0" y="201.6" width="7.0" height="3.1"/>
+<rect class="cell" x="195.0" y="201.6" width="7.0" height="3.1"/>
+<rect class="cell" x="204.0" y="201.6" width="7.0" height="3.1"/>
+<rect class="cell" x="213.0" y="201.6" width="7.0" height="3.1"/>
+<rect class="cell" x="222.0" y="201.6" width="7.0" height="3.1"/>
+<rect class="cell" x="231.0" y="201.6" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="240.0" y="201.6" width="7.0" height="3.1"/>
+<rect class="cell" x="177.0" y="206.0" width="7.0" height="3.1"/>
+<rect class="cell" x="186.0" y="206.0" width="7.0" height="3.1"/>
+<rect class="cell" x="195.0" y="206.0" width="7.0" height="3.1"/>
+<rect class="cell" x="204.0" y="206.0" width="7.0" height="3.1"/>
+<rect class="cell" x="213.0" y="206.0" width="7.0" height="3.1"/>
+<rect class="cell" x="222.0" y="206.0" width="7.0" height="3.1"/>
+<rect class="cell" x="231.0" y="206.0" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="240.0" y="206.0" width="7.0" height="3.1"/>
+<rect class="cell" x="177.0" y="210.4" width="7.0" height="3.1"/>
+<rect class="cell" x="186.0" y="210.4" width="7.0" height="3.1"/>
+<rect class="cell" x="195.0" y="210.4" width="7.0" height="3.1"/>
+<rect class="cell" x="204.0" y="210.4" width="7.0" height="3.1"/>
+<rect class="cell" x="213.0" y="210.4" width="7.0" height="3.1"/>
+<rect class="cell" x="222.0" y="210.4" width="7.0" height="3.1"/>
+<rect class="cell" x="231.0" y="210.4" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="240.0" y="210.4" width="7.0" height="3.1"/>
+<rect class="cell" x="177.0" y="214.8" width="7.0" height="3.1"/>
+<rect class="cell" x="186.0" y="214.8" width="7.0" height="3.1"/>
+<rect class="cell" x="195.0" y="214.8" width="7.0" height="3.1"/>
+<rect class="cell" x="204.0" y="214.8" width="7.0" height="3.1"/>
+<rect class="cell" x="213.0" y="214.8" width="7.0" height="3.1"/>
+<rect class="cell" x="222.0" y="214.8" width="7.0" height="3.1"/>
+<rect class="cell" x="231.0" y="214.8" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="240.0" y="214.8" width="7.0" height="3.1"/>
+<rect class="cell" x="177.0" y="219.2" width="7.0" height="3.1"/>
+<rect class="cell" x="186.0" y="219.2" width="7.0" height="3.1"/>
+<rect class="cell" x="195.0" y="219.2" width="7.0" height="3.1"/>
+<rect class="cell" x="204.0" y="219.2" width="7.0" height="3.1"/>
+<rect class="cell" x="213.0" y="219.2" width="7.0" height="3.1"/>
+<rect class="cell" x="222.0" y="219.2" width="7.0" height="3.1"/>
+<rect class="cell" x="231.0" y="219.2" width="7.0" height="3.1"/>
+<rect class="cell-off" x="240.0" y="219.2" width="7.0" height="3.1"/>
+<rect class="cell" x="249.0" y="219.2" width="7.0" height="3.1"/>
+<rect class="cell" x="177.0" y="223.6" width="7.0" height="3.1"/>
+<rect class="cell" x="186.0" y="223.6" width="7.0" height="3.1"/>
+<rect class="cell" x="195.0" y="223.6" width="7.0" height="3.1"/>
+<rect class="cell" x="204.0" y="223.6" width="7.0" height="3.1"/>
+<rect class="cell" x="213.0" y="223.6" width="7.0" height="3.1"/>
+<rect class="cell" x="222.0" y="223.6" width="7.0" height="3.1"/>
+<rect class="cell" x="231.0" y="223.6" width="7.0" height="3.1"/>
+<rect class="cell" x="240.0" y="223.6" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="249.0" y="223.6" width="7.0" height="3.1"/>
+<rect class="cell" x="177.0" y="228.0" width="7.0" height="3.1"/>
+<rect class="cell" x="186.0" y="228.0" width="7.0" height="3.1"/>
+<rect class="cell" x="195.0" y="228.0" width="7.0" height="3.1"/>
+<rect class="cell" x="204.0" y="228.0" width="7.0" height="3.1"/>
+<rect class="cell" x="213.0" y="228.0" width="7.0" height="3.1"/>
+<rect class="cell" x="222.0" y="228.0" width="7.0" height="3.1"/>
+<rect class="cell" x="231.0" y="228.0" width="7.0" height="3.1"/>
+<rect class="cell" x="240.0" y="228.0" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="249.0" y="228.0" width="7.0" height="3.1"/>
+<rect class="cell" x="177.0" y="232.4" width="7.0" height="3.1"/>
+<rect class="cell" x="186.0" y="232.4" width="7.0" height="3.1"/>
+<rect class="cell" x="195.0" y="232.4" width="7.0" height="3.1"/>
+<rect class="cell" x="204.0" y="232.4" width="7.0" height="3.1"/>
+<rect class="cell" x="213.0" y="232.4" width="7.0" height="3.1"/>
+<rect class="cell" x="222.0" y="232.4" width="7.0" height="3.1"/>
+<rect class="cell" x="231.0" y="232.4" width="7.0" height="3.1"/>
+<rect class="cell" x="240.0" y="232.4" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="249.0" y="232.4" width="7.0" height="3.1"/>
+<rect class="cell" x="177.0" y="236.8" width="7.0" height="3.1"/>
+<rect class="cell" x="186.0" y="236.8" width="7.0" height="3.1"/>
+<rect class="cell" x="195.0" y="236.8" width="7.0" height="3.1"/>
+<rect class="cell" x="204.0" y="236.8" width="7.0" height="3.1"/>
+<rect class="cell" x="213.0" y="236.8" width="7.0" height="3.1"/>
+<rect class="cell" x="222.0" y="236.8" width="7.0" height="3.1"/>
+<rect class="cell" x="231.0" y="236.8" width="7.0" height="3.1"/>
+<rect class="cell" x="240.0" y="236.8" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="249.0" y="236.8" width="7.0" height="3.1"/>
+<rect class="cell" x="177.0" y="241.2" width="7.0" height="3.1"/>
+<rect class="cell" x="186.0" y="241.2" width="7.0" height="3.1"/>
+<rect class="cell" x="195.0" y="241.2" width="7.0" height="3.1"/>
+<rect class="cell" x="204.0" y="241.2" width="7.0" height="3.1"/>
+<rect class="cell" x="213.0" y="241.2" width="7.0" height="3.1"/>
+<rect class="cell" x="222.0" y="241.2" width="7.0" height="3.1"/>
+<rect class="cell" x="231.0" y="241.2" width="7.0" height="3.1"/>
+<rect class="cell" x="240.0" y="241.2" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="249.0" y="241.2" width="7.0" height="3.1"/>
+<rect class="cell" x="177.0" y="245.6" width="7.0" height="3.1"/>
+<rect class="cell" x="186.0" y="245.6" width="7.0" height="3.1"/>
+<rect class="cell" x="195.0" y="245.6" width="7.0" height="3.1"/>
+<rect class="cell" x="204.0" y="245.6" width="7.0" height="3.1"/>
+<rect class="cell" x="213.0" y="245.6" width="7.0" height="3.1"/>
+<rect class="cell" x="222.0" y="245.6" width="7.0" height="3.1"/>
+<rect class="cell" x="231.0" y="245.6" width="7.0" height="3.1"/>
+<rect class="cell" x="240.0" y="245.6" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="249.0" y="245.6" width="7.0" height="3.1"/>
+<rect class="cell" x="177.0" y="250.0" width="7.0" height="3.1"/>
+<rect class="cell" x="186.0" y="250.0" width="7.0" height="3.1"/>
+<rect class="cell" x="195.0" y="250.0" width="7.0" height="3.1"/>
+<rect class="cell" x="204.0" y="250.0" width="7.0" height="3.1"/>
+<rect class="cell" x="213.0" y="250.0" width="7.0" height="3.1"/>
+<rect class="cell" x="222.0" y="250.0" width="7.0" height="3.1"/>
+<rect class="cell" x="231.0" y="250.0" width="7.0" height="3.1"/>
+<rect class="cell" x="240.0" y="250.0" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="249.0" y="250.0" width="7.0" height="3.1"/>
+<rect class="cell" x="177.0" y="254.4" width="7.0" height="3.1"/>
+<rect class="cell" x="186.0" y="254.4" width="7.0" height="3.1"/>
+<rect class="cell" x="195.0" y="254.4" width="7.0" height="3.1"/>
+<rect class="cell" x="204.0" y="254.4" width="7.0" height="3.1"/>
+<rect class="cell" x="213.0" y="254.4" width="7.0" height="3.1"/>
+<rect class="cell" x="222.0" y="254.4" width="7.0" height="3.1"/>
+<rect class="cell" x="231.0" y="254.4" width="7.0" height="3.1"/>
+<rect class="cell" x="240.0" y="254.4" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="249.0" y="254.4" width="7.0" height="3.1"/>
+<rect class="cell" x="177.0" y="258.8" width="7.0" height="3.1"/>
+<rect class="cell" x="186.0" y="258.8" width="7.0" height="3.1"/>
+<rect class="cell" x="195.0" y="258.8" width="7.0" height="3.1"/>
+<rect class="cell" x="204.0" y="258.8" width="7.0" height="3.1"/>
+<rect class="cell" x="213.0" y="258.8" width="7.0" height="3.1"/>
+<rect class="cell" x="222.0" y="258.8" width="7.0" height="3.1"/>
+<rect class="cell" x="231.0" y="258.8" width="7.0" height="3.1"/>
+<rect class="cell" x="240.0" y="258.8" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="249.0" y="258.8" width="7.0" height="3.1"/>
+<rect class="cell" x="177.0" y="263.2" width="7.0" height="3.1"/>
+<rect class="cell" x="186.0" y="263.2" width="7.0" height="3.1"/>
+<rect class="cell" x="195.0" y="263.2" width="7.0" height="3.1"/>
+<rect class="cell" x="204.0" y="263.2" width="7.0" height="3.1"/>
+<rect class="cell" x="213.0" y="263.2" width="7.0" height="3.1"/>
+<rect class="cell" x="222.0" y="263.2" width="7.0" height="3.1"/>
+<rect class="cell" x="231.0" y="263.2" width="7.0" height="3.1"/>
+<rect class="cell" x="240.0" y="263.2" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="249.0" y="263.2" width="7.0" height="3.1"/>
+<rect class="cell" x="177.0" y="267.6" width="7.0" height="3.1"/>
+<rect class="cell" x="186.0" y="267.6" width="7.0" height="3.1"/>
+<rect class="cell" x="195.0" y="267.6" width="7.0" height="3.1"/>
+<rect class="cell" x="204.0" y="267.6" width="7.0" height="3.1"/>
+<rect class="cell" x="213.0" y="267.6" width="7.0" height="3.1"/>
+<rect class="cell" x="222.0" y="267.6" width="7.0" height="3.1"/>
+<rect class="cell" x="231.0" y="267.6" width="7.0" height="3.1"/>
+<rect class="cell" x="240.0" y="267.6" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="249.0" y="267.6" width="7.0" height="3.1"/>
+<rect class="cell" x="177.0" y="272.0" width="7.0" height="3.1"/>
+<rect class="cell" x="186.0" y="272.0" width="7.0" height="3.1"/>
+<rect class="cell" x="195.0" y="272.0" width="7.0" height="3.1"/>
+<rect class="cell" x="204.0" y="272.0" width="7.0" height="3.1"/>
+<rect class="cell" x="213.0" y="272.0" width="7.0" height="3.1"/>
+<rect class="cell" x="222.0" y="272.0" width="7.0" height="3.1"/>
+<rect class="cell" x="231.0" y="272.0" width="7.0" height="3.1"/>
+<rect class="cell" x="240.0" y="272.0" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="249.0" y="272.0" width="7.0" height="3.1"/>
+<rect class="cell" x="177.0" y="276.4" width="7.0" height="3.1"/>
+<rect class="cell" x="186.0" y="276.4" width="7.0" height="3.1"/>
+<rect class="cell" x="195.0" y="276.4" width="7.0" height="3.1"/>
+<rect class="cell" x="204.0" y="276.4" width="7.0" height="3.1"/>
+<rect class="cell" x="213.0" y="276.4" width="7.0" height="3.1"/>
+<rect class="cell" x="222.0" y="276.4" width="7.0" height="3.1"/>
+<rect class="cell" x="231.0" y="276.4" width="7.0" height="3.1"/>
+<rect class="cell" x="240.0" y="276.4" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="249.0" y="276.4" width="7.0" height="3.1"/>
+<rect class="cell" x="177.0" y="280.8" width="7.0" height="3.1"/>
+<rect class="cell" x="186.0" y="280.8" width="7.0" height="3.1"/>
+<rect class="cell" x="195.0" y="280.8" width="7.0" height="3.1"/>
+<rect class="cell" x="204.0" y="280.8" width="7.0" height="3.1"/>
+<rect class="cell" x="213.0" y="280.8" width="7.0" height="3.1"/>
+<rect class="cell" x="222.0" y="280.8" width="7.0" height="3.1"/>
+<rect class="cell" x="231.0" y="280.8" width="7.0" height="3.1"/>
+<rect class="cell" x="240.0" y="280.8" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="249.0" y="280.8" width="7.0" height="3.1"/>
+<rect class="cell" x="177.0" y="285.2" width="7.0" height="3.1"/>
+<rect class="cell" x="186.0" y="285.2" width="7.0" height="3.1"/>
+<rect class="cell" x="195.0" y="285.2" width="7.0" height="3.1"/>
+<rect class="cell" x="204.0" y="285.2" width="7.0" height="3.1"/>
+<rect class="cell" x="213.0" y="285.2" width="7.0" height="3.1"/>
+<rect class="cell" x="222.0" y="285.2" width="7.0" height="3.1"/>
+<rect class="cell" x="231.0" y="285.2" width="7.0" height="3.1"/>
+<rect class="cell" x="240.0" y="285.2" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="249.0" y="285.2" width="7.0" height="3.1"/>
+<rect class="cell" x="177.0" y="289.6" width="7.0" height="3.1"/>
+<rect class="cell" x="186.0" y="289.6" width="7.0" height="3.1"/>
+<rect class="cell" x="195.0" y="289.6" width="7.0" height="3.1"/>
+<rect class="cell" x="204.0" y="289.6" width="7.0" height="3.1"/>
+<rect class="cell" x="213.0" y="289.6" width="7.0" height="3.1"/>
+<rect class="cell" x="222.0" y="289.6" width="7.0" height="3.1"/>
+<rect class="cell" x="231.0" y="289.6" width="7.0" height="3.1"/>
+<rect class="cell" x="240.0" y="289.6" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="249.0" y="289.6" width="7.0" height="3.1"/>
+<rect class="cell" x="177.0" y="294.0" width="7.0" height="3.1"/>
+<rect class="cell" x="186.0" y="294.0" width="7.0" height="3.1"/>
+<rect class="cell" x="195.0" y="294.0" width="7.0" height="3.1"/>
+<rect class="cell" x="204.0" y="294.0" width="7.0" height="3.1"/>
+<rect class="cell" x="213.0" y="294.0" width="7.0" height="3.1"/>
+<rect class="cell" x="222.0" y="294.0" width="7.0" height="3.1"/>
+<rect class="cell" x="231.0" y="294.0" width="7.0" height="3.1"/>
+<rect class="cell" x="240.0" y="294.0" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="249.0" y="294.0" width="7.0" height="3.1"/>
+<rect class="cell" x="177.0" y="298.4" width="7.0" height="3.1"/>
+<rect class="cell" x="186.0" y="298.4" width="7.0" height="3.1"/>
+<rect class="cell" x="195.0" y="298.4" width="7.0" height="3.1"/>
+<rect class="cell" x="204.0" y="298.4" width="7.0" height="3.1"/>
+<rect class="cell" x="213.0" y="298.4" width="7.0" height="3.1"/>
+<rect class="cell" x="222.0" y="298.4" width="7.0" height="3.1"/>
+<rect class="cell" x="231.0" y="298.4" width="7.0" height="3.1"/>
+<rect class="cell" x="240.0" y="298.4" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="249.0" y="298.4" width="7.0" height="3.1"/>
+<rect class="cell" x="177.0" y="302.8" width="7.0" height="3.1"/>
+<rect class="cell" x="186.0" y="302.8" width="7.0" height="3.1"/>
+<rect class="cell" x="195.0" y="302.8" width="7.0" height="3.1"/>
+<rect class="cell" x="204.0" y="302.8" width="7.0" height="3.1"/>
+<rect class="cell" x="213.0" y="302.8" width="7.0" height="3.1"/>
+<rect class="cell" x="222.0" y="302.8" width="7.0" height="3.1"/>
+<rect class="cell" x="231.0" y="302.8" width="7.0" height="3.1"/>
+<rect class="cell" x="240.0" y="302.8" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="249.0" y="302.8" width="7.0" height="3.1"/>
+<rect class="cell" x="177.0" y="307.2" width="7.0" height="3.1"/>
+<rect class="cell" x="186.0" y="307.2" width="7.0" height="3.1"/>
+<rect class="cell" x="195.0" y="307.2" width="7.0" height="3.1"/>
+<rect class="cell" x="204.0" y="307.2" width="7.0" height="3.1"/>
+<rect class="cell" x="213.0" y="307.2" width="7.0" height="3.1"/>
+<rect class="cell" x="222.0" y="307.2" width="7.0" height="3.1"/>
+<rect class="cell" x="231.0" y="307.2" width="7.0" height="3.1"/>
+<rect class="cell" x="240.0" y="307.2" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="249.0" y="307.2" width="7.0" height="3.1"/>
+<rect class="cell" x="354.0" y="30.0" width="7.0" height="3.1"/>
+<rect class="cell" x="363.0" y="30.0" width="7.0" height="3.1"/>
+<rect class="cell" x="372.0" y="30.0" width="7.0" height="3.1"/>
+<rect class="cell" x="381.0" y="30.0" width="7.0" height="3.1"/>
+<rect class="cell" x="390.0" y="30.0" width="7.0" height="3.1"/>
+<rect class="cell" x="399.0" y="30.0" width="7.0" height="3.1"/>
+<rect class="cell" x="408.0" y="30.0" width="7.0" height="3.1"/>
+<rect class="cell" x="417.0" y="30.0" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="426.0" y="30.0" width="7.0" height="3.1"/>
+<rect class="cell" x="354.0" y="34.4" width="7.0" height="3.1"/>
+<rect class="cell" x="363.0" y="34.4" width="7.0" height="3.1"/>
+<rect class="cell" x="372.0" y="34.4" width="7.0" height="3.1"/>
+<rect class="cell" x="381.0" y="34.4" width="7.0" height="3.1"/>
+<rect class="cell" x="390.0" y="34.4" width="7.0" height="3.1"/>
+<rect class="cell" x="399.0" y="34.4" width="7.0" height="3.1"/>
+<rect class="cell" x="408.0" y="34.4" width="7.0" height="3.1"/>
+<rect class="cell" x="417.0" y="34.4" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="426.0" y="34.4" width="7.0" height="3.1"/>
+<rect class="cell" x="354.0" y="38.8" width="7.0" height="3.1"/>
+<rect class="cell" x="363.0" y="38.8" width="7.0" height="3.1"/>
+<rect class="cell" x="372.0" y="38.8" width="7.0" height="3.1"/>
+<rect class="cell" x="381.0" y="38.8" width="7.0" height="3.1"/>
+<rect class="cell" x="390.0" y="38.8" width="7.0" height="3.1"/>
+<rect class="cell" x="399.0" y="38.8" width="7.0" height="3.1"/>
+<rect class="cell" x="408.0" y="38.8" width="7.0" height="3.1"/>
+<rect class="cell" x="417.0" y="38.8" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="426.0" y="38.8" width="7.0" height="3.1"/>
+<rect class="cell" x="354.0" y="43.2" width="7.0" height="3.1"/>
+<rect class="cell" x="363.0" y="43.2" width="7.0" height="3.1"/>
+<rect class="cell" x="372.0" y="43.2" width="7.0" height="3.1"/>
+<rect class="cell" x="381.0" y="43.2" width="7.0" height="3.1"/>
+<rect class="cell" x="390.0" y="43.2" width="7.0" height="3.1"/>
+<rect class="cell" x="399.0" y="43.2" width="7.0" height="3.1"/>
+<rect class="cell" x="408.0" y="43.2" width="7.0" height="3.1"/>
+<rect class="cell" x="417.0" y="43.2" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="426.0" y="43.2" width="7.0" height="3.1"/>
+<rect class="cell" x="354.0" y="47.6" width="7.0" height="3.1"/>
+<rect class="cell" x="363.0" y="47.6" width="7.0" height="3.1"/>
+<rect class="cell" x="372.0" y="47.6" width="7.0" height="3.1"/>
+<rect class="cell" x="381.0" y="47.6" width="7.0" height="3.1"/>
+<rect class="cell" x="390.0" y="47.6" width="7.0" height="3.1"/>
+<rect class="cell" x="399.0" y="47.6" width="7.0" height="3.1"/>
+<rect class="cell" x="408.0" y="47.6" width="7.0" height="3.1"/>
+<rect class="cell" x="417.0" y="47.6" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="426.0" y="47.6" width="7.0" height="3.1"/>
+<rect class="cell" x="354.0" y="52.0" width="7.0" height="3.1"/>
+<rect class="cell" x="363.0" y="52.0" width="7.0" height="3.1"/>
+<rect class="cell" x="372.0" y="52.0" width="7.0" height="3.1"/>
+<rect class="cell" x="381.0" y="52.0" width="7.0" height="3.1"/>
+<rect class="cell" x="390.0" y="52.0" width="7.0" height="3.1"/>
+<rect class="cell" x="399.0" y="52.0" width="7.0" height="3.1"/>
+<rect class="cell" x="408.0" y="52.0" width="7.0" height="3.1"/>
+<rect class="cell" x="417.0" y="52.0" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="426.0" y="52.0" width="7.0" height="3.1"/>
+<rect class="cell" x="354.0" y="56.4" width="7.0" height="3.1"/>
+<rect class="cell" x="363.0" y="56.4" width="7.0" height="3.1"/>
+<rect class="cell" x="372.0" y="56.4" width="7.0" height="3.1"/>
+<rect class="cell" x="381.0" y="56.4" width="7.0" height="3.1"/>
+<rect class="cell" x="390.0" y="56.4" width="7.0" height="3.1"/>
+<rect class="cell" x="399.0" y="56.4" width="7.0" height="3.1"/>
+<rect class="cell" x="408.0" y="56.4" width="7.0" height="3.1"/>
+<rect class="cell" x="417.0" y="56.4" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="426.0" y="56.4" width="7.0" height="3.1"/>
+<rect class="cell" x="354.0" y="60.8" width="7.0" height="3.1"/>
+<rect class="cell" x="363.0" y="60.8" width="7.0" height="3.1"/>
+<rect class="cell" x="372.0" y="60.8" width="7.0" height="3.1"/>
+<rect class="cell" x="381.0" y="60.8" width="7.0" height="3.1"/>
+<rect class="cell" x="390.0" y="60.8" width="7.0" height="3.1"/>
+<rect class="cell" x="399.0" y="60.8" width="7.0" height="3.1"/>
+<rect class="cell" x="408.0" y="60.8" width="7.0" height="3.1"/>
+<rect class="cell" x="417.0" y="60.8" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="426.0" y="60.8" width="7.0" height="3.1"/>
+<rect class="cell" x="354.0" y="65.2" width="7.0" height="3.1"/>
+<rect class="cell" x="363.0" y="65.2" width="7.0" height="3.1"/>
+<rect class="cell" x="372.0" y="65.2" width="7.0" height="3.1"/>
+<rect class="cell" x="381.0" y="65.2" width="7.0" height="3.1"/>
+<rect class="cell" x="390.0" y="65.2" width="7.0" height="3.1"/>
+<rect class="cell" x="399.0" y="65.2" width="7.0" height="3.1"/>
+<rect class="cell" x="408.0" y="65.2" width="7.0" height="3.1"/>
+<rect class="cell" x="417.0" y="65.2" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="426.0" y="65.2" width="7.0" height="3.1"/>
+<rect class="cell" x="354.0" y="69.6" width="7.0" height="3.1"/>
+<rect class="cell" x="363.0" y="69.6" width="7.0" height="3.1"/>
+<rect class="cell" x="372.0" y="69.6" width="7.0" height="3.1"/>
+<rect class="cell" x="381.0" y="69.6" width="7.0" height="3.1"/>
+<rect class="cell" x="390.0" y="69.6" width="7.0" height="3.1"/>
+<rect class="cell" x="399.0" y="69.6" width="7.0" height="3.1"/>
+<rect class="cell" x="408.0" y="69.6" width="7.0" height="3.1"/>
+<rect class="cell" x="417.0" y="69.6" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="426.0" y="69.6" width="7.0" height="3.1"/>
+<rect class="cell" x="354.0" y="74.0" width="7.0" height="3.1"/>
+<rect class="cell" x="363.0" y="74.0" width="7.0" height="3.1"/>
+<rect class="cell" x="372.0" y="74.0" width="7.0" height="3.1"/>
+<rect class="cell" x="381.0" y="74.0" width="7.0" height="3.1"/>
+<rect class="cell" x="390.0" y="74.0" width="7.0" height="3.1"/>
+<rect class="cell" x="399.0" y="74.0" width="7.0" height="3.1"/>
+<rect class="cell" x="408.0" y="74.0" width="7.0" height="3.1"/>
+<rect class="cell" x="417.0" y="74.0" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="426.0" y="74.0" width="7.0" height="3.1"/>
+<rect class="cell" x="354.0" y="78.4" width="7.0" height="3.1"/>
+<rect class="cell" x="363.0" y="78.4" width="7.0" height="3.1"/>
+<rect class="cell" x="372.0" y="78.4" width="7.0" height="3.1"/>
+<rect class="cell" x="381.0" y="78.4" width="7.0" height="3.1"/>
+<rect class="cell" x="390.0" y="78.4" width="7.0" height="3.1"/>
+<rect class="cell" x="399.0" y="78.4" width="7.0" height="3.1"/>
+<rect class="cell" x="408.0" y="78.4" width="7.0" height="3.1"/>
+<rect class="cell" x="417.0" y="78.4" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="426.0" y="78.4" width="7.0" height="3.1"/>
+<rect class="cell" x="354.0" y="82.8" width="7.0" height="3.1"/>
+<rect class="cell" x="363.0" y="82.8" width="7.0" height="3.1"/>
+<rect class="cell" x="372.0" y="82.8" width="7.0" height="3.1"/>
+<rect class="cell" x="381.0" y="82.8" width="7.0" height="3.1"/>
+<rect class="cell" x="390.0" y="82.8" width="7.0" height="3.1"/>
+<rect class="cell" x="399.0" y="82.8" width="7.0" height="3.1"/>
+<rect class="cell" x="408.0" y="82.8" width="7.0" height="3.1"/>
+<rect class="cell" x="417.0" y="82.8" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="426.0" y="82.8" width="7.0" height="3.1"/>
+<rect class="cell" x="354.0" y="87.2" width="7.0" height="3.1"/>
+<rect class="cell" x="363.0" y="87.2" width="7.0" height="3.1"/>
+<rect class="cell" x="372.0" y="87.2" width="7.0" height="3.1"/>
+<rect class="cell" x="381.0" y="87.2" width="7.0" height="3.1"/>
+<rect class="cell" x="390.0" y="87.2" width="7.0" height="3.1"/>
+<rect class="cell" x="399.0" y="87.2" width="7.0" height="3.1"/>
+<rect class="cell" x="408.0" y="87.2" width="7.0" height="3.1"/>
+<rect class="cell" x="417.0" y="87.2" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="426.0" y="87.2" width="7.0" height="3.1"/>
+<rect class="cell" x="354.0" y="91.6" width="7.0" height="3.1"/>
+<rect class="cell" x="363.0" y="91.6" width="7.0" height="3.1"/>
+<rect class="cell" x="372.0" y="91.6" width="7.0" height="3.1"/>
+<rect class="cell" x="381.0" y="91.6" width="7.0" height="3.1"/>
+<rect class="cell" x="390.0" y="91.6" width="7.0" height="3.1"/>
+<rect class="cell" x="399.0" y="91.6" width="7.0" height="3.1"/>
+<rect class="cell" x="408.0" y="91.6" width="7.0" height="3.1"/>
+<rect class="cell" x="417.0" y="91.6" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="426.0" y="91.6" width="7.0" height="3.1"/>
+<rect class="cell" x="354.0" y="96.0" width="7.0" height="3.1"/>
+<rect class="cell" x="363.0" y="96.0" width="7.0" height="3.1"/>
+<rect class="cell" x="372.0" y="96.0" width="7.0" height="3.1"/>
+<rect class="cell" x="381.0" y="96.0" width="7.0" height="3.1"/>
+<rect class="cell" x="390.0" y="96.0" width="7.0" height="3.1"/>
+<rect class="cell" x="399.0" y="96.0" width="7.0" height="3.1"/>
+<rect class="cell" x="408.0" y="96.0" width="7.0" height="3.1"/>
+<rect class="cell" x="417.0" y="96.0" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="426.0" y="96.0" width="7.0" height="3.1"/>
+<rect class="cell" x="354.0" y="100.4" width="7.0" height="3.1"/>
+<rect class="cell" x="363.0" y="100.4" width="7.0" height="3.1"/>
+<rect class="cell" x="372.0" y="100.4" width="7.0" height="3.1"/>
+<rect class="cell" x="381.0" y="100.4" width="7.0" height="3.1"/>
+<rect class="cell" x="390.0" y="100.4" width="7.0" height="3.1"/>
+<rect class="cell" x="399.0" y="100.4" width="7.0" height="3.1"/>
+<rect class="cell" x="408.0" y="100.4" width="7.0" height="3.1"/>
+<rect class="cell" x="417.0" y="100.4" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="426.0" y="100.4" width="7.0" height="3.1"/>
+<rect class="cell" x="354.0" y="104.8" width="7.0" height="3.1"/>
+<rect class="cell" x="363.0" y="104.8" width="7.0" height="3.1"/>
+<rect class="cell" x="372.0" y="104.8" width="7.0" height="3.1"/>
+<rect class="cell" x="381.0" y="104.8" width="7.0" height="3.1"/>
+<rect class="cell" x="390.0" y="104.8" width="7.0" height="3.1"/>
+<rect class="cell" x="399.0" y="104.8" width="7.0" height="3.1"/>
+<rect class="cell" x="408.0" y="104.8" width="7.0" height="3.1"/>
+<rect class="cell" x="417.0" y="104.8" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="426.0" y="104.8" width="7.0" height="3.1"/>
+<rect class="cell" x="354.0" y="109.2" width="7.0" height="3.1"/>
+<rect class="cell" x="363.0" y="109.2" width="7.0" height="3.1"/>
+<rect class="cell" x="372.0" y="109.2" width="7.0" height="3.1"/>
+<rect class="cell" x="381.0" y="109.2" width="7.0" height="3.1"/>
+<rect class="cell" x="390.0" y="109.2" width="7.0" height="3.1"/>
+<rect class="cell" x="399.0" y="109.2" width="7.0" height="3.1"/>
+<rect class="cell" x="408.0" y="109.2" width="7.0" height="3.1"/>
+<rect class="cell" x="417.0" y="109.2" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="426.0" y="109.2" width="7.0" height="3.1"/>
+<rect class="cell" x="354.0" y="113.6" width="7.0" height="3.1"/>
+<rect class="cell" x="363.0" y="113.6" width="7.0" height="3.1"/>
+<rect class="cell" x="372.0" y="113.6" width="7.0" height="3.1"/>
+<rect class="cell" x="381.0" y="113.6" width="7.0" height="3.1"/>
+<rect class="cell" x="390.0" y="113.6" width="7.0" height="3.1"/>
+<rect class="cell" x="399.0" y="113.6" width="7.0" height="3.1"/>
+<rect class="cell" x="408.0" y="113.6" width="7.0" height="3.1"/>
+<rect class="cell" x="417.0" y="113.6" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="426.0" y="113.6" width="7.0" height="3.1"/>
+<rect class="cell" x="354.0" y="118.0" width="7.0" height="3.1"/>
+<rect class="cell" x="363.0" y="118.0" width="7.0" height="3.1"/>
+<rect class="cell" x="372.0" y="118.0" width="7.0" height="3.1"/>
+<rect class="cell" x="381.0" y="118.0" width="7.0" height="3.1"/>
+<rect class="cell" x="390.0" y="118.0" width="7.0" height="3.1"/>
+<rect class="cell" x="399.0" y="118.0" width="7.0" height="3.1"/>
+<rect class="cell" x="408.0" y="118.0" width="7.0" height="3.1"/>
+<rect class="cell" x="417.0" y="118.0" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="426.0" y="118.0" width="7.0" height="3.1"/>
+<rect class="cell" x="354.0" y="122.4" width="7.0" height="3.1"/>
+<rect class="cell" x="363.0" y="122.4" width="7.0" height="3.1"/>
+<rect class="cell" x="372.0" y="122.4" width="7.0" height="3.1"/>
+<rect class="cell" x="381.0" y="122.4" width="7.0" height="3.1"/>
+<rect class="cell" x="390.0" y="122.4" width="7.0" height="3.1"/>
+<rect class="cell" x="399.0" y="122.4" width="7.0" height="3.1"/>
+<rect class="cell" x="408.0" y="122.4" width="7.0" height="3.1"/>
+<rect class="cell" x="417.0" y="122.4" width="7.0" height="3.1"/>
+<rect class="cell" x="426.0" y="122.4" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="435.0" y="122.4" width="7.0" height="3.1"/>
+<rect class="cell" x="354.0" y="126.8" width="7.0" height="3.1"/>
+<rect class="cell" x="363.0" y="126.8" width="7.0" height="3.1"/>
+<rect class="cell" x="372.0" y="126.8" width="7.0" height="3.1"/>
+<rect class="cell" x="381.0" y="126.8" width="7.0" height="3.1"/>
+<rect class="cell" x="390.0" y="126.8" width="7.0" height="3.1"/>
+<rect class="cell" x="399.0" y="126.8" width="7.0" height="3.1"/>
+<rect class="cell" x="408.0" y="126.8" width="7.0" height="3.1"/>
+<rect class="cell" x="417.0" y="126.8" width="7.0" height="3.1"/>
+<rect class="cell" x="426.0" y="126.8" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="435.0" y="126.8" width="7.0" height="3.1"/>
+<rect class="cell" x="354.0" y="131.2" width="7.0" height="3.1"/>
+<rect class="cell" x="363.0" y="131.2" width="7.0" height="3.1"/>
+<rect class="cell" x="372.0" y="131.2" width="7.0" height="3.1"/>
+<rect class="cell" x="381.0" y="131.2" width="7.0" height="3.1"/>
+<rect class="cell" x="390.0" y="131.2" width="7.0" height="3.1"/>
+<rect class="cell" x="399.0" y="131.2" width="7.0" height="3.1"/>
+<rect class="cell" x="408.0" y="131.2" width="7.0" height="3.1"/>
+<rect class="cell" x="417.0" y="131.2" width="7.0" height="3.1"/>
+<rect class="cell" x="426.0" y="131.2" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="435.0" y="131.2" width="7.0" height="3.1"/>
+<rect class="cell" x="354.0" y="135.6" width="7.0" height="3.1"/>
+<rect class="cell" x="363.0" y="135.6" width="7.0" height="3.1"/>
+<rect class="cell" x="372.0" y="135.6" width="7.0" height="3.1"/>
+<rect class="cell" x="381.0" y="135.6" width="7.0" height="3.1"/>
+<rect class="cell" x="390.0" y="135.6" width="7.0" height="3.1"/>
+<rect class="cell" x="399.0" y="135.6" width="7.0" height="3.1"/>
+<rect class="cell" x="408.0" y="135.6" width="7.0" height="3.1"/>
+<rect class="cell" x="417.0" y="135.6" width="7.0" height="3.1"/>
+<rect class="cell" x="426.0" y="135.6" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="435.0" y="135.6" width="7.0" height="3.1"/>
+<rect class="cell" x="354.0" y="140.0" width="7.0" height="3.1"/>
+<rect class="cell" x="363.0" y="140.0" width="7.0" height="3.1"/>
+<rect class="cell" x="372.0" y="140.0" width="7.0" height="3.1"/>
+<rect class="cell" x="381.0" y="140.0" width="7.0" height="3.1"/>
+<rect class="cell" x="390.0" y="140.0" width="7.0" height="3.1"/>
+<rect class="cell" x="399.0" y="140.0" width="7.0" height="3.1"/>
+<rect class="cell" x="408.0" y="140.0" width="7.0" height="3.1"/>
+<rect class="cell" x="417.0" y="140.0" width="7.0" height="3.1"/>
+<rect class="cell" x="426.0" y="140.0" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="435.0" y="140.0" width="7.0" height="3.1"/>
+<rect class="cell" x="354.0" y="144.4" width="7.0" height="3.1"/>
+<rect class="cell" x="363.0" y="144.4" width="7.0" height="3.1"/>
+<rect class="cell" x="372.0" y="144.4" width="7.0" height="3.1"/>
+<rect class="cell" x="381.0" y="144.4" width="7.0" height="3.1"/>
+<rect class="cell" x="390.0" y="144.4" width="7.0" height="3.1"/>
+<rect class="cell" x="399.0" y="144.4" width="7.0" height="3.1"/>
+<rect class="cell" x="408.0" y="144.4" width="7.0" height="3.1"/>
+<rect class="cell" x="417.0" y="144.4" width="7.0" height="3.1"/>
+<rect class="cell" x="426.0" y="144.4" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="435.0" y="144.4" width="7.0" height="3.1"/>
+<rect class="cell" x="354.0" y="148.8" width="7.0" height="3.1"/>
+<rect class="cell" x="363.0" y="148.8" width="7.0" height="3.1"/>
+<rect class="cell" x="372.0" y="148.8" width="7.0" height="3.1"/>
+<rect class="cell" x="381.0" y="148.8" width="7.0" height="3.1"/>
+<rect class="cell" x="390.0" y="148.8" width="7.0" height="3.1"/>
+<rect class="cell" x="399.0" y="148.8" width="7.0" height="3.1"/>
+<rect class="cell" x="408.0" y="148.8" width="7.0" height="3.1"/>
+<rect class="cell" x="417.0" y="148.8" width="7.0" height="3.1"/>
+<rect class="cell" x="426.0" y="148.8" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="435.0" y="148.8" width="7.0" height="3.1"/>
+<rect class="cell" x="354.0" y="153.2" width="7.0" height="3.1"/>
+<rect class="cell" x="363.0" y="153.2" width="7.0" height="3.1"/>
+<rect class="cell" x="372.0" y="153.2" width="7.0" height="3.1"/>
+<rect class="cell" x="381.0" y="153.2" width="7.0" height="3.1"/>
+<rect class="cell" x="390.0" y="153.2" width="7.0" height="3.1"/>
+<rect class="cell" x="399.0" y="153.2" width="7.0" height="3.1"/>
+<rect class="cell" x="408.0" y="153.2" width="7.0" height="3.1"/>
+<rect class="cell" x="417.0" y="153.2" width="7.0" height="3.1"/>
+<rect class="cell" x="426.0" y="153.2" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="435.0" y="153.2" width="7.0" height="3.1"/>
+<rect class="cell" x="354.0" y="157.6" width="7.0" height="3.1"/>
+<rect class="cell" x="363.0" y="157.6" width="7.0" height="3.1"/>
+<rect class="cell" x="372.0" y="157.6" width="7.0" height="3.1"/>
+<rect class="cell" x="381.0" y="157.6" width="7.0" height="3.1"/>
+<rect class="cell" x="390.0" y="157.6" width="7.0" height="3.1"/>
+<rect class="cell" x="399.0" y="157.6" width="7.0" height="3.1"/>
+<rect class="cell" x="408.0" y="157.6" width="7.0" height="3.1"/>
+<rect class="cell" x="417.0" y="157.6" width="7.0" height="3.1"/>
+<rect class="cell" x="426.0" y="157.6" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="435.0" y="157.6" width="7.0" height="3.1"/>
+<rect class="cell" x="354.0" y="162.0" width="7.0" height="3.1"/>
+<rect class="cell" x="363.0" y="162.0" width="7.0" height="3.1"/>
+<rect class="cell" x="372.0" y="162.0" width="7.0" height="3.1"/>
+<rect class="cell" x="381.0" y="162.0" width="7.0" height="3.1"/>
+<rect class="cell" x="390.0" y="162.0" width="7.0" height="3.1"/>
+<rect class="cell" x="399.0" y="162.0" width="7.0" height="3.1"/>
+<rect class="cell" x="408.0" y="162.0" width="7.0" height="3.1"/>
+<rect class="cell" x="417.0" y="162.0" width="7.0" height="3.1"/>
+<rect class="cell" x="426.0" y="162.0" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="435.0" y="162.0" width="7.0" height="3.1"/>
+<rect class="cell" x="354.0" y="166.4" width="7.0" height="3.1"/>
+<rect class="cell" x="363.0" y="166.4" width="7.0" height="3.1"/>
+<rect class="cell" x="372.0" y="166.4" width="7.0" height="3.1"/>
+<rect class="cell" x="381.0" y="166.4" width="7.0" height="3.1"/>
+<rect class="cell" x="390.0" y="166.4" width="7.0" height="3.1"/>
+<rect class="cell" x="399.0" y="166.4" width="7.0" height="3.1"/>
+<rect class="cell" x="408.0" y="166.4" width="7.0" height="3.1"/>
+<rect class="cell" x="417.0" y="166.4" width="7.0" height="3.1"/>
+<rect class="cell" x="426.0" y="166.4" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="435.0" y="166.4" width="7.0" height="3.1"/>
+<rect class="cell" x="354.0" y="170.8" width="7.0" height="3.1"/>
+<rect class="cell" x="363.0" y="170.8" width="7.0" height="3.1"/>
+<rect class="cell" x="372.0" y="170.8" width="7.0" height="3.1"/>
+<rect class="cell" x="381.0" y="170.8" width="7.0" height="3.1"/>
+<rect class="cell" x="390.0" y="170.8" width="7.0" height="3.1"/>
+<rect class="cell" x="399.0" y="170.8" width="7.0" height="3.1"/>
+<rect class="cell" x="408.0" y="170.8" width="7.0" height="3.1"/>
+<rect class="cell" x="417.0" y="170.8" width="7.0" height="3.1"/>
+<rect class="cell" x="426.0" y="170.8" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="435.0" y="170.8" width="7.0" height="3.1"/>
+<rect class="cell" x="354.0" y="175.2" width="7.0" height="3.1"/>
+<rect class="cell" x="363.0" y="175.2" width="7.0" height="3.1"/>
+<rect class="cell" x="372.0" y="175.2" width="7.0" height="3.1"/>
+<rect class="cell" x="381.0" y="175.2" width="7.0" height="3.1"/>
+<rect class="cell" x="390.0" y="175.2" width="7.0" height="3.1"/>
+<rect class="cell" x="399.0" y="175.2" width="7.0" height="3.1"/>
+<rect class="cell" x="408.0" y="175.2" width="7.0" height="3.1"/>
+<rect class="cell" x="417.0" y="175.2" width="7.0" height="3.1"/>
+<rect class="cell" x="426.0" y="175.2" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="435.0" y="175.2" width="7.0" height="3.1"/>
+<rect class="cell" x="354.0" y="179.6" width="7.0" height="3.1"/>
+<rect class="cell" x="363.0" y="179.6" width="7.0" height="3.1"/>
+<rect class="cell" x="372.0" y="179.6" width="7.0" height="3.1"/>
+<rect class="cell" x="381.0" y="179.6" width="7.0" height="3.1"/>
+<rect class="cell" x="390.0" y="179.6" width="7.0" height="3.1"/>
+<rect class="cell" x="399.0" y="179.6" width="7.0" height="3.1"/>
+<rect class="cell" x="408.0" y="179.6" width="7.0" height="3.1"/>
+<rect class="cell" x="417.0" y="179.6" width="7.0" height="3.1"/>
+<rect class="cell" x="426.0" y="179.6" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="435.0" y="179.6" width="7.0" height="3.1"/>
+<rect class="cell" x="354.0" y="184.0" width="7.0" height="3.1"/>
+<rect class="cell" x="363.0" y="184.0" width="7.0" height="3.1"/>
+<rect class="cell" x="372.0" y="184.0" width="7.0" height="3.1"/>
+<rect class="cell" x="381.0" y="184.0" width="7.0" height="3.1"/>
+<rect class="cell" x="390.0" y="184.0" width="7.0" height="3.1"/>
+<rect class="cell" x="399.0" y="184.0" width="7.0" height="3.1"/>
+<rect class="cell" x="408.0" y="184.0" width="7.0" height="3.1"/>
+<rect class="cell" x="417.0" y="184.0" width="7.0" height="3.1"/>
+<rect class="cell" x="426.0" y="184.0" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="435.0" y="184.0" width="7.0" height="3.1"/>
+<rect class="cell" x="354.0" y="188.4" width="7.0" height="3.1"/>
+<rect class="cell" x="363.0" y="188.4" width="7.0" height="3.1"/>
+<rect class="cell" x="372.0" y="188.4" width="7.0" height="3.1"/>
+<rect class="cell" x="381.0" y="188.4" width="7.0" height="3.1"/>
+<rect class="cell" x="390.0" y="188.4" width="7.0" height="3.1"/>
+<rect class="cell" x="399.0" y="188.4" width="7.0" height="3.1"/>
+<rect class="cell" x="408.0" y="188.4" width="7.0" height="3.1"/>
+<rect class="cell" x="417.0" y="188.4" width="7.0" height="3.1"/>
+<rect class="cell" x="426.0" y="188.4" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="435.0" y="188.4" width="7.0" height="3.1"/>
+<rect class="cell" x="354.0" y="192.8" width="7.0" height="3.1"/>
+<rect class="cell" x="363.0" y="192.8" width="7.0" height="3.1"/>
+<rect class="cell" x="372.0" y="192.8" width="7.0" height="3.1"/>
+<rect class="cell" x="381.0" y="192.8" width="7.0" height="3.1"/>
+<rect class="cell" x="390.0" y="192.8" width="7.0" height="3.1"/>
+<rect class="cell" x="399.0" y="192.8" width="7.0" height="3.1"/>
+<rect class="cell" x="408.0" y="192.8" width="7.0" height="3.1"/>
+<rect class="cell" x="417.0" y="192.8" width="7.0" height="3.1"/>
+<rect class="cell" x="426.0" y="192.8" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="435.0" y="192.8" width="7.0" height="3.1"/>
+<rect class="cell" x="354.0" y="197.2" width="7.0" height="3.1"/>
+<rect class="cell" x="363.0" y="197.2" width="7.0" height="3.1"/>
+<rect class="cell" x="372.0" y="197.2" width="7.0" height="3.1"/>
+<rect class="cell" x="381.0" y="197.2" width="7.0" height="3.1"/>
+<rect class="cell" x="390.0" y="197.2" width="7.0" height="3.1"/>
+<rect class="cell" x="399.0" y="197.2" width="7.0" height="3.1"/>
+<rect class="cell" x="408.0" y="197.2" width="7.0" height="3.1"/>
+<rect class="cell" x="417.0" y="197.2" width="7.0" height="3.1"/>
+<rect class="cell" x="426.0" y="197.2" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="435.0" y="197.2" width="7.0" height="3.1"/>
+<rect class="cell" x="354.0" y="201.6" width="7.0" height="3.1"/>
+<rect class="cell" x="363.0" y="201.6" width="7.0" height="3.1"/>
+<rect class="cell" x="372.0" y="201.6" width="7.0" height="3.1"/>
+<rect class="cell" x="381.0" y="201.6" width="7.0" height="3.1"/>
+<rect class="cell" x="390.0" y="201.6" width="7.0" height="3.1"/>
+<rect class="cell" x="399.0" y="201.6" width="7.0" height="3.1"/>
+<rect class="cell" x="408.0" y="201.6" width="7.0" height="3.1"/>
+<rect class="cell" x="417.0" y="201.6" width="7.0" height="3.1"/>
+<rect class="cell" x="426.0" y="201.6" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="435.0" y="201.6" width="7.0" height="3.1"/>
+<rect class="cell" x="354.0" y="206.0" width="7.0" height="3.1"/>
+<rect class="cell" x="363.0" y="206.0" width="7.0" height="3.1"/>
+<rect class="cell" x="372.0" y="206.0" width="7.0" height="3.1"/>
+<rect class="cell" x="381.0" y="206.0" width="7.0" height="3.1"/>
+<rect class="cell" x="390.0" y="206.0" width="7.0" height="3.1"/>
+<rect class="cell" x="399.0" y="206.0" width="7.0" height="3.1"/>
+<rect class="cell" x="408.0" y="206.0" width="7.0" height="3.1"/>
+<rect class="cell" x="417.0" y="206.0" width="7.0" height="3.1"/>
+<rect class="cell" x="426.0" y="206.0" width="7.0" height="3.1"/>
+<rect class="cell-off" x="435.0" y="206.0" width="7.0" height="3.1"/>
+<rect class="cell" x="444.0" y="206.0" width="7.0" height="3.1"/>
+<rect class="cell" x="354.0" y="210.4" width="7.0" height="3.1"/>
+<rect class="cell" x="363.0" y="210.4" width="7.0" height="3.1"/>
+<rect class="cell" x="372.0" y="210.4" width="7.0" height="3.1"/>
+<rect class="cell" x="381.0" y="210.4" width="7.0" height="3.1"/>
+<rect class="cell" x="390.0" y="210.4" width="7.0" height="3.1"/>
+<rect class="cell" x="399.0" y="210.4" width="7.0" height="3.1"/>
+<rect class="cell" x="408.0" y="210.4" width="7.0" height="3.1"/>
+<rect class="cell" x="417.0" y="210.4" width="7.0" height="3.1"/>
+<rect class="cell" x="426.0" y="210.4" width="7.0" height="3.1"/>
+<rect class="cell" x="435.0" y="210.4" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="444.0" y="210.4" width="7.0" height="3.1"/>
+<rect class="cell" x="354.0" y="214.8" width="7.0" height="3.1"/>
+<rect class="cell" x="363.0" y="214.8" width="7.0" height="3.1"/>
+<rect class="cell" x="372.0" y="214.8" width="7.0" height="3.1"/>
+<rect class="cell" x="381.0" y="214.8" width="7.0" height="3.1"/>
+<rect class="cell" x="390.0" y="214.8" width="7.0" height="3.1"/>
+<rect class="cell" x="399.0" y="214.8" width="7.0" height="3.1"/>
+<rect class="cell" x="408.0" y="214.8" width="7.0" height="3.1"/>
+<rect class="cell" x="417.0" y="214.8" width="7.0" height="3.1"/>
+<rect class="cell" x="426.0" y="214.8" width="7.0" height="3.1"/>
+<rect class="cell" x="435.0" y="214.8" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="444.0" y="214.8" width="7.0" height="3.1"/>
+<rect class="cell" x="354.0" y="219.2" width="7.0" height="3.1"/>
+<rect class="cell" x="363.0" y="219.2" width="7.0" height="3.1"/>
+<rect class="cell" x="372.0" y="219.2" width="7.0" height="3.1"/>
+<rect class="cell" x="381.0" y="219.2" width="7.0" height="3.1"/>
+<rect class="cell" x="390.0" y="219.2" width="7.0" height="3.1"/>
+<rect class="cell" x="399.0" y="219.2" width="7.0" height="3.1"/>
+<rect class="cell" x="408.0" y="219.2" width="7.0" height="3.1"/>
+<rect class="cell" x="417.0" y="219.2" width="7.0" height="3.1"/>
+<rect class="cell" x="426.0" y="219.2" width="7.0" height="3.1"/>
+<rect class="cell" x="435.0" y="219.2" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="444.0" y="219.2" width="7.0" height="3.1"/>
+<rect class="cell" x="354.0" y="223.6" width="7.0" height="3.1"/>
+<rect class="cell" x="363.0" y="223.6" width="7.0" height="3.1"/>
+<rect class="cell" x="372.0" y="223.6" width="7.0" height="3.1"/>
+<rect class="cell" x="381.0" y="223.6" width="7.0" height="3.1"/>
+<rect class="cell" x="390.0" y="223.6" width="7.0" height="3.1"/>
+<rect class="cell" x="399.0" y="223.6" width="7.0" height="3.1"/>
+<rect class="cell" x="408.0" y="223.6" width="7.0" height="3.1"/>
+<rect class="cell" x="417.0" y="223.6" width="7.0" height="3.1"/>
+<rect class="cell" x="426.0" y="223.6" width="7.0" height="3.1"/>
+<rect class="cell" x="435.0" y="223.6" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="444.0" y="223.6" width="7.0" height="3.1"/>
+<rect class="cell" x="354.0" y="228.0" width="7.0" height="3.1"/>
+<rect class="cell" x="363.0" y="228.0" width="7.0" height="3.1"/>
+<rect class="cell" x="372.0" y="228.0" width="7.0" height="3.1"/>
+<rect class="cell" x="381.0" y="228.0" width="7.0" height="3.1"/>
+<rect class="cell" x="390.0" y="228.0" width="7.0" height="3.1"/>
+<rect class="cell" x="399.0" y="228.0" width="7.0" height="3.1"/>
+<rect class="cell" x="408.0" y="228.0" width="7.0" height="3.1"/>
+<rect class="cell" x="417.0" y="228.0" width="7.0" height="3.1"/>
+<rect class="cell" x="426.0" y="228.0" width="7.0" height="3.1"/>
+<rect class="cell" x="435.0" y="228.0" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="444.0" y="228.0" width="7.0" height="3.1"/>
+<rect class="cell" x="354.0" y="232.4" width="7.0" height="3.1"/>
+<rect class="cell" x="363.0" y="232.4" width="7.0" height="3.1"/>
+<rect class="cell" x="372.0" y="232.4" width="7.0" height="3.1"/>
+<rect class="cell" x="381.0" y="232.4" width="7.0" height="3.1"/>
+<rect class="cell" x="390.0" y="232.4" width="7.0" height="3.1"/>
+<rect class="cell" x="399.0" y="232.4" width="7.0" height="3.1"/>
+<rect class="cell" x="408.0" y="232.4" width="7.0" height="3.1"/>
+<rect class="cell" x="417.0" y="232.4" width="7.0" height="3.1"/>
+<rect class="cell" x="426.0" y="232.4" width="7.0" height="3.1"/>
+<rect class="cell" x="435.0" y="232.4" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="444.0" y="232.4" width="7.0" height="3.1"/>
+<rect class="cell" x="354.0" y="236.8" width="7.0" height="3.1"/>
+<rect class="cell" x="363.0" y="236.8" width="7.0" height="3.1"/>
+<rect class="cell" x="372.0" y="236.8" width="7.0" height="3.1"/>
+<rect class="cell" x="381.0" y="236.8" width="7.0" height="3.1"/>
+<rect class="cell" x="390.0" y="236.8" width="7.0" height="3.1"/>
+<rect class="cell" x="399.0" y="236.8" width="7.0" height="3.1"/>
+<rect class="cell" x="408.0" y="236.8" width="7.0" height="3.1"/>
+<rect class="cell" x="417.0" y="236.8" width="7.0" height="3.1"/>
+<rect class="cell" x="426.0" y="236.8" width="7.0" height="3.1"/>
+<rect class="cell" x="435.0" y="236.8" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="444.0" y="236.8" width="7.0" height="3.1"/>
+<rect class="cell" x="354.0" y="241.2" width="7.0" height="3.1"/>
+<rect class="cell" x="363.0" y="241.2" width="7.0" height="3.1"/>
+<rect class="cell" x="372.0" y="241.2" width="7.0" height="3.1"/>
+<rect class="cell" x="381.0" y="241.2" width="7.0" height="3.1"/>
+<rect class="cell" x="390.0" y="241.2" width="7.0" height="3.1"/>
+<rect class="cell" x="399.0" y="241.2" width="7.0" height="3.1"/>
+<rect class="cell" x="408.0" y="241.2" width="7.0" height="3.1"/>
+<rect class="cell" x="417.0" y="241.2" width="7.0" height="3.1"/>
+<rect class="cell" x="426.0" y="241.2" width="7.0" height="3.1"/>
+<rect class="cell" x="435.0" y="241.2" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="444.0" y="241.2" width="7.0" height="3.1"/>
+<rect class="cell" x="354.0" y="245.6" width="7.0" height="3.1"/>
+<rect class="cell" x="363.0" y="245.6" width="7.0" height="3.1"/>
+<rect class="cell" x="372.0" y="245.6" width="7.0" height="3.1"/>
+<rect class="cell" x="381.0" y="245.6" width="7.0" height="3.1"/>
+<rect class="cell" x="390.0" y="245.6" width="7.0" height="3.1"/>
+<rect class="cell" x="399.0" y="245.6" width="7.0" height="3.1"/>
+<rect class="cell" x="408.0" y="245.6" width="7.0" height="3.1"/>
+<rect class="cell" x="417.0" y="245.6" width="7.0" height="3.1"/>
+<rect class="cell" x="426.0" y="245.6" width="7.0" height="3.1"/>
+<rect class="cell" x="435.0" y="245.6" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="444.0" y="245.6" width="7.0" height="3.1"/>
+<rect class="cell" x="354.0" y="250.0" width="7.0" height="3.1"/>
+<rect class="cell" x="363.0" y="250.0" width="7.0" height="3.1"/>
+<rect class="cell" x="372.0" y="250.0" width="7.0" height="3.1"/>
+<rect class="cell" x="381.0" y="250.0" width="7.0" height="3.1"/>
+<rect class="cell" x="390.0" y="250.0" width="7.0" height="3.1"/>
+<rect class="cell" x="399.0" y="250.0" width="7.0" height="3.1"/>
+<rect class="cell" x="408.0" y="250.0" width="7.0" height="3.1"/>
+<rect class="cell" x="417.0" y="250.0" width="7.0" height="3.1"/>
+<rect class="cell" x="426.0" y="250.0" width="7.0" height="3.1"/>
+<rect class="cell" x="435.0" y="250.0" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="444.0" y="250.0" width="7.0" height="3.1"/>
+<rect class="cell" x="354.0" y="254.4" width="7.0" height="3.1"/>
+<rect class="cell" x="363.0" y="254.4" width="7.0" height="3.1"/>
+<rect class="cell" x="372.0" y="254.4" width="7.0" height="3.1"/>
+<rect class="cell" x="381.0" y="254.4" width="7.0" height="3.1"/>
+<rect class="cell" x="390.0" y="254.4" width="7.0" height="3.1"/>
+<rect class="cell" x="399.0" y="254.4" width="7.0" height="3.1"/>
+<rect class="cell" x="408.0" y="254.4" width="7.0" height="3.1"/>
+<rect class="cell" x="417.0" y="254.4" width="7.0" height="3.1"/>
+<rect class="cell" x="426.0" y="254.4" width="7.0" height="3.1"/>
+<rect class="cell" x="435.0" y="254.4" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="444.0" y="254.4" width="7.0" height="3.1"/>
+<rect class="cell" x="354.0" y="258.8" width="7.0" height="3.1"/>
+<rect class="cell" x="363.0" y="258.8" width="7.0" height="3.1"/>
+<rect class="cell" x="372.0" y="258.8" width="7.0" height="3.1"/>
+<rect class="cell" x="381.0" y="258.8" width="7.0" height="3.1"/>
+<rect class="cell" x="390.0" y="258.8" width="7.0" height="3.1"/>
+<rect class="cell" x="399.0" y="258.8" width="7.0" height="3.1"/>
+<rect class="cell" x="408.0" y="258.8" width="7.0" height="3.1"/>
+<rect class="cell" x="417.0" y="258.8" width="7.0" height="3.1"/>
+<rect class="cell" x="426.0" y="258.8" width="7.0" height="3.1"/>
+<rect class="cell" x="435.0" y="258.8" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="444.0" y="258.8" width="7.0" height="3.1"/>
+<rect class="cell" x="354.0" y="263.2" width="7.0" height="3.1"/>
+<rect class="cell" x="363.0" y="263.2" width="7.0" height="3.1"/>
+<rect class="cell" x="372.0" y="263.2" width="7.0" height="3.1"/>
+<rect class="cell" x="381.0" y="263.2" width="7.0" height="3.1"/>
+<rect class="cell" x="390.0" y="263.2" width="7.0" height="3.1"/>
+<rect class="cell" x="399.0" y="263.2" width="7.0" height="3.1"/>
+<rect class="cell" x="408.0" y="263.2" width="7.0" height="3.1"/>
+<rect class="cell" x="417.0" y="263.2" width="7.0" height="3.1"/>
+<rect class="cell" x="426.0" y="263.2" width="7.0" height="3.1"/>
+<rect class="cell" x="435.0" y="263.2" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="444.0" y="263.2" width="7.0" height="3.1"/>
+<rect class="cell" x="354.0" y="267.6" width="7.0" height="3.1"/>
+<rect class="cell" x="363.0" y="267.6" width="7.0" height="3.1"/>
+<rect class="cell" x="372.0" y="267.6" width="7.0" height="3.1"/>
+<rect class="cell" x="381.0" y="267.6" width="7.0" height="3.1"/>
+<rect class="cell" x="390.0" y="267.6" width="7.0" height="3.1"/>
+<rect class="cell" x="399.0" y="267.6" width="7.0" height="3.1"/>
+<rect class="cell" x="408.0" y="267.6" width="7.0" height="3.1"/>
+<rect class="cell" x="417.0" y="267.6" width="7.0" height="3.1"/>
+<rect class="cell" x="426.0" y="267.6" width="7.0" height="3.1"/>
+<rect class="cell" x="435.0" y="267.6" width="7.0" height="3.1"/>
+<rect class="cell" x="444.0" y="267.6" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="453.0" y="267.6" width="7.0" height="3.1"/>
+<rect class="cell" x="354.0" y="272.0" width="7.0" height="3.1"/>
+<rect class="cell" x="363.0" y="272.0" width="7.0" height="3.1"/>
+<rect class="cell" x="372.0" y="272.0" width="7.0" height="3.1"/>
+<rect class="cell" x="381.0" y="272.0" width="7.0" height="3.1"/>
+<rect class="cell" x="390.0" y="272.0" width="7.0" height="3.1"/>
+<rect class="cell" x="399.0" y="272.0" width="7.0" height="3.1"/>
+<rect class="cell" x="408.0" y="272.0" width="7.0" height="3.1"/>
+<rect class="cell" x="417.0" y="272.0" width="7.0" height="3.1"/>
+<rect class="cell" x="426.0" y="272.0" width="7.0" height="3.1"/>
+<rect class="cell" x="435.0" y="272.0" width="7.0" height="3.1"/>
+<rect class="cell" x="444.0" y="272.0" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="453.0" y="272.0" width="7.0" height="3.1"/>
+<rect class="cell" x="354.0" y="276.4" width="7.0" height="3.1"/>
+<rect class="cell" x="363.0" y="276.4" width="7.0" height="3.1"/>
+<rect class="cell" x="372.0" y="276.4" width="7.0" height="3.1"/>
+<rect class="cell" x="381.0" y="276.4" width="7.0" height="3.1"/>
+<rect class="cell" x="390.0" y="276.4" width="7.0" height="3.1"/>
+<rect class="cell" x="399.0" y="276.4" width="7.0" height="3.1"/>
+<rect class="cell" x="408.0" y="276.4" width="7.0" height="3.1"/>
+<rect class="cell" x="417.0" y="276.4" width="7.0" height="3.1"/>
+<rect class="cell" x="426.0" y="276.4" width="7.0" height="3.1"/>
+<rect class="cell" x="435.0" y="276.4" width="7.0" height="3.1"/>
+<rect class="cell" x="444.0" y="276.4" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="453.0" y="276.4" width="7.0" height="3.1"/>
+<rect class="cell" x="354.0" y="280.8" width="7.0" height="3.1"/>
+<rect class="cell" x="363.0" y="280.8" width="7.0" height="3.1"/>
+<rect class="cell" x="372.0" y="280.8" width="7.0" height="3.1"/>
+<rect class="cell" x="381.0" y="280.8" width="7.0" height="3.1"/>
+<rect class="cell" x="390.0" y="280.8" width="7.0" height="3.1"/>
+<rect class="cell" x="399.0" y="280.8" width="7.0" height="3.1"/>
+<rect class="cell" x="408.0" y="280.8" width="7.0" height="3.1"/>
+<rect class="cell" x="417.0" y="280.8" width="7.0" height="3.1"/>
+<rect class="cell" x="426.0" y="280.8" width="7.0" height="3.1"/>
+<rect class="cell" x="435.0" y="280.8" width="7.0" height="3.1"/>
+<rect class="cell" x="444.0" y="280.8" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="453.0" y="280.8" width="7.0" height="3.1"/>
+<rect class="cell" x="354.0" y="285.2" width="7.0" height="3.1"/>
+<rect class="cell" x="363.0" y="285.2" width="7.0" height="3.1"/>
+<rect class="cell" x="372.0" y="285.2" width="7.0" height="3.1"/>
+<rect class="cell" x="381.0" y="285.2" width="7.0" height="3.1"/>
+<rect class="cell" x="390.0" y="285.2" width="7.0" height="3.1"/>
+<rect class="cell" x="399.0" y="285.2" width="7.0" height="3.1"/>
+<rect class="cell" x="408.0" y="285.2" width="7.0" height="3.1"/>
+<rect class="cell" x="417.0" y="285.2" width="7.0" height="3.1"/>
+<rect class="cell" x="426.0" y="285.2" width="7.0" height="3.1"/>
+<rect class="cell" x="435.0" y="285.2" width="7.0" height="3.1"/>
+<rect class="cell" x="444.0" y="285.2" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="453.0" y="285.2" width="7.0" height="3.1"/>
+<rect class="cell" x="354.0" y="289.6" width="7.0" height="3.1"/>
+<rect class="cell" x="363.0" y="289.6" width="7.0" height="3.1"/>
+<rect class="cell" x="372.0" y="289.6" width="7.0" height="3.1"/>
+<rect class="cell" x="381.0" y="289.6" width="7.0" height="3.1"/>
+<rect class="cell" x="390.0" y="289.6" width="7.0" height="3.1"/>
+<rect class="cell" x="399.0" y="289.6" width="7.0" height="3.1"/>
+<rect class="cell" x="408.0" y="289.6" width="7.0" height="3.1"/>
+<rect class="cell" x="417.0" y="289.6" width="7.0" height="3.1"/>
+<rect class="cell" x="426.0" y="289.6" width="7.0" height="3.1"/>
+<rect class="cell" x="435.0" y="289.6" width="7.0" height="3.1"/>
+<rect class="cell" x="444.0" y="289.6" width="7.0" height="3.1"/>
+<rect class="cell" x="453.0" y="289.6" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="462.0" y="289.6" width="7.0" height="3.1"/>
+<rect class="cell" x="354.0" y="294.0" width="7.0" height="3.1"/>
+<rect class="cell" x="363.0" y="294.0" width="7.0" height="3.1"/>
+<rect class="cell" x="372.0" y="294.0" width="7.0" height="3.1"/>
+<rect class="cell" x="381.0" y="294.0" width="7.0" height="3.1"/>
+<rect class="cell" x="390.0" y="294.0" width="7.0" height="3.1"/>
+<rect class="cell" x="399.0" y="294.0" width="7.0" height="3.1"/>
+<rect class="cell" x="408.0" y="294.0" width="7.0" height="3.1"/>
+<rect class="cell" x="417.0" y="294.0" width="7.0" height="3.1"/>
+<rect class="cell" x="426.0" y="294.0" width="7.0" height="3.1"/>
+<rect class="cell" x="435.0" y="294.0" width="7.0" height="3.1"/>
+<rect class="cell" x="444.0" y="294.0" width="7.0" height="3.1"/>
+<rect class="cell" x="453.0" y="294.0" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="462.0" y="294.0" width="7.0" height="3.1"/>
+<rect class="cell" x="354.0" y="298.4" width="7.0" height="3.1"/>
+<rect class="cell" x="363.0" y="298.4" width="7.0" height="3.1"/>
+<rect class="cell" x="372.0" y="298.4" width="7.0" height="3.1"/>
+<rect class="cell" x="381.0" y="298.4" width="7.0" height="3.1"/>
+<rect class="cell" x="390.0" y="298.4" width="7.0" height="3.1"/>
+<rect class="cell" x="399.0" y="298.4" width="7.0" height="3.1"/>
+<rect class="cell" x="408.0" y="298.4" width="7.0" height="3.1"/>
+<rect class="cell" x="417.0" y="298.4" width="7.0" height="3.1"/>
+<rect class="cell" x="426.0" y="298.4" width="7.0" height="3.1"/>
+<rect class="cell" x="435.0" y="298.4" width="7.0" height="3.1"/>
+<rect class="cell" x="444.0" y="298.4" width="7.0" height="3.1"/>
+<rect class="cell" x="453.0" y="298.4" width="7.0" height="3.1"/>
+<rect class="cell" x="462.0" y="298.4" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="471.0" y="298.4" width="7.0" height="3.1"/>
+<rect class="cell" x="354.0" y="302.8" width="7.0" height="3.1"/>
+<rect class="cell" x="363.0" y="302.8" width="7.0" height="3.1"/>
+<rect class="cell" x="372.0" y="302.8" width="7.0" height="3.1"/>
+<rect class="cell" x="381.0" y="302.8" width="7.0" height="3.1"/>
+<rect class="cell" x="390.0" y="302.8" width="7.0" height="3.1"/>
+<rect class="cell" x="399.0" y="302.8" width="7.0" height="3.1"/>
+<rect class="cell" x="408.0" y="302.8" width="7.0" height="3.1"/>
+<rect class="cell" x="417.0" y="302.8" width="7.0" height="3.1"/>
+<rect class="cell" x="426.0" y="302.8" width="7.0" height="3.1"/>
+<rect class="cell" x="435.0" y="302.8" width="7.0" height="3.1"/>
+<rect class="cell" x="444.0" y="302.8" width="7.0" height="3.1"/>
+<rect class="cell" x="453.0" y="302.8" width="7.0" height="3.1"/>
+<rect class="cell" x="462.0" y="302.8" width="7.0" height="3.1"/>
+<rect class="cell" x="471.0" y="302.8" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="480.0" y="302.8" width="7.0" height="3.1"/>
+<rect class="cell-hit" x="0" y="325.6" width="7.0" height="3.1"/>
+<text class="ax" x="14" y="331.6">the sentence that carries the address</text>
+<rect class="cell-off" x="0" y="338.6" width="7.0" height="3.1"/>
+<text class="ax" x="14" y="344.6">the same, where the abstract goes on afterwards (4)</text>
+<rect class="cell" x="0" y="351.6" width="7.0" height="3.1"/>
+<text class="ax" x="14" y="357.6">every other sentence of the abstract</text>
+</svg></div>
+  <figcaption>One row per abstract, one cell per sentence, sorted by length of abstract and
+    read down each column in turn. The filled cell is the sentence carrying the address, and
+    it rides the ragged right edge: 187 of 191 rows end on it. The 4 dark
+    cells are the only papers in this corpus that say anything at all after handing over
+    the address.</figcaption>
+</figure>
+
+<h2>Two</h2>
+<p class="sect-title">The word is <em>available</em></p>
+
+<p>Take the hinge of each sentence — the last real word before the address, the word that
+does the inviting. There are 47 distinct hinges across 206 addresses, and
+<strong>113 of them are the single word <em>available</em></strong>. Everything
+else is a fringe: 17 hinges used more than once, 30 used exactly once.</p>
+
+<p><em>Available</em> is not an invitation. It is a state of affairs. It describes the
+thing, not the reader, and it does not require that anybody ever come. The most common
+sentence in this corpus tells you that a door exists somewhere and is, in principle,
+not locked.</p>
+
+<figure>
+  <div class="plate"><svg class="fig" width="500" height="505" viewBox="0 0 500 505" role="img" aria-label="The hinge word of each of the 206 addresses; 113 of them are the word available.">
+<text class="hd" x="0" y="12">THE HINGE — THE LAST WORD BEFORE THE ADDRESS</text>
+<text class="wd" x="110" y="41.0" text-anchor="end">available</text>
+<rect class="bar-hi" x="118" y="31.0" width="300.0" height="12"/>
+<text class="num" x="424.0" y="41.0">113</text>
+<text class="wd" x="110" y="62.0" text-anchor="end">code</text>
+<rect class="bar" x="118" y="52.0" width="45.1" height="12"/>
+<text class="num" x="169.1" y="62.0">17</text>
+<text class="wd" x="110" y="83.0" text-anchor="end">released</text>
+<rect class="bar" x="118" y="73.0" width="21.2" height="12"/>
+<text class="num" x="145.2" y="83.0">8</text>
+<text class="wd" x="110" y="104.0" text-anchor="end">open-sourced</text>
+<rect class="bar" x="118" y="94.0" width="13.3" height="12"/>
+<text class="num" x="137.3" y="104.0">5</text>
+<text class="wd" x="110" y="125.0" text-anchor="end">found</text>
+<rect class="bar" x="118" y="115.0" width="13.3" height="12"/>
+<text class="num" x="137.3" y="125.0">5</text>
+<text class="wd" x="110" y="146.0" text-anchor="end">github</text>
+<rect class="bar" x="118" y="136.0" width="10.6" height="12"/>
+<text class="num" x="134.6" y="146.0">4</text>
+<text class="wd" x="110" y="167.0" text-anchor="end">page</text>
+<rect class="bar" x="118" y="157.0" width="8.0" height="12"/>
+<text class="num" x="132.0" y="167.0">3</text>
+<text class="wd" x="110" y="188.0" text-anchor="end">website</text>
+<rect class="bar" x="118" y="178.0" width="8.0" height="12"/>
+<text class="num" x="132.0" y="188.0">3</text>
+<text class="wd" x="110" y="209.0" text-anchor="end">benchmark</text>
+<rect class="bar" x="118" y="199.0" width="5.3" height="12"/>
+<text class="num" x="129.3" y="209.0">2</text>
+<text class="wd" x="110" y="230.0" text-anchor="end">provided</text>
+<rect class="bar" x="118" y="220.0" width="5.3" height="12"/>
+<text class="num" x="129.3" y="230.0">2</text>
+<text class="wd" x="110" y="251.0" text-anchor="end">public</text>
+<rect class="bar" x="118" y="241.0" width="5.3" height="12"/>
+<text class="num" x="129.3" y="251.0">2</text>
+<text class="wd" x="110" y="272.0" text-anchor="end">accessed</text>
+<rect class="bar" x="118" y="262.0" width="5.3" height="12"/>
+<text class="num" x="129.3" y="272.0">2</text>
+<text class="wd" x="110" y="293.0" text-anchor="end">outputs</text>
+<rect class="bar" x="118" y="283.0" width="5.3" height="12"/>
+<text class="num" x="129.3" y="293.0">2</text>
+<text class="wd" x="110" y="314.0" text-anchor="end">dataset</text>
+<rect class="bar" x="118" y="304.0" width="5.3" height="12"/>
+<text class="num" x="129.3" y="314.0">2</text>
+<text class="wd" x="110" y="335.0" text-anchor="end">data</text>
+<rect class="bar" x="118" y="325.0" width="5.3" height="12"/>
+<text class="num" x="129.3" y="335.0">2</text>
+<text class="wd" x="110" y="356.0" text-anchor="end">source</text>
+<rect class="bar" x="118" y="346.0" width="5.3" height="12"/>
+<text class="num" x="129.3" y="356.0">2</text>
+<text class="wd" x="110" y="377.0" text-anchor="end">href</text>
+<rect class="bar" x="118" y="367.0" width="5.3" height="12"/>
+<text class="num" x="129.3" y="377.0">2</text>
+<text class="hd sm" x="0" y="403.0">AND 30 WORDS USED EXACTLY ONCE</text>
+<text class="tail" x="0" y="420.0">url · online · deepresearcher · baisbench · leaderboard · frameworks</text>
+<text class="tail" x="0" y="434.0">discovery · ctfjudge · aixiv · link · accessible · repo · deepresearch-r</text>
+<text class="tail" x="0" y="448.0">demo · environment · pipeline · project · homepage · sciintegrity-bench</text>
+<text class="tail" x="0" y="462.0">repository · sourced · misknow-agent · webpage · thought-aligner-</text>
+<text class="tail" x="0" y="476.0">avaliable · codebase · videos · curvature-weighted-capacity-allocation</text>
+<text class="tail" x="0" y="490.0">harness · footnote</text>
+</svg></div>
+  <figcaption>The hinge is taken mechanically: the last token before the address that is
+    not a function word. No category was invented for this figure. Among the words used
+    once are 9 that are not words for inviting at all but the project's own name,
+    and 3 that are typesetting machinery — <code>\href</code>,
+    <code>\footnote</code> — leaking through the abstract into the reader's view.</figcaption>
+</figure>
+
+<h2>Three</h2>
+<p class="sect-title">Nobody is addressed</p>
+
+<p>These 206 sentences exist to bring a person somewhere. Here is how often they
+speak to that person.</p>
+
+<figure>
+  <div class="plate">
+    <table class="zeros"><tr><td class="word">you / your</td><td class="zero">0</td></tr>
+<tr><td class="word">please</td><td class="zero">0</td></tr>
+<tr><td class="word">welcome</td><td class="zero">0</td></tr>
+<tr><td class="word">invite / invitation</td><td class="zero">0</td></tr>
+<tr><td class="word">come</td><td class="zero">0</td></tr>
+<tr><td class="word">we hope</td><td class="zero">0</td></tr>
+<tr><td class="word">enjoy</td><td class="zero">0</td></tr></table>
+  </div>
+  <figcaption>Occurrences across all 206 sentences, case-insensitive.</figcaption>
+</figure>
+
+<p>Zero. Not once in 206 attempts to bring somebody in does the sentence contain
+the word <em>you</em>. Nobody says <em>please</em>, nobody says <em>welcome</em>, nobody
+invites, nobody hopes you enjoy it. Across the whole corpus there are 29 distinct
+words that begin one of these sentences, and only 2 of the 206 sentences are
+in the imperative — 2 sentences that turn and speak to somebody:</p>
+
+<div class="quote"><p class="said">Get started now at: \url{https://github.com/SalesforceAIResearch/AgentLite}.</p><p class="meta"><a href="https://arxiv.org/abs/2402.15538">arXiv:2402.15538</a> · 2024-02-23</p></div>
+<div class="quote"><p class="said">See our code at: https://github.com/Mercury7353/EvoChamber</p><p class="meta"><a href="https://arxiv.org/abs/2605.11136">arXiv:2605.11136</a> · 2026-05-11</p></div>
+
+<p>2 in 206. That is the entire repertoire of address in a literature about
+machines that do research on their own: <em>get started</em> once, <em>see</em> once, and
+113 times the passive assurance that something, somewhere, is available. The first
+of the two arrives with its typesetting still on it — <code>\url{…}</code>, a command to
+a compiler that nobody ran — which is its own small proof of how closely this sentence
+was read before it went out.</p>
+
+<h2>Four</h2>
+<p class="sect-title">14 of the doors did not open</p>
+
+<p>The Field knocked on all 206 addresses on 2026-08-31. 8 were gone and
+6 could not be decided from here. Those are its outcomes and its words, kept as it
+published them, with its caveats: this is one snapshot from one network on one day, it
+measures early availability and not rot, and two of the undecidable cases are this
+network's own proxy answering for a video host rather than anything about the address.</p>
+
+<p>What this room adds is only the sentence that was said. A door that does not open has
+ordinary causes — a repository renamed, made private during review, moved, or never
+public in the first place. <strong>No claim is made here that any author misstated
+anything.</strong> The point is quieter and it is about language: these sentences are
+written in the present tense, and the present tense does not hold.</p>
+
+<ol class="litany doors"><li class="entry shut">
+<p class="said">The full code, protocol, and evaluation scripts are available at https://github.com/ResearAI/ResearStudio. We will continue to update the repository to encourage further work on safe and controllable research agents.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2510.12194">arXiv:2510.12194</a> · 2025-10-14 · github.com · <span class="shutmark">gone</span> <span class="note">git-not-public</span></p>
+</li>
+<li class="entry shut">
+<p class="said">The source code and evaluation results are available at https://github.com/reSHARMA/ContextCov.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2603.00822">arXiv:2603.00822</a> · 2026-02-28 · github.com · <span class="shutmark">gone</span> <span class="note">git-not-public</span></p>
+</li>
+<li class="entry shut">
+<p class="said">The open-source repository is available at https://github.com/qinheming/BloClaw.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2604.00550">arXiv:2604.00550</a> · 2026-04-01 · github.com · <span class="shutmark">gone</span> <span class="note">git-not-public</span></p>
+</li>
+<li class="entry shut">
+<p class="said">The benchmark, harness, and all evaluation artifacts are publicly available on GitHub at https://github.com/Strolchii/1GC-7RC-Benchmark to facilitate reproducible comparison of future agents.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2605.17046">arXiv:2605.17046</a> · 2026-05-16 · github.com · <span class="shutmark">gone</span> <span class="note">git-not-public</span></p>
+</li>
+<li class="entry shut">
+<p class="said">Code, data catalogues, and reproduction scripts are released at https://github.com/YatingPan/SPIRE.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2605.30947">arXiv:2605.30947</a> · 2026-05-29 · github.com · <span class="shutmark">gone</span> <span class="note">git-not-public</span></p>
+</li>
+<li class="entry shut">
+<p class="said">Our code and models are available at https://github.com/AICPS/HydraCollab.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2607.00191">arXiv:2607.00191</a> · 2026-06-30 · github.com · <span class="shutmark">gone</span> <span class="note">git-not-public</span></p>
+</li>
+<li class="entry shut">
+<p class="said">Our code is available at https://github.com/henrymao2004/Auto-research-red-teaming-in-sleep.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2607.11698">arXiv:2607.11698</a> · 2026-07-13 · github.com · <span class="shutmark">gone</span> <span class="note">git-not-public</span></p>
+</li>
+<li class="entry shut">
+<p class="said">Code is available at https://github.com/ielab/ITER.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2608.27912">arXiv:2608.27912</a> · 2026-08-28 · github.com · <span class="shutmark">gone</span> <span class="note">git-not-public</span></p>
+</li>
+<li class="entry shut">
+<p class="said">To support open science, we release the CodeT5-Authorship architecture, the LLM-AuthorBench benchmark, and all relevant Google Colab scripts on GitHub: https://github.com/LLMauthorbench/.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2506.17323">arXiv:2506.17323</a> · 2025-06-18 · github.com · <span class="shutmark">indeterminate</span> <span class="note">github-not-a-repository-address</span></p>
+</li>
+<li class="entry shut">
+<p class="said">A demo video of our platform can be found at https://www.youtube.com/watch?v=g4d2dnbdseg.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2507.05495">arXiv:2507.05495</a> · 2025-07-07 · www.youtube.com · <span class="shutmark">indeterminate</span> <span class="note">http-429</span></p>
+</li>
+<li class="entry shut">
+<p class="said">Code: https://github.com/aixiv-org aiXiv: https://aixiv.science</p>
+<p class="meta"><a href="https://arxiv.org/abs/2508.15126">arXiv:2508.15126</a> · 2025-08-20 · github.com · <span class="shutmark">indeterminate</span> <span class="note">github-not-a-repository-address</span></p>
+</li>
+<li class="entry shut">
+<p class="said">Our datasets and LoRA library are available at https://huggingface.co/datasets/YaoLuzjut/LoRAOcean_dataset and https://huggingface.co/YaoLuzjut/models.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2509.18137">arXiv:2509.18137</a> · 2025-09-14 · huggingface.co · <span class="shutmark">indeterminate</span> <span class="note">http-401</span></p>
+</li>
+<li class="entry shut">
+<p class="said">Our live demo is publicly accessible at http://ai-researcher.net:3000/. We support the development of DeepScientist, which can be accessed at https://github.com/ResearAI/DeepScientist.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2510.12194">arXiv:2510.12194</a> · 2025-10-14 · ai-researcher.net:3000 · <span class="shutmark">indeterminate</span> <span class="note">URLError:&lt;urlopen error timed out&gt;</span></p>
+</li>
+<li class="entry shut">
+<p class="said">A video preview of the installation can be found at https://www.youtube.com/watch?v=L6319Ii7MT8.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2601.11532">arXiv:2601.11532</a> · 2025-11-20 · www.youtube.com · <span class="shutmark">indeterminate</span> <span class="note">http-429</span></p>
+</li></ol>
+
+<h2>Five</h2>
+<p class="sect-title">The litany</p>
+
+<p>All 206 sentences, oldest first. <strong>The addresses are printed, not linked.</strong>
+That is deliberate: this page will not do the walking for you, and a work about invitations
+that clicks through on your behalf would be answering its own question. Each sentence links
+instead to the abstract it was taken from.</p>
+
+<div class="controls" role="group" aria-label="Filter the litany">
+  <button type="button" data-f="all" aria-pressed="true">All 206</button>
+  <button type="button" data-f="A" aria-pressed="false">Automation cohort 123</button>
+  <button type="button" data-f="B" aria-pressed="false">Control cohort 83</button>
+  <button type="button" data-f="shut" aria-pressed="false">Did not open 14</button>
+</div>
+
+<ol class="litany" id="litany">
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">Get started now at: \url{https://github.com/SalesforceAIResearch/AgentLite}.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2402.15538">arXiv:2402.15538</a> · 2024-02-23 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">https://proroklab.github.io/cambridge-robomaster</p>
+<p class="meta"><a href="https://arxiv.org/abs/2405.02198">arXiv:2405.02198</a> · 2024-05-03 · automation · proroklab.github.io</p>
+</li>
+<li class="entry" data-cohort="B" data-shut="0">
+<p class="said">The source code of this paper is publicly available via this https://github.com/alaaNfissi/Unveiling-Hidden-Factors-Explainable-AI-for-Feature-Boosting-in-Speech-Emotion-Recognition.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2406.01624">arXiv:2406.01624</a> · 2024-06-01 · control · github.com</p>
+</li>
+<li class="entry" data-cohort="B" data-shut="0">
+<p class="said">Our code is publicly available at: https://github.com/xuefeng-cs/ERP.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2406.07025">arXiv:2406.07025</a> · 2024-06-11 · control · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">We open-source the code to construct the ResearchArena benchmark at https://github.com/cxcscmu/ResearchArena.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2406.10291">arXiv:2406.10291</a> · 2024-06-13 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">The code and data are available at https://github.com/westlake-autolab/BioKGBench.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2407.00466">arXiv:2407.00466</a> · 2024-06-29 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">Our code is open-sourced at https://github.com/SakanaAI/AI-Scientist</p>
+<p class="meta"><a href="https://arxiv.org/abs/2408.06292">arXiv:2408.06292</a> · 2024-08-12 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="B" data-shut="0">
+<p class="said">Webpage: https://microsoft.github.io/WindowsAgentArena Code: https://github.com/microsoft/WindowsAgentArena</p>
+<p class="meta"><a href="https://arxiv.org/abs/2409.08264">arXiv:2409.08264</a> · 2024-09-12 · control · microsoft.github.io</p>
+</li>
+<li class="entry" data-cohort="B" data-shut="0">
+<p class="said">Webpage: https://microsoft.github.io/WindowsAgentArena Code: https://github.com/microsoft/WindowsAgentArena</p>
+<p class="meta"><a href="https://arxiv.org/abs/2409.08264">arXiv:2409.08264</a> · 2024-09-12 · control · github.com</p>
+</li>
+<li class="entry" data-cohort="B" data-shut="0">
+<p class="said">Demos and code will be available at https://github.com/florinshen/FlashSplat.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2409.08270">arXiv:2409.08270</a> · 2024-09-12 · control · github.com</p>
+</li>
+<li class="entry" data-cohort="B" data-shut="0">
+<p class="said">Code available at https://github.com/simular-ai/Agent-S.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2410.08164">arXiv:2410.08164</a> · 2024-10-10 · control · github.com</p>
+</li>
+<li class="entry" data-cohort="B" data-shut="0">
+<p class="said">Our anonymous website: https://sites.google.com/view/evaltasks.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2410.08172">arXiv:2410.08172</a> · 2024-10-10 · control · sites.google.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">The code is available at https://github.com/open-sciencelab/Virtual-Scientists.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2410.09403">arXiv:2410.09403</a> · 2024-10-12 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">TradingAgents is available at https://github.com/TauricResearch/TradingAgents.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2412.20138">arXiv:2412.20138</a> · 2024-12-28 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="B" data-shut="0">
+<p class="said">Code is available at https://github.com/ghimiredhikura/OCSPruner.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2501.13439">arXiv:2501.13439</a> · 2025-01-23 · control · github.com</p>
+</li>
+<li class="entry" data-cohort="B" data-shut="0">
+<p class="said">Our data and models are available at https://github.com/hkust-nlp/CodeIO.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2502.07316">arXiv:2502.07316</a> · 2025-02-11 · control · github.com</p>
+</li>
+<li class="entry" data-cohort="B" data-shut="0">
+<p class="said">The source code and pretrained weights are released at: https://github.com/Tencent/Tencent-XR-3DGen.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2502.14247">arXiv:2502.14247</a> · 2025-02-20 · control · github.com</p>
+</li>
+<li class="entry" data-cohort="B" data-shut="0">
+<p class="said">We release our data and code at https://github.com/baoguangsheng/truth-mirror.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2503.00258">arXiv:2503.00258</a> · 2025-03-01 · control · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">We open-source our code (https://github.com/openai/preparedness) to facilitate future research in understanding the AI engineering capabilities of AI agents.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2504.01848">arXiv:2504.01848</a> · 2025-04-02 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">We release DeepResearcher at https://github.com/GAIR-NLP/DeepResearcher.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2504.03160">arXiv:2504.03160</a> · 2025-04-04 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">We have open-sourced the code at https://github.com/SakanaAI/AI-Scientist-v2 to foster the future development of this transformative technology.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2504.08066">arXiv:2504.08066</a> · 2025-04-10 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">Our leaderboard and code are available at: https://huggingface.co/spaces/launch/MLRC_Bench</p>
+<p class="meta"><a href="https://arxiv.org/abs/2504.09702">arXiv:2504.09702</a> · 2025-04-13 · automation · huggingface.co</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">The code is available at https://github.com/RUC-NLPIR/WebThinker.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2504.21776">arXiv:2504.21776</a> · 2025-04-30 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="B" data-shut="0">
+<p class="said">The source code of AVA is available at https://github.com/I-ESC/Project-Ava. The AVA-100 benchmark can be accessed at https://huggingface.co/datasets/iesc/Ava-100.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2505.00254">arXiv:2505.00254</a> · 2025-05-01 · control · github.com</p>
+</li>
+<li class="entry" data-cohort="B" data-shut="0">
+<p class="said">The source code of AVA is available at https://github.com/I-ESC/Project-Ava. The AVA-100 benchmark can be accessed at https://huggingface.co/datasets/iesc/Ava-100.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2505.00254">arXiv:2505.00254</a> · 2025-05-01 · control · huggingface.co</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">Finally, we evaluate the major web research products branded as &quot;Deep Research&quot;, &quot;Deep Search&quot;, &quot;Search&quot;, or &quot;Research.&quot; Results are available on a public leaderboard at https://drb.futuresearch.ai/.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2506.06287">arXiv:2506.06287</a> · 2025-05-06 · automation · drb.futuresearch.ai</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">The BAISBench can be found at: https://github.com/EperLuo/BAISBench, https://huggingface.co/datasets/EperLuo/BaisBench.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2505.08341">arXiv:2505.08341</a> · 2025-05-13 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">The BAISBench can be found at: https://github.com/EperLuo/BAISBench, https://huggingface.co/datasets/EperLuo/BaisBench.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2505.08341">arXiv:2505.08341</a> · 2025-05-13 · automation · huggingface.co</p>
+</li>
+<li class="entry" data-cohort="B" data-shut="0">
+<p class="said">We publicly release Thought-Aligner-7B at https://huggingface.co/WhitzardAgent/Thought-Aligner-7B.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2505.11063">arXiv:2505.11063</a> · 2025-05-16 · control · huggingface.co</p>
+</li>
+<li class="entry" data-cohort="B" data-shut="0">
+<p class="said">Our code is available at https://github.com/HKUSTDial/DeepFund.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2505.11065">arXiv:2505.11065</a> · 2025-05-16 · control · github.com</p>
+</li>
+<li class="entry" data-cohort="B" data-shut="0">
+<p class="said">Our code is available at https://github.com/ScopeX-ASU/SP2RINT</p>
+<p class="meta"><a href="https://arxiv.org/abs/2505.18377">arXiv:2505.18377</a> · 2025-05-23 · control · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">The source code is provided at https://github.com/Ewendawi/LLaMEA-BO.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2505.21034">arXiv:2505.21034</a> · 2025-05-27 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">The code and data will be available at https://github.com/ulab-uiuc/SafeScientist. \textcolor{red}{Warning: this paper contains example data that may be offensive or harmful.}</p>
+<p class="meta"><a href="https://arxiv.org/abs/2505.23559">arXiv:2505.23559</a> · 2025-05-29 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="B" data-shut="0">
+<p class="said">Project page: https://artiscene-cvpr.github.io/</p>
+<p class="meta"><a href="https://arxiv.org/abs/2506.00742">arXiv:2506.00742</a> · 2025-05-31 · control · artiscene-cvpr.github.io</p>
+</li>
+<li class="entry" data-cohort="B" data-shut="0">
+<p class="said">Our code is available at: https://github.com/zihanghliu/LIFT.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2506.00772">arXiv:2506.00772</a> · 2025-06-01 · control · github.com</p>
+</li>
+<li class="entry" data-cohort="B" data-shut="0">
+<p class="said">Code and data are available at https://ineqmath.github.io/.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2506.07927">arXiv:2506.07927</a> · 2025-06-09 · control · ineqmath.github.io</p>
+</li>
+<li class="entry" data-cohort="B" data-shut="0">
+<p class="said">Code is available at https://github.com/rayonlabs/G.O.D.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2506.07940">arXiv:2506.07940</a> · 2025-06-09 · control · github.com</p>
+</li>
+<li class="entry" data-cohort="B" data-shut="0">
+<p class="said">Code is available at https://github.com/NUS-HPC-AI-Lab/Info-Coevolution/.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2506.08070">arXiv:2506.08070</a> · 2025-06-09 · control · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">We have open-sourced DeepResearch Bench and key components of these frameworks at https://github.com/Ayanami0730/deep_research_bench to accelerate the development of practical LLM-based agents.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2506.11763">arXiv:2506.11763</a> · 2025-06-13 · automation · github.com</p>
+</li>
+<li class="entry shut" data-cohort="B" data-shut="1">
+<p class="said">To support open science, we release the CodeT5-Authorship architecture, the LLM-AuthorBench benchmark, and all relevant Google Colab scripts on GitHub: https://github.com/LLMauthorbench/.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2506.17323">arXiv:2506.17323</a> · 2025-06-18 · control · github.com · <span class="shutmark">did not open · github-not-a-repository-address</span></p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">A curated and continuously updated repository of DR agent research is available at: {https://github.com/ai-agents-2030/awesome-deep-research-agent}.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2506.18096">arXiv:2506.18096</a> · 2025-06-22 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="B" data-shut="0">
+<p class="said">The full dataset is available at https://huggingface.co/datasets/Amar-S/MOVi-MC-AC ,</p>
+<p class="meta"><a href="https://arxiv.org/abs/2507.00339">arXiv:2507.00339</a> · 2025-07-01 · control · huggingface.co</p>
+</li>
+<li class="entry shut" data-cohort="A" data-shut="1">
+<p class="said">A demo video of our platform can be found at https://www.youtube.com/watch?v=g4d2dnbdseg.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2507.05495">arXiv:2507.05495</a> · 2025-07-07 · automation · www.youtube.com · <span class="shutmark">did not open · http-429</span></p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">Our data is available on https://huggingface.co/collections/ai-coscientist/ablationbench, and our code is available on https://github.com/ai-scientist-bench/ablation-bench .</p>
+<p class="meta"><a href="https://arxiv.org/abs/2507.08038">arXiv:2507.08038</a> · 2025-07-09 · automation · huggingface.co</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">Our data is available on https://huggingface.co/collections/ai-coscientist/ablationbench, and our code is available on https://github.com/ai-scientist-bench/ablation-bench .</p>
+<p class="meta"><a href="https://arxiv.org/abs/2507.08038">arXiv:2507.08038</a> · 2025-07-09 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">All code, environments, baselines, and data are publicly available at https://github.com/OS-Copilot/OS-Map.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2507.19132">arXiv:2507.19132</a> · 2025-07-25 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">Code is available at https://github.com/Tencent/CognitiveKernel-Pro</p>
+<p class="meta"><a href="https://arxiv.org/abs/2508.00414">arXiv:2508.00414</a> · 2025-08-01 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">https://github.com/nuuuh/SymbolBench.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2508.03963">arXiv:2508.03963</a> · 2025-08-05 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">We make CTFTiny open source to public https://github.com/NYU-LLM-CTF/CTFTiny along with CTFJudge on https://github.com/NYU-LLM-CTF/CTFJudge.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2508.05674">arXiv:2508.05674</a> · 2025-08-05 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">We make CTFTiny open source to public https://github.com/NYU-LLM-CTF/CTFTiny along with CTFJudge on https://github.com/NYU-LLM-CTF/CTFJudge.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2508.05674">arXiv:2508.05674</a> · 2025-08-05 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="B" data-shut="0">
+<p class="said">The code is available at: https://github.com/syrGitHub/TALON.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2508.07195">arXiv:2508.07195</a> · 2025-08-10 · control · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">The complete code and data will be released at the following link: https://github.com/ByteDance-BandAI/ReportBench</p>
+<p class="meta"><a href="https://arxiv.org/abs/2508.15804">arXiv:2508.15804</a> · 2025-08-14 · automation · github.com</p>
+</li>
+<li class="entry shut" data-cohort="A" data-shut="1">
+<p class="said">Code: https://github.com/aixiv-org aiXiv: https://aixiv.science</p>
+<p class="meta"><a href="https://arxiv.org/abs/2508.15126">arXiv:2508.15126</a> · 2025-08-20 · automation · github.com · <span class="shutmark">did not open · github-not-a-repository-address</span></p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">Code: https://github.com/aixiv-org aiXiv: https://aixiv.science</p>
+<p class="meta"><a href="https://arxiv.org/abs/2508.15126">arXiv:2508.15126</a> · 2025-08-20 · automation · aixiv.science</p>
+</li>
+<li class="entry" data-cohort="B" data-shut="0">
+<p class="said">Our repository can be found at https://github.com/elixir-research-group/Verifierstesttimescaling.github.io.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2508.16665">arXiv:2508.16665</a> · 2025-08-20 · control · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">The library is available at https://github.com/KempnerInstitute/nicewebrl.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2508.15693">arXiv:2508.15693</a> · 2025-08-21 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="B" data-shut="0">
+<p class="said">Our code is avaliable at https://runjia.tech/emnlp_mept/.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2509.00996">arXiv:2509.00996</a> · 2025-08-31 · control · runjia.tech</p>
+</li>
+<li class="entry" data-cohort="B" data-shut="0">
+<p class="said">Our code is open-sourced at https://github.com/TIGER-AI-Lab/verl-tool.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2509.01055">arXiv:2509.01055</a> · 2025-09-01 · control · github.com</p>
+</li>
+<li class="entry shut" data-cohort="B" data-shut="1">
+<p class="said">Our datasets and LoRA library are available at https://huggingface.co/datasets/YaoLuzjut/LoRAOcean_dataset and https://huggingface.co/YaoLuzjut/models.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2509.18137">arXiv:2509.18137</a> · 2025-09-14 · control · huggingface.co · <span class="shutmark">did not open · http-401</span></p>
+</li>
+<li class="entry" data-cohort="B" data-shut="0">
+<p class="said">Our datasets and LoRA library are available at https://huggingface.co/datasets/YaoLuzjut/LoRAOcean_dataset and https://huggingface.co/YaoLuzjut/models.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2509.18137">arXiv:2509.18137</a> · 2025-09-14 · control · huggingface.co</p>
+</li>
+<li class="entry" data-cohort="B" data-shut="0">
+<p class="said">Project page: https://itsbaymax.github.io/meta-memory.github.io/ .</p>
+<p class="meta"><a href="https://arxiv.org/abs/2509.20754">arXiv:2509.20754</a> · 2025-09-25 · control · itsbaymax.github.io</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">The open-source ToolUniverse is available at https://aiscientist.tools.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2509.23426">arXiv:2509.23426</a> · 2025-09-27 · automation · aiscientist.tools</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">To facilitate further research into this process, we will open-source all experimental logs and system code at https://github.com/ResearAI/DeepScientist/.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2509.26603">arXiv:2509.26603</a> · 2025-09-30 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="B" data-shut="0">
+<p class="said">Codebase: https://github.com/TheLovesOfLadyPurple/F-scheduler</p>
+<p class="meta"><a href="https://arxiv.org/abs/2510.02390">arXiv:2510.02390</a> · 2025-09-30 · control · github.com</p>
+</li>
+<li class="entry" data-cohort="B" data-shut="0">
+<p class="said">Our code is available at https://sites.google.com/berkeley.edu/colmo.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2510.00373">arXiv:2510.00373</a> · 2025-10-01 · control · sites.google.com</p>
+</li>
+<li class="entry" data-cohort="B" data-shut="0">
+<p class="said">Our code and data are available at https://3dagentworld.github.io/leader_follower.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2510.09087">arXiv:2510.09087</a> · 2025-10-10 · control · 3dagentworld.github.io</p>
+</li>
+<li class="entry" data-cohort="B" data-shut="0">
+<p class="said">On a real WidowX robotic arm, it completes the task in 12 seconds, 10x faster than behavioral cloning, as shown in real-robot videos on https://sites.google.com/view/constrainedexpert .</p>
+<p class="meta"><a href="https://arxiv.org/abs/2510.09096">arXiv:2510.09096</a> · 2025-10-10 · control · sites.google.com</p>
+</li>
+<li class="entry" data-cohort="B" data-shut="0">
+<p class="said">All code and data are publicly available at https://github.com/open-compass/InteractScience.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2510.09724">arXiv:2510.09724</a> · 2025-10-10 · control · github.com</p>
+</li>
+<li class="entry" data-cohort="B" data-shut="0">
+<p class="said">Our code is available at https://github.com/Shinwoo-Park/stela_watermark.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2510.13829">arXiv:2510.13829</a> · 2025-10-10 · control · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">Our benchmark is available at https://github.com/qrzou/FML-bench.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2510.10472">arXiv:2510.10472</a> · 2025-10-12 · automation · github.com</p>
+</li>
+<li class="entry shut" data-cohort="A" data-shut="1">
+<p class="said">The full code, protocol, and evaluation scripts are available at https://github.com/ResearAI/ResearStudio. We will continue to update the repository to encourage further work on safe and controllable research agents.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2510.12194">arXiv:2510.12194</a> · 2025-10-14 · automation · github.com · <span class="shutmark">did not open · git-not-public</span></p>
+</li>
+<li class="entry shut" data-cohort="A" data-shut="1">
+<p class="said">Our live demo is publicly accessible at http://ai-researcher.net:3000/. We support the development of DeepScientist, which can be accessed at https://github.com/ResearAI/DeepScientist.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2510.12194">arXiv:2510.12194</a> · 2025-10-14 · automation · ai-researcher.net:3000 · <span class="shutmark">did not open · URLError:&lt;urlopen error timed out&gt;</span></p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">Our live demo is publicly accessible at http://ai-researcher.net:3000/. We support the development of DeepScientist, which can be accessed at https://github.com/ResearAI/DeepScientist.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2510.12194">arXiv:2510.12194</a> · 2025-10-14 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">Our project is available at https://github.com/usail-hkust/Awesome-Foundation-Models-for-Scientific-Discovery.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2510.15280">arXiv:2510.15280</a> · 2025-10-17 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">We share our repo: https://github.com/CellFace/TriAgent.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2510.16080">arXiv:2510.16080</a> · 2025-10-17 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="B" data-shut="0">
+<p class="said">Our implementation is available at https://github.com/merlresearch/radar-pose-transformer.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2511.08387">arXiv:2511.08387</a> · 2025-11-11 · control · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">Code available here: https://github.com/CMBAgents/cmbagent</p>
+<p class="meta"><a href="https://arxiv.org/abs/2511.14631">arXiv:2511.14631</a> · 2025-11-18 · automation · github.com</p>
+</li>
+<li class="entry shut" data-cohort="B" data-shut="1">
+<p class="said">A video preview of the installation can be found at https://www.youtube.com/watch?v=L6319Ii7MT8.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2601.11532">arXiv:2601.11532</a> · 2025-11-20 · control · www.youtube.com · <span class="shutmark">did not open · http-429</span></p>
+</li>
+<li class="entry" data-cohort="B" data-shut="0">
+<p class="said">We release our code at https://github.com/Bluefin-Tuna/WISER .</p>
+<p class="meta"><a href="https://arxiv.org/abs/2512.01119">arXiv:2512.01119</a> · 2025-11-30 · control · github.com</p>
+</li>
+<li class="entry" data-cohort="B" data-shut="0">
+<p class="said">Code and dataset are available at https://github.com/Chromou-VQA-Benchmark/Chromou-VQA.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2512.05137">arXiv:2512.05137</a> · 2025-11-30 · control · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">The entire source code, outputs and benchmark results are open-sourced at https://github.com/SauravP97/Static-Deep-Research/</p>
+<p class="meta"><a href="https://arxiv.org/abs/2512.03887">arXiv:2512.03887</a> · 2025-12-03 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">Project page: https://agent2world.github.io.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2512.22336">arXiv:2512.22336</a> · 2025-12-26 · automation · agent2world.github.io</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">We conclude by discussing four design principles for more robust AI-scientist systems, implications for autonomous scientific discovery, and we release all prompts, artifacts, and outputs at https://github.com/Lossfunk/ai-scientist-artefacts-v1</p>
+<p class="meta"><a href="https://arxiv.org/abs/2601.03315">arXiv:2601.03315</a> · 2026-01-06 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">This agent is available at https://github.com/pengzy-cosmo/DeepInflation.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2601.14288">arXiv:2601.14288</a> · 2026-01-14 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">All our code is available at https://github.com/sahel-sh/DeepHone</p>
+<p class="meta"><a href="https://arxiv.org/abs/2601.14224">arXiv:2601.14224</a> · 2026-01-20 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">Our corpus, datasets, and benchmarks are usable with the popular Search-R1 codebase for RLVR training and released on https://huggingface.co/collections/jmhb/papersearchqa. Finally, our data creation methods are scalable and easily extendable to other scientific domains.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2601.18207">arXiv:2601.18207</a> · 2026-01-26 · automation · huggingface.co</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">Code and data are available in https://github.com/yuhao-zhan/DeepHalluBench.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2601.22984">arXiv:2601.22984</a> · 2026-01-30 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">We release our benchmark at https://github.com/WangShao2000/Wiki_Live_Challenge</p>
+<p class="meta"><a href="https://arxiv.org/abs/2602.01590">arXiv:2602.01590</a> · 2026-02-02 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">We conclude with reflections on human-AI collaboration in mathematics and share all prompts as well as model outputs at https://github.com/google-deepmind/superhuman/tree/main/aletheia.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2602.10177">arXiv:2602.10177</a> · 2026-02-10 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">The code is available at https://github.com/yxy-919/LawThinker-agent .</p>
+<p class="meta"><a href="https://arxiv.org/abs/2602.12056">arXiv:2602.12056</a> · 2026-02-12 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">All code and experimental data are publicly available at https://github.com/qiliuchn/OR-Agent.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2602.13769">arXiv:2602.13769</a> · 2026-02-14 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="B" data-shut="0">
+<p class="said">Our project is available at https://github.com/ZJU4HealthCare/OmniCT.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2602.16110">arXiv:2602.16110</a> · 2026-02-18 · control · github.com</p>
+</li>
+<li class="entry" data-cohort="B" data-shut="0">
+<p class="said">Data: \href{https://huggingface.co/datasets/skylenage/DeepVision-103K}{this url}.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2602.16742">arXiv:2602.16742</a> · 2026-02-18 · control · huggingface.co</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">Source code and data are available at: https://github.com/HKUDS/DeepInnovator.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2602.18920">arXiv:2602.18920</a> · 2026-02-21 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">Raw prompts and outputs are available at https://github.com/google-deepmind/superhuman/tree/main/aletheia.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2602.21201">arXiv:2602.21201</a> · 2026-02-24 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">Leaderboard is available at: https://cnsdqd-dyb.github.io/Super-Research-Benchmark/</p>
+<p class="meta"><a href="https://arxiv.org/abs/2603.00582">arXiv:2603.00582</a> · 2026-02-28 · automation · cnsdqd-dyb.github.io</p>
+</li>
+<li class="entry" data-cohort="B" data-shut="0">
+<p class="said">The code is available at \href{https://github.com/therontau0054/Fisale}.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2603.00792">arXiv:2603.00792</a> · 2026-02-28 · control · github.com</p>
+</li>
+<li class="entry shut" data-cohort="B" data-shut="1">
+<p class="said">The source code and evaluation results are available at https://github.com/reSHARMA/ContextCov.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2603.00822">arXiv:2603.00822</a> · 2026-02-28 · control · github.com · <span class="shutmark">did not open · git-not-public</span></p>
+</li>
+<li class="entry" data-cohort="B" data-shut="0">
+<p class="said">Code: https://github.com/YuyangSunshine/bioproagent | Website: https://yuyangsunshine.github.io/BioPro-Project.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2603.00876">arXiv:2603.00876</a> · 2026-03-01 · control · github.com</p>
+</li>
+<li class="entry" data-cohort="B" data-shut="0">
+<p class="said">Code: https://github.com/YuyangSunshine/bioproagent | Website: https://yuyangsunshine.github.io/BioPro-Project.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2603.00876">arXiv:2603.00876</a> · 2026-03-01 · control · yuyangsunshine.github.io</p>
+</li>
+<li class="entry" data-cohort="B" data-shut="0">
+<p class="said">Code is available on github repo - [TKAI-LAB-Mali/Curvature-Weighted-Capacity-Allocation](https://github.com/TKAI-LAB-Mali/Curvature-Weighted-Capacity-Allocation.git)</p>
+<p class="meta"><a href="https://arxiv.org/abs/2603.00910">arXiv:2603.00910</a> · 2026-03-01 · control · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">Code is available at https://github.com/HJYao00/MM-DeepResearch</p>
+<p class="meta"><a href="https://arxiv.org/abs/2603.01050">arXiv:2603.01050</a> · 2026-03-01 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">We release the DeepResearch-9K dataset on https://huggingface.co/datasets/artillerywu/DeepResearch-9K and the code of DeepResearch-R1 on https://github.com/Applied-Machine-Learning-Lab/DeepResearch-R1.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2603.01152">arXiv:2603.01152</a> · 2026-03-01 · automation · huggingface.co</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">We release the DeepResearch-9K dataset on https://huggingface.co/datasets/artillerywu/DeepResearch-9K and the code of DeepResearch-R1 on https://github.com/Applied-Machine-Learning-Lab/DeepResearch-R1.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2603.01152">arXiv:2603.01152</a> · 2026-03-01 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">Code and data are available at: https://texttron.github.io/AgentIR/.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2603.04384">arXiv:2603.04384</a> · 2026-03-04 · automation · texttron.github.io</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">Code is available at https://github.com/CodeSoul-co/THETA.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2603.05972">arXiv:2603.05972</a> · 2026-03-06 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">Our code is publicly available at https://github.com/HansiZeng/syn-plan-research.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2603.07853">arXiv:2603.07853</a> · 2026-03-09 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="B" data-shut="0">
+<p class="said">The code is available at https://github.com/chenchenzong/FairFAL.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2603.10341">arXiv:2603.10341</a> · 2026-03-11 · control · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">Project page with system demo: https://github.com/bopan3/InterDeepResearch.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2603.12608">arXiv:2603.12608</a> · 2026-03-13 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">Our code is publicly available at https://github.com/ZIB-IOL/The-Agentic-Researcher.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2603.15914">arXiv:2603.15914</a> · 2026-03-16 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">We release the pipeline, synthesized trajectories, model checkpoints, and the offline search environment at https://github.com/TIGER-AI-Lab/OpenResearcher.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2603.20278">arXiv:2603.20278</a> · 2026-03-17 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="B" data-shut="0">
+<p class="said">Demo samples are available at https://research.sri-media-analysis.com/aaai26-beeu-gesture2speech/</p>
+<p class="meta"><a href="https://arxiv.org/abs/2603.19831">arXiv:2603.19831</a> · 2026-03-20 · control · research.sri-media-analysis.com</p>
+</li>
+<li class="entry" data-cohort="B" data-shut="0">
+<p class="said">Our code is available at https://github.com/Jasper-Yan/SCRL.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2603.19880">arXiv:2603.19880</a> · 2026-03-20 · control · github.com</p>
+</li>
+<li class="entry" data-cohort="B" data-shut="0">
+<p class="said">Code and dataset are available at https://github.com/MANA-2026/MANA.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2603.20351">arXiv:2603.20351</a> · 2026-03-20 · control · github.com</p>
+</li>
+<li class="entry" data-cohort="B" data-shut="0">
+<p class="said">Our source code is available at https://github.com/bardia-az/pgp-vlm-compression.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2604.00314">arXiv:2604.00314</a> · 2026-03-31 · control · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">We additionally report results on financial time series forecasting in the appendix, and release all code at https://brendanhogan.github.io/alphalab-paper/.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2604.08590">arXiv:2604.08590</a> · 2026-03-31 · automation · brendanhogan.github.io</p>
+</li>
+<li class="entry" data-cohort="B" data-shut="0">
+<p class="said">We then built a native harmony agent harness (https://github.com/borislavmavrin/harmonyagent.git) that encodes messages in the model&#x27;s native format, bypassing the lossy Chat Completions conversion.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2604.00362">arXiv:2604.00362</a> · 2026-04-01 · control · github.com</p>
+</li>
+<li class="entry shut" data-cohort="A" data-shut="1">
+<p class="said">The open-source repository is available at https://github.com/qinheming/BloClaw.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2604.00550">arXiv:2604.00550</a> · 2026-04-01 · automation · github.com · <span class="shutmark">did not open · git-not-public</span></p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">Code is available at this https://github.com/aiming-lab/SimpleMem.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2604.01007">arXiv:2604.01007</a> · 2026-04-01 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="B" data-shut="0">
+<p class="said">We make our code available at https://github.com/smearle/picbreeder-vlm.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2605.23908">arXiv:2605.23908</a> · 2026-04-01 · control · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">The GeoBrowse bernchmark and codes are provided in https://github.com/ornamentt/GeoBrowse</p>
+<p class="meta"><a href="https://arxiv.org/abs/2604.04017">arXiv:2604.04017</a> · 2026-04-05 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">We open-source our Universal Verifier system along with CUAVerifierBench; available at https://github.com/microsoft/fara.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2604.06240">arXiv:2604.06240</a> · 2026-04-05 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">Code is available at https://github.com/Xiangyue-Zhang/auto-deep-researcher-24x7.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2604.05854">arXiv:2604.05854</a> · 2026-04-07 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">We have publicly released the website at https://papercircle.vercel.app/ and the code at https://github.com/MAXNORM8650/papercircle.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2604.06170">arXiv:2604.06170</a> · 2026-04-07 · automation · papercircle.vercel.app</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">We have publicly released the website at https://papercircle.vercel.app/ and the code at https://github.com/MAXNORM8650/papercircle.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2604.06170">arXiv:2604.06170</a> · 2026-04-07 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">We release DrBencher pipeline and the human-verified benchmark data at https://github.com/IBM/DrBencher.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2604.09251">arXiv:2604.09251</a> · 2026-04-10 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="B" data-shut="0">
+<p class="said">Code and resources are available at https://anonymous.4open.science/r/SAGE-Bench-4CD3/.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2604.09285">arXiv:2604.09285</a> · 2026-04-10 · control · anonymous.4open.science</p>
+</li>
+<li class="entry" data-cohort="B" data-shut="0">
+<p class="said">The code has been released at https://github.com/wzb-bupt/VGPO.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2604.09349">arXiv:2604.09349</a> · 2026-04-10 · control · github.com</p>
+</li>
+<li class="entry" data-cohort="B" data-shut="0">
+<p class="said">Code is available at https://github.com/Oaklight/llm-rosetta.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2604.09360">arXiv:2604.09360</a> · 2026-04-10 · control · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">We release code, hypothesis bank, and evaluation pipeline at https://github.com/LucZot/veritas.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2604.12144">arXiv:2604.12144</a> · 2026-04-13 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">We release data and code at https://njucckevin.github.io/openmobile/ to bridge the data gap and facilitate broader mobile agent research.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2604.15093">arXiv:2604.15093</a> · 2026-04-16 · automation · njucckevin.github.io</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">Our work is available on GitHub: https://github.com/KOU-199024/HiRAS.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2604.17745">arXiv:2604.17745</a> · 2026-04-20 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="B" data-shut="0">
+<p class="said">The code is publicly available at https://github.com/zy0929/DSAINet.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2604.18095">arXiv:2604.18095</a> · 2026-04-20 · control · github.com</p>
+</li>
+<li class="entry" data-cohort="B" data-shut="0">
+<p class="said">Code will be released at https://github.com/verach3n/DASH.git.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2604.18103">arXiv:2604.18103</a> · 2026-04-20 · control · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">Project: https://github.com/uni-medical/MedProbeBench</p>
+<p class="meta"><a href="https://arxiv.org/abs/2604.18418">arXiv:2604.18418</a> · 2026-04-20 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">Our code is open-sourced at https://github.com/Orchestra-Research/Agent-Native-Research-Artifact.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2604.24658">arXiv:2604.24658</a> · 2026-04-27 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">Project homepage: https://cuhk-aim-group.github.io/NeuroClaw/index.html</p>
+<p class="meta"><a href="https://arxiv.org/abs/2604.24696">arXiv:2604.24696</a> · 2026-04-27 · automation · cuhk-aim-group.github.io</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">We publicly release the dataset, evaluation pipeline, and code at https://github.com/CherYou/AutoResearchBench.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2604.25256">arXiv:2604.25256</a> · 2026-04-28 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="B" data-shut="0">
+<p class="said">Code and models are available at https://papers.starslab.ca/realm/.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2605.00271">arXiv:2605.00271</a> · 2026-04-30 · control · papers.starslab.ca</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">BioVeil MATRIX can be found at: https://bioveilmatrix.com/</p>
+<p class="meta"><a href="https://arxiv.org/abs/2605.00927">arXiv:2605.00927</a> · 2026-04-30 · automation · bioveilmatrix.com</p>
+</li>
+<li class="entry" data-cohort="B" data-shut="0">
+<p class="said">Our code and datasets are available at https://github.com/xingyuHuxingyu/DynamicPO.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2605.00327">arXiv:2605.00327</a> · 2026-05-01 · control · github.com</p>
+</li>
+<li class="entry" data-cohort="B" data-shut="0">
+<p class="said">We release our code at https://github.com/stone-technologies/ACL_budget_paper.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2605.00336">arXiv:2605.00336</a> · 2026-05-01 · control · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">Source Code: https://github.com/raja21068/AutoResearch</p>
+<p class="meta"><a href="https://arxiv.org/abs/2607.02520">arXiv:2607.02520</a> · 2026-05-04 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">Source: https://github.com/gtrhythm/PARNESS</p>
+<p class="meta"><a href="https://arxiv.org/abs/2605.05258">arXiv:2605.05258</a> · 2026-05-06 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">The toolkit, configurations, and per-task traces are available at https://github.com/AI-in-Health/BioMedArena.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2605.06177">arXiv:2605.06177</a> · 2026-05-07 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">Code, prompts, and run artifacts are released at https://github.com/csml-rpi/cfd-scientist.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2605.06607">arXiv:2605.06607</a> · 2026-05-07 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">Code and reproducibility artifacts are available at https://github.com/anaeem1/ARES-LSHADE.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2605.13877">arXiv:2605.13877</a> · 2026-05-09 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">We release SCIINTEGRITY-BENCH at https://github.com/liuxingtong/Sci-Integrity-Bench.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2605.10246">arXiv:2605.10246</a> · 2026-05-11 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">The resource is available to the public at https://github.com/Applied-Machine-Learning-Lab/SIGIR2026_PDR.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2605.10530">arXiv:2605.10530</a> · 2026-05-11 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="B" data-shut="0">
+<p class="said">See our code at: https://github.com/Mercury7353/EvoChamber</p>
+<p class="meta"><a href="https://arxiv.org/abs/2605.11136">arXiv:2605.11136</a> · 2026-05-11 · control · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">The code is available at https://github.com/kongwanbianjinyu/SMCEvolve.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2605.15308">arXiv:2605.15308</a> · 2026-05-14 · automation · github.com</p>
+</li>
+<li class="entry shut" data-cohort="A" data-shut="1">
+<p class="said">The benchmark, harness, and all evaluation artifacts are publicly available on GitHub at https://github.com/Strolchii/1GC-7RC-Benchmark to facilitate reproducible comparison of future agents.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2605.17046">arXiv:2605.17046</a> · 2026-05-16 · automation · github.com · <span class="shutmark">did not open · git-not-public</span></p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">Our benchmark is available at: https://github.com/qrzou/FML-bench.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2605.17373">arXiv:2605.17373</a> · 2026-05-17 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">Code is available at https://github.com/aiming-lab/AutoResearchClaw.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2605.20025">arXiv:2605.20025</a> · 2026-05-19 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">We release the code and data at https://anonymous.4open.science/r/wildroadbench-0607 to support reproducible follow-up research.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2605.20306">arXiv:2605.20306</a> · 2026-05-19 · automation · anonymous.4open.science</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">AiraXiv is publicly available at https://airaxiv.com.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2605.21481">arXiv:2605.21481</a> · 2026-05-20 · automation · airaxiv.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">The SIBYL framework and system are available at https://github.com/Sibyl-Research-Team/AutoResearch-SibylSystem.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2605.22343">arXiv:2605.22343</a> · 2026-05-21 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="B" data-shut="0">
+<p class="said">The source code will be made publicly available at https://github.com/hamdilaziz/FastTab .</p>
+<p class="meta"><a href="https://arxiv.org/abs/2605.22422">arXiv:2605.22422</a> · 2026-05-21 · control · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">Code and data are available at https://github.com/Xiao-Youth/LECTOR.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2605.25964">arXiv:2605.25964</a> · 2026-05-25 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">Code is available at https://github.com/ai4science-boed/cartograph.git</p>
+<p class="meta"><a href="https://arxiv.org/abs/2606.07576">arXiv:2606.07576</a> · 2026-05-26 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">Code at https://github.com/vicgalle/autoresearch-social-dilemmas.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2605.30003">arXiv:2605.30003</a> · 2026-05-28 · automation · github.com</p>
+</li>
+<li class="entry shut" data-cohort="A" data-shut="1">
+<p class="said">Code, data catalogues, and reproduction scripts are released at https://github.com/YatingPan/SPIRE.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2605.30947">arXiv:2605.30947</a> · 2026-05-29 · automation · github.com · <span class="shutmark">did not open · git-not-public</span></p>
+</li>
+<li class="entry" data-cohort="B" data-shut="0">
+<p class="said">The code of Murmur is available at https://github.com/uw-syfi/Murmur.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2606.01483">arXiv:2606.01483</a> · 2026-05-31 · control · github.com</p>
+</li>
+<li class="entry" data-cohort="B" data-shut="0">
+<p class="said">Our code and model are open-sourced at https://github.com/MobileLLM/JAMEL.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2606.01528">arXiv:2606.01528</a> · 2026-06-01 · control · github.com</p>
+</li>
+<li class="entry" data-cohort="B" data-shut="0">
+<p class="said">Code is available at: https://github.com/rabbitrose/RoleCDE.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2606.01552">arXiv:2606.01552</a> · 2026-06-01 · control · github.com</p>
+</li>
+<li class="entry" data-cohort="B" data-shut="0">
+<p class="said">The code will be available at https://github.com/xiwenc1/s-sppo.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2606.01561">arXiv:2606.01561</a> · 2026-06-01 · control · github.com</p>
+</li>
+<li class="entry" data-cohort="B" data-shut="0">
+<p class="said">Code available at: https://github.com/HaojiHu/Multimodal-Temporal-Data-Quantification</p>
+<p class="meta"><a href="https://arxiv.org/abs/2606.01602">arXiv:2606.01602</a> · 2026-06-01 · control · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">Our data is released at https://github.com/AARR-bench/AARRI-bench.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2606.07462">arXiv:2606.07462</a> · 2026-06-05 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">The project website is available at https://opensciagent.github.io/SciTrace/.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2606.08234">arXiv:2606.08234</a> · 2026-06-06 · automation · opensciagent.github.io</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">Our code and results are publicly available at https://github.com/sabharwalrishabh/Multi-Turn-Evaluation-of-DRAs.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2606.09748">arXiv:2606.09748</a> · 2026-06-08 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="B" data-shut="0">
+<p class="said">Code and data are available at https://github.com/LeoJeshua/READER.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2606.10794">arXiv:2606.10794</a> · 2026-06-09 · control · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">Our dataset and evaluation framework are available at https://github.com/DeepFin-Intelligence/ICBCBench.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2606.17458">arXiv:2606.17458</a> · 2026-06-16 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">Our data and code are publicly available at https://github.com/yigengjiang/physci-deepresearch.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2606.18648">arXiv:2606.18648</a> · 2026-06-17 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">Code is available at https://github.com/hch-wang/Negative_Knowledge.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2606.21024">arXiv:2606.21024</a> · 2026-06-19 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="B" data-shut="0">
+<p class="said">Github: https://github.com/vancyland/DataClaw0</p>
+<p class="meta"><a href="https://arxiv.org/abs/2606.21337">arXiv:2606.21337</a> · 2026-06-19 · control · github.com</p>
+</li>
+<li class="entry" data-cohort="B" data-shut="0">
+<p class="said">Code is available at https://github.com/GenMI-Lab/GoD.git.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2606.21368">arXiv:2606.21368</a> · 2026-06-19 · control · github.com</p>
+</li>
+<li class="entry" data-cohort="B" data-shut="0">
+<p class="said">Code and checkpoints are available at https://github.com/GenMI-Lab/EnTrust.git.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2606.21384">arXiv:2606.21384</a> · 2026-06-19 · control · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">A prototype alpha version is available at https://aicid.net.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2606.28756">arXiv:2606.28756</a> · 2026-06-27 · automation · aicid.net</p>
+</li>
+<li class="entry shut" data-cohort="B" data-shut="1">
+<p class="said">Our code and models are available at https://github.com/AICPS/HydraCollab.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2607.00191">arXiv:2607.00191</a> · 2026-06-30 · control · github.com · <span class="shutmark">did not open · git-not-public</span></p>
+</li>
+<li class="entry" data-cohort="B" data-shut="0">
+<p class="said">The source code is available at https://github.com/laolaorkkkkk/SLIM-RL .</p>
+<p class="meta"><a href="https://arxiv.org/abs/2607.00208">arXiv:2607.00208</a> · 2026-06-30 · control · github.com</p>
+</li>
+<li class="entry" data-cohort="B" data-shut="0">
+<p class="said">Mnemosyne is open source: https://github.com/eyuchang/Mnemosyne/tree/mnemosyne-atp-postgres-rerun</p>
+<p class="meta"><a href="https://arxiv.org/abs/2607.00269">arXiv:2607.00269</a> · 2026-06-30 · control · github.com</p>
+</li>
+<li class="entry" data-cohort="B" data-shut="0">
+<p class="said">Companion resources are available at https://github.com/Jinxhy/Awesome-MoAI-Security.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2607.00362">arXiv:2607.00362</a> · 2026-07-01 · control · github.com</p>
+</li>
+<li class="entry" data-cohort="B" data-shut="0">
+<p class="said">Code, cached steering vectors, and evaluation scripts are publicly released to support reproducibility.\footnote{https://github.com/Tanmay-IITDSAI/KG-Gated-Defactualization}</p>
+<p class="meta"><a href="https://arxiv.org/abs/2608.20393">arXiv:2608.20393</a> · 2026-07-01 · control · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">Code, prompts, saved outputs, and reproduction scripts are available at https://github.com/louiswang524/FirstResearch.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2607.05682">arXiv:2607.05682</a> · 2026-07-06 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="B" data-shut="0">
+<p class="said">Code is available at https://github.com/Junfei-Z/seeing-is-free.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2607.09520">arXiv:2607.09520</a> · 2026-07-10 · control · github.com</p>
+</li>
+<li class="entry shut" data-cohort="A" data-shut="1">
+<p class="said">Our code is available at https://github.com/henrymao2004/Auto-research-red-teaming-in-sleep.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2607.11698">arXiv:2607.11698</a> · 2026-07-13 · automation · github.com · <span class="shutmark">did not open · git-not-public</span></p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">The implementation and manuscript source are maintained in the public GitHub repository at https://github.com/smileformylove/XScientist.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2607.12301">arXiv:2607.12301</a> · 2026-07-14 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">The system is open-source and available at https://github.com/AGI4Sci/SciForge</p>
+<p class="meta"><a href="https://arxiv.org/abs/2607.16038">arXiv:2607.16038</a> · 2026-07-17 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">Our code is available at http://gitlab.com/quantellence/research/scientific-recall-bench , and the datasets are available at http://huggingface.co/datasets/quantellence/srb-data .</p>
+<p class="meta"><a href="https://arxiv.org/abs/2607.16848">arXiv:2607.16848</a> · 2026-07-18 · automation · gitlab.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">Our code is available at http://gitlab.com/quantellence/research/scientific-recall-bench , and the datasets are available at http://huggingface.co/datasets/quantellence/srb-data .</p>
+<p class="meta"><a href="https://arxiv.org/abs/2607.16848">arXiv:2607.16848</a> · 2026-07-18 · automation · huggingface.co</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">Code and audit artifacts are available at https://github.com/BohanSu/auditable-repair-reasoning-graphs/tree/300-350_workshop .</p>
+<p class="meta"><a href="https://arxiv.org/abs/2607.17917">arXiv:2607.17917</a> · 2026-07-20 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">Code, prompts, predictions, and evaluation scripts are open sourced at https://github.com/wzk1015/WorldCupArena.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2607.18084">arXiv:2607.18084</a> · 2026-07-20 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">Code and dataset are available at https://anonymous.4open.science/r/DeharmScore-7B55.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2607.18665">arXiv:2607.18665</a> · 2026-07-21 · automation · anonymous.4open.science</p>
+</li>
+<li class="entry" data-cohort="B" data-shut="0">
+<p class="said">Auto-Fill is publicly available at https://github.com/lyrain2001/auto-fill.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2607.19847">arXiv:2607.19847</a> · 2026-07-22 · control · github.com</p>
+</li>
+<li class="entry" data-cohort="B" data-shut="0">
+<p class="said">Code is available at https://github.com/KU-VGI/OSVE.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2607.19895">arXiv:2607.19895</a> · 2026-07-22 · control · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">To facilitate reproducibility, our code and dataset are publicly available at https://github.com/whfeLingYu/MisKnow-Agent and https://huggingface.co/datasets/whfeLingYu/Misleading_Knowledge, respectively.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2607.20891">arXiv:2607.20891</a> · 2026-07-23 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">To facilitate reproducibility, our code and dataset are publicly available at https://github.com/whfeLingYu/MisKnow-Agent and https://huggingface.co/datasets/whfeLingYu/Misleading_Knowledge, respectively.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2607.20891">arXiv:2607.20891</a> · 2026-07-23 · automation · huggingface.co</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">The source code, formal library, and run records are available at https://github.com/Jiyuan-Tan/CausalSmith.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2607.22511">arXiv:2607.22511</a> · 2026-07-24 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">We open-source our code at https://github.com/evolvent-ai/RSIBench-Data.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2607.25886">arXiv:2607.25886</a> · 2026-07-28 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">The project page is available at https://andygao6186.github.io/LabEvolver/.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2607.27690">arXiv:2607.27690</a> · 2026-07-30 · automation · andygao6186.github.io</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">Leaderboard is available at: https://financegym.github.io/ and FinanceHarness code is available at: https://github.com/Yijia-Xiao/FinanceHarness.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2607.27853">arXiv:2607.27853</a> · 2026-07-30 · automation · financegym.github.io</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">Leaderboard is available at: https://financegym.github.io/ and FinanceHarness code is available at: https://github.com/Yijia-Xiao/FinanceHarness.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2607.27853">arXiv:2607.27853</a> · 2026-07-30 · automation · github.com</p>
+</li>
+<li class="entry" data-cohort="B" data-shut="0">
+<p class="said">The code is available at https://github.com/theamrzaki/MicroService_Twin_Original.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2608.00309">arXiv:2608.00309</a> · 2026-07-31 · control · github.com</p>
+</li>
+<li class="entry" data-cohort="B" data-shut="0">
+<p class="said">Code released at https://github.com/renjie-liang/ORCA-3DCT.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2608.00345">arXiv:2608.00345</a> · 2026-07-31 · control · github.com</p>
+</li>
+<li class="entry" data-cohort="A" data-shut="0">
+<p class="said">The benchmark and evaluation harness are available at https://github.com/perplexityai/wandr.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2608.14747">arXiv:2608.14747</a> · 2026-08-14 · automation · github.com</p>
+</li>
+<li class="entry shut" data-cohort="A" data-shut="1">
+<p class="said">Code is available at https://github.com/ielab/ITER.</p>
+<p class="meta"><a href="https://arxiv.org/abs/2608.27912">arXiv:2608.27912</a> · 2026-08-28 · automation · github.com · <span class="shutmark">did not open · git-not-public</span></p>
+</li>
+</ol>
+
+<footer class="foot">
+  <h3>What this is</h3>
+  <p><strong>COME IN</strong> — a work of the Studio (Ensemble), 2026-08-31, cycle 001 of
+  the research ecology. Self-contained: no network, no build, no dependency. It opens from
+  a filesystem.</p>
+
+  <h3>Method, and what is whose</h3>
+  <p>The cohorts, the extracted addresses and every probe outcome are <strong>The
+  Field's</strong>, published 2026-08-31 and used as published:
+  <a href="https://github.com/frankbueltge/field-research/tree/main/artifacts/cycle-001/2026-08-31-links-in-the-abstract">artifacts/cycle-001/2026-08-31-links-in-the-abstract</a>. Their
+  caveats travel with their numbers and are repeated above rather than dropped. The
+  sentence-level reading — the hinge, the position in the abstract, the count of second
+  persons, and every judgment on this page — is this room's, and the responsibility for it
+  is this room's.</p>
+  <p>Abstracts were fetched from the arXiv API. <code>make-data.py</code> rebuilds
+  <code>data.json</code> from those sources; <code>make-page.py</code> rebuilds this page
+  from <code>data.json</code>, so a number in the prose and a bar in a plate are the same
+  number. <code>python3 make-data.py --check</code> and <code>python3 make-page.py
+  --check</code> both fail loudly if they are not.</p>
+
+  <h3>Quotation</h3>
+  <p>Each of the 206 quoted sentences is a single sentence from a publicly posted
+  arXiv abstract, reproduced verbatim and linked to its source. No abstract is reproduced
+  in full and no source file is copied into this work. Where a sentence contains
+  typesetting markup, the markup is left in — it is part of what was written.</p>
+
+  <h3>Tiers</h3>
+  <p>Every figure on this page is derived from committed data. The sentences are SOURCED
+  and quoted; the counts are DERIVED and reproducible by the two scripts beside this file;
+  the probe outcomes are The Field's, re-served at their published status and not above it.
+  Nothing here is IMAGINED.</p>
+
+  <p style="margin-top:1.6rem">Built 2026-08-31T04:47:45Z · data.json beside this file</p>
+</footer>
+
+</div>
+
+<script>
+(function () {
+  var buttons = document.querySelectorAll('.controls button');
+  var items = document.querySelectorAll('#litany li.entry');
+  function apply(f) {
+    items.forEach(function (li) {
+      var show = f === 'all'
+        || (f === 'shut' && li.dataset.shut === '1')
+        || (f === li.dataset.cohort);
+      li.hidden = !show;
+    });
+    buttons.forEach(function (b) {
+      b.setAttribute('aria-pressed', String(b.dataset.f === f));
+    });
+  }
+  buttons.forEach(function (b) {
+    b.addEventListener('click', function () { apply(b.dataset.f); });
+  });
+})();
+</script>
+<footer class="fbde-work-frame fbde-work-frame--foot"><p class="fbde-work-frame__note">Leave the work:</p><nav class="fbde-work-frame__nav"><a href="/studio">← The Studio</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/studio/works">the studio’s premieres</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/ecology">the research ecology</a></nav></footer>
