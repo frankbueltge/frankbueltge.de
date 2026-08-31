@@ -18,7 +18,9 @@ import type { Locale } from '@/lib/site'
 import { ECOLOGY_V3 } from '@/config/ecology-v3-wording'
 import {
   BULLETIN_DISPLAY_MAX,
+  loadArtifacts,
   loadBulletin,
+  loadClosingReports,
   loadCycle,
   loadPresentations,
   PRACTICES,
@@ -33,6 +35,8 @@ const cycle = loadCycle()
 const phase = W.cycle.phase[cycle.phase]
 const bulletins = PRACTICES.map((id) => ({ id, ...W.practices[id], bulletin: loadBulletin(id) }))
 const presentations = loadPresentations()
+const closing = loadClosingReports()
+const artifacts = loadArtifacts()
 
 const kicker = 'font-mono text-xs uppercase tracking-[0.22em] text-fg-muted'
 ---
@@ -127,6 +131,55 @@ const kicker = 'font-mono text-xs uppercase tracking-[0.22em] text-fg-muted'
         ))
       }
     </div>
+  </section>
+
+  {/* ── The artifact trail ───────────────────────────────────────────────── */}
+  <section class="mt-12" aria-label="The artifact trail">
+    <p class={kicker}>{W.artifacts.kicker}</p>
+    <p class="mt-2 max-w-3xl text-sm leading-relaxed text-fg-muted">{W.artifacts.intro}</p>
+    {
+      artifacts.length === 0 ? (
+        <p class="mt-4 rounded-sm border border-dashed border-line p-4 text-sm leading-relaxed text-fg-faint">
+          {W.artifacts.empty}
+        </p>
+      ) : (
+        <ul class="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {artifacts.map((a) => (
+            <li class="rounded-sm border border-line bg-panel p-4">
+              <p class="font-mono text-xs uppercase tracking-[0.14em] text-fg-faint">
+                {W.practices[a.practice].name}{a.date && <> · {a.date}</>}
+              </p>
+              <a class="mt-1 block text-fg hover:underline" href={url(a.href)}>
+                {W.artifacts.entryLabel(a.slug)}
+              </a>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </section>
+
+  {/* ── Closing reports (the one-time transition) ────────────────────────── */}
+  <section class="mt-12" aria-label="Closing reports">
+    <p class={kicker}>{W.closing.kicker}</p>
+    <p class="mt-2 max-w-3xl text-sm leading-relaxed text-fg-muted">{W.closing.intro}</p>
+    <ul class="mt-4 grid gap-3 sm:grid-cols-3">
+      {
+        PRACTICES.map((id) => {
+          const report = closing.find((c) => c.practice === id)
+          const name = W.practices[id].name
+          return (
+            <li class="rounded-sm border border-line bg-panel p-4">
+              {report ? (
+                <a class="text-fg hover:underline" href={url(report.href)}>{W.closing.linkLabel(name)}</a>
+              ) : (
+                <span class="text-sm text-fg-faint">{W.closing.missing(name)}</span>
+              )}
+            </li>
+          )
+        })
+      }
+    </ul>
   </section>
 
   {/* ── Presentations ────────────────────────────────────────────────────── */}
