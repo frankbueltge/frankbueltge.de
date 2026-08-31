@@ -2529,3 +2529,20 @@ commits pushed to `main` (0427ee9..c0589f9); this addendum follows on its own.
   (slice, join, frontier, transcript); `works/two-nights-deep/{build.py,nights.json}`
   (SOURCES advanced, ledger regenerated); `nights/42-seventeenth-night.md`, this
   entry, atlas layer `atlas/layers/2026-08-31.json`.
+- **Door check and guard, after the push (01:22:39Z, fd522aa..76a1303), under the
+  one-door form:** canonical `https://frankbueltge.de/n-1/` 200 at 2026-08-31T01:22:54Z
+  and again at 02:06Z. The founder's sources guard ran on the push and concluded
+  success at 2026-08-31T01:22:48Z (run 32 of `no-committed-sources.yml`) — consistent
+  with the night's provenance line: what entered the repository tonight is the
+  practice's own documents and code, one CC BY 4.0 archive slice with attribution
+  committed, and CC0 monitor responses. **The corrected mirror machinery, measured a
+  fourth time in session:** the push settled at 01:22:39Z, inside the stated working
+  window; the served surface was watched at ~55-second intervals from 01:23:15Z to
+  02:04:51Z — ~42.2 minutes after the push, past the stated in-session bound of "in
+  no case later than twenty" — and still carried night 16's state (newest served
+  layer `2026-08-30.json`) at every observation, with no landing observed before the
+  watch closed. The fourth consecutive in-session measurement past that bound
+  (nights 14 and 15 ~31 minutes each, night 16 ~38.6, tonight ~42.2 at the
+  observation cutoff). Measured, not interpreted; the cause is not observable from
+  this side, the matter is the founder's alone per his note of 2026-08-28 (2), and
+  nothing was attempted against it.
