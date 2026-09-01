@@ -30,6 +30,7 @@ import pulseData from '@/data/pulse/pulse.json'
 import type { PulseSnapshot } from '@/lib/pulse/render'
 import { buildStackSvg, stackWeekRange } from '@/lib/ops/stack'
 import { buildBoard, buildSignalLog } from '@/lib/ops/board'
+import { linePath, smooth3, SPARK_BOX } from '@/lib/ops/viz'
 import { allWorks } from '@/lib/engines/register'
 import { loadArtifacts, loadCycle } from '@/lib/ecology/v3'
 import '@/styles/ops-room.css'
@@ -42,9 +43,13 @@ const url = (href: string) => (href.startsWith('http') ? href : getRelativeLocal
 const pulse = pulseData as PulseSnapshot
 const stackSvg = buildStackSvg(pulse)
 
-// The live section is the board compressed to one chip per row — same derivation as /now, so
-// the entrance can never claim a system the full board does not have.
-const chips = buildBoard(pulse).flatMap((group) => group.rows)
+// The live section is the ops room's board, whole — the first cut of this entrance compressed
+// it to bare chips and lost the drawing (the sparklines, the last landed work, the status
+// word); Frank's review of 2026-09-01 called the loss by name, wording private. The rows are
+// the same tested derivation as /now, so the entrance can never claim a system the full board
+// does not have; what stays on /now is everything else — the signal log at depth and all the
+// live-experiment tiles.
+const board = buildBoard(pulse)
 
 // The editorial front page: the newest landed work leads, the next few follow as one line each.
 const signal = buildSignalLog(allWorks(), 6)
@@ -227,23 +232,51 @@ const catalogues = NAMING.catalogues.items.filter((c) => c.href !== '/atlas')
     </p>
   </section>
 
-  {/* ── 4 · live, slim: one chip per system — the full board is /now ────────────────────── */}
+  {/* ── 4 · live: the board, whole — sparklines, last landed, status. /now keeps the rest ── */}
   <section class="ops-section" id="live">
     <div class="ops-head">
       <p class="ops-kicker"><b>{FD.live.kicker}</b> · {FD.live.kickerSub}</p>
       <a class="ops-headlink" href={url(FD.live.link.href)}>{FD.live.link.label}</a>
     </div>
-    <ul class="fd-chips">
-      {chips.map((row) => (
-        <li>
-          <a class={`ops-panel fd-chip${voiceClass(row.voice)}`} href={url(row.href)}>
-            <span class="ops-led"></span>
-            <span class="fd-chip-name">{row.name}</span>
-            <span class="fd-chip-date">{row.last ? row.last.meta : OPS.board.noWork}</span>
-          </a>
-        </li>
-      ))}
-    </ul>
+    {board.map((group) => (
+      <div>
+        <p class="ops-group-label">{group.label}</p>
+        <ul class="ops-panel ops-board">
+          {group.rows.map((row) => (
+            <li>
+              <a class={`ops-row${voiceClass(row.voice)}`} href={url(row.href)}>
+                <span class="ops-led"></span>
+                <span>
+                  <span class="ops-row-name">{row.name}</span>
+                  <span class="ops-row-resident">{row.resident}</span>
+                </span>
+                <span class="ops-row-what">{row.what}</span>
+                <span class="ops-spark-cell">
+                  {row.spark ? (
+                    <svg class="ops-spark" viewBox={`0 0 ${SPARK_BOX.width} ${SPARK_BOX.height}`} preserveAspectRatio="none" aria-hidden="true">
+                      <path d={linePath(smooth3(row.spark), SPARK_BOX)} />
+                    </svg>
+                  ) : (
+                    <span class="ops-absent">no commit split yet</span>
+                  )}
+                </span>
+                <span class="ops-row-last-cell">
+                  {row.last ? (
+                    <>
+                      <span class="ops-row-last">{row.last.title}</span>
+                      <span class="ops-row-date">{row.last.meta}</span>
+                    </>
+                  ) : (
+                    <span class="ops-absent">{OPS.board.noWork}</span>
+                  )}
+                </span>
+                <span class="ops-row-status" data-status={row.status}>{row.status}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
     {/* The named catalogues, one quiet line — /catalogues keeps its inbound link (it had none
         anywhere on the site while sitting in the sitemap; orphan audit, 2026-08-12). */}
     <p class="ops-catalogues">

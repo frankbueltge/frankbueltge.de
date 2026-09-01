@@ -772,12 +772,14 @@ export const NAMING = {
       artifactsLead: 'this cycle’s artifacts: ',
     },
 
-    /** The slim live strip: one chip per board row, nothing else — the full instrument room
-     *  with sparklines, status column and tiles is /now. */
+    /** The live board on the entrance — whole, with its sparklines, last landed work and
+     *  status word (the bare-chips cut of the first front door lost the drawing; Frank's
+     *  review 2026-09-01, wording private). /now keeps the deeper room: the signal log at
+     *  depth and every live-experiment tile. */
     live: {
       kicker: 'LIVE',
-      kickerSub: 'EVERY SYSTEM, ONE CHIP — LAST LANDED DATE',
-      link: { label: 'the full board →', href: '/now' },
+      kickerSub: 'WHAT IS RUNNING HERE — FROM THE COMMITTED RECORD',
+      link: { label: 'the full instrument room →', href: '/now' },
     },
 
     /** /now — the ops room's board, moved off the entrance whole (2026-09-01). */
