@@ -3,6 +3,12 @@
 // Everything on these four levels is derived, so a wrong derivation does not crash — it renders a
 // plausible number. That is the failure mode these tests exist for: each one below pins a place
 // where the surface would have looked completely fine while saying something untrue.
+//
+// Dated note (2026-09-01): the station sheets left the routes — /field, /atelier and /studio
+// render the v3 practice station template now (src/components/ecology/PracticeStation.astro),
+// and StationSheet.astro is retired in the repo, unlinked. The libraries below stay: DOORS,
+// windowDoor and splitDoorLine are load-bearing for the new template, and buildStationSheet
+// with the rest remains the archived surface's derivation, still held to its own truth.
 
 import { describe, expect, it } from 'vitest'
 import { daysUntil, readingDate, STATIONS, PRACTICE_STATIONS, MAP_NODES } from './model'

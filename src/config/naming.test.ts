@@ -48,12 +48,14 @@ describe('NAMING.catalogues', () => {
  *  from turning a door link into a scroll to nowhere. */
 describe('NAMING.doors tour links', () => {
   const TOUR_TARGETS: Record<string, string> = {
-    // The three narrative tours were retired with the v3 pyramid (2026-08-12): what each of them
-    // walked a reader through is the figure on that practice's station sheet, so the door points
-    // there. The old routes 301 to the same anchor (public/_redirects).
+    // The three narrative tours were retired with the v3 pyramid (2026-08-12); the doors then
+    // pointed at the figure on each station sheet. Since the v3 practice stations (2026-09-01)
+    // only the Atelier keeps a figure — its line map, still at /atelier#figure — while the gate
+    // strip and the stage floor left with the sheets, so the Field's and the Studio's doors lead
+    // into their register rooms. The old tour routes 301 to the same targets (public/_redirects).
     ulysses: '/atelier#figure',
-    meridian: '/field#figure',
-    ensemble: '/studio#figure',
+    meridian: '/field/instruments',
+    ensemble: '/studio/works',
   }
 
   it('gives every practice door its tour, and The Middle none', () => {

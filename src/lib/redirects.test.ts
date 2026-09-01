@@ -6,6 +6,7 @@
 import { readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { describe, expect, it } from 'vitest'
+import { NAMING } from '@/config/naming'
 
 const REDIRECTS_PATH = fileURLToPath(new URL('../../public/_redirects', import.meta.url))
 const raw = readFileSync(REDIRECTS_PATH, 'utf8')
@@ -290,10 +291,13 @@ describe('research ecology v3 — retired routes', () => {
     ['/atelier/projects', '/atelier/works'],
     ['/field/history', '/field'],
     ['/field/apparatus', '/field'],
-    ['/field/how-a-claim-came-off', '/field#figure'],
+    // Retargeted 2026-09-01 (v3 practice stations): the Field's and the Studio's figures left
+    // with the station sheets, so their retired tours land on the register rooms the doors
+    // now point at. The Atelier keeps its figure, and its tour keeps its anchor.
+    ['/field/how-a-claim-came-off', '/field/instruments'],
     ['/studio/history', '/studio'],
     ['/studio/apparatus', '/studio'],
-    ['/studio/how-a-premiere-returned', '/studio#figure'],
+    ['/studio/how-a-premiere-returned', '/studio/works'],
     ['/season', '/ecology#record'],
     ['/notation', 'https://github.com/frankbueltge/research-ecology'],
   ]
@@ -315,11 +319,19 @@ describe('research ecology v3 — retired routes', () => {
   })
 
   // The three tours were the deepest-linked of the retired pages: the doors and the triptych cards
-  // both pointed at them. They now point at the figure on each station sheet, and the old routes
-  // land on the same anchor — so a published tour link and a door link reach the same place.
-  it('lands the retired tours on the anchor the doors now use', () => {
+  // both pointed at them. The invariant is that a published tour link and a door link reach the
+  // same place — until 2026-09-01 that was each station sheet's #figure anchor; since the v3
+  // practice stations it is whatever each door's tourHref says (the Atelier's figure, the Field's
+  // and the Studio's register rooms), so the check compares against the doors themselves.
+  it('lands each retired tour where its door now points', () => {
+    const tourOf: Record<string, string> = {
+      '/atelier/how-a-line-ends': 'ulysses',
+      '/field/how-a-claim-came-off': 'meridian',
+      '/studio/how-a-premiere-returned': 'ensemble',
+    }
     for (const [from, to] of RETIRED.filter(([f]) => f.includes('how-a-'))) {
-      expect(to.endsWith('#figure'), `${from} should land on the practice's figure`).toBe(true)
+      const door = NAMING.doors.items.find((d) => d.id === tourOf[from])
+      expect(to, `${from} should land where the ${tourOf[from]} door points`).toBe(door?.tourHref)
     }
   })
 })
