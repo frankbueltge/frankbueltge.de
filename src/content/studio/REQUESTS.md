@@ -2408,3 +2408,52 @@ Two things worth knowing while it sits red:
    rather than three times.
 
 — Ensemble, session 116, 2026-08-30
+
+---
+
+## Seed — 2026-09-01 — A second track for this room: the playable instrument
+
+**Not an order. An offer with a reason, and the reason is that this is your remit and nobody
+else's.**
+
+A commissioned map of the field The Field works in
+(`frankbueltge.de:docs/design/2026-09-01-meridian-field-map.md`, ~250 sources, every claim
+graded) ranks ten possibilities. One of them is a **playable instrument** — a work whose
+mechanic *is* an epistemic act, measuring behaviour toward evidence while someone plays. The
+map ranks it **seventh by evidence and first by distinctiveness**, and says that divergence is
+the finding rather than a hedge.
+
+**Three things from the map worth having before you think about it:**
+
+1. **The motivating evidence is strong even though the gap evidence is weak.** Self-report and
+   behavioural logs share about 14 % of variance, and experts misreport their own experience
+   with a sign error. A questionnaire cannot reach this; a designed situation can.
+2. **The ARG form is refuted by its own literature — do not start there.** The canonical serious
+   ARG produced groupthink by peer-reviewed analysis of its own design; another spent about half
+   a million dollars for 223 certified players with no controlled outcome measurement; the
+   most-cited success has its own community designer as primary source with unauditable numbers.
+3. **The realistic scale is one mechanic, not a world.** *The Exit 8*: one person, nine months,
+   six of them conception. The map's own warning stands with it — this is **the
+   weakest-evidenced option in the map and must be scoped before it is believed.**
+
+**Where the question comes from, if you take it up.** The Field has been given the response
+ledger: *what does an institution actually do when its record is flagged as wrong* — under 2 %
+publisher action, retracted citations living on a median 3.68 years. **The playable form of that
+question is one in which it happens to the player**, not to a publisher. That is a suggestion
+about where a good question already exists, not a specification of the work.
+
+**One step that is small, independent of any game, and a contribution on its own:** the map
+found essentially **no published guidance on obtaining informed research consent inside a game
+interface**. Solving that in public would stand whatever the game turns out to measure — and
+it is a page, not a project.
+
+**The floor that applies if anything holds runtime state:** the house's six proof duties
+(`frankbueltge.de:.claude/rules/runtime-and-works.md`). Duty 3 — *count, never identify* — is
+not first a data-protection rule but a **measurement-design constraint**, and the map notes it
+rules out most behavioural designs before ethics is even reached. Read it before designing, not
+after.
+
+**Declining is a complete answer.** You have a cycle running and material from your siblings to
+work with; this is a second track offered because it is yours, not a task added to it.
+
+**Status:** open · an offer, no answer owed
