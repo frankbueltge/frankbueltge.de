@@ -10,7 +10,14 @@ an oversight: `README.md` sits in the auto-land gate's PROTECT_RE, so the practi
 rewrite its own constitution and may not touch the sign that says which constitution is in
 force. Only the version facts and the operating description are corrected here; the
 practice's own voice is left as written, and a nightly drift check now fails when the two
-disagree again. -->
+disagree again.
+
+Correction 2026-09-01 (architect): that drift check did fail, as designed, and this is the
+correction it asked for. Research ecology v3 replaced v6 with Protocol v7 on 2026-08-30;
+this file went on naming v6 as active for two days, and went on describing the work-line as
+the unit of practice after v7 replaced it with the cycle. Same structural cause as
+2026-08-21 and the same remedy: version facts and operating description corrected here, the
+practice's own voice left as written. -->
 
 # Ulysses / Atelier
 
@@ -54,15 +61,20 @@ publication decisions.
 
 ## Active structure
 
-- [`PROTOCOL.md`](PROTOCOL.md) — active **Research Protocol v6** (since 2026-08-08, with the
-  architect's amendments of 2026-08-12 and 2026-08-21). v4 (2026-07-18) and v5 (2026-07-24)
-  are preserved unchanged in [`archive/protocols/`](archive/protocols/).
+- [`PROTOCOL.md`](PROTOCOL.md) — active **Research Protocol v7** (since 2026-08-30, under
+  research ecology v3). v4 (2026-07-18), v5 (2026-07-24) and v6 (2026-08-08, with the
+  architect's amendments of 2026-08-12 and 2026-08-21) are preserved unchanged in
+  [`archive/protocols/`](archive/protocols/).
 - [`governance/STANDING-DELEGATION.md`](governance/STANDING-DELEGATION.md) — the current autonomous operating envelope.
-- [`projects/`](projects/) — the work-lines and their records (the unit of practice since v5:
-  an accumulating line, not a session's output).
+- [`BULLETIN.md`](BULLETIN.md) — what the last session did, in at most 40 lines; the siblings
+  read it at their own session open, as this practice reads theirs.
+- [`projects/`](projects/) — the work-lines and their records; the unit of practice from v5 to
+  v6, superseded by the cycle (three to five sessions on one shared question, each closing on
+  an artifact).
 - [`docs/RESEARCH-FOUNDATION-V1.md`](docs/RESEARCH-FOUNDATION-V1.md) — the Foundation anchor behind the protocol.
 - [`works/`](works/) — historical and curated published works.
-- [`journal/`](journal/) — the historical session record from the nightly phase.
+- [`journal/`](journal/) — the session record: the nightly phase, and since v7 a note of at
+  most 40 lines appended at every session close.
 - [`atlas/`](atlas/) — the practice's situated source shelf and annotations, not a universal canon.
 - [`pulse/`](pulse/) — Ulysses' own self-measurement instrument (an authored conjecture, never a system state).
 - [`REQUESTS.md`](REQUESTS.md) — the offer channel: seeds and questions Ulysses may take up or decline.
@@ -93,7 +105,10 @@ lineage since: **v4** (2026-07-18, bounded projects under standing delegation) �
 under research ecology v2), amended by the architect on 2026-08-12 (existing floors made
 countable, recall restored as the way a session orients) and 2026-08-21 (the ship gate's second
 limb: a work must bring forth something new or singular, and something only art could have
-brought forth). Public: <https://frankbueltge.de/atelier>.
+brought forth) → **v7** (2026-08-30, under research ecology v3: one shared question for all
+three practices, three to five sessions on it per practice, an artifact and a bulletin every
+session, and the v2 gate apparatus retired — verification sits inside the artifact rather than
+in gates in front of it). Public: <https://frankbueltge.de/atelier>.
 
 License: Apache 2.0 (code) · CC BY 4.0 (works, texts) · CC0 1.0 (data) — open since 2026-07-26; the AI-training reservation lives in the crawler policy, not the licence.
 see [LICENSE.md](./LICENSE.md).

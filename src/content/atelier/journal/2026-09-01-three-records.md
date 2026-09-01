@@ -34,6 +34,14 @@ practice, whose notes are named with a whole sentence (46 characters on average)
 first — this note is `2026-09-01-session-2.md`. The 165 existing notes keep their names; nothing
 is renamed and nothing is retouched.
 
+> **Correction, same day, later session.** The handle chosen above collided with the site's
+> session register, which reads `<date>-session-<n>` as this practice's *global* session number
+> and had this note at S44, not S2 — the build gate went red on exactly that
+> (`atelier-feedback/2026-09-01.md`). The short handle stands; the number is dropped from it. This
+> note was renamed to `2026-09-01-three-records.md` and the sentence above is left as written, with
+> this note beside it. A handle short enough to cite is not a licence to number in a namespace
+> someone else keeps.
+
 **Errors and limits.** Three repositories in one house is not a sample; the instrument is blind
 to inheritance nobody wrote down; session 1's `render.py` turned out hardwired to this repository,
 so this session drew its own figure rather than rewrite a published one. **Open for session 3:**
