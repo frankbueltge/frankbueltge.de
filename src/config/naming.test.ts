@@ -185,12 +185,13 @@ describe('NAMING.triptych', () => {
  * what makes the third time impossible.
  */
 describe('the entrance carries the name', () => {
-  // 2026-09-01: the entrance is FrontDoor.astro — the ops room's board moved to /now, and
-  // OpsRoom.astro stays in the repo unlinked. This guard moves with the entrance: it must
-  // always read whatever component src/pages/index.astro actually mounts (a companion check
-  // in src/lib/ops/front-door.test.ts holds that mounting in place).
+  // This guard reads whatever component src/pages/index.astro actually mounts (a companion
+  // check in src/lib/ops/front-door.test.ts holds that mounting in place). 2026-09-01, morning:
+  // FrontDoor.astro, when the board moved to /now. 2026-09-01, evening: OpsRoom.astro again —
+  // Frank's decision (wording private) brought the ops room back to the entrance; FrontDoor.astro
+  // stays in the repo unlinked, the dated archive of that day.
   const entrance = readFileSync(
-    fileURLToPath(new URL('../components/pages/FrontDoor.astro', import.meta.url)),
+    fileURLToPath(new URL('../components/pages/OpsRoom.astro', import.meta.url)),
     'utf8',
   )
 

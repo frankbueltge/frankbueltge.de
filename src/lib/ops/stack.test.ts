@@ -141,6 +141,41 @@ describe('buildStackSvg', () => {
     expect(buildStackSvg(snapshotOf([ramp(30)]))).not.toMatch(/#[0-9a-f]{3,8}|rgba?\(/i)
   })
 
+  it('draws each ridge as a monotone curve through its points, closed along its baseline', () => {
+    // 2026-09-01: d3.curveMonotoneX. The open track (what the dots walk) is the same curve
+    // without the closing segment, so a dot never leaves the drawn line.
+    const svg = buildStackSvg(snapshotOf([ramp(30)]))
+    const ridge = /class="ops-ridge"[^>]*d="([^"]+)"/.exec(svg)![1]
+    const track = /id="ops-track-0" d="([^"]+)"/.exec(svg)![1]
+    expect(ridge.startsWith('M')).toBe(true)
+    expect(ridge).toContain('C')
+    expect(ridge.endsWith('Z')).toBe(true)
+    expect(ridge.startsWith(track)).toBe(true)
+  })
+
+  it('gives every ridge its own facts for the hover readout — week, half, offset and the unshaped bins', () => {
+    const svg = buildStackSvg(snapshotOf([ramp(30), ramp(31, { cutoff_bin: 60 })]))
+    const ridges = [...svg.matchAll(/<path class="ops-ridge"([^>]*)>/g)].map((m) => m[1])
+    expect(ridges).toHaveLength(4)
+    // the first half of week 30 begins at bin 0 and carries bins 0..41 verbatim — not tapered,
+    // not smoothed: the readout states what the archive holds
+    expect(ridges[0]).toContain('data-week="30"')
+    expect(ridges[0]).toContain('data-half="0"')
+    expect(ridges[0]).toContain('data-offset="0"')
+    expect(ridges[0]).toContain(`data-values="${Array.from({ length: 42 }, (_, i) => i).join(',')}"`)
+    // the second half begins where the first ended
+    expect(ridges[1]).toContain('data-half="1"')
+    expect(ridges[1]).toContain('data-offset="42"')
+    // the current week's clipped second half carries only its elapsed bins (42..59)
+    expect(ridges[3]).toContain(`data-values="${Array.from({ length: 18 }, (_, i) => 42 + i).join(',')}"`)
+  })
+
+  it('paints the hairline once, after every ridge, so nothing can cover it', () => {
+    const svg = buildStackSvg(snapshotOf([ramp(30), ramp(31)]))
+    expect((svg.match(/class="ops-hair"/g) ?? []).length).toBe(1)
+    expect(svg.indexOf('class="ops-hair"')).toBeGreaterThan(svg.lastIndexOf('class="ops-ridge"'))
+  })
+
   it('paints each dot under the ridges in front of its line — occlusion binds the dots too', () => {
     // Until 2026-08-16 all six dots were appended after the last ridge, so a dot walking a BACK
     // line floated in front of every line physically nearer than its own (Frank's finding). SVG
