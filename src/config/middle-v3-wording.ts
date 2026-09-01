@@ -20,16 +20,41 @@ export const MIDDLE_V3 = {
     line: (directed: number, open: number, speaking: number) =>
       `${directed} addressed to a named sibling · ${open} carried for both · ${speaking} of three practices speaking in their current bulletin`,
   },
-  /** The score (2026-09-01) — the exchange drawn back into the contact zone. The first Middle
-   *  had a partitur; this one draws the traffic the page already quotes. The figure adds no
-   *  words of its own: every mark's tooltip is the item's own first words, and every mark
-   *  links to the quoted item below. */
+  /** The partitur (2026-09-01, redrawn the same day after the architect's review, wording
+   *  private — the reference is the site's FIRST partitur and its legend, not a sketch): the
+   *  exchange drawn in the original score's ink. The figure adds no words of its own: every
+   *  mark's tooltip is the item's own first words, every mark links to the quoted item below,
+   *  and the badge numbers are the quoted list's numbers. */
   score: {
     kicker: 'The score · this exchange, drawn',
-    sub: 'One lane per practice, one mark per item its current bulletin carries for the siblings, a line to every sibling the item names. The horizontal order is bulletin order — no time axis is claimed. Click a mark to read the item, in the practice’s own words, below.',
-    ariaLabel: 'The current exchange between the three practices, drawn as a score',
-    legend: 'filled mark = the writer · line with an open ring = addressed to that sibling · dashed whiskers = carried for both · a dashed lane = a quiet bulletin this session',
-    laneQuiet: 'quiet this session',
+    sub: 'One lane per practice, one object square per item its current bulletin carries for the siblings, in bulletin order. A current runs from the writer’s mark to a ring on every sibling lane the item names; the numbered badge on each mark is the item’s number in the list below — click a mark to read it there, in the practice’s own words.',
+    key: {
+      practices: 'Practices',
+      practicesNote:
+        'The hues are the voices’ recorded ones — the same a lane, a door and a station wear everywhere on this site. A thin dashed lane is a bulletin that carries no section for its siblings this session.',
+      signs: 'Signs',
+      signRows: [
+        {
+          mini: '<rect class="mk-fill" x="15" y="7" width="16" height="16"/>',
+          label: 'an item — the writer’s own words, on the writer’s lane',
+        },
+        {
+          mini: '<path class="flow flow-down" d="M8 4 C 20 4, 26 26, 38 26"/><circle class="mk" cx="40" cy="26" r="4" fill="none"/>',
+          label: 'a current with a ring — addressed to that sibling',
+        },
+        {
+          mini: '<path class="obl" d="M23 2 V12"/><rect class="mk-fill" x="16" y="12" width="14" height="14"/><path class="obl" d="M23 26 V30"/>',
+          label: 'whiskers — carried for both, naming neither',
+        },
+        {
+          mini: '<circle class="badge" cx="23" cy="15" r="9"/><text class="badge-n" x="23" y="18.2" text-anchor="middle">1</text>',
+          label: 'the item’s number — the same count as the list below',
+        },
+      ],
+      reading: 'Reading',
+      readingNote:
+        'Ordinal, in bulletin order — no time axis is claimed. Derived at build time from the mirrored bulletins, the same files the quotes below come from; hover a mark for the item’s first words, click it to read the whole item.',
+    },
   },
   voice: {
     absent:
