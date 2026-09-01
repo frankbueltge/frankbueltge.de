@@ -1,0 +1,314 @@
+---
+// The practice station (research ecology v3, 2026-09-01) — ONE template for /field, /atelier
+// and /studio, replacing the station sheets of 2026-08-12. Same design language as the v3
+// entrance and The Middle, so the ecology's surfaces read as one instrument; what differs
+// between the three pages is the practices' own record, never the layout.
+//
+// Invariants, kept from the surfaces around it (EcologyV3Entrance, MiddleV3):
+//
+//   · NO TYPED NUMBER — cycle, dates, counts and line totals come from committed files via
+//     src/lib/ecology/v3.ts and the works register; copy that wraps a number is a function in
+//     the wording configs taking that number as its argument.
+//   · NO CLIENT DATA FETCHING — static output, nothing moves after the build.
+//   · ABSENCE IS DRAWN — a missing bulletin, an empty artifact shelf and a silent record each
+//     say so in words; no placeholder stands in for a missing record.
+//   · APPEARANCE VIA CLASSES ONLY — no style="" anywhere (the CSP drops inline styles
+//     silently). The per-practice accent is the validated --hub-c-* voice token from
+//     hub-triptych.css, keyed by data-voice, and it appears exactly twice: the hairline under
+//     the header and the cycle LED. Nothing louder.
+//
+// Names, personas, corners and the door one-liner are READ from ECOLOGY_V3.practices and
+// NAMING.doors — never restated here, so a station cannot describe its practice differently
+// from the door that leads to it.
+import { getRelativeLocaleUrl } from 'astro:i18n'
+import type { Locale } from '@/lib/site'
+import '@/styles/hub-triptych.css'
+import { NAMING } from '@/config/naming'
+import { ECOLOGY_V3 } from '@/config/ecology-v3-wording'
+import { PRACTICE_V3, STATION_V3 } from '@/config/practice-wording'
+import { PYRAMID } from '@/config/ecology-pyramid-wording'
+import {
+  BULLETIN_DISPLAY_MAX,
+  loadArtifacts,
+  loadBulletin,
+  loadCycle,
+  PRACTICES,
+  PRACTICE_REPO,
+  type PracticeId,
+} from '@/lib/ecology/v3'
+import { bulletinBlocks } from '@/lib/ecology/bulletin-render'
+import { DOORS, splitDoorLine, windowDoor, type LogEntry } from '@/lib/ecology/pyramid/station'
+import { allWorks } from '@/lib/engines/register'
+
+interface Props {
+  id: PracticeId
+  /** the practice's last sessions, assembled by the page — the three records are read three
+   *  different ways (chronicle, chronicle, dossier), and only the page knows which one it is */
+  log: LogEntry[]
+}
+
+const { id, log } = Astro.props
+
+const locale = (Astro.currentLocale ?? 'en') as Locale
+const url = (href: string) => (href.startsWith('http') ? href : getRelativeLocaleUrl(locale, href))
+
+/** the door (and voice token) each practice answers to on the entrance */
+const DOOR_ID: Record<PracticeId, 'ulysses' | 'meridian' | 'ensemble'> = {
+  atelier: 'ulysses',
+  field: 'meridian',
+  studio: 'ensemble',
+}
+const voice = DOOR_ID[id]
+const door = splitDoorLine(NAMING.doors.items.find((d) => d.id === voice)!.description)
+
+const P = ECOLOGY_V3.practices[id]
+const W = PRACTICE_V3[id]
+const S = STATION_V3
+
+const cycle = loadCycle()
+const phase = ECOLOGY_V3.cycle.phase[cycle.phase]
+const question = cycle.source === 'seed' && cycle.question ? cycle.question : cycle.defaults[id]
+
+const bulletin = loadBulletin(id)
+const blocks = bulletin.present && bulletin.text ? bulletinBlocks(bulletin.text) : []
+
+const works = allWorks().filter((w) => w.ns === id)
+const newest = works.slice(0, 3)
+const artifacts = loadArtifacts().filter((a) => a.practice === id)
+
+const window = windowDoor(id)
+const doors = window ? [...DOORS[id], window] : DOORS[id]
+const siblings = PRACTICES.filter((p) => p !== id)
+
+const kicker = 'font-mono text-xs uppercase tracking-[0.22em] text-fg-muted'
+const quietLink =
+  'font-mono text-xs text-fg-muted underline decoration-line underline-offset-4 hover:text-fg'
+
+const blockClass: Record<string, string> = {
+  heading: 'pt-2 font-mono text-[13px] uppercase tracking-[0.14em] text-fg first:pt-0',
+  listItem: 'border-l border-line pl-3 text-sm leading-relaxed text-fg-muted',
+  para: 'text-sm leading-relaxed text-fg-muted',
+}
+---
+
+<article class="hub-voices mx-auto max-w-5xl px-4 pb-20 pt-10 sm:px-6" data-voice={voice}>
+  {/* ── Header: the door's own words, then who this is under v3 ──────────── */}
+  <header>
+    <p class={kicker}>{P.name.toUpperCase()} · {P.persona.toUpperCase()} · {P.corner.toUpperCase()}</p>
+    <h1 class="mt-3 max-w-4xl text-3xl font-semibold tracking-tight text-fg sm:text-4xl">{door.lead}</h1>
+    {door.rest && <p class="mt-4 max-w-3xl leading-relaxed text-fg-muted">{door.rest}</p>}
+    <div class="station-hairline mt-6 h-px w-full" aria-hidden="true"></div>
+    <p class="mt-5 max-w-3xl text-sm leading-relaxed text-fg-muted">{W.identity}</p>
+    <p class="mt-4 font-mono text-xs text-fg-faint">
+      {S.siblings.lead}
+      {siblings.map((s) => (
+        <>
+          {' '}<a class="underline decoration-line underline-offset-4 hover:text-fg" href={url(ECOLOGY_V3.practices[s].href)}>{ECOLOGY_V3.practices[s].name}</a> ·
+        </>
+      ))}
+      {' '}<a class="underline decoration-line underline-offset-4 hover:text-fg" href={url(S.siblings.ecologyHref)}>{S.siblings.ecologyLabel}</a>
+      {' '}· <a class="underline decoration-line underline-offset-4 hover:text-fg" href={url(S.siblings.middleHref)}>{S.siblings.middleLabel}</a>
+    </p>
+  </header>
+
+  {/* ── NOW: the house clock, the question, the bulletin, the last sessions ─ */}
+  <section class="mt-12 rounded-sm border border-line bg-panel p-5 sm:p-6" aria-label="Now">
+    <p class={kicker}>{S.now.kicker}</p>
+    <div class="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1">
+      <span class="station-led inline-block h-2 w-2 rounded-full" aria-hidden="true"></span>
+      <h2 class="font-mono text-sm uppercase tracking-[0.18em] text-fg">{ECOLOGY_V3.cycle.label(cycle.cycle)}</h2>
+      <span class="font-mono text-xs uppercase tracking-[0.18em] text-accent">{phase.badge}</span>
+      <span class="font-mono text-xs text-fg-faint">{ECOLOGY_V3.cycle.openedLine(cycle.opened)}</span>
+    </div>
+
+    <div class="mt-4 border-t border-line pt-4">
+      <p class={kicker}>{S.now.questionKicker}</p>
+      <p class="mt-2 max-w-3xl text-lg leading-snug text-fg">{question}</p>
+      <p class="mt-1.5 font-mono text-xs text-fg-faint">
+        {cycle.source === 'seed' ? S.now.seededNote : S.now.defaultsNote}
+      </p>
+    </div>
+
+    <div class="mt-5 border-t border-line pt-4">
+      <div class="flex flex-wrap items-baseline justify-between gap-2">
+        <p class={kicker}>{ECOLOGY_V3.bulletin.kicker}</p>
+        <a
+          class={quietLink}
+          href={`https://github.com/frankbueltge/${PRACTICE_REPO[id]}/blob/main/BULLETIN.md`}
+        >{ECOLOGY_V3.bulletin.sourceLabel}</a>
+      </div>
+      {
+        bulletin.present ? (
+          <>
+            <div class="mt-3 space-y-2.5">
+              {blocks.map((b) => (
+                <p class={blockClass[b.kind]}>
+                  {b.segments.map((s) =>
+                    s.kind === 'strong' ? (
+                      <strong class="font-semibold text-fg">{s.text}</strong>
+                    ) : s.kind === 'code' ? (
+                      <code class="rounded bg-panel-2 px-1 font-mono text-[0.9em]">{s.text}</code>
+                    ) : (
+                      <>{s.text}</>
+                    ),
+                  )}
+                </p>
+              ))}
+            </div>
+            {bulletin.truncated && (
+              <p class="mt-3 font-mono text-xs text-fg-faint">
+                {ECOLOGY_V3.bulletin.truncatedNote(bulletin.lines, BULLETIN_DISPLAY_MAX)}
+              </p>
+            )}
+          </>
+        ) : (
+          <p class="mt-3 text-sm leading-relaxed text-fg-faint">{ECOLOGY_V3.bulletin.absent}</p>
+        )
+      }
+    </div>
+
+    <div class="mt-5 border-t border-line pt-4">
+      <p class={kicker}>{S.now.sessionsKicker}</p>
+      {
+        log.length === 0 ? (
+          <p class="mt-2 text-sm leading-relaxed text-fg-faint">{PYRAMID.station.absent}</p>
+        ) : (
+          <ul class="mt-2 space-y-2">
+            {log.map((r) => (
+              <li class="text-sm leading-relaxed text-fg-muted">
+                <span class="font-mono text-xs tabular-nums text-fg-faint">{r.date}</span>
+                {r.marker && (
+                  <span class="ml-2 font-mono text-xs uppercase tracking-[0.12em] text-fg-faint">{r.marker}</span>
+                )}
+                <span class="ml-2">
+                  {r.href ? (
+                    <a class="hover:underline" href={url(r.href)}>{r.line}</a>
+                  ) : (
+                    r.line
+                  )}
+                </span>
+              </li>
+            ))}
+          </ul>
+        )
+      }
+      <p class="mt-3">
+        <a class={quietLink} href={url(`/${id}/journal`)}>{PYRAMID.station.wholeJournal}</a>
+      </p>
+    </div>
+  </section>
+
+  {/* ── MADE: the newest works, counted from the register, and the cycle's artifacts ─ */}
+  <section class="mt-12" aria-label="Made">
+    <p class={kicker}>{S.made.kicker}</p>
+    <p class="mt-2 max-w-3xl text-sm leading-relaxed text-fg-muted">{W.madeLine(works.length)}</p>
+    {
+      newest.length === 0 ? (
+        <p class="mt-4 rounded-sm border border-dashed border-line p-4 text-sm leading-relaxed text-fg-faint">
+          {PYRAMID.station.absent}
+        </p>
+      ) : (
+        <ul class="mt-4 grid gap-3 sm:grid-cols-3">
+          {newest.map((w) => (
+            <li class="rounded-sm border border-line bg-panel p-4">
+              <p class="font-mono text-xs tabular-nums text-fg-faint">
+                {w.date}
+                {w.state === 'withdrawn' && (
+                  <span class="ml-2 uppercase tracking-[0.12em]">
+                    {NAMING.worksRegister.withdrawnLabel}
+                    {w.withdrawnOn && ` ${w.withdrawnOn}`}
+                  </span>
+                )}
+              </p>
+              <a class="mt-1 block text-fg hover:underline" href={url(w.href)}>{w.title}</a>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+    <p class="mt-3">
+      <a class={quietLink} href={url(W.registerHref)}>{W.registerLabel(works.length)}</a>
+    </p>
+
+    <div class="mt-8">
+      <p class={kicker}>{S.made.artifactsKicker}</p>
+      {
+        artifacts.length === 0 ? (
+          <p class="mt-3 rounded-sm border border-dashed border-line p-4 text-sm leading-relaxed text-fg-faint">
+            {ECOLOGY_V3.artifacts.empty}
+          </p>
+        ) : (
+          <ul class="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {artifacts.map((a) => (
+              <li class="rounded-sm border border-line bg-panel p-4">
+                {a.date && <p class="font-mono text-xs tabular-nums text-fg-faint">{a.date}</p>}
+                <a class="mt-1 block text-fg hover:underline" href={url(a.href)}>
+                  {ECOLOGY_V3.artifacts.entryLabel(a.slug)}
+                </a>
+              </li>
+            ))}
+          </ul>
+        )
+      }
+    </div>
+  </section>
+
+  {/* ── The practice's figure, where it keeps one (the Atelier's line map). The id is a link
+        target, not decoration: the door's tour link and a retired route's 301 land on it. ── */}
+  {
+    Astro.slots.has('figure') && (
+      <section id="figure" class="mt-12" aria-label="The practice’s figure">
+        <slot name="figure" />
+      </section>
+    )
+  }
+
+  {/* ── DOORS: the practice's own rooms, unchanged from the station sheet ── */}
+  <section class="mt-12" aria-label="Doors">
+    <p class={kicker}>{S.doors.kicker}</p>
+    <p class="mt-2 max-w-3xl text-sm leading-relaxed text-fg-muted">{S.doors.sub}</p>
+    <ul class="mt-4 grid gap-3 sm:grid-cols-2">
+      {
+        doors.map((d) => (
+          <li class="rounded-sm border border-line bg-panel">
+            <a class="group block p-4" href={url(d.href)}>
+              <span class="font-mono text-sm text-fg group-hover:underline">{d.title}</span>
+              <span class="mt-1 block text-sm leading-relaxed text-fg-muted">{d.sub}</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  {/* ── Foot: what stood here, dated ─────────────────────────────────────── */}
+  <footer class="mt-14 border-t border-line pt-6">
+    <p class="max-w-3xl text-sm leading-relaxed text-fg-faint">{S.foot.lineage}</p>
+    <nav class="mt-4 flex flex-wrap gap-x-5 gap-y-2" aria-label="Station foot">
+      {
+        S.foot.links.map((l) => (
+          <a class={quietLink} href={url(l.href)}>{l.label}</a>
+        ))
+      }
+    </nav>
+  </footer>
+</article>
+
+<style>
+  /* The voice tokens are declared ONCE, in hub-triptych.css, and inherited through the
+     .hub-voices class the entrance's doors and cards share — restating a hex here would be the
+     drift that file's header warns about. The accent appears twice, and quietly. */
+  article[data-voice='ulysses'] {
+    --station-accent: var(--hub-c-ulysses);
+  }
+  article[data-voice='meridian'] {
+    --station-accent: var(--hub-c-meridian);
+  }
+  article[data-voice='ensemble'] {
+    --station-accent: var(--hub-c-ensemble);
+  }
+  .station-hairline,
+  .station-led {
+    background: var(--station-accent);
+  }
+</style>

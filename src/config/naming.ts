@@ -200,8 +200,10 @@ export const NAMING = {
   doors: {
     kicker: 'WHO LIVES HERE',
     kickerSub: 'FOUR DOORS',
-    /** the small link inside each practice door (WP7) — one wording for all three */
-    tourLabel: '→ see its figure',
+    /** the small link inside each practice door (WP7) — one wording for all three.
+     *  Reworded 2026-09-01 with the v3 practice stations: two of the three targets are now
+     *  register rooms, not figures, so a label promising a figure would lie on two doors. */
+    tourLabel: '→ into its record',
     items: [
       /* Türbeschreibungen neu (Frank, 24.07.): Auskunft statt Poesie — jede Tür sagt in
        * einem Satz, was die Praxis tut, aus ihrer aktuellen Selbstbeschreibung (Engine-READMEs),
@@ -223,7 +225,10 @@ export const NAMING = {
         name: 'The Field',
         href: '/field',
         description: 'An empirical research collective putting the measuring instruments of our time on trial — the science corner of the shared question: measurements over impressions, named sources, honest uncertainty.',
-        tourHref: '/field#figure',
+        // Retargeted 2026-09-01 (v3 practice stations): /field keeps no figure any more — the
+        // gate strip and claim plate went with the station sheet — so the shortest path into
+        // what this practice actually does is its instrument register.
+        tourHref: '/field/instruments',
       },
       {
         id: 'ensemble',
@@ -232,7 +237,9 @@ export const NAMING = {
         // "under no label" until 2026-08-08, when the architect gave this practice a line; the
         // concept-gate clause fell with the v2 gates on 2026-08-30. See docs/decision-log.md.
         description: 'An artist collective on one line: only digital works, and only what a machine does better than a human — it builds works and instruments from its siblings’ research material; scale, repetition, verification, the temporal.',
-        tourHref: '/studio#figure',
+        // Retargeted 2026-09-01 (v3 practice stations): /studio keeps no figure any more — the
+        // stage floor went with the station sheet — so the door leads into the premiere register.
+        tourHref: '/studio/works',
       },
       {
         id: 'conductor',
@@ -283,13 +290,18 @@ export const NAMING = {
     kickerSub: 'ONE FRAME, THREE DRAWING LANGUAGES',
     note: 'The practices share no way of drawing — that is a rule of this ecology, not an accident of who built what. Each card below holds a fragment of one practice’s own figure, on its own paper, in its own marks, cut from the same committed record the room itself reads. The frame around them is the same on purpose, so what you notice is the difference inside. The Middle has no card here: it is where the practices meet, not a practice, and it draws an encounter rather than a hand of its own.',
     provenancePrefix: 'derived at build time from',
+    /* Card ctas and hrefs retargeted 2026-09-01 with the v3 practice stations: a card points at
+     * the same place its door's tourHref does (naming.test.ts holds the two equal), and two of
+     * those are register rooms now that the gate strip and the stage floor left /field and
+     * /studio with the station sheets. The captions are unchanged — the fragments they describe
+     * are still drawn from the same committed records. */
     cards: [
       {
         id: 'ulysses',
         practice: 'The Atelier · Ulysses',
         title: 'a measured sheet',
         caption: 'The line this practice opened most recently, and where the lines around it come to rest: on this sheet every question runs along one shared time axis and curves into the harbour it reached — published, kept as a study, or closed unfinished.',
-        cta: 'see the whole map on its station sheet →',
+        cta: 'see the whole map on its practice page →',
         href: '/atelier#figure',
       },
       {
@@ -297,16 +309,16 @@ export const NAMING = {
         practice: 'The Field · Meridian',
         title: 'a strip of millimetre tape',
         caption: 'The last marked days of the record strip: an instrument entering service, the sessions stamped on their own day, a review cutting in from outside — and the resting pen, where the tape runs on.',
-        cta: 'see the whole gate on its station sheet →',
-        href: '/field#figure',
+        cta: 'into the record — every instrument, dated →',
+        href: '/field/instruments',
       },
       {
         id: 'ensemble',
         practice: 'The Studio · Ensemble',
         title: 'a floor that keeps every mark',
         caption: 'The position this house lit most recently, on the stage floor: the lamp on the bar, the hard-edged pool it plays in, and the tape that blocks the position whether or not the light is still on.',
-        cta: 'see the whole floor on its station sheet →',
-        href: '/studio#figure',
+        cta: 'into the record — every premiere, every strike kept →',
+        href: '/studio/works',
       },
     ] as TriptychCard[],
   },

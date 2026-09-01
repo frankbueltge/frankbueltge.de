@@ -1,31 +1,36 @@
 ---
-// /atelier — the Atelier's station sheet (Level 1 of the ecology pyramid, 2026-08-12).
+// /atelier — the Atelier's practice station (research ecology v3 template, 2026-09-01).
 //
-// Replaces, as separate surfaces: this practice's index, its history, its apparatus page, its
-// tour, and the standalone sheet/sheets/material/foundation/projects rooms. The entrance map that
-// stood here since 2026-07-23 survives as the sheet's figure — reduced to the figure slot, drawn
-// from the same committed records (SCORE/TRACE frontmatter and the works register) it always was.
-// The retired pages 301 here; their texts stay in Git.
+// Lineage: the station sheet of 2026-08-12 (StationSheet) stood here until 2026-09-01 and is
+// archived in the repository history; its components stay in the repo unlinked (decision log,
+// 2026-09-01). This page is thin on purpose: it assembles the practice's own record — the last
+// moves from its dossiers — and renders one PracticeStation.
+//
+// The one thing this page keeps that its siblings do not: the LINE MAP, the practice's own
+// figure, drawn from the same committed records (SCORE/TRACE and the works register) it always
+// was. It fills the station's figure slot, whose section carries id="figure" — the door's tour
+// link and the retired tour route's 301 land on that anchor, and mounted.test.ts holds the map
+// itself on a page.
 import Page from '@/layouts/Page.astro'
-import StationSheet from '@/components/ecology/StationSheet.astro'
+import PracticeStation from '@/components/ecology/PracticeStation.astro'
 import Figure from '@/components/ecology/figures/Figure.astro'
 import LineMapFigure from '@/components/ecology/figures/LineMap.astro'
+import '@/styles/ecology-pyramid.css'
+import { PRACTICE_V3 } from '@/config/practice-wording'
 import { PYRAMID } from '@/config/ecology-pyramid-wording'
 import { FIGURES } from '@/config/ecology-figure-wording'
-import pulseData from '@/data/pulse/pulse.json'
-import type { PulseSnapshot } from '@/lib/pulse/render'
 import { allWorks } from '@/lib/engines/register'
 import { loadDossiers } from '@/lib/atelier/dossier-data'
-import { buildStationSheet, splitDoorLine, type LogEntry } from '@/lib/ecology/pyramid/station'
 import { buildLineMap } from '@/lib/ecology/pyramid/figures'
 import { firstClause } from '@/lib/ecology/pyramid/landings'
+import type { LogEntry } from '@/lib/ecology/pyramid/station'
 
 const works = allWorks()
 const dossiers = loadDossiers()
 const atelierWorks = works.filter((w) => w.ns === 'atelier')
 
-// This practice keeps a trace and a journal per work-line rather than one chronicle, so the log is
-// its dated moves, merged and newest first — the dossier already does that merge.
+// This practice keeps a trace and a journal per work-line rather than one chronicle, so the log
+// is its dated moves, merged and newest first — the dossier already does that merge.
 const log: LogEntry[] = dossiers
   .flatMap((d) => d.moves)
   .filter((m) => m.date)
@@ -38,56 +43,27 @@ const log: LogEntry[] = dossiers
     href: m.href ?? undefined,
   }))
 
-const sheet = buildStationSheet({
-  id: 'atelier',
-  snapshot: pulseData as PulseSnapshot,
-  works,
-  log,
-  made: atelierWorks.length,
-})
-
 const map = buildLineMap(dossiers, works)
-const door = splitDoorLine(sheet.station.description)
-const SEO = PYRAMID.stationSeo.atelier
+const SEO = PRACTICE_V3.atelier.seo
 const F = FIGURES.atelier
-
-// The refrain score is NOT on this sheet any more (2026-08-16, Frank's decision). It is the
-// figure of ONE line's own time, and it lives with that line's record at /atelier/lines/<id> —
-// the station keeps the line map, which shows the whole practice. mounted.test.ts still guards
-// that the score renders on a page; it simply stopped being this one.
 ---
 
 <Page title={`${SEO.title} | Frank Bültge`} description={SEO.description}>
-  <StationSheet
-    id="atelier"
-    kicker={`${sheet.station.name.toUpperCase()} · ${sheet.station.resident.toUpperCase()} · ${sheet.station.corner}`}
-    h1={door.lead}
-    sub={door.rest}
-    status={sheet.status}
-    figureColumns={1}
-    lede={sheet.lede && {
-      kicker: F.lede.kicker(sheet.lede.date),
-      title: sheet.lede.title,
-      teaser: sheet.ledeTeaser,
-      note: sheet.arc?.title ?? null,
-      noteLabel: F.lede.noteLabel,
-      links: [
-        { label: F.lede.open, href: sheet.lede.href },
-        { label: F.lede.record, href: '/atelier/works' },
-      ],
-    }}
-    log={sheet.log}
-    logMore={{ label: PYRAMID.station.wholeJournal, href: '/atelier/journal' }}
-    doors={sheet.doors}
-  >
-    <Figure
-      slot="figure-main"
-      title={F.lineMap.title}
-      sub={F.lineMap.sub}
-      link={{ label: F.lineMap.link(sheet.made.count), href: '/atelier/works' }}
-      caption={F.lineMap.caption(map.lines.length, map.works.length)}
-    >
-      <LineMapFigure map={map} />
-    </Figure>
-  </StationSheet>
+  <PracticeStation id="atelier" log={log}>
+    {/* The figure keeps its own instrument-panel design language (ecology-pyramid.css), scoped
+        by the .eco ancestor — the tokens live there, and the drawing is the practice's, not the
+        template's. */}
+    <div slot="figure" class="eco hub-voices rounded-sm">
+      <div class="p-3 sm:p-4">
+        <Figure
+          title={F.lineMap.title}
+          sub={F.lineMap.sub}
+          link={{ label: F.lineMap.link(atelierWorks.length), href: '/atelier/works' }}
+          caption={F.lineMap.caption(map.lines.length, map.works.length)}
+        >
+          <LineMapFigure map={map} />
+        </Figure>
+      </div>
+    </div>
+  </PracticeStation>
 </Page>

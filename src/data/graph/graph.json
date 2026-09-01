@@ -12,7 +12,7 @@
       },
       {
         "file": "docs/decision-log.md",
-        "sha256": "a5d7de2dd4afacfd"
+        "sha256": "bb333a5634156505"
       },
       {
         "file": "src/data/post/ledger.json",
@@ -57,10 +57,10 @@
       }
     ],
     "counts": {
-      "nodes": 314,
-      "edges": 270,
+      "nodes": 315,
+      "edges": 273,
       "nodesByKind": {
-        "decision": 79,
+        "decision": 80,
         "encounter": 6,
         "neighbor": 93,
         "practice": 9,
@@ -75,7 +75,7 @@
         "made-by": 96,
         "neighbor-of": 93,
         "participates": 17,
-        "touches": 49
+        "touches": 52
       }
     }
   },
@@ -833,6 +833,16 @@
     {
       "id": "decision:2026-09-01-1",
       "kind": "decision",
+      "label": "The three practice pages rebuilt on one v3 template — third slice of the public-surfaces refresh",
+      "date": "2026-09-01",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "The three practice pages rebuilt on one v3 template — third slice of the public-surfaces refresh"
+      }
+    },
+    {
+      "id": "decision:2026-09-01-2",
+      "kind": "decision",
       "label": "The entrance becomes a front door, and the full board moves to /now — fourth slice of the public-surfaces refresh",
       "date": "2026-09-01",
       "source": {
@@ -841,7 +851,7 @@
       }
     },
     {
-      "id": "decision:2026-09-01-2",
+      "id": "decision:2026-09-01-3",
       "kind": "decision",
       "label": "The wording canon learns v3, and the entrance texts stop describing sovereign practices — second slice of the public-surfaces refresh",
       "date": "2026-09-01",
@@ -851,7 +861,7 @@
       }
     },
     {
-      "id": "decision:2026-09-01-3",
+      "id": "decision:2026-09-01-4",
       "kind": "decision",
       "label": "Currency pass: the site stops announcing a reading that already happened — first slice of the public-surfaces refresh after v3",
       "date": "2026-09-01",
@@ -861,7 +871,7 @@
       }
     },
     {
-      "id": "decision:2026-09-01-4",
+      "id": "decision:2026-09-01-5",
       "kind": "decision",
       "label": "Meridians Richtung: das Antwort-Register — gewählt aus einer beauftragten Karte, nicht aus einem Programm",
       "date": "2026-09-01",
@@ -6652,7 +6662,34 @@
     },
     {
       "kind": "touches",
-      "from": "decision:2026-09-01-3",
+      "from": "decision:2026-09-01-1",
+      "to": "work:atelier",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "src/pages/{field,atelier,studio}/index.astro"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-09-01-1",
+      "to": "work:field",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "src/pages/{field,atelier,studio}/index.astro"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-09-01-1",
+      "to": "work:studio",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "src/pages/{field,atelier,studio}/index.astro"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-09-01-4",
       "to": "work:field",
       "source": {
         "file": "docs/decision-log.md",
@@ -6661,7 +6698,7 @@
     },
     {
       "kind": "touches",
-      "from": "decision:2026-09-01-4",
+      "from": "decision:2026-09-01-5",
       "to": "work:field",
       "source": {
         "file": "docs/decision-log.md",

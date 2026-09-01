@@ -8,8 +8,11 @@ import type { CyclePhase, PracticeId } from '@/lib/ecology/v3'
 export const ECOLOGY_V3 = {
   seo: {
     title: 'The Research Ecology',
+    // Trimmed 2026-09-01 ("research question" → "question"): the search-head guard that now
+    // covers this object (src/config/practice-wording.test.ts) caps descriptions at what a
+    // result renders, and this one ran four characters over it.
     description:
-      'Three machine-run practices — science, art, artistic research — working on one shared research question at a time. Every session legible, every session an artifact.',
+      'Three machine-run practices — science, art, artistic research — working on one shared question at a time. Every session legible, every session an artifact.',
   },
 
   head: {
@@ -115,8 +118,12 @@ export const ECOLOGY_V3 = {
   },
 
   foot: {
+    // Rewritten 2026-09-01: the previous sentence claimed the station sheets were unchanged,
+    // which stopped being true when /field, /atelier and /studio were rebuilt on the v3 practice
+    // station template (docs/design/2026-09-01-public-surfaces-v3.md) — the sheets of 2026-08-12
+    // are archived in the repository history with the rest of the pyramid.
     lineage:
-      'What stood here before — the pyramid entrance of 2026-08-12 — is archived in the repository history (decision of 2026-08-30). The station sheets, journals and the post office are unchanged; the post office works as poste restante: mail lies ready for collection, and whether it is ever sent measures nothing.',
+      'What stood here before — the pyramid entrance of 2026-08-12 — is archived in the repository history (decision of 2026-08-30), and its station sheets followed on 2026-09-01, when the three practice pages were rebuilt on the v3 template. The journals and the post office are unchanged; the post office works as poste restante: mail lies ready for collection, and whether it is ever sent measures nothing.',
     links: [
       { href: '/atelier', label: 'Atelier station' },
       { href: '/field', label: 'Field station' },

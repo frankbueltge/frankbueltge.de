@@ -1,29 +1,22 @@
 ---
-// /studio — the Studio's station sheet (Level 1 of the ecology pyramid, 2026-08-12).
+// /studio — the Studio's practice station (research ecology v3 template, 2026-09-01).
 //
-// Replaces, as separate surfaces: this practice's index, its history, its apparatus page and its
-// tour. The stage floor — the practice's own grammar since its first season — survives as the
-// sheet's figure, drawn from the works register and the curated strike list where every reason is
-// a verbatim quotation from the session commit that made it.
+// Lineage: the station sheet of 2026-08-12 (StationSheet with the stage floor as its figure)
+// stood here until 2026-09-01 and is archived in the repository history; its components stay
+// in the repo unlinked (decision log, 2026-09-01). This page is thin on purpose: it assembles
+// the practice's own record — the last sessions from its chronicle — and renders one
+// PracticeStation. Everything else the station derives itself.
 import Page from '@/layouts/Page.astro'
-import StationSheet from '@/components/ecology/StationSheet.astro'
-import Figure from '@/components/ecology/figures/Figure.astro'
-import StageFloorFigure from '@/components/ecology/figures/StageFloor.astro'
+import PracticeStation from '@/components/ecology/PracticeStation.astro'
+import { PRACTICE_V3 } from '@/config/practice-wording'
 import { PYRAMID } from '@/config/ecology-pyramid-wording'
-import { FIGURES } from '@/config/ecology-figure-wording'
-import pulseData from '@/data/pulse/pulse.json'
-import type { PulseSnapshot } from '@/lib/pulse/render'
-import { allWorks } from '@/lib/engines/register'
-import { buildStationSheet, splitDoorLine, type LogEntry } from '@/lib/ecology/pyramid/station'
-import { buildStageFloor } from '@/lib/ecology/pyramid/figures'
 import { recordLine, type ChronicleEntry } from '@/lib/ecology/pyramid/landings'
+import type { LogEntry } from '@/lib/ecology/pyramid/station'
 import chronicle from '@/data/studio/chronicle.upstream.json'
-import stage from '@/data/studio/stage.curated.json'
 
-const works = allWorks()
 const rows = chronicle as ChronicleEntry[]
-const studioWorks = works.filter((w) => w.ns === 'studio')
 
+// The record's last three sessions, in the practice's own words.
 const log: LogEntry[] = [...rows]
   .filter((r) => r.date)
   .sort((a, b) => (a.date! < b.date! ? 1 : -1))
@@ -34,51 +27,9 @@ const log: LogEntry[] = [...rows]
     line: recordLine(r.move, r.summary) ?? PYRAMID.station.absent,
   }))
 
-const sheet = buildStationSheet({
-  id: 'studio',
-  snapshot: pulseData as PulseSnapshot,
-  works,
-  log,
-  made: studioWorks.length,
-})
-
-const floor = buildStageFloor(works, stage as Parameters<typeof buildStageFloor>[1])
-const door = splitDoorLine(sheet.station.description)
-const SEO = PYRAMID.stationSeo.studio
-const F = FIGURES.studio
+const SEO = PRACTICE_V3.studio.seo
 ---
 
 <Page title={`${SEO.title} | Frank Bültge`} description={SEO.description}>
-  <StationSheet
-    id="studio"
-    kicker={`${sheet.station.name.toUpperCase()} · ${sheet.station.resident.toUpperCase()} · ${sheet.station.corner}`}
-    h1={door.lead}
-    sub={door.rest}
-    status={sheet.status}
-    figureColumns={1}
-    lede={sheet.lede && {
-      kicker: F.lede.kicker(sheet.lede.date),
-      title: sheet.lede.title,
-      teaser: sheet.ledeTeaser,
-      note: sheet.arc?.title ?? null,
-      noteLabel: F.lede.noteLabel,
-      links: [
-        { label: F.lede.open, href: sheet.lede.href },
-        { label: F.lede.record, href: '/studio/works' },
-      ],
-    }}
-    log={sheet.log}
-    logMore={{ label: PYRAMID.station.wholeJournal, href: '/studio/journal' }}
-    doors={sheet.doors}
-  >
-    <Figure
-      slot="figure-main"
-      title={F.floor.title}
-      sub={F.floor.sub}
-      link={{ label: F.floor.link(sheet.made.count), href: '/studio/works' }}
-      caption={F.floor.caption(floor.pools.length, floor.strikes.length)}
-    >
-      <StageFloorFigure floor={floor} />
-    </Figure>
-  </StationSheet>
+  <PracticeStation id="studio" log={log} />
 </Page>
