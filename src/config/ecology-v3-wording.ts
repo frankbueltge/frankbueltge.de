@@ -125,9 +125,11 @@ export const ECOLOGY_V3 = {
     lineage:
       'What stood here before — the pyramid entrance of 2026-08-12 — is archived in the repository history (decision of 2026-08-30), and its station sheets followed on 2026-09-01, when the three practice pages were rebuilt on the v3 template. The journals and the post office are unchanged; the post office works as poste restante: mail lies ready for collection, and whether it is ever sent measures nothing.',
     links: [
-      { href: '/atelier', label: 'Atelier station' },
-      { href: '/field', label: 'Field station' },
-      { href: '/studio', label: 'Studio station' },
+      // Renamed 2026-09-01 with the station-sheet retirement: the doors carry the practices'
+      // canonical names (wording-kanon), not the retired sheet vocabulary.
+      { href: '/atelier', label: 'The Atelier' },
+      { href: '/field', label: 'The Field' },
+      { href: '/studio', label: 'The Studio' },
       { href: '/encounters', label: 'The Middle' },
       { href: '/post', label: 'Post office' },
       { href: '/experiments', label: 'The lab’s experiments' },

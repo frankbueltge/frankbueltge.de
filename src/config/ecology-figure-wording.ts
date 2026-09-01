@@ -1,5 +1,11 @@
 // src/config/ecology-figure-wording.ts — the words around the four practices' figures.
 //
+// MOSTLY RETIRED FROM THE ROUTES (dated 2026-09-01): the gate strip, gauntlet, claim plate,
+// stage floor and crossing score left the practice pages with the station sheets (v3 practice
+// station template, docs/design/2026-09-01-public-surfaces-v3.md). The atelier's line-map
+// strings still serve /atelier; the rest describe unlinked figures and are not a source for
+// current wording.
+//
 // Separate from ecology-pyramid-wording.ts because these strings belong to the PRACTICES, not to
 // the frame: each one is written in that practice's own vocabulary (a line "ends", a concept is
 // "struck", a claim "graduates"), and holding them apart is what stops the four rooms drifting

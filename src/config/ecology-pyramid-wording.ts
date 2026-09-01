@@ -1,5 +1,13 @@
 // src/config/ecology-pyramid-wording.ts — every word on the research ecology's four levels.
 //
+// RETIRED FROM THE MAIN ROUTES (dated): /ecology left the pyramid entrance on 2026-08-30
+// (research ecology v3), and /field, /atelier and /studio left the station sheets on
+// 2026-09-01 (the v3 practice station template, docs/design/2026-09-01-public-surfaces-v3.md).
+// Parts of this module still serve live surfaces — the Level-2 registers, journals and shared
+// strings like PYRAMID.station.absent — so it stays maintained; the entrance/stationSeo
+// blocks describe archived surfaces and are not a source for current wording
+// (docs/wording-kanon.md is).
+//
 // Design handoff: docs/design_handoff_research_ecology/README.md. The surfaces it describes —
 // Level 0 (/ecology), Level 1 (the four station sheets), Level 2 (the registers) — are one
 // design, so they get one wording module rather than three that drift.
