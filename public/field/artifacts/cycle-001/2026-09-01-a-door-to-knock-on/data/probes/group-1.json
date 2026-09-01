@@ -1,0 +1,98 @@
+[
+  {
+    "publisher": "Elsevier",
+    "class": "B",
+    "route_kind": "editor_no_address",
+    "route_value": "",
+    "evidence_url": "https://www.elsevier.com/about/policies-and-standards/article-withdrawal",
+    "quote": "contact the journal as soon as possible using the contact details listed on the journal's home page",
+    "http_status": "200",
+    "fetch_note": "Direct fetch via curl returned 200. Full page text retrieved via fetch tool a fetch tool, not just a search snippet.",
+    "evidence_note": "This 'Article withdrawal' policy page only instructs authors who discover an error in their own published work to contact the journal via the contact details on the journal's home page (no address given on this page itself). No wording on this page, or on the companion 'Publishing ethics' page (https://www.elsevier.com/about/policies-and-standards/publishing-ethics), explicitly invites a reader/stranger to report a concern; the same generic per-journal contact channel would be the only route available to anyone, author or not. Elsevier's support center (elsevier.support/publishing/category/10643, 'Report a concern') was also checked but is oriented at authors/reviewers/editors managing their own submissions, not readers flagging published articles.",
+    "second_page_url": "https://www.elsevier.com/about/policies-and-standards/publishing-ethics"
+  },
+  {
+    "publisher": "Oxford University Press",
+    "class": "A",
+    "route_kind": "dedicated_email",
+    "route_value": "journals.corrections@oup.com",
+    "evidence_url": "https://academic.oup.com/pages/contact-us",
+    "quote": "Journal corrections: journals.corrections@oup.com Journal authors can contact this address for potential changes to published journal content",
+    "http_status": "403",
+    "fetch_note": "Direct curl fetch returned 403 (Cloudflare-style block, confirmed with browser-like headers too). A fetch tool (a fetch tool) also returned only a stripped navigation shell with no body text, and a full-page extract a fetch tool failed outright. The quote above was obtained only through a search-engine index snippet (a fetch tool search), not a direct read of the live page.",
+    "evidence_note": "Search-snippet evidence only, per protocol disclosure requirement -- direct/tool fetches of academic.oup.com are blocked. Corroborated by a second, independently indexed OUP page (academic.oup.com/ageing/pages/general_instructions): 'Corrections requests should be made to journals.corrections@oup.com.' The address is dedicated to corrections/changes to published content, which covers post-publication concerns; nothing on the indexed text restricts its use to authors only.",
+    "second_page_url": "https://academic.oup.com/ageing/pages/general_instructions"
+  },
+  {
+    "publisher": "Cureus",
+    "class": "A",
+    "route_kind": "dedicated_email",
+    "route_value": "info@cureus.com",
+    "evidence_url": "https://cureus.com/author_guide/policies-and-procedures/plagiarism-misconduct-and-ethics",
+    "quote": "Any complaints or tips regarding the above should be directed to info@cureus.com.",
+    "http_status": "403",
+    "fetch_note": "Direct curl fetch returned 403 (Cloudflare block) even with a browser user agent. Full page text was successfully retrieved with a fetch tool a fetch tool, which returned the actual page content, not a snippet.",
+    "evidence_note": "The page's raw HTML exposes the address only as a Cloudflare email-obfuscation link (cdn-cgi/l/email-protection#<hash>); the plaintext address 'info@cureus.com' was recovered by decoding that standard, publicly-documented obfuscation scheme (the same decoding a real browser performs automatically for a human reader). The same page also states just above: 'If, for any reason, you are dissatisfied with the performance or actions of the journal or its representatives, including concerns related to scientific misconduct, research plagiarism, or duplicate publication, please contact us at support@cureus.com' -- explicitly addressed to 'all readers, authors, reviewers and users.' Cureus's separate Research Integrity page (https://www.cureus.com/research_integrity) also invites integrity-related contact via a similarly obfuscated email.",
+    "second_page_url": "https://www.cureus.com/research_integrity"
+  },
+  {
+    "publisher": "American Heart Association",
+    "class": "B",
+    "route_kind": "generic_email",
+    "route_value": "circ@circulationjournal.org",
+    "evidence_url": "https://www.ahajournals.org/circ/about",
+    "quote": "Editorial Office Address: Circulation 7272 Greenville Avenue Dallas, TX 75231 E-mail: circ@circulationjournal.org",
+    "http_status": "403",
+    "fetch_note": "Direct curl fetch of every ahajournals.org URL tried (including /integrity, /policies, /circ/about) returned 403; curl with browser headers revealed a Cloudflare 'Just a moment...' JS-challenge page, confirming a bot block rather than a missing page. a fetch tool and a fetch tool's full-page extract a fetch tool were also blocked on all of these URLs. The web.archive.org mirror could not be reached either (egress-blocked in this environment). The quote above reached me only via a search-engine index snippet (a fetch tool search), not a direct page read.",
+    "evidence_note": "Could not directly read ahajournals.org/integrity ('Research Ethics & Publication Integrity') or ahajournals.org/policies (which a snippet confirms has a 'Publication Ethics and Research Integrity' section) -- every fetch path was blocked. The only verifiable route is the standard per-journal editorial-office email shown on each journal's About page (here, Circulation); this is a generic editorial contact, not an address specifically named for misconduct/integrity, and the dedicated ethics/integrity pages that would state the intended route for readers could not be confirmed directly.",
+    "second_page_url": "https://www.ahajournals.org/policies"
+  },
+  {
+    "publisher": "Royal Society Publishing",
+    "class": "A",
+    "route_kind": "dedicated_email",
+    "route_value": "publishing@royalsociety.org",
+    "evidence_url": "https://royalsociety.org/journals/ethics-policies",
+    "quote": "Complaints against a journal, its staff, editorial board or publisher should be directed to the editorial office or alternatively publishing@royalsociety.org.",
+    "http_status": "403",
+    "fetch_note": "Direct curl fetch returned 403 (Cloudflare-style block). A fetch tool a fetch tool successfully retrieved the actual full page content.",
+    "evidence_note": "This is the Royal Society's 'Journal policies' hub page, i.e. the load-bearing research-integrity/publication-ethics page itself. A second Royal Society Publishing page (Information for Readers) makes the article-specific scope explicit: 'Concerns about individual articles or complaints against a journal, its staff, editorial board or publisher should be directed to the editorial office' -- confirmed via search-engine index snippet.",
+    "second_page_url": "https://royalsocietypublishing.org/pages/information-for-readers"
+  },
+  {
+    "publisher": "American Chemical Society (ACS)",
+    "class": "A",
+    "route_kind": "dedicated_email",
+    "route_value": "PIO@acs.org",
+    "evidence_url": "https://researcher-resources.acs.org/publish/publishing_integrity",
+    "quote": "To contact the ACS Publishing Integrity Office, please email PIO@acs.org.",
+    "http_status": "200",
+    "fetch_note": "Direct curl fetch succeeded with HTTP 200; page text extracted directly from the downloaded HTML (no fetch tool needed).",
+    "evidence_note": "The main 'Publishing Integrity & Ethics' page (pubs.acs.org/page/authors/integrity.htm) is blocked to direct fetch (403) but carries the identical text, confirmed via a search-engine index snippet: 'For ethics concerns related to ACS journal content, contact the Editor-in-Chief of the relevant journal. For concerns about editor or reviewer conduct, contact the ACS Publications Ombudsperson.' The Ombudsperson's own page (researcher-resources.acs.org/publish/ombudsperson, HTTP 200) additionally lists a named individual's direct email for peer-review-conduct concerns.",
+    "second_page_url": "https://pubs.acs.org/page/authors/integrity.htm"
+  },
+  {
+    "publisher": "Cell Press",
+    "class": "B",
+    "route_kind": "generic_email",
+    "route_value": "celleditor@cell.com",
+    "evidence_url": "https://www.cell.com/cell/information-for-authors/journal-policies",
+    "quote": "Readers concerned with potential issues with papers published at Cell Press should contact the relevant journal, detailing allegations and providing any supporting evidence.",
+    "http_status": "403",
+    "fetch_note": "Direct curl fetch returned 403 (Cloudflare-style block). A fetch tool a fetch tool successfully retrieved the actual full page content.",
+    "evidence_note": "This 'Journal policies' page (for the flagship journal Cell) is explicit that readers/strangers may raise a concern, but it names no specific address on the page itself -- it says to 'contact the relevant journal.' The journal's own Contact page (cell.com/cell/contact, found via search-engine index snippet) gives the general editorial email 'celleditor@cell.com' (also used for presubmission and submitted-paper inquiries, i.e. not a misconduct-dedicated address). Cell Press's separate 'editorial ethics' page (cell.com/editorial-ethics) describes internal investigation procedure but gives no contact route at all.",
+    "second_page_url": "https://www.cell.com/cell/contact"
+  },
+  {
+    "publisher": "American Speech-Language-Hearing Association",
+    "class": "B",
+    "route_kind": "generic_email",
+    "route_value": "journals@asha.org",
+    "evidence_url": "https://academy.pubs.asha.org/asha-journals-author-resource-center/manuscript-preparation/authorship-and-publication-ethics/",
+    "quote": "If an editor suspects scientific misconduct, the editor will bring the concern to the editor in chief, who will then consult with the Journals Board.",
+    "http_status": "200",
+    "fetch_note": "Direct curl fetch of the ethics page succeeded with HTTP 200. The Contact Us page (pubs.asha.org/pubs/contact) returned 403 to curl but its full text was retrieved via fetch tool a fetch tool.",
+    "evidence_note": "This ASHA Journals Academy 'Authorship and Publication Ethics' page (read directly, HTTP 200) describes only the internal editor-to-Journals-Board misconduct procedure and gives no contact route for an outside reader anywhere on the page. The nearest usable route is the general Journals contact on pubs.asha.org/pubs/contact ('General questions: journals@asha.org'; separate per-journal addresses like jslhr@asha.org are labelled for peer-review/submission queries, not misconduct reports). ASHA's Ethics Office (ethics@asha.org) handles complaints against the professional Code of Ethics for ASHA members/certificate holders -- a different system, not a route for a reader's concern about a published article.",
+    "second_page_url": "https://pubs.asha.org/pubs/contact"
+  }
+]

@@ -1,0 +1,98 @@
+[
+  {
+    "publisher": "SAGE Publications",
+    "class": "A",
+    "route_kind": "dedicated_email",
+    "route_value": "publication_ethics@sagepub.com",
+    "evidence_url": "https://www.sagepub.com/complaints-and-appeals-procedure-msg",
+    "quote": "Anybody wishing to raise a concern or make a complaint about any aspect of being published in a Sage journal ... may email publication_ethics@sagepub.com",
+    "http_status": "200",
+    "fetch_note": "Fetched directly via curl with browser user-agent; page loaded and content verified verbatim in raw HTML.",
+    "evidence_note": "",
+    "second_page_url": ""
+  },
+  {
+    "publisher": "Wiley",
+    "class": "A",
+    "route_kind": "dedicated_form",
+    "route_value": "https://www.wiley.com/en-us/network/publishing/research-publishing/research-integrity/contact-the-research-integrity-team",
+    "evidence_url": "https://authors.wiley.com/ethics-guidelines/retractions-and-expressions-of-concern.html",
+    "quote": "Integrity and ethics concerns and questions about these policies can be submitted to Wiley's Research Integrity Team using this form",
+    "http_status": "200",
+    "fetch_note": "Fetched directly via curl with browser user-agent; page loaded and content verified verbatim in raw HTML. Linked form page separately confirmed 200.",
+    "evidence_note": "",
+    "second_page_url": "https://www.wiley.com/en-us/network/publishing/research-publishing/research-integrity/contact-the-research-integrity-team"
+  },
+  {
+    "publisher": "Dove Press",
+    "class": "B",
+    "route_kind": "generic_form",
+    "route_value": "https://www.dovepress.com/contact",
+    "evidence_url": "https://www.dovepress.com/editorial-policies/corrections-retractions",
+    "quote": "If, after reading the guidance, you believe a correction is necessary for your article, please contact the journal's editorial team, or contact us",
+    "http_status": "200",
+    "fetch_note": "Fetched directly via curl with browser user-agent (plain curl returned 412; adding a browser UA resolved it to 200). Contact page also fetched directly.",
+    "evidence_note": "The linked 'contact us' page (dovepress.com/contact) is a general enquiry form with a dropdown ('Submission help', 'General Inquiries', 'Reprints', etc.) and no dedicated research-integrity/ethics-concern option, so this is a generic channel, not a dedicated one.",
+    "second_page_url": "https://www.dovepress.com/contact"
+  },
+  {
+    "publisher": "American Society for Biochemistry and Molecular Biology (ASBMB)",
+    "class": "B",
+    "route_kind": "generic_form",
+    "route_value": "https://www.asbmb.org/contact",
+    "evidence_url": "https://www.asbmb.org/journals/editorial-policies",
+    "quote": "When an allegation of a suspected violation is received for a published article, ASBMB shall first contact the corresponding author",
+    "http_status": "200",
+    "fetch_note": "Fetched directly via curl with browser user-agent (plain curl UA returned 403; browser UA resolved it to 200). Contact page also fetched directly, 200.",
+    "evidence_note": "The editorial-policies page describes ASBMB's internal handling of allegations but gives no direct address for an outside party to submit one; the site's general contact form (asbmb.org/contact) offers 'Journals (manuscript submissions, policies, etc.)' as one of five generic dropdown reasons, with no dedicated ethics/integrity option.",
+    "second_page_url": "https://www.asbmb.org/contact"
+  },
+  {
+    "publisher": "Hindawi",
+    "class": "A",
+    "route_kind": "dedicated_form",
+    "route_value": "https://www.wiley.com/en-us/network/publishing/research-publishing/research-integrity/contact-the-research-integrity-team",
+    "evidence_url": "https://www.wiley.com/en-us/network/publishing/research-publishing/research-integrity/contact-the-research-integrity-team",
+    "quote": "Integrity and ethics concerns and questions about these policies can be submitted to Wiley's Research Integrity Team using this form",
+    "http_status": "403 (hindawi.com direct); 200 (Wiley research-integrity contact form)",
+    "fetch_note": "hindawi.com and www.hindawi.com both return HTTP 403 with a Cloudflare bot-challenge page ('cf-mitigated: challenge') under both curl and the fetch tool, so the imprint's own former site cannot be read directly. Response headers for www.hindawi.com (HTTP 103 Early Hints) show it is served from the same 'products/acropolis/pericles' platform infrastructure used by wileyonlinelibrary.com, and web search confirms former Hindawi journals (e.g. Journal of Applied Mathematics, ISSN 1687-0042) now resolve to onlinelibrary.wiley.com. The Wiley research-integrity contact form itself was fetched directly and verified (200).",
+    "evidence_note": "The Hindawi brand/imprint was retired by Wiley in 2023-2024 after a mass-retraction crisis; its surviving journals were folded into the Wiley Online Library platform (confirmed via web search of secondary sources, e.g. Retraction Watch and Wikipedia's 'Hindawi (publisher)' article), and the working route for raising a concern about a formerly-Hindawi article is now Wiley's own Research Integrity Team form. hindawi.com itself is not independently reachable to confirm this from the imprint's own domain due to the Cloudflare challenge.",
+    "second_page_url": "https://www.hindawi.com"
+  },
+  {
+    "publisher": "BMJ Publishing Group",
+    "class": "A",
+    "route_kind": "dedicated_form",
+    "route_value": "https://bmjgroup.com/publishing-and-events/#integrity",
+    "evidence_url": "https://bmjgroup.com/publishing-and-events/",
+    "quote": "Get help with a research integrity issue",
+    "http_status": "200",
+    "fetch_note": "Fetched directly via curl with browser user-agent; the 'Report a content integrity issue' nav link and 'Get help with a research integrity issue' button (opening a Contact-us modal/form) were confirmed verbatim in raw HTML.",
+    "evidence_note": "The button opens a modal titled 'Contact us' with a request form; it is reached directly from, and specifically labelled on, the Research Integrity section of BMJ Group's own publishing page, so it is treated as a dedicated route rather than the site's general support contact.",
+    "second_page_url": "https://bmjgroup.com/expertise/research-integrity-and-ethics/"
+  },
+  {
+    "publisher": "IEEE: Institute of Electrical and Electronics Engineers",
+    "class": "A",
+    "route_kind": "dedicated_email",
+    "route_value": "pub-ethics@ieee.org (plus an anonymous IEEE Ethics Reporting line linked from IEEE's own site)",
+    "evidence_url": "https://www.ieee.org/publications/rights/Investigating-misconduct",
+    "quote": "When complaints regarding an article's integrity are received, either via email at pub-ethics@ieee.org or the anonymous ethics reporting line",
+    "http_status": "202 (direct curl and fetch tool both blocked by an AWS WAF JavaScript challenge, 'x-amzn-waf-action: challenge', empty body)",
+    "fetch_note": "Direct fetch of www.ieee.org/publications/rights/Investigating-misconduct was blocked by an AWS WAF bot challenge under both curl (with browser user-agent) and the fetch tool (403/empty response). The quote above was obtained only via a web-search result snippet of that page, not the page body itself. A related, reachable IEEE page on a different subdomain (journals.ieeeauthorcenter.ieee.org, fetched directly, HTTP 200) independently confirms a footer link labelled 'IEEE Ethics Reporting' pointing to the same third-party-hosted anonymous reporting line referenced in the snippet.",
+    "evidence_note": "Primary quote is from a search-result snippet, not a page I read directly, because the load-bearing IEEE.org page is bot-walled. Corroborating link ('IEEE Ethics Reporting') was independently verified by direct fetch of https://journals.ieeeauthorcenter.ieee.org/become-an-ieee-journal-author/publishing-ethics/ (HTTP 200), which is on IEEE's own domain.",
+    "second_page_url": "https://journals.ieeeauthorcenter.ieee.org/become-an-ieee-journal-author/publishing-ethics/"
+  },
+  {
+    "publisher": "Federation of American Societies for Experimental Biology (FASEB)",
+    "class": "A",
+    "route_kind": "dedicated_email",
+    "route_value": "journals@faseb.org",
+    "evidence_url": "https://www.faseb.org/journals-and-news/ethics",
+    "quote": "Have an ethical concern? Submit your concern",
+    "http_status": "200",
+    "fetch_note": "Fetched directly via curl with browser user-agent; the 'Have an ethical concern? Submit your concern' call-to-action (mailto:journals@faseb.org) confirmed verbatim in raw HTML.",
+    "evidence_note": "The mailing address itself (journals@faseb.org) is FASEB's general journals editorial-office address, but on this page it is presented as a specifically labelled call-to-action for ethical concerns, so it is counted as a dedicated route.",
+    "second_page_url": ""
+  }
+]

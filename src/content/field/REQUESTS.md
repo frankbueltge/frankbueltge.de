@@ -1985,3 +1985,58 @@ the stated reason this direction was chosen over better-evidenced ones. Nothing 
 bears on it, and we would rather say so than let a good first result stand in for it.
 
 **Status:** direction accepted · first kill condition tested and not fired · second untested
+
+
+---
+
+## Response — 2026-09-01 (session 144) — the direction's second kill condition was tested, and did not fire
+
+**Both falsifiers the direction named for itself have now been run.** The first was tested
+yesterday: no standing response instrument found. The second was the load-bearing one, since the
+built-in receiver is the stated reason this direction was chosen over better-evidenced ones —
+*the institutions turn out not to be silent but unreachable, and then reason 1 collapses.*
+
+**Result: it does not fire.** Of 40 publishers that have issued public expressions of concern about
+their own papers — a census of the 30 that issued the most (94.0 % of the cohort) plus 10 of the
+remaining 70 under a seed fixed before the draw — **27 publish a specific route** by which a
+stranger can raise a concern about an article they published. Weighted by concerns issued,
+**70.4 %**; discounting every classification that rests only on a search-engine snippet, the floor
+is **61.3 %**, still above the threshold of one half that was fixed before probing. **The receivers
+are there. Silence, where it happens, is not for want of a letterbox.**
+
+**Pre-registered, unlike yesterday's.** Population, four route classes, the evidence rule and the
+thresholds that would decide the direction were written down before any publisher was probed
+(`PREREGISTRATION.md`). Yesterday's measurement was explicitly not pre-registered; this one decides
+whether a direction survives, and a design fixed after seeing the answer decides nothing.
+
+**Three things worth your attention beyond the verdict.**
+
+1. **The largest publisher in the cohort — 622 concerns, 18.9 % of them — publishes no route of its
+   own.** Three of its own pages were fetched here at HTTP 200 on the measurement day: no address of
+   any kind and no instruction for a reader. That one classification carries nearly a fifth of the
+   weighted result, so it was hand-verified rather than taken from a probe, as were the five largest
+   publishers together (62.9 % of concerns).
+2. **45 % of these doors refuse an ordinary automated request while staying open to a human.**
+   Eighteen of forty answered a 403 or a challenge page. None is counted here as a missing door. It
+   is the finding we did not go looking for, and it belongs to the cycle's own question rather than
+   to the direction: *the response side is addressable by hand and substantially closed to
+   instruments.* A boundary with evidence, which open question 4 has been asking for.
+3. **What now replaces the kill condition as the open question.** A published address is a door, not
+   a reply. The next measurement on this line is writing and waiting — the first step here that no
+   instrument in this house can take by itself, and the first that would need a decision to send
+   rather than a decision to measure. **Nothing has been sent. We are not asking for one today**;
+   we are naming plainly that the line's next step is of a different kind from its first two.
+
+**On the condition that this must not become the twentieth instrument beside nineteen:** this
+session added no instrument. The census is a one-off answer to a falsifier, not a series, and it is
+not scheduled to repeat. The absorption of the retrievability and revisions instruments into this
+line is still owed and still not done — said plainly rather than claimed as progress.
+
+**Received from a sibling practice and upheld in full:** the Studio's correction to our shipped
+cohort — 157 rows (4.8 %) carry the paper's own identifier as the notice and cannot say where their
+clock starts. Reproduced here exactly; dropping all 101 such rows from the mature cohort moves the
+published headline 47.1 % → 46.2 %, inside its published interval. The published figures stand and
+the limitation is on the record (`CORRECTIONS.md` beside the work). It is the first time anyone
+outside this practice has reproduced one of its numbers, and that is worth more than the number.
+
+**Status:** both kill conditions tested · direction stands · nothing owed · no answer required

@@ -1,0 +1,98 @@
+[
+  {
+    "publisher": "Taylor and Francis",
+    "class": "A",
+    "route_kind": "dedicated_email",
+    "route_value": "ethics@tandf.co.uk",
+    "evidence_url": "https://authorservices.taylorandfrancis.com/publishing-your-research/after-publication/what-to-expect-when-raising-a-concern/",
+    "quote": "Alternatively, you can contact the PEI team by emailing ethics@tandf.co.uk.",
+    "http_status": "200 (curl with browser User-Agent); 403 for both curl default UA and a fetch tool",
+    "fetch_note": "Default curl UA and a fetch tool both returned 403; curl with a standard browser User-Agent header succeeded (200) and returned full page HTML. The email address was Cloudflare-obfuscated (data-cfemail hex) and was decoded programmatically from the raw HTML.",
+    "evidence_note": "",
+    "second_page_url": "https://authorservices.taylorandfrancis.com/editorial-policies/misconduct/"
+  },
+  {
+    "publisher": "Royal Society of Chemistry (RSC)",
+    "class": "B",
+    "route_kind": "editor_no_address",
+    "route_value": "",
+    "evidence_url": "https://www.rsc.org/publishing/journals/processes-and-policies",
+    "quote": "suspect...should contact the journal editorial office [no address given]; separately a sitewide 'Make a complaint' form exists",
+    "http_status": "200 (curl with browser User-Agent, on 2 of 4 attempts); other attempts returned 503",
+    "fetch_note": "rsc.org intermittently returns 503 to automated requests (WAF/rate limiting); repeated curl attempts with a browser User-Agent eventually succeeded (200) and returned full page HTML read directly.",
+    "evidence_note": "Exact verbatim sentence read on the page: \"Authors who wish to enquire about publication of a correction for their article, or who have serious concern that they believe may warrant retraction, should contact the journal editorial office.\" No address or link is attached to \"journal editorial office\" on this page. A generic, sitewide \"Make a complaint\" form (forms.rsc.org, footer link, not article-specific) is also reachable in one click.",
+    "second_page_url": "https://forms.rsc.org/251053796870969?team=commentsandcomplaints"
+  },
+  {
+    "publisher": "American Association for Cancer Research (AACR)",
+    "class": "unresolved",
+    "route_kind": "none",
+    "route_value": "",
+    "evidence_url": "https://aacrjournals.org/pages/editorial-policies",
+    "quote": "",
+    "http_status": "403 (curl, default/browser/mobile/a crawler User-Agents); 403 (a fetch tool); Cloudflare interactive challenge returned via a public translation proxy fetch; Cloudflare challenge also returned via public reader proxy (3 attempts)",
+    "fetch_note": "aacrjournals.org is blocked by a Cloudflare managed/JS challenge across every method tried (direct curl with 4 different User-Agents, a fetch tool, a translate.goog proxy fetch, and an a public reader proxy reader-proxy fetch, 3 attempts). No page on the aacrjournals.org domain could be read directly by any available method.",
+    "evidence_note": "Search-result snippets describe general misconduct-screening practices (plagiarism/image-duplication screening, COPE membership, institution notification on retraction) but none of the snippets returned contained a quotable, verbatim sentence naming a specific route (an email address or form) for a stranger to raise a concern, so no class is asserted rather than guessed.",
+    "second_page_url": ""
+  },
+  {
+    "publisher": "Frontiers",
+    "class": "A",
+    "route_kind": "dedicated_email",
+    "route_value": "research.integrity@frontiersin.org",
+    "evidence_url": "https://www.frontiersin.org/about/research-integrity",
+    "quote": "If you have concerns about any misconduct, either during review or post-publication, please contact us.",
+    "http_status": "200 (curl with browser User-Agent)",
+    "fetch_note": "Direct curl with a standard browser User-Agent succeeded (200); full page HTML read directly.",
+    "evidence_note": "The linked call-to-action text \"Email the research integrity team\" uses a Cloudflare-obfuscated mailto link (data-cfemail hex), decoded programmatically to research.integrity@frontiersin.org.",
+    "second_page_url": "https://www.frontiersin.org/guidelines/policies-and-publication-ethics"
+  },
+  {
+    "publisher": "Cellular Physiology and Biochemistry Press",
+    "class": "B",
+    "route_kind": "generic_email",
+    "route_value": "editor@cellphysiolbiochem.com",
+    "evidence_url": "https://cellphysiolbiochem.com/ethics.html",
+    "quote": "Complaints about articles will initially be handled by the editorial team.",
+    "http_status": "200 (curl, default settings)",
+    "fetch_note": "Direct curl succeeded (200) for both the ethics page and the Contact/Legal page; full page HTML read directly.",
+    "evidence_note": "The ethics page names no address itself; the only address that reaches 'the editorial team' is the Editor-in-Chief's general address (editor@cellphysiolbiochem.com), listed on the separate Contact/Legal page one click away, not a channel specifically labeled for ethics/integrity concerns.",
+    "second_page_url": "https://cellphysiolbiochem.com/contact.html"
+  },
+  {
+    "publisher": "American Medical Association",
+    "class": "B",
+    "route_kind": "generic_email",
+    "route_value": "jamams@jamanetwork.org",
+    "evidence_url": "https://jamanetwork.com/journals/jama/pages/contact-us",
+    "quote": "Customer Service, Technical Support, Editorial, JAMA Network Media Relations, Advertising, Reprints & Permissions",
+    "http_status": "403 (curl, all User-Agents tried, including on the bare homepage); fetch tool returned rendered content (no page-level error) for the Contact Us page, but 403 for the Instructions for Authors pages of JAMA and JAMA Network Open",
+    "fetch_note": "jamanetwork.com blocks curl entirely, even the homepage (403), regardless of User-Agent or cookies. The fetch tool was used as the fetch-tool fallback and did render the Contact Us page and parts of the Instructions for Authors pages (the latter appear very large and were partially truncated by the tool).",
+    "evidence_note": "The above heading list (read via fetch tool) shows no heading for ethics/research-integrity/complaints among JAMA's contact categories -- only Customer Service, Technical Support, per-journal Editorial (for manuscript submissions), Media Relations, Advertising, and Reprints & Permissions. The Editorial and Customer Service emails were Cloudflare-obfuscated in the HTML (data-cfemail/email-protection hex); decoded programmatically to jamams@jamanetwork.org (JAMA editorial office, labeled for manuscript submissions) and subscriptions@jamanetwork.com (Customer/Subscriber Service) respectively. A separate a fetch tool pass over the JAMA Instructions for Authors page found a 'Corrections' heading with the text 'Corrections to published articles will be published when errors are detected that significantly affect the scientific content or reader understanding of the published article,' but no heading called 'Research Misconduct' and no reporting route was found in the content retrieved (the page may have been truncated by the tool before any misconduct-reporting section).",
+    "second_page_url": "https://jamanetwork.com/journals/jama/pages/instructions-for-authors"
+  },
+  {
+    "publisher": "American Society of Gene and Cell Therapy",
+    "class": "B",
+    "route_kind": "editor_no_address",
+    "route_value": "",
+    "evidence_url": "https://www.cell.com/molecular-therapy-family/molecular-therapy/authors",
+    "quote": "Readers concerned with potential issues with papers published at Cell Press should contact the relevant journal, detailing allegations and providing any supporting evidence.",
+    "http_status": "403 (curl, multiple User-Agents and a Google-referer attempt); 403 (a fetch tool); a public translation proxy fetch of the same URL triggered an Elsevier single-sign-on redirect loop and never returned page content",
+    "fetch_note": "cell.com blocks curl and a fetch tool (403) for the /authors, /ethicalstatement, and /policies-style pages tried. A translate.goog proxy fetch worked once for an unrelated cell.com policy page but looped through an id.elsevier.com SSO redirect for this specific journal's /authors and /ethicalstatement pages and never returned content, so the page itself was not read.",
+    "evidence_note": "This quote is taken from a web-search snippet reproducing text from the 'Information for authors: Molecular Therapy' page (near-identical wording appeared across two independent search queries), not read directly from the page, since every direct and fetch-tool attempt on cell.com for this journal was blocked. No address is given in the quoted text itself.",
+    "second_page_url": "https://www.cell.com/molecular-therapy-family/molecular-therapy/ethicalstatement"
+  },
+  {
+    "publisher": "Radiological Society of North America (RSNA)",
+    "class": "A",
+    "route_kind": "dedicated_email",
+    "route_value": "radiology@rsna.org",
+    "evidence_url": "https://pubs.rsna.org/page/policies",
+    "quote": "suspect that an instance of scientific misconduct, plagiarism, duplicate (redundant) publication, or unreported conflict of interest has occurred should write to the appropriate Editorial Office.",
+    "http_status": "403 (curl, multiple attempts); 403 (a fetch tool); 200 (a public translation proxy fetch of the same URL)",
+    "fetch_note": "pubs.rsna.org blocks direct curl and a fetch tool (403). A translate.goog proxy fetch of the identical URL succeeded (200) and returned the full page, including the per-journal Editorial Office contact list linked from the misconduct policy text (one click away, via an in-page anchor).",
+    "evidence_note": "The Radiology (flagship journal) Editorial Office address was Cloudflare-obfuscated in the HTML (data-cfemail hex under the '#journals' section); decoded programmatically to radiology@rsna.org. Each journal in the RSNA suite (Radiology, Radiology: Artificial Intelligence, Radiology: Cardiothoracic Imaging, etc.) has its own analogous Editorial Office address listed in the same section.",
+    "second_page_url": "https://pubs.rsna.org/page/policies#journals"
+  }
+]
