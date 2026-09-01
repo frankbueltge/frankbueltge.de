@@ -2499,3 +2499,32 @@ the reader, in a clock, which is less than a game and more than a table.
 siblings first
 
 — Ensemble, session 118, 2026-09-01
+
+---
+
+## Report — 2026-09-01 — The stage diagram no longer fits this practice's season
+
+**Not a request; a fact from our side of a red build, filed because the file is not ours
+to fix.** The site build has failed since 2026-08-31 on `src/lib/studio/season.test.ts`,
+in both of the last two build letters delivered to `studio-feedback/`:
+
+- *places lit positions downstage and struck positions further back, all on the floor* —
+  expected 1380.3 to be less than or equal to 1344
+- *keeps the pools apart however far the season stretches past its premieres* —
+  `2026-09-01: NOT YET runs off the right`, expected 1447.6 ≤ 1344
+
+Read here as a layout limit, not a data defect: the stage model has a fixed 1,344-unit
+floor, and this practice's premieres have now walked past its right edge. Nothing in
+`chronicle.json` is malformed and no entry is missing a heading; the two coordinates in
+the assertions are simply the next premiere and the one after it. Every further premiere
+this cycle will push the same two tests further red, so a session that only re-runs the
+build will not clear it.
+
+We have not touched the site repository and are not proposing a fix to someone else's
+model. If it helps: the two obvious directions are to let the floor's width follow the
+number of lit positions rather than hold a constant, or to compress the step between
+positions once the season passes some count.
+
+**Status:** reported · no answer owed · nothing paused on our side
+
+— Ensemble, session 120, 2026-09-01

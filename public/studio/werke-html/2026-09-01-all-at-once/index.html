@@ -1,0 +1,416 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ALL AT ONCE — Ensemble</title>
+<meta name="description" content="Of the 46 expression-of-concern notices in The Field's five-year cohort that flag more than one paper, 43 went entirely one way: every paper retracted, or none. A work made from a sibling practice's committed row file.">
+<style>
+:root{
+  --bg:#f6f4ef; --ink:#16130f; --dim:#6d675e; --rule:#d6d0c4;
+  --on:#16130f; --off:#f6f4ef; --edge:#7d7566; --hot:#a8321e; --panel:#efece5;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#100f0d; --ink:#ece7dd; --dim:#8d867a; --rule:#2e2b26;
+    --on:#ece7dd; --off:#100f0d; --edge:#867e70; --hot:#e0643f; --panel:#191713;
+  }
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:16px/1.62 "Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;}
+main{max-width:47rem;margin:0 auto;padding:5rem 1.5rem 7rem}
+h1{font:700 clamp(2.6rem,11vw,5rem)/0.94 "Helvetica Neue",Helvetica,Arial,sans-serif;
+  letter-spacing:-.035em;margin:0 0 1.4rem;text-transform:uppercase}
+h2{font:600 .78rem/1.4 "Helvetica Neue",Helvetica,Arial,sans-serif;
+  letter-spacing:.19em;text-transform:uppercase;color:var(--dim);
+  margin:4.5rem 0 1.1rem;border-top:1px solid var(--rule);padding-top:1rem}
+p{margin:0 0 1.15rem}
+.lede{font-size:1.24rem;line-height:1.5}
+.dek{color:var(--dim);font-size:.94rem;line-height:1.55}
+b,strong{font-weight:600}
+a{color:inherit}
+em.q{font-style:italic}
+.big{font:600 clamp(2rem,7vw,3.2rem)/1 "Helvetica Neue",Helvetica,Arial,sans-serif;
+  letter-spacing:-.03em;display:block;margin:.2rem 0 .35rem}
+
+/* the marks */
+.c{display:inline-block;width:7px;height:15px;margin:0 1px 2px 0;vertical-align:top;
+  border:1px solid var(--edge);background:var(--off)}
+.c.on{background:var(--on);border-color:var(--on)}
+.plate{margin:1.6rem 0 .6rem}
+.row{margin:0 0 .9rem}
+.stair{margin:0 0 1.1rem}
+.step{display:flex;align-items:center;gap:.5rem;margin:0 0 3px}
+.lab{font:.72rem/1 "Helvetica Neue",Helvetica,Arial,sans-serif;color:var(--dim);
+  font-variant-numeric:tabular-nums}
+.batches{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:flex-start}
+.n{display:inline-block;text-decoration:none;line-height:0;padding:2px;
+  border-radius:2px;outline:0}
+.n:hover,.n:focus-visible{background:var(--panel);box-shadow:0 0 0 1px var(--edge)}
+.n.split{box-shadow:inset 0 0 0 2px var(--hot)}
+.n.split:hover{box-shadow:inset 0 0 0 2px var(--hot),0 0 0 1px var(--edge)}
+.singles{margin-top:1.6rem}
+.dots{line-height:0;margin:0 0 1.1rem}
+.d{display:inline-block;width:5px;height:5px;margin:0 2px 3px 0;border-radius:50%;
+  vertical-align:top;background:var(--on)}
+.d.off{background:transparent;box-shadow:inset 0 0 0 1px var(--edge)}
+.sublab{font:.74rem/1.4 "Helvetica Neue",Helvetica,Arial,sans-serif;color:var(--dim);
+  letter-spacing:.06em;text-transform:uppercase;margin:0 0 .45rem}
+.key{font:.8rem/1.5 "Helvetica Neue",Helvetica,Arial,sans-serif;color:var(--dim);
+  margin:.9rem 0 0}
+.key .c{margin-right:.3rem;transform:translateY(2px)}
+.swatch{box-shadow:inset 0 0 0 2px var(--hot);padding:1px 6px;border-radius:2px;
+  white-space:nowrap;display:inline-block}
+
+/* the three that split, drawn large */
+.split-card{border:1px solid var(--rule);background:var(--panel);
+  padding:1rem 1.1rem;margin:0 0 .8rem;border-radius:3px}
+.split-card .c{width:12px;height:24px}
+.split-card h3{font:600 1rem/1.35 "Helvetica Neue",Helvetica,Arial,sans-serif;
+  margin:0 0 .15rem}
+.split-card .meta{font:.82rem/1.5 "Helvetica Neue",Helvetica,Arial,sans-serif;
+  color:var(--dim);margin:0 0 .7rem}
+.split-card .marks{line-height:0;margin:0 0 .55rem}
+.split-card p{margin:0;font-size:.94rem}
+
+table{border-collapse:collapse;width:100%;
+  font:.86rem/1.45 "Helvetica Neue",Helvetica,Arial,sans-serif;margin:1.2rem 0}
+th,td{text-align:left;padding:.5rem .6rem;border-bottom:1px solid var(--rule);
+  vertical-align:top}
+th{color:var(--dim);font-weight:600;letter-spacing:.05em;text-transform:uppercase;
+  font-size:.72rem}
+td.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+td.doi{word-break:break-all;font-size:.8rem}
+.note{font:.85rem/1.6 "Helvetica Neue",Helvetica,Arial,sans-serif;color:var(--dim)}
+.note li{margin:0 0 .55rem}
+footer{margin-top:5rem;border-top:1px solid var(--rule);padding-top:1.2rem;
+  font:.78rem/1.65 "Helvetica Neue",Helvetica,Arial,sans-serif;color:var(--dim);
+  word-break:break-word}
+footer a{color:var(--dim)}
+@media (max-width:430px){
+  main{padding:3rem 1.1rem 5rem}
+  .c{width:5px;height:13px}
+  .split-card .c{width:10px;height:20px}
+  .batches{gap:5px 8px}
+}
+</style>
+</head>
+<body><style>
+.fbde-work-frame{all:initial;display:block;box-sizing:border-box;width:100%;
+ font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+ background:#f4f4f1;color:#1a1a1a;border-bottom:1px solid #d8d8d2;padding:14px 22px;}
+.fbde-work-frame--foot{border-bottom:0;border-top:1px solid #d8d8d2;margin-top:48px;}
+.fbde-work-frame *{box-sizing:border-box;font-family:inherit;}
+.fbde-work-frame .fbde-work-frame__nav{display:block;font-size:13px;line-height:1.6;margin:0;}
+.fbde-work-frame a{color:#1a1a1a;text-decoration:underline;text-underline-offset:2px;}
+.fbde-work-frame a:hover,.fbde-work-frame a:focus{color:#000;background:#e6e6e0;}
+.fbde-work-frame .fbde-work-frame__sep{color:#8a8a84;padding:0 6px;}
+.fbde-work-frame .fbde-work-frame__wall{margin:10px 0 0;max-width:64ch;font-size:15px;
+ line-height:1.65;color:#1a1a1a;}
+.fbde-work-frame .fbde-work-frame__note{margin:8px 0 0;font-size:12px;line-height:1.5;
+ color:#6b6b64;}
+@media (max-width:520px){.fbde-work-frame{padding:12px 16px;}}
+</style><header class="fbde-work-frame" role="doc-foreword"><nav class="fbde-work-frame__nav"><a href="/studio">← The Studio</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/studio/works">the studio’s premieres</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/ecology">the research ecology</a></nav><p class="fbde-work-frame__note">Wall label and links added by the site. The work itself begins below.</p></header>
+<main>
+
+<h1>All at once</h1>
+
+<p class="lede">An expression of concern is a journal saying in public that one of its own
+papers may be unreliable, and that it is not withdrawing it yet. It is a flag with a date on
+it and an implied promise of a decision to come. The sibling practice next door measured how
+long that promise takes to keep: of 1,277 papers with five full years behind
+them, 601 — 47.1&nbsp;% — were retracted inside the
+window.</p>
+
+<p class="lede">Almost half. It is the kind of number that describes a paper's prospects — this
+one has a bit under an even chance. Regroup the same rows by the <b>notice</b> that raised
+each concern, and the paper stops having prospects of its own.</p>
+
+<h2>Plate I · 962 notices, one scale</h2>
+
+<p class="dek">Every notice in the cohort whose identifier is recorded, drawn as one cell per
+paper it flags. Filled&nbsp;= retracted within five years. Hollow&nbsp;= still standing;
+within a strip the filled cells are placed first, because the papers inside a notice have no
+order. First the 13 notices of five papers or more, a line each, largest
+first; then the 33 smaller ones that flag more than one paper. The
+916 notices that flag exactly one paper are a different kind of object
+— 916 separate decisions, not one decision's inside — so they are drawn
+below in a different mark, in two groups. Every strip links to the notice it stands for.</p>
+
+<div class="plate" id="plate-i">
+<div class="row stair">
+<div class="step"><a class="n none " href="https://doi.org/10.1016/j.earlhumdev.2021.105329" title="48 papers · 0 retracted · 2021-02-05 · Elsevier · 10.1016/j.earlhumdev.2021.105329" target="_blank" rel="noopener"><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i></a><span class="lab">48</span></div>
+<div class="step"><a class="n all " href="https://doi.org/10.1016/j.micpro.2021.104306" title="46 papers · 46 retracted · 2021-06-25 · Elsevier · 10.1016/j.micpro.2021.104306" target="_blank" rel="noopener"><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c on"></i></a><span class="lab">46</span></div>
+<div class="step"><a class="n none " href="https://doi.org/10.1177/0031512520901993" title="36 papers · 0 retracted · 2020-02-10 · SAGE Publications · 10.1177/0031512520901993" target="_blank" rel="noopener"><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i></a><span class="lab">36</span></div>
+<div class="step"><a class="n none " href="https://doi.org/10.1177/0033294120901991" title="25 papers · 0 retracted · 2020-02-10 · SAGE Publications · 10.1177/0033294120901991" target="_blank" rel="noopener"><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i></a><span class="lab">25</span></div>
+<div class="step"><a class="n none " href="https://doi.org/10.1016/j.earlhumdev.2021.105328" title="15 papers · 0 retracted · 2021-02-04 · Elsevier · 10.1016/j.earlhumdev.2021.105328" target="_blank" rel="noopener"><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i></a><span class="lab">15</span></div>
+<div class="step"><a class="n all " href="https://doi.org/10.1177/1081286515618095" title="13 papers · 13 retracted · 2016-03-01 · SAGE Publications · 10.1177/1081286515618095" target="_blank" rel="noopener"><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c on"></i></a><span class="lab">13</span></div>
+<div class="step"><a class="n split " href="https://doi.org/10.1161/res.0000000000000241" title="12 papers · 10 retracted · 2018-11-20 · American Heart Association · 10.1161/res.0000000000000241" target="_blank" rel="noopener"><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c off"></i><i class="c off"></i></a><span class="lab">12</span></div>
+<div class="step"><a class="n none " href="https://doi.org/10.1080/14656566.2018.1475338" title="9 papers · 0 retracted · 2018-05-17 · Taylor and Francis · 10.1080/14656566.2018.1475338" target="_blank" rel="noopener"><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i></a><span class="lab">9</span></div>
+<div class="step"><a class="n all " href="https://doi.org/10.1080/14767058.2020.1842963" title="6 papers · 6 retracted · 2021-01-27 · Taylor and Francis · 10.1080/14767058.2020.1842963" target="_blank" rel="noopener"><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c on"></i></a><span class="lab">6</span></div>
+<div class="step"><a class="n all " href="https://doi.org/10.1161/str.0000000000000188" title="6 papers · 6 retracted · 2019-04-22 · American Heart Association · 10.1161/str.0000000000000188" target="_blank" rel="noopener"><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c on"></i></a><span class="lab">6</span></div>
+<div class="step"><a class="n split " href="https://doi.org/10.1016/j.chest.2018.01.023" title="5 papers · 4 retracted · 2018-03-05 · Elsevier · 10.1016/j.chest.2018.01.023" target="_blank" rel="noopener"><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c off"></i></a><span class="lab">5</span></div>
+<div class="step"><a class="n none " href="https://doi.org/10.1016/j.saa.2016.11.007" title="5 papers · 0 retracted · 2016-11-11 · Elsevier · 10.1016/j.saa.2016.11.007" target="_blank" rel="noopener"><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i></a><span class="lab">5</span></div>
+<div class="step"><a class="n none " href="https://doi.org/10.1080/10408444.2018.1522786" title="5 papers · 0 retracted · 2018-09-26 · Taylor and Francis · 10.1080/10408444.2018.1522786" target="_blank" rel="noopener"><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i></a><span class="lab">5</span></div>
+</div>
+<div class="row batches">
+<a class="n none " href="https://doi.org/10.1177/0020764020925650" title="4 papers · 0 retracted · 2020-07-04 · SAGE Publications · 10.1177/0020764020925650" target="_blank" rel="noopener"><i class="c off"></i><i class="c off"></i><i class="c off"></i><i class="c off"></i></a>
+<a class="n all " href="https://doi.org/10.1212/wnl.0000000000004443" title="4 papers · 4 retracted · 2017-09-06 · American Academy of Neurology · 10.1212/wnl.0000000000004443" target="_blank" rel="noopener"><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c on"></i></a>
+<a class="n all " href="https://doi.org/10.2337/db15-ec03" title="4 papers · 4 retracted · 2015-02-24 · American Diabetes Association · 10.2337/db15-ec03" target="_blank" rel="noopener"><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c on"></i></a>
+<a class="n all " href="https://doi.org/10.1001/jamainternmed.2018.1986" title="3 papers · 3 retracted · 2018-04-13 · American Medical Association · 10.1001/jamainternmed.2018.1986" target="_blank" rel="noopener"><i class="c on"></i><i class="c on"></i><i class="c on"></i></a>
+<a class="n all " href="https://doi.org/10.1002/lary.26260" title="3 papers · 3 retracted · 2016-09-21 · Wiley · 10.1002/lary.26260" target="_blank" rel="noopener"><i class="c on"></i><i class="c on"></i><i class="c on"></i></a>
+<a class="n none " href="https://doi.org/10.1016/j.paid.2020.109855" title="3 papers · 0 retracted · 2020-02-14 · Elsevier · 10.1016/j.paid.2020.109855" target="_blank" rel="noopener"><i class="c off"></i><i class="c off"></i><i class="c off"></i></a>
+<a class="n all " href="https://doi.org/10.1080/07315724.2020.1842691" title="3 papers · 3 retracted · 2020-11-06 · Taylor and Francis · 10.1080/07315724.2020.1842691" target="_blank" rel="noopener"><i class="c on"></i><i class="c on"></i><i class="c on"></i></a>
+<a class="n none " href="https://doi.org/10.1086/714375" title="3 papers · 0 retracted · 2021-04-26 · University of Chicago Press · 10.1086/714375" target="_blank" rel="noopener"><i class="c off"></i><i class="c off"></i><i class="c off"></i></a>
+<a class="n all " href="https://doi.org/10.1128/mcb.00356-13" title="3 papers · 3 retracted · 2013-06-01 · American Society for Microbiology · 10.1128/mcb.00356-13" target="_blank" rel="noopener"><i class="c on"></i><i class="c on"></i><i class="c on"></i></a>
+<a class="n all " href="https://doi.org/10.1161/cir.0000000000000639" title="3 papers · 3 retracted · 2018-11-20 · American Heart Association · 10.1161/cir.0000000000000639" target="_blank" rel="noopener"><i class="c on"></i><i class="c on"></i><i class="c on"></i></a>
+<a class="n none " href="https://doi.org/10.1177/0141076820941361" title="3 papers · 0 retracted · 2020-07-06 · SAGE Publications · 10.1177/0141076820941361" target="_blank" rel="noopener"><i class="c off"></i><i class="c off"></i><i class="c off"></i></a>
+<a class="n none " href="https://doi.org/10.1001/jamainternmed.2018.6048" title="2 papers · 0 retracted · 2018-11-01 · American Medical Association · 10.1001/jamainternmed.2018.6048" target="_blank" rel="noopener"><i class="c off"></i><i class="c off"></i></a>
+<a class="n all " href="https://doi.org/10.1001/jamapediatrics.2018.0940" title="2 papers · 2 retracted · 2018-04-13 · American Medical Association · 10.1001/jamapediatrics.2018.0940" target="_blank" rel="noopener"><i class="c on"></i><i class="c on"></i></a>
+<a class="n split " href="https://doi.org/10.1007/s12517-021-08471-8" title="2 papers · 1 retracted · 2021-02-06 · Springer · 10.1007/s12517-021-08471-8" target="_blank" rel="noopener"><i class="c on"></i><i class="c off"></i></a>
+<a class="n none " href="https://doi.org/10.1016/j.jmig.2020.06.018" title="2 papers · 0 retracted · 2020-06-29 · Elsevier · 10.1016/j.jmig.2020.06.018" target="_blank" rel="noopener"><i class="c off"></i><i class="c off"></i></a>
+<a class="n none " href="https://doi.org/10.1016/j.kint.2019.07.011" title="2 papers · 0 retracted · 2019-08-02 · Elsevier · 10.1016/j.kint.2019.07.011" target="_blank" rel="noopener"><i class="c off"></i><i class="c off"></i></a>
+<a class="n none " href="https://doi.org/10.1016/j.vaccine.2020.06.048" title="2 papers · 0 retracted · 2020-07-02 · Elsevier · 10.1016/j.vaccine.2020.06.048" target="_blank" rel="noopener"><i class="c off"></i><i class="c off"></i></a>
+<a class="n none " href="https://doi.org/10.1056/nejme1813801" title="2 papers · 0 retracted · 2018-10-17 · Massachusetts Medical Society · 10.1056/nejme1813801" target="_blank" rel="noopener"><i class="c off"></i><i class="c off"></i></a>
+<a class="n none " href="https://doi.org/10.1073/pnas.1003210107" title="2 papers · 0 retracted · 2010-04-06 · National Academy of Sciences (NAS) · 10.1073/pnas.1003210107" target="_blank" rel="noopener"><i class="c off"></i><i class="c off"></i></a>
+<a class="n all " href="https://doi.org/10.1080/0167482x.2020.1842508" title="2 papers · 2 retracted · 2020-11-03 · Taylor and Francis · 10.1080/0167482x.2020.1842508" target="_blank" rel="noopener"><i class="c on"></i><i class="c on"></i></a>
+<a class="n all " href="https://doi.org/10.1080/09513590.2020.1841983" title="2 papers · 2 retracted · 2020-11-11 · Taylor and Francis · 10.1080/09513590.2020.1841983" target="_blank" rel="noopener"><i class="c on"></i><i class="c on"></i></a>
+<a class="n none " href="https://doi.org/10.1080/14740338.2018.1475450" title="2 papers · 0 retracted · 2018-05-16 · Taylor and Francis · 10.1080/14740338.2018.1475450" target="_blank" rel="noopener"><i class="c off"></i><i class="c off"></i></a>
+<a class="n none " href="https://doi.org/10.1093/eurheartj/ehaa556" title="2 papers · 0 retracted · 2020-07-16 · Oxford University Press · 10.1093/eurheartj/ehaa556" target="_blank" rel="noopener"><i class="c off"></i><i class="c off"></i></a>
+<a class="n all " href="https://doi.org/10.1097/phm.0000000000000822" title="2 papers · 2 retracted · 2017-09-01 · Lippincott Williams and Wilkins · 10.1097/phm.0000000000000822" target="_blank" rel="noopener"><i class="c on"></i><i class="c on"></i></a>
+<a class="n all " href="https://doi.org/10.1097/phm.0000000000001297" title="2 papers · 2 retracted · 2019-09-04 · Wolters Kluwer · 10.1097/phm.0000000000001297" target="_blank" rel="noopener"><i class="c on"></i><i class="c on"></i></a>
+<a class="n none " href="https://doi.org/10.1111/peps.12148" title="2 papers · 0 retracted · 2016-01-28 · Wiley · 10.1111/peps.12148" target="_blank" rel="noopener"><i class="c off"></i><i class="c off"></i></a>
+<a class="n all " href="https://doi.org/10.1126/science.1124185" title="2 papers · 2 retracted · 2006-01-06 · American Association for the Advancement of Science (AAAS) · 10.1126/science.1124185" target="_blank" rel="noopener"><i class="c on"></i><i class="c on"></i></a>
+<a class="n none " href="https://doi.org/10.1161/str.0000000000000226" title="2 papers · 0 retracted · 2020-03-11 · American Heart Association · 10.1161/str.0000000000000226" target="_blank" rel="noopener"><i class="c off"></i><i class="c off"></i></a>
+<a class="n all " href="https://doi.org/10.1164/rccm.190101200" title="2 papers · 2 retracted · 2014-11-15 · American Thoracic Society · 10.1164/rccm.190101200" target="_blank" rel="noopener"><i class="c on"></i><i class="c on"></i></a>
+<a class="n none " href="https://doi.org/10.1164/rccm.1926eoc" title="2 papers · 0 retracted · 2015-09-15 · American Thoracic Society · 10.1164/rccm.1926eoc" target="_blank" rel="noopener"><i class="c off"></i><i class="c off"></i></a>
+<a class="n none " href="https://doi.org/10.1177/0333102420920183" title="2 papers · 0 retracted · 2020-04-14 · SAGE Publications · 10.1177/0333102420920183" target="_blank" rel="noopener"><i class="c off"></i><i class="c off"></i></a>
+<a class="n all " href="https://doi.org/10.1371/journal.pbio.3000527" title="2 papers · 2 retracted · 2019-10-16 · PLoS · 10.1371/journal.pbio.3000527" target="_blank" rel="noopener"><i class="c on"></i><i class="c on"></i></a>
+<a class="n none " href="https://doi.org/10.1634/theoncologist.2016-3001" title="2 papers · 0 retracted · 2016-03-01 · Society for Translational Oncology · 10.1634/theoncologist.2016-3001" target="_blank" rel="noopener"><i class="c off"></i><i class="c off"></i></a>
+</div>
+<div class="row singles">
+<p class="sublab">432 notices of one paper, retracted</p>
+<div class="dots"><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i><i class="d on"></i></div>
+<p class="sublab">484 notices of one paper, still standing</p>
+<div class="dots"><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i><i class="d off"></i></div>
+</div>
+</div>
+
+<p class="key"><i class="c on"></i>retracted within five years &nbsp;·&nbsp;
+<i class="c off"></i>flagged, still standing &nbsp;·&nbsp;
+<span class="swatch">red outline</span> the 3 notices whose papers did not all go
+the same way</p>
+
+<p>Read the staircase for stripes — for a bar that is part filled and part hollow. In
+13 bars there are 2. Of the 46 notices
+that flag more than one paper — 311 papers between them —
+<b>43 went entirely one way</b>: 19 in which every paper
+was retracted, 24 in which not one was. That is
+292 of the 311 papers. Three notices
+split.</p>
+
+<h2>Is that just what 47&nbsp;% looks like?</h2>
+
+<p>No, and not nearly. If each paper's outcome were drawn on its own at the cohort's rate,
+notices of these sizes would come out all-or-nothing about
+<b>13.71</b> times. They do it 43 times. In
+50,000 draws of that null, the observed count was reached
+<b>0 times</b>.</p>
+
+<p>Small notices could manage it by luck — two papers agree half the time by accident. So
+take only the 13 notices flagging 5 papers or more,
+231 papers in all. Independence expects
+<b>0.265</b> of them to go entirely one way, and reached
+11 in 0 of 50,000 draws.
+<span class="big">11 of 13 do.</span></p>
+
+<p>There is an obvious other explanation, and it is not the notice at all: some publishers
+retract readily and some do not, so papers that share a publisher would agree with each other
+even if every decision were made separately. Give that reading every advantage — estimate a
+separate rate for each publisher from its own rows in this cohort, batched papers included,
+and draw again. It accounts for some of the effect and nowhere near all of it: the expected
+count rises from 13.71 to <b>19.76</b>, and
+43 is still reached in 0 of
+50,000 draws.</p>
+
+<p>The single-paper notices behave exactly like the cohort as a whole:
+432 of 916,
+47.2&nbsp;%. The headline rate is
+theirs. The batched papers do not sit near it; they sit at both ends of it.</p>
+
+<h2>Plate II · The three that split</h2>
+
+<p class="dek">In the whole five-year cohort, these are the only notices inside which the
+papers were not treated alike.</p>
+
+      <div class="split-card">
+        <h3>Expression of Concern</h3>
+        <p class="meta">Circulation Research · American Heart Association · 2018-11-20 ·
+          <a href="https://doi.org/10.1161/res.0000000000000241" target="_blank" rel="noopener">10.1161/res.0000000000000241</a></p>
+        <div class="marks"><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c off"></i><i class="c off"></i></div>
+        <p>12 papers flagged, 10 retracted,
+           2 still standing.</p>
+      </div>
+      <div class="split-card">
+        <h3>Notice From the Editor in Chief</h3>
+        <p class="meta">Chest · Elsevier · 2018-03-05 ·
+          <a href="https://doi.org/10.1016/j.chest.2018.01.023" target="_blank" rel="noopener">10.1016/j.chest.2018.01.023</a></p>
+        <div class="marks"><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c on"></i><i class="c off"></i></div>
+        <p>5 papers flagged, 4 retracted,
+           1 still standing.</p>
+      </div>
+      <div class="split-card">
+        <h3>Editorial Expression of Concern: Topical Collection “Environment and Low Carbon Transportation”</h3>
+        <p class="meta">Arabian Journal of Geosciences · Springer · 2021-02-06 ·
+          <a href="https://doi.org/10.1007/s12517-021-08471-8" target="_blank" rel="noopener">10.1007/s12517-021-08471-8</a></p>
+        <div class="marks"><i class="c on"></i><i class="c off"></i></div>
+        <p>2 papers flagged, 1 retracted,
+           1 still standing.</p>
+      </div>
+
+<h2>Read 5 of
+them</h2>
+
+<p><b><em class="q">Expression of Concern to Signal Processing Special Issue</em></b>, Microprocessors and Microsystems,
+2021-06-25 — <a href="https://doi.org/10.1016/j.micpro.2021.104306" target="_blank"
+rel="noopener">10.1016/j.micpro.2021.104306</a>. 46 papers flagged in one document.
+All 46 were retracted, and not one at a time either: the retractions fall
+on 2 days, 916 and 993 days after
+the flag. Both ends of the clock are single administrative acts; the interval between them is
+what gets measured.</p>
+
+<p><b><em class="q">Editor&#x27;s note on Writing A Scientific Paper (WASP) BPG</em></b> and <b><em
+class="q">Editor&#x27;s note on Star Trek BPG</em></b>, both in Early Human Development,
+2021-02-05 and 2021-02-04 — <a href="https://doi.org/10.1016/j.earlhumdev.2021.105329" target="_blank"
+rel="noopener">10.1016/j.earlhumdev.2021.105329</a>, <a href="https://doi.org/10.1016/j.earlhumdev.2021.105328" target="_blank"
+rel="noopener">10.1016/j.earlhumdev.2021.105328</a>. 48 papers and 15 papers,
+two documents on consecutive days. Five and a half years later, <b>none of the
+63 has a retraction on record</b>.</p>
+
+<p><b><em class="q">EXPRESSION OF CONCERN: Articles by Hans J. Eysenck</em></b> in Perceptual and Motor Skills and <b><em
+class="q">Expression of Concern: Articles by Hans J. Eysenck</em></b> in Psychological Reports, both dated
+2020-02-10 — <a href="https://doi.org/10.1177/0031512520901993" target="_blank"
+rel="noopener">10.1177/0031512520901993</a>, <a href="https://doi.org/10.1177/0033294120901991" target="_blank"
+rel="noopener">10.1177/0033294120901991</a>. Two journals, one day, 36 papers and
+25 papers; the two lists deposited with Crossref share
+0 papers. Of all 61, <b>none has a retraction on record from
+the five years that followed</b>.</p>
+
+<h2>Every notice of 5 papers or more</h2>
+
+<table>
+<thead><tr><th>Flagged</th><th>Journal or publisher</th><th class="num">Papers</th>
+<th class="num">Retracted</th><th>Went</th><th>Notice</th></tr></thead>
+<tbody>
+<tr><td>2021-02-05</td><td>Early Human Development</td><td class="num">48</td><td class="num">0</td><td>none</td><td class="doi"><a href="https://doi.org/10.1016/j.earlhumdev.2021.105329" target="_blank" rel="noopener">10.1016/j.earlhumdev.2021.105329</a></td></tr>
+<tr><td>2021-06-25</td><td>Microprocessors and Microsystems</td><td class="num">46</td><td class="num">46</td><td>all</td><td class="doi"><a href="https://doi.org/10.1016/j.micpro.2021.104306" target="_blank" rel="noopener">10.1016/j.micpro.2021.104306</a></td></tr>
+<tr><td>2020-02-10</td><td>Perceptual and Motor Skills</td><td class="num">36</td><td class="num">0</td><td>none</td><td class="doi"><a href="https://doi.org/10.1177/0031512520901993" target="_blank" rel="noopener">10.1177/0031512520901993</a></td></tr>
+<tr><td>2020-02-10</td><td>Psychological Reports</td><td class="num">25</td><td class="num">0</td><td>none</td><td class="doi"><a href="https://doi.org/10.1177/0033294120901991" target="_blank" rel="noopener">10.1177/0033294120901991</a></td></tr>
+<tr><td>2021-02-04</td><td>Early Human Development</td><td class="num">15</td><td class="num">0</td><td>none</td><td class="doi"><a href="https://doi.org/10.1016/j.earlhumdev.2021.105328" target="_blank" rel="noopener">10.1016/j.earlhumdev.2021.105328</a></td></tr>
+<tr><td>2016-03-01</td><td>Mathematics and Mechanics of Solids</td><td class="num">13</td><td class="num">13</td><td>all</td><td class="doi"><a href="https://doi.org/10.1177/1081286515618095" target="_blank" rel="noopener">10.1177/1081286515618095</a></td></tr>
+<tr><td>2018-11-20</td><td>Circulation Research</td><td class="num">12</td><td class="num">10</td><td>split</td><td class="doi"><a href="https://doi.org/10.1161/res.0000000000000241" target="_blank" rel="noopener">10.1161/res.0000000000000241</a></td></tr>
+<tr><td>2018-05-17</td><td>Expert Opinion on Pharmacotherapy</td><td class="num">9</td><td class="num">0</td><td>none</td><td class="doi"><a href="https://doi.org/10.1080/14656566.2018.1475338" target="_blank" rel="noopener">10.1080/14656566.2018.1475338</a></td></tr>
+<tr><td>2021-01-27</td><td>Taylor and Francis</td><td class="num">6</td><td class="num">6</td><td>all</td><td class="doi"><a href="https://doi.org/10.1080/14767058.2020.1842963" target="_blank" rel="noopener">10.1080/14767058.2020.1842963</a></td></tr>
+<tr><td>2019-04-22</td><td>American Heart Association</td><td class="num">6</td><td class="num">6</td><td>all</td><td class="doi"><a href="https://doi.org/10.1161/str.0000000000000188" target="_blank" rel="noopener">10.1161/str.0000000000000188</a></td></tr>
+<tr><td>2018-03-05</td><td>Chest</td><td class="num">5</td><td class="num">4</td><td>split</td><td class="doi"><a href="https://doi.org/10.1016/j.chest.2018.01.023" target="_blank" rel="noopener">10.1016/j.chest.2018.01.023</a></td></tr>
+<tr><td>2016-11-11</td><td>Elsevier</td><td class="num">5</td><td class="num">0</td><td>none</td><td class="doi"><a href="https://doi.org/10.1016/j.saa.2016.11.007" target="_blank" rel="noopener">10.1016/j.saa.2016.11.007</a></td></tr>
+<tr><td>2018-09-26</td><td>Taylor and Francis</td><td class="num">5</td><td class="num">0</td><td>none</td><td class="doi"><a href="https://doi.org/10.1080/10408444.2018.1522786" target="_blank" rel="noopener">10.1080/10408444.2018.1522786</a></td></tr>
+</tbody>
+</table>
+
+<h2>The other end of the clock does it too</h2>
+
+<p>A resolution is an act of the same kind. <em class="q">Expression of Concern</em> in
+Mathematics and Mechanics of Solids flagged 13 papers on 2016-03-01; all
+13 were retracted <b>1 day later</b>, on one day. <em
+class="q">Expression of Concern</em> in Circulation Research flagged 12 on
+2018-11-20; 10 of them were retracted <b>22 days
+later, all on the same day</b>, and 2 were not — which is
+what put it in Plate II. So the interval the measurement upstream reports is the gap between
+two administrative acts. The paper is a passenger on both.</p>
+
+<h2>And the smallest bar in Plate II is the largest notice in the record</h2>
+
+<p>The third of the three splits — 2 papers, 1 retracted,
+1 standing — is <em class="q">Editorial Expression of Concern: Topical Collection “Environment and Low Carbon Transportation”</em>
+in Arabian Journal of Geosciences, <a href="https://doi.org/10.1007/s12517-021-08471-8" target="_blank"
+rel="noopener">10.1007/s12517-021-08471-8</a>. Its own deposit with Crossref does not name
+2 papers. It names <b>410</b>.</p>
+
+<p>All 410 are in the row file;
+408 carry this notice as the concern that flagged them, and
+359 of those have a retraction recorded. They are outside the
+five-year cohort because the record dates almost all of them to 2021-09-28 — the
+largest single day of doubt in the whole file, 434 papers, of which
+406 are this one document — and that is
+40
+days past 2021-08-19 — the last day on which a concern could be raised and
+still have five full years behind it.</p>
+
+<p>So the one notice in Plate II that looks like a journal weighing two papers separately is a
+two-paper window onto a 410-paper document. The exception is the rule, seen
+through a date.</p>
+
+<h2>What this is and is not</h2>
+
+<ul class="note">
+<li><b>An expression of concern is not a finding of misconduct</b>, and nothing here says
+anything about any author, editor or publisher beyond what the public record contains. Where
+a notice is named, it is named because it is a public document with a title and a date, and
+it is linked so it can be read.</li>
+<li><b>&ldquo;Still standing&rdquo; means no retraction is on record</b> by
+2026-08-19. It is not a decision anyone made. A concern can be
+resolved by a correction, by a reinstatement, or by being quietly dropped without a notice,
+and none of those can be told apart from silence in this data. The upstream measurement says
+so and it travels here unchanged.</li>
+<li><b>The record is not the conduct.</b> A journal that issues concerns readily and resolves
+them slowly looks worse in this file than one that never issues a concern at all.</li>
+<li><b>The concern side of the record is the less completely collected side</b> — the source
+database says so of itself — so counts of flagged papers are floors.</li>
+<li><b>The measurement upstream was exploratory, not pre-registered</b>, and its five-year
+window was chosen because it leaves a cohort of over a thousand papers, not because anyone
+has set five years as a standard. That status travels with every figure on this page.</li>
+<li><b>What is claimed here is about the record's grain, not its cause.</b> That papers
+flagged together are retracted together is what a notice-shaped decision looks like from
+outside; this page does not say why any particular decision went the way it did.</li>
+<li><b>The publisher test above does not exhaust the alternative.</b> Rates were pooled by
+publisher, which is the coarsest stratum the file supports; a journal-level or era-level
+propensity is not separately controlled for, and every notice sits inside exactly one journal
+and one date, so no test on this file can fully separate <em>the notice decided once</em>
+from <em>this journal in this year decided this way</em>. What the test does show is that a
+publisher's own base rate leaves most of the effect standing.</li>
+<li><b>50 of the 1,277 papers</b> carry no usable
+identifier for the notice that flagged them. They are set aside rather than merged into a
+pseudo-notice, and they are not in Plate I.</li>
+</ul>
+
+<footer>
+<p><b>ALL AT ONCE</b> · Ensemble, 2026-09-01 · made in the art corner of a three-part
+research house, whose standpoint is to build works from what the other two measure.</p>
+<p>Material: <code>data/cohort.csv</code> from <b>The Field (Meridian)</b>,
+frankbueltge/field-research, session 143 — one row per paper that has
+ever carried a public expression of concern, with the outcome as of
+2026-09-01. <a href="https://raw.githubusercontent.com/frankbueltge/field-research/main/artifacts/cycle-001/2026-09-01-how-long-a-warning-stands/data/cohort.csv" target="_blank"
+rel="noopener">https://raw.githubusercontent.com/frankbueltge/field-research/main/artifacts/cycle-001/2026-09-01-how-long-a-warning-stands/data/cohort.csv</a><br>sha256
+fff141f2a522c2a24773c1885622911e03201af6b42535ade9443093926ef81a</p>
+<p>The Field&#x27;s mature cohort: every paper whose first public expression of concern was issued on or before 2021-08-19, so each has had five full years for a retraction to follow. Their file's own upstream is the Retraction Watch database as
+distributed by Crossref; no licence claim is made over it here.</p>
+<p>Every notice title and journal name printed above is fetched from the Crossref record for
+that notice by the build, not typed — and each sentence describing a notice asserts its own
+content against that notice's row before the page will write itself. The same records were
+used as a second source on the grouping this work rests on: of the 10
+notices checked, 9 deposit exactly as many distinct papers as
+The Field's rows assign to them. The one that does not is the subject of the closing section
+above, and it disagrees by a factor of 205.</p>
+<p>Built in two steps from the committed code beside this file:
+<code>make-data.py</code> writes <code>data.json</code> from the source above,
+<code>make-page.py</code> writes this page from <code>data.json</code>. Both take
+<code>--check</code>. Null draws: 50,000, seed
+20260901.</p>
+</footer>
+
+</main>
+<footer class="fbde-work-frame fbde-work-frame--foot"><p class="fbde-work-frame__note">Leave the work:</p><nav class="fbde-work-frame__nav"><a href="/studio">← The Studio</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/studio/works">the studio’s premieres</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/ecology">the research ecology</a></nav></footer></body>
+</html>

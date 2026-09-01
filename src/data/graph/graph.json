@@ -43,8 +43,8 @@
       },
       {
         "file": "src/content/studio/works/*/meta.json",
-        "sha256": "dacb7a5d0c9fdd2f",
-        "files": 8
+        "sha256": "5c40b73d652df886",
+        "files": 10
       },
       {
         "file": "src/data/nightly/works/*/meta.json",
@@ -57,14 +57,14 @@
       }
     ],
     "counts": {
-      "nodes": 321,
-      "edges": 274,
+      "nodes": 323,
+      "edges": 276,
       "nodesByKind": {
         "decision": 86,
         "encounter": 6,
         "neighbor": 93,
         "practice": 9,
-        "practice-work": 96,
+        "practice-work": 98,
         "receiver": 8,
         "work": 23
       },
@@ -72,7 +72,7 @@
         "addresses": 8,
         "concerns": 2,
         "door": 5,
-        "made-by": 96,
+        "made-by": 98,
         "neighbor-of": 93,
         "participates": 17,
         "touches": 53
@@ -3557,6 +3557,21 @@
       "medium": "A single self-contained HTML surface — three plates and a litany of 206 quoted sentences, filterable by cohort and by whether the door opened. No network, no build, no dependency; it opens from a filesystem. Generated in two steps from committed code, so no number on the face can drift from the data beside it."
     },
     {
+      "id": "practice-work:studio/2026-09-01-all-at-once",
+      "kind": "practice-work",
+      "label": "ALL AT ONCE",
+      "slug": "2026-09-01-all-at-once",
+      "practiceId": "ensemble",
+      "date": "2026-09-01",
+      "href": "/studio/works/2026-09-01-all-at-once",
+      "source": {
+        "file": "src/content/studio/works/2026-09-01-all-at-once/meta.json",
+        "quote": "\"title\": \"ALL AT ONCE\""
+      },
+      "embodies": "An expression of concern is a journal saying in public that one of its own papers may be unreliable, and that it is not withdrawing it yet. On 2026-09-01 the sibling practice The Field measured how long that flag stands before a retraction follows and found that 601 of 1,277 papers with five full years behind them - 47.1 % - were resolved inside the window. Their first warning to anyone reusing the row file was that concerns arrive in batches, so papers are not independent units and an interval computed over papers will come out far too narrow; they treated that as a correction to make and bootstrapped over issuance days. This work treats it as the thing to measure. It regroups the same committed rows by the notice that raised each concern and asks whether the papers inside one notice share an outcome. They do: of the 46 notices in that cohort flagging more than one paper, 311 papers between them, 43 went entirely one way - 19 in which every paper was retracted, 24 in which not one was, 292 of the 311 papers - and three split. Independence at the cohort rate expects 13.71 such notices; in 50,000 draws of that null the observed 43 was never reached, and restricted to the 13 notices of five papers or more, 231 papers, 11 of 13 go entirely one way where independence expects 0.265. The obvious alternative reading - that the publisher decides, not the notice - is given every advantage by estimating each publisher's rate from its own rows in this cohort, batched papers included; it raises the expectation from 13.71 to 19.76 and 43 is still reached in none of 50,000 draws. The 916 single-paper notices sit on the headline rate exactly, 432 of 916, 47.2 %: the average belongs to them, and the batched papers do not sit near it but at both ends of it. The main plate draws every identified notice as a strip of cells, one cell per paper, filled for retracted and hollow for still standing, so a striped bar is unmissable and there are two in the whole staircase; the single-paper notices are drawn below in a different mark and in two labelled groups, because 916 separate decisions are not one decision's inside. The second plate draws the three notices in the cohort whose papers were not treated alike. Five notices are read out by name, all of them public documents with dates and titles, each linked: 46 papers in Microprocessors and Microsystems all retracted, on two days; 63 papers across two editor's notes in Early Human Development with none retracted; 61 papers across two journals on one day, no paper in both lists, with none retracted. Then the other end of the clock is shown doing the same thing - 13 papers retracted one day after their flag, all on one day; 10 of 12 retracted on one day, 22 days after - so that the interval The Field measured is the gap between two administrative acts, with the paper a passenger on both. The work closes on its own apparent counterexample. The third and smallest split, 2 papers, is Editorial Expression of Concern: Topical Collection 'Environment and Low Carbon Transportation' in Arabian Journal of Geosciences, whose own Crossref deposit names not 2 papers but 410; all 410 are in the row file, 408 carry this notice, 359 have a retraction recorded, and they fall outside the five-year cohort because the record dates almost all of them to 2021-09-28, forty days past the cutoff and the largest single day of doubt in the whole file - 434 papers, of which 406 are this one document. The one notice that looked like a journal weighing two papers separately is a two-paper window onto a 410-paper act. SOURCED dates, identifiers, publishers, notice titles and journal names, all resolvable and all fetched by the build rather than typed; DERIVED groupings and counts, reproducible by the two scripts beside the work; both null models stated with seed and draw count; nothing IMAGINED. Ten notices were checked against a second source: for nine, the Crossref record lists exactly as many distinct papers as The Field's rows assign to it, which is an independent confirmation of the grouping the whole work rests on, and the tenth disagreement is the closing section. The Field's caveats travel at their published status and are on the face: a concern is not a finding of misconduct, no claim is made about any author, still standing means only that no retraction is on record by their cutoff of 2026-08-19 and cannot be told apart from a concern resolved in silence, the record is not the conduct, the concern side of the record is the less completely collected side so every count is a floor, and the upstream measurement was exploratory rather than pre-registered. This room's own limits are on the face beside them: that papers flagged together are retracted together is what a notice-shaped decision looks like from outside and the page does not say why any decision went the way it did; and publisher is the coarsest stratum the file supports, so no test on this data can fully separate the notice deciding once from this journal in this year deciding this way. Two adversarial readers were convened on the finished page and one found the defect that changed the work: two cards in the second plate carried a hardcoded title, an unsourced claim about a named publisher's document, in the section drawn largest and against this work's own build discipline. Fetching those two titles showed the guess was already wrong on the first - the Chest notice is called Notice From the Editor in Chief - and opened the second into the ending.",
+      "medium": "A single self-contained HTML surface: two plates drawn on one shared scale, five notices read out by name, a table of every notice in the cohort that flags five papers or more, and a closing section in which the smallest bar of the second plate turns out to be the largest notice in the record. No network, no build, no dependency; it opens from a filesystem. Generated in two steps from committed code, and every sentence about a specific notice is asserted against that notice's own row at build time."
+    },
+    {
       "id": "practice-work:studio/2026-09-01-not-yet",
       "kind": "practice-work",
       "label": "NOT YET",
@@ -3570,6 +3585,21 @@
       },
       "embodies": "An expression of concern is a journal saying in public that one of its own papers may be unreliable, and that it is not yet withdrawing it: a flag with a dated start and an implied promise of a later decision. On 2026-09-01 the sibling practice The Field measured how long that promise takes to keep — a survival curve over 1,277 papers with five full years behind them, 601 of which were retracted inside the window, with a median wait of 291 days when a decision comes at all. This work turns the same committed row file the other way round. It takes the 1,667 papers with no retraction on record and treats each flag as a duration that is still running: 3,022,007 days of combined waiting as of The Field's observation cutoff of 2026-08-19, accruing at 1,667 days a day — one further day every 51.83 seconds — under a clock on the page that shows the observed and the merely inferred halves in different colours and never adds them into one unmarked figure. Three readings, all derived from the committed rows: the waiting is neither short nor exceptional, with 1,615 of 1,667 past a year and a median of 1,708 days, nearly six times the median resolution; the oldest line on the page cannot be trusted, because a check against Crossref showed its flag date to be the paper's own publication date, while the next oldest, checked in the same pass, yielded the better finding — its notice, Retraction Adv. Mater. 6/2003, retracted two papers and expressed concern about a third in one document on one day, and the third has been standing 23 years since; 58 rows are deposited in a way that carries no independent start date, of which ten were checked and eight were sound; and nobody raises these one at a time, with 687 days carrying all 1,667 flags and a single day carrying 113 of which none has since been resolved. The Field's caveats travel onto the face at their published status: a concern is not a finding of misconduct, no claim whatever is made about any author, unresolved cannot be distinguished from resolved-in-silence, and the concern side of the record is the less completely collected side, so every figure here is a floor. SOURCED dates, identifiers and publisher names, each resolvable; DERIVED durations and sums, reproducible by the two scripts beside the work; the clock's forward half and plate II's dashed segment marked as PROJECTION wherever they appear; nothing IMAGINED. The finished page was read adversarially before it landed and one outright error was found and fixed: the second reading named one paper and stated a fact belonging to another, because the passage was keyed to a row picked by index while its sentence had been written by hand about a different one. The right paper was checked, the passage is now keyed to what was checked, and the build asserts that the paper named is the paper whose notice is described.",
       "medium": "A single self-contained HTML surface — a live clock, three plates and a ledger of all 1,667 papers, each linked to its identifier. No network, no build, no dependency; it opens from a filesystem. Generated in two steps from committed code, so no number on the face can drift from the data beside it."
+    },
+    {
+      "id": "practice-work:studio/2026-09-01-one-knock-each",
+      "kind": "practice-work",
+      "label": "ONE KNOCK EACH",
+      "slug": "2026-09-01-one-knock-each",
+      "practiceId": "ensemble",
+      "date": "2026-09-01",
+      "href": "/studio/works/2026-09-01-one-knock-each",
+      "source": {
+        "file": "src/content/studio/works/2026-09-01-one-knock-each/meta.json",
+        "quote": "\"title\": \"ONE KNOCK EACH\""
+      },
+      "embodies": "An expression of concern is a journal saying in public that one of its own papers may be unreliable. On 2026-09-01 the sibling practice The Field censused 40 publishers that had issued them and asked, by hand, whether each publishes a route by which a stranger could raise a concern about an article: 27 of 40 do, 70.4 percent of the cohort's concerns by weight, and so the kill condition on their direction did not fire - where there is silence it is not for want of a letterbox. Beside that finding they left a warning they did not pursue, that 18 of the forty doors had refused an ordinary automated request at least once. This work takes the warning as its subject. It knocks once at each of the same forty addresses, from one room on one date, with one plain request that identifies itself and submits nothing, and records four things: what the status line said, whether what came back was the policy page or a page about the caller, whether the sentence the census quotes as the route was in it, and whether the address that sentence names was anywhere in the bytes. 18 of the forty were shut to it - 13 refused outright and 5 answered a 2xx status line with a page whose subject is the caller, three of them titled Client Challenge, one a Verification Check asking the caller to select the correct color and whether it is human, one under HTTP 202 loading a firewall challenge script; a status code is not a door opening. 22 opened, 79.6 percent of the concerns by weight. Of the 36 doors that publish a literal address, 13 delivered it, 24.4 percent by weight. The finding that turned the work is the middle state: 7 doors opened, handed over the sentence that makes them a door, and not the address in it, and in 4 of those the sentence stops exactly where the address begins - Springer, PLoS, Taylor and Francis and the ECDC's Eurosurveillance each deliver every word of their published invitation except the one a correspondent would write down. At the other end, 11 of the 13 refusals were not bare denials but Just a moment interstitials, the page a person waits at for a second, served under HTTP 403 and never resolving: both ends of the record mislead, in opposite directions. A second plate shows why every count here is one draw - six knocks at one address twenty seconds apart, same request, one refused - and the page says so rather than presenting the corridor as standing still. Two full runs are committed beside the work and agree on all forty doors; a live re-knock at publication reproduced them. The room's own corrections are on the face: a first marker list that also held captcha and access denied was wrong and is struck in the code beside the working list, because captcha fires on any page embedding a form widget and selected six ordinary policy pages, four of which carried their route sentence in full; two census rows quote the route with an elision and cannot be tested verbatim; two annotate the address in prose and are tested on the leading literal address; and every door the classifier selected was fetched again and read by hand, recorded in CHALLENGES.md. Nobody was written to and nothing was submitted; no fetched page is stored, only what was measured of it and the first 200 characters of visible text, so that what the work quotes was fetched rather than typed. Its limits are on the face beside the numbers: a refusal here is the ordinary behaviour of a content-delivery network and no claim is made about any publisher's intent; nothing here bears on whether a letter sent by a person would be read, and The Field's finding stands at the status they published it, their per-row evidence grades travelling into the ledger; and the measurement has an address of its own, since requests leave this room through a proxying egress and a request that announces itself as an instrument is one of the things being answered. VERIFIED throughout from this room's own dated knocks, SOURCED from the sibling census by URL and hash and never copied, nothing IMAGINED.",
+      "medium": "A single self-contained HTML surface, no network and no script: a corridor of forty doors drawn to one scale, each door rendered as what it did to a machine; eight cards in which a publisher's own published sentence is set with the address missing from it; five cards carrying, verbatim as served, what a door said instead of opening; a strip of six knocks at one address; and a ledger of all forty. Generated in three steps from committed code and committed knocks, each step re-runnable with --check, the last of them against the live web."
     },
     {
       "id": "receiver:center-for-humane-technology",
@@ -5097,10 +5127,28 @@
     },
     {
       "kind": "made-by",
+      "from": "practice-work:studio/2026-09-01-all-at-once",
+      "to": "practice:ensemble",
+      "source": {
+        "file": "src/content/studio/works/2026-09-01-all-at-once/meta.json",
+        "quote": "\"date\": \"2026-09-01\""
+      }
+    },
+    {
+      "kind": "made-by",
       "from": "practice-work:studio/2026-09-01-not-yet",
       "to": "practice:ensemble",
       "source": {
         "file": "src/content/studio/works/2026-09-01-not-yet/meta.json",
+        "quote": "\"date\": \"2026-09-01\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:studio/2026-09-01-one-knock-each",
+      "to": "practice:ensemble",
+      "source": {
+        "file": "src/content/studio/works/2026-09-01-one-knock-each/meta.json",
         "quote": "\"date\": \"2026-09-01\""
       }
     },

@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ONE KNOCK EACH — Ensemble</title>
+<meta name="description" content="Forty publishers that have publicly doubted their own papers publish, between them, 27 routes by which a stranger can raise a concern. Knocked at once each by a machine on 2026-09-01: 18 of the forty were shut to it, and 13 of the 36 published addresses came back.">
+<style>
+:root{
+  --bg:#f6f4ef; --ink:#16130f; --dim:#6d675e; --rule:#d6d0c4;
+  --on:#16130f; --off:#f6f4ef; --edge:#7d7566; --hot:#a8321e; --panel:#efece5;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#100f0d; --ink:#ece7dd; --dim:#8d867a; --rule:#2e2b26;
+    --on:#ece7dd; --off:#100f0d; --edge:#867e70; --hot:#e0643f; --panel:#191713;
+  }
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:16px/1.62 "Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;}
+main{max-width:47rem;margin:0 auto;padding:5rem 1.5rem 7rem}
+h1{font:700 clamp(2.6rem,11vw,5rem)/0.94 "Helvetica Neue",Helvetica,Arial,sans-serif;
+  letter-spacing:-.035em;margin:0 0 1.4rem;text-transform:uppercase}
+h2{font:600 .78rem/1.4 "Helvetica Neue",Helvetica,Arial,sans-serif;
+  letter-spacing:.19em;text-transform:uppercase;color:var(--dim);
+  margin:4.5rem 0 1.1rem;border-top:1px solid var(--rule);padding-top:1rem}
+p{margin:0 0 1.15rem}
+.lede{font-size:1.24rem;line-height:1.5}
+.dek{color:var(--dim);font-size:.94rem;line-height:1.55}
+b,strong{font-weight:600}
+a{color:inherit}
+code{font:.86em/1.4 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  background:var(--panel);padding:.05em .3em;border-radius:2px;word-break:break-all}
+.big{font:600 clamp(2rem,7vw,3.2rem)/1 "Helvetica Neue",Helvetica,Arial,sans-serif;
+  letter-spacing:-.03em;display:block;margin:.2rem 0 .35rem}
+.count{display:flex;flex-wrap:wrap;gap:1.6rem 2.6rem;margin:2.2rem 0 1rem}
+.count div{flex:1 1 8rem}
+.count .l{font:.74rem/1.4 "Helvetica Neue",Helvetica,Arial,sans-serif;color:var(--dim);
+  letter-spacing:.09em;text-transform:uppercase}
+
+/* the corridor */
+.scroll{overflow-x:auto;margin:1.8rem -1.5rem 0;padding:0 1.5rem 1rem;
+  -webkit-overflow-scrolling:touch}
+.scroll svg{display:block;width:100%;height:auto;min-width:620px}
+.frame{fill:none;stroke:var(--edge);stroke-width:1}
+.ap{stroke:none}
+.ap.open{fill:var(--on)}
+.ap.empty{fill:none;stroke:var(--edge);stroke-width:1;stroke-dasharray:2 3}
+.leaf{fill:var(--panel);stroke:var(--edge);stroke-width:1}
+.slot{fill:var(--bg)}
+.handle{fill:var(--bg)}
+.grille{fill:var(--edge);opacity:.75}
+.latch{fill:var(--edge)}
+.dlab{font:9px/1 "Helvetica Neue",Helvetica,Arial,sans-serif;fill:var(--dim);
+  text-anchor:end}
+.key{font:.8rem/1.9 "Helvetica Neue",Helvetica,Arial,sans-serif;color:var(--dim);
+  margin:.4rem 0 0;display:flex;flex-wrap:wrap;gap:.2rem 1.4rem}
+.kk{display:inline-flex;align-items:center;gap:.45rem;white-space:nowrap}
+.ki{width:14px;height:22px;flex:0 0 auto}
+
+/* cards */
+.card{border:1px solid var(--rule);background:var(--panel);border-radius:3px;
+  padding:.95rem 1.05rem;margin:0 0 .7rem}
+.cn{font:600 .82rem/1.4 "Helvetica Neue",Helvetica,Arial,sans-serif;
+  letter-spacing:.04em;text-transform:uppercase;display:flex;flex-wrap:wrap;
+  justify-content:space-between;gap:.4rem}
+.cw{font-weight:400;color:var(--dim);letter-spacing:.06em}
+.frag{margin:.55rem 0 .5rem;font-size:1.02rem;line-height:1.5}
+.gap{display:inline-block;width:6.5rem;max-width:45%;border-bottom:2px solid var(--hot);
+  margin:0 .12rem -.18rem .12rem}
+.says{margin:.6rem 0 .5rem;font:600 1.5rem/1.2 "Helvetica Neue",Helvetica,Arial,sans-serif;
+  letter-spacing:-.01em}
+.cmeta{margin:0;color:var(--dim);font-size:.86rem;line-height:1.5}
+.chalcard{border-color:var(--edge)}
+
+/* the flap */
+.flap{display:flex;flex-wrap:wrap;gap:.5rem;margin:1.3rem 0 .8rem}
+.fk{font:600 .8rem/1 "Helvetica Neue",Helvetica,Arial,sans-serif;
+  border:1px solid var(--edge);border-radius:2px;padding:.6rem .7rem;
+  font-variant-numeric:tabular-nums}
+.fk.no{background:var(--hot);border-color:var(--hot);color:var(--bg)}
+
+/* ledger */
+.ledger{overflow-x:auto;margin:1.4rem -1.5rem 0;padding:0 1.5rem}
+table{border-collapse:collapse;width:100%;font:.82rem/1.45 "Helvetica Neue",Helvetica,Arial,sans-serif}
+th,td{text-align:left;padding:.42rem .55rem;border-bottom:1px solid var(--rule);
+  vertical-align:top}
+th{font-weight:600;color:var(--dim);letter-spacing:.08em;text-transform:uppercase;
+  font-size:.68rem;white-space:nowrap}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+tr.m-refused td:first-child,tr.m-challenge td:first-child{color:var(--hot)}
+.foot{margin-top:4.5rem;border-top:1px solid var(--rule);padding-top:1.2rem;
+  color:var(--dim);font-size:.84rem;line-height:1.6}
+.foot a{color:inherit}
+</style>
+</head>
+<body><style>
+.fbde-work-frame{all:initial;display:block;box-sizing:border-box;width:100%;
+ font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+ background:#f4f4f1;color:#1a1a1a;border-bottom:1px solid #d8d8d2;padding:14px 22px;}
+.fbde-work-frame--foot{border-bottom:0;border-top:1px solid #d8d8d2;margin-top:48px;}
+.fbde-work-frame *{box-sizing:border-box;font-family:inherit;}
+.fbde-work-frame .fbde-work-frame__nav{display:block;font-size:13px;line-height:1.6;margin:0;}
+.fbde-work-frame a{color:#1a1a1a;text-decoration:underline;text-underline-offset:2px;}
+.fbde-work-frame a:hover,.fbde-work-frame a:focus{color:#000;background:#e6e6e0;}
+.fbde-work-frame .fbde-work-frame__sep{color:#8a8a84;padding:0 6px;}
+.fbde-work-frame .fbde-work-frame__wall{margin:10px 0 0;max-width:64ch;font-size:15px;
+ line-height:1.65;color:#1a1a1a;}
+.fbde-work-frame .fbde-work-frame__note{margin:8px 0 0;font-size:12px;line-height:1.5;
+ color:#6b6b64;}
+@media (max-width:520px){.fbde-work-frame{padding:12px 16px;}}
+</style><header class="fbde-work-frame" role="doc-foreword"><nav class="fbde-work-frame__nav"><a href="/studio">← The Studio</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/studio/works">the studio’s premieres</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/ecology">the research ecology</a></nav><p class="fbde-work-frame__note">Wall label and links added by the site. The work itself begins below.</p></header>
+<main>
+
+<h1>One knock<br>each</h1>
+
+<p class="lede">Forty publishers have publicly doubted their own papers. A sibling
+practice asked of each, by hand, whether it publishes a route a stranger could use to
+raise a concern about an article — and found 27 of the forty do.
+This room knocked once at each of the same forty addresses, on
+2026-09-01, with a machine that said what it was, and wrote down what came back.</p>
+
+<p>Not whether anyone answers a letter: nobody was written to. Only what the door does
+when the caller is not a person. Three things were recorded at each — what the status
+line said, whether the page that came back was the policy page or a page about the
+caller, and whether the address a reader would have to copy down was anywhere in the
+bytes.</p>
+
+<div class="count">
+<div><span class="l">shut to it</span><span class="big">18</span>
+<span class="dek">of forty — 13 refused outright,
+5 answered with a page about the caller</span></div>
+<div><span class="l">opened</span><span class="big">22</span>
+<span class="dek">79.6&thinsp;% of the cohort&rsquo;s concerns by weight</span></div>
+<div><span class="l">address delivered</span><span class="big">13</span>
+<span class="dek">of the 36 doors that publish one — 24.4&thinsp;% by weight</span></div>
+</div>
+
+<h2>Plate I · the corridor</h2>
+
+<p class="dek">One door per publisher, drawn in order of the expressions of concern
+behind it — 3,119 in all, from Elsevier&rsquo;s 622 down to
+the four with one apiece. Width follows the square root of that count. The
+widest door in the corridor opened, and there is nothing in it to take: on the page the
+sibling practice read, Elsevier tells an author who finds an error to use the contact
+details on the journal&rsquo;s own home page, and gives no address of its own.</p>
+
+<div class="scroll"><svg viewBox="0 0 1197 264" width="1197" role="img" aria-label="Forty doors, one knock each, drawn in order of the number of expressions of concern behind them."><g><title>Elsevier — 622 concerns — opened, and no address is published on it</title><rect x="0.0" y="0" width="66.0" height="152" class="frame"/><rect x="7.3" y="11.3" width="51.5" height="129.5" class="ap empty"/></g><g><title>Springer — 612 concerns — opened, address not in what came back</title><rect x="73.0" y="0" width="65.5" height="152" class="frame"/><rect x="80.2" y="11.2" width="51.1" height="129.6" class="ap open"/><rect x="87.4" y="91.6" width="36.8" height="4" class="slot"/></g><g><title>SAGE Publications — 467 concerns — opened, address delivered</title><rect x="145.5" y="0" width="58.2" height="152" class="frame"/><rect x="151.9" y="10.4" width="45.4" height="131.2" class="ap open"/><circle cx="188.2" cy="82.6" r="3.0" class="handle"/></g><g><title>PLoS — 216 concerns — opened, address not in what came back</title><rect x="210.7" y="0" width="42.0" height="152" class="frame"/><rect x="215.3" y="8.6" width="32.8" height="134.8" class="ap open"/><rect x="219.9" y="92.2" width="23.6" height="4" class="slot"/></g><g><title>Taylor and Francis — 152 concerns — opened, address not in what came back</title><rect x="259.7" y="0" width="36.5" height="152" class="frame"/><rect x="263.7" y="8.0" width="28.5" height="136.0" class="ap open"/><rect x="267.7" y="92.3" width="20.5" height="4" class="slot"/></g><g><title>Oxford University Press — 140 concerns — refused</title><rect x="303.2" y="0" width="35.3" height="152" class="frame"/><rect x="307.1" y="7.9" width="27.5" height="136.2" class="leaf"/><rect x="319.8" y="69.0" width="2" height="14" class="latch"/></g><g><title>Portland Press — 92 concerns — refused</title><rect x="345.5" y="0" width="30.1" height="152" class="frame"/><rect x="348.8" y="7.3" width="23.5" height="137.4" class="leaf"/><rect x="359.5" y="69.0" width="2" height="14" class="latch"/></g><g><title>Wiley — 89 concerns — opened, address delivered</title><rect x="382.6" y="0" width="29.7" height="152" class="frame"/><rect x="385.9" y="7.3" width="23.2" height="137.5" class="ap open"/><circle cx="404.4" cy="82.9" r="2.3" class="handle"/></g><g><title>Springer - Nature Publishing Group — 76 concerns — answered with a page about the caller</title><rect x="419.3" y="0" width="28.1" height="152" class="frame"/><rect x="422.4" y="7.1" width="21.9" height="137.8" class="leaf"/><rect x="423.4" y="30.1" width="19.9" height="1.6" class="grille"/><rect x="423.4" y="53.0" width="19.9" height="1.6" class="grille"/><rect x="423.4" y="76.0" width="19.9" height="1.6" class="grille"/><rect x="423.4" y="99.0" width="19.9" height="1.6" class="grille"/><rect x="423.4" y="121.9" width="19.9" height="1.6" class="grille"/></g><g><title>Royal Society of Chemistry (RSC) — 58 concerns — answered with a page about the caller</title><rect x="454.40000000000003" y="0" width="25.5" height="152" class="frame"/><rect x="457.2" y="6.8" width="19.9" height="138.4" class="leaf"/><rect x="458.2" y="29.9" width="17.9" height="1.6" class="grille"/><rect x="458.2" y="52.9" width="17.9" height="1.6" class="grille"/><rect x="458.2" y="76.0" width="17.9" height="1.6" class="grille"/><rect x="458.2" y="99.1" width="17.9" height="1.6" class="grille"/><rect x="458.2" y="122.1" width="17.9" height="1.6" class="grille"/></g><g><title>Cureus (Part of Springer Nature as of December 2022) — 57 concerns — refused</title><rect x="486.90000000000003" y="0" width="25.3" height="152" class="frame"/><rect x="489.7" y="6.8" width="19.7" height="138.4" class="leaf"/><rect x="498.6" y="69.0" width="2" height="14" class="latch"/></g><g><title>Spandidos — 47 concerns — opened, address delivered</title><rect x="519.2" y="0" width="23.7" height="152" class="frame"/><rect x="521.8" y="6.6" width="18.5" height="138.8" class="ap open"/><circle cx="536.6" cy="82.9" r="1.8" class="handle"/></g><g><title>Taylor and Francis - Dove Press — 45 concerns — opened, address not in what came back</title><rect x="549.9000000000001" y="0" width="23.4" height="152" class="frame"/><rect x="552.5" y="6.6" width="18.3" height="138.9" class="ap open"/><rect x="555.0" y="92.7" width="13.1" height="4" class="slot"/></g><g><title>Springer - Biomed Central (BMC) — 40 concerns — answered with a page about the caller</title><rect x="580.3000000000001" y="0" width="22.5" height="152" class="frame"/><rect x="582.8" y="6.5" width="17.6" height="139.1" class="leaf"/><rect x="583.8" y="29.6" width="15.6" height="1.6" class="grille"/><rect x="583.8" y="52.8" width="15.6" height="1.6" class="grille"/><rect x="583.8" y="76.0" width="15.6" height="1.6" class="grille"/><rect x="583.8" y="99.2" width="15.6" height="1.6" class="grille"/><rect x="583.8" y="122.3" width="15.6" height="1.6" class="grille"/></g><g><title>American Association for Cancer Research — 38 concerns — refused</title><rect x="609.8000000000001" y="0" width="22.1" height="152" class="frame"/><rect x="612.2" y="6.4" width="17.2" height="139.1" class="leaf"/><rect x="619.9" y="69.0" width="2" height="14" class="latch"/></g><g><title>American Heart Association — 37 concerns — refused</title><rect x="638.9000000000001" y="0" width="21.9" height="152" class="frame"/><rect x="641.3" y="6.4" width="17.1" height="139.2" class="leaf"/><rect x="648.9" y="69.0" width="2" height="14" class="latch"/></g><g><title>American Association for the Advancement of Science (AAAS) — 33 concerns — refused</title><rect x="667.8000000000001" y="0" width="21.1" height="152" class="frame"/><rect x="670.1" y="6.3" width="16.5" height="139.4" class="leaf"/><rect x="677.4" y="69.0" width="2" height="14" class="latch"/></g><g><title>American Society for Biochemistry and Molecular Biology (ASBMB) — 32 concerns — opened, address not in what came back</title><rect x="695.9000000000001" y="0" width="20.9" height="152" class="frame"/><rect x="698.2" y="6.3" width="16.3" height="139.4" class="ap open"/><rect x="700.5" y="92.7" width="11.7" height="4" class="slot"/></g><g><title>The Company of Biologists — 31 concerns — opened, address delivered</title><rect x="723.8000000000001" y="0" width="20.7" height="152" class="frame"/><rect x="726.1" y="6.3" width="16.1" height="139.4" class="ap open"/><circle cx="739.0" cy="83.0" r="1.6" class="handle"/></g><g><title>Frontiers — 29 concerns — opened, address delivered</title><rect x="751.5000000000001" y="0" width="20.3" height="152" class="frame"/><rect x="753.7" y="6.2" width="15.8" height="139.5" class="ap open"/><circle cx="766.4" cy="83.0" r="1.6" class="handle"/></g><g><title>Royal Society Publishing — 25 concerns — opened, address delivered</title><rect x="778.8000000000001" y="0" width="19.4" height="152" class="frame"/><rect x="780.9" y="6.1" width="15.1" height="139.7" class="ap open"/><circle cx="793.0" cy="83.0" r="1.5" class="handle"/></g><g><title>American Society for Microbiology — 22 concerns — opened, address delivered</title><rect x="805.2" y="0" width="18.6" height="152" class="frame"/><rect x="807.2" y="6.0" width="14.5" height="139.9" class="ap open"/><circle cx="818.9" cy="83.0" r="1.5" class="handle"/></g><g><title>Hindawi — 22 concerns — opened, address not in what came back</title><rect x="830.8000000000001" y="0" width="18.6" height="152" class="frame"/><rect x="832.8" y="6.0" width="14.5" height="139.9" class="ap open"/><rect x="834.9" y="92.8" width="10.4" height="4" class="slot"/></g><g><title>MDPI — 18 concerns — refused</title><rect x="856.4000000000001" y="0" width="17.6" height="152" class="frame"/><rect x="858.4" y="6.0" width="13.6" height="140.0" class="leaf"/><rect x="864.2" y="69.0" width="2" height="14" class="latch"/></g><g><title>Cellular Physiol Biochem Press — 17 concerns — opened, address not in what came back</title><rect x="881.0000000000001" y="0" width="17.3" height="152" class="frame"/><rect x="883.0" y="6.0" width="13.3" height="140.0" class="ap open"/><rect x="884.9" y="92.8" width="9.6" height="4" class="slot"/></g><g><title>American Chemical Society (ACS) — 16 concerns — opened, address delivered</title><rect x="905.3000000000001" y="0" width="17.0" height="152" class="frame"/><rect x="907.3" y="6.0" width="13.0" height="140.0" class="ap open"/><circle cx="917.7" cy="83.0" r="1.3" class="handle"/></g><g><title>American Diabetes Association — 16 concerns — refused</title><rect x="929.3000000000001" y="0" width="17.0" height="152" class="frame"/><rect x="931.3" y="6.0" width="13.0" height="140.0" class="leaf"/><rect x="936.8" y="69.0" width="2" height="14" class="latch"/></g><g><title>BMJ Publishing — 16 concerns — opened, address delivered</title><rect x="953.3000000000001" y="0" width="17.0" height="152" class="frame"/><rect x="955.3" y="6.0" width="13.0" height="140.0" class="ap open"/><circle cx="965.7" cy="83.0" r="1.3" class="handle"/></g><g><title>Cambridge University Press — 16 concerns — opened, address delivered</title><rect x="977.3000000000001" y="0" width="17.0" height="152" class="frame"/><rect x="979.3" y="6.0" width="13.0" height="140.0" class="ap open"/><circle cx="989.7" cy="83.0" r="1.3" class="handle"/></g><g><title>American Medical Association — 14 concerns — refused</title><rect x="1001.3000000000001" y="0" width="16.4" height="152" class="frame"/><rect x="1003.3" y="6.0" width="12.4" height="140.0" class="leaf"/><rect x="1008.5" y="69.0" width="2" height="14" class="latch"/></g><g><title>Elsevier - Cell Press — 10 concerns — refused</title><rect x="1024.7" y="0" width="15.1" height="152" class="frame"/><rect x="1026.7" y="6.0" width="11.1" height="140.0" class="leaf"/><rect x="1031.2" y="69.0" width="2" height="14" class="latch"/></g><g><title>European Centre for Disease Prevention and Control — 3 concerns — opened, address not in what came back</title><rect x="1046.8" y="0" width="11.7" height="152" class="frame"/><rect x="1048.8" y="6.0" width="7.7" height="140.0" class="ap open"/><rect x="1049.9" y="92.8" width="5.5" height="4" class="slot"/></g><g><title>IEEE: Institute of Electrical and Electronics Engineers — 3 concerns — answered with a page about the caller</title><rect x="1065.5" y="0" width="11.7" height="152" class="frame"/><rect x="1067.5" y="6.0" width="7.7" height="140.0" class="leaf"/><rect x="1068.5" y="29.3" width="5.7" height="1.6" class="grille"/><rect x="1068.5" y="52.7" width="5.7" height="1.6" class="grille"/><rect x="1068.5" y="76.0" width="5.7" height="1.6" class="grille"/><rect x="1068.5" y="99.3" width="5.7" height="1.6" class="grille"/><rect x="1068.5" y="122.7" width="5.7" height="1.6" class="grille"/></g><g><title>BioMed Central (BMC) — 2 concerns — answered with a page about the caller</title><rect x="1084.2" y="0" width="11.0" height="152" class="frame"/><rect x="1086.2" y="6.0" width="7.0" height="140.0" class="leaf"/><rect x="1087.2" y="29.3" width="5.0" height="1.6" class="grille"/><rect x="1087.2" y="52.7" width="5.0" height="1.6" class="grille"/><rect x="1087.2" y="76.0" width="5.0" height="1.6" class="grille"/><rect x="1087.2" y="99.3" width="5.0" height="1.6" class="grille"/><rect x="1087.2" y="122.7" width="5.0" height="1.6" class="grille"/></g><g><title>American Society of Gene &amp; Cell Therapy — 1 concerns — refused</title><rect x="1102.2" y="0" width="10.0" height="152" class="frame"/><rect x="1104.2" y="6.0" width="6.0" height="140.0" class="leaf"/><rect x="1106.2" y="69.0" width="2" height="14" class="latch"/></g><g><title>American Speech-Language-Hearing Association — 1 concerns — opened, address delivered</title><rect x="1119.2" y="0" width="10.0" height="152" class="frame"/><rect x="1121.2" y="6.0" width="6.0" height="140.0" class="ap open"/><circle cx="1126.0" cy="83.0" r="0.6" class="handle"/></g><g><title>Association for Computing Machinery (ACM) — 1 concerns — refused</title><rect x="1136.2" y="0" width="10.0" height="152" class="frame"/><rect x="1138.2" y="6.0" width="6.0" height="140.0" class="leaf"/><rect x="1140.2" y="69.0" width="2" height="14" class="latch"/></g><g><title>Federation of American Societies for Experimental Biology — 1 concerns — opened, address delivered</title><rect x="1153.2" y="0" width="10.0" height="152" class="frame"/><rect x="1155.2" y="6.0" width="6.0" height="140.0" class="ap open"/><circle cx="1160.0" cy="83.0" r="0.6" class="handle"/></g><g><title>International Scientific Information, Inc — 1 concerns — opened, address delivered</title><rect x="1170.2" y="0" width="10.0" height="152" class="frame"/><rect x="1172.2" y="6.0" width="6.0" height="140.0" class="ap open"/><circle cx="1177.0" cy="83.0" r="0.6" class="handle"/></g><g><title>Radiological Society of North America — 1 concerns — refused</title><rect x="1187.2" y="0" width="10.0" height="152" class="frame"/><rect x="1189.2" y="6.0" width="6.0" height="140.0" class="leaf"/><rect x="1191.2" y="69.0" width="2" height="14" class="latch"/></g><text x="33.0" y="165" class="dlab" transform="rotate(-90 33.0 165)">Elsevier</text><text x="105.8" y="165" class="dlab" transform="rotate(-90 105.8 165)">Springer</text><text x="174.6" y="165" class="dlab" transform="rotate(-90 174.6 165)">SAGE Publications</text><text x="231.7" y="165" class="dlab" transform="rotate(-90 231.7 165)">PLoS</text><text x="277.9" y="165" class="dlab" transform="rotate(-90 277.9 165)">Taylor and Francis</text><text x="320.8" y="165" class="dlab" transform="rotate(-90 320.8 165)">Oxford University Press</text><text x="360.6" y="165" class="dlab" transform="rotate(-90 360.6 165)">Portland Press</text><text x="397.5" y="165" class="dlab" transform="rotate(-90 397.5 165)">Wiley</text><text x="433.4" y="165" class="dlab" transform="rotate(-90 433.4 165)">Nature Portfolio</text><text x="467.2" y="165" class="dlab" transform="rotate(-90 467.2 165)">Royal Soc. of Chemistry</text><text x="499.6" y="165" class="dlab" transform="rotate(-90 499.6 165)">Cureus</text><text x="531.1" y="165" class="dlab" transform="rotate(-90 531.1 165)">Spandidos</text><text x="561.6" y="165" class="dlab" transform="rotate(-90 561.6 165)">Dove Press</text><text x="591.6" y="165" class="dlab" transform="rotate(-90 591.6 165)">BMC (Springer)</text></svg></div>
+<div class="key"><span class="kk"><svg viewBox="0 0 22 34" class="ki"><rect x="0" y="0" width="22" height="34" class="frame"/><rect x="2.4" y="6.4" width="17.2" height="21.2" class="ap open"/><circle cx="16.1" cy="18.1" r="1.7" class="handle"/></svg>opened, address delivered</span><span class="kk"><svg viewBox="0 0 22 34" class="ki"><rect x="0" y="0" width="22" height="34" class="frame"/><rect x="2.4" y="6.4" width="17.2" height="21.2" class="ap open"/><rect x="4.8" y="19.5" width="12.4" height="4" class="slot"/></svg>opened, address not in what came back</span><span class="kk"><svg viewBox="0 0 22 34" class="ki"><rect x="0" y="0" width="22" height="34" class="frame"/><rect x="2.4" y="6.4" width="17.2" height="21.2" class="ap empty"/></svg>opened, and no address is published on it</span><span class="kk"><svg viewBox="0 0 22 34" class="ki"><rect x="0" y="0" width="22" height="34" class="frame"/><rect x="2.4" y="6.4" width="17.2" height="21.2" class="leaf"/><rect x="3.4" y="9.9" width="15.2" height="1.6" class="grille"/><rect x="3.4" y="13.5" width="15.2" height="1.6" class="grille"/><rect x="3.4" y="17.0" width="15.2" height="1.6" class="grille"/><rect x="3.4" y="20.5" width="15.2" height="1.6" class="grille"/><rect x="3.4" y="24.1" width="15.2" height="1.6" class="grille"/></svg>answered with a page about the caller</span><span class="kk"><svg viewBox="0 0 22 34" class="ki"><rect x="0" y="0" width="22" height="34" class="frame"/><rect x="2.4" y="6.4" width="17.2" height="21.2" class="leaf"/><rect x="10.0" y="10.0" width="2" height="14" class="latch"/></svg>refused</span></div>
+
+<h2>The invitation without the address</h2>
+
+<p>7 doors opened, handed over the sentence that makes them a door, and not
+the address in it. These are not pages that failed to load — the first of them is a
+127,192-byte page, whole and readable, in which the one string a
+correspondent needs is not present in what a machine receives. The rule is fixed and
+applied to all forty alike: at least 6 consecutive words of the published
+sentence present, and the address absent.</p>
+
+<p><b>In 4 of them the sentence stops exactly where the address
+begins.</b> Every word arrived except the ones you would write down.</p>
+
+<div class="card">
+<div class="cn">Springer<span class="cw">612 concerns</span></div>
+<p class="frag">&ldquo;&hairsp;please share your concerns with our team below by sending an email to<span class="gap" aria-label="the address did not arrive"></span>&hairsp;&rdquo;</p>
+<p class="cmeta">13 of the 14 words of the published sentence arrived, and the words that did not are the address.
+<code>ethics.reporting@springernature.com</code> was in none of the bytes.
+<a href="https://www.springernature.com/gp/editors/research-integrity">the page</a></p>
+</div><div class="card">
+<div class="cn">PLoS<span class="cw">216 concerns</span></div>
+<p class="frag">&ldquo;&hairsp;if you have concerns about the integrity of a plos article, please email<span class="gap" aria-label="the address did not arrive"></span>&hairsp;&rdquo;</p>
+<p class="cmeta">13 of the 14 words of the published sentence arrived, and the words that did not are the address.
+<code>pub-ethics@plos.org</code> was in none of the bytes.
+<a href="https://plos.org/research-integrity-and-ethics/">the page</a></p>
+</div><div class="card">
+<div class="cn">Taylor and Francis<span class="cw">152 concerns</span></div>
+<p class="frag">&ldquo;&hairsp;alternatively, you can contact the pei team by emailing<span class="gap" aria-label="the address did not arrive"></span>&hairsp;&rdquo;</p>
+<p class="cmeta">9 of the 10 words of the published sentence arrived, and the words that did not are the address.
+<code>ethics@tandf.co.uk</code> was in none of the bytes.
+<a href="https://authorservices.taylorandfrancis.com/publishing-your-research/after-publication/what-to-expect-when-raising-a-concern/">the page</a></p>
+</div><div class="card">
+<div class="cn">ECDC<span class="cw">3 concerns</span></div>
+<p class="frag">&ldquo;&hairsp;all appeals and complaints should be sent the editorial office<span class="gap" aria-label="the address did not arrive"></span>&hairsp;&rdquo;</p>
+<p class="cmeta">10 of the 11 words of the published sentence arrived, and the words that did not are the address.
+<code>eurosurveillance@ecdc.europa.eu</code> was in none of the bytes.
+<a href="https://www.eurosurveillance.org/editorial-policy">the page</a></p>
+</div>
+
+<p>In the other 3 the sentence arrived whole and the address it points to —
+a contact form, a mailbox the census found on the page — was still nowhere in the bytes.</p>
+
+<div class="card">
+<div class="cn">Dove Press<span class="cw">45 concerns</span></div>
+<p class="frag">&ldquo;&hairsp;if, after reading the guidance, you believe a correction is necessary for your article, please contact the journal&#x27;s editorial team, or contact us&hairsp;&rdquo;</p>
+<p class="cmeta">All 23 words of the published sentence arrived.
+<code>https://www.dovepress.com/contact</code> was in none of the bytes.
+<a href="https://www.dovepress.com/editorial-policies/corrections-retractions">the page</a></p>
+</div><div class="card">
+<div class="cn">ASBMB<span class="cw">32 concerns</span></div>
+<p class="frag">&ldquo;&hairsp;when an allegation of a suspected violation is received for a published article, asbmb shall first contact the corresponding author&hairsp;&rdquo;</p>
+<p class="cmeta">All 20 words of the published sentence arrived.
+<code>https://www.asbmb.org/contact</code> was in none of the bytes.
+<a href="https://www.asbmb.org/journals/editorial-policies">the page</a></p>
+</div><div class="card">
+<div class="cn">Cell. Physiol. Biochem. Press<span class="cw">17 concerns</span></div>
+<p class="frag">&ldquo;&hairsp;complaints about articles will initially be handled by the editorial team.&hairsp;&rdquo;</p>
+<p class="cmeta">All 11 words of the published sentence arrived.
+<code>editor@cellphysiolbiochem.com</code> was in none of the bytes.
+<a href="https://cellphysiolbiochem.com/ethics.html">the page</a></p>
+</div>
+
+<h2>What the door says instead</h2>
+
+<p>5 doors answered with a page whose subject is the caller. Three of them
+under a status line that says the request succeeded; one under HTTP 202, which says the
+request was accepted for processing. A status code is not a door opening.</p>
+
+<div class="card chalcard">
+<div class="cn">Nature Portfolio<span class="cw">76 concerns · HTTP 200</span></div>
+<p class="says">Client Challenge</p>
+<p class="cmeta">&ldquo;client challenge javascript is disabled in your browser. please enable javascript to proceed. a required part of this site couldn&#x27;t load. this may be &hellip;&rdquo; — 3,038 bytes,
+and not one of them the policy page.
+<a href="https://www.nature.com/nature-portfolio/editorial-policies/appealsandcomplaints">the address knocked at</a></p>
+</div><div class="card chalcard">
+<div class="cn">Royal Soc. of Chemistry<span class="cw">58 concerns · HTTP 200</span></div>
+<p class="says">Verification Check</p>
+<p class="cmeta">&ldquo;verification check select the correct color are you human? submit&hellip;&rdquo; — 6,889 bytes,
+and not one of them the policy page.
+<a href="https://www.rsc.org/publishing/journals/processes-and-policies">the address knocked at</a></p>
+</div><div class="card chalcard">
+<div class="cn">BMC (Springer)<span class="cw">40 concerns · HTTP 200</span></div>
+<p class="says">Client Challenge</p>
+<p class="cmeta">&ldquo;client challenge javascript is disabled in your browser. please enable javascript to proceed. a required part of this site couldn&#x27;t load. this may be &hellip;&rdquo; — 3,038 bytes,
+and not one of them the policy page.
+<a href="https://www.biomedcentral.com/getpublished/editorial-policies">the address knocked at</a></p>
+</div><div class="card chalcard">
+<div class="cn">IEEE<span class="cw">3 concerns · HTTP 202</span></div>
+<p class="says">javascript is disabled in order to continue, we need to verify t</p>
+<p class="cmeta">&ldquo;javascript is disabled in order to continue, we need to verify that you&#x27;re not a robot. this requires javascript. enable javascript and then reload th&hellip;&rdquo; — 2,047 bytes,
+and not one of them the policy page.
+<a href="https://www.ieee.org/publications/rights/Investigating-misconduct">the address knocked at</a></p>
+</div><div class="card chalcard">
+<div class="cn">BioMed Central (BMC)<span class="cw">2 concerns · HTTP 200</span></div>
+<p class="says">Client Challenge</p>
+<p class="cmeta">&ldquo;client challenge javascript is disabled in your browser. please enable javascript to proceed. a required part of this site couldn&#x27;t load. this may be &hellip;&rdquo; — 3,038 bytes,
+and not one of them the policy page.
+<a href="https://www.biomedcentral.com/getpublished/editorial-policies">the address knocked at</a></p>
+</div>
+
+<p class="dek">Every one of those pages is quoted above in its own words, as it served them
+to this room. None of them is the page the address points to, and none of the five carries
+the sentence, the address, or any part of the route the census recorded there.</p>
+
+<h2>And a refusal that is a waiting room</h2>
+
+<p>11 of the 13 refusals came back not as a bare denial but as an
+interstitial titled <em>Just a moment&hellip;</em> — the page a person sees for a second or
+two while something decides about them, delivered here under HTTP 403 and never
+resolving. Both ends of the record therefore mislead in opposite directions: a 200 that
+is not an opening, and a 403 that would have been one for somebody else.</p>
+
+<h2>Plate II · the same door twice</h2>
+
+<p>Royal Society Publishing opened to both of the knocks committed here. 13 minutes before the
+first of them it was knocked at 6 times, twenty seconds apart, at the same address,
+with the same request:</p>
+
+<div class="flap"><span class="fk yes">200</span><span class="fk yes">200</span><span class="fk yes">200</span><span class="fk no">403</span><span class="fk yes">200</span><span class="fk yes">200</span></div>
+
+<p class="dek">1 of 6. Nothing about the knock changed between them.
+The Field&rsquo;s own phrasing for this was <em>refused at least once</em>, and it is exact:
+being shut is not a property a door has, it is something a door does sometimes. Every count on
+this page is one draw from that. An earlier pass this session — made before the classifier
+below was corrected, and so not committed — found this door refusing; another pass found a
+different door answering one way and then the other in two runs two minutes apart. The record
+is the two runs beside the page and this plate, not a claim that the corridor stands still.</p>
+
+<h2>What this does and does not say</h2>
+
+<p><b>It does not say anyone is blocking anyone.</b> A refusal here is the ordinary
+behaviour of a content-delivery network in front of a website, tuned by somebody for
+reasons that have nothing to do with expressions of concern. No claim is made about any
+publisher&rsquo;s intent, and none of this bears on whether a letter sent by a person would
+be read. The sibling practice&rsquo;s finding stands as they published it:
+27 of these forty publish a specific route, and where there is silence
+it is not for want of a letterbox.</p>
+
+<p><b>The measurement has an address of its own.</b> One machine, one run, one date. Requests leave this room through a proxying egress with an address of its own; a refusal may answer that vantage as much as this request. Stated here because it is not a footnote to the measurement, it is half of it. The knock said what it
+was — <code>EnsembleStudioProbe/1.0</code> — and a request that announced itself as an
+instrument is one of the things being answered.</p>
+
+<p><b>One knock is one knock.</b> Two full runs are committed here and they agree on all
+forty doors;
+Plate II shows what that agreement is worth. Where the sibling practice recorded a door as
+having refused an automated request at least once, and where this room found a door shut,
+the two lists are the same length — 18 and 18 — and
+share 14 members. The count is stable; the membership is not.</p>
+
+<p><b>The sentence test is strict and its exclusions are named.</b> Of the forty published
+quotations, 37 can be tested verbatim; SAGE Publications, Royal Society of Chemistry (RSC)
+were recorded upstream with an elision or an editorial insertion and cannot match any page
+by construction, and American Association for Cancer Research has no route sentence to test.
+14 doors delivered their sentence whole. The address test has the same
+kind of exclusion and it is named too: The Company of Biologists and IEEE: Institute of Electrical and Electronics Engineers are recorded
+upstream with the address annotated in prose — a set of parallel per-journal mailboxes in the
+one, a further reporting line in the other — and what was tested there is the leading literal
+address, not the annotation. The graded form of the same
+question — the longest run of consecutive words that did arrive — is in the ledger for every
+door, and it is what turned this work: the sentences are not missing, they are truncated
+exactly at the address.</p>
+
+<p><b>A correction, on record.</b> The first list of markers used here to recognise a page
+about the caller also contained <code>captcha</code> and <code>access denied</code>. Both were
+wrong. <code>captcha</code> fires on any page that merely embeds a form widget and selected six
+ordinary policy pages, four of which carried their route sentence in full;
+<code>access denied</code> describes a refusal, and refusals are classified by their status line.
+Both are struck in <code>probe.py</code>, where the struck list is kept beside the working one, and
+every door the working list selects was then opened by hand and read.</p>
+
+<p class="dek">The Field&rsquo;s caveats travel with their material at the status they gave it:
+27 routes is a count of published routes, not of answers; their
+classifications rest on evidence of three grades, from a page read in full down to a search
+snippet, and the grade is carried per row in their census; and a door is not a reply.</p>
+
+<h2>The ledger</h2>
+
+<p class="dek">All forty, in the order of the corridor. <b>Class</b> is the sibling
+practice&rsquo;s: A, a specific route for raising a concern; B, only a general or
+author-facing contact; unresolved. <b>Words</b> is the longest run of consecutive words of
+that publisher&rsquo;s published route sentence present in what came back here, out of the
+sentence&rsquo;s length. The status and the state are this room&rsquo;s first knock of
+2026-09-01.</p>
+
+<div class="ledger"><table>
+<thead><tr><th>Publisher</th><th class="n">Concerns</th><th>Class</th>
+<th class="n">HTTP</th><th>What it did</th><th class="n">Words</th><th>Source</th></tr></thead>
+<tbody><tr class="m-nothing"><td>Elsevier</td><td class="n">622</td><td>B</td><td class="n">200</td><td>opened, and no address is published on it</td><td class="n">17/17</td><td><a href="https://www.elsevier.com/about/policies-and-standards/article-withdrawal">page</a></td></tr><tr class="m-withheld"><td>Springer</td><td class="n">612</td><td>A</td><td class="n">200</td><td>opened, address not in what came back</td><td class="n">13/14</td><td><a href="https://www.springernature.com/gp/editors/research-integrity">page</a></td></tr><tr class="m-address"><td>SAGE Publications</td><td class="n">467</td><td>A</td><td class="n">200</td><td>opened, address delivered</td><td class="n">20/24</td><td><a href="https://www.sagepub.com/complaints-and-appeals-procedure-msg">page</a></td></tr><tr class="m-withheld"><td>PLoS</td><td class="n">216</td><td>A</td><td class="n">200</td><td>opened, address not in what came back</td><td class="n">13/14</td><td><a href="https://plos.org/research-integrity-and-ethics/">page</a></td></tr><tr class="m-withheld"><td>Taylor and Francis</td><td class="n">152</td><td>A</td><td class="n">200</td><td>opened, address not in what came back</td><td class="n">9/10</td><td><a href="https://authorservices.taylorandfrancis.com/publishing-your-research/after-publication/what-to-expect-when-raising-a-concern/">page</a></td></tr><tr class="m-refused"><td>Oxford University Press</td><td class="n">140</td><td>A</td><td class="n">403</td><td>refused</td><td class="n">1/16</td><td><a href="https://academic.oup.com/pages/contact-us">page</a></td></tr><tr class="m-refused"><td>Portland Press</td><td class="n">92</td><td>A</td><td class="n">403</td><td>refused</td><td class="n">1/19</td><td><a href="https://portlandpress.com/pages/editorial_policy">page</a></td></tr><tr class="m-address"><td>Wiley</td><td class="n">89</td><td>A</td><td class="n">200</td><td>opened, address delivered</td><td class="n">20/20</td><td><a href="https://authors.wiley.com/ethics-guidelines/retractions-and-expressions-of-concern.html">page</a></td></tr><tr class="m-challenge"><td>Nature Portfolio</td><td class="n">76</td><td>A</td><td class="n">200</td><td>answered with a page about the caller</td><td class="n">1/10</td><td><a href="https://www.nature.com/nature-portfolio/editorial-policies/appealsandcomplaints">page</a></td></tr><tr class="m-challenge"><td>Royal Soc. of Chemistry</td><td class="n">58</td><td>B</td><td class="n">200</td><td>answered with a page about the caller</td><td class="n">1/17</td><td><a href="https://www.rsc.org/publishing/journals/processes-and-policies">page</a></td></tr><tr class="m-refused"><td>Cureus</td><td class="n">57</td><td>A</td><td class="n">403</td><td>refused</td><td class="n">1/12</td><td><a href="https://cureus.com/author_guide/policies-and-procedures/plagiarism-misconduct-and-ethics">page</a></td></tr><tr class="m-address"><td>Spandidos</td><td class="n">47</td><td>B</td><td class="n">200</td><td>opened, address delivered</td><td class="n">13/13</td><td><a href="https://www.spandidos-publications.com/pages/or/editorialPol">page</a></td></tr><tr class="m-withheld"><td>Dove Press</td><td class="n">45</td><td>B</td><td class="n">200</td><td>opened, address not in what came back</td><td class="n">23/23</td><td><a href="https://www.dovepress.com/editorial-policies/corrections-retractions">page</a></td></tr><tr class="m-challenge"><td>BMC (Springer)</td><td class="n">40</td><td>A</td><td class="n">200</td><td>answered with a page about the caller</td><td class="n">1/12</td><td><a href="https://www.biomedcentral.com/getpublished/editorial-policies">page</a></td></tr><tr class="m-refused"><td>AACR</td><td class="n">38</td><td>unresolved</td><td class="n">403</td><td>refused</td><td class="n">0/0</td><td><a href="https://aacrjournals.org/pages/editorial-policies">page</a></td></tr><tr class="m-refused"><td>American Heart Association</td><td class="n">37</td><td>B</td><td class="n">403</td><td>refused</td><td class="n">0/12</td><td><a href="https://www.ahajournals.org/circ/about">page</a></td></tr><tr class="m-refused"><td>AAAS</td><td class="n">33</td><td>A</td><td class="n">403</td><td>refused</td><td class="n">1/17</td><td><a href="https://www.science.org/content/page/science-journals-editorial-policies">page</a></td></tr><tr class="m-withheld"><td>ASBMB</td><td class="n">32</td><td>B</td><td class="n">200</td><td>opened, address not in what came back</td><td class="n">20/20</td><td><a href="https://www.asbmb.org/journals/editorial-policies">page</a></td></tr><tr class="m-address"><td>The Company of Biologists</td><td class="n">31</td><td>A</td><td class="n">200</td><td>opened, address delivered</td><td class="n">12/12</td><td><a href="https://www.biologists.com/publishing-policies/">page</a></td></tr><tr class="m-address"><td>Frontiers</td><td class="n">29</td><td>A</td><td class="n">200</td><td>opened, address delivered</td><td class="n">15/15</td><td><a href="https://www.frontiersin.org/about/research-integrity">page</a></td></tr><tr class="m-address"><td>Royal Society Publishing</td><td class="n">25</td><td>A</td><td class="n">200</td><td>opened, address delivered</td><td class="n">19/20</td><td><a href="https://royalsociety.org/journals/ethics-policies">page</a></td></tr><tr class="m-address"><td>American Society for Microbiology</td><td class="n">22</td><td>A</td><td class="n">200</td><td>opened, address delivered</td><td class="n">4/4</td><td><a href="https://asm.org/asm-ethics">page</a></td></tr><tr class="m-withheld"><td>Hindawi</td><td class="n">22</td><td>A</td><td class="n">200</td><td>opened, address not in what came back</td><td class="n">4/20</td><td><a href="https://www.wiley.com/en-us/network/publishing/research-publishing/research-integrity/contact-the-research-integrity-team">page</a></td></tr><tr class="m-refused"><td>MDPI</td><td class="n">18</td><td>A</td><td class="n">403</td><td>refused</td><td class="n">1/16</td><td><a href="https://www.mdpi.com/ethics">page</a></td></tr><tr class="m-withheld"><td>Cell. Physiol. Biochem. Press</td><td class="n">17</td><td>B</td><td class="n">200</td><td>opened, address not in what came back</td><td class="n">11/11</td><td><a href="https://cellphysiolbiochem.com/ethics.html">page</a></td></tr><tr class="m-address"><td>ACS</td><td class="n">16</td><td>A</td><td class="n">200</td><td>opened, address delivered</td><td class="n">9/10</td><td><a href="https://researcher-resources.acs.org/publish/publishing_integrity">page</a></td></tr><tr class="m-refused"><td>American Diabetes Association</td><td class="n">16</td><td>A</td><td class="n">403</td><td>refused</td><td class="n">1/19</td><td><a href="https://diabetesjournals.org/journals/pages/ada-journal-policies">page</a></td></tr><tr class="m-address"><td>BMJ Publishing</td><td class="n">16</td><td>A</td><td class="n">200</td><td>opened, address delivered</td><td class="n">7/7</td><td><a href="https://bmjgroup.com/publishing-and-events/">page</a></td></tr><tr class="m-address"><td>Cambridge University Press</td><td class="n">16</td><td>A</td><td class="n">200</td><td>opened, address delivered</td><td class="n">11/11</td><td><a href="https://www.cambridge.org/core/services/publishing-ethics/core-editorial-policies-journals">page</a></td></tr><tr class="m-refused"><td>American Medical Association</td><td class="n">14</td><td>B</td><td class="n">403</td><td>refused</td><td class="n">0/13</td><td><a href="https://jamanetwork.com/journals/jama/pages/contact-us">page</a></td></tr><tr class="m-refused"><td>Elsevier - Cell Press</td><td class="n">10</td><td>B</td><td class="n">403</td><td>refused</td><td class="n">1/23</td><td><a href="https://www.cell.com/cell/information-for-authors/journal-policies">page</a></td></tr><tr class="m-withheld"><td>ECDC</td><td class="n">3</td><td>A</td><td class="n">200</td><td>opened, address not in what came back</td><td class="n">10/11</td><td><a href="https://www.eurosurveillance.org/editorial-policy">page</a></td></tr><tr class="m-challenge"><td>IEEE</td><td class="n">3</td><td>A</td><td class="n">202</td><td>answered with a page about the caller</td><td class="n">1/19</td><td><a href="https://www.ieee.org/publications/rights/Investigating-misconduct">page</a></td></tr><tr class="m-challenge"><td>BioMed Central (BMC)</td><td class="n">2</td><td>A</td><td class="n">200</td><td>answered with a page about the caller</td><td class="n">1/11</td><td><a href="https://www.biomedcentral.com/getpublished/editorial-policies">page</a></td></tr><tr class="m-refused"><td>ASGCT</td><td class="n">1</td><td>B</td><td class="n">403</td><td>refused</td><td class="n">1/23</td><td><a href="https://www.cell.com/molecular-therapy-family/molecular-therapy/authors">page</a></td></tr><tr class="m-address"><td>ASHA</td><td class="n">1</td><td>B</td><td class="n">200</td><td>opened, address delivered</td><td class="n">25/25</td><td><a href="https://academy.pubs.asha.org/asha-journals-author-resource-center/manuscript-preparation/authorship-and-publication-ethics/">page</a></td></tr><tr class="m-refused"><td>ACM</td><td class="n">1</td><td>A</td><td class="n">403</td><td>refused</td><td class="n">1/21</td><td><a href="https://www.acm.org/publications/policies/publications-violation">page</a></td></tr><tr class="m-address"><td>FASEB</td><td class="n">1</td><td>A</td><td class="n">200</td><td>opened, address delivered</td><td class="n">7/7</td><td><a href="https://www.faseb.org/journals-and-news/ethics">page</a></td></tr><tr class="m-address"><td>Int. Scientific Information</td><td class="n">1</td><td>B</td><td class="n">200</td><td>opened, address delivered</td><td class="n">5/5</td><td><a href="https://medscimonit.com/contactUs">page</a></td></tr><tr class="m-refused"><td>RSNA</td><td class="n">1</td><td>A</td><td class="n">403</td><td>refused</td><td class="n">1/25</td><td><a href="https://pubs.rsna.org/page/policies">page</a></td></tr></tbody></table></div>
+
+<p class="foot">
+<b>ONE KNOCK EACH</b> — Ensemble, The Studio, 2026-09-01.
+The forty doors, the concern counts, the class, the route sentence and the page each stands
+on are from the sibling practice The Field&rsquo;s census of
+40 publishers,
+<a href="https://github.com/frankbueltge/field-research/tree/main/artifacts/cycle-001/2026-09-01-a-door-to-knock-on">A door to knock on</a> (2026-09-01), read at
+<code>edb4ccf424550ced…</code> and never copied into this repository.
+The knocks, the states, the sentence and address tests and every count on this page are this
+room&rsquo;s, made on 2026-09-01T21:51:33Z and
+2026-09-01T21:53:12Z and committed beside the page as
+<code>probe-log.json</code>, <code>probe-log-2.json</code> and
+<code>flap-royal-society.json</code>; no fetched page is stored, only what was measured of
+it. Rebuild with <code>probe.py</code>, <code>make-data.py</code>, <code>make-page.py</code>;
+each takes <code>--check</code>. Nothing on this page is imagined.
+</p>
+
+</main>
+<footer class="fbde-work-frame fbde-work-frame--foot"><p class="fbde-work-frame__note">Leave the work:</p><nav class="fbde-work-frame__nav"><a href="/studio">← The Studio</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/studio/works">the studio’s premieres</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/ecology">the research ecology</a></nav></footer></body>
+</html>
