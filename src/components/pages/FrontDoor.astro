@@ -1,0 +1,329 @@
+---
+// The entrance, as a front door (2026-09-01). Replaces OpsRoom.astro on the front page the way
+// the ops room replaced HubEntrance and HubEntrance replaced Home: the previous entrance stays
+// in the repo unlinked, and its full board lives on at /now (NowBoard.astro) — Git is the
+// archive, so nothing is commented out and nothing is deleted.
+//
+// Why: the ops room had grown into the densest surface of the site — seven board rows with
+// sparklines, a signal log, a dozen stat tiles — the right amount of instrument for a return
+// visitor and the wrong first page for a stranger. This page is the MIX chosen for it: a clear
+// personal entrance, a radically slimmed live section (one chip per system), and an editorial
+// front page of the newest works. The pulse instrument stays beside the hero: it is the room's
+// proof of life, and the one figure a stranger can read in ten seconds.
+//
+// Three properties carried over from the ops room, unchanged:
+//
+//   · NO NUMBER IS TYPED. Every figure — dates, the cycle number, the week range, the
+//     repository count — is derived at build time by src/lib/ops/* and src/lib/ecology/v3.ts
+//     from committed snapshots. Copy that has to wrap a number is a function in NAMING taking
+//     that number as its argument.
+//   · NO CLIENT DATA FETCHING. The whole page is static output. Exactly two things move, and
+//     both are time, not data: the UTC clock and the dots walking the pulse. One shared rAF
+//     loop drives them, and it never starts its walkers under prefers-reduced-motion.
+//   · ABSENCE IS DRAWN. A chip whose record is empty says so in the board lib's own words; an
+//     artifact strip with nothing in this cycle states that, in ECOLOGY_V3's own words.
+import { getRelativeLocaleUrl } from 'astro:i18n'
+import type { Locale } from '@/lib/site'
+import { NAMING } from '@/config/naming'
+import { ECOLOGY_V3 } from '@/config/ecology-v3-wording'
+import pulseData from '@/data/pulse/pulse.json'
+import type { PulseSnapshot } from '@/lib/pulse/render'
+import { buildStackSvg, stackWeekRange } from '@/lib/ops/stack'
+import { buildBoard, buildSignalLog } from '@/lib/ops/board'
+import { allWorks } from '@/lib/engines/register'
+import { loadArtifacts, loadCycle } from '@/lib/ecology/v3'
+import '@/styles/ops-room.css'
+import '@/styles/hub-triptych.css'
+import '@/styles/front-door.css'
+
+const locale = (Astro.currentLocale ?? 'en') as Locale
+const url = (href: string) => (href.startsWith('http') ? href : getRelativeLocaleUrl(locale, href))
+
+const pulse = pulseData as PulseSnapshot
+const stackSvg = buildStackSvg(pulse)
+
+// The live section is the board compressed to one chip per row — same derivation as /now, so
+// the entrance can never claim a system the full board does not have.
+const chips = buildBoard(pulse).flatMap((group) => group.rows)
+
+// The editorial front page: the newest landed work leads, the next few follow as one line each.
+const signal = buildSignalLog(allWorks(), 6)
+const lead = signal[0]
+const rest = signal.slice(1)
+
+// The house clock, and this cycle's artifact trail (the current cycle only: the strip's label
+// says "this cycle's", so the filter is what makes the label true).
+const cycle = loadCycle()
+const cycleDir = `cycle-${String(cycle.cycle).padStart(3, '0')}`
+const artifacts = loadArtifacts()
+  .filter((a) => a.href.includes(`/artifacts/${cycleDir}/`))
+  .slice(0, 3)
+
+const OPS = NAMING.opsRoom
+const FD = NAMING.frontDoor
+/** the practice a chip or log entry belongs to, as a CSS class carrying its --led */
+const voiceClass = (id: string | null) => (id ? ` ops-voice-${id}` : '')
+const nsVoice: Record<string, string> = { atelier: 'ulysses', field: 'meridian', studio: 'ensemble' }
+
+// The four research cards: exactly the overview items that carry their own strings — the two
+// research projects and the two practices beside the ecology. Experiments stay on /experiments.
+const cards = NAMING.overview.items.filter((item) => item.title)
+
+// The named catalogues, one quiet line — same filter as the ops room: the Atlas stands among
+// the live tiles on /now with its own reading, so the line does not name it twice.
+const catalogues = NAMING.catalogues.items.filter((c) => c.href !== '/atlas')
+---
+
+<main id="main" class="ops-room hub-voices flex-1" data-ops-room>
+  {/* ── the strip: what this page is, and the clock that proves it is live ─────────────── */}
+  <div class="ops-strip">
+    <span class="ops-strip-name">
+      <span class="ops-led"></span>
+      <span>{OPS.strip.label}</span>
+    </span>
+    {/* Rendered empty and filled by the script: a build-time clock would be a stopped clock
+        claiming to be a live one — worse than no clock. */}
+    <span class="ops-clock" data-ops-clock aria-live="off"></span>
+  </div>
+
+  {/* ── 1 · hero: the person, the standing question, the pulse ─────────────────────────── */}
+  <section class="ops-hero">
+    <div>
+      {/* The name, above the standing question. This eyebrow is not decoration: it is the
+          repair made in July after this site lost the ranking for its own name — the H1 is
+          deliberately NOT the person (it is the question this house asks), so the eyebrow is
+          the only place the person stands as a heading. naming.test.ts holds it here. */}
+      <p class="ops-hero-eyebrow">{NAMING.eyebrow}</p>
+      <p class="ops-hero-kicker">{NAMING.focusKicker}</p>
+      <h1>{NAMING.title}</h1>
+      <p class="ops-hero-sub">{FD.sub}</p>
+      <div class="ops-hero-links">
+        <a href={url(OPS.hero.primary.href)}>{OPS.hero.primary.label}</a>
+        <a href={url(OPS.hero.secondary.href)}>{OPS.hero.secondary.label}</a>
+      </div>
+    </div>
+
+    {/* The pulse instrument, exactly as the ops room drew it: the proof of life stays. */}
+    <figure class="ops-panel ops-instrument">
+      <div class="ops-instrument-strip">
+        <span>{OPS.pulsePanel.headLeft(pulse.repos.length)}</span>
+        <span>{OPS.pulsePanel.headRight(stackWeekRange(pulse))}</span>
+      </div>
+      <div class="ops-instrument-body" set:html={stackSvg} />
+      <div class="ops-instrument-strip">
+        <span>{OPS.pulsePanel.footLeft}</span>
+        <span>{OPS.pulsePanel.footRight(pulse.as_of)}</span>
+      </div>
+    </figure>
+  </section>
+
+  {/* ── 2 · the houses: what this is, in plain words, then where it lives ──────────────── */}
+  <section class="ops-section" id="houses">
+    <div class="ops-head">
+      <p class="ops-kicker"><b>{NAMING.whatThis.kicker}</b></p>
+    </div>
+    <div class="fd-what">
+      {NAMING.whatThis.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+    </div>
+
+    <ul class="fd-cards">
+      {cards.map((card) => (
+        <li>
+          <a class="ops-panel fd-card" href={url(card.href!)}>
+            <span class="fd-card-kind">{card.kindLabel}</span>
+            <span class="fd-card-title">{card.title}</span>
+            <span class="fd-card-line">{card.line}</span>
+            {card.id === 'ecology' && (
+              /* The one live line of this section: the house clock, from the same committed
+                 cycle state /ecology renders. The badge is ECOLOGY_V3's own word for the
+                 phase; what the practices work is the seeded question or the standing themes. */
+              <span class="fd-card-cycle">
+                <span class="ops-led"></span>
+                <span class="fd-cycle-label">{FD.ecologyLive.cycleLabel(cycle.cycle)}</span>
+                <span class="fd-cycle-badge">{ECOLOGY_V3.cycle.phase[cycle.phase].badge}</span>
+                <span class="fd-cycle-q">
+                  {cycle.source === 'seed' && cycle.question
+                    ? FD.ecologyLive.question(cycle.question)
+                    : FD.ecologyLive.standingThemes}
+                </span>
+              </span>
+            )}
+            <span class="fd-card-meta">{card.meta}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    {/* The other houses — main projects in their own right, not offshoots of the ecology. */}
+    <p class="ops-group-label">{NAMING.travel.kicker} · {NAMING.travel.kickerSub}</p>
+    <ul class="ops-houses">
+      {NAMING.travel.items.map((house) => (
+        <li>
+          <a class="ops-panel ops-house" href={house.href} target="_blank" rel="noreferrer">
+            <span class="ops-house-name"><span>{house.name}</span><span>↗</span></span>
+            <span class="ops-house-line">{house.description}</span>
+            {house.resident && <span class="ops-house-resident">{house.resident.lead} {house.resident.label}</span>}
+          </a>
+        </li>
+      ))}
+    </ul>
+    <p class="fd-all-projects">
+      <a class="ops-headlink" href={url(NAMING.travel.allLink.href)}>{NAMING.travel.allLink.label}</a>
+    </p>
+  </section>
+
+  {/* ── 3 · the front page: what landed last, newest first ─────────────────────────────── */}
+  <section class="ops-section" id="front-page">
+    <div class="ops-head">
+      <p class="ops-kicker"><b>{FD.front.kicker}</b> · {FD.front.kickerSub}</p>
+      <a class="ops-headlink" href={url(OPS.signal.link.href)}>{OPS.signal.link.label}</a>
+    </div>
+
+    {lead && (
+      <a class={`ops-panel fd-lead${voiceClass(nsVoice[lead.ns] ?? null)}`} href={url(lead.href)}>
+        <span class="fd-lead-meta">
+          <span class="ops-led"></span>
+          <span>{lead.date} · {lead.practice} · <span class="fd-lead-kind">{lead.kind}</span></span>
+        </span>
+        <span class="fd-lead-title">
+          {lead.title}
+          {lead.withdrawn && <span class="ops-log-withdrawn">{NAMING.worksRegister.withdrawnLabel}</span>}
+        </span>
+      </a>
+    )}
+
+    <ul class="ops-panel ops-log fd-log">
+      {rest.map((entry, i) => (
+        /* The stagger comes from a class, not from an inline delay: this site's CSP drops inline
+           style attributes silently, so a per-row delay written that way would have failed
+           without a trace. */
+        <li class={`ops-log-row-${Math.min(i, 7)}`}>
+          <a href={url(entry.href)}>
+            <span class="ops-log-date">{entry.date}</span>
+            <span class={`ops-log-ns${voiceClass(nsVoice[entry.ns] ?? null)}`}>{entry.practice}</span>
+            <span class="ops-log-title">
+              {entry.title}
+              {entry.withdrawn && <span class="ops-log-withdrawn">{NAMING.worksRegister.withdrawnLabel}</span>}
+            </span>
+            <span class="ops-log-kind">{entry.kind}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    {/* This cycle's artifact trail, one thin strip — the label is made true by the filter
+        above, and an empty cycle says so in ECOLOGY_V3's own words rather than hiding. */}
+    <p class="fd-artifacts">
+      {FD.front.artifactsLead}
+      {artifacts.length === 0
+        ? ECOLOGY_V3.artifacts.empty
+        : artifacts.map((a, i) => (
+            <>
+              {i > 0 && ' · '}
+              <a href={url(a.href)}>{a.date ? `${a.date} ` : ''}{ECOLOGY_V3.artifacts.entryLabel(a.slug)}</a>
+            </>
+          ))}
+    </p>
+  </section>
+
+  {/* ── 4 · live, slim: one chip per system — the full board is /now ────────────────────── */}
+  <section class="ops-section" id="live">
+    <div class="ops-head">
+      <p class="ops-kicker"><b>{FD.live.kicker}</b> · {FD.live.kickerSub}</p>
+      <a class="ops-headlink" href={url(FD.live.link.href)}>{FD.live.link.label}</a>
+    </div>
+    <ul class="fd-chips">
+      {chips.map((row) => (
+        <li>
+          <a class={`ops-panel fd-chip${voiceClass(row.voice)}`} href={url(row.href)}>
+            <span class="ops-led"></span>
+            <span class="fd-chip-name">{row.name}</span>
+            <span class="fd-chip-date">{row.last ? row.last.meta : OPS.board.noWork}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+    {/* The named catalogues, one quiet line — /catalogues keeps its inbound link (it had none
+        anywhere on the site while sitting in the sitemap; orphan audit, 2026-08-12). */}
+    <p class="ops-catalogues">
+      {OPS.live.cataloguesLead}
+      {catalogues.map((c, i) => (
+        <>
+          {i > 0 && ' · '}
+          <a href={url(c.href)}>{c.name}</a>
+        </>
+      ))}
+      {' · '}<a href={url(NAMING.catalogues.href)}>{NAMING.catalogues.indexLabel}</a>
+    </p>
+  </section>
+</main>
+
+<style>
+  /* The front page list's stagger. Declared steps rather than an inline delay per row, because
+     this site's CSP drops inline style attributes — the rows would simply all have arrived at
+     once, silently. Eight is the ceiling any log strip here can render. */
+  .ops-log-row-0 { animation-delay: 0s; }
+  .ops-log-row-1 { animation-delay: 0.08s; }
+  .ops-log-row-2 { animation-delay: 0.16s; }
+  .ops-log-row-3 { animation-delay: 0.24s; }
+  .ops-log-row-4 { animation-delay: 0.32s; }
+  .ops-log-row-5 { animation-delay: 0.4s; }
+  .ops-log-row-6 { animation-delay: 0.48s; }
+  .ops-log-row-7 { animation-delay: 0.56s; }
+</style>
+
+<script>
+  // The room's only moving parts: the UTC clock and the dots walking the pulse. ONE
+  // requestAnimationFrame loop drives both — a throttled background tab resumes it correctly,
+  // where a pair of setIntervals would drift apart and need reconciling.
+  //
+  // The dots read their positions off the drawn tracks with getPointAtLength, so this script owns
+  // no geometry: whatever src/lib/ops/stack.ts drew is what they walk. If the markup ever changes
+  // shape, they stop moving; they cannot start moving along a line that is not there.
+  const room = document.querySelector<HTMLElement>('[data-ops-room]')
+  if (room) {
+    const clock = room.querySelector<HTMLElement>('[data-ops-clock]')
+    const pad = (n: number) => String(n).padStart(2, '0')
+    const stamp = (d: Date) =>
+      `${d.getUTCFullYear()}-${pad(d.getUTCMonth() + 1)}-${pad(d.getUTCDate())} ` +
+      `${pad(d.getUTCHours())}:${pad(d.getUTCMinutes())}:${pad(d.getUTCSeconds())} UTC`
+
+    if (clock) clock.textContent = stamp(new Date())
+
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)')
+
+    const dots = [...room.querySelectorAll<SVGCircleElement>('.ops-dot')].map((el) => {
+      const track = room.querySelector<SVGPathElement>(`#ops-track-${el.dataset.track}`)
+      return track ? { el, track, length: track.getTotalLength(), speed: Number(el.dataset.speed), phase: Number(el.dataset.phase) } : null
+    })
+    const walkers = dots.filter((d): d is NonNullable<typeof d> => d !== null && d.length > 0)
+
+    let lastTick = 0
+    let lastSecond = ''
+    const step = (now: number) => {
+      requestAnimationFrame(step)
+      // ~10 fps is enough for a drifting dot and keeps the main thread free; the clock only ever
+      // repaints when the rendered second actually changed.
+      if (now - lastTick < 100) return
+      lastTick = now
+
+      if (clock) {
+        const next = stamp(new Date())
+        if (next !== lastSecond) {
+          clock.textContent = next
+          lastSecond = next
+        }
+      }
+
+      if (reduced.matches) return
+      const seconds = now / 1000
+      for (const dot of walkers) {
+        const t = ((seconds * dot.speed + dot.phase) % 1 + 1) % 1
+        const p = dot.track.getPointAtLength(t * dot.length)
+        dot.el.setAttribute('cx', p.x.toFixed(1))
+        dot.el.setAttribute('cy', p.y.toFixed(1))
+      }
+    }
+    requestAnimationFrame(step)
+  }
+</script>

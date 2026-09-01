@@ -1,0 +1,276 @@
+---
+// /now — the ops room's board, moved off the entrance on 2026-09-01.
+//
+// Entrance lineage: Home → HubEntrance → OpsRoom → FrontDoor; Git is the archive, so each
+// retired entrance stays in the repo unlinked and this page is the ops room's board continued
+// at its own address rather than rewritten. The markup below is lifted from OpsRoom.astro's
+// board, signal-log and live-experiments sections, and every string it renders is
+// NAMING.opsRoom's, verbatim — zero string churn: the full-board promise the entrance's
+// "the full board →" link makes is kept by rendering the same tested derivations
+// (buildBoard, buildSignalLog, readTiles) the ops room rendered.
+//
+// Three properties carried over from the ops room, unchanged:
+//
+//   · NO NUMBER IS TYPED. Every figure — readings, counts, dates, the week range, the
+//     repository count — is derived at build time by src/lib/ops/* from a committed snapshot.
+//     Copy that has to wrap a number is a function in NAMING taking that number as its argument.
+//   · NO CLIENT DATA FETCHING. The whole page is static output. Exactly one thing moves, and it
+//     is time, not data: the UTC clock in the strip (the pulse figure stays on the entrance;
+//     its caption stands here as the provenance foot).
+//   · ABSENCE IS DRAWN. A row whose record is empty says so; a tile whose snapshot yields no
+//     reading is not rendered at all rather than shown with a placeholder.
+import { getRelativeLocaleUrl } from 'astro:i18n'
+import type { Locale } from '@/lib/site'
+import { NAMING } from '@/config/naming'
+import pulseData from '@/data/pulse/pulse.json'
+import { formatWeekRange, type PulseSnapshot } from '@/lib/pulse/render'
+import { buildBoard, buildSignalLog } from '@/lib/ops/board'
+import { allWorks } from '@/lib/engines/register'
+import { readTiles } from '@/lib/ops/tiles'
+import { bars, cells, linePath, ratioBars, smooth3, SPARK_BOX } from '@/lib/ops/viz'
+import { getLatestProtokoll } from '@/lib/protokoll/data'
+import '@/styles/ops-room.css'
+import '@/styles/hub-triptych.css'
+
+const locale = (Astro.currentLocale ?? 'en') as Locale
+const url = (href: string) => (href.startsWith('http') ? href : getRelativeLocaleUrl(locale, href))
+
+const pulse = pulseData as PulseSnapshot
+const board = buildBoard(pulse)
+const signal = buildSignalLog(allWorks(), 8)
+const tiles = readTiles({ protokoll: await getLatestProtokoll() })
+
+// The provenance foot: the pulse caption the hub has carried since it was built, filled from
+// the same committed snapshot — the numbers are the snapshot's, never typed.
+const pulseCaption = NAMING.pulseCaption({
+  weekRange: formatWeekRange(pulse.weeks),
+  repoCount: pulse.repos.length,
+  totalCommits: pulse.total_commits,
+  asOf: pulse.as_of,
+})
+
+const OPS = NAMING.opsRoom
+const FD = NAMING.frontDoor
+/** the practice a board row or log entry belongs to, as a CSS class carrying its --led */
+const voiceClass = (id: string | null) => (id ? ` ops-voice-${id}` : '')
+const nsVoice: Record<string, string> = { atelier: 'ulysses', field: 'meridian', studio: 'ensemble' }
+
+// The three machine-grown catalogues named under the tile grid — read from NAMING.catalogues so
+// this page cannot list a catalogue the catalogues page does not have. The Atlas is left out
+// here because it already stands in the grid above as a live tile with its own reading.
+const catalogues = NAMING.catalogues.items.filter((c) => c.href !== '/atlas')
+---
+
+<main id="main" class="ops-room hub-voices flex-1" data-now-board>
+  {/* ── the strip: what this page is, and the clock that proves it is live ─────────────── */}
+  <div class="ops-strip">
+    <span class="ops-strip-name">
+      <span class="ops-led"></span>
+      <span>{OPS.strip.label}</span>
+    </span>
+    {/* Rendered empty and filled by the script: a build-time clock would be a stopped clock
+        claiming to be a live one — worse than no clock. */}
+    <span class="ops-clock" data-ops-clock aria-live="off"></span>
+  </div>
+
+  {/* ── 1 · what this page is ──────────────────────────────────────────────────────────── */}
+  <section class="ops-section">
+    <h1 class="now-title">{FD.now.h1}</h1>
+    <p class="now-lead">{FD.now.lead}</p>
+    <p class="now-back"><a class="ops-headlink" href={url(FD.now.backHref)}>{FD.now.backLabel}</a></p>
+  </section>
+
+  {/* ── 2 · the board ──────────────────────────────────────────────────────────────────── */}
+  <section class="ops-section" id="board">
+    <div class="ops-head">
+      <p class="ops-kicker"><b>{OPS.board.kicker}</b> · {OPS.board.kickerSub}</p>
+      <a class="ops-headlink" href={url(OPS.board.link.href)}>{OPS.board.link.label}</a>
+    </div>
+
+    {board.map((group) => (
+      <div>
+        <p class="ops-group-label">{group.label}</p>
+        <ul class="ops-panel ops-board">
+          {group.rows.map((row) => (
+            <li>
+              <a class={`ops-row${voiceClass(row.voice)}`} href={url(row.href)}>
+                <span class="ops-led"></span>
+                <span>
+                  <span class="ops-row-name">{row.name}</span>
+                  <span class="ops-row-resident">{row.resident}</span>
+                </span>
+                <span class="ops-row-what">{row.what}</span>
+                <span class="ops-spark-cell">
+                  {row.spark ? (
+                    <svg class="ops-spark" viewBox={`0 0 ${SPARK_BOX.width} ${SPARK_BOX.height}`} preserveAspectRatio="none" aria-hidden="true">
+                      <path d={linePath(smooth3(row.spark), SPARK_BOX)} />
+                    </svg>
+                  ) : (
+                    <span class="ops-absent">no commit split yet</span>
+                  )}
+                </span>
+                <span class="ops-row-last-cell">
+                  {row.last ? (
+                    <>
+                      <span class="ops-row-last">{row.last.title}</span>
+                      <span class="ops-row-date">{row.last.meta}</span>
+                    </>
+                  ) : (
+                    <span class="ops-absent">{OPS.board.noWork}</span>
+                  )}
+                </span>
+                <span class="ops-row-status" data-status={row.status}>{row.status}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </section>
+
+  {/* ── 3 · the signal log ─────────────────────────────────────────────────────────────── */}
+  <section class="ops-section" id="latest">
+    <div class="ops-head">
+      <p class="ops-kicker"><b>{OPS.signal.kicker}</b> · {OPS.signal.kickerSub}</p>
+      <a class="ops-headlink" href={url(OPS.signal.link.href)}>{OPS.signal.link.label}</a>
+    </div>
+    <ul class="ops-panel ops-log">
+      {signal.map((entry, i) => (
+        /* The stagger comes from a class, not from an inline delay: this site's CSP drops inline
+           style attributes silently, so a per-row delay written that way would have failed
+           without a trace — and drift-check rule 3 catches it before it can. */
+        <li class={`ops-log-row-${Math.min(i, 7)}`}>
+          <a href={url(entry.href)}>
+            <span class="ops-log-date">{entry.date}</span>
+            <span class={`ops-log-ns${voiceClass(nsVoice[entry.ns] ?? null)}`}>{entry.practice}</span>
+            <span class="ops-log-title">
+              {entry.title}
+              {entry.withdrawn && <span class="ops-log-withdrawn">{NAMING.worksRegister.withdrawnLabel}</span>}
+            </span>
+            <span class="ops-log-kind">{entry.kind}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+    <p class="ops-foot-line">{OPS.signal.foot} <span class="ops-cursor">▍</span></p>
+  </section>
+
+  {/* ── 4 · live experiments ───────────────────────────────────────────────────────────── */}
+  <section class="ops-section" id="live">
+    <div class="ops-head">
+      <p class="ops-kicker"><b>{OPS.live.kicker}</b> · {OPS.live.kickerSub}</p>
+      <a class="ops-headlink" href={url(OPS.live.link.href)}>{OPS.live.link.label}</a>
+    </div>
+    <ul class="ops-tiles">
+      {tiles.map((tile) => (
+        <li>
+          <a class="ops-panel ops-tile" href={url(tile.href)}>
+            <span class="ops-tile-head">
+              <span class="ops-tile-name">{tile.name}</span>
+              <span class="ops-led"></span>
+            </span>
+            <span class="ops-tile-big">{tile.big}</span>
+            <span class="ops-tile-sub">{tile.sub}</span>
+            {/* Every mark is drawn from the same snapshot as the reading above it. aria-hidden:
+                the number and the sentence already carry the meaning; the mark is its shape. */}
+            <svg class="ops-tile-viz" viewBox="0 0 96 26" preserveAspectRatio="none" aria-hidden="true">
+              {tile.viz.kind === 'line' && <path class="ops-mark-line" d={linePath(smooth3(tile.viz.values))} />}
+              {tile.viz.kind === 'bars' &&
+                bars(tile.viz.values, new Set(tile.viz.marked)).map((b) => (
+                  <rect class={b.marked ? 'ops-mark' : 'ops-mark-dim'} x={b.x} y={b.y} width={b.width} height={b.height} />
+                ))}
+              {tile.viz.kind === 'cells' &&
+                cells(tile.viz.count, new Set(tile.viz.marked)).map((c) => (
+                  <rect class={c.marked ? 'ops-mark-dim' : 'ops-mark'} x={c.x} y={c.y} width={c.width} height={c.height} />
+                ))}
+              {tile.viz.kind === 'ratio' &&
+                ratioBars(tile.viz.part, tile.viz.whole).map((b) => (
+                  <rect class={b.marked ? 'ops-mark' : 'ops-mark-dim'} x={b.x} y={b.y} width={b.width} height={b.height} />
+                ))}
+            </svg>
+            <span class="ops-tile-stamp">{tile.stamp}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+    {/* The named catalogues, and the room that holds all of them — the same quiet line the
+        board carried on the entrance, kept with the board. */}
+    <p class="ops-catalogues">
+      {OPS.live.cataloguesLead}
+      {catalogues.map((c, i) => (
+        <>
+          {i > 0 && ' · '}
+          <a href={url(c.href)}>{c.name}</a>
+        </>
+      ))}
+      {' · '}<a href={url(NAMING.catalogues.href)}>{NAMING.catalogues.indexLabel}</a>
+    </p>
+    {/* The provenance foot: where every mark on this page ultimately comes from — the committed
+        pulse snapshot and its stated window, in the caption the hub has always used. */}
+    <p class="ops-foot-line">{pulseCaption}</p>
+  </section>
+</main>
+
+<style>
+  /* The page head, one register calmer than the sections under it. */
+  .now-title {
+    margin: 0;
+    font-size: clamp(26px, 3.4vw, 36px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  .now-lead {
+    margin: 12px 0 0;
+    max-width: 62ch;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--ops-muted);
+  }
+  .now-back {
+    margin: 14px 0 0;
+    font-family: var(--font-mono);
+    font-size: 11px;
+  }
+
+  /* The signal log's stagger. Eight declared steps rather than an inline delay per row, because
+     this site's CSP drops inline style attributes — the rows would simply all have arrived at
+     once, silently. Eight is the ceiling the strip can ever render. */
+  .ops-log-row-0 { animation-delay: 0s; }
+  .ops-log-row-1 { animation-delay: 0.08s; }
+  .ops-log-row-2 { animation-delay: 0.16s; }
+  .ops-log-row-3 { animation-delay: 0.24s; }
+  .ops-log-row-4 { animation-delay: 0.32s; }
+  .ops-log-row-5 { animation-delay: 0.4s; }
+  .ops-log-row-6 { animation-delay: 0.48s; }
+  .ops-log-row-7 { animation-delay: 0.56s; }
+</style>
+
+<script>
+  // The page's one moving part: the UTC clock. The pulse figure — and the dots that walk it —
+  // stayed on the entrance, so this is the ops room's shared rAF loop reduced to its clock half:
+  // same stamp, same ~10 fps throttle, repainting only when the rendered second changed.
+  const board = document.querySelector<HTMLElement>('[data-now-board]')
+  const clock = board?.querySelector<HTMLElement>('[data-ops-clock]') ?? null
+  if (clock) {
+    const pad = (n: number) => String(n).padStart(2, '0')
+    const stamp = (d: Date) =>
+      `${d.getUTCFullYear()}-${pad(d.getUTCMonth() + 1)}-${pad(d.getUTCDate())} ` +
+      `${pad(d.getUTCHours())}:${pad(d.getUTCMinutes())}:${pad(d.getUTCSeconds())} UTC`
+
+    clock.textContent = stamp(new Date())
+
+    let lastTick = 0
+    let lastSecond = ''
+    const step = (now: number) => {
+      requestAnimationFrame(step)
+      if (now - lastTick < 100) return
+      lastTick = now
+      const next = stamp(new Date())
+      if (next !== lastSecond) {
+        clock.textContent = next
+        lastSecond = next
+      }
+    }
+    requestAnimationFrame(step)
+  }
+</script>

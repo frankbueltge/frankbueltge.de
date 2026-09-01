@@ -183,8 +183,12 @@ describe('NAMING.triptych', () => {
  * what makes the third time impossible.
  */
 describe('the entrance carries the name', () => {
+  // 2026-09-01: the entrance is FrontDoor.astro — the ops room's board moved to /now, and
+  // OpsRoom.astro stays in the repo unlinked. This guard moves with the entrance: it must
+  // always read whatever component src/pages/index.astro actually mounts (a companion check
+  // in src/lib/ops/front-door.test.ts holds that mounting in place).
   const entrance = readFileSync(
-    fileURLToPath(new URL('../components/pages/OpsRoom.astro', import.meta.url)),
+    fileURLToPath(new URL('../components/pages/FrontDoor.astro', import.meta.url)),
     'utf8',
   )
 

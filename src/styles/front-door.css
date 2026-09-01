@@ -1,0 +1,232 @@
+/* src/styles/front-door.css — the entrance after the ops room (2026-09-01).
+ *
+ * The front door keeps the ops room's skin — it loads ops-room.css and reuses its furniture
+ * (strip, hero, panels, kickers, log rows, LEDs) — and adds only the classes the calmer surface
+ * needs: the plain-language introduction, the four research cards, the editorial lead, the
+ * artifact strip and the one-chip-per-system live row. Everything here reads its colour from the
+ * --ops-* tokens ops-room.css declares per theme, so the two surfaces cannot drift apart in
+ * palette; no colour is declared twice.
+ *
+ * All styling is classes + SVG attributes — this site's CSP drops inline style attributes
+ * silently, so an inline style here would not fail, it would just not exist.
+ */
+
+/* ── the introduction: three plain paragraphs, side by side where there is room ─────────────── */
+
+.fd-what {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px;
+  margin-top: 20px;
+}
+.fd-what p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--ops-muted);
+}
+@media (max-width: 900px) {
+  .fd-what {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .fd-what p {
+    max-width: 60ch;
+  }
+}
+
+/* ── the four research cards ────────────────────────────────────────────────────────────────── */
+
+.fd-cards {
+  margin: 28px 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--ops-gap);
+}
+@media (max-width: 800px) {
+  .fd-cards {
+    grid-template-columns: 1fr;
+  }
+}
+.fd-card {
+  display: block;
+  padding: 20px 22px;
+  transition: border-color 0.15s ease;
+}
+.fd-card:hover {
+  border-color: var(--ops-faint);
+}
+.fd-card-kind {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ops-faint);
+}
+.fd-card-title {
+  display: block;
+  margin-top: 8px;
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.fd-card-line {
+  display: block;
+  margin-top: 8px;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--ops-muted);
+}
+.fd-card-meta {
+  display: block;
+  margin-top: 12px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  line-height: 1.5;
+  color: var(--ops-faint);
+}
+
+/* The ecology card's one live line: the house clock, worn as a small strip above the meta.
+   The LED means the same thing it means everywhere in the room — this line is running. */
+.fd-card-cycle {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--ops-line-soft);
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  color: var(--ops-muted);
+}
+.fd-card-cycle .ops-led {
+  height: 6px;
+  width: 6px;
+}
+.fd-cycle-label {
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ops-fg);
+}
+.fd-cycle-badge {
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ops-accent);
+}
+.fd-cycle-q {
+  flex-basis: 100%;
+  line-height: 1.5;
+}
+
+/* The line under the two house cards, holding the way to the full project list. */
+.fd-all-projects {
+  margin: 14px 0 0;
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+
+/* ── the front page: one lead, then a tight list ────────────────────────────────────────────── */
+
+.fd-lead {
+  display: block;
+  margin-top: 18px;
+  padding: 22px 24px;
+  transition: border-color 0.15s ease;
+}
+.fd-lead:hover {
+  border-color: var(--ops-faint);
+}
+.fd-lead-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ops-muted);
+}
+.fd-lead-title {
+  display: block;
+  margin-top: 10px;
+  font-size: clamp(19px, 2.4vw, 24px);
+  font-weight: 650;
+  letter-spacing: -0.015em;
+  line-height: 1.25;
+}
+.fd-lead-kind {
+  color: var(--ops-faint);
+}
+
+/* The list under the lead borrows .ops-log; only its top margin differs from the board page. */
+.fd-log {
+  margin-top: 10px;
+}
+
+/* The artifact trail, as one thin strip — links when the cycle has artifacts, the stated
+   absence when it does not. */
+.fd-artifacts {
+  margin: 12px 0 0;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1.7;
+  color: var(--ops-faint);
+}
+.fd-artifacts a {
+  color: var(--ops-muted);
+  text-decoration: underline;
+  text-decoration-color: var(--ops-line);
+  text-underline-offset: 4px;
+  transition: color 0.15s ease;
+}
+.fd-artifacts a:hover {
+  color: var(--ops-fg);
+}
+
+/* ── the slim live strip: one chip per system ───────────────────────────────────────────────── */
+
+.fd-chips {
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.fd-chip {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 14px;
+  border-radius: 9999px;
+  transition: border-color 0.15s ease;
+}
+.fd-chip:hover {
+  border-color: var(--ops-faint);
+}
+.fd-chip .ops-led {
+  height: 6px;
+  width: 6px;
+}
+.fd-chip-name {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+.fd-chip-date {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--ops-faint);
+  white-space: nowrap;
+}
+@media (max-width: 480px) {
+  .fd-chip-name,
+  .fd-chip-date {
+    white-space: normal;
+  }
+}
