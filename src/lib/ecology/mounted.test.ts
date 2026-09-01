@@ -38,6 +38,9 @@ describe('the instruments are on a page', () => {
   const INSTRUMENTS: [string, string][] = [
     ['RefrainScore', 'the running work-line’s score — the three voices and every move it made'],
     ['LineMap', 'the map of every work-line on one time axis, and how each one ended'],
+    // back on /studio since 2026-09-01 — it had rendered on no page since the station sheets of
+    // 2026-08-12, and its own guard then held the whole studio mirror shut over a figure nobody saw
+    ['SeasonFloor', 'the Studio’s season floor — every premiere lit, every strike taped, every return drawn back'],
   ]
 
   it.each(INSTRUMENTS)('%s is imported by at least one page', (component, what) => {

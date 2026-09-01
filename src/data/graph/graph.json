@@ -12,7 +12,7 @@
       },
       {
         "file": "docs/decision-log.md",
-        "sha256": "b106e691cb0ab70b"
+        "sha256": "3f31c96e61dc447d"
       },
       {
         "file": "src/data/post/ledger.json",
@@ -57,10 +57,10 @@
       }
     ],
     "counts": {
-      "nodes": 320,
-      "edges": 273,
+      "nodes": 321,
+      "edges": 274,
       "nodesByKind": {
-        "decision": 85,
+        "decision": 86,
         "encounter": 6,
         "neighbor": 93,
         "practice": 9,
@@ -75,7 +75,7 @@
         "made-by": 96,
         "neighbor-of": 93,
         "participates": 17,
-        "touches": 52
+        "touches": 53
       }
     }
   },
@@ -833,15 +833,25 @@
     {
       "id": "decision:2026-09-01-1",
       "kind": "decision",
-      "label": "The Middle's score is redrawn in the original partitur's ink",
+      "label": "The Studio’s season floor holds a v3 record, and returns to /studio",
       "date": "2026-09-01",
       "source": {
         "file": "docs/decision-log.md",
-        "quote": "The Middle's score is redrawn in the original partitur's ink"
+        "quote": "The Studio’s season floor holds a v3 record, and returns to /studio"
       }
     },
     {
       "id": "decision:2026-09-01-10",
+      "kind": "decision",
+      "label": "Currency pass: the site stops announcing a reading that already happened — first slice of the public-surfaces refresh after v3",
+      "date": "2026-09-01",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "Currency pass: the site stops announcing a reading that already happened — first slice of the public-surfaces refresh after v3"
+      }
+    },
+    {
+      "id": "decision:2026-09-01-11",
       "kind": "decision",
       "label": "Meridians Richtung: das Antwort-Register — gewählt aus einer beauftragten Karte, nicht aus einem Programm",
       "date": "2026-09-01",
@@ -853,6 +863,16 @@
     {
       "id": "decision:2026-09-01-2",
       "kind": "decision",
+      "label": "The Middle's score is redrawn in the original partitur's ink",
+      "date": "2026-09-01",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "The Middle's score is redrawn in the original partitur's ink"
+      }
+    },
+    {
+      "id": "decision:2026-09-01-3",
+      "kind": "decision",
       "label": "The ecology entrance gets the cycle drawn, and the bulletins get a fold — the UX pass after Frank's verdict",
       "date": "2026-09-01",
       "source": {
@@ -861,7 +881,7 @@
       }
     },
     {
-      "id": "decision:2026-09-01-3",
+      "id": "decision:2026-09-01-4",
       "kind": "decision",
       "label": "The board returns to the entrance, whole — the beauty pass after Frank's review",
       "date": "2026-09-01",
@@ -871,7 +891,7 @@
       }
     },
     {
-      "id": "decision:2026-09-01-4",
+      "id": "decision:2026-09-01-5",
       "kind": "decision",
       "label": "The Middle gets its score back — the exchange drawn, not only quoted",
       "date": "2026-09-01",
@@ -881,7 +901,7 @@
       }
     },
     {
-      "id": "decision:2026-09-01-5",
+      "id": "decision:2026-09-01-6",
       "kind": "decision",
       "label": "The ecology entrance renders bulletins as the practices wrote them, and the drift sweep closes the refresh",
       "date": "2026-09-01",
@@ -891,7 +911,7 @@
       }
     },
     {
-      "id": "decision:2026-09-01-6",
+      "id": "decision:2026-09-01-7",
       "kind": "decision",
       "label": "The three practice pages rebuilt on one v3 template — third slice of the public-surfaces refresh",
       "date": "2026-09-01",
@@ -901,7 +921,7 @@
       }
     },
     {
-      "id": "decision:2026-09-01-7",
+      "id": "decision:2026-09-01-8",
       "kind": "decision",
       "label": "The entrance becomes a front door, and the full board moves to /now — fourth slice of the public-surfaces refresh",
       "date": "2026-09-01",
@@ -911,23 +931,13 @@
       }
     },
     {
-      "id": "decision:2026-09-01-8",
+      "id": "decision:2026-09-01-9",
       "kind": "decision",
       "label": "The wording canon learns v3, and the entrance texts stop describing sovereign practices — second slice of the public-surfaces refresh",
       "date": "2026-09-01",
       "source": {
         "file": "docs/decision-log.md",
         "quote": "The wording canon learns v3, and the entrance texts stop describing sovereign practices — second slice of the public-surfaces refresh"
-      }
-    },
-    {
-      "id": "decision:2026-09-01-9",
-      "kind": "decision",
-      "label": "Currency pass: the site stops announcing a reading that already happened — first slice of the public-surfaces refresh after v3",
-      "date": "2026-09-01",
-      "source": {
-        "file": "docs/decision-log.md",
-        "quote": "Currency pass: the site stops announcing a reading that already happened — first slice of the public-surfaces refresh after v3"
       }
     },
     {
@@ -6712,7 +6722,25 @@
     },
     {
       "kind": "touches",
+      "from": "decision:2026-09-01-1",
+      "to": "work:studio",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "src/lib/studio/season.ts"
+      }
+    },
+    {
+      "kind": "touches",
       "from": "decision:2026-09-01-10",
+      "to": "work:field",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "src/pages/field/index.astro"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-09-01-11",
       "to": "work:field",
       "source": {
         "file": "docs/decision-log.md",
@@ -6721,7 +6749,7 @@
     },
     {
       "kind": "touches",
-      "from": "decision:2026-09-01-6",
+      "from": "decision:2026-09-01-7",
       "to": "work:atelier",
       "source": {
         "file": "docs/decision-log.md",
@@ -6730,7 +6758,7 @@
     },
     {
       "kind": "touches",
-      "from": "decision:2026-09-01-6",
+      "from": "decision:2026-09-01-7",
       "to": "work:field",
       "source": {
         "file": "docs/decision-log.md",
@@ -6739,20 +6767,11 @@
     },
     {
       "kind": "touches",
-      "from": "decision:2026-09-01-6",
+      "from": "decision:2026-09-01-7",
       "to": "work:studio",
       "source": {
         "file": "docs/decision-log.md",
         "quote": "src/pages/{field,atelier,studio}/index.astro"
-      }
-    },
-    {
-      "kind": "touches",
-      "from": "decision:2026-09-01-9",
-      "to": "work:field",
-      "source": {
-        "file": "docs/decision-log.md",
-        "quote": "src/pages/field/index.astro"
       }
     }
   ]
