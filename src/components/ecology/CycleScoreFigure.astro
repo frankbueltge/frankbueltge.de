@@ -1,0 +1,29 @@
+---
+// The cycle, drawn (2026-09-01) — /ecology's partitur of the running cycle.
+//
+// Renders buildCycleScoreSvg inside a `.score-map` scope so src/styles/score-map.css — the
+// original partitur's own stylesheet — inks it: same ruler, same lane weights, same object
+// squares, same hues per voice. The figure is the page's visual anchor; the artifact trail
+// below remains the same record as cards, so nothing is reachable only through the drawing.
+import { ECOLOGY_V3 } from '@/config/ecology-v3-wording'
+import { buildCycleScoreSvg, type CycleScoreInput } from '@/lib/ecology/cycle-score'
+import '@/styles/score-map.css'
+
+interface Props {
+  input: CycleScoreInput
+}
+const { input } = Astro.props
+const svgMarkup = buildCycleScoreSvg(input)
+const W = ECOLOGY_V3.score
+---
+
+<figure class="rounded-sm border border-line bg-panel">
+  <figcaption class="border-b border-line p-4">
+    <p class="font-mono text-xs uppercase tracking-[0.22em] text-fg-muted">{W.kicker}</p>
+    <p class="mt-2 max-w-3xl text-sm leading-relaxed text-fg-muted">{W.sub}</p>
+  </figcaption>
+  <div class="score-map overflow-x-auto">
+    <div class="score-svg min-w-[900px] p-2" set:html={svgMarkup} />
+  </div>
+  <p class="border-t border-line p-4 font-mono text-[11px] leading-relaxed text-fg-faint">{W.legend}</p>
+</figure>

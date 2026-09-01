@@ -20,6 +20,7 @@ import { getRelativeLocaleUrl } from 'astro:i18n'
 import type { Locale } from '@/lib/site'
 import { ECOLOGY_V3 } from '@/config/ecology-v3-wording'
 import { bulletinBlocks } from '@/lib/ecology/bulletin-render'
+import CycleScoreFigure from '@/components/ecology/CycleScoreFigure.astro'
 import {
   BULLETIN_DISPLAY_MAX,
   loadArtifacts,
@@ -41,6 +42,10 @@ const bulletins = PRACTICES.map((id) => ({ id, ...W.practices[id], bulletin: loa
 const presentations = loadPresentations()
 const closing = loadClosingReports()
 const artifacts = loadArtifacts()
+// The partitur draws the CURRENT cycle only — the label above it says so, and the filter is
+// what makes the label true (same move as the entrance's artifact strip).
+const cycleDir = `cycle-${String(cycle.cycle).padStart(3, '0')}`
+const cycleArtifacts = artifacts.filter((a) => a.href.includes(`/artifacts/${cycleDir}/`))
 
 const kicker = 'font-mono text-xs uppercase tracking-[0.22em] text-fg-muted'
 
@@ -101,61 +106,98 @@ const blockClass: Record<string, string> = {
     }
   </section>
 
+  {/* ── The cycle, drawn ─────────────────────────────────────────────────── */}
+  <section class="mt-10" aria-label="The running cycle, drawn as a score">
+    <CycleScoreFigure input={{ cycle, artifacts: cycleArtifacts }} />
+  </section>
+
   {/* ── The three bulletins ──────────────────────────────────────────────── */}
   {/* Rendered through bulletinBlocks() since 2026-09-01, the same renderer the practice
       stations use: the emphasis and headings ARE the practice's own marks — a raw dump showed
       the asterisks instead of the emphasis they encode, which loses information rather than
-      adding fidelity. The words remain byte-verbatim; truncation is still declared. Three
-      columns only from lg up — at md the columns were too narrow to read a bulletin in. */}
+      adding fidelity. The words remain byte-verbatim; truncation is still declared.
+      Redesigned the same day (Frank's UX verdict, wording private): three parallel forty-line
+      columns were a wall. Each bulletin now stands full-width, its opening block visible, the
+      rest behind a native <details> fold — nothing summarised, everything one click away. */}
   <section class="mt-12" aria-label="The three practices and their latest bulletins">
-    <div class="grid gap-5 lg:grid-cols-3">
+    <div class="space-y-5">
       {
         bulletins.map((p) => (
           <div class="flex flex-col rounded-sm border border-line bg-panel">
-            <div class="border-b border-line p-4">
-              <p class={kicker}>{p.corner}</p>
-              <h3 class="mt-1.5 text-lg font-semibold text-fg">
+            <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 border-b border-line p-4">
+              <h3 class="text-lg font-semibold text-fg">
                 <a class="hover:underline" href={url(p.href)}>{p.name}</a>
-                <span class="ml-2 font-mono text-xs font-normal text-fg-faint">{p.persona}</span>
+                <span class="ml-2 font-mono text-xs font-normal text-fg-faint">{p.persona} · {p.corner}</span>
               </h3>
-              <p class="mt-2 text-sm leading-relaxed text-fg-muted">{p.role}</p>
-            </div>
-            <div class="flex-1 p-4">
-              <p class={kicker}>{W.bulletin.kicker}</p>
-              {
-                p.bulletin.present ? (
-                  <>
-                    <div class="mt-3 space-y-2.5">
-                      {bulletinBlocks(p.bulletin.text!).map((b) => (
-                        <p class={blockClass[b.kind]}>
-                          {b.segments.map((s) =>
-                            s.kind === 'strong' ? (
-                              <strong class="font-semibold text-fg">{s.text}</strong>
-                            ) : s.kind === 'code' ? (
-                              <code class="rounded bg-panel-2 px-1 font-mono text-[0.9em]">{s.text}</code>
-                            ) : (
-                              <>{s.text}</>
-                            ),
-                          )}
-                        </p>
-                      ))}
-                    </div>
-                    {p.bulletin.truncated && (
-                      <p class="mt-2 font-mono text-xs text-fg-faint">
-                        {W.bulletin.truncatedNote(p.bulletin.lines, BULLETIN_DISPLAY_MAX)}
-                      </p>
-                    )}
-                  </>
-                ) : (
-                  <p class="mt-3 text-sm leading-relaxed text-fg-faint">{W.bulletin.absent}</p>
-                )
-              }
-            </div>
-            <div class="border-t border-line p-4">
               <a
                 class="font-mono text-xs text-fg-faint underline decoration-line underline-offset-4 hover:text-fg"
                 href={`https://github.com/frankbueltge/${PRACTICE_REPO[p.id]}/blob/main/BULLETIN.md`}
               >{W.bulletin.sourceLabel}</a>
+            </div>
+            <div class="p-4">
+              {
+                p.bulletin.present ? (
+                  ((blocks) => {
+                    // The preview runs to the end of the first paragraph — the practices open
+                    // their bulletins with the session line (date, session, question), and THAT
+                    // is what a reader needs before deciding to unfold; a bare markdown title
+                    // alone previews nothing.
+                    const firstPara = blocks.findIndex((b) => b.kind === 'para')
+                    const cut = firstPara === -1 ? 1 : firstPara + 1
+                    const head = blocks.slice(0, cut)
+                    const rest = blocks.slice(cut)
+                    return (
+                    <>
+                      <div class="space-y-2.5">
+                        {head.map((b) => (
+                          <p class={blockClass[b.kind]}>
+                            {b.segments.map((s) =>
+                              s.kind === 'strong' ? (
+                                <strong class="font-semibold text-fg">{s.text}</strong>
+                              ) : s.kind === 'code' ? (
+                                <code class="rounded bg-panel-2 px-1 font-mono text-[0.9em]">{s.text}</code>
+                              ) : (
+                                <>{s.text}</>
+                              ),
+                            )}
+                          </p>
+                        ))}
+                      </div>
+                      {rest.length > 0 && (
+                        <details class="eco-bulletin-fold group mt-3">
+                          <summary class="cursor-pointer list-none font-mono text-xs text-fg-muted underline decoration-line underline-offset-4 hover:text-fg">
+                            <span class="group-open:hidden">{W.bulletin.expand(p.bulletin.lines)}</span>
+                            <span class="hidden group-open:inline">{W.bulletin.collapse}</span>
+                          </summary>
+                          <div class="mt-3 space-y-2.5 border-t border-line pt-3">
+                            {rest.map((b) => (
+                              <p class={blockClass[b.kind]}>
+                                {b.segments.map((s) =>
+                                  s.kind === 'strong' ? (
+                                    <strong class="font-semibold text-fg">{s.text}</strong>
+                                  ) : s.kind === 'code' ? (
+                                    <code class="rounded bg-panel-2 px-1 font-mono text-[0.9em]">{s.text}</code>
+                                  ) : (
+                                    <>{s.text}</>
+                                  ),
+                                )}
+                              </p>
+                            ))}
+                            {p.bulletin.truncated && (
+                              <p class="font-mono text-xs text-fg-faint">
+                                {W.bulletin.truncatedNote(p.bulletin.lines, BULLETIN_DISPLAY_MAX)}
+                              </p>
+                            )}
+                          </div>
+                        </details>
+                      )}
+                    </>
+                    )
+                  })(bulletinBlocks(p.bulletin.text!))
+                ) : (
+                  <p class="text-sm leading-relaxed text-fg-faint">{W.bulletin.absent}</p>
+                )
+              }
             </div>
           </div>
         ))
