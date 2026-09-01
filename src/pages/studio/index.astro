@@ -6,12 +6,29 @@
 // in the repo unlinked (decision log, 2026-09-01). This page is thin on purpose: it assembles
 // the practice's own record — the last sessions from its chronicle — and renders one
 // PracticeStation. Everything else the station derives itself.
+//
+// The one thing this page keeps that /field does not: the SEASON FLOOR, the practice's own figure
+// since 2026-07-31 — every premiere a lit pool, every strike a taped X, every return a violet arc
+// back into production. It had rendered on no page since the station sheets of 2026-08-12, and on
+// 2026-09-01 its own bounds guard held the whole studio mirror shut over a figure nobody saw; that
+// evening it was rebuilt to hold a v3 record (three rows, the wall, the lettering steps —
+// src/lib/studio/season.ts) and put back here, in the station's figure slot like the Atelier's
+// line map. mounted.test.ts holds it on a page from now on.
 import Page from '@/layouts/Page.astro'
 import PracticeStation from '@/components/ecology/PracticeStation.astro'
+import Figure from '@/components/ecology/figures/Figure.astro'
+import SeasonFloor from '@/components/studio/SeasonFloor.astro'
+import '@/styles/ecology-pyramid.css'
+import '@/styles/studio-stage.css'
 import { PRACTICE_V3 } from '@/config/practice-wording'
 import { PYRAMID } from '@/config/ecology-pyramid-wording'
+import { FIGURES } from '@/config/ecology-figure-wording'
 import { recordLine, type ChronicleEntry } from '@/lib/ecology/pyramid/landings'
 import type { LogEntry } from '@/lib/ecology/pyramid/station'
+import { loadChronicle } from '@/lib/studio/chronicle'
+import { loadWorkMetas } from '@/lib/studio/dossier-data'
+import { buildSeasonModel, type SeasonKill } from '@/lib/studio/season'
+import stageData from '@/data/studio/stage.curated.json'
 import chronicle from '@/data/studio/chronicle.upstream.json'
 
 const rows = chronicle as ChronicleEntry[]
@@ -27,9 +44,50 @@ const log: LogEntry[] = [...rows]
     line: recordLine(r.move, r.summary) ?? PYRAMID.station.absent,
   }))
 
+// The floor, from the same three committed sources it has always read: the chronicle (validated
+// on the way in), every work's own meta.json, and the curated strike list.
+const season = buildSeasonModel({
+  chronicle: loadChronicle(),
+  metas: loadWorkMetas(),
+  kills: stageData.kills as SeasonKill[],
+})
+const premieres = season.counts.premiered + season.counts.withdrawn
+
 const SEO = PRACTICE_V3.studio.seo
+const F = FIGURES.studio.seasonFloor
 ---
 
 <Page title={`${SEO.title} | Frank Bültge`} description={SEO.description}>
-  <PracticeStation id="studio" log={log} />
+  <PracticeStation id="studio" log={log}>
+    {/* The station's shared frame (Figure, ecology-pyramid.css through the .eco ancestor) around
+        the practice's own skin: the stage is dark by default and keeps its Didone, its lamp gold
+        and its curtain crimson (studio-stage.css, scoped to .studio-surface). The frame is shared,
+        the drawing never is — ADR 0010, the same split the Atelier's line map sits in. */}
+    <div slot="figure" class="eco hub-voices rounded-sm">
+      <div class="p-3 sm:p-4">
+        <Figure
+          title={F.title}
+          sub={F.sub}
+          link={{ label: F.link(premieres), href: '/studio/works' }}
+          caption={F.caption(season.counts)}
+        >
+          <div class="studio-surface station-floor">
+            <SeasonFloor model={season} />
+          </div>
+        </Figure>
+      </div>
+    </div>
+  </PracticeStation>
 </Page>
+
+<style>
+  /* .studio-surface is built as a whole page's surface — its own width, margin and border. Inside
+     the station's figure panel it is the drawing's skin only; the panel already frames it. */
+  .station-floor {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    border: 0;
+    padding: 1rem 1.25rem 1.25rem;
+  }
+</style>

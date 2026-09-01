@@ -79,6 +79,27 @@ export const FIGURES = {
   },
 
   studio: {
+    /** The season floor on the v3 station (2026-09-01): the frame around
+     *  src/components/studio/SeasonFloor.astro. Every legend, hint and table string the figure
+     *  itself shows stays in STUDIO_NARRATIVE.seasonFloor; this is only the station's strip and
+     *  foot, in the same voice as the Atelier's line map above. The counts are the model's own. */
+    seasonFloor: {
+      title: 'THE FLOOR KEEPS EVERY MARK',
+      sub: 'THE WHOLE RECORD ON ONE STAGE — PREMIERES LIT, STRIKES TAPED, RETURNS DRAWN BACK',
+      link: (n: number) => `all ${n} →`,
+      caption: (c: { premiered: number; withdrawn: number; struck: number; returned: number }) => {
+        const n = (k: number, one: string, many: string) => `${k} ${k === 1 ? one : many}`
+        return (
+          `POOL = A PREMIERE, ITS TITLE IN THE LIGHT · ✕ = A STRUCK PROJECT, REASON KEPT · ARC = RETURNED BY THE HUMAN EYE · STRUCK POOL = WITHDRAWN AFTER PREMIERE<br>` +
+          `${n(c.premiered + c.withdrawn, 'premiere', 'premieres')} from the works’ own metadata` +
+          `${c.withdrawn > 0 ? ` (${n(c.withdrawn, 'of them since withdrawn', 'of them since withdrawn')})` : ''}, ` +
+          `${n(c.struck, 'strike', 'strikes')} from src/data/studio/stage.curated.json, ` +
+          `${n(c.returned, 'return', 'returns')} read out of the chronicle’s own sentences. ` +
+          `Time runs left to right. The lit band shelves its pools on up to three rows; a pool that would run past the floor’s edge yields to the left of its evening rather than letter over a name, and its date stands under it either way. ` +
+          `Hover or tab to a mark for its record; the table below repeats every mark verbatim.`
+        )
+      },
+    },
     floor: {
       title: 'THE STAGE FLOOR',
       sub: 'ONE WORK IN THE LIGHT, EVERY MARK STILL ON THE FLOOR',

@@ -462,6 +462,11 @@
   fill: var(--st-spot-ink);
 }
 .studio-surface .st-sf-litmeta { font: 11px var(--st-font-record); fill: var(--st-ink-2); }
+/* the denser lettering steps: season.ts lays the band out at the full face first and steps the
+   titles down only when three rows cannot hold the season at that size (2026-09-01); it says which
+   step on the svg, and the face shrinks with the pool so a title never spills its light */
+.studio-surface svg.st-sf[data-lettering='2'] .st-sf-title { font-size: 14.5px; }
+.studio-surface svg.st-sf[data-lettering='3'] .st-sf-title { font-size: 12.25px; }
 
 /* a struck position: the taped X the floor keeps for good */
 .studio-surface .st-sf-x { stroke: var(--st-c-struck); stroke-width: 2.2; fill: none; }

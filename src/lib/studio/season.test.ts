@@ -165,11 +165,13 @@ describe('buildSeasonModel over the committed record', () => {
   })
 
   it('places lit positions downstage and struck positions further back, all on the floor', () => {
+    // The floor's own edges, typed here on purpose rather than imported: 96/1344 across, 150 down
+    // to 810 — the bottom edge was 706 until the lit band gained its third row on 2026-09-01.
     for (const m of model.marks) {
       expect(m.x).toBeGreaterThanOrEqual(96)
       expect(m.x).toBeLessThanOrEqual(1344)
       expect(m.y).toBeGreaterThan(150)
-      expect(m.y).toBeLessThan(706)
+      expect(m.y).toBeLessThan(810)
     }
     const litY = model.marks.filter((m) => m.state === 'premiered' || m.state === 'withdrawn').map((m) => m.y)
     const struckY = model.marks.filter((m) => m.state === 'struck').map((m) => m.y)
@@ -446,6 +448,134 @@ describe('the table floor and the honest gaps', () => {
     expect(text).toContain('ONE TAP')
     expect(text).toContain('premiered, then withdrawn')
     expect(text).toContain('meta.json')
+  })
+})
+
+// The lit band as a shelf (2026-09-01). Under research ecology v3 the studio ships one work per
+// session and several a day; on 2026-09-01 three premieres wanted the same x at the axis end and
+// two rows could not hold them — the bounds guard above fired and held the whole studio mirror shut.
+// These fixtures walk the shelf through the shapes a v3 record takes, so the next such evening is
+// proven here before the record produces it.
+describe('the lit band as a shelf', () => {
+  const ship = (n: number, date: string, slug: string) => ({
+    collective_session: n,
+    date,
+    move: 'ship',
+    summary: `Session ${n} shipped a work, and the record says so in one sentence.`,
+    works: [slug],
+  })
+  const build = (chronicle: ReturnType<typeof ship>[], titles: Record<string, string>) =>
+    buildSeasonModel({
+      chronicle,
+      metas: Object.fromEntries(Object.entries(titles).map(([slug, title]) => [slug, { title, medium: 'a live thing' }])),
+      kills: [],
+    })
+  const poolsOf = (m: ReturnType<typeof buildSeasonModel>) =>
+    m.marks.filter((k) => k.state === 'premiered' || k.state === 'withdrawn')
+  const onTheFloor = (m: ReturnType<typeof buildSeasonModel>) => {
+    for (const p of poolsOf(m)) {
+      expect(p.x - p.rx, `${p.label} runs off the left`).toBeGreaterThanOrEqual(96)
+      expect(p.x + p.rx, `${p.label} runs off the right`).toBeLessThanOrEqual(1344)
+      expect(p.y - p.ry, `${p.label} above the curtain`).toBeGreaterThan(150)
+      expect(p.y + p.ry, `${p.label} into the struck band`).toBeLessThan(542)
+    }
+  }
+  const apart = (m: ReturnType<typeof buildSeasonModel>) => {
+    const pools = poolsOf(m)
+    for (let i = 0; i < pools.length; i++) {
+      for (let j = i + 1; j < pools.length; j++) {
+        const a = pools[i]
+        const b = pools[j]
+        const overlapX = Math.abs(a.x - b.x) < a.rx + b.rx
+        const overlapY = Math.abs(a.y - b.y) < a.ry + b.ry
+        expect(overlapX && overlapY, `${a.label} overlaps ${b.label}`).toBe(false)
+      }
+    }
+  }
+  /** the six premieres of the summer, in the shape of the record */
+  const summer = [
+    ship(1, '2026-07-13', 'native-speaker'),
+    ship(4, '2026-07-17', 'no-way-of-knowing'),
+    ship(9, '2026-07-21', 'recovery'),
+    ship(12, '2026-07-23', 'one-tap'),
+    ship(20, '2026-07-30', 'no-part'),
+    ship(60, '2026-08-15', 'still-dark'),
+  ]
+  const summerTitles = {
+    'native-speaker': 'Native Speaker',
+    'no-way-of-knowing': 'No Way of Knowing',
+    recovery: 'Recovery',
+    'one-tap': 'One Tap',
+    'no-part': 'No Part',
+    'still-dark': 'Still Dark',
+  }
+
+  it('holds three premieres on one evening at the season’s end — none off the floor, none over another', () => {
+    const m = build(
+      [...summer, ship(117, '2026-08-31', 'come-in'), ship(118, '2026-09-01', 'not-yet'), ship(119, '2026-09-01', 'all-at-once'), ship(120, '2026-09-01', 'one-knock-each')],
+      { ...summerTitles, 'come-in': 'Come In', 'not-yet': 'Not Yet', 'all-at-once': 'All at Once', 'one-knock-each': 'One Knock Each' },
+    )
+    expect(poolsOf(m)).toHaveLength(10)
+    // the full face still holds this record — no step down for four works in two evenings
+    expect(m.lettering).toBe(1)
+    onTheFloor(m)
+    apart(m)
+    // the widest pool of the last evening stands at its own evening, against the wall
+    const widest = poolsOf(m).find((p) => p.label === 'ONE KNOCK EACH')!
+    expect(widest.x + widest.rx).toBeCloseTo(1304, 0)
+  })
+
+  it('ends the axis where the widest title of the last evening still fits inside the floor', () => {
+    const m = build(
+      [...summer, ship(121, '2026-09-01', 'long')],
+      { ...summerTitles, long: 'The longest title this house has ever lit' },
+    )
+    const long = poolsOf(m).find((p) => p.label.startsWith('THE LONGEST'))!
+    expect(long.rx).toBeGreaterThan(250)
+    expect(long.x + long.rx).toBeLessThanOrEqual(1344)
+    onTheFloor(m)
+    apart(m)
+  })
+
+  it('opens a row only when the row before would push a pool far off its evening', () => {
+    // three premieres a month apart stand on the top row alone
+    const m = build(
+      [ship(1, '2026-06-01', 'a'), ship(2, '2026-07-01', 'b'), ship(3, '2026-08-01', 'c')],
+      { a: 'One', b: 'Two', c: 'Three' },
+    )
+    for (const p of poolsOf(m)) expect(Math.abs(p.y - 248)).toBeLessThanOrEqual(14)
+    // …and the summer record, which two rows held before the third existed, still uses two
+    const rows = new Set(poolsOf(build(summer, summerTitles)).map((p) => Math.round((p.y - 248) / 104)))
+    expect(rows.size).toBeLessThanOrEqual(2)
+  })
+
+  it('steps the lettering down when three rows cannot hold the season, and says so on the svg', () => {
+    const chronicle: ReturnType<typeof ship>[] = []
+    const titles: Record<string, string> = {}
+    for (let i = 0; i < 18; i++) {
+      const day = String(1 + i).padStart(2, '0')
+      chronicle.push(ship(100 + i, `2026-09-${day}`, `w${day}`))
+      titles[`w${day}`] = `Twelve chars ${day}`.slice(0, 12).padEnd(12, 'x')
+    }
+    const m = build(chronicle, titles)
+    expect(m.lettering).toBeGreaterThan(1)
+    expect(buildSeasonFloorSvg(m)).toContain(`data-lettering="${m.lettering}"`)
+    // the pools narrowed with the face — every one is below the full-face width of a twelve-letter title
+    for (const p of poolsOf(m)) expect(p.rx).toBeLessThan(26 + 12 * 5.9)
+    onTheFloor(m)
+    apart(m)
+    // …and a record the full face holds is drawn at the full face, on the svg too
+    expect(buildSeasonFloorSvg(build(summer, summerTitles))).toContain('data-lettering="1"')
+  })
+
+  it('fails loud, never quietly: a season no lettering can hold throws', () => {
+    const chronicle: ReturnType<typeof ship>[] = []
+    const titles: Record<string, string> = {}
+    for (let i = 0; i < 40; i++) {
+      chronicle.push(ship(200 + i, `2026-09-0${1 + (i % 3)}`, `k${i}`))
+      titles[`k${i}`] = `A twenty letter name ${i}`
+    }
+    expect(() => build(chronicle, titles)).toThrow(/the lit band is full/)
   })
 })
 
