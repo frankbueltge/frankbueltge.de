@@ -1,0 +1,140 @@
+---
+// The Middle's score (2026-09-01) — the current exchange, drawn.
+//
+// The contact zone had a score once and lost it when the ledger it drew was retired; this one
+// draws what the page now quotes: one lane per practice, one mark per item its bulletin carries
+// for the siblings, a connector to every sibling the item names. Every mark is a link into the
+// quoted item below and carries the item's own first words as its native tooltip — the figure
+// adds no words of its own, which is the Middle's one rule applied to a drawing.
+//
+// No JavaScript, no inline style="" (the CSP drops those): geometry from the model, colour from
+// the voices' own tokens via classes, interaction from plain anchors.
+import { ECOLOGY_V3 } from '@/config/ecology-v3-wording'
+import { MIDDLE_V3 } from '@/config/middle-v3-wording'
+import type { MiddleScore } from '@/lib/ecology/middle-score'
+
+interface Props {
+  score: MiddleScore
+}
+const { score } = Astro.props
+const W = MIDDLE_V3.score
+const VOICE: Record<string, string> = { field: 'meridian', atelier: 'ulysses', studio: 'ensemble' }
+const kicker = 'font-mono text-xs uppercase tracking-[0.22em] text-fg-muted'
+---
+
+<figure class="mvs rounded-sm border border-line bg-panel">
+  <figcaption class="border-b border-line p-4">
+    <p class={kicker}>{W.kicker}</p>
+    <p class="mt-2 max-w-3xl text-sm leading-relaxed text-fg-muted">{W.sub}</p>
+  </figcaption>
+
+  <div class="overflow-x-auto p-4">
+    <svg
+      viewBox={`0 0 ${score.width} ${score.height}`}
+      class="mvs-svg block h-auto w-full"
+      role="img"
+      aria-label={W.ariaLabel}
+    >
+      {/* the three staves — a quiet lane is drawn dashed, never dropped */}
+      {
+        score.lanes.map((lane) => (
+          <g class={`mvs-voice mvs-${VOICE[lane.practice]}`}>
+            <text x="0" y={lane.y - 10} class="mvs-name">
+              {ECOLOGY_V3.practices[lane.practice].name}
+            </text>
+            <text x="0" y={lane.y + 6} class="mvs-persona">
+              {lane.quiet ? W.laneQuiet : ECOLOGY_V3.practices[lane.practice].persona}
+            </text>
+            <line
+              x1={score.labelWidth}
+              y1={lane.y}
+              x2={score.width - 16}
+              y2={lane.y}
+              class={lane.quiet ? 'mvs-lane mvs-lane-quiet' : 'mvs-lane'}
+            />
+          </g>
+        ))
+      }
+
+      {/* the marks — each one is the link to the item it draws */}
+      {
+        score.marks.map((m) => (
+          <a href={`#${m.anchor}`} class={`mvs-mark mvs-${VOICE[m.from]}`} aria-label={m.title}>
+            <title>{m.title}</title>
+            {m.targetYs.map((ty) => (
+              <line x1={m.x} y1={m.y} x2={m.x} y2={ty} class="mvs-connector" />
+            ))}
+            {m.targetYs.map((ty) => (
+              <circle cx={m.x} cy={ty} r="4" class="mvs-target" />
+            ))}
+            {m.both && (
+              <g>
+                <line x1={m.x} y1={m.y - 14} x2={m.x} y2={m.y + 14} class="mvs-whisker" />
+              </g>
+            )}
+            <rect x={m.x - 4} y={m.y - 4} width="8" height="8" class="mvs-sender" />
+            {/* a generous invisible hit target, so the link is usable without precision */}
+            <rect x={m.x - 10} y={Math.min(m.y, ...(m.targetYs.length ? m.targetYs : [m.y])) - 12} width="20" height={Math.abs((m.targetYs[0] ?? m.y) - m.y) + 24} class="mvs-hit" />
+          </a>
+        ))
+      }
+    </svg>
+  </div>
+
+  <p class="border-t border-line p-4 font-mono text-[11px] leading-relaxed text-fg-faint">
+    {W.legend}
+  </p>
+</figure>
+
+<style>
+  /* colour comes from the voices' own tokens (hub-triptych.css, on the page's .hub-voices
+     scope); every shape inherits it via currentColor, so one class per voice is the whole
+     palette wiring. */
+  .mvs-meridian { color: var(--hub-c-meridian); }
+  .mvs-ulysses { color: var(--hub-c-ulysses); }
+  .mvs-ensemble { color: var(--hub-c-ensemble); }
+
+  .mvs-name {
+    fill: var(--color-fg);
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .mvs-persona {
+    fill: var(--color-fg-faint);
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 10px;
+  }
+  .mvs-lane {
+    stroke: currentColor;
+    stroke-width: 1.5;
+    opacity: 0.55;
+  }
+  .mvs-lane-quiet {
+    stroke: var(--color-fg-faint);
+    stroke-dasharray: 2 5;
+    opacity: 0.6;
+  }
+  .mvs-connector {
+    stroke: currentColor;
+    stroke-width: 1.25;
+    opacity: 0.7;
+  }
+  .mvs-whisker {
+    stroke: currentColor;
+    stroke-width: 1.25;
+    stroke-dasharray: 2 3;
+  }
+  .mvs-sender { fill: currentColor; }
+  .mvs-target {
+    fill: var(--color-bg, transparent);
+    stroke: currentColor;
+    stroke-width: 1.5;
+  }
+  .mvs-hit { fill: transparent; }
+
+  .mvs-mark:hover .mvs-sender,
+  .mvs-mark:focus-visible .mvs-sender { filter: brightness(1.2); }
+  .mvs-mark:hover .mvs-connector,
+  .mvs-mark:focus-visible .mvs-connector { opacity: 1; stroke-width: 2; }
+</style>

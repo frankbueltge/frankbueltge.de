@@ -7,9 +7,12 @@
 // never summarise, because summarising would be speaking for a practice.
 import { getRelativeLocaleUrl } from 'astro:i18n'
 import type { Locale } from '@/lib/site'
+import '@/styles/hub-triptych.css'
 import { MIDDLE_V3 } from '@/config/middle-v3-wording'
 import { ECOLOGY_V3 } from '@/config/ecology-v3-wording'
 import { loadMiddle, middleCounts, segments, PRACTICE_REPO } from '@/lib/ecology/middle-page'
+import { buildMiddleScore, itemAnchor } from '@/lib/ecology/middle-score'
+import MiddleScoreFigure from '@/components/ecology/MiddleScoreFigure.astro'
 
 const locale = (Astro.currentLocale ?? 'en') as Locale
 const url = (href: string) => (href.startsWith('http') ? href : getRelativeLocaleUrl(locale, href))
@@ -17,11 +20,13 @@ const url = (href: string) => (href.startsWith('http') ? href : getRelativeLocal
 const W = MIDDLE_V3
 const voices = loadMiddle()
 const counts = middleCounts(voices)
+// The score draws exactly what the panels below quote — one derivation, two views of it.
+const score = buildMiddleScore(voices)
 const name = (id: 'field' | 'atelier' | 'studio') => ECOLOGY_V3.practices[id].name
 const kicker = 'font-mono text-xs uppercase tracking-[0.22em] text-fg-muted'
 ---
 
-<article class="mx-auto max-w-5xl px-4 pb-20 pt-10 sm:px-6">
+<article class="hub-voices mx-auto max-w-5xl px-4 pb-20 pt-10 sm:px-6">
   <header>
     <p class={kicker}>{W.head.kicker}</p>
     <h1 class="mt-3 text-3xl font-semibold tracking-tight text-fg sm:text-4xl">{W.head.title}</h1>
@@ -31,6 +36,11 @@ const kicker = 'font-mono text-xs uppercase tracking-[0.22em] text-fg-muted'
       {W.counts.line(counts.directed, counts.open, counts.speaking)}
     </p>
   </header>
+
+  {/* ── The score: the same traffic, drawn (2026-09-01) ──────────────────── */}
+  <section class="mt-10" aria-label="The current exchange, drawn as a score">
+    <MiddleScoreFigure score={score} />
+  </section>
 
   {/* ── The traffic, practice by practice ────────────────────────────────── */}
   <section class="mt-12 space-y-6" aria-label="What passes between the practices">
@@ -53,8 +63,8 @@ const kicker = 'font-mono text-xs uppercase tracking-[0.22em] text-fg-muted'
                 <p class="text-sm leading-relaxed text-fg-faint">{W.voice.absent}</p>
               ) : (
                 <ul class="space-y-4">
-                  {v.items.map((item) => (
-                    <li>
+                  {v.items.map((item, i) => (
+                    <li id={itemAnchor(v.practice, i)} class="scroll-mt-24 target:rounded-sm target:bg-panel-2">
                       <p class="font-mono text-xs uppercase tracking-[0.16em] text-accent">
                         {item.to.length > 0
                           ? W.voice.toLabel(item.to.map((t) => name(t)))
@@ -86,8 +96,9 @@ const kicker = 'font-mono text-xs uppercase tracking-[0.22em] text-fg-muted'
   <section class="mt-14 border-t border-line pt-6" aria-label="The former ledger of encounters">
     <p class={kicker}>{W.archive.kicker}</p>
     <p class="mt-2 max-w-3xl text-sm leading-relaxed text-fg-faint">{W.archive.body}</p>
-    <p class="mt-3">
-      <a class="font-mono text-xs text-fg-muted underline decoration-line underline-offset-4 hover:text-fg" href={W.archive.linkHref}>{W.archive.linkLabel}</a>
+    <p class="mt-3 flex flex-wrap gap-x-5 gap-y-2">
+      <a class="font-mono text-xs text-fg-muted underline decoration-line underline-offset-4 hover:text-fg" href={url(W.archive.linkHref)}>{W.archive.linkLabel}</a>
+      <a class="font-mono text-xs text-fg-faint underline decoration-line underline-offset-4 hover:text-fg" href={W.archive.repoLinkHref}>{W.archive.repoLinkLabel}</a>
     </p>
   </section>
 

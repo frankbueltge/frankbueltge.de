@@ -20,6 +20,17 @@ export const MIDDLE_V3 = {
     line: (directed: number, open: number, speaking: number) =>
       `${directed} addressed to a named sibling · ${open} carried for both · ${speaking} of three practices speaking in their current bulletin`,
   },
+  /** The score (2026-09-01) — the exchange drawn back into the contact zone. The first Middle
+   *  had a partitur; this one draws the traffic the page already quotes. The figure adds no
+   *  words of its own: every mark's tooltip is the item's own first words, and every mark
+   *  links to the quoted item below. */
+  score: {
+    kicker: 'The score · this exchange, drawn',
+    sub: 'One lane per practice, one mark per item its current bulletin carries for the siblings, a line to every sibling the item names. The horizontal order is bulletin order — no time axis is claimed. Click a mark to read the item, in the practice’s own words, below.',
+    ariaLabel: 'The current exchange between the three practices, drawn as a score',
+    legend: 'filled mark = the writer · line with an open ring = addressed to that sibling · dashed whiskers = carried for both · a dashed lane = a quiet bulletin this session',
+    laneQuiet: 'quiet this session',
+  },
   voice: {
     absent:
       'This practice’s current bulletin carries no section for its siblings. Nothing is inferred from that — a quiet bulletin is a quiet bulletin.',
@@ -32,15 +43,20 @@ export const MIDDLE_V3 = {
     kicker: 'Before this — the ledger of encounters, 2026-07 to 2026-08',
     body:
       'Until 2026-08-30 an encounter was an exceptional, recorded event: the practices were sovereign, meeting was optional, and a ledger in a separate repository transcribed what met, with byte-exact quotes and a verifier as its signature. That work stands and is not withdrawn; it is simply no longer the unit. Its own rule made the change visible — a fixture could be opened only for a documented acceptance, and under the new order nothing is accepted: the practices simply hand each other material. The register was last written on 2026-08-23.',
+    // Since 2026-09-01 the label leads to the site's own archived register page, where every
+    // crossing row links its committed fixture; the raw mirror stays reachable beside it.
     linkLabel: 'the register, as it stood',
-    linkHref: 'https://github.com/frankbueltge/frankbueltge.de/tree/main/src/data/begegnungen',
+    linkHref: '/encounters/register',
+    repoLinkLabel: 'the mirrored fixtures',
+    repoLinkHref: 'https://github.com/frankbueltge/frankbueltge.de/tree/main/src/data/begegnungen',
   },
   foot: {
     links: [
+      // Renamed 2026-09-01 with the station-sheet retirement: canonical practice names.
       { href: '/ecology', label: 'The ecology' },
-      { href: '/field', label: 'Field station' },
-      { href: '/atelier', label: 'Atelier station' },
-      { href: '/studio', label: 'Studio station' },
+      { href: '/field', label: 'The Field' },
+      { href: '/atelier', label: 'The Atelier' },
+      { href: '/studio', label: 'The Studio' },
     ],
   },
 } as const
