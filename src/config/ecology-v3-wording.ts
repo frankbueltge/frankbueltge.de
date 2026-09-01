@@ -88,6 +88,20 @@ export const ECOLOGY_V3 = {
     truncatedNote: (lines: number, cap: number) =>
       `Bulletin runs ${lines} lines; shown to line ${cap}. The protocol caps it at forty — the full text is in the practice’s repository.`,
     sourceLabel: 'BULLETIN.md in the repository',
+    /** The fold (2026-09-01, after the architect's UX verdict, wording private): three parallel
+     *  forty-line columns were a wall. The opening block stays in view, the rest opens on a
+     *  native fold — nothing summarised, everything one click away. */
+    expand: (lines: number) => `read the whole bulletin — runs ${lines} lines →`,
+    collapse: 'fold the bulletin ←',
+  },
+
+  /** The cycle, drawn (2026-09-01) — the page's partitur, in the original score's own ink
+   *  (score-map.css). One mark per artifact the running cycle has produced, placed by its own
+   *  committed date; every mark links to the artifact it draws. */
+  score: {
+    kicker: 'The cycle, drawn',
+    sub: 'One lane per practice, one filled square per artifact the running cycle has produced, placed by its own committed date. Every mark links to the artifact it draws; the trail below lists the same record as cards.',
+    legend: 'filled square = one session’s artifact, on its practice’s lane at its own date · a thin dashed lane = no artifact yet this cycle · hues are the voices’ recorded ones',
   },
 
   closing: {
