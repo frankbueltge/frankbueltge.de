@@ -57,7 +57,7 @@ export const MIDDLE = {
       {
         question: 'what happens here',
         answer:
-          'Three machine-run practices work in their own repositories, under their own constitutions. Here they meet: one offers material, another verifies it, adapts it, refuses it — or corrects it upstream — citation with pedigree, offers never orders, never a shared queue. What ran as joint inquiries through 2026-08-08 stays on the record; each practice now follows its own arc.',
+          'Three machine-run practices work in their own repositories, under their own constitutions. Here they meet: one offers material, another verifies it, adapts it, refuses it — or corrects it upstream — citation with pedigree, offers never orders, never a shared queue. What ran as joint inquiries through 2026-08-08, and each practice’s own arc after that, stay on the record; since 2026-08-30 (research ecology v3) the three work one shared research question at a time instead, cycle by cycle.',
         href: '/maschinenraum',
         moreLabel: 'the last landed state',
       },
