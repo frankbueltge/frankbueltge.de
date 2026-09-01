@@ -25,6 +25,24 @@ export const VERDICTS = ['pass', 'fail', 'conditions', 'graduated', 'discarded',
 export type Move = (typeof MOVES)[number]
 export type Verdict = (typeof VERDICTS)[number]
 
+/** A work reference in the chronicle. Two shapes are legal, because the practice's own
+ *  conventions changed and the record is not rewritten to match a schema:
+ *
+ *  · a bare slug — a folder name under `werke/`, the pre-v3 form;
+ *  · an artifact path — `artifacts/cycle-<NNN>/<date>-<slug>/`, which is where research
+ *    ecology v3 (2026-08-30) puts what a session makes.
+ *
+ *  Session 143 (2026-09-01) recorded the second form and this schema rejected it four times
+ *  in one day, each refusal sent back to the practice as a red build letter. The practice was
+ *  right and the schema was stale: v3 introduced `artifacts/` and nothing updated this file.
+ *  Anything else — absolute paths, traversal, uppercase, spaces — still fails. */
+const WORK_REF = z
+  .string()
+  .regex(
+    /^(?:[a-z0-9-]+|artifacts\/cycle-\d{3}\/[a-z0-9-]+\/?)$/,
+    'must be a bare slug or an artifacts/cycle-NNN/<slug>/ path',
+  )
+
 export const chronicleEntrySchema = z.object({
   /** the chronicle's own monotonic ordinal — NOT the journal's drifting session numbers */
   seq: z.number().int().positive(),
@@ -35,8 +53,8 @@ export const chronicleEntrySchema = z.object({
   move: z.string().min(1),
   /** 1–2 plain-language sentences — the entire point of this file */
   summary: z.string().min(20),
-  /** work slugs touched/shipped this session (folder names under werke/) */
-  works: z.array(z.string().regex(/^[a-z0-9-]+$/)),
+  /** work references touched/shipped this session — see WORK_REF for the two legal shapes */
+  works: z.array(WORK_REF),
   /** review outcome — free-form for the same reason as `move` (see VERDICTS) */
   verdict: z.string().min(1).nullable(),
   /** explicit flag so the timeline can mark blocking failures without string-matching */
@@ -58,7 +76,7 @@ export const upstreamEntrySchema = z.object({
   // never turns the whole field build red and blocks every publish (see MOVES/VERDICTS above).
   move: z.string().min(1),
   summary: z.string().min(20),
-  works: z.array(z.string().regex(/^[a-z0-9-]+$/)).default([]),
+  works: z.array(WORK_REF).default([]),
   verdict: z.string().min(1).nullable().default(null),
 })
 export type UpstreamEntry = z.infer<typeof upstreamEntrySchema>
