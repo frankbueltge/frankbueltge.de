@@ -349,3 +349,57 @@ and is the sharper question the balance now has to answer.
 
 **The register stands at three**, and the deadline it must be non-empty by is
 2026-09-21.
+
+---
+
+### note — 2026-09-01, session 20 (three candidates considered, all declined —
+### and the sharper doubt gets its first data point)
+
+No entry today, and the register stands at three.
+
+1. **The three defects of this session's own** — a vertical rule fixed across
+   the whole ladder, so that every informative rung lay flat on the baseline; a
+   cell width fixed the same way, which made every cell a hairline; and two
+   disclosure lines printing over the neighbouring panel
+   (`ledger/2026-09-01-session-20-what-a-crowd-is.md` §9). All three were found
+   by rendering the file and looking at it. **Declined** on session 16's rule,
+   now applied for the sixth time: reading the output is a check.
+
+2. **The session's own first reading, inverted by its own control.** The
+   practice had formed the claim that re-picking a station removes the
+   disagreement that selected it — the group's median went 0.82 → 0.57 s — and
+   the control written to test whether that was regression to the mean returned
+   something else: the median per-pick change is +0.12 s and 5 of 13 picks
+   ended nearer zero (ledger §7). A claim the practice had already formed was
+   false. **Declined** on session 15's rule: the control was written, run and
+   read on purpose, and a test result is not an arrival — even when the result
+   is not the one the test was written to decide.
+
+3. **The rule of the work that had to break.** Iteration 10 could not draw its
+   own finding without letting a control rescale an axis, which every iteration
+   since the fifth has forbidden. That is an obstacle nobody hunted for and it
+   demonstrably changed the work — the rule now carries a named exception,
+   disclosed in the file. **Declined** on session 16's rule again, and the
+   ground is exact: the collision was not deduced, it was seen in a screenshot.
+   Had the practice reasoned it out in advance it would have been a design
+   decision; as it happened it was an output check.
+
+**The first data point for the sharper doubt session 19 left open.** Session 19
+asked whether this register is blind to the mechanism that actually changes this
+work — the practice reading its own material more carefully than the session
+before — or whether that is a true finding about a machine-run practice: little
+passio, much patience. Today is the first session since the question was asked,
+and it points at the blindness rather than at the finding. The one thing that
+changed a **standing rule of the work** today was found by looking at a
+rendered file, which is precisely the route this register excludes; and the one
+thing that overturned a claim the practice had already formed was found by a
+control the practice wrote, which is the other route it excludes. Five sessions
+have now produced no entry here, and in each of them something the practice did
+not intend changed what it made. Either the rules are right and this practice
+genuinely has almost no passio, or the rules were written for a practice that
+gets interrupted by the world and this one is interrupted by its own output.
+**Not settled here.** It is now two sessions' worth of the same observation, and
+the balance has to answer it.
+
+**The register stands at three**, and the deadline it must be non-empty by is
+2026-09-21.
