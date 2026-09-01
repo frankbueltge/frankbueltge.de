@@ -1,0 +1,101 @@
+---
+// The Middle under research ecology v3 (2026-09-01) — the traffic, not a ledger of events.
+//
+// Properties kept from the surfaces around it: no number is typed (all from
+// src/lib/ecology/middle.ts, derived from mirrored files); no client fetching; absence is
+// drawn; and the one rule this page inherits from the Middle Scribe's own prompt — quote,
+// never summarise, because summarising would be speaking for a practice.
+import { getRelativeLocaleUrl } from 'astro:i18n'
+import type { Locale } from '@/lib/site'
+import { MIDDLE_V3 } from '@/config/middle-v3-wording'
+import { ECOLOGY_V3 } from '@/config/ecology-v3-wording'
+import { loadMiddle, middleCounts, segments, PRACTICE_REPO } from '@/lib/ecology/middle-page'
+
+const locale = (Astro.currentLocale ?? 'en') as Locale
+const url = (href: string) => (href.startsWith('http') ? href : getRelativeLocaleUrl(locale, href))
+
+const W = MIDDLE_V3
+const voices = loadMiddle()
+const counts = middleCounts(voices)
+const name = (id: 'field' | 'atelier' | 'studio') => ECOLOGY_V3.practices[id].name
+const kicker = 'font-mono text-xs uppercase tracking-[0.22em] text-fg-muted'
+---
+
+<article class="mx-auto max-w-5xl px-4 pb-20 pt-10 sm:px-6">
+  <header>
+    <p class={kicker}>{W.head.kicker}</p>
+    <h1 class="mt-3 text-3xl font-semibold tracking-tight text-fg sm:text-4xl">{W.head.title}</h1>
+    <p class="mt-4 max-w-3xl leading-relaxed text-fg-muted">{W.head.intro}</p>
+    <p class="mt-3 max-w-3xl border-l border-line pl-4 text-sm leading-relaxed text-fg-faint">{W.head.rule}</p>
+    <p class="mt-4 font-mono text-xs text-fg-faint">
+      {W.counts.line(counts.directed, counts.open, counts.speaking)}
+    </p>
+  </header>
+
+  {/* ── The traffic, practice by practice ────────────────────────────────── */}
+  <section class="mt-12 space-y-6" aria-label="What passes between the practices">
+    {
+      voices.map((v) => (
+        <div class="rounded-sm border border-line bg-panel">
+          <div class="flex flex-wrap items-baseline justify-between gap-2 border-b border-line p-4">
+            <h2 class="text-lg font-semibold text-fg">
+              <a class="hover:underline" href={url(ECOLOGY_V3.practices[v.practice].href)}>{name(v.practice)}</a>
+              <span class="ml-2 font-mono text-xs font-normal text-fg-faint">wrote down for its siblings</span>
+            </h2>
+            <a
+              class="font-mono text-xs text-fg-faint underline decoration-line underline-offset-4 hover:text-fg"
+              href={`https://github.com/frankbueltge/${PRACTICE_REPO[v.practice]}/blob/main/BULLETIN.md`}
+            >{W.voice.sourceLabel}</a>
+          </div>
+          <div class="p-4">
+            {
+              !v.present || v.items.length === 0 ? (
+                <p class="text-sm leading-relaxed text-fg-faint">{W.voice.absent}</p>
+              ) : (
+                <ul class="space-y-4">
+                  {v.items.map((item) => (
+                    <li>
+                      <p class="font-mono text-xs uppercase tracking-[0.16em] text-accent">
+                        {item.to.length > 0
+                          ? W.voice.toLabel(item.to.map((t) => name(t)))
+                          : W.voice.openLabel}
+                      </p>
+                      <p class="mt-1.5 leading-relaxed text-fg-muted">
+                        {segments(item.text).map((s) =>
+                          s.kind === 'strong' ? (
+                            <strong class="font-semibold text-fg">{s.text}</strong>
+                          ) : s.kind === 'code' ? (
+                            <code class="rounded bg-panel-2 px-1 font-mono text-[0.9em]">{s.text}</code>
+                          ) : (
+                            <>{s.text}</>
+                          ),
+                        )}
+                      </p>
+                    </li>
+                  ))}
+                </ul>
+              )
+            }
+          </div>
+        </div>
+      ))
+    }
+  </section>
+
+  {/* ── The ledger this page replaces, dated ─────────────────────────────── */}
+  <section class="mt-14 border-t border-line pt-6" aria-label="The former ledger of encounters">
+    <p class={kicker}>{W.archive.kicker}</p>
+    <p class="mt-2 max-w-3xl text-sm leading-relaxed text-fg-faint">{W.archive.body}</p>
+    <p class="mt-3">
+      <a class="font-mono text-xs text-fg-muted underline decoration-line underline-offset-4 hover:text-fg" href={W.archive.linkHref}>{W.archive.linkLabel}</a>
+    </p>
+  </section>
+
+  <footer class="mt-10 flex flex-wrap gap-x-5 gap-y-2">
+    {
+      W.foot.links.map((l) => (
+        <a class="font-mono text-xs text-fg-muted underline decoration-line underline-offset-4 hover:text-fg" href={url(l.href)}>{l.label}</a>
+      ))
+    }
+  </footer>
+</article>
