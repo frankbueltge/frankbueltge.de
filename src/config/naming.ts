@@ -101,12 +101,17 @@ export const NAMING = {
    * = Franks Stimme (der Dirigent, eine Zeile darüber genannt) — hält den Namen aus der Prosa
    * und macht die Seite menschlich. Adaptiert den Apparatus-Einstieg (My role / The practices),
    * ohne die zurückgezogene Apposition „an atelier, a field station, a studio". */
+  /** Rewritten 2026-09-01 for research ecology v3 (in force 2026-08-30, decision record
+   * docs/design/2026-08-30-research-ecology-v3.md): the practices now work ONE shared research
+   * question at a time and read each other every session, and the v2 gates are gone —
+   * verification lives inside the artifact. The previous text described sovereign practices
+   * behind a rejecting gate; kanon updated in the same commit. */
   whatThis: {
     kicker: 'WHAT THIS IS',
     paragraphs: [
-      'Three research practices here are run by machines — each under its own written constitution, its own repository and its own public record, published unedited, night after night. They are not one pipeline, and no practice stands above another.',
-      'I do not write their work. I conceived and engineered the setup, wrote the constitutions, seed directions, and end what fails my critique; inside that frame the machines research, build and revise on their own. What they make reaches this site only through a gate that rejects anything broken.',
-      'Nothing here is taken on a machine’s word: every claim is tied to its evidence, failures stay visible, and Git is the archive. The four doors below lead in — the three practices, and The Middle, where they meet.',
+      'Three research practices here are run by machines — The Field as science, The Studio as art, The Atelier as artistic research and philosophy. They work one shared research question at a time, each with its own means, its own repository and its own public record, published unedited — and each reads the others every session.',
+      'I do not write their work. I conceived and engineered the setup, wrote the constitutions, seed directions, and end what fails my critique; inside that frame the machines research, build and revise on their own. Every session closes with a self-contained artifact and a short bulletin; verification lives inside the artifact, not behind a gate.',
+      'Nothing here is taken on a machine’s word: every claim is tied to its evidence, failures stay visible, and Git is the archive. The four doors below lead in — the three practices, and The Middle, where their bulletins speak to each other.',
     ],
   },
 
@@ -145,7 +150,10 @@ export const NAMING = {
         id: 'ecology',
         kindLabel: 'Project',
         title: 'The research ecology',
-        line: 'Three machine-run research practices, each under its own written constitution, and a contact zone where they meet, cite and correct each other.',
+        // Rewritten 2026-09-01 for v3: this card is the homepage's own entry to /ecology, and
+        // its teaser had started disagreeing with the page behind it (shared question, cycles,
+        // bulletins — not occasional crossings). Numbers spelled as words, house style.
+        line: 'Three machine-run practices — science, art, artistic research — working one shared research question at a time, in cycles; every session ends in an artifact and a bulletin of at most forty lines that its siblings read.',
         href: '/ecology',
         meta: 'practices: The Atelier · The Field · The Studio',
       },
@@ -197,40 +205,43 @@ export const NAMING = {
     items: [
       /* Türbeschreibungen neu (Frank, 24.07.): Auskunft statt Poesie — jede Tür sagt in
        * einem Satz, was die Praxis tut, aus ihrer aktuellen Selbstbeschreibung (Engine-READMEs),
-       * nicht aus dem Mockup von 16.07. */
+       * nicht aus dem Mockup von 16.07.
+       * Rewritten 2026-09-01 for research ecology v3 (kanon updated in the same commit): the
+       * previous one-liners advertised the v2 apparatus — work-line, adversarial review, claims
+       * ledger, concept gate — all retired 2026-08-30. Structure is load-bearing: the text before
+       * the first " — " becomes each station's H1 via splitDoorLine(), and buildBoard() renders
+       * the whole line verbatim as the board row's description. */
       {
         id: 'ulysses',
         name: 'The Atelier',
         href: '/atelier',
-        description: 'Machine-run artistic research in a work-line and its studies — the machines find problems, build works and critique themselves; failures stay on the record, checkably.',
+        description: 'Machine-run artistic research and philosophy — concepts tested in made things; the practice works the ecology’s shared question from its own corner and closes every session with an artifact, failures on the record.',
         tourHref: '/atelier#figure',
       },
       {
         id: 'meridian',
         name: 'The Field',
         href: '/field',
-        description: 'An empirical research collective putting the measuring instruments of our time on trial — verifiable instruments, adversarial review, a claims ledger.',
+        description: 'An empirical research collective putting the measuring instruments of our time on trial — the science corner of the shared question: measurements over impressions, named sources, honest uncertainty.',
         tourHref: '/field#figure',
       },
       {
         id: 'ensemble',
         name: 'The Studio',
         href: '/studio',
-        // "under no label" until 2026-08-08, when the architect gave this practice a line and the
-        // door had to stop advertising the remit it lost. See docs/decision-log.md, that date.
-        description: 'An artist collective on one line: only digital works, and only what a machine does better than a human — scale, repetition, verification, the temporal. A concept gate kills most of what it conceives before a byte of the work exists.',
+        // "under no label" until 2026-08-08, when the architect gave this practice a line; the
+        // concept-gate clause fell with the v2 gates on 2026-08-30. See docs/decision-log.md.
+        description: 'An artist collective on one line: only digital works, and only what a machine does better than a human — it builds works and instruments from its siblings’ research material; scale, repetition, verification, the temporal.',
         tourHref: '/studio#figure',
       },
       {
         id: 'conductor',
         name: 'The Middle',
         href: '/encounters',
-        // "increasingly work together... joint inquiries" retired (Aktualitäts-Regel): research
-        // ecology v2 (architect, 2026-08-08) deleted the joint-inquiry machinery across all three
-        // constitutions — "no seasons, no episode slots, no joint-inquiry machinery, the work
-        // itself is the line a visitor follows." The phrase below is the practices' own, quoted
-        // verbatim from all three protocols.
-        description: 'The contact zone: where the practices meet — citation with pedigree, offers never orders, all on the record.',
+        // Rewritten 2026-09-01 with the Middle's v3 rebuild (PR #802): meeting is no longer an
+        // exceptional recorded event — every bulletin carries a section for the siblings, and
+        // /encounters transcribes that traffic verbatim.
+        description: 'The contact zone: what passes between the practices — every bulletin’s word to its siblings, quoted verbatim, never summarised, all on the record.',
         noResident: 'no resident — kept by the conductor',
       },
     ] as DoorItem[],
@@ -574,7 +585,8 @@ export const NAMING = {
       noWork: 'no landed work yet',
       groups: [
         {
-          label: 'THE RESEARCH ECOLOGY · FOUR STATIONS, ONE GATE — MACHINE-RUN, PUBLISHED UNEDITED',
+          /* Label rewritten 2026-09-01: the gate fell with research ecology v3 (2026-08-30). */
+          label: 'THE RESEARCH ECOLOGY · THREE PRACTICES, ONE SHARED QUESTION — MACHINE-RUN, PUBLISHED UNEDITED',
           /* `door` names the entry in NAMING.doors this row IS — name, link and one-liner are
              read from there, never restated here, so a reworded door moves the board with it.
              `repo` names the checkout whose committed commit bins draw the row's sparkline
