@@ -117,13 +117,46 @@ interface AttentionMoment {
   statement?: string
 }
 
+/** A board cell holds one line; a subject longer than this is a document, not a title. */
+const MOMENT_TITLE_MAX = 90
+
+/** Mirrored moment subjects arrive as the source wrote them, and sources dump lists: a GDACS
+ *  drought subject is a run of twenty-five country names with doubled spaces and a trailing
+ *  ", ,". The snapshot is the record and stays byte-exact — the cleaning lives here, in the
+ *  derivation, and only tidies what is shown: whitespace runs collapse, empty list items and
+ *  trailing separators fall, and anything past the cell's width is cut at a word with an
+ *  ellipsis. (Found on the entrance board 2026-09-01.) */
+export function cleanMomentTitle(raw: string): string {
+  const tidy = raw
+    .replace(/\s+/g, ' ')
+    .replace(/(,\s*)+,/g, ',')
+    .replace(/[,\s]+$/g, '')
+    .trim()
+  if (tidy.length <= MOMENT_TITLE_MAX) return tidy
+  const cut = tidy.slice(0, MOMENT_TITLE_MAX)
+  const atWord = cut.slice(0, cut.lastIndexOf(' '))
+  return `${(atWord || cut).replace(/[,\s]+$/g, '')} …`
+}
+
+/** Many mirrored moments share one timestamp (a feed lands in batches), and a sort whose
+ *  comparator never returns 0 leaves the pick among equals to engine internals. The tie-break
+ *  on the shown text keeps the same snapshot giving the same board row on every build. */
+export function newestMoment(list: AttentionMoment[]): AttentionMoment | null {
+  if (list.length === 0) return null
+  return [...list].sort(
+    (a, b) =>
+      b.occurred_at!.localeCompare(a.occurred_at!) ||
+      (a.subject ?? a.statement ?? '').localeCompare(b.subject ?? b.statement ?? ''),
+  )[0]
+}
+
 /** Machine Attention publishes moments rather than works; its newest one is what last landed. */
 function lastMoment(): BoardLast | null {
   const list = ((attentionMoments as { moments?: AttentionMoment[] }).moments ?? []).filter((m) => m.occurred_at)
-  if (list.length === 0) return null
-  const newest = [...list].sort((a, b) => (a.occurred_at! < b.occurred_at! ? 1 : -1))[0]
+  const newest = newestMoment(list)
+  if (!newest) return null
   return {
-    title: newest.subject ?? newest.statement ?? 'a moment on the record',
+    title: cleanMomentTitle(newest.subject ?? newest.statement ?? 'a moment on the record'),
     meta: newest.occurred_at!.slice(0, 10),
     href: '/attention',
   }

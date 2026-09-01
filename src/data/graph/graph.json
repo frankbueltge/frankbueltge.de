@@ -12,7 +12,7 @@
       },
       {
         "file": "docs/decision-log.md",
-        "sha256": "49710928f865e61d"
+        "sha256": "8299e01861139f6e"
       },
       {
         "file": "src/data/post/ledger.json",
@@ -57,10 +57,10 @@
       }
     ],
     "counts": {
-      "nodes": 311,
-      "edges": 269,
+      "nodes": 312,
+      "edges": 270,
       "nodesByKind": {
-        "decision": 76,
+        "decision": 77,
         "encounter": 6,
         "neighbor": 93,
         "practice": 9,
@@ -75,7 +75,7 @@
         "made-by": 96,
         "neighbor-of": 93,
         "participates": 17,
-        "touches": 48
+        "touches": 49
       }
     }
   },
@@ -832,6 +832,16 @@
     },
     {
       "id": "decision:2026-09-01-1",
+      "kind": "decision",
+      "label": "Currency pass: the site stops announcing a reading that already happened — first slice of the public-surfaces refresh after v3",
+      "date": "2026-09-01",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "Currency pass: the site stops announcing a reading that already happened — first slice of the public-surfaces refresh after v3"
+      }
+    },
+    {
+      "id": "decision:2026-09-01-2",
       "kind": "decision",
       "label": "Meridians Richtung: das Antwort-Register — gewählt aus einer beauftragten Karte, nicht aus einem Programm",
       "date": "2026-09-01",
@@ -6623,6 +6633,15 @@
     {
       "kind": "touches",
       "from": "decision:2026-09-01-1",
+      "to": "work:field",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "src/pages/field/index.astro"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-09-01-2",
       "to": "work:field",
       "source": {
         "file": "docs/decision-log.md",

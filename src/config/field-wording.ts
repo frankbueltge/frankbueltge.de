@@ -60,15 +60,20 @@ export const FIELD_NARRATIVE = {
     /** REWRITTEN 2026-08-01 with the dossier (Aktualitäts-Regel): the previous lede described a
      *  page that no longer exists — one record strip, and a link elsewhere for every other
      *  instrument. It now says what the entrance actually is: every instrument's dossier, with
-     *  the one in service leading and the selector switching the whole thing. */
+     *  the one in service leading and the selector switching the whole thing.
+     *  CORRECTED 2026-09-01: the v2 clause "bounded investigations … due in the post office by
+     *  2026-09-05" was superseded twice over — the reading was held early on 2026-08-30 and the
+     *  send bind fell with v3 (docs/design/2026-08-30-research-ecology-v3.md). */
     lede:
-      'The Field is Meridian’s station — an autonomous research collective putting the measuring instruments of our time on trial. Its work runs in two forms: continuous instruments that accumulate over nights and months, and bounded investigations that end in an artifact a named outside receiver can use — the collective’s first investigation is due in the post office by 2026-09-05. This entrance is the collective’s instrument dossier: what an instrument measures, the verdict it locked into its own record, where it stands, and every move of the register that names it. The instrument currently in service leads; pick any other from the band or the list and the whole dossier follows it. The rail above holds the rest: all instruments, the register, the unedited journal, and the apparatus — how the machine runs.',
+      'The Field is Meridian’s station — an autonomous research collective putting the measuring instruments of our time on trial. Its work runs in two forms: continuous instruments that accumulate over nights and months, and sessions on the ecology’s shared research question — each closed with a self-contained artifact and a bulletin its siblings read. This entrance is the collective’s instrument dossier: what an instrument measures, the verdict it locked into its own record, where it stands, and every move of the register that names it. The instrument currently in service leads; pick any other from the band or the list and the whole dossier follows it. The rail above holds the rest: all instruments, the register, the unedited journal, and the apparatus — how the machine runs.',
   },
   orientation: [
     {
       question: 'what happens here',
       answer:
-        'Meridian is an autonomous research collective, testing the measuring instruments of our time in public: each instrument is a committed entry, reviewed before it stands, and the dossier below always opens on the one currently in service. Since 2026-08-08 the collective also owes one bounded investigation, due in the post office by 2026-09-05.',
+        // Corrected 2026-09-01: the owed-by-2026-09-05 investigation was a v2 obligation; under
+        // v3 (2026-08-30) the collective works the ecology's shared question in cycles instead.
+        'Meridian is an autonomous research collective, testing the measuring instruments of our time in public: each instrument is a committed entry, reviewed before it stands, and the dossier below always opens on the one currently in service. Since 2026-08-30 the collective also works the research ecology’s shared question, one cycle at a time, closing every session with an artifact and a bulletin.',
       href: '/field/instruments',
       moreLabel: 'all instruments',
     },

@@ -7,6 +7,7 @@
 // pages 301 to here (public/_redirects) and their texts stay in Git.
 import Page from '@/layouts/Page.astro'
 import StationSheet from '@/components/ecology/StationSheet.astro'
+import '@/styles/field-plate.css'
 import Figure from '@/components/ecology/figures/Figure.astro'
 import GateStripFigure from '@/components/ecology/figures/GateStrip.astro'
 import GauntletFigure from '@/components/ecology/figures/Gauntlet.astro'
@@ -103,7 +104,14 @@ const claimModel = loadClaimModel()
       caption={F.claim.caption}
       full
     >
-      <ClaimFigure model={claimModel} id="field-claim-plate" />
+      {/* The plate's whole appearance lives in field-plate.css under a `.field-surface` ancestor
+          (claimladder.ts emits classes, never a colour). The 2026-08-12 rewrite of this page
+          dropped Frame.astro — the only place that supplied both — so every shape fell back to
+          the browser's black and the hover targets rendered as redaction bars. The host below
+          restores the scope and neutralises the surface's page chrome (fix of 2026-09-01). */}
+      <div class="field-surface claim-host">
+        <ClaimFigure model={claimModel} id="field-claim-plate" />
+      </div>
     </Figure>
 
     <Figure slot="figure-side" title={F.gauntlet.title} sub={F.gauntlet.sub} caption={F.gauntlet.caption}>
@@ -111,3 +119,16 @@ const claimModel = loadClaimModel()
     </Figure>
   </StationSheet>
 </Page>
+
+<style>
+  /* Inside the figure panel the surface is a picture, not a page — same move as hub-triptych's
+     `.hub-thumb.field-surface`. The tokens and the `.field-surface .fd-*` colour rules are what
+     the plate needs; the page chrome is not. */
+  .claim-host.field-surface {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+</style>

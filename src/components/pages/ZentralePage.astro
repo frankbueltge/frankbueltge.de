@@ -34,7 +34,7 @@ const KNOBS: { name: string; voice: string | null; links: [string, string][] }[]
     name: 'Atelier · Ulysses',
     voice: 'ulysses',
     links: [
-      ['Verfassung (v6)', `${GH}/ulysses/blob/main/PROTOCOL.md`],
+      ['Verfassung', `${GH}/ulysses/blob/main/PROTOCOL.md`],
       ['Delegation §4', `${GH}/ulysses/blob/main/governance/STANDING-DELEGATION.md`],
       ['Kanal', `${GH}/ulysses/blob/main/REQUESTS.md`],
       ['Gate', `${GH}/ulysses/blob/main/.github/workflows/research-auto-land.yml`],
@@ -45,7 +45,7 @@ const KNOBS: { name: string; voice: string | null; links: [string, string][] }[]
     name: 'Field · Meridian',
     voice: 'meridian',
     links: [
-      ['Verfassung (v3)', `${GH}/field-research/blob/main/PROTOCOL.md`],
+      ['Verfassung', `${GH}/field-research/blob/main/PROTOCOL.md`],
       ['Kanal', `${GH}/field-research/blob/main/REQUESTS.md`],
       ['Feldkarte', `${GH}/field-research/blob/main/FIELD.md`],
       ['Gate', `${GH}/field-research/blob/main/.github/workflows/auto-land.yml`],
@@ -55,7 +55,7 @@ const KNOBS: { name: string; voice: string | null; links: [string, string][] }[]
     name: 'Studio · Ensemble',
     voice: 'ensemble',
     links: [
-      ['Verfassung (v3)', `${GH}/studio/blob/main/PROTOCOL.md`],
+      ['Verfassung', `${GH}/studio/blob/main/PROTOCOL.md`],
       ['Workboard', `${GH}/studio/blob/main/WORKBOARD.md`],
       ['Kanal', `${GH}/studio/blob/main/REQUESTS.md`],
       ['Gate', `${GH}/studio/blob/main/.github/workflows/auto-land.yml`],
@@ -136,16 +136,11 @@ const KNOBS: { name: string; voice: string | null; links: [string, string][] }[]
       </div>
     </header>
 
-    {/* The two dates that govern the house right now. The day counts are filled by the
-        script; the dates themselves stand in markup, so nothing here can drift silently. */}
+    {/* The dates that govern the house right now. The day counts are filled by the
+        script; the dates themselves stand in markup, so nothing here can drift silently.
+        2026-09-01: the ecology-reading countdown is gone — the reading of 2026-09-05 was
+        held early on 2026-08-30 and decided v3 (docs/design/2026-08-30-research-ecology-v3.md). */}
     <div class="zx-counts">
-      <div class="zx-count" data-zx-date="2026-09-05">
-        <span class="zx-count-n" data-zx="countn">–</span>
-        <span class="zx-count-what">
-          <span class="zx-count-label">Lesung der Ecology</span>
-          <span class="zx-count-sub">05.09. · drei Bedingungen · Archiv ist Default</span>
-        </span>
-      </div>
       <div class="zx-count" data-zx-date="2026-10-14">
         <span class="zx-count-n" data-zx="countn">–</span>
         <span class="zx-count-what">

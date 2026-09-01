@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { buildBoard, buildSignalLog, repoSeries } from './board'
+import { buildBoard, buildSignalLog, cleanMomentTitle, newestMoment, repoSeries } from './board'
 import { NAMING } from '@/config/naming'
 import type { PulseSnapshot } from '@/lib/pulse/render'
 import type { LatestWork } from '@/lib/engines/latest'
@@ -120,5 +120,32 @@ describe('the signal log', () => {
     const log = buildSignalLog(WORKS, 3)
     expect(log).toHaveLength(3)
     expect(log.find((e) => e.title === 'A withdrawn premiere')!.withdrawn).toBe(true)
+  })
+})
+
+describe('the attention row title', () => {
+  it('cleans a subject that is a raw list dump — doubled spaces, empty items, a trailing ", ,"', () => {
+    const raw = 'Drought in Austria, Bosnia  and  Herzegovina, Belgium, Belarus, Switzerland, Czech Republic, Germany, Denmark, Spain, France, Croatia, Hungary, Ireland, Italy, Liechtenstein, Luxembourg, Netherlands, Poland, Romania, Serbia, Sweden, Slovenia, Slovakia, San Marino, Ukraine, ,'
+    const title = cleanMomentTitle(raw)
+    expect(title).not.toMatch(/,\s*,/)
+    expect(title).not.toMatch(/\s{2,}/)
+    expect(title).not.toMatch(/,\s*$/)
+    expect(title.length).toBeLessThanOrEqual(92)
+    expect(title.endsWith('…')).toBe(true)
+    expect(title.startsWith('Drought in Austria')).toBe(true)
+  })
+
+  it('leaves a short, clean subject exactly as written', () => {
+    expect(cleanMomentTitle('Earthquake in Afghanistan')).toBe('Earthquake in Afghanistan')
+  })
+
+  it('picks the newest moment deterministically when timestamps tie', () => {
+    const tied = [
+      { occurred_at: '2026-09-01T10:27:00+00:00', subject: 'Zulu warning' },
+      { occurred_at: '2026-09-01T10:27:00+00:00', subject: 'Alpha warning' },
+      { occurred_at: '2026-08-31T09:00:00+00:00', subject: 'Older moment' },
+    ]
+    expect(newestMoment(tied)!.subject).toBe('Alpha warning')
+    expect(newestMoment([...tied].reverse())!.subject).toBe('Alpha warning')
   })
 })
