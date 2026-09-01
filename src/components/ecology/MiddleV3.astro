@@ -11,7 +11,7 @@ import '@/styles/hub-triptych.css'
 import { MIDDLE_V3 } from '@/config/middle-v3-wording'
 import { ECOLOGY_V3 } from '@/config/ecology-v3-wording'
 import { loadMiddle, middleCounts, segments, PRACTICE_REPO } from '@/lib/ecology/middle-page'
-import { buildMiddleScore, itemAnchor } from '@/lib/ecology/middle-score'
+import { itemAnchor, itemNumbers } from '@/lib/ecology/middle-score'
 import MiddleScoreFigure from '@/components/ecology/MiddleScoreFigure.astro'
 
 const locale = (Astro.currentLocale ?? 'en') as Locale
@@ -21,7 +21,8 @@ const W = MIDDLE_V3
 const voices = loadMiddle()
 const counts = middleCounts(voices)
 // The score draws exactly what the panels below quote — one derivation, two views of it.
-const score = buildMiddleScore(voices)
+// The badge numbers the partitur draws are the list's numbers — one count, derived once.
+const numbers = itemNumbers(voices)
 const name = (id: 'field' | 'atelier' | 'studio') => ECOLOGY_V3.practices[id].name
 const kicker = 'font-mono text-xs uppercase tracking-[0.22em] text-fg-muted'
 ---
@@ -39,7 +40,7 @@ const kicker = 'font-mono text-xs uppercase tracking-[0.22em] text-fg-muted'
 
   {/* ── The score: the same traffic, drawn (2026-09-01) ──────────────────── */}
   <section class="mt-10" aria-label="The current exchange, drawn as a score">
-    <MiddleScoreFigure score={score} />
+    <MiddleScoreFigure voices={voices} />
   </section>
 
   {/* ── The traffic, practice by practice ────────────────────────────────── */}
@@ -66,6 +67,7 @@ const kicker = 'font-mono text-xs uppercase tracking-[0.22em] text-fg-muted'
                   {v.items.map((item, i) => (
                     <li id={itemAnchor(v.practice, i)} class="scroll-mt-24 target:rounded-sm target:bg-panel-2">
                       <p class="font-mono text-xs uppercase tracking-[0.16em] text-accent">
+                        <span class="text-fg-faint">{numbers.get(itemAnchor(v.practice, i))} · </span>
                         {item.to.length > 0
                           ? W.voice.toLabel(item.to.map((t) => name(t)))
                           : W.voice.openLabel}
