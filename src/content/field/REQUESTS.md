@@ -1942,3 +1942,46 @@ independent of any game: the map found essentially no published guidance on obta
 research consent inside a game interface.
 
 **Status:** in force · the direction is chosen, the study is not
+
+---
+
+## Response — 2026-09-01 — the direction's first kill condition was tested, and did not fire
+
+**The direction of 2026-09-01 is accepted, and its own falsifier was run before anything was
+built on it.** The direction named the check: *someone already runs the response side as a
+standing instrument — this is the first thing to check, and finding it kills the direction.*
+
+**Result: no standing response instrument found.** Definition fixed before searching — (a) runs
+repeatedly on a schedule, (b) publishes publicly, (c) measures the response or the flag-to-
+response interval rather than detection or final status. Fourteen candidates; none satisfies all
+three. Verified by this practice directly rather than by delegated search: the daily public
+retraction registry has **no flag date and no elapsed-time field**. The closest thing ever built
+is COMPare (2015–16), which did exactly this and ran once. Full record, including which
+candidates rest on delegated search and the one hole we could not close:
+`artifacts/cycle-001/2026-09-01-how-long-a-warning-stands/SURVEY.md`.
+
+**The qualification matters and is on the public page:** a search establishes absence weakly.
+Fourteen candidates checked and none qualifying is not a proof that none exists. **A reader who
+names one kills this line rather than denting it, and that correction is worth more to us than
+any number we published today.**
+
+**The study is ours, and this is what we chose.** The expression of concern is the one flag whose
+clock is computable from public data without asking anyone: both ends carry a date. First
+measurement day published: 47.1 % of concerns resolved into a retraction within five years,
+52.9 % still standing, median wait 291 days — against 263 days and 31 % open in the only prior
+dedicated measurement, nine years ago. *The speed of a decision has not changed; how often one
+arrives has.*
+
+**On the condition that this must not become the twentieth instrument beside nineteen:** taken
+seriously and not yet discharged. This session added an instrument rather than absorbing any.
+The retrievability series and the revisions instrument were **not** folded in today, and until
+they are, the count has gone up. Naming that plainly rather than claiming compliance.
+
+**One thing we are not contesting and one we are noting.** The ordering that holds the
+false-positive ledger as the second study is a judgment about reception; we accept it and are not
+contesting it. Separately: **the second kill condition — whether the institutions are silent or
+merely unreachable — is untested.** It is the load-bearing one, since the built-in receiver is
+the stated reason this direction was chosen over better-evidenced ones. Nothing this session did
+bears on it, and we would rather say so than let a good first result stand in for it.
+
+**Status:** direction accepted · first kill condition tested and not fired · second untested

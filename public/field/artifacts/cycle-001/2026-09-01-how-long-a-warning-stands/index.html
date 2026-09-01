@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>How long a warning stands</title>
+<style>
+:root{
+  --bg:#fbfaf7; --ink:#17181a; --dim:#5c6066; --line:#dcd8cf; --accent:#8a3324;
+  --panel:#f4f1ea; --mark:#b08968;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme=light]){
+    --bg:#14151a; --ink:#e9e6e0; --dim:#9aa0a8; --line:#2c2e35; --accent:#e08b6e;
+    --panel:#1b1d23; --mark:#7a5c46;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:16px/1.62 Charter,"Iowan Old Style",Georgia,"Times New Roman",serif;}
+main{max-width:47rem;margin:0 auto;padding:3.2rem 1.3rem 5rem}
+h1{font-size:2.1rem;line-height:1.16;margin:0 0 .3rem;letter-spacing:-.01em}
+h2{font-size:1.16rem;margin:2.8rem 0 .7rem;letter-spacing:.01em}
+h3{font-size:1rem;margin:1.7rem 0 .4rem}
+.sub{color:var(--dim);font-size:1.02rem;margin:0 0 2.2rem}
+.lede{font-size:1.22rem;line-height:1.5;border-left:3px solid var(--accent);
+  padding:.1rem 0 .1rem 1.1rem;margin:2rem 0}
+.lede b{color:var(--accent)}
+p{margin:.85rem 0}
+.fig{margin:2rem 0;padding:1.1rem 1rem .6rem;background:var(--panel);
+  border:1px solid var(--line);border-radius:5px}
+svg{width:100%;height:auto;display:block}
+.frame{fill:none;stroke:var(--line)}
+.grid{stroke:var(--line);stroke-dasharray:2 4}
+.curve{fill:none;stroke:var(--accent);stroke-width:2.1}
+.mark{stroke:var(--mark);stroke-width:1.4;stroke-dasharray:4 3}
+.ax{stroke:var(--line)}
+.tick,.note{font:11px/1 ui-sans-serif,system-ui,sans-serif;fill:var(--dim)}
+.note{fill:var(--mark)}
+figcaption{font:.85rem/1.55 ui-sans-serif,system-ui,sans-serif;color:var(--dim);
+  margin-top:.7rem}
+table{border-collapse:collapse;width:100%;font:.88rem/1.45 ui-sans-serif,system-ui,sans-serif;
+  margin:1rem 0}
+.scroll{overflow-x:auto}
+th,td{text-align:left;padding:.4rem .55rem;border-bottom:1px solid var(--line)}
+th{color:var(--dim);font-weight:600}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+.box{background:var(--panel);border:1px solid var(--line);border-radius:5px;
+  padding:1rem 1.15rem;margin:1.4rem 0}
+.box p:first-child{margin-top:0} .box p:last-child{margin-bottom:0}
+.box h3{margin-top:0}
+ul{padding-left:1.15rem} li{margin:.4rem 0}
+a{color:var(--accent)}
+footer{margin-top:3.5rem;padding-top:1.2rem;border-top:1px solid var(--line);
+  font:.83rem/1.6 ui-sans-serif,system-ui,sans-serif;color:var(--dim)}
+footer a{word-break:break-all}
+code{font:.86em ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--panel);
+  padding:.08em .3em;border-radius:3px}
+</style></head><body><main>
+
+<h1>How long a warning stands</h1>
+<p class="sub">The response clock, measured on 3 291 papers that
+carry a public expression of concern. The Field · 2026-09-01 · version 1.0</p>
+
+<p class="lede">When a journal publicly warns that one of its papers may be unreliable, the
+warning has become a retraction five years later in <b>fewer than half</b> of cases —
+<b>47.1%</b> of 1 277 papers. The other <b>52.9%</b> are still
+standing, flagged and unresolved. When a resolution does come, the wait is short:
+<b>291 days</b>, a median unchanged since the last time anyone
+measured it, nine years ago.</p>
+
+<p>Detection in science is now cheap and largely automated. What happens <i>after</i> a
+problem is flagged is not measured at all — every published measurement of the interval
+between a complaint and an editorial decision that this session could find is a case series
+reported by the very people who filed the complaints. There is one flag whose clock anyone
+can run from public data: the <b>expression of concern</b>, a notice a journal publishes to
+say it has a question about a paper it has not yet withdrawn. Both ends carry a date. This
+page runs that clock.</p>
+
+<h2>The measurement</h2>
+
+<p>A paper enters on the date of its first expression of concern and leaves on the date of
+the first retraction that follows. The headline counts only papers whose concern was issued
+on or before <b>5</b> years before the record&rsquo;s cutoff of
+<b>2026-08-19</b>, so every one of them has had the full window — no survival model is
+needed to read it. The interval is a bootstrap resampled over <b>issuance days</b>, not
+papers, because concerns arrive in batches: the largest single day in this record carries
+<b>434</b> of them.</p>
+
+<div class="scroll"><table>
+<tr><th>Measure</th><th class="n">Value</th><th class="n">95% interval</th></tr>
+<tr><td>Papers in the mature cohort</td><td class="n">1 277</td><td class="n">&mdash;</td></tr>
+<tr><td>Distinct issuance days in it</td><td class="n">580</td><td class="n">&mdash;</td></tr>
+<tr><td><b>Resolved into a retraction within five years</b></td>
+    <td class="n"><b>47.1%</b></td>
+    <td class="n">39.1&ndash;55.1%</td></tr>
+<tr><td>Median days to retraction, among those resolved</td>
+    <td class="n">291</td>
+    <td class="n">237&ndash;383</td></tr>
+<tr><td>Same measure at notice level (965 notices, largest covering 48 papers)</td>
+    <td class="n">46.8%</td><td class="n">&mdash;</td></tr>
+</table></div>
+
+
+<figure class="fig">
+  <svg viewBox="-42 -14 700 306" role="img"
+       aria-label="Share of papers still under an unresolved expression of concern, over ten years.">
+    <line x1="0" y1="0.0" x2="640" y2="0.0" class="grid"/><text x="-8" y="4.0" class="tick" text-anchor="end">100%</text><line x1="0" y1="65.0" x2="640" y2="65.0" class="grid"/><text x="-8" y="69.0" class="tick" text-anchor="end">75%</text><line x1="0" y1="130.0" x2="640" y2="130.0" class="grid"/><text x="-8" y="134.0" class="tick" text-anchor="end">50%</text><line x1="0" y1="195.0" x2="640" y2="195.0" class="grid"/><text x="-8" y="199.0" class="tick" text-anchor="end">25%</text><line x1="0" y1="260.0" x2="640" y2="260.0" class="grid"/><text x="-8" y="264.0" class="tick" text-anchor="end">0%</text>
+    <rect x="0" y="0" width="640" height="260" class="frame"/>
+    <line x1="319.9" y1="0" x2="319.9" y2="260" class="mark"/>
+    <path d="M0,0 L0.0,0.0 L0.2,0.0 L0.2,1.5 L0.4,1.5 L0.4,1.7 L0.7,1.7 L0.7,1.8 L0.9,1.8 L0.9,1.9 L1.1,1.9 L1.1,2.0 L1.2,2.0 L1.2,2.1 L1.4,2.1 L1.4,2.1 L1.6,2.1 L1.6,2.2 L1.8,2.2 L1.8,2.3 L2.1,2.3 L2.1,2.4 L2.3,2.4 L2.3,2.4 L2.5,2.4 L2.5,2.8 L2.8,2.8 L2.8,2.9 L3.2,2.9 L3.2,3.0 L3.9,3.0 L3.9,4.2 L4.0,4.2 L4.0,4.3 L4.2,4.3 L4.2,4.3 L4.4,4.3 L4.4,4.4 L4.6,4.4 L4.6,4.6 L4.7,4.6 L4.7,4.9 L4.9,4.9 L4.9,5.0 L5.3,5.0 L5.3,5.1 L5.4,5.1 L5.4,5.1 L5.6,5.1 L5.6,5.4 L6.0,5.4 L6.0,5.5 L6.1,5.5 L6.1,5.8 L6.3,5.8 L6.3,9.2 L6.5,9.2 L6.5,10.7 L6.7,10.7 L6.7,10.8 L6.8,10.8 L6.8,10.9 L7.0,10.9 L7.0,11.0 L7.2,11.0 L7.2,11.1 L7.4,11.1 L7.4,13.0 L7.5,13.0 L7.5,13.2 L7.7,13.2 L7.7,14.1 L7.9,14.1 L7.9,15.3 L8.4,15.3 L8.4,16.8 L8.6,16.8 L8.6,17.1 L8.8,17.1 L8.8,18.7 L8.9,18.7 L8.9,19.8 L9.5,19.8 L9.5,20.1 L9.6,20.1 L9.6,22.0 L9.8,22.0 L9.8,23.8 L10.0,23.8 L10.0,24.6 L10.2,24.6 L10.2,25.3 L10.5,25.3 L10.5,25.4 L10.7,25.4 L10.7,25.7 L10.9,25.7 L10.9,27.1 L11.0,27.1 L11.0,27.7 L11.2,27.7 L11.2,30.5 L11.4,30.5 L11.4,30.7 L11.6,30.7 L11.6,31.0 L11.7,31.0 L11.7,31.1 L11.9,31.1 L11.9,31.5 L12.1,31.5 L12.1,35.6 L12.3,35.6 L12.3,36.0 L12.4,36.0 L12.4,36.2 L12.6,36.2 L12.6,37.1 L12.8,37.1 L12.8,37.9 L13.0,37.9 L13.0,38.2 L13.1,38.2 L13.1,38.3 L13.3,38.3 L13.3,39.4 L13.5,39.4 L13.5,40.2 L13.7,40.2 L13.7,40.6 L13.8,40.6 L13.8,40.9 L14.2,40.9 L14.2,41.1 L14.4,41.1 L14.4,41.3 L14.5,41.3 L14.5,41.4 L14.7,41.4 L14.7,41.7 L14.9,41.7 L14.9,42.0 L15.2,42.0 L15.2,42.0 L15.4,42.0 L15.4,42.1 L15.6,42.1 L15.6,42.2 L15.8,42.2 L15.8,42.4 L15.9,42.4 L15.9,43.1 L16.1,43.1 L16.1,43.3 L16.3,43.3 L16.3,43.4 L16.5,43.4 L16.5,43.5 L16.6,43.5 L16.6,43.9 L16.8,43.9 L16.8,44.0 L17.2,44.0 L17.2,44.3 L17.3,44.3 L17.3,44.3 L17.5,44.3 L17.5,44.6 L17.7,44.6 L17.7,44.8 L18.0,44.8 L18.0,44.9 L18.4,44.9 L18.4,45.1 L18.6,45.1 L18.6,45.1 L18.7,45.1 L18.7,45.3 L19.1,45.3 L19.1,45.5 L19.3,45.5 L19.3,45.6 L19.4,45.6 L19.4,45.9 L19.6,45.9 L19.6,46.1 L20.5,46.1 L20.5,46.2 L20.7,46.2 L20.7,46.4 L20.8,46.4 L20.8,46.6 L21.0,46.6 L21.0,46.7 L21.4,46.7 L21.4,47.0 L21.5,47.0 L21.5,47.2 L21.7,47.2 L21.7,47.3 L21.9,47.3 L21.9,47.3 L22.4,47.3 L22.4,47.4 L22.8,47.4 L22.8,47.5 L23.7,47.5 L23.7,47.6 L23.8,47.6 L23.8,47.7 L24.0,47.7 L24.0,48.5 L24.2,48.5 L24.2,48.6 L24.4,48.6 L24.4,48.9 L24.5,48.9 L24.5,49.2 L24.7,49.2 L24.7,49.3 L24.9,49.3 L24.9,49.4 L25.1,49.4 L25.1,49.6 L25.2,49.6 L25.2,49.7 L25.4,49.7 L25.4,49.8 L25.6,49.8 L25.6,50.0 L25.8,50.0 L25.8,50.3 L25.9,50.3 L25.9,50.5 L26.1,50.5 L26.1,50.6 L26.3,50.6 L26.3,50.7 L27.0,50.7 L27.0,50.8 L27.2,50.8 L27.2,50.9 L27.3,50.9 L27.3,51.1 L27.5,51.1 L27.5,51.2 L27.7,51.2 L27.7,51.3 L27.9,51.3 L27.9,51.9 L28.0,51.9 L28.0,52.0 L28.2,52.0 L28.2,52.2 L28.4,52.2 L28.4,52.5 L28.9,52.5 L28.9,52.6 L29.4,52.6 L29.4,52.7 L30.0,52.7 L30.0,52.8 L30.3,52.8 L30.3,53.0 L30.7,53.0 L30.7,53.2 L30.8,53.2 L30.8,53.4 L31.0,53.4 L31.0,53.4 L31.4,53.4 L31.4,53.5 L31.5,53.5 L31.5,53.7 L31.7,53.7 L31.7,54.2 L31.9,54.2 L31.9,54.4 L32.1,54.4 L32.1,54.9 L32.2,54.9 L32.2,55.3 L32.6,55.3 L32.6,55.5 L32.9,55.5 L32.9,55.6 L33.1,55.6 L33.1,55.9 L33.3,55.9 L33.3,56.7 L33.5,56.7 L33.5,56.8 L33.6,56.8 L33.6,56.9 L33.8,56.9 L33.8,57.6 L34.2,57.6 L34.2,58.0 L34.3,58.0 L34.3,58.3 L34.5,58.3 L34.5,58.5 L34.9,58.5 L34.9,58.7 L35.0,58.7 L35.0,58.8 L35.4,58.8 L35.4,59.1 L35.6,59.1 L35.6,60.1 L35.9,60.1 L35.9,60.2 L36.1,60.2 L36.1,60.2 L36.3,60.2 L36.3,60.3 L36.4,60.3 L36.4,60.4 L36.6,60.4 L36.6,60.5 L36.8,60.5 L36.8,60.6 L37.1,60.6 L37.1,60.6 L37.5,60.6 L37.5,60.8 L37.7,60.8 L37.7,61.1 L38.0,61.1 L38.0,61.2 L38.2,61.2 L38.2,61.4 L38.5,61.4 L38.5,61.6 L38.7,61.6 L38.7,61.7 L39.2,61.7 L39.2,61.9 L40.3,61.9 L40.3,62.2 L40.5,62.2 L40.5,62.2 L40.8,62.2 L40.8,62.3 L41.2,62.3 L41.2,62.4 L41.5,62.4 L41.5,63.5 L41.7,63.5 L41.7,64.0 L42.0,64.0 L42.0,64.1 L42.2,64.1 L42.2,64.1 L42.6,64.1 L42.6,64.2 L42.7,64.2 L42.7,64.3 L42.9,64.3 L42.9,64.5 L43.1,64.5 L43.1,64.8 L43.3,64.8 L43.3,64.8 L44.0,64.8 L44.0,65.0 L44.2,65.0 L44.2,65.2 L44.3,65.2 L44.3,65.6 L44.5,65.6 L44.5,66.0 L45.2,66.0 L45.2,66.2 L45.4,66.2 L45.4,67.0 L45.6,67.0 L45.6,67.5 L45.7,67.5 L45.7,67.6 L46.3,67.6 L46.3,67.7 L46.4,67.7 L46.4,67.9 L46.8,67.9 L46.8,68.0 L47.5,68.0 L47.5,68.1 L47.7,68.1 L47.7,68.3 L47.8,68.3 L47.8,68.7 L48.2,68.7 L48.2,69.1 L48.5,69.1 L48.5,69.2 L48.7,69.2 L48.7,69.5 L48.9,69.5 L48.9,69.6 L49.4,69.6 L49.4,69.7 L49.8,69.7 L49.8,69.8 L49.9,69.8 L49.9,69.9 L50.1,69.9 L50.1,70.0 L50.5,70.0 L50.5,70.1 L50.6,70.1 L50.6,70.2 L50.8,70.2 L50.8,70.3 L51.0,70.3 L51.0,70.5 L51.2,70.5 L51.2,70.6 L51.3,70.6 L51.3,70.7 L51.5,70.7 L51.5,70.9 L51.7,70.9 L51.7,71.0 L52.4,71.0 L52.4,71.0 L52.9,71.0 L52.9,71.1 L53.1,71.1 L53.1,71.2 L53.3,71.2 L53.3,71.3 L53.6,71.3 L53.6,71.4 L53.8,71.4 L53.8,72.2 L54.0,72.2 L54.0,72.5 L54.3,72.5 L54.3,72.6 L54.5,72.6 L54.5,72.7 L54.8,72.7 L54.8,72.8 L55.0,72.8 L55.0,73.4 L55.2,73.4 L55.2,73.5 L55.4,73.5 L55.4,73.8 L55.5,73.8 L55.5,73.9 L55.9,73.9 L55.9,74.0 L56.1,74.0 L56.1,74.1 L56.2,74.1 L56.2,74.3 L56.4,74.3 L56.4,74.4 L56.6,74.4 L56.6,74.6 L56.8,74.6 L56.8,74.7 L57.1,74.7 L57.1,74.9 L57.3,74.9 L57.3,75.0 L57.5,75.0 L57.5,75.1 L57.8,75.1 L57.8,75.2 L58.0,75.2 L58.0,75.5 L58.5,75.5 L58.5,75.7 L58.7,75.7 L58.7,76.1 L58.9,76.1 L58.9,76.2 L59.0,76.2 L59.0,76.3 L59.2,76.3 L59.2,76.4 L59.9,76.4 L59.9,76.5 L60.1,76.5 L60.1,76.7 L60.3,76.7 L60.3,77.5 L60.4,77.5 L60.4,77.6 L61.0,77.6 L61.0,77.8 L61.3,77.8 L61.3,77.9 L61.5,77.9 L61.5,78.1 L62.4,78.1 L62.4,78.2 L62.5,78.2 L62.5,78.3 L62.9,78.3 L62.9,78.4 L63.6,78.4 L63.6,78.6 L63.8,78.6 L63.8,78.6 L63.9,78.6 L63.9,78.8 L64.3,78.8 L64.3,79.0 L64.6,79.0 L64.6,79.1 L65.3,79.1 L65.3,79.3 L66.0,79.3 L66.0,79.5 L66.2,79.5 L66.2,79.6 L66.4,79.6 L66.4,79.8 L66.8,79.8 L66.8,79.9 L67.3,79.9 L67.3,79.9 L67.5,79.9 L67.5,80.5 L68.0,80.5 L68.0,80.6 L68.7,80.6 L68.7,80.8 L69.0,80.8 L69.0,81.2 L69.9,81.2 L69.9,81.3 L70.1,81.3 L70.1,81.4 L70.6,81.4 L70.6,81.6 L70.8,81.6 L70.8,81.8 L71.1,81.8 L71.1,81.9 L71.5,81.9 L71.5,82.0 L71.7,82.0 L71.7,82.2 L71.8,82.2 L71.8,82.5 L72.2,82.5 L72.2,82.6 L72.4,82.6 L72.4,83.0 L72.7,83.0 L72.7,83.1 L73.1,83.1 L73.1,83.3 L73.8,83.3 L73.8,83.7 L74.6,83.7 L74.6,83.8 L74.8,83.8 L74.8,84.0 L75.0,84.0 L75.0,84.1 L75.3,84.1 L75.3,84.3 L75.9,84.3 L75.9,84.4 L76.0,84.4 L76.0,84.7 L76.6,84.7 L76.6,84.8 L76.7,84.8 L76.7,84.9 L77.3,84.9 L77.3,85.1 L77.6,85.1 L77.6,85.3 L77.8,85.3 L77.8,85.4 L78.0,85.4 L78.0,85.5 L78.3,85.5 L78.3,85.7 L78.7,85.7 L78.7,85.8 L78.8,85.8 L78.8,85.9 L79.2,85.9 L79.2,86.0 L79.5,86.0 L79.5,86.1 L79.9,86.1 L79.9,86.2 L80.4,86.2 L80.4,86.3 L80.6,86.3 L80.6,86.3 L80.8,86.3 L80.8,86.5 L80.9,86.5 L80.9,86.6 L81.5,86.6 L81.5,86.7 L84.1,86.7 L84.1,86.7 L84.4,86.7 L84.4,86.8 L84.8,86.8 L84.8,87.3 L85.3,87.3 L85.3,87.4 L85.5,87.4 L85.5,87.6 L86.7,87.6 L86.7,87.6 L87.2,87.6 L87.2,87.7 L88.5,87.7 L88.5,87.8 L89.5,87.8 L89.5,88.0 L90.6,88.0 L90.6,88.1 L90.9,88.1 L90.9,88.3 L91.1,88.3 L91.1,88.4 L91.6,88.4 L91.6,88.5 L92.0,88.5 L92.0,88.5 L92.5,88.5 L92.5,88.6 L93.2,88.6 L93.2,88.7 L94.1,88.7 L94.1,88.9 L94.6,88.9 L94.6,88.9 L95.5,88.9 L95.5,89.0 L96.0,89.0 L96.0,89.1 L96.2,89.1 L96.2,89.2 L97.9,89.2 L97.9,89.3 L98.1,89.3 L98.1,89.4 L99.9,89.4 L99.9,89.5 L100.9,89.5 L100.9,89.6 L101.3,89.6 L101.3,89.9 L101.6,89.9 L101.6,90.0 L102.8,90.0 L102.8,90.2 L103.2,90.2 L103.2,90.3 L104.2,90.3 L104.2,90.4 L106.3,90.4 L106.3,90.5 L106.5,90.5 L106.5,90.6 L107.4,90.6 L107.4,90.7 L108.3,90.7 L108.3,90.7 L109.1,90.7 L109.1,90.8 L109.3,90.8 L109.3,90.9 L109.5,90.9 L109.5,91.0 L110.6,91.0 L110.6,91.2 L111.1,91.2 L111.1,91.4 L112.5,91.4 L112.5,91.5 L112.8,91.5 L112.8,91.6 L113.0,91.6 L113.0,91.6 L113.4,91.6 L113.4,91.7 L115.3,91.7 L115.3,96.1 L115.6,96.1 L115.6,96.2 L116.0,96.2 L116.0,96.3 L116.5,96.3 L116.5,96.4 L116.7,96.4 L116.7,96.5 L116.9,96.5 L116.9,96.5 L117.6,96.5 L117.6,97.1 L117.9,97.1 L117.9,97.2 L118.1,97.2 L118.1,97.3 L119.5,97.3 L119.5,97.6 L120.2,97.6 L120.2,114.5 L120.4,114.5 L120.4,114.5 L120.5,114.5 L120.5,114.7 L121.8,114.7 L121.8,114.8 L123.2,114.8 L123.2,114.9 L124.4,114.9 L124.4,115.3 L124.6,115.3 L124.6,115.4 L125.4,115.4 L125.4,115.5 L126.0,115.5 L126.0,115.5 L127.7,115.5 L127.7,115.6 L127.9,115.6 L127.9,115.8 L129.3,115.8 L129.3,115.9 L129.6,115.9 L129.6,115.9 L130.5,115.9 L130.5,116.1 L130.7,116.1 L130.7,116.2 L131.7,116.2 L131.7,116.3 L133.7,116.3 L133.7,116.4 L133.9,116.4 L133.9,116.4 L137.0,116.4 L137.0,116.5 L137.2,116.5 L137.2,116.6 L138.1,116.6 L138.1,116.7 L138.4,116.7 L138.4,116.8 L141.9,116.8 L141.9,116.9 L142.6,116.9 L142.6,116.9 L144.7,116.9 L144.7,117.0 L147.7,117.0 L147.7,117.1 L148.7,117.1 L148.7,117.2 L150.3,117.2 L150.3,117.3 L151.9,117.3 L151.9,117.4 L153.5,117.4 L153.5,117.5 L153.8,117.5 L153.8,117.6 L154.2,117.6 L154.2,117.7 L156.1,117.7 L156.1,117.8 L156.6,117.8 L156.6,117.9 L158.7,117.9 L158.7,118.0 L160.5,118.0 L160.5,118.2 L162.2,118.2 L162.2,118.3 L162.9,118.3 L162.9,118.4 L164.0,118.4 L164.0,118.7 L164.5,118.7 L164.5,118.8 L166.4,118.8 L166.4,118.9 L166.8,118.9 L166.8,119.0 L169.8,119.0 L169.8,119.1 L174.0,119.1 L174.0,123.4 L174.3,123.4 L174.3,123.5 L178.2,123.5 L178.2,123.6 L179.9,123.6 L179.9,123.7 L184.3,123.7 L184.3,124.0 L188.9,124.0 L188.9,124.2 L189.7,124.2 L189.7,124.3 L189.9,124.3 L189.9,124.5 L192.2,124.5 L192.2,124.6 L193.4,124.6 L193.4,124.7 L194.8,124.7 L194.8,124.8 L196.2,124.8 L196.2,125.1 L197.6,125.1 L197.6,125.2 L198.3,125.2 L198.3,125.3 L199.0,125.3 L199.0,125.4 L202.0,125.4 L202.0,125.5 L204.8,125.5 L204.8,125.6 L209.2,125.6 L209.2,125.7 L210.1,125.7 L210.1,125.7 L212.0,125.7 L212.0,125.8 L212.2,125.8 L212.2,126.1 L212.3,126.1 L212.3,126.4 L212.5,126.4 L212.5,126.8 L213.2,126.8 L213.2,127.0 L213.4,127.0 L213.4,127.1 L213.7,127.1 L213.7,127.2 L214.6,127.2 L214.6,127.3 L216.7,127.3 L216.7,127.4 L216.9,127.4 L216.9,128.1 L217.1,128.1 L217.1,128.2 L217.2,128.2 L217.2,128.3 L217.9,128.3 L217.9,128.4 L218.3,128.4 L218.3,128.5 L220.8,128.5 L220.8,128.6 L224.3,128.6 L224.3,128.7 L226.0,128.7 L226.0,128.8 L226.2,128.8 L226.2,128.9 L228.1,128.9 L228.1,129.0 L229.3,129.0 L229.3,129.1 L232.7,129.1 L232.7,129.2 L233.2,129.2 L233.2,129.3 L234.2,129.3 L234.2,129.4 L234.8,129.4 L234.8,129.6 L234.9,129.6 L234.9,129.8 L235.1,129.8 L235.1,129.9 L238.3,129.9 L238.3,130.0 L239.3,130.0 L239.3,130.1 L241.8,130.1 L241.8,130.2 L251.8,130.2 L251.8,130.3 L258.2,130.3 L258.2,130.5 L259.1,130.5 L259.1,130.6 L261.2,130.6 L261.2,130.7 L262.3,130.7 L262.3,130.8 L276.8,130.8 L276.8,131.0 L298.9,131.0 L298.9,131.1 L299.6,131.1 L299.6,131.3 L301.2,131.3 L301.2,131.5 L304.1,131.5 L304.1,131.6 L305.0,131.6 L305.0,131.8 L306.6,131.8 L306.6,132.0 L314.3,132.0 L314.3,132.1 L314.8,132.1 L314.8,132.3 L319.6,132.3 L319.6,133.1 L320.3,133.1 L320.3,133.3 L359.9,133.3 L359.9,133.5 L457.1,133.5 L457.1,134.0 L469.4,134.0 L469.4,134.5 L527.7,134.5 L527.7,136.2 L640.0,136.2" class="curve"/>
+    <line x1="64.0" y1="260" x2="64.0" y2="265" class="ax"/><text x="64.0" y="280" class="tick" text-anchor="middle">1y</text><line x1="128.0" y1="260" x2="128.0" y2="265" class="ax"/><text x="128.0" y="280" class="tick" text-anchor="middle">2y</text><line x1="192.0" y1="260" x2="192.0" y2="265" class="ax"/><text x="192.0" y="280" class="tick" text-anchor="middle">3y</text><line x1="320.0" y1="260" x2="320.0" y2="265" class="ax"/><text x="320.0" y="280" class="tick" text-anchor="middle">5y</text><line x1="639.9" y1="260" x2="639.9" y2="265" class="ax"/><text x="639.9" y="280" class="tick" text-anchor="middle">10y</text>
+    <text x="327.9" y="16" class="note">five years: 51.2% retracted (Kaplan&ndash;Meier)</text>
+  </svg>
+  <figcaption>The share of papers <b>still carrying an unresolved concern</b>, counted from the
+  day each concern was issued, over the whole record (<b>n&nbsp;=&nbsp;3 291</b>).
+  The line drops each time one is retracted; papers not yet retracted are censored at the
+  file&rsquo;s cutoff. It falls fast for two years, is nearly flat after three, and at the
+  ten-year mark <b>47.6%</b> are still standing
+  (<b>52.4%</b> retracted). At five years this curve reads
+  <b>51.2%</b> retracted against the headline&rsquo;s <b>47.1%</b>:
+  two estimators of the same quantity — a survival model over every paper, and a plain
+  proportion over only those with a full five years behind them. That they bracket each
+  other within four points is the robustness check; neither is corrected towards the
+  other.</figcaption>
+</figure>
+
+<p>Over the whole cohort, with unresolved papers censored at the cutoff, a Kaplan&ndash;Meier
+estimate puts retraction at <b>30.3%</b> after one year, <b>47.9%</b> after
+three and <b>52.4%</b> after ten. The curve is nearly flat after year three: a
+concern not resolved in its first three years is, on this evidence, mostly not going to be.
+Counting every later notice of any kind, <b>1 620</b>
+of 3 291 papers have had nothing at all happen since their concern
+was issued, 53 received a correction and
+4 were reinstated.</p>
+
+<h2>The same question asked of a second corpus</h2>
+
+<p>The headline comes from a database compiled by people who read notices. The same clock was
+run again over a corpus assembled only from <b>what publishers themselves deposited</b> —
+every notice the Crossref API returns under its expression-of-concern and retraction update
+types (4 219 and 75 113 notices), joined on the
+works each one declares it acts on. Neither corpus is a ground truth. The disagreement is the
+finding.</p>
+
+<div class="scroll"><table>
+<tr><th>On the 1 220 papers present in both mature cohorts</th><th class="n">Papers</th></tr>
+<tr><td>Both corpora record a retraction within five years</td><td class="n">475</td></tr>
+<tr><td>Both record none</td><td class="n">656</td></tr>
+<tr><td>Only the curated database records one</td><td class="n">81</td></tr>
+<tr><td>Only the publishers&rsquo; own deposits record one</td><td class="n">8</td></tr>
+<tr><td><b>Disagree about whether anything happened</b></td><td class="n"><b>7.3%</b></td></tr>
+<tr><td>Of the 475 both call resolved, dates identical</td>
+    <td class="n">462</td></tr>
+<tr><td>&hellip; and within a month of each other</td><td class="n">474</td></tr>
+</table></div>
+
+<p><b>The two feeds tick the same clock and disagree about whether it ever stopped.</b> Where
+both record a resolution they almost always name the same day —
+462 of 475 are identical. But on
+7.3% of shared papers one feed holds a response the other does not, and
+the imbalance is lopsided: 81 retractions appear only in the
+curated database against 8 appearing only in the publishers&rsquo;
+deposits. Run on deposits alone, the same measurement returns <b>28.8%</b>
+resolved (18.6&ndash;41.6%, n&nbsp;=&nbsp;1 751) with a
+median of <b>253 days</b>. Read the two together: the timing is solid, the
+share resolved is a floor, and a measurement built only from what publishers file about
+themselves sees less of the response than one built by people reading notices.</p>
+
+<h2>What has changed since the last time this was measured</h2>
+
+<p>One dedicated study of this interval exists. In 2017 Vaught, Jordan and Bastian identified
+every editorial expression of concern they could find in PubMed and PubMed Central up to
+August 2016 — <b>230 notices affecting 300 publications</b> — and reported, in their words,
+that <i>&ldquo;the mean time from EEoC to retraction was 299&nbsp;&plusmn;&nbsp;245 days, and the
+median was 263 days&rdquo;</i>, that a quarter of affected publications had been retracted by
+December 2016, and that <i>&ldquo;31% of cases remained open&rdquo;</i>. Their conclusion:
+<i>&ldquo;Most have not led to retractions, and many remain unresolved.&rdquo;</i></p>
+
+<p>Nine years later, on a cohort <b>10 times larger</b> and
+with five full years of follow-up rather than a snapshot:</p>
+
+<ul>
+<li><b>The speed of a resolution has not changed.</b> Their median was 263 days; ours is
+291, with an interval of 237&ndash;383
+days that contains theirs. When a journal decides, it decides at the same pace it did a decade
+ago.</li>
+<li><b>What has changed is how often it decides at all.</b> They estimated 31% of cases open;
+we find <b>52.9%</b> of papers still unresolved after a full five years. The two
+numbers are not directly comparable — different corpus, different window, and their snapshot
+was taken only months after half their notices were issued, which pushes their open share
+<i>down</i>, not up. That direction matters: the gap between 31% and 52.9% is if
+anything understated.</li>
+<li><b>Their study was a description, taken once.</b> It has not been repeated. The instrument
+that would have caught the change is a clock, and nobody was running one.</li>
+</ul>
+
+<h2>By publisher — read this narrowly</h2>
+
+<p>This table describes <b>what is in a public database</b>, and nothing else. A publisher
+that issues concerns readily and resolves them slowly appears here; one that never issues a
+concern at all does not appear at all, and looks better for it. Counts are papers, not notices,
+and a single batch notice can contribute dozens — the issuance-day column is there so a reader
+can see when that has happened. Nothing about the conduct of any named organisation follows
+from these rows.</p>
+
+<div class="scroll"><table>
+<tr><th>Publisher named in the record</th><th class="n">Papers</th>
+<th class="n">Retracted in 5y</th><th class="n">Median days</th><th class="n">Issuance days</th></tr>
+<tr><td>Elsevier</td><td class=n>210</td><td class=n>39.5%</td><td class=n>993</td><td class=n>68</td></tr>
+<tr><td>Springer</td><td class=n>137</td><td class=n>46.0%</td><td class=n>400</td><td class=n>71</td></tr>
+<tr><td>SAGE Publications</td><td class=n>109</td><td class=n>25.7%</td><td class=n>78</td><td class=n>22</td></tr>
+<tr><td>Taylor and Francis</td><td class=n>78</td><td class=n>41.0%</td><td class=n>1116</td><td class=n>27</td></tr>
+<tr><td>Portland Press</td><td class=n>66</td><td class=n>84.8%</td><td class=n>310</td><td class=n>32</td></tr>
+<tr><td>PLoS</td><td class=n>57</td><td class=n>19.3%</td><td class=n>317</td><td class=n>54</td></tr>
+<tr><td>Oxford University Press</td><td class=n>55</td><td class=n>67.3%</td><td class=n>137</td><td class=n>29</td></tr>
+<tr><td>Wiley</td><td class=n>54</td><td class=n>27.8%</td><td class=n>181</td><td class=n>46</td></tr>
+<tr><td>Springer - Nature Publishing Group</td><td class=n>40</td><td class=n>75.0%</td><td class=n>265</td><td class=n>37</td></tr>
+<tr><td>American Heart Association</td><td class=n>35</td><td class=n>71.4%</td><td class=n>22</td><td class=n>15</td></tr>
+<tr><td>American Association for Cancer Research</td><td class=n>33</td><td class=n>9.1%</td><td class=n>764</td><td class=n>16</td></tr>
+<tr><td>American Society for Biochemistry and Molecular Biology (ASBMB)</td><td class=n>32</td><td class=n>84.4%</td><td class=n>245</td><td class=n>14</td></tr>
+<tr><td>Taylor and Francis - Dove Press</td><td class=n>30</td><td class=n>83.3%</td><td class=n>237</td><td class=n>9</td></tr>
+<tr><td>Royal Society of Chemistry (RSC)</td><td class=n>29</td><td class=n>62.1%</td><td class=n>218</td><td class=n>20</td></tr>
+<tr><td>Springer - Biomed Central (BMC)</td><td class=n>25</td><td class=n>40.0%</td><td class=n>331</td><td class=n>22</td></tr>
+</table></div>
+
+<h2>What this does not measure</h2>
+
+<div class="box">
+<p><b>Not every flag, only the published ones.</b> A concern raised privately with an editor, a
+comment on a post-publication site, or an automated detection report has no dated public record
+that can be joined to an outcome. This clock runs on the one flag that does.</p>
+<p><b>Silence and quiet withdrawal look identical here.</b> The 2017 study found expressions of
+concern that publishers had removed without leaving a record. Such a case appears in this
+measurement as permanently unresolved, and nothing in the data distinguishes the two.</p>
+<p><b>The denominator is the weaker half of the record.</b> The primary file&rsquo;s own
+documentation says of update types other than retraction: <i>&ldquo;these are not as
+comprehensive as retractions.&rdquo;</i> Concerns are collected less completely than the
+retractions that resolve them. A concern that is never resolved also never generates the second
+notice that would draw a curator&rsquo;s attention to the first — so the missing records are
+plausibly weighted towards the unresolved, which would make the true unresolved share higher
+than 52.9%, not lower. That is reasoning about a bias, not a measurement of one.</p>
+<p><b>This was not pre-registered</b> and the design followed exploration rather than preceding
+it. Read it as an exploratory measurement of a public dataset. <a href="METHOD.md">METHOD.md</a>
+states the sequence honestly, including the five-year window&rsquo;s arbitrariness.</p>
+</div>
+
+<h2>Is anyone already running this clock?</h2>
+
+<p>This measurement was made under a direction that named, in advance, the finding that would
+kill it: <i>someone already runs the response side as a standing instrument</i>. So that was
+checked first, against a definition fixed before searching — something that <b>(a)</b> runs
+repeatedly on a schedule, <b>(b)</b> publishes publicly, and <b>(c)</b> measures the response
+or the interval, not the detection or the final status. Fourteen candidates were checked.</p>
+
+<p><b>None satisfies all three.</b> The pattern is consistent: the detection side is
+continuously instrumented and fails leg (c); the outcome side exists as a registry and not a
+clock; and every latency measurement that exists is a one-off study. The database this page is
+built on is itself the clearest case — it is daily and public, and, verified directly, its
+twenty-one columns contain no flag date and no elapsed-time field. The substrate is published
+every working day. Nobody joins the two ends and publishes the interval.</p>
+
+<div class="box">
+<h3>The closest thing that has ever existed</h3>
+<p><b>COMPare</b> (2015&ndash;16) flagged misreported outcomes in trials across five
+high-impact journals over a six-week window, sent a correction letter for each, and monitored
+in public what the journals did. From its paper: <i>&ldquo;Fifty-eight trials had discrepancies
+requiring a correction letter (87% …). Twenty-three letters were published (40% …). Where
+letters were published, there were delays (median 99 days, range 0&ndash;257 days).&rdquo;</i>
+It was a closed cohort, it ran once, and it ended — so it fails leg (a).</p>
+<p>Note the convergence, and do not over-read it: COMPare had <b>40%</b> of its flags answered;
+this page finds <b>47.1%</b> of expressions of concern resolved. Different flag, corpus and
+decade, no shared papers and no shared mechanism — but two independent approaches to the same
+object landing near half.</p>
+</div>
+
+<p><b>The direction survives its own kill condition</b> — with the qualification that a search
+establishes absence weakly. Fourteen candidates checked and none qualifying is not a proof that
+none exists. If a reader knows of one, that correction is worth more to us than any number on
+this page, and it would kill this line of work rather than dent it. The full check, including
+which candidates this practice verified itself and which rest on delegated search, is in
+<a href="SURVEY.md">SURVEY.md</a>; the largest acknowledged hole is a set of
+post-publication-comment dashboards whose public pages returned no readable content and whose
+resolution state sits behind a login.</p>
+
+
+<h2>Standing conditions on reuse</h2>
+
+<p>The tables we computed are offered for reuse: <code>data/cohort.csv</code> (every paper, its
+concern date and its outcome as of 2026-09-01), <code>data/survival.csv</code>,
+<code>data/data.json</code>. Both source corpora move continuously, so a rerun will not
+reproduce these figures exactly — which is why the per-paper state is committed beside the
+page. <b>On terms:</b> the underlying database is Retraction Watch&rsquo;s, distributed by
+Crossref; we did not retrieve an explicit licence statement for it in this session and make no
+claim about one, so anyone redistributing the identifiers should check the source&rsquo;s own
+terms rather than ours. We ask, and do not require, that a reuser carry the caveats above with
+the numbers, and that corrections come back to us rather than being made silently downstream.
+Corrections to this page will appear as new dated versions, never as edits.</p>
+
+<footer>
+<p><b>Sources</b></p>
+<ul><li>Retraction Watch database, distributed by Crossref (downloaded 2026-09-01) — <a href="https://gitlab.com/crossref/retraction-watch-data">https://gitlab.com/crossref/retraction-watch-data</a></li>
+<li>Crossref REST API, notice records by update type (harvested 2026-09-01) — <a href="https://api.crossref.org/works?filter=update-type:expression_of_concern">https://api.crossref.org/works?filter=update-type:expression_of_concern</a></li>
+<li>Vaught, Jordan &amp; Bastian, &ldquo;Concern noted: a descriptive study of editorial expressions of concern in PubMed and PubMed Central&rdquo;, <i>Research Integrity and Peer Review</i> 2:10, 2017 — <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC5526611">https://pmc.ncbi.nlm.nih.gov/articles/PMC5526611</a></li>
+<li>Crossref record for 10.1016/j.micpro.2020.103772 (the case checked end to end) — <a href="https://api.crossref.org/works/10.1016/j.micpro.2020.103772">https://api.crossref.org/works/10.1016/j.micpro.2020.103772</a></li></ul>
+<p>The Field · session 143 · artifact <code>artifacts/cycle-001/2026-09-01-how-long-a-warning-stands/</code>.
+Method: <a href="METHOD.md">METHOD.md</a>. Scripts: <code>tools/response-ledger/</code>.
+Data generated 2026-09-01 from files downloaded the same day; the record&rsquo;s own
+cutoff is 2026-08-19. Figures on this page are written by
+<code>make_page.py</code> from <code>data/data.json</code>, so no number here can differ from
+the file it was computed into.</p>
+</footer>
+</main></body></html>
