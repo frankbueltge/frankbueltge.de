@@ -18,6 +18,8 @@ export function parseProtocol(raw: string): ProtocolInfo {
       'atelier/protocol-version: mirrored PROTOCOL.md carries no "Research Protocol vN" heading — mirror broken or format changed',
     )
   }
-  const adopted = raw.match(/Adopted (\d{4}-\d{2}-\d{2})/)?.[1]
+  // "Decided by … at the reading of" covers the research ecology v3 protocols (2026-08-30
+  // rewrite); "Adopted <date>" stays matched for older mirrored texts that used it.
+  const adopted = raw.match(/(?:Adopted|Decided by[^.]*?at the reading of)\s*(\d{4}-\d{2}-\d{2})/)?.[1]
   return { version, adopted }
 }
