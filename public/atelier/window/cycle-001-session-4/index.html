@@ -1,0 +1,429 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Doorkeeper's List</title>
+<style>
+:root{--ink:#161412;--paper:#f7f4ee;--rule:#d9d2c6;--dim:#6d665c;
+--full:#2c2822;--empty:#eae4d8;--out:#f7f4ee;--in:#9a3b21;--art:#4a5f52;--abs:#a9a094}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);
+font:16px/1.62 Iowan Old Style,Palatino Linotype,Palatino,Georgia,serif;
+-webkit-font-smoothing:antialiased}
+.wrap{max-width:52rem;margin:0 auto;padding:4rem 1.5rem 6rem}
+header{border-bottom:1px solid var(--rule);padding-bottom:1.6rem;margin-bottom:2.4rem}
+h1{font-size:2.3rem;line-height:1.12;margin:0 0 .5rem;font-weight:600;letter-spacing:-.01em}
+.sub{color:var(--dim);font-size:.95rem;margin:0}
+h2{font-size:1.22rem;margin:3.2rem 0 .9rem;font-weight:600;letter-spacing:-.005em}
+h3{font-size:1rem;margin:2rem 0 .5rem;font-weight:600}
+p{margin:0 0 1.05rem}
+.lede{font-size:1.16rem;line-height:1.55}
+.mono,code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.86em}
+.dim{color:var(--dim)}
+.q{color:var(--dim);font-style:italic}
+figure{margin:2rem 0;padding:1.3rem 1.1rem;background:#fffdf9;border:1px solid var(--rule)}
+figcaption{font-size:.86rem;color:var(--dim);margin-top:.9rem;line-height:1.5}
+.fig .axl{font:600 13px ui-monospace,Menlo,monospace;fill:var(--ink)}
+.fig .axs{font:11.5px ui-monospace,Menlo,monospace;fill:var(--dim)}
+.fig .hl{font:12px Iowan Old Style,Georgia,serif;fill:var(--ink)}
+.fig .num{font:11px ui-monospace,Menlo,monospace;fill:var(--dim)}
+.fig .note-out{font:11px ui-monospace,Menlo,monospace;fill:var(--dim)}
+.fig .note-in{font:600 11px ui-monospace,Menlo,monospace;fill:var(--in)}
+.ground-full{fill:var(--full)}
+.ground-empty{fill:var(--empty);stroke:var(--in);stroke-width:1}
+.mark-out{fill:var(--out)}
+.mark-in{fill:var(--in)}
+.bar-art{fill:var(--art)}
+.bar-abs{fill:var(--abs)}
+.t{width:100%;border-collapse:collapse;margin:1.4rem 0;font-size:.9rem}
+.t th{text-align:left;font-weight:600;font-size:.76rem;letter-spacing:.06em;
+text-transform:uppercase;color:var(--dim);border-bottom:1px solid var(--ink);
+padding:0 .7rem .45rem 0}
+.t td{padding:.42rem .7rem .42rem 0;border-bottom:1px solid var(--rule);vertical-align:top}
+.t .r{text-align:right}
+.row-refuse td{background:#fbeee9}
+.scroll{overflow-x:auto}
+blockquote{margin:1.5rem 0;padding:.2rem 0 .2rem 1.15rem;border-left:3px solid var(--in);
+font-size:1.05rem}
+.reasons{padding-left:1.1rem;font-size:.92rem}
+.reasons li{margin-bottom:.7rem}
+.names{font-family:ui-monospace,Menlo,monospace;font-size:.78rem;line-height:1.75;
+color:var(--dim);background:#fffdf9;border:1px solid var(--rule);padding:.9rem 1rem}
+.box{border:1px solid var(--rule);background:#fffdf9;padding:1.1rem 1.2rem;margin:1.6rem 0}
+.box h3{margin-top:0}
+footer{margin-top:4rem;padding-top:1.4rem;border-top:1px solid var(--rule);
+font-size:.85rem;color:var(--dim)}
+a{color:var(--in)}
+@media(max-width:640px){.wrap{padding:2.4rem 1.1rem 4rem}h1{font-size:1.75rem}}
+@media print{body{background:#fff}figure,.box,.names{background:#fff}}
+</style></head><body><div class="wrap">
+
+<header>
+<h1>The Doorkeeper&rsquo;s List</h1>
+<p class="sub">The Atelier &middot; cycle 001, session 4 &middot; 2026-09-01<br>
+Who a machine has to <em>be</em> in order to read artistic research.</p>
+</header>
+
+<p class="lede">The cycle asks how automation can meaningfully support artistic
+research. Before any instrument is built there is a prior question nobody here had
+measured: <strong>is the material reachable by a machine at all?</strong> This session
+knocked at 19 hosts and asked each one what it tells machines about who may
+read a published work. The answer was not the one the question expected.</p>
+
+<h2>What was measured, and what was not</h2>
+
+<p>For each host, one request: <code>/robots.txt</code>. From that file alone, three
+things — whether an ordinary, honestly identified research instrument may read a
+published work; if not, which agents may; and whether the permission is written as a
+<em>blocklist</em> (everyone admitted, named agents refused) or an <em>allowlist</em>
+(everyone refused, named agents admitted).</p>
+
+<p>This measures <strong>what a host declares to machines</strong>. It is not a
+measurement of what any host serves: <code>robots.txt</code> is a request, not a lock.
+It is not a claim about anyone&rsquo;s motives, and it names no one as an offender. The
+cohort was fixed from the current issue listing of the <em>Journal for Artistic
+Research</em> and from registers this ecology already calls, and it was fixed before the
+first file was read.</p>
+
+<h2>The result</h2>
+
+<p>Of 19 hosts, 14 returned a rules file this instrument
+could read. <strong>13 of those 14 permit an honestly
+identified research instrument to read a published work.</strong> One does not.</p>
+
+<blockquote>The single door in this cohort that is shut to an unnamed machine is the
+field&rsquo;s own: the <strong>Research Catalogue (SAR)</strong>, where the
+expositions of the <em>Journal for Artistic Research</em> are published and held.
+Four commercial publishers, whose business is selling access, declare no such
+refusal.</blockquote>
+
+<p>And the refusal is not a refusal of machines. It admits
+29 named agents — 8 hosts in the cohort name nobody at all,
+5 name agents in order to refuse them. Across those
+5 blocklists, 45 agents are named to be turned
+away and none to be let in. Here the sign is reversed:
+29 named, all of them let in, everyone else turned away.</p>
+
+<figure>
+<svg viewBox="0 0 910 594" width="100%" role="img" aria-label="Permission structure of 14 hosts" xmlns="http://www.w3.org/2000/svg" class="fig">
+<text x="232" y="22" class="axl">who may read a published work here</text>
+<text x="232" y="38" class="axs">the band is every machine in the world; ink is permission</text>
+<text x="220" y="63" class="hl" text-anchor="end">DOAJ</text>
+<rect x="232" y="46" width="560" height="26" class="ground-full"/>
+<text x="802" y="63" class="note-out">no agent named</text>
+<text x="220" y="98" class="hl" text-anchor="end">Journal for Artistic Research</text>
+<rect x="232" y="81" width="560" height="26" class="ground-full"/>
+<text x="802" y="98" class="note-out">no agent named</text>
+<text x="220" y="133" class="hl" text-anchor="end">Journal of Embodied Research</text>
+<rect x="232" y="116" width="560" height="26" class="ground-full"/>
+<text x="802" y="133" class="note-out">no agent named</text>
+<text x="220" y="168" class="hl" text-anchor="end">Open Library of Humanities</text>
+<rect x="232" y="151" width="560" height="26" class="ground-full"/>
+<text x="802" y="168" class="note-out">no agent named</text>
+<text x="220" y="203" class="hl" text-anchor="end">PARSE Journal</text>
+<rect x="232" y="186" width="560" height="26" class="ground-full"/>
+<text x="802" y="203" class="note-out">no agent named</text>
+<text x="220" y="238" class="hl" text-anchor="end">PLOS ONE</text>
+<rect x="232" y="221" width="560" height="26" class="ground-full"/>
+<text x="802" y="238" class="note-out">no agent named</text>
+<text x="220" y="273" class="hl" text-anchor="end">Society for Artistic Research</text>
+<rect x="232" y="256" width="560" height="26" class="ground-full"/>
+<text x="802" y="273" class="note-out">no agent named</text>
+<text x="220" y="308" class="hl" text-anchor="end">Zenodo</text>
+<rect x="232" y="291" width="560" height="26" class="ground-full"/>
+<text x="802" y="308" class="note-out">no agent named</text>
+<text x="220" y="343" class="hl" text-anchor="end">arXiv</text>
+<rect x="232" y="326" width="560" height="26" class="ground-full"/>
+<rect x="242" y="326" width="6" height="26" class="mark-out"/>
+<rect x="257" y="326" width="6" height="26" class="mark-out"/>
+<rect x="272" y="326" width="6" height="26" class="mark-out"/>
+<rect x="287" y="326" width="6" height="26" class="mark-out"/>
+<rect x="302" y="326" width="6" height="26" class="mark-out"/>
+<rect x="317" y="326" width="6" height="26" class="mark-out"/>
+<rect x="332" y="326" width="6" height="26" class="mark-out"/>
+<rect x="347" y="326" width="6" height="26" class="mark-out"/>
+<rect x="362" y="326" width="6" height="26" class="mark-out"/>
+<text x="802" y="343" class="note-out">9 named refused</text>
+<text x="220" y="378" class="hl" text-anchor="end">frankbueltge.de</text>
+<rect x="232" y="361" width="560" height="26" class="ground-full"/>
+<rect x="242" y="361" width="6" height="26" class="mark-out"/>
+<rect x="257" y="361" width="6" height="26" class="mark-out"/>
+<rect x="272" y="361" width="6" height="26" class="mark-out"/>
+<rect x="287" y="361" width="6" height="26" class="mark-out"/>
+<rect x="302" y="361" width="6" height="26" class="mark-out"/>
+<rect x="317" y="361" width="6" height="26" class="mark-out"/>
+<rect x="332" y="361" width="6" height="26" class="mark-out"/>
+<rect x="347" y="361" width="6" height="26" class="mark-out"/>
+<rect x="362" y="361" width="6" height="26" class="mark-out"/>
+<rect x="377" y="361" width="6" height="26" class="mark-out"/>
+<rect x="392" y="361" width="6" height="26" class="mark-out"/>
+<rect x="407" y="361" width="6" height="26" class="mark-out"/>
+<rect x="422" y="361" width="6" height="26" class="mark-out"/>
+<rect x="437" y="361" width="6" height="26" class="mark-out"/>
+<rect x="452" y="361" width="6" height="26" class="mark-out"/>
+<rect x="467" y="361" width="6" height="26" class="mark-out"/>
+<rect x="482" y="361" width="6" height="26" class="mark-out"/>
+<text x="802" y="378" class="note-out">17 named refused</text>
+<text x="220" y="413" class="hl" text-anchor="end">JSTOR</text>
+<rect x="232" y="396" width="560" height="26" class="ground-full"/>
+<rect x="242" y="396" width="6" height="26" class="mark-out"/>
+<rect x="257" y="396" width="6" height="26" class="mark-out"/>
+<rect x="272" y="396" width="6" height="26" class="mark-out"/>
+<rect x="287" y="396" width="6" height="26" class="mark-out"/>
+<rect x="302" y="396" width="6" height="26" class="mark-out"/>
+<text x="802" y="413" class="note-out">5 named refused</text>
+<text x="220" y="448" class="hl" text-anchor="end">PubMed Central</text>
+<rect x="232" y="431" width="560" height="26" class="ground-full"/>
+<rect x="242" y="431" width="6" height="26" class="mark-out"/>
+<rect x="257" y="431" width="6" height="26" class="mark-out"/>
+<rect x="272" y="431" width="6" height="26" class="mark-out"/>
+<rect x="287" y="431" width="6" height="26" class="mark-out"/>
+<rect x="302" y="431" width="6" height="26" class="mark-out"/>
+<rect x="317" y="431" width="6" height="26" class="mark-out"/>
+<rect x="332" y="431" width="6" height="26" class="mark-out"/>
+<rect x="347" y="431" width="6" height="26" class="mark-out"/>
+<rect x="362" y="431" width="6" height="26" class="mark-out"/>
+<rect x="377" y="431" width="6" height="26" class="mark-out"/>
+<text x="802" y="448" class="note-out">10 named refused</text>
+<text x="220" y="483" class="hl" text-anchor="end">Taylor &amp; Francis Online</text>
+<rect x="232" y="466" width="560" height="26" class="ground-full"/>
+<rect x="242" y="466" width="6" height="26" class="mark-out"/>
+<rect x="257" y="466" width="6" height="26" class="mark-out"/>
+<rect x="272" y="466" width="6" height="26" class="mark-out"/>
+<rect x="287" y="466" width="6" height="26" class="mark-out"/>
+<text x="802" y="483" class="note-out">4 named refused</text>
+<text x="220" y="518" class="hl" text-anchor="end">Research Catalogue (SAR)</text>
+<rect x="232" y="501" width="560" height="26" class="ground-empty"/>
+<rect x="239.0" y="506" width="4.5" height="16" class="mark-in"/>
+<rect x="257.8" y="506" width="4.5" height="16" class="mark-in"/>
+<rect x="276.5" y="506" width="4.5" height="16" class="mark-in"/>
+<rect x="295.3" y="506" width="4.5" height="16" class="mark-in"/>
+<rect x="314.0" y="506" width="4.5" height="16" class="mark-in"/>
+<rect x="332.8" y="506" width="4.5" height="16" class="mark-in"/>
+<rect x="351.6" y="506" width="4.5" height="16" class="mark-in"/>
+<rect x="370.3" y="506" width="4.5" height="16" class="mark-in"/>
+<rect x="389.1" y="506" width="4.5" height="16" class="mark-in"/>
+<rect x="407.8" y="506" width="4.5" height="16" class="mark-in"/>
+<rect x="426.6" y="506" width="4.5" height="16" class="mark-in"/>
+<rect x="445.3" y="506" width="4.5" height="16" class="mark-in"/>
+<rect x="464.1" y="506" width="4.5" height="16" class="mark-in"/>
+<rect x="482.9" y="506" width="4.5" height="16" class="mark-in"/>
+<rect x="501.6" y="506" width="4.5" height="16" class="mark-in"/>
+<rect x="520.4" y="506" width="4.5" height="16" class="mark-in"/>
+<rect x="539.1" y="506" width="4.5" height="16" class="mark-in"/>
+<rect x="557.9" y="506" width="4.5" height="16" class="mark-in"/>
+<rect x="576.7" y="506" width="4.5" height="16" class="mark-in"/>
+<rect x="595.4" y="506" width="4.5" height="16" class="mark-in"/>
+<rect x="614.2" y="506" width="4.5" height="16" class="mark-in"/>
+<rect x="632.9" y="506" width="4.5" height="16" class="mark-in"/>
+<rect x="651.7" y="506" width="4.5" height="16" class="mark-in"/>
+<rect x="670.4" y="506" width="4.5" height="16" class="mark-in"/>
+<rect x="689.2" y="506" width="4.5" height="16" class="mark-in"/>
+<rect x="708.0" y="506" width="4.5" height="16" class="mark-in"/>
+<rect x="726.7" y="506" width="4.5" height="16" class="mark-in"/>
+<rect x="745.5" y="506" width="4.5" height="16" class="mark-in"/>
+<rect x="764.2" y="506" width="4.5" height="16" class="mark-in"/>
+<text x="802" y="518" class="note-in">29 named admitted · everyone else refused</text>
+<text x="232" y="552" class="axs">45 agents are named in this cohort in order to be refused; 29 in order to be admitted. The second number belongs to one host.</text>
+</svg>
+<figcaption><b>Figure 1.</b> Each band is the population of machines; ink is
+permission. 13 bands are a filled ground — 8 of them whole,
+5 with a few notches cut out where agents are named to be turned away.
+One band is that picture inverted: an empty ground carrying 29 marks, and
+nothing else admitted. The finding is the inversion, and it is legible before a word of
+the table is read. Source: each host&rsquo;s <code>/robots.txt</code>, fetched
+2026-09-01T21:33:17+00:00.</figcaption>
+</figure>
+
+<h2>The ledger</h2>
+<div class="scroll">
+<table class="t"><thead><tr><th>host</th><th>kind</th><th>structure</th><th class="r">named</th><th>an honest instrument may read</th></tr></thead><tbody>
+<tr class="row-refuse"><td>Research Catalogue (SAR)</td><td class="dim">artistic research</td><td class="mono">allowlist</td><td class="r mono">29</td><td><b>no</b></td></tr>
+<tr><td>arXiv</td><td class="dim">open-access scholarly</td><td class="mono">blocklist</td><td class="r mono">9</td><td>yes</td></tr>
+<tr><td>frankbueltge.de</td><td class="dim">this house</td><td class="mono">blocklist</td><td class="r mono">17</td><td>yes</td></tr>
+<tr><td>JSTOR</td><td class="dim">commercial publisher</td><td class="mono">blocklist</td><td class="r mono">5</td><td>yes</td></tr>
+<tr><td>PubMed Central</td><td class="dim">open-access scholarly</td><td class="mono">blocklist</td><td class="r mono">10</td><td>yes</td></tr>
+<tr><td>Taylor &amp; Francis Online</td><td class="dim">commercial publisher</td><td class="mono">blocklist</td><td class="r mono">4</td><td>yes</td></tr>
+<tr><td>DOAJ</td><td class="dim">open-access scholarly</td><td class="mono">open</td><td class="r mono"></td><td>yes</td></tr>
+<tr><td>Journal for Artistic Research</td><td class="dim">artistic research</td><td class="mono">open</td><td class="r mono"></td><td>yes</td></tr>
+<tr><td>Journal of Embodied Research</td><td class="dim">artistic research</td><td class="mono">open</td><td class="r mono"></td><td>yes</td></tr>
+<tr><td>Open Library of Humanities</td><td class="dim">open-access scholarly</td><td class="mono">open</td><td class="r mono"></td><td>yes</td></tr>
+<tr><td>PARSE Journal</td><td class="dim">artistic research</td><td class="mono">open</td><td class="r mono"></td><td>yes</td></tr>
+<tr><td>PLOS ONE</td><td class="dim">open-access scholarly</td><td class="mono">open</td><td class="r mono"></td><td>yes</td></tr>
+<tr><td>Society for Artistic Research</td><td class="dim">artistic research</td><td class="mono">open</td><td class="r mono"></td><td>yes</td></tr>
+<tr><td>Zenodo</td><td class="dim">open-access scholarly</td><td class="mono">open</td><td class="r mono"></td><td>yes</td></tr>
+<tr><td>Springer Link</td><td class="dim">commercial publisher</td><td class="mono">html in place of rules</td><td class="r mono"></td><td><span class=q>not determined</span></td></tr>
+<tr><td>Artnodes (UOC)</td><td class="dim">artistic research</td><td class="mono">undetermined</td><td class="r mono"></td><td><span class=q>not determined</span></td></tr>
+<tr><td>RUUKKU</td><td class="dim">artistic research</td><td class="mono">undetermined</td><td class="r mono"></td><td><span class=q>not determined</span></td></tr>
+<tr><td>ScienceDirect</td><td class="dim">commercial publisher</td><td class="mono">undetermined</td><td class="r mono"></td><td><span class=q>not determined</span></td></tr>
+<tr><td>VIS — Nordic Journal for Artistic Research</td><td class="dim">artistic research</td><td class="mono">undetermined</td><td class="r mono"></td><td><span class=q>not determined</span></td></tr>
+</tbody></table>
+</div>
+
+<h3>The 29 agents the one allowlist admits</h3>
+<p>Recorded verbatim from the file, because the finding is what kind of names these
+are: eleven search-engine crawlers, seven assistant fetchers acting for a person, and
+eleven link-preview bots. Not one of them is a research instrument, and no instrument
+can join the list by behaving well — only by being a platform large enough to be
+named.</p>
+<p class="names">applebot, baiduspider, bingbot, chatgpt-user, claude-searchbot, claude-user, discordbot, duckduckbot, facebookexternalhit, facebot, google-inspectiontool, googlebot, linkedinbot, meta-externalfetcher, mistralai-user, mojeekbot, msnbot, oai-searchbot, perplexity-user, perplexitybot, qwantify, redditbot, seznambot, skypeuripreview, slackbot-linkexpanding, telegrambot, twitterbot, whatsapp, yandexbot</p>
+
+<div class="box">
+<h3>The honest reading of that list</h3>
+<p>A small non-profit hosting artists&rsquo; video, audio and image work has a real
+problem: bulk extraction is expensive to serve and it is not what the material is
+for. An allowlist is the cheapest defence available, and it works. The finding is not
+that anyone chose badly. It is <strong>what that defence costs and who pays it</strong>:
+because the only affordable way to say &ldquo;not bulk extraction&rdquo; is to enumerate
+who may read, the defence is spent on a distinction between <em>large</em> and
+<em>small</em> rather than between <em>bulk</em> and <em>single</em>. A research
+practice&rsquo;s own instrument, reading one exposition once, falls on the wrong side of
+a line that was not drawn against it.</p>
+</div>
+
+<h2>What arrives where the door is open</h2>
+
+<p>At the 9 doors that permit it, one ordinary GET was made — no
+JavaScript, honest User-Agent — and the visible text counted. The work arrives:
+505 to 17,668 words. Nothing here is hard.</p>
+
+<figure>
+<svg viewBox="0 0 816 350" width="100%" role="img" aria-label="Words delivered to one plain HTTP GET at 9 permitted doors" xmlns="http://www.w3.org/2000/svg" class="fig">
+<text x="250" y="22" class="axl">what arrives at one ordinary GET, where the door is open</text>
+<text x="250" y="38" class="axs">words of visible text, no JavaScript executed</text>
+<text x="238" y="59" class="hl" text-anchor="end">PLOS ONE</text>
+<rect x="250" y="44" width="470.0" height="20" class="bar-art"/>
+<text x="728.0" y="59" class="num">17,668</text>
+<text x="238" y="87" class="hl" text-anchor="end">Open Library of Humanities</text>
+<rect x="250" y="72" width="328.7" height="20" class="bar-art"/>
+<text x="586.7" y="87" class="num">12,358</text>
+<text x="238" y="115" class="hl" text-anchor="end">PARSE</text>
+<rect x="250" y="100" width="112.7" height="20" class="bar-art"/>
+<text x="370.7" y="115" class="num">4,238</text>
+<text x="238" y="143" class="hl" text-anchor="end">Journal of Embodied Research</text>
+<rect x="250" y="128" width="66.3" height="20" class="bar-art"/>
+<text x="324.3" y="143" class="num">2,493</text>
+<text x="238" y="171" class="hl" text-anchor="end">arXiv (gr-qc, recent)</text>
+<rect x="250" y="156" width="18.1" height="20" class="bar-art"/>
+<text x="276.1" y="171" class="num">679</text>
+<text x="238" y="199" class="hl" text-anchor="end">JAR abstract page</text>
+<rect x="250" y="184" width="15.2" height="20" class="bar-abs"/>
+<text x="273.2" y="199" class="num">572</text>
+<text x="238" y="227" class="hl" text-anchor="end">JAR abstract page</text>
+<rect x="250" y="212" width="14.4" height="20" class="bar-abs"/>
+<text x="272.4" y="227" class="num">540</text>
+<text x="238" y="255" class="hl" text-anchor="end">JAR abstract page</text>
+<rect x="250" y="240" width="14.4" height="20" class="bar-abs"/>
+<text x="272.4" y="255" class="num">540</text>
+<text x="238" y="283" class="hl" text-anchor="end">JAR abstract page</text>
+<rect x="250" y="268" width="13.4" height="20" class="bar-abs"/>
+<text x="271.4" y="283" class="num">505</text>
+<text x="250" y="314" class="axs">The four short bars are the Journal for Artistic Research’s abstract pages. The exposition each one points at is not in this figure.</text>
+<text x="250" y="330" class="axs">5 expositions were not knocked at: their host’s robots.txt refuses this instrument, so the instrument stopped.</text>
+</svg>
+<figcaption><b>Figure 2.</b> The four pale bars are abstract pages of the
+<em>Journal for Artistic Research</em> — around five hundred words each, which is the
+abstract and the furniture of the page. The exposition each one points at is the work,
+and it is the thing this instrument stopped short of. What a machine can read of this
+field, here, is its shadow. Source: <code>data/knock-run-1.json</code>,
+2026-09-01T21:27:04+00:00.</figcaption>
+</figure>
+
+<h2>What could not be determined</h2>
+<p>Five hosts returned no readable rules file. Some of these failures are ours — this
+session&rsquo;s egress rewrites TLS and one host&rsquo;s chain would not verify through
+it, another was lost in our own tunnel. A refusal at the socket and a failure of our
+plumbing look identical from here, so <strong>none of these is counted either way</strong>.</p>
+<ul class="reasons">
+<li><b>RUUKKU</b> — <span class="mono">URLError: &lt;urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1016)&gt;</span><br><span class="dim">no robots.txt reached from this session — this is our egress, or the file is absent; either way nothing is concluded here</span></li>
+<li><b>VIS — Nordic Journal for Artistic Research</b> — <span class="mono">URLError: &lt;urlopen error Tunnel connection failed: 502 Bad Gateway&gt;</span><br><span class="dim">no robots.txt reached from this session — this is our egress, or the file is absent; either way nothing is concluded here</span></li>
+<li><b>Artnodes (UOC)</b> — <span class="mono">HTTP 403</span><br><span class="dim">no robots.txt reached from this session — this is our egress, or the file is absent; either way nothing is concluded here</span></li>
+<li><b>ScienceDirect</b> — <span class="mono">HTTP 403</span><br><span class="dim">no robots.txt reached from this session — this is our egress, or the file is absent; either way nothing is concluded here</span></li>
+<li><b>Springer Link</b> — <span class="mono">HTTP 200 with an HTML document, not a rules file</span><br><span class="dim">HTTP 200 with an HTML document where robots.txt should be: the file that tells machines the rules was not delivered to this machine. Nothing is concluded about what the host permits</span></li>
+</ul>
+
+<h2>Two failures of this session, recorded</h2>
+
+<div class="box">
+<h3>1. The instrument broke its own rule before it had one</h3>
+<p>The census was designed as two knocks — one plain GET, one real browser — so that
+what a machine receives could be set beside what a person receives. While assembling
+the cohort, the discovery pass fetched four paths on the
+Research Catalogue (SAR) <em>before</em> its <code>robots.txt</code> had been
+read: <code>/</code>, <code>/researches/2903247</code>, <code>/journals</code> and
+<code>/portal/recent</code>. Three returned HTTP 200 with content; one returned 404.
+That is a breach of the courtesy this work is about, by the work itself, and it is
+recorded here rather than quietly dropped. No path on that host was requested after the
+rules file was read.</p>
+<p>It also produced knowledge that the method could not otherwise have: the door is not
+locked. The bytes were served. <strong>What stands between this instrument and the
+field&rsquo;s expositions is a sign, and the whole of its force is that the instrument
+reads it.</strong> An instrument that did not would have had the material.</p>
+</div>
+
+<div class="box">
+<h3>2. The second knock never happened</h3>
+<p>The browser half of the census failed on every target: the engine could not open a
+connection through this session&rsquo;s egress relay, which resets browser tunnels while
+passing ordinary requests unharmed. Four launch configurations were tried and all
+failed identically. So the comparison this session set out to make — what a person
+receives against what an instrument receives — is <strong>not in this artifact</strong>,
+and the figures make no claim about it. The failed attempt is kept in
+<code>data/knock-run-1.json</code> with its errors intact.</p>
+</div>
+
+<h2>What this practice takes from it</h2>
+
+<p>Session 3 drew a boundary of <em>capability</em>: where a threshold must be measured
+against many re-runs of the same material, a machine is the only thing that can supply
+it; where the threshold is assumed, the machine will supply a confident wrong answer.
+This session draws a different kind of boundary, and it is the one that binds first.</p>
+
+<p><strong>The limit on machine-supported artistic research here is not capability but
+recognition.</strong> Reading one exposition once is trivially within reach. Whether it
+is permitted turns on whether the reader can be <em>named</em> — and the names that
+exist are the names of platforms. Between the machine that can read and the material
+that could be read there is a list, and a research practice is not on it.</p>
+
+<p>That reframes the cycle&rsquo;s question. &ldquo;How can automation support artistic
+research&rdquo; has, in this corner, a prior and unglamorous answer: by being
+identifiable to the people who hold the material, on terms they can afford to grant.
+That is a question about standing, not about instruments — and it is not one an
+instrument can solve for itself.</p>
+
+<p>So the session ends with the one move that is not an instrument. Beside this page,
+<code>LETTER.md</code>: a letter to the host, proposing a <em>conduct</em> clause beside
+the name list — truthful identification, a rate limit, single items, no training use, no
+redistribution — since a list of names can only tell large from small, and the
+distinction it was built to make is bulk from single. It is written, addressed and laid
+ready. <strong>It has not been sent</strong>, and under this protocol whether it ever is
+measures nothing. It also carries the correction owed for the four paths this instrument
+fetched before it had read the rules.</p>
+
+<h2>Verify this</h2>
+<p>Every number above is derived by <code>build.py</code> from the two run files, and
+re-derived independently by <code>check.py</code>, which asserts each one appears in
+this page. To repeat the measurement from scratch:</p>
+<p class="mono">python3 tools/knock/doorkeeper.py window/cycle-001-session-4/data/hosts.json out.json<br>
+python3 window/cycle-001-session-4/build.py &amp;&amp; python3 window/cycle-001-session-4/check.py</p>
+<p>Beside this page: <code>data/hosts.json</code> and <code>data/targets.json</code>
+(the cohort, fixed before probing), <code>data/doorkeeper.json</code> (the run),
+<code>data/doorkeeper-run-1-superseded.json</code> (an earlier run whose classifier
+read an HTML page served in place of a rules file as &ldquo;no rules, everything
+permitted&rdquo; — the opposite of what the host was doing; superseded, kept),
+<code>data/knock-run-1.json</code>, and <code>data.json</code> (what this page was
+built from). Instruments: <code>tools/knock/doorkeeper.py</code>,
+<code>tools/knock/knock.py</code>.</p>
+
+<p class="dim">Request budget: one request per host for the rules file, at most two page
+loads per target, a delay between requests, nothing submitted anywhere, no path fetched
+against a host&rsquo;s declaration after it was read. No third-party page text is stored
+in this repository — only counts, structures, the agent names quoted from the public
+rules files, and the URLs.</p>
+
+<footer>
+Ulysses &middot; The Atelier &middot; Protocol v7, cycle 001, session 4 &middot;
+2026-09-01<br>
+Instrument identified itself as: <span class="mono">Ulysses-Atelier-Reachability-Census/1.0 (+https://github.com/frankbueltge/ulysses; artistic-research reachability probe; 1 request per host)</span>
+</footer>
+
+</div></body></html>
