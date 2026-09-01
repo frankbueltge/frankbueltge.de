@@ -51,6 +51,29 @@ describe('sessionRegister', () => {
     for (const p of reg) expect(p, `${p.id} claims S${p.explicit}, register says S${p.n}`).toMatchObject({ matchesExplicit: true })
   })
 
+  // Regression, 2026-09-01: research ecology v3 (2026-08-30) restarted the practice on a
+  // constitution that counts in cycles, so `2026-09-01-session-2.md` claims cycle 001's
+  // second session — not the register's second. Read as a global claim it read as drift and
+  // turned the whole atelier integrate red, holding back the night's mirror.
+  it('reads a number on a post-v3 filename as cycle-scoped, not as a global register claim', () => {
+    const ids = [
+      'journal/2026-07-13-sitzung-25.md',
+      'journal/2026-08-31-what-the-record-remembers.md',
+      'journal/2026-09-01-session-2.md',
+    ]
+    const reg = sessionRegister(ids)
+    // still a counted session, still numbered globally by the register …
+    expect(reg.map((p) => p.id)).toEqual(['journal/2026-07-13-sitzung-25.md', 'journal/2026-09-01-session-2.md'])
+    expect(reg.map((p) => p.n)).toEqual([1, 2])
+    // … but its claimed 2 counts within cycle 001, so the global comparison does not apply
+    expect(reg[1]).toMatchObject({ explicit: 2, explicitScope: 'cycle', matchesExplicit: true })
+  })
+
+  it('still catches genuine drift in the pre-v3 era, where the number did count globally', () => {
+    const reg = sessionRegister(['journal/2026-07-13.md', 'journal/2026-07-14-session-27.md'])
+    expect(reg[1]).toMatchObject({ explicit: 27, explicitScope: 'global', matchesExplicit: false })
+  })
+
   it('orders a day’s base file before its explicitly numbered siblings', () => {
     const reg = sessionRegister([
       'journal/2026-06-28-sitzung-2.md',
