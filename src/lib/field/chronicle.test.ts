@@ -146,3 +146,45 @@ describe('schemas reject malformed data (the integrate gate)', () => {
     expect(() => chronicleEntrySchema.parse(bad)).toThrow()
   })
 })
+
+describe('work references (WORK_REF) — two legal shapes, nothing else', () => {
+  const entry = (works: string[]) => ({
+    seq: 1,
+    date: '2026-09-01',
+    collective_session: 143,
+    move: 'test',
+    summary: 'a summary long enough to satisfy the minimum length rule',
+    works,
+    verdict: null,
+    fail: false,
+    journal_id: '2026-09-01',
+  })
+
+  it('accepts a bare slug — the pre-v3 form', () => {
+    expect(() => upstreamEntrySchema.parse(entry(['still-dark']))).not.toThrow()
+  })
+
+  it('accepts a v3 artifact path, with or without the trailing slash', () => {
+    // The exact value session 143 recorded, which this schema rejected four times in one day.
+    expect(() =>
+      upstreamEntrySchema.parse(entry(['artifacts/cycle-001/2026-09-01-how-long-a-warning-stands/'])),
+    ).not.toThrow()
+    expect(() =>
+      upstreamEntrySchema.parse(entry(['artifacts/cycle-001/2026-09-01-how-long-a-warning-stands'])),
+    ).not.toThrow()
+  })
+
+  it('still refuses traversal, absolute paths, uppercase and spaces', () => {
+    for (const bad of [
+      '../etc/passwd',
+      '/artifacts/cycle-001/x/',
+      'artifacts/cycle-1/x/',
+      'artifacts/cycle-001/../../x/',
+      'Artifacts/cycle-001/x/',
+      'artifacts/cycle-001/two words/',
+      'works/still-dark',
+    ]) {
+      expect(() => upstreamEntrySchema.parse(entry([bad])), `should refuse ${bad}`).toThrow()
+    }
+  })
+})
