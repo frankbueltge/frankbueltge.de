@@ -1,6 +1,7 @@
 # Wording-Kanon — frankbueltge.de & Ökologie
 
-**Stand: 2026-07-31.** Dieses Dokument ist die maßgebliche aktuelle Sprachregelung.
+**Stand: 2026-09-01** (v3-Sektion und Türen-Spiegel nachgezogen; davor 2026-07-31).
+Dieses Dokument ist die maßgebliche aktuelle Sprachregelung.
 Bei Widerspruch gilt: das jüngste Wort von Frank > dieses Dokument > `src/config/naming.ts`
 (Hub-Wortlaute) > alles andere. **Engine-READMEs, alte Configs und Design-Mockups sind KEINE
 Quelle für aktuelles Wording** — sie hinken der Praxis nach (Lehre vom 24.07.: „Error as
@@ -14,7 +15,50 @@ geholt). Wer Selbstbeschreibungen ändert, zieht dieses Dokument im selben Commi
 - Name/Identität: Frank Bültge, `f.bueltge@gmail.com`. Niemals `frank@bueltge.de`
   (gehört einer anderen realen Person).
 
+## Research ecology v3 — eine geteilte Frage (in Kraft seit 2026-08-30, VERBINDLICH)
+
+Beschlossen bei der Lesung vom 2026-08-30 — der für den 2026-09-05 angesetzten Lesung, vom
+Architekten vorgezogen; sie beurteilte die v2-Bedingungen als gescheitert. Maßgeblich:
+`docs/design/2026-08-30-research-ecology-v3.md`. Die v2-Ordnung (2026-08-08 – 2026-08-30) ist
+damit **datiert abgelöst**; alle Formulierungen aus ihr — Gates, Adversarial-Review-Rollen,
+Machine-Advantage-Bar, Arcs, Sieben-Tage-Sendebindung, Work-line — sind historisch und werden
+nie als aktuell verwendet.
+
+- **Die Ordnung:** Drei maschinell betriebene Praxen arbeiten **eine geteilte Forschungsfrage
+  zur Zeit** — The Field als Wissenschaft, The Studio als Kunst, The Atelier als künstlerische
+  Forschung und Philosophie. 3–5 Sessions je Praxis pro Frage, dann eine gemeinsame
+  Präsentation. Jede Session hinterlässt ein **selbstständiges Artefakt** und ein **Bulletin
+  von höchstens vierzig Zeilen**, das die Geschwister lesen. Verifikation lebt **im Artefakt**,
+  nicht in Gates. Fragen kommen über den öffentlichen Seed-Kanal (`/seed`); ohne Seed gelten
+  die stehenden Themen der Ecken.
+- **Kanonische Substantive:** *cycle* (Zyklus; Nummern dreistellig: „Cycle 001"), *phase*
+  (`closing` · `working` · `presenting`), *bulletin*, *artifact* / *artifact trail*,
+  *closing report*, *presentation*, *standing themes*. Der Zyklus-Zustand ist **kanonisch in
+  `src/data/ecology/cycle.json`** und wird nie von einer Praxis fortgeschrieben.
+- **The Middle (`/encounters`) zeigt den Verkehr:** Seit v3 lesen sich die Praxen jede Session
+  — Begegnung ist der Normalfall, kein registrierpflichtiges Ereignis mehr. Die Seite
+  transkribiert die „What the siblings should know"-Abschnitte der Bulletins **wörtlich, nie
+  zusammengefasst** (Umbau 2026-09-01, PR #802). Das alte Crossings-Register ist datiertes
+  Archiv.
+- **Post Office = poste restante:** Senden ist keine Pflicht mehr; abholbereit liegende Post
+  ist ein vollständiges Ergebnis. „Nothing sends itself" gilt unverändert.
+- **Personae:** Field/**Meridian** · Studio/**Ensemble** · Atelier: **„Ulysses" nur noch
+  provisorisch** — der Name gehört seit dem 2026-08-31 der Nachtlinie (`error-as-method`),
+  die ihn seit 2026-06-28 trägt; die Atelier-Praxis findet ihren eigenen (offen, eine Zeile
+  geschuldet). Bis dahin schreiben Oberflächen „Ulysses" als provisorische Persona, nie als
+  gesetzten Namen.
+- **Verfassungsnummern werden nie getippt,** sondern aus den Spiegeln gelesen
+  (`readConstitution`). Datierter Schnappschuss, nur hier: Atelier v7 · Field v4 · Studio v4
+  (alle „reading of 2026-08-30").
+- **Unberührt von v3:** die Nachtlinie (`error-as-method`), n-1, Machine Attention, das Lab
+  und **Arch** — v3 bindet nur die drei Ökologie-Praxen.
+
 ## Die Ökologie (Hub)
+
+> **Datierte Notiz 2026-09-01:** Der Block unten beschreibt den Hub-Eingang von site-v2
+> (16.07.). Seit dem Ops-Room-Umbau (2026-08-11) ist die H1 der Startseite die stehende Frage
+> (`NAMING.title`), der Eyebrow trägt den Namen; `/ecology` führt seit v3 mit „One question,
+> three standpoints". Kanonisch: `src/config/naming.ts` und `src/config/ecology-v3-wording.ts`.
 
 - H1: **„a federated research ecology"** · Eyebrow: `FRANK BÜLTGE · DATA ENGINEERING & ANALYTICS`.
 - Hero-Untertitel (Franks Wahl 24.07.): „Three machine-run research practices, each under
@@ -26,15 +70,20 @@ geholt). Wer Selbstbeschreibungen ändert, zieht dieses Dokument im selben Commi
 
 ## Die vier Türen — aktuelle Einzeiler (kanonisch in `naming.ts`, hier gespiegelt)
 
-- **The Atelier / Ulysses:** machine-run artistic research in bounded projects; Maschinen
-  finden Probleme, bauen Werke, kritisieren sich selbst; failures stay on the record,
-  checkably. — NICHT mehr mit „Error as Method" führen: das war der Gründungs-Arbeitstitel
-  (Repo hieß `irrtum-als-methode`, seit 23.07. `ulysses`); nur noch historisch, in Werken
-  der Nightly-Phase.
-- **The Field / Meridian:** empirisches Forschungskollektiv, stellt die Messinstrumente
-  unserer Zeit auf den Prüfstand — verifiable instruments, adversarial review, claims
-  ledger. Der **wissenschaftliche Pol** der Ökologie. NIEMALS „artistic research" für
-  Meridian. — **MRR (Meridian Research Runtime) ist Meridians WERKZEUG, nicht Meridians
+**Spiegel nachgezogen 2026-09-01 (v3):** Die Einzeiler vom 24.07. warben mit dem
+v2-Apparat (work-line, adversarial review, claims ledger, concept gate) — alle Begriffe seit
+2026-08-30 historisch. Struktur bleibt tragend: der Text vor dem ersten „ — " wird per
+`splitDoorLine()` zur H1 der Station, die ganze Zeile erscheint wörtlich auf dem Board.
+
+- **The Atelier** (Persona provisorisch „Ulysses", s. o.): *Machine-run artistic research and
+  philosophy — concepts tested in made things; the practice works the ecology's shared
+  question from its own corner and closes every session with an artifact, failures on the
+  record.* — NICHT mehr mit „Error as Method" führen: der Name gehört der Nachtlinie
+  (`error-as-method`); im Atelier nur noch historisch, in Werken der Nightly-Phase.
+- **The Field / Meridian:** *An empirical research collective putting the measuring
+  instruments of our time on trial — the science corner of the shared question: measurements
+  over impressions, named sources, honest uncertainty.* Der **wissenschaftliche Pol** der
+  Ökologie. NIEMALS „artistic research" für Meridian. — **MRR (Meridian Research Runtime) ist Meridians WERKZEUG, nicht Meridians
   Stimme** (Frank, 2026-08-01, wörtlich: „es ist nicht die Stimme sondern ein Werkzeug
   was sie nutzen können wann immer es Sinn macht"). Das Werkzeug gehört der Praxis; sie
   nutzt es, wann es Sinn macht. Was ein Lauf feststellt, ist ein Befund des Werkzeugs —
@@ -47,13 +96,16 @@ geholt). Wer Selbstbeschreibungen ändert, zieht dieses Dokument im selben Commi
   benannt, nicht verwischt); die Besitz-Zuschreibung ist zurückgezogen. `/on-record` und
   `/e2e-automation` zeigen Läufe der Engineering-Linie und werden weiterhin als solche
   ausgewiesen — aber nicht mehr mit der Begründung, das Werkzeug sei nicht Meridians.
-- **The Studio / Ensemble:** Künstlerkollektiv „under no label", inszeniert Werke der
-  Datenkunst in autonomen Sessions; jedes Element trägt einen honesty tier (verified /
-  sourced / imagined).
-- **The Middle (/encounters):** die Kontaktzone — die Praxen begegnen sich UND arbeiten
-  **zunehmend gemeinsam an geteilten Forschungsfragen (Joint Inquiries)**. NICHT „rare
-  moments"/„rarely" — das widerspricht der laufenden joint-first-Richtung (research-ecology,
-  seit 19.07., erste Joint Inquiries in Vorbereitung 24.07.).
+- **The Studio / Ensemble:** *An artist collective on one line: only digital works, and only
+  what a machine does better than a human — it builds works and instruments from its
+  siblings' research material; scale, repetition, verification, the temporal.* — Die Fassungen
+  „under no label" (bis 2026-08-08) und „a concept gate kills most…" (bis 2026-08-30) sind
+  datiert abgelöst.
+- **The Middle (/encounters):** *The contact zone: what passes between the practices — every
+  bulletin's word to its siblings, quoted verbatim, never summarised, all on the record.* —
+  Die Joint-Inquiries-Fassung (24.07.) ist **zweifach datiert abgelöst**: v2 (2026-08-08)
+  löschte die Joint-Inquiry-Maschinerie, v3 (2026-08-30) machte Begegnung zum Normalfall
+  jeder Session (Verkehr statt Register, s. v3-Sektion oben).
 
 ## Catalogues (Frank, 26.07.)
 
