@@ -13,9 +13,13 @@
 //     presentation shelf says why it is empty. No placeholder stands in for a missing record.
 //   · THE RECORD IS QUOTED, NOT PARAPHRASED — bulletins render verbatim (truncation is
 //     declared), because the bulletin IS the practice's public sentence under this order.
+//     Since 2026-09-01 the words pass through bulletinBlocks(): the bold, code and headings
+//     a practice wrote are ITS OWN marks — showing the asterisks instead of the emphasis
+//     they encode dropped information, which is the opposite of fidelity.
 import { getRelativeLocaleUrl } from 'astro:i18n'
 import type { Locale } from '@/lib/site'
 import { ECOLOGY_V3 } from '@/config/ecology-v3-wording'
+import { bulletinBlocks } from '@/lib/ecology/bulletin-render'
 import {
   BULLETIN_DISPLAY_MAX,
   loadArtifacts,
@@ -39,6 +43,13 @@ const closing = loadClosingReports()
 const artifacts = loadArtifacts()
 
 const kicker = 'font-mono text-xs uppercase tracking-[0.22em] text-fg-muted'
+
+/* the same block classes the practice stations use — one bulletin, one look, everywhere */
+const blockClass: Record<string, string> = {
+  heading: 'pt-2 font-mono text-[13px] uppercase tracking-[0.14em] text-fg first:pt-0',
+  listItem: 'border-l border-line pl-3 text-sm leading-relaxed text-fg-muted',
+  para: 'text-sm leading-relaxed text-fg-muted',
+}
 ---
 
 <article class="mx-auto max-w-5xl px-4 pb-20 pt-10 sm:px-6">
@@ -91,8 +102,13 @@ const kicker = 'font-mono text-xs uppercase tracking-[0.22em] text-fg-muted'
   </section>
 
   {/* ── The three bulletins ──────────────────────────────────────────────── */}
+  {/* Rendered through bulletinBlocks() since 2026-09-01, the same renderer the practice
+      stations use: the emphasis and headings ARE the practice's own marks — a raw dump showed
+      the asterisks instead of the emphasis they encode, which loses information rather than
+      adding fidelity. The words remain byte-verbatim; truncation is still declared. Three
+      columns only from lg up — at md the columns were too narrow to read a bulletin in. */}
   <section class="mt-12" aria-label="The three practices and their latest bulletins">
-    <div class="grid gap-5 md:grid-cols-3">
+    <div class="grid gap-5 lg:grid-cols-3">
       {
         bulletins.map((p) => (
           <div class="flex flex-col rounded-sm border border-line bg-panel">
@@ -109,7 +125,21 @@ const kicker = 'font-mono text-xs uppercase tracking-[0.22em] text-fg-muted'
               {
                 p.bulletin.present ? (
                   <>
-                    <pre class="mt-3 overflow-x-auto whitespace-pre-wrap break-words font-mono text-[13px] leading-relaxed text-fg-muted">{p.bulletin.text}</pre>
+                    <div class="mt-3 space-y-2.5">
+                      {bulletinBlocks(p.bulletin.text!).map((b) => (
+                        <p class={blockClass[b.kind]}>
+                          {b.segments.map((s) =>
+                            s.kind === 'strong' ? (
+                              <strong class="font-semibold text-fg">{s.text}</strong>
+                            ) : s.kind === 'code' ? (
+                              <code class="rounded bg-panel-2 px-1 font-mono text-[0.9em]">{s.text}</code>
+                            ) : (
+                              <>{s.text}</>
+                            ),
+                          )}
+                        </p>
+                      ))}
+                    </div>
                     {p.bulletin.truncated && (
                       <p class="mt-2 font-mono text-xs text-fg-faint">
                         {W.bulletin.truncatedNote(p.bulletin.lines, BULLETIN_DISPLAY_MAX)}
