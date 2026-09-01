@@ -43,8 +43,8 @@
       },
       {
         "file": "src/content/studio/works/*/meta.json",
-        "sha256": "f2eaf119614c9e71",
-        "files": 7
+        "sha256": "dacb7a5d0c9fdd2f",
+        "files": 8
       },
       {
         "file": "src/data/nightly/works/*/meta.json",
@@ -57,14 +57,14 @@
       }
     ],
     "counts": {
-      "nodes": 310,
-      "edges": 268,
+      "nodes": 311,
+      "edges": 269,
       "nodesByKind": {
         "decision": 76,
         "encounter": 6,
         "neighbor": 93,
         "practice": 9,
-        "practice-work": 95,
+        "practice-work": 96,
         "receiver": 8,
         "work": 23
       },
@@ -72,7 +72,7 @@
         "addresses": 8,
         "concerns": 2,
         "door": 5,
-        "made-by": 95,
+        "made-by": 96,
         "neighbor-of": 93,
         "participates": 17,
         "touches": 48
@@ -3457,6 +3457,21 @@
       "medium": "A single self-contained HTML surface — three plates and a litany of 206 quoted sentences, filterable by cohort and by whether the door opened. No network, no build, no dependency; it opens from a filesystem. Generated in two steps from committed code, so no number on the face can drift from the data beside it."
     },
     {
+      "id": "practice-work:studio/2026-09-01-not-yet",
+      "kind": "practice-work",
+      "label": "NOT YET",
+      "slug": "2026-09-01-not-yet",
+      "practiceId": "ensemble",
+      "date": "2026-09-01",
+      "href": "/studio/works/2026-09-01-not-yet",
+      "source": {
+        "file": "src/content/studio/works/2026-09-01-not-yet/meta.json",
+        "quote": "\"title\": \"NOT YET\""
+      },
+      "embodies": "An expression of concern is a journal saying in public that one of its own papers may be unreliable, and that it is not yet withdrawing it: a flag with a dated start and an implied promise of a later decision. On 2026-09-01 the sibling practice The Field measured how long that promise takes to keep — a survival curve over 1,277 papers with five full years behind them, 601 of which were retracted inside the window, with a median wait of 291 days when a decision comes at all. This work turns the same committed row file the other way round. It takes the 1,667 papers with no retraction on record and treats each flag as a duration that is still running: 3,022,007 days of combined waiting as of The Field's observation cutoff of 2026-08-19, accruing at 1,667 days a day — one further day every 51.83 seconds — under a clock on the page that shows the observed and the merely inferred halves in different colours and never adds them into one unmarked figure. Three readings, all derived from the committed rows: the waiting is neither short nor exceptional, with 1,615 of 1,667 past a year and a median of 1,708 days, nearly six times the median resolution; the oldest line on the page cannot be trusted, because a check against Crossref showed its flag date to be the paper's own publication date, while the next oldest, checked in the same pass, yielded the better finding — its notice, Retraction Adv. Mater. 6/2003, retracted two papers and expressed concern about a third in one document on one day, and the third has been standing 23 years since; 58 rows are deposited in a way that carries no independent start date, of which ten were checked and eight were sound; and nobody raises these one at a time, with 687 days carrying all 1,667 flags and a single day carrying 113 of which none has since been resolved. The Field's caveats travel onto the face at their published status: a concern is not a finding of misconduct, no claim whatever is made about any author, unresolved cannot be distinguished from resolved-in-silence, and the concern side of the record is the less completely collected side, so every figure here is a floor. SOURCED dates, identifiers and publisher names, each resolvable; DERIVED durations and sums, reproducible by the two scripts beside the work; the clock's forward half and plate II's dashed segment marked as PROJECTION wherever they appear; nothing IMAGINED. The finished page was read adversarially before it landed and one outright error was found and fixed: the second reading named one paper and stated a fact belonging to another, because the passage was keyed to a row picked by index while its sentence had been written by hand about a different one. The right paper was checked, the passage is now keyed to what was checked, and the build asserts that the paper named is the paper whose notice is described.",
+      "medium": "A single self-contained HTML surface — a live clock, three plates and a ledger of all 1,667 papers, each linked to its identifier. No network, no build, no dependency; it opens from a filesystem. Generated in two steps from committed code, so no number on the face can drift from the data beside it."
+    },
+    {
       "id": "receiver:center-for-humane-technology",
       "kind": "receiver",
       "label": "Center for Humane Technology",
@@ -4978,6 +4993,15 @@
       "source": {
         "file": "src/content/studio/works/2026-08-31-come-in/meta.json",
         "quote": "\"date\": \"2026-08-31\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:studio/2026-09-01-not-yet",
+      "to": "practice:ensemble",
+      "source": {
+        "file": "src/content/studio/works/2026-09-01-not-yet/meta.json",
+        "quote": "\"date\": \"2026-09-01\""
       }
     },
     {
