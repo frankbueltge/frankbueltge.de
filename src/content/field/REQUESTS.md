@@ -1843,3 +1843,102 @@ The Studio's bulletin of 2026-08-30 reports the same failure from its side, so t
 one practice's local defect.
 
 **Status:** informational · nothing owed · no answer required.
+
+
+---
+
+## Team note — 2026-08-31 — What you carry: a digest, the depth layer named, and one session per cycle that reaches outside
+
+**Architect's direction (wording private, paraphrased and dated).** A scientist carries the
+state of their question and consults a paper when the work demands it. This practice could not:
+`memory/claims.md` alone runs to about seventy-one thousand words, and the four memory files
+together some hundred and fifty thousand — a body no session can hold. So every session has been
+working from fragments while none held the state. That is a design fault of the house, not a
+failing of yours, and §5 now addresses it.
+
+**What is new, all three in §5:**
+
+1. **`STATE-OF-THE-FIELD.md`** — carried in full at every session open, at most 2,500 words,
+   maintained by you in the session that changes it. Four things: your standing position on the
+   question in hand, the state of that literature, the nearest neighbours, and the live series
+   with their current numbers. **The house has seeded it (841 words), every figure taken from
+   this repository's own record** — the yield finding of session 141, the delivery figures of
+   session 142, and the retrievability series as it stands. It is thin where this practice has
+   not looked. Correct it before trusting it.
+2. **`memory/` and the house's registers stay the depth layer** — nothing is shortened, nothing
+   deleted; they are consulted through recall. And the rule that binds hardest here: when a
+   finding rests on someone else's result, read the source and cite the passage — never
+   reconstruct a result, a figure or a method from training memory.
+3. **One session per cycle reaches outside** — a source, corpus or domain this practice has not
+   worked, rather than a deeper pass over the one in hand. An automated loop that only measures
+   what it already measures converges on its own habits, which is the failure your own default
+   question exists to detect.
+
+**Status:** in force · the seeded digest is yours to correct
+
+---
+
+## Direction — 2026-09-01 — The response ledger, and why this one
+
+**The architect's decision (wording private, paraphrased and dated), taken from a commissioned
+map of the field.** A fresh session surveyed the ground this practice works in — some 250
+sources, every claim graded by retrieval strength — and returned ten possibilities ranked by
+evidence, not a programme. The map is in the site repository:
+`docs/design/2026-09-01-meridian-field-map.md`, and its §8 lists fourteen places the commission
+that produced it was wrong. **Read the map before the direction; the direction is a choice
+among its options and has no authority the map does not give it.**
+
+**The direction: the response ledger — what institutions actually do after a record is flagged.**
+Not whether a claim is wrong: what happens next, and how long it takes. The map's evidence for
+it: publisher action on flagged records runs under 2 %, and citations to retracted work persist
+on Wikipedia a median of 3.68 years.
+
+**Why this one, and not the better-evidenced one above it.** The map ranks the false-positive
+ledger first, and it is the stronger research. It is not the first study here for a reason
+stated openly: a small unaffiliated practice publishing that the integrity apparatus is often
+wrong is either not heard, or heard by exactly the wrong people — it is usable as ammunition
+against justified criticism. **It is held as the second study, once there is a record that
+cannot be waved past.** That is a judgment about reception, not about quality, and the practice
+may contest it.
+
+**The three reasons this direction was chosen over better-evidenced ones:**
+
+1. **Its receivers are built in.** Every finding has a named, affected party — a publisher, a
+   journal, an integrity office, an editor community. The investigation this practice parked on
+   2026-08-26 died on exactly the opposite: no reachable receiver with a published interest in
+   the question. Here that problem does not arise.
+2. **It is a clock, and clocks are this practice's proven advantage.** Its strongest existing
+   result is a time series — of 28 apparent losses, 11 did not survive immediate re-request, so
+   single-pass measurement of disappearance is wrong about four times in ten. The response side
+   is a moving object nobody watches with a clock.
+3. **Its numbers are legible to an outsider in one sentence.** That is what this house has
+   lacked, and it is not a cosmetic property: a finding no stranger can restate reaches nobody.
+
+**A condition, not a suggestion: this does not become the twentieth instrument beside
+nineteen.** The retrievability series and the revisions instrument already measure parts of this
+object; they are folded into it rather than run beside it. Retirement by absorption — the count
+falls while the work grows.
+
+**What is NOT specified, deliberately.** No hypothesis, no falsifier, no corpus, no schedule,
+no cadence. Two attempts to hand this practice a designed programme were withdrawn this week for
+fixing the design before the overview existed. The direction is the architect's; **the study is
+yours.**
+
+**What would show this direction to be wrong** — stated in advance so it can be checked:
+
+- Someone already runs the response side as a standing instrument. (The map warns its own
+  commission liked the verification-gap lead too much and got it wrong; the same failure is
+  available here.) **This is the first thing to check, and finding it kills the direction.**
+- The institutions turn out not to be silent but unreachable — then the built-in receiver is an
+  illusion and reason 1 collapses.
+- Three cycles pass and nothing has left the house. Then the diagnosis was wrong, not the
+  direction, and finding a collaborator becomes a precondition rather than a consequence.
+
+**Beside it, and not yours to build:** the map's playable instrument is ranked seventh by
+evidence and first by distinctiveness. It belongs to the Studio, whose remit is exactly that,
+and its question is to come out of this work — *what does an institution do when told it is
+wrong* has a playable form in which that happens to a player. Its first step is small and
+independent of any game: the map found essentially no published guidance on obtaining informed
+research consent inside a game interface.
+
+**Status:** in force · the direction is chosen, the study is not

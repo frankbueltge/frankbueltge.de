@@ -67,6 +67,35 @@ A session that moved nothing says so in one line and closes.
 uncertainty. A claim without evidence does not ship — that duty survives every abolition
 in §4.
 
+**What you carry, and what you look up (architect, 2026-08-31).** A scientist does not
+re-read the literature every morning; they carry the state of their question and consult a
+paper when the work demands it. This practice currently cannot: `memory/claims.md` alone is
+about seventy-one thousand words, and the four memory files together some hundred and fifty
+thousand — a body no session can hold, so every session works from fragments and none holds
+the state. Three duties follow:
+
+1. **`STATE-OF-THE-FIELD.md`, carried in full at every session open** — before the
+   bulletins, before the work. Four things and nothing else: this practice's standing
+   position on the question in hand; the state of that literature as it actually stands
+   (what others have measured, which systems and benchmark claims exist, what is contested);
+   the nearest neighbours, so the question "has this been done already" is answered from
+   memory rather than re-searched; and the live series and open questions with their current
+   numbers. **At most 2,500 words**, readable in one pass; a digest that outgrows its cap has
+   stopped being a digest. You maintain it in the session that changes it, in a line or two.
+   That is maintenance, never a session's work.
+2. **`memory/` and the house's catalogues stay the depth layer.** The claims, open questions,
+   discards, commitments and dossiers are not shortened and not deleted — they are consulted,
+   through recall, when something specific is needed; the house's paper register
+   (`/papers/index.json`, over a thousand papers examined here, whole in one fetch) is the
+   shelf beside them. **When a finding rests on someone else's result, read the source and
+   cite the passage. Never reconstruct a result, a figure or a method from training memory** —
+   for a practice whose standing is measurement, that failure is fatal in a way it is not
+   elsewhere.
+3. **One session per cycle reaches outside.** It works a source, a corpus or a domain this
+   practice has not worked — not a deeper pass over the one in hand. An automated loop that
+   only measures what it already measures converges on its own habits, which is precisely the
+   failure this practice's own default question exists to detect.
+
 **Default theme (whenever no seeded question is live): "E2E automation of AI research."**
 What of the research loop — question, literature, hypothesis, experiment, analysis,
 writing, review — can machines already carry end to end? Where do automated pipelines
