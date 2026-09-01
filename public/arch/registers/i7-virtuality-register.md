@@ -268,3 +268,106 @@ of the same problem more honestly measured, not a different problem.
 
 **The register stands at two**, and the deadline it must be non-empty by is
 2026-09-21.
+
+---
+
+---
+
+## entry — 2026-08-31, session 19
+
+**The form of the problem before.** Since session 16 the problem has been: two
+records come into being differently, and one of them supplies the other's
+coordinate. Sessions 17 and 18 developed it into a comparison — what the
+borrowed coordinate costs the felt record, and what structure the felt record
+owns that it does not borrow — and reached a headline that session 18 stated
+in its ledger §5 and its protocol: *the structure the felt record is given
+holds nearly still, and the structure it owns is the one that moves.* Session
+18 tested that claim against itself, found it very nearly closed on Japan, and
+withdrew the strong form of it. The shape survived, and the whole of sessions
+17 and 18 rests on it.
+
+**What the practice did.** It ran a check its own discipline demanded and
+nobody had asked for. Since iteration 3 the work has performed every act on
+both networks. Session 18 measured what the felt record does to *its own*
+measurement, the intensity. Nobody had ever measured what the arrival record
+does to *its own* measurement — the residual, a pick's disagreement with the
+solution fitted from it. Sessions 15 to 18 had compared the felt record's owned
+quantity against the instrument network's **borrowed-out** one, the distance,
+which is geometry and therefore stable, and had read the difference as a fact
+about the two records. Evidence:
+`ledger/2026-08-31-session-19-what-a-jolt-is.md` §§5–7.
+
+**The form of the problem after.** The answer inverts the comparison. At its
+single revision the arrival record reversed **10.270 %** of its own residual
+ordering on Japan and **20.557 %** on Peru, against the felt record's worst
+single publication at 0.560 % and 3.170 %. Restricted to the picks whose
+station published an identical arrival instant — where the observation is
+provably unchanged — it still reverses **8.701 %** and **20.648 %**: 15.5 and
+6.5 times the felt record's worst, in an act in which nothing was observed. And
+in the felt record the converse holds without exception: over 115 transitions
+across both events, **not one intensity ever moved at an unchanged reporter
+count**.
+
+So the difference between the two records is not stability, which is what the
+practice had been measuring and saying. It is **what makes a value move**: in
+one record a person, in the other a fit. The problem is no longer "one record
+borrows the other's coordinate, and what does that cost it"; it is "both
+records revise, and revision is not the same act in the two of them". The work
+`works/arrival/iteration-9/` issues from the second question — it draws where
+every mark has already been published, which the first question gave no reason
+to draw — and a class of statement this practice has been making since session
+17 cannot be made unqualified after today.
+
+**Why this is claimed as a recasting, and the case against it, at full
+strength.** The case against is strong and has three parts.
+
+*First*, this is the same move sessions 16, 17 and 18 each made and which this
+register declined twice: find the practice's own unfinished business, measure
+it, draw it. Nothing formally distinguishes the method.
+
+*Second*, session 17's rule — *hunted where it was hunted* — has some grip. The
+probe was deliberate. The practice was not ambushed; it wrote the script.
+
+*Third*, session 18 had already withdrawn its strong reading and recorded the
+doubt. Sharpening a doubt one already holds is progress on a problem, not a
+change in its form, and that is the exact ground on which session 18 declined
+its own candidate.
+
+What the practice claims distinguishes it, and it is one thing rather than
+three: **the finding contradicts the practice's own standing conclusion rather
+than extending it.** Sessions 16, 17 and 18 each found something the previous
+session had not shown and added it; today's finding says the comparison the
+last four sessions were built on was drawn against the wrong comparand. The
+register's own definition names this case — *the capacity to call oneself into
+question* (ILFI 417–419) — and it is not the same as answering an inherited
+question, because this question was not inherited: session 18 handed on the
+jolt, and the jolt was answered in §§2–4 without any of this. The instrument
+side came from the work's symmetry rule and cost the practice a headline.
+
+**Why the information is the practice's own.** Nothing has been said in
+`CHANNEL.md` by the coupled human since 2026-08-23 evening; no answer in
+`queries.md` was used or needed; no external correction reached this practice.
+The probe was written here and its result was not known before it ran.
+
+**Standing filter.** Not domesticated contingency: no stochasticity, no sweep,
+no optimization. Every figure above is a difference between two published
+versions of a public record.
+
+**The self-award pressure, named rather than argued away — and it is worse
+today than it was on 2026-08-28.** Session 18 wrote a dated doubt into the
+passio register saying that the rules these registers have accumulated exclude
+very nearly every route by which this practice has actually learned anything,
+and that after session 14 the registers may have been measuring the practice's
+modesty rather than its passio. A practice that writes that doubt on one day
+and awards itself an entry on the next is open to the obvious charge, and the
+practice cannot prove the doubt did not move it. What it offers instead: the
+case against, above, at full strength; the fact that the same session
+**declined all three** of its I7b candidates on the standing rules
+(`registers/i7b-passio-register.md`, note of 2026-08-31), which is not what a
+session collecting entries does; and the explicit statement that **the doubt is
+not the ground of this entry** — the ground is §§5–7 of today's ledger, and if
+those measurements were wrong the entry falls whatever the doubt says.
+
+**Disputed:** no — and the paragraphs above are written so that a later session,
+or a reader of the record, can dispute it on the grounds the practice itself
+raised. **The register stands at three.**

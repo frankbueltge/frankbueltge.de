@@ -1,7 +1,7 @@
 # Arrival
 
-A work candidate, in eight iterations. Current: **iteration 8**, built
-2026-08-30 (session 18).
+A work candidate, in ten iterations. Current: **iteration 10**, built
+2026-09-01 (session 20).
 
 This file is for continuing the work, not for explaining it. The work is the
 HTML file; if it needs this README to be understood, it has failed its own
@@ -10,7 +10,7 @@ record, not in a longer README.
 
 ## Rebuilding
 
-    cd iteration-8
+    cd iteration-10
     python3 build.py                 # most recent event carrying both products
     python3 build.py us6000tmta      # a named event
 
@@ -191,6 +191,71 @@ still runs.
   lie wholly inside, 91 reach in, 90 do by their centres. What forced the change
   is in `ledger/2026-08-30-session-18-what-it-owns.md`.
 
+- **`iteration-9/`** — session 19. No mark has always stood where it stands.
+  Session 18 left standing the question of what happens at a jolt — the felt
+  record's own ordering does not drift but reorders at 9 of 79 publications on
+  Japan and 4 of 36 on Peru. A jolt is one person: eight of Japan's nine and
+  three of Peru's four move exactly one block, and over 115 transitions across
+  both events not one intensity ever moved at an unchanged reporter count. The
+  same question asked of the other network inverts the comparison the last four
+  sessions were built on. The arrival record's own measurement of itself is the
+  residual, and its single revision reversed 10.3 % of that ordering on Japan
+  and 20.6 % on Peru — 8.7 % and 20.6 % counting only the picks whose station
+  published an identical arrival instant, where nothing was observed at all.
+  One record's values move when a person acts; the other's move when a fit
+  moves. So both halves of the figure, and the residual strip beside it, now
+  draw where each mark has already been published, at or before the instant
+  being read: below the axis a block's earlier intensity and earlier distances,
+  in the strip a pick's earlier residual with a tail, in the file's own colour
+  for something that changed while nothing was observed. Above the axis the
+  same act is performed and the trace is a fraction of a pixel, which is drawn
+  rather than hidden. `build.py` changes for the first time since iteration 6,
+  and both changes are identity claims: a pick gets a name that survives
+  republication, checked not assumed, and carries its arrival instant counted
+  from an origin that belongs to no version.
+  Instances: `us6000tmta.html` (Japan, M 5.8), `us6000tm81.html` (Peru,
+  M 6.7).
+
+  Struck between iterations 8 and 9: the footer sentence "At each revision every
+  felt report in this file moved, although nobody reported anything" — prose
+  standing in for a picture, on the ground iteration 7 struck the 1 km cell
+  sentence. What forced the change is in
+  `ledger/2026-08-31-session-19-what-a-jolt-is.md` and
+  `registers/i7-virtuality-register.md`.
+
+- **`iteration-10/`** — session 20. The strips beneath the figure stop
+  counting themselves. Session 19 found that the felt record's intensity moves
+  only when a second person answers, and left open which blocks those are. They
+  are not chosen by the earthquake: neither distance from the epicentre nor
+  published intensity separates them, on either event. On the Japanese event
+  they are chosen by the record's own crowd — a median of 12 other blocks
+  already published within 10 km of them when they first appeared, against 3 for
+  the blocks that never move — and they stand close together, 11.3 km apart
+  against 33.2 km for random sets drawn from the same versions. On the Peruvian
+  event, five blocks and nothing measurable. The same question asked of the
+  other network answers differently: a station is re-picked where the record
+  already disagreed with itself, not where stations are dense, and the re-pick
+  does not remove the disagreement that selected it — 5 of 13 picks ended nearer
+  zero and the median per-pick change was +0.12 s. So both strips stop stacking
+  their populations, which was a tally, and stand each mark at how many marks of
+  its own record were standing within a distance of it; that distance is handed
+  over, on a ladder of the felt record's own cell size by powers of ten, because
+  it is a constant neither record justifies. Below the axis the right-hand
+  columns then stand high on one event and scatter on the other; above it the
+  heights say nothing about the residual, which is the finding rather than a
+  failure to draw it. `build.py` changes for the second time since iteration 6:
+  a pick gets a place on the ground, from the epicentral distance and the
+  azimuth its own version publishes about the epicentre that version published,
+  looked up in no station inventory.
+  Instances: `us6000tmta.html` (Japan, M 5.8), `us6000tm81.html` (Peru,
+  M 6.7).
+
+  Struck between iterations 9 and 10: the packing levels in the residual strip
+  and the column stack in the felt strip — both of them tallies of how many
+  marks were beside a mark, which is the habit iteration 8 struck above the axis
+  and left standing below it. What forced the change is in
+  `ledger/2026-09-01-session-20-what-a-crowd-is.md`.
+
 ## Provenance and reuse
 
 Data: USGS Earthquake Hazards Program, public and unauthenticated. The ledger
@@ -232,3 +297,15 @@ after the event, sometimes for days. A rebuild of the same event is not a
 reproduction of an earlier instance, and the built files name the revision
 they came from so the difference stays visible. From iteration 6 that note is
 no longer a caveat about the work but the subject of it.
+
+Iteration 10 derives two more and says so in the file: a pick's place on the
+ground, from its own published epicentral distance and its own published
+azimuth about the epicentre its version published, on the same sphere and by the
+same great circle run forwards; and the number of a record's own marks standing
+within a distance of one of them, counted over the population standing at the
+instant being read. Neither is looked up anywhere: a pick with no published
+azimuth would get no place and be counted rather than placed, and on both work
+events that count is zero. Iteration 10 is also the first to let a control
+rescale an axis — the neighbourhood rung, and only the two strips' vertical
+rule — which the file discloses at every state by drawing both ends of that
+rule.

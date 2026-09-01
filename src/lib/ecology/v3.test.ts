@@ -7,7 +7,9 @@ import os from 'node:os'
 import path from 'node:path'
 import {
   BULLETIN_DISPLAY_MAX,
+  loadArtifacts,
   loadBulletin,
+  loadClosingReports,
   loadCycle,
   loadPresentations,
   PRACTICES,
@@ -113,5 +115,67 @@ describe('loadPresentations', () => {
     expect(entries.find((e) => e.practice === 'field')?.href).toContain(
       'github.com/frankbueltge/field-research',
     )
+  })
+})
+
+describe('loadClosingReports', () => {
+  it('finds nothing when no practice published a report', () => {
+    expect(loadClosingReports(fixtureRoot())).toEqual([])
+  })
+
+  it('prefers closing-report/ and accepts a window only when the page says it is the report', () => {
+    const root = fixtureRoot()
+    const field = path.join(root, 'public/field/closing-report')
+    const atelierWindow = path.join(root, 'public/atelier/window')
+    const studioWindow = path.join(root, 'public/studio/window')
+    for (const d of [field, atelierWindow, studioWindow]) fs.mkdirSync(d, { recursive: true })
+    fs.writeFileSync(path.join(field, 'index.html'), '<title>The Field — closing report</title>')
+    // the Atelier's gate refused a new root path, so its report is its window page
+    fs.writeFileSync(
+      path.join(atelierWindow, 'index.html'),
+      '<title>The Atelier — closing report, 2026-08-30</title>',
+    )
+    // a window that is only a window must not be advertised as a report
+    fs.writeFileSync(path.join(studioWindow, 'index.html'), '<title>The Studio — window</title>')
+    const reports = loadClosingReports(root)
+    expect(reports).toHaveLength(2)
+    expect(reports.find((r) => r.practice === 'field')?.href).toBe('/field/closing-report/')
+    expect(reports.find((r) => r.practice === 'atelier')?.href).toBe('/atelier/window/')
+    expect(reports.find((r) => r.practice === 'studio')).toBeUndefined()
+  })
+})
+
+describe('loadArtifacts', () => {
+  it('finds nothing before the first artifact lands', () => {
+    expect(loadArtifacts(fixtureRoot())).toEqual([])
+  })
+
+  it('reads the practice own date prefix and sorts newest first', () => {
+    const root = fixtureRoot()
+    const mk = (p: string, cycle: string, slug: string) => {
+      const dir = path.join(root, 'public', p, 'artifacts', cycle, slug)
+      fs.mkdirSync(dir, { recursive: true })
+      fs.writeFileSync(path.join(dir, 'index.html'), '<!doctype html>')
+    }
+    mk('field', 'cycle-001', '2026-08-30-yield-of-a-loop')
+    mk('field', 'cycle-001', '2026-08-31-links-in-the-abstract')
+    mk('studio', 'cycle-001', 'undated-thing')
+    const found = loadArtifacts(root)
+    expect(found.map((a) => a.slug)).toEqual([
+      'links-in-the-abstract',
+      'yield-of-a-loop',
+      'undated-thing',
+    ])
+    expect(found[0]!.date).toBe('2026-08-31')
+    expect(found[0]!.href).toBe('/field/artifacts/cycle-001/2026-08-31-links-in-the-abstract/')
+    expect(found[2]!.date).toBeNull()
+  })
+
+  it('ignores a directory without an html face', () => {
+    const root = fixtureRoot()
+    const dir = path.join(root, 'public/field/artifacts/cycle-001/2026-08-30-data-only')
+    fs.mkdirSync(dir, { recursive: true })
+    fs.writeFileSync(path.join(dir, 'data.json'), '{}')
+    expect(loadArtifacts(root)).toEqual([])
   })
 })

@@ -242,6 +242,17 @@ describe('the station sheet', () => {
     expect(law.name).toBe('works of force')
   })
 
+  it('reads the research ecology v3 protocols’ "Decided by … at the reading of" phrasing', () => {
+    const law = readConstitution('x', {
+      '/src/content/x/PROTOCOL.md':
+        '# Research Protocol v4 — one shared question, the science corner\n\n' +
+        '*Research ecology v3. Decided by the architect (Frank Bültge) at the reading of\n' +
+        '2026-08-30 — the reading planned for 2026-09-05, held early at his decision —*',
+    })
+    expect(law.version).toBe('v4')
+    expect(law.adopted).toBe('2026-08-30')
+  })
+
   it('fails loudly on a mirror with no version, rather than defaulting to one', () => {
     expect(() => readConstitution('x', { '/src/content/x/PROTOCOL.md': '# Some other heading' })).toThrow(/no "… Protocol vN" heading/)
     expect(() => readConstitution('missing', {})).toThrow(/mirror missing/)

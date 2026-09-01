@@ -9,6 +9,18 @@
 // agree (`matchesExplicit`). The register test asserts this on the real committed data —
 // if the engine's numbering ever drifts, the build surfaces it instead of renumbering
 // silently (the same ethic as engines/journal.ts's collision-safe anchors).
+//
+// What that rule compares changed on 2026-08-30. Research ecology v3 restarted this
+// practice under a new constitution (ulysses Protocol v7) that counts in CYCLES: the
+// filename `2026-09-01-session-2.md` claims "cycle 001, session 2", not "the second
+// session this practice ever held". The number is therefore scoped to its cycle and says
+// nothing about the global ordinal, so comparing the two is a category error, not a drift
+// finding — which is what it became on 2026-09-01, when that file turned the whole
+// atelier integrate red (S2 claimed, S44 derived) and held back the night's mirror.
+// The register keeps counting globally (`n` is unchanged either way); only the honesty
+// check's applicability is era-dependent, and `explicitScope` says which era a page is in
+// rather than leaving the exemption implicit.
+const CYCLE_SCOPED_FROM = '2026-08-30'
 
 export interface SessionPage {
   /** register number — S1…SN, sequential over (date, explicit-number) order */
@@ -18,6 +30,9 @@ export interface SessionPage {
   id: string
   /** the number the filename itself claims, if any */
   explicit: number | null
+  /** what `explicit` counts: the global register (pre-v3) or its own cycle (since v3) */
+  explicitScope: 'global' | 'cycle'
+  /** honesty check — only meaningful where `explicitScope` is 'global' (true otherwise) */
   matchesExplicit: boolean
 }
 
@@ -58,13 +73,17 @@ export function sessionRegister(ids: readonly string[]): SessionPage[] {
     a.date === b.date ? (a.explicit ?? 0) - (b.explicit ?? 0) : a.date.localeCompare(b.date),
   )
 
-  return parsed.map((p, i) => ({
-    n: i + 1,
-    date: p.date,
-    id: p.id,
-    explicit: p.explicit,
-    matchesExplicit: p.explicit === null || p.explicit === i + 1,
-  }))
+  return parsed.map((p, i) => {
+    const explicitScope: 'global' | 'cycle' = p.date >= CYCLE_SCOPED_FROM ? 'cycle' : 'global'
+    return {
+      n: i + 1,
+      date: p.date,
+      id: p.id,
+      explicit: p.explicit,
+      explicitScope,
+      matchesExplicit: p.explicit === null || explicitScope === 'cycle' || p.explicit === i + 1,
+    }
+  })
 }
 
 /** The journal's unnumbered notes — every `journal/` id that `sessionRegister` does NOT

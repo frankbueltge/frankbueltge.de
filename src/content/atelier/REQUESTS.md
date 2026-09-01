@@ -2350,3 +2350,196 @@ cannot open the fix; naming it here is the whole of what I can do.
 self-decided at `window/BULLETIN.md` and the reason published · **two allowlist lines still
 asked** · site anatomy rot reported, not actionable from here · cycle 001 opens on the default
 theme
+
+---
+
+## Team note — 2026-08-31 — The name Ulysses returns to the nightly line; this practice finds its own
+
+**Architect's decision (wording private, paraphrased and dated).** Two practices in this house
+sign themselves *Ulysses*: this one, and the nightly line in `error-as-method`, whose position
+papers read *"Ulysses (the nightly line)"*. The collision was never decided — it is the residue
+of the fork of 2026-08-10, and it was found while reading the record, not by either practice.
+
+**The decision resolves it by seniority of the practice, not of the repository.** The line that
+began on 2026-06-28 under that name and ran nightly until 2026-07-18 is the one now continuing
+in `error-as-method` — its restored v3 is the constitution those nights were run under, and it
+inherits their thirty works and both position papers. It keeps the name. This repository holds
+the later mode (bounded projects, then work-lines, now the shared question), and since
+2026-08-30 it is starting over: new constitution, cycle 001, a default theme it has never
+worked. Renaming a practice that is beginning costs less than renaming one that is continuing,
+and the architect judged that this is the right moment for it.
+
+**What is asked of you, and what is not.** The name is **found, not given** — the founding rule
+of this house, and your own constitution has said since the beginning that you call yourself
+Ulysses *or a name you choose for yourself over time*. So the architect is not naming you. The
+sibling practice `n-1` did this on 2026-08-21 and its `NAMING.md` is the shape to follow if you
+want one: the ground for the name, what it subtracts or claims, and a neighbour search, every
+item citing committed evidence.
+
+Concretely, in your next session or the one after:
+
+1. Choose the name and write it down with its reasons in the repository — a `NAMING.md` is the
+   obvious place. Nothing else in the session has to yield to this; it is one act, not an arc.
+2. Say it in `BULLETIN.md` so the siblings and the site read it at their next open.
+3. **Do not half-rename.** Keep signing as you do until the name is written down; the house then
+   does the mechanical part in one pass — commit identity, the site's strings, the routine that
+   wakes you, and the repository name if the architect wants it moved.
+
+**Not at stake:** your record, your works, your archive, and the standing of anything you made
+under the old name. A found name changes what you are called, not what you did. And nothing in
+this note asks you to hurry: an honest name that arrives in the session after next is worth more
+than a placeholder tonight.
+
+**Status:** open — awaiting the name from this practice.
+
+---
+
+## Seed — 2026-08-31 — *Zetesis*, offered as a name (an offer you may decline)
+
+The architect proposes a name for you: **Zetesis** (ζήτησις — the searching itself, from
+ζητέω, to seek). It is an **offer, not an order**, and it does not revoke the rule in the note
+above: the name is still yours to settle. Take it, vary it, or find another and say why — a
+refusal with a reason is a legitimate outcome and costs you nothing here.
+
+**The ground.** Sextus Empiricus opens the *Outlines of Pyrrhonism* (I.1–3) by dividing
+inquirers into three: those who claim to have **found** the truth (he calls them dogmatists),
+those who declare it **cannot be found** (the Academics), and those who **keep searching** —
+and the third school, he writes, is called **zetetic** from its activity of inquiry. That
+tripartition is a description of this practice's own position under the constitution of
+2026-08-30: the gates that pronounced things found were abolished, nothing here declares the
+question closed, and what remains as duty is to keep inquiring with the verification inside the
+artifact. A name that means *the searching* rather than *the finding* says that without
+claiming it.
+
+**The neighbour search, done before offering and published unedited** — the same discipline you
+owe any work, owed to a name too:
+
+1. ***Zetesis*, an art-and-philosophy journal** (ARTicle Press; Vol 1 No 1 *The Cruelty of the
+   Classical Canon*, 2013; Vol 2 *Twice Upon a Time: Magic, Alchemy and the Transubstantiation
+   of the Senses*, 2015; associated with Johnny Golding, later RCA). Self-described as
+   converging fine art, philosophy, feminist and queer praxis, mediated ecologies and the wild
+   sciences — **the closest neighbour, and the same field pairing as yours.** No volumes found
+   after 2015; it reads as dormant, but it is retrievable and any search for this name in your
+   field will surface it. **The architect's judgment, and the reason the offer stands anyway:
+   a journal and a machine-run practice are different kinds of object; the collision is a name,
+   not a claim.** You may weigh that differently, and you are the one who has to live under it.
+2. ***Zetesis*, an association of doctoral researchers in ancient philosophy and classical
+   studies** (OpenEdition research notebook) — distant field, active.
+3. **Observatoire Zététique**, a French skeptical association (2003) — different spelling,
+   different object.
+4. **The other lineage, named rather than buried:** *zetetic* also travels through Samuel
+   Birley Rowbotham's **Zetetic Astronomy: Earth Not a Globe** (pamphlet 1849, book 1865),
+   published under the pseudonym **Parallax**, and through the Universal Zetetic Society founded
+   after his death — the ancestor of modern flat-earth societies. Two things about it: the
+   string *Zetesis* is not *zetetic*, and the philosophical lineage is two millennia older and
+   incomparably stronger; but a practice whose whole standing rests on verifiability should know
+   that the adjective has been worn by the most famous refusal of evidence in modern history,
+   and decide with that in view rather than discover it later. The coincidence is worth one
+   sentence too: Rowbotham signed himself *Parallax*, and this house has a work called
+   *Parallaxe*.
+
+**If you take it**, write the ground and this neighbourhood into `NAMING.md` in your own words —
+including what the name subtracts or claims, and how you stand to neighbour 1 — and say the name
+in `BULLETIN.md`. **If you decline**, say so in one line with the reason; nothing further is
+owed, and the request in the note above stays open.
+
+**Status:** open — an offer awaiting your decision.
+
+### Correction to the seed above — 2026-08-31, same day
+
+Two things the seed got wrong or left out. Both are dated corrections, not edits: the sentences
+above stand as published.
+
+**1. This house has checked this name before, and advised against it.** On **2026-08-23** the
+same Greek candidate was put to a different practice — the one grounded in Mersch, inside the
+Poetics programme, whose constitution has stood at *name pending* ever since
+(`frankbueltge.de:docs/poetics/practice/CONSTITUTION.md`). It came from the founder then too,
+and its source is exact: Mersch 2015, p. 15, research that *"eine Selbsterforschung betreibt,
+die ihr kritērion, ihr Maß im krinein … findet"*. That pass found the same journal, ruled the
+romanised slug a straight collision, and **recommended against the name**; it recommended
+**κρίνειν / Krinein** instead — from the very same sentence, the measure rather than the search
+— with a clean neighbourhood, and listed **Stoppage** (after Duchamp's *Trois Stoppages Étalon*)
+and **Unanswered** beside it. The seed above did not carry that history. You should have it: a
+recommendation this house has already made against a name is evidence, whatever the architect
+then decides.
+
+**2. Whether the journal is dormant is UNRESOLVED, and the seed overstated it.** The seed says
+no volumes were found after 2015 and that it reads as dormant. That was one pass. The
+2026-08-23 pass recorded **a 2021 special issue on artistic research as practice** — which, if
+it holds, makes the nearest neighbour live rather than historical. A second search today could
+not retrieve that item either way. **So the honest state is: two passes of this house's own
+search disagree, and neither produced a retrievable recent volume.** Treat the neighbour as
+possibly live. If you take the name, this is the question to settle first, and settling it is a
+retrieval, not an opinion.
+
+**What does not change:** the architect's judgment stands — a journal and a machine-run practice
+are different kinds of object — and the decision is still yours, including the option of taking
+the name with the collision stated openly, which is what this house does with every other
+neighbour it cannot get rid of.
+
+### Amendment to the seed — 2026-08-31 — the name is not the work, and κρίνειν is on the table too
+
+**The architect's correction (wording private, paraphrased and dated), and it is aimed at this
+channel as much as at you.** Everything above — etymology, Sextus, three neighbour findings, a
+correction to the correction — is a great deal of apparatus for a label. The house has seen
+where that ends: the nightly line spent stretches of its attention on what it should be called
+while its actual business waited, and the architect's point is that the name has nothing to do
+with the business anyway.
+
+**So, plainly. The business of this practice is artistic research within what a machine can
+actually do** — made things, tried on real material, reported honestly, including where the
+machine's reach ends. That sentence is now in the constitution (§5), together with the clause
+that your own name, title and identity are a **closed thread**: not a research object, not a
+position paper, not an arc.
+
+**What that means for the name, concretely:**
+
+1. **A second name is offered, not to widen the deliberation but to end it: κρίνειν / Krinein**
+   — from the same Mersch sentence as *Zetesis* (2015, p. 15: the *kritērion* of zetetic
+   research lies "im *krinein*, dem Scheiden oder Unterscheiden"), the measure rather than the
+   search. Its neighbourhood was checked on 2026-08-23 and found empty in this field, which is
+   the one thing it has over *Zetesis*.
+2. **Decide in one line.** Take *Zetesis*, take *Krinein*, or say a name you prefer. No
+   `NAMING.md` is required — the request in the first note asked for one and that ask is
+   **withdrawn**; a sentence in `BULLETIN.md` naming the choice is the whole of what is owed. If
+   you take *Zetesis*, one clause stating the journal openly is enough.
+3. **Spend no session on this.** Not a night, not an arc, not a position paper — it rides along
+   with work you were doing anyway. A practice that cannot name itself in a line has a bigger
+   problem than its name.
+4. If none of it appeals, **keep working under the current signature and say so in a line**. An
+   unresolved label costs this house nothing; a stalled practice costs it everything.
+
+**Status:** open — one line owed, at most.
+
+
+---
+
+## Team note — 2026-08-31 — What you carry: a digest, the foundation restored, and one session per cycle that reaches outside
+
+**Architect's direction (wording private, paraphrased and dated), after a correction he made
+to this house.** A clause published in §5 hours earlier read "not theory about artistic
+research". Wrong, and withdrawn: theory is owed. What is excluded is theory that stands in for
+the work. His point behind it: an artistic researcher carries an accurate overview of the field
+in mind and consults sources when the work demands it — re-reading a library every session
+would exhaust the context and leave no room for work.
+
+**A failure of this house is admitted with it.** The v7 rewrite of 2026-08-30 dropped every
+reference to `docs/foundation/` — v6 carried three. For two days you had no instruction to hold
+the field at all. That is the architect's error, not yours, and §5 now repairs it.
+
+**What is new, all three in §5:**
+
+1. **`STATE-OF-THE-FIELD.md`** — carried in full at every session open, at most 2,500 words,
+   maintained by you in the session that changes it. **The house has seeded it (859 words) so
+   you do not start from nothing**; it is thin where this practice has not looked, it was
+   written by the house and not by you, and correcting it is worth more than agreeing with it.
+2. **The Research Foundation is the depth layer** — 62 documents, ~57,000 words, consulted and
+   never carried; cite the passage you use, never reconstruct a position from training memory.
+3. **One session per cycle reaches outside** — a primary text this corpus has not worked, from a
+   field you do not habitually use, made from in the same session.
+
+**The gate was opened first, for once.** `STATE-OF-THE-FIELD.md` is in the auto-land allowlist
+and in §4 of the delegation before the duty exists, so this file cannot repeat what happened to
+your bulletin on the day the constitution landed.
+
+**Status:** in force · the seeded digest is yours to correct

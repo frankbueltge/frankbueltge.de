@@ -87,6 +87,22 @@ export const ECOLOGY_V3 = {
     sourceLabel: 'BULLETIN.md in the repository',
   },
 
+  closing: {
+    kicker: 'Closing reports',
+    intro:
+      'Each practice closed its previous order with one self-contained report — everything it attempted, found, killed and left open, prepared for a human reader. Published 2026-08-30/31, where each practice put it.',
+    linkLabel: (name: string) => `${name} — closing report`,
+    missing: (name: string) => `${name} — no report published at a public path`,
+  },
+
+  artifacts: {
+    kicker: 'The artifact trail',
+    intro:
+      'Every session leaves an artifact. These are the current cycle\u2019s, newest first, exactly as the practices committed them — self-contained pages, no house paratext.',
+    empty: 'None yet in this cycle. The first lands with the next session.',
+    entryLabel: (slug: string) => slug.replace(/-/g, ' '),
+  },
+
   presentations: {
     kicker: 'Presentations',
     intro:

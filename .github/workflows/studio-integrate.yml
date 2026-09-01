@@ -67,9 +67,18 @@ jobs:
           # into every session. The archive must travel with it, or the public record would lose
           # exactly what the cut removed.
           for f in PROTOCOL.md README.md REQUESTS.md REQUESTS-ARCHIVE.md SITE-API.md BULLETIN.md; do [ -f "/tmp/studio/$f" ] && cp "/tmp/studio/$f" "src/content/studio/$f" || true; done
-          # v3 (2026-08-30): presentations are self-contained artifacts, mirrored bare —
-          # the entrance links them, the house adds no paratext (lib: src/lib/ecology/v3.ts).
-          if [ -d /tmp/studio/presentations ]; then mkdir -p public/studio/presentations && rsync -a --delete /tmp/studio/presentations/ public/studio/presentations/; fi
+          # v3 (2026-08-30/31): the practice's own public artifacts, mirrored BARE — closing
+          # report, cycle artifacts and cycle presentations. They are self-contained pages and
+          # the house adds no paratext; /ecology links them (src/lib/ecology/v3.ts). Mirrored
+          # with --delete so a withdrawn artifact disappears here too.
+          for d in closing-report artifacts presentations; do
+            if [ -d "/tmp/studio/$d" ]; then
+              mkdir -p "public/studio/$d"
+              rsync -a --delete "/tmp/studio/$d/" "public/studio/$d/"
+            else
+              rm -rf "public/studio/$d"
+            fi
+          done
           # Chronicle self-report from the engine repo root (see the chronicle contract in
           # SITE-API.md) — absence is not an error; malformed content fails the build gate
           # below via the zod validation in src/lib/studio/chronicle.ts.
@@ -102,7 +111,7 @@ jobs:
       - name: Commit + let deploy-cf rebuild (on success)
         if: success()
         run: |
-          if [ -n "$(git status --porcelain src/content/studio src/components/studio src/pages/studio src/data/studio/chronicle.upstream.json src/data/graph public/studio/werke-html public/studio/window)" ]; then
+          if [ -n "$(git status --porcelain src/content/studio src/components/studio src/pages/studio src/data/studio/chronicle.upstream.json src/data/graph public/studio/werke-html public/studio/window public/studio/closing-report public/studio/artifacts public/studio/presentations)" ]; then
             git config user.name "Studio-Integrate"
             git config user.email "studio-integrate@frankbueltge.de"
             git add -A src/content/studio src/components/studio src/pages/studio src/data/studio/chronicle.upstream.json src/data/graph
@@ -110,6 +119,7 @@ jobs:
             # `|| true`: the add must survive all three states — window present, window removed
             # (tracked entries record the deletion), and window never present (unmatched pathspec).
             git add -A public/studio/window 2>/dev/null || true
+            for d in closing-report artifacts presentations; do git add -A "public/studio/$d" 2>/dev/null || true; done
             git commit -m "studio: integrate $(date -u +%F)"
             for attempt in 1 2 3 4 5; do
               git pull --rebase --autostash origin main && git push && break
