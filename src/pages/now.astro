@@ -1,0 +1,16 @@
+---
+// /now — the ops room's board, moved off the entrance on 2026-09-01 (entrance lineage:
+// Home → HubEntrance → OpsRoom → FrontDoor; Git is the archive). The entrance's LIVE section
+// links here as "the full board →", and this page keeps that promise with the same tested
+// derivations the ops room rendered. SEO strings live in NAMING.frontDoor.now.seo, guarded for
+// length by src/lib/ops/front-door.test.ts.
+import Page from '@/layouts/Page.astro'
+import NowBoard from '@/components/pages/NowBoard.astro'
+import { NAMING } from '@/config/naming'
+
+const seoTitle = `${NAMING.frontDoor.now.seo.title} | Frank Bültge`
+const seoDescription = NAMING.frontDoor.now.seo.description
+---
+<Page title={seoTitle} description={seoDescription}>
+  <NowBoard />
+</Page>

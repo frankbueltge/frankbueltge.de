@@ -11,8 +11,12 @@
 // instead of a page of prose about it. HubEntrance.astro stays in the repo, unlinked, the same way
 // Home.astro/HeroField.astro did before it: Git is the archive, and the approval trail for this
 // change is in docs/decision-log.md.
+// 2026-09-01: the entrance became the FRONT DOOR — the ops room's full board (rows, sparklines,
+// tiles) moved whole to /now (NowBoard.astro), and the entrance kept a clear personal opening,
+// a slim live strip and an editorial front page of the newest works. OpsRoom.astro stays in the
+// repo, unlinked, like HubEntrance/Home before it: Git is the archive.
 import Page from '@/layouts/Page.astro'
-import OpsRoom from '@/components/pages/OpsRoom.astro'
+import FrontDoor from '@/components/pages/FrontDoor.astro'
 import { NAMING } from '@/config/naming'
 
 // SEO — die Startseite ist die Autoritätsseite für die Namenssuche "Frank Bültge". Titel und
@@ -35,5 +39,5 @@ const seoDescription =
   'Frank Bültge — Data Engineering & Analytics. Projects and experiments probing what machines genuinely do better than people — constant attention, nightly measurement, evidence at scale — and whether they can research autonomously and produce useful, verifiable works. Among them: a federated research ecology, Machine Attention, datavism.org and data-snack.com. Git is the archive.'
 ---
 <Page title={seoTitle} description={seoDescription}>
-  <OpsRoom />
+  <FrontDoor />
 </Page>

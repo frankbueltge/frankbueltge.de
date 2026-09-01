@@ -721,6 +721,67 @@ export const NAMING = {
     },
   },
 
+  /**
+   * THE FRONT DOOR (2026-09-01) — the entrance after the ops room. The board had grown into the
+   * densest surface of the site (seven rows with sparklines, a signal log, a dozen tiles): the
+   * right amount of instrument for a return visitor, the wrong first page for a stranger. The
+   * full board moved to /now whole and unchanged, rendering NAMING.opsRoom above verbatim; this
+   * block holds only what the calmer entrance adds — a plain-language introduction, the ecology
+   * card's one live line, the editorial front page, the slim live strip, and /now's SEO strings.
+   * Same law as the ops room: not one digit. Copy that has to wrap a number is a function
+   * taking that number as its argument.
+   */
+  frontDoor: {
+    /** Who runs this site and what runs on it, in plain words — the first thing a stranger
+     *  reads under the standing question. v3 wording (2026-09-01): one shared question,
+     *  everything published unedited, Git as the archive. */
+    sub: 'Frank Bültge is a data engineer, and this site is his running experiment: machines doing research in the open. Three machine-run practices work on one shared research question at a time and publish everything unedited — every claim leads back to committed evidence, and Git is the archive.',
+
+    /** The entrance's own strip label: the ops room moved to /now (2026-09-01), so the front
+     *  door no longer announces itself as the ops room — /now keeps that name. */
+    strip: { label: 'live from the record', clockLabel: 'UTC' },
+
+    /** The ecology card's one live line. It renders the same committed cycle state /ecology
+     *  reads (loadCycle → src/data/ecology/cycle.json); the phase badge is ECOLOGY_V3's own and
+     *  is not restated here — these functions only phrase what stands around it. */
+    ecologyLive: {
+      cycleLabel: (n: number) => `cycle ${String(n).padStart(3, '0')}`,
+      /** a seeded question is quoted — the card shows the question the practices actually work */
+      question: (q: string) => `“${q}”`,
+      /** what stands when no seed is queued: the corners work their standing themes */
+      standingThemes: 'the standing themes',
+    },
+
+    /** The editorial section: the newest landed work as a lead, the next few as one line each,
+     *  and the current cycle's artifact trail as a thin strip beneath. */
+    front: {
+      kicker: 'FRONT PAGE',
+      kickerSub: 'WHAT LANDED LAST — THE NEWEST WORK LEADS',
+      artifactsLead: 'this cycle’s artifacts: ',
+    },
+
+    /** The slim live strip: one chip per board row, nothing else — the full instrument room
+     *  with sparklines, status column and tiles is /now. */
+    live: {
+      kicker: 'LIVE',
+      kickerSub: 'EVERY SYSTEM, ONE CHIP — LAST LANDED DATE',
+      link: { label: 'the full board →', href: '/now' },
+    },
+
+    /** /now — the ops room's board, moved off the entrance whole (2026-09-01). */
+    now: {
+      seo: {
+        title: 'Now — the board, live from the record',
+        description:
+          'The full status board behind this site’s entrance: every running system, its sparkline and last landed work, and live readings from every experiment.',
+      },
+      h1: 'the full board',
+      lead: 'Everything the entrance summarises in one chip per system, at full instrument depth: the board with its sparklines, the signal log, and the live readings of every experiment that ships data daily.',
+      backLabel: '← the front door',
+      backHref: '/',
+    },
+  },
+
   footer: {
     tagline: 'a federated research ecology · frankbueltge.de',
     licenseLine: 'code Apache 2.0 · works CC BY 4.0 · data CC0 · Git is the archive',
