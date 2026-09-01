@@ -1,111 +1,19 @@
 ---
-// /encounters — the Middle's station sheet (Level 1 of the ecology pyramid, 2026-08-12).
+// /encounters — The Middle (research ecology v3, 2026-09-01).
 //
-// The Middle is not a practice and its sheet must not read like one: it has no resident, no
-// constitution of its own and no works. What it has is a record of what passed between the
-// practices, and the crossing score is that record drawn. The contact stream that used to live
-// here moves to the repository (Git is the archive); the register of crossings stays, one level
-// down, with every encounter in full.
+// What stood here was the Middle's station sheet of the v2 pyramid (2026-08-12), showing a
+// ledger of six crossings exported from a separate repository — an export last written on
+// 2026-08-23. v3 made the encounter the ordinary mode of work rather than an event, so a
+// register of exceptional meetings had stopped describing anything that happens. The station
+// sheet, its figures and its wording stay in the repo, unlinked, as this house does with
+// retired surfaces; the approval trail is docs/decision-log.md, 2026-09-01.
 import Page from '@/layouts/Page.astro'
-import StationSheet from '@/components/ecology/StationSheet.astro'
-import Figure from '@/components/ecology/figures/Figure.astro'
-import CrossingScoreFigure from '@/components/ecology/figures/CrossingScore.astro'
-import { PYRAMID } from '@/config/ecology-pyramid-wording'
-import { FIGURES } from '@/config/ecology-figure-wording'
-import pulseData from '@/data/pulse/pulse.json'
-import type { PulseSnapshot } from '@/lib/pulse/render'
-import { allWorks } from '@/lib/engines/register'
-import { buildStationSheet, splitDoorLine, type LogEntry } from '@/lib/ecology/pyramid/station'
-import { buildCrossings } from '@/lib/ecology/pyramid/figures'
-import { firstClause, runningInquiry } from '@/lib/ecology/pyramid/landings'
-import register from '@/data/begegnungen/register.json'
-import inquiries from '@/data/begegnungen/joint-inquiries.json'
+import MiddleV3 from '@/components/ecology/MiddleV3.astro'
+import { MIDDLE_V3 } from '@/config/middle-v3-wording'
 
-const works = allWorks()
-const crossings = buildCrossings(register as Parameters<typeof buildCrossings>[0])
-
-// The Middle's record is the crossings themselves: newest first, each with its own title as the
-// line — the register carries no separate summary, and inventing one would be the Middle editing
-// what it is only supposed to record.
-// The rows carry NO href. The obvious one — /encounters/<encounter_id> — does not exist: this
-// route builds exactly one detail page, for the current entrance, under a short slug. Four rows
-// shipped on 2026-08-12 pointing at routes that were never built, and all four 404'd. Where a
-// reader can go from here is the register below, which links each crossing to its own committed
-// record.
-const log: LogEntry[] = [...crossings]
-  .filter((c) => c.date)
-  .sort((a, b) => ((a.date ?? '') < (b.date ?? '') ? 1 : -1))
-  .slice(0, 3)
-  .map((c) => ({
-    date: c.date!,
-    marker: c.id.split('-').slice(0, 3).join('-'),
-    line: firstClause(c.title, 190) ?? PYRAMID.station.absent,
-  }))
-
-const sheet = buildStationSheet({
-  id: 'middle',
-  snapshot: pulseData as PulseSnapshot,
-  works,
-  log,
-  made: crossings.length,
-})
-
-// The bracket spans the crossings a running joint inquiry sits across. Where the register does not
-// say which crossings belong to it, the bracket covers the newest stretch it could — so it is only
-// drawn when the inquiries file names one at all.
-const running = runningInquiry()
-const bracket = running && crossings.length > 1
-  ? { label: `${running.title.split(' — ')[0].toUpperCase()} · ${running.label.toUpperCase()}`, from: Math.max(0, crossings.length - 3), to: crossings.length - 1 }
-  : null
-
-// The SAME inquiry the status row names, chosen by the same rule (in motion, most recently
-// updated). Picking it twice by two rules is how a sheet ends up naming one inquiry in its status
-// panel and a different one in its lede — which it did, for exactly one build.
-const live = (inquiries as { status?: string; title?: string; slug?: string; inquiry_id?: string; public_summary?: string; updated_at?: string; record_url?: string }[])
-  .filter((i) => i.status === 'ACTIVE' || i.status === 'REVIEW')
-  .sort((a, b) => ((a.updated_at ?? '') < (b.updated_at ?? '') ? -1 : 1))
-  .at(-1)
-
-const door = splitDoorLine(sheet.station.description)
-const SEO = PYRAMID.stationSeo.middle
-const F = FIGURES.middle
+const SEO = MIDDLE_V3.seo
 ---
 
 <Page title={`${SEO.title} | Frank Bültge`} description={SEO.description}>
-  <StationSheet
-    id="middle"
-    kicker={`${sheet.station.name.toUpperCase()} · ${sheet.station.resident.toUpperCase()}`}
-    h1={door.lead}
-    sub={door.rest}
-    status={sheet.status}
-    figureColumns={1}
-    lede={live
-      ? {
-          kicker: F.lede.kicker(live.status ?? ''),
-          title: live.title ?? live.inquiry_id ?? '',
-          teaser: firstClause(live.public_summary, 320),
-          note: running?.label ?? null,
-          noteLabel: F.lede.noteLabel,
-          links: [
-            // The inquiry's own committed record — there is no detail route for it on this site,
-            // and a link into the repository is the honest way to open the thing itself.
-            { label: F.lede.open, href: live.record_url ?? '/encounters/register' },
-            { label: F.lede.record, href: '/encounters/register' },
-          ],
-        }
-      : null}
-    log={sheet.log}
-    logMore={{ label: F.lede.record, href: '/encounters/register' }}
-    doors={sheet.doors}
-  >
-    <Figure
-      slot="figure-main"
-      title={F.score.title}
-      sub={F.score.sub}
-      link={{ label: F.score.link(crossings.length), href: '/encounters' }}
-      caption={F.score.caption(crossings.length)}
-    >
-      <CrossingScoreFigure crossings={crossings} running={bracket} />
-    </Figure>
-  </StationSheet>
+  <MiddleV3 />
 </Page>
