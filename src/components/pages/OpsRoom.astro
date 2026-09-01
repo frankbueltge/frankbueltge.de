@@ -3,6 +3,14 @@
 // option 3a. Replaces HubEntrance.astro, which stays in the repo unlinked: Git is the archive, so
 // the previous entrance lives in its own file and in this file's history, not in commented blocks.
 //
+// 2026-09-01: mounted again after a day as FrontDoor.astro (which stays in the repo unlinked, the
+// same way). Frank's decision, wording private: the ops room with every lab tile is the entrance,
+// and it should be handsomer than before, with more of the drawing done by d3. What that meant
+// here: the marks moved onto d3 scales and monotone curves at build time (src/lib/ops/viz.ts,
+// stack.ts), the strip's clock got a face drawn from the record (src/lib/ops/dial.ts), and the
+// room answers the pointer — every ridge, sparkline, bar, cell and point states the archive's own
+// number for the place under the cursor. Nothing else moves, and nothing is fetched.
+//
 // The page is a status board of everything running here: the standing question as hero, the commit
 // pulse as an instrument beside it, one board for every running system, a signal log of the newest
 // works, and a dashboard of the experiments that ship data daily.
@@ -10,11 +18,13 @@
 // Three properties this component is built to keep:
 //
 //   · NO NUMBER IS TYPED. Every figure — readings, counts, dates, the week range, the repository
-//     count — is derived at build time by src/lib/ops/* from a committed snapshot. Copy that has to
-//     wrap a number is a function in NAMING.opsRoom taking that number as its argument.
-//   · NO CLIENT DATA FETCHING. The whole page is static output. Exactly two things move, and both
-//     are time, not data: the UTC clock and the dots walking the pulse. One shared rAF loop drives
-//     them, and it never starts under prefers-reduced-motion.
+//     count, every hover readout — is derived at build time by src/lib/ops/* from a committed
+//     snapshot. Copy that has to wrap a number is a function (or a template the client fills) in
+//     NAMING.opsRoom taking that number as its argument.
+//   · NO CLIENT DATA FETCHING. The whole page is static output. Exactly two things move on their
+//     own, and both are time, not data: the UTC clock (its text and the hand on its face) and the
+//     dots walking the pulse. One shared rAF loop drives them, and the dots never start under
+//     prefers-reduced-motion. Everything else the script does is a response to the pointer.
 //   · ABSENCE IS DRAWN. A row whose record is empty says so; a tile whose snapshot yields no
 //     reading is not rendered at all (the handoff's rule) rather than shown with a placeholder.
 import { getRelativeLocaleUrl } from 'astro:i18n'
@@ -24,8 +34,21 @@ import pulseData from '@/data/pulse/pulse.json'
 import type { PulseSnapshot } from '@/lib/pulse/render'
 import { buildStackSvg, stackWeekRange } from '@/lib/ops/stack'
 import { buildBoard, buildSignalLog } from '@/lib/ops/board'
-import { readTiles } from '@/lib/ops/tiles'
-import { bars, cells, linePath, ratioBars, smooth3, SPARK_BOX } from '@/lib/ops/viz'
+import { buildDayDial } from '@/lib/ops/dial'
+import { readTiles, type OpsTile } from '@/lib/ops/tiles'
+import {
+  areaPath,
+  bars,
+  cells,
+  lastPoint,
+  linePath,
+  linePoints,
+  pointsAttr,
+  ratioBars,
+  smooth3,
+  SPARK_BOX,
+  TILE_BOX,
+} from '@/lib/ops/viz'
 import { getLatestProtokoll } from '@/lib/protokoll/data'
 import '@/styles/ops-room.css'
 import '@/styles/hub-triptych.css'
@@ -35,6 +58,7 @@ const url = (href: string) => (href.startsWith('http') ? href : getRelativeLocal
 
 const pulse = pulseData as PulseSnapshot
 const stackSvg = buildStackSvg(pulse)
+const dial = buildDayDial(pulse)
 const board = buildBoard(pulse)
 const signal = buildSignalLog()
 const tiles = readTiles({ protokoll: await getLatestProtokoll() })
@@ -43,6 +67,57 @@ const OPS = NAMING.opsRoom
 /** the practice a board row or log entry belongs to, as a CSS class carrying its --led */
 const voiceClass = (id: string | null) => (id ? ` ops-voice-${id}` : '')
 const nsVoice: Record<string, string> = { atelier: 'ulysses', field: 'meridian', studio: 'ensemble' }
+
+// The sparkline's geometry, once per row: the smoothed series as a curve, the quiet fill under it,
+// the newest bucket as a point, and the points themselves as data for the hover probe. The readout
+// states the UNsmoothed bucket (data-values), the way the pulse states its unshaped bin.
+const sparkOf = (values: number[]) => {
+  const s = smooth3(values)
+  return {
+    area: areaPath(s, SPARK_BOX),
+    line: linePath(s, SPARK_BOX),
+    end: lastPoint(s, SPARK_BOX),
+    points: pointsAttr(linePoints(s, SPARK_BOX)),
+  }
+}
+const boardView = board.map((group) => ({
+  ...group,
+  rows: group.rows.map((row) => ({ ...row, geo: row.spark ? sparkOf(row.spark) : null })),
+}))
+
+// One flat list of rectangles per tile, whatever its kind, each carrying the class that inks it
+// and the readout the pointer will show. Lines keep their points and readouts on the <svg>
+// itself. Line tiles are drawn from the RAW series: their values are annual aggregates (an index
+// per year, works per year), and smoothing those would draw numbers the archive does not hold —
+// the monotone curve already gives the line its calm.
+interface Mark {
+  x: number
+  y: number
+  width: number
+  height: number
+  cls: string
+  label: string | undefined
+}
+const marksOf = (tile: OpsTile): { rects: Mark[]; line: { d: string; points: string; labels: string } | null } => {
+  const v = tile.viz
+  if (v.kind === 'line') {
+    return {
+      rects: [],
+      line: { d: linePath(v.values, TILE_BOX), points: pointsAttr(linePoints(v.values, TILE_BOX)), labels: JSON.stringify(v.labels ?? []) },
+    }
+  }
+  const inked = (marked: boolean, dimWhenMarked = false) =>
+    (dimWhenMarked ? !marked : marked) ? 'ops-mark' : 'ops-mark-dim'
+  if (v.kind === 'bars') {
+    return { rects: bars(v.values, new Set(v.marked), TILE_BOX).map((b, i) => ({ ...b, cls: inked(b.marked), label: v.labels?.[i] })), line: null }
+  }
+  if (v.kind === 'cells') {
+    // a marked cell is a source that did NOT answer — it dims, the answered ones carry the ink
+    return { rects: cells(v.count, new Set(v.marked), TILE_BOX).map((c, i) => ({ ...c, cls: inked(c.marked, true), label: v.labels?.[i] })), line: null }
+  }
+  return { rects: ratioBars(v.part, v.whole, TILE_BOX).map((b, i) => ({ ...b, cls: inked(b.marked), label: v.labels?.[i] })), line: null }
+}
+const tileView = tiles.map((tile) => ({ ...tile, ...marksOf(tile) }))
 
 // The three machine-grown catalogues named under the tile grid — read from NAMING.catalogues so
 // the entrance cannot list a catalogue the catalogues page does not have. The Atlas is left out
@@ -57,9 +132,14 @@ const catalogues = NAMING.catalogues.items.filter((c) => c.href !== '/atlas')
       <span class="ops-led"></span>
       <span>{OPS.strip.label}</span>
     </span>
-    {/* Rendered empty and filled by the script: a build-time clock would be a stopped clock
-        claiming to be a live one — worse than no clock. */}
-    <span class="ops-clock" data-ops-clock aria-live="off"></span>
+    <span class="ops-strip-live">
+      {/* Rendered empty and filled by the script: a build-time clock would be a stopped clock
+          claiming to be a live one — worse than no clock. The dial beside it is the clock's
+          face: twelve arcs of the record (when this house commits, by UTC hour), and a hand the
+          same script sets — hidden until it has, for the same reason the text is empty. */}
+      <span class="ops-clock" data-ops-clock aria-live="off"></span>
+      <Fragment set:html={dial.svg} />
+    </span>
   </div>
 
   {/* ── 1 · hero: the standing question, and the pulse instrument ──────────────────────── */}
@@ -90,7 +170,21 @@ const catalogues = NAMING.catalogues.items.filter((c) => c.href !== '/atlas')
         <span>{OPS.pulsePanel.headLeft(pulse.repos.length)}</span>
         <span>{OPS.pulsePanel.headRight(stackWeekRange(pulse))}</span>
       </div>
-      <div class="ops-instrument-body" set:html={stackSvg} />
+      {/* The readout's wording travels as data (a template with placeholders), so the client
+          script owns none of the words and none of the numbers: it fills what the ridge under the
+          pointer carries — its week, its half, its unshaped bins. The readout is a chip inside the
+          figure, not a third cell in the footer strip: at the strip's size the two fixed captions
+          already take the width, and a reading that has to be cut short is no reading. */}
+      <div
+        class="ops-instrument-body"
+        data-ops-pulse
+        data-fmt={OPS.pulsePanel.readout}
+        data-days={OPS.pulsePanel.days.join(',')}
+        data-bin-hours={pulse.bin_hours}
+      >
+        <Fragment set:html={stackSvg} />
+        <span class="ops-instrument-readout" data-ops-pulse-readout aria-live="off"></span>
+      </div>
       <div class="ops-instrument-strip">
         <span>{OPS.pulsePanel.footLeft}</span>
         <span>{OPS.pulsePanel.footRight(pulse.as_of)}</span>
@@ -105,7 +199,7 @@ const catalogues = NAMING.catalogues.items.filter((c) => c.href !== '/atlas')
       <a class="ops-headlink" href={url(OPS.board.link.href)}>{OPS.board.link.label}</a>
     </div>
 
-    {board.map((group) => (
+    {boardView.map((group) => (
       <div>
         <p class="ops-group-label">{group.label}</p>
         <ul class="ops-panel ops-board">
@@ -119,10 +213,25 @@ const catalogues = NAMING.catalogues.items.filter((c) => c.href !== '/atlas')
                 </span>
                 <span class="ops-row-what">{row.what}</span>
                 <span class="ops-spark-cell">
-                  {row.spark ? (
-                    <svg class="ops-spark" viewBox={`0 0 ${SPARK_BOX.width} ${SPARK_BOX.height}`} preserveAspectRatio="none" aria-hidden="true">
-                      <path d={linePath(smooth3(row.spark), SPARK_BOX)} />
-                    </svg>
+                  {row.spark && row.geo ? (
+                    <>
+                      <svg
+                        class="ops-spark"
+                        viewBox={`0 0 ${SPARK_BOX.width} ${SPARK_BOX.height}`}
+                        preserveAspectRatio="none"
+                        aria-hidden="true"
+                        data-ops-spark
+                        data-values={row.spark.join(',')}
+                        data-points={row.geo.points}
+                        data-fmt={OPS.board.sparkReadout}
+                      >
+                        <path class="ops-spark-area" d={row.geo.area} />
+                        <path class="ops-spark-line" d={row.geo.line} vector-effect="non-scaling-stroke" />
+                        {row.geo.end && <circle class="ops-spark-end" cx={row.geo.end.x} cy={row.geo.end.y} r="1.7" />}
+                        <line class="ops-spark-probe" data-ops-probe x1="0" x2="0" y1="0" y2={SPARK_BOX.height} vector-effect="non-scaling-stroke" />
+                      </svg>
+                      <span class="ops-spark-readout" data-ops-spark-readout aria-live="off"></span>
+                    </>
                   ) : (
                     <span class="ops-absent">no commit split yet</span>
                   )}
@@ -179,8 +288,8 @@ const catalogues = NAMING.catalogues.items.filter((c) => c.href !== '/atlas')
       <p class="ops-kicker"><b>{OPS.live.kicker}</b> · {OPS.live.kickerSub}</p>
       <a class="ops-headlink" href={url(OPS.live.link.href)}>{OPS.live.link.label}</a>
     </div>
-    <ul class="ops-tiles">
-      {tiles.map((tile) => (
+    <ul class="ops-tiles" data-ops-tiles>
+      {tileView.map((tile) => (
         <li>
           <a class="ops-panel ops-tile" href={url(tile.href)}>
             <span class="ops-tile-head">
@@ -190,23 +299,27 @@ const catalogues = NAMING.catalogues.items.filter((c) => c.href !== '/atlas')
             <span class="ops-tile-big">{tile.big}</span>
             <span class="ops-tile-sub">{tile.sub}</span>
             {/* Every mark is drawn from the same snapshot as the reading above it. aria-hidden:
-                the number and the sentence already carry the meaning; the mark is its shape. */}
-            <svg class="ops-tile-viz" viewBox="0 0 96 26" preserveAspectRatio="none" aria-hidden="true">
-              {tile.viz.kind === 'line' && <path class="ops-mark-line" d={linePath(smooth3(tile.viz.values))} />}
-              {tile.viz.kind === 'bars' &&
-                bars(tile.viz.values, new Set(tile.viz.marked)).map((b) => (
-                  <rect class={b.marked ? 'ops-mark' : 'ops-mark-dim'} x={b.x} y={b.y} width={b.width} height={b.height} />
-                ))}
-              {tile.viz.kind === 'cells' &&
-                cells(tile.viz.count, new Set(tile.viz.marked)).map((c) => (
-                  <rect class={c.marked ? 'ops-mark-dim' : 'ops-mark'} x={c.x} y={c.y} width={c.width} height={c.height} />
-                ))}
-              {tile.viz.kind === 'ratio' &&
-                ratioBars(tile.viz.part, tile.viz.whole).map((b) => (
-                  <rect class={b.marked ? 'ops-mark' : 'ops-mark-dim'} x={b.x} y={b.y} width={b.width} height={b.height} />
-                ))}
+                the number and the sentence already carry the meaning; the mark is its shape. Each
+                rectangle carries its own readout (data-label) and a line carries its points and
+                readouts — the stamp line below gives way to the readout while the pointer rests
+                on a mark, and comes back when it leaves. */}
+            <svg
+              class="ops-tile-viz"
+              viewBox={`0 0 ${TILE_BOX.width} ${TILE_BOX.height}`}
+              preserveAspectRatio="none"
+              aria-hidden="true"
+              data-ops-tile-viz
+              data-kind={tile.viz.kind}
+              data-points={tile.line?.points}
+              data-labels={tile.line?.labels}
+            >
+              {tile.line && <path class="ops-mark-line" d={tile.line.d} vector-effect="non-scaling-stroke" />}
+              {tile.line && <line class="ops-tile-probe" data-ops-probe x1="0" x2="0" y1="0" y2={TILE_BOX.height} vector-effect="non-scaling-stroke" />}
+              {tile.rects.map((m) => (
+                <rect class={m.cls} x={m.x} y={m.y} width={m.width} height={m.height} data-label={m.label} />
+              ))}
             </svg>
-            <span class="ops-tile-stamp">{tile.stamp}</span>
+            <span class="ops-tile-stamp" data-ops-stamp data-stamp={tile.stamp}>{tile.stamp}</span>
           </a>
         </li>
       ))}
@@ -261,24 +374,57 @@ const catalogues = NAMING.catalogues.items.filter((c) => c.href !== '/atlas')
 </style>
 
 <script>
-  // The room's only moving parts: the UTC clock and the dots walking the pulse. ONE
-  // requestAnimationFrame loop drives both — a throttled background tab resumes it correctly,
+  // The room's moving parts: the UTC clock (text and hand) and the dots walking the pulse. ONE
+  // requestAnimationFrame loop drives them — a throttled background tab resumes it correctly,
   // where a pair of setIntervals would drift apart and need reconciling.
   //
+  // Everything else here answers the pointer. d3 does the selecting and the pointer maths
+  // (d3.pointer maps a pointer event into the SVG's own viewBox units, through the element's
+  // screen CTM — which is the only correct way to read a position off a figure drawn with
+  // preserveAspectRatio="none"), and one d3 transition grows the tile marks in when the grid
+  // scrolls into view. No d3 call here sets a style attribute: this site's CSP drops those, so
+  // every change is an attribute or a class, and every colour stays in the stylesheet.
+  //
   // The dots read their positions off the drawn tracks with getPointAtLength, so this script owns
-  // no geometry: whatever src/lib/ops/stack.ts drew is what they walk. If the markup ever changes
-  // shape, they stop moving; they cannot start moving along a line that is not there.
+  // no geometry: whatever src/lib/ops/stack.ts drew is what they walk. The readouts own no words
+  // and no numbers either — they fill templates from NAMING with the values the marks carry.
+  import { easeCubicOut, pointer, select, selectAll, transition } from 'd3'
+  // d3-transition installs selection.prototype.transition as a side effect of being imported;
+  // naming the export keeps the bundler from dropping that module along with an "unused" import.
+  void transition
+
   const room = document.querySelector<HTMLElement>('[data-ops-room]')
   if (room) {
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const clamp = (n: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, n))
+    const fill = (template: string, values: Record<string, string>) =>
+      template.replace(/\{(\w+)\}/g, (_, key: string) => values[key] ?? '')
+
+    // ── the clock, its hand, and the dots ───────────────────────────────────────────────────
     const clock = room.querySelector<HTMLElement>('[data-ops-clock]')
+    const hand = room.querySelector<SVGLineElement>('[data-ops-hand]')
+    const dialArcs = [...room.querySelectorAll<SVGPathElement>('.ops-dial-arc')]
     const pad = (n: number) => String(n).padStart(2, '0')
     const stamp = (d: Date) =>
       `${d.getUTCFullYear()}-${pad(d.getUTCMonth() + 1)}-${pad(d.getUTCDate())} ` +
       `${pad(d.getUTCHours())}:${pad(d.getUTCMinutes())}:${pad(d.getUTCSeconds())} UTC`
+    // The hand turns once per UTC day, midnight at the top, and the arc it points into lights up —
+    // the face is the record of when this house commits, the hand is now.
+    const setHand = (d: Date) => {
+      if (!hand) return
+      const seconds = d.getUTCHours() * 3600 + d.getUTCMinutes() * 60 + d.getUTCSeconds()
+      const turn = seconds / 86400
+      hand.setAttribute('transform', `rotate(${(turn * 360).toFixed(2)} 20 20)`)
+      hand.classList.add('is-set')
+      const now = Math.floor(turn * dialArcs.length)
+      dialArcs.forEach((a, i) => a.classList.toggle('is-now', i === now))
+    }
 
-    if (clock) clock.textContent = stamp(new Date())
-
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const tick = (d: Date) => {
+      if (clock) clock.textContent = stamp(d)
+      setHand(d)
+    }
+    tick(new Date())
 
     const dots = [...room.querySelectorAll<SVGCircleElement>('.ops-dot')].map((el) => {
       const track = room.querySelector<SVGPathElement>(`#ops-track-${el.dataset.track}`)
@@ -295,12 +441,11 @@ const catalogues = NAMING.catalogues.items.filter((c) => c.href !== '/atlas')
       if (now - lastTick < 100) return
       lastTick = now
 
-      if (clock) {
-        const next = stamp(new Date())
-        if (next !== lastSecond) {
-          clock.textContent = next
-          lastSecond = next
-        }
+      const d = new Date()
+      const next = stamp(d)
+      if (next !== lastSecond) {
+        tick(d)
+        lastSecond = next
       }
 
       if (reduced.matches) return
@@ -313,5 +458,164 @@ const catalogues = NAMING.catalogues.items.filter((c) => c.href !== '/atlas')
       }
     }
     requestAnimationFrame(step)
+
+    // ── the pulse answers the pointer ───────────────────────────────────────────────────────
+    // The ridge under the pointer is the one in front (they are filled, and paint order is depth),
+    // so the reading is always of the line the eye is on. The hairline and the readout state the
+    // archive's own bin — week, weekday, hour, commits — never the tapered height.
+    const pulseBody = room.querySelector<HTMLElement>('[data-ops-pulse]')
+    const pulseSvg = pulseBody?.querySelector('svg') ?? null
+    const pulseOut = room.querySelector<HTMLElement>('[data-ops-pulse-readout]')
+    const hair = pulseSvg?.querySelector<SVGLineElement>('[data-ops-hair]') ?? null
+    if (pulseBody && pulseSvg && pulseOut && hair) {
+      const template = pulseBody.dataset.fmt ?? ''
+      const days = (pulseBody.dataset.days ?? '').split(',')
+      const binHours = Number(pulseBody.dataset.binHours) || 2
+      const width = pulseSvg.viewBox.baseVal.width || 1000
+      let hot: SVGPathElement | null = null
+      const rest = () => {
+        pulseOut.textContent = ''
+        pulseOut.classList.remove('is-on')
+        hair.classList.remove('is-on')
+        hot?.classList.remove('is-hot')
+        hot = null
+      }
+      select(pulseSvg)
+        .selectAll<SVGPathElement, unknown>('.ops-ridge')
+        .on('pointermove', function (event: PointerEvent) {
+          const values = (this.dataset.values ?? '').split(',').map(Number)
+          if (values.length < 2) return
+          const [x] = pointer(event, pulseSvg)
+          const i = clamp(Math.round((x / width) * (values.length - 1)), 0, values.length - 1)
+          const hoursIn = (Number(this.dataset.offset) + i) * binHours
+          pulseOut.textContent = fill(template, {
+            week: `W${this.dataset.week ?? ''}`,
+            day: days[Math.floor(hoursIn / 24) % 7] ?? '',
+            hour: `${pad(hoursIn % 24)}:00`,
+            commits: String(values[i]),
+          })
+          pulseOut.classList.add('is-on')
+          hair.setAttribute('x1', x.toFixed(1))
+          hair.setAttribute('x2', x.toFixed(1))
+          hair.classList.add('is-on')
+          if (hot !== this) {
+            hot?.classList.remove('is-hot')
+            this.classList.add('is-hot')
+            hot = this
+          }
+        })
+      select(pulseSvg).on('pointerleave', rest)
+    }
+
+    // ── the sparklines answer the pointer ───────────────────────────────────────────────────
+    selectAll<SVGSVGElement, unknown>('[data-ops-spark]').each(function () {
+      const svg = this
+      const values = (svg.dataset.values ?? '').split(',').map(Number)
+      const points = (svg.dataset.points ?? '').split(' ').map((p) => p.split(',').map(Number))
+      const probe = svg.querySelector<SVGLineElement>('[data-ops-probe]')
+      const out = svg.parentElement?.querySelector<HTMLElement>('[data-ops-spark-readout]') ?? null
+      const template = svg.dataset.fmt ?? '{commits}'
+      const width = svg.viewBox.baseVal.width || 96
+      if (!probe || !out || points.length < 2 || points.length !== values.length) return
+      select(svg)
+        .on('pointermove', (event: PointerEvent) => {
+          const [x] = pointer(event, svg)
+          const i = clamp(Math.round((x / width) * (points.length - 1)), 0, points.length - 1)
+          const px = String(points[i][0])
+          probe.setAttribute('x1', px)
+          probe.setAttribute('x2', px)
+          probe.classList.add('is-on')
+          out.textContent = fill(template, { commits: String(values[i]) })
+          out.classList.add('is-on')
+        })
+        .on('pointerleave', () => {
+          probe.classList.remove('is-on')
+          out.classList.remove('is-on')
+        })
+    })
+
+    // ── the tiles answer the pointer, and grow in once ──────────────────────────────────────
+    selectAll<SVGSVGElement, unknown>('[data-ops-tile-viz]').each(function () {
+      const svg = this
+      const stampLine = svg.parentElement?.querySelector<HTMLElement>('[data-ops-stamp]') ?? null
+      if (!stampLine) return
+      const show = (label: string) => {
+        stampLine.textContent = label
+        stampLine.classList.add('is-readout')
+      }
+      const restore = () => {
+        stampLine.textContent = stampLine.dataset.stamp ?? ''
+        stampLine.classList.remove('is-readout')
+      }
+      const rects = select(svg).selectAll<SVGRectElement, unknown>('rect[data-label]')
+      rects.on('pointerenter', function () {
+        rects.classed('is-hot', false)
+        this.classList.add('is-hot')
+        show(this.dataset.label ?? '')
+      })
+      const probe = svg.querySelector<SVGLineElement>('[data-ops-probe]')
+      if (probe && svg.dataset.points) {
+        const points = svg.dataset.points.split(' ').map((p) => p.split(',').map(Number))
+        const labels: string[] = JSON.parse(svg.dataset.labels ?? '[]')
+        const width = svg.viewBox.baseVal.width || 96
+        select(svg).on('pointermove', (event: PointerEvent) => {
+          if (points.length < 2) return
+          const [x] = pointer(event, svg)
+          const i = clamp(Math.round((x / width) * (points.length - 1)), 0, points.length - 1)
+          const px = String(points[i][0])
+          probe.setAttribute('x1', px)
+          probe.setAttribute('x2', px)
+          probe.classList.add('is-on')
+          if (labels[i]) show(labels[i])
+        })
+      }
+      select(svg).on('pointerleave', () => {
+        rects.classed('is-hot', false)
+        probe?.classList.remove('is-on')
+        restore()
+      })
+    })
+
+    // The marks grow up from the floor the first time the grid scrolls into view — once, and
+    // never under reduced motion. The final geometry is what the server rendered; this only
+    // withholds it for the duration of the transition, so a page without script, or a reader who
+    // asked for stillness, sees the finished marks and nothing missing.
+    const grid = room.querySelector<HTMLElement>('[data-ops-tiles]')
+    if (grid && !reduced.matches && 'IntersectionObserver' in window) {
+      const tiles = selectAll<SVGSVGElement, unknown>('[data-ops-tile-viz]')
+      tiles.each(function () {
+        const floor = this.viewBox.baseVal.height || 26
+        select(this)
+          .selectAll<SVGRectElement, unknown>('rect')
+          .each(function () {
+            this.dataset.y = this.getAttribute('y') ?? '0'
+            this.dataset.h = this.getAttribute('height') ?? '0'
+          })
+          .attr('y', floor)
+          .attr('height', 0)
+      })
+      const grow = new IntersectionObserver(
+        (entries) => {
+          if (!entries.some((e) => e.isIntersecting)) return
+          grow.disconnect()
+          tiles.each(function () {
+            select(this)
+              .selectAll<SVGRectElement, unknown>('rect')
+              .transition()
+              .duration(700)
+              .delay((_, i) => i * 18)
+              .ease(easeCubicOut)
+              .attr('y', function () {
+                return Number(this.dataset.y)
+              })
+              .attr('height', function () {
+                return Number(this.dataset.h)
+              })
+          })
+        },
+        { threshold: 0.15 },
+      )
+      grow.observe(grid)
+    }
   }
 </script>

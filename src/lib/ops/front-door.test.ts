@@ -1,9 +1,14 @@
-// The front door and the full board it links (2026-09-01). Source-scan guards in the pattern
-// naming.test.ts established for the entrance: what these check is not markup taste but the
-// promises the pages make to each other — the entrance derives from the same tested libs as
-// the board page, the "the full board →" link really lands on the full board, and the front
-// page really mounts the front door. Each of these broke silently at least once in this
-// entrance's lineage (the eyebrow in August); a scan is what makes the next time loud.
+// The front door, the full board it links, and what the front page mounts (2026-09-01).
+// Source-scan guards in the pattern naming.test.ts established for the entrance: what these
+// check is not markup taste but the promises the pages make to each other — the front door
+// derives from the same tested libs as the board page, the "the full board →" link really lands
+// on the full board, and the front page really mounts the entrance the eyebrow guard reads.
+// Each of these broke silently at least once in this entrance's lineage (the eyebrow in
+// August); a scan is what makes the next time loud.
+//
+// Lineage on this one day: FrontDoor.astro became the entrance in the morning; in the evening
+// Frank's decision (wording private) brought the ops room back, and FrontDoor.astro stays in the
+// repo unlinked — reachable through Git, mounted nowhere. /now keeps the board page as built.
 import { readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { describe, expect, it } from 'vitest'
@@ -45,11 +50,18 @@ describe('the full-board promise the homepage link makes stays true', () => {
   })
 })
 
-describe('the front page mounts the front door', () => {
-  // The eyebrow guard in naming.test.ts reads FrontDoor.astro; this is what keeps that guard
+describe('the front page mounts the ops room', () => {
+  // The eyebrow guard in naming.test.ts reads OpsRoom.astro; this is what keeps that guard
   // honest — if the page ever mounts something else, one of the two fails.
-  it('imports FrontDoor.astro', () => {
-    expect(indexPage).toContain("@/components/pages/FrontDoor.astro")
+  it('imports OpsRoom.astro and mounts nothing else as the entrance', () => {
+    expect(indexPage).toContain('@/components/pages/OpsRoom.astro')
+    expect(indexPage).toContain('<OpsRoom />')
+    expect(indexPage).not.toContain('<FrontDoor />')
+  })
+
+  it('keeps the front door in the repo, dated, rather than deleting it', () => {
+    expect(frontDoor.length).toBeGreaterThan(0)
+    expect(indexPage).toContain('FrontDoor.astro stays in the repo')
   })
 })
 

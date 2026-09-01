@@ -570,7 +570,13 @@ export const NAMING = {
    */
   opsRoom: {
     /** the strip under the real TopBar: what this page is, and the clock that proves it is live */
-    strip: { label: 'ops room · live from the record', clockLabel: 'UTC' },
+    strip: {
+      label: 'ops room · live from the record',
+      clockLabel: 'UTC',
+      /** the clock's face (src/lib/ops/dial.ts): its accessible name, with the figures it draws */
+      dial: (p: { weeks: number; total: number }) =>
+        `The day dial: ${p.total.toLocaleString('en-GB')} commits by UTC hour of the day, across ${p.weeks} weeks of the record — midnight at the top, noon at the bottom; the hand is the live UTC time.`,
+    },
 
     hero: {
       /** condensed from NAMING.sub, per the handoff — the long form still stands on /dossier */
@@ -587,6 +593,11 @@ export const NAMING = {
       headRight: (weekRange: string) => `${weekRange} · TWO LINES/WEEK`,
       footLeft: '2-HOUR BINS · TAPERED',
       footRight: (asOf: string) => `AS OF ${asOf.toUpperCase()}`,
+      /** The hover readout under the pointer: a template, because the client fills it — the
+       *  placeholders are the only wording the script owns, and it owns none of the numbers.
+       *  The number it states is the UNSHAPED bin from the snapshot, not the tapered height. */
+      readout: '{week} · {day} {hour} UTC · {commits} COMMITS',
+      days: ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'],
     },
 
     board: {
@@ -595,6 +606,8 @@ export const NAMING = {
       link: { label: 'the last landed state →', href: '/ecology#now' },
       /** what a row says instead of a title when its source carries no landed work */
       noWork: 'no landed work yet',
+      /** the sparkline's hover readout — a template the client fills with the bucket's own count */
+      sparkReadout: '{commits} commits',
       groups: [
         {
           /* Label rewritten 2026-09-01: the gate fell with research ecology v3 (2026-08-30). */
@@ -659,6 +672,13 @@ export const NAMING = {
           stamp: 'GDACS · NOAA · NIGHTLY VERDICTS',
           sub: (p: { open: number; resolved: number; nights: number }) =>
             `public warnings held open on the ledger — ${p.resolved} closed with a verdict so far, across ${p.nights} nights on the record`,
+          /* `readout` — one line per mark, shown when the pointer rests on it (the tile's stamp
+             line gives way to it and comes back). Written here for the same reason `sub` is: the
+             number in the readout is the value the mark was drawn from, never a second figure. */
+          readout: (p: { resolved: number; open: number }): [string, string] => [
+            `${p.resolved} closed with a verdict`,
+            `${p.open} held open on the ledger`,
+          ],
         },
         protocol: {
           name: 'PROTOCOL',
@@ -667,12 +687,16 @@ export const NAMING = {
             p.unavailable === 0
               ? 'agenda items in today’s minutes of the planet — every source answered, every item adjourned'
               : `agenda items in today’s minutes of the planet — ${p.unavailable} source${p.unavailable === 1 ? '' : 's'}: “Feststellung entfällt”; every item adjourned`,
+          readout: (p: { item: string; answered: boolean }) =>
+            p.answered ? p.item : `${p.item} — “Feststellung entfällt”`,
         },
         consensus: {
           name: 'CONSENSUS',
           stamp: 'ONE SNAPSHOT PER DAY · NEVER EDITED',
           sub: (p: { scanned: number; hours: number }) =>
             `ran today’s most-copied sentence word-for-word — one source, one cascade of ${p.hours} hours, counted across ${p.scanned.toLocaleString('en-GB')} articles`,
+          readout: (p: { hour: number; outlets: number }) =>
+            `hour ${p.hour} of the cascade: ${p.outlets} outlet${p.outlets === 1 ? '' : 's'} joined`,
         },
         iceberg: {
           name: 'ICEBERG THEORY',
@@ -681,24 +705,30 @@ export const NAMING = {
              names WHICH topic and what the other editions do instead. */
           sub: (p: { topic: string }) =>
             `Wikipedia language editions conceal more than average about ${p.topic} — the furthest-apart topic in the register today; the rest state the contested claim outright`,
+          readout: (p: { lang: string; omission: number }) => `${p.lang}: ${p.omission}% of the claim omitted`,
         },
         policy: {
           name: 'POLICY',
           stamp: 'NIGHTLY · MARKET DATA',
           sub: (p: { baseYear: number; latest: string }) =>
             `today’s climate premium against ${p.baseYear} — recomputed from real market data, latest reading ${p.latest}`,
+          readout: (p: { year: number; index: number }) => `${p.year}: premium index ${p.index}`,
         },
         redaction: {
           name: 'EDITORIAL DEADLINE',
           stamp: 'WAYBACK DIFFS · DAILY',
           sub: (p: { institution: string; changed: number; watched: number }) =>
             `taken out of a page of the ${p.institution} — the most substantive of ${p.changed} changes across ${p.watched} watched pages, both versions linked`,
+          readout: (p: { institution: string; tokens: number }) =>
+            `${p.institution}: −${p.tokens.toLocaleString('en-GB')} tokens`,
         },
         ghostFleet: {
           name: 'GHOST FLEET',
           stamp: 'NO CLAIM OF ILLEGALITY — COUNTED',
           sub: (p: { value: number; unit: 'hours' | 'days' }) =>
             `vessels in deliberate AIS silence today — the longest of them dark for ${p.value} ${p.unit}, in waters that are named`,
+          readout: (p: { vessel: string; flag: string | null; value: number; unit: 'hours' | 'days' }) =>
+            `${p.vessel}${p.flag ? ` (${p.flag})` : ''}: dark for ${p.value} ${p.unit}`,
         },
         roundNumbers: {
           name: 'ROUND NUMBERS',
@@ -710,24 +740,30 @@ export const NAMING = {
             p.tampered
               ? `real official series the same Benford test calls suspicious — while the deliberately tampered control comes back “${p.tampered}”`
               : 'real official series the same Benford test calls suspicious — the test is on trial here, not the statistics office',
+          readout: (p: { digit: number; observed: string; expected: string }) =>
+            `leading digit ${p.digit}: ${p.observed}% observed · ${p.expected}% expected`,
         },
         patterns: {
           name: 'PATTERNS',
           stamp: 'PERMUTATION-TESTED · THE CAPSTONE',
           sub: (p: { pairs: number; survives: boolean }) =>
             `today’s strongest correlation among ${p.pairs} pairs of its own archive — ${p.survives ? 'and it survives the permutation test' : 'indistinguishable from noise under the permutation test'}`,
+          readout: (p: { from: string; to: string; count: number }) =>
+            `r between ${p.from} and ${p.to}: ${p.count} of the shuffles`,
         },
         watchtower: {
           name: 'ALL ALONG THE WATCHTOWER',
           stamp: 'CELESTRAK · DAILY ORBITAL DATA · LOCAL ONLY',
           sub: () =>
             'Earth-observation satellites on tonight’s committed orbital data — which of them have you in view is computed in your browser, on the piece itself',
+          readout: (p: { owner: string; count: number }) => `${p.owner}: ${p.count} satellite${p.count === 1 ? '' : 's'}`,
         },
         atlas: {
           name: 'ATLAS OF DATA ART',
           stamp: 'REFERENCE COLLECTION · NIGHTLY',
           sub: (p: { artists: number }) =>
             `catalogued and sourced, by ${p.artists} named artists — uncertain classifications stay flagged`,
+          readout: (p: { year: number; count: number }) => `${p.year}: ${p.count} work${p.count === 1 ? '' : 's'}`,
         },
       },
     },

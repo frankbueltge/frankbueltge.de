@@ -201,6 +201,49 @@
   font-variant-numeric: tabular-nums;
   letter-spacing: 0.06em;
 }
+.ops-strip-live {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* ── the day dial (src/lib/ops/dial.ts) ─────────────────────────────────────────────────────
+   The clock's face: twelve arcs, one per two-hour slot of the UTC day, each as long as the commits
+   the record holds for that slot. The arcs wear the live ink dimmed; the one the hand points into
+   wears it full. The hand is hidden until the script has set it — a hand at a build-time angle
+   would be a stopped clock claiming to be live, the same reason the text clock renders empty. */
+.ops-dial {
+  display: block;
+  flex: none;
+  width: 36px;
+  height: 36px;
+  overflow: visible;
+}
+.ops-dial-ring {
+  fill: none;
+  stroke: var(--ops-line);
+  stroke-width: 1;
+}
+.ops-dial-arc {
+  fill: var(--ops-accent);
+  opacity: 0.45;
+  transition: opacity 0.3s ease;
+}
+.ops-dial-arc.is-now {
+  opacity: 1;
+}
+.ops-dial-hand {
+  stroke: var(--ops-fg);
+  stroke-width: 1.3;
+  stroke-linecap: round;
+  visibility: hidden;
+}
+.ops-dial-hand.is-set {
+  visibility: visible;
+}
+.ops-dial-pin {
+  fill: var(--ops-accent);
+}
 @media (max-width: 720px) {
   .ops-strip {
     padding: 0 20px;
@@ -342,6 +385,46 @@
   fill: var(--ops-accent);
   transition: cx 0.12s linear, cy 0.12s linear;
 }
+/* The ridge under the pointer takes the live ink; the hairline marks the bin the readout states.
+   Both are hidden or quiet until the script has a position to give them. */
+.ops-ridge.is-hot {
+  stroke: var(--ops-accent);
+}
+.ops-hair {
+  stroke: var(--ops-accent);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+  opacity: 0.7;
+  visibility: hidden;
+  pointer-events: none;
+}
+.ops-hair.is-on {
+  visibility: visible;
+}
+/* The reading under the pointer, as a chip in the figure's top-right corner — on the panel's own
+   ground so the ridges never show through the digits, and hidden until the script has a bin to
+   name. It lives inside the body, not in the footer strip: the strip's two captions take its
+   width, and a reading cut short by an ellipsis is no reading. */
+.ops-instrument-readout {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  padding: 4px 8px;
+  border: 1px solid var(--ops-line);
+  border-radius: 4px;
+  background: var(--ops-panel-solid);
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  color: var(--ops-accent);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  visibility: hidden;
+  pointer-events: none;
+}
+.ops-instrument-readout.is-on {
+  visibility: visible;
+}
 
 /* ── 3 · the board ──────────────────────────────────────────────────────────────────────────── */
 
@@ -417,16 +500,58 @@
 .ops-row-status[data-status='RECORDING'] {
   color: var(--ops-muted);
 }
+.ops-spark-cell {
+  position: relative;
+}
 .ops-spark {
   display: block;
   width: 96px;
   height: 26px;
+  overflow: visible;
 }
-.ops-spark path {
+/* PALETTE: ecology-voices — the sparkline wears its row's identity through the same --led slot as
+   the LED: the line full, the fill under it faint, the newest bucket as a point. */
+.ops-spark-line {
   fill: none;
   stroke: var(--led, var(--ops-accent));
   stroke-width: 1.2;
   stroke-linejoin: round;
+}
+.ops-spark-area {
+  fill: var(--led, var(--ops-accent));
+  opacity: 0.14;
+  stroke: none;
+}
+.ops-spark-end {
+  fill: var(--led, var(--ops-accent));
+}
+.ops-spark-probe {
+  stroke: var(--ops-fg);
+  stroke-width: 1;
+  opacity: 0.8;
+  visibility: hidden;
+  pointer-events: none;
+}
+.ops-spark-probe.is-on {
+  visibility: visible;
+}
+/* The bucket's count, above the line while the pointer is on it — the room's small mono, the
+   room's own ink, and gone the moment the pointer leaves. */
+.ops-spark-readout {
+  position: absolute;
+  right: 0;
+  top: -13px;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.08em;
+  color: var(--ops-fg);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  visibility: hidden;
+  pointer-events: none;
+}
+.ops-spark-readout.is-on {
+  visibility: visible;
 }
 /* Whatever a row cannot show, it says. */
 .ops-absent {
@@ -657,13 +782,47 @@
   stroke-linejoin: round;
   opacity: 0.85;
 }
+/* The mark under the pointer: full ink with a hairline edge, so the one the readout speaks of is
+   the one that stands out — the emphasis of the reading (marked/dim) stays underneath it. */
+.ops-tile-viz rect {
+  transition: opacity 0.15s ease;
+}
+.ops-tile-viz rect.is-hot {
+  opacity: 1;
+  stroke: var(--ops-fg);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+.ops-tile-probe {
+  stroke: var(--ops-fg);
+  stroke-width: 1;
+  opacity: 0.8;
+  visibility: hidden;
+  pointer-events: none;
+}
+.ops-tile-probe.is-on {
+  visibility: visible;
+}
 .ops-tile-stamp {
   display: block;
   margin-top: 10px;
+  min-height: 1.4em;
   font-family: var(--font-mono);
   font-size: 9px;
   letter-spacing: 0.12em;
   color: var(--ops-faint);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color 0.15s ease;
+}
+/* While the pointer rests on a mark, the stamp line carries that mark's readout in the room's
+   reading ink; it returns to the stamp when the pointer leaves. Letter-spacing relaxes so a
+   sentence fits where a label stood. */
+.ops-tile-stamp.is-readout {
+  color: var(--ops-fg);
+  letter-spacing: 0.04em;
+  text-transform: none;
 }
 
 .ops-catalogues {
@@ -747,7 +906,10 @@
     opacity: 1;
     transform: none;
   }
-  .ops-room .ops-dot {
+  .ops-room .ops-dot,
+  .ops-room .ops-dial-arc,
+  .ops-room .ops-tile-viz rect,
+  .ops-room .ops-tile-stamp {
     transition: none;
   }
 }

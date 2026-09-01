@@ -42,10 +42,15 @@ import atlasWorks from '@/data/atlas/werke.json'
  *  states gets cells, a distribution gets bars, a series over time gets a line, a share gets the
  *  two-bar ratio. */
 export type TileViz =
-  | { kind: 'line'; values: number[] }
-  | { kind: 'bars'; values: number[]; marked: number[] }
-  | { kind: 'cells'; count: number; marked: number[] }
-  | { kind: 'ratio'; part: number; whole: number }
+  | { kind: 'line'; values: number[]; labels?: string[] }
+  | { kind: 'bars'; values: number[]; marked: number[]; labels?: string[] }
+  | { kind: 'cells'; count: number; marked: number[]; labels?: string[] }
+  | { kind: 'ratio'; part: number; whole: number; labels?: [string, string] }
+// `labels` (2026-09-01): one line per mark, aligned by index with the values, for the hover
+// readout the entrance shows when the pointer rests on a bar, cell or point. Each is written by
+// the tile's own `readout` in NAMING from the value the mark was drawn from — the readout can
+// never state a figure the mark does not show. Optional, so a reader that has nothing to say
+// per mark says nothing rather than something generic.
 
 export interface OpsTile {
   id: string
@@ -82,7 +87,7 @@ function foreknown(): OpsTile | null {
     stamp: COPY.foreknown.stamp,
     href: '/attention',
     // Open against resolved: the shape of a ledger that has barely begun to close is the finding.
-    viz: { kind: 'ratio', part: resolved, whole: open },
+    viz: { kind: 'ratio', part: resolved, whole: open, labels: COPY.foreknown.readout({ resolved, open }) },
   }
 }
 
@@ -102,6 +107,12 @@ function protocol(day: ProtokollDay | undefined): OpsTile | null {
       kind: 'cells',
       count: day.entries.length,
       marked: day.entries.map((e, i) => (e.status === 'ok' ? -1 : i)).filter((i) => i >= 0),
+      // cells() draws at most 24; the labels stop where the cells stop
+      labels: day.entries
+        .slice(0, 24)
+        .map((e) =>
+          COPY.protocol.readout({ item: e.label ?? e.source?.name ?? e.top_id, answered: e.status === 'ok' }),
+        ),
     },
   }
 }
@@ -154,7 +165,12 @@ function consensus(): OpsTile | null {
     sub: COPY.consensus.sub({ scanned, hours }),
     stamp: COPY.consensus.stamp,
     href: '/consensus',
-    viz: { kind: 'bars', values: buckets, marked: [0] },
+    viz: {
+      kind: 'bars',
+      values: buckets,
+      marked: [0],
+      labels: buckets.map((n, i) => COPY.consensus.readout({ hour: i + 1, outlets: n })),
+    },
   }
 }
 
@@ -169,7 +185,8 @@ function iceberg(): OpsTile | null {
   // finding" ordering /parallax renders, so the entrance cannot headline a different topic
   // than the piece.
   const top = [...topics].sort((a, b) => b.mean_omission - a.mean_omission)[0]
-  const values = Object.values(top.omission_by_lang ?? {})
+  const byLang = Object.entries(top.omission_by_lang ?? {})
+  const values = byLang.map(([, v]) => v)
   if (values.length === 0) return null
   // "Conceals" is the register's own threshold: an edition above the topic's mean omission.
   const concealing = values.filter((v) => v > top.mean_omission).length
@@ -184,6 +201,7 @@ function iceberg(): OpsTile | null {
       kind: 'bars',
       values,
       marked: values.map((v, i) => (v > top.mean_omission ? i : -1)).filter((i) => i >= 0),
+      labels: byLang.map(([lang, v]) => COPY.iceberg.readout({ lang, omission: Math.round(v * 100) })),
     },
   }
 }
@@ -203,7 +221,11 @@ function policy(): OpsTile | null {
     sub: COPY.policy.sub({ baseYear: p.base_year, latest: p.latest_date ?? '—' }),
     stamp: COPY.policy.stamp,
     href: '/policy',
-    viz: { kind: 'line', values: (p.series ?? []).map((s) => s.index) },
+    viz: {
+      kind: 'line',
+      values: (p.series ?? []).map((s) => s.index),
+      labels: (p.series ?? []).map((s) => COPY.policy.readout({ year: s.year, index: s.index })),
+    },
   }
 }
 
@@ -231,13 +253,25 @@ function redaction(): OpsTile | null {
     }),
     stamp: COPY.redaction.stamp,
     href: '/redaction',
-    viz: { kind: 'bars', values, marked: [list.indexOf(pick)].filter((i) => i >= 0) },
+    viz: {
+      kind: 'bars',
+      values,
+      marked: [list.indexOf(pick)].filter((i) => i >= 0),
+      labels: list.map((r) =>
+        COPY.redaction.readout({ institution: r.institution ?? 'watched page', tokens: r.removed_tokens ?? 0 }),
+      ),
+    },
   }
 }
 
 interface GhostFleetShape {
-  events?: { duration_hours?: number }[]
+  events?: { duration_hours?: number; vessel?: { name?: string; flag?: string } }[]
 }
+
+/** Days once a silence runs past two of them: "1197 hours" is a number a reader has to divide
+ *  before it means anything, and the piece's own case-of-the-day speaks in days too. */
+const darkSpan = (hours: number): { value: number; unit: 'hours' | 'days' } =>
+  hours >= 48 ? { value: Math.round(hours / 24), unit: 'days' } : { value: Math.round(hours), unit: 'hours' }
 
 function ghostFleet(): OpsTile | null {
   const events = (ghostFleetLatest as unknown as GhostFleetShape).events ?? []
@@ -248,16 +282,21 @@ function ghostFleet(): OpsTile | null {
     id: 'ghostFleet',
     name: COPY.ghostFleet.name,
     big: `${events.length} dark`,
-    // Days once a silence runs past two of them: "1197 hours" is a number a reader has to divide
-    // before it means anything, and the piece's own case-of-the-day speaks in days too.
-    sub: COPY.ghostFleet.sub(
-      longest >= 48
-        ? { value: Math.round(longest / 24), unit: 'days' }
-        : { value: Math.round(longest), unit: 'hours' },
-    ),
+    sub: COPY.ghostFleet.sub(darkSpan(longest)),
     stamp: COPY.ghostFleet.stamp,
     href: '/ghost-fleet',
-    viz: { kind: 'bars', values: durations, marked: [durations.indexOf(longest)] },
+    viz: {
+      kind: 'bars',
+      values: durations,
+      marked: [durations.indexOf(longest)],
+      labels: events.map((e) =>
+        COPY.ghostFleet.readout({
+          vessel: e.vessel?.name ?? 'unnamed vessel',
+          flag: e.vessel?.flag ?? null,
+          ...darkSpan(e.duration_hours ?? 0),
+        }),
+      ),
+    },
   }
 }
 
@@ -296,10 +335,15 @@ function roundNumbers(): OpsTile | null {
     viz: (() => {
       const observed = real[0].benford?.observed ?? []
       const expected = real[0].benford?.expected ?? []
+      // the record holds shares (0.3067); the readout speaks in the percent the piece prints
+      const pct = (v: number) => (v * 100).toFixed(1)
       return {
         kind: 'bars' as const,
         values: observed,
         marked: observed.map((v, i) => (v > (expected[i] ?? v) ? i : -1)).filter((i) => i >= 0),
+        labels: observed.map((v, i) =>
+          COPY.roundNumbers.readout({ digit: i + 1, observed: pct(v), expected: pct(expected[i] ?? 0) }),
+        ),
       }
     })(),
   }
@@ -309,7 +353,7 @@ interface PatternShape {
   headline?: { r?: number }
   pairs?: number
   false_discovery_rate?: number
-  null_distribution?: { counts?: number[] }
+  null_distribution?: { counts?: number[]; range?: number[] }
 }
 
 function patterns(): OpsTile | null {
@@ -325,7 +369,20 @@ function patterns(): OpsTile | null {
     stamp: COPY.patterns.stamp,
     href: '/pattern',
     // The null distribution the permutation test built — the picture of what chance alone does.
-    viz: { kind: 'bars', values: d.null_distribution?.counts ?? [], marked: [] },
+    // Each bar's readout names the r-interval it counts, cut from the distribution's own range;
+    // a snapshot without a range falls back to the full [−1, 1] a correlation can span.
+    viz: (() => {
+      const counts = d.null_distribution?.counts ?? []
+      const range = d.null_distribution?.range
+      const [lo, hi] = Array.isArray(range) && range.length === 2 ? range : [-1, 1]
+      const edge = (i: number) => (lo + ((hi - lo) * i) / Math.max(1, counts.length)).toFixed(2)
+      return {
+        kind: 'bars' as const,
+        values: counts,
+        marked: [],
+        labels: counts.map((n, i) => COPY.patterns.readout({ from: edge(i), to: edge(i + 1), count: n })),
+      }
+    })(),
   }
 }
 
@@ -343,7 +400,9 @@ function watchtower(): OpsTile | null {
     const owner = s.gcat?.owner ?? 'unknown'
     byOwner.set(owner, (byOwner.get(owner) ?? 0) + 1)
   }
-  const top = [...byOwner.values()].sort((a, b) => b - a).slice(0, 10)
+  // Ties keep the catalogue's own order (a Map iterates in insertion order), so the same
+  // snapshot always yields the same ten — and the same readouts on them.
+  const top = [...byOwner.entries()].sort((a, b) => b[1] - a[1]).slice(0, 10)
   return {
     id: 'watchtower',
     name: COPY.watchtower.name,
@@ -351,7 +410,12 @@ function watchtower(): OpsTile | null {
     sub: COPY.watchtower.sub(),
     stamp: COPY.watchtower.stamp,
     href: '/lab/ueberflug-studie',
-    viz: { kind: 'bars', values: top, marked: [0] },
+    viz: {
+      kind: 'bars',
+      values: top.map(([, n]) => n),
+      marked: [0],
+      labels: top.map(([owner, n]) => COPY.watchtower.readout({ owner, count: n })),
+    },
   }
 }
 
@@ -378,7 +442,11 @@ function atlas(): OpsTile | null {
     sub: COPY.atlas.sub({ artists }),
     stamp: COPY.atlas.stamp,
     href: '/atlas',
-    viz: { kind: 'line', values: years.map((y) => byYear.get(y) ?? 0) },
+    viz: {
+      kind: 'line',
+      values: years.map((y) => byYear.get(y) ?? 0),
+      labels: years.map((y) => COPY.atlas.readout({ year: y, count: byYear.get(y) ?? 0 })),
+    },
   }
 }
 
