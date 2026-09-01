@@ -79,7 +79,8 @@ const catalogues = NAMING.catalogues.items.filter((c) => c.href !== '/atlas')
   <div class="ops-strip">
     <span class="ops-strip-name">
       <span class="ops-led"></span>
-      <span>{OPS.strip.label}</span>
+      {/* the front door's own label — the ops room moved to /now and keeps its name there */}
+      <span>{FD.strip.label}</span>
     </span>
     {/* Rendered empty and filled by the script: a build-time clock would be a stopped clock
         claiming to be a live one — worse than no clock. */}

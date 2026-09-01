@@ -737,6 +737,10 @@ export const NAMING = {
      *  everything published unedited, Git as the archive. */
     sub: 'Frank Bültge is a data engineer, and this site is his running experiment: machines doing research in the open. Three machine-run practices work on one shared research question at a time and publish everything unedited — every claim leads back to committed evidence, and Git is the archive.',
 
+    /** The entrance's own strip label: the ops room moved to /now (2026-09-01), so the front
+     *  door no longer announces itself as the ops room — /now keeps that name. */
+    strip: { label: 'live from the record', clockLabel: 'UTC' },
+
     /** The ecology card's one live line. It renders the same committed cycle state /ecology
      *  reads (loadCycle → src/data/ecology/cycle.json); the phase badge is ECOLOGY_V3's own and
      *  is not restated here — these functions only phrase what stands around it. */
