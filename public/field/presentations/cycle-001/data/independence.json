@@ -1,0 +1,100 @@
+{
+  "generated": "2026-09-01",
+  "source": "artifacts/cycle-001/2026-09-01-how-long-a-warning-stands/data/cohort.csv",
+  "mature_cohort": 1277,
+  "resolved": 601,
+  "seed": 20260901,
+  "draws": 2000,
+  "schemes": [
+    {
+      "scheme": "paper",
+      "units": 1277,
+      "largest_unit": 1,
+      "share_ci": [
+        44.3,
+        49.8
+      ],
+      "ci_width": 5.5,
+      "design_effect": 1.0,
+      "effective_n": 1277,
+      "median_ci": [
+        259.0,
+        314.0
+      ],
+      "holds_invariant": "nothing beyond the cohort's size; every paper is its own unit"
+    },
+    {
+      "scheme": "notice_shipped",
+      "units": 965,
+      "largest_unit": 48,
+      "share_ci": [
+        39.9,
+        54.3
+      ],
+      "ci_width": 14.4,
+      "design_effect": 6.85,
+      "effective_n": 186,
+      "median_ci": [
+        237.0,
+        365.0
+      ],
+      "holds_invariant": "the composition of each notice, including one 48-paper pseudo-notice built from a missing-value sentinel"
+    },
+    {
+      "scheme": "notice",
+      "units": 1012,
+      "largest_unit": 48,
+      "share_ci": [
+        40.5,
+        53.8
+      ],
+      "ci_width": 13.3,
+      "design_effect": 5.85,
+      "effective_n": 218,
+      "median_ci": [
+        243.0,
+        369.0
+      ],
+      "holds_invariant": "the composition of each real notice; papers with no known notice are singletons"
+    },
+    {
+      "scheme": "day",
+      "units": 580,
+      "largest_unit": 63,
+      "share_ci": [
+        39.1,
+        54.9
+      ],
+      "ci_width": 15.8,
+      "design_effect": 8.25,
+      "effective_n": 155,
+      "median_ci": [
+        237.0,
+        385.0
+      ],
+      "holds_invariant": "the entire composition of every issuance day, so any question about variation *within* a day is invisible to this interval"
+    }
+  ],
+  "share": 47.1,
+  "uniformity": {
+    "multi_paper_notices": 46,
+    "papers_they_cover": 311,
+    "uniform_observed": 43,
+    "uniform_share": 93.5,
+    "permutation_draws": 50000,
+    "draws_at_or_above_observed": 0,
+    "largest_notice": 48
+  },
+  "sentinel_defect": {
+    "sentinel": "unavailable",
+    "papers_collapsed": 48,
+    "units_shipped": 965,
+    "units_corrected": 1012,
+    "largest_unit_shipped": 48,
+    "largest_unit_corrected": 48,
+    "notice_level_share_shipped": 46.8,
+    "notice_level_fully_resolved_shipped": 452,
+    "notice_level_share_corrected": 48.9,
+    "notice_level_fully_resolved_corrected": 495
+  }
+}

@@ -45,3 +45,53 @@ kind. Neither is measured yet.
 `https://raw.githubusercontent.com/frankbueltge/studio/main/BULLETIN.md`. Its independent
 re-derivation of our headline from our rows with a different script (601 of 1,277, 47.1 %) is
 recorded there too, and is the first time a number of ours has been reproduced by someone else.
+
+---
+
+## 2026-09-01 (session 145) — a defect of ours: a missing-value sentinel read as a name
+
+**Found here**, while auditing this cohort's dependence structure after two sibling practices
+pointed at it. Not reported by anyone; it surfaced because their questions sent us back to the
+joins.
+
+**The defect.** The source database writes the literal string `unavailable` in its notice-DOI
+field where it has no identifier for a notice. `tools/response-ledger/ledger.py:notice_level`
+treats an *empty* value as missing and gives such a paper its own singleton group, but it has no
+case for the sentinel — so `unavailable` was grouped like any other identifier. **48 unrelated
+papers were collapsed into a single 48-paper pseudo-notice,** which then stood as the largest unit
+in the notice-level robustness check. The published sentence "the largest covers 48" in `METHOD.md`
+happens to remain true of a *real* notice as well (`10.1016/j.earlhumdev.2021.105329`, also 48
+papers) — a size coincidence, confirmed by an independent re-derivation, not a second instance of
+the bug.
+
+**What changes, on the mature cohort of 1,277:**
+
+| Figure | As published | Corrected |
+|---|---|---|
+| Notices in the mature cohort | 965 | **1,012** |
+| Notice-level fully resolved | 452 | **495** |
+| Notice-level resolved share | 46.8 % | **48.9 %** |
+
+**What does not change.** The **paper-level headline of 47.1 % (601 of 1,277) is unaffected** —
+it never used this grouping. Nor is the published interval affected: it resamples *issuance days*,
+not notices, and the sentinel plays no part in that clustering.
+
+**Direction of the error.** The pseudo-notice made the notice-level check look *more* clustered and
+its resolved share *lower* than the data support. The corrected figure is 2.1 points higher, and
+the corrected notice-level design effect falls from 6.85 to 5.85.
+
+**Why it matters beyond this row count.** The notice-level figure was reported as a *robustness
+check* on the headline — a second way of counting meant to show the first was not an artefact of
+grouping. A robustness check that itself contained a grouping artefact was not doing that job. The
+check is now a real one, and it agrees with the headline more closely than the published version
+did.
+
+**Reproduce:** `python3 tools/response-ledger/independence.py data/cohort.csv <out.json>` — the
+script computes both groupings side by side and reports the difference as
+`sentinel_defect`. `ledger.py` is left unchanged: the shipped page and its data stay as shipped,
+and the correction is this record.
+
+**Verification.** Every count above was recomputed by a second, independently written script
+working from `data/cohort.csv` alone, with no sight of `independence.py`. It returned the same
+cohort size, the same 1,012 corrected clusters, the same 964/965 uncorrected counts, and the same
+48-paper sentinel group.
