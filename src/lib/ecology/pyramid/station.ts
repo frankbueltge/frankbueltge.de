@@ -73,7 +73,10 @@ export function readConstitution(ns: string, protocols: Record<string, string> =
   }
   return {
     version: `v${heading[2]}`,
-    adopted: /(?:Decided and drafted|Adopted)[^.]*?(\d{4}-\d{2}-\d{2})/.exec(raw)?.[1] ?? null,
+    // "Decided by" covers the research ecology v3 protocols (2026-08-30 rewrite, all three
+    // practices): the older "Decided and drafted"/"Adopted" phrasing stays matched too, so an
+    // archived text keeps parsing the same way it always did.
+    adopted: /(?:Decided and drafted|Decided by|Adopted)[^.]*?(\d{4}-\d{2}-\d{2})/.exec(raw)?.[1] ?? null,
     name: (heading[3] ?? '').trim() || heading[1],
   }
 }

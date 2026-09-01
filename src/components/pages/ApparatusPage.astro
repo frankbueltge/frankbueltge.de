@@ -19,6 +19,7 @@ import ApparatusMap from '@/components/apparatus/ApparatusMap.astro'
 import AuthorshipNote from '@/components/engines/AuthorshipNote.astro'
 import { NODES } from '@/lib/apparatus/topology'
 import { parseProtocol } from '@/lib/atelier/protocol-version'
+import { readConstitution } from '@/lib/ecology/pyramid/station'
 
 // Version aus dem gespiegelten PROTOCOL.md abgeleitet, nie hartkodiert (Aktualitäts-Regel
 // 2026-07-25) — derselbe Mechanismus wie src/pages/atelier/protocol.astro; diese Stelle
@@ -27,6 +28,12 @@ const atelierProtoRaw = Object.values(import.meta.glob('/src/content/atelier/PRO
   eager: true, query: '?raw', import: 'default',
 }) as Record<string, string>)[0] ?? ''
 const atelierProto = parseProtocol(atelierProtoRaw)
+
+// Field and Studio go through the same generic reader the station sheets use (readConstitution
+// already handles all three practices' own headings) — this line hardcoded "v3" for both until
+// the research ecology v3 rewrite of 2026-08-30 moved them to v4 without anyone updating it here.
+const fieldProto = readConstitution('field')
+const studioProto = readConstitution('studio')
 
 // Wording follows the federated constitution (docs/federated-research-ecology/,
 // spec 02: local sovereignty, "what must never be assumed") — no wings, no fixed
@@ -38,14 +45,14 @@ const engines = [
     door: '/field',
     repo: 'https://github.com/frankbueltge/field-research',
     role: 'An autonomous scientific research collective — the ecology’s empirical pole — investigating the live field where data, AI and power meet: verifiable instruments, adversarial review, a claims ledger. Its findings are material other practices may take up under stated conditions — it is not the truth department, and nobody is downstream of it.',
-    protocolNote: 'Research Protocol v3 (2026-08-08) — arcs, not nights: continuous instruments and bounded investigations, no seasons or joint-inquiry machinery; the collective’s first investigation is due in the post office by 2026-09-05',
+    protocolNote: `Research Protocol ${fieldProto.version}${fieldProto.adopted ? ` (${fieldProto.adopted})` : ''} — research ecology v3: one shared research question across all three practices at a time, three to five sessions per question, an artifact every session; v2’s gate apparatus (concept gates, pre-registration, the machine-advantage bar, record ceilings, the seven-day send bind) is retired without replacement`,
   },
   {
     name: 'Ensemble',
     door: '/studio',
     repo: 'https://github.com/frankbueltge/studio',
-    role: 'An autonomous artist collective — only digital works, and only what a machine does better than a human: scale, repetition, verification, the temporal. It composes its works from its own research, its encounters, and — where it so chooses — material Meridian has verified; a concept gate kills most of what it conceives before a byte of the work exists, and a work carrying any false claim, label or citation is blocked at its single premiere. Works realised physically under the pre-2026-08-08 remit stand as made; the remit no longer produces new ones. Not a design service, not structurally downstream of anyone.',
-    protocolNote: 'Studio Protocol v3 (2026-08-16) — the machine-advantage bar now applies at concept, not premiere: three to six milestones per work, no standing Dramaturg role; the digital-only remit carries over from v2 unchanged',
+    role: 'An autonomous artist collective — only digital works, and only what a machine does better than a human: scale, repetition, verification, the temporal. It composes its works from its own research, its encounters, and — where it so chooses — material Meridian has verified; verification lives inside each session’s artifact itself (sources linked, method stated, no unverified claim published as fact) rather than at a gate beforehand. Works realised physically under the pre-2026-08-08 remit stand as made; the remit no longer produces new ones. Not a design service, not structurally downstream of anyone.',
+    protocolNote: `Studio Protocol ${studioProto.version}${studioProto.adopted ? ` (${studioProto.adopted})` : ''} — research ecology v3: the same shared-question cycle as its siblings, one artifact every session; the concept gate and the machine-advantage bar are retired, verification lives inside the artifact itself`,
   },
   {
     name: 'Ulysses',
