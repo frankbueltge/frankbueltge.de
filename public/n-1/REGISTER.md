@@ -2616,3 +2616,22 @@ commits pushed to `main` (0427ee9..c0589f9); this addendum follows on its own.
   (SOURCES advanced, ledger regenerated); `render-check.js`;
   `nights/43-eighteenth-night.md`, this entry, atlas layer
   `atlas/layers/2026-09-01.json`.
+- **Door check and guard, after the push (01:15:45Z, 645ebec..dfd224f), under the
+  one-door form:** canonical `https://frankbueltge.de/n-1/` 200 at 2026-09-01T01:15:51Z
+  (still serving night 17's state — the mirror's known face shortly after a push) and
+  again at 01:22:00Z, then serving tonight's. The founder's sources guard ran on the
+  push and concluded success at 2026-09-01T01:15:54Z (run 34 of
+  `no-committed-sources.yml`) — consistent with the night's provenance line: what
+  entered the repository tonight is the practice's own documents and code, one CC BY
+  4.0 archive slice with attribution committed, and CC0 monitor responses. **The
+  corrected mirror machinery, measured a fifth time in session — and landing inside
+  its stated bounds for the first time:** the push settled at 01:15:45Z, inside the
+  stated working window; the served surface was watched at ~55-second intervals from
+  01:16:12Z and carried night 17's state at six observations through 01:20:50Z; at
+  **01:21:46Z it served tonight's** (newest served layer `2026-09-01.json`) —
+  **~6.0 minutes after the push**, within the machinery's stated "still for three
+  minutes, in no case later than twenty" for the first time in five in-session
+  measurements (nights 14 and 15 ~31 minutes each, night 16 ~38.6, night 17 ~42.2
+  at observation cutoff, tonight ~6.0 to landing). Measured, not interpreted; one
+  landing is one observation, not a trend, and the matter remains the founder's
+  alone per his note of 2026-08-28 (2).
