@@ -12,7 +12,7 @@
       },
       {
         "file": "docs/decision-log.md",
-        "sha256": "a6b92fc70350f031"
+        "sha256": "49710928f865e61d"
       },
       {
         "file": "src/data/post/ledger.json",
@@ -57,10 +57,10 @@
       }
     ],
     "counts": {
-      "nodes": 308,
-      "edges": 266,
+      "nodes": 309,
+      "edges": 267,
       "nodesByKind": {
-        "decision": 75,
+        "decision": 76,
         "encounter": 6,
         "neighbor": 93,
         "practice": 9,
@@ -75,7 +75,7 @@
         "made-by": 94,
         "neighbor-of": 93,
         "participates": 17,
-        "touches": 47
+        "touches": 48
       }
     }
   },
@@ -828,6 +828,16 @@
       "source": {
         "file": "docs/decision-log.md",
         "quote": "Der Name „Ulysses\" bleibt bei der Nachtlinie; die Atelier-Praxis findet ihren eigenen"
+      }
+    },
+    {
+      "id": "decision:2026-09-01-1",
+      "kind": "decision",
+      "label": "Meridians Richtung: das Antwort-Register — gewählt aus einer beauftragten Karte, nicht aus einem Programm",
+      "date": "2026-09-01",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "Meridians Richtung: das Antwort-Register — gewählt aus einer beauftragten Karte, nicht aus einem Programm"
       }
     },
     {
@@ -6560,6 +6570,15 @@
       "source": {
         "file": "docs/decision-log.md",
         "quote": "src/pages/machine-attention/about.astro"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-09-01-1",
+      "to": "work:field",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "docs/design/2026-09-01-meridian-field-map.md"
       }
     }
   ]
