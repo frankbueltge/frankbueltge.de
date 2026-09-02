@@ -1,6 +1,11 @@
 @import 'tailwindcss';
 @plugin "@tailwindcss/typography";
 
+/* Dark mode for the shadcn primitives switches on the attribute this site already stamps —
+   <html data-theme="dark">, set by Base.astro's anti-FOUC script — never on a `.dark` class that
+   nothing here would ever add. (visual layer, 2026-09-02) */
+@custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
+
 /* ── Design tokens (Tailwind v4 @theme → utilities like bg-bg, text-fg, text-accent) ── */
 @theme {
   /* Monochrome: neutral greyscale on near-black. "accent"/"cyan" survive as
@@ -20,6 +25,37 @@
 
   --font-sans: 'Space Grotesk Variable', ui-sans-serif, system-ui, sans-serif;
   --font-mono: 'JetBrains Mono Variable', ui-monospace, monospace;
+}
+
+/* ── shadcn/ui token bridge (visual layer, 2026-09-02 — docs/design/2026-09-02-the-visual-layer.md)
+   The primitives in src/components/ui speak in --color-background, --color-primary, … . This
+   block makes those names POINT at the site's own tokens above — var() references, never values —
+   so the mono skin stays the single source of colour and the light-theme block below keeps
+   flowing through unchanged. Deliberate absences: no `destructive` (status colours are taboo
+   where the practice does not judge — .claude/rules/dataviz-figures.md), no `chart-*` and no
+   `sidebar-*` (figures ink themselves from their own PALETTE-marked stylesheets). `hover` stands
+   where shadcn says `accent`: this site's --color-accent is ink, not a hover surface, and the
+   primitives are edited to match. The radius scale is NOT bridged yet — deciding it re-rounds
+   every existing `rounded-*`, and that waits for the re-skin. src/lib/ui/tokens.test.ts guards
+   every line of this block. */
+@theme inline {
+  --color-background: var(--color-bg);
+  --color-foreground: var(--color-fg);
+  --color-card: var(--color-panel);
+  --color-card-foreground: var(--color-fg);
+  --color-popover: var(--color-panel);
+  --color-popover-foreground: var(--color-fg);
+  --color-primary: var(--color-fg);
+  --color-primary-foreground: var(--color-bg);
+  --color-secondary: var(--color-panel-2);
+  --color-secondary-foreground: var(--color-fg);
+  --color-muted: var(--color-panel-2);
+  --color-muted-foreground: var(--color-fg-muted);
+  --color-hover: var(--color-panel-2);
+  --color-hover-foreground: var(--color-fg);
+  --color-border: var(--color-line);
+  --color-input: var(--color-line);
+  --color-ring: var(--color-accent);
 }
 
 /* RGB triplets for the canvas/WebGL layer to read. */

@@ -146,3 +146,7 @@ jobs:
       - run: npm run test
       - run: npm run check
       - run: npm run build
+      # Gewichts-Gate der Sichtschicht (2026-09-02): gzip-Größe jedes Client-Chunks gegen
+      # scripts/budgets.json — eine Insel zahlt ihre Bytes auf der Seite, die sie bedient, und
+      # die React-Laufzeit bleibt EIN geteilter Chunk. Überschreitung = rot.
+      - run: node scripts/bundle-budget.mjs

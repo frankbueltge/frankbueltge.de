@@ -106,7 +106,7 @@ cd pipelines/protokoll && source .venv/bin/activate && pytest -q
 
 ## Architektur in einem Absatz
 
-Astro 5, statisch, **English-only seit 2026-07-16** (deutsche Alt-Routen 301en via
+Astro 6, statisch, **English-only seit 2026-07-16** (deutsche Alt-Routen 301en via
 `public/_redirects`; Impressum/Datenschutz bleiben deutsch; Werk-Slugs englisch seit
 2026-07-20: `/protocol`, `/policy`, `/headroom`), Tailwind v4,
 Mono-Skin fest. **Git ist das Archiv der Instrumente:** Pipelines committen versionierte
@@ -128,6 +128,17 @@ Archivpflicht bindet weiter **Befunde**. Zustand tragende Werke laufen auf Cloud
 D1/Durable Objects (Free-Plan, SQLite-Backend). Die sechs Beweispflichten und die
 Endpunkt-Karte: `.claude/rules/runtime-and-works.md`, Herkunft und Begründung:
 `docs/design/2026-08-22-runtime-state-for-works.md`.
+**Die Sichtschicht (Frank, 2026-09-02):** Das Archiv bindet die Daten, nicht das Rendering.
+Figuren dürfen clientseitig, interaktiv und animiert gerendert werden — als **React-Inseln**
+in Astro, mit d3 und, wo es trägt, WebGL; das Komponentensystem des Rahmens ist **shadcn/ui
+auf Tailwind v4** (kopierte Primitives in `src/components/ui/`, Token-Brücke in
+`global.css`), der Rahmen bleibt monochrom, aber reicher. Unverändert binden: committete,
+nachrechenbare Daten; Geometrie und jede Zahl aus reinen, getesteten Libs in `src/lib/**`;
+der Server-Render als Boden ohne JavaScript; kein `style=`-Attribut (CSP, drift-check-Regel 3
+auch über `.tsx`); ein gzip-Budget je Insel (`scripts/bundle-budget.mjs`);
+Paletten-Validierung. Die sieben Pflichten einer interaktiven Figur:
+`.claude/rules/dataviz-figures.md`; Herkunft, Programm und Reihenfolge der Flaggschiffe:
+`docs/design/2026-09-02-the-visual-layer.md`.
 
 ## Detailregeln — pfadgebunden, laden bei Bedarf
 
