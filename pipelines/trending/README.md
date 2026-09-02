@@ -140,3 +140,25 @@ check. A source that did not answer is asked once more after a pause (`quality_r
 is written, the workflow log carries a warning, and the page spells the failure out. The
 thresholds are the `quality_*` keys in `rules.json`; the checks are listed on the method sheet
 (`/werke/trending`, section 8).
+
+## The watchlist governs itself now (2026-09-02)
+
+The list of tracked terms lives in the repository at `src/data/trending/watchlist.json`, not in
+the installed package, and the nightly run writes it. Discovery reads the house's own committed
+day files as its primary corpus — twenty sources, so an arc in culture, politics, sport or
+markets can be seen at all — and keeps the four live archives (Hacker News, dev.to, arXiv,
+GitHub) for depth while the archive is young.
+
+A proposal is taken onto the list by the machine when it stood among the candidates on
+`promote_days` consecutive runs including today, carried at least `promote_min_platforms`
+platforms each time, was never struck before, and the list has room (`promote_max_terms`); at
+most `promote_max_per_run` enter per night, and a promoted term is counted from the next run,
+never backfilled. In the other direction, a term the machine promoted and the world dropped
+again is let go: `quiet_since` records the first quiet or fading run, and after
+`retire_quiet_days` of unbroken silence the entry is struck with the reason in the file. A term
+a person put on the list is never struck this way.
+
+A struck entry stays in the file as a tombstone carrying `retired` and `retired_note`, so
+nothing the machine proposes can resurrect it. Both movements are recorded in the day's arcs
+file under `promoted` and `let_go`, and the self-check counts the promotions against the
+ceiling.

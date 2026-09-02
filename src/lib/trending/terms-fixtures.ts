@@ -2,7 +2,7 @@
  *  Deliberately covers every branch the wording has to survive: all five statuses, a term with
  *  a Wikipedia article and one without, a ratio that is null because the prior window was
  *  empty, a capped platform, a platform that returned nothing, and a candidate list. */
-import type { TrendingTerm, TrendingTermsDay } from './terms-types'
+import type { LetGoTerm, PromotedTerm, TrendingTerm, TrendingTermsDay, WatchlistEntry } from './terms-types'
 
 const SOURCES: TrendingTermsDay['sources'] = [
   { id: 'hackernews', name: 'Hacker News (Algolia search)', url: 'https://hn.algolia.com/api/v1/search_by_date', status: 'ok', note: '', retrieved_at: '2026-09-03T06:45:01Z' },
@@ -118,6 +118,82 @@ export function fixtureTerms(over: Partial<TrendingTermsDay> = {}): TrendingTerm
     },
     ...over,
   }
+}
+
+/** The promotions of a run (added 2026-09-02): terms the discovery pass took onto the list
+ *  itself this morning. `fixtureTerms()` deliberately carries NO `promoted` key — that is the
+ *  older contract, and the page has to survive it — so a test that wants promotions passes
+ *  these in. The second entry has no pace, because a term nobody mentioned in the prior
+ *  window has no ratio to show. */
+export function fixturePromoted(): PromotedTerm[] {
+  return [
+    {
+      slug: 'context-compaction',
+      term: 'context compaction',
+      days_seen: 3,
+      platforms: ['hackernews', 'github', 'google_news'],
+      ratio: 4.2,
+      note: 'promoted 2026-09-03: proposed on three consecutive days, three platforms',
+    },
+    {
+      slug: 'eval-harness',
+      term: 'eval harness',
+      days_seen: 4,
+      platforms: ['github', 'arxiv'],
+      ratio: null,
+      note: 'promoted 2026-09-03: proposed on four consecutive days, two platforms',
+    },
+  ]
+}
+
+/** What a run let go of: a term the run itself had promoted that stood still long enough to
+ *  fail the test the run applies to its own additions. Never a term a person seeded. */
+export function fixtureLetGo(): LetGoTerm[] {
+  return [
+    {
+      slug: 'mac-studio',
+      term: 'mac studio',
+      days_quiet: 21,
+      note: 'let go 2026-09-24: quiet for 21 days running',
+    },
+  ]
+}
+
+/** The live watchlist, with one term a person has struck. The tombstone stays in the file —
+ *  it is what keeps the run from promoting the term again. */
+export function fixtureWatchlist(over: WatchlistEntry[] = []): WatchlistEntry[] {
+  return [
+    {
+      term: 'loop engineering',
+      slug: 'loop-engineering',
+      aliases: ['loop-engineering'],
+      added: '2026-09-02',
+      origin: 'editorial',
+      note: 'Editorial seed, 2026-09-02',
+      wikipedia_article: null,
+    },
+    {
+      term: 'context compaction',
+      slug: 'context-compaction',
+      aliases: [],
+      added: '2026-09-03',
+      origin: 'discovered',
+      note: 'promoted 2026-09-03: proposed on three consecutive days, three platforms',
+      wikipedia_article: null,
+    },
+    {
+      term: 'prompt kung fu',
+      slug: 'prompt-kung-fu',
+      aliases: [],
+      added: '2026-09-02',
+      origin: 'discovered',
+      note: 'promoted 2026-09-02',
+      wikipedia_article: null,
+      retired: '2026-09-04',
+      retired_note: 'a joke, not a trend',
+    },
+    ...over,
+  ]
 }
 
 /** A day of the archive carrying one term with a given daily count — the material for the

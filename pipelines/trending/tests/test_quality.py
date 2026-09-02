@@ -85,7 +85,7 @@ def _terms(**over):
 
 def test_a_sound_terms_record_passes():
     g = assess_terms(_terms())
-    assert g["ok"] and g["total"] == 6
+    assert g["ok"] and g["total"] == 7
 
 
 def test_terms_checks_catch_nesting_status_receipts_and_candidates():
@@ -103,4 +103,13 @@ def test_terms_checks_catch_nesting_status_receipts_and_candidates():
     assert not by["receipts_complete"]["ok"]
     assert not by["candidates_bounded"]["ok"]
     assert not by["platforms_answering"]["ok"]
-    assert g["passed"] == 1  # only the size check survives
+    assert g["passed"] == 2  # only the size and promotion checks survive
+
+
+def test_an_overlong_or_duplicate_promotion_fails_its_check():
+    rec = _terms(promoted=[{"slug": "a"}, {"slug": "a"}, {"slug": "b"}, {"slug": "c"}])
+    g = assess_terms(rec, {"promote_max_per_run": 3})
+    assert not {c["id"]: c for c in g["checks"]}["promotions_bounded"]["ok"]
+    already = _terms(promoted=[{"slug": "loop-engineering"}])
+    g = assess_terms(already)
+    assert not {c["id"]: c for c in g["checks"]}["promotions_bounded"]["ok"]

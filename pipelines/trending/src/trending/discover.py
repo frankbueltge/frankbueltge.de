@@ -25,17 +25,28 @@ import xml.etree.ElementTree as ET
 from collections.abc import Callable, Sequence
 from dataclasses import dataclass, field
 from datetime import date, datetime, timedelta, timezone
+from pathlib import Path
 from typing import Any
 from urllib.parse import quote
 
+from trending.archive import load_days
 from trending.data import load_json
 from trending.fetch import SourceUnavailable, fetch
 from trending.normalize import tokens
+from trending.sources import SOURCES
 from trending.textstats import Document, tally
+from trending import watchlist as wl
 from trending.tracker import ATOM, TermContext, make_context, open_client, parse_when
 
-# The corpus order is the order the record lists platforms in.
-CORPUS_PLATFORMS: tuple[str, ...] = ("hackernews", "devto", "arxiv", "github")
+DAY_SOURCE_IDS: tuple[str, ...] = tuple(spec.id for spec in SOURCES)
+
+# The corpus order is the order the record lists platforms in: the day ledger's own sources
+# first (that is where the breadth is), then the four live archives read for depth.
+LIVE_PLATFORMS: tuple[str, ...] = ("hackernews", "devto", "arxiv", "github")
+CORPUS_PLATFORMS: tuple[str, ...] = tuple(dict.fromkeys((*DAY_SOURCE_IDS, *LIVE_PLATFORMS)))
+# A day file lists what each platform put at the top that morning, so one label repeated
+# across ten mornings is ten sightings — which is precisely the arc being looked for.
+ARCHIVE_EXTRA_KEYS = ("description", "subtitle")
 
 ARXIV_CATEGORIES = ("cs.AI", "cs.CL", "cs.LG", "cs.SE")
 # arXiv is read in date slices of equal length, each capped at the same number of papers:
@@ -69,6 +80,36 @@ def _note(notes: dict[str, list[str]], platform: str, text: str) -> None:
 
 
 # ------------------------------------------------------------------------ the four fetchers
+
+def _archive_docs(repo_root: str | Path, today: date, days: int,
+                  notes: dict[str, list[str]]) -> list[Document]:
+    """The house's own committed day files as a corpus. Every signal a day file lists is one
+    sighting of its label on that platform on that date; the key carries the date so ten
+    mornings count ten times."""
+    out: list[Document] = []
+    try:
+        records = load_days(repo_root, today + timedelta(days=1), days)
+    except Exception as exc:  # noqa: BLE001 — a corpus source is a note, never a crash
+        _note(notes, "archive", f"discovery: {type(exc).__name__}: {exc}")
+        return out
+    for rec in records:
+        day = str(rec.get("date") or "")
+        for source_id, signals in (rec.get("signals") or {}).items():
+            for sig in signals or []:
+                label = " ".join(str(sig.get("label") or "").split())
+                if not label:
+                    continue
+                url = str(sig.get("url") or "") or f"ledger://{day}/{source_id}/{sig.get('rank')}"
+                meta = sig.get("meta") or {}
+                extra = ""
+                for k in ARCHIVE_EXTRA_KEYS:
+                    if meta.get(k):
+                        extra = str(meta[k])[:DESCRIPTION_CAP]
+                        break
+                out.append(Document(platform=str(source_id), title=label, url=url, date=day,
+                                    extra=extra, key=f"{day}|{source_id}|{url}"))
+    return out
+
 
 def _hackernews_docs(ctx: TermContext, since: datetime,
                      notes: dict[str, list[str]]) -> list[Document]:
@@ -193,7 +234,8 @@ def _github_docs(ctx: TermContext, since: datetime,
     return out
 
 
-def corpus(ctx: TermContext, *, days: int = 30, log: Callable[[str], None] = print,
+def corpus(ctx: TermContext, *, days: int = 30, repo_root: str | Path | None = None,
+           log: Callable[[str], None] = print,
            ) -> tuple[list[Document], dict[str, list[str]], dict[str, str]]:
     """The last `days` of titles from the four archives. Documents outside the window are
     dropped, so every platform contributes to the same window even when its own filter is
@@ -202,6 +244,14 @@ def corpus(ctx: TermContext, *, days: int = 30, log: Callable[[str], None] = pri
     floor = (ctx.now.date() - timedelta(days=days - 1)).isoformat()
     notes: dict[str, list[str]] = {}
     docs: list[Document] = []
+    if repo_root is not None:
+        archived = [d for d in _archive_docs(repo_root, ctx.now.date(), days, notes)
+                    if d.date >= floor]
+        docs.extend(archived)
+        platforms = len({d.platform for d in archived})
+        oldest = min((d.date for d in archived), default="—")
+        log(f"  corpus {'ledger':<11} {len(archived):>5} sightings  {platforms} platforms  "
+            f"oldest {oldest}")
     for platform, got in (("hackernews", lambda: _hackernews_docs(ctx, since, notes)),
                           ("devto", lambda: _devto_docs(ctx, notes)),
                           ("arxiv", lambda: _arxiv_docs(ctx, since, days, notes)),
@@ -299,11 +349,11 @@ def rank(docs: Sequence[Document], watchlist: Sequence[dict[str, Any]], *, today
 
 
 def discover(ctx: TermContext, watchlist: Sequence[dict[str, Any]], *,
-             rules: dict[str, Any] | None = None,
+             rules: dict[str, Any] | None = None, repo_root: str | Path | None = None,
              log: Callable[[str], None] = print) -> Discovery:
     rules = rules if rules is not None else ctx.rules
     days = int(rules.get("discover_days", 30))
-    docs, notes, coverage = corpus(ctx, days=days, log=log)
+    docs, notes, coverage = corpus(ctx, days=days, repo_root=repo_root, log=log)
     candidates = rank(docs, watchlist, today=ctx.now.date(), rules=rules)
     return Discovery(candidates=candidates, notes=notes, documents=len(docs),
                      coverage=coverage)
@@ -324,19 +374,22 @@ def _table(candidates: Sequence[dict[str, Any]]) -> str:
 def main(argv: list[str] | None = None) -> int:
     p = argparse.ArgumentParser(prog="trending.discover",
                                 description="Propose n-grams the watchlist does not track yet.")
-    p.add_argument("--repo-root", default=".", help="kept for symmetry; discovery writes nothing")
+    p.add_argument("--repo-root", default=".",
+                   help="the repository whose committed day files are the primary corpus")
     p.add_argument("--days", type=int, default=None, help="corpus window in days (default 30)")
     args = p.parse_args(argv)
 
     rules = load_json("rules.json")
     if args.days:
         rules = {**rules, "discover_days": args.days}
-    watchlist = load_json("watchlist.json")
+    entries, from_repo = wl.load(args.repo_root)
+    watchlist = wl.tracked(entries)
     with open_client() as client:
         ctx = make_context(client, rules=rules, now=datetime.now(timezone.utc))
         print(f"discovery: corpus of {int(rules.get('discover_days', 30))} days, "
-              f"{len(watchlist)} watched terms excluded")
-        result = discover(ctx, watchlist, rules=rules)
+              f"{len(watchlist)} watched terms excluded"
+              + ("" if from_repo else " (list from the package seed)"))
+        result = discover(ctx, watchlist, rules=rules, repo_root=args.repo_root)
     print(f"discovery: {result.documents} documents, {len(result.candidates)} candidates")
     for platform, notes in sorted(result.notes.items()):
         for note in notes:

@@ -24,6 +24,7 @@ from trending.data import load_json
 from trending.discover import Discovery, discover
 from trending.model import to_json
 from trending.quality import assess_terms, one_line
+from trending import watchlist as wl
 from trending.normalize import slug as slugify
 from trending.tracker import (CONTRACT_TERMS, PLATFORMS, WINDOWS, TermContext, first_seen_for,
                               history_first_seen, iso_z, load_terms_files, make_context,
@@ -41,7 +42,9 @@ ZERO = {"d1": 0, "d7": 0, "d30": 0, "capped": False}
 
 
 def load_watchlist() -> list[dict[str, Any]]:
-    """The watchlist as shipped, normalised: one entry per slug, aliases as a list."""
+    """The seed list as shipped in the package. The live list lives in the repository and is
+    read through `watchlist.load`; this remains for the first run of a fresh checkout and for
+    tests that need a list without a repository."""
     out: list[dict[str, Any]] = []
     seen: set[str] = set()
     for raw in load_json("watchlist.json"):
@@ -76,6 +79,8 @@ def _summary(terms: Sequence[dict[str, Any]], candidates: Sequence[dict[str, Any
 
 
 def build_terms(ctx: TermContext, *, watchlist: Sequence[dict[str, Any]], today: date,
+                promotions: Sequence[dict[str, Any]] | None = None,
+                repo_root: str | Path | None = None,
                 history: dict[str, str] | None = None,
                 log: Callable[[str], None] = print) -> dict[str, Any]:
     """Count, propose, assemble. Discovery is isolated: when it fails the terms still stand,
@@ -85,7 +90,8 @@ def build_terms(ctx: TermContext, *, watchlist: Sequence[dict[str, Any]], today:
     by_platform, reports = track(ctx, watchlist, log=log)
 
     try:
-        proposed: Discovery = discover(ctx, watchlist, rules=rules, log=log)
+        proposed: Discovery = discover(ctx, watchlist, rules=rules,
+                                      repo_root=repo_root, log=log)
     except Exception as exc:  # noqa: BLE001 — the proposals never take the counts down
         proposed = Discovery(notes={p: [f"discovery: {type(exc).__name__}: {exc}"[:160]]
                                     for p in ("hackernews", "arxiv", "github")})
@@ -144,6 +150,8 @@ def build_terms(ctx: TermContext, *, watchlist: Sequence[dict[str, Any]], today:
         "sources": reports,
         "terms": terms,
         "candidates": list(proposed.candidates),
+        "promoted": list(promotions or []),
+        "let_go": [],
         "summary": _summary(terms, proposed.candidates),
     }
     # The record grades itself before it leaves the builder, so every committed file carries
@@ -180,12 +188,35 @@ def run_terms(client: httpx.Client, *, repo_root: str | Path, today: date,
         return None
     try:
         ctx = make_context(client, rules=rules, now=datetime.now(timezone.utc))
-        watchlist = load_watchlist()
-        history = history_first_seen(load_terms_files(
-            repo_root, before=today, limit=int(rules.get("terms_history_files", 3))))
-        log(f"trending: terms — {len(watchlist)} watched, "
-            f"{'authenticated' if ctx.github_authenticated else 'unauthenticated'} on GitHub")
-        record = build_terms(ctx, watchlist=watchlist, today=today, history=history, log=log)
+        entries, from_repo = wl.load(repo_root)
+        watching = wl.tracked(entries)
+        struck = len(entries) - len(watching)
+        prior = load_terms_files(repo_root, before=today,
+                                limit=max(int(rules.get("terms_history_files", 3)),
+                                          int(rules.get("promote_days", 3))))
+        history = history_first_seen(prior)
+        log(f"trending: terms — {len(watching)} watched"
+            + (f", {struck} struck" if struck else "")
+            + ("" if from_repo else " (list seeded from the package)")
+            + f", {'authenticated' if ctx.github_authenticated else 'unauthenticated'} on GitHub")
+        record = build_terms(ctx, watchlist=watching, today=today, history=history,
+                             repo_root=repo_root, log=log)
+        # The proposals decide the list, not a person's next visit: a phrase that keeps
+        # coming back on several platforms is taken on, and tracked from the next run.
+        promotions = wl.promote(candidates=record["candidates"], prior_records=prior,
+                                entries=entries, today=today, rules=rules)
+        # And the other direction: what the machine took on and the world dropped again is
+        # let go, so the list stays the size of the attention it can actually pay.
+        aged, let_go = wl.age(entries, record["terms"], today, rules)
+        if promotions or let_go or not from_repo:
+            wl.save(repo_root, wl.apply(aged, promotions, today))
+        record["promoted"] = promotions
+        record["let_go"] = let_go
+        for p in promotions:
+            log(f"  promoted       {p['term']:<28} {len(p['platforms'])} platforms, "
+                f"ratio {p['ratio']}")
+        for g in let_go:
+            log(f"  let go         {g['term']:<28} {g['note']}")
     except Exception as exc:  # noqa: BLE001 — the arcs never take the day down
         record = unavailable_record(today, f"{type(exc).__name__}: {exc}")
         log(f"trending: terms unavailable ({type(exc).__name__}: {exc})"[:200])
@@ -199,9 +230,11 @@ def run_terms(client: httpx.Client, *, repo_root: str | Path, today: date,
     s = record["summary"]
     spread = ", ".join(f"{n} {name}" for name, n in s["by_status"].items() if n)
     ok = sum(1 for r in record["sources"] if r["status"] == "ok")
+    promoted = len(record.get("promoted") or [])
     log(f"trending: terms {s['terms_total']} watched ({spread or 'none counted'}), "
-        f"{s['candidates_total']} candidates, {ok}/{len(record['sources'])} platforms ok "
-        f"→ {path}")
+        f"{s['candidates_total']} candidates"
+        + (f", {promoted} promoted" if promoted else "")
+        + f", {ok}/{len(record['sources'])} platforms ok → {path}")
     return path
 
 

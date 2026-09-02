@@ -13,7 +13,7 @@
 import TableFallback from '@/components/dataviz/TableFallback.astro'
 import TrendingSelfCheck from '@/components/pages/TrendingSelfCheck.astro'
 import { fmtDateLong, fmtDateWeekday, fmtTimeUtc } from '@/lib/trending/format'
-import { getTermsDays } from '@/lib/trending/terms-data'
+import { getTermsDays, getWatchlist } from '@/lib/trending/terms-data'
 import { definedTermSetLd, termsDatasetLd, termsWebPageLd } from '@/lib/trending/terms-jsonld'
 import { termsUrls } from '@/lib/trending/terms-markdown'
 import type { TrendingTermsDay } from '@/lib/trending/terms-types'
@@ -21,6 +21,13 @@ import {
   candidateItems,
   hubRows,
   joinWithAnd,
+  letGoItems,
+  letGoRows,
+  letGoSentence,
+  promotedItems,
+  promotedRows,
+  promotionSentence,
+  retiredSentence,
   searchedPlatforms,
   statusTally,
   termLinks,
@@ -43,6 +50,14 @@ const archive = getTermsDays()
 const answered = file.sources.filter((s) => s.status === 'ok').length
 const failed = file.sources.filter((s) => s.status !== 'ok')
 
+// What the run changed about its own list this morning (2026-09-02: the run promotes and lets
+// go, a person overrides either way). Both lists are absent from every file committed before
+// that day and from any run that changed nothing, so the section is conditional — a promoted
+// term is searched from the NEXT run on, which is why nothing here shows a count.
+const promoted = promotedItems(file)
+const letGo = letGoItems(file)
+const struck = retiredSentence(getWatchlist())
+
 const lds = [
   termsDatasetLd(file, canonical),
   definedTermSetLd(file, canonical),
@@ -59,12 +74,25 @@ const lds = [
 const exampleSlug = links[0]?.slug ?? 'loop-engineering'
 
 const machineEditions: { href: string; what: string }[] = [
-  { href: '/trending/topics.json', what: 'the whole watchlist as it stands today — every term with its counts per platform, its status, its receipts, and the candidates nobody tracks yet' },
+  { href: '/trending/topics.json', what: 'the whole watchlist as it stands today — every term with its counts per platform, its status, its receipts, what the run promoted and let go of this morning, and the candidates on their way in' },
   { href: `/trending/topics/${exampleSlug}.json`, what: 'one term by its slug, with its counts today and its series over every committed day' },
   { href: '/trending/topics/latest.md', what: 'the same register as Markdown, for readers that parse text better than markup' },
   { href: '/trending/latest.json', what: "the other half of the ledger: what several platforms surfaced at once this morning" },
   { href: '/llms.txt', what: 'where this sits in the house, and what a retrieval agent may do with it' },
 ]
+
+const promotedProvenance =
+  'A candidate is promoted by the run itself when it clears every one of five committed conditions: proposed on ' +
+  'three days in a row, on at least two platforms each time, never struck before, at most three promotions in one ' +
+  'run, and never past the ceiling of thirty-five tracked terms — each tracked term costs requests in the nightly. ' +
+  'The day count and the platforms in this table are the evidence the run promoted on, read out of its own earlier ' +
+  'files. A promoted term is searched from the next run on, so it has no counts in the file that promoted it.'
+
+const letGoProvenance =
+  'The run also lets go of what it added: a term it promoted itself that stays quiet or fading on every run for ' +
+  'the committed number of days is struck, and the striking is written into the watchlist file with its day and ' +
+  'its reason. A term a person put on the list is never struck this way, and a person can override either ' +
+  'direction. A struck line stays in the file as a tombstone, which is what keeps a struck term from returning.'
 
 const tableProvenance =
   'Each term and each of its aliases is searched as one quoted phrase on the platforms above, once a day; matching ' +
@@ -72,7 +100,8 @@ const tableProvenance =
   'seven-day count with the three weeks before it against thresholds committed in the pipeline — a term is ' +
   'rising or fading because a number crossed a written line, never because anyone judged it interesting. ' +
   'Page views are counted where a term names a Wikipedia article, and never added to a total: they are readers, ' +
-  'not documents.'
+  'not documents. Two columns are governance rather than measurement: the day the term joined the list, and ' +
+  'whether a person put it there by hand or the run promoted it under the conditions below.'
 ---
 
 <main id="main" class="flex-1">
@@ -100,6 +129,12 @@ const tableProvenance =
         written down in the pipeline and repeated on the method sheet, so anyone can run the same comparison on the
         committed file and get the same word.
       </p>
+      <p class="mt-3 max-w-2xl leading-relaxed text-fg-muted">
+        The list governs itself. A phrase that keeps coming back is taken onto it by the run, and a phrase the run
+        added that then stands still for weeks is let go by the run — both under written conditions, both recorded
+        with the day and the reason. A person overrides either direction, and a struck term never returns. Every
+        term below says which of the two put it there.
+      </p>
       <p class="mt-4 flex flex-wrap items-center gap-x-5 gap-y-1 font-mono text-xs text-fg-faint">
         {tally.map((i) => (
           <span>{i.label} <span class="tabular-nums">{i.n}</span></span>
@@ -112,8 +147,8 @@ const tableProvenance =
       <h2 class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">The watchlist</h2>
       {links.length === 0 ? (
         <p class="mt-3 max-w-2xl leading-relaxed text-fg-muted">
-          The watchlist is empty. Nothing is tracked here until a term is written into it by hand — the machine
-          proposes, a person decides.
+          The watchlist is empty: nothing has been seeded by hand, and no candidate has yet come back often enough
+          for the run to promote it.
         </p>
       ) : (
         <>
@@ -125,6 +160,7 @@ const tableProvenance =
                   {l.statusLabel}
                   {' · '}<span class="tabular-nums">{l.d7}</span>
                   {l.ratio && <span class="tabular-nums">{` · ${l.ratio}`}</span>}
+                  {' · '}{l.originMark}
                 </span>
               </li>
             ))}
@@ -138,17 +174,92 @@ const tableProvenance =
                 { key: 'status', label: 'Status', nowrap: true },
                 { key: 'd7', label: '7 days', align: 'right' },
                 { key: 'd30', label: '30 days', align: 'right' },
+                { key: 'added', label: 'On the list since', nowrap: true },
+                { key: 'origin', label: 'How', nowrap: true },
                 { key: 'first_seen', label: 'First seen', nowrap: true },
                 { key: 'platforms', label: 'Platforms' },
               ]}
               rows={rows}
-              caption="Every watched term with its status, its mentions over seven and thirty days, its first sighting and the platforms carrying it"
+              caption="Every watched term with its status, its mentions over seven and thirty days, the day it joined the list and whether a person or the run put it there, its first sighting and the platforms carrying it"
               provenance={tableProvenance}
             />
           </div>
+          {struck && <p class="dv-prov">{struck}</p>}
         </>
       )}
     </section>
+
+    {(promoted.length > 0 || letGo.length > 0) && (
+      <section class="mb-12 border-t border-line pt-6" id="came-and-went">
+        <h2 class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">What came and went today</h2>
+        {promoted.length > 0 && (
+          <>
+            <p class="mt-3 max-w-2xl text-sm leading-relaxed text-fg-muted">{promotionSentence(file)}</p>
+            <ul class="mt-4 space-y-2.5 text-sm">
+              {promoted.map((p) => (
+                <li class="border-b border-line pb-2">
+                  <div class="flex flex-wrap items-baseline justify-between gap-x-4">
+                    <a href={p.href} class="font-semibold underline decoration-line underline-offset-2 transition-colors hover:text-fg">{p.term}</a>
+                    <span class="whitespace-nowrap font-mono text-[10px] text-fg-faint">
+                      <span class="tabular-nums">{p.days}</span> days in a row
+                      {' · '}<span class="tabular-nums">{p.platformCount}</span> platforms
+                      {p.ratio && <span class="tabular-nums">{` · ${p.ratio}`}</span>}
+                    </span>
+                  </div>
+                  <p class="mt-1 text-fg-muted">{p.evidence}</p>
+                </li>
+              ))}
+            </ul>
+            <div class="mt-6 text-sm">
+              <TableFallback
+                summary="Promoted this morning, as a table"
+                columns={[
+                  { key: 'term', label: 'Term' },
+                  { key: 'days', label: 'Days in a row', align: 'right' },
+                  { key: 'platforms', label: 'Platforms' },
+                  { key: 'pace', label: 'Pace', align: 'right' },
+                  { key: 'note', label: 'Why' },
+                ]}
+                rows={promotedRows(file)}
+                caption="The terms the run promoted onto the watchlist this morning, with the consecutive days and the platforms they were proposed on"
+                provenance={promotedProvenance}
+              />
+            </div>
+          </>
+        )}
+        {letGo.length > 0 && (
+          <>
+            <p class="mt-6 max-w-2xl text-sm leading-relaxed text-fg-muted">{letGoSentence(file)}</p>
+            <ul class="mt-4 space-y-2.5 text-sm">
+              {letGo.map((g) => (
+                <li class="border-b border-line pb-2">
+                  <div class="flex flex-wrap items-baseline justify-between gap-x-4">
+                    <span class="font-semibold">{g.term}</span>
+                    <span class="whitespace-nowrap font-mono text-[10px] text-fg-faint">
+                      <span class="tabular-nums">{g.days}</span> days quiet
+                    </span>
+                  </div>
+                  <p class="mt-1 text-fg-muted">{g.evidence}</p>
+                </li>
+              ))}
+            </ul>
+            <div class="mt-6 text-sm">
+              <TableFallback
+                summary="Let go this morning, as a table"
+                columns={[
+                  { key: 'term', label: 'Term' },
+                  { key: 'days_quiet', label: 'Days quiet', align: 'right' },
+                  { key: 'note', label: 'Why' },
+                ]}
+                rows={letGoRows(file)}
+                caption="The terms the run struck this morning, with the days each of them stood still and the reason recorded in the watchlist file"
+                provenance={letGoProvenance}
+              />
+            </div>
+          </>
+        )}
+      </section>
+    )}
 
     <section class="mb-12 border-t border-line pt-6">
       <h2 class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">What the machine noticed</h2>
@@ -161,9 +272,11 @@ const tableProvenance =
         <>
           <p class="mt-3 max-w-2xl text-sm leading-relaxed text-fg-muted">
             Phrases the machine found moving in the last two weeks that are <strong class="font-semibold">not</strong>{' '}
-            on the watchlist, so nothing below is being tracked. They become terms only when a person writes them into
-            the watchlist by hand; until then they are proposals with a sample document attached, and the list is here
-            so that decision happens in the open.
+            on the watchlist yet, so nothing below is being counted above. These are terms on their way in, not
+            proposals waiting for a person: a candidate that keeps coming back — proposed on three days in a row, on
+            at least two platforms each time — is taken onto the list by the run itself, up to three a run and never
+            past the ceiling of thirty-five tracked terms. A person can strike a term, the run lets go of what it
+            added itself, and a struck term never returns: its line stays in the watchlist file as a tombstone.
           </p>
           <ul class="mt-4 space-y-2.5 text-sm">
             {candidates.map((c) => (
@@ -186,11 +299,15 @@ const tableProvenance =
             ))}
           </ul>
           <p class="dv-prov mt-4">
-            Discovery reads the same corpus as the tracker — front-page link aggregator stories, top developer
-            articles, preprints in the machine-learning categories and the newest repositories — reduces titles to
+            Discovery reads the house&rsquo;s own committed day files — every source the nightly ledger asks, which
+            since 2026-09-02 means search interest in ten countries, news, forums, encyclopaedia reading in six
+            languages, app and game charts, model releases and prediction markets — and adds four live archives for
+            depth while the archive is still young: front-page link aggregator stories, top developer articles,
+            preprints in the machine-learning categories and the newest repositories. It reduces labels and titles to
             tokens by the disclosed rule, counts documents per n-gram over the recent fortnight against the fortnight
             before it, and drops generic pairs, months, weekdays and anything already contained in a watched term.
-            Rank is by how many platforms carry an n-gram, then by pace.
+            Rank is by how many platforms carry an n-gram, then by pace. Because the corpus is no longer four
+            technology platforms, an arc can now begin in culture, politics, sport, apps or markets.
           </p>
         </>
       )}
@@ -257,8 +374,10 @@ const tableProvenance =
       </p>
       <p class="au-note">
         No language model writes anything here: every count is a platform&rsquo;s own answer to a quoted phrase, every
-        status a threshold in the pipeline, every proposal an n-gram frequency. What the machine may do is notice;
-        adding a term to the watchlist is a person&rsquo;s decision, written into a file by hand.
+        status a threshold in the pipeline, every promotion and every striking an n-gram frequency against a written
+        condition. What the machine decides is which words are on the list; what a person decides is whether the
+        machine got it right, in either direction — and every one of those decisions is a dated line in a committed
+        file, with the reason beside it.
       </p>
     </section>
 

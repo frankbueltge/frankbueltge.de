@@ -9,12 +9,17 @@
  *  committed day. That is the whole memory of this layer — no accumulating state, no rewriting
  *  of yesterday. A term added to the watchlist last week therefore has a short series, and the
  *  page says so rather than padding it with zeros. */
-import { trendingTermsSchema } from './terms-schema'
-import type { TermSeriesPoint, TrendingTerm, TrendingTermsDay } from './terms-types'
+import { trendingTermsSchema, watchlistSchema } from './terms-schema'
+import type { TermSeriesPoint, TrendingTerm, TrendingTermsDay, WatchlistEntry } from './terms-types'
 
 const TERMS_FILE = /\/(\d{4}-\d{2}-\d{2})\.json$/
 
 const termsModules = import.meta.glob('../../data/trending/terms/*.json', { eager: true, import: 'default' }) as Record<string, unknown>
+
+/** The live watchlist, as one file rather than a dated run. Globbed rather than imported so
+ *  the site still builds before the pipeline has written it for the first time: no file, no
+ *  entries, and the page simply says nothing about the pruning. */
+const watchlistModules = import.meta.glob('../../data/trending/watchlist.json', { eager: true, import: 'default' }) as Record<string, unknown>
 
 /** Every committed terms file, newest first. */
 export function getTermsDays(): TrendingTermsDay[] {
@@ -31,6 +36,16 @@ export function getLatestTerms(): TrendingTermsDay | undefined {
 
 export function getTermsByDate(date: string): TrendingTermsDay | undefined {
   return getTermsDays().find((f) => f.date === date)
+}
+
+/** The watchlist as it stands: every term the nightly run reads, including the ones a person
+ *  has struck. A struck term keeps its line — the tombstone is what stops the run from
+ *  promoting it a second time (docs/design/2026-09-02-common-ground.md, §9 amendment) — so
+ *  this list is longer than the tracked terms of a run, on purpose. */
+export function getWatchlist(): WatchlistEntry[] {
+  const raw = Object.values(watchlistModules)[0]
+  if (raw === undefined) return []
+  return watchlistSchema.parse(raw) as WatchlistEntry[]
 }
 
 /** One watched term out of a terms file, by slug. */

@@ -8,10 +8,10 @@
 
 ## Trending — Common Ground (daily, CC0)
 
-What the web is searching, reading and posting about, cross-checked across independent
-platforms every morning (about 06:40 UTC): Google's daily search trends for six countries,
-Wikipedia's most-read pages in English and German, Hacker News, Bluesky, Mastodon, the day's
-headlines, Reddit's popular feed and the week's most-starred new repositories. Topics that
+What the web is searching, reading, buying, playing and betting on, cross-checked across
+independent platforms every morning (about 06:40 UTC): daily search trends for ten countries,
+the most-read encyclopaedia pages in six languages, the day's headlines, link aggregators and
+social feeds, forums, app and game charts, new model releases and prediction markets. Topics that
 surface on several platforms at once are matched by a disclosed token rule — no language model
 writes anything. Data licence CC0 1.0; the page counts its own readers and publishes the
 classes (browser, search, AI retrieval, AI user-fetch, AI training, other bot) beside the
@@ -36,15 +36,21 @@ into three windows ending at the run (one day, seven days, thirty days). A term'
 (emerging, rising, established, fading, quiet) is a threshold comparison of the last seven days
 against the three weeks before them, with the thresholds committed in the pipeline — no model, no
 editorial judgement. Every count carries receipts: the titles, URLs and dates the count was read
-from. A discovery pass over the same corpus proposes n-grams it finds moving; they are published
-as candidates and become tracked terms only when a person writes them into the watchlist by hand.
+from. A discovery pass over the house's own committed day files (plus four live archives for
+depth) publishes the n-grams it finds moving as candidates; since 2026-09-02 the list governs
+itself — a candidate proposed on three days in a row, on at least two platforms each time, is
+promoted onto the watchlist by the run (at most three a run, never past thirty-five tracked
+terms, never one struck before), a term the run promoted that then stays quiet for three weeks is
+let go by the run, and a person overrides both directions. A struck term keeps its line in the
+watchlist file as a tombstone and never returns. A promoted term is searched from the next run
+on, so it has no counts in the file that promoted it.
 
-- [Trends in the making](https://frankbueltge.de/trending/topics): the hub — every watched term with its status, both windows, and the machine-noticed candidates
-- [topics.json](https://frankbueltge.de/trending/topics.json): the whole watchlist in one file — counts per platform and window, status, receipts, candidates
+- [Trends in the making](https://frankbueltge.de/trending/topics): the hub — every watched term with its status, both windows, whether a person or the run put it on the list, what came and went today, and the candidates on their way in
+- [topics.json](https://frankbueltge.de/trending/topics.json): the whole watchlist in one file — counts per platform and window, status, receipts, candidates, and what the run promoted (`promoted[]`) and let go of (`let_go[]`) that morning
 - [Term page](https://frankbueltge.de/trending/topics/loop-engineering): `/trending/topics/<slug>` for any watched term, with its daily series and its receipts
 - [Term JSON](https://frankbueltge.de/trending/topics/loop-engineering.json): `/trending/topics/<slug>.json` — the same term plus its series over every committed run
 - [topics/latest.md](https://frankbueltge.de/trending/topics/latest.md): the hub as plain Markdown, for readers that prefer text
-- [Method sheet, section 7](https://frankbueltge.de/werke/trending#arcs): the tracking rule, the status thresholds, the discovery rule, the limits
+- [Method sheet, section 7](https://frankbueltge.de/werke/trending#arcs): the tracking rule, the status thresholds, the discovery corpus, the promotion and retirement rules, the limits
 
 ## Other machine-readable surfaces
 

@@ -8,6 +8,14 @@ import {
   candidateItems,
   countedPlatforms,
   joinWithAnd,
+  GOVERNANCE_RULE,
+  letGoItems,
+  letGoSentence,
+  originMark,
+  originSentence,
+  promotedItems,
+  promotionSentence,
+  PROMOTION_RULE,
   searchedPlatforms,
   sortTerms,
   statusLabel,
@@ -54,20 +62,49 @@ export function renderTermsMarkdown(file: TrendingTermsDay): string {
   out.push(`- Licence: CC0 1.0 for the data; method sheet: ${u.method}`)
   out.push('')
 
+  // What the run changed about its own list this morning, in both directions. Absent from the
+  // file until 2026-09-02 and absent from a run that changed nothing — in both cases the
+  // section is simply not written, rather than written as a row of nothing.
+  const promoted = promotedItems(file)
+  const letGo = letGoItems(file)
+  if (promoted.length > 0 || letGo.length > 0) {
+    out.push('## What came and went today')
+    out.push('')
+    if (promoted.length > 0) {
+      out.push(promotionSentence(file))
+      out.push('')
+      out.push('| Promoted | Days in a row | Platforms | Pace | Page |')
+      out.push('|---|---|---|---|---|')
+      for (const p of promoted) {
+        out.push(`| ${esc(p.term)} | ${p.days} | ${esc(p.platforms)} | ${p.ratio ?? '—'} | ${u.termPage(p.slug)} |`)
+      }
+      out.push('')
+    }
+    if (letGo.length > 0) {
+      out.push(letGoSentence(file))
+      out.push('')
+      out.push('| Let go | Days quiet | Why |')
+      out.push('|---|---|---|')
+      for (const g of letGo) out.push(`| ${esc(g.term)} | ${g.days} | ${esc(g.note) || '—'} |`)
+      out.push('')
+    }
+  }
+
   out.push('## Watched terms')
   out.push('')
   if (file.terms.length === 0) {
-    out.push('The watchlist is empty. Nothing is tracked until a term is written into it by hand.')
+    out.push('The watchlist is empty: nothing has been seeded by hand and no candidate has cleared the promotion rule yet.')
   } else {
     out.push('Status is a threshold decision over the term\'s own counts, not a judgement: the thresholds are on the method sheet.')
     out.push('')
-    out.push('| Term | Status | 7 days | 30 days | First seen | Platforms | Page |')
-    out.push('|---|---|---|---|---|---|---|')
+    out.push('| Term | Status | 7 days | 30 days | On the list since | How | First seen | Platforms | Page |')
+    out.push('|---|---|---|---|---|---|---|---|---|')
     for (const t of sortTerms(file.terms)) {
       const platforms = countedPlatforms(t, order).map(termPlatformLabel).join(' · ') || '—'
       const ratio = t.ratio === null ? '' : ` (${ratioText(t.ratio)})`
+      const how = originMark(t.origin)
       out.push(
-        `| ${esc(t.term)} | ${statusLabel(t.status)}${ratio} | ${t.total.d7} | ${t.total.d30} | ${firstSeenCell(file, t)} | ${esc(platforms)} | ${u.termPage(t.slug)} |`,
+        `| ${esc(t.term)} | ${statusLabel(t.status)}${ratio} | ${t.total.d7} | ${t.total.d30} | ${t.added} | ${how} | ${firstSeenCell(file, t)} | ${esc(platforms)} | ${u.termPage(t.slug)} |`,
       )
     }
     out.push('')
@@ -77,7 +114,7 @@ export function renderTermsMarkdown(file: TrendingTermsDay): string {
       out.push(statusSentence(t))
       out.push('')
       out.push(`- Page: ${u.termPage(t.slug)} · JSON: ${u.termJson(t.slug)}`)
-      out.push(`- Tracked since ${fmtDateLong(t.added)}, entered as ${t.origin}${t.note ? ` — ${esc(t.note)}` : ''}`)
+      out.push(`- ${esc(originSentence(t))}`)
       if (t.aliases.length) out.push(`- Also counted as: ${t.aliases.map(esc).join(', ')}`)
       if (t.wikipedia_article) out.push(`- Wikipedia: https://en.wikipedia.org/wiki/${encodeURIComponent(t.wikipedia_article)}`)
       if (t.receipts.length) {
@@ -94,8 +131,9 @@ export function renderTermsMarkdown(file: TrendingTermsDay): string {
     out.push('The discovery run proposed nothing this time.')
   } else {
     out.push(
-      'N-grams the discovery run found moving in the last two weeks that are NOT on the watchlist, so nothing ' +
-        'here is tracked yet. They become terms only when a human writes them into the watchlist.',
+      'N-grams the discovery run found moving in the last two weeks that are NOT (yet) on the watchlist, so ' +
+        'nothing here is counted above. These are terms on their way in, not proposals waiting for a person. ' +
+        PROMOTION_RULE,
     )
     out.push('')
     out.push('| N-gram | Recent documents | Pace | Platforms | Sample |')
@@ -113,7 +151,10 @@ export function renderTermsMarkdown(file: TrendingTermsDay): string {
   out.push('2. Matching documents are deduplicated by URL and counted into three windows ending at the run: one day, seven days, thirty days.')
   out.push('3. The status compares the seven-day count with the three weeks before it, against thresholds committed in the pipeline — no model, no editorial judgement.')
   out.push('4. First seen is the earliest receipt date across this run and every committed terms file; the series on a term page is read out of those files, one point per day.')
-  out.push('5. Discovery counts n-grams over the same corpus and proposes them; the watchlist is only ever changed by a human.')
+  out.push(
+    '5. Discovery reads the house\'s own committed day files, plus four live archives for depth, counts n-grams ' +
+      `over them and governs its own list with the result. ${GOVERNANCE_RULE}`,
+  )
   out.push('')
   out.push('## Cite')
   out.push('')

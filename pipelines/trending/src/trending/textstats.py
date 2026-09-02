@@ -49,10 +49,18 @@ class Document:
     url: str
     date: str  # YYYY-MM-DD
     extra: str = ""  # repository description, already truncated by the caller
+    # What makes two items the same item. Defaults to the url, which is right for a live
+    # feed; the archive sets `date|url`, because the same link listed on ten days is ten
+    # sightings and collapsing them would erase exactly the persistence being measured.
+    key: str = ""
 
     @property
     def text(self) -> str:
         return f"{self.title} {self.extra}".strip()
+
+    @property
+    def dedupe_key(self) -> str:
+        return self.key or self.url
 
 
 @dataclass
@@ -70,14 +78,14 @@ def tally(docs: Iterable[Document], *, recent_from: str,
           sizes: tuple[int, ...] = SIZES,
           min_token_chars: int = MIN_TOKEN_CHARS) -> dict[str, Tally]:
     """Count documents per phrase in the recent window (`date >= recent_from`) and the prior
-    one. Documents are deduped by url, the newest kept; the sample of a phrase is the newest
-    recent document carrying it."""
+    one. Documents are deduped by their key (the url unless the caller says otherwise), the
+    newest kept; the sample of a phrase is the newest recent document carrying it."""
     counted: dict[str, Tally] = {}
     seen: set[str] = set()
     for doc in sorted(docs, key=lambda d: (d.date, d.url), reverse=True):
-        if doc.url in seen:
+        if doc.dedupe_key in seen:
             continue
-        seen.add(doc.url)
+        seen.add(doc.dedupe_key)
         recent = doc.date >= recent_from
         for ngram in phrases(doc.text, sizes=sizes, min_token_chars=min_token_chars):
             item = counted.get(ngram)
