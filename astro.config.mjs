@@ -109,6 +109,17 @@ export default defineConfig({
     // @tailwindcss/vite hängt noch an Vite 6, Astro 6 nutzt Vite 7 → die Plugin-Typen
     // kollidieren (reiner Typ-Konflikt, der Build läuft). Cast, bis Tailwind auf Vite 7 zieht.
     plugins: [/** @type {any} */ (tailwindcss())],
+    build: {
+      // Every script stays an external module file, none is inlined (re-skin 2a, 2026-09-02).
+      // Vite would otherwise inline any chunk under 4 KB as `<script type="module">…</script>`
+      // — the top bar's disclosure script, the experiments shelf filter — and Astro's
+      // ClientRouter, finding an inline module script it has to wait for after a swap, inserts
+      // a sentinel `<script type="module" src="data:application/javascript,">`. This site's CSP
+      // allows no `data:` scripts (rightly), so the sentinel was refused with a console error
+      // on every client-side navigation. With nothing inlined the router never needs the
+      // sentinel, and the CSP hash list shrinks to the two `is:inline` scripts plus Astro's own.
+      assetsInlineLimit: 0,
+    },
     worker: {
       format: 'es',
     },
