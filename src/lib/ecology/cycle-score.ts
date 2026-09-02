@@ -35,10 +35,15 @@ function dayIndex(date: string): number {
   return Math.floor(Date.parse(`${date}T00:00:00Z`) / 86_400_000)
 }
 
-function label(slug: string): string {
-  const words = slug.replace(/-/g, ' ')
-  if (words.length <= LABEL_MAX) return words
-  const cut = words.slice(0, LABEL_MAX)
+/** The words a mark carries: the practice's own title where its record has one, else the slug
+ *  read as words (the Field names its artifacts by slug alone). */
+function words(a: ArtifactEntry): string {
+  return a.title ?? a.slug.replace(/-/g, ' ')
+}
+
+function label(text: string): string {
+  if (text.length <= LABEL_MAX) return text
+  const cut = text.slice(0, LABEL_MAX)
   return `${cut.slice(0, cut.lastIndexOf(' ')) || cut}…`
 }
 
@@ -102,24 +107,36 @@ export function buildCycleScoreSvg({ cycle, artifacts }: CycleScoreInput): strin
   }
 
   // marks: one filled square per artifact — the grammar's object sign; each links to the
-  // artifact it draws, and the label under it is the artifact's own slug, cut at a word.
-  // Two sessions can land on the same lane on the same day: later marks of such a pair step
-  // right by a fixed offset, and their labels alternate below/above the lane, so neither the
-  // squares nor the words overprint each other.
+  // artifact it draws, and the label under it is the artifact's own words, cut at a word.
+  // Several sessions can land on the same lane on the same day (the Studio shipped three works
+  // on 2026-09-01, the Atelier three windows): later marks of such a group step right by a
+  // fixed offset, and their labels alternate below/above the lane AND move one row outward per
+  // pair — a pair reads below/above, a triple below/above/further below — so neither the squares
+  // nor the words overprint each other. The lane gap (96) leaves room for two rows each side.
+  // The newest day IS the axis end (the ruler runs to the latest artifact), so a group there
+  // would step past the span; such a group is shifted left as one, so its last mark stands
+  // on the axis end and its words stay inside the drawing.
+  const groupSize = new Map<string, number>()
+  for (const a of dated) {
+    const slot = `${a.practice}:${a.date}`
+    groupSize.set(slot, (groupSize.get(slot) ?? 0) + 1)
+  }
   const seenSlot = new Map<string, number>()
   dated.forEach((a) => {
     const slot = `${a.practice}:${a.date}`
     const nth = seenSlot.get(slot) ?? 0
     seenSlot.set(slot, nth + 1)
-    const ax = x(a.date!) + nth * 26
+    const overflow = Math.max(0, x(a.date!) + (groupSize.get(slot)! - 1) * 26 - SPAN_X1)
+    const ax = x(a.date!) + nth * 26 - overflow
     const y = laneY.get(a.practice)!
-    const labelY = nth % 2 === 0 ? y + 30 : y - 22
+    const row = Math.floor(nth / 2) * 16
+    const labelY = nth % 2 === 0 ? y + 30 + row : y - 22 - row
     const lane = LANE_OF[a.practice]
-    const title = `${a.date} · ${a.slug.replace(/-/g, ' ')}`
+    const title = `${a.date} · ${words(a)}`
     s.push(`<a href="${escapeXml(a.href)}" class="evt" aria-label="${escapeXml(title)}">`)
     s.push(`<title>${escapeXml(title)}</title>`)
     s.push(`<rect class="mk-fill pr-${lane}" x="${(ax - 8).toFixed(1)}" y="${y - 8}" width="16" height="16"/>`)
-    s.push(`<text class="t-note" x="${ax}" y="${labelY}" text-anchor="middle">${escapeXml(label(a.slug))}</text>`)
+    s.push(`<text class="t-note" x="${ax}" y="${labelY}" text-anchor="middle">${escapeXml(label(words(a)))}</text>`)
     s.push(`<rect class="hit" x="${(ax - 22).toFixed(1)}" y="${y - 30}" width="44" height="70" fill="transparent"/>`)
     s.push('</a>')
   })

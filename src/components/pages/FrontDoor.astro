@@ -32,7 +32,7 @@ import { buildStackSvg, stackWeekRange } from '@/lib/ops/stack'
 import { buildBoard, buildSignalLog } from '@/lib/ops/board'
 import { linePath, smooth3, SPARK_BOX } from '@/lib/ops/viz'
 import { allWorks } from '@/lib/engines/register'
-import { loadArtifacts, loadCycle } from '@/lib/ecology/v3'
+import { inCycle, loadArtifacts, loadCycle } from '@/lib/ecology/v3'
 import '@/styles/ops-room.css'
 import '@/styles/hub-triptych.css'
 import '@/styles/front-door.css'
@@ -59,9 +59,8 @@ const rest = signal.slice(1)
 // The house clock, and this cycle's artifact trail (the current cycle only: the strip's label
 // says "this cycle's", so the filter is what makes the label true).
 const cycle = loadCycle()
-const cycleDir = `cycle-${String(cycle.cycle).padStart(3, '0')}`
 const artifacts = loadArtifacts()
-  .filter((a) => a.href.includes(`/artifacts/${cycleDir}/`))
+  .filter((a) => inCycle(a, cycle))
   .slice(0, 3)
 
 const OPS = NAMING.opsRoom
@@ -226,7 +225,7 @@ const catalogues = NAMING.catalogues.items.filter((c) => c.href !== '/atlas')
         : artifacts.map((a, i) => (
             <>
               {i > 0 && ' · '}
-              <a href={url(a.href)}>{a.date ? `${a.date} ` : ''}{ECOLOGY_V3.artifacts.entryLabel(a.slug)}</a>
+              <a href={url(a.href)}>{a.date ? `${a.date} ` : ''}{ECOLOGY_V3.artifacts.entryLabel(a.slug, a.title)}</a>
             </>
           ))}
     </p>

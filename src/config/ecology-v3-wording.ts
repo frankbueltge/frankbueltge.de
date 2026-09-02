@@ -117,7 +117,8 @@ export const ECOLOGY_V3 = {
     intro:
       'Every session leaves an artifact. These are the current cycle\u2019s, newest first, exactly as the practices committed them — self-contained pages, no house paratext.',
     empty: 'None yet in this cycle. The first lands with the next session.',
-    entryLabel: (slug: string) => slug.replace(/-/g, ' '),
+    /** The practice's own title where its record carries one; the slug read as words otherwise. */
+    entryLabel: (slug: string, title?: string) => title ?? slug.replace(/-/g, ' '),
   },
 
   presentations: {
