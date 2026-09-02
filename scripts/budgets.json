@@ -1,0 +1,16 @@
+{
+  "$note": "Client-side weight budgets of the visual layer (docs/design/2026-09-02-the-visual-layer.md §3, duty 6). Checked by scripts/bundle-budget.mjs after every `astro build`, in CI and before deploy. Sizes are gzip (level 9) of the built chunks under dist/_astro/, matched by file-name prefix; a prefix that matches nothing fails too, so a renamed chunk is re-budgeted on purpose. Add a line when an island lands; raise a number only with the reason written next to it.",
+  "reportOverKB": 20,
+  "budgets": [
+    {
+      "prefix": "client.",
+      "maxGzipKB": 60,
+      "what": "React runtime (react-dom/client 19.2) plus Astro's React hydration client — ONE chunk shared by every island on the site, loaded only on pages that mount one. Measured 56.9 KB gz on 2026-09-02; the plan's 50 KB was an estimate, this is the number."
+    },
+    {
+      "prefix": "CycleScoreIsland.",
+      "maxGzipKB": 8,
+      "what": "the /ecology smoke island (Phase 0): mounts the built score, wires the shared readout on hover. Measured 0.9 KB gz on 2026-09-02. Replaced by the partitur island in Phase 1."
+    }
+  ]
+}

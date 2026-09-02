@@ -20,17 +20,21 @@ import { DOORS } from './pyramid/station'
 
 const roots = ['src/pages', 'src/components/pages', 'src/components/ecology']
 
-function everyAstroFile(dir: string): string[] {
+// .astro pages and components, and — since the visual layer of 2026-09-02 — the React islands
+// (.tsx) that pages mount. An instrument ported to an island must stay visible to this guard;
+// otherwise the port would make it disappear from here silently, which is the exact failure
+// this file exists to catch.
+function everySourceFile(dir: string): string[] {
   const out: string[] = []
   for (const entry of readdirSync(dir)) {
     const path = join(dir, entry)
-    if (statSync(path).isDirectory()) out.push(...everyAstroFile(path))
-    else if (entry.endsWith('.astro')) out.push(path)
+    if (statSync(path).isDirectory()) out.push(...everySourceFile(path))
+    else if (entry.endsWith('.astro') || entry.endsWith('.tsx')) out.push(path)
   }
   return out
 }
 
-const pages = roots.flatMap(everyAstroFile)
+const pages = roots.flatMap(everySourceFile)
 const source = pages.map((p) => readFileSync(p, 'utf8')).join('\n')
 
 describe('the instruments are on a page', () => {
@@ -45,7 +49,8 @@ describe('the instruments are on a page', () => {
 
   it.each(INSTRUMENTS)('%s is imported by at least one page', (component, what) => {
     expect(
-      source.includes(`/${component}.astro'`) || source.includes(`/${component}.astro"`),
+      // an .astro component or a .tsx island, imported by path from a page or a page component
+      new RegExp(`/${component}(\\.astro|\\.tsx)?['"]`).test(source),
       `${component} is mounted on no page — ${what} renders nowhere, and nothing else in this ` +
         `suite will say so: the component is correct, it is simply unreachable.`,
     ).toBe(true)

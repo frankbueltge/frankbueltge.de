@@ -57,11 +57,16 @@ const RETIRED = [
   'artistic research with data and AI',
   '(private) website repository',
 ]
+// .tsx joined the walks on 2026-09-02 with the first React island (docs/design/2026-09-02-the-
+// visual-layer.md): a JSX `style={{…}}` prop is the same inline attribute rule 3 forbids, and
+// rules 1/2/6/7 apply to an island's voice and colours exactly as to a .astro file's. Before
+// that day the walkers saw only .astro/.ts, so "no style= in React" would have been enforced
+// by nothing.
 const voiceFiles = [
-  ...walk(join(ROOT, 'src/pages'), ['.astro', '.ts']),
-  ...walk(join(ROOT, 'src/components'), ['.astro', '.ts']),
+  ...walk(join(ROOT, 'src/pages'), ['.astro', '.ts', '.tsx']),
+  ...walk(join(ROOT, 'src/components'), ['.astro', '.ts', '.tsx']),
   ...walk(join(ROOT, 'src/config'), ['.ts']),
-  ...walk(join(ROOT, 'src/lib'), ['.ts']),
+  ...walk(join(ROOT, 'src/lib'), ['.ts', '.tsx']),
   join(ROOT, 'README.md'),
 ]
 for (const f of voiceFiles) {
@@ -270,8 +275,8 @@ if (existsSync(teaserPath)) {
 // are the two sanctioned homes for hex values).
 const DATAVIZ_HEX_EXEMPT = /\/palette(\.test)?\.ts$/
 for (const f of [
-  ...walk(join(ROOT, 'src/components/dataviz'), ['.astro', '.ts']),
-  ...walk(join(ROOT, 'src/lib/dataviz'), ['.ts']),
+  ...walk(join(ROOT, 'src/components/dataviz'), ['.astro', '.ts', '.tsx']),
+  ...walk(join(ROOT, 'src/lib/dataviz'), ['.ts', '.tsx']),
 ]) {
   const rel = relative(ROOT, f)
   if (DATAVIZ_HEX_EXEMPT.test(rel)) continue
@@ -294,7 +299,7 @@ const paletteSource = existsSync(join(ROOT, 'src/lib/dataviz/palette.ts'))
 const knownSetIds = new Set([...paletteSource.matchAll(/id: '([a-z0-9-]+)'/g)].map((m) => m[1]))
 const IDENTITY_TOKEN = /--[\w-]*(?:-c-|-out-)[\w-]*:\s*#[0-9a-fA-F]{3,8}/
 const MARKER_WINDOW = 30
-for (const f of [...walk(join(ROOT, 'src/styles'), ['.css']), ...voiceFiles.filter((p) => p.endsWith('.astro'))]) {
+for (const f of [...walk(join(ROOT, 'src/styles'), ['.css']), ...voiceFiles.filter((p) => /\.(astro|tsx)$/.test(p))]) {
   const rel = relative(ROOT, f)
   if (isWerkMirror(rel)) continue
   const lines = readFileSync(f, 'utf8').split('\n')

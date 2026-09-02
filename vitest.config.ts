@@ -12,6 +12,8 @@ export default defineConfig({
     // ulysses repository, where a test against dead protocol pointers sat in the tree for a day
     // without CI ever running it. A test that cannot be reached is not a weaker guard than none;
     // it is none, wearing the look of one.
-    include: ['src/**/*.test.ts', 'scripts/**/*.test.ts'],
+    // .test.tsx joined on 2026-09-02 with the first React island: its server render is tested
+    // with react-dom/server in plain node — no DOM emulation, the floor is a string.
+    include: ['src/**/*.test.ts', 'src/**/*.test.tsx', 'scripts/**/*.test.ts'],
   },
 })

@@ -5,9 +5,19 @@
 // original partitur's own stylesheet — inks it: same ruler, same lane weights, same object
 // squares, same hues per voice. The figure is the page's visual anchor; the artifact trail
 // below remains the same record as cards, so nothing is reachable only through the drawing.
+//
+// Since 2026-09-02 the drawing is mounted by the first React island of the visual layer
+// (CycleScoreIsland.tsx — docs/design/2026-09-02-the-visual-layer.md). The geometry still
+// happens here, at build time, in the pure builder; the island renders that markup on the
+// server (so the SVG exists without JavaScript) and, once hydrated, answers the pointer with
+// the shared dataviz Readout shell rendered right beside it. `.score-figure` is the
+// position: relative box the readout is clamped within (score-map.css).
 import { ECOLOGY_V3 } from '@/config/ecology-v3-wording'
+import Readout from '@/components/dataviz/Readout.astro'
 import { buildCycleScoreSvg, type CycleScoreInput } from '@/lib/ecology/cycle-score'
 import '@/styles/score-map.css'
+
+import CycleScoreIsland from './CycleScoreIsland'
 
 interface Props {
   input: CycleScoreInput
@@ -15,6 +25,7 @@ interface Props {
 const { input } = Astro.props
 const svgMarkup = buildCycleScoreSvg(input)
 const W = ECOLOGY_V3.score
+const READOUT_ID = 'cycle-score-readout'
 ---
 
 <figure class="rounded-sm border border-line bg-panel">
@@ -23,7 +34,10 @@ const W = ECOLOGY_V3.score
     <p class="mt-2 max-w-3xl text-sm leading-relaxed text-fg-muted">{W.sub}</p>
   </figcaption>
   <div class="score-map overflow-x-auto">
-    <div class="score-svg min-w-[900px] p-2" set:html={svgMarkup} />
+    <div class="score-figure">
+      <CycleScoreIsland client:visible svg={svgMarkup} readoutId={READOUT_ID} />
+      <Readout id={READOUT_ID} maxWidth="40ch" />
+    </div>
   </div>
   <p class="border-t border-line p-4 font-mono text-[11px] leading-relaxed text-fg-faint">{W.legend}</p>
 </figure>

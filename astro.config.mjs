@@ -2,6 +2,7 @@
 import { defineConfig } from 'astro/config'
 import sitemap from '@astrojs/sitemap'
 import mdx from '@astrojs/mdx'
+import react from '@astrojs/react'
 import tailwindcss from '@tailwindcss/vite'
 import rehypeRepoLinks from './src/lib/engines/rehype-repo-links.mjs'
 
@@ -73,6 +74,11 @@ export default defineConfig({
   // /steuerzentrale ist ein privates Operator-Werkzeug (noindex, token-gated) — nie in der
   // Sitemap, unabhängig davon, ob Google robots.txt beachtet.
   integrations: [
+    // React islands — the visual layer (Frank, 2026-09-02; docs/design/2026-09-02-the-visual-
+    // layer.md). An island's client code is a bundled module script, which Astro hashes into the
+    // CSP below exactly like the .astro <script> chunks — so this integration changes nothing in
+    // security.csp. Geometry stays in src/lib/** (pure, tested); islands mount and interact.
+    react(),
     sitemap({
       // Das Dataset Register hatte bis 2026-07-27 eine Unterseite je Eintrag bzw. je
       // Werk; der Sitemap-Filter musste die abgeleiteten Fassungsseiten hier wieder
