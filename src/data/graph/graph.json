@@ -4,15 +4,15 @@
     "sources": [
       {
         "file": "src/data/werke.ts",
-        "sha256": "5edb252ea4d93ab4"
+        "sha256": "7e3a4b6b2f6881d6"
       },
       {
         "file": "docs/audits/2026-08-09-usp-audit.md",
-        "sha256": "ff63d23bb8f38193"
+        "sha256": "03f7c464de74de3a"
       },
       {
         "file": "docs/decision-log.md",
-        "sha256": "5e5dc325545a20f3"
+        "sha256": "9984d834cfd727cd"
       },
       {
         "file": "src/data/post/ledger.json",
@@ -57,25 +57,25 @@
       }
     ],
     "counts": {
-      "nodes": 324,
-      "edges": 276,
+      "nodes": 335,
+      "edges": 286,
       "nodesByKind": {
-        "decision": 87,
+        "decision": 88,
         "encounter": 6,
-        "neighbor": 93,
+        "neighbor": 102,
         "practice": 9,
         "practice-work": 98,
         "receiver": 8,
-        "work": 23
+        "work": 24
       },
       "edgesByKind": {
         "addresses": 8,
         "concerns": 2,
         "door": 5,
         "made-by": 98,
-        "neighbor-of": 93,
+        "neighbor-of": 102,
         "participates": 17,
-        "touches": 53
+        "touches": 54
       }
     }
   },
@@ -951,6 +951,16 @@
       }
     },
     {
+      "id": "decision:2026-09-02-1",
+      "kind": "decision",
+      "label": "Common Ground — a trending ledger built for machine readers, with its own audience counted",
+      "date": "2026-09-02",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "Common Ground — a trending ledger built for machine readers, with its own audience counted"
+      }
+    },
+    {
       "id": "encounter:enc-2026-001-calibration-gap-travels",
       "kind": "encounter",
       "label": "The Calibration Gap travels: Instrument 001 → Native Speaker → correction upstream",
@@ -1094,6 +1104,16 @@
       "url": "https://anthropocenefii.org/climate-risk-pricing/what-the-catastrophe-bond-market-could-be-telling-us-about-climate-risk"
     },
     {
+      "id": "neighbor:apify-com-miccho27-trends-aggregator",
+      "kind": "neighbor",
+      "label": "Trends Aggregator (Apify actor)",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Trends Aggregator (Apify actor)](https://apify.com/miccho27/trends-aggregator) — Google Trends, Hacker News, Reddit, GitHub and Product Hunt in one paid actor run; per-source lists returned to the caller, no public surface, no archive, no cross-source matching."
+      },
+      "url": "https://apify.com/miccho27/trends-aggregator"
+    },
+    {
       "id": "neighbor:arstechnica-com-information-technology-2013-04-churnalism-tr",
       "kind": "neighbor",
       "label": "Churnalism / Churnalism US",
@@ -1122,6 +1142,26 @@
         "quote": "[\"Implementing Agents in JavaScript\"](https://arxiv.org/abs/2505.18228) — precedent for static, no-backend, browser-only multi-agent simulation as a deployment pattern, not built around Minsky's book."
       },
       "url": "https://arxiv.org/abs/2505.18228"
+    },
+    {
+      "id": "neighbor:arxiv-org-abs-2603-21871",
+      "kind": "neighbor",
+      "label": "GoogleTrendArchive (Urman, Hannák, Baumann, arXiv 2603.21871, March 2026)",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[GoogleTrendArchive (Urman, Hannák, Baumann, arXiv 2603.21871, March 2026)](https://arxiv.org/abs/2603.21871) — the academic proof that archiving trend surfaces is worth doing: a year of Google \"Trending now\" across a hundred and twenty-five countries, seven-and-a-half million trend episodes; one platform, a research dataset, not a living daily page."
+      },
+      "url": "https://arxiv.org/abs/2603.21871"
+    },
+    {
+      "id": "neighbor:berghain-ravers-workers-dev-dashboard-crawl-stats",
+      "kind": "neighbor",
+      "label": "AI Crawler Transparency Dashboard (berghain.ravers.workers.dev)",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[AI Crawler Transparency Dashboard (berghain.ravers.workers.dev)](https://berghain.ravers.workers.dev/dashboard/crawl-stats) — the strongest neighbour of the *audience* half: one site logging every request from eighty-plus AI crawlers and publishing the counts through an unauthenticated API; a crawl-monetisation demo rather than a daily committed series, and it measures a site built to be paid for, not a page built to be read."
+      },
+      "url": "https://berghain.ravers.workers.dev/dashboard/crawl-stats"
     },
     {
       "id": "neighbor:blog-gdeltproject-org-gdelt-2-0-our-global-world-in-realtime",
@@ -1162,6 +1202,16 @@
         "quote": "[GDELT Global Difference Graph](https://blog.gdeltproject.org/looking-back-on-four-months-of-the-global-difference-graph) — publishes the underlying recrawl data (~53.6k title rewrites/day, verified 2026-08-14) and one-off blog analyses; no living public surface, no filter, no archive of record."
       },
       "url": "https://blog.gdeltproject.org/looking-back-on-four-months-of-the-global-difference-graph"
+    },
+    {
+      "id": "neighbor:bot-observability-vercel-app",
+      "kind": "neighbor",
+      "label": "Bot Observability",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Bot Observability](https://bot-observability.vercel.app/) — a self-hosted dashboard for AI crawlers, search engines and SEO bots that shows which URLs they request and how the activity changes; a tool for a site owner's own eyes, not a public series a reader can recompute from committed files."
+      },
+      "url": "https://bot-observability.vercel.app/"
     },
     {
       "id": "neighbor:c4ads-org-reports-oil-and-water",
@@ -1283,6 +1333,16 @@
       "url": "https://en.wikipedia.org/wiki/Wikipedia:On_this_day"
     },
     {
+      "id": "neighbor:en-wikipedia-org-wiki-wikipedia-top-25-report",
+      "kind": "neighbor",
+      "label": "Wikipedia: Top 25 Report",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Wikipedia: Top 25 Report](https://en.wikipedia.org/wiki/Wikipedia:Top_25_Report) — the weekly, hand-written list of the most-read English articles with a sentence of explanation each; editorial curation of one platform, no machine-readable form, no daily cadence."
+      },
+      "url": "https://en.wikipedia.org/wiki/Wikipedia:Top_25_Report"
+    },
+    {
       "id": "neighbor:envirodatagov-org-federal-environmental-web-tracker-about-pa",
       "kind": "neighbor",
       "label": "EDGI — Federal Environmental Web Tracker",
@@ -1300,6 +1360,16 @@
         "file": "docs/audits/2026-08-09-usp-audit.md",
         "quote": "Essay-only pieces drawing K-line/LLM-memory analogies (e.g. \"Society of Mind: The 50-Year-Old Blueprint for AI Agents\") — commentary, not implementations."
       }
+    },
+    {
+      "id": "neighbor:explodingtopics-com",
+      "kind": "neighbor",
+      "label": "Exploding Topics",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Exploding Topics](https://explodingtopics.com/) — a paid keyword-growth service: single-keyword search-volume curves over months, sold as a dashboard; no daily cross-platform list, no open data."
+      },
+      "url": "https://explodingtopics.com/"
     },
     {
       "id": "neighbor:fast-io-resources-ai-detector-accuracy-comparison-2026",
@@ -1349,6 +1419,16 @@
         "file": "docs/audits/2026-08-09-usp-audit.md",
         "quote": "GDACS itself + ReliefWeb, wired by third-party dashboards — GDACS already issues timestamped, population-scored, RSS/CAP bulletins; commercial/NGO dashboards already combine GDACS+ReliefWeb for real-time awareness."
       }
+    },
+    {
+      "id": "neighbor:github-com-claude-world-trend-pulse",
+      "kind": "neighbor",
+      "label": "trend-pulse",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[trend-pulse](https://github.com/claude-world/trend-pulse) — the strongest living neighbour of the *aggregation* half: an MIT-licensed aggregator of twenty built-in and seventeen plugin sources (Google Trends, Hacker News, Reddit, GitHub, Bluesky, Wikipedia …) with a CLI, a Python library and an MCP server; a merged ranking, but no cross-source convergence score, no public page, and no public archive — history lives in a local SQLite file per user."
+      },
+      "url": "https://github.com/claude-world/trend-pulse"
     },
     {
       "id": "neighbor:github-com-docnow-diffengine",
@@ -1850,6 +1930,26 @@
         "quote": "[Transparency International EU — Integrity Watch Red Flags](https://transparency.eu/integrity-watch-red-flags) — real-time public procurement monitoring, ~40,000 EU-budget + 320,000+ national contracts across 9 countries, updated near-daily, 20 fraud/corruption risk indicators."
       },
       "url": "https://transparency.eu/integrity-watch-red-flags"
+    },
+    {
+      "id": "neighbor:trends-google-com-trending",
+      "kind": "neighbor",
+      "label": "Google Trends — Trending now",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Google Trends — Trending now](https://trends.google.com/trending) — the canonical single-source surface: one platform, a rolling window, an RSS feed of ten items per country, and no history beyond a week; the archive gap is stated by Google itself."
+      },
+      "url": "https://trends.google.com/trending"
+    },
+    {
+      "id": "neighbor:trends24-in",
+      "kind": "neighbor",
+      "label": "Trends24",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Trends24](https://trends24.in/) — hourly hashtag trends of one platform (X) per country, scraped and shown as lists; no other platform, no convergence, no open archive."
+      },
+      "url": "https://trends24.in/"
     },
     {
       "id": "neighbor:tussell-com-insights-ai-procurement-tracker",
@@ -3739,7 +3839,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'balance'"
       },
-      "rank": 2,
+      "rank": 3,
       "tier": "experiment",
       "line": "From the “Counter-Measurement” line.",
       "verdict": "UNIQUE",
@@ -3761,7 +3861,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'beifang'"
       },
-      "rank": 5,
+      "rank": 6,
       "verdict": "ADDED VALUE",
       "verdictLabel": "ADDED VALUE (narrow).",
       "daylight": "Cite the prior academic literature (Hanson, Marino, SPARC) explicitly on the page — currently absent, which reads as unawareness — and make the recurring-cadence, paired-control, dual-vantage-point apparatus the headline claim, since that's the part with no existing match.",
@@ -3781,7 +3881,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'consensus'"
       },
-      "rank": 11,
+      "rank": 12,
       "tier": "experiment",
       "line": "From the “Counter-Measurement” line.",
       "verdict": "ADDED VALUE",
@@ -3803,7 +3903,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'correction'"
       },
-      "rank": 12,
+      "rank": 13,
       "tier": "studie",
       "line": "From the “Counter-Measurement” line.",
       "verdict": "REDUNDANT",
@@ -3837,7 +3937,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'ghost-fleet'"
       },
-      "rank": 6,
+      "rank": 7,
       "tier": "studie",
       "line": "From the “Counter-Measurement” line.",
       "verdict": "REDUNDANT",
@@ -3859,7 +3959,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'invoked-past'"
       },
-      "rank": 1,
+      "rank": 2,
       "tier": "experiment",
       "verdict": "UNIQUE",
       "verdictLabel": "UNIQUE (as a living instrument).",
@@ -3913,7 +4013,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'parallaxe'"
       },
-      "rank": 14,
+      "rank": 15,
       "verdict": "REDUNDANT",
       "verdictLabel": "REDUNDANT-leaning.",
       "daylight": "The plausible surviving differentiator is *process*, not method: a committed, versioned, git-archived daily register with a fixed non-selected topic set, never retconned — none of the neighbors offer that as a public, continuously-dated artifact (INFOGAP is a paper/dataset; Omnipedia/Manypedia are dead demos). Name this explicitly as the point, and cite INFOGAP/Omnipedia/Manypedia openly rather than let a visitor discover the overlap unassisted.",
@@ -3933,7 +4033,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'pattern'"
       },
-      "rank": 10,
+      "rank": 11,
       "line": "Capstone of the “Counter-Measurement” line.",
       "verdict": "REDUNDANT",
       "verdictLabel": "REDUNDANT — the weakest claim to uniqueness in this audit.",
@@ -3954,7 +4054,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'praemie'"
       },
-      "rank": 13,
+      "rank": 14,
       "verdict": "REDUNDANT",
       "verdictLabel": "REDUNDANT.",
       "daylight": "Either build on genuinely under-covered instruments — actual cat-bond spread/ROL data (Swiss Re index, Artemis.bm) rather than the BLS homeowner PPI others already use — or make the legal-document framing itself the explicit differentiator, citing Deep Sky/BLS/FRED openly rather than implying proprietary discovery.",
@@ -3974,7 +4074,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'protokoll'"
       },
-      "rank": 15,
+      "rank": 16,
       "verdict": "ADDED VALUE",
       "verdictLabel": "ADDED VALUE, driven by the literary form, not the data aggregation.",
       "daylight": "Stop positioning \"twelve open sources, daily\" as the value proposition (invites a losing comparison to OWID); foreground the deterministic/no-LLM/ test-locked-template mechanism and the \"adjourned\" bureaucratic-literary device as the explicit claim — an art piece about administrative language applied to planetary indicators, not a data-aggregation competitor to Our World in Data.",
@@ -3994,7 +4094,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'redaction'"
       },
-      "rank": 7,
+      "rank": 8,
       "tier": "instrument",
       "line": "From the “Counter-Measurement” line, in two chambers.",
       "verdict": "ADDED VALUE",
@@ -4016,7 +4116,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'round-number'"
       },
-      "rank": 8,
+      "rank": 9,
       "line": "From the “Counter-Measurement” line.",
       "verdict": "REDUNDANT",
       "verdictLabel": "REDUNDANT.",
@@ -4037,7 +4137,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'society'"
       },
-      "rank": 3,
+      "rank": 4,
       "tier": "experiment",
       "verdict": "UNIQUE",
       "verdictLabel": "UNIQUE (provisional).",
@@ -4058,7 +4158,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'spielraum'"
       },
-      "rank": 4,
+      "rank": 5,
       "tier": "experiment",
       "line": "From the counter-measurement line.",
       "verdict": "ADDED VALUE",
@@ -4092,7 +4192,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'tell'"
       },
-      "rank": 9,
+      "rank": 10,
       "line": "From the “Counter-Measurement” line.",
       "verdict": "REDUNDANT",
       "verdictLabel": "REDUNDANT — the clearest case in this audit.",
@@ -4100,6 +4200,27 @@
       "auditSource": {
         "file": "docs/audits/2026-08-09-usp-audit.md",
         "quote": "REDUNDANT — the clearest case in this audit."
+      }
+    },
+    {
+      "id": "work:trending",
+      "kind": "work",
+      "label": "Common Ground",
+      "werkId": "trending",
+      "href": "/trending",
+      "since": "2026-09-02",
+      "source": {
+        "file": "src/data/werke.ts",
+        "quote": "id: 'trending'"
+      },
+      "rank": 1,
+      "tier": "experiment",
+      "verdict": "ADDED VALUE",
+      "verdictLabel": "ADDED VALUE (provisional — sealed before ship).",
+      "daylight": "Once thirty archived days exist: a pattern report over the archive — topic persistence, weekday rhythm, category mix, the share of days on which anything converges at all — published from committed files, never from a live call. A second language axis (German trends beside the English ones are already collected; the convergence rule must learn that a topic can surface in two languages). An MCP server serving the day file, so the readers this page is built for can ask it directly — built here first, published on Frank's button.",
+      "auditSource": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "ADDED VALUE (provisional — sealed before ship)."
       }
     },
     {
@@ -4113,7 +4234,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'ueberflug'"
       },
-      "rank": 16,
+      "rank": 17,
       "tier": "studie",
       "verdict": "ADDED VALUE",
       "verdictLabel": "ADDED VALUE, genuine but narrow.",
@@ -6143,6 +6264,105 @@
     },
     {
       "kind": "neighbor-of",
+      "from": "work:trending",
+      "to": "neighbor:apify-com-miccho27-trends-aggregator",
+      "note": "Google Trends, Hacker News, Reddit, GitHub and Product Hunt in one paid actor run; per-source lists returned to the caller, no public surface, no archive, no cross-source matching.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Trends Aggregator (Apify actor)](https://apify.com/miccho27/trends-aggregator) — Google Trends, Hacker News, Reddit, GitHub and Product Hunt in one paid actor run; per-source lists returned to the caller, no public surface, no archive, no cross-source matching."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:trending",
+      "to": "neighbor:arxiv-org-abs-2603-21871",
+      "note": "the academic proof that archiving trend surfaces is worth doing: a year of Google \"Trending now\" across a hundred and twenty-five countries, seven-and-a-half million trend episodes; one platform, a research dataset, not a living daily page.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[GoogleTrendArchive (Urman, Hannák, Baumann, arXiv 2603.21871, March 2026)](https://arxiv.org/abs/2603.21871) — the academic proof that archiving trend surfaces is worth doing: a year of Google \"Trending now\" across a hundred and twenty-five countries, seven-and-a-half million trend episodes; one platform, a research dataset, not a living daily page."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:trending",
+      "to": "neighbor:berghain-ravers-workers-dev-dashboard-crawl-stats",
+      "note": "the strongest neighbour of the *audience* half: one site logging every request from eighty-plus AI crawlers and publishing the counts through an unauthenticated API; a crawl-monetisation demo rather than a daily committed series, and it measures a site built to be paid for, not a page built to be read.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[AI Crawler Transparency Dashboard (berghain.ravers.workers.dev)](https://berghain.ravers.workers.dev/dashboard/crawl-stats) — the strongest neighbour of the *audience* half: one site logging every request from eighty-plus AI crawlers and publishing the counts through an unauthenticated API; a crawl-monetisation demo rather than a daily committed series, and it measures a site built to be paid for, not a page built to be read."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:trending",
+      "to": "neighbor:bot-observability-vercel-app",
+      "note": "a self-hosted dashboard for AI crawlers, search engines and SEO bots that shows which URLs they request and how the activity changes; a tool for a site owner's own eyes, not a public series a reader can recompute from committed files.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Bot Observability](https://bot-observability.vercel.app/) — a self-hosted dashboard for AI crawlers, search engines and SEO bots that shows which URLs they request and how the activity changes; a tool for a site owner's own eyes, not a public series a reader can recompute from committed files."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:trending",
+      "to": "neighbor:en-wikipedia-org-wiki-wikipedia-top-25-report",
+      "note": "the weekly, hand-written list of the most-read English articles with a sentence of explanation each; editorial curation of one platform, no machine-readable form, no daily cadence.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Wikipedia: Top 25 Report](https://en.wikipedia.org/wiki/Wikipedia:Top_25_Report) — the weekly, hand-written list of the most-read English articles with a sentence of explanation each; editorial curation of one platform, no machine-readable form, no daily cadence."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:trending",
+      "to": "neighbor:explodingtopics-com",
+      "note": "a paid keyword-growth service: single-keyword search-volume curves over months, sold as a dashboard; no daily cross-platform list, no open data.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Exploding Topics](https://explodingtopics.com/) — a paid keyword-growth service: single-keyword search-volume curves over months, sold as a dashboard; no daily cross-platform list, no open data."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:trending",
+      "to": "neighbor:github-com-claude-world-trend-pulse",
+      "note": "the strongest living neighbour of the *aggregation* half: an MIT-licensed aggregator of twenty built-in and seventeen plugin sources (Google Trends, Hacker News, Reddit, GitHub, Bluesky, Wikipedia …) with a CLI, a Python library and an MCP server; a merged ranking, but no cross-source convergence score, no public page, and no public archive — history lives in a local SQLite file per user.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[trend-pulse](https://github.com/claude-world/trend-pulse) — the strongest living neighbour of the *aggregation* half: an MIT-licensed aggregator of twenty built-in and seventeen plugin sources (Google Trends, Hacker News, Reddit, GitHub, Bluesky, Wikipedia …) with a CLI, a Python library and an MCP server; a merged ranking, but no cross-source convergence score, no public page, and no public archive — history lives in a local SQLite file per user."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:trending",
+      "to": "neighbor:trends-google-com-trending",
+      "note": "the canonical single-source surface: one platform, a rolling window, an RSS feed of ten items per country, and no history beyond a week; the archive gap is stated by Google itself.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Google Trends — Trending now](https://trends.google.com/trending) — the canonical single-source surface: one platform, a rolling window, an RSS feed of ten items per country, and no history beyond a week; the archive gap is stated by Google itself."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:trending",
+      "to": "neighbor:trends24-in",
+      "note": "hourly hashtag trends of one platform (X) per country, scraped and shown as lists; no other platform, no convergence, no open archive.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Trends24](https://trends24.in/) — hourly hashtag trends of one platform (X) per country, scraped and shown as lists; no other platform, no convergence, no open archive."
+      }
+    },
+    {
+      "kind": "neighbor-of",
       "from": "work:ueberflug",
       "to": "neighbor:heavens-above-wikipedia-s-list-of-satellite-pass-predictors",
       "note": "classic amateur-astronomy pass predictors, general-purpose.",
@@ -6830,6 +7050,15 @@
       "source": {
         "file": "docs/decision-log.md",
         "quote": "src/pages/{field,atelier,studio}/index.astro"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-09-02-1",
+      "to": "work:trending",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "pipelines/trending"
       }
     }
   ]

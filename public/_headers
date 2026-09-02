@@ -66,6 +66,25 @@
   Access-Control-Allow-Origin: *
   Cache-Control: public, max-age=3600
 
+# Read-only machine surfaces of the trending ledger (Common Ground, /trending): the day files,
+# the archive register, the Markdown edition and the feed. Open CORS because they exist to be
+# fetched from elsewhere; the data is CC0 and carries nothing a browser could be tracked by.
+/trending/*.json
+  Access-Control-Allow-Origin: *
+  Cache-Control: public, max-age=900
+
+# Read-only machine surfaces of the trending ledger, continued: the same day as plain text, for
+# readers that parse Markdown better than markup. Rebuilt with the site, never at runtime.
+/trending/latest.md
+  Access-Control-Allow-Origin: *
+  Cache-Control: public, max-age=900
+
+# Read-only machine surfaces of the trending ledger, continued: one feed item per committed day.
+# Cached briefly, because a morning commit rebuilds the site and the feed moves with it.
+/trending/feed.xml
+  Access-Control-Allow-Origin: *
+  Cache-Control: public, max-age=900
+
 /*
   X-Frame-Options: SAMEORIGIN
   X-Content-Type-Options: nosniff

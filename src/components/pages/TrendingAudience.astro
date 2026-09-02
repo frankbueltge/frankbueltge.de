@@ -1,0 +1,146 @@
+---
+/** Common Ground — who read /trending. One stacked bar per counted day (oldest left), six
+ *  audience classes told apart by stacking order AND fill pattern, an always-on table beneath.
+ *  Counts are Cloudflare edge requests to /trending*, classified by self-declared user agent
+ *  and committed the morning after (src/data/trending/audience/<day>.json). A day without a
+ *  count is drawn as a hollow tick and reads "standby" in the table — never as zero. */
+import '../../styles/trending-audience.css'
+import TableFallback from '@/components/dataviz/TableFallback.astro'
+import { classLabel, compact, fmtDateLong } from '@/lib/trending/format'
+import { AUDIENCE_CLASSES, type TrendingAudience } from '@/lib/trending/types'
+import { audienceStrip, audienceTableRows } from '@/lib/trending/view'
+
+interface Props {
+  /** newest first */
+  audience: TrendingAudience[]
+  /** the record this page speaks about (the day before the ledger day), if any */
+  yesterday?: TrendingAudience
+}
+const { audience, yesterday } = Astro.props
+const live = yesterday && yesterday.edge.status === 'ok'
+const strip = audienceStrip(audience, 30)
+const counted = strip.bars.filter((b) => b.total !== null).length
+const rows = audienceTableRows(audience)
+const botRows = live
+  ? yesterday!.edge.bots.slice(0, 10).map((b) => ({ name: b.name, cls: classLabel(b.class), requests: compact(b.requests), ok: compact(b.ok_2xx), other: compact(b.other_status) }))
+  : []
+const sampled = live && yesterday!.edge.sample_interval_avg && yesterday!.edge.sample_interval_avg > 1
+const provenance = live
+  ? `${yesterday!.edge.source}; window ${yesterday!.edge.window?.[0] ?? '—'} to ${yesterday!.edge.window?.[1] ?? '—'}${sampled ? `; sampled, average sample interval ${yesterday!.edge.sample_interval_avg}` : '; unsampled'}. Classes by self-declared user agent; only the class and the bot name from a fixed table are kept, never the string.`
+  : 'No edge count is connected yet. The table shows every committed audience file; a day reads standby until a Cloudflare Analytics token exists — nothing is estimated.'
+const legendIds = ['tra-l-browser', 'tra-l-search', 'tra-l-ai-retrieval', 'tra-l-ai-user-fetch', 'tra-l-ai-training', 'tra-l-other-bot']
+---
+
+<section class="mb-12 border-t border-line pt-6" id="audience">
+  <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">Who is reading this</p>
+  {live ? (
+    <p class="mt-3 max-w-2xl leading-relaxed">
+      On {fmtDateLong(yesterday!.day)} the edge counted <span class="tabular-nums">{compact(yesterday!.edge.total)}</span> requests to this page and its machine editions:
+      {AUDIENCE_CLASSES.map((c, i) => (
+        <span class="whitespace-nowrap">{i > 0 ? ' · ' : ''}<span class="tabular-nums">{compact(yesterday!.edge.classes?.[c] ?? 0)}</span> {classLabel(c)}</span>
+      ))}.
+      {yesterday!.umami.status === 'ok' && (
+        <span> Script-executing browsers, counted separately by the house’s own analytics: <span class="tabular-nums">{compact(yesterday!.umami.pageviews)}</span> page views.</span>
+      )}
+    </p>
+  ) : (
+    <p class="mt-3 max-w-2xl leading-relaxed text-fg-muted">Audience counter in standby — no analytics token is connected yet; nothing here is estimated.</p>
+  )}
+
+  {counted > 0 && (
+    <figure class="mt-5">
+      <svg viewBox={`0 0 ${strip.width} ${strip.height + 18}`} class="w-full max-w-2xl overflow-visible" role="img"
+        aria-label={`Stacked bars: requests to /trending per day over the last ${counted} counted days, split into ${AUDIENCE_CLASSES.length} audience classes.`}>
+        <defs>
+          <pattern id="tra-p-search" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+            <rect width="6" height="6" class="tra-p-ground" /><line x1="0" y1="0" x2="0" y2="6" class="tra-p-ink" stroke-width="2.4" />
+          </pattern>
+          <pattern id="tra-p-ai-retrieval" width="5" height="5" patternUnits="userSpaceOnUse">
+            <rect width="5" height="5" class="tra-p-ground" /><circle cx="2.5" cy="2.5" r="1.4" class="tra-p-ink" />
+          </pattern>
+          <pattern id="tra-p-ai-user-fetch" width="6" height="6" patternUnits="userSpaceOnUse">
+            <rect width="6" height="6" class="tra-p-ground" /><line x1="0" y1="3" x2="6" y2="3" class="tra-p-ink-muted" stroke-width="2" />
+          </pattern>
+          <pattern id="tra-p-ai-training" width="7" height="7" patternUnits="userSpaceOnUse">
+            <rect width="7" height="7" class="tra-p-ground" /><line x1="0" y1="0" x2="7" y2="7" class="tra-p-ink-muted" stroke-width="1.2" /><line x1="7" y1="0" x2="0" y2="7" class="tra-p-ink-muted" stroke-width="1.2" />
+          </pattern>
+          <pattern id="tra-p-other-bot" width="6" height="6" patternUnits="userSpaceOnUse">
+            <rect width="6" height="6" class="tra-p-ground" /><line x1="3" y1="0" x2="3" y2="6" class="tra-p-ink-faint" stroke-width="1.2" />
+          </pattern>
+        </defs>
+        <line class="tra-baseline" x1="0" y1={strip.height + 0.5} x2={strip.width} y2={strip.height + 0.5} />
+        {strip.bars.map((b) => (
+          b.total === null ? (
+            <g class="tra-bar" tabindex="0">
+              <title>{`${b.day}: standby (no edge count)`}</title>
+              <rect class="tra-standby" x={b.x} y={strip.height - 8} width={strip.barWidth} height={8} />
+            </g>
+          ) : (
+            <g class="tra-bar" tabindex="0">
+              <title>{`${b.day}: ${compact(b.total)} requests — ${b.segments.map((s) => `${classLabel(s.cls)} ${compact(s.n)}`).join(', ')}`}</title>
+              {b.segments.map((s) => (
+                <rect class={`tra-seg-${s.cls}`} x={b.x} y={s.y} width={strip.barWidth} height={s.h} />
+              ))}
+            </g>
+          )
+        ))}
+        {strip.bars.length > 0 && (
+          <>
+            <text class="tra-axis" x={strip.bars[0].x} y={strip.height + 14}>{strip.bars[0].day}</text>
+            <text class="tra-axis" x={strip.width} y={strip.height + 14} text-anchor="end">{strip.bars[strip.bars.length - 1].day}</text>
+          </>
+        )}
+      </svg>
+      <ul class="tra-legend mt-2 font-mono text-[11px] text-fg-muted" aria-label="Audience classes">
+        {AUDIENCE_CLASSES.map((c, i) => (
+          <li class="inline-flex items-center gap-1.5">
+            <svg viewBox="0 0 14 14" aria-hidden="true"><rect x="0.5" y="0.5" width="13" height="13" class={`tra-seg-${c}`} id={legendIds[i]} /></svg>
+            {classLabel(c)} <span class="text-fg-faint tabular-nums">{compact(strip.totals[c])}</span>
+          </li>
+        ))}
+      </ul>
+      <figcaption class="mt-2 max-w-2xl font-mono text-[11px] text-fg-faint">
+        One bar per counted day, oldest on the left, tallest bar = {compact(strip.max)} requests. Legend totals cover the drawn window. The table below is the same data, day by day.
+      </figcaption>
+    </figure>
+  )}
+
+  <div class="mt-4 text-sm">
+    <TableFallback
+      summary="The audience, day by day, as a table"
+      open={!live}
+      columns={[
+        { key: 'day', label: 'Day', nowrap: true },
+        { key: 'total', label: 'Edge requests', align: 'right' },
+        { key: 'browser', label: 'Browsers', align: 'right' },
+        { key: 'search', label: 'Search', align: 'right' },
+        { key: 'ai-retrieval', label: 'AI retrieval', align: 'right' },
+        { key: 'ai-user-fetch', label: 'AI user fetch', align: 'right' },
+        { key: 'ai-training', label: 'AI training', align: 'right' },
+        { key: 'other-bot', label: 'Other bots', align: 'right' },
+        { key: 'pageviews', label: 'Umami views', align: 'right' },
+      ]}
+      rows={rows}
+      caption="Requests to /trending and its machine editions per day, by audience class, plus Umami page views"
+      provenance={provenance}
+    />
+  </div>
+
+  {botRows.length > 0 && (
+    <div class="mt-3 text-sm">
+      <TableFallback
+        summary={`Named bots on ${fmtDateLong(yesterday!.day)}`}
+        columns={[
+          { key: 'name', label: 'Bot', nowrap: true },
+          { key: 'cls', label: 'Class' },
+          { key: 'requests', label: 'Requests', align: 'right' },
+          { key: 'ok', label: '2xx', align: 'right' },
+          { key: 'other', label: 'Other status', align: 'right' },
+        ]}
+        rows={botRows}
+        caption="The most active named bots, by requests"
+        provenance="Bot names come from a fixed classification table in the pipeline; a user agent not in the table is counted only as its class."
+      />
+    </div>
+  )}
+</section>

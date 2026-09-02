@@ -102,6 +102,20 @@ jobs:
           git diff --exit-code -- src/data/meridian/mrr-graph.ttl src/data/meridian/parallax.json \
             || { echo "::error::Abgeleitete Meridian-Dateien weichen vom committeten Export ab — 'npm run meridian:refresh' laufen lassen und das Ergebnis mitcommitten."; exit 1; }
 
+  trending:
+    name: Trending pipeline (pytest)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: pipelines/trending
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -e ".[dev]"
+      - run: pytest -q
+
   beifang-tests:
     runs-on: ubuntu-latest
     defaults:

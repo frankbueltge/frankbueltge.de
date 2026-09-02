@@ -1,0 +1,174 @@
+---
+/** Method sheet — Common Ground (the nightly trending ledger, /trending).
+ *  Same six sections as every other method sheet on this site (MethodenblattPattern.astro is
+ *  the pattern). The source table is read from the newest committed day, so a source that is
+ *  added, renamed or relicensed in the pipeline shows up here without anyone editing prose. */
+import TableFallback from '@/components/dataviz/TableFallback.astro'
+import { getLatestTrending } from '@/lib/trending/data'
+import { fmtDateLong, platformLabel } from '@/lib/trending/format'
+
+const day = getLatestTrending()
+const sourceRows = (day?.sources ?? []).map((s) => ({
+  source: platformLabel(s.id),
+  what: s.name,
+  status: s.status === 'ok' ? 'ok' : `${s.status}${s.note ? ` — ${s.note}` : ''}`,
+  signals: s.count,
+  as_of: s.as_of ?? '—',
+  licence: s.licence,
+}))
+
+const limits = [
+  'The audience counts are sampled at the edge, not a census: Cloudflare returns them with an average sample interval, which is committed beside the numbers so a reader can see what a count is made of.',
+  'Every audience class rests on a self-declaration. A user agent can say anything; the classification believes the string, so a crawler that disguises itself is counted as whatever it claims to be.',
+  'The novelty reading — first seen, days hot — only becomes meaningful once the archive has fourteen days in it. Before that, a topic looks new because the archive is new.',
+  'A crossing is a coincidence of labels, not a claim about intent, influence or causality. Two platforms carrying the same words on the same morning is exactly that, and nothing more.',
+  'The sources lean English, with some German through the fediverse instance that is read; a topic large in another language can be entirely absent here without being absent from the web.',
+  'Sources fail. A source that does not answer is recorded as unavailable with the reason, and the day is published with fewer of them — never backfilled, never quietly replaced by a neighbour.',
+]
+---
+
+<main id="main" class="flex-1">
+  <div class="trending-method mx-auto max-w-2xl px-4 py-14">
+    <h1 class="mb-8 text-xl font-semibold">Method sheet — Common Ground</h1>
+
+    <section class="mb-10 border border-line bg-panel/60 p-5">
+      <h2 class="mb-2 font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">What this is</h2>
+      <p class="leading-relaxed">
+        A ledger, not a summary. Every morning the pipeline reads what a set of independent, open sources declare
+        they are trending, keeps each label and count exactly as its source states it, and then asks one question
+        of the whole set: what is more than one of them looking at? The crossing is a written rule over tokens, so
+        anyone can run it again on the committed file and get the same list. Nothing here is summarised, ranked or
+        phrased by a language model.
+      </p>
+    </section>
+
+    <section class="mb-8">
+      <h2 class="mb-2 font-semibold">1. Sources &amp; licences</h2>
+      <p class="leading-relaxed text-fg-muted">
+        {day
+          ? `The sources of the newest committed day (${fmtDateLong(day.date)}), with what each one returned that morning. Only labels, links and the sources' own counts are kept — never a body text, never a user.`
+          : 'No day has been committed yet; the table fills itself from the newest committed file.'}
+      </p>
+      {sourceRows.length > 0 && (
+        <div class="mt-3 text-sm">
+          <TableFallback
+            summary="The sources, as a table"
+            open={true}
+            columns={[
+              { key: 'source', label: 'Source', nowrap: true },
+              { key: 'what', label: 'What is read' },
+              { key: 'status', label: 'Status' },
+              { key: 'signals', label: 'Signals', align: 'right' },
+              { key: 'as_of', label: 'As of', nowrap: true },
+              { key: 'licence', label: 'Licence / terms' },
+            ]}
+            rows={sourceRows}
+            caption="The sources of the newest committed trending day, with status, signal count, as-of date and licence"
+            provenance="Read from the committed day file, not from a list kept by hand: a source added or relicensed in the pipeline changes this table on the next build."
+          />
+        </div>
+      )}
+    </section>
+
+    <section class="mb-8">
+      <h2 class="mb-2 font-semibold">2. Cadence</h2>
+      <p class="leading-relaxed text-fg-muted">
+        One run per day, at 06:40 UTC, committed as a dated JSON file that is never edited afterwards. One source
+        is deliberately out of step: Wikipedia publishes a day&rsquo;s most-read articles only after that day has
+        closed, so the reader takes the previous day and looks back up to four days for the newest complete list —
+        which is why the Wikipedia row carries an earlier as-of date than the rest. Who read the page is counted
+        one day later still, from Cloudflare&rsquo;s edge analytics: those counts are sampled, and the average
+        sample interval is committed beside them as <code class="font-mono text-xs">sample_interval_avg</code> so a
+        reader can tell a count from an extrapolation.
+      </p>
+    </section>
+
+    <section class="mb-8">
+      <h2 class="mb-2 font-semibold">3. Processing</h2>
+      <p class="leading-relaxed text-fg-muted">
+        Each label is reduced to tokens: case folded, diacritics stripped, hashtags split into their words,
+        stopwords dropped. Two short labels are treated as the same topic when they share an exact single token,
+        when their token sets overlap above the committed Jaccard threshold, or when one set contains the other.
+        A short label also attaches to a headline when every one of its tokens occurs in that headline, which is
+        how a two-word search trend meets the news story that produced it. Surviving clusters are scored first by
+        the number of independent platforms carrying them and then by rank heat within each source, and each
+        cluster is shown under the label of its highest-priority source. First-seen and days-hot are read out of
+        the last thirty archived days — the memory is the archive itself, and it holds nothing a reader cannot
+        open.
+      </p>
+      <p class="mt-2">
+        <a href="https://github.com/frankbueltge/frankbueltge.de/tree/main/pipelines/trending"
+          class="font-mono text-xs text-fg-faint transition-colors hover:text-fg" rel="noopener">&rarr; pipelines/trending</a>
+      </p>
+    </section>
+
+    <section class="mb-8">
+      <h2 class="mb-2 font-semibold">4. Limits of the method</h2>
+      <ul class="list-disc space-y-1 pl-5 text-fg-muted">{limits.map((i) => <li>{i}</li>)}</ul>
+    </section>
+
+    <section class="mb-8">
+      <h2 class="mb-2 font-semibold">5. Compute footprint</h2>
+      <p class="leading-relaxed text-fg-muted">
+        One run per day: roughly forty HTTP requests against public endpoints, a few seconds of token matching in
+        Python, and a commit. No model is called at any point, in the pipeline or on the page, and the site itself
+        stays static.
+      </p>
+    </section>
+
+    <section class="mb-8">
+      <h2 class="mb-2 font-semibold">6. Change log</h2>
+      <ul class="list-disc space-y-1 pl-5 text-fg-muted">
+        <li>2026-09-02 &middot; v1 &middot; first ledger</li>
+      </ul>
+    </section>
+
+    <a href="/trending" class="text-sm text-fg-muted transition-colors hover:text-fg">&rarr; To the experiment</a>
+  </div>
+</main>
+
+<style>
+  /* Same table voice as the ledger page; scoped to this sheet (ADR 0010: the primitive ships
+     structure, the surface decides how it reads). */
+  .trending-method :global(.dv-table-fallback) {
+    margin: 0;
+  }
+  .trending-method :global(.dv-table-fallback > summary) {
+    cursor: pointer;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-fg-faint);
+  }
+  .trending-method :global(.dv-table-fallback > summary:hover) {
+    color: var(--color-fg);
+  }
+  .trending-method :global(.dv-table) {
+    margin-top: 0.75rem;
+    font-size: 0.8125rem;
+  }
+  .trending-method :global(.dv-table th) {
+    padding: 0.35rem 0.75rem 0.35rem 0;
+    border-bottom: 1px solid var(--color-line);
+    text-align: left;
+    font-weight: 600;
+    color: var(--color-fg-muted);
+  }
+  .trending-method :global(.dv-table td) {
+    padding: 0.35rem 0.75rem 0.35rem 0;
+    border-bottom: 1px solid var(--color-line);
+    vertical-align: top;
+  }
+  .trending-method :global(.dv-table [data-align='right']) {
+    padding-right: 0;
+    font-variant-numeric: tabular-nums;
+  }
+  .trending-method :global(.dv-prov) {
+    margin-top: 0.6rem;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    line-height: 1.6;
+    color: var(--color-fg-faint);
+  }
+</style>

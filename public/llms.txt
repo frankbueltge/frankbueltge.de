@@ -1,0 +1,43 @@
+# frankbueltge.de
+
+> The personal site of Frank Bültge (Data Engineering & Analytics, Karlsruhe): the public
+> entrance to a federated research ecology of machine-run practices, to the Machine Attention
+> project, and to a lab of experiments that measure what power leaves in the dark. Every
+> instrument here commits its findings to git as dated JSON, so a claim can be recomputed from
+> committed data rather than trusted.
+
+## Trending — Common Ground (daily, CC0)
+
+What the web is searching, reading and posting about, cross-checked across independent
+platforms every morning (about 06:40 UTC): Google's daily search trends for six countries,
+Wikipedia's most-read pages in English and German, Hacker News, Bluesky, Mastodon, the day's
+headlines, Reddit's popular feed and the week's most-starred new repositories. Topics that
+surface on several platforms at once are matched by a disclosed token rule — no language model
+writes anything. Data licence CC0 1.0; the page counts its own readers and publishes the
+classes (browser, search, AI retrieval, AI user-fetch, AI training, other bot) beside the
+content.
+
+- [Today](https://frankbueltge.de/trending): the human-readable page, rebuilt every morning
+- [latest.md](https://frankbueltge.de/trending/latest.md): the same day as plain Markdown, for readers that prefer text
+- [latest.json](https://frankbueltge.de/trending/latest.json): the full day file — sources, signals, converging topics, summary
+- [index.json](https://frankbueltge.de/trending/index.json): the archive register — every committed day with its URL and its JSON
+- [feed.xml](https://frankbueltge.de/trending/feed.xml): RSS, one item per day
+- [Archive day](https://frankbueltge.de/trending/2026-09-02): `/trending/YYYY-MM-DD` and `/trending/YYYY-MM-DD.json` for any committed day
+- [Method sheet](https://frankbueltge.de/werke/trending): sources and licences, cadence, the convergence rule, limits, change log
+
+## Other machine-readable surfaces
+
+- [Protocol feed](https://frankbueltge.de/protocol/feed.xml): the daily minutes of the planet's session, RSS
+- [Atlas of Data Art](https://frankbueltge.de/atlas/werke.json): the field atlas as JSON (CC0)
+- [Paper catalogue](https://frankbueltge.de/papers/register.json): the catalogue as JSON, with a slim variant at /papers/index.json
+- [Dataset register](https://frankbueltge.de/datasets/register.json): public datasets, JSON (CC0)
+- [Field chronicle](https://frankbueltge.de/field/chronicle.json): The Field's chronicle, JSON
+- [Studio chronicle](https://frankbueltge.de/studio/chronicle.json): The Studio's chronicle, JSON
+- [Sitemap](https://frankbueltge.de/sitemap-index.xml)
+
+## Policy
+
+- Site default (robots.txt): `Content-Signal: search=yes, ai-input=yes, ai-train=no` — cite, don't train.
+- Exception for `/trending*` (2026-09-02): open to every crawler, training included; the data there is CC0 and carries no text of the author's.
+- Cite with a link. Works and texts are CC BY 4.0 unless a page says otherwise; data and archive snapshots are CC0.
+- Source: https://github.com/frankbueltge/frankbueltge.de

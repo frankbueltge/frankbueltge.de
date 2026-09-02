@@ -70,6 +70,10 @@ on:
       - Puls nightly refresh # commits src/data/pulse/pulse.json with GITHUB_TOKEN → no on:push
       - Attention integrate # mirrors public/attention/ with GITHUB_TOKEN → no on:push
       - Knowledge graph nightly # commits src/data/graph/graph.json with GITHUB_TOKEN → no on:push
+      # The trending ledger (Common Ground, 2026-09-02) commits src/data/trending with the built-in
+      # token every morning — the same reason as every entry above: without this line the day's
+      # ledger would wait for an unrelated push.
+      - Trending nightly
     types: [completed]
 
 permissions:
@@ -111,6 +115,17 @@ jobs:
           # PUBLIC_* vars at BUILD time; this build runs on GitHub's runner and does NOT see
           # Cloudflare's runtime env, so without this the /seed form would ship in permanent standby.
           PUBLIC_TURNSTILE_SITE_KEY: "0x4AAAAAAD543CSVCrF26LBW"
+      # IndexNow (Bing, Yandex, Seznam, Naver …) verifies ownership through a key file at the
+      # site root. The key is a repository secret, so the file is generated into dist/ at deploy
+      # time and never committed. Without a key this step does nothing and the deploy proceeds —
+      # the ping below is likewise guarded. Added 2026-09-02 for the trending ledger.
+      - name: IndexNow key file (only when INDEXNOW_KEY is configured)
+        env:
+          INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
+        run: |
+          if [ -z "$INDEXNOW_KEY" ]; then echo "No INDEXNOW_KEY configured — skipping."; exit 0; fi
+          printf '%s' "$INDEXNOW_KEY" > "dist/$INDEXNOW_KEY.txt"
+          echo "IndexNow key file written into dist/."
       - name: Deploy → Cloudflare Pages
         env:
           CF_TOKEN_RAW: ${{ secrets.CF }}
@@ -119,3 +134,18 @@ jobs:
           # Secret kann beim Einfügen ein \n/Leerzeichen enthalten → trimmen (sonst „invalid header value").
           export CLOUDFLARE_API_TOKEN="$(printf '%s' "$CF_TOKEN_RAW" | tr -d '[:space:]')"
           npx --yes wrangler@4 pages deploy dist --project-name=frankbueltge-de --branch=main --commit-dirty=true
+      # After the deploy: tell the IndexNow engines that /trending (and today's archive page, if
+      # the build produced one) changed. Never fails the job — a missing key skips, a failed ping
+      # is printed and ignored; the deploy above is the thing that matters.
+      - name: IndexNow ping for /trending (never fails the deploy)
+        env:
+          INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
+        run: |
+          if [ -z "$INDEXNOW_KEY" ]; then echo "No INDEXNOW_KEY configured — skipping."; exit 0; fi
+          URLS='"https://frankbueltge.de/trending"'
+          D="$(date -u +%F)"
+          if [ -f "dist/trending/$D/index.html" ]; then URLS="$URLS,\"https://frankbueltge.de/trending/$D\""; fi
+          curl -sS -X POST https://api.indexnow.org/indexnow \
+            -H 'Content-Type: application/json; charset=utf-8' \
+            -d "{\"host\":\"frankbueltge.de\",\"key\":\"$INDEXNOW_KEY\",\"keyLocation\":\"https://frankbueltge.de/$INDEXNOW_KEY.txt\",\"urlList\":[$URLS]}" \
+            -o /dev/null -w 'IndexNow HTTP %{http_code}\n' || echo "IndexNow ping failed — ignored."

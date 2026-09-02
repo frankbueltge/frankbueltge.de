@@ -67,7 +67,7 @@ describe('WERKE_HOLDINGS (/experiments register)', () => {
     expect(WERKE_HOLDINGS.map((w) => w.id)).toEqual(
       WERKE_CHRONO.filter((w) => !HOLDINGS_EXCLUDED_IDS.has(w.id)).map((w) => w.id),
     )
-    expect(WERKE_HOLDINGS[0].id).toBe('invoked-past') // newest werk on top today
+    expect(WERKE_HOLDINGS[0].id).toBe('trending') // newest werk on top today (Common Ground, 2026-09-02)
     expect(WERKE_HOLDINGS.map((w) => w.id)).toEqual([...HOLDINGS_RANKED])
   })
   it('keeps every non-excluded entry — ranked and register agree on the set', () => {

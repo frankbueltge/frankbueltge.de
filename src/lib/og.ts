@@ -72,6 +72,11 @@ export const OG_PAGES: Record<string, { title: string; description: string }> = 
     title: 'Patterns',
     description: 'A machine that finds a pattern every day — and does not know whether it means anything',
   },
+  trending: {
+    title: 'Common Ground',
+    description:
+      'Trending today — what the web is searching, reading and posting about, cross-checked across independent sources every morning; open data for people and machine readers',
+  },
   redaction: {
     title: 'Editorial Deadline',
     description: 'What is quietly removed again from the official public record',
@@ -126,6 +131,8 @@ export function ogSlug(pathname: string): keyof typeof OG_PAGES {
   if (p.startsWith('/correction') || p.startsWith('/werke/correction')) return 'correction'
   if (p.startsWith('/tell') || p.startsWith('/werke/tell')) return 'tell'
   if (p.startsWith('/pattern') || p.startsWith('/werke/pattern')) return 'pattern'
+  // Covers /trending, the archived days (/trending/2026-09-02) and the method sheet.
+  if (p.startsWith('/trending') || p.startsWith('/werke/trending')) return 'trending'
   if (p.startsWith('/redaction') || p.startsWith('/werke/redaction')) return 'redaction'
   if (p.startsWith('/round-number') || p.startsWith('/werke/round-number')) return 'round-number'
   if (p.startsWith('/ghost-fleet') || p.startsWith('/werke/ghost-fleet')) return 'ghost-fleet'

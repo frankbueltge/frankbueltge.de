@@ -208,6 +208,24 @@ export const NODES: readonly ApparatusNode[] = [
     ],
   },
 
+  {
+    id: 'src-web',
+    label: 'Platform trend feeds',
+    layer: 'world',
+    kind: 'source',
+    owner: 'shared',
+    what: 'What the platforms themselves publish about what is being searched, read and posted — plus the edge’s own count of who fetched the page that reads them.',
+    members: [
+      { label: 'Google Trends RSS', what: 'the daily search trends of six countries, ten items each', ref: 'https://trends.google.com/trending/rss?geo=US' },
+      { label: 'Wikimedia REST', what: 'the most-read articles of the day before, English and German', ref: 'https://wikimedia.org/api/rest_v1/' },
+      { label: 'Hacker News API', what: 'the front page', ref: 'https://github.com/HackerNews/API' },
+      { label: 'Bluesky public API', what: 'the network’s own trending topics with category and post count', ref: 'https://public.api.bsky.app/xrpc/app.bsky.unspecced.getTrends' },
+      { label: 'Mastodon API', what: 'trending tags and links on mastodon.social', ref: 'https://docs.joinmastodon.org/methods/trends/' },
+      { label: 'Google News RSS · Reddit RSS · GitHub search', what: 'the day’s headlines, the popular feed, the week’s most-starred new repositories', ref: 'https://news.google.com/rss' },
+      { label: 'Cloudflare GraphQL Analytics', what: 'the edge’s count of who fetched /trending the day before — classes and bot names, never a browser’s identity', ref: 'https://developers.cloudflare.com/analytics/graphql-api/', secrets: ['CF_ANALYTICS_TOKEN'] },
+    ],
+  },
+
   // ── the instruments ────────────────────────────────────────────────────
   {
     id: 'in-protokoll',
@@ -239,6 +257,18 @@ export const NODES: readonly ApparatusNode[] = [
       { label: 'Ghost Fleet nightly', what: 'vessels that go dark', ref: '.github/workflows/ghost-fleet.yml', workflowName: 'Ghost Fleet nightly', cron: ['0 4 * * *'], secrets: ['GFW_TOKEN'] },
       { label: 'Beifang weekly', what: 'what a consent wall takes before you consent', ref: '.github/workflows/beifang.yml', workflowName: 'Beifang weekly', cron: ['17 2 * * 1'] },
       { label: 'Spielraum watch', what: 'monthly watch on hyperscaler efficiency claims; writes a watch file, never the register', ref: '.github/workflows/spielraum-watch.yml', workflowName: 'Spielraum watch', cron: ['17 6 3 * *'] },
+    ],
+  },
+  {
+    id: 'in-trending',
+    label: 'Morgenlese',
+    layer: 'instruments',
+    kind: 'pipeline',
+    owner: 'shared',
+    what: 'The morning reader of what the web is searching, reading and posting about: one dated ledger per day, and a day later the count of who read it.',
+    commitsAs: 'Morgenlese <morgenlese@frankbueltge.de>',
+    members: [
+      { label: 'Trending nightly', what: 'eight keyless sources, one disclosed convergence rule, the edge audience of the day before', ref: '.github/workflows/trending.yml', workflowName: 'Trending nightly', cron: ['40 6 * * *'], secrets: ['CF_ANALYTICS_TOKEN'] },
     ],
   },
   {
@@ -461,6 +491,7 @@ export const NODES: readonly ApparatusNode[] = [
       { label: 'src/data/spielraum', what: 'headroom — watch file only; the register is ingested by hand' },
       { label: 'src/data/pulse', what: 'the ecology’s own commit pulse' },
       { label: 'src/content/beifang', what: 'bycatch' },
+      { label: 'src/data/trending', what: 'the trending ledger, and its audience the day after' },
     ],
   },
   {
@@ -595,6 +626,7 @@ export const EDGES: readonly ApparatusEdge[] = [
   { from: 'src-economy', to: 'in-gegenmessung', kind: 'https', mechanism: 'World Bank and Philadelphia Fed series', checked: 'declared', ref: 'pipelines/revision/refresh.py' },
   { from: 'src-scholarly', to: 'in-gegenmessung', kind: 'https', mechanism: 'Wayback snapshots and publisher pages read pre-consent', checked: 'declared', ref: 'pipelines/redaction' },
   { from: 'src-scholarly', to: 'in-scouts', kind: 'https', mechanism: 'OpenAlex, arXiv, ArtBase, dataphys, S+T+ARTS', checked: 'declared', ref: 'pipelines/atlas-scout' },
+  { from: 'src-web', to: 'in-trending', kind: 'https', mechanism: 'HTTPS in the eight source modules, then one GraphQL query for the audience of the day before', checked: 'declared', ref: 'pipelines/trending' },
 
   // practices → their own mirrors, through the gates
   { from: 'repo-field', to: 'gate-field', kind: 'repository_dispatch', mechanism: 'repository_dispatch `field-landed`, sent by the practice when a session lands', checked: 'derived', ref: '.github/workflows/field-integrate.yml' },
@@ -612,6 +644,7 @@ export const EDGES: readonly ApparatusEdge[] = [
   { from: 'in-protokoll', to: 'st-protokoll', kind: 'commit', mechanism: 'commits one dated protocol per night', checked: 'derived', ref: '.github/workflows/protokoll.yml' },
   { from: 'in-protokoll', to: 'st-instruments', kind: 'commit', mechanism: 'commits the policy, the parallax register and the overflight snapshot', checked: 'derived', ref: '.github/workflows/praemie.yml' },
   { from: 'in-gegenmessung', to: 'st-instruments', kind: 'commit', mechanism: 'each instrument commits its own dated findings', checked: 'derived', ref: '.github/workflows/gegenmessung.yml' },
+  { from: 'in-trending', to: 'st-instruments', kind: 'commit', mechanism: 'commits one day file every morning and the audience file of the day before, never rewriting either', checked: 'derived', ref: '.github/workflows/trending.yml' },
   { from: 'in-scouts', to: 'st-catalogues', kind: 'commit', mechanism: 'commits the atlas nightly, capped at thirty new entries a run', checked: 'derived', ref: '.github/workflows/atlas-scout.yml' },
   { from: 'in-pulse', to: 'st-instruments', kind: 'commit', mechanism: 'commits the commit pulse of five repositories', checked: 'derived', ref: '.github/workflows/pulse-refresh.yml' },
   { from: 'in-saat', to: 'st-inlets', kind: 'commit', mechanism: 'commits each practice’s public answer to an offered seed', checked: 'derived', ref: '.github/workflows/requests-watchdog.yml' },
@@ -703,6 +736,7 @@ const DOMAIN: Record<string, Domain> = {
   // the counter-measurement line and the protocol — this site's own experiments
   'in-protokoll': 'lab',
   'in-gegenmessung': 'lab',
+  'in-trending': 'lab',
   'st-protokoll': 'lab',
   'st-instruments': 'lab',
   // read by whoever needs them; belonging to no undertaking
@@ -711,6 +745,7 @@ const DOMAIN: Record<string, Domain> = {
   'src-economy': 'shared',
   'src-scholarly': 'shared',
   'src-model': 'shared',
+  'src-web': 'shared',
   // infrastructure that would still be needed if either undertaking stopped
   'in-scouts': 'shared',
   'in-pulse': 'shared',
