@@ -16,6 +16,15 @@
 //     Since 2026-09-01 the words pass through bulletinBlocks(): the bold, code and headings
 //     a practice wrote are ITS OWN marks — showing the asterisks instead of the emphasis
 //     they encode dropped information, which is the opposite of fidelity.
+//
+// Re-skin 2b (2026-09-02): the same four moves on the frame's recipe. Headings on the type
+// scale, kickers on the `.kicker` class, panels on the frame's radius and resting depth, every
+// link inside a panel cut from the shadcn Button recipe (one hover surface, one focus ring, the
+// top bar's), a card where an entry is a card (the artifact trail, the closing reports, the
+// presentations — these `.lift` on hover because each one leads somewhere), and the bulletin
+// fold wearing the frame's turning chevron. The bulletins themselves stay still: they are read
+// in place, not opened. Nothing here decides a colour; the primitives take theirs from the
+// token bridge in global.css.
 import { getRelativeLocaleUrl } from 'astro:i18n'
 import type { Locale } from '@/lib/site'
 import { ECOLOGY_V3 } from '@/config/ecology-v3-wording'
@@ -36,6 +45,10 @@ import {
   PRACTICES,
   PRACTICE_REPO,
 } from '@/lib/ecology/v3'
+import { buttonVariants } from '@/components/ui/button'
+import { Badge } from '@/components/ui/badge'
+import { Card, CardContent } from '@/components/ui/card'
+import { cn } from '@/lib/ui/cn'
 
 const locale = (Astro.currentLocale ?? 'en') as Locale
 const url = (href: string) => (href.startsWith('http') ? href : getRelativeLocaleUrl(locale, href))
@@ -67,7 +80,16 @@ const model = buildCycleModel({
   presentations,
 })
 
-const kicker = 'font-mono text-xs uppercase tracking-[0.22em] text-fg-muted'
+/* the frame's recipe, named once so every block below is cut from the same cloth */
+const kicker = 'kicker'
+const panel = 'rounded-md border border-line bg-panel panel-raised'
+const quiet = cn(
+  buttonVariants({ variant: 'ghost', size: 'sm' }),
+  'h-7 px-2 font-mono text-mono-sm font-normal text-fg-muted hover:text-fg',
+)
+const empty = 'mt-4 rounded-md border border-dashed border-line p-4 text-sm leading-relaxed text-fg-faint'
+/* a card that leads somewhere: the frame's resting depth, and the lift on hover or focus */
+const card = 'lift h-full rounded-md gap-1 py-3.5 shadow-none panel-raised'
 
 /* the same block classes the practice stations use — one bulletin, one look, everywhere */
 const blockClass: Record<string, string> = {
@@ -81,9 +103,9 @@ const blockClass: Record<string, string> = {
   {/* ── Head ─────────────────────────────────────────────────────────────── */}
   <header>
     <p class={kicker}>{W.head.kicker}</p>
-    <h1 class="mt-3 text-3xl font-semibold tracking-tight text-fg sm:text-4xl">{W.head.title}</h1>
+    <h1 class="mt-3 text-h1 font-semibold text-fg">{W.head.title}</h1>
     <p class="mt-4 max-w-3xl leading-relaxed text-fg-muted">{W.head.intro}</p>
-    <p class="mt-3 font-mono text-xs text-fg-faint">
+    <p class="mt-3 font-mono text-mono text-fg-faint">
       {W.head.orderLine}
       {' '}<a class="underline decoration-line underline-offset-4 hover:text-fg" href={W.head.decisionHref}>{W.head.decisionLabel}</a>
       {' '}· <a class="underline decoration-line underline-offset-4 hover:text-fg" href={url(W.head.seedHref)}>{W.head.seedLabel}</a>
@@ -91,11 +113,13 @@ const blockClass: Record<string, string> = {
   </header>
 
   {/* ── The cycle ────────────────────────────────────────────────────────── */}
-  <section class="mt-12 rounded-sm border border-line bg-panel p-5 sm:p-6" aria-label="Current cycle">
-    <div class="flex flex-wrap items-baseline gap-x-4 gap-y-1">
+  <section class={cn(panel, 'mt-12 p-5 sm:p-6')} aria-label="Current cycle">
+    <div class="flex flex-wrap items-center gap-x-3 gap-y-1.5">
       <h2 class="font-mono text-sm uppercase tracking-[0.18em] text-fg">{W.cycle.label(cycle.cycle)}</h2>
-      <span class="font-mono text-xs uppercase tracking-[0.18em] text-accent">{phase.badge}</span>
-      <span class="font-mono text-xs text-fg-faint">{W.cycle.openedLine(cycle.opened)}</span>
+      <Badge variant="outline" className="border-line font-mono text-[10px] font-normal uppercase tracking-[0.18em] text-accent">
+        {phase.badge}
+      </Badge>
+      <span class="font-mono text-mono text-fg-faint">{W.cycle.openedLine(cycle.opened)}</span>
     </div>
     <p class="mt-3 max-w-3xl leading-relaxed text-fg-muted">{phase.copy}</p>
     {
@@ -112,7 +136,7 @@ const blockClass: Record<string, string> = {
               <ul class="mt-2 space-y-1.5">
                 {PRACTICES.map((id) => (
                   <li class="leading-relaxed text-fg-muted">
-                    <span class="font-mono text-xs uppercase tracking-[0.14em] text-fg">{W.practices[id].name}</span>
+                    <span class="font-mono text-mono uppercase tracking-[0.14em] text-fg">{W.practices[id].name}</span>
                     <span class="text-fg-faint"> — </span>
                     {cycle.defaults[id]}
                   </li>
@@ -120,7 +144,7 @@ const blockClass: Record<string, string> = {
               </ul>
             </>
           )}
-          <p class="mt-3 font-mono text-xs text-fg-faint">{W.cycle.rhythm(cycle.sessionsPerPractice)}</p>
+          <p class="mt-3 font-mono text-mono text-fg-faint">{W.cycle.rhythm(cycle.sessionsPerPractice)}</p>
         </div>
       )
     }
@@ -143,18 +167,18 @@ const blockClass: Record<string, string> = {
     <div class="space-y-5">
       {
         bulletins.map((p) => (
-          <div class="flex flex-col rounded-sm border border-line bg-panel">
-            <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 border-b border-line p-4">
-              <h3 class="text-lg font-semibold text-fg">
+          <div class={cn(panel, 'flex flex-col')}>
+            <div class="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 border-b border-line py-3 pl-4 pr-2 sm:pl-5">
+              <h3 class="text-h3 font-semibold text-fg">
                 <a class="hover:underline" href={url(p.href)}>{p.name}</a>
-                <span class="ml-2 font-mono text-xs font-normal text-fg-faint">{p.persona} · {p.corner}</span>
+                <span class="ml-2 font-mono text-mono-sm font-normal text-fg-faint">{p.persona} · {p.corner}</span>
               </h3>
               <a
-                class="font-mono text-xs text-fg-faint underline decoration-line underline-offset-4 hover:text-fg"
+                class={cn(quiet, 'text-fg-faint')}
                 href={`https://github.com/frankbueltge/${PRACTICE_REPO[p.id]}/blob/main/BULLETIN.md`}
               >{W.bulletin.sourceLabel}</a>
             </div>
-            <div class="p-4">
+            <div class="p-4 sm:p-5">
               {
                 p.bulletin.present ? (
                   ((blocks) => {
@@ -175,7 +199,7 @@ const blockClass: Record<string, string> = {
                               s.kind === 'strong' ? (
                                 <strong class="font-semibold text-fg">{s.text}</strong>
                               ) : s.kind === 'code' ? (
-                                <code class="rounded bg-panel-2 px-1 font-mono text-[0.9em]">{s.text}</code>
+                                <code class="rounded-xs bg-panel-2 px-1 font-mono text-[0.9em]">{s.text}</code>
                               ) : (
                                 <>{s.text}</>
                               ),
@@ -185,9 +209,10 @@ const blockClass: Record<string, string> = {
                       </div>
                       {rest.length > 0 && (
                         <details class="eco-bulletin-fold group mt-3">
-                          <summary class="cursor-pointer list-none font-mono text-xs text-fg-muted underline decoration-line underline-offset-4 hover:text-fg">
+                          <summary class={cn(quiet, 'fold-summary -ml-2 cursor-pointer list-none gap-1.5')}>
                             <span class="group-open:hidden">{W.bulletin.expand(p.bulletin.lines)}</span>
                             <span class="hidden group-open:inline">{W.bulletin.collapse}</span>
+                            <svg class="fold-chevron size-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6" /></svg>
                           </summary>
                           <div class="mt-3 space-y-2.5 border-t border-line pt-3">
                             {rest.map((b) => (
@@ -196,7 +221,7 @@ const blockClass: Record<string, string> = {
                                   s.kind === 'strong' ? (
                                     <strong class="font-semibold text-fg">{s.text}</strong>
                                   ) : s.kind === 'code' ? (
-                                    <code class="rounded bg-panel-2 px-1 font-mono text-[0.9em]">{s.text}</code>
+                                    <code class="rounded-xs bg-panel-2 px-1 font-mono text-[0.9em]">{s.text}</code>
                                   ) : (
                                     <>{s.text}</>
                                   ),
@@ -204,7 +229,7 @@ const blockClass: Record<string, string> = {
                               </p>
                             ))}
                             {p.bulletin.truncated && (
-                              <p class="font-mono text-xs text-fg-faint">
+                              <p class="font-mono text-mono text-fg-faint">
                                 {W.bulletin.truncatedNote(p.bulletin.lines, BULLETIN_DISPLAY_MAX)}
                               </p>
                             )}
@@ -231,19 +256,21 @@ const blockClass: Record<string, string> = {
     <p class="mt-2 max-w-3xl text-sm leading-relaxed text-fg-muted">{W.artifacts.intro}</p>
     {
       cycleArtifacts.length === 0 ? (
-        <p class="mt-4 rounded-sm border border-dashed border-line p-4 text-sm leading-relaxed text-fg-faint">
-          {W.artifacts.empty}
-        </p>
+        <p class={empty}>{W.artifacts.empty}</p>
       ) : (
         <ul class="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {cycleArtifacts.map((a) => (
-            <li class="rounded-sm border border-line bg-panel p-4">
-              <p class="font-mono text-xs uppercase tracking-[0.14em] text-fg-faint">
-                {W.practices[a.practice].name}{a.date && <> · {a.date}</>}
-              </p>
-              <a class="mt-1 block text-fg hover:underline" href={url(a.href)}>
-                {W.artifacts.entryLabel(a.slug, a.title)}
-              </a>
+            <li>
+              <Card className={card}>
+                <CardContent>
+                  <p class="font-mono text-mono-sm uppercase tracking-[0.14em] text-fg-faint">
+                    {W.practices[a.practice].name}{a.date && <> · {a.date}</>}
+                  </p>
+                  <a class="mt-1 block text-fg hover:underline" href={url(a.href)}>
+                    {W.artifacts.entryLabel(a.slug, a.title)}
+                  </a>
+                </CardContent>
+              </Card>
             </li>
           ))}
         </ul>
@@ -261,12 +288,16 @@ const blockClass: Record<string, string> = {
           const report = closing.find((c) => c.practice === id)
           const name = W.practices[id].name
           return (
-            <li class="rounded-sm border border-line bg-panel p-4">
-              {report ? (
-                <a class="text-fg hover:underline" href={url(report.href)}>{W.closing.linkLabel(name)}</a>
-              ) : (
-                <span class="text-sm text-fg-faint">{W.closing.missing(name)}</span>
-              )}
+            <li>
+              <Card className={report ? card : 'h-full gap-1 py-3.5 shadow-none panel-raised'}>
+                <CardContent>
+                  {report ? (
+                    <a class="text-fg hover:underline" href={url(report.href)}>{W.closing.linkLabel(name)}</a>
+                  ) : (
+                    <span class="text-sm text-fg-faint">{W.closing.missing(name)}</span>
+                  )}
+                </CardContent>
+              </Card>
             </li>
           )
         })
@@ -280,17 +311,19 @@ const blockClass: Record<string, string> = {
     <p class="mt-2 max-w-3xl text-sm leading-relaxed text-fg-muted">{W.presentations.intro}</p>
     {
       presentations.length === 0 ? (
-        <p class="mt-4 rounded-sm border border-dashed border-line p-4 text-sm leading-relaxed text-fg-faint">
-          {W.presentations.empty}
-        </p>
+        <p class={empty}>{W.presentations.empty}</p>
       ) : (
         <ul class="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {presentations.map((e) => (
-            <li class="rounded-sm border border-line bg-panel p-4">
-              <a class="text-fg hover:underline" href={e.href.startsWith('http') ? e.href : url(e.href)}>
-                {W.presentations.entryLabel(e.cycle, W.practices[e.practice].name)}
-              </a>
-              <p class="mt-1 font-mono text-xs text-fg-faint">{W.presentations.fileCount(e.files)}</p>
+            <li>
+              <Card className={card}>
+                <CardContent>
+                  <a class="text-fg hover:underline" href={e.href.startsWith('http') ? e.href : url(e.href)}>
+                    {W.presentations.entryLabel(e.cycle, W.practices[e.practice].name)}
+                  </a>
+                  <p class="mt-1 font-mono text-mono text-fg-faint">{W.presentations.fileCount(e.files)}</p>
+                </CardContent>
+              </Card>
             </li>
           ))}
         </ul>
@@ -301,12 +334,21 @@ const blockClass: Record<string, string> = {
   {/* ── Lineage + doors ──────────────────────────────────────────────────── */}
   <footer class="mt-14 border-t border-line pt-6">
     <p class="max-w-3xl text-sm leading-relaxed text-fg-faint">{W.foot.lineage}</p>
-    <nav class="mt-4 flex flex-wrap gap-x-5 gap-y-2" aria-label="Ecology doors">
+    <nav class="mt-4 -ml-2 flex flex-wrap gap-x-1 gap-y-1" aria-label="Ecology doors">
       {
         W.foot.links.map((l) => (
-          <a class="font-mono text-xs text-fg-muted underline decoration-line underline-offset-4 hover:text-fg" href={url(l.href)}>{l.label}</a>
+          <a class={quiet} href={url(l.href)}>{l.label}</a>
         ))
       }
     </nav>
   </footer>
 </article>
+
+<style>
+  /* The fold's summary is a ghost button; the disclosure triangle the browser would add beside
+     it is the one mark the recipe does not want. `list-none` covers Chrome and Firefox, this
+     covers Safari. */
+  .fold-summary::-webkit-details-marker {
+    display: none;
+  }
+</style>

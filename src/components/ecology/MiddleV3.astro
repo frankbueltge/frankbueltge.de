@@ -5,6 +5,11 @@
 // src/lib/ecology/middle.ts, derived from mirrored files); no client fetching; absence is
 // drawn; and the one rule this page inherits from the Middle Scribe's own prompt — quote,
 // never summarise, because summarising would be speaking for a practice.
+//
+// Re-skin 2b (2026-09-02): the same words on the frame's recipe — the type scale for the head,
+// the `.kicker` class, panels on the frame's radius and resting depth, links inside the panels
+// cut from the shadcn Button recipe so they share one hover surface and one focus ring with the
+// top bar. The voice panels hold text a reader reads in place, so they stay still (no `.lift`).
 import { getRelativeLocaleUrl } from 'astro:i18n'
 import type { Locale } from '@/lib/site'
 import '@/styles/hub-triptych.css'
@@ -13,6 +18,8 @@ import { ECOLOGY_V3 } from '@/config/ecology-v3-wording'
 import { loadMiddle, middleCounts, segments, PRACTICE_REPO } from '@/lib/ecology/middle-page'
 import { itemAnchor, itemNumbers } from '@/lib/ecology/middle-score'
 import MiddleScoreFigure from '@/components/ecology/MiddleScoreFigure.astro'
+import { buttonVariants } from '@/components/ui/button'
+import { cn } from '@/lib/ui/cn'
 
 const locale = (Astro.currentLocale ?? 'en') as Locale
 const url = (href: string) => (href.startsWith('http') ? href : getRelativeLocaleUrl(locale, href))
@@ -24,16 +31,23 @@ const counts = middleCounts(voices)
 // The badge numbers the partitur draws are the list's numbers — one count, derived once.
 const numbers = itemNumbers(voices)
 const name = (id: 'field' | 'atelier' | 'studio') => ECOLOGY_V3.practices[id].name
-const kicker = 'font-mono text-xs uppercase tracking-[0.22em] text-fg-muted'
+
+/* the frame's recipe, named once */
+const kicker = 'kicker'
+const panel = 'rounded-md border border-line bg-panel panel-raised'
+const quiet = cn(
+  buttonVariants({ variant: 'ghost', size: 'sm' }),
+  'h-7 px-2 font-mono text-mono-sm font-normal text-fg-muted hover:text-fg',
+)
 ---
 
 <article class="hub-voices mx-auto max-w-5xl px-4 pb-20 pt-10 sm:px-6">
   <header>
     <p class={kicker}>{W.head.kicker}</p>
-    <h1 class="mt-3 text-3xl font-semibold tracking-tight text-fg sm:text-4xl">{W.head.title}</h1>
+    <h1 class="mt-3 text-h1 font-semibold text-fg">{W.head.title}</h1>
     <p class="mt-4 max-w-3xl leading-relaxed text-fg-muted">{W.head.intro}</p>
     <p class="mt-3 max-w-3xl border-l border-line pl-4 text-sm leading-relaxed text-fg-faint">{W.head.rule}</p>
-    <p class="mt-4 font-mono text-xs text-fg-faint">
+    <p class="mt-4 font-mono text-mono text-fg-faint">
       {W.counts.line(counts.directed, counts.open, counts.speaking)}
     </p>
   </header>
@@ -47,26 +61,26 @@ const kicker = 'font-mono text-xs uppercase tracking-[0.22em] text-fg-muted'
   <section class="mt-12 space-y-6" aria-label="What passes between the practices">
     {
       voices.map((v) => (
-        <div class="rounded-sm border border-line bg-panel">
-          <div class="flex flex-wrap items-baseline justify-between gap-2 border-b border-line p-4">
-            <h2 class="text-lg font-semibold text-fg">
+        <div class={panel}>
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-line py-3 pl-4 pr-2 sm:pl-5">
+            <h2 class="text-h3 font-semibold text-fg">
               <a class="hover:underline" href={url(ECOLOGY_V3.practices[v.practice].href)}>{name(v.practice)}</a>
-              <span class="ml-2 font-mono text-xs font-normal text-fg-faint">wrote down for its siblings</span>
+              <span class="ml-2 font-mono text-mono-sm font-normal text-fg-faint">wrote down for its siblings</span>
             </h2>
             <a
-              class="font-mono text-xs text-fg-faint underline decoration-line underline-offset-4 hover:text-fg"
+              class={cn(quiet, 'text-fg-faint')}
               href={`https://github.com/frankbueltge/${PRACTICE_REPO[v.practice]}/blob/main/BULLETIN.md`}
             >{W.voice.sourceLabel}</a>
           </div>
-          <div class="p-4">
+          <div class="p-4 sm:p-5">
             {
               !v.present || v.items.length === 0 ? (
                 <p class="text-sm leading-relaxed text-fg-faint">{W.voice.absent}</p>
               ) : (
                 <ul class="space-y-4">
                   {v.items.map((item, i) => (
-                    <li id={itemAnchor(v.practice, i)} class="scroll-mt-24 target:rounded-sm target:bg-panel-2">
-                      <p class="font-mono text-xs uppercase tracking-[0.16em] text-accent">
+                    <li id={itemAnchor(v.practice, i)} class="scroll-mt-24 rounded-sm target:bg-panel-2">
+                      <p class="font-mono text-mono-sm uppercase tracking-[0.16em] text-accent">
                         <span class="text-fg-faint">{numbers.get(itemAnchor(v.practice, i))} · </span>
                         {item.to.length > 0
                           ? W.voice.toLabel(item.to.map((t) => name(t)))
@@ -77,7 +91,7 @@ const kicker = 'font-mono text-xs uppercase tracking-[0.22em] text-fg-muted'
                           s.kind === 'strong' ? (
                             <strong class="font-semibold text-fg">{s.text}</strong>
                           ) : s.kind === 'code' ? (
-                            <code class="rounded bg-panel-2 px-1 font-mono text-[0.9em]">{s.text}</code>
+                            <code class="rounded-xs bg-panel-2 px-1 font-mono text-[0.9em]">{s.text}</code>
                           ) : (
                             <>{s.text}</>
                           ),
@@ -98,16 +112,16 @@ const kicker = 'font-mono text-xs uppercase tracking-[0.22em] text-fg-muted'
   <section class="mt-14 border-t border-line pt-6" aria-label="The former ledger of encounters">
     <p class={kicker}>{W.archive.kicker}</p>
     <p class="mt-2 max-w-3xl text-sm leading-relaxed text-fg-faint">{W.archive.body}</p>
-    <p class="mt-3 flex flex-wrap gap-x-5 gap-y-2">
-      <a class="font-mono text-xs text-fg-muted underline decoration-line underline-offset-4 hover:text-fg" href={url(W.archive.linkHref)}>{W.archive.linkLabel}</a>
-      <a class="font-mono text-xs text-fg-faint underline decoration-line underline-offset-4 hover:text-fg" href={W.archive.repoLinkHref}>{W.archive.repoLinkLabel}</a>
+    <p class="mt-3 -ml-2 flex flex-wrap gap-x-1 gap-y-1">
+      <a class={quiet} href={url(W.archive.linkHref)}>{W.archive.linkLabel}</a>
+      <a class={cn(quiet, 'text-fg-faint')} href={W.archive.repoLinkHref}>{W.archive.repoLinkLabel}</a>
     </p>
   </section>
 
-  <footer class="mt-10 flex flex-wrap gap-x-5 gap-y-2">
+  <footer class="mt-10 -ml-2 flex flex-wrap gap-x-1 gap-y-1">
     {
       W.foot.links.map((l) => (
-        <a class="font-mono text-xs text-fg-muted underline decoration-line underline-offset-4 hover:text-fg" href={url(l.href)}>{l.label}</a>
+        <a class={quiet} href={url(l.href)}>{l.label}</a>
       ))
     }
   </footer>
