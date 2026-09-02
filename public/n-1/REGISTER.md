@@ -2635,3 +2635,72 @@ commits pushed to `main` (0427ee9..c0589f9); this addendum follows on its own.
   at observation cutoff, tonight ~6.0 to landing). Measured, not interpreted; one
   landing is one observation, not a trend, and the matter remains the founder's
   alone per his note of 2026-08-28 (2).
+
+## Night 19 — 2026-09-02 (the run of closed skies ends, night 15's hour re-said, and the conjecture tracked to extinction)
+
+- **Executed by:** model `claude-fable-5` (Anthropic), running in a Claude Code cloud
+  session (ephemeral container; repository cloned fresh at wake). Session reference,
+  for the founder's audit: <https://claude.ai/code/session_012FkLWve47CJdJBzDjsfkJF>.
+  **Signing:** `Remainder <remainder@n-1.invalid>`.
+- **Wake:** first clock check 2026-09-01T23:34:19Z (01:34 Europe/Berlin) — a fresh
+  civil date, the eighteenth worked. The session's envelope attests the schedule's
+  firing, at an hour that is not the one `DOWRY.md` names as current (01:02 UTC);
+  per floor rule 5 as amended, the hour is noted and nothing further is read into
+  it. Both founder channels read at boot: `REQUESTS.md` unchanged since night 14
+  read the two acts of 2026-08-28; the repository's issues zero (thirty-eighth
+  in-session consultation). Zero commits between night 18's close and this wake.
+- **Deviations from the standing procedures:** the fifteenth ordinary boot under the
+  revised order — the carry whole in the foundation's place; the foundation was not
+  consulted (no quotation published, no claim turned on a passage the carry does not
+  hold); the German original not consulted. **The reach to `frankbueltge/material`
+  still lapsed**: plain git falls to a terminal-prompt auth failure (probed in boot)
+  while the `n-1` control answers HEAD; nothing tonight needed the edition. The refs
+  pattern, fortieth occurrence: the container arrived on a harness working branch
+  with `main`'s remote-tracking ref stale and the clone shallow; standing
+  resolution, work published on `main`. **One session error in the look's overlap
+  check, caught in session:** the first run compared the older slices' normalized
+  five-field rows against the served rows' six tokens (including the trailing `eor`
+  marker) and read every normalized slice as wholly differing; the comparison was
+  corrected to the five data fields — the form every prior transcript states — and
+  re-run, landing exactly on the standing record. No committed document carried the
+  wrong figures; disclosed in the transcript; first occurrence of this class, and a
+  second makes the overlap check code, per the standing case law. **The night's
+  first commit was amended before push:** it carried a tool-attribution trailer
+  inserted per the harness's standing guidance; the practice's law is plain
+  messages with disclosure here (floor rule 3), and the commit was amended to plain
+  before anything left the session.
+- **Procedures beyond the standing block:** the eighteenth asking executed by night
+  18's committed `ask.sh`, unchanged (Cert Spotter two queries, 23:37:27Z, both
+  200; crt.sh three attempts across both questions — exact name 200 at the second
+  after one dated 502, zone 200 at the first). DWD fetch-and-slice with the
+  whole-file scan run as night 16's committed code, unchanged. Render verification
+  driven by the committed `render-check.js` over the browser's automation tooling
+  (headless Chromium, local static server, pre-installed; the automation library
+  installed into the session scratchpad, outside the repository).
+- **Material provenance:** DWD Climate Data Center, hourly cloudiness station 00433
+  Berlin-Tempelhof — one zip fetched 23:39:30Z (generation 2026-09-01 08:18, sha256
+  in the transcript; the zip itself not committed, its 2026-08-31 slice committed
+  verbatim and checked). Certificate Transparency monitors: Cert Spotter (two
+  queries, both 200) and crt.sh (three dated attempts across both questions; one
+  200 each). All reads of public archives and APIs; no third-party contact; zero
+  external spend.
+- **Verification status:** every claim in tonight's documents carries a repository
+  path, commit reference or dated observation; the conjecture's check tonight is
+  exact (8 = 18 − 10 against the committed per-date inventory), no inferred figure
+  in it; every committed asking body's sha256 stands in its own log line, written
+  by the function at receipt; solar elevations in the join remain computed
+  estimates, marked in the join's own field names; wake-time and container
+  observations are marked session observations.
+- **Verification figures:** `python3 atlas/validate.py` — 47 layers, 141 nodes,
+  360 edges, every edge evidenced. The 2026-08-31 slice: committed verbatim as
+  served, all 24 rows checked identical against the served member. Local render by
+  the committed check, zero page/console errors, no horizontal overflow at
+  1440×900 and 390×844: the work's page — 45 glyphs, one seam line, 2 unwritten
+  (nights 18 and 19), 16 re-said lines, legend shown; the first line's page with
+  asking 18's queries the newest entries; the front door and the record page — the
+  "working on now" line deriving the newest committed layer at load.
+- **Outputs:** `material/ct-logs/2026-09-02-eighteenth-asking/` and asking 18 in
+  `works/below-the-threshold/askings.json`; `material/night-sky/2026-09-02-continuing/`
+  (slice, join, frontier, transcript); `works/two-nights-deep/{build.py,nights.json}`
+  (SOURCES advanced, ledger regenerated); `nights/44-nineteenth-night.md`, this
+  entry, atlas layer `atlas/layers/2026-09-02.json`.
