@@ -11,6 +11,11 @@
       "prefix": "CyclePartitur.",
       "maxGzipKB": 30,
       "what": "the /ecology cycle partitur (Phase 1): the model-driven score with d3-zoom (submodules d3-zoom/d3-selection/d3-transition), the shadcn card and badge, and the shared readout. Mounted client:visible, so nothing of it loads on a page without the figure."
+    },
+    {
+      "prefix": "GraphExplorer.",
+      "maxGzipKB": 60,
+      "what": "the knowledge-graph explorer on /experiments/neighbors (Phase 3a): d3-force relaxing the model's radial layout, d3-zoom, the filters, a plain combobox search (no cmdk — its radix dialog dependency would have cost a third of this budget for a search box), the node card with receipts. Mounted client:visible; the receipts are fetched from /graph/view.json only when a card opens."
     }
   ]
 }

@@ -10,6 +10,9 @@
 // section below: the neighbours of the FIGURE were searched before it was built.
 import Page from '@/layouts/Page.astro'
 import NeighborhoodFigure from '@/components/holdings/NeighborhoodFigure.astro'
+// The whole graph the field is cut from, explorable (visual layer, Phase 3a, 2026-09-02):
+// every record the house keeps about itself, with the receipts on every edge.
+import GraphExplorerFigure from '@/components/holdings/GraphExplorerFigure.astro'
 import { GRAPH } from '@/lib/graph/load'
 import { neighborhoodField } from '@/lib/graph/query'
 
@@ -48,6 +51,13 @@ const counted = {
     <div class="mt-12">
       <NeighborhoodFigure />
     </div>
+
+    {/* The field above is one slice of the house's knowledge graph — the audited experiments and
+        their prior art. The graph itself, all of it, follows: same committed file, every node and
+        edge with the receipt it was read from, explorable. */}
+    <section class="mt-16" aria-label="The knowledge graph of the house, explorable">
+      <GraphExplorerFigure />
+    </section>
 
     <section class="mt-16 border-t border-line/60 pt-8">
       <h2 class="text-lg font-semibold">Where this figure stands</h2>
