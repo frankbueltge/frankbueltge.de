@@ -98,7 +98,8 @@ database, no wrangler configuration (`docs/design/2026-08-03-two-deployers-one-p
 
 A term tracker with a discovery pass, beside the day ledger. Layer 1 answers "what converged
 today"; layer 2 answers "which words are building, and how fast". A watchlist of terms
-(`pipelines/trending/src/trending/data/watchlist.json`) is searched once a night on each
+(`src/data/trending/watchlist.json` since the amendment of 2026-09-02 below; it lived in the
+pipeline package on the first day) is searched once a night on each
 platform's own search API; every term gets a mention count per platform over three windows, a
 status, a first-seen date and up to a dozen receipts — the titles, links and dates the counts
 were made from. The run also reads a thirty-day corpus of titles, extracts bigrams and
@@ -125,7 +126,9 @@ day, never rewritten. Envelope: `date`, `generated_at`, `pipeline_version`, `met
 `wikipedia_article`, `counts` per platform per window with a `capped` flag where a feed truncates,
 `total` per window (Wikipedia pageviews excluded from it, being a different unit), `ratio`,
 `status`, `first_seen` and `receipts` (at most twelve, newest first, deduped by URL). Then
-`candidates[]` and a `summary`. Platforms, in fixed order: Hacker News (Algolia search), Google
+`candidates[]`, `promoted[]` and `let_go[]` (both added by the amendment of 2026-09-02, both
+optional with an empty list as the default, so every file committed before that day still parses),
+and a `summary`. Platforms, in fixed order: Hacker News (Algolia search), Google
 News (RSS search), GitHub (repository search), arXiv (API), Reddit (search RSS), Wikipedia
 pageviews. All keyless except GitHub, which uses the workflow's own token when present and
 throttles when not. A platform that fails becomes a note with `unavailable`, never a crash and
@@ -143,7 +146,11 @@ The prior pace is the thirty-day total minus the seven-day total, spread over th
 days between them and scaled to seven. No model, no smoothing, no hand-tuning per term: the
 same arithmetic for every word, and the numbers it ran on are in the file beside the verdict.
 
-### Discovery rule
+### Discovery rule (corpus superseded 2026-09-02 — see the governance amendment below)
+
+The n-gram arithmetic below still stands. The CORPUS does not: discovery reads the house's own
+committed day files as of 2026-09-02, with the four platforms named here kept beside them for
+depth. Why, and what it reads instead, is in the amendment.
 
 The corpus is titles only (plus a short GitHub description), thirty days, four platforms: Hacker
 News front-page stories, dev.to top articles, arXiv in four computer-science categories, and the
@@ -155,17 +162,81 @@ too rare, single-platform, blocklisted as generic (`ngram_blocklist.json`), a su
 already watched, or built from very short tokens. Top thirty are published. Nothing is invented:
 a candidate always carries the platforms it appeared on and one sample document.
 
-### Watchlist governance — humans add, the machine proposes
+### Watchlist governance — humans add, the machine proposes (SUPERSEDED 2026-09-02, see the amendment below)
 
-The machine may only ever *propose*. Promotion from candidate to tracked term is an edit to
-`watchlist.json` by a person, and the file records who decided what and when: `added` (the date),
-`origin` (`editorial` for a human seed, `discovered` for a promoted candidate), and `note` (the
-occasion in one line). A term is never added by a threshold, a score or a pipeline run, and no
-run removes one. This is the same rule the Atlas-Scout works under — a nightly reader may grow a
-catalogue's *candidates*, never its canon — and it is why the candidate list is published rather
-than silently consumed: a reader can see what was offered and declined. Retiring a term is also a
-human edit; the committed day files that mention it stay exactly as they were, because a
-committed dated file is never rewritten.
+> The machine may only ever *propose*. Promotion from candidate to tracked term is an edit to
+> `watchlist.json` by a person, and the file records who decided what and when: `added` (the date),
+> `origin` (`editorial` for a human seed, `discovered` for a promoted candidate), and `note` (the
+> occasion in one line). A term is never added by a threshold, a score or a pipeline run, and no
+> run removes one. This is the same rule the Atlas-Scout works under — a nightly reader may grow a
+> catalogue's *candidates*, never its canon — and it is why the candidate list is published rather
+> than silently consumed: a reader can see what was offered and declined. Retiring a term is also a
+> human edit; the committed day files that mention it stay exactly as they were, because a
+> committed dated file is never rewritten.
+
+The paragraph above is the rule this layer was built with on 2026-09-02. It stood for one day and
+is kept here unedited, because nothing in this house is silently rewritten. What replaces it:
+
+### Watchlist governance, amended 2026-09-02 — the machine adds, the machine lets go of what it added, a person overrides both (Frank's decision, wording private)
+
+**The reversal.** The default is turned around: a candidate is now promoted onto the watchlist by
+the run itself, and a person *prunes*. Five conditions, all committed in
+`pipelines/trending/src/trending/data/rules.json` and printed on the method sheet, and all five
+must hold: the n-gram was proposed on `promote_days` consecutive days (default three, including
+today); on at least two platforms each time; it was never retired before; the run has not already
+promoted three terms in this one pass; and the watchlist stays under its ceiling of thirty-five
+tracked terms, because every tracked term costs requests in the nightly. The run writes what it
+promoted into the day file as `promoted[]` — the term, the consecutive days, the platforms, the
+pace and a one-line note — and a promoted term is searched from the *next* run on, so the file
+that promotes it carries the evidence and no counts. The hub says that in those words rather than
+showing a row of zeros nobody measured.
+
+**The other direction, symmetrical.** The run also lets go of what it added: a term with `origin:
+"discovered"` that has been quiet or fading on every run for `retire_quiet_days` (default
+twenty-one) is struck automatically, and the striking appears in the day file as `let_go[]` with
+the days it stood still and the reason. A term a person put on the list (`origin: "editorial"`) is
+never struck this way. A person overrides both directions — striking a term the run promoted, or
+seeding one the run would never have found.
+
+**Tombstones.** A struck term keeps its line in `src/data/trending/watchlist.json` and gains
+`retired` (the day) and, where there is one, `retired_note` (the reason). The tombstone is not
+bookkeeping: it is the mechanism. Because the line stays, the discovery pass can never re-promote
+a term that was struck, whoever struck it, and the pruning cannot be undone by tomorrow's
+threshold. Deleting the line would undo the striking rather than record it. The committed day
+files that mention a struck term stay exactly as they were, because a committed dated file is
+never rewritten.
+
+**The live watchlist as a committed file.** `src/data/trending/watchlist.json` holds the list the
+nightly reads: `{ term, slug, aliases[], added, origin, note, wikipedia_article|null }` per entry,
+plus `retired` and `retired_note` on a struck one. It is the one file of this contract that is
+rewritten rather than dated — the dated record of every change is in the day files (`promoted[]`,
+`let_go[]`) and in the `origin`/`added`/`note` of every term of every run.
+
+**Why.** Two reasons, both failures of the first design rather than second thoughts about it.
+(1) *The surface was watching a fixed list, not finding trends.* With promotion behind a hand
+edit, `/trending/topics` published exactly the twenty phrases someone had thought of, refreshed
+daily — an editorial watchlist with a counter attached. The candidate list underneath it made the
+gap visible: the machine kept noticing words that then waited for an editor who had no reason to
+act on them. A surface called "trends in the making" that can only ever contain what an editor
+already had in mind is answering a different question than the one it advertises. (2) *The
+discovery corpus was too narrow to see anything outside technology.* It read four live tech
+platforms — a link aggregator's front page, a developer blog, machine-learning preprints, new
+repositories — so every candidate it could ever propose was a technology phrase, and the layer
+could not have found an arc in culture, politics, sport, apps or markets even in principle.
+Discovery now reads the house's own committed day files instead, which since 2026-09-02 carry
+twenty sources (search interest in ten countries, news, forums, encyclopaedia reading in six
+languages, app and game charts, model releases, prediction markets), with the four live archives
+kept beside them for depth while the archive is young. Reading our own archive also means the
+discovery evidence is checkable after the fact: the day file that proposed a term is committed,
+so anyone can recount the three days that promoted it.
+
+**What the reversal costs, and why that is acceptable.** A rule that promotes by itself will put
+words on the list no editor would have chosen; the ceiling, the three-a-run cap and the
+tombstones are what keep that from becoming noise, and the pruning is a published act with a
+date and a reason rather than a silent deletion. The Atlas-Scout comparison in the superseded
+paragraph does not carry over: a catalogue's canon is a claim about works, while this watchlist is
+a claim about nothing except which phrases are being counted — a term on it is not an
+endorsement, and its own numbers are what decide whether it stays.
 
 ### Why this is the SEO/GEO layer
 

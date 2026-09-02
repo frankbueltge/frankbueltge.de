@@ -10,11 +10,15 @@ import { compact, fmtDateLong, platformLabel } from './format'
 import {
   TERM_STATUSES,
   VIEWS_PLATFORM,
+  type LetGoTerm,
+  type PromotedTerm,
   type TermCandidate,
+  type TermOrigin,
   type TermSeriesPoint,
   type TermStatus,
   type TrendingTerm,
   type TrendingTermsDay,
+  type WatchlistEntry,
 } from './terms-types'
 
 const NUM = new Intl.NumberFormat('en-GB')
@@ -65,6 +69,33 @@ export function statusSentence(term: TrendingTerm): string {
     case 'quiet':
       return 'Quiet: fewer than the threshold of mentions in the last seven days.'
   }
+}
+
+/** Who put a term on the list — the table column's version. Since the decision of 2026-09-02
+ *  this is a real distinction on the page and not bookkeeping: the run promotes and lets go of
+ *  what it promoted, a person overrides either way, so a reader is owed the answer for every
+ *  term. */
+const ORIGIN_LABEL: Record<TermOrigin, string> = {
+  editorial: 'By hand',
+  discovered: 'By the run',
+}
+
+export function originLabel(origin: TermOrigin): string {
+  return ORIGIN_LABEL[origin]
+}
+
+/** The same fact inside a running line ("Rising · 33 · 1.6× · by the run"). */
+export function originMark(origin: TermOrigin): string {
+  return origin === 'editorial' ? 'by hand' : 'by the run'
+}
+
+/** One sentence: when the term joined the list, who put it there, and the reason recorded
+ *  with it. The note is the file's own words — only a full stop it already ends on is dropped,
+ *  so the sentence does not close twice. */
+export function originSentence(term: TrendingTerm): string {
+  const how = term.origin === 'editorial' ? 'put there by hand' : 'promoted by the run itself'
+  const note = term.note.trim().replace(/\.+$/, '')
+  return `On the list since ${fmtDateLong(term.added)}, ${how}${note ? ` — ${note}` : ''}.`
 }
 
 /** Platform labels for the arcs. The day ledger's map (./format.ts) covers most of them; the
@@ -143,13 +174,19 @@ export interface HubRow extends Record<string, string | number> {
   status: string
   d7: string
   d30: string
+  added: string
+  origin: string
   first_seen: string
   platforms: string
 }
 
 /** The hub table: every watched term, sorted for reading. The rows carry no link — the
  *  shared table primitive takes cells, not markup — so the page lists the terms as links
- *  above the table and the table stays the plain-text floor beneath it. */
+ *  above the table and the table stays the plain-text floor beneath it.
+ *
+ *  `added` and `origin` are here because the plain-text floor has to carry the governance too
+ *  (2026-09-02): who put a term on the list, and when, is not a detail a reader should have to
+ *  read the JSON for. */
 export function hubRows(file: TrendingTermsDay): HubRow[] {
   const order = searchedPlatforms(file)
   return sortTerms(file.terms).map((t) => ({
@@ -157,6 +194,8 @@ export function hubRows(file: TrendingTermsDay): HubRow[] {
     status: statusLabel(t.status),
     d7: compact(t.total.d7),
     d30: compact(t.total.d30),
+    added: t.added,
+    origin: originLabel(t.origin),
     first_seen: firstSeenCell(file, t),
     platforms: countedPlatforms(t, order).map(termPlatformLabel).join(' · ') || '—',
   }))
@@ -170,6 +209,8 @@ export interface TermLink {
   statusLabel: string
   d7: string
   ratio: string | null
+  origin: TermOrigin
+  originMark: string
 }
 
 /** The linked list of terms above the hub table, and the source of the rising block. */
@@ -182,6 +223,8 @@ export function termLinks(terms: TrendingTerm[]): TermLink[] {
     statusLabel: statusLabel(t.status),
     d7: compact(t.total.d7),
     ratio: t.ratio === null ? null : ratioText(t.ratio),
+    origin: t.origin,
+    originMark: originMark(t.origin),
   }))
 }
 
@@ -243,7 +286,8 @@ export interface CandidateItem {
   sample: { title: string; url: string; date: string } | null
 }
 
-/** What the discovery run noticed and nobody has decided about yet. */
+/** What the discovery run noticed: terms on their way in, not proposals waiting for a person.
+ *  Keep clearing the promotion rule and the run puts them on the list itself (2026-09-02). */
 export function candidateItems(file: TrendingTermsDay, max = 30): CandidateItem[] {
   return file.candidates.slice(0, max).map((c: TermCandidate) => ({
     ngram: c.ngram,
@@ -252,6 +296,184 @@ export function candidateItems(file: TrendingTermsDay, max = 30): CandidateItem[
     platforms: c.platforms.map(termPlatformLabel).join(' · ') || '—',
     sample: c.sample,
   }))
+}
+
+// ——— The list governs itself: the run adds, the run lets go, a person overrides ——————————
+// Frank's decision of 2026-09-02 (wording private) reversed the default of this surface: it
+// was watching a fixed list rather than finding trends. The wording below therefore has three
+// jobs — say what the run did this morning in each direction, say that a promoted term has no
+// counts yet, and say who can override the run.
+
+/** The promotion rule in plain words, for the page and its Markdown edition. The thresholds
+ *  themselves live in the pipeline's rules file and are spelled out on the method sheet; what
+ *  is fixed here is WHO decides, which is the part a reader cannot recompute. */
+export const PROMOTION_RULE =
+  'A candidate that keeps coming back takes itself onto the list: proposed on three days in a row, on at ' +
+  'least two platforms each time, never struck before, at most three promotions in one run, and never past ' +
+  'the ceiling of thirty-five tracked terms.'
+
+/** The other direction, symmetrical: the run lets go of what the run added. */
+export const RETIREMENT_RULE =
+  'The run also lets go of what it added: a term it promoted itself that stays quiet or fading on every run ' +
+  'for three weeks is struck, with the day and the reason written into the watchlist file. A term a person ' +
+  'put on the list is never struck that way. A person overrides both directions — and a struck term never ' +
+  'returns, because its line stays in the file as a tombstone.'
+
+/** Both directions in one paragraph: the machine adds, the machine lets go of what it added,
+ *  and a person overrides either way. */
+export const GOVERNANCE_RULE = `${PROMOTION_RULE} ${RETIREMENT_RULE}`
+
+/** The promotions of a run. An older file carries no such key, and a run that promoted nothing
+ *  writes an empty list; both read as nothing promoted, which is what happened. */
+export function promotedTerms(file: TrendingTermsDay): PromotedTerm[] {
+  return file.promoted ?? []
+}
+
+function countText(n: number, one: string, many: string): string {
+  return `${NUM.format(n)} ${n === 1 ? one : many}`
+}
+
+export interface PromotedItem {
+  slug: string
+  term: string
+  href: string
+  days: string
+  platformCount: string
+  platforms: string
+  ratio: string | null
+  note: string
+  /** the evidence in one sentence: how long it kept coming back, and where */
+  evidence: string
+}
+
+/** The terms this run promoted, in the file's order — the order the run promoted them in. */
+export function promotedItems(file: TrendingTermsDay): PromotedItem[] {
+  return promotedTerms(file).map((p) => ({
+    slug: p.slug,
+    term: p.term,
+    href: `/trending/topics/${p.slug}/`,
+    days: compact(p.days_seen),
+    platformCount: compact(p.platforms.length),
+    platforms: p.platforms.map(termPlatformLabel).join(' · ') || '—',
+    ratio: p.ratio === null ? null : ratioText(p.ratio),
+    note: p.note,
+    evidence:
+      `Proposed on ${countText(p.days_seen, 'day', 'days')} in a row, on ` +
+      `${countText(p.platforms.length, 'platform', 'platforms')}` +
+      (p.platforms.length ? `: ${p.platforms.map(termPlatformLabel).join(', ')}` : '') +
+      '.',
+  }))
+}
+
+export interface PromotedRow extends Record<string, string | number> {
+  term: string
+  days: string
+  platforms: string
+  pace: string
+  note: string
+}
+
+/** The plain-text floor under the promotions: the same four facts, as a table. */
+export function promotedRows(file: TrendingTermsDay): PromotedRow[] {
+  return promotedItems(file).map((p) => ({
+    term: p.term,
+    days: p.days,
+    platforms: p.platforms,
+    pace: p.ratio ?? '—',
+    note: p.note || '—',
+  }))
+}
+
+/** What the promotions mean for the numbers on this page: nothing yet. A promoted term is
+ *  searched from the next run on, so its counts start tomorrow — the page says that rather
+ *  than showing a row of zeros nobody measured. Empty when nothing was promoted. */
+export function promotionSentence(file: TrendingTermsDay): string {
+  const n = promotedTerms(file).length
+  if (n === 0) return ''
+  return n === 1
+    ? 'One term joined the watchlist this morning. Its counts start with the next run: this file records the ' +
+        'proposals that promoted it, not a tracked series.'
+    : `${NUM.format(n)} terms joined the watchlist this morning. Their counts start with the next run: this file ` +
+        'records the proposals that promoted them, not a tracked series.'
+}
+
+/** What the run let go of this morning. Same tolerance as the promotions: an older file and a
+ *  run that let nothing go both read as an empty list. */
+export function letGoTerms(file: TrendingTermsDay): LetGoTerm[] {
+  return file.let_go ?? []
+}
+
+export interface LetGoItem {
+  slug: string
+  term: string
+  days: string
+  note: string
+  /** the evidence in one sentence: how long it had been standing still */
+  evidence: string
+}
+
+export function letGoItems(file: TrendingTermsDay): LetGoItem[] {
+  return letGoTerms(file).map((g) => ({
+    slug: g.slug,
+    term: g.term,
+    days: compact(g.days_quiet),
+    note: g.note,
+    evidence: `Quiet or fading on every run for ${countText(g.days_quiet, 'day', 'days')}.`,
+  }))
+}
+
+export interface LetGoRow extends Record<string, string | number> {
+  term: string
+  days_quiet: string
+  note: string
+}
+
+/** The plain-text floor under the strikings of a run. */
+export function letGoRows(file: TrendingTermsDay): LetGoRow[] {
+  return letGoItems(file).map((g) => ({ term: g.term, days_quiet: g.days, note: g.note || '—' }))
+}
+
+/** What the strikings mean: the run withdrew terms it had put on the list itself, and they
+ *  cannot come back. Empty when nothing was let go. */
+export function letGoSentence(file: TrendingTermsDay): string {
+  const n = letGoTerms(file).length
+  if (n === 0) return ''
+  return n === 1
+    ? 'One term the run had promoted was let go this morning: it stood still long enough to fail the test the run ' +
+        'applies to its own additions. Its line stays in the watchlist file as a tombstone, so it cannot be ' +
+        'promoted again.'
+    : `${NUM.format(n)} terms the run had promoted were let go this morning: they stood still long enough to fail ` +
+        'the test the run applies to its own additions. Their lines stay in the watchlist file as tombstones, so ' +
+        'they cannot be promoted again.'
+}
+
+/** True when a run changed the list at all — the one condition for showing the section that
+ *  says what came and went. */
+export function listChanged(file: TrendingTermsDay): boolean {
+  return promotedTerms(file).length > 0 || letGoTerms(file).length > 0
+}
+
+/** The terms that have been struck, newest striking first — by the run or by a person. They
+ *  stay in the watchlist file: the tombstone is what keeps them from being promoted again. */
+export function retiredEntries(entries: WatchlistEntry[]): WatchlistEntry[] {
+  return entries
+    .filter((e) => typeof e.retired === 'string' && e.retired.length > 0)
+    .sort((a, b) => (b.retired as string).localeCompare(a.retired as string) || a.term.localeCompare(b.term))
+}
+
+/** One line about the pruning: how many terms have been struck over the whole life of the
+ *  list, and why their lines are still in the file. The file records the day and the reason,
+ *  not the hand — a striking by the run and a striking by a person leave the same tombstone.
+ *  Empty when nothing has been struck. */
+export function retiredSentence(entries: WatchlistEntry[]): string {
+  const struck = retiredEntries(entries)
+  if (struck.length === 0) return ''
+  const names = joinWithAnd(struck.map((e) => e.term))
+  return struck.length === 1
+    ? `One term has been struck and stays in the watchlist file as a tombstone, so it cannot be promoted ` +
+        `again: ${names}.`
+    : `${NUM.format(struck.length)} terms have been struck and stay in the watchlist file as tombstones, so they ` +
+        `cannot be promoted again: ${names}.`
 }
 
 export interface StatusTallyItem {
@@ -346,5 +568,5 @@ export function hubTitle(file?: TrendingTermsDay): string {
 export const HUB_DESCRIPTION =
   'Terms that build over weeks before search trends show them: a watchlist tracked every day across link ' +
   'aggregators, news, code repositories and preprints, with a mention count per window, a status derived from ' +
-  'disclosed thresholds, the documents each count was read from, and the n-grams a discovery run noticed but ' +
-  'nobody tracks yet. Open data (CC0), archived daily; no language model writes anything here.'
+  'disclosed thresholds, the documents each count was read from, and the candidates the discovery run is about ' +
+  'to promote onto the list itself. Open data (CC0), archived daily; no language model writes anything here.'

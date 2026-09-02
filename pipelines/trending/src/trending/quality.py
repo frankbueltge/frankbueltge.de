@@ -156,6 +156,16 @@ def assess_terms(record: dict[str, Any], rules: dict[str, Any] | None = None) ->
     checks.append(_check("candidates_bounded", n_cand <= top,
                          f"{n_cand} candidates (ceiling {top})"))
 
+    promoted = list(record.get("promoted") or [])
+    per_run = int(rules.get("promote_max_per_run", 3))
+    slugs = {str(p.get("slug") or "") for p in promoted}
+    tracked_slugs = {str(t.get("slug") or "") for t in terms}
+    checks.append(_check(
+        "promotions_bounded",
+        len(promoted) <= per_run and len(slugs) == len(promoted) and not (slugs & tracked_slugs),
+        f"{len(promoted)} promoted this run (ceiling {per_run}), "
+        f"{len(slugs & tracked_slugs)} of them already tracked"))
+
     size = _size(record)
     max_bytes = int(rules.get("quality_terms_max_bytes", 400_000))
     checks.append(_check("size_within_bounds", size <= max_bytes,

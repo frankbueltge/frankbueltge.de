@@ -1,4 +1,6 @@
 """Discovery: n-grams over a corpus, the two windows, the exclusions and the ranking."""
+
+import json
 from datetime import date, datetime, timedelta, timezone
 
 import httpx
@@ -236,7 +238,9 @@ def test_discover_returns_candidates_notes_and_coverage():
     assert [c["ngram"] for c in result.candidates] == ["sovereign compute"]
     got = result.candidates[0]
     assert got["docs_recent"] == 4 and got["docs_prior"] == 0
-    assert got["platforms"] == ["hackernews", "devto", "arxiv", "github"]
+    # The platform order follows the day ledger's own source order (the archive is the
+    # primary corpus now), then the live archives that are not day sources.
+    assert got["platforms"] == ["hackernews", "github", "devto", "arxiv"]
     assert result.notes == {}
 
 
@@ -254,3 +258,42 @@ def test_the_cli_survives_a_dead_corpus(capsys, monkeypatch):
     assert discover.main(["--repo-root", "."]) == 0
     out = capsys.readouterr().out
     assert "0 documents, 0 candidates" in out and "note hackernews" in out
+
+
+# ------------------------------------------------------- the house's own archive as a corpus
+
+def _day_file(tmp_path, day, signals):
+    folder = tmp_path / "src" / "data" / "trending"
+    folder.mkdir(parents=True, exist_ok=True)
+    (folder / f"{day}.json").write_text(json.dumps({
+        "$contract": "trending-day/1", "date": day, "generated_at": f"{day}T06:40:00Z",
+        "pipeline_version": "0.2.0", "method_version": "2", "sources": [], "topics": [],
+        "summary": {}, "signals": signals,
+    }))
+
+
+def test_the_archive_counts_one_sighting_per_day_not_one_per_link(tmp_path):
+    # the same link on three mornings is three sightings; collapsing them would erase the arc
+    for day in ("2026-09-01", "2026-09-02", "2026-09-03"):
+        _day_file(tmp_path, day, {
+            "google_trends": [{"label": "sovereign compute rules", "url": "https://a/1", "rank": 1,
+                               "meta": {}}],
+            "reddit": [{"label": "sovereign compute is here", "url": "https://b/1", "rank": 1,
+                        "meta": {}}],
+        })
+    notes = {}
+    docs = discover._archive_docs(tmp_path, date(2026, 9, 3), 30, notes)
+    assert notes == {} and len(docs) == 6
+    assert {d.platform for d in docs} == {"google_trends", "reddit"}
+    ranked = discover.rank(docs, [], today=date(2026, 9, 3),
+                           rules={"discover_recent_days": 3, "discover_days": 30,
+                                  "discover_min_docs_recent": 3})
+    got = next(c for c in ranked if c["ngram"] == "sovereign compute")
+    assert got["docs_recent"] == 6 and got["platforms"] == ["google_trends", "reddit"]
+
+
+def test_a_signal_without_a_url_still_counts_and_a_missing_archive_is_a_note(tmp_path):
+    _day_file(tmp_path, "2026-09-03", {"steam": [{"label": "dawnwalker blood", "rank": 1, "meta": {}}]})
+    docs = discover._archive_docs(tmp_path, date(2026, 9, 3), 30, {})
+    assert len(docs) == 1 and docs[0].url.startswith("ledger://")
+    assert discover._archive_docs(tmp_path / "nowhere", date(2026, 9, 3), 30, {}) == []

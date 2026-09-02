@@ -20,6 +20,14 @@ const sourceRows = (day?.sources ?? []).map((s) => ({
   licence: s.licence,
 }))
 
+// Section 7 names the size of the discovery corpus from the ledger's own source list rather
+// than from a hand-typed figure, so a source added to the pipeline reaches this sheet without
+// anyone editing prose (the currency rule, Frank 2026-07-25).
+const ledgerSources = day?.sources.length ?? null
+const corpusClause = ledgerSources
+  ? `every one of the ${ledgerSources} sources the ledger above reads`
+  : 'every source the ledger above reads'
+
 const limits = [
   'The audience counts are sampled at the edge, not a census: Cloudflare returns them with an average sample interval, which is committed beside the numbers so a reader can see what a count is made of.',
   'Every audience class rests on a self-declaration. A user agent can say anything; the classification believes the string, so a crawler that disguises itself is counted as whatever it claims to be.',
@@ -111,9 +119,11 @@ const limits = [
     <section class="mb-8">
       <h2 class="mb-2 font-semibold">5. Compute footprint</h2>
       <p class="leading-relaxed text-fg-muted">
-        One run per day: roughly forty HTTP requests against public endpoints, a few seconds of token matching in
-        Python, and a commit. No model is called at any point, in the pipeline or on the page, and the site itself
-        stays static.
+        One run per day, in three parts: the day's sources, then one search per watched term on each platform that
+        answers, then the discovery pass over the archive. Together a few hundred HTTP requests against public
+        endpoints, a few seconds of token matching in Python, and a commit; the throttles, not the computing, set the
+        wall-clock time. No model is called at any point, in the pipeline or on the page, and the site itself stays
+        static.
       </p>
     </section>
 
@@ -122,6 +132,9 @@ const limits = [
       <ul class="list-disc space-y-1 pl-5 text-fg-muted">
         <li>2026-09-02 &middot; v1 &middot; first ledger</li>
         <li>2026-09-02 &middot; arcs &middot; the term tracker and its discovery run join the ledger (section 7)</li>
+        <li>2026-09-02 &middot; arcs &middot; discovery reads the house&rsquo;s own committed day files instead of four live
+          platforms, and the list governs itself: the run promotes a candidate that keeps coming back, lets go of
+          what it added and went quiet, and a person overrides both (section 7)</li>
       </ul>
     </section>
 
@@ -144,21 +157,39 @@ const limits = [
         recomputed from the committed run. No editorial judgement enters this, and no model is called.
       </p>
       <p class="mt-2 leading-relaxed text-fg-muted">
-        Beside the tracker runs a discovery pass over the same corpus. It reduces titles to tokens by the rule of
-        section 3, builds two- and three-word n-grams over adjacent tokens, counts how many DOCUMENTS carry each one
-        in the recent fortnight against the fortnight before it, and drops generic pairs, months, weekdays and
-        anything already contained in a watched term. What survives is published on the hub as a proposal with a
-        sample document attached — <em>not</em> as a tracked term. The watchlist changes only when a person writes a
-        term into it by hand, with the date and the reason in the file: the machine may notice, and that is the whole
-        of its authority here.
+        Beside the tracker runs a discovery pass, and since 2026-09-02 it reads the house&rsquo;s own archive rather
+        than the open web: the committed day files of the ledger above, which is {corpusClause} — search interest in
+        ten countries, news, forums, encyclopaedia reading in six languages, app and game charts, model releases and
+        prediction markets. Four live archives are still read beside them for depth while the archive is young:
+        front-page link aggregator stories, top developer articles, preprints in the machine-learning categories and
+        the newest repositories. Labels and titles are reduced to tokens by the rule of section 3, two- and
+        three-word n-grams are built over adjacent tokens, and each n-gram is counted in DOCUMENTS over the recent
+        fortnight against the fortnight before it; generic pairs, months, weekdays and anything already contained in
+        a watched term are dropped. Because the corpus is no longer four technology platforms, an arc can begin in
+        culture, politics, sport, apps or markets.
+      </p>
+      <p class="mt-2 leading-relaxed text-fg-muted">
+        <strong class="font-semibold">The list governs itself</strong> (2026-09-02; the earlier rule — a person adds,
+        the machine only proposes — is superseded and stated as such in the design note). A candidate is promoted
+        onto the watchlist by the run itself when it clears five committed conditions: it was proposed on three days
+        in a row, including today; on at least two platforms each time; it was never struck before; the run has not
+        already promoted three terms this morning; and the watchlist stays under its ceiling of thirty-five tracked
+        terms, because every tracked term costs requests in the nightly. A promoted term is searched from the
+        <em>next</em> run on, so the file that promotes it carries the evidence and no counts. The run also lets go of
+        what it added: a term it promoted itself that stays quiet or fading on every run for three weeks is struck.
+        A term a person put on the list is never struck that way, and a person overrides both directions. Every
+        striking, by the run or by a person, stays in <span class="font-mono">watchlist.json</span> as a tombstone
+        with its day and its reason — that line is what makes a struck term unpromotable, so it is never deleted.
+        The committed day files that mention a struck term stay exactly as they were.
       </p>
       <p class="mt-2 leading-relaxed text-fg-muted">
         Limits of this half, on top of those in section 4: a term is a phrase, so a rename splits an arc in two and a
         homonym merges two arcs into one; several platforms return at most a fixed number of items per query, which
         makes their thirty-day figure a floor rather than a count, and the page marks those rows; a term&rsquo;s
         series is only as long as the archive, so a term added last week looks new because the tracker is new, not
-        because the world is; and the discovery pass reads an English-leaning corpus of technology sources, which is
-        what it can see, not what exists.
+        because the world is; the discovery pass can only find what the ledger&rsquo;s sources cover, which is broad
+        but not the world; and a rule that promotes by itself will put words on the list that no editor would have
+        chosen — that is the point of it, and the reason the pruning is a published act rather than a silent one.
       </p>
       <p class="mt-3">
         <a href="/trending/topics/" class="sheet-link">&rarr; The watched terms</a>

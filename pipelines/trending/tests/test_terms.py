@@ -51,7 +51,7 @@ def test_the_record_has_the_shape_the_contract_names():
     rec = build()
     assert set(rec) == {"$contract", "date", "generated_at", "pipeline_version",
                         "method_version", "windows", "sources", "terms", "candidates",
-                        "summary", "quality"}
+                        "promoted", "let_go", "summary", "quality"}
     assert rec["$contract"] == "trending-terms/1"
     assert rec["date"] == "2026-09-02" and rec["generated_at"] == "2026-09-02T12:00:00Z"
     assert rec["pipeline_version"] == "0.2.0" and rec["method_version"] == "2"
