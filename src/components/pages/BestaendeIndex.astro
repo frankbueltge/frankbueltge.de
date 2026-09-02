@@ -205,9 +205,10 @@ const total = cards.length
          Sticky from sm upward only: at 390px the three axes wrap to six rows, and a sticky
          block that tall eats a third of the viewport for the whole scroll — worse than the
          scrolling it was meant to spare. On a phone it stays at the top of the shelf, where
-         you set it once; on wider screens it follows under the TopBar (h-10 there). -->
+         you set it once; on wider screens it follows under the TopBar (h-12 there since the
+         re-skin of 2026-09-02 — this offset and that height move together). -->
     <div
-      class="z-20 -mx-6 space-y-2 border-y border-line bg-bg/95 px-6 py-3 backdrop-blur-md sm:sticky sm:top-10"
+      class="z-20 -mx-6 space-y-2 border-y border-line bg-bg/95 px-6 py-3 backdrop-blur-md sm:sticky sm:top-12"
     >
       {facets.map((facet) => (
         // role/aria-label so the axis label is announced with its buttons: the visible label is

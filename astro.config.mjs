@@ -51,7 +51,13 @@ export default defineConfig({
         // challenges.cloudflare.com lädt das Turnstile-Widget-Script auf /saat (s. o.).
         resources: [
           "'self'",
-          "'sha256-OTbzFulzUa/0o/iJq0xir83lv5aDayqRCmxs9tqjupU='",
+          // The anti-FOUC theme resolver (Base.astro, is:inline). Re-pinned 2026-09-02: the hash
+          // pinned on 2026-07-07 no longer matched the script — it had been edited since — so
+          // the resolver was CSP-blocked on every page in production and a light-theme reader
+          // saw the static dark default until the module script caught up. Found while wiring
+          // the ClientRouter; src/layouts/base.test.ts now recomputes both hashes and fails
+          // the moment either script changes without its constant.
+          "'sha256-sTVkn3xdmeVKVAdr0N+Hx9qKNNaDDSdRSaxZ2TkjJPk='",
           // The zoom-state script (Base.astro, is:inline — iOS pinch-zoom fix of 2026-08-27).
           // Missing since that fix landed: the script was CSP-blocked on every page in
           // production, so the viewport handler never ran. Found 2026-08-30 while verifying
@@ -103,6 +109,17 @@ export default defineConfig({
     // @tailwindcss/vite hängt noch an Vite 6, Astro 6 nutzt Vite 7 → die Plugin-Typen
     // kollidieren (reiner Typ-Konflikt, der Build läuft). Cast, bis Tailwind auf Vite 7 zieht.
     plugins: [/** @type {any} */ (tailwindcss())],
+    build: {
+      // Every script stays an external module file, none is inlined (re-skin 2a, 2026-09-02).
+      // Vite would otherwise inline any chunk under 4 KB as `<script type="module">…</script>`
+      // — the top bar's disclosure script, the experiments shelf filter — and Astro's
+      // ClientRouter, finding an inline module script it has to wait for after a swap, inserts
+      // a sentinel `<script type="module" src="data:application/javascript,">`. This site's CSP
+      // allows no `data:` scripts (rightly), so the sentinel was refused with a console error
+      // on every client-side navigation. With nothing inlined the router never needs the
+      // sentinel, and the CSP hash list shrinks to the two `is:inline` scripts plus Astro's own.
+      assetsInlineLimit: 0,
+    },
     worker: {
       format: 'es',
     },

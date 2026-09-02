@@ -52,7 +52,45 @@ describe('the shadcn token bridge', () => {
     expect(css).not.toMatch(/^\s*\.dark\s*\{/m)
   })
 
-  it('leaves the radius scale alone until it is decided deliberately (plan, Phase 2a)', () => {
-    expect(css).not.toMatch(/--radius(-\w+)?:/)
+})
+
+// Re-skin 2a (2026-09-02): the frame's own scales. They were decided, not inherited, and this
+// guard keeps a later `npx shadcn` run from quietly putting Tailwind's or shadcn's defaults back.
+const light = block(css, ":root[data-skin][data-theme='light'] {")
+
+describe('the frame tokens of the re-skin', () => {
+  it('declares the radius scale that was decided — eight rungs, tighter than the default at every one', () => {
+    const rungs: Record<string, string> = {
+      xs: '0.125rem', sm: '0.1875rem', md: '0.3125rem', lg: '0.4375rem',
+      xl: '0.625rem', '2xl': '0.875rem', '3xl': '1.25rem', '4xl': '1.625rem',
+    }
+    for (const [rung, value] of Object.entries(rungs)) {
+      expect(theme, `--radius-${rung} is not ${value}`).toMatch(new RegExp(`--radius-${rung}:\\s*${value.replace('.', '\\.')};`))
+    }
+    // shadcn's `--radius` base variable would re-derive the rungs from one number; the house sets each rung itself
+    expect(theme).not.toMatch(/--radius:\s/)
+  })
+
+  it('declares the type scale with a line height per step', () => {
+    for (const step of ['display', 'h1', 'h2', 'h3', 'body', 'small', 'mono', 'mono-sm', 'mono-xs']) {
+      expect(theme, `--text-${step} missing`).toMatch(new RegExp(`--text-${step}:`))
+      expect(theme, `--text-${step}--line-height missing`).toMatch(new RegExp(`--text-${step}--line-height:`))
+    }
+  })
+
+  it('paints depth and the second hairline in BOTH themes — a token declared once is a token the light theme inherits from the dark', () => {
+    for (const token of ['--color-line-lift', '--elev-rest', '--elev-lift', '--elev-float']) {
+      expect(css, `${token} missing from the dark declarations`).toMatch(new RegExp(`${token}:`))
+      expect(light, `${token} missing from the light theme block`).toMatch(new RegExp(`${token}:`))
+    }
+  })
+
+  it('gives hand-written CSS a --color-ring to read (the @theme inline bridge emits nothing to :root)', () => {
+    expect(css).toMatch(/^\s*--color-ring:\s*var\(--color-accent\);/m)
+  })
+
+  it('keeps every page transition and hover gesture still under reduced motion', () => {
+    expect(css).toMatch(/@media \(prefers-reduced-motion: no-preference\)\s*\{[^}]*::view-transition-old\(root\)/)
+    expect(css).toMatch(/@media \(prefers-reduced-motion: reduce\)\s*\{\s*\.lift:hover/)
   })
 })

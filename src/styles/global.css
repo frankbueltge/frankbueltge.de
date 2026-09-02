@@ -22,9 +22,67 @@
   --color-green: #d4d4d8;
   --color-amber: #a3a3a8;
   --color-line: #242427;
+  /* The second hairline: what a border becomes while the thing under the pointer is being
+     considered. A mono frame cannot signal "alive" with hue, so it brightens its edge
+     (re-skin 2a, 2026-09-02). Declared per theme like every other colour token. */
+  --color-line-lift: #3a3a41;
 
   --font-sans: 'Space Grotesk Variable', ui-sans-serif, system-ui, sans-serif;
   --font-mono: 'JetBrains Mono Variable', ui-monospace, monospace;
+
+  /* ── The type scale (re-skin 2a, 2026-09-02) ────────────────────────────────
+     Seven steps and three mono steps, each with its own line height and tracking, so a
+     heading is one utility (`text-h1`) instead of a hand-tuned clamp repeated per page.
+     The display and h1 steps stay fluid: this site's headings are sentences, not labels,
+     and they have to survive both a 390 px phone and a 1440 px desk. Tracking tightens as
+     the size grows — the way a drawn title does — and any page may still override a step
+     with `tracking-*` / `leading-*`, which win through Tailwind's own variables. */
+  --text-display: clamp(2.25rem, 5.6vw, 3.75rem); /* 36 → 60 */
+  --text-display--line-height: 1.03;
+  --text-display--letter-spacing: -0.03em;
+  --text-h1: clamp(1.875rem, 3.8vw, 2.875rem); /* 30 → 46 */
+  --text-h1--line-height: 1.08;
+  --text-h1--letter-spacing: -0.025em;
+  --text-h2: clamp(1.375rem, 2.2vw, 1.75rem); /* 22 → 28 */
+  --text-h2--line-height: 1.18;
+  --text-h2--letter-spacing: -0.018em;
+  --text-h3: 1.0625rem; /* 17 */
+  --text-h3--line-height: 1.35;
+  --text-h3--letter-spacing: -0.008em;
+  --text-body: 0.9375rem; /* 15 */
+  --text-body--line-height: 1.65;
+  --text-small: 0.8125rem; /* 13 */
+  --text-small--line-height: 1.55;
+  /* The mono steps carry the site's labels, kickers and provenance lines. They keep normal
+     tracking here; the kicker's wide tracking belongs to the .kicker class below, because
+     not every 11 px mono line in this house is a kicker. */
+  --text-mono: 0.75rem; /* 12 */
+  --text-mono--line-height: 1.5;
+  --text-mono-sm: 0.6875rem; /* 11 */
+  --text-mono-sm--line-height: 1.5;
+  --text-mono-xs: 0.625rem; /* 10 */
+  --text-mono-xs--line-height: 1.5;
+
+  /* ── The radius scale (re-skin 2a, 2026-09-02) ──────────────────────────────
+     Decided rather than inherited. Tailwind v4's default scale (4·6·8·12·16 px) is the
+     scale of a consumer product; shadcn's default would have rounded it further still
+     (6·8·10·14 px) across the ~95 `rounded-*` usages in this tree. This house draws
+     PLATES — hairline borders, mono labels, grid paper — so the scale steps down by one
+     to two pixels at every rung and keeps its corners crisp: 2·3·5·7·10·14·20·26 px.
+     `rounded-full` is untouched (dots, avatars and the live pip stay circles). The step
+     is deliberately small: the before/after shots in the PR show a sharpening, not a
+     different site. */
+  --radius-xs: 0.125rem; /* 2 */
+  --radius-sm: 0.1875rem; /* 3 */
+  --radius-md: 0.3125rem; /* 5 */
+  --radius-lg: 0.4375rem; /* 7 */
+  --radius-xl: 0.625rem; /* 10 */
+  --radius-2xl: 0.875rem; /* 14 */
+  --radius-3xl: 1.25rem; /* 20 */
+  --radius-4xl: 1.625rem; /* 26 */
+
+  /* One easing for the whole frame: a fast start that settles, never a bounce. */
+  --ease-frame: cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
 /* ── shadcn/ui token bridge (visual layer, 2026-09-02 — docs/design/2026-09-02-the-visual-layer.md)
@@ -71,6 +129,28 @@
   --donut-2: #c2c2c8;
   --donut-3: #87878d;
   --donut-4: #4a4a4f;
+
+  /* The focus ring, as a real custom property. The shadcn bridge declares --color-ring in
+     `@theme inline`, and `inline` means exactly this: the value is inlined into the
+     utilities and NOTHING is emitted to :root — so hand-written CSS (the :focus-visible
+     rule below, the chrome) has no --color-ring to read. This declaration gives it one,
+     pointing at the same token the bridge points at. (re-skin 2a, 2026-09-02) */
+  --color-ring: var(--color-accent);
+
+  /* ── Depth for a monochrome frame (re-skin 2a, 2026-09-02) ──────────────────
+     The frame has no hue to spend, so it spends light. In the dark theme a surface sits
+     on an inner top highlight (as if lit from above) over a short drop; lifting it
+     strengthens both and adds a long, very soft cast. In the light theme the same three
+     roles are carried by ink shadows alone — the inner highlight is invisible on paper
+     and the dark theme's hard 0.3-alpha black (which .panel-raised used to hard-code for
+     BOTH themes) reads as grime under the light skin. Hence: one name, two paintings. */
+  --elev-rest: inset 0 1px 0 0 rgb(255 255 255 / 0.045), 0 1px 2px 0 rgb(0 0 0 / 0.34);
+  --elev-lift:
+    inset 0 1px 0 0 rgb(255 255 255 / 0.09), 0 2px 4px -1px rgb(0 0 0 / 0.4),
+    0 14px 34px -20px rgb(0 0 0 / 0.85);
+  --elev-float:
+    inset 0 1px 0 0 rgb(255 255 255 / 0.06), 0 2px 8px -2px rgb(0 0 0 / 0.5),
+    0 16px 40px -16px rgb(0 0 0 / 0.7);
 }
 
 /* ── Light theme (opt-in via <html data-theme="light">) ──
@@ -90,6 +170,12 @@
   --color-green: #2c2c33;
   --color-amber: #54555c;
   --color-line: #d6d7dc;
+  --color-line-lift: #b3b5be;
+
+  /* Paper takes ink, not light: the same three elevation roles, cast instead of lit. */
+  --elev-rest: 0 1px 1px 0 rgb(16 18 24 / 0.04), 0 1px 3px -1px rgb(16 18 24 / 0.07);
+  --elev-lift: 0 1px 2px 0 rgb(16 18 24 / 0.06), 0 10px 26px -14px rgb(16 18 24 / 0.3);
+  --elev-float: 0 2px 6px -2px rgb(16 18 24 / 0.1), 0 18px 44px -18px rgb(16 18 24 / 0.32);
 
   --rgb-bg: 237 238 240;
   --rgb-accent: 122 124 132; /* far ridge lines (lighter grey) */
@@ -143,7 +229,9 @@ body {
   text-rendering: optimizeLegibility;
 }
 ::selection { background-color: rgb(var(--rgb-accent) / 0.3); }
-:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; border-radius: 2px; }
+/* One focus ring for the whole house, on the ring token the shadcn primitives use, at the
+   tightest rung of the radius scale. (re-skin 2a, 2026-09-02) */
+:focus-visible { outline: 2px solid var(--color-ring); outline-offset: 2px; border-radius: var(--radius-xs); }
 
 @layer utilities {
   .text-gradient {
@@ -175,12 +263,54 @@ body {
     mask-image: radial-gradient(125% 95% at 50% 0%, #000 38%, transparent 82%);
   }
 
-  /* Raised card depth. */
+  /* Raised card depth — now theme-aware through the elevation tokens above, instead of
+     casting the dark theme's black over the light theme's paper. (re-skin 2a, 2026-09-02) */
   .panel-raised {
-    box-shadow:
-      inset 0 1px 0 0 rgb(255 255 255 / 0.04),
-      0 1px 2px 0 rgb(0 0 0 / 0.3),
-      0 10px 28px -18px rgb(0 0 0 / 0.7);
+    box-shadow: var(--elev-rest);
+  }
+
+  /* A floating surface: menus, dropdowns, anything that leaves the page plane. */
+  .panel-float {
+    box-shadow: var(--elev-float);
+  }
+
+  /* The one hover gesture of the frame. A card wearing .lift rises by a pixel, brightens
+     its hairline and deepens its cast while the pointer (or the keyboard) is on it. It is
+     an opt-in class, not a blanket rule: a figure's panel must be able to stay still.
+     :focus-within is included so a card reached by Tab shows the same state its mouse
+     visitor sees. */
+  .lift {
+    transition:
+      box-shadow 0.2s var(--ease-frame),
+      border-color 0.2s var(--ease-frame),
+      transform 0.2s var(--ease-frame);
+  }
+  .lift:hover,
+  .lift:focus-visible,
+  .lift:focus-within {
+    box-shadow: var(--elev-lift);
+    border-color: var(--color-line-lift);
+    transform: translateY(-1px);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .lift:hover,
+    .lift:focus-visible,
+    .lift:focus-within {
+      transform: none;
+    }
+  }
+
+  /* The kicker: the small mono line that names what a block is, above nearly every heading
+     on this site. It was retyped as `font-mono text-[11px] uppercase tracking-[0.16em]
+     text-fg-faint` in hundreds of places; from here it is one class on the type scale.
+     (Existing pages keep their utilities — this is the step the re-skin migrates onto.) */
+  .kicker {
+    font-family: var(--font-mono);
+    font-size: var(--text-mono-sm);
+    line-height: 1.5;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-fg-faint);
   }
 
   /* Cinematic vignette — subtle corner falloff over the whole screen. */
@@ -286,7 +416,50 @@ body {
   }
   /* keep interactive feedback snappy despite the broad rule above */
   .skin-switch button { transition: color 0.15s ease; }
+
+  /* ── Hover, at the speed of a hand (re-skin 2a, 2026-09-02) ─────────────────
+     THE FINDING: the skin cross-fade above is unlayered CSS, and unlayered CSS beats every
+     `@layer utilities` rule no matter how specific — so every `transition-colors` utility
+     in this tree was silently overridden, and every link, button and menu item on the site
+     took 600 ms to acknowledge the pointer. That single number is a large part of why the
+     frame reads as slow. Interactive elements get the frame's own 200 ms here (same layer,
+     one type selector more, so it wins), while everything else keeps the long cross-fade a
+     skin swap needs. `transform` and `opacity` join the property list so a .lift can
+     actually rise; `filter` and `border-radius` leave it, which only matters during a skin
+     swap and only for the elements listed. SVG interiors are excluded on purpose: a
+     figure's marks are `<a>` elements too, and their motion belongs to the island's own
+     d3 transitions, not to a CSS rule from the frame. */
+  body :is(a, button, summary, label, input, select, textarea, [role='button'], [data-slot='button'], .lift):not(svg *) {
+    transition:
+      background-color 0.2s var(--ease-frame),
+      color 0.2s var(--ease-frame),
+      border-color 0.2s var(--ease-frame),
+      box-shadow 0.2s var(--ease-frame),
+      fill 0.2s var(--ease-frame),
+      opacity 0.2s var(--ease-frame),
+      transform 0.2s var(--ease-frame);
+  }
 }
+
+/* ── Page transitions (re-skin 2a, 2026-09-02) ────────────────────────────────
+   Base.astro's <ClientRouter /> swaps documents in place and drives a same-document view
+   transition; these rules give its root crossfade the frame's own timing — 200 ms, the
+   same as a hover, so a navigation feels like the page answering rather than reloading.
+   Astro's own viewtransitions.css already switches every transition animation off under
+   prefers-reduced-motion; the guard is repeated here so this file's promise stands on its
+   own. `@view-transition { navigation: auto }` is deliberately NOT set: the ClientRouter
+   intercepts the navigation itself, and asking the browser for a cross-document transition
+   on top of that would mean two mechanisms racing for the same swap. */
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-old(root) {
+    animation: vt-out 0.2s var(--ease-frame) both;
+  }
+  ::view-transition-new(root) {
+    animation: vt-in 0.2s var(--ease-frame) both;
+  }
+}
+@keyframes vt-out { to { opacity: 0; } }
+@keyframes vt-in { from { opacity: 0; } }
 
 /* The skin switcher control (sits above the bottom system bar). */
 .skin-switch {
@@ -315,7 +488,7 @@ body {
   --color-bg: #0a0a0a; --color-panel: #141414; --color-panel-2: #1c1c1c;
   --color-fg: #f4f4f5; --color-fg-muted: #a3a3a8; --color-fg-faint: #8b8b92;
   --color-accent: #c2c2c8; --color-accent-soft: #dedee2; --color-cyan: #fafafa;
-  --color-green: #d4d4d8; --color-amber: #a3a3a8; --color-line: #242427;
+  --color-green: #d4d4d8; --color-amber: #a3a3a8; --color-line: #242427; --color-line-lift: #3a3a41;
   --rgb-bg: 10 10 10; --rgb-accent: 194 194 200; --rgb-accent-soft: 222 222 226; --rgb-cyan: 250 250 250;
   /* solid statt glow: Canvas-shadowBlur ist eine Performance-Klippe (bei
      Software-Rendering blockiert er den Main-Thread) — und die durchgezogene
