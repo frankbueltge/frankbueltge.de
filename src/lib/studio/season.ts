@@ -120,10 +120,13 @@ const W = 1440
 // below), and everything upstage of it — the struck band, the production area, the floor's own
 // edge — moved down by that row's 104px rather than crowding what was already there.
 const H = 884
-const FLOOR = { x0: 96, y0: 150, x1: 1344, y1: 810 }
-const AXIS = { x0: 214, x1: 1248 }
+// The five constants below are exported because the floor has had TWO renderers since 2026-09-02
+// (see "the parts both renderers draw"): a drawing that read its own floor edge from a second copy
+// of these numbers would drift the first time one of them moved.
+export const FLOOR = { x0: 96, y0: 150, x1: 1344, y1: 810 }
+export const AXIS = { x0: 214, x1: 1248 }
 /** lit positions play downstage, just under the curtain line: three rows, this the middle one */
-const LIT_Y = 352
+export const LIT_Y = 352
 /** the rows are 104px apart — more than the 72px two pool edges need, jitter included */
 const LIT_ROW_GAP = 104
 const LIT_ROWS = 3
@@ -134,9 +137,9 @@ const LIT_WALL = { min: FLOOR.x0 + 40, max: FLOOR.x1 - 40 }
 const STRUCK_Y = 616
 const STRUCK_JITTER = 74
 /** the production area: the upstage band a returned work goes back into */
-const PROD_Y = 748
+export const PROD_Y = 748
 
-const POOL_RY = 36
+export const POOL_RY = 36
 const STRIKE_R = 30
 /** Clearance between two pools, so two names never letter into each other. */
 const POOL_GAP = 18
@@ -574,7 +577,9 @@ function shelveLit(pools: readonly ShelfPool[]): Map<string, { x: number; y: num
   return at
 }
 
-const round = (n: number) => Math.round(n * 10) / 10
+/** One decimal, everywhere: an SVG attribute needs no more, and the same rounding on both
+ *  renderers is what keeps the live figure and the build-time still the same drawing. */
+export const round = (n: number) => Math.round(n * 10) / 10
 
 function slugify(s: string): string {
   return s
@@ -681,9 +686,10 @@ export function buildSeasonFloorSvg(model: SeasonModel, opts: SeasonRenderOption
   for (const [key, text] of annotations) {
     const m = model.marks.find((k) => k.key === key)
     if (!m) continue
+    const p = noteParts(m)
     s.push(
-      `<g class="st-sf-note"><path d="M${m.x} ${m.y + m.ry + 6} V${m.y + m.ry + 26}"/>` +
-        `<text x="${m.x}" y="${m.y + m.ry + 42}" text-anchor="middle">${escapeXml(text)}</text></g>`,
+      `<g class="st-sf-note"><path d="${p.stem}"/>` +
+        `<text x="${p.x}" y="${p.y}" text-anchor="middle">${escapeXml(text)}</text></g>`,
     )
   }
 
@@ -711,73 +717,125 @@ function markAttrs(m: SeasonMark, f: MarkFlags, cls: string): string {
   return parts.join(' ')
 }
 
+// ---------------------------------------------------------------- the parts both renderers draw
+//
+// Since 2026-09-02 this floor has TWO renderers: the string builder in this file — which cuts the
+// build-time stills the hub's triptych and the tour's scenes are made of — and the React island
+// src/components/studio/SeasonFloor.tsx, which is the live figure a visitor points at. Two
+// drawings of one stage is exactly the arrangement that drifts, so every NUMBER both of them draw
+// is computed HERE, once; each renderer only decides how to spell it (a template string on one
+// side, JSX on the other). Nothing about appearance moved: the class names and the drawing order
+// still live with the renderer, and studio-stage.css still inks both.
+//
+// The string builder's output did not change by a byte in this move — season.test.ts and
+// triptych.test.ts hold that from the outside, and SeasonFloor.test.tsx holds the two renderings
+// against each other so a change to one cannot silently pass the other.
+
+/** The four blocking-tape corners, as (dx, dy) signs around the pool. */
+const TAPE_CORNERS = [
+  [-1, -1],
+  [1, -1],
+  [-1, 1],
+  [1, 1],
+] as const
+
+export interface LitParts {
+  withdrawn: boolean
+  lamp: { x: number; y: number; width: number; height: number }
+  /** the two beam hairlines, as path data */
+  beams: [string, string]
+  pool: { className: string; cx: number; cy: number; rx: number; ry: number }
+  /** the four blocking-tape corners, as path data */
+  tape: string[]
+  title: { x: number; y: number; text: string }
+  meta: { x: number; y: number; text: string }
+  /** the X drawn THROUGH the pool — null while the light is still on */
+  through: string | null
+  hit: { cx: number; cy: number; rx: number; ry: number }
+}
+
 /** A lit position: the lamp on the bar, its two beam hairlines, the hard-edged pool, the title in
  *  Didone capitals, and the taped blocking corners. A withdrawn one keeps ALL of it and adds the X
- *  through the pool — the light is struck, the position stays on the floor. */
-function litMark(m: SeasonMark, f: MarkFlags): string {
+ *  through the pool — the light is struck, the position stays on the floor.
+ *
+ *  The hit target comes last so it sits on top: the group's own bounding box reaches from the lamp
+ *  on the bar all the way down to the pool, so its geometric centre is empty air between two 1px
+ *  beams — a pointer aimed at "the position" would miss it. The pool plus a little margin is what a
+ *  visitor is actually aiming at. */
+export function litParts(m: SeasonMark): LitParts {
   const w = m.state === 'withdrawn'
-  const g: string[] = []
-  g.push(`<g ${markAttrs(m, f, 'st-sf-lit')}>`)
-  g.push(`<rect class="st-sf-lamp" x="${round(m.x - 7)}" y="${FLOOR.y0 - 28}" width="14" height="8"/>`)
-  g.push(`<path class="st-sf-beam" d="M${round(m.x - 5)} ${FLOOR.y0 - 20} L${round(m.x - m.rx)} ${round(m.y)}"/>`)
-  g.push(`<path class="st-sf-beam" d="M${round(m.x + 5)} ${FLOOR.y0 - 20} L${round(m.x + m.rx)} ${round(m.y)}"/>`)
-  g.push(
-    `<ellipse class="${w ? 'st-sf-pool st-sf-withdrawn' : 'st-sf-pool'}" cx="${m.x}" cy="${m.y}"` +
-      ` rx="${m.rx}" ry="${m.ry}"/>`,
-  )
-  // blocking tape: the position on the floor, kept whether or not the light is on
-  for (const [dx, dy] of [
-    [-1, -1],
-    [1, -1],
-    [-1, 1],
-    [1, 1],
-  ] as const) {
-    const cx = round(m.x + dx * (m.rx + 16))
-    const cy = round(m.y + dy * (m.ry + 14))
-    g.push(`<path class="st-sf-tape" d="M${cx} ${round(cy - dy * 11)} V${cy} H${round(cx - dx * 14)}"/>`)
-  }
-  g.push(
-    `<text class="st-sf-title" x="${m.x}" y="${round(m.y + 5)}" text-anchor="middle">${escapeXml(m.label)}</text>`,
-  )
-  g.push(
-    `<text class="st-sf-litmeta" x="${m.x}" y="${round(m.y + m.ry + 16)}" text-anchor="middle">` +
-      `${escapeXml(`${m.session ? m.session + ' · ' : ''}${m.date}`)}</text>`,
-  )
-  if (w) {
-    // the strike THROUGH the pool — the one mark that says the light was taken away
-    g.push(
-      `<path class="st-sf-x st-sf-x-through" d="M${round(m.x - m.rx * 0.82)} ${round(m.y - m.ry * 0.9)}` +
+  return {
+    withdrawn: w,
+    lamp: { x: round(m.x - 7), y: FLOOR.y0 - 28, width: 14, height: 8 },
+    beams: [
+      `M${round(m.x - 5)} ${FLOOR.y0 - 20} L${round(m.x - m.rx)} ${round(m.y)}`,
+      `M${round(m.x + 5)} ${FLOOR.y0 - 20} L${round(m.x + m.rx)} ${round(m.y)}`,
+    ],
+    pool: {
+      className: w ? 'st-sf-pool st-sf-withdrawn' : 'st-sf-pool',
+      cx: m.x,
+      cy: m.y,
+      rx: m.rx,
+      ry: m.ry,
+    },
+    tape: TAPE_CORNERS.map(([dx, dy]) => {
+      const cx = round(m.x + dx * (m.rx + 16))
+      const cy = round(m.y + dy * (m.ry + 14))
+      return `M${cx} ${round(cy - dy * 11)} V${cy} H${round(cx - dx * 14)}`
+    }),
+    title: { x: m.x, y: round(m.y + 5), text: m.label },
+    meta: {
+      x: m.x,
+      y: round(m.y + m.ry + 16),
+      text: `${m.session ? m.session + ' · ' : ''}${m.date}`,
+    },
+    through: w
+      ? `M${round(m.x - m.rx * 0.82)} ${round(m.y - m.ry * 0.9)}` +
         ` L${round(m.x + m.rx * 0.82)} ${round(m.y + m.ry * 0.9)}` +
         ` M${round(m.x + m.rx * 0.82)} ${round(m.y - m.ry * 0.9)}` +
-        ` L${round(m.x - m.rx * 0.82)} ${round(m.y + m.ry * 0.9)}"/>`,
-    )
+        ` L${round(m.x - m.rx * 0.82)} ${round(m.y + m.ry * 0.9)}`
+      : null,
+    hit: { cx: m.x, cy: m.y, rx: round(m.rx + 8), ry: round(m.ry + 8) },
   }
-  // The hit target, last so it sits on top: the group's own bounding box reaches from the lamp on
-  // the bar all the way down to the pool, so its geometric centre is empty air between two 1px
-  // beams — a pointer aimed at "the position" would miss it. The pool plus a little margin is what
-  // a visitor is actually aiming at.
-  g.push(`<ellipse class="st-sf-hit" cx="${m.x}" cy="${m.y}" rx="${round(m.rx + 8)}" ry="${round(m.ry + 8)}"/>`)
-  g.push(`<title>${escapeXml(hoverText(m))}</title></g>`)
-  return g.join('')
+}
+
+export interface StrikeParts {
+  /** the taped X, as path data */
+  x: string
+  /** where the two lettered lines start, and which side of the X they run towards */
+  labelX: number
+  anchorEnd: boolean
+  name: { y: number; text: string }
+  session: { y: number; text: string }
+  /** the hit target covers the X AND its lettering, not just the 20px glyph */
+  hit: { x: number; y: number; width: number; height: number }
 }
 
 /** A struck position: the taped X the studio's grammar already uses, with its name and session
- *  lettered beside it and the verbatim reason on hover. */
-function strikeMark(m: SeasonMark, f: MarkFlags): string {
+ *  lettered beside it and the verbatim reason on hover. Near the floor's right edge the lettering
+ *  turns and runs back inwards, so a strike on the newest evening never letters off the stage. */
+export function strikeParts(m: SeasonMark): StrikeParts {
   const left = m.x > FLOOR.x1 - 220
-  const lx = round(left ? m.x - 15 : m.x + 15)
-  const anchor = left ? ' text-anchor="end"' : ''
-  return (
-    `<g ${markAttrs(m, f, 'st-sf-strike')}>` +
-    `<path class="st-sf-x" d="M${round(m.x - 10)} ${round(m.y - 10)} L${round(m.x + 10)} ${round(m.y + 10)}` +
-    ` M${round(m.x + 10)} ${round(m.y - 10)} L${round(m.x - 10)} ${round(m.y + 10)}"/>` +
-    `<text class="st-sf-strike-n" x="${lx}" y="${round(m.y - 1)}"${anchor}>${escapeXml(m.label)}</text>` +
-    `<text class="st-sf-strike-s" x="${lx}" y="${round(m.y + 13)}"${anchor}>` +
-    `${escapeXml(`${m.session}${m.dateKnown ? ` · ${m.date}` : ' · evening not in the mirror'}`)}</text>` +
-    // the hit target covers the X and its lettering, not just the 20px glyph
-    `<rect class="st-sf-hit" x="${round(left ? m.x - 132 : m.x - 15)}" y="${round(m.y - 15)}" width="147" height="32"/>` +
-    `<title>${escapeXml(hoverText(m))}</title></g>`
-  )
+  return {
+    x:
+      `M${round(m.x - 10)} ${round(m.y - 10)} L${round(m.x + 10)} ${round(m.y + 10)}` +
+      ` M${round(m.x + 10)} ${round(m.y - 10)} L${round(m.x - 10)} ${round(m.y + 10)}`,
+    labelX: round(left ? m.x - 15 : m.x + 15),
+    anchorEnd: left,
+    name: { y: round(m.y - 1), text: m.label },
+    session: {
+      y: round(m.y + 13),
+      text: `${m.session}${m.dateKnown ? ` · ${m.date}` : ' · evening not in the mirror'}`,
+    },
+    hit: { x: round(left ? m.x - 132 : m.x - 15), y: round(m.y - 15), width: 147, height: 32 },
+  }
+}
+
+export interface ReturnParts {
+  arc: string
+  arrow: string
+  ordinal: { x: number; y: number; text: string }
+  hit: { cx: number; cy: number; r: number }
 }
 
 /** A return: a violet arc leaving the work's own pool on the public side and curving back down
@@ -787,26 +845,92 @@ function strikeMark(m: SeasonMark, f: MarkFlags): string {
  *  sideways by 120 + ordinal × 46 px and drew three enormous crossing teardrops (visible
  *  immediately in the first screenshot pass). The arcs already separate on their own, because each
  *  return lands at its own evening on the time axis — so the curve's only job is to leave the pool
- *  downward and arrive at the landing downward, which is what these two control points do. */
-function returnArc(m: SeasonMark, model: SeasonModel, f: MarkFlags): string {
+ *  downward and arrive at the landing downward, which is what these two control points do.
+ *
+ *  The hit target sits at the landing, on top of the marks, so a pointer finds the arc without
+ *  having to land on a 2px stroke (dataviz interaction rule: the hit area is bigger than the mark). */
+export function returnParts(m: SeasonMark, model: SeasonModel): ReturnParts {
   const from = model.marks.find((k) => k.ofWork === undefined && k.key.endsWith(`:${m.ofWork}`))
   const sx = from ? from.x : m.x
   const sy = from ? from.y + from.ry : LIT_Y + POOL_RY
   const ty = m.y - 12
   const dy = ty - sy
-  const d =
-    `M${round(sx)} ${round(sy)} C${round(sx)} ${round(sy + dy * 0.55)} ` +
-    `${round(m.x)} ${round(sy + dy * 0.78)} ${round(m.x)} ${round(ty)}`
+  return {
+    arc:
+      `M${round(sx)} ${round(sy)} C${round(sx)} ${round(sy + dy * 0.55)} ` +
+      `${round(m.x)} ${round(sy + dy * 0.78)} ${round(m.x)} ${round(ty)}`,
+    arrow:
+      `M${round(m.x - 6)} ${round(m.y - 21)} L${round(m.x)} ${round(m.y - 11)}` +
+      ` L${round(m.x + 6)} ${round(m.y - 21)}`,
+    ordinal: { x: m.x, y: round(m.y + 15), text: roman(m.ordinal ?? 1) },
+    hit: { cx: m.x, cy: round(m.y), r: 20 },
+  }
+}
+
+export interface NoteParts {
+  /** the call-out's stem, as path data */
+  stem: string
+  x: number
+  y: number
+}
+
+/** A free call-out lettered under the mark it names — where a tour scene puts its own words, and
+ *  the one place on this floor a string arrives that the committed record did not write. */
+export function noteParts(m: SeasonMark): NoteParts {
+  return { stem: `M${m.x} ${m.y + m.ry + 6} V${m.y + m.ry + 26}`, x: m.x, y: m.y + m.ry + 42 }
+}
+
+// ---------------------------------------------------------------- the string renderer's marks
+
+function litMark(m: SeasonMark, f: MarkFlags): string {
+  const p = litParts(m)
+  const g: string[] = []
+  g.push(`<g ${markAttrs(m, f, 'st-sf-lit')}>`)
+  g.push(
+    `<rect class="st-sf-lamp" x="${p.lamp.x}" y="${p.lamp.y}" width="${p.lamp.width}" height="${p.lamp.height}"/>`,
+  )
+  for (const d of p.beams) g.push(`<path class="st-sf-beam" d="${d}"/>`)
+  g.push(
+    `<ellipse class="${p.pool.className}" cx="${p.pool.cx}" cy="${p.pool.cy}"` +
+      ` rx="${p.pool.rx}" ry="${p.pool.ry}"/>`,
+  )
+  for (const d of p.tape) g.push(`<path class="st-sf-tape" d="${d}"/>`)
+  g.push(
+    `<text class="st-sf-title" x="${p.title.x}" y="${p.title.y}" text-anchor="middle">${escapeXml(p.title.text)}</text>`,
+  )
+  g.push(
+    `<text class="st-sf-litmeta" x="${p.meta.x}" y="${p.meta.y}" text-anchor="middle">` +
+      `${escapeXml(p.meta.text)}</text>`,
+  )
+  if (p.through) g.push(`<path class="st-sf-x st-sf-x-through" d="${p.through}"/>`)
+  g.push(`<ellipse class="st-sf-hit" cx="${p.hit.cx}" cy="${p.hit.cy}" rx="${p.hit.rx}" ry="${p.hit.ry}"/>`)
+  g.push(`<title>${escapeXml(hoverText(m))}</title></g>`)
+  return g.join('')
+}
+
+function strikeMark(m: SeasonMark, f: MarkFlags): string {
+  const p = strikeParts(m)
+  const anchor = p.anchorEnd ? ' text-anchor="end"' : ''
+  return (
+    `<g ${markAttrs(m, f, 'st-sf-strike')}>` +
+    `<path class="st-sf-x" d="${p.x}"/>` +
+    `<text class="st-sf-strike-n" x="${p.labelX}" y="${p.name.y}"${anchor}>${escapeXml(p.name.text)}</text>` +
+    `<text class="st-sf-strike-s" x="${p.labelX}" y="${p.session.y}"${anchor}>` +
+    `${escapeXml(p.session.text)}</text>` +
+    `<rect class="st-sf-hit" x="${p.hit.x}" y="${p.hit.y}" width="${p.hit.width}" height="${p.hit.height}"/>` +
+    `<title>${escapeXml(hoverText(m))}</title></g>`
+  )
+}
+
+function returnArc(m: SeasonMark, model: SeasonModel, f: MarkFlags): string {
+  const p = returnParts(m, model)
   return (
     `<g ${markAttrs(m, f, 'st-sf-return')}>` +
-    `<path class="st-sf-arc" d="${d}"/>` +
-    `<path class="st-sf-arrow" d="M${round(m.x - 6)} ${round(m.y - 21)} L${round(m.x)} ${round(m.y - 11)}` +
-    ` L${round(m.x + 6)} ${round(m.y - 21)}"/>` +
-    `<text class="st-sf-ord" x="${m.x}" y="${round(m.y + 15)}" text-anchor="middle">` +
-    `${escapeXml(roman(m.ordinal ?? 1))}</text>` +
-    // hit target at the landing, on top of the marks so a pointer finds the arc without having to
-    // land on a 2px stroke (dataviz interaction rule: the hit area is bigger than the mark)
-    `<circle class="st-sf-hit" cx="${m.x}" cy="${round(m.y)}" r="20"/>` +
+    `<path class="st-sf-arc" d="${p.arc}"/>` +
+    `<path class="st-sf-arrow" d="${p.arrow}"/>` +
+    `<text class="st-sf-ord" x="${p.ordinal.x}" y="${p.ordinal.y}" text-anchor="middle">` +
+    `${escapeXml(p.ordinal.text)}</text>` +
+    `<circle class="st-sf-hit" cx="${p.hit.cx}" cy="${p.hit.cy}" r="${p.hit.r}"/>` +
     `<title>${escapeXml(hoverText(m))}</title></g>`
   )
 }

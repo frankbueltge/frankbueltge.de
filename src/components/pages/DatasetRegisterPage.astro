@@ -8,6 +8,8 @@
 // Auskunft-vor-Poesie: zuerst „was ist das hier?", dann der Befund, dann der Bestand.
 // Zahlen NUR aus den Daten — kein Wert steht im Fließtext.
 import { ENTRIES, werkLabel, zugangLabel } from '@/lib/register'
+import { buttonVariants } from '@/components/ui/button'
+import { cn } from '@/lib/ui/cn'
 
 const total = ENTRIES.length
 const bestaetigt = ENTRIES.filter((e) => e.geprueft).length
@@ -42,18 +44,31 @@ const sortiert = [...ENTRIES].sort((a, b) => {
   if (a.geprueft !== b.geprueft) return a.geprueft ? -1 : 1
   return a.titel.localeCompare(b.titel)
 })
+
+// Re-skin 2d (2026-09-02): the register on the frame's recipe — the kicker as the one .kicker
+// class, the head and the entries on the type scale, panels on the frame's radius and resting
+// depth, the filter chips cut from the shadcn Button recipe (they ARE buttons, and they were
+// four hand-typed copies of the same look), the folds on the frame's turning chevron. The
+// filter script, the data and every word are untouched.
+const kicker = 'kicker'
+const panel = 'rounded-md border border-line bg-panel panel-raised'
+const chip = cn(
+  buttonVariants({ variant: 'outline', size: 'sm' }),
+  'h-7 gap-1.5 px-2 font-mono text-mono-sm font-normal text-fg-faint aria-pressed:border-line-lift aria-pressed:text-fg',
+)
+const fold = 'fold-chevron inline-block'
 ---
 
 <main id="main" class="mx-auto w-full max-w-4xl px-4 py-10 sm:py-14">
   <header class="mb-8 max-w-3xl">
-    <p class="mb-2 font-mono text-xs uppercase tracking-widest text-fg-faint">Dataset Register</p>
-    <h1 class="text-3xl font-semibold tracking-tight sm:text-4xl">Dataset Register</h1>
-    <p class="mt-4 text-fg-muted">
+    <p class={cn(kicker, 'mb-2')}>Dataset Register</p>
+    <h1 class="text-h1 font-semibold">Dataset Register</h1>
+    <p class="mt-4 text-body text-fg-muted">
       The public data this ecology's own works actually retrieve. Every entry names the
       work that fetches it and the file the call is written in — and states how far the
       access route was confirmed when it was last asked.
     </p>
-    <p class="mt-3 text-fg-muted">
+    <p class="mt-3 text-body text-fg-muted">
       The register does not collect what exists. It reads what runs. A call in the source
       of a nightly pipeline is a stronger warrant than a citation: a citation says someone
       read this once, a scheduled fetch says it is load-bearing tonight.
@@ -62,11 +77,11 @@ const sortiert = [...ENTRIES].sort((a, b) => {
 
   <!-- Der Rückbau bleibt sichtbar und datiert, statt unter dem neuen Bestand zu
        verschwinden (Aktualitäts-Regel). -->
-  <details class="mb-8 rounded-xl border border-line bg-panel p-5">
-    <summary class="cursor-pointer font-mono text-xs uppercase tracking-widest text-fg-faint hover:text-fg">
-      How this register got here · reset 2026-07-27
+  <details class={cn(panel, 'mb-8 p-5')}>
+    <summary class={cn(kicker, 'cursor-pointer hover:text-fg')}>
+      <span class={fold}>▾</span> How this register got here · reset 2026-07-27
     </summary>
-    <p class="mt-3 text-sm leading-relaxed text-fg-muted">
+    <p class="mt-3 text-small leading-relaxed text-fg-muted">
       Until 27 July 2026 the register held 16,516 entries, harvested by running a keyword
       sieve over 56,620,404 DataCite records, and published 8,590 pages. It was rolled
       back to nothing — not trimmed, not re-filtered. What settled it was a count: of the
@@ -74,17 +89,17 @@ const sortiert = [...ENTRIES].sort((a, b) => {
       <strong class="font-semibold text-fg">zero</strong>. A keyword in a title names a
       role, not a subject; a sieve counts word occurrences and reports it as relevance.
     </p>
-    <p class="mt-3 text-sm leading-relaxed text-fg-muted">
+    <p class="mt-3 text-small leading-relaxed text-fg-muted">
       Five ways of <em>searching</em> for suitable datasets were then measured and found
       empty: DataCite back-references (1 hit across 20 papers), OpenAlex dataset
       neighbourhood (0), and three topic searches (0, 0, and 38 with unusable top hits).
       The experiments had been retrieving sixty public sources all along.
     </p>
-    <p class="mt-3 text-sm leading-relaxed text-fg-muted">
+    <p class="mt-3 text-small leading-relaxed text-fg-muted">
       Nothing measured was destroyed: the earlier harvest, its rejection log and its
       failure notes remain in the
       <a href="https://github.com/frankbueltge/dataset-hub" rel="noopener"
-         class="underline decoration-line underline-offset-4 hover:text-fg">dataset-hub</a>
+         class="underline decoration-line underline-offset-4 transition-colors hover:text-fg">dataset-hub</a>
       repository as a quarry, not as a record on display.
     </p>
   </details>
@@ -96,9 +111,9 @@ const sortiert = [...ENTRIES].sort((a, b) => {
       { wert: gesperrt, label: 'exist but gated' },
       { wert: vonMehreren, label: 'used by more than one work' },
     ].map((k) => (
-      <div class="rounded-lg border border-line bg-panel p-4">
-        <div class="font-mono text-2xl font-semibold tabular-nums text-fg">{k.wert}</div>
-        <div class="mt-1 font-mono text-[10px] uppercase leading-tight tracking-wider text-fg-faint">
+      <div class={cn(panel, 'p-4')}>
+        <div class="font-mono text-h2 font-semibold tabular-nums text-fg">{k.wert}</div>
+        <div class="mt-1 font-mono text-mono-xs uppercase leading-tight tracking-wider text-fg-faint">
           {k.label}
         </div>
       </div>
@@ -114,59 +129,54 @@ const sortiert = [...ENTRIES].sort((a, b) => {
           optionen: zugangFacette.map((z) => ({ wert: z.key, label: z.label, n: z.n })) },
       ].filter((g) => g.optionen.length > 1).map((g) => (
         <div class="flex flex-wrap items-baseline gap-x-2 gap-y-1">
-          <span class="w-16 shrink-0 font-mono text-[10px] uppercase tracking-wider text-fg-faint">
+          <span class="w-16 shrink-0 font-mono text-mono-xs uppercase tracking-wider text-fg-faint">
             {g.titel}
           </span>
-          <button type="button" data-filter={g.gruppe} data-value="all" aria-pressed="true"
-            class="rounded border border-line px-2 py-0.5 font-mono text-[11px] text-fg-faint aria-pressed:border-fg-faint aria-pressed:text-fg hover:text-fg"
-          >all</button>
+          <button type="button" data-filter={g.gruppe} data-value="all" aria-pressed="true" class={chip}>all</button>
           {g.optionen.map((o) => (
-            <button type="button" data-filter={g.gruppe} data-value={o.wert} aria-pressed="false"
-              class="rounded border border-line px-2 py-0.5 font-mono text-[11px] text-fg-faint aria-pressed:border-fg-faint aria-pressed:text-fg hover:text-fg"
+            <button type="button" data-filter={g.gruppe} data-value={o.wert} aria-pressed="false" class={chip}
             >{o.label} <span class="tabular-nums opacity-60">{o.n}</span></button>
           ))}
         </div>
       ))}
       <div class="flex items-center gap-3 pt-1">
-        <p class="font-mono text-xs text-fg-faint"><span data-count>{total}</span> / {total} shown</p>
-        <button type="button" data-reset
-          class="hidden rounded border border-line px-2 py-0.5 font-mono text-[11px] text-fg-faint hover:text-fg"
-        >reset</button>
+        <p class="font-mono text-mono text-fg-faint"><span data-count>{total}</span> / {total} shown</p>
+        <button type="button" data-reset class={cn(chip, 'hidden')}>reset</button>
       </div>
     </div>
 
     <ol class="space-y-4">
       {sortiert.map((e) => (
         <li
-          class="rounded-xl border border-line bg-panel p-5"
+          class={cn(panel, 'ds-card break-words p-5')}
           data-card
           data-werk={e.benutzt_von.join(' ')}
           data-zugang={zustand(e)}
         >
           <div class="flex items-start justify-between gap-3">
-            <h2 class="text-base font-semibold leading-snug text-fg">
+            <h2 class="text-h3 font-semibold leading-snug text-fg">
               <a href={e.zugriff_url} rel="noopener"
-                 class="hover:underline decoration-line underline-offset-4">{e.titel}</a>
+                 class="decoration-line underline-offset-4 hover:underline">{e.titel}</a>
             </h2>
             {e.verify_status === 'toVerify' && (
-              <span class="shrink-0 font-mono text-xs text-fg-faint"
+              <span class="shrink-0 font-mono text-mono text-fg-faint"
                     title="the use is documented; nobody has read the entry over yet">?</span>
             )}
           </div>
 
-          <p class="mt-2 text-sm leading-relaxed text-fg-muted">{e.relevanz}</p>
+          <p class="mt-2 text-small leading-relaxed text-fg-muted">{e.relevanz}</p>
 
-          <div class="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[11px] text-fg-faint">
+          <div class="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-mono-sm text-fg-faint">
             <span>{e.host}</span>
             <span>{zugangLabel(e)}</span>
             <span>used by {e.benutzt_von.map(werkLabel).join(', ')}</span>
           </div>
 
           <details class="mt-3 border-t border-line pt-2">
-            <summary class="cursor-pointer font-mono text-[11px] text-fg-faint hover:text-fg">
-              admitted because a work of this ecology retrieves it
+            <summary class="cursor-pointer font-mono text-mono-sm text-fg-faint hover:text-fg">
+              <span class={fold}>▾</span> admitted because a work of this ecology retrieves it
             </summary>
-            <ul class="mt-2 space-y-1 font-mono text-[11px] text-fg-faint">
+            <ul class="mt-2 space-y-1 font-mono text-mono-sm text-fg-faint">
               {e.fundstellen.map((f) => <li>call written in {f}</li>)}
               {e.adressen.map((a) => <li class="break-all">fetches {a}</li>)}
               {e.pruef_vermerk && <li>note: {e.pruef_vermerk}</li>}
@@ -178,11 +188,29 @@ const sortiert = [...ENTRIES].sort((a, b) => {
   </section>
 
   {total === 0 && (
-    <p class="text-sm leading-relaxed text-fg-muted">
+    <p class="text-small leading-relaxed text-fg-muted">
       Empty, and that is the accurate state — not a source outage, not a failed build.
     </p>
   )}
 </main>
+
+<style>
+  /* The entry card answers the pointer with the frame's gesture at the frame's speed. It is a
+     card that is READ in place (its links sit inside it), so it brightens its hairline and
+     casts a little deeper rather than rising: .lift is for cards that ARE the destination.
+     The rule stands here because global.css's interactive rule cannot reach a <li>.
+     (re-skin 2d, 2026-09-02) */
+  .ds-card {
+    transition:
+      border-color 0.2s var(--ease-frame),
+      box-shadow 0.2s var(--ease-frame);
+  }
+  .ds-card:hover,
+  .ds-card:focus-within {
+    border-color: var(--color-line-lift);
+    box-shadow: var(--elev-lift);
+  }
+</style>
 
 <script>
   // Dasselbe Muster wie AtlasPage und PapersPage.

@@ -58,7 +58,11 @@ const provenance = `${w.provenancePrefix} ${model.provenance.join(' · ')}`
 
 <div id="tour-three-returns" class="st-tour-wrap">
   <Tour tour={oneTapTour} renderStill={renderStill}>
-    <SeasonFloor slot="figure" model={model} id={ONE_TAP_FIGURE} withRecord={false} />
+    {/* `hydrate="load"`, not the island's usual `client:visible`: Tour.astro's figure slot is
+        `hidden` until the tour's own script reveals it, and an island waiting to become visible
+        inside a hidden container may never hydrate — the tour would then step its prose beside a
+        floor that never answered. */}
+    <SeasonFloor slot="figure" model={model} id={ONE_TAP_FIGURE} withRecord={false} hydrate="load" />
   </Tour>
 
   <TableFallback
