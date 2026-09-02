@@ -10,6 +10,7 @@
  */
 import TableFallback from '@/components/dataviz/TableFallback.astro'
 import TrendingAudienceFigure from '@/components/pages/TrendingAudience.astro'
+import TrendingSelfCheck from '@/components/pages/TrendingSelfCheck.astro'
 import TrendingRising from '@/components/pages/TrendingRising.astro'
 import { audienceBefore, getTrendingDays } from '@/lib/trending/data'
 import { fmtDateLong, fmtDateWeekday, fmtTimeUtc, platformLabel } from '@/lib/trending/format'
@@ -72,6 +73,7 @@ const convergenceProvenance =
         {' · '}rebuilt {fmtTimeUtc(day.generated_at)} UTC
         {' · '}<span class="tabular-nums">{day.summary.sources_ok}</span> of <span class="tabular-nums">{day.summary.sources_total}</span> sources answered
       </p>
+      <TrendingSelfCheck quality={day.quality} subject="this morning's ledger" />
       <p class="mt-5 max-w-2xl leading-relaxed text-fg-muted">
         Every morning a machine reads what the open web says it is looking at — search trends, the most-read
         encyclopedia articles, the link aggregators, the fediverse, the day&rsquo;s headlines and the newest

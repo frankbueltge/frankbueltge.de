@@ -1,3 +1,4 @@
+import type { SelfCheck } from './types'
 /** Mirror of the third contract the trending pipeline commits (pipelines/trending):
  *  `src/data/trending/terms/YYYY-MM-DD.json` (`trending-terms/1`) — the slower layer of the
  *  ledger. Where a day file records what spiked this morning, a terms file records how a
@@ -102,6 +103,7 @@ export interface TrendingTermsDay {
   terms: TrendingTerm[]
   candidates: TermCandidate[]
   summary: TermsSummary
+  quality?: SelfCheck
 }
 
 /** One point of a term's series: a committed day and the mentions it counted that day. */

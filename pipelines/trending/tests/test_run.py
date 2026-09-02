@@ -29,6 +29,7 @@ def _fake_sources(fail_optional=False):
 @pytest.fixture
 def patched(monkeypatch):
     monkeypatch.setattr(run_mod, "SOURCES", _fake_sources())
+    monkeypatch.setattr(run_mod.time, "sleep", lambda s: None)  # the retry pause, skipped
     # run_mod.httpx is the httpx module itself, so the replacement must hold the real class
     # before the patch lands — otherwise the stand-in calls itself.
     real_client = httpx.Client
@@ -85,3 +86,28 @@ def test_non_finite_values_raise_instead_of_landing_in_the_archive():
     from trending.model import to_json
     with pytest.raises(ValueError):
         to_json({"x": float("nan")})
+
+
+def test_a_source_that_fails_once_is_asked_again_and_the_day_carries_its_grade(tmp_path, patched, monkeypatch):
+    calls = {"n": 0}
+
+    def flaky(ctx):
+        calls["n"] += 1
+        if calls["n"] == 1:
+            raise RuntimeError("first attempt fails")
+        return SourceResult([Signal(source="delta", label="Recovered item", rank=1, magnitude_unit="rank")])
+
+    slept = []
+    monkeypatch.setattr(run_mod.time, "sleep", lambda s: slept.append(s))
+    monkeypatch.setattr(run_mod, "SOURCES", (*_fake_sources(), SourceSpec("delta", "Delta", "https://d", "lic", flaky)))
+    assert run_mod.main(["--repo-root", str(tmp_path), "--date", "2026-09-02", "--skip-terms", "--skip-audience"]) == 0
+    day = json.loads((tmp_path / "src" / "data" / "trending" / "2026-09-02.json").read_text())
+    delta = next(s for s in day["sources"] if s["id"] == "delta")
+    assert delta["status"] == "ok" and "recovered on retry" in delta["note"] and calls["n"] == 2
+    assert slept and slept[0] == 20  # the configured pause, once
+    grade = day["quality"]
+    assert grade["rubric_version"] == "1" and grade["total"] == 7
+    assert {c["id"] for c in grade["checks"]} >= {"sources_answering", "no_giant_cluster", "size_within_bounds"}
+    # a two-signal fixture cannot meet the signal floor — and the file says so instead of hiding it
+    assert grade["ok"] is False
+    assert any(c["id"] == "signals_present" and not c["ok"] for c in grade["checks"])

@@ -8,6 +8,7 @@
  *  window, a candidate without a sample. Nothing here supplies a default number — an absent
  *  count stays absent rather than becoming a zero the pipeline never measured. */
 import { z } from 'zod/v4'
+import { selfCheckSchema } from './schema'
 
 const termStatus = z.enum(['emerging', 'rising', 'established', 'fading', 'quiet'])
 
@@ -76,4 +77,5 @@ export const trendingTermsSchema = z.object({
     by_status: z.partialRecord(termStatus, z.number()).default({}),
     candidates_total: z.number(),
   }),
+  quality: selfCheckSchema.optional(),
 })

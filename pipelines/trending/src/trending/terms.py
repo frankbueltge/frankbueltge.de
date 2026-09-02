@@ -23,6 +23,7 @@ import httpx
 from trending.data import load_json
 from trending.discover import Discovery, discover
 from trending.model import to_json
+from trending.quality import assess_terms, one_line
 from trending.normalize import slug as slugify
 from trending.tracker import (CONTRACT_TERMS, PLATFORMS, WINDOWS, TermContext, first_seen_for,
                               history_first_seen, iso_z, load_terms_files, make_context,
@@ -133,7 +134,7 @@ def build_terms(ctx: TermContext, *, watchlist: Sequence[dict[str, Any]], today:
             "receipts": merge_receipts(receipts),
         })
 
-    return {
+    record: dict[str, Any] = {
         "$contract": CONTRACT_TERMS,
         "date": today.isoformat(),
         "generated_at": iso_z(ctx.clock()),
@@ -145,6 +146,10 @@ def build_terms(ctx: TermContext, *, watchlist: Sequence[dict[str, Any]], today:
         "candidates": list(proposed.candidates),
         "summary": _summary(terms, proposed.candidates),
     }
+    # The record grades itself before it leaves the builder, so every committed file carries
+    # the rubric's verdict — including the ones a reader would rather not see.
+    record["quality"] = assess_terms(record, ctx.rules)
+    return record
 
 
 def unavailable_record(today: date, note: str, *, generated_at: str | None = None,
@@ -184,6 +189,11 @@ def run_terms(client: httpx.Client, *, repo_root: str | Path, today: date,
     except Exception as exc:  # noqa: BLE001 — the arcs never take the day down
         record = unavailable_record(today, f"{type(exc).__name__}: {exc}")
         log(f"trending: terms unavailable ({type(exc).__name__}: {exc})"[:200])
+    if "quality" not in record:  # the unavailable record grades itself too
+        record["quality"] = assess_terms(record, rules)
+    log(f"trending: terms {one_line(record['quality'])}")
+    if not record["quality"]["ok"]:
+        log(f"::warning::trending terms {today}: {one_line(record['quality'])}")
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(to_json(record), encoding="utf-8")
     s = record["summary"]
