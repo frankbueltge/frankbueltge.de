@@ -4,11 +4,15 @@
 // ist fertig und wird hier nicht angefasst) — Texte wörtlich, nicht umformuliert. Die einzige
 // Ergänzung dieser Komponente sind die Zählungen je Karte, und die stammen ausschließlich aus
 // den Daten (Kanon-Regel: Zahlen nie in Beschreibungstexten, nie geraten).
+//
+// Re-skin 2d (2026-09-02): the head on the type scale, the four cards on the frame's recipe —
+// they lead somewhere, so they lift. The words are the same words.
 import { NAMING } from '@/config/naming'
 import worksData from '@/data/atlas/werke.json'
 import { ENTRIES as datasetEntries } from '@/lib/register'
 import { PAPERS } from '@/lib/papers'
 import { allWorks } from '@/lib/engines/register'
+import { cn } from '@/lib/ui/cn'
 
 const counts: Record<string, number> = {
   '/atlas': (worksData as unknown[]).length,
@@ -18,31 +22,32 @@ const counts: Record<string, number> = {
   // not from a number typed here (added 2026-08-01 with the fourth card).
   '/works': allWorks().length,
 }
+
+const kicker = 'kicker'
+/* a card that leads somewhere: the frame's resting depth, and the lift on hover or focus */
+const cardLink = 'lift group flex h-full flex-col rounded-md border border-line bg-panel p-6 panel-raised'
 ---
 
 <main id="main" class="mx-auto w-full max-w-4xl px-4 py-10 sm:py-14">
   <header class="mb-10 max-w-2xl">
-    <p class="mb-2 font-mono text-xs uppercase tracking-widest text-fg-faint">{NAMING.catalogues.kicker}</p>
-    <h1 class="text-3xl font-semibold tracking-tight sm:text-4xl">{NAMING.catalogues.title}</h1>
-    <p class="mt-4 text-fg-muted">{NAMING.catalogues.sub}</p>
+    <p class={cn(kicker, 'mb-2')}>{NAMING.catalogues.kicker}</p>
+    <h1 class="text-h1 font-semibold">{NAMING.catalogues.title}</h1>
+    <p class="mt-4 text-body text-fg-muted">{NAMING.catalogues.sub}</p>
   </header>
 
   <ul class="grid grid-cols-1 gap-4 sm:grid-cols-2">
     {NAMING.catalogues.items.map((item) => (
       <li>
-        <a
-          href={item.href}
-          class="group flex h-full flex-col rounded-xl border border-line bg-panel p-6 transition-colors hover:border-fg-faint"
-        >
+        <a href={item.href} class={cardLink}>
           <div class="flex items-start justify-between gap-3">
-            <h2 class="text-lg font-semibold text-fg">{item.name}</h2>
+            <h2 class="text-h3 font-semibold text-fg">{item.name}</h2>
             <div class="shrink-0 text-right">
-              <div class="font-mono text-xl font-semibold tabular-nums text-fg">{counts[item.href] ?? '—'}</div>
-              <div class="font-mono text-[10px] uppercase tracking-wider text-fg-faint">entries indexed</div>
+              <div class="font-mono text-h3 font-semibold tabular-nums text-fg">{counts[item.href] ?? '—'}</div>
+              <div class="font-mono text-mono-xs uppercase tracking-wider text-fg-faint">entries indexed</div>
             </div>
           </div>
-          <p class="mt-3 flex-1 text-sm leading-relaxed text-fg-muted">{item.description}</p>
-          <p class="mt-4 font-mono text-xs uppercase tracking-wider text-fg-faint transition-colors group-hover:text-fg">
+          <p class="mt-3 flex-1 text-small leading-relaxed text-fg-muted">{item.description}</p>
+          <p class="mt-4 font-mono text-mono-sm uppercase tracking-wider text-fg-faint transition-colors group-hover:text-fg">
             enter →
           </p>
         </a>

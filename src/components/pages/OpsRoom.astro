@@ -31,6 +31,15 @@
 //     response to the pointer.
 //   · ABSENCE IS DRAWN. A row whose record is empty says so; a tile whose snapshot yields no
 //     reading is not rendered at all (the handoff's rule) rather than shown with a placeholder.
+//
+// Re-skin 2d (2026-09-02) — "the entrance on its tokens": the room stopped keeping a second
+// greyscale, a second radius scale and a second easing beside the frame's. Its own tokens now
+// point at the 2a tokens (src/styles/ops-room.css declares the mapping); here in the markup the
+// kickers wear the frame's one .kicker class, and the two kinds of card that ARE destinations —
+// the experiment tiles and the house cards — wear the frame's one hover gesture, .lift. The
+// board rows keep the register gesture (a wash, not a rise) because a board is read by running
+// down it. The globe panel and the pulse instrument are untouched inside; what they draw is
+// their own.
 import { getRelativeLocaleUrl } from 'astro:i18n'
 import type { Locale } from '@/lib/site'
 import { NAMING } from '@/config/naming'
@@ -160,8 +169,8 @@ const catalogues = NAMING.catalogues.items.filter((c) => c.href !== '/atlas')
           src/pages/index.astro went on explaining that it was there. The name search is contested
           by a different, long-established Frank Bültge; on that query this site cannot afford to
           leave its own name out of its entrance. */}
-      <p class="ops-hero-eyebrow">{NAMING.eyebrow}</p>
-      <p class="ops-hero-kicker">{NAMING.focusKicker}</p>
+      <p class="kicker ops-hero-eyebrow">{NAMING.eyebrow}</p>
+      <p class="kicker ops-hero-kicker">{NAMING.focusKicker}</p>
       <h1>{NAMING.title}</h1>
       <p class="ops-hero-sub">{OPS.hero.sub}</p>
       <div class="ops-hero-links">
@@ -205,13 +214,13 @@ const catalogues = NAMING.catalogues.items.filter((c) => c.href !== '/atlas')
   {/* ── 2 · the board ──────────────────────────────────────────────────────────────────── */}
   <section class="ops-section" id="board">
     <div class="ops-head">
-      <p class="ops-kicker"><b>{OPS.board.kicker}</b> · {OPS.board.kickerSub}</p>
+      <p class="kicker ops-kicker"><b>{OPS.board.kicker}</b> · {OPS.board.kickerSub}</p>
       <a class="ops-headlink" href={url(OPS.board.link.href)}>{OPS.board.link.label}</a>
     </div>
 
     {boardView.map((group) => (
       <div>
-        <p class="ops-group-label">{group.label}</p>
+        <p class="kicker ops-group-label">{group.label}</p>
         <ul class="ops-panel ops-board">
           {group.rows.map((row) => (
             <li>
@@ -268,7 +277,7 @@ const catalogues = NAMING.catalogues.items.filter((c) => c.href !== '/atlas')
   {/* ── 3 · the signal log ─────────────────────────────────────────────────────────────── */}
   <section class="ops-section" id="latest">
     <div class="ops-head">
-      <p class="ops-kicker"><b>{OPS.signal.kicker}</b> · {OPS.signal.kickerSub}</p>
+      <p class="kicker ops-kicker"><b>{OPS.signal.kicker}</b> · {OPS.signal.kickerSub}</p>
       <a class="ops-headlink" href={url(OPS.signal.link.href)}>{OPS.signal.link.label}</a>
     </div>
     <ul class="ops-panel ops-log">
@@ -295,13 +304,13 @@ const catalogues = NAMING.catalogues.items.filter((c) => c.href !== '/atlas')
   {/* ── 4 · live experiments ───────────────────────────────────────────────────────────── */}
   <section class="ops-section" id="live">
     <div class="ops-head">
-      <p class="ops-kicker"><b>{OPS.live.kicker}</b> · {OPS.live.kickerSub}</p>
+      <p class="kicker ops-kicker"><b>{OPS.live.kicker}</b> · {OPS.live.kickerSub}</p>
       <a class="ops-headlink" href={url(OPS.live.link.href)}>{OPS.live.link.label}</a>
     </div>
     <ul class="ops-tiles" data-ops-tiles>
       {tileView.map((tile) => (
         <li>
-          <a class="ops-panel ops-tile" href={url(tile.href)}>
+          <a class="ops-panel ops-tile lift" href={url(tile.href)}>
             <span class="ops-tile-head">
               <span class="ops-tile-name">{tile.name}</span>
               <span class="ops-led"></span>
@@ -354,11 +363,11 @@ const catalogues = NAMING.catalogues.items.filter((c) => c.href !== '/atlas')
     {/* The travel block's own kicker pair, not its long note: a section heading in a status board
         is a label, and travel.note is a sentence. It still stands, on /ecology, where the section
         has room for it. */}
-    <p class="ops-kicker"><b>{NAMING.travel.kicker}</b> · {NAMING.travel.kickerSub}</p>
+    <p class="kicker ops-kicker"><b>{NAMING.travel.kicker}</b> · {NAMING.travel.kickerSub}</p>
     <ul class="ops-houses">
       {NAMING.travel.items.map((house) => (
         <li>
-          <a class="ops-panel ops-house" href={house.href} target="_blank" rel="noreferrer">
+          <a class="ops-panel ops-house lift" href={house.href} target="_blank" rel="noreferrer">
             <span class="ops-house-name"><span>{house.name}</span><span>↗</span></span>
             <span class="ops-house-line">{house.description}</span>
             {house.resident && <span class="ops-house-resident">{house.resident.lead} {house.resident.label}</span>}

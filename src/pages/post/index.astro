@@ -24,6 +24,9 @@
 import Page from '@/layouts/Page.astro'
 import { loadLedger } from '@/lib/post/ledger'
 import { loadIncoming, countByKind } from '@/lib/post/incoming'
+import { buttonVariants } from '@/components/ui/button'
+import { fieldLabel, fieldVariants } from '@/lib/ui/field'
+import { cn } from '@/lib/ui/cn'
 
 const ledger = loadLedger()
 const incoming = loadIncoming()
@@ -53,6 +56,21 @@ const STATUS_LABEL: Record<string, string> = {
   silence: 'silence — published as such',
 }
 const PRACTICES = ['ecology', 'atelier', 'field', 'studio', 'plenum']
+
+// Re-skin 2d (2026-09-02): the post office on the frame's recipe — the kickers as the one
+// .kicker class, the head on the type scale, the panels on the frame's radius and resting
+// depth, the door cards lifting because they lead somewhere, and both forms wearing the shared
+// field recipe (src/lib/ui/field.ts) with the send button on the shadcn Button. The two forms'
+// field names, the honeypots, the Turnstile widgets and both scripts are untouched: the wire to
+// functions/api/post.js and functions/api/digest.js is exactly what it was.
+const kicker = 'kicker'
+const panel = 'rounded-md border border-line bg-panel panel-raised'
+const cardLink = 'lift flex h-full flex-col rounded-md border border-line bg-panel p-4 panel-raised'
+const input = cn(fieldVariants({ kind: 'input' }), 'mt-1.5')
+const select = cn(fieldVariants({ kind: 'select' }), 'mt-1.5')
+const textarea = cn(fieldVariants({ kind: 'textarea' }), 'mt-1.5')
+const primary = cn(buttonVariants({ variant: 'default' }))
+const quietLink = cn(buttonVariants({ variant: 'ghost', size: 'sm' }), '-mx-2 px-2 font-mono text-mono-sm text-fg-faint hover:text-fg')
 ---
 
 <Page
@@ -60,9 +78,9 @@ const PRACTICES = ['ecology', 'atelier', 'field', 'studio', 'plenum']
   description="The research ecology's post office: the outgoing ledger of deliveries to named receivers outside the house, and a letterbox for writing back."
 >
   <main id="main" class="mx-auto w-full max-w-3xl flex-1 px-6 pb-24 pt-16">
-    <p class="font-mono text-xs uppercase tracking-[0.22em] text-fg-muted">the research ecology's mail</p>
-    <h1 class="mt-3 text-3xl font-bold tracking-tight">Post office</h1>
-    <p class="mt-4 max-w-[70ch] text-sm leading-relaxed text-fg-muted">
+    <p class={kicker}>the research ecology's mail</p>
+    <h1 class="mt-3 text-h1 font-bold">Post office</h1>
+    <p class="mt-4 max-w-[70ch] text-body leading-relaxed text-fg-muted">
       Since 2026-07-31 the machine-run practices address work to named receivers
       <em>outside</em> this ecology — receiver and channel on the record. This page is that
       record's public face, and since 2026-08-01 it works as <em>poste restante</em>: a letter
@@ -75,37 +93,39 @@ const PRACTICES = ['ecology', 'atelier', 'field', 'studio', 'plenum']
     </p>
 
     {/* ── Digest subscription — the moved up top, Frank 2026-08-01: prominent, not a footnote ── */}
-    <section id="digest" class="mt-10 scroll-mt-16 rounded-[10px] border border-line bg-panel p-5 sm:p-6" aria-label="Digest">
-      <p class="font-mono text-xs uppercase tracking-[0.22em] text-fg-muted"><b class="text-fg">Stay close</b> · the ecology's digest</p>
-      <p class="mt-3 max-w-[70ch] text-sm leading-relaxed text-fg-muted">
+    <section id="digest" class={cn(panel, 'mt-10 scroll-mt-16 p-5 sm:p-6')} aria-label="Digest">
+      <p class={kicker}><b class="text-fg">Stay close</b> · the ecology's digest</p>
+      <p class="mt-3 max-w-[70ch] text-small leading-relaxed text-fg-muted">
         An irregular letter about what landed here — new works, deliveries, answers. Written
         when something is worth writing about, not on a schedule. Double opt-in: you confirm by
         mail before anything is stored; every mail carries an unsubscribe link; your address
         goes to the mail provider and nowhere else — never into this site's public archive.
       </p>
       <form id="digest-form" class="mt-5 flex max-w-md flex-col gap-3" novalidate>
-        <label class="block text-xs text-fg-muted">
-          <span class="font-mono uppercase tracking-[0.12em]">email</span>
-          <input name="email" type="email" required maxlength="320" placeholder="you@example.org" class="mt-1.5 w-full rounded-[8px] border border-line bg-panel px-3 py-2 text-sm text-fg" />
+        <label class={fieldLabel}>
+          <span>email</span>
+          <input name="email" type="email" required maxlength="320" placeholder="you@example.org" class={input} />
         </label>
         {/* honeypot — invisible to people, filled by bots */}
         <input name="website" tabindex="-1" autocomplete="off" aria-hidden="true" class="hidden" />
         {turnstileSiteKey && <div class="cf-turnstile" data-sitekey={turnstileSiteKey} data-theme="auto"></div>}
         <div class="flex items-center gap-4">
-          <button type="submit" class="self-start rounded-[8px] border border-line bg-panel px-4 py-2 font-mono text-xs uppercase tracking-[0.12em] text-fg transition-colors hover:border-fg-faint">subscribe</button>
-          <p id="digest-status" class="text-xs text-fg-muted" aria-live="polite"></p>
+          <button type="submit" class={cn(primary, 'self-start')}>subscribe</button>
+          <p id="digest-status" class="font-mono text-mono-sm text-fg-muted" aria-live="polite"></p>
         </div>
       </form>
     </section>
 
     {/* ── What you can send ───────────────────────────────────────────────── */}
     <section class="mt-12" aria-label="What you can send">
-      <p class="font-mono text-xs uppercase tracking-[0.22em] text-fg-muted"><b class="text-fg">Inward</b> · what you can send</p>
+      <p class={kicker}><b class="text-fg">Inward</b> · what you can send</p>
       <ul class="mt-5 grid gap-3 sm:grid-cols-2">
         {DOORS.map((d) => (
-          <li class="rounded-[10px] border border-line bg-panel p-4">
-            <a class="text-sm font-semibold tracking-[-0.01em] underline decoration-line hover:decoration-fg" href={d.href}>{d.label} →</a>
-            <p class="mt-1.5 text-xs leading-relaxed text-fg-muted">{d.what}</p>
+          <li>
+            <a class={cardLink} href={d.href}>
+              <span class="text-h3 font-semibold text-fg">{d.label} →</span>
+              <span class="mt-1.5 text-small leading-relaxed text-fg-muted">{d.what}</span>
+            </a>
           </li>
         ))}
       </ul>
@@ -113,8 +133,8 @@ const PRACTICES = ['ecology', 'atelier', 'field', 'studio', 'plenum']
 
     {/* ── Incoming register ───────────────────────────────────────────────── */}
     <section class="mt-12" aria-label="Incoming">
-      <p class="font-mono text-xs uppercase tracking-[0.22em] text-fg-muted"><b class="text-fg">Incoming</b> · what arrived, and what became of it</p>
-      <p class="mt-3 max-w-[70ch] text-sm leading-relaxed text-fg-muted">
+      <p class={kicker}><b class="text-fg">Incoming</b> · what arrived, and what became of it</p>
+      <p class="mt-3 max-w-[70ch] text-body leading-relaxed text-fg-muted">
         Derived from the committed registers, not kept by hand: {incomingCount.seed} seed{incomingCount.seed === 1 ? '' : 's'} and
         {' '}{incomingCount.reception} reception entr{incomingCount.reception === 1 ? 'y' : 'ies'}. Each row names its author's own
         mark and links the surface that holds it in full. A refusal is listed like an acceptance — a
@@ -122,17 +142,17 @@ const PRACTICES = ['ecology', 'atelier', 'field', 'studio', 'plenum']
       </p>
       <ul class="mt-5 divide-y divide-line/60 border-t border-line/60">
         {incoming.map((e) => (
-          <li class="flex flex-wrap items-baseline gap-x-3 gap-y-1 py-3">
-            <span class="font-mono text-[11px] tabular-nums text-fg-faint">{e.date}</span>
-            <span class="text-sm text-fg">{e.what}</span>
-            <span class="text-sm text-fg-muted">from {e.from}</span>
+          <li class="post-row flex flex-wrap items-baseline gap-x-3 gap-y-1 px-2 py-3">
+            <span class="font-mono text-mono-sm tabular-nums text-fg-faint">{e.date}</span>
+            <span class="text-body text-fg">{e.what}</span>
+            <span class="text-body text-fg-muted">from {e.from}</span>
             <span class="text-fg-faint">·</span>
-            <span class="text-sm text-fg-muted">{e.outcome}</span>
-            <a class="font-mono text-[11px] text-fg-faint underline hover:text-fg" href={e.href}>the record →</a>
+            <span class="text-body text-fg-muted">{e.outcome}</span>
+            <a class={quietLink} href={e.href}>the record →</a>
           </li>
         ))}
       </ul>
-      <p class="mt-4 max-w-[70ch] text-xs leading-relaxed text-fg-faint">
+      <p class="mt-4 max-w-[70ch] text-small leading-relaxed text-fg-faint">
         Not listed here: the letters in the letterbox queue. A letter is mail, not a publication —
         it is read by Frank and reaches a practice or Reception only with the writer's explicit
         permission. Showing a count of them would be a number nobody outside could check, so this
@@ -142,8 +162,8 @@ const PRACTICES = ['ecology', 'atelier', 'field', 'studio', 'plenum']
 
     {/* ── Outgoing ledger ─────────────────────────────────────────────────── */}
     <section class="mt-12" aria-label="Outgoing deliveries">
-      <p class="font-mono text-xs uppercase tracking-[0.22em] text-fg-muted"><b class="text-fg">Outgoing</b> · poste restante — the open outbox to the world</p>
-      <p class="mt-3 max-w-[70ch] text-sm leading-relaxed text-fg-muted">
+      <p class={kicker}><b class="text-fg">Outgoing</b> · poste restante — the open outbox to the world</p>
+      <p class="mt-3 max-w-[70ch] text-body leading-relaxed text-fg-muted">
         Every letter below is addressed, complete, and publicly collectible — the lying-open is
         the message, not a backlog. One named exception: submissions to external calls are forms
         with deadlines; those cannot be collected, only sent, and if unsent they lapse — dated,
@@ -151,20 +171,20 @@ const PRACTICES = ['ecology', 'atelier', 'field', 'studio', 'plenum']
       </p>
       <ul class="mt-5 space-y-4">
         {ledger.map((d) => (
-          <li class="rounded-[10px] border border-line bg-panel p-5">
-            <p class="font-mono text-[10px] uppercase tracking-[0.14em] text-fg-muted">
+          <li class={cn(panel, 'p-5')}>
+            <p class="font-mono text-mono-xs uppercase tracking-[0.14em] text-fg-muted">
               {d.practice} · <span class="text-fg">{STATUS_LABEL[d.status] ?? d.status}</span> · as of {d.as_of}
             </p>
-            <p class="mt-2 text-sm font-semibold tracking-[-0.01em]">{d.piece}</p>
-            <p class="mt-1 text-sm text-fg-muted">→ {d.receiver} <span class="text-fg-faint">({d.receiver_channel})</span></p>
-            <p class="mt-2 text-xs leading-relaxed text-fg-muted">{d.note}</p>
-            <p class="mt-2 font-mono text-[11px]"><a class="text-fg-faint underline hover:text-fg" href={d.record_url}>the packet's own record →</a></p>
+            <p class="mt-2 text-h3 font-semibold">{d.piece}</p>
+            <p class="mt-1 text-body text-fg-muted">→ {d.receiver} <span class="text-fg-faint">({d.receiver_channel})</span></p>
+            <p class="mt-2 text-small leading-relaxed text-fg-muted">{d.note}</p>
+            <p class="mt-2"><a class={quietLink} href={d.record_url}>the packet's own record →</a></p>
           </li>
         ))}
       </ul>
-      <p class="mt-4 max-w-[70ch] text-xs leading-relaxed text-fg-faint">
+      <p class="mt-4 max-w-[70ch] text-small leading-relaxed text-fg-faint">
         How an answer gets back: a receiver — or any reader acting as courier — can write to the
-        <a class="underline hover:text-fg" href="#letterbox">letterbox</a> below; that is this
+        <a class="underline decoration-line underline-offset-4 hover:text-fg" href="#letterbox">letterbox</a> below; that is this
         ecology's public reply address, and an answer arriving there is entered above as
         <em>answered</em>. A collected letter is entered as collected. Without a reply route a
         letter can only ever become <em>silence</em>, and silence that had no address is not a
@@ -174,8 +194,8 @@ const PRACTICES = ['ecology', 'atelier', 'field', 'studio', 'plenum']
 
     {/* ── Letterbox ───────────────────────────────────────────────────────── */}
     <section id="letterbox" class="mt-14 scroll-mt-16 border-t border-line/60 pt-10" aria-label="Letterbox">
-      <p class="font-mono text-xs uppercase tracking-[0.22em] text-fg-muted"><b class="text-fg">Letterbox</b> · write back</p>
-      <p class="mt-3 max-w-[70ch] text-sm leading-relaxed text-fg-muted">
+      <p class={kicker}><b class="text-fg">Letterbox</b> · write back</p>
+      <p class="mt-3 max-w-[70ch] text-body leading-relaxed text-fg-muted">
         Answers, corrections, objections — to a delivery, a work, or a practice. Your letter is
         <strong>mail, not a publication</strong>: it goes into a private review queue read by the
         human conductor, who forwards it to the addressed practice; what a practice does with it
@@ -185,32 +205,32 @@ const PRACTICES = ['ecology', 'atelier', 'field', 'studio', 'plenum']
 
       <form id="letter-form" class="mt-6 space-y-4" novalidate>
         <div class="grid gap-4 sm:grid-cols-2">
-          <label class="block text-xs text-fg-muted">
-            <span class="font-mono uppercase tracking-[0.12em]">to</span>
-            <select name="to" class="mt-1.5 w-full rounded-[8px] border border-line bg-panel px-3 py-2 text-sm text-fg">
+          <label class={fieldLabel}>
+            <span>to</span>
+            <select name="to" class={select}>
               {PRACTICES.map((p) => (
                 <option value={p}>{p}</option>
               ))}
             </select>
           </label>
-          <label class="block text-xs text-fg-muted">
-            <span class="font-mono uppercase tracking-[0.12em]">regarding <span class="normal-case text-fg-faint">(optional)</span></span>
-            <input name="regarding" maxlength="120" placeholder="a delivery, a work, a claim…" class="mt-1.5 w-full rounded-[8px] border border-line bg-panel px-3 py-2 text-sm text-fg" />
+          <label class={fieldLabel}>
+            <span>regarding <span class="normal-case text-fg-faint">(optional)</span></span>
+            <input name="regarding" maxlength="120" placeholder="a delivery, a work, a claim…" class={input} />
           </label>
         </div>
         <div class="grid gap-4 sm:grid-cols-2">
-          <label class="block text-xs text-fg-muted">
-            <span class="font-mono uppercase tracking-[0.12em]">from</span>
-            <input name="fromMark" required maxlength="80" placeholder="a name or mark" class="mt-1.5 w-full rounded-[8px] border border-line bg-panel px-3 py-2 text-sm text-fg" />
+          <label class={fieldLabel}>
+            <span>from</span>
+            <input name="fromMark" required maxlength="80" placeholder="a name or mark" class={input} />
           </label>
-          <label class="block text-xs text-fg-muted">
-            <span class="font-mono uppercase tracking-[0.12em]">contact <span class="normal-case text-fg-faint">(optional, for a reply)</span></span>
-            <input name="contact" maxlength="200" placeholder="email or similar" class="mt-1.5 w-full rounded-[8px] border border-line bg-panel px-3 py-2 text-sm text-fg" />
+          <label class={fieldLabel}>
+            <span>contact <span class="normal-case text-fg-faint">(optional, for a reply)</span></span>
+            <input name="contact" maxlength="200" placeholder="email or similar" class={input} />
           </label>
         </div>
-        <label class="block text-xs text-fg-muted">
-          <span class="font-mono uppercase tracking-[0.12em]">the letter</span>
-          <textarea name="text" required minlength="10" maxlength="4000" rows="6" class="mt-1.5 w-full rounded-[8px] border border-line bg-panel px-3 py-2 text-sm leading-relaxed text-fg"></textarea>
+        <label class={fieldLabel}>
+          <span>the letter</span>
+          <textarea name="text" required minlength="10" maxlength="4000" rows="6" class={textarea}></textarea>
         </label>
         {/* honeypot — invisible to people, filled by bots */}
         <input name="website" tabindex="-1" autocomplete="off" aria-hidden="true" class="hidden" />
@@ -218,11 +238,11 @@ const PRACTICES = ['ecology', 'atelier', 'field', 'studio', 'plenum']
           <div class="cf-turnstile" data-sitekey={turnstileSiteKey} data-theme="auto"></div>
         )}
         <div class="flex items-center gap-4">
-          <button type="submit" class="rounded-[8px] border border-line bg-panel px-4 py-2 font-mono text-xs uppercase tracking-[0.12em] text-fg transition-colors hover:border-fg-faint">post the letter</button>
-          <p id="letter-status" class="text-xs text-fg-muted" aria-live="polite"></p>
+          <button type="submit" class={primary}>post the letter</button>
+          <p id="letter-status" class="font-mono text-mono-sm text-fg-muted" aria-live="polite"></p>
         </div>
       </form>
-      <p class="mt-4 font-mono text-[11px] leading-relaxed text-fg-faint">
+      <p class="mt-4 font-mono text-mono-sm leading-relaxed text-fg-faint">
         Letters pass a bot check and land in a private queue — they are not published and not
         fed to any model as instruction. The conductor reads them; refusal is a possible answer,
         and each practice keeps its right to decline.
@@ -231,6 +251,19 @@ const PRACTICES = ['ecology', 'atelier', 'field', 'studio', 'plenum']
 
   </main>
 </Page>
+
+<style>
+  /* The incoming row answers the pointer with the frame's wash, at the frame's own speed. It
+     stands here because the interactive rule in global.css cannot reach a <li>. A register is
+     read by running down it, so a row washes rather than rises. (re-skin 2d, 2026-09-02) */
+  .post-row {
+    transition: background-color 0.2s var(--ease-frame);
+  }
+  .post-row:hover,
+  .post-row:focus-within {
+    background-color: var(--color-panel);
+  }
+</style>
 
 {turnstileSiteKey && <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>}
 

@@ -41,6 +41,9 @@ import {
   type GateReason,
 } from '@/lib/saat/saat'
 import { GATE_MODEL, GATE_PROMPT } from '@/lib/saat/gate'
+import { buttonVariants } from '@/components/ui/button'
+import { fieldLabel, fieldVariants } from '@/lib/ui/field'
+import { cn } from '@/lib/ui/cn'
 
 const register = registerJson as SaatRegister
 const seeds = [...register.seeds].sort((a, b) => b.ts.localeCompare(a.ts))
@@ -196,36 +199,55 @@ const payload = JSON.stringify({
   copyLabel: txt.copyLabel,
   copiedLabel: txt.copiedLabel,
 }).replace(/</g, '\\u003c')
+
+// Re-skin 2d (2026-09-02): the seed page on the frame's recipe — the eyebrow as the one .kicker
+// class, the head on the type scale, the form and the register as panels with the frame's radius
+// and resting depth, the fields on the shared field recipe (src/lib/ui/field.ts) and the two
+// buttons on the shadcn Button. The Turnstile widget, the honeypot, the claim-token lookup and
+// the whole client script are untouched — including the register markup the script re-renders,
+// which is kept byte-for-byte in step with the server's below.
+const kicker = 'kicker'
+const panel = 'rounded-md border border-line bg-panel panel-raised'
+const inset = 'rounded-sm border border-line bg-bg/40'
+const select = cn(fieldVariants({ kind: 'select' }), 'mt-2')
+const input = cn(fieldVariants({ kind: 'input' }), 'mt-2')
+const textarea = cn(fieldVariants({ kind: 'textarea' }), 'mt-2 min-h-24')
+const primary = cn(buttonVariants({ variant: 'default' }))
+const outline = cn(buttonVariants({ variant: 'outline' }))
+const outlineSm = cn(buttonVariants({ variant: 'outline', size: 'sm' }))
+/* the register list, as both the server and the script below render it */
+const registerList = 'mt-6 divide-y divide-line/60 overflow-hidden rounded-md border border-line bg-panel panel-raised'
+const seedMark = 'rounded-sm border border-line px-2 py-0.5 font-mono text-mono-sm'
 ---
 
 <main id="main" class="mx-auto w-full max-w-3xl flex-1 px-6 pb-24 pt-16 sm:pt-24">
   <section>
-    <p class="font-mono text-xs uppercase tracking-[0.22em] text-fg-muted">{txt.eyebrow}</p>
-    <h1 class="mt-4 text-[clamp(34px,6vw,58px)] font-bold leading-[1.05] tracking-[-0.02em]">{txt.title}</h1>
-    <p class="mt-5 max-w-[62ch] text-[17px] text-fg-muted">{txt.lede}</p>
-    <p class="mt-3 max-w-[62ch] text-sm text-fg-muted">{txt.lede2}</p>
-    <p class="mt-3 max-w-[62ch] font-mono text-xs text-fg-faint">{txt.lede3}</p>
+    <p class={kicker}>{txt.eyebrow}</p>
+    <h1 class="mt-4 text-display font-bold">{txt.title}</h1>
+    <p class="mt-5 max-w-[62ch] text-h3 font-normal text-fg-muted">{txt.lede}</p>
+    <p class="mt-3 max-w-[62ch] text-body text-fg-muted">{txt.lede2}</p>
+    <p class="mt-3 max-w-[62ch] font-mono text-mono text-fg-faint">{txt.lede3}</p>
   </section>
 
   {/* ── Formular — Standby bis /api/seed ready:true meldet UND Turnstile zur Buildzeit da ist ── */}
-  <section class="mt-12 rounded-[10px] border border-line bg-panel p-6 sm:p-8" aria-labelledby="saat-form-h">
-    <h2 id="saat-form-h" class="font-mono text-xs uppercase tracking-[0.2em] text-fg-muted">{txt.formHeading}</h2>
+  <section class={cn(panel, 'mt-12 p-6 sm:p-8')} aria-labelledby="saat-form-h">
+    <h2 id="saat-form-h" class={kicker}>{txt.formHeading}</h2>
 
-    <div class="mt-5 flex items-start gap-3 rounded-[8px] border border-line bg-bg/40 p-4" data-saat="standby">
+    <div class={cn(inset, 'mt-5 flex items-start gap-3 p-4')} data-saat="standby">
       <span class="mt-1 h-2 w-2 shrink-0 rounded-full bg-fg-faint" aria-hidden="true"></span>
-      <p class="text-sm text-fg-muted">{txt.standby}</p>
+      <p class="text-small text-fg-muted">{txt.standby}</p>
     </div>
 
     <form class="mt-5 space-y-5" data-saat="form" hidden>
       <div>
-        <label for="saat-kind" class="block font-mono text-xs uppercase tracking-[0.14em] text-fg-faint">{txt.kindLabel}</label>
-        <select id="saat-kind" name="kind" required class="mt-2 w-full rounded-[8px] border border-line bg-panel-2 px-3 py-2.5 text-sm">
+        <label for="saat-kind" class={fieldLabel}>{txt.kindLabel}</label>
+        <select id="saat-kind" name="kind" required class={select}>
           {SAAT_KINDS.map((k) => <option value={k}>{kindOption[k]}</option>)}
         </select>
       </div>
 
       <div>
-        <label for="saat-text" class="block font-mono text-xs uppercase tracking-[0.14em] text-fg-faint">{txt.textLabel}</label>
+        <label for="saat-text" class={fieldLabel}>{txt.textLabel}</label>
         <textarea
           id="saat-text"
           name="text"
@@ -235,16 +257,16 @@ const payload = JSON.stringify({
           rows="4"
           placeholder={txt.textPlaceholder}
           data-saat="text"
-          class="mt-2 w-full rounded-[8px] border border-line bg-panel-2 px-3 py-2.5 text-[15px] leading-relaxed"
+          class={textarea}
         ></textarea>
         <div class="mt-1 flex items-center justify-between">
-          <p class="max-w-[48ch] text-xs text-fg-muted">{txt.textNote}</p>
-          <span class="shrink-0 pl-3 font-mono text-xs text-fg-faint" data-saat="counter">0/{SAAT_MAX_LEN}</span>
+          <p class="max-w-[48ch] text-small text-fg-muted">{txt.textNote}</p>
+          <span class="shrink-0 pl-3 font-mono text-mono text-fg-faint" data-saat="counter">0/{SAAT_MAX_LEN}</span>
         </div>
       </div>
 
       <div>
-        <label for="saat-mark" class="block font-mono text-xs uppercase tracking-[0.14em] text-fg-faint">{txt.markLabel}</label>
+        <label for="saat-mark" class={fieldLabel}>{txt.markLabel}</label>
         <input
           id="saat-mark"
           name="authorMark"
@@ -252,21 +274,21 @@ const payload = JSON.stringify({
           maxlength={AUTHOR_MARK_MAX_LEN}
           placeholder="anonymous"
           autocomplete="off"
-          class="mt-2 w-full rounded-[8px] border border-line bg-panel-2 px-3 py-2.5 text-sm"
+          class={input}
         />
-        <p class="mt-1 text-xs text-fg-muted">{txt.markNote}</p>
+        <p class="mt-1 text-small text-fg-muted">{txt.markNote}</p>
       </div>
 
       <div>
-        <label for="saat-addressee" class="block font-mono text-xs uppercase tracking-[0.14em] text-fg-faint">{txt.addresseeLabel}</label>
-        <select id="saat-addressee" name="addressedTo" required data-saat="addressee" class="mt-2 w-full rounded-[8px] border border-line bg-panel-2 px-3 py-2.5 text-sm">
+        <label for="saat-addressee" class={fieldLabel}>{txt.addresseeLabel}</label>
+        <select id="saat-addressee" name="addressedTo" required data-saat="addressee" class={select}>
           {/* "open" is the default — a seed belongs to the research, not to one practice; the
               ?to=/?an= prefills below still override it for contextual links from a practice page. */}
           {SAAT_ADDRESSEES.map((a) => <option value={a} selected={a === 'open'}>{addresseeLabel[a]}</option>)}
         </select>
       </div>
 
-      <label class="flex items-start gap-2.5 text-sm text-fg-muted">
+      <label class="flex items-start gap-2.5 text-small text-fg-muted">
         <input type="checkbox" name="consent" required class="mt-1 shrink-0" />
         <span>{txt.consentLabel}</span>
       </label>
@@ -277,20 +299,20 @@ const payload = JSON.stringify({
       {hasTurnstile && <div class="cf-turnstile" data-sitekey={turnstileSiteKey}></div>}
 
       <div class="flex flex-wrap items-center gap-3">
-        <button type="submit" data-saat="submit" class="rounded-full bg-fg px-6 py-2.5 text-sm font-semibold text-bg transition hover:opacity-90">
+        <button type="submit" data-saat="submit" class={primary}>
           {txt.submit}
         </button>
-        <span class="font-mono text-xs text-fg-faint" data-saat="ready-info"></span>
+        <span class="font-mono text-mono text-fg-faint" data-saat="ready-info"></span>
       </div>
-      <p class="text-sm text-fg-muted" role="status" data-saat="msg"></p>
+      <p class="text-small text-fg-muted" role="status" data-saat="msg"></p>
     </form>
 
-    <div class="mt-5 rounded-[8px] border border-line bg-bg/40 p-4" data-saat="done" hidden>
-      <p class="font-semibold text-fg">{txt.doneHeading}</p>
-      <p class="mt-2 text-sm text-fg-muted">{txt.doneBody}</p>
+    <div class={cn(inset, 'mt-5 p-4')} data-saat="done" hidden>
+      <p class="text-h3 font-semibold text-fg">{txt.doneHeading}</p>
+      <p class="mt-2 text-small text-fg-muted">{txt.doneBody}</p>
       <div class="mt-3 flex flex-wrap items-center gap-2">
-        <code class="break-all rounded border border-line bg-panel-2 px-3 py-2 font-mono text-sm" data-saat="token"></code>
-        <button type="button" class="rounded-full border border-line px-4 py-1.5 text-xs font-semibold transition hover:border-fg" data-saat="copy">
+        <code class="break-all rounded-sm border border-line bg-panel-2 px-3 py-2 font-mono text-small" data-saat="token"></code>
+        <button type="button" class={outlineSm} data-saat="copy">
           {txt.copyLabel}
         </button>
       </div>
@@ -299,8 +321,8 @@ const payload = JSON.stringify({
 
   {/* ── Status-Abfrage ─────────────────────────────────────────────────── */}
   <section class="mt-14" aria-labelledby="saat-status-h">
-    <h2 id="saat-status-h" class="font-mono text-xs uppercase tracking-[0.2em] text-fg-muted">{txt.statusHeading}</h2>
-    <p class="mt-3 max-w-[60ch] text-sm text-fg-muted">{txt.statusIntro}</p>
+    <h2 id="saat-status-h" class={kicker}>{txt.statusHeading}</h2>
+    <p class="mt-3 max-w-[60ch] text-body text-fg-muted">{txt.statusIntro}</p>
     <form class="mt-4 flex flex-wrap gap-2" data-saat="status-form">
       <label class="sr-only" for="saat-token-input">{txt.statusInputLabel}</label>
       <input
@@ -309,36 +331,36 @@ const payload = JSON.stringify({
         type="text"
         autocomplete="off"
         placeholder={txt.statusInputLabel}
-        class="min-w-[16rem] flex-1 rounded-[8px] border border-line bg-panel px-3 py-2 font-mono text-sm"
+        class={cn(fieldVariants({ kind: 'input' }), 'min-w-[16rem] flex-1 font-mono')}
       />
-      <button type="submit" class="rounded-full border border-line px-5 py-2 text-sm font-semibold transition hover:border-fg">{txt.statusButton}</button>
+      <button type="submit" class={outline}>{txt.statusButton}</button>
     </form>
-    <p class="mt-3 min-h-[1.5em] text-sm text-fg-muted" role="status" data-saat="status-result"></p>
+    <p class="mt-3 min-h-[1.5em] text-small text-fg-muted" role="status" data-saat="status-result"></p>
   </section>
 
   {/* ── Register ───────────────────────────────────────────────────────── */}
   <section class="mt-14" aria-labelledby="saat-register-h">
-    <h2 id="saat-register-h" class="font-mono text-xs uppercase tracking-[0.2em] text-fg-muted">{txt.registerHeading}</h2>
-    <p class="mt-3 max-w-[64ch] text-sm text-fg-muted">{txt.registerIntro}</p>
+    <h2 id="saat-register-h" class={kicker}>{txt.registerHeading}</h2>
+    <p class="mt-3 max-w-[64ch] text-body text-fg-muted">{txt.registerIntro}</p>
 
     <div data-saat="register-body">
     {seeds.length === 0 ? (
-      <p class="mt-6 text-sm text-fg-faint">{txt.registerEmpty}</p>
+      <p class="mt-6 text-small text-fg-faint">{txt.registerEmpty}</p>
     ) : (
-      <ul class="mt-6 divide-y divide-line/60 overflow-hidden rounded-[10px] border border-line bg-panel">
+      <ul class={registerList}>
         {seeds.map((seed) => (
           <li class="p-4 sm:p-5">
-            <div class="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[11px] uppercase tracking-[0.12em] text-fg-faint">
+            <div class="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-mono-sm uppercase tracking-[0.12em] text-fg-faint">
               <span>{seed.ts.slice(0, 10)}</span>
               <span aria-hidden="true">·</span>
               <span>{kindLabel[seed.kind]}</span>
               <span aria-hidden="true">·</span>
               <span>{addresseeLabel[seed.addressed_to]}</span>
               <span aria-hidden="true">·</span>
-              <span class="rounded-full border border-line px-2 py-0.5 normal-case tracking-normal text-fg-muted">{statusLabel[seed.status]}</span>
+              <span class={cn(seedMark, 'normal-case tracking-normal text-fg-muted')}>{statusLabel[seed.status]}</span>
             </div>
-            <p class="mt-2 whitespace-pre-line text-[15px] leading-relaxed text-fg">{seed.text}</p>
-            <p class="mt-2 font-mono text-xs text-fg-faint">— {seed.author_mark}</p>
+            <p class="mt-2 whitespace-pre-line text-body leading-relaxed text-fg">{seed.text}</p>
+            <p class="mt-2 font-mono text-mono text-fg-faint">— {seed.author_mark}</p>
             {/* ALLE Antworten, eine je Praxis. Ein Seed an „open" geht an drei Praxen, und
                 sie antworten verschieden — beim Seed …-e322 nahm Ensemble ihn als Material
                 auf, während Meridian ihn begründet ablehnte. Bis 2026-07-28 zeigte diese
@@ -364,14 +386,14 @@ const payload = JSON.stringify({
                   {/* Übersicht: eine Marke je gefragter Praxis, immer sichtbar. */}
                   <ul class="flex flex-wrap gap-x-2 gap-y-1">
                     {antworten.map((a) => (
-                      <li class="rounded-full border border-line px-2 py-0.5 font-mono text-[11px] text-fg-muted">
+                      <li class={cn(seedMark, 'text-fg-muted')}>
                         {practiceShort[a.practice] ?? a.practice}{' '}
                         <span class="text-fg">{statusLabel[a.decision] ?? a.decision}</span>
                       </li>
                     ))}
                     {offen.map((p) => (
                       <li
-                        class="rounded-full border border-dashed border-line px-2 py-0.5 font-mono text-[11px] text-fg-faint"
+                        class={cn(seedMark, 'border-dashed text-fg-faint')}
                         title={txt.stillOpenHint}
                       >
                         {practiceShort[p] ?? p} <span>{txt.stillOpen}</span>
@@ -383,13 +405,14 @@ const payload = JSON.stringify({
                       Liste soll überfliegbar bleiben. */}
                   {antworten.length > 0 && (
                     <details class="group mt-2">
-                      <summary class="cursor-pointer font-mono text-[11px] uppercase tracking-[0.12em] text-fg-faint hover:text-fg">
+                      <summary class="cursor-pointer font-mono text-mono-sm uppercase tracking-[0.12em] text-fg-faint hover:text-fg">
+                        <span class="fold-chevron inline-block">▾</span>{' '}
                         {antworten.length === 1 ? txt.oneReply : txt.manyReplies.replace('{n}', String(antworten.length))}
                       </summary>
                       <div class="mt-2 space-y-3">
                         {antworten.map((a) => (
-                          <p class="text-sm leading-relaxed text-fg-muted">
-                            <span class="font-mono text-xs uppercase tracking-[0.12em] text-fg-faint">
+                          <p class="text-small leading-relaxed text-fg-muted">
+                            <span class="font-mono text-mono uppercase tracking-[0.12em] text-fg-faint">
                               {practiceShort[a.practice] ?? a.practice} · {statusLabel[a.decision] ?? a.decision}
                             </span>{' '}
                             {a.note}
@@ -411,13 +434,13 @@ const payload = JSON.stringify({
 
   {/* ── Gate-Transparenz (Spec §4, §7) ─────────────────────────────────── */}
   <section class="mb-4 mt-14" aria-labelledby="saat-gate-h">
-    <h2 id="saat-gate-h" class="font-mono text-xs uppercase tracking-[0.2em] text-fg-muted">{txt.gateHeading}</h2>
-    <p class="mt-3 max-w-[68ch] text-sm text-fg-muted">{txt.gateIntro}</p>
-    <p class="mt-4 font-mono text-xs uppercase tracking-[0.14em] text-fg-faint">{txt.gatePromptLabel}</p>
-    <pre class="mt-2 overflow-x-auto whitespace-pre-wrap rounded-[8px] border border-line bg-panel p-4 text-[13px] leading-relaxed text-fg-muted">{GATE_PROMPT}</pre>
-    <p class="mt-4 text-sm text-fg-muted">{txt.turnstileNote}</p>
-    <p class="mt-2 text-sm text-fg-muted">{txt.chainNote}</p>
-    <p class="mt-4 font-mono text-xs text-fg-faint">
+    <h2 id="saat-gate-h" class={kicker}>{txt.gateHeading}</h2>
+    <p class="mt-3 max-w-[68ch] text-body text-fg-muted">{txt.gateIntro}</p>
+    <p class="mt-4 font-mono text-mono uppercase tracking-[0.14em] text-fg-faint">{txt.gatePromptLabel}</p>
+    <pre class={cn(panel, 'mt-2 overflow-x-auto whitespace-pre-wrap p-4 text-small leading-relaxed text-fg-muted')}>{GATE_PROMPT}</pre>
+    <p class="mt-4 text-body text-fg-muted">{txt.turnstileNote}</p>
+    <p class="mt-2 text-body text-fg-muted">{txt.chainNote}</p>
+    <p class="mt-4 font-mono text-mono text-fg-faint">
       {gateStatsTotal === 0 ? txt.gateStatsEmpty : txt.gateStatsLabel(gateStatsTotal)}
       {gateStatsTotal > 0 && gateStatsByReason.length > 0 && (
         <span> {gateStatsByReason.map(([reason, n]) => `${gateReasonLabel[reason] ?? reason}: ${n}`).join(' · ')}</span>
@@ -683,7 +706,7 @@ const payload = JSON.stringify({
           if (!reg || !Array.isArray(reg.seeds)) return
           const seeds = [...reg.seeds].sort((a, b) => String(b.ts).localeCompare(String(a.ts)))
           if (seeds.length === 0) {
-            registerBody.innerHTML = `<p class="mt-6 text-sm text-fg-faint">${esc(DATA.registerEmpty)}</p>`
+            registerBody.innerHTML = `<p class="mt-6 text-small text-fg-faint">${esc(DATA.registerEmpty)}</p>`
             return
           }
           const items = seeds
@@ -698,7 +721,7 @@ const payload = JSON.stringify({
               const beantwortet = new Set(antworten.map((a) => a.practice))
               const offen = (s.forwarded_to ?? []).filter((p) => !beantwortet.has(p))
               const marke = (inhalt: string, gestrichelt: boolean) =>
-                `<li class="rounded-full border ${gestrichelt ? 'border-dashed border-line text-fg-faint' : 'border-line text-fg-muted'} px-2 py-0.5 font-mono text-[11px]">${inhalt}</li>`
+                `<li class="rounded-sm border ${gestrichelt ? 'border-dashed border-line text-fg-faint' : 'border-line text-fg-muted'} px-2 py-0.5 font-mono text-mono-sm">${inhalt}</li>`
               const marken = antworten.length || offen.length
                 ? `<ul class="flex flex-wrap gap-x-2 gap-y-1">${
                     antworten.map((a) => marke(`${esc(DATA.practiceShort[a.practice] ?? a.practice)} <span class="text-fg">${esc(DATA.statusLabels[a.decision] ?? a.decision)}</span>`, false)).join('')
@@ -707,19 +730,19 @@ const payload = JSON.stringify({
                   }</ul>`
                 : ''
               const wortlaut = antworten.length
-                ? `<details class="mt-2"><summary class="cursor-pointer font-mono text-[11px] uppercase tracking-[0.12em] text-fg-faint hover:text-fg">${
+                ? `<details class="mt-2"><summary class="cursor-pointer font-mono text-mono-sm uppercase tracking-[0.12em] text-fg-faint hover:text-fg"><span class="fold-chevron inline-block">\u25BE</span> ${
                     esc(antworten.length === 1 ? DATA.oneReply : DATA.manyReplies.replace('{n}', String(antworten.length)))
                   }</summary><div class="mt-2 space-y-3">${
-                    antworten.map((a) => `<p class="text-sm leading-relaxed text-fg-muted"><span class="font-mono text-xs uppercase tracking-[0.12em] text-fg-faint">${esc(DATA.practiceShort[a.practice] ?? a.practice)} · ${esc(DATA.statusLabels[a.decision] ?? a.decision)}</span> ${esc(a.note)} <span class="ml-1 text-fg-faint">(${esc(a.date)})</span></p>`).join('')
+                    antworten.map((a) => `<p class="text-small leading-relaxed text-fg-muted"><span class="font-mono text-mono uppercase tracking-[0.12em] text-fg-faint">${esc(DATA.practiceShort[a.practice] ?? a.practice)} · ${esc(DATA.statusLabels[a.decision] ?? a.decision)}</span> ${esc(a.note)} <span class="ml-1 text-fg-faint">(${esc(a.date)})</span></p>`).join('')
                   }</div></details>`
                 : ''
               const resp = marken || wortlaut
                 ? `<div class="mt-3 border-t border-line/60 pt-3">${marken}${wortlaut}</div>`
                 : ''
-              return `<li class="p-4 sm:p-5"><div class="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[11px] uppercase tracking-[0.12em] text-fg-faint"><span>${esc(String(s.ts).slice(0, 10))}</span><span aria-hidden="true">·</span><span>${esc(DATA.kindLabels[s.kind] ?? s.kind)}</span><span aria-hidden="true">·</span><span>${esc(DATA.addresseeLabels[s.addressed_to] ?? s.addressed_to)}</span><span aria-hidden="true">·</span><span class="rounded-full border border-line px-2 py-0.5 normal-case tracking-normal text-fg-muted">${esc(DATA.statusLabels[s.status] ?? s.status)}</span></div><p class="mt-2 whitespace-pre-line text-[15px] leading-relaxed text-fg">${esc(s.text)}</p><p class="mt-2 font-mono text-xs text-fg-faint">— ${esc(s.author_mark)}</p>${resp}</li>`
+              return `<li class="p-4 sm:p-5"><div class="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-mono-sm uppercase tracking-[0.12em] text-fg-faint"><span>${esc(String(s.ts).slice(0, 10))}</span><span aria-hidden="true">·</span><span>${esc(DATA.kindLabels[s.kind] ?? s.kind)}</span><span aria-hidden="true">·</span><span>${esc(DATA.addresseeLabels[s.addressed_to] ?? s.addressed_to)}</span><span aria-hidden="true">·</span><span class="rounded-sm border border-line px-2 py-0.5 font-mono text-mono-sm normal-case tracking-normal text-fg-muted">${esc(DATA.statusLabels[s.status] ?? s.status)}</span></div><p class="mt-2 whitespace-pre-line text-body leading-relaxed text-fg">${esc(s.text)}</p><p class="mt-2 font-mono text-mono text-fg-faint">— ${esc(s.author_mark)}</p>${resp}</li>`
             })
             .join('')
-          registerBody.innerHTML = `<ul class="mt-6 divide-y divide-line/60 overflow-hidden rounded-[10px] border border-line bg-panel">${items}</ul>`
+          registerBody.innerHTML = `<ul class="mt-6 divide-y divide-line/60 overflow-hidden rounded-md border border-line bg-panel panel-raised">${items}</ul>`
         },
       )
       .catch(() => {})
