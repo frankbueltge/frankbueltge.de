@@ -5,7 +5,6 @@ import type { AudienceClass, PathKind, TrendingDay, TrendingTopicSignal } from '
 const DATE_LONG = new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' })
 const DATE_WEEKDAY = new Intl.DateTimeFormat('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' })
 const NUM = new Intl.NumberFormat('en-GB')
-const NUM_COMPACT = new Intl.NumberFormat('en-GB', { notation: 'compact', maximumFractionDigits: 1 })
 
 /** "2 September 2026" */
 export function fmtDateLong(iso: string): string {
@@ -24,10 +23,15 @@ export function fmtTimeUtc(isoDateTime: string): string {
   return `${String(d.getUTCHours()).padStart(2, '0')}:${String(d.getUTCMinutes()).padStart(2, '0')}`
 }
 
-/** Full digits below 100 000 (a reader can still count them), compact above. */
+/** Full digits below 100 000 (a reader can still count them), compact above.
+ *  The compact form is spelled here rather than left to Intl's compact notation: ICU builds
+ *  disagree on "314.2K" versus "314.2k" (macOS and the Linux runners differ), and a figure that
+ *  renders differently per machine is not a fact the page can stand on. */
 export function compact(n: number | null | undefined): string {
   if (n === null || n === undefined || !Number.isFinite(n)) return '—'
-  return n < 100_000 ? NUM.format(n) : NUM_COMPACT.format(n)
+  if (n < 100_000) return NUM.format(n)
+  if (n < 1_000_000) return `${(n / 1_000).toFixed(1)}k`
+  return `${(n / 1_000_000).toFixed(1)}M`
 }
 
 const PLATFORM_LABEL: Record<string, string> = {

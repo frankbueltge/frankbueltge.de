@@ -13,7 +13,8 @@ describe('trending formatting', () => {
   it('keeps full digits below a hundred thousand and goes compact above', () => {
     expect(compact(2000)).toBe('2,000')
     expect(compact(99_999)).toBe('99,999')
-    expect(compact(314_205)).toBe('314.2K')
+    expect(compact(314_205)).toBe('314.2k')
+    expect(compact(6_796_501)).toBe('6.8M')
     expect(compact(null)).toBe('—')
   })
 
