@@ -18,7 +18,9 @@ import { readdirSync, readFileSync, statSync } from 'node:fs'
 import { join } from 'node:path'
 import { DOORS } from './pyramid/station'
 
-const roots = ['src/pages', 'src/components/pages', 'src/components/ecology']
+// src/components/holdings joined on 2026-09-02: the knowledge-graph explorer's frame lives there
+// and is what the page imports; the island it mounts must stay visible to this guard.
+const roots = ['src/pages', 'src/components/pages', 'src/components/ecology', 'src/components/holdings']
 
 // .astro pages and components, and — since the visual layer of 2026-09-02 — the React islands
 // (.tsx) that pages mount. An instrument ported to an island must stay visible to this guard;
@@ -48,6 +50,9 @@ describe('the instruments are on a page', () => {
     // the /ecology cycle partitur, an island since 2026-09-02 — the only surface on which the
     // running cycle's artifacts, sessions, letters, encounters and presentations stand together
     ['CyclePartitur', 'the running cycle as a score — every record of the cycle on one dated ruler'],
+    // the knowledge graph, explorable (2026-09-02) — the one surface on which every record the
+    // house keeps about itself stands with its receipts; without it the graph is a file
+    ['GraphExplorer', 'the knowledge graph of the house — every node with the file and quote each edge was read from'],
   ]
 
   it.each(INSTRUMENTS)('%s is imported by at least one page', (component, what) => {

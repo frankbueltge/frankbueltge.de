@@ -1,0 +1,259 @@
+/* src/styles/graph-explorer.css — the knowledge-graph explorer on /experiments/neighbors
+ * (visual layer, Phase 3a, 2026-09-02). Scoped entirely to `.gx`; prefixed `--gx-` to stay
+ * clear of the site's own tokens.
+ *
+ * Identity system — PALETTE: ecology-voices (src/lib/dataviz/palette.ts; the same quartet the
+ * score map, the hub doors and the Partitur wear, validated 2026-07-31 light and dark). Three
+ * categorical slots — Meridian, Ulysses, Ensemble — and the set's declared neutral for everything
+ * the house itself or the world owns. The hue never carries a fact alone: KIND is shape, WEIGHT
+ * is size, and every node repeats as a row of the table under the drawing. No warning red
+ * anywhere — a decision, a neighbour, a receiver are records, not states.
+ * Dark values are the site default; light overrides under [data-theme='light'].
+ */
+
+:root[data-theme='dark'] .gx {
+  --gx-hairline: #2b333d;
+  --gx-ink-2: #aab4bf;
+  --gx-panel: #141414;
+  /* PALETTE: ecology-voices — dark steps. */
+  --gx-c-meridian: #256abf;
+  --gx-c-ulysses: #9085e9;
+  --gx-c-ensemble: #d95926;
+  --gx-c-conductor: #77828d;
+  --gx-tip-bg: #161b22;
+}
+:root[data-theme='light'] .gx {
+  --gx-hairline: #cfd6de;
+  --gx-ink-2: #515b66;
+  --gx-panel: #ffffff;
+  /* PALETTE: ecology-voices — light steps, see the block above. */
+  --gx-c-meridian: #2a78d6;
+  --gx-c-ulysses: #4a3aa7;
+  --gx-c-ensemble: #eb6834;
+  --gx-c-conductor: #6b7684;
+  --gx-tip-bg: #ffffff;
+}
+
+/* one hue per voice, resolved once and inherited by the node's marks and labels */
+.gx .gx-v-meridian { --gx-hue: var(--gx-c-meridian); }
+.gx .gx-v-ulysses { --gx-hue: var(--gx-c-ulysses); }
+.gx .gx-v-ensemble { --gx-hue: var(--gx-c-ensemble); }
+.gx .gx-v-conductor { --gx-hue: var(--gx-c-conductor); }
+
+/* ————————————————————————————————— the frame ————————————————————————————— */
+.gx-figure {
+  position: relative;
+  margin: 0;
+}
+.gx-scroll {
+  overflow-x: auto;
+  contain: inline-size;
+}
+.gx-floor {
+  position: relative;
+  min-width: 640px;
+}
+.gx-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  touch-action: none;
+  cursor: grab;
+  background:
+    radial-gradient(circle at center, transparent 0, transparent 62%, rgb(0 0 0 / 0.04) 100%);
+}
+.gx-svg:active { cursor: grabbing; }
+.gx-svg text { font: 11px var(--font-mono); fill: var(--gx-ink-2); pointer-events: none; }
+
+/* the rings: the house from the inside out, then the world */
+.gx-ring {
+  fill: none;
+  stroke: var(--gx-hairline);
+  stroke-width: 1;
+  stroke-dasharray: 2 6;
+}
+.gx-ring-label {
+  font-size: 9.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+
+/* ————————————————————————————————— edges ——————————————————————————————— */
+.gx-edge {
+  stroke: var(--gx-ink-2);
+  stroke-width: 0.8;
+  opacity: 0.32;
+  fill: none;
+  transition: opacity 0.2s var(--ease-frame, ease);
+}
+.gx-edge[data-kind='made-by'] { stroke-dasharray: none; }
+.gx-edge[data-kind='neighbor-of'] { stroke-dasharray: 2 3; }
+.gx-edge[data-kind='touches'] { stroke-dasharray: 5 4; opacity: 0.24; }
+.gx-edge[data-kind='participates'],
+.gx-edge[data-kind='concerns'] { stroke-width: 1.4; }
+.gx-edge[data-kind='door'] { stroke-width: 1.8; }
+.gx-edge[data-kind='addresses'] { stroke-dasharray: 1 3; }
+.gx-edge[data-hidden] { display: none; }
+.gx[data-reading] .gx-edge:not([data-lit]) { opacity: 0.06; }
+.gx-edge[data-lit] { opacity: 0.9; stroke-width: 1.6; }
+
+/* ————————————————————————————————— nodes ——————————————————————————————— */
+.gx-node {
+  cursor: pointer;
+  outline: none;
+  transition: opacity 0.2s var(--ease-frame, ease);
+}
+.gx-node[data-hidden] { display: none; }
+.gx[data-reading] .gx-node:not([data-lit]) { opacity: 0.22; }
+.gx-node .gx-mark {
+  fill: var(--gx-hue);
+  stroke: var(--gx-panel);
+  stroke-width: 1.2;
+  vector-effect: non-scaling-stroke;
+}
+/* kind is shape; a few kinds are hollow, so the world reads lighter than the house */
+.gx .gx-mark-hollow,
+.gx-node[data-kind='neighbor'] .gx-mark { fill: none; stroke: var(--gx-hue); stroke-width: 1.4; }
+.gx-node[data-kind='decision'] .gx-mark { fill: var(--gx-hue); opacity: 0.85; }
+.gx-node[data-kind='receiver'] .gx-mark { fill: none; stroke: var(--gx-hue); stroke-width: 1.6; }
+.gx-node[data-kind='practice'] .gx-ring-mark { fill: none; stroke: var(--gx-hue); stroke-width: 1.2; opacity: 0.7; }
+.gx-node[data-kind='encounter'] .gx-mark { fill: var(--gx-panel); stroke: var(--gx-hue); stroke-width: 1.8; }
+.gx-node .gx-hit { fill: transparent; stroke: none; }
+.gx-node:hover .gx-mark,
+.gx-node:focus-visible .gx-mark,
+.gx-node[data-selected] .gx-mark { stroke: var(--color-fg); stroke-width: 2; }
+.gx-node[data-selected] .gx-hit { stroke: var(--gx-ink-2); stroke-dasharray: 2 3; stroke-width: 1; }
+
+/* labels: practices and experiments always; the rest when lit, when few are shown, or on hover */
+.gx-node .gx-label {
+  fill: var(--color-fg);
+  font-size: 11px;
+  paint-order: stroke;
+  stroke: var(--gx-panel);
+  stroke-width: 3px;
+  stroke-linejoin: round;
+  opacity: 0.92;
+}
+.gx-node[data-kind='practice'] .gx-label { font-weight: 600; font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; }
+.gx-node:not([data-kind='practice']):not([data-kind='work']) .gx-label { display: none; }
+.gx[data-few] .gx-node .gx-label,
+.gx-node[data-lit] .gx-label,
+.gx-node:hover .gx-label,
+.gx-node:focus-visible .gx-label { display: block; }
+.gx[data-reading] .gx-node[data-lit]:not([data-selected]) .gx-label { fill: var(--gx-ink-2); }
+
+/* ————————————————————————————————— controls ————————————————————————————— */
+.gx-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 1rem; }
+.gx-filter { display: flex; flex-wrap: wrap; align-items: center; gap: 0.25rem; }
+.gx-filter-label { font: 10.5px var(--font-mono); letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-fg-faint); margin-right: 0.25rem; }
+.gx-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  height: 1.75rem;
+  padding: 0 0.6rem;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-sm, 0.1875rem);
+  font: 11px var(--font-mono);
+  color: var(--color-fg-muted);
+  background: transparent;
+  cursor: pointer;
+  transition: border-color 0.2s var(--ease-frame, ease), color 0.2s var(--ease-frame, ease), background-color 0.2s var(--ease-frame, ease);
+}
+.gx-chip:hover { color: var(--color-fg); border-color: var(--color-line-lift, var(--color-line)); }
+.gx-chip[aria-pressed='true'] { color: var(--color-fg); background: var(--color-panel-2); }
+.gx-chip[aria-pressed='false'] { opacity: 0.55; text-decoration: line-through; text-decoration-color: var(--color-fg-faint); }
+.gx-chip .gx-chip-n { color: var(--color-fg-faint); }
+.gx-chip svg { width: 14px; height: 14px; overflow: visible; }
+.gx-chip svg .gx-mark { fill: var(--gx-c-conductor); stroke: none; }
+.gx-chip[data-hollow] svg .gx-mark { fill: none; stroke: var(--gx-c-conductor); stroke-width: 1.4; }
+
+/* the search: an input and a listbox, styled from the primitives' own tokens */
+.gx-search { position: relative; min-width: 16rem; flex: 1 1 18rem; max-width: 30rem; }
+.gx-search input {
+  width: 100%;
+  height: 2rem;
+  padding: 0 0.6rem 0 1.9rem;
+  border: 1px solid var(--color-border, var(--color-line));
+  border-radius: var(--radius-sm, 0.1875rem);
+  background: var(--color-panel);
+  color: var(--color-fg);
+  font: 12.5px var(--font-mono);
+}
+.gx-search input::placeholder { color: var(--color-fg-faint); }
+.gx-search input:focus-visible { outline: 2px solid var(--color-ring, var(--color-accent)); outline-offset: 1px; }
+.gx-search svg { position: absolute; left: 0.55rem; top: 0.5rem; width: 14px; height: 14px; color: var(--color-fg-faint); pointer-events: none; }
+.gx-results {
+  position: absolute;
+  z-index: 20;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  margin: 0;
+  padding: 0.25rem;
+  list-style: none;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-md, 0.3125rem);
+  background: var(--color-panel);
+  box-shadow: var(--elev-float, 0 8px 24px rgb(0 0 0 / 0.35));
+  max-height: 18rem;
+  overflow-y: auto;
+}
+.gx-result {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  padding: 0.35rem 0.5rem;
+  border-radius: var(--radius-sm, 0.1875rem);
+  font-size: 13px;
+  color: var(--color-fg-muted);
+  cursor: pointer;
+}
+.gx-result[aria-selected='true'] { background: var(--color-panel-2); color: var(--color-fg); }
+.gx-result .gx-result-kind { font: 10.5px var(--font-mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-fg-faint); flex: none; }
+.gx-result .gx-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--gx-hue); flex: none; transform: translateY(-1px); }
+.gx-empty { padding: 0.5rem 0.6rem; font-size: 12.5px; color: var(--color-fg-faint); }
+
+/* ————————————————————————————————— the card ————————————————————————————— */
+.gx-card { margin-top: 1rem; }
+.gx-card .gx-voice-badge { border-color: var(--gx-hue); color: var(--color-fg); }
+.gx-card .gx-voice-badge::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--gx-hue); }
+.gx-receipts { margin: 0; padding: 0; list-style: none; display: grid; gap: 0.6rem; }
+.gx-receipt { border-top: 1px solid var(--color-line); padding-top: 0.55rem; font-size: 12.5px; line-height: 1.55; color: var(--color-fg-muted); }
+.gx-receipt-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.4rem; }
+.gx-receipt-kind { font: 10.5px var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-fg-faint); }
+.gx-receipt-other { color: var(--color-fg); background: none; border: 0; padding: 0; font: inherit; cursor: pointer; text-decoration: underline; text-underline-offset: 2px; text-decoration-color: var(--color-fg-faint); }
+.gx-receipt-other:hover { text-decoration-color: var(--color-fg); }
+.gx-receipt-quote { margin: 0.25rem 0 0; font-style: italic; color: var(--color-fg-muted); }
+.gx-receipt-file { display: block; margin-top: 0.2rem; font: 10.5px var(--font-mono); color: var(--color-fg-faint); word-break: break-all; }
+
+/* ————————————————————————————————— the key —————————————————————————————— */
+.gx-key { display: grid; gap: 0.35rem 1.5rem; margin: 0.75rem 0 0; padding: 0; list-style: none; font-size: 12.5px; color: var(--color-fg-muted); }
+@media (min-width: 640px) { .gx-key { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 1024px) { .gx-key { grid-template-columns: 1fr 1fr 1fr; } }
+.gx-key li { display: flex; align-items: baseline; gap: 0.5rem; }
+.gx-key svg { width: 22px; height: 16px; flex: none; overflow: visible; transform: translateY(3px); }
+.gx-key svg .gx-mark { fill: var(--gx-c-conductor); stroke: none; }
+.gx-key li[data-hollow] svg .gx-mark { fill: none; stroke: var(--gx-c-conductor); stroke-width: 1.4; }
+.gx-key li[data-kind='practice'] svg .gx-ring-mark { fill: none; stroke: var(--gx-c-conductor); stroke-width: 1.2; }
+.gx-voices { display: flex; flex-wrap: wrap; gap: 0.35rem 1.25rem; margin-top: 0.75rem; font-size: 12.5px; color: var(--color-fg-muted); }
+.gx-voices span { display: inline-flex; align-items: center; gap: 0.45rem; }
+.gx-sw { width: 14px; height: 4px; border-radius: 2px; background: var(--gx-hue); }
+.gx-note { margin: 0.6rem 0 0; font: 11px var(--font-mono); color: var(--color-fg-faint); line-height: 1.6; }
+
+/* the shared readout shell, inked here like the score map inks its own */
+.gx .dv-readout {
+  padding: 6px 9px;
+  border: 1px solid var(--gx-hairline);
+  border-radius: var(--radius-sm, 0.1875rem);
+  background: var(--gx-tip-bg);
+  color: var(--color-fg);
+  font: 11.5px var(--font-mono);
+  box-shadow: var(--elev-float, 0 8px 24px rgb(0 0 0 / 0.35));
+}
+.gx .dv-readout .gx-tip-kind { display: block; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gx-ink-2); }
+
+@media (prefers-reduced-motion: reduce) {
+  .gx-edge, .gx-node, .gx-chip { transition: none; }
+}
