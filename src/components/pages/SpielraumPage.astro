@@ -11,6 +11,9 @@ import type { Company, CompanyKey, PueEntry, SpielraumRegister, Tier } from '@/l
 import { hasDisclosure } from '@/lib/spielraum/types'
 import { buildRounds, fmtPct, fmtRatio, headroomPct, latestPue, type Round } from '@/lib/spielraum/compute'
 import { SR_CHART_W, floorX, hatchLines, impossibleZone, scaleX, ticks, type Domain } from '@/lib/spielraum/chart'
+import SheetHead from '@/components/experiments/SheetHead.astro'
+import SheetFoot from '@/components/experiments/SheetFoot.astro'
+import '@/styles/experiment-sheet.css'
 
 interface Props { locale: Locale }
 const { locale } = Astro.props
@@ -367,14 +370,12 @@ const methodLabel = de ? 'Methodenblatt' : 'Method sheet'
 
 <main id="main" class="flex-1">
 <article class="spielraum mx-auto max-w-2xl px-4 py-14">
-  <header class="mb-10 space-y-2">
-    <h1 class="text-2xl font-semibold">{t(locale, 'sr.title')}</h1>
-    <p class="text-fg-muted">{t(locale, 'sr.sub')}</p>
-    <p class="text-[15px] leading-relaxed">{ledeText}</p>
-  </header>
+  <SheetHead title={t(locale, 'sr.title')} sub={t(locale, 'sr.sub')}>
+    <p class="mt-4 max-w-2xl text-body leading-relaxed text-fg">{ledeText}</p>
+  </SheetHead>
 
   <section class="mb-12 print:hidden">
-    <p class="font-mono text-xs uppercase tracking-wide text-fg-faint">{showcaseLabel}</p>
+    <p class="kicker">{showcaseLabel}</p>
     <p class="py-1 text-[clamp(48px,9vw,96px)] font-bold leading-none tracking-tight tabular-nums">{showcaseValue}</p>
     <p class="max-w-prose text-sm text-fg-muted">{showcaseCaption}</p>
   </section>
@@ -578,11 +579,11 @@ const methodLabel = de ? 'Methodenblatt' : 'Method sheet'
     </p>
   </section>
 
-  <footer class="mt-12 space-y-1 border-t border-line pt-6">
+  <SheetFoot>
     <nav class="flex gap-4 pt-2 text-sm text-fg-muted print:hidden">
       <a href={methodUrl} class="transition-colors hover:text-fg">{methodLabel}</a>
     </nav>
-  </footer>
+  </SheetFoot>
 </article>
 </main>
 

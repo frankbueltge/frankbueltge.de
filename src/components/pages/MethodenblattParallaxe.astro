@@ -1,6 +1,7 @@
 ---
 import { getRelativeLocaleUrl } from 'astro:i18n'
 import type { Locale } from '@/lib/site'
+import MethodSheet from '@/components/experiments/MethodSheet.astro'
 
 interface Props { locale: Locale }
 const { locale } = Astro.props
@@ -81,9 +82,7 @@ const txt = {
 }
 ---
 
-<main id="main" class="flex-1">
-<div class="mx-auto max-w-2xl px-4 py-14">
-  <h1 class="mb-8 text-xl font-semibold">{txt.h1}</h1>
+<MethodSheet title={txt.h1} workHref={workUrl} workLabel={txt.toWork}>
 
   <section class="mb-8">
     <h2 class="mb-2 font-semibold">{txt.s1}</h2>
@@ -99,7 +98,7 @@ const txt = {
     <h2 class="mb-2 font-semibold">{txt.s3}</h2>
     <p class="leading-relaxed text-fg-muted">{txt.s3body}</p>
     <p class="mt-2">
-      <a href={codeUrl} class="font-mono text-xs text-fg-faint transition-colors hover:text-fg" rel="noopener">{txt.codeLabel}</a>
+      <a href={codeUrl} class="sheet-link" rel="noopener">{txt.codeLabel}</a>
     </p>
     <p class="mb-2 mt-4 text-sm text-fg-faint">{txt.s3promptCaption}</p>
     <pre class="overflow-x-auto rounded-[14px] border border-line bg-panel p-4 font-mono text-xs leading-relaxed text-fg-muted whitespace-pre-wrap">{PROMPT}</pre>
@@ -120,6 +119,4 @@ const txt = {
     <ul class="list-disc space-y-1 pl-5 text-fg-muted">{txt.s6items.map((i) => <li>{i}</li>)}</ul>
   </section>
 
-  <a href={workUrl} class="text-sm text-fg-muted transition-colors hover:text-fg">→ {txt.toWork}</a>
-</div>
-</main>
+</MethodSheet>

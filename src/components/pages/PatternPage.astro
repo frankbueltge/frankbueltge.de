@@ -21,6 +21,9 @@ import type { Locale } from '@/lib/site'
 import type { PatternData } from '@/lib/pattern/types'
 import { rStr, pct, normalize, linePath } from '@/lib/pattern/format'
 import data from '@/data/pattern/latest.json'
+import SheetHead from '@/components/experiments/SheetHead.astro'
+import SheetFoot from '@/components/experiments/SheetFoot.astro'
+import '@/styles/experiment-sheet.css'
 
 interface Props { locale: Locale }
 const { locale } = Astro.props
@@ -45,13 +48,12 @@ const ndMarkerX = nd ? Math.min(nd.bins * 10 - 1, Math.abs(h.r) * nd.bins * 10) 
 
 <main id="main" class="flex-1">
 <article class="pattern mx-auto max-w-3xl px-4 py-14">
-  <header class="mb-10">
-    <h1 class="text-[clamp(30px,6vw,56px)] font-bold tracking-[-0.03em]">Patterns</h1>
+  <SheetHead title="Patterns">
     <p class="mt-2 max-w-xl text-fg-muted">{t(locale, 'pt.sub')}</p>
-  </header>
+  </SheetHead>
 
   <section class="mb-8 border-l-2 border-accent/60 pl-5">
-    <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">{de ? 'Der Fund des Tages' : "Today's discovery"}</p>
+    <p class="kicker">{de ? 'Der Fund des Tages' : "Today's discovery"}</p>
     <p class="mt-3 text-[clamp(18px,3vw,26px)] font-semibold leading-snug">
       {h.a_label[locale]} <span class="text-fg-faint">↔</span> {h.b_label[locale]}
     </p>
@@ -70,8 +72,8 @@ const ndMarkerX = nd ? Math.min(nd.bins * 10 - 1, Math.abs(h.r) * nd.bins * 10) 
     </ul>
   </section>
 
-  <section class="mb-12 border border-line bg-panel/60 p-5">
-    <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">{de ? 'Das Geständnis' : 'The confession'}</p>
+  <section class="mb-12 rounded-md border border-line bg-panel panel-raised p-5">
+    <p class="kicker">{de ? 'Das Geständnis' : 'The confession'}</p>
     <p class="mt-3 leading-relaxed">
       {de
         ? `Die Maschine verglich ${d.pairs} Paare über ${d.days} Tage. ${d.strong_pairs} davon „korrelieren" (|r| ≥ ${d.strong_threshold}). Sie nahm das stärkste und nannte es einen Fund — ohne die leiseste Ahnung, ob es etwas bedeutet. Sie kann es nicht wissen.`
@@ -85,7 +87,7 @@ const ndMarkerX = nd ? Math.min(nd.bins * 10 - 1, Math.abs(h.r) * nd.bins * 10) 
   </section>
 
   <section class="mb-12 border-t border-line pt-6">
-    <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+    <p class="kicker">
       {de ? 'Die Null-Verteilung — was der Zufall allein produziert' : 'The null distribution — what chance alone produces'}
     </p>
     <div class="mt-3 flex flex-wrap gap-x-10 gap-y-3">
@@ -130,7 +132,7 @@ const ndMarkerX = nd ? Math.min(nd.bins * 10 - 1, Math.abs(h.r) * nd.bins * 10) 
   </section>
 
   <section class="mb-12 border-t border-line pt-6">
-    <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+    <p class="kicker">
       {de ? 'Nächste Nachbarn' : 'Nearest neighbors'}
     </p>
     <p class="mt-3 max-w-xl text-sm leading-relaxed text-fg-muted">
@@ -149,13 +151,13 @@ const ndMarkerX = nd ? Math.min(nd.bins * 10 - 1, Math.abs(h.r) * nd.bins * 10) 
     </p>
   </section>
 
-  <footer class="mt-12 border-t border-line pt-6">
+  <SheetFoot>
     <p class="font-mono text-xs text-fg-faint">
       {de ? 'Quelle: ' : 'Source: '}{d.source.name}. {de ? `${d.metrics_count} variierende Metriken.` : `${d.metrics_count} varying metrics.`}
     </p>
     <nav class="mt-2">
-      <a href={methodUrl} class="font-mono text-xs text-fg-faint transition-colors hover:text-fg">{t(locale, 'prot.method')} →</a>
+      <a href={methodUrl} class="sheet-link">{t(locale, 'prot.method')} →</a>
     </nav>
-  </footer>
+  </SheetFoot>
 </article>
 </main>

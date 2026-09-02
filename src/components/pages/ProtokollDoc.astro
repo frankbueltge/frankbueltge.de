@@ -4,6 +4,7 @@ import { t } from '@/i18n/ui'
 import type { Locale } from '@/lib/site'
 import { renderDay } from '@/lib/protokoll/render'
 import type { ProtokollDay } from '@/lib/protokoll/types'
+import '@/styles/experiment-sheet.css'
 
 interface Props { day: ProtokollDay; locale: Locale }
 const { day, locale } = Astro.props
@@ -30,7 +31,7 @@ const feedUrl = locale === 'de' ? '/de/protokoll/feed.xml' : '/protocol/feed.xml
   <footer class="mt-12 space-y-1 border-t border-line pt-6">
     {r.schluss.map((line) => <p>{line}</p>)}
     <p class="pt-4 font-mono text-xs text-fg-faint">{r.meta}</p>
-    <nav class="flex gap-4 pt-2 text-sm text-fg-muted print:hidden">
+    <nav class="sheet-nav flex flex-wrap gap-1 pt-2 print:hidden">
       <a href={archivUrl} class="transition-colors hover:text-fg">{t(locale, 'prot.archive')}</a>
       <a href={methodUrl} class="transition-colors hover:text-fg">{t(locale, 'prot.method')}</a>
       <a href={feedUrl} class="transition-colors hover:text-fg">RSS</a>

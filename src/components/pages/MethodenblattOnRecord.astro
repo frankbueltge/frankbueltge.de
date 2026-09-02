@@ -2,6 +2,7 @@
 // Method sheet for "On Record" (the Meridian parallax). English-only. Numbers come from the
 // same view model the instrument renders, so the sheet cannot drift from the page.
 import data from '@/data/meridian/parallax.json'
+import MethodSheet from '@/components/experiments/MethodSheet.astro'
 
 const { claim, verifications, sources, export_meta: exp, runs, totals, feature_run } = data
 const claimAnchors = claim.supporting + claim.contradicting
@@ -19,13 +20,10 @@ const featureClaims = n(featureRun.claims, 'claim', 'claims')
 const totalClaims = n(totals.claims, 'claim', 'claims')
 ---
 
-<main id="main" class="flex-1">
-<div class="mx-auto max-w-2xl px-4 py-14 font-mono">
-  <p class="mb-2 text-[11px] uppercase tracking-[0.2em] text-fg-faint">Method sheet</p>
-  <h1 class="mb-8 font-sans text-2xl font-semibold">On Record</h1>
+<MethodSheet title="On Record" kicker="Method sheet" workHref="/on-record" workLabel="To the instrument" class="font-mono">
 
-  <section class="mb-10 border border-line bg-panel/60 p-5">
-    <h2 class="mb-2 text-[11px] uppercase tracking-[0.18em] text-fg-faint">What this is</h2>
+  <section class="sheet-reveal mb-10">
+    <h2 class="kicker mb-2">What this is</h2>
     <p class="leading-relaxed text-fg-muted">
       An instrument that reads one real research claim out of a sealed archive and shows the two
       independent verifications that disagreed about it — a <em>pass</em> and a <em>fail</em>, kept side
@@ -130,8 +128,4 @@ const totalClaims = n(totals.claims, 'claim', 'claims')
     </section>
   </div>
 
-  <p class="mt-12 border-t border-line pt-6 text-sm">
-    <a href="/on-record" class="underline transition-colors hover:text-fg">To the instrument →</a>
-  </p>
-</div>
-</main>
+</MethodSheet>

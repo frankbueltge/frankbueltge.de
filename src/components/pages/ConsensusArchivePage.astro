@@ -4,6 +4,9 @@
 // Git is the archive; failures stay failures and uncommitted days render as gaps.
 import { chronicle } from '@/lib/consensus/archive'
 import { cleanTitle, echoPercent, spanLabel, hhmm } from '@/lib/consensus/format'
+import SheetHead from '@/components/experiments/SheetHead.astro'
+import SheetFoot from '@/components/experiments/SheetFoot.astro'
+import '@/styles/experiment-sheet.css'
 
 const files = import.meta.glob('../../data/consensus/*.json', { eager: true })
 const days = chronicle(files as Record<string, unknown>)
@@ -51,13 +54,8 @@ const dateLabel = (iso: string) =>
 
 <main id="main" class="flex-1">
 <article class="mx-auto max-w-3xl px-4 py-14">
-  <header class="mb-10">
-    <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
-      <a href="/consensus" class="transition-colors hover:text-fg">Consensus</a> · Archive
-    </p>
-    <h1 class="mt-2 text-[clamp(30px,6vw,56px)] font-bold tracking-[-0.03em]">
-      {measured.length} days, {measured.length} sentences
-    </h1>
+  <SheetHead title={`${measured.length} days, ${measured.length} sentences`}>
+    <Fragment slot="kicker"><a href="/consensus" class="transition-colors hover:text-fg">Consensus</a> · Archive</Fragment>
     <p class="mt-3 max-w-xl text-fg-muted">
       Every day since {firstLabel}, the sentence the news chorus spoke in unison — the most-echoed
       wording of the day, measured, not curated. Days the measurement failed are recorded as
@@ -67,10 +65,10 @@ const dateLabel = (iso: string) =>
       {days.length} calendar days · {measured.length} measured · {failures.length}
       {failures.length === 1 ? ' failure/gap' : ' failures/gaps'} · median echo {echoPercent(median, 'en')}
     </p>
-  </header>
+  </SheetHead>
 
   <section class="mb-12" aria-label="Echo index over time">
-    <p class="mb-2 font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+    <p class="mb-2 kicker">
       Echo index, daily — share of the scanned news stream that was verbatim copy
     </p>
     <div class="overflow-x-auto">
@@ -120,7 +118,7 @@ const dateLabel = (iso: string) =>
             {d.kind === 'measured' ? (
               <span class="font-mono text-xs tabular-nums text-fg-muted">{echoPercent(d.data!.echo_index, 'en')} echo</span>
             ) : (
-              <span class="font-mono text-xs uppercase tracking-wide text-fg-faint">
+              <span class="kicker">
                 {d.kind === 'failed' ? 'measurement failed' : 'no record'}
               </span>
             )}
@@ -195,7 +193,7 @@ const dateLabel = (iso: string) =>
     </ol>
   </section>
 
-  <footer class="mt-12 border-t border-line pt-6">
+  <SheetFoot>
     <p class="font-mono text-xs text-fg-faint">
       Every row is a committed file — <code>src/data/consensus/&lt;date&gt;.json</code>, written nightly by the
       counter-measurement pipeline from GDELT DOC 2.0 and versioned in the repository. Git is the archive:
@@ -204,9 +202,9 @@ const dateLabel = (iso: string) =>
       hold domains only and are never backfilled.
     </p>
     <nav class="mt-3 flex gap-4">
-      <a href="/consensus" class="font-mono text-xs text-fg-faint transition-colors hover:text-fg">← Today's measurement</a>
-      <a href="/werke/consensus" class="font-mono text-xs text-fg-faint transition-colors hover:text-fg">Method sheet →</a>
+      <a href="/consensus" class="sheet-link">← Today's measurement</a>
+      <a href="/werke/consensus" class="sheet-link">Method sheet →</a>
     </nav>
-  </footer>
+  </SheetFoot>
 </article>
 </main>

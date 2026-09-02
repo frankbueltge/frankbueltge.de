@@ -1,0 +1,48 @@
+---
+// The method sheet's frame (re-skin 2c, 2026-09-02): one wrapper for the seventeen
+// Methodenblatt components, which until now each opened their own <main>, typed their own
+// h1 ("Method sheet — Consensus", one size, one weight) and closed with their own "→ To the
+// experiment" anchor. The wrapper splits that title into the frame's kicker and the
+// experiment's name — the sheet's own string, unchanged, just set on the type scale — and
+// closes with a SheetFoot carrying the link back to the instrument.
+//
+// The sections inside keep their own markup; src/styles/experiment-sheet.css puts their
+// numbered h2s on the type scale and the "what this is" panel on the frame's depth.
+import SheetHead from './SheetHead.astro'
+import SheetFoot from './SheetFoot.astro'
+import { cn } from '@/lib/ui/cn'
+import '@/styles/experiment-sheet.css'
+
+interface Props {
+  /** the sheet's own title — "Method sheet — Consensus" is split into kicker + name */
+  title: string
+  /** the instrument this sheet describes */
+  workHref?: string
+  workLabel?: string
+  /** used when the title carries no "Method sheet —" prefix */
+  kicker?: string
+  /** the wider column some sheets already used */
+  wide?: boolean
+  class?: string
+}
+
+const { title, workHref, workLabel, kicker, wide = false, class: extra } = Astro.props
+const split = /^(Method sheet|Methodenblatt)\s+[—–-]\s+(.+)$/u.exec(title.trim())
+const head = split
+  ? { kicker: split[1]!.toUpperCase(), title: split[2]! }
+  : { kicker: (kicker ?? 'Method sheet').toUpperCase(), title }
+---
+
+<main id="main" class="flex-1">
+  <article class={cn('sheet-body mx-auto px-4 py-14', wide ? 'max-w-3xl' : 'max-w-2xl', extra)}>
+    <SheetHead kicker={head.kicker} title={head.title} />
+    <slot />
+    {
+      (workHref || Astro.slots.has('foot')) && (
+        <SheetFoot links={workHref ? [{ href: workHref, label: workLabel ?? head.title }] : []}>
+          <slot name="foot" />
+        </SheetFoot>
+      )
+    }
+  </article>
+</main>

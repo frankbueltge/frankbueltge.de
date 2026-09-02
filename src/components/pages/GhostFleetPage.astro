@@ -5,6 +5,9 @@ import type { Locale } from '@/lib/site'
 import type { GhostFleetData, GfEvent } from '@/lib/ghost-fleet/types'
 import { darkLabel, coord, flagClause, regionLabel, vesselKind, dateLabel } from '@/lib/ghost-fleet/format'
 import data from '@/data/ghost-fleet/latest.json'
+import SheetHead from '@/components/experiments/SheetHead.astro'
+import SheetFoot from '@/components/experiments/SheetFoot.astro'
+import '@/styles/experiment-sheet.css'
 
 interface Props { locale: Locale }
 const { locale } = Astro.props
@@ -20,11 +23,10 @@ const protectedCount = d.index.in_no_take + d.index.in_mpa
 
 <main id="main" class="flex-1">
 <article class="ghost-fleet mx-auto max-w-3xl px-4 py-14">
-  <header class="mb-10">
-    <h1 class="text-[clamp(30px,6vw,56px)] font-bold">Ghost Fleet</h1>
+  <SheetHead title="Ghost Fleet">
     <p class="mt-2 max-w-xl text-fg-muted">{t(locale, 'gf.sub')}</p>
     <p class="mt-1 font-mono text-xs text-fg-faint">{dateLabel(d.date, locale)}</p>
-  </header>
+  </SheetHead>
 
   {pending ? (
     <p class="mb-12 text-fg-muted">{t(locale, 'gf.empty')}</p>
@@ -32,7 +34,7 @@ const protectedCount = d.index.in_no_take + d.index.in_mpa
     <>
       {pick && (
         <section class="mb-12 border-l-2 border-accent/60 pl-5">
-          <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+          <p class="kicker">
             {de ? 'Der Fall des Tages' : 'The case of the day'}
           </p>
           <p class="mt-2 text-lg font-semibold">{pick.vessel.name} <span class="font-mono text-sm text-fg-faint">({pick.vessel.flag})</span></p>
@@ -68,7 +70,7 @@ const protectedCount = d.index.in_no_take + d.index.in_mpa
 
       {rest.length > 0 && (
         <section class="mb-12 border-t border-line pt-6">
-          <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+          <p class="kicker">
             {de ? 'Weitere Verschwundene' : 'Others gone dark'}
           </p>
           <ul class="mt-3 space-y-1.5">
@@ -86,7 +88,7 @@ const protectedCount = d.index.in_no_take + d.index.in_mpa
   )}
 
   <section class="mb-8 border-t border-line pt-6">
-    <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+    <p class="kicker">
       {de ? 'Nächste Nachbarn' : 'Nearest neighbors'}
     </p>
     <ul class="mt-3 space-y-2 text-sm text-fg-muted">
@@ -110,13 +112,13 @@ const protectedCount = d.index.in_no_take + d.index.in_mpa
     </p>
   </section>
 
-  <p class="border-t border-line pt-6 text-xs leading-relaxed text-fg-faint">
+  <SheetFoot>
+    <p>
     {de
       ? '„Absichtlich" ist eine Schätzung von Global Fishing Watch (ML), kein Beweis — Abschalten kann legitime Gründe haben (etwa Piraterie-Zonen). Dieses Instrument erhebt keinen Vorwurf gegen ein Schiff oder einen Staat. Es erfasst nur offshore, gut beobachtete Abschaltungen.'
       : '„Intentional" is an estimate by Global Fishing Watch (ML), not proof — disabling can have legitimate reasons (e.g. piracy zones). This instrument makes no accusation against any vessel or state. It captures only offshore, well-observed disabling.'}
-    <a href={methodUrl} class="ml-1 underline transition-colors hover:text-fg">
-      {de ? 'Methodenblatt' : 'Method sheet'} →
-    </a>
-  </p>
+    </p>
+    <nav><a href={methodUrl}>{de ? 'Methodenblatt' : 'Method sheet'} →</a></nav>
+  </SheetFoot>
 </article>
 </main>

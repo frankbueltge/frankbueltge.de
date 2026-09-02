@@ -1,0 +1,137 @@
+/* ── The experiment sheet (re-skin 2c, 2026-09-02) ──────────────────────────────────────
+   Structure and type for the lab's surfaces — the experiment pages, the method sheets, the
+   shelf — cut from the frame's recipe: the type scale, the radius scale, the resting depth,
+   the ghost link. Scoped to the sheet classes its components set (src/components/experiments/).
+   It decides NO colour of its own: every value is one of the frame's tokens (global.css), so
+   both themes flow through unchanged and the figures inside keep their own PALETTE-marked
+   stylesheets. Plain CSS import, bundled once however many pages use it. */
+
+/* The method sheets' numbered sections: the h2 on the type scale, one weight, one rhythm. */
+.sheet-body section > h2 {
+  font-size: var(--text-h3);
+  line-height: var(--text-h3--line-height);
+  letter-spacing: var(--text-h3--letter-spacing);
+  font-weight: 600;
+  color: var(--color-fg);
+}
+/* …unless the sheet set the h2 as a mono kicker itself — that reads as a kicker, and stays one */
+.sheet-body section > h2.font-mono,
+.sheet-body section > h2.uppercase {
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-sm);
+  line-height: 1.5;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 400;
+  color: var(--color-fg-faint);
+}
+.sheet-body section > p,
+.sheet-body section > ul {
+  font-size: var(--text-body);
+  line-height: var(--text-body--line-height);
+}
+
+/* The "what this is" panel at the top of a method sheet: the frame's panel, at rest. */
+.sheet-reveal {
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-md);
+  background: var(--color-panel);
+  box-shadow: var(--elev-rest);
+  padding: 1.25rem;
+}
+.sheet-reveal > p {
+  font-size: var(--text-body);
+  line-height: var(--text-body--line-height);
+  color: var(--color-fg);
+}
+
+/* A sub-line the page slotted into its head (a date, a rule, a count) keeps its own classes;
+   only the width is bounded so a long subtitle does not run the whole measure. */
+.sheet-head > :where(p:not(.kicker)) {
+  max-width: 42rem;
+}
+
+/* Links inside a slotted provenance paragraph: the frame's underline, brightening on hover. */
+.sheet-foot-text a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--color-line-lift);
+  text-underline-offset: 4px;
+  transition: color 0.2s var(--ease-frame), text-decoration-color 0.2s var(--ease-frame);
+}
+.sheet-foot-text a:hover {
+  color: var(--color-fg);
+  text-decoration-color: var(--color-fg);
+}
+/* A nav a page slotted into its foot (method sheet · archive · RSS): each link a ghost button,
+   the same cut SheetFoot's own `links` get from buttonVariants — so the page did not have to
+   restate the recipe on every anchor. */
+.sheet-foot-text nav {
+  margin-top: 0.75rem;
+  margin-left: -0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+.sheet-foot-text nav a {
+  display: inline-flex;
+  align-items: center;
+  height: 1.75rem;
+  padding: 0 0.5rem;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-sm);
+  color: var(--color-fg-muted);
+  text-decoration: none;
+  transition: background-color 0.2s var(--ease-frame), color 0.2s var(--ease-frame);
+}
+.sheet-foot-text nav a:hover {
+  background: var(--color-panel-2);
+  color: var(--color-fg);
+}
+
+/* The fold's body indents under its summary by the summary's own inset. */
+.sheet-fold-body {
+  padding-left: 0.25rem;
+}
+
+/* The shelf (/experiments): a row is a card that leads somewhere — the frame's panel at rest,
+   rising on hover or focus like every other card in the house. The lift itself is `.lift`
+   (global.css); this rule only settles the card's inner rhythm. */
+.sheet-row > details > summary {
+  border-radius: var(--radius-md);
+}
+
+/* A source link in the body of a sheet — the pipeline, the dataset, the spec: the frame's mono
+   ink, brightening on hover, no underline (the sentence around it carries the meaning). */
+.sheet-link {
+  font-family: var(--font-mono);
+  font-size: var(--text-mono);
+  color: var(--color-fg-faint);
+  transition: color 0.2s var(--ease-frame);
+}
+.sheet-link:hover {
+  color: var(--color-fg);
+}
+
+/* The nav of a document page (the police, the protocol): its footer is the document's own
+   closing lines and stays; only the links are dressed like every other foot's — ghost buttons. */
+.sheet-nav {
+  margin-left: -0.5rem;
+}
+.sheet-nav a {
+  display: inline-flex;
+  align-items: center;
+  height: 1.75rem;
+  padding: 0 0.5rem;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-sm);
+  color: var(--color-fg-muted);
+  text-decoration: none;
+  transition: background-color 0.2s var(--ease-frame), color 0.2s var(--ease-frame);
+}
+.sheet-nav a:hover {
+  background: var(--color-panel-2);
+  color: var(--color-fg);
+}
