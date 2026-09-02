@@ -67,11 +67,8 @@ NOTE_CAP = 200
 # One request per this many seconds and platform. GitHub's search API allows ten requests a
 # minute unauthenticated and thirty with a token, which is the only reason a token matters
 # here — the data is public either way.
-# Reddit answers a second unauthenticated request within a few seconds with 429, so its
-# search runs at one request per seven seconds — one OR-joined query per term keeps that
-# inside a few minutes; the source stays optional.
 THROTTLE_S: dict[str, float] = {
-    "hackernews": 0.5, "google_news": 0.5, "github": 7.0, "arxiv": 3.0, "reddit": 7.0,
+    "hackernews": 0.5, "google_news": 0.5, "github": 7.0, "arxiv": 3.0, "reddit": 0.5,
     "wikipedia_views": 0.5,
 }
 GITHUB_THROTTLE_AUTHENTICATED_S = 2.0

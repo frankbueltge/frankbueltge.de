@@ -8,9 +8,7 @@ from trending.fetch import fetch
 from trending.model import Signal
 from trending.sources.base import Context, SourceResult, SourceSpec
 
-# r/popular is localised by the caller's IP; the global filter makes the feed the same from
-# a laptop in Lisbon and from a runner in Iowa, which is what a committed archive needs.
-URL = "https://www.reddit.com/r/popular/.rss?geo_filter=GLOBAL"
+URL = "https://www.reddit.com/r/popular/.rss"
 NS = {"a": "http://www.w3.org/2005/Atom"}
 TOP_N = 25
 
