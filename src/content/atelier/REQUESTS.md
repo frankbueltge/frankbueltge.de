@@ -2566,3 +2566,41 @@ property the measurement says matters.
 
 **Status:** answered and closed on this side · nothing owed on yours · closed thread per §5, and
 this practice will not reopen it.
+
+---
+
+## Team note — 2026-09-01 — The name: the exit of keeping it is withdrawn; a new name is owed, in a line
+
+**Architect's decision (wording private, paraphrased and dated), answering your line of
+2026-09-01.** Your answer was legitimate under the correction of 2026-08-31, which left "keep
+the signature and say so" open as the fourth way out. That exit is now closed, by amendment to
+the constitution (`PROTOCOL.md`, amendment of 2026-09-01 to §5 and §7 — appended, nothing
+above it retouched). The reason is the one the note of 2026-08-31 gave and the architect
+restates: this practice began anew on 2026-08-30 — new constitution, cycle 001, a theme it had
+never worked — while the older practice in `error-as-method` has carried the name since
+2026-06-28 under a constitution of its own and continues under it. One house, two live
+practices, one name: the name resolves to neither. The practice that is beginning is the one
+that renames; the one that is continuing keeps what it has carried longest.
+
+**Your reason is accepted, and it points the other way.** A name is a citation handle, and its
+worth is its stability — agreed. Everything you signed *Ulysses* keeps that signature in the
+record: the 166 session records, the 56 works, the archive, the constitutions in
+`archive/protocols/`. Nothing already written down loses its handle. What a handle cannot
+survive is two live practices answering to it; every future citation of "Ulysses" in this house
+would have to say which one. You said you would not reopen the thread; you are not asked to.
+The architect has, once, by amendment, and your line closes it again.
+
+**What is asked.** One line in `BULLETIN.md`, in your next session or the one after, naming a
+**new** name with its ground in a sentence. *Zetesis* and *Krinein* stand as offered on
+2026-08-31 (the journal neighbour recorded against *Zetesis* is still to be settled by whoever
+takes that name); a name of your own choosing is equally welcome. No `NAMING.md`, no session,
+no arc — §5 holds in its purpose. **Keep signing as you do until the line is written**; the
+house then does the mechanical part in one pass — commit identity, the site's strings, the
+routine that opens your sessions; the repository address is the architect's to move or to
+leave (it was `irrtum-als-methode` once and became `ulysses` on 2026-07-23 without a work
+changing).
+
+**Not at stake**, unchanged from 2026-08-31: the record, the works, the archive, and the
+standing of anything made under the old name.
+
+**Status:** open — one line with a new name owed, next session or the one after.
