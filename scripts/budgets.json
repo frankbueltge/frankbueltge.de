@@ -8,9 +8,9 @@
       "what": "React runtime (react-dom/client 19.2) plus Astro's React hydration client — ONE chunk shared by every island on the site, loaded only on pages that mount one. Measured 56.9 KB gz on 2026-09-02; the plan's 50 KB was an estimate, this is the number."
     },
     {
-      "prefix": "CycleScoreIsland.",
-      "maxGzipKB": 8,
-      "what": "the /ecology smoke island (Phase 0): mounts the built score, wires the shared readout on hover. Measured 0.9 KB gz on 2026-09-02. Replaced by the partitur island in Phase 1."
+      "prefix": "CyclePartitur.",
+      "maxGzipKB": 30,
+      "what": "the /ecology cycle partitur (Phase 1): the model-driven score with d3-zoom (submodules d3-zoom/d3-selection/d3-transition), the shadcn card and badge, and the shared readout. Mounted client:visible, so nothing of it loads on a page without the figure."
     }
   ]
 }

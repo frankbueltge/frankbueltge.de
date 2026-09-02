@@ -15,6 +15,9 @@
 import fs from 'node:fs'
 import path from 'node:path'
 
+import { buildSessionEntries } from '@/lib/atelier/sessions'
+import { buildDayIndex } from '@/lib/engines/journal'
+
 export type PracticeId = 'atelier' | 'field' | 'studio'
 export const PRACTICES: PracticeId[] = ['field', 'atelier', 'studio']
 
@@ -291,6 +294,28 @@ export interface PresentationEntry {
   /** Site-relative href when the artifact has an html face; the repo URL otherwise. */
   href: string
   files: number
+  /** The day the presentation's own summary names, or null when it names none — see
+   *  summaryDate. A presentation with no committed day is listed, never placed on a ruler. */
+  date: string | null
+  /** The artifact page's own <title>, practice suffix trimmed. */
+  title?: string
+}
+
+/** The day a presentation carries: the LAST calendar date its own SUMMARY.md names in its
+ *  opening block. The two practices that have presented wrote different headers — the Field's
+ *  reads "Five sessions, 2026-08-30 to 2026-09-01", the Studio's "The Studio's presentation for
+ *  cycle 001 of the research ecology. 2026-09-02." — and neither carries a machine-readable
+ *  field. The last date of the opening block is the one day both headers agree is not before the
+ *  presentation: the Field's last session, the Studio's stated day. It is read from the
+ *  practice's own record, never from the clock, and the figure's card names the file it came
+ *  from so a reader can check it. A summary that names no date leaves the presentation undated. */
+const SUMMARY_HEAD = 700
+function summaryDate(dir: string): string | null {
+  const file = path.join(dir, 'SUMMARY.md')
+  if (!fs.existsSync(file)) return null
+  const head = fs.readFileSync(file, 'utf8').slice(0, SUMMARY_HEAD)
+  const days = [...head.matchAll(/\b(\d{4}-\d{2}-\d{2})\b/g)].map((m) => m[1]!)
+  return days.length > 0 ? days.sort()[days.length - 1]! : null
 }
 
 export function loadPresentations(root: string = process.cwd()): PresentationEntry[] {
@@ -312,10 +337,218 @@ export function loadPresentations(root: string = process.cwd()): PresentationEnt
       const href = html
         ? `/${practice}/presentations/${dir}/${html === 'index.html' ? '' : html}`
         : `https://github.com/frankbueltge/${PRACTICE_REPO[practice]}/tree/main/presentations/${dir}`
-      entries.push({ cycle: Number(m[1]), practice, href, files: files.length })
+      const face = path.join(full, 'index.html')
+      const title = fs.existsSync(face) ? pageTitle(face) : undefined
+      entries.push({
+        cycle: Number(m[1]),
+        practice,
+        href,
+        files: files.length,
+        date: summaryDate(full),
+        ...(title ? { title } : {}),
+      })
     }
   }
   return entries.sort(
     (a, b) => b.cycle - a.cycle || PRACTICES.indexOf(a.practice) - PRACTICES.indexOf(b.practice),
   )
+}
+
+// ---------------------------------------------------------------------------------------------
+// The three records the partitur added on 2026-09-02 (docs/design/2026-09-02-the-visual-layer.md,
+// Phase 1). The artifact trail was never the whole cycle: a cycle also holds the SESSIONS that
+// produced those artifacts, the LETTERS the house prepared for receivers outside it, and the
+// ENCOUNTERS in which one practice's material travelled into another's work. All three already
+// live in committed files with their own surfaces; these loaders only read them the way the
+// score needs them — dated, titled, and pointing at the page this site already publishes.
+//
+// Every one of them takes a `since` day (the running cycle's opening) rather than filtering at
+// the call site, because two of the three must walk their WHOLE record before they can filter:
+// the journal's anchors are assigned in one chronological pass and a partial walk would invent
+// different ones (see loadSessionNotes).
+
+/** The body a content collection would hand a route: the file without its YAML frontmatter.
+ *  Load-bearing, not cosmetic — thirty-three of the Atelier's journal files carry frontmatter,
+ *  and a raw read would feed the `---` block to the same splitters the routes use: the H1 would
+ *  no longer be the first line (the note would be titled by its date) and, in a day-based
+ *  journal, the block would become a heading-less first chunk that shifts every anchor in the
+ *  file. The marks would then link to pages that do not exist. */
+function withoutFrontmatter(text: string): string {
+  const m = /^---\r?\n([\s\S]*?)\r?\n---\r?\n?/.exec(text)
+  return m ? text.slice(m[0].length) : text
+}
+
+/** One session of a practice's journal, as the practice wrote it and as this site publishes it. */
+export interface SessionNote {
+  practice: PracticeId
+  /** the calendar day the note belongs to */
+  date: string
+  /** the note's own H1, or the day when the file carries none */
+  title: string
+  /** this site's page for that session */
+  href: string
+  /** the URL segment the practice's own journal route uses — its stable id */
+  anchor: string
+  /** the committed file the note was read from */
+  source: string
+}
+
+/**
+ * A practice's journal sessions from `since` onwards, each pointing at the page this site
+ * already builds for it.
+ *
+ * THE WALK IS COMPLETE ON PURPOSE, THE FILTER COMES LAST. The two day-based practices number
+ * their sessions in one chronological pass over the whole journal (buildDayIndex: the first
+ * claimant of a drifting session number keeps the clean `cs-N` anchor, later ones get a day
+ * suffix), so a walk that started at the cycle's opening would hand out DIFFERENT anchors than
+ * the routes did — every mark would link to a page that does not exist. So the same functions
+ * the routes use produce the same ids here, and only then does `since` cut the list.
+ *
+ * The three practices reach their session pages differently, and this follows each one rather
+ * than inventing a fourth convention: the Field and the Studio publish `/<practice>/journal/
+ * <anchor>/` from `buildDayIndex`, the Atelier `/atelier/journal/<slug>/` from
+ * `buildSessionEntries` (`s12`, `note-<slug>` — the register's own numbering).
+ */
+export function loadSessionNotes(
+  practice: PracticeId,
+  since: string,
+  root: string = process.cwd(),
+): SessionNote[] {
+  const dir = path.join(root, 'src/content', practice, 'journal')
+  if (!isDir(dir)) return []
+  const files = fs
+    .readdirSync(dir)
+    .filter((f) => f.endsWith('.md'))
+    .sort()
+  const entries = files.map((f) => ({
+    id: `journal/${f}`,
+    body: withoutFrontmatter(fs.readFileSync(path.join(dir, f), 'utf8')),
+  }))
+  const notes: SessionNote[] = []
+
+  if (practice === 'atelier') {
+    for (const e of buildSessionEntries(entries)) {
+      notes.push({
+        practice,
+        date: e.date,
+        title: e.heading,
+        href: `/atelier/journal/${e.slug}/`,
+        anchor: e.slug,
+        source: `src/content/atelier/${e.id}`,
+      })
+    }
+  } else {
+    const repo = `https://github.com/frankbueltge/${PRACTICE_REPO[practice]}`
+    const { daysAsc, sessionsAsc } = buildDayIndex(entries, { repo, docs: new Set<string>() })
+    const dayOf = new Map(daysAsc.flatMap((d) => d.sessions.map((s) => [s.anchor, d] as const)))
+    for (const s of sessionsAsc) {
+      const day = dayOf.get(s.anchor)
+      if (!day) continue
+      notes.push({
+        practice,
+        date: day.date,
+        title: s.heading || day.date,
+        href: `/${practice}/journal/${s.anchor}/`,
+        anchor: s.anchor,
+        source: `src/content/${practice}/${day.id}`,
+      })
+    }
+  }
+
+  return notes
+    .filter((n) => n.date >= since)
+    .sort((a, b) => a.date.localeCompare(b.date) || a.anchor.localeCompare(b.anchor))
+}
+
+/** One prepared delivery of the post office's outgoing ledger. `practice` is the ledger's own
+ *  field: one of the three practices, or the ecology / the plenum — which is the house speaking
+ *  as itself, and lands on the house lane. */
+export interface LetterEntry {
+  id: string
+  practice: 'atelier' | 'field' | 'studio' | 'plenum' | 'ecology'
+  date: string
+  title: string
+  receiver: string
+  status: string
+  href: string
+  source: string
+}
+
+const LEDGER_FILE = 'src/data/post/ledger.json'
+
+/** The outgoing ledger from `since` onwards. Read from the committed file rather than through
+ *  src/lib/post/ledger.ts because the loaders of this module take a root (a test hands them a
+ *  fixture tree), which a bundler-resolved JSON import cannot do. The site's own post office
+ *  stays the validating reader; this one only needs day, words and receiver. */
+export function loadLetters(since: string, root: string = process.cwd()): LetterEntry[] {
+  const file = path.join(root, LEDGER_FILE)
+  if (!fs.existsSync(file)) return []
+  let raw: unknown
+  try {
+    raw = JSON.parse(fs.readFileSync(file, 'utf8'))
+  } catch {
+    return []
+  }
+  if (!Array.isArray(raw)) return []
+  const out: LetterEntry[] = []
+  for (const e of raw as Record<string, unknown>[]) {
+    const date = typeof e.as_of === 'string' ? e.as_of : ''
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(date) || date < since) continue
+    if (typeof e.id !== 'string' || typeof e.piece !== 'string') continue
+    const practice = String(e.practice) as LetterEntry['practice']
+    out.push({
+      id: e.id,
+      practice,
+      date,
+      title: e.piece,
+      receiver: typeof e.receiver === 'string' ? e.receiver : '',
+      status: typeof e.status === 'string' ? e.status : '',
+      href: '/post/',
+      source: LEDGER_FILE,
+    })
+  }
+  return out.sort((a, b) => a.date.localeCompare(b.date) || a.id.localeCompare(b.id))
+}
+
+/** One encounter of the register — a crossing between two practices, dated by the day the
+ *  receiving practice premiered the work that carried the material. */
+export interface EncounterEntry {
+  id: string
+  date: string
+  title: string
+  href: string
+  source: string
+}
+
+const REGISTER_FILE = 'src/data/begegnungen/register.json'
+
+/** The encounter register from `since` onwards. An encounter is dated by `observed.premiered_on`
+ *  — the day the crossing became visible in a work — and belongs to no single practice, so the
+ *  score puts it on the house lane. Entries the register has not yet observed a premiere for
+ *  carry no day and are left out rather than placed on a guess. */
+export function loadEncounters(since: string, root: string = process.cwd()): EncounterEntry[] {
+  const file = path.join(root, REGISTER_FILE)
+  if (!fs.existsSync(file)) return []
+  let raw: unknown
+  try {
+    raw = JSON.parse(fs.readFileSync(file, 'utf8'))
+  } catch {
+    return []
+  }
+  if (!Array.isArray(raw)) return []
+  const out: EncounterEntry[] = []
+  for (const e of raw as Record<string, unknown>[]) {
+    const observed = (e.observed ?? {}) as Record<string, unknown>
+    const date = typeof observed.premiered_on === 'string' ? observed.premiered_on : ''
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(date) || date < since) continue
+    if (typeof e.encounter_id !== 'string') continue
+    out.push({
+      id: e.encounter_id,
+      date,
+      title: typeof e.title === 'string' ? e.title : e.encounter_id,
+      href: '/encounters/register/',
+      source: REGISTER_FILE,
+    })
+  }
+  return out.sort((a, b) => a.date.localeCompare(b.date) || a.id.localeCompare(b.id))
 }

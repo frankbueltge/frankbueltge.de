@@ -134,6 +134,89 @@
   .score-map * { transition: none !important; animation: none !important; }
 }
 
+/* ---- the living partitur (visual layer, Phase 1, 2026-09-02) ----
+   The cycle score of /ecology is a React island since this day
+   (src/components/ecology/CyclePartitur.tsx, docs/design/2026-09-02-the-visual-layer.md). It
+   speaks the grammar above unchanged — ruler, grat, lane, lane-thin, t-lane, t-note, mk-fill,
+   hit, evt, pr-<persona> — and adds four signs, a phase band, the zoom controls and the card a
+   mark opens. NO NEW HUE and no hex below: the four lane colours are the validated
+   `ecology-voices` quartet declared at the top of this file, and every sign here takes its ink
+   from `--pr` or from the site's own neutral tokens. The five kinds are told apart by SHAPE,
+   which is what keeps the figure readable in greyscale, in print and for dichromats. */
+
+/* The score grammar's scope was written for a full page spread (110rem, page-sized padding);
+   inside the /ecology figure the frame supplies the padding, so the scope is flushed. Structure
+   only — every colour still comes from the blocks above. Declared here, after `.score-map`'s own
+   media query, so the cascade needs no `!important`. */
+.score-map-flush { max-width: none; margin: 0; padding: 0; }
+.score-map-flush .score-figure { margin: 0; }
+.score-map-flush .score-record { margin-top: 0; }
+@media (min-width: 640px) {
+  .score-map-flush { padding: 0; }
+}
+
+.score-map .pt-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  /* the island owns the horizontal gesture (d3-zoom, x only); the page keeps the vertical one */
+  touch-action: pan-y;
+}
+.score-map .pt-root { position: relative; }
+
+/* The drawing keeps a floor width (the frame sets it on `.score-figure`, which is also the box
+   the readout clamps to) and scrolls inside this element on a narrow screen. `contain:
+   inline-size` is what keeps that floor from travelling upward as an intrinsic minimum: without
+   it the 900-unit score widens the whole page on a phone instead of scrolling in its own box —
+   the figure would be legible and the article would not. */
+.score-map .score-scroll { overflow-x: auto; contain: inline-size; }
+
+/* the four signs added to the grammar — square (artifact) is `mk-fill` above */
+.score-map .mk-tick { stroke: var(--pr); stroke-width: 3; stroke-linecap: round; opacity: 0.92; }
+.score-map .mk-diamond { fill: none; }
+.score-map .mk-ring { fill: none; }
+.score-map .mk-badge { fill: var(--pr); }
+/* the badge's punched centre — the page ground, so the sign reads as a plaque and not as a
+   second filled square (same technique as `mk-punch` above, and a class for the same reason:
+   a presentation attribute would lose to it in the cascade) */
+.score-map .mk-badge-in { fill: var(--color-panel); }
+
+.score-svg .evt:hover .mk-fill,
+.score-svg .evt:focus .mk-fill,
+.score-svg .evt[data-selected] .mk-fill { stroke: var(--pr); stroke-width: 3; paint-order: stroke; }
+.score-svg .evt:hover .mk-tick,
+.score-svg .evt:focus .mk-tick,
+.score-svg .evt[data-selected] .mk-tick { stroke-width: 5; }
+.score-svg .evt:hover .mk-badge,
+.score-svg .evt:focus .mk-badge,
+.score-svg .evt[data-selected] .mk-badge { stroke: var(--pr); stroke-width: 3; }
+.score-svg .evt[data-selected] .hit { stroke: var(--score-ink-2); stroke-width: 1.4; stroke-dasharray: 2 3; }
+.score-svg .evt .mk-fill,
+.score-svg .evt .mk-tick,
+.score-svg .evt .mk,
+.score-svg .evt .mk-badge { transition: stroke-width 140ms ease-out; }
+
+/* the phase band — a stretch of the ruler the house declared itself to be in. Neutral ink at a
+   whisper, because the band is context, not a category. */
+.score-svg .band-phase { fill: var(--score-ink-2); opacity: 0.055; }
+
+/* zoom controls: the one thing the island adds that the server render cannot carry, so they stay
+   hidden until it has mounted (the [hidden] attribute does that; this only lays them out). */
+.score-map .score-zoom { margin-bottom: 0.5rem; }
+
+/* the card a mark opens — placed under the drawing, in the frame's own panel ink. The lane chip
+   carries a coloured dot, never coloured type: an identity hue is a MARK, not a text colour. */
+.score-map .score-card { max-width: 46rem; }
+.score-map .score-card-lane::before {
+  content: '';
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  background: var(--pr);
+  margin-right: 0.45em;
+}
+
 /* ---- legend ---- */
 .score-legend {
   display: grid;
