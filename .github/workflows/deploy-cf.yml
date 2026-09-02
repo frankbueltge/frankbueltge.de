@@ -115,6 +115,10 @@ jobs:
           # PUBLIC_* vars at BUILD time; this build runs on GitHub's runner and does NOT see
           # Cloudflare's runtime env, so without this the /seed form would ship in permanent standby.
           PUBLIC_TURNSTILE_SITE_KEY: "0x4AAAAAAD543CSVCrF26LBW"
+      # Gewichts-Gate der Sichtschicht (2026-09-02), dasselbe wie in ci.yml: kein Client-Chunk
+      # geht live, der sein gzip-Budget in scripts/budgets.json überschreitet. Auf dem
+      # workflow_run-Pfad der Nightlies ist dieser Job das einzige Netz — deshalb auch hier.
+      - run: node scripts/bundle-budget.mjs
       # IndexNow (Bing, Yandex, Seznam, Naver …) verifies ownership through a key file at the
       # site root. The key is a repository secret, so the file is generated into dist/ at deploy
       # time and never committed. Without a key this step does nothing and the deploy proceeds —

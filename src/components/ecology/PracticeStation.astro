@@ -29,6 +29,7 @@ import { PRACTICE_V3, STATION_V3 } from '@/config/practice-wording'
 import { PYRAMID } from '@/config/ecology-pyramid-wording'
 import {
   BULLETIN_DISPLAY_MAX,
+  inCycle,
   loadArtifacts,
   loadBulletin,
   loadCycle,
@@ -74,7 +75,9 @@ const blocks = bulletin.present && bulletin.text ? bulletinBlocks(bulletin.text)
 
 const works = allWorks().filter((w) => w.ns === id)
 const newest = works.slice(0, 3)
-const artifacts = loadArtifacts().filter((a) => a.practice === id)
+// "this cycle's artifacts" — the kicker says so, and inCycle() (v3.ts) is what makes it true
+// now that the loader also reads the Atelier's windows and the Studio's works (2026-09-02).
+const artifacts = loadArtifacts().filter((a) => a.practice === id && inCycle(a, cycle))
 
 const window = windowDoor(id)
 const doors = window ? [...DOORS[id], window] : DOORS[id]
@@ -243,7 +246,7 @@ const blockClass: Record<string, string> = {
               <li class="rounded-sm border border-line bg-panel p-4">
                 {a.date && <p class="font-mono text-xs tabular-nums text-fg-faint">{a.date}</p>}
                 <a class="mt-1 block text-fg hover:underline" href={url(a.href)}>
-                  {ECOLOGY_V3.artifacts.entryLabel(a.slug)}
+                  {ECOLOGY_V3.artifacts.entryLabel(a.slug, a.title)}
                 </a>
               </li>
             ))}

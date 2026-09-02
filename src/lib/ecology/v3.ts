@@ -118,42 +118,170 @@ export function loadClosingReports(root: string = process.cwd()): ClosingReport[
   return found
 }
 
-/** A dated artifact of the current cycle, as the practice committed it. The date prefix in
- *  the directory name is the practice's own; it is read, never invented. */
+/** A dated artifact of a cycle, as the practice committed it. Date, title and cycle are the
+ *  practice's own — read from its record, never invented.
+ *
+ *  Three practices, three conventions (2026-09-02). Protocol v7 §4 says every session leaves an
+ *  artifact and names no path for it, and the practices did not land in the same place:
+ *
+ *    · The Field writes `artifacts/cycle-NNN/<date>-<slug>/` — date and cycle in the path.
+ *    · The Atelier writes `window/cycle-NNN[-session-n]/` — the cycle in the path, no date; the
+ *      session note in its journal that names the window (`Artifact: window/…`) carries the day
+ *      in its own filename, and the window's <title> is the artifact's title.
+ *    · The Studio ships works: `works/<date>-<slug>/meta.json` (date, title) with the page under
+ *      `werke-html/`. A work names no cycle; it belongs to the cycle whose opening it follows,
+ *      which is the caller's rule (inCycle), because only the house clock knows the cycle.
+ *
+ *  Until 2026-09-02 the loader read the Field's convention alone, and the entrance's score drew
+ *  "no artifact yet this cycle" on two lanes that had delivered four artifacts each. */
 export interface ArtifactEntry {
   practice: PracticeId
   slug: string
   date: string | null
   href: string
+  /** The cycle the practice's own path names; null when the record carries none (a work). */
+  cycle: number | null
+  /** The practice's own title where its record has one (a window's <title>, a work's meta.json). */
+  title?: string
+}
+
+/** Whether an artifact belongs to the given cycle: by the cycle its path names, or — for a
+ *  record that names none — by the house clock: shipped on or after the day the cycle opened.
+ *  Only the running cycle can be judged this way (cycle.json holds no history), which is all
+ *  the surfaces draw. */
+export function inCycle(a: ArtifactEntry, cycle: CycleState): boolean {
+  if (a.cycle !== null) return a.cycle === cycle.cycle
+  return a.date !== null && a.date >= cycle.opened
+}
+
+const CYCLE_DIR = /^cycle-(\d+)/
+const DATED_SLUG = /^(\d{4}-\d{2}-\d{2})-(.*)$/
+
+function isDir(p: string): boolean {
+  return fs.existsSync(p) && fs.statSync(p).isDirectory()
+}
+
+/** The <title> of a self-contained page, read from its head only, with the practice's own
+ *  " — The Atelier, cycle 001, session 2" suffix trimmed: the practice is the lane, the cycle
+ *  is the ruler, so the title keeps what only it says. Entities a title commonly carries are
+ *  decoded; anything else is left as written. */
+function pageTitle(index: string): string | undefined {
+  const head = fs.readFileSync(index, 'utf8').slice(0, 4096)
+  const m = /<title>([^<]*)<\/title>/i.exec(head)
+  if (!m) return undefined
+  const raw = m[1]!
+    .replace(/&amp;/g, '&')
+    .replace(/&#39;|&apos;/g, "'")
+    .replace(/&quot;/g, '"')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/\s+—\s+The (Atelier|Field|Studio)\b.*$/, '')
+    .trim()
+  return raw.length > 0 ? raw : undefined
+}
+
+/** The day a window was made: the earliest journal note that names it. A note names a window
+ *  by its path (`window/cycle-001-session-3/`); the match stops at the directory's end so the
+ *  note for `window/cycle-001/` does not date every session under that cycle. */
+function windowDate(practice: PracticeId, dir: string, root: string): string | null {
+  const journal = path.join(root, 'src/content', practice, 'journal')
+  if (!isDir(journal)) return null
+  const names = new RegExp(`window/${dir.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}(?![\\w-])`)
+  const days: string[] = []
+  for (const file of fs.readdirSync(journal)) {
+    const m = /^(\d{4}-\d{2}-\d{2})-.*\.md$/.exec(file)
+    if (!m) continue
+    if (names.test(fs.readFileSync(path.join(journal, file), 'utf8'))) days.push(m[1]!)
+  }
+  return days.length > 0 ? days.sort()[0]! : null
 }
 
 export function loadArtifacts(root: string = process.cwd()): ArtifactEntry[] {
   const found: ArtifactEntry[] = []
   for (const practice of PRACTICES) {
-    const base = path.join(root, 'public', practice, 'artifacts')
-    if (!fs.existsSync(base)) continue
-    for (const cycleDir of fs.readdirSync(base)) {
-      const cyclePath = path.join(base, cycleDir)
-      if (!fs.statSync(cyclePath).isDirectory()) continue
-      for (const slug of fs.readdirSync(cyclePath)) {
-        const dir = path.join(cyclePath, slug)
-        if (!fs.statSync(dir).isDirectory()) continue
-        if (!fs.existsSync(path.join(dir, 'index.html'))) continue
-        const m = /^(\d{4}-\d{2}-\d{2})-(.*)$/.exec(slug)
+    // artifacts/cycle-NNN/<date>-<slug>/ — the Field's convention, read for every practice
+    const artifacts = path.join(root, 'public', practice, 'artifacts')
+    if (isDir(artifacts)) {
+      for (const cycleDir of fs.readdirSync(artifacts)) {
+        const cyclePath = path.join(artifacts, cycleDir)
+        if (!isDir(cyclePath)) continue
+        const cycleNo = CYCLE_DIR.exec(cycleDir)
+        for (const slug of fs.readdirSync(cyclePath)) {
+          const dir = path.join(cyclePath, slug)
+          if (!isDir(dir) || !fs.existsSync(path.join(dir, 'index.html'))) continue
+          const m = DATED_SLUG.exec(slug)
+          found.push({
+            practice,
+            slug: m ? m[2]! : slug,
+            date: m ? m[1]! : null,
+            href: `/${practice}/artifacts/${cycleDir}/${slug}/`,
+            cycle: cycleNo ? Number(cycleNo[1]) : null,
+          })
+        }
+      }
+    }
+
+    // window/cycle-NNN[-session-n]/ — the Atelier's convention. The window root itself is the
+    // practice's own page (and, for the Atelier, its closing report — loadClosingReports), not
+    // an artifact; only the cycle-named directories under it are.
+    const window = path.join(root, 'public', practice, 'window')
+    if (isDir(window)) {
+      for (const dir of fs.readdirSync(window)) {
+        const cycleNo = CYCLE_DIR.exec(dir)
+        if (!cycleNo) continue
+        const index = path.join(window, dir, 'index.html')
+        if (!isDir(path.join(window, dir)) || !fs.existsSync(index)) continue
         found.push({
           practice,
-          slug: m ? m[2]! : slug,
-          date: m ? m[1]! : null,
-          href: `/${practice}/artifacts/${cycleDir}/${slug}/`,
+          slug: dir,
+          date: windowDate(practice, dir, root),
+          href: `/${practice}/window/${dir}/`,
+          cycle: Number(cycleNo[1]),
+          title: pageTitle(index),
+        })
+      }
+    }
+
+    // works/<date>-<slug>/meta.json + werke-html/<slug>/index.html — the Studio's convention.
+    // A work without a page on this site is not linked, so it is not listed.
+    const works = path.join(root, 'src/content', practice, 'works')
+    if (isDir(works)) {
+      for (const dir of fs.readdirSync(works)) {
+        const meta = path.join(works, dir, 'meta.json')
+        const face = path.join(root, 'public', practice, 'werke-html', dir, 'index.html')
+        if (!fs.existsSync(meta) || !fs.existsSync(face)) continue
+        const m = DATED_SLUG.exec(dir)
+        let parsed: { title?: unknown; date?: unknown } = {}
+        try {
+          parsed = JSON.parse(fs.readFileSync(meta, 'utf8'))
+        } catch {
+          continue
+        }
+        const date =
+          typeof parsed.date === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(parsed.date)
+            ? parsed.date
+            : m
+              ? m[1]!
+              : null
+        const title = typeof parsed.title === 'string' && parsed.title.trim() ? parsed.title.trim() : undefined
+        found.push({
+          practice,
+          slug: m ? m[2]! : dir,
+          date,
+          href: `/${practice}/werke-html/${dir}/`,
+          cycle: null,
+          ...(title ? { title } : {}),
         })
       }
     }
   }
-  // newest first; undated entries last, then by practice for a stable order
+  // newest first; undated entries last; then by practice, then by slug — a total order, so the
+  // listing never depends on the filesystem's own
   return found.sort(
     (a, b) =>
       (b.date ?? '').localeCompare(a.date ?? '') ||
-      PRACTICES.indexOf(a.practice) - PRACTICES.indexOf(b.practice),
+      PRACTICES.indexOf(a.practice) - PRACTICES.indexOf(b.practice) ||
+      a.slug.localeCompare(b.slug),
   )
 }
 
