@@ -1,5 +1,6 @@
 ---
 import { getAbsoluteLocaleUrl } from 'astro:i18n'
+import { ClientRouter } from 'astro:transitions'
 // Self-hosted variable fonts (no external requests, no layout shift).
 import '@fontsource-variable/space-grotesk'
 import '@fontsource-variable/jetbrains-mono'
@@ -127,6 +128,17 @@ const workLd = work ? workJsonLd(work, locale, canonical) : null
     <script type="application/ld+json" set:html={JSON.stringify(person)} />
     <script type="application/ld+json" set:html={JSON.stringify(website)} />
     {workLd && <script type="application/ld+json" set:html={JSON.stringify(workLd)} />}
+
+    {/* Page transitions (re-skin 2a, 2026-09-02). The router swaps documents in place, so a
+        navigation no longer tears the frame down and paints it again: the top bar is
+        persisted, the rest crossfades in 200 ms (src/styles/global.css, ::view-transition-*),
+        and nothing moves at all under prefers-reduced-motion. Everything the swap would
+        otherwise reset — the resolved theme, the smooth-scroll instance, the scroll-flash —
+        is re-established by the page-lifecycle script at the end of <body>. The two
+        `is:inline` scripts on this page are untouched by design: their SHA-256 hashes are
+        pinned in astro.config.mjs (src/layouts/base.test.ts guards that they still match),
+        and Astro runs each of them exactly once per session, never again on a swap. */}
+    <ClientRouter />
   </head>
 
   <body class="flex min-h-dvh flex-col">
@@ -166,71 +178,30 @@ const workLd = work ? workJsonLd(work, locale, canonical) : null
       })()
     </script>
 
-    {/* Lenis smooth scroll — site-wide nicety, disabled for reduced-motion.
-        allowNestedScroll is NOT optional here (Frank's finding 2026-07-31: the score's table
-        would not scroll): Lenis intercepts every wheel event and drives the page with it, so
-        without this every inner scroll container on the site is dead to the wheel — the score
-        table, the nav menu on a small screen, the reference modal. Programmatic scrolling kept
-        working, which is why it read as a CSS bug and was not. With the flag on, Lenis checks
-        whether the pointer sits inside something that can actually scroll in that direction and
-        leaves that gesture to the browser. */}
+    {/* ── The page lifecycle ────────────────────────────────────────────────────────────
+        One module script owns everything that has to be true on every page and true again
+        after every client-side navigation: the resolved theme, the smooth-scroll instance,
+        the scroll-flash. Before the ClientRouter (2026-09-02) these were three scripts that
+        each ran exactly once, which was correct while every navigation was a fresh document.
+        It no longer is. Astro's swap() strips EVERY attribute from <html> and applies the
+        incoming document's instead (node_modules/astro/dist/transitions/swap-functions.js,
+        swapRootAttributes) — and the incoming document is the static build, which ships
+        data-theme="dark". Without the copy in astro:before-swap below, every navigation
+        under the light theme would flash black. Nothing here re-runs the two `is:inline`
+        scripts: Astro executes each script text once per session and marks the rest, and the
+        zoom publisher listens on window.visualViewport, which outlives any swap. */}
     <script>
       import Lenis from 'lenis'
-      if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        const lenis = new Lenis({ duration: 1.1, smoothWheel: true, allowNestedScroll: true })
-        const raf = (time: number) => { lenis.raf(time); requestAnimationFrame(raf) }
-        requestAnimationFrame(raf)
 
-        // Hand scrolling back to the browser while the reader is zoomed in (Frank's finding,
-        // 2026-08-23, Safari; Chrome is unaffected). Lenis drives the page by writing
-        // `scrollTo({ top })` on every frame of a scroll. WebKit, on a page the reader has
-        // pinched or smart-zoomed, resets the horizontal offset of the zoomed view on such a
-        // write — so every frame yanked the page back and the content jumped left mid-scroll.
-        // Stopped, Lenis stops preventing the wheel default and native scrolling resumes.
-        // The signal comes from the settled publisher above: waiting is deliberate, because the
-        // bug this guards against needs a SCROLL, which comes after the gesture, never during it.
-        document.addEventListener('zoomchange', (event) => {
-          const { zoomed } = (event as CustomEvent<{ zoomed: boolean }>).detail
-          if (zoomed) lenis.stop()
-          else lenis.start()
-        })
-      }
-    </script>
-
-    {/* Scroll-flash: the first scroll on each page blinks the WHOLE page briefly to the light
-        theme and eases back — a one-time reveal accent, not a per-scroll strobe. Fires exactly
-        once per page load, then unbinds its listeners. Dark mode only (a no-op under persistent
-        light mode) and never under reduced-motion. (Full-page: see global.css .theme-flash.) */}
-    <script>
-      const root = document.documentElement
-      if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        let done = false
-        const flash = () => {
-          const prev = root.getAttribute('data-theme') // resolved theme is always set now
-          if (done || prev === 'light') return
-          done = true
-          removeEventListener('scroll', flash)
-          removeEventListener('wheel', flash)
-          root.classList.add('theme-flash')
-          root.setAttribute('data-theme', 'light')
-          setTimeout(() => {
-            root.setAttribute('data-theme', prev || 'dark') // restore, never drop the attribute
-            setTimeout(() => root.classList.remove('theme-flash'), 200)
-          }, 150)
-        }
-        addEventListener('scroll', flash, { passive: true })
-        addEventListener('wheel', flash, { passive: true })
-      }
-    </script>
-
-    {/* Theme controller — the single source of truth for light/dark. The head script already
-        set the initial state FOUC-free; this keeps it reactive and wires the toggle (present in
-        TopBar). Modes: 'auto' (default) follows the OS live, including its day/night schedule;
-        'light'/'dark' are explicit user overrides. Cycling: auto → light → dark → auto. */}
-    <script>
       const root = document.documentElement
       const mq = matchMedia('(prefers-color-scheme: dark)')
+      const reducedMotion = (): boolean => matchMedia('(prefers-reduced-motion: reduce)').matches
 
+      // ── Theme controller — the single source of truth for light/dark. The head script
+      // already set the initial state FOUC-free; this keeps it reactive and wires the toggle
+      // (present in TopBar). Modes: 'auto' (default) follows the OS live, including its
+      // day/night schedule; 'light'/'dark' are explicit user overrides. Cycling: auto → light
+      // → dark → auto.
       const readMode = (): string => {
         try { return localStorage.getItem('theme') || 'auto' } catch (e) { return 'auto' }
       }
@@ -248,21 +219,130 @@ const workLd = work ? workJsonLd(work, locale, canonical) : null
         syncThemeColor()
       }
 
-      apply(readMode()) // reconcile with the head script + set the correct theme-color
-
       // Auto mode: follow the OS live, so a system that flips light↔dark on a schedule flips the site too.
       mq.addEventListener('change', () => { if (readMode() === 'auto') apply('auto') })
 
-      // Toggle cycles auto → light → dark → auto. 'auto' clears the override (back to following the OS).
+      // Toggle cycles auto → light → dark → auto. 'auto' clears the override (back to
+      // following the OS). Bound per page-load and marked, so a top bar that was persisted
+      // across a swap is never bound twice and one that was rebuilt is never left dead.
       const order = ['auto', 'light', 'dark']
-      document.querySelector('[data-theme-toggle]')?.addEventListener('click', () => {
-        const next = order[(order.indexOf(readMode()) + 1) % order.length]
-        try {
-          if (next === 'auto') localStorage.removeItem('theme')
-          else localStorage.setItem('theme', next)
-        } catch (e) {}
-        apply(next)
+      const bindThemeToggle = (): void => {
+        const toggle = document.querySelector<HTMLElement>('[data-theme-toggle]')
+        if (!toggle || toggle.dataset.themeBound) return
+        toggle.dataset.themeBound = 'on'
+        toggle.addEventListener('click', () => {
+          const next = order[(order.indexOf(readMode()) + 1) % order.length]
+          try {
+            if (next === 'auto') localStorage.removeItem('theme')
+            else localStorage.setItem('theme', next)
+          } catch (e) {}
+          apply(next)
+        })
+      }
+
+      // ── Lenis smooth scroll — site-wide nicety, disabled for reduced-motion.
+      // allowNestedScroll is NOT optional here (Frank's finding 2026-07-31: the score's table
+      // would not scroll): Lenis intercepts every wheel event and drives the page with it, so
+      // without this every inner scroll container on the site is dead to the wheel — the score
+      // table, the nav menu on a small screen, the reference modal. Programmatic scrolling kept
+      // working, which is why it read as a CSS bug and was not. With the flag on, Lenis checks
+      // whether the pointer sits inside something that can actually scroll in that direction and
+      // leaves that gesture to the browser.
+      // One instance at a time: the swap destroys it and the next page-load builds a new one,
+      // because two Lenis instances would each drive the same scroll position every frame.
+      let lenis: Lenis | null = null
+      let rafId = 0
+      const startScroll = (): void => {
+        if (lenis || reducedMotion()) return
+        lenis = new Lenis({ duration: 1.1, smoothWheel: true, allowNestedScroll: true })
+        const raf = (time: number) => {
+          lenis?.raf(time)
+          rafId = requestAnimationFrame(raf)
+        }
+        rafId = requestAnimationFrame(raf)
+      }
+      const stopScroll = (): void => {
+        if (!lenis) return
+        cancelAnimationFrame(rafId)
+        lenis.destroy()
+        lenis = null
+      }
+
+      // Hand scrolling back to the browser while the reader is zoomed in (Frank's finding,
+      // 2026-08-23, Safari; Chrome is unaffected). Lenis drives the page by writing
+      // `scrollTo({ top })` on every frame of a scroll. WebKit, on a page the reader has
+      // pinched or smart-zoomed, resets the horizontal offset of the zoomed view on such a
+      // write — so every frame yanked the page back and the content jumped left mid-scroll.
+      // Stopped, Lenis stops preventing the wheel default and native scrolling resumes.
+      // The signal comes from the settled publisher above: waiting is deliberate, because the
+      // bug this guards against needs a SCROLL, which comes after the gesture, never during it.
+      // The listener sits on `document`, which survives every swap — it is bound once.
+      document.addEventListener('zoomchange', (event) => {
+        const { zoomed } = (event as CustomEvent<{ zoomed: boolean }>).detail
+        if (zoomed) lenis?.stop()
+        else lenis?.start()
       })
+
+      // ── Scroll-flash: the first scroll on each page blinks the WHOLE page briefly to the
+      // light theme and eases back — a one-time reveal accent, not a per-scroll strobe. Dark
+      // mode only (a no-op under persistent light mode) and never under reduced-motion.
+      // (Full-page: see global.css .theme-flash.) Re-armed after a navigation so "each page"
+      // keeps meaning each page; the previous arming is always removed first, or a reader who
+      // walks the site without scrolling would collect one listener pair per page.
+      let armed: (() => void) | null = null
+      const disarmFlash = (): void => {
+        if (!armed) return
+        removeEventListener('scroll', armed)
+        removeEventListener('wheel', armed)
+        armed = null
+      }
+      const armFlash = (): void => {
+        disarmFlash()
+        if (reducedMotion()) return
+        const flash = () => {
+          const prev = root.getAttribute('data-theme') // resolved theme is always set now
+          disarmFlash()
+          if (prev === 'light') return
+          root.classList.add('theme-flash')
+          root.setAttribute('data-theme', 'light')
+          setTimeout(() => {
+            root.setAttribute('data-theme', prev || 'dark') // restore, never drop the attribute
+            setTimeout(() => root.classList.remove('theme-flash'), 200)
+          }, 150)
+        }
+        armed = flash
+        addEventListener('scroll', flash, { passive: true })
+        addEventListener('wheel', flash, { passive: true })
+      }
+
+      // ── The swap. swapRootAttributes() will replace <html>'s attributes wholesale with the
+      // incoming document's, so the resolved theme, the chosen mode and the skin are written
+      // onto that document BEFORE it is swapped in — the attribute never blinks back to the
+      // build-time default. The zoom state is a class, and swapping wipes those too, so it
+      // travels with them; `theme-flash` deliberately does not (a flash in progress ends with
+      // the page it belonged to). Menus close, Lenis is torn down, the flash is disarmed.
+      document.addEventListener('astro:before-swap', (event) => {
+        const incoming = (event as unknown as { newDocument: Document }).newDocument.documentElement
+        for (const name of ['data-theme', 'data-theme-mode', 'data-skin']) {
+          const value = root.getAttribute(name)
+          if (value) incoming.setAttribute(name, value)
+        }
+        if (root.classList.contains('is-zoomed')) incoming.classList.add('is-zoomed')
+        for (const d of document.querySelectorAll<HTMLDetailsElement>('[data-menu], [data-nav-drop]')) d.open = false
+        disarmFlash()
+        stopScroll()
+      })
+
+      // Runs after the first paint of every page, the initial one included. Each step is
+      // idempotent, so the immediate calls below and this handler can never double up.
+      const startPage = (): void => {
+        apply(readMode()) // reconcile with the head script + set the correct theme-color
+        bindThemeToggle()
+        startScroll()
+        armFlash()
+      }
+      document.addEventListener('astro:page-load', startPage)
+      startPage()
     </script>
 
     {/* Web Analytics — Umami, first-party via a Cloudflare Pages Function proxy (functions/stats/).

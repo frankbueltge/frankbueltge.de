@@ -51,7 +51,13 @@ export default defineConfig({
         // challenges.cloudflare.com lädt das Turnstile-Widget-Script auf /saat (s. o.).
         resources: [
           "'self'",
-          "'sha256-OTbzFulzUa/0o/iJq0xir83lv5aDayqRCmxs9tqjupU='",
+          // The anti-FOUC theme resolver (Base.astro, is:inline). Re-pinned 2026-09-02: the hash
+          // pinned on 2026-07-07 no longer matched the script — it had been edited since — so
+          // the resolver was CSP-blocked on every page in production and a light-theme reader
+          // saw the static dark default until the module script caught up. Found while wiring
+          // the ClientRouter; src/layouts/base.test.ts now recomputes both hashes and fails
+          // the moment either script changes without its constant.
+          "'sha256-sTVkn3xdmeVKVAdr0N+Hx9qKNNaDDSdRSaxZ2TkjJPk='",
           // The zoom-state script (Base.astro, is:inline — iOS pinch-zoom fix of 2026-08-27).
           // Missing since that fix landed: the script was CSP-blocked on every page in
           // production, so the viewport handler never ran. Found 2026-08-30 while verifying
