@@ -79,9 +79,11 @@ const columns = [
 const sources = [...new Set(model.marks.map((m) => m.source.split('/').slice(0, 3).join('/')))].sort()
 ---
 
-<figure class="score-map score-map-flush rounded-sm border border-line bg-panel">
+{/* The frame's panel recipe (re-skin 2b): the frame's radius and resting depth, but NO .lift —
+    a figure's panel stays still, its marks are what move. */}
+<figure class="score-map score-map-flush rounded-md border border-line bg-panel panel-raised">
   <figcaption class="border-b border-line p-4 sm:p-5">
-    <p class="font-mono text-xs uppercase tracking-[0.22em] text-fg-muted">{W.kicker}</p>
+    <p class="kicker">{W.kicker}</p>
     <p class="mt-2 max-w-3xl text-sm leading-relaxed text-fg-muted">{W.sub}</p>
   </figcaption>
 
@@ -100,7 +102,7 @@ const sources = [...new Set(model.marks.map((m) => m.source.split('/').slice(0, 
 
   {/* ── The key: the same sign classes as the marks, at a smaller size ───── */}
   <div class="border-t border-line p-4 sm:p-5">
-    <p class="font-mono text-[11px] uppercase tracking-[0.16em] text-fg-faint">{P.key.kicker}</p>
+    <p class="kicker">{P.key.kicker}</p>
     <ul class="mt-3 grid list-none gap-x-6 gap-y-1 p-0 sm:grid-cols-2 xl:grid-cols-3">
       {
         MARK_KINDS.map((kind) => (

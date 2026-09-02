@@ -29,7 +29,9 @@
  */
 
 .eco {
-  --eco-radius: 8px;
+  /* The radius is the frame's (re-skin 2a, global.css): one scale for every panel on the site,
+     so a register's plate and the entrance's cards share a corner. Was 8px before 2026-09-02. */
+  --eco-radius: var(--radius-lg);
   --eco-gap: 14px;
 }
 
@@ -179,6 +181,9 @@
   border: 1px solid var(--eco-line);
   border-radius: var(--eco-radius);
   background: var(--eco-panel);
+  /* The frame's resting depth (re-skin 2a tokens, painted per theme in global.css): a plate
+     sits on the ground the way the entrance's panels do, instead of lying flat on it. */
+  box-shadow: var(--elev-rest);
 }
 .eco-section {
   padding-top: clamp(32px, 5vw, 48px);
@@ -1450,14 +1455,17 @@
 }
 .eco-register-head h1 {
   margin: 0;
-  font-size: clamp(21px, 3vw, 26px);
-  font-weight: 700;
-  letter-spacing: -0.015em;
+  /* The frame's h2 step (re-skin 2a): a register's title is a room name inside the station,
+     one step under the station's own h1. Was a hand-tuned clamp(21px, 3vw, 26px). */
+  font-size: var(--text-h2);
+  line-height: var(--text-h2--line-height);
+  letter-spacing: var(--text-h2--letter-spacing);
+  font-weight: 600;
 }
 .eco-register-span {
   margin: 8px 0 0;
-  font-size: 13px;
-  line-height: 1.6;
+  font-size: var(--text-small);
+  line-height: var(--text-small--line-height);
   color: var(--eco-muted);
 }
 .eco-filters {
@@ -1469,14 +1477,21 @@
 }
 .eco-filter {
   border: 1px solid var(--eco-line);
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
   color: var(--eco-faint);
   padding: 4px 10px;
+  transition:
+    color 0.2s var(--ease-frame),
+    border-color 0.2s var(--ease-frame),
+    background-color 0.2s var(--ease-frame);
 }
 .eco-filter[aria-current='true'],
 .eco-filter:hover {
   border-color: var(--eco-voice, var(--eco-accent));
   color: var(--eco-voice, var(--eco-accent));
+}
+.eco-filter:hover {
+  background: var(--eco-hover);
 }
 .eco-rows {
   margin: 8px 0 0;
@@ -1498,6 +1513,10 @@
   .eco-register-row {
     grid-template-columns: 6.5em 4.5em 7em 1fr;
   }
+}
+a.eco-register-row {
+  border-radius: var(--radius-xs);
+  transition: background-color 0.2s var(--ease-frame);
 }
 a.eco-register-row:hover {
   background: var(--eco-hover);
@@ -1549,8 +1568,9 @@ a.eco-register-row:hover {
 .eco-doc {
   max-width: 82ch;
   padding: 20px 0 8px;
-  font-size: 14.5px;
-  line-height: 1.66;
+  /* The frame's body step (re-skin 2a). Was 14.5px / 1.66 by hand. */
+  font-size: var(--text-body);
+  line-height: var(--text-body--line-height);
   color: var(--eco-fg);
 }
 .eco-doc a {

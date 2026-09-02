@@ -300,6 +300,17 @@ body {
     }
   }
 
+  /* The fold: a <details> whose summary carries a chevron that turns over when it opens — the
+     same gesture the top bar's dropdowns make, so a fold reads the same in every room. The
+     turn is a state, not an ornament, so it is kept under reduced motion; only its 200 ms of
+     travel is dropped there (the site-wide rule at the foot of this layer). (re-skin 2b) */
+  .fold-chevron {
+    transition: transform 0.2s var(--ease-frame);
+  }
+  details[open] > summary .fold-chevron {
+    transform: rotate(180deg);
+  }
+
   /* The kicker: the small mono line that names what a block is, above nearly every heading
      on this site. It was retyped as `font-mono text-[11px] uppercase tracking-[0.16em]
      text-fg-faint` in hundreds of places; from here it is one class on the type scale.

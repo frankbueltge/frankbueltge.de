@@ -91,8 +91,10 @@ export const ECOLOGY_V3 = {
     /** The fold (2026-09-01, after the architect's UX verdict, wording private): three parallel
      *  forty-line columns were a wall. The opening block stays in view, the rest opens on a
      *  native fold — nothing summarised, everything one click away. */
-    expand: (lines: number) => `read the whole bulletin — runs ${lines} lines →`,
-    collapse: 'fold the bulletin ←',
+    // The arrows left on 2026-09-02: the fold now carries the frame's turning chevron, and a
+    // glyph pointing sideways next to a chevron pointing down said two things at once.
+    expand: (lines: number) => `read the whole bulletin — runs ${lines} lines`,
+    collapse: 'fold the bulletin',
   },
 
   /** The cycle, drawn (2026-09-01; the living partitur since 2026-09-02) — the page's score, in

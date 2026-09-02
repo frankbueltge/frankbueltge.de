@@ -20,6 +20,12 @@
 // Names, personas, corners and the door one-liner are READ from ECOLOGY_V3.practices and
 // NAMING.doors — never restated here, so a station cannot describe its practice differently
 // from the door that leads to it.
+//
+// Re-skin 2b (2026-09-02): the station on the frame's recipe, the same cut as the entrance —
+// the type scale for the head, `.kicker`, panels on the frame's radius and resting depth, the
+// quiet links as ghost buttons on the shadcn recipe, and a card where an entry is a card (the
+// newest works, this cycle's artifacts, the doors), each lifting on hover because it leads
+// somewhere. The NOW panel is read in place and stays still.
 import { getRelativeLocaleUrl } from 'astro:i18n'
 import type { Locale } from '@/lib/site'
 import '@/styles/hub-triptych.css'
@@ -40,6 +46,10 @@ import {
 import { bulletinBlocks } from '@/lib/ecology/bulletin-render'
 import { DOORS, splitDoorLine, windowDoor, type LogEntry } from '@/lib/ecology/pyramid/station'
 import { allWorks } from '@/lib/engines/register'
+import { buttonVariants } from '@/components/ui/button'
+import { Badge } from '@/components/ui/badge'
+import { Card, CardContent } from '@/components/ui/card'
+import { cn } from '@/lib/ui/cn'
 
 interface Props {
   id: PracticeId
@@ -83,9 +93,16 @@ const window = windowDoor(id)
 const doors = window ? [...DOORS[id], window] : DOORS[id]
 const siblings = PRACTICES.filter((p) => p !== id)
 
-const kicker = 'font-mono text-xs uppercase tracking-[0.22em] text-fg-muted'
-const quietLink =
-  'font-mono text-xs text-fg-muted underline decoration-line underline-offset-4 hover:text-fg'
+/* the frame's recipe, named once */
+const kicker = 'kicker'
+const panel = 'rounded-md border border-line bg-panel panel-raised'
+const quietLink = cn(
+  buttonVariants({ variant: 'ghost', size: 'sm' }),
+  'h-7 px-2 font-mono text-mono-sm font-normal text-fg-muted hover:text-fg',
+)
+const empty = 'rounded-md border border-dashed border-line p-4 text-sm leading-relaxed text-fg-faint'
+/* a card that leads somewhere: the frame's resting depth, and the lift on hover or focus */
+const card = 'lift h-full gap-1 py-3.5 shadow-none panel-raised'
 
 const blockClass: Record<string, string> = {
   heading: 'pt-2 font-mono text-[13px] uppercase tracking-[0.14em] text-fg first:pt-0',
@@ -98,11 +115,11 @@ const blockClass: Record<string, string> = {
   {/* ── Header: the door's own words, then who this is under v3 ──────────── */}
   <header>
     <p class={kicker}>{P.name.toUpperCase()} · {P.persona.toUpperCase()} · {P.corner.toUpperCase()}</p>
-    <h1 class="mt-3 max-w-4xl text-3xl font-semibold tracking-tight text-fg sm:text-4xl">{door.lead}</h1>
+    <h1 class="mt-3 max-w-4xl text-h1 font-semibold text-fg">{door.lead}</h1>
     {door.rest && <p class="mt-4 max-w-3xl leading-relaxed text-fg-muted">{door.rest}</p>}
     <div class="station-hairline mt-6 h-px w-full" aria-hidden="true"></div>
     <p class="mt-5 max-w-3xl text-sm leading-relaxed text-fg-muted">{W.identity}</p>
-    <p class="mt-4 font-mono text-xs text-fg-faint">
+    <p class="mt-4 font-mono text-mono text-fg-faint">
       {S.siblings.lead}
       {siblings.map((s) => (
         <>
@@ -115,28 +132,30 @@ const blockClass: Record<string, string> = {
   </header>
 
   {/* ── NOW: the house clock, the question, the bulletin, the last sessions ─ */}
-  <section class="mt-12 rounded-sm border border-line bg-panel p-5 sm:p-6" aria-label="Now">
+  <section class={cn(panel, 'mt-12 p-5 sm:p-6')} aria-label="Now">
     <p class={kicker}>{S.now.kicker}</p>
-    <div class="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1">
+    <div class="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1.5">
       <span class="station-led inline-block h-2 w-2 rounded-full" aria-hidden="true"></span>
       <h2 class="font-mono text-sm uppercase tracking-[0.18em] text-fg">{ECOLOGY_V3.cycle.label(cycle.cycle)}</h2>
-      <span class="font-mono text-xs uppercase tracking-[0.18em] text-accent">{phase.badge}</span>
-      <span class="font-mono text-xs text-fg-faint">{ECOLOGY_V3.cycle.openedLine(cycle.opened)}</span>
+      <Badge variant="outline" className="border-line font-mono text-[10px] font-normal uppercase tracking-[0.18em] text-accent">
+        {phase.badge}
+      </Badge>
+      <span class="font-mono text-mono text-fg-faint">{ECOLOGY_V3.cycle.openedLine(cycle.opened)}</span>
     </div>
 
     <div class="mt-4 border-t border-line pt-4">
       <p class={kicker}>{S.now.questionKicker}</p>
       <p class="mt-2 max-w-3xl text-lg leading-snug text-fg">{question}</p>
-      <p class="mt-1.5 font-mono text-xs text-fg-faint">
+      <p class="mt-1.5 font-mono text-mono text-fg-faint">
         {cycle.source === 'seed' ? S.now.seededNote : S.now.defaultsNote}
       </p>
     </div>
 
     <div class="mt-5 border-t border-line pt-4">
-      <div class="flex flex-wrap items-baseline justify-between gap-2">
+      <div class="flex flex-wrap items-center justify-between gap-2">
         <p class={kicker}>{ECOLOGY_V3.bulletin.kicker}</p>
         <a
-          class={quietLink}
+          class={cn(quietLink, '-mr-2 text-fg-faint')}
           href={`https://github.com/frankbueltge/${PRACTICE_REPO[id]}/blob/main/BULLETIN.md`}
         >{ECOLOGY_V3.bulletin.sourceLabel}</a>
       </div>
@@ -150,7 +169,7 @@ const blockClass: Record<string, string> = {
                     s.kind === 'strong' ? (
                       <strong class="font-semibold text-fg">{s.text}</strong>
                     ) : s.kind === 'code' ? (
-                      <code class="rounded bg-panel-2 px-1 font-mono text-[0.9em]">{s.text}</code>
+                      <code class="rounded-xs bg-panel-2 px-1 font-mono text-[0.9em]">{s.text}</code>
                     ) : (
                       <>{s.text}</>
                     ),
@@ -159,7 +178,7 @@ const blockClass: Record<string, string> = {
               ))}
             </div>
             {bulletin.truncated && (
-              <p class="mt-3 font-mono text-xs text-fg-faint">
+              <p class="mt-3 font-mono text-mono text-fg-faint">
                 {ECOLOGY_V3.bulletin.truncatedNote(bulletin.lines, BULLETIN_DISPLAY_MAX)}
               </p>
             )}
@@ -179,9 +198,9 @@ const blockClass: Record<string, string> = {
           <ul class="mt-2 space-y-2">
             {log.map((r) => (
               <li class="text-sm leading-relaxed text-fg-muted">
-                <span class="font-mono text-xs tabular-nums text-fg-faint">{r.date}</span>
+                <span class="font-mono text-mono tabular-nums text-fg-faint">{r.date}</span>
                 {r.marker && (
-                  <span class="ml-2 font-mono text-xs uppercase tracking-[0.12em] text-fg-faint">{r.marker}</span>
+                  <span class="ml-2 font-mono text-mono uppercase tracking-[0.12em] text-fg-faint">{r.marker}</span>
                 )}
                 <span class="ml-2">
                   {r.href ? (
@@ -195,7 +214,7 @@ const blockClass: Record<string, string> = {
           </ul>
         )
       }
-      <p class="mt-3">
+      <p class="mt-3 -ml-2">
         <a class={quietLink} href={url(`/${id}/journal`)}>{PYRAMID.station.wholeJournal}</a>
       </p>
     </div>
@@ -207,29 +226,31 @@ const blockClass: Record<string, string> = {
     <p class="mt-2 max-w-3xl text-sm leading-relaxed text-fg-muted">{W.madeLine(works.length)}</p>
     {
       newest.length === 0 ? (
-        <p class="mt-4 rounded-sm border border-dashed border-line p-4 text-sm leading-relaxed text-fg-faint">
-          {PYRAMID.station.absent}
-        </p>
+        <p class={cn(empty, 'mt-4')}>{PYRAMID.station.absent}</p>
       ) : (
         <ul class="mt-4 grid gap-3 sm:grid-cols-3">
           {newest.map((w) => (
-            <li class="rounded-sm border border-line bg-panel p-4">
-              <p class="font-mono text-xs tabular-nums text-fg-faint">
-                {w.date}
-                {w.state === 'withdrawn' && (
-                  <span class="ml-2 uppercase tracking-[0.12em]">
-                    {NAMING.worksRegister.withdrawnLabel}
-                    {w.withdrawnOn && ` ${w.withdrawnOn}`}
-                  </span>
-                )}
-              </p>
-              <a class="mt-1 block text-fg hover:underline" href={url(w.href)}>{w.title}</a>
+            <li>
+              <Card className={card}>
+                <CardContent>
+                  <p class="font-mono text-mono tabular-nums text-fg-faint">
+                    {w.date}
+                    {w.state === 'withdrawn' && (
+                      <span class="ml-2 uppercase tracking-[0.12em]">
+                        {NAMING.worksRegister.withdrawnLabel}
+                        {w.withdrawnOn && ` ${w.withdrawnOn}`}
+                      </span>
+                    )}
+                  </p>
+                  <a class="mt-1 block text-fg hover:underline" href={url(w.href)}>{w.title}</a>
+                </CardContent>
+              </Card>
             </li>
           ))}
         </ul>
       )
     }
-    <p class="mt-3">
+    <p class="mt-3 -ml-2">
       <a class={quietLink} href={url(W.registerHref)}>{W.registerLabel(works.length)}</a>
     </p>
 
@@ -237,17 +258,19 @@ const blockClass: Record<string, string> = {
       <p class={kicker}>{S.made.artifactsKicker}</p>
       {
         artifacts.length === 0 ? (
-          <p class="mt-3 rounded-sm border border-dashed border-line p-4 text-sm leading-relaxed text-fg-faint">
-            {ECOLOGY_V3.artifacts.empty}
-          </p>
+          <p class={cn(empty, 'mt-3')}>{ECOLOGY_V3.artifacts.empty}</p>
         ) : (
           <ul class="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {artifacts.map((a) => (
-              <li class="rounded-sm border border-line bg-panel p-4">
-                {a.date && <p class="font-mono text-xs tabular-nums text-fg-faint">{a.date}</p>}
-                <a class="mt-1 block text-fg hover:underline" href={url(a.href)}>
-                  {ECOLOGY_V3.artifacts.entryLabel(a.slug, a.title)}
-                </a>
+              <li>
+                <Card className={card}>
+                  <CardContent>
+                    {a.date && <p class="font-mono text-mono tabular-nums text-fg-faint">{a.date}</p>}
+                    <a class="mt-1 block text-fg hover:underline" href={url(a.href)}>
+                      {ECOLOGY_V3.artifacts.entryLabel(a.slug, a.title)}
+                    </a>
+                  </CardContent>
+                </Card>
               </li>
             ))}
           </ul>
@@ -273,11 +296,13 @@ const blockClass: Record<string, string> = {
     <ul class="mt-4 grid gap-3 sm:grid-cols-2">
       {
         doors.map((d) => (
-          <li class="rounded-sm border border-line bg-panel">
-            <a class="group block p-4" href={url(d.href)}>
-              <span class="font-mono text-sm text-fg group-hover:underline">{d.title}</span>
-              <span class="mt-1 block text-sm leading-relaxed text-fg-muted">{d.sub}</span>
-            </a>
+          <li>
+            <Card className={cn(card, 'py-0')}>
+              <a class="group block p-4" href={url(d.href)}>
+                <span class="font-mono text-sm text-fg group-hover:underline">{d.title}</span>
+                <span class="mt-1 block text-sm leading-relaxed text-fg-muted">{d.sub}</span>
+              </a>
+            </Card>
           </li>
         ))
       }
@@ -287,7 +312,7 @@ const blockClass: Record<string, string> = {
   {/* ── Foot: what stood here, dated ─────────────────────────────────────── */}
   <footer class="mt-14 border-t border-line pt-6">
     <p class="max-w-3xl text-sm leading-relaxed text-fg-faint">{S.foot.lineage}</p>
-    <nav class="mt-4 flex flex-wrap gap-x-5 gap-y-2" aria-label="Station foot">
+    <nav class="mt-4 -ml-2 flex flex-wrap gap-x-1 gap-y-1" aria-label="Station foot">
       {
         S.foot.links.map((l) => (
           <a class={quietLink} href={url(l.href)}>{l.label}</a>
