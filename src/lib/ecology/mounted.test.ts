@@ -45,6 +45,9 @@ describe('the instruments are on a page', () => {
     // back on /studio since 2026-09-01 — it had rendered on no page since the station sheets of
     // 2026-08-12, and its own guard then held the whole studio mirror shut over a figure nobody saw
     ['SeasonFloor', 'the Studio’s season floor — every premiere lit, every strike taped, every return drawn back'],
+    // the /ecology cycle partitur, an island since 2026-09-02 — the only surface on which the
+    // running cycle's artifacts, sessions, letters, encounters and presentations stand together
+    ['CyclePartitur', 'the running cycle as a score — every record of the cycle on one dated ruler'],
   ]
 
   it.each(INSTRUMENTS)('%s is imported by at least one page', (component, what) => {

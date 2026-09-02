@@ -21,6 +21,7 @@ import type { Locale } from '@/lib/site'
 import { ECOLOGY_V3 } from '@/config/ecology-v3-wording'
 import { bulletinBlocks } from '@/lib/ecology/bulletin-render'
 import CycleScoreFigure from '@/components/ecology/CycleScoreFigure.astro'
+import { buildCycleModel } from '@/lib/ecology/cycle-model'
 import {
   BULLETIN_DISPLAY_MAX,
   inCycle,
@@ -28,7 +29,10 @@ import {
   loadBulletin,
   loadClosingReports,
   loadCycle,
+  loadEncounters,
+  loadLetters,
   loadPresentations,
+  loadSessionNotes,
   PRACTICES,
   PRACTICE_REPO,
 } from '@/lib/ecology/v3'
@@ -48,6 +52,20 @@ const closing = loadClosingReports()
 // which), and inCycle() is the one rule for "this cycle": the cycle a path names, or, for a
 // work that names none, the house clock — shipped on or after the day the cycle opened.
 const cycleArtifacts = loadArtifacts().filter((a) => inCycle(a, cycle))
+// The score of 2026-09-02 draws the WHOLE cycle, not only its artifacts: the sessions that
+// produced them, the letters the house prepared for receivers outside it, the encounters in
+// which one practice's material arrived in another's work, and the presentations that close the
+// cycle. All four records were already committed and already had surfaces; the partitur is the
+// first place they stand on one ruler. The geometry is derived in src/lib/ecology/cycle-model.ts
+// — this page only hands it what the loaders read.
+const model = buildCycleModel({
+  cycle,
+  artifacts: cycleArtifacts,
+  sessions: PRACTICES.flatMap((id) => loadSessionNotes(id, cycle.opened)),
+  letters: loadLetters(cycle.opened),
+  encounters: loadEncounters(cycle.opened),
+  presentations,
+})
 
 const kicker = 'font-mono text-xs uppercase tracking-[0.22em] text-fg-muted'
 
@@ -110,7 +128,7 @@ const blockClass: Record<string, string> = {
 
   {/* ── The cycle, drawn ─────────────────────────────────────────────────── */}
   <section class="mt-10" aria-label="The running cycle, drawn as a score">
-    <CycleScoreFigure input={{ cycle, artifacts: cycleArtifacts }} />
+    <CycleScoreFigure model={model} />
   </section>
 
   {/* ── The three bulletins ──────────────────────────────────────────────── */}

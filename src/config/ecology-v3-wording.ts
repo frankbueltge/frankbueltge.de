@@ -95,13 +95,99 @@ export const ECOLOGY_V3 = {
     collapse: 'fold the bulletin ←',
   },
 
-  /** The cycle, drawn (2026-09-01) — the page's partitur, in the original score's own ink
-   *  (score-map.css). One mark per artifact the running cycle has produced, placed by its own
-   *  committed date; every mark links to the artifact it draws. */
+  /** The cycle, drawn (2026-09-01; the living partitur since 2026-09-02) — the page's score, in
+   *  the original grammar's own ink (score-map.css). Every record the running cycle has left,
+   *  on its lane, on its own committed day. Counts and dates arrive as arguments: this file
+   *  types no number of its own (wording canon — numbers in prose go stale nightly). */
   score: {
     kicker: 'The cycle, drawn',
-    sub: 'One lane per practice, one filled square per artifact the running cycle has produced, placed by its own committed date. Every mark links to the artifact it draws; the trail below lists the same record as cards.',
-    legend: 'filled square = one session’s artifact, on its practice’s lane at its own date · a thin dashed lane = no artifact yet this cycle · hues are the voices’ recorded ones',
+    sub: 'Every record the running cycle has left — artifacts, sessions, letters, encounters and presentations — on its own lane, on its own committed day. Every mark links to the record it draws, and the table under the drawing carries the same record in words.',
+
+    partitur: {
+      lanes: {
+        field: 'The Field',
+        atelier: 'The Atelier',
+        studio: 'The Studio',
+        house: 'The house',
+      } satisfies Record<'field' | 'atelier' | 'studio' | 'house', string>,
+      laneRole: {
+        field: 'science',
+        atelier: 'artistic research',
+        studio: 'art',
+        house: 'the conductor',
+      } satisfies Record<'field' | 'atelier' | 'studio' | 'house', string>,
+      laneQuiet: 'quiet this cycle',
+      laneCount: (n: number) => (n === 1 ? '1 record' : `${n} records`),
+      /** Shown beside the zoom controls, which only exist once the island has hydrated — so it
+       *  may name gestures a reader without JavaScript would not have. */
+      hint: 'drag or scroll to zoom the ruler · a mark opens its card · the arrow keys walk a lane',
+
+      axis: {
+        opened: (date: string) => `cycle opened ${date}`,
+        newest: (date: string) => `newest record ${date}`,
+        note: 'dated — the ruler ends at the newest record, never at today',
+      },
+
+      kinds: {
+        artifact: 'artifact',
+        session: 'session',
+        letter: 'letter',
+        encounter: 'encounter',
+        presentation: 'presentation',
+      } satisfies Record<'artifact' | 'session' | 'letter' | 'encounter' | 'presentation', string>,
+      kindWhat: {
+        artifact: 'what a session left behind, as the practice committed it',
+        session: 'one night of a practice’s journal',
+        letter: 'a packet prepared for a receiver outside the house',
+        encounter: 'one practice’s material arriving in another’s work',
+        presentation: 'the self-contained artifact that closes a cycle',
+      } satisfies Record<'artifact' | 'session' | 'letter' | 'encounter' | 'presentation', string>,
+
+      band: (phase: string) => `phase: ${phase}`,
+      figureLabel: (cycleLabel: string) =>
+        `${cycleLabel} as a score: one lane per practice and one for the house, every record on its own committed day.`,
+
+      card: {
+        kindLabel: 'kind',
+        laneLabel: 'lane',
+        dateLabel: 'day',
+        sourceLabel: 'read from',
+        open: 'open the record →',
+        close: 'close',
+        hint: 'the arrow keys walk this lane · Home and End jump to its ends · Esc closes',
+      },
+
+      zoom: {
+        group: 'Zoom the day ruler',
+        in: 'zoom in',
+        out: 'zoom out',
+        reset: 'reset the zoom',
+        /** The live zoom factor is state, not prose: the island prints this mark and then the
+         *  number it is actually at, so no digit is ever typed into a string here. */
+        levelPrefix: '×',
+      },
+
+      key: {
+        kicker: 'The signs',
+        lanes: 'hues are the voices’ recorded ones; the house lane is grey by declaration — the conductor is not a fourth practice',
+        quiet: 'a thin dashed lane carries nothing this cycle',
+      },
+
+      table: {
+        summary: (n: number) => `the score as a table — ${n} marks`,
+        caption: 'Every record of the running cycle: its day, its lane, what kind of record it is, and its own words.',
+        columns: {
+          date: 'day',
+          lane: 'lane',
+          kind: 'kind',
+          what: 'the record’s own words',
+        },
+      },
+
+      provenance: (files: string) =>
+        `Drawn from committed records only: ${files}. Nothing here is fetched while you read it, and no day comes from the clock.`,
+      empty: 'Nothing recorded yet in this cycle. The ruler opens on the day the cycle did.',
+    },
   },
 
   closing: {

@@ -1,43 +1,149 @@
 ---
-// The cycle, drawn (2026-09-01) — /ecology's partitur of the running cycle.
+// The cycle, drawn (2026-09-01; the living partitur since 2026-09-02) — /ecology's score of the
+// running cycle. The component name is kept on purpose: it is what the entrance mounts and what
+// the guard in cycle-model.test.ts looks for.
 //
-// Renders buildCycleScoreSvg inside a `.score-map` scope so src/styles/score-map.css — the
-// original partitur's own stylesheet — inks it: same ruler, same lane weights, same object
-// squares, same hues per voice. The figure is the page's visual anchor; the artifact trail
-// below remains the same record as cards, so nothing is reachable only through the drawing.
+// This file is the FRAME, not the figure. It does four things and stops:
 //
-// Since 2026-09-02 the drawing is mounted by the first React island of the visual layer
-// (CycleScoreIsland.tsx — docs/design/2026-09-02-the-visual-layer.md). The geometry still
-// happens here, at build time, in the pure builder; the island renders that markup on the
-// server (so the SVG exists without JavaScript) and, once hydrated, answers the pointer with
-// the shared dataviz Readout shell rendered right beside it. `.score-figure` is the
-// position: relative box the readout is clamped within (score-map.css).
+//   · resolves the wording canon against the model, so the island receives plain strings and no
+//     number is ever typed into one (the counts and the two axis dates are arguments here);
+//   · mounts the island `client:visible` inside a `.score-map` scope, so src/styles/score-map.css
+//     — the original partitur's own stylesheet — inks it: same ruler, same lane weights, same
+//     hues per voice, plus the four new signs of this drawing;
+//   · draws the KEY as static SVG reusing the very same sign classes, so the key is a miniature
+//     of the marks rather than a second drawing that could drift from them;
+//   · lays the table floor (TableFallback) and the provenance line under it, so nothing the
+//     figure says is reachable only through the drawing.
+//
+// The readout shell sits beside the island inside `.score-figure`, which is the position:
+// relative box readout.ts clamps within (its house rule 1) — and which is deliberately NOT the
+// scrolling element, because a readout clamped to a scroll container drifts with its content.
 import { ECOLOGY_V3 } from '@/config/ecology-v3-wording'
 import Readout from '@/components/dataviz/Readout.astro'
-import { buildCycleScoreSvg, type CycleScoreInput } from '@/lib/ecology/cycle-score'
+import TableFallback from '@/components/dataviz/TableFallback.astro'
+import { LANES, MARK_KINDS, modelRows, type CycleModel, type LaneId } from '@/lib/ecology/cycle-model'
 import '@/styles/score-map.css'
 
-import CycleScoreIsland from './CycleScoreIsland'
+import CyclePartitur, { type PartiturWording } from './CyclePartitur'
 
 interface Props {
-  input: CycleScoreInput
+  model: CycleModel
 }
-const { input } = Astro.props
-const svgMarkup = buildCycleScoreSvg(input)
+const { model } = Astro.props
+
 const W = ECOLOGY_V3.score
-const READOUT_ID = 'cycle-score-readout'
+const P = W.partitur
+const READOUT_ID = 'cycle-partitur-readout'
+const FIGURE_ID = 'cycle-partitur'
+
+const countOf = Object.fromEntries(model.lanes.map((l) => [l.id, P.laneCount(l.marks)])) as Record<
+  LaneId,
+  string
+>
+
+const wording: PartiturWording = {
+  lanes: P.lanes,
+  laneRole: P.laneRole,
+  laneQuiet: P.laneQuiet,
+  laneCount: countOf,
+  hint: P.hint,
+  axis: {
+    opened: P.axis.opened(model.axis.start),
+    newest: P.axis.newest(model.axis.end),
+    note: P.axis.note,
+  },
+  kinds: P.kinds,
+  kindWhat: P.kindWhat,
+  band: P.band(ECOLOGY_V3.cycle.phase[model.phase].badge),
+  card: P.card,
+  zoom: P.zoom,
+  figureLabel: P.figureLabel(ECOLOGY_V3.cycle.label(model.cycle)),
+}
+
+const rows = modelRows(model).map((r) => ({
+  date: r.date,
+  lane: P.lanes[r.lane],
+  kind: P.kinds[r.kind],
+  what: r.what,
+}))
+
+const columns = [
+  { key: 'date', label: P.table.columns.date, nowrap: true },
+  { key: 'lane', label: P.table.columns.lane, nowrap: true },
+  { key: 'kind', label: P.table.columns.kind, nowrap: true },
+  { key: 'what', label: P.table.columns.what },
+]
+
+// The provenance line names the record roots this drawing actually read — derived from the
+// marks' own sources, so it can never claim a file the figure did not open.
+const sources = [...new Set(model.marks.map((m) => m.source.split('/').slice(0, 3).join('/')))].sort()
 ---
 
-<figure class="rounded-sm border border-line bg-panel">
-  <figcaption class="border-b border-line p-4">
+<figure class="score-map score-map-flush rounded-sm border border-line bg-panel">
+  <figcaption class="border-b border-line p-4 sm:p-5">
     <p class="font-mono text-xs uppercase tracking-[0.22em] text-fg-muted">{W.kicker}</p>
     <p class="mt-2 max-w-3xl text-sm leading-relaxed text-fg-muted">{W.sub}</p>
   </figcaption>
-  <div class="score-map overflow-x-auto">
-    <div class="score-figure">
-      <CycleScoreIsland client:visible svg={svgMarkup} readoutId={READOUT_ID} />
-      <Readout id={READOUT_ID} maxWidth="40ch" />
+
+  <div class="p-4 sm:p-5">
+    {/* The drawing keeps a floor width and the frame scrolls: a 1440-unit score squeezed into a
+        phone is a grey smear, and the readout must clamp to the FIGURE's box, not the scroller —
+        so the min-width sits on `.score-figure` itself, which is that box. */}
+    <div class="score-scroll">
+      <div class="score-figure min-w-[900px]">
+        <CyclePartitur client:visible model={model} wording={wording} readoutId={READOUT_ID} figureId={FIGURE_ID} />
+        <Readout id={READOUT_ID} maxWidth="44ch" />
+      </div>
     </div>
+    {model.marks.length === 0 && <p class="text-sm leading-relaxed text-fg-faint">{P.empty}</p>}
   </div>
-  <p class="border-t border-line p-4 font-mono text-[11px] leading-relaxed text-fg-faint">{W.legend}</p>
+
+  {/* ── The key: the same sign classes as the marks, at a smaller size ───── */}
+  <div class="border-t border-line p-4 sm:p-5">
+    <p class="font-mono text-[11px] uppercase tracking-[0.16em] text-fg-faint">{P.key.kicker}</p>
+    <ul class="mt-3 grid list-none gap-x-6 gap-y-1 p-0 sm:grid-cols-2 xl:grid-cols-3">
+      {
+        MARK_KINDS.map((kind) => (
+          <li class="score-lg-row">
+            <svg class="score-mini score-svg" viewBox="0 0 46 30" aria-hidden="true">
+              {kind === 'artifact' && <rect class="mk-fill pr-conductor" x="15" y="7" width="16" height="16" />}
+              {kind === 'session' && <path class="mk-tick pr-conductor" d="M23 4 V26" />}
+              {kind === 'letter' && <path class="mk mk-diamond pr-conductor" d="M23 6 L32 15 L23 24 L14 15 Z" />}
+              {kind === 'encounter' && <circle class="mk mk-ring pr-conductor" cx="23" cy="15" r="8" />}
+              {kind === 'presentation' && (
+                <g>
+                  <rect class="mk-badge pr-conductor" x="12" y="6" width="22" height="18" rx="3" />
+                  <rect class="mk-badge-in" x="18" y="11" width="10" height="8" />
+                </g>
+              )}
+            </svg>
+            <span><b class="text-fg">{P.kinds[kind]}</b> — {P.kindWhat[kind]}</span>
+          </li>
+        ))
+      }
+    </ul>
+    <div class="mt-4 flex flex-wrap gap-x-6 gap-y-1">
+      {
+        model.lanes.map((l) => (
+          <span class="score-lg-row">
+            <span class={`score-sw pr-${l.persona}`}></span>
+            <span>{P.lanes[l.id]}<span class="text-fg-faint"> · {P.laneRole[l.id]}</span></span>
+          </span>
+        ))
+      }
+    </div>
+    <p class="score-lg-note">{P.key.lanes} · {P.key.quiet}</p>
+  </div>
+
+  {/* ── The floor: the same record in words ──────────────────────────────── */}
+  <div class="score-record border-t border-line p-4 sm:p-5">
+    <TableFallback
+      summary={P.table.summary(model.marks.length)}
+      caption={P.table.caption}
+      columns={columns}
+      rows={rows}
+      provenance={P.provenance(sources.join(' · '))}
+    />
+  </div>
 </figure>
+

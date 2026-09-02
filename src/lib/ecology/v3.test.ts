@@ -12,7 +12,10 @@ import {
   loadBulletin,
   loadClosingReports,
   loadCycle,
+  loadEncounters,
+  loadLetters,
   loadPresentations,
+  loadSessionNotes,
   PRACTICES,
   type ArtifactEntry,
 } from './v3'
@@ -336,5 +339,167 @@ describe('inCycle', () => {
     expect(inCycle(entry({ date: '2026-09-01' }), cycle)).toBe(true)
     expect(inCycle(entry({ date: '2026-07-13' }), cycle)).toBe(false)
     expect(inCycle(entry({ date: null }), cycle)).toBe(false)
+  })
+})
+
+// ------------------------------------------------------------------------------------------
+// The three records the partitur added on 2026-09-02 (docs/design/2026-09-02-the-visual-layer.md).
+// Each loader is held against a fixture tree for the shapes this repository does not currently
+// exhibit, and against the real repository for the one it does.
+
+function writeJournal(root: string, practice: string, files: Record<string, string>): void {
+  const dir = path.join(root, 'src/content', practice, 'journal')
+  fs.mkdirSync(dir, { recursive: true })
+  for (const [name, body] of Object.entries(files)) fs.writeFileSync(path.join(dir, name), body)
+}
+
+describe('loadSessionNotes', () => {
+  it('finds nothing where a practice has no journal', () => {
+    expect(loadSessionNotes('field', '2026-08-30', fixtureRoot())).toEqual([])
+  })
+
+  it('reads a day-based journal the way its own route does — one note per H1, the day’s anchor', () => {
+    const root = fixtureRoot()
+    writeJournal(root, 'field', {
+      '2026-08-29.md': '# Session 10 — 2026-08-29\n\nbefore the cycle opened\n',
+      '2026-08-30.md': '# Session 11 — 2026-08-30\n\nfirst\n\n# Session 12 — 2026-08-30\n\nsecond\n',
+    })
+    const notes = loadSessionNotes('field', '2026-08-30', root)
+    expect(notes.map((n) => n.anchor)).toEqual(['cs-11', 'cs-12'])
+    expect(notes.map((n) => n.href)).toEqual(['/field/journal/cs-11/', '/field/journal/cs-12/'])
+    expect(notes[0]!.title).toBe('Session 11 — 2026-08-30')
+    expect(notes[0]!.date).toBe('2026-08-30')
+    expect(notes[0]!.source).toBe('src/content/field/journal/2026-08-30.md')
+  })
+
+  it('walks the WHOLE journal before filtering, so the anchors are the ones the routes published', () => {
+    // Two days both claiming "collective session 24": the first claimant keeps the clean anchor
+    // and the later one is suffixed. A walk that started at the cycle's opening would hand the
+    // clean anchor to the WRONG day, and every mark would link to a page that does not exist.
+    const root = fixtureRoot()
+    writeJournal(root, 'studio', {
+      '2026-08-01-session-24.md': '# Session 24 — 2026-08-01\n\nthe first claimant\n',
+      '2026-08-31-session-24.md': '# Session 24 — 2026-08-31\n\nthe later one\n',
+    })
+    const notes = loadSessionNotes('studio', '2026-08-30', root)
+    expect(notes).toHaveLength(1)
+    // the suffix is the day FILE's own stem, which is what buildDayIndex hands out
+    expect(notes[0]!.anchor).toBe('cs-24-2026-08-31-session-24')
+  })
+
+  it('reads the Atelier’s register the way ITS route does — s-numbers and note slugs', () => {
+    const root = fixtureRoot()
+    writeJournal(root, 'atelier', {
+      '2026-08-29.md': '# An older night\n\nbefore\n',
+      '2026-08-31-blind-search.md': '# Blind search — 2026-08-31\n\nthe reach-outside session\n',
+    })
+    const notes = loadSessionNotes('atelier', '2026-08-30', root)
+    expect(notes).toHaveLength(1)
+    expect(notes[0]!.href).toBe('/atelier/journal/note-blind-search/')
+    expect(notes[0]!.title).toBe('Blind search — 2026-08-31')
+  })
+
+  it('strips frontmatter before splitting — otherwise the H1 is not the first line', () => {
+    const root = fixtureRoot()
+    writeJournal(root, 'atelier', {
+      '2026-08-31-with-frontmatter.md':
+        '---\ndate: 2026-08-31\nkind: journal\n---\n\n# The report checks out\n\nbody\n',
+    })
+    const notes = loadSessionNotes('atelier', '2026-08-30', root)
+    expect(notes[0]!.title).toBe('The report checks out')
+  })
+
+  it('reads this repository’s running cycle, and every note points at a page this site builds', () => {
+    const cycle = loadCycle()
+    for (const practice of PRACTICES) {
+      const notes = loadSessionNotes(practice, cycle.opened)
+      expect(notes.length).toBeGreaterThan(0)
+      for (const n of notes) {
+        expect(n.date >= cycle.opened).toBe(true)
+        expect(n.href.startsWith(`/${practice}/journal/`)).toBe(true)
+        expect(fs.existsSync(path.join(process.cwd(), n.source))).toBe(true)
+      }
+    }
+  })
+})
+
+describe('loadLetters', () => {
+  const ledger = [
+    { id: '2026-08-old', practice: 'studio', piece: 'An older packet', receiver: 'r', status: 'prepared', as_of: '2026-08-15' },
+    { id: '2026-09-new', practice: 'plenum', piece: 'A packet lying open', receiver: 'r', status: 'prepared', as_of: '2026-08-31' },
+    { practice: 'field', piece: 'no id', as_of: '2026-09-01' },
+  ]
+
+  function writeLedger(root: string): void {
+    fs.mkdirSync(path.join(root, 'src/data/post'), { recursive: true })
+    fs.writeFileSync(path.join(root, 'src/data/post/ledger.json'), JSON.stringify(ledger))
+  }
+
+  it('finds nothing where the post office keeps no ledger', () => {
+    expect(loadLetters('2026-08-30', fixtureRoot())).toEqual([])
+  })
+
+  it('takes the letters of this cycle only, and skips an entry it cannot identify', () => {
+    const root = fixtureRoot()
+    writeLedger(root)
+    const letters = loadLetters('2026-08-30', root)
+    expect(letters.map((l) => l.id)).toEqual(['2026-09-new'])
+    expect(letters[0]!.practice).toBe('plenum')
+    expect(letters[0]!.href).toBe('/post/')
+    expect(letters[0]!.source).toBe('src/data/post/ledger.json')
+  })
+
+  it('reads the committed ledger of this repository without throwing', () => {
+    expect(() => loadLetters('2000-01-01')).not.toThrow()
+    expect(loadLetters('2000-01-01').length).toBeGreaterThan(0)
+  })
+})
+
+describe('loadEncounters', () => {
+  function writeRegister(root: string, entries: unknown): void {
+    fs.mkdirSync(path.join(root, 'src/data/begegnungen'), { recursive: true })
+    fs.writeFileSync(path.join(root, 'src/data/begegnungen/register.json'), JSON.stringify(entries))
+  }
+
+  it('finds nothing where the register is absent', () => {
+    expect(loadEncounters('2026-08-30', fixtureRoot())).toEqual([])
+  })
+
+  it('dates an encounter by the premiere the register observed, and leaves the unobserved out', () => {
+    const root = fixtureRoot()
+    writeRegister(root, [
+      { encounter_id: 'enc-a', title: 'An older crossing', observed: { premiered_on: '2026-07-13' } },
+      { encounter_id: 'enc-b', title: 'The measurement travels', observed: { premiered_on: '2026-08-31' } },
+      { encounter_id: 'enc-c', title: 'Not premiered yet', observed: {} },
+    ])
+    const found = loadEncounters('2026-08-30', root)
+    expect(found.map((e) => e.id)).toEqual(['enc-b'])
+    expect(found[0]!.href).toBe('/encounters/register/')
+  })
+
+  it('reads the committed register of this repository without throwing', () => {
+    expect(() => loadEncounters('2000-01-01')).not.toThrow()
+    expect(loadEncounters('2000-01-01').length).toBeGreaterThan(0)
+  })
+})
+
+describe('loadPresentations — the day a presentation names', () => {
+  it('takes the last day its own summary names, and stays undated where it names none', () => {
+    const root = fixtureRoot()
+    const dated = path.join(root, 'public/field/presentations/cycle-001')
+    const undated = path.join(root, 'public/studio/presentations/cycle-001')
+    fs.mkdirSync(dated, { recursive: true })
+    fs.mkdirSync(undated, { recursive: true })
+    fs.writeFileSync(path.join(dated, 'index.html'), '<title>The handover — The Field, cycle 001</title>')
+    fs.writeFileSync(
+      path.join(dated, 'SUMMARY.md'),
+      '# The handover\n\n*The Field, cycle 001. Five sessions, 2026-08-30 to 2026-09-01.*\n',
+    )
+    fs.writeFileSync(path.join(undated, 'index.html'), '<title>A work — The Studio, cycle 001</title>')
+    fs.writeFileSync(path.join(undated, 'SUMMARY.md'), '# A work\n\nNo day named here.\n')
+    const found = loadPresentations(root)
+    expect(found.find((p) => p.practice === 'field')?.date).toBe('2026-09-01')
+    expect(found.find((p) => p.practice === 'field')?.title).toBe('The handover')
+    expect(found.find((p) => p.practice === 'studio')?.date).toBeNull()
   })
 })
