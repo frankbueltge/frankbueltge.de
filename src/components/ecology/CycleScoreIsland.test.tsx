@@ -21,8 +21,8 @@ const CYCLE: CycleState = {
 }
 
 const ARTIFACTS: ArtifactEntry[] = [
-  { practice: 'field', slug: 'a-door-to-knock-on', date: '2026-09-01', href: '/field/artifacts/cycle-001/2026-09-01-a-door-to-knock-on/' },
-  { practice: 'field', slug: 'yield-of-a-loop', date: '2026-08-30', href: '/field/artifacts/cycle-001/2026-08-30-yield-of-a-loop/' },
+  { practice: 'field', slug: 'a-door-to-knock-on', date: '2026-09-01', cycle: 1, href: '/field/artifacts/cycle-001/2026-09-01-a-door-to-knock-on/' },
+  { practice: 'field', slug: 'yield-of-a-loop', date: '2026-08-30', cycle: 1, href: '/field/artifacts/cycle-001/2026-08-30-yield-of-a-loop/' },
 ]
 
 const svg = buildCycleScoreSvg({ cycle: CYCLE, artifacts: ARTIFACTS })
