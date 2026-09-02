@@ -892,11 +892,246 @@
   color: var(--ops-faint);
 }
 
+/* ── 1b · the sky: the globe under the hero (visual layer, Phase 3b, 2026-09-02) ─────────────── */
+/* One panel across both hero columns. The stage on the left carries two figures of the same
+   record: the build-time plate (an SVG, the accessible one) and, once the island has mounted a
+   WebGL globe over it, the canvas. The plate fades under the canvas but never leaves the tree.
+   The aside on the right lists the longest gaps and the key, so the panel reads without a pointer
+   and without WebGL. Marks wear the room's own tokens; the gaps wear the Field's recorded hue —
+   PALETTE: ecology-voices — because the ghost fleet is Meridian's instrument. */
+.ops-sky {
+  grid-column: 1 / -1;
+}
+.ops-sky-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+}
+@media (max-width: 1000px) {
+  .ops-sky-body {
+    grid-template-columns: 1fr;
+  }
+}
+.ops-sky-stage {
+  position: relative;
+  min-width: 0;
+}
+.sky-stage {
+  position: relative;
+  height: clamp(320px, 32vw, 500px);
+  overflow: hidden;
+  background: var(--ops-panel-solid);
+}
+.sky-floor {
+  position: absolute;
+  inset: 0;
+  transition: opacity 0.6s var(--ease-frame);
+}
+.sky-floor-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.sky-stage[data-phase='live'] .sky-floor,
+.sky-stage[data-phase='still'] .sky-floor {
+  opacity: 0;
+}
+.sky-canvas {
+  position: absolute;
+  inset: 0;
+  visibility: hidden;
+}
+.sky-stage[data-phase='live'] .sky-canvas,
+.sky-stage[data-phase='still'] .sky-canvas {
+  visibility: visible;
+}
+.sky-canvas canvas {
+  display: block;
+}
+.sky-status {
+  position: absolute;
+  left: 12px;
+  bottom: 10px;
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ops-faint);
+  pointer-events: none;
+}
+.sky-status:empty {
+  display: none;
+}
+/* the plate's marks */
+.sky-sea {
+  fill: var(--ops-panel-solid);
+}
+.sky-grat {
+  fill: none;
+  stroke: var(--ops-line);
+  stroke-width: 0.5;
+}
+.sky-land {
+  fill: var(--ops-line);
+  stroke: var(--ops-muted);
+  stroke-width: 0.5;
+  stroke-linejoin: round;
+}
+.sky-sat {
+  fill: var(--ops-accent);
+  opacity: 0.92;
+}
+.sky-arc {
+  fill: none;
+  stroke: var(--hub-c-meridian);
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  opacity: 0.85;
+}
+.sky-arc-off {
+  fill: none;
+  stroke: var(--hub-c-meridian);
+  stroke-width: 1.2;
+}
+.sky-arc-on {
+  fill: var(--hub-c-meridian);
+}
+.sky-gap:hover .sky-arc {
+  opacity: 1;
+  stroke-width: 2.2;
+}
+/* the readout the island fills, in the pulse chip's clothes */
+.ops-sky .dv-readout {
+  padding: 4px 8px;
+  border: 1px solid var(--ops-line);
+  border-radius: 4px;
+  background: var(--ops-panel-solid);
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ops-accent);
+  white-space: nowrap;
+}
+/* the aside */
+.ops-sky-aside {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 16px 18px 18px;
+  border-left: 1px solid var(--ops-line);
+  font-family: var(--font-mono);
+}
+@media (max-width: 1000px) {
+  .ops-sky-aside {
+    border-left: 0;
+    border-top: 1px solid var(--ops-line);
+  }
+}
+.ops-sky-kicker {
+  margin: 0;
+  font-size: 9.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ops-faint);
+}
+.ops-sky-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.ops-sky-list li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 2px 10px;
+  padding-left: 12px;
+  border-left: 2px solid var(--hub-c-meridian);
+  font-size: 11px;
+  line-height: 1.35;
+}
+.ops-sky-vessel {
+  color: var(--ops-fg);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ops-sky-hours {
+  color: var(--ops-accent);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.ops-sky-waters {
+  grid-column: 1 / -1;
+  color: var(--ops-muted);
+  font-size: 10px;
+}
+.ops-sky-legend {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 10px;
+  color: var(--ops-muted);
+}
+.ops-sky-legend li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.sky-key {
+  display: inline-block;
+  flex: none;
+  width: 14px;
+  height: 8px;
+}
+.sky-key-sat {
+  width: 6px;
+  height: 6px;
+  margin: 0 4px;
+  border-radius: 9999px;
+  background: var(--ops-accent);
+}
+.sky-key-gap {
+  height: 2px;
+  background: var(--hub-c-meridian);
+}
+.sky-key-land {
+  border: 1px solid var(--ops-muted);
+  background: var(--ops-line);
+}
+.ops-sky-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin: auto 0 0;
+  font-size: 11px;
+}
+.ops-sky-links a {
+  color: var(--ops-muted);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-color: var(--ops-line);
+}
+.ops-sky-links a:hover {
+  color: var(--ops-fg);
+}
+
 /* ── motion, refused ────────────────────────────────────────────────────────────────────────── */
 /* Everything ambient stops: the LEDs hold lit (the fact stays, the breathing goes), the log rows
    are simply there instead of rising in, the cursor stops blinking. The pulse dots are stopped by
-   the script itself, which never starts its loop under this preference. */
+   the script itself, which never starts its loop under this preference — and so is the globe:
+   under this preference the island computes one frame and holds it, no turn, no walk. */
 @media (prefers-reduced-motion: reduce) {
+  .ops-room .sky-floor {
+    transition: none;
+  }
   .ops-room .ops-led,
   .ops-room .ops-cursor,
   .ops-room .ops-log li {
