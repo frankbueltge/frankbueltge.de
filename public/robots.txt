@@ -9,6 +9,13 @@
 # NOTE: these directives only take effect while Cloudflare's managed robots.txt is
 # switched off for this zone (AI Crawl Control). While that feature is on, Cloudflare
 # serves its own block instead of this file.
+#
+# Exception (Frank, 2026-09-02): /trending — the trending ledger, CC0 data built for
+# machine readers, no text of the author's and no personal data — is open to every
+# crawler, training crawlers included. Each training-crawler group below therefore
+# allows /trending before it disallows the rest, and carries its own Content-Signal
+# for what it may fetch there. The site default in the * group stays ai-train=no.
+# Record: docs/design/2026-07-26-crawler-politik.md §5.
 
 User-agent: *
 Content-Signal: search=yes, ai-input=yes, ai-train=no, use=reference
@@ -18,31 +25,47 @@ Sitemap: https://frankbueltge.de/sitemap-index.xml
 
 
 # ---------------------------------------------------------------------------
-# Model training: not permitted
+# Model training: not permitted — except on /trending (2026-09-02, see header)
 # ---------------------------------------------------------------------------
 
 User-agent: GPTBot
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
+Allow: /trending
 Disallow: /
 
 User-agent: ClaudeBot
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
+Allow: /trending
 Disallow: /
 
 User-agent: Google-Extended
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
+Allow: /trending
 Disallow: /
 
 User-agent: CCBot
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
+Allow: /trending
 Disallow: /
 
 User-agent: meta-externalagent
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
+Allow: /trending
 Disallow: /
 
 User-agent: Applebot-Extended
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
+Allow: /trending
 Disallow: /
 
 User-agent: Bytespider
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
+Allow: /trending
 Disallow: /
 
 User-agent: Diffbot
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
+Allow: /trending
 Disallow: /
 
 

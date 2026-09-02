@@ -1,0 +1,27 @@
+---
+// An archived trending day. Unlike the Protocol's day snapshots these are NOT noindex: each one
+// is a whole reading of one morning, with its own converging topics, and it is meant to be found
+// and cited. Its canonical URL is itself — /trending shows the newest day at a second address,
+// so the archived page has to claim its own.
+import Page from '@/layouts/Page.astro'
+import TrendingPage from '@/components/pages/TrendingPage.astro'
+import { getAudienceDays, getTrendingDays } from '@/lib/trending/data'
+import { archiveTitle, metaDescription } from '@/lib/trending/format'
+import type { TrendingDay } from '@/lib/trending/types'
+
+export function getStaticPaths() {
+  const days = getTrendingDays()
+  return days.map((day, i) => ({ params: { date: day.date }, props: { day, isLatest: i === 0 } }))
+}
+
+const { day } = Astro.props as { day: TrendingDay; isLatest: boolean }
+const audience = getAudienceDays(30)
+---
+
+<Page
+  title={archiveTitle(day)}
+  description={metaDescription(day, false)}
+  canonicalPath={`/trending/${day.date}/`}
+>
+  <TrendingPage day={day} audience={audience} isLatest={false} />
+</Page>

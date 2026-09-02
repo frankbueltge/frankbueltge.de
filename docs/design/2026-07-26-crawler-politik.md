@@ -1,7 +1,8 @@
 # Crawler-Politik: zitieren ja, trainieren nein
 
 **Datum:** 2026-07-26 · **Status:** ENTSCHIEDEN (Frank) · **Umsetzung:** `public/robots.txt`
-committet; **eine Handlung steht aus** (Cloudflare-Dashboard, siehe §3)
+committet; **eine Handlung steht aus** (Cloudflare-Dashboard, siehe §3) · **Nachtrag 2026-09-02:**
+eine datierte Ausnahme für `/trending*`, siehe §5
 
 ## 1. Befund (gemessen am 2026-07-26)
 
@@ -145,3 +146,32 @@ das ist eine Bitte; eine Sperre in der Crawler-Liste wäre ein Zaun.
 dieses Tag zu lesen. Ein `Disallow` würde das Tag verbergen, während die nackte URL
 weiterhin gelistet werden könnte. Die Daten dahinter liegen ohnehin hinter einer
 authentifizierten API (401 gemessen).
+
+## 5. Ausnahme: `/trending` (Franks Entscheidung, 2026-09-02, Wortlaut privat)
+
+Die Route `/trending` (Experiment „Common Ground", Linie NIGHTLY LEDGER) ist für **alle**
+KI-Crawler offen — auch für die Trainings-Crawler, die überall sonst gesperrt bleiben. Die
+Politik „zitieren ja, trainieren nein" gilt für die Site unverändert weiter; dies ist eine
+Ausnahme für genau eine Route, datiert und begründet:
+
+- **Was dort liegt:** CC0-Daten, die für Maschinenleser gebaut sind — Titel, Zähler und Links
+  fremder Plattformen, kein eigener Text Franks, keine personenbezogenen Daten. Die drei
+  Gründe aus §2 (Lizenzwiderspruch, Rechte Dritter an abgeleiteten Werken, Personenbezug)
+  greifen für diese Route nicht: Die Ausgabe ist ausdrücklich gemeinfrei, hält nur Metadaten
+  fremder Quellen (keine Artikeltexte), und die Seite misst gerade, *wer* sie liest.
+- **Deklaration:** `public/robots.txt` erhält in jeder Trainings-Crawler-Gruppe ein
+  `Allow: /trending` vor dem `Disallow: /` und die Zeile
+  `Content-Signal: search=yes, ai-input=yes, ai-train=yes` — die Signalzeile gilt nur für das,
+  was die Gruppe abrufen darf. Die Standardgruppe (`User-agent: *`) behält `ai-train=no`.
+  `public/llms.txt` nennt beides.
+- **Kante:** Die Trainings-Crawler stehen im Dashboard unter AI Crawl Control auf *Block*
+  (§3b). Die Deklaration wirkt erst, wenn Frank sie dort auf *Allow* stellt **und** eine
+  WAF-Regel den Rest der Site weiter schützt — Ausdruck:
+  `(http.user_agent contains "GPTBot" or http.user_agent contains "ClaudeBot" or http.user_agent contains "CCBot" or http.user_agent contains "meta-externalagent" or http.user_agent contains "Bytespider" or http.user_agent contains "Diffbot") and not starts_with(http.request.uri.path, "/trending")`,
+  Aktion Block. Bis dahin ist die Ausnahme deklariert, aber nicht durchgesetzt; die
+  nächtliche Leserschafts-Datei (`src/data/trending/audience/`) zeigt die abgewiesenen Abrufe
+  als `other_status`.
+- **Keine Spoof-Tests** (Konsequenz aus §3b bleibt): Ob die Öffnung wirkt, liest sich aus der
+  Crawler-Liste im Dashboard und aus der committeten Leserschafts-Serie, nicht aus einem curl.
+
+Entwurf und Messung: `docs/design/2026-09-02-common-ground.md`.

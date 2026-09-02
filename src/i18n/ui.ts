@@ -36,6 +36,11 @@ export const ui = {
     'tl.sub': 'Die Wörter, die sich die Maschine nicht verkneifen kann — und wie sie nach ChatGPT die Wissenschaft fluteten.',
     'pt.title': 'Patterns',
     'pt.sub': 'Eine Maschine, die jeden Tag eine Korrelation findet — und nicht weiß, ob sie etwas bedeutet.',
+    // Common Ground is English-only in both halves of the dictionary: the ledger's own surface,
+    // its Markdown edition and its feed carry one wording, and a second one would drift.
+    'tr.title': 'Common Ground',
+    'tr.sub':
+      'What the web is searching, reading and posting about — cross-checked across independent sources every morning, kept as open data.',
     'rd.title': 'Editorial Deadline',
     'rd.sub': 'Was aus dem offiziellen öffentlichen Eintrag still wieder entfernt wird — durchgestrichen, in zwei Klicks überprüfbar.',
     'rd.empty': 'Die erste Messung folgt mit dem nächsten nächtlichen Lauf.',
@@ -166,6 +171,9 @@ export const ui = {
     'tl.sub': "The words the machine can't help using — and how they flooded science after ChatGPT.",
     'pt.title': 'Patterns',
     'pt.sub': 'A machine that finds a correlation every day — and cannot tell if it means anything.',
+    'tr.title': 'Common Ground',
+    'tr.sub':
+      'What the web is searching, reading and posting about — cross-checked across independent sources every morning, kept as open data.',
     'rd.title': 'Editorial Deadline',
     'rd.sub': 'What is quietly removed — from the official record, and from the record of the world’s press. Struck through, receipt in hand.',
     'rd.empty': 'The first measurement follows with the next nightly run.',

@@ -1,0 +1,70 @@
+name: Trending nightly
+
+# Common Ground — the trending ledger (docs/design/2026-09-02-common-ground.md).
+# Every morning: read eight keyless public sources (Google Trends RSS for six countries,
+# Wikipedia's most-read pages in two languages, Hacker News, Bluesky, Mastodon, Google News,
+# Reddit, GitHub), keep what converges across independent platforms by a disclosed token rule,
+# and write one day file under src/data/trending/. A day later the same run reads Cloudflare's
+# edge analytics for the day before and writes who fetched /trending — classes and bot names
+# only, never a raw user agent — into src/data/trending/audience/. Commits back to main, which
+# deploy-cf.yml turns into a rebuild through its workflow_run trigger.
+#
+# Secrets (Settings → Secrets and variables → Actions) and one variable:
+#   CF_ANALYTICS_TOKEN — Cloudflare API token, Zone · Analytics · Read for frankbueltge.de.
+#                        Missing: the audience half records status "unavailable" with a note.
+#   CF_ZONE_ID         — repository VARIABLE (not secret): the zone id of frankbueltge.de.
+#   UMAMI_API_URL, UMAMI_USERNAME, UMAMI_PASSWORD — optional, a view-only Umami user for the
+#                        browser-pageview series; missing → that half is "unavailable" too.
+#
+# A committed day file is never rewritten (the archive rule): the pipeline refuses to overwrite
+# an existing src/data/trending/<date>.json and exits 0.
+
+on:
+  schedule:
+    - cron: '40 6 * * *' # daily 06:40 UTC — after Gegenmessung (06:00) and the morning digest
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: trending
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # full history → git pull --rebase in the commit step works
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install the pipeline package
+        run: pip install --no-cache-dir ./pipelines/trending
+      - name: Run the ledger (writes, does not commit)
+        env:
+          CF_ANALYTICS_TOKEN: ${{ secrets.CF_ANALYTICS_TOKEN }}
+          CF_ZONE_ID: ${{ vars.CF_ZONE_ID }}
+          UMAMI_API_URL: ${{ secrets.UMAMI_API_URL }}
+          UMAMI_USERNAME: ${{ secrets.UMAMI_USERNAME }}
+          UMAMI_PASSWORD: ${{ secrets.UMAMI_PASSWORD }}
+        run: python -m trending.run --repo-root .
+      - name: Commit
+        run: |
+          git config user.name "Morgenlese"
+          git config user.email "morgenlese@frankbueltge.de"
+          git add src/data/trending 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No changes."; exit 0
+          fi
+          git commit -m "trending: ledger of $(date -u +%F)"
+          # Against push races (several nightly cron commits): rebase and retry.
+          for i in 1 2 3 4 5; do
+            if git pull --rebase --autostash origin main && git push origin HEAD:main; then
+              echo "Pushed."; exit 0
+            fi
+            echo "Push attempt $i failed, retrying …"; sleep 5
+          done
+          echo "::error::Push failed after 5 attempts"; exit 1

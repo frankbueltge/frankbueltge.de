@@ -1,0 +1,31 @@
+---
+// Common Ground — the newest committed day. /trending/<date> holds the archived ones.
+import Page from '@/layouts/Page.astro'
+import TrendingPage from '@/components/pages/TrendingPage.astro'
+import { getAudienceDays, getLatestTrending } from '@/lib/trending/data'
+import { LATEST_DESCRIPTION, metaDescription, pageTitle } from '@/lib/trending/format'
+import { t } from '@/i18n/ui'
+
+const locale = 'en' as const
+const day = getLatestTrending()
+const audience = getAudienceDays(30)
+---
+
+{
+  day ? (
+    <Page title={pageTitle(day)} description={metaDescription(day, true)}>
+      <TrendingPage day={day} audience={audience} isLatest={true} />
+    </Page>
+  ) : (
+    <Page title={`${t(locale, 'tr.title')} | Frank Bültge`} description={LATEST_DESCRIPTION}>
+      <main id="main" class="flex-1">
+        <div class="mx-auto max-w-2xl px-4 py-14">
+          <p class="font-mono text-xs uppercase tracking-[0.2em] text-fg-faint">Common Ground · Nightly Ledger</p>
+          <h1 class="mt-2 text-[clamp(30px,5vw,52px)] font-bold leading-none tracking-tight">Trending today</h1>
+          <p class="mt-5 max-w-2xl leading-relaxed text-fg-muted">{t(locale, 'tr.sub')}</p>
+          <p class="mt-3 text-fg-faint">The first ledger follows with the next nightly run.</p>
+        </div>
+      </main>
+    </Page>
+  )
+}

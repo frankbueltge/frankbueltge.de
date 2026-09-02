@@ -1,0 +1,296 @@
+---
+/** Common Ground — the nightly ledger of what the web is searching, reading and posting about.
+ *  NIGHTLY LEDGER line. One page per committed day (src/data/trending/<date>.json, contract
+ *  trending-day/1); /trending shows the newest one, /trending/<date> the archived ones.
+ *
+ *  Everything visible here is derived: labels, counts and ranks come from the day file, the
+ *  formatting from src/lib/trending/format.ts, the view models from view.ts. Nothing on this
+ *  page is written by a model, and nothing is hand-typed that a source could contradict — that
+ *  is why the prose carries no numeral of its own.
+ */
+import TableFallback from '@/components/dataviz/TableFallback.astro'
+import TrendingAudienceFigure from '@/components/pages/TrendingAudience.astro'
+import { audienceBefore, getTrendingDays } from '@/lib/trending/data'
+import { fmtDateLong, fmtDateWeekday, fmtTimeUtc, platformLabel } from '@/lib/trending/format'
+import { datasetLd, itemListLd, webPageLd } from '@/lib/trending/jsonld'
+import { trendingUrls } from '@/lib/trending/markdown'
+import type { TrendingAudience, TrendingDay } from '@/lib/trending/types'
+import { convergingRows, sourceColumns } from '@/lib/trending/view'
+
+interface Props {
+  day: TrendingDay
+  /** every committed audience record, newest first */
+  audience: TrendingAudience[]
+  /** true on /trending (the newest day), false on an archived day */
+  isLatest: boolean
+}
+const { day, audience, isLatest } = Astro.props
+
+const rows = convergingRows(day)
+const columns = sourceColumns(day, 10)
+const yesterday = audienceBefore(day.date)
+const u = trendingUrls(day.date)
+
+// Prev/next within the committed archive, and the archive itself. getTrendingDays() is newest
+// first, so the NEWER neighbour sits at the lower index.
+const days = getTrendingDays()
+const idx = days.findIndex((d) => d.date === day.date)
+const newer = idx > 0 ? days[idx - 1] : undefined
+const older = idx >= 0 && idx < days.length - 1 ? days[idx + 1] : undefined
+
+const canonical = isLatest ? u.page : u.day
+const lds = [datasetLd(day, canonical), itemListLd(day, canonical), webPageLd(day, canonical, isLatest)]
+
+const machineEditions: { href: string; what: string }[] = [
+  { href: '/trending/latest.json', what: 'the newest day in full — every source, every signal, the converging topics and the summary' },
+  { href: `/trending/${day.date}.json`, what: 'any committed day by its date, in the same shape, never edited after the morning it was written' },
+  { href: '/trending/index.json', what: 'the archive register — every committed day with its page, its JSON and what converged on it' },
+  { href: '/trending/feed.xml', what: 'RSS, one item per day, with the converging topics as its text' },
+  { href: '/trending/latest.md', what: 'the same day as Markdown, for readers that parse text better than markup' },
+  { href: '/llms.txt', what: 'where this sits in the house, and what a retrieval agent may do with it' },
+]
+
+const convergenceProvenance =
+  'A topic is counted as converging when it surfaces on at least two of the independent sources read this morning. ' +
+  'Labels are matched by a disclosed token rule — case folded, diacritics stripped, hashtags split, stopwords dropped, ' +
+  'then exact token, token overlap above the committed threshold, or containment — never by a language model. ' +
+  'Score is the number of platforms carrying a topic, then rank within each of them; the label shown is the one from the highest-priority source.'
+---
+
+<main id="main" class="flex-1">
+  <div class="trending mx-auto max-w-5xl px-4 py-14">
+    <header class="mb-10">
+      <p class="font-mono text-xs uppercase tracking-[0.2em] text-fg-faint">Common Ground · Nightly Ledger</p>
+      <h1 class="mt-2 text-[clamp(30px,5vw,52px)] font-bold leading-none tracking-tight">
+        {isLatest ? 'Trending today' : `Trending on ${fmtDateLong(day.date)}`}
+      </h1>
+      <p class="mt-4 font-mono text-xs text-fg-faint">
+        <time datetime={day.date}>{fmtDateWeekday(day.date)}</time>
+        {' · '}rebuilt {fmtTimeUtc(day.generated_at)} UTC
+        {' · '}<span class="tabular-nums">{day.summary.sources_ok}</span> of <span class="tabular-nums">{day.summary.sources_total}</span> sources answered
+      </p>
+      <p class="mt-5 max-w-2xl leading-relaxed text-fg-muted">
+        Every morning a machine reads what the open web says it is looking at — search trends, the most-read
+        encyclopedia articles, the link aggregators, the fediverse, the day&rsquo;s headlines and the newest
+        repositories — and keeps what several of them say at once. Each source keeps its own label and its own
+        count; the crossing is done by a token rule that is written down, not by a model that guesses.
+      </p>
+    </header>
+
+    <section class="mb-12">
+      <h2 class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">Converging now</h2>
+      {rows.length === 0 ? (
+        <p class="mt-3 max-w-2xl leading-relaxed text-fg-muted">
+          No topic surfaced on two or more independent platforms this morning. The per-source lists below stand on
+          their own — an empty crossing is a reading, not a failure.
+        </p>
+      ) : (
+        <div class="mt-3 text-sm">
+          <TableFallback
+            summary="The converging topics, as a table"
+            open={true}
+            columns={[
+              { key: 'topic', label: 'Topic' },
+              { key: 'platforms', label: 'Platforms' },
+              { key: 'signals', label: 'What each source recorded' },
+              { key: 'first_seen', label: 'First seen', nowrap: true },
+              { key: 'days_hot', label: 'Days hot', align: 'right' },
+            ]}
+            rows={rows.map((r) => ({
+              topic: r.label,
+              platforms: r.platformsText,
+              signals: r.signalsText,
+              first_seen: r.firstSeen,
+              days_hot: r.daysHot,
+            }))}
+            caption="Topics carried by two or more independent sources on this day, with the signal each source recorded"
+            provenance={convergenceProvenance}
+          />
+        </div>
+      )}
+    </section>
+
+    <section class="mb-12 border-t border-line pt-6">
+      <h2 class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">By source</h2>
+      <p class="mt-3 max-w-2xl text-sm leading-relaxed text-fg-muted">
+        What each source said on its own, before any crossing. A source that did not answer is recorded as
+        unavailable with the reason — never quietly dropped, and never filled in from a neighbour.
+      </p>
+      <div class="mt-5 grid items-start gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {columns.map((col) => (
+          <section class="flex flex-col rounded-[16px] border border-line bg-panel p-4">
+            <h3 class="font-semibold">
+              <a href={col.url} target="_blank" rel="noopener nofollow" class="underline decoration-line underline-offset-2 transition-colors hover:text-fg">
+                {platformLabel(col.id)}
+              </a>
+            </h3>
+            <p class="mt-1 font-mono text-[10px] text-fg-faint">
+              {col.status === 'ok' ? (
+                <span><span class="tabular-nums">{col.count}</span> signals{col.asOf ? ` · as of ${col.asOf}` : ''}</span>
+              ) : (
+                <span>{col.status}</span>
+              )}
+            </p>
+            {col.status !== 'ok' && col.note && (
+              <p class="mt-1 font-mono text-[10px] text-fg-muted">{col.note}</p>
+            )}
+            {col.signals.length === 0 ? (
+              <p class="mt-3 text-sm text-fg-faint">nothing recorded</p>
+            ) : (
+              <ol class="mt-3 space-y-1.5 text-sm">
+                {col.signals.map((s) => (
+                  <li class="flex items-baseline justify-between gap-x-3">
+                    <span class="min-w-0">
+                      {s.url ? (
+                        <a href={s.url} target="_blank" rel="noopener nofollow" class="underline decoration-line underline-offset-2 transition-colors hover:text-fg">{s.label}</a>
+                      ) : (
+                        <span>{s.label}</span>
+                      )}
+                      {s.geo && <span class="ml-1 font-mono text-[10px] text-fg-faint">{s.geo}</span>}
+                    </span>
+                    <span class="shrink-0 whitespace-nowrap font-mono text-[10px] tabular-nums text-fg-faint">{s.magnitudeText}</span>
+                  </li>
+                ))}
+              </ol>
+            )}
+            <p class="mt-3 border-t border-line pt-2 font-mono text-[10px] leading-relaxed text-fg-faint">{col.name}</p>
+          </section>
+        ))}
+      </div>
+    </section>
+
+    <TrendingAudienceFigure audience={audience} yesterday={yesterday} />
+
+    <section class="mb-12 border-t border-line pt-6">
+      <h2 class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">For machines</h2>
+      <p class="mt-3 max-w-2xl text-sm leading-relaxed text-fg-muted">
+        The same day, in the forms a machine reader can use. All of them are static files, built from the archive
+        with the page, so a reader and a crawler never see two different states.
+      </p>
+      <dl class="mt-4 space-y-3 text-sm">
+        {machineEditions.map((e) => (
+          <div class="sm:flex sm:items-baseline sm:gap-4">
+            <dt class="font-mono text-xs sm:w-56 sm:shrink-0">
+              <a href={e.href} class="underline decoration-line underline-offset-2 transition-colors hover:text-fg">{e.href}</a>
+            </dt>
+            <dd class="text-fg-muted">{e.what}</dd>
+          </div>
+        ))}
+      </dl>
+      <ul class="mt-5 space-y-1 font-mono text-[11px] leading-relaxed text-fg-faint">
+        <li>Data: CC0 1.0</li>
+        <li>Cadence: rebuilt daily around 06:40 UTC</li>
+        <li>Cite: Frank Bültge, Common Ground — trending ledger, frankbueltge.de/trending/{day.date}</li>
+      </ul>
+    </section>
+
+    <section class="mb-12 border-t border-line pt-6">
+      <h2 class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">Method</h2>
+      <p class="mt-3 max-w-2xl leading-relaxed text-fg-muted">
+        Every morning the pipeline reads <span class="tabular-nums">{day.sources.length}</span> open sources and
+        records what each one declares as trending, with that source&rsquo;s own label, its own rank and its own count.
+        Labels are reduced to tokens — case folded, diacritics stripped, hashtags split, stopwords dropped — and
+        matched across sources by an exact token, by overlap above a committed threshold, or by one label being
+        contained in another. A topic scores by the number of independent platforms carrying it and then by its rank
+        within each of them, and it is shown under the label of the highest-priority source that carries it. Every day
+        is committed as JSON and never edited afterwards, so first-seen and days-hot are read out of the archive
+        rather than out of a memory.
+      </p>
+      <p class="mt-3">
+        <a href="/werke/trending" class="font-mono text-xs text-fg-faint transition-colors hover:text-fg">Method sheet →</a>
+      </p>
+      <p class="au-note">
+        No language model writes anything on this page: every label is a source&rsquo;s own label, every count a
+        source&rsquo;s own count; the cross-check is a token-matching rule disclosed on the method sheet.
+      </p>
+    </section>
+
+    <nav class="mt-10 flex flex-wrap items-center gap-x-6 gap-y-2 border-t border-line pt-6 font-mono text-xs text-fg-muted">
+      {older && <a href={`/trending/${older.date}/`} class="transition-colors hover:text-fg">← {fmtDateLong(older.date)}</a>}
+      {newer && <a href={`/trending/${newer.date}/`} class="transition-colors hover:text-fg">{fmtDateLong(newer.date)} →</a>}
+      {!isLatest && days[0] && <a href="/trending/" class="transition-colors hover:text-fg">Today</a>}
+    </nav>
+
+    <section class="mt-8">
+      <h2 class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">The archive</h2>
+      <p class="mt-2 font-mono text-[11px] text-fg-faint">
+        Every committed day, newest first — <span class="tabular-nums">{days.length}</span> so far.
+      </p>
+      <ul class="mt-3 flex flex-wrap gap-x-4 gap-y-1 font-mono text-xs">
+        {days.map((d) => (
+          <li>
+            {d.date === day.date ? (
+              <span class="text-fg-faint">{d.date}</span>
+            ) : (
+              <a href={`/trending/${d.date}/`} class="text-fg-muted underline decoration-line underline-offset-2 transition-colors hover:text-fg">{d.date}</a>
+            )}
+          </li>
+        ))}
+      </ul>
+    </section>
+  </div>
+</main>
+
+{lds.map((ld) => <script type="application/ld+json" set:html={JSON.stringify(ld)} />)}
+
+<style>
+  /* The disclosure paragraph wears the house's authorship-note form (see
+     src/components/engines/AuthorshipNote.astro); that component's styles are scoped to it, so
+     the rules are restated here rather than borrowed. */
+  .au-note {
+    margin-top: 1.4rem;
+    max-width: 62ch;
+    padding-left: 0.85rem;
+    border-left: 3px solid var(--color-line);
+    font-size: 0.92rem;
+    line-height: 1.6;
+    color: var(--color-fg-muted);
+    text-wrap: pretty;
+  }
+
+  /* The shared table primitive ships structure only (ADR 0010) — this surface says how its own
+     tables read. Scoped to this page, so no other surface inherits it. */
+  .trending :global(.dv-table-fallback) {
+    margin: 0;
+  }
+  .trending :global(.dv-table-fallback > summary) {
+    cursor: pointer;
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-fg-faint);
+  }
+  .trending :global(.dv-table-fallback > summary:hover) {
+    color: var(--color-fg);
+  }
+  .trending :global(.dv-table) {
+    margin-top: 0.75rem;
+    font-size: 0.8125rem;
+  }
+  .trending :global(.dv-table th) {
+    padding: 0.35rem 0.75rem 0.35rem 0;
+    border-bottom: 1px solid var(--color-line);
+    text-align: left;
+    font-weight: 600;
+    white-space: nowrap;
+    color: var(--color-fg-muted);
+  }
+  .trending :global(.dv-table td) {
+    padding: 0.35rem 0.75rem 0.35rem 0;
+    border-bottom: 1px solid var(--color-line);
+    vertical-align: top;
+  }
+  .trending :global(.dv-table [data-align='right']) {
+    padding-right: 0;
+    font-variant-numeric: tabular-nums;
+  }
+  .trending :global(.dv-prov) {
+    margin-top: 0.6rem;
+    max-width: 68ch;
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 11px;
+    line-height: 1.6;
+    color: var(--color-fg-faint);
+  }
+</style>

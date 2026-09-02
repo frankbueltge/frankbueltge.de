@@ -76,6 +76,27 @@ export const EXPERIMENT_LINES: readonly ExperimentLine[] = [
  *  Gleichstand; die öffentliche Sortierung ist chronologisch über `WERKE_CHRONO`. */
 export const WERKE: Werk[] = [
   {
+    id: 'trending',
+    line: 'ledger',
+    title: 'Common Ground',
+    subtitle: {
+      de: 'What the web is searching, reading and posting about — cross-checked, every morning',
+      en: 'What the web is searching, reading and posting about — cross-checked, every morning',
+    },
+    status: 'live',
+    since: '2026-09-02',
+    live: true,
+    href: '/trending',
+    description: {
+      // One sentence-block in both keys, no digit in it (the currency doctrine): the number of
+      // sources, of topics and of readers all move nightly and live in the day file, never here.
+      de: "From the nightly-ledger line. Every morning a machine reads what the web is searching, reading and posting about — Google's daily search trends, Wikipedia's most-read pages, Hacker News, Bluesky, Mastodon and the day's headlines — and keeps what converges: the topics surfacing on several independent platforms at once, matched by a disclosed rule rather than a model, archived as open data and served in the forms a machine reader can use. It counts its own readers too — which search engines and which AI agents fetched it, published daily, never a browser's identity.",
+      en: "From the nightly-ledger line. Every morning a machine reads what the web is searching, reading and posting about — Google's daily search trends, Wikipedia's most-read pages, Hacker News, Bluesky, Mastodon and the day's headlines — and keeps what converges: the topics surfacing on several independent platforms at once, matched by a disclosed rule rather than a model, archived as open data and served in the forms a machine reader can use. It counts its own readers too — which search engines and which AI agents fetched it, published daily, never a browser's identity.",
+    },
+    methodHref: '/werke/trending',
+    tier: 'experiment',
+  },
+  {
     id: 'attention',
     title: 'Machine Attention',
     subtitle: {
