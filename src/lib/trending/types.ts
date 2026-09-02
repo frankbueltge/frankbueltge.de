@@ -87,6 +87,21 @@ export interface TrendingSummary {
   top_labels: string[]
 }
 
+export interface SelfCheckItem {
+  id: string
+  ok: boolean
+  note: string
+}
+
+/** The run's grade of its own record (rubric on the method sheet). */
+export interface SelfCheck {
+  rubric_version: string
+  ok: boolean
+  passed: number
+  total: number
+  checks: SelfCheckItem[]
+}
+
 export interface TrendingDay {
   $contract: 'trending-day/1'
   date: string
@@ -97,6 +112,7 @@ export interface TrendingDay {
   signals: Record<string, TrendingSignal[]>
   topics: TrendingTopic[]
   summary: TrendingSummary
+  quality?: SelfCheck
 }
 
 export interface AudienceBot {

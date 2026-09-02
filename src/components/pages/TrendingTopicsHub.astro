@@ -11,6 +11,7 @@
  *  thresholds in the pipeline.
  */
 import TableFallback from '@/components/dataviz/TableFallback.astro'
+import TrendingSelfCheck from '@/components/pages/TrendingSelfCheck.astro'
 import { fmtDateLong, fmtDateWeekday, fmtTimeUtc } from '@/lib/trending/format'
 import { getTermsDays } from '@/lib/trending/terms-data'
 import { definedTermSetLd, termsDatasetLd, termsWebPageLd } from '@/lib/trending/terms-jsonld'
@@ -85,6 +86,7 @@ const tableProvenance =
         {' · '}<span class="tabular-nums">{answered}</span> of <span class="tabular-nums">{file.sources.length}</span> platforms answered
         {' · '}<span class="tabular-nums">{file.summary.terms_total}</span> terms watched
       </p>
+      <TrendingSelfCheck quality={file.quality} subject="the term tracker's record" />
       <p class="mt-5 max-w-2xl leading-relaxed text-fg-muted">
         Some things arrive as a spike: a name, a disaster, a launch, gone by the weekend. Others build for weeks in
         forums, repositories, preprints and trade press before any search trend registers them. The day ledger

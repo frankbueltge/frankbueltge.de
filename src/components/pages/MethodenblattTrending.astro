@@ -168,6 +168,24 @@ const limits = [
 
     <a href="/trending" class="text-sm text-fg-muted transition-colors hover:text-fg">&rarr; To the experiment</a>
   </div>
+    <section class="mb-8" id="self-check">
+      <h2 class="mb-2 font-semibold">8. Self-check — the run grades its own record</h2>
+      <p class="leading-relaxed text-fg-muted">
+        Before either file is written, the run grades it against a rubric and writes the grade into the file; the day
+        page and the topics hub show it beside the date. A source that did not answer is asked once more after a pause —
+        the one failure a run can mend on the spot. Everything else is recorded as it is: a failed check does not stop
+        the file, it is spelled out on the page. The thresholds sit in the pipeline's rules file under the
+        <span class="font-mono">quality_</span> keys, and the rubric version travels with every grade.
+      </p>
+      <ul class="mt-3 list-disc space-y-1 pl-5 leading-relaxed text-fg-muted">
+        <li>Day: enough sources answered; enough signals were read; no single cluster swallows the morning (a shared
+          everyday word would do that); labels contain letters and stay short; topic ids are unique; no Wikipedia
+          namespace or main page slipped through the filter; the file stays under its size ceiling.</li>
+        <li>Arcs: enough platforms answered; every term's one-, seven- and thirty-day totals nest; every status is one
+          of the five the method names; every receipt carries a title, a link and a date; the candidate list is bounded;
+          the file stays under its size ceiling.</li>
+      </ul>
+    </section>
 </main>
 
 <style>

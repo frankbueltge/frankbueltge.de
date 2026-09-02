@@ -195,3 +195,17 @@ the nearest free things are Google Trends itself and `pytrends`, a client for it
 for not resolving:** TrendHunter (`https://www.trendhunter.com/`, HTTP 403 bot wall to both a
 plain request and a fetch) — an editorial trend-report business in any case, not a measurement.
 Every other neighbour above was fetched on 2026-09-02 and returned HTTP 200.
+
+## 10. The self-check — the first loop around the pipeline (Frank's go, 2026-09-02, wording private)
+
+The run now grades its own record before writing it: a rubric in `pipelines/trending/src/trending/quality.py`
+(day: sources answering, signals present, no giant cluster, labels sane, topic ids unique, Wikipedia
+filter held, size within bounds; arcs: platforms answering, windows nesting, statuses named, receipts
+complete, candidates bounded, size within bounds), thresholds under the `quality_*` keys of
+`rules.json`, the verdict written into the record as `quality` with the rubric version. One repair is
+allowed on the spot — a source that did not answer is asked once more after a pause. Everything else is
+recorded as it is: a failed check does not stop the file, the workflow log carries a warning, and the
+day page and the topics hub show the grade beside the date, spelling out every failed check. This is
+the first of the three loop stages named in the decision of 2026-09-02: observe the output, judge it,
+mend the one thing that can be mended, publish the verdict. The second stage — adapting the committed
+knobs to the audience series — waits for an audience series to exist.

@@ -4,7 +4,9 @@ second and can never take the day down with them. Committed files are never rewr
 from __future__ import annotations
 
 import argparse
+from dataclasses import asdict
 import sys
+import time
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
@@ -18,6 +20,7 @@ from trending.converge import cluster
 from trending.data import load_json
 from trending.fetch import USER_AGENT
 from trending.model import CONTRACT_AUDIENCE, DayRecord, Signal, SourceReport, day_to_dict, to_json
+from trending.quality import assess_day, one_line
 from trending.sources import SOURCES, Context, SourceSpec
 from trending.terms import run_terms
 
@@ -41,22 +44,41 @@ def _report(spec: SourceSpec, signals: list[Signal], as_of: str | None, notes: l
                         count=len(signals))
 
 
+def _fetch_one(ctx: Context, spec: SourceSpec) -> tuple[SourceReport, list[Signal]]:
+    retrieved_at = _now_iso()
+    try:
+        result = spec.fetch(ctx)
+        return _report(spec, result.signals, result.as_of, result.notes, retrieved_at), list(result.signals)
+    except Exception as exc:  # noqa: BLE001 — deliberate isolation: a note, not a crash
+        return _report(spec, [], None, [f"{type(exc).__name__}: {exc}"[:200]], retrieved_at), []
+
+
 def build_day(ctx: Context, sources: tuple[SourceSpec, ...] | None = None, *,
               log=print) -> DayRecord:
     # Resolved at call time, not at definition time, so a test can swap the module's SOURCES.
     sources = SOURCES if sources is None else sources
+    fetched: dict[str, tuple[SourceReport, list[Signal]]] = {}
+    for spec in sources:
+        fetched[spec.id] = _fetch_one(ctx, spec)
+
+    # The repair loop: a source that did not answer is asked once more after a pause. That is
+    # the one failure a run can mend on the spot; everything else is recorded as it is.
+    failed = [spec for spec in sources if fetched[spec.id][0].status == "unavailable"]
+    if failed and bool(ctx.rules.get("quality_retry", True)):
+        time.sleep(float(ctx.rules.get("quality_retry_delay_s", 20)))
+        for spec in failed:
+            report, got = _fetch_one(ctx, spec)
+            if report.status != "unavailable":
+                first_note = fetched[spec.id][0].note
+                report = SourceReport(**{**asdict(report),
+                                         "note": f"recovered on retry; first attempt: {first_note}"[:200]})
+                fetched[spec.id] = (report, got)
+
     reports: list[SourceReport] = []
     signals: dict[str, tuple[Signal, ...]] = {}
     all_signals: list[Signal] = []
     for spec in sources:
-        retrieved_at = _now_iso()
-        try:
-            result = spec.fetch(ctx)
-            report = _report(spec, result.signals, result.as_of, result.notes, retrieved_at)
-            got = result.signals
-        except Exception as exc:  # noqa: BLE001 — deliberate isolation: a note, not a crash
-            report = _report(spec, [], None, [f"{type(exc).__name__}: {exc}"[:200]], retrieved_at)
-            got = []
+        report, got = fetched[spec.id]
         reports.append(report)
         signals[spec.id] = tuple(got)
         all_signals.extend(got)
@@ -118,7 +140,12 @@ def main(argv: list[str] | None = None) -> int:
             archive = load_days(args.repo_root, today, int(rules.get("memory_days", 30)))
             ctx = Context(client=client, today=today, rules=rules, archive=archive, stoplist=stoplist)
             rec = build_day(ctx)
-            payload = to_json(day_to_dict(rec))
+            record = day_to_dict(rec)
+            record["quality"] = assess_day(record, rules)
+            print(f"trending: {one_line(record['quality'])}")
+            if not record["quality"]["ok"]:
+                print(f"::warning::trending day {today}: {one_line(record['quality'])}")
+            payload = to_json(record)
             out_dir.mkdir(parents=True, exist_ok=True)
             # Only the dated file is committed: the site serves /trending/latest.json from the
             # newest day itself, and a second full copy would double what git has to keep.

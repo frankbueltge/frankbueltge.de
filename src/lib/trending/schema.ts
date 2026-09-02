@@ -61,6 +61,16 @@ const topic = z.object({
     .default(null),
 })
 
+/** The run's own grade of its record — the first loop around the pipeline. Optional because
+ *  the first committed days predate the rubric; a missing grade is shown as none, never as ok. */
+export const selfCheckSchema = z.object({
+  rubric_version: z.string(),
+  ok: z.boolean(),
+  passed: z.number(),
+  total: z.number(),
+  checks: z.array(z.object({ id: z.string(), ok: z.boolean(), note: z.string() })),
+})
+
 export const trendingDaySchema = z.object({
   $contract: z.literal('trending-day/1'),
   date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
@@ -77,6 +87,7 @@ export const trendingDaySchema = z.object({
     sources_total: z.number(),
     top_labels: z.array(z.string()),
   }),
+  quality: selfCheckSchema.optional(),
 })
 
 const audienceStatus = z.enum(['ok', 'unavailable'])

@@ -130,3 +130,13 @@ python -m trending.run --repo-root . --skip-terms     # the day file without the
 
 `GITHUB_TOKEN` (optional) lifts GitHub's search limit from ten to thirty requests a minute;
 the nightly workflow passes the built-in token.
+
+## The self-check (`quality` in both records)
+
+Before a record is written the run grades it against a rubric (`src/trending/quality.py`) and
+writes the grade into the file under `quality` — rubric version, pass count and one line per
+check. A source that did not answer is asked once more after a pause (`quality_retry`,
+`quality_retry_delay_s`); nothing else is repaired. A failed check never stops the file: it
+is written, the workflow log carries a warning, and the page spells the failure out. The
+thresholds are the `quality_*` keys in `rules.json`; the checks are listed on the method sheet
+(`/werke/trending`, section 8).
