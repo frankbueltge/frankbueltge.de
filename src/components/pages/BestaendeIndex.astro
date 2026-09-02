@@ -4,10 +4,6 @@
 // Material, der Ökologie angeboten" um (docs/design/site-restructure-concept.md §2). Jede
 // bestehende Route bleibt unverändert erreichbar; hier ändert sich nur die Rahmung, keine
 // Experiment-Seite wird verändert oder gelöscht.
-// Ökologie-Neustrukturierung, Phase C2 (work order phase-c2-site-entrance-design.md §3):
-// "gleiche Familie, eine Stufe ruhiger" als der Site-Eingang (/) — derselbe Typo-Kanon
-// (Kicker/Mono-Notate/Hairlines/Registertabellen aus docs/design/variants-2026-07-15/
-// a-observatorium.html), keine eigene Zeichengrammatik, kein Dekor.
 //
 // 2026-08-22 — the shelf gets categories, and two neighbours (Frank):
 //   · the sixteen entries are grouped by RESEARCH LINE (src/data/werke.ts: EXPERIMENT_LINES,
@@ -22,29 +18,38 @@
 //     on this shelf, which a practice does not have.
 //
 // 2026-08-22, second pass — a page a visitor can survey (Frank: a menu or a filter, and less
-// endless scrolling):
-//   · every row COLLAPSES to one line — title, its own subtitle, and its stamps. The subtitle
-//     is already each piece's own one-line teaser, so nothing had to be written to make the
-//     compact state readable. The full description opens in place (native <details>, so it
-//     works without JavaScript and stays in the page for search engines).
-//   · a STICKY FILTER BAR over three axes — line, kind, data — in the same data-attribute
-//     idiom as /papers and /atlas (one filter pattern in this repo, not three). Without
-//     JavaScript the complete list simply stands, which is why the bar is a set of buttons and
-//     not a form: no empty screen as the failure state.
-//   · the practices beside the lab are a value of the SAME line axis, not a section outside it.
-//     Filtering to one line therefore hides them too, instead of leaving a headless section
-//     behind — and the shelf's counts stay one arithmetic (src/lib/experiments/shelf.ts).
+// endless scrolling): every row collapses to one line, and a sticky filter bar over three axes —
+// line, kind, data — in the /papers idiom. Without JavaScript the complete list simply stands.
+//
+// 2026-09-02 — THE SHELF BECOMES A GALLERY (visual layer, Phase 3c; Frank's decision, wording
+// private). What was a list of lines is a grid of cards, and every card carries a MINIATURE OF
+// ITS OWN INSTRUMENT: the same committed file the experiment's page draws from, through the same
+// pure builder, in a 240×72 box (src/lib/experiments/thumbnails.ts). Three things did NOT change
+// and were kept deliberately:
+//   · the three axes, their counts, their words and their failure state (with no JavaScript the
+//     whole shelf stands and the buttons are inert) — the filter simply moved INTO the island,
+//     because the count line, the section counts, the empty state and the animated reflow are
+//     one piece of state, and a script outside would fight React for the same `hidden`;
+//   · every card's link, its stamps and its full description in a native <details>;
+//   · the sections, their kickers and their blurbs, read from the register as before.
+// What the practices beside the lab get is NOT a decorative stand-in but the shape of their own
+// record: one tick per dated entry their mirror holds.
 import { getRelativeLocaleUrl } from 'astro:i18n'
 import type { Locale } from '@/lib/site'
 import { WERKE_BY_LINE, werkTitle } from '@/data/werke'
 import { BESIDE_GROUP, KIND_LABEL, kindOf, shelfFacets, type ShelfCard, type ShelfKind } from '@/lib/experiments/shelf'
+import { datedEntries, recordThumbnail, THUMBNAILS, THUMB_BOX } from '@/lib/experiments/thumbnails'
+import { GALLERY } from '@/config/gallery-wording'
 import { NAMING } from '@/config/naming'
 import { readN1Facts } from '@/lib/ecology/n1-line'
 import { readArchFacts } from '@/lib/arch/facts'
 import { buttonVariants } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
 import { cn } from '@/lib/ui/cn'
+import SheetHead from '@/components/experiments/SheetHead.astro'
+import ExperimentGallery, { type GalleryCard, type GallerySection } from '@/components/experiments/ExperimentGallery'
+import Readout from '@/components/dataviz/Readout.astro'
 import '@/styles/experiment-sheet.css'
+import '@/styles/experiment-gallery.css'
 
 const locale = (Astro.currentLocale ?? 'en') as Locale
 // Back to "Experiments" (Frank, 2026-07-31): the 2026-07 redesignation to "Holdings" traded a
@@ -58,31 +63,10 @@ const copy = {
   de: {
     title: 'Experimente',
     sub: 'Die Experimente des Labors — laufende Instrumente, jedes mit offenen Quellen und offengelegtem Verfahren. Nach Forschungslinie geordnet, innerhalb jeder das Neueste zuerst.',
-    live: 'live data',
-    field: 'Das Feld: jedes Experiment gegen die Projekte, die es schon gibt →',
-    shown: 'sichtbar',
-    reset: 'zurücksetzen',
-    all: 'alle',
-    open: 'zum Experiment →',
-    method: 'Methodenblatt →',
-    opened: 'eröffnet ',
-    empty: 'Kein Eintrag passt auf diese Auswahl.',
   },
   en: {
     title: 'Experiments',
     sub: "The lab's experiments — ongoing instruments, each with open sources and a disclosed method. Grouped by research line, newest first inside each.",
-    live: 'live data',
-    // 2026-08-09: the neighbour audit drawn as one figure. It sits at the top of the shelf on
-    // purpose — a visitor should be able to see what already exists near this work before
-    // reading the work's own account of itself.
-    field: 'The field: every experiment against the projects that already exist →',
-    shown: 'shown',
-    reset: 'reset',
-    all: 'all',
-    open: 'open the experiment →',
-    method: 'method sheet →',
-    opened: 'opened ',
-    empty: 'No entry matches this selection.',
   },
 }[locale]
 
@@ -103,38 +87,31 @@ const archCard = NAMING.overview.items.find((i) => i.id === 'arch')
 if (!archCard?.href || !archCard.line) throw new Error('/experiments: NAMING.overview.items has no "arch" card to read')
 const arch = readArchFacts()
 
-interface Row {
-  id: string
-  title: string
-  /** the piece's own one-liner; the compact row leans on it, so it is never invented here */
-  subtitle?: string
-  description: string
-  href: string
-  methodHref?: string | null
-  kind: ShelfKind
-  live: boolean
-  /** short mono note on the right of the collapsed row */
-  stamp?: string
-  /** longer mono note, shown only when the row is open */
-  meta?: string
-}
+const url = (href: string) => getRelativeLocaleUrl(locale, href)
 
-const sections: { id: string; label: string; blurb: string; rows: Row[] }[] = [
+const sections: GallerySection[] = [
   ...WERKE_BY_LINE.map((group) => ({
     id: group.line.id,
     label: group.line.label,
     blurb: group.line.blurb[locale],
-    rows: group.werke.map((werk) => ({
-      id: werk.id,
-      title: werkTitle(werk, locale),
-      subtitle: werk.subtitle[locale],
-      description: werk.description[locale],
-      href: werk.href,
-      methodHref: werk.methodHref,
-      kind: kindOf(werk),
-      live: Boolean(werk.live),
-      stamp: werk.since,
-    })),
+    cards: group.werke.map((werk): GalleryCard => {
+      const kind = kindOf(werk)
+      return {
+        id: werk.id,
+        group: group.line.id,
+        kind,
+        // the default kind stays unsaid: a badge reading "experiment" on a shelf of experiments
+        kindLabel: kind === 'experiment' ? null : KIND_LABEL[kind],
+        live: Boolean(werk.live),
+        title: werkTitle(werk, locale),
+        subtitle: werk.subtitle[locale],
+        description: werk.description[locale],
+        href: url(werk.href),
+        methodHref: werk.methodHref ? url(werk.methodHref) : null,
+        stamp: werk.since,
+        thumb: THUMBNAILS.get(werk.id) ?? null,
+      }
+    }),
   })),
   {
     id: BESIDE_GROUP,
@@ -144,269 +121,115 @@ const sections: { id: string; label: string; blurb: string; rows: Row[] }[] = [
     // starts ageing the day it ships. That belongs in docs/decision-log.md, which has it.
     blurb:
       'Machine-run practices with their own record, their own law and their own surface. None of them belongs to the research ecology — n-1’s founding document says so in as many words — and none is a piece of the lab. They are listed here because this is where a visitor looks for them, not because the lab holds them.',
-    rows: [
+    cards: [
       {
         id: 'nightly-line',
+        group: BESIDE_GROUP,
+        kind: 'practice',
+        kindLabel: KIND_LABEL.practice,
+        live: false,
         title: nightly.title ?? 'Error as Method',
         description: nightly.line ?? '',
-        href: nightly.href,
-        kind: 'practice',
-        live: false,
+        href: url(nightly.href),
         meta: nightly.meta,
+        thumb: recordThumbnail(
+          'nightly-line',
+          datedEntries('src/data/nightly/journal'),
+          GALLERY.beside.nightly,
+          'src/data/nightly/journal',
+        ),
       },
       {
         id: 'n-1',
+        group: BESIDE_GROUP,
+        kind: 'practice',
+        kindLabel: KIND_LABEL.practice,
+        live: false,
         title: n1.title,
         description: `A practice founded on the Atelier’s own working paper and given no protocol document by design; it holds itself to that paper’s trial discipline and rewrites it where it proves too small. Its repository is mirrored whole and served as the practice’s own surface — the house keeps no window on it.${
           n1.name ? ` It has since named itself ${n1.name} (2026-08-21); the working title stands until the founder acts on the renaming request.` : ''
         }`,
-        href: '/n-1',
-        kind: 'practice',
-        live: false,
+        href: url('/n-1'),
         meta: `founded ${n1.founded} · ${n1.law} instead of a protocol`,
+        thumb: recordThumbnail('n-1', datedEntries('public/n-1/nights'), GALLERY.beside.n1, 'public/n-1/nights'),
       },
       {
         id: 'arch',
+        group: BESIDE_GROUP,
+        kind: 'practice',
+        kindLabel: KIND_LABEL.practice,
+        live: false,
         title: archCard.title ?? 'Arch',
         description: archCard.line,
-        href: archCard.href,
-        kind: 'practice',
-        live: false,
+        href: url(archCard.href),
         meta: arch.window
           ? `founded ${arch.founded} · window ${arch.window.opens} → ${arch.window.closes} · balance by ${arch.window.balanceBy}`
           : `founded ${arch.founded} · no window open`,
+        thumb: recordThumbnail(
+          'arch',
+          datedEntries('public/arch/ledger'),
+          GALLERY.beside.arch,
+          'public/arch/ledger',
+        ),
       },
     ],
   },
 ]
 
+// The facet counts stay ONE arithmetic with the cards on the page: they are derived from the
+// very array the gallery renders, never counted a second time by hand (src/lib/experiments/
+// shelf.ts states why).
 const cards: ShelfCard[] = sections.flatMap((s) =>
-  s.rows.map((r) => ({ id: r.id, group: s.id, kind: r.kind, live: r.live })),
+  s.cards.map((c) => ({ id: c.id, group: c.group, kind: c.kind as ShelfKind, live: c.live })),
 )
 const facets = shelfFacets(
   cards,
   new Map(sections.map((s) => [s.id, s.label])),
   sections.map((s) => s.id),
 )
-const total = cards.length
 
-/* the frame's recipe, named once (re-skin 2c, 2026-09-02) */
-const kicker = 'kicker'
+const wording = {
+  all: GALLERY.filter.all,
+  reset: GALLERY.filter.reset,
+  shown: GALLERY.filter.shown,
+  empty: GALLERY.filter.empty,
+  live: GALLERY.stamp.live,
+  opened: GALLERY.stamp.opened,
+  open: GALLERY.link.open,
+  method: GALLERY.link.method,
+  from: GALLERY.thumb.from,
+}
+
+const READOUT_ID = 'gallery-readout'
 const quietLink = cn(
   buttonVariants({ variant: 'ghost', size: 'sm' }),
   'h-7 px-2 font-mono text-mono-sm font-normal text-fg-muted hover:text-fg',
 )
-/* a filter chip: the outline recipe, pressed = the frame's ink on the second panel tone */
-const chip = cn(
-  buttonVariants({ variant: 'outline', size: 'sm' }),
-  'h-7 px-2 font-mono text-mono-sm font-normal text-fg-faint aria-pressed:border-fg-faint aria-pressed:bg-panel-2 aria-pressed:text-fg',
-)
-/* a row is a card that leads somewhere: the frame's resting depth, and the lift on hover or focus */
-const card = 'sheet-row lift rounded-md border border-line bg-panel panel-raised'
-const badge = 'border-line font-mono text-[10px] font-normal uppercase tracking-[0.18em] text-fg-faint'
 ---
 
 <main id="main" class="mx-auto w-full max-w-4xl flex-1 px-6 py-12 sm:py-16">
-  <h1 class="text-h1 font-semibold text-fg">{copy.title}</h1>
-  <p class="mt-3 max-w-2xl text-body text-fg-muted">{copy.sub}</p>
-  <p class="mt-4 -ml-2">
-    <a
-      href={getRelativeLocaleUrl(locale, '/experiments/neighbors')}
-      class={cn(quietLink, 'h-auto whitespace-normal py-1 text-left uppercase tracking-[0.14em] text-fg-faint')}
-    >
-      {copy.field}
-    </a>
-  </p>
+  <SheetHead title={copy.title} sub={copy.sub} class="mb-8">
+    <p class="mt-4 -ml-2">
+      <a
+        href={url('/experiments/neighbors')}
+        class={cn(quietLink, 'h-auto whitespace-normal py-1 text-left uppercase tracking-[0.14em] text-fg-faint')}
+      >
+        {GALLERY.link.field}
+      </a>
+    </p>
+  </SheetHead>
 
-  <section data-shelf class="mt-8">
-    <!-- Filter. Client-side over data attributes, in the /papers idiom; with no JavaScript the
-         full list stands (never an empty screen as the failure state).
-         Sticky from sm upward only: at 390px the three axes wrap to six rows, and a sticky
-         block that tall eats a third of the viewport for the whole scroll — worse than the
-         scrolling it was meant to spare. On a phone it stays at the top of the shelf, where
-         you set it once; on wider screens it follows under the TopBar (h-12 there since the
-         re-skin of 2026-09-02 — this offset and that height move together). -->
-    <div
-      class="z-20 -mx-6 space-y-2 border-y border-line bg-bg/90 px-6 py-3 backdrop-blur-xl sm:sticky sm:top-12"
-    >
-      {facets.map((facet) => (
-        // role/aria-label so the axis label is announced with its buttons: the visible label is
-        // a span, and a screen reader would otherwise hear eight unrelated toggles in a row.
-        <div role="group" aria-label={facet.title} class="flex flex-wrap items-baseline gap-x-2 gap-y-1">
-          <span aria-hidden="true" class={cn(kicker, 'w-10 shrink-0')}>
-            {facet.title}
-          </span>
-          <button
-            type="button"
-            data-filter={facet.group}
-            data-value="all"
-            aria-pressed="true"
-            class={chip}
-          >{copy.all}</button>
-          {facet.options.map((option) => (
-            <button
-              type="button"
-              data-filter={facet.group}
-              data-value={option.value}
-              aria-pressed="false"
-              class={chip}
-            >{option.label} <span class="tabular-nums opacity-60">{option.n}</span></button>
-          ))}
-        </div>
-      ))}
-
-      <div class="flex items-center gap-3 pt-0.5">
-        <p class="font-mono text-[11px] text-fg-faint">
-          <span data-count class="tabular-nums">{total}</span> / <span class="tabular-nums">{total}</span> {copy.shown}
-        </p>
-        <button
-          type="button"
-          data-reset
-          class={cn(chip, 'hidden')}
-        >{copy.reset}</button>
-      </div>
-    </div>
-
-    {sections.map((section) => (
-      <section data-group={section.id} id={section.id} class="mt-10 scroll-mt-28">
-        <div class="flex items-baseline justify-between gap-4 border-b border-line/60 pb-2">
-          <h2 class={cn(kicker, 'text-fg')}>{section.label}</h2>
-          <span data-group-count class="font-mono text-[11px] tabular-nums tracking-[0.14em] text-fg-faint">
-            {section.rows.length}
-          </span>
-        </div>
-        <p class="mt-3 max-w-2xl text-sm leading-relaxed text-fg-muted">{section.blurb}</p>
-
-        <ul class="mt-4 space-y-2">
-          {section.rows.map((row) => (
-            <li data-card data-group={section.id} data-kind={row.kind} data-live={row.live ? 'live' : 'static'} class={card}>
-              <details class="group">
-                <summary
-                  class="flex cursor-pointer list-none items-baseline gap-3 px-4 py-3.5 [&::-webkit-details-marker]:hidden"
-                >
-                  <svg
-                    class="fold-chevron mt-[3px] shrink-0 text-fg-faint"
-                    width="10"
-                    height="10"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2.4"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    aria-hidden="true"><path d="M6 9l6 6 6-6" /></svg>
-                  <span class="min-w-0 flex-1">
-                    {/* The title is a link inside the summary: one click still goes to the
-                        work, exactly as on the flat list this page replaced, while a click
-                        anywhere else on the row opens the description in place. Two clicks to
-                        reach a piece would make a routing shelf worse, not tidier. */}
-                    <a
-                      href={getRelativeLocaleUrl(locale, row.href)}
-                      class="font-semibold text-fg underline decoration-transparent underline-offset-4 transition-colors hover:decoration-current"
-                    >{row.title}</a>
-                    {row.subtitle && <span class="text-fg-faint"> — {row.subtitle}</span>}
-                  </span>
-                  <span class="flex shrink-0 items-center gap-1.5">
-                    {/* the stamps as the frame's outline badges — live data, the kind, the date;
-                        no separators: a badge is its own boundary */}
-                    {row.live && (
-                      <Badge variant="outline" className={cn(badge, 'whitespace-nowrap')}>
-                        <span class="dot-live inline-block h-[5px] w-[5px] rounded-full" aria-hidden="true"></span>{copy.live}
-                      </Badge>
-                    )}
-                    {row.kind !== 'experiment' && (
-                      <Badge variant="outline" className={badge}>{KIND_LABEL[row.kind]}</Badge>
-                    )}
-                    {row.stamp && (
-                      <Badge variant="outline" className={cn(badge, 'hidden tabular-nums sm:inline-flex')}>
-                        <span class="sr-only">{copy.opened}</span>{row.stamp}
-                      </Badge>
-                    )}
-                  </span>
-                </summary>
-
-                <div class="px-4 pb-4 pl-[2.1rem]">
-                  <p class="max-w-2xl text-sm leading-relaxed text-fg-muted">{row.description}</p>
-                  {row.meta && <p class={cn(kicker, 'mt-2')}>{row.meta}</p>}
-                  <p class="mt-3 -ml-2 flex flex-wrap gap-x-1 gap-y-1">
-                    <a href={getRelativeLocaleUrl(locale, row.href)} class={quietLink}>{copy.open}</a>
-                    {row.methodHref && (
-                      <a href={getRelativeLocaleUrl(locale, row.methodHref)} class={quietLink}>{copy.method}</a>
-                    )}
-                  </p>
-                </div>
-              </details>
-            </li>
-          ))}
-        </ul>
-      </section>
-    ))}
-
-    <p data-empty hidden class="mt-10 font-mono text-xs text-fg-faint">{copy.empty}</p>
-  </section>
+  {/* The stage is the box the readout is clamped to (dataviz/readout.ts, house rule 1): the
+      gallery's own element, never the viewport and never a scroll container. */}
+  <div class="gal-stage">
+    <ExperimentGallery
+      client:visible
+      sections={sections}
+      facets={facets}
+      wording={wording}
+      box={{ width: THUMB_BOX.width, height: THUMB_BOX.height }}
+      readoutId={READOUT_ID}
+    />
+    <Readout id={READOUT_ID} maxWidth="34ch" />
+  </div>
 </main>
-
-<script>
-  // The /papers and /atlas filter pattern, third occurrence — one idiom in this repo, not
-  // three. All three axes are single-valued (a row has one line, one kind, one data state), so
-  // equality is enough; no multi-value splitting is needed here.
-  //
-  // What this adds over the /papers script: a section whose every row is filtered away is
-  // hidden with its heading and its blurb. A kicker over nothing states a line that has
-  // nothing in it — the same reason WERKE_BY_LINE drops empty lines at build time.
-  const root = document.querySelector<HTMLElement>('[data-shelf]')
-  if (root) {
-    const cards = Array.from(root.querySelectorAll<HTMLElement>('[data-card]'))
-    const groups = Array.from(root.querySelectorAll<HTMLElement>('section[data-group]'))
-    const countEl = root.querySelector<HTMLElement>('[data-count]')
-    const resetEl = root.querySelector<HTMLButtonElement>('[data-reset]')
-    const emptyEl = root.querySelector<HTMLElement>('[data-empty]')
-    const state: Record<string, string> = { group: 'all', kind: 'all', live: 'all' }
-
-    const apply = () => {
-      let shown = 0
-      for (const card of cards) {
-        const visible = Object.entries(state).every(
-          ([axis, value]) => value === 'all' || (card.dataset[axis] ?? '') === value,
-        )
-        card.hidden = !visible
-        if (visible) shown++
-      }
-
-      for (const group of groups) {
-        const rows = Array.from(group.querySelectorAll<HTMLElement>('[data-card]'))
-        const visible = rows.filter((r) => !r.hidden)
-        group.hidden = visible.length === 0
-        const groupCount = group.querySelector<HTMLElement>('[data-group-count]')
-        // The section count follows the filter: "9" over three shown rows would be a number
-        // the page contradicts two lines further down.
-        if (groupCount) groupCount.textContent = String(visible.length)
-      }
-
-      if (countEl) countEl.textContent = String(shown)
-      if (emptyEl) emptyEl.hidden = shown > 0
-      resetEl?.classList.toggle('hidden', !Object.values(state).some((v) => v !== 'all'))
-    }
-
-    resetEl?.addEventListener('click', () => {
-      for (const axis of Object.keys(state)) state[axis] = 'all'
-      root.querySelectorAll<HTMLButtonElement>('[data-filter]').forEach((b) => {
-        b.setAttribute('aria-pressed', String(b.dataset.value === 'all'))
-      })
-      apply()
-    })
-
-    root.querySelectorAll<HTMLButtonElement>('[data-filter]').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        const axis = btn.dataset.filter ?? ''
-        state[axis] = btn.dataset.value ?? 'all'
-        root
-          .querySelectorAll<HTMLButtonElement>(`[data-filter="${axis}"]`)
-          .forEach((b) => b.setAttribute('aria-pressed', String(b === btn)))
-        apply()
-      })
-    })
-
-    apply()
-  }
-</script>
