@@ -55,6 +55,56 @@ export const MIDDLE_V3 = {
       readingNote:
         'Ordinal, in bulletin order — no time axis is claimed. Derived at build time from the mirrored bulletins, the same files the quotes below come from; hover a mark for the item’s first words, click it to read the whole item.',
     },
+
+    /* ── The score as an island (visual layer, Phase 3d, 2026-09-02) ────────────────────
+       Everything below is what the drawing SAYS once it is a React island rather than an
+       SVG string: the figure's accessible name, the two notes on the ordinal ruler, the
+       word a quiet lane wears, the card an item opens, the zoom group, and the table floor.
+       No digit is typed into any of it — counts arrive as arguments, and the live zoom
+       factor is state the island prints after `zoom.levelPrefix`. */
+    figureLabel:
+      'The current exchange between the three practices, drawn as a score: one lane per practice, one square per item its bulletin carries for the siblings, and a current to every sibling an item names.',
+    ruler: {
+      /** stands at the ruler's left end — the ruler is an order, not a clock, and says so */
+      ordinal: 'ordinal · bulletin order',
+      /** stands at its right end — what the drawing was derived from */
+      mirrored: 'the current bulletins, as mirrored',
+    },
+    laneQuiet: 'quiet this session',
+    hint: 'drag or scroll to stretch the ruler · a mark opens its item · the arrow keys walk a lane',
+    zoom: {
+      group: 'Stretch the ordinal ruler',
+      in: 'stretch the ruler',
+      out: 'compress the ruler',
+      reset: 'reset the ruler',
+      /** the factor itself is state, never prose — the island prints this mark, then the number */
+      levelPrefix: '×',
+    },
+    card: {
+      voiceLabel: 'voice',
+      addressedLabel: 'addressed to',
+      numberLabel: 'number in the list',
+      sourceLabel: 'read from',
+      /** the one line the card makes about itself: the item stands here as written */
+      verbatim: 'the practice’s own words, quoted whole — the Middle summarises nothing',
+      open: 'read it in the list below →',
+      close: 'close',
+      hint: 'the arrow keys walk this lane · Home and End jump to its ends · Esc closes',
+    },
+    table: {
+      summary: (n: number) => (n === 1 ? 'the score as a table — one item' : `the score as a table — ${n} items`),
+      caption:
+        'Every item the three current bulletins carry for their siblings: its number in the list, the practice that wrote it, whom it is addressed to, and the item itself in the practice’s own words.',
+      columns: {
+        number: 'no.',
+        voice: 'voice',
+        addressed: 'addressed to',
+        item: 'the item, in the practice’s own words',
+      },
+    },
+    provenance: (files: string) => `Derived at build time from: ${files}`,
+    empty:
+      'No current bulletin carries a section for the siblings this session. Nothing is inferred from that — a quiet session is a quiet session.',
   },
   voice: {
     absent:

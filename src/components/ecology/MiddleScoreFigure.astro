@@ -1,39 +1,110 @@
 ---
-// The Middle's partitur (2026-09-01, redrawn the same day) — the current exchange, in the
-// original score's ink.
+// The Middle's partitur (2026-09-01, redrawn the same day; an island since 2026-09-02) — the
+// current exchange, in the original score's ink. The component name is kept on purpose: it is
+// what MiddleV3.astro mounts and what middle-score-model.test.ts looks for.
 //
-// buildMiddleScoreSvg emits the 2026-07-15 Zeichengrammatik's class vocabulary and this
-// component mounts it inside a `.score-map` scope, so src/styles/score-map.css — the original
-// partitur's stylesheet — styles the ruler, lanes, squares, currents, badges and legend
-// unchanged. The figure adds no words of its own: every mark's tooltip is the item's own
-// first words, every mark links to the quoted item below, and the badge numbers in the
-// drawing are the same numbers the quoted list wears. No JavaScript, no inline styles.
+// This file is the FRAME, not the figure. It does four things and stops:
+//
+//   · resolves the wording canon against the model, so the island receives plain strings and no
+//     number is ever typed into one (the counts and every addressee line are arguments here);
+//   · mounts the island `client:visible` inside a `.score-map` scope, so src/styles/score-map.css
+//     — the first partitur's own stylesheet — inks it: same ruler, same lane weights, same hues
+//     per voice, same squares, currents, rings, whiskers and badges;
+//   · draws the KEY in the original legend's own classes — Practices · Signs · Reading;
+//   · lays the table floor (TableFallback) and the provenance line under it, so no item is
+//     reachable only through the drawing.
+//
+// The readout shell sits beside the island inside `.score-figure`, which is the position:
+// relative box readout.ts clamps within (its house rule 1) — deliberately NOT the scrolling
+// element, because a readout clamped to a scroll container drifts with its content.
 import { ECOLOGY_V3 } from '@/config/ecology-v3-wording'
 import { MIDDLE_V3 } from '@/config/middle-v3-wording'
-import { buildMiddleScoreSvg, LANE_OF } from '@/lib/ecology/middle-score'
+import Readout from '@/components/dataviz/Readout.astro'
+import TableFallback from '@/components/dataviz/TableFallback.astro'
+import {
+  buildMiddleScoreModel,
+  bulletinSource,
+  LANE_OF,
+  middleRows,
+} from '@/lib/ecology/middle-score-model'
 import type { MiddleVoice } from '@/lib/ecology/middle'
-import { PRACTICES } from '@/lib/ecology/v3'
+import { PRACTICES, type PracticeId } from '@/lib/ecology/v3'
 import '@/styles/score-map.css'
+
+import MiddleScore, { type MiddleScoreWording } from './MiddleScore'
 
 interface Props {
   voices: MiddleVoice[]
 }
 const { voices } = Astro.props
+
 const W = MIDDLE_V3.score
-const svgMarkup = buildMiddleScoreSvg(voices)
-const kicker = 'font-mono text-xs uppercase tracking-[0.22em] text-fg-muted'
+const READOUT_ID = 'middle-score-readout'
+const FIGURE_ID = 'middle-score'
+
+const model = buildMiddleScoreModel(voices)
+const voiceName = Object.fromEntries(PRACTICES.map((p) => [p, ECOLOGY_V3.practices[p].name])) as Record<
+  PracticeId,
+  string
+>
+const addressedOf = (to: PracticeId[], whisker: boolean) =>
+  whisker ? MIDDLE_V3.voice.openLabel : MIDDLE_V3.voice.toLabel(to.map((p) => voiceName[p]))
+
+const wording: MiddleScoreWording = {
+  figureLabel: W.figureLabel,
+  ruler: W.ruler,
+  laneQuiet: W.laneQuiet,
+  hint: W.hint,
+  zoom: W.zoom,
+  card: W.card,
+  voiceName,
+  addressed: Object.fromEntries(model.marks.map((m) => [m.id, addressedOf(m.to, m.whisker)])),
+}
+
+const rows = middleRows(model, {
+  voiceName: (p) => voiceName[p],
+  addressedTo: (names) => MIDDLE_V3.voice.toLabel(names),
+  forBoth: MIDDLE_V3.voice.openLabel,
+})
+
+const columns = [
+  { key: 'number', label: W.table.columns.number, nowrap: true },
+  { key: 'voice', label: W.table.columns.voice, nowrap: true },
+  { key: 'addressed', label: W.table.columns.addressed, nowrap: true },
+  { key: 'item', label: W.table.columns.item },
+]
+
+// The provenance names the files this drawing actually read — the marks' own sources, so it can
+// never claim a bulletin the figure did not open. With nothing to draw it names the three
+// bulletins it looked for, which is the honest answer to an empty session.
+const sources = model.marks.length
+  ? [...new Set(model.marks.map((m) => m.source))].sort()
+  : PRACTICES.map(bulletinSource)
 ---
 
-<figure class="rounded-sm border border-line bg-panel">
-  <figcaption class="border-b border-line p-4">
-    <p class={kicker}>{W.kicker}</p>
+{/* The frame's panel recipe (re-skin 2b): the frame's radius and resting depth, but NO .lift —
+    a figure's panel stays still, its marks are what move. */}
+<figure class="score-map score-map-flush rounded-md border border-line bg-panel panel-raised">
+  <figcaption class="border-b border-line p-4 sm:p-5">
+    <p class="kicker">{W.kicker}</p>
     <p class="mt-2 max-w-3xl text-sm leading-relaxed text-fg-muted">{W.sub}</p>
   </figcaption>
 
-  <div class="score-map overflow-x-auto">
-    <div class="score-svg min-w-[860px] p-2" set:html={svgMarkup} />
+  <div class="p-4 sm:p-5">
+    {/* The drawing keeps a floor width and the frame scrolls: a 1440-unit score squeezed into a
+        phone is a grey smear, and the readout must clamp to the FIGURE's box, not the scroller —
+        so the min-width sits on `.score-figure` itself, which is that box. */}
+    <div class="score-scroll">
+      <div class="score-figure min-w-[900px]">
+        <MiddleScore client:visible model={model} wording={wording} readoutId={READOUT_ID} figureId={FIGURE_ID} />
+        <Readout id={READOUT_ID} maxWidth="44ch" />
+      </div>
+    </div>
+    {model.marks.length === 0 && <p class="text-sm leading-relaxed text-fg-faint">{W.empty}</p>}
+  </div>
 
-    {/* the key, in the original legend's own classes — Practices · Signs · Currents */}
+  {/* ── The key, in the original legend's own classes — Practices · Signs · Reading ── */}
+  <div class="border-t border-line p-4 sm:p-5">
     <aside class="score-legend" aria-label="Map key">
       <div class="score-lg-col">
         <h3>{W.key.practices}</h3>
@@ -54,7 +125,7 @@ const kicker = 'font-mono text-xs uppercase tracking-[0.22em] text-fg-muted'
         {
           W.key.signRows.map((row) => (
             <div class="score-lg-row pr-conductor">
-              <svg class="score-mini" viewBox="0 0 46 30" aria-hidden="true" set:html={row.mini} />
+              <svg class="score-mini score-svg" viewBox="0 0 46 30" aria-hidden="true" set:html={row.mini} />
               <span>{row.label}</span>
             </div>
           ))
@@ -65,5 +136,16 @@ const kicker = 'font-mono text-xs uppercase tracking-[0.22em] text-fg-muted'
         <p class="score-lg-note">{W.key.readingNote}</p>
       </div>
     </aside>
+  </div>
+
+  {/* ── The floor: the same items in words, quoted whole ─────────────────── */}
+  <div class="score-record border-t border-line p-4 sm:p-5">
+    <TableFallback
+      summary={W.table.summary(model.marks.length)}
+      caption={W.table.caption}
+      columns={columns}
+      rows={rows}
+      provenance={W.provenance(sources.join(' · '))}
+    />
   </div>
 </figure>
