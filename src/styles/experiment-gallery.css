@@ -1,0 +1,223 @@
+/* ── The experiments gallery (visual layer, Phase 3c, 2026-09-02) ──────────────────────────
+   The shelf's cards and their miniatures. It decides NO colour of its own: every value is one
+   of the frame's tokens (global.css), which is also why the thumbnails carry no PALETTE record —
+   they are FRAME, not practice figures. What tells one miniature from another is its shape.
+
+   Structure only, in the sense the dataviz rule means it: the SVG marks arrive from
+   src/lib/experiments/thumbnails.ts with geometry and one flag ("this is the mark today's
+   reading is about"); everything below is how that flag looks in this house. */
+
+/* The stage: the box the readout is clamped to and positioned within. */
+.gal-stage {
+  position: relative;
+}
+
+/* Two columns where there is room for two. One column below that, because a card whose figure
+   is a hundred pixels wide has stopped being a figure. */
+.gal-grid {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 40rem) {
+  .gal-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.gal-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+/* A filtered-out card is gone, not merely transparent — and the grid must not keep its track.
+   `display: flex` above would otherwise beat the UA's [hidden] rule. */
+.gal-card[hidden] {
+  display: none !important;
+}
+
+/* ── the miniature ────────────────────────────────────────────────────────────────────────
+   A stave across the top of the card: the second panel tone, one hairline under it. */
+.gal-thumb {
+  border-bottom: 1px solid var(--color-line);
+  background: var(--color-panel-2);
+  padding: 0.5rem 0.75rem;
+}
+.gal-thumb-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  transform-origin: 50% 100%;
+}
+
+/* The marks. Three inks: the record at rest, the mark the reading is about, and a hole the
+   record could not fill — which is drawn as an outline, never as a zero. */
+.tm-bar,
+.tm-dot {
+  fill: var(--color-fg-faint);
+  stroke: none;
+}
+.tm-line,
+.tm-seg,
+.tm-rule {
+  fill: none;
+  stroke: var(--color-fg-faint);
+  stroke-width: 1;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+.tm-area {
+  fill: var(--color-fg-faint);
+  fill-opacity: 0.1;
+  stroke: none;
+}
+.tm-rule {
+  stroke: var(--color-line-lift);
+  stroke-dasharray: 2 3;
+  stroke-width: 0.8;
+}
+.tm-gap {
+  fill: none;
+  stroke: var(--color-line-lift);
+  stroke-width: 0.8;
+  stroke-dasharray: 1.5 2;
+}
+.tm-on {
+  fill: var(--color-fg-muted);
+}
+.tm-line.tm-on,
+.tm-seg.tm-on {
+  fill: none;
+  stroke: var(--color-fg-muted);
+  stroke-width: 1.4;
+}
+.tm-dot.tm-on {
+  fill: var(--color-fg);
+}
+
+/* The card's own hover gesture (the frame's `.lift` does the rest): the figure comes forward. */
+.gal-card:hover .tm-bar,
+.gal-card:focus-within .tm-bar,
+.gal-card:hover .tm-dot,
+.gal-card:focus-within .tm-dot {
+  fill: var(--color-fg-muted);
+}
+.gal-card:hover .tm-line,
+.gal-card:focus-within .tm-line,
+.gal-card:hover .tm-seg,
+.gal-card:focus-within .tm-seg {
+  stroke: var(--color-fg-muted);
+}
+.gal-card:hover .tm-on,
+.gal-card:focus-within .tm-on {
+  fill: var(--color-fg);
+}
+.gal-card:hover .tm-line.tm-on,
+.gal-card:focus-within .tm-line.tm-on,
+.gal-card:hover .tm-seg.tm-on,
+.gal-card:focus-within .tm-seg.tm-on {
+  fill: none;
+  stroke: var(--color-fg);
+}
+.gal-thumb :is(.tm-bar, .tm-dot, .tm-line, .tm-seg, .tm-area) {
+  transition: fill 0.2s var(--ease-frame), stroke 0.2s var(--ease-frame);
+}
+
+/* ── the entrance ─────────────────────────────────────────────────────────────────────────
+   A miniature grows in once, when it is first scrolled into view. `gal-armed` is set by the
+   island AFTER it hydrates, so with no JavaScript — and under prefers-reduced-motion, where
+   the island never arms it — every figure is simply there from the first paint. */
+.gal-armed .gal-thumb:not(.is-in) .gal-thumb-svg {
+  opacity: 0;
+}
+.gal-thumb.is-in .gal-thumb-svg {
+  animation: gal-grow 400ms var(--ease-frame) var(--tm-delay, 0ms) both;
+}
+@keyframes gal-grow {
+  from {
+    opacity: 0;
+    transform: scaleY(0.4);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ── the card's text ──────────────────────────────────────────────────────────────────────
+   The summary is the whole head of the card: title, the piece's own one-liner, its stamps.
+   Clicking the title goes to the work; clicking anything else opens the description in place. */
+.gal-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  cursor: pointer;
+  list-style: none;
+  padding: 0.75rem 1rem 0.85rem;
+}
+.gal-summary::-webkit-details-marker {
+  display: none;
+}
+.gal-summary-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+.gal-sub {
+  font-size: var(--text-small);
+  line-height: 1.5;
+  color: var(--color-fg-faint);
+}
+.gal-stamps {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.375rem;
+  padding-top: 0.15rem;
+}
+.gal-body {
+  padding: 0 1rem 1rem;
+}
+
+/* ── the readout ──────────────────────────────────────────────────────────────────────────
+   The shell (components/dataviz/Readout.astro) ships structure only — this is its ink. */
+.gal-stage .dv-readout {
+  border: 1px solid var(--color-line-lift);
+  border-radius: var(--radius-sm);
+  background: var(--color-panel);
+  box-shadow: var(--elev-float);
+  padding: 0.4rem 0.55rem;
+}
+.gal-readout-reading {
+  font-size: var(--text-small);
+  line-height: 1.4;
+  color: var(--color-fg);
+}
+.gal-readout-source {
+  margin-top: 0.15rem;
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-sm);
+  color: var(--color-fg-faint);
+  word-break: break-all;
+}
+
+/* ── reduced motion ───────────────────────────────────────────────────────────────────────
+   The island already declines to arm the entrance and to run a view transition; this is the
+   belt to that brace, for a preference that changes after the page has loaded. */
+@media (prefers-reduced-motion: reduce) {
+  .gal-armed .gal-thumb .gal-thumb-svg,
+  .gal-thumb.is-in .gal-thumb-svg {
+    opacity: 1;
+    animation: none;
+  }
+  .gal-thumb :is(.tm-bar, .tm-dot, .tm-line, .tm-seg, .tm-area) {
+    transition: none;
+  }
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation-duration: 0.001ms !important;
+  }
+}

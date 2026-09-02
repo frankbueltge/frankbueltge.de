@@ -83,15 +83,27 @@ describe('the experiment sheets on the frame recipe', () => {
     }
   })
 
-  it('the shelf (/experiments) cuts its chips and quiet links from the Button recipe, its stamps from Badge, its rows as lifting cards', () => {
-    const source = read('BestaendeIndex.astro')
-    expect(source).toMatch(/import \{ buttonVariants \} from '@\/components\/ui\/button'/)
-    expect(source).toMatch(/import \{ Badge \} from '@\/components\/ui\/badge'/)
-    expect(source).toMatch(/const chip = cn\(\s*buttonVariants\(\{ variant: 'outline', size: 'sm' \}\)/)
-    expect(source).toMatch(/const card = 'sheet-row lift rounded-md border border-line bg-panel panel-raised'/)
-    expect(source).toMatch(/<h1 class="text-h1 font-semibold text-fg">/)
-    expect(source).toMatch(/fold-chevron/)
-    expect(source).not.toMatch(HAND_H1)
+  it('the shelf (/experiments) cuts its chips and quiet links from the Button recipe, its stamps from Badge, its cards as lifting cards', () => {
+    // The shelf became a GALLERY on 2026-09-02 (visual layer, Phase 3c): the head and the mount
+    // stayed in the page, the card's cut moved into the island that now renders the cards. This
+    // guard follows the recipe to where it lives instead of being dropped — the drift it exists
+    // to prevent (twenty hands re-dressing the same card) is the same on either side of the mount.
+    const page = read('BestaendeIndex.astro')
+    expect(page).toMatch(/import SheetHead from '@\/components\/experiments\/SheetHead\.astro'/)
+    expect(page).toMatch(/<SheetHead[\s\n]/)
+    expect(page).toMatch(/<ExperimentGallery[\s\n]/)
+    expect(page).toMatch(/import '@\/styles\/experiment-sheet\.css'/)
+    expect(page, 'the shelf types an h1 of its own again').not.toMatch(HAND_H1)
+
+    const island = readFileSync(
+      fileURLToPath(new URL('../../components/experiments/ExperimentGallery.tsx', import.meta.url)),
+      'utf8',
+    )
+    expect(island).toMatch(/import \{ buttonVariants \} from '@\/components\/ui\/button'/)
+    expect(island).toMatch(/import \{ Badge \} from '@\/components\/ui\/badge'/)
+    expect(island).toMatch(/const CHIP = cn\(\s*buttonVariants\(\{ variant: 'outline', size: 'sm' \}\)/)
+    expect(island).toMatch(/const CARD = 'gal-card lift rounded-md border border-line bg-panel panel-raised'/)
+    expect(island).toMatch(/fold-chevron/)
   })
 
   it('the shared pieces exist, own no wording, and paint no colour', () => {
@@ -107,5 +119,12 @@ describe('the experiment sheets on the frame recipe', () => {
     expect(css).toMatch(/\.sheet-reveal \{/)
     expect(css).toMatch(/\.sheet-link \{/)
     expect(css).toMatch(/\.sheet-nav a \{/)
+
+    // The gallery's own stylesheet joins the same rule: it inks the miniatures in the frame's
+    // tokens and decides no colour of its own, which is why the thumbnails need no PALETTE record.
+    const gallery = readFileSync(fileURLToPath(new URL('../../styles/experiment-gallery.css', import.meta.url)), 'utf8')
+    expect(gallery, 'the gallery stylesheet decides a colour of its own').not.toMatch(/#[0-9a-fA-F]{3,8}\b/)
+    expect(gallery).toMatch(/\.gal-grid \{/)
+    expect(gallery).toMatch(/\.gal-thumb \{/)
   })
 })
