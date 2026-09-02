@@ -1,0 +1,50 @@
+---
+// The head of an experiment sheet (re-skin 2c, 2026-09-02) — the one place the lab's pages
+// set their kicker, title, subtitle and stamps, so twenty pages cannot drift into twenty heads.
+// Before this file every experiment page carried its own `text-[clamp(30px,6vw,56px)]` h1 and
+// its own hand-typed mono kicker; the ecology rooms had already moved to the type scale (2b).
+//
+// What it decides: the kicker is `.kicker` (the frame's class), the title is `text-h1`, the
+// subtitle is body type in the muted ink, badges are the frame's outline Badge in mono, the
+// stamp is a mono line. What it does NOT decide: any word. Every string is a prop or slotted
+// from the page, which keeps its texts where the wording canon wants them.
+//
+// Slots: the default slot carries the page's own sub-lines (a date, a rule, a count — as the
+// page wrote them); `kicker` carries a kicker that needs markup (a link inside it).
+import { Badge } from '@/components/ui/badge'
+import { cn } from '@/lib/ui/cn'
+
+interface Props {
+  title: string
+  /** the small mono line above the title; use the `kicker` slot instead when it carries markup */
+  kicker?: string
+  /** one sentence under the title */
+  sub?: string
+  /** a mono stamp beside the badges (a date, a version) */
+  stamp?: string
+  /** LIVE DATA · kind · line — the frame's outline badge, mono, uppercase */
+  badges?: string[]
+  class?: string
+}
+
+const { title, kicker, sub, stamp, badges = [], class: extra } = Astro.props
+const hasKickerSlot = Astro.slots.has('kicker')
+const badge = 'border-line font-mono text-[10px] font-normal uppercase tracking-[0.18em] text-fg-faint'
+---
+
+<header class={cn('sheet-head mb-10', extra)}>
+  {hasKickerSlot ? <p class="kicker"><slot name="kicker" /></p> : kicker && <p class="kicker">{kicker}</p>}
+  <h1 class={cn('max-w-4xl text-h1 font-semibold text-fg', (kicker || hasKickerSlot) && 'mt-3')}>{title}</h1>
+  {sub && <p class="mt-3 max-w-2xl text-body text-fg-muted">{sub}</p>}
+  {
+    (badges.length > 0 || stamp) && (
+      <div class="mt-4 flex flex-wrap items-center gap-2">
+        {badges.map((b) => (
+          <Badge variant="outline" className={badge}>{b}</Badge>
+        ))}
+        {stamp && <span class="font-mono text-mono text-fg-faint">{stamp}</span>}
+      </div>
+    )
+  }
+  <slot />
+</header>

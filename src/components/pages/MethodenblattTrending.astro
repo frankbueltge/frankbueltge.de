@@ -8,6 +8,7 @@
 import TableFallback from '@/components/dataviz/TableFallback.astro'
 import { getLatestTrending } from '@/lib/trending/data'
 import { fmtDateLong, platformLabel } from '@/lib/trending/format'
+import MethodSheet from '@/components/experiments/MethodSheet.astro'
 
 const day = getLatestTrending()
 const sourceRows = (day?.sources ?? []).map((s) => ({
@@ -29,12 +30,10 @@ const limits = [
 ]
 ---
 
-<main id="main" class="flex-1">
-  <div class="trending-method mx-auto max-w-2xl px-4 py-14">
-    <h1 class="mb-8 text-xl font-semibold">Method sheet — Common Ground</h1>
+<MethodSheet title="Method sheet — Common Ground" workHref="/trending" workLabel="To the experiment" class="trending-method">
 
-    <section class="mb-10 border border-line bg-panel/60 p-5">
-      <h2 class="mb-2 font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">What this is</h2>
+    <section class="sheet-reveal mb-10">
+      <h2 class="kicker mb-2">What this is</h2>
       <p class="leading-relaxed">
         A ledger, not a summary. Every morning the pipeline reads what a set of independent, open sources declare
         they are trending, keeps each label and count exactly as its source states it, and then asks one question
@@ -100,7 +99,7 @@ const limits = [
       </p>
       <p class="mt-2">
         <a href="https://github.com/frankbueltge/frankbueltge.de/tree/main/pipelines/trending"
-          class="font-mono text-xs text-fg-faint transition-colors hover:text-fg" rel="noopener">&rarr; pipelines/trending</a>
+          class="sheet-link" rel="noopener">&rarr; pipelines/trending</a>
       </p>
     </section>
 
@@ -162,12 +161,10 @@ const limits = [
         what it can see, not what exists.
       </p>
       <p class="mt-3">
-        <a href="/trending/topics/" class="font-mono text-xs text-fg-faint transition-colors hover:text-fg">&rarr; The watched terms</a>
+        <a href="/trending/topics/" class="sheet-link">&rarr; The watched terms</a>
       </p>
     </section>
 
-    <a href="/trending" class="text-sm text-fg-muted transition-colors hover:text-fg">&rarr; To the experiment</a>
-  </div>
     <section class="mb-8" id="self-check">
       <h2 class="mb-2 font-semibold">8. Self-check — the run grades its own record</h2>
       <p class="leading-relaxed text-fg-muted">
@@ -186,7 +183,7 @@ const limits = [
           the file stays under its size ceiling.</li>
       </ul>
     </section>
-</main>
+</MethodSheet>
 
 <style>
   /* Same table voice as the ledger page; scoped to this sheet (ADR 0010: the primitive ships

@@ -41,6 +41,10 @@ import { BESIDE_GROUP, KIND_LABEL, kindOf, shelfFacets, type ShelfCard, type She
 import { NAMING } from '@/config/naming'
 import { readN1Facts } from '@/lib/ecology/n1-line'
 import { readArchFacts } from '@/lib/arch/facts'
+import { buttonVariants } from '@/components/ui/button'
+import { Badge } from '@/components/ui/badge'
+import { cn } from '@/lib/ui/cn'
+import '@/styles/experiment-sheet.css'
 
 const locale = (Astro.currentLocale ?? 'en') as Locale
 // Back to "Experiments" (Frank, 2026-07-31): the 2026-07 redesignation to "Holdings" traded a
@@ -185,15 +189,30 @@ const facets = shelfFacets(
   sections.map((s) => s.id),
 )
 const total = cards.length
+
+/* the frame's recipe, named once (re-skin 2c, 2026-09-02) */
+const kicker = 'kicker'
+const quietLink = cn(
+  buttonVariants({ variant: 'ghost', size: 'sm' }),
+  'h-7 px-2 font-mono text-mono-sm font-normal text-fg-muted hover:text-fg',
+)
+/* a filter chip: the outline recipe, pressed = the frame's ink on the second panel tone */
+const chip = cn(
+  buttonVariants({ variant: 'outline', size: 'sm' }),
+  'h-7 px-2 font-mono text-mono-sm font-normal text-fg-faint aria-pressed:border-fg-faint aria-pressed:bg-panel-2 aria-pressed:text-fg',
+)
+/* a row is a card that leads somewhere: the frame's resting depth, and the lift on hover or focus */
+const card = 'sheet-row lift rounded-md border border-line bg-panel panel-raised'
+const badge = 'border-line font-mono text-[10px] font-normal uppercase tracking-[0.18em] text-fg-faint'
 ---
 
 <main id="main" class="mx-auto w-full max-w-4xl flex-1 px-6 py-12 sm:py-16">
-  <h1 class="text-[clamp(30px,5.5vw,56px)] font-bold tracking-[-0.03em]">{copy.title}</h1>
-  <p class="mt-3 max-w-2xl text-sm leading-relaxed text-fg-muted sm:text-base">{copy.sub}</p>
-  <p class="mt-4">
+  <h1 class="text-h1 font-semibold text-fg">{copy.title}</h1>
+  <p class="mt-3 max-w-2xl text-body text-fg-muted">{copy.sub}</p>
+  <p class="mt-4 -ml-2">
     <a
       href={getRelativeLocaleUrl(locale, '/experiments/neighbors')}
-      class="font-mono text-[11px] uppercase tracking-[0.14em] text-fg-faint underline underline-offset-4 transition-colors hover:text-accent-soft"
+      class={cn(quietLink, 'h-auto whitespace-normal py-1 text-left uppercase tracking-[0.14em] text-fg-faint')}
     >
       {copy.field}
     </a>
@@ -208,13 +227,13 @@ const total = cards.length
          you set it once; on wider screens it follows under the TopBar (h-12 there since the
          re-skin of 2026-09-02 — this offset and that height move together). -->
     <div
-      class="z-20 -mx-6 space-y-2 border-y border-line bg-bg/95 px-6 py-3 backdrop-blur-md sm:sticky sm:top-12"
+      class="z-20 -mx-6 space-y-2 border-y border-line bg-bg/90 px-6 py-3 backdrop-blur-xl sm:sticky sm:top-12"
     >
       {facets.map((facet) => (
         // role/aria-label so the axis label is announced with its buttons: the visible label is
         // a span, and a screen reader would otherwise hear eight unrelated toggles in a row.
         <div role="group" aria-label={facet.title} class="flex flex-wrap items-baseline gap-x-2 gap-y-1">
-          <span aria-hidden="true" class="w-10 shrink-0 font-mono text-[10px] uppercase tracking-wider text-fg-faint">
+          <span aria-hidden="true" class={cn(kicker, 'w-10 shrink-0')}>
             {facet.title}
           </span>
           <button
@@ -222,7 +241,7 @@ const total = cards.length
             data-filter={facet.group}
             data-value="all"
             aria-pressed="true"
-            class="rounded border border-line px-2 py-0.5 font-mono text-[11px] text-fg-faint transition-colors aria-pressed:border-fg-faint aria-pressed:text-fg hover:text-fg"
+            class={chip}
           >{copy.all}</button>
           {facet.options.map((option) => (
             <button
@@ -230,7 +249,7 @@ const total = cards.length
               data-filter={facet.group}
               data-value={option.value}
               aria-pressed="false"
-              class="rounded border border-line px-2 py-0.5 font-mono text-[11px] text-fg-faint transition-colors aria-pressed:border-fg-faint aria-pressed:text-fg hover:text-fg"
+              class={chip}
             >{option.label} <span class="tabular-nums opacity-60">{option.n}</span></button>
           ))}
         </div>
@@ -243,7 +262,7 @@ const total = cards.length
         <button
           type="button"
           data-reset
-          class="hidden rounded border border-line px-2 py-0.5 font-mono text-[11px] text-fg-faint transition-colors hover:text-fg"
+          class={cn(chip, 'hidden')}
         >{copy.reset}</button>
       </div>
     </div>
@@ -251,24 +270,31 @@ const total = cards.length
     {sections.map((section) => (
       <section data-group={section.id} id={section.id} class="mt-10 scroll-mt-28">
         <div class="flex items-baseline justify-between gap-4 border-b border-line/60 pb-2">
-          <h2 class="font-mono text-[12px] uppercase tracking-[0.16em] text-fg-faint">{section.label}</h2>
+          <h2 class={cn(kicker, 'text-fg')}>{section.label}</h2>
           <span data-group-count class="font-mono text-[11px] tabular-nums tracking-[0.14em] text-fg-faint">
             {section.rows.length}
           </span>
         </div>
         <p class="mt-3 max-w-2xl text-sm leading-relaxed text-fg-muted">{section.blurb}</p>
 
-        <ul class="mt-4 divide-y divide-line/60 border-t border-line/60">
+        <ul class="mt-4 space-y-2">
           {section.rows.map((row) => (
-            <li data-card data-group={section.id} data-kind={row.kind} data-live={row.live ? 'live' : 'static'}>
+            <li data-card data-group={section.id} data-kind={row.kind} data-live={row.live ? 'live' : 'static'} class={card}>
               <details class="group">
                 <summary
-                  class="flex cursor-pointer list-none items-baseline gap-3 py-3.5 transition-colors hover:text-accent-soft [&::-webkit-details-marker]:hidden"
+                  class="flex cursor-pointer list-none items-baseline gap-3 px-4 py-3.5 [&::-webkit-details-marker]:hidden"
                 >
-                  <span
-                    aria-hidden="true"
-                    class="mt-[2px] shrink-0 font-mono text-[10px] text-fg-faint motion-safe:transition-transform group-open:rotate-90"
-                  >▸</span>
+                  <svg
+                    class="fold-chevron mt-[3px] shrink-0 text-fg-faint"
+                    width="10"
+                    height="10"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.4"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"><path d="M6 9l6 6 6-6" /></svg>
                   <span class="min-w-0 flex-1">
                     {/* The title is a link inside the summary: one click still goes to the
                         work, exactly as on the flat list this page replaced, while a click
@@ -276,52 +302,36 @@ const total = cards.length
                         reach a piece would make a routing shelf worse, not tidier. */}
                     <a
                       href={getRelativeLocaleUrl(locale, row.href)}
-                      class="font-semibold underline decoration-transparent underline-offset-4 transition-colors hover:decoration-current"
+                      class="font-semibold text-fg underline decoration-transparent underline-offset-4 transition-colors hover:decoration-current"
                     >{row.title}</a>
                     {row.subtitle && <span class="text-fg-faint"> — {row.subtitle}</span>}
                   </span>
-                  <span class="flex shrink-0 items-center gap-1.5 font-mono text-[10px] uppercase tracking-wider text-fg-faint">
+                  <span class="flex shrink-0 items-center gap-1.5">
+                    {/* the stamps as the frame's outline badges — live data, the kind, the date;
+                        no separators: a badge is its own boundary */}
                     {row.live && (
-                      <span class="whitespace-nowrap">
-                        <span class="dot-live mr-1 inline-block h-[5px] w-[5px] rounded-full align-middle"></span>{copy.live}
-                      </span>
+                      <Badge variant="outline" className={cn(badge, 'whitespace-nowrap')}>
+                        <span class="dot-live inline-block h-[5px] w-[5px] rounded-full" aria-hidden="true"></span>{copy.live}
+                      </Badge>
                     )}
                     {row.kind !== 'experiment' && (
-                      <>
-                        {row.live && <span aria-hidden="true" class="opacity-40">·</span>}
-                        <span>{KIND_LABEL[row.kind]}</span>
-                      </>
+                      <Badge variant="outline" className={badge}>{KIND_LABEL[row.kind]}</Badge>
                     )}
                     {row.stamp && (
-                      <>
-                        {/* separator only where something precedes it — a leading "·" in front
-                            of the date is a hairline pointing at nothing */}
-                        {(row.live || row.kind !== 'experiment') && (
-                          <span aria-hidden="true" class="hidden opacity-40 sm:inline">·</span>
-                        )}
-                        <span class="hidden tabular-nums sm:inline">
-                          <span class="sr-only">{copy.opened}</span>{row.stamp}
-                        </span>
-                      </>
+                      <Badge variant="outline" className={cn(badge, 'hidden tabular-nums sm:inline-flex')}>
+                        <span class="sr-only">{copy.opened}</span>{row.stamp}
+                      </Badge>
                     )}
                   </span>
                 </summary>
 
-                <div class="pb-5 pl-6 pr-1">
+                <div class="px-4 pb-4 pl-[2.1rem]">
                   <p class="max-w-2xl text-sm leading-relaxed text-fg-muted">{row.description}</p>
-                  {row.meta && (
-                    <p class="mt-2 font-mono text-[10px] uppercase tracking-wider text-fg-faint">{row.meta}</p>
-                  )}
-                  <p class="mt-3 flex flex-wrap gap-x-5 gap-y-1 font-mono text-[11px]">
-                    <a
-                      href={getRelativeLocaleUrl(locale, row.href)}
-                      class="text-fg-faint underline underline-offset-4 transition-colors hover:text-accent-soft"
-                    >{copy.open}</a>
+                  {row.meta && <p class={cn(kicker, 'mt-2')}>{row.meta}</p>}
+                  <p class="mt-3 -ml-2 flex flex-wrap gap-x-1 gap-y-1">
+                    <a href={getRelativeLocaleUrl(locale, row.href)} class={quietLink}>{copy.open}</a>
                     {row.methodHref && (
-                      <a
-                        href={getRelativeLocaleUrl(locale, row.methodHref)}
-                        class="text-fg-faint underline underline-offset-4 transition-colors hover:text-accent-soft"
-                      >{copy.method}</a>
+                      <a href={getRelativeLocaleUrl(locale, row.methodHref)} class={quietLink}>{copy.method}</a>
                     )}
                   </p>
                 </div>

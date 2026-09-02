@@ -3,6 +3,7 @@
 import data from '@/data/invoked/latest.json'
 import type { InvokedData } from '@/lib/invoked/types'
 import { count, percent, standoutWindow } from '@/lib/invoked/format'
+import MethodSheet from '@/components/experiments/MethodSheet.astro'
 
 const d = data as unknown as InvokedData
 const neighbourhood = standoutWindow(d.method.standout)
@@ -17,10 +18,8 @@ const removed = Object.entries(d.stats.mentions_removed)
 const resolutions = Object.entries(d.method.resolution_codes)
 ---
 
-<article class="mx-auto max-w-3xl px-4 py-14">
-  <header class="mb-10">
-    <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">Method sheet</p>
-    <h1 class="mt-1 text-3xl font-bold tracking-[-0.02em]">Invoked Past</h1>
+<MethodSheet title="Invoked Past" kicker="Method sheet" wide>
+  <div class="-mt-6 mb-10">
     <p class="mt-2 text-fg-muted">
       Method {d.method.version} since {d.method.since}. Spec and calibration record:
       <code class="text-xs">docs/superpowers/specs/2026-08-14-the-invoked-past-design.md</code> in the site repository.
@@ -33,10 +32,10 @@ const resolutions = Object.entries(d.method.resolution_codes)
       names, real headlines, and the anniversary arithmetic. The finding itself is unchanged, and no cleaning
       rule, floor or score moved. What the refusal now covers is naming, and only naming.
     </p>
-  </header>
+  </div>
 
   <section class="mb-10">
-    <h2 class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">Source and field</h2>
+    <h2 class="kicker">Source and field</h2>
     <p class="mt-3 text-sm text-fg-muted">
       The last 24 hours of GDELT's raw 15-minute GKG 2.1 files ({d.stats.slots_expected} static downloads from
       data.gdeltproject.org — no API, no key; the shared fetch layer the Balance already uses). The sensor is
@@ -48,7 +47,7 @@ const resolutions = Object.entries(d.method.resolution_codes)
     <div class="mt-3 overflow-x-auto">
       <table class="w-full border-collapse text-sm">
         <thead>
-          <tr class="border-b border-line text-left font-mono text-[11px] uppercase tracking-[0.12em] text-fg-faint">
+          <tr class="border-b border-line text-left kicker">
             <th class="py-2 pr-3 font-medium">Resolution code</th>
             <th class="py-2 pr-3 font-medium">Meaning</th>
             <th class="py-2 text-right font-medium">mentions today</th>
@@ -73,11 +72,11 @@ const resolutions = Object.entries(d.method.resolution_codes)
   </section>
 
   <section class="mb-10">
-    <h2 class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">The four cleaning rules (versioned)</h2>
+    <h2 class="kicker">The four cleaning rules (versioned)</h2>
     <div class="mt-3 overflow-x-auto">
       <table class="w-full border-collapse text-sm">
         <thead>
-          <tr class="border-b border-line text-left font-mono text-[11px] uppercase tracking-[0.12em] text-fg-faint">
+          <tr class="border-b border-line text-left kicker">
             <th class="py-2 pr-3 font-medium">Rule</th>
             <th class="py-2 font-medium">What it does</th>
           </tr>
@@ -104,7 +103,7 @@ const resolutions = Object.entries(d.method.resolution_codes)
   </section>
 
   <section class="mb-10">
-    <h2 class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">The finding: the standout, not the maximum</h2>
+    <h2 class="kicker">The finding: the standout, not the maximum</h2>
     <p class="mt-3 text-sm text-fg-muted">
       {d.method.standout}
     </p>
@@ -120,7 +119,7 @@ const resolutions = Object.entries(d.method.resolution_codes)
   </section>
 
   <section class="mb-10">
-    <h2 class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+    <h2 class="kicker">
       Why the standout stands out: the evidence, and where it comes from
     </h2>
     {d.method.why && <p class="mt-3 text-sm text-fg-muted">{d.method.why}</p>}
@@ -166,7 +165,7 @@ const resolutions = Object.entries(d.method.resolution_codes)
   </section>
 
   <section class="mb-10">
-    <h2 class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">The {ceiling} wall</h2>
+    <h2 class="kicker">The {ceiling} wall</h2>
     <p class="mt-3 text-sm text-fg-muted">
       {d.method.inherited_ceiling}
     </p>
@@ -178,7 +177,7 @@ const resolutions = Object.entries(d.method.resolution_codes)
   </section>
 
   <section class="mb-10">
-    <h2 class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">The register, and why it waits</h2>
+    <h2 class="kicker">The register, and why it waits</h2>
     <p class="mt-3 text-sm text-fg-muted">
       The decay law (Candia et&nbsp;al. 2019) is the test hypothesis, and testing it needs a series of tracked
       events. The register of {d.method.register_size} events is founded from the first
@@ -192,7 +191,7 @@ const resolutions = Object.entries(d.method.resolution_codes)
   </section>
 
   <section class="mb-10">
-    <h2 class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">Known limits, disclosed</h2>
+    <h2 class="kicker">Known limits, disclosed</h2>
     <ul class="mt-3 list-disc space-y-1.5 pl-5 text-sm text-fg-muted">
       <li>The date extraction is GDELT's, and every error mode of it is inherited; the four rules trim, they do not repair.</li>
       <li>An invoked year is not an invoked event: 1989 carries Tiananmen and the Wall in one bar. Since v1.1 the file shows what the invoking articles were about; it still does not name the event, and the register that will track dates over time waits for an archive.</li>
@@ -208,7 +207,7 @@ const resolutions = Object.entries(d.method.resolution_codes)
   </section>
 
   <section class="mb-10">
-    <h2 class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">Archive and reproducibility</h2>
+    <h2 class="kicker">Archive and reproducibility</h2>
     <p class="mt-3 text-sm text-fg-muted">
       One JSON per day under <code class="text-xs">src/data/invoked/</code>, committed nightly by the
       counter-measurement workflow; committed day files are immutable — the pipeline refuses to overwrite them,
@@ -219,11 +218,11 @@ const resolutions = Object.entries(d.method.resolution_codes)
     </p>
   </section>
 
-  <footer class="border-t border-line pt-5 text-sm text-fg-muted">
+  <Fragment slot="foot">
     <p>
       Data © <a href="https://www.gdeltproject.org/" target="_blank" rel="noopener" class="underline decoration-line underline-offset-2 hover:text-fg">The GDELT Project</a>,
       used and republished with attribution per its terms of use. Daily archive JSONs: CC0.
       Back to <a href="/invoked-past" class="underline decoration-line underline-offset-2 hover:text-fg">the instrument</a>.
     </p>
-  </footer>
-</article>
+  </Fragment>
+</MethodSheet>

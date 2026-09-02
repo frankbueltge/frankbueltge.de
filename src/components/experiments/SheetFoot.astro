@@ -1,0 +1,41 @@
+---
+// The foot of an experiment sheet (re-skin 2c, 2026-09-02): the provenance line — what was
+// scanned, where the data came from, under which licence — in the frame's mono ink, and the
+// sheet's own links (method sheet, archive, feed) as ghost buttons on the shadcn recipe.
+//
+// Two ways in, so twenty pages did not have to be rewritten to agree: `links` renders the
+// buttons from data; the default slot takes the page's existing provenance paragraphs and
+// navs as they are, and src/styles/experiment-sheet.css dresses the anchors inside them in
+// the same ghost recipe. This file owns no wording.
+import { buttonVariants } from '@/components/ui/button'
+import { cn } from '@/lib/ui/cn'
+
+interface Props {
+  links?: { href: string; label: string; external?: boolean }[]
+  label?: string
+  class?: string
+}
+
+const { links = [], label, class: extra } = Astro.props
+const quiet = cn(
+  buttonVariants({ variant: 'ghost', size: 'sm' }),
+  'h-7 px-2 font-mono text-mono-sm font-normal text-fg-muted hover:text-fg',
+)
+---
+
+<footer class={cn('sheet-foot mt-12 border-t border-line pt-6', extra)} aria-label={label}>
+  <div class="sheet-foot-text font-mono text-mono leading-relaxed text-fg-faint">
+    <slot />
+  </div>
+  {
+    links.length > 0 && (
+      <nav class="mt-3 -ml-2 flex flex-wrap gap-x-1 gap-y-1">
+        {links.map((l) => (
+          <a class={quiet} href={l.href} target={l.external ? '_blank' : undefined} rel={l.external ? 'noopener' : undefined}>
+            {l.label}
+          </a>
+        ))}
+      </nav>
+    )
+  }
+</footer>

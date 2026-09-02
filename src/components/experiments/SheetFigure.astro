@@ -1,0 +1,24 @@
+---
+// The figure slot of an experiment sheet (re-skin 2c, 2026-09-02): the panel a page's own
+// figure stands in — the frame's radius, hairline and resting depth, and deliberately NO lift.
+// A figure is read in place; it leads nowhere, so it does not rise under the pointer (the same
+// decision the ecology's partitur frame made in 2b). The figure inside keeps its own stylesheet
+// and its own palette record; this panel decides no colour.
+import { cn } from '@/lib/ui/cn'
+
+interface Props {
+  /** small mono line naming what the panel shows */
+  kicker?: string
+  /** aria-label for the section */
+  label?: string
+  id?: string
+  class?: string
+}
+
+const { kicker, label, id, class: extra } = Astro.props
+---
+
+<section id={id} aria-label={label} class={cn('sheet-figure rounded-md border border-line bg-panel panel-raised p-5 sm:p-6', extra)}>
+  {kicker && <p class="kicker mb-3">{kicker}</p>}
+  <slot />
+</section>

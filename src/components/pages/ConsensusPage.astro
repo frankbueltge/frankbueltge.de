@@ -12,6 +12,9 @@ import { CHAIN_LABEL, aggregateStructure } from '@/lib/consensus/structure'
 import { byYear, standing, summarise, type Baseline } from '@/lib/consensus/baseline'
 import data from '@/data/consensus/latest.json'
 import baselineJson from '@/data/consensus/baseline.json'
+import SheetHead from '@/components/experiments/SheetHead.astro'
+import SheetFoot from '@/components/experiments/SheetFoot.astro'
+import '@/styles/experiment-sheet.css'
 
 interface Props { locale: Locale }
 const { locale } = Astro.props
@@ -82,16 +85,15 @@ const syn = h?.syndication
 
 <main id="main" class="flex-1">
 <article class="consensus mx-auto max-w-3xl px-4 py-14">
-  <header class="mb-10">
-    <h1 class="text-[clamp(30px,6vw,56px)] font-bold tracking-[-0.03em]">Consensus</h1>
+  <SheetHead title="Consensus">
     <p class="mt-2 max-w-xl text-fg-muted">{t(locale, 'cs.sub')}</p>
-    <p class="mt-3 font-mono text-xs uppercase tracking-[0.18em] text-fg-faint">{dateLabel}</p>
-  </header>
+    <p class="mt-3 kicker">{dateLabel}</p>
+  </SheetHead>
 
   {h ? (
     <>
       <section class="mb-12 border-l-2 border-accent/60 pl-5">
-        <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+        <p class="kicker">
           {de ? 'Der heute am unabhängigsten berichtete Satz' : "Today's most independently reported sentence"}
         </p>
         <p class="mt-3 text-[clamp(20px,3.4vw,30px)] font-semibold leading-snug">„{cleanTitle(h.sample_title)}"</p>
@@ -125,7 +127,7 @@ const syn = h?.syndication
       </section>
 
       <section class="mb-12">
-        <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+        <p class="kicker">
           {de ? 'Die „unabhängigen" Quellen' : 'The „independent" outlets'}
         </p>
         <ul class="mt-3 flex flex-wrap gap-1.5">
@@ -167,7 +169,7 @@ const syn = h?.syndication
 
       {stand && (
         <section class="mb-12 border-t border-line pt-6">
-          <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+          <p class="kicker">
             {de ? 'Ist das viel? — sieben Jahre, eine Methode' : 'Is that a lot? — seven years, one method'}
           </p>
           <div class="mt-3 flex items-baseline gap-4">
@@ -231,7 +233,7 @@ const syn = h?.syndication
 
       {r && (
         <section class="mb-12 border-t border-line pt-6">
-          <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">{de ? 'Auch heute im Chor' : 'Also in chorus today'}</p>
+          <p class="kicker">{de ? 'Auch heute im Chor' : 'Also in chorus today'}</p>
           <p class="mt-2 leading-snug">„{cleanTitle(r.sample_title)}"</p>
           <p class="mt-1 font-mono text-xs text-fg-faint">
             {de ? `${r.domain_count} Medien, wortgleich` : `${r.domain_count} outlets, word-for-word`}
@@ -250,7 +252,7 @@ const syn = h?.syndication
   )}
 
   <section class="mb-12 border-t border-line pt-6">
-    <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+    <p class="kicker">
       {de ? 'Nächste Nachbarn' : 'Nearest neighbors'}
     </p>
     <ul class="mt-3 space-y-2 text-sm text-fg-muted">
@@ -274,7 +276,7 @@ const syn = h?.syndication
     </p>
   </section>
 
-  <footer class="mt-12 border-t border-line pt-6">
+  <SheetFoot>
     <p class="font-mono text-xs text-fg-faint">
       {d.stats.beats
         ? de
@@ -285,11 +287,11 @@ const syn = h?.syndication
           : `Scanned: ${d.stats.articles_scanned.toLocaleString('en-US')} articles across ${d.stats.domains_scanned.toLocaleString('en-US')} domains (GDELT raw files, ${d.stats.slots_fetched}/${d.stats.slots_expected} 15-minute files).`}
     </p>
     <nav class="mt-2 flex gap-4">
-      <a href={methodUrl} class="font-mono text-xs text-fg-faint transition-colors hover:text-fg">{t(locale, 'prot.method')} →</a>
-      <a href="/consensus/archive" class="font-mono text-xs text-fg-faint transition-colors hover:text-fg">
+      <a href={methodUrl} class="sheet-link">{t(locale, 'prot.method')} →</a>
+      <a href="/consensus/archive" class="sheet-link">
         {de ? 'Archiv — jeder committete Tag' : 'Archive — every committed day'} →
       </a>
     </nav>
-  </footer>
+  </SheetFoot>
 </article>
 </main>

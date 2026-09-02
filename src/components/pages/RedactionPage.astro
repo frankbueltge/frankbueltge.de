@@ -8,6 +8,9 @@ import { pct, thousands, withholdOnPage } from '@/lib/redaction/world'
 import { tokensLabel, signalLabel, dateLabel } from '@/lib/redaction/format'
 import data from '@/data/redaction/latest.json'
 import worldData from '@/data/redaction/world/latest.json'
+import SheetHead from '@/components/experiments/SheetHead.astro'
+import SheetFoot from '@/components/experiments/SheetFoot.astro'
+import '@/styles/experiment-sheet.css'
 
 interface Props { locale: Locale }
 const { locale } = Astro.props
@@ -31,13 +34,12 @@ const titleChangesWorld = wg.available ? (wg.status_counts?.PAGE_TITLECHANGE ?? 
 
 <main id="main" class="flex-1">
 <article class="redaction mx-auto max-w-3xl px-4 py-14">
-  <header class="mb-10">
-    <h1 class="text-[clamp(30px,6vw,56px)] font-bold">Editorial Deadline</h1>
+  <SheetHead title="Editorial Deadline">
     <p class="mt-2 max-w-xl text-fg-muted">{t(locale, 'rd.sub')}</p>
     <p class="mt-1 font-mono text-xs text-fg-faint">{dateLabel(d.date, locale)}</p>
-  </header>
+  </SheetHead>
 
-  <p class="mb-6 font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+  <p class="mb-6 kicker">
     {de ? 'Kammer 1 — der amtliche Eintrag' : 'Chamber 1 — the official record'}
   </p>
 
@@ -53,7 +55,7 @@ const titleChangesWorld = wg.available ? (wg.status_counts?.PAGE_TITLECHANGE ?? 
   <>
   {pick && (
     <section class="mb-12 border-l-2 border-accent/60 pl-5">
-      <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+      <p class="kicker">
         {de ? 'Die Schwärzung des Tages' : 'The redaction of the day'}
       </p>
       <p class="mt-2 text-lg font-semibold">{pick.institution} — {pick.label}</p>
@@ -96,7 +98,7 @@ const titleChangesWorld = wg.available ? (wg.status_counts?.PAGE_TITLECHANGE ?? 
 
   {rest.length > 0 && (
     <section class="mb-12 border-t border-line pt-6">
-      <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+      <p class="kicker">
         {de ? 'Weitere Schwärzungen' : 'Other redactions'}
       </p>
       <ul class="mt-3 space-y-2">
@@ -123,7 +125,7 @@ const titleChangesWorld = wg.available ? (wg.status_counts?.PAGE_TITLECHANGE ?? 
   )}
 
   <section class="mb-12 border-t border-line pt-8">
-    <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+    <p class="kicker">
       Chamber 2 — the world's press
     </p>
 
@@ -150,7 +152,7 @@ const titleChangesWorld = wg.available ? (wg.status_counts?.PAGE_TITLECHANGE ?? 
 
         {(wg.register?.length ?? 0) > 0 && (
           <div class="mt-6">
-            <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+            <p class="kicker">
               The day's reframings — selected by rule, not by hand
             </p>
             <ul class="mt-3 space-y-4">
@@ -171,7 +173,7 @@ const titleChangesWorld = wg.available ? (wg.status_counts?.PAGE_TITLECHANGE ?? 
     )}
 
     <div class="mt-8">
-      <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+      <p class="kicker">
         Deletion, measured at home
       </p>
       {!wd.available ? (
@@ -224,7 +226,7 @@ const titleChangesWorld = wg.available ? (wg.status_counts?.PAGE_TITLECHANGE ?? 
   </section>
 
   <section class="mb-8 border-t border-line pt-6">
-    <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+    <p class="kicker">
       {de ? 'Nächste Nachbarn' : 'Nearest neighbors'}
     </p>
     <ul class="mt-3 space-y-2 text-sm text-fg-muted">
@@ -266,13 +268,13 @@ const titleChangesWorld = wg.available ? (wg.status_counts?.PAGE_TITLECHANGE ?? 
     </p>
   </section>
 
-  <p class="border-t border-line pt-6 text-xs leading-relaxed text-fg-faint">
+  <SheetFoot>
+    <p>
     {de
       ? 'Belege sind Wayback-Permalinks (vorher/nachher) — in zwei Klicks selbst nachzuprüfen. Umschreibung ist nicht Vertuschung; das Instrument behauptet keine Absicht.'
       : 'Evidence is Wayback permalinks (before/after) — checkable yourself in two clicks. Rewriting is not cover-up; the instrument claims no intent.'}
-    <a href={methodUrl} class="ml-1 underline transition-colors hover:text-fg">
-      {de ? 'Methodenblatt' : 'Method sheet'} →
-    </a>
-  </p>
+    </p>
+    <nav><a href={methodUrl}>{de ? 'Methodenblatt' : 'Method sheet'} →</a></nav>
+  </SheetFoot>
 </article>
 </main>

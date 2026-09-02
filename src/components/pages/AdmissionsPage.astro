@@ -9,6 +9,9 @@
 import type { Locale } from '@/lib/site'
 import ucdp from '@/data/admissions/ucdp-brd.json'
 import emdat from '@/data/admissions/emdat.json'
+import SheetHead from '@/components/experiments/SheetHead.astro'
+import SheetFoot from '@/components/experiments/SheetFoot.astro'
+import '@/styles/experiment-sheet.css'
 
 interface Props { locale: Locale }
 const { locale: _locale } = Astro.props
@@ -61,15 +64,13 @@ const deepest = reports
 <main id="main" class="flex-1">
 <article class="mx-auto max-w-3xl px-4 py-14">
 
-  <header class="mb-10">
-    <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">A register · an instrument, not a work</p>
-    <h1 class="mt-3 text-[clamp(30px,6vw,56px)] font-bold tracking-[-0.03em]">Admissions</h1>
+  <SheetHead kicker="A register · an instrument, not a work" title="Admissions">
     <p class="mt-3 max-w-xl text-fg-muted">
       Records of the world's wars and disasters rewrite their own past. This watch holds every
       released version at once and keeps the account: what was admitted to an earlier year, what
       was removed from one, what changed size — and whether the keeper published a reason.
     </p>
-  </header>
+  </SheetHead>
 
   <section class="mb-14">
     <p class="text-[clamp(40px,8vw,72px)] font-bold leading-none tabular-nums">
@@ -84,7 +85,7 @@ const deepest = reports
   </section>
 
   <section class="mb-14">
-    <h2 class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">Years that changed after the fact</h2>
+    <h2 class="kicker">Years that changed after the fact</h2>
     <p class="mt-3 max-w-xl text-sm text-fg-muted">
       Each row is one year, read across every released version of the record in order. A number
       that moves is a year whose count of wars was corrected — upward, and sometimes down and up
@@ -124,7 +125,7 @@ const deepest = reports
   </section>
 
   <section class="mb-14">
-    <h2 class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">The deepest admissions</h2>
+    <h2 class="kicker">The deepest admissions</h2>
     <p class="mt-3 max-w-xl text-sm text-fg-muted">
       A year that was not a war, or not a disaster, and became one — long afterwards. Depth is
       measured against the last year the earlier release could have carried, so reporting lag at
@@ -190,7 +191,7 @@ const deepest = reports
   ))}
 
   <section class="mb-12 border-t border-line pt-6">
-    <h2 class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">What this is not</h2>
+    <h2 class="kicker">What this is not</h2>
     <ul class="mt-3 max-w-xl space-y-2 text-sm leading-relaxed text-fg-muted">
       <li><span class="text-fg">Absent from a version does not mean nobody died.</span> It means that release did not hold that entry. This is about a record and its line, never about the dead being untrue.</li>
       <li><span class="text-fg">No accusation of error.</span> Both keepers publish more than most: one a change ledger, the other its own past versions. Neither publishes a reason for an individual change — which is worth noting, and is not a standard anyone has agreed to. Recorded as an observation about how records are kept, not as a charge.</li>
@@ -199,7 +200,7 @@ const deepest = reports
     </ul>
   </section>
 
-  <footer class="mt-12 border-t border-line pt-6">
+  <SheetFoot>
     <p class="max-w-xl font-mono text-xs leading-relaxed text-fg-faint">
       Every figure on this page is derived from committed JSON at build time; none is typed.
       The archives are held by SHA-256, so the claim — which is only about what each released
@@ -207,6 +208,6 @@ const deepest = reports
       The watch asks weekly whether a keeper has published a version it does not hold; on its first
       run it found one.
     </p>
-  </footer>
+  </SheetFoot>
 </article>
 </main>

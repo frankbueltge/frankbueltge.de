@@ -12,7 +12,7 @@
       },
       {
         "file": "docs/decision-log.md",
-        "sha256": "69433bf8cc9fee8e"
+        "sha256": "131607294643d579"
       },
       {
         "file": "src/data/post/ledger.json",
@@ -57,10 +57,10 @@
       }
     ],
     "counts": {
-      "nodes": 349,
+      "nodes": 350,
       "edges": 293,
       "nodesByKind": {
-        "decision": 97,
+        "decision": 98,
         "encounter": 6,
         "neighbor": 106,
         "practice": 9,
@@ -963,6 +963,16 @@
     {
       "id": "decision:2026-09-02-10",
       "kind": "decision",
+      "label": "Common Ground — a trending ledger built for machine readers, with its own audience counted",
+      "date": "2026-09-02",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "Common Ground — a trending ledger built for machine readers, with its own audience counted"
+      }
+    },
+    {
+      "id": "decision:2026-09-02-11",
+      "kind": "decision",
       "label": "The cycle score reads every practice’s record, not one convention",
       "date": "2026-09-02",
       "source": {
@@ -973,6 +983,16 @@
     {
       "id": "decision:2026-09-02-2",
       "kind": "decision",
+      "label": "The experiment sheets on the frame's recipe — one head, one fold, one foot for the lab",
+      "date": "2026-09-02",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "The experiment sheets on the frame's recipe — one head, one fold, one foot for the lab"
+      }
+    },
+    {
+      "id": "decision:2026-09-02-3",
+      "kind": "decision",
       "label": "Common Ground grades its own record before it publishes — the first loop around the pipeline",
       "date": "2026-09-02",
       "source": {
@@ -981,7 +1001,7 @@
       }
     },
     {
-      "id": "decision:2026-09-02-3",
+      "id": "decision:2026-09-02-4",
       "kind": "decision",
       "label": "The ecology’s rooms on the frame’s recipe",
       "date": "2026-09-02",
@@ -991,7 +1011,7 @@
       }
     },
     {
-      "id": "decision:2026-09-02-4",
+      "id": "decision:2026-09-02-5",
       "kind": "decision",
       "label": "The frame, richer: one type scale, one radius scale, depth without hue, and page transitions",
       "date": "2026-09-02",
@@ -1001,7 +1021,7 @@
       }
     },
     {
-      "id": "decision:2026-09-02-5",
+      "id": "decision:2026-09-02-6",
       "kind": "decision",
       "label": "The knowledge graph, explorable — every record of the house with its receipts, on /experiments/neighbors",
       "date": "2026-09-02",
@@ -1011,7 +1031,7 @@
       }
     },
     {
-      "id": "decision:2026-09-02-6",
+      "id": "decision:2026-09-02-7",
       "kind": "decision",
       "label": "The cycle as a living partitur — /ecology's first interactive figure",
       "date": "2026-09-02",
@@ -1021,7 +1041,7 @@
       }
     },
     {
-      "id": "decision:2026-09-02-7",
+      "id": "decision:2026-09-02-8",
       "kind": "decision",
       "label": "The visual layer: the archive binds the data, not the rendering",
       "date": "2026-09-02",
@@ -1031,23 +1051,13 @@
       }
     },
     {
-      "id": "decision:2026-09-02-8",
+      "id": "decision:2026-09-02-9",
       "kind": "decision",
       "label": "Common Ground gains a second layer: Arcs — a term tracker with a discovery pass, one landing page per tracked word",
       "date": "2026-09-02",
       "source": {
         "file": "docs/decision-log.md",
         "quote": "Common Ground gains a second layer: Arcs — a term tracker with a discovery pass, one landing page per tracked word"
-      }
-    },
-    {
-      "id": "decision:2026-09-02-9",
-      "kind": "decision",
-      "label": "Common Ground — a trending ledger built for machine readers, with its own audience counted",
-      "date": "2026-09-02",
-      "source": {
-        "file": "docs/decision-log.md",
-        "quote": "Common Ground — a trending ledger built for machine readers, with its own audience counted"
       }
     },
     {
@@ -7252,7 +7262,16 @@
     },
     {
       "kind": "touches",
-      "from": "decision:2026-09-02-2",
+      "from": "decision:2026-09-02-10",
+      "to": "work:trending",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "pipelines/trending"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-09-02-3",
       "to": "work:trending",
       "source": {
         "file": "docs/decision-log.md",
@@ -7261,20 +7280,11 @@
     },
     {
       "kind": "touches",
-      "from": "decision:2026-09-02-8",
-      "to": "work:trending",
-      "source": {
-        "file": "docs/decision-log.md",
-        "quote": "src/data/trending/terms/"
-      }
-    },
-    {
-      "kind": "touches",
       "from": "decision:2026-09-02-9",
       "to": "work:trending",
       "source": {
         "file": "docs/decision-log.md",
-        "quote": "pipelines/trending"
+        "quote": "src/data/trending/terms/"
       }
     }
   ]

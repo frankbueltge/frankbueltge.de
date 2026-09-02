@@ -10,6 +10,9 @@ import { renderBefund } from '@/lib/beifang/befund'
 import { PUBLISHER_LABELS } from '@/lib/beifang/types'
 import { blockadeStats, blockedPublishersFromResults, entityTable, groupMedians, latestByVantage, leakAuditRan, leakFindings, leakFindingsFromResults, leserResults, publisherMedians, sparkPath, timeline, usResults } from '@/lib/beifang/stats'
 import { infraFor } from '@/lib/beifang/infra'
+import SheetHead from '@/components/experiments/SheetHead.astro'
+import SheetFoot from '@/components/experiments/SheetFoot.astro'
+import '@/styles/experiment-sheet.css'
 
 interface Props { locale: 'de' | 'en' }
 const { locale } = Astro.props
@@ -104,12 +107,11 @@ function formLabel(form: string, deLang: boolean): string {
 
 <main id="main" class="flex-1">
 <article class="beifang mx-auto max-w-3xl px-4 py-14">
-  <header class="mb-10">
-    <h1 class="text-[clamp(30px,6vw,56px)] font-bold tracking-[-0.03em]">{t(locale, 'bf.title')}</h1>
+  <SheetHead title={t(locale, 'bf.title')}>
     <p class="mt-2 max-w-xl text-fg-muted">{t(locale, 'bf.sub')}</p>
-  </header>
+  </SheetHead>
 
-  <section class="mb-10 border border-line bg-panel/60 p-5">
+  <section class="mb-10 rounded-md border border-line bg-panel panel-raised p-5">
     <h2 class="mb-2 font-semibold">{de ? 'Was misst das hier?' : 'What does this measure?'}</h2>
     <p class="leading-relaxed text-fg-muted">
       {de
@@ -132,7 +134,7 @@ function formLabel(form: string, deLang: boolean): string {
           aus — die Asymmetrie des Papers, als Zahl. Aggregiert je Verlag, nicht als Einzelliste. */}
       {blockade && blockade.verlag.blocked > 0 && (
         <section class="mb-12 border-l-2 border-accent/60 pl-5">
-          <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">{de ? 'Leitbefund' : 'Headline finding'}</p>
+          <p class="kicker">{de ? 'Leitbefund' : 'Headline finding'}</p>
           <p class="mt-2 text-2xl font-semibold leading-snug">
             {de
               ? `${blockade.verlag.blocked} von ${blockade.verlag.total} Verlagsseiten verweigern die Messung.`
@@ -207,7 +209,7 @@ function formLabel(form: string, deLang: boolean): string {
 
       {/* Befund der Woche */}
       <section class="mb-12 border-l-2 border-accent/60 pl-5">
-        <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">{de ? 'Befund der Woche' : 'Finding of the week'}</p>
+        <p class="kicker">{de ? 'Befund der Woche' : 'Finding of the week'}</p>
         <p class="mt-2 leading-relaxed">{renderBefund(latest.befund, locale)}</p>
       </section>
 
@@ -382,7 +384,7 @@ function formLabel(form: string, deLang: boolean): string {
       </section>
 
       <section class="mb-12 border-t border-line pt-6">
-        <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+        <p class="kicker">
           {de ? 'Nächste Nachbarn' : 'Nearest neighbors'}
         </p>
         <ul class="mt-3 space-y-2 text-sm text-fg-muted">
@@ -406,16 +408,16 @@ function formLabel(form: string, deLang: boolean): string {
         </p>
       </section>
 
-      <footer class="mt-12 border-t border-line pt-6">
+      <SheetFoot>
         <p class="font-mono text-xs text-fg-faint">
           {de
             ? `Sitzung vom ${latest.date} · ${okCount} Seiten gemessen · Panel ${latest.panel_version} · Diese Seite lädt null Drittanbieter-Requests.`
             : `Run of ${latest.date} · ${okCount} pages measured · panel ${latest.panel_version} · This page loads zero third-party requests.`}
         </p>
         <nav class="mt-2">
-          <a href={methodUrl} class="font-mono text-xs text-fg-faint transition-colors hover:text-fg">{t(locale, 'prot.method')} →</a>
+          <a href={methodUrl} class="sheet-link">{t(locale, 'prot.method')} →</a>
         </nav>
-      </footer>
+      </SheetFoot>
     </>
   )}
 </article>

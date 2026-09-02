@@ -6,6 +6,9 @@ import data from '@/data/balance/latest.json'
 import type { BalanceData } from '@/lib/balance/types'
 import { ciLabel, directionSentence, fixed, signed, windowLabel } from '@/lib/balance/format'
 import BalanceFigure from './BalanceFigure.astro'
+import SheetHead from '@/components/experiments/SheetHead.astro'
+import SheetFoot from '@/components/experiments/SheetFoot.astro'
+import '@/styles/experiment-sheet.css'
 
 const d = data as unknown as BalanceData
 const h = d.headline
@@ -17,14 +20,13 @@ const dateLabel = d.date
 
 <main id="main" class="flex-1">
 <article class="mx-auto max-w-3xl px-4 py-14">
-  <header class="mb-10">
-    <h1 class="text-[clamp(30px,6vw,56px)] font-bold tracking-[-0.03em]">Balance</h1>
+  <SheetHead title="Balance">
     <p class="mt-2 max-w-xl text-fg-muted">
       The emotional trade balance of the world's press: how each country's own newsrooms write
       about it — against how the world's newsrooms write about it. Daily, archived, never edited.
     </p>
-    <p class="mt-3 font-mono text-xs uppercase tracking-[0.18em] text-fg-faint">{dateLabel}</p>
-  </header>
+    <p class="mt-3 kicker">{dateLabel}</p>
+  </SheetHead>
 
   {failed ? (
     <section class="mb-12 border-l-2 border-line pl-5">
@@ -32,7 +34,7 @@ const dateLabel = d.date
     </section>
   ) : h ? (
     <section class="mb-12 border-l-2 border-accent/60 pl-5">
-      <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+      <p class="kicker">
         Today's widest gap between self-image and foreign image
       </p>
       <p class="mt-3 text-[clamp(20px,3.4vw,30px)] font-semibold leading-snug">{h.name}</p>
@@ -51,7 +53,7 @@ const dateLabel = d.date
 
   {!failed && rows.length > 0 && (
     <section class="mb-12">
-      <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+      <p class="kicker">
         The ledger — {rows.length} countries with enough material in both pools, {sigCount} with a
         significant tone gap
       </p>
@@ -61,7 +63,7 @@ const dateLabel = d.date
       <div class="mt-3 overflow-x-auto">
         <table class="w-full border-collapse text-sm tabular-nums">
           <thead>
-            <tr class="border-b border-line text-left font-mono text-[11px] uppercase tracking-[0.12em] text-fg-faint">
+            <tr class="border-b border-line text-left kicker">
               <th class="py-2 pr-3 font-medium">Country</th>
               <th class="py-2 pr-3 text-right font-medium" title="Articles by this country's press about itself">by itself</th>
               <th class="py-2 pr-3 text-right font-medium" title="Articles by the rest of the world's press about it">by the world</th>
@@ -104,7 +106,7 @@ const dateLabel = d.date
   )}
 
   <section class="mb-12">
-    <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">What this measures — and what it does not</p>
+    <p class="kicker">What this measures — and what it does not</p>
     <ul class="mt-3 space-y-2 text-sm text-fg-muted">
       <li>
         <strong>Portrayal, not population mood.</strong> Tone and emotion rates are properties of
@@ -152,7 +154,7 @@ const dateLabel = d.date
   </section>
 
   <section class="mb-12">
-    <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">Nearest neighbors</p>
+    <p class="kicker">Nearest neighbors</p>
     <ul class="mt-3 space-y-2 text-sm text-fg-muted">
       <li>
         <a href="https://blog.gdeltproject.org/gdelt-doc-2-0-api-debuts/" target="_blank" rel="noopener nofollow" class="underline decoration-line underline-offset-2 hover:text-fg">GDELT DOC 2.0 API</a>
@@ -181,7 +183,7 @@ const dateLabel = d.date
     </p>
   </section>
 
-  <footer class="border-t border-line pt-5 font-mono text-xs text-fg-faint">
+  <SheetFoot>
     <p>
       Scanned {d.stats.articles_scanned.toLocaleString('en-US')} articles ·
       {d.stats.articles_mapped.toLocaleString('en-US')} mapped to a source country ·
@@ -193,6 +195,6 @@ const dateLabel = d.date
       Data: <a href={d.source.url} target="_blank" rel="noopener" class="underline decoration-line underline-offset-2 hover:text-fg">GDELT Project</a>
       ({d.source.license.toLowerCase()}) · method sheet: <a href="/werke/balance" class="underline decoration-line underline-offset-2 hover:text-fg">/werke/balance</a>
     </p>
-  </footer>
+  </SheetFoot>
 </article>
 </main>

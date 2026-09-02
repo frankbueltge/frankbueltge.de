@@ -1,0 +1,42 @@
+---
+// A fold on an experiment sheet (re-skin 2c, 2026-09-02): a native <details> — it works
+// without JavaScript and stays in the page for search — whose summary is cut from the shadcn
+// Button recipe and wears the frame's turning chevron (`.fold-chevron`, global.css), the same
+// gesture as the top bar's dropdowns and the ecology's bulletin folds. The label is the page's
+// own words, passed in; this file owns no wording.
+import { buttonVariants } from '@/components/ui/button'
+import { cn } from '@/lib/ui/cn'
+
+interface Props {
+  label: string
+  open?: boolean
+  id?: string
+  class?: string
+}
+
+const { label, open = false, id, class: extra } = Astro.props
+const summary = cn(
+  buttonVariants({ variant: 'ghost', size: 'sm' }),
+  '-ml-2 h-8 cursor-pointer list-none px-2 font-mono text-mono-sm font-normal uppercase tracking-[0.14em] text-fg-muted hover:text-fg [&::-webkit-details-marker]:hidden',
+)
+---
+
+<details id={id} class={cn('sheet-fold group', extra)} open={open}>
+  <summary class={summary}>
+    <svg
+      class="fold-chevron"
+      width="10"
+      height="10"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.4"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      aria-hidden="true"><path d="M6 9l6 6 6-6" /></svg>
+    <span>{label}</span>
+  </summary>
+  <div class="sheet-fold-body mt-3">
+    <slot />
+  </div>
+</details>
