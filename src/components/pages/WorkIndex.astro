@@ -1,42 +1,50 @@
 ---
+// /work on the frame's recipe (re-skin 2d, 2026-09-02): kicker as .kicker, the head on the
+// display step, every project a card that lifts because it leads somewhere, the live/dev word
+// and the stack as badges. The wording comes from i18n and src/data/projects as before.
 import { getRelativeLocaleUrl } from 'astro:i18n'
 import { t } from '@/i18n/ui'
 import { getProjects } from '@/data/projects'
 import type { Locale } from '@/lib/site'
+import { buttonVariants } from '@/components/ui/button'
+import { Badge } from '@/components/ui/badge'
+import { cn } from '@/lib/ui/cn'
 
 const locale = (Astro.currentLocale ?? 'en') as Locale
 const projects = getProjects()
+
+const kicker = 'kicker'
+const quietLink = cn(buttonVariants({ variant: 'ghost', size: 'sm' }), '-mx-2 px-2 font-mono text-mono-sm text-fg-faint hover:text-fg')
+/* a card that leads somewhere: the frame's resting depth, and the lift on hover or focus */
+const cardLink = 'lift group relative flex h-full flex-col rounded-md border border-line bg-panel p-6 panel-raised'
 ---
 
 <main id="main" class="mx-auto w-full max-w-5xl flex-1 px-6 py-16 sm:py-24">
   {/* The kicker names what this page is NOT (2026-08-01): /works, one letter away, is the
       research practices' complete works register. Two neighbouring routes that both mean
       "work" need to say which is which where a visitor lands, not in a redirect table. */}
-  <p class="mb-2 font-mono text-xs uppercase tracking-widest text-fg-faint">{t(locale, 'work.kicker')}</p>
-  <h1 class="text-[clamp(34px,6vw,64px)] font-bold tracking-[-0.03em]">{t(locale, 'work.title')}</h1>
-  <p class="mt-4 max-w-2xl text-fg-muted">{t(locale, 'work.sub')}</p>
-  <p class="mt-4 font-mono text-xs text-fg-faint">
+  <p class={cn(kicker, 'mb-2')}>{t(locale, 'work.kicker')}</p>
+  <h1 class="text-display font-bold">{t(locale, 'work.title')}</h1>
+  <p class="mt-4 max-w-2xl text-body text-fg-muted">{t(locale, 'work.sub')}</p>
+  <p class="mt-4 font-mono text-mono-sm text-fg-faint">
     {t(locale, 'work.register.lead')}{' '}
-    <a href={getRelativeLocaleUrl(locale, '/works')} class="underline decoration-line underline-offset-4 transition-colors hover:text-fg">{t(locale, 'work.register.label')}</a>
+    <a href={getRelativeLocaleUrl(locale, '/works')} class={quietLink}>{t(locale, 'work.register.label')}</a>
   </p>
 
-  <div class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+  <div class="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
     {projects.map((p) => (
-      <a
-        href={getRelativeLocaleUrl(locale, `/work/${p.slug}`)}
-        class="group relative flex flex-col overflow-hidden rounded-2xl border border-line bg-panel p-6 transition-colors hover:border-fg-muted/40"
-      >
+      <a href={getRelativeLocaleUrl(locale, `/work/${p.slug}`)} class={cardLink}>
         <div class="flex items-center justify-between">
-          <span class="font-mono text-xs text-fg-faint">{p.year}</span>
-          <span class={`font-mono text-[10px] uppercase tracking-wider ${p.badge === 'live' ? 'text-cyan' : 'text-accent-soft'}`}>
+          <span class="font-mono text-mono-sm text-fg-faint">{p.year}</span>
+          <Badge variant="outline" className={cn('border-line font-mono text-[10px] font-normal uppercase tracking-[0.14em]', p.badge === 'live' ? 'text-fg' : 'text-fg-muted')}>
             {p.badge === 'live' ? t(locale, 'badge.live') : t(locale, 'badge.dev')}
-          </span>
+          </Badge>
         </div>
-        <h2 class="mt-8 text-lg font-semibold transition-colors group-hover:text-accent-soft">{p.name}</h2>
-        <p class="mt-2 text-sm leading-relaxed text-fg-muted">{p.tagline[locale]}</p>
+        <h2 class="mt-8 text-h3 font-semibold text-fg">{p.name}</h2>
+        <p class="mt-2 text-small leading-relaxed text-fg-muted">{p.tagline[locale]}</p>
         <ul class="mt-5 flex flex-wrap gap-1.5">
           {p.tech.slice(0, 4).map((tech) => (
-            <li class="rounded-full border border-line px-2 py-0.5 font-mono text-[10px] text-fg-faint">{tech}</li>
+            <li><Badge variant="outline" className="border-line font-mono text-[10px] font-normal text-fg-faint">{tech}</Badge></li>
           ))}
         </ul>
       </a>

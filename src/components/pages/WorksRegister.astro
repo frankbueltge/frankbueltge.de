@@ -31,6 +31,8 @@ import { practiceWorkAudits } from '@/lib/graph/query'
 import { readable } from '@/lib/graph/derive'
 import { VERDICT_LEGEND } from '@/lib/graph/field'
 import { lineOfWork, lineShortLabel } from '@/lib/ecology/lines'
+import { Badge } from '@/components/ui/badge'
+import { cn } from '@/lib/ui/cn'
 
 const copy = NAMING.worksRegister
 const works = allWorks().map((w) => ({ ...w, desc: descFor(w.ns, w.slug, w.blurb) }))
@@ -64,26 +66,37 @@ const nsName = new Map(copy.practices.map((p) => [p.ns, p.name]))
 // appear here as a FOURTH practice, which was worse — and the repair made the two lines
 // indistinguishable. Both are the Atelier; only one of them keeps the nights.
 const lineOf = (w: (typeof works)[number]) => lineOfWork(w)
+
+// Re-skin 2d (2026-09-02): the register on the frame's recipe — the kicker as the one .kicker
+// class, the head on the type scale, the list as a panel with the frame's resting depth and a
+// hairline between rows, and a row that answers the pointer with the frame's own 200 ms wash.
+// The withdrawal and daylight marks are Badges now instead of a hand-drawn chip; both stay in
+// the mono skin, because a withdrawal is a completed honest act and a verdict is stated in
+// words. Nothing about what this page LISTS changed.
+const kicker = 'kicker'
+const panel = 'rounded-md border border-line bg-panel panel-raised'
+const quietLink = 'underline decoration-line underline-offset-4 transition-colors hover:text-fg'
+const mark = 'border-line font-mono text-mono-sm font-normal uppercase tracking-[0.12em]'
 ---
 
 <main id="main" class="wr-register mx-auto w-full max-w-4xl flex-1 px-4 py-10 sm:py-14">
   <header class="mb-10 max-w-3xl">
-    <p class="mb-2 font-mono text-xs uppercase tracking-widest text-fg-faint">
+    <p class={cn(kicker, 'mb-2')}>
       <b class="text-fg-muted">{copy.kicker}</b> · {copy.kickerSub}
     </p>
-    <h1 class="text-3xl font-semibold tracking-tight sm:text-4xl">{copy.title}</h1>
-    <p class="mt-4 text-fg-muted">{copy.intro}</p>
-    <p class="mt-3 text-fg-muted">{copy.honesty}</p>
+    <h1 class="text-h1 font-semibold">{copy.title}</h1>
+    <p class="mt-4 text-body text-fg-muted">{copy.intro}</p>
+    <p class="mt-3 text-body text-fg-muted">{copy.honesty}</p>
     {/* The one confusion this route can cause, defused where it happens: /work (singular) is
         the conductor's own projects page and stays exactly what it was. */}
-    <p class="mt-4 font-mono text-xs text-fg-faint">
+    <p class="mt-4 font-mono text-mono text-fg-faint">
       {copy.notThis.lead}{' '}
-      <a href={copy.notThis.href} class="underline decoration-line underline-offset-4 transition-colors hover:text-fg">{copy.notThis.label}</a>
+      <a href={copy.notThis.href} class={quietLink}>{copy.notThis.label}</a>
     </p>
   </header>
 
   {/* Counted, never claimed. */}
-  <p class="mb-6 font-mono text-xs leading-relaxed text-fg-muted">
+  <p class="mb-6 font-mono text-mono leading-relaxed text-fg-muted">
     <b class="tabular-nums text-fg">{summary.total}</b> in the register
     {perPractice.map((p) => (
       <>
@@ -103,44 +116,44 @@ const lineOf = (w: (typeof works)[number]) => lineOfWork(w)
   {/* The absence, said once and plainly rather than repeated as a disclaimer on 55 rows. A
       catalogue that stamped "not checked" beside almost every line would read as noise and stop
       being read at all; a single sentence that names the ratio cannot be skimmed past. */}
-  <p class="mb-6 max-w-[80ch] font-mono text-[11px] leading-relaxed text-fg-faint">
+  <p class="mb-6 max-w-[80ch] font-mono text-mono-sm leading-relaxed text-fg-faint">
     Prior art checked for <b class="tabular-nums text-fg-muted">{auditedCount}</b> of{' '}
     <span class="tabular-nums">{summary.total}</span> works
-    (<a href={auditHref} rel="noopener" class="underline decoration-line underline-offset-4 transition-colors hover:text-fg">the audit of 2026-08-09</a>).
+    (<a href={auditHref} rel="noopener" class={quietLink}>the audit of 2026-08-09</a>).
     A work without a note below is <b class="text-fg-muted">unexamined, not cleared</b>.
   </p>
 
-  <ol class="divide-y divide-line/60 overflow-hidden rounded-[10px] border border-line bg-panel">
+  <ol class={cn(panel, 'divide-y divide-line/60 overflow-hidden')}>
     {works.map((w) => {
       const audit = audits.get(`${w.ns}/${w.slug}`)
       return (
       <li class="wr-row" data-voice={w.ns}>
         <a href={w.href} class="group flex flex-wrap items-baseline gap-x-3 gap-y-1 py-3.5 pl-4 pr-4 sm:pl-6 sm:pr-6">
-          <span class="w-[6.5em] shrink-0 whitespace-nowrap font-mono text-[11px] tabular-nums text-fg-faint">{w.date}</span>
+          <span class="w-[6.5em] shrink-0 whitespace-nowrap font-mono text-mono-sm tabular-nums text-fg-faint">{w.date}</span>
           {/* nowrap and wide enough for the longest practice name: at 7.5em "THE ATELIER" broke
               over two lines and pushed its own row taller than the rest of the register. */}
-          <span class="w-[8.5em] shrink-0 whitespace-nowrap font-mono text-[10px] uppercase tracking-[0.14em] text-fg-muted">{nsName.get(w.ns) ?? w.ns}</span>
-          <span class="font-semibold tracking-[-0.01em] transition-opacity group-hover:opacity-70">{w.title}</span>
+          <span class="w-[8.5em] shrink-0 whitespace-nowrap font-mono text-mono-xs uppercase tracking-[0.14em] text-fg-muted">{nsName.get(w.ns) ?? w.ns}</span>
+          <span class="text-h3 font-semibold group-hover:text-fg">{w.title}</span>
           {/* The line, where a practice runs more than one. It sits AFTER the title rather than in
               the practice column: the column is fixed-width so that titles align down the whole
               register, and a second word in it would have pushed every title of every practice. */}
           {lineOf(w) && (
-            <span class="wr-line font-mono text-[10px] uppercase tracking-[0.12em] text-fg-faint">{lineShortLabel(lineOf(w)!)}</span>
+            <span class="wr-line font-mono text-mono-xs uppercase tracking-[0.12em] text-fg-faint">{lineShortLabel(lineOf(w)!)}</span>
           )}
           {w.state === 'withdrawn' && (
-            <span class="wr-chip font-mono text-[10px] uppercase tracking-[0.12em] text-fg-faint">
+            <Badge variant="outline" className={cn(mark, 'text-fg-faint')}>
               {copy.withdrawnLabel}{w.withdrawnOn && ` ${w.withdrawnOn}`}
-            </span>
+            </Badge>
           )}
           {/* The second-line indent is in rem, not em: the two lines below run at different font
               sizes, so an em indent would have set them a dozen pixels apart under the same title. */}
           {w.desc && (
-            <span class="w-full text-[13px] leading-snug text-fg-muted line-clamp-2 sm:pl-[11.3rem]">{w.desc}</span>
+            <span class="w-full text-small leading-snug text-fg-muted line-clamp-2 sm:pl-[11.3rem]">{w.desc}</span>
           )}
           {/* The withdrawal itself, verbatim and in full — a mark the record keeps has to be
               readable, not a tooltip somebody has to find. */}
           {w.withdrawnNote && (
-            <span class="w-full font-mono text-[11px] leading-relaxed text-fg-faint sm:pl-[11.3rem]">{w.withdrawnNote}</span>
+            <span class="w-full font-mono text-mono-sm leading-relaxed text-fg-faint sm:pl-[11.3rem]">{w.withdrawnNote}</span>
           )}
         </a>
         {/* The neighbours, OUTSIDE the row's link: they are links of their own, and a link
@@ -149,14 +162,14 @@ const lineOf = (w: (typeof works)[number]) => lineOfWork(w)
             words ("little daylight"), never painted. */}
         {audit && (
           <div class="wr-audit pb-3.5 pl-4 pr-4 sm:pl-6 sm:pr-6">
-            <p class="font-mono text-[11px] leading-relaxed text-fg-faint sm:pl-[11.3rem]">
-              <span class="wr-chip mr-2 uppercase tracking-[0.12em] text-fg-muted">{daylightWord(audit.verdict)}</span>
+            <p class="font-mono text-mono-sm leading-relaxed text-fg-faint sm:pl-[11.3rem]">
+              <Badge variant="outline" className={cn(mark, 'mr-2 text-fg-muted')}>{daylightWord(audit.verdict)}</Badge>
               nearest prior art:{' '}
               {audit.neighbours.map((n, i) => (
                 <>
                   {i > 0 ? ' · ' : ''}
                   {n.url ? (
-                    <a href={n.url} rel="noopener nofollow" class="underline decoration-line underline-offset-4 transition-colors hover:text-fg">{readable(n.label)}</a>
+                    <a href={n.url} rel="noopener nofollow" class={quietLink}>{readable(n.label)}</a>
                   ) : (
                     <span>{readable(n.label)}</span>
                   )}
@@ -170,24 +183,24 @@ const lineOf = (w: (typeof works)[number]) => lineOfWork(w)
     })}
   </ol>
 
-  <p class="mt-6 font-mono text-xs leading-relaxed text-fg-faint">
+  <p class="mt-6 font-mono text-mono leading-relaxed text-fg-faint">
     {copy.roomsLead}
     {copy.practices.map((p, i) => (
       <>
-        {i > 0 ? ' · ' : ' '}<a href={p.roomHref} class="underline decoration-line underline-offset-4 transition-colors hover:text-fg">{p.roomLabel}</a>
+        {i > 0 ? ' · ' : ' '}<a href={p.roomHref} class={quietLink}>{p.roomLabel}</a>
       </>
     ))}
   </p>
 
-  <p class="mt-2 font-mono text-xs text-fg-faint">
+  <p class="mt-2 font-mono text-mono text-fg-faint">
     {copy.entranceNote.lead}{' '}
-    <a href={copy.entranceNote.href} class="underline decoration-line underline-offset-4 transition-colors hover:text-fg">{copy.entranceNote.label}</a>
+    <a href={copy.entranceNote.href} class={quietLink}>{copy.entranceNote.label}</a>
   </p>
 
   {/* Provenance: the directories this page was built from, named so the list can be checked
       against the repository without reading the code. */}
   <footer class="mt-10 border-t border-line/60 pt-5">
-    <p class="font-mono text-[11px] leading-relaxed text-fg-faint">
+    <p class="font-mono text-mono-sm leading-relaxed text-fg-faint">
       {copy.provenanceLead}
       {WORK_SOURCES.map((s, i) => (
         <>
@@ -195,7 +208,7 @@ const lineOf = (w: (typeof works)[number]) => lineOfWork(w)
         </>
       ))}
     </p>
-    <p class="mt-2 max-w-[80ch] font-mono text-[11px] leading-relaxed text-fg-faint">{copy.provenanceTail}</p>
+    <p class="mt-2 max-w-[80ch] font-mono text-mono-sm leading-relaxed text-fg-faint">{copy.provenanceTail}</p>
   </footer>
 </main>
 
@@ -232,14 +245,23 @@ const lineOf = (w: (typeof works)[number]) => lineOfWork(w)
   .wr-row[data-voice='field'] { --wr-c: var(--wr-c-field); }
   .wr-row[data-voice='studio'] { --wr-c: var(--wr-c-studio); }
 
-  /* The withdrawal chip stays in the mono skin: a bordered mark, never a warning red. A
-     withdrawal here is a completed honest act, not an error state (CLAUDE.md: status colours
-     are out of bounds where the practice does not judge). */
-  .wr-chip {
-    border: 1px solid var(--color-line);
-    border-radius: 2px;
-    padding: 1px 7px;
+  /* The row answers the pointer with the frame's own gesture, at the frame's own speed
+     (re-skin 2d, 2026-09-02): a register is read by running down it, so a row washes rather
+     than rises — a lift on 57 stacked rows would ripple the whole plate. :focus-within so a
+     row reached by Tab shows what its mouse visitor sees. The 200 ms and the easing are the
+     frame's; the utility rule in global.css cannot reach a <li>, which is why it stands here. */
+  .wr-row {
+    transition: background-color 0.2s var(--ease-frame);
   }
+  .wr-row:hover,
+  .wr-row:focus-within {
+    background-color: var(--color-panel-2);
+  }
+
+  /* The withdrawal and daylight marks moved onto the shared Badge primitive on 2026-09-02;
+     both stay in the mono skin, never a warning red — a withdrawal is a completed honest act,
+     not an error state (CLAUDE.md: status colours are out of bounds where the practice does
+     not judge). */
 
   /* The line marker is NOT a chip. A chip is a state the record put on a work — withdrawn,
      little daylight — and a line is neither a state nor a judgement: it is which strand of the
