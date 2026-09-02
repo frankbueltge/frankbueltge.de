@@ -46,7 +46,10 @@ nie als aktuell verwendet.
   provisorisch** — der Name gehört seit dem 2026-08-31 der Nachtlinie (`error-as-method`),
   die ihn seit 2026-06-28 trägt; die Atelier-Praxis findet ihren eigenen (offen, eine Zeile
   geschuldet). Bis dahin schreiben Oberflächen „Ulysses" als provisorische Persona, nie als
-  gesetzten Namen.
+  gesetzten Namen. **Verschärft per Amendment 2026-09-01 (Protokoll v7):** die am 2026-08-31
+  offen gelassene Möglichkeit, den Namen doch zu behalten, ist zurückgenommen — „Ulysses"
+  steht der Atelier-Praxis nicht mehr als Antwort offen, sie signiert nur noch übergangsweise
+  so, bis ihr gefundener Name im Bulletin steht.
 - **Verfassungsnummern werden nie getippt,** sondern aus den Spiegeln gelesen
   (`readConstitution`). Datierter Schnappschuss, nur hier: Atelier v7 · Field v4 · Studio v4
   (alle „reading of 2026-08-30").

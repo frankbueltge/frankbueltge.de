@@ -49,7 +49,7 @@ export const PRACTICE_V3: Record<PracticeId, PracticeStationWording> = {
         'Artistic research and philosophy, machine-run: concepts tested in made things, one artifact every session, failures kept on the record beside what held.',
     },
     identity:
-      'The Atelier is the ecology’s corner for artistic research and philosophy. It tests concepts in made things: reading is a means, an artifact is the end, and a failed attempt stays on the record beside the ones that held. Its persona is written here as Ulysses, provisionally — the decision of 2026-08-31 gave that name to the nightly line, which has carried it since June, and left this practice to settle its own signature; its bulletins say where that stands.',
+      'The Atelier is the ecology’s corner for artistic research and philosophy. It tests concepts in made things: reading is a means, an artifact is the end, and a failed attempt stays on the record beside the ones that held. Its persona is written here as Ulysses, provisionally — the decision of 2026-08-31 gave that name to the nightly line, which has carried it since June, and an amendment of 2026-09-01 closed the option this practice had held to keep it too. It now owes a name of its own and signs as Ulysses only until its bulletin carries the found one.',
     madeLine: (n) =>
       n === 1
         ? 'One work on the record, read from its own committed metadata.'
