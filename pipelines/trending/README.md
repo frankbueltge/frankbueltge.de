@@ -1,7 +1,7 @@
 # trending — the morning reader behind Common Ground (`/trending`)
 
 Every morning this package reads what the web is searching, reading and posting about from
-eight public sources that need no key, keeps what converges across independent platforms by a
+twenty public sources that need no key, keeps what converges across independent platforms by a
 disclosed token rule, and writes one day file into the site. A day later the same run asks
 Cloudflare's edge analytics who fetched `/trending` the day before and writes that as a second
 file — classes and bot names only, never a raw user agent. Git is the archive: a committed day
@@ -36,11 +36,29 @@ numeric fields are then `null` and its collections empty. Nothing is estimated.
 
 ## Sources, in order
 
-`google_trends` (daily search trends RSS, US · GB · CA · AU · IN · DE), `wikipedia`
-(most-read articles of the day before, `en` and `de`, with a four-day lookback for the
-publication lag), `hackernews` (front page), `bluesky` (trending topics), `mastodon`
-(trending tags and links), `google_news` (top stories), `reddit` (r/popular, optional),
-`github` (most-starred repositories created in the last seven days).
+The day's broad publics first: `google_trends` (daily search trends RSS, US · GB · CA · AU ·
+IN · DE · BR · FR · JP · MX), `wikipedia` (most-read articles of the day before, `en` · `de` ·
+`fr` · `es` · `ja` · `pt`, with a four-day lookback for the publication lag), `hackernews`
+(front page), `bluesky` (trending topics), `mastodon` (trending tags and links),
+`google_news` (top stories), `reddit` (r/popular, optional), `github` (most-starred
+repositories created in the last seven days).
+
+Then twelve narrower publics, the places where a term surfaces before it reaches a headline:
+`huggingface` (trending models on the Hub, by downloads), `lobsters` (hottest stories, by
+points), `devto` (top articles of the last day, by reactions), `stackoverflow` (hot questions,
+by score — the keyless Stack Exchange quota is 300 requests a day and one is spent here),
+`pypi` (most-downloaded packages of the last month, from the published top list derived from
+the official download statistics; monthly, CC BY 4.0, optional), `producthunt` (newest
+products, optional), `techmeme` (the editorially curated technology front page, optional),
+`arxiv` (newest preprints in cs.AI · cs.CL · cs.LG · cs.SE, one request, optional),
+`appstore` (top free apps, US and DE, from Apple's Marketing Tools RSS), `steam` (store top
+sellers, optional), `coingecko` (trending searches, optional), `polymarket` (open markets by
+24-hour volume, optional).
+
+Every one of them is keyless, reads one endpoint per run (`appstore` two, one per storefront)
+and keeps at most one request per half second. `optional` marks a feed that blocks or changes
+shape without notice: it becomes an `unavailable` line in the day's `sources[]`, never a
+crash.
 
 Titles, URLs and counts only — never article bodies.
 
@@ -81,3 +99,34 @@ Exit codes: `0` on success (also when the day file already exists — it is left
 
 The nightly workflow is `.github/workflows/trending.yml` (06:40 UTC, commits as Morgenlese).
 Design and measurement: `docs/design/2026-09-02-common-ground.md`.
+
+## Layer 2 — the arcs (`src/data/trending/terms/YYYY-MM-DD.json`, contract `trending-terms/1`)
+
+Beside the day's spikes the run tracks the slower arcs: a watched list of terms
+(`src/trending/data/watchlist.json`) whose mentions in the last one, seven and thirty days
+are counted per platform — Hacker News (Algolia search), Google News (RSS search), GitHub
+(repositories created in the window), arXiv, Reddit (optional; its search feed often refuses)
+and, when the watchlist names an article, Wikipedia pageviews. A term is searched as a quoted
+phrase together with its aliases; platforms whose syntax knows OR get one request per term.
+Every count comes with receipts (title, URL, date) and a `capped` flag where a feed stops
+short of the window. The status — emerging, rising, established, fading, quiet — follows the
+thresholds in `rules.json` (`min_mentions_d7`, `rising_ratio`, `fading_ratio`,
+`emerging_days`, `established_d30`) and is spelled out on the method sheet.
+
+The same step runs a discovery pass over a thirty-day corpus of titles (Hacker News stories
+with fifty or more points, dev.to's top articles, arXiv's four computer-science categories in
+equal date slices, GitHub's most-starred new repositories) and proposes bigrams and trigrams
+whose document count in the recent fourteen days outpaces the sixteen before, provided at
+least two platforms carry them (`discover_*` in `rules.json`, drop rules in
+`ngram_blocklist.json`). Proposals are recorded under `candidates` and shown on the site;
+nothing enters the watchlist without a human editing the file — the `added`, `origin` and
+`note` fields say when and why.
+
+```bash
+python -m trending.discover --repo-root . --days 30   # print the candidate table, write nothing
+python -m trending.terms --repo-root .                # today's arcs record only
+python -m trending.run --repo-root . --skip-terms     # the day file without the arcs
+```
+
+`GITHUB_TOKEN` (optional) lifts GitHub's search limit from ten to thirty requests a minute;
+the nightly workflow passes the built-in token.

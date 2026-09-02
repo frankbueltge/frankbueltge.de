@@ -69,6 +69,11 @@
 # Read-only machine surfaces of the trending ledger (Common Ground, /trending): the day files,
 # the archive register, the Markdown edition and the feed. Open CORS because they exist to be
 # fetched from elsewhere; the data is CC0 and carries nothing a browser could be tracked by.
+#
+# One splat covers the arcs too: in a Pages `_headers` file an asterisk greedily matches ALL
+# characters, slashes included (Cloudflare docs, "Headers → Match a path → Splats"), so this
+# rule also serves /trending/topics.json and /trending/topics/<slug>.json. Only one splat per
+# pattern is allowed, which is why the arcs' Markdown edition needs its own exact block below.
 /trending/*.json
   Access-Control-Allow-Origin: *
   Cache-Control: public, max-age=900
@@ -76,6 +81,12 @@
 # Read-only machine surfaces of the trending ledger, continued: the same day as plain text, for
 # readers that parse Markdown better than markup. Rebuilt with the site, never at runtime.
 /trending/latest.md
+  Access-Control-Allow-Origin: *
+  Cache-Control: public, max-age=900
+
+# The same, for the arcs hub (/trending/topics): its Markdown edition. An exact path, because
+# the block above is exact too and a splat rule cannot reach both.
+/trending/topics/latest.md
   Access-Control-Allow-Origin: *
   Cache-Control: public, max-age=900
 

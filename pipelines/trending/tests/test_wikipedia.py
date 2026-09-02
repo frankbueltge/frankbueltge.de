@@ -67,4 +67,4 @@ def test_novelty_rule_is_inactive_with_a_short_archive(ctx_factory):
 
 def test_no_published_day_is_a_note(ctx_factory):
     res = wikipedia.fetch_source(ctx_factory(lambda req: httpx.Response(404)))
-    assert res.signals == [] and len(res.notes) == 2
+    assert res.signals == [] and len(res.notes) == len(wikipedia.LANGS)

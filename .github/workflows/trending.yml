@@ -46,6 +46,9 @@ jobs:
       - name: Run the ledger (writes, does not commit)
         env:
           CF_ANALYTICS_TOKEN: ${{ secrets.CF_ANALYTICS_TOKEN }}
+          # The built-in token lifts GitHub's search limit from 10 to 30 requests a minute for
+          # the term tracker; the pipeline runs unauthenticated (slower) when it is absent.
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CF_ZONE_ID: ${{ vars.CF_ZONE_ID }}
           UMAMI_API_URL: ${{ secrets.UMAMI_API_URL }}
           UMAMI_USERNAME: ${{ secrets.UMAMI_USERNAME }}
