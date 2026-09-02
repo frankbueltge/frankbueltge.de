@@ -76,7 +76,7 @@ per language — a rule change on the method sheet, never a rewrite of a committ
   `CF_ANALYTICS_TOKEN`; the zone id → repository variable `CF_ZONE_ID`.
 - AI Crawl Control → Crawlers: GPTBot, ClaudeBot, CCBot, meta-externalagent, Bytespider and
   Diffbot from *Block* to *Allow*; then one WAF custom rule (Block) with the expression
-  `(http.user_agent contains "GPTBot" or http.user_agent contains "ClaudeBot" or http.user_agent contains "CCBot" or http.user_agent contains "meta-externalagent" or http.user_agent contains "Bytespider" or http.user_agent contains "Diffbot") and not starts_with(http.request.uri.path, "/trending")`,
+  `(http.user_agent contains "GPTBot" or http.user_agent contains "ClaudeBot" or http.user_agent contains "CCBot" or http.user_agent contains "meta-externalagent" or http.user_agent contains "Bytespider" or http.user_agent contains "Diffbot") and not starts_with(http.request.uri.path, "/trending") and not http.request.uri.path in {"/robots.txt" "/llms.txt"} and not starts_with(http.request.uri.path, "/sitemap")`,
   so the rest of the site keeps its policy at the edge while `/trending*` is open.
 - Optional: a view-only Umami user → `UMAMI_API_URL`, `UMAMI_USERNAME`, `UMAMI_PASSWORD`.
 - Optional: `INDEXNOW_KEY` (`openssl rand -hex 16`) → the deploy writes the key file and pings

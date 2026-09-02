@@ -167,7 +167,7 @@ Ausnahme für genau eine Route, datiert und begründet:
 - **Kante:** Die Trainings-Crawler stehen im Dashboard unter AI Crawl Control auf *Block*
   (§3b). Die Deklaration wirkt erst, wenn Frank sie dort auf *Allow* stellt **und** eine
   WAF-Regel den Rest der Site weiter schützt — Ausdruck:
-  `(http.user_agent contains "GPTBot" or http.user_agent contains "ClaudeBot" or http.user_agent contains "CCBot" or http.user_agent contains "meta-externalagent" or http.user_agent contains "Bytespider" or http.user_agent contains "Diffbot") and not starts_with(http.request.uri.path, "/trending")`,
+  `(http.user_agent contains "GPTBot" or http.user_agent contains "ClaudeBot" or http.user_agent contains "CCBot" or http.user_agent contains "meta-externalagent" or http.user_agent contains "Bytespider" or http.user_agent contains "Diffbot") and not starts_with(http.request.uri.path, "/trending") and not http.request.uri.path in {"/robots.txt" "/llms.txt"} and not starts_with(http.request.uri.path, "/sitemap")`,
   Aktion Block. Bis dahin ist die Ausnahme deklariert, aber nicht durchgesetzt; die
   nächtliche Leserschafts-Datei (`src/data/trending/audience/`) zeigt die abgewiesenen Abrufe
   als `other_status`.
