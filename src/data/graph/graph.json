@@ -4,15 +4,15 @@
     "sources": [
       {
         "file": "src/data/werke.ts",
-        "sha256": "7e3a4b6b2f6881d6"
+        "sha256": "609479331d7d5b23"
       },
       {
         "file": "docs/audits/2026-08-09-usp-audit.md",
-        "sha256": "03f7c464de74de3a"
+        "sha256": "6f4cc3e25ebf5ae4"
       },
       {
         "file": "docs/decision-log.md",
-        "sha256": "9984d834cfd727cd"
+        "sha256": "e003f6728a323199"
       },
       {
         "file": "src/data/post/ledger.json",
@@ -57,12 +57,12 @@
       }
     ],
     "counts": {
-      "nodes": 336,
-      "edges": 287,
+      "nodes": 341,
+      "edges": 292,
       "nodesByKind": {
-        "decision": 88,
+        "decision": 89,
         "encounter": 6,
-        "neighbor": 102,
+        "neighbor": 106,
         "practice": 9,
         "practice-work": 99,
         "receiver": 8,
@@ -73,9 +73,9 @@
         "concerns": 2,
         "door": 5,
         "made-by": 99,
-        "neighbor-of": 102,
+        "neighbor-of": 106,
         "participates": 17,
-        "touches": 54
+        "touches": 55
       }
     }
   },
@@ -953,6 +953,16 @@
     {
       "id": "decision:2026-09-02-1",
       "kind": "decision",
+      "label": "Common Ground gains a second layer: Arcs — a term tracker with a discovery pass, one landing page per tracked word",
+      "date": "2026-09-02",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "Common Ground gains a second layer: Arcs — a term tracker with a discovery pass, one landing page per tracked word"
+      }
+    },
+    {
+      "id": "decision:2026-09-02-2",
+      "kind": "decision",
       "label": "Common Ground — a trending ledger built for machine readers, with its own audience counted",
       "date": "2026-09-02",
       "source": {
@@ -1112,6 +1122,16 @@
         "quote": "[Trends Aggregator (Apify actor)](https://apify.com/miccho27/trends-aggregator) — Google Trends, Hacker News, Reddit, GitHub and Product Hunt in one paid actor run; per-source lists returned to the caller, no public surface, no archive, no cross-source matching."
       },
       "url": "https://apify.com/miccho27/trends-aggregator"
+    },
+    {
+      "id": "neighbor:apify-com-mick-johnson-topic-radar",
+      "kind": "neighbor",
+      "label": "TopicRadar (Apify actor)",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[TopicRadar (Apify actor)](https://apify.com/mick-johnson/topic-radar) — the closest neighbour of the *per-term tracking* half, launched on Show HN in 2026: a paid, closed-source actor that queries Hacker News, GitHub, arXiv, Stack Overflow, Lobste.rs, Papers with Code and Semantic Scholar for one topic and returns a hundred and fifty-odd results per run. The receipts exist here — and belong to whoever paid for the run: no public page, no status, no windows, no committed series, and nothing that says whether a term is accelerating or dying."
+      },
+      "url": "https://apify.com/mick-johnson/topic-radar"
     },
     {
       "id": "neighbor:arstechnica-com-information-technology-2013-04-churnalism-tr",
@@ -1367,7 +1387,7 @@
       "label": "Exploding Topics",
       "source": {
         "file": "docs/audits/2026-08-09-usp-audit.md",
-        "quote": "[Exploding Topics](https://explodingtopics.com/) — a paid keyword-growth service: single-keyword search-volume curves over months, sold as a dashboard; no daily cross-platform list, no open data."
+        "quote": "[Exploding Topics](https://explodingtopics.com/) — the strongest living neighbour of the *arcs* half: a subscription trend-intelligence service that scores emerging topics from search, social, forums, news and podcasts and shows each one as a volume-and-growth curve over months, with a free tier that shows a handful. The platforms behind a score appear as categories, never as individual mentions a reader can open; the growth figure is the product, so there is no receipt, no open data, no public archive and no threshold anyone outside can recompute."
       },
       "url": "https://explodingtopics.com/"
     },
@@ -1600,6 +1620,16 @@
         "quote": "[Media Cloud](https://www.media.mit.edu/projects/media-cloud/overview) (MIT/Harvard) — ingests 1B+ articles, [explicitly deduplicates repeated sentences across sources](https://medium.com/media-cloud-project/tech-brief-how-we-deduplicate-content-in-media-cloud-772cd46b6f7f) at global scale with an open API."
       },
       "url": "https://www.media.mit.edu/projects/media-cloud/overview"
+    },
+    {
+      "id": "neighbor:meetglimpse-com",
+      "kind": "neighbor",
+      "label": "Glimpse",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Glimpse](https://meetglimpse.com/) — the paid detector of \"exploding\" search terms: Google-Trends-derived absolute search volume per keyword and country, year-over-year and month-over-month growth, and a breakdown of which social channels discuss a topic, sold as a dashboard, a browser extension and a subscriber API; search interest is the whole signal, so a term rising in code, papers or developer forums before anyone searches for it is invisible, and nothing is published as a series a reader keeps."
+      },
+      "url": "https://meetglimpse.com/"
     },
     {
       "id": "neighbor:metaculus-good-judgment-superforecasters",
@@ -1864,6 +1894,16 @@
       "url": "https://sunlightfoundation.com/gov404"
     },
     {
+      "id": "neighbor:support-google-com-trends-answer-4355000",
+      "kind": "neighbor",
+      "label": "Google Trends — rising related searches",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Google Trends — rising related searches](https://support.google.com/trends/answer/4355000) — the free, canonical way to watch a term climb: related searches ranked by growth over the chosen window, with \"Breakout\" standing in for growth above five thousand per cent. A relative index of one platform's searches — no absolute counts, no sources behind a rise, and no history the reader holds; it is the surface the arcs are meant to precede, not compete with."
+      },
+      "url": "https://support.google.com/trends/answer/4355000"
+    },
+    {
       "id": "neighbor:support-skylight-global",
       "kind": "neighbor",
       "label": "Skylight",
@@ -1930,6 +1970,16 @@
         "quote": "[Transparency International EU — Integrity Watch Red Flags](https://transparency.eu/integrity-watch-red-flags) — real-time public procurement monitoring, ~40,000 EU-budget + 320,000+ national contracts across 9 countries, updated near-daily, 20 fraud/corruption risk indicators."
       },
       "url": "https://transparency.eu/integrity-watch-red-flags"
+    },
+    {
+      "id": "neighbor:treendly-com",
+      "kind": "neighbor",
+      "label": "Treendly",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Treendly](https://treendly.com/) — a freemium catalogue of rising trends by industry with growth curves, forecasts and email alerts; curation over one search signal, no cross-platform mention counts, no receipts, no open data."
+      },
+      "url": "https://treendly.com/"
     },
     {
       "id": "neighbor:trends-google-com-trending",
@@ -4232,7 +4282,7 @@
       "tier": "experiment",
       "verdict": "ADDED VALUE",
       "verdictLabel": "ADDED VALUE (provisional — sealed before ship).",
-      "daylight": "Once thirty archived days exist: a pattern report over the archive — topic persistence, weekday rhythm, category mix, the share of days on which anything converges at all — published from committed files, never from a live call. A second language axis (German trends beside the English ones are already collected; the convergence rule must learn that a topic can surface in two languages). An MCP server serving the day file, so the readers this page is built for can ask it directly — built here first, published on Frank's button.",
+      "daylight": "Once thirty archived days exist: a pattern report over the archive — topic persistence, weekday rhythm, category mix, the share of days on which anything converges at all — published from committed files, never from a live call. A second language axis (German trends beside the English ones are already collected; the convergence rule must learn that a topic can surface in two languages). An MCP server serving the day file, so the readers this page is built for can ask it directly — built here first, published on Frank's button. For the arcs layer, once ninety days of term files exist: a lead-time record over the committed series — how long a term sits at \"emerging\" before it moves, which arcs die without ever reaching a search trend at all, and how many weeks earlier a term appears in repositories and preprints than in Google's rising related searches. That last measurement is the one no paid tracker can publish, because none of them keeps a public series to measure the lead against.",
       "auditSource": {
         "file": "docs/audits/2026-08-09-usp-audit.md",
         "quote": "ADDED VALUE (provisional — sealed before ship)."
@@ -6300,6 +6350,17 @@
     {
       "kind": "neighbor-of",
       "from": "work:trending",
+      "to": "neighbor:apify-com-mick-johnson-topic-radar",
+      "note": "the closest neighbour of the *per-term tracking* half, launched on Show HN in 2026: a paid, closed-source actor that queries Hacker News, GitHub, arXiv, Stack Overflow, Lobste.rs, Papers with Code and Semantic Scholar for one topic and returns a hundred and fifty-odd results per run. The receipts exist here — and belong to whoever paid for the run: no public page, no status, no windows, no committed series, and nothing that says whether a term is accelerating or dying.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[TopicRadar (Apify actor)](https://apify.com/mick-johnson/topic-radar) — the closest neighbour of the *per-term tracking* half, launched on Show HN in 2026: a paid, closed-source actor that queries Hacker News, GitHub, arXiv, Stack Overflow, Lobste.rs, Papers with Code and Semantic Scholar for one topic and returns a hundred and fifty-odd results per run. The receipts exist here — and belong to whoever paid for the run: no public page, no status, no windows, no committed series, and nothing that says whether a term is accelerating or dying."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:trending",
       "to": "neighbor:arxiv-org-abs-2603-21871",
       "note": "the academic proof that archiving trend surfaces is worth doing: a year of Google \"Trending now\" across a hundred and twenty-five countries, seven-and-a-half million trend episodes; one platform, a research dataset, not a living daily page.",
       "state": "ADDED VALUE",
@@ -6345,11 +6406,11 @@
       "kind": "neighbor-of",
       "from": "work:trending",
       "to": "neighbor:explodingtopics-com",
-      "note": "a paid keyword-growth service: single-keyword search-volume curves over months, sold as a dashboard; no daily cross-platform list, no open data.",
+      "note": "the strongest living neighbour of the *arcs* half: a subscription trend-intelligence service that scores emerging topics from search, social, forums, news and podcasts and shows each one as a volume-and-growth curve over months, with a free tier that shows a handful. The platforms behind a score appear as categories, never as individual mentions a reader can open; the growth figure is the product, so there is no receipt, no open data, no public archive and no threshold anyone outside can recompute.",
       "state": "ADDED VALUE",
       "source": {
         "file": "docs/audits/2026-08-09-usp-audit.md",
-        "quote": "[Exploding Topics](https://explodingtopics.com/) — a paid keyword-growth service: single-keyword search-volume curves over months, sold as a dashboard; no daily cross-platform list, no open data."
+        "quote": "[Exploding Topics](https://explodingtopics.com/) — the strongest living neighbour of the *arcs* half: a subscription trend-intelligence service that scores emerging topics from search, social, forums, news and podcasts and shows each one as a volume-and-growth curve over months, with a free tier that shows a handful. The platforms behind a score appear as categories, never as individual mentions a reader can open; the growth figure is the product, so there is no receipt, no open data, no public archive and no threshold anyone outside can recompute."
       }
     },
     {
@@ -6361,6 +6422,39 @@
       "source": {
         "file": "docs/audits/2026-08-09-usp-audit.md",
         "quote": "[trend-pulse](https://github.com/claude-world/trend-pulse) — the strongest living neighbour of the *aggregation* half: an MIT-licensed aggregator of twenty built-in and seventeen plugin sources (Google Trends, Hacker News, Reddit, GitHub, Bluesky, Wikipedia …) with a CLI, a Python library and an MCP server; a merged ranking, but no cross-source convergence score, no public page, and no public archive — history lives in a local SQLite file per user."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:trending",
+      "to": "neighbor:meetglimpse-com",
+      "note": "the paid detector of \"exploding\" search terms: Google-Trends-derived absolute search volume per keyword and country, year-over-year and month-over-month growth, and a breakdown of which social channels discuss a topic, sold as a dashboard, a browser extension and a subscriber API; search interest is the whole signal, so a term rising in code, papers or developer forums before anyone searches for it is invisible, and nothing is published as a series a reader keeps.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Glimpse](https://meetglimpse.com/) — the paid detector of \"exploding\" search terms: Google-Trends-derived absolute search volume per keyword and country, year-over-year and month-over-month growth, and a breakdown of which social channels discuss a topic, sold as a dashboard, a browser extension and a subscriber API; search interest is the whole signal, so a term rising in code, papers or developer forums before anyone searches for it is invisible, and nothing is published as a series a reader keeps."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:trending",
+      "to": "neighbor:support-google-com-trends-answer-4355000",
+      "note": "the free, canonical way to watch a term climb: related searches ranked by growth over the chosen window, with \"Breakout\" standing in for growth above five thousand per cent. A relative index of one platform's searches — no absolute counts, no sources behind a rise, and no history the reader holds; it is the surface the arcs are meant to precede, not compete with.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Google Trends — rising related searches](https://support.google.com/trends/answer/4355000) — the free, canonical way to watch a term climb: related searches ranked by growth over the chosen window, with \"Breakout\" standing in for growth above five thousand per cent. A relative index of one platform's searches — no absolute counts, no sources behind a rise, and no history the reader holds; it is the surface the arcs are meant to precede, not compete with."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:trending",
+      "to": "neighbor:treendly-com",
+      "note": "a freemium catalogue of rising trends by industry with growth curves, forecasts and email alerts; curation over one search signal, no cross-platform mention counts, no receipts, no open data.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Treendly](https://treendly.com/) — a freemium catalogue of rising trends by industry with growth curves, forecasts and email alerts; curation over one search signal, no cross-platform mention counts, no receipts, no open data."
       }
     },
     {
@@ -7079,6 +7173,15 @@
     {
       "kind": "touches",
       "from": "decision:2026-09-02-1",
+      "to": "work:trending",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "src/data/trending/terms/"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-09-02-2",
       "to": "work:trending",
       "source": {
         "file": "docs/decision-log.md",

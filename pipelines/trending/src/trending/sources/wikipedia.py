@@ -1,4 +1,8 @@
-"""Wikipedia — the most-read articles of the newest published day, English and German.
+"""Wikipedia — the most-read articles of the newest published day, in six languages.
+
+English and German first, because the rest of the house reads in those two and `as_of` is
+taken from the English edition; then French, Spanish, Japanese and Portuguese, so that what
+is read in one language can be told apart from what is read everywhere.
 
 The Wikimedia top-pageviews endpoint publishes a day with a lag, so the newest available of
 the last four days is used and named in `as_of`. Namespace pages, a small stoplist of
@@ -14,13 +18,22 @@ from trending.fetch import SourceUnavailable, fetch
 from trending.model import Signal
 from trending.sources.base import Context, SourceResult, SourceSpec
 
-LANGS = ("en", "de")
+LANGS = ("en", "de", "fr", "es", "ja", "pt")
 BASE = "https://wikimedia.org/api/rest_v1/metrics/pageviews/top/{lang}.wikipedia/all-access"
 LOOKBACK_DAYS = 4
-SKIP_EXACT = frozenset({"Main_Page", "Wikipedia:Hauptseite", "-"})
-SKIP_PREFIXES = ("Special:", "Spezial:", "Wikipedia:", "Portal:", "File:", "Datei:", "Help:",
-                 "Hilfe:", "Talk:", "Diskussion:", "User:", "Benutzer:", "Template:", "Vorlage:",
-                 "MediaWiki:", "Kategorie:", "Category:")
+SKIP_EXACT = frozenset({"Main_Page", "Wikipedia:Hauptseite", "Wikipédia:Accueil_principal",
+                        "Wikipedia:Portada", "メインページ", "Wikipédia:Página_principal", "-"})
+# Every edition's own namespace names, so that a search page or a portal is never mistaken
+# for something the world read today.
+SKIP_PREFIXES = ("Special:", "Spezial:", "Spécial:", "Especial:", "特別:",
+                 "Wikipedia:", "Wikipédia:", "Portal:", "Portail:",
+                 "File:", "Datei:", "Fichier:", "Archivo:", "Ficheiro:", "ファイル:",
+                 "Help:", "Hilfe:", "Aide:", "Ayuda:", "Ajuda:",
+                 "Talk:", "Diskussion:", "Discussion:", "Discusión:", "Discussão:", "ノート:",
+                 "User:", "Benutzer:", "Utilisateur:", "Usuario:", "Usuário:", "利用者:",
+                 "Template:", "Vorlage:", "Modèle:", "Plantilla:", "Predefinição:",
+                 "MediaWiki:", "Category:", "Kategorie:", "Catégorie:", "Categoría:",
+                 "Categoria:", "カテゴリ:")
 
 
 def _newest_day(ctx: Context, lang: str):

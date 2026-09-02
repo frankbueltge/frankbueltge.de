@@ -1,6 +1,6 @@
 """Orchestration and IO. Every source is isolated — a failure becomes a note in the record,
-never a crash; the day is always written, the audience of the day before comes second and
-can never take the day down with it. Committed files are never rewritten."""
+never a crash; the day is always written, the arcs and the audience of the day before come
+second and can never take the day down with them. Committed files are never rewritten."""
 from __future__ import annotations
 
 import argparse
@@ -19,6 +19,7 @@ from trending.data import load_json
 from trending.fetch import USER_AGENT
 from trending.model import CONTRACT_AUDIENCE, DayRecord, Signal, SourceReport, day_to_dict, to_json
 from trending.sources import SOURCES, Context, SourceSpec
+from trending.terms import run_terms
 
 ACCEPT = "application/json, application/rss+xml, application/atom+xml, application/xml;q=0.9, */*;q=0.8"
 
@@ -95,6 +96,7 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--repo-root", required=True)
     p.add_argument("--date", default=None, help="YYYY-MM-DD (default: today, UTC)")
     p.add_argument("--skip-audience", action="store_true")
+    p.add_argument("--skip-terms", action="store_true")
     args = p.parse_args(argv)
     if args.date:
         try:
@@ -124,6 +126,11 @@ def main(argv: list[str] | None = None) -> int:
             s = rec.summary
             print(f"trending: {s['topics_total']} topics, {s['converging']} converging on ≥2 "
                   f"platforms, {s['sources_ok']}/{s['sources_total']} sources ok → {day_path}")
+
+        # The arcs come after the day and before the audience: they read the same clock, and
+        # a failure of theirs writes an unavailable record rather than taking the day down.
+        if not args.skip_terms:
+            run_terms(client, repo_root=args.repo_root, today=today, rules=rules)
 
         if not args.skip_audience:
             yday = today - timedelta(days=1)

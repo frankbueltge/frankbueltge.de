@@ -1,7 +1,9 @@
 ---
 /** Method sheet — Common Ground (the nightly trending ledger, /trending).
- *  Same six sections as every other method sheet on this site (MethodenblattPattern.astro is
- *  the pattern). The source table is read from the newest committed day, so a source that is
+ *  The six sections every other method sheet on this site carries (MethodenblattPattern.astro
+ *  is the pattern), plus a seventh for the arcs — the term tracker of /trending/topics, whose
+ *  method is a different one and deserves its own statement rather than a clause inside
+ *  section 3. The source table is read from the newest committed day, so a source that is
  *  added, renamed or relicensed in the pipeline shows up here without anyone editing prose. */
 import TableFallback from '@/components/dataviz/TableFallback.astro'
 import { getLatestTrending } from '@/lib/trending/data'
@@ -120,7 +122,48 @@ const limits = [
       <h2 class="mb-2 font-semibold">6. Change log</h2>
       <ul class="list-disc space-y-1 pl-5 text-fg-muted">
         <li>2026-09-02 &middot; v1 &middot; first ledger</li>
+        <li>2026-09-02 &middot; arcs &middot; the term tracker and its discovery run join the ledger (section 7)</li>
       </ul>
+    </section>
+
+    <section class="mb-8" id="arcs">
+      <h2 class="mb-2 font-semibold">7. Arcs — the term tracker</h2>
+      <p class="leading-relaxed text-fg-muted">
+        The ledger above catches spikes: what several platforms looked at on one morning. The arcs catch the other
+        motion — a phrase that builds for weeks in forums, repositories, preprints and trade press before any search
+        trend registers it. A watchlist of such terms is put to each platform&rsquo;s own search interface once a day,
+        as one quoted phrase per term and per declared alias, and the documents that come back are deduplicated by URL
+        and counted into three windows ending at the run: one day, seven days, thirty days. Page views are read where
+        the watchlist names a Wikipedia article, and never added to a total — they are readers, not documents.
+      </p>
+      <p class="mt-2 leading-relaxed text-fg-muted">
+        The status of a term is a threshold decision over its own numbers, and nothing else: the seven-day count is
+        compared with the same span in the three weeks before it, and a term counts as rising or fading when that
+        comparison crosses a ratio committed in the pipeline, as quiet when it stays under a minimum number of
+        mentions, as emerging when it is rising and its first sighting is recent, and as established when it is
+        neither moving nor absent. Every threshold sits in the pipeline&rsquo;s rules file, so the same word can be
+        recomputed from the committed run. No editorial judgement enters this, and no model is called.
+      </p>
+      <p class="mt-2 leading-relaxed text-fg-muted">
+        Beside the tracker runs a discovery pass over the same corpus. It reduces titles to tokens by the rule of
+        section 3, builds two- and three-word n-grams over adjacent tokens, counts how many DOCUMENTS carry each one
+        in the recent fortnight against the fortnight before it, and drops generic pairs, months, weekdays and
+        anything already contained in a watched term. What survives is published on the hub as a proposal with a
+        sample document attached — <em>not</em> as a tracked term. The watchlist changes only when a person writes a
+        term into it by hand, with the date and the reason in the file: the machine may notice, and that is the whole
+        of its authority here.
+      </p>
+      <p class="mt-2 leading-relaxed text-fg-muted">
+        Limits of this half, on top of those in section 4: a term is a phrase, so a rename splits an arc in two and a
+        homonym merges two arcs into one; several platforms return at most a fixed number of items per query, which
+        makes their thirty-day figure a floor rather than a count, and the page marks those rows; a term&rsquo;s
+        series is only as long as the archive, so a term added last week looks new because the tracker is new, not
+        because the world is; and the discovery pass reads an English-leaning corpus of technology sources, which is
+        what it can see, not what exists.
+      </p>
+      <p class="mt-3">
+        <a href="/trending/topics/" class="font-mono text-xs text-fg-faint transition-colors hover:text-fg">&rarr; The watched terms</a>
+      </p>
     </section>
 
     <a href="/trending" class="text-sm text-fg-muted transition-colors hover:text-fg">&rarr; To the experiment</a>

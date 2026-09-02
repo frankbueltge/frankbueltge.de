@@ -1,0 +1,37 @@
+---
+// Common Ground, layer two — the hub of the term tracker. Shows the newest committed terms
+// file; the per-term pages hang under it. Before the first run the page exists and says so,
+// rather than 404ing on a URL the ledger already links to.
+import Page from '@/layouts/Page.astro'
+import TrendingTopicsHub from '@/components/pages/TrendingTopicsHub.astro'
+import { getLatestTerms } from '@/lib/trending/terms-data'
+import { HUB_DESCRIPTION, hubTitle } from '@/lib/trending/terms-view'
+
+const file = getLatestTerms()
+---
+
+{
+  file ? (
+    <Page title={hubTitle(file)} description={HUB_DESCRIPTION} canonicalPath="/trending/topics/">
+      <TrendingTopicsHub file={file} />
+    </Page>
+  ) : (
+    <Page title={hubTitle()} description={HUB_DESCRIPTION} canonicalPath="/trending/topics/">
+      <main id="main" class="flex-1">
+        <div class="mx-auto max-w-2xl px-4 py-14">
+          <p class="font-mono text-xs uppercase tracking-[0.2em] text-fg-faint">Common Ground · Nightly Ledger</p>
+          <h1 class="mt-2 text-[clamp(30px,5vw,52px)] font-bold leading-none tracking-tight">Trends in the making</h1>
+          <p class="mt-5 max-w-2xl leading-relaxed text-fg-muted">
+            The slower half of the ledger: terms watched every day across link aggregators, news, code repositories
+            and preprints, so a phrase that builds for weeks before any search trend shows it has somewhere to be
+            seen.
+          </p>
+          <p class="mt-3 text-fg-faint">The first run of the tracker follows with the next nightly pipeline.</p>
+          <p class="mt-6 font-mono text-xs">
+            <a href="/trending/" class="text-fg-muted underline decoration-line underline-offset-2 transition-colors hover:text-fg">Today&rsquo;s spikes &rarr;</a>
+          </p>
+        </div>
+      </main>
+    </Page>
+  )
+}

@@ -12,9 +12,17 @@ from typing import Any
 from trending.model import Link, Signal, Topic, TopicSignal
 from trending.normalize import jaccard, slug, tokens
 
-HEADLINE_SOURCES = frozenset({"google_news", "hackernews", "reddit"})
+# Sources whose labels are sentences (headlines, questions, paper titles) rather than names;
+# they attach to a short label by containment and match each other by token overlap.
+HEADLINE_SOURCES = frozenset({"google_news", "hackernews", "reddit", "lobsters", "devto",
+                              "stackoverflow", "techmeme", "arxiv", "polymarket"})
+# Which member names a cluster: the broadest general-audience surface first, then the named
+# things (apps, games, models, products, coins, packages), then the sentence sources last.
 LABEL_PRIORITY = {"google_trends": 0, "bluesky": 1, "wikipedia": 2, "mastodon": 3,
-                  "hackernews": 4, "google_news": 5, "reddit": 6, "github": 7}
+                  "hackernews": 4, "google_news": 5, "reddit": 6, "github": 7,
+                  "appstore": 8, "steam": 9, "huggingface": 10, "producthunt": 11,
+                  "coingecko": 12, "pypi": 13, "lobsters": 14, "devto": 15, "techmeme": 16,
+                  "stackoverflow": 17, "arxiv": 18, "polymarket": 19}
 SHORT_MAX_TOKENS = 4
 
 

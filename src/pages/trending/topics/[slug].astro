@@ -1,0 +1,26 @@
+---
+// One watched term. The paths come from the NEWEST committed terms file, not from the whole
+// archive: a term struck from the watchlist stops having a page, and its days stay in the
+// archived files where they were written. Each page claims its own canonical URL.
+import Page from '@/layouts/Page.astro'
+import TrendingTopicPage from '@/components/pages/TrendingTopicPage.astro'
+import { getLatestTerms } from '@/lib/trending/terms-data'
+import type { TrendingTerm, TrendingTermsDay } from '@/lib/trending/terms-types'
+import { termDescription, termTitle } from '@/lib/trending/terms-view'
+
+export function getStaticPaths() {
+  const file = getLatestTerms()
+  if (!file) return []
+  return file.terms.map((term) => ({ params: { slug: term.slug }, props: { file, term } }))
+}
+
+const { file, term } = Astro.props as { file: TrendingTermsDay; term: TrendingTerm }
+---
+
+<Page
+  title={termTitle(file, term)}
+  description={termDescription(file, term)}
+  canonicalPath={`/trending/topics/${term.slug}/`}
+>
+  <TrendingTopicPage file={file} term={term} />
+</Page>

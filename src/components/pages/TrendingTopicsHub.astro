@@ -1,0 +1,345 @@
+---
+/** Common Ground, layer two — the arcs. The hub of the term tracker (/trending/topics).
+ *
+ *  The day ledger records what several platforms looked at this morning. This page records the
+ *  slower thing: a watchlist of terms, counted every day across link aggregators, news, code
+ *  repositories and preprints, so a phrase that builds for weeks before any search trend shows
+ *  it has somewhere to be seen. Each term gets its own page; this one is the register.
+ *
+ *  Everything visible is derived from the committed terms file through terms-view.ts — the
+ *  prose here carries no numeral of its own, and no status is phrased by anything but the
+ *  thresholds in the pipeline.
+ */
+import TableFallback from '@/components/dataviz/TableFallback.astro'
+import { fmtDateLong, fmtDateWeekday, fmtTimeUtc } from '@/lib/trending/format'
+import { getTermsDays } from '@/lib/trending/terms-data'
+import { definedTermSetLd, termsDatasetLd, termsWebPageLd } from '@/lib/trending/terms-jsonld'
+import { termsUrls } from '@/lib/trending/terms-markdown'
+import type { TrendingTermsDay } from '@/lib/trending/terms-types'
+import {
+  candidateItems,
+  hubRows,
+  joinWithAnd,
+  searchedPlatforms,
+  statusTally,
+  termLinks,
+  termPlatformLabel,
+} from '@/lib/trending/terms-view'
+
+interface Props {
+  file: TrendingTermsDay
+}
+const { file } = Astro.props
+
+const u = termsUrls()
+const canonical = u.hub
+const rows = hubRows(file)
+const links = termLinks(file.terms)
+const candidates = candidateItems(file)
+const tally = statusTally(file)
+const platforms = joinWithAnd(searchedPlatforms(file).map(termPlatformLabel))
+const archive = getTermsDays()
+const answered = file.sources.filter((s) => s.status === 'ok').length
+const failed = file.sources.filter((s) => s.status !== 'ok')
+
+const lds = [
+  termsDatasetLd(file, canonical),
+  definedTermSetLd(file, canonical),
+  termsWebPageLd({
+    name: `Trends in the making — ${fmtDateLong(file.date)}`,
+    canonical,
+    datePublished: `${file.date}T00:00:00Z`,
+    dateModified: file.generated_at,
+  }),
+]
+
+// The per-term example points at a term that actually exists, so the list never carries a
+// dead link when the watchlist changes.
+const exampleSlug = links[0]?.slug ?? 'loop-engineering'
+
+const machineEditions: { href: string; what: string }[] = [
+  { href: '/trending/topics.json', what: 'the whole watchlist as it stands today — every term with its counts per platform, its status, its receipts, and the candidates nobody tracks yet' },
+  { href: `/trending/topics/${exampleSlug}.json`, what: 'one term by its slug, with its counts today and its series over every committed day' },
+  { href: '/trending/topics/latest.md', what: 'the same register as Markdown, for readers that parse text better than markup' },
+  { href: '/trending/latest.json', what: "the other half of the ledger: what several platforms surfaced at once this morning" },
+  { href: '/llms.txt', what: 'where this sits in the house, and what a retrieval agent may do with it' },
+]
+
+const tableProvenance =
+  'Each term and each of its aliases is searched as one quoted phrase on the platforms above, once a day; matching ' +
+  'documents are deduplicated by URL and counted into three windows ending at the run. Status compares the ' +
+  'seven-day count with the three weeks before it against thresholds committed in the pipeline — a term is ' +
+  'rising or fading because a number crossed a written line, never because anyone judged it interesting. ' +
+  'Page views are counted where a term names a Wikipedia article, and never added to a total: they are readers, ' +
+  'not documents.'
+---
+
+<main id="main" class="flex-1">
+  <div class="trending mx-auto max-w-5xl px-4 py-14">
+    <header class="mb-10">
+      <p class="font-mono text-xs uppercase tracking-[0.2em] text-fg-faint">Common Ground · Nightly Ledger</p>
+      <h1 class="mt-2 text-[clamp(30px,5vw,52px)] font-bold leading-none tracking-tight">Trends in the making</h1>
+      <p class="mt-4 font-mono text-xs text-fg-faint">
+        <time datetime={file.date}>{fmtDateWeekday(file.date)}</time>
+        {' · '}rebuilt {fmtTimeUtc(file.generated_at)} UTC
+        {' · '}<span class="tabular-nums">{answered}</span> of <span class="tabular-nums">{file.sources.length}</span> platforms answered
+        {' · '}<span class="tabular-nums">{file.summary.terms_total}</span> terms watched
+      </p>
+      <p class="mt-5 max-w-2xl leading-relaxed text-fg-muted">
+        Some things arrive as a spike: a name, a disaster, a launch, gone by the weekend. Others build for weeks in
+        forums, repositories, preprints and trade press before any search trend registers them. The day ledger
+        catches the first kind. This is the second: a watchlist of phrases, counted every morning across {platforms},
+        with the documents each count was read from. A term keeps its own page, and that page is rewritten every day
+        the machine runs.
+      </p>
+      <p class="mt-3 max-w-2xl leading-relaxed text-fg-muted">
+        A status here is a threshold decision over a term&rsquo;s own numbers, nothing more: how the last seven days
+        compare with the three weeks before them, and how long the term has been in the archive. The thresholds are
+        written down in the pipeline and repeated on the method sheet, so anyone can run the same comparison on the
+        committed file and get the same word.
+      </p>
+      <p class="mt-4 flex flex-wrap items-center gap-x-5 gap-y-1 font-mono text-xs text-fg-faint">
+        {tally.map((i) => (
+          <span>{i.label} <span class="tabular-nums">{i.n}</span></span>
+        ))}
+        <a href="/trending/" class="transition-colors hover:text-fg">Today&rsquo;s spikes &rarr;</a>
+      </p>
+    </header>
+
+    <section class="mb-12">
+      <h2 class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">The watchlist</h2>
+      {links.length === 0 ? (
+        <p class="mt-3 max-w-2xl leading-relaxed text-fg-muted">
+          The watchlist is empty. Nothing is tracked here until a term is written into it by hand — the machine
+          proposes, a person decides.
+        </p>
+      ) : (
+        <>
+          <ul class="mt-4 grid gap-x-6 gap-y-2 sm:grid-cols-2 lg:grid-cols-3">
+            {links.map((l) => (
+              <li class="flex items-baseline justify-between gap-x-3 border-b border-line pb-1.5">
+                <a href={l.href} class="min-w-0 underline decoration-line underline-offset-2 transition-colors hover:text-fg">{l.term}</a>
+                <span class="shrink-0 whitespace-nowrap font-mono text-[10px] text-fg-faint">
+                  {l.statusLabel}
+                  {' · '}<span class="tabular-nums">{l.d7}</span>
+                  {l.ratio && <span class="tabular-nums">{` · ${l.ratio}`}</span>}
+                </span>
+              </li>
+            ))}
+          </ul>
+          <div class="mt-6 text-sm">
+            <TableFallback
+              summary="The watchlist, as a table"
+              open={true}
+              columns={[
+                { key: 'term', label: 'Term' },
+                { key: 'status', label: 'Status', nowrap: true },
+                { key: 'd7', label: '7 days', align: 'right' },
+                { key: 'd30', label: '30 days', align: 'right' },
+                { key: 'first_seen', label: 'First seen', nowrap: true },
+                { key: 'platforms', label: 'Platforms' },
+              ]}
+              rows={rows}
+              caption="Every watched term with its status, its mentions over seven and thirty days, its first sighting and the platforms carrying it"
+              provenance={tableProvenance}
+            />
+          </div>
+        </>
+      )}
+    </section>
+
+    <section class="mb-12 border-t border-line pt-6">
+      <h2 class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">What the machine noticed</h2>
+      {candidates.length === 0 ? (
+        <p class="mt-3 max-w-2xl text-sm leading-relaxed text-fg-muted">
+          The discovery run proposed nothing this time — it keeps only n-grams that clear its own thresholds, and an
+          empty list is one of the answers it is allowed to give.
+        </p>
+      ) : (
+        <>
+          <p class="mt-3 max-w-2xl text-sm leading-relaxed text-fg-muted">
+            Phrases the machine found moving in the last two weeks that are <strong class="font-semibold">not</strong>{' '}
+            on the watchlist, so nothing below is being tracked. They become terms only when a person writes them into
+            the watchlist by hand; until then they are proposals with a sample document attached, and the list is here
+            so that decision happens in the open.
+          </p>
+          <ul class="mt-4 space-y-2.5 text-sm">
+            {candidates.map((c) => (
+              <li class="border-b border-line pb-2">
+                <div class="flex flex-wrap items-baseline justify-between gap-x-4">
+                  <span class="font-semibold">{c.ngram}</span>
+                  <span class="whitespace-nowrap font-mono text-[10px] text-fg-faint">
+                    <span class="tabular-nums">{c.docsRecent}</span> recent documents
+                    {c.ratio && <span class="tabular-nums">{` · ${c.ratio}`}</span>}
+                    {' · '}{c.platforms}
+                  </span>
+                </div>
+                {c.sample && (
+                  <p class="mt-1 text-fg-muted">
+                    <a href={c.sample.url} target="_blank" rel="noopener nofollow" class="underline decoration-line underline-offset-2 transition-colors hover:text-fg">{c.sample.title}</a>
+                    <span class="ml-2 font-mono text-[10px] text-fg-faint">{c.sample.date}</span>
+                  </p>
+                )}
+              </li>
+            ))}
+          </ul>
+          <p class="dv-prov mt-4">
+            Discovery reads the same corpus as the tracker — front-page link aggregator stories, top developer
+            articles, preprints in the machine-learning categories and the newest repositories — reduces titles to
+            tokens by the disclosed rule, counts documents per n-gram over the recent fortnight against the fortnight
+            before it, and drops generic pairs, months, weekdays and anything already contained in a watched term.
+            Rank is by how many platforms carry an n-gram, then by pace.
+          </p>
+        </>
+      )}
+    </section>
+
+    <section class="mb-12 border-t border-line pt-6">
+      <h2 class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">The platforms searched</h2>
+      <p class="mt-3 max-w-2xl text-sm leading-relaxed text-fg-muted">
+        Every term is put to each of these once a day, as a quoted phrase, through the platform&rsquo;s own search
+        interface. A platform that does not answer is recorded with the reason and the day is published without it —
+        never backfilled, never replaced by a neighbour.
+      </p>
+      <ul class="mt-4 grid gap-x-6 gap-y-1.5 font-mono text-[11px] text-fg-muted sm:grid-cols-2">
+        {file.sources.map((s) => (
+          <li class="flex items-baseline justify-between gap-x-3 border-b border-line pb-1">
+            <a href={s.url} target="_blank" rel="noopener nofollow" class="min-w-0 underline decoration-line underline-offset-2 transition-colors hover:text-fg">{termPlatformLabel(s.id)}</a>
+            <span class="shrink-0 text-fg-faint">{s.status === 'ok' ? 'ok' : `${s.status}${s.note ? ` — ${s.note}` : ''}`}</span>
+          </li>
+        ))}
+      </ul>
+      {failed.length > 0 && (
+        <p class="mt-3 max-w-2xl font-mono text-[11px] leading-relaxed text-fg-faint">
+          A platform recorded as unavailable contributed nothing to any count today, which is why a term&rsquo;s row
+          can drop without the term itself going quiet.
+        </p>
+      )}
+    </section>
+
+    <section class="mb-12 border-t border-line pt-6">
+      <h2 class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">For machines</h2>
+      <p class="mt-3 max-w-2xl text-sm leading-relaxed text-fg-muted">
+        The same register, in the forms a machine reader can use. Static files, built from the archive with the page,
+        so a reader and a crawler never see two different states.
+      </p>
+      <dl class="mt-4 space-y-3 text-sm">
+        {machineEditions.map((e) => (
+          <div class="sm:flex sm:items-baseline sm:gap-4">
+            <dt class="font-mono text-xs sm:w-64 sm:shrink-0">
+              <a href={e.href} class="underline decoration-line underline-offset-2 transition-colors hover:text-fg">{e.href}</a>
+            </dt>
+            <dd class="text-fg-muted">{e.what}</dd>
+          </div>
+        ))}
+      </dl>
+      <ul class="mt-5 space-y-1 font-mono text-[11px] leading-relaxed text-fg-faint">
+        <li>Data: CC0 1.0</li>
+        <li>Cadence: rebuilt daily, with the ledger</li>
+        <li>Cite: Frank Bültge, Common Ground — trends in the making, frankbueltge.de/trending/topics</li>
+      </ul>
+    </section>
+
+    <section class="mb-12 border-t border-line pt-6">
+      <h2 class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">How this is measured</h2>
+      <p class="mt-3 max-w-2xl leading-relaxed text-fg-muted">
+        A term is a phrase, not a topic: it is counted when it or one of its declared aliases occurs in a document&rsquo;s
+        title, and each document counts once however many times the phrase appears in it. The three windows end at the
+        run, so &ldquo;seven days&rdquo; means the seven days before this morning and nothing else. The first sighting is
+        the earliest receipt across every committed file, so it moves backwards only when an older document turns up —
+        never forwards. And the series on a term page is not stored: it is read out of the dated files, one point per
+        day the machine ran.
+      </p>
+      <p class="mt-3">
+        <a href="/werke/trending#arcs" class="font-mono text-xs text-fg-faint transition-colors hover:text-fg">Method sheet, section seven &rarr;</a>
+      </p>
+      <p class="au-note">
+        No language model writes anything here: every count is a platform&rsquo;s own answer to a quoted phrase, every
+        status a threshold in the pipeline, every proposal an n-gram frequency. What the machine may do is notice;
+        adding a term to the watchlist is a person&rsquo;s decision, written into a file by hand.
+      </p>
+    </section>
+
+    <section class="mt-8">
+      <h2 class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">The archive</h2>
+      <p class="mt-2 font-mono text-[11px] text-fg-faint">
+        Every committed run, newest first — <span class="tabular-nums">{archive.length}</span> so far. A run is never
+        edited after the morning it was written, which is what makes a term&rsquo;s series checkable.
+      </p>
+      <ul class="mt-3 flex flex-wrap gap-x-4 gap-y-1 font-mono text-xs">
+        {archive.map((f) => (
+          <li>
+            {f.date === file.date ? (
+              <span class="text-fg-faint">{f.date}</span>
+            ) : (
+              <span class="text-fg-muted">{f.date}</span>
+            )}
+          </li>
+        ))}
+      </ul>
+    </section>
+  </div>
+</main>
+
+{lds.map((ld) => <script type="application/ld+json" set:html={JSON.stringify(ld)} />)}
+
+<style>
+  /* Same voice as the day ledger (src/components/pages/TrendingPage.astro): the shared table
+     primitive ships structure only (ADR 0010), so this surface says how its own tables and
+     provenance lines read. Scoped, so nothing else inherits it. Ink tokens only. */
+  .au-note {
+    margin-top: 1.4rem;
+    max-width: 62ch;
+    padding-left: 0.85rem;
+    border-left: 3px solid var(--color-line);
+    font-size: 0.92rem;
+    line-height: 1.6;
+    color: var(--color-fg-muted);
+    text-wrap: pretty;
+  }
+
+  .trending :global(.dv-table-fallback) {
+    margin: 0;
+  }
+  .trending :global(.dv-table-fallback > summary) {
+    cursor: pointer;
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-fg-faint);
+  }
+  .trending :global(.dv-table-fallback > summary:hover) {
+    color: var(--color-fg);
+  }
+  .trending :global(.dv-table) {
+    margin-top: 0.75rem;
+    font-size: 0.8125rem;
+  }
+  .trending :global(.dv-table th) {
+    padding: 0.35rem 0.75rem 0.35rem 0;
+    border-bottom: 1px solid var(--color-line);
+    text-align: left;
+    font-weight: 600;
+    white-space: nowrap;
+    color: var(--color-fg-muted);
+  }
+  .trending :global(.dv-table td) {
+    padding: 0.35rem 0.75rem 0.35rem 0;
+    border-bottom: 1px solid var(--color-line);
+    vertical-align: top;
+  }
+  .trending :global(.dv-table [data-align='right']) {
+    padding-right: 0;
+    font-variant-numeric: tabular-nums;
+  }
+  .trending .dv-prov,
+  .trending :global(.dv-prov) {
+    margin-top: 0.6rem;
+    max-width: 68ch;
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 11px;
+    line-height: 1.6;
+    color: var(--color-fg-faint);
+  }
+</style>

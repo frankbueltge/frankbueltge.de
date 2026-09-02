@@ -214,7 +214,7 @@ export const NODES: readonly ApparatusNode[] = [
     layer: 'world',
     kind: 'source',
     owner: 'shared',
-    what: 'What the platforms themselves publish about what is being searched, read and posted — plus the edge’s own count of who fetched the page that reads them.',
+    what: 'What the platforms themselves publish about what is being searched, read and posted, plus the search APIs the term tracker asks how often a watched word was mentioned and the discovery pass reads its corpus of titles from — and the edge’s own count of who fetched the page that reads them all.',
     members: [
       { label: 'Google Trends RSS', what: 'the daily search trends of six countries, ten items each', ref: 'https://trends.google.com/trending/rss?geo=US' },
       { label: 'Wikimedia REST', what: 'the most-read articles of the day before, English and German', ref: 'https://wikimedia.org/api/rest_v1/' },
@@ -265,10 +265,10 @@ export const NODES: readonly ApparatusNode[] = [
     layer: 'instruments',
     kind: 'pipeline',
     owner: 'shared',
-    what: 'The morning reader of what the web is searching, reading and posting about: one dated ledger per day, and a day later the count of who read it.',
+    what: 'The morning reader of what the web is searching, reading and posting about: one dated ledger per day, a term tracker that counts how a watched word is building across platforms, the n-grams a discovery pass noticed on its own, and a day later the count of who read it.',
     commitsAs: 'Morgenlese <morgenlese@frankbueltge.de>',
     members: [
-      { label: 'Trending nightly', what: 'eight keyless sources, one disclosed convergence rule, the edge audience of the day before', ref: '.github/workflows/trending.yml', workflowName: 'Trending nightly', cron: ['40 6 * * *'], secrets: ['CF_ANALYTICS_TOKEN'] },
+      { label: 'Trending nightly', what: 'the day’s keyless sources and one disclosed convergence rule, then the term tracker with its discovery pass, then the edge audience of the day before', ref: '.github/workflows/trending.yml', workflowName: 'Trending nightly', cron: ['40 6 * * *'], secrets: ['CF_ANALYTICS_TOKEN'] },
     ],
   },
   {
@@ -626,7 +626,7 @@ export const EDGES: readonly ApparatusEdge[] = [
   { from: 'src-economy', to: 'in-gegenmessung', kind: 'https', mechanism: 'World Bank and Philadelphia Fed series', checked: 'declared', ref: 'pipelines/revision/refresh.py' },
   { from: 'src-scholarly', to: 'in-gegenmessung', kind: 'https', mechanism: 'Wayback snapshots and publisher pages read pre-consent', checked: 'declared', ref: 'pipelines/redaction' },
   { from: 'src-scholarly', to: 'in-scouts', kind: 'https', mechanism: 'OpenAlex, arXiv, ArtBase, dataphys, S+T+ARTS', checked: 'declared', ref: 'pipelines/atlas-scout' },
-  { from: 'src-web', to: 'in-trending', kind: 'https', mechanism: 'HTTPS in the eight source modules, then one GraphQL query for the audience of the day before', checked: 'declared', ref: 'pipelines/trending' },
+  { from: 'src-web', to: 'in-trending', kind: 'https', mechanism: 'HTTPS in the source modules, one quoted-phrase search per watched term, then one GraphQL query for the audience of the day before', checked: 'declared', ref: 'pipelines/trending' },
 
   // practices → their own mirrors, through the gates
   { from: 'repo-field', to: 'gate-field', kind: 'repository_dispatch', mechanism: 'repository_dispatch `field-landed`, sent by the practice when a session lands', checked: 'derived', ref: '.github/workflows/field-integrate.yml' },
@@ -644,7 +644,7 @@ export const EDGES: readonly ApparatusEdge[] = [
   { from: 'in-protokoll', to: 'st-protokoll', kind: 'commit', mechanism: 'commits one dated protocol per night', checked: 'derived', ref: '.github/workflows/protokoll.yml' },
   { from: 'in-protokoll', to: 'st-instruments', kind: 'commit', mechanism: 'commits the policy, the parallax register and the overflight snapshot', checked: 'derived', ref: '.github/workflows/praemie.yml' },
   { from: 'in-gegenmessung', to: 'st-instruments', kind: 'commit', mechanism: 'each instrument commits its own dated findings', checked: 'derived', ref: '.github/workflows/gegenmessung.yml' },
-  { from: 'in-trending', to: 'st-instruments', kind: 'commit', mechanism: 'commits one day file every morning and the audience file of the day before, never rewriting either', checked: 'derived', ref: '.github/workflows/trending.yml' },
+  { from: 'in-trending', to: 'st-instruments', kind: 'commit', mechanism: 'commits one day file and one terms file every morning, plus the audience file of the day before, never rewriting any of them', checked: 'derived', ref: '.github/workflows/trending.yml' },
   { from: 'in-scouts', to: 'st-catalogues', kind: 'commit', mechanism: 'commits the atlas nightly, capped at thirty new entries a run', checked: 'derived', ref: '.github/workflows/atlas-scout.yml' },
   { from: 'in-pulse', to: 'st-instruments', kind: 'commit', mechanism: 'commits the commit pulse of five repositories', checked: 'derived', ref: '.github/workflows/pulse-refresh.yml' },
   { from: 'in-saat', to: 'st-inlets', kind: 'commit', mechanism: 'commits each practice’s public answer to an offered seed', checked: 'derived', ref: '.github/workflows/requests-watchdog.yml' },

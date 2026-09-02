@@ -25,6 +25,27 @@ content.
 - [Archive day](https://frankbueltge.de/trending/2026-09-02): `/trending/YYYY-MM-DD` and `/trending/YYYY-MM-DD.json` for any committed day
 - [Method sheet](https://frankbueltge.de/werke/trending): sources and licences, cadence, the convergence rule, limits, change log
 
+### Trends in the making (the arcs, daily, CC0)
+
+The slower half of the same ledger. A watchlist of terms — phrases that build over weeks in
+forums, repositories, preprints and trade press before any search trend registers them — is put
+to each platform's own search interface once a day, as one quoted phrase per term and per
+declared alias: Hacker News, Google News, GitHub, arXiv and Reddit, plus Wikipedia page views
+where the watchlist names an article. Matching documents are deduplicated by URL and counted
+into three windows ending at the run (one day, seven days, thirty days). A term's status
+(emerging, rising, established, fading, quiet) is a threshold comparison of the last seven days
+against the three weeks before them, with the thresholds committed in the pipeline — no model, no
+editorial judgement. Every count carries receipts: the titles, URLs and dates the count was read
+from. A discovery pass over the same corpus proposes n-grams it finds moving; they are published
+as candidates and become tracked terms only when a person writes them into the watchlist by hand.
+
+- [Trends in the making](https://frankbueltge.de/trending/topics): the hub — every watched term with its status, both windows, and the machine-noticed candidates
+- [topics.json](https://frankbueltge.de/trending/topics.json): the whole watchlist in one file — counts per platform and window, status, receipts, candidates
+- [Term page](https://frankbueltge.de/trending/topics/loop-engineering): `/trending/topics/<slug>` for any watched term, with its daily series and its receipts
+- [Term JSON](https://frankbueltge.de/trending/topics/loop-engineering.json): `/trending/topics/<slug>.json` — the same term plus its series over every committed run
+- [topics/latest.md](https://frankbueltge.de/trending/topics/latest.md): the hub as plain Markdown, for readers that prefer text
+- [Method sheet, section 7](https://frankbueltge.de/werke/trending#arcs): the tracking rule, the status thresholds, the discovery rule, the limits
+
 ## Other machine-readable surfaces
 
 - [Protocol feed](https://frankbueltge.de/protocol/feed.xml): the daily minutes of the planet's session, RSS

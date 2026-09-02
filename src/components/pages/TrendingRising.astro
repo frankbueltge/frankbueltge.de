@@ -1,0 +1,66 @@
+---
+/** "Rising this week" — the arcs seen from the day ledger.
+ *
+ *  The day page answers "what spiked this morning?"; this block is the doorway to the other
+ *  question, "what has been building for weeks?". It shows only the terms the tracker calls
+ *  emerging or rising, at most eight of them, each with the seven-day count and the pace the
+ *  status rests on, and it links every one to its own page.
+ *
+ *  Renders nothing at all before the first terms file is committed: an empty promise on the
+ *  ledger would be worse than no block.
+ */
+import { getLatestTerms } from '@/lib/trending/terms-data'
+import { risingLinks, statusTally } from '@/lib/trending/terms-view'
+
+const file = getLatestTerms()
+const rising = file ? risingLinks(file, 8) : []
+const tally = file ? statusTally(file) : []
+---
+
+{
+  file && (
+    <section class="mb-12 border-t border-line pt-6" id="rising">
+      <h2 class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">Rising this week</h2>
+      {rising.length === 0 ? (
+        <p class="mt-3 max-w-2xl text-sm leading-relaxed text-fg-muted">
+          No watched term is accelerating this week — an arc that stays flat is a reading, not a failure. The whole
+          watchlist, with what each term is doing, stands on the hub.
+        </p>
+      ) : (
+        <>
+          <p class="mt-3 max-w-2xl text-sm leading-relaxed text-fg-muted">
+            Terms that build over weeks rather than spiking for a morning, counted across link aggregators, news,
+            code repositories and preprints. The figure is the last seven days; the pace beside it compares those
+            days with the three weeks before them.
+          </p>
+          <ul class="mt-4 grid gap-x-6 gap-y-2 sm:grid-cols-2">
+            {rising.map((r) => (
+              <li class="flex items-baseline justify-between gap-x-3 border-b border-line pb-1.5">
+                <a
+                  href={r.href}
+                  class="min-w-0 underline decoration-line underline-offset-2 transition-colors hover:text-fg"
+                >
+                  {r.term}
+                </a>
+                <span class="shrink-0 whitespace-nowrap font-mono text-[10px] text-fg-faint">
+                  {r.statusLabel}
+                  {' · '}
+                  <span class="tabular-nums">{r.d7}</span>
+                  {r.ratio && <span class="tabular-nums">{` · ${r.ratio}`}</span>}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
+      <p class="mt-4 flex flex-wrap items-center gap-x-5 gap-y-1 font-mono text-xs text-fg-faint">
+        <a href="/trending/topics/" class="transition-colors hover:text-fg">All watched terms &rarr;</a>
+        {tally.map((i) => (
+          <span>
+            {i.label} <span class="tabular-nums">{i.n}</span>
+          </span>
+        ))}
+      </p>
+    </section>
+  )
+}

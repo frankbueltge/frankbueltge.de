@@ -1,5 +1,9 @@
 """Google Trends — the daily search-trends RSS per country. Ten items per geo, each with an
-approximate search count and up to three news items Google attaches."""
+approximate search count and up to three news items Google attaches.
+
+Ten storefronts of the search box, six English-speaking and four not: a topic that shows up
+in Brazil, France, Japan and Mexico on the same morning as in the US is a different kind of
+finding than one that only trends in one language."""
 from __future__ import annotations
 
 import re
@@ -11,7 +15,7 @@ from trending.fetch import SourceUnavailable, fetch
 from trending.model import Link, Signal
 from trending.sources.base import Context, SourceResult, SourceSpec
 
-GEOS = ("US", "GB", "CA", "AU", "IN", "DE")
+GEOS = ("US", "GB", "CA", "AU", "IN", "DE", "BR", "FR", "JP", "MX")
 NS = {"ht": "https://trends.google.com/trending/rss"}
 THROTTLE_S = 0.25
 
