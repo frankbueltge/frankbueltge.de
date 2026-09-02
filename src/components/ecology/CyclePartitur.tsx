@@ -1,6 +1,9 @@
 // src/components/ecology/CyclePartitur.tsx — the cycle as a living partitur (visual layer,
 // Phase 1, 2026-09-02; docs/design/2026-09-02-the-visual-layer.md). It replaces the smoke island
-// of Phase 0 and, with it, the SVG-string builder src/lib/ecology/cycle-score.ts.
+// of Phase 0 and, with it, the SVG-string builder src/lib/ecology/cycle-score.ts. Since Phase 3d
+// (the same day) its zoom, readout, focus discipline, keyboard walk and events come from
+// ./score-kit — shared with the Middle's score and the Studio's floor; nothing here changed
+// behaviour in the move.
 //
 // What the island is and is not, in the terms of the seven duties
 // (.claude/rules/dataviz-figures.md, "Interaktive Figuren"):
@@ -29,29 +32,34 @@
 //   7. NO NEW HUE. The five kinds are told apart by SHAPE — square, tick, diamond, ring, badge —
 //      on the four lane colours the ecology-voices set already validated.
 import * as React from 'react'
-import { select, type Selection } from 'd3-selection'
-import { zoom, zoomIdentity, type D3ZoomEvent, type ZoomBehavior } from 'd3-zoom'
-import 'd3-transition'
 
-import { Button } from '@/components/ui/button'
-import { createReadout, type ReadoutHandle } from '@/lib/dataviz/readout'
-import { reducedMotion } from '@/lib/dataviz/runtime'
-import { buildSegments, step, type Segmented } from '@/lib/dataviz/stepper'
+import { buildSegments, type Segmented } from '@/lib/dataviz/stepper'
 import {
   axisTicks,
   bandSpan,
-  IDENTITY_VIEW,
   LANES,
   placeMarks,
   type CycleMark,
   type CycleModel,
-  type CycleView,
   type LaneId,
   type MarkKind,
 } from '@/lib/ecology/cycle-model'
 import type { FocusState } from '@/lib/tour/types'
 
 import MarkCard, { type MarkCardWording } from './MarkCard'
+import {
+  emitMarkSelected,
+  focusMarkIn,
+  isWalkKey,
+  useFigureReady,
+  useFocusOnOpen,
+  useOnScreen,
+  useReadout,
+  useZoomX,
+  walkTo,
+  ZOOM_STEP,
+  ZoomControls,
+} from './score-kit'
 
 /** The frame resolves the wording canon's functions against the model before handing it over —
  *  an island receives plain, serialisable strings, and no number is ever typed into one. */
@@ -82,7 +90,6 @@ export interface CyclePartiturProps {
 
 const MIN_K = 1
 const MAX_K = 12
-const TRANSITION_MS = 320
 
 /** Two decimals is more than an SVG attribute needs and keeps the server render byte-stable. */
 function n(value: number): number {
@@ -118,16 +125,12 @@ export default function CyclePartitur({ model, wording, readoutId, figureId }: C
   const rootRef = React.useRef<HTMLDivElement>(null)
   const svgRef = React.useRef<SVGSVGElement>(null)
   const cardRef = React.useRef<HTMLDivElement>(null)
-  const readoutRef = React.useRef<ReadoutHandle | null>(null)
-  const figureRef = React.useRef<HTMLElement | null>(null)
-  const zoomRef = React.useRef<ZoomBehavior<SVGSVGElement, unknown> | null>(null)
 
-  const [view, setView] = React.useState<CycleView>(IDENTITY_VIEW)
   const [selected, setSelected] = React.useState<string | null>(null)
   // False on the server AND on the first client render, so hydration matches; the effect below
   // flips it, which is when the controls (the one thing JavaScript adds) become real.
   const [ready, setReady] = React.useState(false)
-  const [onScreen, setOnScreen] = React.useState(true)
+  React.useEffect(() => setReady(true), [])
 
   const { box } = model
   const bottomY = model.lanes.length > 0 ? model.lanes[model.lanes.length - 1]!.y : box.laneY0
@@ -135,6 +138,18 @@ export default function CyclePartitur({ model, wording, readoutId, figureId }: C
     () => new Map(model.lanes.map((l) => [l.id, l.persona])),
     [model.lanes],
   )
+
+  const onScreen = useOnScreen(rootRef)
+  const readout = useReadout(rootRef, readoutId, '.score-figure')
+  const { view, scaleBy, resetZoom } = useZoomX({
+    svgRef,
+    x0: box.laneX0,
+    x1: box.spanX1,
+    height: box.h,
+    min: MIN_K,
+    max: MAX_K,
+    active: onScreen,
+  })
 
   const placed = React.useMemo(() => placeMarks(model, view), [model, view])
   const ticks = React.useMemo(() => axisTicks(model, view), [model, view])
@@ -155,126 +170,39 @@ export default function CyclePartitur({ model, wording, readoutId, figureId }: C
     [model.marks, selected],
   )
 
-  // ------------------------------------------------------------------ mount
-  React.useEffect(() => {
-    setReady(true)
-    const root = rootRef.current
-    if (!root) return
-    // The box createReadout clamps within: the frame's `.score-figure`, which is
-    // position: relative (score-map.css) and holds this island and the Readout shell alike.
-    figureRef.current = root.closest<HTMLElement>('.score-figure') ?? root
-    const el = document.getElementById(readoutId)
-    readoutRef.current = el ? createReadout(el, figureRef.current) : null
-    return () => {
-      readoutRef.current?.hide()
-      readoutRef.current = null
-    }
-  }, [readoutId])
-
-  // ------------------------------------------------------------------ off-screen pause
-  React.useEffect(() => {
-    const root = rootRef.current
-    if (!root || typeof IntersectionObserver === 'undefined') return
-    const io = new IntersectionObserver(
-      (entries) => setOnScreen(entries.some((e) => e.isIntersecting)),
-      { rootMargin: '128px' },
-    )
-    io.observe(root)
-    return () => io.disconnect()
-  }, [])
-
-  // ------------------------------------------------------------------ d3-zoom, x only
-  React.useEffect(() => {
-    const node = svgRef.current
-    if (!node) return
-    const sel = select(node)
-    if (!onScreen) {
-      // Nothing to animate off-screen, and no reason to keep wheel/pointer handlers bound.
-      sel.on('.zoom', null)
-      return
-    }
-    const behaviour = zoom<SVGSVGElement, unknown>()
-      .scaleExtent([MIN_K, MAX_K])
-      // Both extents in the drawing's OWN units: d3-selection's pointer() reads an <svg> target
-      // through its screen CTM, so gestures already arrive in viewBox space. Pinning both to the
-      // ruler's span is what keeps the axis from ever sliding out from under the lane labels —
-      // at k = 1 the constraint forces the translation to zero.
-      .extent([
-        [box.laneX0, 0],
-        [box.spanX1, box.h],
-      ])
-      .translateExtent([
-        [box.laneX0, 0],
-        [box.spanX1, box.h],
-      ])
-      .on('zoom', (event: D3ZoomEvent<SVGSVGElement, unknown>) => {
-        setView({ k: event.transform.k, x: event.transform.x })
-      })
-    zoomRef.current = behaviour
-    sel.call(behaviour)
-    return () => {
-      sel.on('.zoom', null)
-    }
-  }, [box.h, box.laneX0, box.spanX1, onScreen])
-
-  const zoomSelection = (): Selection<SVGSVGElement, unknown, null, undefined> | null => {
-    const node = svgRef.current
-    return node ? select(node) : null
-  }
-
-  const scaleBy = React.useCallback((factor: number) => {
-    const sel = zoomSelection()
-    const behaviour = zoomRef.current
-    if (!sel || !behaviour) return
-    behaviour.scaleBy(sel.transition().duration(reducedMotion() ? 0 : TRANSITION_MS), factor)
-  }, [])
-
-  const resetZoom = React.useCallback(() => {
-    const sel = zoomSelection()
-    const behaviour = zoomRef.current
-    if (!sel || !behaviour) return
-    behaviour.transform(sel.transition().duration(reducedMotion() ? 0 : TRANSITION_MS), zoomIdentity)
-  }, [])
-
   // ------------------------------------------------------------------ selection
-  const focusMark = React.useCallback((id: string) => {
-    rootRef.current?.querySelector<SVGAElement>(`[data-mark="${CSS.escape(id)}"]`)?.focus()
-  }, [])
-
   const openMark = React.useCallback(
     (mark: CycleMark) => {
       setSelected(mark.id)
-      readoutRef.current?.hide()
-      window.dispatchEvent(
-        new CustomEvent('dv:mark-selected', {
-          detail: { figure: figureId, id: mark.id, kind: mark.kind, lane: mark.lane, date: mark.date, href: mark.href },
-        }),
-      )
+      readout.hide()
+      emitMarkSelected(window, {
+        figure: figureId,
+        key: mark.id,
+        id: mark.id,
+        kind: mark.kind,
+        lane: mark.lane,
+        date: mark.date,
+        href: mark.href,
+      })
     },
-    [figureId],
+    [figureId, readout],
   )
 
   const closeCard = React.useCallback(() => {
     const id = selected
     setSelected(null)
-    if (id) focusMark(id)
-  }, [focusMark, selected])
-
-  // The card takes focus when it opens, so a keyboard reader lands inside what just appeared.
-  React.useEffect(() => {
-    if (selected) cardRef.current?.focus()
+    if (id) focusMarkIn(rootRef.current, id)
   }, [selected])
 
+  useFocusOnOpen(selected, cardRef)
+
   // ------------------------------------------------------------------ the tour contract
-  React.useEffect(() => {
-    const apply = (focus: FocusState) => {
-      if (focus.figure !== figureId) return
-      // A tour may ask this figure to lock one mark; the other FocusState fields (filter, dim,
-      // annotate) are requests this figure does not yet honour, and silence is the honest answer.
-      if (focus.select && model.marks.some((m) => m.id === focus.select)) setSelected(focus.select)
-    }
-    window.dispatchEvent(new CustomEvent('dv:figure-ready', { detail: { id: figureId, apply } }))
-  }, [figureId, model.marks])
+  useFigureReady(figureId, (focus: FocusState) => {
+    if (focus.figure !== figureId) return
+    // A tour may ask this figure to lock one mark; the other FocusState fields (filter, dim,
+    // annotate) are requests this figure does not yet honour, and silence is the honest answer.
+    if (focus.select && model.marks.some((m) => m.id === focus.select)) setSelected(focus.select)
+  })
 
   // ------------------------------------------------------------------ keyboard
   const onKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
@@ -287,12 +215,12 @@ export default function CyclePartitur({ model, wording, readoutId, figureId }: C
     }
     if (event.key === '+' || event.key === '=') {
       event.preventDefault()
-      scaleBy(1.6)
+      scaleBy(ZOOM_STEP)
       return
     }
     if (event.key === '-' || event.key === '_') {
       event.preventDefault()
-      scaleBy(1 / 1.6)
+      scaleBy(1 / ZOOM_STEP)
       return
     }
     if (event.key === '0') {
@@ -300,45 +228,25 @@ export default function CyclePartitur({ model, wording, readoutId, figureId }: C
       resetZoom()
       return
     }
-    const arrows = ['ArrowLeft', 'ArrowRight', 'Home', 'End']
-    if (!arrows.includes(event.key)) return
+    if (!isWalkKey(event.key)) return
     const active = (event.target as Element | null)?.closest?.('[data-mark]') as HTMLElement | null
     const currentId = active?.dataset.mark ?? selected
     if (!currentId) return
     const pos = walk.items.findIndex((m) => m.id === currentId)
     if (pos < 0) return
-    const segment = walk.segments[walk.items[pos]!.lane]
-    let next = pos
-    if (event.key === 'ArrowLeft') next = step(walk, pos, -1)
-    else if (event.key === 'ArrowRight') next = step(walk, pos, 1)
-    else if (event.key === 'Home') next = segment ? segment.start : pos
-    else if (event.key === 'End') next = segment ? segment.end - 1 : pos
+    const next = walkTo(walk, pos, event.key)
     if (next === pos) return
     event.preventDefault()
     const target = walk.items[next]!
     if (selected) setSelected(target.id)
-    focusMark(target.id)
+    focusMarkIn(rootRef.current, target.id)
   }
 
   // ------------------------------------------------------------------ readout
   const showReadout = (mark: CycleMark, anchorX: number, anchorY: number) => {
-    const readout = readoutRef.current
-    if (!readout) return
     const node = document.createElement('span')
     node.textContent = `${mark.date} · ${wording.kinds[mark.kind]} · ${mark.title}`
     readout.show(node, { anchorX, anchorY })
-  }
-  const fromPointer = (event: React.PointerEvent) => {
-    const rect = figureRef.current?.getBoundingClientRect()
-    return { anchorX: event.clientX - (rect?.left ?? 0), anchorY: event.clientY - (rect?.top ?? 0) }
-  }
-  const fromMark = (target: Element) => {
-    const figure = figureRef.current?.getBoundingClientRect()
-    const box2 = target.getBoundingClientRect()
-    return {
-      anchorX: box2.left - (figure?.left ?? 0) + box2.width / 2,
-      anchorY: box2.top - (figure?.top ?? 0),
-    }
   }
 
   const bandLabelY = box.h - 22
@@ -352,31 +260,15 @@ export default function CyclePartitur({ model, wording, readoutId, figureId }: C
       data-paused={onScreen ? undefined : ''}
       onKeyDown={onKeyDown}
     >
-      <div className="score-zoom flex flex-wrap items-center gap-2" hidden={!ready}>
-        <div className="flex items-center gap-1" role="group" aria-label={wording.zoom.group}>
-          <Button variant="ghost" size="sm" type="button" aria-label={wording.zoom.in} onClick={() => scaleBy(1.6)}>
-            +
-          </Button>
-          <Button variant="ghost" size="sm" type="button" aria-label={wording.zoom.out} onClick={() => scaleBy(1 / 1.6)}>
-            −
-          </Button>
-          <Button
-            variant="ghost"
-            size="sm"
-            type="button"
-            aria-label={wording.zoom.reset}
-            onClick={resetZoom}
-            disabled={view.k === 1 && view.x === 0}
-          >
-            0
-          </Button>
-        </div>
-        <span className="font-mono text-[11px] text-fg-faint" aria-live="polite">
-          {wording.zoom.levelPrefix}
-          {view.k.toFixed(1)}
-        </span>
-        <span className="font-mono text-[11px] text-fg-faint">{wording.hint}</span>
-      </div>
+      <ZoomControls
+        wording={wording.zoom}
+        hint={wording.hint}
+        view={view}
+        ready={ready}
+        onIn={() => scaleBy(ZOOM_STEP)}
+        onOut={() => scaleBy(1 / ZOOM_STEP)}
+        onReset={resetZoom}
+      />
 
       <div className="score-svg">
         <svg
@@ -458,14 +350,20 @@ export default function CyclePartitur({ model, wording, readoutId, figureId }: C
                     event.preventDefault()
                     openMark(p.mark)
                   }}
-                  onPointerEnter={(event) => showReadout(p.mark, fromPointer(event).anchorX, fromPointer(event).anchorY)}
-                  onPointerMove={(event) => showReadout(p.mark, fromPointer(event).anchorX, fromPointer(event).anchorY)}
-                  onPointerLeave={() => readoutRef.current?.hide()}
-                  onFocus={(event) => {
-                    const a = fromMark(event.currentTarget)
+                  onPointerEnter={(event) => {
+                    const a = readout.fromPointer(event)
                     showReadout(p.mark, a.anchorX, a.anchorY)
                   }}
-                  onBlur={() => readoutRef.current?.hide()}
+                  onPointerMove={(event) => {
+                    const a = readout.fromPointer(event)
+                    showReadout(p.mark, a.anchorX, a.anchorY)
+                  }}
+                  onPointerLeave={() => readout.hide()}
+                  onFocus={(event) => {
+                    const a = readout.fromMark(event.currentTarget)
+                    showReadout(p.mark, a.anchorX, a.anchorY)
+                  }}
+                  onBlur={() => readout.hide()}
                 >
                   <title>{label}</title>
                   {markShape(p.mark.kind, p.x, p.y, persona)}

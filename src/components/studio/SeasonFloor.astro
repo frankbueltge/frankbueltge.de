@@ -1,37 +1,29 @@
 ---
-// src/components/studio/SeasonFloor.astro — the Studio's signature figure: "The floor keeps every
-// mark." One stage floor carrying the whole season — every premiere lit, every strike taped, every
-// return curving back into production, and the withdrawal as a struck spotlight.
+// src/components/studio/SeasonFloor.astro — the FRAME around the Studio's signature figure,
+// "The floor keeps every mark." The figure itself is the island beside this file
+// (./SeasonFloor.tsx) since the visual layer's Phase 3d (2026-09-02); the component NAME stays,
+// because it is what /studio mounts and what src/lib/ecology/mounted.test.ts looks for.
 //
-// The figure itself is built at BUILD TIME by src/lib/studio/season.ts (pure, tested, derived from
-// committed data only). This component is the wiring: the shared WP3 primitives around it
-// (Readout, DetailPanel, LegendFilter, TableFallback), the studio's own skin in
-// src/styles/studio-stage.css, and the `dv:figure-ready` handshake that lets a guided tour drive
-// it (src/lib/tour/engine.ts) without either side importing the other.
+// This file does four things and stops:
 //
-// House rules this file keeps, all four of them load-bearing:
-//   · the figure container is `position: relative` (studio-stage.css `.st-sf-figure`) because the
-//     Readout is placed in the FIGURE's own coordinate space — readout.ts house rule 1;
-//   · no `is:inline` script, and no dynamic `style=""` anywhere: the site's CSP hashes bundled
-//     module scripts and silently drops style attributes, so every dynamic style goes through
-//     dataviz/runtime.ts's setVars (here: only the Readout's own placement, inside createReadout);
-//   · nothing is reachable ONLY by hovering an SVG mark — every mark carries a native <title>, and
-//     the whole season repeats as a table with the verbatim reason and its source;
-//   · visitor-facing copy comes from src/config/studio-wording.ts, never from this file.
+//   · resolves src/config/studio-wording.ts against the model, so the island receives plain
+//     strings and no number is ever typed into one (the legend's counts come from the model);
+//   · computes the links map — which page a mark opens. A struck project never premiered, so it
+//     has no page and gets no link; a return opens the work it was a return OF;
+//   · mounts the island inside `.st-sf-figure`, the `position: relative` box the readout is
+//     placed in (dataviz/readout.ts house rule 1), with the Readout shell beside it;
+//   · lays the table floor (TableFallback) and the provenance line under it, so nothing this
+//     figure says is reachable only through the drawing.
+//
+// What LEFT with the island: the JSON payload script (the island reads the model directly), the
+// DetailPanel (a mark opens a card now), the LegendFilter shell (the legend is the island's, so a
+// filter cannot fall out of step with the marks it filters) and the whole client script.
 import Readout from '@/components/dataviz/Readout.astro'
-import DetailPanel from '@/components/dataviz/DetailPanel.astro'
-import LegendFilter from '@/components/dataviz/LegendFilter.astro'
 import TableFallback from '@/components/dataviz/TableFallback.astro'
-import { jsonScriptPayload } from '@/lib/dataviz/runtime'
-import {
-  buildSeasonFloorSvg,
-  seasonOrder,
-  seasonRows,
-  SEASON_COLUMNS,
-  type SeasonModel,
-  type SeasonState,
-} from '@/lib/studio/season'
+import { STATE_WORD, seasonRows, SEASON_COLUMNS, type SeasonModel, type SeasonState } from '@/lib/studio/season'
 import { STUDIO_NARRATIVE } from '@/config/studio-wording'
+
+import SeasonFloorIsland, { type SeasonFloorWording } from './SeasonFloor'
 
 export interface Props {
   model: SeasonModel
@@ -44,77 +36,96 @@ export interface Props {
    * sits inside components/dataviz/Tour.astro's figure slot: that slot is `hidden` until JS
    * reveals it, and the table is the figure's DATA FLOOR — it must never be the thing that
    * disappears when scripts don't run. The tour composition (studio/tours/ThreeReturns.astro)
-   * therefore renders the record itself, outside the sticky column. The LEGEND does stay inside:
-   * it is a filter, an enhancement, and identity on this floor is carried by the marks' own
-   * direct labels (the title inside every pool, the name beside every X, the Roman numeral on
-   * every arc) plus that same table — never by colour alone, with or without JS.
+   * therefore renders the record itself, outside the sticky column.
    */
   withRecord?: boolean
+  /**
+   * When the island hydrates. `visible` is right everywhere the figure is simply on the page.
+   * `load` is for the ONE case that breaks it: Tour.astro's figure slot is `hidden` until the
+   * tour's own script reveals it, and an island that waits to become visible inside a hidden
+   * container may never hydrate at all. Two literal mounts below, because a client directive is
+   * a compiler instruction — Astro cannot template one.
+   */
+  hydrate?: 'visible' | 'load'
 }
 
-const { model, id = 'studio-season-floor', heading, withRecord = true } = Astro.props
+const { model, id = 'studio-season-floor', heading, withRecord = true, hydrate = 'visible' } = Astro.props
 const w = STUDIO_NARRATIVE.seasonFloor
 
-const svg = buildSeasonFloorSvg(model, {
-  label: w.altText,
+// The legend reads in the order the season itself runs: the light goes on, it is struck, the eye
+// sends it back, the house takes the light away. Two states share the curtain crimson on purpose
+// (a withdrawal IS the house striking its own light), which is why the swatches also differ in
+// shape — see studio-stage.css, `.dv-legend-swatch`.
+const LEGEND_ORDER: SeasonState[] = ['premiered', 'struck', 'returned', 'withdrawn']
+const swatchOf = (state: SeasonState): string =>
+  state === 'struck' || state === 'withdrawn'
+    ? 'var(--st-c-struck)'
+    : state === 'returned'
+      ? 'var(--st-c-returned)'
+      : 'var(--st-c-lit)'
+
+const wording: SeasonFloorWording = {
+  figureLabel: w.altText,
   headline: w.curtainLine,
   productionLabel: w.productionLabel,
-})
+  legendLabel: w.legendLabel,
+  legend: LEGEND_ORDER.map((state) => ({
+    key: state,
+    label: w.legend[state].label,
+    hint: w.legend[state].hint,
+    swatch: swatchOf(state),
+  })),
+  stateWord: STATE_WORD,
+  unknownEvening: w.unknownEvening,
+  segmentLabel: w.segmentLabel,
+  card: w.card,
+}
 
-const LEGEND_ORDER: SeasonState[] = ['premiered', 'struck', 'returned', 'withdrawn']
-const legendItems = LEGEND_ORDER.map((state) => ({
-  key: state,
-  label: w.legend[state].label,
-  hint: w.legend[state].hint,
-  count: model.counts[state],
-  swatch: state === 'struck' || state === 'withdrawn' ? 'var(--st-c-struck)' : state === 'returned' ? 'var(--st-c-returned)' : 'var(--st-c-lit)',
-}))
-
-// The payload the client script reads: exactly the fields the readout and the panel show, plus the
-// coordinates a scene's call-out is lettered at. No prose that isn't already in the model.
-const payload = seasonOrder(model.marks).map((m) => ({
-  key: m.key,
-  state: m.state,
-  label: m.label,
-  date: m.date,
-  session: m.session,
-  record: m.record,
-  source: m.source,
-  dateKnown: m.dateKnown,
-  x: m.x,
-  y: m.y,
-  ry: m.ry,
-}))
+// Where a mark's own page is. A premiere and a withdrawal are the work itself; a return is a
+// return OF a work, so it opens that work's entry; a strike has no page, because the project it
+// names never opened one — and a link to nothing is worse than no link.
+const links: Record<string, string> = Object.fromEntries(
+  model.marks.flatMap((m) => {
+    if (m.state === 'struck') return []
+    const slug = m.ofWork ?? m.key.split(':')[1]
+    return slug ? [[m.key, `/studio/works#${slug}`] as [string, string]] : []
+  }),
+)
 
 const rows = seasonRows(model)
 const provenance = `${w.provenancePrefix} ${model.provenance.join(' · ')}`
-const legendLabelId = `${id}-legend-label`
+const readoutId = `${id}-readout`
 ---
 
-<section class="st-season-floor" data-sf-root>
+<section class="st-season-floor">
   {heading && <h2 class="st-record-h" id={`${id}-heading`}>{heading}</h2>}
 
-  <p class="st-sf-key" id={legendLabelId}>{w.legendLabel}</p>
-  <LegendFilter items={legendItems} mode="multi" labelledby={legendLabelId} />
-
-  <div class="st-sf-figure" data-sf-figure>
-    <div id={id} data-sf-svg set:html={svg} />
-    <Readout id={`${id}-readout`} maxWidth="46ch" />
+  <div class="st-sf-figure">
+    {
+      hydrate === 'load' ? (
+        <SeasonFloorIsland
+          client:load
+          model={model}
+          wording={wording}
+          id={id}
+          readoutId={readoutId}
+          links={links}
+        />
+      ) : (
+        <SeasonFloorIsland
+          client:visible
+          model={model}
+          wording={wording}
+          id={id}
+          readoutId={readoutId}
+          links={links}
+        />
+      )
+    }
+    <Readout id={readoutId} maxWidth="46ch" />
   </div>
 
   <p class="dv-prov st-sf-hint">{w.hint}</p>
-
-  <DetailPanel id={`${id}-panel`}>
-    <Fragment slot="head">
-      <span class="p-state" data-p-state></span><span data-p-title></span>
-    </Fragment>
-    <Fragment slot="body">
-      <q data-p-record></q>
-    </Fragment>
-    <Fragment slot="foot">
-      <span data-p-source></span> · <span data-p-pos></span>
-    </Fragment>
-  </DetailPanel>
 
   {withRecord && (
     <TableFallback
@@ -125,259 +136,10 @@ const legendLabelId = `${id}-legend-label`
       provenance={provenance}
     />
   )}
-
-  <script type="application/json" data-sf-payload set:html={jsonScriptPayload(payload)} />
 </section>
 
 <style>
-  .st-sf-key,
   .st-sf-hint {
     margin: 0;
   }
 </style>
-
-<script>
-  import { createReadout } from '@/lib/dataviz/readout'
-  import { isOn } from '@/lib/dataviz/filter'
-  import { buildSegments, positionLabel, step } from '@/lib/dataviz/stepper'
-  import { ensureFigureReadyListener } from '@/lib/tour/engine'
-  import type { FocusState } from '@/lib/tour/types'
-
-  const SVG_NS = 'http://www.w3.org/2000/svg'
-
-  interface Mark {
-    key: string
-    state: string
-    label: string
-    date: string
-    session: string
-    record: string
-    source: string
-    dateKnown: boolean
-    x: number
-    y: number
-    ry: number
-  }
-
-  for (const root of document.querySelectorAll<HTMLElement>('[data-sf-root]')) {
-    const figure = root.querySelector<HTMLElement>('[data-sf-figure]')
-    const svgHost = root.querySelector<HTMLElement>('[data-sf-svg]')
-    const readoutEl = root.querySelector<HTMLElement>('[data-dv-readout]')
-    const panel = root.querySelector<HTMLElement>('[data-dv-panel]')
-    const payloadEl = root.querySelector<HTMLElement>('[data-sf-payload]')
-    const svg = svgHost?.querySelector<SVGSVGElement>('svg')
-    if (!figure || !svgHost || !readoutEl || !panel || !payloadEl || !svg) continue
-
-    let marks: Mark[]
-    try {
-      marks = JSON.parse(payloadEl.textContent ?? '[]') as Mark[]
-    } catch {
-      continue // no payload, no enhancement: the SVG's own <title>s and the table still work
-    }
-    const byKey = new Map(marks.map((m) => [m.key, m]))
-    const groups = [...svg.querySelectorAll<SVGGElement>('[data-key]')]
-    const readout = createReadout(readoutEl, figure)
-
-    // one segment, the whole season in chronological order — prev/next walks it end to end
-    const segmented = buildSegments(marks, () => 'the season')
-
-    let filter: string[] = []
-    let dim: string[] = []
-    let chosen: string | null = null
-    let noteLayer: SVGGElement | null = null
-
-    // ——— the curtain-up gesture, once, and only if motion is welcome ————————————————
-    // (the stylesheet gates the animation itself on prefers-reduced-motion: no-preference; this
-    // only adds the class the animation hangs off, so a reduced-motion visitor never even has an
-    // animation declared against their marks)
-    svg.classList.add('st-sf-enter')
-
-    /**
-     * A hover readout is a glance, not the archive. Some records here run to a paragraph (the
-     * withdrawal note is the collective's own full `medium` line), and shown whole the tooltip
-     * covered the floor it was describing. So the readout carries the record's first sentence and
-     * an explicit ellipsis when there is more — never a silent mid-word cut, and never the only
-     * place the full text exists: the detail panel and the table below both carry it entire.
-     */
-    const glance = (record: string): string => {
-      if (record.length <= 200) return record
-      const end = record.indexOf('. ')
-      const head = end > 40 && end < 260 ? record.slice(0, end + 1) : record.slice(0, record.lastIndexOf(' ', 200))
-      return `${head} […]`
-    }
-
-    // ——— the readout: hover and keyboard focus show the same verbatim record ————————
-    const showReadout = (m: Mark, anchorX: number, anchorY: number) => {
-      const node = document.createDocumentFragment()
-      const head = document.createElement('b')
-      head.className = 'r-head'
-      head.textContent = m.label
-      const state = document.createElement('span')
-      state.textContent = `${stateWord(m.state)}${m.session ? ` · ${m.session}` : ''} · ${
-        m.dateKnown ? m.date : `${m.date} (evening not in the mirror)`
-      }`
-      const record = document.createElement('span')
-      record.className = 'r-body'
-      record.textContent = glance(m.record)
-      const src = document.createElement('span')
-      src.className = 'r-src'
-      src.textContent = m.source
-      node.append(head, state, document.createElement('br'), record, src)
-      readoutEl.dataset.state = m.state
-      readout.show(node, { anchorX, anchorY })
-    }
-
-    const stateWord = (s: string) =>
-      s === 'withdrawn'
-        ? 'premiered, then withdrawn'
-        : s === 'returned'
-          ? 'returned by the human eye'
-          : s
-
-    /** Figure-local coordinates for the readout (house rule 1): the pointer for a mouse, the
-     *  mark's own box for keyboard focus — so a tabbing visitor gets the readout at the mark, not
-     *  wherever the pointer happens to rest. */
-    const anchorOf = (g: SVGGElement, ev?: MouseEvent): [number, number] => {
-      const box = figure.getBoundingClientRect()
-      if (ev) return [ev.clientX - box.left, ev.clientY - box.top]
-      const r = g.getBoundingClientRect()
-      return [r.left - box.left + r.width / 2, r.top - box.top + r.height / 2]
-    }
-
-    // ——— the detail panel: the record, one mark at a time, walkable with the arrow keys ———
-    const setText = (sel: string, text: string) => {
-      const el = panel.querySelector<HTMLElement>(sel)
-      if (el) el.textContent = text
-    }
-
-    const openAt = (pos: number) => {
-      const m = marks[pos]
-      if (!m) return
-      chosen = m.key
-      panel.dataset.dvPos = String(pos)
-      panel.dataset.state = m.state
-      setText('[data-p-state]', stateWord(m.state))
-      setText('[data-p-title]', m.label)
-      setText('[data-p-record]', m.record)
-      setText('[data-p-source]', m.source)
-      setText('[data-p-pos]', positionLabel(segmented, pos))
-      panel.hidden = false
-      paint()
-      // The floor as a switchboard (2026-08-01): whoever is listening — on /studio that is the
-      // house dossier wrapping this figure — learns which mark is open. Bubbling and outbound
-      // only: this figure gains no knowledge of what, if anything, is listening, exactly like the
-      // `dv:figure-ready` handshake below. A listener that drives the floor back through `apply`
-      // cannot loop, because re-selecting the mark that is already chosen changes nothing.
-      root.dispatchEvent(
-        new CustomEvent('dv:mark-selected', { bubbles: true, detail: { key: m.key } }),
-      )
-    }
-
-    panel.addEventListener('dv:step', (ev) => {
-      const next = step(segmented, Number(panel.dataset.dvPos ?? '0'), (ev as CustomEvent).detail.pos - Number(panel.dataset.dvPos ?? '0'))
-      if (next !== Number(panel.dataset.dvPos ?? '0')) openAt(next)
-    })
-    panel.addEventListener('dv:close', () => {
-      panel.hidden = true
-      chosen = null
-      paint()
-    })
-
-    // ——— paint: filter, dim and selection are ATTRIBUTES; no mark ever moves ————————
-    function paint() {
-      for (const g of groups) {
-        const key = g.dataset.key ?? ''
-        const m = byKey.get(key)
-        g.toggleAttribute('data-on', isOn(filter, m?.state ?? ''))
-        g.toggleAttribute('data-dim', dim.includes(key))
-        g.toggleAttribute('data-sel', chosen === key)
-      }
-    }
-
-    root.addEventListener('dv:filter', (ev) => {
-      filter = (ev as CustomEvent<{ keys: string[] }>).detail.keys
-      paint()
-    })
-
-    for (const g of groups) {
-      const m = byKey.get(g.dataset.key ?? '')
-      if (!m) continue
-      g.addEventListener('mouseenter', (ev) => showReadout(m, ...anchorOf(g, ev as MouseEvent)))
-      g.addEventListener('mousemove', (ev) => showReadout(m, ...anchorOf(g, ev as MouseEvent)))
-      g.addEventListener('mouseleave', () => readout.hide())
-      g.addEventListener('focus', () => showReadout(m, ...anchorOf(g)))
-      g.addEventListener('blur', () => readout.hide())
-      g.addEventListener('click', () => openAt(marks.findIndex((x) => x.key === m.key)))
-      g.addEventListener('keydown', (ev) => {
-        const k = (ev as KeyboardEvent).key
-        if (k !== 'Enter' && k !== ' ') return
-        ev.preventDefault()
-        openAt(marks.findIndex((x) => x.key === m.key))
-      })
-    }
-
-    // ——— the tour handshake: this figure opts in, and knows nothing about any tour ————
-    // A scene's call-outs are lettered as real SVG text at the marks they name (the same place the
-    // build-time stills letter them), created through the DOM rather than as markup — so no
-    // innerHTML of data and nothing for the CSP to drop.
-    const applyAnnotations = (notes: { key: string; text: string }[]) => {
-      noteLayer?.remove()
-      noteLayer = null
-      if (!notes.length) return
-      const layer = document.createElementNS(SVG_NS, 'g')
-      for (const note of notes) {
-        const m = byKey.get(note.key)
-        if (!m) continue
-        const g = document.createElementNS(SVG_NS, 'g')
-        g.setAttribute('class', 'st-sf-note')
-        const stem = document.createElementNS(SVG_NS, 'path')
-        stem.setAttribute('d', `M${m.x} ${m.y + m.ry + 6} V${m.y + m.ry + 26}`)
-        const text = document.createElementNS(SVG_NS, 'text')
-        text.setAttribute('x', String(m.x))
-        text.setAttribute('y', String(m.y + m.ry + 42))
-        text.setAttribute('text-anchor', 'middle')
-        text.textContent = note.text
-        g.append(stem, text)
-        layer.append(g)
-      }
-      svg.append(layer)
-      noteLayer = layer
-    }
-
-    const apply = (focus: FocusState) => {
-      // `filter: null` explicitly clears; `undefined` means this scene does not touch the filter
-      if (focus.filter !== undefined) filter = focus.filter ?? []
-      dim = focus.dim ?? []
-      applyAnnotations(focus.annotate ?? [])
-      if (focus.select) {
-        const pos = marks.findIndex((m) => m.key === focus.select)
-        if (pos >= 0) openAt(pos)
-      } else if (!panel.hidden) {
-        panel.hidden = true
-        chosen = null
-      }
-      paint()
-      // the legend buttons must agree with a scene-driven filter, or the visitor sees a filtered
-      // floor with an unfilterd legend and cannot tell what is going on
-      for (const b of root.querySelectorAll<HTMLButtonElement>('[data-dv-legend-key]')) {
-        b.setAttribute('aria-pressed', String(filter.includes(b.dataset.dvLegendKey ?? '')))
-      }
-    }
-
-    paint()
-    // The handshake, with the one guarantee the bare dispatch does not give. src/lib/tour/engine.ts
-    // documents both registration orders as safe, and they are — but ONLY once something is
-    // listening: `dv:figure-ready` is an ordinary event, so a figure whose bundle executes before
-    // any Tour's dispatches into an empty room and is never registered at all. Calling
-    // ensureFigureReadyListener() here installs the shared (idempotent, one-per-page) listener
-    // BEFORE this floor announces itself, so the registry is populated whichever bundle runs
-    // first. This figure still knows nothing about any tour — it only makes sure the registry the
-    // contract is built on exists. (Observed, not theorised: /studio emits this component's
-    // module ahead of Tour.astro's, so every scene of the One Tap tour stepped its own prose
-    // while the floor below it stood still — no filter, no spotlight, no re-aimed crop.)
-    ensureFigureReadyListener()
-    window.dispatchEvent(
-      new CustomEvent('dv:figure-ready', { detail: { id: svgHost.id, apply } }),
-    )
-  }
-</script>

@@ -570,9 +570,25 @@
 }
 .studio-surface .dv-readout .r-src { display: block; color: var(--st-ink-2); margin-top: 4px; font-size: 11px; }
 
-/* the legend, as a filter (dataviz/LegendFilter.astro) */
-.studio-surface .dv-legend { gap: 6px 18px; margin: 10px 0 16px; }
+/* The legend, as a filter. Since 2026-09-02 the season floor carries its OWN legend inside the
+   island (components/studio/SeasonFloor.tsx), so that a filter and the marks it filters can never
+   fall out of step. dataviz/LegendFilter.astro's structural CSS is scoped to that component and no
+   longer reaches this markup, so the four structural declarations it contributed are repeated here
+   — layout only, no colour: the swatch's hue is still a value the frame supplies through
+   `--dv-swatch`, and the skin below is unchanged. */
+.studio-surface .dv-legend {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+  gap: 6px 18px;
+  margin: 10px 0 16px;
+}
+.studio-surface .dv-legend-item { display: contents; }
 .studio-surface .dv-legend-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   background: none;
   border: 1px solid transparent;
   border-radius: 2px;
@@ -594,7 +610,13 @@
    would say the opposite of what the floor draws. A lit position is a round pool, an unlit one is
    the same pool with a dashed edge and no fill, a strike is a square-cornered X mark. This is the
    same shape relief src/lib/dataviz/palette.ts records for the 6–8 CVD band, applied to the key. */
-.studio-surface .dv-legend-swatch { width: 12px; height: 12px; border-radius: 1px; }
+.studio-surface .dv-legend-swatch {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 1px;
+  background: var(--dv-swatch, currentColor);
+}
 .studio-surface [data-dv-legend-key='premiered'] .dv-legend-swatch { border-radius: 50%; }
 .studio-surface [data-dv-legend-key='withdrawn'] .dv-legend-swatch {
   border-radius: 50%;
