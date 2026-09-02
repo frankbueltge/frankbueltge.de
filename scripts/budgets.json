@@ -16,6 +16,16 @@
       "prefix": "GraphExplorer.",
       "maxGzipKB": 60,
       "what": "the knowledge-graph explorer on /experiments/neighbors (Phase 3a): d3-force relaxing the model's radial layout, d3-zoom, the filters, a plain combobox search (no cmdk — its radix dialog dependency would have cost a third of this budget for a search box), the node card with receipts. Mounted client:visible; the receipts are fetched from /graph/view.json only when a card opens."
+    },
+    {
+      "prefix": "EntranceGlobe.",
+      "maxGzipKB": 12,
+      "what": "the entrance globe's shell (Phase 3b): the island that carries the build-time plate, watches the hero, and imports the WebGL half on demand. Mounted client:idle on / only; holds no deck.gl, no satellite.js."
+    },
+    {
+      "prefix": "globe-deck.",
+      "maxGzipKB": 320,
+      "what": "the entrance globe's WebGL half (Phase 3b): deck.gl core + layers with the globe view, the land TopoJSON decoder and SGP4 over the committed elements. Loaded by dynamic import() the first time the hero is on screen, never on any other page; the plan's ceiling for this chunk."
     }
   ]
 }

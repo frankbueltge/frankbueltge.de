@@ -53,6 +53,9 @@ describe('the instruments are on a page', () => {
     // the knowledge graph, explorable (2026-09-02) — the one surface on which every record the
     // house keeps about itself stands with its receipts; without it the graph is a file
     ['GraphExplorer', 'the knowledge graph of the house — every node with the file and quote each edge was read from'],
+    // the entrance globe (2026-09-02) — the earth-observation fleet at its positions now and the
+    // ghost fleet's dark gaps, over one WebGL globe; without it the entrance's sky is a plate only
+    ['EntranceGlobe', 'the globe under the hero — the satellites overhead and the vessels gone dark, drawn from the committed snapshots'],
   ]
 
   it.each(INSTRUMENTS)('%s is imported by at least one page', (component, what) => {

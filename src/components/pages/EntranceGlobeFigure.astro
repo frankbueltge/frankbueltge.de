@@ -1,0 +1,102 @@
+---
+// src/components/pages/EntranceGlobeFigure.astro — the frame around the entrance globe (visual
+// layer, Phase 3b, 2026-09-02): the strips that state what is drawn and when, the island, the
+// readout shell it fills, and an aside that carries the longest gaps as a list — so the panel
+// says something on a phone with no WebGL and to a reader with no pointer.
+//
+// Built from two committed nightly snapshots and one committed geography, nothing else: the
+// earth-observation fleet's elements (src/data/ueberflug), the ghost fleet's AIS gaps
+// (src/data/ghost-fleet) and Natural Earth land (src/data/globe). The plate the island stands on
+// is drawn HERE, at build time, at the elements' own time — the island fetches the same two
+// snapshots later and draws them at the visitor's present. Every count in the strips is derived
+// by src/lib/globe/model.ts; no number is typed.
+import { getRelativeLocaleUrl } from 'astro:i18n'
+import type { Locale } from '@/lib/site'
+import type { Topology } from 'topojson-specification'
+import type { SatSnapshot } from '@/lib/ueberflug/types'
+import type { GhostFleetData } from '@/lib/ghost-fleet/types'
+import sky from '@/data/ueberflug/satellites.json'
+import fleet from '@/data/ghost-fleet/latest.json'
+import land from '@/data/globe/land-110m.json'
+import { NAMING } from '@/config/naming'
+import { asOfDay, buildGlobeModel } from '@/lib/globe/model'
+import { positionsAt, satrecsOf } from '@/lib/globe/propagate'
+import { buildGlobeFloorSvg } from '@/lib/globe/floor'
+import Readout from '@/components/dataviz/Readout.astro'
+import EntranceGlobe from './EntranceGlobe'
+
+const locale = (Astro.currentLocale ?? 'en') as Locale
+const url = (href: string) => getRelativeLocaleUrl(locale, href)
+
+const SKY = NAMING.opsRoom.sky
+const model = buildGlobeModel(sky as unknown as SatSnapshot, fleet as unknown as GhostFleetData)
+// The plate stands at the elements' own time, never at the build's.
+const points = positionsAt(satrecsOf(model.satellites), Date.parse(model.asOf.satellites))
+const groupWord = (group: string) => SKY.groups[group] ?? group
+const elementsDay = asOfDay(model.asOf.satellites)
+
+const floor = buildGlobeFloorSvg({
+  land: land as unknown as Topology,
+  arcs: model.arcs,
+  satellites: model.satellites,
+  points,
+  labels: {
+    title: SKY.floorTitle,
+    desc: SKY.floorDesc(model.counts.satellites, model.counts.arcs, elementsDay),
+    satellite: (s) => SKY.satelliteLabel(s.name, groupWord(s.group), s.owner),
+    arc: (a) => SKY.gapLabel(a.vessel.name, Math.round(a.hours), a.waters),
+  },
+})
+
+const longest = model.arcs.slice(0, 5)
+const READOUT_ID = 'sky-readout'
+---
+
+<figure class="ops-panel ops-instrument ops-sky" data-ops-sky>
+  <div class="ops-instrument-strip">
+    <span>{SKY.headLeft(model.counts.satellites)}</span>
+    <span>{SKY.headRight(model.counts.arcs)}</span>
+  </div>
+
+  <div class="ops-sky-body">
+    <div class="ops-sky-stage">
+      <EntranceGlobe
+        client:idle
+        floorSvg={floor}
+        wording={{ readout: SKY.readout, groups: SKY.groups, status: SKY.status }}
+        readoutId={READOUT_ID}
+        figureId="entrance-globe"
+        modelUrl="/globe/model.json"
+        landUrl="/globe/land.json"
+      />
+      <Readout id={READOUT_ID} maxWidth="40ch" />
+    </div>
+
+    <aside class="ops-sky-aside" aria-label={SKY.aside.kicker}>
+      <p class="ops-sky-kicker">{SKY.aside.kicker}</p>
+      <ol class="ops-sky-list">
+        {longest.map((a) => (
+          <li>
+            <span class="ops-sky-vessel">{a.vessel.name}</span>
+            <span class="ops-sky-hours">{SKY.aside.hours(Math.round(a.hours))}</span>
+            <span class="ops-sky-waters">{a.waters}</span>
+          </li>
+        ))}
+      </ol>
+      <ul class="ops-sky-legend" aria-label={SKY.legend.label}>
+        <li><span class="sky-key sky-key-sat" aria-hidden="true"></span>{SKY.legend.satellite}</li>
+        <li><span class="sky-key sky-key-gap" aria-hidden="true"></span>{SKY.legend.gap}</li>
+        <li><span class="sky-key sky-key-land" aria-hidden="true"></span>{SKY.legend.land}</li>
+      </ul>
+      <p class="ops-sky-links">
+        <a href={url(SKY.aside.fleet.href)}>{SKY.aside.fleet.label}</a>
+        <a href={url(SKY.aside.watch.href)}>{SKY.aside.watch.label}</a>
+      </p>
+    </aside>
+  </div>
+
+  <div class="ops-instrument-strip">
+    <span>{SKY.footLeft}</span>
+    <span>{SKY.footRight(elementsDay, model.asOf.fleet)}</span>
+  </div>
+</figure>

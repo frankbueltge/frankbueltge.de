@@ -63,6 +63,17 @@ describe('the front page mounts the ops room', () => {
     expect(frontDoor.length).toBeGreaterThan(0)
     expect(indexPage).toContain('FrontDoor.astro stays in the repo')
   })
+
+  // The globe under the hero (visual layer, Phase 3b, 2026-09-02): the ops room mounts its frame,
+  // and the frame mounts the island — both by path, so mounted.test.ts sees the island too.
+  it('mounts the entrance globe under the hero, frame and island', () => {
+    const opsRoom = read('../../components/pages/OpsRoom.astro')
+    const figure = read('../../components/pages/EntranceGlobeFigure.astro')
+    expect(opsRoom).toContain("from './EntranceGlobeFigure.astro'")
+    expect(opsRoom).toContain('<EntranceGlobeFigure />')
+    expect(figure).toContain("from './EntranceGlobe'")
+    expect(figure).toMatch(/<EntranceGlobe\s+client:idle/)
+  })
 })
 
 describe('/now SEO strings fit their windows', () => {
