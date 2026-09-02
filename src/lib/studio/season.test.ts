@@ -383,6 +383,41 @@ describe('the table floor and the honest gaps', () => {
     expect(model.marks.find((m) => m.state === 'returned')!.label).toBe('not staged at all')
   })
 
+  // A work can reach the chronicle's `ship` move more than once: the practice revises a premiered
+  // work and records the revision as the ship it is. The floor draws PREMIERES, so the second
+  // entry is not a second position — it is the same pool, and drawing it twice put two identical
+  // ellipses on the same coordinates, gave two marks the same `premiered:<slug>` key (which the
+  // dossier index then silently collapsed), and doubled that work's returns. dossier.ts has always
+  // kept the first ship per slug and ignored the rest; this holds season.ts to the same reading.
+  // (2026-09-02, after the studio re-shipped a work of 2026-08-31 and the integration went red.)
+  it('draws one pool for a work the record ships twice, anchored at its premiere', () => {
+    const chronicle = [
+      { collective_session: 1, date: '2026-08-01', move: 'ship', summary: 'A premiere happened here.', works: ['w1'] },
+      {
+        collective_session: 2,
+        date: '2026-08-02',
+        move: 'steer',
+        summary: 'The human eye returned First a first time — "not staged at all". And the house agreed.',
+        works: ['w1'],
+      },
+      { collective_session: 3, date: '2026-08-03', move: 'ship', summary: 'The same work, revised and shipped again.', works: ['w1'] },
+    ]
+    const metas = { w1: { title: 'First', medium: 'A live thing' } }
+    const model = buildSeasonModel({ chronicle, metas, kills: [] })
+
+    const pools = model.marks.filter((m) => m.state === 'premiered' || m.state === 'withdrawn')
+    expect(pools).toHaveLength(1)
+    expect(model.counts.premiered).toBe(1)
+    // the premiere is the FIRST ship — the pool keeps that evening, not the revision's
+    expect(pools[0].date).toBe('2026-08-01')
+    expect(pools[0].session).toBe('S1')
+    expect(pools[0].record).toBe('A premiere happened here.')
+    // every mark still answers to its own key, and the return is counted once, not twice
+    expect(new Set(model.marks.map((m) => m.key)).size).toBe(model.marks.length)
+    expect(model.counts.returned).toBe(1)
+    expect(buildSeasonFloorSvg(model).match(/class="st-sf-pool/g) ?? []).toHaveLength(1)
+  })
+
   it('keeps the whole sentence when a return carries no quotation to lift', () => {
     const model = buildSeasonModel({
       chronicle: [
