@@ -28,6 +28,11 @@
       "what": "the knowledge-graph explorer on /experiments/neighbors (Phase 3a): d3-force relaxing the model's radial layout, d3-zoom, the filters, a plain combobox search (no cmdk — its radix dialog dependency would have cost a third of this budget for a search box), the node card with receipts. Mounted client:visible; the receipts are fetched from /graph/view.json only when a card opens."
     },
     {
+      "prefix": "ExperimentGallery.",
+      "maxGzipKB": 25,
+      "what": "the /experiments gallery (Phase 3c): the cards with their build-time miniatures, the three-axis filter, the CSS view-transition reflow and the shared readout. No motion library and no d3 — the reflow is the browser's own view transition, the entrance a CSS animation. Mounted client:visible."
+    },
+    {
       "prefix": "EntranceGlobe.",
       "maxGzipKB": 12,
       "what": "the entrance globe's shell (Phase 3b): the island that carries the build-time plate, watches the hero, and imports the WebGL half on demand. Mounted client:idle on / only; holds no deck.gl, no satellite.js."

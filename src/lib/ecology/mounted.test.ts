@@ -59,6 +59,9 @@ describe('the instruments are on a page', () => {
     ['GraphExplorer', 'the knowledge graph of the house — every node with the file and quote each edge was read from'],
     // the entrance globe (2026-09-02) — the earth-observation fleet at its positions now and the
     // ghost fleet's dark gaps, over one WebGL globe; without it the entrance's sky is a plate only
+    // the experiments gallery (2026-09-02) — the shelf's cards and, with them, every miniature
+    // drawn from an experiment's own committed record; without it /experiments is a list again
+    ['ExperimentGallery', 'the /experiments gallery — every experiment\u2019s card and the miniature of its own instrument'],
     ['EntranceGlobe', 'the globe under the hero — the satellites overhead and the vessels gone dark, drawn from the committed snapshots'],
   ]
 
