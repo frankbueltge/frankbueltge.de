@@ -290,6 +290,13 @@ export function buildSeasonModel(input: SeasonInput): SeasonModel {
   }
   const lit: Draft[] = []
   const returns: Draft[] = []
+  /** Works already given a position. A work can be shipped more than once — the practice revises a
+   *  premiered work and records the revision as the ship it is — but the floor draws PREMIERES, so
+   *  only the first ship opens a position. Without this, a re-shipped work got a second ellipse on
+   *  the same coordinates, a duplicate `premiered:<slug>` key (which markIndex then collapsed, so
+   *  one of the two marks could no longer be addressed at all) and its returns counted twice.
+   *  dossier.ts keeps the first ship per slug in the same way. (2026-09-02.) */
+  const positioned = new Set<string>()
 
   for (const e of chronicle) {
     if (e.move !== 'ship') continue
@@ -297,6 +304,8 @@ export function buildSeasonModel(input: SeasonInput): SeasonModel {
     if (!slug) continue
     const meta = metas[slug]
     if (!meta?.title) continue
+    if (positioned.has(slug)) continue
+    positioned.add(slug)
     const label = meta.title.toUpperCase()
     // The WITHDRAWN state is machine-readable in the work's own meta.json — the same test /studio's
     // hero already applies to pick the newest LIVE premiere.
