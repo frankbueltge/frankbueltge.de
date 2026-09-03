@@ -132,6 +132,22 @@ export function layersToFetch(asked: ReadonlySet<string>, active: readonly strin
   return active.filter((id) => !asked.has(id))
 }
 
+/** The width below which a globe is not fetched until it is asked for. A phone that lands on this
+ *  page pays two hundred kilobytes for the drawing half, the same again for two archives, and a
+ *  frame loop that propagates orbits twice a second — for a figure the server already drew as a
+ *  plate. Measured on the live entrance on 2026-09-03: three hundred kilobytes over the wire and
+ *  a third of a second of blocking on an unthrottled desktop, which is several times that on the
+ *  processor a mobile audit emulates. */
+export const NARROW_PX = 760
+
+/** Whether the globe may mount as soon as it is on screen, or must wait for a tap. Pure, so the
+ *  rule is a test and not a comment: wide screens mount on sight, narrow ones on request. The
+ *  plate, the legend, the provenance and the tables stand either way — they are the server's own
+ *  render, and on a narrow screen they are the whole figure until the visitor asks for more. */
+export function mountsOnSight(width: number): boolean {
+  return width >= NARROW_PX
+}
+
 /** Where the day axis starts: at the newest day the archive holds, which is the last of them. */
 export function newestDayIndex(days: readonly string[]): number {
   return Math.max(days.length - 1, 0)
@@ -265,6 +281,11 @@ export default function LivingGlobe({
   const [fetches, setFetches] = React.useState<Record<string, FetchState>>({})
   const [selected, setSelected] = React.useState<Selection | null>(null)
   const [playing, setPlaying] = React.useState(false)
+  // The narrow-screen gate. `null` is "not measured yet", which is what the server render and the
+  // first client render both stand in — so nothing is fetched before the width is known, and the
+  // markup React hydrates is the markup it rendered. `armed` is the visitor's tap.
+  const [gated, setGated] = React.useState<boolean | null>(null)
+  const [armed, setArmed] = React.useState(false)
 
   const byId = React.useMemo(() => new Map(manifest.layers.map((l) => [l.id, l])), [manifest.layers])
   const day = manifest.days[dayIndex] ?? manifest.asOf
@@ -275,6 +296,9 @@ export default function LivingGlobe({
 
   // ── the records: one fetch per layer, ever ──────────────────────────────────
   React.useEffect(() => {
+    // the same gate the mount keeps: until the width is known, and while a narrow screen waits to
+    // be asked, nothing is fetched — the records are only ever wanted by the half that draws them
+    if (gated !== false && !armed) return
     const wanted = layersToFetch(askedRef.current, active)
     if (wanted.length === 0) return
     for (const id of wanted) askedRef.current.add(id)
@@ -297,7 +321,7 @@ export default function LivingGlobe({
     return () => {
       cancelled = true
     }
-  }, [active, byId])
+  }, [active, armed, byId, gated])
 
   /** One layer's frame for the day on screen, out of what has been fetched. */
   const frameOf = React.useCallback(
@@ -402,6 +426,13 @@ export default function LivingGlobe({
     }
   }, [active, byId])
 
+  // What the server cannot know: how wide the screen is. It renders the plate for everyone, and
+  // this effect decides afterwards whether the globe follows on its own or waits to be asked.
+  React.useEffect(() => {
+    if (typeof window === 'undefined') return
+    setGated(!mountsOnSight(window.innerWidth))
+  }, [])
+
   // The heavy module is imported the first time the figure comes near the viewport, and never
   // before: `useOnScreen` starts true so the server render and the first client render agree,
   // which makes it the right hook for pausing and the wrong one for starting.
@@ -428,6 +459,8 @@ export default function LivingGlobe({
     const root = rootRef.current
     const host = hostRef.current
     if (!root || !host || !seen || startedRef.current) return
+    // until the width is known, and on a narrow screen until the visitor asks, nothing is fetched
+    if (gated !== false && !armed) return
     startedRef.current = true
     let cancelled = false
     const start = async () => {
@@ -473,7 +506,7 @@ export default function LivingGlobe({
     // The effect must not re-run when a toggle changes buildFrame/showHover/openMark, or the globe
     // would be mounted twice; what it hands over it reads from `latest`, and every later change
     // reaches the drawing half through setFrame below.
-  }, [seen]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [seen, gated, armed]) // eslint-disable-line react-hooks/exhaustive-deps
 
   // Off screen the turn pauses; back on screen it resumes.
   React.useEffect(() => {
@@ -698,6 +731,14 @@ export default function LivingGlobe({
         <div className="lg-floor" dangerouslySetInnerHTML={{ __html: floorSvg }} />
         {/* the globe: a layer the visitor's browser may or may not be able to paint */}
         <div ref={hostRef} className="lg-canvas" aria-hidden="true" onMouseLeave={() => showHover(null)} />
+        {gated === true && !armed && (
+          <div className="lg-ask">
+            <Button type="button" variant="outline" size="sm" onClick={() => setArmed(true)}>
+              {wording.controls.turn}
+            </Button>
+            <span className="lg-ask-hint">{wording.controls.turnHint}</span>
+          </div>
+        )}
         <p className="lg-status" aria-live="polite">
           {status}
         </p>

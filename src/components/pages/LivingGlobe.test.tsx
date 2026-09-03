@@ -30,6 +30,8 @@ import LivingGlobe, {
   emphasisFor,
   layersToFetch,
   mayFly,
+  mountsOnSight,
+  NARROW_PX,
   newestDayIndex,
   parseInk,
   playAdvances,
@@ -457,5 +459,46 @@ describe('the card names a country, never its code (G3, second evening)', () => 
       expect(phrase.startsWith('centroid of '), record.key).toBe(true)
       expect(phrase, record.key).not.toMatch(/centroid of [A-Z]{3}$/)
     }
+  })
+})
+
+describe('who pays for the globe, and when', () => {
+  // Measured on the live entrance on 2026-09-03: a phone fetched the drawing half, two whole
+  // archives and a land topology for a figure the server had already drawn as a plate, and spent
+  // a third of a second of main-thread time on it unthrottled — several times that on the
+  // processor a mobile audit emulates. A narrow screen therefore keeps the plate and fetches
+  // nothing until the visitor asks for the turn.
+  it('mounts on sight on a wide screen', () => {
+    expect(mountsOnSight(1440)).toBe(true)
+    expect(mountsOnSight(NARROW_PX)).toBe(true)
+  })
+
+  it('waits to be asked on a narrow one', () => {
+    expect(mountsOnSight(NARROW_PX - 1)).toBe(false)
+    expect(mountsOnSight(412)).toBe(false)
+    expect(mountsOnSight(0)).toBe(false)
+  })
+
+  it('leaves the server render alone — the plate is what every screen gets first', () => {
+    // the gate lives in an effect, so the markup the server sends is the same for every width
+    expect(render(true)).toContain('lg-floor')
+    expect(render(true)).not.toContain('lg-ask')
+    expect(render(false)).not.toContain('lg-ask')
+  })
+
+  it('fetches no archive while the gate stands — not the drawing half, not the records', () => {
+    const source = read('./LivingGlobe.tsx')
+    // both effects carry the same early return, and the fetch effect watches the gate
+    // both effects carry the same early return, and neither runs before the width is measured:
+    // `gated === null` is the unmeasured state the server render stands in
+    expect(source.match(/if \(gated !== false && !armed\) return/g)?.length).toBe(2)
+    expect(source).toContain('}, [active, armed, byId, gated])')
+    expect(source).toContain('React.useState<boolean | null>(null)')
+  })
+
+  it('asks in the wording config’s own words, and only while the gate stands', () => {
+    const source = read('./LivingGlobe.tsx')
+    expect(source).toContain('{gated === true && !armed && (')
+    expect(source).toContain('wording.controls.turn')
   })
 })

@@ -59,6 +59,9 @@ export interface IslandWording {
     playHint: string
     readMarks: string
     readMarksHint: string
+    /** the narrow screen's own button: the plate stands, the globe arrives when it is asked for */
+    turn: string
+    turnHint: string
     inFront: string
     loading: string
     failed: string
@@ -352,6 +355,8 @@ export const GLOBE = {
       playHint: 'a day a second, from here to the newest',
       readMarks: 'read the marks',
       readMarksHint: 'opens the first mark of the layer in front; the arrow keys walk the rest',
+      turn: 'turn the globe',
+      turnHint: 'the plate is the record as it stands; the turning globe is fetched when you ask for it',
       inFront: 'in front',
       loading: 'fetching this layer’s records',
       failed: 'this layer’s records did not load — its table below still holds them',
