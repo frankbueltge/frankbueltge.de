@@ -1,6 +1,6 @@
 # Living Globe — one globe over everything this house measures on the earth
 
-**Status:** G0 shipped 2026-09-03 (the ground, the crosswalk, the gates); G1 shipped 2026-09-03 (the room: layers, the day, the receipts); G2 shipped 2026-09-03 (three guided stories, and a focus that moves camera, day and layers); G3 evening 1 of 3 shipped 2026-09-03 (the three country layers, the tessellation check, the antimeridian stitch); G3 evening 2 of 3 shipped 2026-09-03 (the removals at their seats, the world chamber's hosts, the trending countries). The third evening of G3, then G4.
+**Status:** G0 shipped 2026-09-03 (the ground, the crosswalk, the gates); G1 shipped 2026-09-03 (the room: layers, the day, the receipts); G2 shipped 2026-09-03 (three guided stories, and a focus that moves camera, day and layers); G3 evening 1 of 3 shipped 2026-09-03 (the three country layers, the tessellation check, the antimeridian stitch); G3 evening 2 of 3 shipped 2026-09-03 (the removals at their seats, the world chamber's hosts, the trending countries); G3 evening 3 of 3 shipped 2026-09-03 (admissions and the mirrored attention warnings, the first two STATIC layers; the hosts/bycatch layer refused, not deferred; the name repair completed over the four layers that still lacked it). **G3 is closed.** Next is G4.
 **Decision:** Frank's decision of 2026-09-03, wording private.
 **Surfaces:** `/globe` · `/werke/globe` · `/globe/layers.json` · `/globe/layers/<id>.json` ·
 `/globe/countries.json` (since G3 the country polygons keyed by alpha-3, stitched and rounded ready to
@@ -98,12 +98,67 @@ Ground, by country** draws only the signals of sources that publish per country,
 that a signal carrying a LANGUAGE is not placed at all: a wiki is read wherever its language is read.
 The repair: a country place now carries the crosswalk's own name beside its code, so a card reads
 “centroid of Qatar” instead of “centroid of the country QAT” — resolved by the adapter, because the
-island holds no crosswalk and must never grow one. **Owed to evening 3:** the admissions and the two
-registers (disasters and battles), the bycatch and the world chamber's own rewriting register with its
-own TLDs, and the attention warnings. **And the two houses that must say yes before anything of theirs
+island holds no crosswalk and must never grow one. **Owed to evening 3:** admissions (the two disaster
+and battle registers), the hosts/bycatch layer the plan named, and the attention warnings — plus, still
+past evening 3 and not part of it, the world chamber's own rewriting register with its own TLDs (the
+"bounded register of genuine reframings" `/redaction`'s second chamber also keeps, distinct from the
+removals this globe already draws). **And the two houses that must say yes before anything of theirs
 is drawn (§6):** Arch's felt-block centroids, which are opt-in only after its preregistration closes on
 **2026-09-21**, and Machine Attention's GDACS coordinates, which stay upstream until its channel
 answers. Neither was touched this evening and neither will be drawn without a yes.
+Decision-log row of 2026-09-03.
+
+**G3, evening 3 of 3 — 2026-09-03, closing G3.** Two layers, and one refusal. **Before building
+anything, the plan's own inventory line for a hosts layer was checked against the files it named** —
+"host TLDs, 13 weekly / 59 hosts" — **and it was wrong.** `src/data/beifang/` holds one file, a curated
+domain→company display map, no weekly host list at all; the weekly bycatch record actually lives at
+`src/content/beifang/2026/*.json` (thirteen FILES, which is where the plan's "13" came from — as a week
+count, not a host count) and its results hold 780 domains, 25 country-shaped (se 13, de 12) against 755
+generic (com 650, org 68, info 13, edu 13, chromewebdata 11); the register at
+`src/data/register/datasets.json` holds 82 hosts, country-shaped suffixes de 2, to 2, co 1, rs 1, uk 1,
+ch 1, plus eu 4, which is not a country — and `.to`/`.co` are vanity registrations, not Tonga and
+Colombia. **The layer is refused, not deferred:** five or six marks that are mostly not what they look
+like would be a claim about the world's hosting infrastructure this record does not support, wearing
+the house's own honesty rules as camouflage rather than living by them. **Admissions** draws EM-DAT and
+UCDP's own late admissions to their past — one mark per country PER REGISTER, never one summed mark for
+a country in both, because a disaster and a war are not one measure. It is the globe's first STATIC
+layer (`days: []`, one frame standing on every day the scrubber can reach), because neither file is a
+dated archive with a day axis of its own. EM-DAT's key carries an ISO-3-like suffix; 150 of 154 distinct
+codes resolve straight through the crosswalk, and four are EM-DAT's own historical labels aliased by
+hand (DFR → DEU, SCG → SRB, SPI → ESP, SUN → RUS, each with the row that named it in a code comment).
+UCDP's `where` is a country name; 9 of 11 match the crosswalk's own spelling directly, 2 carry a
+historical parenthetical the spelling drops and are aliased the same way ("DR Congo (Zaire)" → COD,
+"Yemen (North Yemen)" → YEM). Twelve EM-DAT countries the 1:110m atlas draws no polygon for (Cayman
+Islands and eleven more small islands) are counted and drawn nowhere. Both licence notices are quoted
+byte-exact; EM-DAT's own says CC BY-NC-ND. **The Foreknown, by country** draws the countries a mirrored
+Machine Attention warning names in its own `<h1>` — never the `<title>`, which truncates on two of 250
+pages — at THIS HOUSE's own centroids, because Machine Attention is another house under its own
+constitution and its own GDACS coordinates were asked for through its own channel today and the answer
+is still pending: nothing of its own geometry crosses into this globe. Only 92 of 250 mirrored pages
+name a country in their heading at all (GDACS's drought/earthquake/flood/forest-fire pages do; its
+tropical cyclones and every NHC/NWS page are named after a storm or a warning type and name none), and
+the other 158 are counted in words and drawn nowhere — the honest shape of this archive, not a parsing
+gap. 74 distinct countries resolve through the crosswalk's spelling plus three explicit aliases (China,
+"Democratic Republic of Congo", Türkiye); a doubled space and a stray trailing comma in two headings are
+handled rather than left to break the match. Also static, for the same reason as admissions. **The name
+repair, completed:** invoked past, consensus by domain, the world chamber and Common Ground — the four
+country layers evening 2 built without it — now carry the crosswalk's own centroid alongside its name,
+because a `points`-kind country record needs a place to stand on the client and the island must still
+never hold a crosswalk; the adapter that already asks for the centroid to decide drawability now hands
+it over too. `LayerPlace`'s country variant gained one optional field for this; a `countries`-kind fill
+(balance) still carries none, because its shape arrives ready-drawn and keyed by code alone. **The
+wiring a static layer needed, and nothing before it had exercised:** the model counts a static layer's
+one frame across every day of the union instead of days it does not have; the feed carries that frame in
+its own `static` field, kept out of the manifest like the sky's `instant`; the island's frame lookup
+falls back to it on any day; the method sheet's source row says "static, every day" instead of the wrong
+"0 days"; the gallery thumbnail on `/experiments` draws a point-kind country mark at its own centroid
+explicitly now, rather than by the coincidence of a bare coordinate it would have silently lost the
+moment that shape changed. `bin.ts` stays unwritten: neither new layer needed a build-time bin.
+**Budgets unchanged** by two more layers and no new kind of drawing: the island 5.9 KB gz of 15, the
+WebGL half 208.5 KB gz of 320; the two new feeds measure 7.9 and 3.7 KB gz, both far under the 150 KB
+per-layer ceiling. **Still owed, past this evening:** Arch's felt-block centroids and Machine Attention's
+own GDACS coordinates (§6, unchanged), and the world chamber's own rewriting register, which has no
+layer yet either.
 Decision-log row of 2026-09-03.
 
 **Kill reading — a dated reading, not a feeling.** On **2026-10-15** this document gets a section

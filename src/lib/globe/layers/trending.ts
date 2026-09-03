@@ -137,15 +137,17 @@ function frameOf(day: string): LayerFrame {
   const unplaced: string[] = []
 
   for (const group of countries) {
-    const at = centroidOfIso3(group.iso3)
-    if (!at) {
+    const centroid = centroidOfIso3(group.iso3)
+    if (!centroid) {
       if (!unplaced.includes(group.name)) unplaced.push(group.name)
       continue
     }
     const from = group.sources.map((id) => named.get(id) ?? id).join(', ')
     records.push({
       key: `trending:${day}:${group.iso3}`,
-      at,
+      // the centroid travels with the code (G3, third evening), so the island can draw the point
+      // without holding a crosswalk of its own — the name already did, since the second evening
+      at: { iso3: group.iso3, name: group.name, centroid },
       value: group.signals,
       labelKind: 'centroid',
       receipt: {

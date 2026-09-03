@@ -28,6 +28,11 @@ export interface LayerFeed {
    *  because it is the size of records, not the size of provenance — a visitor who never switches
    *  the layer on never downloads an element set. */
   instant?: LayerInstant
+  /** a static layer's one fixed frame (G3, third evening) — `days` and `frames` are both `[]` for
+   *  such a layer, because it holds no day of its own, and its marks ride here instead so the
+   *  island can draw them on whichever day is on screen without asking the manifest for a day the
+   *  layer does not have. */
+  static?: LayerFrame
 }
 
 export interface ManifestLayer {
@@ -69,6 +74,7 @@ export function layerFeed(layer: GlobeLayer): LayerFeed {
     days: layer.days,
     frames: layer.days.map((day) => frameOf(layer, day)),
     ...(layer.instant ? { instant: layer.instant } : {}),
+    ...(layer.static ? { static: layer.static } : {}),
   }
 }
 

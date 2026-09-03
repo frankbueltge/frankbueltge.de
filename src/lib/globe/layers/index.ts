@@ -13,6 +13,10 @@
 // the countries the world chamber's checked hosts are registered in, and the countries a morning's
 // signals were published for. They come last because each of them stands at a centroid, and a
 // centroid is the weakest claim on this globe: it says "somewhere in this country" and nothing more.
+// Last of all, since G3's third evening, the two STATIC layers — `days: []`, the same frame on
+// every day the others define — because a layer with no day of its own is the least like the rest
+// of this list and belongs at its very end: the countries EM-DAT and UCDP admitted late into their
+// own past, and the countries a mirrored Machine Attention warning names in its own heading.
 import type { GlobeLayer } from './types'
 
 import { skyLayer } from './sky'
@@ -24,6 +28,8 @@ import { invokedLayer } from './invoked'
 import { consensusTldLayer } from './consensus-tld'
 import { redactionWorldLayer } from './redaction-world'
 import { trendingLayer } from './trending'
+import { admissionsLayer } from './admissions'
+import { attentionWarningsLayer } from './attention-warnings'
 
 export * from './types'
 
@@ -37,6 +43,8 @@ export const LAYERS: readonly GlobeLayer[] = Object.freeze([
   consensusTldLayer,
   redactionWorldLayer,
   trendingLayer,
+  admissionsLayer,
+  attentionWarningsLayer,
 ])
 
 /** Ids that appear more than once — a duplicate would silently shadow a layer in every lookup

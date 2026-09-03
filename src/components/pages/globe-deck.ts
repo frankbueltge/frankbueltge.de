@@ -227,11 +227,15 @@ export function inkFor(layer: FrameLayer, ink: GlobeInk, emphasis: Emphasis): { 
 }
 
 /** Where a record stands, as one point: a coordinate is itself, a gap is the end it resumed at
- *  (the place the record starts speaking again), a country has no point of its own here. */
+ *  (the place the record starts speaking again), a country gives its own embedded centroid where
+ *  its record carries one — a `countries`-kind fill never does (its shape comes from the fetched
+ *  polygon, keyed by the code alone) and gives null here, same as before G3's third evening; a
+ *  `points`-kind country record always does, because this module must never resolve a code on its
+ *  own — the island holds no crosswalk. */
 export function pointOf(record: LayerRecord): LonLat | null {
   if (Array.isArray(record.at)) return record.at
   if ('from' in record.at) return record.at.to
-  return null
+  return record.at.centroid ?? null
 }
 
 /** A radius from the record's own value, scaled inside the frame it belongs to — never across

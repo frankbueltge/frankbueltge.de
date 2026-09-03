@@ -48,13 +48,29 @@ describe('the day axis is the union of what the archive holds', () => {
 
   it('takes its newest day from the data, and every registered layer’s as-of is one of its days', () => {
     expect(model.newest).toBe(model.days[model.days.length - 1])
-    for (const layer of LAYERS) expect(layer.days, layer.id).toContain(layer.asOf)
+    for (const layer of LAYERS) {
+      // a static layer holds no days of its own at all (G3, third evening) — its as-of is the
+      // newest RECORD's own date, not a day on an axis it does not have
+      if (layer.days.length === 0) {
+        expect(layer.static, layer.id).toBeTruthy()
+        continue
+      }
+      expect(layer.days, layer.id).toContain(layer.asOf)
+    }
   })
 })
 
 describe('the counts are the frames', () => {
   it('counts what each layer actually draws, day by day', () => {
     for (const layer of LAYERS) {
+      if (layer.days.length === 0 && layer.static) {
+        // static: the one frame's own count, repeated identically for every day of the union —
+        // never summed across days, because it is not "per day it holds" (it holds none)
+        const n = layer.static.records.length
+        for (const day of model.days) expect(model.counts[layer.id][day], `${layer.id} ${day}`).toBe(n)
+        expect(model.totals[layer.id], layer.id).toBe(n)
+        continue
+      }
       for (const day of layer.days) {
         expect(model.counts[layer.id][day], `${layer.id} ${day}`).toBe(layer.frame(day).records.length)
       }
@@ -71,16 +87,72 @@ describe('the counts are the frames', () => {
 })
 
 describe('a day the model does not hold', () => {
-  it('gives empty frames and never reaches for a neighbouring day', () => {
+  it('gives empty frames and never reaches for a neighbouring day — except a static layer, which has no day to reach past', () => {
     const moment = frameAt(model, '1999-01-01')
     expect(moment.day).toBe('1999-01-01')
-    for (const layer of LAYERS) expect(moment.layers[layer.id].records, layer.id).toEqual([])
-    expect(markCount(moment)).toBe(0)
+    let staticMarks = 0
+    for (const layer of LAYERS) {
+      if (layer.days.length === 0 && layer.static) {
+        // a static layer's marks stand on every day there is, by design — including one no
+        // other layer's archive holds anything for at all
+        expect(moment.layers[layer.id].records, layer.id).toEqual(layer.static.records)
+        staticMarks += layer.static.records.length
+        continue
+      }
+      expect(moment.layers[layer.id].records, layer.id).toEqual([])
+    }
+    expect(markCount(moment)).toBe(staticMarks)
   })
 
   it('holds a frame for every registered layer, on every day of the axis', () => {
     const moment = frameAt(model, model.days[0])
     expect(Object.keys(moment.layers).sort()).toEqual(LAYERS.map((l) => l.id).sort())
+  })
+})
+
+// G3, third evening: the first STATIC layers — `days: []`, one fixed frame carried in `static`.
+// A stub isolates the mechanism from the real archives (admissions and the mirrored warnings),
+// which the generic suites above already exercise for real.
+const staticStub = (id: string, per: number): GlobeLayer => {
+  const frame = {
+    day: '2026-08-27',
+    records: Array.from({ length: per }, (_, n) => ({
+      key: `${id}:static:${n}`,
+      at: [0, 0] as [number, number],
+      labelKind: 'centroid' as const,
+      receipt: { file: 'src/data/none.json', locator: `n=${n}`, words: 'none' },
+    })),
+  }
+  return {
+    id,
+    title: id,
+    kind: 'points',
+    owner: { line: 'counter-measurement' },
+    asOf: '2026-08-27',
+    source: { file: 'src/data/none.json', name: 'none', url: 'https://example.invalid/', license: 'CC0' },
+    days: [],
+    frame: () => frame,
+    static: frame,
+    readout: {},
+  }
+}
+
+describe('a static layer draws the same frame on every day there is', () => {
+  it('contributes no day of its own to the union', () => {
+    const built = buildLivingGlobe([staticStub('s', 3), stub('a', ['2026-01-01'], 1)])
+    expect(built.days).toEqual(['2026-01-01'])
+  })
+
+  it('counts its one frame’s records on every day of the union, and totals them once, not per day', () => {
+    const built = buildLivingGlobe([staticStub('s', 3), stub('a', ['2026-01-01', '2026-01-02'], 1)])
+    expect(built.counts['s']).toEqual({ '2026-01-01': 3, '2026-01-02': 3 })
+    expect(built.totals['s']).toBe(3)
+  })
+
+  it('answers a day none of its fellow layers hold either, the same way', () => {
+    const built = buildLivingGlobe([staticStub('s', 2)])
+    const moment = frameAt(built, '1999-01-01')
+    expect(moment.layers['s'].records).toHaveLength(2)
   })
 })
 

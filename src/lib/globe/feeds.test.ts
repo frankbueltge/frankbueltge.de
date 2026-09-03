@@ -55,6 +55,15 @@ describe('the manifest is the provenance, the feed is the records', () => {
     for (const layer of LAYERS) {
       const feed = layerFeed(layer)
       const entry = manifest.layers.find((l) => l.id === layer.id)!
+      if (layer.days.length === 0) {
+        // a static layer's one frame rides in its own `static` field, not in `frames` (G3, third
+        // evening) — the manifest's total is that frame's own record count, repeated over the
+        // whole day union in `entry.counts`, never summed across days
+        expect(feed.days).toEqual([])
+        expect(feed.frames).toEqual([])
+        expect(feed.static?.records.length ?? 0, layer.id).toBe(entry.total)
+        continue
+      }
       expect(feed.days).toEqual(entry.days)
       expect(feed.frames.map((f) => f.day)).toEqual(entry.days)
       for (const frame of feed.frames) expect(entry.counts[frame.day], `${layer.id} ${frame.day}`).toBe(frame.records.length)
@@ -115,5 +124,28 @@ describe('the one declared no-clock exception travels in the feed, not in the ma
   it('stays out of the manifest, which a visitor downloads whether they open the layer or not', () => {
     expect(JSON.stringify(manifest)).not.toContain('MEAN_MOTION')
     expect(JSON.stringify(manifest)).not.toContain('"instant"')
+  })
+})
+
+describe('a static layer’s one frame travels in the feed, not in the manifest (G3, third evening)', () => {
+  const staticLayers = LAYERS.filter((l) => l.days.length === 0)
+
+  it('has at least one — admissions and the mirrored warnings hold no day of their own at all', () => {
+    expect(staticLayers.map((l) => l.id)).toEqual(['admissions', 'attention-warnings'])
+  })
+
+  it('carries records only in `static`, never in `frames`', () => {
+    for (const layer of staticLayers) {
+      const feed = layerFeed(layer)
+      expect(feed.frames, layer.id).toEqual([])
+      expect(feed.static?.records.length ?? 0, layer.id).toBeGreaterThan(0)
+    }
+  })
+
+  it('stays out of the manifest, exactly like the sky’s instant', () => {
+    for (const layer of staticLayers) {
+      const words = layerFeed(layer).static!.records[0]!.receipt.words
+      expect(JSON.stringify(manifest)).not.toContain(words)
+    }
   })
 })

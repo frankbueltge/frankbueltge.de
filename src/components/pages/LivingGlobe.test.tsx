@@ -26,6 +26,7 @@ import type { LayerRecord } from '@/lib/globe/layers/types'
 import LivingGlobe, {
   cameraKey,
   cardStands,
+  daysLineFor,
   dayIndexOf,
   emphasisFor,
   layersToFetch,
@@ -500,5 +501,34 @@ describe('who pays for the globe, and when', () => {
     const source = read('./LivingGlobe.tsx')
     expect(source).toContain('{gated === true && !armed && (')
     expect(source).toContain('wording.controls.turn')
+  })
+})
+
+describe('a static layer’s legend line names no count of days (G3, third evening)', () => {
+  const words = GLOBE.island.controls.days
+  const staticDays = GLOBE.island.controls.staticDays
+
+  it('holds `days: []` to mean static by the contract itself, never "zero days"', () => {
+    expect(daysLineFor(0, words, staticDays)).toBe(staticDays)
+    expect(staticDays).not.toMatch(/\d/)
+  })
+
+  it('still counts a real day axis in the usual two forms', () => {
+    expect(daysLineFor(1, words, staticDays)).toBe('1 day on file')
+    expect(daysLineFor(5, words, staticDays)).toBe('5 days on file')
+  })
+
+  it('is the function the legend itself calls, so the wiring cannot regress to the bare plural', () => {
+    const source = read('./LivingGlobe.tsx')
+    expect(source).toContain('daysLineFor(entry.days.length, wording.controls.days, wording.controls.staticDays)')
+    expect(source).not.toContain('{plural(entry.days.length, wording.controls.days)}')
+  })
+
+  it('holds for every static layer the real registry carries — admissions and the mirrored warnings', () => {
+    const staticLayers = LAYERS.filter((l) => l.days.length === 0)
+    expect(staticLayers.map((l) => l.id)).toEqual(['admissions', 'attention-warnings'])
+    for (const layer of staticLayers) {
+      expect(daysLineFor(layer.days.length, words, staticDays), layer.id).toBe(staticDays)
+    }
   })
 })

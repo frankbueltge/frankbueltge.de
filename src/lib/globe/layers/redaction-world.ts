@@ -127,8 +127,8 @@ function frameOf(day: string): LayerFrame {
 
   for (const group of placed) {
     countrylessHosts -= group.domains.length
-    const at = centroidOfIso3(group.iso3)
-    if (!at) {
+    const centroid = centroidOfIso3(group.iso3)
+    if (!centroid) {
       if (!unplaced.includes(group.name)) unplaced.push(group.name)
       continue
     }
@@ -137,7 +137,9 @@ function frameOf(day: string): LayerFrame {
       gone.length === 0 ? 'none of them found gone or withheld' : gone.map(receiptWords).join(' · ')
     records.push({
       key: `redaction-world:${day}:${group.iso3}`,
-      at,
+      // the centroid travels with the code (G3, third evening), so the island can draw the point
+      // without holding a crosswalk of its own — the name already did, since the second evening
+      at: { iso3: group.iso3, name: group.name, centroid },
       value: group.domains.length,
       labelKind: 'centroid',
       receipt: {

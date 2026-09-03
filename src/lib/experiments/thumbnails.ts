@@ -177,6 +177,14 @@ function globeMarks(): ThumbMark[] {
         const on = projection(record.at.to)
         if (!off || !on) continue
         marks.push({ t: 'seg', x1: r1(off[0]), y1: r1(off[1]), x2: r1(on[0]), y2: r1(on[1]) })
+        continue
+      }
+      // a `points`-kind country record carries its own centroid since G3's third evening; a
+      // `countries`-kind fill (balance) carries none and draws no dot here, same as before
+      if (record.at.centroid) {
+        const xy = projection(record.at.centroid)
+        if (!xy) continue
+        marks.push({ t: 'dot', x: r1(xy[0]), y: r1(xy[1]), r: 0.6 })
       }
     }
   }

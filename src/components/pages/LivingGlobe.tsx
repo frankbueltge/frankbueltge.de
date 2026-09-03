@@ -100,6 +100,15 @@ interface Selection {
   day: string
 }
 
+/** One layer's frame for the day on screen, out of one fetched feed. A day-matched frame wins
+ *  where the feed has one; a STATIC layer (G3, third evening) has none — `frames` is always `[]`
+ *  for it — so its one fixed frame, carried in the feed's own `static` field, stands in instead,
+ *  on every day there is. Exported and pure so this fallback is proven once rather than trusted
+ *  at each of the two call sites that need it. */
+export function frameForDay(feed: LayerFeed | undefined, day: string): LayerFrame | null {
+  return feed?.frames.find((f) => f.day === day) ?? feed?.static ?? null
+}
+
 /** `#rrggbb`, `#rgb`, `rgb()`/`rgba()` and the room's bare `r g b` triplets → an RGB tuple. */
 export function parseInk(value: string): RGB | null {
   const v = value.trim()
@@ -256,6 +265,14 @@ const nf = new Intl.NumberFormat('en-GB')
 const plural = (n: number, words: { one: string; many: string }): string =>
   fill(n === 1 ? words.one : words.many, { n: nf.format(n) })
 
+/** The legend's day-count line for one layer. `days: []` means static by the contract itself
+ *  (types.ts: "ascending, from the data; [] = static") — a layer with no day axis at all, not a
+ *  layer that happens to hold zero days today. "0 days on file" would print a number standing in
+ *  for that absence, so a static layer gets its own digit-free phrase instead of the plural. */
+export function daysLineFor(dayCount: number, days: { one: string; many: string }, staticDays: string): string {
+  return dayCount === 0 ? staticDays : plural(dayCount, days)
+}
+
 export default function LivingGlobe({
   floorSvg,
   manifest,
@@ -324,10 +341,7 @@ export default function LivingGlobe({
   }, [active, armed, byId, gated])
 
   /** One layer's frame for the day on screen, out of what has been fetched. */
-  const frameOf = React.useCallback(
-    (id: string): LayerFrame | null => feeds[id]?.frames.find((f) => f.day === day) ?? null,
-    [feeds, day],
-  )
+  const frameOf = React.useCallback((id: string): LayerFrame | null => frameForDay(feeds[id], day), [feeds, day])
 
   const recordsOf = React.useCallback((id: string): LayerRecord[] => frameOf(id)?.records ?? [], [frameOf])
 
@@ -552,7 +566,7 @@ export default function LivingGlobe({
     (delta: number) => {
       setSelected((was) => {
         if (!was) return was
-        const records = feeds[was.layerId]?.frames.find((f) => f.day === day)?.records ?? []
+        const records = frameForDay(feeds[was.layerId], day)?.records ?? []
         const next = was.index + delta
         return next < 0 || next >= records.length ? was : { ...was, index: next }
       })
@@ -884,7 +898,7 @@ export default function LivingGlobe({
                     </Badge>
                   )}
                   <p className="lg-prov">{provenanceOf(entry)}</p>
-                  <p className="lg-prov">{plural(entry.days.length, wording.controls.days)}</p>
+                  <p className="lg-prov">{daysLineFor(entry.days.length, wording.controls.days, wording.controls.staticDays)}</p>
                   {note && <p className="lg-note">{note}</p>}
                 </li>
               )

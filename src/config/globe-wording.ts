@@ -71,6 +71,10 @@ export interface IslandWording {
     provenance: string
     marks: PluralWording
     days: PluralWording
+    /** a static layer holds no day of its own at all (G3, third evening) — this phrase stands in
+     *  place of the day count for exactly that layer, so "0 days on file" never prints a number
+     *  that is really an absence of an axis. */
+    staticDays: string
   }
   card: {
     label: string
@@ -366,6 +370,7 @@ export const GLOBE = {
       provenance: '{file} · as of {asOf} · {marks} on this day',
       marks: { one: '{n} mark', many: '{n} marks' },
       days: { one: '{n} day on file', many: '{n} days on file' },
+      staticDays: 'no day of its own — its marks stand on every day there is',
     },
     card: {
       label: 'a mark of the {layer} layer',

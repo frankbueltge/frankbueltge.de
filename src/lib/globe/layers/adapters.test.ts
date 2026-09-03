@@ -10,8 +10,16 @@
 //      name fails here instead of shipping as a mark in the wrong ocean.
 import { readFileSync, readdirSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
-import { byFips, centroidOfIso3 } from '../crosswalk'
+import { byFips, byIso3, centroidOfIso3, countries, nameOf } from '../crosswalk'
 import { REDACTION_SEATS, redactionSeatFor } from '../seats'
+import { admissionsLayer, resolveEmdatIso3, resolveUcdpCountry } from './admissions'
+import {
+  attentionWarningsLayer,
+  countriesInHeading,
+  groupByCountry as groupWarningsByCountry,
+  readMirroredPages,
+  resolveMirroredCountry,
+} from './attention-warnings'
 import { balanceLayer } from './balance'
 import { consensusTldLayer, groupByCountry, tldOf } from './consensus-tld'
 import { ghostFleetLayer } from './ghost-fleet'
@@ -195,6 +203,8 @@ describe('no adapter reads a clock', () => {
     'redaction-seats.ts',
     'redaction-world.ts',
     'trending.ts',
+    'admissions.ts',
+    'attention-warnings.ts',
     'archive.ts',
     'types.ts',
     'index.ts',
@@ -304,7 +314,10 @@ describe('invoked past — the countries that invoked the day’s most-invoked y
     const country = maximum.countries[0]
     const record = invokedLayer.frame(day).records[0]
     expect(record.value).toBe(country.mentions)
-    expect(record.at).toEqual(centroidOfIso3(byFips(country.fips).iso3))
+    // the name and the centroid both travel with the code since G3's third evening, so the card
+    // can say "centroid of X" and the island can draw the point without holding a crosswalk
+    const resolved = byFips(country.fips)
+    expect(record.at).toEqual({ iso3: resolved.iso3, name: nameOf(resolved), centroid: centroidOfIso3(resolved.iso3) })
     expect(record.labelKind).toBe('centroid')
     expect(record.receipt.file).toBe(file)
     expect(record.receipt.locator).toBe(`top_years[${index}] · ${maximum.year} · invoked_by[0] · ${country.fips}`)
@@ -354,10 +367,14 @@ describe('consensus by domain — a registration, not a location', () => {
       expect(frame.note).toContain(String(countryless))
       expect(frame.note).toContain('carry no country')
     }
-    // and every mark it does draw stands at a centroid, with the phrase the day file carries
+    // and every mark it does draw stands at a centroid, with the phrase the day file carries,
+    // its name and its own embedded centroid both riding with the code (G3, third evening)
     for (const record of frame.records) {
       expect(record.labelKind).toBe('centroid')
-      expect(Array.isArray(record.at)).toBe(true)
+      expect(Array.isArray(record.at)).toBe(false)
+      const at = record.at as { iso3: string; name: string; centroid: [number, number] }
+      expect(at.centroid).toEqual(centroidOfIso3(at.iso3))
+      expect(at.name).toBe(nameOf(byIso3(at.iso3)))
     }
   })
 
@@ -617,7 +634,11 @@ describe('common ground, by country — a language is not a country', () => {
     const record = frame.records.find((r) => r.receipt.locator.includes(`geo is ${iso2} `))!
     expect(record, iso2).toBeTruthy()
     expect(record.labelKind).toBe('centroid')
-    expect(Array.isArray(record.at)).toBe(true)
+    // the name and the centroid both ride with the code since G3's third evening
+    expect(Array.isArray(record.at)).toBe(false)
+    const at = record.at as { iso3: string; name: string; centroid: [number, number] }
+    expect(at.centroid).toEqual(centroidOfIso3(at.iso3))
+    expect(at.name).toBe(nameOf(byIso3(at.iso3)))
     for (const source of counted.get(iso2)!) expect(record.receipt.words).toContain(names.get(source)!)
   })
 
@@ -638,5 +659,208 @@ describe('common ground, by country — a language is not a country', () => {
     expect(trendingLayer.kind).toBe('points')
     expect(trendingLayer.source.name).toContain('placed nowhere')
     expect(trendingLayer.readout.caution).toContain('never of people')
+  })
+})
+
+// ── G3, third evening: the first STATIC layers, and the two alias tables they own ───────────────
+// A static layer holds no day of its own (`days: []`), so the generic suite above — built to ask
+// "does an unheld day answer empty?" — does not fit it: an unheld day for THESE layers still
+// answers with the one frame they always answer with, on every day there is. So each gets its own
+// suite here instead of a row in the shared `LAYERS` table, asking the same three real questions
+// in the shape that actually applies, plus the one this evening adds twice: does every row of the
+// real archive resolve, so an alias table gap fails the build rather than dropping a country.
+
+interface AdmissionsFixture {
+  source: { licence_notice: string }
+  generated: string
+  pairs: Array<{ admitted: Array<{ key: Array<string | number>; label: string; where: string | null }> }>
+}
+
+describe('admissions — EM-DAT and UCDP, static, one mark per country per register', () => {
+  const emdat = read<AdmissionsFixture>('src/data/admissions/emdat.json')
+  const ucdp = read<AdmissionsFixture>('src/data/admissions/ucdp-brd.json')
+
+  it('resolves every row of both committed files — an alias gap fails here, not silently on the globe', () => {
+    for (const pair of emdat.pairs) {
+      for (const row of pair.admitted) {
+        expect(() => resolveEmdatIso3(String(row.key[0])), String(row.key[0])).not.toThrow()
+      }
+    }
+    for (const pair of ucdp.pairs) {
+      for (const row of pair.admitted) {
+        expect(() => resolveUcdpCountry(row.where!), row.where!).not.toThrow()
+      }
+    }
+  })
+
+  it('throws naming an EM-DAT code and a UCDP place it truly cannot place', () => {
+    expect(() => resolveEmdatIso3('1999-0001-ZZZ')).toThrow(/no country for EM-DAT|ZZZ/)
+    expect(() => resolveUcdpCountry('Not A Real Country')).toThrow(/no country for UCDP place "Not A Real Country"/)
+  })
+
+  it('holds no day of its own, and answers any day — even a nonsense one — with the same frame', () => {
+    expect(admissionsLayer.days).toEqual([])
+    expect(admissionsLayer.static).toBeTruthy()
+    const a = admissionsLayer.frame('1999-01-01')
+    const b = admissionsLayer.frame(admissionsLayer.asOf)
+    expect(a).toEqual(admissionsLayer.static)
+    expect(a).toEqual(b)
+  })
+
+  it('takes its as-of as the later of the two files’ own generated dates, never a clock', () => {
+    expect(admissionsLayer.asOf).toBe([emdat.generated, ucdp.generated].sort().at(-1))
+    expect(admissionsLayer.asOf).toMatch(/^\d{4}-\d{2}-\d{2}$/)
+  })
+
+  it('counts one country of one register exactly as the file holds it, at a real row', () => {
+    // Colombia's UCDP rows, counted by hand from the committed file, independently of the adapter
+    const colombiaRows = ucdp.pairs.flatMap((p) => p.admitted).filter((r) => r.where === 'Colombia')
+    expect(colombiaRows.length).toBeGreaterThan(0)
+    const record = admissionsLayer.static!.records.find(
+      (r) => r.receipt.file.endsWith('ucdp-brd.json') && (r.at as { iso3: string }).iso3 === 'COL',
+    )!
+    expect(record, 'no Colombia mark from the UCDP register').toBeTruthy()
+    expect(record.value).toBe(colombiaRows.length)
+    expect(record.labelKind).toBe('centroid')
+    expect(record.receipt.locator).toMatch(/^pairs\[\d+\]\.admitted\[\d+\] · /)
+    // the locator names a real row: the key it prints is one of the file's own keys
+    const namedKey = record.receipt.locator.split(' · ')[1]
+    expect(colombiaRows.some((r) => r.key.join('-') === namedKey)).toBe(true)
+  })
+
+  it('gives a country in both registers two marks, never one summed mark', () => {
+    const marks = admissionsLayer.static!.records.filter((r) => (r.at as { iso3: string }).iso3 === 'COL')
+    expect(marks.length).toBe(2)
+    expect(new Set(marks.map((m) => m.receipt.file)).size).toBe(2)
+    expect(admissionsLayer.readout.caution).toContain('never adds their counts together')
+  })
+
+  it('counts the small islands the 1:110m atlas draws no polygon for, and draws them nowhere', () => {
+    // Cayman Islands (CYM) is in the EM-DAT file (see the file's own header comment example) and
+    // is one of the countries this atlas has no polygon for
+    expect(centroidOfIso3('CYM')).toBeNull()
+    expect(admissionsLayer.static!.records.some((r) => (r.at as { iso3: string }).iso3 === 'CYM')).toBe(false)
+    expect(admissionsLayer.static!.note).toContain('drawn nowhere')
+  })
+
+  it('gives every mark a name and a centroid riding with its code, and a country-line owner', () => {
+    for (const record of admissionsLayer.static!.records) {
+      const at = record.at as { iso3: string; name: string; centroid: [number, number] }
+      expect(at.centroid).toEqual(centroidOfIso3(at.iso3))
+      expect(at.name).toBe(nameOf(byIso3(at.iso3)))
+    }
+    expect(admissionsLayer.owner).toEqual({ line: 'counter-measurement' })
+  })
+
+  it('quotes both licence notices byte-exact, and says EM-DAT is CC BY-NC-ND', () => {
+    expect(admissionsLayer.source.license).toContain(emdat.source.licence_notice)
+    expect(admissionsLayer.source.license).toContain(ucdp.source.licence_notice)
+    expect(admissionsLayer.source.license).toContain('CC BY-NC-ND')
+  })
+
+  it('carries no digit in its own readout templates', () => {
+    for (const value of Object.values(admissionsLayer.readout)) expect(value).not.toMatch(/\d/)
+  })
+})
+
+describe('the mirrored attention warnings — a heading’s own country, at this house’s own centroids', () => {
+  const pages = readMirroredPages()
+
+  it('holds exactly the 250 mirrored pages this evening’s survey counted', () => {
+    expect(pages.length).toBe(250)
+  })
+
+  it('resolves every named country of every one of the 250 mirrored headings', () => {
+    for (const page of pages) {
+      const names = countriesInHeading(page.h1)
+      if (names === null) continue
+      for (const name of names) expect(() => resolveMirroredCountry(name), `${page.slug}: "${name}"`).not.toThrow()
+    }
+  })
+
+  it('throws naming a mirrored country name it truly cannot place', () => {
+    expect(() => resolveMirroredCountry('Not A Real Country')).toThrow(/no country for mirrored name "Not A Real Country"/)
+  })
+
+  it('parses the <h1>, never the <title> — the two truncated titles still resolve in full', () => {
+    const truncated = pages.filter((p) => {
+      const html = readFileSync(`public/attention/future/${p.slug}.html`, 'utf8')
+      return /<title>[^<]*…[^<]*<\/title>/.test(html)
+    })
+    expect(truncated.length).toBe(2)
+    for (const page of truncated) {
+      const names = countriesInHeading(page.h1)
+      expect(names, page.slug).not.toBeNull()
+      expect(names!.length).toBeGreaterThan(1)
+      expect(page.h1).not.toContain('…')
+    }
+  })
+
+  it('skips an empty segment — one heading ends in a stray trailing comma', () => {
+    const withStray = pages.find((p) => /,\s*,\s*$/.test(p.h1))
+    expect(withStray, 'no mirrored heading ends in a stray double comma this evening').toBeTruthy()
+    expect(countriesInHeading(withStray!.h1)!.every((n) => n.length > 0)).toBe(true)
+  })
+
+  it('collapses doubled whitespace inside a country name before matching it', () => {
+    expect(countriesInHeading('Drought in Bosnia  and  Herzegovina')).toEqual(['Bosnia and Herzegovina'])
+  })
+
+  it('counts a heading naming no country in words, and draws it nowhere — most of this archive', () => {
+    const { placed, countryless } = groupWarningsByCountry(pages)
+    expect(countryless).toBeGreaterThan(placed.length)
+    expect(attentionWarningsLayer.static!.note).toContain(String(countryless))
+    expect(attentionWarningsLayer.static!.note).toContain('name no country')
+  })
+
+  it('counts one real country’s warnings exactly as the mirror holds them, at a real page', () => {
+    const chinaPages = pages.filter((p) => countriesInHeading(p.h1)?.includes('China'))
+    expect(chinaPages.length).toBeGreaterThan(0)
+    const record = attentionWarningsLayer.static!.records.find((r) => (r.at as { iso3: string }).iso3 === 'CHN')!
+    expect(record, 'no China mark').toBeTruthy()
+    expect(record.value).toBe(chinaPages.length)
+    expect(record.receipt.file).toMatch(/^public\/attention\/future\/.+\.html$/)
+    expect(readFileSync(record.receipt.file, 'utf8')).toContain('<h1>')
+    expect(record.receipt.url).toBe(`/attention/future/${record.receipt.file.split('/').pop()}`)
+  })
+
+  it('gives every mark a name and a centroid riding with its code, and Machine Attention’s own voice', () => {
+    for (const record of attentionWarningsLayer.static!.records) {
+      const at = record.at as { iso3: string; name: string; centroid: [number, number] }
+      expect(at.centroid).toEqual(centroidOfIso3(at.iso3))
+      expect(at.name).toBe(nameOf(byIso3(at.iso3)))
+      expect(record.labelKind).toBe('centroid')
+    }
+    expect(attentionWarningsLayer.owner).toEqual({ voice: 'machine-attention' })
+  })
+
+  it('draws none of Machine Attention’s own coordinates, and says so in its source block', () => {
+    expect(attentionWarningsLayer.source.name).toContain('never Machine Attention’s own GDACS positions')
+    expect(attentionWarningsLayer.readout.caution).toContain('asked for and not yet answered')
+  })
+
+  it('holds no day of its own, and answers any day — even a nonsense one — with the same frame', () => {
+    expect(attentionWarningsLayer.days).toEqual([])
+    const a = attentionWarningsLayer.frame('1999-01-01')
+    expect(a).toEqual(attentionWarningsLayer.static)
+  })
+
+  it('takes its as-of from the practice’s own export, never a clock', () => {
+    expect(attentionWarningsLayer.asOf).toMatch(/^\d{4}-\d{2}-\d{2}$/)
+  })
+
+  it('carries no digit in its own readout templates', () => {
+    for (const value of Object.values(attentionWarningsLayer.readout)) expect(value).not.toMatch(/\d/)
+  })
+
+  it('the crosswalk resolves every country name this alias table maps, and every alias earns its keep', () => {
+    // hygiene on the alias table itself: an alias pointing at a code the crosswalk cannot place
+    // would throw loudly at import time already, so this proves the OTHER direction — every
+    // aliased name is one this evening's mirror actually uses, so none of the three can rot unused
+    const names = new Set(pages.flatMap((p) => countriesInHeading(p.h1) ?? []))
+    for (const alias of ['China', 'Democratic Republic of Congo', 'Türkiye']) {
+      expect(names.has(alias), `${alias} is aliased in attention-warnings.ts but never appears in the mirror`).toBe(true)
+    }
+    expect(countries().length).toBeGreaterThan(0)
   })
 })
