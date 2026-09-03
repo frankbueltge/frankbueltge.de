@@ -265,6 +265,14 @@ const nf = new Intl.NumberFormat('en-GB')
 const plural = (n: number, words: { one: string; many: string }): string =>
   fill(n === 1 ? words.one : words.many, { n: nf.format(n) })
 
+/** The legend's day-count line for one layer. `days: []` means static by the contract itself
+ *  (types.ts: "ascending, from the data; [] = static") — a layer with no day axis at all, not a
+ *  layer that happens to hold zero days today. "0 days on file" would print a number standing in
+ *  for that absence, so a static layer gets its own digit-free phrase instead of the plural. */
+export function daysLineFor(dayCount: number, days: { one: string; many: string }, staticDays: string): string {
+  return dayCount === 0 ? staticDays : plural(dayCount, days)
+}
+
 export default function LivingGlobe({
   floorSvg,
   manifest,
@@ -890,7 +898,7 @@ export default function LivingGlobe({
                     </Badge>
                   )}
                   <p className="lg-prov">{provenanceOf(entry)}</p>
-                  <p className="lg-prov">{plural(entry.days.length, wording.controls.days)}</p>
+                  <p className="lg-prov">{daysLineFor(entry.days.length, wording.controls.days, wording.controls.staticDays)}</p>
                   {note && <p className="lg-note">{note}</p>}
                 </li>
               )
