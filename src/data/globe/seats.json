@@ -1,0 +1,247 @@
+{
+  "_": "Where an institution stands — the seats behind the readings this house publishes, and the one physical station among them. Derived, never hand-edited: change the curated list in scripts/build-globe-seats.ts and rebuild.",
+  "derivation": "The sixteen institutions of pipelines/redaction/src/redaction/watchlist.py and the bodies behind the fourteen readings of src/content/protokoll, each resolved against Wikidata.",
+  "regenerate": "npx tsx scripts/build-globe-seats.ts (needs the network; --check fails on drift)",
+  "coordinate_rule": "Wikidata, in this order: P625 on the body’s own item; the P625 qualifier on its P159 (headquarters location); P625 on the item that P159 names; P625 on an item named explicitly in the builder for a body Wikidata places by no other means. Every row’s note says which step answered. Where none does, the row carries no coordinate and says so.",
+  "counts": {
+    "seats": 26,
+    "stations": 1,
+    "placed": 25
+  },
+  "seats": [
+    {
+      "id": "who",
+      "label": "World Health Organization",
+      "lat": 46.2335,
+      "lon": 6.1342,
+      "labelKind": "seat",
+      "qid": "Q7817",
+      "note": "Publishes watched pages on climate and health, air quality, tobacco, obesity. Coordinate: Wikidata coordinate location (P625) on Q7817."
+    },
+    {
+      "id": "un",
+      "label": "United Nations",
+      "lat": 40.75,
+      "lon": -73.97,
+      "labelKind": "seat",
+      "qid": "Q1065",
+      "note": "Publishes watched pages on climate change, human rights, the net-zero coalition. Coordinate: the coordinate qualifying Q1065’s headquarters location (P159)."
+    },
+    {
+      "id": "unhcr",
+      "label": "UNHCR",
+      "lat": 46.221,
+      "lon": 6.1406,
+      "labelKind": "seat",
+      "qid": "Q132551",
+      "note": "Publishes the refugee statistics page, and the protocol’s refugee count. Coordinate: the coordinate qualifying Q132551’s headquarters location (P159)."
+    },
+    {
+      "id": "ipcc",
+      "label": "Intergovernmental Panel on Climate Change",
+      "lat": 46.2,
+      "lon": 6.15,
+      "labelKind": "seat",
+      "qid": "Q171183",
+      "note": "Publishes the watched special report and assessment pages. Coordinate: Wikidata coordinate location (P625) of Geneva (Q71), which Q171183’s headquarters location (P159) names."
+    },
+    {
+      "id": "eu-commission",
+      "label": "European Commission",
+      "lat": 50.8436,
+      "lon": 4.3828,
+      "labelKind": "seat",
+      "qid": "Q8880",
+      "note": "Publishes the watched climate-target and strategy pages. Coordinate: the coordinate qualifying Q8880’s headquarters location (P159)."
+    },
+    {
+      "id": "nasa",
+      "label": "NASA",
+      "lat": 38.8831,
+      "lon": -77.0164,
+      "labelKind": "seat",
+      "qid": "Q23548",
+      "note": "Publishes the watched climate-evidence pages, and the protocol’s fire detections through FIRMS. Coordinate: Wikidata coordinate location (P625) on Q23548."
+    },
+    {
+      "id": "noaa",
+      "label": "NOAA",
+      "lat": 38.9931,
+      "lon": -77.0311,
+      "labelKind": "seat",
+      "qid": "Q214700",
+      "note": "Publishes the watched climate.gov explainers, and the protocol’s sea-surface temperature. Coordinate: Wikidata coordinate location (P625) on Q214700."
+    },
+    {
+      "id": "epa",
+      "label": "United States Environmental Protection Agency",
+      "lat": 38.8959,
+      "lon": -77.0309,
+      "labelKind": "seat",
+      "qid": "Q460173",
+      "note": "Publishes the watched climate-change and greenhouse-gas pages. Coordinate: Wikidata coordinate location (P625) on Q460173."
+    },
+    {
+      "id": "cdc",
+      "label": "Centers for Disease Control and Prevention",
+      "lat": 33.7994,
+      "lon": -84.3283,
+      "labelKind": "seat",
+      "qid": "Q583725",
+      "note": "Publishes the watched climate-health and tobacco pages. Coordinate: Wikidata coordinate location (P625) on Q583725."
+    },
+    {
+      "id": "bls",
+      "label": "Bureau of Labor Statistics",
+      "lat": 38.898,
+      "lon": -77.0083,
+      "labelKind": "seat",
+      "qid": "Q2928428",
+      "note": "Publishes the watched Current Population Survey and employment release. Coordinate: Wikidata coordinate location (P625) of Postal Square Building (Q7233999), which Q2928428’s headquarters location (P159) names."
+    },
+    {
+      "id": "us-state",
+      "label": "United States Department of State",
+      "lat": 38.8942,
+      "lon": -77.0483,
+      "labelKind": "seat",
+      "qid": "Q789915",
+      "note": "Publishes the watched climate-and-environment policy page. Coordinate: Wikidata coordinate location (P625) on Q789915."
+    },
+    {
+      "id": "us-census",
+      "label": "United States Census Bureau",
+      "lat": 38.8482,
+      "lon": -76.9278,
+      "labelKind": "seat",
+      "qid": "Q637413",
+      "note": "Publishes the watched poverty topic page. Coordinate: Wikidata coordinate location (P625) on Q637413."
+    },
+    {
+      "id": "white-house",
+      "label": "White House",
+      "lat": 38.8978,
+      "lon": -77.0367,
+      "labelKind": "seat",
+      "qid": "Q35525",
+      "note": "Publishes the watched priorities page. Coordinate: Wikidata coordinate location (P625) on Q35525."
+    },
+    {
+      "id": "uk-gov",
+      "label": "Government of the United Kingdom",
+      "lat": 51.4994,
+      "lon": -0.1242,
+      "labelKind": "seat",
+      "qid": "Q6063",
+      "note": "Publishes the watched net-zero strategy and climate guidance. Coordinate: Wikidata coordinate location (P625) of Palace of Westminster (Q62408), which Q6063’s headquarters location (P159) names."
+    },
+    {
+      "id": "bundesregierung",
+      "label": "Press and Information Office of the German Federal Government",
+      "lat": 52.5191,
+      "lon": 13.384,
+      "labelKind": "seat",
+      "qid": "Q869805",
+      "note": "Publishes the watched climate-protection page on bundesregierung.de. Coordinate: Wikidata coordinate location (P625) of Presse- und Informationsamt der Bundesregierung Berlin (Q131145550), which Q869805’s headquarters location (P159) names."
+    },
+    {
+      "id": "iea",
+      "label": "International Energy Agency",
+      "lat": 48.8547,
+      "lon": 2.2915,
+      "labelKind": "seat",
+      "qid": "Q826700",
+      "note": "Publishes the watched Net Zero by 2050 report page. Coordinate: the coordinate qualifying Q826700’s headquarters location (P159)."
+    },
+    {
+      "id": "mauna-loa",
+      "label": "Mauna Loa Observatory",
+      "lat": 19.5361,
+      "lon": -155.576,
+      "labelKind": "station",
+      "qid": "Q622590",
+      "note": "Publishes the protocol’s carbon-dioxide reading — the one row here that is an instrument at a site. Coordinate: Wikidata coordinate location (P625) on Q622590."
+    },
+    {
+      "id": "nsidc",
+      "label": "National Snow and Ice Data Center",
+      "lat": 40.0067,
+      "lon": -105.2672,
+      "labelKind": "seat",
+      "qid": "Q1216646",
+      "note": "Publishes the protocol’s sea-ice extent, north and south. Coordinate: Wikidata coordinate location (P625) of University of Colorado Boulder (Q736674) — the University of Colorado Boulder campus the centre gives as its own address; Wikidata records no coordinate on the centre itself."
+    },
+    {
+      "id": "usgs",
+      "label": "United States Geological Survey",
+      "lat": 38.9472,
+      "lon": -77.3675,
+      "labelKind": "seat",
+      "qid": "Q193755",
+      "note": "Publishes the protocol’s earthquake count. Coordinate: Wikidata coordinate location (P625) on Q193755."
+    },
+    {
+      "id": "un-desa",
+      "label": "UN Department of Economic and Social Affairs",
+      "lat": 40.7505,
+      "lon": -73.9691,
+      "labelKind": "seat",
+      "qid": "Q2671637",
+      "note": "Publishes the protocol’s world population figure. Coordinate: the coordinate qualifying Q2671637’s headquarters location (P159)."
+    },
+    {
+      "id": "fao",
+      "label": "Food and Agriculture Organization",
+      "lat": 41.8823,
+      "lon": 12.4883,
+      "labelKind": "seat",
+      "qid": "Q82151",
+      "note": "Publishes the protocol’s food price index. Coordinate: the coordinate qualifying Q82151’s headquarters location (P159)."
+    },
+    {
+      "id": "ecb",
+      "label": "European Central Bank",
+      "lat": 50.1094,
+      "lon": 8.7025,
+      "labelKind": "seat",
+      "qid": "Q8901",
+      "note": "Publishes the protocol’s short-term rate. Coordinate: Wikidata coordinate location (P625) on Q8901."
+    },
+    {
+      "id": "eia",
+      "label": "U.S. Energy Information Administration",
+      "lat": 38.895,
+      "lon": -77.0367,
+      "labelKind": "seat",
+      "qid": "Q1133499",
+      "note": "Publishes the protocol’s Brent spot price. Coordinate: Wikidata coordinate location (P625) of Washington, D.C. (Q61), which Q1133499’s headquarters location (P159) names."
+    },
+    {
+      "id": "gdelt",
+      "label": "GDELT Project",
+      "lat": null,
+      "lon": null,
+      "labelKind": "seat",
+      "qid": "Q18357239",
+      "note": "Publishes the protocol’s count of reported conflict events. Coordinate: Wikidata holds no coordinate for Q18357239, and none is invented here."
+    },
+    {
+      "id": "wikimedia",
+      "label": "Wikimedia Foundation",
+      "lat": 37.7892,
+      "lon": -122.4034,
+      "labelKind": "seat",
+      "qid": "Q180",
+      "note": "Publishes the protocol’s attention reading, through the pageviews API. Coordinate: the coordinate qualifying Q180’s headquarters location (P159)."
+    },
+    {
+      "id": "wikimedia-de",
+      "label": "Wikimedia Deutschland",
+      "lat": 52.4984,
+      "lon": 13.3814,
+      "labelKind": "seat",
+      "qid": "Q8288",
+      "note": "Publishes the protocol’s loss-of-life reading, through Wikidata. Coordinate: Wikidata coordinate location (P625) on Q8288."
+    }
+  ]
+}

@@ -76,6 +76,27 @@ export const EXPERIMENT_LINES: readonly ExperimentLine[] = [
  *  Gleichstand; die öffentliche Sortierung ist chronologisch über `WERKE_CHRONO`. */
 export const WERKE: Werk[] = [
   {
+    id: 'globe',
+    line: 'counter-measurement',
+    title: 'Living Globe',
+    subtitle: {
+      de: 'Everything this house measures on the earth, on one globe, with the receipts',
+      en: 'Everything this house measures on the earth, on one globe, with the receipts',
+    },
+    status: 'live',
+    since: '2026-09-03',
+    live: true,
+    href: '/globe',
+    description: {
+      // One sentence-block in both keys, no digit in it (the currency doctrine): the number of
+      // layers, of days and of marks all move nightly and live in the committed files, never here.
+      de: "From the counter-measurement line. Every instrument in this house that touches a place — the satellites overhead, the vessels that switch their transponders off, the planet's nightly readings, the press counted country by country, the pages a government quietly removed — writes its own dated file every night, and each of them has until now been read alone. This puts them on one earth with one time axis: a layer per instrument, a day slider over the whole archive, and a card behind every single mark naming the committed file, the position inside it and the day it was written. The globe reads no clock. Its oldest day is the oldest day the archive holds and its newest is the newest record, so nothing on it can be more current than the file it came from. What it draws it can prove, and what it cannot place it says instead of moving: a country stands at the centroid of its own polygon and the card calls it a centroid, an institution's reading stands at the seat that publishes it and the card calls it a seat, and only a measurement actually taken at a site is called a station. Where the archive holds no record for a day, that layer draws nothing and states why, because the alternative — propagating today's data backwards into an empty day — is a fabrication with the look of a measurement.",
+      en: "From the counter-measurement line. Every instrument in this house that touches a place — the satellites overhead, the vessels that switch their transponders off, the planet's nightly readings, the press counted country by country, the pages a government quietly removed — writes its own dated file every night, and each of them has until now been read alone. This puts them on one earth with one time axis: a layer per instrument, a day slider over the whole archive, and a card behind every single mark naming the committed file, the position inside it and the day it was written. The globe reads no clock. Its oldest day is the oldest day the archive holds and its newest is the newest record, so nothing on it can be more current than the file it came from. What it draws it can prove, and what it cannot place it says instead of moving: a country stands at the centroid of its own polygon and the card calls it a centroid, an institution's reading stands at the seat that publishes it and the card calls it a seat, and only a measurement actually taken at a site is called a station. Where the archive holds no record for a day, that layer draws nothing and states why, because the alternative — propagating today's data backwards into an empty day — is a fabrication with the look of a measurement.",
+    },
+    methodHref: '/werke/globe',
+    tier: 'experiment',
+  },
+  {
     id: 'trending',
     line: 'ledger',
     title: 'Common Ground',

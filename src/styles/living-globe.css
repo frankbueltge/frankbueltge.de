@@ -1,0 +1,139 @@
+/* src/styles/living-globe.css — the room of the living globe (/globe).
+ *
+ * G0 is the floor: the plate, the legend and the tables under it, drawn from committed files and
+ * readable without a single line of JavaScript. Everything here is a reference to the frame's own
+ * tokens — no hex, no palette record, because nothing on this plate carries an identity colour
+ * yet. Depth carries the base: the sea is the panel, the land is the hairline, the coast is the
+ * muted ink. Marks are told apart by SHAPE and by weight, which is what a mono skin can afford.
+ *
+ * The layers' own colours arrive with the island (phase G1), where at most one layer is in front
+ * at a time and the rest drop to mono ink — the readability rule and the colour rule in one. When
+ * they do, their values live here behind PALETTE: markers, validated in src/lib/dataviz/palette.ts.
+ */
+
+.globe-plate {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-md);
+  background: var(--color-panel);
+}
+
+.globe-floor-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* the ground */
+.globe-sea {
+  fill: var(--color-panel);
+}
+.globe-grat {
+  fill: none;
+  stroke: var(--color-line);
+  stroke-width: 0.5;
+}
+.globe-land {
+  fill: var(--color-line);
+  stroke: var(--color-fg-faint);
+  stroke-width: 0.5;
+  stroke-linejoin: round;
+}
+
+/* the marks — one weight for a measured point, a heavier one for a seat or a station, so a
+   reader can tell an instrument from an address without a legend entry per layer */
+.globe-dot {
+  fill: var(--color-accent);
+  opacity: 0.9;
+}
+.globe-dot[data-kind='seat'],
+.globe-dot[data-kind='station'] {
+  fill: none;
+  stroke: var(--color-accent);
+  stroke-width: 1.2;
+}
+.globe-dot[data-kind='station'] {
+  fill: var(--color-accent);
+}
+.globe-arc {
+  fill: none;
+  stroke: var(--color-fg-muted);
+  stroke-width: 1.3;
+  stroke-linecap: round;
+  opacity: 0.85;
+}
+.globe-arc-off {
+  fill: none;
+  stroke: var(--color-fg-muted);
+  stroke-width: 1.1;
+}
+.globe-arc-on {
+  fill: var(--color-fg-muted);
+}
+.globe-mark:hover .globe-arc {
+  opacity: 1;
+  stroke-width: 2.1;
+}
+
+/* the legend: one row per registered layer, each carrying its own provenance line */
+.globe-legend {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 12px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+.globe-legend li {
+  padding: 10px 12px;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-sm);
+  background: var(--color-panel);
+}
+.globe-legend-name {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+.globe-legend-prov {
+  margin-top: 6px;
+  overflow-wrap: anywhere;
+}
+
+.globe-tables {
+  display: grid;
+  gap: 10px;
+}
+.globe-note {
+  overflow-wrap: anywhere;
+}
+
+/* The tables under the plate and on the method sheet. The shared TableFallback decides structure
+   and behaviour only (ADR 0010) — no padding, no rules — which is right for a three-column table
+   in a wide column and cramped for a five-column one: without a minimum width the cells collapse
+   into each other. So the globe's own surfaces give their tables a floor and let the primitive's
+   `overflow-x: auto` do the rest; on a narrow screen the table scrolls instead of colliding. */
+.globe-tables .dv-table,
+.globe-method .dv-table {
+  min-width: 44rem;
+  font-size: 12px;
+}
+.globe-tables .dv-table :is(th, td),
+.globe-method .dv-table :is(th, td) {
+  padding: 4px 14px 4px 0;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--color-line);
+}
+.globe-tables .dv-table th,
+.globe-method .dv-table th {
+  font-weight: 600;
+  color: var(--color-fg-muted);
+  white-space: nowrap;
+}
+.globe-tables .dv-table td:last-child,
+.globe-method .dv-table td:last-child {
+  padding-right: 0;
+}

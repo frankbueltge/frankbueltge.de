@@ -1,0 +1,3137 @@
+{
+  "_": "Country-code crosswalk for the living globe — FIPS 10-4 (GDELT) ↔ ISO 3166-1 alpha-3 / numeric / alpha-2 ↔ ccTLD, with the country name as Wikidata, Natural Earth, GDELT, EM-DAT and UCDP each spell it. Derived, never hand-edited: correct a code in src/data/globe/iso-fips.csv and rebuild.",
+  "derivation": "src/data/globe/iso-fips.csv (ISO codes, FIPS 10-4, ccTLD) joined with src/data/globe/countries-110m.json by ISO numeric, with pipelines/balance/sources_by_country.csv by FIPS 10-4, with src/data/admissions/emdat.json by the ISO 3166-1 alpha-3 suffix of its keys, and with src/data/admissions/ucdp-brd.json by country name after stripping a historical parenthetical.",
+  "regenerate": "npx tsx scripts/build-globe-crosswalk.ts (--check fails on drift, writes nothing)",
+  "sources": [
+    {
+      "file": "src/data/globe/iso-fips.csv",
+      "name": "Wikidata, ISO 3166-1 and FIPS 10-4 properties",
+      "license": "CC0"
+    },
+    {
+      "file": "src/data/globe/countries-110m.json",
+      "name": "world-atlas 2.0.2 (Natural Earth 4.1.0)",
+      "license": "ISC / public domain"
+    },
+    {
+      "file": "pipelines/balance/sources_by_country.csv",
+      "name": "GDELT source list by country",
+      "license": "GDELT: free use with attribution"
+    },
+    {
+      "file": "src/data/admissions/emdat.json",
+      "name": "EM-DAT admissions register (derived identifiers only)",
+      "license": "CC BY-NC-ND 4.0"
+    },
+    {
+      "file": "src/data/admissions/ucdp-brd.json",
+      "name": "UCDP admissions register (derived identifiers only)",
+      "license": "UCDP terms"
+    }
+  ],
+  "counts": {
+    "countries": 252,
+    "with_fips": 246,
+    "with_atlas_polygon": 174,
+    "with_gdelt_name": 222,
+    "with_emdat_name": 150,
+    "with_ucdp_name": 11
+  },
+  "fips_aliases": {
+    "RB": "SRB",
+    "WE": "PSE"
+  },
+  "countries": [
+    {
+      "iso3": "AND",
+      "iso2": "AD",
+      "num": "020",
+      "fips": "AN",
+      "cctld": ".ad",
+      "names": {
+        "wikidata": "Andorra",
+        "gdelt": "Andorra"
+      }
+    },
+    {
+      "iso3": "ARE",
+      "iso2": "AE",
+      "num": "784",
+      "fips": "AE",
+      "cctld": ".ae",
+      "names": {
+        "wikidata": "United Arab Emirates",
+        "atlas": "United Arab Emirates",
+        "gdelt": "United Arab Emirates",
+        "emdat": "United Arab Emirates"
+      }
+    },
+    {
+      "iso3": "AFG",
+      "iso2": "AF",
+      "num": "004",
+      "fips": "AF",
+      "cctld": ".af",
+      "names": {
+        "wikidata": "Afghanistan",
+        "atlas": "Afghanistan",
+        "gdelt": "Afghanistan",
+        "emdat": "Afghanistan"
+      }
+    },
+    {
+      "iso3": "ATG",
+      "iso2": "AG",
+      "num": "028",
+      "fips": "AC",
+      "cctld": ".ag",
+      "names": {
+        "wikidata": "Antigua and Barbuda",
+        "gdelt": "Antigua and Barbuda"
+      }
+    },
+    {
+      "iso3": "AIA",
+      "iso2": "AI",
+      "num": "660",
+      "fips": "AV",
+      "cctld": ".ai",
+      "names": {
+        "wikidata": "Anguilla",
+        "gdelt": "Anguilla"
+      }
+    },
+    {
+      "iso3": "ALB",
+      "iso2": "AL",
+      "num": "008",
+      "fips": "AL",
+      "cctld": ".al",
+      "names": {
+        "wikidata": "Albania",
+        "atlas": "Albania",
+        "gdelt": "Albania",
+        "emdat": "Albania"
+      }
+    },
+    {
+      "iso3": "ARM",
+      "iso2": "AM",
+      "num": "051",
+      "fips": "AM",
+      "cctld": ".am",
+      "names": {
+        "wikidata": "Armenia",
+        "atlas": "Armenia",
+        "gdelt": "Armenia",
+        "emdat": "Armenia"
+      }
+    },
+    {
+      "iso3": "ANT",
+      "iso2": "AN",
+      "num": "530",
+      "fips": "NT",
+      "cctld": ".an",
+      "names": {
+        "wikidata": "Netherlands Antilles"
+      }
+    },
+    {
+      "iso3": "AGO",
+      "iso2": "AO",
+      "num": "024",
+      "fips": "AO",
+      "cctld": ".ao",
+      "names": {
+        "wikidata": "Angola",
+        "atlas": "Angola",
+        "gdelt": "Angola",
+        "emdat": "Angola"
+      }
+    },
+    {
+      "iso3": "ATA",
+      "iso2": "AQ",
+      "num": "010",
+      "fips": "AY",
+      "cctld": ".aq",
+      "names": {
+        "wikidata": "Antarctica",
+        "atlas": "Antarctica"
+      }
+    },
+    {
+      "iso3": "ARG",
+      "iso2": "AR",
+      "num": "032",
+      "fips": "AR",
+      "cctld": ".ar",
+      "names": {
+        "wikidata": "Argentina",
+        "atlas": "Argentina",
+        "gdelt": "Argentina",
+        "emdat": "Argentina"
+      }
+    },
+    {
+      "iso3": "ASM",
+      "iso2": "AS",
+      "num": "016",
+      "fips": "AQ",
+      "cctld": ".as",
+      "names": {
+        "wikidata": "American Samoa",
+        "gdelt": "American Samoa"
+      }
+    },
+    {
+      "iso3": "AUT",
+      "iso2": "AT",
+      "num": "040",
+      "fips": "AU",
+      "cctld": ".at",
+      "names": {
+        "wikidata": "Austria",
+        "atlas": "Austria",
+        "gdelt": "Austria",
+        "emdat": "Austria"
+      }
+    },
+    {
+      "iso3": "AUS",
+      "iso2": "AU",
+      "num": "036",
+      "fips": "AS",
+      "cctld": ".au",
+      "names": {
+        "wikidata": "Australia",
+        "atlas": "Australia",
+        "gdelt": "Australia",
+        "emdat": "Australia"
+      }
+    },
+    {
+      "iso3": "ABW",
+      "iso2": "AW",
+      "num": "533",
+      "fips": "AA",
+      "cctld": ".aw",
+      "names": {
+        "wikidata": "Aruba",
+        "gdelt": "Aruba"
+      }
+    },
+    {
+      "iso3": "ALA",
+      "iso2": "AX",
+      "num": "248",
+      "fips": "FI01",
+      "cctld": ".ax",
+      "names": {
+        "wikidata": "Åland"
+      }
+    },
+    {
+      "iso3": "AZE",
+      "iso2": "AZ",
+      "num": "031",
+      "fips": "AJ",
+      "cctld": ".az",
+      "names": {
+        "wikidata": "Azerbaijan",
+        "atlas": "Azerbaijan",
+        "gdelt": "Azerbaijan"
+      }
+    },
+    {
+      "iso3": "BIH",
+      "iso2": "BA",
+      "num": "070",
+      "fips": "BK",
+      "cctld": ".ba",
+      "names": {
+        "wikidata": "Bosnia and Herzegovina",
+        "atlas": "Bosnia and Herz.",
+        "gdelt": "Bosnia-Herzegovina",
+        "emdat": "Bosnia and Herzegovina"
+      }
+    },
+    {
+      "iso3": "BRB",
+      "iso2": "BB",
+      "num": "052",
+      "fips": "BB",
+      "cctld": ".bb",
+      "names": {
+        "wikidata": "Barbados",
+        "gdelt": "Barbados",
+        "emdat": "Barbados"
+      }
+    },
+    {
+      "iso3": "BGD",
+      "iso2": "BD",
+      "num": "050",
+      "fips": "BG",
+      "cctld": ".bd",
+      "names": {
+        "wikidata": "Bangladesh",
+        "atlas": "Bangladesh",
+        "gdelt": "Bangladesh",
+        "emdat": "Bangladesh"
+      }
+    },
+    {
+      "iso3": "BEL",
+      "iso2": "BE",
+      "num": "056",
+      "fips": "BE",
+      "cctld": ".be",
+      "names": {
+        "wikidata": "Belgium",
+        "atlas": "Belgium",
+        "gdelt": "Belgium",
+        "emdat": "Belgium"
+      }
+    },
+    {
+      "iso3": "BFA",
+      "iso2": "BF",
+      "num": "854",
+      "fips": "UV",
+      "cctld": ".bf",
+      "names": {
+        "wikidata": "Burkina Faso",
+        "atlas": "Burkina Faso",
+        "gdelt": "Burkina Faso",
+        "emdat": "Burkina Faso"
+      }
+    },
+    {
+      "iso3": "BGR",
+      "iso2": "BG",
+      "num": "100",
+      "fips": "BU",
+      "cctld": ".bg",
+      "names": {
+        "wikidata": "Bulgaria",
+        "atlas": "Bulgaria",
+        "gdelt": "Bulgaria",
+        "emdat": "Bulgaria"
+      }
+    },
+    {
+      "iso3": "BHR",
+      "iso2": "BH",
+      "num": "048",
+      "fips": "BA",
+      "cctld": ".bh",
+      "names": {
+        "wikidata": "Bahrain",
+        "gdelt": "Bahrain"
+      }
+    },
+    {
+      "iso3": "BDI",
+      "iso2": "BI",
+      "num": "108",
+      "fips": "BY",
+      "cctld": ".bi",
+      "names": {
+        "wikidata": "Burundi",
+        "atlas": "Burundi",
+        "gdelt": "Burundi",
+        "emdat": "Burundi",
+        "ucdp": "Burundi"
+      }
+    },
+    {
+      "iso3": "BEN",
+      "iso2": "BJ",
+      "num": "204",
+      "fips": "BN",
+      "cctld": ".bj",
+      "names": {
+        "wikidata": "Benin",
+        "atlas": "Benin",
+        "gdelt": "Benin",
+        "emdat": "Benin"
+      }
+    },
+    {
+      "iso3": "BLM",
+      "iso2": "BL",
+      "num": "652",
+      "fips": "TB",
+      "cctld": ".bl",
+      "names": {
+        "wikidata": "Saint Barthélemy"
+      }
+    },
+    {
+      "iso3": "BMU",
+      "iso2": "BM",
+      "num": "060",
+      "fips": "BD",
+      "cctld": ".bm",
+      "names": {
+        "wikidata": "Bermuda",
+        "gdelt": "Bermuda"
+      }
+    },
+    {
+      "iso3": "BRN",
+      "iso2": "BN",
+      "num": "096",
+      "fips": "BX",
+      "cctld": ".bn",
+      "names": {
+        "wikidata": "Brunei",
+        "atlas": "Brunei",
+        "gdelt": "Brunei"
+      }
+    },
+    {
+      "iso3": "BOL",
+      "iso2": "BO",
+      "num": "068",
+      "fips": "BL",
+      "cctld": ".bo",
+      "names": {
+        "wikidata": "Bolivia",
+        "atlas": "Bolivia",
+        "gdelt": "Bolivia",
+        "emdat": "Bolivia (Plurinational State of)"
+      }
+    },
+    {
+      "iso3": "BES",
+      "iso2": "BQ",
+      "num": "535",
+      "fips": null,
+      "cctld": ".bq",
+      "names": {
+        "wikidata": "Caribbean Netherlands"
+      }
+    },
+    {
+      "iso3": "BRA",
+      "iso2": "BR",
+      "num": "076",
+      "fips": "BR",
+      "cctld": ".br",
+      "names": {
+        "wikidata": "Brazil",
+        "atlas": "Brazil",
+        "gdelt": "Brazil",
+        "emdat": "Brazil"
+      }
+    },
+    {
+      "iso3": "BHS",
+      "iso2": "BS",
+      "num": "044",
+      "fips": "BF",
+      "cctld": ".bs",
+      "names": {
+        "wikidata": "The Bahamas",
+        "atlas": "Bahamas",
+        "gdelt": "Bahamas",
+        "emdat": "Bahamas"
+      }
+    },
+    {
+      "iso3": "BTN",
+      "iso2": "BT",
+      "num": "064",
+      "fips": "BT",
+      "cctld": ".bt",
+      "names": {
+        "wikidata": "Bhutan",
+        "atlas": "Bhutan",
+        "gdelt": "Bhutan"
+      }
+    },
+    {
+      "iso3": "BVT",
+      "iso2": "BV",
+      "num": "074",
+      "fips": "BV",
+      "cctld": ".bv",
+      "names": {
+        "wikidata": "Bouvet Island"
+      }
+    },
+    {
+      "iso3": "BWA",
+      "iso2": "BW",
+      "num": "072",
+      "fips": "BC",
+      "cctld": ".bw",
+      "names": {
+        "wikidata": "Botswana",
+        "atlas": "Botswana",
+        "gdelt": "Botswana",
+        "emdat": "Botswana"
+      }
+    },
+    {
+      "iso3": "BLR",
+      "iso2": "BY",
+      "num": "112",
+      "fips": "BO",
+      "cctld": ".by",
+      "names": {
+        "wikidata": "Belarus",
+        "atlas": "Belarus",
+        "gdelt": "Belarus"
+      }
+    },
+    {
+      "iso3": "BLZ",
+      "iso2": "BZ",
+      "num": "084",
+      "fips": "BH",
+      "cctld": ".bz",
+      "names": {
+        "wikidata": "Belize",
+        "atlas": "Belize",
+        "gdelt": "Belize",
+        "emdat": "Belize"
+      }
+    },
+    {
+      "iso3": "CAN",
+      "iso2": "CA",
+      "num": "124",
+      "fips": "CA",
+      "cctld": ".ca",
+      "names": {
+        "wikidata": "Canada",
+        "atlas": "Canada",
+        "gdelt": "Canada",
+        "emdat": "Canada"
+      }
+    },
+    {
+      "iso3": "CCK",
+      "iso2": "CC",
+      "num": "166",
+      "fips": "CK",
+      "cctld": ".cc",
+      "names": {
+        "wikidata": "Cocos (Keeling) Islands",
+        "gdelt": "Keeling Islands"
+      }
+    },
+    {
+      "iso3": "COD",
+      "iso2": "CD",
+      "num": "180",
+      "fips": "CG",
+      "cctld": ".cd",
+      "names": {
+        "wikidata": "Democratic Republic of the Congo",
+        "atlas": "Dem. Rep. Congo",
+        "gdelt": "Democratic Republic of the Congo",
+        "emdat": "Democratic Republic of the Congo",
+        "ucdp": "DR Congo (Zaire)"
+      }
+    },
+    {
+      "iso3": "CAF",
+      "iso2": "CF",
+      "num": "140",
+      "fips": "CT",
+      "cctld": ".cf",
+      "names": {
+        "wikidata": "Central African Republic",
+        "atlas": "Central African Rep.",
+        "gdelt": "Central African Republic",
+        "emdat": "Central African Republic"
+      }
+    },
+    {
+      "iso3": "COG",
+      "iso2": "CG",
+      "num": "178",
+      "fips": "CF",
+      "cctld": ".cg",
+      "names": {
+        "wikidata": "Republic of the Congo",
+        "atlas": "Congo",
+        "gdelt": "Congo"
+      }
+    },
+    {
+      "iso3": "CHE",
+      "iso2": "CH",
+      "num": "756",
+      "fips": "SZ",
+      "cctld": ".ch",
+      "names": {
+        "wikidata": "Switzerland",
+        "atlas": "Switzerland",
+        "gdelt": "Switzerland",
+        "emdat": "Switzerland"
+      }
+    },
+    {
+      "iso3": "CIV",
+      "iso2": "CI",
+      "num": "384",
+      "fips": "IV",
+      "cctld": ".ci",
+      "names": {
+        "wikidata": "Ivory Coast",
+        "atlas": "Côte d'Ivoire",
+        "gdelt": "Ivory Coast",
+        "emdat": "Côte d’Ivoire"
+      }
+    },
+    {
+      "iso3": "COK",
+      "iso2": "CK",
+      "num": "184",
+      "fips": "CW",
+      "cctld": ".ck",
+      "names": {
+        "wikidata": "Cook Islands",
+        "gdelt": "Cook Islands"
+      }
+    },
+    {
+      "iso3": "CHL",
+      "iso2": "CL",
+      "num": "152",
+      "fips": "CI",
+      "cctld": ".cl",
+      "names": {
+        "wikidata": "Chile",
+        "atlas": "Chile",
+        "gdelt": "Chile",
+        "emdat": "Chile"
+      }
+    },
+    {
+      "iso3": "CMR",
+      "iso2": "CM",
+      "num": "120",
+      "fips": "CM",
+      "cctld": ".cm",
+      "names": {
+        "wikidata": "Cameroon",
+        "atlas": "Cameroon",
+        "gdelt": "Cameroon",
+        "emdat": "Cameroon"
+      }
+    },
+    {
+      "iso3": "CHN",
+      "iso2": "CN",
+      "num": "156",
+      "fips": "CH",
+      "cctld": ".cn",
+      "names": {
+        "wikidata": "People's Republic of China",
+        "atlas": "China",
+        "gdelt": "China",
+        "emdat": "China"
+      }
+    },
+    {
+      "iso3": "COL",
+      "iso2": "CO",
+      "num": "170",
+      "fips": "CO",
+      "cctld": ".co",
+      "names": {
+        "wikidata": "Colombia",
+        "atlas": "Colombia",
+        "gdelt": "Colombia",
+        "emdat": "Colombia",
+        "ucdp": "Colombia"
+      }
+    },
+    {
+      "iso3": "CRI",
+      "iso2": "CR",
+      "num": "188",
+      "fips": "CS",
+      "cctld": ".cr",
+      "names": {
+        "wikidata": "Costa Rica",
+        "atlas": "Costa Rica",
+        "gdelt": "Costa Rica",
+        "emdat": "Costa Rica"
+      }
+    },
+    {
+      "iso3": "CUB",
+      "iso2": "CU",
+      "num": "192",
+      "fips": "CU",
+      "cctld": ".cu",
+      "names": {
+        "wikidata": "Cuba",
+        "atlas": "Cuba",
+        "gdelt": "Cuba",
+        "emdat": "Cuba"
+      }
+    },
+    {
+      "iso3": "CPV",
+      "iso2": "CV",
+      "num": "132",
+      "fips": "CV",
+      "cctld": ".cv",
+      "names": {
+        "wikidata": "Cape Verde",
+        "gdelt": "Cape Verde"
+      }
+    },
+    {
+      "iso3": "CUW",
+      "iso2": "CW",
+      "num": "531",
+      "fips": "UC",
+      "cctld": ".cw",
+      "names": {
+        "wikidata": "Curaçao"
+      }
+    },
+    {
+      "iso3": "CXR",
+      "iso2": "CX",
+      "num": "162",
+      "fips": "KT",
+      "cctld": ".cx",
+      "names": {
+        "wikidata": "Christmas Island"
+      }
+    },
+    {
+      "iso3": "CYP",
+      "iso2": "CY",
+      "num": "196",
+      "fips": "CY",
+      "cctld": ".cy",
+      "names": {
+        "wikidata": "Cyprus",
+        "atlas": "Cyprus",
+        "gdelt": "Cyprus",
+        "emdat": "Cyprus"
+      }
+    },
+    {
+      "iso3": "CZE",
+      "iso2": "CZ",
+      "num": "203",
+      "fips": "EZ",
+      "cctld": ".cz",
+      "names": {
+        "wikidata": "Czech Republic",
+        "atlas": "Czechia",
+        "gdelt": "Czech Republic",
+        "emdat": "Czechia"
+      }
+    },
+    {
+      "iso3": "DDR",
+      "iso2": "DD",
+      "num": "278",
+      "fips": null,
+      "cctld": ".dd",
+      "names": {
+        "wikidata": "East Germany"
+      }
+    },
+    {
+      "iso3": "DEU",
+      "iso2": "DE",
+      "num": "276",
+      "fips": "GM",
+      "cctld": ".de",
+      "names": {
+        "wikidata": "Germany",
+        "atlas": "Germany",
+        "gdelt": "Germany",
+        "emdat": "Germany"
+      }
+    },
+    {
+      "iso3": "DJI",
+      "iso2": "DJ",
+      "num": "262",
+      "fips": "DJ",
+      "cctld": ".dj",
+      "names": {
+        "wikidata": "Djibouti",
+        "atlas": "Djibouti",
+        "gdelt": "Djibouti",
+        "emdat": "Djibouti"
+      }
+    },
+    {
+      "iso3": "DNK",
+      "iso2": "DK",
+      "num": "208",
+      "fips": "DA",
+      "cctld": ".dk",
+      "names": {
+        "wikidata": "Denmark",
+        "atlas": "Denmark",
+        "gdelt": "Denmark",
+        "emdat": "Denmark"
+      }
+    },
+    {
+      "iso3": "DMA",
+      "iso2": "DM",
+      "num": "212",
+      "fips": "DO",
+      "cctld": ".dm",
+      "names": {
+        "wikidata": "Dominica",
+        "gdelt": "Dominica",
+        "emdat": "Dominica"
+      }
+    },
+    {
+      "iso3": "DOM",
+      "iso2": "DO",
+      "num": "214",
+      "fips": "DR",
+      "cctld": ".do",
+      "names": {
+        "wikidata": "Dominican Republic",
+        "atlas": "Dominican Rep.",
+        "gdelt": "Dominican Republic",
+        "emdat": "Dominican Republic"
+      }
+    },
+    {
+      "iso3": "DZA",
+      "iso2": "DZ",
+      "num": "012",
+      "fips": "AG",
+      "cctld": ".dz",
+      "names": {
+        "wikidata": "Algeria",
+        "atlas": "Algeria",
+        "gdelt": "Algeria",
+        "emdat": "Algeria"
+      }
+    },
+    {
+      "iso3": "ECU",
+      "iso2": "EC",
+      "num": "218",
+      "fips": "EC",
+      "cctld": ".ec",
+      "names": {
+        "wikidata": "Ecuador",
+        "atlas": "Ecuador",
+        "gdelt": "Ecuador",
+        "emdat": "Ecuador"
+      }
+    },
+    {
+      "iso3": "EST",
+      "iso2": "EE",
+      "num": "233",
+      "fips": "EN",
+      "cctld": ".ee",
+      "names": {
+        "wikidata": "Estonia",
+        "atlas": "Estonia",
+        "gdelt": "Estonia",
+        "emdat": "Estonia"
+      }
+    },
+    {
+      "iso3": "EGY",
+      "iso2": "EG",
+      "num": "818",
+      "fips": "EG",
+      "cctld": ".eg",
+      "names": {
+        "wikidata": "Egypt",
+        "atlas": "Egypt",
+        "gdelt": "Egypt",
+        "emdat": "Egypt"
+      }
+    },
+    {
+      "iso3": "ESH",
+      "iso2": "EH",
+      "num": "732",
+      "fips": "WI",
+      "cctld": null,
+      "names": {
+        "wikidata": "Western Sahara",
+        "atlas": "W. Sahara"
+      }
+    },
+    {
+      "iso3": "ERI",
+      "iso2": "ER",
+      "num": "232",
+      "fips": "ER",
+      "cctld": ".er",
+      "names": {
+        "wikidata": "Eritrea",
+        "atlas": "Eritrea",
+        "gdelt": "Eritrea"
+      }
+    },
+    {
+      "iso3": "ESP",
+      "iso2": "ES",
+      "num": "724",
+      "fips": "SP",
+      "cctld": ".es",
+      "names": {
+        "wikidata": "Spain",
+        "atlas": "Spain",
+        "gdelt": "Spain",
+        "emdat": "Spain"
+      }
+    },
+    {
+      "iso3": "ETH",
+      "iso2": "ET",
+      "num": "231",
+      "fips": "ET",
+      "cctld": ".et",
+      "names": {
+        "wikidata": "Ethiopia",
+        "atlas": "Ethiopia",
+        "gdelt": "Ethiopia",
+        "emdat": "Ethiopia"
+      }
+    },
+    {
+      "iso3": "FIN",
+      "iso2": "FI",
+      "num": "246",
+      "fips": "FI",
+      "cctld": ".fi",
+      "names": {
+        "wikidata": "Finland",
+        "atlas": "Finland",
+        "gdelt": "Finland",
+        "emdat": "Finland"
+      }
+    },
+    {
+      "iso3": "FJI",
+      "iso2": "FJ",
+      "num": "242",
+      "fips": "FJ",
+      "cctld": ".fj",
+      "names": {
+        "wikidata": "Fiji",
+        "atlas": "Fiji",
+        "gdelt": "Fiji"
+      }
+    },
+    {
+      "iso3": "FLK",
+      "iso2": "FK",
+      "num": "238",
+      "fips": "FK",
+      "cctld": ".fk",
+      "names": {
+        "wikidata": "Falkland Islands",
+        "atlas": "Falkland Is."
+      }
+    },
+    {
+      "iso3": "FSM",
+      "iso2": "FM",
+      "num": "583",
+      "fips": "FM",
+      "cctld": ".fm",
+      "names": {
+        "wikidata": "Federated States of Micronesia",
+        "gdelt": "Micronesia"
+      }
+    },
+    {
+      "iso3": "FRO",
+      "iso2": "FO",
+      "num": "234",
+      "fips": "FO",
+      "cctld": ".fo",
+      "names": {
+        "wikidata": "Faroe Islands",
+        "gdelt": "Faroe Islands"
+      }
+    },
+    {
+      "iso3": "FRA",
+      "iso2": "FR",
+      "num": "250",
+      "fips": "FR",
+      "cctld": ".fr",
+      "names": {
+        "wikidata": "France",
+        "atlas": "France",
+        "gdelt": "France",
+        "emdat": "France"
+      }
+    },
+    {
+      "iso3": "GAB",
+      "iso2": "GA",
+      "num": "266",
+      "fips": "GB",
+      "cctld": ".ga",
+      "names": {
+        "wikidata": "Gabon",
+        "atlas": "Gabon",
+        "gdelt": "Gabon",
+        "emdat": "Gabon"
+      }
+    },
+    {
+      "iso3": "GBR",
+      "iso2": "GB",
+      "num": "826",
+      "fips": "UK",
+      "cctld": ".uk",
+      "names": {
+        "wikidata": "United Kingdom",
+        "atlas": "United Kingdom",
+        "gdelt": "United Kingdom",
+        "emdat": "United Kingdom of Great Britain and Northern Ireland"
+      }
+    },
+    {
+      "iso3": "GRD",
+      "iso2": "GD",
+      "num": "308",
+      "fips": "GJ",
+      "cctld": ".gd",
+      "names": {
+        "wikidata": "Grenada",
+        "gdelt": "Grenada",
+        "emdat": "Grenada"
+      }
+    },
+    {
+      "iso3": "GEO",
+      "iso2": "GE",
+      "num": "268",
+      "fips": "GG",
+      "cctld": ".ge",
+      "names": {
+        "wikidata": "Georgia",
+        "atlas": "Georgia",
+        "gdelt": "Georgia",
+        "emdat": "Georgia"
+      }
+    },
+    {
+      "iso3": "GUF",
+      "iso2": "GF",
+      "num": "254",
+      "fips": "FG",
+      "cctld": ".gf",
+      "names": {
+        "wikidata": "French Guiana"
+      }
+    },
+    {
+      "iso3": "GGY",
+      "iso2": "GG",
+      "num": "831",
+      "fips": "GK",
+      "cctld": ".gg",
+      "names": {
+        "wikidata": "Guernsey",
+        "gdelt": "Guernsey"
+      }
+    },
+    {
+      "iso3": "GHA",
+      "iso2": "GH",
+      "num": "288",
+      "fips": "GH",
+      "cctld": ".gh",
+      "names": {
+        "wikidata": "Ghana",
+        "atlas": "Ghana",
+        "gdelt": "Ghana"
+      }
+    },
+    {
+      "iso3": "GIB",
+      "iso2": "GI",
+      "num": "292",
+      "fips": "GI",
+      "cctld": ".gi",
+      "names": {
+        "wikidata": "Gibraltar",
+        "gdelt": "Gibraltar"
+      }
+    },
+    {
+      "iso3": "GRL",
+      "iso2": "GL",
+      "num": "304",
+      "fips": "GL",
+      "cctld": ".gl",
+      "names": {
+        "wikidata": "Greenland",
+        "atlas": "Greenland",
+        "gdelt": "Greenland"
+      }
+    },
+    {
+      "iso3": "GMB",
+      "iso2": "GM",
+      "num": "270",
+      "fips": "GA",
+      "cctld": ".gm",
+      "names": {
+        "wikidata": "The Gambia",
+        "atlas": "Gambia",
+        "gdelt": "Gambia"
+      }
+    },
+    {
+      "iso3": "GIN",
+      "iso2": "GN",
+      "num": "324",
+      "fips": "GV",
+      "cctld": ".gn",
+      "names": {
+        "wikidata": "Guinea",
+        "atlas": "Guinea",
+        "gdelt": "Guinea",
+        "emdat": "Guinea"
+      }
+    },
+    {
+      "iso3": "GLP",
+      "iso2": "GP",
+      "num": "312",
+      "fips": "GP",
+      "cctld": ".gp",
+      "names": {
+        "wikidata": "Guadeloupe",
+        "gdelt": "Guadeloupe"
+      }
+    },
+    {
+      "iso3": "GNQ",
+      "iso2": "GQ",
+      "num": "226",
+      "fips": "EK",
+      "cctld": ".gq",
+      "names": {
+        "wikidata": "Equatorial Guinea",
+        "atlas": "Eq. Guinea"
+      }
+    },
+    {
+      "iso3": "GRC",
+      "iso2": "GR",
+      "num": "300",
+      "fips": "GR",
+      "cctld": ".gr",
+      "names": {
+        "wikidata": "Greece",
+        "atlas": "Greece",
+        "gdelt": "Greece",
+        "emdat": "Greece"
+      }
+    },
+    {
+      "iso3": "SGS",
+      "iso2": "GS",
+      "num": "239",
+      "fips": "SX",
+      "cctld": ".gs",
+      "names": {
+        "wikidata": "South Georgia and the South Sandwich Islands",
+        "gdelt": "South Georgia and the South Sandwich Islands"
+      }
+    },
+    {
+      "iso3": "GTM",
+      "iso2": "GT",
+      "num": "320",
+      "fips": "GT",
+      "cctld": ".gt",
+      "names": {
+        "wikidata": "Guatemala",
+        "atlas": "Guatemala",
+        "gdelt": "Guatemala",
+        "emdat": "Guatemala"
+      }
+    },
+    {
+      "iso3": "GUM",
+      "iso2": "GU",
+      "num": "316",
+      "fips": "GQ",
+      "cctld": ".gu",
+      "names": {
+        "wikidata": "Guam",
+        "gdelt": "Guam"
+      }
+    },
+    {
+      "iso3": "GNB",
+      "iso2": "GW",
+      "num": "624",
+      "fips": "PU",
+      "cctld": ".gw",
+      "names": {
+        "wikidata": "Guinea-Bissau",
+        "atlas": "Guinea-Bissau",
+        "gdelt": "Guinea-Bissau"
+      }
+    },
+    {
+      "iso3": "GUY",
+      "iso2": "GY",
+      "num": "328",
+      "fips": "GY",
+      "cctld": ".gy",
+      "names": {
+        "wikidata": "Guyana",
+        "atlas": "Guyana",
+        "gdelt": "Guyana"
+      }
+    },
+    {
+      "iso3": "HKG",
+      "iso2": "HK",
+      "num": "344",
+      "fips": "HK",
+      "cctld": ".hk",
+      "names": {
+        "wikidata": "Hong Kong",
+        "gdelt": "Hong Kong"
+      }
+    },
+    {
+      "iso3": "HMD",
+      "iso2": "HM",
+      "num": "334",
+      "fips": "HM",
+      "cctld": ".hm",
+      "names": {
+        "wikidata": "Heard Island and McDonald Islands"
+      }
+    },
+    {
+      "iso3": "HND",
+      "iso2": "HN",
+      "num": "340",
+      "fips": "HO",
+      "cctld": ".hn",
+      "names": {
+        "wikidata": "Honduras",
+        "atlas": "Honduras",
+        "gdelt": "Honduras",
+        "emdat": "Honduras"
+      }
+    },
+    {
+      "iso3": "HRV",
+      "iso2": "HR",
+      "num": "191",
+      "fips": "HR",
+      "cctld": ".hr",
+      "names": {
+        "wikidata": "Croatia",
+        "atlas": "Croatia",
+        "gdelt": "Croatia",
+        "emdat": "Croatia",
+        "ucdp": "Croatia"
+      }
+    },
+    {
+      "iso3": "HTI",
+      "iso2": "HT",
+      "num": "332",
+      "fips": "HA",
+      "cctld": ".ht",
+      "names": {
+        "wikidata": "Haiti",
+        "atlas": "Haiti",
+        "gdelt": "Haiti",
+        "emdat": "Haiti"
+      }
+    },
+    {
+      "iso3": "HUN",
+      "iso2": "HU",
+      "num": "348",
+      "fips": "HU",
+      "cctld": ".hu",
+      "names": {
+        "wikidata": "Hungary",
+        "atlas": "Hungary",
+        "gdelt": "Hungary",
+        "emdat": "Hungary"
+      }
+    },
+    {
+      "iso3": "IDN",
+      "iso2": "ID",
+      "num": "360",
+      "fips": "ID",
+      "cctld": ".id",
+      "names": {
+        "wikidata": "Indonesia",
+        "atlas": "Indonesia",
+        "gdelt": "Indonesia",
+        "emdat": "Indonesia",
+        "ucdp": "Indonesia"
+      }
+    },
+    {
+      "iso3": "IRL",
+      "iso2": "IE",
+      "num": "372",
+      "fips": "EI",
+      "cctld": ".ie",
+      "names": {
+        "wikidata": "Ireland",
+        "atlas": "Ireland",
+        "gdelt": "Ireland",
+        "emdat": "Ireland"
+      }
+    },
+    {
+      "iso3": "ISR",
+      "iso2": "IL",
+      "num": "376",
+      "fips": "IS",
+      "cctld": ".il",
+      "names": {
+        "wikidata": "Israel",
+        "atlas": "Israel",
+        "gdelt": "Israel",
+        "ucdp": "Israel"
+      }
+    },
+    {
+      "iso3": "IMN",
+      "iso2": "IM",
+      "num": "833",
+      "fips": "IM",
+      "cctld": ".im",
+      "names": {
+        "wikidata": "Isle of Man",
+        "gdelt": "Isle of Man"
+      }
+    },
+    {
+      "iso3": "IND",
+      "iso2": "IN",
+      "num": "356",
+      "fips": "IN",
+      "cctld": ".in",
+      "names": {
+        "wikidata": "India",
+        "atlas": "India",
+        "gdelt": "India",
+        "emdat": "India"
+      }
+    },
+    {
+      "iso3": "IOT",
+      "iso2": "IO",
+      "num": "086",
+      "fips": "IO",
+      "cctld": ".io",
+      "names": {
+        "wikidata": "British Indian Ocean Territory",
+        "gdelt": "British Indian Ocean Territory"
+      }
+    },
+    {
+      "iso3": "IRQ",
+      "iso2": "IQ",
+      "num": "368",
+      "fips": "IZ",
+      "cctld": ".iq",
+      "names": {
+        "wikidata": "Iraq",
+        "atlas": "Iraq",
+        "gdelt": "Iraq",
+        "emdat": "Iraq"
+      }
+    },
+    {
+      "iso3": "IRN",
+      "iso2": "IR",
+      "num": "364",
+      "fips": "IR",
+      "cctld": ".ir",
+      "names": {
+        "wikidata": "Iran",
+        "atlas": "Iran",
+        "gdelt": "Iran",
+        "emdat": "Iran (Islamic Republic of)"
+      }
+    },
+    {
+      "iso3": "ISL",
+      "iso2": "IS",
+      "num": "352",
+      "fips": "IC",
+      "cctld": ".is",
+      "names": {
+        "wikidata": "Iceland",
+        "atlas": "Iceland",
+        "gdelt": "Iceland"
+      }
+    },
+    {
+      "iso3": "ITA",
+      "iso2": "IT",
+      "num": "380",
+      "fips": "IT",
+      "cctld": ".it",
+      "names": {
+        "wikidata": "Italy",
+        "atlas": "Italy",
+        "gdelt": "Italy",
+        "emdat": "Italy"
+      }
+    },
+    {
+      "iso3": "JEY",
+      "iso2": "JE",
+      "num": "832",
+      "fips": "JE",
+      "cctld": ".je",
+      "names": {
+        "wikidata": "Jersey",
+        "gdelt": "Jersey"
+      }
+    },
+    {
+      "iso3": "JAM",
+      "iso2": "JM",
+      "num": "388",
+      "fips": "JM",
+      "cctld": ".jm",
+      "names": {
+        "wikidata": "Jamaica",
+        "atlas": "Jamaica",
+        "gdelt": "Jamaica",
+        "emdat": "Jamaica"
+      }
+    },
+    {
+      "iso3": "JOR",
+      "iso2": "JO",
+      "num": "400",
+      "fips": "JO",
+      "cctld": ".jo",
+      "names": {
+        "wikidata": "Jordan",
+        "atlas": "Jordan",
+        "gdelt": "Jordan"
+      }
+    },
+    {
+      "iso3": "JPN",
+      "iso2": "JP",
+      "num": "392",
+      "fips": "JA",
+      "cctld": ".jp",
+      "names": {
+        "wikidata": "Japan",
+        "atlas": "Japan",
+        "gdelt": "Japan",
+        "emdat": "Japan"
+      }
+    },
+    {
+      "iso3": "KEN",
+      "iso2": "KE",
+      "num": "404",
+      "fips": "KE",
+      "cctld": ".ke",
+      "names": {
+        "wikidata": "Kenya",
+        "atlas": "Kenya",
+        "gdelt": "Kenya",
+        "emdat": "Kenya"
+      }
+    },
+    {
+      "iso3": "KGZ",
+      "iso2": "KG",
+      "num": "417",
+      "fips": "KG",
+      "cctld": ".kg",
+      "names": {
+        "wikidata": "Kyrgyzstan",
+        "atlas": "Kyrgyzstan",
+        "gdelt": "Kyrgyzstan",
+        "emdat": "Kyrgyzstan"
+      }
+    },
+    {
+      "iso3": "KHM",
+      "iso2": "KH",
+      "num": "116",
+      "fips": "CB",
+      "cctld": ".kh",
+      "names": {
+        "wikidata": "Cambodia",
+        "atlas": "Cambodia",
+        "gdelt": "Cambodia",
+        "emdat": "Cambodia"
+      }
+    },
+    {
+      "iso3": "KIR",
+      "iso2": "KI",
+      "num": "296",
+      "fips": "KR",
+      "cctld": ".ki",
+      "names": {
+        "wikidata": "Kiribati"
+      }
+    },
+    {
+      "iso3": "COM",
+      "iso2": "KM",
+      "num": "174",
+      "fips": "CN",
+      "cctld": ".km",
+      "names": {
+        "wikidata": "Comoros",
+        "gdelt": "Comoros",
+        "emdat": "Comoros"
+      }
+    },
+    {
+      "iso3": "KNA",
+      "iso2": "KN",
+      "num": "659",
+      "fips": "SC",
+      "cctld": ".kn",
+      "names": {
+        "wikidata": "Saint Kitts and Nevis",
+        "gdelt": "Saint Kitts and Nevis"
+      }
+    },
+    {
+      "iso3": "PRK",
+      "iso2": "KP",
+      "num": "408",
+      "fips": "KN",
+      "cctld": ".kp",
+      "names": {
+        "wikidata": "North Korea",
+        "atlas": "North Korea",
+        "gdelt": "North Korea",
+        "emdat": "Democratic People's Republic of Korea"
+      }
+    },
+    {
+      "iso3": "KOR",
+      "iso2": "KR",
+      "num": "410",
+      "fips": "KS",
+      "cctld": ".kr",
+      "names": {
+        "wikidata": "South Korea",
+        "atlas": "South Korea",
+        "gdelt": "South Korea",
+        "emdat": "Republic of Korea"
+      }
+    },
+    {
+      "iso3": "KWT",
+      "iso2": "KW",
+      "num": "414",
+      "fips": "KU",
+      "cctld": ".kw",
+      "names": {
+        "wikidata": "Kuwait",
+        "atlas": "Kuwait",
+        "gdelt": "Kuwait",
+        "emdat": "Kuwait"
+      }
+    },
+    {
+      "iso3": "CYM",
+      "iso2": "KY",
+      "num": "136",
+      "fips": "CJ",
+      "cctld": ".ky",
+      "names": {
+        "wikidata": "Cayman Islands",
+        "gdelt": "Cayman Islands",
+        "emdat": "Cayman Islands"
+      }
+    },
+    {
+      "iso3": "KAZ",
+      "iso2": "KZ",
+      "num": "398",
+      "fips": "KZ",
+      "cctld": ".kz",
+      "names": {
+        "wikidata": "Kazakhstan",
+        "atlas": "Kazakhstan",
+        "gdelt": "Kazakhstan",
+        "emdat": "Kazakhstan"
+      }
+    },
+    {
+      "iso3": "LAO",
+      "iso2": "LA",
+      "num": "418",
+      "fips": "LA",
+      "cctld": ".la",
+      "names": {
+        "wikidata": "Laos",
+        "atlas": "Laos",
+        "gdelt": "Laos",
+        "emdat": "Lao People's Democratic Republic"
+      }
+    },
+    {
+      "iso3": "LBN",
+      "iso2": "LB",
+      "num": "422",
+      "fips": "LE",
+      "cctld": ".lb",
+      "names": {
+        "wikidata": "Lebanon",
+        "atlas": "Lebanon",
+        "gdelt": "Lebanon",
+        "emdat": "Lebanon"
+      }
+    },
+    {
+      "iso3": "LCA",
+      "iso2": "LC",
+      "num": "662",
+      "fips": "ST",
+      "cctld": ".lc",
+      "names": {
+        "wikidata": "Saint Lucia",
+        "gdelt": "Saint Lucia"
+      }
+    },
+    {
+      "iso3": "LIE",
+      "iso2": "LI",
+      "num": "438",
+      "fips": "LS",
+      "cctld": ".li",
+      "names": {
+        "wikidata": "Liechtenstein",
+        "gdelt": "Liechtenstein"
+      }
+    },
+    {
+      "iso3": "LKA",
+      "iso2": "LK",
+      "num": "144",
+      "fips": "CE",
+      "cctld": ".lk",
+      "names": {
+        "wikidata": "Sri Lanka",
+        "atlas": "Sri Lanka",
+        "gdelt": "Sri Lanka",
+        "emdat": "Sri Lanka"
+      }
+    },
+    {
+      "iso3": "LBR",
+      "iso2": "LR",
+      "num": "430",
+      "fips": "LI",
+      "cctld": ".lr",
+      "names": {
+        "wikidata": "Liberia",
+        "atlas": "Liberia",
+        "gdelt": "Liberia",
+        "emdat": "Liberia"
+      }
+    },
+    {
+      "iso3": "LSO",
+      "iso2": "LS",
+      "num": "426",
+      "fips": "LT",
+      "cctld": ".ls",
+      "names": {
+        "wikidata": "Lesotho",
+        "atlas": "Lesotho",
+        "gdelt": "Lesotho"
+      }
+    },
+    {
+      "iso3": "LTU",
+      "iso2": "LT",
+      "num": "440",
+      "fips": "LH",
+      "cctld": ".lt",
+      "names": {
+        "wikidata": "Lithuania",
+        "atlas": "Lithuania",
+        "gdelt": "Lithuania",
+        "emdat": "Lithuania"
+      }
+    },
+    {
+      "iso3": "LUX",
+      "iso2": "LU",
+      "num": "442",
+      "fips": "LU",
+      "cctld": ".lu",
+      "names": {
+        "wikidata": "Luxembourg",
+        "atlas": "Luxembourg",
+        "gdelt": "Luxembourg",
+        "emdat": "Luxembourg"
+      }
+    },
+    {
+      "iso3": "LVA",
+      "iso2": "LV",
+      "num": "428",
+      "fips": "LG",
+      "cctld": ".lv",
+      "names": {
+        "wikidata": "Latvia",
+        "atlas": "Latvia",
+        "gdelt": "Latvia",
+        "emdat": "Latvia"
+      }
+    },
+    {
+      "iso3": "LBY",
+      "iso2": "LY",
+      "num": "434",
+      "fips": "LY",
+      "cctld": ".ly",
+      "names": {
+        "wikidata": "Libya",
+        "atlas": "Libya",
+        "gdelt": "Libya",
+        "emdat": "Libya"
+      }
+    },
+    {
+      "iso3": "MAR",
+      "iso2": "MA",
+      "num": "504",
+      "fips": "MO",
+      "cctld": ".ma",
+      "names": {
+        "wikidata": "Morocco",
+        "atlas": "Morocco",
+        "gdelt": "Morocco",
+        "emdat": "Morocco"
+      }
+    },
+    {
+      "iso3": "MCO",
+      "iso2": "MC",
+      "num": "492",
+      "fips": "MN",
+      "cctld": ".mc",
+      "names": {
+        "wikidata": "Monaco",
+        "gdelt": "Monaco"
+      }
+    },
+    {
+      "iso3": "MDA",
+      "iso2": "MD",
+      "num": "498",
+      "fips": "MD",
+      "cctld": ".md",
+      "names": {
+        "wikidata": "Moldova",
+        "atlas": "Moldova",
+        "gdelt": "Moldova"
+      }
+    },
+    {
+      "iso3": "MNE",
+      "iso2": "ME",
+      "num": "499",
+      "fips": "MJ",
+      "cctld": ".me",
+      "names": {
+        "wikidata": "Montenegro",
+        "atlas": "Montenegro",
+        "gdelt": "Montenegro",
+        "emdat": "Montenegro"
+      }
+    },
+    {
+      "iso3": "MAF",
+      "iso2": "MF",
+      "num": "663",
+      "fips": "RN",
+      "cctld": ".mf",
+      "names": {
+        "wikidata": "Saint-Martin"
+      }
+    },
+    {
+      "iso3": "MDG",
+      "iso2": "MG",
+      "num": "450",
+      "fips": "MA",
+      "cctld": ".mg",
+      "names": {
+        "wikidata": "Madagascar",
+        "atlas": "Madagascar",
+        "gdelt": "Madagascar",
+        "emdat": "Madagascar"
+      }
+    },
+    {
+      "iso3": "MHL",
+      "iso2": "MH",
+      "num": "584",
+      "fips": "RM",
+      "cctld": ".mh",
+      "names": {
+        "wikidata": "Marshall Islands",
+        "emdat": "Marshall Islands"
+      }
+    },
+    {
+      "iso3": "MKD",
+      "iso2": "MK",
+      "num": "807",
+      "fips": "MK",
+      "cctld": ".mk",
+      "names": {
+        "wikidata": "North Macedonia",
+        "atlas": "Macedonia",
+        "gdelt": "Macedonia"
+      }
+    },
+    {
+      "iso3": "MLI",
+      "iso2": "ML",
+      "num": "466",
+      "fips": "ML",
+      "cctld": ".ml",
+      "names": {
+        "wikidata": "Mali",
+        "atlas": "Mali",
+        "gdelt": "Mali",
+        "emdat": "Mali"
+      }
+    },
+    {
+      "iso3": "MMR",
+      "iso2": "MM",
+      "num": "104",
+      "fips": "BM",
+      "cctld": ".mm",
+      "names": {
+        "wikidata": "Myanmar",
+        "atlas": "Myanmar",
+        "gdelt": "Myanmar",
+        "emdat": "Myanmar"
+      }
+    },
+    {
+      "iso3": "MNG",
+      "iso2": "MN",
+      "num": "496",
+      "fips": "MG",
+      "cctld": ".mn",
+      "names": {
+        "wikidata": "Mongolia",
+        "atlas": "Mongolia",
+        "gdelt": "Mongolia"
+      }
+    },
+    {
+      "iso3": "MAC",
+      "iso2": "MO",
+      "num": "446",
+      "fips": "MC",
+      "cctld": ".mo",
+      "names": {
+        "wikidata": "Macau",
+        "gdelt": "Macau"
+      }
+    },
+    {
+      "iso3": "MNP",
+      "iso2": "MP",
+      "num": "580",
+      "fips": "CQ",
+      "cctld": ".mp",
+      "names": {
+        "wikidata": "Northern Mariana Islands"
+      }
+    },
+    {
+      "iso3": "MTQ",
+      "iso2": "MQ",
+      "num": "474",
+      "fips": "MB",
+      "cctld": ".mq",
+      "names": {
+        "wikidata": "Martinique",
+        "gdelt": "Martinique",
+        "emdat": "Martinique"
+      }
+    },
+    {
+      "iso3": "MRT",
+      "iso2": "MR",
+      "num": "478",
+      "fips": "MR",
+      "cctld": ".mr",
+      "names": {
+        "wikidata": "Mauritania",
+        "atlas": "Mauritania",
+        "gdelt": "Mauritania",
+        "emdat": "Mauritania"
+      }
+    },
+    {
+      "iso3": "MSR",
+      "iso2": "MS",
+      "num": "500",
+      "fips": "MH",
+      "cctld": ".ms",
+      "names": {
+        "wikidata": "Montserrat",
+        "gdelt": "Montserrat"
+      }
+    },
+    {
+      "iso3": "MLT",
+      "iso2": "MT",
+      "num": "470",
+      "fips": "MT",
+      "cctld": ".mt",
+      "names": {
+        "wikidata": "Malta",
+        "gdelt": "Malta"
+      }
+    },
+    {
+      "iso3": "MUS",
+      "iso2": "MU",
+      "num": "480",
+      "fips": "MP",
+      "cctld": ".mu",
+      "names": {
+        "wikidata": "Mauritius",
+        "gdelt": "Mauritius",
+        "emdat": "Mauritius"
+      }
+    },
+    {
+      "iso3": "MDV",
+      "iso2": "MV",
+      "num": "462",
+      "fips": "MV",
+      "cctld": ".mv",
+      "names": {
+        "wikidata": "Maldives",
+        "gdelt": "Maldives"
+      }
+    },
+    {
+      "iso3": "MWI",
+      "iso2": "MW",
+      "num": "454",
+      "fips": "MI",
+      "cctld": ".mw",
+      "names": {
+        "wikidata": "Malawi",
+        "atlas": "Malawi",
+        "gdelt": "Malawi",
+        "emdat": "Malawi"
+      }
+    },
+    {
+      "iso3": "MEX",
+      "iso2": "MX",
+      "num": "484",
+      "fips": "MX",
+      "cctld": ".mx",
+      "names": {
+        "wikidata": "Mexico",
+        "atlas": "Mexico",
+        "gdelt": "Mexico",
+        "emdat": "Mexico"
+      }
+    },
+    {
+      "iso3": "MYS",
+      "iso2": "MY",
+      "num": "458",
+      "fips": "MY",
+      "cctld": ".my",
+      "names": {
+        "wikidata": "Malaysia",
+        "atlas": "Malaysia",
+        "gdelt": "Malaysia",
+        "emdat": "Malaysia"
+      }
+    },
+    {
+      "iso3": "MOZ",
+      "iso2": "MZ",
+      "num": "508",
+      "fips": "MZ",
+      "cctld": ".mz",
+      "names": {
+        "wikidata": "Mozambique",
+        "atlas": "Mozambique",
+        "gdelt": "Mozambique",
+        "emdat": "Mozambique"
+      }
+    },
+    {
+      "iso3": "NAM",
+      "iso2": "NA",
+      "num": "516",
+      "fips": "WA",
+      "cctld": ".na",
+      "names": {
+        "wikidata": "Namibia",
+        "atlas": "Namibia",
+        "gdelt": "Namibia",
+        "emdat": "Namibia"
+      }
+    },
+    {
+      "iso3": "NCL",
+      "iso2": "NC",
+      "num": "540",
+      "fips": "NC",
+      "cctld": ".nc",
+      "names": {
+        "wikidata": "New Caledonia",
+        "atlas": "New Caledonia",
+        "gdelt": "New Caledonia"
+      }
+    },
+    {
+      "iso3": "NER",
+      "iso2": "NE",
+      "num": "562",
+      "fips": "NG",
+      "cctld": ".ne",
+      "names": {
+        "wikidata": "Niger",
+        "atlas": "Niger",
+        "gdelt": "Niger",
+        "emdat": "Niger"
+      }
+    },
+    {
+      "iso3": "NFK",
+      "iso2": "NF",
+      "num": "574",
+      "fips": "NF",
+      "cctld": ".nf",
+      "names": {
+        "wikidata": "Norfolk Island"
+      }
+    },
+    {
+      "iso3": "NGA",
+      "iso2": "NG",
+      "num": "566",
+      "fips": "NI",
+      "cctld": ".ng",
+      "names": {
+        "wikidata": "Nigeria",
+        "atlas": "Nigeria",
+        "gdelt": "Nigeria",
+        "emdat": "Nigeria"
+      }
+    },
+    {
+      "iso3": "NIC",
+      "iso2": "NI",
+      "num": "558",
+      "fips": "NU",
+      "cctld": ".ni",
+      "names": {
+        "wikidata": "Nicaragua",
+        "atlas": "Nicaragua",
+        "gdelt": "Nicaragua",
+        "emdat": "Nicaragua"
+      }
+    },
+    {
+      "iso3": "NLD",
+      "iso2": "NL",
+      "num": "528",
+      "fips": "NL",
+      "cctld": ".nl",
+      "names": {
+        "wikidata": "Netherlands",
+        "atlas": "Netherlands",
+        "gdelt": "Netherlands",
+        "emdat": "Netherlands (Kingdom of the)"
+      }
+    },
+    {
+      "iso3": "NOR",
+      "iso2": "NO",
+      "num": "578",
+      "fips": "NO",
+      "cctld": ".no",
+      "names": {
+        "wikidata": "Norway",
+        "atlas": "Norway",
+        "gdelt": "Norway",
+        "emdat": "Norway"
+      }
+    },
+    {
+      "iso3": "NPL",
+      "iso2": "NP",
+      "num": "524",
+      "fips": "NP",
+      "cctld": ".np",
+      "names": {
+        "wikidata": "Nepal",
+        "atlas": "Nepal",
+        "gdelt": "Nepal",
+        "emdat": "Nepal"
+      }
+    },
+    {
+      "iso3": "NRU",
+      "iso2": "NR",
+      "num": "520",
+      "fips": "NR",
+      "cctld": ".nr",
+      "names": {
+        "wikidata": "Nauru"
+      }
+    },
+    {
+      "iso3": "NIU",
+      "iso2": "NU",
+      "num": "570",
+      "fips": "NE",
+      "cctld": ".nu",
+      "names": {
+        "wikidata": "Niue",
+        "gdelt": "Niue"
+      }
+    },
+    {
+      "iso3": "NZL",
+      "iso2": "NZ",
+      "num": "554",
+      "fips": "NZ",
+      "cctld": ".nz",
+      "names": {
+        "wikidata": "New Zealand",
+        "atlas": "New Zealand",
+        "gdelt": "New Zealand",
+        "emdat": "New Zealand"
+      }
+    },
+    {
+      "iso3": "OMN",
+      "iso2": "OM",
+      "num": "512",
+      "fips": "MU",
+      "cctld": ".om",
+      "names": {
+        "wikidata": "Oman",
+        "atlas": "Oman",
+        "gdelt": "Oman",
+        "emdat": "Oman"
+      }
+    },
+    {
+      "iso3": "PAN",
+      "iso2": "PA",
+      "num": "591",
+      "fips": "PM",
+      "cctld": ".pa",
+      "names": {
+        "wikidata": "Panama",
+        "atlas": "Panama",
+        "gdelt": "Panama",
+        "emdat": "Panama"
+      }
+    },
+    {
+      "iso3": "PCI",
+      "iso2": "PC",
+      "num": "582",
+      "fips": null,
+      "cctld": null,
+      "names": {
+        "wikidata": "Trust Territory of the Pacific Islands"
+      }
+    },
+    {
+      "iso3": "PER",
+      "iso2": "PE",
+      "num": "604",
+      "fips": "PE",
+      "cctld": ".pe",
+      "names": {
+        "wikidata": "Peru",
+        "atlas": "Peru",
+        "gdelt": "Peru",
+        "emdat": "Peru"
+      }
+    },
+    {
+      "iso3": "PYF",
+      "iso2": "PF",
+      "num": "258",
+      "fips": "FP",
+      "cctld": ".pf",
+      "names": {
+        "wikidata": "French Polynesia",
+        "gdelt": "French Polynesia"
+      }
+    },
+    {
+      "iso3": "PNG",
+      "iso2": "PG",
+      "num": "598",
+      "fips": "PP",
+      "cctld": ".pg",
+      "names": {
+        "wikidata": "Papua New Guinea",
+        "atlas": "Papua New Guinea",
+        "gdelt": "Papua New Guinea",
+        "emdat": "Papua New Guinea"
+      }
+    },
+    {
+      "iso3": "PHL",
+      "iso2": "PH",
+      "num": "608",
+      "fips": "RP",
+      "cctld": ".ph",
+      "names": {
+        "wikidata": "Philippines",
+        "atlas": "Philippines",
+        "gdelt": "Philippines",
+        "emdat": "Philippines"
+      }
+    },
+    {
+      "iso3": "PAK",
+      "iso2": "PK",
+      "num": "586",
+      "fips": "PK",
+      "cctld": ".pk",
+      "names": {
+        "wikidata": "Pakistan",
+        "atlas": "Pakistan",
+        "gdelt": "Pakistan",
+        "emdat": "Pakistan",
+        "ucdp": "Pakistan"
+      }
+    },
+    {
+      "iso3": "POL",
+      "iso2": "PL",
+      "num": "616",
+      "fips": "PL",
+      "cctld": ".pl",
+      "names": {
+        "wikidata": "Poland",
+        "atlas": "Poland",
+        "gdelt": "Poland",
+        "emdat": "Poland"
+      }
+    },
+    {
+      "iso3": "SPM",
+      "iso2": "PM",
+      "num": "666",
+      "fips": "SB",
+      "cctld": ".pm",
+      "names": {
+        "wikidata": "Saint Pierre and Miquelon"
+      }
+    },
+    {
+      "iso3": "PCN",
+      "iso2": "PN",
+      "num": "612",
+      "fips": "PC",
+      "cctld": ".pn",
+      "names": {
+        "wikidata": "Pitcairn Islands",
+        "gdelt": "Pitcairn Islands"
+      }
+    },
+    {
+      "iso3": "PRI",
+      "iso2": "PR",
+      "num": "630",
+      "fips": "RQ",
+      "cctld": ".pr",
+      "names": {
+        "wikidata": "Puerto Rico",
+        "atlas": "Puerto Rico",
+        "gdelt": "Puerto Rico",
+        "emdat": "Puerto Rico"
+      }
+    },
+    {
+      "iso3": "PSE",
+      "iso2": "PS",
+      "num": "275",
+      "fips": null,
+      "cctld": ".ps",
+      "names": {
+        "wikidata": "Palestine",
+        "atlas": "Palestine"
+      }
+    },
+    {
+      "iso3": "PRT",
+      "iso2": "PT",
+      "num": "620",
+      "fips": "PO",
+      "cctld": ".pt",
+      "names": {
+        "wikidata": "Portugal",
+        "atlas": "Portugal",
+        "gdelt": "Portugal",
+        "emdat": "Portugal"
+      }
+    },
+    {
+      "iso3": "PLW",
+      "iso2": "PW",
+      "num": "585",
+      "fips": "PS",
+      "cctld": ".pw",
+      "names": {
+        "wikidata": "Palau"
+      }
+    },
+    {
+      "iso3": "PRY",
+      "iso2": "PY",
+      "num": "600",
+      "fips": "PA",
+      "cctld": ".py",
+      "names": {
+        "wikidata": "Paraguay",
+        "atlas": "Paraguay",
+        "gdelt": "Paraguay"
+      }
+    },
+    {
+      "iso3": "QAT",
+      "iso2": "QA",
+      "num": "634",
+      "fips": "QA",
+      "cctld": ".qa",
+      "names": {
+        "wikidata": "Qatar",
+        "atlas": "Qatar",
+        "gdelt": "Qatar"
+      }
+    },
+    {
+      "iso3": "REU",
+      "iso2": "RE",
+      "num": "638",
+      "fips": "RE",
+      "cctld": ".re",
+      "names": {
+        "wikidata": "Réunion",
+        "gdelt": "Reunion",
+        "emdat": "Réunion"
+      }
+    },
+    {
+      "iso3": "ROU",
+      "iso2": "RO",
+      "num": "642",
+      "fips": "RO",
+      "cctld": ".ro",
+      "names": {
+        "wikidata": "Romania",
+        "atlas": "Romania",
+        "gdelt": "Romania",
+        "emdat": "Romania"
+      }
+    },
+    {
+      "iso3": "SRB",
+      "iso2": "RS",
+      "num": "688",
+      "fips": "RI",
+      "cctld": ".rs",
+      "names": {
+        "wikidata": "Serbia",
+        "atlas": "Serbia",
+        "gdelt": "Serbia",
+        "emdat": "Serbia"
+      }
+    },
+    {
+      "iso3": "RUS",
+      "iso2": "RU",
+      "num": "643",
+      "fips": "RS",
+      "cctld": ".ru",
+      "names": {
+        "wikidata": "Russia",
+        "atlas": "Russia",
+        "gdelt": "Russia",
+        "emdat": "Russian Federation"
+      }
+    },
+    {
+      "iso3": "RWA",
+      "iso2": "RW",
+      "num": "646",
+      "fips": "RW",
+      "cctld": ".rw",
+      "names": {
+        "wikidata": "Rwanda",
+        "atlas": "Rwanda",
+        "gdelt": "Rwanda",
+        "emdat": "Rwanda",
+        "ucdp": "Rwanda"
+      }
+    },
+    {
+      "iso3": "SAU",
+      "iso2": "SA",
+      "num": "682",
+      "fips": "SA",
+      "cctld": ".sa",
+      "names": {
+        "wikidata": "Saudi Arabia",
+        "atlas": "Saudi Arabia",
+        "gdelt": "Saudi Arabia",
+        "emdat": "Saudi Arabia"
+      }
+    },
+    {
+      "iso3": "SLB",
+      "iso2": "SB",
+      "num": "090",
+      "fips": "BP",
+      "cctld": ".sb",
+      "names": {
+        "wikidata": "Solomon Islands",
+        "atlas": "Solomon Is.",
+        "gdelt": "Solomon Islands"
+      }
+    },
+    {
+      "iso3": "SYC",
+      "iso2": "SC",
+      "num": "690",
+      "fips": "SE",
+      "cctld": ".sc",
+      "names": {
+        "wikidata": "Seychelles",
+        "gdelt": "Seychelles"
+      }
+    },
+    {
+      "iso3": "SDN",
+      "iso2": "SD",
+      "num": "729",
+      "fips": "SU",
+      "cctld": ".sd",
+      "names": {
+        "wikidata": "Sudan",
+        "atlas": "Sudan",
+        "gdelt": "Sudan",
+        "emdat": "Sudan"
+      }
+    },
+    {
+      "iso3": "SWE",
+      "iso2": "SE",
+      "num": "752",
+      "fips": "SW",
+      "cctld": ".se",
+      "names": {
+        "wikidata": "Sweden",
+        "atlas": "Sweden",
+        "gdelt": "Sweden",
+        "emdat": "Sweden"
+      }
+    },
+    {
+      "iso3": "SGP",
+      "iso2": "SG",
+      "num": "702",
+      "fips": "SN",
+      "cctld": ".sg",
+      "names": {
+        "wikidata": "Singapore",
+        "gdelt": "Singapore"
+      }
+    },
+    {
+      "iso3": "SHN",
+      "iso2": "SH",
+      "num": "654",
+      "fips": "SH",
+      "cctld": null,
+      "names": {
+        "wikidata": "Saint Helena  Ascension and Tristan da Cunha",
+        "gdelt": "Saint Helena"
+      }
+    },
+    {
+      "iso3": "SVN",
+      "iso2": "SI",
+      "num": "705",
+      "fips": "SI",
+      "cctld": ".si",
+      "names": {
+        "wikidata": "Slovenia",
+        "atlas": "Slovenia",
+        "gdelt": "Slovenia",
+        "emdat": "Slovenia"
+      }
+    },
+    {
+      "iso3": "SJM",
+      "iso2": "SJ",
+      "num": "744",
+      "fips": null,
+      "cctld": ".sj",
+      "names": {
+        "wikidata": "Svalbard and Jan Mayen"
+      }
+    },
+    {
+      "iso3": "SVK",
+      "iso2": "SK",
+      "num": "703",
+      "fips": "LO",
+      "cctld": ".sk",
+      "names": {
+        "wikidata": "Slovakia",
+        "atlas": "Slovakia",
+        "gdelt": "Slovak Republic",
+        "emdat": "Slovakia"
+      }
+    },
+    {
+      "iso3": "SLE",
+      "iso2": "SL",
+      "num": "694",
+      "fips": "SL",
+      "cctld": ".sl",
+      "names": {
+        "wikidata": "Sierra Leone",
+        "atlas": "Sierra Leone",
+        "gdelt": "Sierra Leone",
+        "emdat": "Sierra Leone"
+      }
+    },
+    {
+      "iso3": "SMR",
+      "iso2": "SM",
+      "num": "674",
+      "fips": "SM",
+      "cctld": ".sm",
+      "names": {
+        "wikidata": "San Marino",
+        "gdelt": "San Marino"
+      }
+    },
+    {
+      "iso3": "SEN",
+      "iso2": "SN",
+      "num": "686",
+      "fips": "SG",
+      "cctld": ".sn",
+      "names": {
+        "wikidata": "Senegal",
+        "atlas": "Senegal",
+        "gdelt": "Senegal",
+        "emdat": "Senegal"
+      }
+    },
+    {
+      "iso3": "SOM",
+      "iso2": "SO",
+      "num": "706",
+      "fips": "SO",
+      "cctld": ".so",
+      "names": {
+        "wikidata": "Somalia",
+        "atlas": "Somalia",
+        "gdelt": "Somalia",
+        "emdat": "Somalia"
+      }
+    },
+    {
+      "iso3": "SUR",
+      "iso2": "SR",
+      "num": "740",
+      "fips": "NS",
+      "cctld": ".sr",
+      "names": {
+        "wikidata": "Suriname",
+        "atlas": "Suriname",
+        "gdelt": "Suriname"
+      }
+    },
+    {
+      "iso3": "SSD",
+      "iso2": "SS",
+      "num": "728",
+      "fips": "OD",
+      "cctld": ".ss",
+      "names": {
+        "wikidata": "South Sudan",
+        "atlas": "S. Sudan",
+        "gdelt": "South Sudan",
+        "emdat": "South Sudan"
+      }
+    },
+    {
+      "iso3": "STP",
+      "iso2": "ST",
+      "num": "678",
+      "fips": "TP",
+      "cctld": ".st",
+      "names": {
+        "wikidata": "São Tomé and Príncipe",
+        "gdelt": "Sao Tome and Principe"
+      }
+    },
+    {
+      "iso3": "SLV",
+      "iso2": "SV",
+      "num": "222",
+      "fips": "ES",
+      "cctld": ".sv",
+      "names": {
+        "wikidata": "El Salvador",
+        "atlas": "El Salvador",
+        "gdelt": "El Salvador",
+        "emdat": "El Salvador"
+      }
+    },
+    {
+      "iso3": "SXM",
+      "iso2": "SX",
+      "num": "534",
+      "fips": "NN",
+      "cctld": ".sx",
+      "names": {
+        "wikidata": "Sint Maarten"
+      }
+    },
+    {
+      "iso3": "SYR",
+      "iso2": "SY",
+      "num": "760",
+      "fips": "SY",
+      "cctld": ".sy",
+      "names": {
+        "wikidata": "Syria",
+        "atlas": "Syria",
+        "gdelt": "Syria",
+        "emdat": "Syrian Arab Republic"
+      }
+    },
+    {
+      "iso3": "SWZ",
+      "iso2": "SZ",
+      "num": "748",
+      "fips": "WZ",
+      "cctld": ".sz",
+      "names": {
+        "wikidata": "Eswatini",
+        "atlas": "eSwatini",
+        "gdelt": "Swaziland"
+      }
+    },
+    {
+      "iso3": "TCA",
+      "iso2": "TC",
+      "num": "796",
+      "fips": "TK",
+      "cctld": ".tc",
+      "names": {
+        "wikidata": "Turks and Caicos Islands",
+        "gdelt": "Turks and Caicos Islands"
+      }
+    },
+    {
+      "iso3": "TCD",
+      "iso2": "TD",
+      "num": "148",
+      "fips": "CD",
+      "cctld": ".td",
+      "names": {
+        "wikidata": "Chad",
+        "atlas": "Chad",
+        "gdelt": "Chad",
+        "emdat": "Chad"
+      }
+    },
+    {
+      "iso3": "ATF",
+      "iso2": "TF",
+      "num": "260",
+      "fips": "FS",
+      "cctld": ".tf",
+      "names": {
+        "wikidata": "French Southern and Antarctic Lands",
+        "atlas": "Fr. S. Antarctic Lands"
+      }
+    },
+    {
+      "iso3": "TGO",
+      "iso2": "TG",
+      "num": "768",
+      "fips": "TO",
+      "cctld": ".tg",
+      "names": {
+        "wikidata": "Togo",
+        "atlas": "Togo",
+        "gdelt": "Togo",
+        "emdat": "Togo"
+      }
+    },
+    {
+      "iso3": "THA",
+      "iso2": "TH",
+      "num": "764",
+      "fips": "TH",
+      "cctld": ".th",
+      "names": {
+        "wikidata": "Thailand",
+        "atlas": "Thailand",
+        "gdelt": "Thailand",
+        "emdat": "Thailand"
+      }
+    },
+    {
+      "iso3": "TJK",
+      "iso2": "TJ",
+      "num": "762",
+      "fips": "TI",
+      "cctld": ".tj",
+      "names": {
+        "wikidata": "Tajikistan",
+        "atlas": "Tajikistan",
+        "gdelt": "Tajikistan",
+        "emdat": "Tajikistan",
+        "ucdp": "Tajikistan"
+      }
+    },
+    {
+      "iso3": "TKL",
+      "iso2": "TK",
+      "num": "772",
+      "fips": "TL",
+      "cctld": ".tk",
+      "names": {
+        "wikidata": "Tokelau",
+        "gdelt": "Tokelau"
+      }
+    },
+    {
+      "iso3": "TLS",
+      "iso2": "TL",
+      "num": "626",
+      "fips": "TT",
+      "cctld": ".tl",
+      "names": {
+        "wikidata": "Timor-Leste",
+        "atlas": "Timor-Leste",
+        "gdelt": "East Timor"
+      }
+    },
+    {
+      "iso3": "TKM",
+      "iso2": "TM",
+      "num": "795",
+      "fips": "TX",
+      "cctld": ".tm",
+      "names": {
+        "wikidata": "Turkmenistan",
+        "atlas": "Turkmenistan",
+        "gdelt": "Turkmenistan"
+      }
+    },
+    {
+      "iso3": "TUN",
+      "iso2": "TN",
+      "num": "788",
+      "fips": "TS",
+      "cctld": ".tn",
+      "names": {
+        "wikidata": "Tunisia",
+        "atlas": "Tunisia",
+        "gdelt": "Tunisia",
+        "emdat": "Tunisia"
+      }
+    },
+    {
+      "iso3": "TON",
+      "iso2": "TO",
+      "num": "776",
+      "fips": "TN",
+      "cctld": ".to",
+      "names": {
+        "wikidata": "Tonga",
+        "gdelt": "Tonga"
+      }
+    },
+    {
+      "iso3": "TUR",
+      "iso2": "TR",
+      "num": "792",
+      "fips": "TU",
+      "cctld": ".tr",
+      "names": {
+        "wikidata": "Turkey",
+        "atlas": "Turkey",
+        "gdelt": "Turkey",
+        "emdat": "Türkiye"
+      }
+    },
+    {
+      "iso3": "TTO",
+      "iso2": "TT",
+      "num": "780",
+      "fips": "TD",
+      "cctld": ".tt",
+      "names": {
+        "wikidata": "Trinidad and Tobago",
+        "atlas": "Trinidad and Tobago",
+        "gdelt": "Trinidad and Tobago"
+      }
+    },
+    {
+      "iso3": "TUV",
+      "iso2": "TV",
+      "num": "798",
+      "fips": "TV",
+      "cctld": ".tv",
+      "names": {
+        "wikidata": "Tuvalu",
+        "gdelt": "Tuvalu"
+      }
+    },
+    {
+      "iso3": "TWN",
+      "iso2": "TW",
+      "num": "158",
+      "fips": "TW",
+      "cctld": ".tw",
+      "names": {
+        "wikidata": "Taiwan",
+        "atlas": "Taiwan",
+        "gdelt": "Taiwan",
+        "emdat": "Taiwan (Province of China)"
+      }
+    },
+    {
+      "iso3": "TZA",
+      "iso2": "TZ",
+      "num": "834",
+      "fips": "TZ",
+      "cctld": ".tz",
+      "names": {
+        "wikidata": "Tanzania",
+        "atlas": "Tanzania",
+        "gdelt": "Tanzania",
+        "emdat": "United Republic of Tanzania"
+      }
+    },
+    {
+      "iso3": "UKR",
+      "iso2": "UA",
+      "num": "804",
+      "fips": "UP",
+      "cctld": ".ua",
+      "names": {
+        "wikidata": "Ukraine",
+        "atlas": "Ukraine",
+        "gdelt": "Ukraine"
+      }
+    },
+    {
+      "iso3": "UGA",
+      "iso2": "UG",
+      "num": "800",
+      "fips": "UG",
+      "cctld": ".ug",
+      "names": {
+        "wikidata": "Uganda",
+        "atlas": "Uganda",
+        "gdelt": "Uganda",
+        "emdat": "Uganda"
+      }
+    },
+    {
+      "iso3": "UMI",
+      "iso2": "UM",
+      "num": "581",
+      "fips": null,
+      "cctld": ".um",
+      "names": {
+        "wikidata": "United States Minor Outlying Islands"
+      }
+    },
+    {
+      "iso3": "USA",
+      "iso2": "US",
+      "num": "840",
+      "fips": "US",
+      "cctld": ".us",
+      "names": {
+        "wikidata": "United States",
+        "atlas": "United States of America",
+        "gdelt": "United States",
+        "emdat": "United States of America"
+      }
+    },
+    {
+      "iso3": "URY",
+      "iso2": "UY",
+      "num": "858",
+      "fips": "UY",
+      "cctld": ".uy",
+      "names": {
+        "wikidata": "Uruguay",
+        "atlas": "Uruguay",
+        "gdelt": "Uruguay",
+        "emdat": "Uruguay"
+      }
+    },
+    {
+      "iso3": "UZB",
+      "iso2": "UZ",
+      "num": "860",
+      "fips": "UZ",
+      "cctld": ".uz",
+      "names": {
+        "wikidata": "Uzbekistan",
+        "atlas": "Uzbekistan",
+        "gdelt": "Uzbekistan"
+      }
+    },
+    {
+      "iso3": "VAT",
+      "iso2": "VA",
+      "num": "336",
+      "fips": "VT",
+      "cctld": ".va",
+      "names": {
+        "wikidata": "Vatican City",
+        "gdelt": "Vatican City"
+      }
+    },
+    {
+      "iso3": "VCT",
+      "iso2": "VC",
+      "num": "670",
+      "fips": "VC",
+      "cctld": ".vc",
+      "names": {
+        "wikidata": "Saint Vincent and the Grenadines",
+        "gdelt": "Saint Vincent and the Grenadines",
+        "emdat": "Saint Vincent and the Grenadines"
+      }
+    },
+    {
+      "iso3": "VEN",
+      "iso2": "VE",
+      "num": "862",
+      "fips": "VE",
+      "cctld": ".ve",
+      "names": {
+        "wikidata": "Venezuela",
+        "atlas": "Venezuela",
+        "gdelt": "Venezuela",
+        "emdat": "Venezuela (Bolivarian Republic of)"
+      }
+    },
+    {
+      "iso3": "VGB",
+      "iso2": "VG",
+      "num": "092",
+      "fips": "VI",
+      "cctld": ".vg",
+      "names": {
+        "wikidata": "British Virgin Islands",
+        "gdelt": "British Virgin Islands"
+      }
+    },
+    {
+      "iso3": "VIR",
+      "iso2": "VI",
+      "num": "850",
+      "fips": "VQ",
+      "cctld": ".vi",
+      "names": {
+        "wikidata": "United States Virgin Islands",
+        "gdelt": "Virgin Islands",
+        "emdat": "United States Virgin Islands"
+      }
+    },
+    {
+      "iso3": "VNM",
+      "iso2": "VN",
+      "num": "704",
+      "fips": "VM",
+      "cctld": ".vn",
+      "names": {
+        "wikidata": "Vietnam",
+        "atlas": "Vietnam",
+        "gdelt": "Vietnam",
+        "emdat": "Viet Nam"
+      }
+    },
+    {
+      "iso3": "VUT",
+      "iso2": "VU",
+      "num": "548",
+      "fips": "NH",
+      "cctld": ".vu",
+      "names": {
+        "wikidata": "Vanuatu",
+        "atlas": "Vanuatu",
+        "emdat": "Vanuatu"
+      }
+    },
+    {
+      "iso3": "WLF",
+      "iso2": "WF",
+      "num": "876",
+      "fips": "WF",
+      "cctld": ".wf",
+      "names": {
+        "wikidata": "Wallis and Futuna"
+      }
+    },
+    {
+      "iso3": "WSM",
+      "iso2": "WS",
+      "num": "882",
+      "fips": "WS",
+      "cctld": ".ws",
+      "names": {
+        "wikidata": "Samoa",
+        "gdelt": "Samoa"
+      }
+    },
+    {
+      "iso3": "YEM",
+      "iso2": "YE",
+      "num": "887",
+      "fips": "YM",
+      "cctld": ".ye",
+      "names": {
+        "wikidata": "Yemen",
+        "atlas": "Yemen",
+        "gdelt": "Yemen",
+        "emdat": "Yemen",
+        "ucdp": "Yemen (North Yemen)"
+      }
+    },
+    {
+      "iso3": "MYT",
+      "iso2": "YT",
+      "num": "175",
+      "fips": "MF",
+      "cctld": ".yt",
+      "names": {
+        "wikidata": "Mayotte",
+        "gdelt": "Mayotte",
+        "emdat": "Mayotte"
+      }
+    },
+    {
+      "iso3": "ZAF",
+      "iso2": "ZA",
+      "num": "710",
+      "fips": "SF",
+      "cctld": ".za",
+      "names": {
+        "wikidata": "South Africa",
+        "atlas": "South Africa",
+        "gdelt": "South Africa",
+        "emdat": "South Africa",
+        "ucdp": "South Africa"
+      }
+    },
+    {
+      "iso3": "ZMB",
+      "iso2": "ZM",
+      "num": "894",
+      "fips": "ZA",
+      "cctld": ".zm",
+      "names": {
+        "wikidata": "Zambia",
+        "atlas": "Zambia",
+        "gdelt": "Zambia",
+        "emdat": "Zambia"
+      }
+    },
+    {
+      "iso3": "ZWE",
+      "iso2": "ZW",
+      "num": "716",
+      "fips": "ZI",
+      "cctld": ".zw",
+      "names": {
+        "wikidata": "Zimbabwe",
+        "atlas": "Zimbabwe",
+        "gdelt": "Zimbabwe",
+        "emdat": "Zimbabwe"
+      }
+    }
+  ],
+  "unmapped": {
+    "_": "What the join could not place, kept in view rather than dropped. KV is Kosovo, which ISO has given no code and the 1:110m topology draws without an id; OS is GDELT’s \"Oceans\", which is not a country.",
+    "fips": [
+      {
+        "code": "KV",
+        "gdelt_name": "Kosovo"
+      },
+      {
+        "code": "OS",
+        "gdelt_name": "Oceans"
+      }
+    ],
+    "ucdp_places": []
+  }
+}

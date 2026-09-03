@@ -18,7 +18,7 @@ const SHEETS = [
   'ConsensusPage', 'ConsensusArchivePage', 'GhostFleetPage', 'ParallaxePage', 'SpielraumPage',
   'BeifangPage', 'ProtokollDataView', 'InvokedPastPage', 'BalancePage', 'CorrectionPage',
   'RedactionPage', 'RoundNumberPage', 'PatternPage', 'TellPage', 'UeberflugStudiePage',
-  'AdmissionsPage', 'MeridianParallax', 'WorkDetail', 'LabDetail',
+  'AdmissionsPage', 'MeridianParallax', 'WorkDetail', 'LabDetail', 'LivingGlobePage',
 ]
 /** the two that render a DOCUMENT (the police, the protocol): their footer is the document's own
  *  closing lines and stays; only the stylesheet and the dressed nav are required */

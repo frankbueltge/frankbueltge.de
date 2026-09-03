@@ -1,0 +1,171 @@
+---
+/** Living Globe (/globe) — one globe over everything this house measures on the earth.
+ *
+ *  This is the floor of it: the plate, the legend and the tables, all drawn at build time from
+ *  committed files. Nothing on this page needs JavaScript, and nothing on it will need JavaScript
+ *  later either — the island of the next phase mounts ON this plate and takes over the drawing;
+ *  what a reader sees here is what stays when WebGL never arrives.
+ *
+ *  Every number on the page is derived: the days come from the archive's filenames, the counts
+ *  from the frames themselves, the as-of dates from the records. Not one is typed. Every mark in
+ *  the plate and every row in the tables carries the file it came from and the locator inside it,
+ *  which is the whole claim this experiment makes — a globe of one house's own nightly archive,
+ *  where every dot can be followed back into a committed file.
+ */
+import type { Topology } from 'topojson-specification'
+import land from '@/data/globe/land-110m.json'
+import SheetHead from '@/components/experiments/SheetHead.astro'
+import SheetFoot from '@/components/experiments/SheetFoot.astro'
+import TableFallback from '@/components/dataviz/TableFallback.astro'
+import { buildLayeredFloorSvg } from '@/lib/globe/floor'
+import { LAYERS } from '@/lib/globe/layers'
+import type { LayerRecord } from '@/lib/globe/layers/types'
+import { buildLivingGlobe, frameAt } from '@/lib/globe/living'
+import { buildManifest } from '@/lib/globe/feeds'
+import '@/styles/experiment-sheet.css'
+import '@/styles/living-globe.css'
+
+const model = buildLivingGlobe()
+const moment = frameAt(model, model.newest)
+const manifest = buildManifest(model)
+
+/** What a mark stands for, in words. The distinction the whole globe is built on: a satellite's
+ *  point is a position, a seat is an address, a centroid is the middle of a polygon and a gap is
+ *  a place a record stopped. None of them is "a country at these coordinates". */
+const degrees = (lon: number, lat: number): string =>
+  `${Math.abs(lat).toFixed(1)}°${lat >= 0 ? 'N' : 'S'}, ${Math.abs(lon).toFixed(1)}°${lon >= 0 ? 'E' : 'W'}`
+
+function placePhrase(record: LayerRecord): string {
+  if (Array.isArray(record.at)) {
+    const at = degrees(record.at[0], record.at[1])
+    if (record.labelKind === 'seat') return `seat at ${at}`
+    if (record.labelKind === 'station') return `station at ${at}`
+    if (record.labelKind === 'centroid') return `centroid of a country, at ${at}`
+    return `over ${at}`
+  }
+  if ('from' in record.at) {
+    return `dark from ${degrees(record.at.from[0], record.at.from[1])} to ${degrees(record.at.to[0], record.at.to[1])}`
+  }
+  return `the country ${record.at.iso3}`
+}
+
+const markLabel = (record: LayerRecord, layerId: string): string =>
+  `${LAYERS.find((l) => l.id === layerId)?.title ?? layerId} · ${record.receipt.words} · ${placePhrase(record)}`
+
+const floor = buildLayeredFloorSvg({
+  land: land as unknown as Topology,
+  layers: LAYERS.map((layer) => ({ id: layer.id, kind: layer.kind, frame: moment.layers[layer.id] })),
+  labels: {
+    title: 'The living globe',
+    desc: `Every layer of the archive on ${model.newest}, on one equirectangular plate: each mark carries its own record, its file and its day.`,
+    mark: markLabel,
+  },
+})
+
+const count = (n: number): string => new Intl.NumberFormat('en-GB').format(n)
+const marksToday = LAYERS.reduce((sum, layer) => sum + moment.layers[layer.id].records.length, 0)
+
+const ownerLabel = (layer: (typeof LAYERS)[number]): string =>
+  'line' in layer.owner ? layer.owner.line.replace('-', ' ') : layer.owner.voice
+
+const tables = LAYERS.map((layer) => {
+  const frame = moment.layers[layer.id]
+  return {
+    layer,
+    frame,
+    entry: manifest.layers.find((l) => l.id === layer.id)!,
+    rows: frame.records.map((record) => ({
+      mark: record.receipt.words,
+      where: placePhrase(record),
+      read: `${record.receipt.file} · ${record.receipt.locator}`,
+    })),
+  }
+})
+---
+
+<main id="main" class="flex-1">
+  <article class="sheet-body mx-auto max-w-5xl px-4 py-14">
+    <SheetHead
+      kicker="COUNTER-MEASUREMENT"
+      title="Living Globe"
+      sub="One globe over everything this house measures on the earth — every mark carrying the file it came from and the day it was written."
+      stamp={model.newest}
+      badges={['LIVE DATA', 'EXPERIMENT', 'COUNTER-MEASUREMENT']}
+    />
+
+    <figure class="globe-plate mb-4">
+      <Fragment set:html={floor} />
+    </figure>
+    <figcaption class="mb-10 font-mono text-mono text-fg-faint">
+      The newest day the archive holds ({model.newest}): {count(marksToday)} marks from {count(LAYERS.length)} layers,
+      drawn at build time. Point at a mark to read it; the tables below carry all of them.
+    </figcaption>
+
+    <section class="mb-10">
+      <h2 class="kicker mb-3" id="globe-legend-title">The layers</h2>
+      <ul class="globe-legend" aria-labelledby="globe-legend-title">
+        {
+          LAYERS.map((layer) => {
+            const entry = manifest.layers.find((l) => l.id === layer.id)!
+            const frame = moment.layers[layer.id]
+            return (
+              <li>
+                <p class="globe-legend-name">
+                  <span class="text-body font-semibold text-fg">{layer.title}</span>
+                  <span class="font-mono text-mono text-fg-faint">{layer.kind}</span>
+                </p>
+                <p class="mt-1 font-mono text-mono text-fg-muted">
+                  {count(frame.records.length)} on this day · {count(entry.days.length)} days on file · {ownerLabel(layer)}
+                </p>
+                <p class="globe-legend-prov font-mono text-mono text-fg-faint">
+                  {entry.source.file} · as of {entry.asOf} · {entry.source.name} · {entry.source.license}
+                </p>
+                {frame.note && <p class="globe-note mt-1 font-mono text-mono text-fg-muted">{frame.note}</p>}
+              </li>
+            )
+          })
+        }
+      </ul>
+    </section>
+
+    <section class="mb-10">
+      <h2 class="kicker mb-3">The record of this day</h2>
+      <p class="mb-3 max-w-3xl text-body text-fg-muted">
+        One table per layer, holding every mark on the plate above with the file and the locator it was read from.
+        Nothing on this globe is reachable only by pointing at it.
+      </p>
+      <div class="globe-tables">
+        {
+          tables.map(({ layer, rows, entry }) => (
+            <TableFallback
+              summary={`${layer.title} — ${count(rows.length)} marks on ${model.newest}, as a table`}
+              columns={[
+                { key: 'mark', label: 'Mark' },
+                { key: 'where', label: 'Where it stands', nowrap: false },
+                { key: 'read', label: 'Read from' },
+              ]}
+              rows={rows}
+              caption={`Every mark of the ${layer.title} layer on ${model.newest}, with the committed file each one was read from.`}
+              provenance={`${entry.source.file} · ${entry.source.name} · ${entry.source.license} · records at ${entry.href}`}
+            />
+          ))
+        }
+      </div>
+    </section>
+
+    <SheetFoot>
+      <p>
+        Built at build time from committed files only: {count(model.days.length)} days of archive, from {model.days[0]} to
+        {' '}{model.newest}. The day axis is the union of the days the layers themselves hold, read from the archive's own
+        filenames — never from a clock. Country marks stand at the centroid of a country's polygon and say so; an
+        institution's mark stands at its seat and says so; only a reading actually taken at a site is called a station.
+      </p>
+      <p class="mt-1">
+        Geography: Natural Earth via world-atlas (public domain). Each layer's own source, licence and as-of date stand
+        beside it above · method sheet: <a href="/werke/globe">/werke/globe</a> · manifest:
+        {' '}<a href="/globe/layers.json">/globe/layers.json</a> · the other experiments:
+        {' '}<a href="/experiments">/experiments</a>
+      </p>
+    </SheetFoot>
+  </article>
+</main>

@@ -1,0 +1,153 @@
+---
+/** Method sheet — Living Globe (/globe).
+ *
+ *  The six sections every method sheet on this site carries. Section 1 is not written: it is
+ *  DERIVED from the layer registry, one row per registered layer, so a layer added to the globe
+ *  cannot ship without its source, its licence and its cadence appearing here — and a row here
+ *  cannot survive a layer being removed. The counts in the prose come from the model for the same
+ *  reason: the archive grows by a day every night, and a typed figure would be wrong by morning.
+ */
+import MethodSheet from '@/components/experiments/MethodSheet.astro'
+import TableFallback from '@/components/dataviz/TableFallback.astro'
+import { LAYERS } from '@/lib/globe/layers'
+import { buildLivingGlobe } from '@/lib/globe/living'
+import { SEATS } from '@/lib/globe/seats'
+import crosswalk from '@/data/globe/crosswalk.json'
+import '@/styles/living-globe.css'
+
+const model = buildLivingGlobe()
+const count = (n: number): string => new Intl.NumberFormat('en-GB').format(n)
+
+// Five columns, not seven: "drawn as" belongs to the layer's name and the day count belongs to
+// its as-of date, and a table that has to be read sideways is not a source list.
+const sourceRows = LAYERS.map((layer) => ({
+  layer: `${layer.title} (${layer.kind})`,
+  file: layer.source.file,
+  source: layer.source.name,
+  as_of: `${layer.asOf} · ${count(layer.days.length)} days`,
+  licence: layer.source.license,
+}))
+
+const stations = SEATS.filter((s) => s.labelKind === 'station')
+const unplaced = SEATS.filter((s) => s.lat === null)
+
+const limits = [
+  'A country is not a place. Where a record names a country and no coordinate, the mark stands at the spherical centroid of that country’s polygon and the card says "centroid of" — and a country with distant overseas territories therefore gets a centroid in open water, which is a property of the country, not an error in the drawing.',
+  'A seat is not a measurement site. Almost everything the nightly readings hold is published rather than sensed, so the mark stands at the address of the body that publishes it. Only a reading actually taken at a site is called a station.',
+  'An arc is not a track. A vessel’s gap is drawn as the great circle between where its transponder fell silent and where it spoke again — the shortest path it could have taken, never the path it did take. What happened in between is precisely what nobody holds.',
+  'The satellites are the one exception to the no-clock rule, and it runs the other way than usual: the archive keeps current orbital elements and no set per past day, so the sky layer draws only on the day its elements are from. On every older day it draws nothing and states the fleet size the densification series counted then. Propagating today’s orbits backwards would produce hundreds of confident points nobody observed.',
+  'The 1:110m geography draws no Monaco, no Singapore and no Vatican. A lookup for those answers with nothing rather than a point, and the layer says so.',
+  'A code the crosswalk cannot place stops the build instead of vanishing from the globe. Two are known and named in the committed file: Kosovo, which ISO has assigned no code, and GDELT’s "Oceans", which is not a country.',
+  'Where a body carries no coordinate on Wikidata at all, its reading is stated in words and drawn nowhere. A reading drawn nowhere is better than a plausible dot in a convincing city.',
+]
+
+const changelog = [
+  { date: '2026-09-03', what: 'The ground: the layer contract and registry, the country polygons and centroids, the country-code crosswalk, the seats, three adapters (the sky, the ghost fleet, the protocol), the plate that carries them, the manifest and the per-layer feeds, and this sheet.' },
+]
+---
+
+<MethodSheet title="Method sheet — Living Globe" workHref="/globe" workLabel="To the experiment" wide={true} class="globe-method">
+  <section class="sheet-reveal mb-10">
+    <h2 class="kicker mb-2">What this is</h2>
+    <p class="leading-relaxed">
+      One globe over everything this house measures on the earth. Each instrument keeps writing its own dated file
+      every night, exactly as before; this reads them together and puts them on one sphere with one time axis. The
+      claim is not the globe — globes of live data are a genre. The claim is the archive under it: every mark comes
+      from a file committed to this repository, carries the position inside that file, and can be followed back to it.
+      Nothing is fetched at page time, nothing is interpolated, and nothing here can be more current than the record
+      it was read from.
+    </p>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="mb-2 font-semibold">1. Sources &amp; licences</h2>
+    <p class="leading-relaxed text-fg-muted">
+      One row per registered layer, read from the registry itself ({count(LAYERS.length)} layers today) — so a layer
+      cannot appear on the globe without its source and licence appearing here. The geography under all of them is
+      Natural Earth via world-atlas (ISC; the data is public domain), committed unchanged at
+      <code>src/data/globe/</code>.
+    </p>
+    <div class="mt-3 text-sm">
+      <TableFallback
+        summary="The layers and their sources, as a table"
+        open={true}
+        columns={[
+          { key: 'layer', label: 'Layer', nowrap: true },
+          { key: 'file', label: 'Committed file' },
+          { key: 'source', label: 'Source' },
+          { key: 'as_of', label: 'As of', nowrap: true },
+          { key: 'licence', label: 'Licence' },
+        ]}
+        rows={sourceRows}
+        caption="Every layer the living globe registers, with the committed file it reads, the source behind that file, its newest day and its licence."
+        provenance="Derived from src/lib/globe/layers — the same list the globe, the manifest and the feeds are built from."
+      />
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="mb-2 font-semibold">2. Cadence</h2>
+    <p class="leading-relaxed text-fg-muted">
+      Nothing on this page runs on its own. Each layer inherits the cadence of the pipeline that writes its files —
+      nightly for the fleet, the vessels and the planet's readings — and this globe is rebuilt when those files land
+      in the repository. The time axis is the union of the days the layers themselves hold: today
+      {count(model.days.length)} days, from {model.days[0]} to {model.newest}, read from the archive's own filenames
+      and never from a clock. A day nobody wrote is not on the axis; a day one layer holds and another does not is on
+      the axis once, and the layer that has nothing for it says so.
+    </p>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="mb-2 font-semibold">3. Processing</h2>
+    <p class="leading-relaxed text-fg-muted">
+      Three joins and no models. <strong>The crosswalk:</strong> this house writes countries in three code systems at
+      once — GDELT's FIPS 10-4, where the United Kingdom is UK and Germany is GM; ISO numeric on the polygons; ISO
+      alpha-3 in the disaster register — plus ccTLDs for hosts. They are joined once into a committed file
+      ({count((crosswalk.countries as unknown[]).length)} countries), derived from a base table whose header states
+      the query it came from, and checkable with a single command. A code the table cannot place throws rather than
+      silently dropping a country. <strong>The centroid rule:</strong> a record that names a country is placed at the
+      spherical centroid of that country's polygon, and every such record is marked as a centroid so the card can say
+      so. <strong>The seat rule:</strong> a record that names an institution is placed at that institution's seat,
+      taken from Wikidata's coordinate location in a declared order of fallbacks, with the Wikidata item on every row;
+      of the {count(SEATS.length)} bodies on file exactly {count(stations.length)} is a station — an instrument at a
+      site — and the rest are addresses.
+    </p>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="mb-2 font-semibold">4. Limits</h2>
+    <ul class="ml-5 list-disc space-y-2 leading-relaxed text-fg-muted">
+      {limits.map((limit) => <li>{limit}</li>)}
+      {unplaced.length > 0 && (
+        <li>
+          Bodies with no coordinate on Wikidata today: {unplaced.map((s) => s.label).join(', ')}. Their readings are
+          stated and not drawn.
+        </li>
+      )}
+    </ul>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="mb-2 font-semibold">5. Compute footprint</h2>
+    <p class="leading-relaxed text-fg-muted">
+      Build time only. The plate, the manifest and every layer feed are produced during the site build from files
+      already in the repository; no cloud service is called, no GPU is used, no model is run, and nothing is computed
+      when a visitor opens the page. The one measurable cost a visitor pays is the transfer, and it is stated rather
+      than estimated: the manifest carries each layer's own size in bytes, and a test gzips every feed and fails the
+      build when one outgrows its ceiling. A visitor who never opens a layer never downloads it.
+    </p>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="mb-2 font-semibold">6. Change log</h2>
+    <ul class="ml-5 list-disc space-y-1 leading-relaxed text-fg-muted">
+      {changelog.map((row) => <li><strong>{row.date}</strong> — {row.what}</li>)}
+    </ul>
+  </section>
+
+  <p slot="foot">
+    Design note: <code>docs/design/2026-09-03-living-globe.md</code>. Neighbour research:
+    <code>docs/audits/2026-08-09-usp-audit.md</code>. Data: <code>src/data/globe/</code>, and each layer's own archive
+    as named above.
+  </p>
+</MethodSheet>

@@ -166,8 +166,19 @@ describe('the radial layout is arithmetic over the record', () => {
     const edges = view.edges.filter((e) => e.kind === 'made-by')
     // in radians: 15° of the maker for every work, the sector being proportional to the making
     for (const e of edges) expect(diff(angle(e.from), angle(e.to))).toBeLessThan((Math.PI / 180) * 130)
-    const neighbours = view.edges.filter((e) => e.kind === 'neighbor-of')
-    for (const e of neighbours) expect(diff(angle(e.from), angle(e.to))).toBeLessThan((Math.PI / 180) * 30)
+    // A neighbour stands beside the experiment it neighbours — but a piece of prior art can
+    // neighbour TWO experiments (Our World in Data is named in the audit of both the protocol and
+    // the globe), and a node has one angle. So the property is "beside ONE of them", checked over
+    // the whole fan: a neighbour that stood beside none of its works would still fail here.
+    const worksOf = new Map<string, string[]>()
+    for (const e of view.edges.filter((n) => n.kind === 'neighbor-of')) {
+      if (!worksOf.has(e.to)) worksOf.set(e.to, [])
+      worksOf.get(e.to)!.push(e.from)
+    }
+    for (const [neighbour, works] of worksOf) {
+      const closest = Math.min(...works.map((w) => diff(angle(w), angle(neighbour))))
+      expect(closest, `${neighbour} stands beside none of ${works.join(', ')}`).toBeLessThan((Math.PI / 180) * 30)
+    }
   })
 })
 

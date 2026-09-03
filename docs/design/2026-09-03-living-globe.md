@@ -1,0 +1,119 @@
+# Living Globe — one globe over everything this house measures on the earth
+
+**Status:** G0 shipped 2026-09-03 (the ground, the crosswalk, the gates). G1–G4 planned.
+**Decision:** Frank's decision of 2026-09-03, wording private.
+**Surfaces:** `/globe` · `/werke/globe` · `/globe/layers.json` · `/globe/layers/<id>.json` ·
+`/globe/countries.json`. **Data:** `src/data/globe/`. **Code:** `src/lib/globe/`.
+
+## 1. Occasion
+
+The entrance globe of 2026-09-02 draws two records on a sphere: the earth-observation fleet and
+one night of the ghost fleet. Meanwhile this house measures dozens of things on the earth every
+night — satellites overhead, vessels that switch their transponders off, fourteen readings of the
+planet's condition, the world's press counted country by country, the years that press invokes,
+the pages institutions quietly removed, hosts by top-level domain, disasters and battles admitted
+late into two registers. Each of those is read alone, on its own page, in its own figure. Nothing
+anywhere puts them on one earth with one time axis and a receipt behind every mark.
+
+Frank's judgement of 2026-09-03 (wording private): the entrance globe is dull for exactly that
+reason, and the interesting object is the one that does not exist yet. Build it as a work of the
+lab, comprehensively planned, with a method sheet, a neighbour audit and an entry on
+`/experiments`; the entrance keeps a compact version that leads there.
+
+## 2. Hypothesis
+
+**A globe of live data is a genre. A globe of one house's own dated archive, where every mark
+carries the committed file and the position inside it, is not.**
+
+Everything worth testing sits in that second half. The value is not that the sphere spins; it is
+that a reader can point at a dot, read which file it came from, open that file in the repository,
+and recompute the mark. That makes the globe falsifiable in a way a live map is not — and it makes
+the honesty rules load-bearing rather than decorative: a country stands at the centroid of its
+polygon and says so, an institution's reading stands at the seat that publishes it and says so, a
+day the archive does not hold draws nothing and says why.
+
+If the hypothesis is wrong, it will be wrong in one of two ways: either somebody already publishes
+a multi-source globe over a committed, recomputable archive with per-mark receipts (see §4), or
+nobody looks at it, in which case the receipts were a private virtue.
+
+## 3. Milestones and the kill reading
+
+| Gate | What must stand | When |
+|---|---|---|
+| G0 | contract, registry, crosswalk, countries, seats, three adapters, the no-JS floor, feeds, the page, the method sheet, the audit | 2026-09-03 ✅ |
+| G1 | the island: layers on and off, the time scrubber over the whole archive, cards with receipts, the compact entrance | |
+| G2 | guided stories — scripted camera tours on the existing tour engine | |
+| G3 | the remaining layers: the press, the invoked years, the removals, the hosts, the registers | |
+| G4 | method sheet complete, the projection room, and this document's kill reading filled in | |
+
+**Kill reading — a dated reading, not a feeling.** On **2026-10-15** this document gets a section
+written from committed analytics snapshots only, answering three questions: did anyone open
+`/globe`; did anyone open a layer (the feeds are separate routes, so a fetch is a fact, not an
+inference); did anyone finish a story once G2 has shipped. If no snapshot exists that can answer
+them, the reading says **"no reading possible"** in those words rather than reaching for an
+impression. Three outcomes, decided in advance:
+
+- **Keep** — the globe is opened and layers are toggled: continue to G3/G4.
+- **Rework** — the page is opened and no layer ever is: the layers are the wrong unit; the globe
+  becomes a set of scripted views and the toggles go.
+- **Archive** — neither: `/globe` is dated and archived like any other experiment of this house,
+  the entrance keeps the compact figure, and the layer contract survives as library code, because
+  the crosswalk and the seats are worth keeping either way.
+
+## 4. Pre-registered neighbour search (registered before the build, 2026-09-03)
+
+Registered **before** the audit was written, so the verdict cannot be fitted to what was
+convenient to find. The candidates, named in advance:
+
+NASA Worldview · Global Fishing Watch map · Windy · MarineTraffic · Flightradar24 · GDELT GeoGlobe
+· Google Earth Engine Timelapse · earth.nullschool.net · Our World in Data · The Pudding.
+
+Search terms, registered in advance:
+
+1. "interactive globe multiple live data layers time slider provenance every mark cites source file"
+2. "NASA Worldview earth.nullschool Global Fishing Watch map limitations no per-mark citation archive of own measurements"
+3. "globe visualisation committed git archive recomputable open data receipts per mark"
+4. "multi-source data globe personal archive daily snapshots deck.gl time scrubber"
+
+**Runs performed on 2026-09-03:** terms 1 and 2 were run and their findings are written into
+`docs/audits/2026-08-09-usp-audit.md` §20. **Terms 3 and 4 are owed** and must be run before the
+verdict is sealed at the end of G4 — the verdict there is marked provisional for exactly that
+reason. One finding from run 1 belongs here as well as in the audit: an academic tool named
+**Living Globe** already exists (Cardoso et al., arXiv 1607.05946) — a 3D globe over world
+demographic data with a time slider. It is a name collision, not a method collision, and it is
+named in the audit rather than quietly ignored. Whether the name stays is Frank's call (§7).
+
+## 5. Cost ceiling
+
+Build time only, and no cloud service at all. No GCP step, no model, no GPU, nothing computed when
+a visitor opens the page: the plate, the manifest and every feed are produced during the site
+build from files already in the repository. The only cost a visitor pays is transfer, and it is
+bounded by a test rather than by intention — every layer feed is gzipped inside the suite and
+fails over **150 KB gz**; today the three layers measure 11.7 / 37.8 / 16.2 KB gz. The bundle
+ceiling for the island (G1) stays at the measured 320 KB gz of `globe-deck.`, unchanged by G0,
+which ships no JavaScript at all.
+
+## 6. What waits for Frank
+
+- **The name.** "Living Globe" collides with an existing academic tool (§4). Keeping it is
+  defensible — different field, different method — but it is a naming call, not a build call.
+- **The two houses that are asked, not taken.** Arch's felt-block centroids are opt-in after its
+  preregistration closes on 2026-09-21; Machine Attention's GDACS coordinates stay upstream until
+  its channel answers. Neither is touched by G0 and neither will be drawn without a yes.
+- **The entrance.** G1 replaces the entrance island with the compact form of this one. That is a
+  change to the front door and gets shown before it lands.
+
+## 7. What this is not
+
+- **Not a live map.** Nothing is fetched at page time. The newest thing on this globe is the
+  newest committed file, and on a day the pipelines fail it is a day older — visibly, with the
+  date stated.
+- **Not a tracker.** The arcs are gaps in a record, drawn as the shortest path between two points.
+  The globe never claims to know where a vessel went, and the card says so.
+- **Not a country map.** A country's mark is the centroid of its polygon, said in those words. The
+  globe holds no claim about anything happening at those coordinates.
+- **Not a forecast.** The satellites are drawn only on the day their elements were taken. Nothing
+  here is propagated into a day the archive does not hold.
+- **Not one more dashboard.** There is no aggregate score, no ranking of countries, no index that
+  compresses the layers into a single number. The layers stay separate, because what they measure
+  is not commensurable.
