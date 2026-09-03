@@ -9,6 +9,12 @@
 // What it refuses: to invent a day. `frameAt` with a day no layer holds gives empty frames and a
 // note, never a throw and never the nearest day — a globe that silently answers a question with a
 // different day's data is worse than one that says it holds nothing for that day.
+//
+// A STATIC layer (`days: []`, G3's third evening) is the one layer that does not hold days of its
+// own at all — its `frame()` hands back the same fixed frame whatever day it is asked for, so its
+// marks stand on every day the OTHER layers define, never fewer. Its count is therefore not "how
+// many records for a day it holds" (it holds none) but "how many records stand, wherever the
+// scrubber can stand" — the same number, repeated across the whole union.
 import { LAYERS } from './layers'
 import type { GlobeLayer, LayerFrame } from './layers/types'
 
@@ -49,10 +55,17 @@ export function buildLivingGlobe(layers: readonly GlobeLayer[] = LAYERS): Living
   for (const layer of layers) {
     const perDay: Record<string, number> = {}
     let total = 0
-    for (const day of layer.days) {
-      const n = frameOf(layer, day).records.length
-      perDay[day] = n
-      total += n
+    if (layer.days.length === 0 && layer.static) {
+      // static: the same frame on every day the union holds, never zero because it "has none"
+      const n = layer.static.records.length
+      for (const day of days) perDay[day] = n
+      total = n
+    } else {
+      for (const day of layer.days) {
+        const n = frameOf(layer, day).records.length
+        perDay[day] = n
+        total += n
+      }
     }
     counts[layer.id] = perDay
     totals[layer.id] = total
