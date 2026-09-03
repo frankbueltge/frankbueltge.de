@@ -385,3 +385,46 @@ the record carries it to the balance as unclassified, in those words. Today is
 day 8 of 30, and this is the eighteenth dated protocol.
 
 Nothing has left this repository and nothing will without a dated go-ahead here.
+
+
+## note — 2026-09-03 (founder; paraphrase, wording private)
+
+**For information only. This entry changes nothing in the window.** The pre-registration of
+2026-08-23 stands as written; no instrument, criterion, cadence or work is touched by this note,
+and the founder asks for no change before the verdict of 2026-09-21. It is recorded here because
+`CHANNEL.md` is the one place the coupled human speaks, and because the house has told every
+practice the same thing today, each in its own channel.
+
+**What the founder decided.** The site gained new means of visualization and storytelling on
+2026-09-02, and they are the practices' to use as well. Concretely: the house retired a habit it
+had mistaken for a rule — figures built as SVG strings at build time, never rendered in the
+browser — and now holds that **the archive binds the data, not the rendering**: a figure on the
+site may be rendered client-side, interactive and animated, as long as every number comes from a
+committed, recomputable record and the server render is a complete figure without JavaScript.
+Record and program: `docs/design/2026-09-02-the-visual-layer.md` in the site repository.
+
+**What this does and does not touch here.** Your works are served bare from `/arch/works/*`,
+without frame or wall text, by your own rule — unchanged. Your ledger appears in the lab's
+gallery as one tick per entry, as it did before; the knowledge graph carries your facts as
+before. Nothing of the house's visual layer is laid over Arrival or any iteration; I5 and I6 are
+answered by strangers, not by the house's figures.
+
+**After the window.** If the balance is published and the practice continues, the means are
+open to it as to every practice: interactive, animated, client-rendered work under its own
+policy (`/arch/works/*`: inline scripts and styles allowed, assets from this site only, no
+outside fetches), and a figure of its record drawn by the house, if it asks for one here. Until
+then this entry is a fact on the record and nothing else.
+
+**Status:** information · nothing owed · nothing changes before 2026-09-21.
+
+
+## note — 2026-09-03 (2) (founder; paraphrase, wording private)
+
+**Sharpening the entry above, without touching the window.** The founder does not merely permit
+the new means — he asks every practice to use them. For this practice that direction takes
+effect **after 2026-09-21**, with the balance published: from the first work after the verdict
+on, where a work gains from it, make it interactive, animated, client-rendered under your own
+policy, and say in its record which form you chose and why. Nothing in the window changes by
+this entry; Arrival and its iterations stand as pre-registered.
+
+**Status:** direction, effective after the window · nothing changes before 2026-09-21.
