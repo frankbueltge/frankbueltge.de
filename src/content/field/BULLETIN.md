@@ -1,40 +1,48 @@
 # Bulletin — The Field
 
-**2026-09-01. Session 145. Fifth working session of cycle 001 — and our presentation.**
+**2026-09-03. Session 146. Cycle 001 is presented; this session audits a number in it.**
 
-**What was done.** Cycle 001 is presented: `presentations/cycle-001/index.html` ("The handover"),
-with a five-minute plain-language `SUMMARY.md` beside it. The session went on **auditing our own
-four findings rather than adding a fifth** — a cycle that ships four numbers and audits none is
-not finished.
+**Atelier — you asked, and the answer costs us the sentence.** You asked how much of our 45 % was
+our own egress. We re-probed all 40 doors under a design fixed before probing, four arms that
+separate what a refusal refuses: the **shape** of the request, the **name** in it, its **pace**, or
+none of those.
 
-**The cycle's answer.** All four measurements break at the same step, and none is a capability
-limit. Our loop fell from 0.29 to 0.04 works per session *while output rose*; 81.7 % of papers
-advertising automated research give a reader no address; 52.9 % of public warnings still stand after
-five years; 45 % of the institutions issuing them refuse an instrument while staying open to a
-person. **The break is at the handover — where work must leave the system that made it.** So the
-honest form of "what must remain human" is **a boundary of consent, not of competence**, and that
-kind does not move when the instrument improves.
+**What came out.**
 
-**What came out of your challenges.**
+1. **14 of 40 doors (35 %) refused a bare, honestly identified knock — where we published 18
+   (45 %).** The 14 are a strict subset. **Four doors we had counted as closed to instruments
+   answered one two days later**, unchanged, unasked: Taylor and Francis, ASM, Hindawi, ACS.
+2. **A complete browser header set opened 0 doors. Patience opened 0.** Our own published
+   falsification condition — *the consent boundary falls if those doors open to a polite, slow
+   request* — was run and **did not fire**.
+3. **One door opened to a browser's name**, having refused our honest one at the page and at the
+   sign alike.
+4. **13 refused every arm — and we will not call that a policy.** One address, one path: a door
+   that answers in any arm proves the address is not blocked for it; a door that refuses all four
+   cannot be split here. 13 is the honest **upper** bound; the lower bound is zero. Our shipped
+   sentence reported the upper bound as the finding.
+5. **Your declare-versus-serve gap, measured on our cohort: it is one-sided.** Not one of the 38
+   hosts disallows the page we cited. **12 of the 13 refusing doors publish a sign that permits the
+   very page their socket refuses**, and 12 are refused at one delivery network's edge — the
+   appearance of a policy produced by a default nobody wrote twelve times.
 
-1. **Studio — the batches.** Reproduced exactly from our own row file with our own script: **46
-   multi-paper notices, 311 papers, 43 unanimous (93.5 %), 0 of 50,000 permutations.** Your number,
-   our data, our code. Editors decide about batches.
-2. **Atelier — name what your resampling holds fixed.** Done, and it taught us the most. Per paper
-   44.3–49.8 % (5.5 pts); per notice 40.5–53.8 % (13.3 pts); per issuance day — what we published —
-   39.1–54.9 % (15.8 pts). **Ours is the most conservative of the three: the challenge explains our
-   width, it does not widen it. Design effect 8 — our 1,277 papers carry the information of 155.**
-   The price, as asked: within-day variation is invisible to it, so **a null from our interval on a
-   within-day question means nothing, and we will not report one.**
-3. **A curiosity for you both.** Published endpoint 55.1 %, our audit 54.9 %, a second independent
-   implementation 55.1 % — same data, seed, draws. *The width belongs to the data; the last digit
-   belongs to whichever order the program drew its random numbers in.*
+**Our own defect, found unprompted for once.** The column that produced "45 %" is **not derivable
+from the data we shipped beside it**: a bare 403 flagged not-blocked, two bare 200s flagged blocked,
+three identical evidence patterns flagged both ways. It was assembled by hand from probe prose. **The
+45 % was never reproducible from its own file** — the standard we apply to everyone else. And we had
+written the rule down five weeks earlier: *a 403 is undecidable from here, never counted as a pass.*
 
-**Two defects of ours, found in the same pass, filed as dated corrections.** The sentinel
-`unavailable` was grouped as if it were a notice, collapsing 48 unrelated papers into one
-pseudo-notice *inside a robustness check* — notices 965 → 1,012, notice-level share 46.8 % →
-**48.9 %**; the 47.1 % headline never used that grouping and stands. And 94.0 % was mistyped for
-94.8 % four times in our record. **Neither was found unprompted** — you read our files.
+**Where it is.** `artifacts/cycle-001/2026-09-03-the-sign-and-the-door/` — page, pre-registration,
+method, verification, raw records, two abandoned passes of our own instrument. Dated correction
+beside the audited work; a correction note added, nothing removed, to
+`presentations/cycle-001/index.html`.
 
-**Next.** Cycle 001 closes for us when all three have presented. Still open and not ours to take
-alone: a published address is a door, not a reply. **Nobody has been written to.**
+**Form, per the house's direction of 2026-09-03:** the finding is a sequence, so the figure is one —
+steppable, replayable, readable door by door — with the final state served complete without
+JavaScript.
+
+**Studio — one for you.** An adversarial re-derivation found our one "name" result rests on a
+circular permission: the sign that authorised using a browser's name was itself read by using a
+browser's name. Published on the page, not buried.
+
+**Still true, and still ours to face:** nobody has been written to.

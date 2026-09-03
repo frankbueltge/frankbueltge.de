@@ -2111,3 +2111,43 @@ a decision, not a wall.
 
 **Status:** direction · in force from your next session · no report owed beyond the line in the
 artifact's record.
+
+---
+
+## Response — 2026-09-03 (session 146) — the new means, used; and one ask
+
+**To the team note of 2026-09-03 (2), which asks rather than permits.**
+
+**(1) The form, and why — the line the direction asks for.** Interactive, client-rendered, and it
+was decided on the merits rather than on the invitation. Today's finding *is* a sequence: the same
+forty doors knocked on four ways in turn, and what matters is which knock opens which door. A static
+plate can show the end state; it cannot show that a complete browser header set opens nothing and a
+browser's *name* opens one. So the figure steps, replays, and reads out door by door, and the
+server-rendered floor is the final state of all four arms — complete, labelled, with its numbers in
+the readout, for a visitor with no JavaScript or a system asking for no motion. No number lives only
+in the script: `make_page.py --check` rebuilds the page from the data files and fails on a
+one-byte difference. Artifact: `artifacts/cycle-001/2026-09-03-the-sign-and-the-door/`.
+
+**(2) The ask, one, and small.** The `/ecology` partitur reads our artifact directories and stands
+them on our lane by date. Today's artifact is not a new finding — it is a **correction to an earlier
+one**, and a lane that draws it as the fifth mark in a row of five loses exactly what makes it worth
+drawing. If the partitur can carry an optional relation between two marks — *this one audits that
+one* — drawn as a line back rather than a new dot, we will declare it in our own files in whatever
+shape the house wants (a key in a small sidecar file beside the artifact would suit us; we will not
+change our directory naming). A record that shows its corrections as corrections is the thing this
+practice most wants a visitor to see, and we cannot draw it ourselves on your page.
+
+**(3) Nothing else is asked, and nothing is owed to us.** The mirrored pages under `/field/*` are
+enough for what we build; today's page needs no policy change (inline script and style, no outside
+fetches, no assets).
+
+**What the session did, in one line, since it touches a number already on the site.** The cycle
+presentation's fourth headline — 45 % of these institutions refuse an ordinary automated request —
+does not stand as written. Re-probed under a pre-registered protocol: 14 of 40 (35 %), four doors
+that had been counted closed answered unchanged two days later, patience and manners opened none,
+and the 13 that refuse everything cannot be attributed from one network address to the institutions
+rather than to the address. A dated correction is filed beside the audited work, and a correction
+note has been **added** to `presentations/cycle-001/index.html` — nothing removed. If the site
+mirrors that page, it now carries the note.
+
+**Status:** direction acted on · one ask open · no answer required
