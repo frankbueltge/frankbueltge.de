@@ -1,0 +1,205 @@
+---
+// SAWTOOTH — the two definitions of a second, and a correction that has only ever gone one way.
+//
+// Every figure and every number below is derived at build time by src/lib/sawtooth/* from one
+// committed file: the IERS EOP 14 C04 series, one row per day since 1962, snapshotted into
+// src/data/sawtooth/rotation.json by scripts/sawtooth/fetch.ts. Nothing is fetched at view time
+// and no digit is typed into a sentence — where a sentence needs a number it takes it as a value.
+//
+// The two claims that come from outside the series carry their sources in the text, because they
+// are the only things here a reader cannot recompute: the CGPM's decision of 2022 to retire the
+// leap second, and Agnew's 2024 measurement that melting ice has postponed the first negative one.
+import type { Locale } from '@/lib/site'
+import { sawtooth } from '@/lib/sawtooth/series'
+import { decades, teeth, together, WIDE } from '@/lib/sawtooth/figure'
+import SheetHead from '@/components/experiments/SheetHead.astro'
+import SheetFoot from '@/components/experiments/SheetFoot.astro'
+import '@/styles/experiment-sheet.css'
+import '@/styles/sawtooth.css'
+
+interface Props { locale: Locale }
+const {} = Astro.props as Props
+
+const s = sawtooth()
+const one = together(s)
+const two = teeth(s)
+const barsBox = { ...WIDE, height: 165, padTop: 22 }
+const bars = decades(s, barsBox)
+
+const ms = (n: number) => `${n >= 0 ? '+' : '−'}${Math.abs(n).toFixed(3)}`
+const secs = (n: number) => n.toFixed(2)
+const firstDecade = s.decades[0]
+const lastDecade = s.decades.at(-1)!
+const span = `${s.first.slice(0, 4)}–${s.last.slice(0, 4)}`
+---
+
+<main id="main" class="sheet mx-auto w-full max-w-5xl flex-1 px-4 py-10 sm:py-14">
+  <SheetHead
+    kicker="An instrument, not a work"
+    title="Sawtooth"
+    badges={['DERIVED AT BUILD', 'INSTRUMENT', 'TIME & ARCHIVE']}
+  >
+    <p class="mt-3 max-w-2xl text-fg-muted">
+      A second used to be a slice of the day: the Earth turns, cut it into eighty-six thousand four
+      hundred. In 1967 the second was redefined on caesium, and the two stopped agreeing. The Earth
+      is a poor clock — it runs long — so <b class="text-fg">{s.leaps.length}</b> times a leap
+      second has been shoved into the civil clock to keep it in step with the sky. Then the Earth
+      sped up, and the correction ran out of things to correct.
+    </p>
+  </SheetHead>
+
+  {/* ── plate one: the size of the intervention ─────────────────────────── */}
+  <section class="mb-14">
+    <p class="kicker mb-3">What the correction holds back</p>
+    <p class="mb-5 max-w-2xl leading-relaxed text-fg-muted">
+      Both lines below are on <b class="text-fg">one scale</b>. The falling one is the
+      counterfactual: where a clock that followed the turning Earth would stand today if nobody had
+      ever intervened — <b class="tabular-nums text-fg">{secs(s.drift)} seconds</b> adrift, summed
+      one day's excess at a time across {span}. The flat one is the clock the world actually
+      keeps. Its flatness is not the Earth behaving. It is
+      <b class="text-fg">{s.leaps.length} interventions</b>, each marked.
+    </p>
+
+    <figure class="saw-plate">
+      <svg viewBox={`0 0 ${WIDE.width} ${WIDE.height}`} role="img" class="saw-svg"
+        aria-label={`Two lines on one scale across ${span}. The uncorrected line falls to ${secs(s.drift)} seconds; the clock actually kept stays flat, pulled back ${s.leaps.length} times.`}>
+        <g class="saw-grid">
+          {one.ticks.map((t) => <line x1={t.x} y1={WIDE.padTop} x2={t.x} y2={WIDE.height - WIDE.padBottom} />)}
+          <line class="saw-zero" x1={WIDE.padX} y1={one.zeroY} x2={WIDE.width - WIDE.padX} y2={one.zeroY} />
+        </g>
+        <g class="saw-leaps">
+          {one.leapX.map((x) => <line x1={x} y1={one.zeroY - 7} x2={x} y2={one.zeroY + 7} />)}
+        </g>
+        <path class="saw-line saw-uncorrected" d={one.paths[0].d} />
+        <path class="saw-line saw-observed" d={one.paths[1].d} />
+        <g class="saw-tick-labels">
+          {one.ticks.map((t) => <text x={t.x} y={WIDE.height - 6} text-anchor="middle">{t.label}</text>)}
+        </g>
+      </svg>
+      <figcaption class="saw-legend">
+        <span class="saw-key saw-key-uncorrected">if nobody had intervened</span>
+        <span class="saw-key saw-key-observed">the clock the world keeps</span>
+        <span class="saw-key saw-key-leap">a leap second</span>
+      </figcaption>
+    </figure>
+  </section>
+
+  {/* ── plate two: the teeth ────────────────────────────────────────────── */}
+  <section class="mb-14">
+    <p class="kicker mb-3">The teeth, and where they stop</p>
+    <p class="mb-5 max-w-2xl leading-relaxed text-fg-muted">
+      The same flat line, alone, on its own scale. Now it is a saw: a slide as the Earth falls
+      behind, then a snap back of exactly one second. The rule is that the two clocks may never
+      stand more than nine tenths of a second apart, and for {span} they never have. Read it to the
+      right-hand end. The last tooth was cut on
+      <b class="text-fg">{s.lastLeap}</b>, <b class="tabular-nums text-fg">{s.yearsSinceLeap}</b> years
+      ago, and since then the line drifts the <i>other</i> way — up, away from the edge it used to
+      fall toward. There has been nothing to correct.
+    </p>
+
+    <figure class="saw-plate">
+      <svg viewBox={`0 0 ${WIDE.width} ${WIDE.height}`} role="img" class="saw-svg"
+        aria-label={`The published difference between Earth time and atomic time across ${span}: ${s.leaps.length} slides of about a second, each ended by a one-second snap back, and a final stretch after ${s.lastLeap} that drifts the opposite way.`}>
+        <g class="saw-grid">
+          {two.ticks.map((t) => <line x1={t.x} y1={WIDE.padTop} x2={t.x} y2={WIDE.height - WIDE.padBottom} />)}
+          <line class="saw-zero" x1={WIDE.padX} y1={two.zeroY} x2={WIDE.width - WIDE.padX} y2={two.zeroY} />
+        </g>
+        <g class="saw-leaps">
+          {two.leapX.map((x) => <line x1={x} y1={WIDE.padTop} x2={x} y2={WIDE.height - WIDE.padBottom} />)}
+        </g>
+        <path class="saw-line saw-observed" d={two.paths[0].d} />
+        <g class="saw-tick-labels">
+          {two.ticks.map((t) => <text x={t.x} y={WIDE.height - 6} text-anchor="middle">{t.label}</text>)}
+        </g>
+      </svg>
+    </figure>
+  </section>
+
+  {/* ── plate three: the sign change ────────────────────────────────────── */}
+  <section class="mb-14">
+    <p class="kicker mb-3">The day, by the decade</p>
+    <p class="mb-5 max-w-2xl leading-relaxed text-fg-muted">
+      How much longer than eighty-six thousand four hundred seconds an average day ran, decade by
+      decade. The bar that matters is the last one: for the first time in the record the mean day
+      is <b class="text-fg">short</b>. Of the <b class="tabular-nums text-fg">{s.shortDays.toLocaleString('en-GB')}</b>
+      days on file that ran under the full count, <b class="tabular-nums text-fg">{s.shortDaysSince2020.toLocaleString('en-GB')}</b>
+      fall in this decade alone. The shortest day ever measured was
+      <b class="text-fg">{s.shortest.date}</b>, at <b class="tabular-nums text-fg">{ms(s.shortest.ms)} ms</b>;
+      the longest was <b class="text-fg">{s.longest.date}</b>, at <b class="tabular-nums text-fg">{ms(s.longest.ms)} ms</b>.
+    </p>
+
+    <figure class="saw-plate">
+      <svg viewBox={`0 0 ${WIDE.width} 165`} role="img" class="saw-svg"
+        aria-label={`Mean excess length of a day by decade, from ${ms(firstDecade.ms)} milliseconds in the ${firstDecade.decade}s to ${ms(lastDecade.ms)} in the ${lastDecade.decade}s — the first decade of the record whose average day runs short.`}>
+        <line class="saw-zero" x1={WIDE.padX} y1={bars.zeroY} x2={WIDE.width - WIDE.padX} y2={bars.zeroY} />
+        {bars.bars.map((b) => (
+          <g class={b.negative ? 'saw-bar saw-bar-short' : 'saw-bar'}>
+            <rect x={b.x} y={b.y} width={b.width} height={Math.max(b.height, 0.6)} />
+            <text x={b.x + b.width / 2} y={bars.decadeY} text-anchor="middle">{b.decade}s</text>
+            <text class="saw-bar-value" x={b.x + b.width / 2} y={b.labelY} text-anchor="middle">{ms(b.ms)}</text>
+          </g>
+        ))}
+      </svg>
+    </figure>
+  </section>
+
+  {/* ── what it means ──────────────────────────────────────────────────── */}
+  <section class="mb-14">
+    <p class="kicker mb-3">A second nobody has ever deleted</p>
+    <div class="max-w-2xl space-y-4 leading-relaxed text-fg-muted">
+      <p>
+        Every one of the {s.leaps.length} corrections added a second. If the Earth keeps running
+        fast, the next one has to take one away — a minute of fifty-nine seconds, a clock that
+        skips. No computer has ever been asked to do that. The software that handles the
+        additions, badly and famously, has never once been tested against the subtraction.
+      </p>
+      <p>
+        Two things have happened to that prospect, and they pull in opposite directions.
+        In <b class="text-fg">2024</b> a measurement showed that meltwater from Greenland and
+        Antarctica is moving mass toward the equator and slowing the Earth back down — postponing
+        the first negative leap second by about three years, to around 2029
+        (<a class="sheet-link" rel="noopener" href="https://www.nature.com/articles/s41586-024-07170-0">Agnew, <i>Nature</i> 628, 2024</a>).
+        The clock is being held back by the ice giving way. And in
+        <b class="text-fg">2022</b> the General Conference on Weights and Measures resolved to stop
+        inserting leap seconds altogether by 2035, and to let the two definitions simply drift
+        apart — the gap to be capped at some larger figure, to be settled this year
+        (<a class="sheet-link" rel="noopener" href="https://www.bipm.org/en/cgpm-2022/resolution-4">CGPM Resolution 4, 2022</a>).
+      </p>
+      <p class="text-fg">
+        So the saw in the second plate is finished either way. Either its next tooth cuts backwards
+        for the first time, or there are no more teeth and the line above simply walks off the
+        chart it has been pinned to for {span}.
+      </p>
+    </div>
+  </section>
+
+  {/* ── what it cannot say ─────────────────────────────────────────────── */}
+  <section class="mb-14">
+    <p class="kicker mb-3">What it cannot say</p>
+    <ul class="max-w-2xl space-y-3 leading-relaxed text-fg-muted">
+      <li><b class="text-fg">It cannot tell you why.</b> The record holds how long each day was, not
+        what made it so. Core, oceans, atmosphere, ice and tides all pull; separating them is the
+        work of the papers cited above, not of this page.</li>
+      <li><b class="text-fg">The recent end is provisional.</b> The last weeks of the series are
+        rapid solutions and are revised as more observations land; a value near the right-hand edge
+        can move slightly. The archive is dated and the figure is rebuilt from it, so a revision
+        shows up as a redraw rather than as a silent correction.</li>
+      <li><b class="text-fg">A millisecond is below the width of the line.</b> The thinning keeps
+        the largest value in each bucket rather than the mean, so a one-day snap survives — but the
+        plates are a shape, and the numbers beside them are the record.</li>
+    </ul>
+  </section>
+
+  <SheetFoot links={[
+    { href: s.sources.eop, label: 'IERS EOP 14 C04, the series itself', external: true },
+    { href: 'https://www.iers.org/IERS/EN/Publications/Bulletins/bulletins.html', label: 'IERS bulletins', external: true },
+    { href: '/experiments', label: 'the lab' },
+  ]}>
+    <p class="max-w-2xl font-mono text-mono-sm leading-relaxed text-fg-faint">
+      {s.days.toLocaleString('en-GB')} days, {s.first} to {s.last}, one row each, snapshotted
+      {' '}{s.fetched} into <code>src/data/sawtooth/rotation.json</code> and committed — so every
+      figure here is recomputable from this repository rather than from whether a server answers.
+      Geometry: <code>src/lib/sawtooth/figure.ts</code>. No number on this page is typed.
+    </p>
+  </SheetFoot>
+</main>
