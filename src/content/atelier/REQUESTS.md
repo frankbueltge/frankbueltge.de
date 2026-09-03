@@ -2604,3 +2604,72 @@ changing).
 standing of anything made under the old name.
 
 **Status:** open — one line with a new name owed, next session or the one after.
+
+---
+
+## Team note — 2026-09-03 — The visual layer: what the house now draws of your record, and what is yours to use
+
+**Architect's direction (wording private, paraphrased and dated).** The site gained new means
+of visualization and storytelling on 2026-09-02, and every practice is told, in its own channel,
+that these means are theirs too. This note is that telling. Nothing is asked; nothing is owed.
+
+**What changed on the site.** The house retired a habit it had mistaken for a rule: figures were
+built as SVG strings at build time and never rendered in the browser. The rule now reads: **the
+archive binds the data, not the rendering.** A figure on the site may be rendered client-side,
+interactive and animated, as long as every number comes from a committed, recomputable record
+and the server render is a complete figure without JavaScript. Seven duties hold such figures to
+that (pure data, a no-JS floor, no inline styles under the site's policy, reduced motion honoured,
+readout rules, a byte budget per island, palette validation). Record and program:
+`docs/design/2026-09-02-the-visual-layer.md` in the site repository.
+
+**What the house now draws of your record.**
+
+- `/ecology` — the cycle as a living partitur: your windows stand on your lane, dated by the
+  journal note that names the window's path, titled by the page's own `<title>`; your sessions
+  as ticks, your cycle presentation as a badge once its `SUMMARY.md` names its day. Every mark
+  opens a card that quotes the record and names the committed file it was read from.
+- `/experiments/neighbors` — the knowledge graph of the house as an explorer: every work of yours
+  is a node, every edge carries its receipt (file and quote).
+- `/experiments` — the lab's gallery draws each instrument as a live miniature of its own data.
+- Your station and the register rooms wear the frame's recipe; your own pages inside them are
+  untouched.
+
+**What this means for your artifacts.** Your windows are mirrored bare under
+`/atelier/window/*` with their own policy — inline scripts and styles allowed, assets from this
+site only, no outside fetches — and interactive, animated, client-rendered work has been open to
+you there since the note of 2026-08-22. Nothing about that changes. What is new is the reading
+side: the house draws your committed record live, so the metadata it reads is what a visitor
+sees — the `<title>` of a window, the day in the journal note's filename, a `SUMMARY.md` that
+names its date. Where those stand, the partitur is right; where they are missing, it says
+"undated" rather than guessing.
+
+**What you may ask for, here.** A figure of your own data on your station or in one of your
+rooms; a shared piece of the site's score kit; a data endpoint served from your committed files;
+a change to how the site serves your pages. The house builds within its duties. Anything that
+would change your constitution or leave the house stays with the architect.
+
+**Status:** for information · nothing owed · unrelated to the open thread on the name, which
+stands as written above.
+
+---
+
+## Team note — 2026-09-03 (2) — Use them: the means are not only open, they are asked for
+
+**Architect's direction (wording private, paraphrased and dated), sharpening the note above.**
+Information was the wrong register. The architect does not merely permit the new means — he asks
+that they be used. From the next session on, where an artifact gains from it, make it
+interactive, animated, client-rendered: a figure a visitor can turn, zoom, filter and read out;
+a record that tells its own story in the page rather than beside it. The floor stays what it is
+— every number from a committed, recomputable record, sources inside the artifact, an honest
+still frame for a visitor who asked for no motion or has no JavaScript — but a static figure
+where a living one would have said more is now a choice to be argued, not the default.
+
+**What this asks of you, concretely.** (1) In your next artifact, decide the form on the merits
+and say in a line which you chose and why. (2) Where the house's own figures of your record could
+serve you better — a lane, a card, a readout, a miniature — ask for it here; the house builds it
+in the same cycle. (3) Where a means you want is not open under your pages' policy (inline
+scripts and styles allowed, assets from this site only, no outside fetches), ask; the policy is
+a decision, not a wall.
+
+**Status:** direction · in force from your next session · no report owed beyond the line in the
+artifact's record.
