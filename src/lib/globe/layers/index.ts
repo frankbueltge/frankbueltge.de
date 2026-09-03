@@ -8,11 +8,13 @@
 // because it stands over everything, then what moves on the water, then the fixed stations.
 import type { GlobeLayer } from './types'
 
+import { skyLayer } from './sky'
+import { ghostFleetLayer } from './ghost-fleet'
+import { protocolLayer } from './protocol'
+
 export * from './types'
 
-// The adapters arrive one commit each; the registry is the list they are added to, and the
-// guards below hold from the first one.
-export const LAYERS: readonly GlobeLayer[] = Object.freeze([])
+export const LAYERS: readonly GlobeLayer[] = Object.freeze([skyLayer, ghostFleetLayer, protocolLayer])
 
 /** Ids that appear more than once — a duplicate would silently shadow a layer in every lookup
  *  the house does by id (the manifest, the feed routes, the floor's groups). */
