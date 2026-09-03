@@ -31,6 +31,23 @@ export interface FocusState {
   dim?: string[]
   /** freestanding call-outs a figure may render near the marks they name */
   annotate?: { key: string; text: string }[]
+  /** where a figure that has a camera should stand while this scene is active — a longitude and a
+   *  latitude in degrees, and optionally how close. A figure without a camera ignores it; a figure
+   *  with one is expected to travel there rather than to cut, unless the visitor asked for reduced
+   *  motion. (G2, 2026-09-03: the living globe is the first figure with a camera.) */
+  camera?: { longitude: number; latitude: number; zoom?: number }
+  /** which DAY of the figure's own model to show — a day of the archive, in the archive's own
+   *  `YYYY-MM-DD` form, and never a clock: a scene names a day a committed file exists for or it
+   *  names none. A figure whose model does not hold that day is expected to IGNORE the request
+   *  rather than reach for the nearest one — a story that silently shows a different day than the
+   *  one it is talking about is worse than a story whose figure did not move. */
+  time?: { day: string }
+  /** the layer ids to have ON while this scene is active, in order — the whole active set, not a
+   *  delta, so a scene is readable as a state and not as a sequence of toggles. Where a figure has
+   *  an emphasis rule, the LAST id is the one in front (the living globe's room draws it in its own
+   *  hue and drops the rest to mono ink). A scene may only name layers the figure really registers;
+   *  its own test is what proves that, because this module cannot know a figure's registry. */
+  layers?: string[]
 }
 
 /** One step of the tour: a stable-anchored unit of prose plus the quotes that back it and the
@@ -51,7 +68,10 @@ export interface Scene {
  *  files it draws on (shown as the tour's own provenance line, checked to exist by verify.ts). */
 export interface Tour {
   id: string
-  practice: 'atelier' | 'field' | 'studio'
+  /** whose record the tour walks. The three practices of the ecology, plus `lab` for a work of
+   *  this house's own lab (G2, 2026-09-03: the living globe's guided stories are the first — a
+   *  work of the lab is not one of the three practices and must not borrow one of their voices). */
+  practice: 'atelier' | 'field' | 'studio' | 'lab'
   title: string
   standfirst: string
   scenes: Scene[]
