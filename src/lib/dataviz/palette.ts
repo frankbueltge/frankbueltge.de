@@ -682,13 +682,17 @@ export const PALETTES: readonly PaletteSet[] = [
     id: 'globe-voices',
     description:
       'The living globe’s three identity slots (/globe, and the compact form under the hero). ' +
-      'The globe’s colour policy is an EMPHASIS rule before it is a palette: at most one layer ' +
-      'stands IN FRONT and wears a hue, every other active layer drops to mono ink at a reduced ' +
-      'alpha and keeps its place, and the mark a card is open on wears the second hue. Ten layers ' +
-      'cannot carry ten identities on one sphere, so they are never asked to. That makes the pair ' +
-      'that actually co-occurs "the layer in front" ↔ "the selected mark"; the record validates ' +
-      'all three against each other anyway, because a set that holds only under an interaction ' +
-      'rule is a set held by memory. Not one hue is new: the room’s live petrol/cyan is ops-room’s ' +
+      'The globe’s colour policy is an EMPHASIS rule before it is a palette, and the rule is ' +
+      'arithmetic about legibility rather than a vow of poverty. IN THE ROOM, where every ' +
+      'registered layer can be switched on at once, at most one layer stands IN FRONT and wears a ' +
+      'hue; every other active layer drops to mono ink at a reduced alpha and keeps its place; the ' +
+      'mark a card is open on wears the second hue. Ten layers cannot carry ten identities on one ' +
+      'sphere, so they are never asked to. THE COMPACT ENTRANCE draws two layers, and two can: ' +
+      'there the sky keeps the room’s live ink and the ghost fleet keeps the Field’s recorded ' +
+      'voice, both at full weight, exactly as the hero has shown them since 2026-09-02. So all ' +
+      'three of these hues really do co-occur — the two in front on the entrance, and the front ' +
+      'hue with the selection in the room — which is why this record is validated all-pairs and ' +
+      'not only against the surface. Not one hue is new: the room’s live petrol/cyan is ops-room’s ' +
       'own live ink, the blue is the Field’s recorded voice (the ghost fleet has worn it since the ' +
       'entrance globe of 2026-09-02, and this record keeps it), and the ember is the invoked-past ' +
       'standout — legal cross-page reuse, since neither hue means anything else on THIS page. ' +
@@ -697,8 +701,8 @@ export const PALETTES: readonly PaletteSet[] = [
       'not a warning red. The sea, the land, the coast and the mono ink are declared neutrals ' +
       'outside the set — depth carries the base, hue carries identity.',
     slots: [
-      { name: 'the layer in front — a lab line, in the room’s live ink', light: '#10627a', dark: '#7fd0e8' },
-      { name: 'the layer in front — a practice’s record, in its recorded voice (the Field)', light: '#2a78d6', dark: '#256abf' },
+      { name: 'a layer in front — a lab line, in the room’s live ink (the sky wears this on the entrance)', light: '#10627a', dark: '#7fd0e8' },
+      { name: 'a layer in front — a practice’s record, in its recorded voice (the Field; the ghost fleet wears this)', light: '#2a78d6', dark: '#256abf' },
       { name: 'the selected mark — the one a card is open on', light: '#b8410e', dark: '#e2691f' },
     ],
     neutrals: [
@@ -706,7 +710,7 @@ export const PALETTES: readonly PaletteSet[] = [
         name: 'the layers behind — mono ink at a reduced alpha',
         light: '#54555c',
         dark: '#a3a3a8',
-        note: 'the frame’s own --color-fg-muted, referenced not restated; greyness IS the meaning — a layer that is on but not in front',
+        note: 'the frame’s own --color-fg-muted, referenced not restated; greyness IS the meaning — a layer that is on but not in front. Reached only in the room, where more than two layers can be on at once; the compact entrance has no layer behind.',
       },
     ],
     surfaces: { light: ['#f7f8fa'], dark: ['#141414'] },

@@ -4,8 +4,8 @@
 **Decision:** Frank's decision of 2026-09-03, wording private.
 **Surfaces:** `/globe` · `/werke/globe` · `/globe/layers.json` · `/globe/layers/<id>.json` ·
 `/globe/countries.json`. **Data:** `src/data/globe/`. **Code:** `src/lib/globe/`.
-(`/globe/model.json` was retired with G1: the island draws each layer's committed frame instead of
-propagating orbits in the visitor's browser, so nothing read that feed any more.)
+(`/globe/model.json` was retired with G1: the orbital elements the sky's newest frame is propagated
+from now ride in that layer's own feed, so nothing read the separate model feed any more.)
 
 ## 1. Occasion
 
@@ -103,12 +103,11 @@ which ships no JavaScript at all.
   preregistration closes on 2026-09-21; Machine Attention's GDACS coordinates stay upstream until
   its channel answers. Neither is touched by G0 and neither will be drawn without a yes.
 - **The entrance.** G1 replaced the entrance island with the compact form of this one, as planned.
-  Two visible consequences of the shared island are Frank's call, not a build call: the hero's
-  satellites now wear mono ink because the ghost fleet is the layer in front there (the emphasis
-  rule, applied to the front door — the order of `defaultLayers` in `EntranceGlobeFigure.astro`
-  turns it round in one line), and the fleet stands at the positions its elements were taken at
-  rather than being propagated to the visitor's present, which is why the strip under the hero no
-  longer says "positions at your now".
+  Nothing the hero showed on 2026-09-02 was given up: the fleet is still propagated to the
+  visitor's present and still walks its orbits, the gaps still stand in the Field's recorded hue,
+  and both layers keep their own colour at full weight, because the emphasis rule is the room's
+  arithmetic about ten layers and not a rule against two. The strip still says "positions at your
+  now", and it is still exact.
 
 ## 7. What this is not
 

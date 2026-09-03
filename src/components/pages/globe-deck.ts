@@ -5,11 +5,22 @@
 // decides a colour: the island hands in an `ink()` that reads the room's own tokens, and every
 // visitor-facing sentence stays with the island (src/config/globe-wording.ts).
 //
-// THE EMPHASIS RULE, which is the colour rule and the readability rule in one: at most one layer
-// is IN FRONT. It wears its own recorded hue at full weight; every other active layer drops to
-// mono ink at a reduced alpha and keeps its place on the earth; the mark a card is open on wears
-// the second hue and is the only thing on the globe that carries a label. Ten layers cannot have
-// ten identities on one sphere — so they do not get them.
+// THE EMPHASIS RULE, which is the colour rule and the readability rule in one: in the ROOM, where
+// every registered layer can be switched on at once, at most one layer is IN FRONT. It wears its
+// own recorded hue at full weight; every other active layer drops to mono ink at a reduced alpha
+// and keeps its place on the earth; the mark a card is open on wears the second hue and is the only
+// thing on the globe that carries a label. Ten layers cannot have ten identities on one sphere — so
+// they do not get them. The rule exists for that arithmetic and not as a vow of poverty: the
+// compact entrance draws two layers and hands the caller a SET, so both keep their identity and
+// their full weight there. `emphasis` is therefore one id, a list of ids, or nothing.
+//
+// WHAT MOVES, and why it is allowed to. Everything on this globe is a committed record drawn at the
+// day it was written — with exactly one declared exception, and the layer itself declares it. A
+// layer may hand over the elements its NEWEST frame was computed from (LayerInstant); on that day,
+// and on no other, this module propagates them by SGP4 to the visitor's present and recomputes
+// twice a second, easing between the two computations, so the fleet walks its orbits while somebody
+// is looking at it. Scrubbing to any other day propagates nothing, because no other day has
+// elements to propagate. Under prefers-reduced-motion one frame is computed at mount and stands.
 //
 // FETCH-THEN-PARSE ONLY. No layer here is ever handed a URL: deck.gl would fetch and parse it
 // itself, on its own schedule, past the island's "once per layer, never again" promise and past
@@ -32,7 +43,8 @@ import {
 } from '@deck.gl/layers'
 import { feature } from 'topojson-client'
 import type { GeometryObject, Topology } from 'topojson-specification'
-import type { LayerKind, LayerRecord, LonLat } from '@/lib/globe/layers/types'
+import type { LayerInstant, LayerKind, LayerRecord, LonLat } from '@/lib/globe/layers/types'
+import { positionsAt, satrecsOf, type GroundPoint, type SatRecs } from '@/lib/globe/propagate'
 
 export type RGB = [number, number, number]
 
@@ -55,10 +67,21 @@ export interface GlobeInk {
   ramp: RGB[]
 }
 
+/** lon, lat and metres above the ellipsoid — what a propagated mark stands at */
+export type LonLatAlt = [number, number, number]
+
 export interface FrameLayer {
   id: string
   kind: LayerKind
   records: LayerRecord[]
+  /** where this layer's marks stand RIGHT NOW, one per record in its order, null where the
+   *  propagator failed at this instant (the record's own committed point stands in). Set by
+   *  mountGlobe for the one layer that declared an instant; absent for every other layer, which is
+   *  every other layer there is. */
+  positions?: Array<LonLatAlt | null>
+  /** how long a mark takes to travel from its last computed position to this one, in ms; absent
+   *  means it jumps, which is what reduced motion asks for */
+  easeMs?: number
   /** the layer's own recorded hue where the room declares one (the ghost fleet wears the Field's
    *  voice); without one, a layer in front wears the room's live ink */
   hue?: RGB
@@ -67,6 +90,13 @@ export interface FrameLayer {
 export interface GlobeFrame {
   day: string
   layers: FrameLayer[]
+  /** which layer, or layers, stand in front — see the emphasis rule in this file's header */
+  emphasis?: string | readonly string[] | null
+  /** the one declared no-clock exception, handed over by the layer that owns it; drawn only while
+   *  `day` is the instant's own day */
+  instant?: { layerId: string; instant: LayerInstant }
+  /** bumped each time the propagated positions are recomputed, so deck.gl re-reads them */
+  tick?: number
   /** the key of the mark a card is open on */
   selectedKey?: string | null
   /** the words the label carries for the hovered or selected mark — the island's, never this
@@ -139,6 +169,8 @@ const TURN_DEG_PER_S = 1.5
  *  vertices while a frame is built, not a fetch and not a per-pixel cost, which is why it is
  *  affordable here — the measured price of this step stands in the decision-log row. */
 export const GLOBE_RESOLUTION = 4
+/** how often the propagated marks' positions are recomputed; the layer eases between two of them */
+const POSITION_INTERVAL_MS = 500
 /** how far a camera move is allowed to take, when a story asks for one and motion is allowed */
 const FLY_MS = 1200
 /** a build-time bin's footprint on the ground, and the height its value is scaled into — metres,
@@ -163,11 +195,19 @@ export function webglAvailable(): boolean {
 
 // ─────────────────────────────────────────────────────────── the pure part, tested without a GPU
 
-/** The emphasis rule as a function: the layer in front keeps its own hue at full weight, everyone
+/** Which layers stand in front: one id, a list of them, or nothing at all. */
+export type Emphasis = string | readonly string[] | null | undefined
+
+export function inFront(layerId: string, emphasis: Emphasis): boolean {
+  if (emphasis === null || emphasis === undefined) return false
+  return typeof emphasis === 'string' ? layerId === emphasis : emphasis.includes(layerId)
+}
+
+/** The emphasis rule as a function: a layer in front keeps its own hue at full weight, everyone
  *  else is mono ink at a reduced alpha. Exported because this is the rule the whole colour policy
  *  of this globe rests on, and a rule that lives only inside a draw call cannot be tested. */
-export function inkFor(layer: FrameLayer, ink: GlobeInk, emphasisId: string | null): { rgb: RGB; alpha: number } {
-  return layer.id === emphasisId
+export function inkFor(layer: FrameLayer, ink: GlobeInk, emphasis: Emphasis): { rgb: RGB; alpha: number } {
+  return inFront(layer.id, emphasis)
     ? { rgb: layer.hue ?? ink.front, alpha: FRONT_ALPHA }
     : { rgb: ink.mono, alpha: BACK_ALPHA }
 }
@@ -214,16 +254,18 @@ export function rampStep(records: readonly LayerRecord[], steps: number): (recor
 export function layersFor(
   frame: GlobeFrame,
   ink: GlobeInk,
-  emphasisId: string | null,
+  emphasis: Emphasis,
   countries?: CountryShapes,
 ): Layer[] {
-  // the layer in front is drawn last, so it is not covered by the ones holding their places
-  const ordered = [...frame.layers].sort((a, b) => Number(a.id === emphasisId) - Number(b.id === emphasisId))
+  // a layer in front is drawn last, so it is not covered by the ones holding their places
+  const ordered = [...frame.layers].sort(
+    (a, b) => Number(inFront(a.id, emphasis)) - Number(inFront(b.id, emphasis)),
+  )
   const out: Layer[] = []
 
   for (const layer of ordered) {
     if (layer.records.length === 0) continue
-    const { rgb, alpha } = inkFor(layer, ink, emphasisId)
+    const { rgb, alpha } = inkFor(layer, ink, emphasis)
     const colourOf = (record: LayerRecord): [number, number, number, number] =>
       record.key === frame.selectedKey ? [...ink.selected, 255] : [...rgb, alpha]
     const id = `${layer.id}·${frame.day}`
@@ -247,7 +289,7 @@ export function layersFor(
             getTargetColor: colourOf,
             getWidth: (d) => (d.key === frame.selectedKey ? 3.2 : 1.8),
             widthUnits: 'pixels',
-            updateTriggers: { getSourceColor: [emphasisId, frame.selectedKey], getTargetColor: [emphasisId, frame.selectedKey] },
+            updateTriggers: { getSourceColor: [emphasis, frame.selectedKey], getTargetColor: [emphasis, frame.selectedKey] },
             pickable: true,
           }),
         )
@@ -259,7 +301,7 @@ export function layersFor(
             getFillColor: colourOf,
             radiusUnits: 'pixels',
             getRadius: (d) => (d.key === frame.selectedKey ? 4.4 : 3),
-            updateTriggers: { getFillColor: [emphasisId, frame.selectedKey], getRadius: frame.selectedKey },
+            updateTriggers: { getFillColor: [emphasis, frame.selectedKey], getRadius: frame.selectedKey },
             pickable: true,
           }),
         )
@@ -281,7 +323,7 @@ export function layersFor(
             widthUnits: 'pixels',
             capRounded: true,
             jointRounded: true,
-            updateTriggers: { getColor: [emphasisId, frame.selectedKey], getWidth: frame.selectedKey },
+            updateTriggers: { getColor: [emphasis, frame.selectedKey], getWidth: frame.selectedKey },
             pickable: true,
           }),
         )
@@ -309,12 +351,13 @@ export function layersFor(
             getFillColor: (f) => {
               const record = f.properties.record
               if (record.key === frame.selectedKey) return [...ink.selected, 220]
-              const tone = layer.id === emphasisId ? ink.ramp[step(record)] ?? ink.front : ink.mono
-              return [...tone, layer.id === emphasisId ? 210 : BACK_ALPHA]
+              const front = inFront(layer.id, emphasis)
+              const tone = front ? ink.ramp[step(record)] ?? ink.front : ink.mono
+              return [...tone, front ? 210 : BACK_ALPHA]
             },
             getLineColor: [...ink.coast, 180],
             lineWidthMinPixels: 0.6,
-            updateTriggers: { getFillColor: [emphasisId, frame.selectedKey] },
+            updateTriggers: { getFillColor: [emphasis, frame.selectedKey] },
             pickable: true,
           }),
         )
@@ -337,7 +380,7 @@ export function layersFor(
             getFillColor: colourOf,
             getElevation: height,
             elevationScale: 1,
-            updateTriggers: { getFillColor: [emphasisId, frame.selectedKey], getElevation: frame.day },
+            updateTriggers: { getFillColor: [emphasis, frame.selectedKey], getElevation: frame.day },
             pickable: true,
           }),
         )
@@ -352,7 +395,10 @@ export function layersFor(
           new ScatterplotLayer<LayerRecord>({
             id: `point-${id}`,
             data: layer.records,
-            getPosition: (d) => pointOf(d) ?? [0, 0],
+            // a propagated mark stands where it is NOW and at its own altitude; every other mark
+            // stands at the point its record carries. A propagation that failed at this instant
+            // falls back to the committed point rather than to the middle of the Atlantic.
+            getPosition: (d, info) => layer.positions?.[info.index] ?? pointOf(d) ?? [0, 0],
             getFillColor: colourOf,
             getLineColor: colourOf,
             // a station is drawn hollow: an instrument at its own site is not the same claim as a
@@ -364,10 +410,13 @@ export function layersFor(
             radiusUnits: 'pixels',
             getRadius: (d) => (d.key === frame.selectedKey ? radius(d) * 1.6 : radius(d)),
             updateTriggers: {
-              getFillColor: [emphasisId, frame.selectedKey],
-              getLineColor: [emphasisId, frame.selectedKey],
+              getPosition: frame.tick,
+              getFillColor: [emphasis, frame.selectedKey],
+              getLineColor: [emphasis, frame.selectedKey],
               getRadius: frame.selectedKey,
             },
+            // the ease between two computations, so a satellite travels instead of teleporting
+            ...(layer.easeMs === undefined ? {} : { transitions: { getPosition: layer.easeMs } }),
             pickable: true,
           }),
         )
@@ -419,10 +468,57 @@ export function mountGlobe(options: MountOptions): GlobeHandle {
 
   let ink = options.ink()
   let frame = options.frame
-  let emphasisId = frame.layers.length > 0 ? (frame.layers[frame.layers.length - 1]?.id ?? null) : null
   let paused = false
   let interacted = false
   let destroyed = false
+
+  // ── the one declared no-clock exception ────────────────────────────────────────────────────
+  // The elements are parsed once per element set, and the positions recomputed twice a second at
+  // the visitor's present. `tick` is what tells deck.gl to re-read them; `easeMs` is what makes a
+  // satellite travel between two computations instead of teleporting. None of it runs on any other
+  // day, because no other day has elements — scrubbing the axis costs nothing.
+  let recs: SatRecs | null = null
+  let recsDay: string | null = null
+  let points: Array<GroundPoint | null> = []
+  let tick = 0
+
+  const propagate = (): void => {
+    if (!recs) return
+    points = positionsAt(recs, Date.now())
+    tick += 1
+  }
+
+  /** The frame as it is drawn: the propagated layer's marks put where they are right now. */
+  const atInstant = (next: GlobeFrame): GlobeFrame => {
+    const declared = next.instant
+    if (!declared || declared.instant.day !== next.day) {
+      recs = null
+      recsDay = null
+      return next
+    }
+    if (recsDay !== declared.instant.day) {
+      recs = satrecsOf(declared.instant.elements.map((e) => ({ omm: e.omm as never })))
+      recsDay = declared.instant.day
+      propagate()
+    }
+    const at = new Map(declared.instant.elements.map((e, i) => [e.key, i]))
+    return {
+      ...next,
+      tick,
+      layers: next.layers.map((layer) =>
+        layer.id !== declared.layerId
+          ? layer
+          : {
+              ...layer,
+              positions: layer.records.map((record) => {
+                const point = points[at.get(record.key) ?? -1]
+                return point ? ([point.lon, point.lat, point.altKm * 1000] as LonLatAlt) : null
+              }),
+              ...(reduced ? {} : { easeMs: POSITION_INTERVAL_MS }),
+            },
+      ),
+    }
+  }
 
   // The globe should fill the shorter side of its host. In deck.gl's GlobeView the 512 units of
   // zoom 0 are the sphere's CIRCUMFERENCE (the same 512 the mercator world is wide), so its
@@ -455,7 +551,8 @@ export function mountGlobe(options: MountOptions): GlobeHandle {
   ]
 
   const draw = (): void => {
-    deck.setProps({ layers: [...ground(), ...layersFor(frame, ink, emphasisId, options.countries)] })
+    const drawn = atInstant(frame)
+    deck.setProps({ layers: [...ground(), ...layersFor(drawn, ink, drawn.emphasis, options.countries)] })
   }
 
   const hitOf = (info: PickingInfo): GlobeHit | null => {
@@ -469,7 +566,10 @@ export function mountGlobe(options: MountOptions): GlobeHandle {
     parent: host,
     views: new GlobeView({ id: 'globe', resolution: GLOBE_RESOLUTION, controller: { inertia: 250, keyboard: false } }),
     viewState,
-    layers: [...ground(), ...layersFor(frame, ink, emphasisId, options.countries)],
+    layers: (() => {
+      const drawn = atInstant(frame)
+      return [...ground(), ...layersFor(drawn, ink, drawn.emphasis, options.countries)]
+    })(),
     useDevicePixels: Math.min(window.devicePixelRatio || 1, 2),
     getCursor: ({ isDragging, isHovering }) => (isDragging ? 'grabbing' : isHovering ? 'pointer' : 'grab'),
     onViewStateChange: ({ viewState: next, interactionState }) => {
@@ -489,20 +589,31 @@ export function mountGlobe(options: MountOptions): GlobeHandle {
 
   let raf = 0
   let lastFrame = 0
-  const turn = (t: number): void => {
+  let lastPositions = 0
+  const step = (t: number): void => {
     if (destroyed) return
-    raf = requestAnimationFrame(turn)
-    if (paused || interacted) {
+    raf = requestAnimationFrame(step)
+    if (paused) {
       lastFrame = t
       return
     }
-    const dt = lastFrame ? Math.min((t - lastFrame) / 1000, 0.1) : 0
-    viewState = { ...viewState, longitude: ((viewState.longitude + TURN_DEG_PER_S * dt + 540) % 360) - 180 }
-    deck.setProps({ viewState })
+    // The propagated marks keep moving even after the visitor has taken hold of the globe: the turn
+    // is a decoration and stops on touch, the fleet's positions are the record and do not.
+    if (recs && t - lastPositions >= POSITION_INTERVAL_MS) {
+      lastPositions = t
+      propagate()
+      draw()
+    }
+    if (!interacted) {
+      const dt = lastFrame ? Math.min((t - lastFrame) / 1000, 0.1) : 0
+      viewState = { ...viewState, longitude: ((viewState.longitude + TURN_DEG_PER_S * dt + 540) % 360) - 180 }
+      deck.setProps({ viewState })
+    }
     lastFrame = t
   }
-  // Reduced motion: the globe the visitor sees is the one drawn at mount, and it stands still.
-  if (!reduced) raf = requestAnimationFrame(turn)
+  // Reduced motion: the globe the visitor sees is the one drawn at mount, and it stands still —
+  // one propagation, no turn, no easing.
+  if (!reduced) raf = requestAnimationFrame(step)
 
   const resize = new ResizeObserver(() => {
     if (destroyed || interacted) return
@@ -525,7 +636,6 @@ export function mountGlobe(options: MountOptions): GlobeHandle {
     setFrame(next, nextInk) {
       frame = next
       if (nextInk) ink = nextInk
-      emphasisId = next.layers.length > 0 ? (next.layers[next.layers.length - 1]?.id ?? null) : null
       draw()
     },
     flyTo(camera, animate) {

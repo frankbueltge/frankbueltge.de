@@ -17,6 +17,7 @@ import {
   BACK_ALPHA,
   FRONT_ALPHA,
   GLOBE_RESOLUTION,
+  inFront,
   inkFor,
   layersFor,
   pointOf,
@@ -122,6 +123,25 @@ describe('a kind of record becomes a kind of layer', () => {
 })
 
 describe('the emphasis rule', () => {
+  it('takes one layer in the room and a set on the entrance — the rule is arithmetic, not a vow', () => {
+    // ten layers cannot carry ten identities on one sphere; two can, and the hero draws two
+    expect(inFront('sky', 'sky')).toBe(true)
+    expect(inFront('sky', 'ghost-fleet')).toBe(false)
+    expect(inFront('sky', ['sky', 'ghost-fleet'])).toBe(true)
+    expect(inFront('protocol', ['sky', 'ghost-fleet'])).toBe(false)
+    expect(inFront('sky', null)).toBe(false)
+    expect(inFront('sky', undefined)).toBe(false)
+  })
+
+  it('keeps BOTH of the entrance\u2019s layers in their own colours at full weight', () => {
+    const sky = layer('sky', 'points', [point(1)])
+    const ghost = layer('ghost-fleet', 'arcs', [arc(1)], [42, 106, 191])
+    const both = ['sky', 'ghost-fleet']
+    // the sky has no recorded hue of its own and takes the room's live ink; the ghost fleet has one
+    expect(inkFor(sky, INK, both)).toEqual({ rgb: INK.front, alpha: FRONT_ALPHA })
+    expect(inkFor(ghost, INK, both)).toEqual({ rgb: [42, 106, 191], alpha: FRONT_ALPHA })
+  })
+
   it('gives the layer in front its own recorded hue at full weight', () => {
     const ghost = layer('ghost-fleet', 'arcs', [arc(1)], [42, 106, 191])
     expect(inkFor(ghost, INK, 'ghost-fleet')).toEqual({ rgb: [42, 106, 191], alpha: FRONT_ALPHA })
@@ -222,5 +242,45 @@ describe('the deck.gl boundary', () => {
     }
     const deck = Object.keys(pkg.dependencies).filter((name) => name.startsWith('@deck.gl/'))
     expect(deck.sort()).toEqual(['@deck.gl/core', '@deck.gl/layers'])
+  })
+})
+
+describe('the one declared no-clock exception, as the drawing half sees it', () => {
+  const records = [point(1), point(2)]
+
+  it('draws a propagated mark where it is now, and falls back to the committed point where the propagator failed', () => {
+    const moving: FrameLayer = {
+      id: 'sky',
+      kind: 'points',
+      records,
+      positions: [[10, 20, 700000], null],
+      easeMs: 500,
+    }
+    const [scatter] = layersFor({ day: '2026-09-02', layers: [moving], tick: 3 }, INK, 'sky')
+    const props = scatter.props as unknown as {
+      getPosition: (d: LayerRecord, info: { index: number }) => number[]
+      transitions?: { getPosition?: number }
+      updateTriggers: { getPosition?: number }
+    }
+    expect(props.getPosition(records[0], { index: 0 })).toEqual([10, 20, 700000])
+    // the second propagation failed at this instant: the record's own point stands in, not [0, 0]
+    expect(props.getPosition(records[1], { index: 1 })).toEqual([2, 2])
+    expect(props.transitions?.getPosition).toBe(500)
+    expect(props.updateTriggers.getPosition).toBe(3)
+  })
+
+  it('eases nothing when nothing was handed an ease — which is what reduced motion asks for', () => {
+    const still: FrameLayer = { id: 'sky', kind: 'points', records, positions: [[10, 20, 700000], null] }
+    const [scatter] = layersFor({ day: '2026-09-02', layers: [still] }, INK, 'sky')
+    // deck.gl's own default for the prop is null; either way, nothing is being eased
+    expect((scatter.props as unknown as { transitions?: unknown }).transitions).toBeFalsy()
+  })
+
+  it('leaves every layer that declared no instant standing at its record’s own point', () => {
+    const fixed = layer('protocol', 'stations', records)
+    const [scatter] = layersFor({ day: '2026-09-02', layers: [fixed] }, INK, 'protocol')
+    const getPosition = (scatter.props as unknown as { getPosition: (d: LayerRecord, i: { index: number }) => number[] })
+      .getPosition
+    expect(getPosition(records[0], { index: 0 })).toEqual([1, 1])
   })
 })

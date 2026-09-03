@@ -609,11 +609,13 @@ export const NAMING = {
       headRight: (gaps: number) => `${gaps} VESSELS GONE DARK · GLOBAL FISHING WATCH`,
       // no digit in a static string (tiles.test.ts): the propagator's name, SGP4, carries one, so
       // the strip says what it does and the method sheet may name it
-      // Corrected 2026-09-03 with G1 of the living globe: the entrance mounts the one globe
-      // island, which draws the committed frame of each layer rather than propagating orbits in
-      // the visitor's browser. The satellites therefore stand where the elements were taken, and
-      // the strip says that instead of "your now", which would now be a claim the page cannot keep.
-      footLeft: 'ORBITS PROPAGATED FROM CELESTRAK ELEMENTS · POSITIONS AT THE ELEMENTS’ OWN TIME · GAPS FROM SWITCH-OFF TO RETURN',
+      // no digit in a static string (tiles.test.ts): the propagator's name, SGP4, carries one, so
+      // the strip says what it does and the method sheet may name it. "Your now" is exact and stays
+      // exact under G1's shared island: the sky layer hands its committed elements to the drawing
+      // half, which propagates them to the visitor's present twice a second — the one declared
+      // exception to this house's no-clock rule, and the only claim on this globe that is about a
+      // moment rather than about a day.
+      footLeft: 'ORBITS PROPAGATED FROM CELESTRAK ELEMENTS · POSITIONS AT YOUR NOW · GAPS FROM SWITCH-OFF TO RETURN',
       footRight: (elementsDay: string, gapsDay: string) => `ELEMENTS ${elementsDay} · GAPS ${gapsDay}`,
       /** the plate's accessible name and description (src/lib/globe/floor.ts) */
       floorTitle: 'The sky over the record',
@@ -632,7 +634,7 @@ export const NAMING = {
       },
       legend: {
         label: 'What the globe shows',
-        satellite: 'a satellite, where it stood when its elements were taken',
+        satellite: 'a satellite, where it is right now',
         gap: 'a vessel’s dark gap — off to on, in the Field’s hue',
         land: 'Natural Earth coastlines',
       },

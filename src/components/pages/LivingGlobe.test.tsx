@@ -21,7 +21,7 @@ import {
   type PanelKeyHandlers,
 } from '@/lib/dataviz/stepper'
 import type { GlobeManifest } from '@/lib/globe/feeds'
-import LivingGlobe, { layersToFetch, newestDayIndex, parseInk, playAdvances, scrubberYields } from './LivingGlobe'
+import LivingGlobe, { emphasisFor, layersToFetch, newestDayIndex, parseInk, playAdvances, scrubberYields } from './LivingGlobe'
 
 const read = (rel: string) => readFileSync(fileURLToPath(new URL(rel, import.meta.url)), 'utf8')
 
@@ -245,5 +245,49 @@ describe('the drawing half is handed arrays, never a URL', () => {
     const source = read('./LivingGlobe.tsx')
     expect(source).toContain('fetch(entry.href)')
     expect(source).toContain("fetch('/globe/land.json')")
+  })
+})
+
+describe('which layers stand in front', () => {
+  it('names one in the room — the last switched on', () => {
+    expect(emphasisFor(false, ['sky', 'ghost-fleet', 'protocol'])).toBe('protocol')
+    expect(emphasisFor(false, ['sky'])).toBe('sky')
+  })
+
+  it('names both on the compact entrance, so each keeps its own recorded hue', () => {
+    // the emphasis rule is arithmetic about legibility: ten layers cannot carry ten identities on
+    // one sphere, two can, and the hero has drawn exactly two since 2026-09-02
+    expect(emphasisFor(true, ['sky', 'ghost-fleet'])).toEqual(['sky', 'ghost-fleet'])
+  })
+
+  it('names nothing when nothing is on', () => {
+    expect(emphasisFor(false, [])).toBeNull()
+    expect(emphasisFor(true, [])).toBeNull()
+  })
+})
+
+describe('the sky keeps the one declared no-clock exception', () => {
+  it('propagates to the visitor’s present, on the newest frame, from the elements the feed carries', () => {
+    const island = read('./LivingGlobe.tsx')
+    const deck = read('./globe-deck.ts')
+    // the island hands the elements over only while the day on screen is the day they were taken
+    expect(island).toContain("feeds[id]).find((feed) => feed?.instant?.day === day)")
+    // and the drawing half is the only place a clock is read on this globe
+    expect(deck).toContain('positionsAt(recs, Date.now())')
+    expect(deck).toContain('POSITION_INTERVAL_MS')
+    expect(deck).toContain('easeMs: POSITION_INTERVAL_MS')
+    // one copy of satellite.js on this site: the house's own propagator, not a second import
+    expect(deck).toContain("from '@/lib/globe/propagate'")
+    expect(deck).not.toContain("from 'satellite.js'")
+  })
+
+  it('reads no clock anywhere else — the island itself never asks what time it is', () => {
+    const island = read('./LivingGlobe.tsx')
+    const code = island
+      .split('\n')
+      .filter((line) => !line.trim().startsWith('//') && !line.trim().startsWith('*'))
+      .join('\n')
+    expect(code).not.toContain('Date.now()')
+    expect(code).not.toContain('new Date(')
   })
 })

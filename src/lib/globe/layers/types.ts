@@ -59,6 +59,27 @@ export interface LayerFrame {
   note?: string
 }
 
+/** The ONE declared exception to "days come from the data, never from a clock", and the only one
+ *  this globe has. A layer may name a single day — its newest — whose marks are not fixed points
+ *  but positions at an INSTANT, and hand over what a propagator needs to place them at the
+ *  visitor's present. Everything about the exception is declared here rather than assumed by a
+ *  drawing: which day it applies to (and no other), the elements themselves, and the words the
+ *  layer says about why every OTHER day draws nothing at all.
+ *
+ *  The elements travel in the source's own form and this contract makes no claim about it — the
+ *  propagator that reads them is the house's one copy (src/lib/globe/propagate.ts, satellite.js),
+ *  and it is loaded with the drawing half or not at all. `key` matches the record it belongs to,
+ *  so a satellite the build could not place has no mark and no element, and the two lists can
+ *  never drift apart. */
+export interface LayerInstant {
+  /** the only day these elements may be drawn on: the day they were taken */
+  day: string
+  /** one per record of that day's frame, in its order, each carrying the record's own key */
+  elements: Array<{ key: string; omm: Record<string, unknown> }>
+  /** the layer's own words about the exception, for the method sheet and the provenance line */
+  note: string
+}
+
 export type LayerOwner = { line: ExperimentLineId } | { voice: 'meridian' | 'atelier' | 'field' | 'studio' }
 
 export interface GlobeLayer {
@@ -74,6 +95,8 @@ export interface GlobeLayer {
   /** pure, memoised by the builder; an unknown day gives an empty frame and never throws */
   frame(day: string): LayerFrame
   static?: LayerFrame
+  /** the one declared no-clock exception, where a layer has one; see LayerInstant */
+  instant?: LayerInstant
   /** template keys the island fills in — a layer owns no visitor-facing words of its own */
   readout: Record<string, string>
 }

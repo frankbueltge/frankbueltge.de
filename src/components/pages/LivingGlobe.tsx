@@ -21,13 +21,16 @@
 //     change; a visitor who never opens a layer never pays for one. Fetch-then-parse: deck.gl is
 //     never handed a URL.
 //   · TIME COMES FROM THE DATA. The scrubber walks the manifest's day union — the days the archive
-//     itself holds — and starts at the newest of them. It never reads a clock. The sky is the one
-//     declared exception and it declares itself: it draws only on the day its elements were taken,
-//     and on any other day it draws nothing and states, in its own words, the fleet size the
-//     densification series counted that day.
-//   · AT MOST ONE LAYER IS IN FRONT. The last layer switched on wears its own recorded hue; every
-//     other active layer drops to mono ink and keeps its place; the mark a card is open on wears
-//     the second hue. That is the colour rule and the readability rule in one (globe-deck.ts).
+//     itself holds — and starts at the newest of them. It never reads a clock. The sky is the ONE
+//     declared exception and it declares itself: on the day its elements were taken it hands over
+//     those elements, and the drawing half propagates them to the visitor's present, so the fleet
+//     walks its orbits. On any other day it draws nothing and states, in its own words, the fleet
+//     size the densification series counted that day. Scrubbing therefore never propagates.
+//   · IN THE ROOM, AT MOST ONE LAYER IS IN FRONT. The last layer switched on wears its own recorded
+//     hue; every other active layer drops to mono ink and keeps its place; the mark a card is open
+//     on wears the second hue. That is the colour rule and the readability rule in one — it exists
+//     because ten layers cannot carry ten identities on one sphere. The COMPACT entrance draws two,
+//     and two can: there both keep their identity and their full weight (globe-deck.ts).
 //   · NO WORDS AND NO NUMBERS OF ITS OWN. Every sentence is a plain string or a `{placeholder}`
 //     template from src/config/globe-wording.ts; every number is a count the manifest or a fetched
 //     frame carries.
@@ -52,7 +55,7 @@ import {
 } from '@/lib/dataviz/stepper'
 import type { GlobeManifest, LayerFeed, ManifestLayer } from '@/lib/globe/feeds'
 import type { LayerFrame, LayerRecord } from '@/lib/globe/layers/types'
-import type { FrameLayer, GlobeFrame, GlobeHandle, GlobeHit, GlobeInk, RGB } from './globe-deck'
+import type { Emphasis, FrameLayer, GlobeFrame, GlobeHandle, GlobeHit, GlobeInk, RGB } from './globe-deck'
 
 export type { IslandWording as GlobeWording }
 
@@ -121,6 +124,16 @@ export function newestDayIndex(days: readonly string[]): number {
  *  press, and if one were pressed anyway the walk would still stand still. */
 export function playAdvances(playing: boolean, reduced: boolean): boolean {
   return playing && !reduced
+}
+
+/** Which layers stand in front. In the ROOM every registered layer can be on at once, and the
+ *  emphasis rule holds: the last one switched on is in front and the rest drop to mono ink, because
+ *  ten layers cannot carry ten identities on one sphere. The COMPACT entrance draws two, and two
+ *  can — there both keep their own recorded hue and their full weight, which is exactly what the
+ *  hero showed before this island existed. The rule is arithmetic about legibility, not a vow. */
+export function emphasisFor(compact: boolean, active: readonly string[]): Emphasis {
+  if (active.length === 0) return null
+  return compact ? [...active] : active[active.length - 1]!
 }
 
 /** Who owns ←/→ while a card is open: the card, always. The scrubber is a native range input, so
@@ -237,9 +250,19 @@ export default function LivingGlobe({
         hue: room ? hueOf(room, id) : undefined,
       }))
       const mark = selected ? recordsOf(selected.layerId)[selected.index] : undefined
-      return { day, layers, selectedKey: mark?.key ?? null, label }
+      // the one declared no-clock exception, handed over by whichever active layer declared it and
+      // only while the day on screen is the day its elements were taken
+      const declaring = active.map((id) => feeds[id]).find((feed) => feed?.instant?.day === day)
+      return {
+        day,
+        layers,
+        emphasis: emphasisFor(compact, active),
+        selectedKey: mark?.key ?? null,
+        label,
+        ...(declaring?.instant ? { instant: { layerId: declaring.id, instant: declaring.instant } } : {}),
+      }
     },
-    [active, byId, day, recordsOf, selected],
+    [active, byId, compact, day, feeds, recordsOf, selected],
   )
 
   // ── mounting the WebGL half, once the figure is on screen ───────────────────

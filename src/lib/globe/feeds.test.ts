@@ -79,3 +79,41 @@ describe('the manifest is the provenance, the feed is the records', () => {
     for (const layer of LAYERS) expect(feedJson(layer)).toBe(feedJson(layer))
   })
 })
+
+describe('the one declared no-clock exception travels in the feed, not in the manifest', () => {
+  const sky = layerFeed(LAYERS.find((l) => l.id === 'sky')!)
+
+  it('hands over the elements of exactly the marks its newest frame draws, key for key', () => {
+    const instant = sky.instant!
+    expect(instant.day).toBe(sky.asOf)
+    const frame = sky.frames.find((fr) => fr.day === instant.day)!
+    expect(frame.records.length).toBeGreaterThan(0)
+    expect(instant.elements.map((e) => e.key)).toEqual(frame.records.map((r) => r.key))
+    // a satellite the build could not place has neither a mark nor an element: the two lists
+    // cannot drift, which is the whole reason the key travels with the element
+    for (const element of instant.elements) expect(Object.keys(element.omm).length).toBeGreaterThan(0)
+  })
+
+  it('names the day it may be drawn on, and says in words why no other day is drawn at all', () => {
+    const instant = sky.instant!
+    expect(instant.note).toContain(instant.day)
+    expect(instant.note.length).toBeGreaterThan(40)
+    for (const frame of sky.frames) {
+      if (frame.day === instant.day) expect(frame.records.length).toBeGreaterThan(0)
+      else {
+        expect(frame.records).toEqual([])
+        expect(frame.note, `${frame.day} draws nothing and must say why`).toBeTruthy()
+      }
+    }
+  })
+
+  it('is the only layer that has one — an exception that spreads is not an exception', () => {
+    const declaring = LAYERS.filter((l) => l.instant !== undefined).map((l) => l.id)
+    expect(declaring).toEqual(['sky'])
+  })
+
+  it('stays out of the manifest, which a visitor downloads whether they open the layer or not', () => {
+    expect(JSON.stringify(manifest)).not.toContain('MEAN_MOTION')
+    expect(JSON.stringify(manifest)).not.toContain('"instant"')
+  })
+})
