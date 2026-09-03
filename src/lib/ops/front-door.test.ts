@@ -64,15 +64,25 @@ describe('the front page mounts the ops room', () => {
     expect(indexPage).toContain('FrontDoor.astro stays in the repo')
   })
 
-  // The globe under the hero (visual layer, Phase 3b, 2026-09-02): the ops room mounts its frame,
-  // and the frame mounts the island — both by path, so mounted.test.ts sees the island too.
-  it('mounts the entrance globe under the hero, frame and island', () => {
+  // The globe under the hero (visual layer, Phase 3b, 2026-09-02; the one island since G1 of the
+  // living globe, 2026-09-03): the ops room mounts its frame, and the frame mounts the SAME island
+  // the room at /globe mounts — with `compact`, which turns the controls off and nothing else.
+  // Both hops are by path, so mounted.test.ts sees the island too.
+  it('mounts the living globe under the hero, frame and island, in its compact form', () => {
     const opsRoom = read('../../components/pages/OpsRoom.astro')
     const figure = read('../../components/pages/EntranceGlobeFigure.astro')
     expect(opsRoom).toContain("from './EntranceGlobeFigure.astro'")
     expect(opsRoom).toContain('<EntranceGlobeFigure />')
-    expect(figure).toContain("from './EntranceGlobe'")
-    expect(figure).toMatch(/<EntranceGlobe\s+client:idle/)
+    expect(figure).toContain("from './LivingGlobe'")
+    expect(figure).toMatch(/<LivingGlobe\s+client:idle\s+compact/)
+  })
+
+  it('gives the hero the two layers it has always drawn, the ghost fleet in front', () => {
+    // The last id in `defaultLayers` is the layer in front (LivingGlobe.tsx's emphasis rule), and
+    // the ghost fleet is the one this house records a colour for — so the hero keeps the division
+    // it has carried since the globe arrived: the gaps in the Field's hue, the fleet behind them.
+    const figure = read('../../components/pages/EntranceGlobeFigure.astro')
+    expect(figure).toContain("const DEFAULT_LAYERS = ['sky', 'ghost-fleet']")
   })
 })
 
