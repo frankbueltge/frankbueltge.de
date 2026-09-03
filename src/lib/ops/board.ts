@@ -22,6 +22,7 @@ import { WERKE } from '@/data/werke'
 import encounters from '@/data/begegnungen/register.json'
 import attentionMoments from '@/data/attention/moments.json'
 import { lastArchProtocol } from '@/lib/arch/facts'
+import { lastN1Night } from '@/lib/n1/works'
 
 /** Which door id drives which practice namespace — the only mapping the board needs, and the
  *  reason it is written down: the ids are the practices' resident names, the namespaces are the
@@ -162,50 +163,26 @@ function lastMoment(): BoardLast | null {
   }
 }
 
+/** n-1 lands a night, not a work: its shelf holds two works and its record holds twenty nights,
+ *  so the newest night is what this practice last landed — the same reading the Arch row makes
+ *  of its session protocols. The link is the practice's own record surface; the house keeps no
+ *  page per night, because the repository IS the record (its dowry's own arrangement). */
+function lastN1(): BoardLast | null {
+  const night = lastN1Night()
+  return night ? { title: night.title, meta: night.date, href: '/n-1/record.html' } : null
+}
+
 /** The forked nightly line: its newest mirrored work, from the same metadata /error-as-method counts. */
 function lastNightly(): BoardLast | null {
   const work = nightlyLine().works[0]
   return work ? { title: work.title, meta: work.date, href: work.href } : null
 }
 
-export interface SignalEntry {
-  date: string
-  ns: EngineNs
-  /** the practice's own name, from the doors — not a label invented for this strip */
-  practice: string
-  title: string
-  /** the noun that practice uses for what it makes: work · instrument · premiere */
-  kind: string
-  href: string
-  withdrawn: boolean
-}
-
-/**
- * THE SIGNAL LOG — the newest works across the three practices, newest first. The same
- * derivation /works renders, cut to the top few: one register, two views, so a work can never
- * stand on the entrance under one date and in the catalogue under another.
- *
- * Withdrawn works are NOT filtered out. They stay listed and marked, because the record keeps
- * every mark — the rule /works states in its own honesty line, applied here rather than quietly
- * dropped for looking untidy on an entrance.
- */
-export function buildSignalLog(works: readonly LatestWork[] = allWorks(), limit = 5): SignalEntry[] {
-  const doors = new Map(NAMING.doors.items.map((d) => [d.id, d.name]))
-  const nsName: Record<EngineNs, string> = {
-    atelier: doors.get('ulysses') ?? 'The Atelier',
-    field: doors.get('meridian') ?? 'The Field',
-    studio: doors.get('ensemble') ?? 'The Studio',
-  }
-  return works.slice(0, limit).map((w) => ({
-    date: w.date,
-    ns: w.ns,
-    practice: nsName[w.ns],
-    title: w.title,
-    kind: NAMING.opsRoom.signal.kindLabels[w.ns],
-    href: w.href,
-    withdrawn: w.state === 'withdrawn',
-  }))
-}
+/* THE SIGNAL LOG moved out of this module on 2026-09-03. It used to read allWorks() here and
+   show the three ecology practices only; Frank widened it to every house that lands dated work,
+   which needed sources this module has no business knowing about (Arch's mirror, n-1's forms,
+   the lab's shelf). It now lives in src/lib/ops/house-feed.ts — buildHouseFeed() — and this
+   module keeps to the board. */
 
 /**
  * The board, group by group. `works` is injectable so the derivation can be tested against a
@@ -251,7 +228,11 @@ export function buildBoard(snapshot: PulseSnapshot, works: readonly LatestWork[]
         spark,
         // each card beside the ecology states its last landed output from its OWN record — a
         // third card reading the nightly line's would have put another practice's work on it
-        last: spec.card === 'attention' ? lastMoment() : spec.card === 'arch' ? lastArchProtocol() : lastNightly(),
+        last:
+          spec.card === 'attention' ? lastMoment()
+          : spec.card === 'arch' ? lastArchProtocol()
+          : spec.card === 'n-1' ? lastN1()
+          : lastNightly(),
       }
     }),
   }))

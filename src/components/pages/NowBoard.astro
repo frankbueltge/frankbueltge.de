@@ -24,8 +24,9 @@ import type { Locale } from '@/lib/site'
 import { NAMING } from '@/config/naming'
 import pulseData from '@/data/pulse/pulse.json'
 import { formatWeekRange, type PulseSnapshot } from '@/lib/pulse/render'
-import { buildBoard, buildSignalLog } from '@/lib/ops/board'
-import { allWorks } from '@/lib/engines/register'
+import { buildBoard } from '@/lib/ops/board'
+import { buildHouseFeed } from '@/lib/ops/house-feed'
+import SignalLog from '@/components/ops/SignalLog.astro'
 import { readTiles } from '@/lib/ops/tiles'
 import { bars, cells, linePath, ratioBars, smooth3, SPARK_BOX } from '@/lib/ops/viz'
 import { getLatestProtokoll } from '@/lib/protokoll/data'
@@ -37,7 +38,8 @@ const url = (href: string) => (href.startsWith('http') ? href : getRelativeLocal
 
 const pulse = pulseData as PulseSnapshot
 const board = buildBoard(pulse)
-const signal = buildSignalLog(allWorks(), 8)
+// The whole house, newest first — the component pages it seven at a time.
+const signal = buildHouseFeed()
 const tiles = readTiles({ protokoll: await getLatestProtokoll() })
 
 // The provenance foot: the pulse caption the hub has carried since it was built, filled from
@@ -53,7 +55,6 @@ const OPS = NAMING.opsRoom
 const FD = NAMING.frontDoor
 /** the practice a board row or log entry belongs to, as a CSS class carrying its --led */
 const voiceClass = (id: string | null) => (id ? ` ops-voice-${id}` : '')
-const nsVoice: Record<string, string> = { atelier: 'ulysses', field: 'meridian', studio: 'ensemble' }
 
 // The three machine-grown catalogues named under the tile grid — read from NAMING.catalogues so
 // this page cannot list a catalogue the catalogues page does not have. The Atlas is left out
@@ -132,26 +133,8 @@ const catalogues = NAMING.catalogues.items.filter((c) => c.href !== '/atlas')
   <section class="ops-section" id="latest">
     <div class="ops-head">
       <p class="ops-kicker"><b>{OPS.signal.kicker}</b> · {OPS.signal.kickerSub}</p>
-      <a class="ops-headlink" href={url(OPS.signal.link.href)}>{OPS.signal.link.label}</a>
     </div>
-    <ul class="ops-panel ops-log">
-      {signal.map((entry, i) => (
-        /* The stagger comes from a class, not from an inline delay: this site's CSP drops inline
-           style attributes silently, so a per-row delay written that way would have failed
-           without a trace — and drift-check rule 3 catches it before it can. */
-        <li class={`ops-log-row-${Math.min(i, 7)}`}>
-          <a href={url(entry.href)}>
-            <span class="ops-log-date">{entry.date}</span>
-            <span class={`ops-log-ns${voiceClass(nsVoice[entry.ns] ?? null)}`}>{entry.practice}</span>
-            <span class="ops-log-title">
-              {entry.title}
-              {entry.withdrawn && <span class="ops-log-withdrawn">{NAMING.worksRegister.withdrawnLabel}</span>}
-            </span>
-            <span class="ops-log-kind">{entry.kind}</span>
-          </a>
-        </li>
-      ))}
-    </ul>
+    <SignalLog entries={signal} />
     <p class="ops-foot-line">{OPS.signal.foot} <span class="ops-cursor">▍</span></p>
   </section>
 

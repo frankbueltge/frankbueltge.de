@@ -21,8 +21,21 @@ const nowBoard = read('../../components/pages/NowBoard.astro')
 const indexPage = read('../../pages/index.astro')
 
 describe('the front door derives, never types', () => {
-  it('renders the signal log from the tested derivation', () => {
-    expect(frontDoor).toContain('buildSignalLog')
+  it('renders the signal log from the tested derivation, and from the house-wide one', () => {
+    // buildHouseFeed since 2026-09-03: the old buildSignalLog read the three ecology practices
+    // only, so a front door still importing it would be announcing "what landed last" over a
+    // third of the house.
+    expect(frontDoor).toContain('buildHouseFeed')
+    expect(frontDoor).not.toContain('buildSignalLog')
+  })
+
+  it('renders the log through the one component all three surfaces share', () => {
+    // The same twenty lines of markup stood in three files until 2026-09-03; a page that
+    // hand-rolls the log again is a page that can drift away from the other two.
+    for (const [name, src] of [['the front door', frontDoor], ['/now', nowBoard]] as const) {
+      expect(src, name).toContain('SignalLog')
+      expect(src, name).not.toContain('ops-log-date')
+    }
   })
 
   it('compresses the board rows rather than restating them', () => {

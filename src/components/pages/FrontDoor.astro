@@ -29,9 +29,10 @@ import { ECOLOGY_V3 } from '@/config/ecology-v3-wording'
 import pulseData from '@/data/pulse/pulse.json'
 import type { PulseSnapshot } from '@/lib/pulse/render'
 import { buildStackSvg, stackWeekRange } from '@/lib/ops/stack'
-import { buildBoard, buildSignalLog } from '@/lib/ops/board'
+import { buildBoard } from '@/lib/ops/board'
+import { buildHouseFeed } from '@/lib/ops/house-feed'
+import SignalLog from '@/components/ops/SignalLog.astro'
 import { linePath, smooth3, SPARK_BOX } from '@/lib/ops/viz'
-import { allWorks } from '@/lib/engines/register'
 import { inCycle, loadArtifacts, loadCycle } from '@/lib/ecology/v3'
 import '@/styles/ops-room.css'
 import '@/styles/hub-triptych.css'
@@ -52,7 +53,10 @@ const stackSvg = buildStackSvg(pulse)
 const board = buildBoard(pulse)
 
 // The editorial front page: the newest landed work leads, the next few follow as one line each.
-const signal = buildSignalLog(allWorks(), 6)
+// The whole house, newest first (2026-09-03). The front door keeps its lead card — the single
+// newest thing, given the room a headline gets — and the paged log carries everything behind it,
+// so the newest entry is never both the headline and the first row of the list under it.
+const signal = buildHouseFeed()
 const lead = signal[0]
 const rest = signal.slice(1)
 
@@ -67,7 +71,6 @@ const OPS = NAMING.opsRoom
 const FD = NAMING.frontDoor
 /** the practice a chip or log entry belongs to, as a CSS class carrying its --led */
 const voiceClass = (id: string | null) => (id ? ` ops-voice-${id}` : '')
-const nsVoice: Record<string, string> = { atelier: 'ulysses', field: 'meridian', studio: 'ensemble' }
 
 // The four research cards: exactly the overview items that carry their own strings — the two
 // research projects and the two practices beside the ecology. Experiments stay on /experiments.
@@ -181,14 +184,13 @@ const catalogues = NAMING.catalogues.items.filter((c) => c.href !== '/atlas')
   <section class="ops-section" id="front-page">
     <div class="ops-head">
       <p class="ops-kicker"><b>{FD.front.kicker}</b> · {FD.front.kickerSub}</p>
-      <a class="ops-headlink" href={url(OPS.signal.link.href)}>{OPS.signal.link.label}</a>
     </div>
 
     {lead && (
-      <a class={`ops-panel fd-lead${voiceClass(nsVoice[lead.ns] ?? null)}`} href={url(lead.href)}>
+      <a class={`ops-panel fd-lead${voiceClass(lead.voice)}`} href={url(lead.href)}>
         <span class="fd-lead-meta">
           <span class="ops-led"></span>
-          <span>{lead.date} · {lead.practice} · <span class="fd-lead-kind">{lead.kind}</span></span>
+          <span>{lead.date} · {lead.houseName} · <span class="fd-lead-kind">{lead.kind}</span></span>
         </span>
         <span class="fd-lead-title">
           {lead.title}
@@ -197,24 +199,7 @@ const catalogues = NAMING.catalogues.items.filter((c) => c.href !== '/atlas')
       </a>
     )}
 
-    <ul class="ops-panel ops-log fd-log">
-      {rest.map((entry, i) => (
-        /* The stagger comes from a class, not from an inline delay: this site's CSP drops inline
-           style attributes silently, so a per-row delay written that way would have failed
-           without a trace. */
-        <li class={`ops-log-row-${Math.min(i, 7)}`}>
-          <a href={url(entry.href)}>
-            <span class="ops-log-date">{entry.date}</span>
-            <span class={`ops-log-ns${voiceClass(nsVoice[entry.ns] ?? null)}`}>{entry.practice}</span>
-            <span class="ops-log-title">
-              {entry.title}
-              {entry.withdrawn && <span class="ops-log-withdrawn">{NAMING.worksRegister.withdrawnLabel}</span>}
-            </span>
-            <span class="ops-log-kind">{entry.kind}</span>
-          </a>
-        </li>
-      ))}
-    </ul>
+    <SignalLog entries={rest} listClass="fd-log" />
 
     {/* This cycle's artifact trail, one thin strip — the label is made true by the filter
         above, and an empty cycle says so in ECOLOGY_V3's own words rather than hiding. */}

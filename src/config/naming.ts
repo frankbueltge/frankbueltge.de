@@ -190,6 +190,22 @@ export const NAMING = {
         href: '/arch',
         meta: 'under pre-registration · works shown bare · the balance is published regardless',
       },
+      {
+        // Placed beside the ecology on 2026-09-03 (Frank): the house had a door at /n-1 and a
+        // line on the Atelier's station sheet, but no card among the practices it stands next
+        // to — so the one surface that lists what runs here left it out. Founded 2026-08-15 on
+        // the Atelier's own working paper, which is why it is the Atelier's third line and not
+        // a fourth practice of the ecology; its own dowry states that it does not belong to the
+        // ecology, and this card must not imply otherwise. It has no protocol document BY
+        // DESIGN — the dowry says so in as many words — so the card names its law, not a
+        // version number.
+        id: 'n-1',
+        kindLabel: 'Practice',
+        title: 'n-1',
+        line: 'The Atelier’s third line, founded on that practice’s own working paper and given no protocol document on purpose: its repository is its record, served whole as its own surface, and it works one night at a time under a dowry rather than a constitution.',
+        href: '/n-1',
+        meta: 'nightly · the practice named itself Remainder · outside the ecology by its own dowry',
+      },
       { id: 'consensus', kindLabel: 'Experiment' },
       { id: 'society', kindLabel: 'Experiment' },
       { id: 'parallaxe', kindLabel: 'Experiment' },
@@ -406,9 +422,9 @@ export const NAMING = {
      *  the shelf they sit on. */
     href: '/catalogues',
     indexLabel: 'all four →',
-    /* „Two" → „Three" am 2026-07-27: Der Paper-Katalog ist als dritter dazugekommen
-     * (Frank: „datasets für das register und einen weiteren katalog für die sammlung
-     * von papers"). Die Zahl steht ausnahmsweise im Text, weil sie den Satzbau trägt —
+    /* „Two" → „Three" am 2026-07-27: Der Paper-Katalog ist als dritter dazugekommen —
+     * Frank hatte neben dem Datensatz-Register einen zweiten Katalog für Paper verlangt
+     * (Wortlaut privat). Die Zahl steht ausnahmsweise im Text, weil sie den Satzbau trägt —
      * sie wandert in die Prüfung von naming.test.ts, damit sie nicht still veraltet.
      * „Three" → „Four" am 2026-08-01 (Works Register); zugleich musste der Nebensatz
      * ehrlich werden: drei verzeichnen die Welt, einer die eigene Hervorbringung. */
@@ -441,14 +457,17 @@ export const NAMING = {
         description: 'What the three research practices actually read. Each entry is here because a practice reached for it in its own work, and carries the record of that use: who cites it, when it was last picked up, and — where someone wrote one down — why it matters.',
       },
       {
-        /* Neu am 2026-08-01 (Frank: „es fehlt noch eine seite, welche alle werke listet,
-         * welche die ökologie je hervorgebracht hat"). Die Praxen führen je ihren eigenen
+        /* Neu am 2026-08-01 auf Franks Anweisung, eine Seite mit allen je hervorgebrachten
+         * Werken der Ökologie zu führen (Wortlaut privat — stehende Regel seit 2026-08-15:
+         * Franks Nachrichten werden paraphrasiert, nie zitiert). Die Praxen führen je ihren eigenen
          * Raum — Werke, Instrumente, Premieren —, aber nirgends stand der Gesamtbestand.
          * Das Register liest genau dieselben meta.json-Dateien wie die Räume; es ist eine
          * Ansicht, keine zweite Wahrheit. Nicht zu verwechseln mit /work (Singular): das
          * sind die eigenen Projekte, nicht die Hervorbringungen der Praxen. */
         name: 'Works Register',
-        href: '/works',
+        /* The anchor, not /works: the register moved onto /ecology on 2026-09-03 and the old
+           route only redirects here. A card pointing at a redirect makes every visit two hops. */
+        href: '/ecology#register',
         description: 'Every work the three research practices have brought forth, on one page: dated, named by its practice, and linked to the work itself. Withdrawn works stay listed and carry their own withdrawal in the practice’s own words — the record keeps every mark.',
       },
     ],
@@ -582,7 +601,7 @@ export const NAMING = {
       /** condensed from NAMING.sub, per the handoff — the long form still stands on /dossier */
       sub: 'Constant attention, nightly measurement, evidence at scale — and whether machines can research on their own and produce work that holds up. Every claim leads back to its evidence. Git is the archive.',
       primary: { label: 'enter the ecology →', href: '/ecology' },
-      secondary: { label: 'tonight’s works →', href: '/works' },
+      secondary: { label: 'tonight’s works →', href: '/ecology#register' },
     },
 
     /** The instrument's four corner strips; the two that carry numbers are functions. Kept short
@@ -676,17 +695,64 @@ export const NAMING = {
             /* `status` is the practice's own word for its current condition: a window is what its
                pre-registration calls the bounded trial it is in (public/arch/PREREGISTRATION.md). */
             { card: 'arch', repo: 'arch', status: 'WINDOW', resident: 'under pre-registration' },
+            /* Added 2026-09-03: the board named three of the four practices standing beside the
+               ecology. `repo` is the checkout the pulse counts (added to scripts/fetch-pulse.ts
+               the same day); until a snapshot carries its bins the row simply draws no
+               sparkline, which is what repoSeries returns for a repo it cannot find. */
+            { card: 'n-1', repo: 'n-1', status: 'NIGHTLY', resident: 'the Atelier’s third line' },
           ],
         },
       ],
     },
 
+    /**
+     * THE SIGNAL LOG. Widened on 2026-09-03 (Frank) from the three ecology practices to every
+     * house on this site that lands dated work — Error as Method, Arch, n-1 and the lab's own
+     * shelf included. The log's heading had been true of a third of the house; it is now true
+     * of the house.
+     *
+     * The link that used to sit here ("works register →", to /works) is gone with the same
+     * decision: the register moved onto /ecology itself, where the ecology's own catalogue
+     * belongs, and /works redirects there. A heading link to a page that is now an anchor two
+     * sections down would have been a detour dressed as a destination.
+     */
     signal: {
       kicker: 'SIGNAL LOG',
-      kickerSub: 'WHAT LANDED LAST, NEWEST FIRST',
-      link: { label: 'works register →', href: '/works' },
-      /** the practices' own nouns for what they make — the same three /works uses */
-      kindLabels: { atelier: 'work', field: 'instrument', studio: 'premiere' },
+      kickerSub: 'WHAT LANDED LAST ACROSS THE WHOLE HOUSE, NEWEST FIRST',
+      /** each house's own noun for what it makes — never one word flattened across six houses */
+      kindLabels: {
+        atelier: 'work',
+        field: 'instrument',
+        studio: 'premiere',
+        'nightly-line': 'night',
+        arch: 'candidate',
+        'n-1': 'work',
+        experiment: 'experiment',
+        instrument: 'instrument',
+        study: 'study',
+      },
+      /** House names are read from the doors and the overview cards; these stand in only if a
+       *  card is ever removed, so the log degrades to a plain name instead of an id. The lab has
+       *  no card of its own — it is the shelf the cards sit on — so its name lives here. */
+      houseFallback: {
+        atelier: 'The Atelier',
+        field: 'The Field',
+        studio: 'The Studio',
+        'nightly-line': 'Error as Method',
+        arch: 'Arch',
+        'n-1': 'n-1',
+        lab: 'The Lab',
+      },
+      /** the pager under the log — seven rows in view, the rest one click away */
+      pager: {
+        newer: '← newer',
+        older: 'older →',
+        /** "page 2 of 14 · 96 entries" — every number an argument, none written into the string */
+        position: (page: number, pages: number, total: number) =>
+          `page ${page} of ${pages} · ${total} entries`,
+        /** the accessible name of the pager's own region */
+        label: 'signal log pages',
+      },
       foot: 'next sessions: tonight, before dawn UTC',
     },
 

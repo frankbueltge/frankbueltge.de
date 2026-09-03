@@ -1,6 +1,17 @@
 ---
-// /works — the ecology-wide works register (Frank, 2026-08-01: "there is still a page missing
-// that lists ALL works the ecology has ever brought forth").
+// THE WORKS REGISTER — the ecology-wide catalogue, on /ecology itself since 2026-09-03.
+//
+// It stood at /works from 2026-08-01, when Frank asked for a page listing every work the ecology
+// had produced (wording private), until he moved it onto the ecology's own entrance on
+// 2026-09-03: a
+// house's catalogue of what it has produced belongs on the page that is the house, not one click
+// away behind a heading link. /works now redirects to the anchor below, and the catalogues card
+// points at the anchor too — one register, one address.
+//
+// What did NOT change is what it lists. This is the three research practices' catalogue and
+// stays exactly that (src/lib/engines/register.ts). The signal log above it is the wider
+// reading — every house on this site, Arch and n-1 and the lab included — and the two are
+// deliberately different claims rather than one list shown twice at two lengths.
 //
 // Every practice already keeps its own room — /atelier/works, /field/instruments,
 // /studio/works — and each of them speaks that house's language. What did not exist was the
@@ -79,12 +90,12 @@ const quietLink = 'underline decoration-line underline-offset-4 transition-color
 const mark = 'border-line font-mono text-mono-sm font-normal uppercase tracking-[0.12em]'
 ---
 
-<main id="main" class="wr-register mx-auto w-full max-w-4xl flex-1 px-4 py-10 sm:py-14">
-  <header class="mb-10 max-w-3xl">
+<section id="register" class="wr-register mt-16 scroll-mt-24" aria-labelledby="register-title">
+  <header class="mb-8 max-w-3xl">
     <p class={cn(kicker, 'mb-2')}>
       <b class="text-fg-muted">{copy.kicker}</b> · {copy.kickerSub}
     </p>
-    <h1 class="text-h1 font-semibold">{copy.title}</h1>
+    <h2 id="register-title" class="text-h2 font-semibold text-fg">{copy.title}</h2>
     <p class="mt-4 text-body text-fg-muted">{copy.intro}</p>
     <p class="mt-3 text-body text-fg-muted">{copy.honesty}</p>
     {/* The one confusion this route can cause, defused where it happens: /work (singular) is
@@ -192,10 +203,8 @@ const mark = 'border-line font-mono text-mono-sm font-normal uppercase tracking-
     ))}
   </p>
 
-  <p class="mt-2 font-mono text-mono text-fg-faint">
-    {copy.entranceNote.lead}{' '}
-    <a href={copy.entranceNote.href} class={quietLink}>{copy.entranceNote.label}</a>
-  </p>
+  {/* The note that used to send a reader from /works to the entrance's own strip is gone: the
+      register IS on the entrance now, and a link from a page to itself is not a way out. */}
 
   {/* Provenance: the directories this page was built from, named so the list can be checked
       against the repository without reading the code. */}
@@ -210,7 +219,7 @@ const mark = 'border-line font-mono text-mono-sm font-normal uppercase tracking-
     </p>
     <p class="mt-2 max-w-[80ch] font-mono text-mono-sm leading-relaxed text-fg-faint">{copy.provenanceTail}</p>
   </footer>
-</main>
+</section>
 
 <style>
   /* PALETTE: ecology-voices (src/lib/dataviz/palette.ts) — validated 2026-07-31, --pairs all,

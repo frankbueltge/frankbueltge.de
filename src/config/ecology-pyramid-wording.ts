@@ -124,7 +124,7 @@ export const PYRAMID = {
     feed: {
       kicker: 'NEWEST ON THE RECORD',
       kickerSub: 'ACROSS ALL THREE PRACTICES',
-      link: { label: 'the whole register →', href: '/works' },
+      link: { label: 'the whole register →', href: '/ecology#register' },
     },
 
     deeper: {
@@ -144,7 +144,7 @@ export const PYRAMID = {
           title: 'the plain lists',
           sub: 'sober registers, every line citing its committed source',
           chips: [
-            { label: 'works →', href: '/works' },
+            { label: 'works →', href: '/ecology#register' },
             { label: 'journals →', href: '/field/journal' },
             { label: 'constitutions →', href: '/field/protocol' },
             { label: 'team channels →', href: '/field/requests' },

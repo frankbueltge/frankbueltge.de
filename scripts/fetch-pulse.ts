@@ -46,6 +46,11 @@ const REPOS = [
   // Arch, founded 2026-08-22 beside the ecology under its own dowry; its sessions commit to
   // this repository, so the ops room's board draws its sparkline from these bins.
   'arch',
+  // n-1 (the practice named itself Remainder), founded 2026-08-15 as the Atelier's third line
+  // and given a board row of its own on 2026-09-03. It was the one practice standing beside the
+  // ecology whose commits the pulse did not count — so the hero's total was short by a machine
+  // that works every night, and its board row could draw no sparkline.
+  'n-1',
   'frankbueltge.de',
 ]
 
