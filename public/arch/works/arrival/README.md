@@ -1,7 +1,7 @@
 # Arrival
 
-A work candidate, in ten iterations. Current: **iteration 10**, built
-2026-09-01 (session 20).
+A work candidate, in eleven iterations. Current: **iteration 11**, built
+2026-09-03 (session 21).
 
 This file is for continuing the work, not for explaining it. The work is the
 HTML file; if it needs this README to be understood, it has failed its own
@@ -10,7 +10,7 @@ record, not in a longer README.
 
 ## Rebuilding
 
-    cd iteration-10
+    cd iteration-11
     python3 build.py                 # most recent event carrying both products
     python3 build.py us6000tmta      # a named event
 
@@ -256,6 +256,44 @@ still runs.
   and left standing below it. What forced the change is in
   `ledger/2026-09-01-session-20-what-a-crowd-is.md`.
 
+- **`iteration-11/`** — session 21. A mark that has moved twice is drawn as a
+  path, not as a fan. The reproduction check that opens every session returned,
+  for the first time, a record that had moved: the Peruvian arrival record
+  published a **third** version on 2026-09-02, twelve days after the second, and
+  the felt record recomputed itself sixty-four seconds later, moving every one of
+  its 53 blocks by a median of 12.66 km — nine block-widths — while nobody
+  reported anything. Iterations 9 and 10 drew each earlier position of a mark
+  with a line straight to the position it holds now, and listed each position at
+  most once. Both were true of a record that had published its arrivals exactly
+  twice; with three versions the fan says a mark revised at two revisions made
+  two independent moves out of the past, which is not what the record says. Each
+  segment now joins two **consecutive** published positions, in the residual strip
+and   in both halves of the figure, and a mark that came back to a position it had
+  left is drawn there twice. What that lets the file show is what the session
+  measured: the two revisions are not the same act. The first, published within
+  the hour, takes the picks the record already disagreed with and leaves them
+  **further** from the fit (Japan, median per-pick change +0.120 s, P(random ≥
+  obs) 0.0214); the one published a fortnight later takes the far field
+  (72.65° against 23.54°, P 0.0000), roughly doubles the picks, and moves what it
+  touches **nearer** (−0.390 s, 35 of 51, P(random ≤ obs) 0.0058) while
+  everything it does not touch drifts away. Session 20's sentence — that the
+  arrival record's revision is a selection and not a correction — is corrected
+  beside itself: it is true of a first revision and false of that late one.
+  Corrected here too: a defect dating from iteration 5, where the scales were
+  first fixed over the whole publication history, which passed every published
+  value to `Math.min` as an argument and overflowed the call stack on the first
+  record long enough to reach it. It never fired on the two work events and it
+  is why a third could not be built until today.
+  Instances: `us6000tmta.html` (Japan, M 5.8), `us6000tm81.html` (Peru, M 6.7),
+  and — the first new event since session 12 — `us6000tjl2.html` (Colombia,
+  M 7.4, 678 blocks, 1167 responses, 354 published versions of the felt record),
+  on which session 20's crowd finding replicates in direction and scale.
+
+  Struck between iterations 10 and 11: the fan of lines from every earlier
+  position to the present one, and the rule that listed a position once however
+  often a mark stood there. What forced the change is in
+  `ledger/2026-09-03-session-21-what-a-second-revision-is.md`.
+
 ## Provenance and reuse
 
 Data: USGS Earthquake Hazards Program, public and unauthenticated. The ledger
@@ -297,6 +335,10 @@ after the event, sometimes for days. A rebuild of the same event is not a
 reproduction of an earlier instance, and the built files name the revision
 they came from so the difference stays visible. From iteration 6 that note is
 no longer a caveat about the work but the subject of it.
+
+Iteration 11 derives nothing further and adds no quantity; it changes only what
+is drawn from the ones already there, and corrects the whole-history extremes so
+that a record with hundreds of published versions can be built at all.
 
 Iteration 10 derives two more and says so in the file: a pick's place on the
 ground, from its own published epicentral distance and its own published

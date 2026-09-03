@@ -428,3 +428,65 @@ policy, and say in its record which form you chose and why. Nothing in the windo
 this entry; Arrival and its iterations stand as pre-registered.
 
 **Status:** direction, effective after the window · nothing changes before 2026-09-21.
+
+---
+
+## entry — 2026-09-03, session 21 (Arch) — the record moved, iteration 10 is defective, and a second scheduled day is missing
+
+Notification and one question. Nothing below says what any version of the work
+shows; that distinction was drawn on 2026-08-25 and is kept. This entry exists
+under the rule published on 2026-08-30: a version has been found defective, and
+there is one new fact only you can classify.
+
+**1. The candidate is now `works/arrival/iteration-11/`.** Three built instances
+for the first time — the same two events, and one new one. If a reception probe
+is being arranged, arrange it on 11.
+
+**2. Iteration 10 carries two defects, both found today, both corrected in 11,
+and neither a withdrawal.** Iterations 1 to 10 stay frozen unedited, as the
+dowry requires, and are wrong where they are wrong in the open.
+
+  * One of its sentences about itself is now false, because **one of the two
+    records this work is built on published a new version on 2026-09-02** and
+    what it did is not what the sentence says revisions do. The work's arithmetic
+    is sound and its committed instances stand.
+  * A defect dating from **iteration 5** stops the work being built at all on a
+    record with a long publication history — it never fired on the two events the
+    work was built for, and fired on the first larger one tried. The committed
+    instances of iterations 5 to 10 are unaffected: they open.
+
+  What both are, and what iteration 11 changes, is in
+  `record/2026-09-03-session-21.md` and
+  `ledger/2026-09-03-session-21-what-a-second-revision-is.md`, and is
+  deliberately not repeated here.
+
+**3. The one question, and one line answers it: there is no session of
+2026-09-02.** Sessions ran on the 28th, 29th, 30th, 31st and the 1st; no
+protocol in `record/` is dated to the 2nd and no commit carries that date. This
+is the **second** missing scheduled day, after 2026-08-27, and a second
+occurrence is a new fact rather than a restatement of the question of
+2026-08-28. The two kinds and their consequences are unchanged: a **schedule
+change**, which the calendar answer of 2026-08-23 says requires an entry from
+you; or an **outage**, which is documented evidence under inconclusive condition
+(c). Were the 2nd a change you made, or something that failed? If nothing is
+said, the record carries both the 27th and the 2nd to the balance as
+unclassified, in those words.
+
+**4. One reading recorded, so that correcting it costs you a line.** Your two
+notes of today are read here as they are written in this file: information, and
+a direction that takes effect for this practice **after 2026-09-21**. Nothing in
+the window changes on their account, `PREREGISTRATION.md` is untouched, and no
+work of this window will be rebuilt in the new means. The commit message
+accompanying the second note reads as though it took effect from this practice's
+next session; the entry in this file is what the practice follows, because this
+file is where your speech acts live.
+
+**5. Nothing else is asked.** The three questions standing since 2026-08-25 and
+2026-08-28 — the reception probe's lead time, who decides that the "understands
+unaided" condition is met, and the classification of 2026-08-27 — are not
+restated and will not be restated unprompted. The consequence recorded then is
+unchanged: if I6 does not run before 2026-09-21, the work triad cannot hold on
+any work, and by this window's own definitions that is failed, not inconclusive.
+Today is day 12 of 30, and this is the twenty-first dated protocol.
+
+Nothing has left this repository and nothing will without a dated go-ahead here.
