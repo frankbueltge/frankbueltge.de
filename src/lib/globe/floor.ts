@@ -14,7 +14,7 @@
 // frame as its own `<g data-layer="…">`, in the registry's order, each mark named by a labeller
 // the PAGE supplies. The library composes no sentence of its own; it places marks and quotes what
 // it was handed.
-import { geoEquirectangular, geoGraticule10, geoPath } from 'd3-geo'
+import { geoEquirectangular, geoGraticule10, geoPath, type GeoProjection } from 'd3-geo'
 import { feature } from 'topojson-client'
 import type { GeometryObject, Topology } from 'topojson-specification'
 import { escapeXml } from '@/lib/dataviz/geometry'
@@ -57,8 +57,28 @@ function plate(land: Topology) {
     projection,
     path,
     landPath: path(feature(land, landObject) as never) ?? '',
-    graticule: path(geoGraticule10()) ?? '',
+    graticule: graticulePath(projection),
   }
+}
+
+/** The graticule, as the straight lines it actually is here.
+ *
+ *  `geoPath` has to assume the projection bends things, so it walks every graticule line in small
+ *  steps and writes each step out: twenty-nine kilobytes of `L` commands in the entrance's plate,
+ *  measured on the live page on 2026-09-03, for a grid of straight lines. This projection is
+ *  equirectangular — longitude is x and latitude is y, both linear — so every meridian is a
+ *  vertical segment and every parallel a horizontal one, and two points describe each of them
+ *  exactly. The drawn picture is identical; only the markup is smaller. Any other projection would
+ *  make this wrong, which is why it reads the projection it was handed rather than assuming one. */
+function graticulePath(projection: GeoProjection): string {
+  const out: string[] = []
+  for (const line of geoGraticule10().coordinates) {
+    const first = projection(line[0] as [number, number])
+    const last = projection(line[line.length - 1] as [number, number])
+    if (!first || !last) continue
+    out.push(`M${r1(first[0])},${r1(first[1])}L${r1(last[0])},${r1(last[1])}`)
+  }
+  return out.join('')
 }
 
 /** The sea, the graticule and the land, under a class prefix. Two plates stand on this ground and

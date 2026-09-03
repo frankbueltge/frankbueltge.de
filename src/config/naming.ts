@@ -626,15 +626,16 @@ export const NAMING = {
     sky: {
       headLeft: (satellites: number) => `THE SKY · ${satellites} EARTH-OBSERVATION SATELLITES`,
       headRight: (gaps: number) => `${gaps} VESSELS GONE DARK · GLOBAL FISHING WATCH`,
-      // no digit in a static string (tiles.test.ts): the propagator's name, SGP4, carries one, so
-      // the strip says what it does and the method sheet may name it
-      // no digit in a static string (tiles.test.ts): the propagator's name, SGP4, carries one, so
-      // the strip says what it does and the method sheet may name it. "Your now" is exact and stays
-      // exact under G1's shared island: the sky layer hands its committed elements to the drawing
-      // half, which propagates them to the visitor's present twice a second — the one declared
-      // exception to this house's no-clock rule, and the only claim on this globe that is about a
-      // moment rather than about a day.
-      footLeft: 'ORBITS PROPAGATED FROM CELESTRAK ELEMENTS · POSITIONS AT YOUR NOW · GAPS FROM SWITCH-OFF TO RETURN',
+      // No digit in a static string (tiles.test.ts): the propagator's name, SGP4, carries one, so
+      // the strip says what it does and the method sheet may name it.
+      //
+      // It said "POSITIONS AT YOUR NOW" while the hero mounted the living globe's island, which
+      // propagated the committed elements to the visitor's present twice a second. Since the front
+      // door stopped carrying a globe (2026-09-03) this panel is the build-time plate alone, and
+      // the plate stands where the elements stood when they were taken — so the strip says that
+      // instead. The no-clock exception did not become false; it moved to /globe, which is the only
+      // surface that still propagates.
+      footLeft: 'ORBITS PROPAGATED FROM CELESTRAK ELEMENTS · POSITIONS WHERE THE ELEMENTS WERE TAKEN · GAPS FROM SWITCH-OFF TO RETURN',
       footRight: (elementsDay: string, gapsDay: string) => `ELEMENTS ${elementsDay} · GAPS ${gapsDay}`,
       /** the plate's accessible name and description (src/lib/globe/floor.ts) */
       floorTitle: 'The sky over the record',
@@ -652,8 +653,11 @@ export const NAMING = {
         watch: { label: 'the watchtower →', href: '/lab/ueberflug-studie' },
       },
       legend: {
-        label: 'What the globe shows',
-        satellite: 'a satellite, where it is right now',
+        // "What the globe shows" was true while the hero mounted the living globe's island. It is
+        // a plate now (2026-09-03), and a plate shows one moment: the one its elements were taken
+        // at. Both lines were rewritten with it rather than left to overclaim.
+        label: 'What the plate shows',
+        satellite: 'a satellite, where it stood when its elements were taken',
         gap: 'a vessel’s dark gap — off to on, in the Field’s hue',
         land: 'Natural Earth coastlines',
       },

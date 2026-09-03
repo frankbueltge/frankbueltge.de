@@ -8,6 +8,32 @@ draw, not the raw topology). **Data:** `src/data/globe/`. **Code:** `src/lib/glo
 (`/globe/model.json` was retired with G1: the orbital elements the sky's newest frame is propagated
 from now ride in that layer's own feed, so nothing read the separate model feed any more.)
 
+## 2026-09-03, later that day — the front door gives the globe back
+
+The owner's decision (wording private, paraphrased): the entrance does not need the turning
+globe. It stood there from the visual layer's third phase (2026-09-02) until this line, first as
+its own island and then, from G1, as the room's island in a compact form.
+
+What the entrance carries now is the build-time plate it always drew underneath: the whole sky and
+the water on one equirectangular sheet, every satellite where its elements put it, every dark gap
+from switch-off to return, with the longest gaps beside it as a list and a link into `/globe`. The
+globe is not gone from the house; it is where it is the work.
+
+Three claims followed the instrument out, because a plate cannot make them: the foot strip no
+longer says positions are at the reader's present but where the elements were taken, the legend
+says the same, and the palette record stops naming the hero as a surface its slots serve. The one
+declared no-clock exception now lives at `/globe` alone, which is the only surface that still
+propagates.
+
+What it cost the front door, measured on the same build: the document fell from half a megabyte to
+two hundred and eighty kilobytes decoded, the plate from a hundred and thirty-seven to a hundred
+and nine (the graticule is drawn as the straight lines it is in this projection, one move and one
+line each, instead of a densified path), and a phone that lands on the entrance now fetches no
+drawing half, no archive and no land topology, and spends nothing propagating orbits it cannot
+show. The narrow-screen gate stays where it is: `/globe` is a room, and a room on a phone still
+waits to be asked.
+
+
 ## 1. Occasion
 
 The entrance globe of 2026-09-02 draws two records on a sphere: the earth-observation fleet and

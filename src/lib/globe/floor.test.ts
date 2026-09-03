@@ -124,3 +124,24 @@ describe('the living globe’s floor', () => {
     expect(layered).not.toMatch(/\d\.\d{2,}"/)
   })
 })
+
+describe('the graticule costs what a grid of straight lines costs', () => {
+  // Measured on the live entrance on 2026-09-03: `geoPath` walked every graticule line in small
+  // steps and wrote each one out — twenty-nine kilobytes of a hundred-and-thirty-seven-kilobyte
+  // plate, for a grid that is straight in this projection. Two points per line describe it
+  // exactly here, and this test is what keeps the densified version from coming back.
+  const grat = /<path class="sky-grat" d="([^"]*)"/.exec(svg)![1]
+
+  it('writes one move and one line per graticule line, and nothing between', () => {
+    const moves = grat.match(/M/g)!.length
+    const lines = grat.match(/L/g)!.length
+    expect(moves).toBe(lines)
+    expect(moves).toBeGreaterThan(20)
+    expect(moves).toBeLessThan(60)
+  })
+
+  it('stays a fraction of what the densified path cost', () => {
+    // the densified graticule of the same grid was just under thirty thousand characters
+    expect(grat.length).toBeLessThan(2500)
+  })
+})

@@ -681,7 +681,7 @@ export const PALETTES: readonly PaletteSet[] = [
   {
     id: 'globe-voices',
     description:
-      'The living globe’s three identity slots (/globe, and the compact form under the hero). ' +
+      'The living globe’s three identity slots, at /globe (the front door carried a compact form of it until 2026-09-03). ' +
       'The globe’s colour policy is an EMPHASIS rule before it is a palette, and the rule is ' +
       'arithmetic about legibility rather than a vow of poverty. IN THE ROOM, where every ' +
       'registered layer can be switched on at once, at most one layer stands IN FRONT and wears a ' +

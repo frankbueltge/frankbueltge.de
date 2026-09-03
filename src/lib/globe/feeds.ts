@@ -47,8 +47,15 @@ export interface ManifestLayer {
   total: number
   /** the size of this layer's own feed, as bytes of UTF-8 JSON — a visitor's cost, stated */
   bytes: number
-  /** where the records are */
+  /** the size of the newest-day feed, in the same units — what a first paint actually costs */
+  newestBytes: number
+  /** where the records are: every day this layer holds */
   href: string
+  /** where the newest day alone is. A globe draws ONE day at a time, and both surfaces open on the
+   *  newest one, so this is what a first paint needs; the whole archive above is fetched only when
+   *  a visitor walks the days. (Added 2026-09-03 after the entrance's mobile audit: the hero was
+   *  pulling seventy-six kilobytes of archive to draw a single night.) */
+  newestHref: string
 }
 
 export interface GlobeManifest {
@@ -80,6 +87,24 @@ export function layerFeed(layer: GlobeLayer): LayerFeed {
 
 export const feedJson = (layer: GlobeLayer): string => JSON.stringify(layerFeed(layer))
 
+/** The same feed with one frame in it: the newest day the layer holds. `days` is left whole, so a
+ *  reader of this file still learns what the layer has — only the records are cut down to the day
+ *  a globe actually opens on. A static layer has no days and keeps carrying its one fixed frame. */
+export function newestFeed(layer: GlobeLayer): LayerFeed {
+  const whole = layerFeed(layer)
+  const newest = layer.days.at(-1)
+  return {
+    ...whole,
+    frames: newest ? [frameOf(layer, newest)] : [],
+  }
+}
+
+export const newestJson = (layer: GlobeLayer): string => JSON.stringify(newestFeed(layer))
+
+export function newestBytes(layer: GlobeLayer): number {
+  return encoder.encode(newestJson(layer)).length
+}
+
 export function feedBytes(layer: GlobeLayer): number {
   return encoder.encode(feedJson(layer)).length
 }
@@ -104,7 +129,9 @@ export function buildManifest(model: LivingGlobe = buildLivingGlobe(), layers: r
       counts: model.counts[layer.id] ?? {},
       total: model.totals[layer.id] ?? 0,
       bytes: feedBytes(layer),
+      newestBytes: newestBytes(layer),
       href: `/globe/layers/${layer.id}.json`,
+      newestHref: `/globe/layers/${layer.id}.newest.json`,
     })),
   }
 }
