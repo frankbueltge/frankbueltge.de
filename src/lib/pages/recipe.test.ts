@@ -211,11 +211,11 @@ describe('the entrance on the frame’s tokens', () => {
     expect(opsRoomCss).toMatch(/\.ops-room \.lift:hover[\s\S]{0,80}--ops-line: var\(--color-line-lift\);/)
   })
 
-  it('the globe panel and the pulse instrument keep their own interiors', () => {
-    // 2d re-tokenised the room around them; what they DRAW is theirs (Phase 3b).
+  it('the pulse instrument keeps its own interior', () => {
+    // 2d re-tokenised the room around it; what it DRAWS is its own (Phase 3b). The sky panel stood
+    // beside it under the same rule until the owner took it off the front page (2026-09-03); its
+    // stylesheet stays for the figure the repo keeps, dated and unmounted.
     const room = SURFACES.OpsRoom
-    expect(room).toContain("from './EntranceGlobeFigure.astro'")
-    expect(room).toContain('<EntranceGlobeFigure />')
     expect(room).toMatch(/class="ops-panel ops-instrument"/)
     expect(opsRoomCss).toMatch(/\.ops-sky-stage \{/)
   })
