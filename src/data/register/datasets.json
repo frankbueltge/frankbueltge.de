@@ -1,5 +1,55 @@
 [
  {
+  "id": "api-cloudflare-com",
+  "titel": "api.cloudflare.com",
+  "host": "api.cloudflare.com",
+  "adressen": [
+   "https://api.cloudflare.com/client/v4/graphql"
+  ],
+  "zugriff_url": "https://api.cloudflare.com/client/v4/graphql",
+  "geprueft": false,
+  "pruef_status": 400,
+  "pruef_vermerk": "Identifier antwortet mit HTTP 400",
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own trending pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/trending/src/trending/audience.py"
+  ],
+  "benutzt_von": [
+   "trending"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
+  "id": "api-coingecko-com",
+  "titel": "api.coingecko.com",
+  "host": "api.coingecko.com",
+  "adressen": [
+   "https://api.coingecko.com/api/v3/search/trending"
+  ],
+  "zugriff_url": "https://api.coingecko.com/api/v3/search/trending",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own trending pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/trending/src/trending/sources/coingecko.py"
+  ],
+  "benutzt_von": [
+   "trending"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
   "id": "api-eia-gov",
   "titel": "api.eia.gov",
   "host": "api.eia.gov",
@@ -21,6 +71,32 @@
   ],
   "benutzt_von": [
    "protokoll"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
+  "id": "api-stackexchange-com",
+  "titel": "api.stackexchange.com",
+  "host": "api.stackexchange.com",
+  "adressen": [
+   "https://api.stackexchange.com/2.3/questions",
+   "https://api.stackexchange.com/docs/questions"
+  ],
+  "zugriff_url": "https://api.stackexchange.com/2.3/questions",
+  "geprueft": false,
+  "pruef_status": 400,
+  "pruef_vermerk": "Identifier antwortet mit HTTP 400",
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own trending pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/trending/src/trending/sources/stackoverflow.py"
+  ],
+  "benutzt_von": [
+   "trending"
   ],
   "verify_status": "toVerify"
  },
@@ -124,6 +200,31 @@
   ],
   "benutzt_von": [
    "consensus"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
+  "id": "bsky-app",
+  "titel": "Bluesky",
+  "host": "bsky.app",
+  "adressen": [
+   "https://bsky.app"
+  ],
+  "zugriff_url": "https://bsky.app",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own trending pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/trending/src/trending/sources/bluesky.py"
+  ],
+  "benutzt_von": [
+   "trending"
   ],
   "verify_status": "toVerify"
  },
@@ -408,6 +509,58 @@
   "verify_status": "toVerify"
  },
  {
+  "id": "dev-to",
+  "titel": "dev.to",
+  "host": "dev.to",
+  "adressen": [
+   "https://dev.to/api/articles?top=1&per_page=30",
+   "https://dev.to/api/articles?top=30&per_page=1000"
+  ],
+  "zugriff_url": "https://dev.to/api/articles?top=1&per_page=30",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own trending pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/trending/src/trending/discover.py",
+   "pipelines/trending/src/trending/sources/devto.py"
+  ],
+  "benutzt_von": [
+   "trending"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
+  "id": "developers-forem-com",
+  "titel": "API | Forem Docs",
+  "host": "developers.forem.com",
+  "adressen": [
+   "https://developers.forem.com/api"
+  ],
+  "zugriff_url": "https://developers.forem.com/api",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own trending pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/trending/src/trending/sources/devto.py"
+  ],
+  "benutzt_von": [
+   "trending"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
   "id": "earthquake-usgs-gov",
   "titel": "earthquake.usgs.gov",
   "host": "earthquake.usgs.gov",
@@ -535,6 +688,31 @@
   "verify_status": "toVerify"
  },
  {
+  "id": "gamma-api-polymarket-com",
+  "titel": "gamma-api.polymarket.com",
+  "host": "gamma-api.polymarket.com",
+  "adressen": [
+   "https://gamma-api.polymarket.com/markets"
+  ],
+  "zugriff_url": "https://gamma-api.polymarket.com/markets",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own trending pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/trending/src/trending/sources/polymarket.py"
+  ],
+  "benutzt_von": [
+   "trending"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
   "id": "gateway-api-globalfishingwatch-org",
   "titel": "gateway.api.globalfishingwatch.org",
   "host": "gateway.api.globalfishingwatch.org",
@@ -639,6 +817,86 @@
   "verify_status": "toVerify"
  },
  {
+  "id": "hacker-news-firebaseio-com",
+  "titel": "Sign in - Google Accounts",
+  "host": "hacker-news.firebaseio.com",
+  "adressen": [
+   "https://hacker-news.firebaseio.com/v0"
+  ],
+  "zugriff_url": "https://hacker-news.firebaseio.com/v0",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own trending pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/trending/src/trending/sources/hackernews.py"
+  ],
+  "benutzt_von": [
+   "trending"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
+  "id": "hn-algolia-com",
+  "titel": "hn.algolia.com",
+  "host": "hn.algolia.com",
+  "adressen": [
+   "https://hn.algolia.com/api/v1/search_by_date",
+   "https://hn.algolia.com/api/v1/search_by_date?query={quoted",
+   "https://hn.algolia.com/api/v1/search_by_date?tags=story"
+  ],
+  "zugriff_url": "https://hn.algolia.com/api/v1/search_by_date",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own trending pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/trending/src/trending/discover.py",
+   "pipelines/trending/src/trending/tracker.py"
+  ],
+  "benutzt_von": [
+   "trending"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
+  "id": "huggingface-co",
+  "titel": "huggingface.co",
+  "host": "huggingface.co",
+  "adressen": [
+   "https://huggingface.co/api/models?sort=trendingScore&direction=-1&limit=20",
+   "https://huggingface.co/docs/hub/api",
+   "https://huggingface.co/{model_id"
+  ],
+  "zugriff_url": "https://huggingface.co/api/models?sort=trendingScore&direction=-1&limit=20",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own trending pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/trending/src/trending/sources/huggingface.py"
+  ],
+  "benutzt_von": [
+   "trending"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
   "id": "journals-sub-uni-hamburg-de",
   "titel": "Science Tracking über Transformationsverträge und Wissenschaftsplattformen: Vom Beifang zum Hauptziel | kommunikation@gesellschaft",
   "host": "journals.sub.uni-hamburg.de",
@@ -660,6 +918,114 @@
   ],
   "benutzt_von": [
    "beifang"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
+  "id": "lobste-rs",
+  "titel": "lobste.rs",
+  "host": "lobste.rs",
+  "adressen": [
+   "https://lobste.rs/hottest.json"
+  ],
+  "zugriff_url": "https://lobste.rs/hottest.json",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own trending pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/trending/src/trending/sources/lobsters.py"
+  ],
+  "benutzt_von": [
+   "trending"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
+  "id": "mastodon-social",
+  "titel": "mastodon.social",
+  "host": "mastodon.social",
+  "adressen": [
+   "https://mastodon.social/api/v1/trends/links?limit=20",
+   "https://mastodon.social/api/v1/trends/tags?limit=20"
+  ],
+  "zugriff_url": "https://mastodon.social/api/v1/trends/links?limit=20",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own trending pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/trending/src/trending/sources/mastodon.py"
+  ],
+  "benutzt_von": [
+   "trending"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
+  "id": "news-google-com",
+  "titel": "news.google.com",
+  "host": "news.google.com",
+  "adressen": [
+   "https://news.google.com/rss",
+   "https://news.google.com/rss/search",
+   "https://news.google.com/rss/search?q={quoted",
+   "https://news.google.com/rss?hl=en-US&gl=US&ceid=US:en"
+  ],
+  "zugriff_url": "https://news.google.com/rss",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own trending pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/trending/src/trending/sources/google_news.py",
+   "pipelines/trending/src/trending/tracker.py"
+  ],
+  "benutzt_von": [
+   "trending"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
+  "id": "news-ycombinator-com",
+  "titel": "news.ycombinator.com",
+  "host": "news.ycombinator.com",
+  "adressen": [
+   "https://news.ycombinator.com/item?id={item",
+   "https://news.ycombinator.com/item?id={item_id"
+  ],
+  "zugriff_url": "https://news.ycombinator.com/item?id={item",
+  "geprueft": false,
+  "pruef_status": null,
+  "pruef_vermerk": "Adresse ist eine Vorlage mit Platzhalter, nicht abrufbar",
+  "zugang_gesperrt": false,
+  "nur_vorlage": true,
+  "relevanz": "Retrieved by this ecology's own trending pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/trending/src/trending/discover.py",
+   "pipelines/trending/src/trending/sources/hackernews.py",
+   "pipelines/trending/src/trending/tracker.py"
+  ],
+  "benutzt_von": [
+   "trending"
   ],
   "verify_status": "toVerify"
  },
@@ -715,6 +1081,31 @@
   "verify_status": "toVerify"
  },
  {
+  "id": "polymarket-com",
+  "titel": "polymarket.com",
+  "host": "polymarket.com",
+  "adressen": [
+   "https://polymarket.com/market/{slug"
+  ],
+  "zugriff_url": "https://polymarket.com/market/{slug",
+  "geprueft": false,
+  "pruef_status": null,
+  "pruef_vermerk": "Adresse ist eine Vorlage mit Platzhalter, nicht abrufbar",
+  "zugang_gesperrt": false,
+  "nur_vorlage": true,
+  "relevanz": "Retrieved by this ecology's own trending pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/trending/src/trending/sources/polymarket.py"
+  ],
+  "benutzt_von": [
+   "trending"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
   "id": "population-un-org",
   "titel": "World Population Prospects",
   "host": "population.un.org",
@@ -736,6 +1127,32 @@
   ],
   "benutzt_von": [
    "protokoll"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
+  "id": "public-api-bsky-app",
+  "titel": "public.api.bsky.app",
+  "host": "public.api.bsky.app",
+  "adressen": [
+   "https://public.api.bsky.app/xrpc/app.bsky.unspecced.getTrends",
+   "https://public.api.bsky.app/xrpc/app.bsky.unspecced.getTrends?limit=25"
+  ],
+  "zugriff_url": "https://public.api.bsky.app/xrpc/app.bsky.unspecced.getTrends",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own trending pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/trending/src/trending/sources/bluesky.py"
+  ],
+  "benutzt_von": [
+   "trending"
   ],
   "verify_status": "toVerify"
  },
@@ -765,6 +1182,32 @@
   "verify_status": "toVerify"
  },
  {
+  "id": "rss-marketingtools-apple-com",
+  "titel": "RSS Builder",
+  "host": "rss.marketingtools.apple.com",
+  "adressen": [
+   "https://rss.marketingtools.apple.com/",
+   "https://rss.marketingtools.apple.com/api/v2/{store"
+  ],
+  "zugriff_url": "https://rss.marketingtools.apple.com/",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own trending pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/trending/src/trending/sources/appstore.py"
+  ],
+  "benutzt_von": [
+   "trending"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
   "id": "staticcdn-duckduckgo-com",
   "titel": "staticcdn.duckduckgo.com",
   "host": "staticcdn.duckduckgo.com",
@@ -786,6 +1229,33 @@
   ],
   "benutzt_von": [
    "beifang"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
+  "id": "store-steampowered-com",
+  "titel": "store.steampowered.com",
+  "host": "store.steampowered.com",
+  "adressen": [
+   "https://store.steampowered.com/api/featuredcategories",
+   "https://store.steampowered.com/api/featuredcategories?cc=us&l=en",
+   "https://store.steampowered.com/app/{app_id"
+  ],
+  "zugriff_url": "https://store.steampowered.com/api/featuredcategories",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own trending pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/trending/src/trending/sources/steam.py"
+  ],
+  "benutzt_von": [
+   "trending"
   ],
   "verify_status": "toVerify"
  },
@@ -865,6 +1335,33 @@
   "verify_status": "toVerify"
  },
  {
+  "id": "trends-google-com",
+  "titel": "trends.google.com",
+  "host": "trends.google.com",
+  "adressen": [
+   "https://trends.google.com/trending/rss",
+   "https://trends.google.com/trending/rss?geo={geo",
+   "https://trends.google.com/trends/explore?q={quote_plus(title"
+  ],
+  "zugriff_url": "https://trends.google.com/trending/rss",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own trending pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/trending/src/trending/sources/google_trends.py"
+  ],
+  "benutzt_von": [
+   "trending"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
   "id": "web-archive-org",
   "titel": "Wayback Machine",
   "host": "web.archive.org",
@@ -899,7 +1396,9 @@
   "adressen": [
    "https://wikimedia.org/api/rest_v1/",
    "https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article",
-   "https://wikimedia.org/api/rest_v1/metrics/pageviews/top/en.wikipedia.org/all-access"
+   "https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia/",
+   "https://wikimedia.org/api/rest_v1/metrics/pageviews/top/en.wikipedia.org/all-access",
+   "https://wikimedia.org/api/rest_v1/metrics/pageviews/top/{lang"
   ],
   "zugriff_url": "https://wikimedia.org/api/rest_v1/",
   "geprueft": false,
@@ -907,16 +1406,19 @@
   "pruef_vermerk": "Zugang erfordert Anmeldung oder Schlüssel (HTTP 403)",
   "zugang_gesperrt": true,
   "nur_vorlage": false,
-  "relevanz": "Retrieved by this ecology's own protokoll pipeline on every run.",
+  "relevanz": "Retrieved by this ecology's own protokoll and trending pipeline on every run.",
   "relevanz_herkunft": "gebrauch",
   "weg": "praxis",
   "aufnahmegrund": "benutzt",
   "fundstellen": [
    "pipelines/protokoll/src/protokoll/adapters/attention.py",
-   "pipelines/protokoll/src/protokoll/halbwertszeit/pageviews.py"
+   "pipelines/protokoll/src/protokoll/halbwertszeit/pageviews.py",
+   "pipelines/trending/src/trending/sources/wikipedia.py",
+   "pipelines/trending/src/trending/tracker.py"
   ],
   "benutzt_von": [
-   "protokoll"
+   "protokoll",
+   "trending"
   ],
   "verify_status": "toVerify"
  },
@@ -1045,6 +1547,31 @@
   ],
   "benutzt_von": [
    "redaction"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
+  "id": "www-coingecko-com",
+  "titel": "www.coingecko.com",
+  "host": "www.coingecko.com",
+  "adressen": [
+   "https://www.coingecko.com/en/coins/{coin_id"
+  ],
+  "zugriff_url": "https://www.coingecko.com/en/coins/{coin_id",
+  "geprueft": false,
+  "pruef_status": null,
+  "pruef_vermerk": "Adresse ist eine Vorlage mit Platzhalter, nicht abrufbar",
+  "zugang_gesperrt": false,
+  "nur_vorlage": true,
+  "relevanz": "Retrieved by this ecology's own trending pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/trending/src/trending/sources/coingecko.py"
+  ],
+  "benutzt_von": [
+   "trending"
   ],
   "verify_status": "toVerify"
  },
@@ -1364,17 +1891,71 @@
   "verify_status": "toVerify"
  },
  {
+  "id": "www-producthunt-com",
+  "titel": "www.producthunt.com",
+  "host": "www.producthunt.com",
+  "adressen": [
+   "https://www.producthunt.com/feed"
+  ],
+  "zugriff_url": "https://www.producthunt.com/feed",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own trending pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/trending/src/trending/sources/producthunt.py"
+  ],
+  "benutzt_von": [
+   "trending"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
+  "id": "www-reddit-com",
+  "titel": "www.reddit.com",
+  "host": "www.reddit.com",
+  "adressen": [
+   "https://www.reddit.com/r/popular/",
+   "https://www.reddit.com/r/popular/.rss?geo_filter=GLOBAL",
+   "https://www.reddit.com/search.rss",
+   "https://www.reddit.com/search.rss?q={quoted"
+  ],
+  "zugriff_url": "https://www.reddit.com/r/popular/",
+  "geprueft": false,
+  "pruef_status": 403,
+  "pruef_vermerk": "Zugang erfordert Anmeldung oder Schlüssel (HTTP 403)",
+  "zugang_gesperrt": true,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own trending pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/trending/src/trending/sources/reddit.py",
+   "pipelines/trending/src/trending/tracker.py"
+  ],
+  "benutzt_von": [
+   "trending"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
   "id": "www-state-gov",
-  "titel": "Technical Difficulties",
+  "titel": "www.state.gov",
   "host": "www.state.gov",
   "adressen": [
    "https://www.state.gov/policy-issues/climate-and-environment/"
   ],
   "zugriff_url": "https://www.state.gov/policy-issues/climate-and-environment/",
-  "geprueft": true,
-  "pruef_status": 200,
-  "pruef_vermerk": null,
-  "zugang_gesperrt": false,
+  "geprueft": false,
+  "pruef_status": 403,
+  "pruef_vermerk": "Zugang erfordert Anmeldung oder Schlüssel (HTTP 403)",
+  "zugang_gesperrt": true,
   "nur_vorlage": false,
   "relevanz": "Retrieved by this ecology's own redaction pipeline on every run.",
   "relevanz_herkunft": "gebrauch",
@@ -1385,6 +1966,31 @@
   ],
   "benutzt_von": [
    "redaction"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
+  "id": "www-techmeme-com",
+  "titel": "www.techmeme.com",
+  "host": "www.techmeme.com",
+  "adressen": [
+   "https://www.techmeme.com/feed.xml"
+  ],
+  "zugriff_url": "https://www.techmeme.com/feed.xml",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own trending pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/trending/src/trending/sources/techmeme.py"
+  ],
+  "benutzt_von": [
+   "trending"
   ],
   "verify_status": "toVerify"
  },
@@ -1501,7 +2107,8 @@
   "titel": "www.wikidata.org",
   "host": "www.wikidata.org",
   "adressen": [
-   "https://www.wikidata.org/"
+   "https://www.wikidata.org/",
+   "https://www.wikidata.org/w/api.php"
   ],
   "zugriff_url": "https://www.wikidata.org/",
   "geprueft": false,
@@ -1509,15 +2116,17 @@
   "pruef_vermerk": "Zugang erfordert Anmeldung oder Schlüssel (HTTP 403)",
   "zugang_gesperrt": true,
   "nur_vorlage": false,
-  "relevanz": "Retrieved by this ecology's own protokoll pipeline on every run.",
+  "relevanz": "Retrieved by this ecology's own protokoll and scripts pipeline on every run.",
   "relevanz_herkunft": "gebrauch",
   "weg": "praxis",
   "aufnahmegrund": "benutzt",
   "fundstellen": [
-   "pipelines/protokoll/src/protokoll/verluste.py"
+   "pipelines/protokoll/src/protokoll/verluste.py",
+   "scripts/build-globe-seats.ts"
   ],
   "benutzt_von": [
-   "protokoll"
+   "protokoll",
+   "scripts"
   ],
   "verify_status": "toVerify"
  }
