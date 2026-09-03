@@ -258,6 +258,17 @@ describe('the drawing half is handed arrays, never a URL', () => {
     expect(source).toContain('fetch(entry.href)')
     expect(source).toContain("fetch('/globe/land.json')")
   })
+
+  it('fetches the country polygons once, and only when a country layer is switched on (G3)', () => {
+    const source = read('./LivingGlobe.tsx')
+    // the shapes travel the way a layer's records do: asked for once, when they are first needed,
+    // and served ready to draw — the island decodes no topology of its own, because a border is
+    // geometry and geometry belongs to a tested library (src/lib/globe/shapes.ts)
+    expect(source).toContain("fetch('/globe/countries.json')")
+    expect(source).toContain("byId.get(id)?.kind === 'countries'")
+    expect(source).toContain('countriesAskedRef')
+    expect(source).not.toContain("from 'topojson-client'")
+  })
 })
 
 describe('which layers stand in front', () => {

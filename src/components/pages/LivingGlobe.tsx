@@ -60,7 +60,16 @@ import {
 } from '@/lib/dataviz/stepper'
 import type { GlobeManifest, LayerFeed, ManifestLayer } from '@/lib/globe/feeds'
 import type { LayerFrame, LayerRecord } from '@/lib/globe/layers/types'
-import type { Emphasis, FrameLayer, GlobeFrame, GlobeHandle, GlobeHit, GlobeInk, RGB } from './globe-deck'
+import type {
+  CountryShapes,
+  Emphasis,
+  FrameLayer,
+  GlobeFrame,
+  GlobeHandle,
+  GlobeHit,
+  GlobeInk,
+  RGB,
+} from './globe-deck'
 
 export type { IslandWording as GlobeWording }
 
@@ -365,6 +374,34 @@ export default function LivingGlobe({
   const latest = React.useRef({ buildFrame, recordsOf, showHover, openMark })
   latest.current = { buildFrame, recordsOf, showHover, openMark }
 
+  // ── the country polygons: one fetch, the first time a country layer is on (G3) ───────────────
+  // A `countries` layer fills polygons, and the drawing half holds no geography beyond the land it
+  // was handed at mount. The shapes therefore travel the way a layer's records do: fetched once,
+  // when a country layer is first switched on, and never again — a visitor who never switches one
+  // on never pays for a border. They reach the drawing half by filling the object the mount was
+  // handed, which is the same object every draw reads, and one setFrame puts them on screen. A
+  // fetch that fails leaves the fills undrawn and every mark in the table under the plate.
+  const countriesRef = React.useRef<CountryShapes>({ byIso3: {} })
+  const countriesAskedRef = React.useRef(false)
+  React.useEffect(() => {
+    if (countriesAskedRef.current) return
+    if (!active.some((id) => byId.get(id)?.kind === 'countries')) return
+    countriesAskedRef.current = true
+    let cancelled = false
+    fetch('/globe/countries.json')
+      .then((res) => (res.ok ? (res.json() as Promise<CountryShapes>) : Promise.reject(new Error(String(res.status)))))
+      .then((shapes) => {
+        if (cancelled) return
+        countriesRef.current.byIso3 = shapes.byIso3
+        const room = rootRef.current
+        if (handleRef.current && room) handleRef.current.setFrame(latest.current.buildFrame(), readInk(room))
+      })
+      .catch(() => undefined)
+    return () => {
+      cancelled = true
+    }
+  }, [active, byId])
+
   // The heavy module is imported the first time the figure comes near the viewport, and never
   // before: `useOnScreen` starts true so the server render and the first client render agree,
   // which makes it the right hook for pausing and the wrong one for starting.
@@ -414,6 +451,9 @@ export default function LivingGlobe({
           frame: latest.current.buildFrame(),
           ink: () => readInk(root),
           reduced: stillReduced,
+          // filled by the country-polygon effect above, whenever it resolves — before or after
+          // this mount; the drawing half reads this same object on every draw
+          countries: countriesRef.current,
           onHover: (hit) => latest.current.showHover(hit),
           onSelect: (hit) => {
             const index = latest.current.recordsOf(hit.layerId).findIndex((r) => r.key === hit.record.key)
