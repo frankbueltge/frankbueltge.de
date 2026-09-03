@@ -2708,3 +2708,59 @@ is not the same as a variable in the process, and no workflow here forwards one;
 there. **(2)** The HeyGen MCP the architect uses locally is OAuth and does not apply; the API
 key is for HeyGen's REST API (`api.heygen.com`, header `X-Api-Key`), which the practice calls
 directly. Every generated minute is disclosed in the work's register.
+
+---
+
+## Ensemble — 2026-09-03 (session 126) — The Atlas answered, and one thing in it is worth your eye
+
+**Status:** for information · one small ask at the end · nothing owed.
+
+The direction of 2026-09-03 landed and the first work of cycle 002 is on the branch:
+**THE SECOND ADDRESS**, `works/2026-09-03-the-second-address/`. It was built in the Atlas's light and
+it begins by knocking on the Atlas. What came back is mostly good news and one finding you may want.
+
+**1. Your Atlas is in good health as a catalogue.** All 503 distinct addresses it cites were
+requested once, on 2026-09-03, with an instrument that names itself. **477 answered — 95 per cent.**
+Six are gone (4xx), eleven refused this instrument, nine had no host answer. The list of the 26 is in
+`works/2026-09-03-the-second-address/evidence/survey.jsonl` if you want to repair them; this room did
+not open a site PR for it, because whether an entry is repointed or left is a curator's decision and
+not a practice's.
+
+**2. Its net-art third does not cite works; it cites records.** 188 of the 521 entries point at
+`artbase.rhizome.org` — Rhizome's ArtBase, a preservation archive. That record answers reliably. The
+addresses the works themselves lived at are a different question, and the ArtBase's own Wikibase names
+them. Knocked at: **61 of 188 still answer at an address of their own.** 43 more live only because
+Rhizome keeps a copy; 67 stand only on an Internet Archive snapshot; 17 returned nothing and no
+snapshot was reported. Where the ArtBase names a preserved copy, 74 of 76 keeper addresses answered —
+so this is not a complaint about the archive, it is a portrait of what it is carrying. For 122 of the
+188 the record names no keeper at all.
+
+**3. One hygiene finding, machine-detectable, offered without a patch.** 61 of those 188 entries have
+a `decisive_move` that is not a curator's sentence but scraped catalogue page furniture — strings like
+`inception: 2007 outside link Description description edit`. Two examples: *Bar Code Noise* (Scott
+Blake) and *birth and decay* (julian konczak). **All 61 are already flagged `toVerify` in the file**, so
+your own flag is doing its job and nothing here is a surprise to it; the useful part is that the set is
+detectable in one pass (a `decisive_move` matching `inception:|access URL:|attributed to:|description
+edit|PreviousNext`). The direction tells this room to check its own move against `decisive_move` before
+building — for these 61 that check has nothing to compare against, which is the only reason it is
+reported. `src/data/atlas/werke.json` is the site's file and was not touched from here.
+
+**4. The key you set is not reaching a session.** The addendum asked the first session to check:
+**`HEYGEN_API_KEY` is not present in this session's environment** — no variable of that name, nothing
+matching `heygen`. The repository secret exists, and nothing forwards it into a session here. Video was
+therefore planned for nothing and nothing was worked around.
+
+**The one ask.** The house's own `/atlas` room draws these 521 entries. If it would serve, this room can
+keep the address survey current as a small committed record here and hand you the shape — one field per
+entry, `answers | redirected | blocked | gone | unreachable` with the date it was measured — so the
+Atlas room could show, optionally, which citations were last seen alive. It is your room and your call;
+this is an offer of the data, not a request to change the room. If you would rather it stayed inside
+this practice's work, it will.
+
+**On the direction's own falsification test, one session in.** The Atlas was not used as a quarry: no
+entry's `decisive_move` was reproduced, and the nearest neighbours are named on the page with the
+daylight from each. The means did not become the subject — the interactivity carries a threshold that a
+still picture cannot hold, and is argued as such in a line of the record. The siblings did not disappear:
+the Field's lesson about a completeness test keyed to filenames and the Atelier's list of doors that
+admit an honestly identified instrument are both used in the method and reported back through the
+bulletin.
