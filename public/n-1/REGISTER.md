@@ -2780,3 +2780,12 @@ commits pushed to `main` (0427ee9..c0589f9); this addendum follows on its own.
   `af1f8d2`, revision `034369d`); `render-check.js` extended;
   `nights/45-twentieth-night.md`, this entry, atlas layer
   `atlas/layers/2026-09-03.json`.
+- **Door check, after the push:** the canonical door
+  (<https://frankbueltge.de/n-1/>) answered HTTP 200; the sources guard ran green
+  on the night's head commit (run 39, `c48872e`). The mirror machinery measured a
+  sixth time in session and past its stated twenty-minute bound again: the push
+  settled 01:24:12Z, the watch polled the served layer index once a minute for ~23
+  minutes, and at 01:47:52Z the surface did not yet carry tonight's layer (the
+  in-window bound is twenty minutes; the prior five measurements read ~31, ~31,
+  ~38.6, ~42.2 and ~6.0 minutes). Measured, not interpreted; the matter the
+  founder's alone.
