@@ -1,0 +1,109 @@
+name: Cycle sentinel
+
+# Who notices that a cycle is over? (Frank's order, 2026-09-03, wording private.)
+#
+# Cycle 001 opened 2026-08-30 with a budget of three to five sessions per practice. Four days
+# later all three had presented and published their closing reports, the counts stood at ten,
+# eight and eleven, and the Atelier had spent three consecutive nights writing "empty tick:
+# cycle presented, nothing owed" — a practice correctly idling in a cycle nobody had closed.
+# Nothing was broken and nothing was red. The cycle is turned by hand on purpose (v3 decision,
+# 2026-08-30: "advanced by the architect or a site session, never by a practice"), and the
+# hand-turned step simply had no reminder attached to it.
+#
+# This watcher supplies the reminder and nothing else. It follows the Ecology sentinel's rule
+# rather than opening a seventh stream of issues: ONE standing issue, edited in place, closed
+# the night it is no longer true. And it keeps the limit that matters —
+#
+#   IT NEVER TURNS THE CYCLE. `contents: read`, no write to src/data/ecology/cycle.json.
+#
+# — because WHICH question the next cycle carries is a judgement no script can make. Cycle 002
+# proved that the day this was built: its question was changed, not repeated. The answer to
+# nobody noticing is to notice, not to automate the decision.
+
+on:
+  schedule:
+    # After the Ecology sentinel (06:45 UTC) and before the morning digest (06:30 UTC next day),
+    # so a finished cycle is already standing when the digest reads the house.
+    - cron: '50 6 * * *'
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: cycle-sentinel
+  cancel-in-progress: false
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+
+      # The presentations live in public/<practice>/presentations/, mirrored by the integrate
+      # workflows into this repository — so the verdict reads committed state here and needs no
+      # network and no engine checkout.
+      - name: Read the cycle clock
+        id: watch
+        run: |
+          set -euo pipefail
+          npx tsx scripts/ecology/cycle-watch.ts > "$RUNNER_TEMP/verdict.json" 2> "$RUNNER_TEMP/lines.txt"
+          cat "$RUNNER_TEMP/lines.txt"
+          {
+            echo "### Cycle sentinel"
+            echo
+            sed 's/^/- /' "$RUNNER_TEMP/lines.txt"
+          } >> "$GITHUB_STEP_SUMMARY"
+          echo "due=$(jq -r '(.lines | length) > 0' "$RUNNER_TEMP/verdict.json")" >> "$GITHUB_OUTPUT"
+
+      - name: One standing issue, edited in place
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          TITLE="Cycle sentinel — the running cycle is finished"
+          NUM=$(gh issue list --repo "$REPO" --state open --search "$TITLE in:title" \
+                  --json number,title --jq "[.[] | select(.title == \"$TITLE\")][0].number // empty")
+
+          if [ "${{ steps.watch.outputs.due }}" != "true" ]; then
+            # An open issue should mean an open decision. A turned cycle closes it.
+            if [ -n "$NUM" ]; then
+              gh issue close "$NUM" --repo "$REPO" \
+                --comment "The cycle moved: $(jq -r '"cycle \(.cycle), phase \(.phase)"' "$RUNNER_TEMP/verdict.json"). Nothing due."
+              echo "closed #$NUM"
+            else
+              echo "nothing due, and no issue exists"
+            fi
+            exit 0
+          fi
+
+          {
+            jq -r '.lines[] | "**" + . + "**"' "$RUNNER_TEMP/verdict.json"
+            echo
+            echo "| practice | sessions | presented | past budget |"
+            echo "|---|---|---|---|"
+            jq -r '.standings[] | "| \(.practice) | \(.sessions) | \(if .presented then "yes" else "not yet" end) | \(if .over > 0 then "+\(.over)" else "—" end) |"' \
+              "$RUNNER_TEMP/verdict.json"
+            echo
+            echo "Turning the cycle is a hand step and stays one: edit \`src/data/ecology/cycle.json\` —"
+            echo "raise \`cycle\`, set \`opened\`, and decide what question the next cycle carries."
+            echo "This watcher reads that file and never writes it; the question is not a thing a"
+            echo "script may choose. Closing this issue without turning the cycle will reopen it"
+            echo "tomorrow, because the condition, not the issue, is what is true."
+            echo
+            echo "_Cycle sentinel, $(date -u '+%Y-%m-%d %H:%M UTC'). Derivation: \`src/lib/ecology/cycle-watch.ts\` (under test)._"
+          } > "$RUNNER_TEMP/body.md"
+
+          if [ -n "$NUM" ]; then
+            gh issue edit "$NUM" --repo "$REPO" --body-file "$RUNNER_TEMP/body.md"
+            echo "edited #$NUM in place"
+          else
+            gh issue create --repo "$REPO" --title "$TITLE" --body-file "$RUNNER_TEMP/body.md"
+          fi

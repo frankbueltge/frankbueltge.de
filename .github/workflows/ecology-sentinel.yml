@@ -18,8 +18,11 @@ name: Ecology sentinel
 
 on:
   schedule:
-    # After the practices' nightly sessions have landed (field auto-lands 04:00–06:30 UTC) and
-    # before the morning digest at 07:58 UTC, so the digest reads a settled house.
+    # After the practices' nightly sessions have landed (field auto-lands 04:00–06:30 UTC).
+    # NOTE (corrected 2026-09-03): this said "before the morning digest at 07:58 UTC". The digest
+    # runs at 06:30 UTC and this sweep at 06:45 — it runs AFTER, not before, and the digest reads
+    # yesterday's sweep. Left as it stands rather than moved: changing a cron changes behaviour,
+    # and the digest computes what it needs itself. The comment was the wrong half.
     - cron: '45 6 * * *'
   workflow_dispatch: {}
 

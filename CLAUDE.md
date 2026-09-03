@@ -55,8 +55,15 @@ Abschluss-Report als Artefakt. Maßgeblich: `docs/design/2026-08-30-research-eco
 **Lab-Linie: Gegenmessung / Counter-Measurement** — messen, was Macht im Dunkeln lässt,
 und nachprüfbar machen. Erstes Instrument „Consensus" misst orchestrierten Konsens
 (`docs/superpowers/specs/2026-06-22-gegenmessung-echo-design.md`). Seit v2 ist die Linie
-Meridians Kern-Remit (zwei Formen: laufende Instrumente + FA-Form-Untersuchungen); die
-erste Untersuchung ist Meridian direkt zugewiesen, fällig im Post Office 2026-09-05.
+Meridians Kern-Remit (zwei Formen: laufende Instrumente + FA-Form-Untersuchungen).
+**Für Cycle 002 RUHT dieses Remit (Frank, 2026-09-03, Wortlaut privat)** — nicht abgeschafft,
+datiert ausgesetzt, und es kehrt zurück, wenn nichts anderes gesagt wird. Anlass: In Cycle 001
+zogen drei stehende Aufträge Meridian gleichzeitig von der Zyklusfrage weg (dieses Remit, die
+Direktive vom 2026-09-01 im eigenen Kanal, und eine beauftragte Feldkarte, deren zehn Optionen
+sämtlich beobachtend sind), während nur die Zyklusfrage auf E2E-Automation zeigte — fünf von
+sieben Artefakten landeten beim response ledger. Cycle 002 fragt Meridian **konstruktiv**:
+E2E-Automation der KI-Forschung bauen und messen, wo sie bricht. Eine Praxis kann nicht
+zugleich Fähigkeit bauen und fremde Fähigkeit auditieren und an beidem gemessen werden.
 
 **Die Experimente: kein Dachtitel, aber vier Linien** (Frank, 2026-07-12 / 2026-08-22):
 „Die Akte der Gegenwart" bleibt als Gruppierung zurückgezogen, und einen Gesamttitel bekommt

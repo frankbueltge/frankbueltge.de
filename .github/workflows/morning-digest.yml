@@ -22,6 +22,16 @@ jobs:
   digest:
     runs-on: ubuntu-latest
     steps:
+      # Checkout and node added 2026-09-03 for the cycle line below. The job had neither and
+      # ran entirely on `gh`; without them the cycle derivation would have failed behind its
+      # own `|| true` and the section would simply never have appeared — a watchdog that is
+      # quietly absent is worse than one that is missing.
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
       - name: Compose and post the digest
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -45,6 +55,25 @@ jobs:
             elif [ "$REPO" = "ulysses" ]; then BODY+="- **$REPO**: keine Landung (projektbasierte Praxis, v5 — kein nächtlicher Takt geschuldet)"$'\n'
             else BODY+="- **$REPO**: keine Session gelandet"$'\n'; fi
           done
+
+          # 1b) Der Zyklus-Stand (2026-09-03). Der Digest zählte Sessions und meldete rote
+          # Läufe, aber nichts las die Zyklus-Uhr: Cycle 001 stand vier Tage lang fertig
+          # präsentiert offen, während zwei Praxen weiter Artefakte hineinlegten und die
+          # dritte "nothing owed" schrieb. Die Ableitung liegt unter Test
+          # (src/lib/ecology/cycle-watch.ts); der Digest rendert nur ihre Zeilen und
+          # schweigt, solange der Zyklus normal läuft.
+          if CYCLE_JSON=$(npx tsx scripts/ecology/cycle-watch.ts 2>/dev/null); then
+            CYCLE=$(printf '%s' "$CYCLE_JSON" | jq -r '(.lines // []) | map("- " + .) | join("\n")')
+            if [ -n "$CYCLE" ]; then
+              BODY+=$'\n'"### Der Zyklus"$'\n'
+              BODY+="$CYCLE"$'\n'
+            fi
+          else
+            # Say it rather than swallow it: a silent failure here reads exactly like a
+            # healthy cycle, which is the one thing this section exists to distinguish.
+            BODY+=$'\n'"### Der Zyklus"$'\n'
+            BODY+="- ⚠ Zyklus-Stand nicht lesbar — \`scripts/ecology/cycle-watch.ts\` ist gescheitert."$'\n'
+          fi
 
           # 2) Rote Läufe der letzten 24h in diesem Repo
           BODY+=$'\n'"### Rote Läufe (24h)"$'\n'
