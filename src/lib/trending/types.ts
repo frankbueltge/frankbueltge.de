@@ -1,10 +1,18 @@
 /** Mirror of the two contracts the trending pipeline commits (pipelines/trending):
  *  `src/data/trending/YYYY-MM-DD.json` (`trending-day/1`) and
- *  `src/data/trending/audience/YYYY-MM-DD.json` (`trending-audience/1`).
+ *  `src/data/trending/audience/YYYY-MM-DD.json` (`trending-audience/1` or `/2`).
  *  The zod schemas in ./schema.ts are the validating twin; keep both in step. */
 
 export type SourceStatus = 'ok' | 'partial' | 'unavailable'
 export type AudienceStatus = 'ok' | 'unavailable'
+
+/** Both audience contracts stay readable: `/1` carried a second, browser-beacon half beside
+ *  the edge count; `/2` (from 2026-09-03) counts at the edge alone and adds the country and
+ *  referring-host dimensions. The two `/1` days already committed are never rewritten, so
+ *  everything here reads both — see docs/design/2026-09-02-common-ground.md §12. */
+export type AudienceContract = 'trending-audience/1' | 'trending-audience/2'
+
+export const AUDIENCE_CONTRACTS: readonly AudienceContract[] = ['trending-audience/1', 'trending-audience/2'] as const
 
 export type AudienceClass =
   | 'browser'
@@ -133,8 +141,18 @@ export interface AudienceEdge {
   paths: Partial<Record<PathKind, number>> | null
   classes: Partial<Record<AudienceClass, number>> | null
   bots: AudienceBot[]
+  /** Top ten visitor countries by requests (`trending-audience/2` and later). `null` means the
+   *  dimension is not available on this plan — the reason is in `extra_note`. Never a zero. */
+  countries?: Record<string, number> | null
+  /** Top ten referring hosts by requests, same rule: `null` is an absence, not an emptiness. */
+  referers?: Record<string, number> | null
+  /** Why `countries` / `referers` are null, when they are; empty otherwise. */
+  extra_note?: string
 }
 
+/** The retired second half of `trending-audience/1`: a client-side beacon, which cannot see a
+ *  reader that runs no JavaScript and so could never answer this page's question. Kept as a
+ *  type because the two `/1` days that carry it still render (decision of 2026-09-03). */
 export interface AudienceUmami {
   status: AudienceStatus
   note: string
@@ -144,9 +162,10 @@ export interface AudienceUmami {
 }
 
 export interface TrendingAudience {
-  $contract: 'trending-audience/1'
+  $contract: AudienceContract
   day: string
   generated_at: string
   edge: AudienceEdge
-  umami: AudienceUmami
+  /** Absent from `trending-audience/2` on: the measurement is taken at the edge alone. */
+  umami?: AudienceUmami
 }

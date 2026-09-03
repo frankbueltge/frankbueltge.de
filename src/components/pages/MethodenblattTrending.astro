@@ -31,6 +31,8 @@ const corpusClause = ledgerSources
 const limits = [
   'The audience counts are sampled at the edge, not a census: Cloudflare returns them with an average sample interval, which is committed beside the numbers so a reader can see what a count is made of.',
   'Every audience class rests on a self-declaration. A user agent can say anything; the classification believes the string, so a crawler that disguises itself is counted as whatever it claims to be.',
+  'The edge analytics of this plan are retained for seven days, so the committed dated files are the only long record of who read the page — a gap in them cannot be filled afterwards, and none is ever backfilled.',
+  'Two of the edge dimensions are not on every plan: the visitor countries and the referring hosts. Where they are missing the file says so with a reason and the page prints it — an absence, never a count of zero.',
   'The novelty reading — first seen, days hot — only becomes meaningful once the archive has fourteen days in it. Before that, a topic looks new because the archive is new.',
   'A crossing is a coincidence of labels, not a claim about intent, influence or causality. Two platforms carrying the same words on the same morning is exactly that, and nothing more.',
   'The sources lean English, with some German through the fediverse instance that is read; a topic large in another language can be entirely absent here without being absent from the web.',
@@ -86,9 +88,21 @@ const limits = [
         is deliberately out of step: Wikipedia publishes a day&rsquo;s most-read articles only after that day has
         closed, so the reader takes the previous day and looks back up to four days for the newest complete list —
         which is why the Wikipedia row carries an earlier as-of date than the rest. Who read the page is counted
-        one day later still, from Cloudflare&rsquo;s edge analytics: those counts are sampled, and the average
-        sample interval is committed beside them as <code class="font-mono text-xs">sample_interval_avg</code> so a
-        reader can tell a count from an extrapolation.
+        one day later still, from Cloudflare&rsquo;s edge analytics.
+      </p>
+      <p class="mt-2 leading-relaxed text-fg-muted">
+        That count is taken at the edge and not in the browser, and since 2026-09-03 it is taken there alone. The
+        edge sees every request that reaches this page &mdash; including the search and AI crawlers it is built for,
+        which is most of what a ledger for machine readers wants to know. A page beacon cannot: it is JavaScript,
+        so it runs only for a reader that executes JavaScript, which nearly no crawler does, and known bot agents
+        are dropped from such a count a second time on the server. A half that structurally cannot see the readers
+        in question would report an absence as a measurement, so it is not part of this file; the site&rsquo;s own
+        cookieless, privacy-friendly beacon stays in place site-wide for the different purpose it was named for in
+        the privacy policy &mdash; human reach, not crawlers. Two limits belong to the edge count instead: it is
+        sampled, and the average sample interval is committed beside every number as
+        <code class="font-mono text-xs">sample_interval_avg</code> so a reader can tell a count from an
+        extrapolation; and the plan retains its analytics for seven days, which is why the count is read once a
+        night and committed as a dated file rather than queried when someone visits.
       </p>
     </section>
 
@@ -135,6 +149,10 @@ const limits = [
         <li>2026-09-02 &middot; arcs &middot; discovery reads the house&rsquo;s own committed day files instead of four live
           platforms, and the list governs itself: the run promotes a candidate that keeps coming back, lets go of
           what it added and went quiet, and a person overrides both (section 7)</li>
+        <li>2026-09-03 &middot; audience &middot; the reader count is taken at the edge alone (contract
+          <span class="font-mono">trending-audience/2</span>): the browser-beacon half is retired, because a beacon
+          cannot see a crawler, and the visitor countries and referring hosts join the file where the plan exposes
+          them (section 2). The two days already committed under the old contract stay as they are.</li>
       </ul>
     </section>
 

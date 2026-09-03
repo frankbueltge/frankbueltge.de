@@ -31,6 +31,14 @@
 .tra-legend svg { width: 14px; height: 14px; vertical-align: -2px; }
 .tra-legend svg rect { stroke: var(--color-line); stroke-width: 1; }
 
+/* The two dimensions of trending-audience/2 — countries and referring hosts — read side by
+   side where there is room, stacked where there is not. Two short tables, no figure: the
+   plain-text floor IS the readout here. */
+.tra-dims { display: grid; gap: 0.75rem 2rem; }
+@media (min-width: 40rem) {
+  .tra-dims { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .tra-bar rect { transition: none; }
 }

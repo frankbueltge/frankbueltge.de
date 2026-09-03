@@ -15,7 +15,7 @@ source's own count.
 | File | Contract | Written |
 |---|---|---|
 | `src/data/trending/YYYY-MM-DD.json` | `trending-day/1` | once per run day; refused if it already exists |
-| `src/data/trending/audience/YYYY-MM-DD.json` | `trending-audience/1`, `day` = the measured day (run day − 1) | once; skipped if it already exists |
+| `src/data/trending/audience/YYYY-MM-DD.json` | `trending-audience/2`, `day` = the measured day (run day − 1) | once; skipped if it already exists |
 
 The site serves `/trending/latest.json` from the newest committed day; no second copy is
 committed.
@@ -30,9 +30,17 @@ not repeated) and a `summary` (`topics_total` counts every cluster, singletons i
 
 The audience file carries `edge` (Cloudflare GraphQL `httpRequestsAdaptiveGroups`, zone
 scope, one 24-hour window, sampled — `sample_interval_avg` is committed beside the counts)
-and `umami` (browser pageviews from the self-hosted Umami). Either half records
+(Cloudflare GraphQL `httpRequestsAdaptiveGroups`, zone scope, one 24-hour window, sampled —
+`sample_interval_avg` is committed beside the counts), plus, when the plan serves those
+dimensions, the ten most frequent countries and referring hosts; a dimension the plan refuses
+is `null` with the reason in `extra_note`, never a zero. The half records
 `status: "unavailable"` with a note when its credentials are missing or its call fails; its
 numeric fields are then `null` and its collections empty. Nothing is estimated.
+
+There is no browser-beacon half. A client-side beacon needs JavaScript, so it cannot see a
+crawler, and crawlers are most of what this page is measured by; the site's own privacy-friendly
+beacon stays in place for its own purpose. Contract `trending-audience/2` since 2026-09-03;
+committed v1 files keep their string and are read as they are.
 
 ## Sources, in order
 
@@ -95,7 +103,6 @@ Exit codes: `0` on success (also when the day file already exists — it is left
 |---|---|---|
 | `CF_ANALYTICS_TOKEN` | Cloudflare API token, *Zone · Analytics · Read* | `edge.status = unavailable` |
 | `CF_ZONE_ID` | the zone id of frankbueltge.de | same |
-| `UMAMI_API_URL`, `UMAMI_USERNAME`, `UMAMI_PASSWORD` | a view-only user of the self-hosted Umami | `umami.status = unavailable` |
 
 The nightly workflow is `.github/workflows/trending.yml` (06:40 UTC, commits as Morgenlese).
 Design and measurement: `docs/design/2026-09-02-common-ground.md`.

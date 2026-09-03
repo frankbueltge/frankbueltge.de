@@ -4,7 +4,7 @@ import { SITE } from '@/lib/site'
 import { classLabel, compact, fmtDateLong, fmtTimeUtc, platformLabel } from './format'
 import type { TrendingAudience, TrendingDay } from './types'
 import { AUDIENCE_CLASSES } from './types'
-import { convergingRows, sourceColumns } from './view'
+import { audienceDimensionRows, audienceMissingDimensions, convergingRows, sourceColumns } from './view'
 
 const esc = (s: string) => s.replace(/\|/g, '\\|').replace(/\r?\n/g, ' ')
 
@@ -77,7 +77,26 @@ export function renderMarkdown(day: TrendingDay, audience?: TrendingAudience): s
       out.push('')
       out.push('Named bots: ' + audience.edge.bots.slice(0, 10).map((b) => `${b.name} ${compact(b.requests)}`).join(', '))
     }
-    if (audience.umami.status === 'ok') out.push(`\nHuman page views (Umami, script-executing browsers): ${compact(audience.umami.pageviews)}.`)
+    const countries = audienceDimensionRows(audience.edge.countries)
+    if (countries.length) {
+      out.push('')
+      out.push('Countries: ' + countries.map((r) => `${r.name} ${r.requests}`).join(', ') + '.')
+    }
+    const referers = audienceDimensionRows(audience.edge.referers)
+    if (referers.length) {
+      out.push('')
+      out.push('Referring hosts: ' + referers.map((r) => `${r.name} ${r.requests}`).join(', ') + '.')
+    }
+    const missing = audienceMissingDimensions(audience)
+    if (missing.length) {
+      const named = missing.map((k) => (k === 'countries' ? 'countries' : 'referring hosts')).join(' and ')
+      out.push('')
+      out.push(`Not in this record: ${named} — ${audience.edge.extra_note || 'the file gives no reason'}.`)
+    }
+    // The browser-beacon half is retired from `trending-audience/2` on (2026-09-03): a
+    // client-side beacon cannot see a reader that runs no JavaScript, which is most of the
+    // readers this page is built for. The two `/1` days that carry it still report it.
+    if (audience.umami?.status === 'ok') out.push(`\nHuman page views (browser beacon, script-executing browsers only): ${compact(audience.umami.pageviews)}.`)
   }
   out.push('')
   out.push('## Method (v1)')

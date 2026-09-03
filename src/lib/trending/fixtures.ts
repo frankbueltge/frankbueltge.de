@@ -46,9 +46,12 @@ export function fixtureDay(over: Partial<TrendingDay> = {}): TrendingDay {
   }
 }
 
+/** A `trending-audience/2` record: the edge alone, with the two dimensions the contract of
+ *  2026-09-03 added. Pass `countries: null, referers: null, extra_note: '…'` to get the shape
+ *  the pipeline commits when the plan refuses those dimensions. */
 export function fixtureAudience(over: Partial<TrendingAudience> = {}): TrendingAudience {
   return {
-    $contract: 'trending-audience/1',
+    $contract: 'trending-audience/2',
     day: '2026-09-01',
     generated_at: '2026-09-02T06:41:40Z',
     edge: {
@@ -64,16 +67,50 @@ export function fixtureAudience(over: Partial<TrendingAudience> = {}): TrendingA
         { name: 'Googlebot', class: 'search', requests: 30, ok_2xx: 30, other_status: 0 },
         { name: 'PerplexityBot', class: 'ai-retrieval', requests: 20, ok_2xx: 19, other_status: 1 },
       ],
+      countries: { 'United States': 61, Germany: 22, France: 7 },
+      referers: { 'news.ycombinator.com': 3, 'www.google.com': 2 },
+      extra_note: '',
     },
+    ...over,
+  }
+}
+
+/** A `trending-audience/1` record — the shape of the two days committed before the contract
+ *  bump, browser-beacon half and all. Those files are never rewritten, so this path is the
+ *  one the real build exercises until they fall out of the drawn window. */
+export function legacyAudience(over: Partial<TrendingAudience> = {}): TrendingAudience {
+  const { edge, ...rest } = fixtureAudience()
+  const edgeV1 = { ...edge }
+  delete edgeV1.countries
+  delete edgeV1.referers
+  delete edgeV1.extra_note
+  return {
+    ...rest,
+    $contract: 'trending-audience/1',
+    edge: edgeV1,
     umami: { status: 'ok', note: '', source: 'self-hosted Umami, website cea1def9-…, url prefix /trending', pageviews: 42, visitors: 30 },
     ...over,
+  }
+}
+
+/** The `/2` record the pipeline commits when the plan does not expose the two dimensions: not
+ *  zero, not absent — `null` plus the refusal in `extra_note`. */
+export function dimensionlessAudience(day = '2026-09-03'): TrendingAudience {
+  const base = fixtureAudience({ day })
+  return {
+    ...base,
+    edge: {
+      ...base.edge,
+      countries: null,
+      referers: null,
+      extra_note: 'clientCountryName and refererHost are not queryable on this plan (GraphQL error 400)',
+    },
   }
 }
 
 export function standbyAudience(day = '2026-09-01'): TrendingAudience {
   return fixtureAudience({
     day,
-    edge: { status: 'unavailable', note: 'CF_ANALYTICS_TOKEN not set', source: 'Cloudflare GraphQL Analytics API', window: null, sample_interval_avg: null, total: null, paths: null, classes: null, bots: [] },
-    umami: { status: 'unavailable', note: 'UMAMI_API_URL not set', source: 'self-hosted Umami', pageviews: null, visitors: null },
+    edge: { status: 'unavailable', note: 'CF_ANALYTICS_TOKEN not set', source: 'Cloudflare GraphQL Analytics API', window: null, sample_interval_avg: null, total: null, paths: null, classes: null, bots: [], countries: null, referers: null, extra_note: 'no token, so no dimension was asked for' },
   })
 }

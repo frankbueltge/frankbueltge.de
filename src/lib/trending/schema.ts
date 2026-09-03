@@ -93,8 +93,14 @@ export const trendingDaySchema = z.object({
 const audienceStatus = z.enum(['ok', 'unavailable'])
 const audienceClass = z.enum(['browser', 'search', 'ai-retrieval', 'ai-user-fetch', 'ai-training', 'other-bot'])
 
+/** Both audience contracts are accepted, because the archive holds both and a committed dated
+ *  file is never rewritten: `/1` (the two days of 2026-09-01 and 2026-09-02) carried a
+ *  browser-beacon half beside the edge count, `/2` counts at the edge alone and adds the
+ *  country and referring-host dimensions. Hence `umami` optional and the new dimensions
+ *  optional-and-nullable: a `null` there means "the plan does not expose this, see
+ *  `extra_note`", which is a different statement from a count of zero. */
 export const trendingAudienceSchema = z.object({
-  $contract: z.literal('trending-audience/1'),
+  $contract: z.enum(['trending-audience/1', 'trending-audience/2']),
   day: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
   generated_at: z.string(),
   edge: z.object({
@@ -117,12 +123,26 @@ export const trendingAudienceSchema = z.object({
         }),
       )
       .default([]),
+    countries: z.record(z.string(), z.number()).nullable().optional(),
+    referers: z.record(z.string(), z.number()).nullable().optional(),
+    extra_note: z.string().optional(),
   }),
-  umami: z.object({
-    status: audienceStatus,
-    note: z.string().default(''),
-    source: z.string(),
-    pageviews: z.number().nullable().default(null),
-    visitors: z.number().nullable().default(null),
-  }),
-})
+  umami: z
+    .object({
+      status: audienceStatus,
+      note: z.string().default(''),
+      source: z.string(),
+      pageviews: z.number().nullable().default(null),
+      visitors: z.number().nullable().default(null),
+    })
+    .optional(),
+}).refine(
+  (rec) => rec.$contract === 'trending-audience/1' || rec.umami === undefined,
+  {
+    message:
+      'trending-audience/2 has no beacon half: a client-side beacon cannot see a crawler. A /2 file ' +
+      'carrying `umami` means the pipeline and this schema disagree, and the build says so rather than ' +
+      'rendering a column nobody decided on.',
+    path: ['umami'],
+  },
+)

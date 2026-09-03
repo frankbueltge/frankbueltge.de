@@ -37,6 +37,9 @@ The audience is read from Cloudflare's edge analytics for the day before (sample
 Umami for browser pageviews. Both halves fail closed to `unavailable` with a note when their
 credentials are missing; the page then says the counter is in standby and estimates nothing.
 
+> The second half of that paragraph is superseded on 2026-09-03: the measurement is taken at
+> the edge alone, and the sentence is kept as it stood rather than rewritten. See §12.
+
 ## 4. Pre-registered neighbour search (run 2026-09-02, before the build)
 
 Search terms, verbatim:
@@ -78,7 +81,9 @@ per language — a rule change on the method sheet, never a rewrite of a committ
   Diffbot from *Block* to *Allow*; then one WAF custom rule (Block) with the expression
   `(http.user_agent contains "GPTBot" or http.user_agent contains "ClaudeBot" or http.user_agent contains "CCBot" or http.user_agent contains "meta-externalagent" or http.user_agent contains "Bytespider" or http.user_agent contains "Diffbot") and not starts_with(http.request.uri.path, "/trending") and not http.request.uri.path in {"/robots.txt" "/llms.txt"} and not starts_with(http.request.uri.path, "/sitemap")`,
   so the rest of the site keeps its policy at the edge while `/trending*` is open.
-- Optional: a view-only Umami user → `UMAMI_API_URL`, `UMAMI_USERNAME`, `UMAMI_PASSWORD`.
+- ~~Optional: a view-only Umami user → `UMAMI_API_URL`, `UMAMI_USERNAME`, `UMAMI_PASSWORD`.~~
+  Withdrawn 2026-09-03: nothing waits for these, because this measurement no longer reads a
+  browser beacon (§12). Umami itself stays embedded site-wide and unaffected.
 - Optional: `INDEXNOW_KEY` (`openssl rand -hex 16`) → the deploy writes the key file and pings
   IndexNow after every deploy; without it both steps exit silently.
 - Everything that leaves the house waits for his button, as always: a Show HN or r/datasets
@@ -327,3 +332,63 @@ clustering is a union of pairs, a missed pair can still land in the right cluste
 signal — the Apple Maps and MapQuest headlines were not joined to each other, yet both were
 joined to the Lake Ontario article and so ended in one topic. A cluster-level measure would need
 labels of a different kind and is not claimed here.
+
+## 12. The audience is counted at the edge, not in the browser (2026-09-03, Frank's decision, wording private)
+
+**What was red.** The audience file had two halves. `edge` came from Cloudflare's edge
+analytics and saw every request, crawlers included. `umami` came from the site's own
+client-side beacon — and it had read `unavailable` on both committed days, which the page
+dutifully printed as a standby column, as though a number were on its way.
+
+**The reason it is retired here is structural, not practical.** It is not that the beacon's
+credentials are missing and could be supplied. A client-side beacon is JavaScript: it fires
+only for a reader that executes JavaScript. Almost no crawler does — and the readers this page
+was built for (§2, §3: search indexers and AI retrieval agents) are exactly those crawlers.
+Umami additionally drops known bot user agents server-side, so even a crawler that did execute
+the script would be discarded before it was counted. The beacon therefore cannot answer the
+question `/trending` asks, in principle and not by accident, and a half that will report
+"unavailable" for ever implies that something is missing when nothing is. What is left is what
+the edge already answers completely: every request that arrived, classified by its own declared
+user agent.
+
+**What is not retired.** Umami stays embedded site-wide, unchanged: cookieless, without
+fingerprinting, first-party through the `/stats` proxy to the self-hosted instance, named in the
+privacy policy (`src/data/legal.ts`) and described in `.claude/rules/runtime-and-works.md`. It
+measures human reach for the site as a whole, which is a different question from who fetches
+one page. This decision touches one measurement — the audience file of the trending ledger —
+and nothing else.
+
+**The contract, in short.** `src/data/trending/audience/YYYY-MM-DD.json`, `$contract:
+"trending-audience/2"`. Envelope unchanged: `day`, `generated_at`. One half, `edge`, with the
+keys it already had — `status` (`ok | unavailable`), `note`, `source`, `window`,
+`sample_interval_avg`, `total`, `paths`, `classes`, `bots[]` — and three new ones:
+
+- `countries`: the top ten visitor countries by requests, or `null`.
+- `referers`: the top ten referring hosts by requests, or `null` — host names only, never a
+  full URL, and a request that declares no referrer is in no row, so the rows do not sum to the
+  day's total.
+- `extra_note`: why `countries` / `referers` are `null`, when they are; empty otherwise.
+
+There is no `umami` key. `null` in either dimension means "not available on this plan, see
+`extra_note`" and is never rendered as a zero: the page prints the reason in the provenance line
+of the audience table instead of drawing an empty table.
+
+**Unverified at the time of writing.** Whether the Free plan exposes `clientCountryName` and
+`refererHost` on `httpRequestsAdaptiveGroups` at zone scope could not be confirmed — the test
+token had expired. So the pipeline *asks* for both dimensions and records the refusal in
+`extra_note` rather than assuming either way, and the surface is built for both outcomes. The
+first committed `/2` file is what settles it.
+
+**The two `/1` files stay untouched.** `2026-09-01.json` and `2026-09-02.json` keep their
+`umami` half exactly as committed — a dated file in this house is never rewritten. Everything
+that reads these files therefore accepts both contracts: `src/lib/trending/schema.ts` takes
+`trending-audience/1` or `/2` with `umami` optional, and the surface shows the beacon column
+only while a file that has that half is in the drawn window, with a dash for the days that never
+had it. Once the two old days fall out of the thirty-day window the column disappears on its
+own, rather than standing there reading "unavailable" for ever.
+
+**Evidence.** `src/lib/trending/types.ts`, `src/lib/trending/schema.ts`,
+`src/lib/trending/view.ts` (`audienceHasUmami`, `audienceDimensionRows`,
+`audienceMissingDimensions`), `src/lib/trending/markdown.ts`,
+`src/components/pages/TrendingAudience.astro`, `src/components/pages/MethodenblattTrending.astro`
+§2 and §4, `pipelines/trending/src/trending/audience.py`, `public/llms.txt`.

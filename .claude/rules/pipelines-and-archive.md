@@ -53,8 +53,7 @@ Runbook: `pipelines/protokoll/README.md`. Pipelines = **GitHub-Actions-Workflows
 Batch-Baustein unter den Bedingungen oben. Secrets (GitHub → Actions): `FIRMS_MAP_KEY`,
 `EIA_API_KEY`, `GEMINI_API_KEY` (Parallaxe, AI-Studio-Free-Tier), `CF` (Cloudflare),
 `CF_ANALYTICS_TOKEN` (Zone · Analytics · Read — die Leserschaft von `/trending`, gelesen von
-`trending.yml`; dazu die Repo-Variable `CF_ZONE_ID`), optional `UMAMI_API_URL`,
-`UMAMI_USERNAME`, `UMAMI_PASSWORD` (Lesekonto der eigenen Umami-Instanz) und `INDEXNOW_KEY`
+`trending.yml`; dazu die Repo-Variable `CF_ZONE_ID`) und optional `INDEXNOW_KEY`
 (Schlüsseldatei + Ping in `deploy-cf.yml`; fehlt er, passiert dort nichts).
 Site: statisch (dist/) auf Cloudflare Pages via `deploy-cf.yml`; Rebuild-Trigger ist der
 `workflow_run` nach jedem Nightly (Push mit eingebautem GITHUB_TOKEN löst `on: push` nicht
