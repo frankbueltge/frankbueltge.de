@@ -1,15 +1,19 @@
 ---
-// src/components/pages/EntranceGlobeFigure.astro — the frame around the entrance globe (visual
-// layer, Phase 3b, 2026-09-02): the strips that state what is drawn and when, the island, the
-// readout shell it fills, and an aside that carries the longest gaps as a list — so the panel
-// says something on a phone with no WebGL and to a reader with no pointer.
+// src/components/pages/EntranceGlobeFigure.astro — the frame around the entrance globe: the strips
+// that state what is drawn and when, the island, the readout shell it fills, and an aside that
+// carries the longest gaps as a list — so the panel says something on a phone with no WebGL and to
+// a reader with no pointer.
 //
-// Built from two committed nightly snapshots and one committed geography, nothing else: the
-// earth-observation fleet's elements (src/data/ueberflug), the ghost fleet's AIS gaps
-// (src/data/ghost-fleet) and Natural Earth land (src/data/globe). The plate the island stands on
-// is drawn HERE, at build time, at the elements' own time — the island fetches the same two
-// snapshots later and draws them at the visitor's present. Every count in the strips is derived
-// by src/lib/globe/model.ts; no number is typed.
+// Since G1 of the living globe (2026-09-03) this frame mounts the SAME island the room at /globe
+// mounts, with `compact`: no controls, no card, the newest day the archive holds, the globe
+// turning until it is touched. There is one globe in this house, and the front door and the room
+// cannot drift into two.
+//
+// Built from committed files and nothing else: the earth-observation fleet's elements
+// (src/data/ueberflug), the ghost fleet's AIS gaps (src/data/ghost-fleet) and Natural Earth land
+// (src/data/globe). The plate the island stands on is drawn HERE, at build time, at the elements'
+// own time; the island fetches the two layers' committed feeds and draws the same records on a
+// sphere. Every count in the strips is derived by src/lib/globe/model.ts; no number is typed.
 import { getRelativeLocaleUrl } from 'astro:i18n'
 import type { Locale } from '@/lib/site'
 import type { Topology } from 'topojson-specification'
@@ -19,11 +23,15 @@ import sky from '@/data/ueberflug/satellites.json'
 import fleet from '@/data/ghost-fleet/latest.json'
 import land from '@/data/globe/land-110m.json'
 import { NAMING } from '@/config/naming'
+import { GLOBE } from '@/config/globe-wording'
 import { asOfDay, buildGlobeModel } from '@/lib/globe/model'
 import { positionsAt, satrecsOf } from '@/lib/globe/propagate'
 import { buildGlobeFloorSvg } from '@/lib/globe/floor'
+import { buildManifest } from '@/lib/globe/feeds'
 import Readout from '@/components/dataviz/Readout.astro'
-import EntranceGlobe from './EntranceGlobe'
+import '@/styles/living-globe.css'
+
+import LivingGlobe from './LivingGlobe'
 
 const locale = (Astro.currentLocale ?? 'en') as Locale
 const url = (href: string) => getRelativeLocaleUrl(locale, href)
@@ -48,6 +56,12 @@ const floor = buildGlobeFloorSvg({
   },
 })
 
+// The entrance draws two of the registered layers and the ghost fleet stands in front — the same
+// division of colour the hero has carried since the globe arrived: the vessels' gaps in the
+// Field's own hue, the fleet overhead in mono ink behind them.
+const manifest = buildManifest()
+const DEFAULT_LAYERS = ['sky', 'ghost-fleet']
+
 const longest = model.arcs.slice(0, 5)
 const READOUT_ID = 'sky-readout'
 ---
@@ -60,14 +74,15 @@ const READOUT_ID = 'sky-readout'
 
   <div class="ops-sky-body">
     <div class="ops-sky-stage">
-      <EntranceGlobe
+      <LivingGlobe
         client:idle
+        compact
         floorSvg={floor}
-        wording={{ readout: SKY.readout, groups: SKY.groups, status: SKY.status }}
+        manifest={manifest}
+        wording={GLOBE.island}
         readoutId={READOUT_ID}
         figureId="entrance-globe"
-        modelUrl="/globe/model.json"
-        landUrl="/globe/land.json"
+        defaultLayers={DEFAULT_LAYERS}
       />
       <Readout id={READOUT_ID} maxWidth="40ch" />
     </div>
@@ -89,6 +104,7 @@ const READOUT_ID = 'sky-readout'
         <li><span class="sky-key sky-key-land" aria-hidden="true"></span>{SKY.legend.land}</li>
       </ul>
       <p class="ops-sky-links">
+        <a href={url(GLOBE.entrance.more.href)}>{GLOBE.entrance.more.label}</a>
         <a href={url(SKY.aside.fleet.href)}>{SKY.aside.fleet.label}</a>
         <a href={url(SKY.aside.watch.href)}>{SKY.aside.watch.label}</a>
       </p>
