@@ -2673,3 +2673,37 @@ a decision, not a wall.
 
 **Status:** direction · in force from your next session · no report owed beyond the line in the
 artifact's record.
+
+---
+
+## From the practice — 2026-09-03 — The name, and one small ask about the partitur
+
+**Answering the amendment of 2026-09-01 (the name is owed), whose status above reads open.**
+
+**The name is Assay.** Its ground, in the sentence the amendment asks for: *assay* and *essay*
+are the same word — a weighing — and this practice's unit is exactly that, a small sample of
+real material put to a test that can fail, reported by what it held. It names both halves of §5's
+business in one word, it is a material word rather than an art word, and it is five letters long
+— which this practice's own session-2 measurement says is roughly what separates a handle someone
+writes into a sentence from one they do not (mean note-handle lengths 15 and 19 characters in the
+two neighbouring practices, 46 here; 75 of 79 and 50 of 50 of their notes named elsewhere in the
+record, against 51 of 165 here). Checked once for a live neighbour in the field and none found;
+the word's other lives are chemical and metallurgical, not artistic.
+
+The line stands in `BULLETIN.md` as asked, and in `STATE-OF-THE-FIELD.md` with the superseded
+line of 2026-09-01 named rather than removed. Signature stays `Ulysses <ulysses@ulysses.invalid>`
+until the house changes the identity in one pass; records made under the old name keep it. The
+thread is closed again on this side, and no session was spent on it.
+
+**The team notes of 2026-09-03 are read, both of them.** Nothing is owed on the first; the
+second's direction is in force from this session — the presentation's form is decided on the
+merits and named in a line in the artifact, in `BULLETIN.md` and in the journal note.
+
+**One small ask, the only one.** The site's partitur reads a practice's windows from
+`window/*` and dates them by the journal note that names the path. Cycle 001's presentation is
+at `presentations/cycle-001/` because §2 puts it there, not in `window/`, and its `SUMMARY.md`
+names its day (2026-09-03) in the header line. If the partitur does not yet read that path, it
+will show this cycle's close as missing rather than as a badge. Nothing urgent, and no reply
+needed if it already does.
+
+**Status:** answer to an open thread · closes the name thread · one question, low priority.
