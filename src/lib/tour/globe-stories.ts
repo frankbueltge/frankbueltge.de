@@ -1,6 +1,7 @@
-// src/lib/tour/globe-stories.ts — the living globe's guided stories (G2, 2026-09-03): three
-// readings of this house's own archive on the tour engine that already drives the Studio's floor
-// and the Field's plate, with ONE figure between them — the globe in the room.
+// src/lib/tour/globe-stories.ts — the living globe's guided stories (G2, 2026-09-03; the three
+// late stories added the same day once G3 registered their layers): six readings of this house's
+// own archive on the tour engine that already drives the Studio's floor and the Field's plate,
+// with ONE figure between them — the globe in the room.
 //
 // The division every tour on this site keeps, kept here too:
 //   · the FRAME — the room's heading, each story's title and standfirst, every scene's kicker,
@@ -17,22 +18,37 @@
 //
 // NOTHING HERE IS TYPED THAT CAN BE DERIVED. The mark keys and every camera coordinate come out of
 // the same adapters the globe draws from (the ghost fleet's own frame for the night in question,
-// the protocol's frame for the reading in question, the committed seats file for a vantage), so a
-// story cannot point at a mark the globe does not draw, and a moved seat moves the camera with it.
-// What IS typed is the quotes — and those are exactly what the harness checks against the bytes.
+// the protocol's frame for the reading in question, the committed seats file for a vantage, the
+// balance/consensus/redaction layers' own frames for a country's or an institution's mark), so a
+// story cannot point at a mark the globe does not draw, and a moved seat or a recomputed centroid
+// moves the camera with it. What IS typed is the quotes — and those are exactly what the harness
+// checks against the bytes.
 //
-// THE THREE STORIES THAT ARE NOT HERE. The plan named six. Balance, Consensus and Redaction need
-// layers that arrive with G3 (the registers, the press, the removals), and a story may only name a
-// registered layer id — so they are not written, not stubbed and not commented out as a draft:
-// they are named in the design note's G3 row and in the method sheet, and they will be written when
-// the layers they are about exist. A scene pointing at a layer nobody has built is exactly the kind
-// of promise this globe was built to stop making.
+// THE THREE STORIES THAT WAITED. The plan named six from the start; G2 shipped the three that
+// needed no layer G3 had not yet built (the ghost fleet, the sky, the protocol), and left Balance,
+// Consensus and Redaction unwritten on purpose — not stubbed, not commented out as a draft, because
+// a story may only name a registered layer id and a scene pointing at a layer nobody has built is
+// exactly the kind of promise this globe exists to stop making. G3 registered `balance`,
+// `consensus-tld`, `redaction-seats` and `redaction-world` across its three evenings, and the three
+// stories below are those three, written the same day: **Where the press looks at itself** (three
+// nights of the tone-gap record, camera Europe to the Americas, closing on one country's mark),
+// **One sentence, and the outlets that carried it** (one day of the most-echoed phrase, camera over
+// the country of its first masthead) and **What the record removed** (three nights of the
+// institutional removals, camera Geneva to Washington, its last scene bringing the wider press's
+// own chamber in front and closing on one removal's mark).
 import { GLOBE } from '@/config/globe-wording'
+import { balanceLayer } from '@/lib/globe/layers/balance'
+import { consensusTldLayer } from '@/lib/globe/layers/consensus-tld'
+import { germanVantageNote } from '@/lib/globe/layers/redaction-world'
+import { dayPath, readJson } from '@/lib/globe/layers/archive'
 import { ghostFleetLayer } from '@/lib/globe/layers/ghost-fleet'
 import { protocolLayer } from '@/lib/globe/layers/protocol'
+import { redactionSeatsLayer } from '@/lib/globe/layers/redaction-seats'
 import { skyLayer } from '@/lib/globe/layers/sky'
 import type { LayerRecord } from '@/lib/globe/layers/types'
-import { seatPoint } from '@/lib/globe/seats'
+import { centroidOfIso3 } from '@/lib/globe/crosswalk'
+import { redactionSeatFor, seatPoint } from '@/lib/globe/seats'
+import type { WorldData } from '@/lib/redaction/world'
 import type { Scene, Tour } from './types'
 
 /** The DOM id the room's island registers under, and the figure every scene of every story below
@@ -64,6 +80,29 @@ const METHOD = 'src/components/pages/MethodenblattGlobe.astro'
  *  written into this file would be wrong by morning and the story would look at an empty sphere. */
 const SKY_DAY = skyLayer.instant?.day ?? skyLayer.asOf
 
+/** the three nights the balance story walks, oldest first — a Romania headline over Europe, a
+ *  later night whose Brazil row carries a wide gap, and the newest night this house's archive
+ *  holds at all, which is also the newest night the balance layer itself holds */
+export const BALANCE_NIGHTS = ['2026-08-13', '2026-09-01', '2026-09-03'] as const
+const balanceFile = (day: string): string => `src/data/balance/${day}.json`
+
+/** the one day the consensus-by-domain story walks — the newest day this record's own mastheads
+ *  resolve to more than one country, so the honesty rule about a domain with no country in it has
+ *  something to stand next to rather than an empty sphere */
+export const CONSENSUS_DAY = '2026-08-24'
+const consensusFile = (day: string): string => `src/data/consensus/${day}.json`
+
+const REDACTION_SEATS_ADAPTER = 'src/lib/globe/layers/redaction-seats.ts'
+const redactionFile = (day: string): string => `src/data/redaction/${day}.json`
+
+/** the one night the world chamber's own scene reads — the exact night that adapter's own header
+ *  names as the night an American television station's `.tv` domain (a Tuvalu registration, not a
+ *  Tuvaluan newsroom) came back gone, which is the honesty rule of that layer made concrete rather
+ *  than asserted */
+export const WORLD_DAY = '2026-09-02'
+const WORLD_DIR = 'src/data/redaction/world'
+const worldFile = (day: string): string => `${WORLD_DIR}/${day}.json`
+
 // ── the marks and the places, derived from the same adapters the globe draws ──────────────────────
 
 /** The longest gap of a night, out of that night's own frame — by the record's own value, which the
@@ -94,6 +133,69 @@ function overSeat(id: string, zoom: number): { longitude: number; latitude: numb
   const point = seatPoint(id)
   if (!point) throw new Error(`globe stories: the seat "${id}" carries no coordinate, so no camera can stand over it`)
   return { longitude: point[0], latitude: point[1], zoom }
+}
+
+/** One country's row on one night of the balance layer, found by the name the crosswalk resolved
+ *  it to — never the FIPS code the source file itself uses, so a scene reads the same name a
+ *  visitor sees on the card. */
+function balanceCountry(day: string, name: string): LayerRecord {
+  const record = balanceLayer.frame(day).records.find((r) => 'name' in r.at && r.at.name === name)
+  if (!record) throw new Error(`globe stories: ${balanceFile(day)} carries no drawable balance row for "${name}"`)
+  return record
+}
+
+/** A camera over a balance country's centroid. `balance`'s own records carry no centroid of their
+ *  own (a `countries`-kind fill is keyed by code alone, drawn from a polygon fetched once), so this
+ *  asks the same crosswalk function the layer asks to decide whether the country can be drawn at
+ *  all — never a second, independent lookup. */
+function overBalanceCountry(day: string, name: string, zoom: number): { longitude: number; latitude: number; zoom: number } {
+  const record = balanceCountry(day, name)
+  const at = record.at as { iso3: string; name: string }
+  const centroid = centroidOfIso3(at.iso3)
+  if (!centroid) throw new Error(`globe stories: "${name}" carries no centroid to stand a camera over`)
+  return { longitude: centroid[0], latitude: centroid[1], zoom }
+}
+
+/** One country's mark on the consensus-by-domain layer, found by the crosswalk name it resolved
+ *  to. Its `at` already carries the centroid the drawing needs (G3's third evening put it there),
+ *  so the camera comes straight off the record rather than a second crosswalk lookup. */
+function consensusCountry(day: string, name: string): LayerRecord {
+  const record = consensusTldLayer.frame(day).records.find((r) => 'name' in r.at && r.at.name === name)
+  if (!record) throw new Error(`globe stories: ${consensusFile(day)} carries no drawable consensus-tld mark for "${name}"`)
+  return record
+}
+
+function overConsensusCountry(day: string, name: string, zoom: number): { longitude: number; latitude: number; zoom: number } {
+  const record = consensusCountry(day, name)
+  const at = record.at as { iso3: string; name: string; centroid?: [number, number] }
+  if (!at.centroid) throw new Error(`globe stories: "${name}" carries no centroid to stand a camera over`)
+  return { longitude: at.centroid[0], latitude: at.centroid[1], zoom }
+}
+
+/** One institution's mark on one night of the redaction-seats layer, found by the words its own
+ *  receipt is built from (`wordsFor` in that adapter always opens with the institution's own name)
+ *  rather than a reconstructed key — so a renamed key format cannot silently point this story at
+ *  the wrong mark. */
+function redactionMark(day: string, institution: string): LayerRecord {
+  const record = redactionSeatsLayer.frame(day).records.find((r) => r.receipt.words.startsWith(institution))
+  if (!record) throw new Error(`globe stories: ${redactionFile(day)} carries no drawable redaction-seats mark for "${institution}"`)
+  return record
+}
+
+/** A camera over the seat an institution of the redaction watch publishes from — the same lookup
+ *  the layer itself makes before it ever draws a mark there. */
+function overInstitution(institution: string, zoom: number): { longitude: number; latitude: number; zoom: number } {
+  return overSeat(redactionSeatFor(institution), zoom)
+}
+
+/** The world chamber's own caution about reading a 451 from a German vantage point, read off the
+ *  committed file rather than retyped — the same function the layer itself uses to find it, so a
+ *  day whose record stopped carrying the caution fails this module at build time instead of
+ *  shipping a quote nothing backs. */
+const WORLD_DATA = readJson<WorldData>(dayPath(WORLD_DIR, WORLD_DAY))
+const WORLD_VANTAGE_NOTE = germanVantageNote(WORLD_DATA)
+if (!WORLD_VANTAGE_NOTE) {
+  throw new Error(`globe stories: ${worldFile(WORLD_DAY)} carries no German-vantage caution to quote`)
 }
 
 const GAP = longestGap(FLEET_NIGHT)
@@ -511,6 +613,309 @@ export const planetsMinutesStory: Tour = {
   scenes: minutesScenes,
 }
 
-/** The stories the room mounts, in the order it mounts them: the one night, the one moment, the
- *  season. Three of the six the plan named; the other three wait for the layers of G3. */
-export const GLOBE_STORIES: readonly Tour[] = Object.freeze([fleetNightStory, skyOverReaderStory, planetsMinutesStory])
+const balanceScenes: Scene[] = [
+  {
+    id: 'the-headline-the-day-carried',
+    ...w.balance.scenes.headline,
+    quotes: [
+      { text: '"name": "Romania"', source: balanceFile(BALANCE_NIGHTS[0]), locator: 'headline — the country the day’s own file names' },
+      { text: '"direction": "self_brighter"', source: balanceFile(BALANCE_NIGHTS[0]), locator: 'headline — which way the gap ran' },
+      { text: '"gap": 5.789', source: balanceFile(BALANCE_NIGHTS[0]), locator: 'headline — the gap itself, as the file computed it' },
+    ],
+    focus: {
+      figure: GLOBE_FIGURE,
+      layers: ['balance'],
+      time: { day: BALANCE_NIGHTS[0] },
+      camera: overBalanceCountry(BALANCE_NIGHTS[0], 'Romania', 1.6),
+    },
+  },
+  {
+    id: 'the-same-night-a-different-country',
+    ...w.balance.scenes.elsewhere,
+    quotes: [
+      { text: '"name": "Netherlands"', source: balanceFile(BALANCE_NIGHTS[0]), locator: 'countries[] — a row the headline never names' },
+      { text: '"self": -1.928', source: balanceFile(BALANCE_NIGHTS[0]), locator: 'countries[].dims.tone — the tone of its own press' },
+      { text: '"foreign": 0.039', source: balanceFile(BALANCE_NIGHTS[0]), locator: 'countries[].dims.tone — and the tone of the world’s press about it' },
+    ],
+    focus: {
+      figure: GLOBE_FIGURE,
+      layers: ['balance'],
+      time: { day: BALANCE_NIGHTS[0] },
+      camera: overBalanceCountry(BALANCE_NIGHTS[0], 'Netherlands', 1.8),
+    },
+  },
+  {
+    id: 'the-same-file-an-ocean-away',
+    ...w.balance.scenes.crossing,
+    quotes: [
+      { text: '"name": "United States"', source: balanceFile(BALANCE_NIGHTS[0]), locator: 'countries[] — a row from the very same night' },
+      { text: '"self": -1.104', source: balanceFile(BALANCE_NIGHTS[0]), locator: 'countries[].dims.tone — its own press' },
+      { text: '"foreign": -0.669', source: balanceFile(BALANCE_NIGHTS[0]), locator: 'countries[].dims.tone — the world’s press about it' },
+    ],
+    focus: {
+      figure: GLOBE_FIGURE,
+      layers: ['balance'],
+      time: { day: BALANCE_NIGHTS[0] },
+      camera: overBalanceCountry(BALANCE_NIGHTS[0], 'United States', 1.2),
+    },
+  },
+  {
+    id: 'a-different-night-the-same-measure',
+    ...w.balance.scenes.further,
+    quotes: [
+      { text: '"name": "Brazil"', source: balanceFile(BALANCE_NIGHTS[1]), locator: 'countries[] — a row from a later night' },
+      { text: '"self": -1.391', source: balanceFile(BALANCE_NIGHTS[1]), locator: 'countries[].dims.tone — its own press' },
+      { text: '"foreign": 0.728', source: balanceFile(BALANCE_NIGHTS[1]), locator: 'countries[].dims.tone — the world’s press about it' },
+    ],
+    focus: {
+      figure: GLOBE_FIGURE,
+      layers: ['balance'],
+      time: { day: BALANCE_NIGHTS[1] },
+      camera: overBalanceCountry(BALANCE_NIGHTS[1], 'Brazil', 1.4),
+    },
+  },
+  {
+    id: 'the-newest-night-this-story-holds',
+    ...w.balance.scenes.newest,
+    quotes: [
+      { text: '"name": "Jamaica"', source: balanceFile(BALANCE_NIGHTS[2]), locator: 'countries[] — the row this scene opens' },
+      { text: '"self": -0.048', source: balanceFile(BALANCE_NIGHTS[2]), locator: 'countries[].dims.tone — its own press' },
+      { text: '"foreign": 1.657', source: balanceFile(BALANCE_NIGHTS[2]), locator: 'countries[].dims.tone — the world’s press about it' },
+      { text: 'A country is NOT a place, and this layer is the first on the globe that has to mean it.', source: 'src/lib/globe/layers/balance.ts', locator: 'the layer’s own header — why a fill is a shape and not a spot' },
+    ],
+    focus: {
+      figure: GLOBE_FIGURE,
+      layers: ['balance'],
+      time: { day: BALANCE_NIGHTS[2] },
+      camera: overBalanceCountry(BALANCE_NIGHTS[2], 'Jamaica', 2.4),
+      select: balanceCountry(BALANCE_NIGHTS[2], 'Jamaica').key,
+    },
+  },
+]
+
+export const balanceStory: Tour = {
+  id: 'globe-where-the-press-looks-at-itself',
+  practice: 'lab',
+  title: w.balance.title,
+  standfirst: w.balance.standfirst,
+  provenance: [...BALANCE_NIGHTS.map(balanceFile), 'src/lib/globe/layers/balance.ts'],
+  scenes: balanceScenes,
+}
+
+const consensusScenes: Scene[] = [
+  {
+    id: 'the-sentence-the-day-echoed',
+    ...w.consensus.scenes.phrase,
+    quotes: [
+      { text: '"phrase": "details rift with dismissed defence minister"', source: consensusFile(CONSENSUS_DAY), locator: 'headline — the phrase this record found' },
+      { text: '"sample_title": "Zelensky details rift with dismissed defence minister"', source: consensusFile(CONSENSUS_DAY), locator: 'headline — the headline it was drawn from' },
+    ],
+    focus: {
+      figure: GLOBE_FIGURE,
+      layers: ['consensus-tld'],
+      time: { day: CONSENSUS_DAY },
+      camera: overConsensusCountry(CONSENSUS_DAY, 'United Kingdom', 1.0),
+    },
+  },
+  {
+    id: 'the-first-masthead-to-carry-it',
+    ...w.consensus.scenes.first,
+    quotes: [
+      { text: '"first_domain": "readingchronicle.co.uk"', source: consensusFile(CONSENSUS_DAY), locator: 'headline — the outlet the file names first' },
+      { text: '"domain_count": 163', source: consensusFile(CONSENSUS_DAY), locator: 'headline — how many outlets the file counts in all' },
+    ],
+    focus: {
+      figure: GLOBE_FIGURE,
+      layers: ['consensus-tld'],
+      time: { day: CONSENSUS_DAY },
+      camera: overConsensusCountry(CONSENSUS_DAY, 'United Kingdom', 1.6),
+    },
+  },
+  {
+    id: 'the-list-the-file-itself-keeps',
+    ...w.consensus.scenes.list,
+    quotes: [
+      { text: '"andoveradvertiser.co.uk"', source: consensusFile(CONSENSUS_DAY), locator: 'headline.mastheads[0]' },
+      { text: '"basingstokegazette.co.uk"', source: consensusFile(CONSENSUS_DAY), locator: 'headline.mastheads[3]' },
+    ],
+    focus: {
+      figure: GLOBE_FIGURE,
+      layers: ['consensus-tld'],
+      time: { day: CONSENSUS_DAY },
+      camera: overConsensusCountry(CONSENSUS_DAY, 'United Kingdom', 1.8),
+    },
+  },
+  {
+    id: 'the-same-list-a-different-registry',
+    ...w.consensus.scenes.elsewhere,
+    quotes: [
+      { text: '"bendigoadvertiser.com.au"', source: consensusFile(CONSENSUS_DAY), locator: 'headline.mastheads[4]' },
+      { text: '"dailyadvertiser.com.au"', source: consensusFile(CONSENSUS_DAY), locator: 'headline.mastheads[31]' },
+    ],
+    focus: {
+      figure: GLOBE_FIGURE,
+      layers: ['consensus-tld'],
+      time: { day: CONSENSUS_DAY },
+      camera: overConsensusCountry(CONSENSUS_DAY, 'Australia', 1.8),
+    },
+  },
+  {
+    id: 'what-a-registration-does-not-say',
+    ...w.consensus.scenes.noCountry,
+    quotes: [
+      { text: '"dunfermlinepress.com"', source: consensusFile(CONSENSUS_DAY), locator: 'headline.mastheads[39] — a domain the layer places nowhere' },
+      { text: '"bicesteradvertiser.net"', source: consensusFile(CONSENSUS_DAY), locator: 'headline.mastheads[5] — the same rule, a different generic domain' },
+      {
+        text: 'a top-level domain is a registration and not a location',
+        source: 'src/lib/globe/layers/consensus-tld.ts',
+        locator: 'the layer’s own caution, stated in its readout',
+      },
+    ],
+    focus: {
+      figure: GLOBE_FIGURE,
+      layers: ['consensus-tld'],
+      time: { day: CONSENSUS_DAY },
+      camera: overConsensusCountry(CONSENSUS_DAY, 'United Kingdom', 1.0),
+    },
+  },
+]
+
+export const consensusOutletsStory: Tour = {
+  id: 'globe-one-sentence-and-the-outlets-that-carried-it',
+  practice: 'lab',
+  title: w.consensus.title,
+  standfirst: w.consensus.standfirst,
+  provenance: [consensusFile(CONSENSUS_DAY), 'src/lib/globe/layers/consensus-tld.ts'],
+  scenes: consensusScenes,
+}
+
+const REDACTION_NIGHTS = ['2026-08-11', '2026-08-13', WORLD_DAY] as const
+
+const redactionScenes: Scene[] = [
+  {
+    id: 'the-watch-and-what-it-found',
+    ...w.redaction.scenes.geneva,
+    quotes: [
+      { text: '"institution": "WHO"', source: redactionFile(REDACTION_NIGHTS[0]), locator: 'redactions[] — the body the night names' },
+      { text: '"label": "Luftqualität und Gesundheit"', source: redactionFile(REDACTION_NIGHTS[0]), locator: 'redactions[] — the watch-list’s own label, unchanged' },
+      { text: '"removed_tokens": 870', source: redactionFile(REDACTION_NIGHTS[0]), locator: 'redactions[] — how much of the page the night counted as taken' },
+    ],
+    focus: {
+      figure: GLOBE_FIGURE,
+      layers: ['redaction-seats'],
+      time: { day: REDACTION_NIGHTS[0] },
+      camera: overInstitution('WHO', 1.4),
+    },
+  },
+  {
+    id: 'a-second-address-the-same-city',
+    ...w.redaction.scenes.secondSeat,
+    quotes: [
+      { text: '"institution": "UNHCR"', source: redactionFile(REDACTION_NIGHTS[0]), locator: 'redactions[] — a second body, the same night' },
+      { text: '"label": "Flüchtlingsstatistik"', source: redactionFile(REDACTION_NIGHTS[0]), locator: 'redactions[] — its own label' },
+      { text: '"kind": "deletion"', source: redactionFile(REDACTION_NIGHTS[0]), locator: 'redactions[] — the whole page gone, not passages struck out' },
+    ],
+    focus: {
+      figure: GLOBE_FIGURE,
+      layers: ['redaction-seats'],
+      time: { day: REDACTION_NIGHTS[0] },
+      camera: overInstitution('UNHCR', 2.0),
+    },
+  },
+  {
+    id: 'a-whole-page-not-a-passage',
+    ...w.redaction.scenes.wholePage,
+    quotes: [
+      { text: '"institution": "IPCC"', source: redactionFile(REDACTION_NIGHTS[1]), locator: 'redactions[] — a body watched at a third address in the same city' },
+      { text: '"label": "Sonderbericht 1,5 °C"', source: redactionFile(REDACTION_NIGHTS[1]), locator: 'redactions[] — the page named' },
+      { text: '"removed_tokens": 4562', source: redactionFile(REDACTION_NIGHTS[1]), locator: 'redactions[] — the largest single loss this story walks' },
+    ],
+    focus: {
+      figure: GLOBE_FIGURE,
+      layers: ['redaction-seats'],
+      time: { day: REDACTION_NIGHTS[1] },
+      camera: overInstitution('IPCC', 2.4),
+    },
+  },
+  {
+    id: 'the-same-night-a-seat-in-washington',
+    ...w.redaction.scenes.washington,
+    quotes: [
+      { text: '"institution": "US Census"', source: redactionFile(REDACTION_NIGHTS[1]), locator: 'redactions[] — the same night’s file, a seat on another continent' },
+      { text: '"label": "Armut (Themenseite)"', source: redactionFile(REDACTION_NIGHTS[1]), locator: 'redactions[] — the page named' },
+      { text: '"removed_tokens": 617', source: redactionFile(REDACTION_NIGHTS[1]), locator: 'redactions[] — how much the night counted here' },
+    ],
+    focus: {
+      figure: GLOBE_FIGURE,
+      layers: ['redaction-seats'],
+      time: { day: REDACTION_NIGHTS[1] },
+      camera: overInstitution('US Census', 1.6),
+    },
+  },
+  {
+    id: 'the-nights-own-pick',
+    ...w.redaction.scenes.pick,
+    quotes: [
+      {
+        text: '"pick": "20260825110649_www.census.gov_topics_income-poverty_poverty.html"',
+        source: redactionFile(REDACTION_NIGHTS[2]),
+        locator: 'pick — the one row this night’s own file names, at its top level',
+      },
+      { text: '"removed_tokens": 57', source: redactionFile(REDACTION_NIGHTS[2]), locator: 'redactions[] — a smaller loss, the same seat' },
+    ],
+    focus: {
+      figure: GLOBE_FIGURE,
+      layers: ['redaction-seats'],
+      time: { day: REDACTION_NIGHTS[2] },
+      camera: overInstitution('US Census', 2.0),
+    },
+  },
+  {
+    id: 'a-second-chamber-the-same-night',
+    ...w.redaction.scenes.world,
+    quotes: [
+      {
+        text: 'the mark is the seat of a body, never the place a page was written',
+        source: REDACTION_SEATS_ADAPTER,
+        locator: 'the layer’s own source line — the rule this whole story has kept',
+      },
+      { text: WORLD_VANTAGE_NOTE, source: worldFile(WORLD_DAY), locator: 'deletion.notes — the record’s own caution, quoted whole' },
+      { text: '"domain": "wgxa.tv"', source: worldFile(WORLD_DAY), locator: 'deletion.receipts — a host this chamber found gone that night' },
+    ],
+    focus: {
+      figure: GLOBE_FIGURE,
+      layers: ['redaction-seats', 'redaction-world'],
+      time: { day: REDACTION_NIGHTS[2] },
+      camera: overInstitution('US Census', 2.2),
+      select: redactionMark(REDACTION_NIGHTS[2], 'US Census').key,
+    },
+  },
+]
+
+export const redactionRemovedStory: Tour = {
+  id: 'globe-what-the-record-removed',
+  practice: 'lab',
+  title: w.redaction.title,
+  standfirst: w.redaction.standfirst,
+  provenance: [
+    ...REDACTION_NIGHTS.map(redactionFile),
+    worldFile(WORLD_DAY),
+    REDACTION_SEATS_ADAPTER,
+  ],
+  scenes: redactionScenes,
+}
+
+/** The stories the room mounts, in the order it mounts them. The three G2 shipped stand first,
+ *  because a returning reader's deep link and any external reference to them should keep pointing
+ *  at the same position in the list: the one night, the one moment, the season. The three G3's
+ *  layers made possible follow in the order their layers were registered across G3's three
+ *  evenings — the press's tone gap, the day's most-echoed phrase by domain, the removals — so the
+ *  reading order retraces the building order rather than inventing a new one. */
+export const GLOBE_STORIES: readonly Tour[] = Object.freeze([
+  fleetNightStory,
+  skyOverReaderStory,
+  planetsMinutesStory,
+  balanceStory,
+  consensusOutletsStory,
+  redactionRemovedStory,
+])
