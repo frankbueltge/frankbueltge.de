@@ -1,0 +1,211 @@
+{
+ "checks_performed": 476,
+ "disagreements": [
+  {
+   "claim": "has_doi|has_journal_ref",
+   "loop": "Papers where the paper carries a DOI differ in carrying a journal reference: 48.2 % against 1.0 %, a difference of +47.3 points, p = <0.0001 (two-proportion z, n = 85 against 1949).",
+   "quantity": "number in the written sentence not re-derivable",
+   "review": "0.0001"
+  },
+  {
+   "claim": "has_journal_ref|has_doi",
+   "loop": "Papers where the paper carries a journal reference differ in carrying a DOI: 68.3 % against 2.2 %, a difference of +66.1 points, p = <0.0001 (two-proportion z, n = 60 against 1974).",
+   "quantity": "number in the written sentence not re-derivable",
+   "review": "0.0001"
+  },
+  {
+   "claim": "cross_listed|author_count",
+   "loop": "Papers where the paper is cross-listed have lower number of authors than papers where it does not: median 3 against 4, rank-biserial -0.220, p = <0.0001 (Mann-Whitney U, n = 1296 against 738).",
+   "quantity": "number in the written sentence not re-derivable",
+   "review": "0.0001"
+  },
+  {
+   "claim": "large_team|category_count",
+   "loop": "Papers where the paper has five or more authors have lower number of categories than papers where it does not: median 2 against 2, rank-biserial -0.187, p = <0.0001 (Mann-Whitney U, n = 779 against 1255).",
+   "quantity": "number in the written sentence not re-derivable",
+   "review": "0.0001"
+  },
+  {
+   "claim": "weekend|category_count",
+   "loop": "Papers where the paper published at a weekend (UTC) have higher number of categories than papers where it does not: median 2 against 2, rank-biserial +0.186, p = <0.0001 (Mann-Whitney U, n = 192 against 1842).",
+   "quantity": "number in the written sentence not re-derivable",
+   "review": "0.0001"
+  }
+ ],
+ "redundancy": {
+  "bh_survivors": 10,
+  "distinct_pairs_among_bh_survivors": 8,
+  "distinct_pairs_among_raw_findings": 12,
+  "distinct_underlying_variable_pairs": 51,
+  "mirrored_questions": [
+   {
+    "asked_as": [
+     "cross_listed|author_count",
+     "large_team|category_count"
+    ],
+    "both_significant": true,
+    "underlying_pair": [
+     "author_count",
+     "category_count"
+    ]
+   },
+   {
+    "asked_as": [
+     "has_doi|author_count",
+     "large_team|has_doi"
+    ],
+    "both_significant": false,
+    "underlying_pair": [
+     "author_count",
+     "has_doi"
+    ]
+   },
+   {
+    "asked_as": [
+     "large_team|has_journal_ref",
+     "has_journal_ref|author_count"
+    ],
+    "both_significant": false,
+    "underlying_pair": [
+     "author_count",
+     "has_journal_ref"
+    ]
+   },
+   {
+    "asked_as": [
+     "large_team|published_hour_utc",
+     "night_submission|author_count"
+    ],
+    "both_significant": false,
+    "underlying_pair": [
+     "author_count",
+     "published_hour_utc"
+    ]
+   },
+   {
+    "asked_as": [
+     "large_team|revised",
+     "revised|author_count"
+    ],
+    "both_significant": false,
+    "underlying_pair": [
+     "author_count",
+     "revised"
+    ]
+   },
+   {
+    "asked_as": [
+     "has_doi|category_count",
+     "cross_listed|has_doi"
+    ],
+    "both_significant": false,
+    "underlying_pair": [
+     "category_count",
+     "has_doi"
+    ]
+   },
+   {
+    "asked_as": [
+     "has_journal_ref|category_count",
+     "cross_listed|has_journal_ref"
+    ],
+    "both_significant": false,
+    "underlying_pair": [
+     "category_count",
+     "has_journal_ref"
+    ]
+   },
+   {
+    "asked_as": [
+     "night_submission|category_count",
+     "cross_listed|published_hour_utc"
+    ],
+    "both_significant": false,
+    "underlying_pair": [
+     "category_count",
+     "published_hour_utc"
+    ]
+   },
+   {
+    "asked_as": [
+     "cross_listed|revised",
+     "revised|category_count"
+    ],
+    "both_significant": false,
+    "underlying_pair": [
+     "category_count",
+     "revised"
+    ]
+   },
+   {
+    "asked_as": [
+     "has_doi|has_journal_ref",
+     "has_journal_ref|has_doi"
+    ],
+    "both_significant": true,
+    "underlying_pair": [
+     "has_doi",
+     "has_journal_ref"
+    ]
+   },
+   {
+    "asked_as": [
+     "has_doi|published_hour_utc",
+     "night_submission|has_doi"
+    ],
+    "both_significant": false,
+    "underlying_pair": [
+     "has_doi",
+     "published_hour_utc"
+    ]
+   },
+   {
+    "asked_as": [
+     "has_doi|revised",
+     "revised|has_doi"
+    ],
+    "both_significant": false,
+    "underlying_pair": [
+     "has_doi",
+     "revised"
+    ]
+   },
+   {
+    "asked_as": [
+     "has_journal_ref|published_hour_utc",
+     "night_submission|has_journal_ref"
+    ],
+    "both_significant": false,
+    "underlying_pair": [
+     "has_journal_ref",
+     "published_hour_utc"
+    ]
+   },
+   {
+    "asked_as": [
+     "has_journal_ref|revised",
+     "revised|has_journal_ref"
+    ],
+    "both_significant": false,
+    "underlying_pair": [
+     "has_journal_ref",
+     "revised"
+    ]
+   },
+   {
+    "asked_as": [
+     "night_submission|revised",
+     "revised|published_hour_utc"
+    ],
+    "both_significant": false,
+    "underlying_pair": [
+     "published_hour_utc",
+     "revised"
+    ]
+   }
+  ],
+  "questions_asked": 66,
+  "raw_findings": 14
+ },
+ "verdict": "DISAGREES"
+}

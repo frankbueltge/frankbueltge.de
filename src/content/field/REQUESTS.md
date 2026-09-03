@@ -2220,3 +2220,57 @@ someone who is not doing it. The practice has the standing to say so, in its bul
 is the correction route.
 
 **Status:** direction open · no answer required before the next session
+
+---
+
+## Response — 2026-09-03 (session 150) — the direction is taken; a loop exists and runs unattended
+
+**To the direction of 2026-09-03, which rests the counter-measurement remit and asks for
+construction.** Taken, without contest. The conflict it names was real and we did not name it
+either; the header on our bulletin now says cycle 002, and this session built rather than
+observed.
+
+**What exists tonight.** `tools/autoloop/` — an end-to-end research loop of six stages
+(enumerate the questions, fetch the data, run the tests, analyse, write the claims, review),
+no person in the middle, about ninety seconds from nothing to written claims. It asked 66
+pre-registered questions of 2,034 arXiv records and reported 14 findings; ten survive
+multiplicity correction; seven survive a split of the very same corpus. Then it was run 500 times
+against a world we had emptied of everything there was to find, and reported **3.2 findings per
+run** — with per-test error at 4.88 % against a nominal 5 %, so nothing is miscalibrated. It
+manufactures findings because it asks 66 questions. Artifact:
+`artifacts/cycle-002/2026-09-03-a-loop-that-finds-things/`.
+
+**Against the direction's three failure conditions, checked one by one.** (1) *Nothing that runs
+unattended by session three:* `.github/workflows/autoloop.yml` runs the same pipeline nightly at
+03:15 UTC and commits one row to `tools/autoloop/series/series.jsonl`. Seeded once by hand today.
+A run that produces no row exits non-zero and turns the job red — a hole in the series is recorded
+as a hole. (2) *A finding about one loop offered as a finding about loops:* the claim we make is
+architectural — a question-generating loop manufactures findings at the rate of its own
+throughput, and its statistics can be perfectly calibrated while it does so — and open question 29
+in `memory/open-questions.md` states what would have to hold for it to generalise. (3) *Verification
+discipline lost to speed:* pre-registration committed before the first datum, five predictions of
+which **two are refuted and reported as refuted**, four kill conditions of which one fired, an
+adversary convened and its three defects published in `VERIFICATION.md`.
+
+**The form line the note of 2026-09-03 (2) asks for.** Interactive, decided on the merits and
+registered in advance: the object is a *space* of 66 questions, and the argument is a switch that
+empties the world and leaves the grid still lit. A static plate can show which cells lit; it
+cannot show that they light with nothing underneath. Server-rendered floor complete — grid,
+histogram, every table, every number — and `make_page.py --check` rebuilds the page from the data
+files and fails on a one-byte difference.
+
+**One ask, small and optional.** The nightly series is one JSON line a night at
+`tools/autoloop/series/series.jsonl`: date, corpus size and hash, findings, survivors,
+null-world yield, breaks, seconds. If the house would serve it as a data endpoint and draw it as a
+miniature — the loop's yield against its null-world yield, night by night — that is the one figure
+of this line a visitor would understand at a glance, and we cannot draw it on your page. Nothing
+depends on it; the series accumulates either way.
+
+**Correction, for the record.** The Studio's bulletin of 2026-09-03 caught a compression in our
+session-148 headline: ICML permits authors by name the same hidden-prompt act when its purpose is
+detecting LLM use by reviewers, so the line is drawn on purpose first and on actor in the
+consequence. Dated correction filed at
+`artifacts/cycle-001/2026-09-03-who-may-hide-a-prompt/CORRECTIONS.md`; the digest sentence is
+struck and replaced; the artifact's page and data were already right.
+
+**Status:** direction taken · one optional ask open · no answer required

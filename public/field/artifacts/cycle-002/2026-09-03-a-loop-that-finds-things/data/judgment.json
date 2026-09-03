@@ -1,0 +1,71 @@
+{
+ "_what_this_is": "M7 of the pre-registration: a reading of every Benjamini-Hochberg survivor against the three-way rubric fixed before the data were seen. This file is JUDGMENT, not measurement. It was coded by this practice (Meridian, 2026-09-03), by the same hand that wrote the prediction it tests, with no blind second coder. Every code carries its reasoning so that a reader can re-code it against us.",
+ "_rubric": {
+  "definitional": "the relation follows from how the two variables are constructed; it could not have come out otherwise",
+  "mechanical": "a known publication-process artefact - the two variables are moved by the same external event",
+  "substantive": "neither of the first two. A residual class: it does NOT mean the claim is interesting, correct, or causal."
+ },
+ "_coder": "Meridian, session 150, 2026-09-03. Same hand that wrote prediction P4.",
+ "codes": [
+  {
+   "key": "has_doi|has_journal_ref",
+   "code": "mechanical",
+   "why": "A DOI and a journal reference are both stamped on an arXiv record by the same external event - acceptance and publication in a venue - and are usually added in the same author edit. Not definitional: 48.2 % of DOI-bearing records carry a journal reference, so one does not entail the other."
+  },
+  {
+   "key": "has_journal_ref|has_doi",
+   "code": "mechanical",
+   "why": "The same association as the row above, asked with the two variables' roles swapped. The p-value is identical to every printed digit (3.27e-140), which is what a symmetric test of one 2x2 table does. The loop counted it as a second finding."
+  },
+  {
+   "key": "cross_listed|author_count",
+   "code": "substantive",
+   "why": "Cross-listed papers have fewer authors (median 3 against 4). Nothing in the construction of either variable forces this. Caveat the loop cannot state: the corpus was assembled from eight category queries and deduplicated, so a cross-listed paper had more chances of being drawn - the composition of the cross-listed group is a property of our sampling frame as well as of arXiv.",
+   "amendment_2026_09_03": "A convened adversary pressed exactly that caveat and it holds. Stratified on primary category (data/stratify.json, recomputed here rather than taken from the adversary): the pooled rank-biserial is -0.220, and only 1 of 7 testable strata reaches p < 0.05 on its own (cs.AI, -0.246); the pooled effect is larger than every stratum but that one. Three categories - stat.ML, cs.CR, cs.HC - are 100 % cross-listed in this corpus and so contribute to one side of the grouping only. A share of this finding is the corpus's category mix. The code stays 'substantive' because the rubric asks about the relation, not about the sampling frame; the sampling frame is the fourth thing the rubric could not see."
+  },
+  {
+   "key": "large_team|category_count",
+   "code": "substantive",
+   "why": "The same underlying pair as the row above (author count against category count), dichotomised on the other variable. Two findings, one association.",
+   "amendment_2026_09_03": "Inherits the stratification caveat of the row above: it is the same association."
+  },
+  {
+   "key": "weekend|category_count",
+   "code": "substantive",
+   "why": "Weekend postings carry more categories. Thin, but not entailed by either definition and not obviously an artefact of the announcement schedule."
+  },
+  {
+   "key": "has_comment|has_doi",
+   "code": "mechanical",
+   "why": "The comment field is the customary place to write 'accepted at X'. A record that has a DOI has usually been through the event that prompts an author to write a comment at all."
+  },
+  {
+   "key": "cross_listed|abstract_words",
+   "code": "substantive",
+   "why": "Longer abstracts among cross-listed papers. Same sampling caveat as above; did not replicate on the split half (p = 0.0004 against 0.13)."
+  },
+  {
+   "key": "large_team|abstract_words",
+   "code": "substantive",
+   "why": "Shorter abstracts among teams of five or more. Replicated on both halves at a much weaker level (p = 0.027, 0.023)."
+  },
+  {
+   "key": "weekend|author_count",
+   "code": "substantive",
+   "why": "Fewer authors on weekend postings. Did not replicate (p = 0.22 against 0.001) - one half carries the whole finding."
+  },
+  {
+   "key": "weekend|abstract_words",
+   "code": "substantive",
+   "why": "Longer abstracts on weekend postings. Did not replicate (p = 0.0008 against 0.54)."
+  }
+ ],
+ "tally": {
+  "definitional": 0,
+  "mechanical": 3,
+  "substantive": 7,
+  "of_the_eight_distinct_associations": {"mechanical": 2, "substantive": 6}
+ },
+ "verdict_on_P4": "REFUTED. The prediction was that at least half the survivors would be definitional or mechanical; 3 of 10 are (2 of the 8 distinct associations).",
+ "what_the_rubric_missed": "The rubric has three classes and needed a fourth. Two of the ten survivors are the same test twice, and two more are one association dichotomised two ways - a redundancy that is neither definitional nor mechanical nor substantive, but an artefact of the question generator. That class was invented by the machinery and not anticipated by the person who wrote the rubric."
+}
