@@ -67,6 +67,27 @@ describe('the seats cover what the instruments publish', () => {
     expect(Object.keys(REDACTION_SEATS).length).toBe(institutions.size)
   })
 
+  it('gives every institution the committed archive has ever named a seat (G3, second evening)', () => {
+    // the watch-list above is what the pipeline watches TODAY; the archive is what it found on every
+    // night it has ever run, and the globe draws from the archive. An institution that was watched
+    // in July and dropped since still has marks on those days.
+    const dir = 'src/data/redaction'
+    const days = readdirSync(dir).filter((f) => /^\d{4}-\d{2}-\d{2}\.json$/.test(f))
+    expect(days.length).toBeGreaterThan(0)
+    const seen = new Set<string>()
+    for (const day of days) {
+      const rows = JSON.parse(readFileSync(`${dir}/${day}`, 'utf8')).redactions as Array<{ institution: string }>
+      for (const row of rows) seen.add(row.institution)
+    }
+    expect(seen.size).toBeGreaterThan(0)
+    for (const institution of seen) {
+      expect(
+        REDACTION_SEATS[institution],
+        `src/data/redaction holds a removal by "${institution}" and no seat is mapped for it`,
+      ).toBeDefined()
+    }
+  })
+
   it('gives every reading of the newest protocol night a seat', () => {
     const day = newestProtocolDay()
     expect(day.entries.length).toBeGreaterThan(0)

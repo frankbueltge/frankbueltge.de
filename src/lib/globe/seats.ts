@@ -56,7 +56,10 @@ export const PROTOCOL_SEATS: Readonly<Record<string, string>> = Object.freeze({
 })
 
 /** Which seat each institution of the redaction watch-list sits at. The keys are the
- *  `institution` strings of pipelines/redaction/src/redaction/watchlist.py. */
+ *  `institution` strings of pipelines/redaction/src/redaction/watchlist.py — and, since G3's second
+ *  evening, of every committed day file under src/data/redaction as well: seats.test.ts walks the
+ *  whole archive and the pipeline's own list, so an institution that appears in either without a
+ *  seat here is a red suite rather than a mark this globe quietly does not draw. */
 export const REDACTION_SEATS: Readonly<Record<string, string>> = Object.freeze({
   WHO: 'who',
   UN: 'un',
@@ -75,3 +78,22 @@ export const REDACTION_SEATS: Readonly<Record<string, string>> = Object.freeze({
   Bundesregierung: 'bundesregierung',
   IEA: 'iea',
 })
+
+/** The seat an institution of the redaction archive sits at, or a throw naming the institution and
+ *  every institution the table does hold.
+ *
+ *  It throws for the same reason `byFips` throws and `tryCctld` does not: an institution string in
+ *  this house's OWN archive is a body the pipeline claims to have watched, so one the table cannot
+ *  place is a gap in the table, never a licence to draw one mark fewer. A silently dropped seat
+ *  looks exactly like a quiet night. */
+export function redactionSeatFor(institution: string): string {
+  const id = REDACTION_SEATS[institution]
+  if (!id) {
+    throw new Error(
+      `globe seats: no seat for the institution "${institution}" — src/lib/globe/seats.ts maps ` +
+        `${Object.keys(REDACTION_SEATS).join(', ')}. Add the institution with its seat id, and the seat ` +
+        'itself with its Wikidata item (scripts/build-globe-seats.ts).',
+    )
+  }
+  return id
+}
