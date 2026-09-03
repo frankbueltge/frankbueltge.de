@@ -298,6 +298,14 @@ export default function LivingGlobe({
     [compact, day, figureId, readout, recordsOf],
   )
 
+  // The mount effect below runs once and must not re-run when these change — yet it has to hand
+  // the drawing half whatever is newest at the moment WebGL is ready. Read through the closure of
+  // its first run, a feed that arrived while the module was still loading would never be drawn
+  // until the next toggle: sea and land and no marks, the race of 2026-09-03. So the mount reads
+  // the newest closures through this ref, and setFrame below carries every change after it.
+  const latest = React.useRef({ buildFrame, recordsOf, showHover, openMark })
+  latest.current = { buildFrame, recordsOf, showHover, openMark }
+
   // The heavy module is imported the first time the figure comes near the viewport, and never
   // before: `useOnScreen` starts true so the server render and the first client render agree,
   // which makes it the right hook for pausing and the wrong one for starting.
@@ -339,16 +347,18 @@ export default function LivingGlobe({
         )
         if (cancelled) return
         const stillReduced = reducedMotion()
+        // everything the drawing half is handed comes through `latest`, never through this
+        // effect's own closure: the feeds may well have arrived while the module was loading
         handleRef.current = deckModule.mountGlobe({
           host,
           land,
-          frame: buildFrame(),
+          frame: latest.current.buildFrame(),
           ink: () => readInk(root),
           reduced: stillReduced,
-          onHover: (hit) => showHover(hit),
+          onHover: (hit) => latest.current.showHover(hit),
           onSelect: (hit) => {
-            const index = recordsOf(hit.layerId).findIndex((r) => r.key === hit.record.key)
-            if (index >= 0) openMark(hit.layerId, index)
+            const index = latest.current.recordsOf(hit.layerId).findIndex((r) => r.key === hit.record.key)
+            if (index >= 0) latest.current.openMark(hit.layerId, index)
           },
           onError: () => setPhase('fallback'),
         })
@@ -361,9 +371,9 @@ export default function LivingGlobe({
     return () => {
       cancelled = true
     }
-    // buildFrame/showHover/openMark are read through the closure at mount only; the effect must
-    // not re-run when a toggle changes them, or the globe would be mounted twice — every later
-    // change reaches the drawing half through setFrame below.
+    // The effect must not re-run when a toggle changes buildFrame/showHover/openMark, or the globe
+    // would be mounted twice; what it hands over it reads from `latest`, and every later change
+    // reaches the drawing half through setFrame below.
   }, [seen]) // eslint-disable-line react-hooks/exhaustive-deps
 
   // Off screen the turn pauses; back on screen it resumes.

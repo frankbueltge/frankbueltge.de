@@ -291,3 +291,23 @@ describe('the sky keeps the one declared no-clock exception', () => {
     expect(code).not.toContain('new Date(')
   })
 })
+
+describe('what the drawing half is handed at mount', () => {
+  // The mount effect runs once, on `seen`, and awaits the module and the land before it draws.
+  // A feed that arrives in that gap changes buildFrame — but the setFrame effect finds no handle
+  // yet and does nothing, and the mount, reading its own first closure, would draw the records it
+  // knew then: none. Sea and land and no marks (2026-09-03). The mount therefore reads the newest
+  // closures through a ref, never its own.
+  const source = read('./LivingGlobe.tsx')
+
+  it('reads the newest frame, not the one its first closure knew', () => {
+    expect(source).toContain('frame: latest.current.buildFrame()')
+    expect(source).not.toMatch(/frame: buildFrame\(\)/)
+  })
+
+  it('answers hover and select with the newest records as well', () => {
+    expect(source).toContain('latest.current.showHover(hit)')
+    expect(source).toContain('latest.current.recordsOf(hit.layerId)')
+    expect(source).toContain('latest.current.openMark(hit.layerId, index)')
+  })
+})

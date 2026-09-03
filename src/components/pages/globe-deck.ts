@@ -289,6 +289,13 @@ export function layersFor(
             getTargetColor: colourOf,
             getWidth: (d) => (d.key === frame.selectedKey ? 3.2 : 1.8),
             widthUnits: 'pixels',
+            // half the default rise: a gap of a thousand hours does not need to leave the atmosphere
+            getHeight: 0.5,
+            // on the globe the ribbon's winding faces away from the camera for most of its length,
+            // and the default back-face cull swallows it whole — deck.gl's own globe example turns
+            // the cull off for its arcs, and so does this one (verified 2026-09-03: twelve arcs
+            // drawn, two pixels changed, until this line)
+            parameters: { cullMode: 'none' },
             updateTriggers: { getSourceColor: [emphasis, frame.selectedKey], getTargetColor: [emphasis, frame.selectedKey] },
             pickable: true,
           }),
@@ -323,6 +330,7 @@ export function layersFor(
             widthUnits: 'pixels',
             capRounded: true,
             jointRounded: true,
+            parameters: { cullMode: 'none' },
             updateTriggers: { getColor: [emphasis, frame.selectedKey], getWidth: frame.selectedKey },
             pickable: true,
           }),
