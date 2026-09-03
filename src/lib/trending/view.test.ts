@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { audienceDimensionRows, audienceHasUmami, audienceMissingDimensions, audienceStrip, audienceTableRows, convergingRows, sourceColumns } from './view'
+import { audienceDimensionRows, audienceHasUmami, audienceMissingDimensions, audienceStrip, audienceTableRows, convergingRows, sourceColumns, stripSpan } from './view'
 import { dimensionlessAudience, fixtureAudience, fixtureDay, legacyAudience, standbyAudience } from './fixtures'
 import { AUDIENCE_CLASSES } from './types'
 
@@ -131,5 +131,23 @@ describe('the two dimensions of trending-audience/2', () => {
     expect(old.edge.countries).toBeUndefined()
     expect(audienceDimensionRows(old.edge.countries)).toEqual([])
     expect(audienceMissingDimensions(old)).toEqual([])
+  })
+})
+
+describe('how wide a strip may draw', () => {
+  it('buckets by bar count, because a viewBox scales to its container', () => {
+    // Found on /trending on 2026-09-03: two committed audience days drawn at full width are two
+    // 300-unit slabs, which reads as a broken figure rather than as a young archive.
+    expect(stripSpan(0)).toBe('short')
+    expect(stripSpan(2)).toBe('short')
+    expect(stripSpan(5)).toBe('short')
+    expect(stripSpan(6)).toBe('mid')
+    expect(stripSpan(14)).toBe('mid')
+    expect(stripSpan(15)).toBe('full')
+    expect(stripSpan(30)).toBe('full')
+  })
+
+  it('carries the bucket on the model, so the island only passes it across', () => {
+    expect(audienceStrip([fixtureAudience()], 30).span).toBe('short')
   })
 })

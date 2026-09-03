@@ -8,8 +8,10 @@
  *  page is written by a model, and nothing is hand-typed that a source could contradict — that
  *  is why the prose carries no numeral of its own.
  */
-import TableFallback from '@/components/dataviz/TableFallback.astro'
+import '@/styles/trending.css'
+import { Badge } from '@/components/ui/badge'
 import TrendingAudienceFigure from '@/components/pages/TrendingAudience.astro'
+import TrendingConvergenceFigure from '@/components/pages/TrendingConvergenceFigure.astro'
 import TrendingSelfCheck from '@/components/pages/TrendingSelfCheck.astro'
 import TrendingRising from '@/components/pages/TrendingRising.astro'
 import { audienceBefore, getTrendingDays } from '@/lib/trending/data'
@@ -17,7 +19,7 @@ import { fmtDateLong, fmtDateWeekday, fmtTimeUtc, platformLabel } from '@/lib/tr
 import { datasetLd, itemListLd, webPageLd } from '@/lib/trending/jsonld'
 import { trendingUrls } from '@/lib/trending/markdown'
 import type { TrendingAudience, TrendingDay } from '@/lib/trending/types'
-import { convergingRows, sourceColumns } from '@/lib/trending/view'
+import { sourceColumns } from '@/lib/trending/view'
 
 interface Props {
   day: TrendingDay
@@ -28,7 +30,6 @@ interface Props {
 }
 const { day, audience, isLatest } = Astro.props
 
-const rows = convergingRows(day)
 // A uniform count per source, so a card is not short merely because its source publishes a
 // short list. The full lists stay in the JSON and Markdown editions.
 const columns = sourceColumns(day, 8)
@@ -55,19 +56,13 @@ const machineEditions: { href: string; what: string }[] = [
   { href: '/trending/topics.json', what: 'the whole watchlist in one file: counts per platform and window, status, receipts, and what the discovery run proposed' },
   { href: '/llms.txt', what: 'where this sits in the house, and what a retrieval agent may do with it' },
 ]
-
-const convergenceProvenance =
-  'A topic is counted as converging when it surfaces on at least two of the independent sources read this morning. ' +
-  'Labels are matched by a disclosed token rule — case folded, diacritics stripped, hashtags split, stopwords dropped, ' +
-  'then exact token, token overlap above the committed threshold, or containment — never by a language model. ' +
-  'Score is the number of platforms carrying a topic, then rank within each of them; the label shown is the one from the highest-priority source.'
 ---
 
 <main id="main" class="flex-1">
   <div class="trending mx-auto max-w-5xl px-4 py-14">
     <header class="mb-10">
-      <p class="font-mono text-xs uppercase tracking-[0.2em] text-fg-faint">Common Ground · Nightly Ledger</p>
-      <h1 class="mt-2 text-[clamp(30px,5vw,52px)] font-bold leading-none tracking-tight">
+      <p class="kicker">Common Ground · Nightly Ledger</p>
+      <h1 class="mt-2 text-h1 font-bold">
         {isLatest ? 'Trending today' : `Trending on ${fmtDateLong(day.date)}`}
       </h1>
       <p class="mt-4 font-mono text-xs text-fg-faint">
@@ -88,41 +83,10 @@ const convergenceProvenance =
         Renders nothing until the term tracker has committed its first run. */}
     <TrendingRising />
 
-    <section class="mb-12">
-      <h2 class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">Converging now</h2>
-      {rows.length === 0 ? (
-        <p class="mt-3 max-w-2xl leading-relaxed text-fg-muted">
-          No topic surfaced on two or more independent platforms this morning. The per-source lists below stand on
-          their own — an empty crossing is a reading, not a failure.
-        </p>
-      ) : (
-        <div class="mt-3 text-sm">
-          <TableFallback
-            summary="The converging topics, as a table"
-            open={true}
-            columns={[
-              { key: 'topic', label: 'Topic' },
-              { key: 'platforms', label: 'Platforms' },
-              { key: 'signals', label: 'What each source recorded' },
-              { key: 'first_seen', label: 'First seen', nowrap: true },
-              { key: 'days_hot', label: 'Days hot', align: 'right' },
-            ]}
-            rows={rows.map((r) => ({
-              topic: r.label,
-              platforms: r.platformsText,
-              signals: r.signalsText,
-              first_seen: r.firstSeen,
-              days_hot: r.daysHot,
-            }))}
-            caption="Topics carried by two or more independent sources on this day, with the signal each source recorded"
-            provenance={convergenceProvenance}
-          />
-        </div>
-      )}
-    </section>
+    <TrendingConvergenceFigure day={day} />
 
     <section class="mb-12 border-t border-line pt-6">
-      <h2 class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">By source</h2>
+      <h2 class="kicker">By source</h2>
       <p class="mt-3 max-w-2xl text-sm leading-relaxed text-fg-muted">
         What each source said on its own, before any crossing. A source that did not answer is recorded as
         unavailable with the reason — never quietly dropped, and never filled in from a neighbour.
@@ -132,21 +96,21 @@ const convergenceProvenance =
           by the longest labels in its row rather than by how much each source happened to say. */}
       <div class="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {columns.map((col) => (
-          <section class="flex flex-col rounded-[16px] border border-line bg-panel p-4">
-            <h3 class="font-semibold">
+          <section class="flex flex-col rounded-md border border-line bg-panel panel-raised p-4">
+            <h3 class="text-h3 font-semibold">
               <a href={col.url} target="_blank" rel="noopener nofollow" class="underline decoration-line underline-offset-2 transition-colors hover:text-fg">
                 {platformLabel(col.id)}
               </a>
             </h3>
-            <p class="mt-1 font-mono text-[10px] text-fg-faint">
-              {col.status === 'ok' ? (
-                <span><span class="tabular-nums">{col.count}</span> signals{col.asOf ? ` · as of ${col.asOf}` : ''}</span>
-              ) : (
-                <span>{col.status}</span>
-              )}
-            </p>
-            {col.status !== 'ok' && col.note && (
-              <p class="mt-1 font-mono text-[10px] text-fg-muted">{col.note}</p>
+            {col.status === 'ok' ? (
+              <p class="mt-1 font-mono text-mono-sm text-fg-faint">
+                <span class="tabular-nums">{col.count}</span> signals{col.asOf ? ` · as of ${col.asOf}` : ''}
+              </p>
+            ) : (
+              <p class="mt-1.5">
+                <Badge variant="outline">{col.status}</Badge>
+                {col.note && <span class="ml-2 font-mono text-mono-sm text-fg-muted">{col.note}</span>}
+              </p>
             )}
             {col.signals.length === 0 ? (
               <p class="mt-3 flex-1 text-sm text-fg-faint">nothing recorded</p>
@@ -160,14 +124,14 @@ const convergenceProvenance =
                       ) : (
                         <span>{s.label}</span>
                       )}
-                      {s.geo && <span class="ml-1 font-mono text-[10px] text-fg-faint">{s.geo}</span>}
+                      {s.geo && <span class="ml-1 font-mono text-mono-sm text-fg-faint">{s.geo}</span>}
                     </span>
-                    <span class="shrink-0 whitespace-nowrap font-mono text-[10px] tabular-nums text-fg-faint">{s.magnitudeText}</span>
+                    <span class="shrink-0 whitespace-nowrap font-mono text-mono-sm tabular-nums text-fg-faint">{s.magnitudeText}</span>
                   </li>
                 ))}
               </ol>
             )}
-            <p class="mt-3 border-t border-line pt-2 font-mono text-[10px] leading-relaxed text-fg-faint">{col.name}</p>
+            <p class="mt-3 border-t border-line pt-2 font-mono text-mono-sm leading-relaxed text-fg-faint">{col.name}</p>
           </section>
         ))}
       </div>
@@ -176,7 +140,7 @@ const convergenceProvenance =
     <TrendingAudienceFigure audience={audience} yesterday={yesterday} />
 
     <section class="mb-12 border-t border-line pt-6">
-      <h2 class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">For machines</h2>
+      <h2 class="kicker">For machines</h2>
       <p class="mt-3 max-w-2xl text-sm leading-relaxed text-fg-muted">
         The same day, in the forms a machine reader can use. All of them are static files, built from the archive
         with the page, so a reader and a crawler never see two different states.
@@ -191,7 +155,7 @@ const convergenceProvenance =
           </div>
         ))}
       </dl>
-      <ul class="mt-5 space-y-1 font-mono text-[11px] leading-relaxed text-fg-faint">
+      <ul class="mt-5 space-y-1 font-mono text-mono-sm leading-relaxed text-fg-faint">
         <li>Data: CC0 1.0</li>
         <li>Cadence: rebuilt daily around 06:40 UTC</li>
         <li>Cite: Frank Bültge, Common Ground — trending ledger, frankbueltge.de/trending/{day.date}</li>
@@ -199,7 +163,7 @@ const convergenceProvenance =
     </section>
 
     <section class="mb-12 border-t border-line pt-6">
-      <h2 class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">Method</h2>
+      <h2 class="kicker">Method</h2>
       <p class="mt-3 max-w-2xl leading-relaxed text-fg-muted">
         Every morning the pipeline reads <span class="tabular-nums">{day.sources.length}</span> open sources and
         records what each one declares as trending, with that source&rsquo;s own label, its own rank and its own count.
@@ -226,8 +190,8 @@ const convergenceProvenance =
     </nav>
 
     <section class="mt-8">
-      <h2 class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">The archive</h2>
-      <p class="mt-2 font-mono text-[11px] text-fg-faint">
+      <h2 class="kicker">The archive</h2>
+      <p class="mt-2 font-mono text-mono-sm text-fg-faint">
         Every committed day, newest first — <span class="tabular-nums">{days.length}</span> so far.
       </p>
       <ul class="mt-3 flex flex-wrap gap-x-4 gap-y-1 font-mono text-xs">
@@ -247,64 +211,3 @@ const convergenceProvenance =
 
 {lds.map((ld) => <script type="application/ld+json" set:html={JSON.stringify(ld)} />)}
 
-<style>
-  /* The disclosure paragraph wears the house's authorship-note form (see
-     src/components/engines/AuthorshipNote.astro); that component's styles are scoped to it, so
-     the rules are restated here rather than borrowed. */
-  .au-note {
-    margin-top: 1.4rem;
-    max-width: 62ch;
-    padding-left: 0.85rem;
-    border-left: 3px solid var(--color-line);
-    font-size: 0.92rem;
-    line-height: 1.6;
-    color: var(--color-fg-muted);
-    text-wrap: pretty;
-  }
-
-  /* The shared table primitive ships structure only (ADR 0010) — this surface says how its own
-     tables read. Scoped to this page, so no other surface inherits it. */
-  .trending :global(.dv-table-fallback) {
-    margin: 0;
-  }
-  .trending :global(.dv-table-fallback > summary) {
-    cursor: pointer;
-    font-family: var(--font-mono, ui-monospace, monospace);
-    font-size: 11px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--color-fg-faint);
-  }
-  .trending :global(.dv-table-fallback > summary:hover) {
-    color: var(--color-fg);
-  }
-  .trending :global(.dv-table) {
-    margin-top: 0.75rem;
-    font-size: 0.8125rem;
-  }
-  .trending :global(.dv-table th) {
-    padding: 0.35rem 0.75rem 0.35rem 0;
-    border-bottom: 1px solid var(--color-line);
-    text-align: left;
-    font-weight: 600;
-    white-space: nowrap;
-    color: var(--color-fg-muted);
-  }
-  .trending :global(.dv-table td) {
-    padding: 0.35rem 0.75rem 0.35rem 0;
-    border-bottom: 1px solid var(--color-line);
-    vertical-align: top;
-  }
-  .trending :global(.dv-table [data-align='right']) {
-    padding-right: 0;
-    font-variant-numeric: tabular-nums;
-  }
-  .trending :global(.dv-prov) {
-    margin-top: 0.6rem;
-    max-width: 68ch;
-    font-family: var(--font-mono, ui-monospace, monospace);
-    font-size: 11px;
-    line-height: 1.6;
-    color: var(--color-fg-faint);
-  }
-</style>

@@ -101,6 +101,7 @@ The binding text is the German section "Interaktive Figuren (Frank, 2026-09-02)"
 | 3c Experiments gallery | 1 | animated, filterable gallery with live thumbnails |
 | 2d Re-skin: utility pages, entrance tokens | 1 | About, Contact, Seed, Post, Legal, 404; the ops room on the new tokens |
 | 3d Middle score + Studio floor | 1 | both figures as islands with cards, on a shared score kit |
+| 2e/3e Trending, polished (2026-09-03) | 1 | the five Common Ground surfaces on the recipe with ONE sheet stylesheet instead of three copies; the audience strip and a term's arc as islands; and `/trending`'s own claim finally drawn — the convergence matrix of topics × sources |
 
 Every step is one PR: green checks (the permanently red Workers Build excepted), a
 decision-log row and a graph rebuild, screenshots light and dark, merged under the standing
@@ -144,5 +145,11 @@ authority. Untouched throughout: the mirrored practice surfaces (`public/*/windo
 - **The radius scale is deliberately not bridged yet.** shadcn's `--radius-*` would silently
   re-round more than a hundred existing `rounded-*` usages; that decision is made with
   screenshots in step 2a.
+- **A step can be a repair as much as an addition.** The trending step (2026-09-03) was asked
+  for as polish and found a surface built beside the re-skin rather than on it: heading clamps,
+  three copies of one stylesheet, and twelve of twenty source names printing as raw ids. The
+  lesson for the steps still to come is that a NEW surface built while the re-skin is running
+  needs the recipe's guard test on the day it ships, not a fortnight later —
+  `src/lib/trending/recipe.test.ts` is that guard, written after the fact.
 - **The smoke island is a placeholder.** It proves the shape on a real surface; the partitur
   replaces it in Phase 1 and deletes `cycle-score.ts` (git is the archive).

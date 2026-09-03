@@ -1,0 +1,377 @@
+/* Common Ground — the ink of the ledger's three figures (visual layer, 2026-09-03).
+ *
+ * The convergence matrix (/trending), the audience strip (/trending) and a term's arc
+ * (/trending/topics/<slug>). All three are React islands since today; the drawing they render on
+ * the server is the same drawing, and everything below inks BOTH states, because a visitor
+ * without JavaScript sees the server's.
+ *
+ * NO PALETTE RECORD IS NEEDED HERE, and that is a decision, not an omission. The seven duties
+ * allow at most four categorical hues (.claude/rules/dataviz-figures.md); the audience strip
+ * alone tells six classes apart, so colour could not carry identity honestly. All three figures
+ * are therefore ink and pattern: stacking order, fill pattern, mark size, and a table beneath.
+ * They stay legible in greyscale, in print and for dichromats, and none of them needs a hue to
+ * mean anything. The site's CSP discards style="" attributes, so every mark wears a class.
+ *
+ * Absorbed src/styles/trending-audience.css (2026-09-01) unchanged on 2026-09-03, when the strip
+ * became an island and the ledger got two more figures to ink.
+ */
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Shared — the readout every one of the three speaks through
+   ═════════════════════════════════════════════════════════════════════════ */
+
+.trending .dv-readout {
+  padding: 6px 9px;
+  border: 1px solid var(--color-line-lift);
+  border-radius: var(--radius-sm);
+  background: var(--color-panel);
+  color: var(--color-fg);
+  font: var(--text-mono-sm) / 1.5 var(--font-mono);
+  box-shadow: var(--elev-float);
+}
+.trending .dv-readout .r-head {
+  display: block;
+  margin-bottom: 2px;
+  font-weight: 600;
+  color: var(--color-fg);
+}
+.trending .dv-readout .r-body {
+  display: block;
+  color: var(--color-fg-muted);
+}
+.trending .dv-readout .r-src {
+  display: block;
+  margin-top: 3px;
+  color: var(--color-fg-faint);
+}
+
+/* The figure box the readout clamps within (readout.ts, house rule 1). */
+.tr-figure {
+  position: relative;
+}
+
+/* How wide a bar strip is allowed to draw. An SVG viewBox scales to its container, so a strip
+   with two committed days at full width becomes two 300-unit slabs — a broken-looking figure
+   standing for a young archive. The bucket is derived in src/lib/trending/view.ts (stripSpan)
+   and reaches the DOM as a data attribute; the width is decided here, where widths belong. */
+.tr-strip {
+  display: block;
+  width: 100%;
+  max-width: 42rem;
+  overflow: visible;
+}
+.tr-strip[data-span='short'] {
+  max-width: 13rem;
+}
+.tr-strip[data-span='mid'] {
+  max-width: 26rem;
+}
+/* A drawing keeps a floor width and its frame scrolls: a twenty-column grid squeezed into a
+   phone is a grey smear, and the readout must clamp to the FIGURE, not to the scroller. */
+.tr-scroll {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   The convergence matrix — one row per converging topic, one column per source
+   ═════════════════════════════════════════════════════════════════════════ */
+
+/* The shared legend primitive ships behaviour and structure, not layout: every surface of this
+   house lays `.dv-legend` out itself (see .studio-surface's and .field-surface's own rules). Ours
+   reads as one wrapping row of source names above the grid. */
+.tr-cv-root .dv-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem 1.1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tr-cv {
+  display: block;
+  width: 100%;
+  overflow: visible;
+}
+
+.tr-cv-rule {
+  stroke: var(--color-line);
+  stroke-width: 1;
+}
+.tr-cv-grid {
+  stroke: var(--color-line);
+  stroke-width: 1;
+  opacity: 0.5;
+}
+/* The column's own vertical guide, so an eye can fall from a head to a mark. */
+.tr-cv-guide {
+  stroke: var(--color-line);
+  stroke-width: 1;
+  opacity: 0.35;
+}
+.tr-cv-head {
+  fill: var(--color-fg-muted);
+  font-family: var(--font-mono);
+  font-size: 10px;
+}
+.tr-cv-foot {
+  fill: var(--color-fg-faint);
+  font-family: var(--font-mono);
+  font-size: 10px;
+}
+.tr-cv-label {
+  fill: var(--color-fg);
+  font-size: 13px;
+}
+.tr-cv-label-a {
+  fill: var(--color-fg);
+  font-size: 13px;
+  text-decoration: underline;
+  text-decoration-color: var(--color-line-lift);
+  text-underline-offset: 2px;
+}
+.tr-cv-row:hover .tr-cv-label-a,
+.tr-cv-row:focus-within .tr-cv-label-a {
+  text-decoration-color: var(--color-fg);
+}
+.tr-cv-count {
+  fill: var(--color-fg-faint);
+  font-family: var(--font-mono);
+  font-size: 10px;
+}
+
+/* The mark. Size is the source's own rank WITHIN ITS OWN COLUMN, in three steps; the ring is
+   drawn for every mark so the smallest one is still a target, and the fill says the weight.
+   Double encoding on purpose: radius and fill both say the same fact, so the grid survives
+   greyscale, print and a dichromat's eye. */
+.tr-cv-mark {
+  fill: var(--color-fg);
+  stroke: var(--color-panel);
+  stroke-width: 1;
+  transition: opacity 140ms var(--ease-frame, ease), transform 140ms var(--ease-frame, ease);
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.tr-cv-mark[data-w='3'] { opacity: 0.95; }
+.tr-cv-mark[data-w='2'] { opacity: 0.72; }
+.tr-cv-mark[data-w='1'] { opacity: 0.5; }
+
+.tr-cv-hit {
+  fill: transparent;
+  cursor: pointer;
+}
+.tr-cv-cell {
+  outline: none;
+}
+.tr-cv-cell:hover .tr-cv-mark,
+.tr-cv-cell:focus-visible .tr-cv-mark {
+  opacity: 1;
+  transform: scale(1.35);
+}
+.tr-cv-cell:focus-visible .tr-cv-ring {
+  stroke: var(--color-ring);
+  stroke-width: 2;
+}
+.tr-cv-ring {
+  fill: none;
+  stroke: transparent;
+}
+
+/* A row the reader opened, and the rows the legend filter left standing. */
+.tr-cv-band {
+  fill: transparent;
+}
+.tr-cv-row[data-sel] .tr-cv-band {
+  fill: var(--color-hover);
+}
+.tr-cv-row:hover .tr-cv-band {
+  fill: var(--color-hover);
+}
+/* The legend washes a column out; it never moves a mark. */
+.tr-cv-cell[data-off] .tr-cv-mark {
+  opacity: 0.14;
+}
+.tr-cv-head[data-off] {
+  opacity: 0.35;
+}
+
+/* The entrance: the rows land one after another, top to bottom. State, not ornament — the
+   gesture is declared only where motion was not refused.
+   The stagger is nth-child rather than a per-mark custom property on purpose: this site's CSP
+   drops style="" attributes, so a per-element delay would have to be written through the CSSOM
+   after mount — one setProperty per mark, to say something the stylesheet can say once. The row
+   cap (CONVERGE.maxRows) is what makes it finite. */
+@media (prefers-reduced-motion: no-preference) {
+  .tr-cv-enter .tr-cv-cell .tr-cv-mark {
+    animation: tr-cv-land 320ms var(--ease-frame, ease) backwards;
+  }
+  .tr-cv-enter .tr-cv-rows > .tr-cv-row:nth-child(1) .tr-cv-mark { animation-delay: 0ms; }
+  .tr-cv-enter .tr-cv-rows > .tr-cv-row:nth-child(2) .tr-cv-mark { animation-delay: 30ms; }
+  .tr-cv-enter .tr-cv-rows > .tr-cv-row:nth-child(3) .tr-cv-mark { animation-delay: 60ms; }
+  .tr-cv-enter .tr-cv-rows > .tr-cv-row:nth-child(4) .tr-cv-mark { animation-delay: 90ms; }
+  .tr-cv-enter .tr-cv-rows > .tr-cv-row:nth-child(5) .tr-cv-mark { animation-delay: 120ms; }
+  .tr-cv-enter .tr-cv-rows > .tr-cv-row:nth-child(6) .tr-cv-mark { animation-delay: 150ms; }
+  .tr-cv-enter .tr-cv-rows > .tr-cv-row:nth-child(7) .tr-cv-mark { animation-delay: 180ms; }
+  .tr-cv-enter .tr-cv-rows > .tr-cv-row:nth-child(8) .tr-cv-mark { animation-delay: 210ms; }
+  .tr-cv-enter .tr-cv-rows > .tr-cv-row:nth-child(9) .tr-cv-mark { animation-delay: 240ms; }
+  .tr-cv-enter .tr-cv-rows > .tr-cv-row:nth-child(n + 10) .tr-cv-mark { animation-delay: 270ms; }
+  @keyframes tr-cv-land {
+    from {
+      opacity: 0;
+      transform: scale(0.4);
+    }
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   The audience strip — who read /trending, by class, per day
+   (moved here from trending-audience.css, 2026-09-01, unchanged)
+   ═════════════════════════════════════════════════════════════════════════ */
+
+.tra-seg-browser { fill: var(--color-fg); opacity: 0.92; }
+.tra-seg-search { fill: url(#tra-p-search); }
+.tra-seg-ai-retrieval { fill: url(#tra-p-ai-retrieval); }
+.tra-seg-ai-user-fetch { fill: url(#tra-p-ai-user-fetch); }
+.tra-seg-ai-training { fill: url(#tra-p-ai-training); }
+.tra-seg-other-bot { fill: url(#tra-p-other-bot); }
+
+/* Pattern ink: the strokes and dots inside the six fills. */
+.tra-p-ink { fill: var(--color-fg); stroke: var(--color-fg); }
+.tra-p-ink-muted { fill: var(--color-fg-muted); stroke: var(--color-fg-muted); }
+.tra-p-ink-faint { fill: var(--color-fg-faint); stroke: var(--color-fg-faint); }
+.tra-p-ground { fill: var(--color-panel); }
+
+/* Hollow tick for a day whose count is in standby. */
+.tra-standby { fill: none; stroke: var(--color-fg-faint); stroke-width: 1; stroke-dasharray: 2 2; opacity: 0.8; }
+.tra-baseline { stroke: var(--color-fg-faint); stroke-width: 1; opacity: 0.35; }
+.tra-axis { fill: var(--color-fg-faint); font-size: 10px; }
+
+.tra-bar { outline: none; }
+.tra-bar rect { transition: opacity 120ms ease; }
+/* `:not([data-off])` is load-bearing since the legend became a filter: this rule is one step
+   more specific than `.tra-seg[data-off]`, so without it, hovering a bar would brighten the very
+   classes the reader had just washed out. */
+.tra-bar:hover rect:not([data-off]),
+.tra-bar:focus-visible rect:not([data-off]) { opacity: 1; }
+
+/* Legend swatches reuse the six fills. */
+.tra-legend { display: flex; flex-wrap: wrap; gap: 0.35rem 1.1rem; }
+.tra-legend svg { width: 14px; height: 14px; vertical-align: -2px; }
+.tra-legend svg rect { stroke: var(--color-line); stroke-width: 1; }
+
+/* ── what the island adds (2026-09-03) ──────────────────────────────────────
+   The legend became a filter, the bars became focusable, and a day the reader is pointing at
+   keeps a hairline so the readout is never the only sign of which bar is meant. Nothing here
+   moves a mark: the geometry the server drew is the geometry the browser keeps. */
+.tra-seg { transition: opacity 140ms var(--ease-frame, ease); }
+.tra-seg[data-off] { opacity: 0.12; }
+.tra-bar[data-sel] .tra-cursor,
+.tra-bar:hover .tra-cursor,
+.tra-bar:focus-visible .tra-cursor {
+  stroke: var(--color-fg);
+  opacity: 0.55;
+}
+.tra-cursor { stroke: transparent; stroke-width: 1; }
+.tra-hit { fill: transparent; cursor: crosshair; }
+
+.tra-legend-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border: 0;
+  padding: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+.tra-legend-btn[aria-pressed='true'] { color: var(--color-fg); }
+.tra-legend-btn:hover { color: var(--color-fg); }
+.tra-legend-btn[data-off] { opacity: 0.45; }
+
+/* The strip rises once, as one gesture: thirty bars each with their own delay would be thirty
+   CSSOM writes for a flourish, and a ledger's figure should not cost that. */
+@media (prefers-reduced-motion: no-preference) {
+  .tra-enter .tra-bar rect {
+    animation: tra-rise 420ms var(--ease-frame, ease) backwards;
+    transform-box: fill-box;
+    transform-origin: bottom;
+  }
+  @keyframes tra-rise {
+    from { transform: scaleY(0); }
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   A term's arc — one bar per committed run, with the two windows the status rests on
+   ═════════════════════════════════════════════════════════════════════════ */
+
+/* One series, one ink. */
+.tt-mark {
+  fill: var(--color-fg);
+  opacity: 0.88;
+  transition: opacity 120ms ease;
+}
+.tt-baseline {
+  stroke: var(--color-fg-faint);
+  stroke-width: 1;
+  opacity: 0.35;
+}
+.tt-axis {
+  fill: var(--color-fg-faint);
+  font-size: 10px;
+}
+.tt-bar {
+  outline: none;
+}
+.tt-bar:hover .tt-mark,
+.tt-bar:focus-visible .tt-mark {
+  opacity: 1;
+}
+.tt-bar[data-sel] .tt-mark {
+  opacity: 1;
+}
+.tt-hit { fill: transparent; cursor: crosshair; }
+
+/* The two brackets: the last seven runs, and the three weeks the pipeline holds them against.
+   A bracket is drawn only where the archive can carry it — see src/lib/trending/arc.ts. */
+.tt-win {
+  stroke: var(--color-fg-faint);
+  stroke-width: 1;
+  fill: none;
+}
+.tt-win-recent { stroke: var(--color-fg); opacity: 0.7; }
+.tt-win-label {
+  fill: var(--color-fg-faint);
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+}
+.tt-win-label-recent { fill: var(--color-fg-muted); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .tt-enter .tt-bar .tt-mark {
+    animation: tra-rise 380ms var(--ease-frame, ease) backwards;
+    transform-box: fill-box;
+    transform-origin: bottom;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tra-bar rect,
+  .tra-seg,
+  .tr-cv-mark,
+  .tt-mark {
+    transition: none;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   The two dimensions of trending-audience/2 — countries and referring hosts
+   ═════════════════════════════════════════════════════════════════════════ */
+
+/* Two short tables, no figure: the plain-text floor IS the readout here. */
+.tra-dims { display: grid; gap: 0.75rem 2rem; }
+@media (min-width: 40rem) {
+  .tra-dims { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; }
+}

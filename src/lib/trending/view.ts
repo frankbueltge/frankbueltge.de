@@ -94,6 +94,19 @@ export interface StripBar {
   segments: StripSegment[]
 }
 
+/** How wide a strip of `n` bars may render. A strip's viewBox scales to its container, so two
+ *  committed days drawn at full width become two 300-unit slabs that read as a broken figure
+ *  rather than as a young archive (seen on /trending on 2026-09-03, with two audience days in the
+ *  window). The bucket is geometry, so it lives here and is tested here; the stylesheet turns it
+ *  into a max-width and the island only carries it across as a data attribute. */
+export type StripSpan = 'short' | 'mid' | 'full'
+
+export function stripSpan(n: number): StripSpan {
+  if (n <= 5) return 'short'
+  if (n <= 14) return 'mid'
+  return 'full'
+}
+
 export interface StripModel {
   width: number
   height: number
@@ -103,6 +116,8 @@ export interface StripModel {
   bars: StripBar[]
   /** class → total over the drawn window, for the legend */
   totals: Record<AudienceClass, number>
+  /** how wide the drawing may render — see stripSpan() */
+  span: StripSpan
 }
 
 /** The last `n` audience days as stacked bars, oldest left, pure geometry. Missing days
@@ -134,7 +149,7 @@ export function audienceStrip(days: TrendingAudience[], n = 30, width = 640, hei
     }
     return { day: c.day, x, total: c.total, segments }
   })
-  return { width, height, barWidth, gap, max, bars, totals }
+  return { width, height, barWidth, gap, max, bars, totals, span: stripSpan(bars.length) }
 }
 
 export interface AudienceTableRow extends Record<string, string | number> {

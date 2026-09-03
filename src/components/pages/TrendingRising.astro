@@ -9,6 +9,7 @@
  *  Renders nothing at all before the first terms file is committed: an empty promise on the
  *  ledger would be worse than no block.
  */
+import { Badge } from '@/components/ui/badge'
 import { getLatestTerms } from '@/lib/trending/terms-data'
 import { risingLinks, statusTally } from '@/lib/trending/terms-view'
 
@@ -20,7 +21,7 @@ const tally = file ? statusTally(file) : []
 {
   file && (
     <section class="mb-12 border-t border-line pt-6" id="rising">
-      <h2 class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">Rising this week</h2>
+      <h2 class="kicker">Rising this week</h2>
       {rising.length === 0 ? (
         <p class="mt-3 max-w-2xl text-sm leading-relaxed text-fg-muted">
           No watched term is accelerating this week — an arc that stays flat is a reading, not a failure. The whole
@@ -42,7 +43,7 @@ const tally = file ? statusTally(file) : []
                 >
                   {r.term}
                 </a>
-                <span class="shrink-0 whitespace-nowrap font-mono text-[10px] text-fg-faint">
+                <span class="shrink-0 whitespace-nowrap font-mono text-mono-sm text-fg-faint">
                   {r.statusLabel}
                   {' · '}
                   <span class="tabular-nums">{r.d7}</span>
@@ -56,9 +57,9 @@ const tally = file ? statusTally(file) : []
       <p class="mt-4 flex flex-wrap items-center gap-x-5 gap-y-1 font-mono text-xs text-fg-faint">
         <a href="/trending/topics/" class="transition-colors hover:text-fg">All watched terms &rarr;</a>
         {tally.map((i) => (
-          <span>
-            {i.label} <span class="tabular-nums">{i.n}</span>
-          </span>
+          <Badge variant="outline">
+            {i.label} <span class="ml-1 tabular-nums">{i.n}</span>
+          </Badge>
         ))}
       </p>
     </section>
