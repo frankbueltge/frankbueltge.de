@@ -57,6 +57,12 @@
 .globe-dot[data-kind='station'] {
   fill: var(--color-accent);
 }
+/* a centroid is the weakest claim on this plate — somewhere inside a country's polygon and nothing
+   more — so it is drawn in muted ink rather than in the accent a measured point wears (G3) */
+.globe-dot[data-kind='centroid'] {
+  fill: var(--color-fg-muted);
+  opacity: 0.7;
+}
 .globe-arc {
   fill: none;
   stroke: var(--color-fg-muted);
