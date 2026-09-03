@@ -1,0 +1,107 @@
+/* Sawtooth's plates. No hue carries information here: the two lines are told apart by WEIGHT and
+   by DASH, the leap seconds by a tick, the short decade by a hollow bar. That is why this file
+   needs no PALETTE record — there is no categorical colour set to validate. It reads the same in
+   both themes and the same in monochrome, which is the honest test for a figure whose subject is
+   a quantity too small to see. */
+
+.saw-plate {
+  margin: 0;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-md);
+  background: var(--color-panel);
+  padding: 10px 8px 4px;
+  overflow-x: auto;
+}
+.saw-svg {
+  display: block;
+  width: 100%;
+  min-width: 520px;
+  height: auto;
+}
+
+/* the decade rules and the line a value is measured against */
+.saw-grid line {
+  stroke: var(--color-line);
+  stroke-width: 1;
+  opacity: 0.5;
+}
+.saw-zero {
+  stroke: var(--color-fg-faint);
+  stroke-width: 1;
+  stroke-dasharray: 3 3;
+}
+
+/* the twenty-seven interventions: a tick, not a band — each one is an instant */
+.saw-leaps line {
+  stroke: var(--color-fg-faint);
+  stroke-width: 1;
+  opacity: 0.45;
+}
+
+.saw-line {
+  fill: none;
+  stroke: var(--color-fg);
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+/* the counterfactual is drawn thin and dashed — it is the line that was NOT run */
+.saw-uncorrected {
+  stroke-width: 1.25;
+  stroke-dasharray: 5 3;
+  opacity: 0.75;
+}
+/* the clock the world keeps is the solid, heavier one */
+.saw-observed {
+  stroke-width: 1.75;
+}
+
+.saw-tick-labels text,
+.saw-bar text {
+  fill: var(--color-fg-faint);
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+.saw-bar-value {
+  font-size: 10px;
+}
+
+.saw-bar rect {
+  fill: var(--color-fg);
+}
+/* the decade whose days ran short: hollow, so the sign change is a change of KIND, not of hue */
+.saw-bar-short rect {
+  fill: none;
+  stroke: var(--color-fg);
+  stroke-width: 1.5;
+}
+
+.saw-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 18px;
+  padding: 8px 2px 4px;
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-sm);
+  color: var(--color-fg-faint);
+}
+.saw-key {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+.saw-key::before {
+  content: '';
+  width: 22px;
+  height: 0;
+  border-top: 1.75px solid currentColor;
+}
+.saw-key-uncorrected::before {
+  border-top-style: dashed;
+  border-top-width: 1.25px;
+}
+.saw-key-leap::before {
+  width: 0;
+  height: 13px;
+  border-top: 0;
+  border-left: 1px solid currentColor;
+}

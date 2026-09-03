@@ -26,6 +26,8 @@ import { feature } from 'topojson-client'
 import type { Topology } from 'topojson-specification'
 
 import { GALLERY } from '@/config/gallery-wording'
+import { sawtooth as sawtoothSeries } from '@/lib/sawtooth/series'
+import { thin } from '@/lib/sawtooth/figure'
 import { bars as vizBars, linePath, type VizBox } from '@/lib/ops/viz'
 import { bars as benfordBars } from '@/lib/round-number/histogram'
 import { yearAreaPath, yearLinePath } from '@/lib/praemie/chart'
@@ -508,6 +510,26 @@ export function recordThumbnail(id: string, entries: number, what: string, sourc
   }
 }
 
+/**
+ * SAWTOOTH's miniature: the work's own subject, in a smaller box — the published gap between
+ * Earth time and atomic time, thinned by the same rule the page uses (largest absolute value per
+ * bucket, never the mean, so a one-day snap of a whole second survives the shrinking). Drawn as
+ * bars rather than a line because at this width a line of twenty-seven teeth reads as noise while
+ * a bar row keeps each slide legible. The marked bar is the deepest slide of the record.
+ */
+function sawtoothThumbnail(): Thumbnail {
+  const s = sawtoothSeries()
+  const values = thin(s.observed, 56)
+  const deepest = values.reduce((best, v, i) => (v < values[best] ? i : best), 0)
+  return {
+    id: 'sawtooth',
+    marks: barMarks(values, new Set([deepest])),
+    draws: GALLERY.draws.sawtooth,
+    readout: GALLERY.readouts.sawtooth(String(s.leaps.length), String(s.yearsSinceLeap)),
+    source: 'src/data/sawtooth/rotation.json',
+  }
+}
+
 // ── the catalogue ─────────────────────────────────────────────────────────────────────────
 function buildThumbnails(): Thumbnail[] {
   const R = GALLERY.readouts
@@ -712,6 +734,8 @@ function buildThumbnails(): Thumbnail[] {
       source: 'src/data/ghost-fleet/latest.json',
     })
   }
+
+  out.push(sawtoothThumbnail())
 
   return out
 }

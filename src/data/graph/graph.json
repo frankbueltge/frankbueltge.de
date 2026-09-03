@@ -4,15 +4,15 @@
     "sources": [
       {
         "file": "src/data/werke.ts",
-        "sha256": "86613f8c6a10dc49"
+        "sha256": "e89de54b89292a67"
       },
       {
         "file": "docs/audits/2026-08-09-usp-audit.md",
-        "sha256": "a8dcdd89c0fcaa1f"
+        "sha256": "20f3fb7f501f5d11"
       },
       {
         "file": "docs/decision-log.md",
-        "sha256": "ef0d986da7e07148"
+        "sha256": "847fbcc00d6eb012"
       },
       {
         "file": "src/data/post/ledger.json",
@@ -57,25 +57,25 @@
       }
     ],
     "counts": {
-      "nodes": 386,
-      "edges": 341,
+      "nodes": 397,
+      "edges": 351,
       "nodesByKind": {
-        "decision": 119,
+        "decision": 120,
         "encounter": 6,
-        "neighbor": 115,
+        "neighbor": 124,
         "practice": 9,
         "practice-work": 104,
         "receiver": 8,
-        "work": 25
+        "work": 26
       },
       "edgesByKind": {
         "addresses": 8,
         "concerns": 2,
         "door": 5,
         "made-by": 104,
-        "neighbor-of": 116,
+        "neighbor-of": 125,
         "participates": 17,
-        "touches": 89
+        "touches": 90
       }
     }
   },
@@ -1271,6 +1271,16 @@
       }
     },
     {
+      "id": "decision:2026-09-04-1",
+      "kind": "decision",
+      "label": "Sawtooth — a free work in the half of the Atlas this house had never entered",
+      "date": "2026-09-04",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "Sawtooth — a free work in the half of the Atlas this house had never entered"
+      }
+    },
+    {
       "id": "encounter:enc-2026-001-calibration-gap-travels",
       "kind": "encounter",
       "label": "The Calibration Gap travels: Instrument 001 → Native Speaker → correction upstream",
@@ -1897,6 +1907,16 @@
       "url": "https://www.holdfastprojects.com/us-datacentre-pue.md-2"
     },
     {
+      "id": "neighbor:iers-org-iers-en-publications-bulletins-bulletins-html",
+      "kind": "neighbor",
+      "label": "IERS Bulletin A / EOP product centre plots",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[IERS Bulletin A / EOP product centre plots](https://www.iers.org/IERS/EN/Publications/Bulletins/bulletins.html) — the source, and it publishes its own UT1−UTC plot. Stronger on authority by definition, and the only place the data comes from. It is a technical product for people who already know what they are looking at: no counterfactual, no shared scale, and no claim about what the shape means."
+      },
+      "url": "https://www.iers.org/IERS/EN/Publications/Bulletins/bulletins.html"
+    },
+    {
       "id": "neighbor:ijoc-org-index-php-ijoc-article-download-10786-2679-38967",
       "kind": "neighbor",
       "label": "\"Unpublishing the News\" (IJoC 2019)",
@@ -1954,6 +1974,16 @@
       "url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0271969"
     },
     {
+      "id": "neighbor:leapsecond-com",
+      "kind": "neighbor",
+      "label": "leapsecond.com",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[leapsecond.com](http://www.leapsecond.com/) (Tom Van Baak) — the deepest amateur precision-timekeeping site on the web, with decades of length-of-day material and measurements this work does not attempt. A reference archive rather than a figure; nothing on it puts the corrected and uncorrected clocks on one axis."
+      },
+      "url": "http://www.leapsecond.com/"
+    },
+    {
       "id": "neighbor:liang-et-al-monitoring-ai-modified-content-at-scale-icml-202",
       "kind": "neighbor",
       "label": "Liang et al., \"Monitoring AI-modified content at scale\" (ICML 2024)",
@@ -1961,6 +1991,16 @@
         "file": "docs/audits/2026-08-09-usp-audit.md",
         "quote": "Liang et al., \"Monitoring AI-modified content at scale\" (ICML 2024) — names \"showcasing, realm\" among top LLM-preferred words; both appear in this experiment's own title/copy."
       }
+    },
+    {
+      "id": "neighbor:longnow-org-clock",
+      "kind": "neighbor",
+      "label": "The Long Now Foundation, *Clock of the Long Now*",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[The Long Now Foundation, *Clock of the Long Now*](https://longnow.org/clock/) — the canonical artwork about timekeeping at scale. It builds a clock meant to survive; it does not measure the disagreement between the two we have."
+      },
+      "url": "https://longnow.org/clock/"
     },
     {
       "id": "neighbor:marino-who-s-reading-who-exploring-the-state-of-third-party-",
@@ -2037,6 +2077,16 @@
         "quote": "[Candia et al. 2019, \"The universal decay of collective memory and attention\"](https://www.nature.com/articles/s41562-018-0474-5) — the biexponential decay law across cultural domains; a static paper, and simultaneously this instrument's test hypothesis."
       },
       "url": "https://www.nature.com/articles/s41562-018-0474-5"
+    },
+    {
+      "id": "neighbor:nature-com-articles-s41586-024-07170-0",
+      "kind": "neighbor",
+      "label": "Agnew, *A global timekeeping problem postponed by global warming*, **Nature** 628 (2024)",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Agnew, *A global timekeeping problem postponed by global warming*, **Nature** 628 (2024)](https://www.nature.com/articles/s41586-024-07170-0) — not a neighbour but the load-bearing citation, and the reason the subject is live: the first negative leap second is projected for about 2029, roughly three years later than it would have been without accelerated polar melt."
+      },
+      "url": "https://www.nature.com/articles/s41586-024-07170-0"
     },
     {
       "id": "neighbor:news-gallup-com-interactives-248240-global-emotions-aspx",
@@ -2178,6 +2228,16 @@
       "url": "https://www.reusingthenews.org"
     },
     {
+      "id": "neighbor:ruthewan-com",
+      "kind": "neighbor",
+      "label": "Ruth Ewan, *We Could Have Been Anything That We Wanted To Be*",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Ruth Ewan, *We Could Have Been Anything That We Wanted To Be*](https://ruthewan.com/) (2011) — the closest **conceptual** neighbour in art: working decimal clocks from the French Republican calendar, which is exactly the subject of a time unit that was defined differently. Sculptural and historical, about a definition that was abandoned; this is about two definitions still running against each other, and it is a measurement rather than an object."
+      },
+      "url": "https://ruthewan.com/"
+    },
+    {
       "id": "neighbor:satfleetlive-com",
       "kind": "neighbor",
       "label": "SatFleetLive",
@@ -2224,6 +2284,16 @@
         "file": "docs/audits/2026-08-09-usp-audit.md",
         "quote": "Shiny app + R package for p-hacking simulation (PMC9905987) — academic tool exploring p-hacking severity settings interactively."
       }
+    },
+    {
+      "id": "neighbor:showyourstripes-info",
+      "kind": "neighbor",
+      "label": "Ed Hawkins, *Warming Stripes*",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Ed Hawkins, *Warming Stripes*](https://showyourstripes.info/) — the formal neighbour: one long instrumental series as a texture a stranger reads instantly. This is the standard the plates are trying to reach and it does the job with one series and no counterfactual; the second plate here is more complex than a stripe and has to earn that."
+      },
+      "url": "https://showyourstripes.info/"
     },
     {
       "id": "neighbor:sparc-navigating-risk-in-vendor-data-privacy-practices",
@@ -2294,6 +2364,16 @@
       "url": "https://www.swissre.com/Library/swiss-re-cat-bond-indices-methodology.html"
     },
     {
+      "id": "neighbor:tate-org-uk-art-artworks-marclay-the-clock-t14265",
+      "kind": "neighbor",
+      "label": "Christian Marclay, *The Clock*",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Christian Marclay, *The Clock*](https://www.tate.org.uk/art/artworks/marclay-the-clock-t14265) (2010) — the canonical time artwork, and named because any work with a clock in it is measured against this one. A twenty-four-hour montage of cinema, synchronised to the room; no data, no drift, no argument about the unit."
+      },
+      "url": "https://www.tate.org.uk/art/artworks/marclay-the-clock-t14265"
+    },
+    {
       "id": "neighbor:the-commercial-comparison-genre-at-large-isitai-solidaitech-",
       "kind": "neighbor",
       "label": "The commercial comparison genre at large (isitai, SolidAITech, EyeSift, 2026)",
@@ -2309,6 +2389,15 @@
       "source": {
         "file": "docs/audits/2026-08-09-ecology-usp-audit.md",
         "quote": "The detector-demo genre — GPTZero, Copyleaks and others let anyone paste text and receive a live score; the scoring surface itself is a commodity."
+      }
+    },
+    {
+      "id": "neighbor:the-fifteen-atlas-entries-whose-text-carries-time-or-clock-v",
+      "kind": "neighbor",
+      "label": "The fifteen Atlas entries whose text carries time or clock vocabulary (Digital Terraforming, Tellurian Drama, Vigil, PacketWeather, One Minute of Ass, and others)",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "The fifteen Atlas entries whose text carries time or clock vocabulary (Digital Terraforming, Tellurian Drama, Vigil, PacketWeather, One Minute of Ass, and others) — returned by the machine search over `decisive_move`, and dismissed on reading: not one is about timekeeping. **The Atlas holds no work on the second, the leap second, or the divergence of Earth time from atomic time.**"
       }
     },
     {
@@ -2330,6 +2419,16 @@
         "quote": "[The Outlaw Ocean Project](https://theoutlawocean.com/podcast/the-dark-fleet) — investigative journalism running the \"single vessel dark for months\" narrative for years (e.g. the 110-day chase of the *Thunder*), with named vessels, crews, and months of reporting."
       },
       "url": "https://theoutlawocean.com/podcast/the-dark-fleet"
+    },
+    {
+      "id": "neighbor:time-is",
+      "kind": "neighbor",
+      "label": "time.is",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[time.is](https://time.is/) · [NIST](https://www.nist.gov/pml/time-and-frequency-division) explainers — the standard public accounts of the leap second, better as explanation and with no figure of the record as a whole."
+      },
+      "url": "https://time.is/"
     },
     {
       "id": "neighbor:transparency-eu-integrity-watch-red-flags",
@@ -4369,7 +4468,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'balance'"
       },
-      "rank": 4,
+      "rank": 5,
       "tier": "experiment",
       "line": "From the “Counter-Measurement” line.",
       "verdict": "UNIQUE",
@@ -4391,7 +4490,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'beifang'"
       },
-      "rank": 7,
+      "rank": 8,
       "verdict": "ADDED VALUE",
       "verdictLabel": "ADDED VALUE (narrow).",
       "daylight": "Cite the prior academic literature (Hanson, Marino, SPARC) explicitly on the page — currently absent, which reads as unawareness — and make the recurring-cadence, paired-control, dual-vantage-point apparatus the headline claim, since that's the part with no existing match.",
@@ -4411,7 +4510,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'consensus'"
       },
-      "rank": 13,
+      "rank": 14,
       "tier": "experiment",
       "line": "From the “Counter-Measurement” line.",
       "verdict": "ADDED VALUE",
@@ -4433,7 +4532,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'correction'"
       },
-      "rank": 14,
+      "rank": 15,
       "tier": "studie",
       "line": "From the “Counter-Measurement” line.",
       "verdict": "REDUNDANT",
@@ -4467,7 +4566,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'ghost-fleet'"
       },
-      "rank": 8,
+      "rank": 9,
       "tier": "studie",
       "line": "From the “Counter-Measurement” line.",
       "verdict": "REDUNDANT",
@@ -4489,7 +4588,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'globe'"
       },
-      "rank": 1,
+      "rank": 2,
       "tier": "experiment",
       "line": "From the counter-measurement line.",
       "verdict": "ADDED VALUE",
@@ -4511,7 +4610,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'invoked-past'"
       },
-      "rank": 3,
+      "rank": 4,
       "tier": "experiment",
       "verdict": "UNIQUE",
       "verdictLabel": "UNIQUE (as a living instrument).",
@@ -4565,7 +4664,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'parallaxe'"
       },
-      "rank": 16,
+      "rank": 17,
       "verdict": "REDUNDANT",
       "verdictLabel": "REDUNDANT-leaning.",
       "daylight": "The plausible surviving differentiator is *process*, not method: a committed, versioned, git-archived daily register with a fixed non-selected topic set, never retconned — none of the neighbors offer that as a public, continuously-dated artifact (INFOGAP is a paper/dataset; Omnipedia/Manypedia are dead demos). Name this explicitly as the point, and cite INFOGAP/Omnipedia/Manypedia openly rather than let a visitor discover the overlap unassisted.",
@@ -4585,7 +4684,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'pattern'"
       },
-      "rank": 12,
+      "rank": 13,
       "line": "Capstone of the “Counter-Measurement” line.",
       "verdict": "REDUNDANT",
       "verdictLabel": "REDUNDANT — the weakest claim to uniqueness in this audit.",
@@ -4606,7 +4705,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'praemie'"
       },
-      "rank": 15,
+      "rank": 16,
       "verdict": "REDUNDANT",
       "verdictLabel": "REDUNDANT.",
       "daylight": "Either build on genuinely under-covered instruments — actual cat-bond spread/ROL data (Swiss Re index, Artemis.bm) rather than the BLS homeowner PPI others already use — or make the legal-document framing itself the explicit differentiator, citing Deep Sky/BLS/FRED openly rather than implying proprietary discovery.",
@@ -4626,7 +4725,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'protokoll'"
       },
-      "rank": 17,
+      "rank": 18,
       "verdict": "ADDED VALUE",
       "verdictLabel": "ADDED VALUE, driven by the literary form, not the data aggregation.",
       "daylight": "Stop positioning \"twelve open sources, daily\" as the value proposition (invites a losing comparison to OWID); foreground the deterministic/no-LLM/ test-locked-template mechanism and the \"adjourned\" bureaucratic-literary device as the explicit claim — an art piece about administrative language applied to planetary indicators, not a data-aggregation competitor to Our World in Data.",
@@ -4646,7 +4745,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'redaction'"
       },
-      "rank": 9,
+      "rank": 10,
       "tier": "instrument",
       "line": "From the “Counter-Measurement” line, in two chambers.",
       "verdict": "ADDED VALUE",
@@ -4668,7 +4767,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'round-number'"
       },
-      "rank": 10,
+      "rank": 11,
       "line": "From the “Counter-Measurement” line.",
       "verdict": "REDUNDANT",
       "verdictLabel": "REDUNDANT.",
@@ -4676,6 +4775,26 @@
       "auditSource": {
         "file": "docs/audits/2026-08-09-usp-audit.md",
         "quote": "REDUNDANT."
+      }
+    },
+    {
+      "id": "work:sawtooth",
+      "kind": "work",
+      "label": "Sawtooth",
+      "werkId": "sawtooth",
+      "href": "/sawtooth",
+      "since": "2026-09-04",
+      "source": {
+        "file": "src/data/werke.ts",
+        "quote": "id: 'sawtooth'"
+      },
+      "rank": 1,
+      "verdict": "ADDED VALUE",
+      "verdictLabel": "ADDED VALUE.",
+      "daylight": "Keep, and refresh with the record rather than by hand: `scripts/sawtooth/fetch.ts` rebuilds the snapshot, and the plates redraw from it. The work has a dated end built into its own subject — either a negative leap second arrives, or the leap second is retired in 2035 — and on either event this page becomes historical and should say so on its face rather than continuing to describe a live mechanism. That is the currency risk to watch, and it is the reason the last paragraph is written as a fork rather than as a prediction.",
+      "auditSource": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "ADDED VALUE."
       }
     },
     {
@@ -4689,7 +4808,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'society'"
       },
-      "rank": 5,
+      "rank": 6,
       "tier": "experiment",
       "verdict": "UNIQUE",
       "verdictLabel": "UNIQUE (provisional).",
@@ -4710,7 +4829,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'spielraum'"
       },
-      "rank": 6,
+      "rank": 7,
       "tier": "experiment",
       "line": "From the counter-measurement line.",
       "verdict": "ADDED VALUE",
@@ -4744,7 +4863,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'tell'"
       },
-      "rank": 11,
+      "rank": 12,
       "line": "From the “Counter-Measurement” line.",
       "verdict": "REDUNDANT",
       "verdictLabel": "REDUNDANT — the clearest case in this audit.",
@@ -4765,7 +4884,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'trending'"
       },
-      "rank": 2,
+      "rank": 3,
       "tier": "experiment",
       "verdict": "ADDED VALUE",
       "verdictLabel": "ADDED VALUE (provisional — sealed before ship).",
@@ -4786,7 +4905,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'ueberflug'"
       },
-      "rank": 18,
+      "rank": 19,
       "tier": "studie",
       "verdict": "ADDED VALUE",
       "verdictLabel": "ADDED VALUE, genuine but narrow.",
@@ -6837,6 +6956,105 @@
     },
     {
       "kind": "neighbor-of",
+      "from": "work:sawtooth",
+      "to": "neighbor:iers-org-iers-en-publications-bulletins-bulletins-html",
+      "note": "the source, and it publishes its own UT1−UTC plot. Stronger on authority by definition, and the only place the data comes from. It is a technical product for people who already know what they are looking at: no counterfactual, no shared scale, and no claim about what the shape means.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[IERS Bulletin A / EOP product centre plots](https://www.iers.org/IERS/EN/Publications/Bulletins/bulletins.html) — the source, and it publishes its own UT1−UTC plot. Stronger on authority by definition, and the only place the data comes from. It is a technical product for people who already know what they are looking at: no counterfactual, no shared scale, and no claim about what the shape means."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:sawtooth",
+      "to": "neighbor:leapsecond-com",
+      "note": "the deepest amateur precision-timekeeping site on the web, with decades of length-of-day material and measurements this work does not attempt. A reference archive rather than a figure; nothing on it puts the corrected and uncorrected clocks on one axis.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[leapsecond.com](http://www.leapsecond.com/) (Tom Van Baak) — the deepest amateur precision-timekeeping site on the web, with decades of length-of-day material and measurements this work does not attempt. A reference archive rather than a figure; nothing on it puts the corrected and uncorrected clocks on one axis."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:sawtooth",
+      "to": "neighbor:longnow-org-clock",
+      "note": "the canonical artwork about timekeeping at scale. It builds a clock meant to survive; it does not measure the disagreement between the two we have.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[The Long Now Foundation, *Clock of the Long Now*](https://longnow.org/clock/) — the canonical artwork about timekeeping at scale. It builds a clock meant to survive; it does not measure the disagreement between the two we have."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:sawtooth",
+      "to": "neighbor:nature-com-articles-s41586-024-07170-0",
+      "note": "not a neighbour but the load-bearing citation, and the reason the subject is live: the first negative leap second is projected for about 2029, roughly three years later than it would have been without accelerated polar melt.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Agnew, *A global timekeeping problem postponed by global warming*, **Nature** 628 (2024)](https://www.nature.com/articles/s41586-024-07170-0) — not a neighbour but the load-bearing citation, and the reason the subject is live: the first negative leap second is projected for about 2029, roughly three years later than it would have been without accelerated polar melt."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:sawtooth",
+      "to": "neighbor:ruthewan-com",
+      "note": "the closest **conceptual** neighbour in art: working decimal clocks from the French Republican calendar, which is exactly the subject of a time unit that was defined differently. Sculptural and historical, about a definition that was abandoned; this is about two definitions still running against each other, and it is a measurement rather than an object.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Ruth Ewan, *We Could Have Been Anything That We Wanted To Be*](https://ruthewan.com/) (2011) — the closest **conceptual** neighbour in art: working decimal clocks from the French Republican calendar, which is exactly the subject of a time unit that was defined differently. Sculptural and historical, about a definition that was abandoned; this is about two definitions still running against each other, and it is a measurement rather than an object."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:sawtooth",
+      "to": "neighbor:showyourstripes-info",
+      "note": "the formal neighbour: one long instrumental series as a texture a stranger reads instantly. This is the standard the plates are trying to reach and it does the job with one series and no counterfactual; the second plate here is more complex than a stripe and has to earn that.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Ed Hawkins, *Warming Stripes*](https://showyourstripes.info/) — the formal neighbour: one long instrumental series as a texture a stranger reads instantly. This is the standard the plates are trying to reach and it does the job with one series and no counterfactual; the second plate here is more complex than a stripe and has to earn that."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:sawtooth",
+      "to": "neighbor:tate-org-uk-art-artworks-marclay-the-clock-t14265",
+      "note": "the canonical time artwork, and named because any work with a clock in it is measured against this one. A twenty-four-hour montage of cinema, synchronised to the room; no data, no drift, no argument about the unit.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Christian Marclay, *The Clock*](https://www.tate.org.uk/art/artworks/marclay-the-clock-t14265) (2010) — the canonical time artwork, and named because any work with a clock in it is measured against this one. A twenty-four-hour montage of cinema, synchronised to the room; no data, no drift, no argument about the unit."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:sawtooth",
+      "to": "neighbor:the-fifteen-atlas-entries-whose-text-carries-time-or-clock-v",
+      "note": "returned by the machine search over `decisive_move`, and dismissed on reading: not one is about timekeeping. **The Atlas holds no work on the second, the leap second, or the divergence of Earth time from atomic time.**",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "The fifteen Atlas entries whose text carries time or clock vocabulary (Digital Terraforming, Tellurian Drama, Vigil, PacketWeather, One Minute of Ass, and others) — returned by the machine search over `decisive_move`, and dismissed on reading: not one is about timekeeping. **The Atlas holds no work on the second, the leap second, or the divergence of Earth time from atomic time.**"
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:sawtooth",
+      "to": "neighbor:time-is",
+      "note": "the standard public accounts of the leap second, better as explanation and with no figure of the record as a whole.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[time.is](https://time.is/) · [NIST](https://www.nist.gov/pml/time-and-frequency-division) explainers — the standard public accounts of the leap second, better as explanation and with no figure of the record as a whole."
+      }
+    },
+    {
+      "kind": "neighbor-of",
       "from": "work:society",
       "to": "neighbor:arxiv-org-abs-2505-18228",
       "note": "precedent for static, no-backend, browser-only multi-agent simulation as a deployment pattern, not built around Minsky's book.",
@@ -8134,6 +8352,15 @@
       "source": {
         "file": "docs/decision-log.md",
         "quote": "src/lib/globe/layers/{redaction-seats,redaction-world,trending,index,types,balance}.ts"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-09-04-1",
+      "to": "work:sawtooth",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "src/lib/sawtooth/series.ts"
       }
     }
   ]

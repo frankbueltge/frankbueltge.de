@@ -70,6 +70,7 @@ export const GALLERY = {
     tell: 'the index of the marker words across the years of the corpus',
     redaction: 'one tick per watched page, marked where the page changed, hollow where the change could not be verified',
     'round-number': 'the leading-digit distribution against the expectation it is measured against',
+    sawtooth: 'the published gap between Earth time and atomic time, every day of the record',
     pattern: 'the day’s strongest pair, both series over the days on file',
     praemie: 'the premium index over the years the record covers',
     parallaxe: 'what each tracked topic leaves out, one bar per topic',
@@ -100,6 +101,9 @@ export const GALLERY = {
     tell: (word: string, fold: string) => `“${word}” stands at ${fold} times its own baseline`,
     redaction: (watched: string, changed: string) => `${watched} pages watched, ${changed} changed`,
     'round-number': (name: string, verdict: string) => `${name}: ${verdict}`,
+    /* the corrections and the years since the last one — both handed over already formatted by
+       src/lib/experiments/thumbnails.ts, per rule 1 of this file */
+    sawtooth: (leaps: string, years: string) => `${leaps} leap seconds; none for ${years} years`,
     pattern: (a: string, b: string, r: string) => `${a} against ${b}, correlation ${r}`,
     praemie: (base: string, change: string) => `since ${base} the premium has moved ${change}`,
     parallaxe: (topics: string, omission: string) => `${topics} topics tracked, mean omission ${omission}`,

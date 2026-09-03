@@ -67,7 +67,12 @@ describe('WERKE_HOLDINGS (/experiments register)', () => {
     expect(WERKE_HOLDINGS.map((w) => w.id)).toEqual(
       WERKE_CHRONO.filter((w) => !HOLDINGS_EXCLUDED_IDS.has(w.id)).map((w) => w.id),
     )
-    expect(WERKE_HOLDINGS[0].id).toBe('globe') // newest werk on top today (Living Globe, 2026-09-03)
+    // The head is checked as the RULE, not as a name: pinning today's newest work made this
+    // assertion fail on the next one that shipped (Sawtooth, 2026-09-04), which is the rule
+    // working rather than a regression. What must hold is that nothing on the shelf is newer
+    // than the head — that is what "newest first" means and it cannot go stale.
+    const head = WERKE_HOLDINGS[0]
+    for (const w of WERKE_HOLDINGS) expect(w.since <= head.since, `${w.id} is newer than the head`).toBe(true)
     expect(WERKE_HOLDINGS.map((w) => w.id)).toEqual([...HOLDINGS_RANKED])
   })
   it('keeps every non-excluded entry — ranked and register agree on the set', () => {
