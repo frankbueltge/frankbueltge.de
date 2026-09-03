@@ -1,11 +1,11 @@
 {
-  "$note": "Client-side weight budgets of the visual layer (docs/design/2026-09-02-the-visual-layer.md §3, duty 6). Checked by scripts/bundle-budget.mjs after every `astro build`, in CI and before deploy. Sizes are gzip (level 9) of the built chunks under dist/_astro/, matched by file-name prefix; a prefix that matches nothing fails too, so a renamed chunk is re-budgeted on purpose. Add a line when an island lands; raise a number only with the reason written next to it.",
+  "$note": "Client-side weight budgets of the visual layer (docs/design/2026-09-02-the-visual-layer.md \u00a73, duty 6). Checked by scripts/bundle-budget.mjs after every `astro build`, in CI and before deploy. Sizes are gzip (level 9) of the built chunks under dist/_astro/, matched by file-name prefix; a prefix that matches nothing fails too, so a renamed chunk is re-budgeted on purpose. Add a line when an island lands; raise a number only with the reason written next to it.",
   "reportOverKB": 20,
   "budgets": [
     {
       "prefix": "client.",
       "maxGzipKB": 60,
-      "what": "React runtime (react-dom/client 19.2) plus Astro's React hydration client — ONE chunk shared by every island on the site, loaded only on pages that mount one. Measured 56.9 KB gz on 2026-09-02; the plan's 50 KB was an estimate, this is the number."
+      "what": "React runtime (react-dom/client 19.2) plus Astro's React hydration client \u2014 ONE chunk shared by every island on the site, loaded only on pages that mount one. Measured 56.9 KB gz on 2026-09-02; the plan's 50 KB was an estimate, this is the number."
     },
     {
       "prefix": "CyclePartitur.",
@@ -25,22 +25,22 @@
     {
       "prefix": "GraphExplorer.",
       "maxGzipKB": 60,
-      "what": "the knowledge-graph explorer on /experiments/neighbors (Phase 3a): d3-force relaxing the model's radial layout, d3-zoom, the filters, a plain combobox search (no cmdk — its radix dialog dependency would have cost a third of this budget for a search box), the node card with receipts. Mounted client:visible; the receipts are fetched from /graph/view.json only when a card opens."
+      "what": "the knowledge-graph explorer on /experiments/neighbors (Phase 3a): d3-force relaxing the model's radial layout, d3-zoom, the filters, a plain combobox search (no cmdk \u2014 its radix dialog dependency would have cost a third of this budget for a search box), the node card with receipts. Mounted client:visible; the receipts are fetched from /graph/view.json only when a card opens."
     },
     {
       "prefix": "ExperimentGallery.",
       "maxGzipKB": 25,
-      "what": "the /experiments gallery (Phase 3c): the cards with their build-time miniatures, the three-axis filter, the CSS view-transition reflow and the shared readout. No motion library and no d3 — the reflow is the browser's own view transition, the entrance a CSS animation. Mounted client:visible."
+      "what": "the /experiments gallery (Phase 3c): the cards with their build-time miniatures, the three-axis filter, the CSS view-transition reflow and the shared readout. No motion library and no d3 \u2014 the reflow is the browser's own view transition, the entrance a CSS animation. Mounted client:visible."
     },
     {
-      "prefix": "EntranceGlobe.",
-      "maxGzipKB": 12,
-      "what": "the entrance globe's shell (Phase 3b): the island that carries the build-time plate, watches the hero, and imports the WebGL half on demand. Mounted client:idle on / only; holds no deck.gl, no satellite.js."
+      "prefix": "LivingGlobe.",
+      "maxGzipKB": 15,
+      "what": "the living globe's island (G1, 2026-09-03) \u2014 the ONE globe of this house: it carries the build-time plate, the layer toggles with their provenance, the day scrubber and the card with receipts, and it imports the WebGL half on demand. Mounted client:idle on /globe and, with `compact`, under the hero on /; it replaced EntranceGlobe. (12 KB gz) and holds no deck.gl of its own. Measured 5.2 KB gz on 2026-09-03 (two chunks), well under the 15 KB the plan allowed."
     },
     {
       "prefix": "globe-deck.",
       "maxGzipKB": 320,
-      "what": "the entrance globe's WebGL half (Phase 3b): deck.gl core + layers with the globe view, the land TopoJSON decoder and SGP4 over the committed elements. Loaded by dynamic import() the first time the hero is on screen, never on any other page; the plan's ceiling for this chunk."
+      "what": "the living globe's WebGL half (G1, 2026-09-03): deck.gl core + layers with the globe view (Scatterplot, Arc, Path, Column, GeoJson/SolidPolygon, Text) and the land TopoJSON decoder. Loaded by dynamic import() the first time a globe figure is on screen, never on any other page. Measured 207.5 KB gz on 2026-09-03, against 203.9 KB gz on 2026-09-02: Path, Column, Text and the fly-to interpolator came in, SGP4 went out (the sky now draws its committed frame instead of propagating in the browser). The plan's 320 KB ceiling holds with room for the layers of G3."
     }
   ]
 }
