@@ -213,7 +213,7 @@ export const PALETTES: readonly PaletteSet[] = [
       // the declared neutral — and the hue never carries meaning alone: every row states its
       // practice by name in the column beside the rule, so the light-mode contrast WARN below
       // cannot reach it (nothing on that page is TEXT in these hues).
-      'src/components/pages/WorksRegister.astro',
+      'src/components/ecology/WorksRegisterSection.astro',
       // The Plenum's own rooms (/plenum, 2026-08-02) use exactly ONE slot of this set — their
       // own aqua — so the guest voice wears the same colour in its room as it does on the
       // Partitur lane and the score map. It is never text there and never the sole carrier of a

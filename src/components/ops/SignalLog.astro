@@ -1,0 +1,110 @@
+---
+// THE SIGNAL LOG, once — rendered on the front door, in the ops room and on /now.
+//
+// Before 2026-09-03 the same twenty lines of markup stood three times, in three components, over
+// three slightly different slices of one derivation. That is three places for the same log to
+// drift, and it had already drifted in one way that mattered: all three showed the ecology's
+// three practices and called the nightly line's works "The Atelier". So the log is one component
+// now, over one feed (src/lib/ops/house-feed.ts), and the pages compose it.
+//
+// The pager (Frank, 2026-09-03: seven rows in view, the rest behind older/newer). What it must
+// not do is fetch: this site renders static and the log is small, so EVERY page is in the HTML
+// and the script only moves which one is visible. Consequences that are features, not
+// compromises — the whole log is in the document for search and for Ctrl-F, and a visitor with
+// no JavaScript sees page one complete, with the pager hidden from them because it would not
+// work. Visibility is toggled with the `hidden` property, never with a style attribute: this
+// site's CSP drops inline styles silently (drift-check rule 3).
+import { getRelativeLocaleUrl } from 'astro:i18n'
+import type { Locale } from '@/lib/site'
+import { NAMING } from '@/config/naming'
+import { FEED_PAGE_SIZE, paginate, type FeedEntry } from '@/lib/ops/house-feed'
+
+interface Props {
+  entries: FeedEntry[]
+  /** rows per page — the default is the house rule, overridable for a tighter surface */
+  pageSize?: number
+  /** extra classes on each page's list, for a page that dresses its own panel */
+  listClass?: string
+}
+
+const { entries, pageSize = FEED_PAGE_SIZE, listClass = '' } = Astro.props
+
+const locale = (Astro.currentLocale ?? 'en') as Locale
+const url = (href: string) => (href.startsWith('http') ? href : getRelativeLocaleUrl(locale, href))
+
+const S = NAMING.opsRoom.signal
+const pages = paginate(entries, pageSize)
+const voiceClass = (v: FeedEntry['voice']) => (v ? ` ops-voice-${v}` : '')
+---
+
+<div class="ops-signal" data-signal-log>
+  {pages.map((page, p) => (
+    /* Every page ships; the script moves which one is shown. `hidden` (the attribute, and the
+       property the script sets) rather than a class, so the pages are correctly hidden from
+       assistive technology and from find-in-page on the pages nobody is looking at. */
+    <ul class={`ops-panel ops-log ${listClass}`.trim()} data-signal-page={p} hidden={p > 0}>
+      {page.map((entry, i) => (
+        /* The stagger comes from a class, not from an inline delay: this site's CSP drops
+           inline style attributes silently, so a per-row delay written that way would have
+           failed without a trace — and drift-check rule 3 catches it before it can. */
+        <li class={`ops-log-row-${Math.min(i, 7)}`}>
+          <a href={url(entry.href)}>
+            <span class="ops-log-date">{entry.date}</span>
+            <span class={`ops-log-ns${voiceClass(entry.voice)}`}>{entry.houseName}</span>
+            <span class="ops-log-title">
+              {entry.title}
+              {entry.withdrawn && <span class="ops-log-withdrawn">{NAMING.worksRegister.withdrawnLabel}</span>}
+            </span>
+            <span class="ops-log-kind">{entry.kind}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  ))}
+
+  {/* One page needs no pager, and a pager over nothing is furniture around an absence. The
+      whole control starts hidden and the script unhides it: without JavaScript the buttons
+      would be two dead words under a log that is already complete on screen. */}
+  {pages.length > 1 && (
+    <nav class="ops-signal-pager" aria-label={S.pager.label} data-signal-pager hidden>
+      <button type="button" class="ops-signal-step" data-signal-prev disabled>{S.pager.newer}</button>
+      <span class="ops-signal-pos" data-signal-pos aria-live="polite">
+        {S.pager.position(1, pages.length, entries.length)}
+      </span>
+      <button type="button" class="ops-signal-step" data-signal-next>{S.pager.older}</button>
+    </nav>
+  )}
+</div>
+
+<script>
+  // The pager. Reads its wording from the DOM it was given rather than carrying copies: the
+  // position line is re-rendered from a template the server wrote into a data attribute, so the
+  // words after a click are the words NAMING approved, not a second string nobody reviewed.
+  for (const root of document.querySelectorAll<HTMLElement>('[data-signal-log]')) {
+    const pages = [...root.querySelectorAll<HTMLElement>('[data-signal-page]')]
+    const pager = root.querySelector<HTMLElement>('[data-signal-pager]')
+    if (!pager || pages.length < 2) continue
+
+    const prev = pager.querySelector<HTMLButtonElement>('[data-signal-prev]')!
+    const next = pager.querySelector<HTMLButtonElement>('[data-signal-next]')!
+    const pos = pager.querySelector<HTMLElement>('[data-signal-pos]')!
+    // The server-rendered first position IS the template: "page 1 of 14 · 96 entries".
+    const template = pos.textContent ?? ''
+    let at = 0
+
+    const show = (n: number) => {
+      at = Math.max(0, Math.min(pages.length - 1, n))
+      pages.forEach((page, i) => { page.hidden = i !== at })
+      prev.disabled = at === 0
+      next.disabled = at === pages.length - 1
+      // Only the page number moves; the total and the count are the same sentence they were.
+      pos.textContent = template.replace(/^(\D*)\d+/, (_m, lead: string) => `${lead}${at + 1}`)
+    }
+
+    prev.addEventListener('click', () => show(at - 1))
+    next.addEventListener('click', () => show(at + 1))
+    // Unhidden only now: the control works, so it may be seen.
+    pager.hidden = false
+    show(0)
+  }
+</script>

@@ -1,9 +1,12 @@
 ---
 // The v3 ecology entrance (research ecology v3, 2026-08-30 — the shared question).
 //
-// One surface, four moves, and it stops: what this is · where the house clock stands (the
+// One surface, five moves, and it stops: what this is · where the house clock stands (the
 // cycle) · what each practice just did (the three bulletins, verbatim) · what the cycles have
-// produced (the presentations). Properties kept from the surface it replaces:
+// produced (the presentations) · and, since 2026-09-03, the complete works register, which used
+// to be a page of its own at /works. Frank moved it here: the catalogue of what this house has
+// brought forth belongs on the page that IS the house. /works redirects to its anchor.
+// Properties kept from the surface it replaces:
 //
 //   · NO NUMBER IS TYPED — cycle, dates, line counts and file counts come from
 //     src/lib/ecology/v3.ts, which reads only committed files. Copy that wraps a number is a
@@ -30,6 +33,7 @@ import type { Locale } from '@/lib/site'
 import { ECOLOGY_V3 } from '@/config/ecology-v3-wording'
 import { bulletinBlocks } from '@/lib/ecology/bulletin-render'
 import CycleScoreFigure from '@/components/ecology/CycleScoreFigure.astro'
+import WorksRegisterSection from '@/components/ecology/WorksRegisterSection.astro'
 import { buildCycleModel } from '@/lib/ecology/cycle-model'
 import {
   BULLETIN_DISPLAY_MAX,
@@ -330,6 +334,13 @@ const blockClass: Record<string, string> = {
       )
     }
   </section>
+
+  {/* ── The works register ───────────────────────────────────────────────── */}
+  {/* The complete catalogue, last on the page on purpose: the four moves above answer "where
+      does this house stand right now", and the register answers "everything it has ever made" —
+      a hundred-odd rows ahead of the cycle would have buried today under the archive. It brings
+      its own <style> and its own heading; nothing about what it lists changed in the move. */}
+  <WorksRegisterSection />
 
   {/* ── Lineage + doors ──────────────────────────────────────────────────── */}
   <footer class="mt-14 border-t border-line pt-6">

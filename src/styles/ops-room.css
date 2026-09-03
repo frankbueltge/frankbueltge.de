@@ -640,9 +640,14 @@
   color: var(--ops-faint);
 }
 .ops-log-ns {
-  /* Wide enough for the longest practice name plus its 5px mark — "The Atelier" wrapped onto two
-     lines at 7em, which turned a quiet label column into the noisiest thing in the strip. */
-  width: 9.5em;
+  /* Wide enough for the longest HOUSE name plus its 5px mark. Was 9.5em, which fitted "The
+     Atelier" (7em wrapped it, and a wrapping label turned a quiet column into the noisiest thing
+     in the strip). The log widened to the whole house on 2026-09-03 and the longest name became
+     "Error as Method", which the browser measures at 12.2em in this face including the mark and
+     its gap — so the column is set from that measurement with a little air, not from an eyeball.
+     A shorter guess (11.5em was tried) wraps it, which is the very defect this width exists to
+     prevent. Re-measure if a longer house name ever joins. */
+  width: 12.5em;
   flex: none;
   font-family: var(--font-mono);
   font-size: var(--text-mono-xs);
@@ -687,6 +692,62 @@
   padding: 0 5px;
   margin-left: 8px;
 }
+/* The log's pager (Frank, 2026-09-03: seven rows in view, the rest one click away). Every page
+   is in the document and only visibility moves, so this is a control over static content — which
+   is why it ships hidden and the script unhides it: two dead words under a complete log would be
+   worse than no control at all. The buttons wear the head-link's quiet mono, not a filled
+   button: the log is read, and a pager that shouts sits louder than the rows it pages. */
+.ops-signal-pager {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 10px;
+  padding: 0 2px;
+}
+.ops-signal-step {
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-sm);
+  letter-spacing: 0.08em;
+  color: var(--ops-muted);
+  background: none;
+  border: 1px solid var(--ops-line);
+  border-radius: var(--radius-xs);
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: background-color 0.2s var(--ease-frame), color 0.2s var(--ease-frame);
+}
+.ops-signal-step:hover:not(:disabled) {
+  background: var(--ops-hover);
+  color: var(--ops-ink);
+}
+/* Disabled, not removed: the ends of the log stay visible as ends. Kept above the 3:1 the frame
+   asks of a disabled control's own outline by keeping the border and dimming only the ink. */
+.ops-signal-step:disabled {
+  color: var(--ops-faint);
+  cursor: default;
+  opacity: 0.55;
+}
+.ops-signal-pos {
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-sm);
+  font-variant-numeric: tabular-nums;
+  color: var(--ops-faint);
+  text-align: center;
+}
+@media (max-width: 480px) {
+  /* At this width the position line and two buttons cannot share a row without the buttons
+     shrinking below a comfortable target; the line moves under them instead. */
+  .ops-signal-pager {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .ops-signal-pos {
+    order: 3;
+    width: 100%;
+  }
+}
+
 @keyframes opsRise {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: none; }

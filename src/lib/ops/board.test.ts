@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { buildBoard, buildSignalLog, cleanMomentTitle, newestMoment, repoSeries } from './board'
+import { buildBoard, cleanMomentTitle, newestMoment, repoSeries } from './board'
 import { NAMING } from '@/config/naming'
 import type { PulseSnapshot } from '@/lib/pulse/render'
 import type { LatestWork } from '@/lib/engines/latest'
@@ -83,13 +83,23 @@ describe('the board says what the rooms say', () => {
     expect(middle.last!.meta).toMatch(/^\d+ crossings on the record$/)
   })
 
-  it('gives the four ecology stations their voice and the three beside it none', () => {
+  it('gives the four ecology stations their voice and the four beside it none', () => {
     expect(rows.filter((r) => r.voice !== null).map((r) => r.voice)).toEqual([
       'ulysses', 'meridian', 'ensemble', 'conductor',
     ])
     // Four is the measured ceiling for a categorical set in this repo (palette.test.ts); the
-    // rows beside the ecology wear the room's live accent and are told apart by name.
-    expect(rows.filter((r) => r.voice === null).map((r) => r.id)).toEqual(['attention', 'nightly-line', 'arch'])
+    // rows beside the ecology wear the room's live accent and are told apart by name. n-1
+    // joined them on 2026-09-03 — a fifth hue would have broken the ceiling, and n-1 is the
+    // Atelier's line rather than a practice of its own, so borrowing a voice would have been
+    // a second claim on top of a colour.
+    expect(rows.filter((r) => r.voice === null).map((r) => r.id)).toEqual(['attention', 'nightly-line', 'arch', 'n-1'])
+  })
+
+  it('reads n-1’s last landed output from n-1’s own nights, never from the Atelier it descends from', () => {
+    const n1 = rows.find((r) => r.id === 'n-1')!
+    expect(n1.last).not.toBeNull()
+    expect(n1.last!.title).toMatch(/^Night \d+/)
+    expect(n1.last!.href).toBe('/n-1/record.html')
   })
 
   it('reads Arch’s last landed output from Arch’s own record, never from another practice', () => {
@@ -108,20 +118,7 @@ describe('the board says what the rooms say', () => {
   })
 })
 
-describe('the signal log', () => {
-  it('is the works register, cut to the top few and newest first', () => {
-    const log = buildSignalLog(WORKS, 2)
-    expect(log.map((e) => e.title)).toEqual(['A field instrument', 'An atelier work'])
-    expect(log[0].practice).toBe(NAMING.doors.items.find((d) => d.id === 'meridian')!.name)
-    expect(log[0].kind).toBe('instrument')
-  })
-
-  it('keeps a withdrawn work listed and marked — the record keeps every mark', () => {
-    const log = buildSignalLog(WORKS, 3)
-    expect(log).toHaveLength(3)
-    expect(log.find((e) => e.title === 'A withdrawn premiere')!.withdrawn).toBe(true)
-  })
-})
+/* The signal log's own tests moved with it to house-feed.test.ts on 2026-09-03. */
 
 describe('the attention row title', () => {
   it('cleans a subject that is a raw list dump — doubled spaces, empty items, a trailing ", ,"', () => {

@@ -10,9 +10,11 @@ export const ECOLOGY_V3 = {
     title: 'The Research Ecology',
     // Trimmed 2026-09-01 ("research question" → "question"): the search-head guard that now
     // covers this object (src/config/practice-wording.test.ts) caps descriptions at what a
-    // result renders, and this one ran four characters over it.
+    // result renders, and this one ran four characters over it. Reworded 2026-09-03, when the
+    // complete works register moved onto this page: a description that named only the cycle
+    // would have left the page's largest section unannounced to anyone arriving from search.
     description:
-      'Three machine-run practices — science, art, artistic research — working on one shared question at a time. Every session legible, every session an artifact.',
+      'Three machine-run practices — science, art, artistic research — on one shared question at a time, with the complete register of every work they have made.',
   },
 
   head: {

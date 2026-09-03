@@ -38,7 +38,10 @@ const SURFACES: Record<string, string> = {
   AtlasPage: page('AtlasPage'),
   DatasetRegisterPage: page('DatasetRegisterPage'),
   PapersPage: page('PapersPage'),
-  WorksRegister: page('WorksRegister'),
+  // Moved to src/components/ecology/ on 2026-09-03, when the register became a section of
+  // /ecology instead of a page of its own. Same recipe rules apply — it is still a surface a
+  // reader meets, only now inside another one.
+  WorksRegisterSection: read('../../components/ecology/WorksRegisterSection.astro'),
   OpsRoom: page('OpsRoom'),
   'pages/404': read('../../pages/404.astro'),
   'pages/post/index': read('../../pages/post/index.astro'),
@@ -82,7 +85,7 @@ describe('the panels, the cards and the marks', () => {
     'AtlasPage',
     'DatasetRegisterPage',
     'PapersPage',
-    'WorksRegister',
+    'WorksRegisterSection',
     'pages/post/index',
   ]
   for (const name of PANELLED) {
@@ -100,14 +103,14 @@ describe('the panels, the cards and the marks', () => {
     }
     // The four registers list rows and entry cards that are READ where they stand; they wash or
     // brighten their hairline instead, and none of them may take the lift by mistake.
-    for (const name of ['AtlasPage', 'DatasetRegisterPage', 'PapersPage', 'WorksRegister']) {
+    for (const name of ['AtlasPage', 'DatasetRegisterPage', 'PapersPage', 'WorksRegisterSection']) {
       expect(SURFACES[name], `${name} lifts a row of a register`).not.toMatch(/'lift /)
     }
   })
 
   it('the labels of the register are Badges, not a chip drawn once more by hand', () => {
-    expect(SURFACES.WorksRegister).toMatch(/import \{ Badge \} from '@\/components\/ui\/badge'/)
-    expect(SURFACES.WorksRegister, 'the withdrawal chip drew its own box again').not.toMatch(
+    expect(SURFACES.WorksRegisterSection).toMatch(/import \{ Badge \} from '@\/components\/ui\/badge'/)
+    expect(SURFACES.WorksRegisterSection, 'the withdrawal chip drew its own box again').not.toMatch(
       /\.wr-chip \{/,
     )
     // WorkDetail and AdmissionsPage went onto the experiment-sheet recipe in step 2c (SheetHead /
@@ -128,7 +131,7 @@ describe('the panels, the cards and the marks', () => {
     // The interactive rule in global.css reaches a, button, summary and .lift — never a <li> or a
     // <tr>. Every page that renders rows as one of those has to say so itself, and must not
     // reintroduce a hand-typed duration while doing it.
-    for (const name of ['WorksRegister', 'AdmissionsPage', 'AtlasPage', 'DatasetRegisterPage', 'PapersPage', 'pages/post/index']) {
+    for (const name of ['WorksRegisterSection', 'AdmissionsPage', 'AtlasPage', 'DatasetRegisterPage', 'PapersPage', 'pages/post/index']) {
       expect(SURFACES[name], `${name} has rows that never acknowledge the pointer`).toMatch(
         /0\.2s var\(--ease-frame\)/,
       )
