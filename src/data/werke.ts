@@ -16,6 +16,17 @@ export interface Werk {
   methodHref?: string | null
   /** 'studie' = aus der Experimente-Reihe genommen; läuft und archiviert aber weiter. */
   tier?: 'experiment' | 'studie' | 'project' | 'instrument'
+  /** A work that reads the world AS IT RUNS. Nothing it shows is committed, it makes no archival
+   *  claim, and it may go dark when a source does.
+   *
+   *  Frank's decision of 2026-09-04 (wording private, paraphrased): live and real-time
+   *  experiments must be startable here, in this repo, without a second site and without asking
+   *  first; citability and archiving are not the point, the work is. So an unarchived work is
+   *  exempt from the three duties that were built for archived ones — the USP audit gate, the
+   *  currency test against committed snapshots, and the method sheet — and owes exactly ONE
+   *  thing instead, tested like the others were: it says on its own surface, in its own words,
+   *  that it is live and that nothing here is archived. One duty replaces four. */
+  unarchived?: boolean
   /** Research line this experiment belongs to (Frank, 2026-08-22) — the shelf's categories.
    *  Mandatory for everything /experiments renders, absent for the practice doors and the
    *  other houses' entries; werke.test.ts holds both halves of that rule. */

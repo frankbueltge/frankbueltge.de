@@ -13,6 +13,12 @@ paths:
 Umgezogen aus `CLAUDE.md` am 2026-08-09 (CLAUDE.md-Diät). Inhalt unverändert; lädt jetzt,
 wenn eine Pipeline, ein Archiv-JSON, ein Skript oder ein Workflow angefasst wird.
 
+> **Zuschnitt seit 2026-09-04 (Frank, Wortlaut privat):** Die Pflichten in dieser Datei binden
+> die nächtlichen Instrumente — die Pipelines, ihre committeten JSONs und die Befunde, die daraus
+> gerechnet werden. Sie binden NICHT ein Werk mit `unarchived: true`, das die Welt zur Laufzeit
+> liest und nichts committet. Ein solches Werk darf ausfallen, wenn seine Quelle ausfällt, und
+> muss das nur sagen.
+
 ## Das Archiv
 
 - **Ausnahme — The Protocol bleibt deterministisch.** Die Prosa des Protokolls ist
