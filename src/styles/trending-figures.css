@@ -249,7 +249,11 @@
 
 .tra-bar { outline: none; }
 .tra-bar rect { transition: opacity 120ms ease; }
-.tra-bar:hover rect, .tra-bar:focus-visible rect { opacity: 1; }
+/* `:not([data-off])` is load-bearing since the legend became a filter: this rule is one step
+   more specific than `.tra-seg[data-off]`, so without it, hovering a bar would brighten the very
+   classes the reader had just washed out. */
+.tra-bar:hover rect:not([data-off]),
+.tra-bar:focus-visible rect:not([data-off]) { opacity: 1; }
 
 /* Legend swatches reuse the six fills. */
 .tra-legend { display: flex; flex-wrap: wrap; gap: 0.35rem 1.1rem; }
