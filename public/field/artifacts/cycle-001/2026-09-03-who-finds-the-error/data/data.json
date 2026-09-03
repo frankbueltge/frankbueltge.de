@@ -1,0 +1,1373 @@
+{
+ "generated_from": "data/corrections.csv + data/shipped_units.csv",
+ "today": "2026-09-03",
+ "population_files": 13,
+ "shipped_units": 31,
+ "shipped_units_by_kind": {
+  "work": 22,
+  "artifact": 7,
+  "delivery": 1,
+  "presentation": 1
+ },
+ "entries_total": 52,
+ "shipped": {
+  "n": 16,
+  "objects_corrected": 8,
+  "objects": [
+   "artifacts/cycle-001/2026-09-01-a-door-to-knock-on",
+   "artifacts/cycle-001/2026-09-01-how-long-a-warning-stands",
+   "deliveries/2026-07-31-enai",
+   "works/2026-07-01-calibration-gap",
+   "works/2026-07-01-fairness-trap",
+   "works/2026-07-26-one-line-for-ten-thousand",
+   "works/2026-07-26-unable-to-ring-its-own-bell",
+   "works/2026-08-03-where-the-reader-declines"
+  ],
+  "finders": {
+   "external-machine-gate": 1,
+   "external-sibling": 2,
+   "self-after-external-prompt": 1,
+   "self-convened-adversary": 1,
+   "self-machine-check": 3,
+   "self-unprompted": 8
+  },
+  "buckets": {
+   "self": 13,
+   "external": 3,
+   "unstated": 0
+  },
+  "standing_days": {
+   "n": 15,
+   "min": 0,
+   "max": 31,
+   "median": 7,
+   "mean": 13.5,
+   "values": [
+    0,
+    0,
+    0,
+    1,
+    2,
+    2,
+    4,
+    7,
+    8,
+    27,
+    30,
+    30,
+    30,
+    30,
+    31
+   ]
+  },
+  "consequences": {
+   "headline-moved": 1,
+   "headline-unaffected": 14,
+   "object-voided": 1
+  }
+ },
+ "draft": {
+  "n": 36,
+  "finders": {
+   "self-convened-adversary": 22,
+   "self-machine-check": 3,
+   "self-unprompted": 9,
+   "unstated": 2
+  },
+  "buckets": {
+   "self": 34,
+   "external": 0,
+   "unstated": 2
+  },
+  "standing_days": {
+   "n": 36,
+   "min": 0,
+   "max": 1,
+   "median": 0.0,
+   "mean": 0.2,
+   "values": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ]
+  }
+ },
+ "completeness": [
+  {
+   "source_file": "journal/2026-07-03.md",
+   "source_line": "66-70",
+   "date": "2026-07-03",
+   "object": "works/2026-07-01-calibration-gap (instrument 001)",
+   "filed": "false",
+   "quote": "shipped Instrument 001 corrected (Originality row rebuilt on the real RAID figures; displayed correction note added)",
+   "what": "A displayed figure row on a shipped work was rebuilt after its source figures fell; recorded only in the journal.",
+   "note": "works/2026-07-01-calibration-gap/CORRECTIONS.md exists but its earliest entry is dated 2026-08-01; this 2026-07-03 event is not in it."
+  },
+  {
+   "source_file": "journal/2026-07-03.md",
+   "source_line": "68-69",
+   "date": "2026-07-03",
+   "object": "instrument 003 (a work shipped 2026-07-01)",
+   "filed": "false",
+   "quote": "shipped Instrument 003's source list corrected (the arXiv paper's real title and Bray added).",
+   "what": "A shipped work's source list carried a wrong paper title and a missing author; corrected in place with a journal record only.",
+   "note": "No CORRECTIONS.md exists beside any 2026-07-01 work other than calibration-gap and fairness-trap."
+  },
+  {
+   "source_file": "presentations/cycle-001/index.html",
+   "source_line": "75-83",
+   "date": "2026-09-03",
+   "object": "presentations/cycle-001",
+   "filed": "partly",
+   "quote": "Correction, 2026-09-03 (added, nothing removed). ... does not stand as written.",
+   "what": "A headline of the cycle presentation was corrected by an in-page dated note.",
+   "note": "Filed, but beside the artifact that made the claim (artifacts/cycle-001/2026-09-01-a-door-to-knock-on/CORRECTIONS.md), not beside the presentation that carried it. The convention files against the object that made the claim, not every object that repeats it."
+  }
+ ],
+ "completeness_unfiled": 2,
+ "excluded": [
+  {
+   "file": "works/2026-07-01-calibration-gap/CORRECTIONS.md",
+   "heading": "What this correction does not touch",
+   "reason": "Undated summary section restating what the correction left unchanged; not itself a dated correction entry."
+  },
+  {
+   "file": "works/2026-07-01-calibration-gap/CORRECTIONS.md",
+   "heading": "Standing conditions",
+   "reason": "Undated policy note on the conditions under which the work is offered; not a correction entry."
+  },
+  {
+   "file": "deliveries/2026-07-31-enai/ERRATA.md",
+   "heading": "6. What was checked and holds",
+   "reason": "A list of checks that passed; it corrects nothing and is the sheet's own guard against a defect list reading as a total verdict."
+  },
+  {
+   "file": "drafts/2026-08-10-who-actually-reads-it/CORRECTIONS.md",
+   "heading": "C4 — 2026-08-10, session 106. Guard against an over-read this arc has not yet made.",
+   "reason": "Prospective guard against a claim not yet made; it withdraws no existing statement. Noted because C5 in the same file records that the guard failed."
+  }
+ ],
+ "curve": [
+  {
+   "date": "2026-07-01",
+   "live": 6
+  },
+  {
+   "date": "2026-07-02",
+   "live": 6
+  },
+  {
+   "date": "2026-07-03",
+   "live": 6
+  },
+  {
+   "date": "2026-07-04",
+   "live": 6
+  },
+  {
+   "date": "2026-07-05",
+   "live": 6
+  },
+  {
+   "date": "2026-07-06",
+   "live": 6
+  },
+  {
+   "date": "2026-07-07",
+   "live": 6
+  },
+  {
+   "date": "2026-07-08",
+   "live": 6
+  },
+  {
+   "date": "2026-07-09",
+   "live": 6
+  },
+  {
+   "date": "2026-07-10",
+   "live": 6
+  },
+  {
+   "date": "2026-07-11",
+   "live": 6
+  },
+  {
+   "date": "2026-07-12",
+   "live": 6
+  },
+  {
+   "date": "2026-07-13",
+   "live": 6
+  },
+  {
+   "date": "2026-07-14",
+   "live": 6
+  },
+  {
+   "date": "2026-07-15",
+   "live": 6
+  },
+  {
+   "date": "2026-07-16",
+   "live": 6
+  },
+  {
+   "date": "2026-07-17",
+   "live": 6
+  },
+  {
+   "date": "2026-07-18",
+   "live": 6
+  },
+  {
+   "date": "2026-07-19",
+   "live": 6
+  },
+  {
+   "date": "2026-07-20",
+   "live": 6
+  },
+  {
+   "date": "2026-07-21",
+   "live": 6
+  },
+  {
+   "date": "2026-07-22",
+   "live": 6
+  },
+  {
+   "date": "2026-07-23",
+   "live": 6
+  },
+  {
+   "date": "2026-07-24",
+   "live": 6
+  },
+  {
+   "date": "2026-07-25",
+   "live": 6
+  },
+  {
+   "date": "2026-07-26",
+   "live": 8
+  },
+  {
+   "date": "2026-07-27",
+   "live": 8
+  },
+  {
+   "date": "2026-07-28",
+   "live": 8
+  },
+  {
+   "date": "2026-07-29",
+   "live": 8
+  },
+  {
+   "date": "2026-07-30",
+   "live": 7
+  },
+  {
+   "date": "2026-07-31",
+   "live": 3
+  },
+  {
+   "date": "2026-08-01",
+   "live": 2
+  },
+  {
+   "date": "2026-08-02",
+   "live": 2
+  },
+  {
+   "date": "2026-08-03",
+   "live": 2
+  },
+  {
+   "date": "2026-08-04",
+   "live": 0
+  },
+  {
+   "date": "2026-08-05",
+   "live": 0
+  },
+  {
+   "date": "2026-08-06",
+   "live": 0
+  },
+  {
+   "date": "2026-08-07",
+   "live": 0
+  },
+  {
+   "date": "2026-08-08",
+   "live": 0
+  },
+  {
+   "date": "2026-08-09",
+   "live": 0
+  },
+  {
+   "date": "2026-08-10",
+   "live": 0
+  },
+  {
+   "date": "2026-08-11",
+   "live": 0
+  },
+  {
+   "date": "2026-08-12",
+   "live": 0
+  },
+  {
+   "date": "2026-08-13",
+   "live": 0
+  },
+  {
+   "date": "2026-08-14",
+   "live": 0
+  },
+  {
+   "date": "2026-08-15",
+   "live": 0
+  },
+  {
+   "date": "2026-08-16",
+   "live": 0
+  },
+  {
+   "date": "2026-08-17",
+   "live": 0
+  },
+  {
+   "date": "2026-08-18",
+   "live": 0
+  },
+  {
+   "date": "2026-08-19",
+   "live": 0
+  },
+  {
+   "date": "2026-08-20",
+   "live": 0
+  },
+  {
+   "date": "2026-08-21",
+   "live": 0
+  },
+  {
+   "date": "2026-08-22",
+   "live": 0
+  },
+  {
+   "date": "2026-08-23",
+   "live": 0
+  },
+  {
+   "date": "2026-08-24",
+   "live": 0
+  },
+  {
+   "date": "2026-08-25",
+   "live": 0
+  },
+  {
+   "date": "2026-08-26",
+   "live": 0
+  },
+  {
+   "date": "2026-08-27",
+   "live": 0
+  },
+  {
+   "date": "2026-08-28",
+   "live": 0
+  },
+  {
+   "date": "2026-08-29",
+   "live": 0
+  },
+  {
+   "date": "2026-08-30",
+   "live": 0
+  },
+  {
+   "date": "2026-08-31",
+   "live": 0
+  },
+  {
+   "date": "2026-09-01",
+   "live": 2
+  },
+  {
+   "date": "2026-09-02",
+   "live": 2
+  },
+  {
+   "date": "2026-09-03",
+   "live": 0
+  }
+ ],
+ "curve_peak": {
+  "date": "2026-07-26",
+  "live": 8
+ },
+ "curve_first_day": "2026-07-01",
+ "rows": [
+  {
+   "file": "works/2026-07-01-calibration-gap/CORRECTIONS.md",
+   "heading": "2026-08-01 (session 77) — the repair: one act, seven parts",
+   "stratum": "SHIPPED",
+   "correction_date": "2026-08-01",
+   "origin_date": "2026-07-01",
+   "origin_date_note": "directory date prefix",
+   "finder": "self-unprompted",
+   "finder_quote": "Prepared for delivery to an outside reader, this work was checked against itself by the practice that made it. It failed that check in seven ways. All seven were found here, by us, before anything was sent — not by the receiver, and not by a reader.",
+   "consequence": "headline-unaffected",
+   "consequence_quote": "The finding does not turn on the error; the citation did.",
+   "what_was_wrong": "A pre-delivery self-review found seven defects in the shipped calibration certificate: an undrawn chart, unfollowable sources, unsourced specification figures and citation errors.",
+   "ambiguity": "",
+   "overlap_note": "Substantially overlaps the five defects filed eleven days earlier in deliveries/2026-07-31-enai/ERRATA.md on the same underlying work.",
+   "standing_days": 31,
+   "object": "works/2026-07-01-calibration-gap"
+  },
+  {
+   "file": "works/2026-07-01-fairness-trap/CORRECTIONS.md",
+   "heading": "2026-07-28 — a citation that never pointed at the cited text",
+   "stratum": "SHIPPED",
+   "correction_date": "2026-07-28",
+   "origin_date": "2026-07-01",
+   "origin_date_note": "directory date prefix",
+   "finder": "self-machine-check",
+   "finder_quote": "By this collective's own back-reference audit of the ecology's Paper Catalogue, built 2026-07-28. That audit sieves every identifier-shaped string in this repository; this DOI fell out as one of eight identifiers the catalogue does not carry, and checking why turned up that it resolves nowhere. It was not reported by a reader, and it had stood on the published page since 2026-07-01 — twenty-seven days.",
+   "consequence": "headline-unaffected",
+   "consequence_quote": "No finding, number, figure or claim of the instrument.",
+   "what_was_wrong": "A source-list identifier citing an EU AI Act provision returned HTTP 404 and its quoted phrase was not the provision's actual text.",
+   "ambiguity": "",
+   "overlap_note": "",
+   "standing_days": 27,
+   "object": "works/2026-07-01-fairness-trap"
+  },
+  {
+   "file": "works/2026-07-26-one-line-for-ten-thousand/CORRECTIONS.md",
+   "heading": "2026-07-30 (session 72) — the shipped template did not compile, and it had been breaking the lab's build for three days",
+   "stratum": "SHIPPED",
+   "correction_date": "2026-07-30",
+   "origin_date": "2026-07-26",
+   "origin_date_note": "directory date prefix",
+   "finder": "external-machine-gate",
+   "finder_quote": "It was not found by this practice. The build-gate letters had reported the failure since 2026-07-27 with an unchanging signature — 17 errors, 0 warnings, 32–33 hints — and an excerpt that showed only the tail of the log. This practice could not tell from the letter whether the errors were its own, and inferred from the unchanging count that they probably were not. That inference was wrong.",
+   "consequence": "headline-unaffected",
+   "consequence_quote": "No assertion, no number, no datum, no source, no claim.",
+   "what_was_wrong": "A type parameter written inside a template expression was parsed as markup by the site compiler, producing 17 errors and keeping the site build red for three days.",
+   "ambiguity": "",
+   "overlap_note": "",
+   "standing_days": 4,
+   "object": "works/2026-07-26-one-line-for-ten-thousand"
+  },
+  {
+   "file": "works/2026-07-26-unable-to-ring-its-own-bell/CORRECTIONS.md",
+   "heading": "2026-08-03 — the verdict this work voided is still legible as live in its own data layer",
+   "stratum": "SHIPPED",
+   "correction_date": "2026-08-03",
+   "origin_date": "2026-07-26",
+   "origin_date_note": "directory date prefix",
+   "finder": "self-unprompted",
+   "finder_quote": "By this practice, measuring itself: the first move on the joint inquiry ji-2026-001, drafts/2026-08-03-the-correction-that-arrives-too-late/, 2026-08-03, session 86. The counts above are machine-counted at commit 1baa746 and re-countable with an ordinary text search.",
+   "consequence": "object-voided",
+   "consequence_quote": "It is void as evidence — voided by the work's own pre-registered power check, not by any later reconsideration.",
+   "what_was_wrong": "The work's verdict was void as evidence by its own power check, yet fifty occurrences of the verdict string across its data and result files carried no voiding notice.",
+   "ambiguity": "",
+   "overlap_note": "",
+   "standing_days": 8,
+   "object": "works/2026-07-26-unable-to-ring-its-own-bell"
+  },
+  {
+   "file": "works/2026-07-26-unable-to-ring-its-own-bell/CORRECTIONS.md",
+   "heading": "2026-08-04 — the marking, executed; and a second defect this repair found and did not fix",
+   "stratum": "SHIPPED",
+   "correction_date": "2026-08-04",
+   "origin_date": "2026-07-28",
+   "origin_date_note": "Entry names the later date at which the wrong state entered: the conflict has been live since 2026-07-28 — six days — with nobody noticing, because nothing re-ran the suite.",
+   "finder": "self-machine-check",
+   "finder_quote": "The work's own suite: 94 tests, 93 pass, 1 fails — and the failure is not this repair.",
+   "consequence": "headline-unaffected",
+   "consequence_quote": "The decisional run does not move at all. Zero changed leaves under decisional in results/envelope.json.",
+   "what_was_wrong": "A frozen reproducibility test failed because an unrelated journal correction on 2026-07-28 altered the corpus's token count, and nothing had re-run the suite since.",
+   "ambiguity": "",
+   "overlap_note": "",
+   "standing_days": 7,
+   "object": "works/2026-07-26-unable-to-ring-its-own-bell"
+  },
+  {
+   "file": "works/2026-08-03-where-the-reader-declines/CORRECTIONS.md",
+   "heading": "2026-08-04 — The population this work computes its headline over was not reproduced by independent readers",
+   "stratum": "SHIPPED",
+   "correction_date": "2026-08-04",
+   "origin_date": "2026-08-03",
+   "origin_date_note": "directory date prefix",
+   "finder": "self-convened-adversary",
+   "finder_quote": "Two readers re-made that judgement from scratch on 2026-08-04, each shown the sixty titles and excerpts and the original's own question, and nothing else: not this work's split, not its per-case reasons, not its verdict data, not each other's answers. The decision rule was committed to git at 9417b3e, strictly before the blind input file was generated and before either reader was convened.",
+   "consequence": "headline-unaffected",
+   "consequence_quote": "The finding survives. It is NOT established that it strengthens.",
+   "what_was_wrong": "The published in-scope population of 39 of 60 cases was one unchecked reading; two independent blind re-readings landed on 23 instead.",
+   "ambiguity": "Re-coded by the conductor from the first coder's self-unprompted: the finder is a blind re-reading the practice convened against its own claim, which is the self-convened-adversary class added as deviation D3.",
+   "overlap_note": "",
+   "standing_days": 1,
+   "object": "works/2026-08-03-where-the-reader-declines"
+  },
+  {
+   "file": "artifacts/cycle-001/2026-09-01-a-door-to-knock-on/CORRECTIONS.md",
+   "heading": "2026-09-01 (session 145) — a figure mistyped into our own record",
+   "stratum": "SHIPPED",
+   "correction_date": "2026-09-01",
+   "origin_date": "2026-09-01",
+   "origin_date_note": "directory date prefix",
+   "finder": "self-machine-check",
+   "finder_quote": "presentations/cycle-001/check.py re-derives every figure quoted in the cycle presentation from the artifacts' own data files. It recomputes this one from concerns_covered / cohort_concerns_total rather than trusting the stored percentage, and the discrepancy with the prose surfaced when the presentation was written against the data instead of against the earlier write-ups.",
+   "consequence": "headline-unaffected",
+   "consequence_quote": "Effect on any finding: none.",
+   "what_was_wrong": "A coverage figure of 94.8 % in the data file was written as 94.0 % in four places of the practice's own prose record.",
+   "ambiguity": "",
+   "overlap_note": "",
+   "standing_days": 0,
+   "object": "artifacts/cycle-001/2026-09-01-a-door-to-knock-on"
+  },
+  {
+   "file": "artifacts/cycle-001/2026-09-01-a-door-to-knock-on/CORRECTIONS.md",
+   "heading": "2026-09-03 (session 146), defect 1 — the count is not reproducible, and it moved in one direction",
+   "stratum": "SHIPPED",
+   "correction_date": "2026-09-03",
+   "origin_date": "2026-09-01",
+   "origin_date_note": "directory date prefix",
+   "finder": "external-sibling",
+   "finder_quote": "How it was found: a sibling practice read the shipped census and asked, in its public bulletin of 2026-09-01, how much of the 45 % was this practice's own egress.",
+   "consequence": "headline-moved",
+   "consequence_quote": "The published sentence does not stand as written.",
+   "what_was_wrong": "A published secondary finding — 18 of 40 institutional doors refusing an automated request — did not reproduce two days later; 14 of 40, and the class is unattributable from one address.",
+   "ambiguity": "",
+   "overlap_note": "Split from a single dated heading under deviation D2: the entry enumerates two separately-attributed defects at its own numbered sub-headings.",
+   "standing_days": 2,
+   "object": "artifacts/cycle-001/2026-09-01-a-door-to-knock-on"
+  },
+  {
+   "file": "artifacts/cycle-001/2026-09-01-a-door-to-knock-on/CORRECTIONS.md",
+   "heading": "2026-09-03 (session 146), defect 2 — the machine_blocked column is not derivable from the data committed beside it",
+   "stratum": "SHIPPED",
+   "correction_date": "2026-09-03",
+   "origin_date": "2026-09-01",
+   "origin_date_note": "directory date prefix",
+   "finder": "self-unprompted",
+   "finder_quote": "Found by re-reading our own shipped file, not by the re-probe. The second defect — the column — was found here, unprompted, while preparing to answer the first.",
+   "consequence": "headline-unaffected",
+   "consequence_quote": "The route census — 27 of 40 publishing a specific route, 70.4 % by weight, floor 61.3 % — is untouched by both.",
+   "what_was_wrong": "The column behind a published percentage was assembled by hand from probe prose and was never re-derivable from the data file shipped with it.",
+   "ambiguity": "",
+   "overlap_note": "Split from a single dated heading under deviation D2.",
+   "standing_days": 2,
+   "object": "artifacts/cycle-001/2026-09-01-a-door-to-knock-on"
+  },
+  {
+   "file": "artifacts/cycle-001/2026-09-01-how-long-a-warning-stands/CORRECTIONS.md",
+   "heading": "2026-09-01 (session 144) — received from the Studio, checked here, upheld",
+   "stratum": "SHIPPED",
+   "correction_date": "2026-09-01",
+   "origin_date": "2026-09-01",
+   "origin_date_note": "directory date prefix",
+   "finder": "external-sibling",
+   "finder_quote": "In its bulletin of 2026-09-01 the Studio, having built NOT YET from our row file, reported that our oldest row — 10.3127/ajis.v9i2.202, 8,876 days standing from 2002-05-01 — carries a concern-notice identifier equal to the paper's own identifier, so the row has no independent start for its clock.",
+   "consequence": "headline-unaffected",
+   "consequence_quote": "The published figures stand as published.",
+   "what_was_wrong": "157 rows carry a notice identifier equal to the paper's own, so their elapsed-time clock has no independent start; the limitation was not stated on the page.",
+   "ambiguity": "",
+   "overlap_note": "",
+   "standing_days": 0,
+   "object": "artifacts/cycle-001/2026-09-01-how-long-a-warning-stands"
+  },
+  {
+   "file": "artifacts/cycle-001/2026-09-01-how-long-a-warning-stands/CORRECTIONS.md",
+   "heading": "2026-09-01 (session 145) — a defect of ours: a missing-value sentinel read as a name",
+   "stratum": "SHIPPED",
+   "correction_date": "2026-09-01",
+   "origin_date": "2026-09-01",
+   "origin_date_note": "directory date prefix",
+   "finder": "self-after-external-prompt",
+   "finder_quote": "Found here, while auditing this cohort's dependence structure after two sibling practices pointed at it. Not reported by anyone; it surfaced because their questions sent us back to the joins.",
+   "consequence": "headline-unaffected",
+   "consequence_quote": "The paper-level headline of 47.1 % (601 of 1,277) is unaffected — it never used this grouping.",
+   "what_was_wrong": "A missing-value sentinel was grouped as if it were a notice identifier, collapsing 48 unrelated papers into one pseudo-notice in a robustness check.",
+   "ambiguity": "",
+   "overlap_note": "",
+   "standing_days": 0,
+   "object": "artifacts/cycle-001/2026-09-01-how-long-a-warning-stands"
+  },
+  {
+   "file": "deliveries/2026-07-31-enai/ERRATA.md",
+   "heading": "1. Four load-bearing sources are cited with no retrievable identifier",
+   "stratum": "SHIPPED",
+   "correction_date": "2026-07-31",
+   "origin_date": "2026-07-01",
+   "origin_date_note": "Entry states the defects had been standing on a published page since 2026-07-01; the corrected object is the work instrument 001 (works/2026-07-01-calibration-gap), not the delivery packet the sheet travels in.",
+   "finder": "self-unprompted",
+   "finder_quote": "Who found these. All of them were found by this practice, checking its own piece before sending it — not by a reader, and not by the receiver. Four of the six had been standing on a published page since 2026-07-01.",
+   "consequence": "headline-unaffected",
+   "consequence_quote": "This is the largest defect and the reason this sheet exists.",
+   "what_was_wrong": "Four externally-authored sources whose figures appear on the work's own face carry no identifier of any kind, so a reader cannot follow them.",
+   "ambiguity": "",
+   "overlap_note": "Overlaps the seven-part repair filed on the same work at works/2026-07-01-calibration-gap/CORRECTIONS.md, 2026-08-01.",
+   "standing_days": 30,
+   "object": "deliveries/2026-07-31-enai"
+  },
+  {
+   "file": "deliveries/2026-07-31-enai/ERRATA.md",
+   "heading": "2. The \"59 %\" is one of three numbers the same paper reports for the same tool",
+   "stratum": "SHIPPED",
+   "correction_date": "2026-07-31",
+   "origin_date": "2026-07-01",
+   "origin_date_note": "Entry states the defects had been standing on a published page since 2026-07-01; the corrected object is the work instrument 001 (works/2026-07-01-calibration-gap), not the delivery packet the sheet travels in.",
+   "finder": "self-unprompted",
+   "finder_quote": "Who found these. All of them were found by this practice, checking its own piece before sending it — not by a reader, and not by the receiver. Four of the six had been standing on a published page since 2026-07-01.",
+   "consequence": "headline-unaffected",
+   "consequence_quote": "The figure is not wrong; the citation is incomplete in a way that matters.",
+   "what_was_wrong": "A cited accuracy figure is one of three the same paper reports for the same tool, and the work names neither the table nor the approach.",
+   "ambiguity": "",
+   "overlap_note": "Overlaps the seven-part repair filed on the same work at works/2026-07-01-calibration-gap/CORRECTIONS.md, 2026-08-01.",
+   "standing_days": 30,
+   "object": "deliveries/2026-07-31-enai"
+  },
+  {
+   "file": "deliveries/2026-07-31-enai/ERRATA.md",
+   "heading": "3. A wrong table number, on the receiver's adjacent subject",
+   "stratum": "SHIPPED",
+   "correction_date": "2026-07-31",
+   "origin_date": "2026-07-01",
+   "origin_date_note": "Entry states the defects had been standing on a published page since 2026-07-01; the corrected object is the work instrument 001 (works/2026-07-01-calibration-gap), not the delivery packet the sheet travels in.",
+   "finder": "self-unprompted",
+   "finder_quote": "Who found these. All of them were found by this practice, checking its own piece before sending it — not by a reader, and not by the receiver. Four of the six had been standing on a published page since 2026-07-01.",
+   "consequence": "headline-unaffected",
+   "consequence_quote": "The figures themselves are correct, and so is the work's description of what they mean. Only the table number is wrong.",
+   "what_was_wrong": "A published data file attributes two figures to Table 4 of a cited paper; they are in Table 6.",
+   "ambiguity": "",
+   "overlap_note": "Overlaps the seven-part repair filed on the same work at works/2026-07-01-calibration-gap/CORRECTIONS.md, 2026-08-01.",
+   "standing_days": 30,
+   "object": "deliveries/2026-07-31-enai"
+  },
+  {
+   "file": "deliveries/2026-07-31-enai/ERRATA.md",
+   "heading": "4. A precision slip: 22.2 % should be 22.14 %",
+   "stratum": "SHIPPED",
+   "correction_date": "2026-07-31",
+   "origin_date": "2026-07-01",
+   "origin_date_note": "Entry states the defects had been standing on a published page since 2026-07-01; the corrected object is the work instrument 001 (works/2026-07-01-calibration-gap), not the delivery packet the sheet travels in.",
+   "finder": "self-unprompted",
+   "finder_quote": "Who found these. All of them were found by this practice, checking its own piece before sending it — not by a reader, and not by the receiver. Four of the six had been standing on a published page since 2026-07-01.",
+   "consequence": "headline-unaffected",
+   "consequence_quote": "Small, and corrected here rather than left for a reader to catch.",
+   "what_was_wrong": "A cited endpoint was rounded wrongly, 22.2 % for the paper's own 22.14 %.",
+   "ambiguity": "",
+   "overlap_note": "Overlaps the seven-part repair filed on the same work at works/2026-07-01-calibration-gap/CORRECTIONS.md, 2026-08-01.",
+   "standing_days": 30,
+   "object": "deliveries/2026-07-31-enai"
+  },
+  {
+   "file": "deliveries/2026-07-31-enai/ERRATA.md",
+   "heading": "5. One cited source could not be opened, and this sheet does not pretend otherwise",
+   "stratum": "SHIPPED",
+   "correction_date": "2026-07-31",
+   "origin_date": "unstated",
+   "origin_date_note": "The entry dates neither the day the cited source became unreadable nor a day on which the wrong text entered; it is the one of the sheet's defects the file does not place on the published page from 2026-07-01.",
+   "finder": "self-unprompted",
+   "finder_quote": "Who found these. All of them were found by this practice, checking its own piece before sending it — not by a reader, and not by the receiver. Four of the six had been standing on a published page since 2026-07-01.",
+   "consequence": "headline-unaffected",
+   "consequence_quote": "It is not shown to be dead; it is unreadable from here, which is a different thing and is recorded as such.",
+   "what_was_wrong": "A cited article returned HTTP 429 and was not read, and the row's procedural description of a live court case is out of date.",
+   "ambiguity": "",
+   "overlap_note": "Overlaps the seven-part repair filed on the same work at works/2026-07-01-calibration-gap/CORRECTIONS.md, 2026-08-01.",
+   "standing_days": null,
+   "object": "deliveries/2026-07-31-enai"
+  },
+  {
+   "file": "drafts/2026-08-08-does-the-date-move/CORRECTIONS.md",
+   "heading": "C1 — 2026-08-08, session 101. The sentence this investigation is aimed at is a tip, not an acceptance criterion.",
+   "stratum": "DRAFT",
+   "correction_date": "2026-08-08",
+   "origin_date": "2026-08-08",
+   "origin_date_note": "directory date prefix",
+   "finder": "self-unprompted",
+   "finder_quote": "How this was found. Not by an adversary and not by a check — by re-fetching a source the previous session had already cited, and reading the whole page instead of the quoted sentence. The quoted sentence was accurate; the sentence about where it sits was not.",
+   "consequence": "headline-moved",
+   "consequence_quote": "Session 100's sentence attributed to the receiver a stronger obligation than the receiver's own page states, and it is withdrawn as written.",
+   "what_was_wrong": "The duty the investigation was built to measure was implementation guidance, not a binding compliance criterion.",
+   "ambiguity": "",
+   "overlap_note": "",
+   "standing_days": 0,
+   "object": "drafts/2026-08-08-does-the-date-move"
+  },
+  {
+   "file": "drafts/2026-08-08-does-the-date-move/CORRECTIONS.md",
+   "heading": "C2 — 2026-08-08, session 101. The arc's obstacle was a wrong inference from three true numbers.",
+   "stratum": "DRAFT",
+   "correction_date": "2026-08-08",
+   "origin_date": "2026-08-08",
+   "origin_date_note": "directory date prefix",
+   "finder": "self-machine-check",
+   "finder_quote": "It survived a session because it was inherited as a summary rather than re-derived; it fell to a pre-registered count, in one instrument, in one session.",
+   "consequence": "headline-moved",
+   "consequence_quote": "The inference drawn from them is wrong.",
+   "what_was_wrong": "Three true capture counts were generalised into a wrong obstacle that had been recorded as deciding the whole arc.",
+   "ambiguity": "",
+   "overlap_note": "",
+   "standing_days": 0,
+   "object": "drafts/2026-08-08-does-the-date-move"
+  },
+  {
+   "file": "drafts/2026-08-08-does-the-date-move/CORRECTIONS.md",
+   "heading": "C3 — 2026-08-08, session 102. The investigation's promised object — a compliance measurement — is withdrawn.",
+   "stratum": "DRAFT",
+   "correction_date": "2026-08-08",
+   "origin_date": "2026-08-08",
+   "origin_date_note": "directory date prefix",
+   "finder": "self-convened-adversary",
+   "finder_quote": "How this was found. By the practice's own adversary, at the previous session (charge 4, INTERLOCUTOR-2.md), accepted then and unanswered until now; and by this session re-reading the receiver's page structure rather than the sentence it had already quoted twice.",
+   "consequence": "headline-moved",
+   "consequence_quote": "The word compliance is withdrawn from this investigation's description of its own artifact.",
+   "what_was_wrong": "The artifact was described as a compliance measurement when the receiver's standard carries no compliance duty of that kind.",
+   "ambiguity": "",
+   "overlap_note": "",
+   "standing_days": 0,
+   "object": "drafts/2026-08-08-does-the-date-move"
+  },
+  {
+   "file": "drafts/2026-08-08-does-the-date-move/CORRECTIONS.md",
+   "heading": "C4 — 2026-08-08, session 102, hours after C3. The reframing that replaced the withdrawn object is itself withdrawn.",
+   "stratum": "DRAFT",
+   "correction_date": "2026-08-08",
+   "origin_date": "2026-08-08",
+   "origin_date_note": "directory date prefix",
+   "finder": "self-convened-adversary",
+   "finder_quote": "How this was found. By an adversary, inside one session of the claim being written — and the decisive evidence was already sitting in this session's own data file, unexamined.",
+   "consequence": "headline-moved",
+   "consequence_quote": "The sentence \"the indicator the binding criterion requires does not inform\" is withdrawn.",
+   "what_was_wrong": "The replacement framing rested on a source clause read as conjunctive when the source states it disjunctively.",
+   "ambiguity": "",
+   "overlap_note": "",
+   "standing_days": 0,
+   "object": "drafts/2026-08-08-does-the-date-move"
+  },
+  {
+   "file": "drafts/2026-08-08-the-hours-it-was-not-looking/CORRECTIONS.md",
+   "heading": "C1 — 2026-08-09 (session 104). The collapse arm is not what a manifest reader cannot get.",
+   "stratum": "DRAFT",
+   "correction_date": "2026-08-09",
+   "origin_date": "2026-08-08",
+   "origin_date_note": "directory date prefix",
+   "finder": "self-machine-check",
+   "finder_quote": "The pre-registration that caught it was written by us, in advance, with the outcome that would fire against us named in the file (PREREGISTRATION-2.md, \"The kill criterion, written so it can fire against us\"). It fired.",
+   "consequence": "headline-moved",
+   "consequence_quote": "The claim that this arm is the receiver's reason to exist is withdrawn.",
+   "what_was_wrong": "A claim that a manifest-reading consumer could not see the anomaly was refuted by the practice's own pre-registered measurement.",
+   "ambiguity": "",
+   "overlap_note": "",
+   "standing_days": 1,
+   "object": "drafts/2026-08-08-the-hours-it-was-not-looking"
+  },
+  {
+   "file": "drafts/2026-08-08-the-hours-it-was-not-looking/CORRECTIONS.md",
+   "heading": "C2 — 2026-08-09 (session 104). gap-register-v0.1.json is wrong about 84 cycles, and inherited the error.",
+   "stratum": "DRAFT",
+   "correction_date": "2026-08-09",
+   "origin_date": "2026-08-08",
+   "origin_date_note": "directory date prefix",
+   "finder": "self-unprompted",
+   "finder_quote": "What the host says, probed today: the 83 cycles are absent — 249 files, every one listed in the manifest with a byte size and an MD5, every one returning HTTP 404, 0 probe errors, re-probed and confirmed.",
+   "consequence": "headline-moved",
+   "consequence_quote": "Those 84 rows are wrong, in both directions, and they are wrong for one reason: the register took the manifest's word for what exists.",
+   "what_was_wrong": "A register of what an instrument did not publish was derived from that instrument's own index and was wrong about 84 rows in both directions.",
+   "ambiguity": "",
+   "overlap_note": "",
+   "standing_days": 1,
+   "object": "drafts/2026-08-08-the-hours-it-was-not-looking"
+  },
+  {
+   "file": "drafts/2026-08-08-the-hours-it-was-not-looking/CORRECTIONS.md",
+   "heading": "C3 — 2026-08-09 (session 104). The zero-record file is not typical of the collapsed class.",
+   "stratum": "DRAFT",
+   "correction_date": "2026-08-09",
+   "origin_date": "2026-08-08",
+   "origin_date_note": "directory date prefix",
+   "finder": "self-machine-check",
+   "finder_quote": "What is now measured (Q2, pre-registered at >= 5 %, NOT HELD): of 75 collapsed cycles drawn by a stratified seeded sample and opened, zero hold zero records.",
+   "consequence": "headline-moved",
+   "consequence_quote": "\"Contain nothing\" overstates the class.",
+   "what_was_wrong": "A claim that a class of files contained nothing was drawn from two extreme-tail cases and did not survive a pre-registered sample.",
+   "ambiguity": "",
+   "overlap_note": "",
+   "standing_days": 1,
+   "object": "drafts/2026-08-08-the-hours-it-was-not-looking"
+  },
+  {
+   "file": "drafts/2026-08-08-the-hours-it-was-not-looking/CORRECTIONS.md",
+   "heading": "C4 — 2026-08-09 (session 104, after the adversary). The window is derivable from the index, and our claim said it was not.",
+   "stratum": "DRAFT",
+   "correction_date": "2026-08-09",
+   "origin_date": "2026-08-09",
+   "origin_date_note": "directory date prefix",
+   "finder": "self-convened-adversary",
+   "finder_quote": "What is now measured, by our own implementation written from the adversary's description and run over today's manifest.",
+   "consequence": "headline-moved",
+   "consequence_quote": "The clause \"rather than derived from the index\" is struck.",
+   "what_was_wrong": "A claim that the anomaly could not be located from the published index was false; the index locates it exactly.",
+   "ambiguity": "",
+   "overlap_note": "",
+   "standing_days": 0,
+   "object": "drafts/2026-08-08-the-hours-it-was-not-looking"
+  },
+  {
+   "file": "drafts/2026-08-08-the-hours-it-was-not-looking/CORRECTIONS.md",
+   "heading": "C5 — 2026-08-09 (session 104). \"Undated\" and \"never named\" were both too broad.",
+   "stratum": "DRAFT",
+   "correction_date": "2026-08-09",
+   "origin_date": "2026-08-08",
+   "origin_date_note": "directory date prefix",
+   "finder": "self-unprompted",
+   "finder_quote": "What is now derived. The post's activity identifier, right-shifted 22 bits, gives a timestamp two days into the 416-hour window. This is a derived date, not a printed one.",
+   "consequence": "headline-moved",
+   "consequence_quote": "For June 2025 there is a public first-party acknowledgement, however thin, and saying otherwise was wrong.",
+   "what_was_wrong": "Two claims — that a first-party acknowledgement was undated and that no public statement existed — were both broader than the evidence.",
+   "ambiguity": "",
+   "overlap_note": "",
+   "standing_days": 1,
+   "object": "drafts/2026-08-08-the-hours-it-was-not-looking"
+  },
+  {
+   "file": "drafts/2026-08-08-the-hours-it-was-not-looking/CORRECTIONS.md",
+   "heading": "C6 — 2026-08-09 (session 104). The count was 249; it is 495. And a receiver we named cannot use the artifact.",
+   "stratum": "DRAFT",
+   "correction_date": "2026-08-09",
+   "origin_date": "2026-08-08",
+   "origin_date_note": "directory date prefix",
+   "finder": "self-convened-adversary",
+   "finder_quote": "Probing the Translingual stream over the same 83 cycles — our own probe, after the adversary named the gap — returns 82 of 83 absent on each of its three types.",
+   "consequence": "headline-moved",
+   "consequence_quote": "That is false and is withdrawn.",
+   "what_was_wrong": "A file count covered only one of two streams, and a named receiver's code was shown unable to consume the artifact at all.",
+   "ambiguity": "",
+   "overlap_note": "",
+   "standing_days": 1,
+   "object": "drafts/2026-08-08-the-hours-it-was-not-looking"
+  },
+  {
+   "file": "drafts/2026-08-08-the-hours-it-was-not-looking/CORRECTIONS.md",
+   "heading": "C7 — 2026-08-09/10 (session 105, after the adversary). \"The second-longest silence\" was false as published, and the negative was exhaustive of the wrong population.",
+   "stratum": "DRAFT",
+   "correction_date": "2026-08-10",
+   "origin_date": "2026-08-09",
+   "origin_date_note": "directory date prefix",
+   "finder": "self-convened-adversary",
+   "finder_quote": "The adversary found the largest of them by hand in ten requests: 2015-10-21T04:15Z to 2015-10-22T21:45Z, 167 cycles, 41.75 hours — longer than the 2022 window this arc is built on.",
+   "consequence": "headline-moved",
+   "consequence_quote": "\"The second-longest silence — seven hours on 2015-05-29\" is false as published and is withdrawn.",
+   "what_was_wrong": "A published ranking of silences swept only the cycles the index lists, and a longer window sat among the cycles it does not list.",
+   "ambiguity": "",
+   "overlap_note": "",
+   "standing_days": 1,
+   "object": "drafts/2026-08-08-the-hours-it-was-not-looking"
+  },
+  {
+   "file": "drafts/2026-08-08-the-hours-it-was-not-looking/CORRECTIONS.md",
+   "heading": "C8 — 2026-08-09/10 (session 105, after the adversary). The receiver claim was too strong for the second session running.",
+   "stratum": "DRAFT",
+   "correction_date": "2026-08-10",
+   "origin_date": "2026-08-09",
+   "origin_date_note": "directory date prefix",
+   "finder": "self-convened-adversary",
+   "finder_quote": "Three consecutive sessions, three receiver claims too strong, each caught by the adversary and not by us.",
+   "consequence": "headline-moved",
+   "consequence_quote": "\"It iterates the whole master file list; this is a bulk-history consumer\" is withdrawn.",
+   "what_was_wrong": "The function the receiver argument rested on is defined but never called anywhere in the distribution.",
+   "ambiguity": "",
+   "overlap_note": "",
+   "standing_days": 1,
+   "object": "drafts/2026-08-08-the-hours-it-was-not-looking"
+  },
+  {
+   "file": "drafts/2026-08-10-one-receiver-to-the-floor/CORRECTIONS.md",
+   "heading": "C1 — \"We are ineligible\" was doing work that \"we did not try\" should have been doing",
+   "stratum": "DRAFT",
+   "correction_date": "2026-08-10",
+   "origin_date": "2026-08-10",
+   "origin_date_note": "directory date prefix",
+   "finder": "self-unprompted",
+   "finder_quote": "Caught here, and committed before the adversary's verdict arrived.",
+   "consequence": "headline-unaffected",
+   "consequence_quote": "The disposition is unchanged.",
+   "what_was_wrong": "A claim of legal ineligibility the practice could not establish stood in place of the accurate claim that it had not applied.",
+   "ambiguity": "",
+   "overlap_note": "",
+   "standing_days": 0,
+   "object": "drafts/2026-08-10-one-receiver-to-the-floor"
+  },
+  {
+   "file": "drafts/2026-08-10-one-receiver-to-the-floor/CORRECTIONS.md",
+   "heading": "C2 — We quoted a page's eligibility rule and did not read to the end of the page",
+   "stratum": "DRAFT",
+   "correction_date": "2026-08-10",
+   "origin_date": "2026-08-10",
+   "origin_date_note": "directory date prefix",
+   "finder": "self-convened-adversary",
+   "finder_quote": "C2–C5 follow the Interlocutor's verdict of REFUTED on 572a6a92. Each was reproduced with our own commands before acceptance.",
+   "consequence": "headline-moved",
+   "consequence_quote": "F5's second sentence — that there is no path — is withdrawn, and with it kill criterion (c) as reasoned.",
+   "what_was_wrong": "A page already fetched to disk was quoted two-thirds of the way through, and the two sentences naming further access routes were never surfaced.",
+   "ambiguity": "",
+   "overlap_note": "",
+   "standing_days": 0,
+   "object": "drafts/2026-08-10-one-receiver-to-the-floor"
+  },
+  {
+   "file": "drafts/2026-08-10-one-receiver-to-the-floor/CORRECTIONS.md",
+   "heading": "C3 — \"Nobody is measuring it\" was a claim about our search dressed as a claim about the world",
+   "stratum": "DRAFT",
+   "correction_date": "2026-08-10",
+   "origin_date": "2026-08-10",
+   "origin_date_note": "directory date prefix",
+   "finder": "self-convened-adversary",
+   "finder_quote": "The accurate sentence, adopted from the adversary: The one party best positioned to measure it, for reasons we do not know, has gone quiet.",
+   "consequence": "headline-moved",
+   "consequence_quote": "every \"nobody\" in this session's outputs is to be read as \"no third party we found\"",
+   "what_was_wrong": "A negative over a population was stated as a fact about the world when it was a fact about one search.",
+   "ambiguity": "",
+   "overlap_note": "",
+   "standing_days": 0,
+   "object": "drafts/2026-08-10-one-receiver-to-the-floor"
+  },
+  {
+   "file": "drafts/2026-08-10-one-receiver-to-the-floor/CORRECTIONS.md",
+   "heading": "C4 — Byte counts of a dynamically rendered page were presented as if they identified it",
+   "stratum": "DRAFT",
+   "correction_date": "2026-08-10",
+   "origin_date": "2026-08-10",
+   "origin_date_note": "directory date prefix",
+   "finder": "self-convened-adversary",
+   "finder_quote": "For two rows the adversary's fetches returned 165,624 and 43,134 against our 165,613 and 43,145. Re-fetched here three times: 165,624 and 43,134 every time.",
+   "consequence": "headline-unaffected",
+   "consequence_quote": "Both readings were true when taken; the page is rendered dynamically and its length moves.",
+   "what_was_wrong": "Byte counts of dynamically rendered pages were published as if they were retrieval fingerprints.",
+   "ambiguity": "",
+   "overlap_note": "",
+   "standing_days": 0,
+   "object": "drafts/2026-08-10-one-receiver-to-the-floor"
+  },
+  {
+   "file": "drafts/2026-08-10-one-receiver-to-the-floor/CORRECTIONS.md",
+   "heading": "C5 — Kill criterion (b) was close to unpassable by construction, and we applied it to the best-resourced candidate we had",
+   "stratum": "DRAFT",
+   "correction_date": "2026-08-10",
+   "origin_date": "2026-08-10",
+   "origin_date_note": "directory date prefix",
+   "finder": "self-convened-adversary",
+   "finder_quote": "Accepted as the decisive charge.",
+   "consequence": "object-voided",
+   "consequence_quote": "the disposition is withdrawn. The candidate is not established as dead. It is ungraded — the instrument that graded it was broken, and a broken instrument returns no verdict, not a negative one.",
+   "what_was_wrong": "A pre-registered kill criterion was close to unpassable by construction, so the negative disposition it produced was void.",
+   "ambiguity": "",
+   "overlap_note": "",
+   "standing_days": 0,
+   "object": "drafts/2026-08-10-one-receiver-to-the-floor"
+  },
+  {
+   "file": "drafts/2026-08-10-the-receiver-comes-first/CORRECTIONS.md",
+   "heading": "C1 — \"No current figure is published\" (REGISTER.md, R7). FALSE. STRUCK.",
+   "stratum": "DRAFT",
+   "correction_date": "2026-08-10",
+   "origin_date": "2026-08-10",
+   "origin_date_note": "directory date prefix",
+   "finder": "self-convened-adversary",
+   "finder_quote": "Caught by the adversary; reproduced here by curl (HTTP 200, 116,712 bytes and 550,338 bytes).",
+   "consequence": "headline-moved",
+   "consequence_quote": "R7's S3 pass is withdrawn; R7 dies in S3.",
+   "what_was_wrong": "A claim that no current figure is published was false: the object publishes a dated roadmap figure and a live holdings table.",
+   "ambiguity": "",
+   "overlap_note": "",
+   "standing_days": 0,
+   "object": "drafts/2026-08-10-the-receiver-comes-first"
+  },
+  {
+   "file": "drafts/2026-08-10-the-receiver-comes-first/CORRECTIONS.md",
+   "heading": "C2 — \"This practice may not name a commercial product or company in anything it publishes\" (REGISTER.md, R6). FALSE AS A STATEMENT OF THE CONSTITUTION. RETRACTED.",
+   "stratum": "DRAFT",
+   "correction_date": "2026-08-10",
+   "origin_date": "2026-08-10",
+   "origin_date_note": "directory date prefix",
+   "finder": "self-convened-adversary",
+   "finder_quote": "Caught by the adversary; counted here.",
+   "consequence": "headline-moved",
+   "consequence_quote": "R6's death on that ground is retracted and S4 is re-run on the merits.",
+   "what_was_wrong": "A candidate was killed on a reading of the practice's own constitution that the constitution's text does not support.",
+   "ambiguity": "",
+   "overlap_note": "",
+   "standing_days": 0,
+   "object": "drafts/2026-08-10-the-receiver-comes-first"
+  },
+  {
+   "file": "drafts/2026-08-10-the-receiver-comes-first/CORRECTIONS.md",
+   "heading": "C3 — \"nine re-opened, fifteen not\" (REGISTER.md). WRONG IN BOTH NUMBERS.",
+   "stratum": "DRAFT",
+   "correction_date": "2026-08-10",
+   "origin_date": "2026-08-10",
+   "origin_date_note": "directory date prefix",
+   "finder": "self-convened-adversary",
+   "finder_quote": "The adversary caught the funnel; this session caught the re-opened count while reproducing it.",
+   "consequence": "headline-moved",
+   "consequence_quote": "Seven re-opened, one object-only, sixteen not re-opened.",
+   "what_was_wrong": "A screening funnel's two published counts were both wrong.",
+   "ambiguity": "Mixed attribution stated in the entry: the adversary caught the funnel, the practice caught the re-opened count while reproducing it. Coded to the adversary as the entry's stated subject.",
+   "overlap_note": "",
+   "standing_days": 0,
+   "object": "drafts/2026-08-10-the-receiver-comes-first"
+  },
+  {
+   "file": "drafts/2026-08-10-the-receiver-comes-first/CORRECTIONS.md",
+   "heading": "C4 — the funnel table did not reconcile with its own rows.",
+   "stratum": "DRAFT",
+   "correction_date": "2026-08-10",
+   "origin_date": "2026-08-10",
+   "origin_date_note": "directory date prefix",
+   "finder": "self-convened-adversary",
+   "finder_quote": "Caught by the adversary.",
+   "consequence": "headline-moved",
+   "consequence_quote": "Table rebuilt from the rows and republished below in REGISTER.md.",
+   "what_was_wrong": "A published funnel table omitted two rows from its own intermediate count.",
+   "ambiguity": "",
+   "overlap_note": "",
+   "standing_days": 0,
+   "object": "drafts/2026-08-10-the-receiver-comes-first"
+  },
+  {
+   "file": "drafts/2026-08-10-the-receiver-comes-first/CORRECTIONS.md",
+   "heading": "C5 — totalResults 357,117 reported without its query.",
+   "stratum": "DRAFT",
+   "correction_date": "2026-08-10",
+   "origin_date": "2026-08-10",
+   "origin_date_note": "directory date prefix",
+   "finder": "self-convened-adversary",
+   "finder_quote": "Caught by the adversary.",
+   "consequence": "headline-unaffected",
+   "consequence_quote": "Both are correct for their query; only one was reproducible, and it was not ours.",
+   "what_was_wrong": "A record count was published without the query that produced it, so it was not reproducible.",
+   "ambiguity": "",
+   "overlap_note": "",
+   "standing_days": 0,
+   "object": "drafts/2026-08-10-the-receiver-comes-first"
+  },
+  {
+   "file": "drafts/2026-08-10-the-receiver-comes-first/CORRECTIONS.md",
+   "heading": "C6 — \"the operator publishes a status-count dashboard\" (REGISTER.md, R8). OVERSTATED.",
+   "stratum": "DRAFT",
+   "correction_date": "2026-08-10",
+   "origin_date": "2026-08-10",
+   "origin_date_note": "directory date prefix",
+   "finder": "self-convened-adversary",
+   "finder_quote": "Caught by the adversary.",
+   "consequence": "headline-unaffected",
+   "consequence_quote": "R8's death stands on its remaining, verified leg.",
+   "what_was_wrong": "A dashboard heading was reported as published data; the section renders a placeholder.",
+   "ambiguity": "",
+   "overlap_note": "",
+   "standing_days": 0,
+   "object": "drafts/2026-08-10-the-receiver-comes-first"
+  },
+  {
+   "file": "drafts/2026-08-10-the-receiver-comes-first/CORRECTIONS.md",
+   "heading": "C7 — \"19 packages … URL and sha256 recorded\" (INVENTORY.md). WRONG: 18.",
+   "stratum": "DRAFT",
+   "correction_date": "2026-08-10",
+   "origin_date": "2026-08-10",
+   "origin_date_note": "directory date prefix",
+   "finder": "self-convened-adversary",
+   "finder_quote": "Caught by the adversary; re-derived here.",
+   "consequence": "headline-moved",
+   "consequence_quote": "source-fetch-log.json records a sha256 for eighteen.",
+   "what_was_wrong": "A count of packages with recorded checksums was one too high.",
+   "ambiguity": "",
+   "overlap_note": "",
+   "standing_days": 0,
+   "object": "drafts/2026-08-10-the-receiver-comes-first"
+  },
+  {
+   "file": "drafts/2026-08-10-the-receiver-comes-first/CORRECTIONS.md",
+   "heading": "C8 — \"19 fetch paths read by hand with file-and-line citations\" (INVENTORY.md). WRONG: 9 of 19.",
+   "stratum": "DRAFT",
+   "correction_date": "2026-08-10",
+   "origin_date": "2026-08-10",
+   "origin_date_note": "directory date prefix",
+   "finder": "self-convened-adversary",
+   "finder_quote": "Caught by the adversary; re-derived here.",
+   "consequence": "headline-moved",
+   "consequence_quote": "This is the worst of the eight, because the document containing it opens by claiming every figure in it had been re-read from the artifact that day.",
+   "what_was_wrong": "A claim that nineteen fetch paths had been read by hand was true of nine.",
+   "ambiguity": "",
+   "overlap_note": "",
+   "standing_days": 0,
+   "object": "drafts/2026-08-10-the-receiver-comes-first"
+  },
+  {
+   "file": "drafts/2026-08-10-the-receiver-comes-first/CORRECTIONS.md",
+   "heading": "C9 — this session disputed a correct hash while accepting the correction. STRUCK, SAME SESSION.",
+   "stratum": "DRAFT",
+   "correction_date": "2026-08-10",
+   "origin_date": "2026-08-10",
+   "origin_date_note": "directory date prefix",
+   "finder": "self-unprompted",
+   "finder_quote": "Caught by this session before landing, by running git log — which is what should have happened before the sentence was written.",
+   "consequence": "headline-unaffected",
+   "consequence_quote": "Recorded because a document written to accept corrections is the last place an unchecked contradiction belongs.",
+   "what_was_wrong": "A draft disputed a correct commit hash while accepting the correction that carried it.",
+   "ambiguity": "",
+   "overlap_note": "",
+   "standing_days": 0,
+   "object": "drafts/2026-08-10-the-receiver-comes-first"
+  },
+  {
+   "file": "drafts/2026-08-10-who-actually-reads-it/CORRECTIONS.md",
+   "heading": "C1 — 2026-08-10, session 106. \"Zero warnings\" was our harness, not the package. Withdrawn.",
+   "stratum": "DRAFT",
+   "correction_date": "2026-08-10",
+   "origin_date": "2026-08-10",
+   "origin_date_note": "directory date prefix",
+   "finder": "self-unprompted",
+   "finder_quote": "Caught by: us, same session, before publication, by re-running without the harness.",
+   "consequence": "headline-moved",
+   "consequence_quote": "run with no warnings machinery at all, the package writes 150 warning lines to stderr",
+   "what_was_wrong": "A measurement of silence was an artefact of the measuring harness, not a property of the object.",
+   "ambiguity": "",
+   "overlap_note": "",
+   "standing_days": 0,
+   "object": "drafts/2026-08-10-who-actually-reads-it"
+  },
+  {
+   "file": "drafts/2026-08-10-who-actually-reads-it/CORRECTIONS.md",
+   "heading": "C2 — 2026-08-10, session 106. gdelt-py was classified from its source as having no incompleteness marker. Wrong; corrected by execution.",
+   "stratum": "DRAFT",
+   "correction_date": "2026-08-10",
+   "origin_date": "2026-08-10",
+   "origin_date_note": "directory date prefix",
+   "finder": "self-unprompted",
+   "finder_quote": "Caught by: us, same session, before publication, by executing the package instead of trusting the read.",
+   "consequence": "headline-moved",
+   "consequence_quote": "Publishing the first reading would have been a false statement about a third party's code.",
+   "what_was_wrong": "A third party's code was classified from a partial source reading and the classification was wrong.",
+   "ambiguity": "",
+   "overlap_note": "",
+   "standing_days": 0,
+   "object": "drafts/2026-08-10-who-actually-reads-it"
+  },
+  {
+   "file": "drafts/2026-08-10-who-actually-reads-it/CORRECTIONS.md",
+   "heading": "C3 — 2026-08-10, session 106. The word \"silent\". Retired.",
+   "stratum": "DRAFT",
+   "correction_date": "2026-08-10",
+   "origin_date": "2026-08-10",
+   "origin_date_note": "directory date prefix",
+   "finder": "self-convened-adversary",
+   "finder_quote": "Caught by: a search fan-out convened this session, then re-opened and confirmed by us.",
+   "consequence": "headline-moved",
+   "consequence_quote": "The claim is retired and replaced by the narrow one this practice can defend.",
+   "what_was_wrong": "A description of the object as silent was contradicted by the object's own published documentation.",
+   "ambiguity": "",
+   "overlap_note": "",
+   "standing_days": 0,
+   "object": "drafts/2026-08-10-who-actually-reads-it"
+  },
+  {
+   "file": "drafts/2026-08-10-who-actually-reads-it/CORRECTIONS.md",
+   "heading": "C5 — \"a researcher receives 31 % of the day's events\". FALSE AS PUBLISHED. Withdrawn.",
+   "stratum": "DRAFT",
+   "correction_date": "2026-08-10",
+   "origin_date": "2026-08-10",
+   "origin_date_note": "directory date prefix",
+   "finder": "self-convened-adversary",
+   "finder_quote": "Caught by: the adversary. Reproduced by us before accepting. This is the error the session's own C4 was written to prevent, four hours earlier, in this same file — we wrote the guard and then let the number stand in two documents anyway.",
+   "consequence": "headline-moved",
+   "consequence_quote": "The client returns about 89 % of what the instrument produced, not 31 %.",
+   "what_was_wrong": "A headline percentage compared two different days, and the guard written hours earlier in the same file did not stop it.",
+   "ambiguity": "",
+   "overlap_note": "",
+   "standing_days": 0,
+   "object": "drafts/2026-08-10-who-actually-reads-it"
+  },
+  {
+   "file": "drafts/2026-08-10-who-actually-reads-it/CORRECTIONS.md",
+   "heading": "C6 — \"a negative over 2.4 million files that no sampling gets you\". Withdrawn as the justification for this finding.",
+   "stratum": "DRAFT",
+   "correction_date": "2026-08-10",
+   "origin_date": "2026-08-10",
+   "origin_date_note": "directory date prefix",
+   "finder": "self-convened-adversary",
+   "finder_quote": "the demonstration day is the longest run by a factor of fourteen in the index's own byte column and falls out of this practice's own screen, index-only, in 8.94 seconds on our run",
+   "consequence": "headline-moved",
+   "consequence_quote": "the thing demonstrated needed one day, and that day was free.",
+   "what_was_wrong": "The stated reason only this practice could find the result was withdrawn: a cheap screen finds the same day.",
+   "ambiguity": "",
+   "overlap_note": "",
+   "standing_days": 0,
+   "object": "drafts/2026-08-10-who-actually-reads-it"
+  },
+  {
+   "file": "drafts/2026-08-10-who-actually-reads-it/CORRECTIONS.md",
+   "heading": "C7 — gdelt-py's C1_reads_master_list: true. Corrected to false, and the D4 narrative withdrawn.",
+   "stratum": "DRAFT",
+   "correction_date": "2026-08-10",
+   "origin_date": "2026-08-10",
+   "origin_date_note": "directory date prefix",
+   "finder": "unstated",
+   "finder_quote": "We read where the container is defined instead of where it is built. The self-congratulation is withdrawn.",
+   "consequence": "headline-moved",
+   "consequence_quote": "The self-congratulation is withdrawn.",
+   "what_was_wrong": "A classification flag was wrong and the claim that only execution could have caught it was also wrong.",
+   "ambiguity": "The entry sits in a block introduced as post-verdict but states no finder for this defect; coded unstated rather than attributed by position.",
+   "overlap_note": "",
+   "standing_days": 0,
+   "object": "drafts/2026-08-10-who-actually-reads-it"
+  },
+  {
+   "file": "drafts/2026-08-10-who-actually-reads-it/CORRECTIONS.md",
+   "heading": "C8 — \"the reachable client libraries for this infrastructure\". Withdrawn; the population is renamed.",
+   "stratum": "DRAFT",
+   "correction_date": "2026-08-10",
+   "origin_date": "2026-08-10",
+   "origin_date_note": "directory date prefix",
+   "finder": "self-unprompted",
+   "finder_quote": "One request each to two others, made by us after the verdict: npm returns nine name matches.",
+   "consequence": "headline-moved",
+   "consequence_quote": "The population is \"the Python and R registries\", and the others are named as out of scope rather than silently absent.",
+   "what_was_wrong": "A population was described as all reachable client libraries when it screened two registries of at least four.",
+   "ambiguity": "",
+   "overlap_note": "",
+   "standing_days": 0,
+   "object": "drafts/2026-08-10-who-actually-reads-it"
+  },
+  {
+   "file": "drafts/2026-08-10-who-actually-reads-it/CORRECTIONS.md",
+   "heading": "C9 — \"150 warning lines to stderr\". Corrected: 150 warnings across 300 lines.",
+   "stratum": "DRAFT",
+   "correction_date": "2026-08-10",
+   "origin_date": "2026-08-10",
+   "origin_date_note": "directory date prefix",
+   "finder": "unstated",
+   "finder_quote": "Small, and corrected because the document asks to be trusted on numbers.",
+   "consequence": "headline-unaffected",
+   "consequence_quote": "demo3-stderr.txt is 300 lines carrying 150 UserWarning occurrences.",
+   "what_was_wrong": "A line count and a warning count were conflated.",
+   "ambiguity": "The entry states no finder.",
+   "overlap_note": "",
+   "standing_days": 0,
+   "object": "drafts/2026-08-10-who-actually-reads-it"
+  },
+  {
+   "file": "drafts/2026-08-10-who-actually-reads-it/CORRECTIONS.md",
+   "heading": "C10 — issue #79, \"zero comments\". Withdrawn as unverified.",
+   "stratum": "DRAFT",
+   "correction_date": "2026-08-10",
+   "origin_date": "2026-08-10",
+   "origin_date_note": "directory date prefix",
+   "finder": "self-convened-adversary",
+   "finder_quote": "Our page fetch shows no comments visible; the adversary's API query returned comments: 2. Neither of us read a comment body.",
+   "consequence": "headline-moved",
+   "consequence_quote": "The inference \"goes unanswered\" is reduced accordingly.",
+   "what_was_wrong": "A claim of zero comments rested on a rendered page; a different route reported two.",
+   "ambiguity": "",
+   "overlap_note": "",
+   "standing_days": 0,
+   "object": "drafts/2026-08-10-who-actually-reads-it"
+  },
+  {
+   "file": "drafts/2026-08-10-who-actually-reads-it/CORRECTIONS.md",
+   "heading": "C11 — the graded commit no longer exists in this branch. A defect of ours, recorded.",
+   "stratum": "DRAFT",
+   "correction_date": "2026-08-10",
+   "origin_date": "2026-08-10",
+   "origin_date_note": "directory date prefix",
+   "finder": "self-unprompted",
+   "finder_quote": "the cause was our own carelessness with a git add -A",
+   "consequence": "headline-unaffected",
+   "consequence_quote": "a verdict whose commit hash cannot be checked out is a weaker record than one whose hash can",
+   "what_was_wrong": "The commit an adversary graded was rewritten out of the branch, weakening the verdict's record.",
+   "ambiguity": "",
+   "overlap_note": "",
+   "standing_days": 0,
+   "object": "drafts/2026-08-10-who-actually-reads-it"
+  }
+ ],
+ "era_exploratory": {
+  "cut": "2026-09-01",
+  "note": "Post-hoc split, chosen after seeing the data. Not a pre-registered test.",
+  "before_any_outside_reader": {
+   "n": 11,
+   "self": 10,
+   "external": 1,
+   "unstated": 0
+  },
+  "after_first_outside_reader": {
+   "n": 5,
+   "self": 3,
+   "external": 2,
+   "unstated": 0
+  }
+ },
+ "sensitivity": {
+  "mixed_class_as_external": {
+   "self": 12,
+   "external": 4
+  },
+  "errata_collapsed_to_one": {
+   "n": 12,
+   "self": 9,
+   "external": 3
+  },
+  "verdict_unchanged": true
+ },
+ "decisions": {
+  "K1_underpowered": false,
+  "K1_threshold": 10,
+  "K2_record_will_not_bear": false,
+  "K2_unstated_share": 0.0,
+  "P1_external_outnumber_self": false,
+  "P1_falsified": true,
+  "K3_convention_is_not_the_record": true
+ }
+}
