@@ -162,3 +162,37 @@ A struck entry stays in the file as a tombstone carrying `retired` and `retired_
 nothing the machine proposes can resurrect it. Both movements are recorded in the day's arcs
 file under `promoted` and `let_go`, and the self-check counts the promotions against the
 ceiling.
+
+## The rule on trial (`src/data/trending/eval/`)
+
+The convergence rule makes one decision over and over: are these two signals the same topic?
+`src/trending/evaluate.py` puts that decision on trial against judgements written down by hand.
+
+```bash
+python -m trending.evaluate propose --repo-root . --date 2026-09-02 --labeller "who judges"
+#   → src/data/trending/eval/<date>-pairs.json: every pair the rule joined, plus a
+#     deterministic sample of near misses (pairs sharing a word that were not joined).
+#     Judge each by setting "same_topic" to true or false. Nothing is judged for you, and an
+#     existing sheet is never overwritten.
+python -m trending.evaluate score --repo-root .   # → eval/scorecard.json, and the errors
+python -m trending.evaluate sweep --repo-root .   # the same labels against a range of thresholds
+```
+
+The criterion is written into every sheet before the judging starts, together with who judged:
+two signals are the same topic when a reader looking for one would want the other. The score
+re-runs the rule rather than reading the sheet's own verdict, so the same labels can measure a
+changed threshold — which is why they are kept. Pairs sharing no word are left out: they are
+the overwhelming majority and judging them teaches nothing.
+
+A judgement is editorial, not a measurement. The sheet names the labeller, anyone may overrule
+a single label, and git keeps the change.
+
+**First measurement, 2026-09-02** (55 judged pairs of the day's 8 sources): precision 1.0,
+recall 0.652, f1 0.789 — no pair joined that should not have been, eight of twenty-three true
+joins missed. The sweep showed the threshold is not what binds: from `jaccard_min` 0.35 to 0.8
+nothing changes at all, and only 0.3 buys a false join without buying a single catch. The
+misses come from the shape of the rule, not its number — two outlets describing one event share
+only common nouns ("Nepal mountain collapse causes floods" against "missing tourists make
+contact as Nepal floods"), and a one-word label like a hashtag can only match another label
+exactly. Weighting a shared word by how rare it is in the day would address both and stays
+deterministic; it is not built, and the labelled set is what will decide it.

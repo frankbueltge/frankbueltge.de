@@ -280,3 +280,50 @@ day page and the topics hub show the grade beside the date, spelling out every f
 the first of the three loop stages named in the decision of 2026-09-02: observe the output, judge it,
 mend the one thing that can be mended, publish the verdict. The second stage — adapting the committed
 knobs to the audience series — waits for an audience series to exist.
+
+## 11. The rule on trial — a labelled set and a score (2026-09-02, Frank's go, wording private)
+
+The convergence rule makes one decision over and over: are these two signals the same topic?
+Until now that decision was defended by argument. It is now defended against judgements written
+down by hand, in the form the neighbourhood calls a task-owned evaluator: the metric and the
+labels belong to this experiment, not to a harness.
+
+**The instrument.** `pipelines/trending/src/trending/evaluate.py` draws a sheet from a committed
+day — every pair the rule joined, plus a deterministic sample of near misses, meaning pairs that
+share a word and were *not* joined — and writes it to
+`src/data/trending/eval/<date>-pairs.json` with `same_topic: null` on every entry. A person fills
+those in. The criterion is written into the sheet before the judging starts: two signals are the
+same topic when a reader looking for one would want the other; sharing only a word, a genre or a
+place is not enough. The sheet also names the labeller, because a judgement is editorial and not
+a measurement, and anyone may overrule a single label with git keeping the change. Pairs that
+share no word at all are left off the sheet: they are the overwhelming majority and judging them
+teaches nothing.
+
+`score` re-runs the rule against the labels rather than reading the sheet's own verdict, which is
+the whole reason to keep them — the same labels can measure a changed threshold. `sweep` reports
+the same labels against a range of thresholds and writes nothing: a threshold is changed by a
+person editing `rules.json`, with the table as the reason.
+
+**First measurement, day of 2026-09-02, 55 judged pairs across the day's eight sources:**
+
+| | |
+|---|---|
+| precision | 1.0 (no pair joined that a reader would call two topics) |
+| recall | 0.652 (eight of twenty-three true joins missed) |
+| f1 | 0.789 |
+
+**And the first thing it refuted.** The sweep shows the threshold is not what binds: between
+`jaccard_min` 0.35 and 0.8 the score does not move at all, and 0.3 buys one false join without
+buying a single catch. So the misses are the shape of the rule, not its number. Two of them name
+the shape exactly: two outlets describing one event share only common nouns ("Nepal mountain
+collapse causes floods" against "Some missing tourists make contact as Nepal floods"), and a
+one-word label such as a hashtag can only ever match another label exactly ("usps" against "USPS
+mail ballot handling"). Weighting a shared word by how rare it is in the day would address both
+and would stay deterministic and disclosable. It is not built. The labelled set is what will
+decide it, which is the point of having one.
+
+**One honest limit of the measure.** It scores the pair decision, not the cluster. Because the
+clustering is a union of pairs, a missed pair can still land in the right cluster through a third
+signal — the Apple Maps and MapQuest headlines were not joined to each other, yet both were
+joined to the Lake Ontario article and so ended in one topic. A cluster-level measure would need
+labels of a different kind and is not claimed here.
