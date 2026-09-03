@@ -26,6 +26,11 @@ on:
         description: "Read the edge audience of this past day (YYYY-MM-DD) and print it. Writes and commits nothing."
         required: false
         default: ""
+      rehearsal:
+        description: "Run the whole routine into a scratch tree and print what it produced. Writes and commits nothing."
+        required: false
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -52,8 +57,66 @@ jobs:
           CF_ANALYTICS_TOKEN: ${{ secrets.CF_ANALYTICS_TOKEN }}
           CF_ZONE_ID: ${{ vars.CF_ZONE_ID }}
         run: python -m trending.audience --day "${{ inputs.probe_day }}"
+      - name: Rehearse the whole routine in a scratch tree (writes nothing to the repo)
+        if: ${{ inputs.rehearsal }}
+        env:
+          CF_ANALYTICS_TOKEN: ${{ secrets.CF_ANALYTICS_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CF_ZONE_ID: ${{ vars.CF_ZONE_ID }}
+        run: |
+          # The dress rehearsal: the same run, the same secrets, the same archive as history —
+          # but into a copy, so a change can be seen working before it is ever committed. The
+          # committed day of today is removed from the copy only, so the run writes it fresh.
+          set -eu
+          TMP="$(mktemp -d)"
+          mkdir -p "$TMP/src/data"
+          cp -R src/data/trending "$TMP/src/data/"
+          # Both dates through python: `date -d` is GNU-only, and this script is also run by
+          # hand on a laptop when a change needs seeing before it ships.
+          D="$(python3 -c 'import datetime as d; print(d.datetime.now(d.timezone.utc).date())')"
+          Y="$(python3 -c 'import datetime as d; print(d.datetime.now(d.timezone.utc).date() - d.timedelta(days=1))')"
+          rm -f "$TMP/src/data/trending/$D.json" "$TMP/src/data/trending/terms/$D.json" \
+                "$TMP/src/data/trending/audience/$Y.json"
+          python -m trending.run --repo-root "$TMP"
+          echo "::group::what the rehearsal produced"
+          python - "$TMP" "$D" "$Y" <<'PY'
+          import json, pathlib, sys
+          root, day, yday = pathlib.Path(sys.argv[1]) / "src/data/trending", sys.argv[2], sys.argv[3]
+          d = json.loads((root / f"{day}.json").read_text())
+          q = d["quality"]
+          print(f"day {day}: {d['summary']['topics_total']} clusters, "
+                f"{d['summary']['converging']} converging, "
+                f"{d['summary']['sources_ok']}/{d['summary']['sources_total']} sources ok, "
+                f"self-check {q['passed']}/{q['total']}")
+          for c in q["checks"]:
+              if not c["ok"]:
+                  print(f"  failed: {c['id']} — {c['note']}")
+          for t in d["topics"][:8]:
+              print(f"  {t['platform_count']}x {t['label'][:56]}  {', '.join(t['platforms'])}")
+          t = json.loads((root / "terms" / f"{day}.json").read_text())
+          tq = t["quality"]
+          print(f"arcs {day}: {t['summary']['terms_total']} watched, "
+                f"{t['summary']['candidates_total']} candidates, "
+                f"{len(t['promoted'])} promoted, {len(t['let_go'])} let go, "
+                f"self-check {tq['passed']}/{tq['total']}")
+          for p in t["promoted"]:
+              print(f"  promoted: {p['term']} ({len(p['platforms'])} platforms)")
+          for term in t["terms"]:
+              if term["status"] in ("emerging", "rising"):
+                  print(f"  {term['status']}: {term['term']} d7={term['total']['d7']} ratio={term['ratio']}")
+          a = json.loads((root / "audience" / f"{yday}.json").read_text())
+          e = a["edge"]
+          print(f"audience {yday}: {e['status']}, total {e.get('total')}, "
+                f"classes {({k: v for k, v in (e.get('classes') or {}).items() if v})}")
+          print(f"  countries: {e.get('countries')}")
+          print(f"  referers:  {e.get('referers')}")
+          if e.get("extra_note"):
+              print(f"  note: {e['extra_note']}")
+          PY
+          echo "::endgroup::"
+          echo "rehearsal: nothing was written to the repository"
       - name: Run the ledger (writes, does not commit)
-        if: ${{ inputs.probe_day == '' }}
+        if: ${{ inputs.probe_day == '' && !inputs.rehearsal }}
         env:
           CF_ANALYTICS_TOKEN: ${{ secrets.CF_ANALYTICS_TOKEN }}
           # The built-in token lifts GitHub's search limit from 10 to 30 requests a minute for
@@ -62,7 +125,7 @@ jobs:
           CF_ZONE_ID: ${{ vars.CF_ZONE_ID }}
         run: python -m trending.run --repo-root .
       - name: Commit
-        if: ${{ inputs.probe_day == '' }}
+        if: ${{ inputs.probe_day == '' && !inputs.rehearsal }}
         run: |
           git config user.name "Morgenlese"
           git config user.email "morgenlese@frankbueltge.de"
