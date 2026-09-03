@@ -68,9 +68,17 @@
 .trending .dv-table tbody tr:hover td {
   background: var(--color-hover, transparent);
 }
+/* Numerals line up under each other; the alignment itself belongs to the primitive
+   (components/dataviz/TableFallback.astro sets text-align from `data-align`). */
 .trending .dv-table [data-align='right'] {
-  padding-right: 0;
   font-variant-numeric: tabular-nums;
+}
+/* `padding-right: 0` is right for the LAST cell of a row and wrong for every other: the copied
+   blocks put it on every right-aligned cell, so "363" and "2026-09-02" printed as "3632026-09-02"
+   in the watchlist table, and the two headers above them as "7 days30 days". Seen on
+   /trending/topics on 2026-09-03, three days after the defect shipped. */
+.trending .dv-table tr > :last-child {
+  padding-right: 0;
 }
 .trending .dv-prov {
   margin-top: 0.6rem;

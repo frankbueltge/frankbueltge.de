@@ -154,7 +154,10 @@ const tableProvenance =
         </p>
       ) : (
         <>
-          <ul class="mt-4 grid gap-x-6 gap-y-2 sm:grid-cols-2 lg:grid-cols-3">
+          {/* Two columns, not three: a row carries the term AND its status, count, pace and
+              origin, and at three columns of a max-w-5xl page the meta line squeezed the term
+              into three wrapped lines. The rising block beside it has always been two. */}
+          <ul class="mt-4 grid gap-x-8 gap-y-2 sm:grid-cols-2">
             {links.map((l) => (
               <li class="flex items-baseline justify-between gap-x-3 border-b border-line pb-1.5">
                 <a href={l.href} class="min-w-0 underline decoration-line underline-offset-2 transition-colors hover:text-fg">{l.term}</a>

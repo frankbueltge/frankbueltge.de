@@ -81,6 +81,15 @@ describe('the ledger on the frame recipe', () => {
     expect(sheet).toContain('.trending .dv-table')
   })
 
+  it('zeroes a cell\'s right padding only at the end of a row, never on every number', () => {
+    // The copied blocks put `padding-right: 0` on every right-aligned cell, so a count and the
+    // date beside it printed as one string ("3632026-09-02" on /trending/topics) and so did the
+    // two headers above them. Found by looking at the page on 2026-09-03.
+    const sheet = read('../../styles/trending.css')
+    expect(sheet).toMatch(/tr > :last-child \{\s*padding-right: 0;/)
+    expect(sheet).not.toMatch(/\[data-align='right'\] \{[^}]*padding-right: 0/)
+  })
+
   it('scopes every surface with .trending, or the shared stylesheet reaches nothing', () => {
     for (const name of ['TrendingPage', 'TrendingTopicsHub', 'TrendingTopicPage']) {
       expect(SURFACES[name], `${name} left the .trending scope`).toMatch(/class="trending /)
