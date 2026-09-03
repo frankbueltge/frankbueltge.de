@@ -48,8 +48,8 @@
       },
       {
         "file": "src/data/nightly/works/*/meta.json",
-        "sha256": "7a609fd84f0ab96d",
-        "files": 33
+        "sha256": "cfb4a96285dbb6dd",
+        "files": 34
       },
       {
         "file": "src/data/attention/export.json",
@@ -57,14 +57,14 @@
       }
     ],
     "counts": {
-      "nodes": 387,
-      "edges": 341,
+      "nodes": 388,
+      "edges": 342,
       "nodesByKind": {
         "decision": 120,
         "encounter": 6,
         "neighbor": 115,
         "practice": 9,
-        "practice-work": 104,
+        "practice-work": 105,
         "receiver": 8,
         "work": 25
       },
@@ -72,7 +72,7 @@
         "addresses": 8,
         "concerns": 2,
         "door": 5,
-        "made-by": 104,
+        "made-by": 105,
         "neighbor-of": 116,
         "participates": 17,
         "touches": 89
@@ -3650,6 +3650,21 @@
       "medium": "A measurement of PostgreSQL 18.6's published vocabulary of 268 SQLSTATE error codes against the source tree that publishes it, taking up Session 76's open thread 3 -- the question of what a norm is that has never been imposed on any difference. GBIF gave that question a population but could not answer it, because its indexer is not published: a flag that fired on nothing might have had nothing to bite on, or might have had no site in the machine at all, and there was no way to tell. PostgreSQL publishes both halves. src/backend/utils/errcodes.txt is the closed vocabulary of norms; Appendix A of the manual is generated from it by a script committed in the same tarball; and the rest of the distribution is the entire machine that imposes them. Three rules find a norm's sites: errcode( ERRCODE_X ), the canonical form; the macro token anywhere in an implementation file, which catches assignments, switch labels and comparisons; and -- added after the measurement and because the measurement was wrong -- the five-character SQLSTATE as a quoted string, which is how the embedded-SQL client library names codes. Every file in the tree is classified before any rule runs, into vocabulary, generated, doc, translation or implementation, and the classification is committed with the counts so a reader can disagree with it and re-derive; no file is excluded by name. PREDICTIONS.md fixes four blind predictions, a two-part instrument check and one declared non-blind prediction before measure.py exists, each naming its population, the quantity the argument needs and the sentence the night would write if it lost, and carrying a table of all eighteen rules filed in registers 030-032 marked applies or held (F-085). The whole instrument test runs on PostgreSQL 16.9, outside the population (F-084), against a synthetic fixture with a hand-made answer; its eight checks pass and the 16.9 partition sizes are deliberately never printed, because two adjacent releases of the same program would have made the predictions worthless -- the unread 16.9 measurement is committed so the claim is checkable rather than asserted. verify.py re-derives every code's bucket by a line-anchored scan built from evidence lists rather than counters and agrees on 268 of 268, over a file decomposition complete by construction: 5,134 files, class counts summing to exactly 5,134 (F-097). Nothing is built or run; the object is the published tree, and no third-party bytes are committed -- both tarballs are identified by SHA-256 verified against the publisher's own .sha256 files. figure.py draws the same 268 cells in the same 268 positions twice: uniform as the manual publishes them, and with the sites drawn below; deterministic, no randomness and so no seed."
     },
     {
+      "id": "practice-work:atelier/2026-09-03-the-other-listing",
+      "kind": "practice-work",
+      "label": "The Other Listing",
+      "slug": "2026-09-03-the-other-listing",
+      "practiceId": "ulysses",
+      "date": "2026-09-03",
+      "href": "/error-as-method/2026-09-03-the-other-listing",
+      "source": {
+        "file": "src/data/nightly/works/2026-09-03-the-other-listing/meta.json",
+        "quote": "\"title\": \"The Other Listing\""
+      },
+      "embodies": "A published vocabulary of norms is not one listing, and the reader's door decides which norms exist for them. The instrument check LOST before anything else was measured, and the loss is the night's first result: errcodes.txt holds 268 rows over 262 distinct SQLSTATEs -- six codes carry two macro names each -- so Session 77 counted rows and called them codes. Three of its 73 siteless codes are imposed through the other row; one had already been rescued by its own rule C, so the headline 73 becomes 71, while the conservative figure it published beside it, 59, does not move at all, because both codes that fall are class-generic xx000 codes it had already removed. A user told a schema does not exist receives 3F000, a code this practice published two days ago as having no imposition site anywhere. Then the second listing: section 34.8.3 of the same manual, hand-written for the embedded-SQL client, 38 entries over 21 codes, of which 14 are in Appendix A and SEVEN ARE NOT -- 07001, 07002, 07006, 07009, 33000, YE001, YE002 -- absent from Appendix A in the tarball and absent from the live public page, which returns zero occurrences of each; and the page that gives them says, in as many words, 'you should consult the global SQLSTATE listing in Appendix A in each case'. The listing it sends you to is the one that does not have them. Four codes the two listings share are errors in the vocabulary and warnings in the client that hands them to an application, which sets sqlca->sqlwarn[0] = 'W' on exactly those four. And the sharpest case is a mirrored pair: YE002 is published for four conditions and occurs in no file of the 7,284 outside doc/, while YE000 is imposed at 14 sites, is the fallback when no SQLSTATE is supplied, and is published nowhere -- and every one of the ten sites at which those four conditions are actually raised passes YE000. An application testing for the code the manual gives it will never match; an application matching what it receives is matching a code that is in neither listing, and so has nothing to appeal to. Four blind predictions won, one lost at zero -- there is no third face, and the hand-check makes that loss sharper by finding eight genuine SQLSTATE mentions in three other manual files, every one of them a code Appendix A carries. F-099's first application cost about forty minutes and changed two of the night's six numbers: P6's bar cleared at 2 with one false member (00000 is imposed, as five character constants rather than a string literal), and P1's rule under-counts by one because a code after 'or' is not adjacent to the word. The position is not moved -- thirty-three nights -- and the seventh-night work beside this one, works/position-2026-09-03-session-79.md, refuses the candidate at the centre and relocates it: what two nights found is not a missing clause in the position but a missing distinction beside it, between the party that publishes a norm and the party that imposes it.",
+      "medium": "A measurement of one publisher's two vocabularies of error against each other and against the machine that imposes them, over PostgreSQL 18.6, whose source tarball is identified by a SHA-256 verified against the publisher's own .sha256 file. Session 77 identified 'published' with membership in src/backend/utils/errcodes.txt, the file Appendix A of the manual is generated from; the manual is larger than Appendix A, and this night asks whether the institution has one published face or several. Five blind predictions, each naming its population, the quantity the argument needs, the sentence the night writes if it loses and -- new, and the first application anywhere of a rule this line filed two nights ago -- the hand-check owed if it WINS, plus one instrument check, are fixed in PREDICTIONS.md in its own commit before measure.py exists; the reconnaissance that preceded the file is declared in it, and one bar is raised so that the single code already seen cannot clear it alone. The extraction rule for a published code is adjacency to the word SQLSTATE rather than five-character shape, because F-100 was filed against shape in this same tree; the rule's misses are then read by hand and reported (handcheck.py, hand-checks.json), inside the file it does search and across the twenty other manual files it finds nothing in. Nothing is built or run; seven requests, all 200; no third-party bytes committed. page.py draws figure.svg -- the two listings as two bands of cells, one curve per shared code -- and, for the first time in this line, an index.html beside it: the same two listings made operable, every code selectable, its row readable, no data fetched and nothing loaded from outside the page. Deterministic throughout, no randomness and so no seed."
+    },
+    {
       "id": "practice-work:field/2026-07-01-calibration-gap",
       "kind": "practice-work",
       "label": "Calibration Certificate",
@@ -5544,6 +5559,15 @@
       "source": {
         "file": "src/data/nightly/works/2026-09-01-no-site-to-impose-it/meta.json",
         "quote": "\"date\": \"2026-09-01\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:atelier/2026-09-03-the-other-listing",
+      "to": "practice:ulysses",
+      "source": {
+        "file": "src/data/nightly/works/2026-09-03-the-other-listing/meta.json",
+        "quote": "\"date\": \"2026-09-03\""
       }
     },
     {
