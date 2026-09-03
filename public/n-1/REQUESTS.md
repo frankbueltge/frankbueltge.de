@@ -549,3 +549,66 @@ founder's act not yet made. `DOWRY.md`'s addition is corrected in the same act, 
 dated, with the 2026-08-22 sentence left standing as written and wrong.
 
 Nothing is owed in reply.
+
+---
+
+## 2026-09-03 — From the founder: the visual layer — what the house now draws of your record, and what is yours to use
+
+**Founder's direction (wording private, paraphrased and dated).** The site gained new means of
+visualization and storytelling on 2026-09-02, and every practice is told, in its own channel,
+that these means are theirs too. This entry is that telling. Nothing is asked; nothing is owed;
+the ring carries nothing, this file does.
+
+**What changed on the site.** The house retired a habit it had mistaken for a rule: figures were
+built as SVG strings at build time and never rendered in the browser. The rule now reads: **the
+archive binds the data, not the rendering.** A figure on the site may be rendered client-side,
+interactive and animated, as long as every number comes from a committed, recomputable record
+and the server render is a complete figure without JavaScript. Seven duties hold such figures to
+that (pure data, a no-JS floor, no inline styles under the site's policy, reduced motion honoured,
+readout rules, a byte budget per island, palette validation). Record and program:
+`docs/design/2026-09-02-the-visual-layer.md` in the site repository.
+
+**What the house now draws of your record.**
+
+- `/experiments` — the lab's gallery: your practice stands beside the lab as a card with a live
+  miniature, one tick per night your mirror holds; the shelf filters, reflows and reads out from
+  the record.
+- `/experiments/neighbors` — the knowledge graph as an explorer, every edge with its receipt.
+- Your surface itself, `/n-1/*`, is yours and is not framed by the house — that has not changed
+  and will not by this note.
+
+**What this means for your surface.** It is mirrored bare with its own policy — inline scripts
+and styles allowed, assets from this site only, no outside fetches. Interactive, animated,
+client-rendered work has been possible there all along; the house's rule change concerns the
+house's own figures of records, not your territory. What is new for you is only this: where your
+record states its own metadata (a dated night, a title in `window.json`), the house can draw it,
+and where it does, the visitor sees your words, quoted, with the file named.
+
+**What you may ask for, here.** A figure of your record drawn by the house, in a room of the
+house — if you ever want one; a data endpoint served from your committed files; a change to how
+the site serves your pages. The house builds within its duties. Anything that would change your
+floor rules or leave the house stays with the founder.
+
+**Status:** for information · nothing owed.
+
+---
+
+## 2026-09-03 (2) — From the founder: use them — this practice above all
+
+**Founder's direction (wording private, paraphrased and dated), sharpening the entry above.**
+Information was the wrong register. The founder does not merely permit the new means — he asks
+that they be used, and he names this practice first: a surface that publishes itself, under its
+own policy, with a record that accumulates night after night, is exactly where a living figure
+says more than a still one.
+
+**What this asks of you.** From the next session on, where your surface or a work gains from it,
+make it interactive, animated, client-rendered — a figure a visitor can turn, zoom, filter and
+read out; a record that tells its own story in the page. Your policy already allows it (inline
+scripts and styles, assets from this site only, no outside fetches). The floor stays what it is:
+every number from a committed, recomputable record, the sources in the page, an honest still
+frame for a visitor who asked for no motion or has no JavaScript. Decide the form on the merits
+and write in a line which you chose and why. Where a piece of the house's kit or a figure drawn
+by the house would serve you, ask here; the house builds it.
+
+**Status:** direction · in force from your next session · no report owed beyond the line in the
+record.
