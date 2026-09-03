@@ -91,30 +91,31 @@ def test_token_is_sent_as_bearer_and_never_in_notes():
 
 
 
-def test_the_two_extra_dimensions_are_asked_for_and_capped():
+def test_the_country_dimension_is_asked_for_and_capped():
     edge = edge_counts(make_client(_route()), "t", "z", DAY)
     assert edge["status"] == "ok" and edge["total"] == 60
     assert edge["countries"] == {"United States": 40, "Germany": 20}
-    assert edge["referers"] == {"news.ycombinator.com": 3}
-    assert edge["extra_note"] == ""
+    # Not asked for since 2026-09-03: the plan refuses it, and the record says so instead of
+    # staying silent about a field a reader might look for.
+    assert edge["referers"] is None
+    assert "referring hosts are not served on this plan" in edge["extra_note"]
     many = [{"count": 100 - i, "dimensions": {"clientCountryName": f"Country {i:02d}"}} for i in range(25)]
     edge = edge_counts(make_client(_route(countries=many)), "t", "z", DAY)
     assert len(edge["countries"]) == 10 and list(edge["countries"])[0] == "Country 00"
 
 
-def test_a_dimension_the_plan_refuses_is_null_with_the_reason_and_costs_the_other_nothing():
-    edge = edge_counts(make_client(_route(refuse=("clientRefererHost",))), "t", "z", DAY)
+def test_a_dimension_the_plan_refuses_is_null_with_the_reason_and_costs_the_total_nothing():
+    edge = edge_counts(make_client(_route(refuse=("clientCountryName",))), "t", "z", DAY)
     assert edge["status"] == "ok" and edge["total"] == 60
-    assert edge["countries"] == {"United States": 40, "Germany": 20}
-    assert edge["referers"] is None
-    assert "clientRefererHost" in edge["extra_note"] and "paid dimension" in edge["extra_note"]
+    assert edge["countries"] is None
+    assert "clientCountryName" in edge["extra_note"] and "paid dimension" in edge["extra_note"]
 
 
 def test_a_blank_dimension_value_is_not_counted_as_a_place():
-    blank = [{"count": 7, "dimensions": {"clientRefererHost": ""}},
-             {"count": 2, "dimensions": {"clientRefererHost": "example.org"}}]
-    edge = edge_counts(make_client(_route(referers=blank)), "t", "z", DAY)
-    assert edge["referers"] == {"example.org": 2}
+    blank = [{"count": 7, "dimensions": {"clientCountryName": ""}},
+             {"count": 2, "dimensions": {"clientCountryName": "Portugal"}}]
+    edge = edge_counts(make_client(_route(countries=blank)), "t", "z", DAY)
+    assert edge["countries"] == {"Portugal": 2}
 
 
 def test_the_probe_refuses_a_day_that_has_not_ended(capsys):

@@ -392,3 +392,20 @@ own, rather than standing there reading "unavailable" for ever.
 `audienceMissingDimensions`), `src/lib/trending/markdown.ts`,
 `src/components/pages/TrendingAudience.astro`, `src/components/pages/MethodenblattTrending.astro`
 §2 and §4, `pipelines/trending/src/trending/audience.py`, `public/llms.txt`.
+
+### 12a. What the plan actually serves (measured 2026-09-03)
+
+§12 left it open whether the Free plan serves the two dimensions the retired beacon would have
+contributed, and said the run would ask rather than assume. It asked, through the rehearsal of
+the same day:
+
+- **`clientCountryName`: served.** The reading of 2026-09-02 came back with three countries
+  behind one hundred and four requests.
+- **`clientRefererHost`: refused**, verbatim: *"zone … does not have access to the field
+  'clientrefererhost' from the path"*. That is a plan boundary, not an outage.
+
+The refused dimension is therefore no longer asked for every night — a refusal already known is
+not a finding, and asking would write the same note into every file of the year. The field stays
+in the contract as `null` with one sentence saying why, so a reader looking for referring hosts
+finds an answer rather than a silence. Re-adding the pair to `EXTRA_DIMENSIONS` is the whole
+change if the plan ever serves it.
