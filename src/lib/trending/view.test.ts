@@ -33,7 +33,41 @@ describe('source columns', () => {
     expect(cols[2].status).toBe('unavailable')
     expect(cols[2].note).toBe('HTTP 403')
     expect(cols[2].signals).toEqual([])
-    expect(cols[0].signals[0].magnitudeText).toBe('2,000+')
+  })
+
+  it("prints a source's number with the unit it counted in, never bare", () => {
+    // The defect this pins: until 2026-09-03 the cards printed the number alone, so one column
+    // of /trending carried eleven incomparable quantities — PyPI's monthly downloads beside
+    // Bluesky's posts beside a Stack Overflow score that can be negative.
+    const cols = sourceColumns(fixtureDay(), 15)
+    expect(cols[0].signals[0].magnitudeText).toBe('2,000+ searches')
+    expect(cols[1].signals[0].magnitudeText).toBe('2,779 posts')
+  })
+
+  it('carries the measurement apart as well, so the structured data can state it', () => {
+    const first = sourceColumns(fixtureDay(), 15)[0].signals[0]
+    expect(first.magnitudeValue).toBe(2000)
+    expect(first.magnitudeUnit).toBe('searches')
+    expect(first.rank).toBe(1)
+  })
+
+  it('says "as of" only where a source lags the ledger, not twenty times over', () => {
+    const day = fixtureDay()
+    // google_trends is as of the ledger's own day; bluesky states none at all
+    expect(sourceColumns(day)[0].asOf).toBeNull()
+    expect(sourceColumns(day)[1].asOf).toBeNull()
+    day.sources[0]!.as_of = '2026-09-01'
+    expect(sourceColumns(day)[0].asOf).toBe('2026-09-01')
+  })
+
+  it('states a rank as a position, because a position has no unit', () => {
+    const day = fixtureDay()
+    day.signals.google_trends![0]!.magnitude = null
+    day.signals.google_trends![0]!.magnitude_unit = 'rank'
+    const s = sourceColumns(day)[0].signals[0]
+    expect(s.magnitudeText).toBe('#1')
+    expect(s.magnitudeValue).toBeNull()
+    expect(s.magnitudeUnit).toBe('')
   })
 })
 

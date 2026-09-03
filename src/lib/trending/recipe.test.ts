@@ -96,12 +96,33 @@ describe('the ledger on the frame recipe', () => {
     }
   })
 
-  it('paints the panels on the frame\'s radius and resting depth', () => {
-    for (const name of ['TrendingPage', 'TrendingConvergenceFigure']) {
-      expect(SURFACES[name], `${name} paints a panel of its own`).toMatch(
-        /rounded-md border border-line bg-panel panel-raised/,
-      )
-    }
+  it('paints a panel, where it paints one, on the frame\'s radius and resting depth', () => {
+    // Only the convergence figure carries a panel now. The source register lost its twenty cards
+    // on 2026-09-03: they stretched to their row's tallest, and half the block was drawn hole.
+    expect(SURFACES.TrendingConvergenceFigure).toMatch(/rounded-md border border-line bg-panel panel-raised/)
+    expect(SURFACES.TrendingPage, 'the source cards came back').not.toMatch(/rounded-md border border-line bg-panel/)
+  })
+
+  it('keeps the source register a column flow, with every signal still in the markup', () => {
+    // The SEO/GEO condition on this block (Frank, 2026-09-03): a denser register may not be a
+    // folded one — every label, link and number stays in the HTML for a crawler and a retrieval
+    // agent, so no `<details>`, no client-side reveal, and no cut below what the page states.
+    expect(SURFACES.TrendingPage).toContain('class="tr-sources')
+    expect(SURFACES.TrendingPage, 'the register folds its lists away').not.toMatch(
+      /<details[^>]*>[\s\S]*tr-signal/,
+    )
+    const sheet = read('../../styles/trending.css')
+    expect(sheet).toMatch(/\.tr-sources \{[^}]*columns:/)
+    expect(sheet).toMatch(/\.tr-source \{[^}]*break-inside: avoid/)
+  })
+
+  it('states the per-source register in structured data, not only in markup', () => {
+    // Until 2026-09-03 the register was half the page's weight and appeared in no JSON-LD at all:
+    // a machine reader could learn what converged but not what any single source had said.
+    expect(SURFACES.TrendingPage).toContain('sourceListsLd(day, canonical, 8)')
+    expect(SURFACES.TrendingPage, 'the structured data outruns the rendered cut').toContain(
+      'sourceColumns(day, 8)',
+    )
   })
 
   it('draws a status chip as a Badge, never a box drawn once more by hand', () => {

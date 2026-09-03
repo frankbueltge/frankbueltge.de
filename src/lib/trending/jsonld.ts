@@ -5,7 +5,7 @@
 import { SITE } from '@/lib/site'
 import { fmtDateLong, LATEST_DESCRIPTION, topLabels } from './format'
 import type { TrendingDay } from './types'
-import { convergingRows } from './view'
+import { convergingRows, sourceColumns } from './view'
 import { trendingUrls } from './markdown'
 
 export const CC0_URL = 'https://creativecommons.org/publicdomain/zero/1.0/'
@@ -67,4 +67,48 @@ export function webPageLd(day: TrendingDay, canonical: string, isLatest: boolean
     isPartOf: { '@id': `${SITE.url}/#website` },
     mainEntity: { '@id': `${canonical}#dataset` },
   }
+}
+
+/**
+ * One ItemList per source: what that source said on its own, before any crossing.
+ *
+ * The gap this closes (2026-09-03): the per-source register is half the weight of this page and
+ * appeared in no structured data at all — the Dataset described the day, the ItemList described
+ * the crossing, and the twenty lists the crossing is DERIVED FROM were invisible to a machine
+ * reader that does not parse markup. A retrieval agent could learn that "gloria steinem" was
+ * converging but not that Mastodon called it something else at rank four.
+ *
+ * Two rules held here. The lists mirror exactly what the page renders — same sources, same
+ * `top` cut, same order — because structured data that says more than the page is cloaking. And
+ * every measurement travels as a PropertyValue with its unit, never as a bare number: the same
+ * reason the cards stopped printing bare numbers on the same day.
+ */
+export function sourceListsLd(day: TrendingDay, canonical: string, top = 8) {
+  return sourceColumns(day, top)
+    .filter((col) => col.signals.length > 0)
+    .map((col) => ({
+      '@context': 'https://schema.org',
+      '@type': 'ItemList',
+      '@id': `${canonical}#source-${col.id}`,
+      name: `${col.name} — ${fmtDateLong(day.date)}`,
+      itemListOrder: 'https://schema.org/ItemListOrderAscending',
+      numberOfItems: col.signals.length,
+      isPartOf: { '@id': `${canonical}#dataset` },
+      itemListElement: col.signals.map((sig, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        item: {
+          '@type': 'Thing',
+          name: sig.label,
+          ...(sig.url ? { url: sig.url } : {}),
+          additionalProperty: [
+            { '@type': 'PropertyValue', name: 'rank', value: sig.rank },
+            ...(sig.magnitudeValue !== null
+              ? [{ '@type': 'PropertyValue', name: sig.magnitudeUnit, value: sig.magnitudeValue, unitText: sig.magnitudeUnit }]
+              : []),
+            ...(sig.geo ? [{ '@type': 'PropertyValue', name: 'geo', value: sig.geo }] : []),
+          ],
+        },
+      })),
+    }))
 }

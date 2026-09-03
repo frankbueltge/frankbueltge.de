@@ -90,3 +90,61 @@ export function arcModel(points: TermSeriesPoint[], width = 560, height = 72): A
     needs: 0,
   }
 }
+
+// ─────────────────────────────────────────────────────────────────────────────
+// The register's sparklines (2026-09-03)
+//
+// /trending/topics is the half of the ledger called "the arcs", and until today it drew none:
+// twenty watched terms with their counts, their status and their pace, and not one line. This is
+// the smallest honest figure for a register row — a term's own shape, at the size of a word.
+//
+// It is deliberately NOT an island. The visual layer permits client rendering; it does not
+// require it, and a sparkline has nothing to answer: no readout, no filter, no keyboard walk that
+// the row's own link does not already give. Twenty of them cost one <title> each and no
+// JavaScript at all.
+
+export const SPARK = { width: 72, height: 16, pad: 1.5 } as const
+
+export interface Spark {
+  width: number
+  height: number
+  /** the polyline through the runs, empty when there is nothing to draw */
+  d: string
+  /** the newest run, for the dot that ends the line */
+  last: { x: number; y: number } | null
+  /** this term's own maximum — the line is scaled to it, never to a neighbour's */
+  max: number
+  runs: number
+  /** the term's own zero. A line without one reads as a scratch rather than a figure — with two
+   *  committed runs, which is what the archive holds today, it is the only thing that says
+   *  whether the segment rose or fell. */
+  baseY: number
+}
+
+/**
+ * One term's committed runs as a line at the size of a word.
+ *
+ * SCALED TO ITS OWN MAXIMUM, which is the one thing a reader must know: two lines of the same
+ * height in this register mean two terms each at their own peak, not two terms at the same count.
+ * The alternative — one scale across the register — would flatten every small term into the
+ * baseline and say nothing at all. The hub states which of the two it is, in words, under the
+ * list.
+ */
+export function sparkline(points: TermSeriesPoint[], width = SPARK.width, height = SPARK.height): Spark {
+  const pad = SPARK.pad
+  const runs = points.length
+  const baseY = height - pad
+  if (runs === 0) return { width, height, d: '', last: null, max: 0, runs, baseY }
+  const max = Math.max(...points.map((p) => p.d1))
+  const span = height - pad * 2
+  const xs = runs === 1 ? [width / 2] : points.map((_, i) => (i / (runs - 1)) * width)
+  const ys = points.map((p) => (max > 0 ? height - pad - (p.d1 / max) * span : height - pad))
+  const d = xs.map((x, i) => `${i === 0 ? 'M' : 'L'}${round(x)} ${round(ys[i]!)}`).join(' ')
+  return { width, height, d, last: { x: round(xs[runs - 1]!), y: round(ys[runs - 1]!) }, max, runs, baseY }
+}
+
+/** Two decimals: enough for a 72-unit line, and it keeps the built markup byte-identical run to
+ *  run rather than carrying floating-point noise into the archive. */
+function round(n: number): number {
+  return Math.round(n * 100) / 100
+}

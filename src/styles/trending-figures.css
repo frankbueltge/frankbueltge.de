@@ -67,10 +67,37 @@
   max-width: 26rem;
 }
 /* A drawing keeps a floor width and its frame scrolls: a twenty-column grid squeezed into a
-   phone is a grey smear, and the readout must clamp to the FIGURE, not to the scroller. */
+   phone is a grey smear, and the readout must clamp to the FIGURE, not to the scroller.
+   On a narrow screen the grid was ALSO silent about scrolling — at 390 px a reader saw the topic
+   labels, one column of marks and nothing to say that six more stood off the edge (found on the
+   rendered page, 2026-09-03). The mask below fades the edge exactly while there is something
+   past it: `scroll-timeline` drives it from the scroller's own position, so it is a report of
+   the scroll rather than a decoration guessing at one, and a browser without it simply gets no
+   fade — the grid still scrolls, and the table floor still carries every crossing in words.
+   The gradient is written in `currentColor`, not a literal: a mask reads ALPHA and ignores hue,
+   so there is no colour decision here to record — which is also why the no-hex guard on this
+   file was right to reject the opaque black literal it was first written with. (The literal is
+   not spelled here either: the guard reads comments too, as it should.) */
 .tr-scroll {
   overflow-x: auto;
   overscroll-behavior-x: contain;
+  scroll-timeline: --tr-x inline;
+}
+@supports (animation-timeline: scroll(inline)) {
+  .tr-scroll {
+    mask-image: linear-gradient(to right, transparent 0, currentColor 2rem, currentColor calc(100% - 2rem), transparent 100%);
+    animation: tr-edges linear both;
+    animation-timeline: --tr-x;
+  }
+  /* at the left end nothing is hidden to the left, at the right end nothing to the right */
+  @keyframes tr-edges {
+    from {
+      mask-image: linear-gradient(to right, currentColor 0, currentColor calc(100% - 2rem), transparent 100%);
+    }
+    to {
+      mask-image: linear-gradient(to right, transparent 0, currentColor 2rem, currentColor 100%);
+    }
+  }
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -374,4 +401,53 @@
 .tra-dims { display: grid; gap: 0.75rem 2rem; }
 @media (min-width: 40rem) {
   .tra-dims { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   The register's sparklines — one term's shape, at the size of a word
+   ═════════════════════════════════════════════════════════════════════════ */
+
+.tr-spark {
+  flex: none;
+  width: 72px;
+  height: 16px;
+  overflow: visible;
+  opacity: 0.75;
+  transition: opacity 140ms var(--ease-frame, ease);
+}
+.tr-term:hover .tr-spark,
+.tr-term:focus-within .tr-spark {
+  opacity: 1;
+}
+.tr-spark-base {
+  stroke: var(--color-line);
+  stroke-width: 1;
+}
+.tr-spark-line {
+  fill: none;
+  stroke: var(--color-fg-muted);
+  stroke-width: 1.2;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+.tr-spark-dot {
+  fill: var(--color-fg);
+}
+.tr-term:hover .tr-spark-line,
+.tr-term:focus-within .tr-spark-line {
+  stroke: var(--color-fg);
+}
+
+/* Narrow columns give the line no room beside a wrapping term name; the row keeps the term and
+   its numbers, which are the two things the register is for. */
+@media (max-width: 32rem) {
+  .tr-spark {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tr-spark {
+    transition: none;
+  }
 }

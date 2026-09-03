@@ -11,11 +11,13 @@
  *  thresholds in the pipeline.
  */
 import '@/styles/trending.css'
+import '@/styles/trending-figures.css'
+import { sparkline } from '@/lib/trending/arc'
 import TableFallback from '@/components/dataviz/TableFallback.astro'
 import { Badge } from '@/components/ui/badge'
 import TrendingSelfCheck from '@/components/pages/TrendingSelfCheck.astro'
 import { fmtDateLong, fmtDateWeekday, fmtTimeUtc } from '@/lib/trending/format'
-import { getTermsDays, getWatchlist } from '@/lib/trending/terms-data'
+import { getTermsDays, getWatchlist, seriesFor } from '@/lib/trending/terms-data'
 import { definedTermSetLd, termsDatasetLd, termsWebPageLd } from '@/lib/trending/terms-jsonld'
 import { termsUrls } from '@/lib/trending/terms-markdown'
 import type { TrendingTermsDay } from '@/lib/trending/terms-types'
@@ -45,6 +47,10 @@ const u = termsUrls()
 const canonical = u.hub
 const rows = hubRows(file)
 const links = termLinks(file.terms)
+// One line per term, at the size of a word, from the committed runs alone. Build-time SVG on
+// purpose: a sparkline has nothing to answer that the row's own link does not already give, so it
+// carries a native <title> and no JavaScript (src/lib/trending/arc.ts states the scaling rule).
+const sparks = Object.fromEntries(links.map((l) => [l.slug, sparkline(seriesFor(l.slug, 30))]))
 const candidates = candidateItems(file)
 const tally = statusTally(file)
 const platforms = joinWithAnd(searchedPlatforms(file).map(termPlatformLabel))
@@ -159,8 +165,21 @@ const tableProvenance =
               into three wrapped lines. The rising block beside it has always been two. */}
           <ul class="mt-4 grid gap-x-8 gap-y-2 sm:grid-cols-2">
             {links.map((l) => (
-              <li class="flex items-baseline justify-between gap-x-3 border-b border-line pb-1.5">
-                <a href={l.href} class="min-w-0 underline decoration-line underline-offset-2 transition-colors hover:text-fg">{l.term}</a>
+              <li class="tr-term flex items-baseline gap-x-3 border-b border-line pb-1.5">
+                <a href={l.href} class="min-w-0 flex-1 underline decoration-line underline-offset-2 transition-colors hover:text-fg">{l.term}</a>
+                {sparks[l.slug]!.runs > 0 && (
+                  <svg
+                    class="tr-spark"
+                    viewBox={`0 0 ${sparks[l.slug]!.width} ${sparks[l.slug]!.height}`}
+                    role="img"
+                    aria-label={`${l.term}: the shape of its last ${sparks[l.slug]!.runs} committed runs, peaking at ${sparks[l.slug]!.max} mentions in a day`}
+                  >
+                    <title>{`${sparks[l.slug]!.runs} committed runs · peak ${sparks[l.slug]!.max} mentions in a day`}</title>
+                    <line class="tr-spark-base" x1="0" y1={sparks[l.slug]!.baseY} x2={sparks[l.slug]!.width} y2={sparks[l.slug]!.baseY} />
+                    <path class="tr-spark-line" d={sparks[l.slug]!.d} />
+                    <circle class="tr-spark-dot" cx={sparks[l.slug]!.last!.x} cy={sparks[l.slug]!.last!.y} r="1.6" />
+                  </svg>
+                )}
                 <span class="shrink-0 whitespace-nowrap font-mono text-mono-sm text-fg-faint">
                   {l.statusLabel}
                   {' · '}<span class="tabular-nums">{l.d7}</span>
@@ -170,6 +189,11 @@ const tableProvenance =
               </li>
             ))}
           </ul>
+          <p class="mt-3 max-w-3xl font-mono text-mono-sm leading-relaxed text-fg-faint">
+            Each line is that term's own committed runs, oldest left, scaled to its OWN peak — two
+            lines of the same height are two terms each at their own maximum, never two terms at
+            the same count. The numbers beside them are comparable; the shapes are not.
+          </p>
           <div class="mt-6 text-sm">
             <TableFallback
               summary="The watchlist, as a table"
