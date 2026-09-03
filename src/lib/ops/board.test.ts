@@ -98,7 +98,12 @@ describe('the board says what the rooms say', () => {
   it('reads n-1’s last landed output from n-1’s own nights, never from the Atelier it descends from', () => {
     const n1 = rows.find((r) => r.id === 'n-1')!
     expect(n1.last).not.toBeNull()
-    expect(n1.last!.title).toMatch(/^Night \d+/)
+    // The practice names its own unit of record, and on 2026-09-03 it renamed one: the newest
+    // file reads "Bell 26 — …" where its predecessors read "Night 20 — …". This assertion
+    // therefore checks the SHAPE the loader depends on — a word, a number, the em dash, then the
+    // record's own words — and not the word itself. The house reads what a practice publishes; it
+    // does not prescribe what a practice calls its nights.
+    expect(n1.last!.title).toMatch(/^\S+ \d+ — \S/)
     expect(n1.last!.href).toBe('/n-1/record.html')
   })
 
