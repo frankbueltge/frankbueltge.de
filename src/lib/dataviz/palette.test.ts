@@ -10,7 +10,7 @@
 import { readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { describe, expect, it } from 'vitest'
-import { PALETTES, paletteById, type PaletteSet } from './palette'
+import { PALETTES, paletteById, SEQUENTIALS, sequentialById, type PaletteSet, type SequentialSet } from './palette'
 
 const ROOT = fileURLToPath(new URL('../../..', import.meta.url))
 
@@ -336,5 +336,102 @@ describe('ecology-voices is ONE quartet across its four surfaces', () => {
     expect(hub).not.toContain('#1baf7a')
     expect(score).not.toContain('#1baf7a')
     expect(score).not.toContain('#199e70')
+  })
+})
+
+
+// ——— sequential ramps —————————————————————————————————————————————————————————
+//
+// A ramp owes different arithmetic than a categorical set, so it gets its own re-derivation. The
+// categorical floor (all-pairs ΔE 15) would fail a ramp for doing exactly what a ramp is for; what
+// a ramp must prove instead is that neighbouring steps are TELLABLE APART, that no step vanishes
+// into the surface it is drawn on, and that it moves in one direction from end to end.
+describe.each(SEQUENTIALS.map((s) => [s.id, s] as const))('sequential ramp %s', (_id, set: SequentialSet) => {
+  const MODES = ['light', 'dark'] as const
+
+  it('is a complete, dated record', () => {
+    expect(set.steps.length).toBeGreaterThanOrEqual(3)
+    expect(set.validatedOn).toMatch(/^\d{4}-\d{2}-\d{2}$/)
+    expect(set.validator).toContain('validate_palette')
+    for (const step of set.steps) {
+      expect(step.light).toMatch(HEX)
+      expect(step.dark).toMatch(HEX)
+    }
+    for (const mode of MODES) expect(set.surfaces[mode]).toMatch(HEX)
+    expect(set.adjacent.map((a) => a.mode).sort()).toEqual(['dark', 'light'])
+    expect(set.againstSurface.map((a) => a.mode).sort()).toEqual(['dark', 'light'])
+  })
+
+  it.each(MODES)('%s-mode adjacent steps re-derive, and stay far enough apart to be told apart', (mode) => {
+    const hexes = set.steps.map((s) => s[mode])
+    const recorded = set.adjacent.find((a) => a.mode === mode)!
+    const derived = hexes.slice(1).map((hex, i) => deltaE(hexes[i], hex))
+    expect(derived).toHaveLength(recorded.deltas.length)
+    derived.forEach((d, i) => {
+      expect(Math.abs(d - recorded.deltas[i])).toBeLessThanOrEqual(0.15)
+      // a step a reader cannot separate from its neighbour is a step that is not there
+      expect(d).toBeGreaterThanOrEqual(6)
+    })
+  })
+
+  it.each(MODES)('%s-mode steps re-derive against the surface, and none of them disappears into it', (mode) => {
+    const surface = set.surfaces[mode]
+    const hexes = set.steps.map((s) => s[mode])
+    const recorded = set.againstSurface.find((a) => a.mode === mode)!
+    hexes.forEach((hex, i) => {
+      expect(Math.abs(deltaE(hex, surface) - recorded.deltaE[i])).toBeLessThanOrEqual(0.15)
+      expect(Math.abs(wcagContrast(hex, surface) - recorded.contrast[i])).toBeLessThanOrEqual(0.05)
+    })
+    // the faintest step still has to be visible AS a mark
+    expect(deltaE(hexes[0], surface)).toBeGreaterThanOrEqual(6)
+    // and the top of the ramp has to carry weight against the ground it sits on
+    expect(wcagContrast(hexes[hexes.length - 1], surface)).toBeGreaterThanOrEqual(3)
+  })
+
+  it.each(MODES)('%s-mode moves in one direction — a ramp that reverses lies about its order', (mode) => {
+    const surface = set.surfaces[mode]
+    const away = set.steps.map((s) => deltaE(s[mode], surface))
+    for (let i = 1; i < away.length; i++) expect(away[i]).toBeGreaterThan(away[i - 1])
+  })
+
+  it('carries its PALETTE marker, and every step, in the files that claim it', () => {
+    for (const rel of set.usedBy) {
+      const text = readFileSync(new URL(rel, `file://${ROOT}`), 'utf8')
+      expect(text, `${rel} must carry "PALETTE: ${set.id}"`).toContain(`PALETTE: ${set.id}`)
+      for (const step of set.steps) {
+        expect(text).toContain(step.light)
+        expect(text).toContain(step.dark)
+      }
+    }
+  })
+})
+
+describe('the living globe records the emphasis rule it actually draws', () => {
+  const voices = paletteById('globe-voices')!
+  const ramp = sequentialById('globe-sequential')!
+  const css = readFileSync(new URL('src/styles/living-globe.css', `file://${ROOT}`), 'utf8')
+
+  it('reuses the hues this house already records, rather than inventing three more', () => {
+    // the Field's voice, unchanged from hub-triptych.css; the invoked-past standout, unchanged
+    expect(voices.slots[1]).toMatchObject({ light: '#2a78d6', dark: '#256abf' })
+    expect(voices.slots[2]).toMatchObject({ light: '#b8410e', dark: '#e2691f' })
+  })
+
+  it('gives the ghost fleet the Field’s voice by token, not by a second hex', () => {
+    expect(css).toContain('--globe-c-ghost-fleet: var(--globe-c-voice-meridian)')
+  })
+
+  it('shares one hue between the ramp’s top step and the layer in front — one ink, two jobs', () => {
+    // The ramp is the room's live ink at five lightnesses; its top step IS the front hue, so a
+    // country fill at its maximum and a mark of the layer in front are the same colour by
+    // construction rather than by coincidence.
+    expect(ramp.steps[ramp.steps.length - 1].light).toBe(voices.slots[0].light)
+    expect(ramp.steps[ramp.steps.length - 1].dark).toBe(voices.slots[0].dark)
+  })
+
+  it('wears no warning red — a vessel gone dark is an identity, not an error', () => {
+    for (const red of ['#d32f2f', '#e5484d', '#dc2626', '#ff0000', '#d03b3b']) {
+      expect(css, `status red ${red}`).not.toContain(red)
+    }
   })
 })

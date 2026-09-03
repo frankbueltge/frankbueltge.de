@@ -678,9 +678,157 @@ export const PALETTES: readonly PaletteSet[] = [
     warns: [],
     usedBy: ['src/styles/invoked-figure.css'],
   },
+  {
+    id: 'globe-voices',
+    description:
+      'The living globe’s three identity slots (/globe, and the compact form under the hero). ' +
+      'The globe’s colour policy is an EMPHASIS rule before it is a palette: at most one layer ' +
+      'stands IN FRONT and wears a hue, every other active layer drops to mono ink at a reduced ' +
+      'alpha and keeps its place, and the mark a card is open on wears the second hue. Ten layers ' +
+      'cannot carry ten identities on one sphere, so they are never asked to. That makes the pair ' +
+      'that actually co-occurs "the layer in front" ↔ "the selected mark"; the record validates ' +
+      'all three against each other anyway, because a set that holds only under an interaction ' +
+      'rule is a set held by memory. Not one hue is new: the room’s live petrol/cyan is ops-room’s ' +
+      'own live ink, the blue is the Field’s recorded voice (the ghost fleet has worn it since the ' +
+      'entrance globe of 2026-09-02, and this record keeps it), and the ember is the invoked-past ' +
+      'standout — legal cross-page reuse, since neither hue means anything else on THIS page. ' +
+      'Identity, never status: a vessel gone dark, a removed page and an instrument that could not ' +
+      'read are identities, not failures, which is why the selection hue is a burnt earth tone and ' +
+      'not a warning red. The sea, the land, the coast and the mono ink are declared neutrals ' +
+      'outside the set — depth carries the base, hue carries identity.',
+    slots: [
+      { name: 'the layer in front — a lab line, in the room’s live ink', light: '#10627a', dark: '#7fd0e8' },
+      { name: 'the layer in front — a practice’s record, in its recorded voice (the Field)', light: '#2a78d6', dark: '#256abf' },
+      { name: 'the selected mark — the one a card is open on', light: '#b8410e', dark: '#e2691f' },
+    ],
+    neutrals: [
+      {
+        name: 'the layers behind — mono ink at a reduced alpha',
+        light: '#54555c',
+        dark: '#a3a3a8',
+        note: 'the frame’s own --color-fg-muted, referenced not restated; greyness IS the meaning — a layer that is on but not in front',
+      },
+    ],
+    surfaces: { light: ['#f7f8fa'], dark: ['#141414'] },
+    pairs: 'all',
+    validatedOn: '2026-09-03',
+    validator:
+      'validate_palette.js is NOT in this repository’s tree, and this record says so rather than ' +
+      'implying a run: the distances below were re-derived in-repo with palette.test.ts’s own ' +
+      'maths (sRGB → linear → Machado 2009 protan/deutan → OKLab ΔE ×100; WCAG contrast against ' +
+      'the declared surface of each mode), which is what the test then re-checks on every run. ' +
+      'The surfaces are the sea the globe actually draws on — --color-panel in each mode — not a ' +
+      'page background the marks never touch. No contrast WARN in either mode: the weakest is the ' +
+      'Field blue on the dark sea at 3.41:1, and no hue here is ever used as text. Tritan derived ' +
+      'with the same matrices, informational only.',
+    worst: [
+      {
+        mode: 'light',
+        cvd: 14.42,
+        cvdPair: '#10627a↔#b8410e',
+        cvdType: 'protan',
+        tritan: 11.83,
+        normal: 15.29,
+        normalPair: '#2a78d6↔#10627a',
+      },
+      {
+        mode: 'dark',
+        cvd: 23.55,
+        cvdPair: '#7fd0e8↔#e2691f',
+        cvdType: 'deutan',
+        tritan: 29.39,
+        normal: 30.01,
+        normalPair: '#7fd0e8↔#e2691f',
+      },
+    ],
+    warns: [],
+    usedBy: ['src/styles/living-globe.css'],
+  },
 ]
 
 /** Lookup by id — WP6 practice packages add their sets to PALETTES and get the same guards. */
 export function paletteById(id: string): PaletteSet | undefined {
   return PALETTES.find((p) => p.id === id)
+}
+
+// ─────────────────────────────────────────────────────────────────── sequential ramps
+//
+// A ramp is not a categorical set and must never be recorded as one: its adjacent steps are
+// DELIBERATELY close (that is what makes it read as an ordered quantity), so the all-pairs ΔE 15
+// floor above would fail it for doing its job. It therefore gets its own record shape and its own
+// checks, and palette.test.ts re-derives those the same way: every step must be far enough from
+// the SEA it is drawn on to be seen at all, adjacent steps must be far enough apart to be told
+// apart, and the ramp must move in one direction — a ramp that reverses anywhere is a ramp that
+// lies about its order.
+
+export interface SequentialStep {
+  /** low to high; the name says what the step is, never what it is worth */
+  name: string
+  light: string
+  dark: string
+}
+
+export interface SequentialSet {
+  id: string
+  description: string
+  /** low → high, exactly as the stylesheet declares them */
+  steps: SequentialStep[]
+  /** the surface the ramp is drawn on, per mode — for this globe, the sea */
+  surfaces: { light: string; dark: string }
+  validatedOn: string
+  validator: string
+  /** ΔE (OKLab ×100) between neighbouring steps, low → high, per mode */
+  adjacent: { mode: 'light' | 'dark'; deltas: number[] }[]
+  /** every step against the surface: ΔE, and WCAG contrast, per mode */
+  againstSurface: { mode: 'light' | 'dark'; deltaE: number[]; contrast: number[] }[]
+  usedBy: string[]
+}
+
+export const SEQUENTIALS: readonly SequentialSet[] = [
+  {
+    id: 'globe-sequential',
+    description:
+      'The five-step mono ramp a country fill takes on the living globe, low to high, off the ' +
+      'room’s own live ink — one hue, five lightness steps, own steps per mode and never an ' +
+      'automatic flip. It encodes a QUANTITY a layer carries per country and nothing else: it is ' +
+      'never used for identity (that is globe-voices) and never for status. A country fill only ' +
+      'ever wears it while its layer stands IN FRONT; behind, the layer drops to the same mono ink ' +
+      'every other layer behind does, so two ramps can never compete on one sphere. No layer of ' +
+      'kind `countries` is registered yet — the press, the invoked years and the removals arrive ' +
+      'in G3 — but the builder that reads these five steps ships now (globe-deck.ts, `rampStep`), ' +
+      'so the ramp is measured before it is drawn rather than after.',
+    steps: [
+      { name: 'lowest', light: '#cfe0e6', dark: '#1e3b45' },
+      { name: 'low', light: '#a5c5cf', dark: '#2e5c6b' },
+      { name: 'middle', light: '#6fa3b3', dark: '#438397' },
+      { name: 'high', light: '#3b7f95', dark: '#5fadc6' },
+      { name: 'highest', light: '#10627a', dark: '#7fd0e8' },
+    ],
+    surfaces: { light: '#f7f8fa', dark: '#141414' },
+    validatedOn: '2026-09-03',
+    validator:
+      'validate_palette.js is NOT in this repository’s tree, and this record says so rather than ' +
+      'implying a run: every number below was computed in-repo with palette.test.ts’s own maths ' +
+      '(sRGB → linear → OKLab ΔE ×100 for the distances, WCAG for the contrasts), against the sea ' +
+      'each mode actually draws — and the test re-derives all of it on every run. The two checks a ' +
+      'ramp owes: the weakest adjacent step is 9.42 (light) and 10.71 (dark), so neighbouring ' +
+      'values are distinguishable; the faintest step still stands 8.51 (light) and 14.81 (dark) ' +
+      'from the sea, so no step disappears into the water. Contrast is recorded for every step and ' +
+      'reaches 6.48:1 (light) and 10.61:1 (dark) at the top; the low steps sit under 3:1 by ' +
+      'construction, which is what a sequential ramp IS — they are fills, never text, and every ' +
+      'value they encode is repeated in the tables under the plate.',
+    adjacent: [
+      { mode: 'light', deltas: [9.42, 12.05, 12.43, 9.96] },
+      { mode: 'dark', deltas: [11.57, 12.81, 13.21, 10.71] },
+    ],
+    againstSurface: [
+      { mode: 'light', deltaE: [8.51, 17.93, 29.98, 42.39, 52.28], contrast: [1.28, 1.72, 2.61, 4.24, 6.48] },
+      { mode: 'dark', deltaE: [14.81, 26.33, 39.11, 52.29, 62.89], contrast: [1.55, 2.51, 4.33, 7.26, 10.61] },
+    ],
+    usedBy: ['src/styles/living-globe.css'],
+  },
+]
+
+export function sequentialById(id: string): SequentialSet | undefined {
+  return SEQUENTIALS.find((s) => s.id === id)
 }
