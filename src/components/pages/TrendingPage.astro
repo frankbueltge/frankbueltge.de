@@ -29,7 +29,9 @@ interface Props {
 const { day, audience, isLatest } = Astro.props
 
 const rows = convergingRows(day)
-const columns = sourceColumns(day, 10)
+// A uniform count per source, so a card is not short merely because its source publishes a
+// short list. The full lists stay in the JSON and Markdown editions.
+const columns = sourceColumns(day, 8)
 const yesterday = audienceBefore(day.date)
 const u = trendingUrls(day.date)
 
@@ -125,7 +127,10 @@ const convergenceProvenance =
         What each source said on its own, before any crossing. A source that did not answer is recorded as
         unavailable with the reason — never quietly dropped, and never filled in from a neighbour.
       </p>
-      <div class="mt-5 grid items-start gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {/* No `items-start`: the cards of a row stretch to the row's height, and the list below
+          grows into the gap, so every footer sits on the same line. A card's height is then set
+          by the longest labels in its row rather than by how much each source happened to say. */}
+      <div class="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {columns.map((col) => (
           <section class="flex flex-col rounded-[16px] border border-line bg-panel p-4">
             <h3 class="font-semibold">
@@ -144,12 +149,12 @@ const convergenceProvenance =
               <p class="mt-1 font-mono text-[10px] text-fg-muted">{col.note}</p>
             )}
             {col.signals.length === 0 ? (
-              <p class="mt-3 text-sm text-fg-faint">nothing recorded</p>
+              <p class="mt-3 flex-1 text-sm text-fg-faint">nothing recorded</p>
             ) : (
-              <ol class="mt-3 space-y-1.5 text-sm">
+              <ol class="mt-3 flex-1 space-y-1.5 text-sm">
                 {col.signals.map((s) => (
                   <li class="flex items-baseline justify-between gap-x-3">
-                    <span class="min-w-0">
+                    <span class="line-clamp-3 min-w-0">
                       {s.url ? (
                         <a href={s.url} target="_blank" rel="noopener nofollow" class="underline decoration-line underline-offset-2 transition-colors hover:text-fg">{s.label}</a>
                       ) : (
