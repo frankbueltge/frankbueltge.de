@@ -1,6 +1,6 @@
 # Living Globe — one globe over everything this house measures on the earth
 
-**Status:** G0 shipped 2026-09-03 (the ground, the crosswalk, the gates); G1 shipped 2026-09-03 (the room: layers, the day, the receipts); G2 shipped 2026-09-03 (three guided stories, and a focus that moves camera, day and layers); G3 evening 1 of 3 shipped 2026-09-03 (the three country layers, the tessellation check, the antimeridian stitch); G3 evening 2 of 3 shipped 2026-09-03 (the removals at their seats, the world chamber's hosts, the trending countries); G3 evening 3 of 3 shipped 2026-09-03 (admissions and the mirrored attention warnings, the first two STATIC layers; the hosts/bycatch layer refused, not deferred; the name repair completed over the four layers that still lacked it). **G3 is closed.** Next is G4.
+**Status:** G0 shipped 2026-09-03 (the ground, the crosswalk, the gates); G1 shipped 2026-09-03 (the room: layers, the day, the receipts); G2 shipped 2026-09-03 (three guided stories, and a focus that moves camera, day and layers); G3 evening 1 of 3 shipped 2026-09-03 (the three country layers, the tessellation check, the antimeridian stitch); G3 evening 2 of 3 shipped 2026-09-03 (the removals at their seats, the world chamber's hosts, the trending countries); G3 evening 3 of 3 shipped 2026-09-03 (admissions and the mirrored attention warnings, the first two STATIC layers; the hosts/bycatch layer refused, not deferred; the name repair completed over the four layers that still lacked it). **G3 is closed.** **G2's three late stories shipped 2026-09-03, after G3 closed** (Balance, Consensus and Redaction — the three the plan named from the start, written now that their layers exist; the guided-stories section carries six now, not three). Next is G4.
 **Decision:** Frank's decision of 2026-09-03, wording private.
 **Surfaces:** `/globe` · `/werke/globe` · `/globe/layers.json` · `/globe/layers/<id>.json` ·
 `/globe/countries.json` (since G3 the country polygons keyed by alpha-3, stitched and rounded ready to
@@ -87,6 +87,23 @@ each is about a layer that arrives with G3, a story may only name a registered l
 `globe-stories.test.ts` asserts that those three ids are NOT in the registry today. So the promise
 is kept by a test rather than by a note, and the stories will be written when the layers they are
 about exist. Details in the decision-log row of 2026-09-03.
+
+**G2's three late stories, shipped 2026-09-03 — after G3 closed.** The three stories named above as
+not yet written are written now: **Where the press looks at itself** (layers: `balance`; three
+nights of the tone-gap record, camera Europe to the Americas, closing on one country's own mark),
+**One sentence, and the outlets that carried it** (layers: `consensus-tld`; one night whose
+most-echoed phrase resolves to more than one country, camera over the country of its first-named
+masthead) and **What the record removed** (layers: `redaction-seats`, joined by `redaction-world`
+only in its last scene; three nights of the institutional removals, camera Geneva to Washington,
+closing on one removal's own mark). All six of the plan's stories are written; the registered-layers
+guard in `globe-stories.test.ts` now asserts that `balance`, `consensus-tld`, `redaction-seats` and
+`redaction-world` ARE registered, and three new per-story `describe` blocks check each late story's
+own nights, camera path and closing select the same way the three original stories already were.
+`MethodenblattGlobe.astro`'s guided-stories section reads six stories where it read three; nothing
+about the room's mechanics changed — the same `FocusState`, the same one figure, the same
+byte-exact harness. Bundles unmoved: `LivingGlobe.` still measures 6.2 KB gz of 15 and `globe-deck.`
+still 208.5 KB gz of 320, because this evening added prose and quotes rendered at build time and no
+island code at all. Decision-log row of 2026-09-03.
 
 **G3, evening 1 of 3 — 2026-09-03.** Three layers whose records name a country rather than a place:
 **Balance** as country fills carrying the tone gap `/balance` headlines, **Invoked Past** as points at
