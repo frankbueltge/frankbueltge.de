@@ -11,12 +11,16 @@
 import { readFileSync, readdirSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
 import { byFips, centroidOfIso3 } from '../crosswalk'
+import { REDACTION_SEATS, redactionSeatFor } from '../seats'
 import { balanceLayer } from './balance'
 import { consensusTldLayer, groupByCountry, tldOf } from './consensus-tld'
 import { ghostFleetLayer } from './ghost-fleet'
 import { invokedLayer, maximumOf } from './invoked'
 import { protocolLayer } from './protocol'
+import { byInstitution, largestOf, redactionSeatsLayer } from './redaction-seats'
+import { germanVantageNote, receiptWords, receiptsByTld, redactionWorldLayer } from './redaction-world'
 import { skyLayer } from './sky'
+import { geoKindOf, groupByGeo, trendingLayer } from './trending'
 import type { GlobeLayer } from './types'
 
 const read = <T>(path: string): T => JSON.parse(readFileSync(path, 'utf8')) as T
@@ -26,7 +30,17 @@ const datedFiles = (dir: string) =>
     .map((f) => f.slice(0, 10))
     .sort()
 
-const LAYERS = [skyLayer, ghostFleetLayer, protocolLayer, balanceLayer, invokedLayer, consensusTldLayer]
+const LAYERS = [
+  skyLayer,
+  ghostFleetLayer,
+  protocolLayer,
+  redactionSeatsLayer,
+  balanceLayer,
+  invokedLayer,
+  consensusTldLayer,
+  redactionWorldLayer,
+  trendingLayer,
+]
 
 describe.each(LAYERS.map((l) => [l.id, l] as const))('%s', (id, layer: GlobeLayer) => {
   it('gives the same frame twice for the same day', () => {
@@ -178,6 +192,9 @@ describe('no adapter reads a clock', () => {
     'balance.ts',
     'invoked.ts',
     'consensus-tld.ts',
+    'redaction-seats.ts',
+    'redaction-world.ts',
+    'trending.ts',
     'archive.ts',
     'types.ts',
     'index.ts',
@@ -233,7 +250,9 @@ describe('balance — the tone gap as country fills', () => {
     // no record at all — but where it has one, the value is the gap and nothing else
     if (record) {
       expect(record.value).toBeCloseTo(tone.self - tone.foreign, 10)
-      expect(record.at).toEqual({ iso3: byFips(entry.fips).iso3 })
+      // the place carries the crosswalk's NAME beside the code since G3's second evening, so the
+      // card can say "centroid of Qatar" without the island ever holding a crosswalk
+      expect(record.at).toEqual({ iso3: byFips(entry.fips).iso3, name: byFips(entry.fips).names.wikidata })
       expect(record.labelKind).toBe('centroid')
       expect(record.receipt.file).toBe(file)
       expect(record.receipt.words).toContain(entry.name)
@@ -345,5 +364,279 @@ describe('consensus by domain — a registration, not a location', () => {
   it('says in its source block that a top-level domain is a registration', () => {
     expect(consensusTldLayer.source.name).toContain('registration and not a location')
     expect(consensusTldLayer.readout.caution).toContain('registration')
+  })
+})
+
+// ── G3, second evening: the removals, the world chamber's hosts and the trending countries ──────
+// Three more adapters, the same third question asked three more ways — and one question this
+// evening adds: does the adapter STOP when the archive holds something it cannot place? The
+// institution table, the alpha-2 codes and the geo shapes are all resolved through throwing
+// lookups, so a quiet mark fewer is impossible by construction; these suites prove it rather than
+// asserting it in a comment.
+
+describe('editorial deadline, at the seats — a removal stands at the body that published it', () => {
+  const day = redactionSeatsLayer.days[redactionSeatsLayer.days.length - 1]
+  const file = `src/data/redaction/${day}.json`
+  const data = read<{
+    date: string
+    watched_count: number
+    redactions: Array<{ id: string; institution: string; label: string; kind: string; removed_tokens: number; after: { url: string } }>
+  }>(file)
+
+  it('reads its days from the archive’s filenames', () => {
+    expect(redactionSeatsLayer.days).toEqual(datedFiles('src/data/redaction'))
+    expect(redactionSeatsLayer.asOf).toBe(data.date)
+  })
+
+  it('maps every institution in every committed day, and names one it cannot', () => {
+    // the whole archive, not only the newest night: an institution that appeared once in July and
+    // never again must still have a seat, or that night draws one mark fewer than it holds
+    for (const name of datedFiles('src/data/redaction')) {
+      const rows = read<{ redactions: Array<{ institution: string }> }>(`src/data/redaction/${name}.json`).redactions
+      for (const row of rows) {
+        expect(REDACTION_SEATS[row.institution], `${name}: no seat for "${row.institution}"`).toBeDefined()
+        expect(() => redactionSeatFor(row.institution)).not.toThrow()
+      }
+    }
+    expect(() => redactionSeatFor('Ministry of Nothing')).toThrow(/no seat for the institution "Ministry of Nothing"/)
+  })
+
+  it('calls every mark a seat — a removal is never taken at an instrument', () => {
+    for (const name of redactionSeatsLayer.days) {
+      for (const record of redactionSeatsLayer.frame(name).records) {
+        expect(record.labelKind, `${name} ${record.key}`).toBe('seat')
+      }
+    }
+  })
+
+  it('carries one real removal exactly as the file holds it, with the words the page counts in', () => {
+    const withRows = redactionSeatsLayer.days
+      .map((name) => ({ name, frame: redactionSeatsLayer.frame(name) }))
+      .find((entry) => entry.frame.records.length > 0)!
+    const rows = read<typeof data>(`src/data/redaction/${withRows.name}.json`).redactions
+    const record = withRows.frame.records[0]
+    const index = Number(/redactions\[(\d+)\]/.exec(record.receipt.locator)![1])
+    const row = rows[index]
+    expect(record.receipt.file).toBe(`src/data/redaction/${withRows.name}.json`)
+    expect(record.receipt.locator).toContain(row.id)
+    expect(record.receipt.words).toContain(row.institution)
+    expect(record.receipt.words).toContain(row.label)
+    expect(record.receipt.words).toContain(`${row.removed_tokens} word`)
+    expect(record.receipt.url).toBe(row.after.url)
+  })
+
+  it('gives an institution one mark a day and the day’s whole loss as its value', () => {
+    for (const name of redactionSeatsLayer.days) {
+      const rows = read<typeof data>(`src/data/redaction/${name}.json`).redactions
+      const grouped = byInstitution(rows as never)
+      const frame = redactionSeatsLayer.frame(name)
+      expect(frame.records.length, name).toBe(grouped.length)
+      expect(new Set(frame.records.map((r) => r.key)).size).toBe(frame.records.length)
+      for (const group of grouped) {
+        const total = group.rows.reduce((sum, entry) => sum + entry.row.removed_tokens, 0)
+        const record = frame.records.find((r) => r.receipt.words.startsWith(`${group.institution} ·`))!
+        expect(record, `${name} ${group.institution}`).toBeTruthy()
+        expect(record.value).toBe(total)
+        // the locator leads to the largest of that institution's removals, never to a group
+        expect(record.receipt.locator).toContain(largestOf(group.rows).row.id)
+      }
+    }
+  })
+
+  it('draws nothing on a night the watch found nothing, and says so with the record’s own count', () => {
+    const quiet = redactionSeatsLayer.days.find(
+      (name) => read<typeof data>(`src/data/redaction/${name}.json`).redactions.length === 0,
+    )!
+    const record = read<typeof data>(`src/data/redaction/${quiet}.json`)
+    const frame = redactionSeatsLayer.frame(quiet)
+    expect(frame.records).toEqual([])
+    expect(frame.note).toContain('took nothing back')
+    expect(frame.note).toContain(String(record.watched_count))
+  })
+
+  it('says in its source block that the mark is a seat and what its value is', () => {
+    expect(redactionSeatsLayer.kind).toBe('stations')
+    expect(redactionSeatsLayer.source.name).toContain('seat of a body, never the place a page was written')
+    expect(redactionSeatsLayer.readout.place).toContain('seat of the institution')
+  })
+})
+
+describe('editorial deadline, the world chamber — hosts by registration, outcomes where committed', () => {
+  const day = redactionWorldLayer.days[redactionWorldLayer.days.length - 1]
+  const data = read<{
+    date: string
+    deletion: {
+      available: boolean
+      pool_day: string
+      counts: Record<string, number>
+      gone: number
+      legal_451: number
+      notes: string[]
+      receipts: Array<{ domain: string; url: string; class: string; http_code: number | null }>
+    }
+  }>(`src/data/redaction/world/${day}.json`)
+
+  it('reads its days from the archive’s filenames', () => {
+    expect(redactionWorldLayer.days).toEqual(datedFiles('src/data/redaction/world'))
+    expect(redactionWorldLayer.asOf).toBe(data.date)
+  })
+
+  it('places the hosts of the sample the day actually checked, not the one it committed that night', () => {
+    // proven, not assumed: every receipt of the day is a URL of the pool the record names in
+    // `pool_day` — which is a different file from the `sample_committed` drawn for the next run
+    const pool = read<{ items: Array<{ url: string; domain: string }> }>(
+      `src/data/redaction/world/samples/${data.deletion.pool_day}.json`,
+    )
+    const urls = new Set(pool.items.map((item) => item.url))
+    for (const receipt of data.deletion.receipts) expect(urls.has(receipt.url), receipt.url).toBe(true)
+
+    const { placed } = groupByCountry(pool.items.map((item) => item.domain))
+    const frame = redactionWorldLayer.frame(day)
+    const drawable = placed.filter((group) => centroidOfIso3(group.iso3) !== null)
+    expect(frame.records.length).toBe(drawable.length)
+    for (const group of drawable) {
+      const record = frame.records.find((r) => r.key === `redaction-world:${day}:${group.iso3}`)!
+      expect(record, group.iso3).toBeTruthy()
+      expect(record.value).toBe(group.domains.length)
+      expect(record.labelKind).toBe('centroid')
+      expect(record.receipt.file).toBe(`src/data/redaction/world/samples/${data.deletion.pool_day}.json`)
+      expect(record.receipt.locator).toContain(`.${group.cctld}`)
+    }
+  })
+
+  it('counts the hosts that carry no country, and the countries the atlas cannot draw', () => {
+    const pool = read<{ items: Array<{ domain: string }> }>(
+      `src/data/redaction/world/samples/${data.deletion.pool_day}.json`,
+    )
+    const { placed } = groupByCountry(pool.items.map((item) => item.domain))
+    const countryless = pool.items.length - placed.reduce((sum, group) => sum + group.domains.length, 0)
+    const frame = redactionWorldLayer.frame(day)
+    expect(frame.note).toContain(String(countryless))
+    expect(frame.note).toContain('carry no country')
+    if (placed.some((group) => centroidOfIso3(group.iso3) === null)) expect(frame.note).toContain('drawn nowhere')
+  })
+
+  it('states the day’s counts in words and never folds a 451 into gone', () => {
+    const frame = redactionWorldLayer.frame(day)
+    expect(frame.note).toContain('stood behind a bot wall')
+    expect(frame.note).toContain('counted apart and never added together')
+    expect(frame.note).toContain(String(data.deletion.gone))
+    expect(frame.note).toContain(String(data.deletion.counts.botwall))
+    // and the two classes are two different sentences, never one
+    expect(receiptWords({ domain: 'x.uk', url: 'u', first_seen: 'f', class: 'gone_404', http_code: 404 })).toContain('gone')
+    const withheld = receiptWords({ domain: 'x.uk', url: 'u', first_seen: 'f', class: 'legal_451', http_code: 451 })
+    expect(withheld).toContain('withheld for legal reasons')
+    expect(withheld).not.toContain('gone')
+  })
+
+  it('carries the per-host outcome the record commits, wherever a vanished host had a country', () => {
+    // most vanished hosts are `.com` and belong to no country at all, so the archive is walked for
+    // the ones that do — and every one of them must be named in its country's own mark
+    let named = 0
+    for (const name of redactionWorldLayer.days) {
+      const record = read<typeof data>(`src/data/redaction/world/${name}.json`)
+      const frame = redactionWorldLayer.frame(name)
+      for (const [tld, receipts] of receiptsByTld((record.deletion.receipts ?? []) as never)) {
+        for (const receipt of receipts) {
+          const mark = frame.records.find((r) => r.receipt.locator.includes(`.${tld} `))
+          // a ccTLD the atlas draws no polygon for is counted in the note instead of drawn
+          if (!mark) continue
+          named += 1
+          expect(mark.receipt.words, `${name} ${receipt.domain}`).toContain(receipt.domain)
+          expect(mark.receipt.words).toContain(String(receipt.http_code))
+          expect(mark.receipt.url).toBeTruthy()
+        }
+      }
+    }
+    expect(named, 'no vanished host in the whole archive carried a country — check receiptsByTld').toBeGreaterThan(0)
+  })
+
+  it('draws nothing and quotes the record’s own reason on a day it could not measure', () => {
+    const unavailable = redactionWorldLayer.days.find(
+      (name) => read<typeof data>(`src/data/redaction/world/${name}.json`).deletion.available === false,
+    )!
+    const record = read<{ deletion: { note: string } }>(`src/data/redaction/world/${unavailable}.json`)
+    const frame = redactionWorldLayer.frame(unavailable)
+    expect(frame.records).toEqual([])
+    expect(frame.note).toContain(record.deletion.note)
+  })
+
+  it('quotes the record’s own German-vantage caution in the source block, byte for byte', () => {
+    const note = germanVantageNote(data as never)
+    expect(note, 'the day record no longer carries the 451 caution the source block quotes').toBeTruthy()
+    expect(data.deletion.notes).toContain(note)
+    expect(redactionWorldLayer.source.name).toContain(note!)
+    expect(redactionWorldLayer.source.name).toContain('registration and not a location')
+  })
+})
+
+describe('common ground, by country — a language is not a country', () => {
+  const day = trendingLayer.days[trendingLayer.days.length - 1]
+  const data = read<{
+    date: string
+    sources: Array<{ id: string; name: string }>
+    signals: Record<string, Array<{ geo: string | null; source: string; meta: Record<string, unknown> }>>
+  }>(`src/data/trending/${day}.json`)
+
+  it('reads its days from the archive’s filenames, however few there are', () => {
+    expect(trendingLayer.days).toEqual(datedFiles('src/data/trending'))
+    expect(trendingLayer.days.length).toBeGreaterThan(0)
+    expect(trendingLayer.asOf).toBe(data.date)
+  })
+
+  it('tells a country from a language by a rule, and stops at anything that is neither', () => {
+    expect(geoKindOf({ geo: 'DE', source: 'google_trends', meta: {} })).toEqual({ kind: 'country', iso2: 'DE' })
+    expect(geoKindOf({ geo: 'de', source: 'wikipedia', meta: { lang: 'de' } })).toEqual({ kind: 'language', code: 'de' })
+    expect(geoKindOf({ geo: 'en', source: 'wikipedia', meta: {} })).toEqual({ kind: 'language', code: 'en' })
+    expect(geoKindOf({ geo: null, source: 'hackernews', meta: {} })).toEqual({ kind: 'none' })
+    expect(() => geoKindOf({ geo: 'Berlin', source: 'somewhere', meta: {} })).toThrow(/neither an ISO 3166-1/)
+  })
+
+  it('refuses an alpha-2 the crosswalk cannot place, rather than drawing one mark fewer', () => {
+    expect(() => groupByGeo([{ geo: 'XX', source: 'nowhere', meta: {} } as never])).toThrow(/alpha-2/)
+  })
+
+  it('counts one real country’s signals exactly as the file holds them, and names their sources', () => {
+    const counted = new Map<string, Set<string>>()
+    let expected = 0
+    for (const [id, signals] of Object.entries(data.signals)) {
+      for (const signal of signals) {
+        if (signal.geo === null || !/^[A-Z]{2}$/.test(signal.geo)) continue
+        const held = counted.get(signal.geo) ?? new Set<string>()
+        held.add(id)
+        counted.set(signal.geo, held)
+        expected += 1
+      }
+    }
+    expect(expected).toBeGreaterThan(0)
+    const frame = trendingLayer.frame(day)
+    expect(frame.records.reduce((sum, r) => sum + (r.value ?? 0), 0)).toBe(expected)
+
+    const names = new Map(data.sources.map((source) => [source.id, source.name]))
+    const iso2 = [...counted.keys()].sort()[0]
+    const record = frame.records.find((r) => r.receipt.locator.includes(`geo is ${iso2} `))!
+    expect(record, iso2).toBeTruthy()
+    expect(record.labelKind).toBe('centroid')
+    expect(Array.isArray(record.at)).toBe(true)
+    for (const source of counted.get(iso2)!) expect(record.receipt.words).toContain(names.get(source)!)
+  })
+
+  it('counts the signals that carry a language, in words, and places none of them', () => {
+    const languages = Object.values(data.signals)
+      .flat()
+      .filter((signal) => signal.geo !== null && !/^[A-Z]{2}$/.test(signal.geo))
+    expect(languages.length).toBeGreaterThan(0)
+    const frame = trendingLayer.frame(day)
+    expect(frame.note).toContain(String(languages.length))
+    expect(frame.note).toContain('carry a language rather than a country')
+    for (const signal of languages) {
+      expect(frame.records.some((r) => r.receipt.locator.includes(`geo is ${signal.geo} `))).toBe(false)
+    }
+  })
+
+  it('says in its source block that a per-language signal is placed nowhere', () => {
+    expect(trendingLayer.kind).toBe('points')
+    expect(trendingLayer.source.name).toContain('placed nowhere')
+    expect(trendingLayer.readout.caution).toContain('never of people')
   })
 })
