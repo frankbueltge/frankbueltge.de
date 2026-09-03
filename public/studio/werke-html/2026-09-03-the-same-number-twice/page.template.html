@@ -1,0 +1,438 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>THE SAME NUMBER TWICE — Ensemble</title>
+<meta name="description" content="Forty census rows at thirty-nine addresses, read three times in three days by two rooms. Two readings return 18 and it is not the same 18. Give the two measured readings one rule and they agree exactly: 13 doors, the same 13.">
+<style>
+:root{
+  --bg:#f6f4ef; --ink:#16130f; --dim:#6d675e; --rule:#d6d0c4;
+  --edge:#7d7566; --hot:#a8321e; --panel:#efece5;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#100f0d; --ink:#ece7dd; --dim:#8d867a; --rule:#2e2b26;
+    --edge:#867e70; --hot:#e0643f; --panel:#191713;
+  }
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:16px/1.62 "Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;}
+main{max-width:47rem;margin:0 auto;padding:5rem 1.5rem 7rem}
+h1{font:700 clamp(2.3rem,9.4vw,4.4rem)/0.95 "Helvetica Neue",Helvetica,Arial,sans-serif;
+  letter-spacing:-.035em;margin:0 0 1.4rem;text-transform:uppercase}
+h2{font:600 .78rem/1.4 "Helvetica Neue",Helvetica,Arial,sans-serif;
+  letter-spacing:.19em;text-transform:uppercase;color:var(--dim);
+  margin:4.5rem 0 1.1rem;border-top:1px solid var(--rule);padding-top:1rem}
+h3{font:600 1.12rem/1.35 "Helvetica Neue",Helvetica,Arial,sans-serif;
+  letter-spacing:-.01em;margin:2.4rem 0 .7rem}
+p{margin:0 0 1.15rem}
+.lede{font-size:1.24rem;line-height:1.5}
+.dek{color:var(--dim);font-size:.94rem;line-height:1.55}
+b,strong{font-weight:600}
+a{color:inherit}
+code{font:.86em/1.4 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  background:var(--panel);padding:.05em .3em;border-radius:2px;word-break:break-all}
+.hot{color:var(--hot)}
+.said{border-left:2px solid var(--edge);padding:.1rem 0 .1rem 1rem;margin:0 0 1.15rem;
+  color:var(--dim);font-size:.96rem;line-height:1.55}
+
+.count{display:flex;flex-wrap:wrap;gap:1.4rem 2.4rem;margin:2.4rem 0 1.4rem}
+.count div{flex:1 1 7rem}
+.count .v{font:600 clamp(2.2rem,8vw,3.4rem)/1 "Helvetica Neue",Helvetica,Arial,sans-serif;
+  letter-spacing:-.03em;display:block}
+.count .l{font:.72rem/1.45 "Helvetica Neue",Helvetica,Arial,sans-serif;color:var(--dim);
+  letter-spacing:.09em;text-transform:uppercase;margin-top:.35rem;display:block}
+.count .v.none{color:var(--dim)}
+
+.scroll{overflow-x:auto;margin:1.8rem -1.5rem 0;padding:0 1.5rem 1rem;
+  -webkit-overflow-scrolling:touch}
+.scroll svg{display:block;width:100%;height:auto;min-width:648px}
+.sh{fill:var(--ink)}
+.sh.hot{fill:var(--hot)}
+.op{fill:none;stroke:var(--edge);stroke-width:1;stroke-dasharray:2 3}
+.na{fill:var(--edge);opacity:.14}
+.bar{fill:var(--edge);opacity:.5}
+.dl{font:10px/1 "Helvetica Neue",Helvetica,Arial,sans-serif;fill:var(--dim);
+  text-anchor:end}
+.dl.hot{fill:var(--hot)}
+.tie{fill:none;stroke:var(--edge);stroke-width:1}
+.ch{font:600 8px/1 "Helvetica Neue",Helvetica,Arial,sans-serif;fill:var(--ink);
+  text-anchor:middle;letter-spacing:.05em}
+.ch.dimtx{fill:var(--dim);font-weight:400;letter-spacing:.04em}
+.bl{font:9px/1 "Helvetica Neue",Helvetica,Arial,sans-serif;fill:var(--dim)}
+.key{font:.8rem/1.9 "Helvetica Neue",Helvetica,Arial,sans-serif;color:var(--dim);
+  margin:.5rem 0 0;display:flex;flex-wrap:wrap;gap:.2rem 1.5rem}
+.kk{display:inline-flex;align-items:center;gap:.5rem;white-space:nowrap}
+.ki{width:22px;height:8px;flex:0 0 auto;display:inline-block}
+.ki.f{background:var(--ink)}
+.ki.h{background:var(--hot)}
+.ki.o{border:1px dashed var(--edge)}
+.ki.n{background:var(--edge);opacity:.2}
+
+/* the rule switch — absent without scripting, and the page is whole without it */
+#rules{display:none}
+#rules.on{display:block;margin:2rem 0 0}
+#rules .rl{font:.72rem/1.45 "Helvetica Neue",Helvetica,Arial,sans-serif;color:var(--dim);
+  letter-spacing:.09em;text-transform:uppercase;margin:0 0 .6rem}
+#rules .btns{display:flex;flex-wrap:wrap;gap:.5rem}
+#rules button{font:.86rem/1.3 "Helvetica Neue",Helvetica,Arial,sans-serif;color:var(--ink);
+  background:var(--bg);border:1px solid var(--edge);border-radius:2px;
+  padding:.5rem .8rem;cursor:pointer;text-align:left;max-width:22rem}
+#rules button[aria-pressed="true"]{background:var(--ink);color:var(--bg);
+  border-color:var(--ink)}
+#rules .said{margin:1rem 0 0}
+
+ul.named{list-style:none;padding:0;margin:1.2rem 0 1.4rem}
+ul.named li{border-top:1px solid var(--rule);padding:.7rem 0 .75rem;font-size:.98rem}
+ul.named li:last-child{border-bottom:1px solid var(--rule)}
+.w{color:var(--dim);font-size:.87rem;line-height:1.5}
+
+.pair{display:flex;flex-wrap:wrap;gap:0 2rem}
+.pair>div{flex:1 1 15rem;min-width:14rem}
+.pair h3{margin-top:1.6rem}
+
+table{border-collapse:collapse;width:100%;font-size:.85rem;margin:1.4rem 0 .4rem}
+th,td{text-align:left;padding:.36rem .5rem .36rem 0;border-bottom:1px solid var(--rule);
+  vertical-align:top}
+th{font:600 .68rem/1.4 "Helvetica Neue",Helvetica,Arial,sans-serif;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--dim)}
+td.n,td.c{white-space:nowrap}
+td.n{text-align:right;font-variant-numeric:tabular-nums}
+tr.dis td{color:var(--hot)}
+td.no{color:var(--dim)}
+.tscroll{overflow-x:auto;margin:0 -1.5rem;padding:0 1.5rem}
+.tscroll table{min-width:34rem}
+
+ul.plain{padding-left:1.15rem;margin:0 0 1.2rem}
+ul.plain li{margin:0 0 .5rem}
+footer{margin-top:5rem;border-top:1px solid var(--rule);padding-top:1.2rem;
+  color:var(--dim);font-size:.86rem;line-height:1.6}
+</style>
+</head>
+<body>
+<main>
+
+<h1>The same<br>number twice</h1>
+
+<p class="lede">Forty rows of a census of publishers that have publicly doubted their own
+papers. Three readings of how many of their doors are shut to a machine, taken in three days
+by two rooms: <b>{{r1_n}}</b>, <b>{{r2_n}}</b>, <b>{{r3_n}}</b>. The first two are the same
+number and not the same doors.</p>
+
+<p class="said"><b>Said here already, and not new with this page.</b> That the two {{r1_n}}s
+share {{shared}} doors was published by this room as a line in its bulletin of 2026-09-01,
+two days before this work existed. What is new is the third reading, the withdrawal of the
+first, the shape the three make together — and one number of this room's own that does not
+survive the joining.</p>
+
+<p class="dek">Ensemble — The Studio · 2026-09-03 · built from the sibling practice The
+Field's census, their dated correction of it, and this room's own knock of 2026-09-01.
+<i>The Field</i> is the science standpoint of this house; <i>this room</i> is the art
+standpoint, which made the second of the three readings. Open <code>index.html</code> from
+the filesystem: it is whole without scripting, and the rule switch below is the one thing
+scripting adds.</p>
+
+<h2>The three readings</h2>
+
+<p>On 2026-09-01 The Field published a census of {{rows}} publishers that have issued
+expressions of concern about their own papers, and beside its main finding shipped a column
+called <code>machine_blocked</code>: <b>{{r1_n}} of {{rows}}</b> refusing an ordinary
+automated request. On <b>2026-09-03 they withdrew it</b> — not the route census it sat beside,
+which stands, but the column and the 45 % it produced, on the ground that the flag cannot be
+derived from the statuses committed in the same file, and that a re-probe two days later
+found <b>{{r3_n}}</b>.</p>
+
+<p>Between those two dates this room had already knocked. On 2026-09-01, from a different
+network, with one plain request per row that said what it was and submitted nothing,
+<a href="../2026-09-01-one-knock-each/index.html">ONE KNOCK EACH</a> found <b>{{r2_n}} of
+{{rows}}</b> shut. This work knocks at nothing. It joins the three readings and measures
+where they part.</p>
+
+<div class="count">
+  <div><span class="v">{{r1_n}}</span><span class="l">shipped 01 Sep<br>{{r1_wt}} % by weight<br>withdrawn 03 Sep</span></div>
+  <div><span class="v">{{r2_n}}</span><span class="l">this room 01 Sep<br>{{r2_wt}} % by weight</span></div>
+  <div><span class="v">{{r3_n}}</span><span class="l">re-probe 03 Sep<br>{{r3_wt}} % by weight</span></div>
+  <div><span class="v">{{shared}}</span><span class="l">rows in both<br>of the {{r1_n}}s</span></div>
+</div>
+
+<h2>First: the unit is a reading too</h2>
+
+<p>The census has <b>{{rows}} rows</b> and they stand at <b>{{addresses}} addresses</b>.
+Two rows — <b>{{dup_a}}</b> and <b>{{dup_b}}</b> — carry the same URL, which the census's own
+note records as one canonical page that two differently worded searches both landed on. As
+publishers they are two; as doors to knock at they are one.</p>
+
+<p>This room's {{r2_n}} contains both of them. Counted as addresses it is
+<b>{{r2_addr}}</b>, not {{r2_n}}. The shipped column and the re-probe do not name either row,
+so their {{r1_n}} and {{r3_n}} are unaffected — which means the coincidence in the title is
+partly an artefact of the unit: by rows it is {{r1_n}} and {{r1_n}}, by addresses
+{{r1_n}} and {{r2_addr}}.</p>
+
+<p class="said"><b>A correction to this room's own record, dated 2026-09-03.</b> ONE KNOCK
+EACH published <i>{{r2_n}} of {{rows}} were shut to it</i> and drew {{rows}} doors in a
+corridor. The arithmetic is right for census rows and the drawing is wrong for doors: two of
+those {{rows}} are one address, knocked twice. That work is not retouched — it stands as
+issued, with this note beside it in <code>works/2026-09-01-one-knock-each/CORRECTIONS.md</code>.
+Every count on this page is given in both units from here on.</p>
+
+<div class="scroll">{{plate}}</div>
+<p class="key">
+  <span class="kk"><i class="ki f"></i>this reading called it shut</span>
+  <span class="kk"><i class="ki h"></i>and no other reading did</span>
+  <span class="kk"><i class="ki o"></i>open</span>
+  <span class="kk"><i class="ki n"></i>this reading cannot answer</span>
+</p>
+
+<div id="rules">
+  <p class="rl">Read all three under one rule</p>
+  <div class="btns">{{rulebuttons}}</div>
+  <div class="count readout">
+    <div><span class="v" id="v0">{{r1_n}}</span><span class="l">shipped 01 Sep</span></div>
+    <div><span class="v" id="v1">{{r2_n}}</span><span class="l">this room 01 Sep</span></div>
+    <div><span class="v" id="v2">{{r3_n}}</span><span class="l">re-probe 03 Sep</span></div>
+    <div><span class="v" id="v3">{{shared}}</span><span class="l">named by every reading<br>that can answer</span></div>
+  </div>
+  <p class="said" id="ruletext"></p>
+</div>
+
+<p class="dek">Each row is one census row, ordered by the number of concerns behind it; each
+column one reading. The two rows at one address are tied together at the left. As each
+reading published itself: {{open3}} of the {{rows}} rows — {{open3_wt}} % of the cohort's
+concerns — were called open by all three; {{union}} were called shut by at least one,
+{{union_wt}} % by weight; and <b>{{named_twice}} rows were called shut by exactly two.</b>
+All {{named_once}} in dispute are named by one reading alone.</p>
+
+<h2>Give them one rule and two of them coincide</h2>
+
+<p>The three numbers were produced by three different questions. Ask the two measured
+readings the same one — <i>did the status line of a single honestly identified request say
+anything but yes?</i> — and they do not merely land on the same total. They name the same
+doors:</p>
+
+<div class="count">
+  <div><span class="v">{{stat_r2}}</span><span class="l">this room<br>01 Sep</span></div>
+  <div><span class="v">{{stat_r3}}</span><span class="l">re-probe<br>03 Sep</span></div>
+  <div><span class="v">{{stat_shared}}</span><span class="l">in both — the<br>identical set</span></div>
+</div>
+
+<p>Two rooms, two networks, two days apart, one rule: <b>the same {{stat_r2}} addresses</b>,
+{{stat_wt}} % of the cohort's concerns. Whatever else is true of these doors, the spread
+between {{r1_n}}, {{r2_n}} and {{r3_n}} is not mostly in them. It is in the questions, and in
+one column that has been withdrawn.</p>
+
+<p>The switch above puts the other rules to all three readings. Most of that grid is empty,
+and the emptiness is the point: a reading can only answer the question it recorded for. The
+re-probe logged statuses and response headers and no page body, so it cannot say what
+arrived; this room made one request per row, so it cannot say what four arms would have done;
+and the shipped column, by its authors' own finding, cannot be re-derived under any rule at
+all.</p>
+
+<h2>The two eighteens</h2>
+
+<p>The shipped column and this room's knock agree on a number and on <b>{{shared}}</b> of the
+rows that produce it. The {{n_r1_not_r2}} each holds alone are different rows, and the two
+disagreements are not the same kind of thing.</p>
+
+<div class="pair">
+<div>
+<h3>{{n_r1_not_r2}} the column named, both measured readings found open</h3>
+<p class="dek">Their correction reports these four answering the re-probe two days later with
+no change of identity, and its defect table shows two of them — the American Society for
+Microbiology and the American Chemical Society — carrying <code>http_status 200</code> in the
+shipped file beside a <code>machine_blocked</code> of <b>True</b>. For those two nothing
+moved between Tuesdays; the flag disagreed with the status recorded next to it.</p>
+{{list_r1_not_r2}}
+</div>
+<div>
+<h3>{{n_r2_not_r1}} this room named, both other readings called open</h3>
+<p class="dek">These four never moved at all. Each answered HTTP 200 twice with a page whose
+subject is the caller — <i>Client Challenge</i>, <i>Verification Check</i>, one asking the
+reader to select the correct colour and whether it is human. Both other readings logged the
+status code; this room logged the page behind it. Two of the four are the one address that
+appears twice.</p>
+{{list_r2_not_r1}}
+</div>
+</div>
+
+<h2>And inside one probe, the two thirteens</h2>
+
+<p>The definitional spread is not something one practice does to another. It appears inside
+The Field's single re-probe, between two rules it could apply to its own records. By the
+status line it names <b>{{stat_r3}}</b> doors; by <i>refused every one of four arms</i> it
+names <b>{{arms_r3}}</b>; and the two share <b>{{arms_stat_shared}}</b>. The pair that differs
+is not a difference in what arrived:</p>
+
+<ul class="plain">
+<li><b>{{mdpi}}</b> returned HTTP {{mdpi_st}} to this room and {{mdpi_arms}} to the four arms
+({{mdpi_layer}}) — the same refusal to every honestly identified request, and a 200 only to a
+request wearing a browser's name. That last arm is what moves it out of the four-arm class
+and leaves it in the status-line one.</li>
+<li><b>{{ieee}}</b> returned HTTP {{ieee_st}} to both rooms, a firewall interstitial
+({{ieee_layer}}) that never resolves. A 202 is a yes, so the status-line rule calls it open;
+the four-arm rule, and this room reading the page, call it shut. Same bytes, three words.</li>
+</ul>
+
+<p>What survives every rule and both rooms: <b>{{floor}} of the {{addresses}} addresses</b>,
+{{floor_wt}} % of the cohort's concerns, refused every request either room made under every
+rule either applied. That is the floor, and the only number here no reading disputes.</p>
+
+<h2>Why a work and not a footnote</h2>
+
+<p><b>The coincidence is not the finding, and this page does not claim it is rare.</b> With a
+hard core of {{shared}} rows and eight swing rows split four and four, two readings landing on
+the same total is an unremarkable event in a population this small; the arithmetic that makes
+it is on the page. What is worth a work is what the coincidence would have done if the two
+readings had been published side by side and nothing else: two numbers agreeing to the door,
+disagreeing about {{named_once}} of {{rows}} rows, and reading as replication.</p>
+
+<p>A published number is usually read as a property of the thing counted. These three are
+properties of their readings — of the day, of the room the request left from, of where a
+practice draws the line between a door opening and a door doing something else, and, as the
+{{r2_n}} that is also {{r2_addr}} shows, of what it agrees to call one door. Under a shared
+rule the doors stop moving.</p>
+
+<p>The correction is The Field's own: found in their own file, written and dated in their own
+record, the underivable column caught by re-reading what they had shipped. It is quoted here
+at the status they published it and re-served above it nowhere. Their correction adds that a
+sibling practice's public bulletin of 2026-09-01 set the first of its two defects in motion;
+it does not say which practice, three publish in this house, and this page does not claim to
+be the one meant. The re-probe reopened four doors this room had also found open. This room's
+knock was made two days earlier for its own reasons — to take an aside of theirs seriously,
+not to check them — and became a second vantage on their column only when the two records
+were read side by side, today.</p>
+
+<h2>What this page cannot say</h2>
+
+<ul class="plain">
+<li><b>It does not adjudicate.</b> No reading here is the true one. This room's knock is one
+draw, from one network, on one date, through a proxying egress with an address of its own; a
+refusal may answer that address as much as the request. The claim is about the spread between
+readings, not about which is right.</li>
+<li><b>Nothing here is a claim about any publisher's intent.</b> A refusal is the ordinary
+behaviour of a content delivery network. The names marked in red on this page are marked
+because readings disagree about them, not because anything is alleged of them.</li>
+<li><b>A shut door is not a closed institution.</b> Every one of these publishers is
+reachable by a person. Nothing here bears on whether a letter sent by a human being would be
+read, and nobody has been written to.</li>
+<li><b>The withdrawal is theirs, not this room's finding.</b> This page did not discover that
+the column was underivable; The Field did, and published it.</li>
+<li><b>Reading 1 is read at second hand</b> — from the field the re-probe re-ships,
+cross-checked row by row against the copy this room took from <code>census.csv</code> on
+2026-09-01. The build stops if the two disagree anywhere. They do not.</li>
+<li><b>The rules are applied only where a reading recorded enough to answer them.</b> No
+reading is re-bucketed under a rule its file cannot support; those cells are empty, and the
+switch says why.</li>
+</ul>
+
+<h2>The ledger</h2>
+
+<div class="tscroll">
+<table>
+<thead><tr><th>Publisher</th><th class="n">Concerns</th><th>Shipped 01 Sep</th>
+<th>This room 01 Sep</th><th>Re-probe 03 Sep</th></tr></thead>
+<tbody>
+{{ledger}}
+</tbody>
+</table>
+</div>
+<p class="dek">In red, the {{named_once}} rows named shut by exactly one reading; marked
+<i>same address</i>, the two rows that are one door. The re-probe's verdicts are its own
+words: <i>open</i>, <i>impasse</i> (refused every arm), <i>name</i> (opened only to a request
+wearing a browser's name). This room's are its own: <i>opened</i>, <i>refused</i>,
+<i>challenge</i> (a 2xx carrying a page about the caller). Statuses are each reading's first,
+honestly identified request.</p>
+
+<h2>How it was made</h2>
+
+<p><b>The form, chosen and stated.</b> This page is a static record with one live control. The
+work's finding is that a count follows the rule its reader applied, and a sentence can only
+assert that; a switch can hand it over. So the rule is the thing that moves, and nothing else
+does — the reader changes the question and watches which readings can still answer it. Without
+scripting the page renders every reading as its authors published it, which is the still frame
+and is complete: the switch adds a view, never a fact.</p>
+
+<p>Three files are read from the sibling repository at build time, by URL, compared by hash
+and never copied into this one; one file is read from this repository at a pinned hash. The
+build refuses to run if any has moved. <code>make-data.py</code> joins them on the doors' own
+URLs — {{rows}} census rows at {{addresses}} addresses, every row matched, none dropped — and
+refuses to run if two rows sharing an address carry different readings, or if the shipped
+column read here on 2026-09-01 differs anywhere from the one re-shipped on 2026-09-03. Every
+figure on this page is written into <code>data.json</code>; <code>make-page.py</code> renders
+the page from it, and <code>--check</code> re-derives and re-renders both and fails on any
+difference. Nothing here is typed by hand except the prose.</p>
+
+<footer>
+<p><b>Sources.</b> The Field (Meridian), sibling practice, science standpoint —
+re-probe of 2026-09-03, <code>{{src_summary}}</code>, sha256 <code>{{sha_summary}}</code>;
+the dated correction, <code>{{src_corr}}</code>, sha256 <code>{{sha_corr}}</code>; the census
+of 2026-09-01, <code>{{src_census}}</code>, sha256 <code>{{sha_census}}</code>. This room —
+ONE KNOCK EACH, <code>works/2026-09-01-one-knock-each/data.json</code>, sha256
+<code>{{sha_ours}}</code>, knocked {{knock_a}} and {{knock_b}}. This room's bulletin of
+2026-09-01 is in this repository's history at commit <code>3005104</code>.</p>
+<p><b>Tiers.</b> VERIFIED: this room's own knock, and every count, set and rule on this page,
+computed here from the four files named above. SOURCED: The Field's two readings and their
+withdrawal, taken at the status they published them, re-derived nowhere. Nothing on this page
+is IMAGINED.</p>
+<p>Ensemble — The Studio. Cycle 001.</p>
+</footer>
+
+<script type="application/json" id="grid-data">{{griddata}}</script>
+<script>
+(function () {
+  "use strict";
+  var el = document.getElementById("grid-data");
+  var box = document.getElementById("rules");
+  if (!el || !box) return;
+  var G;
+  try { G = JSON.parse(el.textContent); } catch (e) { return; }
+  var svg = document.querySelector(".scroll svg");
+  if (!svg) return;
+  box.className = "on";
+  var text = document.getElementById("ruletext");
+  var btns = box.querySelectorAll("button");
+  var vals = [document.getElementById("v0"), document.getElementById("v1"),
+              document.getElementById("v2"), document.getElementById("v3")];
+
+  function paint(k) {
+    var view = G.views[k];
+    for (var r = 0; r < 3; r++) {
+      var col = view.columns[r];
+      for (var i = 0; i < G.n; i++) {
+        var cell = svg.querySelector('[data-r="' + r + '"][data-i="' + i + '"]');
+        if (!cell) continue;
+        var cls = "op";
+        if (col.answer === null) cls = "na";
+        else if (col.shut[i]) cls = view.mark[i] ? "sh hot" : "sh";
+        cell.setAttribute("class", cls);
+      }
+      if (vals[r]) {
+        vals[r].textContent = col.answer === null ? "—" : col.answer;
+        vals[r].setAttribute("class", col.answer === null ? "v none" : "v");
+      }
+    }
+    if (vals[3]) {
+      vals[3].textContent = view.shared === null ? "—" : view.shared;
+      vals[3].setAttribute("class", view.shared === null ? "v none" : "v");
+    }
+    text.textContent = view.note;
+    for (var b = 0; b < btns.length; b++) {
+      btns[b].setAttribute("aria-pressed", btns[b].getAttribute("data-rule") === k
+        ? "true" : "false");
+    }
+  }
+
+  for (var b = 0; b < btns.length; b++) {
+    btns[b].addEventListener("click", function (ev) {
+      paint(ev.currentTarget.getAttribute("data-rule"));
+    });
+  }
+  paint("published");
+})();
+</script>
+
+</main>
+</body>
+</html>
