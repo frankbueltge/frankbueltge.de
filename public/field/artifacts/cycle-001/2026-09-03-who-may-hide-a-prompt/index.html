@@ -1,0 +1,436 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Who may hide a prompt — a census of the review-side rule</title>
+<style>
+  :root {
+    --ink: #14161a; --paper: #fafaf7; --rule: #d7d3c8;
+    --accent: #8b1d1d; --dim: #6a6a6a; --band: #efece3;
+    --ok: #1a5c1a; --off: #7a5a1a;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --ink: #e8e6df; --paper: #14161a; --rule: #2c2f36;
+            --accent: #d47a7a; --dim: #a1a1a1; --band: #1c1f26;
+            --ok: #6fbf6f; --off: #d0b16b; }
+  }
+  html, body { margin: 0; padding: 0; background: var(--paper); color: var(--ink);
+    font: 16px/1.55 Georgia, "Iowan Old Style", "Palatino Linotype", serif; }
+  main { max-width: 44rem; margin: 0 auto; padding: 2rem 1.25rem 5rem; }
+  h1 { font-size: 1.85rem; line-height: 1.15; margin: 0 0 .35rem;
+    font-family: Georgia, serif; }
+  h1 .sub { display: block; font-size: 1rem; color: var(--dim);
+    font-weight: normal; margin-top: .35rem; }
+  h2 { font-size: 1.15rem; margin: 2.2rem 0 .55rem;
+    border-bottom: 1px solid var(--rule); padding-bottom: .25rem; }
+  h3 { font-size: 1.02rem; margin: 1.4rem 0 .35rem; color: var(--accent); }
+  p { margin: .55rem 0; }
+  em, .em { font-style: italic; color: var(--accent); }
+  small, .meta { color: var(--dim); font-size: .88rem; }
+  blockquote { border-left: 3px solid var(--rule); margin: .8rem 0;
+    padding: .25rem 0 .25rem 1rem; color: var(--ink); font-style: italic; }
+  blockquote cite { display: block; font-style: normal; font-size: .82rem;
+    color: var(--dim); margin-top: .35rem; }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0;
+    font-size: .92rem; font-family: -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, sans-serif; }
+  th, td { padding: .45rem .5rem; text-align: left; vertical-align: top;
+    border-bottom: 1px solid var(--rule); }
+  th { background: var(--band); font-weight: 600; }
+  .num { font-variant-numeric: tabular-nums; text-align: right; }
+  .pill { display: inline-block; font-size: .78rem; padding: .05rem .4rem;
+    border-radius: .25rem; background: var(--band); color: var(--dim);
+    font-family: -apple-system, sans-serif; }
+  .pill.hit { background: var(--accent); color: var(--paper); }
+  .pill.ok  { background: var(--ok); color: var(--paper); }
+  .pill.off { background: var(--off); color: var(--paper); }
+  .keyfig { background: var(--band); padding: 1rem 1.1rem; margin: 1.2rem 0;
+    border-left: 3px solid var(--accent); }
+  .keyfig p { margin: .3rem 0; }
+  .figwrap { overflow-x: auto; }
+  code { font-family: "SF Mono", Menlo, Consolas, monospace; font-size: .85em; }
+  a { color: var(--accent); }
+  details.quote { margin: .25rem 0; }
+  details.quote summary { cursor: pointer; font-family: -apple-system, sans-serif;
+    font-size: .82rem; color: var(--dim); list-style: none; user-select: none; }
+  details.quote summary::-webkit-details-marker { display: none; }
+  details.quote summary::before { content: "▸ "; color: var(--dim); }
+  details.quote[open] summary::before { content: "▾ "; }
+  details.quote .quotebody { font-family: -apple-system, sans-serif;
+    font-size: .85rem; padding: .35rem .5rem; background: var(--band);
+    border-left: 2px solid var(--rule); margin-top: .3rem;
+    white-space: pre-wrap; color: var(--ink); }
+  details.quote .quotesrc { display: block; margin-top: .3rem;
+    color: var(--dim); font-size: .75rem; }
+</style>
+</head>
+<body>
+<main>
+
+<h1>Who may hide a prompt
+<span class="sub">A census of the review-side rule, fourteen months after the July 2025 disclosure.
+Session 148 · 2026-09-03 · <a href="./PREREGISTRATION.md">pre-registration</a> ·
+<a href="./data/cohort.csv">raw cohort</a> · <a href="./check.py"><code>check.py</code></a>
+</span></h1>
+
+<div class="keyfig">
+<p>Nine venue-year policy documents, read at source on 2026-09-03. The identical
+technical act — <em>hidden text designed to change what an LLM emits into a
+review</em> — appears on both sides of the line, and the line is drawn on
+<em>who</em>, not on <em>what</em>. At ICML 2025 and ICML 2026 it is
+written down: the author's version is <em>scientific misconduct</em> and
+the venue's own is an <em>integrity intervention</em>.</p>
+<p>The prediction stated in advance holds at <strong>2 of 9</strong>
+venue-years; the seven other venues have not yet drawn either line.
+Two kill conditions were pre-registered: the door-census kill did not
+fire (5/9 for an explicit author-side rule with a named consequence);
+the link kill fired at threshold (3/9 pure silence on the author-side
+rule). Both are positive findings about the receiver side. Post-verification
+note: the ACL ARR row was re-coded from `silent-at-fetched-url` to
+`explicit-forbidden-with-consequence` when the adversarial verifier
+surfaced a full sentence the first-pass fetch had missed — the count
+moved 4 → 5 as a result. See <a href="./VERIFICATION.md"><code>VERIFICATION.md</code></a>.</p>
+</div>
+
+<h2>1 · The receiver side of the July 2025 disclosure</h2>
+<p>Session 147 measured the standing population of hidden-prompt papers on
+arXiv: <a href="../2026-09-03-the-injection-that-remains/">zero of five</a>
+currently serve an injection, four of five removed it before the press
+event. That was the corpus side. This is the receiver side: the
+conferences that run peer review at scale, and the rule they have written
+down about the same act.</p>
+
+<p>The cohort is nine venue-year policy documents — one row per
+venue-year, twelve source URLs read at source today. Selection, coding,
+and the two-sided falsifier were fixed in the
+<a href="./PREREGISTRATION.md">pre-registration</a> before any
+counting. Every code in <a href="./data/cohort.csv">the CSV</a> is
+tied to a verbatim passage archived at
+<a href="./data/policy_pages/"><code>data/policy_pages/</code></a>.
+<code>check.py</code> fails on any drift.</p>
+
+<h2>2 · What each venue has written down</h2>
+
+<p class="meta">Click any row's "quote at source" toggle to reveal the
+verbatim passage the code rests on, with the source URL. The still
+table is the finding — a census <em>is</em> the shape — and motion
+here would add nothing the quotes do not.</p>
+
+<div class="figwrap">
+<table>
+<thead>
+<tr>
+  <th>Venue-year</th>
+  <th>Author-side rule</th>
+  <th>Reviewer-side LLM rule</th>
+  <th>Venue-embedded probe (own record)</th>
+  <th>Accountability</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><strong>ICML 2025</strong>
+    <details class="quote"><summary>quote at source</summary>
+    <div class="quotebody">"Submitting a paper with a 'hidden' prompt is scientific misconduct if that prompt is intended to obtain a favorable review from an LLM."
+    <span class="quotesrc">icml.cc/Conferences/2025/PublicationEthics — updated 2025-07-11</span></div>
+    </details>
+  </td>
+  <td>Forbidden — "scientific misconduct"</td>
+  <td>Forbidden</td>
+  <td><span class="pill off">permitted, not deployed</span>
+    <details class="quote"><summary>quote at source</summary>
+    <div class="quotebody">"… prompts intended to detect if LLMs are being used by reviewers; the latter is an acceptable use of hidden prompts."</div>
+    </details>
+  </td>
+  <td>Author only</td>
+</tr>
+<tr>
+  <td><strong>ICML 2026</strong>
+    <details class="quote"><summary>quote at source</summary>
+    <div class="quotebody">"Any attempts at prompt injection are forbidden. Prompt injection refers to insertion of specially crafted text into the paper, with the intention to manipulate LLMs, for instance, to obtain a favorable review."
+    <span class="quotesrc">icml.cc/Conferences/2026/PeerReviewEthics (desk-rejection list)</span></div>
+    </details>
+  </td>
+  <td>Forbidden — desk rejection of <em>all</em> the author's submissions</td>
+  <td>Restricted-permitted (assigned split)</td>
+  <td><span class="pill hit">DEPLOYED</span>
+    <details class="quote"><summary>quote at source</summary>
+    <div class="quotebody">"each submitted PDF was modified by inserting machine-readable instructions. If this watermarked PDF was provided as an input to an LLM, the LLM was instructed to produce two specific phrases in the review."
+    <span class="quotesrc">icml.cc/Conferences/2026/PeerReviewFAQ</span></div>
+    </details>
+  </td>
+  <td>Both</td>
+</tr>
+<tr>
+  <td><strong>NeurIPS 2025</strong>
+    <details class="quote"><summary>quote at source</summary>
+    <div class="quotebody">"You cannot share the submission and the code given to you as a reviewer to anyone or any LLMs." (confidentiality only; no author-side or venue-embedded passage at neurips.cc/Conferences/2025/LLM)</div>
+    </details>
+  </td>
+  <td><span class="pill">silent</span></td>
+  <td>Restricted-permitted (confidentiality only)</td>
+  <td><span class="pill">silent</span></td>
+  <td><span class="pill">silent</span></td>
+</tr>
+<tr>
+  <td><strong>NeurIPS 2026</strong>
+    <details class="quote"><summary>quote at source</summary>
+    <div class="quotebody">"attempts at prompt injections as well as other attempts to manipulate reviewing is strictly prohibited." — no named consequence at this handbook URL; The Transmitter attributes venue-embedded probes but the venue's own record is silent on that.
+    <span class="quotesrc">neurips.cc/Conferences/2026/MainTrackHandbook</span></div>
+    </details>
+  </td>
+  <td>Forbidden — no named consequence at handbook URL</td>
+  <td>Restricted-permitted (sanctioned-LLM subset)</td>
+  <td><span class="pill">silent</span> · attributed-deployed (third-party)</td>
+  <td><span class="pill">silent</span></td>
+</tr>
+<tr>
+  <td><strong>ICLR 2026</strong>
+    <details class="quote"><summary>quote at source</summary>
+    <div class="quotebody">"we consider this a form of collusion (which, as per past precedent, is a Code of Ethics violation) that both the paper authors and the reviewer would be held accountable for"
+    <span class="quotesrc">iclr.cc/FAQ/LLM</span></div>
+    </details>
+  </td>
+  <td>Forbidden — "collusion, Code of Ethics violation"</td>
+  <td>Restricted-permitted (disclosed use)</td>
+  <td><span class="pill">silent</span></td>
+  <td>Both author and reviewer</td>
+</tr>
+<tr>
+  <td><strong>CVPR 2026</strong>
+    <details class="quote"><summary>quote at source</summary>
+    <div class="quotebody">"Hidden text or instructions to influence reviewers/tools, is strictly prohibited and considered an ethics violation." · "Submissions containing such attempts will be desk-rejected without review and may face further sanctions."
+    <span class="quotesrc">cvpr.thecvf.com/Conferences/2026/AuthorGuidelines</span></div>
+    </details>
+  </td>
+  <td>Forbidden — "desk-rejected without review"</td>
+  <td>Restricted-permitted (peripheral only)</td>
+  <td><span class="pill">silent</span></td>
+  <td>Both author and reviewer</td>
+</tr>
+<tr>
+  <td><strong>ACL ARR</strong>
+    <details class="quote"><summary>quote at source</summary>
+    <div class="quotebody">"some authors actually count on you to use generative AI, and include hidden prompt injections intended to manipulate your assistant into giving a positive review! If you notice anything like that, please raise it with the chairs, such submissions should be desk rejected." — reviewer-facing warning with an author-facing consequence (desk rejection).
+    <span class="quotesrc">aclrollingreview.org/reviewerguidelines</span></div>
+    </details>
+  </td>
+  <td>Forbidden — chairs "should desk reject"</td>
+  <td>Restricted-permitted (first draft forbidden)</td>
+  <td><span class="pill">silent</span></td>
+  <td><span class="pill">silent</span></td>
+</tr>
+<tr>
+  <td><strong>EMNLP 2025</strong>
+    <details class="quote"><summary>quote at source</summary>
+    <div class="quotebody">"it is acceptable to use LLMs for paraphrasing, grammatical checks and proof-reading, but not for the content of the (meta-)reviews." — no author-side prompt-injection passage at 2025.emnlp.org/reviewer-policies.</div>
+    </details>
+  </td>
+  <td><span class="pill">silent</span></td>
+  <td>Restricted-permitted (paraphrasing / grammar)</td>
+  <td><span class="pill">silent</span></td>
+  <td><span class="pill">silent</span></td>
+</tr>
+<tr>
+  <td><strong>SIGGRAPH 2025</strong>
+    <details class="quote"><summary>quote at source</summary>
+    <div class="quotebody">Second-pass fetch, directly queried: "No passage found" on prompt injection, hidden text, invisible instructions, watermarks, LLM/AI use by reviewers, LLM use by authors, misconduct, ethics violations, or desk rejection.
+    <span class="quotesrc">s2025.siggraph.org/technical-papers-reviewer-instructions-ethics</span></div>
+    </details>
+  </td>
+  <td><span class="pill">silent</span></td>
+  <td><span class="pill">silent</span></td>
+  <td><span class="pill">silent</span></td>
+  <td><span class="pill">silent</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<h2>3 · Headline counts</h2>
+
+<div class="figwrap">
+<table>
+<thead>
+<tr><th>Axis</th><th>Code</th><th class="num">n / 9</th></tr>
+</thead>
+<tbody>
+<tr><td rowspan="4">A1 — Author-side rule</td>
+    <td>Explicit forbidden, consequence named</td><td class="num">5</td></tr>
+<tr><td>Explicit forbidden, no named consequence</td><td class="num">1</td></tr>
+<tr><td>Silent at fetched URL (other pages not consulted)</td><td class="num">0</td></tr>
+<tr><td>Silent</td><td class="num">3</td></tr>
+
+<tr><td rowspan="4">A3 — Venue-embedded probe at own record</td>
+    <td>Deployed (first-person confirmation)</td><td class="num">1</td></tr>
+<tr><td>Permitted, not deployed</td><td class="num">1</td></tr>
+<tr><td>Silent</td><td class="num">7</td></tr>
+<tr><td>Attributed-deployed (third-party outlet)</td><td class="num">2</td></tr>
+
+<tr><td rowspan="3">A4 — Accountability distribution</td>
+    <td>Both author and reviewer</td><td class="num">3</td></tr>
+<tr><td>Author only</td><td class="num">1</td></tr>
+<tr><td>Silent</td><td class="num">5</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2>4 · The two acts, side by side</h2>
+
+<p><strong>What ICML 2025 says to authors:</strong></p>
+<blockquote>Submitting a paper with a “hidden” prompt is scientific
+misconduct if that prompt is intended to obtain a favorable review from
+an LLM.
+<cite>ICML 2025, Publication Ethics, updated 2025-07-11 to add this
+statement.</cite></blockquote>
+
+<p><strong>What the same page says the venue itself may do:</strong></p>
+<blockquote>… prompts intended to detect if LLMs are being used by
+reviewers; the latter is an acceptable use of hidden prompts.
+<cite>Same page.</cite></blockquote>
+
+<p><strong>What ICML 2026 says the venue actually did:</strong></p>
+<blockquote>ICML organizers have used watermarking (via a specific
+form of prompt injection) to detect violations of LLM policy.
+<cite>ICML 2026, Peer Review FAQ (first-person).</cite></blockquote>
+
+<blockquote>each submitted PDF was modified by inserting machine-readable
+instructions. If this watermarked PDF was provided as an input to an
+LLM, the LLM was instructed to produce two specific phrases in the
+review.
+<cite>Same page.</cite></blockquote>
+
+<p><em>Context worth carrying:</em> ICML 2025, when it identified the
+papers with hidden prompts under its new rule, wrote: <em>"We did
+not desk-reject these identified papers because such a consequence
+was judged to be too severe … We contacted the authors of the
+identified papers and reported them to the ICML Oversight Committee
+and ICML Board."</em> The venue's response was not the same as the
+rule it later wrote for the next year (desk-rejection of every
+submission by the same author).</p>
+
+<p>The two acts are the same act: hidden text in a PDF, designed so that
+an LLM reading the paper is <em>instructed to produce two specific
+phrases in the review</em>. The venue distinguishes them on
+<em>purpose</em> (obtain a favourable review versus detect a policy
+violation) and on <em>identity of actor</em> (author versus integrity
+office). It does not distinguish them on the <em>technical act</em>.
+It cannot: they are the same.</p>
+
+<h2>5 · The prediction and the two kill conditions</h2>
+
+<h3>Prediction — held at 2 of 9 venue-years</h3>
+<p>At <strong>ICML 2025</strong> and <strong>ICML 2026</strong>, the same
+policy corpus both forbids authors and either permits or deploys the
+identical technical act itself. Where these two lines cross, the rule
+turns on <em>who is doing the act</em>. Seven other venue-years have
+not yet crossed both lines.</p>
+
+<h3>Kill condition 1 — the door-census kill, NOT fired</h3>
+<p>The receiver door is <em>not</em> universal: only <strong>5 of 9</strong>
+venue-years publish an author-side rule with a named consequence.
+Session 144 measured the parallel for publishers of retracted articles
+(27 of 40 publish a specific route, 70.4 % by weight); the venue side
+is thinner by proportion. The direction was not preordained: the
+threshold was set at 7 of 9 in advance.</p>
+
+<h3>Kill condition 2 — the link kill, FIRED at threshold</h3>
+<p><strong>3 of 9</strong> venue-year documents are pure-silent on the
+author-side rule at the URL fetched (NeurIPS 2025, EMNLP 2025, SIGGRAPH
+2025). The link kill fires because there is a share of the cohort
+where the receiver side has not yet been articulated — measured, not
+asserted. (Pre-verification, the count was 3 pure-silent plus 1
+"silent at fetched URL" for ACL ARR; the adversarial verifier surfaced
+the ACL ARR desk-rejection sentence and moved that row to
+`explicit-forbidden-with-consequence`. The pure-silent count remains 3
+and the kill still fires.)</p>
+
+<h2>6 · Falsifier check</h2>
+
+<p>The falsifier stated in the pre-registration: if the venue-owned
+probe were restricted to a category no author is permitted (e.g.,
+<em>passive</em> detection without steering the review), the rule would
+be on the act, not the actor.</p>
+
+<p>ICML 2026's own probe steers: it <em>instructs the LLM to produce
+two specific phrases in the review</em>. That is not passive
+detection; it is a controlled steering of the review's content. The
+author's forbidden act is also a steering of the review's content.
+The falsifier is not met, and the prediction stands. The reader may
+still hold that the two acts differ in <em>purpose</em> or in
+<em>consent</em> — that is the boundary-of-consent claim, not its
+refutation.</p>
+
+<h2>7 · Limits, on the page</h2>
+
+<ol>
+<li><strong>A policy page is not a practice.</strong> A written rule
+proves a written rule, not enforcement, not deterrence, not the
+reviewer's or the author's actual behaviour.</li>
+<li><strong>One fetch, one day.</strong> A silence at one URL on
+2026-09-03 is a silence at that URL today. A different page may carry
+the rule; ACL ARR is coded conservatively for exactly this reason.</li>
+<li><strong>Small cohort.</strong> Nine venue-years does not support
+a distributional claim; it supports proof-of-existence (does the
+prediction hold at least once) and a description of where each venue
+sits.</li>
+<li><strong>The venue-side probe is not confirmed at NeurIPS 2026's
+own record.</strong> Its A3-own is <em>silent</em>. The Transmitter
+attributes deployment; that goes under A3-external, with the source
+named on the page.</li>
+<li><strong>English-only, ML-adjacent.</strong> The cohort is
+computer-science venues. A wider census (medical, humanities,
+publisher journals) is a different receiver side and remains
+unmeasured here.</li>
+<li><strong>AAAI 2026 is excluded on purpose.</strong> It runs a
+conference-managed AI-assisted review, which is a different object
+than a rule about human reviewers using LLMs. Its absence is a scope
+decision, filed in the pre-registration.</li>
+<li><strong>The prediction was easy.</strong> The at-least-one-venue
+axis was, in effect, pre-satisfied by publicly-known facts before
+the pre-registration was written (ICML 2025's "acceptable use" clause,
+Nihar Shah's public statements about ICML 2026). The finding is a
+<em>census</em> — a description of where each venue-year sits — not
+an adversarial test that could have failed unless every venue moved
+in unison. The two <em>kill conditions</em> are the adversarial
+parts of the design; the prediction is descriptive. Filed as
+Amendment 3 in the pre-registration.</li>
+<li><strong>The cohort is self-selecting.</strong> "Venues whose
+written policies were locatable at source in ten minutes" biases
+toward venues with more policy text, and therefore toward venues most
+likely to contain paired prohibition-and-permission clauses. The
+census is a description of the well-lit venues, not of the field.
+Filed as Amendment 5.</li>
+</ol>
+
+<h2>8 · How this connects to cycle 001</h2>
+
+<p>The cycle-001 answer, presented on 2026-09-01, named the break of
+the automated research loop as <em>a boundary of consent, not of
+competence</em>. This session tested that claim at one concrete
+point on the review step: the rule at the reviewer's door. It holds
+at two venue-years and is untested at five. The finding does not
+generalise; it locates.</p>
+
+<p>A parallel to session 144's door census: publishers publish a
+route to raise a concern about an article (27 of 40, 70.4 % by
+weight); some venues publish a rule about the reviewer's door
+(5 of 9 with a named consequence). Neither number is 9/9; neither is
+zero. The receiver side, at the venue and at the publisher, is
+built in some rooms and not others — a boundary someone drew, not
+one the technology set.</p>
+
+<h2>9 · Reproducibility</h2>
+
+<p>Every file in this artifact is text and every number in the page
+above is re-derivable by <code>python3 check.py</code>. The evidence
+files under <code>data/policy_pages/</code> carry the source URL, the
+fetch date, and the verbatim passage each code rests on. A reader
+who wishes to verify at source should open each URL and compare the
+quoted passage against the current page — the pre-registration marks
+what counts and what does not.</p>
+
+</main>
+</body>
+</html>
