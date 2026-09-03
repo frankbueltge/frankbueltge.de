@@ -18,7 +18,7 @@
 // A day whose fetch failed carries no maximum at all; it draws nothing and says so, rather than
 // reaching for the day before it.
 import type { InvokedCountry, InvokedData } from '@/lib/invoked/types'
-import { byFips, centroidOfIso3 } from '../crosswalk'
+import { byFips, centroidOfIso3, nameOf } from '../crosswalk'
 import { archiveDays, dayPath, readDay, readJson } from './archive'
 import { EMPTY_FRAME, type GlobeLayer, type LayerFrame, type LayerRecord } from './types'
 
@@ -64,14 +64,16 @@ function frameOf(day: string): LayerFrame {
   maximum.countries.forEach((country, n) => {
     // an unresolvable FIPS code throws here, in the build, naming the code — never drops a country
     const resolved = byFips(country.fips)
-    const at = centroidOfIso3(resolved.iso3)
-    if (!at) {
+    const centroid = centroidOfIso3(resolved.iso3)
+    if (!centroid) {
       if (!unplaced.includes(country.name)) unplaced.push(country.name)
       return
     }
     records.push({
       key: `invoked:${day}:${n}`,
-      at,
+      // the name and the centroid both travel with the code (G3, third evening): the card can
+      // say "centroid of X", and the island can draw the point without holding a crosswalk
+      at: { iso3: resolved.iso3, name: nameOf(resolved), centroid },
       value: country.mentions,
       labelKind: 'centroid',
       receipt: {

@@ -26,8 +26,16 @@ export type LonLat = [lon: number, lat: number]
  *  evening rather than a convenience: the card used to read "centroid of the country QAT", because
  *  the code was the only thing that had crossed into the island. The name is the crosswalk's own, so
  *  the adapter that resolved the code is also the one that says what it resolved to — the island
- *  holds no crosswalk and must never grow one. */
-export type LayerPlace = LonLat | { from: LonLat; to: LonLat } | { iso3: string; name: string }
+ *  holds no crosswalk and must never grow one.
+ *
+ *  `centroid` is the same rule applied to the POSITION rather than the name, added in G3's third
+ *  evening for the first country layers that draw `points` rather than fill `countries`: a polygon
+ *  fill only ever needs the code (the shape arrives ready-drawn, fetched once as `/globe/countries.json`
+ *  and keyed by it), but a point needs a place to stand on the client, which must not resolve one
+ *  itself — same reason, same rule. So the adapter, which already asks the crosswalk for the centroid
+ *  to decide whether the country can be drawn at all, hands the answer over instead of asking again on
+ *  the other side of the fetch. Optional because a `countries`-kind record never needs it. */
+export type LayerPlace = LonLat | { from: LonLat; to: LonLat } | { iso3: string; name: string; centroid?: LonLat }
 
 /** What a mark IS, so the card can say it in words instead of printing two numbers.
  *   · point    — the record's own coordinate (a fire, a quake, a vessel's position)
@@ -86,7 +94,13 @@ export interface LayerInstant {
   note: string
 }
 
-export type LayerOwner = { line: ExperimentLineId } | { voice: 'meridian' | 'atelier' | 'field' | 'studio' }
+/** `machine-attention` joined this union in G3's third evening: it is not one of the ecology's
+ *  four research lines and it is not one of the ecology's four practice voices either — it is
+ *  another house, under its own constitution, and a layer drawing its record says so as plainly
+ *  as a layer drawing Field's or Studio's own does. */
+export type LayerOwner =
+  | { line: ExperimentLineId }
+  | { voice: 'meridian' | 'atelier' | 'field' | 'studio' | 'machine-attention' }
 
 export interface GlobeLayer {
   id: string

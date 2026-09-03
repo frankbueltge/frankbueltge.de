@@ -61,9 +61,9 @@ const arc = (n: number): LayerRecord => ({
   receipt: { file: 'src/data/y.json', locator: `[${n}]`, words: `gap ${n}` },
 })
 
-const country = (iso3: string): LayerRecord => ({
+const country = (iso3: string, centroid?: [number, number]): LayerRecord => ({
   key: `c:${iso3}`,
-  at: { iso3, name: `country ${iso3}` },
+  at: { iso3, name: `country ${iso3}`, ...(centroid ? { centroid } : {}) },
   value: iso3.length,
   labelKind: 'centroid',
   receipt: { file: 'src/data/z.json', locator: iso3, words: `country ${iso3}` },
@@ -202,8 +202,15 @@ describe('where a record stands, as one point', () => {
     expect(pointOf(arc(3))).toEqual([4, 4])
   })
 
-  it('gives a country no point of its own — the polygon carries it', () => {
+  it('gives a `countries`-kind country no point of its own — the polygon carries it', () => {
     expect(pointOf(country('DEU'))).toBeNull()
+  })
+
+  it('takes a `points`-kind country at its own embedded centroid, never resolving the code itself', () => {
+    // G3, third evening: admissions, the mirrored warnings and the four layers before them all
+    // draw a country as a point, and this module must never ask a crosswalk for one — the record
+    // already carries the answer the adapter computed at build time
+    expect(pointOf(country('QAT', [51.2, 25.3]))).toEqual([51.2, 25.3])
   })
 })
 
@@ -302,5 +309,13 @@ describe('the one declared no-clock exception, as the drawing half sees it', () 
     const getPosition = (scatter.props as unknown as { getPosition: (d: LayerRecord, i: { index: number }) => number[] })
       .getPosition
     expect(getPosition(records[0], { index: 0 })).toEqual([1, 1])
+  })
+
+  it('draws a `points`-kind country mark at its own embedded centroid, end to end (G3, third evening)', () => {
+    const admissions = layer('admissions', 'points', [country('QAT', [51.2, 25.3])])
+    const [scatter] = layersFor({ day: 'static', layers: [admissions] }, INK, null)
+    const getPosition = (scatter.props as unknown as { getPosition: (d: LayerRecord, i: { index: number }) => number[] })
+      .getPosition
+    expect(getPosition(admissions.records[0], { index: 0 })).toEqual([51.2, 25.3])
   })
 })
