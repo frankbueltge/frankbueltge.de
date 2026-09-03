@@ -13,17 +13,18 @@ import { LAYERS } from '@/lib/globe/layers'
 import { buildLivingGlobe } from '@/lib/globe/living'
 import { SEATS } from '@/lib/globe/seats'
 import crosswalk from '@/data/globe/crosswalk.json'
+import '@/styles/living-globe.css'
 
 const model = buildLivingGlobe()
 const count = (n: number): string => new Intl.NumberFormat('en-GB').format(n)
 
+// Five columns, not seven: "drawn as" belongs to the layer's name and the day count belongs to
+// its as-of date, and a table that has to be read sideways is not a source list.
 const sourceRows = LAYERS.map((layer) => ({
-  layer: layer.title,
-  kind: layer.kind,
+  layer: `${layer.title} (${layer.kind})`,
   file: layer.source.file,
   source: layer.source.name,
-  as_of: layer.asOf,
-  days: count(layer.days.length),
+  as_of: `${layer.asOf} · ${count(layer.days.length)} days`,
   licence: layer.source.license,
 }))
 
@@ -45,7 +46,7 @@ const changelog = [
 ]
 ---
 
-<MethodSheet title="Method sheet — Living Globe" workHref="/globe" workLabel="To the experiment" wide={true}>
+<MethodSheet title="Method sheet — Living Globe" workHref="/globe" workLabel="To the experiment" wide={true} class="globe-method">
   <section class="sheet-reveal mb-10">
     <h2 class="kicker mb-2">What this is</h2>
     <p class="leading-relaxed">
@@ -72,11 +73,9 @@ const changelog = [
         open={true}
         columns={[
           { key: 'layer', label: 'Layer', nowrap: true },
-          { key: 'kind', label: 'Drawn as' },
           { key: 'file', label: 'Committed file' },
           { key: 'source', label: 'Source' },
           { key: 'as_of', label: 'As of', nowrap: true },
-          { key: 'days', label: 'Days', align: 'right' },
           { key: 'licence', label: 'Licence' },
         ]}
         rows={sourceRows}

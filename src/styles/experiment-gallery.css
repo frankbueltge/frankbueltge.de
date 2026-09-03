@@ -72,6 +72,14 @@
   fill-opacity: 0.1;
   stroke: none;
 }
+/* One exception to the shared area step: the globe's miniature is a MAP under its marks, not an
+   area under a line. At fill-opacity 0.1 the continents vanish and the dots float on nothing, so
+   the land gets the frame's lifted hairline at full opacity — its own step, leaving the premium's
+   area exactly as it was tuned. */
+.gal-card[data-card='globe'] .tm-area {
+  fill: var(--color-line-lift);
+  fill-opacity: 1;
+}
 .tm-rule {
   stroke: var(--color-line-lift);
   stroke-dasharray: 2 3;

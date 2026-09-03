@@ -109,3 +109,31 @@
 .globe-note {
   overflow-wrap: anywhere;
 }
+
+/* The tables under the plate and on the method sheet. The shared TableFallback decides structure
+   and behaviour only (ADR 0010) — no padding, no rules — which is right for a three-column table
+   in a wide column and cramped for a five-column one: without a minimum width the cells collapse
+   into each other. So the globe's own surfaces give their tables a floor and let the primitive's
+   `overflow-x: auto` do the rest; on a narrow screen the table scrolls instead of colliding. */
+.globe-tables .dv-table,
+.globe-method .dv-table {
+  min-width: 44rem;
+  font-size: 12px;
+}
+.globe-tables .dv-table :is(th, td),
+.globe-method .dv-table :is(th, td) {
+  padding: 4px 14px 4px 0;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--color-line);
+}
+.globe-tables .dv-table th,
+.globe-method .dv-table th {
+  font-weight: 600;
+  color: var(--color-fg-muted);
+  white-space: nowrap;
+}
+.globe-tables .dv-table td:last-child,
+.globe-method .dv-table td:last-child {
+  padding-right: 0;
+}
