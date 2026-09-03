@@ -171,8 +171,8 @@ export const GLOBE = {
   stories: {
     heading: 'Guided stories',
     lead:
-      'Three readings of this archive. A story asks the globe for a set of layers, a night and a place to stand, ' +
-      'and the last scene of two of them opens the card on one mark. Scroll, and the globe follows the scene you ' +
+      'Six readings of this archive. A story asks the globe for a set of layers, a night and a place to stand, ' +
+      'and the last scene of four of them opens the card on one mark. Scroll, and the globe follows the scene you ' +
       'are reading; take hold of the sphere and it stays where you put it until the next scene asks for a new view. ' +
       'Every sentence in quotation marks is a sentence out of a committed file, at the position named beneath it.',
     hint:
@@ -313,6 +313,151 @@ export const GLOBE = {
             'Back to the mountain, with the year-ago comparison the file carries beside the reading. The card that ' +
             'opens here holds the committed file and the position inside it, which is the only thing this globe ' +
             'has ever asked to be believed on.',
+        },
+      },
+    },
+
+    balance: {
+      title: 'Where the press looks at itself',
+      standfirst:
+        'Every country on this layer carries one measure: the tone of its own press about itself, against the ' +
+        'tone of the rest of the world’s press about it — the same gap the record headlines. A fill is the whole ' +
+        'country, standing at the middle of its own shape, and never a place inside it.',
+      scenes: {
+        headline: {
+          kicker: 'THE HEADLINE THE DAY CARRIED',
+          heading: 'One country, and the gap the day wrote for it',
+          lead:
+            'Before any other row is read, the day’s own file names the one country its headline is about and the ' +
+            'two tones the gap is built from — a country’s own press about itself, and everyone else’s press about ' +
+            'it.',
+        },
+        elsewhere: {
+          kicker: 'THE SAME DAY, A DIFFERENT COUNTRY',
+          heading: 'Not every country the day measured is the headline',
+          lead:
+            'The headline is one country out of however many the same file carried enough material to measure that ' +
+            'day. Every other row holds the same two numbers, whether or not the page ever names it.',
+        },
+        crossing: {
+          kicker: 'THE SAME FILE, AN OCEAN AWAY',
+          heading: 'One file, and every country it measured that night',
+          lead:
+            'A night’s file is not a regional record: whichever countries the two pools wrote enough about that ' +
+            'night sit in the same file together, wherever on the earth they stand.',
+        },
+        further: {
+          kicker: 'A DIFFERENT NIGHT, THE SAME MEASURE',
+          heading: 'The measure does not change; the night does',
+          lead:
+            'Every night this record runs the same two pools and the same one measure. What changes from night to ' +
+            'night is only which countries had enough material in both pools to carry a gap at all.',
+        },
+        newest: {
+          kicker: 'THE NEWEST NIGHT THIS STORY HOLDS',
+          heading: 'One country’s own mark, and the receipt behind it',
+          lead:
+            'The card this scene opens holds nothing this story has not already shown: the file, the row inside ' +
+            'it, and the two tones the gap is built from. The fill is the country’s whole shape, standing for the ' +
+            'country and for no place inside it.',
+        },
+      },
+    },
+
+    consensus: {
+      title: 'One sentence, and the outlets that carried it',
+      standfirst:
+        'One day’s most-echoed sentence, and the mastheads the record says carried it — counted by the registry ' +
+        'their own domain answers to, never by where a newsroom, a reporter or a server actually sits.',
+      scenes: {
+        phrase: {
+          kicker: 'THE SENTENCE THE DAY ECHOED',
+          heading: 'One phrase, run by enough newsrooms to count',
+          lead:
+            'Before any masthead is named, the day’s own file states the phrase that crossed this record’s ' +
+            'threshold and the headline it was drawn from.',
+        },
+        first: {
+          kicker: 'THE FIRST MASTHEAD TO CARRY IT',
+          heading: 'Where the file says the sentence was first seen',
+          lead:
+            'The file names one outlet as the first to carry the phrase, and this layer stands its camera over the ' +
+            'country that outlet’s own domain is registered in — a registry, never an address.',
+        },
+        list: {
+          kicker: 'THE LIST THE FILE ITSELF KEEPS',
+          heading: 'Every masthead the record counted, by name',
+          lead:
+            'The mastheads on this layer are not a summary written for the globe: they are the day’s own list, ' +
+            'named one outlet at a time inside the committed file.',
+        },
+        elsewhere: {
+          kicker: 'THE SAME LIST, A DIFFERENT REGISTRY',
+          heading: 'Not every masthead on the list answers to the same country',
+          lead:
+            'A run of names on the very same list end in a different country’s own registry, and the camera ' +
+            'follows the list rather than staying where the sentence started.',
+        },
+        noCountry: {
+          kicker: 'WHAT A REGISTRATION DOES NOT SAY',
+          heading: 'A domain that answers to no country at all',
+          lead:
+            'A top-level domain is a registration, never a location: it names a registry, not a newsroom’s ' +
+            'address. A masthead whose domain belongs to no country is counted in words on this layer and stood ' +
+            'nowhere on the sphere.',
+        },
+      },
+    },
+
+    redaction: {
+      title: 'What the record removed',
+      standfirst:
+        'What an institution took back from a page it had already published, read from the watch that diffs a ' +
+        'curated list of official pages every night. A mark on this layer stands at the seat of the body that ' +
+        'publishes — never at the place a page was written, hosted or read.',
+      scenes: {
+        geneva: {
+          kicker: 'THE WATCH, AT AN ADDRESS IN GENEVA',
+          heading: 'One institution, and what a night took from it',
+          lead:
+            'Before any words are named, the archive’s own row says which body lost content that night and how ' +
+            'the removal itself is labelled — the watch-list’s own label, never a translation of it.',
+        },
+        secondSeat: {
+          kicker: 'A SECOND ADDRESS, THE SAME CITY',
+          heading: 'Two institutions, two seats, one night',
+          lead:
+            'The same night’s file names a second body that lost content, and its seat sits a short distance from ' +
+            'the first — two marks in the same city, never at the same address.',
+        },
+        wholePage: {
+          kicker: 'A WHOLE PAGE, NOT A PASSAGE',
+          heading: 'The difference between struck words and a page gone outright',
+          lead:
+            'One of the two kinds this watch names is a page still standing with words struck out of it; the ' +
+            'other is the whole page gone from the record. The file states which, for every row it carries.',
+        },
+        washington: {
+          kicker: 'THE SAME NIGHT, A SEAT IN WASHINGTON',
+          heading: 'One night’s file, two institutions, two seats',
+          lead:
+            'The same night that recorded a loss in Geneva also recorded a loss at an office in Washington, in ' +
+            'the very same file — the same rule holds for both: the mark stands at the seat, never at the page.',
+        },
+        pick: {
+          kicker: 'THE NIGHT’S OWN PICK',
+          heading: 'A later night, the same seat, the file’s own choice of row',
+          lead:
+            'A later night’s file returns to the same seat with a loss of its own, and the file itself names ' +
+            'which row it considers the night’s pick — never an editorial choice made outside it.',
+        },
+        world: {
+          kicker: 'A SECOND CHAMBER, THE SAME NIGHT',
+          heading: 'A wider watch, and the same caution about where a domain sits',
+          lead:
+            'A second chamber of this same watch samples the wider press every night rather than a curated list ' +
+            'of seats, and it keeps the caution this whole story has carried throughout: a mark stands at an ' +
+            'institution’s seat or at a domain’s own registry — never at the place a page was written.',
         },
       },
     },

@@ -1,14 +1,14 @@
 // The honesty harness of the living globe's guided stories, wired to the real filesystem and to the
-// real layer registry (G2, 2026-09-03). Six things are checked here, and each one is a promise a
-// story makes that a reader cannot check by looking:
+// real layer registry (G2, 2026-09-03; extended the same day once the three late stories were
+// written over G3's layers). Six things are checked here, and each one is a promise a story makes
+// that a reader cannot check by looking:
 //
 //   1. every quote is a BYTE-EXACT substring of the committed file it names (verifyTourQuotes);
 //   2. every day a scene asks for is a day the model actually holds — never a clock, never a guess;
-//   3. every layer a scene switches on is REGISTERED — which is what keeps a story the plan named
-//      for G3 from being written before its layer exists, rather than a note in a document nobody
-//      re-reads. G3's first evening registered the press's tone gap and the hosts by top-level
-//      domain and its second the two chambers of the removals, so all three of the stories the plan
-//      named are now writable and owed — each by its layer's own id, never by the plan's shorthand;
+//   3. every layer a scene switches on is REGISTERED — which is what kept the three late stories
+//      from being written before their layers existed, rather than a note in a document nobody
+//      re-reads. All four of the layers they needed (`balance`, `consensus-tld`, `redaction-seats`,
+//      `redaction-world`) are registered now, each named by its own id, never by a plan's shorthand;
 //   4. every camera stands on the earth (a longitude in [-180, 180], a latitude in [-90, 90], a
 //      zoom the globe view can actually hold);
 //   5. every selected mark EXISTS in that layer's frame on that scene's own day — the one thing a
@@ -25,12 +25,18 @@ import { LAYERS } from '@/lib/globe/layers'
 import { buildLivingGlobe, frameAt } from '@/lib/globe/living'
 import { verifyTourQuotes } from './verify'
 import {
+  BALANCE_NIGHTS,
+  CONSENSUS_DAY,
   FLEET_NIGHT,
   GLOBE_FIGURE,
   GLOBE_STORIES,
   MINUTES_NIGHTS,
+  WORLD_DAY,
+  balanceStory,
+  consensusOutletsStory,
   fleetNightStory,
   planetsMinutesStory,
+  redactionRemovedStory,
   skyOverReaderStory,
 } from './globe-stories'
 
@@ -49,8 +55,8 @@ describe('the globe’s stories are verbatim or they are not shipped', () => {
     },
   )
 
-  it('ships three stories, four to six scenes each, every scene backed by substance', () => {
-    expect(GLOBE_STORIES).toHaveLength(3)
+  it('ships six stories, four to six scenes each, every scene backed by substance', () => {
+    expect(GLOBE_STORIES).toHaveLength(6)
     for (const tour of GLOBE_STORIES) {
       expect(tour.practice, `${tour.id} is a work of the lab, not of a practice`).toBe('lab')
       expect(tour.scenes.length, `${tour.id} has the wrong number of scenes`).toBeGreaterThanOrEqual(4)
@@ -114,14 +120,14 @@ describe('every scene asks the globe for something the globe really has', () => 
         }
       }
     }
-    // The guard above is what makes "not yet" enforceable rather than remembered, and G3 moved the
-    // line twice. The first evening (2026-09-03) registered the press's tone gap and the hosts by
-    // top-level domain, so the balance and consensus stories became WRITABLE and are owed. The
-    // second evening registered the removals — as TWO layers, one per chamber — so the third of the
-    // stories the plan named is writable too, and all three are owed to a later evening rather than
-    // blocked. What a story may NOT do is name a chamber that does not exist: the ids are
-    // `redaction-seats`, `redaction-world` and `consensus-tld`, never the bare `redaction` or
-    // `consensus` a plan wrote them down as.
+    // The guard above is what made "not yet" enforceable rather than remembered, and G3 moved the
+    // line twice before the three late stories were written: its first evening registered the
+    // press's tone gap and the hosts by top-level domain, and its second registered the removals —
+    // as TWO layers, one per chamber. All four are named below by their own registered id, never by
+    // a plan's shorthand: the ids are `redaction-seats`, `redaction-world` and `consensus-tld`,
+    // never the bare `redaction` or `consensus` a plan once wrote them down as, and neither
+    // shorthand is registered — a story naming one would fail the very check above, not just this
+    // one.
     for (const id of ['balance', 'consensus-tld', 'redaction-seats', 'redaction-world', 'trending']) {
       expect(registered.has(id)).toBe(true)
     }
@@ -157,8 +163,10 @@ describe('every scene asks the globe for something the globe really has', () => 
         expect(keys.has(scene.focus.select), `${tour.id}/${scene.id}: ${scene.focus.select} is not drawn that day`).toBe(true)
       }
     }
-    // two stories end on a mark; the third ends on an empty sphere by design (the sky's other days)
-    expect(selections).toBe(2)
+    // four stories end on a mark (the fleet, the minutes, balance, redaction); the other two do
+    // not — the sky's other days end on an empty sphere by design, and consensus-by-domain never
+    // asks for a select at all, its point already made by the countries it does and does not draw
+    expect(selections).toBe(4)
   })
 })
 
@@ -234,5 +242,102 @@ describe('the minutes story walks a season, oldest night first', () => {
 
   it('keeps the protocol layer on throughout, and no other', () => {
     for (const scene of planetsMinutesStory.scenes) expect(scene.focus.layers).toEqual(['protocol'])
+  })
+})
+
+describe('the balance story walks three nights, camera Europe to the Americas', () => {
+  it('walks exactly the three nights it names, none of them invented', () => {
+    const days = balanceStory.scenes.map((s) => s.focus.time!.day)
+    expect(new Set(days)).toEqual(new Set(BALANCE_NIGHTS))
+    expect(days[0]).toBe(BALANCE_NIGHTS[0])
+    expect(days[days.length - 1]).toBe(BALANCE_NIGHTS[BALANCE_NIGHTS.length - 1])
+  })
+
+  it('ends on the newest night this house’s whole archive holds', () => {
+    expect(BALANCE_NIGHTS[BALANCE_NIGHTS.length - 1]).toBe(model.newest)
+  })
+
+  it('moves its camera from Europe into the Americas, and stays there once it arrives', () => {
+    const longitudes = balanceStory.scenes.map((s) => s.focus.camera!.longitude)
+    // Romania, then the Netherlands: both positive, both Europe
+    expect(longitudes[0]).toBeGreaterThan(0)
+    expect(longitudes[1]).toBeGreaterThan(0)
+    // the United States, Brazil, Jamaica: all negative, all west of the prime meridian
+    for (const lon of longitudes.slice(2)) expect(lon).toBeLessThan(0)
+  })
+
+  it('ends on Jamaica’s own mark, opened from the file it was read from', () => {
+    const last = balanceStory.scenes[balanceStory.scenes.length - 1]!
+    const moment = frameAt(model, last.focus.time!.day)
+    const record = moment.layers.balance!.records.find((r) => r.key === last.focus.select)!
+    expect(record).toBeTruthy()
+    expect(record.receipt.file).toBe(`src/data/balance/${last.focus.time!.day}.json`)
+    expect((record.at as { name: string }).name).toBe('Jamaica')
+    // a country fill is always a centroid — never a station, never a seat
+    expect(record.labelKind).toBe('centroid')
+  })
+
+  it('keeps the balance layer on throughout, and no other', () => {
+    for (const scene of balanceStory.scenes) expect(scene.focus.layers).toEqual(['balance'])
+  })
+})
+
+describe('the consensus-by-domain story walks one day, and draws no empty sphere', () => {
+  it('stands on one day only, and that day really draws more than one country', () => {
+    for (const scene of consensusOutletsStory.scenes) expect(scene.focus.time?.day).toBe(CONSENSUS_DAY)
+    const records = frameAt(model, CONSENSUS_DAY).layers['consensus-tld']!.records
+    expect(records.length).toBeGreaterThan(1)
+  })
+
+  it('stands its camera over the country of the day’s own first domain', () => {
+    const first = consensusOutletsStory.scenes[0]!
+    const records = frameAt(model, CONSENSUS_DAY).layers['consensus-tld']!.records
+    const uk = records.find((r) => (r.at as { name: string }).name === 'United Kingdom')!
+    const at = uk.at as { centroid: [number, number] }
+    expect(first.focus.camera).toEqual({ longitude: at.centroid[0], latitude: at.centroid[1], zoom: 1.0 })
+  })
+
+  it('asks for no select at all — its point is which countries are drawn, not one mark', () => {
+    for (const scene of consensusOutletsStory.scenes) expect(scene.focus.select).toBeUndefined()
+  })
+
+  it('keeps the consensus-tld layer on throughout, and no other', () => {
+    for (const scene of consensusOutletsStory.scenes) expect(scene.focus.layers).toEqual(['consensus-tld'])
+  })
+})
+
+describe('the redaction story walks three nights, camera Geneva to Washington', () => {
+  it('walks exactly the three nights it names, the world chamber’s night last', () => {
+    const days = redactionRemovedStory.scenes.map((s) => s.focus.time!.day)
+    expect(new Set(days)).toEqual(new Set(['2026-08-11', '2026-08-13', WORLD_DAY]))
+    expect(days[days.length - 1]).toBe(WORLD_DAY)
+  })
+
+  it('moves its camera from Geneva to Washington, and stays there once it arrives', () => {
+    const longitudes = redactionRemovedStory.scenes.map((s) => s.focus.camera!.longitude)
+    // WHO, UNHCR, IPCC: all three Geneva seats sit east of the prime meridian
+    for (const lon of longitudes.slice(0, 3)) expect(lon).toBeGreaterThan(0)
+    // US Census, three times over: west of it
+    for (const lon of longitudes.slice(3)) expect(lon).toBeLessThan(0)
+  })
+
+  it('brings the world chamber in front only in its last scene, and only there', () => {
+    const withWorld = redactionRemovedStory.scenes.filter((s) => s.focus.layers!.includes('redaction-world'))
+    expect(withWorld).toHaveLength(1)
+    expect(withWorld[0]).toBe(redactionRemovedStory.scenes[redactionRemovedStory.scenes.length - 1])
+    // the last id in the array is the one the room draws in front — redaction-world, deliberately
+    const last = redactionRemovedStory.scenes[redactionRemovedStory.scenes.length - 1]!
+    expect(last.focus.layers![last.focus.layers!.length - 1]).toBe('redaction-world')
+  })
+
+  it('ends on the US Census mark of its last night, opened from the file it was read from', () => {
+    const last = redactionRemovedStory.scenes[redactionRemovedStory.scenes.length - 1]!
+    const moment = frameAt(model, last.focus.time!.day)
+    const record = moment.layers['redaction-seats']!.records.find((r) => r.key === last.focus.select)!
+    expect(record).toBeTruthy()
+    expect(record.receipt.file).toBe(`src/data/redaction/${last.focus.time!.day}.json`)
+    expect(record.receipt.words.startsWith('US Census')).toBe(true)
+    // a removal is never taken at an instrument — the seat is the whole claim
+    expect(record.labelKind).toBe('seat')
   })
 })

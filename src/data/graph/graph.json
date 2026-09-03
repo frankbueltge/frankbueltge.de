@@ -12,7 +12,7 @@
       },
       {
         "file": "docs/decision-log.md",
-        "sha256": "60d3330154e25fcb"
+        "sha256": "d2a5cea76f878781"
       },
       {
         "file": "src/data/post/ledger.json",
@@ -58,7 +58,7 @@
     ],
     "counts": {
       "nodes": 382,
-      "edges": 336,
+      "edges": 337,
       "nodesByKind": {
         "decision": 116,
         "encounter": 6,
@@ -75,7 +75,7 @@
         "made-by": 103,
         "neighbor-of": 116,
         "participates": 17,
-        "touches": 85
+        "touches": 86
       }
     }
   },
@@ -1113,11 +1113,11 @@
     {
       "id": "decision:2026-09-03-1",
       "kind": "decision",
-      "label": "The front door gives the globe back, and the room stops paying for the archive it is not showing",
+      "label": "The three stories G2 deferred are written",
       "date": "2026-09-03",
       "source": {
         "file": "docs/decision-log.md",
-        "quote": "The front door gives the globe back, and the room stops paying for the archive it is not showing"
+        "quote": "The three stories G2 deferred are written"
       }
     },
     {
@@ -7842,10 +7842,19 @@
     {
       "kind": "touches",
       "from": "decision:2026-09-03-1",
+      "to": "work:balance",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "/balance"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-09-03-1",
       "to": "work:globe",
       "source": {
         "file": "docs/decision-log.md",
-        "quote": "src/components/pages/EntranceGlobeFigure.astro"
+        "quote": "src/lib/tour/globe-stories.ts"
       }
     },
     {
