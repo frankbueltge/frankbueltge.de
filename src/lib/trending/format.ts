@@ -66,6 +66,9 @@ export function platformLabel(id: string): string {
   return PLATFORM_LABEL[id] ?? id
 }
 
+// What each source counts, in words. A source that answers with a bare rank has no unit at all,
+// which is why '' is a value here and not an omission. Twelve of these were missing between
+// 2026-09-01 and 2026-09-03 — see the note on magnitudeOf below.
 const UNIT_LABEL: Record<string, string> = {
   approx_searches: 'searches',
   views: 'views',
@@ -74,16 +77,57 @@ const UNIT_LABEL: Record<string, string> = {
   uses: 'uses',
   shares: 'shares',
   stars: 'stars',
+  downloads: 'downloads',
+  reactions: 'reactions',
+  score: 'score',
+  usd_24h: 'USD in 24 h',
   rank: '',
+}
+
+/** The shape every signal shares, day ledger and crossing alike. */
+interface Measured {
+  magnitude: number | null
+  magnitude_unit: string
+  rank: number
+}
+
+export interface Magnitude {
+  /** what a reader sees: "941 posts" · "2,000+ searches" · "#3" */
+  text: string
+  /** the source's own number, null where the source states only a position */
+  value: number | null
+  /** the unit in words; '' when the source states only a position */
+  unit: string
+}
+
+/**
+ * A source's own number WITH the unit it counted in.
+ *
+ * The unit is not decoration. Between 2026-09-01 and 2026-09-03 the per-source cards on
+ * /trending printed the bare number, so one column of the page carried eleven incomparable
+ * quantities side by side — 3206.7M (PyPI downloads in a month), 941 (Bluesky posts), 207
+ * (Hacker News points) and -1 (a Stack Overflow score, which can be negative). A reader could
+ * take nothing from that, and a machine reader even less: a number without a unit is not a fact.
+ * `value` and `unit` are carried separately so the page's structured data can state the same
+ * measurement as a PropertyValue rather than as prose.
+ */
+export function magnitudeOf(s: Measured): Magnitude {
+  if (s.magnitude === null || s.magnitude_unit === 'rank') {
+    return { text: `#${s.rank}`, value: null, unit: '' }
+  }
+  const unit = UNIT_LABEL[s.magnitude_unit] ?? s.magnitude_unit
+  const approx = s.magnitude_unit === 'approx_searches' ? '+' : ''
+  return {
+    text: `${compact(s.magnitude)}${approx}${unit ? ` ${unit}` : ''}`,
+    value: s.magnitude,
+    unit,
+  }
 }
 
 /** "Google Trends US 2,000+ searches" · "Wikipedia en 314,205 views" · "Google News #3" */
 export function signalText(s: TrendingTopicSignal): string {
   const head = [platformLabel(s.source), s.geo].filter(Boolean).join(' ')
-  if (s.magnitude === null || s.magnitude_unit === 'rank') return `${head} #${s.rank}`
-  const unit = UNIT_LABEL[s.magnitude_unit] ?? s.magnitude_unit
-  const approx = s.magnitude_unit === 'approx_searches' ? '+' : ''
-  return `${head} ${compact(s.magnitude)}${approx} ${unit}`.trim()
+  return `${head} ${magnitudeOf(s).text}`.trim()
 }
 
 const CLASS_LABEL: Record<AudienceClass, string> = {

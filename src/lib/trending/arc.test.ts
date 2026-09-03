@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { ARC_WINDOW, arcModel } from './arc'
+import { ARC_WINDOW, SPARK, arcModel, sparkline } from './arc'
 import { seriesStrip } from './terms-view'
 
 /** `n` committed runs, one mention per run unless `at` says otherwise. */
@@ -71,5 +71,58 @@ describe("a term's arc", () => {
 
   it('is deterministic', () => {
     expect(JSON.stringify(arcModel(runs(30)))).toBe(JSON.stringify(arcModel(runs(30))))
+  })
+})
+
+describe("the register's sparklines", () => {
+  it('draws one point per committed run, left to right, ending at the newest', () => {
+    const s = sparkline(runs(4))
+    expect(s.runs).toBe(4)
+    expect(s.d.startsWith('M0 ')).toBe(true)
+    expect(s.last!.x).toBe(SPARK.width)
+  })
+
+  it("scales to the term's OWN maximum, so a small term is not flattened into the baseline", () => {
+    const small = sparkline(runs(3, { 0: 1, 1: 2, 2: 3 }))
+    const large = sparkline(runs(3, { 0: 100, 1: 200, 2: 300 }))
+    expect(small.max).toBe(3)
+    expect(large.max).toBe(300)
+    // identical shapes, identical lines — the register compares shapes, never heights
+    expect(small.d).toBe(large.d)
+  })
+
+  it('puts the peak at the top and the floor at the bottom, within the padding', () => {
+    const s = sparkline(runs(2, { 0: 0, 1: 10 }))
+    expect(s.d).toBe(`M0 ${SPARK.height - SPARK.pad} L${SPARK.width} ${SPARK.pad}`)
+  })
+
+  it('centres a single run rather than pinning it to an edge', () => {
+    const s = sparkline(runs(1))
+    expect(s.runs).toBe(1)
+    expect(s.last!.x).toBe(SPARK.width / 2)
+  })
+
+  it('draws a flat line for a term measured at zero every day, because zero was measured', () => {
+    const s = sparkline(runs(3, { 0: 0, 1: 0, 2: 0 }))
+    expect(s.max).toBe(0)
+    expect(s.d).toBe(`M0 ${SPARK.height - SPARK.pad} L${SPARK.width / 2} ${SPARK.height - SPARK.pad} L${SPARK.width} ${SPARK.height - SPARK.pad}`)
+  })
+
+  it('draws nothing at all for a term no run has carried', () => {
+    const s = sparkline([])
+    expect(s.d).toBe('')
+    expect(s.last).toBeNull()
+  })
+
+  it("gives every line the term's own zero to be read against", () => {
+    // With the two committed runs the archive holds today, a bare segment says nothing about
+    // direction; the baseline is what makes it a figure rather than a scratch.
+    expect(sparkline(runs(2)).baseY).toBe(SPARK.height - SPARK.pad)
+    expect(sparkline([]).baseY).toBe(SPARK.height - SPARK.pad)
+  })
+
+  it('is deterministic, and rounds so the built markup does not carry float noise', () => {
+    expect(sparkline(runs(7)).d).toBe(sparkline(runs(7)).d)
+    expect(sparkline(runs(7)).d).not.toMatch(/\d\.\d{3}/)
   })
 })

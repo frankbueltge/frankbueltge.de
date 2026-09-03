@@ -16,7 +16,7 @@ import TrendingSelfCheck from '@/components/pages/TrendingSelfCheck.astro'
 import TrendingRising from '@/components/pages/TrendingRising.astro'
 import { audienceBefore, getTrendingDays } from '@/lib/trending/data'
 import { fmtDateLong, fmtDateWeekday, fmtTimeUtc, platformLabel } from '@/lib/trending/format'
-import { datasetLd, itemListLd, webPageLd } from '@/lib/trending/jsonld'
+import { datasetLd, itemListLd, sourceListsLd, webPageLd } from '@/lib/trending/jsonld'
 import { trendingUrls } from '@/lib/trending/markdown'
 import type { TrendingAudience, TrendingDay } from '@/lib/trending/types'
 import { sourceColumns } from '@/lib/trending/view'
@@ -44,7 +44,14 @@ const newer = idx > 0 ? days[idx - 1] : undefined
 const older = idx >= 0 && idx < days.length - 1 ? days[idx + 1] : undefined
 
 const canonical = isLatest ? u.page : u.day
-const lds = [datasetLd(day, canonical), itemListLd(day, canonical), webPageLd(day, canonical, isLatest)]
+// The register below is rendered from sourceColumns(day, 8); the structured data states exactly
+// that same cut, because a machine reader must not be told more than a reader is shown.
+const lds = [
+  datasetLd(day, canonical),
+  itemListLd(day, canonical),
+  webPageLd(day, canonical, isLatest),
+  ...sourceListsLd(day, canonical, 8),
+]
 
 const machineEditions: { href: string; what: string }[] = [
   { href: '/trending/latest.json', what: 'the newest day in full — every source, every signal, the converging topics and the summary' },
@@ -91,19 +98,24 @@ const machineEditions: { href: string; what: string }[] = [
         What each source said on its own, before any crossing. A source that did not answer is recorded as
         unavailable with the reason — never quietly dropped, and never filled in from a neighbour.
       </p>
-      {/* No `items-start`: the cards of a row stretch to the row's height, and the list below
-          grows into the gap, so every footer sits on the same line. A card's height is then set
-          by the longest labels in its row rather than by how much each source happened to say. */}
-      <div class="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {/* A COLUMN FLOW, not a card grid (2026-09-03). Until today the twenty sources stood in
+          rows of three and every card stretched to the tallest in its row, so a source with seven
+          labels sat beside one with eight wrapped headlines and the difference was drawn as empty
+          panel: the block was 102 KB of a 213 KB page and roughly half of it was hole. CSS columns
+          pack sources of unequal length with no gaps at all, keep the reading order of the file,
+          and — the reason it is columns rather than a fold — leave every label, link and number in
+          the HTML, where a crawler and a retrieval agent can read them without running anything. */}
+      <div class="tr-sources mt-5">
         {columns.map((col) => (
-          <section class="flex flex-col rounded-md border border-line bg-panel panel-raised p-4">
+          <section class="tr-source">
             <h3 class="text-h3 font-semibold">
               <a href={col.url} target="_blank" rel="noopener nofollow" class="underline decoration-line underline-offset-2 transition-colors hover:text-fg">
                 {platformLabel(col.id)}
               </a>
             </h3>
+            <p class="mt-0.5 font-mono text-mono-sm leading-relaxed text-fg-faint">{col.name}</p>
             {col.status === 'ok' ? (
-              <p class="mt-1 font-mono text-mono-sm text-fg-faint">
+              <p class="mt-0.5 font-mono text-mono-sm text-fg-faint">
                 <span class="tabular-nums">{col.count}</span> signals{col.asOf ? ` · as of ${col.asOf}` : ''}
               </p>
             ) : (
@@ -113,25 +125,24 @@ const machineEditions: { href: string; what: string }[] = [
               </p>
             )}
             {col.signals.length === 0 ? (
-              <p class="mt-3 flex-1 text-sm text-fg-faint">nothing recorded</p>
+              <p class="mt-2 text-sm text-fg-faint">nothing recorded</p>
             ) : (
-              <ol class="mt-3 flex-1 space-y-1.5 text-sm">
+              <ol class="mt-2 space-y-1 text-sm">
                 {col.signals.map((s) => (
-                  <li class="flex items-baseline justify-between gap-x-3">
-                    <span class="line-clamp-3 min-w-0">
+                  <li class="tr-signal">
+                    <span class="tr-signal-label">
                       {s.url ? (
                         <a href={s.url} target="_blank" rel="noopener nofollow" class="underline decoration-line underline-offset-2 transition-colors hover:text-fg">{s.label}</a>
                       ) : (
                         <span>{s.label}</span>
                       )}
-                      {s.geo && <span class="ml-1 font-mono text-mono-sm text-fg-faint">{s.geo}</span>}
+                      {s.geo && <span class="ml-1 font-mono text-mono-xs text-fg-faint">{s.geo}</span>}
                     </span>
-                    <span class="shrink-0 whitespace-nowrap font-mono text-mono-sm tabular-nums text-fg-faint">{s.magnitudeText}</span>
+                    <span class="tr-signal-n font-mono text-mono-xs tabular-nums text-fg-faint">{s.magnitudeText}</span>
                   </li>
                 ))}
               </ol>
             )}
-            <p class="mt-3 border-t border-line pt-2 font-mono text-mono-sm leading-relaxed text-fg-faint">{col.name}</p>
           </section>
         ))}
       </div>

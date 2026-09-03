@@ -1,6 +1,6 @@
 /** View models for the trending page — derived, never hand-written, so a number on the page
  *  is always the committed file's number. Pure functions, unit-tested. */
-import { compact, platformLabel, signalText } from './format'
+import { compact, magnitudeOf, platformLabel, signalText } from './format'
 import { AUDIENCE_CLASSES, type AudienceClass, type TrendingAudience, type TrendingDay, type TrendingLink, type TrendingTopic } from './types'
 
 export interface ConvergingRow {
@@ -46,7 +46,12 @@ export interface SourceColumnSignal {
   label: string
   url: string | null
   geo: string | null
+  /** the source's own number WITH its unit — "941 posts", "#3" (see format.ts's magnitudeOf) */
   magnitudeText: string
+  /** the same measurement, apart, for the page's structured data */
+  magnitudeValue: number | null
+  magnitudeUnit: string
+  rank: number
 }
 
 export interface SourceColumn {
@@ -55,6 +60,8 @@ export interface SourceColumn {
   url: string
   status: 'ok' | 'partial' | 'unavailable'
   note: string
+  /** null when the source is as of the ledger's own day — printing the same date twenty times
+   *  says nothing; a source that lags says so, and that is the only case worth the line */
   asOf: string | null
   count: number
   signals: SourceColumnSignal[]
@@ -68,14 +75,20 @@ export function sourceColumns(day: TrendingDay, top = 15): SourceColumn[] {
     url: s.url,
     status: s.status,
     note: s.note,
-    asOf: s.as_of,
+    asOf: s.as_of && s.as_of !== day.date ? s.as_of : null,
     count: s.count,
-    signals: (day.signals[s.id] ?? []).slice(0, top).map((sig) => ({
-      label: sig.label,
-      url: sig.url,
-      geo: sig.geo,
-      magnitudeText: sig.magnitude === null || sig.magnitude_unit === 'rank' ? `#${sig.rank}` : `${compact(sig.magnitude)}${sig.magnitude_unit === 'approx_searches' ? '+' : ''}`,
-    })),
+    signals: (day.signals[s.id] ?? []).slice(0, top).map((sig) => {
+      const m = magnitudeOf(sig)
+      return {
+        label: sig.label,
+        url: sig.url,
+        geo: sig.geo,
+        magnitudeText: m.text,
+        magnitudeValue: m.value,
+        magnitudeUnit: m.unit,
+        rank: sig.rank,
+      }
+    }),
   }))
 }
 

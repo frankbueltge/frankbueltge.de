@@ -88,3 +88,57 @@
   line-height: 1.6;
   color: var(--color-fg-faint);
 }
+
+/* ── the source register ─────────────────────────────────────────────────────
+   Twenty sources of very unequal length. A grid of cards stretches every card in a row to the
+   tallest of them, which on 2026-09-03 made half of this block empty panel; a column flow packs
+   them without a single gap and keeps the file's own order. Nothing is folded away: every label,
+   link and number stays in the markup, which is the point of a ledger built to be crawled and
+   retrieved from. */
+.tr-sources {
+  columns: 1;
+  column-gap: 2.25rem;
+}
+@media (min-width: 40rem) {
+  .tr-sources {
+    columns: 2;
+  }
+}
+@media (min-width: 64rem) {
+  .tr-sources {
+    columns: 3;
+  }
+}
+
+/* A source is never split across a column break — half a register under one heading and half
+   under none would be a different, worse claim about what that source said. */
+.tr-source {
+  break-inside: avoid;
+  page-break-inside: avoid;
+  margin: 0 0 1.6rem;
+  padding-bottom: 1.1rem;
+  border-bottom: 1px solid var(--color-line);
+}
+.tr-source:last-child {
+  border-bottom: 0;
+}
+
+/* The label runs, the number stays on the line's right and never wraps under it: a count that
+   drops to its own line stops reading as belonging to the label above it. */
+.tr-signal {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0 0.75rem;
+}
+.tr-signal-label {
+  min-width: 0;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
+.tr-signal-n {
+  flex: none;
+  white-space: nowrap;
+}
