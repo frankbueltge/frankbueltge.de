@@ -10,24 +10,28 @@
 // Build-time only. Everything under src/lib/globe/layers is imported by pages that prerender;
 // the island of the next phase takes the TYPES and fetches the feeds.
 import { readFileSync, readdirSync } from 'node:fs'
-import { fileURLToPath } from 'node:url'
+import { resolve } from 'node:path'
 import { daysFromFiles } from './types'
 
-const ROOT = fileURLToPath(new URL('../../../../', import.meta.url))
+/** Paths are given relative to the repository root and resolved against the working directory —
+ *  the same way src/lib/experiments/thumbnails.ts reads the practices' mirrors. Not against
+ *  `import.meta.url`: at build time this module is bundled into a chunk under dist/, and a path
+ *  relative to the bundle points somewhere outside the repository entirely. */
+const from = (path: string): string => resolve(process.cwd(), path)
 
 const cache = new Map<string, unknown>()
 
 /** The dated day files of one archive directory, ascending. `latest.json` is ignored: it is a
  *  copy of one of the dated files, and counting it would give the newest day twice. */
 export function archiveDays(dir: string): string[] {
-  return daysFromFiles(readdirSync(`${ROOT}${dir}`))
+  return daysFromFiles(readdirSync(from(dir)))
 }
 
 /** One committed file, parsed once per build. */
 export function readJson<T>(path: string): T {
   const hit = cache.get(path)
   if (hit !== undefined) return hit as T
-  const parsed = JSON.parse(readFileSync(`${ROOT}${path}`, 'utf8')) as T
+  const parsed = JSON.parse(readFileSync(from(path), 'utf8')) as T
   cache.set(path, parsed)
   return parsed
 }

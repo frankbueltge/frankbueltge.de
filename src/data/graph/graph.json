@@ -4,15 +4,15 @@
     "sources": [
       {
         "file": "src/data/werke.ts",
-        "sha256": "609479331d7d5b23"
+        "sha256": "86613f8c6a10dc49"
       },
       {
         "file": "docs/audits/2026-08-09-usp-audit.md",
-        "sha256": "6f4cc3e25ebf5ae4"
+        "sha256": "a8dcdd89c0fcaa1f"
       },
       {
         "file": "docs/decision-log.md",
-        "sha256": "c9829f97b5da825a"
+        "sha256": "cf2b2added9f7421"
       },
       {
         "file": "src/data/post/ledger.json",
@@ -57,25 +57,25 @@
       }
     ],
     "counts": {
-      "nodes": 355,
-      "edges": 298,
+      "nodes": 366,
+      "edges": 310,
       "nodesByKind": {
-        "decision": 103,
+        "decision": 104,
         "encounter": 6,
-        "neighbor": 106,
+        "neighbor": 115,
         "practice": 9,
         "practice-work": 99,
         "receiver": 8,
-        "work": 24
+        "work": 25
       },
       "edgesByKind": {
         "addresses": 8,
         "concerns": 2,
         "door": 5,
         "made-by": 99,
-        "neighbor-of": 106,
+        "neighbor-of": 116,
         "participates": 17,
-        "touches": 61
+        "touches": 63
       }
     }
   },
@@ -1111,6 +1111,16 @@
       }
     },
     {
+      "id": "decision:2026-09-03-1",
+      "kind": "decision",
+      "label": "One globe over everything this house measures on the earth",
+      "date": "2026-09-03",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "One globe over everything this house measures on the earth"
+      }
+    },
+    {
       "id": "encounter:enc-2026-001-calibration-gap-travels",
       "kind": "encounter",
       "label": "The Calibration Gap travels: Instrument 001 → Native Speaker → correction upstream",
@@ -1284,6 +1294,16 @@
       "url": "https://arstechnica.com/information-technology/2013/04/churnalism-tracker-catches-journalists-copying-press-releases-wikipedia"
     },
     {
+      "id": "neighbor:arxiv-org-abs-1607-05946",
+      "kind": "neighbor",
+      "label": "Living Globe (Cardoso et al., arXiv 1607.05946)",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Living Globe (Cardoso et al., arXiv 1607.05946)](https://arxiv.org/abs/1607.05946) — a **name** collision, named here rather than ignored: a 3D interactive globe for exploring world demographic data with a time slider. One dataset, an academic prototype, no archive and no receipts; the collision is in the title, not the method."
+      },
+      "url": "https://arxiv.org/abs/1607.05946"
+    },
+    {
       "id": "neighbor:arxiv-org-abs-2304-02819",
       "kind": "neighbor",
       "label": "Liang et al., \"GPT detectors are biased against non-native English writers\"",
@@ -1292,6 +1312,16 @@
         "quote": "[Liang et al., \"GPT detectors are biased against non-native English writers\"](https://arxiv.org/abs/2304.02819), *Patterns* (2023) — **the finding, entire**: seven detectors, 61.3% average false-positive rate on TOEFL essays, 19.8% flagged unanimously, and perplexity named as the mechanism. Widely covered ([ScienceDaily](https://www.sciencedaily.com/releases/2023/07/230710113921.htm))."
       },
       "url": "https://arxiv.org/abs/2304.02819"
+    },
+    {
+      "id": "neighbor:arxiv-org-abs-2505-11784",
+      "kind": "neighbor",
+      "label": "ProvenanceLens (arXiv 2505.11784)",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[ProvenanceLens (arXiv 2505.11784)](https://arxiv.org/abs/2505.11784) — the closest thing to the *idea* in the literature: provenance as a visual attribute of a mark, so a reader can see where a value came from. A design probe and a technique, not a running instrument, and not on a globe."
+      },
+      "url": "https://arxiv.org/abs/2505.11784"
     },
     {
       "id": "neighbor:arxiv-org-abs-2505-18228",
@@ -1322,6 +1352,16 @@
         "quote": "[AI Crawler Transparency Dashboard (berghain.ravers.workers.dev)](https://berghain.ravers.workers.dev/dashboard/crawl-stats) — the strongest neighbour of the *audience* half: one site logging every request from eighty-plus AI crawlers and publishing the counts through an unauthenticated API; a crawl-monetisation demo rather than a daily committed series, and it measures a site built to be paid for, not a page built to be read."
       },
       "url": "https://berghain.ravers.workers.dev/dashboard/crawl-stats"
+    },
+    {
+      "id": "neighbor:blog-gdeltproject-org",
+      "kind": "neighbor",
+      "label": "GDELT GeoGlobe / the GDELT visualisations",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[GDELT GeoGlobe / the GDELT visualisations](https://blog.gdeltproject.org/) — the neighbour of the press layers: global event and tone data on a sphere, from the same GDELT files this house reads. It is one source, drawn live from BigQuery, with no committed snapshot behind the drawing — the query is the artefact and it is not kept."
+      },
+      "url": "https://blog.gdeltproject.org/"
     },
     {
       "id": "neighbor:blog-gdeltproject-org-gdelt-2-0-our-global-world-in-realtime",
@@ -1451,6 +1491,26 @@
         "quote": "[Deep Sky Research — \"Insuring against climate risk is becoming unaffordable\"](https://www.deepskyclimate.com/data-dashboard-charts/price-of-home-insurance) — a live, quarterly-updated public dashboard whose chart is literally \"Percent Increase in the Price of Home Insurance Premiums since 1998,\" sourced from the *same* BLS PPI series, same 1998 base year, same \"climate is unaffordable\" framing."
       },
       "url": "https://www.deepskyclimate.com/data-dashboard-charts/price-of-home-insurance"
+    },
+    {
+      "id": "neighbor:earth-nullschool-net",
+      "kind": "neighbor",
+      "label": "earth.nullschool.net",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[earth.nullschool.net](https://earth.nullschool.net/) — the canonical beautiful globe: wind, currents, waves, pollutants, with a date picker over reanalysis. One class of source (numerical weather models), no per-mark provenance, and a reader who wants the underlying grid goes to the model, not to the page."
+      },
+      "url": "https://earth.nullschool.net/"
+    },
+    {
+      "id": "neighbor:earthengine-google-com-timelapse",
+      "kind": "neighbor",
+      "label": "Google Earth Engine Timelapse",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Google Earth Engine Timelapse](https://earthengine.google.com/timelapse/) — the strongest neighbour on the *archive* claim: four decades of imagery as one scrubbable planet. One source family, a rendered product rather than a citable record; a viewer cannot ask a pixel which scene it came from."
+      },
+      "url": "https://earthengine.google.com/timelapse/"
     },
     {
       "id": "neighbor:edintegrity-biomedcentral-com-articles-10-1007-s40979-023-00",
@@ -1619,6 +1679,16 @@
         "quote": "[AgentSociety](https://github.com/tsinghua-fib-lab/agentsociety) (Tsinghua FIB Lab) — large LLM-agent social-simulation platform, but LLM-native agents for social science, not Minsky's small deterministic rule agents."
       },
       "url": "https://github.com/tsinghua-fib-lab/agentsociety"
+    },
+    {
+      "id": "neighbor:globalfishingwatch-org-map",
+      "kind": "neighbor",
+      "label": "Global Fishing Watch map",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Global Fishing Watch map](https://globalfishingwatch.org/map/) — the neighbour of the ghost-fleet layer, and much stronger on it: the whole AIS corpus, vessel identity, encounters, gaps, with the detection method published. One domain, one keeper's platform, an account for the data; the page is the product and the archive is the keeper's."
+      },
+      "url": "https://globalfishingwatch.org/map/"
     },
     {
       "id": "neighbor:globalfishingwatch-org-research-project-dark-vessels",
@@ -1938,6 +2008,16 @@
       }
     },
     {
+      "id": "neighbor:pudding-cool",
+      "kind": "neighbor",
+      "label": "The Pudding",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[The Pudding](https://pudding.cool/) — the standard of the essayistic data piece, and occasionally on a globe. Each piece is a finished argument over a frozen dataset; nothing is a standing instrument that grows a day every night."
+      },
+      "url": "https://pudding.cool/"
+    },
+    {
       "id": "neighbor:reusingthenews-org",
       "kind": "neighbor",
       "label": "Reusing the News",
@@ -2199,6 +2279,16 @@
       }
     },
     {
+      "id": "neighbor:windy-com",
+      "kind": "neighbor",
+      "label": "Windy",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Windy](https://www.windy.com/) · [MarineTraffic](https://www.marinetraffic.com/) · [Flightradar24](https://www.flightradar24.com/) — the three live-tracking neighbours. All three are better than this globe will ever be at what they do, and all three are the opposite object: the present tense, refreshed, with history behind a subscription and no receipt a reader can recompute."
+      },
+      "url": "https://www.windy.com/"
+    },
+    {
       "id": "neighbor:worldmoodtracker-com",
       "kind": "neighbor",
       "label": "World Mood Tracker",
@@ -2207,6 +2297,16 @@
         "quote": "[World Mood Tracker](https://worldmoodtracker.com) — daily happy/worried/angry/sad labels for 133+ countries; undisclosed model, 30-day memory, no download, nothing citable."
       },
       "url": "https://worldmoodtracker.com"
+    },
+    {
+      "id": "neighbor:worldview-earthdata-nasa-gov",
+      "kind": "neighbor",
+      "label": "NASA Worldview",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[NASA Worldview](https://worldview.earthdata.nasa.gov/) — the strongest neighbour on breadth and on time: more than a thousand full-resolution satellite imagery layers, many within three hours of observation, with a date control over years of archive. It is one keeper's own imagery, served from an API at view time; there is no committed archive a reader holds, no per-mark receipt into a file, and nothing from outside NASA's own holdings."
+      },
+      "url": "https://worldview.earthdata.nasa.gov/"
     },
     {
       "id": "practice:conductor",
@@ -4044,7 +4144,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'balance'"
       },
-      "rank": 3,
+      "rank": 4,
       "tier": "experiment",
       "line": "From the “Counter-Measurement” line.",
       "verdict": "UNIQUE",
@@ -4066,7 +4166,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'beifang'"
       },
-      "rank": 6,
+      "rank": 7,
       "verdict": "ADDED VALUE",
       "verdictLabel": "ADDED VALUE (narrow).",
       "daylight": "Cite the prior academic literature (Hanson, Marino, SPARC) explicitly on the page — currently absent, which reads as unawareness — and make the recurring-cadence, paired-control, dual-vantage-point apparatus the headline claim, since that's the part with no existing match.",
@@ -4086,7 +4186,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'consensus'"
       },
-      "rank": 12,
+      "rank": 13,
       "tier": "experiment",
       "line": "From the “Counter-Measurement” line.",
       "verdict": "ADDED VALUE",
@@ -4108,7 +4208,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'correction'"
       },
-      "rank": 13,
+      "rank": 14,
       "tier": "studie",
       "line": "From the “Counter-Measurement” line.",
       "verdict": "REDUNDANT",
@@ -4142,7 +4242,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'ghost-fleet'"
       },
-      "rank": 7,
+      "rank": 8,
       "tier": "studie",
       "line": "From the “Counter-Measurement” line.",
       "verdict": "REDUNDANT",
@@ -4151,6 +4251,28 @@
       "auditSource": {
         "file": "docs/audits/2026-08-09-usp-audit.md",
         "quote": "REDUNDANT — the most severe case in this audit, because the page's own text names the dependency."
+      }
+    },
+    {
+      "id": "work:globe",
+      "kind": "work",
+      "label": "Living Globe",
+      "werkId": "globe",
+      "href": "/globe",
+      "since": "2026-09-03",
+      "source": {
+        "file": "src/data/werke.ts",
+        "quote": "id: 'globe'"
+      },
+      "rank": 1,
+      "tier": "experiment",
+      "line": "From the counter-measurement line.",
+      "verdict": "ADDED VALUE",
+      "verdictLabel": "ADDED VALUE (provisional — two registered searches owed, sealed at the end of G4).",
+      "daylight": "Keep, provisionally, and finish the audit. Two of the four pre-registered search terms are owed before this verdict is sealed at the end of G4; the entry stays marked provisional on `/experiments/neighbors` until then. Two things would strengthen the claim between now and the sealing: the remaining layers of G3, because the union is the claim and three layers is not yet a union; and the kill reading of 2026-10-15, which is the only evidence that will say whether the receipts are worth their cost to anyone but this house. The name is Frank's call — the collision with the arXiv tool is harmless in practice and is on the record here either way.",
+      "auditSource": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "ADDED VALUE (provisional — two registered searches owed, sealed at the end of G4)."
       }
     },
     {
@@ -4164,7 +4286,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'invoked-past'"
       },
-      "rank": 2,
+      "rank": 3,
       "tier": "experiment",
       "verdict": "UNIQUE",
       "verdictLabel": "UNIQUE (as a living instrument).",
@@ -4218,7 +4340,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'parallaxe'"
       },
-      "rank": 15,
+      "rank": 16,
       "verdict": "REDUNDANT",
       "verdictLabel": "REDUNDANT-leaning.",
       "daylight": "The plausible surviving differentiator is *process*, not method: a committed, versioned, git-archived daily register with a fixed non-selected topic set, never retconned — none of the neighbors offer that as a public, continuously-dated artifact (INFOGAP is a paper/dataset; Omnipedia/Manypedia are dead demos). Name this explicitly as the point, and cite INFOGAP/Omnipedia/Manypedia openly rather than let a visitor discover the overlap unassisted.",
@@ -4238,7 +4360,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'pattern'"
       },
-      "rank": 11,
+      "rank": 12,
       "line": "Capstone of the “Counter-Measurement” line.",
       "verdict": "REDUNDANT",
       "verdictLabel": "REDUNDANT — the weakest claim to uniqueness in this audit.",
@@ -4259,7 +4381,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'praemie'"
       },
-      "rank": 14,
+      "rank": 15,
       "verdict": "REDUNDANT",
       "verdictLabel": "REDUNDANT.",
       "daylight": "Either build on genuinely under-covered instruments — actual cat-bond spread/ROL data (Swiss Re index, Artemis.bm) rather than the BLS homeowner PPI others already use — or make the legal-document framing itself the explicit differentiator, citing Deep Sky/BLS/FRED openly rather than implying proprietary discovery.",
@@ -4279,7 +4401,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'protokoll'"
       },
-      "rank": 16,
+      "rank": 17,
       "verdict": "ADDED VALUE",
       "verdictLabel": "ADDED VALUE, driven by the literary form, not the data aggregation.",
       "daylight": "Stop positioning \"twelve open sources, daily\" as the value proposition (invites a losing comparison to OWID); foreground the deterministic/no-LLM/ test-locked-template mechanism and the \"adjourned\" bureaucratic-literary device as the explicit claim — an art piece about administrative language applied to planetary indicators, not a data-aggregation competitor to Our World in Data.",
@@ -4299,7 +4421,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'redaction'"
       },
-      "rank": 8,
+      "rank": 9,
       "tier": "instrument",
       "line": "From the “Counter-Measurement” line, in two chambers.",
       "verdict": "ADDED VALUE",
@@ -4321,7 +4443,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'round-number'"
       },
-      "rank": 9,
+      "rank": 10,
       "line": "From the “Counter-Measurement” line.",
       "verdict": "REDUNDANT",
       "verdictLabel": "REDUNDANT.",
@@ -4342,7 +4464,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'society'"
       },
-      "rank": 4,
+      "rank": 5,
       "tier": "experiment",
       "verdict": "UNIQUE",
       "verdictLabel": "UNIQUE (provisional).",
@@ -4363,7 +4485,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'spielraum'"
       },
-      "rank": 5,
+      "rank": 6,
       "tier": "experiment",
       "line": "From the counter-measurement line.",
       "verdict": "ADDED VALUE",
@@ -4397,7 +4519,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'tell'"
       },
-      "rank": 10,
+      "rank": 11,
       "line": "From the “Counter-Measurement” line.",
       "verdict": "REDUNDANT",
       "verdictLabel": "REDUNDANT — the clearest case in this audit.",
@@ -4418,7 +4540,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'trending'"
       },
-      "rank": 1,
+      "rank": 2,
       "tier": "experiment",
       "verdict": "ADDED VALUE",
       "verdictLabel": "ADDED VALUE (provisional — sealed before ship).",
@@ -4439,7 +4561,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'ueberflug'"
       },
-      "rank": 17,
+      "rank": 18,
       "tier": "studie",
       "verdict": "ADDED VALUE",
       "verdictLabel": "ADDED VALUE, genuine but narrow.",
@@ -5869,6 +5991,116 @@
       "source": {
         "file": "docs/audits/2026-08-09-usp-audit.md",
         "quote": "[The Outlaw Ocean Project](https://theoutlawocean.com/podcast/the-dark-fleet) — investigative journalism running the \"single vessel dark for months\" narrative for years (e.g. the 110-day chase of the *Thunder*), with named vessels, crews, and months of reporting."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:globe",
+      "to": "neighbor:arxiv-org-abs-1607-05946",
+      "note": "a **name** collision, named here rather than ignored: a 3D interactive globe for exploring world demographic data with a time slider. One dataset, an academic prototype, no archive and no receipts; the collision is in the title, not the method.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Living Globe (Cardoso et al., arXiv 1607.05946)](https://arxiv.org/abs/1607.05946) — a **name** collision, named here rather than ignored: a 3D interactive globe for exploring world demographic data with a time slider. One dataset, an academic prototype, no archive and no receipts; the collision is in the title, not the method."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:globe",
+      "to": "neighbor:arxiv-org-abs-2505-11784",
+      "note": "the closest thing to the *idea* in the literature: provenance as a visual attribute of a mark, so a reader can see where a value came from. A design probe and a technique, not a running instrument, and not on a globe.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[ProvenanceLens (arXiv 2505.11784)](https://arxiv.org/abs/2505.11784) — the closest thing to the *idea* in the literature: provenance as a visual attribute of a mark, so a reader can see where a value came from. A design probe and a technique, not a running instrument, and not on a globe."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:globe",
+      "to": "neighbor:blog-gdeltproject-org",
+      "note": "the neighbour of the press layers: global event and tone data on a sphere, from the same GDELT files this house reads. It is one source, drawn live from BigQuery, with no committed snapshot behind the drawing — the query is the artefact and it is not kept.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[GDELT GeoGlobe / the GDELT visualisations](https://blog.gdeltproject.org/) — the neighbour of the press layers: global event and tone data on a sphere, from the same GDELT files this house reads. It is one source, drawn live from BigQuery, with no committed snapshot behind the drawing — the query is the artefact and it is not kept."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:globe",
+      "to": "neighbor:earth-nullschool-net",
+      "note": "the canonical beautiful globe: wind, currents, waves, pollutants, with a date picker over reanalysis. One class of source (numerical weather models), no per-mark provenance, and a reader who wants the underlying grid goes to the model, not to the page.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[earth.nullschool.net](https://earth.nullschool.net/) — the canonical beautiful globe: wind, currents, waves, pollutants, with a date picker over reanalysis. One class of source (numerical weather models), no per-mark provenance, and a reader who wants the underlying grid goes to the model, not to the page."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:globe",
+      "to": "neighbor:earthengine-google-com-timelapse",
+      "note": "the strongest neighbour on the *archive* claim: four decades of imagery as one scrubbable planet. One source family, a rendered product rather than a citable record; a viewer cannot ask a pixel which scene it came from.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Google Earth Engine Timelapse](https://earthengine.google.com/timelapse/) — the strongest neighbour on the *archive* claim: four decades of imagery as one scrubbable planet. One source family, a rendered product rather than a citable record; a viewer cannot ask a pixel which scene it came from."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:globe",
+      "to": "neighbor:globalfishingwatch-org-map",
+      "note": "the neighbour of the ghost-fleet layer, and much stronger on it: the whole AIS corpus, vessel identity, encounters, gaps, with the detection method published. One domain, one keeper's platform, an account for the data; the page is the product and the archive is the keeper's.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Global Fishing Watch map](https://globalfishingwatch.org/map/) — the neighbour of the ghost-fleet layer, and much stronger on it: the whole AIS corpus, vessel identity, encounters, gaps, with the detection method published. One domain, one keeper's platform, an account for the data; the page is the product and the archive is the keeper's."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:globe",
+      "to": "neighbor:ourworldindata-org",
+      "note": "the standard of provenance in public data visualisation: every chart names its source, its download and its processing, and the data is open. Charts and country maps, not a globe; one dataset per figure, never many on one earth at one instant.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Our World in Data](https://ourworldindata.org/) — the standard of provenance in public data visualisation: every chart names its source, its download and its processing, and the data is open. Charts and country maps, not a globe; one dataset per figure, never many on one earth at one instant."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:globe",
+      "to": "neighbor:pudding-cool",
+      "note": "the standard of the essayistic data piece, and occasionally on a globe. Each piece is a finished argument over a frozen dataset; nothing is a standing instrument that grows a day every night.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[The Pudding](https://pudding.cool/) — the standard of the essayistic data piece, and occasionally on a globe. Each piece is a finished argument over a frozen dataset; nothing is a standing instrument that grows a day every night."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:globe",
+      "to": "neighbor:windy-com",
+      "note": "the three live-tracking neighbours. All three are better than this globe will ever be at what they do, and all three are the opposite object: the present tense, refreshed, with history behind a subscription and no receipt a reader can recompute.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Windy](https://www.windy.com/) · [MarineTraffic](https://www.marinetraffic.com/) · [Flightradar24](https://www.flightradar24.com/) — the three live-tracking neighbours. All three are better than this globe will ever be at what they do, and all three are the opposite object: the present tense, refreshed, with history behind a subscription and no receipt a reader can recompute."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:globe",
+      "to": "neighbor:worldview-earthdata-nasa-gov",
+      "note": "the strongest neighbour on breadth and on time: more than a thousand full-resolution satellite imagery layers, many within three hours of observation, with a date control over years of archive. It is one keeper's own imagery, served from an API at view time; there is no committed archive a reader holds, no per-mark receipt into a file, and nothing from outside NASA's own holdings.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[NASA Worldview](https://worldview.earthdata.nasa.gov/) — the strongest neighbour on breadth and on time: more than a thousand full-resolution satellite imagery layers, many within three hours of observation, with a date control over years of archive. It is one keeper's own imagery, served from an API at view time; there is no committed archive a reader holds, no per-mark receipt into a file, and nothing from outside NASA's own holdings."
       }
     },
     {
@@ -7375,11 +7607,29 @@
     },
     {
       "kind": "touches",
+      "from": "decision:2026-09-02-6",
+      "to": "work:globe",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "src/lib/globe/model.ts"
+      }
+    },
+    {
+      "kind": "touches",
       "from": "decision:2026-09-02-8",
       "to": "work:trending",
       "source": {
         "file": "docs/decision-log.md",
         "quote": "pipelines/trending/src/trending/quality.py"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-09-03-1",
+      "to": "work:globe",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "src/lib/globe/"
       }
     }
   ]

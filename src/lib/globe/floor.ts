@@ -60,21 +60,33 @@ function plate(land: Topology) {
   }
 }
 
-function openPlate(titleId: string, descId: string, title: string, desc: string, landPath: string, graticule: string): string[] {
+/** The sea, the graticule and the land, under a class prefix. Two plates stand on this ground and
+ *  they are inked by two different stylesheets — the entrance's `sky-` classes live in
+ *  ops-room.css, the living globe's `globe-` classes in living-globe.css — so neither page has to
+ *  carry the other's stylesheet, and neither can silently re-colour the other. */
+function openPlate(
+  prefix: string,
+  titleId: string,
+  descId: string,
+  title: string,
+  desc: string,
+  landPath: string,
+  graticule: string,
+): string[] {
   return [
-    `<svg class="sky-floor-svg" viewBox="0 0 ${FLOOR_W} ${FLOOR_H}" role="img" aria-labelledby="${titleId} ${descId}" xmlns="http://www.w3.org/2000/svg">`,
+    `<svg class="${prefix}-floor-svg" viewBox="0 0 ${FLOOR_W} ${FLOOR_H}" role="img" aria-labelledby="${titleId} ${descId}" xmlns="http://www.w3.org/2000/svg">`,
     `<title id="${titleId}">${escapeXml(title)}</title>`,
     `<desc id="${descId}">${escapeXml(desc)}</desc>`,
-    `<rect class="sky-sea" x="0" y="0" width="${FLOOR_W}" height="${FLOOR_H}"/>`,
-    `<path class="sky-grat" d="${graticule}"/>`,
-    `<path class="sky-land" d="${landPath}"/>`,
+    `<rect class="${prefix}-sea" x="0" y="0" width="${FLOOR_W}" height="${FLOOR_H}"/>`,
+    `<path class="${prefix}-grat" d="${graticule}"/>`,
+    `<path class="${prefix}-land" d="${landPath}"/>`,
   ]
 }
 
 export function buildGlobeFloorSvg({ land, arcs, satellites, points, labels }: FloorInput): string {
   const { projection, path, landPath, graticule } = plate(land)
 
-  const s: string[] = openPlate('sky-floor-title', 'sky-floor-desc', labels.title, labels.desc, landPath, graticule)
+  const s: string[] = openPlate('sky', 'sky-floor-title', 'sky-floor-desc', labels.title, labels.desc, landPath, graticule)
 
   s.push('<g class="sky-arcs">')
   for (const a of arcs) {
@@ -139,7 +151,7 @@ function place(record: LayerRecord): { from: [number, number]; to?: [number, num
 
 export function buildLayeredFloorSvg({ land, layers, labels }: LayeredFloorInput): string {
   const { projection, path, landPath, graticule } = plate(land)
-  const s: string[] = openPlate('globe-floor-title', 'globe-floor-desc', labels.title, labels.desc, landPath, graticule)
+  const s: string[] = openPlate('globe', 'globe-floor-title', 'globe-floor-desc', labels.title, labels.desc, landPath, graticule)
 
   for (const layer of layers) {
     s.push(`<g class="globe-layer" data-layer="${escapeXml(layer.id)}">`)

@@ -21,6 +21,10 @@
 import { readFileSync, readdirSync } from 'node:fs'
 import { join } from 'node:path'
 
+import { geoEquirectangular, geoPath } from 'd3-geo'
+import { feature } from 'topojson-client'
+import type { Topology } from 'topojson-specification'
+
 import { GALLERY } from '@/config/gallery-wording'
 import { bars as vizBars, linePath, type VizBox } from '@/lib/ops/viz'
 import { bars as benfordBars } from '@/lib/round-number/histogram'
@@ -46,6 +50,9 @@ import balanceData from '@/data/balance/latest.json'
 import revisionData from '@/data/revision/latest.json'
 import spielraumData from '@/data/spielraum/register.json'
 import ueberflugData from '@/data/ueberflug/densification.json'
+import landTopology from '@/data/globe/land-110m.json'
+import { LAYERS } from '@/lib/globe/layers'
+import { buildLivingGlobe, frameAt } from '@/lib/globe/living'
 
 /** The miniature's box. Wide and short on purpose: it sits above a card's title like a stave,
  *  and at this height no figure can pretend to be readable in detail — it is a signature. */
@@ -133,6 +140,48 @@ function lineMark(values: readonly number[], on = false): ThumbMark[] {
 
 // ── one builder per experiment ────────────────────────────────────────────────────────────
 // Each returns the marks; the readout and the provenance line travel beside them in THUMBNAILS.
+
+/** Living Globe — the land of the committed geography, with the marks of the newest day the
+ *  archive holds on it: one segment per vessel gone dark, one dot per satellite overhead, one
+ *  filled dot per seat the planet's readings are published from. The same projection the plate on
+ *  /globe uses, at a twentieth of the size, so the miniature is the figure and not a picture of
+ *  one. Every coordinate is rounded once, here. */
+function globeMarks(): ThumbMark[] {
+  const topology = landTopology as unknown as Topology
+  const projection = geoEquirectangular().fitExtent(
+    [
+      [P, P],
+      [W - P, H - P],
+    ],
+    { type: 'Sphere' },
+  )
+  const path = geoPath(projection).digits(1)
+  const marks: ThumbMark[] = []
+  const land = path(feature(topology, topology.objects.land as never) as never)
+  if (land) marks.push({ t: 'area', d: land })
+
+  const model = buildLivingGlobe()
+  const moment = frameAt(model, model.newest)
+  for (const layer of LAYERS) {
+    for (const record of moment.layers[layer.id].records) {
+      if (Array.isArray(record.at)) {
+        const xy = projection(record.at)
+        if (!xy) continue
+        const seat = record.labelKind === 'seat' || record.labelKind === 'station'
+        const dot = { t: 'dot' as const, x: r1(xy[0]), y: r1(xy[1]), r: seat ? 1.2 : 0.6 }
+        marks.push(seat ? { ...dot, on: true as const } : dot)
+        continue
+      }
+      if ('from' in record.at) {
+        const off = projection(record.at.from)
+        const on = projection(record.at.to)
+        if (!off || !on) continue
+        marks.push({ t: 'seg', x1: r1(off[0]), y1: r1(off[1]), x2: r1(on[0]), y2: r1(on[1]) })
+      }
+    }
+  }
+  return marks
+}
 
 /** Consensus — the cascade of the day's phrase: outlets against the hours since the first one. */
 function consensusMarks(): ThumbMark[] {
@@ -588,6 +637,19 @@ function buildThumbnails(): Thumbnail[] {
       count(ueberflugData.observations),
     ),
     source: 'src/data/ueberflug/densification.json',
+  })
+
+  const globeModel = buildLivingGlobe()
+  const globeMoment = frameAt(globeModel, globeModel.newest)
+  out.push({
+    id: 'globe',
+    marks: globeMarks(),
+    draws: D.globe!,
+    readout: R.globe(
+      count(LAYERS.reduce((sum, layer) => sum + globeMoment.layers[layer.id].records.length, 0)),
+      count(LAYERS.length),
+    ),
+    source: 'src/data/globe/land-110m.json',
   })
 
   out.push({

@@ -61,6 +61,7 @@ export const GALLERY = {
    * never what the axis showed today. The reading of the day is the readout below.
    */
   draws: {
+    globe: 'the land of the committed geography with the newest day’s marks on it — a segment per vessel gone dark, a dot per satellite overhead, a filled dot per seat a reading is published from',
     trending: 'the day’s converging topics by the platforms that carried each, over the sources that answered',
     society: 'the room’s agents and the connections between them',
     spielraum: 'each company’s latest reported efficiency against the physical floor',
@@ -87,6 +88,7 @@ export const GALLERY = {
    * own, the card would start contradicting the file under it.
    */
   readouts: {
+    globe: (marks: string, layers: string) => `${marks} marks from ${layers} layers on the newest day the archive holds`,
     trending: (topics: string, platforms: string) =>
       `${topics} converging on ${platforms} independent platforms or more`,
     society: (agents: string, links: string) => `${agents} agents, ${links} connections between them`,
