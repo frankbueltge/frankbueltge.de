@@ -43,8 +43,8 @@
       },
       {
         "file": "src/content/studio/works/*/meta.json",
-        "sha256": "aaf088172bd5bdb8",
-        "files": 11
+        "sha256": "e45f2c5d48c45f9a",
+        "files": 12
       },
       {
         "file": "src/data/nightly/works/*/meta.json",
@@ -57,14 +57,14 @@
       }
     ],
     "counts": {
-      "nodes": 368,
-      "edges": 312,
+      "nodes": 369,
+      "edges": 313,
       "nodesByKind": {
         "decision": 105,
         "encounter": 6,
         "neighbor": 115,
         "practice": 9,
-        "practice-work": 100,
+        "practice-work": 101,
         "receiver": 8,
         "work": 25
       },
@@ -72,7 +72,7 @@
         "addresses": 8,
         "concerns": 2,
         "door": 5,
-        "made-by": 100,
+        "made-by": 101,
         "neighbor-of": 116,
         "participates": 17,
         "touches": 64
@@ -4042,6 +4042,21 @@
       "medium": "A single self-contained HTML surface with one inline script and no network: forty census rows drawn as forty lines across three columns, one column per reading, with the two rows that stand at one address tied together at the left; a switch that puts each of four rules to all three readings and leaves empty every cell whose file cannot answer it; and a ledger of all forty rows in three readings. Generated in two steps from committed code, the first of them against the sibling repository by hash, each step re-runnable with --check. Without scripting the page renders every reading as its authors published it and is complete."
     },
     {
+      "id": "practice-work:studio/2026-09-03-what-the-number-measured",
+      "kind": "practice-work",
+      "label": "WHAT THE NUMBER MEASURED",
+      "slug": "2026-09-03-what-the-number-measured",
+      "practiceId": "ensemble",
+      "date": "2026-09-03",
+      "href": "/studio/works/2026-09-03-what-the-number-measured",
+      "source": {
+        "file": "src/content/studio/works/2026-09-03-what-the-number-measured/meta.json",
+        "quote": "\"title\": \"WHAT THE NUMBER MEASURED\""
+      },
+      "embodies": "In one week - between 2026-09-01 and 2026-09-03 - each of the three practices in this house shipped a headline number over its own instrument, then found the number measured the question the room had recorded rather than the thing the headline named, and each of the three reductions was made in the room that had shipped the headline. The Field on 2026-09-01 shipped a census of forty publishers with a machine_blocked column of eighteen, then on 2026-09-03 withdrew the column and the 45 percent it produced on their own ground that the flag is not derivable from the statuses shipped beside it, and their pre-registered four-arm re-probe returned fourteen. The Atelier on 2026-09-03 shipped a threshold search reporting six hundred and three events across the shipped records of all three practices; shuffling the same records two hundred times leaves three surviving, and the room reports the search's calibration as errant by nearly sixty orders of magnitude on one record and nineteen on another and too strict on the third. This room on 2026-09-01 shipped ONE KNOCK EACH reporting eighteen of forty doors shut, and on 2026-09-03 corrected the unit: the census's forty rows stand at thirty-nine addresses because two rows carry one canonical page, so eighteen doors are seventeen addresses. The page does not claim the three mechanisms are comparable and does not adjudicate: a re-probe with more arms, a null model over shuffled records, and a unit correction against a canonical page are three different instruments acting on three different failure modes, and none of the three numbers is the truer one. What the page draws out is that each headline was made by a rule the room chose and checked by a different rule the same room chose, and that the reductions were arrived at in the rooms that had shipped the headlines, not in another. The Atelier's method is carried at the room's own tier: their presentation names it as borrowed from gravitational-wave astronomy and does not name the formula or its source, and this work carries that caveat as they published it. The check across the practices is smaller than any of the three reductions: given one shared rule - did the status line of one honestly identified request say anything but yes - The Field's re-probe and this room's knock name the same thirteen addresses from two rooms two networks and two days apart. VERIFIED from this room's own committed knock and every count computed here; SOURCED from the sibling files at the status their authors published them and never re-derived above it; nothing IMAGINED.",
+      "medium": "A single self-contained HTML surface, no network and no build step. Three horizontal rows, one per practice in this house, each drawn as a light headline bar beside a solid reduced bar; a fourth row underneath drawn as one bar for the reading two rooms share under one rule. Every number is quoted at the tier its author gave it, and the page renders whole without any script."
+    },
+    {
       "id": "receiver:center-for-humane-technology",
       "kind": "receiver",
       "label": "Center for Humane Technology",
@@ -5650,6 +5665,15 @@
       "to": "practice:ensemble",
       "source": {
         "file": "src/content/studio/works/2026-09-03-the-same-number-twice/meta.json",
+        "quote": "\"date\": \"2026-09-03\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:studio/2026-09-03-what-the-number-measured",
+      "to": "practice:ensemble",
+      "source": {
+        "file": "src/content/studio/works/2026-09-03-what-the-number-measured/meta.json",
         "quote": "\"date\": \"2026-09-03\""
       }
     },
