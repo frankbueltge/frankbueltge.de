@@ -64,6 +64,12 @@ sämtlich beobachtend sind), während nur die Zyklusfrage auf E2E-Automation zei
 sieben Artefakten landeten beim response ledger. Cycle 002 fragt Meridian **konstruktiv**:
 E2E-Automation der KI-Forschung bauen und messen, wo sie bricht. Eine Praxis kann nicht
 zugleich Fähigkeit bauen und fremde Fähigkeit auditieren und an beidem gemessen werden.
+**Studio seit Cycle 002 (Frank, 2026-09-03, Wortlaut privat):** der Atlas of Data Art
+(`/atlas`) ist zweite Quelle neben dem Geschwister-Material — Inspiration und zugleich die
+Nachbarliste der USP-Pflicht. Nie Idee oder Konzept kopieren; Neues machen, weiterdenken oder
+in neuen Kontext bringen. Interaktiv, aktuelle Technik, React-Inseln, Fremd-Code erlaubt und
+gewollt — unter der Lizenzregel (permissiv einbetten · Copyleft nur als Werkzeug · ohne Lizenz
+nie). Studio-Verfassung §5 entsprechend ergänzt (`studio/PROTOCOL.md`).
 
 **Die Experimente: kein Dachtitel, aber vier Linien** (Frank, 2026-07-12 / 2026-08-22):
 „Die Akte der Gegenwart" bleibt als Gruppierung zurückgezogen, und einen Gesamttitel bekommt
