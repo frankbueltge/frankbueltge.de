@@ -78,27 +78,29 @@ describe('the front page mounts the ops room', () => {
     expect(indexPage).toContain('FrontDoor.astro stays in the repo')
   })
 
-  // The panel of the sky and the water still stands under the hero, and it is a PLATE. It carried
-  // the living globe's island from 2026-09-02 until the owner's decision of 2026-09-03 (wording
-  // private: the front door needs no turning globe), which is why this assertion is the way round
-  // it is. The globe is not gone from the house — it is at /globe, where it is the work — and this
-  // test exists so nobody quietly mounts it here again and hands a phone three hundred kilobytes
-  // for a decoration.
-  it('mounts the plate under the hero, and no globe', () => {
+  // The sky and the water stood under the hero from 2026-09-02: a turning globe first, then the
+  // plate underneath it. The owner took the globe off the front page on 2026-09-03 and, when the
+  // plate turned out to be what he meant by it, the panel too (wording private, paraphrased). Six
+  // hundred pixels of world map were the second thing on the page and the most expensive; the
+  // fleet and the gaps are one click away in the signal log and the tiles. This assertion is the
+  // way round it is so nobody puts it back without saying so.
+  it('mounts no sky panel under the hero', () => {
     const opsRoom = read('../../components/pages/OpsRoom.astro')
-    const figure = read('../../components/pages/EntranceGlobeFigure.astro')
-    expect(opsRoom).toContain("from './EntranceGlobeFigure.astro'")
-    expect(opsRoom).toContain('<EntranceGlobeFigure />')
-    expect(figure).not.toContain("from './LivingGlobe'")
-    expect(figure).not.toContain('<LivingGlobe')
-    expect(figure).toContain('buildGlobeFloorSvg')
-    expect(figure).toContain('set:html={floor}')
+    expect(opsRoom).not.toContain('<EntranceGlobeFigure />')
+    expect(opsRoom).not.toContain("from './EntranceGlobeFigure.astro'")
   })
 
-  it('sends the reader to the globe rather than pretending to be one', () => {
+  it('keeps the figure in the repo, dated and unmounted, rather than deleting it', () => {
     const figure = read('../../components/pages/EntranceGlobeFigure.astro')
-    expect(figure).toContain('GLOBE.entrance.more.href')
-    expect(GLOBE.entrance.more.href).toBe('/globe')
+    expect(figure.length).toBeGreaterThan(0)
+    expect(figure).toContain('NOT MOUNTED SINCE 2026-09-03')
+    // and it is still a plate, not a globe: whoever mounts it again mounts the drawing, not the island
+    expect(figure).not.toContain("from './LivingGlobe'")
+  })
+
+  it('leaves the ops room with no client data fetching at all', () => {
+    const opsRoom = read('../../components/pages/OpsRoom.astro')
+    expect(opsRoom).toContain('NO CLIENT DATA FETCHING, with no exception again since 2026-09-03')
   })
 
   it('says the plate stands where the elements were taken, not at the reader’s present', () => {

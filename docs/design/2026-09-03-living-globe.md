@@ -10,6 +10,12 @@ from now ride in that layer's own feed, so nothing read the separate model feed 
 
 ## 2026-09-03, later that day — the front door gives the globe back
 
+*Amended the same evening: the panel went too. The plate the island had been standing on was still
+six hundred pixels of world map under the hero, and it was what the owner was still seeing when he
+said the globe was on the homepage. The ops room now mounts no sky panel at all; the figure is kept
+dated and unmounted, and the room's no-client-fetching rule has no exception again. The globe keeps
+its whole apparatus at `/globe`.*
+
 The owner's decision (wording private, paraphrased): the entrance does not need the turning
 globe. It stood there from the visual layer's third phase (2026-09-02) until this line, first as
 its own island and then, from G1, as the room's island in a compact form.

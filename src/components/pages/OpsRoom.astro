@@ -21,12 +21,13 @@
 //     count, every hover readout — is derived at build time by src/lib/ops/* from a committed
 //     snapshot. Copy that has to wrap a number is a function (or a template the client fills) in
 //     NAMING.opsRoom taking that number as its argument.
-//   · NO CLIENT DATA FETCHING — with one declared exception since 2026-09-02: the globe under the
-//     hero (EntranceGlobeFigure.astro) fetches the two committed snapshots it was drawn from, same-
-//     origin, once it is on screen, because SGP4 needs the orbital elements in the browser and the
-//     hero should not carry them in its HTML. The page itself is static output. Three things move
-//     on their own, and all three are time, not data: the UTC clock (its text and the hand on its
-//     face), the dots walking the pulse, and the satellites walking their orbits over the globe.
+//   · NO CLIENT DATA FETCHING, with no exception again since 2026-09-03. The globe under the hero
+//     was the one exception from 2026-09-02: it fetched the two committed snapshots it was drawn
+//     from, because SGP4 needs the elements in the browser. The owner took the globe off the front
+//     door that evening and the panel with it (wording private, paraphrased: the front page does
+//     not need it), so this room is static output again. Two things move on their own, and both
+//     are time, not data: the UTC clock — its text and the hand on its face — and the dots walking
+//     the pulse.
 //     None of it starts under prefers-reduced-motion. Everything else the scripts do is a
 //     response to the pointer.
 //   · ABSENCE IS DRAWN. A row whose record is empty says so; a tile whose snapshot yields no
@@ -65,7 +66,6 @@ import {
   TILE_BOX,
 } from '@/lib/ops/viz'
 import { getLatestProtokoll } from '@/lib/protokoll/data'
-import EntranceGlobeFigure from './EntranceGlobeFigure.astro'
 import '@/styles/ops-room.css'
 import '@/styles/hub-triptych.css'
 
@@ -207,10 +207,12 @@ const catalogues = NAMING.catalogues.items.filter((c) => c.href !== '/atlas')
       </div>
     </figure>
 
-    {/* The sky over the record: the earth-observation fleet at its positions now, and the ghost
-        fleet's dark gaps — one panel across both columns, drawn from the same committed snapshots
-        the watchtower and the ghost-fleet pages read (visual layer, Phase 3b). */}
-    <EntranceGlobeFigure />
+    {/* The sky over the record stood here from 2026-09-02: the earth-observation fleet at its
+        positions and the ghost fleet's dark gaps, first as a turning globe and then, from
+        2026-09-03, as the plate underneath it. The owner took both off the front page the same
+        evening (wording private, paraphrased). The figure is kept, unmounted and dated, in
+        EntranceGlobeFigure.astro; the fleet and the gaps are still one click away — the signal log
+        below links the globe, and the tiles carry the watchtower and the ghost fleet. */}
   </section>
 
   {/* ── 2 · the board ──────────────────────────────────────────────────────────────────── */}
