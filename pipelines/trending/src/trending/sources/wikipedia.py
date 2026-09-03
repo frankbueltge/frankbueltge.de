@@ -21,8 +21,15 @@ from trending.sources.base import Context, SourceResult, SourceSpec
 LANGS = ("en", "de", "fr", "es", "ja", "pt")
 BASE = "https://wikimedia.org/api/rest_v1/metrics/pageviews/top/{lang}.wikipedia/all-access"
 LOOKBACK_DAYS = 4
+# The canonical main-page titles AND the bare redirects that point at them: de.wikipedia's
+# top list carries "Hauptseite" beside "Wikipedia:Hauptseite", and a redirect collects
+# hundreds of thousands of views of its own. The day's self-check caught this on the first
+# real run of the six-language reader (2026-09-03, wikipedia_filter_held), which is what a
+# rubric is for.
 SKIP_EXACT = frozenset({"Main_Page", "Wikipedia:Hauptseite", "Wikipédia:Accueil_principal",
-                        "Wikipedia:Portada", "メインページ", "Wikipédia:Página_principal", "-"})
+                        "Wikipedia:Portada", "メインページ", "Wikipédia:Página_principal", "-",
+                        "Hauptseite", "Accueil_principal", "Portada", "Página_principal",
+                        "Main_page", "Wikipedia:Main_Page", "Wikipedia:メインページ"})
 # Every edition's own namespace names, so that a search page or a portal is never mistaken
 # for something the world read today.
 SKIP_PREFIXES = ("Special:", "Spezial:", "Spécial:", "Especial:", "特別:",

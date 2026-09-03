@@ -68,3 +68,15 @@ def test_novelty_rule_is_inactive_with_a_short_archive(ctx_factory):
 def test_no_published_day_is_a_note(ctx_factory):
     res = wikipedia.fetch_source(ctx_factory(lambda req: httpx.Response(404)))
     assert res.signals == [] and len(res.notes) == len(wikipedia.LANGS)
+
+
+def test_the_bare_main_page_redirects_are_dropped_like_the_canonical_titles(ctx_factory):
+    """de.wikipedia lists "Hauptseite" beside "Wikipedia:Hauptseite"; both are furniture, and
+    the day's self-check caught the bare one on the first six-language run."""
+    redirects = [("Hauptseite", 890_158), ("Accueil_principal", 500_000), ("Portada", 400_000),
+                 ("Página_principal", 300_000), ("Main_page", 200_000),
+                 ("Jean_Pierre_Kraemer", 70_287)]
+    def handler(req):
+        return httpx.Response(200, json=_payload(redirects))
+    res = wikipedia.fetch_source(ctx_factory(handler))
+    assert {s.label for s in res.signals} == {"Jean Pierre Kraemer"}
