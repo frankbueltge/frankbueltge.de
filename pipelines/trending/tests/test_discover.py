@@ -244,18 +244,20 @@ def test_discover_returns_candidates_notes_and_coverage():
     assert result.notes == {}
 
 
-def test_the_cli_prints_the_table(capsys, monkeypatch):
+def test_the_cli_prints_the_table(capsys, monkeypatch, tmp_path):
+    # An empty repository root on purpose: the CLI reads the house's committed day files as
+    # its primary corpus, so pointing it at the real one would make this test read the archive.
     monkeypatch.setattr(discover, "open_client", lambda: make_client(corpus_route))
-    assert discover.main(["--repo-root", ".", "--days", "30"]) == 0
+    assert discover.main(["--repo-root", str(tmp_path), "--days", "30"]) == 0
     out = capsys.readouterr().out
     assert "n-gram" in out and "sovereign compute" in out
     assert "1 candidates" in out or "1 candidate" in out
 
 
-def test_the_cli_survives_a_dead_corpus(capsys, monkeypatch):
+def test_the_cli_survives_a_dead_corpus(capsys, monkeypatch, tmp_path):
     monkeypatch.setattr(discover, "open_client",
                         lambda: make_client(lambda request: httpx.Response(503)))
-    assert discover.main(["--repo-root", "."]) == 0
+    assert discover.main(["--repo-root", str(tmp_path)]) == 0
     out = capsys.readouterr().out
     assert "0 documents, 0 candidates" in out and "note hackernews" in out
 

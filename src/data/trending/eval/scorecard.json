@@ -1,0 +1,163 @@
+{
+ "$contract": "trending-rule-score/1",
+ "criterion": "Two signals are the same topic when a reader looking for one would want the other: they name the same event, person, work, product or dispute. They are not the same topic when they only share a word, a genre or a place — an obituary and a book by the same author are one topic; two unrelated stories from one country are not.",
+ "days": [
+  {
+   "date": "2026-09-02",
+   "f1": 0.789,
+   "false_joins": 0,
+   "judged": 55,
+   "missed_joins": 8,
+   "not_in_the_day": 0,
+   "precision": 1.0,
+   "recall": 0.652,
+   "true_joins": 15,
+   "true_separations": 32,
+   "unjudged": 0
+  }
+ ],
+ "errors": [
+  {
+   "id": "bluesky:-:1|google_news:-:14",
+   "kind": "missed-the-same-topic",
+   "left": {
+    "geo": null,
+    "label": "Andy Burnham PMQs",
+    "source": "bluesky",
+    "url": "https://bsky.app/profile/did:plc:qrz3lhbyuxbeilrc6nekdqme/feed/ce7e36ad3a07"
+   },
+   "right": {
+    "geo": null,
+    "label": "Five takeaways from Burnham's Commons debut as PM",
+    "source": "google_news",
+    "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE5LMTVkTVFZY1k0a29YVmZOcGhNRlVxcFROVk0yUDQzZ053VURSWnNoNjh4T2ZGYkhUdTUxb1JfdExJWVJsMmpHNlc4cFNobGxfV2tLOTNGQkZxdw?oc=5"
+   }
+  },
+  {
+   "id": "bluesky:-:16|google_news:-:12",
+   "kind": "missed-the-same-topic",
+   "left": {
+    "geo": null,
+    "label": "Nepal mountain collapse causes floods",
+    "source": "bluesky",
+    "url": "https://bsky.app/profile/did:plc:qrz3lhbyuxbeilrc6nekdqme/feed/e80cf4f102b7"
+   },
+   "right": {
+    "geo": null,
+    "label": "Some missing tourists make contact as Nepal flood death toll tops 1,100",
+    "source": "google_news",
+    "url": "https://news.google.com/rss/articles/CBMijAFBVV95cUxOUVdRVkJTSmh6dDVnNk1rXzdHaDNSUGE1SU5xVUJkd2JPcjZubGh3Z1JsbHUwSGhPc01mSDhhVGhqbDdlZFFrRkh3VDVKS1hheHJrMW5uRmZCcUZ1eU5hVnlWZWpJUzVBZVRkTzYxRUM3bU5NdEVqWVhpMUtDdU1IX2dJZUdpN3JNLUotVg?oc=5"
+   }
+  },
+  {
+   "id": "bluesky:-:1|mastodon:-:4",
+   "kind": "missed-the-same-topic",
+   "left": {
+    "geo": null,
+    "label": "Andy Burnham PMQs",
+    "source": "bluesky",
+    "url": "https://bsky.app/profile/did:plc:qrz3lhbyuxbeilrc6nekdqme/feed/ce7e36ad3a07"
+   },
+   "right": {
+    "geo": null,
+    "label": "Andy Burnham has already made a mistake that will cost him his premiership: he lost his nerve over political donations",
+    "source": "mastodon",
+    "url": "https://www.theguardian.com/commentisfree/2026/sep/02/andy-burnham-mistake-political-donations-wealthy-britain"
+   }
+  },
+  {
+   "id": "bluesky:-:10|mastodon:-:19",
+   "kind": "missed-the-same-topic",
+   "left": {
+    "geo": null,
+    "label": "USPS mail ballot handling",
+    "source": "bluesky",
+    "url": "https://bsky.app/profile/did:plc:qrz3lhbyuxbeilrc6nekdqme/feed/a33d09a90d59"
+   },
+   "right": {
+    "geo": null,
+    "label": "usps",
+    "source": "mastodon",
+    "url": "https://mastodon.social/tags/usps"
+   }
+  },
+  {
+   "id": "bluesky:-:3|mastodon:-:12",
+   "kind": "missed-the-same-topic",
+   "left": {
+    "geo": null,
+    "label": "Apple Maps renames Lake Ontario",
+    "source": "bluesky",
+    "url": "https://bsky.app/profile/did:plc:qrz3lhbyuxbeilrc6nekdqme/feed/1ddc5211b77e"
+   },
+   "right": {
+    "geo": null,
+    "label": "MapQuest app reaches No 1 on US Apple list after defying Trump’s Lake Ontario order",
+    "source": "mastodon",
+    "url": "https://www.theguardian.com/us-news/2026/sep/01/mapquest-lake-ontario-trump"
+   }
+  },
+  {
+   "id": "google_news:-:23|wikipedia:de:13",
+   "kind": "missed-the-same-topic",
+   "left": {
+    "geo": null,
+    "label": "‘Not the end of the movie’: Duane Davis’ lawyer on what’s next after Tupac murder verdict",
+    "source": "google_news",
+    "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxORnV0S1ctYi1WYjg5b3kwbVZXd3B6WFlFSVVqdmVOaWpacVQ3bVFSbmZPTUhubG1vaFFWZ0RMajBsakpLLVk2MmJHSXJTYVNhN0N5aEtSZU4xRDVJTlI2cEQ1UVRna2djYmxuSUw0Rl9iVVoxVlB4RmtWU09ZZE9SMDFRd0dpRkZOR0JHRGZEZC1oM0JNeTBhd1FOdUZaVjU1ZVhSYm5DWXJfcXZSZTNz?oc=5"
+   },
+   "right": {
+    "geo": "de",
+    "label": "Tupac Shakur",
+    "source": "wikipedia",
+    "url": "https://de.wikipedia.org/wiki/Tupac_Shakur"
+   }
+  },
+  {
+   "id": "bluesky:-:19|google_news:-:16",
+   "kind": "missed-the-same-topic",
+   "left": {
+    "geo": null,
+    "label": "Iran conflict, oil and rates",
+    "source": "bluesky",
+    "url": "https://bsky.app/profile/did:plc:qrz3lhbyuxbeilrc6nekdqme/feed/070dcd4056f4"
+   },
+   "right": {
+    "geo": null,
+    "label": "Oil prices rise for third session as US-Iran tensions fuel supply concerns",
+    "source": "google_news",
+    "url": "https://news.google.com/rss/articles/CBMixwFBVV95cUxQcVNYNjNrSnRRR3duZFUtYllsVG5mNjZ3MFlJWkxXYzVFMXBLQjBGdDVPeEljYmRUbVBfczJ4MmhjdUJkdzJmSHN2OGtYM0NUQkU3Q21ydmZNcHBoLWZha1NVei15OVBVZHJ3dE9zRV9vTnp2V3pTel9UNVc0OFpUNXRPZjNVTzVfUG82MXFLanRkN3Z1MTAtRllYdU91S0h6WWlCOFN4ODhZSzUzclJQb2pFYmg0OFAyRGo0eUhOQmNMNWQ4OGZ3?oc=5"
+   }
+  },
+  {
+   "id": "google_news:-:4|mastodon:-:19",
+   "kind": "missed-the-same-topic",
+   "left": {
+    "geo": null,
+    "label": "Whistleblower Warns of Chaotic Trump Plan to Meddle With USPS Ballot Processing",
+    "source": "google_news",
+    "url": "https://news.google.com/rss/articles/CBMinwFBVV95cUxOUDJEeWplc0NtZENBVmlZOUVBWjhoaUF3VnBXN3R6RmszanFNYXhBTk5ybTVCVDViX3Zpd2NLVTJaMGlDYktNdnRpWUhNVlRQNHRnUWp5NkJYQ1J2bjE4TjRsY3pVbGF1MnZBa2hnaXQyUXdDVFpRLVZLdlI1QWhDM25seTF1MkdJRkFWY0VfbVI3Q0NUb201bEFqMTJ3X2M?oc=5"
+   },
+   "right": {
+    "geo": null,
+    "label": "usps",
+    "source": "mastodon",
+    "url": "https://mastodon.social/tags/usps"
+   }
+  }
+ ],
+ "generated_at": "2026-09-03T00:02:31Z",
+ "thresholds": {
+  "jaccard_min": 0.5
+ },
+ "total": {
+  "f1": 0.789,
+  "false_joins": 0,
+  "judged": 55,
+  "missed_joins": 8,
+  "precision": 1.0,
+  "recall": 0.652,
+  "true_joins": 15,
+  "true_separations": 32
+ }
+}
