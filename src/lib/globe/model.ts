@@ -114,7 +114,7 @@ export function buildGlobeModel(sky: SatSnapshot, fleet: GhostFleetData): GlobeM
 
 /** What the island fetches once the hero is on screen: the same model, without the fields the
  *  drawing never reads (GCAT category, the source list — both stand in the frame's own markup),
- *  and the elements SGP4 actually needs. Served at /globe/model.json from the committed snapshots,
+ *  and the elements SGP4 actually needs. Built at build time from the committed snapshots,
  *  so the client draws exactly what the build-time floor drew. */
 export interface GlobePayload {
   asOf: GlobeModel['asOf']

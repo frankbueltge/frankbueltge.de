@@ -6,9 +6,10 @@
  * yet. Depth carries the base: the sea is the panel, the land is the hairline, the coast is the
  * muted ink. Marks are told apart by SHAPE and by weight, which is what a mono skin can afford.
  *
- * The layers' own colours arrive with the island (phase G1), where at most one layer is in front
- * at a time and the rest drop to mono ink — the readability rule and the colour rule in one. When
- * they do, their values live here behind PALETTE: markers, validated in src/lib/dataviz/palette.ts.
+ * G1 adds the room: the island over the plate, the toggles, the day axis and the card. The layers'
+ * own colours arrive with it — at most one layer is in front at a time and the rest drop to mono
+ * ink, the readability rule and the colour rule in one. Their values live at the bottom of this
+ * file behind PALETTE: markers, validated in src/lib/dataviz/palette.ts.
  */
 
 .globe-plate {
@@ -136,4 +137,264 @@
 .globe-tables .dv-table td:last-child,
 .globe-method .dv-table td:last-child {
   padding-right: 0;
+}
+
+/* ═══ G1: the room ════════════════════════════════════════════════════════════════════════════
+ *
+ * The island (src/components/pages/LivingGlobe.tsx) mounts ON the plate: the plate is the server
+ * render and stays in the accessibility tree, the canvas is a layer over it that appears only if
+ * the browser can paint it. Everything below is structure and behaviour; the four identity values
+ * and the five ramp steps sit in their own block at the end, each under its PALETTE marker.
+ */
+
+/* the positioned box the readout clamps within — the FIGURE's own, never a scroll container */
+.globe-stage {
+  position: relative;
+  min-width: 0;
+}
+
+.lg-root {
+  display: block;
+  min-width: 0;
+}
+
+.lg-stage {
+  position: relative;
+  height: clamp(340px, 44vw, 600px);
+  overflow: hidden;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-md);
+  background: var(--color-panel);
+}
+.lg-root[data-compact='yes'] .lg-stage {
+  height: clamp(320px, 32vw, 500px);
+  border: 0;
+  border-radius: 0;
+}
+
+.lg-floor {
+  position: absolute;
+  inset: 0;
+  transition: opacity 0.6s var(--ease-frame);
+}
+.lg-floor svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.lg-root[data-phase='live'] .lg-floor,
+.lg-root[data-phase='still'] .lg-floor {
+  opacity: 0;
+}
+
+.lg-canvas {
+  position: absolute;
+  inset: 0;
+  visibility: hidden;
+}
+.lg-root[data-phase='live'] .lg-canvas,
+.lg-root[data-phase='still'] .lg-canvas {
+  visibility: visible;
+}
+.lg-canvas canvas {
+  display: block;
+}
+
+.lg-status {
+  position: absolute;
+  left: 12px;
+  bottom: 10px;
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-fg-faint);
+  pointer-events: none;
+}
+.lg-status:empty {
+  display: none;
+}
+
+/* ── the controls ─────────────────────────────────────────────────────────────────────────── */
+
+.lg-controls {
+  margin-top: 14px;
+}
+
+.lg-day {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 12px;
+}
+.lg-day-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-fg-faint);
+}
+.lg-scrub {
+  flex: 1 1 220px;
+  min-width: 180px;
+  max-width: 460px;
+  accent-color: var(--globe-c-front);
+}
+.lg-day-value {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--color-fg-muted);
+  white-space: nowrap;
+}
+.lg-hint {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--color-fg-faint);
+}
+
+.lg-legend-title {
+  margin-bottom: 8px;
+}
+.lg-legend {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 10px;
+  padding: 0;
+  margin: 0 0 8px;
+  list-style: none;
+}
+.lg-legend-item {
+  padding: 10px 12px;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-sm);
+  background: var(--color-panel);
+}
+.lg-legend-item[data-front='yes'] {
+  border-color: var(--color-line-lift);
+}
+.lg-legend-item[data-on='no'] {
+  opacity: 0.72;
+}
+
+.lg-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+  text-align: left;
+}
+.lg-toggle:disabled {
+  cursor: default;
+}
+.lg-swatch {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  flex: none;
+  border: 1px solid var(--color-line-lift);
+  background: transparent;
+}
+.lg-legend-item[data-on='yes'] .lg-swatch {
+  border-color: transparent;
+  background: var(--globe-mono);
+}
+.lg-legend-item[data-front='yes'] .lg-swatch {
+  background: var(--globe-c-front);
+}
+.lg-legend-item[data-front='yes'] .lg-swatch[data-layer='ghost-fleet'] {
+  background: var(--globe-c-ghost-fleet);
+}
+.lg-toggle-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-fg);
+}
+.lg-toggle-kind {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--color-fg-faint);
+}
+.lg-front {
+  margin-left: 8px;
+  vertical-align: middle;
+}
+.lg-prov,
+.lg-note {
+  margin-top: 4px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--color-fg-faint);
+  overflow-wrap: anywhere;
+}
+.lg-note {
+  color: var(--color-fg-muted);
+}
+
+.lg-card {
+  scroll-margin-top: 80px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lg-floor {
+    transition: none;
+  }
+}
+
+/* ── the room's ink ────────────────────────────────────────────────────────────────────────────
+ *
+ * PALETTE: globe-voices (src/lib/dataviz/palette.ts) — three identity slots, validated
+ * 2026-09-03 all-pairs in both modes against the sea this globe actually draws on
+ * (#f7f8fa light, #141414 dark). At most ONE layer is in front at a time, so the pair that ever
+ * appears together is the layer in front and the selected mark; the record validates all three
+ * against each other anyway, because a set that only holds under an interaction rule is a set
+ * held by memory. Every hue is one this house already records: the Field's voice (the ghost
+ * fleet has worn it since the entrance globe), the room's live petrol/cyan, and the invoked-past
+ * ember for the selection. Identity, never status: a dark vessel, a removed page and a silent
+ * instrument are identities, and none of them is an error.
+ *
+ * The sea, the land, the coast and the mono ink the layers behind drop to are DECLARED NEUTRALS
+ * and reference the frame's own tokens — depth carries the base, hue carries identity.
+ */
+.lg-root {
+  --globe-sea: var(--color-panel);
+  --globe-land: var(--color-line);
+  --globe-coast: var(--color-fg-faint);
+  --globe-mono: var(--color-fg-muted);
+  --globe-label: var(--color-fg);
+
+  --globe-c-front: #7fd0e8;
+  --globe-c-selected: #e2691f;
+  --globe-c-voice-meridian: #256abf;
+  --globe-c-ghost-fleet: var(--globe-c-voice-meridian);
+}
+:root[data-skin][data-theme='light'] .lg-root {
+  --globe-c-front: #10627a;
+  --globe-c-selected: #b8410e;
+  --globe-c-voice-meridian: #2a78d6;
+}
+
+/* PALETTE: globe-sequential (src/lib/dataviz/palette.ts) — the five-step mono ramp a country fill
+ * takes, low to high, off the room's own live ink; own steps per mode, never an automatic flip.
+ * Recorded and re-derived with adjacent-step ΔE and WCAG against the same sea. No country layer is
+ * registered yet (that is G3); the builder that reads these steps is in globe-deck.ts and is
+ * exercised by its test, so the ramp ships measured rather than assumed. */
+.lg-root {
+  --globe-c-ramp-a: #1e3b45;
+  --globe-c-ramp-b: #2e5c6b;
+  --globe-c-ramp-c: #438397;
+  --globe-c-ramp-d: #5fadc6;
+  --globe-c-ramp-e: #7fd0e8;
+}
+:root[data-skin][data-theme='light'] .lg-root {
+  --globe-c-ramp-a: #cfe0e6;
+  --globe-c-ramp-b: #a5c5cf;
+  --globe-c-ramp-c: #6fa3b3;
+  --globe-c-ramp-d: #3b7f95;
+  --globe-c-ramp-e: #10627a;
 }

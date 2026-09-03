@@ -135,14 +135,23 @@ describe('the radial layout is arithmetic over the record', () => {
   })
 
   it('lets no two nodes stand closer than the gap', () => {
+    // one assertion over the closest pair, not one per pair: the record has grown past sixty
+    // thousand pairs, and an expect() on each of them ran the test past its timeout under a
+    // loaded suite (2026-09-03) while the layout itself was sound
+    let closest = Infinity
+    let pair = ''
     for (let i = 0; i < placed.length; i++) {
       for (let j = i + 1; j < placed.length; j++) {
         const a = placed[i]!
         const b = placed[j]!
         const d = Math.hypot(a.x - b.x, a.y - b.y)
-        expect(d, `${a.id} and ${b.id} collide (${d.toFixed(1)} px)`).toBeGreaterThanOrEqual(MIN_GAP - 1e-9)
+        if (d < closest) {
+          closest = d
+          pair = `${a.id} and ${b.id}`
+        }
       }
     }
+    expect(closest, `${pair} collide (${closest.toFixed(1)} px)`).toBeGreaterThanOrEqual(MIN_GAP - 1e-9)
   })
 
   it('keeps every kind on its own ring, stepping outward at most one band', () => {

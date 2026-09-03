@@ -1,9 +1,11 @@
 # Living Globe — one globe over everything this house measures on the earth
 
-**Status:** G0 shipped 2026-09-03 (the ground, the crosswalk, the gates). G1–G4 planned.
+**Status:** G0 shipped 2026-09-03 (the ground, the crosswalk, the gates); G1 shipped 2026-09-03 (the room: layers, the day, the receipts). G2–G4 planned.
 **Decision:** Frank's decision of 2026-09-03, wording private.
 **Surfaces:** `/globe` · `/werke/globe` · `/globe/layers.json` · `/globe/layers/<id>.json` ·
 `/globe/countries.json`. **Data:** `src/data/globe/`. **Code:** `src/lib/globe/`.
+(`/globe/model.json` was retired with G1: the orbital elements the sky's newest frame is propagated
+from now ride in that layer's own feed, so nothing read the separate model feed any more.)
 
 ## 1. Occasion
 
@@ -41,7 +43,7 @@ nobody looks at it, in which case the receipts were a private virtue.
 | Gate | What must stand | When |
 |---|---|---|
 | G0 | contract, registry, crosswalk, countries, seats, three adapters, the no-JS floor, feeds, the page, the method sheet, the audit | 2026-09-03 ✅ |
-| G1 | the island: layers on and off, the time scrubber over the whole archive, cards with receipts, the compact entrance | |
+| G1 | the island: layers on and off, the time scrubber over the whole archive, cards with receipts, the compact entrance | 2026-09-03 ✅ |
 | G2 | guided stories — scripted camera tours on the existing tour engine | |
 | G3 | the remaining layers: the press, the invoked years, the removals, the hosts, the registers | |
 | G4 | method sheet complete, the projection room, and this document's kill reading filled in | |
@@ -100,8 +102,12 @@ which ships no JavaScript at all.
 - **The two houses that are asked, not taken.** Arch's felt-block centroids are opt-in after its
   preregistration closes on 2026-09-21; Machine Attention's GDACS coordinates stay upstream until
   its channel answers. Neither is touched by G0 and neither will be drawn without a yes.
-- **The entrance.** G1 replaces the entrance island with the compact form of this one. That is a
-  change to the front door and gets shown before it lands.
+- **The entrance.** G1 replaced the entrance island with the compact form of this one, as planned.
+  Nothing the hero showed on 2026-09-02 was given up: the fleet is still propagated to the
+  visitor's present and still walks its orbits, the gaps still stand in the Field's recorded hue,
+  and both layers keep their own colour at full weight, because the emphasis rule is the room's
+  arithmetic about ten layers and not a rule against two. The strip still says "positions at your
+  now", and it is still exact.
 
 ## 7. What this is not
 

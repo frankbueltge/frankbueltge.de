@@ -9,15 +9,22 @@
 // nothing and says why, and where the densification series holds that day it states the fleet
 // size counted then, in words, from the committed file.
 //
-// Two things follow from that, both wanted. Scrubbing the time axis never propagates anything, so
-// SGP4 stays off the hot path entirely; and the declared no-clock exception stays exactly where it
-// was declared — on the newest frame, the visitor's present, and nowhere else.
+// On that ONE day the layer does the opposite of standing still, and this is the house's single
+// declared exception to the no-clock rule: it hands over the elements themselves (`instant`), and
+// the drawing half propagates them to the VISITOR'S PRESENT, so the fleet walks its orbits while
+// somebody is looking at it. That is not a licence taken loosely — it is the only honest reading of
+// a CURRENT element set, and it is why the entrance says "positions at your now" rather than naming
+// a date.
+//
+// Two things follow, both wanted. Scrubbing the time axis never propagates anything, because a past
+// day has no elements to propagate — SGP4 stays off the scrubber's hot path entirely. And the
+// exception stays exactly where it was declared: on the newest frame, and nowhere else.
 import type { SatSnapshot } from '@/lib/ueberflug/types'
 import { asOfDay, buildGlobeModel } from '../model'
 import { positionsAt, satrecsOf } from '../propagate'
 import type { GhostFleetData } from '@/lib/ghost-fleet/types'
 import { readJson } from './archive'
-import { EMPTY_FRAME, type GlobeLayer, type LayerFrame, type LayerRecord } from './types'
+import { EMPTY_FRAME, type GlobeLayer, type LayerFrame, type LayerInstant, type LayerRecord } from './types'
 
 const ELEMENTS = 'src/data/ueberflug/satellites.json'
 const DENSIFICATION = 'src/data/ueberflug/densification.json'
@@ -40,7 +47,7 @@ const DAYS = [...new Set([...OBSERVED.keys(), ELEMENTS_DAY])].sort()
 
 const READOUT = {
   mark: '{name}, {group}, operated by {owner}',
-  place: 'the point on the ground the satellite stood over when the elements were taken',
+  place: 'the point on the ground the satellite is over right now, propagated from the committed elements',
   onlyDay:
     'The archive keeps the current orbital elements, not one set per day. This layer therefore draws ' +
     'only on the day its elements are from ({day}); on any other day it draws nothing rather than ' +
@@ -86,6 +93,19 @@ function frameOf(day: string): LayerFrame {
   return { day, records }
 }
 
+/** The elements of exactly the marks the newest frame draws, in its order — collected in the same
+ *  pass, so a satellite SGP4 could not place at build time has neither a mark nor an element and
+ *  the two lists cannot drift apart. This is what travels in the feed and lets the drawing half
+ *  propagate to the visitor's present without a second copy of the archive or of satellite.js. */
+function instantOf(): LayerInstant {
+  const elements: LayerInstant['elements'] = []
+  model.satellites.forEach((satellite, index) => {
+    if (!POSITIONS[index]) return
+    elements.push({ key: `sky:${ELEMENTS_DAY}:${index}`, omm: satellite.omm as unknown as Record<string, unknown> })
+  })
+  return { day: ELEMENTS_DAY, elements, note: READOUT.onlyDay.replace('{day}', ELEMENTS_DAY) }
+}
+
 export const skyLayer: GlobeLayer = {
   id: 'sky',
   title: 'Sky',
@@ -100,5 +120,6 @@ export const skyLayer: GlobeLayer = {
   },
   days: DAYS,
   frame: frameOf,
+  instant: instantOf(),
   readout: READOUT,
 }

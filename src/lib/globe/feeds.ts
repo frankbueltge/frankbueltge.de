@@ -12,7 +12,7 @@
 // sees without JavaScript and the data an island would fetch cannot drift apart, because there is
 // one model behind both.
 import { LAYERS } from './layers'
-import type { GlobeLayer, LayerFrame } from './layers/types'
+import type { GlobeLayer, LayerFrame, LayerInstant } from './layers/types'
 import { buildLivingGlobe, frameOf, type LivingGlobe } from './living'
 
 export interface LayerFeed {
@@ -23,6 +23,11 @@ export interface LayerFeed {
   source: GlobeLayer['source']
   days: string[]
   frames: LayerFrame[]
+  /** the one declared no-clock exception, where the layer has one: the elements its newest frame is
+   *  propagated from, at the visitor's present. It rides in the FEED and not in the manifest
+   *  because it is the size of records, not the size of provenance — a visitor who never switches
+   *  the layer on never downloads an element set. */
+  instant?: LayerInstant
 }
 
 export interface ManifestLayer {
@@ -63,6 +68,7 @@ export function layerFeed(layer: GlobeLayer): LayerFeed {
     source: layer.source,
     days: layer.days,
     frames: layer.days.map((day) => frameOf(layer, day)),
+    ...(layer.instant ? { instant: layer.instant } : {}),
   }
 }
 

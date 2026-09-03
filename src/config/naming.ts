@@ -609,6 +609,12 @@ export const NAMING = {
       headRight: (gaps: number) => `${gaps} VESSELS GONE DARK · GLOBAL FISHING WATCH`,
       // no digit in a static string (tiles.test.ts): the propagator's name, SGP4, carries one, so
       // the strip says what it does and the method sheet may name it
+      // no digit in a static string (tiles.test.ts): the propagator's name, SGP4, carries one, so
+      // the strip says what it does and the method sheet may name it. "Your now" is exact and stays
+      // exact under G1's shared island: the sky layer hands its committed elements to the drawing
+      // half, which propagates them to the visitor's present twice a second — the one declared
+      // exception to this house's no-clock rule, and the only claim on this globe that is about a
+      // moment rather than about a day.
       footLeft: 'ORBITS PROPAGATED FROM CELESTRAK ELEMENTS · POSITIONS AT YOUR NOW · GAPS FROM SWITCH-OFF TO RETURN',
       footRight: (elementsDay: string, gapsDay: string) => `ELEMENTS ${elementsDay} · GAPS ${gapsDay}`,
       /** the plate's accessible name and description (src/lib/globe/floor.ts) */
@@ -618,17 +624,8 @@ export const NAMING = {
       /** native titles on the plate's marks */
       satelliteLabel: (name: string, group: string, owner: string | null) => (owner ? `${name} · ${group} · ${owner}` : `${name} · ${group}`),
       gapLabel: (vessel: string, hours: number, waters: string) => `${vessel} · ${hours} h dark · ${waters}`,
-      /** the island's hover readouts — templates, so the script owns none of the words */
-      readout: { satellite: '{name} · {group} · {owner}', gap: '{vessel} · {hours} h dark · {waters}' },
       /** CelesTrak group → the page's word for it */
       groups: { resource: 'earth resources', sar: 'radar imaging', weather: 'weather' } as Record<string, string>,
-      status: {
-        loading: 'the globe is loading',
-        live: 'live · drag to turn, scroll to zoom',
-        still: 'held still — you asked for reduced motion',
-        noWebgl: 'no WebGL here — the plate stands at the record’s own time',
-        failed: 'the globe did not load — the plate stands at the record’s own time',
-      },
       aside: {
         kicker: 'THE LONGEST GAPS',
         hours: (hours: number) => `${hours} h dark`,
