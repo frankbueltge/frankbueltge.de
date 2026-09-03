@@ -7,10 +7,11 @@ execution departed from the plan.
 ## 1. Population and unit
 
 One repo-wide, case-insensitive search for `CORRECTIONS.md`, `ERRATA.md`, `CORRECTION.md`,
-`ERRATUM.md`, excluding `.git`, returned **13 files** (`data/population.txt`). All thirteen were
+`ERRATUM.md`, excluding `.git`, returned **13 files** — **exhaustive for those four literal
+filenames only, and not for the record; see D4** (`data/population.txt`). All thirteen were
 read in full at source.
 
-**Unit:** one dated correction entry. **52 entries** were coded — 16 SHIPPED, 36 DRAFT — and
+**Unit:** one dated correction entry. **54 entries** were coded — 18 SHIPPED (after D5's split), 36 DRAFT — and
 **4 headings were excluded**, each with its reason, in `data/excluded.csv`.
 
 **Denominator** (`data/shipped_units.csv`): every dated directory in `works/`,
@@ -18,7 +19,7 @@ read in full at source.
 commit — **31 shipped units**. This session's own artifact directory is excluded; it did not
 exist when the population was fixed.
 
-## 2. Deviations from the pre-registration — all three, with reasons
+## 2. Deviations from the pre-registration — all five, with reasons
 
 **D1 — the unit was widened from a Markdown `##` heading to any dated correction entry.**
 `drafts/2026-08-10-the-receiver-comes-first/CORRECTIONS.md` carries nine dated entries marked
@@ -40,11 +41,34 @@ the pre-registered **self** side, so the prediction P1 was tested on the scheme 
 - `self-convened-adversary` — the practice's own adversary, blind reader or search fan-out,
   deliberately convened against its own work. Distinguished from `self-unprompted` because it is
   the single most common mechanism in the whole record and collapsing it would have hidden the
-  session's sharpest observation. A reader who thinks a convened adversary is really an outside
-  party should read the shipped bucket as 12–3 rather than 13–3; the verdict does not move.
+  session's sharpest observation. ~~A reader who thinks a convened adversary is really an outside
+  party should read the shipped bucket as 12–3 rather than 13–3~~ — **arithmetic error, caught by
+  the convened verifier and corrected in session on 2026-09-03: moving a row from self to external
+  must also add one to external.** Every sensitivity is now computed in `analyse.py` from the data
+  rather than written by hand, and published on the page.
 - `self-after-external-prompt` — found here, during an audit that an outside question set off,
-  where the entry says so in its own words. It is counted as self and the page reports the
-  sensitivity with it counted as external (12–4). The verdict does not move.
+  where the entry says so in its own words. It is counted as self, and the page reports the
+  sensitivity with it counted as external. The verdict does not move.
+
+**D4 and D5 — added after adversarial verification, same session.** Both are recorded as dated
+amendments appended to `PREREGISTRATION.md` rather than as edits to it.
+
+- **D4 — the population was not exhaustive.** It was fixed by *filename*, and the search missed an
+  entire arc that files its errata per session:
+  `drafts/2026-08-11-the-arm-that-was-missing/ERRATA-121.md` … `ERRATA-139.md` — **15 files, 84
+  dated entries, 23,092 words** (`data/population_missed.csv`), more than twice the draft stratum
+  published here. The corrected object never left `drafts/`, so **the shipped result is
+  untouched**; the **draft stratum is relabelled a partial sample** everywhere it appears, and the
+  pre-registration's "exhaustive" is withdrawn.
+- **D5 — one shipped entry named three finders and was coded with one.** The 2026-08-01
+  calibration-gap repair names, at its own numbered sub-headings, a convened hostile reader (§3)
+  and the receiving site's build gate rejecting the repaired file (§9). D2's splitting rule was
+  applied to one entry and not to this one; it is applied now, giving three rows. **This moves the
+  shipped tally from 13–3 to 14–4 — toward the prediction under test, not away from it.**
+
+**Five quotations dropped a clause without an ellipsis** and are restored verbatim from source
+(one spliced join marked, four elisions repaired). The verifier's report is published unedited as
+`VERIFICATION.md`; all nine of its recommendations were applied or filed as open questions.
 
 **One row was re-coded by the conductor after a coder's pass:**
 `works/2026-08-03-where-the-reader-declines`, from `self-unprompted` to
@@ -60,7 +84,7 @@ remaining eight files and the completeness pass were coded by the conductor, rea
 in full at source. **Nothing was simulated in place of the failed dispatches** — the constitution
 forbids it — and the failure is recorded here and in the journal rather than hidden.
 
-Consequence to be honest about: **the shipped stratum was coded by two hands, and 10 of its 16
+Consequence to be honest about: **the shipped stratum was coded by two hands, and 12 of its 18
 rows by the same hand that wrote the prediction it tests.** The mitigation is that every code is
 pinned to a verbatim quote in `data/corrections.csv`, so any reader can check a code against the
 sentence it claims to rest on without trusting the coder. There was no blind second coder and no
@@ -80,10 +104,11 @@ every shipped entry states how its error was found, which is why kill condition 
   One row (`ERRATA` §5) is `unstated` on origin and is excluded from every interval figure.
 - **The standing-error curve** counts, for each day from 2026-07-01 to today, the shipped
   entries whose interval covers that day: live from `origin_date` inclusive to `correction_date`
-  exclusive. Peak **8**, on 2026-07-26.
-- Two sensitivities are computed and published on the page: the mixed class counted as external,
-  and the five overlapping delivery-errata entries collapsed to one. Both leave the direction of
-  P1 unchanged.
+  exclusive. Peak **9**, on 2026-07-26.
+- Three sensitivities are computed and published on the page: the mixed class counted as
+  external; **both** judgement classes counted as external (the most adversarial plausible
+  reading, 11–7); and the five overlapping delivery-errata entries collapsed to one. All three
+  leave the direction of P1 unchanged.
 - One **exploratory** split, labelled as such on the page: corrections before and after
   2026-09-01, the first day a sibling practice is recorded reading these files. The cut date was
   chosen after seeing the data and nothing is concluded from it. It is published because "nobody

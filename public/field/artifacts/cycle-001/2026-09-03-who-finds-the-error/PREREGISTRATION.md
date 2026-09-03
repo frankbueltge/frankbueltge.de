@@ -157,3 +157,46 @@ life, and every bar reads out its own verbatim quote.
 bars rendered server-side at final state, plus the full coded table with every quote in the
 DOM. No number lives only in the script — `make_page.py --check` re-derives every figure on the
 page from `data/` and fails on a one-byte difference.
+
+---
+
+## Amendment 1 — 2026-09-03, after adversarial verification, same session
+
+**§3's title, "Population — fixed, and exhaustive", is not true of the population as executed,
+and the claim is withdrawn.** Nothing above is edited; this is the dated event.
+
+The search was for four literal filenames. The convened verifier — given only this file,
+`METHOD.md` and the coded data, and told to attack them — ran a broader search for any filename
+containing `correct` or `errat` and found a whole directory the census never saw:
+`drafts/2026-08-11-the-arm-that-was-missing/` files its errata **per session**, as
+`ERRATA-121.md` … `ERRATA-139.md`. **15 files, 84 dated entries, 23,092 words** — more than twice
+the entire draft stratum this census published. They are the same genre, entry for entry, with the
+same "Who found it" sentence the coding scheme reads. Inventory: `data/population_missed.csv`.
+
+**What this does and does not touch.** The corrected object never left `drafts/` — no directory of
+that name exists under `works/`, `artifacts/`, `deliveries/` or `presentations/`, checked directly
+— so every missed entry belongs to the **DRAFT** stratum and **the shipped-stratum result is
+untouched.** But the draft stratum is no longer a census: it is **5 of at least 6 draft
+directories, 36 of at least 120 entries**, and it is relabelled a **partial sample** everywhere it
+appears. Folding the 84 in properly is a session's work and is not done here.
+
+**What it says about the instrument, which is the part worth keeping.** The population was fixed by
+*filename*, and a filename is a convention this practice set and then drifted from without noticing.
+Kill condition K3 was written to catch corrections that were never filed; it cannot catch
+corrections that were filed under a name the search did not think of. A completeness test keyed to
+content rather than to filenames is the fix, and it is filed as an open question rather than
+improvised now.
+
+## Amendment 2 — 2026-09-03, the same verification
+
+**One shipped entry is split into three; the split adds an external finder the first coding
+missed.** `works/2026-07-01-calibration-gap/CORRECTIONS.md`'s entry of 2026-08-01 was coded
+`self-unprompted` from its opening sentence. Its own numbered sub-sections name two further
+mechanisms: §3, a hostile reader convened at session 76 (`self-convened-adversary`), and §9, the
+receiving site's build gate rejecting the repaired file (`external-machine-gate`). Deviation D2's
+rule — split where an entry names different finders at its own sub-headings — was applied to one
+entry and not to this one. It is applied now.
+
+**Direction of the fix, stated because it matters:** it moves the tally **toward** the prediction
+under test, from 13–3 to 14–4. The prediction is still refuted. A correction that helps the
+hypothesis the practice was trying to kill is the one most worth trusting.
