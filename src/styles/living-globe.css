@@ -206,6 +206,37 @@
   display: block;
 }
 
+/* The narrow screen's own offer: the plate stands, and the globe is fetched when it is asked
+   for. Colour-free — the button is the frame's own outline variant, the hint the muted text of
+   the room around it. */
+.lg-ask {
+  position: absolute;
+  left: 50%;
+  bottom: 1.5rem;
+  z-index: 2;
+  transform: translateX(-50%);
+  display: flex;
+  max-width: min(30ch, calc(100% - 2rem));
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 0.9rem;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-md);
+  /* the plate keeps drawing behind this, so the offer needs a ground of its own to be read on */
+  background: var(--color-panel);
+  text-align: center;
+}
+
+.lg-ask-hint {
+  color: var(--color-fg-faint);
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+  text-wrap: pretty;
+}
+
 .lg-status {
   position: absolute;
   left: 12px;
