@@ -8,12 +8,15 @@
  *  arrives: the plate, the legend with every layer's provenance, and one table per layer holding
  *  every mark on it.
  *
- *  G2 puts three guided stories beside it (2026-09-03). They are ordinary tours on the house's own
- *  tour engine, and they drive the ONE island this page already mounts — a second globe would be a
- *  second WebGL context and a second truth. The figure therefore stands in a sticky column while
- *  the stories scroll past it: each scene asks for a set of layers, a night of the archive, a place
- *  to stand and at most one selected mark, and nothing else. Without JavaScript the column is an
- *  ordinary figure at the top of an ordinary page and every story is a complete article under it.
+ *  G2 puts guided stories beside it (2026-09-03): three that shipped the same day the room did, and
+ *  three more — Balance, Consensus and Redaction, deliberately left unwritten until G3 registered
+ *  the layers they read — added later the same day once those layers existed. All six are ordinary
+ *  tours on the house's own tour engine, and they drive the ONE island this page already mounts — a
+ *  second globe would be a second WebGL context and a second truth. The figure therefore stands in
+ *  a sticky column while the stories scroll past it: each scene asks for a set of layers, a night
+ *  of the archive, a place to stand and at most one selected mark, and nothing else. Without
+ *  JavaScript the column is an ordinary figure at the top of an ordinary page and every story is a
+ *  complete article under it.
  *
  *  Every number on the page is derived: the days come from the archive's filenames, the counts
  *  from the frames themselves, the as-of dates from the records. Not one is typed. Every mark in
@@ -129,7 +132,8 @@ const tables = LAYERS.map((layer) => {
         <p class="mb-6 font-mono text-mono text-fg-faint">{GLOBE.stories.hint}</p>
         {
           /* No `figure` slot: each story DRIVES the island above rather than carrying a globe of
-             its own (see Tour.astro's `carriesFigure`). Three tours, one figure id, one globe. */
+             its own (see Tour.astro's `carriesFigure`). Six tours, one figure id, one globe — in
+             the order GLOBE_STORIES fixes (see that array's own comment for why). */
           GLOBE_STORIES.map((story) => <Tour tour={story} />)
         }
       </section>
