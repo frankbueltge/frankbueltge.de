@@ -41,6 +41,21 @@
       "prefix": "globe-deck.",
       "maxGzipKB": 320,
       "what": "the living globe's WebGL half (G1, 2026-09-03): deck.gl core + layers with the globe view (Scatterplot, Arc, Path, Column, GeoJson/SolidPolygon, Text) and the land TopoJSON decoder. Loaded by dynamic import() the first time a globe figure is on screen, never on any other page. Also carries SGP4 over the sky layer's committed elements \u2014 the one declared no-clock exception \u2014 through src/lib/globe/propagate.ts, which rollup hoists into a shared chunk (transforms.*, 9.9 KB gz on 2026-09-03) that the watchtower island already loads: one copy of satellite.js on this site, so the honest total for the WebGL half is this number plus that shared chunk. Since G3's first evening it also stitches the land across the antimeridian before drawing it (src/lib/globe/antimeridian.ts) \u2014 the fix that took the seam off the sphere. Measured 208.5 KB gz on 2026-09-03 and unchanged by G3's second evening, which added three layers and no new kind of drawing: the removals stand at seats, which are stations, and the two new country layers are points \u2014 both builders were already here. Against 208.1 KB gz for G1+G2 (whose guided stories added a boolean to the handle and nothing to the drawing) and 203.9 KB gz on 2026-09-02 (Path, Column, Text and the fly-to interpolator came in). The plan's 320 KB ceiling holds with room for the rest of G3."
+    },
+    {
+      "prefix": "TrendingConvergence.",
+      "maxGzipKB": 15,
+      "what": "the convergence matrix on /trending (visual layer, 2026-09-03): the day's crossing as a grid of topics \u00d7 sources, with the column filter, the readout, the keyboard walk along a row and the shadcn card carrying a topic's own labels and headlines. No d3 \u2014 the grid has no ruler to zoom. Mounted client:visible. Measured 2.3 KB gz on 2026-09-03."
+    },
+    {
+      "prefix": "TrendingAudienceStrip.",
+      "maxGzipKB": 12,
+      "what": "the audience strip on /trending (visual layer, 2026-09-03): the stacked bars audienceStrip() has drawn since 2026-09-01, now with the legend as a class filter, a per-day readout and the keyboard walk. The six SVG fill patterns travel in the island because a fill of url(#\u2026) needs its pattern in the same document. Measured 1.9 KB gz on 2026-09-03."
+    },
+    {
+      "prefix": "TrendingArc.",
+      "maxGzipKB": 12,
+      "what": "a watched term's arc on /trending/topics/<slug> (visual layer, 2026-09-03): the committed runs as bars plus the two windows the status word rests on, with a per-run readout and the keyboard walk. Mounted client:visible on every term page. Measured 1.3 KB gz on 2026-09-03."
     }
   ]
 }

@@ -34,6 +34,11 @@ export function compact(n: number | null | undefined): string {
   return `${(n / 1_000_000).toFixed(1)}M`
 }
 
+// Every source the pipeline reads, spelled the way its own house spells it. An id with no
+// entry here falls through to the id itself, which is how twelve of the twenty sources read
+// as `stackoverflow` and `appstore` on the page between 2026-09-01 and 2026-09-03: the map was
+// written when the ledger had eight sources and did not grow with it. The names come from each
+// source's own report line in the committed day file, never from a guess.
 const PLATFORM_LABEL: Record<string, string> = {
   google_trends: 'Google Trends',
   wikipedia: 'Wikipedia',
@@ -43,6 +48,18 @@ const PLATFORM_LABEL: Record<string, string> = {
   google_news: 'Google News',
   reddit: 'Reddit',
   github: 'GitHub',
+  huggingface: 'Hugging Face',
+  lobsters: 'Lobsters',
+  devto: 'DEV',
+  stackoverflow: 'Stack Overflow',
+  pypi: 'PyPI',
+  producthunt: 'Product Hunt',
+  techmeme: 'Techmeme',
+  arxiv: 'arXiv',
+  appstore: 'App Store',
+  steam: 'Steam',
+  coingecko: 'CoinGecko',
+  polymarket: 'Polymarket',
 }
 
 export function platformLabel(id: string): string {

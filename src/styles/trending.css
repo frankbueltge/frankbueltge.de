@@ -1,0 +1,82 @@
+/* Common Ground — the sheet ink of the trending surfaces (visual layer, 2026-09-03).
+ *
+ * Until today the same forty lines lived three times, as scoped <style> blocks in
+ * TrendingPage.astro, TrendingTopicPage.astro and TrendingTopicsHub.astro: the disclosure note
+ * and the table dress, copied because an Astro <style> is scoped and a fourth surface could not
+ * borrow the third's. Three copies is three chances to drift, which is exactly what a shared
+ * stylesheet is for. Nothing here is new — the rules are the ones those blocks held, moved.
+ *
+ * Ink tokens only, no hex, no palette record: these surfaces are the ledger's own, and the ledger
+ * does not judge what it counts (.claude/rules/dataviz-figures.md — no status colours where the
+ * practice does not judge).
+ */
+
+/* ── the disclosure note ─────────────────────────────────────────────────────
+   The house's authorship-note form, worn by a paragraph that makes the opposite statement: not
+   "a machine wrote this" but "no language model wrote a word of this". The engines' component
+   (components/engines/AuthorshipNote.astro) keeps its own scoped copy of these rules; this one
+   serves the ledger, whose note is written per surface. */
+.trending .au-note {
+  margin-top: 1.4rem;
+  max-width: 62ch;
+  padding-left: 0.85rem;
+  border-left: 3px solid var(--color-line);
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--color-fg-muted);
+  text-wrap: pretty;
+}
+.trending .au-note strong {
+  color: var(--color-fg);
+}
+
+/* ── the tables ──────────────────────────────────────────────────────────────
+   The shared primitive ships structure only (ADR 0010) — these surfaces say how their own tables
+   read. Scoped to `.trending`, so no other surface of the house inherits it. */
+.trending .dv-table-fallback {
+  margin: 0;
+}
+.trending .dv-table-fallback > summary {
+  cursor: pointer;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: var(--text-mono-sm, 11px);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-fg-faint);
+}
+.trending .dv-table-fallback > summary:hover {
+  color: var(--color-fg);
+}
+.trending .dv-table {
+  margin-top: 0.75rem;
+  font-size: 0.8125rem;
+}
+.trending .dv-table th {
+  padding: 0.35rem 0.75rem 0.35rem 0;
+  border-bottom: 1px solid var(--color-line);
+  text-align: left;
+  font-weight: 600;
+  white-space: nowrap;
+  color: var(--color-fg-muted);
+}
+.trending .dv-table td {
+  padding: 0.35rem 0.75rem 0.35rem 0;
+  border-bottom: 1px solid var(--color-line);
+  vertical-align: top;
+}
+/* A row of a register is READ where it stands — it never lifts, it washes (re-skin 2b/2d). */
+.trending .dv-table tbody tr:hover td {
+  background: var(--color-hover, transparent);
+}
+.trending .dv-table [data-align='right'] {
+  padding-right: 0;
+  font-variant-numeric: tabular-nums;
+}
+.trending .dv-prov {
+  margin-top: 0.6rem;
+  max-width: 68ch;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: var(--text-mono-sm, 11px);
+  line-height: 1.6;
+  color: var(--color-fg-faint);
+}

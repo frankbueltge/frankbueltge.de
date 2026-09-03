@@ -11,11 +11,14 @@
  *  that still carry a beacon half keep reporting it, and the column exists only while such a
  *  day is in the window — a half that reads "unavailable" for ever would imply something is
  *  missing when nothing is. */
-import '../../styles/trending-audience.css'
+import '@/styles/trending-figures.css'
+import Readout from '@/components/dataviz/Readout.astro'
 import TableFallback from '@/components/dataviz/TableFallback.astro'
 import { classLabel, compact, fmtDateLong } from '@/lib/trending/format'
 import { AUDIENCE_CLASSES, type TrendingAudience } from '@/lib/trending/types'
 import { audienceDimensionRows, audienceHasUmami, audienceMissingDimensions, audienceStrip, audienceTableRows } from '@/lib/trending/view'
+
+import TrendingAudienceStrip, { type AudienceStripWording } from './TrendingAudienceStrip'
 
 interface Props {
   /** newest first */
@@ -58,11 +61,18 @@ const columns = [
   { key: 'other-bot', label: 'Other bots', align: 'right' as const },
   ...(hasUmami ? [{ key: 'pageviews', label: 'Beacon views', align: 'right' as const }] : []),
 ]
-const legendIds = ['tra-l-browser', 'tra-l-search', 'tra-l-ai-retrieval', 'tra-l-ai-user-fetch', 'tra-l-ai-training', 'tra-l-other-bot']
+const READOUT_ID = 'trending-audience-readout'
+const FIGURE_ID = 'trending-audience'
+const stripWording: AudienceStripWording = {
+  figureLabel: `Stacked bars: requests to /trending per day over the last ${counted} counted days, split into ${AUDIENCE_CLASSES.length} audience classes.`,
+  legendLabel: 'The audience classes, as a filter',
+  standby: 'standby (no edge count)',
+  requestsWord: 'requests',
+}
 ---
 
 <section class="mb-12 border-t border-line pt-6" id="audience">
-  <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">Who is reading this</p>
+  <p class="kicker">Who is reading this</p>
   {live ? (
     <p class="mt-3 max-w-2xl leading-relaxed">
       On {fmtDateLong(yesterday!.day)} the edge counted <span class="tabular-nums">{compact(yesterday!.edge.total)}</span> requests to this page and its machine editions:
@@ -79,58 +89,14 @@ const legendIds = ['tra-l-browser', 'tra-l-search', 'tra-l-ai-retrieval', 'tra-l
 
   {counted > 0 && (
     <figure class="mt-5">
-      <svg viewBox={`0 0 ${strip.width} ${strip.height + 18}`} class="w-full max-w-2xl overflow-visible" role="img"
-        aria-label={`Stacked bars: requests to /trending per day over the last ${counted} counted days, split into ${AUDIENCE_CLASSES.length} audience classes.`}>
-        <defs>
-          <pattern id="tra-p-search" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
-            <rect width="6" height="6" class="tra-p-ground" /><line x1="0" y1="0" x2="0" y2="6" class="tra-p-ink" stroke-width="2.4" />
-          </pattern>
-          <pattern id="tra-p-ai-retrieval" width="5" height="5" patternUnits="userSpaceOnUse">
-            <rect width="5" height="5" class="tra-p-ground" /><circle cx="2.5" cy="2.5" r="1.4" class="tra-p-ink" />
-          </pattern>
-          <pattern id="tra-p-ai-user-fetch" width="6" height="6" patternUnits="userSpaceOnUse">
-            <rect width="6" height="6" class="tra-p-ground" /><line x1="0" y1="3" x2="6" y2="3" class="tra-p-ink-muted" stroke-width="2" />
-          </pattern>
-          <pattern id="tra-p-ai-training" width="7" height="7" patternUnits="userSpaceOnUse">
-            <rect width="7" height="7" class="tra-p-ground" /><line x1="0" y1="0" x2="7" y2="7" class="tra-p-ink-muted" stroke-width="1.2" /><line x1="7" y1="0" x2="0" y2="7" class="tra-p-ink-muted" stroke-width="1.2" />
-          </pattern>
-          <pattern id="tra-p-other-bot" width="6" height="6" patternUnits="userSpaceOnUse">
-            <rect width="6" height="6" class="tra-p-ground" /><line x1="3" y1="0" x2="3" y2="6" class="tra-p-ink-faint" stroke-width="1.2" />
-          </pattern>
-        </defs>
-        <line class="tra-baseline" x1="0" y1={strip.height + 0.5} x2={strip.width} y2={strip.height + 0.5} />
-        {strip.bars.map((b) => (
-          b.total === null ? (
-            <g class="tra-bar" tabindex="0">
-              <title>{`${b.day}: standby (no edge count)`}</title>
-              <rect class="tra-standby" x={b.x} y={strip.height - 8} width={strip.barWidth} height={8} />
-            </g>
-          ) : (
-            <g class="tra-bar" tabindex="0">
-              <title>{`${b.day}: ${compact(b.total)} requests — ${b.segments.map((s) => `${classLabel(s.cls)} ${compact(s.n)}`).join(', ')}`}</title>
-              {b.segments.map((s) => (
-                <rect class={`tra-seg-${s.cls}`} x={b.x} y={s.y} width={strip.barWidth} height={s.h} />
-              ))}
-            </g>
-          )
-        ))}
-        {strip.bars.length > 0 && (
-          <>
-            <text class="tra-axis" x={strip.bars[0].x} y={strip.height + 14}>{strip.bars[0].day}</text>
-            <text class="tra-axis" x={strip.width} y={strip.height + 14} text-anchor="end">{strip.bars[strip.bars.length - 1].day}</text>
-          </>
-        )}
-      </svg>
-      <ul class="tra-legend mt-2 font-mono text-[11px] text-fg-muted" aria-label="Audience classes">
-        {AUDIENCE_CLASSES.map((c, i) => (
-          <li class="inline-flex items-center gap-1.5">
-            <svg viewBox="0 0 14 14" aria-hidden="true"><rect x="0.5" y="0.5" width="13" height="13" class={`tra-seg-${c}`} id={legendIds[i]} /></svg>
-            {classLabel(c)} <span class="text-fg-faint tabular-nums">{compact(strip.totals[c])}</span>
-          </li>
-        ))}
-      </ul>
-      <figcaption class="mt-2 max-w-2xl font-mono text-[11px] text-fg-faint">
-        One bar per counted day, oldest on the left, tallest bar = {compact(strip.max)} requests. Legend totals cover the drawn window. The table below is the same data, day by day.
+      <div class="tr-figure">
+        <TrendingAudienceStrip client:visible model={strip} wording={stripWording} id={FIGURE_ID} readoutId={READOUT_ID} />
+        <Readout id={READOUT_ID} maxWidth="30ch" />
+      </div>
+      <figcaption class="mt-2 max-w-2xl font-mono text-mono-sm text-fg-faint">
+        One bar per counted day, oldest on the left, tallest bar = {compact(strip.max)} requests. A class in the legend
+        washes the others out; nothing moves. Legend totals cover the drawn window, and the table below is the same
+        data, day by day.
       </figcaption>
     </figure>
   )}

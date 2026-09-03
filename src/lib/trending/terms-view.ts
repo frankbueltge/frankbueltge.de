@@ -98,10 +98,10 @@ export function originSentence(term: TrendingTerm): string {
   return `On the list since ${fmtDateLong(term.added)}, ${how}${note ? ` — ${note}` : ''}.`
 }
 
-/** Platform labels for the arcs. The day ledger's map (./format.ts) covers most of them; the
- *  two the term tracker adds are spelled here rather than there, because the arcs own them. */
+/** Platform labels for the arcs. The day ledger's map (./format.ts) spells every source the
+ *  pipeline reads, arXiv included since 2026-09-03; the one thing left here is the pseudo
+ *  platform the arcs invent for page views, which no day ledger knows. */
 const TERM_PLATFORM_LABEL: Record<string, string> = {
-  arxiv: 'arXiv',
   [VIEWS_PLATFORM]: 'Wikipedia page views',
 }
 
