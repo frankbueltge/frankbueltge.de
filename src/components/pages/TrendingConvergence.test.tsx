@@ -24,7 +24,6 @@ const wording: ConvergenceWording = {
   carriedWord: 'carried',
   sourcesWord: 'sources',
   card: {
-    platformsLabel: 'Sources',
     firstSeenLabel: 'first seen',
     daysHotLabel: 'mornings held',
     signalsLabel: 'What each source called it',

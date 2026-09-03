@@ -46,7 +46,6 @@ export interface ConvergenceWording {
   /** "sources" — the word after a row's mark count, in the card and the native title */
   sourcesWord: string
   card: {
-    platformsLabel: string
     firstSeenLabel: string
     daysHotLabel: string
     signalsLabel: string
