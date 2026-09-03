@@ -12,7 +12,7 @@ import { fileURLToPath } from 'node:url'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { beforeEach, describe, expect, it } from 'vitest'
 
-import { GLOBE } from '@/config/globe-wording'
+import { GLOBE, placePhrase } from '@/config/globe-wording'
 import {
   activatePanel,
   dispatchPanelKey,
@@ -21,6 +21,8 @@ import {
   type PanelKeyHandlers,
 } from '@/lib/dataviz/stepper'
 import type { GlobeManifest } from '@/lib/globe/feeds'
+import { LAYERS } from '@/lib/globe/layers'
+import type { LayerRecord } from '@/lib/globe/layers/types'
 import LivingGlobe, {
   cameraKey,
   cardStands,
@@ -411,5 +413,49 @@ describe('what the drawing half is handed at mount', () => {
     expect(source).toContain('latest.current.showHover(hit)')
     expect(source).toContain('latest.current.recordsOf(hit.layerId)')
     expect(source).toContain('latest.current.openMark(hit.layerId, index)')
+  })
+})
+
+describe('the card names a country, never its code (G3, second evening)', () => {
+  // The wording repair carried over from the first evening. The island renders `placePhrase` into
+  // the card's "What the mark is" row and into the hover readout, and for a record that names a
+  // country rather than a coordinate that phrase read "centroid of the country QAT" — a receipt
+  // only somebody holding the crosswalk could read. The name now travels WITH the code, resolved by
+  // the adapter that resolved the code, because the island holds no crosswalk and must not grow one.
+  const P = GLOBE.island.place
+  const country = (iso3: string, name: string): LayerRecord => ({
+    key: `balance:2026-09-02:0`,
+    at: { iso3, name },
+    value: 1,
+    labelKind: 'centroid',
+    receipt: { file: 'src/data/balance/2026-09-02.json', locator: 'countries[0] · QA', words: 'w' },
+  })
+
+  it('fills the crosswalk’s name into the phrase the card prints', () => {
+    expect(placePhrase(country('QAT', 'Qatar'), P)).toBe('centroid of Qatar')
+    expect(placePhrase(country('DEU', 'Germany'), P)).toBe('centroid of Germany')
+  })
+
+  it('prints no alpha-3 code at a reader', () => {
+    expect(placePhrase(country('QAT', 'Qatar'), P)).not.toContain('QAT')
+    expect(P.country).toContain('{name}')
+    expect(P.country).not.toContain('{code}')
+  })
+
+  it('is the phrase the island itself uses, in the card and in the readout', () => {
+    const source = read('./LivingGlobe.tsx')
+    expect(source).toContain('placePhrase(selectedRecord, wording.place)')
+    expect(source).toContain('place: placePhrase(hit.record, wording.place)')
+  })
+
+  it('holds for every country record the real archive carries', () => {
+    const balance = LAYERS.find((layer) => layer.id === 'balance')!
+    const frame = balance.frame(balance.days[balance.days.length - 1])
+    expect(frame.records.length).toBeGreaterThan(0)
+    for (const record of frame.records) {
+      const phrase = placePhrase(record, P)
+      expect(phrase.startsWith('centroid of '), record.key).toBe(true)
+      expect(phrase, record.key).not.toMatch(/centroid of [A-Z]{3}$/)
+    }
   })
 })

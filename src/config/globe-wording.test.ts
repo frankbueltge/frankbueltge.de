@@ -96,8 +96,12 @@ describe('a mark is said in words, never in a bare pair of coordinates', () => {
     expect(phrase).toContain(' to ')
   })
 
-  it('says a country resolved through the crosswalk as a centroid, and names the code it resolved', () => {
-    expect(placePhrase(record('centroid', { iso3: 'DEU' }), P)).toContain('DEU')
+  it('says a country resolved through the crosswalk as a centroid, and NAMES it (G3, second evening)', () => {
+    // the repair: until 2026-09-03 this phrase filled in the alpha-3 code, and a reader was told
+    // "centroid of the country QAT" — a receipt only somebody holding the crosswalk could read
+    const phrase = placePhrase(record('centroid', { iso3: 'QAT', name: 'Qatar' }), P)
+    expect(phrase).toBe('centroid of Qatar')
+    expect(phrase).not.toContain('QAT')
   })
 
   it('writes a coordinate with its hemisphere, so a minus sign is never a reader’s problem', () => {

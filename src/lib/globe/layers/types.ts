@@ -20,8 +20,14 @@ export type LayerKind = 'points' | 'arcs' | 'tracks' | 'countries' | 'stations' 
 export type LonLat = [lon: number, lat: number]
 
 /** Where a mark stands: a point, a great-circle pair, or a country the drawing resolves through
- *  the crosswalk and the centroid rule. */
-export type LayerPlace = LonLat | { from: LonLat; to: LonLat } | { iso3: string }
+ *  the crosswalk and the centroid rule.
+ *
+ *  A country place carries its NAME as well as its code, and that is a wording repair of G3's second
+ *  evening rather than a convenience: the card used to read "centroid of the country QAT", because
+ *  the code was the only thing that had crossed into the island. The name is the crosswalk's own, so
+ *  the adapter that resolved the code is also the one that says what it resolved to — the island
+ *  holds no crosswalk and must never grow one. */
+export type LayerPlace = LonLat | { from: LonLat; to: LonLat } | { iso3: string; name: string }
 
 /** What a mark IS, so the card can say it in words instead of printing two numbers.
  *   · point    — the record's own coordinate (a fire, a quake, a vessel's position)
