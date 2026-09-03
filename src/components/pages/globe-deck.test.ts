@@ -212,6 +212,26 @@ describe('the globe view is subdivided finely enough to be a sphere', () => {
     // the prop is in DEGREES: a smaller number is a finer mesh, and deck.gl's default is ten
     expect(GLOBE_RESOLUTION).toBeLessThan(10)
   })
+
+  it('is the resolution the country fills were measured at (G3, 2026-09-03)', () => {
+    // measured with the Balance layer in front and the sphere zoomed in on west Africa: at deck.gl's
+    // default of ten degrees the grid cut leaves notches inside Ghana, Nigeria and Saudi Arabia where
+    // a cell falls away; at four they are gone and every fill sits inside its own outline. Screenshots
+    // g3a-tess-res10.png and g3a-tess-res4.png, named in the decision-log row.
+    expect(GLOBE_RESOLUTION).toBe(4)
+  })
+})
+
+describe('the sphere is stitched before it is drawn', () => {
+  it('makes the land continuous across the antimeridian, in the house’s one tested place', () => {
+    // a ring that crosses the antimeridian arrives from Natural Earth as a ring that JUMPS across the
+    // longitude plane, and the globe view draws that jump as a band around the whole earth — the seam
+    // that ran across this sphere until 2026-09-03. The arithmetic is a pure lib with its own suite
+    // (src/lib/globe/antimeridian.ts); this only holds the drawing to using it.
+    const code = readFileSync(join(ROOT, 'src/components/pages/globe-deck.ts'), 'utf8')
+    expect(code).toContain("from '@/lib/globe/antimeridian'")
+    expect(code).toContain('stitchFeatures(')
+  })
 })
 
 describe('the deck.gl boundary', () => {
