@@ -37,9 +37,19 @@ DIMENSION_QUERY = """query TrendingDimension($zone: string!, $start: Time!, $end
 }"""
 EDGE_SOURCE = ("Cloudflare GraphQL Analytics API, httpRequestsAdaptiveGroups, zone scope, "
                "requestSource eyeball, clientRequestPath_like /trending%")
-# The two dimensions the retired browser beacon would have contributed. Whether the Free plan
-# serves them is not assumed: the run asks, and records a refusal in `extra_note`.
-EXTRA_DIMENSIONS = (("countries", "clientCountryName"), ("referers", "clientRefererHost"))
+# The dimensions the retired browser beacon would have contributed. `clientCountryName` is
+# served on this plan; `clientRefererHost` is not — measured on 2026-09-03 through the
+# rehearsal, which answered "zone does not have access to the field 'clientrefererhost'". It is
+# therefore not asked for every night: a refusal already known is not a finding, and repeating
+# it would put the same note in every file of the year. The refusal is recorded once, in the
+# design note and the method sheet; re-adding the pair here is the whole change if the plan
+# ever serves it.
+EXTRA_DIMENSIONS = (("countries", "clientCountryName"),)
+# Named so the record still says the field exists and why it is empty, rather than staying
+# silent about a thing a reader might look for.
+UNASKED_DIMENSIONS = ("referers",)
+UNASKED_NOTE = ("referring hosts are not served on this plan (clientRefererHost, measured "
+                "2026-09-03)")
 EXTRA_TOP = 10
 PATH_KINDS = ("page", "archive", "json", "feed", "md", "other")
 TIMEOUT = 60.0
@@ -151,6 +161,9 @@ def edge_counts(client: httpx.Client, token: str | None, zone: str | None, day: 
         edge[key] = values
         if why:
             notes.append(why)
+    for key in UNASKED_DIMENSIONS:
+        edge[key] = None
+    notes.append(UNASKED_NOTE)
     edge["extra_note"] = "; ".join(notes)[:200]
     return edge
 
