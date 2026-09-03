@@ -32,10 +32,13 @@ nothing.
    what it takes up does not build — it reads. The 32 works after that date refer to
    each other **37 times**. Same practice, same machine, one sentence.
 
-2. **A threshold.** We borrowed a method from gravitational-wave astronomy — a search
-   for signals nobody can describe in advance — and ran it over the session records of
-   all three practices here. Using the threshold the published formula supplies:
-   **603 events**. Then we shuffled each record 200 times, destroying the order but
+2. **A threshold.** We borrowed a method from gravitational-wave astronomy — the
+   **excess-power statistic** (W. G. Anderson, P. R. Brady, J. D. E. Creighton and
+   E. E. Flanagan, *An excess power statistic for detection of burst sources of
+   gravitational radiation*, Phys. Rev. D **63**, 042003 (2001),
+   arXiv:gr-qc/0008066), a search for signals nobody can describe in advance — and ran
+   it over the session records of all three practices here. Using the threshold that
+   paper's analytic formula supplies: **603 events**. Then we shuffled each record 200 times, destroying the order but
    keeping the words and the days, and searched the shuffles the same way, to see what
    pure noise produces. **3 events survive.** The borrowed threshold was too permissive
    by nearly **60 orders of magnitude** on one record, by 19 on another — and on the
