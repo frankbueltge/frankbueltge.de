@@ -12,7 +12,7 @@
       },
       {
         "file": "docs/decision-log.md",
-        "sha256": "fc2481888bf3271e"
+        "sha256": "e8673d70770ac570"
       },
       {
         "file": "src/data/post/ledger.json",
@@ -57,10 +57,10 @@
       }
     ],
     "counts": {
-      "nodes": 377,
-      "edges": 321,
+      "nodes": 378,
+      "edges": 325,
       "nodesByKind": {
-        "decision": 111,
+        "decision": 112,
         "encounter": 6,
         "neighbor": 115,
         "practice": 9,
@@ -75,7 +75,7 @@
         "made-by": 103,
         "neighbor-of": 116,
         "participates": 17,
-        "touches": 70
+        "touches": 74
       }
     }
   },
@@ -1113,6 +1113,16 @@
     {
       "id": "decision:2026-09-03-1",
       "kind": "decision",
+      "label": "The removals at their seats, the world chamber's hosts and the trending countries",
+      "date": "2026-09-03",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "The removals at their seats, the world chamber's hosts and the trending countries"
+      }
+    },
+    {
+      "id": "decision:2026-09-03-2",
+      "kind": "decision",
       "label": "The Studio gets a second source: the Atlas of Data Art",
       "date": "2026-09-03",
       "source": {
@@ -1121,7 +1131,7 @@
       }
     },
     {
-      "id": "decision:2026-09-03-2",
+      "id": "decision:2026-09-03-3",
       "kind": "decision",
       "label": "Three country layers on the globe, and the seam taken off the sphere",
       "date": "2026-09-03",
@@ -1131,7 +1141,7 @@
       }
     },
     {
-      "id": "decision:2026-09-03-3",
+      "id": "decision:2026-09-03-4",
       "kind": "decision",
       "label": "Three guided stories over one globe, and a focus that moves the camera, the day and the layers",
       "date": "2026-09-03",
@@ -1141,7 +1151,7 @@
       }
     },
     {
-      "id": "decision:2026-09-03-4",
+      "id": "decision:2026-09-03-5",
       "kind": "decision",
       "label": "Cycle 002 opens, and the Field is asked to build rather than measure",
       "date": "2026-09-03",
@@ -1151,7 +1161,7 @@
       }
     },
     {
-      "id": "decision:2026-09-03-5",
+      "id": "decision:2026-09-03-6",
       "kind": "decision",
       "label": "The signal log speaks for the whole house, and the works register moves onto /ecology",
       "date": "2026-09-03",
@@ -1161,7 +1171,7 @@
       }
     },
     {
-      "id": "decision:2026-09-03-6",
+      "id": "decision:2026-09-03-7",
       "kind": "decision",
       "label": "The audience of the trending ledger is counted at the edge, not in the browser",
       "date": "2026-09-03",
@@ -1171,7 +1181,7 @@
       }
     },
     {
-      "id": "decision:2026-09-03-7",
+      "id": "decision:2026-09-03-8",
       "kind": "decision",
       "label": "The globe becomes a room: layers on and off, the whole archive on one day axis, a receipt behind every mark",
       "date": "2026-09-03",
@@ -1181,7 +1191,7 @@
       }
     },
     {
-      "id": "decision:2026-09-03-8",
+      "id": "decision:2026-09-03-9",
       "kind": "decision",
       "label": "One globe over everything this house measures on the earth",
       "date": "2026-09-03",
@@ -7791,25 +7801,16 @@
     },
     {
       "kind": "touches",
-      "from": "decision:2026-09-03-2",
+      "from": "decision:2026-09-03-1",
       "to": "work:balance",
       "source": {
         "file": "docs/decision-log.md",
-        "quote": "src/data/balance/"
+        "quote": "src/lib/globe/layers/{redaction-seats,redaction-world,trending,index,types,balance}.ts"
       }
     },
     {
       "kind": "touches",
-      "from": "decision:2026-09-03-2",
-      "to": "work:consensus",
-      "source": {
-        "file": "docs/decision-log.md",
-        "quote": "src/lib/globe/layers/{balance,invoked,consensus-tld,index}.ts"
-      }
-    },
-    {
-      "kind": "touches",
-      "from": "decision:2026-09-03-2",
+      "from": "decision:2026-09-03-1",
       "to": "work:globe",
       "source": {
         "file": "docs/decision-log.md",
@@ -7818,8 +7819,35 @@
     },
     {
       "kind": "touches",
-      "from": "decision:2026-09-03-2",
-      "to": "work:invoked-past",
+      "from": "decision:2026-09-03-1",
+      "to": "work:redaction",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "src/lib/globe/layers/{redaction-seats,redaction-world,trending,index,types,balance}.ts"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-09-03-1",
+      "to": "work:trending",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "src/lib/globe/layers/{redaction-seats,redaction-world,trending,index,types,balance}.ts"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-09-03-3",
+      "to": "work:balance",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "src/data/balance/"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-09-03-3",
+      "to": "work:consensus",
       "source": {
         "file": "docs/decision-log.md",
         "quote": "src/lib/globe/layers/{balance,invoked,consensus-tld,index}.ts"
@@ -7831,12 +7859,30 @@
       "to": "work:globe",
       "source": {
         "file": "docs/decision-log.md",
+        "quote": "docs/design/2026-09-03-living-globe.md"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-09-03-3",
+      "to": "work:invoked-past",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "src/lib/globe/layers/{balance,invoked,consensus-tld,index}.ts"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-09-03-4",
+      "to": "work:globe",
+      "source": {
+        "file": "docs/decision-log.md",
         "quote": "src/lib/tour/{types,globe-stories}.ts"
       }
     },
     {
       "kind": "touches",
-      "from": "decision:2026-09-03-6",
+      "from": "decision:2026-09-03-7",
       "to": "work:trending",
       "source": {
         "file": "docs/decision-log.md",
@@ -7845,7 +7891,7 @@
     },
     {
       "kind": "touches",
-      "from": "decision:2026-09-03-7",
+      "from": "decision:2026-09-03-8",
       "to": "work:globe",
       "source": {
         "file": "docs/decision-log.md",
@@ -7854,7 +7900,7 @@
     },
     {
       "kind": "touches",
-      "from": "decision:2026-09-03-8",
+      "from": "decision:2026-09-03-9",
       "to": "work:globe",
       "source": {
         "file": "docs/decision-log.md",
