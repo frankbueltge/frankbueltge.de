@@ -25,10 +25,22 @@ QUERY = """query TrendingAudience($zone: string!, $start: Time!, $end: Time!) {
     ) { count avg { sampleInterval } dimensions { userAgent clientRequestPath edgeResponseStatus } }
   } }
 }"""
+# One dimension per query on purpose: a plan that refuses one of them should not cost the
+# other, and a combined query would fail whole rather than in part.
+DIMENSION_QUERY = """query TrendingDimension($zone: string!, $start: Time!, $end: Time!) {
+  viewer { zones(filter: { zoneTag: $zone }) {
+    httpRequestsAdaptiveGroups(
+      filter: { datetime_geq: $start, datetime_leq: $end, requestSource: "eyeball", clientRequestPath_like: "/trending%" }
+      limit: 200, orderBy: [count_DESC]
+    ) { count dimensions { __DIM__ } }
+  } }
+}"""
 EDGE_SOURCE = ("Cloudflare GraphQL Analytics API, httpRequestsAdaptiveGroups, zone scope, "
                "requestSource eyeball, clientRequestPath_like /trending%")
-UMAMI_WEBSITE_ID = "cea1def9-863b-44e8-9f79-84837cf9cc42"
-UMAMI_SOURCE = f"self-hosted Umami, website {UMAMI_WEBSITE_ID}, url prefix /trending"
+# The two dimensions the retired browser beacon would have contributed. Whether the Free plan
+# serves them is not assumed: the run asks, and records a refusal in `extra_note`.
+EXTRA_DIMENSIONS = (("countries", "clientCountryName"), ("referers", "clientRefererHost"))
+EXTRA_TOP = 10
 PATH_KINDS = ("page", "archive", "json", "feed", "md", "other")
 TIMEOUT = 60.0
 
@@ -41,12 +53,8 @@ def _edge_unavailable(day: date, note: str) -> dict[str, Any]:
     start, end = _window(day)
     return {"status": "unavailable", "note": note[:200], "source": EDGE_SOURCE,
             "window": [start, end], "sample_interval_avg": None, "total": None,
-            "paths": {}, "classes": {}, "bots": []}
-
-
-def _umami_unavailable(note: str) -> dict[str, Any]:
-    return {"status": "unavailable", "note": note[:200], "source": UMAMI_SOURCE,
-            "pageviews": None, "visitors": None}
+            "paths": {}, "classes": {}, "bots": [],
+            "countries": None, "referers": None, "extra_note": ""}
 
 
 def _err(exc: Exception) -> str:
@@ -87,6 +95,36 @@ def aggregate_edge(rows: list[dict[str, Any]], day: date) -> dict[str, Any]:
             "bots": sorted(bots.values(), key=lambda b: (-b["requests"], b["name"]))}
 
 
+
+def _dimension_counts(client: httpx.Client, token: str, zone: str, day: date,
+                      dimension: str) -> tuple[dict[str, int] | None, str]:
+    """The top values of one dimension, or None and the reason. Aggregate counts only: a
+    country and a referring host are places, never people."""
+    start, end = _window(day)
+    query = DIMENSION_QUERY.replace("__DIM__", dimension)
+    try:
+        r = client.post(GRAPHQL_URL, json={"query": query,
+                                           "variables": {"zone": zone, "start": start, "end": end}},
+                        headers={"Authorization": f"Bearer {token}"}, timeout=TIMEOUT)
+        r.raise_for_status()
+        data = r.json()
+    except (httpx.HTTPError, ValueError) as exc:
+        return None, f"{dimension}: {_err(exc)}"
+    if data.get("errors"):
+        return None, f"{dimension}: {(data['errors'][0] or {}).get('message', 'unknown error')}"[:200]
+    zones = ((data.get("data") or {}).get("viewer") or {}).get("zones") or []
+    if not zones:
+        return None, f"{dimension}: zone not found for this token"
+    counts: dict[str, int] = {}
+    for row in zones[0].get("httpRequestsAdaptiveGroups") or []:
+        value = str((row.get("dimensions") or {}).get(dimension) or "").strip()
+        if not value:
+            continue
+        counts[value] = counts.get(value, 0) + int(row.get("count") or 0)
+    top = dict(sorted(counts.items(), key=lambda kv: (-kv[1], kv[0]))[:EXTRA_TOP])
+    return top, ""
+
+
 def edge_counts(client: httpx.Client, token: str | None, zone: str | None, day: date) -> dict[str, Any]:
     if not token or not zone:
         return _edge_unavailable(day, "no analytics token connected")
@@ -106,43 +144,15 @@ def edge_counts(client: httpx.Client, token: str | None, zone: str | None, day: 
     if not zones:
         return _edge_unavailable(day, "zone not found for this token")
     rows = zones[0].get("httpRequestsAdaptiveGroups") or []
-    return aggregate_edge(rows, day)
-
-
-def _ms(dt: datetime) -> int:
-    return int(dt.timestamp() * 1000)
-
-
-def umami_counts(client: httpx.Client, base_url: str | None, username: str | None,
-                 password: str | None, day: date) -> dict[str, Any]:
-    if not base_url or not username or not password:
-        return _umami_unavailable("no analytics account connected")
-    base = base_url.rstrip("/")
-    start = datetime(day.year, day.month, day.day, tzinfo=timezone.utc)
-    end = start + timedelta(days=1) - timedelta(milliseconds=1)
-    try:
-        login = client.post(f"{base}/api/auth/login",
-                            json={"username": username, "password": password}, timeout=TIMEOUT)
-        login.raise_for_status()
-        token = login.json().get("token")
-        if not token:
-            return _umami_unavailable("login returned no token")
-        headers = {"Authorization": f"Bearer {token}"}
-        params = {"startAt": _ms(start), "endAt": _ms(end)}
-        metrics = client.get(f"{base}/api/websites/{UMAMI_WEBSITE_ID}/metrics",
-                             params={**params, "type": "url"}, headers=headers, timeout=TIMEOUT)
-        metrics.raise_for_status()
-        pageviews = sum(int(row.get("y") or 0) for row in metrics.json()
-                        if str(row.get("x", "")).startswith("/trending"))
-        stats = client.get(f"{base}/api/websites/{UMAMI_WEBSITE_ID}/stats",
-                           params={**params, "url": "/trending"}, headers=headers, timeout=TIMEOUT)
-        stats.raise_for_status()
-        raw = stats.json().get("visitors")
-        visitors = int((raw.get("value") if isinstance(raw, dict) else raw) or 0)
-    except (httpx.HTTPError, ValueError, AttributeError, TypeError) as exc:
-        return _umami_unavailable(_err(exc))
-    return {"status": "ok", "note": "", "source": UMAMI_SOURCE,
-            "pageviews": pageviews, "visitors": visitors}
+    edge = aggregate_edge(rows, day)
+    notes: list[str] = []
+    for key, dimension in EXTRA_DIMENSIONS:
+        values, why = _dimension_counts(client, token, zone, day, dimension)
+        edge[key] = values
+        if why:
+            notes.append(why)
+    edge["extra_note"] = "; ".join(notes)[:200]
+    return edge
 
 
 def build_audience(client: httpx.Client, day: date, env: dict[str, str] | None = None,
@@ -154,6 +164,4 @@ def build_audience(client: httpx.Client, day: date, env: dict[str, str] | None =
         "day": day.isoformat(),
         "generated_at": generated_at,
         "edge": edge_counts(client, env.get("CF_ANALYTICS_TOKEN"), env.get("CF_ZONE_ID"), day),
-        "umami": umami_counts(client, env.get("UMAMI_API_URL"), env.get("UMAMI_USERNAME"),
-                              env.get("UMAMI_PASSWORD"), day),
     }

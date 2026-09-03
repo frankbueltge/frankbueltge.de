@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { audienceStrip, audienceTableRows, convergingRows, sourceColumns } from './view'
-import { fixtureAudience, fixtureDay, standbyAudience } from './fixtures'
+import { audienceDimensionRows, audienceHasUmami, audienceMissingDimensions, audienceStrip, audienceTableRows, convergingRows, sourceColumns } from './view'
+import { dimensionlessAudience, fixtureAudience, fixtureDay, legacyAudience, standbyAudience } from './fixtures'
 import { AUDIENCE_CLASSES } from './types'
 
 describe('converging rows', () => {
@@ -70,11 +70,66 @@ describe('audience strip', () => {
 
 describe('audience table', () => {
   it('reads standby, never zero, for an unavailable day', () => {
-    const rows = audienceTableRows([standbyAudience('2026-09-01'), fixtureAudience({ day: '2026-09-02' })])
+    const rows = audienceTableRows([standbyAudience('2026-09-01'), legacyAudience({ day: '2026-09-02' })])
     expect(rows[0].day).toBe('2026-09-02')
     expect(rows[0].total).toBe('120')
+    expect(rows[0].pageviews).toBe('42')
     expect(rows[1].total).toBe('standby')
     expect(rows[1].browser).toBe('standby')
-    expect(rows[1].pageviews).toBe('standby')
+  })
+
+  // The two committed trending-audience/1 days keep their beacon half for ever; a /2 day never
+  // had one. A dash says "this file has no such half", which is a different statement from the
+  // "standby" of a half whose count is pending — the distinction the decision of 2026-09-03 rests on.
+  it('tells a retired half apart from a pending one', () => {
+    // 2026-09-01 is the shape of the real committed day: a /1 file whose beacon half never got
+    // its credentials, so it reads standby. 2026-09-03 is a /2 file — a dash, not standby,
+    // because nothing is pending there.
+    const unconnected = legacyAudience({ day: '2026-09-01', umami: { status: 'unavailable', note: 'no analytics account connected', source: 'self-hosted Umami', pageviews: null, visitors: null } })
+    const rows = audienceTableRows([fixtureAudience({ day: '2026-09-03' }), legacyAudience({ day: '2026-09-02' }), unconnected])
+    expect(rows.map((r) => r.pageviews)).toEqual(['—', '42', 'standby'])
+  })
+
+  it('keeps the beacon column only while a file still carries that half', () => {
+    expect(audienceHasUmami([legacyAudience(), fixtureAudience({ day: '2026-09-03' })])).toBe(true)
+    expect(audienceHasUmami([fixtureAudience(), dimensionlessAudience()])).toBe(false)
+    expect(audienceHasUmami([])).toBe(false)
+  })
+})
+
+describe('the two dimensions of trending-audience/2', () => {
+  it('ranks countries and referring hosts by requests, ties by name, capped', () => {
+    const a = fixtureAudience()
+    expect(audienceDimensionRows(a.edge.countries)).toEqual([
+      { name: 'United States', requests: '61' },
+      { name: 'Germany', requests: '22' },
+      { name: 'France', requests: '7' },
+    ])
+    expect(audienceDimensionRows(a.edge.referers).map((r) => r.name)).toEqual(['news.ycombinator.com', 'www.google.com'])
+    expect(audienceDimensionRows({ b: 5, a: 5, c: 9 })).toEqual([
+      { name: 'c', requests: '9' },
+      { name: 'a', requests: '5' },
+      { name: 'b', requests: '5' },
+    ])
+    expect(audienceDimensionRows(Object.fromEntries(Array.from({ length: 20 }, (_, i) => [`c${i}`, i])), 10)).toHaveLength(10)
+  })
+
+  // A plan that does not expose a dimension is an absence with a reason, not a row of zeros:
+  // no rows at all, and the record names which dimension is missing so the surface can say why.
+  it('yields no rows for a null dimension, and names it as missing', () => {
+    const none = dimensionlessAudience()
+    expect(audienceDimensionRows(none.edge.countries)).toEqual([])
+    expect(audienceDimensionRows(none.edge.referers)).toEqual([])
+    expect(audienceMissingDimensions(none)).toEqual(['countries', 'referers'])
+    expect(none.edge.extra_note).toContain('not queryable')
+  })
+
+  // A trending-audience/1 day carries neither key. That is not the same as a null: nothing is
+  // claimed about it, so nothing is reported as missing either.
+  it('claims nothing about a record from before the dimensions existed', () => {
+    const old = legacyAudience()
+    expect(old.edge.countries).toBeUndefined()
+    expect(audienceDimensionRows(old.edge.countries)).toEqual([])
+    expect(audienceMissingDimensions(old)).toEqual([])
   })
 })

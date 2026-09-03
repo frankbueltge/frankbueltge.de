@@ -108,9 +108,9 @@ def build_day(ctx: Context, sources: tuple[SourceSpec, ...] | None = None, *,
 
 
 def _audience_fallback(day: date, note: str) -> dict[str, Any]:
-    from trending.audience import _edge_unavailable, _umami_unavailable
+    from trending.audience import _edge_unavailable
     return {"$contract": CONTRACT_AUDIENCE, "day": day.isoformat(), "generated_at": _now_iso(),
-            "edge": _edge_unavailable(day, note), "umami": _umami_unavailable(note)}
+            "edge": _edge_unavailable(day, note)}
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -171,9 +171,12 @@ def main(argv: list[str] | None = None) -> int:
                     aud = _audience_fallback(yday, f"{type(exc).__name__}: {exc}"[:200])
                 aud_path.parent.mkdir(parents=True, exist_ok=True)
                 aud_path.write_text(to_json(aud), encoding="utf-8")
-                e, u = aud["edge"], aud["umami"]
-                print(f"trending: audience {yday}: edge={e['status']} ({e.get('total')}) "
-                      f"umami={u['status']} ({u.get('pageviews')}) → {aud_path}")
+                e = aud["edge"]
+                places = len(e.get("countries") or {})
+                print(f"trending: audience {yday}: edge={e['status']} ({e.get('total')})"
+                      + (f", {places} countries" if places else "")
+                      + (f", note: {e['extra_note']}" if e.get("extra_note") else "")
+                      + f" → {aud_path}")
     return 0
 
 

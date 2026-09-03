@@ -1,7 +1,8 @@
 """Canonical data model. JSON is the archive; prose is rendered by the site.
 
-Two contracts leave this package: `trending-day/1` (one file per run day) and
-`trending-audience/1` (one file per measured day, written the morning after)."""
+Three contracts leave this package: `trending-day/1` (one file per run day),
+`trending-terms/1` (the arcs of the same run) and `trending-audience/2` (one file per measured
+day, written the morning after; `/1` files stay in the archive with their own string)."""
 from __future__ import annotations
 
 import json
@@ -9,7 +10,10 @@ from dataclasses import asdict, dataclass, field
 from typing import Any, Literal
 
 CONTRACT_DAY = "trending-day/1"
-CONTRACT_AUDIENCE = "trending-audience/1"
+# v2 (2026-09-03) retired the browser-beacon half: a client-side beacon cannot see a crawler
+# that runs no JavaScript, which is most of the readers this page is built for. Committed v1
+# files keep their contract string and are read as they are.
+CONTRACT_AUDIENCE = "trending-audience/2"
 
 Status = Literal["ok", "partial", "unavailable"]
 

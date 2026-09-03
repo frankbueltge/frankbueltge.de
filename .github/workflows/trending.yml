@@ -13,8 +13,6 @@ name: Trending nightly
 #   CF_ANALYTICS_TOKEN — Cloudflare API token, Zone · Analytics · Read for frankbueltge.de.
 #                        Missing: the audience half records status "unavailable" with a note.
 #   CF_ZONE_ID         — repository VARIABLE (not secret): the zone id of frankbueltge.de.
-#   UMAMI_API_URL, UMAMI_USERNAME, UMAMI_PASSWORD — optional, a view-only Umami user for the
-#                        browser-pageview series; missing → that half is "unavailable" too.
 #
 # A committed day file is never rewritten (the archive rule): the pipeline refuses to overwrite
 # an existing src/data/trending/<date>.json and exits 0.
@@ -50,9 +48,6 @@ jobs:
           # the term tracker; the pipeline runs unauthenticated (slower) when it is absent.
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CF_ZONE_ID: ${{ vars.CF_ZONE_ID }}
-          UMAMI_API_URL: ${{ secrets.UMAMI_API_URL }}
-          UMAMI_USERNAME: ${{ secrets.UMAMI_USERNAME }}
-          UMAMI_PASSWORD: ${{ secrets.UMAMI_PASSWORD }}
         run: python -m trending.run --repo-root .
       - name: Commit
         run: |

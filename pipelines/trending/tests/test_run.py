@@ -51,8 +51,8 @@ def test_dry_run_writes_day_latest_and_audience(tmp_path, patched, capsys):
                               "top_labels": ["Storm warning", "Other"]}
     assert day["topics"][0]["platforms"] == ["alpha", "beta"]
     aud = json.loads((out / "audience" / "2026-09-01.json").read_text())
-    assert aud["$contract"] == "trending-audience/1" and aud["day"] == "2026-09-01"
-    assert aud["edge"]["status"] == "unavailable"
+    assert aud["$contract"] == "trending-audience/2" and aud["day"] == "2026-09-01"
+    assert aud["edge"]["status"] == "unavailable" and "umami" not in aud
     text = (out / "2026-09-02.json").read_text()
     assert text.endswith("\n") and text == json.dumps(json.loads(text), ensure_ascii=False, indent=1, sort_keys=True) + "\n"
     assert "converging" in capsys.readouterr().out

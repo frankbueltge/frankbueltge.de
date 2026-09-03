@@ -138,18 +138,34 @@ jobs:
           # Secret kann beim Einfügen ein \n/Leerzeichen enthalten → trimmen (sonst „invalid header value").
           export CLOUDFLARE_API_TOKEN="$(printf '%s' "$CF_TOKEN_RAW" | tr -d '[:space:]')"
           npx --yes wrangler@4 pages deploy dist --project-name=frankbueltge-de --branch=main --commit-dirty=true
-      # After the deploy: tell the IndexNow engines that /trending (and today's archive page, if
-      # the build produced one) changed. Never fails the job — a missing key skips, a failed ping
-      # is printed and ignored; the deploy above is the thing that matters.
-      - name: IndexNow ping for /trending (never fails the deploy)
+      # After the deploy: tell the IndexNow engines (Bing, Yandex, Seznam, Naver, Yep — Google
+      # does not take part) which pages changed. Only the trending surfaces change daily, and
+      # only the nightly changes them, so the step runs on that trigger and on a manual deploy
+      # rather than on all ten-odd deploys a day: submitting unchanged URLs over and over is
+      # what the protocol asks callers not to do. Never fails the job — a missing key skips, a
+      # failed ping is printed and ignored; the deploy above is the thing that matters.
+      - name: IndexNow ping for the trending surfaces (never fails the deploy)
+        if: ${{ github.event_name == 'workflow_dispatch' || (github.event_name == 'workflow_run' && github.event.workflow_run.name == 'Trending nightly') }}
         env:
           INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
         run: |
           if [ -z "$INDEXNOW_KEY" ]; then echo "No INDEXNOW_KEY configured — skipping."; exit 0; fi
-          URLS='"https://frankbueltge.de/trending"'
-          D="$(date -u +%F)"
-          if [ -f "dist/trending/$D/index.html" ]; then URLS="$URLS,\"https://frankbueltge.de/trending/$D\""; fi
+          # Every page the build produced under /trending: today's ledger, the archived days,
+          # the topics hub and one landing page per watched term.
+          python3 - "$INDEXNOW_KEY" <<'PY' > /tmp/indexnow.json
+          import json, sys, pathlib
+          key = sys.argv[1]
+          root = pathlib.Path("dist")
+          urls = sorted(
+              "https://frankbueltge.de/" + str(p.parent.relative_to(root)) + "/"
+              for p in root.glob("trending/**/index.html")
+          )
+          json.dump({"host": "frankbueltge.de", "key": key,
+                     "keyLocation": f"https://frankbueltge.de/{key}.txt",
+                     "urlList": urls[:10000]}, sys.stdout)
+          print(f"IndexNow: submitting {len(urls)} pages", file=sys.stderr)
+          PY
           curl -sS -X POST https://api.indexnow.org/indexnow \
             -H 'Content-Type: application/json; charset=utf-8' \
-            -d "{\"host\":\"frankbueltge.de\",\"key\":\"$INDEXNOW_KEY\",\"keyLocation\":\"https://frankbueltge.de/$INDEXNOW_KEY.txt\",\"urlList\":[$URLS]}" \
+            --data-binary @/tmp/indexnow.json \
             -o /dev/null -w 'IndexNow HTTP %{http_code}\n' || echo "IndexNow ping failed — ignored."

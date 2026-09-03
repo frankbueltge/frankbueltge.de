@@ -149,6 +149,14 @@ export interface AudienceTableRow extends Record<string, string | number> {
   pageviews: string
 }
 
+/** True when at least one of these files still carries the retired browser-beacon half, i.e.
+ *  when the Umami column has anything to say at all. From `trending-audience/2` on no file
+ *  has it (decision of 2026-09-03), so the column disappears once the two `/1` days fall out
+ *  of the drawn window — rather than standing there reading "unavailable" for ever. */
+export function audienceHasUmami(days: TrendingAudience[]): boolean {
+  return days.some((d) => Boolean(d.umami))
+}
+
 /** The always-on table under the strip: one row per audience file, newest first. */
 export function audienceTableRows(days: TrendingAudience[]): AudienceTableRow[] {
   return [...days]
@@ -165,7 +173,33 @@ export function audienceTableRows(days: TrendingAudience[]): AudienceTableRow[] 
         'ai-user-fetch': cell('ai-user-fetch'),
         'ai-training': cell('ai-training'),
         'other-bot': cell('other-bot'),
-        pageviews: d.umami.status === 'ok' ? compact(d.umami.pageviews) : 'standby',
+        // A day whose file never had that half reads as an absence, not as standby: standby
+        // would say a count is pending, and no count is pending — the half is retired.
+        pageviews: d.umami ? (d.umami.status === 'ok' ? compact(d.umami.pageviews) : 'standby') : '—',
       }
     })
+}
+
+export interface AudienceDimensionRow extends Record<string, string | number> {
+  name: string
+  requests: string
+}
+
+/** One of the two dimensions `trending-audience/2` adds — countries, referring hosts — as
+ *  table rows: by requests descending, ties by name, capped. A `null` or absent dimension
+ *  yields no rows at all, so the surface can say why instead of drawing an empty table; it is
+ *  never read as a row of zeros. */
+export function audienceDimensionRows(dim: Record<string, number> | null | undefined, max = 10): AudienceDimensionRow[] {
+  if (!dim) return []
+  return Object.entries(dim)
+    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+    .slice(0, max)
+    .map(([name, n]) => ({ name, requests: compact(n) }))
+}
+
+/** Which of the two new dimensions this record explicitly reports as unavailable (`null`),
+ *  in contract order. A record that does not carry the key at all — every
+ *  `trending-audience/1` day — reports nothing, and nothing is claimed about it. */
+export function audienceMissingDimensions(a: TrendingAudience): ('countries' | 'referers')[] {
+  return (['countries', 'referers'] as const).filter((k) => a.edge[k] === null)
 }

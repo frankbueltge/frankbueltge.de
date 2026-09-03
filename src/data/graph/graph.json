@@ -12,7 +12,7 @@
       },
       {
         "file": "docs/decision-log.md",
-        "sha256": "cf2b2added9f7421"
+        "sha256": "ddec1b46ccd73926"
       },
       {
         "file": "src/data/post/ledger.json",
@@ -57,10 +57,10 @@
       }
     ],
     "counts": {
-      "nodes": 368,
-      "edges": 312,
+      "nodes": 369,
+      "edges": 313,
       "nodesByKind": {
-        "decision": 104,
+        "decision": 105,
         "encounter": 6,
         "neighbor": 115,
         "practice": 9,
@@ -75,7 +75,7 @@
         "made-by": 101,
         "neighbor-of": 116,
         "participates": 17,
-        "touches": 63
+        "touches": 64
       }
     }
   },
@@ -1112,6 +1112,16 @@
     },
     {
       "id": "decision:2026-09-03-1",
+      "kind": "decision",
+      "label": "The audience of the trending ledger is counted at the edge, not in the browser",
+      "date": "2026-09-03",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "The audience of the trending ledger is counted at the edge, not in the browser"
+      }
+    },
+    {
+      "id": "decision:2026-09-03-2",
       "kind": "decision",
       "label": "One globe over everything this house measures on the earth",
       "date": "2026-09-03",
@@ -7674,6 +7684,15 @@
     {
       "kind": "touches",
       "from": "decision:2026-09-03-1",
+      "to": "work:trending",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "src/lib/trending/types.ts"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-09-03-2",
       "to": "work:globe",
       "source": {
         "file": "docs/decision-log.md",
