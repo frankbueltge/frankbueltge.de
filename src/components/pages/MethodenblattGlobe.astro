@@ -1,7 +1,9 @@
 ---
 /** Method sheet — Living Globe (/globe).
  *
- *  The six sections every method sheet on this site carries. Section 1 is not written: it is
+ *  The sections every method sheet on this site carries, plus one this experiment needs since G2:
+ *  the guided stories are a READING of the data and not a step in producing it, so they get their
+ *  own section rather than a paragraph inside "Processing". Section 1 is not written: it is
  *  DERIVED from the layer registry, one row per registered layer, so a layer added to the globe
  *  cannot ship without its source, its licence and its cadence appearing here — and a row here
  *  cannot survive a layer being removed. The counts in the prose come from the model for the same
@@ -10,6 +12,7 @@
 import MethodSheet from '@/components/experiments/MethodSheet.astro'
 import TableFallback from '@/components/dataviz/TableFallback.astro'
 import { LAYERS } from '@/lib/globe/layers'
+import { GLOBE_STORIES } from '@/lib/tour/globe-stories'
 import { buildLivingGlobe } from '@/lib/globe/living'
 import { SEATS } from '@/lib/globe/seats'
 import crosswalk from '@/data/globe/crosswalk.json'
@@ -28,6 +31,7 @@ const sourceRows = LAYERS.map((layer) => ({
   licence: layer.source.license,
 }))
 
+const stories = GLOBE_STORIES
 const stations = SEATS.filter((s) => s.labelKind === 'station')
 const unplaced = SEATS.filter((s) => s.lat === null)
 
@@ -42,6 +46,14 @@ const limits = [
 ]
 
 const changelog = [
+  {
+    date: '2026-09-03',
+    what:
+      'The room, and then the stories: the island over the plate with the layer toggles, the day axis over the ' +
+      'whole archive and the card with receipts (G1) — and three guided stories that drive it, each scene asking ' +
+      'for a set of layers, a day, a camera and at most one mark, with every quote byte-exact from a committed ' +
+      'file (G2).',
+  },
   { date: '2026-09-03', what: 'The ground: the layer contract and registry, the country polygons and centroids, the country-code crosswalk, the seats, three adapters (the sky, the ghost fleet, the protocol), the plate that carries them, the manifest and the per-layer feeds, and this sheet.' },
 ]
 ---
@@ -128,7 +140,27 @@ const changelog = [
   </section>
 
   <section class="mb-8">
-    <h2 class="mb-2 font-semibold">5. Compute footprint</h2>
+    <h2 class="mb-2 font-semibold">5. Guided stories</h2>
+    <p class="leading-relaxed text-fg-muted">
+      Since 2026-09-03 the room carries {count(stories.length)} guided stories
+      ({stories.map((s) => s.title).join(', ')}), written as ordinary tours on this site's own tour engine and
+      driving the one globe the room already holds. <strong>What a scene of a story may ask for is exactly four
+      things:</strong> which layers are switched on (the last one is the one in front), which day of the archive is on
+      screen, where the camera stands, and at most one mark to open the card on. It may not ask for a number, a
+      sentence, a colour, or a layer that is not registered — a test refuses each of those, which is also why three of
+      the six stories the plan named are not written yet: they are about layers that arrive with the next phase.
+      <strong>Every sentence a story quotes is byte-exact</strong> from the committed file named under it, checked
+      character for character against that file by <code>src/lib/tour/globe-stories.test.ts</code>; a quote that
+      drifted by one comma fails the build rather than reading well. The prose around the quotes is framing only and
+      carries no figures at all — a separate test refuses a digit in it. Every mark key and every camera coordinate is
+      derived from the same adapters and the same committed seats file the globe draws from, so a story cannot point at
+      a mark the globe does not draw. Without JavaScript each story is a complete article; the globe simply is not
+      driven, and the plate, the legend and the tables stand as they always do.
+    </p>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="mb-2 font-semibold">6. Compute footprint</h2>
     <p class="leading-relaxed text-fg-muted">
       Build time only. The plate, the manifest and every layer feed are produced during the site build from files
       already in the repository; no cloud service is called, no GPU is used, no model is run, and nothing is computed
@@ -139,7 +171,7 @@ const changelog = [
   </section>
 
   <section class="mb-8">
-    <h2 class="mb-2 font-semibold">6. Change log</h2>
+    <h2 class="mb-2 font-semibold">7. Change log</h2>
     <ul class="ml-5 list-disc space-y-1 leading-relaxed text-fg-muted">
       {changelog.map((row) => <li><strong>{row.date}</strong> — {row.what}</li>)}
     </ul>

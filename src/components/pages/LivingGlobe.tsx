@@ -31,6 +31,11 @@
 //     on wears the second hue. That is the colour rule and the readability rule in one — it exists
 //     because ten layers cannot carry ten identities on one sphere. The COMPACT entrance draws two,
 //     and two can: there both keep their identity and their full weight (globe-deck.ts).
+//   · A GUIDED STORY MAY DRIVE THE ROOM, AND ONLY THE ROOM. A scene of a tour
+//     (src/lib/tour/globe-stories.ts) may ask for a set of layers, a day of the archive, a camera
+//     and one selected mark — nothing else, and never a number or a sentence. The pointer outranks
+//     it: once the visitor has taken hold of the sphere, a re-applied scene leaves it alone. The
+//     COMPACT entrance registers no handle at all, so nothing on any page can drive the hero.
 //   · NO WORDS AND NO NUMBERS OF ITS OWN. Every sentence is a plain string or a `{placeholder}`
 //     template from src/config/globe-wording.ts; every number is a count the manifest or a fetched
 //     frame carries.
@@ -81,6 +86,9 @@ type FetchState = 'idle' | 'loading' | 'ready' | 'failed'
 interface Selection {
   layerId: string
   index: number
+  /** the day the card was opened on — a card is a mark ON A DAY, and the position it holds means
+   *  nothing on another one (see `cardStands`) */
+  day: string
 }
 
 /** `#rrggbb`, `#rgb`, `rgb()`/`rgba()` and the room's bare `r g b` triplets → an RGB tuple. */
@@ -134,6 +142,57 @@ export function playAdvances(playing: boolean, reduced: boolean): boolean {
 export function emphasisFor(compact: boolean, active: readonly string[]): Emphasis {
   if (active.length === 0) return null
   return compact ? [...active] : active[active.length - 1]!
+}
+
+/** Whether an open card still stands for what the visitor opened. A card is one mark, of one
+ *  layer, on one day, and it holds a POSITION in that day's frame — so on another day the same
+ *  position is a different record entirely (found while walking the stories in the browser,
+ *  2026-09-03: a scene that moved the day turned an open ghost-fleet card into another night's
+ *  vessel, with the card's own day and file honestly relabelled and the visitor never told the
+ *  mark had changed under them). It therefore closes when the day moves, when its layer is
+ *  switched off, and when the record it names is gone. Pure, because "which card may stand" is a
+ *  rule and not an effect. */
+export function cardStands(
+  selection: { layerId: string; day: string } | null,
+  day: string,
+  active: readonly string[],
+  hasRecord: boolean,
+): boolean {
+  if (!selection) return false
+  return selection.day === day && active.includes(selection.layerId) && hasRecord
+}
+
+/** Which figure id this island answers to in the tour contract. The ROOM answers to its own id;
+ *  the COMPACT entrance answers to nothing at all and registers no handle — the hero is a figure,
+ *  not a stage, and a story anywhere on the site must never be able to fly the globe under the
+ *  front door's headline, change its day or open a card it does not even render. Empty means "no
+ *  contract", which `useFigureReady` skips (G2, 2026-09-03). */
+export function tourFigureId(compact: boolean, figureId: string): string {
+  return compact ? '' : figureId
+}
+
+/** Where a scene's day sits on the axis, or -1 when the archive does not hold that day. A story
+ *  that names a day the model has no file for is IGNORED rather than approximated: the nearest day
+ *  would put a different night on screen than the one the prose is reading out, which is exactly
+ *  the quiet lie this globe exists to avoid. */
+export function dayIndexOf(days: readonly string[], day: string | undefined): number {
+  return day === undefined ? -1 : days.indexOf(day)
+}
+
+/** Whether a story may move the camera. It may, unless it is asking for the SAME view it already
+ *  asked for and the visitor has taken hold of the globe since — that is a re-applied scene (the
+ *  tour pushes its active scene again when a figure registers late), and pulling the sphere out of
+ *  a reader's hand to show them what they are already looking at is the one move a guided story
+ *  must not make. The next scene asks for a different view and is honored. */
+export function mayFly(sameCamera: boolean, held: boolean): boolean {
+  return !(sameCamera && held)
+}
+
+/** A camera as one comparable string — the identity of a view, so "the same scene again" can be
+ *  told from "the next scene" without holding on to the tour's own objects (Tour.astro parses a
+ *  fresh FocusState out of its JSON payload on every activation, so object identity says nothing). */
+export function cameraKey(camera: { longitude: number; latitude: number; zoom?: number }): string {
+  return `${camera.longitude},${camera.latitude},${camera.zoom ?? ''}`
 }
 
 /** Who owns ←/→ while a card is open: the card, always. The scrubber is a native range input, so
@@ -289,7 +348,7 @@ export default function LivingGlobe({
       if (compact) return
       const record = recordsOf(layerId)[index]
       if (!record) return
-      setSelected({ layerId, index })
+      setSelected({ layerId, index, day })
       readout.hide()
       if (rootRef.current) {
         emitMarkSelected(rootRef.current, { figure: figureId, key: record.key, layer: layerId, day }, true)
@@ -442,10 +501,11 @@ export default function LivingGlobe({
 
   useFocusOnOpen(selectedRecord ? selectedRecord.key : null, cardRef)
 
-  // A frame the card cannot stand on any more (the day moved, the layer went off) closes it.
+  // A frame the card cannot stand on any more closes it: the day moved, its layer was switched
+  // off, or the record it named is gone. Never re-pointed at whatever now sits at the same index.
   React.useEffect(() => {
-    if (selected && !selectedRecord) setSelected(null)
-  }, [selected, selectedRecord])
+    if (selected && !cardStands(selected, day, active, Boolean(selectedRecord))) setSelected(null)
+  }, [active, day, selected, selectedRecord])
 
   // ── the day axis ───────────────────────────────────────────────────────────
   const lastIndex = newestDayIndex(manifest.days)
@@ -482,18 +542,79 @@ export default function LivingGlobe({
     return () => cancelAnimationFrame(raf)
   }, [playing, reduced, lastIndex])
 
-  // ── the tour contract (G2 fills the camera and the time) ───────────────────
-  useFigureReady(figureId, (focus) => {
+  // ── the tour contract: a guided story drives this island (G2, 2026-09-03) ──
+  //
+  // A scene may ask for four things, and they are applied in the order a reader needs them: the
+  // LAYERS first (which may start the one fetch a layer ever gets), then the DAY, then the CAMERA,
+  // and only then the SELECTED MARK — because a mark exists on a day, in a layer, and asking for it
+  // before either has arrived would open nothing. The first three are React state and the browser
+  // paints them together; the fourth waits in a ref until the records it names are actually here.
+  const pendingRef = React.useRef<{ key: string; day: string } | null>(null)
+  const flownRef = React.useRef<string | null>(null)
+
+  /** Opens the card on `key`, looking through the layers given, and says whether it found it. */
+  const openKeyIn = React.useCallback(
+    (layerIds: readonly string[], key: string): boolean => {
+      for (const id of layerIds) {
+        const index = recordsOf(id).findIndex((record) => record.key === key)
+        if (index >= 0) {
+          openMark(id, index)
+          return true
+        }
+      }
+      return false
+    },
+    [openMark, recordsOf],
+  )
+
+  useFigureReady(tourFigureId(compact, figureId), (focus) => {
     if (focus.figure !== figureId) return
-    if (!focus.select) return
-    for (const id of active) {
-      const index = recordsOf(id).findIndex((r) => r.key === focus.select)
-      if (index >= 0) {
-        openMark(id, index)
-        return
+
+    // the whole active set, in order — the last id is the one in front, which is the room's own
+    // emphasis rule and not something a story has to restate
+    const wanted = focus.layers ? focus.layers.filter((id) => byId.has(id)) : active
+    if (focus.layers) {
+      setActive((was) => (was.length === wanted.length && was.every((id, i) => id === wanted[i]) ? was : wanted))
+    }
+
+    // a day of the archive, or nothing: an unknown day leaves the axis where it stands
+    const index = dayIndexOf(manifest.days, focus.time?.day)
+    if (index >= 0) {
+      setPlaying(false)
+      setDayIndex(index)
+    }
+
+    if (focus.camera) {
+      const key = cameraKey(focus.camera)
+      if (mayFly(key === flownRef.current, handleRef.current?.heldByPointer() ?? false)) {
+        flownRef.current = key
+        handleRef.current?.flyTo(focus.camera, !reduced)
       }
     }
+
+    // The card opens on the day the scene asked for, not on the one that happens to be on screen.
+    // If that day is ALREADY on screen and the records are already here, it opens right now —
+    // because a scene that changes nothing but the camera changes none of the effect deps below,
+    // and a selection left waiting for a re-render that never comes never opens (found in the
+    // browser, 2026-09-03: the fleet story's closing card).
+    if (!focus.select) {
+      pendingRef.current = null
+      return
+    }
+    const targetDay = index >= 0 ? manifest.days[index]! : day
+    const opened = targetDay === day && openKeyIn(wanted, focus.select)
+    pendingRef.current = opened ? null : { key: focus.select, day: targetDay }
   })
+
+  // The other half of "only then the selected mark": the day may still be a state update away and
+  // the layer's records a fetch away, so a request the callback could not honor at once waits here
+  // until the frame it names is the frame on screen. It is dropped once honored, and it never
+  // guesses: a key no active layer holds on that day simply never opens a card.
+  React.useEffect(() => {
+    const pending = pendingRef.current
+    if (!pending || pending.day !== day) return
+    if (openKeyIn(active, pending.key)) pendingRef.current = null
+  }, [active, day, openKeyIn])
 
   // ── what the island says ───────────────────────────────────────────────────
   const status =
@@ -541,6 +662,74 @@ export default function LivingGlobe({
           {status}
         </p>
       </div>
+
+      {/* The card sits directly under the globe, not below the controls (moved there 2026-09-03,
+          G2): in the room's two-column layout the figure column is taller than the viewport, and a
+          card at its foot opened where nobody could see it. Under the sphere the mark and the globe
+          it was picked off are in one view, and what moves down is the console, never the figure. */}
+      {!compact && selected && selectedRecord && (
+        <Card
+          ref={cardRef}
+          tabIndex={-1}
+          role="group"
+          aria-label={fill(wording.card.label, { layer: byId.get(selected.layerId)?.title ?? selected.layerId })}
+          className="lg-card mt-4 outline-none"
+          data-mark={selectedRecord.key}
+        >
+          <CardHeader>
+            <div className="flex flex-wrap items-center gap-2">
+              <Badge variant="outline">{byId.get(selected.layerId)?.title ?? selected.layerId}</Badge>
+              <Badge variant="secondary">{byId.get(selected.layerId)?.kind}</Badge>
+              <span className="font-mono text-xs text-fg-faint">{day}</span>
+              <span className="font-mono text-xs text-fg-faint">
+                {fill(wording.card.position, {
+                  index: nf.format(selected.index + 1),
+                  of: nf.format(selectedRecords.length),
+                  layer: byId.get(selected.layerId)?.title ?? selected.layerId,
+                })}
+              </span>
+            </div>
+            <CardTitle className="text-base text-fg">{selectedRecord.receipt.words}</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            <p className="text-sm leading-relaxed text-fg-muted">{wording.card.kinds[selectedRecord.labelKind]}</p>
+            <dl className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 font-mono text-[11px] text-fg-faint">
+              <dt>{wording.card.layerLabel}</dt>
+              <dd className="text-fg-muted">{byId.get(selected.layerId)?.title ?? selected.layerId}</dd>
+              <dt>{wording.card.dayLabel}</dt>
+              <dd className="text-fg-muted">{day}</dd>
+              <dt>{wording.card.placeLabel}</dt>
+              <dd className="text-fg-muted">{placePhrase(selectedRecord, wording.place)}</dd>
+              <dt>{wording.card.fileLabel}</dt>
+              <dd className="break-all text-fg-muted">
+                {selectedRecord.receipt.file} · {selectedRecord.receipt.locator}
+              </dd>
+            </dl>
+            <div className="flex flex-wrap items-center gap-3">
+              <Button size="sm" variant="outline" disabled={selected.index === 0} onClick={() => stepCard(-1)}>
+                {wording.card.prev}
+              </Button>
+              <Button
+                size="sm"
+                variant="outline"
+                disabled={selected.index >= selectedRecords.length - 1}
+                onClick={() => stepCard(1)}
+              >
+                {wording.card.next}
+              </Button>
+              {selectedRecord.receipt.url && (
+                <Button asChild size="sm" variant="outline">
+                  <a href={selectedRecord.receipt.url}>{wording.card.open}</a>
+                </Button>
+              )}
+              <Button size="sm" variant="ghost" onClick={closeCard}>
+                {wording.card.close}
+              </Button>
+              <span className="lg-hint">{wording.card.hint}</span>
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       {!compact && (
         <div className="lg-controls">
@@ -622,70 +811,6 @@ export default function LivingGlobe({
           </ul>
           <p className="lg-hint">{wording.controls.layersHint}</p>
         </div>
-      )}
-
-      {!compact && selected && selectedRecord && (
-        <Card
-          ref={cardRef}
-          tabIndex={-1}
-          role="group"
-          aria-label={fill(wording.card.label, { layer: byId.get(selected.layerId)?.title ?? selected.layerId })}
-          className="lg-card mt-4 outline-none"
-          data-mark={selectedRecord.key}
-        >
-          <CardHeader>
-            <div className="flex flex-wrap items-center gap-2">
-              <Badge variant="outline">{byId.get(selected.layerId)?.title ?? selected.layerId}</Badge>
-              <Badge variant="secondary">{byId.get(selected.layerId)?.kind}</Badge>
-              <span className="font-mono text-xs text-fg-faint">{day}</span>
-              <span className="font-mono text-xs text-fg-faint">
-                {fill(wording.card.position, {
-                  index: nf.format(selected.index + 1),
-                  of: nf.format(selectedRecords.length),
-                  layer: byId.get(selected.layerId)?.title ?? selected.layerId,
-                })}
-              </span>
-            </div>
-            <CardTitle className="text-base text-fg">{selectedRecord.receipt.words}</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            <p className="text-sm leading-relaxed text-fg-muted">{wording.card.kinds[selectedRecord.labelKind]}</p>
-            <dl className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 font-mono text-[11px] text-fg-faint">
-              <dt>{wording.card.layerLabel}</dt>
-              <dd className="text-fg-muted">{byId.get(selected.layerId)?.title ?? selected.layerId}</dd>
-              <dt>{wording.card.dayLabel}</dt>
-              <dd className="text-fg-muted">{day}</dd>
-              <dt>{wording.card.placeLabel}</dt>
-              <dd className="text-fg-muted">{placePhrase(selectedRecord, wording.place)}</dd>
-              <dt>{wording.card.fileLabel}</dt>
-              <dd className="break-all text-fg-muted">
-                {selectedRecord.receipt.file} · {selectedRecord.receipt.locator}
-              </dd>
-            </dl>
-            <div className="flex flex-wrap items-center gap-3">
-              <Button size="sm" variant="outline" disabled={selected.index === 0} onClick={() => stepCard(-1)}>
-                {wording.card.prev}
-              </Button>
-              <Button
-                size="sm"
-                variant="outline"
-                disabled={selected.index >= selectedRecords.length - 1}
-                onClick={() => stepCard(1)}
-              >
-                {wording.card.next}
-              </Button>
-              {selectedRecord.receipt.url && (
-                <Button asChild size="sm" variant="outline">
-                  <a href={selectedRecord.receipt.url}>{wording.card.open}</a>
-                </Button>
-              )}
-              <Button size="sm" variant="ghost" onClick={closeCard}>
-                {wording.card.close}
-              </Button>
-              <span className="lg-hint">{wording.card.hint}</span>
-            </div>
-          </CardContent>
-        </Card>
       )}
     </div>
   )

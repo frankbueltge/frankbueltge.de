@@ -1,6 +1,6 @@
 # Living Globe — one globe over everything this house measures on the earth
 
-**Status:** G0 shipped 2026-09-03 (the ground, the crosswalk, the gates); G1 shipped 2026-09-03 (the room: layers, the day, the receipts). G2–G4 planned.
+**Status:** G0 shipped 2026-09-03 (the ground, the crosswalk, the gates); G1 shipped 2026-09-03 (the room: layers, the day, the receipts); G2 shipped 2026-09-03 (three guided stories, and a focus that moves camera, day and layers). G3–G4 planned.
 **Decision:** Frank's decision of 2026-09-03, wording private.
 **Surfaces:** `/globe` · `/werke/globe` · `/globe/layers.json` · `/globe/layers/<id>.json` ·
 `/globe/countries.json`. **Data:** `src/data/globe/`. **Code:** `src/lib/globe/`.
@@ -44,9 +44,22 @@ nobody looks at it, in which case the receipts were a private virtue.
 |---|---|---|
 | G0 | contract, registry, crosswalk, countries, seats, three adapters, the no-JS floor, feeds, the page, the method sheet, the audit | 2026-09-03 ✅ |
 | G1 | the island: layers on and off, the time scrubber over the whole archive, cards with receipts, the compact entrance | 2026-09-03 ✅ |
-| G2 | guided stories — scripted camera tours on the existing tour engine | |
+| G2 | guided stories — scripted camera tours on the existing tour engine | 2026-09-03 ✅ |
 | G3 | the remaining layers: the press, the invoked years, the removals, the hosts, the registers | |
 | G4 | method sheet complete, the projection room, and this document's kill reading filled in | |
+
+**G2, shipped 2026-09-03 — three of six stories, and the three that wait.** `FocusState` gained
+three optional fields (a camera, a day of the model, the set of layers to have on), the island
+honours them in that order and hands the pointer the last word, and three stories ride on them: **A
+night of the ghost fleet** (the longest silence of 2026-08-16, ending on that gap's own card), **The
+sky over the reader** (the fleet at this moment, over the house's fixed vantage in Berlin, reading no
+location of the visitor) and **The planet's minutes** (a season of nightly readings, from the first
+night on file to the newest, ending on the carbon-dioxide mark). The other three the plan named —
+**balance**, **consensus** and **redaction** — are **not written and deliberately not stubbed**:
+each is about a layer that arrives with G3, a story may only name a registered layer id, and
+`globe-stories.test.ts` asserts that those three ids are NOT in the registry today. So the promise
+is kept by a test rather than by a note, and the stories will be written when the layers they are
+about exist. Details in the decision-log row of 2026-09-03.
 
 **Kill reading — a dated reading, not a feeling.** On **2026-10-15** this document gets a section
 written from committed analytics snapshots only, answering three questions: did anyone open

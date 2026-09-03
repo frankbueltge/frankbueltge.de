@@ -21,7 +21,19 @@ import {
   type PanelKeyHandlers,
 } from '@/lib/dataviz/stepper'
 import type { GlobeManifest } from '@/lib/globe/feeds'
-import LivingGlobe, { emphasisFor, layersToFetch, newestDayIndex, parseInk, playAdvances, scrubberYields } from './LivingGlobe'
+import LivingGlobe, {
+  cameraKey,
+  cardStands,
+  dayIndexOf,
+  emphasisFor,
+  layersToFetch,
+  mayFly,
+  newestDayIndex,
+  parseInk,
+  playAdvances,
+  scrubberYields,
+  tourFigureId,
+} from './LivingGlobe'
 
 const read = (rel: string) => readFileSync(fileURLToPath(new URL(rel, import.meta.url)), 'utf8')
 
@@ -289,6 +301,85 @@ describe('the sky keeps the one declared no-clock exception', () => {
       .join('\n')
     expect(code).not.toContain('Date.now()')
     expect(code).not.toContain('new Date(')
+  })
+})
+
+describe('a guided story drives the room, and only the room (G2)', () => {
+  const island = read('./LivingGlobe.tsx')
+
+  it('answers to the room’s figure id, and to nothing at all under the hero', () => {
+    expect(tourFigureId(false, 'living-globe')).toBe('living-globe')
+    // the hero renders no controls and no card; a story that could fly it would move a figure the
+    // visitor has no way to take back, on a page that is not about the globe at all
+    expect(tourFigureId(true, 'living-globe')).toBe('')
+  })
+
+  it('registers no handle for an empty id — the guard is in the shared hook, not in a comment', () => {
+    expect(island).toContain('useFigureReady(tourFigureId(compact, figureId)')
+    const hook = read('../ecology/score-kit/useFigureReady.ts')
+    expect(hook).toContain('if (!figureId) return')
+  })
+
+  it('moves the day only to a day the archive holds — never to the nearest one', () => {
+    expect(dayIndexOf(DAYS, '2026-08-31')).toBe(1)
+    expect(dayIndexOf(DAYS, DAYS[DAYS.length - 1])).toBe(DAYS.length - 1)
+    // a day the model does not hold, a day between two it holds, and no day at all: all ignored
+    expect(dayIndexOf(DAYS, '2026-07-04')).toBe(-1)
+    expect(dayIndexOf(DAYS, '2026-08-30T12:00:00Z')).toBe(-1)
+    expect(dayIndexOf(DAYS, undefined)).toBe(-1)
+  })
+
+  it('yields the camera to the pointer for the scene the visitor took hold in, and takes it back at the next', () => {
+    // nothing held: the story may always fly
+    expect(mayFly(false, false)).toBe(true)
+    expect(mayFly(true, false)).toBe(true)
+    // the same scene re-applied while the reader is holding the globe: leave it alone
+    expect(mayFly(true, true)).toBe(false)
+    // the next scene asks for a different view, and that is a new command
+    expect(mayFly(false, true)).toBe(true)
+  })
+
+  it('tells one view from another without holding on to the tour’s own objects', () => {
+    // Tour.astro parses a fresh FocusState out of its JSON payload on every activation, so object
+    // identity says nothing about whether this is the same scene
+    expect(cameraKey({ longitude: 13.384, latitude: 52.5191, zoom: 2.2 })).toBe('13.384,52.5191,2.2')
+    expect(cameraKey({ longitude: 13.384, latitude: 52.5191 })).not.toBe(
+      cameraKey({ longitude: 13.384, latitude: 52.5191, zoom: 2.2 }),
+    )
+  })
+
+  it('applies a scene in the order a reader needs it: layers, day, camera, then the mark', () => {
+    // the mark exists ON a day, IN a layer — asking for it first would open nothing, and the
+    // records it names may still be one fetch away, which is what the pending ref is for
+    const focusBlock = island.slice(island.indexOf('useFigureReady(tourFigureId'), island.indexOf('// ── what the island says'))
+    const order = ['focus.layers', 'focus.time?.day', 'focus.camera', 'focus.select'].map((needle) =>
+      focusBlock.indexOf(needle),
+    )
+    expect(order.every((i) => i >= 0)).toBe(true)
+    expect([...order]).toEqual([...order].sort((a, b) => a - b))
+    expect(focusBlock).toContain('handleRef.current?.heldByPointer()')
+    expect(focusBlock).toContain('flyTo(focus.camera, !reduced)')
+  })
+
+  it('closes an open card rather than re-pointing it at another day’s record', () => {
+    // Found while walking the stories in the browser on 2026-09-03: a card holds a POSITION in a
+    // day's frame, so on the next day the same position is a different vessel — the card relabelled
+    // itself honestly (new day, new file) and said nothing about having changed mark. A card is one
+    // mark, of one layer, on one day.
+    const open = { layerId: 'ghost-fleet', day: '2026-09-01' }
+    expect(cardStands(open, '2026-09-01', ['sky', 'ghost-fleet'], true)).toBe(true)
+    expect(cardStands(open, '2026-09-02', ['sky', 'ghost-fleet'], true)).toBe(false)
+    expect(cardStands(open, '2026-09-01', ['sky'], true)).toBe(false)
+    expect(cardStands(open, '2026-09-01', ['sky', 'ghost-fleet'], false)).toBe(false)
+    expect(cardStands(null, '2026-09-01', ['ghost-fleet'], true)).toBe(false)
+  })
+
+  it('asks the drawing half whether the globe was taken over — never a second listener on the page', () => {
+    const deck = read('./globe-deck.ts')
+    expect(deck).toContain('heldByPointer()')
+    // the flag is cleared by the story's own camera command, so "held" means "held since this view"
+    expect(deck).toMatch(/flyTo\(camera, animate\) \{\n\s+interacted = true\n\s+held = false/)
+    expect(island).not.toContain("document.addEventListener('pointerdown'")
   })
 })
 

@@ -8,6 +8,13 @@
  *  arrives: the plate, the legend with every layer's provenance, and one table per layer holding
  *  every mark on it.
  *
+ *  G2 puts three guided stories beside it (2026-09-03). They are ordinary tours on the house's own
+ *  tour engine, and they drive the ONE island this page already mounts — a second globe would be a
+ *  second WebGL context and a second truth. The figure therefore stands in a sticky column while
+ *  the stories scroll past it: each scene asks for a set of layers, a night of the archive, a place
+ *  to stand and at most one selected mark, and nothing else. Without JavaScript the column is an
+ *  ordinary figure at the top of an ordinary page and every story is a complete article under it.
+ *
  *  Every number on the page is derived: the days come from the archive's filenames, the counts
  *  from the frames themselves, the as-of dates from the records. Not one is typed. Every mark in
  *  the plate and every row in the tables carries the file it came from and the locator inside it,
@@ -20,6 +27,8 @@ import SheetHead from '@/components/experiments/SheetHead.astro'
 import SheetFoot from '@/components/experiments/SheetFoot.astro'
 import Readout from '@/components/dataviz/Readout.astro'
 import TableFallback from '@/components/dataviz/TableFallback.astro'
+import Tour from '@/components/dataviz/Tour.astro'
+import { GLOBE_FIGURE, GLOBE_STORIES } from '@/lib/tour/globe-stories'
 import { GLOBE, placePhrase } from '@/config/globe-wording'
 import { buildLayeredFloorSvg } from '@/lib/globe/floor'
 import { LAYERS } from '@/lib/globe/layers'
@@ -60,7 +69,9 @@ const FRONT = 'ghost-fleet'
 const defaultLayers = [...LAYERS.map((l) => l.id).filter((id) => id !== FRONT), ...LAYERS.filter((l) => l.id === FRONT).map((l) => l.id)]
 
 const READOUT_ID = 'living-globe-readout'
-const FIGURE_ID = 'living-globe'
+/** the one figure id in this house's globe: exported by the stories module, so the room and the
+ *  scenes that drive it cannot drift into two figures that never find each other */
+const FIGURE_ID = GLOBE_FIGURE
 
 const tables = LAYERS.map((layer) => {
   const frame = moment.layers[layer.id]
@@ -87,23 +98,42 @@ const tables = LAYERS.map((layer) => {
       badges={GLOBE.sheet.badges}
     />
 
-    <figure class="mb-10">
-      <div class="globe-stage">
-        <LivingGlobe
-          client:idle
-          floorSvg={floor}
-          manifest={manifest}
-          wording={GLOBE.island}
-          readoutId={READOUT_ID}
-          figureId={FIGURE_ID}
-          defaultLayers={defaultLayers}
-        />
-        <Readout id={READOUT_ID} maxWidth="44ch" />
+    {/* The room: ONE figure, and the stories that drive it beside it. The figure comes first in
+        the document, so with no JavaScript (or no WebGL) the page reads as it always did — plate,
+        legend, tables — and the stories follow as three ordinary articles. With JavaScript the
+        figure holds its place in a sticky column while the scenes scroll past it. */}
+    <div class="globe-room">
+      <div class="globe-room-figure">
+        <figure>
+          <div class="globe-stage">
+            <LivingGlobe
+              client:idle
+              floorSvg={floor}
+              manifest={manifest}
+              wording={GLOBE.island}
+              readoutId={READOUT_ID}
+              figureId={FIGURE_ID}
+              defaultLayers={defaultLayers}
+            />
+            <Readout id={READOUT_ID} maxWidth="44ch" />
+          </div>
+          <figcaption class="mt-3 font-mono text-mono text-fg-faint">
+            {GLOBE.sheet.caption(model.newest, marksToday, LAYERS.length)}
+          </figcaption>
+        </figure>
       </div>
-      <figcaption class="mt-3 font-mono text-mono text-fg-faint">
-        {GLOBE.sheet.caption(model.newest, marksToday, LAYERS.length)}
-      </figcaption>
-    </figure>
+
+      <section class="globe-stories" aria-labelledby="globe-stories-heading">
+        <h2 class="kicker mb-3" id="globe-stories-heading">{GLOBE.stories.heading}</h2>
+        <p class="mb-3 text-body text-fg-muted">{GLOBE.stories.lead}</p>
+        <p class="mb-6 font-mono text-mono text-fg-faint">{GLOBE.stories.hint}</p>
+        {
+          /* No `figure` slot: each story DRIVES the island above rather than carrying a globe of
+             its own (see Tour.astro's `carriesFigure`). Three tours, one figure id, one globe. */
+          GLOBE_STORIES.map((story) => <Tour tour={story} />)
+        }
+      </section>
+    </div>
 
     <section class="mb-10">
       <h2 class="kicker mb-3">{GLOBE.sheet.recordHeading}</h2>

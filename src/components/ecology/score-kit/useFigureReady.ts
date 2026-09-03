@@ -13,11 +13,17 @@ import * as React from 'react'
 import { ensureFigureReadyListener } from '@/lib/tour/engine'
 import type { FocusState } from '@/lib/tour/types'
 
+/** An EMPTY id is "this island keeps no tour contract" and registers nothing (added 2026-09-03 for
+ *  the living globe's compact entrance: one island serves the room and the front door, and only the
+ *  room may be driven — a story must not be able to fly, re-day or open a card in a hero that
+ *  renders no controls). It is a guard here rather than a conditional hook at every call site,
+ *  because a hook cannot be called conditionally and `getFigure('')` is a lookup nothing does. */
 export function useFigureReady(figureId: string, apply: (focus: FocusState) => void): void {
   const applyRef = React.useRef(apply)
   applyRef.current = apply
 
   React.useEffect(() => {
+    if (!figureId) return
     ensureFigureReadyListener()
     window.dispatchEvent(
       new CustomEvent('dv:figure-ready', {
