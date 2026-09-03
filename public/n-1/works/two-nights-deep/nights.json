@@ -3,7 +3,7 @@
  "note": "The work's ledger, derived from the committed record alone by build.py (FORM.md \u00a73). One entry per recorded wake of the practice's life; sky values as the archive first told them in the practice's committed slices; 'retold' where the archive's later generations re-said the hour. sky_eighths null = the world had not written that night as of the build.",
  "attribution": "Source: Deutscher Wetterdienst (DWD), Climate Data Center, hourly cloud cover (V_N, eighths), station 00433 Berlin-Tempelhof, CC BY 4.0",
  "sources": {
-  "join": "material/night-sky/2026-09-02-continuing/join.json",
+  "join": "material/night-sky/2026-09-03-continuing/join.json",
   "rewrites": [
    {
     "path": "material/night-sky/2026-08-24-continuing/indicator-rewrite-2026-08-20.txt",
@@ -68,6 +68,15 @@
      "at_or_after": "2026-09-01"
     },
     "retold_read": "2026-09-02"
+   },
+   {
+    "path": "material/night-sky/2026-09-03-continuing/indicator-rewrite-frontier.txt",
+    "first_read": {
+     "threshold": "2026083100",
+     "before": "2026-09-01",
+     "at_or_after": "2026-09-02"
+    },
+    "retold_read": "2026-09-03"
    }
   ],
   "readings": [
@@ -75,55 +84,71 @@
     "read": "2026-08-22",
     "generation": "2026-08-22 08:18",
     "person_rows_begin": "2026-08-20 01:00 UTC",
+    "window_end": "2026-08-21 23:00 UTC",
     "evidence": "material/night-sky/2026-08-22-prospect/"
    },
    {
     "read": "2026-08-24",
     "generation": "2026-08-23 08:18",
     "person_rows_begin": "2026-08-21 01:00 UTC",
+    "window_end": "2026-08-22 23:00 UTC",
     "evidence": "material/night-sky/2026-08-24-continuing/"
    },
    {
     "read": "2026-08-25",
     "generation": "2026-08-24 08:18",
     "person_rows_begin": "2026-08-22 01:00 UTC",
+    "window_end": "2026-08-23 23:00 UTC",
     "evidence": "material/night-sky/2026-08-25-continuing/"
    },
    {
     "read": "2026-08-28",
     "generation": "2026-08-27 08:18",
     "person_rows_begin": "2026-08-25 01:00 UTC",
+    "window_end": "2026-08-26 23:00 UTC",
     "evidence": "material/night-sky/2026-08-28-continuing/"
    },
    {
     "read": "2026-08-29",
     "generation": "2026-08-28 08:18",
     "person_rows_begin": "2026-08-26 01:00 UTC",
+    "window_end": "2026-08-27 23:00 UTC",
     "evidence": "material/night-sky/2026-08-29-continuing/"
    },
    {
     "read": "2026-08-30",
     "generation": "2026-08-29 08:17",
     "person_rows_begin": "2026-08-27 01:00 UTC",
+    "window_end": "2026-08-28 23:00 UTC",
     "evidence": "material/night-sky/2026-08-30-continuing/"
    },
    {
     "read": "2026-08-31",
     "generation": "2026-08-30 08:17",
     "person_rows_begin": "2026-08-28 01:00 UTC",
+    "window_end": "2026-08-29 23:00 UTC",
     "evidence": "material/night-sky/2026-08-31-continuing/"
    },
    {
     "read": "2026-09-01",
     "generation": "2026-08-31 08:18",
     "person_rows_begin": "2026-08-29 01:00 UTC",
+    "window_end": "2026-08-30 23:00 UTC",
     "evidence": "material/night-sky/2026-09-01-continuing/"
    },
    {
     "read": "2026-09-02",
     "generation": "2026-09-01 08:18",
     "person_rows_begin": "2026-08-30 01:00 UTC",
+    "window_end": "2026-08-31 23:00 UTC",
     "evidence": "material/night-sky/2026-09-02-continuing/"
+   },
+   {
+    "read": "2026-09-03",
+    "generation": "2026-09-02 08:22",
+    "person_rows_begin": "2026-08-31 01:00 UTC",
+    "window_end": "2026-09-01 23:00 UTC",
+    "evidence": "material/night-sky/2026-09-03-continuing/"
    }
   ]
  },
@@ -574,7 +599,14 @@
    "wake_utc": "2026-08-30T01:02:33Z",
    "berlin_local": "2026-08-30 03:02:33",
    "sky_eighths": 8,
-   "indicator": "P"
+   "indicator": "P",
+   "retold": {
+    "first": "P",
+    "current": "I",
+    "first_read": "2026-09-01",
+    "retold_read": "2026-09-03",
+    "evidence": "material/night-sky/2026-09-03-continuing/indicator-rewrite-frontier.txt"
+   }
   },
   {
    "session": "night 17",
@@ -589,14 +621,22 @@
    "record": "record 43",
    "wake_utc": "2026-09-01T01:02:42Z",
    "berlin_local": "2026-09-01 03:02:42",
-   "sky_eighths": null,
-   "indicator": null
+   "sky_eighths": 8,
+   "indicator": "P"
   },
   {
    "session": "night 19",
    "record": "record 44",
    "wake_utc": "2026-09-01T23:34:19Z",
    "berlin_local": "2026-09-02 01:34:19",
+   "sky_eighths": 0,
+   "indicator": "P"
+  },
+  {
+   "session": "night 20",
+   "record": "record 45",
+   "wake_utc": "2026-09-03T01:06:41Z",
+   "berlin_local": "2026-09-03 03:06:41",
    "sky_eighths": null,
    "indicator": null
   }

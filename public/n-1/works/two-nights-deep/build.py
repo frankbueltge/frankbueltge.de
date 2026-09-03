@@ -46,6 +46,20 @@ Revisions:
   2026-08-29 rows first committed 2026-08-31, the 2026-08-30 00:00 row
   2026-09-01; night 15's wake hour among them); the ninth dated reading
   appended. No logic changed.
+- night 20 (record 45, 2026-09-03): SOURCES advanced to the tenth act's join
+  (night 20 enters as a wake; nights 18 AND 19's hours written in one reading —
+  8/8 and 0/8, the first single entering civil date to carry two wake hours;
+  night 13's reading had delivered two across two entering dates — leaving only
+  tonight unwritten) and its rewrite frontier (24 rows spanning two
+  first-committed dates — threshold form: 2026-08-30 rows first committed
+  2026-09-01, the 2026-08-31 00:00 row 2026-09-02; night 16's wake hour among
+  them); the tenth dated reading appended. One shape change, for the page's
+  readings figure (FORM.md §5, added tonight): every reading entry now carries
+  "window_end" — the last hour the archive's window held at that reading,
+  verbatim from the committed fetch transcripts ("last data row"; for the first
+  reading, the prospect slice's span end as stated in
+  material/night-sky/2026-08-24-continuing/fetch-and-check.txt). No committed
+  value changed; the field is new.
 """
 import json, os, re
 
@@ -54,7 +68,7 @@ ROOT = os.path.normpath(os.path.join(HERE, "..", ".."))
 
 SOURCES = {
     # the newest committed join: every recorded wake x the sky's record
-    "join": "material/night-sky/2026-09-02-continuing/join.json",
+    "join": "material/night-sky/2026-09-03-continuing/join.json",
     # every committed record of the archive re-saying an already-written hour,
     # oldest first. first_read gives the date the practice first committed each
     # hour's telling: a plain string, or a threshold dict
@@ -126,6 +140,15 @@ SOURCES = {
                            "at_or_after": "2026-09-01"},
             "retold_read": "2026-09-02",
         },
+        {
+            # 2026-08-30 01:00..23:00 first committed in the sixteenth-date
+            # slice (read 2026-09-01); the 2026-08-31 00:00 row in the
+            # seventeenth-date slice (read 2026-09-02)
+            "path": "material/night-sky/2026-09-03-continuing/indicator-rewrite-frontier.txt",
+            "first_read": {"threshold": "2026083100", "before": "2026-09-01",
+                           "at_or_after": "2026-09-02"},
+            "retold_read": "2026-09-03",
+        },
     ],
     # the practice's dated readings of the archive, with where the boundary
     # between instrument-told and person-told rows stood in each (the frontier;
@@ -133,31 +156,44 @@ SOURCES = {
     "readings": [
         {"read": "2026-08-22", "generation": "2026-08-22 08:18",
          "person_rows_begin": "2026-08-20 01:00 UTC",
+         "window_end": "2026-08-21 23:00 UTC",
          "evidence": "material/night-sky/2026-08-22-prospect/"},
         {"read": "2026-08-24", "generation": "2026-08-23 08:18",
          "person_rows_begin": "2026-08-21 01:00 UTC",
+         "window_end": "2026-08-22 23:00 UTC",
          "evidence": "material/night-sky/2026-08-24-continuing/"},
         {"read": "2026-08-25", "generation": "2026-08-24 08:18",
          "person_rows_begin": "2026-08-22 01:00 UTC",
+         "window_end": "2026-08-23 23:00 UTC",
          "evidence": "material/night-sky/2026-08-25-continuing/"},
         {"read": "2026-08-28", "generation": "2026-08-27 08:18",
          "person_rows_begin": "2026-08-25 01:00 UTC",
+         "window_end": "2026-08-26 23:00 UTC",
          "evidence": "material/night-sky/2026-08-28-continuing/"},
         {"read": "2026-08-29", "generation": "2026-08-28 08:18",
          "person_rows_begin": "2026-08-26 01:00 UTC",
+         "window_end": "2026-08-27 23:00 UTC",
          "evidence": "material/night-sky/2026-08-29-continuing/"},
         {"read": "2026-08-30", "generation": "2026-08-29 08:17",
          "person_rows_begin": "2026-08-27 01:00 UTC",
+         "window_end": "2026-08-28 23:00 UTC",
          "evidence": "material/night-sky/2026-08-30-continuing/"},
         {"read": "2026-08-31", "generation": "2026-08-30 08:17",
          "person_rows_begin": "2026-08-28 01:00 UTC",
+         "window_end": "2026-08-29 23:00 UTC",
          "evidence": "material/night-sky/2026-08-31-continuing/"},
         {"read": "2026-09-01", "generation": "2026-08-31 08:18",
          "person_rows_begin": "2026-08-29 01:00 UTC",
+         "window_end": "2026-08-30 23:00 UTC",
          "evidence": "material/night-sky/2026-09-01-continuing/"},
         {"read": "2026-09-02", "generation": "2026-09-01 08:18",
          "person_rows_begin": "2026-08-30 01:00 UTC",
+         "window_end": "2026-08-31 23:00 UTC",
          "evidence": "material/night-sky/2026-09-02-continuing/"},
+        {"read": "2026-09-03", "generation": "2026-09-02 08:22",
+         "person_rows_begin": "2026-08-31 01:00 UTC",
+         "window_end": "2026-09-01 23:00 UTC",
+         "evidence": "material/night-sky/2026-09-03-continuing/"},
     ],
 }
 

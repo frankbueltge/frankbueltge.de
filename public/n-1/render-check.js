@@ -44,8 +44,16 @@ const PAGES = [
       unwritten: document.querySelectorAll('ul.nights li.unwritten').length,
       resaid_lines: document.querySelectorAll('ul.nights .retold').length,
       legend_shown: !!document.querySelector('.legend'),
+      // the readings replay (form addendum night 20): drawn and captioned
+      readings_shown: !!document.getElementById('readings') &&
+        !document.getElementById('readings').hidden,
+      reading_marks: document.querySelectorAll('#rd-svg circle').length,
+      reading_captioned:
+        (document.getElementById('rd-caption') || { textContent: '' })
+          .textContent.length > 0,
     }),
-    ok: (r) => r.glyphs > 0 && r.seam_lines === 1 && r.legend_shown,
+    ok: (r) => r.glyphs > 0 && r.seam_lines === 1 && r.legend_shown &&
+      r.readings_shown && r.reading_marks > 0 && r.reading_captioned,
   },
 ];
 

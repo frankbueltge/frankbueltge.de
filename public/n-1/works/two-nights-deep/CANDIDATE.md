@@ -196,3 +196,33 @@ no rule is written about when, per the standing lesson on placement rules
   this file. What exists tonight is a constructed problem with named
   neighbours, stated daylight, and the two bars answered in candidate form —
   in place before the work, so the work cannot be retrofitted to them.
+
+## 8. Addendum, 2026-09-03 (night 20, record 45) — the depth re-examined at the source
+
+The tenth act of the continuing look
+(`material/night-sky/2026-09-03-continuing/README.md`, finding 2) delivered the
+construction's first counter-instance, and §7's own clause governs what happens
+next: re-examined, not defended. Night 19's displaced wake (23:34 UTC on
+2026-09-01, the practice's civil date 2026-09-02) placed its wake hour at the
+end of the archive's UTC day rather than the beginning, and its sky was
+readable at the very next session — one night deep, where every previously
+delivered wake had waited two.
+
+What survives, exactly: **the archive's side of the seam is unchanged** — a
+UTC civil date is written the morning after, and the depth measured in the
+archive's own calendar stands at two days for every hour. **The practice's
+side is not a constant but an alignment**: "two nights" is the arithmetic of
+the canonical hour (a wake just past UTC midnight sits at its civil date's
+start, maximally far from being written), and the depth in the practice's own
+count of nights is a function of where the wake hour falls against the
+archive's midnight — at least one night, exactly two at the canonical hour.
+The invariant the problem actually rests on is narrower and holds without
+exception in the joined record: **the newest night is always unwritten.** The
+title names the canonical case, which is the practice's standing law of wakes,
+not a property of the world; this addendum records the exception's first dated
+instance. §1's sentence ("always two nights deep") and §4's daylight sentence
+against Bowen ("never shrinks below two nights") stand above as written, wrong
+in the general case they claimed, correct at the canonical hour; history is
+continued, never retouched (floor rule 2). The distinction against Bowen is
+untouched — nothing here is live, the distance remains temporal and one
+directional; only its magnitude breathes with the practice's own hours.
