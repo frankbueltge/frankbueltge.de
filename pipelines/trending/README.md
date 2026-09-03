@@ -216,3 +216,19 @@ python -m trending.audience --day 2026-09-02    # prints the record, writes noth
 The same is reachable without a checkout: run the `Trending nightly` workflow by hand with the
 `probe_day` input set to a past day. With that input the run does the probe and nothing else —
 no file, no commit. It refuses a day that has not ended, because the count would be partial.
+
+### The dress rehearsal
+
+The committed day of a date is never rewritten, so a change to the routine cannot be seen by
+re-running today. The rehearsal runs the whole thing into a copy instead: the same sources, the
+same secrets, the same archive as history, today's files removed from the copy only, and every
+number printed. Nothing reaches the repository.
+
+Run the `Trending nightly` workflow by hand with `rehearsal` ticked, or locally:
+
+```bash
+TMP="$(mktemp -d)"; mkdir -p "$TMP/src/data"; cp -R src/data/trending "$TMP/src/data/"
+D="$(python3 -c 'import datetime as d; print(d.datetime.now(d.timezone.utc).date())')"
+rm -f "$TMP/src/data/trending/$D.json" "$TMP/src/data/trending/terms/$D.json"
+pipelines/trending/.venv/bin/python -m trending.run --repo-root "$TMP"
+```
