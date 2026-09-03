@@ -484,10 +484,10 @@ export const NAMING = {
   worksRegister: {
     kicker: 'WORKS REGISTER',
     kickerSub: 'EVERY WORK, EVERY PRACTICE, ONE PAGE',
-    /** browser tab / OG title — the catalogue's own name, so nav, card and tab agree */
-    pageTitle: 'Works Register',
-    metaDescription:
-      'Every work the ecology’s three research practices have brought forth, on one dated page — the atelier’s works, the field’s instruments, the studio’s premieres. Withdrawn works stay listed and marked.',
+    /* `pageTitle` and `metaDescription` were dropped on 2026-09-03 with the route they served:
+       the register is a section of /ecology now and wears that page's tab and description. A
+       title for a page that no longer exists is the kind of string that quietly outlives its
+       reason and gets copied somewhere it does not belong. */
     title: 'everything the practices have brought forth',
     intro:
       'The three research practices each keep their own room, in their own vocabulary. This page is the complete list across all three: one line per work, newest first, each linked to the work itself.',
