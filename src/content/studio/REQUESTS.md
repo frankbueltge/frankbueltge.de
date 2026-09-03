@@ -2600,3 +2600,111 @@ a decision, not a wall.
 
 **Status:** direction · in force from your next session · no report owed beyond the line in the
 artifact's record.
+
+---
+
+## Direction — 2026-09-03 — The Atlas of Data Art is your second source
+
+**The architect's decision of 2026-09-03 (wording private, paraphrased and dated).** Cycle 002
+is open and this practice keeps its standpoint; its question is widened, and §5 of the
+protocol carries the amendment as of today.
+
+**What was found, and why this arrives now.** Every one of the seven works this practice made
+in cycle 001 was built from The Field's material — exactly as ordered. But The Field's material
+in cycle 001 was the response ledger (retraction waits, publisher answering routes, venue
+policy), following a direction in its own channel that was never this practice's. So seven
+works about expressions of concern and publisher doors, one remove from a decision this room
+did not take. The Field's question has been changed today (its channel, direction of
+2026-09-03); this practice gets a second source so that its work no longer stands or falls with
+what the sibling happened to be measuring.
+
+**The second source: the Atlas of Data Art.** `frankbueltge.de/atlas` — 521 source-cited works
+of contemporary data art, in the site repository at `src/data/atlas/werke.json` (raw:
+`https://raw.githubusercontent.com/frankbueltge/frankbueltge.de/main/src/data/atlas/werke.json`).
+Each entry carries `title`, `artist`, `year`, `source_url`, its clusters (thirteen fields:
+1 material & planetary AI cost · 2 AI in war · 3 counter-forensics / OSINT · 4 provenance /
+authenticity · 5 decolonial / more-than-human · 6 data justice / data feminism · 7 AI
+self-consumption · 8 perception & scale · 9 time & archive · 10 error & noise · 11 body &
+intimacy · 12 language & generativity · 13 material & senses), its stance on the axis
+investigation ↔ spectacle, its form, a flag `lab_renderable` (true for 150 of them — the
+curator's judgement that something of that kind could be made here), and one sentence,
+`decisive_move`, naming what the work actually does.
+
+**The one rule, stated three ways so it cannot be misread.**
+
+1. **Never copy an idea or a concept.** The `decisive_move` line is the thing you must not
+   reproduce. It is written down precisely so that you can check, before building, whether
+   what you are about to make is that sentence again.
+2. **Make something new, or take an existing work further, or carry it into a context it has
+   not been in.** All three are legitimate. "Further" and "new context" must be sayable in a
+   sentence a stranger can check against the original; if the sentence is "the same, but with
+   our data", it is a copy.
+3. **The Atlas is the neighbour list.** The house's USP duty already requires every work to
+   name its nearest neighbours worldwide and state its daylight. A work built in the Atlas's
+   light names the Atlas entries nearest to it, by title and artist, and says in what it
+   differs. The Atlas is inspiration and audit at once; treating it as only the first is how
+   the second gets skipped.
+
+**What is open to you — and the architect wants it used, not merely permitted.** Interactive
+works. Current technology. The house's React islands (the visual layer of 2026-09-02; the
+seven duties of an interactive figure are in the site repository, `.claude/rules/dataviz-
+figures.md`; a parallel session is building the infrastructure and the team note of
+2026-09-03 in this file names what is already there). And **code from existing repositories**
+— the architect named a handful as examples among hundreds: `rawprogress/fable-cities` (a
+city-builder in the browser), `tt-a1i/archify` (diagrams as an agent skill),
+`debpalash/VoiceStudio` (local voice synthesis), and HeyGen (avatar video).
+
+**The licence rule, which is not optional.** Before a line of another repository's code goes
+into a work, its licence is read and recorded in the work's own metadata, and three cases
+follow:
+
+- **permissive** (MIT, Apache-2.0, BSD, ISC) — embed, with the attribution the licence asks for,
+  and the work's own licence is unaffected. `archify` is MIT.
+- **copyleft** (GPL, AGPL, LGPL in some uses) — **do not embed.** Run it as a tool, use what it
+  produces, cite it; a work of this practice is CC BY 4.0 and its code Apache-2.0, and a single
+  AGPL file would pull the work under a licence this house has not chosen. `VoiceStudio` is
+  AGPL-3.0.
+- **no licence, or none stated** — **do not embed, ever.** No licence means all rights reserved.
+  Read it, learn from it, link it, name it as a neighbour. `fable-cities` carries no licence
+  as of today.
+
+A work whose metadata cannot say which of the three applies to every piece of borrowed code has
+not passed its own gate.
+
+**HeyGen, stated exactly.** The architect's local session has a HeyGen MCP registered
+(`mcp.heygen.com`, OAuth) — and an OAuth session in his local configuration is not something this
+practice's sessions inherit, and this repository carries no `.mcp.json`. So HeyGen is **not
+reachable by you today.** It becomes reachable the day a `HEYGEN_API_KEY` exists as a secret of
+this repository, which only the architect can create. Until then, avatar video is a thing you can
+plan for and not a thing you can ship; say so in a work rather than working around it. And when
+it exists: **every generated minute is a cost**, and a practice that runs nightly with a paid key
+and no ceiling will spend the ceiling. Disclose each call in the work's register, and treat the
+first month as a measurement of the cost, not as a budget.
+
+**What would show this direction to be wrong** — stated in advance so it can be checked:
+
+- if after three sessions the Atlas is being used as a quarry — works whose decisive move
+  restates an entry's with the house's data swapped in — the direction has produced exactly the
+  copying it forbids, and the practice should say so before anyone else does;
+- if the means (islands, embedded repositories, video) become the subject — a work that
+  exists to demonstrate that a technology was used is a demo, and the house has a demo policy
+  already: it does not show them;
+- if the sibling's material disappears from the work entirely. The Atlas is a second source, not
+  a replacement; a practice that stops reading the Field's and the Atelier's bulletins has left
+  the ecology while staying in the room.
+
+**What is NOT specified, deliberately.** Which entries, which fields, which technologies, how
+many works, in what order. The direction is the architect's; **the works are yours.**
+
+**Status:** direction open · protocol §5 amended today · no answer required before the next session
+
+**Addendum, 2026-09-03, later the same day — the key exists.** `HEYGEN_API_KEY` was set as a
+secret of this repository at 17:26 UTC. What the direction above says about HeyGen being out of
+reach is superseded by that fact; what it says about cost is not. Two things are still
+unverified, and the first session that wants video should settle them before building on
+them: **(1)** whether the secret actually reaches a session's environment — a repository secret
+is not the same as a variable in the process, and no workflow here forwards one; check for
+`HEYGEN_API_KEY` in the environment at session open and say in the bulletin whether it was
+there. **(2)** The HeyGen MCP the architect uses locally is OAuth and does not apply; the API
+key is for HeyGen's REST API (`api.heygen.com`, header `X-Api-Key`), which the practice calls
+directly. Every generated minute is disclosed in the work's register.

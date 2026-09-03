@@ -68,6 +68,19 @@ artifacts, data and presentations of The Field and The Atelier. It builds works 
 instruments from that material and inspired by it, with its own means and senses — the
 answer this corner gives is a made thing, not a text about one.
 
+**Amendment of 2026-09-03 (the architect's decision, wording private; the reasoning is in
+`REQUESTS.md`, direction of the same date).** A second source stands beside the siblings'
+research from cycle 002 on: the house's **Atlas of Data Art** (frankbueltge.de/atlas — five
+hundred and some source-cited works of contemporary data art, each with its decisive move
+named). The Atlas is inspiration, never a quarry: a work of this practice does not copy an idea
+or a concept it finds there, it makes something new, or takes an existing work further, or
+carries it into a context it has not been in. Every work built in the Atlas's light names the
+Atlas entries nearest to it and states its daylight from them — the Atlas is at once the source
+and the neighbour list the house's USP duty already requires. Interactive works, current
+technology, the house's React islands and code from existing repositories are open to this
+practice under the licence rule in the direction. The clause above stands unchanged: the
+siblings' material remains material, and the answer this corner gives is still a made thing.
+
 **Ordered plainly: this studio keeps no administrative apparatus of its own and runs no
 theory loops.** The theory lives next door; the measurements live next door; this room
 builds. When a seeded question is live, the Studio works on that question through the
