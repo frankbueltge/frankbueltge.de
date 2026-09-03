@@ -340,6 +340,221 @@
   scroll-margin-top: 80px;
 }
 
+/* ═══ G2: the guided stories ══════════════════════════════════════════════════════════════════
+ *
+ * Three tours (src/lib/tour/globe-stories.ts) drive the ONE island above them, so the room has one
+ * globe and one WebGL context — and the figure has to stay in sight while the prose about it
+ * scrolls. Hence a two-column room on a wide viewport with the figure column sticky, and a single
+ * ordinary column below that width, where the figure is simply the first thing on the page. No
+ * colour of its own: everything here is a frame token, and the only identity ink on this page is
+ * still the globe's own (bottom of this file).
+ *
+ * Nothing here is load-bearing for reading the stories. Without JavaScript each one renders as a
+ * complete article — heading, standfirst, every scene's prose, every quote with its file and
+ * locator, and the tour's own source line — and the plate, the legend and the tables stand
+ * unchanged above and below them.
+ */
+
+.globe-room {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 28px;
+  margin-bottom: 40px;
+}
+
+@media (min-width: 62rem) {
+  .globe-room {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 32px;
+  }
+  /* The figure holds its place while the scenes scroll past it. It is taller than most viewports
+     (globe, day axis, three layers with their provenance, and a card when one is open), and a
+     sticky box taller than the viewport hides its own foot: whatever sits below the fold can never
+     be scrolled to, because the box itself no longer moves. So the column scrolls INSIDE its own
+     height — which is also what carries a card into view when a story's closing scene opens one,
+     since focusing it scrolls its nearest scrollable ancestor and not the page under the reader.
+     The readout still clamps to the figure's own box (.globe-stage), never to this one. */
+  .globe-room-figure {
+    position: sticky;
+    top: 1rem;
+    align-self: start;
+    max-height: calc(100vh - 2rem);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+  }
+  /* a half-width column does not need the full plate height; the globe stays the biggest thing in
+     the column and the controls under it stay reachable without scrolling the sticky box */
+  .globe-room .lg-stage {
+    height: clamp(300px, 30vw, 460px);
+  }
+}
+
+.globe-stories {
+  min-width: 0;
+}
+
+.globe-stories .dv-tour {
+  display: block;
+  padding-top: 20px;
+  border-top: 1px solid var(--color-line);
+  margin-top: 20px;
+}
+.globe-stories .dv-tour:first-of-type {
+  padding-top: 0;
+  border-top: 0;
+  margin-top: 0;
+}
+.globe-stories .dv-tour:focus-visible {
+  outline: 2px solid var(--color-fg-faint);
+  outline-offset: 6px;
+}
+
+.globe-stories .dv-tour-title {
+  font-size: var(--text-h3);
+  font-weight: 600;
+  color: var(--color-fg);
+}
+.globe-stories .dv-tour-standfirst {
+  margin-top: 6px;
+  font-size: var(--text-small);
+  line-height: 1.65;
+  color: var(--color-fg-muted);
+}
+
+.globe-stories .dv-tour-scenes {
+  display: grid;
+  gap: 0;
+}
+
+.globe-stories .dv-scene {
+  padding: 18px 0 18px 14px;
+  border-left: 2px solid transparent;
+  scroll-margin-top: 1.5rem;
+}
+/* The one cue the scroll mode needs: which scene the globe is currently answering. A hairline that
+   appears, not prose that fades — dimming the text of every other scene would take contrast away
+   from the thing a reader is about to read next. */
+.globe-stories .dv-scene[aria-current='step'] {
+  border-left-color: var(--color-line-lift);
+}
+
+.globe-stories .dv-scene-kicker {
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-xs);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-fg-faint);
+}
+.globe-stories .dv-scene[aria-current='step'] .dv-scene-kicker {
+  color: var(--color-fg-muted);
+}
+.globe-stories .dv-scene-heading {
+  margin-top: 4px;
+  font-size: var(--text-body);
+  font-weight: 600;
+  color: var(--color-fg);
+}
+.globe-stories .dv-scene-lead {
+  margin-top: 6px;
+  font-size: var(--text-small);
+  line-height: 1.7;
+  color: var(--color-fg-muted);
+}
+
+/* A quote is a fragment of a committed file, and it is set as one: mono, on a rule, with the file
+   and the position inside it under it. Most of these are single lines out of a nightly JSON — a
+   proportional face would dress them up as prose somebody wrote. */
+.globe-stories .dv-scene-quote {
+  margin: 10px 0 0;
+  padding: 8px 10px;
+  border-left: 1px solid var(--color-line-lift);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  background: var(--color-panel);
+}
+.globe-stories .dv-scene-quote p {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--text-mono);
+  line-height: 1.6;
+  color: var(--color-fg);
+  overflow-wrap: anywhere;
+}
+.globe-stories .dv-scene-quote footer {
+  margin-top: 5px;
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-xs);
+  color: var(--color-fg-faint);
+  overflow-wrap: anywhere;
+}
+.globe-stories .dv-scene-quote cite {
+  font-style: normal;
+}
+
+.globe-stories .dv-scene-still:empty {
+  display: none;
+}
+
+/* The explicit mode: real buttons and a jump list, revealed by the tour's own script under reduced
+   motion or a coarse pointer on a short screen. Nothing about it is a globe control — it steps the
+   prose, and the globe follows the step. */
+.globe-stories .dv-tour-steps {
+  flex-wrap: wrap;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--color-line);
+}
+.globe-stories .dv-tour-steps button,
+.globe-stories .dv-tour-jump a {
+  padding: 3px 9px;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-sm);
+  background: var(--color-panel);
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-sm);
+  color: var(--color-fg-muted);
+  text-decoration: none;
+  transition: border-color 200ms var(--ease-frame), color 200ms var(--ease-frame);
+}
+.globe-stories .dv-tour-steps button:hover,
+.globe-stories .dv-tour-jump a:hover {
+  border-color: var(--color-line-lift);
+  color: var(--color-fg);
+}
+.globe-stories .dv-tour-jump a[aria-current='true'] {
+  border-color: var(--color-line-lift);
+  color: var(--color-fg);
+}
+
+.globe-stories .dv-prov {
+  margin-top: 12px;
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-xs);
+  line-height: 1.6;
+  color: var(--color-fg-faint);
+  overflow-wrap: anywhere;
+}
+
+/* Scroll driving needs air between the scenes — a band of viewport per scene, so the observer's
+   mid-viewport line lands on one at a time. The explicit mode needs the opposite: it is read as a
+   list, and a screen of white between two steps would be a scroll where a click was offered. */
+@media (min-width: 62rem) {
+  .globe-stories .dv-tour[data-dv-tour-mode='scroll'] .dv-scene {
+    min-height: 62vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .globe-stories .dv-scene,
+  .globe-stories .dv-tour-steps button,
+  .globe-stories .dv-tour-jump a {
+    transition: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .lg-floor {
     transition: none;
