@@ -315,6 +315,23 @@ for (const f of [...walk(join(ROOT, 'src/styles'), ['.css']), ...voiceFiles.filt
   })
 }
 
+// ——— 9. Living Globe: no aggregation layers, no geo layers ——————————————————
+// deck.gl's aggregation layers do not work on the globe view at all, and the geo layers would
+// roughly double globe-deck.'s chunk for a tile source this site does not have and could not fetch
+// under `connect-src 'self'` (docs/design/2026-09-03-living-globe.md, scripts/budgets.json). Bound
+// as a vitest suite already (src/components/pages/globe-deck.test.ts, "the deck.gl boundary"); the
+// same rule stands here as a static gate that runs without a test runner.
+for (const f of voiceFiles) {
+  const rel = relative(ROOT, f)
+  const lines = readFileSync(f, 'utf8').split('\n')
+  lines.forEach((line, i) => {
+    if (line.trim().startsWith('//') || line.trim().startsWith('*')) return
+    if (/@deck\.gl\/(geo-layers|aggregation-layers)/.test(line)) {
+      findings.push(`${rel}:${i + 1} — imports @deck.gl/geo-layers or @deck.gl/aggregation-layers, banned on the living globe (see globe-deck.ts's own header)`)
+    }
+  })
+}
+
 // ——— 4. Spiegel-Frische (Netz, nur im Nightly) ———————————————————————————————
 if (process.env.DRIFT_NETWORK === '1') {
   const MIRRORS = [
