@@ -12,6 +12,7 @@
 import { readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { describe, expect, it } from 'vitest'
+import { GLOBE } from '@/config/globe-wording'
 import { NAMING } from '@/config/naming'
 
 const read = (rel: string) => readFileSync(fileURLToPath(new URL(rel, import.meta.url)), 'utf8')
@@ -77,25 +78,34 @@ describe('the front page mounts the ops room', () => {
     expect(indexPage).toContain('FrontDoor.astro stays in the repo')
   })
 
-  // The globe under the hero (visual layer, Phase 3b, 2026-09-02; the one island since G1 of the
-  // living globe, 2026-09-03): the ops room mounts its frame, and the frame mounts the SAME island
-  // the room at /globe mounts — with `compact`, which turns the controls off and nothing else.
-  // Both hops are by path, so mounted.test.ts sees the island too.
-  it('mounts the living globe under the hero, frame and island, in its compact form', () => {
+  // The panel of the sky and the water still stands under the hero, and it is a PLATE. It carried
+  // the living globe's island from 2026-09-02 until the owner's decision of 2026-09-03 (wording
+  // private: the front door needs no turning globe), which is why this assertion is the way round
+  // it is. The globe is not gone from the house — it is at /globe, where it is the work — and this
+  // test exists so nobody quietly mounts it here again and hands a phone three hundred kilobytes
+  // for a decoration.
+  it('mounts the plate under the hero, and no globe', () => {
     const opsRoom = read('../../components/pages/OpsRoom.astro')
     const figure = read('../../components/pages/EntranceGlobeFigure.astro')
     expect(opsRoom).toContain("from './EntranceGlobeFigure.astro'")
     expect(opsRoom).toContain('<EntranceGlobeFigure />')
-    expect(figure).toContain("from './LivingGlobe'")
-    expect(figure).toMatch(/<LivingGlobe\s+client:idle\s+compact/)
+    expect(figure).not.toContain("from './LivingGlobe'")
+    expect(figure).not.toContain('<LivingGlobe')
+    expect(figure).toContain('buildGlobeFloorSvg')
+    expect(figure).toContain('set:html={floor}')
   })
 
-  it('gives the hero the two layers it has always drawn, the ghost fleet in front', () => {
-    // The last id in `defaultLayers` is the layer in front (LivingGlobe.tsx's emphasis rule), and
-    // the ghost fleet is the one this house records a colour for — so the hero keeps the division
-    // it has carried since the globe arrived: the gaps in the Field's hue, the fleet behind them.
+  it('sends the reader to the globe rather than pretending to be one', () => {
     const figure = read('../../components/pages/EntranceGlobeFigure.astro')
-    expect(figure).toContain("const DEFAULT_LAYERS = ['sky', 'ghost-fleet']")
+    expect(figure).toContain('GLOBE.entrance.more.href')
+    expect(GLOBE.entrance.more.href).toBe('/globe')
+  })
+
+  it('says the plate stands where the elements were taken, not at the reader’s present', () => {
+    // the claim followed the instrument: the propagated present lives at /globe now, and a plate
+    // that cannot move must not say "your now"
+    expect(NAMING.opsRoom.sky.footLeft).not.toContain('YOUR NOW')
+    expect(NAMING.opsRoom.sky.footLeft).toContain('WHERE THE ELEMENTS WERE TAKEN')
   })
 })
 

@@ -157,6 +157,20 @@ export function mountsOnSight(width: number): boolean {
   return width >= NARROW_PX
 }
 
+/** Which layers still owe their WHOLE archive. Both surfaces open on the newest day and fetch
+ *  only that day's records; the archive behind it is worth its kilobytes exactly when a visitor
+ *  leaves the newest day — by dragging the scrubber, by pressing play, or by a story that names an
+ *  older day. Pure, so the rule is a test: nothing upgrades while the newest day is on screen, and
+ *  a layer upgrades once. */
+export function layersToUpgrade(
+  upgraded: ReadonlySet<string>,
+  active: readonly string[],
+  onNewestDay: boolean,
+): string[] {
+  if (onNewestDay) return []
+  return active.filter((id) => !upgraded.has(id))
+}
+
 /** Where the day axis starts: at the newest day the archive holds, which is the last of them. */
 export function newestDayIndex(days: readonly string[]): number {
   return Math.max(days.length - 1, 0)
@@ -288,6 +302,7 @@ export default function LivingGlobe({
   const handleRef = React.useRef<GlobeHandle | null>(null)
   const startedRef = React.useRef(false)
   const askedRef = React.useRef<Set<string>>(new Set())
+  const wholeRef = React.useRef<Set<string>>(new Set())
 
   const [phase, setPhase] = React.useState<Phase>('floor')
   const [ready, setReady] = React.useState(false)
@@ -324,7 +339,8 @@ export default function LivingGlobe({
     for (const id of wanted) {
       const entry = byId.get(id)
       if (!entry) continue
-      fetch(entry.href)
+      // stage one: the day on screen, which is the newest one both surfaces open on
+      fetch(entry.newestHref)
         .then((res) => (res.ok ? (res.json() as Promise<LayerFeed>) : Promise.reject(new Error(String(res.status)))))
         .then((feed) => {
           if (cancelled) return
@@ -339,6 +355,34 @@ export default function LivingGlobe({
       cancelled = true
     }
   }, [active, armed, byId, gated])
+
+  // ── stage two: the archive behind the newest day, the moment a visitor leaves it ───────────
+  React.useEffect(() => {
+    if (gated !== false && !armed) return
+    const onNewestDay = dayIndex === newestDayIndex(manifest.days)
+    const wanted = layersToUpgrade(wholeRef.current, active, onNewestDay)
+    if (wanted.length === 0) return
+    for (const id of wanted) wholeRef.current.add(id)
+    setFetches((was) => ({ ...was, ...Object.fromEntries(wanted.map((id) => [id, 'loading' as FetchState])) }))
+    let cancelled = false
+    for (const id of wanted) {
+      const entry = byId.get(id)
+      if (!entry) continue
+      fetch(entry.href)
+        .then((res) => (res.ok ? (res.json() as Promise<LayerFeed>) : Promise.reject(new Error(String(res.status)))))
+        .then((feed) => {
+          if (cancelled) return
+          setFeeds((was) => ({ ...was, [id]: feed }))
+          setFetches((was) => ({ ...was, [id]: 'ready' }))
+        })
+        .catch(() => {
+          if (!cancelled) setFetches((was) => ({ ...was, [id]: 'failed' }))
+        })
+    }
+    return () => {
+      cancelled = true
+    }
+  }, [active, armed, byId, dayIndex, gated, manifest.days])
 
   /** One layer's frame for the day on screen, out of what has been fetched. */
   const frameOf = React.useCallback((id: string): LayerFrame | null => frameForDay(feeds[id], day), [feeds, day])

@@ -57,13 +57,13 @@ describe('the instruments are on a page', () => {
     // the knowledge graph, explorable (2026-09-02) — the one surface on which every record the
     // house keeps about itself stands with its receipts; without it the graph is a file
     ['GraphExplorer', 'the knowledge graph of the house — every node with the file and quote each edge was read from'],
-    // the living globe (2026-09-03, G1) — one island for both surfaces: the room at /globe and,
-    // with `compact`, the hero's own globe. It replaced EntranceGlobe.tsx, so if this name ever
-    // stops being imported, BOTH the room and the front door quietly fall back to a plate
+    // the living globe (2026-09-03, G1) — the room's island at /globe. It stood under the hero in
+    // a compact form too until the owner took the globe off the front door (2026-09-03, wording
+    // private); if this name ever stops being imported, the room quietly falls back to a plate
     // the experiments gallery (2026-09-02) — the shelf's cards and, with them, every miniature
     // drawn from an experiment's own committed record; without it /experiments is a list again
     ['ExperimentGallery', 'the /experiments gallery — every experiment\u2019s card and the miniature of its own instrument'],
-    ['LivingGlobe', 'the one globe of this house — every layer of the archive on one earth, in the room at /globe and in its compact form under the hero'],
+    ['LivingGlobe', 'the one globe of this house — every layer of the archive on one earth, in the room at /globe'],
   ]
 
   it.each(INSTRUMENTS)('%s is imported by at least one page', (component, what) => {

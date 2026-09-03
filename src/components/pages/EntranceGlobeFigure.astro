@@ -1,19 +1,19 @@
 ---
-// src/components/pages/EntranceGlobeFigure.astro — the frame around the entrance globe: the strips
-// that state what is drawn and when, the island, the readout shell it fills, and an aside that
-// carries the longest gaps as a list — so the panel says something on a phone with no WebGL and to
-// a reader with no pointer.
+// src/components/pages/EntranceGlobeFigure.astro — the entrance's plate of the sky and the water:
+// the strips that state what is drawn and when, the drawing itself, and an aside that carries the
+// longest gaps as a list.
 //
-// Since G1 of the living globe (2026-09-03) this frame mounts the SAME island the room at /globe
-// mounts, with `compact`: no controls, no card, the newest day the archive holds, the globe
-// turning until it is touched. There is one globe in this house, and the front door and the room
-// cannot drift into two.
+// THE FRONT DOOR CARRIES NO GLOBE (the owner's decision of 2026-09-03, paraphrased, wording
+// private: the turning globe need not stand on the entrance). From G1 of the living globe until
+// that decision this frame mounted the room's own island in a compact form; it now draws the
+// build-time plate and nothing else, and the globe lives where it is the work — at /globe, which
+// the aside links to. What the front door loses is a decoration; what it gains is that a phone
+// pays nothing for it: no drawing half, no archive, no land topology, no frame loop.
 //
 // Built from committed files and nothing else: the earth-observation fleet's elements
 // (src/data/ueberflug), the ghost fleet's AIS gaps (src/data/ghost-fleet) and Natural Earth land
-// (src/data/globe). The plate the island stands on is drawn HERE, at build time, at the elements'
-// own time; the island fetches the two layers' committed feeds and draws the same records on a
-// sphere. Every count in the strips is derived by src/lib/globe/model.ts; no number is typed.
+// (src/data/globe). The plate stands at the elements' own time, which is what the foot strip says.
+// Every count in the strips is derived by src/lib/globe/model.ts; no number is typed.
 import { getRelativeLocaleUrl } from 'astro:i18n'
 import type { Locale } from '@/lib/site'
 import type { Topology } from 'topojson-specification'
@@ -27,11 +27,6 @@ import { GLOBE } from '@/config/globe-wording'
 import { asOfDay, buildGlobeModel } from '@/lib/globe/model'
 import { positionsAt, satrecsOf } from '@/lib/globe/propagate'
 import { buildGlobeFloorSvg } from '@/lib/globe/floor'
-import { buildManifest } from '@/lib/globe/feeds'
-import Readout from '@/components/dataviz/Readout.astro'
-import '@/styles/living-globe.css'
-
-import LivingGlobe from './LivingGlobe'
 
 const locale = (Astro.currentLocale ?? 'en') as Locale
 const url = (href: string) => getRelativeLocaleUrl(locale, href)
@@ -56,14 +51,9 @@ const floor = buildGlobeFloorSvg({
   },
 })
 
-// The entrance draws two of the registered layers and the ghost fleet stands in front — the same
-// division of colour the hero has carried since the globe arrived: the vessels' gaps in the
-// Field's own hue, the fleet overhead in mono ink behind them.
-const manifest = buildManifest()
-const DEFAULT_LAYERS = ['sky', 'ghost-fleet']
-
+// The plate keeps the division of colour this panel has always carried: the vessels' gaps in the
+// Field's own hue, the fleet overhead in mono ink behind them. It is inked by ops-room.css.
 const longest = model.arcs.slice(0, 5)
-const READOUT_ID = 'sky-readout'
 ---
 
 <figure class="ops-panel ops-instrument ops-sky" data-ops-sky>
@@ -73,19 +63,7 @@ const READOUT_ID = 'sky-readout'
   </div>
 
   <div class="ops-sky-body">
-    <div class="ops-sky-stage">
-      <LivingGlobe
-        client:idle
-        compact
-        floorSvg={floor}
-        manifest={manifest}
-        wording={GLOBE.island}
-        readoutId={READOUT_ID}
-        figureId="entrance-globe"
-        defaultLayers={DEFAULT_LAYERS}
-      />
-      <Readout id={READOUT_ID} maxWidth="40ch" />
-    </div>
+    <div class="ops-sky-stage" set:html={floor} />
 
     <aside class="ops-sky-aside" aria-label={SKY.aside.kicker}>
       <p class="ops-sky-kicker">{SKY.aside.kicker}</p>

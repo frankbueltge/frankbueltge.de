@@ -30,6 +30,7 @@ import LivingGlobe, {
   dayIndexOf,
   emphasisFor,
   layersToFetch,
+  layersToUpgrade,
   mayFly,
   mountsOnSight,
   NARROW_PX,
@@ -60,7 +61,9 @@ const MANIFEST: GlobeManifest = {
       counts: { '2026-09-02': 341 },
       total: 341,
       bytes: 1024,
+      newestBytes: 256,
       href: '/globe/layers/sky.json',
+      newestHref: '/globe/layers/sky.newest.json',
     },
     {
       id: 'ghost-fleet',
@@ -73,7 +76,9 @@ const MANIFEST: GlobeManifest = {
       counts: { '2026-09-02': 12 },
       total: 828,
       bytes: 2048,
+      newestBytes: 128,
       href: '/globe/layers/ghost-fleet.json',
+      newestHref: '/globe/layers/ghost-fleet.newest.json',
     },
   ],
 }
@@ -492,7 +497,7 @@ describe('who pays for the globe, and when', () => {
     // both effects carry the same early return, and the fetch effect watches the gate
     // both effects carry the same early return, and neither runs before the width is measured:
     // `gated === null` is the unmeasured state the server render stands in
-    expect(source.match(/if \(gated !== false && !armed\) return/g)?.length).toBe(2)
+    expect(source.match(/if \(gated !== false && !armed\) return/g)?.length).toBe(3)
     expect(source).toContain('}, [active, armed, byId, gated])')
     expect(source).toContain('React.useState<boolean | null>(null)')
   })
@@ -530,5 +535,32 @@ describe('a static layer’s legend line names no count of days (G3, third eveni
     for (const layer of staticLayers) {
       expect(daysLineFor(layer.days.length, words, staticDays), layer.id).toBe(staticDays)
     }
+  })
+})
+
+describe('what a first paint costs, and when the archive follows', () => {
+  // Measured on the live entrance on 2026-09-03: the hero pulled seventy-six kilobytes gzipped of
+  // archive — fifty-seven frames of sky and seventy nights of the fleet — to draw ONE night. Both
+  // surfaces open on the newest day, so that is what a first paint fetches; the archive behind it
+  // is worth its kilobytes exactly when the visitor leaves that day.
+  it('asks for no archive while the newest day is on screen', () => {
+    expect(layersToUpgrade(new Set(), ['sky', 'ghost-fleet'], true)).toEqual([])
+  })
+
+  it('asks for it the moment the day moves', () => {
+    expect(layersToUpgrade(new Set(), ['sky', 'ghost-fleet'], false)).toEqual(['sky', 'ghost-fleet'])
+  })
+
+  it('asks once, for what is on, and never again', () => {
+    const had = new Set(['sky'])
+    expect(layersToUpgrade(had, ['sky', 'ghost-fleet'], false)).toEqual(['ghost-fleet'])
+    expect(layersToUpgrade(new Set(['sky', 'ghost-fleet']), ['sky', 'ghost-fleet'], false)).toEqual([])
+  })
+
+  it('fetches the newest feed first and the whole one only in the second stage', () => {
+    const source = read('./LivingGlobe.tsx')
+    expect(source).toContain('fetch(entry.newestHref)')
+    expect(source).toContain('fetch(entry.href)')
+    expect(source).toContain('layersToUpgrade(wholeRef.current, active, onNewestDay)')
   })
 })
