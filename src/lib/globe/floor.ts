@@ -18,6 +18,7 @@ import { geoEquirectangular, geoGraticule10, geoPath } from 'd3-geo'
 import { feature } from 'topojson-client'
 import type { GeometryObject, Topology } from 'topojson-specification'
 import { escapeXml } from '@/lib/dataviz/geometry'
+import { centroidOfIso3 } from './crosswalk'
 import type { GlobeArc, GlobeSatellite } from './model'
 import type { GroundPoint } from './propagate'
 import type { LayerFrame, LayerKind, LayerRecord } from './layers/types'
@@ -141,12 +142,18 @@ export interface LayeredFloorInput {
   labels: LayeredFloorLabels
 }
 
-/** Where a record stands on the plate. A country-shaped record is placed by its centroid, which
- *  the record carries already resolved — this builder resolves nothing and invents nothing. */
+/** Where a record stands on the plate. A country-shaped record has no coordinate of its own, so
+ *  it is placed at the spherical centroid of its own polygon — the same point the card, the tables
+ *  and the readout name, read from the same committed topology, so the plate and the sphere cannot
+ *  disagree about where a country is. The centroid is DERIVED, never invented: a country the
+ *  topology draws no polygon for gets no point here, and the adapters that build country records
+ *  drop it from the frame and count it in the frame's note, so a plate and a table never differ by
+ *  a silent mark. */
 function place(record: LayerRecord): { from: [number, number]; to?: [number, number] } | null {
   if (Array.isArray(record.at)) return { from: record.at }
   if ('from' in record.at) return { from: record.at.from, to: record.at.to }
-  return null
+  const centroid = centroidOfIso3(record.at.iso3)
+  return centroid ? { from: centroid } : null
 }
 
 export function buildLayeredFloorSvg({ land, layers, labels }: LayeredFloorInput): string {

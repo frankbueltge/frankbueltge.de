@@ -50,6 +50,7 @@ import {
 } from '@deck.gl/layers'
 import { feature } from 'topojson-client'
 import type { GeometryObject, Topology } from 'topojson-specification'
+import { stitchFeatures } from '@/lib/globe/antimeridian'
 import type { LayerInstant, LayerKind, LayerRecord, LonLat } from '@/lib/globe/layers/types'
 import { positionsAt, satrecsOf, type GroundPoint, type SatRecs } from '@/lib/globe/propagate'
 
@@ -485,7 +486,14 @@ interface ViewState {
 
 export function mountGlobe(options: MountOptions): GlobeHandle {
   const { host, land, reduced } = options
-  const landFeature = feature(land, land.objects.land as GeometryObject)
+  // Stitched, and this is the whole reason the sphere has no seam across it any more: a ring that
+  // crosses the antimeridian arrives from Natural Earth as a ring that JUMPS from one edge of the
+  // longitude plane to the other, and the globe view subdivides that jump into a band around the
+  // whole earth. Made continuous once, here, before anything is drawn from it — the arithmetic and
+  // the measurement are in src/lib/globe/antimeridian.ts.
+  const landFeature = stitchFeatures(
+    feature(land, land.objects.land as GeometryObject) as unknown as { features: Array<{ geometry: GeoJSON.Geometry }> },
+  )
 
   let ink = options.ink()
   let frame = options.frame

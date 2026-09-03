@@ -33,6 +33,8 @@ const ALIASES = crosswalk.fips_aliases as Record<string, string>
 const BY_ISO3 = new Map(COUNTRIES.map((c) => [c.iso3, c]))
 const BY_ISO2 = new Map(COUNTRIES.map((c) => [c.iso2, c]))
 const BY_NUM = new Map(COUNTRIES.map((c) => [c.num, c]))
+const BY_CCTLD = new Map<string, CrosswalkCountry>()
+for (const country of COUNTRIES) if (country.cctld) BY_CCTLD.set(country.cctld.replace(/^\./, ''), country)
 const BY_FIPS = new Map<string, CrosswalkCountry>()
 for (const country of COUNTRIES) if (country.fips) BY_FIPS.set(country.fips, country)
 for (const [alias, iso3] of Object.entries(ALIASES)) {
@@ -74,6 +76,21 @@ export function byNumeric(code: string | number): CrosswalkCountry {
  *  cannot place (the manifest's provenance line) rather than fail on it. */
 export function tryFips(code: string): CrosswalkCountry | null {
   return BY_FIPS.get(code) ?? null
+}
+
+/** The country a country-code top-level domain belongs to, as this table records it — `uk` is the
+ *  United Kingdom here, exactly as the crosswalk's own `cctld` column has it, and not the ISO
+ *  alpha-2 `GB` a naive lookup would ask for.
+ *
+ *  This one ASKS rather than throws, and that is a decision about what a domain is. A FIPS code in
+ *  this house's own archive is a country the record claims to have measured, so a code the table
+ *  cannot place must stop the build. A top-level domain is a REGISTRATION: most of them belong to
+ *  no country at all (`com`, `org`, `net`), some belong to a union rather than a state (`eu`), and
+ *  a caller must be able to count those and say so in words instead of failing a nightly build the
+ *  moment a new outlet appears. So the caller reports what it could not place — it never drops it
+ *  in silence. */
+export function tryCctld(tld: string): CrosswalkCountry | null {
+  return BY_CCTLD.get(tld.trim().toLowerCase().replace(/^\./, '')) ?? null
 }
 
 /** The centroid of a country named by its alpha-3 code, or null where the 1:110m topology draws

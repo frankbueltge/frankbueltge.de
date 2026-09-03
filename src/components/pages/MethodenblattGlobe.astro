@@ -43,6 +43,9 @@ const limits = [
   'The 1:110m geography draws no Monaco, no Singapore and no Vatican. A lookup for those answers with nothing rather than a point, and the layer says so.',
   'A code the crosswalk cannot place stops the build instead of vanishing from the globe. Two are known and named in the committed file: Kosovo, which ISO has assigned no code, and GDELT’s "Oceans", which is not a country.',
   'Where a body carries no coordinate on Wikidata at all, its reading is stated in words and drawn nowhere. A reading drawn nowhere is better than a plausible dot in a convincing city.',
+  'A top-level domain is a registration, not a location. The hosts layer counts the mastheads of the day’s most-echoed phrase by the last label of their domain and puts each country-code group at that country’s centroid — but a domain bought from one country’s registry says nothing about where the newsroom, the reporter or the server is. A domain with no country in it (com, org, net, and every other label that is not a country code this crosswalk records) is counted and stated in words — "so many of so many mastheads carry no country" — and drawn nowhere. On many days that is most of them; on some it is all of them, and then the layer draws nothing and says so.',
+  'A tone gap is a fact about the language of newsrooms. The country fills carry the measure /balance headlines — the tone of a country’s own press about it minus the tone of the world’s press about it — and a wide gap means the two pools wrote in the most different registers that day, never that a country is contested. The fill runs low to high inside each day’s own range and compares nothing across days.',
+  'A polygon that crosses the antimeridian is stitched before it is drawn, and one that encircles a pole is closed through it. Natural Earth stores such a ring as a ring that jumps from one edge of the longitude plane to the other, and a globe subdivides that jump into a band around the whole earth: until 2026-09-03 this sphere carried one such band south of the equator, three at the north pole, and no south polar cap at all. Making a ring continuous adds no vertex a reader can see; closing an encircling ring through the pole adds the two corners a flat file has no way to write down.',
 ]
 
 const changelog = [
@@ -55,6 +58,8 @@ const changelog = [
       'file (G2).',
   },
   { date: '2026-09-03', what: 'The ground: the layer contract and registry, the country polygons and centroids, the country-code crosswalk, the seats, three adapters (the sky, the ghost fleet, the protocol), the plate that carries them, the manifest and the per-layer feeds, and this sheet.' },
+  { date: '2026-09-03', what: 'The room: the island over the plate, the layers on and off, the day axis over the whole archive, and a card with the receipt behind every mark.' },
+  { date: '2026-09-03', what: 'The first three layers whose records name a country rather than a place — the press’s tone gap as country fills, the countries that invoked the day’s most-invoked year, and the countries the day’s most-echoed phrase was registered in — the country polygons served ready to draw, and the antimeridian stitch that took the seam off the sphere.' },
 ]
 ---
 
