@@ -2789,3 +2789,81 @@ commits pushed to `main` (0427ee9..c0589f9); this addendum follows on its own.
   in-window bound is twenty minutes; the prior five measurements read ~31, ~31,
   ~38.6, ~42.2 and ~6.0 minutes). Measured, not interpreted; the matter the
   founder's alone.
+
+## Bell 26 — 2026-09-03 (the second reading of one date, the frontier shown to be the archive's, and the vigil's stillest asking)
+
+- **Executed by:** model `claude-fable-5` (Anthropic), running in a Claude Code cloud
+  session (ephemeral container; repository cloned fresh at wake). Session reference,
+  for the founder's audit: <https://claude.ai/code/session_013HUUHmMdfkoPZMLU2Zb9sX>.
+  **Signing:** `Remainder <remainder@n-1.invalid>`.
+- **Wake:** first clock check 2026-09-03T14:26:29Z (16:26 Europe/Berlin) — not the
+  schedule's hour, therefore the founder's bell; noted and not read, per floor rule 5
+  as amended. The same civil date as night 20, thirteen hours after it. Both founder
+  channels read at boot and quiet: no dated act in `REQUESTS.md` since the two of
+  2026-09-03 that night 20 read and enacted; the repository's issues zero (fortieth
+  in-session consultation). The reach to `frankbueltge/material` probed and still
+  refused (terminal-prompt auth failure) while the `n-1` control answers HEAD;
+  nothing tonight needed the edition.
+- **Deviations from the standing procedures:** the seventeenth ordinary boot under
+  the revised order — the carry whole in the foundation's place; the foundation not
+  consulted (no quotation published, no claim turned on a passage the carry does not
+  hold); the German original not consulted. The refs pattern, forty-second
+  occurrence: the container on a harness working branch with the clone shallow;
+  standing resolution, work published on `main`. Session detours (T4, in the record's
+  detours): the second pass caught an overclaim in the eleventh act's draft README
+  ("the one civil date … no session touched at the canonical hour" — 2026-08-26 and
+  2026-08-27 also carry none; corrected in place, drafted words quoted, exact fact
+  from the committed slices); the session's first quick −999 count read the marker
+  in the value field where the archive carries it in the indicator field (0 for 8),
+  caught by running the committed scan, whose figures are the act's — no document
+  carried the wrong number; the replay's day grain re-noticed with two wakes on one
+  date (night 20's reading step now shows both; the grain stated on the page covers
+  it, the sharper per-reading grain noted, not promised).
+- **Procedures beyond the standing block:** the twentieth asking executed by night
+  18's committed `ask.sh`, body verified identical before the run (four attempts,
+  four first-attempt 200s — Cert Spotter 14:30:41Z, crt.sh 14:30:42Z and 14:31:07Z).
+  DWD fetch-and-slice with the whole-file scan run as night 16's committed code,
+  unchanged; the fetch (14:28:11Z) was the session's probe of whether the drawer had
+  turned, made before the deliberation and recorded as the act's fetch, dated as
+  made. Render verification by the committed `render-check.js` (headless Chromium,
+  local static server, pre-installed; the automation library installed into the
+  session scratchpad, outside the repository); one additional in-session probe drove
+  the readings slider through readings 1, 10 and 11 and re-derived every caption
+  count from the committed record.
+- **Material provenance:** DWD Climate Data Center, hourly cloudiness station 00433
+  Berlin-Tempelhof — one zip fetched 14:28:11Z (generation 2026-09-03 08:18, sha256
+  in the transcript; the zip itself not committed, its 2026-09-02 slice committed
+  verbatim and checked). Certificate Transparency monitors: Cert Spotter and crt.sh
+  (four dated queries, all 200 at first attempt; every body byte-identical to asking
+  19's committed files, by sha256). All reads of public archives and APIs; no
+  third-party contact; zero external spend.
+- **Verification status:** every claim in tonight's documents carries a repository
+  path, commit reference or dated observation; the one counterfactual (a
+  canonical-hour wake on 2026-09-02 would have read 0/8) is marked as such in the
+  act's README; solar elevations in the join remain computed estimates, marked in
+  the join's own field names; wake-time and container observations are marked
+  session observations.
+- **Verification figures:** `python3 atlas/validate.py` — 49 layers, 144 nodes,
+  375 edges, every edge evidenced (run with tonight's layer). The 2026-09-02 slice:
+  committed verbatim as served, all 24 rows checked identical against the served
+  member; the frontier's 24 rows checked with quality level and cloud value
+  unchanged, indicator only. Local render by the committed check, zero page/console
+  errors, no horizontal overflow at 1440×900 and 390×844: the second work's page —
+  47 glyphs, one seam line, 2 unwritten (night 20, bell 26), 18 re-said lines,
+  legend shown, readings figure drawn and captioned; the first line's page with
+  asking 20's queries the newest entries; the front door and the record page. The
+  asking-ledger append verified in the staged diff as a pure 20-line addition.
+- **Outputs:** `material/ct-logs/2026-09-03-twentieth-asking/` and asking 20 in
+  `works/below-the-threshold/askings.json`; `material/night-sky/2026-09-03-a-continuing/`
+  (slice, join, frontier, transcript); `works/two-nights-deep/` regenerated
+  (build.py by dated revision, nights.json, one page sentence re-said — draft
+  `e9c238c`, revision `ccaaf00`); `nights/46-twenty-sixth-bell.md`, this entry,
+  atlas layer `atlas/layers/2026-09-03-a.json`.
+- **Door check, after the push:** the canonical door
+  (<https://frankbueltge.de/n-1/>) answered HTTP 200 at 14:44:40Z; the sources
+  guard ran green on the night's head commit (run 41, `a7d6201`). No mirror watch
+  kept tonight: the push settled at ~14:44 UTC, outside the mirror's stated working
+  window (22:50–03:50 UTC), where its own corrected cadence is one check every
+  three hours — the surface may carry tonight's layer up to three hours after the
+  push, per the stated machinery (`DOWRY.md` gift 3 as corrected 2026-08-28;
+  `window.json`). Stated, not measured; the matter the founder's alone.
