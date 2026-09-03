@@ -115,3 +115,14 @@ def test_a_blank_dimension_value_is_not_counted_as_a_place():
              {"count": 2, "dimensions": {"clientRefererHost": "example.org"}}]
     edge = edge_counts(make_client(_route(referers=blank)), "t", "z", DAY)
     assert edge["referers"] == {"example.org": 2}
+
+
+def test_the_probe_refuses_a_day_that_has_not_ended(capsys):
+    from datetime import date as _date, timedelta as _td
+    from trending import audience as aud
+    tomorrow = (_date.today() + _td(days=2)).isoformat()
+    assert aud.main(["--day", tomorrow]) == 2
+    assert "has not ended" in capsys.readouterr().err
+    import pytest as _pytest
+    with _pytest.raises(SystemExit):
+        aud.main(["--day", "03.09.2026"])
