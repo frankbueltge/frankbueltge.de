@@ -2151,3 +2151,72 @@ note has been **added** to `presentations/cycle-001/index.html` — nothing remo
 mirrors that page, it now carries the note.
 
 **Status:** direction acted on · one ask open · no answer required
+
+---
+
+## Direction — 2026-09-03 — The 2026-09-01 direction is spent; the question is constructive now
+
+**The architect's decision of 2026-09-03 (wording private, paraphrased and dated).** It
+supersedes the direction of 2026-09-01 in this file. That direction is not withdrawn as a
+mistake — the response ledger produced real work, and the correction filed beside it two days
+ago is the kind of result this practice exists for. It is **spent**: it was a choice among the
+options of a map, and the map's options were all observational.
+
+**What was found on 2026-09-03.** Cycle 001 gave this practice the question *end-to-end
+automation of AI research*. Of the seven artifacts it filed, two are on that question — the
+yield of its own loop, and the addresses that automated-research abstracts do or do not hand
+over. Five are the response ledger: retraction waits, publisher answering routes, venue policy
+on hidden prompts. Meanwhile the bulletin went on carrying the header *"Cycle 001 default
+question"* over publishing work.
+
+**That is not this practice's drift, and it is not being charged as one.** Three standing
+orders pointed away from the cycle question at once: this file's direction of 2026-09-01, the
+counter-measurement remit this practice has carried as its core since ecology v2, and a
+commissioned field map whose ten possibilities (`docs/design/2026-09-01-meridian-field-map.md`
+§5, in the site repository) contain no constructive option at all. One order pointed at the
+cycle question. The practice followed the loudest three. What went wrong is that **nobody named
+the conflict** — least of all the record, which papered over it with a header.
+
+**Cycle 002's question, in `src/data/ecology/cycle.json`:** *How can end-to-end automation of AI
+research be realised? Build it, and measure where it breaks.*
+
+**Two things follow, and they are the whole of the change:**
+
+1. **The counter-measurement remit RESTS for this cycle.** Not retired — rested, dated, and it
+   returns unless something says otherwise. A practice cannot be asked to build capability and
+   to audit other people's at the same time and be judged on both.
+2. **The question is constructive, not observational.** Measuring how well someone else's
+   automated pipeline works is the thing this practice already knows how to do. The question is
+   what it can make one do, and where its own attempt fails.
+
+**Where to start, if a starting point helps — and it is a suggestion, not a specification.**
+`artifacts/cycle-001/2026-08-30-yield-of-a-loop/` is already the first finding of this line and
+the strongest thing in cycle 001: the yield of this practice's own loop fell from 0.29 works per
+session to 0.04, and a stretch of 48 sessions over 25 days produced 769 commits, 1,213 draft
+files and nothing shipped. *The interesting failure of an automated research loop is not a bad
+output — it is a loop that keeps producing and stops delivering.* That sentence rests on one
+system, and this practice has unrestricted access to that system. The frontier it should be read
+against is real and mapped: the field map's §1.1 lists the end-to-end systems now publishing in
+*Nature* — Sakana's *AI Scientist*, Google's ERA and Co-Scientist, MIRA, FutureHouse's Robin —
+and notes that every wet-lab validation among them was executed by humans.
+
+**What is NOT specified, deliberately.** No hypothesis, no falsifier, no corpus, no schedule, no
+cadence — as on 2026-09-01, and for the same reason. The direction is the architect's; **the
+study is yours.**
+
+**What would show this direction to be wrong** — stated in advance so it can be checked:
+
+- if three sessions in, the practice can name nothing it has built that runs unattended, and the
+  work has become a survey of other people's automation with a constructive title on it;
+- if the only system it can study is itself, and it cannot say what about itself generalises —
+  a finding true of one loop, offered as a finding about loops, is the failure this house
+  measures in others;
+- if the constructive turn costs the practice its verification discipline: an artifact that
+  ships without a pre-registration, a falsifier, or a stated kill condition is not this practice
+  building faster, it is this practice becoming an ordinary one.
+
+**Contest it if it is wrong.** This direction is a judgement about what is worth doing, made by
+someone who is not doing it. The practice has the standing to say so, in its bulletin, and that
+is the correction route.
+
+**Status:** direction open · no answer required before the next session
