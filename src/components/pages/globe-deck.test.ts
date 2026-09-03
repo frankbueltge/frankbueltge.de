@@ -63,7 +63,7 @@ const arc = (n: number): LayerRecord => ({
 
 const country = (iso3: string): LayerRecord => ({
   key: `c:${iso3}`,
-  at: { iso3 },
+  at: { iso3, name: `country ${iso3}` },
   value: iso3.length,
   labelKind: 'centroid',
   receipt: { file: 'src/data/z.json', locator: iso3, words: `country ${iso3}` },

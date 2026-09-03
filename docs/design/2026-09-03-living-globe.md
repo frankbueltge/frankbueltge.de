@@ -1,6 +1,6 @@
 # Living Globe — one globe over everything this house measures on the earth
 
-**Status:** G0 shipped 2026-09-03 (the ground, the crosswalk, the gates); G1 shipped 2026-09-03 (the room: layers, the day, the receipts); G2 shipped 2026-09-03 (three guided stories, and a focus that moves camera, day and layers); G3 evening 1 of 3 shipped 2026-09-03 (the three country layers, the tessellation check, the antimeridian stitch). The rest of G3, then G4.
+**Status:** G0 shipped 2026-09-03 (the ground, the crosswalk, the gates); G1 shipped 2026-09-03 (the room: layers, the day, the receipts); G2 shipped 2026-09-03 (three guided stories, and a focus that moves camera, day and layers); G3 evening 1 of 3 shipped 2026-09-03 (the three country layers, the tessellation check, the antimeridian stitch); G3 evening 2 of 3 shipped 2026-09-03 (the removals at their seats, the world chamber's hosts, the trending countries). The third evening of G3, then G4.
 **Decision:** Frank's decision of 2026-09-03, wording private.
 **Surfaces:** `/globe` · `/werke/globe` · `/globe/layers.json` · `/globe/layers/<id>.json` ·
 `/globe/countries.json` (since G3 the country polygons keyed by alpha-3, stitched and rounded ready to
@@ -46,7 +46,7 @@ nobody looks at it, in which case the receipts were a private virtue.
 | G0 | contract, registry, crosswalk, countries, seats, three adapters, the no-JS floor, feeds, the page, the method sheet, the audit | 2026-09-03 ✅ |
 | G1 | the island: layers on and off, the time scrubber over the whole archive, cards with receipts, the compact entrance | 2026-09-03 ✅ |
 | G2 | guided stories — scripted camera tours on the existing tour engine | 2026-09-03 ✅ |
-| G3 | the remaining layers: the press, the invoked years, the removals, the hosts, the registers | evening 1 of 3: 2026-09-03 ✅ |
+| G3 | the remaining layers: the press, the invoked years, the removals, the hosts, the registers | evenings 1 and 2 of 3: 2026-09-03 ✅ |
 | G4 | method sheet complete, the projection room, and this document's kill reading filled in | |
 
 **G2, shipped 2026-09-03 — three of six stories, and the three that wait.** `FocusState` gained
@@ -78,6 +78,32 @@ longitude plane, which a globe subdivides into a band around the whole earth. Un
 three rings at the north pole and the missing south polar cap in one move. Owed to evenings 2 and 3:
 the removals (Redaction), the registers (the two disaster and battle registers), and the layers
 whose owners have not said yes (Arch's felt blocks, Machine Attention's coordinates — §6).
+Decision-log row of 2026-09-03.
+
+**G3, evening 2 of 3 — 2026-09-03.** The two instruments this house runs that had no layer at all,
+and one wording repair. **Editorial Deadline, at the seats** puts one mark per institution that lost
+content on a night at the seat it publishes from, its value the words it took back; every record is a
+`seat` outright, because a removal happens in a document and a document has no coordinate, so this
+layer has no station case. The institution→seat table is the house's one committed map and resolving
+through it throws by name; two suites walk every committed day, so an institution without a seat is a
+red build and never one mark fewer. **Editorial Deadline, the world chamber** places the hosts of the
+sample the day actually checked by the country their top-level domain is registered in — the same
+registration-is-not-a-location rule as the hosts of `/consensus`, the same function, imported rather
+than copied. The shape was decided by what the record commits: a receipt exists per URL that came back
+gone or withheld for legal reasons, so those outcomes ride with their country's mark, while the
+answered, the bot-walled and the unreachable exist only as counts for the whole day and are stated in
+the note and attributed to no country. A 451 is never folded into gone, and the record's own caution
+about reading one from a German vantage point is quoted byte-exact in the source block. **Common
+Ground, by country** draws only the signals of sources that publish per country, and states in words
+that a signal carrying a LANGUAGE is not placed at all: a wiki is read wherever its language is read.
+The repair: a country place now carries the crosswalk's own name beside its code, so a card reads
+“centroid of Qatar” instead of “centroid of the country QAT” — resolved by the adapter, because the
+island holds no crosswalk and must never grow one. **Owed to evening 3:** the admissions and the two
+registers (disasters and battles), the bycatch and the world chamber's own rewriting register with its
+own TLDs, and the attention warnings. **And the two houses that must say yes before anything of theirs
+is drawn (§6):** Arch's felt-block centroids, which are opt-in only after its preregistration closes on
+**2026-09-21**, and Machine Attention's GDACS coordinates, which stay upstream until its channel
+answers. Neither was touched this evening and neither will be drawn without a yes.
 Decision-log row of 2026-09-03.
 
 **Kill reading — a dated reading, not a feeling.** On **2026-10-15** this document gets a section

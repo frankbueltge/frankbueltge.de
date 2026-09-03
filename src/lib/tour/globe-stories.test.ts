@@ -7,7 +7,8 @@
 //   3. every layer a scene switches on is REGISTERED — which is what keeps a story the plan named
 //      for G3 from being written before its layer exists, rather than a note in a document nobody
 //      re-reads. G3's first evening registered the press's tone gap and the hosts by top-level
-//      domain, so those two stories are now writable and owed; the removals still have no layer;
+//      domain and its second the two chambers of the removals, so all three of the stories the plan
+//      named are now writable and owed — each by its layer's own id, never by the plan's shorthand;
 //   4. every camera stands on the earth (a longitude in [-180, 180], a latitude in [-90, 90], a
 //      zoom the globe view can actually hold);
 //   5. every selected mark EXISTS in that layer's frame on that scene's own day — the one thing a
@@ -113,13 +114,17 @@ describe('every scene asks the globe for something the globe really has', () => 
         }
       }
     }
-    // The guard above is what makes "not yet" enforceable rather than remembered, and G3's first
-    // evening (2026-09-03) moved the line: the press's tone gap and the hosts by top-level domain
-    // are now registered, so the balance and consensus stories have become WRITABLE and are owed to
-    // a later evening rather than blocked. The removals still have no layer, so the story about them
-    // still cannot be written at all — and a story would have to name the hosts layer by its own
-    // registered id, which is `consensus-tld` and not `consensus`.
-    for (const id of ['balance', 'consensus-tld']) expect(registered.has(id)).toBe(true)
+    // The guard above is what makes "not yet" enforceable rather than remembered, and G3 moved the
+    // line twice. The first evening (2026-09-03) registered the press's tone gap and the hosts by
+    // top-level domain, so the balance and consensus stories became WRITABLE and are owed. The
+    // second evening registered the removals — as TWO layers, one per chamber — so the third of the
+    // stories the plan named is writable too, and all three are owed to a later evening rather than
+    // blocked. What a story may NOT do is name a chamber that does not exist: the ids are
+    // `redaction-seats`, `redaction-world` and `consensus-tld`, never the bare `redaction` or
+    // `consensus` a plan wrote them down as.
+    for (const id of ['balance', 'consensus-tld', 'redaction-seats', 'redaction-world', 'trending']) {
+      expect(registered.has(id)).toBe(true)
+    }
     for (const id of ['consensus', 'redaction']) expect(registered.has(id)).toBe(false)
   })
 

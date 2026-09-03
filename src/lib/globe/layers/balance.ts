@@ -23,7 +23,7 @@
 // a fill guessed from a neighbouring country would not be.
 import { ciLabel, signed } from '@/lib/balance/format'
 import type { BalanceCountry, BalanceData } from '@/lib/balance/types'
-import { byFips, centroidOfIso3 } from '../crosswalk'
+import { byFips, centroidOfIso3, nameOf } from '../crosswalk'
 import { archiveDays, dayPath, readDay, readJson } from './archive'
 import { EMPTY_FRAME, type GlobeLayer, type LayerFrame, type LayerRecord } from './types'
 
@@ -72,7 +72,9 @@ function frameOf(day: string): LayerFrame {
     }
     records.push({
       key: `balance:${day}:${index}`,
-      at: { iso3: resolved.iso3 },
+      // the name travels with the code, so the card can say "centroid of Qatar" without the island
+      // ever holding a crosswalk of its own (G3, second evening)
+      at: { iso3: resolved.iso3, name: nameOf(resolved) },
       value: gap,
       labelKind: 'centroid',
       receipt: {

@@ -34,9 +34,10 @@ export interface PlaceWording extends Record<LabelKind, string> {
   centroid: string
   station: string
   gap: string
-  /** a country resolved through the crosswalk, with no coordinate of its own in the record; its
-   *  placeholder is `{code}` and not the code system's own name, because that name carries a digit
-   *  and the digit guard is over the whole file, template placeholders included */
+  /** a country resolved through the crosswalk, with no coordinate of its own in the record. Its
+   *  placeholder is `{name}`: until G3's second evening it was the alpha-3 code, and the card read
+   *  "centroid of the country QAT" at a reader with no way of knowing that meant Qatar. The record
+   *  now carries the crosswalk's own name beside the code, so the phrase can say the country */
   country: string
   north: string
   south: string
@@ -113,7 +114,7 @@ export function placePhrase(record: LayerRecord, words: PlaceWording): string {
       to: degrees(record.at.to[0], record.at.to[1], words),
     })
   }
-  return fill(words.country, { code: record.at.iso3 })
+  return fill(words.country, { name: record.at.name })
 }
 
 export const GLOBE = {
@@ -388,7 +389,7 @@ export const GLOBE = {
       centroid: 'centroid of a country, at {at}',
       station: 'station at {at}',
       gap: 'gap from {from} to {to}',
-      country: 'centroid of the country {code}',
+      country: 'centroid of {name}',
       north: 'N',
       south: 'S',
       east: 'E',
