@@ -124,7 +124,17 @@ Astro 6, statisch, **English-only seit 2026-07-16** (deutsche Alt-Routen 301en v
 2026-07-20: `/protocol`, `/policy`, `/headroom`), Tailwind v4,
 Mono-Skin fest. **Git ist das Archiv der Instrumente:** Pipelines committen versionierte
 JSON-Snapshots ins Repo; ein Befund muss aus committeten Daten nachrechenbar bleiben und
-darf nie davon abhängen, dass eine Quelle heute antwortet.
+darf nie davon abhängen, dass eine Quelle heute antwortet. **Das bindet die nächtlichen
+Instrumente, nicht mehr jedes Werk (Frank, 2026-09-04, Wortlaut privat — Kern: Live- und
+Echtzeit-Experimente müssen hier startbar sein, ohne zweite Seite und ohne Rückfrage;
+Zitierfähigkeit und Archivierung sind nicht der Punkt, die Arbeit ist es).** Ein Werk mit
+`unarchived: true` in `src/data/werke.ts` liest die Welt zur Laufzeit, committet nichts und
+behauptet nichts über gestern — und ist damit frei von USP-Audit, Währungs-Test und
+Methodenblatt-Pflicht. Es schuldet genau eine Sache, testgesichert statt in Prosa: Es sagt auf
+seiner eigenen Fläche, dass es live und nicht archiviert ist (`src/lib/experiments/unarchived.ts`,
+Wächter in `src/data/werke.test.ts`). **`connect-src` ist seit demselben Tag für jeden
+HTTPS-Host offen** — der Browser darf jede API und jeden Event-Stream lesen; `script-src` und
+`style-src` bleiben geschlossen, fremder Code läuft hier weiterhin nicht.
 Die Protokoll-Pipelines (`pipelines/protokoll/`, Python 3.12) laufen als nächtliche
 **GitHub-Actions-Workflows** und schreiben täglich `src/content/protokoll/<jahr>/<datum>.json`,
 `src/data/praemie/police.json` und `src/data/parallaxe/register.json`, committet als Autorin
@@ -165,6 +175,20 @@ alles umgezogen). Was wo liegt:
 | `experiments.md` | `werke.ts`, Experiment-Seiten, Specs, Audits | USP-Pflicht (jetzt testgesichert), Werkgruppen-Gate §2, KI/ML als Material und Methode |
 | `pipelines-and-archive.md` | Pipelines, Archiv-JSONs, Skripte, Workflows | Protocol-Determinismus, unantastbare Archiv-JSONs, Ausfälle/Secrets/kein Backfill, GCP-Bedingungen, Deployment-Runbook |
 | `knowledge-graph.md` | Graph-Quellen und -Code | Wer eine Quelle ändert (auch: eine Zeile ins decision-log), führt `npm run graph:build` aus |
+
+## Das Log auf Diät (Frank, 2026-09-04, Wortlaut privat)
+
+Anlass, gemessen: `docs/decision-log.md` steht bei rund 43.000 Wörtern in 119 Zeilen, davon
+über 10.000 an einem einzigen Tag — geschrieben von Sessions, nicht verlangt von Frank. Zusammen
+mit den stehenden Regeln (Workspace, Projekt, Wording-Kanon, `.claude/rules/*`) sind das mehr
+als 50.000 Wörter, die jede Session liest, bevor sie irgendetwas tut. Das ist der Apparat, über
+den Frank sich beschwert hat, und er ist selbstgebaut.
+
+**Ab sofort:** Eine Log-Zeile ist **ein bis zwei Sätze plus die Dateiliste** — was sich geändert
+hat und warum, mehr nicht. Prosa, Messreihen und Begründungsketten gehören in ein Design-Doc,
+und nur, wenn wirklich eine Entscheidung gefallen ist. Kein Eintrag für Routine: Fix, Refactor,
+Wortlaut, Abhängigkeit, ein Test mehr. Wer unsicher ist, schreibt keinen Eintrag. Die
+Historie ist ohnehin in Git; das Log ist für Entscheidungen, nicht für Protokolle.
 
 ## Experimente — was in jeder Session gilt
 

@@ -31,12 +31,19 @@ export default defineConfig({
         "default-src 'self'",
         "img-src 'self' data:",
         "font-src 'self' data:",
-        // Zwei dokumentierte Ausnahmen für /saat (Design-Spec 2026-07-20-oeffentliche-
-        // saat-design.md §4/§10, D2): Turnstile (Cloudflare, bot check vor dem Gate — selber
-        // Anbieter wie das Hosting) und raw.githubusercontent.com (Client liest das committete
-        // Register für die Status-Abfrage per Claim-Token, ohne eigenen Server). Sonst bleibt
-        // connect-src 'self'.
-        "connect-src 'self' https://challenges.cloudflare.com https://raw.githubusercontent.com",
+        // connect-src is OPEN to any HTTPS host since 2026-09-04 (Frank's decision, wording
+        // private, paraphrased: live and real-time experiments must be startable here, without a
+        // second site and without asking first; citability is not the point, the work is).
+        //
+        // What this changes: a page in this repo may now talk to any HTTPS API or event stream
+        // from the browser — no allowlist entry, no session that has to notice, no config change
+        // per experiment. What it deliberately does NOT change: script-src and style-src stay
+        // closed ('self' plus pinned hashes), so nothing foreign may EXECUTE here. Reading data
+        // from the world is now free; running the world's code is still not.
+        //
+        // The two hosts this line used to name are covered by the same opening: Turnstile on
+        // /saat and raw.githubusercontent.com for the seed register's status lookup.
+        "connect-src 'self' https:",
         // Turnstile rendert seine Challenge in einem Iframe von derselben Domain.
         "frame-src https://challenges.cloudflare.com",
         "object-src 'none'",

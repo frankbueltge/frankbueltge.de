@@ -9,6 +9,15 @@ paths:
 
 # Experimente — Gate, Material, Methode
 
+> **Vorab, seit 2026-09-04 (Frank, Wortlaut privat):** Alles Folgende gilt für ARCHIVIERTE
+> Experimente. Ein Werk mit `unarchived: true` liest die Welt zur Laufzeit und ist von der
+> USP-Pflicht, der Währungs-Pflicht und der Methodenblatt-Pflicht **ausgenommen** — es schuldet
+> nur den Live-Hinweis auf der eigenen Fläche (`src/lib/experiments/unarchived.ts`). Auch das
+> §2-Gate gilt dort nicht: Ein Live-Experiment wird gestartet, nicht beantragt. Der Grund ist
+> Zuschnitt, nicht Nachlässigkeit — das Audit fragt, ob die Welt einen BEFUND schon hat, und ein
+> Live-Werk veröffentlicht keinen Befund, sondern zeigt die Welt in dem Moment, in dem jemand
+> hinsieht.
+
 Umgezogen aus `CLAUDE.md` am 2026-08-09 (CLAUDE.md-Diät). Inhalt unverändert; lädt, wenn
 das Werkeverzeichnis, eine Experiment-Seite oder eine Spec/ein Audit angefasst wird.
 

@@ -1,4 +1,6 @@
 // src/data/werke.test.ts
+import { existsSync, readFileSync } from 'node:fs'
+import { fileURLToPath } from 'node:url'
 import { describe, it, expect } from 'vitest'
 import {
   EXPERIMENT_LINES,
@@ -184,5 +186,33 @@ describe('titles carry no leading article (Frank, 2026-08-22)', () => {
     expect(byId.get('balance')).toBe('Balance')
     expect(byId.get('correction')).toBe('Correction')
     expect(byId.get('ghost-fleet')).toBe('Ghost Fleet')
+  })
+})
+
+// ── the one duty of an unarchived work ────────────────────────────────────────────────────────
+// Frank's decision of 2026-09-04 (wording private, paraphrased): live experiments may be started
+// here without asking, and archiving is not what matters. Three duties fell away with that — the
+// USP audit gate, the currency test, the method sheet. This is the one that replaced them, and it
+// lives in a test rather than in prose because a live page and an archived page look identical to
+// a reader; only the page itself can tell them apart.
+describe('a live work says that it is live', () => {
+  const pageSourceFor = (href: string): string | null => {
+    const slug = href.replace(/^\/+|\/+$/g, '')
+    for (const candidate of [`../pages/${slug}/index.astro`, `../pages/${slug}.astro`]) {
+      const path = fileURLToPath(new URL(candidate, import.meta.url))
+      if (existsSync(path)) return readFileSync(path, 'utf8')
+    }
+    return null
+  }
+
+  it('carries the notice on its own page, or it is not unarchived', () => {
+    for (const werk of WERKE.filter((w) => w.unarchived)) {
+      const source = pageSourceFor(werk.href)
+      expect(source, `${werk.id} declares itself unarchived but has no page at ${werk.href}`).not.toBeNull()
+      expect(
+        source!.includes('UNARCHIVED_NOTICE'),
+        `${werk.id} is unarchived and its page never says so — see src/lib/experiments/unarchived.ts`,
+      ).toBe(true)
+    }
   })
 })
