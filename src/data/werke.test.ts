@@ -98,9 +98,9 @@ describe('tier split (Experimente vs. Studien)', () => {
         WERKE_INSTRUMENTS.length,
     ).toBe(WERKE.length)
   })
-  it('keeps the research project and the instruments out of the experiments row (Frank, 2026-08-09; redaction reclassified 2026-08-14)', () => {
+  it('keeps the research project and the instruments out of the experiments row (Frank, 2026-08-09; redaction reclassified 2026-08-14; unexamined added 2026-09-03)', () => {
     expect(WERKE_PROJECTS.map((w) => w.id)).toEqual(['attention'])
-    expect(WERKE_INSTRUMENTS.map((w) => w.id).sort()).toEqual(['admissions', 'observatory', 'redaction'])
+    expect(WERKE_INSTRUMENTS.map((w) => w.id).sort()).toEqual(['admissions', 'observatory', 'redaction', 'unexamined'])
     const experiments = WERKE_EXPERIMENTE.map((w) => w.id)
     expect(experiments).not.toContain('attention')
     expect(experiments).not.toContain('observatory')

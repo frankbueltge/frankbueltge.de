@@ -26,6 +26,7 @@ import { feature } from 'topojson-client'
 import type { Topology } from 'topojson-specification'
 
 import { GALLERY } from '@/config/gallery-wording'
+import { screenWorks } from '@/lib/daylight/data'
 import { bars as vizBars, linePath, type VizBox } from '@/lib/ops/viz'
 import { bars as benfordBars } from '@/lib/round-number/histogram'
 import { yearAreaPath, yearLinePath } from '@/lib/praemie/chart'
@@ -508,6 +509,26 @@ export function recordThumbnail(id: string, entries: number, what: string, sourc
   }
 }
 
+/**
+ * UNEXAMINED's miniature: the screen's own result in a smaller box. One bar per work of the
+ * register, its height the score of that work's nearest catalogued neighbour, nearest first —
+ * the same ordering and the same derivation the page's queue uses. The marked bar is the
+ * tallest, which is the pairing the instrument most wants a human to look at.
+ *
+ * A miniature of the instrument, not a decoration of it: the shape a reader sees here — a low
+ * ceiling that falls away at once — IS the finding, before a word of the page is read.
+ */
+function unexaminedThumbnail(): Thumbnail {
+  const r = screenWorks(1)
+  return {
+    id: 'unexamined',
+    marks: barMarks(r.works.map((w) => w.top), new Set([0])),
+    draws: GALLERY.draws.unexamined,
+    readout: GALLERY.readouts.unexamined(r.works[0].top.toFixed(3), r.ruler.median.toFixed(3)),
+    source: 'src/data/atlas/werke.json + the works register',
+  }
+}
+
 // ── the catalogue ─────────────────────────────────────────────────────────────────────────
 function buildThumbnails(): Thumbnail[] {
   const R = GALLERY.readouts
@@ -712,6 +733,8 @@ function buildThumbnails(): Thumbnail[] {
       source: 'src/data/ghost-fleet/latest.json',
     })
   }
+
+  out.push(unexaminedThumbnail())
 
   return out
 }

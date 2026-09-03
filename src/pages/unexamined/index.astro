@@ -1,0 +1,11 @@
+---
+import Page from '@/layouts/Page.astro'
+import UnexaminedPage from '@/components/pages/UnexaminedPage.astro'
+const locale = 'en' as const
+---
+<Page
+  title="Unexamined | Frank Bültge"
+  description="This house asks every work to name its nearest prior art. Its own register admits almost none have. An instrument that scores every work against the Atlas of Data Art — and refuses to call the result a clearance."
+>
+  <UnexaminedPage {locale} />
+</Page>

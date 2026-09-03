@@ -1,0 +1,199 @@
+---
+// UNEXAMINED — an instrument that turns one of this house's own honest admissions into a queue.
+//
+// The works register carries a sentence about itself that has stood unmoved since the audit of
+// 2026-08-09: prior art has been checked for three of its works, and "a work without a note below
+// is UNEXAMINED, NOT CLEARED". The house also keeps the Atlas of Data Art, whose every entry
+// carries one sentence — decisive_move — saying what that work actually does. Nobody had ever run
+// the one against the other.
+//
+// This page does. Every figure on it is derived at build time by src/lib/daylight/* from two
+// committed files and nothing else; not one number is typed. The measure is term frequency
+// against inverse document frequency, cosine — arithmetic, not a model, so the finding stays
+// recomputable from this commit forever (the reasoning is in screen.ts).
+//
+// What the page must never do, and the reason it is built this way: present a low score as
+// daylight. The screen can raise a candidate; it cannot certify an absence. Its false negatives
+// are invisible and they are the dangerous half. So the ruler sits ABOVE the queue rather than
+// under it, and the sentence about false negatives is in the reader's path, not in a footnote.
+import type { Locale } from '@/lib/site'
+import { LOOK_FIRST, screenWorks } from '@/lib/daylight/data'
+import SheetHead from '@/components/experiments/SheetHead.astro'
+import SheetFoot from '@/components/experiments/SheetFoot.astro'
+import '@/styles/experiment-sheet.css'
+
+interface Props { locale: Locale }
+const {} = Astro.props as Props
+
+const r = screenWorks()
+const queue = r.works.slice(0, LOOK_FIRST)
+const three = (n: number) => n.toFixed(3)
+const audit = 'https://github.com/frankbueltge/frankbueltge.de/blob/main/docs/audits/2026-08-09-ecology-usp-audit.md'
+---
+
+<main id="main" class="sheet mx-auto w-full max-w-4xl flex-1 px-4 py-10 sm:py-14">
+  <SheetHead
+    kicker="An instrument, not a work"
+    title="Unexamined"
+    badges={['DERIVED AT BUILD', 'INSTRUMENT', 'COUNTER-MEASUREMENT']}
+  >
+    <p class="mt-3 max-w-2xl text-fg-muted">
+      This house asks every work it publishes to name its nearest prior art and state its daylight
+      from it. Its own register admits that almost none of them have: <b class="text-fg">{r.works.length}</b> works
+      stand there, and the page says of each one without a note that it is
+      <b class="text-fg">unexamined, not cleared</b>. This instrument does not clear them either.
+      It puts them in an order.
+    </p>
+  </SheetHead>
+
+  {/* ── what was measured ──────────────────────────────────────────────── */}
+  <section class="mb-14">
+    <p class="kicker mb-3">What was measured</p>
+    <p class="max-w-2xl leading-relaxed text-fg-muted">
+      Every work in the register was scored against every entry in the house's
+      <a class="sheet-link" href="/atlas">Atlas of Data Art</a> —
+      <b class="tabular-nums text-fg">{r.pairings.toLocaleString('en-GB')}</b> pairings. The Atlas
+      is what makes this possible: each of its <span class="tabular-nums">{r.atlasCount}</span> entries
+      carries one sentence saying what that work <i>does</i>, and a sentence can be compared with a
+      sentence where a title cannot. The measure is term frequency against inverse document
+      frequency, cosine, over one index built from both sides at once. It is arithmetic. There is
+      no model in it, and that is deliberate: a finding that rests on a model cannot be rechecked
+      once the model changes.
+    </p>
+  </section>
+
+  {/* ── the ruler, before the queue ────────────────────────────────────── */}
+  <section class="mb-14">
+    <p class="kicker mb-3">The ruler, first</p>
+    <p class="mb-5 max-w-2xl leading-relaxed text-fg-muted">
+      A similarity score means nothing on its own. So the same measure was run where relatedness is
+      not in question — this house's own works against each other, where the siblings are matters
+      of public record. This is what <i>related</i> looks like here:
+    </p>
+    <ol class="sheet-plate divide-y divide-line/60">
+      {r.ruler.top.map((p) => (
+        <li class="flex flex-wrap items-baseline gap-x-3 gap-y-1 px-4 py-3 sm:px-5">
+          <span class="w-[4.5em] shrink-0 font-mono text-mono tabular-nums text-fg">{three(p.score)}</span>
+          <span class="text-small text-fg">{p.a} <span class="text-fg-faint">↔</span> {p.b}</span>
+          <span class="w-full font-mono text-mono-sm text-fg-faint sm:pl-[4.5em]">shared: {p.shared.join(' · ')}</span>
+        </li>
+      ))}
+    </ol>
+    <p class="mt-4 max-w-2xl leading-relaxed text-fg-muted">
+      Across all {r.works.length} works the nearest house sibling scores
+      <b class="tabular-nums text-fg">{three(r.ruler.median)}</b> at the median and
+      <b class="tabular-nums text-fg">{three(r.ruler.max)}</b> at the top. Read that as an
+      <b class="text-fg"> upper bound, not a standard</b>: works from one house share more than a
+      subject — they share an idiom, a register and a vocabulary, and some of that score is voice
+      rather than likeness.
+    </p>
+  </section>
+
+  {/* ── the finding ────────────────────────────────────────────────────── */}
+  <section class="mb-14">
+    <p class="kicker mb-3">What the screen found</p>
+    <div class="sheet-plate p-5 sm:p-6">
+      <p class="text-h3 font-semibold leading-snug text-fg">
+        Not one of the {r.works.length} works has an Atlas neighbour as close as the median pair
+        inside this house.
+      </p>
+      <dl class="mt-5 grid gap-x-6 gap-y-3 sm:grid-cols-3">
+        <div>
+          <dt class="font-mono text-mono-sm uppercase tracking-[0.14em] text-fg-faint">nearest house sibling</dt>
+          <dd class="mt-1 font-mono text-h3 tabular-nums text-fg">{three(r.ruler.median)}</dd>
+          <dd class="font-mono text-mono-sm text-fg-faint">median · known related</dd>
+        </div>
+        <div>
+          <dt class="font-mono text-mono-sm uppercase tracking-[0.14em] text-fg-faint">nearest Atlas entry</dt>
+          <dd class="mt-1 font-mono text-h3 tabular-nums text-fg">{three(r.works[Math.floor(r.works.length / 2)].top)}</dd>
+          <dd class="font-mono text-mono-sm text-fg-faint">median · across {r.works.length} works</dd>
+        </div>
+        <div>
+          <dt class="font-mono text-mono-sm uppercase tracking-[0.14em] text-fg-faint">reaching the ruler</dt>
+          <dd class="mt-1 font-mono text-h3 tabular-nums text-fg">{r.atMedian}</dd>
+          <dd class="font-mono text-mono-sm text-fg-faint">of {r.works.length} works</dd>
+        </div>
+      </dl>
+    </div>
+    <p class="mt-5 max-w-2xl leading-relaxed text-fg-muted">
+      <b class="text-fg">That is not a clearance, and this instrument will not be used as one.</b>
+      A screen of this kind can raise a candidate; it cannot certify an absence. A genuine
+      neighbour that happens to be described in other words scores low and sinks — and a sunk pair
+      looks exactly like daylight. The register's own sentence therefore still stands after this
+      page as it stood before it: a work without a checked note is unexamined, not cleared. What
+      has changed is only that the unexamined ones now have an order.
+    </p>
+  </section>
+
+  {/* ── the queue ──────────────────────────────────────────────────────── */}
+  <section class="mb-14">
+    <p class="kicker mb-3">Look at these first</p>
+    <p class="mb-5 max-w-2xl leading-relaxed text-fg-muted">
+      The {LOOK_FIRST} pairings the screen scored highest, strongest first. The shared terms are
+      shown because they are the reason: they let a reader see in one line whether a score is about
+      the subject or about the vocabulary. Several of these are plainly the second kind.
+    </p>
+    <ol class="sheet-plate divide-y divide-line/60">
+      {queue.map((w, i) => {
+        const n = w.neighbours[0]
+        return (
+        <li class="px-4 py-4 sm:px-5">
+          <div class="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+            <span class="w-[2em] shrink-0 font-mono text-mono-sm tabular-nums text-fg-faint">{i + 1}</span>
+            <span class="w-[4.5em] shrink-0 font-mono text-mono tabular-nums text-fg">{three(w.top)}</span>
+            <a class="text-small font-semibold text-fg hover:underline" href={w.href}>{w.title}</a>
+            <span class="font-mono text-mono-xs uppercase tracking-[0.12em] text-fg-faint">{w.practice}</span>
+          </div>
+          <div class="mt-1.5 sm:pl-[6.5em]">
+            <p class="text-small text-fg-muted">
+              <span class="text-fg-faint">↔</span>{' '}
+              {n.entry.source_url
+                ? <a class="sheet-link" href={n.entry.source_url} rel="noopener nofollow">{n.entry.title}</a>
+                : <span>{n.entry.title}</span>}
+              {n.entry.artist && <span class="text-fg-faint"> — {n.entry.artist}</span>}
+              {n.entry.year && <span class="text-fg-faint"> ({n.entry.year})</span>}
+            </p>
+            <p class="mt-1 font-mono text-mono-sm leading-relaxed text-fg-faint">shared: {n.shared.join(' · ')}</p>
+          </div>
+        </li>
+        )
+      })}
+    </ol>
+    <p class="mt-4 font-mono text-mono-sm text-fg-faint">
+      The remaining {r.works.length - LOOK_FIRST} works scored lower. Lower is not clear; the cut is
+      a reading aid, nothing else.
+    </p>
+  </section>
+
+  {/* ── what it cannot do ──────────────────────────────────────────────── */}
+  <section class="mb-14">
+    <p class="kicker mb-3">What it cannot do</p>
+    <ul class="max-w-2xl space-y-3 leading-relaxed text-fg-muted">
+      <li><b class="text-fg">It cannot see a paraphrase.</b> Two descriptions of the same idea with
+        no words in common score near zero. This is the failure that matters, because it is
+        indistinguishable from success.</li>
+      <li><b class="text-fg">Shared words are not a shared idea.</b> Two works about satellites
+        score on <i>orbit</i> and <i>sensor</i> while doing entirely unrelated things. Read the
+        shared terms above and several of the top pairings dissolve.</li>
+      <li><b class="text-fg">The Atlas is not the world.</b> It holds
+        <span class="tabular-nums"> {r.atlasCount}</span> entries, gathered by this house. A neighbour
+        it never catalogued cannot be found here at all.</li>
+      <li><b class="text-fg">Its ruler is contaminated.</b> The house-sibling scores are inflated by
+        a shared idiom, which makes the gap look larger than the likeness alone would.</li>
+    </ul>
+  </section>
+
+  <SheetFoot links={[
+    { href: '/ecology#register', label: 'the works register' },
+    { href: '/atlas', label: 'the Atlas of Data Art' },
+    { href: audit, label: 'the audit of 2026-08-09', external: true },
+  ]}>
+    <p class="max-w-2xl font-mono text-mono-sm leading-relaxed text-fg-faint">
+      Derived at build time from <code>src/data/atlas/werke.json</code> and the works register, by
+      <code>src/lib/daylight/screen.ts</code> — {r.corpus} documents in one index,
+      {' '}{r.pairings.toLocaleString('en-GB')} pairings scored. No number on this page is typed. The
+      measure is stated in full in the source and reproducible by hand: lowercase, cut on
+      non-letters, drop tokens under three letters and a stated stoplist, tf-idf, cosine.
+    </p>
+  </SheetFoot>
+</main>

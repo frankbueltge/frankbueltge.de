@@ -97,6 +97,30 @@ export const WERKE: Werk[] = [
     tier: 'experiment',
   },
   {
+    // Built 2026-09-03 with the method the Studio's own direction of the same day lays down — the
+    // Atlas as inspiration AND as the neighbour list — but built for the lab and not signed by a
+    // practice: the practices author their own works. Its subject is this house's own admission
+    // that it has not kept its USP duty. The neighbour search its own duty requires was run over
+    // the Atlas before a line of it existed: eight entries share its vocabulary, none its move —
+    // no catalogued work audits a practice's novelty claim against a neighbour catalogue.
+    id: 'unexamined',
+    line: 'counter-measurement',
+    title: 'Unexamined',
+    subtitle: {
+      de: 'This house asks every work to name its prior art. Almost none have.',
+      en: 'This house asks every work to name its prior art. Almost none have.',
+    },
+    status: 'live',
+    since: '2026-09-03',
+    href: '/unexamined',
+    description: {
+      de: "An instrument, not a work. The works register admits that prior art has been checked for three of its works, and says of every other that it is unexamined, not cleared — a sentence that has stood unmoved since the audit of 2026-08-09. This screen scores every one of those works against every entry in the house's own Atlas of Data Art, tens of thousands of pairings, by term frequency against inverse document frequency: arithmetic, not a model, so the finding stays recomputable from committed data forever. It reports two things. First a ruler, taken where relatedness is not in question — this house's own works against each other, where the sibling pairs are matters of record. Then the result: not one work has a catalogued neighbour as close as the median pair inside the house. And then it refuses the obvious reading. A screen of this kind can raise a candidate and cannot certify an absence; a genuine neighbour described in other words scores low and sinks, and a sunk pair looks exactly like daylight. So the register's sentence stands after the instrument as it stood before it. What changed is that the unexamined works now have an order, with the reason for each pairing shown as the terms that produced it.",
+      en: "An instrument, not a work. The works register admits that prior art has been checked for three of its works, and says of every other that it is unexamined, not cleared — a sentence that has stood unmoved since the audit of 2026-08-09. This screen scores every one of those works against every entry in the house's own Atlas of Data Art, tens of thousands of pairings, by term frequency against inverse document frequency: arithmetic, not a model, so the finding stays recomputable from committed data forever. It reports two things. First a ruler, taken where relatedness is not in question — this house's own works against each other, where the sibling pairs are matters of record. Then the result: not one work has a catalogued neighbour as close as the median pair inside the house. And then it refuses the obvious reading. A screen of this kind can raise a candidate and cannot certify an absence; a genuine neighbour described in other words scores low and sinks, and a sunk pair looks exactly like daylight. So the register's sentence stands after the instrument as it stood before it. What changed is that the unexamined works now have an order, with the reason for each pairing shown as the terms that produced it.",
+    },
+    live: true,
+    tier: 'instrument',
+  },
+  {
     id: 'trending',
     line: 'ledger',
     title: 'Common Ground',
