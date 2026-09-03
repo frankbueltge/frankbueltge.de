@@ -22,6 +22,13 @@
 // is looking at it. Scrubbing to any other day propagates nothing, because no other day has
 // elements to propagate. Under prefers-reduced-motion one frame is computed at mount and stands.
 //
+// WHO OWNS THE CAMERA (G2, 2026-09-03). A guided story may ask the camera to stand somewhere
+// (`flyTo`), and the visitor may take the sphere out of its hands at any moment. The pointer wins:
+// the first drag stops the decorative turn for good, and `heldByPointer()` lets a story see that it
+// has been taken over, so a scene re-applied while a reader is holding the globe does not yank it
+// back. A new scene is a new command and moves it. Under reduced motion every camera move is a cut,
+// not a flight, and there is no ambient movement at all.
+//
 // FETCH-THEN-PARSE ONLY. No layer here is ever handed a URL: deck.gl would fetch and parse it
 // itself, on its own schedule, past the island's "once per layer, never again" promise and past
 // any error the island could show. The island fetches, the island parses, this module draws
@@ -150,6 +157,12 @@ export interface GlobeHandle {
   retheme(): void
   setFrame(frame: GlobeFrame, ink?: GlobeInk): void
   flyTo(camera: GlobeCamera, animate: boolean): void
+  /** Whether the visitor has taken hold of the globe — dragged, zoomed, panned or rotated it —
+   *  SINCE the last camera command. A guided story asks this before it moves the camera again, so
+   *  a re-applied scene cannot pull the sphere out of a reader's hand; the next scene's camera is a
+   *  new command and moves it. This is why no story needs a listener of its own: the drawing half
+   *  already knows, because it is the thing the pointer is on (G2, 2026-09-03). */
+  heldByPointer(): boolean
   destroy(): void
 }
 
@@ -478,6 +491,12 @@ export function mountGlobe(options: MountOptions): GlobeHandle {
   let frame = options.frame
   let paused = false
   let interacted = false
+  // `interacted` is one-way and permanent: it stops the decorative turn for good, because a turn
+  // that resumes under a reader's hand is worse than no turn at all. `held` is the same event read
+  // for a different question — "has the visitor touched this since the last camera command?" — and
+  // it is therefore CLEARED by flyTo, so a story can tell "the reader is holding this scene's
+  // globe" from "the reader held some earlier scene's".
+  let held = false
   let destroyed = false
 
   // ── the one declared no-clock exception ────────────────────────────────────────────────────
@@ -583,6 +602,7 @@ export function mountGlobe(options: MountOptions): GlobeHandle {
     onViewStateChange: ({ viewState: next, interactionState }) => {
       if (interactionState.isDragging || interactionState.isZooming || interactionState.isPanning || interactionState.isRotating) {
         interacted = true
+        held = true
       }
       viewState = next as ViewState
       deck.setProps({ viewState })
@@ -646,8 +666,12 @@ export function mountGlobe(options: MountOptions): GlobeHandle {
       if (nextInk) ink = nextInk
       draw()
     },
+    heldByPointer() {
+      return held
+    },
     flyTo(camera, animate) {
       interacted = true
+      held = false
       const moving = animate && !reduced
       viewState = {
         ...viewState,
