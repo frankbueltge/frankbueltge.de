@@ -12,8 +12,8 @@ from typing import Any
 
 import httpx
 
-from trending.fetch import _redacted
-from trending.model import CONTRACT_AUDIENCE
+from trending.fetch import USER_AGENT, _redacted
+from trending.model import CONTRACT_AUDIENCE, to_json
 from trending.ua import CLASSES, classify, path_kind
 
 GRAPHQL_URL = "https://api.cloudflare.com/client/v4/graphql"
@@ -165,3 +165,41 @@ def build_audience(client: httpx.Client, day: date, env: dict[str, str] | None =
         "generated_at": generated_at,
         "edge": edge_counts(client, env.get("CF_ANALYTICS_TOKEN"), env.get("CF_ZONE_ID"), day),
     }
+
+
+# ------------------------------------------------------------------------------------- the probe
+
+def main(argv: list[str] | None = None) -> int:
+    """Read the edge audience of one past day and print it. Writes nothing.
+
+    This exists because a question about the record should be answerable without occupying a
+    slot in it: which dimensions the plan actually serves, whether the token still reaches the
+    zone, what a day looked like. The nightly writes; the probe only looks.
+    """
+    import argparse
+    import sys
+
+    p = argparse.ArgumentParser(prog="trending.audience",
+                                description="Print the edge audience of a past day; write nothing.")
+    p.add_argument("--day", required=True, help="YYYY-MM-DD, a day that has ended")
+    args = p.parse_args(argv)
+    try:
+        day = datetime.strptime(args.day, "%Y-%m-%d").date()
+    except ValueError:
+        p.error("--day must be YYYY-MM-DD")
+    if day >= datetime.now(timezone.utc).date():
+        print("audience probe: that day has not ended; the count would be partial", file=sys.stderr)
+        return 2
+    with httpx.Client(headers={"User-Agent": USER_AGENT}) as client:
+        record = build_audience(client, day)
+    print(to_json(record), end="")
+    e = record["edge"]
+    print(f"audience probe {day}: {e['status']} · total {e.get('total')} · "
+          f"countries {'yes' if e.get('countries') else 'no'} · "
+          f"referers {'yes' if e.get('referers') else 'no'}"
+          + (f" · note: {e['extra_note']}" if e.get("extra_note") else ""), file=sys.stderr)
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

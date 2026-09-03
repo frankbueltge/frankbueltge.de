@@ -203,3 +203,16 @@ only common nouns ("Nepal mountain collapse causes floods" against "missing tour
 contact as Nepal floods"), and a one-word label like a hashtag can only match another label
 exactly. Weighting a shared word by how rare it is in the day would address both and stays
 deterministic; it is not built, and the labelled set is what will decide it.
+
+### The probe
+
+A question about the record should be answerable without occupying a slot in it. The nightly
+writes; the probe only looks:
+
+```bash
+python -m trending.audience --day 2026-09-02    # prints the record, writes nothing
+```
+
+The same is reachable without a checkout: run the `Trending nightly` workflow by hand with the
+`probe_day` input set to a past day. With that input the run does the probe and nothing else —
+no file, no commit. It refuses a day that has not ended, because the count would be partial.

@@ -20,7 +20,12 @@ name: Trending nightly
 on:
   schedule:
     - cron: '40 6 * * *' # daily 06:40 UTC — after Gegenmessung (06:00) and the morning digest
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      probe_day:
+        description: "Read the edge audience of this past day (YYYY-MM-DD) and print it. Writes and commits nothing."
+        required: false
+        default: ""
 
 permissions:
   contents: write
@@ -41,7 +46,14 @@ jobs:
           python-version: '3.12'
       - name: Install the pipeline package
         run: pip install --no-cache-dir ./pipelines/trending
+      - name: Probe the edge audience of a past day (writes nothing)
+        if: ${{ inputs.probe_day != '' }}
+        env:
+          CF_ANALYTICS_TOKEN: ${{ secrets.CF_ANALYTICS_TOKEN }}
+          CF_ZONE_ID: ${{ vars.CF_ZONE_ID }}
+        run: python -m trending.audience --day "${{ inputs.probe_day }}"
       - name: Run the ledger (writes, does not commit)
+        if: ${{ inputs.probe_day == '' }}
         env:
           CF_ANALYTICS_TOKEN: ${{ secrets.CF_ANALYTICS_TOKEN }}
           # The built-in token lifts GitHub's search limit from 10 to 30 requests a minute for
@@ -50,6 +62,7 @@ jobs:
           CF_ZONE_ID: ${{ vars.CF_ZONE_ID }}
         run: python -m trending.run --repo-root .
       - name: Commit
+        if: ${{ inputs.probe_day == '' }}
         run: |
           git config user.name "Morgenlese"
           git config user.email "morgenlese@frankbueltge.de"
