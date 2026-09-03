@@ -1,6 +1,6 @@
 // src/lib/engines/register.ts
-// The works register (/works): every work the three practices have produced, from the works'
-// own committed meta.json files and from nothing else.
+// The works register (/ecology#register, at /works until 2026-09-03): every work the three
+// practices have produced, from the works' own committed meta.json files and from nothing else.
 //
 // The hub's LATEST strip reads the same derivation and shows the newest few (see
 // src/lib/engines/latest.ts). This module adds the two things a complete register needs and a

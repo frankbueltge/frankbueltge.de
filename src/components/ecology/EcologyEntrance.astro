@@ -27,7 +27,7 @@ import { NAMING } from '@/config/naming'
 import pulseData from '@/data/pulse/pulse.json'
 import type { PulseSnapshot } from '@/lib/pulse/render'
 import { allWorks } from '@/lib/engines/register'
-import { buildSignalLog } from '@/lib/ops/board'
+import { registerEntries } from '@/lib/ops/house-feed'
 import { linePath, smooth3 } from '@/lib/ops/viz'
 import { MAP_NODES, daysUntil, readingDate, type StationId } from '@/lib/ecology/pyramid/model'
 import { buildLandings } from '@/lib/ecology/pyramid/landings'
@@ -59,7 +59,14 @@ const timeline = buildTimeline({ works, now, readingDate: reading, origin: count
 const score = loadEcologyScore()
 const scoreLast = scoreLastLanded(score)
 const geo = timelineGeometry(timeline)
-const feed = buildSignalLog(works, 5)
+// This surface is archived (see the note at the top) and keeps the ecology-only reading it
+// shipped with: the house-wide feed of 2026-09-03 belongs to the surfaces that are live, and
+// widening a page nobody can reach would put Arch and n-1 on a map whose three nodes have no
+// room for them. registerEntries() is the same derivation the live log uses, cut to the three
+// practices this page draws.
+const feed = registerEntries(works)
+  .filter((e) => e.house !== 'nightly-line')
+  .slice(0, 5)
 
 // The map's mini-sparkline box — 44px wide, which is what fits beside a node without crowding the
 // label under it. Its own box rather than SPARK_BOX: this line is a texture, not a reading.
@@ -381,9 +388,9 @@ const weeksOnRecord = Math.max(1, Math.ceil(weekOffset(timeline.origin, now.toIS
              style attributes silently, so a per-card delay written that way would have failed
              without a trace. */
           <li>
-            <a class={`eco-card eco-rise-${Math.min(i, 7)} eco-voice-${voiceOf(nsVoice[entry.ns])}`} href={url(entry.href)}>
+            <a class={`eco-card eco-rise-${Math.min(i, 7)} eco-voice-${voiceOf(nsVoice[entry.house])}`} href={url(entry.href)}>
               <span class="eco-card-meta">
-                {entry.date} · <span class="eco-card-voice">{entry.practice}</span>
+                {entry.date} · <span class="eco-card-voice">{entry.houseName}</span>
               </span>
               <span class="eco-card-title">{entry.title}</span>
               <span class="eco-card-kind">

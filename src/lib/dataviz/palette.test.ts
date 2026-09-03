@@ -286,7 +286,7 @@ describe('ecology-voices is ONE quartet across its four surfaces', () => {
   const score = readFileSync(new URL('src/styles/score-map.css', `file://${ROOT}`), 'utf8')
   const partitur = readFileSync(new URL('src/components/maschinenraum/Partitur.astro', `file://${ROOT}`), 'utf8')
   // The fourth surface (2026-08-01): the works register's per-row practice hairline.
-  const register = readFileSync(new URL('src/components/pages/WorksRegister.astro', `file://${ROOT}`), 'utf8')
+  const register = readFileSync(new URL('src/components/ecology/WorksRegisterSection.astro', `file://${ROOT}`), 'utf8')
 
   it('hub doors and score map carry identical practice-trio values in both modes', () => {
     for (const s of set.slots.slice(0, 3)) {

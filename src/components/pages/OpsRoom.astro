@@ -46,7 +46,9 @@ import { NAMING } from '@/config/naming'
 import pulseData from '@/data/pulse/pulse.json'
 import type { PulseSnapshot } from '@/lib/pulse/render'
 import { buildStackSvg, stackWeekRange } from '@/lib/ops/stack'
-import { buildBoard, buildSignalLog } from '@/lib/ops/board'
+import { buildBoard } from '@/lib/ops/board'
+import { buildHouseFeed } from '@/lib/ops/house-feed'
+import SignalLog from '@/components/ops/SignalLog.astro'
 import { buildDayDial } from '@/lib/ops/dial'
 import { readTiles, type OpsTile } from '@/lib/ops/tiles'
 import {
@@ -74,13 +76,13 @@ const pulse = pulseData as PulseSnapshot
 const stackSvg = buildStackSvg(pulse)
 const dial = buildDayDial(pulse)
 const board = buildBoard(pulse)
-const signal = buildSignalLog()
+// The whole house, newest first — the component pages it seven at a time.
+const signal = buildHouseFeed()
 const tiles = readTiles({ protokoll: await getLatestProtokoll() })
 
 const OPS = NAMING.opsRoom
 /** the practice a board row or log entry belongs to, as a CSS class carrying its --led */
 const voiceClass = (id: string | null) => (id ? ` ops-voice-${id}` : '')
-const nsVoice: Record<string, string> = { atelier: 'ulysses', field: 'meridian', studio: 'ensemble' }
 
 // The sparkline's geometry, once per row: the smoothed series as a curve, the quiet fill under it,
 // the newest bucket as a point, and the points themselves as data for the hover probe. The readout
@@ -278,26 +280,8 @@ const catalogues = NAMING.catalogues.items.filter((c) => c.href !== '/atlas')
   <section class="ops-section" id="latest">
     <div class="ops-head">
       <p class="kicker ops-kicker"><b>{OPS.signal.kicker}</b> · {OPS.signal.kickerSub}</p>
-      <a class="ops-headlink" href={url(OPS.signal.link.href)}>{OPS.signal.link.label}</a>
     </div>
-    <ul class="ops-panel ops-log">
-      {signal.map((entry, i) => (
-        /* The stagger comes from a class, not from an inline delay: this site's CSP drops inline
-           style attributes silently, so a per-row delay written that way would have failed
-           without a trace — and drift-check rule 3 catches it before it can. */
-        <li class={`ops-log-row-${Math.min(i, 7)}`}>
-          <a href={url(entry.href)}>
-            <span class="ops-log-date">{entry.date}</span>
-            <span class={`ops-log-ns${voiceClass(nsVoice[entry.ns] ?? null)}`}>{entry.practice}</span>
-            <span class="ops-log-title">
-              {entry.title}
-              {entry.withdrawn && <span class="ops-log-withdrawn">{NAMING.worksRegister.withdrawnLabel}</span>}
-            </span>
-            <span class="ops-log-kind">{entry.kind}</span>
-          </a>
-        </li>
-      ))}
-    </ul>
+    <SignalLog entries={signal} />
     <p class="ops-foot-line">{OPS.signal.foot} <span class="ops-cursor">▍</span></p>
   </section>
 

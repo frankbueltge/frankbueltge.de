@@ -62,7 +62,7 @@ describe('what the register prints about prior art', () => {
   it('leaves the unaudited majority without a note, so the head line has to explain it', () => {
     const unaudited = works.filter((w) => !audits.has(`${w.ns}/${w.slug}`))
     expect(unaudited.length).toBeGreaterThan(0)
-    const page = readFileSync(`${ROOT}src/components/pages/WorksRegister.astro`, 'utf8')
+    const page = readFileSync(`${ROOT}src/components/ecology/WorksRegisterSection.astro`, 'utf8')
     expect(page).toContain('unexamined, not cleared')
     expect(page).toContain('Prior art checked for')
   })

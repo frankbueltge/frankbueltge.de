@@ -190,8 +190,14 @@ describe('the cascade is binned against a measured span, not a counted one', () 
 describe('the copy dictionary carries no readings', () => {
   /** Constants of the method, not measurements — the only digits allowed to be written down. The
    *  bin width is a property of how the pulse is built, fixed in scripts/fetch-pulse.ts; it cannot
-   *  go stale the way a reading can. Anything else with a digit in it belongs in a derivation. */
-  const ALLOWED = new Set(['2-HOUR BINS · TAPERED'])
+   *  go stale the way a reading can. Anything else with a digit in it belongs in a derivation.
+   *
+   *  "n-1" is the second kind of allowed digit, added 2026-09-03: a proper name that happens to
+   *  contain one. It is the practice's own repository title, after the rhizome's writing rule
+   *  ("subtract the unique from the multiplicity"), and it appears here as a board row's id, its
+   *  repo and its fallback name. A name cannot go stale the way a reading can — and rewriting it
+   *  to satisfy a digit scan would be the site renaming a practice to suit its own test. */
+  const ALLOWED = new Set(['2-HOUR BINS · TAPERED', 'n-1'])
 
   function walk(value: unknown, path: string, found: string[]): void {
     if (typeof value === 'string') {
