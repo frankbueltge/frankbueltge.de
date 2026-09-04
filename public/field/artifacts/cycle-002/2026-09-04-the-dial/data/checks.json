@@ -2,6 +2,10 @@
  "P1": {
   "arxiv": {
    "dense": {
+    "centered_intercept": 0.002601819427527463,
+    "centered_r2": 0.9993729293598526,
+    "centered_r2_ok": true,
+    "centered_slope": 0.04661731120584653,
     "means": [
      0.225,
      0.3775,
@@ -18,6 +22,10 @@
     "slope_in_band": true
    },
    "lean": {
+    "centered_intercept": -0.031227923264311563,
+    "centered_r2": 0.9996614711305754,
+    "centered_r2_ok": true,
+    "centered_slope": 0.047626370280146164,
     "means": [
      0.19,
      0.34,
@@ -36,6 +44,10 @@
   },
   "crossref": {
    "dense": {
+    "centered_intercept": 0.04671551461632184,
+    "centered_r2": 0.984874354146928,
+    "centered_r2_ok": false,
+    "centered_slope": 0.043268118148599266,
     "means": [
      0.19,
      0.33,
@@ -52,6 +64,10 @@
     "slope_in_band": false
    },
    "lean": {
+    "centered_intercept": 0.10322339372716205,
+    "centered_r2": 0.9807609645176327,
+    "centered_r2_ok": false,
+    "centered_slope": 0.040261495127892816,
     "means": [
      0.18,
      0.3325,
@@ -230,6 +246,10 @@
    },
    "P1": {
     "dense": {
+     "centered_intercept": 0.002601819427527463,
+     "centered_r2": 0.9993729293598526,
+     "centered_r2_ok": true,
+     "centered_slope": 0.04661731120584653,
      "means": [
       0.225,
       0.3775,
@@ -246,6 +266,10 @@
      "slope_in_band": true
     },
     "lean": {
+     "centered_intercept": -0.031227923264311563,
+     "centered_r2": 0.9996614711305754,
+     "centered_r2_ok": true,
+     "centered_slope": 0.047626370280146164,
      "means": [
       0.19,
       0.34,
@@ -319,6 +343,21 @@
     "predicted": "deduplicating the space yields MORE survivors",
     "raw_findings": 17
    },
+   "P4_representative_sensitivity": {
+    "first": {
+     "distinct": 11,
+     "survivors": 11
+    },
+    "invariant_across_rules": false,
+    "max_p": {
+     "distinct": 10,
+     "survivors": 10
+    },
+    "min_p": {
+     "distinct": 11,
+     "survivors": 11
+    }
+   },
    "P5": {
     "ci95": [
      0.044667217934068054,
@@ -329,6 +368,7 @@
    },
    "breaks": 0,
    "distinct_pairs": 51,
+   "pairing_verified": true,
    "per_question_null_rate": {
     "above_0.08": 0,
     "below_0.02": 0,
@@ -386,6 +426,16 @@
      0.0225
     ]
    },
+   "posthoc_trim_control": {
+    "claimable": 0.04872549019607845,
+    "dead_questions": [],
+    "killed": 0.04183333333333333,
+    "n_claimable": 51,
+    "n_killed": 15,
+    "n_whole": 66,
+    "naive_drop_lowest_n": 0.05098039215686276,
+    "whole_space": 0.04715909090909095
+   },
    "questions": 66,
    "records": 2039,
    "review_kills": 15
@@ -403,6 +453,10 @@
    },
    "P1": {
     "dense": {
+     "centered_intercept": 0.04671551461632184,
+     "centered_r2": 0.984874354146928,
+     "centered_r2_ok": false,
+     "centered_slope": 0.043268118148599266,
      "means": [
       0.19,
       0.33,
@@ -419,6 +473,10 @@
      "slope_in_band": false
     },
     "lean": {
+     "centered_intercept": 0.10322339372716205,
+     "centered_r2": 0.9807609645176327,
+     "centered_r2_ok": false,
+     "centered_slope": 0.040261495127892816,
      "means": [
       0.18,
       0.3325,
@@ -497,6 +555,21 @@
     "predicted": "deduplicating the space yields MORE survivors",
     "raw_findings": 28
    },
+   "P4_representative_sensitivity": {
+    "first": {
+     "distinct": 21,
+     "survivors": 21
+    },
+    "invariant_across_rules": false,
+    "max_p": {
+     "distinct": 20,
+     "survivors": 20
+    },
+    "min_p": {
+     "distinct": 21,
+     "survivors": 21
+    }
+   },
    "P5": {
     "ci95": [
      0.03851206976057887,
@@ -507,6 +580,7 @@
    },
    "breaks": 0,
    "distinct_pairs": 51,
+   "pairing_verified": true,
    "per_question_null_rate": {
     "above_0.08": 0,
     "below_0.02": 10,
@@ -563,6 +637,26 @@
      "has_fulltext_link|abstract_words",
      0.0
     ]
+   },
+   "posthoc_trim_control": {
+    "claimable": 0.049390243902439034,
+    "dead_questions": [
+     "has_fulltext_link|abstract_words",
+     "has_fulltext_link|author_count",
+     "has_fulltext_link|cited_by_count",
+     "has_fulltext_link|has_abstract",
+     "has_fulltext_link|has_license",
+     "has_fulltext_link|has_orcid",
+     "has_fulltext_link|published_doy",
+     "has_fulltext_link|reference_count",
+     "has_fulltext_link|title_words"
+    ],
+    "killed": 0.0268,
+    "n_claimable": 41,
+    "n_killed": 25,
+    "n_whole": 66,
+    "naive_drop_lowest_n": 0.0525609756097561,
+    "whole_space": 0.04083333333333334
    },
    "questions": 66,
    "records": 2400,

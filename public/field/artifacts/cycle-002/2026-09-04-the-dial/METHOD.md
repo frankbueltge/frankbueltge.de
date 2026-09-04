@@ -80,8 +80,34 @@ was **not modified**, so the nightly series it feeds is undisturbed.
    this session that *rescues* a refuted prediction, which is exactly the kind of analysis that
    has to carry its label loudest. See VERIFICATION.md for the objection that it is circular.
 
+5. **Three diagnostics added after the adversary reported, and the page rebuilt.** `dial_checks.py`
+   gained the conventional mean-centred R² alongside the through-origin one, a sensitivity of P4 to
+   which copy of a duplicated question is kept, and a control for the §6 restriction that trims the
+   same number of questions with no rationale at all. `dial_checks.py` also now recomputes the
+   pairing claim rather than asserting it. **No sweep was re-run and no datum changed**; these read
+   the same committed sweep files. Four sentences on the page changed as a result and each says so
+   where it stands; the whole account is in `VERIFICATION.md` and the superseded page is at
+   `1571e41`.
+
 Nothing else departed. No cell, k value, family rule, α, seed, replicate count or prediction was
-changed after any datum was seen. K3 did not fire: both arms logged 0 breaks and nothing raised.
+changed after any datum was seen. K3 did not fire: both arms logged 0 breaks and nothing raised —
+though the adversary showed that the Crossref break log's zero is less informative than it looks
+(§5 below).
+
+## 4a. A defect in the second corpus, found after the fact and not repaired
+
+The Crossref fetcher sorts by *deposit* date, newest first, and stops at 300 per member. For a
+publisher depositing more than 300 articles in the window, that returns the most recently deposited
+slice rather than a spread across it. In the committed corpus, **1,485 of the 1,921 dated records
+fall on day-of-year 240 or later**, MDPI's 300 span six days, and **Elsevier's 300 have no
+resolvable issue date at all** — `_doy` swallowed every exception, so that total, publisher-shaped
+missingness produced nothing in the break log.
+
+**Not repaired here, deliberately.** Repairing the fetcher would break the match between the
+committed corpus and the code that produced it, and re-fetching would replace the corpus every
+number in this artifact rests on. The corpus stands as fetched; the fetcher carries a dated
+`KNOWN DEFECT` block naming both faults and the fix; page section 7 and `VERIFICATION.md` state the
+consequence. No verdict in P1–P5 depends on the corpus being a fair sample of its window.
 
 ## 5. Statistics
 

@@ -2348,3 +2348,50 @@ loop's yield against its null-world yield, night by night, that is the one figur
 visitor would understand at a glance. Nothing depends on it.
 
 **Status:** direction taken, session two · one optional ask open · no answer required
+
+## Correction — 2026-09-04 (session 151, same day) — an adversary took four sentences off the entry above
+
+**The entry above was written before the artifact was attacked. Four of its claims are now weaker
+or withdrawn, and the correction belongs in this channel rather than only in the artifact.**
+
+An adversary was convened against the whole thing after it was committed, given the data, the
+instruments and the pre-registration, and told to break it. **Five defects; four changed the page.**
+Every number it reported was recomputed independently before anything was altered, and every one
+held. What changes in what was said to you above:
+
+1. **Withdrawn: "the slope transfers between the questions that are awake".** The post-hoc
+   restriction to claimable questions (4.87 % / 4.94 %) does not establish transfer. Drop simply the
+   fifteen and twenty-five questions with the *lowest* null rates — no pre-conditions, no reasoning
+   — and the rates are **5.10 %** and **5.26 %**. The convergence is what trimming the low tail of a
+   roughly nominal distribution does. **P5 stays refuted with nothing taken off it.** The failed
+   repair is kept on the page as a failed repair.
+2. **Weakened: "Benjamini–Hochberg is self-correcting for exact duplicates".** True here under the
+   canonical and the smallest-p representative; keeping the *largest*-p copy instead costs a
+   survivor on both corpora (11 → 10, 21 → 20). It is a property of this data under the rule used,
+   not a theorem. P4 remains refuted either way.
+3. **Qualified: the R² behind "the dial is a line".** Ours was the through-origin convention, which
+   is the lenient one; the conventional mean-centred R² puts Crossref at **0.981**, under the
+   registered bar. The pre-registration named the through-origin model, so the registered verdict
+   stands — but both are now computed and both are on the page.
+4. **Corrected: one sentence was simply wrong** against the data committed beside it. We wrote that
+   a tenth Crossref question died "for the same reason" on `open_licence`. It did not: that grouping
+   has seven false records, its questions are killed at review, and their null rates are 2.75–5.5 %.
+   The load-bearing claim is unaffected and exact — `has_fulltext_link` is true for 2,400 of 2,400.
+
+**And one thing you should know that we did not know when we wrote to you.** The Crossref corpus is
+not the corpus the pre-registration describes. The fetcher sorts by *deposit* date and stops at 300
+per publisher, so **1,485 of the 1,921 dated records fall in the last eight days of a fourteen-week
+window**, MDPI's three hundred span six days, and **Elsevier's three hundred carry no resolvable
+issue date at all** — swallowed by a bare `except`, so the break log reads zero and means nothing
+about it. No verdict conditions on the corpus being a fair sample of its window, so nothing above
+moves. We have **not** repaired the fetcher and **not** re-fetched: repairing would break the match
+between the committed corpus and the code that produced it, and re-fetching would replace the data
+every number rests on. A dated defect note now stands in the file, and page section 7 says all of it.
+
+**Why this is in your channel and not only in the artifact.** The entry above told you the session's
+own claim died by its own falsifier and offered that as the discipline working. It is fairer to add
+that the discipline needed a second pass to catch four more, that the second pass was something this
+practice convened against itself, and that one of the four was a plain factual error against our own
+committed data — the kind this house measures in others.
+
+**Status:** correction filed · no answer required
