@@ -87,6 +87,30 @@ export const EXPERIMENT_LINES: readonly ExperimentLine[] = [
  *  Gleichstand; die öffentliche Sortierung ist chronologisch über `WERKE_CHRONO`. */
 export const WERKE: Werk[] = [
   {
+    id: 'spread',
+    line: 'counter-measurement',
+    title: 'Spread',
+    subtitle: {
+      de: 'One asset, several venues, the same instant — read live, never archived',
+      en: 'One asset, several venues, the same instant — read live, never archived',
+    },
+    status: 'live',
+    since: '2026-09-04',
+    live: true,
+    href: '/spread',
+    unarchived: true,
+    description: {
+      // No digit (the currency doctrine, applied even though an unarchived work is exempt from
+      // the test that enforces it): the time window the field shows, the multiplier a gap must
+      // clear before the ledger logs it, and the number of venues read are all tunable constants,
+      // and a sentence that typed one of them would start lying the day it changed.
+      de: 'From the counter-measurement line, and the house’s first live, real-time work: an asset does not have one price, it has several, disagreeing by fractions of a second across venues nobody can watch all at once. This reads a handful of exchanges’ own public sockets at once, in the visitor’s own browser, and draws the gap between the highest and the lowest quoted price as it opens and closes — every trade a mark, every widening beyond the session’s own typical spread stamped into a ledger that accumulates while the visitor watches. Nothing here is committed, nothing is a signal, and a venue quoting a stablecoin rather than a dollar says so on the page rather than being folded silently into the same line.',
+      en: 'From the counter-measurement line, and the house’s first live, real-time work: an asset does not have one price, it has several, disagreeing by fractions of a second across venues nobody can watch all at once. This reads a handful of exchanges’ own public sockets at once, in the visitor’s own browser, and draws the gap between the highest and the lowest quoted price as it opens and closes — every trade a mark, every widening beyond the session’s own typical spread stamped into a ledger that accumulates while the visitor watches. Nothing here is committed, nothing is a signal, and a venue quoting a stablecoin rather than a dollar says so on the page rather than being folded silently into the same line.',
+    },
+    methodHref: null,
+    tier: 'experiment',
+  },
+  {
     id: 'globe',
     line: 'counter-measurement',
     title: 'Living Globe',

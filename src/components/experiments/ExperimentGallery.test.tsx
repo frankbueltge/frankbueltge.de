@@ -96,7 +96,11 @@ describe('the gallery renders whole on the server', () => {
   it('draws every miniature before a script has run', () => {
     for (const section of sections) {
       for (const card of section.cards) {
-        expect(card.thumb, `${card.id} reached the gallery without a miniature`).not.toBeNull()
+        // An unarchived work (src/lib/experiments/unarchived.ts) has no committed file at build
+        // time for a miniature to be drawn FROM — thumbnails.test.ts carries the matching
+        // exemption, and the gallery itself renders such a card with no `.gal-thumb` block at
+        // all rather than a stand-in graphic.
+        if (card.thumb === null) continue
         expect(html, `${card.id}'s miniature is not in the server render`).toContain(`tm-t-${card.id}`)
       }
     }
@@ -120,7 +124,9 @@ describe('the gallery renders whole on the server', () => {
   })
 
   it('names each miniature after the experiment and what the drawing shows', () => {
-    const first = sections[0]!.cards[0]!
+    // The first card with an actual miniature — not necessarily sections[0].cards[0], since an
+    // unarchived work with no committed file can now sit newest-first with no thumb at all.
+    const first = sections.flatMap((s) => s.cards).find((c) => c.thumb !== null)!
     expect(html).toContain(`${first.title} — ${first.thumb!.draws}`)
   })
 })

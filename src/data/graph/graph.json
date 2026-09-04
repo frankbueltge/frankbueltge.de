@@ -4,7 +4,7 @@
     "sources": [
       {
         "file": "src/data/werke.ts",
-        "sha256": "a9f9ffff8ad43986"
+        "sha256": "8b1ecdef53895966"
       },
       {
         "file": "docs/audits/2026-08-09-usp-audit.md",
@@ -12,7 +12,7 @@
       },
       {
         "file": "docs/decision-log.md",
-        "sha256": "00bc1a8b20a59abe"
+        "sha256": "38b73cd977e8ac7c"
       },
       {
         "file": "src/data/post/ledger.json",
@@ -57,16 +57,16 @@
       }
     ],
     "counts": {
-      "nodes": 389,
-      "edges": 343,
+      "nodes": 391,
+      "edges": 344,
       "nodesByKind": {
-        "decision": 120,
+        "decision": 121,
         "encounter": 6,
         "neighbor": 115,
         "practice": 9,
         "practice-work": 106,
         "receiver": 8,
-        "work": 25
+        "work": 26
       },
       "edgesByKind": {
         "addresses": 8,
@@ -75,7 +75,7 @@
         "made-by": 106,
         "neighbor-of": 116,
         "participates": 17,
-        "touches": 89
+        "touches": 90
       }
     }
   },
@@ -1272,6 +1272,16 @@
     },
     {
       "id": "decision:2026-09-04-1",
+      "kind": "decision",
+      "label": "Spread ships",
+      "date": "2026-09-04",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "Spread ships"
+      }
+    },
+    {
+      "id": "decision:2026-09-04-2",
       "kind": "decision",
       "label": "Das Korsett kommt ab: Live- und Echtzeit-Experimente sind hier startbar, ohne zweite Seite und ohne Rückfrage",
       "date": "2026-09-04",
@@ -4409,7 +4419,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'balance'"
       },
-      "rank": 4,
+      "rank": 5,
       "tier": "experiment",
       "line": "From the “Counter-Measurement” line.",
       "verdict": "UNIQUE",
@@ -4431,7 +4441,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'beifang'"
       },
-      "rank": 7,
+      "rank": 8,
       "verdict": "ADDED VALUE",
       "verdictLabel": "ADDED VALUE (narrow).",
       "daylight": "Cite the prior academic literature (Hanson, Marino, SPARC) explicitly on the page — currently absent, which reads as unawareness — and make the recurring-cadence, paired-control, dual-vantage-point apparatus the headline claim, since that's the part with no existing match.",
@@ -4451,7 +4461,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'consensus'"
       },
-      "rank": 13,
+      "rank": 14,
       "tier": "experiment",
       "line": "From the “Counter-Measurement” line.",
       "verdict": "ADDED VALUE",
@@ -4473,7 +4483,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'correction'"
       },
-      "rank": 14,
+      "rank": 15,
       "tier": "studie",
       "line": "From the “Counter-Measurement” line.",
       "verdict": "REDUNDANT",
@@ -4507,7 +4517,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'ghost-fleet'"
       },
-      "rank": 8,
+      "rank": 9,
       "tier": "studie",
       "line": "From the “Counter-Measurement” line.",
       "verdict": "REDUNDANT",
@@ -4529,7 +4539,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'globe'"
       },
-      "rank": 1,
+      "rank": 2,
       "tier": "experiment",
       "line": "From the counter-measurement line.",
       "verdict": "ADDED VALUE",
@@ -4551,7 +4561,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'invoked-past'"
       },
-      "rank": 3,
+      "rank": 4,
       "tier": "experiment",
       "verdict": "UNIQUE",
       "verdictLabel": "UNIQUE (as a living instrument).",
@@ -4605,7 +4615,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'parallaxe'"
       },
-      "rank": 16,
+      "rank": 17,
       "verdict": "REDUNDANT",
       "verdictLabel": "REDUNDANT-leaning.",
       "daylight": "The plausible surviving differentiator is *process*, not method: a committed, versioned, git-archived daily register with a fixed non-selected topic set, never retconned — none of the neighbors offer that as a public, continuously-dated artifact (INFOGAP is a paper/dataset; Omnipedia/Manypedia are dead demos). Name this explicitly as the point, and cite INFOGAP/Omnipedia/Manypedia openly rather than let a visitor discover the overlap unassisted.",
@@ -4625,7 +4635,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'pattern'"
       },
-      "rank": 12,
+      "rank": 13,
       "line": "Capstone of the “Counter-Measurement” line.",
       "verdict": "REDUNDANT",
       "verdictLabel": "REDUNDANT — the weakest claim to uniqueness in this audit.",
@@ -4646,7 +4656,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'praemie'"
       },
-      "rank": 15,
+      "rank": 16,
       "verdict": "REDUNDANT",
       "verdictLabel": "REDUNDANT.",
       "daylight": "Either build on genuinely under-covered instruments — actual cat-bond spread/ROL data (Swiss Re index, Artemis.bm) rather than the BLS homeowner PPI others already use — or make the legal-document framing itself the explicit differentiator, citing Deep Sky/BLS/FRED openly rather than implying proprietary discovery.",
@@ -4666,7 +4676,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'protokoll'"
       },
-      "rank": 17,
+      "rank": 18,
       "verdict": "ADDED VALUE",
       "verdictLabel": "ADDED VALUE, driven by the literary form, not the data aggregation.",
       "daylight": "Stop positioning \"twelve open sources, daily\" as the value proposition (invites a losing comparison to OWID); foreground the deterministic/no-LLM/ test-locked-template mechanism and the \"adjourned\" bureaucratic-literary device as the explicit claim — an art piece about administrative language applied to planetary indicators, not a data-aggregation competitor to Our World in Data.",
@@ -4686,7 +4696,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'redaction'"
       },
-      "rank": 9,
+      "rank": 10,
       "tier": "instrument",
       "line": "From the “Counter-Measurement” line, in two chambers.",
       "verdict": "ADDED VALUE",
@@ -4708,7 +4718,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'round-number'"
       },
-      "rank": 10,
+      "rank": 11,
       "line": "From the “Counter-Measurement” line.",
       "verdict": "REDUNDANT",
       "verdictLabel": "REDUNDANT.",
@@ -4729,7 +4739,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'society'"
       },
-      "rank": 5,
+      "rank": 6,
       "tier": "experiment",
       "verdict": "UNIQUE",
       "verdictLabel": "UNIQUE (provisional).",
@@ -4750,7 +4760,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'spielraum'"
       },
-      "rank": 6,
+      "rank": 7,
       "tier": "experiment",
       "line": "From the counter-measurement line.",
       "verdict": "ADDED VALUE",
@@ -4760,6 +4770,21 @@
         "file": "docs/audits/2026-08-09-usp-audit.md",
         "quote": "ADDED VALUE (weak/borderline)."
       }
+    },
+    {
+      "id": "work:spread",
+      "kind": "work",
+      "label": "Spread",
+      "werkId": "spread",
+      "href": "/spread",
+      "since": "2026-09-04",
+      "source": {
+        "file": "src/data/werke.ts",
+        "quote": "id: 'spread'"
+      },
+      "rank": 1,
+      "tier": "experiment",
+      "line": "From the counter-measurement line, and the house’s first live, real-time work: an asset does not have one price, it has several, disagreeing by fractions of a second across venues nobody can watch all at once."
     },
     {
       "id": "work:studio",
@@ -4784,7 +4809,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'tell'"
       },
-      "rank": 11,
+      "rank": 12,
       "line": "From the “Counter-Measurement” line.",
       "verdict": "REDUNDANT",
       "verdictLabel": "REDUNDANT — the clearest case in this audit.",
@@ -4805,7 +4830,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'trending'"
       },
-      "rank": 2,
+      "rank": 3,
       "tier": "experiment",
       "verdict": "ADDED VALUE",
       "verdictLabel": "ADDED VALUE (provisional — sealed before ship).",
@@ -4826,7 +4851,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'ueberflug'"
       },
-      "rank": 18,
+      "rank": 19,
       "tier": "studie",
       "verdict": "ADDED VALUE",
       "verdictLabel": "ADDED VALUE, genuine but narrow.",
@@ -8192,6 +8217,15 @@
       "source": {
         "file": "docs/decision-log.md",
         "quote": "src/lib/globe/layers/{redaction-seats,redaction-world,trending,index,types,balance}.ts"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-09-04-1",
+      "to": "work:spread",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "src/pages/spread/index.astro"
       }
     }
   ]

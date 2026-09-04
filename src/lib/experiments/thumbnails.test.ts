@@ -10,8 +10,15 @@ import { readFileSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
 
 import { GALLERY } from '@/config/gallery-wording'
-import { WERKE_BY_LINE } from '@/data/werke'
+import { WERKE, WERKE_BY_LINE } from '@/data/werke'
 import { datedEntries, recordThumbnail, THUMBNAILS, THUMB_BOX, type ThumbMark } from './thumbnails'
+
+/** An unarchived work (Frank, 2026-09-04, wording private) reads the world at the moment someone
+ *  looks — there is no committed file at build time for a miniature to be drawn FROM, and this
+ *  module's whole rule is that a miniature is never a stand-in graphic. ExperimentGallery.tsx
+ *  already renders a card with no `thumb` gracefully (the `.gal-thumb` block simply does not
+ *  print); this exemption matches the one graph.test.ts already carries for the same works. */
+const isUnarchived = (id: string): boolean => WERKE.find((w) => w.id === id)?.unarchived === true
 
 const inBox = (m: ThumbMark): boolean => {
   const { width, height } = THUMB_BOX
@@ -37,6 +44,7 @@ describe('every experiment on the shelf has a miniature of its own', () => {
   it.each(shelf.map((w) => [w.id, w.href] as const))(
     '%s carries a thumbnail built from a committed file',
     (id, href) => {
+      if (isUnarchived(id)) return
       const thumb = THUMBNAILS.get(id)
       expect(
         thumb,

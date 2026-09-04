@@ -56,6 +56,11 @@
       "prefix": "TrendingArc.",
       "maxGzipKB": 12,
       "what": "a watched term's arc on /trending/topics/<slug> (visual layer, 2026-09-03): the committed runs as bars plus the two windows the status word rests on, with a per-run readout and the keyboard walk. Mounted client:visible on every term page. Measured 1.3 KB gz on 2026-09-03."
+    },
+    {
+      "prefix": "Spread.",
+      "maxGzipKB": 15,
+      "what": "the live field of /spread (2026-09-04), the house's first live, real-time work: four exchanges' own WebSockets, opened and parsed in the browser, drawn to a Canvas 2D field (never SVG/DOM marks — thousands of trades over a session would be thousands of nodes). No d3, no chart library — the geometry is linear interpolation over a time window and the band/remarkable-gap math already tested in src/lib/spread/band.ts. Mounted client:visible. Measured 6.4 KB gz on 2026-09-04."
     }
   ]
 }
