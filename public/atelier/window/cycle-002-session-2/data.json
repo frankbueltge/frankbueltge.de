@@ -1,0 +1,5424 @@
+{
+ "_note": "Derived record of the Propp reduction — cycle 002, session 2 of the Atelier. Every number here is recomputed by tools/neighbour/propp.py from the feed pinned in `manifest`; nothing is copied by hand. The feed is read, never mirrored. Verdicts on the pairs live in verdicts.json, kept separate on purpose: this file is what the instrument computed, that file is what a reader decided.",
+ "session": "cycle-002-session-2",
+ "date": "2026-09-04",
+ "manifest": {
+  "origin": "https://frankbueltge.de/atlas/werke.json",
+  "sha256": "a033aef59a4a0d397de02f57cd7db50bd44b075fe1756c6d3490355528c64a61",
+  "bytes": 387847,
+  "count_declared": 521,
+  "licence": "CC0-1.0 (data), per the licence line of 2026-07-26",
+  "read_at": "2026-09-04T04:20:54+00:00"
+ },
+ "n_works": 521,
+ "reach_outside": {
+  "text": "Vladimir Propp, Morphology of the Folktale, 2nd ed., trans. Laurence Scott, rev. Louis A. Wagner (Austin: University of Texas Press, 1968), ch. II 'The Method and Material', pp. 19-24",
+  "field": "structural folkloristics",
+  "used_for": "the claim that moves are few and subjects many, and its consequence that a move-word recurs across a corpus while a subject-word does not"
+ },
+ "tokenisation": {
+  "source": "tools/neighbour/nn.py (session 1) — imported, not reimplemented",
+  "types": 5060,
+  "tokens": 11998,
+  "min_length": 3,
+  "stopwords": 109
+ },
+ "act_lexicon": {
+  "rule": "a token is an act token iff one of its stems (stated English suffix rules) appears in this corpus with verbal inflection (-ing or -ed) and also bare or with -s/-es",
+  "verbal_stems": 1224,
+  "act_types": 1325,
+  "act_types_share": 0.2619,
+  "act_token_share": 0.2673,
+  "lexicon": [
+   "accelerating",
+   "accepting",
+   "according",
+   "accused",
+   "acknowledged",
+   "added",
+   "addition",
+   "address",
+   "addresses",
+   "addressing",
+   "adds",
+   "admitted",
+   "advance",
+   "advanced",
+   "affect",
+   "affected",
+   "affection",
+   "affects",
+   "aimed",
+   "aims",
+   "allocated",
+   "allow",
+   "allowing",
+   "allows",
+   "amplified",
+   "analysed",
+   "animated",
+   "animates",
+   "animation",
+   "anonymized",
+   "answer",
+   "answering",
+   "appear",
+   "appearance",
+   "appearing",
+   "appears",
+   "applied",
+   "approximated",
+   "archive",
+   "archives",
+   "archiving",
+   "arguing",
+   "arm",
+   "armed",
+   "arms",
+   "arrange",
+   "arranged",
+   "arrived",
+   "ask",
+   "asked",
+   "asking",
+   "asks",
+   "assembled",
+   "asserting",
+   "asserts",
+   "assisted",
+   "associated",
+   "attempt",
+   "attempted",
+   "attempts",
+   "attending",
+   "attributed",
+   "auctioned",
+   "audit",
+   "auditing",
+   "augmented",
+   "author",
+   "authored",
+   "authors",
+   "automated",
+   "avoiding",
+   "baked",
+   "balked",
+   "base",
+   "based",
+   "become",
+   "becomes",
+   "becoming",
+   "begin",
+   "beginning",
+   "begins",
+   "beijing",
+   "bias",
+   "biased",
+   "bioleaching",
+   "bioprinting",
+   "blending",
+   "blends",
+   "blowing",
+   "blurring",
+   "bombing",
+   "braided",
+   "braids",
+   "branching",
+   "brand",
+   "branding",
+   "breath",
+   "breathing",
+   "bring",
+   "bringing",
+   "brings",
+   "build",
+   "building",
+   "builds",
+   "buried",
+   "burn",
+   "burned",
+   "burning",
+   "burying",
+   "cal",
+   "calculating",
+   "call",
+   "called",
+   "capture",
+   "captured",
+   "captures",
+   "cast",
+   "casting",
+   "cataloguing",
+   "catering",
+   "caused",
+   "ceiling",
+   "celebrate",
+   "celebrates",
+   "celebrating",
+   "center",
+   "centering",
+   "centre",
+   "centred",
+   "centres",
+   "chalked",
+   "change",
+   "changes",
+   "changing",
+   "choreographed",
+   "choreographs",
+   "classified",
+   "cloning",
+   "close",
+   "closed",
+   "closing",
+   "code",
+   "coded",
+   "codes",
+   "coining",
+   "collaborate",
+   "collaborating",
+   "collaboration",
+   "collapse",
+   "collapsed",
+   "collapsing",
+   "collect",
+   "collected",
+   "collection",
+   "color",
+   "colored",
+   "colors",
+   "colour",
+   "coloured",
+   "colours",
+   "com",
+   "combined",
+   "combines",
+   "combining",
+   "come",
+   "coming",
+   "comment",
+   "commissioned",
+   "commissioning",
+   "compare",
+   "compared",
+   "complete",
+   "completing",
+   "composed",
+   "composes",
+   "composition",
+   "comprised",
+   "compute",
+   "computerised",
+   "computerized",
+   "computing",
+   "concealing",
+   "conceived",
+   "concentrating",
+   "condensed",
+   "confined",
+   "confiscated",
+   "confronting",
+   "connected",
+   "connecting",
+   "connection",
+   "connects",
+   "consent",
+   "consented",
+   "considered",
+   "considers",
+   "consisting",
+   "consists",
+   "constricted",
+   "construct",
+   "constructed",
+   "construction",
+   "contained",
+   "contains",
+   "contaminated",
+   "contested",
+   "contesting",
+   "contributing",
+   "control",
+   "controlled",
+   "controls",
+   "convert",
+   "converted",
+   "converting",
+   "converts",
+   "convey",
+   "conveyed",
+   "conveying",
+   "conveys",
+   "convoluted",
+   "cooling",
+   "correlating",
+   "corrugated",
+   "corrupted",
+   "costumed",
+   "count",
+   "counting",
+   "counts",
+   "coupled",
+   "cover",
+   "covered",
+   "covering",
+   "craft",
+   "crafted",
+   "create",
+   "created",
+   "creates",
+   "creating",
+   "creation",
+   "credit",
+   "credited",
+   "crest",
+   "crested",
+   "critique",
+   "critiquing",
+   "cropped",
+   "cross",
+   "crossing",
+   "culture",
+   "cultured",
+   "cultures",
+   "curated",
+   "cycle",
+   "cycling",
+   "danced",
+   "dancing",
+   "decay",
+   "decayed",
+   "decaying",
+   "decays",
+   "decentralized",
+   "declassified",
+   "decoding",
+   "decolonising",
+   "decolonized",
+   "decorated",
+   "dedicated",
+   "defeated",
+   "defying",
+   "degrading",
+   "delivered",
+   "delivers",
+   "demolished",
+   "demonized",
+   "denied",
+   "depend",
+   "depending",
+   "depends",
+   "deployed",
+   "depopulated",
+   "derived",
+   "described",
+   "describes",
+   "design",
+   "designed",
+   "designs",
+   "destroyed",
+   "detect",
+   "detected",
+   "detecting",
+   "detection",
+   "detects",
+   "develop",
+   "developed",
+   "developing",
+   "development",
+   "develops",
+   "differentiated",
+   "diffusing",
+   "digitized",
+   "discarded",
+   "disclosed",
+   "disconnected",
+   "discontinued",
+   "dispersed",
+   "displaced",
+   "display",
+   "displayed",
+   "displaying",
+   "dissolve",
+   "dissolved",
+   "dissolving",
+   "distorted",
+   "distributed",
+   "distributing",
+   "divided",
+   "document",
+   "documented",
+   "documenting",
+   "documents",
+   "donated",
+   "dosing",
+   "downloaded",
+   "draw",
+   "drawing",
+   "drawings",
+   "draws",
+   "dream",
+   "dreaming",
+   "drinking",
+   "drive",
+   "driving",
+   "drumming",
+   "duplicated",
+   "echo",
+   "echoes",
+   "echoing",
+   "embed",
+   "embedded",
+   "embodied",
+   "embraces",
+   "embracing",
+   "emerge",
+   "emerged",
+   "emergence",
+   "emerging",
+   "employed",
+   "employing",
+   "employment",
+   "employs",
+   "enable",
+   "enabling",
+   "enclosed",
+   "encode",
+   "encodes",
+   "encoding",
+   "endangered",
+   "enforced",
+   "engineered",
+   "engineers",
+   "engraving",
+   "enrolled",
+   "enslaved",
+   "entangle",
+   "entanglement",
+   "entangling",
+   "entitled",
+   "erased",
+   "erases",
+   "erasure",
+   "erring",
+   "escalating",
+   "evade",
+   "evading",
+   "everything",
+   "evolved",
+   "evolves",
+   "evolving",
+   "exciting",
+   "excluded",
+   "executing",
+   "exhibit",
+   "exhibited",
+   "exhibition",
+   "exhibits",
+   "exist",
+   "existed",
+   "existence",
+   "existing",
+   "exorcised",
+   "expand",
+   "expanded",
+   "expanding",
+   "expansion",
+   "experience",
+   "experienced",
+   "experiences",
+   "experiencing",
+   "exploded",
+   "exploration",
+   "explore",
+   "explored",
+   "explores",
+   "exploring",
+   "expose",
+   "exposed",
+   "exposes",
+   "exposing",
+   "expressing",
+   "extend",
+   "extending",
+   "extends",
+   "extension",
+   "extruded",
+   "fabricate",
+   "fabricated",
+   "fabrication",
+   "face",
+   "faced",
+   "faces",
+   "facing",
+   "fading",
+   "failing",
+   "fastened",
+   "featured",
+   "features",
+   "featuring",
+   "feed",
+   "feeding",
+   "feeds",
+   "feel",
+   "feeling",
+   "feels",
+   "festering",
+   "figures",
+   "figuring",
+   "file",
+   "files",
+   "filing",
+   "fill",
+   "filled",
+   "filling",
+   "fills",
+   "film",
+   "filmed",
+   "films",
+   "filtered",
+   "filters",
+   "find",
+   "finding",
+   "findings",
+   "finds",
+   "fingerprinting",
+   "fingerprints",
+   "fire",
+   "fired",
+   "fish",
+   "fishing",
+   "fixed",
+   "fixes",
+   "flash",
+   "flashing",
+   "flattening",
+   "flattens",
+   "fleet",
+   "fleeting",
+   "floating",
+   "floats",
+   "flow",
+   "flowing",
+   "flows",
+   "focus",
+   "focuses",
+   "focusing",
+   "follow",
+   "followed",
+   "following",
+   "follows",
+   "force",
+   "forced",
+   "forces",
+   "forcing",
+   "form",
+   "formed",
+   "forming",
+   "forms",
+   "fossilized",
+   "found",
+   "foundation",
+   "founded",
+   "founding",
+   "founds",
+   "fragmented",
+   "fragments",
+   "frame",
+   "framed",
+   "frames",
+   "framing",
+   "fuse",
+   "fused",
+   "fuses",
+   "game",
+   "games",
+   "gaming",
+   "gathering",
+   "gathers",
+   "generate",
+   "generated",
+   "generates",
+   "generating",
+   "generation",
+   "geoengineering",
+   "germinating",
+   "get",
+   "gets",
+   "getting",
+   "give",
+   "gives",
+   "giving",
+   "glued",
+   "governed",
+   "granting",
+   "greeting",
+   "ground",
+   "grounded",
+   "growing",
+   "grows",
+   "guidance",
+   "guide",
+   "guided",
+   "hacked",
+   "hacking",
+   "halting",
+   "handcrafted",
+   "happen",
+   "happening",
+   "happens",
+   "hatred",
+   "haunting",
+   "healing",
+   "help",
+   "helped",
+   "helps",
+   "hilsing",
+   "hinged",
+   "hiring",
+   "honed",
+   "host",
+   "hosting",
+   "hosts",
+   "house",
+   "housing",
+   "hundred",
+   "hundreds",
+   "identified",
+   "illustrated",
+   "image",
+   "images",
+   "imagine",
+   "imagined",
+   "imagines",
+   "imaging",
+   "imagining",
+   "immersing",
+   "impact",
+   "impacting",
+   "impacts",
+   "importing",
+   "improvise",
+   "improvised",
+   "improvising",
+   "incarcerated",
+   "include",
+   "included",
+   "includes",
+   "including",
+   "income",
+   "incoming",
+   "incubating",
+   "index",
+   "indexes",
+   "indexing",
+   "inflated",
+   "inflates",
+   "inflation",
+   "influence",
+   "influenced",
+   "influencing",
+   "infrared",
+   "ingesting",
+   "inscribed",
+   "inspiration",
+   "inspired",
+   "inspires",
+   "installation",
+   "installed",
+   "installs",
+   "institutionalized",
+   "institutionalizes",
+   "intend",
+   "intended",
+   "interacting",
+   "interconnected",
+   "interested",
+   "interesting",
+   "interrupted",
+   "intersecting",
+   "invading",
+   "invent",
+   "invented",
+   "inverted",
+   "inverting",
+   "investigate",
+   "investigates",
+   "investigating",
+   "investigation",
+   "invitation",
+   "invite",
+   "invited",
+   "invites",
+   "involved",
+   "involvement",
+   "involves",
+   "isolates",
+   "isolating",
+   "joining",
+   "keep",
+   "keeping",
+   "keeps",
+   "key",
+   "keyed",
+   "keying",
+   "kill",
+   "killed",
+   "killing",
+   "label",
+   "labeled",
+   "labeling",
+   "labels",
+   "laced",
+   "lamenting",
+   "lashed",
+   "last",
+   "lasting",
+   "layer",
+   "layered",
+   "layering",
+   "layers",
+   "lead",
+   "leading",
+   "leaked",
+   "leaks",
+   "learn",
+   "learned",
+   "learning",
+   "learns",
+   "leave",
+   "leaving",
+   "leering",
+   "let",
+   "lets",
+   "letting",
+   "leverages",
+   "leveraging",
+   "limit",
+   "limited",
+   "limits",
+   "line",
+   "lined",
+   "lines",
+   "link",
+   "linking",
+   "links",
+   "listening",
+   "listens",
+   "literalising",
+   "literalized",
+   "literalizes",
+   "literalizing",
+   "live",
+   "lived",
+   "lives",
+   "livestreamed",
+   "living",
+   "loading",
+   "loads",
+   "locate",
+   "locating",
+   "location",
+   "locked",
+   "locks",
+   "logged",
+   "look",
+   "looking",
+   "looks",
+   "loop",
+   "looping",
+   "loops",
+   "looted",
+   "los",
+   "losing",
+   "love",
+   "loved",
+   "maintained",
+   "maintaining",
+   "malfunctioning",
+   "manipulated",
+   "manufacture",
+   "manufactured",
+   "map",
+   "mapped",
+   "mapping",
+   "maps",
+   "marginalized",
+   "market",
+   "marketing",
+   "marking",
+   "markings",
+   "materializing",
+   "meaning",
+   "means",
+   "measured",
+   "measurement",
+   "measures",
+   "measuring",
+   "mediated",
+   "meditating",
+   "meet",
+   "meeting",
+   "merged",
+   "merges",
+   "merging",
+   "metabolized",
+   "metabolizes",
+   "meter",
+   "metered",
+   "militarized",
+   "mines",
+   "mining",
+   "mirror",
+   "mirrored",
+   "misgendering",
+   "misplaced",
+   "misrepresented",
+   "missing",
+   "mixed",
+   "modding",
+   "model",
+   "modeled",
+   "modeling",
+   "modelling",
+   "models",
+   "modified",
+   "modifying",
+   "monitor",
+   "monitored",
+   "monitoring",
+   "monitors",
+   "morphing",
+   "moulded",
+   "move",
+   "moved",
+   "movement",
+   "moves",
+   "moving",
+   "multiplying",
+   "murdered",
+   "mutating",
+   "nailing",
+   "named",
+   "names",
+   "naming",
+   "narrativizing",
+   "need",
+   "needed",
+   "needs",
+   "negotiated",
+   "negotiating",
+   "nesting",
+   "network",
+   "networked",
+   "networks",
+   "note",
+   "noted",
+   "number",
+   "numbered",
+   "observe",
+   "observed",
+   "observing",
+   "occupied",
+   "occur",
+   "occurring",
+   "offering",
+   "offers",
+   "ongoing",
+   "open",
+   "opened",
+   "opens",
+   "operate",
+   "operated",
+   "operates",
+   "operating",
+   "operation",
+   "opt",
+   "opted",
+   "optimized",
+   "opts",
+   "orbit",
+   "orbiting",
+   "organized",
+   "organizes",
+   "organizing",
+   "oscillating",
+   "output",
+   "outputs",
+   "outputted",
+   "owned",
+   "packaged",
+   "paint",
+   "painted",
+   "pair",
+   "paired",
+   "pairing",
+   "pairs",
+   "park",
+   "parking",
+   "participates",
+   "participating",
+   "passing",
+   "pattern",
+   "patterned",
+   "patterns",
+   "perceive",
+   "perceived",
+   "perform",
+   "performance",
+   "performed",
+   "performing",
+   "performs",
+   "photograph",
+   "photographed",
+   "photographs",
+   "physicalizing",
+   "piled",
+   "piles",
+   "pioneering",
+   "pioneers",
+   "place",
+   "placed",
+   "placement",
+   "places",
+   "planned",
+   "plant",
+   "plantation",
+   "planted",
+   "plants",
+   "play",
+   "played",
+   "playing",
+   "plays",
+   "plotted",
+   "plotting",
+   "plucked",
+   "plunging",
+   "point",
+   "pointed",
+   "points",
+   "police",
+   "policing",
+   "polluted",
+   "pos",
+   "posed",
+   "positioning",
+   "positions",
+   "possessed",
+   "post",
+   "posting",
+   "poured",
+   "power",
+   "powered",
+   "powers",
+   "presence",
+   "present",
+   "presented",
+   "presenting",
+   "presents",
+   "preservation",
+   "preserve",
+   "preserves",
+   "preserving",
+   "press",
+   "pressing",
+   "print",
+   "printed",
+   "printing",
+   "prints",
+   "probing",
+   "process",
+   "processes",
+   "processing",
+   "produce",
+   "produced",
+   "produces",
+   "producing",
+   "program",
+   "programme",
+   "programmed",
+   "programming",
+   "project",
+   "projected",
+   "projecting",
+   "projection",
+   "projects",
+   "prompting",
+   "prompts",
+   "propose",
+   "proposed",
+   "proposes",
+   "proposing",
+   "protecting",
+   "provide",
+   "provided",
+   "published",
+   "publishes",
+   "publishing",
+   "pulled",
+   "pulls",
+   "pumped",
+   "push",
+   "pushed",
+   "pushes",
+   "put",
+   "puts",
+   "putting",
+   "quantified",
+   "quantifies",
+   "question",
+   "questioning",
+   "questions",
+   "raises",
+   "raising",
+   "read",
+   "reading",
+   "reads",
+   "realized",
+   "reanimated",
+   "reanimating",
+   "reason",
+   "reasoning",
+   "reasons",
+   "rebuilding",
+   "rebuilds",
+   "recaptioned",
+   "receiving",
+   "recited",
+   "recites",
+   "reclaim",
+   "reclaiming",
+   "reconstruct",
+   "reconstructed",
+   "reconstruction",
+   "reconstructs",
+   "record",
+   "recorded",
+   "recording",
+   "recordings",
+   "records",
+   "recovered",
+   "redacted",
+   "redrawing",
+   "referenced",
+   "references",
+   "refering",
+   "refers",
+   "refined",
+   "reflect",
+   "reflecting",
+   "reflection",
+   "reflects",
+   "reframes",
+   "reframing",
+   "refuse",
+   "refuses",
+   "refusing",
+   "regenerate",
+   "regenerating",
+   "regeneration",
+   "regurgitating",
+   "rejecting",
+   "relate",
+   "related",
+   "relation",
+   "release",
+   "released",
+   "releases",
+   "releasing",
+   "relied",
+   "relocating",
+   "rely",
+   "relying",
+   "render",
+   "rendered",
+   "rendering",
+   "renders",
+   "renewing",
+   "repackaged",
+   "repeating",
+   "representation",
+   "represente",
+   "represented",
+   "representing",
+   "represents",
+   "repurposed",
+   "repurposes",
+   "research",
+   "researched",
+   "resembling",
+   "resist",
+   "resistance",
+   "resisting",
+   "restaged",
+   "restages",
+   "restaging",
+   "restarting",
+   "resting",
+   "restricting",
+   "result",
+   "resulting",
+   "results",
+   "resumed",
+   "retelling",
+   "rethink",
+   "rethinking",
+   "return",
+   "returned",
+   "returns",
+   "reveal",
+   "revealing",
+   "reveals",
+   "reverse",
+   "reversing",
+   "rewired",
+   "rise",
+   "rising",
+   "rooted",
+   "route",
+   "routes",
+   "routing",
+   "run",
+   "running",
+   "runs",
+   "sacking",
+   "sacred",
+   "sample",
+   "sampled",
+   "saturated",
+   "save",
+   "saving",
+   "scaffolding",
+   "scanned",
+   "scanning",
+   "scans",
+   "scraped",
+   "scrapes",
+   "scraping",
+   "scrolling",
+   "scrubbing",
+   "sculpting",
+   "seabed",
+   "sealed",
+   "seals",
+   "see",
+   "seeded",
+   "seeing",
+   "seeking",
+   "seeks",
+   "seemed",
+   "seized",
+   "sense",
+   "sensed",
+   "sensing",
+   "sequence",
+   "sequenced",
+   "serve",
+   "serves",
+   "serving",
+   "settled",
+   "shape",
+   "shaped",
+   "share",
+   "shared",
+   "sharing",
+   "shifted",
+   "shifting",
+   "shifts",
+   "ship",
+   "shipped",
+   "shooting",
+   "sibling",
+   "simulate",
+   "simulated",
+   "simulating",
+   "simulation",
+   "singing",
+   "situated",
+   "size",
+   "sized",
+   "skin",
+   "skinned",
+   "sliming",
+   "sniffing",
+   "something",
+   "sonified",
+   "sonifies",
+   "source",
+   "sourced",
+   "sources",
+   "spanned",
+   "spatialized",
+   "spatializing",
+   "speed",
+   "splices",
+   "splicing",
+   "splitting",
+   "spray",
+   "spraying",
+   "sprays",
+   "squirting",
+   "stage",
+   "staged",
+   "stages",
+   "staging",
+   "standing",
+   "stands",
+   "started",
+   "starting",
+   "startling",
+   "state",
+   "stated",
+   "statement",
+   "states",
+   "stimulated",
+   "stitched",
+   "storytelling",
+   "straddling",
+   "structure",
+   "structured",
+   "structures",
+   "struggling",
+   "studied",
+   "studies",
+   "stuffed",
+   "submerged",
+   "submitted",
+   "submitting",
+   "subsumed",
+   "suffused",
+   "supercomputing",
+   "superimposed",
+   "superimposing",
+   "supposed",
+   "suppressed",
+   "surface",
+   "surfaces",
+   "surfacing",
+   "surfing",
+   "surround",
+   "surrounding",
+   "surrounds",
+   "suspended",
+   "sweating",
+   "synchronised",
+   "synthesize",
+   "synthesized",
+   "synthesizes",
+   "take",
+   "takes",
+   "taking",
+   "target",
+   "targeted",
+   "targeting",
+   "targets",
+   "tattooed",
+   "test",
+   "tested",
+   "testing",
+   "text",
+   "texted",
+   "texts",
+   "texture",
+   "theorizing",
+   "thickening",
+   "thread",
+   "threading",
+   "threatened",
+   "threatening",
+   "threatens",
+   "thriving",
+   "tiered",
+   "title",
+   "titled",
+   "touch",
+   "touched",
+   "towering",
+   "trace",
+   "traces",
+   "tracing",
+   "track",
+   "tracked",
+   "tracking",
+   "train",
+   "trained",
+   "training",
+   "trains",
+   "transcending",
+   "transfering",
+   "transform",
+   "transformed",
+   "transforming",
+   "transforms",
+   "translated",
+   "translates",
+   "translating",
+   "translation",
+   "transported",
+   "traveling",
+   "travels",
+   "treated",
+   "treating",
+   "treats",
+   "tried",
+   "trouble",
+   "troubled",
+   "trust",
+   "trusted",
+   "trying",
+   "turn",
+   "turned",
+   "turning",
+   "turns",
+   "type",
+   "typed",
+   "types",
+   "unannounced",
+   "unauthorized",
+   "uncharted",
+   "uncollected",
+   "uncounted",
+   "undated",
+   "underlying",
+   "underrepresented",
+   "understand",
+   "understanding",
+   "understandings",
+   "undisclosed",
+   "undocumented",
+   "unending",
+   "unexpected",
+   "unfiltered",
+   "unfinished",
+   "unlabeled",
+   "unprotected",
+   "unregulated",
+   "unresolved",
+   "unscripted",
+   "unsecured",
+   "unsettled",
+   "untitled",
+   "unwanted",
+   "updated",
+   "updates",
+   "updating",
+   "uploaded",
+   "utilization",
+   "utilized",
+   "utilizes",
+   "validated",
+   "vanished",
+   "verified",
+   "victimizing",
+   "videotaped",
+   "view",
+   "viewed",
+   "viewing",
+   "visualization",
+   "visualize",
+   "visualized",
+   "visualizes",
+   "visualizing",
+   "voice",
+   "voiced",
+   "voices",
+   "wandering",
+   "warming",
+   "warms",
+   "warning",
+   "watch",
+   "watched",
+   "watches",
+   "watching",
+   "weakened",
+   "weaponized",
+   "weaponizes",
+   "weaponizing",
+   "wearing",
+   "weave",
+   "weaving",
+   "weighed",
+   "weight",
+   "weighted",
+   "whale",
+   "whaling",
+   "willing",
+   "witness",
+   "witnessing",
+   "working",
+   "workings",
+   "worldbuilding",
+   "wrapped",
+   "write",
+   "writes",
+   "writing",
+   "writings",
+   "yelling",
+   "zigzagging"
+  ]
+ },
+ "census": {
+  "rule": "class of the field's first word only",
+  "counts": {
+   "finite verb": 78,
+   "determiner": 111,
+   "other": 264,
+   "participle": 17,
+   "no word": 12,
+   "residue": 39
+  },
+  "n": 521
+ },
+ "cells": {
+  "A": {
+   "observed_median": 0.123376,
+   "observed_mean": 0.151883,
+   "null_median": 0.119413,
+   "null_t99": 0.217747,
+   "null_max": 0.382307,
+   "n_surrogates": 104200,
+   "n_pairs_scored": 31887,
+   "n_works_above_t99": 74,
+   "n_pairs_above_t99": 97,
+   "obs_hist": [
+    0,
+    0,
+    5,
+    43,
+    99,
+    102,
+    85,
+    52,
+    38,
+    17,
+    8,
+    12,
+    14,
+    4,
+    10,
+    6,
+    6,
+    4,
+    3,
+    1,
+    3,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    2,
+    0,
+    0,
+    0,
+    2,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    0,
+    4
+   ],
+   "null_hist": [
+    0,
+    0,
+    0,
+    1145,
+    17897,
+    34015,
+    25673,
+    13847,
+    6569,
+    2882,
+    1230,
+    534,
+    225,
+    102,
+    39,
+    21,
+    12,
+    6,
+    2,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "vocab_types": 5060,
+   "vocab_tokens": 11998,
+   "empty_docs": 0,
+   "vocabulary": "ALL",
+   "weighting": "IDF",
+   "note": "session 1's measure: every token, rarity decides",
+   "doc_length": {
+    "min": 8,
+    "q25": 15,
+    "median": 22,
+    "q75": 28,
+    "max": 63
+   },
+   "top": [
+    {
+     "rank": 1,
+     "score": 1.0,
+     "i": 293,
+     "j": 307,
+     "stratum": "same artist"
+    },
+    {
+     "rank": 2,
+     "score": 1.0,
+     "i": 363,
+     "j": 367,
+     "stratum": "same artist"
+    },
+    {
+     "rank": 3,
+     "score": 0.956583,
+     "i": 363,
+     "j": 369,
+     "stratum": "same artist"
+    },
+    {
+     "rank": 4,
+     "score": 0.956583,
+     "i": 367,
+     "j": 369,
+     "stratum": "same artist"
+    },
+    {
+     "rank": 5,
+     "score": 0.669304,
+     "i": 221,
+     "j": 222,
+     "stratum": "same artist"
+    },
+    {
+     "rank": 6,
+     "score": 0.583091,
+     "i": 250,
+     "j": 261,
+     "stratum": null
+    },
+    {
+     "rank": 7,
+     "score": 0.410746,
+     "i": 227,
+     "j": 229,
+     "stratum": "residue both sides"
+    },
+    {
+     "rank": 8,
+     "score": 0.404302,
+     "i": 227,
+     "j": 228,
+     "stratum": "residue both sides"
+    },
+    {
+     "rank": 9,
+     "score": 0.381507,
+     "i": 250,
+     "j": 253,
+     "stratum": null
+    },
+    {
+     "rank": 10,
+     "score": 0.373289,
+     "i": 377,
+     "j": 390,
+     "stratum": "residue both sides"
+    },
+    {
+     "rank": 11,
+     "score": 0.365686,
+     "i": 229,
+     "j": 264,
+     "stratum": "same artist"
+    },
+    {
+     "rank": 12,
+     "score": 0.359229,
+     "i": 385,
+     "j": 391,
+     "stratum": "residue both sides"
+    },
+    {
+     "rank": 13,
+     "score": 0.345407,
+     "i": 377,
+     "j": 385,
+     "stratum": "residue both sides"
+    },
+    {
+     "rank": 14,
+     "score": 0.341487,
+     "i": 260,
+     "j": 275,
+     "stratum": null
+    },
+    {
+     "rank": 15,
+     "score": 0.338106,
+     "i": 377,
+     "j": 391,
+     "stratum": "residue both sides"
+    },
+    {
+     "rank": 16,
+     "score": 0.332682,
+     "i": 368,
+     "j": 377,
+     "stratum": "residue both sides"
+    },
+    {
+     "rank": 17,
+     "score": 0.332572,
+     "i": 229,
+     "j": 302,
+     "stratum": "residue both sides"
+    },
+    {
+     "rank": 18,
+     "score": 0.329555,
+     "i": 225,
+     "j": 374,
+     "stratum": "residue both sides"
+    },
+    {
+     "rank": 19,
+     "score": 0.32291,
+     "i": 277,
+     "j": 282,
+     "stratum": null
+    },
+    {
+     "rank": 20,
+     "score": 0.320793,
+     "i": 228,
+     "j": 229,
+     "stratum": "residue both sides"
+    },
+    {
+     "rank": 21,
+     "score": 0.317886,
+     "i": 257,
+     "j": 262,
+     "stratum": null
+    },
+    {
+     "rank": 22,
+     "score": 0.315876,
+     "i": 282,
+     "j": 287,
+     "stratum": null
+    },
+    {
+     "rank": 23,
+     "score": 0.30706,
+     "i": 264,
+     "j": 302,
+     "stratum": "residue both sides"
+    },
+    {
+     "rank": 24,
+     "score": 0.306556,
+     "i": 321,
+     "j": 336,
+     "stratum": "residue both sides"
+    },
+    {
+     "rank": 25,
+     "score": 0.306044,
+     "i": 316,
+     "j": 321,
+     "stratum": "residue both sides"
+    },
+    {
+     "rank": 26,
+     "score": 0.298351,
+     "i": 265,
+     "j": 275,
+     "stratum": null
+    },
+    {
+     "rank": 27,
+     "score": 0.297264,
+     "i": 260,
+     "j": 265,
+     "stratum": null
+    },
+    {
+     "rank": 28,
+     "score": 0.294806,
+     "i": 229,
+     "j": 285,
+     "stratum": "residue both sides"
+    },
+    {
+     "rank": 29,
+     "score": 0.294332,
+     "i": 282,
+     "j": 311,
+     "stratum": null
+    },
+    {
+     "rank": 30,
+     "score": 0.293041,
+     "i": 250,
+     "j": 382,
+     "stratum": null
+    },
+    {
+     "rank": 31,
+     "score": 0.292784,
+     "i": 250,
+     "j": 252,
+     "stratum": null
+    },
+    {
+     "rank": 32,
+     "score": 0.291826,
+     "i": 227,
+     "j": 230,
+     "stratum": null
+    },
+    {
+     "rank": 33,
+     "score": 0.290612,
+     "i": 250,
+     "j": 256,
+     "stratum": null
+    },
+    {
+     "rank": 34,
+     "score": 0.28962,
+     "i": 253,
+     "j": 261,
+     "stratum": null
+    },
+    {
+     "rank": 35,
+     "score": 0.286127,
+     "i": 280,
+     "j": 377,
+     "stratum": "residue both sides"
+    },
+    {
+     "rank": 36,
+     "score": 0.282303,
+     "i": 390,
+     "j": 391,
+     "stratum": "residue both sides"
+    },
+    {
+     "rank": 37,
+     "score": 0.281698,
+     "i": 277,
+     "j": 287,
+     "stratum": null
+    },
+    {
+     "rank": 38,
+     "score": 0.280334,
+     "i": 416,
+     "j": 431,
+     "stratum": null
+    },
+    {
+     "rank": 39,
+     "score": 0.277271,
+     "i": 257,
+     "j": 326,
+     "stratum": "residue both sides"
+    },
+    {
+     "rank": 40,
+     "score": 0.275633,
+     "i": 316,
+     "j": 336,
+     "stratum": "residue both sides"
+    }
+   ],
+   "top_strata": {
+    "same artist": 6,
+    "residue both sides": 18,
+    "survives": 16
+   }
+  },
+  "B": {
+   "observed_median": 0.185312,
+   "observed_mean": 0.226039,
+   "null_median": 0.163299,
+   "null_t99": 0.311294,
+   "null_max": 0.516398,
+   "n_surrogates": 104200,
+   "n_pairs_scored": 31887,
+   "n_works_above_t99": 85,
+   "n_pairs_above_t99": 242,
+   "obs_hist": [
+    0,
+    0,
+    0,
+    3,
+    13,
+    32,
+    50,
+    79,
+    64,
+    67,
+    44,
+    29,
+    23,
+    13,
+    14,
+    12,
+    8,
+    9,
+    4,
+    4,
+    4,
+    7,
+    9,
+    2,
+    4,
+    7,
+    2,
+    5,
+    2,
+    0,
+    2,
+    0,
+    2,
+    0,
+    0,
+    0,
+    0,
+    2,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    0,
+    0,
+    0,
+    4
+   ],
+   "null_hist": [
+    0,
+    0,
+    0,
+    74,
+    1358,
+    7576,
+    17663,
+    21993,
+    19283,
+    14169,
+    8762,
+    5832,
+    3195,
+    1780,
+    1031,
+    680,
+    330,
+    208,
+    112,
+    70,
+    25,
+    28,
+    13,
+    7,
+    7,
+    4,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "vocab_types": 5060,
+   "vocab_tokens": 11998,
+   "empty_docs": 0,
+   "vocabulary": "ALL",
+   "weighting": "TF",
+   "note": "the Propp inversion: every token, recurrence decides",
+   "doc_length": {
+    "min": 8,
+    "q25": 15,
+    "median": 22,
+    "q75": 28,
+    "max": 63
+   },
+   "top": [
+    {
+     "rank": 1,
+     "score": 1.0,
+     "i": 293,
+     "j": 307,
+     "stratum": "same artist"
+    },
+    {
+     "rank": 2,
+     "score": 1.0,
+     "i": 363,
+     "j": 367,
+     "stratum": "same artist"
+    },
+    {
+     "rank": 3,
+     "score": 0.919866,
+     "i": 363,
+     "j": 369,
+     "stratum": "same artist"
+    },
+    {
+     "rank": 4,
+     "score": 0.919866,
+     "i": 367,
+     "j": 369,
+     "stratum": "same artist"
+    },
+    {
+     "rank": 5,
+     "score": 0.758947,
+     "i": 250,
+     "j": 261,
+     "stratum": null
+    },
+    {
+     "rank": 6,
+     "score": 0.650791,
+     "i": 221,
+     "j": 222,
+     "stratum": "same artist"
+    },
+    {
+     "rank": 7,
+     "score": 0.617213,
+     "i": 377,
+     "j": 390,
+     "stratum": "residue both sides"
+    },
+    {
+     "rank": 8,
+     "score": 0.573539,
+     "i": 321,
+     "j": 336,
+     "stratum": "residue both sides"
+    },
+    {
+     "rank": 9,
+     "score": 0.557773,
+     "i": 250,
+     "j": 253,
+     "stratum": null
+    },
+    {
+     "rank": 10,
+     "score": 0.556415,
+     "i": 316,
+     "j": 321,
+     "stratum": "residue both sides"
+    },
+    {
+     "rank": 11,
+     "score": 0.553399,
+     "i": 377,
+     "j": 385,
+     "stratum": "residue both sides"
+    },
+    {
+     "rank": 12,
+     "score": 0.552907,
+     "i": 368,
+     "j": 377,
+     "stratum": "residue both sides"
+    },
+    {
+     "rank": 13,
+     "score": 0.545705,
+     "i": 316,
+     "j": 336,
+     "stratum": "residue both sides"
+    },
+    {
+     "rank": 14,
+     "score": 0.540062,
+     "i": 377,
+     "j": 391,
+     "stratum": "residue both sides"
+    },
+    {
+     "rank": 15,
+     "score": 0.536745,
+     "i": 385,
+     "j": 391,
+     "stratum": "residue both sides"
+    },
+    {
+     "rank": 16,
+     "score": 0.527645,
+     "i": 280,
+     "j": 377,
+     "stratum": "residue both sides"
+    },
+    {
+     "rank": 17,
+     "score": 0.526316,
+     "i": 321,
+     "j": 361,
+     "stratum": "residue both sides"
+    },
+    {
+     "rank": 18,
+     "score": 0.52381,
+     "i": 390,
+     "j": 391,
+     "stratum": "residue both sides"
+    },
+    {
+     "rank": 19,
+     "score": 0.516185,
+     "i": 321,
+     "j": 329,
+     "stratum": "residue both sides"
+    },
+    {
+     "rank": 20,
+     "score": 0.514496,
+     "i": 225,
+     "j": 374,
+     "stratum": "residue both sides"
+    },
+    {
+     "rank": 21,
+     "score": 0.502519,
+     "i": 260,
+     "j": 275,
+     "stratum": null
+    },
+    {
+     "rank": 22,
+     "score": 0.500773,
+     "i": 216,
+     "j": 321,
+     "stratum": "residue both sides"
+    },
+    {
+     "rank": 23,
+     "score": 0.500773,
+     "i": 321,
+     "j": 341,
+     "stratum": "residue both sides"
+    },
+    {
+     "rank": 24,
+     "score": 0.500626,
+     "i": 321,
+     "j": 390,
+     "stratum": "residue both sides"
+    },
+    {
+     "rank": 25,
+     "score": 0.5,
+     "i": 329,
+     "j": 336,
+     "stratum": "residue both sides"
+    },
+    {
+     "rank": 26,
+     "score": 0.49897,
+     "i": 227,
+     "j": 228,
+     "stratum": "residue both sides"
+    },
+    {
+     "rank": 27,
+     "score": 0.492366,
+     "i": 324,
+     "j": 389,
+     "stratum": null
+    },
+    {
+     "rank": 28,
+     "score": 0.485071,
+     "i": 216,
+     "j": 329,
+     "stratum": "residue both sides"
+    },
+    {
+     "rank": 29,
+     "score": 0.485071,
+     "i": 216,
+     "j": 336,
+     "stratum": "residue both sides"
+    },
+    {
+     "rank": 30,
+     "score": 0.485071,
+     "i": 316,
+     "j": 329,
+     "stratum": "residue both sides"
+    },
+    {
+     "rank": 31,
+     "score": 0.485071,
+     "i": 336,
+     "j": 341,
+     "stratum": "residue both sides"
+    },
+    {
+     "rank": 32,
+     "score": 0.476331,
+     "i": 316,
+     "j": 390,
+     "stratum": "residue both sides"
+    },
+    {
+     "rank": 33,
+     "score": 0.474342,
+     "i": 265,
+     "j": 275,
+     "stratum": null
+    },
+    {
+     "rank": 34,
+     "score": 0.473684,
+     "i": 321,
+     "j": 399,
+     "stratum": "residue both sides"
+    },
+    {
+     "rank": 35,
+     "score": 0.470588,
+     "i": 216,
+     "j": 316,
+     "stratum": "residue both sides"
+    },
+    {
+     "rank": 36,
+     "score": 0.470588,
+     "i": 316,
+     "j": 341,
+     "stratum": "residue both sides"
+    },
+    {
+     "rank": 37,
+     "score": 0.470588,
+     "i": 341,
+     "j": 374,
+     "stratum": "residue both sides"
+    },
+    {
+     "rank": 38,
+     "score": 0.465242,
+     "i": 280,
+     "j": 390,
+     "stratum": "residue both sides"
+    },
+    {
+     "rank": 39,
+     "score": 0.458831,
+     "i": 329,
+     "j": 361,
+     "stratum": "residue both sides"
+    },
+    {
+     "rank": 40,
+     "score": 0.458831,
+     "i": 329,
+     "j": 399,
+     "stratum": "residue both sides"
+    }
+   ],
+   "top_strata": {
+    "same artist": 5,
+    "residue both sides": 30,
+    "survives": 5
+   }
+  },
+  "C": {
+   "observed_median": 0.268089,
+   "observed_mean": 0.295686,
+   "null_median": 0.301346,
+   "null_t99": 0.647051,
+   "null_max": 1.0,
+   "n_surrogates": 104200,
+   "n_pairs_scored": 8308,
+   "n_works_above_t99": 17,
+   "n_pairs_above_t99": 11,
+   "obs_hist": [
+    11,
+    0,
+    0,
+    0,
+    0,
+    1,
+    8,
+    16,
+    30,
+    55,
+    45,
+    48,
+    31,
+    40,
+    38,
+    28,
+    28,
+    28,
+    16,
+    12,
+    13,
+    10,
+    7,
+    13,
+    6,
+    5,
+    2,
+    1,
+    4,
+    2,
+    2,
+    4,
+    5,
+    0,
+    0,
+    0,
+    3,
+    2,
+    0,
+    2,
+    0,
+    0,
+    0,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    4
+   ],
+   "null_hist": [
+    800,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    71,
+    680,
+    2705,
+    5820,
+    8642,
+    10623,
+    11232,
+    10828,
+    9871,
+    8439,
+    6913,
+    5775,
+    4590,
+    3651,
+    2821,
+    2152,
+    1876,
+    1402,
+    1147,
+    870,
+    689,
+    495,
+    436,
+    352,
+    232,
+    189,
+    218,
+    122,
+    128,
+    88,
+    73,
+    46,
+    59,
+    22,
+    26,
+    8,
+    26,
+    7,
+    12,
+    1,
+    0,
+    0,
+    62
+   ],
+   "vocab_types": 1325,
+   "vocab_tokens": 3207,
+   "empty_docs": 4,
+   "vocabulary": "ACT",
+   "weighting": "IDF",
+   "note": "Propp's vocabulary, session 1's weighting",
+   "doc_length": {
+    "min": 0,
+    "q25": 4,
+    "median": 6,
+    "q75": 8,
+    "max": 18
+   },
+   "top": [
+    {
+     "rank": 1,
+     "score": 1.0,
+     "i": 293,
+     "j": 307,
+     "stratum": "same artist"
+    },
+    {
+     "rank": 2,
+     "score": 1.0,
+     "i": 363,
+     "j": 367,
+     "stratum": "same artist"
+    },
+    {
+     "rank": 3,
+     "score": 0.867953,
+     "i": 363,
+     "j": 369,
+     "stratum": "same artist"
+    },
+    {
+     "rank": 4,
+     "score": 0.867953,
+     "i": 367,
+     "j": 369,
+     "stratum": "same artist"
+    },
+    {
+     "rank": 5,
+     "score": 0.780659,
+     "i": 225,
+     "j": 374,
+     "stratum": "residue both sides"
+    },
+    {
+     "rank": 6,
+     "score": 0.746725,
+     "i": 216,
+     "j": 336,
+     "stratum": "residue both sides"
+    },
+    {
+     "rank": 7,
+     "score": 0.728492,
+     "i": 321,
+     "j": 336,
+     "stratum": "residue both sides"
+    },
+    {
+     "rank": 8,
+     "score": 0.722929,
+     "i": 222,
+     "j": 228,
+     "stratum": "residue both sides"
+    },
+    {
+     "rank": 9,
+     "score": 0.659904,
+     "i": 438,
+     "j": 451,
+     "stratum": null
+    },
+    {
+     "rank": 10,
+     "score": 0.658671,
+     "i": 283,
+     "j": 380,
+     "stratum": null
+    },
+    {
+     "rank": 11,
+     "score": 0.65737,
+     "i": 336,
+     "j": 348,
+     "stratum": "residue both sides"
+    },
+    {
+     "rank": 12,
+     "score": 0.632292,
+     "i": 255,
+     "j": 346,
+     "stratum": null
+    },
+    {
+     "rank": 13,
+     "score": 0.621994,
+     "i": 323,
+     "j": 383,
+     "stratum": null
+    },
+    {
+     "rank": 14,
+     "score": 0.614277,
+     "i": 434,
+     "j": 446,
+     "stratum": null
+    },
+    {
+     "rank": 15,
+     "score": 0.585062,
+     "i": 330,
+     "j": 476,
+     "stratum": null
+    },
+    {
+     "rank": 16,
+     "score": 0.577014,
+     "i": 285,
+     "j": 304,
+     "stratum": null
+    },
+    {
+     "rank": 17,
+     "score": 0.568612,
+     "i": 264,
+     "j": 302,
+     "stratum": "residue both sides"
+    },
+    {
+     "rank": 18,
+     "score": 0.545763,
+     "i": 321,
+     "j": 361,
+     "stratum": "residue both sides"
+    },
+    {
+     "rank": 19,
+     "score": 0.543984,
+     "i": 216,
+     "j": 321,
+     "stratum": "residue both sides"
+    },
+    {
+     "rank": 20,
+     "score": 0.521141,
+     "i": 253,
+     "j": 327,
+     "stratum": null
+    },
+    {
+     "rank": 21,
+     "score": 0.519918,
+     "i": 379,
+     "j": 475,
+     "stratum": null
+    },
+    {
+     "rank": 22,
+     "score": 0.508139,
+     "i": 26,
+     "j": 383,
+     "stratum": null
+    },
+    {
+     "rank": 23,
+     "score": 0.502743,
+     "i": 267,
+     "j": 317,
+     "stratum": null
+    },
+    {
+     "rank": 24,
+     "score": 0.490875,
+     "i": 216,
+     "j": 348,
+     "stratum": "residue both sides"
+    },
+    {
+     "rank": 25,
+     "score": 0.489378,
+     "i": 90,
+     "j": 304,
+     "stratum": null
+    },
+    {
+     "rank": 26,
+     "score": 0.487423,
+     "i": 252,
+     "j": 255,
+     "stratum": null
+    },
+    {
+     "rank": 27,
+     "score": 0.487291,
+     "i": 240,
+     "j": 315,
+     "stratum": null
+    },
+    {
+     "rank": 28,
+     "score": 0.482194,
+     "i": 234,
+     "j": 275,
+     "stratum": null
+    },
+    {
+     "rank": 29,
+     "score": 0.479179,
+     "i": 257,
+     "j": 262,
+     "stratum": null
+    },
+    {
+     "rank": 30,
+     "score": 0.478889,
+     "i": 321,
+     "j": 348,
+     "stratum": "residue both sides"
+    },
+    {
+     "rank": 31,
+     "score": 0.476658,
+     "i": 328,
+     "j": 510,
+     "stratum": null
+    },
+    {
+     "rank": 32,
+     "score": 0.475994,
+     "i": 285,
+     "j": 300,
+     "stratum": null
+    },
+    {
+     "rank": 33,
+     "score": 0.475822,
+     "i": 337,
+     "j": 357,
+     "stratum": null
+    },
+    {
+     "rank": 34,
+     "score": 0.473761,
+     "i": 336,
+     "j": 377,
+     "stratum": "residue both sides"
+    },
+    {
+     "rank": 35,
+     "score": 0.473319,
+     "i": 222,
+     "j": 321,
+     "stratum": "residue both sides"
+    },
+    {
+     "rank": 36,
+     "score": 0.472587,
+     "i": 253,
+     "j": 344,
+     "stratum": null
+    },
+    {
+     "rank": 37,
+     "score": 0.471215,
+     "i": 226,
+     "j": 242,
+     "stratum": null
+    },
+    {
+     "rank": 38,
+     "score": 0.468154,
+     "i": 349,
+     "j": 374,
+     "stratum": "residue both sides"
+    },
+    {
+     "rank": 39,
+     "score": 0.467786,
+     "i": 379,
+     "j": 398,
+     "stratum": null
+    },
+    {
+     "rank": 40,
+     "score": 0.458676,
+     "i": 228,
+     "j": 273,
+     "stratum": null
+    }
+   ],
+   "top_strata": {
+    "same artist": 4,
+    "residue both sides": 13,
+    "survives": 23
+   }
+  },
+  "D": {
+   "observed_median": 0.322749,
+   "observed_mean": 0.356649,
+   "null_median": 0.333333,
+   "null_t99": 0.707107,
+   "null_max": 1.0,
+   "n_surrogates": 104200,
+   "n_pairs_scored": 8308,
+   "n_works_above_t99": 9,
+   "n_pairs_above_t99": 6,
+   "obs_hist": [
+    11,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    4,
+    3,
+    13,
+    16,
+    39,
+    45,
+    31,
+    47,
+    47,
+    30,
+    34,
+    30,
+    13,
+    36,
+    9,
+    7,
+    10,
+    19,
+    24,
+    5,
+    0,
+    15,
+    2,
+    3,
+    0,
+    2,
+    0,
+    0,
+    17,
+    0,
+    2,
+    0,
+    0,
+    3,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    4
+   ],
+   "null_hist": [
+    800,
+    0,
+    0,
+    0,
+    0,
+    0,
+    2,
+    43,
+    288,
+    1223,
+    3141,
+    6299,
+    8310,
+    7111,
+    12180,
+    11044,
+    8381,
+    9772,
+    6144,
+    1985,
+    9388,
+    2090,
+    3624,
+    1495,
+    2841,
+    2605,
+    1188,
+    224,
+    1912,
+    26,
+    219,
+    259,
+    160,
+    129,
+    7,
+    1027,
+    2,
+    98,
+    6,
+    2,
+    80,
+    1,
+    0,
+    5,
+    10,
+    17,
+    0,
+    0,
+    0,
+    62
+   ],
+   "vocab_types": 1325,
+   "vocab_tokens": 3207,
+   "empty_docs": 4,
+   "vocabulary": "ACT",
+   "weighting": "TF",
+   "note": "both: act vocabulary, recurrence decides",
+   "doc_length": {
+    "min": 0,
+    "q25": 4,
+    "median": 6,
+    "q75": 8,
+    "max": 18
+   },
+   "top": [
+    {
+     "rank": 1,
+     "score": 1.0,
+     "i": 363,
+     "j": 367,
+     "stratum": "same artist"
+    },
+    {
+     "rank": 2,
+     "score": 1.0,
+     "i": 293,
+     "j": 307,
+     "stratum": "same artist"
+    },
+    {
+     "rank": 3,
+     "score": 0.816497,
+     "i": 363,
+     "j": 369,
+     "stratum": "same artist"
+    },
+    {
+     "rank": 4,
+     "score": 0.816497,
+     "i": 367,
+     "j": 369,
+     "stratum": "same artist"
+    },
+    {
+     "rank": 5,
+     "score": 0.816497,
+     "i": 438,
+     "j": 451,
+     "stratum": null
+    },
+    {
+     "rank": 6,
+     "score": 0.75,
+     "i": 434,
+     "j": 446,
+     "stratum": null
+    },
+    {
+     "rank": 7,
+     "score": 0.707107,
+     "i": 26,
+     "j": 383,
+     "stratum": null
+    },
+    {
+     "rank": 8,
+     "score": 0.707107,
+     "i": 216,
+     "j": 336,
+     "stratum": "residue both sides"
+    },
+    {
+     "rank": 9,
+     "score": 0.707107,
+     "i": 222,
+     "j": 228,
+     "stratum": "residue both sides"
+    },
+    {
+     "rank": 10,
+     "score": 0.707107,
+     "i": 225,
+     "j": 374,
+     "stratum": "residue both sides"
+    },
+    {
+     "rank": 11,
+     "score": 0.707107,
+     "i": 283,
+     "j": 380,
+     "stratum": null
+    },
+    {
+     "rank": 12,
+     "score": 0.707107,
+     "i": 321,
+     "j": 336,
+     "stratum": "residue both sides"
+    },
+    {
+     "rank": 13,
+     "score": 0.707107,
+     "i": 321,
+     "j": 361,
+     "stratum": "residue both sides"
+    },
+    {
+     "rank": 14,
+     "score": 0.707107,
+     "i": 323,
+     "j": 383,
+     "stratum": null
+    },
+    {
+     "rank": 15,
+     "score": 0.707107,
+     "i": 330,
+     "j": 476,
+     "stratum": null
+    },
+    {
+     "rank": 16,
+     "score": 0.707107,
+     "i": 336,
+     "j": 348,
+     "stratum": "residue both sides"
+    },
+    {
+     "rank": 17,
+     "score": 0.707107,
+     "i": 336,
+     "j": 377,
+     "stratum": "residue both sides"
+    },
+    {
+     "rank": 18,
+     "score": 0.648886,
+     "i": 262,
+     "j": 272,
+     "stratum": null
+    },
+    {
+     "rank": 19,
+     "score": 0.615587,
+     "i": 257,
+     "j": 262,
+     "stratum": null
+    },
+    {
+     "rank": 20,
+     "score": 0.612372,
+     "i": 285,
+     "j": 304,
+     "stratum": null
+    },
+    {
+     "rank": 21,
+     "score": 0.58554,
+     "i": 267,
+     "j": 317,
+     "stratum": null
+    },
+    {
+     "rank": 22,
+     "score": 0.57735,
+     "i": 35,
+     "j": 383,
+     "stratum": null
+    },
+    {
+     "rank": 23,
+     "score": 0.57735,
+     "i": 216,
+     "j": 290,
+     "stratum": "residue both sides"
+    },
+    {
+     "rank": 24,
+     "score": 0.57735,
+     "i": 228,
+     "j": 273,
+     "stratum": null
+    },
+    {
+     "rank": 25,
+     "score": 0.57735,
+     "i": 234,
+     "j": 275,
+     "stratum": null
+    },
+    {
+     "rank": 26,
+     "score": 0.57735,
+     "i": 246,
+     "j": 327,
+     "stratum": null
+    },
+    {
+     "rank": 27,
+     "score": 0.57735,
+     "i": 255,
+     "j": 346,
+     "stratum": null
+    },
+    {
+     "rank": 28,
+     "score": 0.57735,
+     "i": 328,
+     "j": 510,
+     "stratum": null
+    },
+    {
+     "rank": 29,
+     "score": 0.57735,
+     "i": 329,
+     "j": 336,
+     "stratum": "residue both sides"
+    },
+    {
+     "rank": 30,
+     "score": 0.565685,
+     "i": 314,
+     "j": 436,
+     "stratum": null
+    },
+    {
+     "rank": 31,
+     "score": 0.565685,
+     "i": 355,
+     "j": 436,
+     "stratum": null
+    },
+    {
+     "rank": 32,
+     "score": 0.534522,
+     "i": 352,
+     "j": 430,
+     "stratum": null
+    },
+    {
+     "rank": 33,
+     "score": 0.534522,
+     "i": 359,
+     "j": 454,
+     "stratum": null
+    },
+    {
+     "rank": 34,
+     "score": 0.534522,
+     "i": 359,
+     "j": 430,
+     "stratum": null
+    },
+    {
+     "rank": 35,
+     "score": 0.529813,
+     "i": 262,
+     "j": 389,
+     "stratum": null
+    },
+    {
+     "rank": 36,
+     "score": 0.516398,
+     "i": 5,
+     "j": 328,
+     "stratum": null
+    },
+    {
+     "rank": 37,
+     "score": 0.516398,
+     "i": 226,
+     "j": 431,
+     "stratum": null
+    },
+    {
+     "rank": 38,
+     "score": 0.516398,
+     "i": 258,
+     "j": 289,
+     "stratum": null
+    },
+    {
+     "rank": 39,
+     "score": 0.516398,
+     "i": 327,
+     "j": 337,
+     "stratum": "residue both sides"
+    },
+    {
+     "rank": 40,
+     "score": 0.503953,
+     "i": 157,
+     "j": 338,
+     "stratum": null
+    }
+   ],
+   "top_strata": {
+    "same artist": 4,
+    "residue both sides": 10,
+    "survives": 26
+   }
+  }
+ },
+ "top_overlap": {
+  "A|B": 21,
+  "A|C": 8,
+  "A|D": 7,
+  "B|C": 9,
+  "B|D": 9,
+  "C|D": 24
+ },
+ "adjudication": {
+  "strata_rule": "carried over from session 1 unchanged: a pair is set aside before reading if both sides are by the same artist, or if both sides carry one of eight fixed harvesting markers",
+  "residue_markers": [
+   "description edit",
+   "outside link",
+   "inception:",
+   "attributed to:",
+   "access url:",
+   "variant edit",
+   "static files",
+   "&quot;"
+  ],
+  "n_pairs": 52,
+  "reading_order": [
+   "8e808b55",
+   "b8eec842",
+   "03dcf4ae",
+   "ba1e5bcf",
+   "0974d0db",
+   "b3a4389f",
+   "2dc26ea4",
+   "5c1159b1",
+   "66752570",
+   "f9ddc2a5",
+   "4902c4a0",
+   "7a771374",
+   "f9cd3423",
+   "ab83e4bc",
+   "f6cbe811",
+   "a542d8f8",
+   "86c175f2",
+   "7da1483c",
+   "5b8e946c",
+   "d8bcf8ff",
+   "bcfa7410",
+   "e7081e80",
+   "3d34c3a2",
+   "77dcd637",
+   "1b786137",
+   "01ed85c5",
+   "67822b89",
+   "865c4b4c",
+   "e2f153b8",
+   "29beddbc",
+   "36132600",
+   "1495d980",
+   "d26f19be",
+   "07d20a26",
+   "b1807eda",
+   "a41c88e8",
+   "3e0db181",
+   "bac0e086",
+   "a3bfb6ca",
+   "9069b2ba",
+   "7a64a360",
+   "f4b694cb",
+   "0106905e",
+   "27464608",
+   "9ca6d72b",
+   "e500f20b",
+   "47456733",
+   "a2fbe95b",
+   "4d7c6b7a",
+   "7b5c19ba",
+   "3c047c8c",
+   "1eff6d56"
+  ],
+  "pairs": [
+   {
+    "id": "0106905e",
+    "i": 257,
+    "j": 262,
+    "a": {
+     "i": 257,
+     "title": "Animated Text",
+     "artist": "animated text",
+     "year": "2012",
+     "field": "history. attributed to: animated text inception: 2022 Metadata Descriptive Data artist: animated text title: Animated Text inception: 7 November 2012 Variant",
+     "truncated": false,
+     "residue": true,
+     "head": "other"
+    },
+    "b": {
+     "i": 262,
+     "title": "@reply-all",
+     "artist": "Mark Beasley",
+     "year": "2008",
+     "field": "the author's text against all existing - previously written - text that matches the current text. The user has the option to insert this text by pressing",
+     "truncated": false,
+     "residue": false,
+     "head": "determiner"
+    },
+    "cells": {
+     "A": {
+      "rank": 21,
+      "score": 0.317886,
+      "carried_by": [
+       [
+        "text",
+        0.317886
+       ]
+      ],
+      "top_share": 1.0,
+      "n_shared": 1
+     },
+     "C": {
+      "rank": 29,
+      "score": 0.479179,
+      "carried_by": [
+       [
+        "text",
+        0.479179
+       ]
+      ],
+      "top_share": 1.0,
+      "n_shared": 1
+     },
+     "D": {
+      "rank": 19,
+      "score": 0.615587,
+      "carried_by": [
+       [
+        "text",
+        0.615587
+       ]
+      ],
+      "top_share": 1.0,
+      "n_shared": 1
+     }
+    }
+   },
+   {
+    "id": "01ed85c5",
+    "i": 226,
+    "j": 242,
+    "a": {
+     "i": 226,
+     "title": "Cyberspace Mega Brains Group",
+     "artist": "Jordons Francisco",
+     "year": "2004",
+     "field": "Lua error in Module:entityUtilities at line 189: attempt to index local 't' (a nil value).",
+     "truncated": false,
+     "residue": false,
+     "head": "other"
+    },
+    "b": {
+     "i": 242,
+     "title": "Marketscape",
+     "artist": "Christian Marc Schmidt",
+     "year": "2008",
+     "field": "the S&amp;P500 index, representing daily market activity as a virtual data artifact. It depicts index constituents as individual volumes, reflecting price",
+     "truncated": false,
+     "residue": false,
+     "head": "determiner"
+    },
+    "cells": {
+     "C": {
+      "rank": 37,
+      "score": 0.471215,
+      "carried_by": [
+       [
+        "index",
+        0.471215
+       ]
+      ],
+      "top_share": 1.0,
+      "n_shared": 1
+     }
+    }
+   },
+   {
+    "id": "03dcf4ae",
+    "i": 250,
+    "j": 261,
+    "a": {
+     "i": 250,
+     "title": "World of Female Avatars",
+     "artist": "Evelin Stermitz",
+     "year": "2006",
+     "field": "this artistic work are: Body and technology - Body and sex - Absent body - Body and picture - Body and violence. The debate of body in media art and in this",
+     "truncated": false,
+     "residue": false,
+     "head": "determiner"
+    },
+    "b": {
+     "i": 261,
+     "title": "k'muni",
+     "artist": "chia-hsiao sinz shih",
+     "year": "2001",
+     "field": "in my body; my body lives in this world. My mind exceeds my body; my body exceeds its skin. I structure the world via my body's experiences. My body is structured",
+     "truncated": false,
+     "residue": false,
+     "head": "other"
+    },
+    "cells": {
+     "A": {
+      "rank": 6,
+      "score": 0.583091,
+      "carried_by": [
+       [
+        "body",
+        0.583091
+       ]
+      ],
+      "top_share": 1.0,
+      "n_shared": 1
+     },
+     "B": {
+      "rank": 5,
+      "score": 0.758947,
+      "carried_by": [
+       [
+        "body",
+        0.758947
+       ]
+      ],
+      "top_share": 1.0,
+      "n_shared": 1
+     }
+    }
+   },
+   {
+    "id": "07d20a26",
+    "i": 246,
+    "j": 327,
+    "a": {
+     "i": 246,
+     "title": "Digital Nature: The Case Collection",
+     "artist": "Tal Halpern",
+     "year": "2002",
+     "field": "Nature can be thought of as a writing machine and real-time anthropological artifact generator, which exploits the popular forms of information culture attributed",
+     "truncated": false,
+     "residue": false,
+     "head": "other"
+    },
+    "b": {
+     "i": 327,
+     "title": "My Voice (for personal computer and microphone)",
+     "artist": "Grégory Chatonsky",
+     "year": "2003",
+     "field": "synchronize and desynchronize. What is the relation between the speech and the writing? attributed to: Grégory Chatonsky inception: 29 May 2003 Legacy descriptive",
+     "truncated": false,
+     "residue": true,
+     "head": "other"
+    },
+    "cells": {
+     "D": {
+      "rank": 26,
+      "score": 0.57735,
+      "carried_by": [
+       [
+        "writing",
+        0.288675
+       ],
+       [
+        "attributed",
+        0.288675
+       ]
+      ],
+      "top_share": 0.5,
+      "n_shared": 2
+     }
+    }
+   },
+   {
+    "id": "0974d0db",
+    "i": 253,
+    "j": 261,
+    "a": {
+     "i": 253,
+     "title": "ftp_formless_anatomy",
+     "artist": "Eugene Thacker",
+     "year": "2001",
+     "field": "of the digital-anatomical body. A theme running through most of my theoretical and net.art work is the relation between the body and technology. Specifically",
+     "truncated": false,
+     "residue": false,
+     "head": "other"
+    },
+    "b": {
+     "i": 261,
+     "title": "k'muni",
+     "artist": "chia-hsiao sinz shih",
+     "year": "2001",
+     "field": "in my body; my body lives in this world. My mind exceeds my body; my body exceeds its skin. I structure the world via my body's experiences. My body is structured",
+     "truncated": false,
+     "residue": false,
+     "head": "other"
+    },
+    "cells": {
+     "A": {
+      "rank": 34,
+      "score": 0.28962,
+      "carried_by": [
+       [
+        "body",
+        0.28962
+       ]
+      ],
+      "top_share": 1.0,
+      "n_shared": 1
+     }
+    }
+   },
+   {
+    "id": "1495d980",
+    "i": 255,
+    "j": 346,
+    "a": {
+     "i": 255,
+     "title": "plastiQ Memory",
+     "artist": "Philippe Boisnard",
+     "year": "2002",
+     "field": "description edit PlastiQ Memory, is an exploration of brain with the Xenakis music (&quot;Diamorphoses&quot;). This discover shows that memory is sensitive, and not",
+     "truncated": false,
+     "residue": true,
+     "head": "residue"
+    },
+    "b": {
+     "i": 346,
+     "title": "Beyond Resolution",
+     "artist": "Rosa Menkman",
+     "year": "2020",
+     "field": "An institute for the exploration of resolutions as compromises inscribed into every image standard.",
+     "truncated": false,
+     "residue": false,
+     "head": "determiner"
+    },
+    "cells": {
+     "C": {
+      "rank": 12,
+      "score": 0.632292,
+      "carried_by": [
+       [
+        "exploration",
+        0.632292
+       ]
+      ],
+      "top_share": 1.0,
+      "n_shared": 1
+     },
+     "D": {
+      "rank": 27,
+      "score": 0.57735,
+      "carried_by": [
+       [
+        "exploration",
+        0.57735
+       ]
+      ],
+      "top_share": 1.0,
+      "n_shared": 1
+     }
+    }
+   },
+   {
+    "id": "1b786137",
+    "i": 253,
+    "j": 327,
+    "a": {
+     "i": 253,
+     "title": "ftp_formless_anatomy",
+     "artist": "Eugene Thacker",
+     "year": "2001",
+     "field": "of the digital-anatomical body. A theme running through most of my theoretical and net.art work is the relation between the body and technology. Specifically",
+     "truncated": false,
+     "residue": false,
+     "head": "other"
+    },
+    "b": {
+     "i": 327,
+     "title": "My Voice (for personal computer and microphone)",
+     "artist": "Grégory Chatonsky",
+     "year": "2003",
+     "field": "synchronize and desynchronize. What is the relation between the speech and the writing? attributed to: Grégory Chatonsky inception: 29 May 2003 Legacy descriptive",
+     "truncated": false,
+     "residue": true,
+     "head": "other"
+    },
+    "cells": {
+     "C": {
+      "rank": 20,
+      "score": 0.521141,
+      "carried_by": [
+       [
+        "relation",
+        0.521141
+       ]
+      ],
+      "top_share": 1.0,
+      "n_shared": 1
+     }
+    }
+   },
+   {
+    "id": "1eff6d56",
+    "i": 250,
+    "j": 252,
+    "a": {
+     "i": 250,
+     "title": "World of Female Avatars",
+     "artist": "Evelin Stermitz",
+     "year": "2006",
+     "field": "this artistic work are: Body and technology - Body and sex - Absent body - Body and picture - Body and violence. The debate of body in media art and in this",
+     "truncated": false,
+     "residue": false,
+     "head": "determiner"
+    },
+    "b": {
+     "i": 252,
+     "title": "my body — a Wunderkammer",
+     "artist": "Shelley Jackson",
+     "year": "1997",
+     "field": "Description summary edit my body — a Wunderkammer is a semi-autobiographical hypertext combining text and image in an exploration of the body. It features a line",
+     "truncated": false,
+     "residue": false,
+     "head": "residue"
+    },
+    "cells": {
+     "A": {
+      "rank": 31,
+      "score": 0.292784,
+      "carried_by": [
+       [
+        "body",
+        0.292784
+       ]
+      ],
+      "top_share": 1.0,
+      "n_shared": 1
+     }
+    }
+   },
+   {
+    "id": "27464608",
+    "i": 277,
+    "j": 287,
+    "a": {
+     "i": 277,
+     "title": "IP Poetry Project",
+     "artist": "Gustavo Romano",
+     "year": "2007",
+     "field": "edit The IP Poetry project involves the development of a software and hardware system that uses text from the Internet to generate poetry that is then",
+     "truncated": false,
+     "residue": false,
+     "head": "residue"
+    },
+    "b": {
+     "i": 287,
+     "title": "The Profane Earth",
+     "artist": "Ollivier Dyens",
+     "year": "2005",
+     "field": "worlds. Why poetry as virtual worlds? Throughout the years, I came to see 3d creation and poetry are not that far apart. For what is poetry if not an architecture",
+     "truncated": false,
+     "residue": false,
+     "head": "other"
+    },
+    "cells": {
+     "A": {
+      "rank": 37,
+      "score": 0.281698,
+      "carried_by": [
+       [
+        "poetry",
+        0.281698
+       ]
+      ],
+      "top_share": 1.0,
+      "n_shared": 1
+     }
+    }
+   },
+   {
+    "id": "29beddbc",
+    "i": 324,
+    "j": 389,
+    "a": {
+     "i": 324,
+     "title": "Ghost City",
+     "artist": "Jody Zellen",
+     "year": "2001",
+     "field": "about memory, and about traveling through time and space. The time is infinite. The space is finite. Yet the time and space of GHOST CITY metaphorically relate",
+     "truncated": false,
+     "residue": false,
+     "head": "other"
+    },
+    "b": {
+     "i": 389,
+     "title": "La langue se charge",
+     "artist": "Michael Sellam",
+     "year": "2002",
+     "field": "proposes an experiment of loss of time, of influence of time. This is an audio-haptic experiment about the relationships between text, space, time, sound and",
+     "truncated": false,
+     "residue": false,
+     "head": "finite verb"
+    },
+    "cells": {
+     "B": {
+      "rank": 27,
+      "score": 0.492366,
+      "carried_by": [
+       [
+        "time",
+        0.369274
+       ],
+       [
+        "space",
+        0.123091
+       ]
+      ],
+      "top_share": 0.75,
+      "n_shared": 2
+     }
+    }
+   },
+   {
+    "id": "2dc26ea4",
+    "i": 285,
+    "j": 300,
+    "a": {
+     "i": 285,
+     "title": "birth and decay",
+     "artist": "julian konczak",
+     "year": "2006",
+     "field": "birth and decay inception: 2006 Variant History outside link variant edit access URL: http://www.hidrazone.com/artists/julian_konczak/birth_and_decay/display_birth_and_decay",
+     "truncated": false,
+     "residue": true,
+     "head": "other"
+    },
+    "b": {
+     "i": 300,
+     "title": "Saving The Alphabet",
+     "artist": "Alan Bigelow",
+     "year": "2005",
+     "field": "those who navigate the site themselves become a contributing factor in the decay of the story, and their contribution to the fictional death of language suggests",
+     "truncated": false,
+     "residue": false,
+     "head": "determiner"
+    },
+    "cells": {
+     "C": {
+      "rank": 32,
+      "score": 0.475994,
+      "carried_by": [
+       [
+        "decay",
+        0.475994
+       ]
+      ],
+      "top_share": 1.0,
+      "n_shared": 1
+     }
+    }
+   },
+   {
+    "id": "36132600",
+    "i": 283,
+    "j": 380,
+    "a": {
+     "i": 283,
+     "title": "Bruxis",
+     "artist": "Damon Hamm",
+     "year": "2002",
+     "field": "include participatory elements that range from audio to the physically tactile to infrared motion sensors. His new work incorporates custom electronics",
+     "truncated": false,
+     "residue": false,
+     "head": "other"
+    },
+    "b": {
+     "i": 380,
+     "title": "SELLz",
+     "artist": "David Gitt",
+     "year": "2005",
+     "field": "Some of these systems include education, economic, government, and health care. At the same time, blood cells, water, gas, sperm, cancer cells, food, and",
+     "truncated": false,
+     "residue": false,
+     "head": "determiner"
+    },
+    "cells": {
+     "C": {
+      "rank": 10,
+      "score": 0.658671,
+      "carried_by": [
+       [
+        "include",
+        0.658671
+       ]
+      ],
+      "top_share": 1.0,
+      "n_shared": 1
+     },
+     "D": {
+      "rank": 11,
+      "score": 0.707107,
+      "carried_by": [
+       [
+        "include",
+        0.707107
+       ]
+      ],
+      "top_share": 1.0,
+      "n_shared": 1
+     }
+    }
+   },
+   {
+    "id": "3c047c8c",
+    "i": 314,
+    "j": 436,
+    "a": {
+     "i": 314,
+     "title": "Email God",
+     "artist": "Stewart Smith",
+     "year": "2005",
+     "field": "in the process of negotiating broadcast time with a satellite service that could beam these messages into deep space, however this aspect is not integral",
+     "truncated": false,
+     "residue": false,
+     "head": "other"
+    },
+    "b": {
+     "i": 436,
+     "title": "Idea of a tree",
+     "artist": "mischer'traxler",
+     "year": "2008",
+     "field": "The idea of a tree is an autonomous production process which combines natural input with a mechanical process. Solely driven by solar energy, it translates the intensity of the sun through a mechanical apparatus into one object a day. The outcome reflects the ",
+     "truncated": true,
+     "residue": false,
+     "head": "determiner"
+    },
+    "cells": {
+     "D": {
+      "rank": 30,
+      "score": 0.565685,
+      "carried_by": [
+       [
+        "process",
+        0.565685
+       ]
+      ],
+      "top_share": 1.0,
+      "n_shared": 1
+     }
+    }
+   },
+   {
+    "id": "3d34c3a2",
+    "i": 355,
+    "j": 436,
+    "a": {
+     "i": 355,
+     "title": "The Samuel Gray Society",
+     "artist": "Darryl Lauster",
+     "year": "2009",
+     "field": "fabricate--a ripe mixture of historical fact and tenuous hypothesis, which, in many ways, is an honest depiction of the process of historical interpretation. This",
+     "truncated": false,
+     "residue": false,
+     "head": "other"
+    },
+    "b": {
+     "i": 436,
+     "title": "Idea of a tree",
+     "artist": "mischer'traxler",
+     "year": "2008",
+     "field": "The idea of a tree is an autonomous production process which combines natural input with a mechanical process. Solely driven by solar energy, it translates the intensity of the sun through a mechanical apparatus into one object a day. The outcome reflects the ",
+     "truncated": true,
+     "residue": false,
+     "head": "determiner"
+    },
+    "cells": {
+     "D": {
+      "rank": 31,
+      "score": 0.565685,
+      "carried_by": [
+       [
+        "process",
+        0.565685
+       ]
+      ],
+      "top_share": 1.0,
+      "n_shared": 1
+     }
+    }
+   },
+   {
+    "id": "3e0db181",
+    "i": 26,
+    "j": 383,
+    "a": {
+     "i": 26,
+     "title": "Post Growth",
+     "artist": "Disnovation.org",
+     "year": "2018–ongoing",
+     "field": "A modular toolkit — a tactical card game, speculative video 'prototypes', and workshop formats — re-quantifies growth's ecological and social costs through ecofeminist, indigenous-knowledge and historical-materialist lenses.",
+     "truncated": false,
+     "residue": false,
+     "head": "determiner"
+    },
+    "b": {
+     "i": 383,
+     "title": "war game",
+     "artist": "joeser alvarez",
+     "year": "2002",
+     "field": "world, the lord`s of the war book Attribution: joeser alvarez tactical, historical, allegory, War, social space, netart, media activism, globalization, game",
+     "truncated": false,
+     "residue": false,
+     "head": "other"
+    },
+    "cells": {
+     "C": {
+      "rank": 22,
+      "score": 0.508139,
+      "carried_by": [
+       [
+        "game",
+        0.508139
+       ]
+      ],
+      "top_share": 1.0,
+      "n_shared": 1
+     },
+     "D": {
+      "rank": 7,
+      "score": 0.707107,
+      "carried_by": [
+       [
+        "game",
+        0.707107
+       ]
+      ],
+      "top_share": 1.0,
+      "n_shared": 1
+     }
+    }
+   },
+   {
+    "id": "47456733",
+    "i": 323,
+    "j": 383,
+    "a": {
+     "i": 323,
+     "title": "The Book after the Book",
+     "artist": "giselle beiguelman",
+     "year": "2001",
+     "field": "reading contexts where significations are built. A gesture repertoire, a tactile game between hand and paper (or mouse), a constellation of objects and vision",
+     "truncated": false,
+     "residue": false,
+     "head": "participle"
+    },
+    "b": {
+     "i": 383,
+     "title": "war game",
+     "artist": "joeser alvarez",
+     "year": "2002",
+     "field": "world, the lord`s of the war book Attribution: joeser alvarez tactical, historical, allegory, War, social space, netart, media activism, globalization, game",
+     "truncated": false,
+     "residue": false,
+     "head": "other"
+    },
+    "cells": {
+     "C": {
+      "rank": 13,
+      "score": 0.621994,
+      "carried_by": [
+       [
+        "game",
+        0.621994
+       ]
+      ],
+      "top_share": 1.0,
+      "n_shared": 1
+     },
+     "D": {
+      "rank": 14,
+      "score": 0.707107,
+      "carried_by": [
+       [
+        "game",
+        0.707107
+       ]
+      ],
+      "top_share": 1.0,
+      "n_shared": 1
+     }
+    }
+   },
+   {
+    "id": "4902c4a0",
+    "i": 250,
+    "j": 382,
+    "a": {
+     "i": 250,
+     "title": "World of Female Avatars",
+     "artist": "Evelin Stermitz",
+     "year": "2006",
+     "field": "this artistic work are: Body and technology - Body and sex - Absent body - Body and picture - Body and violence. The debate of body in media art and in this",
+     "truncated": false,
+     "residue": false,
+     "head": "determiner"
+    },
+    "b": {
+     "i": 382,
+     "title": "Keep Walking",
+     "artist": "Marcello Mazzella",
+     "year": "2000",
+     "field": "body is no longer limited to a small, constricted space but has become a &quot;planetary body&quot; without limitations. Represented in the work is my vision of this",
+     "truncated": false,
+     "residue": true,
+     "head": "other"
+    },
+    "cells": {
+     "A": {
+      "rank": 30,
+      "score": 0.293041,
+      "carried_by": [
+       [
+        "body",
+        0.293041
+       ]
+      ],
+      "top_share": 1.0,
+      "n_shared": 1
+     }
+    }
+   },
+   {
+    "id": "4d7c6b7a",
+    "i": 227,
+    "j": 230,
+    "a": {
+     "i": 227,
+     "title": "white noise",
+     "artist": "Jürgen Trautwein",
+     "year": "2006",
+     "field": "2006 outside link Description description edit White noise is a noise- color-composer or a noise- color association interactive game simulator. An experimental",
+     "truncated": false,
+     "residue": true,
+     "head": "no word"
+    },
+    "b": {
+     "i": 230,
+     "title": "atari-noise",
+     "artist": "arcangel constantini",
+     "year": "2000",
+     "field": "infinite quantity of RANDOM audiovisual noise patterns that can be played in real time. The user of atari-noise, by pressing the keyboard push buttons,",
+     "truncated": false,
+     "residue": false,
+     "head": "other"
+    },
+    "cells": {
+     "A": {
+      "rank": 32,
+      "score": 0.291826,
+      "carried_by": [
+       [
+        "noise",
+        0.291826
+       ]
+      ],
+      "top_share": 1.0,
+      "n_shared": 1
+     }
+    }
+   },
+   {
+    "id": "5b8e946c",
+    "i": 277,
+    "j": 282,
+    "a": {
+     "i": 277,
+     "title": "IP Poetry Project",
+     "artist": "Gustavo Romano",
+     "year": "2007",
+     "field": "edit The IP Poetry project involves the development of a software and hardware system that uses text from the Internet to generate poetry that is then",
+     "truncated": false,
+     "residue": false,
+     "head": "residue"
+    },
+    "b": {
+     "i": 282,
+     "title": "cyberpoetry 1995-1997",
+     "artist": "komninos zervos",
+     "year": "2003",
+     "field": "and movie. cyberpoetry: poetry that can not be published in the traditional print media, poetry that moves in time and space, poetry that requires new ways",
+     "truncated": false,
+     "residue": false,
+     "head": "other"
+    },
+    "cells": {
+     "A": {
+      "rank": 19,
+      "score": 0.32291,
+      "carried_by": [
+       [
+        "poetry",
+        0.32291
+       ]
+      ],
+      "top_share": 1.0,
+      "n_shared": 1
+     }
+    }
+   },
+   {
+    "id": "5c1159b1",
+    "i": 250,
+    "j": 256,
+    "a": {
+     "i": 250,
+     "title": "World of Female Avatars",
+     "artist": "Evelin Stermitz",
+     "year": "2006",
+     "field": "this artistic work are: Body and technology - Body and sex - Absent body - Body and picture - Body and violence. The debate of body in media art and in this",
+     "truncated": false,
+     "residue": false,
+     "head": "determiner"
+    },
+    "b": {
+     "i": 256,
+     "title": "Pieces of Herself",
+     "artist": "Juliet Davis",
+     "year": "2005",
+     "field": "pieces of the self and arrange them in compositions inside the body. As each piece enters the body, it triggers audio clips from interviews with women. attributed",
+     "truncated": false,
+     "residue": false,
+     "head": "other"
+    },
+    "cells": {
+     "A": {
+      "rank": 33,
+      "score": 0.290612,
+      "carried_by": [
+       [
+        "body",
+        0.290612
+       ]
+      ],
+      "top_share": 1.0,
+      "n_shared": 1
+     }
+    }
+   },
+   {
+    "id": "66752570",
+    "i": 359,
+    "j": 454,
+    "a": {
+     "i": 359,
+     "title": "exodus",
+     "artist": "michael bielicky",
+     "year": "1995",
+     "field": "other projects like &quot;The Spiral,&quot; a video installation which examines historical communication methods. It's an unusual and provocative use of the Web",
+     "truncated": false,
+     "residue": true,
+     "head": "other"
+    },
+    "b": {
+     "i": 454,
+     "title": "DataMorphose: Animated Sails",
+     "artist": "Christiane Keller",
+     "year": "2009",
+     "field": "DataMorphose is an interactive installation which projects various data streams into real space and visualizes it three-dimensionally. Information is represented by spanned and moving sails directly in the room. Source: Christiane Keller (2009). Data Morphose.",
+     "truncated": false,
+     "residue": false,
+     "head": "other"
+    },
+    "cells": {
+     "D": {
+      "rank": 33,
+      "score": 0.534522,
+      "carried_by": [
+       [
+        "projects",
+        0.267261
+       ],
+       [
+        "installation",
+        0.267261
+       ]
+      ],
+      "top_share": 0.5,
+      "n_shared": 2
+     }
+    }
+   },
+   {
+    "id": "67822b89",
+    "i": 265,
+    "j": 275,
+    "a": {
+     "i": 265,
+     "title": "Marathon 55 . Cache Memory",
+     "artist": "Grégory Chatonsky",
+     "year": "2003",
+     "field": "remote server because it is in the cache memory. This memory is on the user's hard drive: technological mode of memory appropriation. Progressively the movie",
+     "truncated": false,
+     "residue": false,
+     "head": "other"
+    },
+    "b": {
+     "i": 275,
+     "title": "Music Box",
+     "artist": "Jin-Yo Mok",
+     "year": "2000",
+     "field": "dizziness might be from the faint memory of my uneasy childhood, the memory of my gauche first love, or from the memory of every humiliation I have had.",
+     "truncated": false,
+     "residue": false,
+     "head": "other"
+    },
+    "cells": {
+     "A": {
+      "rank": 26,
+      "score": 0.298351,
+      "carried_by": [
+       [
+        "memory",
+        0.298351
+       ]
+      ],
+      "top_share": 1.0,
+      "n_shared": 1
+     },
+     "B": {
+      "rank": 33,
+      "score": 0.474342,
+      "carried_by": [
+       [
+        "memory",
+        0.474342
+       ]
+      ],
+      "top_share": 1.0,
+      "n_shared": 1
+     }
+    }
+   },
+   {
+    "id": "77dcd637",
+    "i": 5,
+    "j": 328,
+    "a": {
+     "i": 5,
+     "title": "Connection Machine CM-2 (displayed as historical artifact)",
+     "artist": "Thinking Machines Corporation / W. Daniel Hillis (curated by Michael Beigl, Alistair Hudson, Daria Mille, Tamiko Thiel)",
+     "year": "1985/2026",
+     "field": "A real 1980s massively-parallel supercomputer — the machine historians credit with pioneering the parallel-processing paradigm behind today's AI — is put on physical display, reframing 'AI' as decades-old material infrastructure with a design history (and a de",
+     "truncated": true,
+     "residue": false,
+     "head": "determiner"
+    },
+    "b": {
+     "i": 328,
+     "title": "Smart Second Skin Dress",
+     "artist": "Jenny Tillotson",
+     "year": "2004",
+     "field": "disciplines of analytical chemistry, nanotechnology, perfumery, fashion &amp; textile design to be the pioneers of Scentsory Design attributed to: Jenny Tillotson",
+     "truncated": false,
+     "residue": true,
+     "head": "other"
+    },
+    "cells": {
+     "D": {
+      "rank": 36,
+      "score": 0.516398,
+      "carried_by": [
+       [
+        "design",
+        0.516398
+       ]
+      ],
+      "top_share": 1.0,
+      "n_shared": 1
+     }
+    }
+   },
+   {
+    "id": "7a64a360",
+    "i": 337,
+    "j": 357,
+    "a": {
+     "i": 337,
+     "title": "Breathe On Me",
+     "artist": "Will Pappenheimer",
+     "year": "2005",
+     "field": "attributed to: Will Pappenheimer inception: 26 May 2005 artist statement edit Writing in the 1960s, Fluxus artist Dick Higgins proposed the expansion of the artwork",
+     "truncated": false,
+     "residue": true,
+     "head": "residue"
+    },
+    "b": {
+     "i": 357,
+     "title": "Eco-social sculpture",
+     "artist": "Gosia Koscielak",
+     "year": "2007",
+     "field": "Artist Statement The idea of eco - social sculptures integrates my concepts of spatial symulations -sculpture to infinity and broader aspects of scientific",
+     "truncated": false,
+     "residue": false,
+     "head": "residue"
+    },
+    "cells": {
+     "C": {
+      "rank": 33,
+      "score": 0.475822,
+      "carried_by": [
+       [
+        "statement",
+        0.475822
+       ]
+      ],
+      "top_share": 1.0,
+      "n_shared": 1
+     }
+    }
+   },
+   {
+    "id": "7a771374",
+    "i": 328,
+    "j": 510,
+    "a": {
+     "i": 328,
+     "title": "Smart Second Skin Dress",
+     "artist": "Jenny Tillotson",
+     "year": "2004",
+     "field": "disciplines of analytical chemistry, nanotechnology, perfumery, fashion &amp; textile design to be the pioneers of Scentsory Design attributed to: Jenny Tillotson",
+     "truncated": false,
+     "residue": true,
+     "head": "other"
+    },
+    "b": {
+     "i": 510,
+     "title": "Large Language Writer",
+     "artist": "Lucy Li, Leo Mühlfeld, Alan Schiegl",
+     "year": "2025",
+     "field": "How will we write in the future, and why should we design “seamful” interactions? The Large Language Writer (LLW) is an experimental design project that explores honest interactions with Large Language Models (LLMs).",
+     "truncated": false,
+     "residue": false,
+     "head": "other"
+    },
+    "cells": {
+     "C": {
+      "rank": 31,
+      "score": 0.476658,
+      "carried_by": [
+       [
+        "design",
+        0.476658
+       ]
+      ],
+      "top_share": 1.0,
+      "n_shared": 1
+     },
+     "D": {
+      "rank": 28,
+      "score": 0.57735,
+      "carried_by": [
+       [
+        "design",
+        0.57735
+       ]
+      ],
+      "top_share": 1.0,
+      "n_shared": 1
+     }
+    }
+   },
+   {
+    "id": "7b5c19ba",
+    "i": 258,
+    "j": 289,
+    "a": {
+     "i": 258,
+     "title": "Atmospherics/Weather Works",
+     "artist": "Andrea Polli",
+     "year": "2004",
+     "field": "a performance, installation, and distributed software project for the sonification of storms (cyclones, for example) and other meteorological events generated",
+     "truncated": false,
+     "residue": false,
+     "head": "determiner"
+    },
+    "b": {
+     "i": 289,
+     "title": "Re:Positioning Fear, Relational Architecture 3",
+     "artist": "Rafael Lozano-Hemmer",
+     "year": "2001",
+     "field": "Description summary edit Re:Positioning Fear was an online project and large-scale installation on the courtyard facade of the world's largest historic armory",
+     "truncated": false,
+     "residue": false,
+     "head": "residue"
+    },
+    "cells": {
+     "D": {
+      "rank": 38,
+      "score": 0.516398,
+      "carried_by": [
+       [
+        "installation",
+        0.258199
+       ],
+       [
+        "project",
+        0.258199
+       ]
+      ],
+      "top_share": 0.5,
+      "n_shared": 2
+     }
+    }
+   },
+   {
+    "id": "7da1483c",
+    "i": 228,
+    "j": 273,
+    "a": {
+     "i": 228,
+     "title": "all is full of noise",
+     "artist": "Georg Duemlein",
+     "year": "2004",
+     "field": "Description description edit this is about the pure noise of digital communication. based on a realtime noise broadcast users can use this as a message relay",
+     "truncated": false,
+     "residue": true,
+     "head": "residue"
+    },
+    "b": {
+     "i": 273,
+     "title": "Sensity. Artworks using data from the real time environment.  By Stanza",
+     "artist": "Stanza",
+     "year": "2006",
+     "field": "based on sensing the environment. The results are the visualisation and sonification of real time spaces. Sensity artworks are made from the data that is",
+     "truncated": false,
+     "residue": false,
+     "head": "other"
+    },
+    "cells": {
+     "C": {
+      "rank": 40,
+      "score": 0.458676,
+      "carried_by": [
+       [
+        "based",
+        0.458676
+       ]
+      ],
+      "top_share": 1.0,
+      "n_shared": 1
+     },
+     "D": {
+      "rank": 24,
+      "score": 0.57735,
+      "carried_by": [
+       [
+        "based",
+        0.57735
+       ]
+      ],
+      "top_share": 1.0,
+      "n_shared": 1
+     }
+    }
+   },
+   {
+    "id": "865c4b4c",
+    "i": 240,
+    "j": 315,
+    "a": {
+     "i": 240,
+     "title": "Buddy Rivers Live (the automatic comedian)",
+     "artist": "Dave Miller",
+     "year": "2008",
+     "field": "reflect his personal demons, constructed from Yahoo searches on: 'fear of failure', 'Little Britain', 'Lenny Henry', 'panic attacks', 'divorce', etc. For",
+     "truncated": false,
+     "residue": false,
+     "head": "other"
+    },
+    "b": {
+     "i": 315,
+     "title": "The Field Museum of Art",
+     "artist": "mark cooley",
+     "year": "2007",
+     "field": "museum mash-up wherein a Fine Art Museum is constructed on the bones of a decayed Natural History Museum site - specifically Chicago's Field Museum was used",
+     "truncated": false,
+     "residue": false,
+     "head": "other"
+    },
+    "cells": {
+     "C": {
+      "rank": 27,
+      "score": 0.487291,
+      "carried_by": [
+       [
+        "constructed",
+        0.487291
+       ]
+      ],
+      "top_share": 1.0,
+      "n_shared": 1
+     }
+    }
+   },
+   {
+    "id": "86c175f2",
+    "i": 253,
+    "j": 344,
+    "a": {
+     "i": 253,
+     "title": "ftp_formless_anatomy",
+     "artist": "Eugene Thacker",
+     "year": "2001",
+     "field": "of the digital-anatomical body. A theme running through most of my theoretical and net.art work is the relation between the body and technology. Specifically",
+     "truncated": false,
+     "residue": false,
+     "head": "other"
+    },
+    "b": {
+     "i": 344,
+     "title": "ColourMetrics",
+     "artist": "Joao Santos",
+     "year": "2008",
+     "field": "the movements of the camera. The ColorMetrics depend on the relation of the time and the shutter of the digital camera: their progression and length are events",
+     "truncated": false,
+     "residue": false,
+     "head": "determiner"
+    },
+    "cells": {
+     "C": {
+      "rank": 36,
+      "score": 0.472587,
+      "carried_by": [
+       [
+        "relation",
+        0.472587
+       ]
+      ],
+      "top_share": 1.0,
+      "n_shared": 1
+     }
+    }
+   },
+   {
+    "id": "8e808b55",
+    "i": 352,
+    "j": 430,
+    "a": {
+     "i": 352,
+     "title": "Da Bear",
+     "artist": "Aurora Halal",
+     "year": "2006",
+     "field": "edit This website is part of a recent installation about interface and intimacy. A huge stuffed bear sculpture has a joystick for the user to navigate",
+     "truncated": false,
+     "residue": false,
+     "head": "residue"
+    },
+    "b": {
+     "i": 430,
+     "title": "Email Erosion: First Data Sculpture?",
+     "artist": "Ethan Ham",
+     "year": "2005",
+     "field": "Although there are older data sculptures (see our entry 1995 – Loren Madsen’s Early Data Sculptures), this installation from artist Ethan Ham may have been the first artifact to be called a data sculpture. In 2005, Andrew Vande Moere, a Design Professor and au",
+     "truncated": true,
+     "residue": false,
+     "head": "other"
+    },
+    "cells": {
+     "D": {
+      "rank": 32,
+      "score": 0.534522,
+      "carried_by": [
+       [
+        "installation",
+        0.534522
+       ]
+      ],
+      "top_share": 1.0,
+      "n_shared": 1
+     }
+    }
+   },
+   {
+    "id": "9069b2ba",
+    "i": 226,
+    "j": 431,
+    "a": {
+     "i": 226,
+     "title": "Cyberspace Mega Brains Group",
+     "artist": "Jordons Francisco",
+     "year": "2004",
+     "field": "Lua error in Module:entityUtilities at line 189: attempt to index local 't' (a nil value).",
+     "truncated": false,
+     "residue": false,
+     "head": "other"
+    },
+    "b": {
+     "i": 431,
+     "title": "Windcuts: Wind Travels Captured on Wood",
+     "artist": "Miska Knapek",
+     "year": "2009",
+     "field": "Windcuts is a physical information visualisation retelling the Helsinki wind's travels over five days, using wind sensor measurements from Helsinki, and wood and a CNC machine to cut it from there too. [...] The line's direction shows the wind's direction, the",
+     "truncated": true,
+     "residue": false,
+     "head": "other"
+    },
+    "cells": {
+     "D": {
+      "rank": 37,
+      "score": 0.516398,
+      "carried_by": [
+       [
+        "line",
+        0.516398
+       ]
+      ],
+      "top_share": 1.0,
+      "n_shared": 1
+     }
+    }
+   },
+   {
+    "id": "9ca6d72b",
+    "i": 434,
+    "j": 446,
+    "a": {
+     "i": 434,
+     "title": "Nathalie Miebach's Woven Sculptures",
+     "artist": "Nathalie Miebach",
+     "year": "2006",
+     "field": "Artist Nathalie Miebach created a range of beautiful woven sculptures out of weather data. Source: Nathalie Miebach. http://www.nathaliemiebach.com/weather.html (see TED Talk).",
+     "truncated": false,
+     "residue": false,
+     "head": "residue"
+    },
+    "b": {
+     "i": 446,
+     "title": "Joshua Callaghan's Physical Charts",
+     "artist": "Joshua Callaghan",
+     "year": "2008",
+     "field": "Joshua Callaghan has created various extruded 2-D charts. Source: http://www.joshuacallaghan.com/Graphs.htm",
+     "truncated": false,
+     "residue": false,
+     "head": "other"
+    },
+    "cells": {
+     "C": {
+      "rank": 14,
+      "score": 0.614277,
+      "carried_by": [
+       [
+        "com",
+        0.24305
+       ],
+       [
+        "created",
+        0.231471
+       ],
+       [
+        "source",
+        0.139755
+       ]
+      ],
+      "top_share": 0.3957,
+      "n_shared": 3
+     },
+     "D": {
+      "rank": 6,
+      "score": 0.75,
+      "carried_by": [
+       [
+        "com",
+        0.25
+       ],
+       [
+        "source",
+        0.25
+       ],
+       [
+        "created",
+        0.25
+       ]
+      ],
+      "top_share": 0.3333,
+      "n_shared": 3
+     }
+    }
+   },
+   {
+    "id": "a2fbe95b",
+    "i": 90,
+    "j": 304,
+    "a": {
+     "i": 90,
+     "title": "Troll Patrol",
+     "artist": "Amnesty International, with Element AI and Amnesty Decoders volunteers",
+     "year": "2018",
+     "field": "Crowdsources 6,500 volunteers across 150 countries to hand-label 228,000 tweets, then trains an ML classifier to extrapolate scale of abuse against women online — and publicly reports the classifier's own ~50% reliability limit.",
+     "truncated": false,
+     "residue": false,
+     "head": "other"
+    },
+    "b": {
+     "i": 304,
+     "title": "SL Dumpster",
+     "artist": "eteam",
+     "year": "2008",
+     "field": "what was going on, the problems (prim limit) we ran tinto, the solutions (decay script) we came up with, the avatars we met, (Dunn Bing, Relder Waco, Whooter",
+     "truncated": false,
+     "residue": false,
+     "head": "other"
+    },
+    "cells": {
+     "C": {
+      "rank": 25,
+      "score": 0.489378,
+      "carried_by": [
+       [
+        "limit",
+        0.489378
+       ]
+      ],
+      "top_share": 1.0,
+      "n_shared": 1
+     }
+    }
+   },
+   {
+    "id": "a3bfb6ca",
+    "i": 252,
+    "j": 255,
+    "a": {
+     "i": 252,
+     "title": "my body — a Wunderkammer",
+     "artist": "Shelley Jackson",
+     "year": "1997",
+     "field": "Description summary edit my body — a Wunderkammer is a semi-autobiographical hypertext combining text and image in an exploration of the body. It features a line",
+     "truncated": false,
+     "residue": false,
+     "head": "residue"
+    },
+    "b": {
+     "i": 255,
+     "title": "plastiQ Memory",
+     "artist": "Philippe Boisnard",
+     "year": "2002",
+     "field": "description edit PlastiQ Memory, is an exploration of brain with the Xenakis music (&quot;Diamorphoses&quot;). This discover shows that memory is sensitive, and not",
+     "truncated": false,
+     "residue": true,
+     "head": "residue"
+    },
+    "cells": {
+     "C": {
+      "rank": 26,
+      "score": 0.487423,
+      "carried_by": [
+       [
+        "exploration",
+        0.487423
+       ]
+      ],
+      "top_share": 1.0,
+      "n_shared": 1
+     }
+    }
+   },
+   {
+    "id": "a41c88e8",
+    "i": 359,
+    "j": 430,
+    "a": {
+     "i": 359,
+     "title": "exodus",
+     "artist": "michael bielicky",
+     "year": "1995",
+     "field": "other projects like &quot;The Spiral,&quot; a video installation which examines historical communication methods. It's an unusual and provocative use of the Web",
+     "truncated": false,
+     "residue": true,
+     "head": "other"
+    },
+    "b": {
+     "i": 430,
+     "title": "Email Erosion: First Data Sculpture?",
+     "artist": "Ethan Ham",
+     "year": "2005",
+     "field": "Although there are older data sculptures (see our entry 1995 – Loren Madsen’s Early Data Sculptures), this installation from artist Ethan Ham may have been the first artifact to be called a data sculpture. In 2005, Andrew Vande Moere, a Design Professor and au",
+     "truncated": true,
+     "residue": false,
+     "head": "other"
+    },
+    "cells": {
+     "D": {
+      "rank": 34,
+      "score": 0.534522,
+      "carried_by": [
+       [
+        "installation",
+        0.534522
+       ]
+      ],
+      "top_share": 1.0,
+      "n_shared": 1
+     }
+    }
+   },
+   {
+    "id": "a542d8f8",
+    "i": 438,
+    "j": 451,
+    "a": {
+     "i": 438,
+     "title": "Inverted Participatory Bar Charts",
+     "artist": "Lucy Kimbell",
+     "year": "2006",
+     "field": "Participatory physical visualization where people pick badges from tanks to vote. A lower bar means more votes. Source: Lucy Kimbell (2006). Physical Bar Charts.",
+     "truncated": false,
+     "residue": false,
+     "head": "other"
+    },
+    "b": {
+     "i": 451,
+     "title": "Justin Stewart's Data Sculptures",
+     "artist": "Justin Stewart",
+     "year": "2008",
+     "field": "A 3-D graph and a time series visualization. Source: http://thesocietypages.org/graphicsociology/tag/r-justin-stewart/",
+     "truncated": false,
+     "residue": false,
+     "head": "determiner"
+    },
+    "cells": {
+     "C": {
+      "rank": 9,
+      "score": 0.659904,
+      "carried_by": [
+       [
+        "visualization",
+        0.411471
+       ],
+       [
+        "source",
+        0.248433
+       ]
+      ],
+      "top_share": 0.6235,
+      "n_shared": 2
+     },
+     "D": {
+      "rank": 5,
+      "score": 0.816497,
+      "carried_by": [
+       [
+        "source",
+        0.408248
+       ],
+       [
+        "visualization",
+        0.408248
+       ]
+      ],
+      "top_share": 0.5,
+      "n_shared": 2
+     }
+    }
+   },
+   {
+    "id": "ab83e4bc",
+    "i": 262,
+    "j": 272,
+    "a": {
+     "i": 262,
+     "title": "@reply-all",
+     "artist": "Mark Beasley",
+     "year": "2008",
+     "field": "the author's text against all existing - previously written - text that matches the current text. The user has the option to insert this text by pressing",
+     "truncated": false,
+     "residue": false,
+     "head": "determiner"
+    },
+    "b": {
+     "i": 272,
+     "title": "regenerative",
+     "artist": "Eugenio Tisselli",
+     "year": "2005",
+     "field": "regenerative web page, text degenerates with each visit, but it also attempts to regenerate itself by trying to extract some text from the refering page",
+     "truncated": false,
+     "residue": false,
+     "head": "other"
+    },
+    "cells": {
+     "D": {
+      "rank": 18,
+      "score": 0.648886,
+      "carried_by": [
+       [
+        "text",
+        0.648886
+       ]
+      ],
+      "top_share": 1.0,
+      "n_shared": 1
+     }
+    }
+   },
+   {
+    "id": "b1807eda",
+    "i": 379,
+    "j": 398,
+    "a": {
+     "i": 379,
+     "title": "Camp La Jolla Military Park",
+     "artist": "Owen Mundy",
+     "year": "2008",
+     "field": "Description summary edit Camp La Jolla Military Park investigates the historical, geographic, and economic ties between the University of California, San",
+     "truncated": false,
+     "residue": false,
+     "head": "residue"
+    },
+    "b": {
+     "i": 398,
+     "title": "Sonic Map of Battersea Park",
+     "artist": "Gaya Gajewska",
+     "year": "2007",
+     "field": "London park to experience its complexity, cosmopolitanism, vibrancy and sense of enjoyment, using sound clips and minimal graphics. It also challenges",
+     "truncated": false,
+     "residue": false,
+     "head": "other"
+    },
+    "cells": {
+     "C": {
+      "rank": 39,
+      "score": 0.467786,
+      "carried_by": [
+       [
+        "park",
+        0.467786
+       ]
+      ],
+      "top_share": 1.0,
+      "n_shared": 1
+     }
+    }
+   },
+   {
+    "id": "b3a4389f",
+    "i": 379,
+    "j": 475,
+    "a": {
+     "i": 379,
+     "title": "Camp La Jolla Military Park",
+     "artist": "Owen Mundy",
+     "year": "2008",
+     "field": "Description summary edit Camp La Jolla Military Park investigates the historical, geographic, and economic ties between the University of California, San",
+     "truncated": false,
+     "residue": false,
+     "head": "residue"
+    },
+    "b": {
+     "i": 475,
+     "title": "Direito à Sombra (The Right to Shade)",
+     "artist": "Mari Nagem, Thiago Hersan",
+     "year": "2026",
+     "field": "Direito à Sombra investigates shade as a socio-environmental right. Is shade accessible, or has it become a commodity?",
+     "truncated": false,
+     "residue": false,
+     "head": "other"
+    },
+    "cells": {
+     "C": {
+      "rank": 21,
+      "score": 0.519918,
+      "carried_by": [
+       [
+        "investigates",
+        0.519918
+       ]
+      ],
+      "top_share": 1.0,
+      "n_shared": 1
+     }
+    }
+   },
+   {
+    "id": "b8eec842",
+    "i": 330,
+    "j": 476,
+    "a": {
+     "i": 330,
+     "title": "blackaeonium (a keeping-place)",
+     "artist": "lisa cianci",
+     "year": "2007",
+     "field": "Blackaeonium project explores the concept of keeping and loss in the preservation of digital media objects. It explores how best to keep the content of",
+     "truncated": false,
+     "residue": false,
+     "head": "other"
+    },
+    "b": {
+     "i": 476,
+     "title": "Morphogenic Angels: Chapter 2 (Alchemy of Perspectives) Demo",
+     "artist": "Keiken",
+     "year": "2026",
+     "field": "Set 1000 years in the future on a parallel timeline, Morphogenic Angels: Chapter 2 (Alchemy of Perspectives) continues Keiken’s expansive universe of Morphogenic Angels, which explores identity, energy, perception, and consciousness.",
+     "truncated": false,
+     "residue": false,
+     "head": "other"
+    },
+    "cells": {
+     "C": {
+      "rank": 15,
+      "score": 0.585062,
+      "carried_by": [
+       [
+        "explores",
+        0.585062
+       ]
+      ],
+      "top_share": 1.0,
+      "n_shared": 1
+     },
+     "D": {
+      "rank": 15,
+      "score": 0.707107,
+      "carried_by": [
+       [
+        "explores",
+        0.707107
+       ]
+      ],
+      "top_share": 1.0,
+      "n_shared": 1
+     }
+    }
+   },
+   {
+    "id": "ba1e5bcf",
+    "i": 416,
+    "j": 431,
+    "a": {
+     "i": 416,
+     "title": "Ned Kahn's Wind-Visualizing Facades",
+     "artist": "Ned Kahn",
+     "year": "1996",
+     "field": "Since 1996, Nothern California artist Ned Kahn creates large-scale installations that visualize wind patterns. The left image shows Wind veil (2000), a facade of a parking garage covered with 80,000 small aluminum panels that are hinged to move freely in the w",
+     "truncated": true,
+     "residue": false,
+     "head": "other"
+    },
+    "b": {
+     "i": 431,
+     "title": "Windcuts: Wind Travels Captured on Wood",
+     "artist": "Miska Knapek",
+     "year": "2009",
+     "field": "Windcuts is a physical information visualisation retelling the Helsinki wind's travels over five days, using wind sensor measurements from Helsinki, and wood and a CNC machine to cut it from there too. [...] The line's direction shows the wind's direction, the",
+     "truncated": true,
+     "residue": false,
+     "head": "other"
+    },
+    "cells": {
+     "A": {
+      "rank": 38,
+      "score": 0.280334,
+      "carried_by": [
+       [
+        "wind",
+        0.280334
+       ]
+      ],
+      "top_share": 1.0,
+      "n_shared": 1
+     }
+    }
+   },
+   {
+    "id": "bac0e086",
+    "i": 267,
+    "j": 317,
+    "a": {
+     "i": 267,
+     "title": "Cody on Cage on Joyce",
+     "artist": "Cody Trepte",
+     "year": "2008",
+     "field": "description edit This is a writing through a writing of a text that is largely considered unreadable. This text is a random regeneration of John Cage’s Fourth Writing",
+     "truncated": false,
+     "residue": true,
+     "head": "residue"
+    },
+    "b": {
+     "i": 317,
+     "title": "Alphabet Synthesis Machine",
+     "artist": "Golan Levin",
+     "year": "2001",
+     "field": "own glyphs, and then evolves them into imaginary writing systems using genetic algorithms. The writing systems developed with the software can be downloaded",
+     "truncated": false,
+     "residue": false,
+     "head": "other"
+    },
+    "cells": {
+     "C": {
+      "rank": 23,
+      "score": 0.502743,
+      "carried_by": [
+       [
+        "writing",
+        0.502743
+       ]
+      ],
+      "top_share": 1.0,
+      "n_shared": 1
+     },
+     "D": {
+      "rank": 21,
+      "score": 0.58554,
+      "carried_by": [
+       [
+        "writing",
+        0.58554
+       ]
+      ],
+      "top_share": 1.0,
+      "n_shared": 1
+     }
+    }
+   },
+   {
+    "id": "bcfa7410",
+    "i": 35,
+    "j": 383,
+    "a": {
+     "i": 35,
+     "title": "The Alluvials",
+     "artist": "Alice Bucknell",
+     "year": "2024",
+     "field": "A seven-scene game built by modding Grand Theft Auto V depicts a future, climate-collapsed Los Angeles from non-human points of view, using AI-modified game engines to imagine planetary crisis outside a human vantage point.",
+     "truncated": false,
+     "residue": false,
+     "head": "determiner"
+    },
+    "b": {
+     "i": 383,
+     "title": "war game",
+     "artist": "joeser alvarez",
+     "year": "2002",
+     "field": "world, the lord`s of the war book Attribution: joeser alvarez tactical, historical, allegory, War, social space, netart, media activism, globalization, game",
+     "truncated": false,
+     "residue": false,
+     "head": "other"
+    },
+    "cells": {
+     "D": {
+      "rank": 22,
+      "score": 0.57735,
+      "carried_by": [
+       [
+        "game",
+        0.57735
+       ]
+      ],
+      "top_share": 1.0,
+      "n_shared": 1
+     }
+    }
+   },
+   {
+    "id": "d26f19be",
+    "i": 262,
+    "j": 389,
+    "a": {
+     "i": 262,
+     "title": "@reply-all",
+     "artist": "Mark Beasley",
+     "year": "2008",
+     "field": "the author's text against all existing - previously written - text that matches the current text. The user has the option to insert this text by pressing",
+     "truncated": false,
+     "residue": false,
+     "head": "determiner"
+    },
+    "b": {
+     "i": 389,
+     "title": "La langue se charge",
+     "artist": "Michael Sellam",
+     "year": "2002",
+     "field": "proposes an experiment of loss of time, of influence of time. This is an audio-haptic experiment about the relationships between text, space, time, sound and",
+     "truncated": false,
+     "residue": false,
+     "head": "finite verb"
+    },
+    "cells": {
+     "D": {
+      "rank": 35,
+      "score": 0.529813,
+      "carried_by": [
+       [
+        "text",
+        0.529813
+       ]
+      ],
+      "top_share": 1.0,
+      "n_shared": 1
+     }
+    }
+   },
+   {
+    "id": "d8bcf8ff",
+    "i": 260,
+    "j": 275,
+    "a": {
+     "i": 260,
+     "title": "Antediluvian Fragments of Memories",
+     "artist": "sonya nielsen",
+     "year": "2007",
+     "field": "reflecting the three different forms of memory: sensory, temporal and lasting memory. The first is the is nine elements of memory, each take on the form of an image",
+     "truncated": false,
+     "residue": false,
+     "head": "participle"
+    },
+    "b": {
+     "i": 275,
+     "title": "Music Box",
+     "artist": "Jin-Yo Mok",
+     "year": "2000",
+     "field": "dizziness might be from the faint memory of my uneasy childhood, the memory of my gauche first love, or from the memory of every humiliation I have had.",
+     "truncated": false,
+     "residue": false,
+     "head": "other"
+    },
+    "cells": {
+     "A": {
+      "rank": 14,
+      "score": 0.341487,
+      "carried_by": [
+       [
+        "memory",
+        0.322327
+       ],
+       [
+        "first",
+        0.01916
+       ]
+      ],
+      "top_share": 0.9439,
+      "n_shared": 2
+     },
+     "B": {
+      "rank": 21,
+      "score": 0.502519,
+      "carried_by": [
+       [
+        "memory",
+        0.452267
+       ],
+       [
+        "first",
+        0.050252
+       ]
+      ],
+      "top_share": 0.9,
+      "n_shared": 2
+     }
+    }
+   },
+   {
+    "id": "e2f153b8",
+    "i": 260,
+    "j": 265,
+    "a": {
+     "i": 260,
+     "title": "Antediluvian Fragments of Memories",
+     "artist": "sonya nielsen",
+     "year": "2007",
+     "field": "reflecting the three different forms of memory: sensory, temporal and lasting memory. The first is the is nine elements of memory, each take on the form of an image",
+     "truncated": false,
+     "residue": false,
+     "head": "participle"
+    },
+    "b": {
+     "i": 265,
+     "title": "Marathon 55 . Cache Memory",
+     "artist": "Grégory Chatonsky",
+     "year": "2003",
+     "field": "remote server because it is in the cache memory. This memory is on the user's hard drive: technological mode of memory appropriation. Progressively the movie",
+     "truncated": false,
+     "residue": false,
+     "head": "other"
+    },
+    "cells": {
+     "A": {
+      "rank": 27,
+      "score": 0.297264,
+      "carried_by": [
+       [
+        "memory",
+        0.297264
+       ]
+      ],
+      "top_share": 1.0,
+      "n_shared": 1
+     }
+    }
+   },
+   {
+    "id": "e500f20b",
+    "i": 282,
+    "j": 311,
+    "a": {
+     "i": 282,
+     "title": "cyberpoetry 1995-1997",
+     "artist": "komninos zervos",
+     "year": "2003",
+     "field": "and movie. cyberpoetry: poetry that can not be published in the traditional print media, poetry that moves in time and space, poetry that requires new ways",
+     "truncated": false,
+     "residue": false,
+     "head": "other"
+    },
+    "b": {
+     "i": 311,
+     "title": "E.L.I. Nomad",
+     "artist": "Christian Croft",
+     "year": "2004",
+     "field": "sharing randomly generated poetry in exchange for new vocabulary words for his database. After hundreds of interactions, E.L.I.’s poetry has transformed from",
+     "truncated": false,
+     "residue": false,
+     "head": "participle"
+    },
+    "cells": {
+     "A": {
+      "rank": 29,
+      "score": 0.294332,
+      "carried_by": [
+       [
+        "poetry",
+        0.267197
+       ],
+       [
+        "new",
+        0.027135
+       ]
+      ],
+      "top_share": 0.9078,
+      "n_shared": 2
+     }
+    }
+   },
+   {
+    "id": "e7081e80",
+    "i": 282,
+    "j": 287,
+    "a": {
+     "i": 282,
+     "title": "cyberpoetry 1995-1997",
+     "artist": "komninos zervos",
+     "year": "2003",
+     "field": "and movie. cyberpoetry: poetry that can not be published in the traditional print media, poetry that moves in time and space, poetry that requires new ways",
+     "truncated": false,
+     "residue": false,
+     "head": "other"
+    },
+    "b": {
+     "i": 287,
+     "title": "The Profane Earth",
+     "artist": "Ollivier Dyens",
+     "year": "2005",
+     "field": "worlds. Why poetry as virtual worlds? Throughout the years, I came to see 3d creation and poetry are not that far apart. For what is poetry if not an architecture",
+     "truncated": false,
+     "residue": false,
+     "head": "other"
+    },
+    "cells": {
+     "A": {
+      "rank": 22,
+      "score": 0.315876,
+      "carried_by": [
+       [
+        "poetry",
+        0.315876
+       ]
+      ],
+      "top_share": 1.0,
+      "n_shared": 1
+     }
+    }
+   },
+   {
+    "id": "f4b694cb",
+    "i": 250,
+    "j": 253,
+    "a": {
+     "i": 250,
+     "title": "World of Female Avatars",
+     "artist": "Evelin Stermitz",
+     "year": "2006",
+     "field": "this artistic work are: Body and technology - Body and sex - Absent body - Body and picture - Body and violence. The debate of body in media art and in this",
+     "truncated": false,
+     "residue": false,
+     "head": "determiner"
+    },
+    "b": {
+     "i": 253,
+     "title": "ftp_formless_anatomy",
+     "artist": "Eugene Thacker",
+     "year": "2001",
+     "field": "of the digital-anatomical body. A theme running through most of my theoretical and net.art work is the relation between the body and technology. Specifically",
+     "truncated": false,
+     "residue": false,
+     "head": "other"
+    },
+    "cells": {
+     "A": {
+      "rank": 9,
+      "score": 0.381507,
+      "carried_by": [
+       [
+        "body",
+        0.331421
+       ],
+       [
+        "technology",
+        0.031529
+       ],
+       [
+        "art",
+        0.018557
+       ]
+      ],
+      "top_share": 0.8687,
+      "n_shared": 3
+     },
+     "B": {
+      "rank": 9,
+      "score": 0.557773,
+      "carried_by": [
+       [
+        "body",
+        0.478091
+       ],
+       [
+        "technology",
+        0.039841
+       ],
+       [
+        "art",
+        0.039841
+       ]
+      ],
+      "top_share": 0.8571,
+      "n_shared": 3
+     }
+    }
+   },
+   {
+    "id": "f6cbe811",
+    "i": 157,
+    "j": 338,
+    "a": {
+     "i": 157,
+     "title": "Matrix Vegetal",
+     "artist": "Patricia Domínguez",
+     "year": "2021–22",
+     "field": "A video installation braids Peruvian plant-healing practices together with 'quantum-inspired' technology, treating indeterminacy and non-Western epistemics of plant communication as equally valid registers of knowledge alongside computation.",
+     "truncated": false,
+     "residue": false,
+     "head": "determiner"
+    },
+    "b": {
+     "i": 338,
+     "title": "Lilly",
+     "artist": "Daniel Croyle",
+     "year": "2003",
+     "field": "was that of a plant or flower, due to the nature of my employment, being textile design. Many a flower or plant has been studied by myself in an objective",
+     "truncated": false,
+     "residue": false,
+     "head": "other"
+    },
+    "cells": {
+     "D": {
+      "rank": 40,
+      "score": 0.503953,
+      "carried_by": [
+       [
+        "plant",
+        0.503953
+       ]
+      ],
+      "top_share": 1.0,
+      "n_shared": 1
+     }
+    }
+   },
+   {
+    "id": "f9cd3423",
+    "i": 234,
+    "j": 275,
+    "a": {
+     "i": 234,
+     "title": "thecry.org",
+     "artist": "Indira Montoya",
+     "year": "2004",
+     "field": "in a few days. Love, hatred, illusions, all could be resumed in a word: failure. thecry.org is about visual consequences; the only consequences one could",
+     "truncated": false,
+     "residue": false,
+     "head": "other"
+    },
+    "b": {
+     "i": 275,
+     "title": "Music Box",
+     "artist": "Jin-Yo Mok",
+     "year": "2000",
+     "field": "dizziness might be from the faint memory of my uneasy childhood, the memory of my gauche first love, or from the memory of every humiliation I have had.",
+     "truncated": false,
+     "residue": false,
+     "head": "other"
+    },
+    "cells": {
+     "C": {
+      "rank": 28,
+      "score": 0.482194,
+      "carried_by": [
+       [
+        "love",
+        0.482194
+       ]
+      ],
+      "top_share": 1.0,
+      "n_shared": 1
+     },
+     "D": {
+      "rank": 25,
+      "score": 0.57735,
+      "carried_by": [
+       [
+        "love",
+        0.57735
+       ]
+      ],
+      "top_share": 1.0,
+      "n_shared": 1
+     }
+    }
+   },
+   {
+    "id": "f9ddc2a5",
+    "i": 285,
+    "j": 304,
+    "a": {
+     "i": 285,
+     "title": "birth and decay",
+     "artist": "julian konczak",
+     "year": "2006",
+     "field": "birth and decay inception: 2006 Variant History outside link variant edit access URL: http://www.hidrazone.com/artists/julian_konczak/birth_and_decay/display_birth_and_decay",
+     "truncated": false,
+     "residue": true,
+     "head": "other"
+    },
+    "b": {
+     "i": 304,
+     "title": "SL Dumpster",
+     "artist": "eteam",
+     "year": "2008",
+     "field": "what was going on, the problems (prim limit) we ran tinto, the solutions (decay script) we came up with, the avatars we met, (Dunn Bing, Relder Waco, Whooter",
+     "truncated": false,
+     "residue": false,
+     "head": "other"
+    },
+    "cells": {
+     "C": {
+      "rank": 16,
+      "score": 0.577014,
+      "carried_by": [
+       [
+        "decay",
+        0.577014
+       ]
+      ],
+      "top_share": 1.0,
+      "n_shared": 1
+     },
+     "D": {
+      "rank": 20,
+      "score": 0.612372,
+      "carried_by": [
+       [
+        "decay",
+        0.612372
+       ]
+      ],
+      "top_share": 1.0,
+      "n_shared": 1
+     }
+    }
+   }
+  ]
+ }
+}

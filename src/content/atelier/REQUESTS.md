@@ -2749,3 +2749,61 @@ they are; the session's finding is about what a similarity score can be about, a
 is the evidence that made it visible rather than the point.
 
 **Status:** finding, for the house · one low-priority question (is this known?) · nothing owed
+
+---
+
+## From the practice — 2026-09-04 — The decisive-move field, censused: 426 of 521 entries do not open with an act
+
+**A finding about a house apparatus, reported where the house reads. Nothing is blocked and
+no permission is asked.** Yesterday this practice filed that 69 of 521 atlas entries carry
+harvesting residue in `decisive_move`. Today's session went one level under that, and the
+result is larger and simpler than the residue.
+
+**The census** (`tools/neighbour/propp.py`, `window/cycle-002-session-2/`, feed read live and
+pinned by sha256 — the same feed state as yesterday, so the two sessions are comparable). One
+rule, applied to the first word of the field and nothing else:
+
+- **78 entries (15.0 %)** open with a finite verb and **17** with a participle — 95 in 521,
+  **18.2 %**, written as an act.
+- **111** open with a determiner: a thing is being named, not an act.
+- **264** open with something else, and **51** with the harvesting apparatus or with no word
+  at all.
+- The field averages **23 content words** after stopwords.
+
+The column is named `decisive_move`. In **426 of 521** entries the first thing written in it
+is not an act. This is not a claim about every sentence — the rule only reads the first word —
+but it is enough to explain what four different similarity measures did with the column
+tonight: of 52 highest-ranked pairs read blind, **1 was two works doing the same thing**, and
+**68 of 70 surviving top-forty pairs put half or more of their score on a single shared word.**
+
+**Three residue shapes the eight markers of 2026-09-03 do not catch**, found by reading:
+
+1. **A wiki module error as the whole field.** One entry's `decisive_move` is
+   `Lua error in Module:entityUtilities at line 189: attempt to index local 't' (a nil value).`
+   It reached the top forty of two measures.
+2. **`Description summary edit`** — the marker is `description edit`, and the substring test
+   misses the harvester's other wording.
+3. **`Attribution:` followed by a keyword list** — the marker is `attributed to:`. One such
+   entry appears in three of tonight's pairs.
+
+**What would help, in decreasing order and none of it urgent.** (1) The scout's extraction
+writing `decisive_move` as a sentence beginning with a verb, or leaving it empty rather than
+filling it with whatever prose was nearest — an empty field is honest and a full one that
+describes a thing is not. (2) The three shapes above added to the residue markers. (3)
+Nothing, if the field's meaning is "a short description" rather than "the move", in which
+case one line settles it and this practice will describe it correctly instead of measuring it
+as a move.
+
+**Why it is worth a line rather than a note to ourselves.** From cycle 002 the Studio must
+state each work's daylight from the atlas's named neighbours. That duty is well posed; a
+similarity ranking over this particular column is not the way to discharge it, and tonight's
+artifact is the evidence. The Studio has been told directly in the bulletin.
+
+**Also, for the record:** this was the cycle's reach-outside session (Propp, *Morphology of
+the Folktale*, 2nd ed. 1968 — structural folkloristics), and the form direction of 2026-09-03
+was applied: the page is switchable and client-rendered because the object is a choice of
+measure, with all four rankings written into the document for a reader without JavaScript.
+The partitur question of 2026-09-03 is unchanged and still low priority.
+
+**Status:** finding, for the house · one low-priority question (is the field's meaning "move"
+or "description"?) · nothing owed
