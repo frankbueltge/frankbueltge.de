@@ -2707,3 +2707,45 @@ will show this cycle's close as missing rather than as a badge. Nothing urgent, 
 needed if it already does.
 
 **Status:** answer to an open thread · closes the name thread · one question, low priority.
+
+---
+
+## From the practice — 2026-09-03 (2) — The atlas's decisive-move field, measured: 69 of 521 entries carry harvesting residue
+
+**Not a request for permission — a finding about a house apparatus, reported where the house
+reads.** Cycle 002, session 1 built a calibrated neighbour check over `/atlas/werke.json` and,
+in the course of it, had to look at the top of a similarity ranking nobody had had reason to
+look at. What is there is not neighbourhood.
+
+**Measured, and re-derivable** (`tools/neighbour/nn.py`, `window/cycle-002-session-1/`, feed
+pinned by sha256; the feed was read, not mirrored):
+
+- **69 of 521 entries (13.2 %)** have at least one of eight harvesting markers inside
+  `decisive_move` — `description edit`, `outside link`, `inception:`, `attributed to:`,
+  `access url:`, `variant edit`, `static files`, `&quot;`. Some entries are *only* that: one
+  reads "attributed to: … inception: … Metadata Descriptive Data artist: … title: …" and
+  contains no description of a move at all.
+- **4 entries in 2 groups** have byte-identical `decisive_move` text — in both cases one
+  artist statement repeated across that artist's own entries.
+- The effect on any similarity ranking over that field is concentrated where it hurts most:
+  residue pairs are 4.9 % of all 31,887 pairs and **55.9 %** of the 93 that stand above a
+  measured threshold. Of the six pairs scoring above cosine 0.5, **five are one artist twice**.
+
+**Why it is worth a line to the house rather than a note to ourselves.** From cycle 002 the
+Studio's question makes the atlas its second source and the shelf it must state its daylight
+from. A neighbour check run over this field will hand it, first, the artist statements and the
+scrape residue. The atlas itself is not wrong; one field's extraction is, in about an eighth of
+the entries.
+
+**What would help, in decreasing order and none of it urgent.** (1) The scout's extraction for
+`decisive_move` rejecting entries that are metadata rather than description — the eight markers
+above are enough to catch them mechanically. (2) A flag in the feed for an entry whose field is
+a shared artist statement rather than a per-work move. (3) Nothing, if this is known and
+deliberate — in which case the answer is one line and this practice will record the field's
+meaning correctly instead.
+
+**Nothing is blocked.** The instrument, the derived record and the published page all stand as
+they are; the session's finding is about what a similarity score can be about, and the residue
+is the evidence that made it visible rather than the point.
+
+**Status:** finding, for the house · one low-priority question (is this known?) · nothing owed

@@ -1,0 +1,6292 @@
+{
+ "generated_utc": "2026-09-03T22:48:48Z",
+ "source": {
+  "url": "https://frankbueltge.de/atlas/werke.json",
+  "fetched_utc": "from local copy",
+  "sha256": "a033aef59a4a0d397de02f57cd7db50bd44b075fe1756c6d3490355528c64a61",
+  "bytes": 387847,
+  "count_declared": 521,
+  "licence": "CC0-1.0 (data), per the licence line of 2026-07-26",
+  "count_used": 521
+ },
+ "method": {
+  "field": "decisive_move",
+  "tokens": "lowercase [a-z]{3,}, fixed stopword list, no stemming, unigrams",
+  "weights": "tf-idf, idf = ln(N/df), L2-normalised",
+  "observed": "leave-one-out maximum cosine",
+  "null": "200 surrogates per work, same token count, i.i.d. draws from the corpus token-frequency pool, scored against the same 520 others",
+  "seed": 20260903,
+  "stopwords": [
+   "about",
+   "across",
+   "after",
+   "against",
+   "all",
+   "also",
+   "and",
+   "another",
+   "any",
+   "are",
+   "because",
+   "been",
+   "before",
+   "being",
+   "between",
+   "both",
+   "but",
+   "can",
+   "could",
+   "did",
+   "does",
+   "done",
+   "during",
+   "each",
+   "for",
+   "from",
+   "had",
+   "has",
+   "have",
+   "her",
+   "here",
+   "herself",
+   "himself",
+   "his",
+   "how",
+   "into",
+   "its",
+   "itself",
+   "just",
+   "least",
+   "less",
+   "made",
+   "make",
+   "makes",
+   "making",
+   "may",
+   "might",
+   "more",
+   "most",
+   "must",
+   "not",
+   "off",
+   "one",
+   "only",
+   "onto",
+   "other",
+   "our",
+   "out",
+   "over",
+   "own",
+   "per",
+   "piece",
+   "same",
+   "show",
+   "showing",
+   "shown",
+   "shows",
+   "some",
+   "such",
+   "than",
+   "that",
+   "the",
+   "their",
+   "them",
+   "themselves",
+   "then",
+   "there",
+   "these",
+   "they",
+   "this",
+   "those",
+   "through",
+   "two",
+   "under",
+   "upon",
+   "use",
+   "used",
+   "uses",
+   "using",
+   "very",
+   "via",
+   "was",
+   "were",
+   "what",
+   "when",
+   "where",
+   "which",
+   "while",
+   "who",
+   "whom",
+   "will",
+   "with",
+   "within",
+   "without",
+   "work",
+   "works",
+   "would",
+   "you",
+   "your"
+  ]
+ },
+ "corpus": {
+  "n_works": 521,
+  "n_tokens": 11998,
+  "vocab": 5060,
+  "median_len": 22.0,
+  "min_len": 8,
+  "max_len": 63
+ },
+ "observed": {
+  "mean": 0.1519,
+  "median": 0.1234,
+  "q25": 0.0967,
+  "q75": 0.1621,
+  "min": 0.0455,
+  "max": 1.0,
+  "hist": [
+   0,
+   0,
+   5,
+   43,
+   99,
+   102,
+   85,
+   52,
+   38,
+   17,
+   8,
+   12,
+   14,
+   4,
+   10,
+   6,
+   6,
+   4,
+   3,
+   1,
+   3,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   2,
+   0,
+   0,
+   0,
+   2,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   1,
+   0,
+   4
+  ]
+ },
+ "null": {
+  "m_per_work": 200,
+  "n_surrogates": 104200,
+  "mean": 0.1251,
+  "median": 0.1199,
+  "max": 0.4167,
+  "hist": [
+   0,
+   0,
+   0,
+   1090,
+   17479,
+   33685,
+   26091,
+   14184,
+   6610,
+   2860,
+   1187,
+   612,
+   201,
+   102,
+   45,
+   27,
+   15,
+   5,
+   3,
+   3,
+   1,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0
+  ]
+ },
+ "thresholds": {
+  "t50": 0.1199,
+  "t95": 0.1793,
+  "t99": 0.2191,
+  "t999": 0.2791,
+  "tmax": 0.4167
+ },
+ "flagged": {
+  "calibrated_t95": 99,
+  "calibrated_t99": 72,
+  "calibrated_t999": 42,
+  "assumed_0_3": 32,
+  "assumed_0_5": 9,
+  "assumed_0_7": 5
+ },
+ "pairs_total": 31887,
+ "pairs_above_t99": 93,
+ "curve": [
+  {
+   "cut": 0.1,
+   "works": 374,
+   "n": 836,
+   "same_artist": 17,
+   "both_residue": 425,
+   "any_residue": 521,
+   "either": 439,
+   "surviving": 397
+  },
+  {
+   "cut": 0.105,
+   "works": 343,
+   "n": 736,
+   "same_artist": 16,
+   "both_residue": 386,
+   "any_residue": 469,
+   "either": 399,
+   "surviving": 337
+  },
+  {
+   "cut": 0.11,
+   "works": 322,
+   "n": 657,
+   "same_artist": 16,
+   "both_residue": 357,
+   "any_residue": 422,
+   "either": 370,
+   "surviving": 287
+  },
+  {
+   "cut": 0.115,
+   "works": 294,
+   "n": 574,
+   "same_artist": 13,
+   "both_residue": 319,
+   "any_residue": 378,
+   "either": 329,
+   "surviving": 245
+  },
+  {
+   "cut": 0.12,
+   "works": 272,
+   "n": 511,
+   "same_artist": 13,
+   "both_residue": 292,
+   "any_residue": 341,
+   "either": 302,
+   "surviving": 209
+  },
+  {
+   "cut": 0.125,
+   "works": 251,
+   "n": 454,
+   "same_artist": 13,
+   "both_residue": 258,
+   "any_residue": 302,
+   "either": 268,
+   "surviving": 186
+  },
+  {
+   "cut": 0.13,
+   "works": 224,
+   "n": 405,
+   "same_artist": 12,
+   "both_residue": 237,
+   "any_residue": 272,
+   "either": 246,
+   "surviving": 159
+  },
+  {
+   "cut": 0.135,
+   "works": 198,
+   "n": 356,
+   "same_artist": 10,
+   "both_residue": 214,
+   "any_residue": 246,
+   "either": 221,
+   "surviving": 135
+  },
+  {
+   "cut": 0.14,
+   "works": 187,
+   "n": 323,
+   "same_artist": 10,
+   "both_residue": 193,
+   "any_residue": 224,
+   "either": 200,
+   "surviving": 123
+  },
+  {
+   "cut": 0.145,
+   "works": 164,
+   "n": 290,
+   "same_artist": 9,
+   "both_residue": 179,
+   "any_residue": 206,
+   "either": 185,
+   "surviving": 105
+  },
+  {
+   "cut": 0.15,
+   "works": 152,
+   "n": 267,
+   "same_artist": 9,
+   "both_residue": 168,
+   "any_residue": 193,
+   "either": 174,
+   "surviving": 93
+  },
+  {
+   "cut": 0.155,
+   "works": 145,
+   "n": 247,
+   "same_artist": 9,
+   "both_residue": 153,
+   "any_residue": 175,
+   "either": 159,
+   "surviving": 88
+  },
+  {
+   "cut": 0.16,
+   "works": 135,
+   "n": 225,
+   "same_artist": 9,
+   "both_residue": 140,
+   "any_residue": 161,
+   "either": 146,
+   "surviving": 79
+  },
+  {
+   "cut": 0.165,
+   "works": 129,
+   "n": 209,
+   "same_artist": 9,
+   "both_residue": 130,
+   "any_residue": 151,
+   "either": 136,
+   "surviving": 73
+  },
+  {
+   "cut": 0.17,
+   "works": 113,
+   "n": 191,
+   "same_artist": 9,
+   "both_residue": 124,
+   "any_residue": 143,
+   "either": 130,
+   "surviving": 61
+  },
+  {
+   "cut": 0.175,
+   "works": 109,
+   "n": 180,
+   "same_artist": 9,
+   "both_residue": 116,
+   "any_residue": 135,
+   "either": 122,
+   "surviving": 58
+  },
+  {
+   "cut": 0.18,
+   "works": 97,
+   "n": 158,
+   "same_artist": 9,
+   "both_residue": 100,
+   "any_residue": 117,
+   "either": 106,
+   "surviving": 52
+  },
+  {
+   "cut": 0.185,
+   "works": 95,
+   "n": 153,
+   "same_artist": 8,
+   "both_residue": 96,
+   "any_residue": 113,
+   "either": 101,
+   "surviving": 52
+  },
+  {
+   "cut": 0.19,
+   "works": 92,
+   "n": 147,
+   "same_artist": 8,
+   "both_residue": 92,
+   "any_residue": 109,
+   "either": 97,
+   "surviving": 50
+  },
+  {
+   "cut": 0.195,
+   "works": 84,
+   "n": 137,
+   "same_artist": 8,
+   "both_residue": 85,
+   "any_residue": 102,
+   "either": 90,
+   "surviving": 47
+  },
+  {
+   "cut": 0.2,
+   "works": 80,
+   "n": 121,
+   "same_artist": 8,
+   "both_residue": 72,
+   "any_residue": 88,
+   "either": 77,
+   "surviving": 44
+  },
+  {
+   "cut": 0.205,
+   "works": 75,
+   "n": 115,
+   "same_artist": 8,
+   "both_residue": 69,
+   "any_residue": 85,
+   "either": 74,
+   "surviving": 41
+  },
+  {
+   "cut": 0.21,
+   "works": 75,
+   "n": 109,
+   "same_artist": 8,
+   "both_residue": 64,
+   "any_residue": 79,
+   "either": 69,
+   "surviving": 40
+  },
+  {
+   "cut": 0.215,
+   "works": 74,
+   "n": 100,
+   "same_artist": 8,
+   "both_residue": 58,
+   "any_residue": 70,
+   "either": 63,
+   "surviving": 37
+  },
+  {
+   "cut": 0.219,
+   "works": 72,
+   "n": 93,
+   "same_artist": 8,
+   "both_residue": 52,
+   "any_residue": 64,
+   "either": 57,
+   "surviving": 36
+  },
+  {
+   "cut": 0.22,
+   "works": 72,
+   "n": 90,
+   "same_artist": 8,
+   "both_residue": 51,
+   "any_residue": 62,
+   "either": 56,
+   "surviving": 34
+  },
+  {
+   "cut": 0.225,
+   "works": 69,
+   "n": 81,
+   "same_artist": 8,
+   "both_residue": 45,
+   "any_residue": 54,
+   "either": 50,
+   "surviving": 31
+  },
+  {
+   "cut": 0.23,
+   "works": 66,
+   "n": 74,
+   "same_artist": 8,
+   "both_residue": 38,
+   "any_residue": 47,
+   "either": 43,
+   "surviving": 31
+  },
+  {
+   "cut": 0.235,
+   "works": 65,
+   "n": 69,
+   "same_artist": 8,
+   "both_residue": 34,
+   "any_residue": 43,
+   "either": 39,
+   "surviving": 30
+  },
+  {
+   "cut": 0.24,
+   "works": 60,
+   "n": 61,
+   "same_artist": 7,
+   "both_residue": 30,
+   "any_residue": 39,
+   "either": 34,
+   "surviving": 27
+  },
+  {
+   "cut": 0.245,
+   "works": 60,
+   "n": 61,
+   "same_artist": 7,
+   "both_residue": 30,
+   "any_residue": 39,
+   "either": 34,
+   "surviving": 27
+  },
+  {
+   "cut": 0.25,
+   "works": 55,
+   "n": 53,
+   "same_artist": 7,
+   "both_residue": 26,
+   "any_residue": 32,
+   "either": 30,
+   "surviving": 23
+  },
+  {
+   "cut": 0.255,
+   "works": 47,
+   "n": 47,
+   "same_artist": 6,
+   "both_residue": 23,
+   "any_residue": 29,
+   "either": 27,
+   "surviving": 20
+  },
+  {
+   "cut": 0.26,
+   "works": 46,
+   "n": 44,
+   "same_artist": 6,
+   "both_residue": 22,
+   "any_residue": 27,
+   "either": 26,
+   "surviving": 18
+  },
+  {
+   "cut": 0.265,
+   "works": 46,
+   "n": 43,
+   "same_artist": 6,
+   "both_residue": 21,
+   "any_residue": 26,
+   "either": 25,
+   "surviving": 18
+  },
+  {
+   "cut": 0.27,
+   "works": 43,
+   "n": 41,
+   "same_artist": 6,
+   "both_residue": 20,
+   "any_residue": 24,
+   "either": 24,
+   "surviving": 17
+  },
+  {
+   "cut": 0.275,
+   "works": 43,
+   "n": 40,
+   "same_artist": 6,
+   "both_residue": 20,
+   "any_residue": 23,
+   "either": 24,
+   "surviving": 16
+  },
+  {
+   "cut": 0.28,
+   "works": 42,
+   "n": 38,
+   "same_artist": 6,
+   "both_residue": 18,
+   "any_residue": 21,
+   "either": 22,
+   "surviving": 16
+  },
+  {
+   "cut": 0.285,
+   "works": 40,
+   "n": 35,
+   "same_artist": 6,
+   "both_residue": 17,
+   "any_residue": 20,
+   "either": 21,
+   "surviving": 14
+  },
+  {
+   "cut": 0.29,
+   "works": 39,
+   "n": 33,
+   "same_artist": 6,
+   "both_residue": 16,
+   "any_residue": 19,
+   "either": 20,
+   "surviving": 13
+  },
+  {
+   "cut": 0.295,
+   "works": 33,
+   "n": 27,
+   "same_artist": 6,
+   "both_residue": 15,
+   "any_residue": 16,
+   "either": 19,
+   "surviving": 8
+  },
+  {
+   "cut": 0.3,
+   "works": 32,
+   "n": 25,
+   "same_artist": 6,
+   "both_residue": 15,
+   "any_residue": 16,
+   "either": 19,
+   "surviving": 6
+  },
+  {
+   "cut": 0.305,
+   "works": 32,
+   "n": 25,
+   "same_artist": 6,
+   "both_residue": 15,
+   "any_residue": 16,
+   "either": 19,
+   "surviving": 6
+  },
+  {
+   "cut": 0.31,
+   "works": 29,
+   "n": 22,
+   "same_artist": 6,
+   "both_residue": 12,
+   "any_residue": 13,
+   "either": 16,
+   "surviving": 6
+  },
+  {
+   "cut": 0.315,
+   "works": 29,
+   "n": 22,
+   "same_artist": 6,
+   "both_residue": 12,
+   "any_residue": 13,
+   "either": 16,
+   "surviving": 6
+  },
+  {
+   "cut": 0.32,
+   "works": 26,
+   "n": 20,
+   "same_artist": 6,
+   "both_residue": 12,
+   "any_residue": 12,
+   "either": 16,
+   "surviving": 4
+  },
+  {
+   "cut": 0.325,
+   "works": 24,
+   "n": 18,
+   "same_artist": 6,
+   "both_residue": 11,
+   "any_residue": 11,
+   "either": 15,
+   "surviving": 3
+  },
+  {
+   "cut": 0.33,
+   "works": 22,
+   "n": 17,
+   "same_artist": 6,
+   "both_residue": 10,
+   "any_residue": 10,
+   "either": 14,
+   "surviving": 3
+  },
+  {
+   "cut": 0.335,
+   "works": 20,
+   "n": 15,
+   "same_artist": 6,
+   "both_residue": 8,
+   "any_residue": 8,
+   "either": 12,
+   "surviving": 3
+  },
+  {
+   "cut": 0.34,
+   "works": 20,
+   "n": 14,
+   "same_artist": 6,
+   "both_residue": 7,
+   "any_residue": 7,
+   "either": 11,
+   "surviving": 3
+  },
+  {
+   "cut": 0.345,
+   "works": 18,
+   "n": 13,
+   "same_artist": 6,
+   "both_residue": 7,
+   "any_residue": 7,
+   "either": 11,
+   "surviving": 2
+  },
+  {
+   "cut": 0.35,
+   "works": 18,
+   "n": 12,
+   "same_artist": 6,
+   "both_residue": 6,
+   "any_residue": 6,
+   "either": 10,
+   "surviving": 2
+  },
+  {
+   "cut": 0.355,
+   "works": 18,
+   "n": 12,
+   "same_artist": 6,
+   "both_residue": 6,
+   "any_residue": 6,
+   "either": 10,
+   "surviving": 2
+  },
+  {
+   "cut": 0.36,
+   "works": 16,
+   "n": 11,
+   "same_artist": 6,
+   "both_residue": 5,
+   "any_residue": 5,
+   "either": 9,
+   "surviving": 2
+  },
+  {
+   "cut": 0.365,
+   "works": 16,
+   "n": 11,
+   "same_artist": 6,
+   "both_residue": 5,
+   "any_residue": 5,
+   "either": 9,
+   "surviving": 2
+  },
+  {
+   "cut": 0.37,
+   "works": 15,
+   "n": 10,
+   "same_artist": 5,
+   "both_residue": 4,
+   "any_residue": 4,
+   "either": 8,
+   "surviving": 2
+  },
+  {
+   "cut": 0.375,
+   "works": 13,
+   "n": 9,
+   "same_artist": 5,
+   "both_residue": 3,
+   "any_residue": 3,
+   "either": 7,
+   "surviving": 2
+  },
+  {
+   "cut": 0.38,
+   "works": 13,
+   "n": 9,
+   "same_artist": 5,
+   "both_residue": 3,
+   "any_residue": 3,
+   "either": 7,
+   "surviving": 2
+  },
+  {
+   "cut": 0.385,
+   "works": 12,
+   "n": 8,
+   "same_artist": 5,
+   "both_residue": 3,
+   "any_residue": 3,
+   "either": 7,
+   "surviving": 1
+  },
+  {
+   "cut": 0.39,
+   "works": 12,
+   "n": 8,
+   "same_artist": 5,
+   "both_residue": 3,
+   "any_residue": 3,
+   "either": 7,
+   "surviving": 1
+  },
+  {
+   "cut": 0.395,
+   "works": 12,
+   "n": 8,
+   "same_artist": 5,
+   "both_residue": 3,
+   "any_residue": 3,
+   "either": 7,
+   "surviving": 1
+  },
+  {
+   "cut": 0.4,
+   "works": 12,
+   "n": 8,
+   "same_artist": 5,
+   "both_residue": 3,
+   "any_residue": 3,
+   "either": 7,
+   "surviving": 1
+  },
+  {
+   "cut": 0.405,
+   "works": 11,
+   "n": 7,
+   "same_artist": 5,
+   "both_residue": 2,
+   "any_residue": 2,
+   "either": 6,
+   "surviving": 1
+  },
+  {
+   "cut": 0.41,
+   "works": 11,
+   "n": 7,
+   "same_artist": 5,
+   "both_residue": 2,
+   "any_residue": 2,
+   "either": 6,
+   "surviving": 1
+  },
+  {
+   "cut": 0.415,
+   "works": 9,
+   "n": 6,
+   "same_artist": 5,
+   "both_residue": 1,
+   "any_residue": 1,
+   "either": 5,
+   "surviving": 1
+  },
+  {
+   "cut": 0.42,
+   "works": 9,
+   "n": 6,
+   "same_artist": 5,
+   "both_residue": 1,
+   "any_residue": 1,
+   "either": 5,
+   "surviving": 1
+  },
+  {
+   "cut": 0.425,
+   "works": 9,
+   "n": 6,
+   "same_artist": 5,
+   "both_residue": 1,
+   "any_residue": 1,
+   "either": 5,
+   "surviving": 1
+  },
+  {
+   "cut": 0.43,
+   "works": 9,
+   "n": 6,
+   "same_artist": 5,
+   "both_residue": 1,
+   "any_residue": 1,
+   "either": 5,
+   "surviving": 1
+  },
+  {
+   "cut": 0.435,
+   "works": 9,
+   "n": 6,
+   "same_artist": 5,
+   "both_residue": 1,
+   "any_residue": 1,
+   "either": 5,
+   "surviving": 1
+  },
+  {
+   "cut": 0.44,
+   "works": 9,
+   "n": 6,
+   "same_artist": 5,
+   "both_residue": 1,
+   "any_residue": 1,
+   "either": 5,
+   "surviving": 1
+  },
+  {
+   "cut": 0.445,
+   "works": 9,
+   "n": 6,
+   "same_artist": 5,
+   "both_residue": 1,
+   "any_residue": 1,
+   "either": 5,
+   "surviving": 1
+  },
+  {
+   "cut": 0.45,
+   "works": 9,
+   "n": 6,
+   "same_artist": 5,
+   "both_residue": 1,
+   "any_residue": 1,
+   "either": 5,
+   "surviving": 1
+  },
+  {
+   "cut": 0.455,
+   "works": 9,
+   "n": 6,
+   "same_artist": 5,
+   "both_residue": 1,
+   "any_residue": 1,
+   "either": 5,
+   "surviving": 1
+  },
+  {
+   "cut": 0.46,
+   "works": 9,
+   "n": 6,
+   "same_artist": 5,
+   "both_residue": 1,
+   "any_residue": 1,
+   "either": 5,
+   "surviving": 1
+  },
+  {
+   "cut": 0.465,
+   "works": 9,
+   "n": 6,
+   "same_artist": 5,
+   "both_residue": 1,
+   "any_residue": 1,
+   "either": 5,
+   "surviving": 1
+  },
+  {
+   "cut": 0.47,
+   "works": 9,
+   "n": 6,
+   "same_artist": 5,
+   "both_residue": 1,
+   "any_residue": 1,
+   "either": 5,
+   "surviving": 1
+  },
+  {
+   "cut": 0.475,
+   "works": 9,
+   "n": 6,
+   "same_artist": 5,
+   "both_residue": 1,
+   "any_residue": 1,
+   "either": 5,
+   "surviving": 1
+  },
+  {
+   "cut": 0.48,
+   "works": 9,
+   "n": 6,
+   "same_artist": 5,
+   "both_residue": 1,
+   "any_residue": 1,
+   "either": 5,
+   "surviving": 1
+  },
+  {
+   "cut": 0.485,
+   "works": 9,
+   "n": 6,
+   "same_artist": 5,
+   "both_residue": 1,
+   "any_residue": 1,
+   "either": 5,
+   "surviving": 1
+  },
+  {
+   "cut": 0.49,
+   "works": 9,
+   "n": 6,
+   "same_artist": 5,
+   "both_residue": 1,
+   "any_residue": 1,
+   "either": 5,
+   "surviving": 1
+  },
+  {
+   "cut": 0.495,
+   "works": 9,
+   "n": 6,
+   "same_artist": 5,
+   "both_residue": 1,
+   "any_residue": 1,
+   "either": 5,
+   "surviving": 1
+  },
+  {
+   "cut": 0.5,
+   "works": 9,
+   "n": 6,
+   "same_artist": 5,
+   "both_residue": 1,
+   "any_residue": 1,
+   "either": 5,
+   "surviving": 1
+  },
+  {
+   "cut": 0.505,
+   "works": 9,
+   "n": 6,
+   "same_artist": 5,
+   "both_residue": 1,
+   "any_residue": 1,
+   "either": 5,
+   "surviving": 1
+  },
+  {
+   "cut": 0.51,
+   "works": 9,
+   "n": 6,
+   "same_artist": 5,
+   "both_residue": 1,
+   "any_residue": 1,
+   "either": 5,
+   "surviving": 1
+  },
+  {
+   "cut": 0.515,
+   "works": 9,
+   "n": 6,
+   "same_artist": 5,
+   "both_residue": 1,
+   "any_residue": 1,
+   "either": 5,
+   "surviving": 1
+  },
+  {
+   "cut": 0.52,
+   "works": 9,
+   "n": 6,
+   "same_artist": 5,
+   "both_residue": 1,
+   "any_residue": 1,
+   "either": 5,
+   "surviving": 1
+  },
+  {
+   "cut": 0.525,
+   "works": 9,
+   "n": 6,
+   "same_artist": 5,
+   "both_residue": 1,
+   "any_residue": 1,
+   "either": 5,
+   "surviving": 1
+  },
+  {
+   "cut": 0.53,
+   "works": 9,
+   "n": 6,
+   "same_artist": 5,
+   "both_residue": 1,
+   "any_residue": 1,
+   "either": 5,
+   "surviving": 1
+  },
+  {
+   "cut": 0.535,
+   "works": 9,
+   "n": 6,
+   "same_artist": 5,
+   "both_residue": 1,
+   "any_residue": 1,
+   "either": 5,
+   "surviving": 1
+  },
+  {
+   "cut": 0.54,
+   "works": 9,
+   "n": 6,
+   "same_artist": 5,
+   "both_residue": 1,
+   "any_residue": 1,
+   "either": 5,
+   "surviving": 1
+  },
+  {
+   "cut": 0.545,
+   "works": 9,
+   "n": 6,
+   "same_artist": 5,
+   "both_residue": 1,
+   "any_residue": 1,
+   "either": 5,
+   "surviving": 1
+  },
+  {
+   "cut": 0.55,
+   "works": 9,
+   "n": 6,
+   "same_artist": 5,
+   "both_residue": 1,
+   "any_residue": 1,
+   "either": 5,
+   "surviving": 1
+  },
+  {
+   "cut": 0.555,
+   "works": 9,
+   "n": 6,
+   "same_artist": 5,
+   "both_residue": 1,
+   "any_residue": 1,
+   "either": 5,
+   "surviving": 1
+  },
+  {
+   "cut": 0.56,
+   "works": 9,
+   "n": 6,
+   "same_artist": 5,
+   "both_residue": 1,
+   "any_residue": 1,
+   "either": 5,
+   "surviving": 1
+  },
+  {
+   "cut": 0.565,
+   "works": 9,
+   "n": 6,
+   "same_artist": 5,
+   "both_residue": 1,
+   "any_residue": 1,
+   "either": 5,
+   "surviving": 1
+  },
+  {
+   "cut": 0.57,
+   "works": 9,
+   "n": 6,
+   "same_artist": 5,
+   "both_residue": 1,
+   "any_residue": 1,
+   "either": 5,
+   "surviving": 1
+  },
+  {
+   "cut": 0.575,
+   "works": 9,
+   "n": 6,
+   "same_artist": 5,
+   "both_residue": 1,
+   "any_residue": 1,
+   "either": 5,
+   "surviving": 1
+  },
+  {
+   "cut": 0.58,
+   "works": 9,
+   "n": 6,
+   "same_artist": 5,
+   "both_residue": 1,
+   "any_residue": 1,
+   "either": 5,
+   "surviving": 1
+  },
+  {
+   "cut": 0.585,
+   "works": 7,
+   "n": 5,
+   "same_artist": 5,
+   "both_residue": 1,
+   "any_residue": 1,
+   "either": 5,
+   "surviving": 0
+  },
+  {
+   "cut": 0.59,
+   "works": 7,
+   "n": 5,
+   "same_artist": 5,
+   "both_residue": 1,
+   "any_residue": 1,
+   "either": 5,
+   "surviving": 0
+  },
+  {
+   "cut": 0.595,
+   "works": 7,
+   "n": 5,
+   "same_artist": 5,
+   "both_residue": 1,
+   "any_residue": 1,
+   "either": 5,
+   "surviving": 0
+  },
+  {
+   "cut": 0.6,
+   "works": 7,
+   "n": 5,
+   "same_artist": 5,
+   "both_residue": 1,
+   "any_residue": 1,
+   "either": 5,
+   "surviving": 0
+  }
+ ],
+ "field_condition": {
+  "residue_markers": {
+   "description edit": 33,
+   "outside link": 21,
+   "inception:": 34,
+   "attributed to:": 20,
+   "access url:": 4,
+   "variant edit": 3,
+   "static files": 7,
+   "&quot;": 20
+  },
+  "entries_with_any_residue": 69,
+  "duplicate_texts": {
+   "groups": 2,
+   "entries": 4
+  },
+  "strata_above_t99": {
+   "n": 93,
+   "same_artist": 8,
+   "both_residue": 52,
+   "any_residue": 64,
+   "either": 57,
+   "surviving": 36,
+   "same_artist_share": 0.086,
+   "both_residue_share": 0.5591
+  },
+  "strata_all_pairs": {
+   "n": 31887,
+   "same_artist": 44,
+   "both_residue": 1568,
+   "any_residue": 5996,
+   "either": 1609,
+   "surviving": 30278,
+   "same_artist_share": 0.0014,
+   "both_residue_share": 0.0492
+  },
+  "strata_top": {
+   "n": 40,
+   "same_artist": 6,
+   "both_residue": 20,
+   "any_residue": 23,
+   "either": 24,
+   "surviving": 16,
+   "same_artist_share": 0.15,
+   "both_residue_share": 0.5
+  }
+ },
+ "categories": {
+  "all_pairs": {
+   "n": 31887,
+   "cluster_share": 0.2006,
+   "axis_share": 0.6115
+  },
+  "above_t99": {
+   "n": 93,
+   "cluster_share": 0.5591,
+   "axis_share": 0.9892
+  },
+  "top40": {
+   "n": 40,
+   "cluster_share": 0.675,
+   "axis_share": 1.0
+  }
+ },
+ "top_pairs": [
+  {
+   "rank": 1,
+   "score": 1.0,
+   "a": {
+    "id": "6e0f66eea8",
+    "title": "Legible Nature",
+    "artist": "adam chapman",
+    "year": "2006",
+    "axis_pole": "mixed",
+    "clusters": [
+     13
+    ],
+    "move": "repurposed and handmade objects, giving them voices and personalities. Through tactile and audio interactions with the objects, users develop immediate emotional"
+   },
+   "b": {
+    "id": "2610dac8b2",
+    "title": "Diagram of the Dynamics of the Physical Embodiment of Desire",
+    "artist": "adam chapman",
+    "year": "2006",
+    "axis_pole": "mixed",
+    "clusters": [
+     13
+    ],
+    "move": "repurposed and handmade objects, giving them voices and personalities. Through tactile and audio interactions with the objects, users develop immediate emotional"
+   },
+   "cluster_overlap": 1,
+   "same_axis": true,
+   "same_artist": true,
+   "both_residue": false,
+   "identical_text": true,
+   "survives": false
+  },
+  {
+   "rank": 2,
+   "score": 1.0,
+   "a": {
+    "id": "443253e044",
+    "title": "1833 Chicago City Limits (Chicago, IL)",
+    "artist": "Christian Marc Schmidt",
+    "year": "2006",
+    "axis_pole": "mixed",
+    "clusters": [
+     9
+    ],
+    "move": "Using sequenced still photography, I trace paths around political and/or historical boundaries within cities, borders which, at one point in time, may have"
+   },
+   "b": {
+    "id": "3ebb39cce9",
+    "title": "LOOP (Chicago, IL)",
+    "artist": "Christian Marc Schmidt",
+    "year": "2006",
+    "axis_pole": "mixed",
+    "clusters": [
+     9
+    ],
+    "move": "Using sequenced still photography, I trace paths around political and/or historical boundaries within cities, borders which, at one point in time, may have"
+   },
+   "cluster_overlap": 1,
+   "same_axis": true,
+   "same_artist": true,
+   "both_residue": false,
+   "identical_text": true,
+   "survives": false
+  },
+  {
+   "rank": 3,
+   "score": 0.9566,
+   "a": {
+    "id": "443253e044",
+    "title": "1833 Chicago City Limits (Chicago, IL)",
+    "artist": "Christian Marc Schmidt",
+    "year": "2006",
+    "axis_pole": "mixed",
+    "clusters": [
+     9
+    ],
+    "move": "Using sequenced still photography, I trace paths around political and/or historical boundaries within cities, borders which, at one point in time, may have"
+   },
+   "b": {
+    "id": "0968d66b9b",
+    "title": "Atlantic Yards",
+    "artist": "Christian Marc Schmidt",
+    "year": "2007",
+    "axis_pole": "mixed",
+    "clusters": [
+     9
+    ],
+    "move": "Using sequenced still photography, I trace paths around political and/or historical boundaries within cities, borders which may have had, or will have, a"
+   },
+   "cluster_overlap": 1,
+   "same_axis": true,
+   "same_artist": true,
+   "both_residue": false,
+   "identical_text": false,
+   "survives": false
+  },
+  {
+   "rank": 4,
+   "score": 0.9566,
+   "a": {
+    "id": "3ebb39cce9",
+    "title": "LOOP (Chicago, IL)",
+    "artist": "Christian Marc Schmidt",
+    "year": "2006",
+    "axis_pole": "mixed",
+    "clusters": [
+     9
+    ],
+    "move": "Using sequenced still photography, I trace paths around political and/or historical boundaries within cities, borders which, at one point in time, may have"
+   },
+   "b": {
+    "id": "0968d66b9b",
+    "title": "Atlantic Yards",
+    "artist": "Christian Marc Schmidt",
+    "year": "2007",
+    "axis_pole": "mixed",
+    "clusters": [
+     9
+    ],
+    "move": "Using sequenced still photography, I trace paths around political and/or historical boundaries within cities, borders which may have had, or will have, a"
+   },
+   "cluster_overlap": 1,
+   "same_axis": true,
+   "same_artist": true,
+   "both_residue": false,
+   "identical_text": false,
+   "survives": false
+  },
+  {
+   "rank": 5,
+   "score": 0.6693,
+   "a": {
+    "id": "764ea87f9d",
+    "title": "Homestead Grays",
+    "artist": "Takeshi Murata",
+    "year": "2008",
+    "axis_pole": "mixed",
+    "clusters": [
+     10
+    ],
+    "move": "artists other video work from this period relied heavily upon digital video glitch, and the .avi format. attributed to: Takeshi Murata inception: 9 March 2012"
+   },
+   "b": {
+    "id": "9946c41abf",
+    "title": "Melter 2",
+    "artist": "Takeshi Murata",
+    "year": "2003",
+    "axis_pole": "mixed",
+    "clusters": [
+     10
+    ],
+    "move": "artist's later &quot;data mosh&quot; works, which are based heavily upon digital video glitch, and the .avi format. attributed to: Takeshi Murata inception: 9 March 2012"
+   },
+   "cluster_overlap": 1,
+   "same_axis": true,
+   "same_artist": true,
+   "both_residue": true,
+   "identical_text": false,
+   "survives": false
+  },
+  {
+   "rank": 6,
+   "score": 0.5831,
+   "a": {
+    "id": "2ea9127a9e",
+    "title": "World of Female Avatars",
+    "artist": "Evelin Stermitz",
+    "year": "2006",
+    "axis_pole": "mixed",
+    "clusters": [
+     11
+    ],
+    "move": "this artistic work are: Body and technology - Body and sex - Absent body - Body and picture - Body and violence. The debate of body in media art and in this"
+   },
+   "b": {
+    "id": "c5f7002e7e",
+    "title": "k'muni",
+    "artist": "chia-hsiao sinz shih",
+    "year": "2001",
+    "axis_pole": "mixed",
+    "clusters": [
+     11
+    ],
+    "move": "in my body; my body lives in this world. My mind exceeds my body; my body exceeds its skin. I structure the world via my body's experiences. My body is structured"
+   },
+   "cluster_overlap": 1,
+   "same_axis": true,
+   "same_artist": false,
+   "both_residue": false,
+   "identical_text": false,
+   "survives": true
+  },
+  {
+   "rank": 7,
+   "score": 0.4107,
+   "a": {
+    "id": "db3092eb0e",
+    "title": "white noise",
+    "artist": "Jürgen Trautwein",
+    "year": "2006",
+    "axis_pole": "mixed",
+    "clusters": [
+     10
+    ],
+    "move": "2006 outside link Description description edit White noise is a noise- color-composer or a noise- color association interactive game simulator. An experimental"
+   },
+   "b": {
+    "id": "aa9d9588b0",
+    "title": "Bar Code Noise",
+    "artist": "Scott Blake",
+    "year": "2001",
+    "axis_pole": "mixed",
+    "clusters": [
+     10
+    ],
+    "move": "title: Bar Code Noise inception: 2001 Variant History outside link variant edit access URL: http://www.punklist.com/~blake/art/noise/noise_01.html inception:"
+   },
+   "cluster_overlap": 1,
+   "same_axis": true,
+   "same_artist": false,
+   "both_residue": true,
+   "identical_text": false,
+   "survives": false
+  },
+  {
+   "rank": 8,
+   "score": 0.4043,
+   "a": {
+    "id": "db3092eb0e",
+    "title": "white noise",
+    "artist": "Jürgen Trautwein",
+    "year": "2006",
+    "axis_pole": "mixed",
+    "clusters": [
+     10
+    ],
+    "move": "2006 outside link Description description edit White noise is a noise- color-composer or a noise- color association interactive game simulator. An experimental"
+   },
+   "b": {
+    "id": "8478f5c6a0",
+    "title": "all is full of noise",
+    "artist": "Georg Duemlein",
+    "year": "2004",
+    "axis_pole": "mixed",
+    "clusters": [
+     10
+    ],
+    "move": "Description description edit this is about the pure noise of digital communication. based on a realtime noise broadcast users can use this as a message relay"
+   },
+   "cluster_overlap": 1,
+   "same_axis": true,
+   "same_artist": false,
+   "both_residue": true,
+   "identical_text": false,
+   "survives": false
+  },
+  {
+   "rank": 9,
+   "score": 0.3815,
+   "a": {
+    "id": "2ea9127a9e",
+    "title": "World of Female Avatars",
+    "artist": "Evelin Stermitz",
+    "year": "2006",
+    "axis_pole": "mixed",
+    "clusters": [
+     11
+    ],
+    "move": "this artistic work are: Body and technology - Body and sex - Absent body - Body and picture - Body and violence. The debate of body in media art and in this"
+   },
+   "b": {
+    "id": "32df82c841",
+    "title": "ftp_formless_anatomy",
+    "artist": "Eugene Thacker",
+    "year": "2001",
+    "axis_pole": "mixed",
+    "clusters": [
+     11
+    ],
+    "move": "of the digital-anatomical body. A theme running through most of my theoretical and net.art work is the relation between the body and technology. Specifically"
+   },
+   "cluster_overlap": 1,
+   "same_axis": true,
+   "same_artist": false,
+   "both_residue": false,
+   "identical_text": false,
+   "survives": true
+  },
+  {
+   "rank": 10,
+   "score": 0.3733,
+   "a": {
+    "id": "f620f2c690",
+    "title": "Which --- Side",
+    "artist": "Jorn Ebner",
+    "year": "2007",
+    "axis_pole": "mixed",
+    "clusters": [
+     13
+    ],
+    "move": "outside link Description description edit &quot;Which Side&quot;, 2007, is a song sculpture for &quot;OffCentre&quot; - the art in the public realm programme in Newcastle upon"
+   },
+   "b": {
+    "id": "d131ef4eb6",
+    "title": "Survey of Common Sense",
+    "artist": "Haleh Niazmand",
+    "year": "2001",
+    "axis_pole": "mixed",
+    "clusters": [
+     8
+    ],
+    "move": "inception: 2001 outside link Description description edit The &quot;Survey of Common Sense&quot; is an art project that uses the methodology of polls to address an array"
+   },
+   "cluster_overlap": 0,
+   "same_axis": true,
+   "same_artist": false,
+   "both_residue": true,
+   "identical_text": false,
+   "survives": false
+  },
+  {
+   "rank": 11,
+   "score": 0.3657,
+   "a": {
+    "id": "aa9d9588b0",
+    "title": "Bar Code Noise",
+    "artist": "Scott Blake",
+    "year": "2001",
+    "axis_pole": "mixed",
+    "clusters": [
+     10
+    ],
+    "move": "title: Bar Code Noise inception: 2001 Variant History outside link variant edit access URL: http://www.punklist.com/~blake/art/noise/noise_01.html inception:"
+   },
+   "b": {
+    "id": "c571bf97b1",
+    "title": "Mouse Pointer",
+    "artist": "Scott Blake",
+    "year": "2004",
+    "axis_pole": "mixed",
+    "clusters": [
+     8
+    ],
+    "move": "variant edit access URL: http://www.barcodeart.com/artwork/netart/mouse/full_scale.swf inception: 2004 associated with: Scott Blake"
+   },
+   "cluster_overlap": 0,
+   "same_axis": true,
+   "same_artist": true,
+   "both_residue": true,
+   "identical_text": false,
+   "survives": false
+  },
+  {
+   "rank": 12,
+   "score": 0.3592,
+   "a": {
+    "id": "47b5e04af9",
+    "title": "Threads://HTML",
+    "artist": "Edward Tang",
+    "year": "2004",
+    "axis_pole": "mixed",
+    "clusters": [
+     13
+    ],
+    "move": "linkstatic files Description description edit Using my technique, &quot;3D Video Sculpture&quot;, this work aims to reconnect human presence with the content and underlying"
+   },
+   "b": {
+    "id": "3c966df273",
+    "title": "DECONSTRUCTION - RECONSTRUCTION",
+    "artist": "Paul Brand",
+    "year": "2000",
+    "axis_pole": "mixed",
+    "clusters": [
+     9
+    ],
+    "move": "outside linkstatic files Description description edit &quot;deconstructon - reconstruction&quot; is a text/sound project by the artist Paul Brand, developed over a"
+   },
+   "cluster_overlap": 0,
+   "same_axis": true,
+   "same_artist": false,
+   "both_residue": true,
+   "identical_text": false,
+   "survives": false
+  },
+  {
+   "rank": 13,
+   "score": 0.3454,
+   "a": {
+    "id": "f620f2c690",
+    "title": "Which --- Side",
+    "artist": "Jorn Ebner",
+    "year": "2007",
+    "axis_pole": "mixed",
+    "clusters": [
+     13
+    ],
+    "move": "outside link Description description edit &quot;Which Side&quot;, 2007, is a song sculpture for &quot;OffCentre&quot; - the art in the public realm programme in Newcastle upon"
+   },
+   "b": {
+    "id": "47b5e04af9",
+    "title": "Threads://HTML",
+    "artist": "Edward Tang",
+    "year": "2004",
+    "axis_pole": "mixed",
+    "clusters": [
+     13
+    ],
+    "move": "linkstatic files Description description edit Using my technique, &quot;3D Video Sculpture&quot;, this work aims to reconnect human presence with the content and underlying"
+   },
+   "cluster_overlap": 1,
+   "same_axis": true,
+   "same_artist": false,
+   "both_residue": true,
+   "identical_text": false,
+   "survives": false
+  },
+  {
+   "rank": 14,
+   "score": 0.3415,
+   "a": {
+    "id": "1bd0fe828e",
+    "title": "Antediluvian Fragments of Memories",
+    "artist": "sonya nielsen",
+    "year": "2007",
+    "axis_pole": "mixed",
+    "clusters": [
+     9
+    ],
+    "move": "reflecting the three different forms of memory: sensory, temporal and lasting memory. The first is the is nine elements of memory, each take on the form of an image"
+   },
+   "b": {
+    "id": "3b3139ec4f",
+    "title": "Music Box",
+    "artist": "Jin-Yo Mok",
+    "year": "2000",
+    "axis_pole": "mixed",
+    "clusters": [
+     9
+    ],
+    "move": "dizziness might be from the faint memory of my uneasy childhood, the memory of my gauche first love, or from the memory of every humiliation I have had."
+   },
+   "cluster_overlap": 1,
+   "same_axis": true,
+   "same_artist": false,
+   "both_residue": false,
+   "identical_text": false,
+   "survives": true
+  },
+  {
+   "rank": 15,
+   "score": 0.3381,
+   "a": {
+    "id": "f620f2c690",
+    "title": "Which --- Side",
+    "artist": "Jorn Ebner",
+    "year": "2007",
+    "axis_pole": "mixed",
+    "clusters": [
+     13
+    ],
+    "move": "outside link Description description edit &quot;Which Side&quot;, 2007, is a song sculpture for &quot;OffCentre&quot; - the art in the public realm programme in Newcastle upon"
+   },
+   "b": {
+    "id": "3c966df273",
+    "title": "DECONSTRUCTION - RECONSTRUCTION",
+    "artist": "Paul Brand",
+    "year": "2000",
+    "axis_pole": "mixed",
+    "clusters": [
+     9
+    ],
+    "move": "outside linkstatic files Description description edit &quot;deconstructon - reconstruction&quot; is a text/sound project by the artist Paul Brand, developed over a"
+   },
+   "cluster_overlap": 0,
+   "same_axis": true,
+   "same_artist": false,
+   "both_residue": true,
+   "identical_text": false,
+   "survives": false
+  },
+  {
+   "rank": 16,
+   "score": 0.3327,
+   "a": {
+    "id": "e6d65edf58",
+    "title": "Browser abstract",
+    "artist": "sinae kim",
+    "year": "2006",
+    "axis_pole": "mixed",
+    "clusters": [
+     8
+    ],
+    "move": "description edit &quot;Leibniz conceived the universe as composed of &quot;monads&quot;, microscopic substances each of which lives in its own self-enclosed inner space, with"
+   },
+   "b": {
+    "id": "f620f2c690",
+    "title": "Which --- Side",
+    "artist": "Jorn Ebner",
+    "year": "2007",
+    "axis_pole": "mixed",
+    "clusters": [
+     13
+    ],
+    "move": "outside link Description description edit &quot;Which Side&quot;, 2007, is a song sculpture for &quot;OffCentre&quot; - the art in the public realm programme in Newcastle upon"
+   },
+   "cluster_overlap": 0,
+   "same_axis": true,
+   "same_artist": false,
+   "both_residue": true,
+   "identical_text": false,
+   "survives": false
+  },
+  {
+   "rank": 17,
+   "score": 0.3326,
+   "a": {
+    "id": "aa9d9588b0",
+    "title": "Bar Code Noise",
+    "artist": "Scott Blake",
+    "year": "2001",
+    "axis_pole": "mixed",
+    "clusters": [
+     10
+    ],
+    "move": "title: Bar Code Noise inception: 2001 Variant History outside link variant edit access URL: http://www.punklist.com/~blake/art/noise/noise_01.html inception:"
+   },
+   "b": {
+    "id": "db756dee2f",
+    "title": "Movement is Life",
+    "artist": "Peter Wildman",
+    "year": "2018",
+    "axis_pole": "mixed",
+    "clusters": [
+     12
+    ],
+    "move": "Archive capture: March 2025 access URL: https://www.peterwildman.com.au/code-poetry.html inception: 2018 associated with: Peter Wildman web archive variant"
+   },
+   "cluster_overlap": 0,
+   "same_axis": true,
+   "same_artist": false,
+   "both_residue": true,
+   "identical_text": false,
+   "survives": false
+  },
+  {
+   "rank": 18,
+   "score": 0.3296,
+   "a": {
+    "id": "cecc69c7e9",
+    "title": "(t)error",
+    "artist": "Robert Praxmarer",
+    "year": "2004",
+    "axis_pole": "mixed",
+    "clusters": [
+     10
+    ],
+    "move": "PreviousNext outside linkstatic files Description description edit (t)error (t)error is an interactive videoinstallation. it attributed to: Robert Praxmarer"
+   },
+   "b": {
+    "id": "1debc8eac9",
+    "title": "A Planetary Order (Terrestrial Cloud Globe)",
+    "artist": "Martin John Callanan",
+    "year": "2009",
+    "axis_pole": "mixed",
+    "clusters": [
+     8
+    ],
+    "move": "2009 PreviousNext outside linkstatic files Description description edit A Planetary Order is a terrestrial globe showing clouds from one single moment in time"
+   },
+   "cluster_overlap": 0,
+   "same_axis": true,
+   "same_artist": false,
+   "both_residue": true,
+   "identical_text": false,
+   "survives": false
+  },
+  {
+   "rank": 19,
+   "score": 0.3229,
+   "a": {
+    "id": "b88725b0e9",
+    "title": "IP Poetry Project",
+    "artist": "Gustavo Romano",
+    "year": "2007",
+    "axis_pole": "mixed",
+    "clusters": [
+     12
+    ],
+    "move": "edit The IP Poetry project involves the development of a software and hardware system that uses text from the Internet to generate poetry that is then"
+   },
+   "b": {
+    "id": "5b81a6bf32",
+    "title": "cyberpoetry 1995-1997",
+    "artist": "komninos zervos",
+    "year": "2003",
+    "axis_pole": "mixed",
+    "clusters": [
+     12
+    ],
+    "move": "and movie. cyberpoetry: poetry that can not be published in the traditional print media, poetry that moves in time and space, poetry that requires new ways"
+   },
+   "cluster_overlap": 1,
+   "same_axis": true,
+   "same_artist": false,
+   "both_residue": false,
+   "identical_text": false,
+   "survives": true
+  },
+  {
+   "rank": 20,
+   "score": 0.3208,
+   "a": {
+    "id": "8478f5c6a0",
+    "title": "all is full of noise",
+    "artist": "Georg Duemlein",
+    "year": "2004",
+    "axis_pole": "mixed",
+    "clusters": [
+     10
+    ],
+    "move": "Description description edit this is about the pure noise of digital communication. based on a realtime noise broadcast users can use this as a message relay"
+   },
+   "b": {
+    "id": "aa9d9588b0",
+    "title": "Bar Code Noise",
+    "artist": "Scott Blake",
+    "year": "2001",
+    "axis_pole": "mixed",
+    "clusters": [
+     10
+    ],
+    "move": "title: Bar Code Noise inception: 2001 Variant History outside link variant edit access URL: http://www.punklist.com/~blake/art/noise/noise_01.html inception:"
+   },
+   "cluster_overlap": 1,
+   "same_axis": true,
+   "same_artist": false,
+   "both_residue": true,
+   "identical_text": false,
+   "survives": false
+  },
+  {
+   "rank": 21,
+   "score": 0.3179,
+   "a": {
+    "id": "fe58b5fdb6",
+    "title": "Animated Text",
+    "artist": "animated text",
+    "year": "2012",
+    "axis_pole": "mixed",
+    "clusters": [
+     12
+    ],
+    "move": "history. attributed to: animated text inception: 2022 Metadata Descriptive Data artist: animated text title: Animated Text inception: 7 November 2012 Variant"
+   },
+   "b": {
+    "id": "e5595d4441",
+    "title": "@reply-all",
+    "artist": "Mark Beasley",
+    "year": "2008",
+    "axis_pole": "mixed",
+    "clusters": [
+     12
+    ],
+    "move": "the author's text against all existing - previously written - text that matches the current text. The user has the option to insert this text by pressing"
+   },
+   "cluster_overlap": 1,
+   "same_axis": true,
+   "same_artist": false,
+   "both_residue": false,
+   "identical_text": false,
+   "survives": true
+  },
+  {
+   "rank": 22,
+   "score": 0.3159,
+   "a": {
+    "id": "5b81a6bf32",
+    "title": "cyberpoetry 1995-1997",
+    "artist": "komninos zervos",
+    "year": "2003",
+    "axis_pole": "mixed",
+    "clusters": [
+     12
+    ],
+    "move": "and movie. cyberpoetry: poetry that can not be published in the traditional print media, poetry that moves in time and space, poetry that requires new ways"
+   },
+   "b": {
+    "id": "67952caabd",
+    "title": "The Profane Earth",
+    "artist": "Ollivier Dyens",
+    "year": "2005",
+    "axis_pole": "mixed",
+    "clusters": [
+     12
+    ],
+    "move": "worlds. Why poetry as virtual worlds? Throughout the years, I came to see 3d creation and poetry are not that far apart. For what is poetry if not an architecture"
+   },
+   "cluster_overlap": 1,
+   "same_axis": true,
+   "same_artist": false,
+   "both_residue": false,
+   "identical_text": false,
+   "survives": true
+  },
+  {
+   "rank": 23,
+   "score": 0.3071,
+   "a": {
+    "id": "c571bf97b1",
+    "title": "Mouse Pointer",
+    "artist": "Scott Blake",
+    "year": "2004",
+    "axis_pole": "mixed",
+    "clusters": [
+     8
+    ],
+    "move": "variant edit access URL: http://www.barcodeart.com/artwork/netart/mouse/full_scale.swf inception: 2004 associated with: Scott Blake"
+   },
+   "b": {
+    "id": "db756dee2f",
+    "title": "Movement is Life",
+    "artist": "Peter Wildman",
+    "year": "2018",
+    "axis_pole": "mixed",
+    "clusters": [
+     12
+    ],
+    "move": "Archive capture: March 2025 access URL: https://www.peterwildman.com.au/code-poetry.html inception: 2018 associated with: Peter Wildman web archive variant"
+   },
+   "cluster_overlap": 0,
+   "same_axis": true,
+   "same_artist": false,
+   "both_residue": true,
+   "identical_text": false,
+   "survives": false
+  },
+  {
+   "rank": 24,
+   "score": 0.3066,
+   "a": {
+    "id": "812675cfa0",
+    "title": "internet & autofiction",
+    "artist": "stephanie boisset",
+    "year": "2002",
+    "axis_pole": "mixed",
+    "clusters": [
+     11
+    ],
+    "move": "inception: 2002 outside link Description description edit identity / art / intimacy / r attributed to: stephanie boisset inception: 17 April 2002 Metadata"
+   },
+   "b": {
+    "id": "065e7a4a94",
+    "title": "don't touch me",
+    "artist": "Annie Abrahams",
+    "year": "2003",
+    "axis_pole": "mixed",
+    "clusters": [
+     11
+    ],
+    "move": "inception: 2003 outside link Description description edit A work about intimacy and attitudes in front of the computer screen. I want to tell you a story"
+   },
+   "cluster_overlap": 1,
+   "same_axis": true,
+   "same_artist": false,
+   "both_residue": true,
+   "identical_text": false,
+   "survives": false
+  },
+  {
+   "rank": 25,
+   "score": 0.306,
+   "a": {
+    "id": "48eac5b6da",
+    "title": "Project for Urban Intimacy",
+    "artist": "Krista Connerly",
+    "year": "2003",
+    "axis_pole": "mixed",
+    "clusters": [
+     11
+    ],
+    "move": "inception: 2003 outside link Description description edit The Project for Urban Intimacy seeks to counter the efficiency and rationality that are invading our cities"
+   },
+   "b": {
+    "id": "812675cfa0",
+    "title": "internet & autofiction",
+    "artist": "stephanie boisset",
+    "year": "2002",
+    "axis_pole": "mixed",
+    "clusters": [
+     11
+    ],
+    "move": "inception: 2002 outside link Description description edit identity / art / intimacy / r attributed to: stephanie boisset inception: 17 April 2002 Metadata"
+   },
+   "cluster_overlap": 1,
+   "same_axis": true,
+   "same_artist": false,
+   "both_residue": true,
+   "identical_text": false,
+   "survives": false
+  },
+  {
+   "rank": 26,
+   "score": 0.2984,
+   "a": {
+    "id": "d5272d04d9",
+    "title": "Marathon 55 . Cache Memory",
+    "artist": "Grégory Chatonsky",
+    "year": "2003",
+    "axis_pole": "mixed",
+    "clusters": [
+     9
+    ],
+    "move": "remote server because it is in the cache memory. This memory is on the user's hard drive: technological mode of memory appropriation. Progressively the movie"
+   },
+   "b": {
+    "id": "3b3139ec4f",
+    "title": "Music Box",
+    "artist": "Jin-Yo Mok",
+    "year": "2000",
+    "axis_pole": "mixed",
+    "clusters": [
+     9
+    ],
+    "move": "dizziness might be from the faint memory of my uneasy childhood, the memory of my gauche first love, or from the memory of every humiliation I have had."
+   },
+   "cluster_overlap": 1,
+   "same_axis": true,
+   "same_artist": false,
+   "both_residue": false,
+   "identical_text": false,
+   "survives": true
+  },
+  {
+   "rank": 27,
+   "score": 0.2973,
+   "a": {
+    "id": "1bd0fe828e",
+    "title": "Antediluvian Fragments of Memories",
+    "artist": "sonya nielsen",
+    "year": "2007",
+    "axis_pole": "mixed",
+    "clusters": [
+     9
+    ],
+    "move": "reflecting the three different forms of memory: sensory, temporal and lasting memory. The first is the is nine elements of memory, each take on the form of an image"
+   },
+   "b": {
+    "id": "d5272d04d9",
+    "title": "Marathon 55 . Cache Memory",
+    "artist": "Grégory Chatonsky",
+    "year": "2003",
+    "axis_pole": "mixed",
+    "clusters": [
+     9
+    ],
+    "move": "remote server because it is in the cache memory. This memory is on the user's hard drive: technological mode of memory appropriation. Progressively the movie"
+   },
+   "cluster_overlap": 1,
+   "same_axis": true,
+   "same_artist": false,
+   "both_residue": false,
+   "identical_text": false,
+   "survives": true
+  },
+  {
+   "rank": 28,
+   "score": 0.2948,
+   "a": {
+    "id": "aa9d9588b0",
+    "title": "Bar Code Noise",
+    "artist": "Scott Blake",
+    "year": "2001",
+    "axis_pole": "mixed",
+    "clusters": [
+     10
+    ],
+    "move": "title: Bar Code Noise inception: 2001 Variant History outside link variant edit access URL: http://www.punklist.com/~blake/art/noise/noise_01.html inception:"
+   },
+   "b": {
+    "id": "e6dac60338",
+    "title": "birth and decay",
+    "artist": "julian konczak",
+    "year": "2006",
+    "axis_pole": "mixed",
+    "clusters": [
+     9
+    ],
+    "move": "birth and decay inception: 2006 Variant History outside link variant edit access URL: http://www.hidrazone.com/artists/julian_konczak/birth_and_decay/display_birth_and_decay"
+   },
+   "cluster_overlap": 0,
+   "same_axis": true,
+   "same_artist": false,
+   "both_residue": true,
+   "identical_text": false,
+   "survives": false
+  },
+  {
+   "rank": 29,
+   "score": 0.2943,
+   "a": {
+    "id": "5b81a6bf32",
+    "title": "cyberpoetry 1995-1997",
+    "artist": "komninos zervos",
+    "year": "2003",
+    "axis_pole": "mixed",
+    "clusters": [
+     12
+    ],
+    "move": "and movie. cyberpoetry: poetry that can not be published in the traditional print media, poetry that moves in time and space, poetry that requires new ways"
+   },
+   "b": {
+    "id": "b5aee9b56b",
+    "title": "E.L.I. Nomad",
+    "artist": "Christian Croft",
+    "year": "2004",
+    "axis_pole": "mixed",
+    "clusters": [
+     12
+    ],
+    "move": "sharing randomly generated poetry in exchange for new vocabulary words for his database. After hundreds of interactions, E.L.I.’s poetry has transformed from"
+   },
+   "cluster_overlap": 1,
+   "same_axis": true,
+   "same_artist": false,
+   "both_residue": false,
+   "identical_text": false,
+   "survives": true
+  },
+  {
+   "rank": 30,
+   "score": 0.293,
+   "a": {
+    "id": "2ea9127a9e",
+    "title": "World of Female Avatars",
+    "artist": "Evelin Stermitz",
+    "year": "2006",
+    "axis_pole": "mixed",
+    "clusters": [
+     11
+    ],
+    "move": "this artistic work are: Body and technology - Body and sex - Absent body - Body and picture - Body and violence. The debate of body in media art and in this"
+   },
+   "b": {
+    "id": "bed579bc7e",
+    "title": "Keep Walking",
+    "artist": "Marcello Mazzella",
+    "year": "2000",
+    "axis_pole": "mixed",
+    "clusters": [
+     8
+    ],
+    "move": "body is no longer limited to a small, constricted space but has become a &quot;planetary body&quot; without limitations. Represented in the work is my vision of this"
+   },
+   "cluster_overlap": 0,
+   "same_axis": true,
+   "same_artist": false,
+   "both_residue": false,
+   "identical_text": false,
+   "survives": true
+  },
+  {
+   "rank": 31,
+   "score": 0.2928,
+   "a": {
+    "id": "2ea9127a9e",
+    "title": "World of Female Avatars",
+    "artist": "Evelin Stermitz",
+    "year": "2006",
+    "axis_pole": "mixed",
+    "clusters": [
+     11
+    ],
+    "move": "this artistic work are: Body and technology - Body and sex - Absent body - Body and picture - Body and violence. The debate of body in media art and in this"
+   },
+   "b": {
+    "id": "99dcd74211",
+    "title": "my body — a Wunderkammer",
+    "artist": "Shelley Jackson",
+    "year": "1997",
+    "axis_pole": "mixed",
+    "clusters": [
+     11
+    ],
+    "move": "Description summary edit my body — a Wunderkammer is a semi-autobiographical hypertext combining text and image in an exploration of the body. It features a line"
+   },
+   "cluster_overlap": 1,
+   "same_axis": true,
+   "same_artist": false,
+   "both_residue": false,
+   "identical_text": false,
+   "survives": true
+  },
+  {
+   "rank": 32,
+   "score": 0.2918,
+   "a": {
+    "id": "db3092eb0e",
+    "title": "white noise",
+    "artist": "Jürgen Trautwein",
+    "year": "2006",
+    "axis_pole": "mixed",
+    "clusters": [
+     10
+    ],
+    "move": "2006 outside link Description description edit White noise is a noise- color-composer or a noise- color association interactive game simulator. An experimental"
+   },
+   "b": {
+    "id": "90e5060b51",
+    "title": "atari-noise",
+    "artist": "arcangel constantini",
+    "year": "2000",
+    "axis_pole": "mixed",
+    "clusters": [
+     10
+    ],
+    "move": "infinite quantity of RANDOM audiovisual noise patterns that can be played in real time. The user of atari-noise, by pressing the keyboard push buttons,"
+   },
+   "cluster_overlap": 1,
+   "same_axis": true,
+   "same_artist": false,
+   "both_residue": false,
+   "identical_text": false,
+   "survives": true
+  },
+  {
+   "rank": 33,
+   "score": 0.2906,
+   "a": {
+    "id": "2ea9127a9e",
+    "title": "World of Female Avatars",
+    "artist": "Evelin Stermitz",
+    "year": "2006",
+    "axis_pole": "mixed",
+    "clusters": [
+     11
+    ],
+    "move": "this artistic work are: Body and technology - Body and sex - Absent body - Body and picture - Body and violence. The debate of body in media art and in this"
+   },
+   "b": {
+    "id": "cc52f603aa",
+    "title": "Pieces of Herself",
+    "artist": "Juliet Davis",
+    "year": "2005",
+    "axis_pole": "mixed",
+    "clusters": [
+     11
+    ],
+    "move": "pieces of the self and arrange them in compositions inside the body. As each piece enters the body, it triggers audio clips from interviews with women. attributed"
+   },
+   "cluster_overlap": 1,
+   "same_axis": true,
+   "same_artist": false,
+   "both_residue": false,
+   "identical_text": false,
+   "survives": true
+  },
+  {
+   "rank": 34,
+   "score": 0.2896,
+   "a": {
+    "id": "32df82c841",
+    "title": "ftp_formless_anatomy",
+    "artist": "Eugene Thacker",
+    "year": "2001",
+    "axis_pole": "mixed",
+    "clusters": [
+     11
+    ],
+    "move": "of the digital-anatomical body. A theme running through most of my theoretical and net.art work is the relation between the body and technology. Specifically"
+   },
+   "b": {
+    "id": "c5f7002e7e",
+    "title": "k'muni",
+    "artist": "chia-hsiao sinz shih",
+    "year": "2001",
+    "axis_pole": "mixed",
+    "clusters": [
+     11
+    ],
+    "move": "in my body; my body lives in this world. My mind exceeds my body; my body exceeds its skin. I structure the world via my body's experiences. My body is structured"
+   },
+   "cluster_overlap": 1,
+   "same_axis": true,
+   "same_artist": false,
+   "both_residue": false,
+   "identical_text": false,
+   "survives": true
+  },
+  {
+   "rank": 35,
+   "score": 0.2861,
+   "a": {
+    "id": "12252e43de",
+    "title": "Embed",
+    "artist": "Adrian Van Allen",
+    "year": "2009",
+    "axis_pole": "mixed",
+    "clusters": [
+     9
+    ],
+    "move": "link Description description edit &quot;Embed&quot; is a projected loop of potential memory implants filtered through layered scrims. The visual vocabulary of antique"
+   },
+   "b": {
+    "id": "f620f2c690",
+    "title": "Which --- Side",
+    "artist": "Jorn Ebner",
+    "year": "2007",
+    "axis_pole": "mixed",
+    "clusters": [
+     13
+    ],
+    "move": "outside link Description description edit &quot;Which Side&quot;, 2007, is a song sculpture for &quot;OffCentre&quot; - the art in the public realm programme in Newcastle upon"
+   },
+   "cluster_overlap": 0,
+   "same_axis": true,
+   "same_artist": false,
+   "both_residue": true,
+   "identical_text": false,
+   "survives": false
+  },
+  {
+   "rank": 36,
+   "score": 0.2823,
+   "a": {
+    "id": "d131ef4eb6",
+    "title": "Survey of Common Sense",
+    "artist": "Haleh Niazmand",
+    "year": "2001",
+    "axis_pole": "mixed",
+    "clusters": [
+     8
+    ],
+    "move": "inception: 2001 outside link Description description edit The &quot;Survey of Common Sense&quot; is an art project that uses the methodology of polls to address an array"
+   },
+   "b": {
+    "id": "3c966df273",
+    "title": "DECONSTRUCTION - RECONSTRUCTION",
+    "artist": "Paul Brand",
+    "year": "2000",
+    "axis_pole": "mixed",
+    "clusters": [
+     9
+    ],
+    "move": "outside linkstatic files Description description edit &quot;deconstructon - reconstruction&quot; is a text/sound project by the artist Paul Brand, developed over a"
+   },
+   "cluster_overlap": 0,
+   "same_axis": true,
+   "same_artist": false,
+   "both_residue": true,
+   "identical_text": false,
+   "survives": false
+  },
+  {
+   "rank": 37,
+   "score": 0.2817,
+   "a": {
+    "id": "b88725b0e9",
+    "title": "IP Poetry Project",
+    "artist": "Gustavo Romano",
+    "year": "2007",
+    "axis_pole": "mixed",
+    "clusters": [
+     12
+    ],
+    "move": "edit The IP Poetry project involves the development of a software and hardware system that uses text from the Internet to generate poetry that is then"
+   },
+   "b": {
+    "id": "67952caabd",
+    "title": "The Profane Earth",
+    "artist": "Ollivier Dyens",
+    "year": "2005",
+    "axis_pole": "mixed",
+    "clusters": [
+     12
+    ],
+    "move": "worlds. Why poetry as virtual worlds? Throughout the years, I came to see 3d creation and poetry are not that far apart. For what is poetry if not an architecture"
+   },
+   "cluster_overlap": 1,
+   "same_axis": true,
+   "same_artist": false,
+   "both_residue": false,
+   "identical_text": false,
+   "survives": true
+  },
+  {
+   "rank": 38,
+   "score": 0.2803,
+   "a": {
+    "id": "e052e754ca",
+    "title": "Ned Kahn's Wind-Visualizing Facades",
+    "artist": "Ned Kahn",
+    "year": "1996",
+    "axis_pole": "mixed",
+    "clusters": [
+     8
+    ],
+    "move": "Since 1996, Nothern California artist Ned Kahn creates large-scale installations that visualize wind patterns. The left image shows Wind veil (2000), a facade of a parking garage covered with 80,000 small aluminum panels that are hinged to "
+   },
+   "b": {
+    "id": "839c922936",
+    "title": "Windcuts: Wind Travels Captured on Wood",
+    "artist": "Miska Knapek",
+    "year": "2009",
+    "axis_pole": "mixed",
+    "clusters": [
+     8
+    ],
+    "move": "Windcuts is a physical information visualisation retelling the Helsinki wind's travels over five days, using wind sensor measurements from Helsinki, and wood and a CNC machine to cut it from there too. [...] The line's direction shows the w"
+   },
+   "cluster_overlap": 1,
+   "same_axis": true,
+   "same_artist": false,
+   "both_residue": false,
+   "identical_text": false,
+   "survives": true
+  },
+  {
+   "rank": 39,
+   "score": 0.2773,
+   "a": {
+    "id": "fe58b5fdb6",
+    "title": "Animated Text",
+    "artist": "animated text",
+    "year": "2012",
+    "axis_pole": "mixed",
+    "clusters": [
+     12
+    ],
+    "move": "history. attributed to: animated text inception: 2022 Metadata Descriptive Data artist: animated text title: Animated Text inception: 7 November 2012 Variant"
+   },
+   "b": {
+    "id": "c39a948d4e",
+    "title": "they learned this intimacy, however, meditating on the house",
+    "artist": "Igor Štromajer",
+    "year": "2001",
+    "axis_pole": "mixed",
+    "clusters": [
+     11
+    ],
+    "move": "Metadata Descriptive Data artist: Igor Štromajer title: they learned this intimacy, however, meditating on the house inception: 2001 Variant History outside"
+   },
+   "cluster_overlap": 0,
+   "same_axis": true,
+   "same_artist": false,
+   "both_residue": true,
+   "identical_text": false,
+   "survives": false
+  },
+  {
+   "rank": 40,
+   "score": 0.2756,
+   "a": {
+    "id": "48eac5b6da",
+    "title": "Project for Urban Intimacy",
+    "artist": "Krista Connerly",
+    "year": "2003",
+    "axis_pole": "mixed",
+    "clusters": [
+     11
+    ],
+    "move": "inception: 2003 outside link Description description edit The Project for Urban Intimacy seeks to counter the efficiency and rationality that are invading our cities"
+   },
+   "b": {
+    "id": "065e7a4a94",
+    "title": "don't touch me",
+    "artist": "Annie Abrahams",
+    "year": "2003",
+    "axis_pole": "mixed",
+    "clusters": [
+     11
+    ],
+    "move": "inception: 2003 outside link Description description edit A work about intimacy and attitudes in front of the computer screen. I want to tell you a story"
+   },
+   "cluster_overlap": 1,
+   "same_axis": true,
+   "same_artist": false,
+   "both_residue": true,
+   "identical_text": false,
+   "survives": false
+  }
+ ],
+ "rows": [
+  {
+   "id": "bace7f65de",
+   "s": 0.1941,
+   "nn": "4ecb30be25",
+   "len": 27,
+   "null": 0.1157
+  },
+  {
+   "id": "12b138f0aa",
+   "s": 0.1143,
+   "nn": "4962c24426",
+   "len": 29,
+   "null": 0.1138
+  },
+  {
+   "id": "da6f8179f8",
+   "s": 0.0895,
+   "nn": "0fd8e9af62",
+   "len": 30,
+   "null": 0.1148
+  },
+  {
+   "id": "afebe6afbe",
+   "s": 0.1581,
+   "nn": "bd0835dda6",
+   "len": 18,
+   "null": 0.1237
+  },
+  {
+   "id": "08110e39b5",
+   "s": 0.1138,
+   "nn": "3e85b96270",
+   "len": 20,
+   "null": 0.1233
+  },
+  {
+   "id": "1746088713",
+   "s": 0.0854,
+   "nn": "126d7cd7bb",
+   "len": 30,
+   "null": 0.1128
+  },
+  {
+   "id": "6550baa833",
+   "s": 0.1307,
+   "nn": "c737291d59",
+   "len": 26,
+   "null": 0.1129
+  },
+  {
+   "id": "70250da1ab",
+   "s": 0.103,
+   "nn": "ff67517e11",
+   "len": 19,
+   "null": 0.1208
+  },
+  {
+   "id": "bd0835dda6",
+   "s": 0.1696,
+   "nn": "4515911fda",
+   "len": 30,
+   "null": 0.1143
+  },
+  {
+   "id": "4314b5bcac",
+   "s": 0.0743,
+   "nn": "b36c56db44",
+   "len": 24,
+   "null": 0.1153
+  },
+  {
+   "id": "519d661a7b",
+   "s": 0.1669,
+   "nn": "bd0835dda6",
+   "len": 20,
+   "null": 0.1187
+  },
+  {
+   "id": "f171bd81c0",
+   "s": 0.1456,
+   "nn": "37a8b7ae7b",
+   "len": 32,
+   "null": 0.112
+  },
+  {
+   "id": "67e6465036",
+   "s": 0.0809,
+   "nn": "afebe6afbe",
+   "len": 29,
+   "null": 0.1139
+  },
+  {
+   "id": "03950529c0",
+   "s": 0.0889,
+   "nn": "768810c7b9",
+   "len": 25,
+   "null": 0.1183
+  },
+  {
+   "id": "6a73b8a61d",
+   "s": 0.1252,
+   "nn": "7a41d81e51",
+   "len": 23,
+   "null": 0.1193
+  },
+  {
+   "id": "0fd8e9af62",
+   "s": 0.1311,
+   "nn": "e0bb609ee1",
+   "len": 36,
+   "null": 0.1118
+  },
+  {
+   "id": "e7b874ba64",
+   "s": 0.1098,
+   "nn": "afebe6afbe",
+   "len": 25,
+   "null": 0.1164
+  },
+  {
+   "id": "8aaf8a48a5",
+   "s": 0.0934,
+   "nn": "2ea9127a9e",
+   "len": 33,
+   "null": 0.1116
+  },
+  {
+   "id": "7c85ee4911",
+   "s": 0.0664,
+   "nn": "af722c3ba8",
+   "len": 44,
+   "null": 0.1069
+  },
+  {
+   "id": "a269419e3e",
+   "s": 0.1845,
+   "nn": "5575cca05f",
+   "len": 22,
+   "null": 0.1191
+  },
+  {
+   "id": "ff67517e11",
+   "s": 0.103,
+   "nn": "70250da1ab",
+   "len": 22,
+   "null": 0.1192
+  },
+  {
+   "id": "d69eede7af",
+   "s": 0.1138,
+   "nn": "a82e87b259",
+   "len": 24,
+   "null": 0.1198
+  },
+  {
+   "id": "3cb55a1e80",
+   "s": 0.1306,
+   "nn": "20e4050e5c",
+   "len": 24,
+   "null": 0.1153
+  },
+  {
+   "id": "5284a0e46a",
+   "s": 0.0831,
+   "nn": "973465359f",
+   "len": 31,
+   "null": 0.1131
+  },
+  {
+   "id": "1081630eb5",
+   "s": 0.1125,
+   "nn": "175a333569",
+   "len": 27,
+   "null": 0.119
+  },
+  {
+   "id": "5ea53dd0bd",
+   "s": 0.0792,
+   "nn": "93b04d8bf5",
+   "len": 22,
+   "null": 0.1199
+  },
+  {
+   "id": "d5e89157a8",
+   "s": 0.1322,
+   "nn": "a82e87b259",
+   "len": 21,
+   "null": 0.1165
+  },
+  {
+   "id": "9270412615",
+   "s": 0.0871,
+   "nn": "25d37621fd",
+   "len": 18,
+   "null": 0.1249
+  },
+  {
+   "id": "b8e0f3f27c",
+   "s": 0.0803,
+   "nn": "08121d2ca1",
+   "len": 20,
+   "null": 0.1209
+  },
+  {
+   "id": "794e7cc9c6",
+   "s": 0.1016,
+   "nn": "732cadc9dd",
+   "len": 24,
+   "null": 0.1158
+  },
+  {
+   "id": "afd23bb549",
+   "s": 0.1423,
+   "nn": "afebe6afbe",
+   "len": 25,
+   "null": 0.1164
+  },
+  {
+   "id": "90d40b5ed9",
+   "s": 0.1042,
+   "nn": "4d93161db6",
+   "len": 28,
+   "null": 0.1142
+  },
+  {
+   "id": "a27a387216",
+   "s": 0.119,
+   "nn": "f1e9e83120",
+   "len": 28,
+   "null": 0.1128
+  },
+  {
+   "id": "fd2f19e6fe",
+   "s": 0.092,
+   "nn": "ae63dd4bd3",
+   "len": 28,
+   "null": 0.1148
+  },
+  {
+   "id": "11128499fa",
+   "s": 0.111,
+   "nn": "40b17133c5",
+   "len": 24,
+   "null": 0.1163
+  },
+  {
+   "id": "2708b235c6",
+   "s": 0.0766,
+   "nn": "faee35ea85",
+   "len": 28,
+   "null": 0.1129
+  },
+  {
+   "id": "5366efde55",
+   "s": 0.1691,
+   "nn": "e8c2ce8dee",
+   "len": 24,
+   "null": 0.1175
+  },
+  {
+   "id": "06346613e6",
+   "s": 0.1253,
+   "nn": "840846a50d",
+   "len": 23,
+   "null": 0.1166
+  },
+  {
+   "id": "d410ab977b",
+   "s": 0.1797,
+   "nn": "d5e9b4a0b2",
+   "len": 24,
+   "null": 0.1154
+  },
+  {
+   "id": "2ad44614cc",
+   "s": 0.1244,
+   "nn": "2aeac413f8",
+   "len": 23,
+   "null": 0.1189
+  },
+  {
+   "id": "732cadc9dd",
+   "s": 0.1016,
+   "nn": "794e7cc9c6",
+   "len": 31,
+   "null": 0.109
+  },
+  {
+   "id": "6c1ee2af0c",
+   "s": 0.1269,
+   "nn": "5a5ce1fc0a",
+   "len": 26,
+   "null": 0.1161
+  },
+  {
+   "id": "16183ea819",
+   "s": 0.0625,
+   "nn": "a82e87b259",
+   "len": 19,
+   "null": 0.1215
+  },
+  {
+   "id": "d226bfc4b3",
+   "s": 0.1751,
+   "nn": "c737291d59",
+   "len": 24,
+   "null": 0.117
+  },
+  {
+   "id": "aa1f863e97",
+   "s": 0.1222,
+   "nn": "f5b8c7bc6c",
+   "len": 29,
+   "null": 0.1148
+  },
+  {
+   "id": "864cff7299",
+   "s": 0.1442,
+   "nn": "fdb3b41991",
+   "len": 29,
+   "null": 0.1147
+  },
+  {
+   "id": "4ecb30be25",
+   "s": 0.1941,
+   "nn": "bace7f65de",
+   "len": 18,
+   "null": 0.1268
+  },
+  {
+   "id": "4ea5500d1b",
+   "s": 0.1195,
+   "nn": "7b4645679f",
+   "len": 25,
+   "null": 0.1179
+  },
+  {
+   "id": "d5e9b4a0b2",
+   "s": 0.1797,
+   "nn": "d410ab977b",
+   "len": 24,
+   "null": 0.1182
+  },
+  {
+   "id": "334f3bb4ce",
+   "s": 0.1138,
+   "nn": "5a5ce1fc0a",
+   "len": 27,
+   "null": 0.1158
+  },
+  {
+   "id": "cdd7e48bdb",
+   "s": 0.1455,
+   "nn": "fdb3b41991",
+   "len": 28,
+   "null": 0.1161
+  },
+  {
+   "id": "426aaec2fc",
+   "s": 0.1068,
+   "nn": "999bbc7b62",
+   "len": 37,
+   "null": 0.1095
+  },
+  {
+   "id": "df317bd849",
+   "s": 0.0776,
+   "nn": "20c967a38b",
+   "len": 22,
+   "null": 0.1154
+  },
+  {
+   "id": "5a5ce1fc0a",
+   "s": 0.1269,
+   "nn": "6c1ee2af0c",
+   "len": 26,
+   "null": 0.1158
+  },
+  {
+   "id": "fca4b8be74",
+   "s": 0.0826,
+   "nn": "072db89e95",
+   "len": 20,
+   "null": 0.119
+  },
+  {
+   "id": "dc7258e965",
+   "s": 0.0658,
+   "nn": "61d5618c41",
+   "len": 26,
+   "null": 0.1177
+  },
+  {
+   "id": "f5aab6d6ae",
+   "s": 0.0982,
+   "nn": "145856f9d5",
+   "len": 32,
+   "null": 0.1111
+  },
+  {
+   "id": "fdb3b41991",
+   "s": 0.1455,
+   "nn": "cdd7e48bdb",
+   "len": 25,
+   "null": 0.1161
+  },
+  {
+   "id": "147e9d223e",
+   "s": 0.0884,
+   "nn": "334f3bb4ce",
+   "len": 23,
+   "null": 0.1217
+  },
+  {
+   "id": "f170dc1d8c",
+   "s": 0.0825,
+   "nn": "8fcfbaafa3",
+   "len": 29,
+   "null": 0.1121
+  },
+  {
+   "id": "4998869149",
+   "s": 0.0821,
+   "nn": "ca03d802d1",
+   "len": 24,
+   "null": 0.1177
+  },
+  {
+   "id": "d56ce09c5c",
+   "s": 0.0748,
+   "nn": "9e616a7d7b",
+   "len": 19,
+   "null": 0.126
+  },
+  {
+   "id": "c6828b08c9",
+   "s": 0.1197,
+   "nn": "6c1ee2af0c",
+   "len": 25,
+   "null": 0.1179
+  },
+  {
+   "id": "8dca852c35",
+   "s": 0.0794,
+   "nn": "a9b7babad6",
+   "len": 30,
+   "null": 0.1135
+  },
+  {
+   "id": "5a76d933fa",
+   "s": 0.1697,
+   "nn": "2438524730",
+   "len": 27,
+   "null": 0.1147
+  },
+  {
+   "id": "f390af5b91",
+   "s": 0.1275,
+   "nn": "2ea9127a9e",
+   "len": 24,
+   "null": 0.1167
+  },
+  {
+   "id": "17857f3751",
+   "s": 0.0673,
+   "nn": "204a042b86",
+   "len": 24,
+   "null": 0.1219
+  },
+  {
+   "id": "415016d754",
+   "s": 0.11,
+   "nn": "af88ecb903",
+   "len": 26,
+   "null": 0.1149
+  },
+  {
+   "id": "b75466d801",
+   "s": 0.148,
+   "nn": "e55f5768eb",
+   "len": 36,
+   "null": 0.1079
+  },
+  {
+   "id": "af88ecb903",
+   "s": 0.11,
+   "nn": "415016d754",
+   "len": 18,
+   "null": 0.1232
+  },
+  {
+   "id": "3d11bc97c2",
+   "s": 0.1145,
+   "nn": "2ad44614cc",
+   "len": 24,
+   "null": 0.118
+  },
+  {
+   "id": "20c967a38b",
+   "s": 0.1191,
+   "nn": "5a5ce1fc0a",
+   "len": 28,
+   "null": 0.1139
+  },
+  {
+   "id": "0da0e802a1",
+   "s": 0.086,
+   "nn": "9bcadf5634",
+   "len": 20,
+   "null": 0.1202
+  },
+  {
+   "id": "d79a95b9a7",
+   "s": 0.1041,
+   "nn": "7a41d81e51",
+   "len": 22,
+   "null": 0.1182
+  },
+  {
+   "id": "5a7774fa1b",
+   "s": 0.0829,
+   "nn": "3d11bc97c2",
+   "len": 29,
+   "null": 0.1119
+  },
+  {
+   "id": "3e85b96270",
+   "s": 0.1138,
+   "nn": "08110e39b5",
+   "len": 26,
+   "null": 0.1162
+  },
+  {
+   "id": "64b83b170d",
+   "s": 0.1011,
+   "nn": "6bad44a384",
+   "len": 25,
+   "null": 0.1163
+  },
+  {
+   "id": "0d4e3c3cdd",
+   "s": 0.1051,
+   "nn": "9cd86148c3",
+   "len": 25,
+   "null": 0.1145
+  },
+  {
+   "id": "840846a50d",
+   "s": 0.1253,
+   "nn": "06346613e6",
+   "len": 25,
+   "null": 0.1158
+  },
+  {
+   "id": "24756f21f6",
+   "s": 0.1551,
+   "nn": "4f01c4bf12",
+   "len": 20,
+   "null": 0.1225
+  },
+  {
+   "id": "bcb91aedcb",
+   "s": 0.0921,
+   "nn": "a9b7babad6",
+   "len": 27,
+   "null": 0.1152
+  },
+  {
+   "id": "204a042b86",
+   "s": 0.0916,
+   "nn": "7fd98f2445",
+   "len": 26,
+   "null": 0.1185
+  },
+  {
+   "id": "1bceb60d8d",
+   "s": 0.1121,
+   "nn": "d5e9b4a0b2",
+   "len": 24,
+   "null": 0.1176
+  },
+  {
+   "id": "b36c56db44",
+   "s": 0.0852,
+   "nn": "b265483029",
+   "len": 24,
+   "null": 0.1177
+  },
+  {
+   "id": "f21b1a77d6",
+   "s": 0.0713,
+   "nn": "47b5e04af9",
+   "len": 22,
+   "null": 0.1164
+  },
+  {
+   "id": "e24fe2cafa",
+   "s": 0.0811,
+   "nn": "a82e87b259",
+   "len": 19,
+   "null": 0.1228
+  },
+  {
+   "id": "8fcfbaafa3",
+   "s": 0.0936,
+   "nn": "415016d754",
+   "len": 33,
+   "null": 0.1119
+  },
+  {
+   "id": "4ddd8cad0e",
+   "s": 0.0851,
+   "nn": "fbf1d0a6d2",
+   "len": 30,
+   "null": 0.113
+  },
+  {
+   "id": "792835a7d9",
+   "s": 0.0696,
+   "nn": "7fbc0f8110",
+   "len": 28,
+   "null": 0.1154
+  },
+  {
+   "id": "24ddb898c1",
+   "s": 0.0839,
+   "nn": "794e7cc9c6",
+   "len": 26,
+   "null": 0.1134
+  },
+  {
+   "id": "48082a0da0",
+   "s": 0.1143,
+   "nn": "cdd7e48bdb",
+   "len": 18,
+   "null": 0.1232
+  },
+  {
+   "id": "4a36191bfe",
+   "s": 0.0873,
+   "nn": "70250da1ab",
+   "len": 24,
+   "null": 0.1168
+  },
+  {
+   "id": "1e00060226",
+   "s": 0.0912,
+   "nn": "fdb3b41991",
+   "len": 25,
+   "null": 0.1134
+  },
+  {
+   "id": "89899a425e",
+   "s": 0.0684,
+   "nn": "d5a375310e",
+   "len": 32,
+   "null": 0.1131
+  },
+  {
+   "id": "5525587ac9",
+   "s": 0.1604,
+   "nn": "fb5cc40a85",
+   "len": 20,
+   "null": 0.1165
+  },
+  {
+   "id": "3d04ed6b20",
+   "s": 0.0888,
+   "nn": "f2044ca08e",
+   "len": 27,
+   "null": 0.115
+  },
+  {
+   "id": "898cf450e1",
+   "s": 0.1151,
+   "nn": "dad5127a9a",
+   "len": 22,
+   "null": 0.124
+  },
+  {
+   "id": "3c3d0bae34",
+   "s": 0.0843,
+   "nn": "6550baa833",
+   "len": 15,
+   "null": 0.131
+  },
+  {
+   "id": "d3b75ec4d0",
+   "s": 0.0946,
+   "nn": "1853e345c0",
+   "len": 38,
+   "null": 0.1107
+  },
+  {
+   "id": "aef3af1117",
+   "s": 0.0963,
+   "nn": "1da04accea",
+   "len": 28,
+   "null": 0.1144
+  },
+  {
+   "id": "167022cb1d",
+   "s": 0.0934,
+   "nn": "5525587ac9",
+   "len": 29,
+   "null": 0.1114
+  },
+  {
+   "id": "2f70a67dd9",
+   "s": 0.097,
+   "nn": "7ba5f4ac07",
+   "len": 32,
+   "null": 0.1097
+  },
+  {
+   "id": "d071c48511",
+   "s": 0.0942,
+   "nn": "45fdcb6417",
+   "len": 21,
+   "null": 0.1202
+  },
+  {
+   "id": "7ffa7c2b17",
+   "s": 0.2518,
+   "nn": "ab564dfcb0",
+   "len": 28,
+   "null": 0.1153
+  },
+  {
+   "id": "1c79319e36",
+   "s": 0.1021,
+   "nn": "db11bf29b6",
+   "len": 21,
+   "null": 0.1186
+  },
+  {
+   "id": "16893b12ba",
+   "s": 0.157,
+   "nn": "fe58b5fdb6",
+   "len": 22,
+   "null": 0.118
+  },
+  {
+   "id": "252e9c94fe",
+   "s": 0.0665,
+   "nn": "2708b235c6",
+   "len": 32,
+   "null": 0.112
+  },
+  {
+   "id": "fa065c63c4",
+   "s": 0.0786,
+   "nn": "e4e55ea1c6",
+   "len": 28,
+   "null": 0.1153
+  },
+  {
+   "id": "b2d2046236",
+   "s": 0.1658,
+   "nn": "9a272b1bb9",
+   "len": 25,
+   "null": 0.1142
+  },
+  {
+   "id": "f047f6835c",
+   "s": 0.1287,
+   "nn": "841e9ffd58",
+   "len": 24,
+   "null": 0.1164
+  },
+  {
+   "id": "b4bc927167",
+   "s": 0.0644,
+   "nn": "9d9eee8631",
+   "len": 23,
+   "null": 0.1176
+  },
+  {
+   "id": "50aa8f8828",
+   "s": 0.0975,
+   "nn": "0ee560b00f",
+   "len": 32,
+   "null": 0.1137
+  },
+  {
+   "id": "69c8993a7d",
+   "s": 0.0924,
+   "nn": "b3ee5442b1",
+   "len": 31,
+   "null": 0.1107
+  },
+  {
+   "id": "5701a1c620",
+   "s": 0.1035,
+   "nn": "449763a2a2",
+   "len": 26,
+   "null": 0.1133
+  },
+  {
+   "id": "9a272b1bb9",
+   "s": 0.1658,
+   "nn": "b2d2046236",
+   "len": 22,
+   "null": 0.1165
+  },
+  {
+   "id": "9b82b2d285",
+   "s": 0.1001,
+   "nn": "9ac26a91ac",
+   "len": 25,
+   "null": 0.1184
+  },
+  {
+   "id": "0cb66b1273",
+   "s": 0.0777,
+   "nn": "ab564dfcb0",
+   "len": 26,
+   "null": 0.1172
+  },
+  {
+   "id": "bd010fe05d",
+   "s": 0.119,
+   "nn": "29a4db3edc",
+   "len": 28,
+   "null": 0.1144
+  },
+  {
+   "id": "e4e55ea1c6",
+   "s": 0.1289,
+   "nn": "8d851dd48d",
+   "len": 28,
+   "null": 0.1145
+  },
+  {
+   "id": "17f01d583f",
+   "s": 0.118,
+   "nn": "a58681e245",
+   "len": 29,
+   "null": 0.1096
+  },
+  {
+   "id": "63bc9c3ef0",
+   "s": 0.1598,
+   "nn": "63bcc4f11c",
+   "len": 28,
+   "null": 0.1135
+  },
+  {
+   "id": "b5574f767f",
+   "s": 0.119,
+   "nn": "bbce089208",
+   "len": 17,
+   "null": 0.1245
+  },
+  {
+   "id": "986f39fbdf",
+   "s": 0.1424,
+   "nn": "5d54ac4dc5",
+   "len": 31,
+   "null": 0.1145
+  },
+  {
+   "id": "3c4e7c169e",
+   "s": 0.1099,
+   "nn": "ee916ac696",
+   "len": 33,
+   "null": 0.1086
+  },
+  {
+   "id": "3d18334ee0",
+   "s": 0.0966,
+   "nn": "e4e55ea1c6",
+   "len": 30,
+   "null": 0.1125
+  },
+  {
+   "id": "d8ac20e007",
+   "s": 0.1435,
+   "nn": "ab564dfcb0",
+   "len": 25,
+   "null": 0.1188
+  },
+  {
+   "id": "63bcc4f11c",
+   "s": 0.1598,
+   "nn": "63bc9c3ef0",
+   "len": 24,
+   "null": 0.1132
+  },
+  {
+   "id": "7fd98f2445",
+   "s": 0.0916,
+   "nn": "204a042b86",
+   "len": 19,
+   "null": 0.1239
+  },
+  {
+   "id": "ab564dfcb0",
+   "s": 0.2518,
+   "nn": "7ffa7c2b17",
+   "len": 36,
+   "null": 0.1099
+  },
+  {
+   "id": "6bad44a384",
+   "s": 0.1135,
+   "nn": "dad523d2d1",
+   "len": 24,
+   "null": 0.1203
+  },
+  {
+   "id": "1da04accea",
+   "s": 0.1289,
+   "nn": "2afcf64d7c",
+   "len": 35,
+   "null": 0.1098
+  },
+  {
+   "id": "8bcb0820da",
+   "s": 0.084,
+   "nn": "2afcf64d7c",
+   "len": 22,
+   "null": 0.1176
+  },
+  {
+   "id": "4fca35e866",
+   "s": 0.0857,
+   "nn": "2b3532e209",
+   "len": 30,
+   "null": 0.112
+  },
+  {
+   "id": "4d93161db6",
+   "s": 0.1164,
+   "nn": "947938fb51",
+   "len": 29,
+   "null": 0.1168
+  },
+  {
+   "id": "66c2aca79a",
+   "s": 0.11,
+   "nn": "947938fb51",
+   "len": 29,
+   "null": 0.1109
+  },
+  {
+   "id": "db11bf29b6",
+   "s": 0.1021,
+   "nn": "1c79319e36",
+   "len": 28,
+   "null": 0.1122
+  },
+  {
+   "id": "bfb36e1e71",
+   "s": 0.103,
+   "nn": "0322d98674",
+   "len": 28,
+   "null": 0.1137
+  },
+  {
+   "id": "ca03d802d1",
+   "s": 0.1092,
+   "nn": "8d9caeafc6",
+   "len": 25,
+   "null": 0.1139
+  },
+  {
+   "id": "2473fd2c52",
+   "s": 0.1238,
+   "nn": "fbde8a9324",
+   "len": 23,
+   "null": 0.1186
+  },
+  {
+   "id": "1853e345c0",
+   "s": 0.0946,
+   "nn": "d3b75ec4d0",
+   "len": 30,
+   "null": 0.1115
+  },
+  {
+   "id": "3b64cf09b4",
+   "s": 0.1129,
+   "nn": "664a4e23ac",
+   "len": 32,
+   "null": 0.1115
+  },
+  {
+   "id": "61d5618c41",
+   "s": 0.0927,
+   "nn": "63bc9c3ef0",
+   "len": 26,
+   "null": 0.1153
+  },
+  {
+   "id": "25d37621fd",
+   "s": 0.1248,
+   "nn": "a269419e3e",
+   "len": 34,
+   "null": 0.1116
+  },
+  {
+   "id": "5c7ff810ea",
+   "s": 0.0844,
+   "nn": "b9c3eddfee",
+   "len": 25,
+   "null": 0.1151
+  },
+  {
+   "id": "973465359f",
+   "s": 0.1028,
+   "nn": "430c6ec381",
+   "len": 27,
+   "null": 0.1138
+  },
+  {
+   "id": "07a550fe89",
+   "s": 0.0665,
+   "nn": "9ef54f137f",
+   "len": 22,
+   "null": 0.1176
+  },
+  {
+   "id": "08121d2ca1",
+   "s": 0.1876,
+   "nn": "430c6ec381",
+   "len": 32,
+   "null": 0.113
+  },
+  {
+   "id": "1d810931d0",
+   "s": 0.0712,
+   "nn": "8df63536bb",
+   "len": 35,
+   "null": 0.11
+  },
+  {
+   "id": "ebd6c49d12",
+   "s": 0.0969,
+   "nn": "a81053f215",
+   "len": 26,
+   "null": 0.1125
+  },
+  {
+   "id": "c45c38bff0",
+   "s": 0.0866,
+   "nn": "74dc5c34dd",
+   "len": 20,
+   "null": 0.1193
+  },
+  {
+   "id": "a9b7babad6",
+   "s": 0.0939,
+   "nn": "ae63dd4bd3",
+   "len": 21,
+   "null": 0.1207
+  },
+  {
+   "id": "a0c297dfa5",
+   "s": 0.1525,
+   "nn": "c06e6f3f37",
+   "len": 21,
+   "null": 0.1201
+  },
+  {
+   "id": "22491f900a",
+   "s": 0.1233,
+   "nn": "d5e9b4a0b2",
+   "len": 25,
+   "null": 0.1186
+  },
+  {
+   "id": "9bcadf5634",
+   "s": 0.103,
+   "nn": "8d9caeafc6",
+   "len": 33,
+   "null": 0.1106
+  },
+  {
+   "id": "f1e9e83120",
+   "s": 0.1458,
+   "nn": "947938fb51",
+   "len": 19,
+   "null": 0.1229
+  },
+  {
+   "id": "819793137d",
+   "s": 0.124,
+   "nn": "8d851dd48d",
+   "len": 35,
+   "null": 0.1092
+  },
+  {
+   "id": "8303e54c7e",
+   "s": 0.1365,
+   "nn": "08121d2ca1",
+   "len": 30,
+   "null": 0.1104
+  },
+  {
+   "id": "db89d25fc2",
+   "s": 0.1453,
+   "nn": "40b17133c5",
+   "len": 24,
+   "null": 0.1167
+  },
+  {
+   "id": "aad001ebd0",
+   "s": 0.1088,
+   "nn": "0322d98674",
+   "len": 24,
+   "null": 0.1127
+  },
+  {
+   "id": "fb5cc40a85",
+   "s": 0.1604,
+   "nn": "5525587ac9",
+   "len": 38,
+   "null": 0.1084
+  },
+  {
+   "id": "88a0be4cba",
+   "s": 0.0995,
+   "nn": "8472f4f5b7",
+   "len": 39,
+   "null": 0.1109
+  },
+  {
+   "id": "aada780324",
+   "s": 0.1045,
+   "nn": "fbde8a9324",
+   "len": 22,
+   "null": 0.1202
+  },
+  {
+   "id": "449763a2a2",
+   "s": 0.1043,
+   "nn": "2317c0c3a8",
+   "len": 23,
+   "null": 0.1221
+  },
+  {
+   "id": "20f0ebb108",
+   "s": 0.0855,
+   "nn": "31b98ce979",
+   "len": 26,
+   "null": 0.116
+  },
+  {
+   "id": "aa6589964f",
+   "s": 0.085,
+   "nn": "aad001ebd0",
+   "len": 28,
+   "null": 0.1137
+  },
+  {
+   "id": "4962c24426",
+   "s": 0.1414,
+   "nn": "0968d66b9b",
+   "len": 26,
+   "null": 0.1128
+  },
+  {
+   "id": "0322d98674",
+   "s": 0.1346,
+   "nn": "63bcc4f11c",
+   "len": 23,
+   "null": 0.1184
+  },
+  {
+   "id": "430c6ec381",
+   "s": 0.1876,
+   "nn": "08121d2ca1",
+   "len": 27,
+   "null": 0.1141
+  },
+  {
+   "id": "6de809d172",
+   "s": 0.1125,
+   "nn": "4962c24426",
+   "len": 28,
+   "null": 0.1175
+  },
+  {
+   "id": "567548e2d3",
+   "s": 0.0807,
+   "nn": "b75466d801",
+   "len": 23,
+   "null": 0.1178
+  },
+  {
+   "id": "ae63dd4bd3",
+   "s": 0.1235,
+   "nn": "986f39fbdf",
+   "len": 29,
+   "null": 0.1158
+  },
+  {
+   "id": "93b04d8bf5",
+   "s": 0.1348,
+   "nn": "54aa2ed478",
+   "len": 24,
+   "null": 0.1197
+  },
+  {
+   "id": "2344582094",
+   "s": 0.064,
+   "nn": "fd2f19e6fe",
+   "len": 24,
+   "null": 0.1161
+  },
+  {
+   "id": "3e2587701e",
+   "s": 0.0973,
+   "nn": "732cadc9dd",
+   "len": 28,
+   "null": 0.1158
+  },
+  {
+   "id": "ed7e430e7f",
+   "s": 0.1083,
+   "nn": "b85a6ce037",
+   "len": 27,
+   "null": 0.1139
+  },
+  {
+   "id": "664a4e23ac",
+   "s": 0.1344,
+   "nn": "5a76d933fa",
+   "len": 28,
+   "null": 0.1118
+  },
+  {
+   "id": "6b5350cf45",
+   "s": 0.1032,
+   "nn": "e55f5768eb",
+   "len": 23,
+   "null": 0.1182
+  },
+  {
+   "id": "747357b5d9",
+   "s": 0.0758,
+   "nn": "dad523d2d1",
+   "len": 24,
+   "null": 0.1189
+  },
+  {
+   "id": "2dbbf0c1fb",
+   "s": 0.0804,
+   "nn": "b06327ff25",
+   "len": 25,
+   "null": 0.1167
+  },
+  {
+   "id": "b880676846",
+   "s": 0.1051,
+   "nn": "aad001ebd0",
+   "len": 23,
+   "null": 0.1169
+  },
+  {
+   "id": "6b1638fb31",
+   "s": 0.0952,
+   "nn": "d3700c8acf",
+   "len": 19,
+   "null": 0.1197
+  },
+  {
+   "id": "8d9caeafc6",
+   "s": 0.1443,
+   "nn": "df5ea43833",
+   "len": 22,
+   "null": 0.1156
+  },
+  {
+   "id": "54aa2ed478",
+   "s": 0.1348,
+   "nn": "93b04d8bf5",
+   "len": 26,
+   "null": 0.116
+  },
+  {
+   "id": "29a4db3edc",
+   "s": 0.1259,
+   "nn": "fb5cc40a85",
+   "len": 28,
+   "null": 0.1147
+  },
+  {
+   "id": "e900c57dc1",
+   "s": 0.1327,
+   "nn": "545e56437b",
+   "len": 24,
+   "null": 0.1168
+  },
+  {
+   "id": "05602e187f",
+   "s": 0.1339,
+   "nn": "e55f5768eb",
+   "len": 19,
+   "null": 0.1267
+  },
+  {
+   "id": "16c4d33098",
+   "s": 0.1408,
+   "nn": "76e7b06057",
+   "len": 33,
+   "null": 0.1107
+  },
+  {
+   "id": "c37aaea7e9",
+   "s": 0.0962,
+   "nn": "3fa58b9529",
+   "len": 22,
+   "null": 0.1206
+  },
+  {
+   "id": "7b4645679f",
+   "s": 0.1295,
+   "nn": "76e7b06057",
+   "len": 18,
+   "null": 0.1228
+  },
+  {
+   "id": "e307f50d48",
+   "s": 0.0939,
+   "nn": "ab564dfcb0",
+   "len": 22,
+   "null": 0.1175
+  },
+  {
+   "id": "51954c1450",
+   "s": 0.0967,
+   "nn": "cf5b2c07ce",
+   "len": 29,
+   "null": 0.1119
+  },
+  {
+   "id": "cad4440ed1",
+   "s": 0.0826,
+   "nn": "d226bfc4b3",
+   "len": 25,
+   "null": 0.1159
+  },
+  {
+   "id": "cf5b2c07ce",
+   "s": 0.105,
+   "nn": "0d99ae0e82",
+   "len": 27,
+   "null": 0.1132
+  },
+  {
+   "id": "76e7b06057",
+   "s": 0.1408,
+   "nn": "16c4d33098",
+   "len": 29,
+   "null": 0.1147
+  },
+  {
+   "id": "a1b3f5282b",
+   "s": 0.1389,
+   "nn": "430c6ec381",
+   "len": 19,
+   "null": 0.1227
+  },
+  {
+   "id": "a3443a091d",
+   "s": 0.0874,
+   "nn": "3b3139ec4f",
+   "len": 24,
+   "null": 0.1195
+  },
+  {
+   "id": "7a41d81e51",
+   "s": 0.1252,
+   "nn": "6a73b8a61d",
+   "len": 27,
+   "null": 0.1118
+  },
+  {
+   "id": "b265483029",
+   "s": 0.0852,
+   "nn": "b36c56db44",
+   "len": 21,
+   "null": 0.1199
+  },
+  {
+   "id": "45fdcb6417",
+   "s": 0.0993,
+   "nn": "df5ea43833",
+   "len": 25,
+   "null": 0.1189
+  },
+  {
+   "id": "b4dddac132",
+   "s": 0.0731,
+   "nn": "24756f21f6",
+   "len": 29,
+   "null": 0.1129
+  },
+  {
+   "id": "9ac26a91ac",
+   "s": 0.1001,
+   "nn": "9b82b2d285",
+   "len": 31,
+   "null": 0.1137
+  },
+  {
+   "id": "ef036f9da2",
+   "s": 0.2387,
+   "nn": "d5a375310e",
+   "len": 17,
+   "null": 0.1237
+  },
+  {
+   "id": "d5a375310e",
+   "s": 0.2387,
+   "nn": "ef036f9da2",
+   "len": 35,
+   "null": 0.1107
+  },
+  {
+   "id": "9e616a7d7b",
+   "s": 0.0808,
+   "nn": "05602e187f",
+   "len": 21,
+   "null": 0.1236
+  },
+  {
+   "id": "df5ea43833",
+   "s": 0.1443,
+   "nn": "8d9caeafc6",
+   "len": 27,
+   "null": 0.1153
+  },
+  {
+   "id": "fdd6eecbf3",
+   "s": 0.134,
+   "nn": "fbde8a9324",
+   "len": 24,
+   "null": 0.1151
+  },
+  {
+   "id": "d3700c8acf",
+   "s": 0.0952,
+   "nn": "6b1638fb31",
+   "len": 28,
+   "null": 0.1115
+  },
+  {
+   "id": "b85a6ce037",
+   "s": 0.1083,
+   "nn": "ed7e430e7f",
+   "len": 23,
+   "null": 0.1157
+  },
+  {
+   "id": "b3af8e4cbf",
+   "s": 0.0912,
+   "nn": "3e85b96270",
+   "len": 23,
+   "null": 0.1186
+  },
+  {
+   "id": "b8a249f5f1",
+   "s": 0.2048,
+   "nn": "9ef54f137f",
+   "len": 27,
+   "null": 0.115
+  },
+  {
+   "id": "5cbdc70355",
+   "s": 0.1667,
+   "nn": "e55f5768eb",
+   "len": 29,
+   "null": 0.1122
+  },
+  {
+   "id": "9ef54f137f",
+   "s": 0.2048,
+   "nn": "b8a249f5f1",
+   "len": 27,
+   "null": 0.1128
+  },
+  {
+   "id": "3fa58b9529",
+   "s": 0.0962,
+   "nn": "c37aaea7e9",
+   "len": 26,
+   "null": 0.114
+  },
+  {
+   "id": "5575cca05f",
+   "s": 0.1845,
+   "nn": "a269419e3e",
+   "len": 27,
+   "null": 0.1148
+  },
+  {
+   "id": "b89f06e604",
+   "s": 0.1594,
+   "nn": "c14dabacc1",
+   "len": 14,
+   "null": 0.1308
+  },
+  {
+   "id": "dc37e47364",
+   "s": 0.1697,
+   "nn": "50b23cb2f2",
+   "len": 16,
+   "null": 0.1268
+  },
+  {
+   "id": "c14dabacc1",
+   "s": 0.2295,
+   "nn": "812675cfa0",
+   "len": 15,
+   "null": 0.1309
+  },
+  {
+   "id": "f5ae7b808b",
+   "s": 0.1569,
+   "nn": "2aeac413f8",
+   "len": 17,
+   "null": 0.1284
+  },
+  {
+   "id": "9d9eee8631",
+   "s": 0.1331,
+   "nn": "e5595d4441",
+   "len": 16,
+   "null": 0.1266
+  },
+  {
+   "id": "bd2584dd27",
+   "s": 0.1208,
+   "nn": "764ea87f9d",
+   "len": 17,
+   "null": 0.1273
+  },
+  {
+   "id": "7b2a7c4be2",
+   "s": 0.135,
+   "nn": "b88725b0e9",
+   "len": 12,
+   "null": 0.1348
+  },
+  {
+   "id": "764ea87f9d",
+   "s": 0.6693,
+   "nn": "9946c41abf",
+   "len": 15,
+   "null": 0.1285
+  },
+  {
+   "id": "9946c41abf",
+   "s": 0.6693,
+   "nn": "764ea87f9d",
+   "len": 18,
+   "null": 0.1235
+  },
+  {
+   "id": "336931a962",
+   "s": 0.1512,
+   "nn": "c5f7002e7e",
+   "len": 16,
+   "null": 0.1254
+  },
+  {
+   "id": "6c4d63514d",
+   "s": 0.2651,
+   "nn": "cecc69c7e9",
+   "len": 14,
+   "null": 0.1337
+  },
+  {
+   "id": "cecc69c7e9",
+   "s": 0.3296,
+   "nn": "1debc8eac9",
+   "len": 14,
+   "null": 0.1332
+  },
+  {
+   "id": "2919fbbb95",
+   "s": 0.1519,
+   "nn": "cecc69c7e9",
+   "len": 10,
+   "null": 0.139
+  },
+  {
+   "id": "db3092eb0e",
+   "s": 0.4107,
+   "nn": "aa9d9588b0",
+   "len": 17,
+   "null": 0.125
+  },
+  {
+   "id": "8478f5c6a0",
+   "s": 0.4043,
+   "nn": "db3092eb0e",
+   "len": 14,
+   "null": 0.1275
+  },
+  {
+   "id": "aa9d9588b0",
+   "s": 0.4107,
+   "nn": "db3092eb0e",
+   "len": 23,
+   "null": 0.1167
+  },
+  {
+   "id": "90e5060b51",
+   "s": 0.2918,
+   "nn": "db3092eb0e",
+   "len": 16,
+   "null": 0.1253
+  },
+  {
+   "id": "2b3532e209",
+   "s": 0.1419,
+   "nn": "9cd86148c3",
+   "len": 13,
+   "null": 0.1358
+  },
+  {
+   "id": "be05843058",
+   "s": 0.1289,
+   "nn": "2b3532e209",
+   "len": 12,
+   "null": 0.1328
+  },
+  {
+   "id": "653d71c514",
+   "s": 0.1323,
+   "nn": "764ea87f9d",
+   "len": 17,
+   "null": 0.1285
+  },
+  {
+   "id": "92cc3a0e23",
+   "s": 0.1066,
+   "nn": "2b3532e209",
+   "len": 13,
+   "null": 0.1328
+  },
+  {
+   "id": "947938fb51",
+   "s": 0.1688,
+   "nn": "3c955751e5",
+   "len": 17,
+   "null": 0.1223
+  },
+  {
+   "id": "9cd86148c3",
+   "s": 0.1419,
+   "nn": "2b3532e209",
+   "len": 13,
+   "null": 0.1306
+  },
+  {
+   "id": "92e6165ad3",
+   "s": 0.2252,
+   "nn": "f620f2c690",
+   "len": 16,
+   "null": 0.1248
+  },
+  {
+   "id": "da9cd0a959",
+   "s": 0.1977,
+   "nn": "f620f2c690",
+   "len": 17,
+   "null": 0.1249
+  },
+  {
+   "id": "5d38f8fed3",
+   "s": 0.1195,
+   "nn": "2b3532e209",
+   "len": 13,
+   "null": 0.1311
+  },
+  {
+   "id": "4d07ed33d6",
+   "s": 0.1029,
+   "nn": "2b3532e209",
+   "len": 16,
+   "null": 0.1231
+  },
+  {
+   "id": "ee916ac696",
+   "s": 0.1163,
+   "nn": "e5acd50dc5",
+   "len": 13,
+   "null": 0.1316
+  },
+  {
+   "id": "af722c3ba8",
+   "s": 0.1446,
+   "nn": "2919fbbb95",
+   "len": 16,
+   "null": 0.1257
+  },
+  {
+   "id": "1b12774bb9",
+   "s": 0.1345,
+   "nn": "cad73e02c2",
+   "len": 17,
+   "null": 0.1242
+  },
+  {
+   "id": "c3d17bf5e4",
+   "s": 0.1915,
+   "nn": "50b23cb2f2",
+   "len": 12,
+   "null": 0.1408
+  },
+  {
+   "id": "e5acd50dc5",
+   "s": 0.1271,
+   "nn": "c3d17bf5e4",
+   "len": 10,
+   "null": 0.142
+  },
+  {
+   "id": "9adc978c30",
+   "s": 0.1258,
+   "nn": "9d4462fe25",
+   "len": 15,
+   "null": 0.1295
+  },
+  {
+   "id": "0769491aaa",
+   "s": 0.104,
+   "nn": "df5411a738",
+   "len": 15,
+   "null": 0.1304
+  },
+  {
+   "id": "cce76e96c4",
+   "s": 0.1508,
+   "nn": "065e7a4a94",
+   "len": 15,
+   "null": 0.1245
+  },
+  {
+   "id": "780cf84f7e",
+   "s": 0.085,
+   "nn": "503868a12f",
+   "len": 17,
+   "null": 0.1304
+  },
+  {
+   "id": "2ea9127a9e",
+   "s": 0.5831,
+   "nn": "c5f7002e7e",
+   "len": 15,
+   "null": 0.1249
+  },
+  {
+   "id": "a81053f215",
+   "s": 0.2456,
+   "nn": "2ea9127a9e",
+   "len": 20,
+   "null": 0.1211
+  },
+  {
+   "id": "99dcd74211",
+   "s": 0.2928,
+   "nn": "2ea9127a9e",
+   "len": 15,
+   "null": 0.1275
+  },
+  {
+   "id": "32df82c841",
+   "s": 0.3815,
+   "nn": "2ea9127a9e",
+   "len": 12,
+   "null": 0.1367
+  },
+  {
+   "id": "963863cf94",
+   "s": 0.1658,
+   "nn": "839c922936",
+   "len": 15,
+   "null": 0.1249
+  },
+  {
+   "id": "db18b43e6a",
+   "s": 0.255,
+   "nn": "c427fd2543",
+   "len": 14,
+   "null": 0.1286
+  },
+  {
+   "id": "cc52f603aa",
+   "s": 0.2906,
+   "nn": "2ea9127a9e",
+   "len": 14,
+   "null": 0.1271
+  },
+  {
+   "id": "fe58b5fdb6",
+   "s": 0.3179,
+   "nn": "e5595d4441",
+   "len": 17,
+   "null": 0.1235
+  },
+  {
+   "id": "3069ac2770",
+   "s": 0.1198,
+   "nn": "c72a54fc1f",
+   "len": 12,
+   "null": 0.136
+  },
+  {
+   "id": "7960d878d7",
+   "s": 0.1306,
+   "nn": "1d056a1190",
+   "len": 18,
+   "null": 0.121
+  },
+  {
+   "id": "1bd0fe828e",
+   "s": 0.3415,
+   "nn": "3b3139ec4f",
+   "len": 16,
+   "null": 0.1238
+  },
+  {
+   "id": "c5f7002e7e",
+   "s": 0.5831,
+   "nn": "2ea9127a9e",
+   "len": 16,
+   "null": 0.1282
+  },
+  {
+   "id": "e5595d4441",
+   "s": 0.3179,
+   "nn": "fe58b5fdb6",
+   "len": 14,
+   "null": 0.1317
+  },
+  {
+   "id": "c72a54fc1f",
+   "s": 0.1381,
+   "nn": "a57d4c7050",
+   "len": 15,
+   "null": 0.126
+  },
+  {
+   "id": "c571bf97b1",
+   "s": 0.3657,
+   "nn": "aa9d9588b0",
+   "len": 18,
+   "null": 0.1189
+  },
+  {
+   "id": "d5272d04d9",
+   "s": 0.2984,
+   "nn": "3b3139ec4f",
+   "len": 14,
+   "null": 0.1289
+  },
+  {
+   "id": "d227d4ba95",
+   "s": 0.0893,
+   "nn": "fd2f19e6fe",
+   "len": 16,
+   "null": 0.127
+  },
+  {
+   "id": "9d4462fe25",
+   "s": 0.2484,
+   "nn": "545e56437b",
+   "len": 15,
+   "null": 0.1284
+  },
+  {
+   "id": "1dccb869ee",
+   "s": 0.1236,
+   "nn": "c72a54fc1f",
+   "len": 13,
+   "null": 0.132
+  },
+  {
+   "id": "1d056a1190",
+   "s": 0.2245,
+   "nn": "3197797054",
+   "len": 15,
+   "null": 0.1247
+  },
+  {
+   "id": "c427fd2543",
+   "s": 0.255,
+   "nn": "db18b43e6a",
+   "len": 14,
+   "null": 0.1283
+  },
+  {
+   "id": "a47c89b6a9",
+   "s": 0.0969,
+   "nn": "449763a2a2",
+   "len": 12,
+   "null": 0.1403
+  },
+  {
+   "id": "d2abee3ce9",
+   "s": 0.2361,
+   "nn": "e5595d4441",
+   "len": 13,
+   "null": 0.1324
+  },
+  {
+   "id": "a57d4c7050",
+   "s": 0.1381,
+   "nn": "c72a54fc1f",
+   "len": 12,
+   "null": 0.1316
+  },
+  {
+   "id": "5d8e6c2c7c",
+   "s": 0.1791,
+   "nn": "812675cfa0",
+   "len": 16,
+   "null": 0.1261
+  },
+  {
+   "id": "3b3139ec4f",
+   "s": 0.3415,
+   "nn": "1bd0fe828e",
+   "len": 12,
+   "null": 0.1372
+  },
+  {
+   "id": "2d48bbfb6e",
+   "s": 0.1167,
+   "nn": "65147543ed",
+   "len": 16,
+   "null": 0.1254
+  },
+  {
+   "id": "b88725b0e9",
+   "s": 0.3229,
+   "nn": "5b81a6bf32",
+   "len": 12,
+   "null": 0.1333
+  },
+  {
+   "id": "16e4362339",
+   "s": 0.1004,
+   "nn": "7b5cf1898e",
+   "len": 16,
+   "null": 0.126
+  },
+  {
+   "id": "56ae15f910",
+   "s": 0.1007,
+   "nn": "f620f2c690",
+   "len": 13,
+   "null": 0.1342
+  },
+  {
+   "id": "12252e43de",
+   "s": 0.2861,
+   "nn": "f620f2c690",
+   "len": 18,
+   "null": 0.1227
+  },
+  {
+   "id": "a5e6667b30",
+   "s": 0.0679,
+   "nn": "2d48bbfb6e",
+   "len": 15,
+   "null": 0.1307
+  },
+  {
+   "id": "5b81a6bf32",
+   "s": 0.3229,
+   "nn": "b88725b0e9",
+   "len": 15,
+   "null": 0.1276
+  },
+  {
+   "id": "3050cd14a5",
+   "s": 0.1066,
+   "nn": "7960d878d7",
+   "len": 14,
+   "null": 0.1269
+  },
+  {
+   "id": "fc821fdae6",
+   "s": 0.0966,
+   "nn": "764ea87f9d",
+   "len": 16,
+   "null": 0.1286
+  },
+  {
+   "id": "e6dac60338",
+   "s": 0.2948,
+   "nn": "aa9d9588b0",
+   "len": 23,
+   "null": 0.1186
+  },
+  {
+   "id": "e05de48b6f",
+   "s": 0.0706,
+   "nn": "caabe49640",
+   "len": 13,
+   "null": 0.1304
+  },
+  {
+   "id": "67952caabd",
+   "s": 0.3159,
+   "nn": "5b81a6bf32",
+   "len": 15,
+   "null": 0.1315
+  },
+  {
+   "id": "6ef44e1108",
+   "s": 0.1264,
+   "nn": "cf4dccd57d",
+   "len": 17,
+   "null": 0.1283
+  },
+  {
+   "id": "603b61a194",
+   "s": 0.1283,
+   "nn": "1d056a1190",
+   "len": 16,
+   "null": 0.1258
+  },
+  {
+   "id": "2f402ccb06",
+   "s": 0.1901,
+   "nn": "c14dabacc1",
+   "len": 18,
+   "null": 0.1211
+  },
+  {
+   "id": "308114cad0",
+   "s": 0.1004,
+   "nn": "16893b12ba",
+   "len": 11,
+   "null": 0.133
+  },
+  {
+   "id": "93da887c14",
+   "s": 0.2513,
+   "nn": "5b81a6bf32",
+   "len": 14,
+   "null": 0.1276
+  },
+  {
+   "id": "6e0f66eea8",
+   "s": 1.0,
+   "nn": "2610dac8b2",
+   "len": 14,
+   "null": 0.1302
+  },
+  {
+   "id": "62fda2d1fb",
+   "s": 0.1129,
+   "nn": "b8a249f5f1",
+   "len": 16,
+   "null": 0.127
+  },
+  {
+   "id": "7b00c99a12",
+   "s": 0.1782,
+   "nn": "50b23cb2f2",
+   "len": 15,
+   "null": 0.1285
+  },
+  {
+   "id": "f2044ca08e",
+   "s": 0.134,
+   "nn": "caabe49640",
+   "len": 14,
+   "null": 0.1279
+  },
+  {
+   "id": "071cd2c7b7",
+   "s": 0.2005,
+   "nn": "5b81a6bf32",
+   "len": 14,
+   "null": 0.1317
+  },
+  {
+   "id": "cf4dccd57d",
+   "s": 0.1471,
+   "nn": "dad5127a9a",
+   "len": 12,
+   "null": 0.1333
+  },
+  {
+   "id": "95c4e453dc",
+   "s": 0.0984,
+   "nn": "b880676846",
+   "len": 16,
+   "null": 0.1229
+  },
+  {
+   "id": "fb4d394be6",
+   "s": 0.1213,
+   "nn": "e6dac60338",
+   "len": 12,
+   "null": 0.1332
+  },
+  {
+   "id": "3c7f1529f6",
+   "s": 0.0809,
+   "nn": "7b00c99a12",
+   "len": 12,
+   "null": 0.135
+  },
+  {
+   "id": "db756dee2f",
+   "s": 0.3326,
+   "nn": "aa9d9588b0",
+   "len": 19,
+   "null": 0.1204
+  },
+  {
+   "id": "f99d7f4a05",
+   "s": 0.1566,
+   "nn": "6e0f66eea8",
+   "len": 12,
+   "null": 0.1347
+  },
+  {
+   "id": "621e3577b8",
+   "s": 0.1023,
+   "nn": "91ab41a391",
+   "len": 17,
+   "null": 0.1265
+  },
+  {
+   "id": "5ec0679e12",
+   "s": 0.1286,
+   "nn": "2ea9127a9e",
+   "len": 16,
+   "null": 0.1292
+  },
+  {
+   "id": "e8c2ce8dee",
+   "s": 0.1691,
+   "nn": "5366efde55",
+   "len": 14,
+   "null": 0.1278
+  },
+  {
+   "id": "2610dac8b2",
+   "s": 1.0,
+   "nn": "6e0f66eea8",
+   "len": 14,
+   "null": 0.1337
+  },
+  {
+   "id": "10ea2677d1",
+   "s": 0.1363,
+   "nn": "294fed7294",
+   "len": 10,
+   "null": 0.1422
+  },
+  {
+   "id": "8463ad3154",
+   "s": 0.0959,
+   "nn": "e6dac60338",
+   "len": 15,
+   "null": 0.1285
+  },
+  {
+   "id": "7c93eb4873",
+   "s": 0.0661,
+   "nn": "6de809d172",
+   "len": 12,
+   "null": 0.133
+  },
+  {
+   "id": "b5aee9b56b",
+   "s": 0.2943,
+   "nn": "5b81a6bf32",
+   "len": 13,
+   "null": 0.132
+  },
+  {
+   "id": "bbd4740bf0",
+   "s": 0.1185,
+   "nn": "faee35ea85",
+   "len": 13,
+   "null": 0.1346
+  },
+  {
+   "id": "294fed7294",
+   "s": 0.1363,
+   "nn": "10ea2677d1",
+   "len": 15,
+   "null": 0.134
+  },
+  {
+   "id": "6e2f3aca2f",
+   "s": 0.118,
+   "nn": "7733c698a3",
+   "len": 13,
+   "null": 0.1287
+  },
+  {
+   "id": "e55f5768eb",
+   "s": 0.174,
+   "nn": "cb7c017c93",
+   "len": 17,
+   "null": 0.1264
+  },
+  {
+   "id": "48eac5b6da",
+   "s": 0.306,
+   "nn": "812675cfa0",
+   "len": 15,
+   "null": 0.1284
+  },
+  {
+   "id": "545e56437b",
+   "s": 0.2484,
+   "nn": "9d4462fe25",
+   "len": 12,
+   "null": 0.1379
+  },
+  {
+   "id": "4c677e74dd",
+   "s": 0.0679,
+   "nn": "eb71575cab",
+   "len": 15,
+   "null": 0.1324
+  },
+  {
+   "id": "999bbc7b62",
+   "s": 0.1404,
+   "nn": "864cff7299",
+   "len": 17,
+   "null": 0.1234
+  },
+  {
+   "id": "ee1764e75a",
+   "s": 0.0754,
+   "nn": "9ef54f137f",
+   "len": 14,
+   "null": 0.1298
+  },
+  {
+   "id": "812675cfa0",
+   "s": 0.3066,
+   "nn": "065e7a4a94",
+   "len": 15,
+   "null": 0.1288
+  },
+  {
+   "id": "39d6820c0d",
+   "s": 0.1431,
+   "nn": "9d4462fe25",
+   "len": 11,
+   "null": 0.1384
+  },
+  {
+   "id": "faee35ea85",
+   "s": 0.1435,
+   "nn": "6e0f66eea8",
+   "len": 14,
+   "null": 0.1272
+  },
+  {
+   "id": "7733c698a3",
+   "s": 0.2016,
+   "nn": "7ba5f4ac07",
+   "len": 15,
+   "null": 0.1281
+  },
+  {
+   "id": "b053af6055",
+   "s": 0.1857,
+   "nn": "f620f2c690",
+   "len": 18,
+   "null": 0.1236
+  },
+  {
+   "id": "c39a948d4e",
+   "s": 0.2773,
+   "nn": "fe58b5fdb6",
+   "len": 16,
+   "null": 0.1278
+  },
+  {
+   "id": "d2b7f1d9ae",
+   "s": 0.2534,
+   "nn": "c874e47e67",
+   "len": 11,
+   "null": 0.1412
+  },
+  {
+   "id": "126d7cd7bb",
+   "s": 0.1084,
+   "nn": "40b17133c5",
+   "len": 15,
+   "null": 0.1257
+  },
+  {
+   "id": "74dc5c34dd",
+   "s": 0.2484,
+   "nn": "812675cfa0",
+   "len": 14,
+   "null": 0.1294
+  },
+  {
+   "id": "00839deab5",
+   "s": 0.1377,
+   "nn": "9cd86148c3",
+   "len": 14,
+   "null": 0.131
+  },
+  {
+   "id": "c874e47e67",
+   "s": 0.2534,
+   "nn": "d2b7f1d9ae",
+   "len": 16,
+   "null": 0.1303
+  },
+  {
+   "id": "e163f2ee3e",
+   "s": 0.1776,
+   "nn": "f620f2c690",
+   "len": 16,
+   "null": 0.1243
+  },
+  {
+   "id": "2d23adeecb",
+   "s": 0.0581,
+   "nn": "b5aee9b56b",
+   "len": 16,
+   "null": 0.1275
+  },
+  {
+   "id": "2988d45d6f",
+   "s": 0.1336,
+   "nn": "e8c2ce8dee",
+   "len": 14,
+   "null": 0.1346
+  },
+  {
+   "id": "50b23cb2f2",
+   "s": 0.1915,
+   "nn": "c3d17bf5e4",
+   "len": 14,
+   "null": 0.1343
+  },
+  {
+   "id": "065e7a4a94",
+   "s": 0.3066,
+   "nn": "812675cfa0",
+   "len": 14,
+   "null": 0.1305
+  },
+  {
+   "id": "789428a643",
+   "s": 0.1395,
+   "nn": "9d4462fe25",
+   "len": 14,
+   "null": 0.1321
+  },
+  {
+   "id": "40b17133c5",
+   "s": 0.1453,
+   "nn": "db89d25fc2",
+   "len": 13,
+   "null": 0.1315
+  },
+  {
+   "id": "e18a070bdb",
+   "s": 0.144,
+   "nn": "1debc8eac9",
+   "len": 12,
+   "null": 0.1337
+  },
+  {
+   "id": "c34ccc1edf",
+   "s": 0.11,
+   "nn": "b3ee5442b1",
+   "len": 15,
+   "null": 0.1258
+  },
+  {
+   "id": "41c6508469",
+   "s": 0.2533,
+   "nn": "1debc8eac9",
+   "len": 15,
+   "null": 0.1278
+  },
+  {
+   "id": "0ee560b00f",
+   "s": 0.2674,
+   "nn": "9442a9f52d",
+   "len": 17,
+   "null": 0.1253
+  },
+  {
+   "id": "31a72b8025",
+   "s": 0.0888,
+   "nn": "db3092eb0e",
+   "len": 16,
+   "null": 0.1249
+  },
+  {
+   "id": "f69792183d",
+   "s": 0.1114,
+   "nn": "32df82c841",
+   "len": 12,
+   "null": 0.1308
+  },
+  {
+   "id": "df5411a738",
+   "s": 0.1319,
+   "nn": "bd8be57993",
+   "len": 16,
+   "null": 0.1242
+  },
+  {
+   "id": "f01d589ab5",
+   "s": 0.1354,
+   "nn": "99dcd74211",
+   "len": 8,
+   "null": 0.1489
+  },
+  {
+   "id": "7b5cf1898e",
+   "s": 0.1004,
+   "nn": "16e4362339",
+   "len": 11,
+   "null": 0.1366
+  },
+  {
+   "id": "9442a9f52d",
+   "s": 0.2674,
+   "nn": "0ee560b00f",
+   "len": 17,
+   "null": 0.1269
+  },
+  {
+   "id": "cad73e02c2",
+   "s": 0.247,
+   "nn": "3c966df273",
+   "len": 15,
+   "null": 0.1282
+  },
+  {
+   "id": "2afcf64d7c",
+   "s": 0.1289,
+   "nn": "1da04accea",
+   "len": 14,
+   "null": 0.1311
+  },
+  {
+   "id": "b6eeec178b",
+   "s": 0.1905,
+   "nn": "812675cfa0",
+   "len": 13,
+   "null": 0.128
+  },
+  {
+   "id": "3c955751e5",
+   "s": 0.1688,
+   "nn": "947938fb51",
+   "len": 14,
+   "null": 0.1326
+  },
+  {
+   "id": "5117e300cd",
+   "s": 0.1662,
+   "nn": "1e9a2c25ed",
+   "len": 16,
+   "null": 0.1292
+  },
+  {
+   "id": "1307e96cbe",
+   "s": 0.1621,
+   "nn": "34c21331fe",
+   "len": 11,
+   "null": 0.1353
+  },
+  {
+   "id": "28d5e859fd",
+   "s": 0.1274,
+   "nn": "df5411a738",
+   "len": 14,
+   "null": 0.1333
+  },
+  {
+   "id": "df61bd26e5",
+   "s": 0.1098,
+   "nn": "41c6508469",
+   "len": 16,
+   "null": 0.1259
+  },
+  {
+   "id": "60a796a9e5",
+   "s": 0.1154,
+   "nn": "789428a643",
+   "len": 15,
+   "null": 0.1281
+  },
+  {
+   "id": "34c21331fe",
+   "s": 0.1621,
+   "nn": "1307e96cbe",
+   "len": 11,
+   "null": 0.138
+  },
+  {
+   "id": "4345ecd17c",
+   "s": 0.2308,
+   "nn": "f620f2c690",
+   "len": 14,
+   "null": 0.1312
+  },
+  {
+   "id": "b5b7c4a2df",
+   "s": 0.1506,
+   "nn": "175a333569",
+   "len": 16,
+   "null": 0.1262
+  },
+  {
+   "id": "3197797054",
+   "s": 0.2593,
+   "nn": "812675cfa0",
+   "len": 17,
+   "null": 0.1296
+  },
+  {
+   "id": "8d0469b606",
+   "s": 0.1267,
+   "nn": "f99d7f4a05",
+   "len": 13,
+   "null": 0.1298
+  },
+  {
+   "id": "443253e044",
+   "s": 1.0,
+   "nn": "3ebb39cce9",
+   "len": 13,
+   "null": 0.1337
+  },
+  {
+   "id": "eb71575cab",
+   "s": 0.0853,
+   "nn": "dc37e47364",
+   "len": 13,
+   "null": 0.1342
+  },
+  {
+   "id": "1e9a2c25ed",
+   "s": 0.1662,
+   "nn": "5117e300cd",
+   "len": 13,
+   "null": 0.1333
+  },
+  {
+   "id": "7e37d5a9b7",
+   "s": 0.0901,
+   "nn": "93da887c14",
+   "len": 15,
+   "null": 0.1272
+  },
+  {
+   "id": "3ebb39cce9",
+   "s": 1.0,
+   "nn": "443253e044",
+   "len": 13,
+   "null": 0.1292
+  },
+  {
+   "id": "e6d65edf58",
+   "s": 0.3327,
+   "nn": "f620f2c690",
+   "len": 17,
+   "null": 0.1268
+  },
+  {
+   "id": "0968d66b9b",
+   "s": 0.9566,
+   "nn": "443253e044",
+   "len": 11,
+   "null": 0.1338
+  },
+  {
+   "id": "a58681e245",
+   "s": 0.118,
+   "nn": "17f01d583f",
+   "len": 54,
+   "null": 0.1035
+  },
+  {
+   "id": "770396174e",
+   "s": 0.0759,
+   "nn": "cf4dccd57d",
+   "len": 15,
+   "null": 0.1301
+  },
+  {
+   "id": "b1d42a4199",
+   "s": 0.095,
+   "nn": "c427fd2543",
+   "len": 59,
+   "null": 0.1029
+  },
+  {
+   "id": "ce64ff43b1",
+   "s": 0.1341,
+   "nn": "5117e300cd",
+   "len": 15,
+   "null": 0.1268
+  },
+  {
+   "id": "1debc8eac9",
+   "s": 0.3296,
+   "nn": "cecc69c7e9",
+   "len": 15,
+   "null": 0.1243
+  },
+  {
+   "id": "d029368350",
+   "s": 0.1324,
+   "nn": "3b3139ec4f",
+   "len": 12,
+   "null": 0.1343
+  },
+  {
+   "id": "391fb666fc",
+   "s": 0.1666,
+   "nn": "50b23cb2f2",
+   "len": 15,
+   "null": 0.1269
+  },
+  {
+   "id": "f620f2c690",
+   "s": 0.3733,
+   "nn": "d131ef4eb6",
+   "len": 18,
+   "null": 0.1238
+  },
+  {
+   "id": "e4c10592a4",
+   "s": 0.1176,
+   "nn": "bed579bc7e",
+   "len": 13,
+   "null": 0.1302
+  },
+  {
+   "id": "bd8be57993",
+   "s": 0.1319,
+   "nn": "df5411a738",
+   "len": 15,
+   "null": 0.1307
+  },
+  {
+   "id": "7d3c6fd8c3",
+   "s": 0.1453,
+   "nn": "522267757b",
+   "len": 16,
+   "null": 0.126
+  },
+  {
+   "id": "caabe49640",
+   "s": 0.134,
+   "nn": "f2044ca08e",
+   "len": 14,
+   "null": 0.1296
+  },
+  {
+   "id": "bed579bc7e",
+   "s": 0.293,
+   "nn": "2ea9127a9e",
+   "len": 14,
+   "null": 0.1265
+  },
+  {
+   "id": "a82e87b259",
+   "s": 0.1322,
+   "nn": "d5e89157a8",
+   "len": 18,
+   "null": 0.1275
+  },
+  {
+   "id": "d577d71dd9",
+   "s": 0.1098,
+   "nn": "f2044ca08e",
+   "len": 16,
+   "null": 0.1215
+  },
+  {
+   "id": "47b5e04af9",
+   "s": 0.3592,
+   "nn": "3c966df273",
+   "len": 16,
+   "null": 0.1203
+  },
+  {
+   "id": "ecda6a5dd1",
+   "s": 0.1212,
+   "nn": "2ea9127a9e",
+   "len": 14,
+   "null": 0.1325
+  },
+  {
+   "id": "a488c6f5bf",
+   "s": 0.2351,
+   "nn": "d727c40f4e",
+   "len": 15,
+   "null": 0.1246
+  },
+  {
+   "id": "a4c2b19e6c",
+   "s": 0.1416,
+   "nn": "8df63536bb",
+   "len": 13,
+   "null": 0.1293
+  },
+  {
+   "id": "7ba5f4ac07",
+   "s": 0.2016,
+   "nn": "7733c698a3",
+   "len": 14,
+   "null": 0.1326
+  },
+  {
+   "id": "d131ef4eb6",
+   "s": 0.3733,
+   "nn": "f620f2c690",
+   "len": 17,
+   "null": 0.1259
+  },
+  {
+   "id": "3c966df273",
+   "s": 0.3592,
+   "nn": "47b5e04af9",
+   "len": 17,
+   "null": 0.1276
+  },
+  {
+   "id": "91ab41a391",
+   "s": 0.1023,
+   "nn": "621e3577b8",
+   "len": 15,
+   "null": 0.1244
+  },
+  {
+   "id": "78f5197914",
+   "s": 0.1251,
+   "nn": "e8e45b506f",
+   "len": 11,
+   "null": 0.1338
+  },
+  {
+   "id": "b3ee5442b1",
+   "s": 0.11,
+   "nn": "c34ccc1edf",
+   "len": 23,
+   "null": 0.1146
+  },
+  {
+   "id": "fa2ecec7b9",
+   "s": 0.1113,
+   "nn": "05a13a0761",
+   "len": 30,
+   "null": 0.1111
+  },
+  {
+   "id": "f5b8c7bc6c",
+   "s": 0.1222,
+   "nn": "aa1f863e97",
+   "len": 25,
+   "null": 0.1158
+  },
+  {
+   "id": "37a8b7ae7b",
+   "s": 0.2,
+   "nn": "05a13a0761",
+   "len": 32,
+   "null": 0.1144
+  },
+  {
+   "id": "503868a12f",
+   "s": 0.1133,
+   "nn": "11733d5f19",
+   "len": 13,
+   "null": 0.134
+  },
+  {
+   "id": "3c22b693bb",
+   "s": 0.2257,
+   "nn": "812675cfa0",
+   "len": 17,
+   "null": 0.1251
+  },
+  {
+   "id": "841e9ffd58",
+   "s": 0.1287,
+   "nn": "f047f6835c",
+   "len": 16,
+   "null": 0.1262
+  },
+  {
+   "id": "5b9ba7077b",
+   "s": 0.0852,
+   "nn": "6e2f3aca2f",
+   "len": 53,
+   "null": 0.1038
+  },
+  {
+   "id": "88ffaaf120",
+   "s": 0.09,
+   "nn": "4f01c4bf12",
+   "len": 24,
+   "null": 0.1161
+  },
+  {
+   "id": "0d99ae0e82",
+   "s": 0.1054,
+   "nn": "f390af5b91",
+   "len": 21,
+   "null": 0.126
+  },
+  {
+   "id": "05a13a0761",
+   "s": 0.2211,
+   "nn": "24c007c93b",
+   "len": 18,
+   "null": 0.1287
+  },
+  {
+   "id": "dad5127a9a",
+   "s": 0.1471,
+   "nn": "cf4dccd57d",
+   "len": 15,
+   "null": 0.1292
+  },
+  {
+   "id": "b06327ff25",
+   "s": 0.1383,
+   "nn": "812675cfa0",
+   "len": 14,
+   "null": 0.1286
+  },
+  {
+   "id": "7b22977e40",
+   "s": 0.1792,
+   "nn": "f620f2c690",
+   "len": 16,
+   "null": 0.1295
+  },
+  {
+   "id": "2db5a9077e",
+   "s": 0.0958,
+   "nn": "2b74d7f8d3",
+   "len": 59,
+   "null": 0.102
+  },
+  {
+   "id": "e8e45b506f",
+   "s": 0.1251,
+   "nn": "78f5197914",
+   "len": 23,
+   "null": 0.1194
+  },
+  {
+   "id": "24c007c93b",
+   "s": 0.2211,
+   "nn": "05a13a0761",
+   "len": 25,
+   "null": 0.1165
+  },
+  {
+   "id": "b046ef9533",
+   "s": 0.1919,
+   "nn": "00dced7a6f",
+   "len": 44,
+   "null": 0.106
+  },
+  {
+   "id": "fbf1d0a6d2",
+   "s": 0.0983,
+   "nn": "c14dabacc1",
+   "len": 13,
+   "null": 0.1306
+  },
+  {
+   "id": "31b98ce979",
+   "s": 0.0904,
+   "nn": "308114cad0",
+   "len": 14,
+   "null": 0.1342
+  },
+  {
+   "id": "b869e473c2",
+   "s": 0.1011,
+   "nn": "68cfe2325c",
+   "len": 55,
+   "null": 0.104
+  },
+  {
+   "id": "8d851dd48d",
+   "s": 0.1289,
+   "nn": "e4e55ea1c6",
+   "len": 29,
+   "null": 0.112
+  },
+  {
+   "id": "e052e754ca",
+   "s": 0.2803,
+   "nn": "839c922936",
+   "len": 63,
+   "null": 0.101
+  },
+  {
+   "id": "d727c40f4e",
+   "s": 0.2351,
+   "nn": "a488c6f5bf",
+   "len": 11,
+   "null": 0.1368
+  },
+  {
+   "id": "3e93faabec",
+   "s": 0.0981,
+   "nn": "29a4db3edc",
+   "len": 19,
+   "null": 0.1231
+  },
+  {
+   "id": "11733d5f19",
+   "s": 0.1133,
+   "nn": "503868a12f",
+   "len": 17,
+   "null": 0.1234
+  },
+  {
+   "id": "b4f671956b",
+   "s": 0.1203,
+   "nn": "3c966df273",
+   "len": 11,
+   "null": 0.133
+  },
+  {
+   "id": "a3de656dde",
+   "s": 0.1206,
+   "nn": "1b12774bb9",
+   "len": 15,
+   "null": 0.1256
+  },
+  {
+   "id": "2b74d7f8d3",
+   "s": 0.1786,
+   "nn": "205b6f37ea",
+   "len": 34,
+   "null": 0.1059
+  },
+  {
+   "id": "1700b89712",
+   "s": 0.0858,
+   "nn": "947938fb51",
+   "len": 55,
+   "null": 0.1036
+  },
+  {
+   "id": "ac61aef924",
+   "s": 0.0647,
+   "nn": "289ccaa625",
+   "len": 57,
+   "null": 0.1024
+  },
+  {
+   "id": "8ec2b1c64c",
+   "s": 0.2143,
+   "nn": "f620f2c690",
+   "len": 14,
+   "null": 0.1312
+  },
+  {
+   "id": "826bf0e434",
+   "s": 0.1309,
+   "nn": "205b6f37ea",
+   "len": 20,
+   "null": 0.119
+  },
+  {
+   "id": "7f557f890c",
+   "s": 0.0519,
+   "nn": "d2abee3ce9",
+   "len": 46,
+   "null": 0.1053
+  },
+  {
+   "id": "f86751dc5e",
+   "s": 0.1972,
+   "nn": "f90fdb5c8c",
+   "len": 28,
+   "null": 0.1139
+  },
+  {
+   "id": "6fae935cc2",
+   "s": 0.0699,
+   "nn": "205b6f37ea",
+   "len": 55,
+   "null": 0.1044
+  },
+  {
+   "id": "205b6f37ea",
+   "s": 0.1786,
+   "nn": "2b74d7f8d3",
+   "len": 59,
+   "null": 0.1014
+  },
+  {
+   "id": "839c922936",
+   "s": 0.2803,
+   "nn": "e052e754ca",
+   "len": 39,
+   "null": 0.1113
+  },
+  {
+   "id": "5190de7969",
+   "s": 0.0693,
+   "nn": "1416675e4b",
+   "len": 41,
+   "null": 0.1058
+  },
+  {
+   "id": "ce5f9767dc",
+   "s": 0.0978,
+   "nn": "b1836c90de",
+   "len": 53,
+   "null": 0.1059
+  },
+  {
+   "id": "374b7b228d",
+   "s": 0.1602,
+   "nn": "2438524730",
+   "len": 22,
+   "null": 0.1202
+  },
+  {
+   "id": "00dced7a6f",
+   "s": 0.1919,
+   "nn": "b046ef9533",
+   "len": 56,
+   "null": 0.1042
+  },
+  {
+   "id": "906838e50c",
+   "s": 0.1111,
+   "nn": "fa2ecec7b9",
+   "len": 52,
+   "null": 0.1064
+  },
+  {
+   "id": "b1836c90de",
+   "s": 0.1404,
+   "nn": "930bd813ac",
+   "len": 53,
+   "null": 0.1054
+  },
+  {
+   "id": "1416675e4b",
+   "s": 0.1028,
+   "nn": "e900c57dc1",
+   "len": 18,
+   "null": 0.1237
+  },
+  {
+   "id": "2317c0c3a8",
+   "s": 0.1428,
+   "nn": "7b00c99a12",
+   "len": 47,
+   "null": 0.1095
+  },
+  {
+   "id": "5c3846caf0",
+   "s": 0.0651,
+   "nn": "3c22b693bb",
+   "len": 56,
+   "null": 0.1031
+  },
+  {
+   "id": "930bd813ac",
+   "s": 0.1404,
+   "nn": "b1836c90de",
+   "len": 52,
+   "null": 0.1048
+  },
+  {
+   "id": "2402018169",
+   "s": 0.1239,
+   "nn": "c96c71654c",
+   "len": 31,
+   "null": 0.1095
+  },
+  {
+   "id": "2abd362505",
+   "s": 0.083,
+   "nn": "294fed7294",
+   "len": 25,
+   "null": 0.1155
+  },
+  {
+   "id": "f90fdb5c8c",
+   "s": 0.1972,
+   "nn": "f86751dc5e",
+   "len": 38,
+   "null": 0.108
+  },
+  {
+   "id": "145856f9d5",
+   "s": 0.0982,
+   "nn": "f5aab6d6ae",
+   "len": 48,
+   "null": 0.1044
+  },
+  {
+   "id": "65cd7db451",
+   "s": 0.1435,
+   "nn": "374b7b228d",
+   "len": 13,
+   "null": 0.1349
+  },
+  {
+   "id": "65147543ed",
+   "s": 0.1167,
+   "nn": "2d48bbfb6e",
+   "len": 17,
+   "null": 0.1273
+  },
+  {
+   "id": "65c1dcbc1d",
+   "s": 0.0862,
+   "nn": "f5b8c7bc6c",
+   "len": 13,
+   "null": 0.1323
+  },
+  {
+   "id": "ac3e8c67bd",
+   "s": 0.1742,
+   "nn": "2438524730",
+   "len": 39,
+   "null": 0.109
+  },
+  {
+   "id": "c96c71654c",
+   "s": 0.1239,
+   "nn": "2402018169",
+   "len": 18,
+   "null": 0.1244
+  },
+  {
+   "id": "c3087cb10a",
+   "s": 0.1119,
+   "nn": "9d9eee8631",
+   "len": 12,
+   "null": 0.1332
+  },
+  {
+   "id": "289ccaa625",
+   "s": 0.1061,
+   "nn": "e55f5768eb",
+   "len": 55,
+   "null": 0.1037
+  },
+  {
+   "id": "7c26056160",
+   "s": 0.1289,
+   "nn": "132fdbed43",
+   "len": 16,
+   "null": 0.1302
+  },
+  {
+   "id": "cbfaa6040b",
+   "s": 0.0978,
+   "nn": "b1836c90de",
+   "len": 24,
+   "null": 0.1196
+  },
+  {
+   "id": "b153776a01",
+   "s": 0.1234,
+   "nn": "2ea9127a9e",
+   "len": 23,
+   "null": 0.1163
+  },
+  {
+   "id": "132fdbed43",
+   "s": 0.1289,
+   "nn": "7c26056160",
+   "len": 11,
+   "null": 0.1322
+  },
+  {
+   "id": "dad523d2d1",
+   "s": 0.1135,
+   "nn": "6bad44a384",
+   "len": 19,
+   "null": 0.1191
+  },
+  {
+   "id": "2aeac413f8",
+   "s": 0.1569,
+   "nn": "f5ae7b808b",
+   "len": 28,
+   "null": 0.114
+  },
+  {
+   "id": "072db89e95",
+   "s": 0.0826,
+   "nn": "fca4b8be74",
+   "len": 56,
+   "null": 0.1066
+  },
+  {
+   "id": "60a54dd3a6",
+   "s": 0.0985,
+   "nn": "7633b2b3e9",
+   "len": 24,
+   "null": 0.116
+  },
+  {
+   "id": "175a333569",
+   "s": 0.1506,
+   "nn": "b5b7c4a2df",
+   "len": 11,
+   "null": 0.1339
+  },
+  {
+   "id": "d9d3ff9fba",
+   "s": 0.0999,
+   "nn": "9442a9f52d",
+   "len": 28,
+   "null": 0.1136
+  },
+  {
+   "id": "19ffbba37f",
+   "s": 0.0912,
+   "nn": "60a54dd3a6",
+   "len": 19,
+   "null": 0.1226
+  },
+  {
+   "id": "dd1d62bc63",
+   "s": 0.0907,
+   "nn": "522267757b",
+   "len": 16,
+   "null": 0.1257
+  },
+  {
+   "id": "b9c3eddfee",
+   "s": 0.145,
+   "nn": "7ba5f4ac07",
+   "len": 11,
+   "null": 0.1387
+  },
+  {
+   "id": "ec7f47f9eb",
+   "s": 0.0818,
+   "nn": "d9d3ff9fba",
+   "len": 37,
+   "null": 0.1093
+  },
+  {
+   "id": "66e7d67d4d",
+   "s": 0.1181,
+   "nn": "b062d5f7fc",
+   "len": 31,
+   "null": 0.1125
+  },
+  {
+   "id": "19d4c6dd39",
+   "s": 0.1784,
+   "nn": "768810c7b9",
+   "len": 28,
+   "null": 0.1139
+  },
+  {
+   "id": "c3a29484f9",
+   "s": 0.0915,
+   "nn": "647a93d1fd",
+   "len": 32,
+   "null": 0.1153
+  },
+  {
+   "id": "d1b33b5804",
+   "s": 0.065,
+   "nn": "48eac5b6da",
+   "len": 28,
+   "null": 0.1141
+  },
+  {
+   "id": "1bcaa2f822",
+   "s": 0.0783,
+   "nn": "1da04accea",
+   "len": 13,
+   "null": 0.1289
+  },
+  {
+   "id": "b77b7c362f",
+   "s": 0.0874,
+   "nn": "48eac5b6da",
+   "len": 26,
+   "null": 0.1134
+  },
+  {
+   "id": "5be8ce8e2d",
+   "s": 0.0687,
+   "nn": "4345ecd17c",
+   "len": 11,
+   "null": 0.1344
+  },
+  {
+   "id": "7fbc0f8110",
+   "s": 0.1206,
+   "nn": "06addacf1d",
+   "len": 31,
+   "null": 0.1153
+  },
+  {
+   "id": "9630628ef4",
+   "s": 0.0878,
+   "nn": "1307e96cbe",
+   "len": 11,
+   "null": 0.141
+  },
+  {
+   "id": "e8045644c0",
+   "s": 0.0686,
+   "nn": "4d93161db6",
+   "len": 21,
+   "null": 0.1184
+  },
+  {
+   "id": "674767819d",
+   "s": 0.0569,
+   "nn": "a1b3f5282b",
+   "len": 15,
+   "null": 0.1322
+  },
+  {
+   "id": "20e4050e5c",
+   "s": 0.1306,
+   "nn": "3cb55a1e80",
+   "len": 25,
+   "null": 0.1175
+  },
+  {
+   "id": "fe8d211b3c",
+   "s": 0.121,
+   "nn": "24756f21f6",
+   "len": 33,
+   "null": 0.1121
+  },
+  {
+   "id": "7633b2b3e9",
+   "s": 0.1131,
+   "nn": "dad523d2d1",
+   "len": 27,
+   "null": 0.1142
+  },
+  {
+   "id": "06addacf1d",
+   "s": 0.1206,
+   "nn": "7fbc0f8110",
+   "len": 34,
+   "null": 0.1105
+  },
+  {
+   "id": "4f01c4bf12",
+   "s": 0.1551,
+   "nn": "24756f21f6",
+   "len": 36,
+   "null": 0.1093
+  },
+  {
+   "id": "bc5642c843",
+   "s": 0.0863,
+   "nn": "391fb666fc",
+   "len": 38,
+   "null": 0.107
+  },
+  {
+   "id": "fbde8a9324",
+   "s": 0.134,
+   "nn": "fdd6eecbf3",
+   "len": 27,
+   "null": 0.1152
+  },
+  {
+   "id": "fce46de810",
+   "s": 0.0688,
+   "nn": "c3d17bf5e4",
+   "len": 25,
+   "null": 0.1186
+  },
+  {
+   "id": "f85f92b161",
+   "s": 0.2185,
+   "nn": "e0bb609ee1",
+   "len": 31,
+   "null": 0.1138
+  },
+  {
+   "id": "daccb4ca57",
+   "s": 0.0713,
+   "nn": "fe8d211b3c",
+   "len": 30,
+   "null": 0.1138
+  },
+  {
+   "id": "437b611f93",
+   "s": 0.0792,
+   "nn": "e0bb609ee1",
+   "len": 30,
+   "null": 0.1104
+  },
+  {
+   "id": "522267757b",
+   "s": 0.1453,
+   "nn": "7d3c6fd8c3",
+   "len": 32,
+   "null": 0.1144
+  },
+  {
+   "id": "bbce089208",
+   "s": 0.119,
+   "nn": "b5574f767f",
+   "len": 36,
+   "null": 0.1077
+  },
+  {
+   "id": "b646cfb02d",
+   "s": 0.1119,
+   "nn": "06addacf1d",
+   "len": 42,
+   "null": 0.1085
+  },
+  {
+   "id": "5d54ac4dc5",
+   "s": 0.1424,
+   "nn": "986f39fbdf",
+   "len": 38,
+   "null": 0.1094
+  },
+  {
+   "id": "52e07c2ec4",
+   "s": 0.1098,
+   "nn": "e0bb609ee1",
+   "len": 29,
+   "null": 0.1145
+  },
+  {
+   "id": "3dde0e34cc",
+   "s": 0.1141,
+   "nn": "e900c57dc1",
+   "len": 39,
+   "null": 0.1095
+  },
+  {
+   "id": "9e8c9aa0b9",
+   "s": 0.0857,
+   "nn": "c737291d59",
+   "len": 31,
+   "null": 0.1118
+  },
+  {
+   "id": "c06e6f3f37",
+   "s": 0.1525,
+   "nn": "a0c297dfa5",
+   "len": 29,
+   "null": 0.1139
+  },
+  {
+   "id": "cb7c017c93",
+   "s": 0.174,
+   "nn": "e55f5768eb",
+   "len": 29,
+   "null": 0.1119
+  },
+  {
+   "id": "45af8dbe2b",
+   "s": 0.0844,
+   "nn": "7960d878d7",
+   "len": 33,
+   "null": 0.1105
+  },
+  {
+   "id": "3303428fbc",
+   "s": 0.0684,
+   "nn": "c45c38bff0",
+   "len": 36,
+   "null": 0.1111
+  },
+  {
+   "id": "c737291d59",
+   "s": 0.1751,
+   "nn": "d226bfc4b3",
+   "len": 28,
+   "null": 0.1144
+  },
+  {
+   "id": "b062d5f7fc",
+   "s": 0.1181,
+   "nn": "66e7d67d4d",
+   "len": 31,
+   "null": 0.1097
+  },
+  {
+   "id": "cabdb835e5",
+   "s": 0.0815,
+   "nn": "6ef44e1108",
+   "len": 28,
+   "null": 0.1117
+  },
+  {
+   "id": "4b166d8260",
+   "s": 0.0517,
+   "nn": "00839deab5",
+   "len": 31,
+   "null": 0.1127
+  },
+  {
+   "id": "8472f4f5b7",
+   "s": 0.1236,
+   "nn": "2919fbbb95",
+   "len": 23,
+   "null": 0.1171
+  },
+  {
+   "id": "963293110a",
+   "s": 0.1129,
+   "nn": "7733c698a3",
+   "len": 26,
+   "null": 0.1193
+  },
+  {
+   "id": "2438524730",
+   "s": 0.1742,
+   "nn": "ac3e8c67bd",
+   "len": 36,
+   "null": 0.1064
+  },
+  {
+   "id": "68cfe2325c",
+   "s": 0.1011,
+   "nn": "b869e473c2",
+   "len": 25,
+   "null": 0.1162
+  },
+  {
+   "id": "b534dbf825",
+   "s": 0.1619,
+   "nn": "e55f5768eb",
+   "len": 30,
+   "null": 0.1121
+  },
+  {
+   "id": "ddee7f22c2",
+   "s": 0.0455,
+   "nn": "b4f671956b",
+   "len": 21,
+   "null": 0.1222
+  },
+  {
+   "id": "768810c7b9",
+   "s": 0.1784,
+   "nn": "19d4c6dd39",
+   "len": 21,
+   "null": 0.1195
+  },
+  {
+   "id": "cf589079c1",
+   "s": 0.0703,
+   "nn": "732cadc9dd",
+   "len": 25,
+   "null": 0.1168
+  },
+  {
+   "id": "4515911fda",
+   "s": 0.1696,
+   "nn": "bd0835dda6",
+   "len": 30,
+   "null": 0.1107
+  },
+  {
+   "id": "e29262b122",
+   "s": 0.0628,
+   "nn": "e05de48b6f",
+   "len": 25,
+   "null": 0.1148
+  },
+  {
+   "id": "c54ff1e3f9",
+   "s": 0.0704,
+   "nn": "4314b5bcac",
+   "len": 32,
+   "null": 0.1127
+  },
+  {
+   "id": "8df63536bb",
+   "s": 0.1416,
+   "nn": "a4c2b19e6c",
+   "len": 15,
+   "null": 0.1285
+  },
+  {
+   "id": "e0bb609ee1",
+   "s": 0.2185,
+   "nn": "f85f92b161",
+   "len": 27,
+   "null": 0.1144
+  },
+  {
+   "id": "2e2a8685d4",
+   "s": 0.1139,
+   "nn": "40b17133c5",
+   "len": 27,
+   "null": 0.1151
+  },
+  {
+   "id": "1fe2e92d3d",
+   "s": 0.0919,
+   "nn": "e8c2ce8dee",
+   "len": 22,
+   "null": 0.1179
+  },
+  {
+   "id": "7a0a9c28e9",
+   "s": 0.1088,
+   "nn": "05a13a0761",
+   "len": 30,
+   "null": 0.116
+  },
+  {
+   "id": "647a93d1fd",
+   "s": 0.1044,
+   "nn": "b8a249f5f1",
+   "len": 31,
+   "null": 0.1111
+  }
+ ]
+}
