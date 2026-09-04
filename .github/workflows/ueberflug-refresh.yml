@@ -1,4 +1,4 @@
-# Täglicher Bahndaten-Snapshot für "Überflug". Öffentliche Quellen, keine Secrets.
+# Daily orbital-elements snapshot for "Überflug". Public sources, no secrets.
 name: ueberflug-refresh
 
 on:
@@ -22,11 +22,24 @@ jobs:
       - run: npm run ueberflug:refresh
       - run: npm run test
       - run: npm run build
-      - name: Commit wenn geändert
+      - name: Commit when changed
         run: |
           git config user.name "Protokollführung"
           git config user.email "protokoll@frankbueltge.de"
           git add src/data/ueberflug/satellites.json
-          git diff --cached --quiet && echo "keine Änderung" && exit 0
+          if git diff --cached --quiet; then
+            echo "No change."; exit 0
+          fi
           git commit -m "ueberflug: Bahndaten vom $(date -u +%F)"
-          git push
+          # Against push races (a dozen nightly cron commits share this branch):
+          # rebase and retry, as every other nightly committer here already does.
+          # Without it a snapshot that was fetched, gated and committed is thrown
+          # away because an unrelated workflow pushed first — which is what
+          # happened on 2026-09-04, when katalog-scout won the race.
+          for i in 1 2 3 4 5; do
+            if git pull --rebase --autostash origin main && git push origin HEAD:main; then
+              echo "Pushed."; exit 0
+            fi
+            echo "Push attempt $i failed, retrying …"; sleep 5
+          done
+          echo "::error::Push failed after 5 attempts"; exit 1
