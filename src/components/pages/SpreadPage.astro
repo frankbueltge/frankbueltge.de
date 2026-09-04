@@ -1,0 +1,86 @@
+---
+/** Spread (/spread) — one asset, several venues, the same instant (2026-09-04).
+ *
+ *  This is the house's first LIVE, UNARCHIVED work (src/lib/experiments/unarchived.ts): it reads
+ *  four exchanges' own public sockets in the visitor's own browser and commits nothing. There is
+ *  therefore no committed file this frame can render at build time — the usual "server render is
+ *  the floor" duty is kept in the only sense available to a work with no archive: the honesty
+ *  text, the venue list and the notice below are all real markup before a script runs; the FIELD
+ *  itself is drawn only once a socket has something to draw.
+ *
+ *  `notice` is threaded in as a prop from src/pages/spread/index.astro rather than imported here,
+ *  so the literal token `UNARCHIVED_NOTICE` sits in the page file itself — the surface
+ *  werke.test.ts actually reads for every work that declares `unarchived: true`.
+ */
+import SheetHead from '@/components/experiments/SheetHead.astro'
+import SheetFoot from '@/components/experiments/SheetFoot.astro'
+import { UNARCHIVED_NOTICE } from '@/lib/experiments/unarchived'
+import { SPREAD } from '@/config/spread-wording'
+import '@/styles/spread.css'
+
+import Spread, { type SpreadWording } from './Spread'
+
+interface Props {
+  notice: typeof UNARCHIVED_NOTICE
+}
+const { notice } = Astro.props
+
+const FIGURE_ID = 'spread-field'
+const READOUT_ID = 'spread-readout'
+
+const wording: SpreadWording = {
+  figureLabel: SPREAD.field.figureLabel,
+  scaleHint: SPREAD.field.scaleHint,
+  formHint: SPREAD.field.formHint,
+  pauseLabel: SPREAD.controls.pauseLabel,
+  resumeLabel: SPREAD.controls.resumeLabel,
+  pauseHint: SPREAD.controls.pauseHint,
+  venuesLegend: SPREAD.controls.venuesLegend,
+  assetLegend: SPREAD.controls.assetLegend,
+  assets: SPREAD.controls.assets,
+  status: SPREAD.controls.status,
+  counterLabel: SPREAD.counter.label,
+  ledgerHeading: SPREAD.ledger.heading,
+  ledgerLead: SPREAD.ledger.lead,
+  ledgerEmpty: SPREAD.ledger.empty,
+  ledgerColumns: SPREAD.ledger.columns,
+  ledgerSelectHint: SPREAD.ledger.selectHint,
+  ledgerOutOfView: SPREAD.ledger.outOfView,
+  ledgerMixedNote: SPREAD.ledger.mixedNote,
+  readoutJustNow: SPREAD.readout.justNow,
+  readoutAgoSuffix: SPREAD.readout.agoSuffix,
+}
+---
+
+<main id="main" class="flex-1">
+  <article class="sheet-body mx-auto max-w-5xl px-4 py-14">
+    <SheetHead kicker={SPREAD.sheet.kicker} title={SPREAD.sheet.title} sub={SPREAD.sheet.sub} badges={[...SPREAD.sheet.badges]} />
+
+    <p class="mb-6 max-w-2xl font-mono text-mono text-fg-faint">{SPREAD.field.scaleHint} {SPREAD.field.formHint}</p>
+
+    <noscript>
+      <p class="mb-8 max-w-2xl rounded-md border border-line bg-panel p-4 text-body text-fg-muted">{SPREAD.noscript}</p>
+    </noscript>
+
+    <Spread client:visible id={FIGURE_ID} readoutId={READOUT_ID} wording={wording} />
+
+    <section class="mt-10 max-w-2xl" aria-labelledby="spread-honesty-heading">
+      <h2 class="kicker" id="spread-honesty-heading">{SPREAD.honesty.heading}</h2>
+      <p class="mt-3 text-body text-fg-muted">{SPREAD.honesty.currency}</p>
+      <p class="mt-3 text-body text-fg-muted">{SPREAD.honesty.latency}</p>
+      <p class="mt-3 text-body text-fg-muted">{SPREAD.honesty.notASignal}</p>
+      <p class="mt-5 font-mono text-mono-sm uppercase tracking-[0.14em] text-fg-faint">{notice.badge}</p>
+      <p class="mt-1 text-mono-sm text-fg-faint">{notice.line}</p>
+    </section>
+
+    <SheetFoot>
+      <p>
+        Reads Coinbase, Kraken, Bitstamp and Binance over their own public sockets, directly from this browser — no
+        proxy, no key, nothing stored server-side.
+      </p>
+      <p class="mt-1">
+        <a href="/experiments">Back to the experiments</a>
+      </p>
+    </SheetFoot>
+  </article>
+</main>
