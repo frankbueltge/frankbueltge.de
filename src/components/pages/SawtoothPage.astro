@@ -1,6 +1,12 @@
 ---
 // SAWTOOTH — the two definitions of a second, and a correction that has only ever gone one way.
 //
+// It calls itself a WORK and not an instrument, and the distinction is load-bearing rather than
+// modest: an instrument here is something that keeps measuring and keeps finding (Admissions
+// discovers a new version every week). This draws one long public record carefully and finds
+// nothing the record did not already hold. Its own audit says exactly that, and a page whose
+// header claimed otherwise would be the first thing the audit contradicted.
+//
 // Every figure and every number below is derived at build time by src/lib/sawtooth/* from one
 // committed file: the IERS EOP 14 C04 series, one row per day since 1962, snapshotted into
 // src/data/sawtooth/rotation.json by scripts/sawtooth/fetch.ts. Nothing is fetched at view time
@@ -35,9 +41,9 @@ const span = `${s.first.slice(0, 4)}–${s.last.slice(0, 4)}`
 
 <main id="main" class="sheet mx-auto w-full max-w-5xl flex-1 px-4 py-10 sm:py-14">
   <SheetHead
-    kicker="An instrument, not a work"
+    kicker="A work, from one long record"
     title="Sawtooth"
-    badges={['DERIVED AT BUILD', 'INSTRUMENT', 'TIME & ARCHIVE']}
+    badges={['DERIVED AT BUILD', 'REPRESENTATION & MEMORY']}
   >
     <p class="mt-3 max-w-2xl text-fg-muted">
       A second used to be a slice of the day: the Earth turns, cut it into eighty-six thousand four
