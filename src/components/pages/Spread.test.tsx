@@ -11,6 +11,7 @@ const wording: SpreadWording = {
   figureLabel: 'A live field of trades across several venues.',
   scaleHint: 'The vertical scale follows the last few minutes.',
   formHint: 'A filled mark is a buy, a hollow mark is a sell.',
+  pauseLegend: 'The drawing',
   pauseLabel: 'Pause',
   resumeLabel: 'Resume',
   pauseHint: 'Freezes the drawing.',
