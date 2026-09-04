@@ -1,7 +1,7 @@
 # trending — the morning reader behind Common Ground (`/trending`)
 
 Every morning this package reads what the web is searching, reading and posting about from
-twenty public sources that need no key, keeps what converges across independent platforms by a
+twenty-one public sources that need no key, keeps what converges across independent platforms by a
 disclosed token rule, and writes one day file into the site. A day later the same run asks
 Cloudflare's edge analytics who fetched `/trending` the day before and writes that as a second
 file — classes and bot names only, never a raw user agent. Git is the archive: a committed day
@@ -49,7 +49,10 @@ IN · DE · BR · FR · JP · MX), `wikipedia` (most-read articles of the day be
 `fr` · `es` · `ja` · `pt`, with a four-day lookback for the publication lag), `hackernews`
 (front page), `bluesky` (trending topics), `mastodon` (trending tags and links),
 `google_news` (top stories), `reddit` (r/popular, optional), `github` (most-starred
-repositories created in the last seven days).
+repositories created in the last seven days), `github_trending` (the trending page itself —
+GitHub's own daily ranking, read from the HTML because no API exists for it, optional; since
+2026-09-04). The two GitHub lists are **one platform** for the convergence rule and the
+discovery corpus (`SourceSpec.platform`, `platform_of`): a repository on both counts once.
 
 Then twelve narrower publics, the places where a term surfaces before it reaches a headline:
 `huggingface` (trending models on the Hub, by downloads), `lobsters` (hottest stories, by
@@ -64,7 +67,11 @@ sellers, optional), `coingecko` (trending searches, optional), `polymarket` (ope
 24-hour volume, optional).
 
 Every one of them is keyless, reads one endpoint per run (`appstore` two, one per storefront)
-and keeps at most one request per half second. `optional` marks a feed that blocks or changes
+and keeps at most one request per half second. Each respects the host's `robots.txt`:
+GitHub allows `/trending` and disallows the per-repository `/stargazers` and `/forks` pages, so
+the totals are read from the trending page where GitHub prints them. Trendshift, a third-party
+archive of that page, was considered on 2026-09-04 and not taken — its `robots.txt` disallows
+`/api/`, and what it adds is derived from the page read here directly. `optional` marks a feed that blocks or changes
 shape without notice: it becomes an `unavailable` line in the day's `sources[]`, never a
 crash.
 
@@ -152,7 +159,7 @@ thresholds are the `quality_*` keys in `rules.json`; the checks are listed on th
 
 The list of tracked terms lives in the repository at `src/data/trending/watchlist.json`, not in
 the installed package, and the nightly run writes it. Discovery reads the house's own committed
-day files as its primary corpus — twenty sources, so an arc in culture, politics, sport or
+day files as its primary corpus — twenty-one sources, so an arc in culture, politics, sport or
 markets can be seen at all — and keeps the four live archives (Hacker News, dev.to, arXiv,
 GitHub) for depth while the archive is young.
 

@@ -33,7 +33,7 @@ from trending.archive import load_days
 from trending.data import load_json
 from trending.fetch import SourceUnavailable, fetch
 from trending.normalize import tokens
-from trending.sources import SOURCES
+from trending.sources import SOURCES, platform_of
 from trending.textstats import Document, tally
 from trending import watchlist as wl
 from trending.tracker import ATOM, TermContext, make_context, open_client, parse_when
@@ -41,9 +41,12 @@ from trending.tracker import ATOM, TermContext, make_context, open_client, parse
 DAY_SOURCE_IDS: tuple[str, ...] = tuple(spec.id for spec in SOURCES)
 
 # The corpus order is the order the record lists platforms in: the day ledger's own sources
-# first (that is where the breadth is), then the four live archives read for depth.
+# first (that is where the breadth is), then the four live archives read for depth. Counted by
+# platform, not by source id: the ledger reads GitHub twice (new repositories, trending page)
+# and a phrase on both lists is still carried by one platform.
 LIVE_PLATFORMS: tuple[str, ...] = ("hackernews", "devto", "arxiv", "github")
-CORPUS_PLATFORMS: tuple[str, ...] = tuple(dict.fromkeys((*DAY_SOURCE_IDS, *LIVE_PLATFORMS)))
+CORPUS_PLATFORMS: tuple[str, ...] = tuple(dict.fromkeys(
+    (*(platform_of(s) for s in DAY_SOURCE_IDS), *LIVE_PLATFORMS)))
 # A day file lists what each platform put at the top that morning, so one label repeated
 # across ten mornings is ten sightings — which is precisely the arc being looked for.
 ARCHIVE_EXTRA_KEYS = ("description", "subtitle")
@@ -106,8 +109,8 @@ def _archive_docs(repo_root: str | Path, today: date, days: int,
                     if meta.get(k):
                         extra = str(meta[k])[:DESCRIPTION_CAP]
                         break
-                out.append(Document(platform=str(source_id), title=label, url=url, date=day,
-                                    extra=extra, key=f"{day}|{source_id}|{url}"))
+                out.append(Document(platform=platform_of(str(source_id)), title=label, url=url,
+                                    date=day, extra=extra, key=f"{day}|{source_id}|{url}"))
     return out
 
 
