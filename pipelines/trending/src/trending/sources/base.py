@@ -35,3 +35,7 @@ class SourceSpec:
     licence: str
     fetch: Callable[[Context], SourceResult]
     optional: bool = False
+    # The platform behind the source when several sources read one platform (GitHub's new
+    # repositories and its trending page). None means the id is the platform. The convergence
+    # rule and the discovery corpus count platforms, not sources — see `platform_of`.
+    platform: str | None = None

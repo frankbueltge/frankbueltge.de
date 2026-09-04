@@ -11,6 +11,7 @@ from typing import Any
 
 from trending.model import Link, Signal, Topic, TopicSignal
 from trending.normalize import jaccard, slug, tokens
+from trending.sources import platform_of
 
 # Sources whose labels are sentences (headlines, questions, paper titles) rather than names;
 # they attach to a short label by containment and match each other by token overlap.
@@ -20,9 +21,9 @@ HEADLINE_SOURCES = frozenset({"google_news", "hackernews", "reddit", "lobsters",
 # things (apps, games, models, products, coins, packages), then the sentence sources last.
 LABEL_PRIORITY = {"google_trends": 0, "bluesky": 1, "wikipedia": 2, "mastodon": 3,
                   "hackernews": 4, "google_news": 5, "reddit": 6, "github": 7,
-                  "appstore": 8, "steam": 9, "huggingface": 10, "producthunt": 11,
-                  "coingecko": 12, "pypi": 13, "lobsters": 14, "devto": 15, "techmeme": 16,
-                  "stackoverflow": 17, "arxiv": 18, "polymarket": 19}
+                  "github_trending": 8, "appstore": 9, "steam": 10, "huggingface": 11,
+                  "producthunt": 12, "coingecko": 13, "pypi": 14, "lobsters": 15, "devto": 16,
+                  "techmeme": 17, "stackoverflow": 18, "arxiv": 19, "polymarket": 20}
 SHORT_MAX_TOKENS = 4
 
 
@@ -122,7 +123,9 @@ def cluster(signals: list[Signal], archive: list[dict[str, Any]], rules: dict[st
     for members in groups.values():
         members.sort(key=lambda p: (LABEL_PRIORITY.get(p.sig.source, 99), p.sig.rank, p.sig.label))
         lead = members[0].sig
-        platforms = tuple(sorted({p.sig.source for p in members}))
+        # Counted by platform, not by source: the two GitHub lists are one platform, so a
+        # repository on both sits in one cluster and still counts once (2026-09-04).
+        platforms = tuple(sorted({platform_of(p.sig.source) for p in members}))
         heat = sum(1 - (p.sig.rank - 1) / max(sizes[(p.sig.source, p.sig.geo)], 1)
                    for p in members) / len(members)
         score = round(len(platforms) + round(heat, 3), 3)

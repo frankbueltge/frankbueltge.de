@@ -9,7 +9,7 @@ from trending.sources import (SOURCES, appstore, arxiv, coingecko, devto, huggin
                               polymarket, producthunt, pypi, stackoverflow, steam, techmeme)
 
 EXPECTED_ORDER = ["google_trends", "wikipedia", "hackernews", "bluesky", "mastodon",
-                  "google_news", "reddit", "github", "huggingface", "lobsters", "devto",
+                  "google_news", "reddit", "github", "github_trending", "huggingface", "lobsters", "devto",
                   "stackoverflow", "pypi", "producthunt", "techmeme", "arxiv", "appstore",
                   "steam", "coingecko", "polymarket"]
 

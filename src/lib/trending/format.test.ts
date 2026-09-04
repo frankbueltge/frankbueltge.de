@@ -22,6 +22,8 @@ describe('trending formatting', () => {
     expect(signalText({ source: 'google_trends', geo: 'US', label: 'x', url: null, rank: 1, magnitude: 2000, magnitude_unit: 'approx_searches' })).toBe('Google Trends US 2,000+ searches')
     expect(signalText({ source: 'bluesky', geo: null, label: 'x', url: null, rank: 1, magnitude: 2779, magnitude_unit: 'posts' })).toBe('Bluesky 2,779 posts')
     expect(signalText({ source: 'google_news', geo: null, label: 'x', url: null, rank: 3, magnitude: null, magnitude_unit: 'rank' })).toBe('Google News #3')
+    // The trending page counts in its own window; the label says so instead of a bare "stars".
+    expect(signalText({ source: 'github_trending', geo: null, label: 'x', url: null, rank: 1, magnitude: 2757, magnitude_unit: 'stars_today' })).toBe('GitHub Trending 2,757 stars today')
   })
 
   it('builds the page and archive titles from the day', () => {

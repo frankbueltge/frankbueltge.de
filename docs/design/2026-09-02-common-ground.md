@@ -409,3 +409,39 @@ not a finding, and asking would write the same note into every file of the year.
 in the contract as `null` with one sentence saying why, so a reader looking for referring hosts
 finds an answer rather than a silence. Re-adding the pair to `EXTRA_DIMENSIONS` is the whole
 change if the plan ever serves it.
+
+## 13. GitHub's trending page joins the ledger; Trendshift does not (2026-09-04, Frank's go, wording private)
+
+**Occasion.** A conversation about three agent-skill repositories that had gathered tens of
+thousands of stars in weeks, and the question whether the ledger saw that genre at all. It did —
+the `github` source had a de-AI-writing skill at rank two on 2026-09-03 — but only through the
+search API's "most-starred repositories created in the last seven days", which is a proxy. The
+platform's own statement of what is trending is https://github.com/trending, a ranking GitHub
+computes by an undisclosed rule and recomputes several times a day, and it had no API, which is
+why the first eight sources left it out.
+
+**What changed.** A twenty-first source, `github_trending`, reads that page once a morning (daily
+window, all languages, at most twenty-five rows) and keeps repository name, description, language,
+the page's own star and fork totals and its "stars today" count as the magnitude, unit
+`stars_today`. GitHub's robots.txt allows `/trending` for every agent; the per-repository
+`/stargazers` and `/forks` pages it disallows are never fetched, because the totals stand on the
+trending page itself. The source is optional: the parser is anchored on the page's own attributes,
+and a changed shape becomes an `unavailable` line, never a guessed list.
+
+**One platform, two lists.** `github` and `github_trending` are both GitHub. A repository on both
+lists is one public looking at it, so `SourceSpec` gains a `platform` field, the convergence rule
+counts `platforms` by platform rather than by source id, and the discovery corpus does the same.
+Without that, every repository on both lists would have "converged on two platforms" by itself —
+a false crossing the ledger's headline number would have carried every morning.
+
+**Trendshift, considered and refused.** Trendshift archives the same page daily and sells badges
+that link back to it — the loop the three repositories in the conversation were riding. As a source
+it fails twice: its `robots.txt` disallows `/api/`, which is where its data sits, and everything it
+adds (how many days a repository has trended) is derived from the page this ledger now reads
+directly and commits, so the archive produces that history itself within days. A source whose
+access terms are unclear and whose data is a derivative of one already read is not taken.
+
+**Evidence.** `pipelines/trending/src/trending/sources/github_trending.py`, `sources/base.py`
+(`platform`), `sources/__init__.py` (`platform_of`), `converge.py`, `discover.py`, the tests beside
+them; `src/lib/trending/format.ts` (the label and the unit); `MethodenblattTrending.astro` §6.
+
