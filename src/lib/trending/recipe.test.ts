@@ -179,6 +179,21 @@ describe("the ledger's figures on the visual layer", () => {
     }
   })
 
+  it('fades the scroller on the right only — never the edge the labels start at', () => {
+    // Reported from the rendered page (2026-09-04): the first shape of this fade masked BOTH
+    // edges at rest, and on a wide screen, where the grid fits and nothing is hidden, it ate the
+    // first letters of every topic label. Whatever this rule becomes, the left edge is where the
+    // topic labels begin and it stays opaque.
+    const sheet = read('../../styles/trending-figures.css')
+    const rule = sheet.slice(sheet.indexOf('.tr-scroll {'), sheet.indexOf('}', sheet.indexOf('.tr-scroll {')))
+    const mask = /mask-image: linear-gradient\(([^;]*)\);/.exec(rule)
+    expect(mask, '.tr-scroll declares no fade at all').not.toBeNull()
+    expect(mask![1], 'the fade starts transparent, so it masks the left edge').not.toMatch(
+      /to right,\s*transparent/,
+    )
+    expect(mask![1], 'the fade does not end at the right edge').toMatch(/transparent 100%\s*$/)
+  })
+
   it('keeps the figures free of a colour palette, as six classes require', () => {
     // Duty 7 allows at most four categorical hues; the audience strip alone tells six classes
     // apart, so all three figures are ink and pattern. A hex or an hsl() in this stylesheet would
