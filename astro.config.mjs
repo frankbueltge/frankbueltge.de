@@ -43,7 +43,12 @@ export default defineConfig({
         //
         // The two hosts this line used to name are covered by the same opening: Turnstile on
         // /saat and raw.githubusercontent.com for the seed register's status lookup.
-        "connect-src 'self' https:",
+        // `wss:` beside `https:` since 2026-09-04, the same evening and the same decision: a live
+        // market reads a socket, not a poll. An exchange pushes every trade and every change of
+        // its book down one connection, and a page that may only fetch would be a page that can
+        // only ask "and now?" a few times a second. Scheme-wide, like the https opening beside it,
+        // so a new source is a line of code and not a config change.
+        "connect-src 'self' https: wss:",
         // Turnstile rendert seine Challenge in einem Iframe von derselben Domain.
         "frame-src https://challenges.cloudflare.com",
         "object-src 'none'",
