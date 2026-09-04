@@ -314,7 +314,7 @@ export const NAMING = {
     cards: [
       {
         id: 'ulysses',
-        practice: 'The Atelier · Ulysses',
+        practice: 'The Atelier · Assay',
         title: 'a measured sheet',
         caption: 'The line this practice opened most recently, and where the lines around it come to rest: on this sheet every question runs along one shared time axis and curves into the harbour it reached — published, kept as a study, or closed unfinished.',
         cta: 'see the whole map on its practice page →',

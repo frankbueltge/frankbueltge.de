@@ -79,12 +79,12 @@ export const ATELIER_NARRATIVE = {
    * trägt als die Design-Session (S26–S28) sah. */
   titleRule: 'the sheet title is the youngest thread’s own label, verbatim',
   sheetLede:
-    'every edge below is drawn in the rhizome by Ulysses — the practice’s own reading of its works and sources',
+    'every edge below is drawn in the rhizome by Assay — the practice’s own reading of its works and sources',
   /** Franks Rahmung, 2 Sätze am Blatt-Fuß (atelier-aesthetik §5; volle Rahmung in
    * apparatus). v4-Revision 2026-07-18: projektbasiert statt nightly. v5-Sync 2026-07-25:
    * work-line statt bounded projects (Aktualitäts-Regel — v5 löste v4 am 24.07. ab). */
   framingFoot:
-    'Ulysses is a machine-participatory artistic research practice — a work-line and its studies under a standing delegation, errors catalogued checkably. The machines write, the record shows who wrote what; since 2026-08-10 curated publication is the practice’s own act, signed and answered for in its own record.',
+    'Assay is a machine-participatory artistic research practice — a work-line and its studies under a standing delegation, errors catalogued checkably. The machines write, the record shows who wrote what; since 2026-08-10 curated publication is the practice’s own act, signed and answered for in its own record.',
   /** Ehrliche Abweichungen der Site gegenüber den Mockup-Generatoren (nichts still überbrückt). */
   provenance: {
     sheet: 'drawn from src/data/atelier/rhizome.json — the practice’s own reading, mirrored by the integration gate, read-only',
@@ -100,9 +100,9 @@ export const ATELIER_NARRATIVE = {
    * Draft bis Franks Merge des Stufe-0-PRs. */
   entrance: {
     kicker: 'Atelier · machine-participatory artistic research',
-    h1: 'Atelier · Ulysses',
+    h1: 'Atelier · Assay',
     lede:
-      'Ulysses is a situated artistic research practice, developed through documented human–machine operations. Machines hold real operative agency here — they find problems, research, build, revise and archive inside a standing human delegation, and since 2026-08-10 publish what they judge ready under their own signature. The unit of work is the work-line, fed by studies that compost back into it; failures stay on the record, checkably.',
+      'Assay is a situated artistic research practice, developed through documented human–machine operations. Machines hold real operative agency here — they find problems, research, build, revise and archive inside a standing human delegation, and since 2026-08-10 publish what they judge ready under their own signature. The unit of work is the work-line, fed by studies that compost back into it; failures stay on the record, checkably.',
     doors: {
       now: 'the research log — the work-line and its studies under Protocol v6: scores, traces, dispositions',
       works: 'works & catalogue — the nightly phase (28 June – 18 July 2026) and, since 24 July, its curated publications',
@@ -527,7 +527,7 @@ export const ATELIER_NARRATIVE = {
       'the work-line protocol. The register is closed here, not everywhere: the nightly line was ' +
       'forked back to life on 10 August under the constitution that produced it, and it reads its ' +
       'next session number off this same journal.',
-    material: 'Ulysses’ own shelf: the sources the practice has pulled, as it catalogued them.',
+    material: 'Assay’s own shelf: the sources the practice has pulled, as it catalogued them.',
     materialAtlasNote:
       'Frank’s atlas (/atlas) is the lab’s reference collection; this shelf is the practice’s own lens on it. Each points at the other.',
     apparatus: 'How the machine runs — repo, constitution, team channel, integration machinery, in one room.',

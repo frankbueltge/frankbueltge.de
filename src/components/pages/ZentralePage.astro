@@ -31,7 +31,7 @@ import '@/styles/zentrale-ops.css'
 const GH = 'https://github.com/frankbueltge'
 const KNOBS: { name: string; voice: string | null; links: [string, string][] }[] = [
   {
-    name: 'Atelier · Ulysses',
+    name: 'Atelier · Assay',
     voice: 'ulysses',
     links: [
       ['Verfassung', `${GH}/ulysses/blob/main/PROTOCOL.md`],
@@ -211,7 +211,7 @@ const KNOBS: { name: string; voice: string | null; links: [string, string][] }[]
               <select id="zx-seed-repo" name="repo" class="zx-select">
                 <option value="field-research">Field · Meridian</option>
                 <option value="studio">Studio · Ensemble</option>
-                <option value="ulysses">Atelier · Ulysses</option>
+                <option value="ulysses">Atelier · Assay</option>
                 <option value="data-snack-plenum">Plenum</option>
               </select>
             </div>
@@ -420,8 +420,8 @@ const KNOBS: { name: string; voice: string | null; links: [string, string][] }[]
   const REPO_LABELS: Record<string, string> = {
     'field-research': 'Field · Meridian',
     studio: 'Studio · Ensemble',
-    ulysses: 'Atelier · Ulysses',
-    'irrtum-als-methode': 'Atelier · Ulysses', // historischer Repo-Name (bis 2026-07-23)
+    ulysses: 'Atelier · Assay',
+    'irrtum-als-methode': 'Atelier · Assay', // historischer Repo-Name (bis 2026-07-23)
     'error-as-method': 'Nightly line',
     'n-1': 'n-1 · Remainder',
     'machine-attention': 'Machine Attention',
