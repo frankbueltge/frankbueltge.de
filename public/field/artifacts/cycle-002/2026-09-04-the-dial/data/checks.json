@@ -1,0 +1,572 @@
+{
+ "P1": {
+  "arxiv": {
+   "dense": {
+    "means": [
+     0.225,
+     0.3775,
+     0.695,
+     1.015,
+     1.3925,
+     1.825,
+     2.38,
+     3.1125
+    ],
+    "r2": 0.9997986672144366,
+    "r2_ok": true,
+    "slope": 0.046677239898496974,
+    "slope_in_band": true
+   },
+   "lean": {
+    "means": [
+     0.19,
+     0.34,
+     0.6875,
+     0.9875,
+     1.3825,
+     1.8725,
+     2.4175,
+     3.1125
+    ],
+    "r2": 0.9997772390250022,
+    "r2_ok": true,
+    "slope": 0.04690708569197736,
+    "slope_in_band": true
+   }
+  },
+  "crossref": {
+   "dense": {
+    "means": [
+     0.19,
+     0.33,
+     0.66,
+     1.0,
+     1.395,
+     1.885,
+     2.43,
+     2.695
+    ],
+    "r2": 0.9950603173696266,
+    "r2_ok": true,
+    "slope": 0.04434413429631076,
+    "slope_in_band": false
+   },
+   "lean": {
+    "means": [
+     0.18,
+     0.3325,
+     0.7025,
+     1.0575,
+     1.46,
+     1.8975,
+     2.0025,
+     2.695
+    ],
+    "r2": 0.9929772803154282,
+    "r2_ok": true,
+    "slope": 0.042639078664844815,
+    "slope_in_band": false
+   }
+  }
+ },
+ "P2": {
+  "arxiv": {
+   "dense_overdispersion": 1.1945736086175942,
+   "dense_variance": 1.66344375,
+   "holds": false,
+   "lean_overdispersion": 1.1256374321880651,
+   "lean_variance": 1.55619375,
+   "mean_difference_dense_minus_lean": {
+    "mean_difference": 0.01,
+    "n": 400,
+    "p": 0.8879519589011067,
+    "se": 0.0709742443312783,
+    "z": 0.1408961813432511
+   },
+   "predicted": "dense variance at least 10 % above lean",
+   "ratio": 1.0689181536682049,
+   "ratio_ci95_paired_bootstrap": {
+    "bootstrap_replicates": 2000,
+    "ci95": [
+     0.8885289388123995,
+     1.272554767506669
+    ],
+    "point": 1.0689181536682049
+   }
+  },
+  "crossref": {
+   "dense_overdispersion": 0.9741756272401434,
+   "dense_variance": 1.358975,
+   "holds": false,
+   "lean_overdispersion": 0.9543835616438356,
+   "lean_variance": 1.3934,
+   "mean_difference_dense_minus_lean": {
+    "mean_difference": -0.065,
+    "n": 400,
+    "p": 0.3444110760199841,
+    "se": 0.06874775002014306,
+    "z": -0.9454854883389642
+   },
+   "predicted": "dense variance at least 10 % above lean",
+   "ratio": 0.9752942442945314,
+   "ratio_ci95_paired_bootstrap": {
+    "bootstrap_replicates": 2000,
+    "ci95": [
+     0.770552848786352,
+     1.2268653590077352
+    ],
+    "point": 0.9752942442945314
+   }
+  }
+ },
+ "P3": {
+  "arxiv": {
+   "dense_below_independence": true,
+   "dense_below_lean": true,
+   "dense_p_at_least_one": 0.7,
+   "independence_value": 0.7853612360570628,
+   "lean_below_independence": true,
+   "lean_p_at_least_one": 0.7175,
+   "paired_mcnemar_dense_vs_lean": {
+    "a_only": 68,
+    "b_only": 61,
+    "discordant": 129,
+    "p": 0.597484999305873
+   }
+  },
+  "crossref": {
+   "dense_below_independence": true,
+   "dense_below_lean": true,
+   "dense_p_at_least_one": 0.765,
+   "independence_value": 0.7853612360570628,
+   "lean_below_independence": false,
+   "lean_p_at_least_one": 0.795,
+   "paired_mcnemar_dense_vs_lean": {
+    "a_only": 60,
+    "b_only": 48,
+    "discordant": 108,
+    "p": 0.28979821540506145
+   }
+  }
+ },
+ "P4": {
+  "arxiv": {
+   "all66_only": [
+    "has_journal_ref|has_doi",
+    "large_team|category_count"
+   ],
+   "bh_denominator_all66": 51,
+   "bh_denominator_dedup51": 38,
+   "bh_survivors_all66": 13,
+   "bh_survivors_dedup51": 11,
+   "dedup_only": [],
+   "dedup_recovers_any": false,
+   "distinct_claim_set_identical": true,
+   "distinct_claims_all66": 11,
+   "distinct_claims_dedup51": 11,
+   "distinct_pairs_among_raw": 14,
+   "holds": false,
+   "predicted": "deduplicating the space yields MORE survivors",
+   "raw_findings": 17
+  },
+  "crossref": {
+   "all66_only": [
+    "cited|has_abstract",
+    "cited|has_orcid",
+    "cited|reference_count",
+    "has_orcid|has_abstract",
+    "large_team|has_abstract",
+    "long_bibliography|author_count",
+    "long_bibliography|has_orcid"
+   ],
+   "bh_denominator_all66": 41,
+   "bh_denominator_dedup51": 31,
+   "bh_survivors_all66": 28,
+   "bh_survivors_dedup51": 21,
+   "dedup_only": [],
+   "dedup_recovers_any": false,
+   "distinct_claim_set_identical": true,
+   "distinct_claims_all66": 21,
+   "distinct_claims_dedup51": 21,
+   "distinct_pairs_among_raw": 21,
+   "holds": false,
+   "predicted": "deduplicating the space yields MORE survivors",
+   "raw_findings": 28
+  }
+ },
+ "P5": {
+  "arms": [
+   "arxiv",
+   "crossref"
+  ],
+  "both_contain_alpha": false,
+  "intervals": [
+   [
+    0.044667217934068054,
+    0.04978273513639727
+   ],
+   [
+    0.03851206976057887,
+    0.04328820887766292
+   ]
+  ],
+  "intervals_overlap": false,
+  "rates": [
+   0.04715909090909091,
+   0.04083333333333333
+  ]
+ },
+ "arms": {
+  "arxiv": {
+   "K2": {
+    "distinct_pairs_is_51": true,
+    "full_space_per_test_rate": 0.04715909090909091,
+    "inside_session150_ci": true,
+    "questions_is_66": true,
+    "session150_ci": [
+     0.0466,
+     0.0512
+    ]
+   },
+   "P1": {
+    "dense": {
+     "means": [
+      0.225,
+      0.3775,
+      0.695,
+      1.015,
+      1.3925,
+      1.825,
+      2.38,
+      3.1125
+     ],
+     "r2": 0.9997986672144366,
+     "r2_ok": true,
+     "slope": 0.046677239898496974,
+     "slope_in_band": true
+    },
+    "lean": {
+     "means": [
+      0.19,
+      0.34,
+      0.6875,
+      0.9875,
+      1.3825,
+      1.8725,
+      2.4175,
+      3.1125
+     ],
+     "r2": 0.9997772390250022,
+     "r2_ok": true,
+     "slope": 0.04690708569197736,
+     "slope_in_band": true
+    }
+   },
+   "P2": {
+    "dense_overdispersion": 1.1945736086175942,
+    "dense_variance": 1.66344375,
+    "holds": false,
+    "lean_overdispersion": 1.1256374321880651,
+    "lean_variance": 1.55619375,
+    "mean_difference_dense_minus_lean": {
+     "mean_difference": 0.01,
+     "n": 400,
+     "p": 0.8879519589011067,
+     "se": 0.0709742443312783,
+     "z": 0.1408961813432511
+    },
+    "predicted": "dense variance at least 10 % above lean",
+    "ratio": 1.0689181536682049,
+    "ratio_ci95_paired_bootstrap": {
+     "bootstrap_replicates": 2000,
+     "ci95": [
+      0.8885289388123995,
+      1.272554767506669
+     ],
+     "point": 1.0689181536682049
+    }
+   },
+   "P3": {
+    "dense_below_independence": true,
+    "dense_below_lean": true,
+    "dense_p_at_least_one": 0.7,
+    "independence_value": 0.7853612360570628,
+    "lean_below_independence": true,
+    "lean_p_at_least_one": 0.7175,
+    "paired_mcnemar_dense_vs_lean": {
+     "a_only": 68,
+     "b_only": 61,
+     "discordant": 129,
+     "p": 0.597484999305873
+    }
+   },
+   "P4": {
+    "all66_only": [
+     "has_journal_ref|has_doi",
+     "large_team|category_count"
+    ],
+    "bh_denominator_all66": 51,
+    "bh_denominator_dedup51": 38,
+    "bh_survivors_all66": 13,
+    "bh_survivors_dedup51": 11,
+    "dedup_only": [],
+    "dedup_recovers_any": false,
+    "distinct_claim_set_identical": true,
+    "distinct_claims_all66": 11,
+    "distinct_claims_dedup51": 11,
+    "distinct_pairs_among_raw": 14,
+    "holds": false,
+    "predicted": "deduplicating the space yields MORE survivors",
+    "raw_findings": 17
+   },
+   "P5": {
+    "ci95": [
+     0.044667217934068054,
+     0.04978273513639727
+    ],
+    "contains_alpha": false,
+    "per_test_rate": 0.04715909090909091
+   },
+   "breaks": 0,
+   "distinct_pairs": 51,
+   "per_question_null_rate": {
+    "above_0.08": 0,
+    "below_0.02": 0,
+    "highest_five": [
+     [
+      "revised|author_count",
+      0.06
+     ],
+     [
+      "has_doi|author_count",
+      0.0625
+     ],
+     [
+      "revised|comment_pages",
+      0.0625
+     ],
+     [
+      "large_team|has_doi",
+      0.065
+     ],
+     [
+      "night_submission|title_words",
+      0.065
+     ]
+    ],
+    "lowest_five": [
+     [
+      "weekend|has_journal_ref",
+      0.0225
+     ],
+     [
+      "weekend|has_doi",
+      0.025
+     ],
+     [
+      "has_doi|has_journal_ref",
+      0.03
+     ],
+     [
+      "has_journal_ref|has_doi",
+      0.0325
+     ],
+     [
+      "has_journal_ref|revised",
+      0.0325
+     ]
+    ],
+    "max": [
+     "night_submission|title_words",
+     0.065
+    ],
+    "median": 0.0475,
+    "min": [
+     "weekend|has_journal_ref",
+     0.0225
+    ]
+   },
+   "questions": 66,
+   "records": 2039,
+   "review_kills": 15
+  },
+  "crossref": {
+   "K2": {
+    "distinct_pairs_is_51": true,
+    "full_space_per_test_rate": 0.04083333333333333,
+    "inside_session150_ci": false,
+    "questions_is_66": true,
+    "session150_ci": [
+     0.0466,
+     0.0512
+    ]
+   },
+   "P1": {
+    "dense": {
+     "means": [
+      0.19,
+      0.33,
+      0.66,
+      1.0,
+      1.395,
+      1.885,
+      2.43,
+      2.695
+     ],
+     "r2": 0.9950603173696266,
+     "r2_ok": true,
+     "slope": 0.04434413429631076,
+     "slope_in_band": false
+    },
+    "lean": {
+     "means": [
+      0.18,
+      0.3325,
+      0.7025,
+      1.0575,
+      1.46,
+      1.8975,
+      2.0025,
+      2.695
+     ],
+     "r2": 0.9929772803154282,
+     "r2_ok": true,
+     "slope": 0.042639078664844815,
+     "slope_in_band": false
+    }
+   },
+   "P2": {
+    "dense_overdispersion": 0.9741756272401434,
+    "dense_variance": 1.358975,
+    "holds": false,
+    "lean_overdispersion": 0.9543835616438356,
+    "lean_variance": 1.3934,
+    "mean_difference_dense_minus_lean": {
+     "mean_difference": -0.065,
+     "n": 400,
+     "p": 0.3444110760199841,
+     "se": 0.06874775002014306,
+     "z": -0.9454854883389642
+    },
+    "predicted": "dense variance at least 10 % above lean",
+    "ratio": 0.9752942442945314,
+    "ratio_ci95_paired_bootstrap": {
+     "bootstrap_replicates": 2000,
+     "ci95": [
+      0.770552848786352,
+      1.2268653590077352
+     ],
+     "point": 0.9752942442945314
+    }
+   },
+   "P3": {
+    "dense_below_independence": true,
+    "dense_below_lean": true,
+    "dense_p_at_least_one": 0.765,
+    "independence_value": 0.7853612360570628,
+    "lean_below_independence": false,
+    "lean_p_at_least_one": 0.795,
+    "paired_mcnemar_dense_vs_lean": {
+     "a_only": 60,
+     "b_only": 48,
+     "discordant": 108,
+     "p": 0.28979821540506145
+    }
+   },
+   "P4": {
+    "all66_only": [
+     "cited|has_abstract",
+     "cited|has_orcid",
+     "cited|reference_count",
+     "has_orcid|has_abstract",
+     "large_team|has_abstract",
+     "long_bibliography|author_count",
+     "long_bibliography|has_orcid"
+    ],
+    "bh_denominator_all66": 41,
+    "bh_denominator_dedup51": 31,
+    "bh_survivors_all66": 28,
+    "bh_survivors_dedup51": 21,
+    "dedup_only": [],
+    "dedup_recovers_any": false,
+    "distinct_claim_set_identical": true,
+    "distinct_claims_all66": 21,
+    "distinct_claims_dedup51": 21,
+    "distinct_pairs_among_raw": 21,
+    "holds": false,
+    "predicted": "deduplicating the space yields MORE survivors",
+    "raw_findings": 28
+   },
+   "P5": {
+    "ci95": [
+     0.03851206976057887,
+     0.04328820887766292
+    ],
+    "contains_alpha": false,
+    "per_test_rate": 0.04083333333333333
+   },
+   "breaks": 0,
+   "distinct_pairs": 51,
+   "per_question_null_rate": {
+    "above_0.08": 0,
+    "below_0.02": 10,
+    "highest_five": [
+     [
+      "has_orcid|published_doy",
+      0.06
+     ],
+     [
+      "large_team|has_license",
+      0.06
+     ],
+     [
+      "has_orcid|author_count",
+      0.0625
+     ],
+     [
+      "large_team|title_words",
+      0.0675
+     ],
+     [
+      "has_abstract|title_words",
+      0.07
+     ]
+    ],
+    "lowest_five": [
+     [
+      "has_fulltext_link|abstract_words",
+      0.0
+     ],
+     [
+      "has_fulltext_link|author_count",
+      0.0
+     ],
+     [
+      "has_fulltext_link|cited_by_count",
+      0.0
+     ],
+     [
+      "has_fulltext_link|has_abstract",
+      0.0
+     ],
+     [
+      "has_fulltext_link|has_license",
+      0.0
+     ]
+    ],
+    "max": [
+     "has_abstract|title_words",
+     0.07
+    ],
+    "median": 0.0475,
+    "min": [
+     "has_fulltext_link|abstract_words",
+     0.0
+    ]
+   },
+   "questions": 66,
+   "records": 2400,
+   "review_kills": 25
+  }
+ }
+}

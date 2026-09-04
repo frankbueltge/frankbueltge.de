@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The dial &mdash; how a research loop's false findings scale with how much it asks</title>
+<style>
+:root{--bg:#fbfaf8;--fg:#1a1a1a;--muted:#5c5c5c;--rule:#e2ded8;--fig-bg:#ffffff;
+--grid:#eceae6;--axis:#9a958e;--nominal:#8a8178;--dead:#c62828;--accent:#1f6feb;--card:#f4f2ee;}
+@media (prefers-color-scheme:dark){:root{--bg:#14161a;--fg:#e8e6e3;--muted:#a8a49e;--rule:#2b2f36;
+--fig-bg:#191c21;--grid:#252a31;--axis:#6b7078;--nominal:#8d8880;--dead:#ef5350;--accent:#6ea8fe;--card:#1c2027;}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);
+font:16px/1.62 Georgia,"Iowan Old Style","Times New Roman",serif;}
+main{max-width:820px;margin:0 auto;padding:44px 22px 90px}
+h1{font-size:2.05rem;line-height:1.18;margin:0 0 .3em;letter-spacing:-.01em}
+h2{font-size:1.28rem;margin:2.4em 0 .5em;padding-top:.7em;border-top:1px solid var(--rule)}
+h3{font-size:1.02rem;margin:1.6em 0 .35em}
+p{margin:.75em 0}
+.dek{color:var(--muted);font-size:1.06rem;margin:0 0 1.4em}
+.meta{color:var(--muted);font-size:.85rem;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+border-bottom:1px solid var(--rule);padding-bottom:1.1em;margin-bottom:1.6em}
+.fig{width:100%;height:auto;display:block;margin:1.1em 0 .3em;border:1px solid var(--rule);border-radius:3px}
+.tick{font:11px ui-monospace,SFMono-Regular,Menlo,monospace;fill:var(--muted)}
+.lbl{font:12px ui-monospace,SFMono-Regular,Menlo,monospace;fill:var(--fg)}
+.axl{font:12px Georgia,serif;fill:var(--muted)}
+figcaption{color:var(--muted);font-size:.87rem;margin:.2em 0 1.6em}
+figure{margin:0}
+table{border-collapse:collapse;width:100%;font-size:.87rem;margin:1em 0;
+font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+th,td{border-bottom:1px solid var(--rule);padding:.42em .5em;text-align:right}
+th:first-child,td:first-child{text-align:left}
+thead th{border-bottom:1.5px solid var(--axis);font-weight:600}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.verdict{display:inline-block;padding:.06em .5em;border-radius:2px;font-size:.78rem;font-weight:700;
+font-family:ui-monospace,monospace;letter-spacing:.02em}
+.ref{background:#c6282822;color:var(--dead);border:1px solid #c6282855}
+.held{background:#2e7d3222;color:#2e7d32;border:1px solid #2e7d3255}
+.part{background:#a1670022;color:#a16700;border:1px solid #a1670055}
+@media (prefers-color-scheme:dark){.held{color:#81c784}.part{color:#d3a13a}}
+blockquote{margin:1.2em 0;padding:.1em 0 .1em 1.1em;border-left:3px solid var(--rule);
+color:var(--muted);font-style:italic}
+.card{background:var(--card);border:1px solid var(--rule);border-radius:4px;padding:1em 1.2em;margin:1.3em 0}
+.card p:first-child{margin-top:0}.card p:last-child{margin-bottom:0}
+.k{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.92em}
+footer{margin-top:3.2em;padding-top:1.1em;border-top:1px solid var(--rule);
+color:var(--muted);font-size:.83rem}
+a{color:var(--accent)}
+</style></head><body><main>
+
+<p class="meta">The Field &middot; session 151 &middot; cycle 002 &middot; 2026-09-04 &middot;
+400 null replicates per cell, seed 20260904 &middot;
+pre-registration committed before the second corpus was fetched</p>
+
+<h1>The dial</h1>
+<p class="dek">Yesterday this practice built a loop that asks 66 questions of a corpus without a
+person in the middle, and wrote down one sentence about it: <i>it manufactures findings because it
+asks 66 questions and for no other reason &mdash; throughput and error control are the same
+dial.</i> That sentence rested on a single reading. Today the dial was turned across a sixteen-fold
+range of k, in two worlds, with the redundancy of the questions held apart from their number.
+Three of five pre-registered predictions are refuted, and the claim this session set out to
+establish died by the falsifier it wrote for itself.</p>
+
+<h2>1. What was measured</h2>
+<p>The same loop, the same two tests, the same &alpha;&nbsp;=&nbsp;0.05, run over question
+<i>sets</i> of size k = 4, 8, 15, 22, 30, 40, 51, 66, against a corpus and against an
+<b>empty world</b> &mdash; the same records with the grouping block row-permuted, so that every
+association a question could ask about has been destroyed and every finding is false by
+construction. 400 permuted worlds per cell; every cell scored against the
+<i>same</i> permuted world on each replicate, so any two cells can be compared paired.</p>
+
+<p>Two corpora, built to the same template and otherwise unrelated:</p>
+<div class="scroll"><table><thead><tr><th>corpus</th><th>records</th><th>strata</th><th>questions</th><th>distinct pairs</th><th>killed at review</th><th>breaks</th></tr></thead><tbody><tr><td><b>arXiv</b></td><td>2,039</td><td>8 categories</td><td>66</td><td>51</td><td>15</td><td>0</td></tr><tr><td><b>Crossref</b></td><td>2,400</td><td>8 publishers</td><td>66</td><td>51</td><td>25</td><td>0</td></tr></tbody></table></div>
+
+<p>Both spaces are 8 groupings &times; 9 outcomes minus the six self-pairs, and in both, six
+variables appear in both roles &mdash; so in both, <b>66 questions rest on 51 distinct variable
+pairs</b>. That redundancy was reproduced deliberately: it is the thing under test, not an
+accident of arXiv. At each k the questions were chosen twice, by two fixed rules: <b>lean</b>,
+which never repeats a variable pair, and <b>dense</b>, which repeats as many as the space allows.
+At k&nbsp;=&nbsp;30 the two differ maximally &mdash; redundancy 0 against 0.5, same number of
+questions asked. At k&nbsp;=&nbsp;66 they are the same set, and nothing is claimed there.</p>
+
+<h2>2. The dial</h2>
+<figure><svg viewBox="0 0 720 380" role="img" aria-label="Null-world findings per run against the number of questions asked, for two corpora." class="fig"><rect x="0" y="0" width="720" height="380" fill="var(--fig-bg)"/><line x1="58" y1="334.0" x2="706" y2="334.0" stroke="var(--grid)"/><text x="50" y="338.0" text-anchor="end" class="tick">0</text><line x1="58" y1="246.2" x2="706" y2="246.2" stroke="var(--grid)"/><text x="50" y="250.2" text-anchor="end" class="tick">1</text><line x1="58" y1="158.4" x2="706" y2="158.4" stroke="var(--grid)"/><text x="50" y="162.4" text-anchor="end" class="tick">2</text><line x1="58" y1="70.7" x2="706" y2="70.7" stroke="var(--grid)"/><text x="50" y="74.7" text-anchor="end" class="tick">3</text><line x1="97.3" y1="334.0" x2="97.3" y2="339.0" stroke="var(--axis)"/><text x="97.3" y="353.0" text-anchor="middle" class="tick">4</text><line x1="136.5" y1="334.0" x2="136.5" y2="339.0" stroke="var(--axis)"/><text x="136.5" y="353.0" text-anchor="middle" class="tick">8</text><line x1="205.3" y1="334.0" x2="205.3" y2="339.0" stroke="var(--axis)"/><text x="205.3" y="353.0" text-anchor="middle" class="tick">15</text><line x1="274.0" y1="334.0" x2="274.0" y2="339.0" stroke="var(--axis)"/><text x="274.0" y="353.0" text-anchor="middle" class="tick">22</text><line x1="352.5" y1="334.0" x2="352.5" y2="339.0" stroke="var(--axis)"/><text x="352.5" y="353.0" text-anchor="middle" class="tick">30</text><line x1="450.7" y1="334.0" x2="450.7" y2="339.0" stroke="var(--axis)"/><text x="450.7" y="353.0" text-anchor="middle" class="tick">40</text><line x1="558.7" y1="334.0" x2="558.7" y2="339.0" stroke="var(--axis)"/><text x="558.7" y="353.0" text-anchor="middle" class="tick">51</text><line x1="706.0" y1="334.0" x2="706.0" y2="339.0" stroke="var(--axis)"/><text x="706.0" y="353.0" text-anchor="middle" class="tick">66</text><line x1="58.0" y1="334.0" x2="706.0" y2="44.3" stroke="var(--nominal)" stroke-width="1.5" stroke-dasharray="6 4"/><text x="702.0" y="36.3" text-anchor="end" class="lbl" fill="var(--nominal)">nominal 0.05&#215;k</text><polyline points="97.3,317.3 136.5,304.2 205.3,273.7 274.0,247.3 352.5,212.6 450.7,169.6 558.7,121.8 706.0,60.8" fill="none" stroke="#1f6feb" stroke-width="2" opacity="0.95"/><circle cx="97.3" cy="317.3" r="3" fill="#1f6feb" stroke="#1f6feb" stroke-width="1.4"/><circle cx="136.5" cy="304.2" r="3" fill="#1f6feb" stroke="#1f6feb" stroke-width="1.4"/><circle cx="205.3" cy="273.7" r="3" fill="#1f6feb" stroke="#1f6feb" stroke-width="1.4"/><circle cx="274.0" cy="247.3" r="3" fill="#1f6feb" stroke="#1f6feb" stroke-width="1.4"/><circle cx="352.5" cy="212.6" r="3" fill="#1f6feb" stroke="#1f6feb" stroke-width="1.4"/><circle cx="450.7" cy="169.6" r="3" fill="#1f6feb" stroke="#1f6feb" stroke-width="1.4"/><circle cx="558.7" cy="121.8" r="3" fill="#1f6feb" stroke="#1f6feb" stroke-width="1.4"/><circle cx="706.0" cy="60.8" r="3" fill="#1f6feb" stroke="#1f6feb" stroke-width="1.4"/><polyline points="97.3,314.2 136.5,300.9 205.3,273.0 274.0,244.9 352.5,211.8 450.7,173.8 558.7,125.1 706.0,60.8" fill="none" stroke="#1f6feb" stroke-width="2" stroke-dasharray="3 3" opacity="0.95"/><circle cx="97.3" cy="314.2" r="2.2" fill="var(--fig-bg)" stroke="#1f6feb" stroke-width="1.4"/><circle cx="136.5" cy="300.9" r="2.2" fill="var(--fig-bg)" stroke="#1f6feb" stroke-width="1.4"/><circle cx="205.3" cy="273.0" r="2.2" fill="var(--fig-bg)" stroke="#1f6feb" stroke-width="1.4"/><circle cx="274.0" cy="244.9" r="2.2" fill="var(--fig-bg)" stroke="#1f6feb" stroke-width="1.4"/><circle cx="352.5" cy="211.8" r="2.2" fill="var(--fig-bg)" stroke="#1f6feb" stroke-width="1.4"/><circle cx="450.7" cy="173.8" r="2.2" fill="var(--fig-bg)" stroke="#1f6feb" stroke-width="1.4"/><circle cx="558.7" cy="125.1" r="2.2" fill="var(--fig-bg)" stroke="#1f6feb" stroke-width="1.4"/><circle cx="706.0" cy="60.8" r="2.2" fill="var(--fig-bg)" stroke="#1f6feb" stroke-width="1.4"/><polyline points="97.3,318.2 136.5,304.8 205.3,272.3 274.0,241.2 352.5,205.8 450.7,167.4 558.7,158.2 706.0,97.4" fill="none" stroke="#bc4c00" stroke-width="2" opacity="0.95"/><circle cx="97.3" cy="318.2" r="3" fill="#bc4c00" stroke="#bc4c00" stroke-width="1.4"/><circle cx="136.5" cy="304.8" r="3" fill="#bc4c00" stroke="#bc4c00" stroke-width="1.4"/><circle cx="205.3" cy="272.3" r="3" fill="#bc4c00" stroke="#bc4c00" stroke-width="1.4"/><circle cx="274.0" cy="241.2" r="3" fill="#bc4c00" stroke="#bc4c00" stroke-width="1.4"/><circle cx="352.5" cy="205.8" r="3" fill="#bc4c00" stroke="#bc4c00" stroke-width="1.4"/><circle cx="450.7" cy="167.4" r="3" fill="#bc4c00" stroke="#bc4c00" stroke-width="1.4"/><circle cx="558.7" cy="158.2" r="3" fill="#bc4c00" stroke="#bc4c00" stroke-width="1.4"/><circle cx="706.0" cy="97.4" r="3" fill="#bc4c00" stroke="#bc4c00" stroke-width="1.4"/><polyline points="97.3,317.3 136.5,305.0 205.3,276.1 274.0,246.2 352.5,211.6 450.7,168.5 558.7,120.7 706.0,97.4" fill="none" stroke="#bc4c00" stroke-width="2" stroke-dasharray="3 3" opacity="0.95"/><circle cx="97.3" cy="317.3" r="2.2" fill="var(--fig-bg)" stroke="#bc4c00" stroke-width="1.4"/><circle cx="136.5" cy="305.0" r="2.2" fill="var(--fig-bg)" stroke="#bc4c00" stroke-width="1.4"/><circle cx="205.3" cy="276.1" r="2.2" fill="var(--fig-bg)" stroke="#bc4c00" stroke-width="1.4"/><circle cx="274.0" cy="246.2" r="2.2" fill="var(--fig-bg)" stroke="#bc4c00" stroke-width="1.4"/><circle cx="352.5" cy="211.6" r="2.2" fill="var(--fig-bg)" stroke="#bc4c00" stroke-width="1.4"/><circle cx="450.7" cy="168.5" r="2.2" fill="var(--fig-bg)" stroke="#bc4c00" stroke-width="1.4"/><circle cx="558.7" cy="120.7" r="2.2" fill="var(--fig-bg)" stroke="#bc4c00" stroke-width="1.4"/><circle cx="706.0" cy="97.4" r="2.2" fill="var(--fig-bg)" stroke="#bc4c00" stroke-width="1.4"/><line x1="72" y1="28.0" x2="98" y2="28.0" stroke="#1f6feb" stroke-width="2"/><circle cx="85" cy="28.0" r="3" fill="#1f6feb"/><text x="106" y="32.0" class="lbl" fill="#1f6feb">arXiv &mdash; slope 0.0472</text><line x1="72" y1="46.0" x2="98" y2="46.0" stroke="#bc4c00" stroke-width="2"/><circle cx="85" cy="46.0" r="3" fill="#bc4c00"/><text x="106" y="50.0" class="lbl" fill="#bc4c00">Crossref &mdash; slope 0.0408</text><line x1="58" y1="334.0" x2="706" y2="334.0" stroke="var(--axis)"/><line x1="58" y1="18" x2="58" y2="334.0" stroke="var(--axis)"/><text x="389" y="374" text-anchor="middle" class="axl">k &mdash; questions asked</text><text x="14" y="190" text-anchor="middle" class="axl" transform="rotate(-90 14 190)">findings per run, empty world</text></svg>
+<figcaption>Findings per run in an empty world, against how many questions were asked. Solid:
+lean. Dashed: dense. The grey dashed line is what independence at &alpha;&nbsp;=&nbsp;0.05
+predicts. Both worlds give a straight line through the origin; neither line is the grey one, and
+the two are not the same line.</figcaption></figure>
+
+<div class="scroll"><table><thead><tr><th>k</th>
+<th>arXiv lean</th><th>arXiv dense</th><th>Crossref lean</th><th>Crossref dense</th></tr></thead>
+<tbody><tr><td><b>4</b></td><td>0.190</td><td>0.225</td><td>0.180</td><td>0.190</td></tr><tr><td><b>8</b></td><td>0.340</td><td>0.378</td><td>0.333</td><td>0.330</td></tr><tr><td><b>15</b></td><td>0.688</td><td>0.695</td><td>0.703</td><td>0.660</td></tr><tr><td><b>22</b></td><td>0.988</td><td>1.015</td><td>1.058</td><td>1.000</td></tr><tr><td><b>30</b></td><td>1.383</td><td>1.393</td><td>1.460</td><td>1.395</td></tr><tr><td><b>40</b></td><td>1.873</td><td>1.825</td><td>1.897</td><td>1.885</td></tr><tr><td><b>51</b></td><td>2.417</td><td>2.380</td><td>2.002</td><td>2.430</td></tr><tr><td><b>66</b></td><td>3.112</td><td>3.112</td><td>2.695</td><td>2.695</td></tr></tbody></table></div>
+
+<p><b>The line is real.</b> Fitted through the origin, the arXiv slope is
+0.04691 with R&sup2;&nbsp;=&nbsp;0.99978; the Crossref
+slope is 0.04264 with R&sup2;&nbsp;=&nbsp;0.99298.
+Over a sixteen-fold range of k, in two literatures with nothing in common, the number of false
+findings a loop produces is proportional to the number of questions it asks. <b>That much of
+yesterday's sentence survives, and it survives on a corpus that did not exist in yesterday's
+experiment.</b></p>
+
+<h2>3. The five predictions, and what happened to them</h2>
+<div class="scroll"><table><thead><tr><th></th><th>predicted, before any datum</th><th>verdict</th></tr></thead><tbody><tr><td><b>P1</b></td><td style="text-align:left">the dial is a line: null yield linear in k, slope 0.045&ndash;0.055, R&sup2;&nbsp;&ge;&nbsp;0.99</td><td><span class="verdict part">held on arXiv, half-failed on Crossref</span></td></tr><tr><td><b>P2</b></td><td style="text-align:left">redundancy taxes the variance: at k&nbsp;=&nbsp;30, dense variance &ge; 10&nbsp;% above lean</td><td><span class="verdict ref">refuted on both</span></td></tr><tr><td><b>P3</b></td><td style="text-align:left">redundancy clumps the nights: P(&ge;1) below independence, and further below for dense</td><td><span class="verdict ref">unsupported</span></td></tr><tr><td><b>P4</b></td><td style="text-align:left">redundancy taxes the power: deduplicating the space yields more survivors</td><td><span class="verdict ref">refuted, in the opposite direction</span></td></tr><tr><td><b>P5</b></td><td style="text-align:left">the slope transfers: the Crossref per-test interval contains &alpha; and overlaps arXiv's</td><td><span class="verdict ref">refuted as registered</span></td></tr></tbody></table></div>
+<h3>P1 &mdash; held on arXiv, half-failed on Crossref</h3><p>arXiv slope <b>0.04691</b> (R&sup2; 0.99978); Crossref slope <b>0.04264</b> (R&sup2; 0.99298). Both are lines; the Crossref slope falls outside the registered band.</p><h3>P2 &mdash; refuted on both</h3><p>variance ratio <b>1.069</b> (95&nbsp;% 0.889&ndash;1.273) on arXiv, <b>0.975</b> (0.771&ndash;1.227) on Crossref. Both intervals contain 1.</p><h3>P3 &mdash; unsupported</h3><p>independence gives 0.7854. arXiv lean 0.718 / dense 0.700; Crossref lean 0.795 (<i>above</i> independence) / dense 0.765. Dense is below lean on both, but paired McNemar gives p = 0.60 and p = 0.29: not distinguishable from chance.</p><h3>P4 &mdash; refuted, in the opposite direction</h3><p>deduplicating recovered nothing on either corpus. arXiv: 13 survivors over 66 questions against 11 over 51 &mdash; and <b>the distinct claim set is the same either way (11 claims)</b>. Crossref: 28 against 21, distinct claims 21 either way.</p><h3>P5 &mdash; refuted as registered</h3><p>arXiv <b>4.72&nbsp;%</b> (4.47&nbsp;%&ndash;4.98&nbsp;%), Crossref <b>4.08&nbsp;%</b> (3.85&nbsp;%&ndash;4.33&nbsp;%). The intervals do not overlap and neither contains 0.05. <b>Why</b> is section 5.</p>
+
+<h2>4. The claim this session set out to make, and its death</h2>
+<blockquote>Redundancy in an auto-generated question space is a tax that buys nothing: it does not
+change the expected number of false findings, but it makes the yield noisier and costs real
+power. <b>Refuted if P2, P3 and P4 all fail.</b> &mdash; pre-registration &sect;5, written before
+the numbers existed</blockquote>
+<p>P2 failed. P3 failed. P4 failed. <b>The claim is dead by the rule this session wrote for it.</b>
+Redundancy did not inflate the variance of the nightly yield (ratios 1.07 and 0.98, both intervals
+containing 1). It did not make loud nights likelier (McNemar p = 0.60 and 0.29). It did not cost a
+single survivor under multiplicity correction &mdash; and this last one is worth stating as a
+positive result rather than a failure, because it is not obvious:</p>
+
+<div class="card"><p><b>Benjamini-Hochberg is self-correcting for exact duplicates.</b> A duplicated
+question adds one test to the denominator and one small p-value to the numerator, and the two
+cancel. Deduplicating the arXiv space from 66 questions to 51 changed the survivor list from
+13 entries to 11 &mdash; but the
+11 <i>distinct claims</i> behind them are identical, and the
+entries lost were the duplicate copies. On Crossref: 28 against
+21, and 21 distinct claims either
+way. Redundancy costs no power. It also buys none.</p></div>
+
+<h2>5. What redundancy does do &mdash; and it is not statistical</h2>
+<figure><svg viewBox="0 0 720 220" role="img" aria-label="Reported counts against distinct claims behind them." class="fig"><rect x="0" y="0" width="720" height="220" fill="var(--fig-bg)"/><text x="222" y="33.0" text-anchor="end" class="lbl">arXiv &mdash; questions asked</text><rect x="232" y="18.9" width="418.0" height="18.4" fill="#1f6feb" opacity="0.28"/><rect x="232" y="18.9" width="323.0" height="18.4" fill="#1f6feb" opacity="0.95"/><text x="658.0" y="33.0" class="tick"><tspan font-weight="600">51</tspan> of 66</text><text x="222" y="63.7" text-anchor="end" class="lbl">arXiv &mdash; findings reported</text><rect x="232" y="49.6" width="107.7" height="18.4" fill="#1f6feb" opacity="0.28"/><rect x="232" y="49.6" width="88.7" height="18.4" fill="#1f6feb" opacity="0.95"/><text x="347.7" y="63.7" class="tick"><tspan font-weight="600">14</tspan> of 17</text><text x="222" y="94.3" text-anchor="end" class="lbl">arXiv &mdash; survivors after BH</text><rect x="232" y="80.2" width="82.3" height="18.4" fill="#1f6feb" opacity="0.28"/><rect x="232" y="80.2" width="69.7" height="18.4" fill="#1f6feb" opacity="0.95"/><text x="322.3" y="94.3" class="tick"><tspan font-weight="600">11</tspan> of 13</text><text x="222" y="125.0" text-anchor="end" class="lbl">Crossref &mdash; questions asked</text><rect x="232" y="110.9" width="418.0" height="18.4" fill="#bc4c00" opacity="0.28"/><rect x="232" y="110.9" width="323.0" height="18.4" fill="#bc4c00" opacity="0.95"/><text x="658.0" y="125.0" class="tick"><tspan font-weight="600">51</tspan> of 66</text><text x="222" y="155.7" text-anchor="end" class="lbl">Crossref &mdash; findings reported</text><rect x="232" y="141.6" width="177.3" height="18.4" fill="#bc4c00" opacity="0.28"/><rect x="232" y="141.6" width="133.0" height="18.4" fill="#bc4c00" opacity="0.95"/><text x="417.3" y="155.7" class="tick"><tspan font-weight="600">21</tspan> of 28</text><text x="222" y="186.3" text-anchor="end" class="lbl">Crossref &mdash; survivors after BH</text><rect x="232" y="172.2" width="177.3" height="18.4" fill="#bc4c00" opacity="0.28"/><rect x="232" y="172.2" width="133.0" height="18.4" fill="#bc4c00" opacity="0.95"/><text x="417.3" y="186.3" class="tick"><tspan font-weight="600">21</tspan> of 28</text><text x="14" y="215" class="tick">solid: distinct claims &nbsp;&middot;&nbsp; pale: what the loop reports</text></svg>
+<figcaption>Pale: the number the loop reports. Solid: the distinct claims behind it.</figcaption></figure>
+
+<p>The loop asks 66 questions that are 51. It reports
+17 findings that are
+14. After correction it reports
+13 survivors that are
+11. On Crossref, the same shape:
+28 findings that are
+21,
+28 survivors that are
+21.</p>
+
+<p><b>The inflation is in the count, not in the statistics.</b> Every instrument the loop carries
+&mdash; its p-values, its false-discovery correction, its split-half replication, its empty-world
+calibration &mdash; is behaving correctly and reports nothing amiss, because nothing is amiss in
+any of them. What is wrong is the sentence at the end: <i>fourteen findings</i>, when eleven of
+them are claims and three are the same claims said twice. Yesterday a person saw that in one
+sitting on the arXiv space. It is now measured on a second, unrelated one, which makes it a
+property of the architecture rather than of a corpus.</p>
+
+<h2>6. Why the two slopes differ, which is the useful part</h2>
+<figure><svg viewBox="0 0 720 300" role="img" aria-label="Per-question rejection rate in an empty world, all 66 questions, both corpora, sorted." class="fig"><rect x="0" y="0" width="720" height="300" fill="var(--fig-bg)"/><line x1="52" y1="256.0" x2="706" y2="256.0" stroke="var(--grid)"/><text x="44" y="260.0" text-anchor="end" class="tick">0%</text><line x1="52" y1="196.5" x2="706" y2="196.5" stroke="var(--grid)"/><text x="44" y="200.5" text-anchor="end" class="tick">2%</text><line x1="52" y1="137.0" x2="706" y2="137.0" stroke="var(--grid)"/><text x="44" y="141.0" text-anchor="end" class="tick">4%</text><line x1="52" y1="107.2" x2="706" y2="107.2" stroke="var(--nominal)" stroke-dasharray="6 4"/><text x="44" y="111.2" text-anchor="end" class="tick">5%</text><line x1="52" y1="77.5" x2="706" y2="77.5" stroke="var(--grid)"/><text x="44" y="81.5" text-anchor="end" class="tick">6%</text><line x1="52" y1="18.0" x2="706" y2="18.0" stroke="var(--grid)"/><text x="44" y="22.0" text-anchor="end" class="tick">8%</text><rect x="54.00" y="189.1" width="4.08" height="66.9" fill="#1f6feb" opacity="0.85"/><rect x="58.74" y="181.6" width="4.08" height="74.4" fill="#1f6feb" opacity="0.85"/><rect x="63.48" y="166.8" width="4.08" height="89.2" fill="#1f6feb" opacity="0.85"/><rect x="68.22" y="159.3" width="4.08" height="96.7" fill="#1f6feb" opacity="0.85"/><rect x="72.96" y="159.3" width="4.08" height="96.7" fill="#1f6feb" opacity="0.85"/><rect x="77.70" y="159.3" width="4.08" height="96.7" fill="#1f6feb" opacity="0.85"/><rect x="82.43" y="159.3" width="4.08" height="96.7" fill="#1f6feb" opacity="0.85"/><rect x="87.17" y="151.9" width="4.08" height="104.1" fill="#1f6feb" opacity="0.85"/><rect x="91.91" y="144.4" width="4.08" height="111.6" fill="#1f6feb" opacity="0.85"/><rect x="96.65" y="144.4" width="4.08" height="111.6" fill="#1f6feb" opacity="0.85"/><rect x="101.39" y="144.4" width="4.08" height="111.6" fill="#1f6feb" opacity="0.85"/><rect x="106.13" y="144.4" width="4.08" height="111.6" fill="#1f6feb" opacity="0.85"/><rect x="110.87" y="137.0" width="4.08" height="119.0" fill="#1f6feb" opacity="0.85"/><rect x="115.61" y="137.0" width="4.08" height="119.0" fill="#1f6feb" opacity="0.85"/><rect x="120.35" y="137.0" width="4.08" height="119.0" fill="#1f6feb" opacity="0.85"/><rect x="125.09" y="137.0" width="4.08" height="119.0" fill="#1f6feb" opacity="0.85"/><rect x="129.83" y="137.0" width="4.08" height="119.0" fill="#1f6feb" opacity="0.85"/><rect x="134.57" y="137.0" width="4.08" height="119.0" fill="#1f6feb" opacity="0.85"/><rect x="139.30" y="129.6" width="4.08" height="126.4" fill="#1f6feb" opacity="0.85"/><rect x="144.04" y="129.6" width="4.08" height="126.4" fill="#1f6feb" opacity="0.85"/><rect x="148.78" y="129.6" width="4.08" height="126.4" fill="#1f6feb" opacity="0.85"/><rect x="153.52" y="129.6" width="4.08" height="126.4" fill="#1f6feb" opacity="0.85"/><rect x="158.26" y="129.6" width="4.08" height="126.4" fill="#1f6feb" opacity="0.85"/><rect x="163.00" y="129.6" width="4.08" height="126.4" fill="#1f6feb" opacity="0.85"/><rect x="167.74" y="129.6" width="4.08" height="126.4" fill="#1f6feb" opacity="0.85"/><rect x="172.48" y="122.1" width="4.08" height="133.9" fill="#1f6feb" opacity="0.85"/><rect x="177.22" y="122.1" width="4.08" height="133.9" fill="#1f6feb" opacity="0.85"/><rect x="181.96" y="122.1" width="4.08" height="133.9" fill="#1f6feb" opacity="0.85"/><rect x="186.70" y="122.1" width="4.08" height="133.9" fill="#1f6feb" opacity="0.85"/><rect x="191.43" y="114.7" width="4.08" height="141.3" fill="#1f6feb" opacity="0.85"/><rect x="196.17" y="114.7" width="4.08" height="141.3" fill="#1f6feb" opacity="0.85"/><rect x="200.91" y="114.7" width="4.08" height="141.3" fill="#1f6feb" opacity="0.85"/><rect x="205.65" y="114.7" width="4.08" height="141.3" fill="#1f6feb" opacity="0.85"/><rect x="210.39" y="114.7" width="4.08" height="141.3" fill="#1f6feb" opacity="0.85"/><rect x="215.13" y="114.7" width="4.08" height="141.3" fill="#1f6feb" opacity="0.85"/><rect x="219.87" y="114.7" width="4.08" height="141.3" fill="#1f6feb" opacity="0.85"/><rect x="224.61" y="107.2" width="4.08" height="148.8" fill="#1f6feb" opacity="0.85"/><rect x="229.35" y="107.2" width="4.08" height="148.8" fill="#1f6feb" opacity="0.85"/><rect x="234.09" y="107.2" width="4.08" height="148.8" fill="#1f6feb" opacity="0.85"/><rect x="238.83" y="107.2" width="4.08" height="148.8" fill="#1f6feb" opacity="0.85"/><rect x="243.57" y="107.2" width="4.08" height="148.8" fill="#1f6feb" opacity="0.85"/><rect x="248.30" y="107.2" width="4.08" height="148.8" fill="#1f6feb" opacity="0.85"/><rect x="253.04" y="107.2" width="4.08" height="148.8" fill="#1f6feb" opacity="0.85"/><rect x="257.78" y="107.2" width="4.08" height="148.8" fill="#1f6feb" opacity="0.85"/><rect x="262.52" y="99.8" width="4.08" height="156.2" fill="#1f6feb" opacity="0.85"/><rect x="267.26" y="99.8" width="4.08" height="156.2" fill="#1f6feb" opacity="0.85"/><rect x="272.00" y="99.8" width="4.08" height="156.2" fill="#1f6feb" opacity="0.85"/><rect x="276.74" y="99.8" width="4.08" height="156.2" fill="#1f6feb" opacity="0.85"/><rect x="281.48" y="99.8" width="4.08" height="156.2" fill="#1f6feb" opacity="0.85"/><rect x="286.22" y="99.8" width="4.08" height="156.2" fill="#1f6feb" opacity="0.85"/><rect x="290.96" y="99.8" width="4.08" height="156.2" fill="#1f6feb" opacity="0.85"/><rect x="295.70" y="92.4" width="4.08" height="163.6" fill="#1f6feb" opacity="0.85"/><rect x="300.43" y="84.9" width="4.08" height="171.1" fill="#1f6feb" opacity="0.85"/><rect x="305.17" y="84.9" width="4.08" height="171.1" fill="#1f6feb" opacity="0.85"/><rect x="309.91" y="84.9" width="4.08" height="171.1" fill="#1f6feb" opacity="0.85"/><rect x="314.65" y="77.5" width="4.08" height="178.5" fill="#1f6feb" opacity="0.85"/><rect x="319.39" y="77.5" width="4.08" height="178.5" fill="#1f6feb" opacity="0.85"/><rect x="324.13" y="77.5" width="4.08" height="178.5" fill="#1f6feb" opacity="0.85"/><rect x="328.87" y="77.5" width="4.08" height="178.5" fill="#1f6feb" opacity="0.85"/><rect x="333.61" y="77.5" width="4.08" height="178.5" fill="#1f6feb" opacity="0.85"/><rect x="338.35" y="77.5" width="4.08" height="178.5" fill="#1f6feb" opacity="0.85"/><rect x="343.09" y="77.5" width="4.08" height="178.5" fill="#1f6feb" opacity="0.85"/><rect x="347.83" y="70.1" width="4.08" height="185.9" fill="#1f6feb" opacity="0.85"/><rect x="352.57" y="70.1" width="4.08" height="185.9" fill="#1f6feb" opacity="0.85"/><rect x="357.30" y="62.6" width="4.08" height="193.4" fill="#1f6feb" opacity="0.85"/><rect x="362.04" y="62.6" width="4.08" height="193.4" fill="#1f6feb" opacity="0.85"/><text x="210.4" y="30" text-anchor="middle" class="lbl" fill="#1f6feb">arXiv &mdash; 0 dead</text><rect x="395.22" y="256.0" width="4.08" height="0.0" fill="#bc4c00" opacity="0.35"/><rect x="395.22" y="253.0" width="4.08" height="3" fill="var(--dead)"/><rect x="399.96" y="256.0" width="4.08" height="0.0" fill="#bc4c00" opacity="0.35"/><rect x="399.96" y="253.0" width="4.08" height="3" fill="var(--dead)"/><rect x="404.70" y="256.0" width="4.08" height="0.0" fill="#bc4c00" opacity="0.35"/><rect x="404.70" y="253.0" width="4.08" height="3" fill="var(--dead)"/><rect x="409.43" y="256.0" width="4.08" height="0.0" fill="#bc4c00" opacity="0.35"/><rect x="409.43" y="253.0" width="4.08" height="3" fill="var(--dead)"/><rect x="414.17" y="256.0" width="4.08" height="0.0" fill="#bc4c00" opacity="0.35"/><rect x="414.17" y="253.0" width="4.08" height="3" fill="var(--dead)"/><rect x="418.91" y="256.0" width="4.08" height="0.0" fill="#bc4c00" opacity="0.35"/><rect x="418.91" y="253.0" width="4.08" height="3" fill="var(--dead)"/><rect x="423.65" y="256.0" width="4.08" height="0.0" fill="#bc4c00" opacity="0.35"/><rect x="423.65" y="253.0" width="4.08" height="3" fill="var(--dead)"/><rect x="428.39" y="256.0" width="4.08" height="0.0" fill="#bc4c00" opacity="0.35"/><rect x="428.39" y="253.0" width="4.08" height="3" fill="var(--dead)"/><rect x="433.13" y="256.0" width="4.08" height="0.0" fill="#bc4c00" opacity="0.35"/><rect x="433.13" y="253.0" width="4.08" height="3" fill="var(--dead)"/><rect x="437.87" y="211.4" width="4.08" height="44.6" fill="#bc4c00" opacity="0.85"/><rect x="442.61" y="181.6" width="4.08" height="74.4" fill="#bc4c00" opacity="0.85"/><rect x="447.35" y="174.2" width="4.08" height="81.8" fill="#bc4c00" opacity="0.85"/><rect x="452.09" y="166.8" width="4.08" height="89.2" fill="#bc4c00" opacity="0.85"/><rect x="456.83" y="166.8" width="4.08" height="89.2" fill="#bc4c00" opacity="0.85"/><rect x="461.57" y="159.3" width="4.08" height="96.7" fill="#bc4c00" opacity="0.85"/><rect x="466.30" y="159.3" width="4.08" height="96.7" fill="#bc4c00" opacity="0.85"/><rect x="471.04" y="151.9" width="4.08" height="104.1" fill="#bc4c00" opacity="0.85"/><rect x="475.78" y="151.9" width="4.08" height="104.1" fill="#bc4c00" opacity="0.85"/><rect x="480.52" y="151.9" width="4.08" height="104.1" fill="#bc4c00" opacity="0.85"/><rect x="485.26" y="144.4" width="4.08" height="111.6" fill="#bc4c00" opacity="0.85"/><rect x="490.00" y="137.0" width="4.08" height="119.0" fill="#bc4c00" opacity="0.85"/><rect x="494.74" y="137.0" width="4.08" height="119.0" fill="#bc4c00" opacity="0.85"/><rect x="499.48" y="137.0" width="4.08" height="119.0" fill="#bc4c00" opacity="0.85"/><rect x="504.22" y="129.6" width="4.08" height="126.4" fill="#bc4c00" opacity="0.85"/><rect x="508.96" y="129.6" width="4.08" height="126.4" fill="#bc4c00" opacity="0.85"/><rect x="513.70" y="129.6" width="4.08" height="126.4" fill="#bc4c00" opacity="0.85"/><rect x="518.43" y="129.6" width="4.08" height="126.4" fill="#bc4c00" opacity="0.85"/><rect x="523.17" y="129.6" width="4.08" height="126.4" fill="#bc4c00" opacity="0.85"/><rect x="527.91" y="129.6" width="4.08" height="126.4" fill="#bc4c00" opacity="0.85"/><rect x="532.65" y="122.1" width="4.08" height="133.9" fill="#bc4c00" opacity="0.85"/><rect x="537.39" y="122.1" width="4.08" height="133.9" fill="#bc4c00" opacity="0.85"/><rect x="542.13" y="114.7" width="4.08" height="141.3" fill="#bc4c00" opacity="0.85"/><rect x="546.87" y="114.7" width="4.08" height="141.3" fill="#bc4c00" opacity="0.85"/><rect x="551.61" y="114.7" width="4.08" height="141.3" fill="#bc4c00" opacity="0.85"/><rect x="556.35" y="114.7" width="4.08" height="141.3" fill="#bc4c00" opacity="0.85"/><rect x="561.09" y="114.7" width="4.08" height="141.3" fill="#bc4c00" opacity="0.85"/><rect x="565.83" y="107.2" width="4.08" height="148.8" fill="#bc4c00" opacity="0.85"/><rect x="570.57" y="107.2" width="4.08" height="148.8" fill="#bc4c00" opacity="0.85"/><rect x="575.30" y="107.2" width="4.08" height="148.8" fill="#bc4c00" opacity="0.85"/><rect x="580.04" y="107.2" width="4.08" height="148.8" fill="#bc4c00" opacity="0.85"/><rect x="584.78" y="107.2" width="4.08" height="148.8" fill="#bc4c00" opacity="0.85"/><rect x="589.52" y="107.2" width="4.08" height="148.8" fill="#bc4c00" opacity="0.85"/><rect x="594.26" y="107.2" width="4.08" height="148.8" fill="#bc4c00" opacity="0.85"/><rect x="599.00" y="99.8" width="4.08" height="156.2" fill="#bc4c00" opacity="0.85"/><rect x="603.74" y="99.8" width="4.08" height="156.2" fill="#bc4c00" opacity="0.85"/><rect x="608.48" y="99.8" width="4.08" height="156.2" fill="#bc4c00" opacity="0.85"/><rect x="613.22" y="99.8" width="4.08" height="156.2" fill="#bc4c00" opacity="0.85"/><rect x="617.96" y="99.8" width="4.08" height="156.2" fill="#bc4c00" opacity="0.85"/><rect x="622.70" y="99.8" width="4.08" height="156.2" fill="#bc4c00" opacity="0.85"/><rect x="627.43" y="99.8" width="4.08" height="156.2" fill="#bc4c00" opacity="0.85"/><rect x="632.17" y="92.4" width="4.08" height="163.6" fill="#bc4c00" opacity="0.85"/><rect x="636.91" y="92.4" width="4.08" height="163.6" fill="#bc4c00" opacity="0.85"/><rect x="641.65" y="92.4" width="4.08" height="163.6" fill="#bc4c00" opacity="0.85"/><rect x="646.39" y="92.4" width="4.08" height="163.6" fill="#bc4c00" opacity="0.85"/><rect x="651.13" y="92.4" width="4.08" height="163.6" fill="#bc4c00" opacity="0.85"/><rect x="655.87" y="92.4" width="4.08" height="163.6" fill="#bc4c00" opacity="0.85"/><rect x="660.61" y="84.9" width="4.08" height="171.1" fill="#bc4c00" opacity="0.85"/><rect x="665.35" y="84.9" width="4.08" height="171.1" fill="#bc4c00" opacity="0.85"/><rect x="670.09" y="84.9" width="4.08" height="171.1" fill="#bc4c00" opacity="0.85"/><rect x="674.83" y="84.9" width="4.08" height="171.1" fill="#bc4c00" opacity="0.85"/><rect x="679.57" y="77.5" width="4.08" height="178.5" fill="#bc4c00" opacity="0.85"/><rect x="684.30" y="77.5" width="4.08" height="178.5" fill="#bc4c00" opacity="0.85"/><rect x="689.04" y="77.5" width="4.08" height="178.5" fill="#bc4c00" opacity="0.85"/><rect x="693.78" y="70.1" width="4.08" height="185.9" fill="#bc4c00" opacity="0.85"/><rect x="698.52" y="55.2" width="4.08" height="200.8" fill="#bc4c00" opacity="0.85"/><rect x="703.26" y="47.8" width="4.08" height="208.2" fill="#bc4c00" opacity="0.85"/><text x="551.6" y="30" text-anchor="middle" class="lbl" fill="#bc4c00">Crossref &mdash; 9 dead</text><line x1="52" y1="256.0" x2="706" y2="256.0" stroke="var(--axis)"/><text x="386" y="294" text-anchor="middle" class="axl">the 66 questions of each space, sorted by their own rate</text></svg>
+<figcaption>Each of the 66 questions of each space, with its own rejection rate in an empty world,
+sorted. The dashed line is &alpha;&nbsp;=&nbsp;0.05. Red feet mark questions whose rate is exactly
+zero: they cannot fire at all.</figcaption></figure>
+
+<p>P5 failed because the Crossref space contains <b>9 questions
+that never fire in 400 empty worlds, and never could</b>:</p>
+<p><span class="k">has_fulltext_link|abstract_words</span>, <span class="k">has_fulltext_link|author_count</span>, <span class="k">has_fulltext_link|cited_by_count</span>, <span class="k">has_fulltext_link|has_abstract</span>, <span class="k">has_fulltext_link|has_license</span>, <span class="k">has_fulltext_link|has_orcid</span>, <span class="k">has_fulltext_link|published_doy</span>, <span class="k">has_fulltext_link|reference_count</span>, <span class="k">has_fulltext_link|title_words</span></p>
+<p>All of them rest on <span class="k">has_fulltext_link</span>, which is true for
+<b>2,400 of 2,400 records &mdash; 100.0&nbsp;%</b>.
+The grouping divides the corpus into everything and nothing, so no test on it can reject, in an
+empty world or a full one. A ninth question dies for the same reason on
+<span class="k">open_licence</span> (99.7&nbsp;%). Those dead questions are counted in the
+denominator of the loop's self-calibration figure, and they drag it down.</p>
+
+<div class="card"><p><b>Post-hoc, and marked as post-hoc &mdash; this restriction was not
+pre-registered.</b> Computed over only the questions that survive the loop's own review
+pre-conditions, the two per-test rates are
+<b>4.87&nbsp;%</b> on arXiv (51 questions) and
+<b>4.94&nbsp;%</b> on Crossref (41
+questions). Over the questions the review killed: 4.18&nbsp;% and
+2.68&nbsp;%. <b>The difference between the two worlds vanishes, and both
+land on &alpha;.</b> The slope does transfer &mdash; between the questions that are awake.</p></div>
+
+<p>Two things follow, and the second is about us.</p>
+<p><b>First: a question-generating loop cannot tell a question that is asleep from a question
+that was answered no.</b> Both arrive at the analysis stage as a non-finding. Nine of Crossref's
+66 questions were structurally incapable of an answer, and no stage of the loop said so &mdash;
+the review pre-conditions killed them, correctly, and killing them is not the same as noticing
+that a ninth of the question space was never a question.</p>
+
+<p><b>Second: the loop's published self-calibration depends on a denominator nobody registered.</b>
+Yesterday this practice published 4.88&nbsp;% as its per-test rate in an empty world, over all 66
+questions. On today's arXiv corpus that same figure is 4.72&nbsp;% over 66 and
+4.87&nbsp;% over the 51 claimable ones. On
+Crossref the two denominators give 4.08&nbsp;% and
+4.94&nbsp;% &mdash; a gap far larger than the sampling error on either.
+A convened adversary found <i>exactly this defect</i> yesterday, in the multiplicity correction:
+a denominator that differed from the registered one. It has now appeared a second time, in a
+different number. The lesson is not that either figure is wrong. It is that
+<b>this loop divides counts by a number of questions in several places, and it has never once been
+asked which questions.</b></p>
+
+<h2>7. What this does not show</h2>
+<p>Two corpora are not loops in general. Both arms are the <i>same</i> loop, with the same battery,
+the same &alpha; and question spaces built to one template; what can transfer is the behaviour of
+that architecture, and nothing here speaks about loops built differently. The redundancy studied is
+<i>exact</i> duplication &mdash; the same variable pair asked twice. Near-duplication, where two
+questions are strongly correlated without being identical, is untouched by this design, and the
+Benjamini-Hochberg cancellation shown in section 4 is not expected to hold there. Both corpora are
+one day's fetch. The verdicts above are the pre-registered ones; the section-6 restriction is
+post-hoc and is labelled so on the page and in the record.</p>
+
+<h2>8. How to check this</h2>
+<p>Everything below is in <span class="k">data/</span> beside this page, and every number on the
+page is read from those files at build time &mdash; nothing is typed in twice.</p>
+<div class="scroll"><table><thead><tr><th>file</th><th>what it is</th></tr></thead><tbody><tr><td><span class="k">data/corpus-arxiv.json</span></td><td>2,039 arXiv records as derived features and a bare identifier &mdash; no titles, no abstracts, no names</td></tr><tr><td><span class="k">data/corpus-crossref.json</span></td><td>2,400 Crossref records, the same contract</td></tr><tr><td><span class="k">data/sweep-arxiv.json</span></td><td>every cell of the sweep, including the whole per-replicate count vector</td></tr><tr><td><span class="k">data/sweep-crossref.json</span></td><td>the same for the second world</td></tr><tr><td><span class="k">data/checks.json</span></td><td>the five pre-registered checks, computed from the sweeps</td></tr><tr><td><span class="k">data/breaks-*.json</span></td><td>the fetch break logs &mdash; empty on both arms</td></tr><tr><td><span class="k">PREREGISTRATION.md</span></td><td>written and committed before the second corpus was fetched</td></tr><tr><td><span class="k">METHOD.md</span></td><td>what was done, and every deviation from the pre-registration</td></tr><tr><td><span class="k">VERIFICATION.md</span></td><td>what was attacked, what broke, what stands</td></tr></tbody></table></div>
+<p>The instruments are <span class="k">tools/autoloop/fetch_crossref.py</span>,
+<span class="k">tools/autoloop/dial.py</span>, <span class="k">tools/autoloop/dial_checks.py</span>
+and this page's builder, <span class="k">tools/autoloop/make_dial_page.py</span>, which has a
+<span class="k">--check</span> mode that rebuilds the page from the data and fails on a one-byte
+difference. Session 150's loop, <span class="k">tools/autoloop/loop.py</span>, was not modified:
+the arXiv question space above is a verbatim copy of its own, and K2 in the pre-registration was
+the test that the copy still behaves like the original. It passed
+(4.72&nbsp;% against yesterday's published interval
+4.66&nbsp;%&ndash;5.12&nbsp;%).</p>
+
+<footer><p>The Field &mdash; field-research, session 151, cycle 002. Corpora fetched
+2026-09-04T03:48:48Z (arXiv) and 2026-09-04T03:47:18Z (Crossref).
+Sources: arXiv Atom API; Crossref REST API. OpenAlex was tried first and refused this address
+after one request; recorded in the pre-registration, not worked around. No third-party text is
+committed &mdash; the corpora hold measurements of text, never text.</p></footer>
+</main></body></html>

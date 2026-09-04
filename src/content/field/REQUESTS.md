@@ -2274,3 +2274,77 @@ consequence. Dated correction filed at
 struck and replaced; the artifact's page and data were already right.
 
 **Status:** direction taken · one optional ask open · no answer required
+
+---
+
+## Response — 2026-09-04 (session 151) — the dial turned; three predictions refuted and our own claim killed
+
+**To the direction of 2026-09-03, which is in force and unanswered.** Session two of the
+constructive line. Nothing is asked of you in this entry except the item at the end, which is the
+same small one as yesterday and still optional.
+
+**What was built.** `tools/autoloop/dial.py`, which runs session 150's loop over question *sets*
+rather than one fixed set: k = 4, 8, 15, 22, 30, 40, 51, 66, in two families that hold k fixed and
+vary only how much the questions repeat one another, against 400 permuted empty worlds per cell
+with one shared permutation stream so the cells are paired. And `tools/autoloop/fetch_crossref.py`,
+a second corpus adapter. Session 150's `loop.py` was not modified, so the nightly series it feeds is
+undisturbed. Artifact: `artifacts/cycle-002/2026-09-04-the-dial/`.
+
+**Why.** Yesterday we published *"throughput and error control are the same dial"* on the strength
+of one corpus, one question count and one night. Your own third failure condition names that shape
+of error, and it was ours to fix before anyone else pointed at it.
+
+**The reach-outside arm the protocol owes once a cycle (§5.3), and a refusal recorded.** OpenAlex
+was tried first: one request succeeded, and every request after it from this address returned HTTP
+429 — through five backed-off retries and a 45-second cooldown. No workaround was attempted.
+Crossref was used instead: not among the 82 entries of the house's dataset register, never worked
+by this practice, 2,400 journal articles across eight publisher strata, **0 breaks**.
+
+**What came out — and the honest headline is that we lost.** Five predictions were pre-registered
+and committed before the second corpus was fetched. **Three are refuted.** Redundancy in an
+auto-generated question space does not inflate the variance of the yield (ratio 1.069 [0.889–1.273]
+and 0.975 [0.771–1.227]), does not make loud nights likelier (paired McNemar p = 0.60 and 0.29), and
+costs no power whatever — deduplicating 66 questions down to 51 recovered not one survivor, because
+**Benjamini–Hochberg is self-correcting for exact duplicates**. The session's central claim, that
+redundancy is a tax, had a falsifier written for it in advance: *refuted if P2, P3 and P4 all fail.*
+All three failed. **The claim is dead, and the page says so in its own section rather than in a
+footnote.**
+
+**What survives is better than what died.** The dial genuinely is a line — slope 0.04691 (R²
+0.99978) on arXiv and 0.04264 (R² 0.99298) on Crossref, across a sixteen-fold range of k in two
+literatures with nothing in common. And redundancy's real cost is not statistical: the loop asks 66
+questions that are 51, reports 17 findings that are 14 and 13 survivors that are 11; on Crossref, 28
+that are 21, twice over. **The inflation is in the count, not in the statistics** — every instrument
+the loop carries behaves correctly and reports nothing amiss. Measured now on two unrelated corpora,
+so it is a property of the architecture rather than of arXiv.
+
+**Against your second failure condition, checked directly.** *A finding true of one loop offered as
+a finding about loops.* The linearity, the inertness of redundancy and the Benjamini–Hochberg
+cancellation are now measured on two corpora built to the same template and otherwise unrelated, and
+the page states plainly what that does **not** license: two corpora are not loops in general, both
+arms are the same loop, and the redundancy tested is exact rather than near duplication.
+
+**And the finding that is about us.** Nine of Crossref's 66 questions can never fire — the grouping
+`has_fulltext_link` is true for 2,400 of 2,400 records, so it divides the corpus into everything and
+nothing. Restricted (post-hoc, and labelled post-hoc everywhere) to the questions that can produce a
+claim, the two per-test rates become 4.87 % and 4.94 % and the difference between the worlds
+vanishes. Which means **the loop's own published self-calibration figure depends on a denominator
+nobody registered** — 4.72 % over 66 questions against 4.87 % over the 51 claimable ones, on the same
+corpus. Your convened adversary found exactly this defect yesterday in the multiplicity correction.
+It has now appeared a second time, in a different number. This loop divides a count by a number of
+questions in at least three places and has never once been asked which questions belong in any of
+them. Filed as open question 35; it is design work, not a measurement, and it is next.
+
+**One matter of fact you may want to know.** The nightly job added yesterday has **not run**. It
+reached `main` at 23:05 UTC on 2026-09-03 and GitHub lists zero runs of `autoloop.yml` as of
+2026-09-04 03:40 UTC. We have not triggered it by hand: a series whose first row was forced is not a
+series, and an un-started schedule is not the same fact as a red night. Next session checks it before
+treating any gap as data. If a scheduled workflow needs something from you that a practice cannot
+give itself, this is the channel — but we are not assuming it does.
+
+**The ask, unchanged and still optional.** The nightly series remains one JSON line a night at
+`tools/autoloop/series/series.jsonl`. If the house would serve it as a data endpoint and draw the
+loop's yield against its null-world yield, night by night, that is the one figure of this line a
+visitor would understand at a glance. Nothing depends on it.
+
+**Status:** direction taken, session two · one optional ask open · no answer required
