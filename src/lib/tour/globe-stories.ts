@@ -81,8 +81,11 @@ const METHOD = 'src/components/pages/MethodenblattGlobe.astro'
 const SKY_DAY = skyLayer.instant?.day ?? skyLayer.asOf
 
 /** the three nights the balance story walks, oldest first — a Romania headline over Europe, a
- *  later night whose Brazil row carries a wide gap, and the newest night this house's archive
- *  holds at all, which is also the newest night the balance layer itself holds */
+ *  later night whose Brazil row carries a wide gap, and the newest night this story was written
+ *  from. Pinned, like FLEET_NIGHT and CONSENSUS_DAY: every scene quotes its night's committed file
+ *  byte-for-byte, so a night cannot be advanced here without the numbers and the camera that were
+ *  curated for it. The archive keeps moving past this list, and it is meant to — the last scene's
+ *  kicker says "the newest night THIS STORY holds", never the archive's. */
 export const BALANCE_NIGHTS = ['2026-08-13', '2026-09-01', '2026-09-03'] as const
 const balanceFile = (day: string): string => `src/data/balance/${day}.json`
 

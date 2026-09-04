@@ -253,8 +253,21 @@ describe('the balance story walks three nights, camera Europe to the Americas', 
     expect(days[days.length - 1]).toBe(BALANCE_NIGHTS[BALANCE_NIGHTS.length - 1])
   })
 
-  it('ends on the newest night this house’s whole archive holds', () => {
-    expect(BALANCE_NIGHTS[BALANCE_NIGHTS.length - 1]).toBe(model.newest)
+  // This once asserted that the last night walked was `model.newest` — the newest day ANY layer of
+  // the globe holds. That was true on the evening the story was written and false by the next
+  // morning: `model.newest` moves the moment any layer gains a day, and the protokoll pipeline
+  // commits one every night, so the assertion took the whole build red on its first night and would
+  // have every night after. The story cannot follow it. Its scenes quote committed files
+  // byte-for-byte, so each night it walks is pinned by the numbers the frame copy stands on —
+  // the same way FLEET_NIGHT, CONSENSUS_DAY and WORLD_DAY are pinned, and none of those claims to
+  // be newest. The page never made the claim either: this scene's kicker reads "THE NEWEST NIGHT
+  // THIS STORY HOLDS", not the archive's. What is worth guarding is that the night the story ends
+  // on is its own latest and still carries the layer it switches on — a pinned night whose data
+  // went away would leave the reader on an empty sphere.
+  it('ends on the latest of the nights it walks, and that night still carries this layer', () => {
+    const last = BALANCE_NIGHTS[BALANCE_NIGHTS.length - 1]
+    expect([...BALANCE_NIGHTS]).toEqual([...BALANCE_NIGHTS].sort())
+    expect(frameAt(model, last).layers.balance!.records.length).toBeGreaterThan(0)
   })
 
   it('moves its camera from Europe into the Americas, and stays there once it arrives', () => {
