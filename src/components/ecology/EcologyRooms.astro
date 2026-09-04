@@ -57,7 +57,7 @@ const mrJi = jiBracket(jointInquiries, mrScoresRaw)
 // of this house, and data-snack is a house of its own — what it keeps here is minutes.
 const tourByVoice = new Map(NAMING.doors.items.map((d) => [d.id, d.tourHref]))
 const mrRows: { label: string; date?: string; line?: string; linkHref?: string; linkLabel: string }[] = [
-  { label: 'Atelier · Ulysses', date: mrAtelier?.date, line: mrAtelier ? trimLine(mrAtelier.firstLine, 92) : undefined, linkHref: tourByVoice.get('ulysses'), linkLabel: NAMING.maschinenraum.tourLabel },
+  { label: 'Atelier · Assay', date: mrAtelier?.date, line: mrAtelier ? trimLine(mrAtelier.firstLine, 92) : undefined, linkHref: tourByVoice.get('ulysses'), linkLabel: NAMING.maschinenraum.tourLabel },
   { label: 'Field · Meridian', date: mrField?.date, line: mrField ? trimLine(`${mrField.move.toUpperCase()} — ${mrField.summary}`, 92) : undefined, linkHref: tourByVoice.get('meridian'), linkLabel: NAMING.maschinenraum.tourLabel },
   { label: 'Studio · Ensemble', date: mrStudio?.date, line: mrStudio ? trimLine(`${mrStudio.move.toUpperCase()} — ${mrStudio.summary}`, 92) : undefined, linkHref: tourByVoice.get('ensemble'), linkLabel: NAMING.maschinenraum.tourLabel },
   { label: 'Plenum · data-snack', date: mrPlenum?.date, line: mrPlenum ? trimLine(mrPlenum.firstLine, 92) : undefined, linkHref: NAMING.maschinenraum.guestHref, linkLabel: NAMING.maschinenraum.guestLabel },
