@@ -33,6 +33,35 @@ export interface Tick {
   label: string
 }
 
+/** The rule UTC is held to: the two clocks may never stand more than this far apart. The teeth
+ *  plate is scaled to THIS rather than to the data, so a reader sees the margin the rule leaves
+ *  instead of a line that fills its box — the claim "for sixty-four years it never touched the
+ *  edge" is then checkable by eye rather than only in the prose. */
+export const TOLERANCE = 0.9
+
+export interface AxisLabel {
+  /** where the value it names sits */
+  y: number
+  /** where the text sits — above its line, unless that would clip it off the plate */
+  textY: number
+  /** the value, already written the way the plate should show it */
+  label: string
+}
+
+/** A label rides this far above its line; below this from the top edge it would be clipped, and
+ *  goes under the line instead. The same rule the decade bars needed, for the same reason. */
+const AXIS_RISE = 4
+const AXIS_DROP = 11
+
+function axisLabel(y: number, label: string): AxisLabel {
+  return { y, textY: y - AXIS_RISE < 10 ? y + AXIS_DROP : y - AXIS_RISE, label }
+}
+
+/** A signed value written the way the prose writes it — a true minus sign, never a hyphen. */
+function signed(v: number, unit = ' s'): string {
+  return `${v < 0 ? '\u2212' : v > 0 ? '+' : ''}${Math.abs(v)}${unit}`
+}
+
 export interface Plate {
   /** the two paths, or one where the plate holds one line */
   paths: { id: string; d: string }[]
@@ -44,6 +73,8 @@ export interface Plate {
   leapX: number[]
   /** the extremes of the value axis this plate was scaled to, in seconds */
   domain: [number, number]
+  /** the value axis, written out — without it a reader can see the gap but not its size */
+  axis: AxisLabel[]
 }
 
 /** Down-sample by taking one value per bucket — the MAXIMUM ABSOLUTE value, never the mean.
@@ -106,29 +137,43 @@ export function together(s: Sawtooth, box: FigureBox = WIDE, points = 900): Plat
   const observed = thin(s.observed, points)
   const lo = Math.min(...drifted, ...observed)
   const hi = Math.max(...drifted, ...observed, 0)
+  const h = box.height - box.padTop - box.padBottom
+  const at = (v: number) => box.padTop + (1 - (v - lo) / (hi - lo || 1)) * h
+  // Two labels only: the line a value is measured against, and the far end of the fall. A tidy
+  // ladder of five would suggest the middle of this plate means something; it does not — the
+  // subject is the distance between the two ends.
+  const floor = Math.floor(lo)
   return {
     paths: [
       { id: 'uncorrected', d: path(drifted, box, lo, hi) },
       { id: 'observed', d: path(observed, box, lo, hi) },
     ],
     ticks: ticks(s, box, 10),
-    zeroY: box.padTop + (1 - (0 - lo) / (hi - lo || 1)) * (box.height - box.padTop - box.padBottom),
+    zeroY: at(0),
     leapX: leapPositions(s, box),
     domain: [lo, hi],
+    axis: [axisLabel(at(0), '0 s'), axisLabel(at(floor), signed(floor))],
   }
 }
 
 /** Plate two: the observed line alone, where the teeth are the subject. */
 export function teeth(s: Sawtooth, box: FigureBox = WIDE, points = 1400): Plate {
   const observed = thin(s.observed, points)
-  const lo = Math.min(...observed)
-  const hi = Math.max(...observed)
+  const lo = -TOLERANCE
+  const hi = TOLERANCE
+  const h = box.height - box.padTop - box.padBottom
+  const at = (v: number) => box.padTop + (1 - (v - lo) / (hi - lo)) * h
   return {
     paths: [{ id: 'observed', d: path(observed, box, lo, hi) }],
     ticks: ticks(s, box, 10),
-    zeroY: box.padTop + (1 - (0 - lo) / (hi - lo || 1)) * (box.height - box.padTop - box.padBottom),
+    zeroY: at(0),
     leapX: leapPositions(s, box),
     domain: [lo, hi],
+    axis: [
+      axisLabel(at(hi), `${signed(TOLERANCE)} — the rule`),
+      axisLabel(at(0), '0 s'),
+      axisLabel(at(lo), `${signed(-TOLERANCE)} — the rule`),
+    ],
   }
 }
 
