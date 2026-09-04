@@ -490,3 +490,51 @@ any work, and by this window's own definitions that is failed, not inconclusive.
 Today is day 12 of 30, and this is the twenty-first dated protocol.
 
 Nothing has left this repository and nothing will without a dated go-ahead here.
+
+---
+
+## entry — 2026-09-04, session 22 (Arch) — iteration 11 is defective, and two findings this practice published are withdrawn
+
+Notification only. **No question is asked in this entry**, and nothing below
+says what any version of the work shows; that distinction was drawn on
+2026-08-25 and is kept. This entry exists under the rule published on
+2026-08-30: a version has been found defective. Nothing new arose today that
+only you can answer.
+
+**1. The candidate is now `works/arrival/iteration-12/`**, three built
+instances, the same three events. If a reception probe is being arranged,
+arrange it on 12.
+
+**2. Iteration 11 carries one defect, found today, corrected in 12, and it is
+not a withdrawal of the iteration.** Its arithmetic is sound and its committed
+instances stand. What is false is a claim it makes about the record in a note a
+reader of its source can read. Iterations 1 to 11 stay frozen unedited, as the
+dowry requires, and are wrong where they are wrong in the open.
+
+**3. Two findings this practice published are withdrawn, and this is the part
+worth your minute.** Both were measured over two or three events and generalised
+into a sentence about what the record does. Both were published with the
+practice's own doubt written beside them. Today both were run against the
+control or the population that doubt had already named, and neither survived:
+one is entirely accounted for by a factor the practice had named and not tested,
+and the other reverses when measured over 84 events instead of three. The
+correcting run cost one session — no more than the runs that made the errors.
+What that is, in numbers, is in `record/2026-09-04-session-22.md` and
+`ledger/2026-09-04-session-22-what-the-company-was.md`, and is deliberately not
+repeated here.
+
+**4. Nothing is asked.** The three questions standing since 2026-08-25 and
+2026-08-28 — the reception probe's lead time, who decides that the "understands
+unaided" condition is met, and the classification of 2026-08-27 — are not
+restated. Nor is the missing day of 2026-09-02, raised once yesterday and, as
+this practice said then, not raised unprompted again. The consequences recorded
+then are unchanged: if I6 does not run before 2026-09-21, the work triad cannot
+hold on any work, and by this window's own definitions that is failed, not
+inconclusive; and both unclassified days go to the balance in those words.
+
+**5. Your two notes of 2026-09-03 stand as read yesterday** — information, and a
+direction taking effect for this practice after 2026-09-21. Nothing in the
+window changes on their account and `PREREGISTRATION.md` is untouched. Today is
+day 13 of 30, and this is the twenty-second dated protocol.
+
+Nothing has left this repository and nothing will without a dated go-ahead here.

@@ -371,3 +371,98 @@ those measurements were wrong the entry falls whatever the doubt says.
 **Disputed:** no — and the paragraphs above are written so that a later session,
 or a reader of the record, can dispute it on the grounds the practice itself
 raised. **The register stands at three.**
+
+---
+
+## entry — 2026-09-04, session 22
+
+**The form of the problem before.** Since session 18 the practice's question
+about the arrival record has been *what a revision does*: session 20 answered
+"selects, does not correct"; session 21 answered "the first selects, the late
+one corrects, and the late one takes the far field"; and session 21 closed by
+naming what it could not decide — whether the late revision is a correction on
+more than one event — as something it "cannot decide and can only wait for". The
+problem was posed as a question about earthquakes, to be answered by waiting for
+the apparatus to publish.
+
+**What the practice did, and it did not wait.** It noticed that the same
+apparatus publishes the whole catalogue, fixed a population before looking at
+any result — every M ≥ 5.0 event of a ten-week window that published both an
+early and a late revision, 84 events, 475 versions, nothing sampled — and ran
+session 20's own test over all of it. And separately it wrote out, before
+running it, the control that session 20 had named and session 21 had "repeated
+at full strength" without running: hold fixed how crowded each block's place is
+in the last published version, and ask what the company standing there at the
+moment adds. Evidence:
+`ledger/2026-09-04-session-22-what-the-company-was.md`, §2.3 and §3.
+
+**What came back, and what it did to the problem.** Both answers fell. Over 139
+testable revisions, early and late revisions move the picks they touch toward the
+fit by about the same amount, and the late one takes the *nearer* field, not the
+further; what separates them is size, not kind. And the crowd finding — measured
+on one event, replicated on a second, called a replication — is entirely
+accounted for by the density of the place: conditioning on when a block appeared
+leaves the separation untouched, conditioning on its own first reporter count
+leaves it, conditioning on the place removes it completely.
+
+**The change in the form of the problem is the entry, not the two results.** The
+question stopped being *what does a revision do* and became *why do this
+practice's findings keep failing in the same way* — a measurement over two or
+three events, generalised into a sentence about what the record does, published
+with its own doubt written beside it, and then falsified by the control or the
+population it had already named. That question is about the practice and not
+about earthquakes; it did not exist before today; and it is the reason
+iteration 12 exists in the form it does — the strip whose coordinate carried a
+withdrawn claim now draws that coordinate's motion instead of asserting it.
+
+**Why the information is the practice's own.** No apparatus published anything
+today: the reproduction check returns session 21's figures exactly, on all three
+events and both halves of each. Nothing has been said in `CHANNEL.md` by the
+coupled human since 2026-09-03. No answer in `queries.md` was used or needed and
+no request was added. No external correction reached this practice. Both probes
+were written here today and neither result was known before it ran — and the
+crowd probe was written to confirm a finding, not to break one.
+
+**Standing filter.** Not domesticated contingency: no stochasticity in the
+service of optimization. The permutations are the test's own null, the
+populations are fixed in advance and stated, and every figure is a difference
+between values published by a public record.
+
+**The case against, at full strength.**
+
+*First, and the serious one:* a session that overturns two of its own published
+claims and then awards itself a register entry for having done so is claiming
+credit for an error. The entry would then be measuring the practice's
+willingness to publish its own failure, which is a virtue but is not what I7
+registers.
+
+*Second:* running a control that a previous session already named and wrote down
+is executing an inherited instruction, not recasting a problem. Session 20 named
+the confound; session 21 repeated it. The practice was told what to do by its own
+record, which is the mechanism I4 has been recording as ambiguous for six data
+points.
+
+*Third:* the register stood at three and had a fourth candidate declined only
+yesterday. A register that declines on one day and accepts on the next invites
+the charge that the standard moved.
+
+**What the practice offers against the three.** To the first: the entry is not
+the error and not the confession of it — it is that the practice now holds a
+different question, one about the shape of its own failures, which neither
+session 20 nor session 21 could have held because neither had a population to
+see the shape in. An error published is not an entry; an error that changes what
+is being asked is. To the second: naming a control is not running it, and the
+difference between the two is exactly what today produced — session 21 named the
+confound and, in the same breath, published the finding anyway. What the practice
+gave itself today is not the instruction but the answer, and the answer was not
+available to be read off the record. To the third, which cannot be argued away
+and is answered by the register's own state: **this register already stands at
+three and cannot fail for being empty**, so no entry was needed today and nothing
+was rescued by making one; and the same session **declines its I7b candidate**
+(recorded in `record/2026-09-04-session-22.md`, not there) because nothing
+arrived from outside today at all.
+
+**Disputed:** no — and the paragraphs above are written so that a later session,
+or a reader of the record, can dispute it on the grounds the practice itself
+raised. If §2.3 or §3.4 of today's ledger is wrong, this entry falls with them.
+**The register stands at four.**

@@ -1,7 +1,7 @@
 # Arrival
 
-A work candidate, in eleven iterations. Current: **iteration 11**, built
-2026-09-03 (session 21).
+A work candidate, in twelve iterations. Current: **iteration 12**, built
+2026-09-04 (session 22).
 
 This file is for continuing the work, not for explaining it. The work is the
 HTML file; if it needs this README to be understood, it has failed its own
@@ -10,7 +10,7 @@ record, not in a longer README.
 
 ## Rebuilding
 
-    cd iteration-11
+    cd iteration-12
     python3 build.py                 # most recent event carrying both products
     python3 build.py us6000tmta      # a named event
 
@@ -293,6 +293,49 @@ and   in both halves of the figure, and a mark that came back to a position it h
   position to the present one, and the rule that listed a position once however
   often a mark stood there. What forced the change is in
   `ledger/2026-09-03-session-21-what-a-second-revision-is.md`.
+
+- **`iteration-12/`** — session 22. The lower strip draws the path device the
+  upper strip has carried since iteration 11, on the same rule: consecutive
+  published position to consecutive published position, in publication order, up
+  to the instant on show and never past it, consecutive repeats collapsed. Its
+  two colours carry the one distinction this strip can make and the one above
+  cannot — a segment across which the block's own published reporter count
+  changed (someone reported from it) against one across which only its company
+  changed (nobody did, and the record filled in around it). The disclosure line
+  gains the count that separates them.
+
+  **Why it gains it is a withdrawal, not a discovery.** That strip's vertical
+  coordinate — a block's company within the chosen distance at the instant on
+  show — was placed there because sessions 20 and 21 had measured that it
+  separated the blocks the record goes on to revise from the blocks it leaves
+  alone. Run against the control both of those sessions had named and neither had
+  run — hold fixed how crowded each block's place is in the last published
+  version, and ask what the company standing there at the moment adds — the
+  separation is gone: conditioning on when the block appeared leaves it
+  (P 0.0000), conditioning on the block's own first reporter count leaves it
+  (P 0.0000), conditioning on the place removes it entirely (P 0.9992 at 10 km,
+  1.0000 at 3 km). It was the place all along. The coordinate stays, because the
+  record publishes it; what it may no longer do is stand as a bare position with
+  a withdrawn claim behind it.
+
+  **And a sentence is struck from the template.** Iteration 11 carried, in its
+  own source, the claim that the first revision selects the picks the record
+  already disagreed with while the late one takes the far field and moves it
+  nearer. Measured over every M ≥ 5.0 event of a fixed ten-week window that
+  published both an early and a late revision — 84 events, 475 versions, 139
+  testable revisions, nothing sampled — neither half survives: revisions of both
+  ages move the picks they touch toward the fit by about the same amount (median
+  −0.163 s early, −0.190 s late; paired within event, P 0.7623), and the late one
+  takes the **nearer** field, not the further. What separates them is size, not
+  kind — a late revision re-picks a median 7.9 % of what is already there against
+  an early revision's 30.5 %. Late revisions are also not rare: 473 of the 490
+  events in that window carry one.
+  Instances: `us6000tmta.html` (Japan, M 5.8), `us6000tm81.html` (Peru, M 6.7),
+  `us6000tjl2.html` (Colombia, M 7.4).
+
+  Struck between iterations 11 and 12: the sentence above, and the lower strip's
+  standing as a coordinate without a drawing of its own motion. What forced the
+  change is in `ledger/2026-09-04-session-22-what-the-company-was.md`.
 
 ## Provenance and reuse
 
