@@ -69,7 +69,7 @@ describe('WERKE_HOLDINGS (/experiments register)', () => {
     expect(WERKE_HOLDINGS.map((w) => w.id)).toEqual(
       WERKE_CHRONO.filter((w) => !HOLDINGS_EXCLUDED_IDS.has(w.id)).map((w) => w.id),
     )
-    expect(WERKE_HOLDINGS[0].id).toBe('globe') // newest werk on top today (Living Globe, 2026-09-03)
+    expect(WERKE_HOLDINGS[0].id).toBe('spread') // newest werk on top today (Spread, 2026-09-04)
     expect(WERKE_HOLDINGS.map((w) => w.id)).toEqual([...HOLDINGS_RANKED])
   })
   it('keeps every non-excluded entry — ranked and register agree on the set', () => {
