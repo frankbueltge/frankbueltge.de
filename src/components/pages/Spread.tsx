@@ -44,6 +44,7 @@ export interface SpreadWording {
   figureLabel: string
   scaleHint: string
   formHint: string
+  pauseLegend: string
   pauseLabel: string
   resumeLabel: string
   pauseHint: string
@@ -507,17 +508,27 @@ export default function Spread({ wording, id, readoutId }: SpreadProps) {
           ctx.lineTo(xTime(b.time), yPrice(b.low))
         }
         ctx.closePath()
-        ctx.fillStyle = rgba(ink.band, (remarkable ? BAND_ALPHA_REMARKABLE : BAND_ALPHA_NORMAL) * breathe)
+        // At rest the band is the frame's own accent, which in this house's mono skin is a tone
+        // rather than a hue — a slightly darker grey, and that is right for the ninety-odd percent
+        // of the time when the venues agree to within a few dollars. The moment they do not is the
+        // subject of the work, so it wears the recorded live ink instead (spread.css's header).
+        const bandInk = remarkable ? ink.flare : ink.band
+        ctx.fillStyle = rgba(bandInk, (remarkable ? BAND_ALPHA_REMARKABLE : BAND_ALPHA_NORMAL) * breathe)
         ctx.fill()
-        ctx.strokeStyle = rgba(ink.band, Math.min(1, (remarkable ? 0.9 : 0.45) * breathe))
-        ctx.lineWidth = remarkable ? 1.6 : 1
+        ctx.strokeStyle = rgba(bandInk, Math.min(1, (remarkable ? 0.95 : 0.45) * breathe))
+        ctx.lineWidth = remarkable ? 1.8 : 1
         ctx.stroke()
       }
 
       // trade marks: filled triangle-up = buy, hollow triangle-down = sell
       for (const t of trades) {
         const age = (now - t.time) / WINDOW_MS
-        const alpha = clamp(1 - age, 0.12, 1)
+        // A busy minute puts thousands of marks in this window, and at full opacity they merge
+        // into one black mass — which is what the first build looked like. Held under half, the
+        // same crowd builds TONE instead: where the trading was thick the field darkens, where it
+        // was thin single marks stay readable, and the shape of the last few minutes is legible
+        // from across the room (2026-09-04).
+        const alpha = clamp(1 - age, 0.08, 1) * 0.42
         const r = clamp(Math.sqrt(Math.max(t.size, 0)) * 9, SIZE_MIN_R, SIZE_MAX_R)
         const x = xTime(t.time)
         const y = yPrice(t.price)
@@ -570,7 +581,9 @@ export default function Spread({ wording, id, readoutId }: SpreadProps) {
           const x = xTime(selected.time)
           ctx.save()
           ctx.setLineDash([4, 3])
-          ctx.strokeStyle = rgba(ink.mark, 0.9)
+          // the recorded live ink again: a moment picked out of the ledger is the same kind of
+          // thing as a band that is flaring — the one place in the field the reader is pointing at
+          ctx.strokeStyle = rgba(ink.flare, 0.95)
           ctx.lineWidth = 1.4
           ctx.beginPath()
           ctx.moveTo(x, 0)
@@ -728,40 +741,60 @@ export default function Spread({ wording, id, readoutId }: SpreadProps) {
         })}
       </ul>
 
+      {/* Every control here is a button the frame styles, never a native checkbox or radio: the
+          browser's own boxes arrive with the browser's own blue, which is the one hue this house
+          did not choose (found in review 2026-09-04). State travels as aria-pressed, which is
+          what the room at /globe does with its layer toggles, so both figures read alike. */}
       <div className="sp-controls">
         <div className="sp-control-group">
-          <span className="sp-control-legend" id={`${id}-pause-legend`}>
-            {wording.pauseHint}
-          </span>
-          <button type="button" onClick={() => setPaused((p) => !p)} aria-pressed={paused}>
+          <span className="sp-control-legend">{wording.pauseLegend}</span>
+          <button type="button" className="sp-toggle" onClick={() => setPaused((p) => !p)} aria-pressed={paused} data-on={paused ? 'yes' : 'no'}>
             {paused ? wording.resumeLabel : wording.pauseLabel}
           </button>
+          <span className="sp-control-hint">{wording.pauseHint}</span>
         </div>
 
-        <fieldset className="sp-control-group">
-          <legend className="sp-control-legend">{wording.venuesLegend}</legend>
-          {VENUES.map((def) => (
-            <div className="sp-venue-row" key={def.id} data-status={venueStatus[def.id]}>
-              <label>
-                <input type="checkbox" checked={venueOn[def.id]} onChange={() => toggleVenue(def.id)} />
-                {def.label}
-              </label>
-              <span className="sp-venue-status">{wording.status[venueOn[def.id] ? venueStatus[def.id] : 'off']}</span>
-            </div>
-          ))}
-        </fieldset>
-
-        <fieldset className="sp-control-group">
-          <legend className="sp-control-legend">{wording.assetLegend}</legend>
-          <div className="sp-asset-group" role="radiogroup" aria-label={wording.assetLegend}>
-            {(Object.keys(wording.assets) as AssetId[]).map((a) => (
-              <label key={a}>
-                <input type="radio" name={`${id}-asset`} checked={asset === a} onChange={() => setAsset(a)} />
-                {wording.assets[a]}
-              </label>
+        <div className="sp-control-group">
+          <span className="sp-control-legend" id={`${id}-venues-legend`}>
+            {wording.venuesLegend}
+          </span>
+          <div className="sp-toggle-set" role="group" aria-labelledby={`${id}-venues-legend`}>
+            {VENUES.map((def) => (
+              <button
+                key={def.id}
+                type="button"
+                className="sp-toggle sp-venue-toggle"
+                onClick={() => toggleVenue(def.id)}
+                aria-pressed={venueOn[def.id]}
+                data-on={venueOn[def.id] ? 'yes' : 'no'}
+                data-status={venueOn[def.id] ? venueStatus[def.id] : 'off'}
+              >
+                <span className="sp-toggle-label">{def.label}</span>
+                <span className="sp-venue-status">{wording.status[venueOn[def.id] ? venueStatus[def.id] : 'off']}</span>
+              </button>
             ))}
           </div>
-        </fieldset>
+        </div>
+
+        <div className="sp-control-group">
+          <span className="sp-control-legend" id={`${id}-asset-legend`}>
+            {wording.assetLegend}
+          </span>
+          <div className="sp-toggle-set" role="group" aria-labelledby={`${id}-asset-legend`}>
+            {(Object.keys(wording.assets) as AssetId[]).map((a) => (
+              <button
+                key={a}
+                type="button"
+                className="sp-toggle"
+                onClick={() => setAsset(a)}
+                aria-pressed={asset === a}
+                data-on={asset === a ? 'yes' : 'no'}
+              >
+                {wording.assets[a]}
+              </button>
+            ))}
+          </div>
+        </div>
 
         <div className="sp-control-group">
           <span className="sp-control-legend">{wording.counterLabel}</span>

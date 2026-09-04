@@ -70,6 +70,7 @@ export const SPREAD = {
   },
 
   controls: {
+    pauseLegend: 'The drawing',
     pauseLabel: 'Pause',
     resumeLabel: 'Resume',
     pauseHint: 'Freezes the drawing; the sockets underneath keep reading.',

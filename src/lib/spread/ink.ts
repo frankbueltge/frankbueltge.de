@@ -37,6 +37,8 @@ export interface FieldInk {
   band: RGB
   grid: RGB
   muted: RGB
+  /** the recorded live front ink, worn only while the venues disagree (spread.css's header) */
+  flare: RGB
 }
 
 /** The field's four inks, read off the element that carries `--sp-*` (spread.css). A token that
@@ -48,6 +50,7 @@ export function readFieldInk(el: Element): FieldInk {
     mark: token('--sp-mark', [244, 244, 245]),
     band: token('--sp-band', [194, 194, 200]),
     grid: token('--sp-grid', [36, 36, 39]),
+    flare: token('--sp-flare', [127, 208, 232]),
     muted: token('--sp-muted', [163, 163, 168]),
   }
 }

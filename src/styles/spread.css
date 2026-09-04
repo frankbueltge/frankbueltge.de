@@ -1,15 +1,22 @@
 /* src/styles/spread.css — the room of Spread (/spread, 2026-09-04).
  *
- * NO PALETTE RECORD IS NEEDED HERE, and that is a decision, not an omission (the same one
- * living-globe.css's G0 floor makes): every `--sp-*` custom property below is an ALIAS of the
- * frame's own mono tokens, never a hex literal, so scripts/drift-check.mjs's identity-colour
- * rule (rule 7) finds nothing to mark and src/lib/dataviz/palette.ts stays untouched. Buys and
- * sells are told apart by FORM (filled vs hollow), venues by LABEL, not by hue — richer than a
- * single-ink figure through weight, opacity and shape, still one ink and one accent throughout.
+ * Almost every `--sp-*` custom property below is an ALIAS of the frame's own mono tokens, so
+ * buys and sells are told apart by FORM (filled vs hollow) and venues by LABEL, never by hue.
+ * The canvas reads these same tokens at runtime through src/lib/spread/ink.ts — the seam
+ * LivingGlobe.tsx's readInk established for a layer that cannot take a CSS class.
  *
- * The canvas itself is drawn by Spread.tsx, which reads these same tokens at runtime via
- * src/lib/spread/ink.ts (the pattern LivingGlobe.tsx's readInk already established for a
- * layer that cannot take a CSS class the way markup can).
+ * ONE hue does appear, and it is not a new one. The frame's `--color-accent` is a TONE in this
+ * house's mono skin (#2c2c33 light, #c2c2c8 dark), so a band painted with it reads as a slightly
+ * darker grey — which is exactly what the first build of this page looked like, and exactly what
+ * the owner meant on 2026-09-04 when he said the recent work was no feast for the eyes. The
+ * moment the venues disagree is the whole subject of this work, and it has to be visible from
+ * across the room.
+ *
+ * PALETTE: --sp-flare aliases the living globe's own front ink (`--globe-c-front`, #10627a light
+ * / #7fd0e8 dark), which is already recorded and all-pairs validated as `globe-voices` in
+ * src/lib/dataviz/palette.ts. It is the same meaning here as there — the live thing standing in
+ * front of the mono record — so it reuses that record rather than opening a second one, and no
+ * new hue enters the house.
  */
 
 .sp-room {
@@ -17,6 +24,18 @@
   --sp-band: var(--color-accent);
   --sp-grid: var(--color-line);
   --sp-muted: var(--color-fg-muted);
+  /* PALETTE: the recorded live front ink — see the header, record `globe-voices` */
+  --sp-flare: #10627a;
+}
+
+:root:not([data-theme='light']) .sp-room {
+  /* PALETTE: the dark half of the same recorded ink */
+  --sp-flare: #7fd0e8;
+}
+
+:root[data-theme='dark'] .sp-room {
+  /* PALETTE: the dark half of the same recorded ink */
+  --sp-flare: #7fd0e8;
 }
 
 .sp-figure {
@@ -104,18 +123,61 @@
   color: var(--color-fg-faint);
 }
 
+/* The controls: buttons the frame styles, never native boxes with the browser's own blue.
+   `data-on` carries the state, the same seam the room at /globe uses for its layer toggles. */
+.sp-toggle-set {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.sp-toggle {
+  align-self: start;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  padding: 4px 9px;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-fg-muted);
+  font: var(--text-mono-sm) / 1.3 var(--font-mono);
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: color 120ms ease, border-color 120ms ease, background-color 120ms ease;
+}
+
+.sp-toggle:hover {
+  border-color: var(--color-line-lift);
+  color: var(--color-fg);
+}
+
+.sp-toggle:focus-visible {
+  outline: 2px solid var(--sp-flare);
+  outline-offset: 2px;
+}
+
+.sp-toggle[data-on='yes'] {
+  border-color: var(--color-fg-muted);
+  background: var(--color-panel-solid);
+  color: var(--color-fg);
+}
+
+.sp-toggle[data-status='down'] .sp-venue-status::before {
+  content: '! ';
+}
+
+.sp-control-hint {
+  max-width: 34ch;
+  color: var(--color-fg-faint);
+  font: var(--text-mono-sm) / 1.5 var(--font-mono);
+}
+
 .sp-venue-row {
   display: flex;
   align-items: center;
   gap: 8px;
   font: var(--text-mono-sm) / 1.4 var(--font-mono);
-}
-
-.sp-venue-row label {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  cursor: pointer;
 }
 
 .sp-venue-status {
