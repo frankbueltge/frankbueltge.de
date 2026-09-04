@@ -105,3 +105,18 @@
   border-top: 0;
   border-left: 1px solid currentColor;
 }
+
+/* the value axis: two or three labels, never a ladder — the middle of these plates means nothing
+   and a full scale would suggest otherwise */
+.saw-axis text {
+  fill: var(--color-fg-faint);
+  font-family: var(--font-mono);
+  font-size: 10px;
+}
+/* the rule UTC is held to, drawn so "it never touched the edge" can be checked by eye */
+.saw-bound line {
+  stroke: var(--color-fg-faint);
+  stroke-width: 1;
+  stroke-dasharray: 2 4;
+  opacity: 0.8;
+}

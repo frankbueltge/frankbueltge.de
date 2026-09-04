@@ -17,7 +17,7 @@
 // leap second, and Agnew's 2024 measurement that melting ice has postponed the first negative one.
 import type { Locale } from '@/lib/site'
 import { sawtooth } from '@/lib/sawtooth/series'
-import { decades, teeth, together, WIDE } from '@/lib/sawtooth/figure'
+import { decades, teeth, together, TOLERANCE, WIDE } from '@/lib/sawtooth/figure'
 import SheetHead from '@/components/experiments/SheetHead.astro'
 import SheetFoot from '@/components/experiments/SheetFoot.astro'
 import '@/styles/experiment-sheet.css'
@@ -81,6 +81,9 @@ const span = `${s.first.slice(0, 4)}–${s.last.slice(0, 4)}`
         <g class="saw-tick-labels">
           {one.ticks.map((t) => <text x={t.x} y={WIDE.height - 6} text-anchor="middle">{t.label}</text>)}
         </g>
+        <g class="saw-axis">
+          {one.axis.map((a) => <text x={WIDE.padX + 3} y={a.textY}>{a.label}</text>)}
+        </g>
       </svg>
       <figcaption class="saw-legend">
         <span class="saw-key saw-key-uncorrected">if nobody had intervened</span>
@@ -113,9 +116,15 @@ const span = `${s.first.slice(0, 4)}–${s.last.slice(0, 4)}`
         <g class="saw-leaps">
           {two.leapX.map((x) => <line x1={x} y1={WIDE.padTop} x2={x} y2={WIDE.height - WIDE.padBottom} />)}
         </g>
+        <g class="saw-bound">
+          {[two.axis[0], two.axis[2]].map((a) => <line x1={WIDE.padX} y1={a.y} x2={WIDE.width - WIDE.padX} y2={a.y} />)}
+        </g>
         <path class="saw-line saw-observed" d={two.paths[0].d} />
         <g class="saw-tick-labels">
           {two.ticks.map((t) => <text x={t.x} y={WIDE.height - 6} text-anchor="middle">{t.label}</text>)}
+        </g>
+        <g class="saw-axis">
+          {two.axis.map((a) => <text x={WIDE.padX + 3} y={a.textY}>{a.label}</text>)}
         </g>
       </svg>
     </figure>

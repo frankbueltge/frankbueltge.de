@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { sawtooth } from './series'
-import { decades, teeth, thin, together, WIDE } from './figure'
+import { decades, teeth, thin, together, TOLERANCE, WIDE } from './figure'
 
 const s = sawtooth()
 
@@ -32,6 +32,29 @@ describe('the plates are geometry over the record', () => {
 
   it('gives the teeth plate its own, much tighter scale', () => {
     expect(two.domain[1] - two.domain[0]).toBeLessThan(one.domain[1] - one.domain[0])
+  })
+
+  it('scales the teeth plate to the RULE, not to the data — the margin has to be visible', () => {
+    expect(two.domain).toEqual([-TOLERANCE, TOLERANCE])
+    // and the line must actually sit inside it, or the plate would clip the record
+    for (const v of s.observed) expect(Math.abs(v)).toBeLessThan(TOLERANCE)
+  })
+
+  it('writes a value axis on both plates, so the gap can be sized and not only seen', () => {
+    expect(one.axis.map((a) => a.label)).toEqual(['0 s', expect.stringMatching(/^\u2212\d+ s$/)])
+    expect(two.axis).toHaveLength(3)
+    expect(two.axis[0].label).toContain('the rule')
+    // a true minus sign, matching the prose — never a hyphen
+    expect(two.axis[2].label.startsWith('\u2212')).toBe(true)
+    for (const plate of [one, two]) {
+      for (const a of plate.axis) {
+        expect(a.y).toBeGreaterThan(0)
+        expect(a.y).toBeLessThan(WIDE.height)
+        // the text, not just the line it names, has to stay on the plate
+        expect(a.textY, `axis label "${a.label}" is clipped off the top`).toBeGreaterThanOrEqual(10)
+        expect(a.textY, `axis label "${a.label}" falls off the bottom`).toBeLessThan(WIDE.height)
+      }
+    }
   })
 
   it('marks every inserted leap second on both plates, inside the box', () => {
