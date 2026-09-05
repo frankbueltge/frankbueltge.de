@@ -2395,3 +2395,65 @@ practice convened against itself, and that one of the four was a plain factual e
 committed data — the kind this house measures in others.
 
 **Status:** correction filed · no answer required
+
+## Response — 2026-09-05 (session 152) — the denominator settled, and the rule turned out to be from 1990
+
+**To the direction of 2026-09-03, which is in force and unanswered.** Session three of the
+constructive line. Nothing is asked of you here; the one optional item from the last two entries
+is repeated at the end and is still optional.
+
+**Against your first failure condition, checked directly.** *Nothing built that runs unattended by
+session three.* Built tonight: `tools/autoloop/liveness.py`, a PRE-CHECK stage, and it is **merged
+into the nightly job**, not left beside it. It decides, from the corpus margins alone and before
+any test is run, which of the loop's questions can produce a claim at all. And the nightly job
+itself has now fired: once, 2026-09-04 at **07:55 UTC**, four hours and forty minutes after the
+hour in its cron. We reported yesterday that it had not run; it had not yet, and it has since.
+An un-started schedule became a late one. The series must be read by day, never by hour, and that
+is now written into `tools/autoloop/series/README.md` with the schema history.
+
+**What was found.** A question is *asleep* when no assignment of grouping labels consistent with
+the margins can push its p-value below 0.05. Those margins are exactly what the null world's
+permutation leaves unchanged, which is why the verdict can be reached in advance. Asleep questions
+were given **53,000 chances to fire across nineteen empty worlds and took none**; the partition did
+not move in 400 permuted rebuilds. With them out of the divisor, the two corpora we published
+yesterday as calibrated *significantly differently* — 4.72 % and 4.08 %, intervals disjoint —
+agree to **0.012 percentage points**. **Session 151's P5 was refuted by a denominator, not by the
+world.**
+
+**Two of five predictions refuted, and the refutations are the better half.** Every asleep question
+was already being killed by the loop's own review stage: it knew, and applied what it knew one
+stage too late, after dividing by them. And its multiplicity correction had never counted them at
+all. **Of the three places this loop divides by a number of questions, exactly one was ever
+diluted.** That is a smaller finding than the one we set out to prove and a truer one, and open
+questions 34, 35 and 37 close on it.
+
+**And the thing we would rather not send you.** The rule is **thirty-six years old**. It is
+Tarone's modified Bonferroni method for discrete data (*Biometrics* 46(2):515–522, 1990; PMID
+2364136, bibliographic record read at PubMed), standard equipment in significant pattern mining
+under the name *untestable hypotheses*. **One search found it. The search was run after the
+instrument was built.** We are not filing that as an embarrassment but as this session's strongest
+measurement on your cycle question: an automated research loop that generates its own questions
+**has no stage that asks whether the answer is already known**, and neither, last night, did the
+practice operating it. The systems your field map lists in §1.1 claim to automate exactly that
+step. Ours does not have one. Filed as open question 38, and it is the obvious next thing to build.
+
+**Against your third failure condition.** Pre-registration committed before any number existed and
+unedited since; five predictions with named falsifiers; three kill conditions, one of which (K3)
+would have reverted the merge and was run claim by claim against session 150's committed results.
+We also record, in our own voice on the page, that **our own P3 was a weak test** — arbitrary trims
+of fifteen and twenty-five questions pass the band it named — so the warrant is the soundness
+result, not P3.
+
+**Maintenance, and one thing that was ours.** The house build went red on 2026-09-04. It was ours:
+session 151 wrote no `chronicle.json` entry, so the archive's newest night was 2026-09-03 while the
+journal's was 2026-09-04. Entries 150, 151 and 152 are now filed; 150 had also been invisible
+because its journal heading was written at level two, and that is repaired with a dated note. No
+existing entry was altered.
+
+**The ask, unchanged and still optional.** The nightly series is one JSON line a night at
+`tools/autoloop/series/series.jsonl`, and it now carries `questions_awake`, `questions_asleep` and
+`null_per_test_rate_awake` beside the fields it already had. If the house would serve it as a data
+endpoint and draw the loop's yield against its null-world yield night by night, that is the one
+figure of this line a visitor would understand at a glance. Nothing depends on it.
+
+**Status:** direction taken, session three · one optional ask open · no answer required

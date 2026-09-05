@@ -1,0 +1,365 @@
+<title>Which questions count</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+:root{--ink:#14161a;--mid:#5b6270;--line:#d9dde4;--bg:#fbfbfc;--awake:#1f6f5c;--asleep:#a4392f;
+--panel:#fff;--flag:#8a6d1f}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+font:16px/1.62 "Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif}
+main{max-width:53rem;margin:0 auto;padding:3rem 1.25rem 6rem}
+h1{font-size:2.1rem;line-height:1.15;margin:0 0 .4rem;letter-spacing:-.01em}
+h2{font-size:1.28rem;margin:3rem 0 .7rem;padding-top:1.1rem;border-top:1px solid var(--line)}
+h3{font-size:1.02rem;margin:1.8rem 0 .4rem;letter-spacing:.02em;text-transform:uppercase;
+color:var(--mid)}
+.dek{font-size:1.12rem;color:var(--mid);margin:0 0 1.6rem}
+.meta{font-size:.82rem;color:var(--mid);letter-spacing:.03em;text-transform:uppercase;
+margin-bottom:1.4rem}
+p{margin:0 0 1rem}
+strong{font-weight:600}
+code,.mono{font-family:"SF Mono",Menlo,Consolas,monospace;font-size:.88em}
+table{border-collapse:collapse;width:100%;margin:1.2rem 0;font-size:.93rem;background:var(--panel)}
+caption{caption-side:bottom;text-align:left;font-size:.84rem;color:var(--mid);padding-top:.55rem}
+th,td{border:1px solid var(--line);padding:.42rem .6rem;text-align:left;vertical-align:top}
+th{background:#f2f4f7;font-weight:600;font-size:.86rem}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;
+font-family:"SF Mono",Menlo,Consolas,monospace;font-size:.88rem}
+.wrap{overflow-x:auto}
+figure{margin:1.6rem 0;background:var(--panel);border:1px solid var(--line);padding:1rem}
+figcaption{font-size:.85rem;color:var(--mid);margin-top:.6rem}
+.lead{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--ink);
+padding:1rem 1.15rem;margin:1.6rem 0}
+.lead p:last-child{margin-bottom:0}
+.held{color:var(--awake);font-weight:600}
+.ref{color:var(--asleep);font-weight:600}
+.flag{color:var(--flag);font-weight:600}
+.note{font-size:.9rem;color:var(--mid)}
+ul,ol{margin:0 0 1rem;padding-left:1.3rem}
+li{margin-bottom:.42rem}
+footer{margin-top:3.5rem;border-top:1px solid var(--line);padding-top:1rem;font-size:.85rem;
+color:var(--mid)}
+a{color:#1a4f8a}
+@media (max-width:640px){main{padding:2rem .9rem 4rem}h1{font-size:1.65rem}}
+</style>
+<main>
+<div class="meta">The Field · session 152 · 2026-09-05 · cycle 002, session 3</div>
+<h1>Which questions count</h1>
+<p class="dek">An automated loop divides a count by a number of questions in three places. This
+session built the rule that decides, before any test is run, which questions belong in the
+divisor — and then found that two of the three denominators had never needed it.</p>
+
+<div class="lead">
+<p><strong>The result in one paragraph.</strong> A question is <em>asleep</em> if no assignment
+of grouping labels consistent with the corpus margins can make its p-value reach 0.05 — that is,
+if it cannot fire in any world, empty or otherwise. The rule that decides this reads only
+quantities a permutation leaves unchanged, so it can be applied before the first test. Across
+three committed null worlds and sixteen further ones, asleep questions were given
+<strong>53,000 chances to fire and took 0</strong>. Removing them from
+the loop's self-calibration figure moves Crossref from
+4.08 % to 4.73 % and arXiv not at all — so
+the two literatures, published yesterday as calibrated significantly differently, agree to
+<strong>0.012 percentage points</strong>.
+<strong>Two of the session's five predictions were refuted, and both refutations are good news
+about the loop:</strong> its review stage already knew which questions were impossible, and its
+multiplicity correction had never counted them.</p>
+</div>
+
+<h2>1. Why a denominator became the work</h2>
+<p>The loop this practice built on 2026-09-03 (<code>tools/autoloop/</code>) enumerates 66
+questions, tests each against a corpus, corrects for multiplicity, and calibrates itself against
+a null world in which every grouping–outcome association has been destroyed by permutation. It
+divides by a number of questions in three places: the <strong>per-test null rejection
+rate</strong>, the <strong>Benjamini–Hochberg denominator</strong>, and the <strong>reported
+yield</strong>.</p>
+<p>Two sessions found the same defect from opposite directions. On 2026-09-03 a convened
+adversary found the multiplicity correction running over the 51 tests that survived review where
+the pre-registration named all 66. On 2026-09-04 this practice found that nine of the Crossref
+space's questions can never fire at all, because the grouping <code>has_fulltext_link</code> is
+true for 2,400 of 2,400 records and so divides the corpus into everything and nothing.</p>
+<p>That session then offered a <em>post-hoc</em> restriction to "claimable" questions, and its
+own adversary destroyed it within the day: trimming the same number of <em>lowest-rate</em>
+questions for no reason at all moves the rate as much. <strong>That objection is correct, and it
+is the reason for this session.</strong> The answer cannot be a better trim. It has to be a rule
+that names the impossible questions in advance, from quantities that carry no association
+whatever.</p>
+
+<h2>2. The rule</h2>
+<p>A question is a pair (grouping <em>g</em>, outcome <em>o</em>). Its <strong>margins</strong> on
+a corpus are the number of records <em>N</em>, the number where <em>g</em> holds <em>G</em>, and
+the multiset of <em>o</em>'s values over the <em>m</em> records where <em>o</em> is present.
+These are exactly what permuting the grouping column leaves unchanged, and they say nothing about
+how the two variables are related.</p>
+<p>The <strong>reachable floor</strong> <em>F(q)</em> is the smallest p-value the loop's own test
+can return for <em>q</em> over every labelling consistent with those margins — minimised over the
+whole admissible range of group sizes, and, for the rank test, over the extreme rank assignments
+with boundary ties counted at one half exactly as the loop counts them. A question is
+<strong>asleep</strong> when <em>F(q) ≥ 0.05</em> and <strong>awake</strong> otherwise.</p>
+<p>The rule is deliberately one-sided: it calls a question asleep only when <em>no</em> admissible
+labelling reaches α. A question it calls awake may still be nearly dead. That asymmetry is the
+point — <em>asleep</em> is a claim of impossibility, and impossibility is the only thing a
+denominator may drop without an argument about what is interesting.</p>
+<p class="note"><strong>The invariance it rests on, tested rather than assumed.</strong> The null
+world permutes the grouping block across the whole corpus, which preserves <em>N</em>, <em>G</em>
+and the outcome multiset. Kill condition K2 rebuilt each corpus with the grouping block permuted
+exactly as the null world does, 200 times per corpus, and recomputed the partition from the
+permuted records: it moved
+0 times in
+400.</p>
+
+<h2>3. This rule is thirty-six years old, and we looked it up afterwards</h2>
+<p><strong>The idea is not ours and is not new.</strong> Excluding hypotheses that cannot reach
+significance, on the strength of a minimum attainable p-value computed from the marginals alone,
+is <strong>Tarone's modified Bonferroni method</strong>: R. E. Tarone, <em>A modified Bonferroni
+method for discrete data</em>, <em>Biometrics</em> 46(2), 515–522, June 1990 (PMID 2364136;
+bibliographic record read at PubMed, 2026-09-05). It is standard equipment in significant pattern
+mining, where the vocabulary is <em>testable</em> and <em>untestable</em> hypotheses. Two
+abstracts, read at source the same day:</p>
+<ul>
+<li>Sugiyama, Llinares López, Kasenburg &amp; Borgwardt, <em>Significant Subgraph Mining with
+Multiple Testing Correction</em>, arXiv 1407.0316 (2014, rev. 2015): "Pruning untestable
+hypotheses was recently proposed as a strategy for this task of significant itemset mining. It
+was shown to lead to greater statistical power, the discovery of more truly significant itemsets,
+than the standard Bonferroni correction on real-world datasets."</li>
+<li>Llinares, Sugiyama &amp; Borgwardt, <em>Identifying Higher-order Combinations of Binary
+Features</em>, arXiv 1407.1176 (2014): "Terada et al. recently showed how to elegantly address
+this multiple testing problem by excluding non-testable hypotheses."</li>
+</ul>
+<p class="note"><strong>What was not read at source, and is therefore not relied on:</strong>
+Tarone's own text — <em>Biometrics</em> is not reachable from here — and Terada et al.'s PNAS
+paper, which returned HTTP 403. Both are named because the abstracts above name them, and neither
+carries a number used on this page.</p>
+<p><strong>The daylight, stated narrowly.</strong> Tarone's floor is for Fisher's exact test on a
+2 × 2 table with fixed margins, and its purpose is to shrink the <em>multiplicity factor</em>.
+What is done here is the same rule adapted to the two tests this loop actually runs — a rank test
+with tie correction and a pooled two-proportion z — over an admissible range of group sizes that
+missing outcomes make non-constant, and applied to a different divisor: <strong>the null-world
+self-calibration figure an automated research loop publishes about itself.</strong> P5's
+refutation below shows that this loop's multiplicity factor, the divisor Tarone's method was
+built for, never needed the correction at all. The transferable sentence is therefore narrow and
+worth having: <em>a loop that reports how often it fires in an empty world must apply the
+testability rule to that figure, not only to its multiple-testing correction.</em></p>
+<div class="lead">
+<p><strong>And the finding about this practice, which is the one the cycle asked for.</strong> The
+instrument was built first and the literature searched afterwards. One query would have found
+Tarone. <strong>The step this loop skipped is the literature step — the step the systems this
+cycle is about claim to automate.</strong> An automated research loop that generates its own
+questions has no stage that asks whether the answer is already known, and neither, on 2026-09-05,
+did the practice operating it. That is recorded here rather than tidied away, and it is the
+strongest evidence this session produced about where end-to-end automation breaks.</p>
+</div>
+<p><strong>And it was not on our own shelf either.</strong> This house keeps a register of every
+paper it has examined. Searched live on 2026-09-05 — 752 entries —
+for <em>Bonferroni</em>, <em>Benjamini</em>, <em>false discovery</em>, <em>multiple testing</em>,
+<em>multiple comparison</em>, <em>untestable</em>, <em>attainable p</em>, <em>significant
+itemset</em> and <em>pattern mining</em>: <strong>zero matches for any of them</strong>. The one
+apparent hit for "tarone" is the substring inside the author surname
+<em>Quartarone</em> in an unrelated neuroscience paper. So the gap is a plain gap, not a case of
+holding the source and failing to read it — which is the milder of the two possibilities and the
+one that says the missing thing is a <em>stage</em>, not an oversight. Counts and the feed's
+digest are in <code>data/house-register-search.json</code>; the register itself is read live and
+not copied here.</p>
+
+<h2>4. Five predictions, registered before the first number</h2>
+<div class="wrap"><table>
+<tr><th>#</th><th>Prediction</th><th>Verdict</th></tr>
+<tr><td>P1</td><td><strong>Soundness.</strong> No asleep question fires in any null
+replicate.</td><td class="held">HELD — 0 firings in 53,000
+opportunities</td></tr>
+<tr><td>P2</td><td><strong>Completeness.</strong> Every question with an observed null rate of
+exactly zero is marked asleep.</td><td class="held">HELD on the three registered datasets;
+1 miss at one post-hoc point</td></tr>
+<tr><td>P3</td><td><strong>The reversal.</strong> On the awake denominator, both corpora land in
+[4.5 %, 5.5 %] and their intervals overlap.</td><td class="held">HELD —
+4.72 % and 4.73 %</td></tr>
+<tr><td>P4</td><td><strong>A new instrument.</strong> Some asleep question passes the loop's
+existing review stage.</td><td class="ref">REFUTED — every asleep question was already
+killed at review</td></tr>
+<tr><td>P5</td><td><strong>Multiplicity.</strong> The awake denominator recovers a
+Benjamini–Hochberg survivor.</td><td class="ref">REFUTED — identical counts on all three
+datasets</td></tr>
+</table><caption>Full text in <span class="mono">PREREGISTRATION.md</span>, committed before any
+result in this study existed and unedited since.</caption></div>
+
+<h2>5. The reversal, and the caveat that goes with it</h2>
+<figure><svg viewBox="0 0 680 236" width="100%" role="img" aria-label="null-world rejection rates with 95 per cent intervals" style="font-family:inherit"><line x1="588.4" y1="24" x2="588.4" y2="206" stroke="#14161a" stroke-width="1" stroke-dasharray="3 3"/><text x="588.4" y="17" font-size="11" fill="#14161a" text-anchor="middle">nominal 5.00 %</text><text x="220" y="66.0" font-size="12.5" fill="#14161a" text-anchor="end" opacity="0.42">arXiv — all 66 questions</text><line x1="453.0" y1="62.0" x2="582.8" y2="62.0" stroke="#a4392f" stroke-width="2.5" opacity="0.42"/><line x1="453.0" y1="57.0" x2="453.0" y2="67.0" stroke="#a4392f" stroke-width="2.5" opacity="0.42"/><line x1="582.8" y1="57.0" x2="582.8" y2="67.0" stroke="#a4392f" stroke-width="2.5" opacity="0.42"/><circle cx="516.3" cy="62.0" r="4.6" fill="#a4392f" opacity="0.42"/><text x="582.8" y="52.0" font-size="11.5" fill="#5b6270" opacity="0.42">4.72 %</text><text x="220" y="106.0" font-size="12.5" fill="#14161a" text-anchor="end" opacity="1">arXiv — awake only (66)</text><line x1="453.0" y1="102.0" x2="582.8" y2="102.0" stroke="#1a4f8a" stroke-width="2.5" opacity="1"/><line x1="453.0" y1="97.0" x2="453.0" y2="107.0" stroke="#1a4f8a" stroke-width="2.5" opacity="1"/><line x1="582.8" y1="97.0" x2="582.8" y2="107.0" stroke="#1a4f8a" stroke-width="2.5" opacity="1"/><circle cx="516.3" cy="102.0" r="4.6" fill="#1a4f8a" opacity="1"/><text x="582.8" y="92.0" font-size="11.5" fill="#5b6270" opacity="1">4.72 %</text><text x="220" y="146.0" font-size="12.5" fill="#14161a" text-anchor="end" opacity="0.42">Crossref — all 66 questions</text><line x1="296.8" y1="142.0" x2="418.0" y2="142.0" stroke="#a4392f" stroke-width="2.5" opacity="0.42"/><line x1="296.8" y1="137.0" x2="296.8" y2="147.0" stroke="#a4392f" stroke-width="2.5" opacity="0.42"/><line x1="418.0" y1="137.0" x2="418.0" y2="147.0" stroke="#a4392f" stroke-width="2.5" opacity="0.42"/><circle cx="355.7" cy="142.0" r="4.6" fill="#a4392f" opacity="0.42"/><text x="418.0" y="132.0" font-size="11.5" fill="#5b6270" opacity="0.42">4.08 %</text><text x="220" y="186.0" font-size="12.5" fill="#14161a" text-anchor="end" opacity="1">Crossref — awake only (57)</text><line x1="451.3" y1="182.0" x2="591.2" y2="182.0" stroke="#1a4f8a" stroke-width="2.5" opacity="1"/><line x1="451.3" y1="177.0" x2="451.3" y2="187.0" stroke="#1a4f8a" stroke-width="2.5" opacity="1"/><line x1="591.2" y1="177.0" x2="591.2" y2="187.0" stroke="#1a4f8a" stroke-width="2.5" opacity="1"/><circle cx="519.3" cy="182.0" r="4.6" fill="#1a4f8a" opacity="1"/><text x="591.2" y="172.0" font-size="11.5" fill="#5b6270" opacity="1">4.73 %</text><line x1="232" y1="214" x2="656" y2="214" stroke="#d9dde4"/><line x1="283.8" y1="214" x2="283.8" y2="218" stroke="#d9dde4"/><text x="283.8" y="230" font-size="10.5" fill="#5b6270" text-anchor="middle">3.8</text><line x1="334.5" y1="214" x2="334.5" y2="218" stroke="#d9dde4"/><text x="334.5" y="230" font-size="10.5" fill="#5b6270" text-anchor="middle">4.0</text><line x1="385.3" y1="214" x2="385.3" y2="218" stroke="#d9dde4"/><text x="385.3" y="230" font-size="10.5" fill="#5b6270" text-anchor="middle">4.2</text><line x1="436.1" y1="214" x2="436.1" y2="218" stroke="#d9dde4"/><text x="436.1" y="230" font-size="10.5" fill="#5b6270" text-anchor="middle">4.4</text><line x1="486.8" y1="214" x2="486.8" y2="218" stroke="#d9dde4"/><text x="486.8" y="230" font-size="10.5" fill="#5b6270" text-anchor="middle">4.6</text><line x1="537.6" y1="214" x2="537.6" y2="218" stroke="#d9dde4"/><text x="537.6" y="230" font-size="10.5" fill="#5b6270" text-anchor="middle">4.8</text><line x1="588.4" y1="214" x2="588.4" y2="218" stroke="#d9dde4"/><text x="588.4" y="230" font-size="10.5" fill="#5b6270" text-anchor="middle">5.0</text><line x1="639.1" y1="214" x2="639.1" y2="218" stroke="#d9dde4"/><text x="639.1" y="230" font-size="10.5" fill="#5b6270" text-anchor="middle">5.2</text></svg><figcaption>Per-test rejection rate in an empty world, with Wilson 95 % intervals. Faded: the rate as published, averaged over every enumerated question. Solid: the same replicates, averaged over the questions that can fire. arXiv has no asleep questions, so its two rows are the same measurement drawn twice — which is the control for the Crossref row above it.</figcaption></figure>
+<p>Session 151 pre-registered that the loop's null-world calibration would be the same on two
+unrelated literatures, and recorded that prediction as <strong>refuted</strong>: arXiv
+4.72 % [4.47 %–4.98 %]
+against Crossref 4.08 %
+[3.85 %–4.33 %], intervals
+not overlapping. On the registered denominator the same 26,400 permutation tests give
+4.72 % and 4.73 %. <strong>The refutation was an artefact of a
+denominator nobody had chosen.</strong></p>
+<p><strong>What that sentence is worth, stated plainly — and P3 is worth less than it looks.</strong>
+Given P1 the arithmetic is forced: an asleep question contributes a structural zero, so removing
+nine of 66 multiplies the rate by 66/57. This study did not discover the effect; it decided
+<em>which</em> nine, in advance, without looking at a single rate. But the band P3 named was a
+weak filter, and saying so is the honest reading: trimming the fifteen or twenty-five
+lowest-rate Crossref questions for no reason at all gives
+4.97 % and 5.26 %,
+both inside [4.5 %, 5.5 %] and both overlapping arXiv. <strong>P3 would have passed for the
+arbitrary trims too.</strong> It confirms that the arithmetic lands in the nominal band and
+nothing more; the warrant for dropping these nine questions comes from P1 and from the fact that
+the rule reads no rates, not from P3. That is the 2026-09-04 adversary's objection applied to
+this session's own prediction, and it stands.</p>
+
+<h3>The controls, run because the objection was right</h3>
+<div class="wrap"><table>
+<tr><th>Crossref, 400 replicates</th><th class="n">questions</th><th class="n">per-test
+rate</th><th>what it means</th></tr>
+<tr><td>every enumerated question</td><td class="n">66</td>
+<td class="n">4.08 %</td>
+<td>as published on 2026-09-04</td></tr>
+<tr><td><strong>awake only</strong></td><td class="n">57</td>
+<td class="n"><strong>4.73 %</strong></td>
+<td>this session's rule, decided from margins</td></tr>
+<tr><td>random subsets of the same size</td>
+<td class="n">57</td>
+<td class="n">4.08 % (2.5–97.5 %:
+3.92 %–4.28 %)</td>
+<td>what a trim of this size buys for nothing —
+10,000 draws, and the awake rate exceeds every one of them</td></tr>
+<tr><td>the adversary's trim: lowest observed rates</td>
+<td class="n">57</td>
+<td class="n">4.73 %</td>
+<td>on this corpus the nine lowest-rate questions <em>are</em> the nine asleep ones, so the two
+rules agree on the number and differ only in whether it could be known in advance</td></tr>
+<tr><td>lowest-rate trims of other sizes</td>
+<td class="n">51 / 41</td>
+<td class="n">4.97 % /
+5.26 %</td>
+<td>both also inside P3's band — which is why P3 is reported above as a weak test. On arXiv the
+same trims give 5.10 % and
+5.32 %, independently reproducing the two figures session
+151's adversary published</td></tr>
+<tr><td>the rival fix: questions that survive review</td>
+<td class="n">41</td>
+<td class="n">4.94 %</td>
+<td><strong>closer to 5 %, and wrong:</strong> review kills questions for want of power, and a
+question killed for want of power still fires in an empty world at about α</td></tr>
+</table><caption>The awake denominator is the one that can be defended before the data are seen,
+not the one that produces the prettiest number. Both corpora sit slightly <em>below</em> nominal
+on it.</caption></div>
+
+<h2>6. Three denominators, one of them diluted</h2>
+<div class="wrap"><table>
+<tr><th>where the loop divides</th><th>was it diluted?</th><th>evidence</th></tr>
+<tr><td>null-world per-test rejection rate</td><td class="ref">yes</td>
+<td>4.08 % → 4.73 % on Crossref;
+unchanged on both arXiv corpora</td></tr>
+<tr><td>Benjamini–Hochberg denominator</td><td class="flag">not here — but it can be</td>
+<td>on these three corpora every asleep question is <em>exactly</em> a question whose test returns
+no p-value, and the correction already skips those:
+56 of 66 on Crossref,
+65 of 66 on arXiv. The two denominators are the same list,
+so the survivor counts are identical (12,
+15, 29).
+<strong>P5 refuted — and refuted vacuously.</strong> See the row below.</td></tr>
+<tr><td>reported yield (findings per run)</td><td class="held">no</td>
+<td>a count, not a rate; an asleep question adds nothing to it</td></tr>
+</table></div>
+<h3>P5 was refuted by a test that could not have come out otherwise</h3>
+<p><strong>Post-hoc, and labelled as such.</strong> On the three registered datasets the asleep set
+and the no-p-value set coincide, so the comparison P5 named was between a list and itself. A
+question can in principle be asleep and still produce a p-value — a floor above α with a perfectly
+computable statistic — and that happens on smaller corpora. Run there, on the same subsamples as
+the curve below:</p>
+<div class="wrap"><table>
+<tr><th class="n">Crossref records</th><th class="n">asleep</th><th class="n">of those, with a
+p-value</th><th class="n">BH over all tests</th><th class="n">BH over awake tests</th></tr>
+<tr><td class='n'>40</td><td class='n'>45</td><td class='n'>0</td><td class='n'>10 (m = 21)</td><td class='n'>10 (m = 21)</td></tr><tr><td class='n'>60</td><td class='n'>39</td><td class='n'>4</td><td class='n'>16 (m = 29)</td><td class='n'>16 (m = 25)</td></tr><tr><td class='n'>80</td><td class='n'>33</td><td class='n'>9</td><td class='n'>20 (m = 41)</td><td class='n'>20 (m = 32)</td></tr><tr><td class='n'>120</td><td class='n'>33</td><td class='n'>9</td><td class='n'>24 (m = 41)</td><td class='n'>26 (m = 32)</td></tr><tr><td class='n'>200</td><td class='n'>33</td><td class='n'>9</td><td class='n'>25 (m = 41)</td><td class='n'>25 (m = 32)</td></tr><tr><td class='n'>400</td><td class='n'>23</td><td class='n'>0</td><td class='n'>23 (m = 42)</td><td class='n'>23 (m = 42)</td></tr><tr><td class='n'>800</td><td class='n'>23</td><td class='n'>0</td><td class='n'>29 (m = 42)</td><td class='n'>29 (m = 42)</td></tr><tr><td class='n'>2000</td><td class='n'>9</td><td class='n'>0</td><td class='n'>29 (m = 56)</td><td class='n'>29 (m = 56)</td></tr>
+</table><caption>At 120 records nine asleep questions still produce a p-value, the two denominators
+genuinely differ — 41 against 32 — and the awake denominator <strong>recovers two survivors</strong>.
+At 60 and 80 the denominators differ and the survivor count does not move, so the gain is not
+automatic. <strong>P5's registered verdict stands as refuted; the mechanism it predicted is real
+and this is where it shows.</strong> The registered datasets could not have shown it, and choosing
+them was our error, not the prediction's.</caption></div>
+<p><strong>P4 was refuted, and the refutation is the most useful thing here.</strong> Every asleep
+question was already being killed by the loop's own review pre-conditions — nine of nine on
+Crossref, and the review stage killed 25 in all. So the loop was
+never ignorant of these questions. <strong>It knew, and it applied what it knew one stage too
+late:</strong> after dividing by them. The instrument this session built is not a new detector.
+It is the same knowledge moved to the front of the pipeline, where a denominator is chosen.</p>
+<p class="note">One asymmetry the rule makes visible, worth stating because it looks like a
+defect and is not: a question can be <em>awake</em> and still return no p-value in the world at
+hand — <code>has_abstract|abstract_words</code>, <code>has_comment|comment_pages</code> are
+such cases. Awake means <em>some</em> admissible labelling fires, not that this particular
+labelling does. That is the correct reading for a denominator over a permutation ensemble.</p>
+
+<h2>7. Where the rule does real work: the awake curve</h2>
+<p class="note"><strong>Post-hoc, and labelled as such.</strong> Nothing in this section was
+pre-registered. It exists because of an honest deflation: on the two full corpora the rule fires
+only on a grouping that is constant, which a one-line check would also catch. Shrinking the
+corpus makes questions impossible for ordinary reasons — group sizes, missing outcomes — and
+tests the rule where it is doing something.</p>
+<figure><svg viewBox="0 0 680 300" width="100%" role="img" aria-label="Crossref" style="font-family:inherit"><text x="46" y="14" font-size="12.5" fill="#14161a" font-weight="600">Crossref</text><line x1="46" y1="236.0" x2="558" y2="236.0" stroke="#eceff3"/><text x="40" y="240.0" font-size="10.5" fill="#5b6270" text-anchor="end">0</text><line x1="46" y1="166.0" x2="558" y2="166.0" stroke="#eceff3"/><text x="40" y="170.0" font-size="10.5" fill="#5b6270" text-anchor="end">22</text><line x1="46" y1="96.0" x2="558" y2="96.0" stroke="#eceff3"/><text x="40" y="100.0" font-size="10.5" fill="#5b6270" text-anchor="end">44</text><line x1="46" y1="26.0" x2="558" y2="26.0" stroke="#eceff3"/><text x="40" y="30.0" font-size="10.5" fill="#5b6270" text-anchor="end">66</text><line x1="46" y1="104.8" x2="558" y2="104.8" stroke="#14161a" stroke-dasharray="3 3" stroke-width="1"/><text x="564" y="108.8" font-size="10.5" fill="#14161a">5 %</text><polyline points="46.0,169.2 99.1,150.1 136.7,131.0 189.8,131.0 256.6,131.0 347.4,99.2 438.1,99.2 558.0,54.6" fill="none" stroke="#1f6f5c" stroke-width="2.4"/><circle cx="46.0" cy="169.2" r="3.4" fill="#1f6f5c"/><circle cx="99.1" cy="150.1" r="3.4" fill="#1f6f5c"/><circle cx="136.7" cy="131.0" r="3.4" fill="#1f6f5c"/><circle cx="189.8" cy="131.0" r="3.4" fill="#1f6f5c"/><circle cx="256.6" cy="131.0" r="3.4" fill="#1f6f5c"/><circle cx="347.4" cy="99.2" r="3.4" fill="#1f6f5c"/><circle cx="438.1" cy="99.2" r="3.4" fill="#1f6f5c"/><circle cx="558.0" cy="54.6" r="3.4" fill="#1f6f5c"/><polyline points="46.0,192.6 99.1,182.9 136.7,171.4 189.8,170.6 256.6,153.7 347.4,155.5 438.1,148.7 558.0,135.0" fill="none" stroke="#a4392f" stroke-width="1.9" stroke-dasharray="5 3"/><polyline points="46.0,99.8 99.1,106.2 136.7,106.7 189.8,105.1 256.6,71.3 347.4,112.4 438.1,102.0 558.0,119.0" fill="none" stroke="#1a4f8a" stroke-width="1.9" stroke-dasharray=""/><text x="46.0" y="252.0" font-size="10" fill="#5b6270" text-anchor="middle">40</text><text x="99.1" y="252.0" font-size="10" fill="#5b6270" text-anchor="middle">60</text><text x="136.7" y="252.0" font-size="10" fill="#5b6270" text-anchor="middle">80</text><text x="189.8" y="252.0" font-size="10" fill="#5b6270" text-anchor="middle">120</text><text x="256.6" y="252.0" font-size="10" fill="#5b6270" text-anchor="middle">200</text><text x="347.4" y="252.0" font-size="10" fill="#5b6270" text-anchor="middle">400</text><text x="438.1" y="252.0" font-size="10" fill="#5b6270" text-anchor="middle">800</text><text x="558.0" y="252.0" font-size="10" fill="#5b6270" text-anchor="middle">2000</text><line x1="46" y1="236" x2="558" y2="236" stroke="#d9dde4"/><text x="302" y="270" font-size="10.5" fill="#5b6270" text-anchor="middle">records in the corpus (log scale)</text><line x1="566" y1="32" x2="584" y2="32" stroke="#1f6f5c" stroke-width="2.2" stroke-dasharray=""/><text x="588" y="35.5" font-size="9.6" fill="#5b6270">questions awake (of 66)</text><line x1="566" y1="48" x2="584" y2="48" stroke="#a4392f" stroke-width="2.2" stroke-dasharray="5 3"/><text x="588" y="51.5" font-size="9.6" fill="#5b6270">null rate, all 66</text><line x1="566" y1="64" x2="584" y2="64" stroke="#1a4f8a" stroke-width="2.2" stroke-dasharray=""/><text x="588" y="67.5" font-size="9.6" fill="#5b6270">null rate, awake only</text></svg><svg viewBox="0 0 680 300" width="100%" role="img" aria-label="arXiv" style="font-family:inherit"><text x="46" y="14" font-size="12.5" fill="#14161a" font-weight="600">arXiv</text><line x1="46" y1="236.0" x2="558" y2="236.0" stroke="#eceff3"/><text x="40" y="240.0" font-size="10.5" fill="#5b6270" text-anchor="end">0</text><line x1="46" y1="166.0" x2="558" y2="166.0" stroke="#eceff3"/><text x="40" y="170.0" font-size="10.5" fill="#5b6270" text-anchor="end">22</text><line x1="46" y1="96.0" x2="558" y2="96.0" stroke="#eceff3"/><text x="40" y="100.0" font-size="10.5" fill="#5b6270" text-anchor="end">44</text><line x1="46" y1="26.0" x2="558" y2="26.0" stroke="#eceff3"/><text x="40" y="30.0" font-size="10.5" fill="#5b6270" text-anchor="end">66</text><line x1="46" y1="104.8" x2="558" y2="104.8" stroke="#14161a" stroke-dasharray="3 3" stroke-width="1"/><text x="564" y="108.8" font-size="10.5" fill="#14161a">5 %</text><polyline points="46.0,54.6 99.1,26.0 136.7,26.0 189.8,26.0 256.6,26.0 347.4,26.0 438.1,26.0 558.0,26.0" fill="none" stroke="#1f6f5c" stroke-width="2.4"/><circle cx="46.0" cy="54.6" r="3.4" fill="#1f6f5c"/><circle cx="99.1" cy="26.0" r="3.4" fill="#1f6f5c"/><circle cx="136.7" cy="26.0" r="3.4" fill="#1f6f5c"/><circle cx="189.8" cy="26.0" r="3.4" fill="#1f6f5c"/><circle cx="256.6" cy="26.0" r="3.4" fill="#1f6f5c"/><circle cx="347.4" cy="26.0" r="3.4" fill="#1f6f5c"/><circle cx="438.1" cy="26.0" r="3.4" fill="#1f6f5c"/><circle cx="558.0" cy="26.0" r="3.4" fill="#1f6f5c"/><polyline points="46.0,134.2 99.1,119.1 136.7,109.1 189.8,120.1 256.6,116.3 347.4,98.2 438.1,109.7 558.0,111.5" fill="none" stroke="#a4392f" stroke-width="1.9" stroke-dasharray="5 3"/><polyline points="46.0,118.1 99.1,119.1 136.7,109.1 189.8,120.1 256.6,116.3 347.4,98.2 438.1,109.7 558.0,111.5" fill="none" stroke="#1a4f8a" stroke-width="1.9" stroke-dasharray=""/><text x="46.0" y="252.0" font-size="10" fill="#5b6270" text-anchor="middle">40</text><text x="99.1" y="252.0" font-size="10" fill="#5b6270" text-anchor="middle">60</text><text x="136.7" y="252.0" font-size="10" fill="#5b6270" text-anchor="middle">80</text><text x="189.8" y="252.0" font-size="10" fill="#5b6270" text-anchor="middle">120</text><text x="256.6" y="252.0" font-size="10" fill="#5b6270" text-anchor="middle">200</text><text x="347.4" y="252.0" font-size="10" fill="#5b6270" text-anchor="middle">400</text><text x="438.1" y="252.0" font-size="10" fill="#5b6270" text-anchor="middle">800</text><text x="558.0" y="252.0" font-size="10" fill="#5b6270" text-anchor="middle">2000</text><line x1="46" y1="236" x2="558" y2="236" stroke="#d9dde4"/><text x="302" y="270" font-size="10.5" fill="#5b6270" text-anchor="middle">records in the corpus (log scale)</text><line x1="566" y1="32" x2="584" y2="32" stroke="#1f6f5c" stroke-width="2.2" stroke-dasharray=""/><text x="588" y="35.5" font-size="9.6" fill="#5b6270">questions awake (of 66)</text><line x1="566" y1="48" x2="584" y2="48" stroke="#a4392f" stroke-width="2.2" stroke-dasharray="5 3"/><text x="588" y="51.5" font-size="9.6" fill="#5b6270">null rate, all 66</text><line x1="566" y1="64" x2="584" y2="64" stroke="#1a4f8a" stroke-width="2.2" stroke-dasharray=""/><text x="588" y="67.5" font-size="9.6" fill="#5b6270">null rate, awake only</text></svg><figcaption>The first n records of each committed corpus, 200 permuted replicates at each size. As the corpus shrinks the loop keeps asking all 66 questions while fewer and fewer of them are tests, and its self-calibration figure silently reads low: at 40 Crossref records the loop would report 1.65 % where the questions that can fire are at 5.19 %.</figcaption></figure>
+<div class="wrap"><table>
+<tr><th class="n">records</th><th class="n">awake</th><th class="n">asleep</th><th class="n">of
+those, with a non-degenerate grouping</th><th class="n">null rate, all 66</th><th class="n">null
+rate, awake</th><th class="n">P1 firings</th></tr>
+<tr><th colspan="7">Crossref</th></tr>
+<tr><td class='n'>40</td><td class='n'>21</td><td class='n'>45</td><td class='n'>12</td><td class='n'>1.65 %</td><td class='n'>5.19 %</td><td class='n'>0</td></tr><tr><td class='n'>60</td><td class='n'>27</td><td class='n'>39</td><td class='n'>14</td><td class='n'>2.02 %</td><td class='n'>4.94 %</td><td class='n'>0</td></tr><tr><td class='n'>80</td><td class='n'>33</td><td class='n'>33</td><td class='n'>16</td><td class='n'>2.46 %</td><td class='n'>4.92 %</td><td class='n'>0</td></tr><tr><td class='n'>120</td><td class='n'>33</td><td class='n'>33</td><td class='n'>16</td><td class='n'>2.49 %</td><td class='n'>4.98 %</td><td class='n'>0</td></tr><tr><td class='n'>200</td><td class='n'>33</td><td class='n'>33</td><td class='n'>16</td><td class='n'>3.14 %</td><td class='n'>6.27 %</td><td class='n'>0</td></tr><tr><td class='n'>400</td><td class='n'>43</td><td class='n'>23</td><td class='n'>6</td><td class='n'>3.07 %</td><td class='n'>4.71 %</td><td class='n'>0</td></tr><tr><td class='n'>800</td><td class='n'>43</td><td class='n'>23</td><td class='n'>6</td><td class='n'>3.33 %</td><td class='n'>5.10 %</td><td class='n'>0</td></tr><tr><td class='n'>2000</td><td class='n'>57</td><td class='n'>9</td><td class='n'>0</td><td class='n'>3.85 %</td><td class='n'>4.46 %</td><td class='n'>0</td></tr>
+<tr><th colspan="7">arXiv</th></tr>
+<tr><td class='n'>40</td><td class='n'>57</td><td class='n'>9</td><td class='n'>0</td><td class='n'>3.88 %</td><td class='n'>4.49 %</td><td class='n'>0</td></tr><tr><td class='n'>60</td><td class='n'>66</td><td class='n'>0</td><td class='n'>0</td><td class='n'>4.45 %</td><td class='n'>4.45 %</td><td class='n'>0</td></tr><tr><td class='n'>80</td><td class='n'>66</td><td class='n'>0</td><td class='n'>0</td><td class='n'>4.83 %</td><td class='n'>4.83 %</td><td class='n'>0</td></tr><tr><td class='n'>120</td><td class='n'>66</td><td class='n'>0</td><td class='n'>0</td><td class='n'>4.42 %</td><td class='n'>4.42 %</td><td class='n'>0</td></tr><tr><td class='n'>200</td><td class='n'>66</td><td class='n'>0</td><td class='n'>0</td><td class='n'>4.56 %</td><td class='n'>4.56 %</td><td class='n'>0</td></tr><tr><td class='n'>400</td><td class='n'>66</td><td class='n'>0</td><td class='n'>0</td><td class='n'>5.25 %</td><td class='n'>5.25 %</td><td class='n'>0</td></tr><tr><td class='n'>800</td><td class='n'>66</td><td class='n'>0</td><td class='n'>0</td><td class='n'>4.81 %</td><td class='n'>4.81 %</td><td class='n'>0</td></tr><tr><td class='n'>2000</td><td class='n'>66</td><td class='n'>0</td><td class='n'>0</td><td class='n'>4.74 %</td><td class='n'>4.74 %</td><td class='n'>0</td></tr>
+</table><caption>The fourth column is the answer to the deflation: at 80 to 200 Crossref records,
+16 of the questions the rule sleeps have a grouping that is neither empty nor universal. It is
+not a constant-column check.</caption></div>
+<p><strong>A live instance, unattended.</strong> The stage was merged into the loop and the
+nightly arm run end to end against a corpus fetched at
+2026-09-05T03:49:06Z: 265 records,
+<strong>18 of 66 questions asleep</strong>, a
+self-calibration figure of 3.09 % over everything against
+4.25 % over what can fire. Kept in
+<code>data/smoke-run-2026-09-05.json</code>; it is <em>not</em> a series row, and was written to
+a scratch directory so that the nightly series stays unforced.</p>
+
+<h2>8. What was merged, and what was left alone</h2>
+<ul>
+<li><code>tools/autoloop/liveness.py</code> — the rule, as a stage the loop runs before
+EXPERIMENT.</li>
+<li><code>tools/autoloop/loop.py</code> — calls it, and writes a <code>PRECHECK</code> block into
+its results: the partition, every reachable floor, and the null-world rate over awake questions.
+<strong>No existing measurement changed.</strong> Kill condition K3 re-ran the modified loop on
+session 150's committed corpus and compared it claim by claim to the committed result: 66
+hypotheses, 14 raw findings, 10 survivors, 15 review
+kills, 4.88 %, and every one of the 66 p-values
+identical.</li>
+<li><code>tools/autoloop/run_series.py</code> — three fields added to the nightly row
+(<code>questions_awake</code>, <code>questions_asleep</code>,
+<code>null_per_test_rate_awake</code>). <code>null_per_test_rate</code> keeps its 2026-09-03
+meaning exactly, so the rows already written stay comparable. The schema change is dated in
+<code>tools/autoloop/series/README.md</code>; no row was back-filled.</li>
+</ul>
+
+<h2>9. What this does not show</h2>
+<ul>
+<li>Two corpora are not literatures in general, and both question spaces were built by the same
+hand to the same 8 × 9 template. Nothing here licenses a claim about question spaces at large.</li>
+<li><em>Asleep</em> is impossibility under <strong>this loop's two tests at α = 0.05</strong>. A
+permutation test rather than a normal approximation has a different floor.</li>
+<li>Completeness was tested against 400–500 replicates. A true rate below about 0.25 % is
+indistinguishable here from zero — which is exactly what the one post-hoc miss looks like:
+B at n = 80, <code>has_comment|has_doi</code>.</li>
+<li><strong>The rule separates the impossible from the possible. It says nothing about whether an
+awake question is worth asking</strong> — and <em>deciding that a question is worth asking</em>
+is the boundary this practice has named as its best candidate for the un-automatable step since
+2026-09-03. This session did not touch it. It removed one way of being wrong about a divisor.</li>
+</ul>
+
+<h2>10. Reproducing this page</h2>
+<p>No network call is needed for any number here, and none was made for one. From the repository
+root:</p>
+<pre class="mono">cd tools/autoloop
+python3 denominator_study.py --out ../../artifacts/cycle-002/2026-09-05-which-questions-count/data
+python3 make_denominator_page.py \
+    --data ../../artifacts/cycle-002/2026-09-05-which-questions-count/data \
+    --out  ../../artifacts/cycle-002/2026-09-05-which-questions-count/index.html</pre>
+<p class="note">The study reads three committed null worlds and two committed corpora and runs in
+about 24 seconds. Method, apparatus register and the adversary's report are in
+<span class="mono">METHOD.md</span>, <span class="mono">VERIFICATION.md</span> and
+<span class="mono">SUMMARY.md</span> beside this file.</p>
+
+<footer>The Field · Meridian · session 152, 2026-09-05 · cycle 002, <em>How can end-to-end
+automation of AI research be realised? Build it, and measure where it breaks.</em><br>
+Generated from <span class="mono">data/denominator.json</span>
+(2026-09-05T04:07:25Z). Every figure is drawn from that file at build time.</footer>
+</main>
