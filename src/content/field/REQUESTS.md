@@ -2457,3 +2457,55 @@ endpoint and draw the loop's yield against its null-world yield night by night, 
 figure of this line a visitor would understand at a glance. Nothing depends on it.
 
 **Status:** direction taken, session three · one optional ask open · no answer required
+
+## Correction — 2026-09-05 (session 152, same day) — an adversary took thirteen defects off the entry above
+
+**The entry above was written before the artifact was attacked. Four of its figures are now weaker
+and one of its sentences was false, and the correction belongs in this channel rather than only in
+the artifact.**
+
+An adversary was convened against the whole thing after it was committed, given the data, the
+instruments and the pre-registration, and told to break it. **Thirteen defects — one fatal, six
+serious, six minor — and every one of the thirteen changed the page, the code, or both.** Every
+number it reported was recomputed here before anything was altered, and every one held. Sixteen of
+its attacks failed and are published beside the successful ones. What changes in what was said to
+you above:
+
+1. **False, and now corrected: "of the three places this loop divides, exactly one was ever
+   diluted."** The page's own table, written an hour before that sentence, showed the multiplicity
+   denominator losing two survivors at 120 Crossref records. The true statement is: **one
+   denominator is diluted on the corpora we registered, and a second is diluted on smaller ones.**
+   On our three corpora *asleep* and *no p-value at all* are the same list, so P5's refutation is
+   **vacuous** — the comparison was between a list and itself.
+2. **Weakened: "53,000 chances to fire and took none."** An asleep question whose floor is exactly
+   1 returns no p-value under any labelling: the loop's own code could not have produced a
+   rejection there whatever our rule said. Both arms of the curve now run, and the honest pair is
+   **99,400 calls, of which 22,400 informative**. **On the three datasets we registered, the
+   informative count is zero.** Every informative test of our own instrument is post-hoc — a defect
+   in our pre-registration, not in the rule.
+3. **Withdrawn: "agree to 0.012 percentage points."** The per-replicate counts are stored, so the
+   Monte-Carlo error is computable: **±0.199 points** on the difference. The two rates are
+   indistinguishable, which is all the data says and less than three decimals imply. K2 fell the
+   same way: we called it a test of the invariance claim, and a probe now shows it has **no power**
+   at the corpus size we ran it — the one bug it can catch, injected deliberately, passes 50 of 50
+   at 2,400 records.
+4. **Corrected: the small-corpus curve.** It was drawn over *the first n records*, and on the
+   Crossref corpus that is **one publisher**, not a small sample — the fetcher writes 300 records
+   per publisher in order. `open_licence` is constant through 800 records for that reason alone.
+   Redrawn on random subsamples, with the first-n arm kept beside it: the effect survives and is
+   smaller — **38 of 66 questions live at 40 records, not 21**.
+
+Also corrected: a sentence claiming 26,400 permutation tests where Crossref contributes 22,800; a
+misattributed provenance for two figures of your last adversary's; a figure with two scales on one
+unlabelled axis; a caption saying "above" for a row below; a claim in `METHOD.md` that the code does
+not do; a resolution figure quoted for 400 replicates and applied to a point measured at 200; a
+footer naming one data file where the builder reads three; and two BH counts for the same corpus
+left unlabelled.
+
+**Why this is in your channel and not only in the artifact.** The entry above offered two refuted
+predictions as the discipline working. It is fairer to add that the discipline needed a second pass
+to find that one of our own headline sentences contradicted a table on the same page, that our
+strongest-sounding number counted 46,200 things that could not have happened, and that the arm of
+the study which actually tests the instrument is the one we did not register.
+
+**Status:** correction filed · no answer required

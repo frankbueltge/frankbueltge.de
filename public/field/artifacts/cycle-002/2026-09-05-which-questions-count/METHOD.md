@@ -15,8 +15,9 @@ python3 make_denominator_page.py \
     --out  ../../artifacts/cycle-002/2026-09-05-which-questions-count/index.html
 ```
 
-Runtime ≈ 25 s, pure Python 3.12, no third-party package. Every figure on `index.html` is drawn
-from `data/denominator.json` at build time, so the page cannot drift from its evidence.
+Runtime ≈ 45 s, pure Python 3.12, no third-party package. Every figure on `index.html` is drawn at
+build time from `data/denominator.json`, `data/smoke-run-2026-09-05.json` and
+`data/house-register-search.json`, so the page cannot drift from its evidence.
 
 Kill condition K3 (that the loop's existing measurements did not move) is reproduced by:
 
@@ -94,21 +95,36 @@ verdict here is about the loop's arithmetic over whatever corpus it is handed.
 - **P4.** The asleep set against the set the loop's review pre-conditions c1–c4 kill.
 - **P5.** Benjamini–Hochberg at q = 0.05 over all questions with a p-value, against the same over
   awake questions only, on the real (unpermuted) data.
-- **K2, invariance.** Each corpus is rebuilt 200 times with the grouping block permuted exactly
-  as `null_world()` permutes it — the fields the grouping predicates read are taken from the
-  permuted row, everything else stays — and liveness is recomputed from the permuted records.
-  The partition must not move.
+- **K2, the registered invariance check.** Each corpus is rebuilt 200 times with the fields the
+  grouping predicates read taken from a permuted row, and liveness is recomputed from the permuted
+  records; the partition **and** the vector of reachable floors must not move.
+  **This is not the permutation `null_world()` performs, and the first version of this file said it
+  was.** `null_world()` permutes the derived boolean grouping columns and leaves every record field
+  and every outcome preparation untouched; K2 permutes record fields, six of which per space are
+  also outcome columns. K2's perturbation is therefore the stronger one, which is why it stands in
+  for the weaker.
+  **And K2 is a regression test, not evidence.** `liveness.assess` reads only column multisets, so
+  invariance is a property of the code; the one bug K2 can catch is a grouping predicate reading a
+  field outside the permuted block. `k2_power_probe` injects exactly that bug and reports whether
+  K2 notices, by corpus size — at full size it does not.
 
 ## 5. Post-hoc, and labelled as such everywhere it appears
 
 Nothing in this section was pre-registered.
 
-- **The awake curve.** On the two full corpora the rule fires only on a grouping that is constant,
-  which a one-line check would also catch. So the first *n* records of each corpus are taken for
+- **The awake curve, in two arms.** On the two full corpora the rule fires only on a grouping that
+  is constant, which a one-line check would also catch. So each corpus is subsampled to
   *n* ∈ {40, 60, 80, 120, 200, 400, 800, 2000}, 200 permuted replicates each, and the rule is
-  compared against a real null world at each size. The fourth column of the table on the page
-  counts asleep questions whose grouping is *neither* empty nor universal — the cases where the
-  rule is doing work a constant-column check would not do.
+  compared against a real null world at each size.
+  **`sampling="first"`** takes the first *n* records — how this was first run, and kept. On the
+  Crossref corpus that slice is a **publisher block**: `fetch_crossref.py` writes up to 300 records
+  per publisher in order, so the first 169 carry one member and `open_licence` is constant through
+  800 records for that reason rather than for want of records. **`sampling="random"`** draws without
+  replacement and is the corrected arm; the page leads with it. Both are in `denominator.json` and
+  both are on the page, with a `strata` column that shows the difference.
+  The table's fifth column counts asleep questions whose grouping is *neither* empty nor universal;
+  the sixth counts those whose statistic returns a p-value at all, which is what makes a replicate
+  informative about P1.
 - **Trim sensitivity.** The lowest-rate trim at sizes 0, 5, 9, 15 and 25, so the page can say what
   P3 would have concluded had the rule returned a different count. It would have concluded the
   same, which is why the page reports P3 as a weak test.

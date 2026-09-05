@@ -39,12 +39,16 @@ one.
 
 ## What happened when it was tested
 
-- Asleep questions were given **53,000 chances to fire across nineteen emptied worlds and took
-  none.**
-- The partition did not move once in 400 rebuilds of the corpus under the shuffle.
+- Asleep questions were given **99,400 test calls across thirty-five emptied worlds and produced
+  no findings at all.** Of those calls, 22,400 were ones where the test can return an answer at
+  all — that smaller number is the one that actually tests the rule, and on the three corpora the
+  session registered in advance it is **zero**. Every informative test of the rule came from work
+  done after the fact.
 - With the impossible questions out of the divisor, the two literatures — published a day earlier
-  as calibrated significantly differently — **agree to 0.012 percentage points**: 4.72 % and
-  4.73 %.
+  as calibrated significantly differently — become **indistinguishable**: 4.72 % and 4.73 %,
+  against a Monte-Carlo error of ±0.20 points on the difference. (An earlier draft of this page
+  said they "agree to 0.012 percentage points". They do, and that is sixteen times finer than the
+  noise; the claim has been cut back to what the data supports.)
 - Merged into the nightly job under a condition that would have reverted it: the loop was re-run
   on the older corpus and compared claim by claim to what it had published. Nothing moved.
 
@@ -56,10 +60,14 @@ one.
    Every impossible question was already being killed by the loop's review — *after* it had been
    divided by. The loop was never ignorant. It applied what it knew one stage too late.
 2. We predicted that fixing the divisor would recover a finding lost to over-correction. **It does
-   not.** The multiplicity correction had never counted the dead questions in the first place.
+   not — on the three corpora we chose.** There, an impossible question is also a question the
+   test cannot answer at all, and the correction was already skipping it. Run on a smaller corpus,
+   where an impossible question still produces a number, the fix does recover findings: at 120
+   Crossref records it returns two.
 
-So of the three places the loop divides by a number of questions, exactly **one** was ever wrong.
-That is a better result than the one we set out to prove, and it is smaller.
+So of the three places the loop divides by a number of questions, **one was wrong on the corpora we
+registered and a second is wrong on smaller ones**. That is a better result than the one we set out
+to prove, and it is smaller.
 
 ## The thing we would rather not report
 
@@ -79,8 +87,15 @@ step. Ours does not have one, and its operator forgot to be one.
 
 Two corpora are not literatures in general. *Asleep* means impossible under this loop's two tests
 at this threshold, not impossible in principle. And the rule separates the impossible from the
-possible — it says nothing whatever about whether a possible question is **worth asking**, which
-remains this practice's best candidate for the step of research that does not automate.
+possible — it says nothing whatever about whether a possible question is **worth asking**.
+
+**An adversary was convened against this page after it was written and found thirteen defects, one
+of them a flat self-contradiction between the opening paragraph and a table further down.** All
+thirteen were repaired; the list, and the sixteen attacks that failed, are in `VERIFICATION.md`
+beside this file. Two are worth a visitor's attention: the headline "53,000 chances" counted 46,200
+calls that could never have produced an answer, and the small-corpus figure was first drawn over
+*the first n records*, which on this corpus means *one publisher* rather than *a small sample*.
+Both are corrected above and on the page.
 
 **Where the work is:** `artifacts/cycle-002/2026-09-05-which-questions-count/index.html` opens
 from the filesystem, with every figure drawn from the committed data beside it.
