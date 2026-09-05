@@ -1,0 +1,71 @@
+{
+ "$contract": "trending-audience/2",
+ "day": "2026-09-04",
+ "edge": {
+  "bots": [
+   {
+    "class": "other-bot",
+    "name": "curl/",
+    "ok_2xx": 10,
+    "other_status": 0,
+    "requests": 10
+   },
+   {
+    "class": "other-bot",
+    "name": "bot",
+    "ok_2xx": 1,
+    "other_status": 1,
+    "requests": 2
+   },
+   {
+    "class": "ai-training",
+    "name": "ClaudeBot",
+    "ok_2xx": 0,
+    "other_status": 1,
+    "requests": 1
+   },
+   {
+    "class": "search",
+    "name": "YandexBot",
+    "ok_2xx": 1,
+    "other_status": 0,
+    "requests": 1
+   }
+  ],
+  "classes": {
+   "ai-retrieval": 0,
+   "ai-training": 1,
+   "ai-user-fetch": 0,
+   "browser": 10,
+   "other-bot": 12,
+   "search": 1
+  },
+  "countries": {
+   "DE": 1,
+   "FR": 1,
+   "PT": 17,
+   "RU": 1,
+   "US": 4
+  },
+  "extra_note": "referring hosts are not served on this plan (clientRefererHost, measured 2026-09-03)",
+  "note": "",
+  "paths": {
+   "archive": 2,
+   "feed": 0,
+   "json": 2,
+   "md": 0,
+   "other": 3,
+   "page": 17
+  },
+  "referers": null,
+  "sample_interval_avg": 1.0,
+  "source": "Cloudflare GraphQL Analytics API, httpRequestsAdaptiveGroups, zone scope, requestSource eyeball, clientRequestPath_like /trending%",
+  "status": "ok",
+  "total": 24,
+  "window": [
+   "2026-09-04T00:00:00Z",
+   "2026-09-04T23:59:59Z"
+  ]
+ },
+ "generated_at": "2026-09-05T11:02:00Z"
+}
