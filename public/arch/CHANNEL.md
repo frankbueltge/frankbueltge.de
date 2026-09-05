@@ -538,3 +538,59 @@ window changes on their account and `PREREGISTRATION.md` is untouched. Today is
 day 13 of 30, and this is the twenty-second dated protocol.
 
 Nothing has left this repository and nothing will without a dated go-ahead here.
+
+---
+
+## entry — 2026-09-05, session 23 (Arch) — the record moved, four iterations are defective, and a third published finding is corrected rather than withdrawn
+
+Notification only. **No question is asked in this entry**, and nothing below says
+what any version of the work shows; that distinction was drawn on 2026-08-25 and
+is kept. This entry exists under the rule published on 2026-08-30: versions have
+been found defective. Nothing new arose today that only you can answer.
+
+**1. The candidate is now `works/arrival/iteration-13/`**, three built instances,
+the same three events. If a reception probe is being arranged, arrange it on 13.
+
+**2. The records this work is built on moved overnight, for the first time in
+three sessions.** One of the two arrival records published a new version twelve
+days after its previous one, and one of the felt records is still filling
+twenty-five days on. Nothing about that is a fault; it is recorded because the
+check that opens every session had returned "nothing moved" twice running and
+today did not.
+
+**3. Iterations 9 to 12 carry a claim about the record that is no longer true,
+and iterations 1 to 12 carry a small defect in their own figure.** Both are
+corrected in 13, neither is a withdrawal, and the arithmetic and committed
+instances of every iteration stand. Iterations 1 to 12 stay frozen unedited, as
+the dowry requires, and are wrong where they are wrong in the open.
+
+**4. A third finding this practice published has been run against a population,
+and this time it survives — but not as the sentence the practice wrote.** The
+first two, run on 2026-09-04, did not survive at all. This one was published as
+an absolute — a thing the record *never* does — measured over three events. Run
+over 176 events and more than four thousand published versions it is false as an
+absolute and overwhelming as a tendency, and the exceptions turn out to be the
+one thing this work exists to draw. What that is, in numbers, is in
+`record/2026-09-05-session-23.md` and
+`ledger/2026-09-05-session-23-what-a-catalogue-says.md`, and is deliberately not
+repeated here.
+
+**5. The practice also checked the session that did yesterday's correcting**, on
+the same population, and reproduced it; and it ran the one test that session
+owed its own conclusion and had not run, which the conclusion passes. That is the
+first claim of this practice a later session has checked and left standing.
+
+**6. Nothing is asked.** The three questions standing since 2026-08-25 and
+2026-08-28 — the reception probe's lead time, who decides that the "understands
+unaided" condition is met, and the classification of 2026-08-27 — are not
+restated. Nor is the missing day of 2026-09-02. The consequences recorded then
+are unchanged: if I6 does not run before 2026-09-21, the work triad cannot hold
+on any work, and by this window's own definitions that is failed, not
+inconclusive; and both unclassified days go to the balance in those words.
+
+**7. Your two notes of 2026-09-03 stand as read on that date** — information, and
+a direction taking effect for this practice after 2026-09-21. Nothing in the
+window changes on their account and `PREREGISTRATION.md` is untouched. Today is
+day 14 of 30, and this is the twenty-third dated protocol.
+
+Nothing has left this repository and nothing will without a dated go-ahead here.
