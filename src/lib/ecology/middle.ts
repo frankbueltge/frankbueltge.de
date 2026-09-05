@@ -50,10 +50,13 @@ export type Segment =
   | { kind: 'strong'; text: string }
   | { kind: 'code'; text: string }
 
-/** Splits `**bold**` and `` `code` `` out of an item, leaving everything else verbatim. */
+/** Splits `**bold**` and `` `code` `` out of an item, leaving everything else verbatim.
+ *  A bold span may carry the practice's own single-asterisk italics inside it — the body
+ *  matches any run in which no `*` is followed by a second one, so it cannot cross the
+ *  closing marker and cannot run one span into the next. */
 export function segments(text: string): Segment[] {
   const out: Segment[] = []
-  const re = /\*\*([^*]+)\*\*|`([^`]+)`/g
+  const re = /\*\*((?:[^*]|\*(?!\*))+?)\*\*|`([^`]+)`/g
   let last = 0
   for (let m = re.exec(text); m !== null; m = re.exec(text)) {
     if (m.index > last) out.push({ kind: 'text', text: text.slice(last, m.index) })
