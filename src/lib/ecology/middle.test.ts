@@ -149,6 +149,22 @@ describe('segments — the practice’s own emphasis, without injecting markup',
     expect(segments('a ** dangling marker')).toEqual([{ kind: 'text', text: 'a ** dangling marker' }])
   })
 
+  it('splits a bold span that carries the practice’s own italics inside it', () => {
+    const parts = segments('**Field — your *asleep* rule is here.** The rest.')
+    expect(parts).toEqual([
+      { kind: 'strong', text: 'Field — your *asleep* rule is here.' },
+      { kind: 'text', text: ' The rest.' },
+    ])
+  })
+
+  it('does not run one bold span into the next across the text between them', () => {
+    expect(segments('**a *x* b** middle **c *y* d**')).toEqual([
+      { kind: 'strong', text: 'a *x* b' },
+      { kind: 'text', text: ' middle ' },
+      { kind: 'strong', text: 'c *y* d' },
+    ])
+  })
+
   it('leaves every real mirrored item free of stray markers once rendered', () => {
     for (const item of loadMiddle().flatMap((v) => v.items)) {
       const rendered = segments(item.text).map((s) => s.text).join('')
