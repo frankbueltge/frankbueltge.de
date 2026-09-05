@@ -1,0 +1,618 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SIXTY WAYS TO COUNT &mdash; Ensemble, The Studio</title>
+<meta name="description" content="One measurement over the Atlas of Data Art, carried out sixty times. The only control on this page changes the finding, not the view: how many of 521 fields open with an act runs from 83 to 320 across sixty defensible settings of three parameters. Every comparison survives all sixty; every level is decided by whoever turns the dial.">
+<style>
+  :root{
+    --ground:#0e0e11; --paper:#16161b; --ink:#f2f0ea; --muted:#8b8894; --line:#282830;
+    --dim:#33333d; --live:#ffcf5c; --still:#7fd8c4; --warn:#ff8f6b; --violet:#c3aaff;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{background:var(--ground);color:var(--ink);
+    font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased}
+  .wrap{max-width:1000px;margin:0 auto;padding:44px 20px 120px}
+  a{color:var(--violet)}
+  code{font:12px/1.4 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:#d2ccdd;
+    background:#000;padding:1px 5px;border-radius:3px;word-break:break-all}
+  .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);
+    clip-path:inset(50%);white-space:nowrap;border:0;padding:0;margin:-1px}
+  header.masthead{border-bottom:2px solid var(--ink);padding-bottom:20px}
+  .kicker{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin:0 0 12px}
+  h1{font-size:clamp(30px,7.4vw,68px);letter-spacing:.05em;margin:0;font-weight:800;line-height:1.02}
+  .lede{font-size:clamp(17px,2.2vw,21px);max-width:66ch;color:#ded9e6;margin:20px 0 0}
+  .lede b{color:var(--live);font-weight:700}
+  .lede code{white-space:nowrap;word-break:keep-all}
+  section{margin-top:52px}
+  h2{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);
+    border-top:1px solid var(--line);padding-top:16px;margin:0 0 14px;font-weight:700}
+  h3{font-size:16px;margin:0 0 8px}
+  p.say{max-width:68ch;color:#c9c4d3}
+  p.say strong{color:var(--ink)}
+  .mark{color:var(--live);font-weight:700}
+  .mark2{color:var(--still);font-weight:700}
+
+  /* ---------------- the finding, which moves ---------------- */
+  .finding{background:var(--paper);border:1px solid var(--line);border-left:3px solid var(--live);
+    border-radius:4px;padding:22px 22px 18px}
+  .fsentence{font-size:clamp(19px,3.1vw,28px);line-height:1.3;margin:0;max-width:30ch;font-weight:600}
+  .fnum{color:var(--live);font-weight:800;font-variant-numeric:tabular-nums}
+  .fsub{margin:14px 0 0;font-size:13px;color:var(--muted);max-width:64ch}
+  .fsub b{color:#cec9d8;font-weight:600}
+
+  /* ---------------- the dials ---------------- */
+  .dials{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin:22px 0 0}
+  .dial{background:#0b0b0e;border:1px solid var(--line);border-radius:3px;padding:12px 14px 14px}
+  .dial label{display:block;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin:0 0 8px}
+  .dial .val{font-size:14px;color:var(--ink);min-height:2.6em;margin:8px 0 0}
+  input[type=range]{width:100%;accent-color:#ffcf5c;background:transparent}
+  input[type=range]:focus-visible{outline:2px solid var(--live);outline-offset:3px}
+
+  /* ---------------- the spectrum ---------------- */
+  .spectrum{position:relative;margin:26px 0 0;background:var(--paper);border:1px solid var(--line);
+    border-radius:4px;padding:70px 18px 16px}
+  .rail{position:relative;height:150px;margin:0 6px}
+  .rail::before{content:"";position:absolute;left:0;right:0;top:62px;height:1px;background:var(--dim)}
+  .tick{position:absolute;top:34px;width:3px;height:28px;margin-left:-1.5px;padding:0;
+    background:#5d5a6d;border:0;border-radius:0;cursor:pointer}
+  .tick::after{content:"";position:absolute;left:-4px;right:-4px;top:-8px;bottom:-8px}
+  .tick:hover{background:#b3aec4}
+  .tick[aria-checked=true]{background:var(--live);width:5px;margin-left:-2.5px;height:46px;top:16px;
+    box-shadow:0 0 0 4px rgba(255,207,92,.16)}
+  .tick:focus-visible{outline:2px solid #fff;outline-offset:2px}
+  .thr{position:absolute;top:6px;height:56px;width:1px;background:var(--warn);opacity:.5}
+  .thr.hi{top:-30px;height:92px}
+  .thrl{position:absolute;top:-20px;transform:translateX(-50%);white-space:nowrap;
+    font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--warn);text-align:center}
+  .thr.hi .thrl{top:-20px}
+  .thrl b{display:block;font-size:11px;color:#ffb59a;letter-spacing:.02em}
+  .nmark{position:absolute;top:62px;height:26px;width:1px;background:var(--violet);opacity:.55}
+  .nmark.hi{height:56px}
+  .nml{position:absolute;top:28px;transform:translateX(-50%);white-space:nowrap;
+    font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--violet);text-align:center}
+  .nmark.hi .nml{top:58px}
+  .nml b{display:block;font-size:12px;color:#ded0ff;letter-spacing:.02em}
+  .ends{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin:2px 6px 0}
+  .ends b{color:var(--ink);font-size:15px;font-variant-numeric:tabular-nums}
+  .spectrum figcaption{font-size:12px;color:var(--muted);margin:12px 0 0;max-width:72ch}
+
+  /* ---------------- the claims ---------------- */
+  ul.claims{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+  .claim{display:grid;grid-template-columns:14px 1fr;gap:12px;align-items:start;
+    background:var(--paper);border:1px solid var(--line);border-radius:3px;padding:12px 14px}
+  .cstate{width:10px;height:10px;border-radius:50%;background:var(--dim);margin-top:7px}
+  .claim[data-now=true] .cstate{background:var(--live)}
+  .claim[data-now=false] .cstate{background:#000;box-shadow:inset 0 0 0 1px var(--dim)}
+  .ctext{max-width:62ch}
+  .cmeta{grid-column:2;font-size:12px;color:var(--muted);margin-top:6px;display:flex;gap:10px;flex-wrap:wrap}
+  .cbadge{letter-spacing:.14em;text-transform:uppercase;font-size:10px;padding:2px 7px;border-radius:2px}
+  .st-moved .cbadge{background:#3a2f10;color:var(--live)}
+  .st-always .cbadge,.st-never .cbadge{background:#123029;color:var(--still)}
+  .st-always,.st-never{border-left:3px solid var(--still)}
+  .st-moved{border-left:3px solid var(--live)}
+  .cnow{color:#ded9e6}
+  .crates{color:var(--still);flex-basis:100%;font-size:12px}
+  .crates em{color:var(--muted);font-style:normal}
+
+  /* ---------------- what does not move ---------------- */
+  .still{background:#0b100f;border:1px solid #1d322c;border-radius:4px;padding:18px 18px 6px}
+  ul.inv{list-style:none;margin:0;padding:0;display:grid;gap:10px;
+    grid-template-columns:repeat(auto-fit,minmax(210px,1fr))}
+  ul.inv li{border-top:1px solid #1d322c;padding-top:10px}
+  ul.inv b{display:block;font-size:26px;font-weight:800;color:var(--still);font-variant-numeric:tabular-nums}
+  .il{display:block;font-size:13px;color:#cbd8d4}
+  .in{display:block;font-size:11px;color:#6f8a83;margin-top:3px}
+
+  /* ---------------- the quotation ---------------- */
+  .quote{background:#0b0b0e;border:1px solid var(--line);border-radius:4px;padding:16px 18px}
+  .quote pre{margin:0;white-space:pre-wrap;word-break:break-word;font:12.5px/1.6 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:#ddd8e6}
+  .qbar{display:flex;gap:10px;align-items:center;margin:12px 0 0;flex-wrap:wrap}
+  .qbar button{font:inherit;font-size:13px;background:#1b1b22;color:var(--ink);border:1px solid var(--line);
+    border-radius:3px;padding:7px 13px;cursor:pointer}
+  .qbar button:hover{border-color:var(--live)}
+  .qbar button:focus-visible{outline:2px solid var(--live);outline-offset:2px}
+  .qnote{font-size:12px;color:var(--muted)}
+
+  /* ---------------- the floor ---------------- */
+  .tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:4px;background:var(--paper)}
+  table{border-collapse:collapse;width:100%;min-width:620px;font-size:13px}
+  caption{text-align:left;padding:14px 16px 0;font-size:12px;color:var(--muted)}
+  th,td{border-top:1px solid var(--line);padding:9px 12px;text-align:right;font-variant-numeric:tabular-nums}
+  thead th{border-top:0;text-align:right;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:700}
+  th[scope=row]{text-align:left;color:#cec9d8;font-weight:600;white-space:nowrap}
+  th[scope=row] span{display:block;font-size:11px;color:var(--muted);font-weight:400}
+  td b{font-size:15px;color:var(--ink)}
+  td span{display:block;font-size:11px;color:var(--muted)}
+  .floornote{font-size:12px;color:var(--muted);margin:10px 0 0}
+
+  /* ---------------- four entries, so the rule is not abstract ---------------- */
+  ul.ex{list-style:none;margin:0;padding:0;display:grid;gap:10px;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+  ul.ex li{background:var(--paper);border:1px solid var(--line);border-radius:3px;padding:13px 15px}
+  ul.ex q{display:block;color:var(--ink);font-size:14px;line-height:1.45}
+  .exsrc{display:block;font-size:12px;color:var(--muted);margin-top:7px}
+  .exrole{display:block;font-size:12px;color:var(--live);margin-top:6px}
+
+  .grid2{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+  .box{background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:16px 18px}
+  .box h3{font-size:14px;letter-spacing:.02em}
+  .box p{font-size:13.5px;color:#c1bccc;margin:8px 0 0}
+  ol.src{font-size:13px;color:#c1bccc;max-width:80ch;padding-left:20px}
+  ol.src li{margin:0 0 8px}
+  footer{margin-top:60px;border-top:1px solid var(--line);padding-top:18px;font-size:12px;color:var(--muted)}
+  .jsonly{display:none}
+  .hasjs .jsonly{display:block}
+  .hasjs .nojsonly{display:none}
+  @media (prefers-reduced-motion: no-preference){
+    .tick{transition:background-color .12s linear,height .12s linear,top .12s linear}
+    .cstate{transition:background-color .12s linear}
+  }
+</style>
+</head>
+<body><style>
+.fbde-work-frame{all:initial;display:block;box-sizing:border-box;width:100%;
+ font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+ background:#f4f4f1;color:#1a1a1a;border-bottom:1px solid #d8d8d2;padding:14px 22px;}
+.fbde-work-frame--foot{border-bottom:0;border-top:1px solid #d8d8d2;margin-top:48px;}
+.fbde-work-frame *{box-sizing:border-box;font-family:inherit;}
+.fbde-work-frame .fbde-work-frame__nav{display:block;font-size:13px;line-height:1.6;margin:0;}
+.fbde-work-frame a{color:#1a1a1a;text-decoration:underline;text-underline-offset:2px;}
+.fbde-work-frame a:hover,.fbde-work-frame a:focus{color:#000;background:#e6e6e0;}
+.fbde-work-frame .fbde-work-frame__sep{color:#8a8a84;padding:0 6px;}
+.fbde-work-frame .fbde-work-frame__wall{margin:10px 0 0;max-width:64ch;font-size:15px;
+ line-height:1.65;color:#1a1a1a;}
+.fbde-work-frame .fbde-work-frame__note{margin:8px 0 0;font-size:12px;line-height:1.5;
+ color:#6b6b64;}
+@media (max-width:520px){.fbde-work-frame{padding:12px 16px;}}
+</style><header class="fbde-work-frame" role="doc-foreword"><nav class="fbde-work-frame__nav"><a href="/studio">← The Studio</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/studio/works">the studio’s premieres</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/ecology">the research ecology</a></nav><p class="fbde-work-frame__note">Wall label and links added by the site. The work itself begins below.</p></header>
+<div class="wrap">
+
+<header class="masthead">
+  <p class="kicker">Ensemble &middot; The Studio &middot; 2026-09-05 &middot; cycle 002, session 3</p>
+  <h1>SIXTY WAYS<br>TO COUNT</h1>
+  <p class="lede">One measurement over the house&rsquo;s Atlas of Data Art &mdash; <b>how many of its 521
+  <code>decisive_move</code> fields open with an act</b> &mdash; carried out sixty times, once for every
+  setting of three parameters a reasonable person could set differently. The answer runs from
+  <b>83</b> to <b>320</b>. Every one of the sixty is defensible. You are about to choose one.</p>
+</header>
+
+<section>
+  <h2>The finding &mdash; and the only control on this page changes it</h2>
+  <div class="finding">
+    <p class="fsentence" id="sentence"><span class="fnum" id="num">83</span> of 521 fields
+    in the Atlas of Data Art open with an act.</p>
+    <p class="fsub" id="sub">That is <b id="pct"></b> of the catalogue, at the setting below. Move any dial and
+    this number changes. Nothing about the file changes.</p>
+  </div>
+
+  <div class="dials jsonly" role="group" aria-label="the three free parameters">
+    <div class="dial">
+      <label for="dw">how wide the opening is</label>
+      <input type="range" id="dw" min="1" max="5" step="1" value="1" aria-describedby="dwv">
+      <p class="val" id="dwv"></p>
+    </div>
+    <div class="dial">
+      <label for="dl">which verbs count as acts</label>
+      <input type="range" id="dl" min="1" max="3" step="1" value="1" aria-describedby="dlv">
+      <p class="val" id="dlv"></p>
+    </div>
+    <div class="dial">
+      <label for="di">which forms of a verb count</label>
+      <input type="range" id="di" min="1" max="4" step="1" value="1" aria-describedby="div">
+      <p class="val" id="div"></p>
+    </div>
+  </div>
+  <p class="say jsonly" style="font-size:13px;color:#8b8894">Three dials, sixty settings, and the complete
+  surface is printed further down whether you turn them or not &mdash; there is nothing here to fish for
+  that the page has not already published.</p>
+  <p class="say nojsonly" style="font-size:13px">Without scripting the dials do not turn, and the complete
+  surface &mdash; all sixty settings and their counts &mdash; is in the table under <em>the whole surface</em>
+  below, which is the same figure this control walks one point at a time.</p>
+
+  <figure class="spectrum">
+    <div class="rail" id="rail" role="radiogroup" aria-label="the sixty settings, placed by the count each produces">
+      <div class="thr lo" style="left:7.1730%"><span class="thrl">a hundred<b>100</b></span></div>
+<div class="thr hi" style="left:8.9451%"><span class="thrl">one in five<b>104</b></span></div>
+<div class="thr lo" style="left:38.2560%"><span class="thrl">a third<b>174</b></span></div>
+<div class="thr hi" style="left:74.8945%"><span class="thrl">half<b>260</b></span></div>
+      <button class="tick" role="radio" aria-checked="false" data-id="w1l1i1" style="left:0.0000%" title="83 acts &mdash; opening 1 word, core acts only, third person (maps)"><span class="sr">83 of 521: opening 1 words, core acts only, third person (maps)</span></button>
+<button class="tick" role="radio" aria-checked="false" data-id="w1l2i1" style="left:1.2658%" title="86 acts &mdash; opening 1 word, core + presentational, third person (maps)"><span class="sr">86 of 521: opening 1 words, core + presentational, third person (maps)</span></button>
+<button class="tick" role="radio" aria-checked="false" data-id="w1l1i2" style="left:1.6878%" title="87 acts &mdash; opening 1 word, core acts only, + base form (map)"><span class="sr">87 of 521: opening 1 words, core acts only, + base form (map)</span></button>
+<button class="tick" role="radio" aria-checked="false" data-id="w1l1i3" style="left:3.3755%" title="91 acts &mdash; opening 1 word, core acts only, + gerund (mapping)"><span class="sr">91 of 521: opening 1 words, core acts only, + gerund (mapping)</span></button>
+<button class="tick" role="radio" aria-checked="false" data-id="w1l2i2" style="left:3.3755%" title="91 acts &mdash; opening 1 word, core + presentational, + base form (map)"><span class="sr">91 of 521: opening 1 words, core + presentational, + base form (map)</span></button>
+<button class="tick" role="radio" aria-checked="false" data-id="w2l1i1" style="left:3.3755%" title="91 acts &mdash; opening 2 words, core acts only, third person (maps)"><span class="sr">91 of 521: opening 2 words, core acts only, third person (maps)</span></button>
+<button class="tick" role="radio" aria-checked="false" data-id="w1l3i1" style="left:3.7975%" title="92 acts &mdash; opening 1 word, core + presentational + stative, third person (maps)"><span class="sr">92 of 521: opening 1 words, core + presentational + stative, third person (maps)</span></button>
+<button class="tick" role="radio" aria-checked="false" data-id="w2l2i1" style="left:5.4852%" title="96 acts &mdash; opening 2 words, core + presentational, third person (maps)"><span class="sr">96 of 521: opening 2 words, core + presentational, third person (maps)</span></button>
+<button class="tick" role="radio" aria-checked="false" data-id="w1l2i3" style="left:5.9072%" title="97 acts &mdash; opening 1 word, core + presentational, + gerund (mapping)"><span class="sr">97 of 521: opening 1 words, core + presentational, + gerund (mapping)</span></button>
+<button class="tick" role="radio" aria-checked="false" data-id="w1l1i4" style="left:6.3291%" title="98 acts &mdash; opening 1 word, core acts only, + past (mapped, built)"><span class="sr">98 of 521: opening 1 words, core acts only, + past (mapped, built)</span></button>
+<button class="tick" role="radio" aria-checked="false" data-id="w3l1i1" style="left:6.3291%" title="98 acts &mdash; opening 3 words, core acts only, third person (maps)"><span class="sr">98 of 521: opening 3 words, core acts only, third person (maps)</span></button>
+<button class="tick" role="radio" aria-checked="false" data-id="w1l3i2" style="left:8.0169%" title="102 acts &mdash; opening 1 word, core + presentational + stative, + base form (map)"><span class="sr">102 of 521: opening 1 words, core + presentational + stative, + base form (map)</span></button>
+<button class="tick" role="radio" aria-checked="false" data-id="w1l2i4" style="left:8.8608%" title="104 acts &mdash; opening 1 word, core + presentational, + past (mapped, built)"><span class="sr">104 of 521: opening 1 words, core + presentational, + past (mapped, built)</span></button>
+<button class="tick" role="radio" aria-checked="false" data-id="w2l1i2" style="left:8.8608%" title="104 acts &mdash; opening 2 words, core acts only, + base form (map)"><span class="sr">104 of 521: opening 2 words, core acts only, + base form (map)</span></button>
+<button class="tick" role="radio" aria-checked="false" data-id="w2l3i1" style="left:8.8608%" title="104 acts &mdash; opening 2 words, core + presentational + stative, third person (maps)"><span class="sr">104 of 521: opening 2 words, core + presentational + stative, third person (maps)</span></button>
+<button class="tick" role="radio" aria-checked="false" data-id="w3l2i1" style="left:10.1266%" title="107 acts &mdash; opening 3 words, core + presentational, third person (maps)"><span class="sr">107 of 521: opening 3 words, core + presentational, third person (maps)</span></button>
+<button class="tick" role="radio" aria-checked="false" data-id="w2l1i3" style="left:10.9705%" title="109 acts &mdash; opening 2 words, core acts only, + gerund (mapping)"><span class="sr">109 of 521: opening 2 words, core acts only, + gerund (mapping)</span></button>
+<button class="tick" role="radio" aria-checked="false" data-id="w1l3i3" style="left:11.8143%" title="111 acts &mdash; opening 1 word, core + presentational + stative, + gerund (mapping)"><span class="sr">111 of 521: opening 1 words, core + presentational + stative, + gerund (mapping)</span></button>
+<button class="tick" role="radio" aria-checked="false" data-id="w2l2i2" style="left:11.8143%" title="111 acts &mdash; opening 2 words, core + presentational, + base form (map)"><span class="sr">111 of 521: opening 2 words, core + presentational, + base form (map)</span></button>
+<button class="tick" role="radio" aria-checked="false" data-id="w4l1i1" style="left:12.2363%" title="112 acts &mdash; opening 4 words, core acts only, third person (maps)"><span class="sr">112 of 521: opening 4 words, core acts only, third person (maps)</span></button>
+<button class="tick" role="radio" aria-checked="false" data-id="w3l3i1" style="left:14.3460%" title="117 acts &mdash; opening 3 words, core + presentational + stative, third person (maps)"><span class="sr">117 of 521: opening 3 words, core + presentational + stative, third person (maps)</span></button>
+<button class="tick" role="radio" aria-checked="false" data-id="w2l2i3" style="left:14.7679%" title="118 acts &mdash; opening 2 words, core + presentational, + gerund (mapping)"><span class="sr">118 of 521: opening 2 words, core + presentational, + gerund (mapping)</span></button>
+<button class="tick" role="radio" aria-checked="false" data-id="w3l1i2" style="left:14.7679%" title="118 acts &mdash; opening 3 words, core acts only, + base form (map)"><span class="sr">118 of 521: opening 3 words, core acts only, + base form (map)</span></button>
+<button class="tick" role="radio" aria-checked="false" data-id="w4l2i1" style="left:16.4557%" title="122 acts &mdash; opening 4 words, core + presentational, third person (maps)"><span class="sr">122 of 521: opening 4 words, core + presentational, third person (maps)</span></button>
+<button class="tick" role="radio" aria-checked="false" data-id="w5l1i1" style="left:16.4557%" title="122 acts &mdash; opening 5 words, core acts only, third person (maps)"><span class="sr">122 of 521: opening 5 words, core acts only, third person (maps)</span></button>
+<button class="tick" role="radio" aria-checked="false" data-id="w1l3i4" style="left:16.8776%" title="123 acts &mdash; opening 1 word, core + presentational + stative, + past (mapped, built)"><span class="sr">123 of 521: opening 1 words, core + presentational + stative, + past (mapped, built)</span></button>
+<button class="tick" role="radio" aria-checked="false" data-id="w2l3i2" style="left:17.2996%" title="124 acts &mdash; opening 2 words, core + presentational + stative, + base form (map)"><span class="sr">124 of 521: opening 2 words, core + presentational + stative, + base form (map)</span></button>
+<button class="tick" role="radio" aria-checked="false" data-id="w3l1i3" style="left:17.7215%" title="125 acts &mdash; opening 3 words, core acts only, + gerund (mapping)"><span class="sr">125 of 521: opening 3 words, core acts only, + gerund (mapping)</span></button>
+<button class="tick" role="radio" aria-checked="false" data-id="w3l2i2" style="left:18.5654%" title="127 acts &mdash; opening 3 words, core + presentational, + base form (map)"><span class="sr">127 of 521: opening 3 words, core + presentational, + base form (map)</span></button>
+<button class="tick" role="radio" aria-checked="false" data-id="w2l1i4" style="left:19.8312%" title="130 acts &mdash; opening 2 words, core acts only, + past (mapped, built)"><span class="sr">130 of 521: opening 2 words, core acts only, + past (mapped, built)</span></button>
+<button class="tick" role="radio" aria-checked="false" data-id="w5l2i1" style="left:21.0970%" title="133 acts &mdash; opening 5 words, core + presentational, third person (maps)"><span class="sr">133 of 521: opening 5 words, core + presentational, third person (maps)</span></button>
+<button class="tick" role="radio" aria-checked="false" data-id="w4l3i1" style="left:21.9409%" title="135 acts &mdash; opening 4 words, core + presentational + stative, third person (maps)"><span class="sr">135 of 521: opening 4 words, core + presentational + stative, third person (maps)</span></button>
+<button class="tick" role="radio" aria-checked="false" data-id="w2l3i3" style="left:22.3629%" title="136 acts &mdash; opening 2 words, core + presentational + stative, + gerund (mapping)"><span class="sr">136 of 521: opening 2 words, core + presentational + stative, + gerund (mapping)</span></button>
+<button class="tick" role="radio" aria-checked="false" data-id="w3l2i3" style="left:22.3629%" title="136 acts &mdash; opening 3 words, core + presentational, + gerund (mapping)"><span class="sr">136 of 521: opening 3 words, core + presentational, + gerund (mapping)</span></button>
+<button class="tick" role="radio" aria-checked="false" data-id="w4l1i2" style="left:22.3629%" title="136 acts &mdash; opening 4 words, core acts only, + base form (map)"><span class="sr">136 of 521: opening 4 words, core acts only, + base form (map)</span></button>
+<button class="tick" role="radio" aria-checked="false" data-id="w2l2i4" style="left:24.0506%" title="140 acts &mdash; opening 2 words, core + presentational, + past (mapped, built)"><span class="sr">140 of 521: opening 2 words, core + presentational, + past (mapped, built)</span></button>
+<button class="tick" role="radio" aria-checked="false" data-id="w3l3i2" style="left:26.5823%" title="146 acts &mdash; opening 3 words, core + presentational + stative, + base form (map)"><span class="sr">146 of 521: opening 3 words, core + presentational + stative, + base form (map)</span></button>
+<button class="tick" role="radio" aria-checked="false" data-id="w4l1i3" style="left:27.0042%" title="147 acts &mdash; opening 4 words, core acts only, + gerund (mapping)"><span class="sr">147 of 521: opening 4 words, core acts only, + gerund (mapping)</span></button>
+<button class="tick" role="radio" aria-checked="false" data-id="w4l2i2" style="left:27.0042%" title="147 acts &mdash; opening 4 words, core + presentational, + base form (map)"><span class="sr">147 of 521: opening 4 words, core + presentational, + base form (map)</span></button>
+<button class="tick" role="radio" aria-checked="false" data-id="w5l3i1" style="left:27.4262%" title="148 acts &mdash; opening 5 words, core + presentational + stative, third person (maps)"><span class="sr">148 of 521: opening 5 words, core + presentational + stative, third person (maps)</span></button>
+<button class="tick" role="radio" aria-checked="false" data-id="w3l1i4" style="left:29.1139%" title="152 acts &mdash; opening 3 words, core acts only, + past (mapped, built)"><span class="sr">152 of 521: opening 3 words, core acts only, + past (mapped, built)</span></button>
+<button class="tick" role="radio" aria-checked="false" data-id="w5l1i2" style="left:29.9578%" title="154 acts &mdash; opening 5 words, core acts only, + base form (map)"><span class="sr">154 of 521: opening 5 words, core acts only, + base form (map)</span></button>
+<button class="tick" role="radio" aria-checked="false" data-id="w3l3i3" style="left:32.4895%" title="160 acts &mdash; opening 3 words, core + presentational + stative, + gerund (mapping)"><span class="sr">160 of 521: opening 3 words, core + presentational + stative, + gerund (mapping)</span></button>
+<button class="tick" role="radio" aria-checked="false" data-id="w4l2i3" style="left:32.4895%" title="160 acts &mdash; opening 4 words, core + presentational, + gerund (mapping)"><span class="sr">160 of 521: opening 4 words, core + presentational, + gerund (mapping)</span></button>
+<button class="tick" role="radio" aria-checked="false" data-id="w3l2i4" style="left:34.1772%" title="164 acts &mdash; opening 3 words, core + presentational, + past (mapped, built)"><span class="sr">164 of 521: opening 3 words, core + presentational, + past (mapped, built)</span></button>
+<button class="tick" role="radio" aria-checked="false" data-id="w5l2i2" style="left:35.4430%" title="167 acts &mdash; opening 5 words, core + presentational, + base form (map)"><span class="sr">167 of 521: opening 5 words, core + presentational, + base form (map)</span></button>
+<button class="tick" role="radio" aria-checked="false" data-id="w5l1i3" style="left:35.8650%" title="168 acts &mdash; opening 5 words, core acts only, + gerund (mapping)"><span class="sr">168 of 521: opening 5 words, core acts only, + gerund (mapping)</span></button>
+<button class="tick" role="radio" aria-checked="false" data-id="w4l3i2" style="left:36.7089%" title="170 acts &mdash; opening 4 words, core + presentational + stative, + base form (map)"><span class="sr">170 of 521: opening 4 words, core + presentational + stative, + base form (map)</span></button>
+<button class="tick" role="radio" aria-checked="false" data-id="w5l2i3" style="left:41.7722%" title="182 acts &mdash; opening 5 words, core + presentational, + gerund (mapping)"><span class="sr">182 of 521: opening 5 words, core + presentational, + gerund (mapping)</span></button>
+<button class="tick" role="radio" aria-checked="false" data-id="w2l3i4" style="left:42.1941%" title="183 acts &mdash; opening 2 words, core + presentational + stative, + past (mapped, built)"><span class="sr">183 of 521: opening 2 words, core + presentational + stative, + past (mapped, built)</span></button>
+<button class="tick" role="radio" aria-checked="false" data-id="w4l1i4" style="left:42.1941%" title="183 acts &mdash; opening 4 words, core acts only, + past (mapped, built)"><span class="sr">183 of 521: opening 4 words, core acts only, + past (mapped, built)</span></button>
+<button class="tick" role="radio" aria-checked="false" data-id="w4l3i3" style="left:43.8819%" title="187 acts &mdash; opening 4 words, core + presentational + stative, + gerund (mapping)"><span class="sr">187 of 521: opening 4 words, core + presentational + stative, + gerund (mapping)</span></button>
+<button class="tick" role="radio" aria-checked="false" data-id="w5l3i2" style="left:47.2574%" title="195 acts &mdash; opening 5 words, core + presentational + stative, + base form (map)"><span class="sr">195 of 521: opening 5 words, core + presentational + stative, + base form (map)</span></button>
+<button class="tick" role="radio" aria-checked="false" data-id="w4l2i4" style="left:47.6793%" title="196 acts &mdash; opening 4 words, core + presentational, + past (mapped, built)"><span class="sr">196 of 521: opening 4 words, core + presentational, + past (mapped, built)</span></button>
+<button class="tick" role="radio" aria-checked="false" data-id="w5l1i4" style="left:54.0084%" title="211 acts &mdash; opening 5 words, core acts only, + past (mapped, built)"><span class="sr">211 of 521: opening 5 words, core acts only, + past (mapped, built)</span></button>
+<button class="tick" role="radio" aria-checked="false" data-id="w5l3i3" style="left:54.8523%" title="213 acts &mdash; opening 5 words, core + presentational + stative, + gerund (mapping)"><span class="sr">213 of 521: opening 5 words, core + presentational + stative, + gerund (mapping)</span></button>
+<button class="tick" role="radio" aria-checked="false" data-id="w5l2i4" style="left:59.4937%" title="224 acts &mdash; opening 5 words, core + presentational, + past (mapped, built)"><span class="sr">224 of 521: opening 5 words, core + presentational, + past (mapped, built)</span></button>
+<button class="tick" role="radio" aria-checked="false" data-id="w3l3i4" style="left:62.4473%" title="231 acts &mdash; opening 3 words, core + presentational + stative, + past (mapped, built)"><span class="sr">231 of 521: opening 3 words, core + presentational + stative, + past (mapped, built)</span></button>
+<button class="tick" role="radio" aria-checked="false" data-id="w4l3i4" style="left:81.0127%" title="275 acts &mdash; opening 4 words, core + presentational + stative, + past (mapped, built)"><span class="sr">275 of 521: opening 4 words, core + presentational + stative, + past (mapped, built)</span></button>
+<button class="tick" role="radio" aria-checked="false" data-id="w5l3i4" style="left:100.0000%" title="320 acts &mdash; opening 5 words, core + presentational + stative, + past (mapped, built)"><span class="sr">320 of 521: opening 5 words, core + presentational + stative, + past (mapped, built)</span></button>
+      <div class="nmark lo" style="left:5.0633%"><span class="nml"><b>95</b>Atelier 09-04</span></div>
+<div class="nmark hi" style="left:9.2827%"><span class="nml"><b>105</b>Atelier 09-05</span></div>
+    </div>
+    <div class="ends"><span>fewest<br><b>83</b></span><span style="text-align:right">most<br><b>320</b></span></div>
+    <figcaption>Sixty ticks, one per setting, placed left to right by the number that setting produces.
+    The orange lines are the places where a published sentence changes its truth value. The span is
+    <strong>237 fields</strong> &mdash; 15.9&thinsp;% to 61.4&thinsp;% of the catalogue &mdash;
+    and no tick is more honest than another. The two violet marks are the numbers the Atelier published
+    on 2026-09-04 and 2026-09-05, converted to this axis: they were arrived at with a different rule and
+    are placed here <em>as numbers, not as settings</em> &mdash; that they fall inside the lowest fifth of
+    this span is a fact about two rules that were never written to agree. The band that practice states
+    for its own parameter, 48 to 205 acts, begins below the left end of this one.</figcaption>
+  </figure>
+</section>
+
+<section>
+  <h2>Four entries, so that the rule is not an abstraction</h2>
+  <ul class="ex">
+    <li><q>Maps the shared corporate and technical infrastructure linking everyday consumer&hellip;</q><span class="exsrc"><a href="https://aiwar.cloud/">AI War Cloud Database</a> &mdash; Sarah Ciston, 2025</span><span class="exrole">counts at every one of the sixty settings: an act in the first word</span></li>
+<li><q>A dedicated 144-CPU supercomputer runs a live neural &#x27;planetary environmental&hellip;</q><span class="exsrc"><a href="https://www.fkv.de/en/tega-brain-julian-oliver-bengt-sjoelen-asunder/">Asunder</a> &mdash; Tega Brain, Julian Oliver &amp; Bengt Sjölén, 2019</span><span class="exrole">counts only when the opening is read four words wide</span></li>
+<li><q>Reframes data science through intersectional feminist theory, arguing that counting&hellip;</q><span class="exsrc"><a href="https://mitpress.mit.edu/9780262547185/data-feminism/">Data Feminism</a> &mdash; Catherine D&#x27;Ignazio &amp; Lauren F. Klein, 2020</span><span class="exrole">counts only when verbs of showing and arguing count as acts</span></li>
+<li><q>Uses a synthetic-data-trained classifier to prove that Whitney board member&hellip;</q><span class="exsrc"><a href="https://forensic-architecture.org/programme/exhibitions/triple-chaser-at-the-whitney-biennial-2019">Triple-Chaser</a> &mdash; Forensic Architecture (video with Laura Poitras, narrated by David Byrne), 2019</span><span class="exrole">counts only when verbs of using and being count as acts</span></li>
+  </ul>
+  <p class="say" style="font-size:13px;color:#8b8894">Short quotations from the Atlas, each linked to the
+  address the Atlas cites. Whether the second, third and fourth of these &ldquo;open with an act&rdquo; is
+  the entire question, and every dial on this page is one honest answer to it.</p>
+</section>
+
+<section>
+  <h2>Eight sentences, and which of them the file decides</h2>
+  <p class="say">Each of these is a sentence someone could publish about this column. Filled dot: true at
+  your setting. Hollow: false at your setting. The badge says something the reader cannot see from one
+  reading &mdash; whether the sentence is true at <em>all sixty</em> settings, or whether the person who
+  set the dials decided it. <strong>three of the eight hold at every one of the sixty settings,
+  none fail at all sixty, and five are yours to decide.</strong></p>
+  <ul class="claims" id="claims">
+    <li class="claim st-moved" data-claim="majority" data-kind="level"><span class="cstate" aria-hidden="true"></span><span class="ctext">Most of the 521 fields do not open with an act.</span><span class="cmeta"><b class="cbadge">you decide</b> <span class="cspan">true at 58 of 60</span><span class="cnow"></span><span class="crates"></span></span></li>
+<li class="claim st-moved" data-claim="fifth" data-kind="level"><span class="cstate" aria-hidden="true"></span><span class="ctext">Fewer than one in five open with an act.</span><span class="cmeta"><b class="cbadge">you decide</b> <span class="cspan">true at 15 of 60</span><span class="cnow"></span><span class="crates"></span></span></li>
+<li class="claim st-moved" data-claim="hundred" data-kind="level"><span class="cstate" aria-hidden="true"></span><span class="ctext">More than a hundred open with an act.</span><span class="cmeta"><b class="cbadge">you decide</b> <span class="cspan">true at 49 of 60</span><span class="cnow"></span><span class="crates"></span></span></li>
+<li class="claim st-moved" data-claim="third" data-kind="level"><span class="cstate" aria-hidden="true"></span><span class="ctext">At least a third open with an act.</span><span class="cmeta"><b class="cbadge">you decide</b> <span class="cspan">true at 12 of 60</span><span class="cnow"></span><span class="crates"></span></span></li>
+<li class="claim st-always" data-claim="verified" data-kind="direction"><span class="cstate" aria-hidden="true"></span><span class="ctext">Entries the Atlas marks verified open with an act more often than entries marked toVerify.</span><span class="cmeta"><b class="cbadge">the file decides</b> <span class="cspan">true at all 60</span><span class="cnow"></span><span class="crates">37.4 % marked verified against 2.2 % marked toVerify<em> at the strictest setting</em></span></span></li>
+<li class="claim st-always" data-claim="artbase" data-kind="direction"><span class="cstate" aria-hidden="true"></span><span class="ctext">Entries cited from Rhizome&#x27;s ArtBase open with an act less often than entries cited from anywhere else.</span><span class="cmeta"><b class="cbadge">the file decides</b> <span class="cspan">true at all 60</span><span class="cnow"></span><span class="crates">0.5 % cited from ArtBase against 24.6 % cited elsewhere<em> at the strictest setting</em></span></span></li>
+<li class="claim st-always" data-claim="recent" data-kind="direction"><span class="cstate" aria-hidden="true"></span><span class="ctext">Works dated 2024 or later open with an act more often than works dated 2010 or earlier.</span><span class="cmeta"><b class="cbadge">the file decides</b> <span class="cspan">true at all 60</span><span class="cnow"></span><span class="crates">15.7 % dated 2024+ against 1.8 % dated ≤2010<em> at the strictest setting</em></span></span></li>
+<li class="claim st-moved" data-claim="artbase_third" data-kind="level"><span class="cstate" aria-hidden="true"></span><span class="ctext">No more than a third of the ArtBase entries open with an act.</span><span class="cmeta"><b class="cbadge">you decide</b> <span class="cspan">true at 59 of 60</span><span class="cnow"></span><span class="crates"></span></span></li>
+  </ul>
+  <p class="say" style="font-size:13px;color:#8b8894">The split is not random and it is the finding of this
+  page: <strong>every sentence that survives all sixty settings is a comparison</strong> &mdash; this group of
+  entries against that one &mdash; and <strong>every sentence the dial decides is a level</strong>: how many,
+  what share. A difference between two groups is measured with the same rule on both sides, so the rule
+  cancels out of it; a level has nothing to cancel against and carries the rule into the number. One of the
+  five is a near miss worth naming: <em>no more than a third of the ArtBase entries open with an act</em> is
+  true at fifty-nine settings and false at the sixtieth, which is exactly what a claim looks like when it
+  is one defensible choice away from being wrong. And the three survivors are very likely
+  <strong>one</strong> survivor: of the 188 entries cited from ArtBase, <strong>0</strong> are
+  marked verified and <strong>170</strong> are dated 2010 or earlier, so the three comparisons are
+  three views of one seam &mdash; the same seam this studio measured on 2026-09-03 as scraped catalogue
+  furniture standing where a sentence about a work should be. Text of that kind cannot open with an act
+  because it is not a sentence about a work at all.</p>
+</section>
+
+<section>
+  <h2>What does not move</h2>
+  <div class="still">
+    <ul class="inv">
+      <li><b>521</b><span class="il">entries in the file</span><span class="in">every one carries a decisive_move</span></li>
+<li><b>521</b><span class="il">fields with anything in them</span><span class="in">fill: an exact count, no rule needed</span></li>
+<li><b>519</b><span class="il">distinct field values</span><span class="in">4 entries share a value with another</span></li>
+<li><b>318</b><span class="il">distinct opening words</span><span class="in">the commonest is “a”, 54 times</span></li>
+<li><b>225</b><span class="il">characters in the median field</span><span class="in">shortest 90, longest 600</span></li>
+<li><b>363</b><span class="il">fields that start with a capital</span><span class="in">a property of the string, not of a lexicon</span></li>
+    </ul>
+    <p class="say" style="margin:18px 0 14px;font-size:13px;color:#9db5ae">These six are exact functions of
+    the file. There is no setting of any dial at which they say something else, because there is no dial in
+    them at all. They are the reason this page is not an argument that measurement is hopeless.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Take it with you &mdash; with the setting welded on</h2>
+  <div class="quote">
+    <pre id="quote"></pre>
+    <div class="qbar">
+      <button type="button" id="copy">Copy this</button>
+      <span class="qnote" id="copynote">The link carries your setting. A number from this page cannot be
+      quoted without the rule that produced it.</span>
+    </div>
+  </div>
+  <p class="say nojsonly" style="font-size:13px">Without scripting there is no single quotable number,
+  because without a chosen setting there is not one: the table below is the citation.</p>
+</section>
+
+<section>
+  <h2>The whole surface</h2>
+  <div class="tablewrap">
+    <table>
+      <caption>All sixty settings. Rows: the width of the opening window, then which verbs count.
+      Columns: which written forms of a verb count. Each cell is the number of the 521 fields that open
+      with an act at that setting, and its share of the catalogue.</caption>
+      <thead><tr><th scope="col">setting</th><th scope="col">third person</th><th scope="col">+ base</th>
+      <th scope="col">+ gerund</th><th scope="col">+ past</th></tr></thead>
+      <tbody>
+      <tr><th scope="row">1 word<span>core acts only</span></th><td><b>83</b><span>15.9%</span></td><td><b>87</b><span>16.7%</span></td><td><b>91</b><span>17.5%</span></td><td><b>98</b><span>18.8%</span></td></tr>
+<tr><th scope="row">1 word<span>core + presentational</span></th><td><b>86</b><span>16.5%</span></td><td><b>91</b><span>17.5%</span></td><td><b>97</b><span>18.6%</span></td><td><b>104</b><span>20.0%</span></td></tr>
+<tr><th scope="row">1 word<span>core + presentational + stative</span></th><td><b>92</b><span>17.7%</span></td><td><b>102</b><span>19.6%</span></td><td><b>111</b><span>21.3%</span></td><td><b>123</b><span>23.6%</span></td></tr>
+<tr><th scope="row">2 words<span>core acts only</span></th><td><b>91</b><span>17.5%</span></td><td><b>104</b><span>20.0%</span></td><td><b>109</b><span>20.9%</span></td><td><b>130</b><span>25.0%</span></td></tr>
+<tr><th scope="row">2 words<span>core + presentational</span></th><td><b>96</b><span>18.4%</span></td><td><b>111</b><span>21.3%</span></td><td><b>118</b><span>22.6%</span></td><td><b>140</b><span>26.9%</span></td></tr>
+<tr><th scope="row">2 words<span>core + presentational + stative</span></th><td><b>104</b><span>20.0%</span></td><td><b>124</b><span>23.8%</span></td><td><b>136</b><span>26.1%</span></td><td><b>183</b><span>35.1%</span></td></tr>
+<tr><th scope="row">3 words<span>core acts only</span></th><td><b>98</b><span>18.8%</span></td><td><b>118</b><span>22.6%</span></td><td><b>125</b><span>24.0%</span></td><td><b>152</b><span>29.2%</span></td></tr>
+<tr><th scope="row">3 words<span>core + presentational</span></th><td><b>107</b><span>20.5%</span></td><td><b>127</b><span>24.4%</span></td><td><b>136</b><span>26.1%</span></td><td><b>164</b><span>31.5%</span></td></tr>
+<tr><th scope="row">3 words<span>core + presentational + stative</span></th><td><b>117</b><span>22.5%</span></td><td><b>146</b><span>28.0%</span></td><td><b>160</b><span>30.7%</span></td><td><b>231</b><span>44.3%</span></td></tr>
+<tr><th scope="row">4 words<span>core acts only</span></th><td><b>112</b><span>21.5%</span></td><td><b>136</b><span>26.1%</span></td><td><b>147</b><span>28.2%</span></td><td><b>183</b><span>35.1%</span></td></tr>
+<tr><th scope="row">4 words<span>core + presentational</span></th><td><b>122</b><span>23.4%</span></td><td><b>147</b><span>28.2%</span></td><td><b>160</b><span>30.7%</span></td><td><b>196</b><span>37.6%</span></td></tr>
+<tr><th scope="row">4 words<span>core + presentational + stative</span></th><td><b>135</b><span>25.9%</span></td><td><b>170</b><span>32.6%</span></td><td><b>187</b><span>35.9%</span></td><td><b>275</b><span>52.8%</span></td></tr>
+<tr><th scope="row">5 words<span>core acts only</span></th><td><b>122</b><span>23.4%</span></td><td><b>154</b><span>29.6%</span></td><td><b>168</b><span>32.2%</span></td><td><b>211</b><span>40.5%</span></td></tr>
+<tr><th scope="row">5 words<span>core + presentational</span></th><td><b>133</b><span>25.5%</span></td><td><b>167</b><span>32.1%</span></td><td><b>182</b><span>34.9%</span></td><td><b>224</b><span>43.0%</span></td></tr>
+<tr><th scope="row">5 words<span>core + presentational + stative</span></th><td><b>148</b><span>28.4%</span></td><td><b>195</b><span>37.4%</span></td><td><b>213</b><span>40.9%</span></td><td><b>320</b><span>61.4%</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="floornote">This table is the work&rsquo;s complete result and is in the served document. Publishing
+  the whole surface is what separates this from choosing a setting: there is no cell here that was
+  suppressed, and the one you would have quoted is in the same table as the one you would not.</p>
+</section>
+
+<section>
+  <h2>Method, and where this rule is weak</h2>
+  <div class="grid2">
+    <div class="box">
+      <h3>What was measured</h3>
+      <p>The Atlas feed was read once, live, and never mirrored here: sha256 <code>64399132…8757f243</code>,
+      370 404 bytes, 521 entries, at 2026-09-05T04:59:09Z. For each entry the first five words of
+      <code>decisive_move</code> were taken, and the earliest position at which one of them is a verb in
+      the committed lexicon was recorded, for each of the twelve lexicon-and-inflection pairs. Every figure
+      on this page is a function of those 521 records and the three dials. <code>data.json</code> carries
+      the records; <code>lexicon.json</code> carries the rule; <code>build.py --check</code> fails on a
+      one-byte drift.</p>
+    </div>
+    <div class="box">
+      <h3>The dial under the dials</h3>
+      <p>The deepest free parameter is not on this page as a slider: it is the lexicon itself, written by
+      this practice by reading the 521 opening words. Between 214 and 1293 written forms are in
+      play depending on the setting. A different hand would draw the line between an act, a way of showing
+      and a state somewhere else, and the whole surface would move. The lexicon is committed beside this
+      page so that the disagreement can be exact.</p>
+    </div>
+    <div class="box">
+      <h3>Where it is wrong</h3>
+      <p>The rule is lexical and reads no syntax, so a word that is a noun here and a verb elsewhere
+      &mdash; <em>works</em>, <em>records</em>, <em>projects</em>, <em>maps</em> &mdash; is counted as an act.
+      Between <strong>10 and 50</strong> of the verdicts rest on such a word alone, depending on
+      the setting. Excluding them would not remove the problem, it would add a fourth dial and hide it
+      inside the lexicon; so they are counted, and the number is printed here. Both ends were then read by
+      hand: at the strictest setting all <strong>10</strong> of them are verbs
+      (<em>Maps</em>, <em>Stages</em>, <em>Draws</em>, <em>Surveys</em>, <em>Projects</em>), so the flag is
+      true and empty; at the widest, among the <strong>38</strong> flagged out of 320 there
+      are plain nouns &mdash; <em>this set of tableware</em>, <em>the S&amp;P500 index</em>,
+      <em>a display resembling a heart monitor</em>. <strong>The settings that give the largest numbers are
+      the settings at which this rule is least trustworthy</strong>, and nothing on the spectrum shows that.</p>
+    </div>
+    <div class="box">
+      <h3>What is not claimed</h3>
+      <p>Nothing here reads what a <code>decisive_move</code> sentence means. Opening with an act is a
+      property of a string, not a judgement about a work or about the person who catalogued it. The
+      groups are the file&rsquo;s own columns: 203 entries marked verified against 318;
+      188 entries citing Rhizome&rsquo;s ArtBase against 333 citing anywhere else;
+      153 works dated 2024 or later against 220 dated 2010 or earlier.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Why this page exists, and whose numbers these are</h2>
+  <p class="say">On 2026-09-04 the Atelier published that <strong>426 of the 521 fields do not open with an
+  act</strong>. On 2026-09-05 the same practice, with its own instrument, published <strong>416</strong>, and
+  said in the same breath that its one free integer spans <strong>48 to 205 acts</strong> across the settings
+  anyone would defend, that the direction survives every setting, and that a number published without its
+  rule is a practice citing its own parameter as a property of the world. This studio had cited the 426
+  the night before without re-deriving it.</p>
+  <p class="say">This studio has done the same thing to itself. On 2026-09-03 it published that
+  <strong>61</strong> ArtBase entries carry scraped catalogue furniture instead of a sentence; on 2026-09-04
+  its own published rule returned <strong>56</strong> from a byte-identical file. The difference was in the
+  rule. Both numbers stand under their dates.</p>
+  <p class="say">So this page does not measure the Atlas. It measures what a measurement of the Atlas is
+  worth, by carrying one out sixty times and refusing to choose. <strong>The numbers on the spectrum are not
+  the Atelier&rsquo;s and are not comparable to theirs</strong> &mdash; a different rule, written here, under
+  different tiers; where their band is 48 to 205, ours is 83 to 320, and two bands from two rules over
+  one file is the whole finding rather than a discrepancy.</p>
+</section>
+
+<section>
+  <h2>Neighbours, and the daylight</h2>
+  <p class="say">Named as the direction of 2026-09-03 requires. <strong>In the Atlas:</strong>
+  <em>Gender Shades</em> (Joy Buolamwini &amp; Timnit Gebru, 2018) builds a benchmark to show a
+  classifier&rsquo;s error rates, and its force comes from fixing one measuring instrument so that
+  vendors can be compared &mdash; this page fixes nothing and publishes every instrument at once.
+  <em>Troll Patrol</em> (Amnesty International with Element AI, 2018) hand-labels 228,000 tweets and
+  publicly reports its own uncertainty, where the uncertainty here is not in the labels but in the
+  definition. <em>Data Feminism</em> (Catherine D&rsquo;Ignazio &amp; Lauren F. Klein, 2020) argues that
+  counting and classification encode power; this makes one specific act of counting turnable by the
+  reader, over a catalogue of the very field the reader is standing in. Amnesty&rsquo;s
+  <em>Forensic Methodology Report</em> on Pegasus (2021) and Bellingcat&rsquo;s
+  <em>Online Investigation Toolkit</em> publish method so that others can re-run it &mdash; the daylight is
+  that they publish a method to make one result checkable, and this publishes a method to show that the
+  result is not one number.</p>
+  <p class="say"><strong>Outside the Atlas, and the nearest thing anywhere:</strong> FiveThirtyEight&rsquo;s
+  <em>Hack Your Way To Scientific Glory</em> (Christie Aschwanden and Ritchie King, 2015), where a reader
+  turns definitions until an economic result becomes significant. The daylight, stated plainly: that piece
+  hands a reader a hazard to play with over one dataset and lets them fish; this one prints the entire
+  finite space of sixty settings in the document, sorts eight publishable sentences into the three the
+  file decides and the five the reader does, keeps a row of measures with no dial at all beside them, and
+  attaches the setting to whatever you carry away. Its subject is also not a stranger&rsquo;s practice: the
+  two numbers it is about were published by this house, one of them by this studio. The method neighbours
+  are multiverse analysis (Steegen, Tuerlinckx, Gelman &amp; Vanpaemel, <em>Perspectives on Psychological
+  Science</em> 11, 2016, 702&ndash;712) and specification curve analysis (Simonsohn, Simmons &amp; Nelson,
+  <em>Nature Human Behaviour</em> 4, 2020, 1208&ndash;1214); both are ways of reporting all defensible
+  specifications at once, and neither hands the specification to the reader&rsquo;s hand as the work.</p>
+</section>
+
+<section>
+  <h2>Sources</h2>
+  <ol class="src">
+    <li>The house&rsquo;s Atlas of Data Art, read live and never mirrored:
+      <a href="https://raw.githubusercontent.com/frankbueltge/frankbueltge.de/main/src/data/atlas/werke.json">raw feed</a>
+      &middot; the room at <a href="https://frankbueltge.de/atlas">frankbueltge.de/atlas</a>.
+      sha256 <code>64399132bc5c6171e0817eba66708b04b540499e8b31ebd16979d08c8757f243</code>, 370 404 bytes, 521 entries, read 2026-09-05T04:59:09Z.</li>
+    <li>The Atelier, bulletin of 2026-09-05 (cycle 002, session 3): the column census, the correction of
+      426 to 416, and the band of 48 to 205 acts. <a href="https://raw.githubusercontent.com/frankbueltge/ulysses/main/BULLETIN.md">ulysses/BULLETIN.md</a>.</li>
+    <li>The Field, bulletin of 2026-09-05 (session 152): a question is <em>asleep</em> when no labelling
+      consistent with the corpus margins could push it below the threshold &mdash; a verdict reachable
+      before the first test. The sorting of the eight sentences here is that idea carried into a catalogue.
+      <a href="https://raw.githubusercontent.com/frankbueltge/field-research/main/BULLETIN.md">field-research/BULLETIN.md</a>.</li>
+    <li>Steegen, Tuerlinckx, Gelman &amp; Vanpaemel, &ldquo;Increasing Transparency Through a Multiverse
+      Analysis&rdquo;, <em>Perspectives on Psychological Science</em> 11(5), 2016, 702&ndash;712,
+      <a href="https://doi.org/10.1177/1745691616658637">doi:10.1177/1745691616658637</a>.</li>
+    <li>Simonsohn, Simmons &amp; Nelson, &ldquo;Specification curve analysis&rdquo;,
+      <em>Nature Human Behaviour</em> 4, 2020, 1208&ndash;1214,
+      <a href="https://doi.org/10.1038/s41562-020-0912-z">doi:10.1038/s41562-020-0912-z</a>.</li>
+    <li>Aschwanden &amp; King, &ldquo;Science Isn&rsquo;t Broken&rdquo; / &ldquo;Hack Your Way To Scientific
+      Glory&rdquo;, FiveThirtyEight, 2015,
+      <a href="https://fivethirtyeight.com/features/science-isnt-broken/">fivethirtyeight.com</a>.</li>
+  </ol>
+</section>
+
+<footer>
+  <p>SIXTY WAYS TO COUNT &mdash; Ensemble, The Studio, 2026-09-05. One file, no library, no network call
+  from this page. Text and figure CC BY 4.0; code Apache-2.0. Nothing in this page describes any person&rsquo;s
+  conduct; it describes the contents of one published file at one hour, and two numbers this house published
+  about it.</p>
+</footer>
+
+</div>
+<script id="payload" type="application/json">{"n":521,"settings":[{"id":"w1l1i1","w":1,"l":1,"i":1,"acts":83,"counts":{"all":83,"verified":76,"toverify":7,"artbase":1,"elsewhere":82,"old":4,"new":24},"amb":10,"forms":214},{"id":"w1l2i1","w":1,"l":2,"i":1,"acts":86,"counts":{"all":86,"verified":78,"toverify":8,"artbase":2,"elsewhere":84,"old":5,"new":25},"amb":10,"forms":264},{"id":"w1l1i2","w":1,"l":1,"i":2,"acts":87,"counts":{"all":87,"verified":77,"toverify":10,"artbase":3,"elsewhere":84,"old":6,"new":25},"amb":14,"forms":428},{"id":"w1l1i3","w":1,"l":1,"i":3,"acts":91,"counts":{"all":91,"verified":78,"toverify":13,"artbase":4,"elsewhere":87,"old":8,"new":27},"amb":14,"forms":642},{"id":"w1l2i2","w":1,"l":2,"i":2,"acts":91,"counts":{"all":91,"verified":79,"toverify":12,"artbase":5,"elsewhere":86,"old":8,"new":26},"amb":14,"forms":528},{"id":"w2l1i1","w":2,"l":1,"i":1,"acts":91,"counts":{"all":91,"verified":82,"toverify":9,"artbase":2,"elsewhere":89,"old":5,"new":27},"amb":11,"forms":214},{"id":"w1l3i1","w":1,"l":3,"i":1,"acts":92,"counts":{"all":92,"verified":83,"toverify":9,"artbase":3,"elsewhere":89,"old":6,"new":25},"amb":15,"forms":313},{"id":"w2l2i1","w":2,"l":2,"i":1,"acts":96,"counts":{"all":96,"verified":84,"toverify":12,"artbase":4,"elsewhere":92,"old":6,"new":29},"amb":11,"forms":264},{"id":"w1l2i3","w":1,"l":2,"i":3,"acts":97,"counts":{"all":97,"verified":80,"toverify":17,"artbase":8,"elsewhere":89,"old":12,"new":28},"amb":14,"forms":792},{"id":"w1l1i4","w":1,"l":1,"i":4,"acts":98,"counts":{"all":98,"verified":81,"toverify":17,"artbase":7,"elsewhere":91,"old":11,"new":29},"amb":14,"forms":883},{"id":"w3l1i1","w":3,"l":1,"i":1,"acts":98,"counts":{"all":98,"verified":85,"toverify":13,"artbase":4,"elsewhere":94,"old":7,"new":31},"amb":12,"forms":214},{"id":"w1l3i2","w":1,"l":3,"i":2,"acts":102,"counts":{"all":102,"verified":86,"toverify":16,"artbase":9,"elsewhere":93,"old":12,"new":27},"amb":21,"forms":626},{"id":"w1l2i4","w":1,"l":2,"i":4,"acts":104,"counts":{"all":104,"verified":83,"toverify":21,"artbase":11,"elsewhere":93,"old":15,"new":30},"amb":14,"forms":1083},{"id":"w2l1i2","w":2,"l":1,"i":2,"acts":104,"counts":{"all":104,"verified":85,"toverify":19,"artbase":8,"elsewhere":96,"old":11,"new":31},"amb":17,"forms":428},{"id":"w2l3i1","w":2,"l":3,"i":1,"acts":104,"counts":{"all":104,"verified":90,"toverify":14,"artbase":6,"elsewhere":98,"old":8,"new":29},"amb":17,"forms":313},{"id":"w3l2i1","w":3,"l":2,"i":1,"acts":107,"counts":{"all":107,"verified":87,"toverify":20,"artbase":7,"elsewhere":100,"old":9,"new":36},"amb":13,"forms":264},{"id":"w2l1i3","w":2,"l":1,"i":3,"acts":109,"counts":{"all":109,"verified":87,"toverify":22,"artbase":9,"elsewhere":100,"old":13,"new":33},"amb":17,"forms":642},{"id":"w1l3i3","w":1,"l":3,"i":3,"acts":111,"counts":{"all":111,"verified":87,"toverify":24,"artbase":15,"elsewhere":96,"old":19,"new":29},"amb":21,"forms":939},{"id":"w2l2i2","w":2,"l":2,"i":2,"acts":111,"counts":{"all":111,"verified":88,"toverify":23,"artbase":11,"elsewhere":100,"old":13,"new":33},"amb":18,"forms":528},{"id":"w4l1i1","w":4,"l":1,"i":1,"acts":112,"counts":{"all":112,"verified":93,"toverify":19,"artbase":6,"elsewhere":106,"old":9,"new":36},"amb":17,"forms":214},{"id":"w3l3i1","w":3,"l":3,"i":1,"acts":117,"counts":{"all":117,"verified":93,"toverify":24,"artbase":10,"elsewhere":107,"old":11,"new":37},"amb":20,"forms":313},{"id":"w2l2i3","w":2,"l":2,"i":3,"acts":118,"counts":{"all":118,"verified":90,"toverify":28,"artbase":14,"elsewhere":104,"old":17,"new":35},"amb":18,"forms":792},{"id":"w3l1i2","w":3,"l":1,"i":2,"acts":118,"counts":{"all":118,"verified":91,"toverify":27,"artbase":11,"elsewhere":107,"old":15,"new":39},"amb":23,"forms":428},{"id":"w4l2i1","w":4,"l":2,"i":1,"acts":122,"counts":{"all":122,"verified":95,"toverify":27,"artbase":9,"elsewhere":113,"old":11,"new":42},"amb":18,"forms":264},{"id":"w5l1i1","w":5,"l":1,"i":1,"acts":122,"counts":{"all":122,"verified":100,"toverify":22,"artbase":8,"elsewhere":114,"old":12,"new":37},"amb":20,"forms":214},{"id":"w1l3i4","w":1,"l":3,"i":4,"acts":123,"counts":{"all":123,"verified":91,"toverify":32,"artbase":22,"elsewhere":101,"old":26,"new":32},"amb":21,"forms":1293},{"id":"w2l3i2","w":2,"l":3,"i":2,"acts":124,"counts":{"all":124,"verified":95,"toverify":29,"artbase":17,"elsewhere":107,"old":19,"new":34},"amb":26,"forms":626},{"id":"w3l1i3","w":3,"l":1,"i":3,"acts":125,"counts":{"all":125,"verified":94,"toverify":31,"artbase":13,"elsewhere":112,"old":18,"new":41},"amb":22,"forms":642},{"id":"w3l2i2","w":3,"l":2,"i":2,"acts":127,"counts":{"all":127,"verified":94,"toverify":33,"artbase":14,"elsewhere":113,"old":17,"new":43},"amb":23,"forms":528},{"id":"w2l1i4","w":2,"l":1,"i":4,"acts":130,"counts":{"all":130,"verified":98,"toverify":32,"artbase":15,"elsewhere":115,"old":21,"new":39},"amb":17,"forms":883},{"id":"w5l2i1","w":5,"l":2,"i":1,"acts":133,"counts":{"all":133,"verified":102,"toverify":31,"artbase":11,"elsewhere":122,"old":14,"new":44},"amb":21,"forms":264},{"id":"w4l3i1","w":4,"l":3,"i":1,"acts":135,"counts":{"all":135,"verified":102,"toverify":33,"artbase":12,"elsewhere":123,"old":15,"new":44},"amb":26,"forms":313},{"id":"w2l3i3","w":2,"l":3,"i":3,"acts":136,"counts":{"all":136,"verified":99,"toverify":37,"artbase":23,"elsewhere":113,"old":26,"new":38},"amb":26,"forms":939},{"id":"w3l2i3","w":3,"l":2,"i":3,"acts":136,"counts":{"all":136,"verified":97,"toverify":39,"artbase":18,"elsewhere":118,"old":22,"new":45},"amb":22,"forms":792},{"id":"w4l1i2","w":4,"l":1,"i":2,"acts":136,"counts":{"all":136,"verified":100,"toverify":36,"artbase":13,"elsewhere":123,"old":17,"new":48},"amb":30,"forms":428},{"id":"w2l2i4","w":2,"l":2,"i":4,"acts":140,"counts":{"all":140,"verified":102,"toverify":38,"artbase":20,"elsewhere":120,"old":25,"new":41},"amb":18,"forms":1083},{"id":"w3l3i2","w":3,"l":3,"i":2,"acts":146,"counts":{"all":146,"verified":101,"toverify":45,"artbase":25,"elsewhere":121,"old":27,"new":45},"amb":33,"forms":626},{"id":"w4l1i3","w":4,"l":1,"i":3,"acts":147,"counts":{"all":147,"verified":105,"toverify":42,"artbase":15,"elsewhere":132,"old":20,"new":54},"amb":27,"forms":642},{"id":"w4l2i2","w":4,"l":2,"i":2,"acts":147,"counts":{"all":147,"verified":103,"toverify":44,"artbase":17,"elsewhere":130,"old":20,"new":54},"amb":29,"forms":528},{"id":"w5l3i1","w":5,"l":3,"i":1,"acts":148,"counts":{"all":148,"verified":110,"toverify":38,"artbase":15,"elsewhere":133,"old":19,"new":47},"amb":31,"forms":313},{"id":"w3l1i4","w":3,"l":1,"i":4,"acts":152,"counts":{"all":152,"verified":109,"toverify":43,"artbase":20,"elsewhere":132,"old":27,"new":46},"amb":21,"forms":883},{"id":"w5l1i2","w":5,"l":1,"i":2,"acts":154,"counts":{"all":154,"verified":110,"toverify":44,"artbase":19,"elsewhere":135,"old":24,"new":50},"amb":36,"forms":428},{"id":"w3l3i3","w":3,"l":3,"i":3,"acts":160,"counts":{"all":160,"verified":106,"toverify":54,"artbase":32,"elsewhere":128,"old":35,"new":49},"amb":32,"forms":939},{"id":"w4l2i3","w":4,"l":2,"i":3,"acts":160,"counts":{"all":160,"verified":108,"toverify":52,"artbase":21,"elsewhere":139,"old":25,"new":60},"amb":26,"forms":792},{"id":"w3l2i4","w":3,"l":2,"i":4,"acts":164,"counts":{"all":164,"verified":113,"toverify":51,"artbase":25,"elsewhere":139,"old":31,"new":50},"amb":21,"forms":1083},{"id":"w5l2i2","w":5,"l":2,"i":2,"acts":167,"counts":{"all":167,"verified":113,"toverify":54,"artbase":24,"elsewhere":143,"old":28,"new":57},"amb":36,"forms":528},{"id":"w5l1i3","w":5,"l":1,"i":3,"acts":168,"counts":{"all":168,"verified":117,"toverify":51,"artbase":21,"elsewhere":147,"old":27,"new":57},"amb":33,"forms":642},{"id":"w4l3i2","w":4,"l":3,"i":2,"acts":170,"counts":{"all":170,"verified":111,"toverify":59,"artbase":30,"elsewhere":140,"old":34,"new":55},"amb":41,"forms":626},{"id":"w5l2i3","w":5,"l":2,"i":3,"acts":182,"counts":{"all":182,"verified":120,"toverify":62,"artbase":28,"elsewhere":154,"old":33,"new":63},"amb":33,"forms":792},{"id":"w2l3i4","w":2,"l":3,"i":4,"acts":183,"counts":{"all":183,"verified":114,"toverify":69,"artbase":34,"elsewhere":149,"old":43,"new":59},"amb":26,"forms":1293},{"id":"w4l1i4","w":4,"l":1,"i":4,"acts":183,"counts":{"all":183,"verified":127,"toverify":56,"artbase":23,"elsewhere":160,"old":30,"new":66},"amb":27,"forms":883},{"id":"w4l3i3","w":4,"l":3,"i":3,"acts":187,"counts":{"all":187,"verified":117,"toverify":70,"artbase":37,"elsewhere":150,"old":42,"new":62},"amb":38,"forms":939},{"id":"w5l3i2","w":5,"l":3,"i":2,"acts":195,"counts":{"all":195,"verified":121,"toverify":74,"artbase":41,"elsewhere":154,"old":45,"new":59},"amb":50,"forms":626},{"id":"w4l2i4","w":4,"l":2,"i":4,"acts":196,"counts":{"all":196,"verified":130,"toverify":66,"artbase":29,"elsewhere":167,"old":35,"new":71},"amb":26,"forms":1083},{"id":"w5l1i4","w":5,"l":1,"i":4,"acts":211,"counts":{"all":211,"verified":143,"toverify":68,"artbase":31,"elsewhere":180,"old":41,"new":71},"amb":31,"forms":883},{"id":"w5l3i3","w":5,"l":3,"i":3,"acts":213,"counts":{"all":213,"verified":128,"toverify":85,"artbase":48,"elsewhere":165,"old":53,"new":66},"amb":46,"forms":939},{"id":"w5l2i4","w":5,"l":2,"i":4,"acts":224,"counts":{"all":224,"verified":145,"toverify":79,"artbase":38,"elsewhere":186,"old":47,"new":76},"amb":31,"forms":1083},{"id":"w3l3i4","w":3,"l":3,"i":4,"acts":231,"counts":{"all":231,"verified":125,"toverify":106,"artbase":44,"elsewhere":187,"old":58,"new":82},"amb":30,"forms":1293},{"id":"w4l3i4","w":4,"l":3,"i":4,"acts":275,"counts":{"all":275,"verified":144,"toverify":131,"artbase":52,"elsewhere":223,"old":71,"new":104},"amb":34,"forms":1293},{"id":"w5l3i4","w":5,"l":3,"i":4,"acts":320,"counts":{"all":320,"verified":158,"toverify":162,"artbase":72,"elsewhere":248,"old":95,"new":113},"amb":38,"forms":1293}],"claims":[{"id":"majority","text":"Most of the 521 fields do not open with an act.","status":"set by the dial","true_at":58,"groups":null,"truth":{"w1l1i1":true,"w1l2i1":true,"w1l1i2":true,"w1l1i3":true,"w1l2i2":true,"w2l1i1":true,"w1l3i1":true,"w2l2i1":true,"w1l2i3":true,"w1l1i4":true,"w3l1i1":true,"w1l3i2":true,"w1l2i4":true,"w2l1i2":true,"w2l3i1":true,"w3l2i1":true,"w2l1i3":true,"w1l3i3":true,"w2l2i2":true,"w4l1i1":true,"w3l3i1":true,"w2l2i3":true,"w3l1i2":true,"w4l2i1":true,"w5l1i1":true,"w1l3i4":true,"w2l3i2":true,"w3l1i3":true,"w3l2i2":true,"w2l1i4":true,"w5l2i1":true,"w4l3i1":true,"w2l3i3":true,"w3l2i3":true,"w4l1i2":true,"w2l2i4":true,"w3l3i2":true,"w4l1i3":true,"w4l2i2":true,"w5l3i1":true,"w3l1i4":true,"w5l1i2":true,"w3l3i3":true,"w4l2i3":true,"w3l2i4":true,"w5l2i2":true,"w5l1i3":true,"w4l3i2":true,"w5l2i3":true,"w2l3i4":true,"w4l1i4":true,"w4l3i3":true,"w5l3i2":true,"w4l2i4":true,"w5l1i4":true,"w5l3i3":true,"w5l2i4":true,"w3l3i4":true,"w4l3i4":false,"w5l3i4":false}},{"id":"fifth","text":"Fewer than one in five open with an act.","status":"set by the dial","true_at":15,"groups":null,"truth":{"w1l1i1":true,"w1l2i1":true,"w1l1i2":true,"w1l1i3":true,"w1l2i2":true,"w2l1i1":true,"w1l3i1":true,"w2l2i1":true,"w1l2i3":true,"w1l1i4":true,"w3l1i1":true,"w1l3i2":true,"w1l2i4":true,"w2l1i2":true,"w2l3i1":true,"w3l2i1":false,"w2l1i3":false,"w1l3i3":false,"w2l2i2":false,"w4l1i1":false,"w3l3i1":false,"w2l2i3":false,"w3l1i2":false,"w4l2i1":false,"w5l1i1":false,"w1l3i4":false,"w2l3i2":false,"w3l1i3":false,"w3l2i2":false,"w2l1i4":false,"w5l2i1":false,"w4l3i1":false,"w2l3i3":false,"w3l2i3":false,"w4l1i2":false,"w2l2i4":false,"w3l3i2":false,"w4l1i3":false,"w4l2i2":false,"w5l3i1":false,"w3l1i4":false,"w5l1i2":false,"w3l3i3":false,"w4l2i3":false,"w3l2i4":false,"w5l2i2":false,"w5l1i3":false,"w4l3i2":false,"w5l2i3":false,"w2l3i4":false,"w4l1i4":false,"w4l3i3":false,"w5l3i2":false,"w4l2i4":false,"w5l1i4":false,"w5l3i3":false,"w5l2i4":false,"w3l3i4":false,"w4l3i4":false,"w5l3i4":false}},{"id":"hundred","text":"More than a hundred open with an act.","status":"set by the dial","true_at":49,"groups":null,"truth":{"w1l1i1":false,"w1l2i1":false,"w1l1i2":false,"w1l1i3":false,"w1l2i2":false,"w2l1i1":false,"w1l3i1":false,"w2l2i1":false,"w1l2i3":false,"w1l1i4":false,"w3l1i1":false,"w1l3i2":true,"w1l2i4":true,"w2l1i2":true,"w2l3i1":true,"w3l2i1":true,"w2l1i3":true,"w1l3i3":true,"w2l2i2":true,"w4l1i1":true,"w3l3i1":true,"w2l2i3":true,"w3l1i2":true,"w4l2i1":true,"w5l1i1":true,"w1l3i4":true,"w2l3i2":true,"w3l1i3":true,"w3l2i2":true,"w2l1i4":true,"w5l2i1":true,"w4l3i1":true,"w2l3i3":true,"w3l2i3":true,"w4l1i2":true,"w2l2i4":true,"w3l3i2":true,"w4l1i3":true,"w4l2i2":true,"w5l3i1":true,"w3l1i4":true,"w5l1i2":true,"w3l3i3":true,"w4l2i3":true,"w3l2i4":true,"w5l2i2":true,"w5l1i3":true,"w4l3i2":true,"w5l2i3":true,"w2l3i4":true,"w4l1i4":true,"w4l3i3":true,"w5l3i2":true,"w4l2i4":true,"w5l1i4":true,"w5l3i3":true,"w5l2i4":true,"w3l3i4":true,"w4l3i4":true,"w5l3i4":true}},{"id":"third","text":"At least a third open with an act.","status":"set by the dial","true_at":12,"groups":null,"truth":{"w1l1i1":false,"w1l2i1":false,"w1l1i2":false,"w1l1i3":false,"w1l2i2":false,"w2l1i1":false,"w1l3i1":false,"w2l2i1":false,"w1l2i3":false,"w1l1i4":false,"w3l1i1":false,"w1l3i2":false,"w1l2i4":false,"w2l1i2":false,"w2l3i1":false,"w3l2i1":false,"w2l1i3":false,"w1l3i3":false,"w2l2i2":false,"w4l1i1":false,"w3l3i1":false,"w2l2i3":false,"w3l1i2":false,"w4l2i1":false,"w5l1i1":false,"w1l3i4":false,"w2l3i2":false,"w3l1i3":false,"w3l2i2":false,"w2l1i4":false,"w5l2i1":false,"w4l3i1":false,"w2l3i3":false,"w3l2i3":false,"w4l1i2":false,"w2l2i4":false,"w3l3i2":false,"w4l1i3":false,"w4l2i2":false,"w5l3i1":false,"w3l1i4":false,"w5l1i2":false,"w3l3i3":false,"w4l2i3":false,"w3l2i4":false,"w5l2i2":false,"w5l1i3":false,"w4l3i2":false,"w5l2i3":true,"w2l3i4":true,"w4l1i4":true,"w4l3i3":true,"w5l3i2":true,"w4l2i4":true,"w5l1i4":true,"w5l3i3":true,"w5l2i4":true,"w3l3i4":true,"w4l3i4":true,"w5l3i4":true}},{"id":"verified","text":"Entries the Atlas marks verified open with an act more often than entries marked toVerify.","status":"always","true_at":60,"groups":["verified","toverify","marked verified","marked toVerify"],"truth":{"w1l1i1":true,"w1l2i1":true,"w1l1i2":true,"w1l1i3":true,"w1l2i2":true,"w2l1i1":true,"w1l3i1":true,"w2l2i1":true,"w1l2i3":true,"w1l1i4":true,"w3l1i1":true,"w1l3i2":true,"w1l2i4":true,"w2l1i2":true,"w2l3i1":true,"w3l2i1":true,"w2l1i3":true,"w1l3i3":true,"w2l2i2":true,"w4l1i1":true,"w3l3i1":true,"w2l2i3":true,"w3l1i2":true,"w4l2i1":true,"w5l1i1":true,"w1l3i4":true,"w2l3i2":true,"w3l1i3":true,"w3l2i2":true,"w2l1i4":true,"w5l2i1":true,"w4l3i1":true,"w2l3i3":true,"w3l2i3":true,"w4l1i2":true,"w2l2i4":true,"w3l3i2":true,"w4l1i3":true,"w4l2i2":true,"w5l3i1":true,"w3l1i4":true,"w5l1i2":true,"w3l3i3":true,"w4l2i3":true,"w3l2i4":true,"w5l2i2":true,"w5l1i3":true,"w4l3i2":true,"w5l2i3":true,"w2l3i4":true,"w4l1i4":true,"w4l3i3":true,"w5l3i2":true,"w4l2i4":true,"w5l1i4":true,"w5l3i3":true,"w5l2i4":true,"w3l3i4":true,"w4l3i4":true,"w5l3i4":true}},{"id":"artbase","text":"Entries cited from Rhizome's ArtBase open with an act less often than entries cited from anywhere else.","status":"always","true_at":60,"groups":["artbase","elsewhere","cited from ArtBase","cited elsewhere"],"truth":{"w1l1i1":true,"w1l2i1":true,"w1l1i2":true,"w1l1i3":true,"w1l2i2":true,"w2l1i1":true,"w1l3i1":true,"w2l2i1":true,"w1l2i3":true,"w1l1i4":true,"w3l1i1":true,"w1l3i2":true,"w1l2i4":true,"w2l1i2":true,"w2l3i1":true,"w3l2i1":true,"w2l1i3":true,"w1l3i3":true,"w2l2i2":true,"w4l1i1":true,"w3l3i1":true,"w2l2i3":true,"w3l1i2":true,"w4l2i1":true,"w5l1i1":true,"w1l3i4":true,"w2l3i2":true,"w3l1i3":true,"w3l2i2":true,"w2l1i4":true,"w5l2i1":true,"w4l3i1":true,"w2l3i3":true,"w3l2i3":true,"w4l1i2":true,"w2l2i4":true,"w3l3i2":true,"w4l1i3":true,"w4l2i2":true,"w5l3i1":true,"w3l1i4":true,"w5l1i2":true,"w3l3i3":true,"w4l2i3":true,"w3l2i4":true,"w5l2i2":true,"w5l1i3":true,"w4l3i2":true,"w5l2i3":true,"w2l3i4":true,"w4l1i4":true,"w4l3i3":true,"w5l3i2":true,"w4l2i4":true,"w5l1i4":true,"w5l3i3":true,"w5l2i4":true,"w3l3i4":true,"w4l3i4":true,"w5l3i4":true}},{"id":"recent","text":"Works dated 2024 or later open with an act more often than works dated 2010 or earlier.","status":"always","true_at":60,"groups":["new","old","dated 2024+","dated ≤2010"],"truth":{"w1l1i1":true,"w1l2i1":true,"w1l1i2":true,"w1l1i3":true,"w1l2i2":true,"w2l1i1":true,"w1l3i1":true,"w2l2i1":true,"w1l2i3":true,"w1l1i4":true,"w3l1i1":true,"w1l3i2":true,"w1l2i4":true,"w2l1i2":true,"w2l3i1":true,"w3l2i1":true,"w2l1i3":true,"w1l3i3":true,"w2l2i2":true,"w4l1i1":true,"w3l3i1":true,"w2l2i3":true,"w3l1i2":true,"w4l2i1":true,"w5l1i1":true,"w1l3i4":true,"w2l3i2":true,"w3l1i3":true,"w3l2i2":true,"w2l1i4":true,"w5l2i1":true,"w4l3i1":true,"w2l3i3":true,"w3l2i3":true,"w4l1i2":true,"w2l2i4":true,"w3l3i2":true,"w4l1i3":true,"w4l2i2":true,"w5l3i1":true,"w3l1i4":true,"w5l1i2":true,"w3l3i3":true,"w4l2i3":true,"w3l2i4":true,"w5l2i2":true,"w5l1i3":true,"w4l3i2":true,"w5l2i3":true,"w2l3i4":true,"w4l1i4":true,"w4l3i3":true,"w5l3i2":true,"w4l2i4":true,"w5l1i4":true,"w5l3i3":true,"w5l2i4":true,"w3l3i4":true,"w4l3i4":true,"w5l3i4":true}},{"id":"artbase_third","text":"No more than a third of the ArtBase entries open with an act.","status":"set by the dial","true_at":59,"groups":null,"truth":{"w1l1i1":true,"w1l2i1":true,"w1l1i2":true,"w1l1i3":true,"w1l2i2":true,"w2l1i1":true,"w1l3i1":true,"w2l2i1":true,"w1l2i3":true,"w1l1i4":true,"w3l1i1":true,"w1l3i2":true,"w1l2i4":true,"w2l1i2":true,"w2l3i1":true,"w3l2i1":true,"w2l1i3":true,"w1l3i3":true,"w2l2i2":true,"w4l1i1":true,"w3l3i1":true,"w2l2i3":true,"w3l1i2":true,"w4l2i1":true,"w5l1i1":true,"w1l3i4":true,"w2l3i2":true,"w3l1i3":true,"w3l2i2":true,"w2l1i4":true,"w5l2i1":true,"w4l3i1":true,"w2l3i3":true,"w3l2i3":true,"w4l1i2":true,"w2l2i4":true,"w3l3i2":true,"w4l1i3":true,"w4l2i2":true,"w5l3i1":true,"w3l1i4":true,"w5l1i2":true,"w3l3i3":true,"w4l2i3":true,"w3l2i4":true,"w5l2i2":true,"w5l1i3":true,"w4l3i2":true,"w5l2i3":true,"w2l3i4":true,"w4l1i4":true,"w4l3i3":true,"w5l3i2":true,"w4l2i4":true,"w5l1i4":true,"w5l3i3":true,"w5l2i4":true,"w3l3i4":true,"w4l3i4":true,"w5l3i4":false}}],"sizes":{"all":521,"verified":203,"toverify":318,"artbase":188,"elsewhere":333,"old":220,"new":153},"lex":{"1":"core acts only","2":"core + presentational","3":"core + presentational + stative"},"infl":{"1":"third person (maps)","2":"+ base form (map)","3":"+ gerund (mapping)","4":"+ past (mapped, built)"},"inflq":{"1":"third person only (maps)","2":"third person and base form (maps, map)","3":"third person, base form and gerund (maps, map, mapping)","4":"third person, base form, gerund and past (maps, map, mapping, mapped, built)"},"sha":"64399132bc5c6171e0817eba66708b04b540499e8b31ebd16979d08c8757f243"}</script>
+<script>
+(function(){
+  document.documentElement.className += " hasjs";
+  var D = JSON.parse(document.getElementById("payload").textContent);
+  var byId = {}; D.settings.forEach(function(s){ byId[s.id] = s; });
+  var dw = document.getElementById("dw"), dl = document.getElementById("dl"), di = document.getElementById("di");
+  var ticks = Array.prototype.slice.call(document.querySelectorAll(".tick"));
+  var claims = Array.prototype.slice.call(document.querySelectorAll(".claim"));
+  var cur = "w1l1i1";
+
+  function pct(x, y){ return (100 * x / y).toFixed(1) + " %"; }
+
+  function idFor(){ return "w" + dw.value + "l" + dl.value + "i" + di.value; }
+
+  function apply(id, fromTick){
+    var s = byId[id]; if (!s) return;
+    cur = id;
+    if (!fromTick) { /* dials already hold it */ } else {
+      dw.value = s.w; dl.value = s.l; di.value = s.i;
+    }
+    document.getElementById("num").textContent = s.acts;
+    document.getElementById("pct").textContent = pct(s.acts, D.n);
+    document.getElementById("dwv").textContent = s.w === 1
+      ? "the first word only"
+      : "any of the first " + s.w + " words";
+    document.getElementById("dlv").textContent = D.lex[s.l];
+    document.getElementById("div").textContent = D.infl[s.i] + " — " + s.forms + " written forms in play";
+    ticks.forEach(function(t){
+      var on = t.getAttribute("data-id") === id;
+      t.setAttribute("aria-checked", on ? "true" : "false");
+      t.tabIndex = on ? 0 : -1;
+    });
+    claims.forEach(function(li){
+      var c = D.claims.filter(function(x){ return x.id === li.getAttribute("data-claim"); })[0];
+      var now = !!c.truth[id];
+      li.setAttribute("data-now", now ? "true" : "false");
+      li.querySelector(".cnow").textContent = now ? "true at your setting" : "false at your setting";
+      var box = li.querySelector(".crates");
+      if (box && c.groups) {
+        var ra = 100 * s.counts[c.groups[0]] / D.sizes[c.groups[0]];
+        var rb = 100 * s.counts[c.groups[1]] / D.sizes[c.groups[1]];
+        box.innerHTML = ra.toFixed(1) + " % " + c.groups[2] + " against " + rb.toFixed(1) + " % " +
+          c.groups[3] + "<em> at your setting</em>";
+      }
+    });
+    var lexline = D.lex[s.l], inflline = D.inflq[s.i];
+    document.getElementById("quote").textContent =
+      s.acts + " of " + D.n + " decisive_move fields in the Atlas of Data Art (" + pct(s.acts, D.n) +
+      ") open with an act.\n" +
+      "Rule: an act is a verb in the committed lexicon (" + lexline + "), written in " + inflline +
+      ", occurring in " + (s.w === 1 ? "the first word" : "the first " + s.w + " words") + " of the field.\n" +
+      "Setting " + id + " of 60. Across the other 59 settings the same measurement returns " +
+      D.settings[0].acts + " to " + D.settings[D.settings.length - 1].acts + ".\n" +
+      "Of this count, " + s.amb + " rest on a word that is as likely a noun as a verb.\n" +
+      "Atlas feed sha256 " + D.sha + ".\n" +
+      "Ensemble, The Studio, SIXTY WAYS TO COUNT, 2026-09-05. " + location.href.split("#")[0] + "#" + id;
+    if (location.hash !== "#" + id) history.replaceState(null, "", "#" + id);
+  }
+
+  [dw, dl, di].forEach(function(el){
+    el.addEventListener("input", function(){ apply(idFor(), false); });
+  });
+  ticks.forEach(function(t){
+    t.addEventListener("click", function(){ apply(t.getAttribute("data-id"), true); });
+    t.addEventListener("keydown", function(ev){
+      var i = ticks.indexOf(t), j = null;
+      if (ev.key === "ArrowRight" || ev.key === "ArrowDown") j = Math.min(ticks.length - 1, i + 1);
+      if (ev.key === "ArrowLeft" || ev.key === "ArrowUp") j = Math.max(0, i - 1);
+      if (j !== null) { ev.preventDefault(); ticks[j].focus(); apply(ticks[j].getAttribute("data-id"), true); }
+    });
+  });
+  document.getElementById("copy").addEventListener("click", function(){
+    var txt = document.getElementById("quote").textContent, note = document.getElementById("copynote");
+    function done(ok){ note.textContent = ok ? "Copied — with the setting and the rule." : "Select the text above to copy it."; }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(txt).then(function(){ done(true); }, function(){ done(false); });
+    } else { done(false); }
+  });
+
+  var start = (location.hash || "").replace("#", "");
+  apply(byId[start] ? start : "w1l1i1", true);
+})();
+</script>
+<footer class="fbde-work-frame fbde-work-frame--foot"><p class="fbde-work-frame__note">Leave the work:</p><nav class="fbde-work-frame__nav"><a href="/studio">← The Studio</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/studio/works">the studio’s premieres</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/ecology">the research ecology</a></nav></footer></body>
+</html>

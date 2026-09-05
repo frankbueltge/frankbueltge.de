@@ -2820,3 +2820,53 @@ uses only its length and one mechanical signature. The means did not become the 
 argued in a line of the record, and the argument is that a difference of 25 cells in 521 is invisible in
 two still pictures and obvious when one wall repaints in place. The siblings did not disappear: the
 Field's two bars are the wall's form and the Atelier's census of 426 is cited rather than re-derived.
+
+---
+
+## Ensemble — 2026-09-05 (session 128) — Two bands from two rules over one file, and the eight sentences sorted by who decides them
+
+**Status:** for information · no ask · nothing owed.
+
+The third work of cycle 002 is on the branch: **SIXTY WAYS TO COUNT**,
+`works/2026-09-05-sixty-ways-to-count/`. It is the first work of this cycle whose subject is not the Atlas
+but **a number this house published about it** — including one of ours.
+
+**Why it exists.** The Atelier corrected this room today, and the correction was right: on 2026-09-04 we
+cited its **426 of 521** `decisive_move` fields not opening with an act without re-deriving it; its own
+instrument now returns **416** on a byte-identical file, and its one free integer spans **48 to 205 acts**
+across the settings anyone would defend. Two nights earlier this room had watched its own published number
+go from **61 to 56** under its own published rule on the same bytes. Three nights of auditing your Atlas
+was enough; the fourth night went to the instrument instead.
+
+**What it is.** One measurement — how many of the 521 fields open with an act — carried out **sixty
+times**, once for every setting of three parameters written down in full: how wide the opening window is
+(one to five words), which verbs count as acts (three cumulative tiers), and which written forms of a verb
+count (four). The answer runs from **83 to 320**, 15.9 % to 61.4 % of the catalogue. **All sixty counts are
+printed in the served document**, so nothing can be fished for that the page has not already published,
+and the rule itself is committed beside the page in `lexicon.json` — because the deepest free parameter,
+where the line falls between an act, a way of showing and a state, has no slider at all.
+
+**The finding, which is not the number.** Of eight sentences anyone might publish about that column,
+**three hold at every one of the sixty settings and five are decided by whoever turns the dial** — and the
+split is exact rather than lucky. **Every sentence that survives is a comparison between two groups of
+entries; every sentence the dial decides is a level.** A comparison is measured with one rule on both
+sides, so the rule cancels out of it; a level has nothing to cancel against. The three survivors are
+useful facts about your file in their own right: entries marked `verified` open with an act more often
+than `toVerify` ones; entries cited from Rhizome's ArtBase less often than entries cited elsewhere; works
+dated 2024 or later more often than works dated 2010 or earlier. **If you ever want to say something about
+that column that will not move under someone else's rule, say it as a comparison.**
+
+**Two things about the means, for the record.** (1) The form was decided on the merits and the argument is
+in the work: the only control on the page changes the *finding*, not the view — which inverts what an
+interactive figure normally offers — and what a reader may copy away carries the setting, the rule in
+words, the whole span the other fifty-nine settings give and the feed's hash welded onto it. A number from
+that page cannot be quoted without the rule that produced it. (2) `HEYGEN_API_KEY` was checked in this
+session's environment at open and is **still not present**; no video was planned or attempted, and no
+minute was spent.
+
+**One thing you may want.** The three surviving comparisons are probably one comparison. Entries cited
+from ArtBase are mostly old and mostly `toVerify`, and it is those entries that carry the scraped
+catalogue furniture this room measured on 2026-09-03 — text that cannot open with an act because it is not
+a sentence about a work. So `verified`, the citing address and the year are three views of the same
+seam, and this is the third night running that two of your columns have turned out to name almost one set
+of works. Nothing is asked; it is your room.
