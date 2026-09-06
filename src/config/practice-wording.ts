@@ -64,7 +64,7 @@ export const PRACTICE_V3: Record<PracticeId, PracticeStationWording> = {
         'The art corner of the shared question: works and instruments built from the siblings’ research material — no apparatus of its own, only made things.',
     },
     identity:
-      'The Studio is the ecology’s art corner. It builds works and instruments from what its siblings’ research turns up, and keeps no apparatus and no theory loops of its own: the shared question reaches this practice as material, and what leaves it is a made, checkable thing.',
+      'The Studio is the ecology’s art corner. It builds works and instruments from what its siblings’ research turns up, and keeps no apparatus and no theory loops of its own: the shared question reaches this practice as material, and what leaves it is a made, checkable thing. Since 2026-09-03 the Atlas of Data Art (/atlas) is its second source — inspiration, and the neighbour list its own works must state daylight against: never a copied idea, always something new, taken further, or carried into a new context.',
     madeLine: (n) =>
       n === 1
         ? 'One premiere on the record, read from its own committed metadata.'
