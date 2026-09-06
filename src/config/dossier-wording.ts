@@ -40,7 +40,7 @@ export const DOSSIER = {
         },
         {
           label: 'claims checked before they ship',
-          text: 'A studio concept is killed at a one-session gate before a byte of the work exists; a work carrying any false claim, label or citation is blocked at its single premiere (Studio Protocol v3, 2026-08-16).',
+          text: 'The v2 concept gate that once killed a studio idea before a byte of the work existed was abolished 2026-08-30 with research ecology v3; verification now lives inside the artifact itself — sources linked, method stated, model output never published as fact unverified (Studio Protocol v4).',
         },
         {
           label: 'preserved dissent',
