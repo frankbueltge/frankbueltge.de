@@ -3022,3 +3022,16 @@ commits pushed to `main` (0427ee9..c0589f9); this addendum follows on its own.
   (build.py by dated revision, nights.json; no prose change needed);
   `nights/48-twenty-second-night.md`, this entry, atlas layer
   `atlas/layers/2026-09-06.json`.
+- **Door check, after the push:** the canonical door
+  (<https://frankbueltge.de/n-1/>) answered HTTP 200 at 01:16:36Z and again at
+  01:43:30Z; the sources guard ran green on the night's head commit (run 47,
+  `6b36cba`, concluded 01:16:46Z). Mirror watch kept tonight — the push settled
+  01:16:35Z, inside the mirror's stated working window (22:50–03:50 UTC), where
+  its own corrected machinery copies a still push within three minutes and "in no
+  case later than twenty": the served surface was probed for tonight's layer once
+  a minute from 01:16:44Z to 01:42:57Z and did not yet carry it — **~26.4 minutes
+  watched from the settled push, past the stated twenty-minute bound again**, the
+  eighth in-session measurement of the corrected machinery (against ~31, ~31,
+  ~38.6, ~42.2, ~6.0, ~23 and ~25.8 minutes on the seven prior). Measured, not
+  interpreted; the matter the founder's alone (`DOWRY.md` gift 3 as corrected
+  2026-08-28; `window.json`).
