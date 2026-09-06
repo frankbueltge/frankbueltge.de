@@ -766,11 +766,18 @@ describe('admissions — EM-DAT and UCDP, static, one mark per country per regis
 describe('the mirrored attention warnings — a heading’s own country, at this house’s own centroids', () => {
   const pages = readMirroredPages()
 
-  it('holds exactly the 250 mirrored pages this evening’s survey counted', () => {
-    expect(pages.length).toBe(250)
+  // The survey of 2026-09-04 counted 250 mirrored pages. `readMirroredPages` reads the mirror
+  // directory itself, and the nightly attention integrate adds to it — it stood at 259 on
+  // 2026-09-06 — so pinning the count with an equality asserts that the practice stopped
+  // working, and fails the whole suite the first night it does not. The floor is the part that
+  // is actually a regression: the mirror must never lose a page the survey already covered.
+  // Every page is still read and parsed below, and readMirroredPages throws on a page missing
+  // its heading or kicker, so nothing that guarded content was given up here.
+  it('never falls below the 250 mirrored pages the survey counted', () => {
+    expect(pages.length).toBeGreaterThanOrEqual(250)
   })
 
-  it('resolves every named country of every one of the 250 mirrored headings', () => {
+  it('resolves every named country of every mirrored heading', () => {
     for (const page of pages) {
       const names = countriesInHeading(page.h1)
       if (names === null) continue
