@@ -25,7 +25,7 @@
 //
 // A country name that DOES appear resolves through the crosswalk's own Wikidata spelling, with an
 // explicit alias table for the handful this mirror spells its own way; a name neither can place
-// throws, naming it — proven by a test that parses every one of the 250 files.
+// throws, naming it — proven by a test that parses every one of the mirrored files.
 import { readFileSync, readdirSync } from 'node:fs'
 import attentionExport from '@/data/attention/export.json'
 import { byIso3, centroidOfIso3, countries, nameOf, type CrosswalkCountry } from '../crosswalk'

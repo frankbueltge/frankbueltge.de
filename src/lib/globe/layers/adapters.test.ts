@@ -10,6 +10,7 @@
 //      name fails here instead of shipping as a mark in the wrong ocean.
 import { readFileSync, readdirSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
+import attentionExport from '@/data/attention/export.json'
 import { byFips, byIso3, centroidOfIso3, countries, nameOf } from '../crosswalk'
 import { REDACTION_SEATS, redactionSeatFor } from '../seats'
 import { admissionsLayer, resolveEmdatIso3, resolveUcdpCountry } from './admissions'
@@ -87,6 +88,8 @@ describe.each(LAYERS.map((l) => [l.id, l] as const))('%s', (id, layer: GlobeLaye
     }
   })
 })
+
+const attentionFigures = (attentionExport as { figures: { key: string; value: number }[] }).figures
 
 describe('ghost fleet — the arcs', () => {
   const day = ghostFleetLayer.days[ghostFleetLayer.days.length - 1]
@@ -765,12 +768,25 @@ describe('admissions — EM-DAT and UCDP, static, one mark per country per regis
 
 describe('the mirrored attention warnings — a heading’s own country, at this house’s own centroids', () => {
   const pages = readMirroredPages()
+  // The mirror grows every night, so no literal page count survives a week. The expectation is
+  // the practice's own ledger, mirrored in the same run as the pages: a directory that holds more
+  // or fewer pages than the practice notarised is an incomplete mirror, and that is what fails here.
+  const notarised = attentionFigures.filter((f) => /^futures_notarized_(?!total$)/.test(f.key))
+  const sourceOf = (key: string) => key.replace('futures_notarized_', '')
 
-  it('holds exactly the 250 mirrored pages this evening’s survey counted', () => {
-    expect(pages.length).toBe(250)
+  it('holds exactly as many pages as the practice’s own export notarises, per source and in total', () => {
+    expect(notarised.length).toBeGreaterThan(0)
+    const counted = new Map<string, number>()
+    for (const page of pages) {
+      const source = page.slug.slice(0, page.slug.indexOf('-'))
+      counted.set(source, (counted.get(source) ?? 0) + 1)
+    }
+    for (const figure of notarised) expect(counted.get(sourceOf(figure.key)), figure.key).toBe(figure.value)
+    expect([...counted.keys()].sort()).toEqual(notarised.map((f) => sourceOf(f.key)).sort())
+    expect(pages.length).toBe(attentionFigures.find((f) => f.key === 'futures_notarized_total')?.value)
   })
 
-  it('resolves every named country of every one of the 250 mirrored headings', () => {
+  it('resolves every named country of every mirrored heading', () => {
     for (const page of pages) {
       const names = countriesInHeading(page.h1)
       if (names === null) continue
@@ -782,12 +798,12 @@ describe('the mirrored attention warnings — a heading’s own country, at this
     expect(() => resolveMirroredCountry('Not A Real Country')).toThrow(/no country for mirrored name "Not A Real Country"/)
   })
 
-  it('parses the <h1>, never the <title> — the two truncated titles still resolve in full', () => {
+  it('parses the <h1>, never the <title> — every truncated title still resolves in full', () => {
     const truncated = pages.filter((p) => {
       const html = readFileSync(`public/attention/future/${p.slug}.html`, 'utf8')
       return /<title>[^<]*…[^<]*<\/title>/.test(html)
     })
-    expect(truncated.length).toBe(2)
+    expect(truncated.length).toBeGreaterThan(0)
     for (const page of truncated) {
       const names = countriesInHeading(page.h1)
       expect(names, page.slug).not.toBeNull()
@@ -796,10 +812,14 @@ describe('the mirrored attention warnings — a heading’s own country, at this
     }
   })
 
-  it('skips an empty segment — one heading ends in a stray trailing comma', () => {
-    const withStray = pages.find((p) => /,\s*,\s*$/.test(p.h1))
-    expect(withStray, 'no mirrored heading ends in a stray double comma this evening').toBeTruthy()
-    expect(countriesInHeading(withStray!.h1)!.every((n) => n.length > 0)).toBe(true)
+  it('skips an empty segment — a heading ending in a stray trailing comma names no empty country', () => {
+    // A synthetic heading, not a hunt through the mirror: the mirror's stray comma may be fixed
+    // upstream any night, and this behaviour has to stay proven when it is.
+    expect(countriesInHeading('Flood in Nigeria, ,')).toEqual(['Nigeria'])
+    for (const page of pages) {
+      const names = countriesInHeading(page.h1)
+      if (names) expect(names.every((n) => n.length > 0), page.slug).toBe(true)
+    }
   })
 
   it('collapses doubled whitespace inside a country name before matching it', () => {
