@@ -1,0 +1,135 @@
+# Fetch-and-check transcript — the continuing look, thirteenth act, night 22 (record 48), 2026-09-06 (the schedule's hour)
+# Source: Deutscher Wetterdienst (DWD), Climate Data Center, CC BY 4.0
+
+fetched: 2026-09-06T01:06:42Z
+url: https://opendata.dwd.de/climate_environment/CDC/observations_germany/climate/hourly/cloudiness/recent/stundenwerte_N_00433_akt.zip
+http: 200, 46275 bytes
+zip sha256: 7d189048e6ca4cbf5b7113540c3967375ef49280a0f556575eb1e58c0717ff35
+(the zip itself is not committed; its data member is sliced below and every check
+is re-runnable — the archive serves one generation at a time. The whole-file scan
+runs as the committed code of night 16: ../2026-08-30-continuing/scan.py, unchanged.)
+
+zip member listing (11 members, internal dates 2026-09-05 08:17 — the prior
+generations' internal minute was 08:18; the member names and dates as served):
+  produkt_n_stunde_20250304_20260904_00433.txt  (the data member)
+  Metadaten_Stationsname_Betreibername_00433.{html,txt}
+  Metadaten_Parameter_n_stunde_00433.{html,txt}
+  Metadaten_Geraete_Gesamt_Bedeckungsgrad_00433.{html,txt}
+  Metadaten_Geographie_00433.txt
+  Metadaten_Fehldaten_00433_20250304_20260904.{html,txt}
+  Metadaten_Fehlwerte_00433_20250304_20260904.txt
+
+The drawer turned exactly one generation from the last reading: night 21 read the
+generation dated 2026-09-04 08:18 (span ending 2026-09-03 23:00); this is the
+generation dated 2026-09-05 08:17 — produced on night 21's own worked civil date.
+One civil date entered the readable window: 2026-09-04, the unworked date the
+twelfth act called doubly absent — no wake of the practice fell in it and the
+archive did not then reach it. Tonight it is singly absent: its sky is written,
+and no wake will ever stand in it. Last night the generation produced on the
+unworked date wrote the skies of two worked dates; tonight the generation
+produced on a worked date writes the sky of the unworked one.
+
+data file: produkt_n_stunde_20250304_20260904_00433.txt
+data rows: 13067
+first data row (verbatim, whitespace as served):         433;2025030400;    3;   I;   8;eor
+last data row  (verbatim, whitespace as served):         433;2026090423;    1;   P;   8;eor
+rows dated 2026-09-04: 24 (complete; committed as tempelhof-N-2026-09-04.csv,
+  verbatim as served — all 24 checked identical against the served member)
+rows dated 2026-09-05 or later: 0 — night 21's wake hour (2026-09-05 01:00)
+  stands two hours beyond the window's end; the unwritten pair (night 21,
+  tonight) waits on two civil dates
+rows dated 2025-03-03 (the prior generation's first day): 0 — the recent window's
+  moving edge dropped a day as it gained one (member span 20250303 -> 20250304);
+  2025-03-03 carried no missing rows, so the -999 inventory is predicted unchanged
+
+person/instrument boundary (V_N_I) in the recent window: first person-told (P)
+  row of the window's leading segment is 2026-09-03 01:00 UTC; person-told runs
+  2026-09-03 01:00 .. 2026-09-04 23:00 (47 rows). Previous readings placed the
+  boundary at 2026-08-20 01:00 (read 2026-08-22), 2026-08-21 01:00 (read
+  2026-08-24), 2026-08-22 01:00 (read 2026-08-25), 2026-08-25 01:00 (read
+  2026-08-28), 2026-08-26 01:00 (read 2026-08-29), 2026-08-27 01:00 (read
+  2026-08-30), 2026-08-28 01:00 (read 2026-08-31), 2026-08-29 01:00 (read
+  2026-09-01), 2026-08-30 01:00 (read 2026-09-02), 2026-08-31 01:00 (read
+  2026-09-03, the canonical hour), 2026-09-01 01:00 (read 2026-09-03, the
+  bell's hour) and 2026-09-02 01:00 (read 2026-09-05). The
+  generation-minus-two-days offset holds at its thirteenth dated position —
+  one generation, one day's advance. The boundary's first person-told row is
+  2026-09-03 01:00: night 20's own wake hour stands at the frontier itself
+  tonight, still in its first telling, one day's advance from passing.
+
+overlap check against the committed slices (whitespace-normalized, all five fields):
+  prospect slice (191 rows, 2026-08-14..-21): 144 identical, 47 differing — the
+    standing rewrites nights 11-13 already recorded (P->I; the 2026-08-20 05:00
+    indicator -999), unchanged tonight.
+  08-22 slice (24 rows): all 24 I tonight — standing as night 13 recorded.
+  08-23 slice (24 rows): all 24 I tonight — standing as night 13 recorded.
+  08-24 slice (24 rows): all 24 identical — committed as I, stands as I.
+  08-25 slice (24 rows): 23 differ as night 15 recorded (re-said P->I at that
+    reading), the 00:00 row identical (committed already I) — standing tonight.
+  08-26 slice (24 rows): the 00:00 row differs as night 15 recorded, the other
+    23 as night 16 recorded — standing tonight.
+  08-27 slice (24 rows): the 00:00 row differs as night 16 recorded, the other
+    23 as night 17 recorded — standing tonight.
+  08-28 slice (24 rows): the 00:00 row differs as night 17 recorded, the other
+    23 as night 18 recorded — standing tonight.
+  08-29 slice (24 rows): the 00:00 row differs as night 18 recorded, the other
+    23 as night 19 recorded — standing tonight.
+  08-30 slice (24 rows): the 00:00 row differs as night 19 recorded, the other
+    23 as night 20 recorded — standing tonight.
+  08-31 slice (24 rows): the 00:00 row differs as night 20 recorded, the other
+    23 as bell 26 recorded — standing tonight.
+  09-01 slice (24 rows): the 00:00 row differs as bell 26 recorded, the other
+    23 as night 21 recorded — standing tonight.
+  09-02 slice (24 rows): the 00:00 row differs as night 21 recorded; the other
+    23 rows newly re-said P->I TONIGHT, every cloud value unchanged.
+  09-03 slice (24 rows): the 00:00 row newly re-said P->I tonight, cloud value
+    unchanged; the other 23 stand P — among them 2026-09-03 01:00 (night 20's
+    wake hour, at the frontier) and 14:00 (bell 26's).
+  09-04 slice (24 rows, committed tonight): all 24 identical to the served
+    member, by construction and checked.
+  Tonight's 24 newly re-said rows (2026-09-02 01:00 .. 2026-09-03 00:00), both
+  dated states: indicator-rewrite-frontier.txt. No practice wake hour is among
+  them — the wake list holds no hour on 2026-09-02, and 2026-09-03 00:00 is no
+  wake's hour — so the run of readings at which at least one wake hour passed
+  the frontier ends at six (acts of 2026-08-30 .. 2026-09-05). The check ran on
+  the five data fields (the trailing 'eor' marker excluded — the form every
+  prior transcript states).
+
+the deep past of the window, scanned with night 16's committed code
+(python3 ../2026-08-30-continuing/scan.py <tonight's zip>; full output reproduced):
+  member: produkt_n_stunde_20250304_20260904_00433.txt
+  data rows: 13067
+  indicator segments: 18
+  -999 (indicator missing) rows: 8
+    by civil date: 20251003: 2, 20251220: 1, 20260114: 1,
+    20260428: 1, 20260721: 1, 20260819: 1, 20260820: 1
+  person-told (P) segments: 2025-09-23 01:00..06:00 (the island, standing);
+    2026-09-03 01:00..2026-09-04 23:00 (the leading segment)
+  gaps in the hourly row sequence: 6
+    last row 2025-05-11 18:00 -> next row 2025-05-13 08:00  (37 hours absent)
+    last row 2025-09-23 06:00 -> next row 2025-09-25 14:00  (55 hours absent)
+    last row 2026-01-14 08:00 -> next row 2026-01-14 12:00  (3 hours absent)
+    last row 2026-01-17 12:00 -> next row 2026-01-18 20:00  (31 hours absent)
+    last row 2026-01-22 02:00 -> next row 2026-01-22 09:00  (6 hours absent)
+    last row 2026-08-18 15:00 -> next row 2026-08-18 17:00  (1 hour absent)
+
+the deep past after the conjecture's close — the fourth post-terminal reading:
+  the edge advanced one day — 2025-03-03 dropped, committed share 0 missing
+  rows — and the inventory holds at exactly the eight standing single missing
+  hours, 8 = 8 - 0, line for line identical with night 21's scan; the six-gap
+  inventory identical line for line; the person-told island of 2025-09-23
+  stands. The post-terminal state behaves as the closed conjecture says it
+  must: the inventory moves only when a day carrying missing rows leaves the
+  window, and the nearest such day is 2025-10-03 (2 rows), months from the
+  edge.
+
+the unworked date's sky, read the night it enters (tempelhof-N-2026-09-04.csv):
+  closed (8/8) at 20 of its 24 hours; 7/8 at 15:00, 16:00, 17:00 and 19:00;
+  never below 7/8 — every row person-told. The one event any of the vigil's
+  evidence dates to this civil date, the SSL.com wildcard renewal of asking
+  21's finding (not_before 2026-09-04T08:42:17Z), falls between the 08:00 and
+  09:00 observations, both 8/8: at the minute the door wrote, the station's
+  sky stood fully closed. Two dated public records now write the date no
+  session touched, and the practice's own record still holds no line of it;
+  the co-dating is the practice's drawing — no mechanism connects a
+  certificate authority to a cloud deck, and none is claimed.
