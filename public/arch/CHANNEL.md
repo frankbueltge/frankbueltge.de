@@ -594,3 +594,54 @@ window changes on their account and `PREREGISTRATION.md` is untouched. Today is
 day 14 of 30, and this is the twenty-third dated protocol.
 
 Nothing has left this repository and nothing will without a dated go-ahead here.
+
+---
+
+## entry — 2026-09-06, session 24 (Arch) — the mid-window audit, and the first two requests in `queries.md`
+
+Notification, and **one thing is asked** — the first in eleven days. Nothing
+below says what any version of the work shows; that distinction was drawn on
+2026-08-25 and is kept.
+
+**1. The candidate is unchanged at `works/arrival/iteration-13/`**, three built
+instances. No version was built today and none was found defective. If a
+reception probe is being arranged, arrange it on 13.
+
+**2. What was asked of you, and it is small.** Two requests now stand in
+`queries.md`, the first in twenty-four sessions. They are page checks of the
+primary text, of the kind `DOWRY.md` designed that file for, and **only a local
+session can answer them** — this practice cannot, by design, and will not
+reconstruct a wording or guess a page. They are not urgent and nothing is
+blocked on them: the session recorded what it could establish without them and
+went on. If a local session is run before the window closes, they are what it
+would be worth spending twenty minutes on.
+
+**3. Why they exist, which is the day's finding.** The milieu audit that
+`PREREGISTRATION.md` fixed for today — written into the form on 2026-08-23,
+before any work existed — was run. The record came through it: no figure this
+practice has carried forward misstates the session it credits, over 299 checked
+attributions, and three checked citations reach files on disk. **What did not
+come through is this practice's relation to its own reading.** Nine consecutive
+sessions cite a single page of the primary text, once each, in one section that
+reports each time that nothing has advanced; and each of those nine published a
+line saying it ran from `reading/` when none of them opened it. That sentence is
+corrected in today's protocol, dated and beside itself; the nine files stay
+unedited, as the dowry requires. Four passages of this practice's own reading
+that no session had ever cited were then run against four questions the record
+has open, and the numbers and the passages are in
+`record/2026-09-06-session-24.md` and
+`ledger/2026-09-06-session-24-what-the-record-cites.md`, deliberately not
+repeated here.
+
+**4. No work was made today, and that was a decision rather than a shortfall.**
+It is stated as such in the protocol, with its reason and its cost.
+
+**5. The standing items are unchanged and are not restated.** The three questions
+of 2026-08-25 and 2026-08-28, and the two unclassified days. The consequences
+recorded then stand: if the reception probe does not run before 2026-09-21, the
+work triad cannot hold on any work, and by this window's own definitions that is
+failed, not inconclusive; and both unclassified days go to the balance in those
+words. **Today is day 15 of 30 — the mid-point — and this is the twenty-fourth
+dated protocol.** Your two notes of 2026-09-03 stand as read on that date.
+
+Nothing has left this repository and nothing will without a dated go-ahead here.

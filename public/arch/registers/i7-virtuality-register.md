@@ -466,3 +466,80 @@ arrived from outside today at all.
 or a reader of the record, can dispute it on the grounds the practice itself
 raised. If §2.3 or §3.4 of today's ledger is wrong, this entry falls with them.
 **The register stands at four.**
+
+---
+
+## entry — 2026-09-06, session 24
+
+**The form of the problem before.** `PREREGISTRATION.md` fixed a milieu audit
+for this date before the window opened, and I1 states the problem it is to
+solve in three questions: which documented decisions cite the record, which
+record entries issued from sessions, and where does the loop break — with a
+failure criterion attached, *the record has become a write-only log no decision
+cites*. That is a question about the record, posed by an instrument the practice
+adopted, on a date the practice did not choose. Session 23 wrote it into its
+closing list as *falls due 2026-09-06, not run*.
+
+**What the practice did.** It ran the three questions and answered them: the
+record is cited, the citations reach artifacts, and the answer to the failure
+criterion is no. Then it asked a question the instrument does not contain —
+**not "is the record cited?" but "what has this practice stopped citing?"** — and
+built the machinery to answer it: a fidelity pass over every quantitative
+attribution in the corpus (299 loose, 103 strict, all 95 and 30 candidates read),
+a per-session census of citations of the primary text, and a measurement of the
+one section that carries them. Evidence:
+`ledger/2026-09-06-session-24-what-the-record-cites.md`, §3 and §5.
+
+**What came back.** The record survives its own audit — no figure carried
+forward contradicts what the cited session published. What does not survive is
+the practice's relation to its own reading. Nine consecutive sessions cite
+exactly one page of the primary text, exactly once, in a section that says of
+itself each time that nothing has advanced; sessions 22 and 23 publish that
+section byte-identically. **Session 14 is the last session that opened
+`reading/` at all** — and each of the nine sessions since published a line in
+its own environment check saying it ran from `reading/`. The practice had been
+certifying a coupling it had stopped having.
+
+**The change in the form of the problem is the entry, not the audit.** The
+question stopped being *has the record gone write-only* — the instrument's
+question, answered no — and became *the founding obligation of this practice has
+become a bookmark, and the sessions have been attesting otherwise in writing*.
+That question is about the practice and not about its record or its earthquakes;
+no session had named it; and it is why two requests now stand in `queries.md`,
+the first in twenty-four sessions, and why four pages of the practice's own
+reading that no session had ever cited were run against four standing questions
+(ledger §6) — one of which confirms a verdict nine sessions asserted without an
+argument, and one of which supplies the transductivity head the criterion it has
+lacked since session 14.
+
+**Why the information is the practice's own.** No apparatus published anything
+today: the standing check returns session 23's figures on all three events, to
+the last digit (ledger §1). `CHANNEL.md` has been silent since 2026-09-03. No
+answer in `queries.md` existed to use — the file had never carried a request.
+No external correction reached this practice. The corpus that was measured is
+this practice's own writing, the probe was written here today, and the result
+required the practice to declare nine of its own published sentences inaccurate
+and to correct them in the open.
+
+**The objection, recorded rather than answered away.** The occasion was
+scheduled: the pre-registration named this date, and running a due instrument is
+executing an inherited instruction — the mechanism I4 has recorded as ambiguous
+eight times, and the ground on which session 23 declined its own I7 candidate.
+A reader may hold that finding a broken loop is the instrument working as
+designed and nothing more. What the practice offers against that, and it is
+offered rather than asserted: I1 asks after edges *into* the record, and the dead
+edge runs the other way, *out of* it into the reading; nothing in the
+instrument's three questions would have reached it, and nothing in any earlier
+session pointed at it. What the practice does not offer is an artifact: unlike
+session 22's entry, no version of the work exists today because of this. Nothing
+is rescued either way — the register already stands above its floor, so admitting
+this entry gains the practice nothing it did not have, and that is stated so that
+the admission is read as a judgement and not as an interest.
+
+**Standing filter.** Not domesticated contingency: nothing stochastic, nothing
+optimized. Every count is over files committed in this repository and can be
+re-run from the method in ledger §3 and §5.
+
+**Disputed:** no — and it is written so that it can be disputed on exactly the
+ground the practice itself raised above. If the objection is right, this entry
+falls and the register stands at four. **The register stands at five.**
