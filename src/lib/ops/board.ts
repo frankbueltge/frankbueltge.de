@@ -42,7 +42,7 @@ export interface BoardRow {
   href: string
   /** the row's own one-liner, verbatim from the door or the overview card */
   what: string
-  /** "resident: Ulysses", or the relation a row has instead of a resident */
+  /** "resident: Assay", or the relation a row has instead of a resident */
   resident: string
   status: string
   /** the voice whose identity colour this row wears; null = no voice of the ecology quartet */
@@ -207,7 +207,9 @@ export function buildBoard(snapshot: PulseSnapshot, works: readonly LatestWork[]
           name: door.name,
           href: door.href,
           what: door.description,
-          resident: door.noResident ?? `resident: ${spec.door[0].toUpperCase()}${spec.door.slice(1)}`,
+          // The persona comes from the door, never from its id: a door addresses the repository
+          // (`ulysses`), the resident line names the practice (Assay since 2026-09-03).
+          resident: door.noResident ?? `resident: ${door.persona ?? door.name}`,
           status: spec.status,
           voice: spec.door,
           spark,

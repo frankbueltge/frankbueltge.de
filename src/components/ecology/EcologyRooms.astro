@@ -91,7 +91,7 @@ const doors = NAMING.doors.items.map((d) => ({
   ...d,
   meta: d.noResident
     ? `${d.noResident} · last recorded: ${lastRecorded[d.id] ?? '—'}`
-    : `resident: ${d.id.charAt(0).toUpperCase()}${d.id.slice(1)} · last recorded: ${lastRecorded[d.id] ?? '—'}`,
+    : `resident: ${d.persona ?? d.name} · last recorded: ${lastRecorded[d.id] ?? '—'}`,
 }))
 ---
 

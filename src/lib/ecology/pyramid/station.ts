@@ -265,7 +265,7 @@ export function buildStationSheet({ id, snapshot, works = allWorks(), log, made 
   // runs, and what governs each strand. A single constitution row on a multi-line practice would
   // be a lie by omission — it would name one law and leave the other lines ungoverned on the page.
   //
-  // Each line states itself in its own unit. The two Ulysses-run strands land works in the
+  // Each line states itself in its own unit. The two Atelier-run strands land works in the
   // register, so they are counted from it; n-1 keeps its whole record in its own mirrored
   // repository, so its row states what the mirror states — the practice's current title (its
   // own window declaration; the working title is a placeholder the practice will replace) and

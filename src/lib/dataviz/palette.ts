@@ -222,7 +222,7 @@ export const PALETTES: readonly PaletteSet[] = [
       // below. Remove the hue entirely and that page loses decoration, not meaning.
       'src/styles/plenum-dossier.css',
       // The knowledge-graph explorer (/experiments/neighbors, 2026-09-02) wears three slots —
-      // Meridian, Ulysses, Ensemble — and the declared neutral for everything the house or the
+      // Meridian, Assay, Ensemble — and the declared neutral for everything the house or the
       // world owns. The hue never carries a fact alone: KIND is shape, WEIGHT is size, every node
       // has a native title and a row in the table under the drawing, and the card names the voice
       // in words beside the coloured badge. The Plenum slot is not used there.

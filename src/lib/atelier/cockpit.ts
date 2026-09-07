@@ -27,7 +27,7 @@ export interface AtlasEntry {
 }
 
 export type NodeKind = 'work' | 'thread' | 'source' | 'impulse'
-// Ulysses' Rhizom-Vokabular ist offen — neue Kinds werden hier BEWUSST aufgenommen,
+// Assays Rhizom-Vokabular ist offen — neue Kinds werden hier BEWUSST aufgenommen,
 // wenn die Praxis sie einführt (S27: continues/grounds/complement); das Integrate-Gate
 // (cockpit.test.ts) schlägt sonst ehrlich an, statt still zu raten.
 /** Die Arten mit eigenem Zeichen auf Blatt/Cockpit. Das Vokabular der Praxis ist OFFEN

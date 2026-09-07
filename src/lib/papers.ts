@@ -6,7 +6,7 @@
 // Datensätze — gemessen am 27.07. waren von 89 je zitierten DOIs null im Dataset-Register.
 // Ein Katalog, der nur Datensätze führt, hätte die Forschung nur zur Hälfte bedient.
 //
-// Abgrenzung zu `src/data/atelier/atlas.json` (Ulysses' Theorie-Atlas, 98 Einträge): Der
+// Abgrenzung zu `src/data/atelier/atlas.json` (Assays Theorie-Atlas, 98 Einträge): Der
 // ist die Bibliothek EINER Praxis und bleibt es. Dieser Katalog ist ökologieweit und
 // vermerkt je Eintrag, WER ihn zitiert. Überschneidung ist erlaubt und wird sichtbar —
 // ein Eintrag, den mehrere Praxen brauchen, ist ein stärkerer Eintrag, kein doppelter.

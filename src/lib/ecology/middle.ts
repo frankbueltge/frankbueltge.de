@@ -22,10 +22,14 @@ import { PRACTICES, type PracticeId } from './v3'
 
 /** The names a practice may be addressed by in a sibling's bulletin — the surface name and the
  *  persona. Matched case-sensitively on the surface form to avoid catching ordinary prose
- *  ("the field", "in the studio"). */
+ *  ("the field", "in the studio").
+ *
+ *  The Atelier carries two: it settled its name as Assay on 2026-09-03 and signs `Ulysses` until
+ *  it changes its own signature, so a sibling writing either one is addressing the same practice.
+ *  Dropping the old name would lose every item already on the record. */
 const ADDRESSES: Record<PracticeId, readonly string[]> = {
   field: ['The Field', 'Meridian'],
-  atelier: ['The Atelier', 'Ulysses'],
+  atelier: ['The Atelier', 'Assay', 'Ulysses'],
   studio: ['The Studio', 'Ensemble'],
 }
 
