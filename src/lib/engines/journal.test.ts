@@ -3,6 +3,7 @@ import {
   buildDayIndex,
   legacyJournalHashTarget,
   renderMarkdown,
+  absolutizeRelativeUrls,
   sessionAnchor,
   sessionMeta,
   splitSessions,
@@ -298,5 +299,27 @@ describe('legacyJournalHashTarget', () => {
   it('never throws on a malformed percent escape', () => {
     expect(() => legacyJournalHashTarget('#%E0%A4%A')).not.toThrow()
     expect(legacyJournalHashTarget('#%E0%A4%A')).toBe(null)
+  })
+})
+
+describe('absolutizeRelativeUrls', () => {
+  const base = '/error-as-method/2026-09-06-the-rate-of-the-rule/'
+
+  it('resolves a relative figure and a relative link against the work’s own address', () => {
+    const html = '<p><img src="figure.svg" alt="x"> <a href="sources/MANIFEST.json">m</a> <a href="./data.json">d</a></p>'
+    expect(absolutizeRelativeUrls(html, base)).toBe(
+      `<p><img src="${base}figure.svg" alt="x"> <a href="${base}sources/MANIFEST.json">m</a> <a href="${base}data.json">d</a></p>`,
+    )
+  })
+
+  it('leaves absolute, fragment, protocol and protocol-relative references exactly as written', () => {
+    const html =
+      '<a href="/atelier/">a</a><a href="#top">b</a><a href="https://x.y/z">c</a><a href="mailto:a@b.c">d</a>' +
+      '<img src="data:image/svg+xml,x"><img src="//cdn.example/x.png"><a href="">e</a>'
+    expect(absolutizeRelativeUrls(html, base)).toBe(html)
+  })
+
+  it('accepts a base without a trailing slash', () => {
+    expect(absolutizeRelativeUrls('<img src="figure.svg">', '/n/2026-09-06')).toBe('<img src="/n/2026-09-06/figure.svg">')
   })
 })
