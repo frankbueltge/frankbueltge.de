@@ -120,8 +120,19 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          PREFIX="Nightly-Integrate rot"
           RUN_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
           TAIL=$(tail -c 3000 /tmp/validate.log 2>/dev/null || echo "no validate log")
-          gh issue create --repo "$GITHUB_REPOSITORY" \
-            --title "Nightly-Integrate rot ($(date -u +%F))" \
-            --body "$(printf 'Der Spiegel der nächtlichen Linie ist rot; nichts wurde committet, die Site steht auf ihrem letzten guten Stand.\n\nLauf: %s\n\n```\n%s\n```\n' "$RUN_URL" "$TAIL")" || true
+          # One alarm per red streak, as the practice integrates do: a red that persists comments
+          # on the issue it already has instead of opening another (2026-09-06 left five in a day).
+          # `|| true` on the lookup: this step is the messenger, and a duplicate beats silence.
+          EXISTING=$(gh issue list --repo "$GITHUB_REPOSITORY" --state open --limit 100 --json number,title \
+            | jq -r --arg p "$PREFIX" '[.[]|select(.title|startswith($p))][0].number // empty' || true)
+          if [ -n "$EXISTING" ]; then
+            gh issue comment "$EXISTING" --repo "$GITHUB_REPOSITORY" \
+              --body "$(printf 'Weiter rot am %s — Lauf: %s\n\n```\n%s\n```\n' "$(date -u +%F' '%H:%MZ)" "$RUN_URL" "$TAIL")" || true
+          else
+            gh issue create --repo "$GITHUB_REPOSITORY" \
+              --title "$PREFIX ($(date -u +%F))" \
+              --body "$(printf 'Der Spiegel der nächtlichen Linie ist rot; nichts wurde committet, die Site steht auf ihrem letzten guten Stand.\n\nLauf: %s\n\n```\n%s\n```\n' "$RUN_URL" "$TAIL")" || true
+          fi
