@@ -1,5 +1,5 @@
 // src/lib/atelier/sitepr.ts
-// Die PR-Schleuse: Eine Engine (Ulysses/atelier, Meridian/field, Ensemble/studio)
+// Die PR-Schleuse: Eine Engine (Assay/atelier, Meridian/field, Ensemble/studio)
 // schlägt Änderungen an der Site SELBST vor — vollständige Dateien unter
 // site-prs/<slug>/files/<repo-pfad> in ihrem Repo, plus PR.md (Titel + Begründung).
 // Diese Bibliothek ist die Pfad-Grenze der Schleuse:

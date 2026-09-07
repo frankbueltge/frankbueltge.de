@@ -4,7 +4,7 @@
     "sources": [
       {
         "file": "src/data/werke.ts",
-        "sha256": "8b1ecdef53895966"
+        "sha256": "fb9acc63ee8084ee"
       },
       {
         "file": "docs/audits/2026-08-09-usp-audit.md",
@@ -12,7 +12,7 @@
       },
       {
         "file": "docs/decision-log.md",
-        "sha256": "38b73cd977e8ac7c"
+        "sha256": "5dd8cda1b47640d9"
       },
       {
         "file": "src/data/post/ledger.json",
@@ -57,10 +57,10 @@
       }
     ],
     "counts": {
-      "nodes": 395,
-      "edges": 348,
+      "nodes": 396,
+      "edges": 349,
       "nodesByKind": {
-        "decision": 121,
+        "decision": 122,
         "encounter": 6,
         "neighbor": 115,
         "practice": 9,
@@ -75,7 +75,7 @@
         "made-by": 110,
         "neighbor-of": 116,
         "participates": 17,
-        "touches": 90
+        "touches": 91
       }
     }
   },
@@ -1288,6 +1288,16 @@
       "source": {
         "file": "docs/decision-log.md",
         "quote": "Das Korsett kommt ab: Live- und Echtzeit-Experimente sind hier startbar, ohne zweite Seite und ohne Rückfrage"
+      }
+    },
+    {
+      "id": "decision:2026-09-07-1",
+      "kind": "decision",
+      "label": "The Atelier signs as Assay on every current-state surface",
+      "date": "2026-09-07",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "The Atelier signs as Assay on every current-state surface"
       }
     },
     {
@@ -2676,7 +2686,7 @@
     {
       "id": "practice:ulysses",
       "kind": "practice",
-      "label": "The Atelier · Ulysses",
+      "label": "The Atelier · Assay",
       "practiceId": "ulysses",
       "spellings": [
         "atelier",
@@ -4439,7 +4449,7 @@
     {
       "id": "work:atelier",
       "kind": "work",
-      "label": "Atelier · Ulysses",
+      "label": "Atelier · Assay",
       "werkId": "atelier",
       "href": "/atelier",
       "since": "2026-06-29",
@@ -8322,6 +8332,15 @@
       "source": {
         "file": "docs/decision-log.md",
         "quote": "src/pages/spread/index.astro"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-09-07-1",
+      "to": "work:atelier",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "src/lib/atelier/{sitepr,cockpit}.ts"
       }
     }
   ]

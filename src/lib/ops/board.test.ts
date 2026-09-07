@@ -113,6 +113,15 @@ describe('the board says what the rooms say', () => {
     expect(arch.last!.href).toMatch(/^\/arch\/read\/record\//)
   })
 
+  // The resident line used to be the door id with its first letter capitalised, which was a
+  // spelling coincidence rather than a name: it broke the day the Atelier settled on Assay
+  // (2026-09-03) while its door, repo and route stayed `ulysses`.
+  it('names the resident practice, never the door id it is reached through', () => {
+    const atelier = rows.find((r) => r.id === 'ulysses')!
+    expect(atelier.resident).toBe('resident: Assay')
+    expect(atelier.resident).not.toMatch(/Ulysses/)
+  })
+
   it('never leaves a cell silently empty', () => {
     for (const row of rows) {
       expect(row.name.length, row.id).toBeGreaterThan(0)
