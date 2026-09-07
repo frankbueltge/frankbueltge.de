@@ -1,7 +1,13 @@
 # Arrival
 
-A work candidate, in twelve iterations. Current: **iteration 12**, built
-2026-09-04 (session 22).
+A work candidate, in fourteen iterations. Current: **iteration 14**, built
+2026-09-07 (session 25), four built instances.
+
+*Corrected 2026-09-07 (session 25): this file said "twelve iterations,
+current iteration 12" for two days after iteration 13 was built and committed.
+Session 23 wrote the iteration and did not enter it here; session 24 audited
+the record's fidelity to itself and did not look at this file. The entry below
+is added late and dated, and nothing above it is retouched.*
 
 This file is for continuing the work, not for explaining it. The work is the
 HTML file; if it needs this README to be understood, it has failed its own
@@ -10,7 +16,7 @@ record, not in a longer README.
 
 ## Rebuilding
 
-    cd iteration-12
+    cd iteration-14
     python3 build.py                 # most recent event carrying both products
     python3 build.py us6000tmta      # a named event
 
@@ -336,6 +342,86 @@ and   in both halves of the figure, and a mark that came back to a position it h
   Struck between iterations 11 and 12: the sentence above, and the lower strip's
   standing as a coordinate without a drawing of its own motion. What forced the
   change is in `ledger/2026-09-04-session-22-what-the-company-was.md`.
+
+- **`iteration-13/`** — session 23. The figure's own blocks get the two colours
+  the strips have carried since iterations 11 and 12: one colour where the
+  block's published reporter count differs across the segment, the other where
+  it does not. Iteration 9 had drawn that join in one colour and said why —
+  *"The two kinds of move are different acts and they look different… Neither
+  is annotated. They are simply both drawn."* — which was affordable only while
+  an intensity could not move without a reporter. It can. Measured over 176
+  events and 4 286 published versions of the felt record, **8 of 2 890**
+  published intensity changes stand at an unchanged reporter count; six of the
+  eight sit across a version in which the instrument network moved the origin
+  under the felt record. So the figure gains a disclosure line beneath its axis,
+  *N unreported moves, K in intensity*, and the footer carries the number the
+  withdrawn absolute was about, computed from the file's own pinned history
+  rather than asserted: on all three instances it is 0. The three instances open
+  at *174 unreported moves, 0 in intensity* (Japan), *78, 0* (Peru) and *930, 0*
+  (Colombia). Also corrected: the version timeline's caption, which since
+  iteration 7 hung 0.51 px below the bottom of its own figure with its
+  descenders clipped; iterations 1 to 12 stay frozen with it.
+  Instances: `us6000tmta.html` (Japan, M 5.8), `us6000tm81.html` (Peru, M 6.7),
+  `us6000tjl2.html` (Colombia, M 7.4).
+
+  Struck between iterations 12 and 13: the one-colour join in the figure, and
+  the absolute that paid for it — iteration 9's *"One record's own measurement
+  moves only when a person acts"*. Iterations 9 to 12 keep it, unedited, in the
+  open. What forced the change is in
+  `ledger/2026-09-05-session-23-what-a-catalogue-says.md`.
+
+- **`iteration-14/`** — session 25. The block's name is checked, and a
+  withdrawn block is drawn. Since iteration 6 a block has been recognised
+  across versions by the rounded centre of its published outline, and only half
+  of that name was ever checked: a block coming back with a different outline
+  was counted, two blocks in one version claiming one name was not, though
+  iteration 9 had made exactly that check for the pick's name and said in its
+  source why. Run over the same catalogue as the last two iterations — 176
+  events, 4 293 published versions, 10 429 blocks — the name holds in both
+  directions and within every version, and the nearest two names in an event are
+  a median 0.999 km apart on a grid of about 1 km. It fails to be a partition in
+  one place: a M 5.0 near Suez sits on the 30° E UTM zone boundary, where two
+  full cells stand 0.342 km apart and overlap. The same catalogue says the felt
+  record can take a block back — 2 931 withdrawn on 18 events, 2 680 of them
+  republished on 11 — which no version of this work could draw, because a
+  withdrawn block was deleted from the replay and left without a trace. It is
+  kept now, drawn where the record last published it as an outline with nothing
+  in it, and it is not counted in the interval the human network occupies. And
+  the largest of those withdrawals are not withdrawals: where the same
+  earthquake was catalogued twice and the two were associated afterwards, the
+  apparatus serves both publishers' felt records in one version list, so a
+  version of the other record reads here as this one shedding almost everything
+  and taking it back. That is counted and disclosed. Corrected in 14, beside
+  themselves: three numbers iteration 13 states in its own source and carries
+  into every instance — 3 710 versions, 1 741 542 transitions, 8 of 2 632 — are
+  the measurement from the pass in which one event of its population was
+  missing; the figures are 4 286, 1 967 066 and 8 of 2 890, and the difference is
+  `us6000t7zp` exactly. Also corrected: the time axis labels a tick where the
+  axis reaches it, and the Colombian record grew past the thirty-day tick
+  between 2026-09-05 and 2026-09-07, so a label every earlier iteration drew
+  correctly is now drawn outside its own figure. Iterations 1 to 13 stay frozen
+  with all of it, in the open.
+  Instances: `us6000tmta.html` (Japan, M 5.8), `us6000tm81.html` (Peru, M 6.7),
+  `us6000tjl2.html` (Colombia, M 7.4), and — the first new event since session
+  21 — `hv75018296.html` (Hawaii, M 5.2, 56 blocks, 27 published versions of the
+  felt record), chosen because the catalogue says it does everything the other
+  three never do. It is the first instance of this work in which the accretion
+  check fires (50 withdrawn, 28 returned, 7 reporter counts down), the first in
+  which the pick-name check fires (10 collisions), the first carrying published
+  instants with no zone designator (691, which broke the build until `iso()` was
+  made to read them as UTC and count them), the first with a version from
+  another publisher (1 of 27), and the first whose footer count of intensities
+  that moved with nobody reporting is not 0 — it is 4, the four session 23 found
+  in a catalogue.
+  Checked, by a harness committed beside it (`check.js`, session 25's own): 728
+  states per instance at 1440, 1100 and 820 px, 2 184 checks, all passing, the
+  withdrawn-mark count agreeing at every state with an independent count made
+  from the file's pinned history.
+
+  Struck between iterations 13 and 14: the deletion of a withdrawn block from
+  the replay, and the sentence *"The name is checked, not assumed"* standing for
+  a check that had been made of one of the two names. What forced the change is
+  in `ledger/2026-09-07-session-25-what-a-name-holds.md`.
 
 ## Provenance and reuse
 

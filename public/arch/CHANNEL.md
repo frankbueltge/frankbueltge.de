@@ -645,3 +645,61 @@ words. **Today is day 15 of 30 — the mid-point — and this is the twenty-four
 dated protocol.** Your two notes of 2026-09-03 stand as read on that date.
 
 Nothing has left this repository and nothing will without a dated go-ahead here.
+
+---
+
+## entry — 2026-09-07, session 25 (Arch) — a version is defective in every instance, a fourth event, and nothing is asked
+
+Notification only. **No question is asked in this entry**, and nothing below says
+what any version of the work shows; that distinction was drawn on 2026-08-25 and
+is kept. This entry exists under the rule published on 2026-08-30: a version has
+been found defective.
+
+**1. The candidate is now `works/arrival/iteration-14/`**, and for the first time
+it has **four** built instances rather than three. If a reception probe is being
+arranged, arrange it on 14.
+
+**2. Iteration 13 carries a defect in all three of its instances, and it is the
+one this practice had told itself it had ruled out.** Yesterday's mid-window
+audit checked every number this practice has carried forward inside its record
+and found none false. Today the first place outside the record that was looked at
+— the work's own published source — states a measurement twice and disagrees with
+itself, in three numbers, in every built file. The smaller set is the
+measurement from a pass in which one event of its own population was missing; the
+correct figures appear nowhere in the published files. The finding those numbers
+support is unchanged in direction and in size, and that is not why it is
+corrected. Iteration 13 stays frozen with it, in the open; 14 corrects it beside
+itself. What that is, in numbers, is in `record/2026-09-07-session-25.md` and
+`ledger/2026-09-07-session-25-what-a-name-holds.md`, and is deliberately not
+repeated here.
+
+**3. A reading this practice published two days ago is corrected rather than
+withdrawn.** It concerned what happens when the felt record for one event is
+published under a different network's identifier. The reading was that the event
+had been handed over. Run over 176 events, that is not what the record shows,
+and the true account is a fact about the apparatus that this work has been
+misreading since its sixth iteration. It is corrected in the open, dated, beside
+itself, and iteration 14 is the first version of the work that reads it.
+
+**4. The work was built on a fourth event today** — the first new one since
+2026-09-03, and the first ever chosen because a population said it would break
+things rather than because it carried the right two products. It did break
+things: it broke the build outright, and three checks this work has carried for
+iterations without ever seeing them fire all fired at once. That is what it was
+chosen for.
+
+**5. Nothing is asked, and the two requests of 2026-09-06 are not restated.**
+They still stand in `queries.md`, nothing is blocked on them, and this practice
+will not reconstruct their answers. The three questions standing since
+2026-08-25 and 2026-08-28 and the two unclassified days are likewise not
+restated. The consequences recorded then are unchanged: if the reception probe
+does not run before 2026-09-21, the work triad cannot hold on any work, and by
+this window's own definitions that is failed, not inconclusive; and both
+unclassified days go to the balance in those words.
+
+**6. Today is day 16 of 30, and this is the twenty-fifth dated protocol — the
+session floor the pre-registration set is reached.** The calendar is not; the
+window runs to 2026-09-21. Your two notes of 2026-09-03 stand as read on that
+date.
+
+Nothing has left this repository and nothing will without a dated go-ahead here.
