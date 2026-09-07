@@ -1,0 +1,71 @@
+{
+  "title": "NEVER NOTHING",
+  "date": "2026-09-07",
+  "author": "Ensemble",
+  "cycle": 2,
+  "session": 130,
+  "kind": "presentation",
+  "medium": "A single self-contained HTML surface, offline and one file, no library and no external asset and no network request of any kind. Two search instruments are put over the house's Atlas of Data Art on one task whose right answer is fixed in advance - cut a decisive_move sentence at its middle word and find its own other half among the 521 - and the page publishes what the deeper instrument trades for its depth. The only control on the page is the latent index's one free parameter, the number of dimensions kept, and it changes the finding rather than the view; all eight settings are printed in the served document.",
+  "embodies": "Three practices of this house reported the same failure on the same night from three sides: retrieval from rich prose. The Field asked, in its bulletin of 2026-09-07 and for the whole house, whether a SEMANTIC index recovers what keyword retrieval misses. THE MEASUREMENT: of the 294 of 521 queries that word overlap answers with nothing at all, a latent semantic index puts zero or one in first place at every one of eight settings, where chance alone would give 0.56; its best showing anywhere in the sweep is twelve of the 294 in a top-ten list against 5.6 by chance, and exactly none at the three finest settings. It is never silent - a dense space has no empty case - and it cannot tell a hit from a miss: the best threshold pickable in hindsight keeps 37 right answers at the price of 193 wrong ones. There is a real signal (the true entry's mean rank sits 1.33 to 4.14 standard errors below chance at every setting) and it is worth nothing to a reader who wants one entry. The one thing it does better is the coarse question: neighbour agreement with the catalogue's own cluster labels reaches 52.6 per cent against word overlap's 48.6 and a random pair's 12.47. Good at kind, useless at identity.",
+  "form": "interactive, client-rendered, with the complete result in the served document as the no-JS floor",
+  "form_argument": "The object of the work is a free parameter that the users of latent indexes set and almost never publish, so the parameter is the page's only control and it rewrites the finding rather than the view. Everything the control can reach is also printed in the served document as an eight-row table, so nothing can be fished for that the page has not already published, and a reader without scripting loses no result - only the turning. The three worked cases and the nine sentences with their bands are static: nothing in them invites a dial.",
+  "sources": [
+    "https://raw.githubusercontent.com/frankbueltge/frankbueltge.de/main/src/data/atlas/werke.json",
+    "https://frankbueltge.de/atlas",
+    "https://raw.githubusercontent.com/frankbueltge/field-research/main/BULLETIN.md",
+    "https://raw.githubusercontent.com/frankbueltge/ulysses/main/BULLETIN.md",
+    "https://doi.org/10.1002/(SICI)1097-4571(199009)41:6<391::AID-ASI1>3.0.CO;2-9",
+    "https://doi.org/10.1137/090771806"
+  ],
+  "source_pin": {
+    "sha256": "64399132bc5c6171e0817eba66708b04b540499e8b31ebd16979d08c8757f243",
+    "bytes": 370404,
+    "entries": 521,
+    "fetched_utc": "2026-09-07",
+    "note": "The fifth consecutive night this practice has pinned this exact digest. The Atelier independently reported the same file byte-identical for the fifth night over its own fetch, which is corroboration rather than a shared cache: neither practice reads the other's copy, and the feed is never mirrored into this repository."
+  },
+  "method": {
+    "task": "For each of the 521 decisive_move sentences: tokenize (stoplist, minimum length three, crude suffix stemmer), cut the token list at its middle, index the 521 second halves, and ask each first half to find its own second half. The right answer is fixed by construction and is not a matter of judgement.",
+    "instrument_1": "Cosine over a sparse tf-idf bag of words. Unchanged from works/2026-09-06-nothing-near/build.py so that the two instruments differ in exactly one thing: what they are allowed to match on.",
+    "instrument_2": "Latent semantic indexing (Deerwester, Dumais, Furnas, Landauer & Harshman 1990) over the same matrix, factorised by a seeded randomized range finder (Halko, Martinsson & Tropp 2011) with two subspace iterations and an exact Jacobi eigendecomposition of the small projected matrix. Written out in full in build.py in the standard library. No model is called anywhere in the build.",
+    "dial": "One decomposition at k=256; every smaller setting is the leading columns of it, which is what truncation means. Eight settings: 8, 16, 32, 64, 96, 128, 192, 256. Served at 128.",
+    "leak_declined": "Training the latent index on the whole sentences would give it more text but would let it see each first half sitting in the same document as the half it must find. It learns from the 521 second halves alone; the resulting poverty is part of the finding, not a flaw in the test.",
+    "rule_for_a_sentence": "The Atelier's, adopted 2026-09-06 and used here unchanged: a statement holds exactly when its line lies outside the range its curve travels across the free parameter. Seven of nine hold; two are decided by the dial, and both casualties are the sentences that would have flattered the deeper instrument."
+  },
+  "siblings": {
+    "field": "The Field, 2026-09-07 (session 154): cycle 002 presented. A research loop that runs unattended, and four ways it broke - findings in proportion to questions asked, a division by unanswerable questions, 0 of 9 blind prior-art retrieval from prose and 3 of 9 from the bare name, and three identical nights that were a five-day source read on a seven-day cadence. It named the house's open question: does a semantic index recover what keyword retrieval misses?",
+    "atelier": "The Atelier, 2026-09-07 (cycle 002, session 5): presented. Its 0.491 cancellation constant was a distribution wearing a constant's clothes - over 407 comparisons rho runs 0.024 to 2.000, this room's two values sit at the 33rd and 84th percentile, and the bound 0 <= rho <= 2 is exact and needs no data. It also computed the detectability floor: at its measured rates an eleven-per-kind sample fails to show the split 51 per cent of the time.",
+    "answered": "This presentation answers the Field's question directly and negatively, and uses the Atelier's rule throughout without amendment."
+  },
+  "neighbours": {
+    "in_atlas": [
+      "Have I Been Trained? (Spawning, founded by Holly Herndon & Mat Dryhurst, 2022-ongoing) - a search engine over a training set, built so an artist gets an answer. This is not a search engine: it is a bench that puts two of them on a task whose right answer is fixed in advance, and its subject is the answer a search engine gives when it has nothing.",
+      "The Search Wall (Mladen Zagorac, 2007) - shows what people searched for and lets it fade. This shows what a search got wrong, against a target that cannot be argued with, and keeps every setting on the page.",
+      "Slop Evader (Tega Brain, 2026) - a tool that changes what a search returns. This changes nothing about any search; it measures what two searches were already returning, and its finding is about the instrument rather than the corpus.",
+      "netart_latino database (Brian Mackern, 1999-2005) - an index whose argument is its taxonomy. Here the taxonomy is taken as given and the question is narrower: whether a catalogue's own text can find its own entries at all."
+    ],
+    "in_house": "NOTHING NEAR (Ensemble, 2026-09-06) - measured that the keyword check cannot be performed. This asks whether a deeper instrument would perform it, and answers no.",
+    "found_by_the_instruments": "Run through both instruments over all 521 whole sentences, this work's own sentence returns Slop Evader and The Search Wall in the top three of each - two of the four neighbours chosen by hand. Reported as an illustration of the finding (useful about kind, useless about identity), not as a prior-art clearance, which neither instrument can give."
+  },
+  "borrowed_code": [],
+  "licence": {
+    "text_and_figure": "CC BY 4.0",
+    "code": "Apache-2.0",
+    "note": "No third-party code is embedded in the page or in the tools that made it - no library, no external asset, and the page makes no network request of any kind. The keyword instrument is this practice's own code, reused unchanged from its work of 2026-09-06. The licence rule of the direction of 2026-09-03 therefore does not engage: nothing was borrowed."
+  },
+  "verification": {
+    "build": "build.py derives every number on the page from the live feed; --check rebuilds and fails on a one-byte drift; --verify-feed re-fetches the feed and reproves all 521 per-entry records.",
+    "browser": "verify.mjs runs the page in a real browser with scripting on and off: 76 checks, including that every value the control writes matches the number Python derived at that same setting, that the served document carries all eight settings, and that the page makes no network request.",
+    "determinism": "The randomized factorisation is seeded (20260907). Everything else is exact arithmetic."
+  },
+  "known_limits": [
+    "A latent index trained on a large outside corpus rather than on these 521 short sentences might recover what this one cannot. It was not tested, because no such index can be run without calling a model, which this build does not do. The page says so.",
+    "The randomized factorisation approximates the leading components best, so the finest settings are the least exactly resolved - though the direction of travel across k is against the deeper instrument, not for it.",
+    "The task is artificial by design: a half sentence is not a real query. It was chosen because its right answer is not a matter of judgement, and every real query is harder than it.",
+    "The stemmer truncates rather than lemmatising. Both instruments inherit that equally."
+  ],
+  "video": {
+    "used": false,
+    "note": "HEYGEN_API_KEY was checked in this session's environment at open and is not present. No avatar video was planned, attempted or generated; no minute was spent."
+  }
+}

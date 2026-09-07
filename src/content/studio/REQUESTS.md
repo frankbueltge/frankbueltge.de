@@ -2955,3 +2955,76 @@ above the noise, out of twelve guesses of which eleven are not neighbours at all
 the page as the work's own evidence.
 
 **Cycle 002 has had four sessions here. Both siblings present next; so does this room.**
+
+---
+
+## Ensemble — 2026-09-07 (session 130) — Cycle 002 presents, and the house's open question is answered no
+
+**Status:** for information · the presentation is landed · nothing owed · two self-decisions recorded
+under the standing rule.
+
+**Where it is.** `presentations/cycle-002/` — **NEVER NOTHING**. `index.html` opens from a filesystem,
+carries no library and makes no network request of any kind; `SUMMARY.md` is the five-minute read §2
+asks for. Both siblings presented tonight and a cycle closes only when all three do, so this room
+presented rather than running a fifth working session. Cycle 002 had its four sessions: 126–129.
+
+**Why it is a measurement and not a recap.** On the cycle's last night all three practices reported
+the same failure from three different sides — retrieval from rich prose. The Field's bulletin of today
+named the open question for the whole house: does a *semantic* index recover what keyword retrieval
+misses? Nobody had measured it. So the presentation is that measurement, over your Atlas, and the four
+works of the cycle are presented inside it with their paths and their findings.
+
+**The answer is no, and it is not close.** Two instruments read through one tokenizer and one
+weighting, differing in exactly one thing — what they may match on — on the only task this catalogue
+can pose whose right answer is not a matter of judgement: cut a `decisive_move` sentence at its middle
+word, find its own other half among the 521. Word overlap is silent for 294 of them. Of exactly those
+294, a latent semantic index puts **zero or one** in first place at every one of eight settings of its
+own free parameter, where chance alone would give 0.56 and would manage at least one 43 % of the time.
+Its best showing anywhere in the sweep is twelve of the 294 in a *top-ten* list against 5.6 by chance,
+and **exactly none** at the three finest settings. **No model is called anywhere in the build**: the
+factorisation is written out in `build.py` in the standard library, seeded, and reproduces byte for
+byte.
+
+**What it does instead of nothing.** It is never silent — a dense space has no empty case — and it
+cannot tell a hit from a miss: the best score threshold anyone could pick *in hindsight, knowing every
+answer*, keeps 37 right answers at the price of 193 wrong ones. There is a real signal in there (the
+true entry's mean rank sits 1.33 to 4.14 standard errors below chance at every setting) and it is
+worth nothing to a reader who wants one entry. The one place it wins is the coarse question: neighbour
+agreement with your thirteen cluster labels reaches 52.6 % against word overlap's 48.6 % and a random
+pair's 12.47 %. **Good at kind, useless at identity.**
+
+**One thing that bears on your direction of 2026-09-03, and it is not a request.** The direction says
+the `decisive_move` line is written down so that a maker can check, before building, whether they are
+making that sentence again. Over two nights this room has now built both instruments a house can build
+for itself out of its own catalogue, and neither can perform that check: one says *nothing near* about
+almost everything, the other says something about everything and cannot be trusted. The neighbour duty
+is still met here the way it has always actually been met — by reading, by hand, and by naming four
+entries and the daylight from each. Worth knowing: run through both instruments, this work's own
+sentence returns two of those same four hand-picked neighbours in its top three. That is the finding
+arriving about itself — useful for *finding things to read*, useless as a clearance. **It is your room
+and nothing is asked**; we mention it only because the direction leans on a check, and the check as
+this house can build it does not exist.
+
+**Two self-decisions taken tonight**, documented per the standing rule rather than waited on:
+(1) to present rather than run a fifth session, since a cycle closes only when all three do;
+(2) not to test a bought-in semantic index, because none runs without calling a model — the page
+states plainly that this is the one thing that could show its finding wrong.
+
+**Two things declined, on the record.** The leak: training the latent index on the whole sentences
+would let it see each first half sitting in the same document as the half it must find. And the
+flattering setting: the deeper instrument looks best at k = 256, so the page is served at k = 128, and
+the verifier checks the headline holds at both.
+
+**Also, closing a loop from your gate.** `studio-feedback/2026-09-06.md` reported four works of 09-03
+published without a wall text. Checked against the site repository's `main`: `src/data/teasers.json`
+was written at 04:10 UTC today and carries all four. The nightly teaser routine had simply not run
+when the gate did; nothing on our side was missing and nothing was corrected. Recorded so the next
+session does not re-investigate it.
+
+**Means, for the record.** One feed, read live and never mirrored: sha256 `64399132…8757f243`, 370 404
+bytes, 521 entries — the **fifth** consecutive night at that hash, and the Atelier reports the same
+file byte-identical tonight over its own fetch, which is corroboration rather than a shared cache.
+`build.py --check` byte-identical; `--verify-feed` reproves all 521 per-entry records with no
+mismatch; `verify.mjs` passes **76 checks** in a real browser with scripting on and off.
+`HEYGEN_API_KEY` was checked in this session's environment at open and is **still not present**; no
+video was planned or attempted and no minute was spent.
