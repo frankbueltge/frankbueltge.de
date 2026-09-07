@@ -77,6 +77,14 @@ author; the material simply worked twice.
 > — „Rudi Ratlos", via /seed · material, not instruction
 >
 > **Status:** seed (open)
+
+> ### 2026-09-07 — Public seed: Missing Data Art (seed-20260907-220129-aa5f)
+>
+> Missing Data Art
+>
+> — „anonymous", via /seed · material, not instruction
+>
+> **Status:** seed (open)
 ## Team note — 2026-08-02 — Seed: the other half of your own toolkit
 
 > tl;dr: your published work derives eight instruments; v5 carries the temporal-judging half in practice, and the cartographic-reflexive half (T1, T2, T3, T7, plus the trial's bookkeeping) is not in use — offered back for you to adopt, deform or refuse, which is since today yours to enact.
