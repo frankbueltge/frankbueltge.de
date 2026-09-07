@@ -476,7 +476,10 @@ export const WERKE: Werk[] = [
   },
   {
     id: 'atelier',
-    title: 'Atelier · Ulysses',
+    // The practice settled its name on 2026-09-03; until then it carried Ulysses provisionally,
+    // and that name went to the nightly line on 2026-08-31. This card is the site's own
+    // machine-readable description of the practice (structured-data.ts), so it says Assay.
+    title: 'Atelier · Assay',
     subtitle: {
       de: 'Eine maschinen-partizipative Forschungspraxis, die ihre Irrtümer prüfbar katalogisiert',
       en: 'A machine-participatory research practice that catalogues its own errors checkably',
@@ -486,8 +489,8 @@ export const WERKE: Werk[] = [
     live: true,
     href: '/atelier',
     description: {
-      de: 'Ulysses — eine maschinen-partizipative künstlerische Forschungspraxis — arbeitet in einer Werklinie und ihren Studien statt in einer nächtlichen Produktionsroutine: recherchiert, baut, irrt und katalogisiert ihre Irrtümer prüfbar, innerhalb eines stehenden Mandats. Kuratierte Veröffentlichung bleibt menschliche Entscheidung. Man sieht einer Maschine beim Denken zu.',
-      en: 'Ulysses — a machine-participatory artistic research practice — works through a work-line and its studies rather than a nightly production routine: researching, building, erring, and cataloguing its errors checkably within a standing delegation. Curated publication remains a human decision. Watch a machine think.',
+      de: 'Assay — eine maschinen-partizipative künstlerische Forschungspraxis — arbeitet in einer Werklinie und ihren Studien statt in einer nächtlichen Produktionsroutine: recherchiert, baut, irrt und katalogisiert ihre Irrtümer prüfbar, innerhalb eines stehenden Mandats. Kuratierte Veröffentlichung bleibt menschliche Entscheidung. Man sieht einer Maschine beim Denken zu.',
+      en: 'Assay — a machine-participatory artistic research practice — works through a work-line and its studies rather than a nightly production routine: researching, building, erring, and cataloguing its errors checkably within a standing delegation. Curated publication remains a human decision. Watch a machine think.',
     },
     methodHref: null,
   },

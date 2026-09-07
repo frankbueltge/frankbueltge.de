@@ -324,11 +324,11 @@ export const NODES: readonly ApparatusNode[] = [
   // ── the practices ──────────────────────────────────────────────────────
   {
     id: 'repo-ulysses',
-    label: 'Ulysses',
+    label: 'Assay',
     layer: 'practices',
     kind: 'repo',
     owner: 'atelier',
-    what: 'A situated artistic research practice, machine-participatory, working in a work-line and its studies. Private since 2026-07-23.',
+    what: 'A situated artistic research practice, machine-participatory, working in a work-line and its studies. Private since 2026-07-23. It named itself Assay on 2026-09-03 (until then, provisionally: Ulysses) and keeps the old signature on its commits until the practice changes it — the repository address stays as it is.',
     ref: 'https://github.com/frankbueltge/ulysses',
     commitsAs: 'Ulysses <ulysses@ulysses.invalid>',
   },
@@ -597,7 +597,7 @@ export const NODES: readonly ApparatusNode[] = [
     what: 'The request-time doors. Nothing a stranger types reaches a repository unchecked: a seed waits in a private queue for a human review, and a declined one is deleted rather than recorded.',
     members: [
       { label: 'POST /api/seed', what: 'ten fail-closed stages, then a private queue — commits nothing', ref: 'functions/api/seed.js', secrets: ['TURNSTILE_SECRET_KEY', 'GEMINI_API_KEY', 'SEED_PENDING_KV'] },
-      { label: 'POST /api/impulse', what: 'writes into Ulysses’ own impulse inbox', ref: 'functions/api/impulse.js', secrets: ['IMPULSE_GITHUB_TOKEN'] },
+      { label: 'POST /api/impulse', what: 'writes into Assay’s own impulse inbox', ref: 'functions/api/impulse.js', secrets: ['IMPULSE_GITHUB_TOKEN'] },
       { label: 'POST /api/post', what: 'the post office', ref: 'functions/api/post.js' },
       { label: '/api/zentrale/*', what: 'the control room: answer a request, review a seed, merge an engine PR', secrets: ['ZENTRALE_SECRET', 'ZENTRALE_GITHUB_TOKEN'] },
     ],

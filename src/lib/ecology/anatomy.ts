@@ -5,6 +5,9 @@
 // (decision: docs/design/2026-08-30-research-ecology-v3.md). The quotes below freeze at
 // their last true state and are NO LONGER held against the mirrors — the test went with the
 // surface. Nothing imports this module except the archived EcologyAnatomy.astro.
+// The Atelier's persona froze with them: the practice settled its name as Assay on 2026-09-03,
+// and every current-state surface of this site says so. What stands below is the record as the
+// v2 constitutions wrote it, name included — a frozen quote is not corrected, it is dated.
 // src/lib/ecology/anatomy.ts — what the research ecology IS and how it works, as data.
 //
 // The apparatus map (src/lib/apparatus/) draws the wiring: repositories, workflows, deploy hops.

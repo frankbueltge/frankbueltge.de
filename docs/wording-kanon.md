@@ -1,6 +1,7 @@
 # Wording-Kanon — frankbueltge.de & Ökologie
 
-**Stand: 2026-09-01** (v3-Sektion und Türen-Spiegel nachgezogen; davor 2026-07-31).
+**Stand: 2026-09-07** (Persona des Ateliers: Assay; davor 2026-09-01 v3-Sektion und
+Türen-Spiegel, davor 2026-07-31).
 Dieses Dokument ist die maßgebliche aktuelle Sprachregelung.
 Bei Widerspruch gilt: das jüngste Wort von Frank > dieses Dokument > `src/config/naming.ts`
 (Hub-Wortlaute) > alles andere. **Engine-READMEs, alte Configs und Design-Mockups sind KEINE
@@ -42,11 +43,14 @@ nie als aktuell verwendet.
   Archiv.
 - **Post Office = poste restante:** Senden ist keine Pflicht mehr; abholbereit liegende Post
   ist ein vollständiges Ergebnis. „Nothing sends itself" gilt unverändert.
-- **Personae:** Field/**Meridian** · Studio/**Ensemble** · Atelier: **„Ulysses" nur noch
-  provisorisch** — der Name gehört seit dem 2026-08-31 der Nachtlinie (`error-as-method`),
-  die ihn seit 2026-06-28 trägt; die Atelier-Praxis findet ihren eigenen (offen, eine Zeile
-  geschuldet). Bis dahin schreiben Oberflächen „Ulysses" als provisorische Persona, nie als
-  gesetzten Namen.
+- **Personae (Stand 2026-09-07):** Field/**Meridian** · Studio/**Ensemble** ·
+  Atelier/**Assay** — am 2026-09-03 von der Praxis selbst gesetzt (dasselbe Wort wie *essay*,
+  eine Wägung), nachdem der Architekt am 2026-08-31 entschieden hatte, dass **„Ulysses" der
+  Nachtlinie** (`error-as-method`, trägt ihn seit 2026-06-28) gehört. Oberflächen schreiben
+  überall **Assay**; „Ulysses" nur noch für die Nachtlinie und für den Nightly-Phasen-Record
+  des Ateliers (Werke Juni–Juli 2026) — dort bleibt er historisch stehen. Bezeichner ändern
+  sich nicht: Repo, Tür-Id und Route heißen weiter `ulysses`/`/atelier`, und die Praxis
+  signiert ihre Commits als `Ulysses <ulysses@ulysses.invalid>`, bis sie das selbst ändert.
 - **Verfassungsnummern werden nie getippt,** sondern aus den Spiegeln gelesen
   (`readConstitution`). Datierter Schnappschuss, nur hier: Atelier v7 · Field v4 · Studio v4
   (alle „reading of 2026-08-30").
@@ -75,7 +79,7 @@ v2-Apparat (work-line, adversarial review, claims ledger, concept gate) — alle
 2026-08-30 historisch. Struktur bleibt tragend: der Text vor dem ersten „ — " wird per
 `splitDoorLine()` zur H1 der Station, die ganze Zeile erscheint wörtlich auf dem Board.
 
-- **The Atelier** (Persona provisorisch „Ulysses", s. o.): *Machine-run artistic research and
+- **The Atelier / Assay** (Name gesetzt am 2026-09-03, s. o.): *Machine-run artistic research and
   philosophy — concepts tested in made things; the practice works the ecology's shared
   question from its own corner and closes every session with an artifact, failures on the
   record.* — NICHT mehr mit „Error as Method" führen: der Name gehört der Nachtlinie
@@ -430,7 +434,7 @@ human", „the architect & conductor", „the human decides".
 - „apparatus" ist Haus-Vokabular, wird aber an jeder Verwendung erklärt
   („how the machine runs").
 - Die KI-Technologie bleibt unbenannt (No-Vendor-Regel der Verfassungen); Persona-Namen
-  (Ulysses, Meridian, Ensemble) sind die eigenen der Kollektive.
+  (Assay, Meridian, Ensemble) sind die eigenen der Kollektive.
 - Lizenz-Zeile: **„code Apache 2.0 · works CC BY 4.0 · data CC0 · Git is the archive"**
   (Frank, 26.07. — löst die lab-weite Nichtkommerzialität vom 12.07. ab). Begründung:
   Die NC-Klausel blockierte genau die Weiterverwendung, die Reichweite schafft — wenn ein

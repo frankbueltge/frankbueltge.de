@@ -38,7 +38,7 @@ export const APPARATUS_MAP = {
 
   legendLabel: 'Colour is ownership. Filter by whose it is:',
   legend: {
-    atelier: { label: 'Ulysses', hint: 'the atelier’s own repository, gate and mirror' },
+    atelier: { label: 'Assay', hint: 'the atelier’s own repository, gate and mirror' },
     field: { label: 'Meridian', hint: 'the field’s own repository, gate and mirror' },
     studio: { label: 'Ensemble', hint: 'the studio’s own repository, gate and mirror' },
     plenum: { label: 'Plenum', hint: 'the guest voice from data-snack' },

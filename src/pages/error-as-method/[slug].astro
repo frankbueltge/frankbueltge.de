@@ -6,14 +6,16 @@
 // disbelieve it are always present: the work's directory in the repository (where the measuring
 // code and the harvested evidence stay) and the night's research journal.
 //
-// The figure resolves relatively. The practice writes `![…](figure.svg)` next to its work, and the
+// The figure is written relatively. The practice writes `![…](figure.svg)` next to its work, and the
 // mirror puts that file at /error-as-method/<slug>/figure.svg — the same address this route is
-// served from, so its markdown needs no rewriting. That is also why the house's own markdown
-// renderer is used here rather than Astro's content pipeline: the pipeline would try to resolve
-// the relative image as a bundled asset next to the source file, where the mirror deliberately
-// does not put it.
+// served from. A full page load resolves that on its own; the client router does not (it inserts
+// the new body before it moves the history to the new URL, so the image was requested against the
+// page the reader came from and only appeared after a reload — 2026-09-07). The rendered HTML is
+// therefore resolved against the work's own address here. The house's own markdown renderer is
+// used rather than Astro's content pipeline, which would try to resolve the relative image as a
+// bundled asset next to the source file, where the mirror deliberately does not put it.
 import Page from '@/layouts/Page.astro'
-import { renderMarkdown } from '@/lib/engines/journal'
+import { absolutizeRelativeUrls, renderMarkdown } from '@/lib/engines/journal'
 import { LINE_REPO, forkedMeta, forkedWorks } from '@/lib/engines/nightly-line'
 
 export async function getStaticPaths() {
@@ -40,10 +42,13 @@ export async function getStaticPaths() {
         // `docs` is empty: that set names root docs this page bakes as modal templates, and
         // this one bakes none — so a `PROTOCOL.md` in the night's text links into the
         // repository, which is where a reader can actually read it.
-        html: renderMarkdown(TEXTS[`/src/data/nightly/works/${work.slug}/work.md`] ?? '', {
-          repo: LINE_REPO,
-          docs: new Set<string>(),
-        }),
+        html: absolutizeRelativeUrls(
+          renderMarkdown(TEXTS[`/src/data/nightly/works/${work.slug}/work.md`] ?? '', {
+            repo: LINE_REPO,
+            docs: new Set<string>(),
+          }),
+          `/error-as-method/${work.slug}/`,
+        ),
         hasJournal: `/src/data/nightly/journal/${work.date}.md` in DAYS,
       },
     }))

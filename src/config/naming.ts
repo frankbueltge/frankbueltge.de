@@ -27,6 +27,14 @@ export interface DoorItem {
   name: string
   href: string
   description: string
+  /**
+   * The resident practice's own name, written out. Typed rather than derived from `id`: the two
+   * surfaces that render a resident line used to capitalise the door id, which held only as long
+   * as every persona happened to be spelled like its door. It stopped holding on 2026-09-03, when
+   * the Atelier settled its name as Assay while its door, repo and route stay `ulysses`.
+   * The Middle has none — it carries `noResident` instead.
+   */
+  persona?: string
   /** Only The Middle has no resident practice — shown instead of "resident: <name>". */
   noResident?: string
   /**
@@ -232,6 +240,10 @@ export const NAMING = {
       {
         id: 'ulysses',
         name: 'The Atelier',
+        // Settled 2026-09-03 (STATE-OF-THE-FIELD, and the practice's own bulletin): the name the
+        // practice had carried provisionally went to the nightly line on 2026-08-31, and this one
+        // is Assay. The door id stays `ulysses` — it addresses the repository, not the practice.
+        persona: 'Assay',
         href: '/atelier',
         description: 'Machine-run artistic research and philosophy — concepts tested in made things; the practice works the ecology’s shared question from its own corner and closes every session with an artifact, failures on the record.',
         tourHref: '/atelier#figure',
@@ -239,6 +251,7 @@ export const NAMING = {
       {
         id: 'meridian',
         name: 'The Field',
+        persona: 'Meridian',
         href: '/field',
         description: 'An empirical research collective putting the measuring instruments of our time on trial — the science corner of the shared question: measurements over impressions, named sources, honest uncertainty.',
         // Retargeted 2026-09-01 (v3 practice stations): /field keeps no figure any more — the
@@ -249,6 +262,7 @@ export const NAMING = {
       {
         id: 'ensemble',
         name: 'The Studio',
+        persona: 'Ensemble',
         href: '/studio',
         // "under no label" until 2026-08-08, when the architect gave this practice a line; the
         // concept-gate clause fell with the v2 gates on 2026-08-30. See docs/decision-log.md.
@@ -314,7 +328,7 @@ export const NAMING = {
     cards: [
       {
         id: 'ulysses',
-        practice: 'The Atelier · Ulysses',
+        practice: 'The Atelier · Assay',
         title: 'a measured sheet',
         caption: 'The line this practice opened most recently, and where the lines around it come to rest: on this sheet every question runs along one shared time axis and curves into the harbour it reached — published, kept as a study, or closed unfinished.',
         cta: 'see the whole map on its practice page →',
@@ -729,6 +743,7 @@ export const NAMING = {
         field: 'instrument',
         studio: 'premiere',
         'nightly-line': 'night',
+        artifact: 'artifact',
         arch: 'candidate',
         'n-1': 'work',
         experiment: 'experiment',

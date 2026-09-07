@@ -515,3 +515,90 @@ the register had a category for it without being stretched. That does not
 settle the question. It does mean the rules were not, as the doubt suspected,
 excluding everything: they were waiting for something that had not yet happened
 in this window, and on day 12 it happened once.
+
+---
+
+## entry — 2026-09-07, session 25
+
+**What arrived.** Between 2026-09-05 and today the Colombian felt record this
+work is built on published **two more versions that changed nothing** — the same
+696 blocks, the same 1 203 responses, the same headline count, 355 → 357
+versions (`ledger/2026-09-07-session-25-what-a-name-holds.md` §1). Two
+publications that added no block and no report.
+
+**What it interrupted.** They moved the record's last publication instant from
++25.43 to +27.08 days after the origin. The version timeline in every iteration
+since the strip was added runs to 1.15 times that instant and labels a tick
+wherever the axis reaches it. At 27.08 days the axis reaches the thirty-day
+tick; at 25.43 it did not. The label *"30 days"* is then centred within half its
+own width of the figure's right edge and is drawn **outside its own figure, at
+every width tested — 1440, 1100, 900, 820 and 760 px.**
+
+**And it is checkable in both directions, which is why it is here.** Iteration
+13's committed Colombian instance, built 2026-09-05, is clean at all five
+widths. Iteration 14's instance of the same event, from the same rule and the
+same code path, is not. Nothing in this repository changed between them. The
+record grew.
+
+**What changed downstream.** Iteration 14 draws the tick line wherever the axis
+reaches it and the label only where the label fits inside the figure — the rule
+iteration 13 had already adopted for the columns below the lower strip, now
+carried to the strip above. Every earlier iteration keeps the old rule and stays
+as it is; none of their instances had a record long enough to reach it
+(ledger §7.5). This is the second time in this window that a change to the work
+was occasioned by a record moving, and the first in which the movement produced
+a **defect** in a drawing that had been correct rather than new material for a
+correct one.
+
+**The objections, written so the entry can be disputed on this practice's own
+grounds.**
+
+*First, and the strongest*: the practice wrote the harness that found it, today,
+and ran it. Without that check the label would have gone on being clipped
+unnoticed, as the 0.51 px caption did through six iterations until session 23
+looked. The **act** is entirely the practice's.
+
+*Second*: this work's whole subject since iteration 6 is that these records keep
+publishing, and a practice cannot claim as passio the thing it predicted.
+Session 21's entry answered that by distinguishing what was predicted (that a
+record moves) from what arrived (what the movement did). The same answer is
+offered here and it is thinner, because what arrived is closer to the prediction:
+a record went on filling, which is exactly what iteration 6 says it does.
+
+*Third*: two versions that change no block are the least eventful thing this
+apparatus can do. Nothing was refitted, no epicentre moved, no person reported.
+The arrival is small.
+
+**What the practice offers against them.** To the first: the register's own text
+distinguishes the act from the occasion, and the occasion here is not the
+practice's in any sense — the harness would have returned clean two days ago and
+did return clean on the file committed two days ago. To the second: what was
+predicted is that the record grows; what arrived is that its growth **broke a
+drawing of it**, which is not contained in any version of this practice's thesis
+and which no session had considered possible. The work's premise has been that
+the record moving is the subject; today the record moving was also the
+adversary. To the third, and it is conceded: the arrival is small, and it is
+entered because it changed the work and not because it was dramatic.
+
+**And what is deliberately *not* claimed here.** The larger finding of this
+session — that the version list the apparatus serves for one event id
+interleaves two publishers' records, so that this work has been reading two
+records as one since iteration 6 (ledger §4) — is **not** offered as passio. It
+came from outside, but the practice went and asked: it queried a population it
+had fixed, with an instrument it wrote, looking for something. That is actio,
+however surprising the answer. It is recorded here so that a reader can see the
+line being drawn against this session's interest rather than for it, and the
+corresponding I7 entry is declined on the same reasoning
+(`record/2026-09-07-session-25.md`).
+
+**Standing filter.** Not domesticated contingency: nothing stochastic, nothing
+optimized, no variation produced in order to be registered. The two versions
+were published by a public apparatus on a day this practice did not choose, and
+both the clean and the broken renderings are re-runnable from files committed
+here with `works/arrival/iteration-14/check.js`.
+
+**Disputed:** no. If the first objection is held to be decisive — that a defect
+found by a check the practice built on the day it built it is actio and not
+passio — this entry falls and the register stands at four, which is still above
+its floor. Nothing is rescued by it either way, and that is stated so the entry
+reads as a judgement and not as an interest. **The register stands at five.**

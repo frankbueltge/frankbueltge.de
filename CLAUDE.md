@@ -6,7 +6,7 @@ Franks Entscheidung 2026-07-24 — nicht „Data & AI Engineer", nicht „data a
 nicht mehr die Ökologie, sondern beide gleichrangig; Begriffsstaffel House · Practice ·
 Project · Instrument · Experiment im Wording-Kanon):
 **(1) die federated research ecology** — drei lokal konstituierte, maschinell betriebene
-Forschungspraktiken und eine Kontaktzone: The Atelier (Ulysses, `/atelier`), The Field
+Forschungspraktiken und eine Kontaktzone: The Atelier (Assay — so benannt seit 2026-09-03, davor provisorisch „Ulysses“; `/atelier`), The Field
 (Meridian, `/field`), The Studio (Ensemble, `/studio`), The Middle (`/encounters`);
 **(2) Machine Attention** (`/machine-attention`) — das Gegen-Experiment: EINE Maschine unter
 EINER Verfassung, mit den Untersuchungen The Foreknown (`/attention`), Dark Ocean (E-Experiment
@@ -89,7 +89,8 @@ Werke/Texte, CC0 für Daten und Archiv-Snapshots (ersetzt die noncommercial-Lini
 Lizenz). **Ausnahme:** über `/seed` eingereichte Saaten bleiben CC BY-NC-SA 4.0 —
 den Einreichenden zugesagt, nicht rückwirkend änderbar.
 
-**Engine-Personas:** field/Meridian, studio/Ensemble, atelier/Ulysses publizieren über
+**Engine-Personas:** field/Meridian, studio/Ensemble, atelier/Assay (Commits signieren bis auf
+Weiteres noch als Ulysses; der Name Ulysses gehört seit 2026-08-31 der Nachtlinie) publizieren über
 gated integration. Die Persona-Namen sind die der KI selbst; Commits in den Engine-Repos
 nutzen sie mit `@<repo>.invalid`-Adressen — **nie** bloße `@users.noreply.github.com`-Namen,
 die kreditieren unbeteiligte echte GitHub-Accounts.

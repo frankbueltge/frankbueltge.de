@@ -60,7 +60,7 @@ export const GRAPH_EXPLORER = {
 
   voices: {
     meridian: 'The Field · Meridian',
-    ulysses: 'The Atelier · Ulysses',
+    ulysses: 'The Atelier · Assay',
     ensemble: 'The Studio · Ensemble',
     conductor: 'no voice — the house itself, or the world',
   } satisfies Record<Voice, string>,
