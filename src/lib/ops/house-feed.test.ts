@@ -16,6 +16,7 @@ import type { Werk } from '@/data/werke'
 import type { ArchFacts } from '@/lib/arch/facts'
 import type { N1Work } from '@/lib/n1/works'
 import type { LatestWork } from '@/lib/engines/latest'
+import { loadArtifacts, type ArtifactEntry } from '@/lib/ecology/v3'
 import { NIGHTLY_FORK_DIR } from '@/lib/engines/register'
 
 const WORKS: LatestWork[] = [
@@ -49,7 +50,16 @@ const LAB: Werk[] = [
   { id: 'door', title: 'A practice door', subtitle: { de: '', en: '' }, status: 'live', href: '/d', description: { de: '', en: '' }, since: '2026-09-02' },
 ]
 
-const feed = () => buildHouseFeed({ works: WORKS, arch: ARCH, n1: N1, werke: LAB })
+const ARTIFACTS: ArtifactEntry[] = [
+  { practice: 'atelier', slug: 'cycle-002-session-4', date: '2026-09-06', href: '/atelier/window/cycle-002-session-4/', cycle: 2, title: 'Dials' },
+  { practice: 'field', slug: 'does-it-know', date: '2026-09-06', href: '/field/artifacts/cycle-002/2026-09-06-does-it-know/', cycle: 2 },
+  // a window whose journal names no day — dropped, never dated by the feed
+  { practice: 'atelier', slug: 'cycle-002-session-1', date: null, href: '/atelier/window/cycle-002-session-1/', cycle: 2, title: 'An undated window' },
+  // the Studio ships its artifact as a work; the register already carries it, so it names no cycle
+  { practice: 'studio', slug: 'c', date: '2026-07-30', href: '/studio/werke-html/c/', cycle: null, title: 'A withdrawn premiere' },
+]
+
+const feed = () => buildHouseFeed({ works: WORKS, arch: ARCH, n1: N1, werke: LAB, artifacts: ARTIFACTS })
 
 describe('the signal log speaks for the whole house', () => {
   it('carries every house that lands dated work, not only the ecology’s three practices', () => {
@@ -101,6 +111,26 @@ describe('each house is named and counted by its own record', () => {
     expect(byTitle.get('Two Nights Deep')).toBe(K['n-1'])
     expect(byTitle.get('A lab experiment')).toBe(K.experiment)
     expect(byTitle.get('A lab instrument')).toBe(K.instrument)
+    expect(byTitle.get('Dials')).toBe(K.artifact)
+  })
+
+  it('lists the Field’s and the Atelier’s cycle artifacts under their own houses, in their own colour', () => {
+    const rows = feed()
+      .filter((e) => e.kind === NAMING.opsRoom.signal.kindLabels.artifact)
+      .sort((a, b) => a.house.localeCompare(b.house))
+    expect(rows.map((e) => [e.house, e.title, e.date, e.href])).toEqual([
+      ['atelier', 'Dials', '2026-09-06', '/atelier/window/cycle-002-session-4/'],
+      ['field', 'does-it-know', '2026-09-06', '/field/artifacts/cycle-002/2026-09-06-does-it-know/'],
+    ])
+    expect(rows.map((e) => e.voice)).toEqual(['ulysses', 'meridian'])
+  })
+
+  it('leaves a work-shaped artifact to the register — one row, not two', () => {
+    expect(feed().filter((e) => e.href === '/studio/werke-html/c/')).toHaveLength(1)
+  })
+
+  it('drops a window whose journal names no day rather than dating it itself', () => {
+    expect(feed().some((e) => e.href === '/atelier/window/cycle-002-session-1/')).toBe(false)
   })
 
   it('takes only the lab’s own shelf from werke.ts — a practice door is not an experiment', () => {
@@ -163,6 +193,17 @@ describe('against the real record, not only the fixture', () => {
   it('lists every lab experiment and instrument /experiments renders', () => {
     const lab = real.filter((e) => e.house === 'lab')
     expect(lab).toHaveLength(WERKE.filter((w) => w.line).length)
+  })
+
+  it('carries the practices’ cycle artifacts, so the Atelier’s newest row is not a work of July', () => {
+    const K = NAMING.opsRoom.signal.kindLabels
+    for (const practice of ['atelier', 'field'] as const) {
+      const shipped = loadArtifacts().filter((a) => a.practice === practice && a.cycle !== null && a.date)
+      expect(shipped.length, `${practice} has committed no dated cycle artifact`).toBeGreaterThan(0)
+      const rows = real.filter((e) => e.house === practice && e.kind === K.artifact)
+      expect(rows).toHaveLength(shipped.length)
+      expect(real.find((e) => e.house === practice)?.date).toBe(shipped[0]!.date)
+    }
   })
 
   it('carries no address twice — one row per thing that landed', () => {

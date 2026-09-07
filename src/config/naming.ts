@@ -729,6 +729,7 @@ export const NAMING = {
         field: 'instrument',
         studio: 'premiere',
         'nightly-line': 'night',
+        artifact: 'artifact',
         arch: 'candidate',
         'n-1': 'work',
         experiment: 'experiment',
