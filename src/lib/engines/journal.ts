@@ -141,6 +141,11 @@ export function sessionAnchor(heading: string, dayId: string, indexInFile: numbe
   if (cs) return `cs-${Number(cs[1])}`
   const pre = heading.match(/^Session (\d+)/i)
   if (pre) return dayId <= '2026-07-01' ? `pre-${dayId}-${Number(pre[1])}` : `cs-${Number(pre[1])}`
+  // The date-first generation (Meridian, 2026-09-06: "2026-09-06 — session 153"). Deliberately
+  // narrow — a bare "session N" anywhere in a heading would re-anchor 54 plenum minutes of the
+  // form "Plenum minutes — <date> (Session N)" and break every deep link into them.
+  const dated = heading.match(/^\d{4}-\d{2}-\d{2}\s*[—–-]+\s*session (\d+)\b/i)
+  if (dated) return `cs-${Number(dated[1])}`
   return `${dayId}-${indexInFile}`
 }
 
