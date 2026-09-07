@@ -10,6 +10,10 @@
 // So the feed is assembled here, from each house's OWN record, in each house's OWN noun:
 //
 //   the three practices   works · instruments · premieres, from their committed meta.json
+//   their cycles          the artifacts each session leaves (ecology v3), from the practices'
+//                         own artifact and window directories — the Field and the Atelier land
+//                         these outside the works register, and until 2026-09-07 the log showed
+//                         the Atelier's last work of July while it shipped an artifact a day
 //   Error as Method       the fork's nights, split out of the same register by the directory
 //                         they were mirrored from — same practice by descent, own address
 //   Arch                  its work candidates, dated by the day the current iteration was built
@@ -36,6 +40,7 @@ import { readArchFacts, type ArchFacts } from '@/lib/arch/facts'
 import { readN1Works, type N1Work } from '@/lib/n1/works'
 import type { LatestWork } from '@/lib/engines/latest'
 import { allWorks, NIGHTLY_FORK_DIR } from '@/lib/engines/register'
+import { loadArtifacts, type ArtifactEntry } from '@/lib/ecology/v3'
 
 /** Every house that lands dated work on this site. Not a namespace — `EngineNs` is the works
  *  register's three practices and stays that; this is the wider set the entrance speaks for. */
@@ -163,8 +168,33 @@ export function registerEntries(works: readonly LatestWork[], names = houseNames
   })
 }
 
+/** The practices' cycle artifacts — research ecology v3: every session leaves one. The Field
+ *  writes them to `artifacts/cycle-NNN/<date>-<slug>/`, the Atelier to `window/cycle-NNN-session-n/`;
+ *  neither is a work in the register's sense, so the register never saw them. The Studio ships
+ *  its artifacts as works, which the register already carries: an entry naming no cycle is its
+ *  and is left to it. A window whose journal names no day drops out rather than being dated. */
+export function artifactEntries(artifacts: readonly ArtifactEntry[], names = houseNames()): FeedEntry[] {
+  const K = NAMING.opsRoom.signal.kindLabels
+  return artifacts.flatMap((a) => {
+    if (a.cycle === null || a.date === null) return []
+    return [
+      {
+        date: a.date,
+        house: a.practice as HouseId,
+        houseName: names[a.practice],
+        title: a.title ?? a.slug,
+        kind: K.artifact,
+        href: a.href,
+        withdrawn: false,
+        voice: PRACTICE[a.practice].voice,
+      },
+    ]
+  })
+}
+
 export interface FeedSources {
   works?: readonly LatestWork[]
+  artifacts?: readonly ArtifactEntry[]
   arch?: ArchFacts | null
   n1?: readonly N1Work[]
   werke?: readonly Werk[]
@@ -181,11 +211,13 @@ export interface FeedSources {
 export function buildHouseFeed(sources: FeedSources = {}): FeedEntry[] {
   const names = houseNames()
   const works = sources.works ?? allWorks()
+  const artifacts = sources.artifacts ?? loadArtifacts()
   const arch = sources.arch !== undefined ? sources.arch : readArchFacts()
   const n1 = sources.n1 ?? readN1Works()
 
   return [
     ...registerEntries(works, names),
+    ...artifactEntries(artifacts, names),
     ...(arch ? archEntries(arch, names) : []),
     ...n1Entries(n1, names),
     ...labEntries(sources.werke ?? WERKE, names),
