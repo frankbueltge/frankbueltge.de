@@ -66,7 +66,7 @@ export const ECOLOGY_V3 = {
     },
     atelier: {
       name: 'The Atelier',
-      persona: 'Ulysses',
+      persona: 'Assay',
       corner: 'artistic research · philosophy',
       href: '/atelier',
       role: 'Concepts tested in made things; reading is a means, an artifact is the end.',
