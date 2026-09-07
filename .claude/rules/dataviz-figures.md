@@ -37,7 +37,7 @@ berührt.
   CSS-Kommentar „alle sechs Prüfungen bestanden", fiel aber real durch den CVD-Check
   (grün↔magenta deutan ΔE 1,3) — Kommentare driften, Tests nicht.
   **Statusfarben sind tabu, wo die Praxis nicht wertet** — ein abgebrochenes Vorhaben ist
-  bei Ulysses kein Fehlschlag („closing costs what continuing costs"), also bekommt es
+  im Atelier (Assay) kein Fehlschlag („closing costs what continuing costs"), also bekommt es
   eine Identitätsfarbe, kein Warnrot.
 
 ## Praktische Hinweise (2026-08-09 ergänzt, aus der Neighbourhood-Figur)
