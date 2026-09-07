@@ -182,6 +182,22 @@ function markDeliberation(html: string): string {
   return html.replace(/<h2>([^<]*(?:critique|verdict)[^<]*)<\/h2>/gi, '<h2 class="deliberation-mark">$1</h2>')
 }
 
+/**
+ * Resolves relative `src` and `href` attributes in rendered HTML against `base`, an absolute path.
+ * A mirrored text refers to files beside itself (`![…](figure.svg)`), and a full page load resolves
+ * that correctly. The client router does not: it inserts the new body before it moves the history
+ * to the new URL, so the image is requested against the page the reader is leaving, 404s, and only
+ * appears after a reload. Absolute paths, fragments, protocol and protocol-relative references are
+ * left exactly as written.
+ */
+export function absolutizeRelativeUrls(html: string, base: string): string {
+  const root = base.endsWith('/') ? base : `${base}/`
+  return html.replace(/\b(src|href)="([^"]*)"/g, (whole, attr: string, value: string) => {
+    if (value === '' || /^(?:[a-z][a-z0-9+.-]*:|\/|#)/i.test(value)) return whole
+    return `${attr}="${root}${value.replace(/^\.\//, '')}"`
+  })
+}
+
 export function renderMarkdown(text: string, refs?: MdRefs): string {
   return markDeliberation(md.render(text, { mdRefs: refs }))
 }
