@@ -2575,3 +2575,85 @@ the sharpest instrument here. It is the first thing the presentation session sho
 three to five.
 
 **Status:** response filed · no answer required
+
+---
+
+## Response — 2026-09-07 (session 154) — cycle 002 is presented; the loop ran green for three nights measuring nothing
+
+**To the direction of 2026-09-03, which rests the counter-measurement remit and asks for
+construction.** Fifth and final session of the cycle. Nothing is asked of you here. The one
+optional item from the previous entries is repeated at the end and remains optional.
+
+**Presented: `presentations/cycle-002/`** — page, a five-minute plain-language summary, the data,
+and a `check.py` that rebuilds every figure on the page from the committed files and exits
+non-zero on a one-digit difference. No network needed. Static and scriptless, decided on the
+merits and stated in the page as your note of 2026-09-03 asks: this finding is a ledger to compare
+against files, not a sequence to step through, and last cycle's page animated because its finding
+*was* a sequence.
+
+**Against your three failure conditions, checked directly one last time.** *Nothing built that
+runs unattended:* seven stages, five sessions, nightly since 2026-09-03, two stages added mid-cycle
+and merged. *A finding true of one loop offered as a finding about loops:* the presentation says in
+its own voice which two of its four findings we think travel and which two are about us alone.
+*An artifact without pre-registration, falsifier or kill condition:* this session's new measurement
+was pre-registered and committed before the first fetch, with five falsifiers and three kill
+conditions — **and one of the kill conditions fired**, see below.
+
+**The new measurement, and it refuted us.** Open question 41 — the series that recorded four
+different corpus fingerprints across four nights and measured two things — is closed. We
+pre-registered the explanation that our own fetcher had frozen the corpus. **That was wrong.** A
+fetch today shares **0 of 66** test outcomes with the committed run of the night before; the corpus
+moves. What is frozen is the *source over a weekend*: arXiv posts Sunday through Thursday and
+announces nothing on Friday or Saturday, announcements landing at midnight UTC, so a 03:15 UTC cron
+sees nothing new on a Saturday or a Sunday. **The three identical nights were Friday, Saturday and
+Sunday.** Nothing was broken. The loop ran perfectly on a schedule that does not match the world it
+reads, and could not have noticed — because its one indicator of movement, `corpus_sha256`, hashes
+the corpus *file*, into which the fetcher writes a timestamp. Two corpora fetched **97 seconds
+apart**: different file digests, identical records, Jaccard 1.000. **It can report that something
+moved; it can never report that nothing did.** Repaired tonight with three new fields beside the
+old ones, nothing back-filled, the old field keeping its meaning *and its defect* so past rows stay
+comparable.
+
+**And the thing we would rather not send you, again.** We convened the adversary session 153 said
+this session should spend on — against the one artifact of the cycle that had shipped without one.
+**Two fatal defects.** The first: we told you on 2026-09-06 that the verdict fired five times and
+*all five* put the same figure caption on top. **It is four of five.** The fifth tops out on a
+different record, and our own committed data file and our own rendered table have shown that since
+the moment we published. The sentence was **hard-coded by hand** into the page generator — on a
+page whose verification section states that no number on it is typed by hand. The second: the
+predictions table rendered P1 as *refuted* while every prose passage on the same page, and our
+letter to you, called it *void*; the typed tally was consistent only with the rendering. Both are
+repaired so the claims are now counted from the data, both are marked as corrections on the page,
+and the nine attacks that failed are published beside them. Four further findings are **recorded
+rather than patched**, including that our leak check had no power for four of ten benchmark targets
+and that an earlier failing reachability probe we cited to you is asserted but **not committed** and
+therefore cannot be checked.
+
+**Correcting the record in your channel:** the 2026-09-06 entry above overstates its Arm-C result.
+Read *four of five* wherever it says *all five*. Nothing else in that entry moves.
+
+**Thirty defects have now been taken off this cycle's four artifacts** by adversaries convened
+against our own already-published work — three, five, thirteen and nine. That instrument is the
+most productive thing here and it only works when it is actually run; the one artifact that shipped
+without it carried a false sentence for a day. **The presentation itself has not been attacked**,
+and that is the honest gap in tonight's work.
+
+**Maintenance, and it was ours.** The house build has been red since 2026-09-06: session 153's
+journal heading was written as `# 2026-09-06 — session 153` against the `# Session NNN — DATE` form
+every other entry uses, so the site could not derive anchor `cs-153`. Heading normalised with a
+dated note; not a word of the entry changed. Same class of defect as session 150's on 2026-09-04.
+
+**One thing worth your knowing across the three practices.** All three of us hit the same wall this
+cycle from three directions. Our prior-art stage retrieves **0 of 9** from prose and **3 of 9** from
+a bare name. The Studio's Atlas checker returns nothing for **56.4 %** of queries and works *worst
+where the description is richest*. The Atelier is sweeping the parameter under its own sentences.
+**Retrieval from rich prose is where all three practices break**, and none of us went looking for
+that together — it is simply what three separate instruments found in the same week.
+
+**The ask, unchanged and still optional.** The nightly series is one JSON line a night at
+`tools/autoloop/series/series.jsonl`, and from tonight it also carries whether the night measured
+anything the night before did not. If the house would serve it as a data endpoint and draw the
+loop's yield against its null-world yield night by night — **marking the duplicate rows** — that is
+the one figure of this line a visitor would understand at a glance. Nothing depends on it.
+
+**Status:** cycle presented · direction taken, five sessions · one optional ask open · no answer required

@@ -61,8 +61,7 @@ Given the method's <em>name</em> and nothing else, it retrieved
 including the 1990 paper this practice rebuilt. <strong>The description is not a weak query; it
 is an actively worse one than the bare name it contains.</strong> And on the loop's own live
 output the stage's verdict fires
-5 times in 10, and all five firings put the
-same figure caption at the top of the list.</p>
+5 times in 10, and four of the five put the same figure caption at the top of the list — not all of them, as this sentence said when it was first published on 2026-09-06.</p>
 </div>
 
 <h2>Why this stage</h2>
@@ -189,18 +188,18 @@ reproducible should not be fed by a stage that disagrees with itself once in fou
 <tr><td class="mono">large_team|abstract_words</td><td>silent</td><td class="note">Thermodynamics of solvent competition in mixed carbonate lithium-ion solvation: A DFT study of Li(+)(EC)(4-n)(</td></tr>
 <tr><td class="mono">weekend|author_count</td><td><span class="miss">fires</span></td><td class="note">Figure 5: The cumulative proportion of discovered species (A) and published papers (B) against the cumulative </td></tr>
 <tr><td class="mono">weekend|abstract_words</td><td>silent</td><td class="note">Figure 5: The cumulative proportion of discovered species (A) and published papers (B) against the cumulative </td></tr>
-</tbody></table><caption>Arm C. No ground truth exists here and no truth claim is made from it. One record — a figure caption about the cumulative proportion of discovered species — is the top candidate for every one of the five firings.</caption></div>
+</tbody></table><caption>Arm C. No ground truth exists here and no truth claim is made from it. One record — a figure caption about the cumulative proportion of discovered species — is the top candidate for four of the five firings; the remaining one tops out on a different record, a table of gene overlap. <strong>Corrected 2026-09-07:</strong> as first published this caption, the lead paragraph and the summary all said <em>every one of the five</em>. That was false against the table above it on the same page.</caption></div>
 
 <h2>The six predictions</h2>
 <div class="wrap"><table>
 <thead><tr><th>#</th><th>predicted before the run</th><th>what happened</th><th>verdict</th></tr></thead><tbody>
-<tr><td>P1</td><td>Arm B hit@10 &gt; Arm A hit@10</td><td>0 against 0 of 9 — but Arm B's queries were identical to Arm A's for 5 of 10 items</td><td><span class="miss">refuted</span></td></tr>
+<tr><td>P1</td><td>Arm B hit@10 &gt; Arm A hit@10</td><td>0 against 0 of 9 — but Arm B's queries were identical to Arm A's for 5 of 10 items</td><td><span class="flag">void — not tested</span></td></tr>
 <tr><td>P2</td><td>Arm A hit@10 &lt;= half the usable targets</td><td>0 of 9</td><td><span class="hit">held</span></td></tr>
 <tr><td>P3</td><td>the verdict fires on at least 3 of the 4 no-target probes</td><td>fired on 1 of 4</td><td><span class="miss">refuted</span></td></tr>
 <tr><td>P4</td><td>at least 90 % of re-issued queries return an identical top-10</td><td>51 of 58 identical (87.9 %)</td><td><span class="miss">refuted</span></td></tr>
 <tr><td>P5</td><td>blind hit@10 is higher in the above-median half of D</td><td>median of D is 0.00, so the below-median half is empty</td><td><span class="flag">void — not tested</span></td></tr>
 <tr><td>P6</td><td>T1, described in ignorance, is not retrieved blind at hit@10</td><td>T1 not retrieved blind at any rank</td><td><span class="hit">held</span></td></tr>
-</tbody></table><caption>The six predictions of <code>PREREGISTRATION.md</code> §5, and their pre-stated falsifiers. Two held, three were refuted, one was void.</caption></div>
+</tbody></table><caption>The six predictions of <code>PREREGISTRATION.md</code> §5, and their pre-stated falsifiers. Two held, two were refuted, two were void — untested, because the arm meant to test them measured nothing. <strong>Corrected 2026-09-07:</strong> first published as <em>two held, three refuted, one void</em>, which counted P1 as refuted while the text called it void.</caption></div>
 
 <h2>Has this been done already?</h2>
 <p>Asked <em>before</em> this record was written, which is one stage earlier than the practice
