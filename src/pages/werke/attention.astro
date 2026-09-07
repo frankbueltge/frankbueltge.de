@@ -40,10 +40,13 @@ const BACKGROUND = 'https://github.com/frankbueltge/state-before-interface'
       <section>
         <h2 class="mb-2 font-semibold text-fg">1. Sources &amp; provenance</h2>
         <p>
-          V0 reads two keyless public warning feeds, audited live before any adapter was
+          V0 read two keyless public warning feeds, audited live before any adapter was
           built (2026-08-08): <a href="https://www.gdacs.org" class="underline decoration-line underline-offset-4">GDACS</a>
           (EU/JRC hazard alerts, all types, Orange/Red) and NOAA's National Hurricane Center
-          (genuine cyclone forecasts — an empty storm list is the honest quiet state). Two
+          (genuine cyclone forecasts — an empty storm list is the honest quiet state). A third,
+          NOAA's National Weather Service CAP alerts (US public domain, keyless, filtered to
+          Extreme/Severe warnings), was audited and added 2026-08-22, after the register had
+          held at two sources for fourteen nights. Two
           reaction sources are read alongside: UN OCHA's public plan and funding API, and
           GDELT's daily raw files. Every preserved file carries source URL, UTC retrieval
           time and SHA-256 in a manifest; a verifier walks the chain backwards and fails the
@@ -117,8 +120,8 @@ const BACKGROUND = 'https://github.com/frankbueltge/state-before-interface'
           natural persons, no imagery of suffering, no location below administrative levels.
           No accusations: the machine publishes timestamps, amounts and volumes, not blame.
           No forecasts of its own: it notarizes the issuers' predictions and adds none. GDACS
-          episodes are largely hazards already in motion (alert episodes), NHC entries are
-          genuine forecasts — the ledger keeps the two kinds distinct. Famine early warning
+          and NWS episodes are largely hazards already in motion (alert episodes), NHC entries
+          are genuine forecasts — the ledger keeps the two kinds distinct. Famine early warning
           (FEWS NET/IPC) and flood forecasts (Copernicus) are audited as phase-2 sources,
           not yet read.
         </p>
