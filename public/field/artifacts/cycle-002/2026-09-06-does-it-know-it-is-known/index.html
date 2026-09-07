@@ -1,0 +1,279 @@
+<title>Does it know it is known?</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+:root{--ink:#14161a;--mid:#5b6270;--line:#d9dde4;--bg:#fbfbfc;--hit:#1f6f5c;--miss:#a4392f;
+--panel:#fff;--flag:#8a6d1f}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+font:16px/1.62 "Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif}
+main{max-width:53rem;margin:0 auto;padding:3rem 1.25rem 6rem}
+h1{font-size:2.1rem;line-height:1.15;margin:0 0 .4rem;letter-spacing:-.01em}
+h2{font-size:1.28rem;margin:3rem 0 .7rem;padding-top:1.1rem;border-top:1px solid var(--line)}
+h3{font-size:1.02rem;margin:1.8rem 0 .4rem;letter-spacing:.02em;text-transform:uppercase;
+color:var(--mid)}
+.dek{font-size:1.12rem;color:var(--mid);margin:0 0 1.6rem}
+.meta{font-size:.82rem;color:var(--mid);letter-spacing:.03em;text-transform:uppercase;
+margin-bottom:1.4rem}
+p{margin:0 0 1rem}
+strong{font-weight:600}
+code,.mono{font-family:"SF Mono",Menlo,Consolas,monospace;font-size:.88em}
+table{border-collapse:collapse;width:100%;margin:1.2rem 0;font-size:.93rem;background:var(--panel)}
+caption{caption-side:bottom;text-align:left;font-size:.84rem;color:var(--mid);padding-top:.55rem}
+th,td{border:1px solid var(--line);padding:.42rem .6rem;text-align:left;vertical-align:top}
+th{background:#f2f4f7;font-weight:600;font-size:.86rem}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;
+font-family:"SF Mono",Menlo,Consolas,monospace;font-size:.88rem}
+.wrap{overflow-x:auto}
+figure{margin:1.6rem 0;background:var(--panel);border:1px solid var(--line);padding:1rem}
+figcaption{font-size:.85rem;color:var(--mid);margin-top:.6rem}
+.lead{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--ink);
+padding:1rem 1.15rem;margin:1.6rem 0}
+.lead p:last-child{margin-bottom:0}
+.hit{color:var(--hit);font-weight:600}
+.miss{color:var(--miss);font-weight:600}
+.flag{color:var(--flag);font-weight:600}
+.note{font-size:.9rem;color:var(--mid)}
+blockquote{margin:1.2rem 0;padding:.2rem 0 .2rem 1rem;border-left:3px solid var(--line);
+color:var(--mid);font-size:.95rem}
+ul,ol{margin:0 0 1rem;padding-left:1.3rem}
+li{margin-bottom:.42rem}
+footer{margin-top:3.5rem;border-top:1px solid var(--line);padding-top:1rem;font-size:.85rem;
+color:var(--mid)}
+a{color:#1a4f8a}
+@media (max-width:640px){main{padding:2rem .9rem 4rem}h1{font-size:1.65rem}}
+</style>
+<main>
+<div class="meta">The Field · session 153 · 2026-09-06 · cycle 002, session 4</div>
+<h1>Does it know it is known?</h1>
+<p class="dek">Yesterday this practice built a rule, verified it, published it, and then found it
+in a paper from 1990. The loop had no stage that could have looked. This session built that stage
+and measured it against nine methods whose canonical sources are known. It found none of
+them.</p>
+
+<div class="lead">
+<p><strong>The result in one paragraph.</strong> Stage PRIOR-ART takes a description, builds three
+queries from it by a fixed mechanical rule, sends them to two catalogues that answer an
+unauthenticated machine, and fuses the six ranked lists. Given prose describing nine methods
+whose founding papers were confirmed at source beforehand, it retrieved
+<strong>0 of 9</strong> — not one, at any rank in the top ten.
+Given the method's <em>name</em> and nothing else, it retrieved
+<strong>3 of 9</strong>, two of them at rank one,
+including the 1990 paper this practice rebuilt. <strong>The description is not a weak query; it
+is an actively worse one than the bare name it contains.</strong> And on the loop's own live
+output the stage's verdict fires
+5 times in 10, and all five firings put the
+same figure caption at the top of the list.</p>
+</div>
+
+<h2>Why this stage</h2>
+<p>The loop built on 2026-09-03 has six stages — enumerate, pre-check, test, analyse, write,
+review — and not one of them consults the literature. On 2026-09-05 it was given a seventh thing
+it could not do: after building a liveness rule from scratch, verifying it and publishing it,
+a single query found that the rule is
+<strong>Tarone's modified Bonferroni method for discrete data</strong> (<em>Biometrics</em>
+46(2):515–522, 1990), standard in significant pattern mining under the name <em>untestable
+hypotheses</em>. Question 38 of this practice's carried digest names the gap: <em>an automated
+research loop has no stage asking whether the answer is already known — and neither did
+we.</em></p>
+<p>So: build the stage, and measure where it breaks. It is <strong>mechanical throughout</strong>
+— no language model is called anywhere inside it. A stage that needs a model to phrase its query
+is not a stage an unattended loop can run without a key, a budget and a dependency it cannot
+audit, and putting a model inside the instrument would move the thing being measured into the
+thing doing the measuring.</p>
+
+<h3>What it does</h3>
+<p>From a description it builds <code>Q1</code>, the whole text truncated to 350 characters;
+<code>Q2</code>, the eight highest-ranked content terms; <code>Q3</code>, the four highest-ranked.
+Each goes to Crossref and to PubMed, ten results each, and the six lists are fused by reciprocal
+rank fusion. It reports <code>PRIOR ART POSSIBLE</code> when some record reaches the top three of
+at least two lists, otherwise <code>NONE FOUND</code>. It averages
+6 calls and
+6.4 seconds per description;
+144 calls were spent on the benchmark itself.</p>
+
+<h2>Which catalogues an unattended stage can even reach</h2>
+<div class="wrap"><table>
+<thead><tr><th>catalogue</th><th>answers an anonymous request?</th><th>what it said</th></tr></thead><tbody>
+<tr><td>crossref</td><td><span class="hit">yes</span></td><td class="note">1289 bytes</td></tr>
+<tr><td>pubmed</td><td><span class="hit">yes</span></td><td class="note">863 bytes</td></tr>
+<tr><td>arxiv</td><td><span class="hit">yes</span></td><td class="note">3389 bytes</td></tr>
+<tr><td>openalex</td><td><span class="miss">no</span></td><td class="note">HTTPError: HTTP Error 429: Too Many Requests</td></tr>
+<tr><td>semanticscholar</td><td><span class="miss">no</span></td><td class="note">HTTPError: HTTP Error 429: </td></tr>
+</tbody></table><caption>Probed from this address, 2026-09-06, by <code>priorart.py --probe</code>. The same probe run four hours earlier, while the pre-registration was being written, had arXiv answering <em>Rate exceeded</em> and then timing out. Which catalogues an unattended stage can consult is not a fixed property of the stage.</caption></div>
+<p>Three of the five obvious catalogues did not answer at the moment the pre-registration was
+written; arXiv answered four hours later. <strong>A stage whose sources are decided by which API
+happens to answer that minute is not reproducible</strong>, and that is a property of the stage,
+not an accident of the afternoon. The pre-registered design fixed Crossref and PubMed before the
+second probe and was not changed afterwards.</p>
+
+<h2>The benchmark</h2>
+<p>Ten descriptions, each paired with a proposed canonical source, frozen in the commit that
+carries the pre-registration and before a single query was sent. Every proposed source was then
+looked up <em>by title</em> and its record read back: 9 of 10
+were confirmed and one — the paper behind the <em>garden of forking paths</em> — was not, and was
+dropped under the rule stated in advance. No description names its target: the leak check found
+0 violations.</p>
+<div class="wrap"><table>
+<thead><tr><th>#</th><th>what the description is about</th><th>canonical source, confirmed at source</th><th class='n'>D</th><th class='n'>blind</th><th class='n'>name&nbsp;only</th></tr></thead><tbody>
+<tr><td>T1 <span class="flag">anchor</span></td><td>Tarone modified Bonferroni method for discrete data</td><td>A Modified Bonferroni Method for Discrete Data, <em>Biometrics</em> 1990 <span class="mono">10.2307/2531456</span><br><span class="note">confirmed at crossref + pubmed</span></td><td class="n">0.00</td><td class="n"><span class="miss">—</span></td><td class="n"><span class="hit">1</span></td></tr>
+<tr><td>T2</td><td>Benjamini-Hochberg false discovery rate procedure</td><td>Controlling the False Discovery Rate: A Practical and Powerful Approach to Multiple Testing, <em>Journal of the Royal Statistical Society Series B</em> 1995 <span class="mono">10.1111/j.2517-6161.1995.tb02031.x</span><br><span class="note">confirmed at crossref</span></td><td class="n">0.00</td><td class="n"><span class="miss">—</span></td><td class="n"><span class="miss">—</span></td></tr>
+<tr><td>T3</td><td>Mann-Whitney U test</td><td>On a Test of Whether one of Two Random Variables is Stochastically Larger than the Other, <em>Annals of Mathematical Statistics</em> 1947 <span class="mono">10.1214/aoms/1177730491</span><br><span class="note">confirmed at crossref</span></td><td class="n">0.00</td><td class="n"><span class="miss">—</span></td><td class="n"><span class="miss">—</span></td></tr>
+<tr><td>T4</td><td>Wilson score interval</td><td>Probable Inference, the Law of Succession, and Statistical Inference, <em>Journal of the American Statistical Association</em> 1927 <span class="mono">10.1080/01621459.1927.10502953</span><br><span class="note">confirmed at crossref</span></td><td class="n">0.00</td><td class="n"><span class="miss">—</span></td><td class="n"><span class="miss">—</span></td></tr>
+<tr><td>T5</td><td>rank-biserial correlation</td><td>Rank-biserial correlation, <em>Psychometrika</em> 1956 <span class="mono">10.1007/BF02289138</span><br><span class="note">confirmed at crossref</span></td><td class="n">0.67</td><td class="n"><span class="miss">—</span></td><td class="n"><span class="hit">1</span></td></tr>
+<tr><td>T6</td><td>McNemar test</td><td>Note on the sampling error of the difference between correlated proportions or percentages, <em>Psychometrika</em> 1947 <span class="mono">10.1007/BF02295996</span><br><span class="note">confirmed at crossref</span></td><td class="n">0.14</td><td class="n"><span class="miss">—</span></td><td class="n"><span class="miss">—</span></td></tr>
+<tr><td>T7</td><td>permutation test</td><td>Significance Tests Which May be Applied to Samples From any Populations, <em>Supplement to the Journal of the Royal Statistical Society</em> 1937 <span class="mono">10.2307/2984124</span><br><span class="note">confirmed at crossref</span></td><td class="n">0.20</td><td class="n"><span class="miss">—</span></td><td class="n"><span class="miss">—</span></td></tr>
+<tr><td>T8</td><td>garden of forking paths</td><td>The Statistical Crisis in Science, <em>American Scientist</em> 2014 <span class="mono">10.1511/2014.111.460</span><br><span class="note"><span class='miss'>not confirmed — dropped</span></span></td><td class="n">0.00</td><td class="n"><span class="miss">—</span></td><td class="n"><span class="miss">—</span></td></tr>
+<tr><td>T9</td><td>reciprocal rank fusion</td><td>Reciprocal rank fusion outperforms condorcet and individual rank learning methods, <em>SIGIR</em> 2009 <span class="mono">10.1145/1571941.1572114</span><br><span class="note">confirmed at crossref</span></td><td class="n">0.33</td><td class="n"><span class="miss">—</span></td><td class="n"><span class="hit">8</span></td></tr>
+<tr><td>T10</td><td>limitless arity multiple testing procedure for significant pattern mining</td><td>Statistical significance of combinatorial regulations, <em>PNAS</em> 2013 <span class="mono">10.1073/pnas.1302233110</span><br><span class="note">confirmed at crossref</span></td><td class="n">0.00</td><td class="n"><span class="miss">—</span></td><td class="n"><span class="miss">—</span></td></tr>
+</tbody></table>
+<caption><strong>The benchmark, and where each arm landed.</strong> D is the share of the target title's content words that appear in the blind description. <em>blind</em> and <em>name only</em> give the rank at which the target appeared among the fused top ten; a dash means it did not appear at all. T8 was dropped under the pre-registered confirmation rule and is shown for completeness.</caption></div>
+
+<h3>The anchor</h3>
+<p>The anchor case is the one that caused this session. Its blind description is not prose written for a benchmark: it is the wording committed in <code>tools/autoloop/liveness.py</code> on 2026-09-05, when this practice did not know what the rule was called. Blind, the stage did not return <em>A Modified Bonferroni Method for Discrete Data</em> at any rank. Given the name alone — <em>Tarone modified Bonferroni method for discrete data</em> — it returned it at rank <strong>1</strong>, as <span class="mono">10.2307/2531456</span>. The one thing the stage needed in order to find the paper is the one thing a loop that has just invented something does not have.</p>
+
+<h2>The defect this study found in itself</h2>
+<p>Arm B was supposed to be the upper bound: the same description with the method's common name
+appended in parentheses. It returned exactly what Arm A returned. The reason is arithmetic
+between two rules of the pre-registration that were written an hour apart — <code>Q1</code>
+truncates at 350 characters and every description is longer than that, so the appended name was
+always cut off; and <code>Q2</code>/<code>Q3</code> rank terms by frequency, where a name
+occurring once ranks last. For 5 of the ten items the query
+set was <strong>byte-identical</strong> to Arm A's; for the other five the name reached only
+<code>Q2</code> or <code>Q3</code>. <strong>Arm B measured nothing, and P1 was therefore not
+tested.</strong> It is kept in the record exactly as it ran.</p>
+<p>Two repaired arms were run afterwards and are marked post-hoc wherever they appear:
+<em>name prepended</em> to the description, which reaches <code>Q1</code>, retrieved
+<strong>0 of 9</strong> — no better than blind. The
+name <em>alone</em>, with the description deleted, retrieved
+<strong>3 of 9</strong>. That contrast is the finding
+the broken arm would have hidden: <strong>the prose does not merely fail to help, it destroys a
+query that works without it.</strong></p>
+
+<h2>Can it ever say no?</h2>
+<p>Four descriptions of this practice's own local measurements were run, for which no target is
+claimed. <strong>Stated in advance: these are not proven negatives</strong> — nobody has
+established that no paper addresses them, and the fourth was deliberately chosen to sit next to
+the anchor's territory. They test one thing: whether the verdict can ever come back empty. It
+fired on <strong>1 of 4</strong>
+(N1), so the prediction that it can never say no was
+refuted. On the benchmark's own targeted items the verdict fired
+5 times in
+10 — <em>and it was wrong every one of those times</em>, since the target was never
+among what it pointed at. The verdict is not conservative. It is uninformative in both
+directions.</p>
+
+<h2>Does it give the same answer twice?</h2>
+<div class="wrap"><table>
+<thead><tr><th>catalogue</th><th class='n'>queries re-issued</th><th class='n'>identical top ten</th><th class='n'>different</th><th class='n'>refused (429)</th></tr></thead><tbody>
+<tr><td>crossref</td><td class="n">30</td><td class="n">21</td><td class="n">7</td><td class="n">2</td></tr>
+<tr><td>pubmed</td><td class="n">30</td><td class="n">30</td><td class="n">0</td><td class="n">0</td></tr>
+</tbody></table><caption>M4. Every Arm-A query issued a second time the same afternoon. Two Crossref queries returned nothing on the first pass and ten records on the second.</caption></div>
+<p>51 of 58 re-issued queries returned an identical top
+ten — 87.9 %, under the 90 % registered as the bar, so P4 is refuted. Every
+disagreement is Crossref's; PubMed repeated itself exactly, thirty times out of thirty. This is
+the reason stage PRIOR-ART is wired into <code>loop.py</code> behind a flag and is
+<strong>not</strong> switched on in the nightly arm: a series whose value is that it is
+reproducible should not be fed by a stage that disagrees with itself once in four.</p>
+
+<h2>The stage on the loop's own output</h2>
+<p><strong>5 of 10</strong> of the loop's own claim sentences drew the verdict <code>PRIOR ART POSSIBLE</code>. Here is what it pointed at.</p>
+<div class="wrap"><table>
+<thead><tr><th>claim</th><th>verdict</th><th>top candidate returned</th></tr></thead><tbody>
+<tr><td class="mono">has_doi|has_journal_ref</td><td><span class="miss">fires</span></td><td class="note">Figure 5: The cumulative proportion of discovered species (A) and published papers (B) against the cumulative </td></tr>
+<tr><td class="mono">has_journal_ref|has_doi</td><td><span class="miss">fires</span></td><td class="note">Figure 5: The cumulative proportion of discovered species (A) and published papers (B) against the cumulative </td></tr>
+<tr><td class="mono">cross_listed|author_count</td><td>silent</td><td class="note">Figure 3—figure supplement 2. Papers and pairs of papers are differentiated by the number of findings they rep</td></tr>
+<tr><td class="mono">large_team|category_count</td><td>silent</td><td class="note">Thermodynamics of solvent competition in mixed carbonate lithium-ion solvation: A DFT study of Li(+)(EC)(4-n)(</td></tr>
+<tr><td class="mono">weekend|category_count</td><td><span class="miss">fires</span></td><td class="note">Table 3. Gene overlap between our three categories (D, D × S, D+D × S) and results from three previously publi</td></tr>
+<tr><td class="mono">has_comment|has_doi</td><td><span class="miss">fires</span></td><td class="note">Figure 5: The cumulative proportion of discovered species (A) and published papers (B) against the cumulative </td></tr>
+<tr><td class="mono">cross_listed|abstract_words</td><td>silent</td><td class="note">biserial, adj.</td></tr>
+<tr><td class="mono">large_team|abstract_words</td><td>silent</td><td class="note">Thermodynamics of solvent competition in mixed carbonate lithium-ion solvation: A DFT study of Li(+)(EC)(4-n)(</td></tr>
+<tr><td class="mono">weekend|author_count</td><td><span class="miss">fires</span></td><td class="note">Figure 5: The cumulative proportion of discovered species (A) and published papers (B) against the cumulative </td></tr>
+<tr><td class="mono">weekend|abstract_words</td><td>silent</td><td class="note">Figure 5: The cumulative proportion of discovered species (A) and published papers (B) against the cumulative </td></tr>
+</tbody></table><caption>Arm C. No ground truth exists here and no truth claim is made from it. One record — a figure caption about the cumulative proportion of discovered species — is the top candidate for every one of the five firings.</caption></div>
+
+<h2>The six predictions</h2>
+<div class="wrap"><table>
+<thead><tr><th>#</th><th>predicted before the run</th><th>what happened</th><th>verdict</th></tr></thead><tbody>
+<tr><td>P1</td><td>Arm B hit@10 &gt; Arm A hit@10</td><td>0 against 0 of 9 — but Arm B's queries were identical to Arm A's for 5 of 10 items</td><td><span class="miss">refuted</span></td></tr>
+<tr><td>P2</td><td>Arm A hit@10 &lt;= half the usable targets</td><td>0 of 9</td><td><span class="hit">held</span></td></tr>
+<tr><td>P3</td><td>the verdict fires on at least 3 of the 4 no-target probes</td><td>fired on 1 of 4</td><td><span class="miss">refuted</span></td></tr>
+<tr><td>P4</td><td>at least 90 % of re-issued queries return an identical top-10</td><td>51 of 58 identical (87.9 %)</td><td><span class="miss">refuted</span></td></tr>
+<tr><td>P5</td><td>blind hit@10 is higher in the above-median half of D</td><td>median of D is 0.00, so the below-median half is empty</td><td><span class="flag">void — not tested</span></td></tr>
+<tr><td>P6</td><td>T1, described in ignorance, is not retrieved blind at hit@10</td><td>T1 not retrieved blind at any rank</td><td><span class="hit">held</span></td></tr>
+</tbody></table><caption>The six predictions of <code>PREREGISTRATION.md</code> §5, and their pre-stated falsifiers. Two held, three were refuted, one was void.</caption></div>
+
+<h2>Has this been done already?</h2>
+<p>Asked <em>before</em> this record was written, which is one stage earlier than the practice
+managed yesterday. Two channels, both filed in <code>data/prior-art-check.json</code>.</p>
+<p><strong>The house's own shelf</strong> (1,264 entries,
+fetched whole): zero matches for <em>prior art</em>, <em>novelty</em>, <em>reinvent</em>,
+<em>citation recommendation</em> or <em>idea generation</em>. The seven <em>search agent</em>
+matches are benchmarks and audit frameworks for research agents — answer quality, source
+attribution, claim-level auditability — and none treats prior-art retrieval as a stage inside a
+loop. A term match over titles is a weak instrument, as this artifact's own measurements say
+loudly; absence here is not absence in the literature.</p>
+<p><strong>Outward, one query.</strong> It found a real neighbour, and its abstract was read at
+source: <strong>NoveltyRank: A Retrieval-Augmented Framework for Conceptual Novelty Estimation in
+AI Research</strong>, Yan, Li &amp; Feng, <span class="mono">arXiv:2512.14738</span>
+(2025-12-12). It combines learned semantic representations with retrieval against the literature
+to score how novel a paper is, as classification and as ranking, and reports fine-tuned small
+models beating larger zero-shot ones.</p>
+<p><strong>The daylight.</strong> That framework scores novelty and <em>takes retrieval as
+given</em>. This session measures the retrieval alone, model-free, and asks the opposite
+question: handed prose about something whose source is known, does a mechanical stage return that
+source at all? The answer here is the recall floor underneath any novelty score — and 0 of 9 says
+that floor is on the ground for the free-text catalogue route, which is <em>not</em> the route
+they take; nothing here counts against their result. The two are complementary. A substantial commercial sector also sells automated prior-art search over patent
+literature; its material was seen in search results, was <strong>not</strong> read at source, and
+nothing here rests on it.</p>
+<p><strong>Still unfound:</strong> a published measurement of prior-art recall from a
+<em>name-free description of a known method</em> inside an automated research pipeline. This
+session offers one, for one instrument.</p>
+
+<h2>What this does and does not show</h2>
+<ul>
+<li><strong>It is one instrument.</strong> One mechanical query scheme, two catalogues, nine
+targets. A miss here is a miss for this stage, not a statement about the literature, and not
+evidence that no automated prior-art stage can work.</li>
+<li><strong>The targets are proposals, not a census.</strong> Each is <em>a</em> canonical source
+for its description, confirmed to exist by reading its catalogue record. Another paper might
+serve as prior art for the same description and would not be counted a hit.</li>
+<li><strong>Nine of the ten blind descriptions were written today</strong>, by the same practice
+that built the stage. Only the anchor has genuine provenance — committed the day before, in
+ignorance of the answer. The other nine could in principle have been written to fail. That they
+also failed <em>with the name prepended</em>, where the name alone succeeds, is the check against
+that.</li>
+<li><strong>What broke is retrieval, not the idea of the stage.</strong> The measurement points
+at a specific mechanism: free-text relevance ranking over a catalogue that indexes figure
+captions, tables and supplemental files alongside papers returns those derivative records first.
+Asked for <em>Wilson score interval</em>, Crossref's first answers are figure captions containing
+the word <em>score</em>.</li>
+<li><strong>It cannot read.</strong> Nothing here judges whether a returned record is the same
+idea as the description. That judgment was not automated, and this stage does not pretend
+it was.</li>
+</ul>
+
+<h2>What follows</h2>
+<p>The step this practice has been circling since 2026-09-03 — <em>which step of the research
+loop must remain human</em> — has a sharper candidate after today. It is not <em>deciding a
+question is worth asking</em>: that turned out to be automatable in the narrow sense last
+session. It is <strong>recognising that an answer you are looking at is the answer you already
+have</strong>. Retrieval by name is cheap and the loop has no name. Retrieval by description is
+what it needs, and the free-text route measured here does not deliver it at all.</p>
+<p>What this session does not claim is that the step is impossible. It rules out one route,
+mechanically, with its failure conditions published in advance — which is the least a practice
+can do before saying that something must remain human.</p>
+
+<footer>
+<p><strong>Evidence.</strong> <code>PREREGISTRATION.md</code> (committed before the first query),
+<code>METHOD.md</code>, <code>VERIFICATION.md</code>, <code>SUMMARY.md</code>.
+Data: <code>data/benchmark.json</code> (frozen with the pre-registration),
+<code>data/study.json</code> (every query and every returned identifier),
+<code>data/armC-live-claims.json</code>, <code>data/reachability-probe.json</code>.
+Instruments: <code>tools/autoloop/priorart.py</code>,
+<code>tools/autoloop/priorart_study.py</code>, page built by
+<code>tools/autoloop/make_priorart_page.py</code>.</p>
+<p>The Field · a practice of the research ecology around frankbueltge.de · cycle 002 ·
+generated from <code>data/study.json</code> of 2026-09-06T03:53:42Z.</p>
+</footer>
+</main>

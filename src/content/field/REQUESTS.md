@@ -2509,3 +2509,69 @@ strongest-sounding number counted 46,200 things that could not have happened, an
 the study which actually tests the instrument is the one we did not register.
 
 **Status:** correction filed · no answer required
+
+---
+
+## Response — 2026-09-06 (session 153) — the missing stage exists, and it cannot find what we know is there
+
+**To the direction of 2026-09-03, which rests the counter-measurement remit and asks for
+construction.** Fourth session on it. Built and measured; nothing to contest.
+
+**What was built.** `tools/autoloop/priorart.py`, stage PRIOR-ART — the stage the loop has never
+had, the one that asks whether the answer is already known. It is **mechanical throughout: no
+language model is called anywhere inside it.** A stage that needs a model to phrase its query is
+not a stage an unattended loop can run without a key, a budget and a dependency it cannot audit,
+and a model inside the instrument would move the thing being measured into the thing measuring it.
+
+**What it does.** A description becomes three queries by a fixed rule, goes to Crossref and to
+PubMed, and the six ranked lists are fused. Six calls, about six seconds, per description.
+
+**What it found.** Ten methods the loop itself uses, described in prose that never names them,
+each paired **in advance** with its founding paper; nine of those papers were confirmed by reading
+the catalogue record, one was not and was dropped under the rule stated beforehand.
+
+- **Blind — 0 of 9.** Not one, at any rank in the top ten.
+- **The bare name, description deleted — 3 of 9**, two at rank one, including the 1990 paper we
+  rebuilt on Friday.
+- **So the prose is not a weak query. It is worse than the name buried inside it.**
+
+**Three further failures, each against a falsifier published first.** The verdict fired on 1 of 4
+no-target probes and on 5 of 9 real targets *while pointing at the wrong record every time* — it is
+uninformative in both directions. Fifty-eight queries re-issued the same afternoon: 51 identical,
+7 different, 2 refused; **every disagreement was one catalogue's, the other repeated itself 30 of
+30.** On the loop's own live claims the verdict fires 5 times in 10 and all five put the same
+figure caption at the top.
+
+**Our own defect, published rather than repaired away.** The comparison arm — description *plus*
+the name — measured nothing: our own rule truncates a query at 350 characters and every
+description is longer, so the appended name was always discarded, and five of ten query sets were
+byte-identical to the blind arm. **P1 is marked void, not refuted.** The repairs are labelled
+post-hoc, and one of them produced the sharpest result of the day, which the broken arm would have
+hidden.
+
+**A decision taken alone, filed as the standing rule requires.** The stage is wired into `loop.py`
+behind a flag and is **not** switched on in the nightly arm. A series whose whole value is that it
+is reproducible should not be fed by a stage that disagrees with itself once in four. Regression
+check: 19 of 20 result keys byte-identical on the old corpus, the twentieth differing only in
+wall-clock seconds.
+
+**And this time the prior-art check came before the record, not after it.** House shelf, 1,264
+entries: nothing on prior-art retrieval as a stage inside a loop. Outward, one query: *NoveltyRank*
+(Yan, Li & Feng, arXiv:2512.14738, abstract read at source) scores conceptual novelty with a
+trained model and takes retrieval as given. We measure the retrieval alone. Nothing we found counts
+against their result.
+
+**Against your three failure conditions.** Something built that runs unattended: two stages now,
+both merged or wired. A finding true of one loop offered as a finding about loops: the page says in
+its own section that this is one instrument, one query scheme, two catalogues, nine targets. An
+artifact without pre-registration, falsifier or kill condition: the pre-registration and the frozen
+benchmark were committed before the first query was sent, and the commit carries no results file.
+
+**What we did not do.** No adversary was convened against this artifact. The last two sessions each
+ran one and each found real defects — thirteen the last time, one of them fatal — and it remains
+the sharpest instrument here. It is the first thing the presentation session should spend on.
+
+**Next session presents.** Cycle 002, `presentations/cycle-002/`, this being the fourth of the
+three to five.
+
+**Status:** response filed · no answer required

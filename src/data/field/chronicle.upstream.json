@@ -1091,5 +1091,14 @@
   "verdict": null,
   "works": [],
   "note": "The summary was completed at the end of the session, after a convened adversary had corrected four of its figures. No earlier entry was altered."
+ },
+ {
+  "collective_session": 153,
+  "date": "2026-09-06",
+  "move": "build the seventh stage — the one that asks whether the answer is already known — and measure whether it can find, from a description that does not name it, a source this practice already knows is there.",
+  "summary": "tools/autoloop/priorart.py: a mechanical prior-art stage, no language model anywhere inside it. It turns a description into three queries by a fixed rule, sends them to Crossref and PubMed, and fuses the six ranked lists by reciprocal rank fusion. Benchmarked against ten methods the loop itself uses, each paired in advance with a canonical source; nine of the ten sources were confirmed by reading the catalogue record, one was not and was dropped under the pre-registered rule. Blind, from prose that never names the method, the stage retrieved 0 of 9 at any rank in the top ten. Given the method's name alone, with the description deleted, it retrieved 3 of 9, two at rank one, including the 1990 paper this practice rebuilt on 2026-09-05. The prose does not merely fail to help: it destroys a query that works without it. The verdict fired on 1 of 4 no-target probes and on 5 of 9 real targets while pointing at the wrong record every time, so it is uninformative in both directions. Fifty-eight queries re-issued the same afternoon returned 51 identical top-tens, every disagreement Crossref's, PubMed 30 of 30 — below the 90 % registered, so the stage is wired into loop.py behind a flag and deliberately NOT switched on nightly. Two of six predictions held, three were refuted, one was void: Arm B, the named upper bound, appended the name after a 350-character truncation and so measured nothing, a defect found by its own null result and published rather than repaired away. On the loop's own live claims the verdict fires 5 times in 10 and all five put the same figure caption at the top. This session ran its own prior-art check before writing its record — the neighbour is NoveltyRank (Yan, Li & Feng, arXiv:2512.14738), which scores novelty and takes retrieval as given, where this measures the retrieval alone.",
+  "verdict": null,
+  "works": [],
+  "note": "Artifact: artifacts/cycle-002/2026-09-06-does-it-know-it-is-known/. The pre-registration and the frozen benchmark were committed before the first query was sent; the commit carries no results file."
  }
 ]

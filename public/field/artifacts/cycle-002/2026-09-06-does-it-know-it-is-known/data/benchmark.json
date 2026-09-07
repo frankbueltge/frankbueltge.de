@@ -1,0 +1,91 @@
+{
+ "_note": "Benchmark for stage PRIOR-ART, session 153, 2026-09-06. FROZEN in the pre-registration commit, before any retrieval run. Descriptions are never edited after a run. 'blind' carries no eponym and no common name; 'name' is appended in Arm B. 'target' is a PROPOSAL and becomes ground truth only after confirmation at Crossref or PubMed by title.",
+ "frozen_utc_note": "committed together with PREREGISTRATION.md; the commit carries no results file",
+ "stopwords": ["the","a","an","and","or","of","to","in","on","for","with","that","this","is","are","was","were","be","been","by","it","its","as","at","from","which","when","where","than","then","them","they","their","there","not","no","any","all","every","each","some","one","two","three","other","others","such","into","over","under","after","before","between","among","about","also","only","but","if","so","can","cannot","could","would","should","may","might","must","do","does","did","done","has","have","had","we","our","us","you","your","he","she","his","her","i","me","my","what","who","whom","whose","how","why","more","most","less","least","many","much","very","same","own","just","even","still","yet","both","either","neither","because","while","during","without","within","across","per","up","down","out","off","again","once","here","further","being","having","itself","themselves","given","gives","give","take","takes","taken","made","make","makes","using","used","use","uses"],
+ "targeted": [
+  {
+   "id": "T1",
+   "anchor": true,
+   "provenance": "verbatim from tools/autoloop/liveness.py, committed 2026-09-05, written before the neighbour was known",
+   "blind": "A question is a pair of a grouping and an outcome. Its margins on a corpus are the number of records, the number of records where the grouping is true, and the multiset of outcome values over the records where the outcome is not missing. These are exactly what a permutation of the grouping column leaves unchanged, and they say nothing about the association between the two variables. The reachable floor of a question is the smallest p-value the test can return over every assignment of grouping labels consistent with those margins. A question is asleep if even that floor does not reach alpha: no labelling of any world can make it fire. A question is marked asleep only when no admissible labelling reaches alpha, so the rule is conservative by construction, and impossibility is the only thing a denominator may exclude without an argument about what is interesting.",
+   "name": "Tarone modified Bonferroni method for discrete data",
+   "target": {"doi": "10.2307/2531456", "pmid": "2364136", "title": "A Modified Bonferroni Method for Discrete Data", "year": 1990, "venue": "Biometrics"}
+  },
+  {
+   "id": "T2",
+   "blind": "Order the p-values of many simultaneous comparisons from smallest to largest and compare each with a threshold that rises linearly with its rank, the largest threshold being the chosen level. Reject every comparison up to the last one that falls below its own threshold. The quantity held below the chosen level is the expected proportion of erroneous rejections among the rejections actually made, which is a weaker and more useful guarantee than holding the chance of any erroneous rejection at all, and it gains a great deal of power when the number of comparisons is large.",
+   "name": "Benjamini-Hochberg false discovery rate procedure",
+   "target": {"doi": "10.1111/j.2517-6161.1995.tb02031.x", "title": "Controlling the False Discovery Rate: A Practical and Powerful Approach to Multiple Testing", "year": 1995, "venue": "Journal of the Royal Statistical Society Series B"}
+  },
+  {
+   "id": "T3",
+   "blind": "Two independent groups of observations are pooled and ranked from lowest to highest, ties receiving the average of the ranks they span. The sum of ranks falling to the first group is compared with what would be expected if the groups did not differ, and for moderate group sizes the standardised deviation of that sum is treated as normal, with a correction to its variance for the ties. The null hypothesis is that a value drawn from the first group is equally likely to exceed or fall short of a value drawn from the second, so no assumption about the shape of either distribution is required.",
+   "name": "Mann-Whitney U test",
+   "target": {"doi": "10.1214/aoms/1177730491", "title": "On a Test of Whether one of Two Random Variables is Stochastically Larger than the Other", "year": 1947, "venue": "Annals of Mathematical Statistics"}
+  },
+  {
+   "id": "T4",
+   "blind": "An interval for a binomial proportion obtained by solving for the values of the parameter at which the standardised difference between the observed and hypothesised proportion, standardised by the hypothesised rather than the observed variance, equals the critical value. The resulting limits are asymmetric about the observed proportion, never leave the unit interval, and behave far better near zero and one than the familiar symmetric limits formed by adding and subtracting a multiple of the estimated standard error.",
+   "name": "Wilson score interval",
+   "target": {"doi": "10.1080/01621459.1927.10502953", "title": "Probable Inference, the Law of Succession, and Statistical Inference", "year": 1927, "venue": "Journal of the American Statistical Association"}
+  },
+  {
+   "id": "T5",
+   "blind": "An effect size for the comparison of two independent groups on an ordinal outcome, defined as the probability that a randomly chosen member of the first group exceeds a randomly chosen member of the second minus the probability of the reverse. It is a simple linear function of the rank sum, runs from minus one to plus one, and equals zero when the two groups are interchangeable. It is the ordinal counterpart of the correlation between a dichotomous grouping and a continuous variable.",
+   "name": "rank-biserial correlation",
+   "target": {"doi": "10.1007/BF02289138", "title": "Rank-biserial correlation", "year": 1956, "venue": "Psychometrika"}
+  },
+  {
+   "id": "T6",
+   "blind": "Two binary verdicts are recorded on the same units, giving a two-by-two table of agreement. The cells where both verdicts agree carry no information about which verdict is more often positive, so the comparison uses only the two discordant cells: under the hypothesis of no difference each discordant unit is equally likely to fall in either cell, and the count in one of them is compared with a binomial expectation, or for larger counts with a chi-square on one degree of freedom.",
+   "name": "McNemar test",
+   "target": {"doi": "10.1007/BF02295996", "title": "Note on the sampling error of the difference between correlated proportions or percentages", "year": 1947, "venue": "Psychometrika"}
+  },
+  {
+   "id": "T7",
+   "blind": "A significance procedure that assumes nothing about the population from which the observations came. The observed values are held fixed and the labels attaching them to groups are reassigned in every admissible way, or in a large random selection of the admissible ways. The chosen statistic is recomputed for each reassignment, and the proportion of reassignments giving a value at least as extreme as the observed one is the attained level. The reference distribution is generated by the act of relabelling itself rather than assumed in advance.",
+   "name": "permutation test",
+   "target": {"doi": "10.2307/2984124", "title": "Significance Tests Which May be Applied to Samples From any Populations", "year": 1937, "venue": "Supplement to the Journal of the Royal Statistical Society"}
+  },
+  {
+   "id": "T8",
+   "blind": "A researcher who analyses a body of observations once, and reports the single comparison that emerged from it, has nonetheless conducted many comparisons: the ones that would have been reported had the observations come out otherwise. The decisions about exclusions, groupings, cut points and which contrast to feature are contingent on what was seen, so the reported level is not the level of the procedure that generated it. No deliberate hunting for a result is needed for this to happen; a single honest pass through flexible choices is enough, and it explains how a literature of ostensibly significant findings can fail to hold up.",
+   "name": "garden of forking paths",
+   "target": {"doi": "10.1511/2014.111.460", "title": "The Statistical Crisis in Science", "year": 2014, "venue": "American Scientist"}
+  },
+  {
+   "id": "T9",
+   "blind": "Several ranked lists of documents, produced by different retrieval systems for the same request, are combined into one. Each document receives, from each list, a score equal to the reciprocal of a constant plus its position in that list, and the scores are summed across the lists. The combination requires no relevance scores, no training and no tuning of weights, depending only on positions, and it outperforms combinations built from the underlying scores as well as more elaborate learned methods.",
+   "name": "reciprocal rank fusion",
+   "target": {"doi": "10.1145/1571941.1572114", "title": "Reciprocal rank fusion outperforms condorcet and individual rank learning methods", "year": 2009, "venue": "SIGIR"}
+  },
+  {
+   "id": "T10",
+   "blind": "When every combination of variables in a large set is examined for association with an outcome, the number of comparisons is astronomically large and the usual correction destroys all power. But for a categorical outcome and a fixed table margin, a combination occurring in very few records cannot attain the corrected level under any arrangement of the outcome whatever. Such combinations are therefore removed from the count of comparisons rather than merely failing it, which lowers the correction factor enough to make the exhaustive search usable, and the procedure was applied to detecting combinations of regulators acting together on genes.",
+   "name": "limitless arity multiple testing procedure for significant pattern mining",
+   "target": {"doi": "10.1073/pnas.1302233110", "title": "Statistical significance of combinatorial regulations", "year": 2013, "venue": "PNAS"}
+  }
+ ],
+ "no_target": [
+  {
+   "id": "N1",
+   "blind": "An automated research pipeline was measured over one hundred and thirty-nine of its own working sessions. The number of finished works it delivered per session fell from 0.29 in the first half of that record to 0.04 in the second, while its output of intermediate material rose: forty-eight sessions over twenty-five days produced seven hundred and sixty-nine commits and one thousand two hundred and thirteen draft files, and shipped nothing at all. The interesting failure is not a bad output but a loop that keeps producing and stops delivering.",
+   "note": "this practice's own measurement of itself, 2026-08-30"
+  },
+  {
+   "id": "N2",
+   "blind": "Forty academic publishers were checked for whether they publish a route by which a reader may raise a concern about an article. Twenty-seven do. When each route was then approached by an unauthenticated automated request from a single network address, fourteen of the forty refused the request outright, and thirteen refused every request whatever, so that the refusal cannot be attributed to the institution rather than to the address it came from.",
+   "note": "this practice's own measurement, 2026-09-01, re-measured later"
+  },
+  {
+   "id": "N3",
+   "blind": "Over seventeen measurement days a set of network addresses was checked repeatedly for whether the resource each names is still served. Twenty-eight apparent losses were recorded, of which eleven did not survive an immediate second request: the resource answered normally when asked again at once. A single pass therefore reaches the wrong verdict about disappearance in roughly four cases out of ten.",
+   "note": "this practice's own retrievability series"
+  },
+  {
+   "id": "N4",
+   "blind": "When a fixed set of questions is asked of a smaller and smaller body of records, a growing share of those questions becomes incapable of producing an answer, because the groups they define fall below the size at which the statistic can separate anything. The calibration figure computed by dividing rejections by the whole fixed set therefore reads lower on a small body than on a large one, and the apparent difference is arithmetic rather than a property of either body.",
+   "note": "deliberately the hard probe: adjacent to T1's territory"
+  }
+ ]
+}
