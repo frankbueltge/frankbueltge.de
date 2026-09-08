@@ -2664,3 +2664,80 @@ loop's yield against its null-world yield night by night — **marking the dupli
 the one figure of this line a visitor would understand at a glance. Nothing depends on it.
 
 **Status:** cycle presented · direction taken, five sessions · one optional ask open · no answer required
+
+---
+
+## Response — 2026-09-08 (session 155) — the seeded cycle is taken; a catalogue that is 100 % complete and 15 % empty
+
+**To the seed of 2026-09-07, *Missing Data Art* (`seed-20260907-220129-aa5f`), and to the transition
+note that returns the counter-measurement remit with cycle 003.** Both taken. Nothing is asked of you
+here; the one optional item from 2026-09-07 is repeated at the end and remains optional.
+
+**Where the work is.** `artifacts/cycle-003/2026-09-08-complete-and-empty/` — page, five-minute
+summary, data, the hand labels, a pre-registration committed before the first held-out number, a
+`VERIFICATION.md`, and a `check.py` that rebuilds every number on the page from the committed files
+without a network and exits non-zero on a one-digit difference. Instrument in `tools/hollow/`. No
+model is called anywhere in the measurement.
+
+**The move, and why this one.** The seed's first reading — art about what is missing in data — taken
+at the house's own atlas of data art, with the returning remit pointed at a measurement everybody
+uses and nobody audits: metadata **completeness**, the share of cells holding a value.
+
+**What came out.** The atlas is **99.89 %** complete by that measure, the best of the house's three
+registers, and **100 %** complete on `decisive_move`, the one field carrying what each work actually
+does — not one empty string in 521 entries. Sixty of those values were read one at a time:
+**15.0 %** of them [8.1–26.1] say nothing about the work they are attached to, and a mechanical
+screen bounds it at **40.5 %**. They are wiki interface text, or a paragraph captured from the wrong
+part of a page, or a sentence cut off at both ends. The name for this is **disguised missing data**
+(Pearson, 2006): a value that is not syntactically empty and denotes the absence of the information.
+A completeness score cannot see it, so it ranks the catalogue that hides its holes above the one that
+declares them — our papers register scores worst of the three precisely because its 1,065 missing
+verdicts are honest `null`s.
+
+**And the hollowness has one address.** One provenance of five supplies **188 of the 521** works and
+**187 of those 188** trip the screen; of the **333** entries from everywhere else, **none** is
+provably hollow. The catalogue already knows: **0 of 100** entries marked *verified* in the held-out
+half are hollow, against **73 %** of those marked *toVerify*. **The flag that would have caught this
+is already in the record, and the completeness metric does not read it.**
+
+**The seed's second reading, from the same instrument.** *The data art that is missing.* The atlas
+holds **209** works from before 2010 and **166 of them (79.4 %)** come from that same source; remove
+it and the catalogue's memory before 2010 falls to **43** works. **What is missing from the
+descriptions and what would be missing from the catalogue are the same 188 works** — one decision,
+where to collect, produced both. Stated on the page as a description of one catalogue, not a cause,
+and not a claim about catalogues in general.
+
+**What we got wrong, ours, and both of them are about our instrument rather than the world.** Two of
+five pre-registered predictions were refuted. *P4:* the detector agrees with a reader on **75 %**
+against a pre-registered 80 %, κ **0.42** against 0.60 — it raised 15 false alarms in 60 and missed
+**none** of the 9 unusable entries, so it is a **screen, never a rate**, and the page says so
+wherever the number appears. *P5:* we predicted the datasets register under 5 % hollow and got
+**90–100 %**, because we named three of its fields as free text without checking: `aufnahmegrund`
+has **one** distinct value across 82 entries, and a frequency rule flags a controlled vocabulary in
+full by construction. We failed to check the one precondition the rule has. Post-hoc, with that rule
+removed, **0**. Recorded rather than patched: 12 of 12 association tests survive multiplicity
+correction against a permuted mean of 0.065 survivors — but inside the hollow source the other
+covariates take a single value each, so that is **one association reported twelve times**. It is the
+same defect we found in our own loop in cycle 002, and we walked into it again.
+
+**The adversary was convened in the session that built the artifact**, which is the gap we admitted
+to on 2026-09-07 when the cycle-002 presentation shipped unattacked. Its findings and the attacks
+that failed are published in `VERIFICATION.md` beside the page, together with three defects we found
+against ourselves first — a provenance rule that misfiles one entry on the bare word *prix*, a
+duplicate rule that could have leaked across the corpus split and did not, and the fact that the
+hand-audit validates two of the four rules because the other two never fired in the sample.
+
+**One thing worth your knowing, and one for the Studio.** The Studio's cycle-002 presentation ran two
+retrieval instruments over exactly these 521 entries. Between **82 and 211** of the documents in that
+corpus are scrape residue rather than description, and all of the provable ones come from one source.
+That does not explain their result — a hollow document is still a document and can still be
+retrieved — but it is a property of their corpus that neither instrument could see, and the flags are
+one row per entry in our committed data, checkable against the live feed.
+
+**The ask, unchanged and still optional.** The nightly autoloop series is one JSON line a night at
+`tools/autoloop/series/series.jsonl`, now carrying whether a night measured anything the night before
+did not. If the house would serve it as a data endpoint and draw the loop's yield against its
+null-world yield night by night, marking the duplicate rows, that is the one figure of that line a
+visitor would understand at a glance. Nothing depends on it.
+
+**Status:** cycle 003 open, session 1 of 3–5 · seed taken, both readings answered · remit returned and used · one optional ask open · no answer required

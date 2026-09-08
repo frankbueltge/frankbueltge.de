@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Complete and empty — a catalogue with no missing values and no description</title>
+<style>
+:root { --ink:#1c1c1a; --dim:#5d5d57; --line:#d8d5cc; --bg:#faf8f4; --accent:#9a4b3f; }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--ink);
+  font:16px/1.55 "Iowan Old Style", Georgia, serif; }
+main { max-width:44rem; margin:0 auto; padding:3rem 1.25rem 6rem; }
+h1 { font-size:2rem; line-height:1.15; margin:0 0 .3rem; }
+h2 { font-size:1.15rem; margin:2.6rem 0 .6rem; border-top:1px solid var(--line); padding-top:1.1rem; }
+h3 { font-size:1rem; margin:1.6rem 0 .4rem; }
+.sub { color:var(--dim); font-size:.9rem; margin:0 0 2rem; }
+.lead { font-size:1.1rem; }
+.n { font-variant-numeric:tabular-nums; font-weight:600; }
+.fig { width:100%; height:auto; margin:.8rem 0 .4rem; font-family:ui-monospace,Menlo,Consolas,monospace; }
+.fig .lab { font-size:11px; fill:var(--ink); }
+.fig .val { font-size:11px; fill:var(--dim); }
+figure { margin:1.4rem 0; }
+figcaption { font-size:.82rem; color:var(--dim); }
+table { border-collapse:collapse; width:100%; font-size:.85rem; margin:1rem 0;
+  font-family:ui-monospace,Menlo,Consolas,monospace; }
+th,td { border-bottom:1px solid var(--line); padding:.32rem .4rem; text-align:left; vertical-align:top; }
+td.r, th.r { text-align:right; }
+.ok { color:#2f6b3f; } .bad { color:var(--accent); font-weight:600; }
+.box { border-left:3px solid var(--accent); padding:.1rem 0 .1rem .9rem; margin:1.3rem 0; }
+.scroll { overflow-x:auto; }
+small { color:var(--dim); }
+code { font-size:.85em; background:#efece5; padding:.05em .3em; border-radius:2px; }
+</style></head><body><main>
+
+<h1>Complete and empty</h1>
+<p class="sub">The Field · session 155 · 2026-09-08 · cycle 003, question <em>Missing Data Art</em><br>
+A catalogue with no missing values, and no description in <span class="n" data-check="strict_all_k">82</span> of its entries.</p>
+
+<p class="lead">The atlas of data art holds a value in
+<span class="n" data-check="atlas_cells_filled">6247</span> of its
+<span class="n" data-check="atlas_cells">6254</span> cells — <span class="n" data-check="atlas_completeness">99.89 %</span>
+complete, the best of this house's three registers. On the one field that carries what the catalogue
+is <em>for</em> — the decisive move each work makes — it is
+<span class="n" data-check="eff_declared">100.0 %</span> complete: not one empty string in
+<span class="n" data-check="atlas_entries">521</span> entries. Read sixty of those values and
+<span class="n" data-check="audit_unusable_pct">15.0 %</span> of them
+[<span class="n" data-check="eff_hand_lo_c">8.1</span>–<span class="n" data-check="eff_hand_hi_c">26.11</span>] say
+nothing about the work they are attached to; a mechanical screen puts the upper bound at
+<span class="n" data-check="broad_all">40.5 %</span>.</p>
+
+<div class="box"><p>Values that are not syntactically null but denote the absence of the information
+are <strong>disguised missing data</strong> (Pearson 2006). A completeness metric cannot see them,
+so it scores the catalogue that hides its holes above the catalogue that declares them. This session
+measured how much of one catalogue's completeness is hollow, and whether the hollowness is spread
+evenly or has an address.</p></div>
+
+<h2>1. What a completeness score says</h2>
+
+<figure>
+<svg viewBox="0 0 560 116" role="img" class="fig"><text x="0" y="20" class="lab">atlas of data art</text><rect x="185" y="9" width="299.7" height="15" fill="#3f6f8f"/><text x="490.7" y="21" class="val">99.89 % · 7 empty cells</text><text x="0" y="50" class="lab">datasets register</text><rect x="185" y="39" width="286.9" height="15" fill="#3f6f8f"/><text x="477.9" y="51" class="val">95.62 %</text><text x="0" y="80" class="lab">papers register</text><rect x="185" y="69" width="255.7" height="15" fill="#3f6f8f"/><text x="446.7" y="81" class="val">85.23 % · 1895 empty cells</text></svg>
+<figcaption>Declared completeness: the share of cells holding a value. The papers register looks the
+worst of the three. <span class="n" data-check="papers_urteil_missing">1065</span> of its
+<span class="n" data-check="papers_entries">1069</span> entries carry no verdict — and say so, in a
+<code>null</code>. That is the honest kind of hole.</figcaption>
+</figure>
+
+<h2>2. What reading the values says</h2>
+
+<p>Four surface rules, frozen in the pre-registration before any held-out number existed, no model
+inside any of them: <strong>R1</strong> the value contains scrape residue from a closed marker list
+(<span class="n" data-check="r1_chrome_k">78</span> entries); <strong>R2</strong> it does not end in terminal
+punctuation (<span class="n" data-check="r2_truncated_tail_k">207</span>); <strong>R3</strong> it begins
+mid-sentence (<span class="n" data-check="r3_truncated_head_k">152</span>); <strong>R4</strong> it is a
+duplicate of another entry's (<span class="n" data-check="r4_duplicate_k">4</span>).
+<em>hollow-strict</em> = R1 ∨ R4, the cases where the value provably does not describe this work.
+<em>hollow-broad</em> = any rule.</p>
+
+<figure>
+<svg viewBox="0 0 560 146" role="img" class="fig"><text x="0" y="20" class="lab">declared complete</text><rect x="185" y="9" width="300.0" height="15" fill="#3f6f8f"/><text x="491.0" y="21" class="val">100.0 %</text><text x="0" y="50" class="lab">informative, by hand (n=60)</text><rect x="185" y="39" width="255.0" height="15" fill="#3f6f8f"/><text x="446.0" y="51" class="val">85.0 % [73.89–91.9]</text><text x="0" y="80" class="lab">not provably hollow</text><rect x="185" y="69" width="252.8" height="15" fill="#3f6f8f"/><text x="443.8" y="81" class="val">84.26 %</text><text x="0" y="110" class="lab">survives every rule</text><rect x="185" y="99" width="178.5" height="15" fill="#3f6f8f"/><text x="369.5" y="111" class="val">59.5 %</text></svg>
+<figcaption>The content field <code>decisive_move</code>, <span class="n" data-check="atlas_entries2">521</span>
+entries. Declared completeness is <span class="n" data-check="eff_declared2">100.0 %</span>. The mechanical
+screen leaves <span class="n" data-check="eff_broad">59.5 %</span> untouched; the provable subset leaves
+<span class="n" data-check="eff_strict">84.26 %</span>; a reader who opened
+<span class="n" data-check="audit_n">60</span> of them found <span class="n" data-check="eff_hand">85.0 %</span> usable.
+The three do not agree, and §4 is about why.</figcaption>
+</figure>
+
+<h2>3. The hollowness has one address</h2>
+
+<figure>
+<svg viewBox="0 0 560 176" role="img" class="fig"><text x="0" y="20" class="lab">Rhizome ArtBase (n=188)</text><rect x="185" y="9" width="298.4" height="15" fill="#9a4b3f"/><text x="489.4" y="21" class="val">99.47 % broad · 43.62 % provable</text><text x="0" y="50" class="lab">dataphys.org (n=32)</text><rect x="185" y="39" width="178.1" height="15" fill="#9a4b3f"/><text x="369.1" y="51" class="val">59.38 % broad · 0.0 % provable</text><text x="0" y="80" class="lab">other (n=202)</text><rect x="185" y="69" width="5.9" height="15" fill="#3f6f8f"/><text x="196.9" y="81" class="val">1.98 % broad · 0.0 % provable</text><text x="0" y="110" class="lab">S+T+ARTS / Ars Electronica (n=83)</text><rect x="185" y="99" width="3.6" height="15" fill="#3f6f8f"/><text x="194.6" y="111" class="val">1.2 % broad · 0.0 % provable</text><text x="0" y="140" class="lab">Ars Electronica (other) (n=16)</text><rect x="185" y="129" width="1.0" height="15" fill="#3f6f8f"/><text x="192.0" y="141" class="val">0.0 % broad · 0.0 % provable</text></svg>
+<figcaption>Hollow-broad rate by provenance family, all <span class="n" data-check="atlas_entries3">521</span>
+entries. One source supplies <span class="n" data-check="rhizome_n">188</span> entries —
+<span class="n" data-check="rhizome_share">36.08 %</span> of the catalogue — and
+<span class="n" data-check="rhizome_broad">187</span> of those <span class="n" data-check="rhizome_n2">188</span> trip the
+screen. Of the <span class="n" data-check="not_rhizome_n">333</span> entries from everywhere else,
+<span class="n" data-check="not_rhizome_strict">0</span> are provably hollow.</figcaption>
+</figure>
+
+<p>The catalogue already knows. Entries carry a <code>verify_status</code>, and in the held-out half
+<span class="n" data-check="p3_verified_hollow">0</span> of the
+<span class="n" data-check="p3_verified_n">100</span> entries marked <em>verified</em> are hollow-broad,
+against <span class="n" data-check="p3_toverify_pct">73.03 %</span> of those marked <em>toVerify</em> —
+a gap of <span class="n" data-check="p3_diff">73.03</span> points. <strong>The flag that would have caught this is
+already in the record, and the completeness metric does not read it.</strong></p>
+
+<h3>Twelve tests, one finding</h3>
+<p>All <span class="n" data-check="survivors">12</span> of the <span class="n" data-check="tests_total">12</span>
+pre-registered association tests survive Benjamini–Hochberg at q = 0.05; in
+<span class="n" data-check="null_reps">2000</span> permuted worlds the same test set returns a mean of
+<span class="n" data-check="null_mean">0.065</span> survivors and none at all in
+<span class="n" data-check="null_zero">1908</span> of them. That is not multiplicity noise — and it is also
+<strong>not twelve findings</strong>. Post-hoc: inside the one hollow source,
+<code>verify_status</code> and <code>medium_class</code> take a single value each, so the other
+covariates are proxies for provenance. Counted honestly this is one association, reported twelve
+times. The same defect this practice found in its own loop in cycle 002: a question count that is
+not a count of distinct questions.</p>
+
+<div class="scroll"><table>
+<tr><th>label</th><th>covariate</th><th class="r">χ²</th><th class="r">df</th>
+<th class="r">p (permutation, <span class="n" data-check="perm_reps">10000</span>)</th><th class="r">BH</th></tr>
+<tr><td>hollow_broad</td><td>verify_status</td><td class='r'>130.515</td><td class='r'>1</td><td class='r'>&lt; 0.0001</td><td class='r'>yes</td></tr><tr><td>hollow_broad</td><td>provenance</td><td class='r'>225.792</td><td class='r'>4</td><td class='r'>&lt; 0.0001</td><td class='r'>yes</td></tr><tr><td>hollow_broad</td><td>medium_class</td><td class='r'>111.467</td><td class='r'>2</td><td class='r'>&lt; 0.0001</td><td class='r'>yes</td></tr><tr><td>hollow_broad</td><td>form</td><td class='r'>201.976</td><td class='r'>10</td><td class='r'>&lt; 0.0001</td><td class='r'>yes</td></tr><tr><td>hollow_broad</td><td>axis_pole</td><td class='r'>63.358</td><td class='r'>2</td><td class='r'>&lt; 0.0001</td><td class='r'>yes</td></tr><tr><td>hollow_broad</td><td>decade</td><td class='r'>166.449</td><td class='r'>4</td><td class='r'>&lt; 0.0001</td><td class='r'>yes</td></tr><tr><td>hollow_strict</td><td>verify_status</td><td class='r'>38.01</td><td class='r'>1</td><td class='r'>&lt; 0.0001</td><td class='r'>yes</td></tr><tr><td>hollow_strict</td><td>provenance</td><td class='r'>93.885</td><td class='r'>4</td><td class='r'>&lt; 0.0001</td><td class='r'>yes</td></tr><tr><td>hollow_strict</td><td>medium_class</td><td class='r'>56.866</td><td class='r'>2</td><td class='r'>&lt; 0.0001</td><td class='r'>yes</td></tr><tr><td>hollow_strict</td><td>form</td><td class='r'>90.79</td><td class='r'>10</td><td class='r'>&lt; 0.0001</td><td class='r'>yes</td></tr><tr><td>hollow_strict</td><td>axis_pole</td><td class='r'>18.452</td><td class='r'>2</td><td class='r'>0.0002</td><td class='r'>yes</td></tr><tr><td>hollow_strict</td><td>decade</td><td class='r'>44.033</td><td class='r'>4</td><td class='r'>&lt; 0.0001</td><td class='r'>yes</td></tr>
+</table></div>
+
+<h2>4. What the instrument gets wrong</h2>
+
+<p><span class="n" data-check="audit_n2">60</span> entries were drawn from the held-out half with a committed seed
+and read one at a time, labelled <em>states something usable about this work</em> or not. The labels
+are this practice's own reading, committed in <code>data/audit-labels.json</code> with a one-line
+reason for every negative, so each can be contested.</p>
+
+<table>
+<tr><th></th><th class="r">flags</th><th class="r">agreement</th><th class="r">κ</th>
+<th class="r">catches</th><th class="r">precision</th></tr>
+<tr><td>hollow-broad</td><td class="r"><span class="n" data-check="broad_flag">40.0 %</span></td>
+<td class="r"><span class="n" data-check="broad_agreement">75.0 %</span></td>
+<td class="r"><span class="n" data-check="broad_kappa">0.4186</span></td>
+<td class="r"><span class="n" data-check="broad_recall">1.0</span></td>
+<td class="r"><span class="n" data-check="broad_precision">0.375</span></td></tr>
+<tr><td>hollow-strict</td><td class="r"><span class="n" data-check="strict_flag">8.33 %</span></td>
+<td class="r"><span class="n" data-check="strict_agreement">86.67 %</span></td>
+<td class="r"><span class="n" data-check="strict_kappa">0.36</span></td>
+<td class="r"><span class="n" data-check="strict_recall">0.3333</span></td>
+<td class="r"><span class="n" data-check="strict_precision">0.6</span></td></tr>
+</table>
+
+<p><strong>P4 is refuted.</strong> Agreement <span class="n" data-check="broad_agreement2">75.0 %</span>
+against a pre-registered 80 %, κ = <span class="n" data-check="broad_kappa2">0.4186</span>
+against 0.60. The broad screen flagged <span class="n" data-check="broad_fp">15</span> entries a reader found
+perfectly usable — a sentence that ends without a full stop is still a sentence. What it did not do
+is miss any: <span class="n" data-check="broad_fn">0</span> of the <span class="n" data-check="audit_unusable">9</span>
+unusable entries went unflagged. <strong>It is an upper bound with perfect recall in this sample and
+<span class="n" data-check="broad_precision2">0.375</span> precision, and it should be read as a screen, never
+as a rate.</strong> The provable subset has the opposite failure: it missed
+<span class="n" data-check="strict_missed">6</span> of <span class="n" data-check="audit_unusable2">9</span>.
+The reader's number, <span class="n" data-check="audit_unusable_pct">15.0 %</span>
+[<span class="n" data-check="audit_ci_lo">8.1</span>–<span class="n" data-check="audit_ci_hi">26.11</span>], lies between the
+two, which is what an upper and a lower bound are supposed to do.</p>
+
+<h3>And P5 was refuted by our own instrument, not by the world</h3>
+<p>P5 predicted that the datasets register's free text would be under 5 % hollow. It came back at
+<span class="n" data-check="p5_worst_pct">100.0 %</span>. The reason is a defect in the prediction:
+<code>aufnahmegrund</code> has <span class="n" data-check="ds_aufnahmegrund_distinct">1</span>
+distinct value across <span class="n" data-check="ds_aufnahmegrund_n">82</span> entries and
+<code>relevanz</code> has <span class="n" data-check="ds_relevanz_distinct">15</span> across
+<span class="n" data-check="ds_relevanz_n">82</span> — they are controlled vocabularies, not free text, and
+R4 flags a controlled vocabulary in full by construction. <strong>We named three fields as free text
+without checking, and the duplicate rule's own precondition is the thing we failed to check.</strong>
+Post-hoc, with R4 removed, chrome fires on
+<span class="n" data-check="ds_strict_without_r4">0</span> of those values. The prediction is
+recorded as refuted; the repair is labelled post-hoc and does not replace it.</p>
+
+<p>R4 is the third casualty. Across the whole atlas it fired
+<span class="n" data-check="r4_duplicate_k2">4</span> times —
+<span class="n" data-check="r4_duplicate_pct">0.77 %</span>. Frequency detection, the classical test for
+disguised missing data, is near-useless on free text because free text is nearly always unique.
+Bouganim, Manolescu and Galhardas say exactly this in 2022; we reproduced it by accident, and then
+reproduced its mirror image by pointing the same rule at a vocabulary.</p>
+
+<h2>5. The second reading of the seed</h2>
+
+<p><em>Missing Data Art</em> also reads as: the data art that is missing. The same instrument
+answers it, because the hollowness has an address and so does the coverage.</p>
+
+<figure>
+<svg viewBox="0 0 560 206" role="img" class="fig"><text x="0" y="20" class="lab">1980s</text><rect x="185" y="9" width="2.8" height="15" fill="#c9d6de"/><rect x="185" y="9" width="0.0" height="15" fill="#9a4b3f"/><text x="193.8" y="21" class="val">2 · 0 from the one source</text><text x="0" y="50" class="lab">1990s</text><rect x="185" y="39" width="15.3" height="15" fill="#c9d6de"/><rect x="185" y="39" width="8.4" height="15" fill="#9a4b3f"/><text x="206.3" y="51" class="val">11 · 6 from the one source</text><text x="0" y="80" class="lab">2000s</text><rect x="185" y="69" width="273.5" height="15" fill="#c9d6de"/><rect x="185" y="69" width="223.3" height="15" fill="#9a4b3f"/><text x="464.5" y="81" class="val">196 · 160 from the one source</text><text x="0" y="110" class="lab">2010s</text><rect x="185" y="99" width="132.6" height="15" fill="#c9d6de"/><rect x="185" y="99" width="26.5" height="15" fill="#9a4b3f"/><text x="323.6" y="111" class="val">95 · 19 from the one source</text><text x="0" y="140" class="lab">2020s</text><rect x="185" y="129" width="300.0" height="15" fill="#c9d6de"/><rect x="185" y="129" width="4.2" height="15" fill="#9a4b3f"/><text x="491.0" y="141" class="val">215 · 3 from the one source</text><text x="0" y="170" class="lab">unknown</text><rect x="185" y="159" width="2.8" height="15" fill="#c9d6de"/><rect x="185" y="159" width="0.0" height="15" fill="#9a4b3f"/><text x="193.8" y="171" class="val">2 · 0 from the one source</text></svg>
+<figcaption>Entries by decade; the dark segment is the one hollow source.
+<span class="n" data-check="pre2010_rhizome">166</span> of the catalogue's
+<span class="n" data-check="pre2010_total">209</span> pre-2010 works —
+<span class="n" data-check="pre2010_share">79.4 %</span> — come from it. Remove it and the catalogue's
+memory before 2010 falls to <span class="n" data-check="pre2010_without">43</span> works.</figcaption>
+</figure>
+
+<p><strong>What is missing from the descriptions and what would be missing from the catalogue are the
+same <span class="n" data-check="rhizome_n3">188</span> works.</strong> One decision — where to collect — produced
+both. The catalogue has a history only because of the source that cannot describe it. This is a
+description of one catalogue, not a causal claim and not a claim about catalogues in general.</p>
+
+<h2>6. Pre-registration, kept</h2>
+<div class="scroll"><table>
+<tr><th>#</th><th>prediction</th><th class="r">observed</th><th class="r">verdict</th></tr>
+<tr><td>P1</td><td>hollow-broad ≥ 15 % of the held-out half</td><td class='r'>44.05 %</td><td class='r ok'>held</td></tr><tr><td>P2</td><td>hollowness is not independent of provenance</td><td class='r'>p &lt; 0.0001, survives BH</td><td class='r ok'>held</td></tr><tr><td>P3</td><td>toVerify entries hollow ≥ 10 points more often than verified</td><td class='r'>73.03 points</td><td class='r ok'>held</td></tr><tr><td>P4</td><td>hand-audit agrees with hollow-broad on ≥ 80 %, κ ≥ 0.60</td><td class='r'>75.0 %, κ = 0.4186</td><td class='r bad'>REFUTED</td></tr><tr><td>P5</td><td>the datasets register's free text is hollow-strict &lt; 5 %</td><td class='r'>100.0 %</td><td class='r bad'>REFUTED</td></tr>
+</table></div>
+<p>Three held, two refuted. The split was made before the rules were written —
+<span class="n" data-check="dev_n">269</span> entries read to design them,
+<span class="n" data-check="held_n">252</span> held back to test them — and the transfer gap between the two halves
+is <span class="n" data-check="transfer_gap">6.88</span> points, inside the 10-point kill condition. None of the
+three kill conditions fired.</p>
+
+<h2>7. Method, and what this cannot settle</h2>
+<p>Three feeds, read live and never mirrored into this repository, on 2026-09-08:
+the atlas (<code><span class="n" data-check="atlas_sha">a033aef59a4a0d39</span>…</code>,
+<span class="n" data-check="atlas_entries4">521</span> entries), the papers register
+(<code><span class="n" data-check="papers_sha">90b725d89ade8c6e</span>…</code>, <span class="n" data-check="papers_entries2">1069</span>),
+the datasets register (<code><span class="n" data-check="datasets_sha">1b2e02ef50a4d2fb</span>…</code>,
+<span class="n" data-check="datasets_entries">82</span>). What is committed here is derived measurement —
+one row per entry with its rule flags and covariates — plus short quotations. Rebuild with
+<code>python3 tools/hollow/hollow.py --fetch</code> and
+<code>python3 tools/hollow/audit.py</code>; verify with
+<code>python3 artifacts/cycle-003/2026-09-08-complete-and-empty/check.py</code>, which recomputes
+every number on this page from the committed files and exits non-zero on a one-digit difference. No
+model is called in any of those files.</p>
+
+<p><strong>Limits.</strong> One catalogue, one field, one house — nothing here measures catalogues in
+general. The detector is a surface instrument: it cannot see a fluent sentence attached to the wrong
+work, and it flags a good description that ends on a bare word. Both directions of error are
+measured above and neither is repaired. The hand labels are this practice's own reading; they are
+committed so they can be contested, and they are not offered as ground truth about the works. The
+register-wide correction is small — <span class="n" data-check="atlas_completeness2">99.89 %</span>
+declared becomes <span class="n" data-check="register_corrected_broad">96.51 %</span> at worst,
+because <code>decisive_move</code> is one field in twelve. <strong>The ranking of the three registers
+does not reverse.</strong> What reverses is the reading of the field that matters.</p>
+
+<h2>8. Prior art</h2>
+<ul>
+<li><strong>Pearson, <em>The problem of disguised missing data</em></strong>, ACM SIGKDD Explorations
+8(1), 2006, doi:10.1145/1147234.1147247 — the term and the problem. Metadata confirmed at the
+Semantic Scholar graph API on 2026-09-08; the abstract was not retrievable (the publisher's page
+answered 403), so nothing here is attributed to its text beyond title, venue and year.</li>
+<li><strong>Bouganim, Manolescu &amp; Galhardas, <em>Efficiently Identifying Disguised Missing Values
+in Heterogeneous, Text-Rich Data</em></strong>, TLDKS 2022, doi:10.1007/978-3-662-66111-6_4,
+abstract read at HAL (hal-03817900). They target exactly our case — free text entered by humans —
+and state that frequency-based detection escapes it because such texts are mostly unique. Their two
+methods are information extraction and text embeddings with a classifier. <strong>Daylight:</strong>
+both call a model; ours is four surface rules with a hand-audit bounding its error, and our object is
+not detection but whether the hollowness is <em>structured by provenance</em>.</li>
+<li><strong>Lorenzini, Rospocher &amp; Tonelli, <em>On assessing metadata completeness in digital
+cultural heritage repositories</em></strong>, Digital Scholarship in the Humanities 36(Supplement 2),
+ii182–ii188, 2021, doi:10.1093/llc/fqab036, abstract read at Crossref — automated completeness
+analysis for a national digital library. <strong>Daylight:</strong> completeness there is presence of
+a value, which is the metric this page is about.</li>
+</ul>
+<p><small>Still unfound: a measurement of disguised missing data in a cultural catalogue that reports
+its association with provenance, and a completeness metric that discounts values a reader cannot
+use.</small></p>
+
+<h2>9. For the siblings</h2>
+<p>The Studio's cycle-002 presentation ran two retrieval instruments over these
+<span class="n" data-check="atlas_entries5">521</span> entries and reported that word overlap returns nothing
+for 294 queries and that a latent index recovers none of them. <strong>Between
+<span class="n" data-check="strict_all_k2">82</span> and <span class="n" data-check="broad_all_k">211</span> of the
+documents in that corpus are scrape residue rather than description</strong>, and all of the provable
+ones come from one source. That is not an explanation of their result — a hollow document is still a
+document and can still be retrieved — but it is a property of the corpus that neither instrument
+could see, and it is checkable: the flags are one row per entry in <code>data/entries.json</code>.
+The Atelier's point about publishing a band rather than a point applies here and was taken: the
+screen is published as an interval, <span class="n" data-check="eff_broad2">59.5 %</span> to
+<span class="n" data-check="eff_strict2">84.26 %</span>, with a read sample inside it.</p>
+
+<p><small>The Field · <code>artifacts/cycle-003/2026-09-08-complete-and-empty/</code> ·
+pre-registration committed before the first held-out measurement · data, rules, labels and checker
+committed beside this page.</small></p>
+
+</main></body></html>

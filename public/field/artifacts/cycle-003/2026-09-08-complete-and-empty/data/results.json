@@ -1,0 +1,673 @@
+{
+  "generated_by": "tools/hollow/hollow.py",
+  "date": "2026-09-08",
+  "session": 155,
+  "cycle": 3,
+  "question": "Missing Data Art",
+  "feeds": {
+    "atlas": {
+      "url": "https://frankbueltge.de/atlas/werke.json",
+      "sha256": "a033aef59a4a0d397de02f57cd7db50bd44b075fe1756c6d3490355528c64a61",
+      "bytes": 387847,
+      "count": 521
+    },
+    "papers": {
+      "url": "https://frankbueltge.de/papers/index.json",
+      "sha256": "90b725d89ade8c6e6569d392bbdf9b549eec20f9c31d6e4462cbb19d3dfc6a86",
+      "bytes": 697821,
+      "count": 1069
+    },
+    "datasets": {
+      "url": "https://frankbueltge.de/datasets/register.json",
+      "sha256": "1b2e02ef50a4d2fb2cb231f61528bdebe08cd74242e1665ec7f3acd94de5d23c",
+      "bytes": 71172,
+      "count": 82
+    }
+  },
+  "declared_missing": {
+    "atlas": {
+      "cells": 6254,
+      "declared_missing": 7,
+      "completeness_pct": 99.89,
+      "per_field": {
+        "clusters": {
+          "missing": 7,
+          "of": 521
+        }
+      }
+    },
+    "papers": {
+      "cells": 12828,
+      "declared_missing": 1895,
+      "completeness_pct": 85.23,
+      "per_field": {
+        "felder": {
+          "missing": 566,
+          "of": 1069
+        },
+        "jahr": {
+          "missing": 22,
+          "of": 1069
+        },
+        "ort": {
+          "missing": 141,
+          "of": 1069
+        },
+        "urheber": {
+          "missing": 101,
+          "of": 1069
+        },
+        "urteil": {
+          "missing": 1065,
+          "of": 1069
+        }
+      }
+    },
+    "datasets": {
+      "cells": 1394,
+      "declared_missing": 61,
+      "completeness_pct": 95.62,
+      "per_field": {
+        "pruef_status": {
+          "missing": 4,
+          "of": 82
+        },
+        "pruef_vermerk": {
+          "missing": 57,
+          "of": 82
+        }
+      }
+    }
+  },
+  "split": {
+    "rule": "sha256(title) mod 2",
+    "dev": 269,
+    "held": 252
+  },
+  "headline": {
+    "all": {
+      "hollow_strict": {
+        "k": 82,
+        "n": 521,
+        "pct": 15.74,
+        "ci95": [
+          12.86,
+          19.12
+        ]
+      },
+      "hollow_broad": {
+        "k": 211,
+        "n": 521,
+        "pct": 40.5,
+        "ci95": [
+          36.37,
+          44.77
+        ]
+      },
+      "r1_chrome": {
+        "k": 78,
+        "n": 521,
+        "pct": 14.97,
+        "ci95": [
+          12.16,
+          18.29
+        ]
+      },
+      "r2_truncated_tail": {
+        "k": 207,
+        "n": 521,
+        "pct": 39.73,
+        "ci95": [
+          35.62,
+          43.99
+        ]
+      },
+      "r3_truncated_head": {
+        "k": 152,
+        "n": 521,
+        "pct": 29.17,
+        "ci95": [
+          25.44,
+          33.22
+        ]
+      },
+      "r4_duplicate": {
+        "k": 4,
+        "n": 521,
+        "pct": 0.77,
+        "ci95": [
+          0.3,
+          1.96
+        ]
+      }
+    },
+    "dev": {
+      "hollow_strict": {
+        "k": 35,
+        "n": 269,
+        "pct": 13.01,
+        "ci95": [
+          9.51,
+          17.56
+        ]
+      },
+      "hollow_broad": {
+        "k": 100,
+        "n": 269,
+        "pct": 37.17,
+        "ci95": [
+          31.62,
+          43.09
+        ]
+      }
+    },
+    "held": {
+      "hollow_strict": {
+        "k": 47,
+        "n": 252,
+        "pct": 18.65,
+        "ci95": [
+          14.33,
+          23.92
+        ]
+      },
+      "hollow_broad": {
+        "k": 111,
+        "n": 252,
+        "pct": 44.05,
+        "ci95": [
+          38.05,
+          50.22
+        ]
+      }
+    }
+  },
+  "tests": [
+    {
+      "label": "hollow_broad",
+      "covariate": "verify_status",
+      "chi2": 130.515,
+      "df": 1,
+      "p_perm": 0.0001,
+      "p_chi2": 3.161155633352757e-30,
+      "levels": 2,
+      "table": {
+        "toVerify": {
+          "not": 41,
+          "hollow": 111
+        },
+        "verified": {
+          "not": 100,
+          "hollow": 0
+        }
+      },
+      "bh_survivor": true,
+      "bh_survivor_chi2": true
+    },
+    {
+      "label": "hollow_broad",
+      "covariate": "provenance",
+      "chi2": 225.792,
+      "df": 4,
+      "p_perm": 0.0001,
+      "p_chi2": 1.0627363921114125e-47,
+      "levels": 5,
+      "table": {
+        "Ars Electronica (other)": {
+          "not": 8,
+          "hollow": 0
+        },
+        "Rhizome ArtBase": {
+          "not": 0,
+          "hollow": 96
+        },
+        "S+T+ARTS / Ars Electronica": {
+          "not": 34,
+          "hollow": 1
+        },
+        "dataphys.org": {
+          "not": 5,
+          "hollow": 12
+        },
+        "other": {
+          "not": 94,
+          "hollow": 2
+        }
+      },
+      "bh_survivor": true,
+      "bh_survivor_chi2": true
+    },
+    {
+      "label": "hollow_broad",
+      "covariate": "medium_class",
+      "chi2": 111.467,
+      "df": 2,
+      "p_perm": 0.0001,
+      "p_chi2": 6.242168026387819e-25,
+      "levels": 3,
+      "table": {
+        "digital": {
+          "not": 30,
+          "hollow": 97
+        },
+        "hybrid": {
+          "not": 85,
+          "hollow": 6
+        },
+        "physical": {
+          "not": 26,
+          "hollow": 8
+        }
+      },
+      "bh_survivor": true,
+      "bh_survivor_chi2": true
+    },
+    {
+      "label": "hollow_broad",
+      "covariate": "form",
+      "chi2": 201.976,
+      "df": 10,
+      "p_perm": 0.0001,
+      "p_chi2": 6.247459155520702e-38,
+      "levels": 11,
+      "table": {
+        "database": {
+          "not": 8,
+          "hollow": 1
+        },
+        "digital-web": {
+          "not": 1,
+          "hollow": 97
+        },
+        "evidence-platform": {
+          "not": 9,
+          "hollow": 0
+        },
+        "hybrid": {
+          "not": 51,
+          "hollow": 1
+        },
+        "interactive-installation": {
+          "not": 20,
+          "hollow": 3
+        },
+        "performance": {
+          "not": 4,
+          "hollow": 1
+        },
+        "physical-installation": {
+          "not": 25,
+          "hollow": 8
+        },
+        "print-diagram": {
+          "not": 3,
+          "hollow": 0
+        },
+        "public-space-intervention": {
+          "not": 6,
+          "hollow": 0
+        },
+        "publication": {
+          "not": 6,
+          "hollow": 0
+        },
+        "video-film": {
+          "not": 8,
+          "hollow": 0
+        }
+      },
+      "bh_survivor": true,
+      "bh_survivor_chi2": true
+    },
+    {
+      "label": "hollow_broad",
+      "covariate": "axis_pole",
+      "chi2": 63.358,
+      "df": 2,
+      "p_perm": 0.0001,
+      "p_chi2": 1.745836772495299e-14,
+      "levels": 3,
+      "table": {
+        "investigation": {
+          "not": 58,
+          "hollow": 0
+        },
+        "mixed": {
+          "not": 80,
+          "hollow": 111
+        },
+        "spectacle": {
+          "not": 3,
+          "hollow": 0
+        }
+      },
+      "bh_survivor": true,
+      "bh_survivor_chi2": true
+    },
+    {
+      "label": "hollow_broad",
+      "covariate": "decade",
+      "chi2": 166.449,
+      "df": 4,
+      "p_perm": 0.0001,
+      "p_chi2": 6.046934634949166e-35,
+      "levels": 5,
+      "table": {
+        "1990s": {
+          "not": 1,
+          "hollow": 7
+        },
+        "2000s": {
+          "not": 10,
+          "hollow": 89
+        },
+        "2010s": {
+          "not": 38,
+          "hollow": 14
+        },
+        "2020s": {
+          "not": 90,
+          "hollow": 1
+        },
+        "unknown": {
+          "not": 2,
+          "hollow": 0
+        }
+      },
+      "bh_survivor": true,
+      "bh_survivor_chi2": true
+    },
+    {
+      "label": "hollow_strict",
+      "covariate": "verify_status",
+      "chi2": 38.01,
+      "df": 1,
+      "p_perm": 0.0001,
+      "p_chi2": 7.037323962767051e-10,
+      "levels": 2,
+      "table": {
+        "toVerify": {
+          "not": 105,
+          "hollow": 47
+        },
+        "verified": {
+          "not": 100,
+          "hollow": 0
+        }
+      },
+      "bh_survivor": true,
+      "bh_survivor_chi2": true
+    },
+    {
+      "label": "hollow_strict",
+      "covariate": "provenance",
+      "chi2": 93.885,
+      "df": 4,
+      "p_perm": 0.0001,
+      "p_chi2": 1.9668632832142712e-19,
+      "levels": 5,
+      "table": {
+        "Ars Electronica (other)": {
+          "not": 8,
+          "hollow": 0
+        },
+        "Rhizome ArtBase": {
+          "not": 49,
+          "hollow": 47
+        },
+        "S+T+ARTS / Ars Electronica": {
+          "not": 35,
+          "hollow": 0
+        },
+        "dataphys.org": {
+          "not": 17,
+          "hollow": 0
+        },
+        "other": {
+          "not": 96,
+          "hollow": 0
+        }
+      },
+      "bh_survivor": true,
+      "bh_survivor_chi2": true
+    },
+    {
+      "label": "hollow_strict",
+      "covariate": "medium_class",
+      "chi2": 56.866,
+      "df": 2,
+      "p_perm": 0.0001,
+      "p_chi2": 4.4849502007860555e-13,
+      "levels": 3,
+      "table": {
+        "digital": {
+          "not": 80,
+          "hollow": 47
+        },
+        "hybrid": {
+          "not": 91,
+          "hollow": 0
+        },
+        "physical": {
+          "not": 34,
+          "hollow": 0
+        }
+      },
+      "bh_survivor": true,
+      "bh_survivor_chi2": true
+    },
+    {
+      "label": "hollow_strict",
+      "covariate": "form",
+      "chi2": 90.79,
+      "df": 10,
+      "p_perm": 0.0001,
+      "p_chi2": 3.7331160776328155e-15,
+      "levels": 11,
+      "table": {
+        "database": {
+          "not": 9,
+          "hollow": 0
+        },
+        "digital-web": {
+          "not": 51,
+          "hollow": 47
+        },
+        "evidence-platform": {
+          "not": 9,
+          "hollow": 0
+        },
+        "hybrid": {
+          "not": 52,
+          "hollow": 0
+        },
+        "interactive-installation": {
+          "not": 23,
+          "hollow": 0
+        },
+        "performance": {
+          "not": 5,
+          "hollow": 0
+        },
+        "physical-installation": {
+          "not": 33,
+          "hollow": 0
+        },
+        "print-diagram": {
+          "not": 3,
+          "hollow": 0
+        },
+        "public-space-intervention": {
+          "not": 6,
+          "hollow": 0
+        },
+        "publication": {
+          "not": 6,
+          "hollow": 0
+        },
+        "video-film": {
+          "not": 8,
+          "hollow": 0
+        }
+      },
+      "bh_survivor": true,
+      "bh_survivor_chi2": true
+    },
+    {
+      "label": "hollow_strict",
+      "covariate": "axis_pole",
+      "chi2": 18.452,
+      "df": 2,
+      "p_perm": 0.0002,
+      "p_chi2": 9.845133874299558e-05,
+      "levels": 3,
+      "table": {
+        "investigation": {
+          "not": 58,
+          "hollow": 0
+        },
+        "mixed": {
+          "not": 144,
+          "hollow": 47
+        },
+        "spectacle": {
+          "not": 3,
+          "hollow": 0
+        }
+      },
+      "bh_survivor": true,
+      "bh_survivor_chi2": true
+    },
+    {
+      "label": "hollow_strict",
+      "covariate": "decade",
+      "chi2": 44.033,
+      "df": 4,
+      "p_perm": 0.0001,
+      "p_chi2": 6.315341903253797e-09,
+      "levels": 5,
+      "table": {
+        "1990s": {
+          "not": 5,
+          "hollow": 3
+        },
+        "2000s": {
+          "not": 63,
+          "hollow": 36
+        },
+        "2010s": {
+          "not": 44,
+          "hollow": 8
+        },
+        "2020s": {
+          "not": 91,
+          "hollow": 0
+        },
+        "unknown": {
+          "not": 2,
+          "hollow": 0
+        }
+      },
+      "bh_survivor": true,
+      "bh_survivor_chi2": true
+    }
+  ],
+  "null_world": {
+    "replicates": 2000,
+    "p_family": "asymptotic chi-square, both observed and null",
+    "observed_survivors_chi2_family": 12,
+    "mean_survivors": 0.065,
+    "distribution": {
+      "0": 1908,
+      "1": 69,
+      "2": 12,
+      "3": 7,
+      "4": 4
+    }
+  },
+  "p3_verify_status": {
+    "toVerify": {
+      "hollow": 111,
+      "not": 41,
+      "pct": 73.03
+    },
+    "verified": {
+      "hollow": 0,
+      "not": 100,
+      "pct": 0.0
+    },
+    "fisher_p": 0.0,
+    "points_difference": 73.03
+  },
+  "p5_datasets_register": {
+    "relevanz": {
+      "n_nonempty": 82,
+      "n_entries": 82,
+      "hollow_strict": 74,
+      "hollow_broad": 74,
+      "strict_pct": 90.24
+    },
+    "pruef_vermerk": {
+      "n_nonempty": 25,
+      "n_entries": 82,
+      "hollow_strict": 24,
+      "hollow_broad": 25,
+      "strict_pct": 96.0
+    },
+    "aufnahmegrund": {
+      "n_nonempty": 82,
+      "n_entries": 82,
+      "hollow_strict": 82,
+      "hollow_broad": 82,
+      "strict_pct": 100.0
+    }
+  },
+  "provenance_counts": {
+    "other": 202,
+    "Rhizome ArtBase": 188,
+    "S+T+ARTS / Ars Electronica": 83,
+    "dataphys.org": 32,
+    "Ars Electronica (other)": 16
+  },
+  "provenance_hollow": {
+    "S+T+ARTS / Ars Electronica": {
+      "n": 83,
+      "hollow_broad_pct": 1.2,
+      "hollow_strict_pct": 0.0
+    },
+    "other": {
+      "n": 202,
+      "hollow_broad_pct": 1.98,
+      "hollow_strict_pct": 0.0
+    },
+    "Ars Electronica (other)": {
+      "n": 16,
+      "hollow_broad_pct": 0.0,
+      "hollow_strict_pct": 0.0
+    },
+    "Rhizome ArtBase": {
+      "n": 188,
+      "hollow_broad_pct": 99.47,
+      "hollow_strict_pct": 43.62
+    },
+    "dataphys.org": {
+      "n": 32,
+      "hollow_broad_pct": 59.38,
+      "hollow_strict_pct": 0.0
+    }
+  },
+  "decade_counts": {
+    "1980s": 2,
+    "1990s": 11,
+    "2000s": 196,
+    "2010s": 95,
+    "2020s": 215,
+    "unknown": 2
+  },
+  "params": {
+    "reps": 10000,
+    "null_reps": 2000,
+    "seed": 20260908,
+    "audit_n": 60
+  }
+}

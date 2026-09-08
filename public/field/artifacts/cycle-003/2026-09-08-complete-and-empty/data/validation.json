@@ -1,0 +1,139 @@
+{
+  "validation": {
+    "n": 60,
+    "hand_unusable": 9,
+    "hand_unusable_pct": 15.0,
+    "hand_unusable_ci95": [
+      8.1,
+      26.11
+    ],
+    "hollow_broad": {
+      "flagged_and_unusable": 9,
+      "flagged_but_usable": 15,
+      "unflagged_and_unusable": 0,
+      "unflagged_and_usable": 36,
+      "agreement_pct": 75.0,
+      "cohen_kappa": 0.4186,
+      "recall_on_unusable": 1.0,
+      "precision": 0.375,
+      "flag_rate_pct": 40.0
+    },
+    "hollow_strict": {
+      "flagged_and_unusable": 3,
+      "flagged_but_usable": 2,
+      "unflagged_and_unusable": 6,
+      "unflagged_and_usable": 49,
+      "agreement_pct": 86.67,
+      "cohen_kappa": 0.36,
+      "recall_on_unusable": 0.3333,
+      "precision": 0.6,
+      "flag_rate_pct": 8.33
+    },
+    "r1_chrome": {
+      "flagged_and_unusable": 3,
+      "flagged_but_usable": 2,
+      "unflagged_and_unusable": 6,
+      "unflagged_and_usable": 49,
+      "agreement_pct": 86.67,
+      "cohen_kappa": 0.36,
+      "recall_on_unusable": 0.3333,
+      "precision": 0.6,
+      "flag_rate_pct": 8.33
+    },
+    "r2_truncated_tail": {
+      "flagged_and_unusable": 9,
+      "flagged_but_usable": 15,
+      "unflagged_and_unusable": 0,
+      "unflagged_and_usable": 36,
+      "agreement_pct": 75.0,
+      "cohen_kappa": 0.4186,
+      "recall_on_unusable": 1.0,
+      "precision": 0.375,
+      "flag_rate_pct": 40.0
+    },
+    "r3_truncated_head": {
+      "flagged_and_unusable": 5,
+      "flagged_but_usable": 9,
+      "unflagged_and_unusable": 4,
+      "unflagged_and_usable": 42,
+      "agreement_pct": 78.33,
+      "cohen_kappa": 0.3085,
+      "recall_on_unusable": 0.5556,
+      "precision": 0.3571,
+      "flag_rate_pct": 23.33
+    },
+    "r4_duplicate": {
+      "flagged_and_unusable": 0,
+      "flagged_but_usable": 0,
+      "unflagged_and_unusable": 9,
+      "unflagged_and_usable": 51,
+      "agreement_pct": 85.0,
+      "cohen_kappa": 0.0,
+      "recall_on_unusable": 0.0,
+      "precision": null,
+      "flag_rate_pct": 0.0
+    }
+  },
+  "post_hoc_provenance": {
+    "post_hoc": true,
+    "note": "Not in the pre-registered test set. Reported because 12 of 12 tests survived BH, which is a warning that the covariates are not independent.",
+    "rhizome": {
+      "n": 188,
+      "hollow_broad": 187,
+      "hollow_strict": 82,
+      "verify_status_levels": [
+        "toVerify"
+      ],
+      "medium_class_levels": [
+        "digital"
+      ]
+    },
+    "not_rhizome": {
+      "n": 333,
+      "hollow_broad": 24,
+      "hollow_strict": 0
+    }
+  },
+  "post_hoc_datasets_fields": {
+    "post_hoc": true,
+    "note": "P5 named three fields as free text without checking their cardinality. Two of the three are controlled vocabularies, on which the duplicate rule R4 flags everything by construction.",
+    "relevanz": {
+      "n_nonempty": 82,
+      "distinct_values": 15,
+      "is_free_text_by_cardinality": false,
+      "hollow_strict_with_r4": 74,
+      "hollow_strict_without_r4": 0
+    },
+    "pruef_vermerk": {
+      "n_nonempty": 25,
+      "distinct_values": 6,
+      "is_free_text_by_cardinality": false,
+      "hollow_strict_with_r4": 24,
+      "hollow_strict_without_r4": 0
+    },
+    "aufnahmegrund": {
+      "n_nonempty": 82,
+      "distinct_values": 1,
+      "is_free_text_by_cardinality": false,
+      "hollow_strict_with_r4": 82,
+      "hollow_strict_without_r4": 0
+    }
+  },
+  "post_hoc_effective_completeness": {
+    "post_hoc": true,
+    "field": "decisive_move",
+    "declared_completeness_pct": 100.0,
+    "effective_completeness_broad_pct": 59.5,
+    "effective_completeness_strict_pct": 84.26,
+    "effective_completeness_hand_pct": 85.0,
+    "hand_ci95_pct": [
+      73.89,
+      91.9
+    ],
+    "register_completeness_declared_pct": 99.89,
+    "register_completeness_corrected_broad_pct": 96.51,
+    "register_completeness_corrected_strict_pct": 98.58,
+    "papers_declared_pct": 85.23,
+    "datasets_declared_pct": 95.62
+  }
+}
