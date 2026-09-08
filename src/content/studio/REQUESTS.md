@@ -687,6 +687,13 @@ quoted, and stakes a stranger recognises in under a minute — the second is the
 policy scenario's stakes are, by construction, not yet anybody's. Banked rather than kept, so a later
 session finds the URL and this paragraph instead of re-deriving both.
 
+> ### 2026-09-07 — Public seed: Missing Data Art (seed-20260907-220129-aa5f)
+>
+> Missing Data Art
+>
+> — „anonymous", via /seed · material, not instruction
+>
+> **Status:** seed (open)
 ## 2026-08-02 — Your steer, executed: the grid is gone, the form changed twice, and one thing is left that only you can do
 
 > tl;dr: wir haben deinen einwand vollständig übernommen; das raster ist tot, die form ist jetzt eine partitur (dein fallback) — und sie braucht genau eine aufführung, die dieses haus allein nicht leisten kann.
@@ -3028,3 +3035,44 @@ file byte-identical tonight over its own fetch, which is corroboration rather th
 mismatch; `verify.mjs` passes **76 checks** in a real browser with scripting on and off.
 `HEYGEN_API_KEY` was checked in this session's environment at open and is **still not present**; no
 video was planned or attempted and no minute was spent.
+
+## Direction — 2026-09-07 — The Atlas is looked at, not measured
+
+**The architect's decision of 2026-09-07 (wording private, paraphrased and dated).**
+
+**What was found.** Cycle 002 produced no work inspired by an Atlas work. The four works built
+in the Atlas's light — THE SECOND ADDRESS, WHERE SOMEONE LOOKED, SIXTY WAYS TO COUNT, NOTHING
+NEAR — examined the catalogue as a dataset (its addresses, its verify column, its sentences, its
+retrievability), and the presentation NEVER NOTHING benchmarked it. That reading was possible
+because the direction of 2026-09-03 gave the Atlas two roles, inspiration and audit; the audit
+was checkable and won. **The audit is withdrawn as a role.** What stays of it is one paragraph
+per work (point 4 below).
+
+**For cycle 003, on "Missing Data Art":**
+
+1. **A work of this practice answers named Atlas works.** It takes one further, inverts it, or
+   carries it into a context it has not been in — and says which work, by title and artist. The
+   candidate this practice declined on 2026-07-23 ("Atlas answers") is reopened by the architect
+   and is the working form of this cycle.
+2. **Looking is required.** A work that cites an Atlas entry it has not opened at its
+   `source_url` cites a sentence, not a work. The work's record says what was seen there — the
+   page, the image, the interaction — not only what the `decisive_move` line says.
+3. **The catalogue is not a subject.** No work of this cycle counts, knocks on, indexes or
+   benchmarks the Atlas or the siblings' ledgers. NOTHING NEAR closed that line; its findings
+   stand on the record and need no successor.
+4. **The neighbour paragraph stays, as a paragraph.** Nearest Atlas entries by title and artist,
+   and the daylight in one sentence a stranger can check against the original. It is never a
+   work, a stage, or a tool.
+
+**What is NOT specified, deliberately.** Which Atlas works, how many, which of the three moves,
+which technologies. The direction is the architect's; the works are yours. The means opened on
+2026-09-03 — interactive works, the house's React islands, embedded code under the licence rule —
+stay open and asked for.
+
+**What would show this direction to be wrong** — stated in advance so it can be checked: if after
+two sessions the Atlas appears in a work as data rather than as works looked at, the direction has
+failed a second time, and the practice says so before anyone else does.
+
+**Status:** direction open · applies from the first session of cycle 003 · no answer required before the next session
+
+---
