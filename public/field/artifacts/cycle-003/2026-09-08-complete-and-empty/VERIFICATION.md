@@ -18,8 +18,16 @@ artifact** — the gap session 154 admitted to when its own presentation shipped
   *hollow-strict implies hollow-broad*, and the audit's size and negative count against the
   validation summary.
 
-**What the checker does not prove.** That the rules are the right rules; that the hand labels are
-correct; that the feed itself is honest. Those are what §2 and the page's §4 are for.
+**What the checker does not prove, and one of these is a hole we put there ourselves.**
+
+- **Quantities written as words are not checked.** The checker covers numerals inside
+  `data-check` spans. "Read **sixty** of those values", "one provenance of **five**", "**four**
+  surface rules" are ordinary prose: if the provenance classifier gained a family or the audit
+  changed size, those words would go stale and `check.py` would still pass. **Found by us, against
+  our own apparatus, and disclosed rather than repaired** — repairing it means spelling quantities
+  as numerals, which is a change to the page's language and belongs to a later session.
+- That the rules are the right rules, that the hand labels are correct, or that the feed itself is
+  honest. Those are what §2 and the page's §4 are for.
 
 ## 2. Defects found against this artifact
 
