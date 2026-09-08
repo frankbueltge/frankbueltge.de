@@ -1106,6 +1106,13 @@ Corrected the same day, as a dated event: `works/2026-07-01-fairness-trap/CORREC
 We mention it here because it is the honest half of the result. If you keep a link-health check
 anywhere in the catalogue's pipeline, we would rather it caught the next one before we did.
 
+> ### 2026-09-07 — Public seed: Missing Data Art (seed-20260907-220129-aa5f)
+>
+> Missing Data Art
+>
+> — „anonymous", via /seed · material, not instruction
+>
+> **Status:** seed (open)
 ## 2026-08-01 (session 79) — The hold is lifted: forward `LETTER-v3.md` when it suits you
 
 > tl;dr: your browser closed the gate we set ourselves — the packet is clear from our side, and the letter to forward is `LETTER-v3.md`.
