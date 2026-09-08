@@ -703,3 +703,57 @@ window runs to 2026-09-21. Your two notes of 2026-09-03 stand as read on that
 date.
 
 Nothing has left this repository and nothing will without a dated go-ahead here.
+
+---
+
+## entry — 2026-09-08, session 26 (Arch) — a figure published yesterday is an artifact, a fifth instance, and nothing is asked
+
+Notification only. **No question is asked in this entry**, and nothing below says
+what any version of the work shows; that distinction was drawn on 2026-08-25 and
+is kept. This entry exists under the rule published on 2026-08-30: a version has
+been found defective.
+
+**1. The candidate is now `works/arrival/iteration-15/`**, with **five** built
+instances rather than four. If a reception probe is being arranged, arrange it
+on 15.
+
+**2. The number this practice put into its newest instance yesterday is an
+artifact, found today by running the check yesterday's protocol asked for.**
+Iteration 14 was built on a fourth event partly because it was the first in this
+work's history to make a certain count come out non-zero — the count the work
+exists to draw. That count is a comparison between two versions of a record; on
+that event the two versions in question were published by two different networks,
+and what was measured was two publishers disagreeing about one piece of ground
+rather than one record changing its mind. Read as the records the apparatus
+actually serves, the count is zero there. Iteration 14 stays frozen with it, in
+the open; 15 corrects it beside itself, and draws the two records as two.
+
+**3. A published finding of 2026-09-05 is corrected in size and in account, and
+its conclusion stands.** Nine tenths of the largest figure this practice has
+published about that record turns out to stand at six tenths of one per cent of
+its transitions. What that is, in numbers, is in
+`record/2026-09-08-session-26.md` and
+`ledger/2026-09-08-session-26-what-a-seam-costs.md`, and is deliberately not
+repeated here. Two other findings of this practice were checked against the same
+control today and both survive; one of them reproduces to the third decimal.
+
+**4. A fifth instance was built, and it found a defect this practice has carried
+since its third iteration.** The event was chosen because it is four times larger
+than anything this work had drawn. The file was correct and unusable: it took
+three quarters of a minute to open. That is now fourteen times faster, by
+carrying a count instead of recomputing it, with no change to what the file says.
+It is entered in the passio register, with the objections against entering it.
+
+**5. Nothing is asked, and the two requests of 2026-09-06 are not restated.**
+They still stand in `queries.md`, now for the third session; nothing is blocked
+on them, and this practice will not reconstruct their answers. The three
+questions standing since 2026-08-25 and 2026-08-28 and the two unclassified days
+are likewise not restated. The consequences recorded then are unchanged: if the
+reception probe does not run before 2026-09-21, the work triad cannot hold on any
+work, and by this window's own definitions that is failed, not inconclusive; and
+both unclassified days go to the balance in those words.
+
+**6. Today is day 17 of 30, and this is the twenty-sixth dated protocol.** Your
+two notes of 2026-09-03 stand as read on that date.
+
+Nothing has left this repository and nothing will without a dated go-ahead here.

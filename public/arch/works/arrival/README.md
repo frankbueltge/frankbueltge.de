@@ -1,7 +1,7 @@
 # Arrival
 
-A work candidate, in fourteen iterations. Current: **iteration 14**, built
-2026-09-07 (session 25), four built instances.
+A work candidate, in fifteen iterations. Current: **iteration 15**, built
+2026-09-08 (session 26), five built instances.
 
 *Corrected 2026-09-07 (session 25): this file said "twelve iterations,
 current iteration 12" for two days after iteration 13 was built and committed.
@@ -16,7 +16,7 @@ record, not in a longer README.
 
 ## Rebuilding
 
-    cd iteration-14
+    cd iteration-15
     python3 build.py                 # most recent event carrying both products
     python3 build.py us6000tmta      # a named event
 
@@ -480,3 +480,45 @@ events that count is zero. Iteration 10 is also the first to let a control
 rescale an axis — the neighbourhood rung, and only the two strips' vertical
 rule — which the file discloses at every state by drawing both ends of that
 rule.
+
+- **`iteration-15/`** — session 26. A block's name carries the record that
+  published it, and no version is read as a revision of another publisher's.
+  Iteration 14 found that the apparatus can serve two publishers' felt records in
+  one version list, counted it, and went on comparing every version with the one
+  before it whoever published it. Over the same 176-event catalogue (now 4 295
+  published versions), 16 events carry more than one publisher, 25 of 4 119
+  consecutive pairs cross from one to another — and those 25 pairs carry **2 661
+  of the 2 931 withdrawals iteration 14 published, 90.8 %**. Read as the records
+  the lists contain, the catalogue withdraws 294 blocks and republishes 51, not
+  2 931 and 2 680. **Four of the eight counterexamples iteration 13 was rebuilt
+  around are the same artifact**: all four of the Hawaiian intensity moves at an
+  unchanged reporter count stand at one crossing from `us/6000tk56` to
+  `hv/75018296`, and are two publishers disagreeing about one cell rather than
+  one record changing its mind. So iteration 14's Hawaiian instance — the first
+  in this work's history whose footer count of unreported intensity moves was not
+  zero — published the artifact: *4* there, **0** here, with 22 withdrawn instead
+  of 50 and 0 returned instead of 28. Iterations 1 to 14 stay frozen with all of
+  it, in the open. What changes in the pipeline: a block is named by its
+  publisher **and** its outline's centre; a version revises only the previous
+  version of its own publisher; a block stands against the epicentre its own
+  record published it under, so one publisher revising the origin no longer moves
+  the other's blocks; the other record's blocks are drawn, marked, with their
+  publisher named; the half-cell name check runs inside each publisher's grid;
+  and the file carries both readings — what the same history would say read as
+  one list, and what the two publishers disagree about where they name the same
+  ground.
+  And the crowd count is carried instead of recomputed. Every version had
+  recounted every pair of blocks standing in it, which on the new fifth event is
+  about 830 million comparisons: the file took **45 430 ms** to open. Carrying
+  the counts and paying only for arrivals and departures makes that **3 255 ms**,
+  with no new structure and the same numbers — both computations were run inside
+  every built file and compared, 5 789 357 counts, 0 disagreements.
+  Instances: `us6000tmta.html` (Japan), `us6000tm81.html` (Peru),
+  `us6000tjl2.html` (Colombia), `hv75018296.html` (Hawaii), and — the fifth, and
+  the demonstration — `nc75382936.html` (Redwood Valley, California, M 5.6, 2 587
+  blocks over 248 published versions), where **read as one list the record
+  withdraws 2 586 blocks and republishes 2 584, and read as the records it
+  contains it withdraws 2 and republishes 1**. Both numbers are in the file.
+  Checked by `check.js`, iteration 14's harness with the other publisher's marks
+  counted separately: 1 051 states per width at 1440, 1100 and 820 px — **3 153
+  checks, all passing**.

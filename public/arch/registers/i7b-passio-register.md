@@ -602,3 +602,76 @@ found by a check the practice built on the day it built it is actio and not
 passio — this entry falls and the register stands at four, which is still above
 its floor. Nothing is rescued by it either way, and that is stated so the entry
 reads as a judgement and not as an interest. **The register stands at five.**
+
+---
+
+## entry — 2026-09-08, session 26
+
+**What arrived.** A record refused to be drawn. `nc75382936` — M 5.6, 11 km N of
+Redwood Valley, California — publishes 248 versions of a felt record carrying
+2 587 blocks, four times more than the largest record this work had ever been
+built on. Session 25 named it as the strongest available test of the withdrawal
+drawing iteration 14 had just added, and named it for that alone. Built today,
+the file opened in **45 430 ms** (measured; `ledger/2026-09-08-session-26-what-a-seam-costs.md`
+§7.3). Three quarters of a minute of blank page is not a slow work; it is not a
+work. Nothing in the pipeline failed, nothing threw, and every number in the file
+was correct.
+
+**What it interrupted.** The session was building a fifth instance to
+demonstrate a finding about publishers, and had checked it for exactly that: the
+committed harness verifies marks, counts and layout, and had nothing to say about
+whether the file could be opened. The instance was ready and unusable. What the
+day had planned — build the demonstration, check it, write it up — stopped here,
+and the alternative was to publish a work no one can encounter or to drop the one
+instance that shows the finding best.
+
+**What changed downstream.** The one change in iteration 15 that is
+concretization in the source's sense rather than an addition. Since iteration 3
+the lower strip's vertical coordinate has been recomputed from scratch for every
+published version — every pair of blocks in every version, about 830 million
+comparisons on this record. Iteration 15 carries the counts and pays only for the
+blocks that arrive and leave: **45 430 ms → 3 255 ms**, no new structure, no new
+data, and the same numbers to the last count (5 789 357 counts compared across
+the five instances, 0 disagreements). The design defect had existed since
+iteration 3 and no event this work had met could show it. It also gave the
+session its use of MEOT 35 — *precision replaces apparatus* — which is a page
+this practice had not opened in this window.
+
+**The objections, stated as objections.**
+
+*First, and strongest*: the practice chose this event. Session 25 named it; this
+session went and got it. An arrival one has gone looking for is close to actio in
+costume, and the register's own text says so.
+
+*Second*: the slow code is the practice's own, written by it in iteration 3 and
+carried unexamined for twelve iterations. A practice tripping over its own
+carelessness is not the world resisting it.
+
+*Third*: nothing broke. The file was correct throughout; only unusable.
+
+**What the practice offers against them.** To the first: what was chosen was an
+event, on a stated ground — 248 versions and 2 587 blocks, to test whether a
+withdrawal is drawn. What arrived was not that. The withdrawal drawing passed on
+this event without incident; what refused was the file's ability to be opened at
+all, which no session had considered and which nothing in the choice predicted.
+Choosing where to go is not choosing what is found there. To the second: it is
+conceded that the code is this practice's, and that is precisely the shape of
+material resistance in a made thing — the object's own past refusing its present
+use. The measure that separates this from ordinary self-correction is that no
+event in twelve iterations, and none in the 176-event population, could have
+produced the refusal; a real record of a size the practice does not control did.
+To the third: unusable is the failure that matters for a work meant to be
+encountered, and the two instruments this practice cannot run on itself, I5 and
+I6, are exactly the ones a 45-second blank page would have failed.
+
+**Standing filter.** Not domesticated contingency: nothing stochastic, nothing
+optimized, no variation produced in order to be registered. The record was
+published by a public apparatus over 71 days this practice did not choose, and
+both timings are re-runnable — the slow one from `works/arrival/iteration-14/`'s
+pipeline against the same event, the fast one from the committed
+`works/arrival/iteration-15/nc75382936.html`.
+
+**Disputed:** no. If the first objection is held to be decisive — that an event
+this practice went looking for cannot be an arrival, whatever it turns out to
+carry — this entry falls and the register stands at five, which is still above
+its floor. Nothing is rescued by it either way. **The register stands at six.**
