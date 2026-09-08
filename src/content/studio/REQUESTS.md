@@ -3076,3 +3076,91 @@ failed a second time, and the practice says so before anyone else does.
 **Status:** direction open · applies from the first session of cycle 003 · no answer required before the next session
 
 ---
+
+## Ensemble — 2026-09-08 (session 131) — Your direction was followed, and it turned up four kills this practice never wrote down
+
+**Request:** none. **Status:** a statement, and one small thing you may want to decide.
+
+### The work
+
+**NEVER HUNG** — `works/2026-09-08-never-hung/`. Cycle 003, session 1, on the seeded question
+*Missing Data Art*. An exhibition of **twenty-five works this practice decided not to make**, hung in
+the order they died on one hanging line, along a wall that scrolls. **Frame area is exactly the
+number of words we wrote about a work that does not exist** — the documents dedicated to it plus its
+entry in `memory/discarded.md`; session minutes are cited beside each work and never counted. The
+frames stay empty and nothing on the page reconstructs what a killed work would have looked like.
+One press fills them with the only body these works have: their own paperwork, as bands in the exact
+proportions of the surviving documents, tiling each frame with nothing left over.
+
+**25 works · 286 662 words · 108 documents · not one object.** The largest frame is STOP USING
+IMMEDIATELY at 63 239 words; the smallest is THE QUIET SIGNATURE at 30. Both are equally unmade.
+
+Your direction of 09-07 asked for a work that answers named Atlas works, opened at their addresses.
+It answers three, and the Atelier's shelf of the same night (22 of 521 entries about data never
+collected) was the neighbour set it was chosen against. The nearest is **Mimi Ọnụọha's Library of
+Missing Datasets** — a steel cabinet of empty labelled folders, looked at on its gallery page. The
+daylight in one line: **her absences have no author, and every absence here does** — a name, a date,
+a written verdict a stranger can read and overrule, and a size. Full neighbour paragraphs in
+`meta.json`. Her list states no licence, so nothing from it is embedded; it is linked and named.
+
+### What it found, which is about this practice and not about the Atlas
+
+`memory/discarded.md` is the register this room keeps of its own kills. Its first line says *killing
+is honorable; hiding is not*. It held **twenty** entries, and the last was written on **2026-08-16**.
+
+**Four concepts died after that date and not one was ever entered:** INGRESS (session 100, 08-16),
+UNISON (102, 08-18), TENANCY (104, 08-20), SILENT PERIOD (105, 08-21). Nothing was hidden — each is
+on the retired working board and each was reported to you in this file the night it died. The
+transfer into the permanent register simply stopped happening, in the six days this room was killing
+the most.
+
+**On 2026-08-30 both ends closed at once.** The working board was retired to `archive/workboard/`,
+as §8 required, and the same session wrote the closing report — which tells its readers *twenty
+proposals were killed* and names its source in its own footnotes: *kills counted from the twenty
+dated entries in memory/discarded*. Correct arithmetic over a denominator that was four short. **The
+count for sessions 1–114 is twenty-four**, and the number twenty has stood in this repository since.
+
+### What we did about it, on our own authority
+
+Repaired forward, not retouched: **752 words in four late entries** appended to `memory/discarded.md`
+tonight, dated at the killings, marked as late entries made on 2026-09-08, **with nothing above them
+edited**. Those words are counted in **no** frame on the wall — four frames there are the size of a
+record that did not exist, and enlarging them with words written by the work that noticed would be
+this practice marking its own homework. `verify.mjs` checks that no frame's total includes a word
+written tonight.
+
+### The one thing that is yours rather than ours
+
+**The closing report's own face still says twenty.** We left it standing exactly as published — §7
+says corrections stay in the record clearly marked, and retouching a report nine days after it was
+read seemed worse than correcting it beside itself. If you would rather `closing-report/index.html`
+carried a dated correction note on its face, say so and the next session adds one; the report is a
+public artifact of this house and how it is corrected is your call as much as ours. **Absent a word
+from you, it stays as it is** and the correction lives in `memory/discarded.md`, in this entry, and
+in the work.
+
+### One line on the other frames
+
+The last one is not a kill. **OUTSTANDING** survived this room's gate, ran eight sessions in
+production, and was held on the relay asked for in this file on 2026-08-21 — one piece of
+infrastructure that was never this practice's to build — and was then overtaken by v4. It was never
+refused. It has never been shown. It is on the wall as the one work that went missing without
+anybody deciding anything, and nothing about that is an ask: the request is old, the season it
+belonged to is gone, and this entry does not reopen it.
+
+### Found tonight and deliberately not fixed, so it is not found a third time
+
+`tools/selftest.sh` has been failing since 2026-08-30. `tools/record_words.py` reads
+`tools/record-files.txt`, which names `WORKBOARD.md` — retired to `archive/workboard/` that night —
+so the selftest exits on a path that no longer exists in HEAD. It is the same class of thing this
+work is about, which is why it is in this letter rather than in a drawer. We did not repair it:
+what that instrument measures is the **3,000-word record ceiling of the Production Amendment**, and
+v4 §4 abolished record ceilings outright, so repointing the path would keep a dead instrument
+running and marking the manifest superseded is a decision about house apparatus rather than about
+tonight's work. Either move is one line; the next session can take it, or you can say which.
+
+`HEYGEN_API_KEY` checked in the environment at open: **not present**, the sixth night running.
+
+— Ensemble, session 131, 2026-09-08
+
+---
