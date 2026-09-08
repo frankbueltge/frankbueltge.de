@@ -3,7 +3,7 @@
  "note": "The work's ledger, derived from the committed record alone by build.py (FORM.md \u00a73). One entry per recorded wake of the practice's life; sky values as the archive first told them in the practice's committed slices; 'retold' where the archive's later generations re-said the hour. sky_eighths null = the world had not written that night as of the build.",
  "attribution": "Source: Deutscher Wetterdienst (DWD), Climate Data Center, hourly cloud cover (V_N, eighths), station 00433 Berlin-Tempelhof, CC BY 4.0",
  "sources": {
-  "join": "material/night-sky/2026-09-06-continuing/join.json",
+  "join": "material/night-sky/2026-09-08-continuing/join.json",
   "rewrites": [
    {
     "path": "material/night-sky/2026-08-24-continuing/indicator-rewrite-2026-08-20.txt",
@@ -100,6 +100,15 @@
      "at_or_after": "2026-09-05"
     },
     "retold_read": "2026-09-06"
+   },
+   {
+    "path": "material/night-sky/2026-09-08-continuing/indicator-rewrite-frontier.txt",
+    "first_read": {
+     "threshold": "2026090400",
+     "before": "2026-09-05",
+     "at_or_after": "2026-09-06"
+    },
+    "retold_read": "2026-09-08"
    }
   ],
   "readings": [
@@ -193,6 +202,13 @@
     "person_rows_begin": "2026-09-03 01:00 UTC",
     "window_end": "2026-09-04 23:00 UTC",
     "evidence": "material/night-sky/2026-09-06-continuing/"
+   },
+   {
+    "read": "2026-09-08",
+    "generation": "2026-09-07 08:17",
+    "person_rows_begin": "2026-09-05 01:00 UTC",
+    "window_end": "2026-09-06 23:00 UTC",
+    "evidence": "material/night-sky/2026-09-08-continuing/"
    }
   ]
  },
@@ -703,7 +719,14 @@
    "wake_utc": "2026-09-03T01:06:41Z",
    "berlin_local": "2026-09-03 03:06:41",
    "sky_eighths": 8,
-   "indicator": "P"
+   "indicator": "P",
+   "retold": {
+    "first": "P",
+    "current": "I",
+    "first_read": "2026-09-05",
+    "retold_read": "2026-09-08",
+    "evidence": "material/night-sky/2026-09-08-continuing/indicator-rewrite-frontier.txt"
+   }
   },
   {
    "session": "bell 26",
@@ -711,21 +734,36 @@
    "wake_utc": "2026-09-03T14:26:29Z",
    "berlin_local": "2026-09-03 16:26:29",
    "sky_eighths": 7,
-   "indicator": "P"
+   "indicator": "P",
+   "retold": {
+    "first": "P",
+    "current": "I",
+    "first_read": "2026-09-05",
+    "retold_read": "2026-09-08",
+    "evidence": "material/night-sky/2026-09-08-continuing/indicator-rewrite-frontier.txt"
+   }
   },
   {
    "session": "night 21",
    "record": "record 47",
    "wake_utc": "2026-09-05T01:03:15Z",
    "berlin_local": "2026-09-05 03:03:15",
-   "sky_eighths": null,
-   "indicator": null
+   "sky_eighths": 8,
+   "indicator": "P"
   },
   {
    "session": "night 22",
    "record": "record 48",
    "wake_utc": "2026-09-06T01:04:24Z",
    "berlin_local": "2026-09-06 03:04:24",
+   "sky_eighths": 8,
+   "indicator": "P"
+  },
+  {
+   "session": "night 23",
+   "record": "record 49",
+   "wake_utc": "2026-09-08T01:05:32Z",
+   "berlin_local": "2026-09-08 03:05:32",
    "sky_eighths": null,
    "indicator": null
   }
