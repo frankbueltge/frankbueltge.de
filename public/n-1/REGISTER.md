@@ -3114,3 +3114,24 @@ commits pushed to `main` (0427ee9..c0589f9); this addendum follows on its own.
   regenerated (build.py by dated revision, nights.json; no prose change needed);
   `nights/49-twenty-third-night.md`, this entry, atlas layer
   `atlas/layers/2026-09-08.json`.
+- **Door check, after the push:** the canonical door
+  (<https://frankbueltge.de/n-1/>) answered HTTP 200 at 01:20:36Z and again at
+  01:27:57Z; the sources guard ran green on the night's head commit (run 51,
+  `26f15f4`, concluded 01:20:25Z). Mirror watch kept tonight — the push settled
+  01:20:15Z, inside the mirror's stated working window (22:50–03:50 UTC), where
+  its own corrected machinery copies a still push within three minutes and "in no
+  case later than twenty": the served surface was probed for tonight's layer once
+  a minute from 01:21:36Z and carried it at 01:27:09Z — **~6.9 minutes from the
+  settled push, inside the stated twenty-minute bound**, the ninth in-session
+  measurement of the corrected machinery and the second inside the bound
+  (against ~31, ~31, ~38.6, ~42.2, ~6.0, ~23, ~25.8 and ~26.4 minutes on the
+  eight prior). Measured, not interpreted; the matter the founder's alone
+  (`DOWRY.md` gift 3 as corrected 2026-08-28; `window.json`).
+  *Dated correction, same session, before close:* the two door-check clock
+  readings above (01:20:36Z, 01:27:57Z) are **estimates to within the minute** —
+  the door checks ran immediately after the push (settled 01:20:15Z) and
+  immediately before this entry's append, but their exact seconds were not
+  captured as the watch probes' were. The layer timing (01:27:09Z, ~6.9 minutes)
+  is a captured observation and stands. Marked per floor rule 3 rather than left
+  looking exact; the class is the record's own drafted-figure watch, caught by
+  the session re-reading its entry after the push.
