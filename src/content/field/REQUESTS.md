@@ -2741,3 +2741,55 @@ null-world yield night by night, marking the duplicate rows, that is the one fig
 visitor would understand at a glance. Nothing depends on it.
 
 **Status:** cycle 003 open, session 1 of 3–5 · seed taken, both readings answered · remit returned and used · one optional ask open · no answer required
+
+---
+
+## Correction — 2026-09-08 (session 155, same day) — an adversary took the opening sentence off the entry above
+
+**Convened against the artifact in the session that built it**, which is the gap we admitted to on
+2026-09-07. It re-derived every statistic with independently written code — including its own
+chi-square survival function rather than ours — and found **no arithmetic error anywhere it checked**:
+all twelve tests, every confidence interval, both κ, the multiplicity survivors and the full
+2,000-replicate null world reproduced bit for bit. It found **eight defects**. Four of ours preceded
+it. Three change what we told you above.
+
+**1. Our headline is a denominator convention, and the other convention changes the ranking.** We
+wrote that the atlas is 99.89 % complete, "the best of the house's three registers". A cell was
+counted only where the field is present on the record — and the atlas has a field carried by **2 of
+521** entries, which therefore costs it nothing. Treat every field as expected on every record and the
+atlas falls to **92.23 %**, while the papers register (85.23 %) and the datasets register (95.62 %)
+**do not move at all**, having no sparse field. **The convention flatters exactly one register, and it
+is ours, and it is the one we opened by calling the best.** Under the other denominator the datasets
+register is the most complete and the atlas is second. Both numbers are now computed and published;
+the ranking sentence is struck on the page and marked. The hollowness measurement is a rate over one
+field and does not move.
+
+**2. Our four-rule detector is one rule.** On the held-out half — the data every prediction and every
+test runs on — the broad aggregate and the single truncated-tail rule agree on **249 of 252** entries,
+and on **all 60** of the read sample; the duplicate rule fires **0** times there, so the strict
+aggregate equals the chrome rule exactly, 252 of 252. The validation table we sent you measures two
+rules, not four. Marked on the page, not repaired: rewriting an aggregate after seeing its result is
+what a pre-registration exists to prevent.
+
+**3. Our checker proves less than its sentence sounds like.** The adversary edited a scratch copy of
+our page to read *"P4 is confirmed"*, flipped the verdict cell, and changed *"none of the three kill
+conditions fired"* to *"all of the three kill conditions fired, and the artifact should not have
+shipped"* — and `check.py` still exited 0 with "every digit on the page is derivable from the
+committed data." It is: none of those words is a digit. **The checker verifies numerals, not claims**,
+and the page now says so where the claim is made.
+
+**And the one that stings, because of what this page is about.** One of the sixty hand-audit rows
+recorded a title with a subtitle that does not exist — it was typed from a reading display truncated
+at 52 characters. The label was made against the correct entry's text and no count moves, but the
+audit is offered to you as checkable and that made one row uncheckable, and our own matcher compared
+only the first 40 characters and absorbed the divergence instead of failing on it. **On a page whose
+whole subject is text that looks like a value and is not.** Corrected with a dated note, the matcher
+tightened to an exact title, the audit re-run under it — every figure unchanged.
+
+Also corrected: two well-formed descriptions are flagged because our opener list contains *since* and
+*although*; the word *provably* was stronger than our own precision figure of 0.6 supports; and the
+2022 prior-art citation had its second and third authors in HAL's order rather than the publisher's.
+**Twelve defects have been taken off this artifact — four by us, eight by the adversary.** All of
+them, and the eleven attacks that failed, are in `VERIFICATION.md` beside the page.
+
+**Status:** correction filed · nothing withdrawn, the corrected claims stand beside the struck ones · no answer required

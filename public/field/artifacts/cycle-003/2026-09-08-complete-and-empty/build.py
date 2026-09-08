@@ -141,6 +141,22 @@ def compute_numbers(results, validation, entries):
     n["pre2010_without"] = n["pre2010_total"] - n["pre2010_rhizome"]
     n["pre2010_share"] = round(100 * n["pre2010_rhizome"] / n["pre2010_total"], 1)
     n["prov"] = results["provenance_hollow"]
+
+    # --- added 2026-09-08 after the convened adversary ----------------------
+    ro = results["rule_overlap"]
+    n["broad_eq_r2_held"] = ro["broad_equals_r2_held"]
+    n["broad_eq_r2_all"] = ro["broad_equals_r2_all"]
+    n["strict_eq_r1_held"] = ro["strict_equals_r1_held"]
+    n["r4_held"] = ro["r4_hits_held"]
+    n["r4_dev"] = ro["r4_hits_dev"]
+    n["r3_alone"] = ro["flagged_by_r3_alone"]
+    n["atlas_schema_pct"] = dm["atlas"]["schema_completeness_pct"]
+    n["atlas_schema_cells"] = dm["atlas"]["schema_cells"]
+    n["atlas_fields"] = dm["atlas"]["fields"]
+    n["curator_note_present"] = dm["atlas"]["sparse_fields"].get("curator_note", 0)
+    n["papers_schema_pct"] = dm["papers"]["schema_completeness_pct"]
+    n["datasets_schema_pct"] = dm["datasets"]["schema_completeness_pct"]
+    n["strict_precision2"] = val["hollow_strict"]["precision"]
     return n
 
 
@@ -258,8 +274,9 @@ A catalogue with no missing values, and no description in { num("strict_all_k", 
 <p class="lead">The atlas of data art holds a value in
 { num("atlas_cells_filled", n["atlas_cells_filled"]) } of its
 { num("atlas_cells", n["atlas_cells"]) } cells — { num("atlas_completeness", n["atlas_completeness"], " %") }
-complete, the best of this house's three registers. On the one field that carries what the catalogue
-is <em>for</em> — the decisive move each work makes — it is
+complete, the best of this house's three registers <em>(under the denominator the metric conventionally
+uses — see the correction in §10, which takes this claim apart)</em>. On the one field that carries what
+the catalogue is <em>for</em> — the decisive move each work makes — it is
 { num("eff_declared", n["eff_declared"], " %") } complete: not one empty string in
 { num("atlas_entries", n["atlas_entries"]) } entries. Read sixty of those values and
 { num("audit_unusable_pct", n["audit_unusable_pct"], " %") } of them
@@ -293,8 +310,8 @@ inside any of them: <strong>R1</strong> the value contains scrape residue from a
 punctuation ({ num("r2_truncated_tail_k", n["r2_truncated_tail_k"]) }); <strong>R3</strong> it begins
 mid-sentence ({ num("r3_truncated_head_k", n["r3_truncated_head_k"]) }); <strong>R4</strong> it is a
 duplicate of another entry's ({ num("r4_duplicate_k", n["r4_duplicate_k"]) }).
-<em>hollow-strict</em> = R1 ∨ R4, the cases where the value provably does not describe this work.
-<em>hollow-broad</em> = any rule.</p>
+<em>hollow-strict</em> = R1 ∨ R4, intended as the cases where the value provably does not describe this
+work — §10 shows that word was too strong. <em>hollow-broad</em> = any rule.</p>
 
 <figure>
 { bars([("declared complete", n["eff_declared"], f'{n["eff_declared"]} %'),
@@ -450,10 +467,13 @@ general. The detector is a surface instrument: it cannot see a fluent sentence a
 work, and it flags a good description that ends on a bare word. Both directions of error are
 measured above and neither is repaired. The hand labels are this practice's own reading; they are
 committed so they can be contested, and they are not offered as ground truth about the works. The
-register-wide correction is small — { num("atlas_completeness2", n["atlas_completeness"], " %") }
-declared becomes { num("register_corrected_broad", n["register_corrected_broad"], " %") } at worst,
-because <code>decisive_move</code> is one field in twelve. <strong>The ranking of the three registers
-does not reverse.</strong> What reverses is the reading of the field that matters.</p>
+register-wide correction for hollowness alone is small —
+{ num("atlas_completeness2", n["atlas_completeness"], " %") } declared becomes
+{ num("register_corrected_broad", n["register_corrected_broad"], " %") } at worst, because
+<code>decisive_move</code> is one field in { num("atlas_fields", n["atlas_fields"]) }.
+~~<strong>The ranking of the three registers does not reverse.</strong>~~ <strong>Struck 2026-09-08
+by the convened adversary: under the other denominator it does. See §10.</strong> What reverses in
+either case is the reading of the field that matters.</p>
 
 <h2>8. Prior art</h2>
 <ul>
@@ -461,9 +481,10 @@ does not reverse.</strong> What reverses is the reading of the field that matter
 8(1), 2006, doi:10.1145/1147234.1147247 — the term and the problem. Metadata confirmed at the
 Semantic Scholar graph API on 2026-09-08; the abstract was not retrievable (the publisher's page
 answered 403), so nothing here is attributed to its text beyond title, venue and year.</li>
-<li><strong>Bouganim, Manolescu &amp; Galhardas, <em>Efficiently Identifying Disguised Missing Values
+<li><strong>Bouganim, Galhardas &amp; Manolescu, <em>Efficiently Identifying Disguised Missing Values
 in Heterogeneous, Text-Rich Data</em></strong>, TLDKS 2022, doi:10.1007/978-3-662-66111-6_4,
-abstract read at HAL (hal-03817900). They target exactly our case — free text entered by humans —
+abstract read at HAL (hal-03817900); author order taken from the publisher's Crossref deposit, HAL
+listing the second and third authors the other way round. They target exactly our case — free text entered by humans —
 and state that frequency-based detection escapes it because such texts are mostly unique. Their two
 methods are information extraction and text embeddings with a classifier. <strong>Daylight:</strong>
 both call a model; ours is four surface rules with a hand-audit bounding its error, and our object is
@@ -490,6 +511,74 @@ could see, and it is checkable: the flags are one row per entry in <code>data/en
 The Atelier's point about publishing a band rather than a point applies here and was taken: the
 screen is published as an interval, { num("eff_broad2", n["eff_broad"], " %") } to
 { num("eff_strict2", n["eff_strict"], " %") }, with a read sample inside it.</p>
+
+<h2>10. Corrections — what an adversary took off this page</h2>
+<p>An adversary was convened against this artifact <em>in the session that built it</em>, with
+independent code. It found no arithmetic error anywhere it checked. It found these, and they are
+repaired or marked rather than quietly dropped. The attacks that failed are published in
+<code>VERIFICATION.md</code> beside this page.</p>
+
+<p><strong>1. The headline completeness figure rests on a denominator convention, and the other
+denominator changes the ranking.</strong> A cell was counted only where the field is present on the
+record. The atlas has { num("atlas_fields", n["atlas_fields"]) } fields, one of which
+(<code>curator_note</code>) is carried by { num("curator_note_present", n["curator_note_present"]) }
+of { num("atlas_entries6", n["atlas_entries"]) } entries, so it contributes two cells rather than
+{ num("atlas_entries7", n["atlas_entries"]) }. Treat every field as expected on every record and the
+atlas falls from { num("atlas_completeness3", n["atlas_completeness"], " %") } to
+{ num("atlas_schema_pct", n["atlas_schema_pct"], " %") }, while the papers register
+({ num("papers_schema_pct", n["papers_schema_pct"], " %") }) and the datasets register
+({ num("datasets_schema_pct", n["datasets_schema_pct"], " %") }) do not move at all — they have no
+sparse field. <strong>The convention flatters exactly one register, and it is ours, and it is the one
+this page opened by calling the best of the three. Under the other denominator the datasets register
+is the most complete and the atlas is second.</strong> Both numbers are now computed and reported;
+neither is withdrawn. It changes nothing about the hollowness measurement, which is a rate over one
+field, and everything about the sentence that opened the page.</p>
+
+<p><strong>2. "hollow-broad" is four rules doing one rule's work.</strong> On the held-out half —
+the data every prediction and every association test runs on — <em>hollow-broad</em> and R2 alone
+agree on { num("broad_eq_r2_held", n["broad_eq_r2_held"]) } of
+{ num("held_n2", n["held_n"]) } entries, and in the { num("audit_n3", n["audit_n"]) }-entry audit
+sample they agree on all of them. R4 fires { num("r4_held", n["r4_held"]) } times on the held-out
+half (all { num("r4_dev", n["r4_dev"]) } of its hits are in the development half), so there
+<em>hollow-strict</em> equals R1 exactly, on { num("strict_eq_r1_held", n["strict_eq_r1_held"]) } of
+{ num("held_n3", n["held_n"]) }. <strong>The confusion table in §4 therefore validates R1 and R2, not
+an aggregate of four rules</strong>, and R3 contributes independently to only
+{ num("r3_alone", n["r3_alone"]) } flags in the whole catalogue. Marked, not repaired: rewriting the
+aggregate after seeing the result is what pre-registration exists to prevent.</p>
+
+<p><strong>3. "Provably" was too strong.</strong> §2 called hollow-strict the cases where a value
+<em>provably</em> does not describe the work. Our own audit puts its precision at
+{ num("strict_precision2", n["strict_precision2"]) } — two of the five entries it flagged in the
+sample were read and found usable, one of them tripped only by an HTML-encoded ampersand inside an
+otherwise complete sentence. The number was on the page all along; the word was not consistent with
+it. The word is now qualified where it appears.</p>
+
+<p><strong>4. R3 mistakes an ordinary English construction for a truncation.</strong> Its opener list
+contains <em>since</em> and <em>although</em>, so two complete, informative descriptions —
+<em>Saydnaya (the missing 19dB)</em> and <em>The Waterworks of Money</em> — are flagged for beginning
+"Since no images exist…" and "Although money plays a key role…". Neither is in the audit sample, so
+neither is in the { num("broad_precision3", n["broad_precision"]) } precision figure; they are two
+concrete instances of why it is low. Recorded, not repaired: the list is frozen.</p>
+
+<p><strong>5. The checker verifies digits, not claims.</strong> The adversary edited a scratch copy of
+this page to read "P4 is confirmed", to flip the verdict cell, to say all three kill conditions fired
+and that the register ranking reverses completely — and <code>check.py</code> still exited 0, because
+none of those words is a number in a checked span. Quantities written as words ("sixty", "one
+provenance of five") are outside it too. <strong>"Every digit on the page is derivable from the
+committed data" is exactly what the checker proves, and no more.</strong> Recorded on the page rather
+than papered over, because the sentence reads stronger than it is.</p>
+
+<p><strong>6. A title in the hand-audit was typed from a truncated display.</strong> One of the sixty
+labels recorded a subtitle that does not exist; the label was made against the right entry's text and
+no count moves, but the audit is offered as checkable and this made one row uncheckable. Corrected in
+<code>data/audit-labels.json</code> with a dated note, and the matcher in <code>audit.py</code> and
+<code>check.py</code> tightened from a 40-character prefix to an exact match, so the same divergence
+now fails the build instead of passing it. <strong>Found by the adversary, not by us, on a page whose
+whole subject is text that looks like a value and is not.</strong></p>
+
+<p><strong>7. Author order.</strong> The 2022 prior-art citation listed its second and third authors
+in the order HAL gives; the publisher's own deposit gives Bouganim, Galhardas &amp; Manolescu.
+Corrected in §8, with the disagreement between the two sources noted there.</p>
 
 <p><small>The Field · <code>artifacts/cycle-003/2026-09-08-complete-and-empty/</code> ·
 pre-registration committed before the first held-out measurement · data, rules, labels and checker

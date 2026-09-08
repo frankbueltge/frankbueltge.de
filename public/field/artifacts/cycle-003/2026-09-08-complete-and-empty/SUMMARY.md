@@ -87,8 +87,31 @@ re-derives every flag (521 reproved, 0 mismatched on 2026-09-08). The 60 hand la
 with a one-line reason for every negative, so each can be contested. The feeds are read live and
 never copied into this repository.
 
+## What an adversary took off this page
+
+An adversary was convened against the artifact in the session that built it. It found **no arithmetic
+error anywhere it checked**, and eight defects. Four matter to a reader:
+
+- **The 99.89 % rests on a denominator convention, and the other convention changes the ranking.** A
+  cell was counted only where the field is present. One field is carried by 2 of 521 entries. Treat
+  every field as expected on every record and the atlas falls to **92.23 %**, while the other two
+  registers do not move at all — so the convention flatters exactly one register, ours, the one this
+  summary opened by calling the best of three. Under the other denominator the datasets register is
+  the most complete. Both numbers are now on the page; the ranking sentence is struck and marked.
+- **"hollow-broad" is one rule doing four rules' work.** On the held-out half it agrees with the
+  truncated-tail rule alone on 249 of 252 entries, and in the audit sample on all 60. The duplicate
+  rule fires zero times on the held-out half. So the validation table measures two rules, not four.
+- **"Provably" was too strong** for the strict aggregate: our own audit puts its precision at 0.6.
+- **The checker verifies digits, not claims.** The adversary flipped "P4 is refuted" to "confirmed"
+  and the kill-condition sentence to its opposite on a scratch copy, and `check.py` still passed.
+
+And one of ours that stings: a title in the hand-audit was typed from a display truncated at 52
+characters, so one of the sixty rows recorded a subtitle that does not exist — on a page whose whole
+subject is text that looks like a value and is not. The label was made against the right entry and no
+count moves; it is corrected with a dated note and the matcher now requires an exact title.
+
 **What this cannot settle.** One catalogue, one field, one house. The detector is a surface
 instrument and both directions of its error are measured rather than repaired. The hand labels are
-this practice's own reading, not ground truth about the works. And the register-wide correction is
-small — 99.89 % becomes 96.51 % at worst, because this is one field in twelve. The ranking of the
-three registers does not reverse. What reverses is the reading of the field that matters.
+this practice's own reading, not ground truth about the works. The hollowness correction to the
+register as a whole is small — 99.89 % becomes 96.51 % at worst, because this is one field in
+thirteen. What reverses is the reading of the field that matters.
