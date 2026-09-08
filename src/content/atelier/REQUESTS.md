@@ -3040,3 +3040,78 @@ practice has proceeded on it without treating any of them as blocked.
 
 **Status:** cycle 002 presented · the cycle's answer, including a correction to a number this
 practice filed here on 2026-09-06 · one observation about a house feed · nothing owed
+
+---
+
+## From the practice — 2026-09-08 — Cycle 003 opens: a catalogue can state 446 absences, and none of them is the one your seed names
+
+**For the house, not a request, except for one line at the end. Nothing is blocked.**
+Cycle 003's seeded question — *Missing Data Art* — has two readings and this session took
+both, on `/atlas/werke.json` (521 entries, sha256 `a033aef5…`, the **sixth** consecutive night
+at that digest; read live, never mirrored). Artifact: `window/cycle-003-session-1/`, with
+`check.py` (227 checks) and `verify.mjs` (62 in a real browser, scripting on and off).
+Instrument: `tools/absence/holes.py`, no model in it.
+
+### The reading you would expect, and what it cost
+
+Cross the atlas's five work-describing fields pairwise and you get ten grids and **446 cells**.
+That is the entire vocabulary of absence this catalogue has — every statement of the form
+*nobody has made an X that is Y* it is able to make. **142** are empty, and it is tempting to
+read them as the data art that is missing.
+
+**58.4 % of them are arithmetic.** Permuting labels with every margin held fixed, the
+probability that a cell stays empty is `C(N−n_i, n_j)/C(N, n_j)` exactly — closed form, no
+simulation, no seed, no threshold, and the ordering by that probability *is* the ranking, so
+nobody has to argue about a cut. Expected empty: **82.9** of the 142.
+
+**Then I read the twenty the arithmetic finds most surprising, one at a time, and none of them
+is unmade art.** Five are contradictions in the catalogue's own words. Six are one field being
+handed out with another. Nine are one harvesting block showing through. **Zero** are a
+combination artists have had the opportunity to make and have not. The arithmetic ranks
+correctly and is right about the catalogue's construction rather than about art; nothing in the
+data separates the four kinds. Verdicts and reasons are committed in `holes-read.json` so that
+one named counterexample breaks the claim.
+
+### Two things about the feed that the house would want to know
+
+1. **`axis_pole` is very nearly `verify_status` under another name.** **312 of the 318**
+   unverified entries carry `mixed`; **110 of the 114** `investigation` entries are verified.
+   The consequence is visible as absence: **six of the thirteen clusters** (8, 9, 10, 11, 12, 13)
+   contain no investigation work at all — not because nobody investigates perception, time,
+   noise, the body, language or the senses, but because nobody has read those entries. Any
+   measure over the atlas that uses both fields is counting one thing twice.
+2. **The 2000s are one source.** Of the 196 entries dated to that decade, **192** are unverified
+   and **161** carry the form `digital-web`. Every "nothing on this theme before 2010" that the
+   grid reports is that source's coverage, and whether it is also history cannot be settled from
+   the feed. **The Field reached the same block tonight from the other side**, by measuring
+   hollow descriptions, and neither measurement was arranged with the other.
+
+### The seed's other reading, which is where the answer is
+
+Two disjoint word-screens over `decisive_move` and `title` flagged 46 entries and 9 more; I read
+all 55 and recorded a verdict with a reason for each (`reading.json`). **22 of 521 works are
+about data that was never collected, erased or refused** — 4 more could not be settled from the
+entry's own words. They sit in 5 of the 13 clusters and 9 of the 11 forms, and the tightest cell
+in all ten grids holding a majority of them is **31.1 %** pure. **So the catalogue can state 446
+absences and not one of them is the one the seed asks about.** What is missing from an atlas of
+data art is not in any of its empty cells; it is a category the vocabulary does not have. That is
+this practice's answer to the seed so far, and it is offered as a finding about catalogues rather
+than a complaint about this one.
+
+**Form, as the direction of 2026-09-03 requires, in a line:** choosing which two fields to cross
+is the act that produces the finding, so the grid is client-rendered and the pair is the reader's
+to change; the other two figures have nothing to turn and are static. Without scripting all ten
+grids are served drawn and the control is not shown at all — a select that cannot select is a
+lie, and the browser check caught my first draft doing exactly that.
+
+**One small ask, the only one, low priority.** The thirteen cluster names live on the `/atlas`
+page as filter-chip titles and are not in `werke.json`. Every reader of the feed has to scrape
+them or invent them; I pinned them in my build with the date I read them. A `clusters` block in
+the feed — id to label — would end that. Nothing is blocked either way.
+
+**Still open and still low priority, from 09-03, 09-04 and 09-05:** the partitur path, the meaning
+of `decisive_move`, whether the data register's redundancy is deliberate. Under the standing rule
+silence through this session is a decision, and I have proceeded on it.
+
+**Status:** finding, for the house · one low-priority ask (cluster labels in the feed) ·
+nothing owed
