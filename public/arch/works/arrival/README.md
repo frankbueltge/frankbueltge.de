@@ -522,3 +522,54 @@ rule.
   Checked by `check.js`, iteration 14's harness with the other publisher's marks
   counted separately: 1 051 states per width at 1440, 1100 and 820 px — **3 153
   checks, all passing**.
+
+- **`iteration-16/`** — session 27. The pick's name carries its record too, and
+  the seam this work drew over from its ninth iteration is drawn. Iteration 15
+  gave the block's name its publisher on the felt half only; the arrival half
+  kept iteration 9's name — the published network and station code with the
+  published phase label — and went on looking for a pick's previous position in
+  every earlier version whoever published it. Over the same 491-event catalogue
+  the arrival record's seam is seven times denser than the felt record's: 1 588
+  published `phase-data` versions in 1 097 consecutive pairs, 16 events with more
+  than one publisher, **50 crossings — 4.6 % against 0.61 %**. What a crossing
+  does to that name is the opposite of what it does to a block's, and that is the
+  whole of this iteration. A block's name is geometry, computed alike by both
+  publishers, so it survives a crossing and the old rule read one record as
+  revising the other. **A pick's name is each publisher's own vocabulary and does
+  not survive one at all**: median survival across the 50 crossings is **0.000**,
+  8 037 of 8 097 names dropped and 8 784 added, against a median of 1.000 within
+  one publisher — because the regional networks publish only `P` and `S` where
+  `us` publishes `Pn`, `Pg`, `Sn`, `Sg` for the same near field, and only about a
+  third of the stations are shared anyway. **So the seam was not corrupting this
+  work's arrival arithmetic; it was truncating it.** Every arrival figure in
+  iteration 15's five instances is correct — not one name survives any of the
+  eight crossings on its two seam instances — and this is the first seam check in
+  three sessions to leave a published number standing. What was wrong is what the
+  file said: a denominator counting versions of a record the picks were never in,
+  a readout asserting *"moving the epicentre by X km"* where nothing moved and
+  another record was served, and a timeline drawing a crossing as an unexplained
+  collapse. All three are corrected. Where the name *does* survive it survives
+  into a falsehood: **60 names survive a crossing in the whole population, on
+  three events, and all 60 publish a different arrival instant** — the condition
+  under which this work draws a re-picked tail and says the station remade its own
+  pick. None did. Four of them, on `us7000t2wx`, are remade and unremade: one
+  instant by `us`, another by `ak` for twenty-three versions, the first again.
+  That event has no felt record at all — 93 km off Adak — so the clearest case in
+  the population is undrawable by this work, and lives only in the record.
+  What changes in the pipeline: an arrival version carries its publisher; a pick
+  is named by that publisher with its station code and phase label; a version
+  revises only the previous version of its own record; both readings are computed
+  inside every build at every version in force and the count of disagreements
+  travels into the file; and the build ends by listing every guard that fired,
+  marked `!!`, where the build is read rather than only in the artifact — because
+  iteration 9's pick-name guard fired 10 on the Hawaiian instance, was published
+  by iterations 14 and 15, and went unread here for two sessions (MEOT 143, the
+  Watt governor: regulation on the same channel as the thing regulated).
+  Instances: the five of iteration 15, whose `counts` are identical to iteration
+  15's but for seven added fields, and — the sixth, and the demonstration —
+  `aka2026msxacu.html` (Cordova, Alaska, M 5.3), which carries 42 of the 60
+  surviving names and is the only event in this work's reach where the two rules
+  give a built file different numbers: at its last version **99 picks with a
+  predecessor and 98 movements become 72 and 71**. Both numbers are in the file.
+  Checked by `check.js`, unchanged from iteration 15: 1 250 states per width at
+  1440, 1100 and 820 px — **3 750 checks, all passing**.

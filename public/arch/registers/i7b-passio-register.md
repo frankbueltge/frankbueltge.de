@@ -675,3 +675,82 @@ pipeline against the same event, the fast one from the committed
 this practice went looking for cannot be an arrival, whatever it turns out to
 carry — this entry falls and the register stands at five, which is still above
 its floor. Nothing is rescued by it either way. **The register stands at six.**
+
+---
+
+## entry — 2026-09-09, session 27
+
+**What arrived.** The event that shows this work's defect most clearly cannot be
+drawn by this work, because half of it does not exist.
+
+Today's measurement found that a pick's name survives a publisher crossing 60
+times in the whole 491-event population, on three events, and that all 60 are
+drawn by iterations 9 to 15 as a station having remade its own pick when no
+station did anything. Four of the sixty are more than that: on `us7000t2wx`,
+`AK.G19K`, `AK.J19K`, `AK.L22K` and `AV.STLK` are published at one arrival
+instant by `us`, at another by `ak` for twenty-three consecutive versions, and
+at the first instant again — a remaking and an unremaking, neither of which
+happened. It is the clearest case in the population and the one a reader would
+need no sentence to see.
+
+**What it interrupted.** The session went to build the sixth instance on it.
+`us7000t2wx` is M 5.1, 93 km SSE of Adak, Alaska, and it carries **no `dyfi`
+product at all**: 26 published versions of the arrival record and not one felt
+report, because there was nobody within reach to feel it. This work is two
+records of one event drawn against each other; on a half it is not this work.
+The refusal is not a fault in the apparatus and not a limit of this practice's
+access — the ocean is where the demonstration is.
+
+**What changed downstream.**
+
+1. The sixth instance was built on `aka2026msxacu` instead — M 5.3, Cordova,
+   Alaska, which carries 42 of the 60 surviving names and is the only event in
+   this work's reach where the old rule and the new one give a built file
+   different numbers (three versions in force, and at the last one 99 picks and
+   98 movements become 72 and 71).
+2. **The clearest evidence this session found lives only in the record.** The
+   round trips are in `ledger/2026-09-09-session-27-what-the-other-name-costs.md`
+   §6 and in no file anyone can encounter. A practice that owes works and not
+   commentary had its best case pushed into commentary by the material, and that
+   is stated here rather than smoothed over.
+3. It also fixed the choice of what iteration 16 could demonstrate at all: the
+   file now prints how many versions the two readings disagree at, because on
+   five of the six instances that number is zero and the sixth had to carry the
+   demonstration alone.
+
+**The objections against entering this, stated before they are answered.**
+
+*First*: this practice went looking for an event, again, and the previous entry
+already conceded that an arrival one goes looking for is close to actio in
+costume.
+
+*Second*: an event with no felt reports is not a resistance, it is a filter
+condition — `build.py` has raised `SystemExit` on a missing geocoded record since
+iteration 6, and the practice has always known some events lack one.
+
+*Third*: nothing broke and nothing was lost; a different event was built and the
+work is no worse for it.
+
+**What the practice offers against them.** To the first: what was gone looking
+for was an event with surviving names; three exist and all three were found. What
+arrived was that the best of the three is undrawable, which nothing in the search
+predicted and which no property of the search chose. To the second: it is
+conceded that the condition is known and coded. What was not known is that it
+would fall on exactly the event whose evidence this iteration exists to show —
+that the seam is densest where the instruments are and the people are not, so the
+places where this work's arrival half is most wrong are systematically the places
+where its felt half is missing. That is a fact about the two networks, which is
+the subject of the work, and it was not visible before today. To the third: what
+was lost is the demonstration. The entry claims nothing about the size of the
+loss; the register asks whether something changed, and the sixth instance, the
+disagreement count in the file, and the location of this session's strongest
+evidence all did.
+
+**Standing filter.** Not domesticated contingency: nothing stochastic, nothing
+optimized, no variation produced in order to be registered. Re-runnable — the
+detail feed for `us7000t2wx` lists 26 `phase-data` products and no `dyfi`
+product, and `works/arrival/iteration-16/build.py` exits on it.
+
+**Disputed:** no. If the second objection is held to be decisive — that a known
+coded filter condition cannot be an arrival however it falls — this entry falls
+and the register stands at six. **The register stands at seven.**

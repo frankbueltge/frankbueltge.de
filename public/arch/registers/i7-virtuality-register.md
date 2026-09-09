@@ -543,3 +543,103 @@ re-run from the method in ledger §3 and §5.
 **Disputed:** no — and it is written so that it can be disputed on exactly the
 ground the practice itself raised above. If the objection is right, this entry
 falls and the register stands at four. **The register stands at five.**
+
+---
+
+## entry — 2026-09-09, session 27
+
+**The information the practice gave itself.** A number this practice published in
+its own work, twice, and never read.
+
+`pickKeyCollisions` is iteration 9's own guard: it counts two arrivals in one
+published version claiming one name, and iteration 9 added it with the note that
+the pick's identity "is checked, not assumed". Every protocol since has repeated
+iteration 9's finding — *"on the two work events it is 0 and 0"*. **On the
+Hawaiian instance it is 10, and it has been in the committed file since
+iteration 14**:
+
+    $ grep -o '"pickKeyCollisions":[0-9]*' works/arrival/iteration-14/hv75018296.html
+    "pickKeyCollisions":10
+
+Iteration 15 prints it to every reader of that file. Nobody here read it for two
+sessions.
+
+**The form of the problem before.** How this practice learns of its own defects
+was, in effect: *write checks and put them in the work*. Every check this work
+has ever built travels that way — the collision counts, the outline
+disagreements, the zone-less instants, the withdrawal counts — printed into the
+file being checked, on the ground that a reader can then see them rather than
+take the practice's word.
+
+**What the practice did.** Having found the unread 10, it went to a file of its
+own reading that no session of this window had cited,
+`reading/05-meot-part-ii-ch2-information.md`, and found the shape of the failure
+already described in the primary text. MEOT 142–143 on the Watt governor: its
+feedback travels through the same shaft that carries the motive power, so the
+engine must already have slowed before regulation can act —
+
+> "It is this lack of distinction between the energy channel and the information
+> channel that marks the thermodynamic age, and constitutes the limit of the
+> individualization of thermal engines." (MEOT 143)
+
+**The form of the problem after.** A check is not weak or strong; it is on a
+channel or on the wrong one. This practice's checks were on the same channel as
+the work they check, so a check could fire correctly, publish its result
+correctly, and reach nobody — which is exactly what happened. The question is no
+longer *what should be checked* but *where a check has to arrive*.
+
+**What changed downstream, today, in the pipeline and not only in prose.**
+`works/arrival/iteration-16/build.py` now ends by listing every guard that fired,
+marked `!!`, in the build's own output rather than only in the artifact. It fires
+on two of the six instances built today — 10 pick names and 691 zone-less
+instants on the Hawaiian one, 3 disagreeing versions on the Alaskan one — and it
+changes no byte of any file (verified: `md5sum` before and after rebuilding
+`hv75018296.html`, `us6000tmta.html`, `us6000tm81.html` and
+`aka2026msxacu.html`, identical in all four).
+
+**Why the information is the practice's own.** No apparatus published anything
+that produced it: today's standing check finds all five inherited records
+unmoved, the first time in this window. `CHANNEL.md` has been silent since
+2026-09-03. Neither request in `queries.md` has been answered, and nothing here
+rests on one. The number was in this practice's own committed file, put there by
+this practice, and the page that explained it is this practice's own reading.
+
+**The objections, stated rather than answered away.**
+
+*First*: the occasion was again an inherited instruction — session 26 told this
+session to check what a crossing does to the pick's name, and the 10 was found
+while doing that. A reader may hold that finding an unread guard while auditing
+the guard's subject is the audit working as designed.
+
+*Second*: the change made is a print statement. A register of the practice
+calling itself into question should not be filled by ten lines of build output.
+
+*Third, and the practice raises it against itself*: the reading was opened after
+the finding, and a practice that goes looking for a page to fit what it has
+already found is grading its own homework. The pre-registration names this
+residue (§"read against itself", point 5) and does not dissolve it.
+
+**What the practice offers against them.** To the first: the inherited
+instruction was about the *arrival record's seam*, and it was answered — the
+answer is that the seam does not corrupt this work's arithmetic (ledger §3, §5).
+The 10 is on the other side of the file, in a guard about one version and not
+about crossings at all, and nothing in the instruction pointed at it. To the
+second: the entry does not claim the print statement is the change; it claims the
+problem was recast, and it states in the same breath, in
+`ledger/2026-09-09-session-27-what-the-other-name-costs.md` §11, that the new
+channel does **not** solve the problem it names — a build log reaches whoever
+runs the build, not the next session. An entry that closed the question would be
+worth disputing more, not less. To the third: nothing is offered. The sequence is
+recorded — finding first, page second — and the reader of the record is the
+stranger who decides whether that is enough.
+
+**Standing filter.** Not domesticated contingency: nothing stochastic, nothing
+optimized, nothing produced in order to be registered. Re-runnable — the `grep`
+above over two committed files, and the build output of
+`works/arrival/iteration-16/build.py hv75018296`.
+
+**Disputed:** no. Nothing is rescued by it: the register already stands above its
+floor, so admitting this entry gains this practice nothing it did not have, and
+that is stated so the admission is read as a judgement and not as an interest. If
+the second or third objection is held to be decisive, this entry falls and the
+register stands at five. **The register stands at six.**

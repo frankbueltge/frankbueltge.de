@@ -757,3 +757,63 @@ both unclassified days go to the balance in those words.
 two notes of 2026-09-03 stand as read on that date.
 
 Nothing has left this repository and nothing will without a dated go-ahead here.
+
+---
+
+## entry — 2026-09-09, session 27 (Arch) — three sentences in the newest version are false, a check that fired unread, and nothing is asked
+
+Notification only. **No question is asked in this entry**, and nothing below says
+what any version of the work shows; that distinction was drawn on 2026-08-25 and
+is kept. This entry exists under the rule published on 2026-08-30: a version has
+been found defective.
+
+**1. The candidate is now `works/arrival/iteration-16/`**, with **six** built
+instances rather than five. If a reception probe is being arranged, arrange it on
+16.
+
+**2. Yesterday's version puts three false sentences in front of a reader, and
+none of its numbers is wrong.** The check yesterday's protocol asked for was run
+today over the same public population, and it came back the other way round from
+the last two: the identity this work uses on the half it had not examined turns
+out to break so completely at the seam between two publishers that nothing could
+ever have been mis-joined by it. Every figure in yesterday's five instances is
+correct, and this is the first such check in three sessions to leave a published
+number standing. What is wrong is what the file *says* about where those figures
+came from, at the instants where the seam falls — a denominator that counts a
+record the measurement never touched, a sentence asserting movement where nothing
+moved, and a drawing that shows a collapse with no cause. All three are corrected
+in 16, beside themselves; 15 stays frozen with them, in the open.
+
+**3. A check this practice built into its own work fired correctly, published its
+result in two committed versions, and was read by nobody here for two sessions.**
+That is not a wrong number anywhere. It is a guard on the wrong channel, and the
+primary text turns out to describe the failure exactly — in a chapter of this
+practice's own reading that no session of this window had opened. The pipeline
+was changed today in consequence, and the change is small and does not solve the
+problem it names; that is said plainly in the ledger rather than softened. What
+this is, in detail, is in `record/2026-09-09-session-27.md` and
+`ledger/2026-09-09-session-27-what-the-other-name-costs.md`, and is deliberately
+not repeated here.
+
+**4. The event that shows this work's defect most clearly cannot be drawn by
+this work**, because half of the material does not exist for it: the seam is
+densest where the instruments are dense and no one lives, so the places where
+this work is most wrong are the places where its human half is missing. The sixth
+instance was built on the next best event instead. It is entered in the passio
+register, with the objections against entering it; an entry was also made in the
+virtuality register, with its objections.
+
+**5. Nothing is asked, and the two requests of 2026-09-06 are not restated.**
+They still stand in `queries.md`, now for the fourth session; nothing is blocked
+on them, and this practice will not reconstruct their answers. The three
+questions standing since 2026-08-25 and 2026-08-28 and the two unclassified days
+are likewise not restated. The consequences recorded then are unchanged: if the
+reception probe does not run before 2026-09-21, the work triad cannot hold on any
+work, and by this window's own definitions that is failed, not inconclusive; and
+both unclassified days go to the balance in those words.
+
+**6. Today is day 18 of 30, and this is the twenty-seventh dated protocol.** For
+the first time in this window not one of the five records this work is built on
+moved overnight. Your two notes of 2026-09-03 stand as read on that date.
+
+Nothing has left this repository and nothing will without a dated go-ahead here.
