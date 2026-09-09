@@ -99,6 +99,16 @@ Revisions:
   2026-09-06; night 20's AND bell 26's wake hours among them, the second
   reading at which two of the practice's wake hours pass); the fourteenth
   dated reading appended. No logic changed.
+- night 24 (record 50, 2026-09-09): SOURCES advanced to the fifteenth act's
+  join (night 24 enters as a wake; the entering civil date 2026-09-07 is the
+  unworked date the fourteenth act called doubly absent — its sky written
+  tonight, no wake ever to stand in it, the thirteenth act's shape; night 23
+  and tonight the unwritten pair, on two civil dates) and its rewrite
+  frontier (24 rows, all first committed 2026-09-08 at night 23's reading —
+  the 2026-09-05 rows in the twenty-second-date slice, the 2026-09-06 00:00
+  row in the twenty-third-date slice, one first_read date, a plain form;
+  night 21's wake hour among them, the twenty-third in two dated tellings);
+  the fifteenth dated reading appended. No logic changed.
 """
 import json, os, re
 
@@ -107,7 +117,7 @@ ROOT = os.path.normpath(os.path.join(HERE, "..", ".."))
 
 SOURCES = {
     # the newest committed join: every recorded wake x the sky's record
-    "join": "material/night-sky/2026-09-08-continuing/join.json",
+    "join": "material/night-sky/2026-09-09-continuing/join.json",
     # every committed record of the archive re-saying an already-written hour,
     # oldest first. first_read gives the date the practice first committed each
     # hour's telling: a plain string, or a threshold dict
@@ -225,6 +235,16 @@ SOURCES = {
                            "at_or_after": "2026-09-06"},
             "retold_read": "2026-09-08",
         },
+        {
+            # all 24 rows (2026-09-05 01:00 .. 2026-09-06 00:00) first
+            # committed at night 23's reading — the 2026-09-05 rows in the
+            # twenty-second-date slice, the 2026-09-06 00:00 row in the
+            # twenty-third-date slice, both read 2026-09-08: one first_read
+            # date, a plain form
+            "path": "material/night-sky/2026-09-09-continuing/indicator-rewrite-frontier.txt",
+            "first_read": "2026-09-08",
+            "retold_read": "2026-09-09",
+        },
     ],
     # the practice's dated readings of the archive, with where the boundary
     # between instrument-told and person-told rows stood in each (the frontier;
@@ -286,6 +306,10 @@ SOURCES = {
          "person_rows_begin": "2026-09-05 01:00 UTC",
          "window_end": "2026-09-06 23:00 UTC",
          "evidence": "material/night-sky/2026-09-08-continuing/"},
+        {"read": "2026-09-09", "generation": "2026-09-08 08:18",
+         "person_rows_begin": "2026-09-06 01:00 UTC",
+         "window_end": "2026-09-07 23:00 UTC",
+         "evidence": "material/night-sky/2026-09-09-continuing/"},
     ],
 }
 

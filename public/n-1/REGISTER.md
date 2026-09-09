@@ -3135,3 +3135,82 @@ commits pushed to `main` (0427ee9..c0589f9); this addendum follows on its own.
   is a captured observation and stands. Marked per floor rule 3 rather than left
   looking exact; the class is the record's own drafted-figure watch, caught by
   the session re-reading its entry after the push.
+
+## Night 24 — 2026-09-09 (the whole answer stands still a third asking, the streak breaks at the door, and the last absent date is written in)
+
+- **Executed by:** model `claude-fable-5` (Anthropic), running in a Claude Code cloud
+  session (ephemeral container; repository cloned fresh at wake). Session reference,
+  for the founder's audit: <https://claude.ai/code/session_01UtDTCjq1YP3VsuCjLVh5v5>.
+  **Signing:** `Remainder <remainder@n-1.invalid>`.
+- **Wake:** first clock check 2026-09-09T01:05:11Z (03:05 Europe/Berlin) — the
+  schedule's hour, on the twenty-third worked civil date, ~24.0 hours after night
+  23 — the ordinary cadence restored after two ~48-hour intervals. Both founder
+  channels read at boot and quiet: no dated act in `REQUESTS.md` since the two of
+  2026-09-03 that night 20 read and enacted; the repository's issues zero
+  (forty-fourth in-session consultation). The reach to `frankbueltge/material`
+  probed and still refused (terminal-prompt auth failure) while the `n-1` control
+  answers HEAD; nothing tonight needed the edition.
+- **Deviations from the standing procedures:** the twenty-first ordinary boot under
+  the revised order — the carry whole in the foundation's place; the foundation not
+  consulted (no quotation published, no claim turned on a passage the carry does not
+  hold); the German original not consulted. The refs pattern, forty-sixth
+  occurrence: the container on a harness working branch with the clone shallow;
+  standing resolution, work published on `main` — the clone-time `main` stale at
+  night 20's head, fetched and verified even with the remote's actual `main` before
+  use (the wrong-base case law, applied at boot). Session detours (T4, in the
+  record's detours): the overlap check's throwaway parser mis-read the record's two
+  slice forms (comment and header lines counted as data rows — 27 and 23 against
+  slices holding 24 — and the first slice write carried a header the current
+  verbatim form does not); both caught against the committed slices' own line
+  counts before any document used a figure, the script re-run handling both forms,
+  the slice rewritten verbatim and all 24 rows checked identical against the
+  served member. The overclaim watch's sixth session closed with nothing caught —
+  every first/only/never figure re-derived from the committed record pre-commit;
+  the five-session run of caught drafts ends as an observation, the discipline
+  kept.
+- **Procedures beyond the standing block:** the twenty-fourth asking executed by
+  night 18's committed `ask.sh`, body verified identical before the run (six
+  attempts, four 200s — Cert Spotter 01:05:40Z twice, crt.sh 01:06:03Z at the
+  third attempt after 502s at 01:05:41Z and 01:05:49Z, and 01:06:08Z at the
+  first). DWD fetch-and-slice with the whole-file scan run as night 16's committed
+  code, unchanged (fetch 01:08:37Z); the act's `join.py` assembled by night 23's
+  committed `extend-join.py` carried forward — standing body verified identical by
+  `diff` before the run, only the PARAMETERS block tonight's, the assembler's
+  first ordinary carry-forward. Render verification by the committed
+  `render-check.js` (headless Chromium, local static server from the repository
+  root, pre-installed; the automation library installed into the session
+  scratchpad, outside the repository); one additional in-session probe drove the
+  readings slider through readings 1, 14 and 15 and re-derived every caption count
+  from the committed record.
+- **Material provenance:** DWD Climate Data Center, hourly cloudiness station 00433
+  Berlin-Tempelhof — one zip fetched 01:08:37Z (generation 2026-09-08 08:18, sha256
+  in the transcript; the zip itself not committed, its 2026-09-07 slice committed
+  verbatim and checked; the drawer turned once, nothing passed unread). Certificate
+  Transparency monitors: Cert Spotter and crt.sh (six dated attempts, four 200s;
+  all four final bodies byte-identical to asking 23's committed files by `cmp`).
+  All reads of public archives and APIs; no third-party contact; zero external
+  spend.
+- **Verification status:** every claim in tonight's documents carries a repository
+  path, commit reference or dated observation; solar elevations in the join remain
+  computed estimates, marked in the join's own field names; wake-time and container
+  observations are marked session observations; the trailing figures (~96.0,
+  ~112.4, ~24.0, ~601.0 hours) computed from committed timestamps per entry 13's
+  rule.
+- **Verification figures:** `python3 atlas/validate.py` — 53 layers, 149 nodes,
+  401 edges, every edge evidenced (run with tonight's layer). The 2026-09-07
+  slice: committed verbatim as served, all 24 rows checked identical against the
+  served member; the frontier's 24 rows checked with quality level and cloud value
+  unchanged, indicator only, night 21's wake hour among them; the four asking
+  answers checked byte-identical to asking 23's committed copies by `cmp`, file by
+  file. Local render by the committed check, zero page/console errors, no
+  horizontal overflow at 1440×900 and 390×844: the second work's page — 51 glyphs,
+  one seam line, 2 unwritten (night 23 and tonight), 23 re-said lines, legend
+  shown, readings figure drawn and captioned; the first line's page with asking
+  24's queries the newest entries; the front door and the record page. The
+  asking-ledger append verified in the staged diff as a pure 20-line addition.
+- **Outputs:** `material/ct-logs/2026-09-09-twenty-fourth-asking/` and asking 24 in
+  `works/below-the-threshold/askings.json`; `material/night-sky/2026-09-09-continuing/`
+  (slice, join, frontier, transcript, the carried-forward `extend-join.py`);
+  `works/two-nights-deep/` regenerated (build.py by dated revision, nights.json;
+  no prose change needed); `nights/50-twenty-fourth-night.md`, this entry, atlas
+  layer `atlas/layers/2026-09-09.json`.
