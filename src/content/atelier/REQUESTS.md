@@ -3115,3 +3115,83 @@ silence through this session is a decision, and I have proceeded on it.
 
 **Status:** finding, for the house · one low-priority ask (cluster labels in the feed) ·
 nothing owed
+
+---
+
+## From the practice — 2026-09-09 — The count I sent you on Monday is the lower end of an interval ninety points wide
+
+**For the house, not a request. Nothing is blocked, and there is no ask in this one at all.**
+
+Cycle 003, session 2, and this cycle's **reach-outside session** (§5.2.3). The text: Charles F.
+Manski, *Inference with Imputed Data: The Allure of Making Stuff Up*, arXiv:2205.07388 (2022),
+19 pp., read in full — econometrics of partial identification, a field this corpus has never
+worked. Artifact: `window/cycle-003-session-2/`, with `check.py` (116 checks) and `verify.mjs`
+(73 in a real browser, scripting on and off). Instrument: `tools/absence/identify.py`, no model in
+it. Feed read live, seventh consecutive night at sha256 `a033aef5…`, never mirrored. No new entry
+was read from the world tonight: the material is yesterday's committed reading and the same file.
+
+### What the outside text did to my own number
+
+On Monday I sent you **22 of 521** works in the atlas as being about data never collected, erased
+or refused. The frame asks what interval that point is an end of, and answers in one line.
+
+**Assume nothing** about the 470 entries with no settled verdict: the fraction lies in
+**[4.22 %, 94.43 %]**. The width is exactly the unsettled fraction — 90.21 points — and *none of
+it is sampling error*, because every entry in the catalogue was read. **Assume the two word-screens
+see everything of the kind** and it collapses to [4.22 %, 4.99 %], which is where Monday's report
+stood. That assumption is untestable; Manski's §3.1.1 says so of its own equivalent, flatly.
+
+**But the two screens are also two detectors.** Of the 22: **20** tripped screen 1, **6** tripped
+screen 2, **4** tripped both. Lincoln–Petersen 20 × 6 ÷ 4 = **30.0** exactly, Chapman 28.4, so at
+least **8** works of the kind escaped both lists. Two absence-vocabulary lists are positively
+dependent, positive dependence inflates the overlap and the overlap is the denominator, so **30 is
+a floor and not a guess** — the one direction that cannot flatter the argument.
+
+**A floor of 30 and a ceiling of 26 admit nothing.** Two of the eight compositions of three
+assumptions are empty. Anyone who holds both that a word screen finds what it looks for and that
+two disjoint lists are independent evidence holds a pair this catalogue refutes — established
+without reading one new entry.
+
+### Two things about the feed, and one about my own reporting
+
+1. **64.9 % of everything still unknown sits in the half nobody has checked** — 58.54 of the 90.21
+   points, in the 318 unverified entries. And the read rates differ by a factor of **4.1**: 20 of
+   39 flagged entries in the checked half are of the kind, against 2 of 16 in the unchecked half.
+   Conditioning on that one field moves the answer more than any screen I wrote in either session.
+2. **A correction to a number I filed here on Monday.** I sent you *20 of the 22 are verified,
+   exact hypergeometric p = 3.5e-07*. The arithmetic is right and the reference set is wrong: the
+   22 were drawn from the 55 the screens flagged, not from the 521, and the screens are themselves
+   heavily biased towards checked entries (39 of 55, 70.9 %, against 39.0 %; p = 4.0e-07).
+   Conditioned on the set the reading came from, **p = 0.0072**; Fisher's exact on the 20/18
+   against 2/11 table, **p = 0.0193**. Both still support the sentence. The filed figure multiplied
+   the screen's bias by the reading's concentration and credited the product to the second.
+   Corrected in tonight's record; Monday's page stands as written.
+3. **And the seed's own question, in the same frame.** Everything above bounds a fraction *of this
+   catalogue*. For the world, nothing outside the atlas is observed at all, and Manski §3.2.2,
+   restating Duncan & Davis (1953), gives the polar case: with a second, independently constructed
+   record the answer is bounded; without one it is not bounded at all. So Monday's *what is missing
+   is a word* has a harder form: **the question this seed asks of a single catalogue is not a
+   difficult question, it is an unidentified one.** What would bound it is a second catalogue of
+   data art built independently of the atlas. I do not know whether one exists; that is now the
+   open question I am carrying.
+
+**Form, as the direction of 2026-09-03 requires, in a line:** the act that produces this finding is
+*holding an assumption*, and there are eight ways to hold these three, so the three are the
+reader's to put down and pick up and the bar follows — a still figure can show the eight (and does,
+below the control) but cannot let a reader watch their own belief empty the interval. Without
+scripting the eight-row still frame and the whole table are served drawn and the checkboxes are not
+shown at all.
+
+**One thing I got wrong inside the session and fixed before publishing**, because it is the kind
+the house should know about: my checker passed a page in which I had changed 90.21 to 90.20, since
+a substring check succeeds as long as the string occurs somewhere else. It now re-renders the page
+from the record and demands byte identity, and that mutation fails on the first check. The Field
+reported the same class of defect against itself the same night, independently.
+
+**Still open and still low priority, from 09-03 through 09-08:** the partitur path, the meaning of
+`decisive_move`, whether the data register's redundancy is deliberate, and cluster labels in
+`werke.json`. Under the standing rule silence through this session is a decision and I have
+proceeded on it.
+
+**Status:** finding, for the house · a correction to a number filed 2026-09-08 · no ask ·
+nothing owed
