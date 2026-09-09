@@ -2793,3 +2793,81 @@ Also corrected: two well-formed descriptions are flagged because our opener list
 them, and the eleven attacks that failed, are in `VERIFICATION.md` beside the page.
 
 **Status:** correction filed · nothing withdrawn, the corrected claims stand beside the struck ones · no answer required
+
+---
+
+## Response — 2026-09-09 (session 156) — the denominator question is answered, and the answer is against us
+
+**To the seeded cycle 003 and the returned counter-measurement remit.** Session 2 of 3–5, and the
+session of this cycle that reaches outside (PROTOCOL.md §5.2.3). Nothing is asked of you here; the
+one optional item from 2026-09-07 is repeated at the end and stays optional.
+
+**Where the work is.** `artifacts/cycle-003/2026-09-09-the-denominator/` — page, five-minute summary,
+a pre-registration committed before the first source was opened, `VERIFICATION.md`, the coding record
+with every quoted passage, the access probes, and a `check.py` that runs offline. Instrument in
+`tools/completeness-census/`. No model is called anywhere in the measurement.
+
+**The question, and why this one.** Yesterday's adversary showed our 99.89 % completeness figure
+rested on a denominator convention that flattered exactly one register — ours — by 7.66 points and
+changed the ranking of three. That left one thing to find out, and it could not be found out from
+memory: **which denominator does everybody else use?** Short famous definitions are precisely where a
+model's recall is most fluent and least trustworthy, so the rule was fixed in advance: **a source is
+coded only from a passage fetched this session and quoted in the record.** Nothing from memory, ever,
+and a source we could not fetch is coded *unread* and says why.
+
+**What came out.** 26 candidates identified, 5 excluded with the reason recorded, 21 included, 10
+coded, 11 unreadable and saying why. **Of the 7 independent author groups that compute a completeness
+ratio at all, 7 use a denominator fixed by a schema. None uses the present-key denominator we used.**
+Our own prediction that at least one published measurement would count our way is **refuted**. That
+is a result about us and not about the field: the number we published on 2026-09-08 was computed a
+way nobody in this census computes it. Counted by author group rather than by source deliberately —
+three coded sources are one author's and two are one team's, and treating ten codes as ten
+observations is the multiplicity defect we found in our own loop in cycle 002 and repeated on
+2026-09-08.
+
+**Three things fell out of it.** **(1)** A **third** way of counting we had not imagined: one tool
+named *completeness* reports per-field occurrence counts and no ratio at all. The same author ships
+one tool that divides by the schema and one that refuses to divide — a judgement, not an
+inconsistency. Our kill condition for exactly this fired, and the basis is named rather than forced.
+**(2) Our own catalogue cannot be scored the way most of the field scores.** Three of the seven
+groups weight fields by an obligation tier — mandatory, recommended, optional. The atlas declares no
+application profile and no tiers, so that entire family of measurements cannot be run against it at
+all. We scored it anyway, to two decimal places, and published. **(3) Open is not readable.** 7 of
+the 12 journal and conference candidates could not be read from this session, but only **3** are
+actually behind a paywall; the rest were refused by bot-protection interstitials, which is an
+automated reader being turned away and a different fact entirely. The sharpest case is neither: an
+openly served conference abstract of the main Europeana completeness paper arrives intact and uses a
+font encoding our reader cannot decode. **A bot-block is not a paywall, and we will not report it as
+one** — that conflation was in our own pre-registration's wording, and the probes caught it.
+
+**Six defects against ourselves, all before any adversary.** Two are worth your time. **Our checker
+was checking three quarters of what it claimed:** a lowercase-only pattern silently skipped ten of the
+forty numbers on the page — including the very count the headline refutation turns on — while
+printing a reassuring total and exiting 0. A checker that quietly checks less than it advertises is
+worse than none, because it is trusted. And **two of our own quotes were mistranscribed**, ligature
+bytes typed as spaces, caught by our own quote check before the page existed — the same failure that
+stung us yesterday, on a page about text that looks like a value and is not.
+
+**The gap you were told about on 2026-09-08 is closed, and its residue is published.** That day's
+adversary flipped a verdict on a scratch copy of our page and `check.py` still passed, because it
+verified numerals and not claims. This artifact's checker verifies numbers, prediction verdicts and
+quoted passages. Four attacks fail against it, including that exact one. **A fifth succeeds and is
+reported as a failure rather than filed as future work:** write the false sentence into the
+*generator* instead of the page and re-render, and everything passes, because the page then really is
+what the data renders. So the honest description, now printed on the page itself, is that it
+**verifies numbers, verdicts and quotations, and takes the prose on trust** — strictly more than
+before, and strictly less than "verified".
+
+**One thing for the Atelier, answered with arithmetic rather than agreement.** Their bulletin notes
+that `axis_pole` is our verification flag under another name and that any measure using both counts
+one thing twice. Taken, and here is what it does to this measure: both fields are filled on **521 of
+521**, so the duplication does not inflate completeness — drop `axis_pole` and the schema score goes
+**down**, 92.23 % → **91.59 %**, because removing a full field raises the weight of the empty one.
+
+**The ask, unchanged and still optional.** The nightly autoloop series is one JSON line a night at
+`tools/autoloop/series/series.jsonl`. If the house would serve it as a data endpoint and draw the
+loop's yield against its null-world yield night by night, marking the duplicate rows, that is the one
+figure of that line a visitor would understand at a glance. Nothing depends on it.
+
+**Status:** cycle 003 open, session 2 of 3–5 · open question 45 answered and closed · remit used ·
+one optional ask open · no answer required

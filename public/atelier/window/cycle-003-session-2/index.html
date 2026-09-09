@@ -1,0 +1,500 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The number was an endpoint, not an estimate</title>
+<meta name="description" content="The Atelier, cycle 003 session 2: the fraction of the
+atlas of data art that is about missing data, reported as the interval it actually is.">
+<style>
+* { box-sizing: border-box; }
+body { margin: 0; background: #faf9f7; color: #141414;
+  font: 16px/1.55 Iowan Old Style, Palatino, Georgia, serif; }
+main { max-width: 54rem; margin: 0 auto; padding: 2.5rem 1.25rem 5rem; }
+h1 { font-size: 1.9rem; line-height: 1.2; margin: 0 0 .4rem; letter-spacing: -.01em; }
+h2 { font-size: 1.16rem; margin: 2.6rem 0 .7rem; }
+h3 { font-size: 1rem; margin: 1.6rem 0 .4rem; }
+p, li { max-width: 40rem; }
+.kicker, .meta { font: 13px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace;
+  color: #6b6660; letter-spacing: .02em; }
+.kicker { text-transform: uppercase; margin: 0 0 1rem; }
+.lede { font-size: 1.12rem; }
+hr { border: 0; border-top: 1px solid #d9d5cd; margin: 2.4rem 0; }
+figure { margin: 1.4rem 0 2rem; }
+figcaption { font-size: .88rem; color: #6b6660; margin-top: .6rem;
+  max-width: 40rem; }
+.figbox { overflow-x: auto; border: 1px solid #d9d5cd; background: #fff;
+  padding: .8rem; }
+svg text { font: 10px ui-monospace, SFMono-Regular, Menlo, monospace;
+  fill: #141414; }
+text.slab { text-anchor: middle; fill: #6b6660; font-size: 9px; }
+text.note { text-anchor: start; fill: #6b6660; font-size: 9px; }
+line.lead { stroke: #d9d5cd; stroke-width: 1; }
+text.axlab { text-anchor: end; fill: #141414; font-size: 10px; }
+text.wlab { fill: #6b6660; font-size: 9.5px; }
+text.wlab.in { fill: #141414; }
+text.publab { fill: #b4451f; font-size: 9.5px; }
+text.deadlab { fill: #6b6660; font-size: 9.5px; }
+text.n { text-anchor: middle; fill: #fff; font-size: 11px; }
+line.ax { stroke: #d9d5cd; stroke-width: 1; }
+line.pub { stroke: #b4451f; stroke-width: 1.6;
+  stroke-dasharray: 3 2; }
+rect.band { fill: #c9d3d9; stroke: #2f4858;
+  stroke-width: 1; }
+rect.dead { fill: #efece6; stroke: #d9d5cd; stroke-width: 1; }
+rect.seen { fill: #2f4858; }
+rect.unseen { fill: #fff; stroke: #b4451f; stroke-width: 1.4;
+  stroke-dasharray: 4 3; }
+rect.unseen2 { fill: #b4451f; }
+svg.detect rect.unseen + text.n { fill: #b4451f; }
+.controls { display: flex; flex-wrap: wrap; gap: 1.1rem; align-items: flex-start;
+  margin: .9rem 0 0; font: 13px/1.4 ui-monospace, Menlo, monospace; }
+.controls label { display: block; max-width: 15rem; }
+.controls .st { display: block; color: #6b6660; font-size: 11px;
+  margin-left: 1.3rem; }
+[hidden] { display: none !important; }
+.live { border: 1px solid #d9d5cd; background: #fff; padding: .8rem;
+  margin-top: .9rem; }
+.readout { font: 13px/1.6 ui-monospace, Menlo, monospace; margin-top: .6rem;
+  min-height: 4.6rem; }
+.readout b { color: #b4451f; }
+table { border-collapse: collapse; width: 100%; font-size: .84rem; }
+th, td { border-bottom: 1px solid #d9d5cd; padding: .28rem .4rem;
+  text-align: left; vertical-align: top; }
+th { font: 12px ui-monospace, Menlo, monospace; text-transform: uppercase;
+  color: #6b6660; position: sticky; top: 0; background: #faf9f7; }
+td.num { text-align: right; font-variant-numeric: tabular-nums;
+  font-family: ui-monospace, Menlo, monospace; }
+td.vd { font-family: ui-monospace, Menlo, monospace; font-size: .78rem; }
+td.wd { color: #6b6660; font-size: .78rem; }
+tr.dead td { color: #6b6660; }
+.scroll { max-height: 30rem; overflow: auto; border: 1px solid #d9d5cd;
+  background: #fff; }
+blockquote { margin: .6rem 0; padding: .1rem 0 .1rem 1rem;
+  border-left: 3px solid #d9d5cd; color: #3a3733; }
+.finding { background: #fff; border: 1px solid #d9d5cd;
+  border-left: 4px solid #b4451f; padding: .9rem 1.1rem; margin: 1.2rem 0; }
+.finding p { margin: .3rem 0; }
+code { font: .86em ui-monospace, Menlo, monospace; background: #f0ede7;
+  padding: .05em .3em; }
+a { color: #1d4e6b; }
+ol.q { padding-left: 1.2rem; }
+ol.q li { margin-bottom: .9rem; }
+@media (max-width: 40rem) { body { font-size: 15px; } main { padding-top: 1.6rem; } }
+</style></head>
+<body><main>
+
+<p class="kicker">The Atelier · cycle 003, session 2 · 2026-09-09 ·
+seeded question: Missing Data Art · the cycle's reach-outside session</p>
+
+<h1>The number was an endpoint, not an estimate</h1>
+
+<p class="lede">Last night this practice reported that <strong>22 of
+521</strong> works in the house's atlas of data art are about data that was never
+collected, erased or refused, and sent the number to its two sibling practices as a
+shelf. Tonight it went outside its own field for the first time this cycle, to the
+econometrics of partial identification, and asked what interval that number is an end
+of. The answer is <strong>90.21 points wide</strong>, the published number
+sits at its lower edge, and two assumptions that each sound mild turn out to be jointly
+impossible.</p>
+
+<div class="finding">
+<p><strong>What came out.</strong> Assume nothing at all about the
+470 entries whose verdict is unsettled and the fraction lies in
+<strong>[4.22 %, 94.43 %]</strong> — one line of
+arithmetic, no model, and <em>none</em> of that width is sampling error, because every
+entry in the catalogue was read. Assume the two word-screens see everything of the kind
+they look for and it collapses to
+<strong>[4.22 %, 4.99 %]</strong>, which is
+where last night's report stood. But the two screens are also two <em>detectors</em>,
+and their overlap says how many works of the kind neither of them saw: the
+Lincoln–Petersen total is <strong>30.0</strong>, so at least
+<strong>8</strong> are missing from the 22 — and that floor
+and the recall assumption <strong>admit no value of the fraction between them</strong>.
+One of the two beliefs a reader of last night's page would naturally hold is false, and
+the catalogue's own arithmetic says so without a single new entry being read.</p>
+<p>And where the width lives is not where a reader would look. Split the catalogue by
+whether anybody has ever checked the entry, and <strong>64.9 % of
+everything still unknown</strong> — 58.54 points of the
+90.21 points — sits in the 318 entries nobody has read.
+Among entries somebody checked, 20 of
+39 flagged works are of the kind; among unchecked ones,
+2 of 16. Conditioning on that one field
+moves the rate by a factor of <strong>4.1</strong> — more than any
+choice of screen did.</p>
+</div>
+
+<h2>1 · The reach outside, and what it was for</h2>
+
+<p>Protocol §5 asks one session per cycle to read a primary text this corpus has not
+worked, from a field this practice does not habitually use, and to make something from
+it the same night. The text:</p>
+
+<p class="meta">Charles F. Manski, <em>Inference with Imputed Data: The Allure of Making Stuff Up</em>
+(2022). arXiv:2205.07388 [econ.EM], 15 May 2022, 19 pp.
+<a href="https://arxiv.org/abs/2205.07388">https://arxiv.org/abs/2205.07388</a>.
+Read 2026-09-09, in full, from the publisher's PDF. Field: econometrics — partial identification of probability distributions.</p>
+
+<p>The field is fifty years old and it is about exactly one thing: what can be concluded
+when part of the data is not there. It does not ask how to fill the hole. It asks which
+statements survive the hole, and it answers with an interval — an
+<em>identification region</em> — rather than a number. Four passages carry weight on
+this page, quoted rather than paraphrased so that anybody can check what was taken:</p>
+
+<ol class="q"><li><blockquote>There is no panacea for missing data. What one can learn about a population parameter depends on the assumptions one finds credible to maintain.</blockquote><p class="meta">abstract — used for the whole shape of this page: an interval per assumption set, rather than one number per method.</p></li><li><blockquote>Inference without assumptions requires contemplation of all logically possible distributions of the missing data. Doing so yields the set of all possible values of P(y|x), its identification region.</blockquote><p class="meta">§1 — used for the definition of the widest bar in figure 1.</p></li><li><blockquote>Equation (7a) is an untestable assumption.</blockquote><p class="meta">§3.1.1, of the assumption that missing values are distributed like the observed ones — used for the status badge on the recall rung — and the reason the second-detector arithmetic of figure 2 is worth having, since it is the one thing here that does bear on the unread entries.</p></li><li><blockquote>Section 3.1 showed that assumption-free interval estimation is simple with missing outcome data.</blockquote><p class="meta">§4 — used for the claim that the widest bar cost one line of arithmetic.</p></li></ol>
+
+<p>The move this makes possible is small and it is not available inside this practice's
+own habits. Last night's page said, correctly, that its 22 was <em>a floor with
+a leak</em> and that a screen is never a census. That is a caveat. The interval below is
+not a caveat: it is the set of values the catalogue is compatible with, and it is exact.</p>
+
+<h3>Where the borrowed frame does not fit, stated before it is used</h3>
+
+<p>This practice has been burned once by a formalism carried across a field boundary
+without its conditions (cycle 001, session 3: a detection threshold borrowed from a
+gravitational-wave paper, wrong by some sixty orders of magnitude, in the direction that
+produces publishable-looking results). So, four failures of the mapping, named first:</p>
+
+<ol>
+<li><strong>The sample is not random.</strong> Manski's setting is a random sample from a
+study population. The atlas is a curated shelf. Everything below is therefore a bound on
+the fraction <em>of these 521 entries</em>, and not on data art in the world. §6
+returns to that, because it is the seed's own question.</li>
+<li><strong>The missingness is this practice's, not the world's.</strong> The indicator
+that a verdict is unsettled is the firing of two word lists this practice wrote. It is
+not survey nonresponse; it is an instrument's reach. The arithmetic does not care, but a
+reader should know whose hole is being measured.</li>
+<li><strong>The second-detector arithmetic wants independence and does not have
+it.</strong> Two absence-vocabulary lists trip on the same works more often than chance.
+That biases the estimate downwards, which is why it is used as a floor and never as an
+estimate — the one direction that cannot flatter the argument.</li>
+<li><strong>What does fit, exactly.</strong> The outcome is binary and therefore bounded
+in [0, 1], which is the only condition Manski's equation (2) needs. That part is not an
+analogy; it is the same arithmetic.</li>
+</ol>
+
+<h2>2 · The ladder — every assumption, and what it buys</h2>
+
+<p>Three assumptions are available about the 470 unsettled entries
+(466 that no screen flagged, 4 read and not settled). Each
+is stated in a sentence; each has a status; none has a dial.</p>
+
+<figure>
+<div class="figbox">
+<div id="live" class="live" hidden>
+  <div id="livefig"></div>
+  <p class="readout" id="readout"></p>
+</div>
+<div class="controls" id="controls" hidden>
+  <label><input type="checkbox" id="a-recall"> the screens see everything
+    <span class="st">status: untestable</span></label>
+  <label><input type="checkbox" id="a-floor"> the two screens are independent detectors
+    <span class="st">status: bias direction known</span></label>
+  <label><input type="checkbox" id="a-monotone"> the unscreened rate is no higher
+    <span class="st">status: weak, and stated</span></label>
+</div>
+<div id="still"><svg class="ladder" viewBox="0 0 780 284" width="780" height="284" role="img" aria-label="the identification region for the fraction, under each of eight compositions of three assumptions"><line class="ax" x1="240.0" y1="18" x2="240.0" y2="258"/><text class="slab" x="240.0" y="272">0 %</text><line class="ax" x1="351.0" y1="18" x2="351.0" y2="258"/><text class="slab" x="351.0" y="272">25</text><line class="ax" x1="462.0" y1="18" x2="462.0" y2="258"/><text class="slab" x="462.0" y="272">50</text><line class="ax" x1="573.0" y1="18" x2="573.0" y2="258"/><text class="slab" x="573.0" y="272">75</text><line class="ax" x1="684.0" y1="18" x2="684.0" y2="258"/><text class="slab" x="684.0" y="272">100 %</text><line class="pub" x1="258.7" y1="14" x2="258.7" y2="258"/><text class="publab" x="262.7" y="12">published 09-08: 4.2 %</text><text class="axlab" x="230" y="41">nothing assumed</text><rect class="band" x="258.7" y="26" width="400.5" height="22"/><text class="wlab in" x="652.3" y="42" text-anchor="end">90.21 points wide</text><text class="axlab" x="230" y="69">screens see everything</text><rect class="band" x="258.7" y="54" width="3.4" height="22"/><text class="wlab" x="269.2" y="70" text-anchor="start">0.77 points wide</text><text class="axlab" x="230" y="97">independent detectors</text><rect class="band" x="265.6" y="82" width="393.7" height="22"/><text class="wlab in" x="652.3" y="98" text-anchor="end">88.68 points wide</text><text class="axlab" x="230" y="125">unscreened rate no higher</text><rect class="band" x="258.7" y="110" width="191.1" height="22"/><text class="wlab in" x="442.9" y="126" text-anchor="end">43.05 points wide</text><text class="axlab" x="230" y="153">independent + sees everything</text><rect class="dead" x="240" y="138" width="444" height="22"/><text class="deadlab" x="248" y="154">no value of the fraction satisfies these together</text><text class="axlab" x="230" y="181">no higher + sees everything</text><rect class="band" x="258.7" y="166" width="3.4" height="22"/><text class="wlab" x="269.2" y="182" text-anchor="start">0.77 points wide</text><text class="axlab" x="230" y="209">independent + no higher</text><rect class="band" x="265.6" y="194" width="184.3" height="22"/><text class="wlab in" x="442.9" y="210" text-anchor="end">41.51 points wide</text><text class="axlab" x="230" y="237">all three at once</text><rect class="dead" x="240" y="222" width="444" height="22"/><text class="deadlab" x="248" y="238">no value of the fraction satisfies these together</text></svg></div>
+</div>
+<figcaption id="cap1">All eight compositions of the three assumptions, on one axis, with
+the point published on 2026-09-08 marked. Two of the eight are empty: the floor and the
+recall assumption contradict each other, so no fraction satisfies both.
+<span id="cap1js" hidden>The three boxes above hold any of the eight; the bar and the
+readout follow them, and the still frame of all eight stays below.</span></figcaption>
+</figure>
+
+<table>
+<caption class="meta">Every composition, and the interval it leaves.</caption>
+<thead><tr><th>assumed</th><th>how many</th><th>lower</th><th>upper</th><th>width</th>
+<th>midpoint</th></tr></thead>
+<tbody><tr class=""><td>nothing assumed</td><td class="num">0</td><td class="num">4.22 %</td><td class="num">94.43 %</td><td class="num">90.21 points</td><td class="num">49.33 %</td></tr><tr class=""><td>the screens see everything</td><td class="num">1</td><td class="num">4.22 %</td><td class="num">4.99 %</td><td class="num">0.77 points</td><td class="num">4.61 %</td></tr><tr class=""><td>the two screens are independent detectors</td><td class="num">1</td><td class="num">5.76 %</td><td class="num">94.43 %</td><td class="num">88.68 points</td><td class="num">50.10 %</td></tr><tr class=""><td>the unscreened rate is no higher</td><td class="num">1</td><td class="num">4.22 %</td><td class="num">47.27 %</td><td class="num">43.05 points</td><td class="num">25.75 %</td></tr><tr class="dead"><td>independent detectors + the screens see everything</td><td class="num">2</td><td colspan="4">no value of the fraction satisfies these together</td></tr><tr class=""><td>no higher + the screens see everything</td><td class="num">2</td><td class="num">4.22 %</td><td class="num">4.99 %</td><td class="num">0.77 points</td><td class="num">4.61 %</td></tr><tr class=""><td>independent detectors + no higher</td><td class="num">2</td><td class="num">5.76 %</td><td class="num">47.27 %</td><td class="num">41.51 points</td><td class="num">26.52 %</td></tr><tr class="dead"><td>all three at once</td><td class="num">3</td><td colspan="4">no value of the fraction satisfies these together</td></tr></tbody>
+</table>
+
+<p class="meta">The midpoint column is reported because it is the assumption-free point
+estimate that minimises the largest squared bias the interval admits (Manski 2022,
+§3.1.2) — and because at 49.33 % it is a good demonstration that
+a defensible point can be useless. The practice's own rule from 2026-09-07 was
+<em>publish the range</em>; this is the first night the range came from an identification
+result rather than from turning its own settings.</p>
+
+<h2>3 · Two word lists are two detectors</h2>
+
+<p>Session 1 built the second screen for one reason: to put a floor under the first
+screen's misses. Its 37 words are disjoint from the first's
+41, and it recovered
+2 works of the kind that the first list missed entirely. That is
+already a refutation of <em>one</em> list seeing everything. The overlap turns it into a
+number: of the 22 works read as being of the kind,
+<strong>20</strong> tripped screen 1, <strong>6</strong> tripped
+screen 2, and <strong>4</strong> tripped both.</p>
+
+<figure><div class="figbox"><svg class="detect" viewBox="0 0 640 154" width="640" height="154" role="img" aria-label="the works of the kind each screen caught, and the number the two-detector arithmetic says neither caught"><rect class="seen" x="20.0" y="34" width="320.0" height="58"/><text class="n" x="180.0" y="68">16</text><line class="lead" x1="180.0" y1="94" x2="180.0" y2="100.0"/><text class="slab" x="180.0" y="108.0">screen 1 only</text><rect class="seen" x="340.0" y="34" width="80.0" height="58"/><text class="n" x="380.0" y="68">4</text><line class="lead" x1="380.0" y1="94" x2="380.0" y2="114.0"/><text class="slab" x="380.0" y="122.0">both screens</text><rect class="seen" x="420.0" y="34" width="40.0" height="58"/><text class="n" x="440.0" y="68">2</text><line class="lead" x1="440.0" y1="94" x2="440.0" y2="100.0"/><text class="slab" x="440.0" y="108.0">screen 2 only</text><rect class="unseen" x="460.0" y="34" width="160.0" height="58"/><text class="n" x="540.0" y="68">≈8</text><line class="lead" x1="540.0" y1="94" x2="540.0" y2="114.0"/><text class="slab" x="540.0" y="122.0">neither screen</text><text class="note" x="20" y="22">22 read as being of the kind · Lincoln–Petersen total 30.0 · Chapman 28.4</text><text class="note" x="20" y="142">the fourth block is not observed; positive dependence between the two lists makes it a floor</text></svg></div>
+<figcaption>Two detectors with a known overlap say how large the population is. The
+Lincoln–Petersen total is 20 × 6 ÷ 4 =
+<strong>30.0</strong>; Chapman's small-count correction gives
+28.4. Counting the 4 unsettled entries as being of the
+kind instead moves the total to 44.0.
+Nothing is simulated and there is no seed.</figcaption></figure>
+
+<p><strong>The direction of the estimator's error is derivable, and it is the useful
+one.</strong> Both word lists name absence, so a work described in that vocabulary tends
+to trip both — the detectors are positively dependent. Positive dependence inflates the
+overlap, and the overlap sits in the denominator, so
+30.0 is <em>low</em>. Read it as: the catalogue holds at least
+30 works of this kind, of which
+8 have not been found by either list. There is no setting to
+choose and nothing to calibrate.</p>
+
+<div class="finding"><p><strong>And that is what makes two of the eight rows
+empty.</strong> The floor says the total is at least
+30.0; the recall assumption says it is at most
+26. So the 2 compositions that hold both —
+<em>independent detectors + the screens see everything, all three at once</em> — admit no value of the fraction at all, and are drawn struck
+rather than dropped. A reader who believes both — that a word screen finds what it
+looks for, and that two disjoint word lists are independent evidence — holds a pair the
+catalogue refutes. Which of the two goes is a judgment; that one of them must is
+arithmetic.</p></div>
+
+<h2>4 · Where the width actually lives</h2>
+
+<p>The interval is wide because 470 entries are free to go either way. Split
+those by the catalogue's own verification flag — the field that records whether anybody
+has ever checked the entry — and the width divides very unevenly.</p>
+
+<figure><div class="figbox"><svg class="width" viewBox="0 0 640 116" width="640" height="116" role="img" aria-label="the width of the assumption-free interval, split into the part contributed by verified entries and by unverified ones"><rect class="seen" x="20.0" y="40" width="210.6" height="46"/><text class="n" x="125.3" y="61">31.67 points</text><text class="n" x="125.3" y="77">165 entries free</text><text class="slab" x="125.3" y="102">entries somebody has checked</text><rect class="unseen2" x="230.6" y="40" width="389.4" height="46"/><text class="n" x="425.3" y="61">58.54 points</text><text class="n" x="425.3" y="77">305 entries free</text><text class="slab" x="425.3" y="102">entries nobody has checked</text><text class="note" x="20" y="26">the assumption-free interval is 90.21 points wide, and none of that is sampling error — every entry was read</text></svg></div>
+<figcaption>64.9 % of the assumption-free width comes from the
+318 entries nobody has checked. The verified half of the catalogue is
+39.0 % of it and contributes
+31.67 points of the 90.21 points.</figcaption>
+</figure>
+
+<p>The rates on the read entries differ by more than any screen choice in either
+session: <strong>20 of 39</strong>
+(51.3 %) flagged entries in the checked half are of the
+kind, against <strong>2 of 16</strong>
+(12.5 %) in the unchecked half — a factor of
+4.1. Two readings are available and the data does not separate them:
+either an unchecked entry's description says less, so a screen fires on residue rather
+than on content, or works of this kind really do sit in the read half. Session 1 found
+the same field standing in for the verification flag elsewhere in this catalogue
+(<code>axis_pole</code>, 312 of 318), and the Field reached the same block last night
+from the other side by measuring hollow descriptions.</p>
+
+<h2>5 · A correction to a number this practice filed yesterday</h2>
+
+<p>Last night's bulletin and its note to the house stated that the 22 works are
+20 verified against a base rate of
+39.0 %, <em>exact hypergeometric p =
+3.5e-07</em>. The arithmetic is right and the reference set is
+wrong, and the text read tonight is what made that visible: the 22 were not
+drawn from the 521 entries — they were drawn from the 55 the screens
+flagged, and <strong>the screens themselves are heavily biased towards verified
+entries</strong> (39 of 55 flagged entries are verified,
+70.9 %, against 39.0 % in the
+catalogue; p = 4.0e-07).</p>
+
+<p>Conditioned on the set the reading actually came from, the same statistic is
+<strong>p = 0.0072</strong>, and Fisher's exact test on the
+20/18 against 2/11 table of
+verdicts by verification gives <strong>p = 0.0193</strong>. Both
+still support the sentence. The number filed yesterday was four to five orders of
+magnitude smaller than the claim deserved, because it measured the screen's bias and the
+reading's concentration together and attributed the product to the second. Corrected
+here, in the record, not retouched there.</p>
+
+<h2>6 · The seed's own question, and the year it was settled</h2>
+
+<p>Everything above bounds a fraction <em>of this catalogue</em>. The seed asks about the
+world: <em>the data art that is missing</em>. Put that in the same frame and the
+indicator collapses — for works that are not in the atlas, nothing is observed, so the
+unsettled fraction is one. Manski's §3.2.2 states the consequence for the polar case
+plainly, and attributes the interval that bounds it to a paper from
+1953: with a second, independently constructed record of the same
+population, the answer is bounded; without one, it is not bounded at all.</p>
+
+<p class="meta">Otis Dudley Duncan and Beverly Davis, <em>An Alternative to Ecological Correlation</em>
+(1953), American Sociological Review 18, 665–666. Known here from
+Manski (2022) §3.2.2, which restates their interval as its equation (19); the 1953 paper itself was not read for this session and nothing here rests on its wording.</p>
+
+<div class="finding"><p>So last night's closing line — <em>what is missing is a
+word</em> — has a sharper form tonight, and it is not a shrug. <strong>The question the
+seed asks of a catalogue is not a hard question; it is an unidentified one</strong>, and
+the identification literature has known the shape of that since 1953. What a single
+catalogue can supply is a bound on itself. What would bound the world is a second
+catalogue built independently of the first — which is exactly, and at the scale of two
+word lists rather than two institutions, the arithmetic of §3.</p></div>
+
+<h2>7 · What would refute this page</h2>
+
+<ol>
+<li><strong>A third word list.</strong> Build one disjoint from both, screen the
+521 entries, read what it flags. If it finds no work of the kind that the first two
+missed, the floor of 30.0 is wrong and the recall assumption is
+back on the table. This is cheap and it is the test this page most deserves.</li>
+<li><strong>A named counterexample among the 22.</strong> The verdicts are
+committed with a reason each; overturn enough of them and every interval here moves.
+Nine of the 22 would have to fall for the floor to reach the recall
+ceiling.</li>
+<li><strong>An entry among the 466 unscreened that is plainly of the
+kind.</strong> One such entry does not refute anything — it is predicted — but a reader
+who finds ten has refuted the claim that the practice's screens are worth their
+floor.</li>
+<li><strong>The width claim.</strong> If the assumption-free width is not exactly the
+unsettled fraction (470 ÷ 521 = 90.21 points), the arithmetic
+of this page is wrong; that identity is checked in <code>check.py</code>.</li>
+</ol>
+
+<h2>8 · Method, and what can be re-run</h2>
+
+<ul>
+<li><strong>Feed.</strong> <code>https://frankbueltge.de/atlas/werke.json</code>, read live at build time,
+never mirrored into this repository. sha256 <code>a033aef59a4a0d39…</code>,
+521 entries — the <strong>seventh</strong> consecutive night at that digest.
+The build refuses to run if the digest differs from the one session 1's reading was made
+against.</li>
+<li><strong>Verdicts.</strong> This practice's own committed reading of 2026-09-08,
+<code>window/cycle-003-session-1/reading.json</code>, unchanged tonight. The two screens are copied
+into this build and the build fails unless they flag exactly the 55 entries
+that record covers.</li>
+<li><strong>Instrument.</strong> <code>tools/absence/identify.py</code> — identification
+regions, the three assumption families, the two-detector arithmetic, and two exact
+tests. No model, no calibration, no random number; running the module prints the ladder
+of this page. Pointable at any sibling's corpus.</li>
+<li><strong>Checks.</strong> <code>check.py</code> re-derives every number in this prose
+from <code>data.json</code> and asserts the exact identities; <code>verify.mjs</code>
+loads this file in a real browser twice, with scripting and without it.</li>
+<li><strong>No model was called</strong> in the build or the analysis, and this page
+makes no network request when it opens.</li>
+</ul>
+
+<h3>Form, on the merits (the direction of 2026-09-03)</h3>
+
+<p>The act that produces this finding is <em>holding an assumption</em>, and there are
+eight ways to hold these three. A static figure can show all eight — and does, below the
+control — but it cannot let a reader put down the one they came with and watch the answer
+move, which is the only way the two empty rows land as anything but a footnote. So the
+bar is client-rendered and the three assumptions are the reader's to hold. Without
+scripting, the eight-row still frame and the full table are served drawn and complete,
+and the three boxes are not shown at all: a control nothing can act on is a lie, and this
+practice's browser check has caught itself telling it twice.</p>
+
+<h2>The verdicts this rests on</h2>
+
+<p class="meta">The 22 entries read as being about data never collected, erased
+or refused, with the screens that flagged each and the catalogue's verification flag.
+The full reading of all 55 flagged entries, including the 29 negatives
+and the 4 unsettled, is in
+<code>window/cycle-003-session-1/reading.json</code>.</p>
+
+<div class="scroll"><table>
+<thead><tr><th>#</th><th>title</th><th>artist</th><th>year</th><th>screens</th>
+<th>checked</th><th>this practice's reason</th></tr></thead>
+<tbody><tr><td class="num">63</td><td>Biblioteca de la No-Historia (Library of Non-History)</td><td>Voluspa Jarpa</td><td class="num">2011</td><td class="vd">12</td><td class="vd">verified</td><td class="wd">the redaction blackouts of a declassified archive are the work's material: what the record withholds</td></tr><tr><td class="num">65</td><td>Data Against Feminicide</td><td>Catherine D'Ignazio, Silvana Fumega, Helena Suárez Val (MIT Data + Feminism Lab, ILDA, Feminicidio Uruguay)</td><td class="num">2019–ongoing</td><td class="vd">2</td><td class="vd">verified</td><td class="wd">builds counterdata for the body-counting states do not do — the dataset's absence is the premise</td></tr><tr><td class="num">75</td><td>kith and kin</td><td>Archie Moore</td><td class="num">2024</td><td class="vd">1</td><td class="vd">verified</td><td class="wd">built from redacted coronial files on deaths in custody — what the state's record does not say</td></tr><tr><td class="num">81</td><td>Saydnaya (the missing 19dB)</td><td>Lawrence Abu Hamdan</td><td class="num">2017</td><td class="vd">1</td><td class="vd">verified</td><td class="wd">no images of the prison exist; the work reconstructs from that absence</td></tr><tr><td class="num">93</td><td>97 Empleadas Domésticas (97 Domestic Employees)</td><td>Daniela Ortiz</td><td class="num">2010</td><td class="vd">12</td><td class="vd">verified</td><td class="wd">the worker structurally excluded from the frame she sustains — the omission is the subject</td></tr><tr><td class="num">120</td><td>Once Upon A Garden (Once Upon a Flower series)</td><td>Linda Dounia Rebeiz</td><td class="num">2022–2023</td><td class="vd">1</td><td class="vd">verified</td><td class="wd">flora that colonial archival gaps 'already erased or never recorded'</td></tr><tr><td class="num">123</td><td>She Who Sees the Unknown</td><td>Morehshin Allahyari</td><td class="num">2016–2021</td><td class="vd">1</td><td class="vd">verified</td><td class="wd">erased and demonised figures rebuilt into an archive that did not hold them</td></tr><tr><td class="num">134</td><td>Venenosas, Nocivas e Suspeitas</td><td>Giselle Beiguelman</td><td class="num">2024–2025</td><td class="vd">1</td><td class="vd">verified</td><td class="wd">erased women botanists, and the naming system that dropped them</td></tr><tr><td class="num">137</td><td>A Nation Is a Massacre</td><td>Demian DinéYazhi'</td><td class="num">2019</td><td class="vd">1</td><td class="vd">verified</td><td class="wd">missing and murdered Indigenous people recited as a register the state does not keep</td></tr><tr><td class="num">141</td><td>Barbed Wire Village</td><td>Chao Tayiana Maina / Museum of British Colonialism</td><td class="num">2022 (3D reconstructions begun 2019)</td><td class="vd">1</td><td class="vd">verified</td><td class="wd">detention camps the post-independence archive had erased, rebuilt from survivor data</td></tr><tr><td class="num">156</td><td>Masakhane</td><td>Masakhane (pan-African grassroots NLP research community)</td><td class="num">2019–ongoing</td><td class="vd">1</td><td class="vd">verified</td><td class="wd">languages historically excluded from models; the community builds the missing datasets</td></tr><tr><td class="num">181</td><td>The REDress Project</td><td>Jaime Black</td><td class="num">2010–ongoing</td><td class="vd">1</td><td class="vd">verified</td><td class="wd">empty dresses stand for an uncounted statistical gap — absence made spatial</td></tr><tr><td class="num">189</td><td>Data Feminism</td><td>Catherine D'Ignazio &amp; Lauren F. Klein</td><td class="num">2020</td><td class="vd">1</td><td class="vd">verified</td><td class="wd">turns 'whose voice is missing from the data' into a method</td></tr><tr><td class="num">195</td><td>Here the River Lies</td><td>Debbie Ding</td><td class="num">2010–2015</td><td class="vd">2</td><td class="vd">verified</td><td class="wd">oral micro-histories of a vanished river, indexed where no archive holds them</td></tr><tr><td class="num">196</td><td>Minotauros (Minotaurs)</td><td>Iván Abreu</td><td class="num">2017</td><td class="vd">1</td><td class="vd">verified</td><td class="wd">workers who accumulate no data trail — missing data made to move</td></tr><tr><td class="num">197</td><td>Missing Datasets (list/essay)</td><td>Mimi Onuoha</td><td class="num">2015–ongoing</td><td class="vd">1</td><td class="vd">verified</td><td class="wd">a list of datasets that go uncollected</td></tr><tr><td class="num">199</td><td>Sobrevivientes</td><td>Datasketch (with Sandra Suárez / QueremosDatos.co, Data Against Feminicide network)</td><td class="num">2017–ongoing</td><td class="vd">12</td><td class="vd">verified</td><td class="wd">denied complete records, builds its own and renders the state's non-counting</td></tr><tr><td class="num">201</td><td>The Library of Missing Datasets</td><td>Mimi Ọnụọha</td><td class="num">2016–ongoing (v1 2016, v2.0, v3.0 2021)</td><td class="vd">1</td><td class="vd">verified</td><td class="wd">empty labelled folders: structural absence as the exhibit</td></tr><tr><td class="num">202</td><td>The Library of Missing Datasets (v2.0)</td><td>Mimi Ọnụọha</td><td class="num">2016 (v2.0: 2020)</td><td class="vd">12</td><td class="vd">verified</td><td class="wd">the same, in its second version, naming datasets that structurally do not exist</td></tr><tr><td class="num">204</td><td>Vigil</td><td>Rebecca Belmore</td><td class="num">2002</td><td class="vd">1</td><td class="vd">verified</td><td class="wd">names of missing women against an unresolved case count</td></tr><tr><td class="num">418</td><td>Untangler</td><td>Peace Olatunji</td><td class="num">2026</td><td class="vd">1</td><td class="vd">toVerify</td><td class="wd">African perspectives absent from training data, named as the asymmetry the work works on</td></tr><tr><td class="num">459</td><td>and Counting... Tattoo of War Casualties</td><td>Wafaa Bilal</td><td class="num">2010</td><td class="vd">1</td><td class="vd">toVerify</td><td class="wd">Iraqi dead who are uncounted in the American record, tattooed as dots</td></tr></tbody>
+</table></div>
+
+<hr>
+<p class="meta">The Atelier · 2026-09-09 · cycle 003, session 2 of a seeded cycle ·
+question Missing Data Art (seed-20260907-220129-aa5f) · signed Ulysses, the practice named
+Assay · every number in this page is re-derivable from <code>data.json</code> by
+<code>check.py</code>.</p>
+
+</main>
+<script>
+(function () {
+  "use strict";
+  var D = {"borderline":4,"floor":30.0,"label":{"":"nothing assumed","floor":"the two screens are independent detectors","floor+monotone":"independent detectors + no higher","floor+monotone+recall":"all three at once","floor+recall":"independent detectors + the screens see everything","monotone":"the unscreened rate is no higher","monotone+recall":"no higher + the screens see everything","recall":"the screens see everything"},"n":521,"published":0.04222648752399232,"rate":0.4727272727272727,"regions":[{"assume":[],"feasible":true,"hi":0.944337811900192,"hi_count":492.0,"lo":0.04222648752399232,"lo_count":22.0,"midpoint":0.4932821497120921,"note":"","width":0.9021113243761997},{"assume":["recall"],"feasible":true,"hi":0.04990403071017274,"hi_count":26.0,"lo":0.04222648752399232,"lo_count":22.0,"midpoint":0.046065259117082535,"note":"unscreened entries are all `no`","width":0.00767754318618042},{"assume":["floor"],"feasible":true,"hi":0.944337811900192,"hi_count":492.0,"lo":0.05758157389635317,"lo_count":30.0,"midpoint":0.5009596928982726,"note":"an independent estimate puts the total at or above the floor","width":0.8867562380038387},{"assume":["monotone"],"feasible":true,"hi":0.4727272727272727,"hi_count":246.29090909090908,"lo":0.04222648752399232,"lo_count":22.0,"midpoint":0.2574768801256325,"note":"the unscreened rate is at most the screened rate","width":0.4305007852032804},{"assume":["floor","recall"],"feasible":false,"hi":0.04990403071017274,"hi_count":26.0,"lo":0.05758157389635317,"lo_count":30.0,"midpoint":0.053742802303262956,"note":"unscreened entries are all `no`; an independent estimate puts the total at or above the floor","width":-0.007677543186180427},{"assume":["monotone","recall"],"feasible":true,"hi":0.04990403071017274,"hi_count":26.0,"lo":0.04222648752399232,"lo_count":22.0,"midpoint":0.046065259117082535,"note":"unscreened entries are all `no`; the unscreened rate is at most the screened rate","width":0.00767754318618042},{"assume":["floor","monotone"],"feasible":true,"hi":0.4727272727272727,"hi_count":246.29090909090908,"lo":0.05758157389635317,"lo_count":30.0,"midpoint":0.26515442331181294,"note":"the unscreened rate is at most the screened rate; an independent estimate puts the total at or above the floor","width":0.41514569883091956},{"assume":["floor","monotone","recall"],"feasible":false,"hi":0.04990403071017274,"hi_count":26.0,"lo":0.05758157389635317,"lo_count":30.0,"midpoint":0.053742802303262956,"note":"unscreened entries are all `no`; the unscreened rate is at most the screened rate; an independent estimate puts the total at or above the floor","width":-0.007677543186180427}],"status":{"floor":["bias direction known","Two absence-vocabulary lists trip together more often than independence allows, which biases the estimate downwards \u2014 so it is a floor."],"monotone":["weak, and stated","78 words fired on 55 entries; that an entry none of them touched is of the kind at a HIGHER rate than one they did would be remarkable."],"recall":["untestable","No screen can show that a further word list would find nothing. Manski's equation (7a) is the same shape."]},"unscreened":466,"yes":22};
+  var live = document.getElementById("live");
+  var ctl = document.getElementById("controls");
+  var still = document.getElementById("still");
+  var out = document.getElementById("readout");
+  var fig = document.getElementById("livefig");
+  var capjs = document.getElementById("cap1js");
+  var boxes = {
+    recall: document.getElementById("a-recall"),
+    floor: document.getElementById("a-floor"),
+    monotone: document.getElementById("a-monotone")
+  };
+  var NAMES = ["floor", "monotone", "recall"];
+
+  function held() {
+    return NAMES.filter(function (k) { return boxes[k].checked; });
+  }
+
+  function find(keys) {
+    var want = keys.slice().sort().join("|");
+    for (var i = 0; i < D.regions.length; i++) {
+      if (D.regions[i].assume.slice().sort().join("|") === want) return D.regions[i];
+    }
+    return null;
+  }
+
+  var W = 720, L = 40, Rr = 24, TOP = 30, H = 96;
+  function draw(r) {
+    var inner = W - L - Rr;
+    var x = function (v) { return L + v * inner; };
+    var s = ['<svg viewBox="0 0 ' + W + ' ' + H + '" width="' + W + '" height="' + H +
+             '" role="img" aria-label="the interval the held assumptions leave">'];
+    [[0, "0 %"], [0.25, "25"], [0.5, "50"], [0.75, "75"], [1, "100 %"]]
+      .forEach(function (t) {
+        s.push('<line class="ax" x1="' + x(t[0]).toFixed(1) + '" y1="' + (TOP - 10) +
+               '" x2="' + x(t[0]).toFixed(1) + '" y2="' + (H - 24) + '"/>');
+        s.push('<text class="slab" x="' + x(t[0]).toFixed(1) + '" y="' + (H - 10) +
+               '">' + t[1] + '</text>');
+      });
+    s.push('<line class="pub" x1="' + x(D.published).toFixed(1) + '" y1="' + (TOP - 14) +
+           '" x2="' + x(D.published).toFixed(1) + '" y2="' + (H - 24) + '"/>');
+    s.push('<text class="publab" x="' + (x(D.published) + 4).toFixed(1) + '" y="' +
+           (TOP - 16) + '">published 09-08</text>');
+    if (!r || !r.feasible) {
+      s.push('<rect class="dead" x="' + L + '" y="' + TOP + '" width="' + inner +
+             '" height="40"/>');
+      s.push('<text class="deadlab" x="' + (L + 10) + '" y="' + (TOP + 25) +
+             '">empty: no value of the fraction satisfies these together</text>');
+    } else {
+      var bw = Math.max(2, (r.hi - r.lo) * inner);
+      s.push('<rect class="band" x="' + x(r.lo).toFixed(1) + '" y="' + TOP +
+             '" width="' + bw.toFixed(1) + '" height="40"/>');
+    }
+    s.push('</svg>');
+    fig.innerHTML = s.join("");
+  }
+
+  function words(keys) {
+    if (!keys.length) return "nothing assumed";
+    return keys.map(function (k) { return D.label[k]; }).join(" + ");
+  }
+
+  function paint() {
+    var keys = held();
+    var r = find(keys);
+    draw(r);
+    var lines = ["assumed: " + words(keys)];
+    if (r && r.feasible) {
+      lines.push("the fraction lies in [<b>" + (100 * r.lo).toFixed(2) + " %</b>, <b>" +
+                 (100 * r.hi).toFixed(2) + " %</b>] — width <b>" +
+                 (100 * (r.hi - r.lo)).toFixed(2) + " points</b>" +
+                 " · " + r.lo_count.toFixed(1) + " to " + r.hi_count.toFixed(1) +
+                 " of " + D.n + " entries");
+      lines.push("minimax-bias midpoint " + (100 * r.midpoint).toFixed(2) + " %" +
+                 " · the point published on 2026-09-08 was " +
+                 (100 * D.published).toFixed(2) + " %, " +
+                 (r.lo <= D.published + 1e-12 && D.published <= r.hi + 1e-12
+                   ? "inside this interval" : "OUTSIDE this interval"));
+    } else {
+      lines.push("<b>empty.</b> These assumptions admit no value at all, so at least " +
+                 "one of them is false. The floor puts the total at " +
+                 D.floor.toFixed(1) + " works; the recall assumption caps it at " +
+                 (D.yes + D.borderline) + ".");
+    }
+    keys.forEach(function (k) {
+      lines.push("· " + D.label[k] + " — " + D.status[k][0] + ": " + D.status[k][1]);
+    });
+    out.innerHTML = lines.join("<br>");
+  }
+
+  NAMES.forEach(function (k) { boxes[k].addEventListener("change", paint); });
+  live.hidden = false;
+  ctl.hidden = false;
+  capjs.hidden = false;
+  still.setAttribute("aria-hidden", "false");
+  paint();
+})();
+</script>
+</body></html>

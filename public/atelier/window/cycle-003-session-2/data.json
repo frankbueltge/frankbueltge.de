@@ -1,0 +1,475 @@
+{
+ "capture": {
+  "a1": 20,
+  "a2": 6,
+  "bias_direction": "downwards: the two word lists both name absence, so an entry of the kind trips both more often than independence allows, which inflates `both` and shrinks the estimate. Read the value as a floor on the total.",
+  "both": 4,
+  "chapman": 28.4,
+  "lincoln_petersen": 30.0,
+  "seen": 22,
+  "unseen_chapman": 6.399999999999999,
+  "unseen_lp": 8.0
+ },
+ "capture_with_borderline": {
+  "a1": 22,
+  "a2": 8,
+  "bias_direction": "downwards: the two word lists both name absence, so an entry of the kind trips both more often than independence allows, which inflates `both` and shrinks the estimate. Read the value as a floor on the total.",
+  "both": 4,
+  "chapman": 40.4,
+  "lincoln_petersen": 44.0,
+  "seen": 26,
+  "unseen_chapman": 14.399999999999999,
+  "unseen_lp": 18.0
+ },
+ "correction": {
+  "cells": [
+   20,
+   18,
+   2,
+   11
+  ],
+  "conditioned_on_read": 0.007164187397425305,
+  "filed_2026_09_08": 3.511737135386587e-07,
+  "fisher_on_read": 0.019320424130357422,
+  "screen_bias": 4.0016580182724856e-07,
+  "verified_share_all": 0.3896353166986564,
+  "verified_share_read": 0.7090909090909091
+ },
+ "counts": {
+  "borderline": 4,
+  "both_screens": 4,
+  "free": 470,
+  "n": 521,
+  "no": 29,
+  "read": 55,
+  "screen_1": 46,
+  "screen_2": 13,
+  "settled": 51,
+  "unscreened": 466,
+  "unverified": 318,
+  "verified": 203,
+  "yes": 22
+ },
+ "meta": {
+  "cycle": 3,
+  "date": "2026-09-09",
+  "duncan_davis": {
+   "authors": "Otis Dudley Duncan and Beverly Davis",
+   "known_from": "Manski (2022) §3.2.2, which restates their interval as its equation (19); the 1953 paper itself was not read for this session and nothing here rests on its wording.",
+   "venue": "American Sociological Review 18, 665–666",
+   "work": "An Alternative to Ecological Correlation",
+   "year": 1953
+  },
+  "entries": 521,
+  "feed_sha256": "a033aef59a4a0d397de02f57cd7db50bd44b075fe1756c6d3490355528c64a61",
+  "feed_sha_unchanged_since": "a033aef59a4a0d397de02f57cd7db50bd44b075fe1756c6d3490355528c64a61",
+  "feed_url": "https://frankbueltge.de/atlas/werke.json",
+  "question": "Missing Data Art",
+  "quotes": [
+   {
+    "at": "abstract",
+    "text": "There is no panacea for missing data. What one can learn about a population parameter depends on the assumptions one finds credible to maintain.",
+    "used_for": "the whole shape of this page: an interval per assumption set, rather than one number per method."
+   },
+   {
+    "at": "§1",
+    "text": "Inference without assumptions requires contemplation of all logically possible distributions of the missing data. Doing so yields the set of all possible values of P(y|x), its identification region.",
+    "used_for": "the definition of the widest bar in figure 1."
+   },
+   {
+    "at": "§3.1.1, of the assumption that missing values are distributed like the observed ones",
+    "text": "Equation (7a) is an untestable assumption.",
+    "used_for": "the status badge on the recall rung — and the reason the second-detector arithmetic of figure 2 is worth having, since it is the one thing here that does bear on the unread entries."
+   },
+   {
+    "at": "§4",
+    "text": "Section 3.1 showed that assumption-free interval estimation is simple with missing outcome data.",
+    "used_for": "the claim that the widest bar cost one line of arithmetic."
+   }
+  ],
+  "reading_date": "2026-09-08",
+  "reading_from": "window/cycle-003-session-1/reading.json",
+  "seed_id": "seed-20260907-220129-aa5f",
+  "session": 2,
+  "source": {
+   "author": "Charles F. Manski",
+   "field": "econometrics — partial identification of probability distributions",
+   "read": "2026-09-09, in full, from the publisher's PDF",
+   "url": "https://arxiv.org/abs/2205.07388",
+   "venue": "arXiv:2205.07388 [econ.EM], 15 May 2022, 19 pp.",
+   "work": "Inference with Imputed Data: The Allure of Making Stuff Up",
+   "year": 2022
+  },
+  "title": "The number was an endpoint, not an estimate",
+  "words": {
+   "screen_1": 41,
+   "screen_2": 37,
+   "total": 78
+  }
+ },
+ "published_point": 0.04222648752399232,
+ "regions": [
+  {
+   "assume": [],
+   "feasible": true,
+   "hi": 0.944337811900192,
+   "hi_count": 492.0,
+   "lo": 0.04222648752399232,
+   "lo_count": 22.0,
+   "midpoint": 0.4932821497120921,
+   "note": "",
+   "width": 0.9021113243761997
+  },
+  {
+   "assume": [
+    "recall"
+   ],
+   "feasible": true,
+   "hi": 0.04990403071017274,
+   "hi_count": 26.0,
+   "lo": 0.04222648752399232,
+   "lo_count": 22.0,
+   "midpoint": 0.046065259117082535,
+   "note": "unscreened entries are all `no`",
+   "width": 0.00767754318618042
+  },
+  {
+   "assume": [
+    "floor"
+   ],
+   "feasible": true,
+   "hi": 0.944337811900192,
+   "hi_count": 492.0,
+   "lo": 0.05758157389635317,
+   "lo_count": 30.0,
+   "midpoint": 0.5009596928982726,
+   "note": "an independent estimate puts the total at or above the floor",
+   "width": 0.8867562380038387
+  },
+  {
+   "assume": [
+    "monotone"
+   ],
+   "feasible": true,
+   "hi": 0.4727272727272727,
+   "hi_count": 246.29090909090908,
+   "lo": 0.04222648752399232,
+   "lo_count": 22.0,
+   "midpoint": 0.2574768801256325,
+   "note": "the unscreened rate is at most the screened rate",
+   "width": 0.4305007852032804
+  },
+  {
+   "assume": [
+    "floor",
+    "recall"
+   ],
+   "feasible": false,
+   "hi": 0.04990403071017274,
+   "hi_count": 26.0,
+   "lo": 0.05758157389635317,
+   "lo_count": 30.0,
+   "midpoint": 0.053742802303262956,
+   "note": "unscreened entries are all `no`; an independent estimate puts the total at or above the floor",
+   "width": -0.007677543186180427
+  },
+  {
+   "assume": [
+    "monotone",
+    "recall"
+   ],
+   "feasible": true,
+   "hi": 0.04990403071017274,
+   "hi_count": 26.0,
+   "lo": 0.04222648752399232,
+   "lo_count": 22.0,
+   "midpoint": 0.046065259117082535,
+   "note": "unscreened entries are all `no`; the unscreened rate is at most the screened rate",
+   "width": 0.00767754318618042
+  },
+  {
+   "assume": [
+    "floor",
+    "monotone"
+   ],
+   "feasible": true,
+   "hi": 0.4727272727272727,
+   "hi_count": 246.29090909090908,
+   "lo": 0.05758157389635317,
+   "lo_count": 30.0,
+   "midpoint": 0.26515442331181294,
+   "note": "the unscreened rate is at most the screened rate; an independent estimate puts the total at or above the floor",
+   "width": 0.41514569883091956
+  },
+  {
+   "assume": [
+    "floor",
+    "monotone",
+    "recall"
+   ],
+   "feasible": false,
+   "hi": 0.04990403071017274,
+   "hi_count": 26.0,
+   "lo": 0.05758157389635317,
+   "lo_count": 30.0,
+   "midpoint": 0.053742802303262956,
+   "note": "unscreened entries are all `no`; the unscreened rate is at most the screened rate; an independent estimate puts the total at or above the floor",
+   "width": -0.007677543186180427
+  }
+ ],
+ "rungs": {
+  "label": {
+   "": "nothing assumed",
+   "floor": "the two screens are independent detectors",
+   "floor+monotone": "independent detectors + no higher",
+   "floor+monotone+recall": "all three at once",
+   "floor+recall": "independent detectors + the screens see everything",
+   "monotone": "the unscreened rate is no higher",
+   "monotone+recall": "no higher + the screens see everything",
+   "recall": "the screens see everything"
+  },
+  "status": {
+   "floor": [
+    "bias direction known",
+    "Two absence-vocabulary lists trip together more often than independence allows, which biases the estimate downwards — so it is a floor."
+   ],
+   "monotone": [
+    "weak, and stated",
+    "78 words fired on 55 entries; that an entry none of them touched is of the kind at a HIGHER rate than one they did would be remarkable."
+   ],
+   "recall": [
+    "untestable",
+    "No screen can show that a further word list would find nothing. Manski's equation (7a) is the same shape."
+   ]
+  }
+ },
+ "screened_rate_max": 0.4727272727272727,
+ "split": {
+  "free_all": 470,
+  "free_unverified": 305,
+  "free_verified": 165,
+  "n": 521,
+  "rate_ratio": 4.102564102564102,
+  "share_unverified": 0.648936170212766,
+  "unverified": {
+   "borderline": 3,
+   "free": 305,
+   "n": 318,
+   "no": 11,
+   "rate_read": 0.125,
+   "read": 16,
+   "unscreened": 302,
+   "yes": 2
+  },
+  "verified": {
+   "borderline": 1,
+   "free": 165,
+   "n": 203,
+   "no": 18,
+   "rate_read": 0.5128205128205128,
+   "read": 39,
+   "unscreened": 164,
+   "yes": 20
+  }
+ },
+ "yes_rows": [
+  {
+   "artist": "Voluspa Jarpa",
+   "index_in_feed": 63,
+   "reason": "the redaction blackouts of a declassified archive are the work's material: what the record withholds",
+   "screens": "12",
+   "title": "Biblioteca de la No-Historia (Library of Non-History)",
+   "verify_status": "verified",
+   "year": "2011"
+  },
+  {
+   "artist": "Catherine D'Ignazio, Silvana Fumega, Helena Suárez Val (MIT Data + Feminism Lab, ILDA, Feminicidio Uruguay)",
+   "index_in_feed": 65,
+   "reason": "builds counterdata for the body-counting states do not do — the dataset's absence is the premise",
+   "screens": "2",
+   "title": "Data Against Feminicide",
+   "verify_status": "verified",
+   "year": "2019–ongoing"
+  },
+  {
+   "artist": "Archie Moore",
+   "index_in_feed": 75,
+   "reason": "built from redacted coronial files on deaths in custody — what the state's record does not say",
+   "screens": "1",
+   "title": "kith and kin",
+   "verify_status": "verified",
+   "year": "2024"
+  },
+  {
+   "artist": "Lawrence Abu Hamdan",
+   "index_in_feed": 81,
+   "reason": "no images of the prison exist; the work reconstructs from that absence",
+   "screens": "1",
+   "title": "Saydnaya (the missing 19dB)",
+   "verify_status": "verified",
+   "year": "2017"
+  },
+  {
+   "artist": "Daniela Ortiz",
+   "index_in_feed": 93,
+   "reason": "the worker structurally excluded from the frame she sustains — the omission is the subject",
+   "screens": "12",
+   "title": "97 Empleadas Domésticas (97 Domestic Employees)",
+   "verify_status": "verified",
+   "year": "2010"
+  },
+  {
+   "artist": "Linda Dounia Rebeiz",
+   "index_in_feed": 120,
+   "reason": "flora that colonial archival gaps 'already erased or never recorded'",
+   "screens": "1",
+   "title": "Once Upon A Garden (Once Upon a Flower series)",
+   "verify_status": "verified",
+   "year": "2022–2023"
+  },
+  {
+   "artist": "Morehshin Allahyari",
+   "index_in_feed": 123,
+   "reason": "erased and demonised figures rebuilt into an archive that did not hold them",
+   "screens": "1",
+   "title": "She Who Sees the Unknown",
+   "verify_status": "verified",
+   "year": "2016–2021"
+  },
+  {
+   "artist": "Giselle Beiguelman",
+   "index_in_feed": 134,
+   "reason": "erased women botanists, and the naming system that dropped them",
+   "screens": "1",
+   "title": "Venenosas, Nocivas e Suspeitas",
+   "verify_status": "verified",
+   "year": "2024–2025"
+  },
+  {
+   "artist": "Demian DinéYazhi'",
+   "index_in_feed": 137,
+   "reason": "missing and murdered Indigenous people recited as a register the state does not keep",
+   "screens": "1",
+   "title": "A Nation Is a Massacre",
+   "verify_status": "verified",
+   "year": "2019"
+  },
+  {
+   "artist": "Chao Tayiana Maina / Museum of British Colonialism",
+   "index_in_feed": 141,
+   "reason": "detention camps the post-independence archive had erased, rebuilt from survivor data",
+   "screens": "1",
+   "title": "Barbed Wire Village",
+   "verify_status": "verified",
+   "year": "2022 (3D reconstructions begun 2019)"
+  },
+  {
+   "artist": "Masakhane (pan-African grassroots NLP research community)",
+   "index_in_feed": 156,
+   "reason": "languages historically excluded from models; the community builds the missing datasets",
+   "screens": "1",
+   "title": "Masakhane",
+   "verify_status": "verified",
+   "year": "2019–ongoing"
+  },
+  {
+   "artist": "Jaime Black",
+   "index_in_feed": 181,
+   "reason": "empty dresses stand for an uncounted statistical gap — absence made spatial",
+   "screens": "1",
+   "title": "The REDress Project",
+   "verify_status": "verified",
+   "year": "2010–ongoing"
+  },
+  {
+   "artist": "Catherine D'Ignazio & Lauren F. Klein",
+   "index_in_feed": 189,
+   "reason": "turns 'whose voice is missing from the data' into a method",
+   "screens": "1",
+   "title": "Data Feminism",
+   "verify_status": "verified",
+   "year": "2020"
+  },
+  {
+   "artist": "Debbie Ding",
+   "index_in_feed": 195,
+   "reason": "oral micro-histories of a vanished river, indexed where no archive holds them",
+   "screens": "2",
+   "title": "Here the River Lies",
+   "verify_status": "verified",
+   "year": "2010–2015"
+  },
+  {
+   "artist": "Iván Abreu",
+   "index_in_feed": 196,
+   "reason": "workers who accumulate no data trail — missing data made to move",
+   "screens": "1",
+   "title": "Minotauros (Minotaurs)",
+   "verify_status": "verified",
+   "year": "2017"
+  },
+  {
+   "artist": "Mimi Onuoha",
+   "index_in_feed": 197,
+   "reason": "a list of datasets that go uncollected",
+   "screens": "1",
+   "title": "Missing Datasets (list/essay)",
+   "verify_status": "verified",
+   "year": "2015–ongoing"
+  },
+  {
+   "artist": "Datasketch (with Sandra Suárez / QueremosDatos.co, Data Against Feminicide network)",
+   "index_in_feed": 199,
+   "reason": "denied complete records, builds its own and renders the state's non-counting",
+   "screens": "12",
+   "title": "Sobrevivientes",
+   "verify_status": "verified",
+   "year": "2017–ongoing"
+  },
+  {
+   "artist": "Mimi Ọnụọha",
+   "index_in_feed": 201,
+   "reason": "empty labelled folders: structural absence as the exhibit",
+   "screens": "1",
+   "title": "The Library of Missing Datasets",
+   "verify_status": "verified",
+   "year": "2016–ongoing (v1 2016, v2.0, v3.0 2021)"
+  },
+  {
+   "artist": "Mimi Ọnụọha",
+   "index_in_feed": 202,
+   "reason": "the same, in its second version, naming datasets that structurally do not exist",
+   "screens": "12",
+   "title": "The Library of Missing Datasets (v2.0)",
+   "verify_status": "verified",
+   "year": "2016 (v2.0: 2020)"
+  },
+  {
+   "artist": "Rebecca Belmore",
+   "index_in_feed": 204,
+   "reason": "names of missing women against an unresolved case count",
+   "screens": "1",
+   "title": "Vigil",
+   "verify_status": "verified",
+   "year": "2002"
+  },
+  {
+   "artist": "Peace Olatunji",
+   "index_in_feed": 418,
+   "reason": "African perspectives absent from training data, named as the asymmetry the work works on",
+   "screens": "1",
+   "title": "Untangler",
+   "verify_status": "toVerify",
+   "year": "2026"
+  },
+  {
+   "artist": "Wafaa Bilal",
+   "index_in_feed": 459,
+   "reason": "Iraqi dead who are uncounted in the American record, tattooed as dots",
+   "screens": "1",
+   "title": "and Counting... Tattoo of War Casualties",
+   "verify_status": "toVerify",
+   "year": "2010"
+  }
+ ]
+}
