@@ -45,9 +45,15 @@ jobs:
 
           # 1) Engine-Sessions der letzten 24h (Commits auf main, ohne Merge-/Bot-Rauschen)
           BODY+="### Sessions"$'\n'
-          for REPO in field-research ulysses studio data-snack-plenum; do
+          # arch, n-1 and error-as-method added 2026-09-11. They have run a session every night
+          # since 2026-09-03 and none of them appeared here, so the one mechanism that reports
+          # "keine Session gelandet" never looked at them: arch missed the nights of 09-10 and
+          # 09-11 and nothing said so. `Night [0-9]` is n-1's own session marker ("Night 25: …");
+          # it is written with the digit so that prose like "Two Nights Deep" is not counted as
+          # a landing. arch and error-as-method are caught by the existing "Session" alternative.
+          for REPO in field-research ulysses studio data-snack-plenum arch n-1 error-as-method; do
             LINES=$(gh api "repos/frankbueltge/$REPO/commits?since=$SINCE&per_page=15" \
-              --jq '[.[] | select(.commit.message | test("session|Session|Research day|Plenum|Auto-land research|Project work")) | "- **'"$REPO"'**: " + (.commit.message | split("\n")[0] | .[0:140])] | join("\n")' 2>/dev/null || echo "")
+              --jq '[.[] | select(.commit.message | test("session|Session|Research day|Plenum|Auto-land research|Project work|Night [0-9]")) | "- **'"$REPO"'**: " + (.commit.message | split("\n")[0] | .[0:140])] | join("\n")' 2>/dev/null || echo "")
             if [ -n "$LINES" ]; then BODY+="$LINES"$'\n'
             # Atelier arbeitet seit Protokoll v4 projektbasiert (v5 seit 2026-07-24: Arbeitslinien) —
             # eine Nacht ohne Landung ist normal, kein Alarm. Sein Sitzungsmarker heißt "Project work",
