@@ -106,9 +106,9 @@ export interface SeasonModel {
   height: number
   /** every path this model read, for the figure's own provenance line */
   provenance: string[]
-  /** the title lettering the lit band could afford: 1 is the full face, 2 and 3 the two denser
+  /** the title lettering the lit band could afford: 1 is the full face, 2, 3 and 4 the denser
    *  steps studio-stage.css matches through `data-lettering` on the svg (see LETTERING) */
-  lettering: 1 | 2 | 3
+  lettering: 1 | 2 | 3 | 4
 }
 
 // ---------------------------------------------------------------- geometry constants
