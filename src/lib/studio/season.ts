@@ -153,7 +153,7 @@ const OPEN_ROW_COST = 150
 /** The title lettering, full face first. When three rows cannot hold the season at one step the
  *  layout is tried at the next; studio-stage.css sets the matching font size off `data-lettering`
  *  on the svg, so the face and the pool shrink together and a title never spills its pool. */
-const LETTERING = [1, 0.85, 0.72] as const
+const LETTERING = [1, 0.85, 0.72, 0.62] as const
 /** the top edge of the lamp the light hangs from — the highest thing on the stage, and therefore
  *  the lowest a crop window's top edge may sit if the fragment is still to read as a stage */
 const LAMP_TOP = FLOOR.y0 - 28
@@ -370,7 +370,7 @@ export function buildSeasonModel(input: SeasonInput): SeasonModel {
   // stylesheet sets the face to match). A record that fits no step is the honest alarm this file has
   // always kept — the band is full, the figure needs a decision — and it throws rather than draw a
   // name over a name.
-  const layoutAt = (step: 1 | 2 | 3) => {
+  const layoutAt = (step: 1 | 2 | 3 | 4) => {
     const scale = LETTERING[step - 1]
     const rx = (label: string) => poolRx(label, scale)
     const widestLastDay = Math.max(0, ...lit.filter((d) => d.date === lastDate).map((d) => rx(d.label)))
@@ -386,7 +386,7 @@ export function buildSeasonModel(input: SeasonInput): SeasonModel {
     )
     return shelved ? { step, scale, x, shelved } : null
   }
-  const layout = layoutAt(1) ?? layoutAt(2) ?? layoutAt(3)
+  const layout = layoutAt(1) ?? layoutAt(2) ?? layoutAt(3) ?? layoutAt(4)
   if (!layout) {
     throw new Error(
       `buildSeasonModel: the lit band is full — ${lit.length} premieres do not fit ${LIT_ROWS} rows ` +
