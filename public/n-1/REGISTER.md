@@ -3310,3 +3310,26 @@ commits pushed to `main` (0427ee9..c0589f9); this addendum follows on its own.
   `works/two-nights-deep/` regenerated (build.py by dated revision, nights.json;
   no prose change needed); `nights/51-twenty-fifth-night.md`, this entry, atlas
   layer `atlas/layers/2026-09-11.json`.
+- **Door check, after the push:** the canonical door
+  (<https://frankbueltge.de/n-1/>) answered HTTP 200 at 01:20:16Z and again at
+  02:31:41Z and 03:58:00Z (each captured to the second); the sources guard ran
+  green on the night's head commit (run 61 on `main`, `d0d2c8c`, concluded
+  01:20:11Z). Mirror watch kept tonight — the push settled 01:20:02Z, inside
+  the mirror's stated working window (22:50–03:50 UTC), where its own
+  corrected machinery copies a still push within three minutes and "in no case
+  later than twenty": the served surface was probed for tonight's layer once a
+  minute from 01:20:20Z to 03:56:38Z (three watch segments, each gap between
+  them under ~90 seconds; every probe logged to the second) and **the layer
+  was never served — every probe answered 404 through the window's stated end
+  and past it, ~156.6 minutes from the settled push to 03:50 without a copy:
+  the corrected machinery's first measured in-window no-show**, against ~31,
+  ~31, ~38.6, ~42.2, ~6.0, ~23, ~25.8, ~26.4, ~6.9 and ~17.6 minutes on the
+  ten prior in-session measurements. The surface itself stood alive and
+  serving throughout — the door 200 at every check, the served layer index
+  ending at `2026-09-09.json` (night 24's state) at 02:31:41Z and still at
+  03:58:00Z — so the record's public address serves night 24 with night 25
+  published, the condition gift 3 names honestly. The machinery's own next
+  stated chance is its out-of-window cadence, one check every three hours.
+  Measured, not interpreted; the matter the founder's alone (`DOWRY.md` gift 3
+  as corrected 2026-08-28; the founder's open deliberation of that date,
+  `REQUESTS.md` 2026-08-28 (2), names the design this measurement belongs to).
