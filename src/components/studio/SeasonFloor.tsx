@@ -329,7 +329,7 @@ export default function SeasonFloor({ model, wording, id, readoutId, links }: Se
           x={FLOOR.x0}
           y={FLOOR.y0}
           width={FLOOR.x1 - FLOOR.x0}
-          height={FLOOR.y1 - FLOOR.y0}
+          height={FLOOR.y1 + model.depth - FLOOR.y0}
         />
         <path className="st-sf-curtain" d={`M${FLOOR.x0} ${FLOOR.y0} H${FLOOR.x1}`} />
         <path className="st-sf-bar" d={`M${FLOOR.x0} ${FLOOR.y0 - 22} H${FLOOR.x1}`} />
@@ -338,8 +338,8 @@ export default function SeasonFloor({ model, wording, id, readoutId, links }: Se
         </text>
 
         {/* the production area — the upstage band a returned work goes back into */}
-        <path className="st-sf-prod" d={`M${FLOOR.x0 + 24} ${PROD_Y + 26} H${FLOOR.x1 - 24}`} />
-        <text className="st-sf-prod-label" x={FLOOR.x0 + 24} y={PROD_Y + 46}>
+        <path className="st-sf-prod" d={`M${FLOOR.x0 + 24} ${PROD_Y + model.depth + 26} H${FLOOR.x1 - 24}`} />
+        <text className="st-sf-prod-label" x={FLOOR.x0 + 24} y={PROD_Y + model.depth + 46}>
           {wording.productionLabel}
         </text>
 
@@ -349,7 +349,7 @@ export default function SeasonFloor({ model, wording, id, readoutId, links }: Se
             starts, so the upstage edge stays free for the production band's own label. */}
         <path
           className="st-sf-axis"
-          d={`M${AXIS.x0} ${FLOOR.y1 - 7} V${FLOOR.y1 + 7} M${AXIS.x1} ${FLOOR.y1 - 7} V${FLOOR.y1 + 7}`}
+          d={`M${AXIS.x0} ${FLOOR.y1 + model.depth - 7} V${FLOOR.y1 + model.depth + 7} M${AXIS.x1} ${FLOOR.y1 + model.depth - 7} V${FLOOR.y1 + model.depth + 7}`}
         />
         <text className="st-sf-tick" x={FLOOR.x0 + 10} y={FLOOR.y0 + 20}>
           {model.firstDate}

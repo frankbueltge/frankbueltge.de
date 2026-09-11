@@ -106,9 +106,14 @@ export interface SeasonModel {
   height: number
   /** every path this model read, for the figure's own provenance line */
   provenance: string[]
-  /** the title lettering the lit band could afford: 1 is the full face, 2, 3 and 4 the denser
+  /** the title lettering the lit band could afford: 1 is the full face, 2 and 3 the two denser
    *  steps studio-stage.css matches through `data-lettering` on the svg (see LETTERING) */
-  lettering: 1 | 2 | 3 | 4
+  lettering: 1 | 2 | 3
+  /** How far the floor was deepened for this season: 0 while the lit band fits its shallowest
+   *  three rows, and one LIT_ROW_GAP per row added beyond them. Everything downstage of the band —
+   *  the struck positions, the production area, the floor's own edge and the canvas — is offset by
+   *  it, so a deeper band never crowds what plays behind it. */
+  depth: number
 }
 
 // ---------------------------------------------------------------- geometry constants
@@ -125,12 +130,31 @@ const H = 884
 // of these numbers would drift the first time one of them moved.
 export const FLOOR = { x0: 96, y0: 150, x1: 1344, y1: 810 }
 export const AXIS = { x0: 214, x1: 1248 }
-/** lit positions play downstage, just under the curtain line: three rows, this the middle one */
+/** lit positions play downstage, just under the curtain line: the shallowest band is three rows,
+ *  this the middle one */
 export const LIT_Y = 352
 /** the rows are 104px apart — more than the 72px two pool edges need, jitter included */
 const LIT_ROW_GAP = 104
-const LIT_ROWS = 3
-const LIT_ROW_Y = [LIT_Y - LIT_ROW_GAP, LIT_Y, LIT_Y + LIT_ROW_GAP]
+/** The shallowest lit band — a starting depth, NOT a capacity.
+ *
+ *  A pool is as wide as the name it lights, so a season of N premieres needs a width no face can
+ *  keep shrinking to meet: at 21 premieres the lettering ladder was already on its last rung, and
+ *  the arithmetic says 40 would need a 6.8px face. The three ways out were to drop a position, to
+ *  stop spelling a name, or to give the band more room. The first two contradict what this figure
+ *  is — the floor keeps every mark (ADR 0010), and a pool is as wide as the name it lights.
+ *
+ *  So THE FLOOR DEEPENS. When the season outgrows the band at every face the ladder has, a row is
+ *  added and everything downstage of the band moves with it (`depth`). A season that accumulates
+ *  makes a deeper floor, which is what "the floor keeps every mark" means when it is taken at its
+ *  word. (2026-09-11, replacing the throw that asked for this decision.) */
+const LIT_ROWS_MIN = 3
+/** A guard, not a design limit: eight rows is a floor two and a half times today's depth, and a
+ *  season that reaches it is a figure to look at again rather than one to grow silently. */
+const LIT_ROWS_MAX = 8
+/** Row centres for a band of `rows`. The top row is fixed and the band grows DOWNWARD, so at
+ *  LIT_ROWS_MIN these are exactly the three rows the floor has had since 2026-09-01. */
+const litRowY = (rows: number): number[] =>
+  Array.from({ length: rows }, (_, r) => LIT_Y - LIT_ROW_GAP + r * LIT_ROW_GAP)
 /** the lit band's two walls: 40px inside the floor's edge on either side */
 const LIT_WALL = { min: FLOOR.x0 + 40, max: FLOOR.x1 - 40 }
 /** struck positions sit further back, on the dark part of the floor */
@@ -153,7 +177,7 @@ const OPEN_ROW_COST = 150
 /** The title lettering, full face first. When three rows cannot hold the season at one step the
  *  layout is tried at the next; studio-stage.css sets the matching font size off `data-lettering`
  *  on the svg, so the face and the pool shrink together and a title never spills its pool. */
-const LETTERING = [1, 0.85, 0.72, 0.62] as const
+const LETTERING = [1, 0.85, 0.72] as const
 /** the top edge of the lamp the light hangs from — the highest thing on the stage, and therefore
  *  the lowest a crop window's top edge may sit if the fragment is still to read as a stage */
 const LAMP_TOP = FLOOR.y0 - 28
@@ -370,7 +394,7 @@ export function buildSeasonModel(input: SeasonInput): SeasonModel {
   // stylesheet sets the face to match). A record that fits no step is the honest alarm this file has
   // always kept — the band is full, the figure needs a decision — and it throws rather than draw a
   // name over a name.
-  const layoutAt = (step: 1 | 2 | 3 | 4) => {
+  const layoutAt = (step: 1 | 2 | 3, rows: number) => {
     const scale = LETTERING[step - 1]
     const rx = (label: string) => poolRx(label, scale)
     const widestLastDay = Math.max(0, ...lit.filter((d) => d.date === lastDate).map((d) => rx(d.label)))
@@ -383,16 +407,26 @@ export function buildSeasonModel(input: SeasonInput): SeasonModel {
         rx: rx(d.label),
         wanted: Math.max(x(ts(d.date)), LIT_WALL.min + rx(d.label)),
       })),
+      rows,
     )
-    return shelved ? { step, scale, x, shelved } : null
+    return shelved ? { step, scale, x, shelved, rows } : null
   }
-  const layout = layoutAt(1) ?? layoutAt(2) ?? layoutAt(3) ?? layoutAt(4)
+  // Fewest rows first, and within a depth the fullest face that fits it: the floor stays as shallow
+  // as it can, and when it must deepen it gets the FULL face back instead of shrinking further.
+  let layout: ReturnType<typeof layoutAt> = null
+  for (let rows = LIT_ROWS_MIN; rows <= LIT_ROWS_MAX && !layout; rows++) {
+    for (let step = 1; step <= LETTERING.length && !layout; step++) {
+      layout = layoutAt(step as 1 | 2 | 3, rows)
+    }
+  }
   if (!layout) {
     throw new Error(
-      `buildSeasonModel: the lit band is full — ${lit.length} premieres do not fit ${LIT_ROWS} rows ` +
+      `buildSeasonModel: the lit band is full — ${lit.length} premieres do not fit ${LIT_ROWS_MAX} rows ` +
         'even at the densest lettering; the floor needs a decision (season.ts, the shelf), not a quietly overlapping name',
     )
   }
+  /** how far this season deepened the floor — 0 while the band still fits its shallowest form */
+  const depth = (layout.rows - LIT_ROWS_MIN) * LIT_ROW_GAP
   const { x } = layout
   for (const r of returns) r.x = x(ts(r.date))
 
@@ -410,7 +444,7 @@ export function buildSeasonModel(input: SeasonInput): SeasonModel {
       source: k.source,
       dateKnown: known !== undefined,
       x: x(ts(known ?? firstDate)),
-      y: STRUCK_Y + (hash01(k.name) - 0.5) * 2 * STRUCK_JITTER,
+      y: STRUCK_Y + depth + (hash01(k.name) - 0.5) * 2 * STRUCK_JITTER,
       rx: STRIKE_R,
       ry: STRIKE_R,
     }
@@ -448,16 +482,26 @@ export function buildSeasonModel(input: SeasonInput): SeasonModel {
     // not relaxed (see shelveLit), at the lettering the band could afford
     ...lit.map((d) => ({ ...d, rx: poolRx(d.label, layout.scale), ...layout.shelved.get(d.key)! })),
     // an X plus two lettered lines: ~68 wide, ~26 tall
-    ...settle(struck, STRUCK_Y - STRUCK_JITTER, STRUCK_Y + STRUCK_JITTER, 26, 16, 2.6),
+    ...settle(struck, STRUCK_Y + depth - STRUCK_JITTER, STRUCK_Y + depth + STRUCK_JITTER, 26, 16, 2.6),
     // returns land on the production band itself — the arc carries only a Roman numeral, so their
     // footprint is the numeral, and their x spread is what keeps three journeys legible
-    ...settle(returns, PROD_Y, PROD_Y, 26, 26),
+    ...settle(returns, PROD_Y + depth, PROD_Y + depth, 26, 26),
   ]
 
   const counts: Record<SeasonState, number> = { premiered: 0, withdrawn: 0, struck: 0, returned: 0 }
   for (const m of marks) counts[m.state] += 1
 
-  return { marks, counts, firstDate, lastDate, width: W, height: H, provenance: PROV, lettering: layout.step }
+  return {
+    marks,
+    counts,
+    firstDate,
+    lastDate,
+    width: W,
+    height: H + depth,
+    provenance: PROV,
+    lettering: layout.step,
+    depth,
+  }
 }
 
 // ---------------------------------------------------------------- the lit band is shelved, not relaxed
@@ -542,10 +586,14 @@ function placeOnRow(row: readonly RowPool[], d: ShelfPool): Placement | null {
   return { x, cost, shifts }
 }
 
-/** The shelf: every pool's place on the lit band, or null when LIT_ROWS rows cannot hold them at
+/** The shelf: every pool's place on the lit band, or null when `maxRows` rows cannot hold them at
  *  this lettering. Deterministic — same pools in, same map out; the key breaks a same-day tie, so
  *  the walk is a total order and never depends on the chronicle's own row order. */
-function shelveLit(pools: readonly ShelfPool[]): Map<string, { x: number; y: number }> | null {
+function shelveLit(
+  pools: readonly ShelfPool[],
+  maxRows: number,
+): Map<string, { x: number; y: number }> | null {
+  const rowY = litRowY(maxRows)
   const rows: RowPool[][] = []
   const oldestFirst = [...pools].sort((a, b) =>
     a.date === b.date ? a.key.localeCompare(b.key) : a.date < b.date ? -1 : 1,
@@ -553,7 +601,7 @@ function shelveLit(pools: readonly ShelfPool[]): Map<string, { x: number; y: num
   for (const d of oldestFirst) {
     let best: { row: number; cost: number; placed: Placement } | null = null
     // every open row, and — while one is still free — the option of opening the next
-    const options = Math.min(rows.length + 1, LIT_ROWS)
+    const options = Math.min(rows.length + 1, maxRows)
     for (let r = 0; r < options; r++) {
       const placed = placeOnRow(rows[r] ?? [], d)
       if (!placed) continue
@@ -571,7 +619,7 @@ function shelveLit(pools: readonly ShelfPool[]): Map<string, { x: number; y: num
   const at = new Map<string, { x: number; y: number }>()
   rows.forEach((row, r) => {
     for (const p of row) {
-      at.set(p.key, { x: round(p.x), y: round(LIT_ROW_Y[r] + (hash01(p.key) - 0.5) * 2 * LIT_ROW_JITTER) })
+      at.set(p.key, { x: round(p.x), y: round(rowY[r] + (hash01(p.key) - 0.5) * 2 * LIT_ROW_JITTER) })
     }
   })
   return at
@@ -648,7 +696,7 @@ export function buildSeasonFloorSvg(model: SeasonModel, opts: SeasonRenderOption
   )
 
   // the floor, the curtain line, and the lamp bar the light hangs from
-  s.push(`<rect class="st-sf-floor" x="${FLOOR.x0}" y="${FLOOR.y0}" width="${FLOOR.x1 - FLOOR.x0}" height="${FLOOR.y1 - FLOOR.y0}"/>`)
+  s.push(`<rect class="st-sf-floor" x="${FLOOR.x0}" y="${FLOOR.y0}" width="${FLOOR.x1 - FLOOR.x0}" height="${FLOOR.y1 + model.depth - FLOOR.y0}"/>`)
   s.push(`<path class="st-sf-curtain" d="M${FLOOR.x0} ${FLOOR.y0} H${FLOOR.x1}"/>`)
   s.push(`<path class="st-sf-bar" d="M${FLOOR.x0} ${FLOOR.y0 - 22} H${FLOOR.x1}"/>`)
   if (opts.headline) {
@@ -656,9 +704,9 @@ export function buildSeasonFloorSvg(model: SeasonModel, opts: SeasonRenderOption
   }
 
   // the production area — the upstage band a returned work goes back into
-  s.push(`<path class="st-sf-prod" d="M${FLOOR.x0 + 24} ${PROD_Y + 26} H${FLOOR.x1 - 24}"/>`)
+  s.push(`<path class="st-sf-prod" d="M${FLOOR.x0 + 24} ${PROD_Y + model.depth + 26} H${FLOOR.x1 - 24}"/>`)
   s.push(
-    `<text class="st-sf-prod-label" x="${FLOOR.x0 + 24}" y="${PROD_Y + 46}">` +
+    `<text class="st-sf-prod-label" x="${FLOOR.x0 + 24}" y="${PROD_Y + model.depth + 46}">` +
       `${escapeXml(opts.productionLabel ?? 'THE PRODUCTION AREA')}</text>`,
   )
 
@@ -666,7 +714,7 @@ export function buildSeasonFloorSvg(model: SeasonModel, opts: SeasonRenderOption
   // two dates the data actually carries (an invented month grid would be a claim about evenings the
   // house never played). The dates letter at the TOP, where the axis starts, so the upstage edge
   // stays free for the production band's own label.
-  s.push(`<path class="st-sf-axis" d="M${AXIS.x0} ${FLOOR.y1 - 7} V${FLOOR.y1 + 7} M${AXIS.x1} ${FLOOR.y1 - 7} V${FLOOR.y1 + 7}"/>`)
+  s.push(`<path class="st-sf-axis" d="M${AXIS.x0} ${FLOOR.y1 + model.depth - 7} V${FLOOR.y1 + model.depth + 7} M${AXIS.x1} ${FLOOR.y1 + model.depth - 7} V${FLOOR.y1 + model.depth + 7}"/>`)
   s.push(`<text class="st-sf-tick" x="${FLOOR.x0 + 10}" y="${FLOOR.y0 + 20}">${escapeXml(model.firstDate)}</text>`)
   s.push(
     `<text class="st-sf-tick" x="${FLOOR.x1 - 10}" y="${FLOOR.y0 + 20}" text-anchor="end">${escapeXml(model.lastDate)}</text>`,
@@ -964,9 +1012,9 @@ function defaultLabel(model: SeasonModel): string {
  *  reads as a stage rather than a detail of one. Landscape on purpose: the first version cropped to
  *  760 × 684, nearly square, and the stills rendered a full reading column tall. */
 function cropView(model: SeasonModel, cropTo?: string, box?: { width: number; height: number }): string {
-  if (!cropTo) return `0 0 ${W} ${H}`
+  if (!cropTo) return `0 0 ${W} ${model.height}`
   const m = model.marks.find((k) => k.key === cropTo)
-  if (!m) return `0 0 ${W} ${H}`
+  if (!m) return `0 0 ${W} ${model.height}`
   if (box) {
     // A named window: centred on the mark in both axes and clamped to the figure, so a window
     // larger than the stage simply becomes the stage rather than a viewBox reaching past it.
@@ -978,14 +1026,14 @@ function cropView(model: SeasonModel, cropTo?: string, box?: { width: number; he
     // lit pools happened to sit high enough, and broke by 3.5px the first evening a sixth premiere
     // pushed the newest pool down (2026-08-15).
     const cw = Math.min(box.width, W)
-    const ch = Math.min(box.height, H)
+    const ch = Math.min(box.height, model.height)
     const bx = Math.min(Math.max(m.x - cw / 2, 0), W - cw)
-    const by = Math.min(Math.max(m.y - ch / 2, 0), H - ch, LAMP_TOP)
+    const by = Math.min(Math.max(m.y - ch / 2, 0), model.height - ch, LAMP_TOP)
     return `${round(bx)} ${round(by)} ${round(cw)} ${round(ch)}`
   }
   const cw = 1040
   const x0 = Math.min(Math.max(m.x - cw / 2, 0), W - cw)
-  return `${round(x0)} 104 ${cw} ${H - 104}`
+  return `${round(x0)} 104 ${cw} ${model.height - 104}`
 }
 
 // ---------------------------------------------------------------- the table floor

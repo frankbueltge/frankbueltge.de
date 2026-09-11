@@ -166,12 +166,14 @@ describe('buildSeasonModel over the committed record', () => {
 
   it('places lit positions downstage and struck positions further back, all on the floor', () => {
     // The floor's own edges, typed here on purpose rather than imported: 96/1344 across, 150 down
-    // to 810 — the bottom edge was 706 until the lit band gained its third row on 2026-09-01.
+    // to 810 — the bottom edge was 706 until the lit band gained its third row on 2026-09-01. Since
+    // 2026-09-11 the band opens a row whenever the season outgrows it and the edge moves down with
+    // it, so the bottom is the typed edge PLUS the depth this season needed.
     for (const m of model.marks) {
       expect(m.x).toBeGreaterThanOrEqual(96)
       expect(m.x).toBeLessThanOrEqual(1344)
       expect(m.y).toBeGreaterThan(150)
-      expect(m.y).toBeLessThan(810)
+      expect(m.y).toBeLessThan(810 + model.depth)
     }
     const litY = model.marks.filter((m) => m.state === 'premiered' || m.state === 'withdrawn').map((m) => m.y)
     const struckY = model.marks.filter((m) => m.state === 'struck').map((m) => m.y)
@@ -512,7 +514,8 @@ describe('the lit band as a shelf', () => {
       expect(p.x - p.rx, `${p.label} runs off the left`).toBeGreaterThanOrEqual(96)
       expect(p.x + p.rx, `${p.label} runs off the right`).toBeLessThanOrEqual(1344)
       expect(p.y - p.ry, `${p.label} above the curtain`).toBeGreaterThan(150)
-      expect(p.y + p.ry, `${p.label} into the struck band`).toBeLessThan(542)
+      // the struck band's edge moves down with the floor, so this bound is relative to it
+      expect(p.y + p.ry, `${p.label} into the struck band`).toBeLessThan(542 + m.depth)
     }
   }
   const apart = (m: ReturnType<typeof buildSeasonModel>) => {
@@ -603,12 +606,40 @@ describe('the lit band as a shelf', () => {
     expect(buildSeasonFloorSvg(build(summer, summerTitles))).toContain('data-lettering="1"')
   })
 
-  it('fails loud, never quietly: a season no lettering can hold throws', () => {
+  it('deepens the floor rather than refuse a season three rows cannot hold', () => {
+    // The band used to throw here. It does not any more: a pool is as wide as the name it lights
+    // and the ladder of faces is finite, so the floor gains rows instead of losing names.
+    // thirty premieres of the practice's own median title length, one an evening — the shape this
+    // season is actually growing into, not a pathological one
     const chronicle: ReturnType<typeof ship>[] = []
     const titles: Record<string, string> = {}
-    for (let i = 0; i < 40; i++) {
-      chronicle.push(ship(200 + i, `2026-09-0${1 + (i % 3)}`, `k${i}`))
-      titles[`k${i}`] = `A twenty letter name ${i}`
+    for (let i = 0; i < 30; i++) {
+      const day = String(1 + i).padStart(2, '0')
+      chronicle.push(ship(200 + i, `2026-10-${day}`, `k${day}`))
+      titles[`k${day}`] = `Median name ${day}`
+    }
+    const m = build(chronicle, titles)
+    const shallow = build(summer, summerTitles)
+    // the summer still sits on the floor's shallowest form, so today's figure is unchanged …
+    expect(shallow.depth).toBe(0)
+    // … and the crowded season opened rows below it
+    expect(m.depth).toBeGreaterThan(0)
+    expect(m.depth % 104).toBe(0)
+    // the canvas grew by exactly the added depth and by nothing else
+    expect(m.height - shallow.height).toBe(m.depth)
+    // every premiere is still drawn, none dropped, none overlapping, none in the struck band
+    expect(poolsOf(m)).toHaveLength(30)
+    onTheFloor(m)
+    apart(m)
+  })
+
+  it('fails loud, never quietly: a season past the guard still throws', () => {
+    // the deepening is bounded — a season that outgrows even the guard is a figure to look at
+    const chronicle: ReturnType<typeof ship>[] = []
+    const titles: Record<string, string> = {}
+    for (let i = 0; i < 150; i++) {
+      chronicle.push(ship(400 + i, `2026-09-0${1 + (i % 3)}`, `g${i}`))
+      titles[`g${i}`] = `A name of forty letters, give or take, ${i}`
     }
     expect(() => build(chronicle, titles)).toThrow(/the lit band is full/)
   })
