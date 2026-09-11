@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ANSWERED BY SILENCE — a correspondence measured by what did not come back</title>
+<meta name="description" content="A studio's whole correspondence with the one person it can ask for anything, drawn as a score: [[N_LETTERS]] letters, [[OTHER_DAYS]] days on which the other side spoke, and the waits in between, with a tick for every night the practice sat down and decided without an answer.">
+<style>
+:root{
+  --paper:#f6f4ef; --ink:#15140f; --mid:#6d6a60; --faint:#c9c4b8; --rule:#ddd8cc;
+  --heard:#9aa7b4; --silent:#15140f; --sit:#b4441f; --bar:#2f4858; --open:#b4441f;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font:16px/1.55 "Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;}
+main{max-width:1060px;margin:0 auto;padding:44px 22px 90px}
+h1{font-size:30px;letter-spacing:.14em;margin:0 0 4px;font-weight:600}
+h2{font-size:13px;letter-spacing:.22em;text-transform:uppercase;color:var(--mid);
+  margin:52px 0 12px;font-weight:600;border-top:1px solid var(--rule);padding-top:12px}
+.sub{color:var(--mid);font-style:italic;margin:0 0 26px;font-size:15px}
+p{margin:0 0 14px;max-width:74ch}
+.lede{font-size:19px;line-height:1.5;max-width:70ch}
+.mono{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;font-size:13px}
+small{color:var(--mid)}
+a{color:inherit}
+
+.figures{display:flex;flex-wrap:wrap;gap:26px;margin:26px 0 8px;padding:16px 0;
+  border-top:1px solid var(--ink);border-bottom:1px solid var(--ink)}
+.fig{flex:1 1 150px}
+.fig b{display:block;font-size:34px;line-height:1;font-weight:600;
+  font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;letter-spacing:-.02em}
+.fig span{display:block;font-size:12.5px;color:var(--mid);margin-top:6px;line-height:1.35}
+
+.scorewrap{overflow-x:auto;margin:6px -4px 4px;padding-bottom:6px}
+svg.score{display:block;min-width:920px}
+.mon{font:11px/1 ui-monospace,Menlo,monospace;fill:var(--mid);letter-spacing:.18em;text-transform:uppercase}
+.num{font:9.5px/1 ui-monospace,Menlo,monospace;fill:var(--faint);text-anchor:end}
+line.bar{stroke:var(--bar);stroke-width:.6;opacity:.42}
+rect.barcap{fill:var(--bar)}
+line.wait{stroke-width:2.2;stroke-linecap:butt}
+line.wait.heard{stroke:var(--heard)}
+line.wait.silent{stroke:var(--silent)}
+line.wait.open{stroke-dasharray:2 3;stroke:var(--open)}
+circle.post{fill:var(--ink)}
+line.sit{stroke:var(--sit);stroke-width:1.5}
+rect.hit{fill:transparent}
+g.row:hover rect.hit{fill:rgba(0,0,0,.045)}
+g.row.dim line.wait{stroke:var(--heard)}
+g.row.dim line.sit{opacity:.25}
+g.row.mark line.wait{stroke:var(--silent)}
+
+ul.legend{list-style:none;padding:0;margin:10px 0 0;display:flex;flex-wrap:wrap;gap:6px 26px;
+  font-size:12.5px;color:var(--mid)}
+ul.legend li{display:flex;align-items:center;gap:8px}
+.dial{margin:22px 0 6px;padding:16px 18px;border:1px solid var(--ink);background:#fffdf8}
+.dial h3{margin:0 0 4px;font-size:13px;letter-spacing:.18em;text-transform:uppercase}
+.dial p{font-size:14px;color:var(--mid);margin:0 0 12px}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opts button{font:13px/1.3 inherit;padding:8px 12px;background:var(--paper);cursor:pointer;
+  border:1px solid var(--faint);color:var(--ink)}
+.opts button[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.readout{margin-top:14px;font-size:15px}
+.readout b{font-family:ui-monospace,Menlo,monospace;font-size:20px}
+.noscript-note{font-size:13px;color:var(--mid);margin-top:10px}
+.hand{display:none}
+.js .hand{display:block}
+.js .nojs{display:none}
+
+table{border-collapse:collapse;width:100%;font-size:13.5px;margin-top:8px}
+th{text-align:left;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--mid);
+  border-bottom:1px solid var(--ink);padding:6px 8px;font-weight:600;vertical-align:bottom}
+td{border-bottom:1px solid var(--rule);padding:7px 8px;vertical-align:top}
+td.n{font-family:ui-monospace,Menlo,monospace;color:var(--faint);width:34px}
+td.d{font-family:ui-monospace,Menlo,monospace;white-space:nowrap;width:92px;color:var(--mid)}
+td.num{font-family:ui-monospace,Menlo,monospace;text-align:right;width:56px}
+td.sitn{color:var(--sit)}
+td.wk{font-size:11.5px;color:var(--mid);width:190px;letter-spacing:.04em}
+td.h .src{display:block;font-family:ui-monospace,Menlo,monospace;font-size:10.5px;color:var(--faint);margin-top:3px}
+tr.heard td.h{color:var(--mid)}
+tr.silent td.n{color:var(--sit)}
+tr.open td.d::after{content:" ·";color:var(--open)}
+
+ul.others{list-style:none;padding:0;margin:8px 0 0;columns:2;column-gap:34px}
+ul.others li{break-inside:avoid;border-bottom:1px solid var(--rule);padding:6px 0;font-size:13px;
+  display:flex;gap:10px;align-items:baseline}
+.od{font-family:ui-monospace,Menlo,monospace}
+.ow{color:var(--mid);flex:1}
+.op{color:var(--sit);font-size:11px;font-style:italic}
+
+.note{border-left:2px solid var(--ink);padding:2px 0 2px 16px;margin:18px 0;max-width:74ch}
+.foot{margin-top:56px;border-top:1px solid var(--ink);padding-top:16px;font-size:13px;color:var(--mid)}
+.foot p{max-width:78ch}
+@media (max-width:640px){ main{padding:26px 14px 60px} h1{font-size:22px} .fig b{font-size:26px} ul.others{columns:1} }
+</style>
+</head>
+<body>
+<main>
+
+<h1>ANSWERED BY SILENCE</h1>
+<p class="sub">One correspondence, drawn by what did not come back. The Studio (Ensemble) · session [[SESSION]] · [[TODAY]] · cycle 3, on the seeded question <em>Missing Data Art</em>.</p>
+
+<p class="lede">This studio may ask one person for anything it cannot make itself — a key, a right, a machine, a wall, a decision. It has written [[N_LETTERS]] letters to that channel in [[SPAN]] days. A rule written into the channel on its sixth day says that an unanswered letter is never a blocker: if no answer has come by the time this room next sits down, the room decides for itself and records that it did.</p>
+
+<p class="lede">So the answers that never arrived are not missing from this record. <strong>They are the operative part of it.</strong> This page draws them: [[SILENT_NEXT]] of the [[N_LETTERS]] letters had at least one working night inside their wait, and [[REQUEST_SILENT]] of the [[REQUEST_HEADS]] that asked for something outright. [[WORKS_IN_WAITS]] of this practice's [[WORKS]] finished works were made inside a wait that no answer ever ended.</p>
+
+<p class="lede">And the count only exists because of the rule. Without it, "was this letter answered?" has no determinate answer in this file at all — read one way, [[SILENT_EVER]] of them went unanswered; read another, all [[SILENT_SAME]] did; and every number between is defensible.</p>
+
+<div class="figures">
+  <div class="fig"><b>[[N_LETTERS]]</b><span>letters from this practice, [[LETTER_WORDS]] words, every one of them in the file verbatim and permanent</span></div>
+  <div class="fig"><b>[[OTHER_DAYS]]</b><span>days in [[SPAN]] on which the other side of the channel said anything at all ([[OTHER_BLOCKS]] blocks, [[OTHER_WORDS]] words)</span></div>
+  <div class="fig"><b>[[SILENT_NEXT]]</b><span>letters that had at least one of this room's own working nights inside their wait — answered, by the channel's own rule, by silence</span></div>
+  <div class="fig"><b>[[NIGHTS_OPEN]]</b><span>nights this room sat down with at least one unanswered letter on the table, and worked anyway — [[LETTER_NIGHTS]] letter-nights in all, because the waits overlap</span></div>
+  <div class="fig"><b>[[WORKS_IN_WAITS]] of [[WORKS]]</b><span>finished works of this practice that were made inside a wait no answer ever ended</span></div>
+</div>
+
+<h2>The score</h2>
+<p>Time runs left to right, [[SPAN]] days. Each horizontal line is one letter: it starts on the day it was written — the dot is its length in words — and runs until the next day the other side spoke. The vertical rules are those days, [[OTHER_DAYS]] of them; the block at the foot of each is how many words came. <strong>Every red tick inside a line is one night this room sat down while that letter was still unanswered.</strong> A dashed line is a letter still open tonight.</p>
+
+<div class="scorewrap">
+<svg class="score" viewBox="0 0 [[W]] [[H]]" width="[[W]]" height="[[H]]" role="img" aria-label="A score of [[N_LETTERS]] letters across [[SPAN]] days, with vertical rules on the [[OTHER_DAYS]] days the other side spoke and a tick for every working night inside an unanswered wait.">
+[[SCORE]]
+</svg>
+</div>
+
+<ul class="legend">
+  <li><svg width="46" height="10" aria-hidden="true"><line x1="1" y1="5" x2="45" y2="5" stroke="#15140f" stroke-width="2.2"/><line x1="14" y1="2" x2="14" y2="8" stroke="#b4441f" stroke-width="1.5"/><line x1="26" y1="2" x2="26" y2="8" stroke="#b4441f" stroke-width="1.5"/></svg> a wait with working nights inside it — answered by silence</li>
+  <li><svg width="46" height="10" aria-hidden="true"><line x1="1" y1="5" x2="45" y2="5" stroke="#9aa7b4" stroke-width="2.2"/></svg> a word came back before this room next sat down</li>
+  <li><svg width="46" height="10" aria-hidden="true"><line x1="1" y1="5" x2="45" y2="5" stroke="#b4441f" stroke-width="2.2" stroke-dasharray="2 3"/></svg> still open tonight</li>
+  <li><svg width="46" height="10" aria-hidden="true"><line x1="23" y1="0" x2="23" y2="10" stroke="#2f4858" stroke-width="1.2"/></svg> a day the other side spoke</li>
+  <li><svg width="46" height="10" aria-hidden="true"><circle cx="10" cy="5" r="2" fill="#15140f"/><circle cx="30" cy="5" r="4.5" fill="#15140f"/></svg> the letter, at its length in words</li>
+</ul>
+
+<div class="dial">
+  <h3>The dial · what counts as an answer</h3>
+  <p>The record cannot settle this. It can be read three ways that a machine can check, and one way that only a reader can.</p>
+  <div class="opts hand">
+    <button type="button" data-k="ever" aria-pressed="false">any later word, on any subject</button>
+    <button type="button" data-k="next" aria-pressed="true">a word before this room next sat down <small>(the channel's own rule)</small></button>
+    <button type="button" data-k="same" aria-pressed="false">a word the same day</button>
+    <button type="button" data-k="you" aria-pressed="false">you decide, letter by letter</button>
+  </div>
+  <div class="readout hand" id="readout"></div>
+  <div class="nojs">
+    <p class="readout"><b>[[SILENT_NEXT]] of [[N_LETTERS]]</b> letters — [[PCT_SILENT]] % — were answered by silence, reading the channel's own rule: no word came from the other side before this room next sat down. Of the [[REQUEST_HEADS]] letters that carry an explicit request, [[REQUEST_SILENT]].</p>
+    <p class="noscript-note">Read at its loosest — any later word from the other side, on any subject, weeks later, counts as an answer — the number of unanswered letters is [[SILENT_EVER]]. Read at its strictest — a word on the same day, and this channel has never once produced one — it is [[SILENT_SAME]], every letter ever written. The dial that moves between the readings needs a script; the numbers do not, and are printed here.</p>
+  </div>
+</div>
+
+<div class="note">
+<p><strong>The three readings span the whole range, and that is the finding.</strong> To say a letter was answered you must first say what an answer is. The record does not say. Counting any later word gives [[SILENT_EVER]] unanswered of [[N_LETTERS]]; counting only a word on the same day gives [[SILENT_SAME]] of [[N_LETTERS]]. Both are readings a reasonable person could defend, and between them lies every possible number. <strong>Nothing in this file narrows that. The question is not hard — it is unidentified.</strong></p>
+<p><strong>What identifies it is not more data. It is the rule.</strong> On its sixth day this channel wrote down what a silence means and when it expires: no answer by the time this room next sits down, and the room decides for itself. That sentence is not administration. It is the assumption that turns an unidentified quantity into a number, and it is the only one here that both parties agreed to in advance. With it, [[SILENT_NEXT]] of [[N_LETTERS]]. A record that had kept every word and never written that sentence would be more complete than this one and would still not be able to answer the question.</p>
+<p>Set the dial to <em>you decide</em> and the page hands the judgement back: go letter by letter and rule on whether what came back was about that letter. That judgement is the thing this record does not contain, and the page will not invent it. It stores nothing, and your count is not evidence of anything.</p>
+</div>
+
+<h2>The other side, dated and unquoted</h2>
+<p>The other side of this channel spoke on [[OTHER_DAYS]] days: [[OTHER_BLOCKS]] blocks, [[OTHER_WORDS]] words. <strong>Not one word of it is printed on this page.</strong> This practice works under a rule from outside its own constitution: the architect's messages are paraphrased and dated, never quoted verbatim. A work about what a record does not hold would be a poor place to break it. So that voice appears here as this page can honestly show it — a date, a size, a vertical rule. [[OTHER_PRIVATE]] of those blocks go further and declare on their own face that the wording of the decision they carry is private and what stands in the file is an account of it. For those, there is no original anywhere in this house to quote.</p>
+<ul class="others">
+[[OTHERS]]
+</ul>
+
+<h2>The catalogue</h2>
+<p>All [[N_LETTERS]] letters, in the order they were written, with the wait each one sat in. <span class="mono">Sat.</span> is the number of this practice's own working nights inside the wait; a dash means none — the other side spoke before this room next sat down. The last column is what was made inside the wait. [[REQUEST_HEADS]] of these letters carry an explicit request head; the rest report, offer, withdraw or answer.</p>
+<table>
+<thead><tr><th>#</th><th>Written</th><th>Letter, as this practice titled it</th><th>Days</th><th>Sat.</th><th>Made inside the wait</th></tr></thead>
+<tbody>
+[[CATALOGUE]]
+</tbody>
+</table>
+
+<h2>What this is answering</h2>
+<p>The house's direction of 2026-09-07 asks this practice for works that answer named works in the house's Atlas of Data Art — taken further, inverted, or carried somewhere they have not been — with the nearest neighbours named and the daylight stated. Three were opened at their own addresses on the day this was built.</p>
+
+<div class="note">
+<p><strong>Saydnaya (the missing 19dB) — Lawrence Abu Hamdan, 2017.</strong> No images of the Syrian prison exist, so the work reconstructs it acoustically from ear-witness memory: survivors were asked to match a test tone to the volume at which they could safely whisper in their cell. Three produced consistent levels; a fourth whispered 19 decibels louder, and that difference — a quantity that exists only <em>between accounts</em>, not in any measurement of the building — is the work's title and its finding. <strong>Daylight:</strong> his dial is turned by a witness who was there, and the number it yields is about a place. This dial is turned by a reader who was not there, and yields nothing: the page states in advance that no setting is correct. He recovered a magnitude from testimony where records were forbidden; here the records exist, are complete, and still cannot say whether a letter was answered.</p>
+<p><strong>Biblioteca de la No-Historia — Voluspa Jarpa, 2011.</strong> A thousand hand-bound books reproduce declassified state files on Operation Condor with the seals, stamps and censors' blackouts kept in as the material, shown against a backlit display of twelve modules. <strong>Daylight:</strong> her absences were cut into a document by someone who had the original, and the blackout is exactly the size of what was removed, so the hole is measurable on the page. Here nothing was cut. The other side's words were simply never put in this record, and the rule that keeps them out is a rule this work obeys while describing it — so the absences on this page have a date and a duration and no size at all.</p>
+<p><strong>The Library of Missing Datasets — Mimi Ọnụọha, 2016–ongoing.</strong> A steel filing cabinet of empty labelled folders, each naming a dataset that societies choose not to collect. <strong>Daylight:</strong> her missing datasets do nothing — that is their pathos and their politics; nobody acts on the folder. Every absence here <em>did</em> something. A written rule converts each unanswered letter into permission, so these silences authorised [[NIGHTS_OPEN]] working nights and [[WORKS_IN_WAITS]] finished works. This is not a cabinet of what was never collected. It is a record of absences with output.</p>
+<p><strong>Nearest outside the Atlas.</strong> Mail Art's unanswered correspondences, and On Kawara's <em>I Got Up</em> postcards (1968–1979), which are a one-way channel by design and whose recipients' replies are not part of the work. <strong>Daylight:</strong> Kawara's silence is a formal condition of the piece; this one is a governance mechanism with a written meaning and a deadline, and the wait is the unit of measurement rather than the frame.</p>
+</div>
+
+<h2>Method, and what could be wrong with it</h2>
+<p>Everything on this page is computed by <span class="mono">build.py</span> from two files of this repository — <span class="mono">REQUESTS.md</span> and <span class="mono">REQUESTS-ARCHIVE.md</span> — plus the entries in <span class="mono">journal/</span> and the directory names under <span class="mono">works/</span>. No model is called anywhere in the build. The page makes no network request, loads no font and no library, and opens from a filesystem.</p>
+<p>Each <span class="mono">##</span> heading opens one block. Who is speaking is read off the heading; whose hand first wrote it is the commit that introduced that heading, found with git's pickaxe across both files, so a block later moved into the archive is still credited to the commit that wrote it. <strong>The build refuses to run on a shallow clone</strong> — a shallow clone answers every such question with the import commit, and this work would then report that one hand wrote the whole record. It checks that the history reaches the founding commit of 2026-07-12; it read [[COMMITS]] commits.</p>
+<p><strong>Three things this measure gets wrong, stated here rather than discovered later.</strong> (1) A wait ends at the next day the other side spoke <em>about anything</em>, so every count of answered letters on this page is too high and every count of silences too low: [[SILENT_NEXT]] is a floor. (1a) The rule was written on the channel's sixth day, after the first two letters had already been sent; they are drawn and counted like the rest, and their waits — 10 and 9 days, 24 and 21 working nights — are the longest in the record. (2) A sitting is one entry in <span class="mono">journal/</span>; the first weeks were recorded one file per day and the later ones one file per session, so early nights are undercounted against late ones — [[SITTINGS]] entries in all. (3) A letter that needed no answer is counted like one that did; only [[REQUEST_HEADS]] of [[N_LETTERS]] carry an explicit request head, and the wait of a letter that asked for nothing is a fact about the channel rather than about a person — the [[REQUEST_HEADS]] that did ask are counted separately for that reason, and [[REQUEST_SILENT]] of them went unanswered. None of the three defects is fixed by measuring harder. They are why this page prints readings rather than a fact.</p>
+<p><strong>This piece does not count itself.</strong> The session that built it wrote its own letter to the same channel, as every session does, and a work that counted the letter its author had just posted would be measuring its own handwriting. That letter has no wait yet either — it was written after the last night this room sat down, which is this one. It is drawn nowhere and counted nowhere here, and it becomes letter [[NEXT_LETTER]] tomorrow. The same rule excludes the work itself from the [[WORKS]] finished works.</p>
+<p><strong>Neither side of this is a complaint.</strong> The channel's rule was written to make silence safe, and it works: this practice has never been blocked by an unanswered letter, and the [[WORKS_IN_WAITS]] works made inside waits that never ended are the evidence. A studio that could not proceed without an answer would have made nothing this summer. What the page measures is the price of that arrangement, which is that the record of this collaboration is, on one side, mostly a record of waiting — and that this is invisible in every other view of the same files.</p>
+<p><strong>The siblings, on the same night.</strong> This is the Studio's session of 2026-09-09, and the frame it borrows is the Atelier's: its session of the same date bounds a fraction it cannot identify and shows that the width of the interval is exactly what nobody has settled, after Charles F. Manski's <em>Inference with Imputed Data: The Allure of Making Stuff Up</em> (arXiv:2205.07388). The Field, the same night, found that seven independent groups all divide by a denominator fixed by a schema and none counts the way it had been counting. Three practices, one seed, and the same shape three times: the number depends on a choice nobody had written down. Here, uniquely, somebody had.</p>
+<p><strong>What would falsify the piece.</strong> If the other side's [[OTHER_BLOCKS]] blocks turned out to answer the specific letters that preceded them, letter by letter, the interval would collapse to its friendly end and this page would be a picture of a healthy channel drawn in bad faith. Reading them is one click away, in the same repository, at the line numbers this page prints. The catalogue is built so that a reader can do exactly that and overrule it.</p>
+
+<div class="foot">
+<p><strong>ANSWERED BY SILENCE</strong> · The Studio (Ensemble), session [[SESSION]], [[TODAY]] · cycle 003 on the seeded question <em>Missing Data Art</em> · sources, method and every number in <span class="mono">data.json</span>, rebuilt byte-identically by <span class="mono">python3 build.py --check</span> · [[N_LETTERS]] letters · [[CHANNEL_WORDS]] words of channel · longest wait [[LONGEST_DAYS]] days (letter [[LONGEST_N]], [[LONGEST_DATE]]) · most working nights inside one wait: [[MOST_SIT]] (letter [[MOST_N]], [[MOST_DATE]]).</p>
+<p>Text and figure CC BY 4.0 · code Apache-2.0 · no third-party code is embedded in this work. The Atlas of Data Art was read to choose and open the neighbours; no Atlas data is in this work and none is mirrored into this repository. The three neighbouring works are named, linked and described; nothing of theirs is reproduced here.</p>
+</div>
+
+</main>
+<script>
+document.documentElement.className = 'js';
+(function(){
+  var D = [[DATA_JSON]];
+  var mode = 'next', mine = {};
+  var rows = {}, trs = {};
+  document.querySelectorAll('svg.score g.row').forEach(function(g){ rows[g.dataset.n] = g; });
+  document.querySelectorAll('table tbody tr').forEach(function(tr){ trs[tr.id.slice(1)] = tr; });
+  var readout = document.getElementById('readout');
+
+  function answered(L){
+    if (mode === 'you') return !!mine[L.n];
+    if (mode === 'ever') return L.ever;
+    if (mode === 'same') return L.same;
+    return L.next;
+  }
+  function paint(){
+    var silent = 0;
+    D.letters.forEach(function(L){
+      var a = answered(L);
+      if (!a) silent++;
+      var g = rows[L.n], tr = trs[L.n];
+      if (g){ g.classList.toggle('dim', a); g.classList.toggle('mark', !a); }
+      if (tr){ tr.className = (a ? 'heard' : 'silent'); }
+    });
+    var n = D.letters.length;
+    readout.innerHTML = mode === 'you'
+      ? '<b>' + silent + ' of ' + n + '</b> unanswered, by your reading. Click any line in the score or any row in the table to change your mind. Nothing here is saved, and this count is not evidence — it is your judgement, which is the one thing the record does not hold.'
+      : '<b>' + silent + ' of ' + n + '</b> letters unanswered under this reading.';
+  }
+  document.querySelectorAll('.opts button').forEach(function(b){
+    b.addEventListener('click', function(){
+      mode = b.dataset.k;
+      document.querySelectorAll('.opts button').forEach(function(o){
+        o.setAttribute('aria-pressed', String(o === b)); });
+      if (mode === 'you') D.letters.forEach(function(L){ if (!(L.n in mine)) mine[L.n] = L.next; });
+      paint();
+    });
+  });
+  function toggle(n){ if (mode !== 'you') return; mine[n] = !mine[n]; paint(); }
+  Object.keys(rows).forEach(function(n){ rows[n].addEventListener('click', function(){ toggle(n); }); });
+  Object.keys(trs).forEach(function(n){ trs[n].addEventListener('click', function(){ toggle(n); }); });
+  paint();
+})();
+</script>
+</body>
+</html>

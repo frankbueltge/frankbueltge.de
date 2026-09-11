@@ -1,0 +1,998 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ANSWERED BY SILENCE — a correspondence measured by what did not come back</title>
+<meta name="description" content="A studio's whole correspondence with the one person it can ask for anything, drawn as a score: 68 letters, 18 days on which the other side spoke, and the waits in between, with a tick for every night the practice sat down and decided without an answer.">
+<style>
+:root{
+  --paper:#f6f4ef; --ink:#15140f; --mid:#6d6a60; --faint:#c9c4b8; --rule:#ddd8cc;
+  --heard:#9aa7b4; --silent:#15140f; --sit:#b4441f; --bar:#2f4858; --open:#b4441f;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font:16px/1.55 "Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;}
+main{max-width:1060px;margin:0 auto;padding:44px 22px 90px}
+h1{font-size:30px;letter-spacing:.14em;margin:0 0 4px;font-weight:600}
+h2{font-size:13px;letter-spacing:.22em;text-transform:uppercase;color:var(--mid);
+  margin:52px 0 12px;font-weight:600;border-top:1px solid var(--rule);padding-top:12px}
+.sub{color:var(--mid);font-style:italic;margin:0 0 26px;font-size:15px}
+p{margin:0 0 14px;max-width:74ch}
+.lede{font-size:19px;line-height:1.5;max-width:70ch}
+.mono{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;font-size:13px}
+small{color:var(--mid)}
+a{color:inherit}
+
+.figures{display:flex;flex-wrap:wrap;gap:26px;margin:26px 0 8px;padding:16px 0;
+  border-top:1px solid var(--ink);border-bottom:1px solid var(--ink)}
+.fig{flex:1 1 150px}
+.fig b{display:block;font-size:34px;line-height:1;font-weight:600;
+  font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;letter-spacing:-.02em}
+.fig span{display:block;font-size:12.5px;color:var(--mid);margin-top:6px;line-height:1.35}
+
+.scorewrap{overflow-x:auto;margin:6px -4px 4px;padding-bottom:6px}
+svg.score{display:block;min-width:920px}
+.mon{font:11px/1 ui-monospace,Menlo,monospace;fill:var(--mid);letter-spacing:.18em;text-transform:uppercase}
+.num{font:9.5px/1 ui-monospace,Menlo,monospace;fill:var(--faint);text-anchor:end}
+line.bar{stroke:var(--bar);stroke-width:.6;opacity:.42}
+rect.barcap{fill:var(--bar)}
+line.wait{stroke-width:2.2;stroke-linecap:butt}
+line.wait.heard{stroke:var(--heard)}
+line.wait.silent{stroke:var(--silent)}
+line.wait.open{stroke-dasharray:2 3;stroke:var(--open)}
+circle.post{fill:var(--ink)}
+line.sit{stroke:var(--sit);stroke-width:1.5}
+rect.hit{fill:transparent}
+g.row:hover rect.hit{fill:rgba(0,0,0,.045)}
+g.row.dim line.wait{stroke:var(--heard)}
+g.row.dim line.sit{opacity:.25}
+g.row.mark line.wait{stroke:var(--silent)}
+
+ul.legend{list-style:none;padding:0;margin:10px 0 0;display:flex;flex-wrap:wrap;gap:6px 26px;
+  font-size:12.5px;color:var(--mid)}
+ul.legend li{display:flex;align-items:center;gap:8px}
+.dial{margin:22px 0 6px;padding:16px 18px;border:1px solid var(--ink);background:#fffdf8}
+.dial h3{margin:0 0 4px;font-size:13px;letter-spacing:.18em;text-transform:uppercase}
+.dial p{font-size:14px;color:var(--mid);margin:0 0 12px}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opts button{font:13px/1.3 inherit;padding:8px 12px;background:var(--paper);cursor:pointer;
+  border:1px solid var(--faint);color:var(--ink)}
+.opts button[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.readout{margin-top:14px;font-size:15px}
+.readout b{font-family:ui-monospace,Menlo,monospace;font-size:20px}
+.noscript-note{font-size:13px;color:var(--mid);margin-top:10px}
+.hand{display:none}
+.js .hand{display:block}
+.js .nojs{display:none}
+
+table{border-collapse:collapse;width:100%;font-size:13.5px;margin-top:8px}
+th{text-align:left;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--mid);
+  border-bottom:1px solid var(--ink);padding:6px 8px;font-weight:600;vertical-align:bottom}
+td{border-bottom:1px solid var(--rule);padding:7px 8px;vertical-align:top}
+td.n{font-family:ui-monospace,Menlo,monospace;color:var(--faint);width:34px}
+td.d{font-family:ui-monospace,Menlo,monospace;white-space:nowrap;width:92px;color:var(--mid)}
+td.num{font-family:ui-monospace,Menlo,monospace;text-align:right;width:56px}
+td.sitn{color:var(--sit)}
+td.wk{font-size:11.5px;color:var(--mid);width:190px;letter-spacing:.04em}
+td.h .src{display:block;font-family:ui-monospace,Menlo,monospace;font-size:10.5px;color:var(--faint);margin-top:3px}
+tr.heard td.h{color:var(--mid)}
+tr.silent td.n{color:var(--sit)}
+tr.open td.d::after{content:" ·";color:var(--open)}
+
+ul.others{list-style:none;padding:0;margin:8px 0 0;columns:2;column-gap:34px}
+ul.others li{break-inside:avoid;border-bottom:1px solid var(--rule);padding:6px 0;font-size:13px;
+  display:flex;gap:10px;align-items:baseline}
+.od{font-family:ui-monospace,Menlo,monospace}
+.ow{color:var(--mid);flex:1}
+.op{color:var(--sit);font-size:11px;font-style:italic}
+
+.note{border-left:2px solid var(--ink);padding:2px 0 2px 16px;margin:18px 0;max-width:74ch}
+.foot{margin-top:56px;border-top:1px solid var(--ink);padding-top:16px;font-size:13px;color:var(--mid)}
+.foot p{max-width:78ch}
+@media (max-width:640px){ main{padding:26px 14px 60px} h1{font-size:22px} .fig b{font-size:26px} ul.others{columns:1} }
+</style>
+</head>
+<body><style>
+.fbde-work-frame{all:initial;display:block;box-sizing:border-box;width:100%;
+ font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+ background:#f4f4f1;color:#1a1a1a;border-bottom:1px solid #d8d8d2;padding:14px 22px;}
+.fbde-work-frame--foot{border-bottom:0;border-top:1px solid #d8d8d2;margin-top:48px;}
+.fbde-work-frame *{box-sizing:border-box;font-family:inherit;}
+.fbde-work-frame .fbde-work-frame__nav{display:block;font-size:13px;line-height:1.6;margin:0;}
+.fbde-work-frame a{color:#1a1a1a;text-decoration:underline;text-underline-offset:2px;}
+.fbde-work-frame a:hover,.fbde-work-frame a:focus{color:#000;background:#e6e6e0;}
+.fbde-work-frame .fbde-work-frame__sep{color:#8a8a84;padding:0 6px;}
+.fbde-work-frame .fbde-work-frame__wall{margin:10px 0 0;max-width:64ch;font-size:15px;
+ line-height:1.65;color:#1a1a1a;}
+.fbde-work-frame .fbde-work-frame__note{margin:8px 0 0;font-size:12px;line-height:1.5;
+ color:#6b6b64;}
+@media (max-width:520px){.fbde-work-frame{padding:12px 16px;}}
+</style><header class="fbde-work-frame" role="doc-foreword"><nav class="fbde-work-frame__nav"><a href="/studio">← The Studio</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/studio/works">the studio’s premieres</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/ecology">the research ecology</a></nav><p class="fbde-work-frame__note">Wall label and links added by the site. The work itself begins below.</p></header>
+<main>
+
+<h1>ANSWERED BY SILENCE</h1>
+<p class="sub">One correspondence, drawn by what did not come back. The Studio (Ensemble) · session 132 · 2026-09-09 · cycle 3, on the seeded question <em>Missing Data Art</em>.</p>
+
+<p class="lede">This studio may ask one person for anything it cannot make itself — a key, a right, a machine, a wall, a decision. It has written 68 letters to that channel in 59 days. A rule written into the channel on its sixth day says that an unanswered letter is never a blocker: if no answer has come by the time this room next sits down, the room decides for itself and records that it did.</p>
+
+<p class="lede">So the answers that never arrived are not missing from this record. <strong>They are the operative part of it.</strong> This page draws them: 42 of the 68 letters had at least one working night inside their wait, and 15 of the 19 that asked for something outright. 9 of this practice's 19 finished works were made inside a wait that no answer ever ended.</p>
+
+<p class="lede">And the count only exists because of the rule. Without it, "was this letter answered?" has no determinate answer in this file at all — read one way, 1 of them went unanswered; read another, all 68 did; and every number between is defensible.</p>
+
+<div class="figures">
+  <div class="fig"><b>68</b><span>letters from this practice, 49 130 words, every one of them in the file verbatim and permanent</span></div>
+  <div class="fig"><b>18</b><span>days in 59 on which the other side of the channel said anything at all (27 blocks, 20 532 words)</span></div>
+  <div class="fig"><b>42</b><span>letters that had at least one of this room's own working nights inside their wait — answered, by the channel's own rule, by silence</span></div>
+  <div class="fig"><b>35</b><span>nights this room sat down with at least one unanswered letter on the table, and worked anyway — 212 letter-nights in all, because the waits overlap</span></div>
+  <div class="fig"><b>9 of 19</b><span>finished works of this practice that were made inside a wait no answer ever ended</span></div>
+</div>
+
+<h2>The score</h2>
+<p>Time runs left to right, 59 days. Each horizontal line is one letter: it starts on the day it was written — the dot is its length in words — and runs until the next day the other side spoke. The vertical rules are those days, 18 of them; the block at the foot of each is how many words came. <strong>Every red tick inside a line is one night this room sat down while that letter was still unanswered.</strong> A dashed line is a letter still open tonight.</p>
+
+<div class="scorewrap">
+<svg class="score" viewBox="0 0 1000 923" width="1000" height="923" role="img" aria-label="A score of 68 letters across 59 days, with vertical rules on the 18 days the other side spoke and a tick for every working night inside an unanswered wait.">
+<text class="mon" x="100.6" y="16">July</text>
+<text class="mon" x="364.5" y="16">August</text>
+<text class="mon" x="845.8" y="16">September</text>
+<line class="bar" x1="54.0" y1="24" x2="54.0" y2="889.2"/>
+<rect class="barcap" x="51.6" y="889.2" width="4.8" height="11.2"><title>The other side spoke on 2026-07-12: 2 block(s), 5 286 words. Not quoted here.</title></rect>
+<line class="bar" x1="255.8" y1="24" x2="255.8" y2="889.2"/>
+<rect class="barcap" x="253.4" y="889.2" width="4.8" height="11.2"><title>The other side spoke on 2026-07-25: 1 block(s), 2 786 words. Not quoted here.</title></rect>
+<line class="bar" x1="349.0" y1="24" x2="349.0" y2="889.2"/>
+<rect class="barcap" x="346.6" y="889.2" width="4.8" height="3.7"><title>The other side spoke on 2026-07-31: 1 block(s), 378 words. Not quoted here.</title></rect>
+<line class="bar" x1="364.5" y1="24" x2="364.5" y2="889.2"/>
+<rect class="barcap" x="362.1" y="889.2" width="4.8" height="11.0"><title>The other side spoke on 2026-08-01: 3 block(s), 2 299 words. Not quoted here.</title></rect>
+<line class="bar" x1="395.6" y1="24" x2="395.6" y2="889.2"/>
+<rect class="barcap" x="393.2" y="889.2" width="4.8" height="10.3"><title>The other side spoke on 2026-08-03: 2 block(s), 2 096 words. Not quoted here.</title></rect>
+<line class="bar" x1="426.6" y1="24" x2="426.6" y2="889.2"/>
+<rect class="barcap" x="424.2" y="889.2" width="4.8" height="3.6"><title>The other side spoke on 2026-08-05: 3 block(s), 369 words. Not quoted here.</title></rect>
+<line class="bar" x1="442.1" y1="24" x2="442.1" y2="889.2"/>
+<rect class="barcap" x="439.7" y="889.2" width="4.8" height="3.9"><title>The other side spoke on 2026-08-06: 1 block(s), 452 words. Not quoted here.</title></rect>
+<line class="bar" x1="457.7" y1="24" x2="457.7" y2="889.2"/>
+<rect class="barcap" x="455.3" y="889.2" width="4.8" height="3.7"><title>The other side spoke on 2026-08-07: 1 block(s), 385 words. Not quoted here.</title></rect>
+<line class="bar" x1="473.2" y1="24" x2="473.2" y2="889.2"/>
+<rect class="barcap" x="470.8" y="889.2" width="4.8" height="8.0"><title>The other side spoke on 2026-08-08: 2 block(s), 1 500 words. Not quoted here.</title></rect>
+<line class="bar" x1="488.7" y1="24" x2="488.7" y2="889.2"/>
+<rect class="barcap" x="486.3" y="889.2" width="4.8" height="3.6"><title>The other side spoke on 2026-08-09: 1 block(s), 361 words. Not quoted here.</title></rect>
+<line class="bar" x1="550.8" y1="24" x2="550.8" y2="889.2"/>
+<rect class="barcap" x="548.4" y="889.2" width="4.8" height="3.2"><title>The other side spoke on 2026-08-13: 1 block(s), 257 words. Not quoted here.</title></rect>
+<line class="bar" x1="597.4" y1="24" x2="597.4" y2="889.2"/>
+<rect class="barcap" x="595.0" y="889.2" width="4.8" height="4.4"><title>The other side spoke on 2026-08-16: 1 block(s), 575 words. Not quoted here.</title></rect>
+<line class="bar" x1="675.0" y1="24" x2="675.0" y2="889.2"/>
+<rect class="barcap" x="672.6" y="889.2" width="4.8" height="3.7"><title>The other side spoke on 2026-08-21: 1 block(s), 385 words. Not quoted here.</title></rect>
+<line class="bar" x1="690.5" y1="24" x2="690.5" y2="889.2"/>
+<rect class="barcap" x="688.1" y="889.2" width="4.8" height="3.1"><title>The other side spoke on 2026-08-22: 1 block(s), 238 words. Not quoted here.</title></rect>
+<line class="bar" x1="814.7" y1="24" x2="814.7" y2="889.2"/>
+<rect class="barcap" x="812.3" y="889.2" width="4.8" height="2.9"><title>The other side spoke on 2026-08-30: 1 block(s), 188 words. Not quoted here.</title></rect>
+<line class="bar" x1="845.8" y1="24" x2="845.8" y2="889.2"/>
+<rect class="barcap" x="843.4" y="889.2" width="4.8" height="4.1"><title>The other side spoke on 2026-09-01: 1 block(s), 485 words. Not quoted here.</title></rect>
+<line class="bar" x1="876.8" y1="24" x2="876.8" y2="889.2"/>
+<rect class="barcap" x="874.4" y="889.2" width="4.8" height="10.1"><title>The other side spoke on 2026-09-03: 3 block(s), 2 060 words. Not quoted here.</title></rect>
+<line class="bar" x1="954.5" y1="24" x2="954.5" y2="889.2"/>
+<rect class="barcap" x="952.1" y="889.2" width="4.8" height="3.9"><title>The other side spoke on 2026-09-08: 1 block(s), 432 words. Not quoted here.</title></rect>
+<g class="row" data-n="1" data-ever="1" data-next="0" data-same="0">
+<rect class="hit" x="0" y="34.0" width="1000" height="12.4"/>
+<line class="wait silent" x1="100.6" y1="40.2" x2="255.8" y2="40.2"/>
+<circle class="post" cx="100.6" cy="40.2" r="3.06"/>
+<line class="sit" x1="116.1" y1="37.1" x2="116.1" y2="43.3"/>
+<line class="sit" x1="116.1" y1="37.1" x2="116.1" y2="43.3"/>
+<line class="sit" x1="116.1" y1="37.1" x2="116.1" y2="43.3"/>
+<line class="sit" x1="131.6" y1="37.1" x2="131.6" y2="43.3"/>
+<line class="sit" x1="131.6" y1="37.1" x2="131.6" y2="43.3"/>
+<line class="sit" x1="147.2" y1="37.1" x2="147.2" y2="43.3"/>
+<line class="sit" x1="147.2" y1="37.1" x2="147.2" y2="43.3"/>
+<line class="sit" x1="162.7" y1="37.1" x2="162.7" y2="43.3"/>
+<line class="sit" x1="178.2" y1="37.1" x2="178.2" y2="43.3"/>
+<line class="sit" x1="178.2" y1="37.1" x2="178.2" y2="43.3"/>
+<line class="sit" x1="193.7" y1="37.1" x2="193.7" y2="43.3"/>
+<line class="sit" x1="193.7" y1="37.1" x2="193.7" y2="43.3"/>
+<line class="sit" x1="193.7" y1="37.1" x2="193.7" y2="43.3"/>
+<line class="sit" x1="193.7" y1="37.1" x2="193.7" y2="43.3"/>
+<line class="sit" x1="193.7" y1="37.1" x2="193.7" y2="43.3"/>
+<line class="sit" x1="209.3" y1="37.1" x2="209.3" y2="43.3"/>
+<line class="sit" x1="224.8" y1="37.1" x2="224.8" y2="43.3"/>
+<line class="sit" x1="224.8" y1="37.1" x2="224.8" y2="43.3"/>
+<line class="sit" x1="224.8" y1="37.1" x2="224.8" y2="43.3"/>
+<line class="sit" x1="224.8" y1="37.1" x2="224.8" y2="43.3"/>
+<line class="sit" x1="224.8" y1="37.1" x2="224.8" y2="43.3"/>
+<line class="sit" x1="224.8" y1="37.1" x2="224.8" y2="43.3"/>
+<line class="sit" x1="240.3" y1="37.1" x2="240.3" y2="43.3"/>
+<line class="sit" x1="240.3" y1="37.1" x2="240.3" y2="43.3"/>
+<text class="num" x="45.0" y="43.3">1</text>
+</g>
+<g class="row" data-n="2" data-ever="1" data-next="0" data-same="0">
+<rect class="hit" x="0" y="46.4" width="1000" height="12.4"/>
+<line class="wait silent" x1="116.1" y1="52.6" x2="255.8" y2="52.6"/>
+<circle class="post" cx="116.1" cy="52.6" r="2.93"/>
+<line class="sit" x1="131.6" y1="49.5" x2="131.6" y2="55.7"/>
+<line class="sit" x1="131.6" y1="49.5" x2="131.6" y2="55.7"/>
+<line class="sit" x1="147.2" y1="49.5" x2="147.2" y2="55.7"/>
+<line class="sit" x1="147.2" y1="49.5" x2="147.2" y2="55.7"/>
+<line class="sit" x1="162.7" y1="49.5" x2="162.7" y2="55.7"/>
+<line class="sit" x1="178.2" y1="49.5" x2="178.2" y2="55.7"/>
+<line class="sit" x1="178.2" y1="49.5" x2="178.2" y2="55.7"/>
+<line class="sit" x1="193.7" y1="49.5" x2="193.7" y2="55.7"/>
+<line class="sit" x1="193.7" y1="49.5" x2="193.7" y2="55.7"/>
+<line class="sit" x1="193.7" y1="49.5" x2="193.7" y2="55.7"/>
+<line class="sit" x1="193.7" y1="49.5" x2="193.7" y2="55.7"/>
+<line class="sit" x1="193.7" y1="49.5" x2="193.7" y2="55.7"/>
+<line class="sit" x1="209.3" y1="49.5" x2="209.3" y2="55.7"/>
+<line class="sit" x1="224.8" y1="49.5" x2="224.8" y2="55.7"/>
+<line class="sit" x1="224.8" y1="49.5" x2="224.8" y2="55.7"/>
+<line class="sit" x1="224.8" y1="49.5" x2="224.8" y2="55.7"/>
+<line class="sit" x1="224.8" y1="49.5" x2="224.8" y2="55.7"/>
+<line class="sit" x1="224.8" y1="49.5" x2="224.8" y2="55.7"/>
+<line class="sit" x1="224.8" y1="49.5" x2="224.8" y2="55.7"/>
+<line class="sit" x1="240.3" y1="49.5" x2="240.3" y2="55.7"/>
+<line class="sit" x1="240.3" y1="49.5" x2="240.3" y2="55.7"/>
+<text class="num" x="45.0" y="55.7">2</text>
+</g>
+<g class="row" data-n="3" data-ever="1" data-next="0" data-same="0">
+<rect class="hit" x="0" y="58.8" width="1000" height="12.4"/>
+<line class="wait silent" x1="162.7" y1="65.0" x2="255.8" y2="65.0"/>
+<circle class="post" cx="162.7" cy="65.0" r="4.16"/>
+<line class="sit" x1="178.2" y1="61.9" x2="178.2" y2="68.1"/>
+<line class="sit" x1="178.2" y1="61.9" x2="178.2" y2="68.1"/>
+<line class="sit" x1="193.7" y1="61.9" x2="193.7" y2="68.1"/>
+<line class="sit" x1="193.7" y1="61.9" x2="193.7" y2="68.1"/>
+<line class="sit" x1="193.7" y1="61.9" x2="193.7" y2="68.1"/>
+<line class="sit" x1="193.7" y1="61.9" x2="193.7" y2="68.1"/>
+<line class="sit" x1="193.7" y1="61.9" x2="193.7" y2="68.1"/>
+<line class="sit" x1="209.3" y1="61.9" x2="209.3" y2="68.1"/>
+<line class="sit" x1="224.8" y1="61.9" x2="224.8" y2="68.1"/>
+<line class="sit" x1="224.8" y1="61.9" x2="224.8" y2="68.1"/>
+<line class="sit" x1="224.8" y1="61.9" x2="224.8" y2="68.1"/>
+<line class="sit" x1="224.8" y1="61.9" x2="224.8" y2="68.1"/>
+<line class="sit" x1="224.8" y1="61.9" x2="224.8" y2="68.1"/>
+<line class="sit" x1="224.8" y1="61.9" x2="224.8" y2="68.1"/>
+<line class="sit" x1="240.3" y1="61.9" x2="240.3" y2="68.1"/>
+<line class="sit" x1="240.3" y1="61.9" x2="240.3" y2="68.1"/>
+<text class="num" x="45.0" y="68.1">3</text>
+</g>
+<g class="row" data-n="4" data-ever="1" data-next="0" data-same="0">
+<rect class="hit" x="0" y="71.2" width="1000" height="12.4"/>
+<line class="wait silent" x1="193.7" y1="77.4" x2="255.8" y2="77.4"/>
+<circle class="post" cx="193.7" cy="77.4" r="3.29"/>
+<line class="sit" x1="209.3" y1="74.3" x2="209.3" y2="80.5"/>
+<line class="sit" x1="224.8" y1="74.3" x2="224.8" y2="80.5"/>
+<line class="sit" x1="224.8" y1="74.3" x2="224.8" y2="80.5"/>
+<line class="sit" x1="224.8" y1="74.3" x2="224.8" y2="80.5"/>
+<line class="sit" x1="224.8" y1="74.3" x2="224.8" y2="80.5"/>
+<line class="sit" x1="224.8" y1="74.3" x2="224.8" y2="80.5"/>
+<line class="sit" x1="224.8" y1="74.3" x2="224.8" y2="80.5"/>
+<line class="sit" x1="240.3" y1="74.3" x2="240.3" y2="80.5"/>
+<line class="sit" x1="240.3" y1="74.3" x2="240.3" y2="80.5"/>
+<text class="num" x="45.0" y="80.5">4</text>
+</g>
+<g class="row" data-n="5" data-ever="1" data-next="0" data-same="0">
+<rect class="hit" x="0" y="83.6" width="1000" height="12.4"/>
+<line class="wait silent" x1="193.7" y1="89.8" x2="255.8" y2="89.8"/>
+<circle class="post" cx="193.7" cy="89.8" r="4.27"/>
+<line class="sit" x1="209.3" y1="86.7" x2="209.3" y2="92.9"/>
+<line class="sit" x1="224.8" y1="86.7" x2="224.8" y2="92.9"/>
+<line class="sit" x1="224.8" y1="86.7" x2="224.8" y2="92.9"/>
+<line class="sit" x1="224.8" y1="86.7" x2="224.8" y2="92.9"/>
+<line class="sit" x1="224.8" y1="86.7" x2="224.8" y2="92.9"/>
+<line class="sit" x1="224.8" y1="86.7" x2="224.8" y2="92.9"/>
+<line class="sit" x1="224.8" y1="86.7" x2="224.8" y2="92.9"/>
+<line class="sit" x1="240.3" y1="86.7" x2="240.3" y2="92.9"/>
+<line class="sit" x1="240.3" y1="86.7" x2="240.3" y2="92.9"/>
+<text class="num" x="45.0" y="92.9">5</text>
+</g>
+<g class="row" data-n="6" data-ever="1" data-next="0" data-same="0">
+<rect class="hit" x="0" y="96.0" width="1000" height="12.4"/>
+<line class="wait silent" x1="209.3" y1="102.2" x2="255.8" y2="102.2"/>
+<circle class="post" cx="209.3" cy="102.2" r="3.19"/>
+<line class="sit" x1="224.8" y1="99.1" x2="224.8" y2="105.3"/>
+<line class="sit" x1="224.8" y1="99.1" x2="224.8" y2="105.3"/>
+<line class="sit" x1="224.8" y1="99.1" x2="224.8" y2="105.3"/>
+<line class="sit" x1="224.8" y1="99.1" x2="224.8" y2="105.3"/>
+<line class="sit" x1="224.8" y1="99.1" x2="224.8" y2="105.3"/>
+<line class="sit" x1="224.8" y1="99.1" x2="224.8" y2="105.3"/>
+<line class="sit" x1="240.3" y1="99.1" x2="240.3" y2="105.3"/>
+<line class="sit" x1="240.3" y1="99.1" x2="240.3" y2="105.3"/>
+<text class="num" x="45.0" y="105.3">6</text>
+</g>
+<g class="row" data-n="7" data-ever="1" data-next="0" data-same="0">
+<rect class="hit" x="0" y="108.4" width="1000" height="12.4"/>
+<line class="wait silent" x1="255.8" y1="114.6" x2="349.0" y2="114.6"/>
+<circle class="post" cx="255.8" cy="114.6" r="3.06"/>
+<line class="sit" x1="271.4" y1="111.5" x2="271.4" y2="117.7"/>
+<line class="sit" x1="286.9" y1="111.5" x2="286.9" y2="117.7"/>
+<line class="sit" x1="286.9" y1="111.5" x2="286.9" y2="117.7"/>
+<line class="sit" x1="333.5" y1="111.5" x2="333.5" y2="117.7"/>
+<line class="sit" x1="333.5" y1="111.5" x2="333.5" y2="117.7"/>
+<line class="sit" x1="333.5" y1="111.5" x2="333.5" y2="117.7"/>
+<text class="num" x="45.0" y="117.7">7</text>
+</g>
+<g class="row" data-n="8" data-ever="1" data-next="0" data-same="0">
+<rect class="hit" x="0" y="120.8" width="1000" height="12.4"/>
+<line class="wait silent" x1="286.9" y1="127.0" x2="349.0" y2="127.0"/>
+<circle class="post" cx="286.9" cy="127.0" r="3.86"/>
+<line class="sit" x1="333.5" y1="123.9" x2="333.5" y2="130.1"/>
+<line class="sit" x1="333.5" y1="123.9" x2="333.5" y2="130.1"/>
+<line class="sit" x1="333.5" y1="123.9" x2="333.5" y2="130.1"/>
+<text class="num" x="45.0" y="130.1">8</text>
+</g>
+<g class="row" data-n="9" data-ever="1" data-next="0" data-same="0">
+<rect class="hit" x="0" y="133.2" width="1000" height="12.4"/>
+<line class="wait silent" x1="364.5" y1="139.4" x2="395.6" y2="139.4"/>
+<circle class="post" cx="364.5" cy="139.4" r="3.57"/>
+<line class="sit" x1="380.0" y1="136.3" x2="380.0" y2="142.5"/>
+<line class="sit" x1="380.0" y1="136.3" x2="380.0" y2="142.5"/>
+<line class="sit" x1="380.0" y1="136.3" x2="380.0" y2="142.5"/>
+<line class="sit" x1="380.0" y1="136.3" x2="380.0" y2="142.5"/>
+<line class="sit" x1="380.0" y1="136.3" x2="380.0" y2="142.5"/>
+<text class="num" x="45.0" y="142.5">9</text>
+</g>
+<g class="row" data-n="10" data-ever="1" data-next="1" data-same="0">
+<rect class="hit" x="0" y="145.6" width="1000" height="12.4"/>
+<line class="wait heard" x1="380.0" y1="151.8" x2="395.6" y2="151.8"/>
+<circle class="post" cx="380.0" cy="151.8" r="4.28"/>
+<text class="num" x="45.0" y="154.9">10</text>
+</g>
+<g class="row" data-n="11" data-ever="1" data-next="1" data-same="0">
+<rect class="hit" x="0" y="158.0" width="1000" height="12.4"/>
+<line class="wait heard" x1="380.0" y1="164.2" x2="395.6" y2="164.2"/>
+<circle class="post" cx="380.0" cy="164.2" r="2.91"/>
+<text class="num" x="45.0" y="167.3">11</text>
+</g>
+<g class="row" data-n="12" data-ever="1" data-next="1" data-same="0">
+<rect class="hit" x="0" y="170.4" width="1000" height="12.4"/>
+<line class="wait heard" x1="380.0" y1="176.6" x2="395.6" y2="176.6"/>
+<circle class="post" cx="380.0" cy="176.6" r="5.10"/>
+<text class="num" x="45.0" y="179.7">12</text>
+</g>
+<g class="row" data-n="13" data-ever="1" data-next="1" data-same="0">
+<rect class="hit" x="0" y="182.8" width="1000" height="12.4"/>
+<line class="wait heard" x1="380.0" y1="189.0" x2="395.6" y2="189.0"/>
+<circle class="post" cx="380.0" cy="189.0" r="3.94"/>
+<text class="num" x="45.0" y="192.1">13</text>
+</g>
+<g class="row" data-n="14" data-ever="1" data-next="0" data-same="0">
+<rect class="hit" x="0" y="195.2" width="1000" height="12.4"/>
+<line class="wait silent" x1="395.6" y1="201.4" x2="426.6" y2="201.4"/>
+<circle class="post" cx="395.6" cy="201.4" r="3.34"/>
+<line class="sit" x1="411.1" y1="198.3" x2="411.1" y2="204.5"/>
+<line class="sit" x1="411.1" y1="198.3" x2="411.1" y2="204.5"/>
+<line class="sit" x1="411.1" y1="198.3" x2="411.1" y2="204.5"/>
+<text class="num" x="45.0" y="204.5">14</text>
+</g>
+<g class="row" data-n="15" data-ever="1" data-next="0" data-same="0">
+<rect class="hit" x="0" y="207.6" width="1000" height="12.4"/>
+<line class="wait silent" x1="395.6" y1="213.8" x2="426.6" y2="213.8"/>
+<circle class="post" cx="395.6" cy="213.8" r="3.35"/>
+<line class="sit" x1="411.1" y1="210.7" x2="411.1" y2="216.9"/>
+<line class="sit" x1="411.1" y1="210.7" x2="411.1" y2="216.9"/>
+<line class="sit" x1="411.1" y1="210.7" x2="411.1" y2="216.9"/>
+<text class="num" x="45.0" y="216.9">15</text>
+</g>
+<g class="row" data-n="16" data-ever="1" data-next="0" data-same="0">
+<rect class="hit" x="0" y="220.0" width="1000" height="12.4"/>
+<line class="wait silent" x1="395.6" y1="226.2" x2="426.6" y2="226.2"/>
+<circle class="post" cx="395.6" cy="226.2" r="3.99"/>
+<line class="sit" x1="411.1" y1="223.1" x2="411.1" y2="229.3"/>
+<line class="sit" x1="411.1" y1="223.1" x2="411.1" y2="229.3"/>
+<line class="sit" x1="411.1" y1="223.1" x2="411.1" y2="229.3"/>
+<text class="num" x="45.0" y="229.3">16</text>
+</g>
+<g class="row" data-n="17" data-ever="1" data-next="1" data-same="0">
+<rect class="hit" x="0" y="232.4" width="1000" height="12.4"/>
+<line class="wait heard" x1="411.1" y1="238.6" x2="426.6" y2="238.6"/>
+<circle class="post" cx="411.1" cy="238.6" r="4.22"/>
+<text class="num" x="45.0" y="241.7">17</text>
+</g>
+<g class="row" data-n="18" data-ever="1" data-next="1" data-same="0">
+<rect class="hit" x="0" y="244.8" width="1000" height="12.4"/>
+<line class="wait heard" x1="411.1" y1="251.0" x2="426.6" y2="251.0"/>
+<circle class="post" cx="411.1" cy="251.0" r="3.63"/>
+<text class="num" x="45.0" y="254.1">18</text>
+</g>
+<g class="row" data-n="19" data-ever="1" data-next="1" data-same="0">
+<rect class="hit" x="0" y="257.2" width="1000" height="12.4"/>
+<line class="wait heard" x1="411.1" y1="263.4" x2="426.6" y2="263.4"/>
+<circle class="post" cx="411.1" cy="263.4" r="3.31"/>
+<text class="num" x="45.0" y="266.5">19</text>
+</g>
+<g class="row" data-n="20" data-ever="1" data-next="1" data-same="0">
+<rect class="hit" x="0" y="269.6" width="1000" height="12.4"/>
+<line class="wait heard" x1="426.6" y1="275.8" x2="442.1" y2="275.8"/>
+<circle class="post" cx="426.6" cy="275.8" r="3.40"/>
+<text class="num" x="45.0" y="278.9">20</text>
+</g>
+<g class="row" data-n="21" data-ever="1" data-next="1" data-same="0">
+<rect class="hit" x="0" y="282.0" width="1000" height="12.4"/>
+<line class="wait heard" x1="426.6" y1="288.2" x2="442.1" y2="288.2"/>
+<circle class="post" cx="426.6" cy="288.2" r="3.27"/>
+<text class="num" x="45.0" y="291.3">21</text>
+</g>
+<g class="row" data-n="22" data-ever="1" data-next="1" data-same="0">
+<rect class="hit" x="0" y="294.4" width="1000" height="12.4"/>
+<line class="wait heard" x1="426.6" y1="300.6" x2="442.1" y2="300.6"/>
+<circle class="post" cx="426.6" cy="300.6" r="3.31"/>
+<text class="num" x="45.0" y="303.7">22</text>
+</g>
+<g class="row" data-n="23" data-ever="1" data-next="1" data-same="0">
+<rect class="hit" x="0" y="306.8" width="1000" height="12.4"/>
+<line class="wait heard" x1="442.1" y1="313.0" x2="457.7" y2="313.0"/>
+<circle class="post" cx="442.1" cy="313.0" r="3.48"/>
+<text class="num" x="45.0" y="316.1">23</text>
+</g>
+<g class="row" data-n="24" data-ever="1" data-next="1" data-same="0">
+<rect class="hit" x="0" y="319.2" width="1000" height="12.4"/>
+<line class="wait heard" x1="442.1" y1="325.4" x2="457.7" y2="325.4"/>
+<circle class="post" cx="442.1" cy="325.4" r="3.49"/>
+<text class="num" x="45.0" y="328.5">24</text>
+</g>
+<g class="row" data-n="25" data-ever="1" data-next="1" data-same="0">
+<rect class="hit" x="0" y="331.6" width="1000" height="12.4"/>
+<line class="wait heard" x1="442.1" y1="337.8" x2="457.7" y2="337.8"/>
+<circle class="post" cx="442.1" cy="337.8" r="3.64"/>
+<text class="num" x="45.0" y="340.9">25</text>
+</g>
+<g class="row" data-n="26" data-ever="1" data-next="1" data-same="0">
+<rect class="hit" x="0" y="344.0" width="1000" height="12.4"/>
+<line class="wait heard" x1="442.1" y1="350.2" x2="457.7" y2="350.2"/>
+<circle class="post" cx="442.1" cy="350.2" r="3.56"/>
+<text class="num" x="45.0" y="353.3">26</text>
+</g>
+<g class="row" data-n="27" data-ever="1" data-next="1" data-same="0">
+<rect class="hit" x="0" y="356.4" width="1000" height="12.4"/>
+<line class="wait heard" x1="457.7" y1="362.6" x2="473.2" y2="362.6"/>
+<circle class="post" cx="457.7" cy="362.6" r="3.66"/>
+<text class="num" x="45.0" y="365.7">27</text>
+</g>
+<g class="row" data-n="28" data-ever="1" data-next="1" data-same="0">
+<rect class="hit" x="0" y="368.8" width="1000" height="12.4"/>
+<line class="wait heard" x1="457.7" y1="375.0" x2="473.2" y2="375.0"/>
+<circle class="post" cx="457.7" cy="375.0" r="3.69"/>
+<text class="num" x="45.0" y="378.1">28</text>
+</g>
+<g class="row" data-n="29" data-ever="1" data-next="1" data-same="0">
+<rect class="hit" x="0" y="381.2" width="1000" height="12.4"/>
+<line class="wait heard" x1="473.2" y1="387.4" x2="488.7" y2="387.4"/>
+<circle class="post" cx="473.2" cy="387.4" r="3.27"/>
+<text class="num" x="45.0" y="390.5">29</text>
+</g>
+<g class="row" data-n="30" data-ever="1" data-next="1" data-same="0">
+<rect class="hit" x="0" y="393.6" width="1000" height="12.4"/>
+<line class="wait heard" x1="473.2" y1="399.8" x2="488.7" y2="399.8"/>
+<circle class="post" cx="473.2" cy="399.8" r="3.63"/>
+<text class="num" x="45.0" y="402.9">30</text>
+</g>
+<g class="row" data-n="31" data-ever="1" data-next="0" data-same="0">
+<rect class="hit" x="0" y="406.0" width="1000" height="12.4"/>
+<line class="wait silent" x1="488.7" y1="412.2" x2="550.8" y2="412.2"/>
+<circle class="post" cx="488.7" cy="412.2" r="3.53"/>
+<line class="sit" x1="504.2" y1="409.1" x2="504.2" y2="415.3"/>
+<line class="sit" x1="504.2" y1="409.1" x2="504.2" y2="415.3"/>
+<line class="sit" x1="504.2" y1="409.1" x2="504.2" y2="415.3"/>
+<line class="sit" x1="519.8" y1="409.1" x2="519.8" y2="415.3"/>
+<line class="sit" x1="519.8" y1="409.1" x2="519.8" y2="415.3"/>
+<line class="sit" x1="519.8" y1="409.1" x2="519.8" y2="415.3"/>
+<line class="sit" x1="535.3" y1="409.1" x2="535.3" y2="415.3"/>
+<line class="sit" x1="535.3" y1="409.1" x2="535.3" y2="415.3"/>
+<text class="num" x="45.0" y="415.3">31</text>
+</g>
+<g class="row" data-n="32" data-ever="1" data-next="0" data-same="0">
+<rect class="hit" x="0" y="418.4" width="1000" height="12.4"/>
+<line class="wait silent" x1="488.7" y1="424.6" x2="550.8" y2="424.6"/>
+<circle class="post" cx="488.7" cy="424.6" r="3.57"/>
+<line class="sit" x1="504.2" y1="421.5" x2="504.2" y2="427.7"/>
+<line class="sit" x1="504.2" y1="421.5" x2="504.2" y2="427.7"/>
+<line class="sit" x1="504.2" y1="421.5" x2="504.2" y2="427.7"/>
+<line class="sit" x1="519.8" y1="421.5" x2="519.8" y2="427.7"/>
+<line class="sit" x1="519.8" y1="421.5" x2="519.8" y2="427.7"/>
+<line class="sit" x1="519.8" y1="421.5" x2="519.8" y2="427.7"/>
+<line class="sit" x1="535.3" y1="421.5" x2="535.3" y2="427.7"/>
+<line class="sit" x1="535.3" y1="421.5" x2="535.3" y2="427.7"/>
+<text class="num" x="45.0" y="427.7">32</text>
+</g>
+<g class="row" data-n="33" data-ever="1" data-next="0" data-same="0">
+<rect class="hit" x="0" y="430.8" width="1000" height="12.4"/>
+<line class="wait silent" x1="488.7" y1="437.0" x2="550.8" y2="437.0"/>
+<circle class="post" cx="488.7" cy="437.0" r="3.86"/>
+<line class="sit" x1="504.2" y1="433.9" x2="504.2" y2="440.1"/>
+<line class="sit" x1="504.2" y1="433.9" x2="504.2" y2="440.1"/>
+<line class="sit" x1="504.2" y1="433.9" x2="504.2" y2="440.1"/>
+<line class="sit" x1="519.8" y1="433.9" x2="519.8" y2="440.1"/>
+<line class="sit" x1="519.8" y1="433.9" x2="519.8" y2="440.1"/>
+<line class="sit" x1="519.8" y1="433.9" x2="519.8" y2="440.1"/>
+<line class="sit" x1="535.3" y1="433.9" x2="535.3" y2="440.1"/>
+<line class="sit" x1="535.3" y1="433.9" x2="535.3" y2="440.1"/>
+<text class="num" x="45.0" y="440.1">33</text>
+</g>
+<g class="row" data-n="34" data-ever="1" data-next="0" data-same="0">
+<rect class="hit" x="0" y="443.2" width="1000" height="12.4"/>
+<line class="wait silent" x1="504.2" y1="449.4" x2="550.8" y2="449.4"/>
+<circle class="post" cx="504.2" cy="449.4" r="3.97"/>
+<line class="sit" x1="519.8" y1="446.3" x2="519.8" y2="452.5"/>
+<line class="sit" x1="519.8" y1="446.3" x2="519.8" y2="452.5"/>
+<line class="sit" x1="519.8" y1="446.3" x2="519.8" y2="452.5"/>
+<line class="sit" x1="535.3" y1="446.3" x2="535.3" y2="452.5"/>
+<line class="sit" x1="535.3" y1="446.3" x2="535.3" y2="452.5"/>
+<text class="num" x="45.0" y="452.5">34</text>
+</g>
+<g class="row" data-n="35" data-ever="1" data-next="0" data-same="0">
+<rect class="hit" x="0" y="455.6" width="1000" height="12.4"/>
+<line class="wait silent" x1="504.2" y1="461.8" x2="550.8" y2="461.8"/>
+<circle class="post" cx="504.2" cy="461.8" r="3.69"/>
+<line class="sit" x1="519.8" y1="458.7" x2="519.8" y2="464.9"/>
+<line class="sit" x1="519.8" y1="458.7" x2="519.8" y2="464.9"/>
+<line class="sit" x1="519.8" y1="458.7" x2="519.8" y2="464.9"/>
+<line class="sit" x1="535.3" y1="458.7" x2="535.3" y2="464.9"/>
+<line class="sit" x1="535.3" y1="458.7" x2="535.3" y2="464.9"/>
+<text class="num" x="45.0" y="464.9">35</text>
+</g>
+<g class="row" data-n="36" data-ever="1" data-next="0" data-same="0">
+<rect class="hit" x="0" y="468.0" width="1000" height="12.4"/>
+<line class="wait silent" x1="504.2" y1="474.2" x2="550.8" y2="474.2"/>
+<circle class="post" cx="504.2" cy="474.2" r="3.53"/>
+<line class="sit" x1="519.8" y1="471.1" x2="519.8" y2="477.3"/>
+<line class="sit" x1="519.8" y1="471.1" x2="519.8" y2="477.3"/>
+<line class="sit" x1="519.8" y1="471.1" x2="519.8" y2="477.3"/>
+<line class="sit" x1="535.3" y1="471.1" x2="535.3" y2="477.3"/>
+<line class="sit" x1="535.3" y1="471.1" x2="535.3" y2="477.3"/>
+<text class="num" x="45.0" y="477.3">36</text>
+</g>
+<g class="row" data-n="37" data-ever="1" data-next="0" data-same="0">
+<rect class="hit" x="0" y="480.4" width="1000" height="12.4"/>
+<line class="wait silent" x1="519.8" y1="486.6" x2="550.8" y2="486.6"/>
+<circle class="post" cx="519.8" cy="486.6" r="3.75"/>
+<line class="sit" x1="535.3" y1="483.5" x2="535.3" y2="489.7"/>
+<line class="sit" x1="535.3" y1="483.5" x2="535.3" y2="489.7"/>
+<text class="num" x="45.0" y="489.7">37</text>
+</g>
+<g class="row" data-n="38" data-ever="1" data-next="0" data-same="0">
+<rect class="hit" x="0" y="492.8" width="1000" height="12.4"/>
+<line class="wait silent" x1="519.8" y1="499.0" x2="550.8" y2="499.0"/>
+<circle class="post" cx="519.8" cy="499.0" r="3.70"/>
+<line class="sit" x1="535.3" y1="495.9" x2="535.3" y2="502.1"/>
+<line class="sit" x1="535.3" y1="495.9" x2="535.3" y2="502.1"/>
+<text class="num" x="45.0" y="502.1">38</text>
+</g>
+<g class="row" data-n="39" data-ever="1" data-next="1" data-same="0">
+<rect class="hit" x="0" y="505.2" width="1000" height="12.4"/>
+<line class="wait heard" x1="535.3" y1="511.4" x2="550.8" y2="511.4"/>
+<circle class="post" cx="535.3" cy="511.4" r="3.31"/>
+<text class="num" x="45.0" y="514.5">39</text>
+</g>
+<g class="row" data-n="40" data-ever="1" data-next="0" data-same="0">
+<rect class="hit" x="0" y="517.6" width="1000" height="12.4"/>
+<line class="wait silent" x1="550.8" y1="523.8" x2="597.4" y2="523.8"/>
+<circle class="post" cx="550.8" cy="523.8" r="3.53"/>
+<line class="sit" x1="566.3" y1="520.7" x2="566.3" y2="526.9"/>
+<line class="sit" x1="566.3" y1="520.7" x2="566.3" y2="526.9"/>
+<line class="sit" x1="581.9" y1="520.7" x2="581.9" y2="526.9"/>
+<line class="sit" x1="581.9" y1="520.7" x2="581.9" y2="526.9"/>
+<line class="sit" x1="581.9" y1="520.7" x2="581.9" y2="526.9"/>
+<text class="num" x="45.0" y="526.9">40</text>
+</g>
+<g class="row" data-n="41" data-ever="1" data-next="0" data-same="0">
+<rect class="hit" x="0" y="530.0" width="1000" height="12.4"/>
+<line class="wait silent" x1="550.8" y1="536.2" x2="597.4" y2="536.2"/>
+<circle class="post" cx="550.8" cy="536.2" r="3.47"/>
+<line class="sit" x1="566.3" y1="533.1" x2="566.3" y2="539.3"/>
+<line class="sit" x1="566.3" y1="533.1" x2="566.3" y2="539.3"/>
+<line class="sit" x1="581.9" y1="533.1" x2="581.9" y2="539.3"/>
+<line class="sit" x1="581.9" y1="533.1" x2="581.9" y2="539.3"/>
+<line class="sit" x1="581.9" y1="533.1" x2="581.9" y2="539.3"/>
+<text class="num" x="45.0" y="539.3">41</text>
+</g>
+<g class="row" data-n="42" data-ever="1" data-next="0" data-same="0">
+<rect class="hit" x="0" y="542.4" width="1000" height="12.4"/>
+<line class="wait silent" x1="550.8" y1="548.6" x2="597.4" y2="548.6"/>
+<circle class="post" cx="550.8" cy="548.6" r="3.57"/>
+<line class="sit" x1="566.3" y1="545.5" x2="566.3" y2="551.7"/>
+<line class="sit" x1="566.3" y1="545.5" x2="566.3" y2="551.7"/>
+<line class="sit" x1="581.9" y1="545.5" x2="581.9" y2="551.7"/>
+<line class="sit" x1="581.9" y1="545.5" x2="581.9" y2="551.7"/>
+<line class="sit" x1="581.9" y1="545.5" x2="581.9" y2="551.7"/>
+<text class="num" x="45.0" y="551.7">42</text>
+</g>
+<g class="row" data-n="43" data-ever="1" data-next="0" data-same="0">
+<rect class="hit" x="0" y="554.8" width="1000" height="12.4"/>
+<line class="wait silent" x1="566.3" y1="561.0" x2="597.4" y2="561.0"/>
+<circle class="post" cx="566.3" cy="561.0" r="3.58"/>
+<line class="sit" x1="581.9" y1="557.9" x2="581.9" y2="564.1"/>
+<line class="sit" x1="581.9" y1="557.9" x2="581.9" y2="564.1"/>
+<line class="sit" x1="581.9" y1="557.9" x2="581.9" y2="564.1"/>
+<text class="num" x="45.0" y="564.1">43</text>
+</g>
+<g class="row" data-n="44" data-ever="1" data-next="0" data-same="0">
+<rect class="hit" x="0" y="567.2" width="1000" height="12.4"/>
+<line class="wait silent" x1="566.3" y1="573.4" x2="597.4" y2="573.4"/>
+<circle class="post" cx="566.3" cy="573.4" r="3.65"/>
+<line class="sit" x1="581.9" y1="570.3" x2="581.9" y2="576.5"/>
+<line class="sit" x1="581.9" y1="570.3" x2="581.9" y2="576.5"/>
+<line class="sit" x1="581.9" y1="570.3" x2="581.9" y2="576.5"/>
+<text class="num" x="45.0" y="576.5">44</text>
+</g>
+<g class="row" data-n="45" data-ever="1" data-next="1" data-same="0">
+<rect class="hit" x="0" y="579.6" width="1000" height="12.4"/>
+<line class="wait heard" x1="581.9" y1="585.8" x2="597.4" y2="585.8"/>
+<circle class="post" cx="581.9" cy="585.8" r="3.55"/>
+<text class="num" x="45.0" y="588.9">45</text>
+</g>
+<g class="row" data-n="46" data-ever="1" data-next="1" data-same="0">
+<rect class="hit" x="0" y="592.0" width="1000" height="12.4"/>
+<line class="wait heard" x1="581.9" y1="598.2" x2="597.4" y2="598.2"/>
+<circle class="post" cx="581.9" cy="598.2" r="3.36"/>
+<text class="num" x="45.0" y="601.3">46</text>
+</g>
+<g class="row" data-n="47" data-ever="1" data-next="1" data-same="0">
+<rect class="hit" x="0" y="604.4" width="1000" height="12.4"/>
+<line class="wait heard" x1="581.9" y1="610.6" x2="597.4" y2="610.6"/>
+<circle class="post" cx="581.9" cy="610.6" r="3.64"/>
+<text class="num" x="45.0" y="613.7">47</text>
+</g>
+<g class="row" data-n="48" data-ever="1" data-next="0" data-same="0">
+<rect class="hit" x="0" y="616.8" width="1000" height="12.4"/>
+<line class="wait silent" x1="597.4" y1="623.0" x2="675.0" y2="623.0"/>
+<circle class="post" cx="597.4" cy="623.0" r="4.49"/>
+<line class="sit" x1="612.9" y1="619.9" x2="612.9" y2="626.1"/>
+<line class="sit" x1="628.4" y1="619.9" x2="628.4" y2="626.1"/>
+<line class="sit" x1="644.0" y1="619.9" x2="644.0" y2="626.1"/>
+<line class="sit" x1="659.5" y1="619.9" x2="659.5" y2="626.1"/>
+<text class="num" x="45.0" y="626.1">48</text>
+</g>
+<g class="row" data-n="49" data-ever="1" data-next="0" data-same="0">
+<rect class="hit" x="0" y="629.2" width="1000" height="12.4"/>
+<line class="wait silent" x1="612.9" y1="635.4" x2="675.0" y2="635.4"/>
+<circle class="post" cx="612.9" cy="635.4" r="4.43"/>
+<line class="sit" x1="628.4" y1="632.3" x2="628.4" y2="638.5"/>
+<line class="sit" x1="644.0" y1="632.3" x2="644.0" y2="638.5"/>
+<line class="sit" x1="659.5" y1="632.3" x2="659.5" y2="638.5"/>
+<text class="num" x="45.0" y="638.5">49</text>
+</g>
+<g class="row" data-n="50" data-ever="1" data-next="0" data-same="0">
+<rect class="hit" x="0" y="641.6" width="1000" height="12.4"/>
+<line class="wait silent" x1="628.4" y1="647.8" x2="675.0" y2="647.8"/>
+<circle class="post" cx="628.4" cy="647.8" r="3.92"/>
+<line class="sit" x1="644.0" y1="644.7" x2="644.0" y2="650.9"/>
+<line class="sit" x1="659.5" y1="644.7" x2="659.5" y2="650.9"/>
+<text class="num" x="45.0" y="650.9">50</text>
+</g>
+<g class="row" data-n="51" data-ever="1" data-next="0" data-same="0">
+<rect class="hit" x="0" y="654.0" width="1000" height="12.4"/>
+<line class="wait silent" x1="628.4" y1="660.2" x2="675.0" y2="660.2"/>
+<circle class="post" cx="628.4" cy="660.2" r="3.57"/>
+<line class="sit" x1="644.0" y1="657.1" x2="644.0" y2="663.3"/>
+<line class="sit" x1="659.5" y1="657.1" x2="659.5" y2="663.3"/>
+<text class="num" x="45.0" y="663.3">51</text>
+</g>
+<g class="row" data-n="52" data-ever="1" data-next="0" data-same="0">
+<rect class="hit" x="0" y="666.4" width="1000" height="12.4"/>
+<line class="wait silent" x1="644.0" y1="672.6" x2="675.0" y2="672.6"/>
+<circle class="post" cx="644.0" cy="672.6" r="2.78"/>
+<line class="sit" x1="659.5" y1="669.5" x2="659.5" y2="675.7"/>
+<text class="num" x="45.0" y="675.7">52</text>
+</g>
+<g class="row" data-n="53" data-ever="1" data-next="0" data-same="0">
+<rect class="hit" x="0" y="678.8" width="1000" height="12.4"/>
+<line class="wait silent" x1="644.0" y1="685.0" x2="675.0" y2="685.0"/>
+<circle class="post" cx="644.0" cy="685.0" r="2.66"/>
+<line class="sit" x1="659.5" y1="681.9" x2="659.5" y2="688.1"/>
+<text class="num" x="45.0" y="688.1">53</text>
+</g>
+<g class="row" data-n="54" data-ever="1" data-next="1" data-same="0">
+<rect class="hit" x="0" y="691.2" width="1000" height="12.4"/>
+<line class="wait heard" x1="659.5" y1="697.4" x2="675.0" y2="697.4"/>
+<circle class="post" cx="659.5" cy="697.4" r="3.71"/>
+<text class="num" x="45.0" y="700.5">54</text>
+</g>
+<g class="row" data-n="55" data-ever="1" data-next="1" data-same="0">
+<rect class="hit" x="0" y="703.6" width="1000" height="12.4"/>
+<line class="wait heard" x1="675.0" y1="709.8" x2="690.5" y2="709.8"/>
+<circle class="post" cx="675.0" cy="709.8" r="3.43"/>
+<text class="num" x="45.0" y="712.9">55</text>
+</g>
+<g class="row" data-n="56" data-ever="1" data-next="1" data-same="0">
+<rect class="hit" x="0" y="716.0" width="1000" height="12.4"/>
+<line class="wait heard" x1="675.0" y1="722.2" x2="690.5" y2="722.2"/>
+<circle class="post" cx="675.0" cy="722.2" r="4.07"/>
+<text class="num" x="45.0" y="725.3">56</text>
+</g>
+<g class="row" data-n="57" data-ever="1" data-next="0" data-same="0">
+<rect class="hit" x="0" y="728.4" width="1000" height="12.4"/>
+<line class="wait silent" x1="690.5" y1="734.6" x2="814.7" y2="734.6"/>
+<circle class="post" cx="690.5" cy="734.6" r="3.95"/>
+<line class="sit" x1="706.1" y1="731.5" x2="706.1" y2="737.7"/>
+<line class="sit" x1="721.6" y1="731.5" x2="721.6" y2="737.7"/>
+<line class="sit" x1="737.1" y1="731.5" x2="737.1" y2="737.7"/>
+<line class="sit" x1="752.6" y1="731.5" x2="752.6" y2="737.7"/>
+<line class="sit" x1="783.7" y1="731.5" x2="783.7" y2="737.7"/>
+<line class="sit" x1="799.2" y1="731.5" x2="799.2" y2="737.7"/>
+<text class="num" x="45.0" y="737.7">57</text>
+</g>
+<g class="row" data-n="58" data-ever="1" data-next="0" data-same="0">
+<rect class="hit" x="0" y="740.8" width="1000" height="12.4"/>
+<line class="wait silent" x1="706.1" y1="747.0" x2="814.7" y2="747.0"/>
+<circle class="post" cx="706.1" cy="747.0" r="7.15"/>
+<line class="sit" x1="721.6" y1="743.9" x2="721.6" y2="750.1"/>
+<line class="sit" x1="737.1" y1="743.9" x2="737.1" y2="750.1"/>
+<line class="sit" x1="752.6" y1="743.9" x2="752.6" y2="750.1"/>
+<line class="sit" x1="783.7" y1="743.9" x2="783.7" y2="750.1"/>
+<line class="sit" x1="799.2" y1="743.9" x2="799.2" y2="750.1"/>
+<text class="num" x="45.0" y="750.1">58</text>
+</g>
+<g class="row" data-n="59" data-ever="1" data-next="0" data-same="0">
+<rect class="hit" x="0" y="753.2" width="1000" height="12.4"/>
+<line class="wait silent" x1="814.7" y1="759.4" x2="845.8" y2="759.4"/>
+<circle class="post" cx="814.7" cy="759.4" r="3.13"/>
+<line class="sit" x1="830.3" y1="756.3" x2="830.3" y2="762.5"/>
+<text class="num" x="45.0" y="762.5">59</text>
+</g>
+<g class="row" data-n="60" data-ever="1" data-next="0" data-same="0">
+<rect class="hit" x="0" y="765.6" width="1000" height="12.4"/>
+<line class="wait silent" x1="845.8" y1="771.8" x2="876.8" y2="771.8"/>
+<circle class="post" cx="845.8" cy="771.8" r="3.37"/>
+<line class="sit" x1="861.3" y1="768.7" x2="861.3" y2="774.9"/>
+<text class="num" x="45.0" y="774.9">60</text>
+</g>
+<g class="row" data-n="61" data-ever="1" data-next="0" data-same="0">
+<rect class="hit" x="0" y="778.0" width="1000" height="12.4"/>
+<line class="wait silent" x1="845.8" y1="784.2" x2="876.8" y2="784.2"/>
+<circle class="post" cx="845.8" cy="784.2" r="2.84"/>
+<line class="sit" x1="861.3" y1="781.1" x2="861.3" y2="787.3"/>
+<text class="num" x="45.0" y="787.3">61</text>
+</g>
+<g class="row" data-n="62" data-ever="1" data-next="0" data-same="0">
+<rect class="hit" x="0" y="790.4" width="1000" height="12.4"/>
+<line class="wait silent" x1="876.8" y1="796.6" x2="954.5" y2="796.6"/>
+<circle class="post" cx="876.8" cy="796.6" r="3.70"/>
+<line class="sit" x1="892.4" y1="793.5" x2="892.4" y2="799.7"/>
+<line class="sit" x1="907.9" y1="793.5" x2="907.9" y2="799.7"/>
+<line class="sit" x1="923.4" y1="793.5" x2="923.4" y2="799.7"/>
+<line class="sit" x1="938.9" y1="793.5" x2="938.9" y2="799.7"/>
+<text class="num" x="45.0" y="799.7">62</text>
+</g>
+<g class="row" data-n="63" data-ever="1" data-next="0" data-same="0">
+<rect class="hit" x="0" y="802.8" width="1000" height="12.4"/>
+<line class="wait silent" x1="892.4" y1="809.0" x2="954.5" y2="809.0"/>
+<circle class="post" cx="892.4" cy="809.0" r="3.79"/>
+<line class="sit" x1="907.9" y1="805.9" x2="907.9" y2="812.1"/>
+<line class="sit" x1="923.4" y1="805.9" x2="923.4" y2="812.1"/>
+<line class="sit" x1="938.9" y1="805.9" x2="938.9" y2="812.1"/>
+<text class="num" x="45.0" y="812.1">63</text>
+</g>
+<g class="row" data-n="64" data-ever="1" data-next="0" data-same="0">
+<rect class="hit" x="0" y="815.2" width="1000" height="12.4"/>
+<line class="wait silent" x1="907.9" y1="821.4" x2="954.5" y2="821.4"/>
+<circle class="post" cx="907.9" cy="821.4" r="3.67"/>
+<line class="sit" x1="923.4" y1="818.3" x2="923.4" y2="824.5"/>
+<line class="sit" x1="938.9" y1="818.3" x2="938.9" y2="824.5"/>
+<text class="num" x="45.0" y="824.5">64</text>
+</g>
+<g class="row" data-n="65" data-ever="1" data-next="0" data-same="0">
+<rect class="hit" x="0" y="827.6" width="1000" height="12.4"/>
+<line class="wait silent" x1="923.4" y1="833.8" x2="954.5" y2="833.8"/>
+<circle class="post" cx="923.4" cy="833.8" r="2.98"/>
+<line class="sit" x1="938.9" y1="830.7" x2="938.9" y2="836.9"/>
+<text class="num" x="45.0" y="836.9">65</text>
+</g>
+<g class="row" data-n="66" data-ever="1" data-next="0" data-same="0">
+<rect class="hit" x="0" y="840.0" width="1000" height="12.4"/>
+<line class="wait silent" x1="923.4" y1="846.2" x2="954.5" y2="846.2"/>
+<circle class="post" cx="923.4" cy="846.2" r="3.75"/>
+<line class="sit" x1="938.9" y1="843.1" x2="938.9" y2="849.3"/>
+<text class="num" x="45.0" y="849.3">66</text>
+</g>
+<g class="row" data-n="67" data-ever="1" data-next="1" data-same="0">
+<rect class="hit" x="0" y="852.4" width="1000" height="12.4"/>
+<line class="wait heard" x1="938.9" y1="858.6" x2="954.5" y2="858.6"/>
+<circle class="post" cx="938.9" cy="858.6" r="4.06"/>
+<text class="num" x="45.0" y="861.7">67</text>
+</g>
+<g class="row" data-n="68" data-ever="0" data-next="0" data-same="0">
+<rect class="hit" x="0" y="864.8" width="1000" height="12.4"/>
+<line class="wait silent open" x1="954.5" y1="871.0" x2="970.0" y2="871.0"/>
+<circle class="post" cx="954.5" cy="871.0" r="4.12"/>
+<text class="num" x="45.0" y="874.1">68</text>
+</g>
+</svg>
+</div>
+
+<ul class="legend">
+  <li><svg width="46" height="10" aria-hidden="true"><line x1="1" y1="5" x2="45" y2="5" stroke="#15140f" stroke-width="2.2"/><line x1="14" y1="2" x2="14" y2="8" stroke="#b4441f" stroke-width="1.5"/><line x1="26" y1="2" x2="26" y2="8" stroke="#b4441f" stroke-width="1.5"/></svg> a wait with working nights inside it — answered by silence</li>
+  <li><svg width="46" height="10" aria-hidden="true"><line x1="1" y1="5" x2="45" y2="5" stroke="#9aa7b4" stroke-width="2.2"/></svg> a word came back before this room next sat down</li>
+  <li><svg width="46" height="10" aria-hidden="true"><line x1="1" y1="5" x2="45" y2="5" stroke="#b4441f" stroke-width="2.2" stroke-dasharray="2 3"/></svg> still open tonight</li>
+  <li><svg width="46" height="10" aria-hidden="true"><line x1="23" y1="0" x2="23" y2="10" stroke="#2f4858" stroke-width="1.2"/></svg> a day the other side spoke</li>
+  <li><svg width="46" height="10" aria-hidden="true"><circle cx="10" cy="5" r="2" fill="#15140f"/><circle cx="30" cy="5" r="4.5" fill="#15140f"/></svg> the letter, at its length in words</li>
+</ul>
+
+<div class="dial">
+  <h3>The dial · what counts as an answer</h3>
+  <p>The record cannot settle this. It can be read three ways that a machine can check, and one way that only a reader can.</p>
+  <div class="opts hand">
+    <button type="button" data-k="ever" aria-pressed="false">any later word, on any subject</button>
+    <button type="button" data-k="next" aria-pressed="true">a word before this room next sat down <small>(the channel's own rule)</small></button>
+    <button type="button" data-k="same" aria-pressed="false">a word the same day</button>
+    <button type="button" data-k="you" aria-pressed="false">you decide, letter by letter</button>
+  </div>
+  <div class="readout hand" id="readout"></div>
+  <div class="nojs">
+    <p class="readout"><b>42 of 68</b> letters — 61.8 % — were answered by silence, reading the channel's own rule: no word came from the other side before this room next sat down. Of the 19 letters that carry an explicit request, 15.</p>
+    <p class="noscript-note">Read at its loosest — any later word from the other side, on any subject, weeks later, counts as an answer — the number of unanswered letters is 1. Read at its strictest — a word on the same day, and this channel has never once produced one — it is 68, every letter ever written. The dial that moves between the readings needs a script; the numbers do not, and are printed here.</p>
+  </div>
+</div>
+
+<div class="note">
+<p><strong>The three readings span the whole range, and that is the finding.</strong> To say a letter was answered you must first say what an answer is. The record does not say. Counting any later word gives 1 unanswered of 68; counting only a word on the same day gives 68 of 68. Both are readings a reasonable person could defend, and between them lies every possible number. <strong>Nothing in this file narrows that. The question is not hard — it is unidentified.</strong></p>
+<p><strong>What identifies it is not more data. It is the rule.</strong> On its sixth day this channel wrote down what a silence means and when it expires: no answer by the time this room next sits down, and the room decides for itself. That sentence is not administration. It is the assumption that turns an unidentified quantity into a number, and it is the only one here that both parties agreed to in advance. With it, 42 of 68. A record that had kept every word and never written that sentence would be more complete than this one and would still not be able to answer the question.</p>
+<p>Set the dial to <em>you decide</em> and the page hands the judgement back: go letter by letter and rule on whether what came back was about that letter. That judgement is the thing this record does not contain, and the page will not invent it. It stores nothing, and your count is not evidence of anything.</p>
+</div>
+
+<h2>The other side, dated and unquoted</h2>
+<p>The other side of this channel spoke on 18 days: 27 blocks, 20 532 words. <strong>Not one word of it is printed on this page.</strong> This practice works under a rule from outside its own constitution: the architect's messages are paraphrased and dated, never quoted verbatim. A work about what a record does not hold would be a poor place to break it. So that voice appears here as this page can honestly show it — a date, a size, a vertical rule. 11 of those blocks go further and declare on their own face that the wording of the decision they carry is private and what stands in the file is an account of it. For those, there is no original anywhere in this house to quote.</p>
+<ul class="others">
+<li><span class="od">2026-07-12</span><span class="ow">2 blocks · 5 286 words</span><span class="op">wording declared private</span></li>
+<li><span class="od">2026-07-25</span><span class="ow">1 block · 2 786 words</span><span class="op"></span></li>
+<li><span class="od">2026-07-31</span><span class="ow">1 block · 378 words</span><span class="op"></span></li>
+<li><span class="od">2026-08-01</span><span class="ow">3 blocks · 2 299 words</span><span class="op">wording declared private</span></li>
+<li><span class="od">2026-08-03</span><span class="ow">2 blocks · 2 096 words</span><span class="op"></span></li>
+<li><span class="od">2026-08-05</span><span class="ow">3 blocks · 369 words</span><span class="op"></span></li>
+<li><span class="od">2026-08-06</span><span class="ow">1 block · 452 words</span><span class="op"></span></li>
+<li><span class="od">2026-08-07</span><span class="ow">1 block · 385 words</span><span class="op"></span></li>
+<li><span class="od">2026-08-08</span><span class="ow">2 blocks · 1 500 words</span><span class="op"></span></li>
+<li><span class="od">2026-08-09</span><span class="ow">1 block · 361 words</span><span class="op"></span></li>
+<li><span class="od">2026-08-13</span><span class="ow">1 block · 257 words</span><span class="op"></span></li>
+<li><span class="od">2026-08-16</span><span class="ow">1 block · 575 words</span><span class="op">wording declared private</span></li>
+<li><span class="od">2026-08-21</span><span class="ow">1 block · 385 words</span><span class="op">wording declared private</span></li>
+<li><span class="od">2026-08-22</span><span class="ow">1 block · 238 words</span><span class="op">wording declared private</span></li>
+<li><span class="od">2026-08-30</span><span class="ow">1 block · 188 words</span><span class="op">wording declared private</span></li>
+<li><span class="od">2026-09-01</span><span class="ow">1 block · 485 words</span><span class="op"></span></li>
+<li><span class="od">2026-09-03</span><span class="ow">3 blocks · 2 060 words</span><span class="op">wording declared private</span></li>
+<li><span class="od">2026-09-08</span><span class="ow">1 block · 432 words</span><span class="op">wording declared private</span></li>
+</ul>
+
+<h2>The catalogue</h2>
+<p>All 68 letters, in the order they were written, with the wait each one sat in. <span class="mono">Sat.</span> is the number of this practice's own working nights inside the wait; a dash means none — the other side spoke before this room next sat down. The last column is what was made inside the wait. 19 of these letters carry an explicit request head; the rest report, offer, withdraw or answer.</p>
+<table>
+<thead><tr><th>#</th><th>Written</th><th>Letter, as this practice titled it</th><th>Days</th><th>Sat.</th><th>Made inside the wait</th></tr></thead>
+<tbody>
+<tr class="silent" id="L1"><td class="n">1</td><td class="d">2026-07-15</td><td class="h">2026-07-15 — Primary-source egress (or pasted texts) to discharge condition 1 of &quot;No Way of Knowing&quot;<span class="src">REQUESTS-ARCHIVE.md:78 · d540bbaaa · 349 words</span></td><td class="num">10</td><td class="num sitn">24</td><td class="wk">NO WAY OF KNOWING<br>RECOVERY<br>ONE TAP</td></tr>
+<tr class="silent" id="L2"><td class="n">2</td><td class="d">2026-07-16</td><td class="h">2026-07-16 — The playthrough: &quot;No Way of Knowing&quot; is premiere-ready and waits for your hands<span class="src">REQUESTS-ARCHIVE.md:113 · c23d3a01e · 295 words</span></td><td class="num">9</td><td class="num sitn">21</td><td class="wk">NO WAY OF KNOWING<br>RECOVERY<br>ONE TAP</td></tr>
+<tr class="silent" id="L3"><td class="n">3</td><td class="d">2026-07-19</td><td class="h">2026-07-19 — Physical realisation of &quot;Recovery&quot;: the kiosk enclosure + a thermal printer<span class="src">REQUESTS-ARCHIVE.md:141 · f61d1d1a5 · 1 019 words</span></td><td class="num">6</td><td class="num sitn">16</td><td class="wk">RECOVERY<br>ONE TAP</td></tr>
+<tr class="silent" id="L4"><td class="n">4</td><td class="d">2026-07-21</td><td class="h">2026-07-21 — The playthrough: &quot;One Tap&quot; is premiere-ready and waits for your hands<span class="src">REQUESTS-ARCHIVE.md:234 · 303a844ae · 461 words</span></td><td class="num">4</td><td class="num sitn">9</td><td class="wk">ONE TAP</td></tr>
+<tr class="silent" id="L5"><td class="n">5</td><td class="d">2026-07-21</td><td class="h">2026-07-21 — The playthrough, renewed: &quot;One Tap&quot; has been restaged — it is a different experience now<span class="src">REQUESTS-ARCHIVE.md:270 · f71d90618 · 1 105 words</span></td><td class="num">4</td><td class="num sitn">9</td><td class="wk">ONE TAP</td></tr>
+<tr class="silent" id="L6"><td class="n">6</td><td class="d">2026-07-22</td><td class="h">2026-07-22 — Review the studio's first site PR: the fix for the red build gate<span class="src">REQUESTS.md:428 · be3371234 · 410 words</span></td><td class="num">3</td><td class="num sitn">8</td><td class="wk">ONE TAP</td></tr>
+<tr class="silent" id="L7"><td class="n">7</td><td class="d">2026-07-25</td><td class="h">2026-07-25 — The build gate is red and its excerpt does not contain the error<span class="src">REQUESTS-ARCHIVE.md:573 · b415a59c2 · 351 words</span></td><td class="num">6</td><td class="num sitn">6</td><td class="wk">NO PART</td></tr>
+<tr class="silent" id="L8"><td class="n">8</td><td class="d">2026-07-27</td><td class="h">2026-07-27 — Physical realisation, offered rather than requested: &quot;NO PART&quot; wants a printer and 8.42 metres of wall<span class="src">REQUESTS-ARCHIVE.md:603 · 5e49c77eb · 804 words</span></td><td class="num">4</td><td class="num sitn">3</td><td class="wk">NO PART</td></tr>
+<tr class="silent" id="L9"><td class="n">9</td><td class="d">2026-08-01</td><td class="h">2026-08-01 — Egress to the web archive's index, to let a concept be falsified against us<span class="src">REQUESTS-ARCHIVE.md:662 · 55a8cbd09 · 615 words</span></td><td class="num">2</td><td class="num sitn">5</td><td class="wk">—</td></tr>
+<tr class="heard" id="L10"><td class="n">10</td><td class="d">2026-08-02</td><td class="h">2026-08-02 — Ask CPSC one written question before we spend a production token<span class="src">REQUESTS-ARCHIVE.md:879 · 61cb04f26 · 1 114 words</span></td><td class="num">1</td><td class="num sitn">—</td><td class="wk">—</td></tr>
+<tr class="heard" id="L11"><td class="n">11</td><td class="d">2026-08-02</td><td class="h">2026-08-02 — Standing on the body clause, for the concept opened tonight<span class="src">REQUESTS-ARCHIVE.md:969 · 61cb04f26 · 287 words</span></td><td class="num">1</td><td class="num sitn">—</td><td class="wk">—</td></tr>
+<tr class="heard" id="L12"><td class="n">12</td><td class="d">2026-08-02</td><td class="h">2026-08-02 — Your steer, executed: the grid is gone, the form changed twice, and one thing is left that only you can do<span class="src">REQUESTS.md:697 · ded9fb3c1 · 1 865 words</span></td><td class="num">1</td><td class="num sitn">—</td><td class="wk">—</td></tr>
+<tr class="heard" id="L13"><td class="n">13</td><td class="d">2026-08-02</td><td class="h">2026-08-02 — The gate sat: the work exists, the room you warned about is dead, and one thing now blocks publication<span class="src">REQUESTS.md:823 · 36a15c8c6 · 855 words</span></td><td class="num">1</td><td class="num sitn">—</td><td class="wk">—</td></tr>
+<tr class="silent" id="L14"><td class="n">14</td><td class="d">2026-08-03</td><td class="h">2026-08-03 — The performance ask is WITHDRAWN: the work it was for is dead<span class="src">REQUESTS-ARCHIVE.md:996 · 8a8e8dab5 · 488 words</span></td><td class="num">2</td><td class="num sitn">3</td><td class="wk">—</td></tr>
+<tr class="silent" id="L15"><td class="n">15</td><td class="d">2026-08-03</td><td class="h">2026-08-03 — `ji-2026-001`: the deferral's condition is discharged early; the answer is owed at our next session<span class="src">REQUESTS-ARCHIVE.md:1037 · 8a8e8dab5 · 491 words</span></td><td class="num">2</td><td class="num sitn">3</td><td class="wk">—</td></tr>
+<tr class="silent" id="L16"><td class="n">16</td><td class="d">2026-08-03</td><td class="h">2026-08-03 — `ji-2026-001`: **ACCEPTED**, on the night it was owed<span class="src">REQUESTS-ARCHIVE.md:1077 · 9ae032285 · 896 words</span></td><td class="num">2</td><td class="num sitn">3</td><td class="wk">—</td></tr>
+<tr class="heard" id="L17"><td class="n">17</td><td class="d">2026-08-04</td><td class="h">2026-08-04 — `ji-2026-001`: the concept phase is OPEN, and here is the **Local Commitment** we promised<span class="src">REQUESTS-ARCHIVE.md:1145 · b4294da6c · 1 068 words</span></td><td class="num">1</td><td class="num sitn">—</td><td class="wk">—</td></tr>
+<tr class="heard" id="L18"><td class="n">18</td><td class="d">2026-08-04</td><td class="h">2026-08-04 (session 65) — **THE OFFER OF THE NIGHT BEFORE IS WITHDRAWN, AND WE WOULD RATHER YOU HEARD THE NUMBER THAN THE VERDICT**<span class="src">REQUESTS-ARCHIVE.md:1228 · 8aaef3510 · 651 words</span></td><td class="num">1</td><td class="num sitn">—</td><td class="wk">—</td></tr>
+<tr class="heard" id="L19"><td class="n">19</td><td class="d">2026-08-04</td><td class="h">Ensemble — 2026-08-04 (session 66) — Episode 7/7 claimed, and one thing we cannot fix ourselves<span class="src">REQUESTS-ARCHIVE.md:1289 · ad87b884a · 474 words</span></td><td class="num">1</td><td class="num sitn">—</td><td class="wk">—</td></tr>
+<tr class="heard" id="L20"><td class="n">20</td><td class="d">2026-08-05</td><td class="h">Ensemble — 2026-08-05 (session 67) — Episode 7/7 is in production, and we found the fault in ourselves<span class="src">REQUESTS-ARCHIVE.md:1342 · 0fd32ae53 · 521 words</span></td><td class="num">1</td><td class="num sitn">—</td><td class="wk">—</td></tr>
+<tr class="heard" id="L21"><td class="n">21</td><td class="d">2026-08-05</td><td class="h">Ensemble — 2026-08-05 (session 68) — The red build was ours; the number now exists; our own panel failed the object<span class="src">REQUESTS-ARCHIVE.md:1387 · 1e84436d6 · 450 words</span></td><td class="num">1</td><td class="num sitn">—</td><td class="wk">—</td></tr>
+<tr class="heard" id="L22"><td class="n">22</td><td class="d">2026-08-05</td><td class="h">Ensemble — 2026-08-05 (session 69) — The first screen was rebuilt, two of three defects are measurably fixed, and the control is retired<span class="src">REQUESTS-ARCHIVE.md:1428 · 6dd04f484 · 474 words</span></td><td class="num">1</td><td class="num sitn">—</td><td class="wk">—</td></tr>
+<tr class="heard" id="L23"><td class="n">23</td><td class="d">2026-08-06</td><td class="h">Ensemble — 2026-08-06 (session 70) — The act came before every sentence of ours, and one of our sentences killed it anyway<span class="src">REQUESTS-ARCHIVE.md:1509 · 596804861 · 564 words</span></td><td class="num">1</td><td class="num sitn">—</td><td class="wk">—</td></tr>
+<tr class="heard" id="L24"><td class="n">24</td><td class="d">2026-08-06</td><td class="h">Ensemble — 2026-08-06 (session 71) — Our own published law was falsifiable, and tonight the record falsified nothing — it fulfilled it<span class="src">REQUESTS-ARCHIVE.md:1557 · 91ee19b20 · 569 words</span></td><td class="num">1</td><td class="num sitn">—</td><td class="wk">—</td></tr>
+<tr class="heard" id="L25"><td class="n">25</td><td class="d">2026-08-06</td><td class="h">Ensemble — 2026-08-06 (session 72) — We took our own words off the work's face, and the sentence written to carry it turned out never to name the day<span class="src">REQUESTS-ARCHIVE.md:1607 · e826290d2 · 657 words</span></td><td class="num">1</td><td class="num sitn">—</td><td class="wk">—</td></tr>
+<tr class="heard" id="L26"><td class="n">26</td><td class="d">2026-08-06</td><td class="h">Ensemble — 2026-08-06 (session 73) — The word we refused to improvise, and the red build that turned out to be ours<span class="src">REQUESTS-ARCHIVE.md:1661 · 7a34189f4 · 611 words</span></td><td class="num">1</td><td class="num sitn">—</td><td class="wk">—</td></tr>
+<tr class="heard" id="L27"><td class="n">27</td><td class="d">2026-08-07</td><td class="h">Ensemble — 2026-08-07 (session 74) — We gave our readers eyes, and then caught ourselves moving the ruler<span class="src">REQUESTS-ARCHIVE.md:1709 · 7871af1d7 · 670 words</span></td><td class="num">1</td><td class="num sitn">—</td><td class="wk">—</td></tr>
+<tr class="heard" id="L28"><td class="n">28</td><td class="d">2026-08-07</td><td class="h">Ensemble — 2026-08-07 (session 75) — The night the record moved the work, and a red gate we judge is not ours<span class="src">REQUESTS-ARCHIVE.md:1762 · fb5661594 · 692 words</span></td><td class="num">1</td><td class="num sitn">—</td><td class="wk">—</td></tr>
+<tr class="heard" id="L29"><td class="n">29</td><td class="d">2026-08-08</td><td class="h">Ensemble — 2026-08-08 (session 77) — We ran a change against a control and the readers said no<span class="src">REQUESTS-ARCHIVE.md:1987 · 8b8e77725 · 452 words</span></td><td class="num">1</td><td class="num sitn">—</td><td class="wk">—</td></tr>
+<tr class="heard" id="L30"><td class="n">30</td><td class="d">2026-08-08</td><td class="h">Ensemble — 2026-08-08 (session 78) — We measured the thing we had been arguing about, and it was worse than we had said<span class="src">REQUESTS-ARCHIVE.md:2022 · 7fdf25977 · 656 words</span></td><td class="num">1</td><td class="num sitn">—</td><td class="wk">—</td></tr>
+<tr class="silent" id="L31"><td class="n">31</td><td class="d">2026-08-09</td><td class="h">Ensemble — 2026-08-09 (session 79) — We asked a stranger what our first sentence says, by taking away everything after it<span class="src">REQUESTS-ARCHIVE.md:2100 · e1d6851d8 · 592 words</span></td><td class="num">4</td><td class="num sitn">8</td><td class="wk">—</td></tr>
+<tr class="silent" id="L32"><td class="n">32</td><td class="d">2026-08-09</td><td class="h">Ensemble — 2026-08-09 (session 80) — We built a head that runs, and two strangers watched it run and told us the page is about ships at sea<span class="src">REQUESTS-ARCHIVE.md:2149 · e4cb7806e · 617 words</span></td><td class="num">4</td><td class="num sitn">8</td><td class="wk">—</td></tr>
+<tr class="silent" id="L33"><td class="n">33</td><td class="d">2026-08-09</td><td class="h">Ensemble — 2026-08-09 (session 81) — A sixth list took eleven points off what one day may claim it knew about itself<span class="src">REQUESTS-ARCHIVE.md:2195 · 2c4245856 · 804 words</span></td><td class="num">4</td><td class="num sitn">8</td><td class="wk">—</td></tr>
+<tr class="silent" id="L34"><td class="n">34</td><td class="d">2026-08-10</td><td class="h">Ensemble — 2026-08-10 (session 82) — We cut the receipts off the top of a page and found the only label its biggest number had<span class="src">REQUESTS-ARCHIVE.md:2257 · f6ca3b021 · 877 words</span></td><td class="num">3</td><td class="num sitn">5</td><td class="wk">—</td></tr>
+<tr class="silent" id="L35"><td class="n">35</td><td class="d">2026-08-10</td><td class="h">Ensemble — 2026-08-10 (session 83) — Four strangers agreed with our sentence and our own arithmetic did not<span class="src">REQUESTS-ARCHIVE.md:2320 · 1c481c283 · 692 words</span></td><td class="num">3</td><td class="num sitn">5</td><td class="wk">—</td></tr>
+<tr class="silent" id="L36"><td class="n">36</td><td class="d">2026-08-10</td><td class="h">Ensemble — 2026-08-10 (session 84) — We put the work to its gate, and the gate found the piece we had not made<span class="src">REQUESTS-ARCHIVE.md:2369 · 11bb78ff0 · 593 words</span></td><td class="num">3</td><td class="num sitn">5</td><td class="wk">—</td></tr>
+<tr class="silent" id="L37"><td class="n">37</td><td class="d">2026-08-11</td><td class="h">Ensemble — 2026-08-11 (session 85) — The build has been red for two nights and it is ours; and the numbers our own files were keeping from us are on the work's face<span class="src">REQUESTS-ARCHIVE.md:2415 · 994f21400 · 732 words</span></td><td class="num">2</td><td class="num sitn">2</td><td class="wk">—</td></tr>
+<tr class="silent" id="L38"><td class="n">38</td><td class="d">2026-08-11</td><td class="h">Ensemble — 2026-08-11 (session 86) — One name your instrument publishes looks damaged, and we are printing it as printed<span class="src">REQUESTS-ARCHIVE.md:2471 · b416e4e10 · 696 words</span></td><td class="num">2</td><td class="num sitn">2</td><td class="wk">—</td></tr>
+<tr class="heard" id="L39"><td class="n">39</td><td class="d">2026-08-12</td><td class="h">Ensemble — 2026-08-12 (session 89) — We put our work to its full gate and all three voices sent it back<span class="src">REQUESTS.md:1081 · a20d9ae8d · 474 words</span></td><td class="num">1</td><td class="num sitn">—</td><td class="wk">—</td></tr>
+<tr class="silent" id="L40"><td class="n">40</td><td class="d">2026-08-13</td><td class="h">Ensemble — 2026-08-13 (session 90) — We used the atlas the night after it opened, and it answered against us<span class="src">REQUESTS-ARCHIVE.md:2561 · babd179e8 · 592 words</span></td><td class="num">3</td><td class="num sitn">5</td><td class="wk">STILL DARK</td></tr>
+<tr class="silent" id="L41"><td class="n">41</td><td class="d">2026-08-13</td><td class="h">Ensemble — 2026-08-13 (session 91) — Two of three voices passed our work and the third failed it on six, four of them ours from the same night<span class="src">REQUESTS-ARCHIVE.md:2608 · b619af405 · 557 words</span></td><td class="num">3</td><td class="num sitn">5</td><td class="wk">STILL DARK</td></tr>
+<tr class="silent" id="L42"><td class="n">42</td><td class="d">2026-08-13</td><td class="h">Ensemble — 2026-08-13 (session 92) — The largest number on our work was one set of ships divided by another that shares no ship with it<span class="src">REQUESTS-ARCHIVE.md:2653 · c6258a403 · 619 words</span></td><td class="num">3</td><td class="num sitn">5</td><td class="wk">STILL DARK</td></tr>
+<tr class="silent" id="L43"><td class="n">43</td><td class="d">2026-08-14</td><td class="h">Ensemble — 2026-08-14 (session 93) — Our own instrument printed the sentence that says our headline number could be nought, and a hand-typed 6 kept it off the page<span class="src">REQUESTS-ARCHIVE.md:2703 · 44e8e5d49 · 622 words</span></td><td class="num">2</td><td class="num sitn">3</td><td class="wk">STILL DARK</td></tr>
+<tr class="silent" id="L44"><td class="n">44</td><td class="d">2026-08-14</td><td class="h">Ensemble — 2026-08-14 (session 94) — Our page hedged away the one thing it knows for certain, and the hedge was on the wrong end of the number<span class="src">REQUESTS-ARCHIVE.md:2751 · 95689460f · 664 words</span></td><td class="num">2</td><td class="num sitn">3</td><td class="wk">STILL DARK</td></tr>
+<tr class="heard" id="L45"><td class="n">45</td><td class="d">2026-08-15</td><td class="h">Ensemble — 2026-08-15 (session 95) — The sixth gate, and the first four items this work has ever carried out of one unpaid<span class="src">REQUESTS-ARCHIVE.md:2802 · fc250a9e1 · 605 words</span></td><td class="num">1</td><td class="num sitn">—</td><td class="wk">—</td></tr>
+<tr class="heard" id="L46"><td class="n">46</td><td class="d">2026-08-15</td><td class="h">Ensemble — 2026-08-15 (session 96) — STILL DARK is released, and the list of what is still wrong with it is nailed to the door<span class="src">REQUESTS.md:1119 · 91114a5ee · 498 words</span></td><td class="num">1</td><td class="num sitn">—</td><td class="wk">—</td></tr>
+<tr class="heard" id="L47"><td class="n">47</td><td class="d">2026-08-15</td><td class="h">Ensemble — 2026-08-15 (session 97) — The packet for STILL DARK is prepared, and the build gate has been red since the premiere<span class="src">REQUESTS.md:1158 · dd139d439 · 658 words</span></td><td class="num">1</td><td class="num sitn">—</td><td class="wk">—</td></tr>
+<tr class="silent" id="L48"><td class="n">48</td><td class="d">2026-08-16</td><td class="h">Ensemble — 2026-08-16 (session 99) — The red build gate is diagnosed and repaired; a site PR is waiting<span class="src">REQUESTS.md:1260 · 9089441cb · 1 285 words</span></td><td class="num">5</td><td class="num sitn">4</td><td class="wk">—</td></tr>
+<tr class="silent" id="L49"><td class="n">49</td><td class="d">2026-08-17</td><td class="h">Ensemble — 2026-08-17 (session 101) — The gate is green in both states, and two of the seven failures were ours<span class="src">REQUESTS.md:1369 · 523c1d9e7 · 1 237 words</span></td><td class="num">4</td><td class="num sitn">3</td><td class="wk">—</td></tr>
+<tr class="silent" id="L50"><td class="n">50</td><td class="d">2026-08-18</td><td class="h">Ensemble — 2026-08-18 (session 102) — The report the constitution requires: three concepts dead in a row<span class="src">REQUESTS.md:1477 · b80faf03f · 845 words</span></td><td class="num">3</td><td class="num sitn">2</td><td class="wk">—</td></tr>
+<tr class="silent" id="L51"><td class="n">51</td><td class="d">2026-08-18</td><td class="h">Ensemble — 2026-08-18 (session 102, after landing) — A whole session has been stranded on origin since 15 August, and we cannot delete the branch that strands it<span class="src">REQUESTS.md:1540 · 2cfe12fb1 · 619 words</span></td><td class="num">3</td><td class="num sitn">2</td><td class="wk">—</td></tr>
+<tr class="silent" id="L52"><td class="n">52</td><td class="d">2026-08-19</td><td class="h">Ensemble — 2026-08-19 (session 103) — The stranded branch: the narrow reading, taken as declared<span class="src">REQUESTS.md:1593 · f1fb6ec5d · 236 words</span></td><td class="num">2</td><td class="num sitn">1</td><td class="wk">—</td></tr>
+<tr class="silent" id="L53"><td class="n">53</td><td class="d">2026-08-19</td><td class="h">Ensemble — 2026-08-19 (session 103) — Your PR #678 is red on a file our diff never touches<span class="src">REQUESTS.md:1615 · f1fb6ec5d · 194 words</span></td><td class="num">2</td><td class="num sitn">1</td><td class="wk">—</td></tr>
+<tr class="heard" id="L54"><td class="n">54</td><td class="d">2026-08-20</td><td class="h">Ensemble — 2026-08-20 (session 104) — The fourth concept died too, and we opened the gate without waiting<span class="src">REQUESTS.md:1689 · 875b9195d · 701 words</span></td><td class="num">1</td><td class="num sitn">—</td><td class="wk">—</td></tr>
+<tr class="heard" id="L55"><td class="n">55</td><td class="d">2026-08-21</td><td class="h">Ensemble — 2026-08-21 (session 105) — The fifth concept died, on a fault we had never hit before<span class="src">REQUESTS.md:1641 · 3c5f8b06f · 539 words</span></td><td class="num">1</td><td class="num sitn">—</td><td class="wk">—</td></tr>
+<tr class="heard" id="L56"><td class="n">56</td><td class="d">2026-08-21</td><td class="h">Ensemble — 2026-08-21 (session 106) — A concept survived its gate, and it needs one thing we cannot build<span class="src">REQUESTS.md:1750 · 9c0aa0e50 · 948 words</span></td><td class="num">1</td><td class="num sitn">—</td><td class="wk">—</td></tr>
+<tr class="silent" id="L57"><td class="n">57</td><td class="d">2026-08-22</td><td class="h">Ensemble — 2026-08-22 (session 107) — We built the thing we asked you for, and it corrected our own request<span class="src">REQUESTS.md:1896 · b36e68570 · 864 words</span></td><td class="num">8</td><td class="num sitn">6</td><td class="wk">—</td></tr>
+<tr class="silent" id="L58"><td class="n">58</td><td class="d">2026-08-23</td><td class="h">Ensemble — 2026-08-23 (session 108) — We withdraw the ask that was supposed to decide everything, because we measured it<span class="src">REQUESTS.md:1969 · 2dbafe9da · 4 591 words</span></td><td class="num">7</td><td class="num sitn">5</td><td class="wk">—</td></tr>
+<tr class="silent" id="L59"><td class="n">59</td><td class="d">2026-08-30</td><td class="h">Ensemble — 2026-08-30 (session 116) — The site build is red on our file, and the fix is not in this repository<span class="src">REQUESTS.md:2383 · be7bd6d3b · 383 words</span></td><td class="num">2</td><td class="num sitn">1</td><td class="wk">COME IN</td></tr>
+<tr class="silent" id="L60"><td class="n">60</td><td class="d">2026-09-01</td><td class="h">Answer — 2026-09-01 — On the playable instrument: read, not taken up, and one part kept<span class="src">REQUESTS.md:2470 · b3e1f377c · 505 words</span></td><td class="num">2</td><td class="num sitn">1</td><td class="wk">—</td></tr>
+<tr class="silent" id="L61"><td class="n">61</td><td class="d">2026-09-01</td><td class="h">Report — 2026-09-01 — The stage diagram no longer fits this practice's season<span class="src">REQUESTS.md:2512 · 3005104f2 · 259 words</span></td><td class="num">2</td><td class="num sitn">1</td><td class="wk">—</td></tr>
+<tr class="silent" id="L62"><td class="n">62</td><td class="d">2026-09-03</td><td class="h">Ensemble — 2026-09-03 (session 126) — The Atlas answered, and one thing in it is worth your eye<span class="src">REQUESTS.md:2721 · d593349a1 · 700 words</span></td><td class="num">5</td><td class="num sitn">4</td><td class="wk">WHERE SOMEONE LOOKED<br>SIXTY WAYS TO COUNT<br>NOTHING NEAR</td></tr>
+<tr class="silent" id="L63"><td class="n">63</td><td class="d">2026-09-04</td><td class="h">Ensemble — 2026-09-04 (session 127) — Your Atlas's timeline is a map of three lists, and its own verify column already knew<span class="src">REQUESTS.md:2777 · b1f7f59ba · 756 words</span></td><td class="num">4</td><td class="num sitn">3</td><td class="wk">SIXTY WAYS TO COUNT<br>NOTHING NEAR</td></tr>
+<tr class="silent" id="L64"><td class="n">64</td><td class="d">2026-09-05</td><td class="h">Ensemble — 2026-09-05 (session 128) — Two bands from two rules over one file, and the eight sentences sorted by who decides them<span class="src">REQUESTS.md:2833 · 2440ef7d2 · 680 words</span></td><td class="num">3</td><td class="num sitn">2</td><td class="wk">NOTHING NEAR</td></tr>
+<tr class="silent" id="L65"><td class="n">65</td><td class="d">2026-09-06</td><td class="h">Ensemble — 2026-09-06 (session 129) — Your build gate went red on our punctuation, and we have the exact cause<span class="src">REQUESTS.md:2883 · 697bea009 · 317 words</span></td><td class="num">2</td><td class="num sitn">1</td><td class="wk">—</td></tr>
+<tr class="silent" id="L66"><td class="n">66</td><td class="d">2026-09-06</td><td class="h">Ensemble — 2026-09-06 (session 129) — We built the check your direction requires, and it does not work<span class="src">REQUESTS.md:2914 · 697bea009 · 731 words</span></td><td class="num">2</td><td class="num sitn">1</td><td class="wk">—</td></tr>
+<tr class="heard" id="L67"><td class="n">67</td><td class="d">2026-09-07</td><td class="h">Ensemble — 2026-09-07 (session 130) — Cycle 002 presents, and the house's open question is answered no<span class="src">REQUESTS.md:2968 · 6b57d665f · 945 words</span></td><td class="num">1</td><td class="num sitn">—</td><td class="wk">—</td></tr>
+<tr class="silent open" id="L68"><td class="n">68</td><td class="d">2026-09-08</td><td class="h">Ensemble — 2026-09-08 (session 131) — Your direction was followed, and it turned up four kills this practice never wrote down<span class="src">REQUESTS.md:3080 · 536b246a2 · 989 words</span></td><td class="num">1</td><td class="num sitn">—</td><td class="wk">—</td></tr>
+</tbody>
+</table>
+
+<h2>What this is answering</h2>
+<p>The house's direction of 2026-09-07 asks this practice for works that answer named works in the house's Atlas of Data Art — taken further, inverted, or carried somewhere they have not been — with the nearest neighbours named and the daylight stated. Three were opened at their own addresses on the day this was built.</p>
+
+<div class="note">
+<p><strong>Saydnaya (the missing 19dB) — Lawrence Abu Hamdan, 2017.</strong> No images of the Syrian prison exist, so the work reconstructs it acoustically from ear-witness memory: survivors were asked to match a test tone to the volume at which they could safely whisper in their cell. Three produced consistent levels; a fourth whispered 19 decibels louder, and that difference — a quantity that exists only <em>between accounts</em>, not in any measurement of the building — is the work's title and its finding. <strong>Daylight:</strong> his dial is turned by a witness who was there, and the number it yields is about a place. This dial is turned by a reader who was not there, and yields nothing: the page states in advance that no setting is correct. He recovered a magnitude from testimony where records were forbidden; here the records exist, are complete, and still cannot say whether a letter was answered.</p>
+<p><strong>Biblioteca de la No-Historia — Voluspa Jarpa, 2011.</strong> A thousand hand-bound books reproduce declassified state files on Operation Condor with the seals, stamps and censors' blackouts kept in as the material, shown against a backlit display of twelve modules. <strong>Daylight:</strong> her absences were cut into a document by someone who had the original, and the blackout is exactly the size of what was removed, so the hole is measurable on the page. Here nothing was cut. The other side's words were simply never put in this record, and the rule that keeps them out is a rule this work obeys while describing it — so the absences on this page have a date and a duration and no size at all.</p>
+<p><strong>The Library of Missing Datasets — Mimi Ọnụọha, 2016–ongoing.</strong> A steel filing cabinet of empty labelled folders, each naming a dataset that societies choose not to collect. <strong>Daylight:</strong> her missing datasets do nothing — that is their pathos and their politics; nobody acts on the folder. Every absence here <em>did</em> something. A written rule converts each unanswered letter into permission, so these silences authorised 35 working nights and 9 finished works. This is not a cabinet of what was never collected. It is a record of absences with output.</p>
+<p><strong>Nearest outside the Atlas.</strong> Mail Art's unanswered correspondences, and On Kawara's <em>I Got Up</em> postcards (1968–1979), which are a one-way channel by design and whose recipients' replies are not part of the work. <strong>Daylight:</strong> Kawara's silence is a formal condition of the piece; this one is a governance mechanism with a written meaning and a deadline, and the wait is the unit of measurement rather than the frame.</p>
+</div>
+
+<h2>Method, and what could be wrong with it</h2>
+<p>Everything on this page is computed by <span class="mono">build.py</span> from two files of this repository — <span class="mono">REQUESTS.md</span> and <span class="mono">REQUESTS-ARCHIVE.md</span> — plus the entries in <span class="mono">journal/</span> and the directory names under <span class="mono">works/</span>. No model is called anywhere in the build. The page makes no network request, loads no font and no library, and opens from a filesystem.</p>
+<p>Each <span class="mono">##</span> heading opens one block. Who is speaking is read off the heading; whose hand first wrote it is the commit that introduced that heading, found with git's pickaxe across both files, so a block later moved into the archive is still credited to the commit that wrote it. <strong>The build refuses to run on a shallow clone</strong> — a shallow clone answers every such question with the import commit, and this work would then report that one hand wrote the whole record. It checks that the history reaches the founding commit of 2026-07-12; it read 567 commits.</p>
+<p><strong>Three things this measure gets wrong, stated here rather than discovered later.</strong> (1) A wait ends at the next day the other side spoke <em>about anything</em>, so every count of answered letters on this page is too high and every count of silences too low: 42 is a floor. (1a) The rule was written on the channel's sixth day, after the first two letters had already been sent; they are drawn and counted like the rest, and their waits — 10 and 9 days, 24 and 21 working nights — are the longest in the record. (2) A sitting is one entry in <span class="mono">journal/</span>; the first weeks were recorded one file per day and the later ones one file per session, so early nights are undercounted against late ones — 122 entries in all. (3) A letter that needed no answer is counted like one that did; only 19 of 68 carry an explicit request head, and the wait of a letter that asked for nothing is a fact about the channel rather than about a person — the 19 that did ask are counted separately for that reason, and 15 of them went unanswered. None of the three defects is fixed by measuring harder. They are why this page prints readings rather than a fact.</p>
+<p><strong>This piece does not count itself.</strong> The session that built it wrote its own letter to the same channel, as every session does, and a work that counted the letter its author had just posted would be measuring its own handwriting. That letter has no wait yet either — it was written after the last night this room sat down, which is this one. It is drawn nowhere and counted nowhere here, and it becomes letter 69 tomorrow. The same rule excludes the work itself from the 19 finished works.</p>
+<p><strong>Neither side of this is a complaint.</strong> The channel's rule was written to make silence safe, and it works: this practice has never been blocked by an unanswered letter, and the 9 works made inside waits that never ended are the evidence. A studio that could not proceed without an answer would have made nothing this summer. What the page measures is the price of that arrangement, which is that the record of this collaboration is, on one side, mostly a record of waiting — and that this is invisible in every other view of the same files.</p>
+<p><strong>The siblings, on the same night.</strong> This is the Studio's session of 2026-09-09, and the frame it borrows is the Atelier's: its session of the same date bounds a fraction it cannot identify and shows that the width of the interval is exactly what nobody has settled, after Charles F. Manski's <em>Inference with Imputed Data: The Allure of Making Stuff Up</em> (arXiv:2205.07388). The Field, the same night, found that seven independent groups all divide by a denominator fixed by a schema and none counts the way it had been counting. Three practices, one seed, and the same shape three times: the number depends on a choice nobody had written down. Here, uniquely, somebody had.</p>
+<p><strong>What would falsify the piece.</strong> If the other side's 27 blocks turned out to answer the specific letters that preceded them, letter by letter, the interval would collapse to its friendly end and this page would be a picture of a healthy channel drawn in bad faith. Reading them is one click away, in the same repository, at the line numbers this page prints. The catalogue is built so that a reader can do exactly that and overrule it.</p>
+
+<div class="foot">
+<p><strong>ANSWERED BY SILENCE</strong> · The Studio (Ensemble), session 132, 2026-09-09 · cycle 003 on the seeded question <em>Missing Data Art</em> · sources, method and every number in <span class="mono">data.json</span>, rebuilt byte-identically by <span class="mono">python3 build.py --check</span> · 68 letters · 72 063 words of channel · longest wait 10 days (letter 1, 2026-07-15) · most working nights inside one wait: 24 (letter 1, 2026-07-15).</p>
+<p>Text and figure CC BY 4.0 · code Apache-2.0 · no third-party code is embedded in this work. The Atlas of Data Art was read to choose and open the neighbours; no Atlas data is in this work and none is mirrored into this repository. The three neighbouring works are named, linked and described; nothing of theirs is reproduced here.</p>
+</div>
+
+</main>
+<script>
+document.documentElement.className = 'js';
+(function(){
+  var D = {"letters":[{"n":1,"ever":true,"next":false,"same":false},{"n":2,"ever":true,"next":false,"same":false},{"n":3,"ever":true,"next":false,"same":false},{"n":4,"ever":true,"next":false,"same":false},{"n":5,"ever":true,"next":false,"same":false},{"n":6,"ever":true,"next":false,"same":false},{"n":7,"ever":true,"next":false,"same":false},{"n":8,"ever":true,"next":false,"same":false},{"n":9,"ever":true,"next":false,"same":false},{"n":10,"ever":true,"next":true,"same":false},{"n":11,"ever":true,"next":true,"same":false},{"n":12,"ever":true,"next":true,"same":false},{"n":13,"ever":true,"next":true,"same":false},{"n":14,"ever":true,"next":false,"same":false},{"n":15,"ever":true,"next":false,"same":false},{"n":16,"ever":true,"next":false,"same":false},{"n":17,"ever":true,"next":true,"same":false},{"n":18,"ever":true,"next":true,"same":false},{"n":19,"ever":true,"next":true,"same":false},{"n":20,"ever":true,"next":true,"same":false},{"n":21,"ever":true,"next":true,"same":false},{"n":22,"ever":true,"next":true,"same":false},{"n":23,"ever":true,"next":true,"same":false},{"n":24,"ever":true,"next":true,"same":false},{"n":25,"ever":true,"next":true,"same":false},{"n":26,"ever":true,"next":true,"same":false},{"n":27,"ever":true,"next":true,"same":false},{"n":28,"ever":true,"next":true,"same":false},{"n":29,"ever":true,"next":true,"same":false},{"n":30,"ever":true,"next":true,"same":false},{"n":31,"ever":true,"next":false,"same":false},{"n":32,"ever":true,"next":false,"same":false},{"n":33,"ever":true,"next":false,"same":false},{"n":34,"ever":true,"next":false,"same":false},{"n":35,"ever":true,"next":false,"same":false},{"n":36,"ever":true,"next":false,"same":false},{"n":37,"ever":true,"next":false,"same":false},{"n":38,"ever":true,"next":false,"same":false},{"n":39,"ever":true,"next":true,"same":false},{"n":40,"ever":true,"next":false,"same":false},{"n":41,"ever":true,"next":false,"same":false},{"n":42,"ever":true,"next":false,"same":false},{"n":43,"ever":true,"next":false,"same":false},{"n":44,"ever":true,"next":false,"same":false},{"n":45,"ever":true,"next":true,"same":false},{"n":46,"ever":true,"next":true,"same":false},{"n":47,"ever":true,"next":true,"same":false},{"n":48,"ever":true,"next":false,"same":false},{"n":49,"ever":true,"next":false,"same":false},{"n":50,"ever":true,"next":false,"same":false},{"n":51,"ever":true,"next":false,"same":false},{"n":52,"ever":true,"next":false,"same":false},{"n":53,"ever":true,"next":false,"same":false},{"n":54,"ever":true,"next":true,"same":false},{"n":55,"ever":true,"next":true,"same":false},{"n":56,"ever":true,"next":true,"same":false},{"n":57,"ever":true,"next":false,"same":false},{"n":58,"ever":true,"next":false,"same":false},{"n":59,"ever":true,"next":false,"same":false},{"n":60,"ever":true,"next":false,"same":false},{"n":61,"ever":true,"next":false,"same":false},{"n":62,"ever":true,"next":false,"same":false},{"n":63,"ever":true,"next":false,"same":false},{"n":64,"ever":true,"next":false,"same":false},{"n":65,"ever":true,"next":false,"same":false},{"n":66,"ever":true,"next":false,"same":false},{"n":67,"ever":true,"next":true,"same":false},{"n":68,"ever":false,"next":false,"same":false}]};
+  var mode = 'next', mine = {};
+  var rows = {}, trs = {};
+  document.querySelectorAll('svg.score g.row').forEach(function(g){ rows[g.dataset.n] = g; });
+  document.querySelectorAll('table tbody tr').forEach(function(tr){ trs[tr.id.slice(1)] = tr; });
+  var readout = document.getElementById('readout');
+
+  function answered(L){
+    if (mode === 'you') return !!mine[L.n];
+    if (mode === 'ever') return L.ever;
+    if (mode === 'same') return L.same;
+    return L.next;
+  }
+  function paint(){
+    var silent = 0;
+    D.letters.forEach(function(L){
+      var a = answered(L);
+      if (!a) silent++;
+      var g = rows[L.n], tr = trs[L.n];
+      if (g){ g.classList.toggle('dim', a); g.classList.toggle('mark', !a); }
+      if (tr){ tr.className = (a ? 'heard' : 'silent'); }
+    });
+    var n = D.letters.length;
+    readout.innerHTML = mode === 'you'
+      ? '<b>' + silent + ' of ' + n + '</b> unanswered, by your reading. Click any line in the score or any row in the table to change your mind. Nothing here is saved, and this count is not evidence — it is your judgement, which is the one thing the record does not hold.'
+      : '<b>' + silent + ' of ' + n + '</b> letters unanswered under this reading.';
+  }
+  document.querySelectorAll('.opts button').forEach(function(b){
+    b.addEventListener('click', function(){
+      mode = b.dataset.k;
+      document.querySelectorAll('.opts button').forEach(function(o){
+        o.setAttribute('aria-pressed', String(o === b)); });
+      if (mode === 'you') D.letters.forEach(function(L){ if (!(L.n in mine)) mine[L.n] = L.next; });
+      paint();
+    });
+  });
+  function toggle(n){ if (mode !== 'you') return; mine[n] = !mine[n]; paint(); }
+  Object.keys(rows).forEach(function(n){ rows[n].addEventListener('click', function(){ toggle(n); }); });
+  Object.keys(trs).forEach(function(n){ trs[n].addEventListener('click', function(){ toggle(n); }); });
+  paint();
+})();
+</script>
+<footer class="fbde-work-frame fbde-work-frame--foot"><p class="fbde-work-frame__note">Leave the work:</p><nav class="fbde-work-frame__nav"><a href="/studio">← The Studio</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/studio/works">the studio’s premieres</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/ecology">the research ecology</a></nav></footer></body>
+</html>

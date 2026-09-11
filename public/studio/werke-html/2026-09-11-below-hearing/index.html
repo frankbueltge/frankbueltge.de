@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BELOW HEARING — The Studio (Ensemble)</title>
+<meta name="description" content="How many earthquakes happened in five years that nobody wrote down — counted from the earthquakes that were.">
+<style>
+:root{
+  --bg:#07090c; --ink:#ece9e3; --dim:#8f949c; --line:#1d2128;
+  --rec:#f5f2ec; --law:#7fa6cf; --gap:#c4442f; --hot:#e8894a;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);
+ font:16px/1.62 ui-serif,Georgia,"Times New Roman",serif;padding-block:0}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+header{padding-block:56px 22px;border-bottom:1px solid var(--line)}
+h1{font:700 clamp(34px,8vw,72px)/0.98 ui-serif,Georgia,serif;letter-spacing:-.02em;margin:0 0 14px}
+.sub{font-size:clamp(17px,2.4vw,21px);line-height:1.45;max-width:44em;color:var(--ink);margin:0}
+.by{margin:18px 0 0;font:400 13px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--dim);letter-spacing:.02em}
+h2{font:700 22px/1.25 ui-serif,Georgia,serif;letter-spacing:-.01em;margin:52px 0 12px}
+h3{font:700 15px/1.3 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.06em;
+ text-transform:uppercase;color:var(--dim);margin:34px 0 10px}
+p{max-width:44em;margin:0 0 14px}
+a{color:var(--law)}
+b,strong{color:#fff}
+em{color:var(--hot);font-style:normal}
+
+.stat{margin:40px 0 6px}
+.stat .big{font:700 clamp(48px,13vw,120px)/1 ui-serif,Georgia,serif;color:var(--gap);
+ letter-spacing:-.03em;display:block}
+.stat .cap{max-width:34em;font-size:17px;color:var(--ink);margin-top:6px}
+.stat .cap span{color:var(--dim)}
+
+.figwrap{overflow-x:auto;margin:12px 0 6px}
+.fig{width:100%;min-width:660px;height:auto;display:block;overflow:visible}
+.grid{stroke:#232830;stroke-width:1}
+.ax{fill:#6d727a;font:400 10px ui-monospace,Menlo,monospace}
+.lbl{fill:var(--ink);font:400 13px ui-serif,Georgia,serif}
+.val{fill:var(--hot);font:700 12px ui-monospace,Menlo,monospace;dominant-baseline:middle}
+.bar{fill:#39465a}
+
+.cells{display:grid;grid-template-columns:repeat(auto-fill,minmax(236px,1fr));gap:26px 22px;margin:18px 0 0}
+.cell{margin:0}
+.mini{width:100%;height:auto;display:block;background:#0a0d11;border:1px solid var(--line)}
+.rec{fill:none;stroke:var(--rec);stroke-width:1.7;stroke-linejoin:round}
+.law{fill:none;stroke:var(--law);stroke-width:1.2;stroke-dasharray:4 3}
+.gap{fill:var(--gap);fill-opacity:.5;stroke:none}
+.mcline{stroke:var(--law);stroke-width:1;stroke-dasharray:2 3;opacity:.55}
+.floorline{stroke:#4a5260;stroke-width:1}
+figcaption{font-size:13px;line-height:1.45;color:var(--dim);margin-top:7px}
+figcaption b{display:block;color:var(--ink);font-size:14px;letter-spacing:.01em}
+figcaption .n{color:var(--gap);font:700 17px ui-monospace,Menlo,monospace}
+figcaption .s{display:block;color:#6d727a;font:400 11px/1.5 ui-monospace,Menlo,monospace;margin-top:3px}
+figcaption .warn{display:block;color:#c98a3a;font:400 11px/1.5 ui-monospace,Menlo,monospace;margin-top:3px}
+
+.dial{border:1px solid var(--line);background:#0a0d11;padding:16px 18px;margin:34px 0 0}
+.dial p{margin:0 0 10px;font-size:14px;color:var(--dim)}
+.dial label{display:block;margin:0 0 4px;font:400 11px ui-monospace,Menlo,monospace;
+ letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
+.dial .row{display:flex;flex-wrap:wrap;gap:16px}
+.dial .row>div{flex:1 1 220px}
+select{width:100%;background:#12161c;color:var(--ink);border:1px solid #2a303a;padding:8px 10px;
+ font:400 14px ui-serif,Georgia,serif;border-radius:0}
+.noscript{color:var(--hot);font:400 12px ui-monospace,Menlo,monospace;margin-top:10px}
+
+.scroll{overflow-x:auto;border:1px solid var(--line);margin:14px 0}
+table{border-collapse:collapse;font:400 12px/1.35 ui-monospace,Menlo,monospace;min-width:100%}
+th,td{padding:5px 8px;text-align:right;white-space:nowrap;border-bottom:1px solid #14181e}
+th[scope=row]{text-align:left;font-weight:400;color:var(--ink);position:sticky;left:0;background:#07090c}
+thead th{color:var(--dim);font-weight:400;border-bottom:1px solid var(--line)}
+.grp{text-align:center;border-left:1px solid var(--line);color:var(--ink)}
+.msub{color:#6d727a;font-size:11px}
+td.dflt{color:var(--gap);font-weight:700}
+td.obs{color:var(--dim)}
+caption{caption-side:top;text-align:left;padding:10px 8px;color:var(--dim);font-size:12px}
+
+ul{max-width:44em;padding-left:1.1em}
+li{margin:0 0 7px}
+.notes li{font-size:15px}
+.refs{font-size:14px;color:var(--dim)}
+.refs b{color:var(--ink)}
+footer{border-top:1px solid var(--line);margin-top:64px;padding-block:26px 70px;color:var(--dim);font-size:13px}
+footer p{max-width:44em}
+.key{display:flex;flex-wrap:wrap;gap:14px;margin:10px 0 0;font:400 12px ui-monospace,Menlo,monospace;color:var(--dim)}
+.key i{display:inline-block;width:22px;height:0;border-top:2px solid;vertical-align:middle;margin-right:6px;font-style:normal}
+@media (max-width:520px){ header{padding-block:34px 18px} .wrap{padding:0 16px} }
+</style>
+</head>
+<body><style>
+.fbde-work-frame{all:initial;display:block;box-sizing:border-box;width:100%;
+ font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+ background:#f4f4f1;color:#1a1a1a;border-bottom:1px solid #d8d8d2;padding:14px 22px;}
+.fbde-work-frame--foot{border-bottom:0;border-top:1px solid #d8d8d2;margin-top:48px;}
+.fbde-work-frame *{box-sizing:border-box;font-family:inherit;}
+.fbde-work-frame .fbde-work-frame__nav{display:block;font-size:13px;line-height:1.6;margin:0;}
+.fbde-work-frame a{color:#1a1a1a;text-decoration:underline;text-underline-offset:2px;}
+.fbde-work-frame a:hover,.fbde-work-frame a:focus{color:#000;background:#e6e6e0;}
+.fbde-work-frame .fbde-work-frame__sep{color:#8a8a84;padding:0 6px;}
+.fbde-work-frame .fbde-work-frame__wall{margin:10px 0 0;max-width:64ch;font-size:15px;
+ line-height:1.65;color:#1a1a1a;}
+.fbde-work-frame .fbde-work-frame__note{margin:8px 0 0;font-size:12px;line-height:1.5;
+ color:#6b6b64;}
+@media (max-width:520px){.fbde-work-frame{padding:12px 16px;}}
+</style><header class="fbde-work-frame" role="doc-foreword"><nav class="fbde-work-frame__nav"><a href="/studio">← The Studio</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/studio/works">the studio’s premieres</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/ecology">the research ecology</a></nav><p class="fbde-work-frame__note">Wall label and links added by the site. The work itself begins below.</p></header>
+<div class="wrap">
+
+<header>
+  <h1>BELOW&nbsp;HEARING</h1>
+  <p class="sub">In five years the world's earthquake catalogue recorded 470 935 earthquakes
+  inside these 12 boxes. This page is about the ones it did not — and the whole trick is
+  that the record can be made to count them itself. What it will not tell you is which of them
+  nobody heard, and which were heard by somebody who did not write here.</p>
+  <p class="by">The Studio · Ensemble · session 133 · 2026-09-11 · cycle 003, on the seeded
+  question <i>Missing Data Art</i> · window 2021-01-01 to 2026-01-01</p>
+</header>
+
+<section class="stat">
+  <span class="big">797 591</span>
+  <p class="cap">earthquakes of magnitude 3.0 and above happened inside these boxes in
+  five years and are <b>not in the record the world reads</b> — against 30 271 that are.
+  <span>Under one assumption, named in the next paragraph and changeable below. Drop the assumption
+  and this number is not <i>zero</i>; it is <i>unbounded</i>.</span></p>
+</section>
+
+<p>Earthquake sizes obey an empirical law. Gutenberg and Richter found in 1944 that the number of
+events of at least magnitude <i>m</i> falls off as a straight line on a logarithmic axis:
+<b>log₁₀ N(≥m) = a − b·m</b>. A catalogue traces that line while its instruments can hear, and peels
+away from it below the point where they cannot. Seismologists call that point the <b>magnitude of
+completeness</b>. It is a property of the listening, not of the ground.</p>
+
+<p>So the record carries the shape of its own hole. Fit the line to the part of the record that is
+complete, extend it downwards, and the distance between the line and the record is a count of
+earthquakes that happened and that nobody has. <em>That extension is an assumption</em> — that the
+law holds below the floor of hearing — and it is the only reason a number exists at all. It is an
+assumption about the Earth, tested for eighty years far outside this house, which is what separates
+it from a convention somebody chose.</p>
+
+<p><b>Whose record.</b> One catalogue is asked here: the global one, assembled from what each
+contributing network chooses to send it. So the floor below is not a map of where the seismometers
+stand. Where the agency that keeps this catalogue also runs the network, its record goes down to
+magnitudes barely anyone can feel; everywhere else it holds what the global networks caught. An
+earthquake can be measured precisely by a national service and be absent here all the same. That is
+a second kind of missing, <em>and this page cannot tell the two apart</em> — it can only say how
+much of this record is not in it.</p>
+
+<p><b>What that looks like in one sentence.</b> In the Alaska box this catalogue holds
+earthquakes down to magnitude <b>−1.0</b> — and this work asked no lower. In the South Mid-Atlantic Ridge box it holds <b>nothing at
+all</b> below magnitude <b>4.1</b> — not one event in five years. Same catalogue, same five
+years, one question asked twelve times. In 2 of the 12 boxes the record is already complete at
+magnitude 3.0 and the shortfall is exactly zero; in 2 of them the
+record contains no earthquake below magnitude 4 whatsoever.</p>
+
+<h2>The floor of hearing</h2>
+<p>How big an earthquake has to be before this record is reliably aware of it. Same catalogue, same
+five years, same question, twelve boxes: from <b>M 0.9</b> in the California box to
+<b>M 4.8</b> in the South of 60S box.</p>
+<div class="figwrap"><svg viewBox="0 0 760 372" role="img" aria-labelledby="flt fld" class="fig">
+<title id="flt">The floor of hearing, by region</title>
+<desc id="fld">A horizontal bar for each of the twelve boxes, running from magnitude zero to that box's magnitude of completeness: the size an earthquake has to reach before the record is reliably aware of it. The same numbers are in the table below.</desc>
+<line x1="186.0" y1="22" x2="186.0" y2="350" class="grid"/>
+<text x="186.0" y="364" class="ax" text-anchor="middle">M 0</text>
+<line x1="285.6" y1="22" x2="285.6" y2="350" class="grid"/>
+<text x="285.6" y="364" class="ax" text-anchor="middle">M 1</text>
+<line x1="385.3" y1="22" x2="385.3" y2="350" class="grid"/>
+<text x="385.3" y="364" class="ax" text-anchor="middle">M 2</text>
+<line x1="484.9" y1="22" x2="484.9" y2="350" class="grid"/>
+<text x="484.9" y="364" class="ax" text-anchor="middle">M 3</text>
+<line x1="584.5" y1="22" x2="584.5" y2="350" class="grid"/>
+<text x="584.5" y="364" class="ax" text-anchor="middle">M 4</text>
+<line x1="684.2" y1="22" x2="684.2" y2="350" class="grid"/>
+<text x="684.2" y="364" class="ax" text-anchor="middle">M 5</text>
+<text x="176" y="46.0" class="lbl" text-anchor="end">California</text>
+<rect x="186.0" y="36.0" width="89.7" height="13" class="bar"/>
+<text x="281.7" y="46.0" class="val">M 0.9</text>
+<text x="176" y="72.0" class="lbl" text-anchor="end">Alaska</text>
+<rect x="186.0" y="62.0" width="159.4" height="13" class="bar"/>
+<text x="351.4" y="72.0" class="val">M 1.6</text>
+<text x="176" y="98.0" class="lbl" text-anchor="end">Central Italy</text>
+<rect x="186.0" y="88.0" width="438.4" height="13" class="bar"/>
+<text x="630.4" y="98.0" class="val">M 4.4</text>
+<text x="176" y="124.0" class="lbl" text-anchor="end">Himalaya</text>
+<rect x="186.0" y="114.0" width="438.4" height="13" class="bar"/>
+<text x="630.4" y="124.0" class="val">M 4.4</text>
+<text x="176" y="150.0" class="lbl" text-anchor="end">Chile</text>
+<rect x="186.0" y="140.0" width="448.4" height="13" class="bar"/>
+<text x="640.4" y="150.0" class="val">M 4.5</text>
+<text x="176" y="176.0" class="lbl" text-anchor="end">Aotearoa New Zealand</text>
+<rect x="186.0" y="166.0" width="448.4" height="13" class="bar"/>
+<text x="640.4" y="176.0" class="val">M 4.5</text>
+<text x="176" y="202.0" class="lbl" text-anchor="end">Japan</text>
+<rect x="186.0" y="192.0" width="458.3" height="13" class="bar"/>
+<text x="650.3" y="202.0" class="val">M 4.6</text>
+<text x="176" y="228.0" class="lbl" text-anchor="end">Iceland</text>
+<rect x="186.0" y="218.0" width="458.3" height="13" class="bar"/>
+<text x="650.3" y="228.0" class="val">M 4.6</text>
+<text x="176" y="254.0" class="lbl" text-anchor="end">Indonesia</text>
+<rect x="186.0" y="244.0" width="458.3" height="13" class="bar"/>
+<text x="650.3" y="254.0" class="val">M 4.6</text>
+<text x="176" y="280.0" class="lbl" text-anchor="end">Central Africa</text>
+<rect x="186.0" y="270.0" width="468.3" height="13" class="bar"/>
+<text x="660.3" y="280.0" class="val">M 4.7</text>
+<text x="176" y="306.0" class="lbl" text-anchor="end">South Mid-Atlantic Ridge</text>
+<rect x="186.0" y="296.0" width="478.3" height="13" class="bar"/>
+<text x="670.3" y="306.0" class="val">M 4.8</text>
+<text x="176" y="332.0" class="lbl" text-anchor="end">South of 60S</text>
+<rect x="186.0" y="322.0" width="478.3" height="13" class="bar"/>
+<text x="670.3" y="332.0" class="val">M 4.8</text>
+</svg></div>
+<p class="by">Estimated by maximum curvature, +0.2. Every other estimator is in the table below.</p>
+
+<h2>Twelve boxes, and what each is missing</h2>
+<p>Each panel is one box's record: magnitude across, count on a logarithmic scale up.
+The <b>white line</b> is what the catalogue holds. The <b>blue dashed line</b> is the law, fitted
+only to the complete part. The <b>red field between them</b> is the shortfall — the earthquakes the
+law expects and the record does not have. Each panel is scaled to its own record, so where the red
+field runs off the top edge the law expects more than that panel can show; the number under it is
+the count either way.</p>
+<div class="key">
+  <span><i style="border-color:#f5f2ec"></i>what was recorded</span>
+  <span><i style="border-color:#7fa6cf;border-top-style:dashed"></i>what the law expects</span>
+  <span><i style="border-color:#c4442f;border-top-width:8px"></i>never recorded</span>
+</div>
+<div class="cells">
+<figure class="cell" data-region="California"><svg viewBox="0 0 250 168" class="mini" role="img" aria-label="California">
+<line x1="34.0" y1="142.0" x2="242.0" y2="142.0" class="grid"/>
+<text x="30.0" y="145.0" class="ax" text-anchor="end">1</text>
+<line x1="34.0" y1="119.6" x2="242.0" y2="119.6" class="grid"/>
+<text x="30.0" y="122.6" class="ax" text-anchor="end">10<tspan dy='-4' font-size='7'>1</tspan></text>
+<line x1="34.0" y1="97.2" x2="242.0" y2="97.2" class="grid"/>
+<text x="30.0" y="100.2" class="ax" text-anchor="end">10<tspan dy='-4' font-size='7'>2</tspan></text>
+<line x1="34.0" y1="74.8" x2="242.0" y2="74.8" class="grid"/>
+<text x="30.0" y="77.8" class="ax" text-anchor="end">10<tspan dy='-4' font-size='7'>3</tspan></text>
+<line x1="34.0" y1="52.4" x2="242.0" y2="52.4" class="grid"/>
+<text x="30.0" y="55.4" class="ax" text-anchor="end">10<tspan dy='-4' font-size='7'>4</tspan></text>
+<line x1="34.0" y1="30.0" x2="242.0" y2="30.0" class="grid"/>
+<text x="30.0" y="33.0" class="ax" text-anchor="end">10<tspan dy='-4' font-size='7'>5</tspan></text>
+<polygon points="" class="gap"/>
+<line x1="0.0" y1="0.0" x2="0.0" y2="0.0" class="law"/>
+<line x1="30.5" y1="16.0" x2="30.5" y2="142.0" class="mcline"/>
+<polyline points="34.0,28.7 37.5,30.4 40.9,32.2 44.4,33.8 47.9,35.4 51.3,37.2 54.8,39.1 58.3,41.1 61.7,43.0 65.2,45.0 68.7,46.8 72.1,48.7 75.6,50.7 79.1,52.8 82.5,54.9 86.0,57.0 89.5,59.2 92.9,61.5 96.4,63.8 99.9,66.4 103.3,68.9 106.8,70.9 110.3,72.7 113.7,74.9 117.2,76.8 120.7,78.9 124.1,81.4 127.6,83.4 131.1,85.8 134.5,88.0 138.0,90.5 141.5,93.2 144.9,95.4 148.4,97.7 151.9,101.2 155.3,103.4 158.8,105.6 162.3,108.0 165.7,110.3 169.2,113.9 172.7,115.7 176.1,117.8 179.6,119.6 183.1,123.1 186.5,124.6 190.0,126.3 193.5,126.3 196.9,128.5 200.4,131.3 203.9,131.3 207.3,131.3 210.8,135.3 214.3,135.3 217.7,142.0 221.2,142.0" class="rec"/>
+<line x1="103.3" y1="16.0" x2="103.3" y2="142.0" class="floorline"/>
+<text x="34.0" y="160" class="ax" text-anchor="middle">1</text>
+<text x="103.3" y="160" class="ax" text-anchor="middle">3</text>
+<text x="172.7" y="160" class="ax" text-anchor="middle">5</text>
+<text x="242.0" y="160" class="ax" text-anchor="middle">7</text>
+</svg><figcaption><b>California</b><span class="n" data-missing>0</span> <span data-atm>unrecorded at M 3.0 and above</span><span class="s" data-sub>floor of hearing M 0.9 · b = 0.77 ± 0.00 · 1 835 in the record</span></figcaption></figure>
+<figure class="cell" data-region="Alaska"><svg viewBox="0 0 250 168" class="mini" role="img" aria-label="Alaska">
+<line x1="34.0" y1="142.0" x2="242.0" y2="142.0" class="grid"/>
+<text x="30.0" y="145.0" class="ax" text-anchor="end">1</text>
+<line x1="34.0" y1="119.4" x2="242.0" y2="119.4" class="grid"/>
+<text x="30.0" y="122.4" class="ax" text-anchor="end">10<tspan dy='-4' font-size='7'>1</tspan></text>
+<line x1="34.0" y1="96.8" x2="242.0" y2="96.8" class="grid"/>
+<text x="30.0" y="99.8" class="ax" text-anchor="end">10<tspan dy='-4' font-size='7'>2</tspan></text>
+<line x1="34.0" y1="74.2" x2="242.0" y2="74.2" class="grid"/>
+<text x="30.0" y="77.2" class="ax" text-anchor="end">10<tspan dy='-4' font-size='7'>3</tspan></text>
+<line x1="34.0" y1="51.6" x2="242.0" y2="51.6" class="grid"/>
+<text x="30.0" y="54.6" class="ax" text-anchor="end">10<tspan dy='-4' font-size='7'>4</tspan></text>
+<line x1="34.0" y1="29.1" x2="242.0" y2="29.1" class="grid"/>
+<text x="30.0" y="32.1" class="ax" text-anchor="end">10<tspan dy='-4' font-size='7'>5</tspan></text>
+<polygon points="" class="gap"/>
+<line x1="0.0" y1="0.0" x2="0.0" y2="0.0" class="law"/>
+<line x1="54.8" y1="16.0" x2="54.8" y2="142.0" class="mcline"/>
+<polyline points="34.0,24.3 37.5,24.9 40.9,25.8 44.4,26.9 47.9,28.1 51.3,29.6 54.8,31.0 58.3,32.7 61.7,34.1 65.2,35.9 68.7,37.8 72.1,39.7 75.6,41.5 79.1,43.2 82.5,44.6 86.0,46.0 89.5,47.5 92.9,49.2 96.4,51.0 99.9,53.1 103.3,55.2 106.8,57.4 110.3,59.6 113.7,61.7 117.2,63.6 120.7,65.6 124.1,67.4 127.6,69.3 131.1,71.1 134.5,72.9 138.0,74.7 141.5,76.4 144.9,78.0 148.4,79.9 151.9,81.9 155.3,84.3 158.8,86.7 162.3,89.5 165.7,91.7 169.2,94.2 172.7,95.9 176.1,97.7 179.6,99.8 183.1,102.0 186.5,104.0 190.0,108.3 193.5,110.0 196.9,113.6 200.4,114.8 203.9,116.1 207.3,118.5 210.8,119.4 214.3,120.4 217.7,122.9 221.2,122.9 224.7,122.9 228.1,122.9 231.6,124.4 235.1,124.4 238.5,126.2 242.0,131.2" class="rec"/>
+<line x1="103.3" y1="16.0" x2="103.3" y2="142.0" class="floorline"/>
+<text x="34.0" y="160" class="ax" text-anchor="middle">1</text>
+<text x="103.3" y="160" class="ax" text-anchor="middle">3</text>
+<text x="172.7" y="160" class="ax" text-anchor="middle">5</text>
+<text x="242.0" y="160" class="ax" text-anchor="middle">7</text>
+</svg><figcaption><b>Alaska</b><span class="n" data-missing>0</span> <span data-atm>unrecorded at M 3.0 and above</span><span class="s" data-sub>floor of hearing M 1.6 · b = 0.76 ± 0.00 · 6 981 in the record</span></figcaption></figure>
+<figure class="cell" data-region="Japan"><svg viewBox="0 0 250 168" class="mini" role="img" aria-label="Japan">
+<line x1="34.0" y1="142.0" x2="242.0" y2="142.0" class="grid"/>
+<text x="30.0" y="145.0" class="ax" text-anchor="end">1</text>
+<line x1="34.0" y1="109.4" x2="242.0" y2="109.4" class="grid"/>
+<text x="30.0" y="112.4" class="ax" text-anchor="end">10<tspan dy='-4' font-size='7'>1</tspan></text>
+<line x1="34.0" y1="76.9" x2="242.0" y2="76.9" class="grid"/>
+<text x="30.0" y="79.9" class="ax" text-anchor="end">10<tspan dy='-4' font-size='7'>2</tspan></text>
+<line x1="34.0" y1="44.3" x2="242.0" y2="44.3" class="grid"/>
+<text x="30.0" y="47.3" class="ax" text-anchor="end">10<tspan dy='-4' font-size='7'>3</tspan></text>
+<polygon points="103.3,-22.3 106.8,-18.4 110.3,-14.4 113.7,-10.5 117.2,-6.6 120.7,-2.6 124.1,1.3 127.6,5.3 131.1,9.2 134.5,13.1 138.0,17.1 141.5,21.0 144.9,25.0 148.4,28.9 151.9,32.8 155.3,36.8 158.8,40.7 158.8,40.7 155.3,35.9 151.9,31.3 148.4,28.0 144.9,26.0 141.5,24.8 138.0,24.2 134.5,24.2 131.1,24.1 127.6,24.1 124.1,24.1 120.7,24.1 117.2,24.1 113.7,24.1 110.3,24.1 106.8,24.1 103.3,24.1" class="gap"/>
+<line x1="103.3" y1="-22.3" x2="242.0" y2="135.2" class="law"/>
+<line x1="158.8" y1="16.0" x2="158.8" y2="142.0" class="mcline"/>
+<polyline points="34.0,24.1 37.5,24.1 40.9,24.1 44.4,24.1 47.9,24.1 51.3,24.1 54.8,24.1 58.3,24.1 61.7,24.1 65.2,24.1 68.7,24.1 72.1,24.1 75.6,24.1 79.1,24.1 82.5,24.1 86.0,24.1 89.5,24.1 92.9,24.1 96.4,24.1 99.9,24.1 103.3,24.1 106.8,24.1 110.3,24.1 113.7,24.1 117.2,24.1 120.7,24.1 124.1,24.1 127.6,24.1 131.1,24.1 134.5,24.2 138.0,24.2 141.5,24.8 144.9,26.0 148.4,28.0 151.9,31.3 155.3,35.9 158.8,40.7 162.3,45.4 165.7,48.6 169.2,52.7 172.7,57.8 176.1,61.6 179.6,64.7 183.1,69.1 186.5,72.8 190.0,75.4 193.5,78.2 196.9,82.1 200.4,84.6 203.9,88.2 207.3,91.7 210.8,96.5 214.3,101.1 217.7,103.7 221.2,106.9 224.7,108.1 228.1,108.1 231.6,109.4 235.1,110.9 238.5,114.5 242.0,116.7" class="rec"/>
+<line x1="103.3" y1="16.0" x2="103.3" y2="142.0" class="floorline"/>
+<text x="34.0" y="160" class="ax" text-anchor="middle">1</text>
+<text x="103.3" y="160" class="ax" text-anchor="middle">3</text>
+<text x="172.7" y="160" class="ax" text-anchor="middle">5</text>
+<text x="242.0" y="160" class="ax" text-anchor="middle">7</text>
+</svg><figcaption><b>Japan</b><span class="n" data-missing>106 754</span> <span data-atm>unrecorded at M 3.0 and above</span><span class="s" data-sub>floor of hearing M 4.6 · b = 1.21 ± 0.04 · 4 157 in the record</span></figcaption></figure>
+<figure class="cell" data-region="Iceland"><svg viewBox="0 0 250 168" class="mini" role="img" aria-label="Iceland">
+<line x1="34.0" y1="142.0" x2="242.0" y2="142.0" class="grid"/>
+<text x="30.0" y="145.0" class="ax" text-anchor="end">1</text>
+<line x1="34.0" y1="92.9" x2="242.0" y2="92.9" class="grid"/>
+<text x="30.0" y="95.9" class="ax" text-anchor="end">10<tspan dy='-4' font-size='7'>1</tspan></text>
+<line x1="34.0" y1="43.7" x2="242.0" y2="43.7" class="grid"/>
+<text x="30.0" y="46.7" class="ax" text-anchor="end">10<tspan dy='-4' font-size='7'>2</tspan></text>
+<polygon points="103.3,-49.4 106.8,-43.1 110.3,-36.8 113.7,-30.6 117.2,-24.3 120.7,-18.0 124.1,-11.7 127.6,-5.5 131.1,0.8 134.5,7.1 138.0,13.4 141.5,19.6 144.9,25.9 148.4,32.2 151.9,38.5 155.3,44.7 158.8,51.0 158.8,51.0 155.3,42.3 151.9,36.1 148.4,33.2 144.9,30.6 141.5,28.9 138.0,28.4 134.5,28.4 131.1,28.4 127.6,28.4 124.1,28.4 120.7,28.3 117.2,28.3 113.7,28.3 110.3,28.3 106.8,28.3 103.3,28.3" class="gap"/>
+<line x1="103.3" y1="-49.4" x2="193.5" y2="113.8" class="law"/>
+<line x1="158.8" y1="16.0" x2="158.8" y2="142.0" class="mcline"/>
+<polyline points="34.0,28.3 37.5,28.3 40.9,28.3 44.4,28.3 47.9,28.3 51.3,28.3 54.8,28.3 58.3,28.3 61.7,28.3 65.2,28.3 68.7,28.3 72.1,28.3 75.6,28.3 79.1,28.3 82.5,28.3 86.0,28.3 89.5,28.3 92.9,28.3 96.4,28.3 99.9,28.3 103.3,28.3 106.8,28.3 110.3,28.3 113.7,28.3 117.2,28.3 120.7,28.3 124.1,28.4 127.6,28.4 131.1,28.4 134.5,28.4 138.0,28.4 141.5,28.9 144.9,30.6 148.4,33.2 151.9,36.1 155.3,42.3 158.8,51.0 162.3,57.7 165.7,61.7 169.2,68.0 172.7,72.5 176.1,76.0 179.6,81.5 183.1,95.1 186.5,118.6 190.0,142.0 193.5,142.0" class="rec"/>
+<line x1="103.3" y1="16.0" x2="103.3" y2="142.0" class="floorline"/>
+<text x="34.0" y="160" class="ax" text-anchor="middle">1</text>
+<text x="103.3" y="160" class="ax" text-anchor="middle">3</text>
+<text x="172.7" y="160" class="ax" text-anchor="middle">5</text>
+<text x="242.0" y="160" class="ax" text-anchor="middle">7</text>
+</svg><figcaption><b>Iceland</b><span class="n" data-missing>7 631</span> <span data-atm>unrecorded at M 3.0 and above</span><span class="s" data-sub>floor of hearing M 4.6 · b = 1.28 ± 0.12 · 206 in the record</span><span class="warn">few events: this box holds 206 in all, and a law fitted to that is a weak instrument</span></figcaption></figure>
+<figure class="cell" data-region="Central Italy"><svg viewBox="0 0 250 168" class="mini" role="img" aria-label="Central Italy">
+<line x1="34.0" y1="142.0" x2="242.0" y2="142.0" class="grid"/>
+<text x="30.0" y="145.0" class="ax" text-anchor="end">1</text>
+<line x1="34.0" y1="79.9" x2="242.0" y2="79.9" class="grid"/>
+<text x="30.0" y="82.9" class="ax" text-anchor="end">10<tspan dy='-4' font-size='7'>1</tspan></text>
+<line x1="34.0" y1="17.7" x2="242.0" y2="17.7" class="grid"/>
+<text x="30.0" y="20.7" class="ax" text-anchor="end">10<tspan dy='-4' font-size='7'>2</tspan></text>
+<polygon points="103.3,-17.6 106.8,-10.9 110.3,-4.3 113.7,2.3 117.2,8.9 120.7,15.5 124.1,22.1 127.6,28.7 131.1,35.3 134.5,41.9 138.0,48.5 141.5,55.1 144.9,61.7 148.4,68.3 151.9,75.0 151.9,75.0 148.4,61.2 144.9,48.5 141.5,43.2 138.0,39.3 134.5,38.1 131.1,37.6 127.6,37.0 124.1,37.0 120.7,35.9 117.2,35.4 113.7,34.9 110.3,34.4 106.8,34.4 103.3,33.9" class="gap"/>
+<line x1="103.3" y1="-17.6" x2="193.5" y2="142.0" class="law"/>
+<line x1="151.9" y1="16.0" x2="151.9" y2="142.0" class="mcline"/>
+<polyline points="34.0,31.5 37.5,31.5 40.9,31.5 44.4,31.5 47.9,31.5 51.3,31.5 54.8,31.5 58.3,31.5 61.7,31.5 65.2,31.5 68.7,31.5 72.1,31.5 75.6,32.0 79.1,32.0 82.5,32.0 86.0,32.4 89.5,32.9 92.9,32.9 96.4,33.4 99.9,33.9 103.3,33.9 106.8,34.4 110.3,34.4 113.7,34.9 117.2,35.4 120.7,35.9 124.1,37.0 127.6,37.0 131.1,37.6 134.5,38.1 138.0,39.3 141.5,43.2 144.9,48.5 148.4,61.2 151.9,75.0 155.3,77.3 158.8,85.9 162.3,93.7 165.7,104.6 169.2,104.6 172.7,112.4 176.1,123.3 179.6,142.0 183.1,142.0 186.5,142.0 190.0,142.0 193.5,142.0" class="rec"/>
+<line x1="103.3" y1="16.0" x2="103.3" y2="142.0" class="floorline"/>
+<text x="34.0" y="160" class="ax" text-anchor="middle">1</text>
+<text x="103.3" y="160" class="ax" text-anchor="middle">3</text>
+<text x="172.7" y="160" class="ax" text-anchor="middle">5</text>
+<text x="242.0" y="160" class="ax" text-anchor="middle">7</text>
+</svg><figcaption><b>Central Italy</b><span class="n" data-missing>315</span> <span data-atm>unrecorded at M 3.0 and above</span><span class="s" data-sub>floor of hearing M 4.4 · b = 1.06 ± 0.26 · 55 in the record</span><span class="warn">few events: this box holds 60 in all, and a law fitted to that is a weak instrument</span></figcaption></figure>
+<figure class="cell" data-region="Chile"><svg viewBox="0 0 250 168" class="mini" role="img" aria-label="Chile">
+<line x1="34.0" y1="142.0" x2="242.0" y2="142.0" class="grid"/>
+<text x="30.0" y="145.0" class="ax" text-anchor="end">1</text>
+<line x1="34.0" y1="109.7" x2="242.0" y2="109.7" class="grid"/>
+<text x="30.0" y="112.7" class="ax" text-anchor="end">10<tspan dy='-4' font-size='7'>1</tspan></text>
+<line x1="34.0" y1="77.4" x2="242.0" y2="77.4" class="grid"/>
+<text x="30.0" y="80.4" class="ax" text-anchor="end">10<tspan dy='-4' font-size='7'>2</tspan></text>
+<line x1="34.0" y1="45.1" x2="242.0" y2="45.1" class="grid"/>
+<text x="30.0" y="48.1" class="ax" text-anchor="end">10<tspan dy='-4' font-size='7'>3</tspan></text>
+<polygon points="103.3,-27.9 106.8,-23.3 110.3,-18.7 113.7,-14.0 117.2,-9.4 120.7,-4.8 124.1,-0.2 127.6,4.4 131.1,9.1 134.5,13.7 138.0,18.3 141.5,22.9 144.9,27.6 148.4,32.2 151.9,36.8 155.3,41.4 155.3,41.4 151.9,35.6 148.4,31.0 144.9,27.6 141.5,25.7 138.0,24.6 134.5,24.4 131.1,24.3 127.6,24.3 124.1,24.2 120.7,24.2 117.2,24.2 113.7,24.2 110.3,24.2 106.8,24.1 103.3,24.1" class="gap"/>
+<line x1="103.3" y1="-27.9" x2="242.0" y2="142.0" class="law"/>
+<line x1="155.3" y1="16.0" x2="155.3" y2="142.0" class="mcline"/>
+<polyline points="34.0,24.1 37.5,24.1 40.9,24.1 44.4,24.1 47.9,24.1 51.3,24.1 54.8,24.1 58.3,24.1 61.7,24.1 65.2,24.1 68.7,24.1 72.1,24.1 75.6,24.1 79.1,24.1 82.5,24.1 86.0,24.1 89.5,24.1 92.9,24.1 96.4,24.1 99.9,24.1 103.3,24.1 106.8,24.1 110.3,24.2 113.7,24.2 117.2,24.2 120.7,24.2 124.1,24.2 127.6,24.3 131.1,24.3 134.5,24.4 138.0,24.6 141.5,25.7 144.9,27.6 148.4,31.0 151.9,35.6 155.3,41.4 158.8,47.7 162.3,53.2 165.7,56.9 169.2,61.1 172.7,64.6 176.1,67.9 179.6,71.3 183.1,74.5 186.5,77.8 190.0,80.9 193.5,85.0 196.9,87.7 200.4,92.9 203.9,95.2 207.3,98.0 210.8,101.4 214.3,105.0 217.7,108.3 221.2,111.2 224.7,122.5 228.1,122.5 231.6,132.3 235.1,132.3 238.5,142.0 242.0,142.0" class="rec"/>
+<line x1="103.3" y1="16.0" x2="103.3" y2="142.0" class="floorline"/>
+<text x="34.0" y="160" class="ax" text-anchor="middle">1</text>
+<text x="103.3" y="160" class="ax" text-anchor="middle">3</text>
+<text x="172.7" y="160" class="ax" text-anchor="middle">5</text>
+<text x="242.0" y="160" class="ax" text-anchor="middle">7</text>
+</svg><figcaption><b>Chile</b><span class="n" data-missing>176 541</span> <span data-atm>unrecorded at M 3.0 and above</span><span class="s" data-sub>floor of hearing M 4.5 · b = 1.43 ± 0.05 · 4 443 in the record</span></figcaption></figure>
+<figure class="cell" data-region="Aotearoa New Zealand"><svg viewBox="0 0 250 168" class="mini" role="img" aria-label="Aotearoa New Zealand">
+<line x1="34.0" y1="142.0" x2="242.0" y2="142.0" class="grid"/>
+<text x="30.0" y="145.0" class="ax" text-anchor="end">1</text>
+<line x1="34.0" y1="101.4" x2="242.0" y2="101.4" class="grid"/>
+<text x="30.0" y="104.4" class="ax" text-anchor="end">10<tspan dy='-4' font-size='7'>1</tspan></text>
+<line x1="34.0" y1="60.8" x2="242.0" y2="60.8" class="grid"/>
+<text x="30.0" y="63.8" class="ax" text-anchor="end">10<tspan dy='-4' font-size='7'>2</tspan></text>
+<line x1="34.0" y1="20.2" x2="242.0" y2="20.2" class="grid"/>
+<text x="30.0" y="23.2" class="ax" text-anchor="end">10<tspan dy='-4' font-size='7'>3</tspan></text>
+<polygon points="103.3,-32.4 106.8,-27.4 110.3,-22.3 113.7,-17.3 117.2,-12.3 120.7,-7.2 124.1,-2.2 127.6,2.8 131.1,7.8 134.5,12.9 138.0,17.9 141.5,22.9 144.9,28.0 148.4,33.0 151.9,38.0 155.3,43.1 155.3,43.1 151.9,37.3 148.4,32.6 144.9,30.0 141.5,28.1 138.0,27.3 134.5,27.2 131.1,27.2 127.6,27.2 124.1,27.0 120.7,26.9 117.2,26.8 113.7,26.7 110.3,26.6 106.8,26.6 103.3,26.5" class="gap"/>
+<line x1="103.3" y1="-32.4" x2="242.0" y2="142.0" class="law"/>
+<line x1="155.3" y1="16.0" x2="155.3" y2="142.0" class="mcline"/>
+<polyline points="34.0,26.2 37.5,26.2 40.9,26.2 44.4,26.2 47.9,26.2 51.3,26.2 54.8,26.2 58.3,26.2 61.7,26.2 65.2,26.2 68.7,26.2 72.1,26.2 75.6,26.2 79.1,26.2 82.5,26.2 86.0,26.2 89.5,26.2 92.9,26.3 96.4,26.4 99.9,26.4 103.3,26.5 106.8,26.6 110.3,26.6 113.7,26.7 117.2,26.8 120.7,26.9 124.1,27.0 127.6,27.2 131.1,27.2 134.5,27.2 138.0,27.3 141.5,28.1 144.9,30.0 148.4,32.6 151.9,37.3 155.3,43.1 158.8,49.9 162.3,54.4 165.7,58.0 169.2,61.7 172.7,67.1 176.1,72.0 179.6,78.8 183.1,86.0 186.5,91.0 190.0,95.5 193.5,96.8 196.9,103.3 200.4,110.4 203.9,113.6 207.3,113.6 210.8,113.6 214.3,117.6 217.7,122.6 221.2,129.8 224.7,129.8 228.1,129.8 231.6,129.8 235.1,142.0 238.5,142.0 242.0,142.0" class="rec"/>
+<line x1="103.3" y1="16.0" x2="103.3" y2="142.0" class="floorline"/>
+<text x="34.0" y="160" class="ax" text-anchor="middle">1</text>
+<text x="103.3" y="160" class="ax" text-anchor="middle">3</text>
+<text x="172.7" y="160" class="ax" text-anchor="middle">5</text>
+<text x="242.0" y="160" class="ax" text-anchor="middle">7</text>
+</svg><figcaption><b>Aotearoa New Zealand</b><span class="n" data-missing>19 042</span> <span data-atm>unrecorded at M 3.0 and above</span><span class="s" data-sub>floor of hearing M 4.5 · b = 1.24 ± 0.08 · 701 in the record</span></figcaption></figure>
+<figure class="cell" data-region="Indonesia"><svg viewBox="0 0 250 168" class="mini" role="img" aria-label="Indonesia">
+<line x1="34.0" y1="142.0" x2="242.0" y2="142.0" class="grid"/>
+<text x="30.0" y="145.0" class="ax" text-anchor="end">1</text>
+<line x1="34.0" y1="112.4" x2="242.0" y2="112.4" class="grid"/>
+<text x="30.0" y="115.4" class="ax" text-anchor="end">10<tspan dy='-4' font-size='7'>1</tspan></text>
+<line x1="34.0" y1="82.8" x2="242.0" y2="82.8" class="grid"/>
+<text x="30.0" y="85.8" class="ax" text-anchor="end">10<tspan dy='-4' font-size='7'>2</tspan></text>
+<line x1="34.0" y1="53.2" x2="242.0" y2="53.2" class="grid"/>
+<text x="30.0" y="56.2" class="ax" text-anchor="end">10<tspan dy='-4' font-size='7'>3</tspan></text>
+<line x1="34.0" y1="23.5" x2="242.0" y2="23.5" class="grid"/>
+<text x="30.0" y="26.5" class="ax" text-anchor="end">10<tspan dy='-4' font-size='7'>4</tspan></text>
+<polygon points="103.3,-21.7 106.8,-17.9 110.3,-14.1 113.7,-10.4 117.2,-6.6 120.7,-2.9 124.1,0.9 127.6,4.7 131.1,8.4 134.5,12.2 138.0,16.0 141.5,19.7 144.9,23.5 148.4,27.2 151.9,31.0 155.3,34.8 158.8,38.5 158.8,38.5 155.3,34.1 151.9,30.1 148.4,27.2 144.9,25.2 141.5,24.0 138.0,23.4 134.5,23.4 131.1,23.4 127.6,23.4 124.1,23.4 120.7,23.4 117.2,23.4 113.7,23.4 110.3,23.4 106.8,23.4 103.3,23.4" class="gap"/>
+<line x1="103.3" y1="-21.7" x2="242.0" y2="128.8" class="law"/>
+<line x1="158.8" y1="16.0" x2="158.8" y2="142.0" class="mcline"/>
+<polyline points="34.0,23.4 37.5,23.4 40.9,23.4 44.4,23.4 47.9,23.4 51.3,23.4 54.8,23.4 58.3,23.4 61.7,23.4 65.2,23.4 68.7,23.4 72.1,23.4 75.6,23.4 79.1,23.4 82.5,23.4 86.0,23.4 89.5,23.4 92.9,23.4 96.4,23.4 99.9,23.4 103.3,23.4 106.8,23.4 110.3,23.4 113.7,23.4 117.2,23.4 120.7,23.4 124.1,23.4 127.6,23.4 131.1,23.4 134.5,23.4 138.0,23.4 141.5,24.0 144.9,25.2 148.4,27.2 151.9,30.1 155.3,34.1 158.8,38.5 162.3,42.9 165.7,45.9 169.2,49.0 172.7,54.1 176.1,58.7 179.6,62.9 183.1,67.0 186.5,70.2 190.0,72.4 193.5,75.1 196.9,78.1 200.4,80.6 203.9,83.4 207.3,86.5 210.8,90.2 214.3,93.9 217.7,98.3 221.2,101.1 224.7,104.8 228.1,104.8 231.6,105.6 235.1,112.4 238.5,112.4 242.0,113.7" class="rec"/>
+<line x1="103.3" y1="16.0" x2="103.3" y2="142.0" class="floorline"/>
+<text x="34.0" y="160" class="ax" text-anchor="middle">1</text>
+<text x="103.3" y="160" class="ax" text-anchor="middle">3</text>
+<text x="172.7" y="160" class="ax" text-anchor="middle">5</text>
+<text x="242.0" y="160" class="ax" text-anchor="middle">7</text>
+</svg><figcaption><b>Indonesia</b><span class="n" data-missing>325 663</span> <span data-atm>unrecorded at M 3.0 and above</span><span class="s" data-sub>floor of hearing M 4.6 · b = 1.27 ± 0.02 · 10 103 in the record</span></figcaption></figure>
+<figure class="cell" data-region="Himalaya"><svg viewBox="0 0 250 168" class="mini" role="img" aria-label="Himalaya">
+<line x1="34.0" y1="142.0" x2="242.0" y2="142.0" class="grid"/>
+<text x="30.0" y="145.0" class="ax" text-anchor="end">1</text>
+<line x1="34.0" y1="100.0" x2="242.0" y2="100.0" class="grid"/>
+<text x="30.0" y="103.0" class="ax" text-anchor="end">10<tspan dy='-4' font-size='7'>1</tspan></text>
+<line x1="34.0" y1="57.9" x2="242.0" y2="57.9" class="grid"/>
+<text x="30.0" y="60.9" class="ax" text-anchor="end">10<tspan dy='-4' font-size='7'>2</tspan></text>
+<polygon points="103.3,-34.7 106.8,-29.5 110.3,-24.4 113.7,-19.2 117.2,-14.1 120.7,-8.9 124.1,-3.8 127.6,1.4 131.1,6.6 134.5,11.7 138.0,16.9 141.5,22.0 144.9,27.2 148.4,32.3 151.9,37.5 151.9,37.5 148.4,33.2 144.9,29.8 141.5,27.9 138.0,26.7 134.5,26.6 131.1,26.6 127.6,26.5 124.1,26.5 120.7,26.5 117.2,26.5 113.7,26.5 110.3,26.5 106.8,26.5 103.3,26.5" class="gap"/>
+<line x1="103.3" y1="-34.7" x2="242.0" y2="142.0" class="law"/>
+<line x1="151.9" y1="16.0" x2="151.9" y2="142.0" class="mcline"/>
+<polyline points="34.0,26.5 37.5,26.5 40.9,26.5 44.4,26.5 47.9,26.5 51.3,26.5 54.8,26.5 58.3,26.5 61.7,26.5 65.2,26.5 68.7,26.5 72.1,26.5 75.6,26.5 79.1,26.5 82.5,26.5 86.0,26.5 89.5,26.5 92.9,26.5 96.4,26.5 99.9,26.5 103.3,26.5 106.8,26.5 110.3,26.5 113.7,26.5 117.2,26.5 120.7,26.5 124.1,26.5 127.6,26.5 131.1,26.6 134.5,26.6 138.0,26.7 141.5,27.9 144.9,29.8 148.4,33.2 151.9,37.5 155.3,42.8 158.8,48.2 162.3,52.8 165.7,57.7 169.2,61.5 172.7,66.9 176.1,76.1 179.6,80.5 183.1,86.4 186.5,89.2 190.0,92.5 193.5,101.9 196.9,104.0 200.4,121.9 203.9,121.9 207.3,129.3 210.8,142.0 214.3,142.0 217.7,142.0 221.2,142.0 224.7,142.0 228.1,142.0 231.6,142.0 235.1,142.0 238.5,142.0 242.0,142.0" class="rec"/>
+<line x1="103.3" y1="16.0" x2="103.3" y2="142.0" class="floorline"/>
+<text x="34.0" y="160" class="ax" text-anchor="middle">1</text>
+<text x="103.3" y="160" class="ax" text-anchor="middle">3</text>
+<text x="172.7" y="160" class="ax" text-anchor="middle">5</text>
+<text x="242.0" y="160" class="ax" text-anchor="middle">7</text>
+</svg><figcaption><b>Himalaya</b><span class="n" data-missing>15 369</span> <span data-atm>unrecorded at M 3.0 and above</span><span class="s" data-sub>floor of hearing M 4.4 · b = 1.23 ± 0.07 · 558 in the record</span></figcaption></figure>
+<figure class="cell" data-region="South Mid-Atlantic Ridge"><svg viewBox="0 0 250 168" class="mini" role="img" aria-label="South Mid-Atlantic Ridge">
+<line x1="34.0" y1="142.0" x2="242.0" y2="142.0" class="grid"/>
+<text x="30.0" y="145.0" class="ax" text-anchor="end">1</text>
+<line x1="34.0" y1="95.7" x2="242.0" y2="95.7" class="grid"/>
+<text x="30.0" y="98.7" class="ax" text-anchor="end">10<tspan dy='-4' font-size='7'>1</tspan></text>
+<line x1="34.0" y1="49.3" x2="242.0" y2="49.3" class="grid"/>
+<text x="30.0" y="52.3" class="ax" text-anchor="end">10<tspan dy='-4' font-size='7'>2</tspan></text>
+<polygon points="103.3,-71.2 106.8,-64.8 110.3,-58.5 113.7,-52.1 117.2,-45.8 120.7,-39.5 124.1,-33.1 127.6,-26.8 131.1,-20.4 134.5,-14.1 138.0,-7.7 141.5,-1.4 144.9,4.9 148.4,11.3 151.9,17.6 155.3,24.0 158.8,30.3 162.3,36.7 165.7,43.0 165.7,43.0 162.3,37.0 158.8,31.6 155.3,28.7 151.9,28.0 148.4,27.9 144.9,27.7 141.5,27.6 138.0,27.6 134.5,27.6 131.1,27.6 127.6,27.6 124.1,27.6 120.7,27.6 117.2,27.6 113.7,27.6 110.3,27.6 106.8,27.6 103.3,27.6" class="gap"/>
+<line x1="103.3" y1="-71.2" x2="214.3" y2="131.8" class="law"/>
+<line x1="165.7" y1="16.0" x2="165.7" y2="142.0" class="mcline"/>
+<polyline points="34.0,27.6 37.5,27.6 40.9,27.6 44.4,27.6 47.9,27.6 51.3,27.6 54.8,27.6 58.3,27.6 61.7,27.6 65.2,27.6 68.7,27.6 72.1,27.6 75.6,27.6 79.1,27.6 82.5,27.6 86.0,27.6 89.5,27.6 92.9,27.6 96.4,27.6 99.9,27.6 103.3,27.6 106.8,27.6 110.3,27.6 113.7,27.6 117.2,27.6 120.7,27.6 124.1,27.6 127.6,27.6 131.1,27.6 134.5,27.6 138.0,27.6 141.5,27.6 144.9,27.7 148.4,27.9 151.9,28.0 155.3,28.7 158.8,31.6 162.3,37.0 165.7,43.0 169.2,48.2 172.7,55.7 176.1,64.5 179.6,68.8 183.1,72.3 186.5,76.4 190.0,83.8 193.5,97.8 196.9,109.6 200.4,109.6 203.9,114.1 207.3,142.0 210.8,142.0 214.3,142.0" class="rec"/>
+<line x1="103.3" y1="16.0" x2="103.3" y2="142.0" class="floorline"/>
+<text x="34.0" y="160" class="ax" text-anchor="middle">1</text>
+<text x="103.3" y="160" class="ax" text-anchor="middle">3</text>
+<text x="172.7" y="160" class="ax" text-anchor="middle">5</text>
+<text x="242.0" y="160" class="ax" text-anchor="middle">7</text>
+</svg><figcaption><b>South Mid-Atlantic Ridge</b><span class="n" data-missing>39 666</span> <span data-atm>unrecorded at M 3.0 and above</span><span class="s" data-sub>floor of hearing M 4.8 · b = 1.37 ± 0.11 · 295 in the record</span><span class="warn">few events: this box holds 295 in all, and a law fitted to that is a weak instrument</span></figcaption></figure>
+<figure class="cell" data-region="Central Africa"><svg viewBox="0 0 250 168" class="mini" role="img" aria-label="Central Africa">
+<line x1="34.0" y1="142.0" x2="242.0" y2="142.0" class="grid"/>
+<text x="30.0" y="145.0" class="ax" text-anchor="end">1</text>
+<line x1="34.0" y1="90.9" x2="242.0" y2="90.9" class="grid"/>
+<text x="30.0" y="93.9" class="ax" text-anchor="end">10<tspan dy='-4' font-size='7'>1</tspan></text>
+<line x1="34.0" y1="39.8" x2="242.0" y2="39.8" class="grid"/>
+<text x="30.0" y="42.8" class="ax" text-anchor="end">10<tspan dy='-4' font-size='7'>2</tspan></text>
+<polygon points="103.3,-111.7 106.8,-101.5 110.3,-91.3 113.7,-81.0 117.2,-70.8 120.7,-60.5 124.1,-50.3 127.6,-40.0 131.1,-29.8 134.5,-19.5 138.0,-9.3 141.5,1.0 144.9,11.2 148.4,21.5 151.9,31.7 155.3,42.0 158.8,52.2 162.3,62.4 162.3,62.4 158.8,52.6 155.3,42.6 151.9,36.3 148.4,31.7 144.9,29.6 141.5,29.2 138.0,29.1 134.5,29.1 131.1,29.1 127.6,29.1 124.1,28.9 120.7,28.9 117.2,28.9 113.7,28.9 110.3,28.8 106.8,28.8 103.3,28.8" class="gap"/>
+<line x1="103.3" y1="-111.7" x2="190.0" y2="142.0" class="law"/>
+<line x1="162.3" y1="16.0" x2="162.3" y2="142.0" class="mcline"/>
+<polyline points="34.0,28.8 37.5,28.8 40.9,28.8 44.4,28.8 47.9,28.8 51.3,28.8 54.8,28.8 58.3,28.8 61.7,28.8 65.2,28.8 68.7,28.8 72.1,28.8 75.6,28.8 79.1,28.8 82.5,28.8 86.0,28.8 89.5,28.8 92.9,28.8 96.4,28.8 99.9,28.8 103.3,28.8 106.8,28.8 110.3,28.8 113.7,28.9 117.2,28.9 120.7,28.9 124.1,28.9 127.6,29.1 131.1,29.1 134.5,29.1 138.0,29.1 141.5,29.2 144.9,29.6 148.4,31.7 151.9,36.3 155.3,42.6 158.8,52.6 162.3,62.4 165.7,76.6 169.2,86.8 172.7,93.2 176.1,98.8 179.6,102.2 183.1,117.6 186.5,126.6 190.0,126.6" class="rec"/>
+<line x1="103.3" y1="16.0" x2="103.3" y2="142.0" class="floorline"/>
+<text x="34.0" y="160" class="ax" text-anchor="middle">1</text>
+<text x="103.3" y="160" class="ax" text-anchor="middle">3</text>
+<text x="172.7" y="160" class="ax" text-anchor="middle">5</text>
+<text x="242.0" y="160" class="ax" text-anchor="middle">7</text>
+</svg><figcaption><b>Central Africa</b><span class="n" data-missing>91 835</span> <span data-atm>unrecorded at M 3.0 and above</span><span class="s" data-sub>floor of hearing M 4.7 · b = 2.00 ± 0.36 · 164 in the record</span><span class="warn">few events: this box holds 164 in all, and a law fitted to that is a weak instrument</span><span class="warn">the fitted b is outside 0.6–1.6, where catalogues normally put it: read this box as a sign the fit is wrong, not the Earth</span></figcaption></figure>
+<figure class="cell" data-region="South of 60S"><svg viewBox="0 0 250 168" class="mini" role="img" aria-label="South of 60S">
+<line x1="34.0" y1="142.0" x2="242.0" y2="142.0" class="grid"/>
+<text x="30.0" y="145.0" class="ax" text-anchor="end">1</text>
+<line x1="34.0" y1="101.8" x2="242.0" y2="101.8" class="grid"/>
+<text x="30.0" y="104.8" class="ax" text-anchor="end">10<tspan dy='-4' font-size='7'>1</tspan></text>
+<line x1="34.0" y1="61.7" x2="242.0" y2="61.7" class="grid"/>
+<text x="30.0" y="64.7" class="ax" text-anchor="end">10<tspan dy='-4' font-size='7'>2</tspan></text>
+<line x1="34.0" y1="21.5" x2="242.0" y2="21.5" class="grid"/>
+<text x="30.0" y="24.5" class="ax" text-anchor="end">10<tspan dy='-4' font-size='7'>3</tspan></text>
+<polygon points="103.3,-26.3 106.8,-22.4 110.3,-18.5 113.7,-14.7 117.2,-10.8 120.7,-6.9 124.1,-3.0 127.6,0.9 131.1,4.7 134.5,8.6 138.0,12.5 141.5,16.4 144.9,20.3 148.4,24.2 151.9,28.0 155.3,31.9 158.8,35.8 162.3,39.7 165.7,43.6 165.7,43.6 162.3,40.3 158.8,34.8 155.3,30.8 151.9,28.1 148.4,26.8 144.9,26.2 141.5,26.1 138.0,26.0 134.5,26.0 131.1,26.0 127.6,26.0 124.1,26.0 120.7,26.0 117.2,26.0 113.7,26.0 110.3,26.0 106.8,26.0 103.3,26.0" class="gap"/>
+<line x1="103.3" y1="-26.3" x2="242.0" y2="128.9" class="law"/>
+<line x1="165.7" y1="16.0" x2="165.7" y2="142.0" class="mcline"/>
+<polyline points="34.0,26.0 37.5,26.0 40.9,26.0 44.4,26.0 47.9,26.0 51.3,26.0 54.8,26.0 58.3,26.0 61.7,26.0 65.2,26.0 68.7,26.0 72.1,26.0 75.6,26.0 79.1,26.0 82.5,26.0 86.0,26.0 89.5,26.0 92.9,26.0 96.4,26.0 99.9,26.0 103.3,26.0 106.8,26.0 110.3,26.0 113.7,26.0 117.2,26.0 120.7,26.0 124.1,26.0 127.6,26.0 131.1,26.0 134.5,26.0 138.0,26.0 141.5,26.1 144.9,26.2 148.4,26.8 151.9,28.1 155.3,30.8 158.8,34.8 162.3,40.3 165.7,43.6 169.2,46.4 172.7,51.5 176.1,55.7 179.6,59.9 183.1,62.6 186.5,65.4 190.0,70.9 193.5,74.9 196.9,80.5 200.4,85.9 203.9,89.8 207.3,93.7 210.8,97.3 214.3,101.8 217.7,103.7 221.2,105.7 224.7,105.7 228.1,108.1 231.6,117.8 235.1,117.8 238.5,117.8 242.0,122.8" class="rec"/>
+<line x1="103.3" y1="16.0" x2="103.3" y2="142.0" class="floorline"/>
+<text x="34.0" y="160" class="ax" text-anchor="middle">1</text>
+<text x="103.3" y="160" class="ax" text-anchor="middle">3</text>
+<text x="172.7" y="160" class="ax" text-anchor="middle">5</text>
+<text x="242.0" y="160" class="ax" text-anchor="middle">7</text>
+</svg><figcaption><b>South of 60S</b><span class="n" data-missing>14 775</span> <span data-atm>unrecorded at M 3.0 and above</span><span class="s" data-sub>floor of hearing M 4.8 · b = 0.97 ± 0.06 · 773 in the record</span></figcaption></figure>
+</div>
+
+<div class="dial">
+  <p><b>This control changes the finding, not the view.</b> Both settings are assumptions about
+  something nobody observed. Every value either one can produce is printed in the table below, so
+  nothing here can be fished for that the page has not already published.</p>
+  <div class="row">
+    <div>
+      <label for="floor">Count events down to</label>
+      <select id="floor"><option value="2.0">M 2.0</option><option value="2.5">M 2.5</option><option value="3.0" selected>M 3.0</option><option value="3.5">M 3.5</option><option value="4.0">M 4.0</option></select>
+    </div>
+    <div>
+      <label for="rule">Locate the floor of hearing by</label>
+      <select id="rule"><option value="maxc" selected>maximum curvature, +0.2</option><option value="maxc_raw">maximum curvature, raw</option><option value="gft95">goodness of fit, 95 %</option><option value="gft90">goodness of fit, 90 %</option><option value="cautious">maximum curvature, +0.7</option><option value="none">no law at all</option></select>
+    </div>
+  </div>
+  <p class="noscript" id="nojs">Without scripting this page is served at its default setting —
+  magnitude 3.0, maximum curvature, +0.2 — and the complete grid of every other setting
+  is in the table below. Nothing is hidden behind the control.</p>
+</div>
+
+<h2>Every setting, printed</h2>
+<div class="scroll">
+<table>
+  <caption>Earthquakes that happened inside each box in five years and were never recorded, under
+  six rules for locating the floor of hearing × five floors to count down to. <b>0</b> means the
+  record is already complete at that floor. <b>∞</b> is the honest entry for a reader who holds no
+  law: bounded below by nothing recorded, bounded above by nothing at all. The bold column is the
+  setting the page opens at.</caption>
+  <thead>
+    <tr><th scope="col" rowspan="2">Box</th><th scope="col" rowspan="2">in the record</th><th colspan="5" class="grp">maximum curvature, +0.2</th><th colspan="5" class="grp">maximum curvature, raw</th><th colspan="5" class="grp">goodness of fit, 95 %</th><th colspan="5" class="grp">goodness of fit, 90 %</th><th colspan="5" class="grp">maximum curvature, +0.7</th><th colspan="5" class="grp">no law at all</th></tr>
+    <tr><th class="msub">M 2.0</th><th class="msub">M 2.5</th><th class="msub">M 3.0</th><th class="msub">M 3.5</th><th class="msub">M 4.0</th><th class="msub">M 2.0</th><th class="msub">M 2.5</th><th class="msub">M 3.0</th><th class="msub">M 3.5</th><th class="msub">M 4.0</th><th class="msub">M 2.0</th><th class="msub">M 2.5</th><th class="msub">M 3.0</th><th class="msub">M 3.5</th><th class="msub">M 4.0</th><th class="msub">M 2.0</th><th class="msub">M 2.5</th><th class="msub">M 3.0</th><th class="msub">M 3.5</th><th class="msub">M 4.0</th><th class="msub">M 2.0</th><th class="msub">M 2.5</th><th class="msub">M 3.0</th><th class="msub">M 3.5</th><th class="msub">M 4.0</th><th class="msub">M 2.0</th><th class="msub">M 2.5</th><th class="msub">M 3.0</th><th class="msub">M 3.5</th><th class="msub">M 4.0</th></tr>
+  </thead>
+  <tbody>
+<tr><th scope="row">Indonesia</th><td class="obs">10 103</td><td>6 243 584</td><td>1 438 956</td><td class="dflt">325 663</td><td>67 701</td><td>7 955</td><td>9 181 776</td><td>1 983 801</td><td>422 415</td><td>83 722</td><td>10 279</td><td>5 284 663</td><td>1 262 658</td><td>295 844</td><td>63 444</td><td>7 606</td><td>2 348 515</td><td>651 363</td><td>175 403</td><td>41 924</td><td>4 517</td><td>2 122 615</td><td>567 771</td><td>146 476</td><td>32 326</td><td>1 423</td><td>∞</td><td>∞</td><td>∞</td><td>∞</td><td>∞</td></tr>
+<tr><th scope="row">Chile</th><td class="obs">4 460</td><td>4 864 542</td><td>934 269</td><td class="dflt">176 541</td><td>30 474</td><td>2 436</td><td>7 669 678</td><td>1 361 317</td><td>238 626</td><td>38 840</td><td>3 408</td><td>562 507</td><td>152 942</td><td>39 255</td><td>7 712</td><td>0</td><td>3 573 494</td><td>735 035</td><td>148 396</td><td>27 170</td><td>2 238</td><td>328 392</td><td>95 760</td><td>25 732</td><td>4 667</td><td>0</td><td>∞</td><td>∞</td><td>∞</td><td>∞</td><td>∞</td></tr>
+<tr><th scope="row">Japan</th><td class="obs">4 157</td><td>1 791 291</td><td>442 088</td><td class="dflt">106 754</td><td>23 409</td><td>2 715</td><td>3 386 843</td><td>750 810</td><td>163 928</td><td>33 265</td><td>4 196</td><td>2 103 559</td><td>508 483</td><td>120 527</td><td>26 169</td><td>3 240</td><td>896 737</td><td>253 430</td><td>69 493</td><td>16 901</td><td>1 885</td><td>467 886</td><td>139 452</td><td>39 533</td><td>9 135</td><td>0</td><td>∞</td><td>∞</td><td>∞</td><td>∞</td><td>∞</td></tr>
+<tr><th scope="row">Central Africa</th><td class="obs">164</td><td>9 293 404</td><td>924 497</td><td class="dflt">91 835</td><td>8 990</td><td>749</td><td>6 595 107</td><td>698 523</td><td>73 853</td><td>7 678</td><td>669</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>1 424 478</td><td>200 540</td><td>28 111</td><td>3 820</td><td>399</td><td>1 308 311 612</td><td>65 134 361</td><td>3 242 569</td><td>161 277</td><td>7 875</td><td>∞</td><td>∞</td><td>∞</td><td>∞</td><td>∞</td></tr>
+<tr><th scope="row">South Mid-Atlantic Ridge</th><td class="obs">295</td><td>935 198</td><td>193 053</td><td class="dflt">39 666</td><td>7 964</td><td>1 412</td><td>577 103</td><td>129 102</td><td>28 703</td><td>6 204</td><td>1 161</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>577 103</td><td>129 102</td><td>28 703</td><td>6 204</td><td>1 161</td><td>6 885 435</td><td>1 071 101</td><td>166 411</td><td>25 644</td><td>3 741</td><td>∞</td><td>∞</td><td>∞</td><td>∞</td><td>∞</td></tr>
+<tr><th scope="row">Aotearoa New Zealand</th><td class="obs">713</td><td>341 987</td><td>81 544</td><td class="dflt">19 042</td><td>4 056</td><td>470</td><td>377 392</td><td>88 632</td><td>20 410</td><td>4 305</td><td>512</td><td>377 392</td><td>88 632</td><td>20 410</td><td>4 305</td><td>512</td><td>154 925</td><td>42 851</td><td>11 492</td><td>2 730</td><td>288</td><td>381 935</td><td>90 458</td><td>21 021</td><td>4 492</td><td>566</td><td>∞</td><td>∞</td><td>∞</td><td>∞</td><td>∞</td></tr>
+<tr><th scope="row">Himalaya</th><td class="obs">558</td><td>267 434</td><td>64 773</td><td class="dflt">15 369</td><td>3 325</td><td>395</td><td>117 696</td><td>33 060</td><td>8 999</td><td>2 159</td><td>220</td><td>191 255</td><td>49 184</td><td>12 342</td><td>2 787</td><td>316</td><td>117 696</td><td>33 060</td><td>8 999</td><td>2 159</td><td>220</td><td>824 879</td><td>167 916</td><td>33 828</td><td>6 460</td><td>880</td><td>∞</td><td>∞</td><td>∞</td><td>∞</td><td>∞</td></tr>
+<tr><th scope="row">South of 60S</th><td class="obs">773</td><td>143 195</td><td>46 538</td><td class="dflt">14 775</td><td>4 336</td><td>906</td><td>214 531</td><td>65 472</td><td>19 609</td><td>5 498</td><td>1 157</td><td>125 888</td><td>41 934</td><td>13 626</td><td>4 082</td><td>864</td><td>125 888</td><td>41 934</td><td>13 626</td><td>4 082</td><td>864</td><td>192 559</td><td>60 181</td><td>18 445</td><td>5 286</td><td>1 137</td><td>∞</td><td>∞</td><td>∞</td><td>∞</td><td>∞</td></tr>
+<tr><th scope="row">Iceland</th><td class="obs">206</td><td>148 025</td><td>33 877</td><td class="dflt">7 631</td><td>1 596</td><td>209</td><td>267 400</td><td>55 486</td><td>11 384</td><td>2 206</td><td>297</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>80 090</td><td>20 684</td><td>5 229</td><td>1 208</td><td>163</td><td>248 091 749</td><td>18 078 306</td><td>1 317 179</td><td>95 792</td><td>6 790</td><td>∞</td><td>∞</td><td>∞</td><td>∞</td><td>∞</td></tr>
+<tr><th scope="row">Central Italy</th><td class="obs">60</td><td>4 224</td><td>1 201</td><td class="dflt">315</td><td>58</td><td>0</td><td>73 221</td><td>12 572</td><td>2 122</td><td>324</td><td>20</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>63 050</td><td>11 863</td><td>2 197</td><td>374</td><td>35</td><td>∞</td><td>∞</td><td>∞</td><td>∞</td><td>∞</td></tr>
+<tr><th scope="row">California</th><td class="obs">236 571</td><td>0</td><td>0</td><td class="dflt">0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>∞</td><td>∞</td><td>∞</td><td>∞</td><td>∞</td></tr>
+<tr><th scope="row">Alaska</th><td class="obs">212 875</td><td>0</td><td>0</td><td class="dflt">0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>∞</td><td>∞</td><td>∞</td><td>∞</td><td>∞</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p class="refs">Under the setting this page opens at, 1 of the 12 boxes — Central Africa — return a b outside the band 0.6 to 1.6 where catalogues normally put it. Their shortfall is printed like the others and should be read as a sign that the fit is wrong rather than that the Earth is unusual there.</p>
+<p class="refs">The largest number this arithmetic can be made to produce is <b>1 567 670 112</b>, at
+maximum curvature, +0.7 counting down to magnitude 2.0. <b>Nobody should believe it.</b> It is
+printed because a page that showed only its believable settings would be making the choice on your
+behalf, and because watching an extrapolation explode over three magnitude units is the fastest way
+to see what kind of number this is.</p>
+
+<h3>The six rules</h3>
+<ul class="notes"><li><b>maximum curvature, +0.2.</b> Woessner & Wiemer (2005) correction to the MAXC estimate</li><li><b>maximum curvature, raw.</b> the fullest magnitude bin, uncorrected</li><li><b>goodness of fit, 95 %.</b> Wiemer & Wyss (2000): lowest Mc whose fitted line reproduces the record to 5 %</li><li><b>goodness of fit, 90 %.</b> the same test relaxed to 10 %</li><li><b>maximum curvature, +0.7.</b> a deliberately cautious floor, half a magnitude above the default</li><li><b>no law at all.</b> hold nothing about magnitudes below the floor of hearing</li></ul>
+
+<h2>What this page does not say</h2>
+<ul class="notes">
+  <li><b>It is not a comparison of how seismic one place is with another.</b> Each box's line is
+  fitted to that box's own record, so a quiet box and a violent one are each measured against
+  themselves. What is compared is the floor, not the ground.</li>
+  <li><b>It is not a map of where the seismometers are.</b> This is one record — the global one,
+  assembled from whatever each network chooses to report into it. A national network can hear its
+  own ground superbly and keep that catalogue at home, and then its small earthquakes are missing
+  <i>here</i> while being perfectly well known <i>there</i>. The Japan box on this page is the
+  clearest case of exactly that, and it is the reason the finding is about a record and not about
+  the density of instruments on the Earth.</li>
+  <li><b>It is not a complaint about a catalogue.</b> Nobody has failed at anything. A record is
+  made of what reaches it, and what reaches this one is what its contributors send.</li>
+  <li><b>The count below the floor is never a measurement.</b> It is what a law predicts, and every
+  number on this page under a red field inherits that. The five rules that assume the law give
+  totals from 489 452 to 5 013 391 for the same five years; the rule that assumes nothing
+  gives no number and no upper bound.</li>
+  <li><b>Aftershocks are not removed.</b> A large earthquake is followed by thousands of small ones,
+  which both inflate the counts and bend the line. Declustering would change every number here and
+  is not done: it is one more assumption, and this page prefers to carry a stated bias than an
+  unstated method.</li>
+  <li><b>Magnitudes are not all the same quantity.</b> The catalogue mixes local, body-wave, surface
+  and moment magnitudes as its contributing networks report them. Fitting one line across them is
+  standard practice and it is still a smoothing of four different instruments' idea of size.</li>
+</ul>
+
+<h2>How it was made</h2>
+<p>The catalogue was asked <b>985 questions</b> and no more, each of the form <i>how many
+earthquakes of at least this magnitude are in your record, inside this box, between 2021-01-01 and
+2026-01-01?</i> — 91 magnitude thresholds, one tenth apart, in each of 12 boxes.
+<b>No earthquake record was downloaded and none is stored here.</b> The material of this work is a
+table of counts, which is also the quantity the law is written in.</p>
+
+<p class="refs"><b>Source.</b> USGS Earthquake Catalog (ComCat), through the FDSN event web service,
+API version 2.7.0, harvested 2026-09-11T04:42:47Z. A work of the United States Geological Survey and in
+the public domain; credit: U.S. Geological Survey, Department of the Interior/USGS.
+<b>Method.</b> B. Gutenberg &amp; C. F. Richter, <i>Frequency of earthquakes in California</i>,
+Bulletin of the Seismological Society of America 34 (1944) 185–188. K. Aki, <i>Maximum likelihood
+estimate of b in the formula log N = a − bM</i>, Bulletin of the Earthquake Research Institute 43
+(1965) 237–239. G. Shi &amp; B. A. Bolt, <i>The standard error of the magnitude-frequency b
+value</i>, BSSA 72 (1982) 1677–1687. S. Wiemer &amp; M. Wyss, <i>Minimum magnitude of completeness
+in earthquake catalogs</i>, BSSA 90 (2000) 859–869. J. Woessner &amp; S. Wiemer, <i>Assessing the
+quality of earthquake catalogues: estimating the magnitude of completeness and its uncertainty</i>,
+BSSA 95 (2005) 684–698. A reader without a library can check the same estimators in
+A. M. Lombardi, <i>A normalized distance test for co-determining the completeness magnitude and
+b-value of earthquake catalogs</i>, JGR Solid Earth 126 (2021), doi:10.1029/2020JB021242, which is
+open.</p>
+
+<p class="refs"><b>Verification.</b> The page holds no network request of any kind, with scripting on
+or off. <code>build.py --check</code> rebuilds this document from <code>counts.json</code> and fails
+if one byte differs. <code>verify.mjs</code> runs the page in a real browser in both states and
+checks that the numbers drawn are the numbers in <code>data.json</code>.
+<b>No model wrote any number, any figure or any sentence of the method on this page.</b></p>
+
+<footer>
+  <p><b>BELOW HEARING</b> · The Studio (Ensemble), the art corner of the research ecology at
+  frankbueltge.de · session 133, 2026-09-11 · cycle 003, seeded question <i>Missing Data
+  Art</i>. Work CC BY 4.0; code Apache-2.0. No third-party code is embedded in this work.</p>
+  <p>Nearest works in the house's Atlas of Data Art, both opened at their own addresses before this
+  one was built, with the daylight from each set out in <code>meta.json</code> beside this page:
+  <b>Deng Yufeng, <i>A Disappeared Movement</i></b> (2020) — four months mapping the viewing angles
+  of 89 cameras along 1,100 metres of one Beijing street, to walk where they cannot see; the report
+  the Atlas cites adds what the catalogue line does not, that no complete route was found and three
+  more cameras had gone up by the day of the walk. <b>Ken Goldberg, with Randall Packer, Gregory
+  Kuhn and Wojciech Matusik, <i>Memento Mori / Mori: an Interface With the Earth</i></b> (1998–1999)
+  — the Hayward Fault's minute movements carried live from one seismometer into a resonating room.
+  He passes on everything one instrument hears. This counts what twelve regions' instruments did
+  not. A third candidate was dropped rather than cited unseen: its address refused this practice
+  twice tonight, and a sentence about a work is not the work.</p>
+</footer>
+
+</div>
+
+<script type="application/json" id="payload">{"thresholds":[-1.0,-0.9,-0.8,-0.7,-0.6,-0.5,-0.4,-0.3,-0.2,-0.1,0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0,1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9,2.0,2.1,2.2,2.3,2.4,2.5,2.6,2.7,2.8,2.9,3.0,3.1,3.2,3.3,3.4,3.5,3.6,3.7,3.8,3.9,4.0,4.1,4.2,4.3,4.4,4.5,4.6,4.7,4.8,4.9,5.0,5.1,5.2,5.3,5.4,5.5,5.6,5.7,5.8,5.9,6.0,6.1,6.2,6.3,6.4,6.5,6.6,6.7,6.8,6.9,7.0,7.1,7.2,7.3,7.4,7.5,7.6,7.7,7.8,7.9,8.0],"floors":[2.0,2.5,3.0,3.5,4.0],"rules":["maxc","maxc_raw","gft95","gft90","cautious","none"],"regions":[{"name":"California","cumulative":[236571,236571,236571,236568,236553,236533,236149,235384,234065,232413,230111,227555,223937,216338,205278,194800,184124,171439,149751,129956,114256,95279,79472,67529,57266,47527,39078,31938,26226,21424,17789,14649,11917,9555,7759,6239,4983,3915,3087,2368,1835,1497,1239,986,811,655,509,412,324,258,198,150,120,95,66,53,42,33,26,18,15,12,10,7,6,5,5,4,3,3,3,2,2,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"total":236571,"largest":6.4,"rules":{"maxc":{"mc":0.9,"b":0.7662,"sigma_b":0.0019,"n_above":129956,"unavailable":false,"implausible_b":false},"maxc_raw":{"mc":0.7,"b":0.7179,"sigma_b":0.0015,"n_above":171439,"unavailable":false,"implausible_b":false},"gft95":{"mc":1.0,"b":0.8075,"sigma_b":0.0022,"n_above":114256,"unavailable":false,"implausible_b":false},"gft90":{"mc":0.7,"b":0.7179,"sigma_b":0.0015,"n_above":171439,"unavailable":false,"implausible_b":false},"cautious":{"mc":1.4,"b":0.8681,"sigma_b":0.0034,"n_above":57266,"unavailable":false,"implausible_b":false},"none":{"mc":null,"b":null,"sigma_b":null,"n_above":null,"unavailable":false}},"grid":{"maxc":{"2.0":{"observed":17789,"expected":17789,"missing":0,"unbounded":false,"complete":true},"2.5":{"observed":6239,"expected":6239,"missing":0,"unbounded":false,"complete":true},"3.0":{"observed":1835,"expected":1835,"missing":0,"unbounded":false,"complete":true},"3.5":{"observed":655,"expected":655,"missing":0,"unbounded":false,"complete":true},"4.0":{"observed":198,"expected":198,"missing":0,"unbounded":false,"complete":true}},"maxc_raw":{"2.0":{"observed":17789,"expected":17789,"missing":0,"unbounded":false,"complete":true},"2.5":{"observed":6239,"expected":6239,"missing":0,"unbounded":false,"complete":true},"3.0":{"observed":1835,"expected":1835,"missing":0,"unbounded":false,"complete":true},"3.5":{"observed":655,"expected":655,"missing":0,"unbounded":false,"complete":true},"4.0":{"observed":198,"expected":198,"missing":0,"unbounded":false,"complete":true}},"gft95":{"2.0":{"observed":17789,"expected":17789,"missing":0,"unbounded":false,"complete":true},"2.5":{"observed":6239,"expected":6239,"missing":0,"unbounded":false,"complete":true},"3.0":{"observed":1835,"expected":1835,"missing":0,"unbounded":false,"complete":true},"3.5":{"observed":655,"expected":655,"missing":0,"unbounded":false,"complete":true},"4.0":{"observed":198,"expected":198,"missing":0,"unbounded":false,"complete":true}},"gft90":{"2.0":{"observed":17789,"expected":17789,"missing":0,"unbounded":false,"complete":true},"2.5":{"observed":6239,"expected":6239,"missing":0,"unbounded":false,"complete":true},"3.0":{"observed":1835,"expected":1835,"missing":0,"unbounded":false,"complete":true},"3.5":{"observed":655,"expected":655,"missing":0,"unbounded":false,"complete":true},"4.0":{"observed":198,"expected":198,"missing":0,"unbounded":false,"complete":true}},"cautious":{"2.0":{"observed":17789,"expected":17789,"missing":0,"unbounded":false,"complete":true},"2.5":{"observed":6239,"expected":6239,"missing":0,"unbounded":false,"complete":true},"3.0":{"observed":1835,"expected":1835,"missing":0,"unbounded":false,"complete":true},"3.5":{"observed":655,"expected":655,"missing":0,"unbounded":false,"complete":true},"4.0":{"observed":198,"expected":198,"missing":0,"unbounded":false,"complete":true}},"none":{"2.0":{"observed":17789,"expected":null,"missing":null,"unbounded":true,"complete":false},"2.5":{"observed":6239,"expected":null,"missing":null,"unbounded":true,"complete":false},"3.0":{"observed":1835,"expected":null,"missing":null,"unbounded":true,"complete":false},"3.5":{"observed":655,"expected":null,"missing":null,"unbounded":true,"complete":false},"4.0":{"observed":198,"expected":null,"missing":null,"unbounded":true,"complete":false}}}},{"name":"Alaska","cumulative":[212875,212150,211071,209620,207854,205578,202928,200198,197226,194303,191485,188951,186599,184503,182358,180537,178711,176705,173961,169182,162471,153388,139453,125006,110717,94617,82355,69056,59538,50013,40960,33880,28136,23713,20486,17822,15229,12787,10652,8639,6981,5539,4444,3600,2948,2415,2004,1661,1375,1151,958,803,679,560,456,360,281,212,169,131,110,91,74,59,48,31,26,18,16,14,11,10,9,7,7,7,7,6,6,5,3,3,3,2,1,1,1,1,1,1,1],"total":212875,"largest":8.0,"rules":{"maxc":{"mc":1.6,"b":0.762,"sigma_b":0.0025,"n_above":82355,"unavailable":false,"implausible_b":false},"maxc_raw":{"mc":1.4,"b":0.7279,"sigma_b":0.002,"n_above":110717,"unavailable":false,"implausible_b":false},"gft95":{"mc":1.4,"b":0.7279,"sigma_b":0.002,"n_above":110717,"unavailable":false,"implausible_b":false},"gft90":{"mc":1.2,"b":0.6651,"sigma_b":0.0016,"n_above":139453,"unavailable":false,"implausible_b":false},"cautious":{"mc":2.1,"b":0.7675,"sigma_b":0.0039,"n_above":33880,"unavailable":false,"implausible_b":false},"none":{"mc":null,"b":null,"sigma_b":null,"n_above":null,"unavailable":false}},"grid":{"maxc":{"2.0":{"observed":40960,"expected":40960,"missing":0,"unbounded":false,"complete":true},"2.5":{"observed":17822,"expected":17822,"missing":0,"unbounded":false,"complete":true},"3.0":{"observed":6981,"expected":6981,"missing":0,"unbounded":false,"complete":true},"3.5":{"observed":2415,"expected":2415,"missing":0,"unbounded":false,"complete":true},"4.0":{"observed":958,"expected":958,"missing":0,"unbounded":false,"complete":true}},"maxc_raw":{"2.0":{"observed":40960,"expected":40960,"missing":0,"unbounded":false,"complete":true},"2.5":{"observed":17822,"expected":17822,"missing":0,"unbounded":false,"complete":true},"3.0":{"observed":6981,"expected":6981,"missing":0,"unbounded":false,"complete":true},"3.5":{"observed":2415,"expected":2415,"missing":0,"unbounded":false,"complete":true},"4.0":{"observed":958,"expected":958,"missing":0,"unbounded":false,"complete":true}},"gft95":{"2.0":{"observed":40960,"expected":40960,"missing":0,"unbounded":false,"complete":true},"2.5":{"observed":17822,"expected":17822,"missing":0,"unbounded":false,"complete":true},"3.0":{"observed":6981,"expected":6981,"missing":0,"unbounded":false,"complete":true},"3.5":{"observed":2415,"expected":2415,"missing":0,"unbounded":false,"complete":true},"4.0":{"observed":958,"expected":958,"missing":0,"unbounded":false,"complete":true}},"gft90":{"2.0":{"observed":40960,"expected":40960,"missing":0,"unbounded":false,"complete":true},"2.5":{"observed":17822,"expected":17822,"missing":0,"unbounded":false,"complete":true},"3.0":{"observed":6981,"expected":6981,"missing":0,"unbounded":false,"complete":true},"3.5":{"observed":2415,"expected":2415,"missing":0,"unbounded":false,"complete":true},"4.0":{"observed":958,"expected":958,"missing":0,"unbounded":false,"complete":true}},"cautious":{"2.0":{"observed":40960,"expected":40429,"missing":0,"unbounded":false,"complete":false},"2.5":{"observed":17822,"expected":17822,"missing":0,"unbounded":false,"complete":true},"3.0":{"observed":6981,"expected":6981,"missing":0,"unbounded":false,"complete":true},"3.5":{"observed":2415,"expected":2415,"missing":0,"unbounded":false,"complete":true},"4.0":{"observed":958,"expected":958,"missing":0,"unbounded":false,"complete":true}},"none":{"2.0":{"observed":40960,"expected":null,"missing":null,"unbounded":true,"complete":false},"2.5":{"observed":17822,"expected":null,"missing":null,"unbounded":true,"complete":false},"3.0":{"observed":6981,"expected":null,"missing":null,"unbounded":true,"complete":false},"3.5":{"observed":2415,"expected":null,"missing":null,"unbounded":true,"complete":false},"4.0":{"observed":958,"expected":null,"missing":null,"unbounded":true,"complete":false}}}},{"name":"Japan","cumulative":[4157,4157,4157,4157,4157,4157,4157,4157,4157,4157,4157,4157,4157,4157,4157,4157,4157,4157,4157,4157,4157,4157,4157,4157,4157,4157,4157,4157,4157,4157,4157,4157,4157,4157,4157,4157,4157,4157,4157,4157,4157,4157,4157,4157,4157,4157,4157,4157,4157,4153,4136,3971,3649,3158,2505,1811,1289,925,738,551,384,295,237,173,133,111,91,69,58,45,35,25,18,15,12,11,11,10,9,7,6,5,3,3,2,2,1,0,0,0,0],"total":4157,"largest":7.6,"rules":{"maxc":{"mc":4.6,"b":1.2092,"sigma_b":0.0365,"n_above":1289,"unavailable":false,"implausible_b":false},"maxc_raw":{"mc":4.4,"b":1.3048,"sigma_b":0.0286,"n_above":2505,"unavailable":false,"implausible_b":false},"gft95":{"mc":4.3,"b":1.228,"sigma_b":0.0222,"n_above":3158,"unavailable":false,"implausible_b":false},"gft90":{"mc":4.2,"b":1.0875,"sigma_b":0.0163,"n_above":3649,"unavailable":false,"implausible_b":false},"cautious":{"mc":5.1,"b":1.0336,"sigma_b":0.0626,"n_above":295,"unavailable":false,"implausible_b":false},"none":{"mc":null,"b":null,"sigma_b":null,"n_above":null,"unavailable":false}},"grid":{"maxc":{"2.0":{"observed":4157,"expected":1795448,"missing":1791291,"unbounded":false,"complete":false},"2.5":{"observed":4157,"expected":446245,"missing":442088,"unbounded":false,"complete":false},"3.0":{"observed":4157,"expected":110911,"missing":106754,"unbounded":false,"complete":false},"3.5":{"observed":4157,"expected":27566,"missing":23409,"unbounded":false,"complete":false},"4.0":{"observed":4136,"expected":6851,"missing":2715,"unbounded":false,"complete":false}},"maxc_raw":{"2.0":{"observed":4157,"expected":3391000,"missing":3386843,"unbounded":false,"complete":false},"2.5":{"observed":4157,"expected":754967,"missing":750810,"unbounded":false,"complete":false},"3.0":{"observed":4157,"expected":168085,"missing":163928,"unbounded":false,"complete":false},"3.5":{"observed":4157,"expected":37422,"missing":33265,"unbounded":false,"complete":false},"4.0":{"observed":4136,"expected":8332,"missing":4196,"unbounded":false,"complete":false}},"gft95":{"2.0":{"observed":4157,"expected":2107716,"missing":2103559,"unbounded":false,"complete":false},"2.5":{"observed":4157,"expected":512640,"missing":508483,"unbounded":false,"complete":false},"3.0":{"observed":4157,"expected":124684,"missing":120527,"unbounded":false,"complete":false},"3.5":{"observed":4157,"expected":30326,"missing":26169,"unbounded":false,"complete":false},"4.0":{"observed":4136,"expected":7376,"missing":3240,"unbounded":false,"complete":false}},"gft90":{"2.0":{"observed":4157,"expected":900894,"missing":896737,"unbounded":false,"complete":false},"2.5":{"observed":4157,"expected":257587,"missing":253430,"unbounded":false,"complete":false},"3.0":{"observed":4157,"expected":73650,"missing":69493,"unbounded":false,"complete":false},"3.5":{"observed":4157,"expected":21058,"missing":16901,"unbounded":false,"complete":false},"4.0":{"observed":4136,"expected":6021,"missing":1885,"unbounded":false,"complete":false}},"cautious":{"2.0":{"observed":4157,"expected":472043,"missing":467886,"unbounded":false,"complete":false},"2.5":{"observed":4157,"expected":143609,"missing":139452,"unbounded":false,"complete":false},"3.0":{"observed":4157,"expected":43690,"missing":39533,"unbounded":false,"complete":false},"3.5":{"observed":4157,"expected":13292,"missing":9135,"unbounded":false,"complete":false},"4.0":{"observed":4136,"expected":4044,"missing":0,"unbounded":false,"complete":false}},"none":{"2.0":{"observed":4157,"expected":null,"missing":null,"unbounded":true,"complete":false},"2.5":{"observed":4157,"expected":null,"missing":null,"unbounded":true,"complete":false},"3.0":{"observed":4157,"expected":null,"missing":null,"unbounded":true,"complete":false},"3.5":{"observed":4157,"expected":null,"missing":null,"unbounded":true,"complete":false},"4.0":{"observed":4136,"expected":null,"missing":null,"unbounded":true,"complete":false}}}},{"name":"Iceland","cumulative":[206,206,206,206,206,206,206,206,206,206,206,206,206,206,206,206,206,206,206,206,206,206,206,206,206,206,206,206,206,206,206,206,206,206,206,206,206,206,206,206,206,206,206,206,206,206,205,205,205,205,205,200,185,164,143,107,71,52,43,32,26,22,17,9,3,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"total":206,"largest":5.6,"rules":{"maxc":{"mc":4.6,"b":1.2768,"sigma_b":0.1199,"n_above":71,"unavailable":false,"implausible_b":false},"maxc_raw":{"mc":4.4,"b":1.3634,"sigma_b":0.1047,"n_above":143,"unavailable":false,"implausible_b":false},"gft95":{"mc":null,"b":null,"sigma_b":null,"n_above":null,"unavailable":true},"gft90":{"mc":4.3,"b":1.1695,"sigma_b":0.0737,"n_above":164,"unavailable":false,"implausible_b":false},"cautious":{"mc":5.1,"b":2.2749,"sigma_b":0.3099,"n_above":22,"unavailable":false,"implausible_b":true},"none":{"mc":null,"b":null,"sigma_b":null,"n_above":null,"unavailable":false}},"grid":{"maxc":{"2.0":{"observed":206,"expected":148231,"missing":148025,"unbounded":false,"complete":false},"2.5":{"observed":206,"expected":34083,"missing":33877,"unbounded":false,"complete":false},"3.0":{"observed":206,"expected":7837,"missing":7631,"unbounded":false,"complete":false},"3.5":{"observed":206,"expected":1802,"missing":1596,"unbounded":false,"complete":false},"4.0":{"observed":205,"expected":414,"missing":209,"unbounded":false,"complete":false}},"maxc_raw":{"2.0":{"observed":206,"expected":267606,"missing":267400,"unbounded":false,"complete":false},"2.5":{"observed":206,"expected":55692,"missing":55486,"unbounded":false,"complete":false},"3.0":{"observed":206,"expected":11590,"missing":11384,"unbounded":false,"complete":false},"3.5":{"observed":206,"expected":2412,"missing":2206,"unbounded":false,"complete":false},"4.0":{"observed":205,"expected":502,"missing":297,"unbounded":false,"complete":false}},"gft95":{"2.0":{"observed":206,"expected":null,"missing":null,"unbounded":false,"complete":false,"unavailable":true},"2.5":{"observed":206,"expected":null,"missing":null,"unbounded":false,"complete":false,"unavailable":true},"3.0":{"observed":206,"expected":null,"missing":null,"unbounded":false,"complete":false,"unavailable":true},"3.5":{"observed":206,"expected":null,"missing":null,"unbounded":false,"complete":false,"unavailable":true},"4.0":{"observed":205,"expected":null,"missing":null,"unbounded":false,"complete":false,"unavailable":true}},"gft90":{"2.0":{"observed":206,"expected":80296,"missing":80090,"unbounded":false,"complete":false},"2.5":{"observed":206,"expected":20890,"missing":20684,"unbounded":false,"complete":false},"3.0":{"observed":206,"expected":5435,"missing":5229,"unbounded":false,"complete":false},"3.5":{"observed":206,"expected":1414,"missing":1208,"unbounded":false,"complete":false},"4.0":{"observed":205,"expected":368,"missing":163,"unbounded":false,"complete":false}},"cautious":{"2.0":{"observed":206,"expected":248091955,"missing":248091749,"unbounded":false,"complete":false},"2.5":{"observed":206,"expected":18078512,"missing":18078306,"unbounded":false,"complete":false},"3.0":{"observed":206,"expected":1317385,"missing":1317179,"unbounded":false,"complete":false},"3.5":{"observed":206,"expected":95998,"missing":95792,"unbounded":false,"complete":false},"4.0":{"observed":205,"expected":6995,"missing":6790,"unbounded":false,"complete":false}},"none":{"2.0":{"observed":206,"expected":null,"missing":null,"unbounded":true,"complete":false},"2.5":{"observed":206,"expected":null,"missing":null,"unbounded":true,"complete":false},"3.0":{"observed":206,"expected":null,"missing":null,"unbounded":true,"complete":false},"3.5":{"observed":206,"expected":null,"missing":null,"unbounded":true,"complete":false},"4.0":{"observed":205,"expected":null,"missing":null,"unbounded":true,"complete":false}}}},{"name":"Central Italy","cumulative":[60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,59,59,59,58,57,57,56,55,55,54,54,53,52,51,49,49,48,47,45,39,32,20,12,11,8,6,4,4,3,2,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"total":60,"largest":5.6,"rules":{"maxc":{"mc":4.4,"b":1.0636,"sigma_b":0.2571,"n_above":12,"unavailable":false,"implausible_b":false},"maxc_raw":{"mc":4.2,"b":1.5272,"sigma_b":0.3118,"n_above":32,"unavailable":false,"implausible_b":false},"gft95":{"mc":null,"b":null,"sigma_b":null,"n_above":null,"unavailable":true},"gft90":{"mc":null,"b":null,"sigma_b":null,"n_above":null,"unavailable":true},"cautious":{"mc":4.9,"b":1.4476,"sigma_b":0.7493,"n_above":4,"unavailable":false,"implausible_b":false},"none":{"mc":null,"b":null,"sigma_b":null,"n_above":null,"unavailable":false}},"grid":{"maxc":{"2.0":{"observed":60,"expected":4284,"missing":4224,"unbounded":false,"complete":false},"2.5":{"observed":58,"expected":1259,"missing":1201,"unbounded":false,"complete":false},"3.0":{"observed":55,"expected":370,"missing":315,"unbounded":false,"complete":false},"3.5":{"observed":51,"expected":109,"missing":58,"unbounded":false,"complete":false},"4.0":{"observed":45,"expected":32,"missing":0,"unbounded":false,"complete":false}},"maxc_raw":{"2.0":{"observed":60,"expected":73281,"missing":73221,"unbounded":false,"complete":false},"2.5":{"observed":58,"expected":12630,"missing":12572,"unbounded":false,"complete":false},"3.0":{"observed":55,"expected":2177,"missing":2122,"unbounded":false,"complete":false},"3.5":{"observed":51,"expected":375,"missing":324,"unbounded":false,"complete":false},"4.0":{"observed":45,"expected":65,"missing":20,"unbounded":false,"complete":false}},"gft95":{"2.0":{"observed":60,"expected":null,"missing":null,"unbounded":false,"complete":false,"unavailable":true},"2.5":{"observed":58,"expected":null,"missing":null,"unbounded":false,"complete":false,"unavailable":true},"3.0":{"observed":55,"expected":null,"missing":null,"unbounded":false,"complete":false,"unavailable":true},"3.5":{"observed":51,"expected":null,"missing":null,"unbounded":false,"complete":false,"unavailable":true},"4.0":{"observed":45,"expected":null,"missing":null,"unbounded":false,"complete":false,"unavailable":true}},"gft90":{"2.0":{"observed":60,"expected":null,"missing":null,"unbounded":false,"complete":false,"unavailable":true},"2.5":{"observed":58,"expected":null,"missing":null,"unbounded":false,"complete":false,"unavailable":true},"3.0":{"observed":55,"expected":null,"missing":null,"unbounded":false,"complete":false,"unavailable":true},"3.5":{"observed":51,"expected":null,"missing":null,"unbounded":false,"complete":false,"unavailable":true},"4.0":{"observed":45,"expected":null,"missing":null,"unbounded":false,"complete":false,"unavailable":true}},"cautious":{"2.0":{"observed":60,"expected":63110,"missing":63050,"unbounded":false,"complete":false},"2.5":{"observed":58,"expected":11921,"missing":11863,"unbounded":false,"complete":false},"3.0":{"observed":55,"expected":2252,"missing":2197,"unbounded":false,"complete":false},"3.5":{"observed":51,"expected":425,"missing":374,"unbounded":false,"complete":false},"4.0":{"observed":45,"expected":80,"missing":35,"unbounded":false,"complete":false}},"none":{"2.0":{"observed":60,"expected":null,"missing":null,"unbounded":true,"complete":false},"2.5":{"observed":58,"expected":null,"missing":null,"unbounded":true,"complete":false},"3.0":{"observed":55,"expected":null,"missing":null,"unbounded":true,"complete":false},"3.5":{"observed":51,"expected":null,"missing":null,"unbounded":true,"complete":false},"4.0":{"observed":45,"expected":null,"missing":null,"unbounded":true,"complete":false}}}},{"name":"Chile","cumulative":[4460,4460,4460,4460,4460,4460,4460,4460,4460,4460,4460,4460,4460,4460,4460,4460,4460,4460,4460,4460,4460,4460,4460,4460,4460,4460,4460,4460,4460,4460,4460,4460,4460,4460,4459,4459,4457,4454,4450,4447,4443,4441,4435,4433,4423,4419,4413,4405,4385,4357,4291,3983,3475,2733,1962,1297,826,560,429,319,248,197,154,123,97,78,58,48,33,28,23,18,14,11,9,4,4,2,2,1,1,1,1,1,1,0,0,0,0,0,0],"total":4460,"largest":7.4,"rules":{"maxc":{"mc":4.5,"b":1.4298,"sigma_b":0.0473,"n_above":1297,"unavailable":false,"implausible_b":false},"maxc_raw":{"mc":4.3,"b":1.4993,"sigma_b":0.0321,"n_above":2733,"unavailable":false,"implausible_b":false},"gft95":{"mc":4.7,"b":1.1131,"sigma_b":0.0477,"n_above":560,"unavailable":false,"implausible_b":false},"gft90":{"mc":4.2,"b":1.3694,"sigma_b":0.0234,"n_above":3475,"unavailable":false,"implausible_b":false},"cautious":{"mc":5.0,"b":1.0426,"sigma_b":0.0626,"n_above":248,"unavailable":false,"implausible_b":false},"none":{"mc":null,"b":null,"sigma_b":null,"n_above":null,"unavailable":false}},"grid":{"maxc":{"2.0":{"observed":4460,"expected":4869002,"missing":4864542,"unbounded":false,"complete":false},"2.5":{"observed":4459,"expected":938728,"missing":934269,"unbounded":false,"complete":false},"3.0":{"observed":4443,"expected":180984,"missing":176541,"unbounded":false,"complete":false},"3.5":{"observed":4419,"expected":34893,"missing":30474,"unbounded":false,"complete":false},"4.0":{"observed":4291,"expected":6727,"missing":2436,"unbounded":false,"complete":false}},"maxc_raw":{"2.0":{"observed":4460,"expected":7674138,"missing":7669678,"unbounded":false,"complete":false},"2.5":{"observed":4459,"expected":1365776,"missing":1361317,"unbounded":false,"complete":false},"3.0":{"observed":4443,"expected":243069,"missing":238626,"unbounded":false,"complete":false},"3.5":{"observed":4419,"expected":43259,"missing":38840,"unbounded":false,"complete":false},"4.0":{"observed":4291,"expected":7699,"missing":3408,"unbounded":false,"complete":false}},"gft95":{"2.0":{"observed":4460,"expected":566967,"missing":562507,"unbounded":false,"complete":false},"2.5":{"observed":4459,"expected":157401,"missing":152942,"unbounded":false,"complete":false},"3.0":{"observed":4443,"expected":43698,"missing":39255,"unbounded":false,"complete":false},"3.5":{"observed":4419,"expected":12131,"missing":7712,"unbounded":false,"complete":false},"4.0":{"observed":4291,"expected":3368,"missing":0,"unbounded":false,"complete":false}},"gft90":{"2.0":{"observed":4460,"expected":3577954,"missing":3573494,"unbounded":false,"complete":false},"2.5":{"observed":4459,"expected":739494,"missing":735035,"unbounded":false,"complete":false},"3.0":{"observed":4443,"expected":152839,"missing":148396,"unbounded":false,"complete":false},"3.5":{"observed":4419,"expected":31589,"missing":27170,"unbounded":false,"complete":false},"4.0":{"observed":4291,"expected":6529,"missing":2238,"unbounded":false,"complete":false}},"cautious":{"2.0":{"observed":4460,"expected":332852,"missing":328392,"unbounded":false,"complete":false},"2.5":{"observed":4459,"expected":100219,"missing":95760,"unbounded":false,"complete":false},"3.0":{"observed":4443,"expected":30175,"missing":25732,"unbounded":false,"complete":false},"3.5":{"observed":4419,"expected":9086,"missing":4667,"unbounded":false,"complete":false},"4.0":{"observed":4291,"expected":2736,"missing":0,"unbounded":false,"complete":false}},"none":{"2.0":{"observed":4460,"expected":null,"missing":null,"unbounded":true,"complete":false},"2.5":{"observed":4459,"expected":null,"missing":null,"unbounded":true,"complete":false},"3.0":{"observed":4443,"expected":null,"missing":null,"unbounded":true,"complete":false},"3.5":{"observed":4419,"expected":null,"missing":null,"unbounded":true,"complete":false},"4.0":{"observed":4291,"expected":null,"missing":null,"unbounded":true,"complete":false}}}},{"name":"Aotearoa New Zealand","cumulative":[713,713,713,713,713,713,713,713,713,713,713,713,713,713,713,713,713,713,713,713,713,713,713,713,713,713,713,713,713,713,712,712,712,712,712,711,710,707,705,704,701,696,695,692,688,683,678,673,672,671,667,637,574,496,378,273,185,144,117,95,70,53,36,24,18,14,13,9,6,5,5,5,4,3,2,2,2,2,1,1,1,1,1,1,0,0,0,0,0,0,0],"total":713,"largest":7.3,"rules":{"maxc":{"mc":4.5,"b":1.2395,"sigma_b":0.0814,"n_above":273,"unavailable":false,"implausible_b":false},"maxc_raw":{"mc":4.3,"b":1.2531,"sigma_b":0.0588,"n_above":496,"unavailable":false,"implausible_b":false},"gft95":{"mc":4.3,"b":1.2531,"sigma_b":0.0588,"n_above":496,"unavailable":false,"implausible_b":false},"gft90":{"mc":4.2,"b":1.106,"sigma_b":0.0427,"n_above":574,"unavailable":false,"implausible_b":false},"cautious":{"mc":5.0,"b":1.2459,"sigma_b":0.1773,"n_above":70,"unavailable":false,"implausible_b":false},"none":{"mc":null,"b":null,"sigma_b":null,"n_above":null,"unavailable":false}},"grid":{"maxc":{"2.0":{"observed":712,"expected":342699,"missing":341987,"unbounded":false,"complete":false},"2.5":{"observed":711,"expected":82255,"missing":81544,"unbounded":false,"complete":false},"3.0":{"observed":701,"expected":19743,"missing":19042,"unbounded":false,"complete":false},"3.5":{"observed":683,"expected":4739,"missing":4056,"unbounded":false,"complete":false},"4.0":{"observed":667,"expected":1137,"missing":470,"unbounded":false,"complete":false}},"maxc_raw":{"2.0":{"observed":712,"expected":378104,"missing":377392,"unbounded":false,"complete":false},"2.5":{"observed":711,"expected":89343,"missing":88632,"unbounded":false,"complete":false},"3.0":{"observed":701,"expected":21111,"missing":20410,"unbounded":false,"complete":false},"3.5":{"observed":683,"expected":4988,"missing":4305,"unbounded":false,"complete":false},"4.0":{"observed":667,"expected":1179,"missing":512,"unbounded":false,"complete":false}},"gft95":{"2.0":{"observed":712,"expected":378104,"missing":377392,"unbounded":false,"complete":false},"2.5":{"observed":711,"expected":89343,"missing":88632,"unbounded":false,"complete":false},"3.0":{"observed":701,"expected":21111,"missing":20410,"unbounded":false,"complete":false},"3.5":{"observed":683,"expected":4988,"missing":4305,"unbounded":false,"complete":false},"4.0":{"observed":667,"expected":1179,"missing":512,"unbounded":false,"complete":false}},"gft90":{"2.0":{"observed":712,"expected":155637,"missing":154925,"unbounded":false,"complete":false},"2.5":{"observed":711,"expected":43562,"missing":42851,"unbounded":false,"complete":false},"3.0":{"observed":701,"expected":12193,"missing":11492,"unbounded":false,"complete":false},"3.5":{"observed":683,"expected":3413,"missing":2730,"unbounded":false,"complete":false},"4.0":{"observed":667,"expected":955,"missing":288,"unbounded":false,"complete":false}},"cautious":{"2.0":{"observed":712,"expected":382647,"missing":381935,"unbounded":false,"complete":false},"2.5":{"observed":711,"expected":91169,"missing":90458,"unbounded":false,"complete":false},"3.0":{"observed":701,"expected":21722,"missing":21021,"unbounded":false,"complete":false},"3.5":{"observed":683,"expected":5175,"missing":4492,"unbounded":false,"complete":false},"4.0":{"observed":667,"expected":1233,"missing":566,"unbounded":false,"complete":false}},"none":{"2.0":{"observed":712,"expected":null,"missing":null,"unbounded":true,"complete":false},"2.5":{"observed":711,"expected":null,"missing":null,"unbounded":true,"complete":false},"3.0":{"observed":701,"expected":null,"missing":null,"unbounded":true,"complete":false},"3.5":{"observed":683,"expected":null,"missing":null,"unbounded":true,"complete":false},"4.0":{"observed":667,"expected":null,"missing":null,"unbounded":true,"complete":false}}}},{"name":"Indonesia","cumulative":[10103,10103,10103,10103,10103,10103,10103,10103,10103,10103,10103,10103,10103,10103,10103,10103,10103,10103,10103,10103,10103,10103,10103,10103,10103,10103,10103,10103,10103,10103,10103,10103,10103,10103,10103,10103,10103,10103,10103,10103,10103,10102,10102,10102,10102,10100,10100,10099,10098,10091,10073,9634,8774,7516,5993,4390,3118,2223,1761,1377,928,650,470,341,266,224,182,144,118,95,75,56,42,30,24,18,18,17,10,10,9,6,3,3,1,1,1,0,0,0,0],"total":10103,"largest":7.6,"rules":{"maxc":{"mc":4.6,"b":1.2701,"sigma_b":0.0238,"n_above":3118,"unavailable":false,"implausible_b":false},"maxc_raw":{"mc":4.4,"b":1.3274,"sigma_b":0.018,"n_above":5993,"unavailable":false,"implausible_b":false},"gft95":{"mc":4.3,"b":1.2382,"sigma_b":0.0139,"n_above":7516,"unavailable":false,"implausible_b":false},"gft90":{"mc":4.2,"b":1.1043,"sigma_b":0.0104,"n_above":8774,"unavailable":false,"implausible_b":false},"cautious":{"mc":5.1,"b":1.1342,"sigma_b":0.0479,"n_above":650,"unavailable":false,"implausible_b":false},"none":{"mc":null,"b":null,"sigma_b":null,"n_above":null,"unavailable":false}},"grid":{"maxc":{"2.0":{"observed":10103,"expected":6253687,"missing":6243584,"unbounded":false,"complete":false},"2.5":{"observed":10103,"expected":1449059,"missing":1438956,"unbounded":false,"complete":false},"3.0":{"observed":10103,"expected":335766,"missing":325663,"unbounded":false,"complete":false},"3.5":{"observed":10100,"expected":77801,"missing":67701,"unbounded":false,"complete":false},"4.0":{"observed":10073,"expected":18028,"missing":7955,"unbounded":false,"complete":false}},"maxc_raw":{"2.0":{"observed":10103,"expected":9191879,"missing":9181776,"unbounded":false,"complete":false},"2.5":{"observed":10103,"expected":1993904,"missing":1983801,"unbounded":false,"complete":false},"3.0":{"observed":10103,"expected":432518,"missing":422415,"unbounded":false,"complete":false},"3.5":{"observed":10100,"expected":93822,"missing":83722,"unbounded":false,"complete":false},"4.0":{"observed":10073,"expected":20352,"missing":10279,"unbounded":false,"complete":false}},"gft95":{"2.0":{"observed":10103,"expected":5294766,"missing":5284663,"unbounded":false,"complete":false},"2.5":{"observed":10103,"expected":1272761,"missing":1262658,"unbounded":false,"complete":false},"3.0":{"observed":10103,"expected":305947,"missing":295844,"unbounded":false,"complete":false},"3.5":{"observed":10100,"expected":73544,"missing":63444,"unbounded":false,"complete":false},"4.0":{"observed":10073,"expected":17679,"missing":7606,"unbounded":false,"complete":false}},"gft90":{"2.0":{"observed":10103,"expected":2358618,"missing":2348515,"unbounded":false,"complete":false},"2.5":{"observed":10103,"expected":661466,"missing":651363,"unbounded":false,"complete":false},"3.0":{"observed":10103,"expected":185506,"missing":175403,"unbounded":false,"complete":false},"3.5":{"observed":10100,"expected":52024,"missing":41924,"unbounded":false,"complete":false},"4.0":{"observed":10073,"expected":14590,"missing":4517,"unbounded":false,"complete":false}},"cautious":{"2.0":{"observed":10103,"expected":2132718,"missing":2122615,"unbounded":false,"complete":false},"2.5":{"observed":10103,"expected":577874,"missing":567771,"unbounded":false,"complete":false},"3.0":{"observed":10103,"expected":156579,"missing":146476,"unbounded":false,"complete":false},"3.5":{"observed":10100,"expected":42426,"missing":32326,"unbounded":false,"complete":false},"4.0":{"observed":10073,"expected":11496,"missing":1423,"unbounded":false,"complete":false}},"none":{"2.0":{"observed":10103,"expected":null,"missing":null,"unbounded":true,"complete":false},"2.5":{"observed":10103,"expected":null,"missing":null,"unbounded":true,"complete":false},"3.0":{"observed":10103,"expected":null,"missing":null,"unbounded":true,"complete":false},"3.5":{"observed":10100,"expected":null,"missing":null,"unbounded":true,"complete":false},"4.0":{"observed":10073,"expected":null,"missing":null,"unbounded":true,"complete":false}}}},{"name":"Himalaya","cumulative":[558,558,558,558,558,558,558,558,558,558,558,558,558,558,558,558,558,558,558,558,558,558,558,558,558,558,558,558,558,558,558,558,558,558,558,558,558,558,558,558,558,558,558,558,558,558,558,557,556,554,552,516,467,386,306,229,170,132,101,82,61,37,29,21,18,15,9,8,3,3,2,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0],"total":558,"largest":7.1,"rules":{"maxc":{"mc":4.4,"b":1.226,"sigma_b":0.069,"n_above":306,"unavailable":false,"implausible_b":false},"maxc_raw":{"mc":4.2,"b":1.0925,"sigma_b":0.0454,"n_above":467,"unavailable":false,"implausible_b":false},"gft95":{"mc":4.3,"b":1.1723,"sigma_b":0.0566,"n_above":386,"unavailable":false,"implausible_b":false},"gft90":{"mc":4.2,"b":1.0925,"sigma_b":0.0454,"n_above":467,"unavailable":false,"implausible_b":false},"cautious":{"mc":4.9,"b":1.3803,"sigma_b":0.1672,"n_above":82,"unavailable":false,"implausible_b":false},"none":{"mc":null,"b":null,"sigma_b":null,"n_above":null,"unavailable":false}},"grid":{"maxc":{"2.0":{"observed":558,"expected":267992,"missing":267434,"unbounded":false,"complete":false},"2.5":{"observed":558,"expected":65331,"missing":64773,"unbounded":false,"complete":false},"3.0":{"observed":558,"expected":15927,"missing":15369,"unbounded":false,"complete":false},"3.5":{"observed":558,"expected":3883,"missing":3325,"unbounded":false,"complete":false},"4.0":{"observed":552,"expected":947,"missing":395,"unbounded":false,"complete":false}},"maxc_raw":{"2.0":{"observed":558,"expected":118254,"missing":117696,"unbounded":false,"complete":false},"2.5":{"observed":558,"expected":33618,"missing":33060,"unbounded":false,"complete":false},"3.0":{"observed":558,"expected":9557,"missing":8999,"unbounded":false,"complete":false},"3.5":{"observed":558,"expected":2717,"missing":2159,"unbounded":false,"complete":false},"4.0":{"observed":552,"expected":772,"missing":220,"unbounded":false,"complete":false}},"gft95":{"2.0":{"observed":558,"expected":191813,"missing":191255,"unbounded":false,"complete":false},"2.5":{"observed":558,"expected":49742,"missing":49184,"unbounded":false,"complete":false},"3.0":{"observed":558,"expected":12900,"missing":12342,"unbounded":false,"complete":false},"3.5":{"observed":558,"expected":3345,"missing":2787,"unbounded":false,"complete":false},"4.0":{"observed":552,"expected":868,"missing":316,"unbounded":false,"complete":false}},"gft90":{"2.0":{"observed":558,"expected":118254,"missing":117696,"unbounded":false,"complete":false},"2.5":{"observed":558,"expected":33618,"missing":33060,"unbounded":false,"complete":false},"3.0":{"observed":558,"expected":9557,"missing":8999,"unbounded":false,"complete":false},"3.5":{"observed":558,"expected":2717,"missing":2159,"unbounded":false,"complete":false},"4.0":{"observed":552,"expected":772,"missing":220,"unbounded":false,"complete":false}},"cautious":{"2.0":{"observed":558,"expected":825437,"missing":824879,"unbounded":false,"complete":false},"2.5":{"observed":558,"expected":168474,"missing":167916,"unbounded":false,"complete":false},"3.0":{"observed":558,"expected":34386,"missing":33828,"unbounded":false,"complete":false},"3.5":{"observed":558,"expected":7018,"missing":6460,"unbounded":false,"complete":false},"4.0":{"observed":552,"expected":1432,"missing":880,"unbounded":false,"complete":false}},"none":{"2.0":{"observed":558,"expected":null,"missing":null,"unbounded":true,"complete":false},"2.5":{"observed":558,"expected":null,"missing":null,"unbounded":true,"complete":false},"3.0":{"observed":558,"expected":null,"missing":null,"unbounded":true,"complete":false},"3.5":{"observed":558,"expected":null,"missing":null,"unbounded":true,"complete":false},"4.0":{"observed":552,"expected":null,"missing":null,"unbounded":true,"complete":false}}}},{"name":"South Mid-Atlantic Ridge","cumulative":[295,295,295,295,295,295,295,295,295,295,295,295,295,295,295,295,295,295,295,295,295,295,295,295,295,295,295,295,295,295,295,295,295,295,295,295,295,295,295,295,295,295,295,295,295,295,295,295,295,295,295,295,293,291,289,279,242,185,137,106,73,47,38,32,26,18,9,5,5,4,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"total":295,"largest":6.2,"rules":{"maxc":{"mc":4.8,"b":1.3694,"sigma_b":0.1062,"n_above":137,"unavailable":false,"implausible_b":false},"maxc_raw":{"mc":4.6,"b":1.2991,"sigma_b":0.0756,"n_above":242,"unavailable":false,"implausible_b":false},"gft95":{"mc":null,"b":null,"sigma_b":null,"n_above":null,"unavailable":true},"gft90":{"mc":4.6,"b":1.2991,"sigma_b":0.0756,"n_above":242,"unavailable":false,"implausible_b":false},"cautious":{"mc":5.3,"b":1.616,"sigma_b":0.2263,"n_above":32,"unavailable":false,"implausible_b":true},"none":{"mc":null,"b":null,"sigma_b":null,"n_above":null,"unavailable":false}},"grid":{"maxc":{"2.0":{"observed":295,"expected":935493,"missing":935198,"unbounded":false,"complete":false},"2.5":{"observed":295,"expected":193348,"missing":193053,"unbounded":false,"complete":false},"3.0":{"observed":295,"expected":39961,"missing":39666,"unbounded":false,"complete":false},"3.5":{"observed":295,"expected":8259,"missing":7964,"unbounded":false,"complete":false},"4.0":{"observed":295,"expected":1707,"missing":1412,"unbounded":false,"complete":false}},"maxc_raw":{"2.0":{"observed":295,"expected":577398,"missing":577103,"unbounded":false,"complete":false},"2.5":{"observed":295,"expected":129397,"missing":129102,"unbounded":false,"complete":false},"3.0":{"observed":295,"expected":28998,"missing":28703,"unbounded":false,"complete":false},"3.5":{"observed":295,"expected":6499,"missing":6204,"unbounded":false,"complete":false},"4.0":{"observed":295,"expected":1456,"missing":1161,"unbounded":false,"complete":false}},"gft95":{"2.0":{"observed":295,"expected":null,"missing":null,"unbounded":false,"complete":false,"unavailable":true},"2.5":{"observed":295,"expected":null,"missing":null,"unbounded":false,"complete":false,"unavailable":true},"3.0":{"observed":295,"expected":null,"missing":null,"unbounded":false,"complete":false,"unavailable":true},"3.5":{"observed":295,"expected":null,"missing":null,"unbounded":false,"complete":false,"unavailable":true},"4.0":{"observed":295,"expected":null,"missing":null,"unbounded":false,"complete":false,"unavailable":true}},"gft90":{"2.0":{"observed":295,"expected":577398,"missing":577103,"unbounded":false,"complete":false},"2.5":{"observed":295,"expected":129397,"missing":129102,"unbounded":false,"complete":false},"3.0":{"observed":295,"expected":28998,"missing":28703,"unbounded":false,"complete":false},"3.5":{"observed":295,"expected":6499,"missing":6204,"unbounded":false,"complete":false},"4.0":{"observed":295,"expected":1456,"missing":1161,"unbounded":false,"complete":false}},"cautious":{"2.0":{"observed":295,"expected":6885730,"missing":6885435,"unbounded":false,"complete":false},"2.5":{"observed":295,"expected":1071396,"missing":1071101,"unbounded":false,"complete":false},"3.0":{"observed":295,"expected":166706,"missing":166411,"unbounded":false,"complete":false},"3.5":{"observed":295,"expected":25939,"missing":25644,"unbounded":false,"complete":false},"4.0":{"observed":295,"expected":4036,"missing":3741,"unbounded":false,"complete":false}},"none":{"2.0":{"observed":295,"expected":null,"missing":null,"unbounded":true,"complete":false},"2.5":{"observed":295,"expected":null,"missing":null,"unbounded":true,"complete":false},"3.0":{"observed":295,"expected":null,"missing":null,"unbounded":true,"complete":false},"3.5":{"observed":295,"expected":null,"missing":null,"unbounded":true,"complete":false},"4.0":{"observed":295,"expected":null,"missing":null,"unbounded":true,"complete":false}}}},{"name":"Central Africa","cumulative":[164,164,164,164,164,164,164,164,164,164,164,164,164,164,164,164,164,164,164,164,164,164,164,164,164,164,164,164,164,164,164,164,164,164,164,164,164,164,164,164,164,164,164,163,163,163,163,162,162,162,162,161,158,144,117,88,56,36,19,12,9,7,6,3,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"total":164,"largest":5.5,"rules":{"maxc":{"mc":4.7,"b":2.0044,"sigma_b":0.3607,"n_above":36,"unavailable":false,"implausible_b":true},"maxc_raw":{"mc":4.5,"b":1.9499,"sigma_b":0.2081,"n_above":88,"unavailable":false,"implausible_b":true},"gft95":{"mc":null,"b":null,"sigma_b":null,"n_above":null,"unavailable":true},"gft90":{"mc":4.4,"b":1.7023,"sigma_b":0.1396,"n_above":117,"unavailable":false,"implausible_b":true},"cautious":{"mc":5.2,"b":2.6058,"sigma_b":0.9385,"n_above":6,"unavailable":false,"implausible_b":true},"none":{"mc":null,"b":null,"sigma_b":null,"n_above":null,"unavailable":false}},"grid":{"maxc":{"2.0":{"observed":164,"expected":9293568,"missing":9293404,"unbounded":false,"complete":false},"2.5":{"observed":164,"expected":924661,"missing":924497,"unbounded":false,"complete":false},"3.0":{"observed":164,"expected":91999,"missing":91835,"unbounded":false,"complete":false},"3.5":{"observed":163,"expected":9153,"missing":8990,"unbounded":false,"complete":false},"4.0":{"observed":162,"expected":911,"missing":749,"unbounded":false,"complete":false}},"maxc_raw":{"2.0":{"observed":164,"expected":6595271,"missing":6595107,"unbounded":false,"complete":false},"2.5":{"observed":164,"expected":698687,"missing":698523,"unbounded":false,"complete":false},"3.0":{"observed":164,"expected":74017,"missing":73853,"unbounded":false,"complete":false},"3.5":{"observed":163,"expected":7841,"missing":7678,"unbounded":false,"complete":false},"4.0":{"observed":162,"expected":831,"missing":669,"unbounded":false,"complete":false}},"gft95":{"2.0":{"observed":164,"expected":null,"missing":null,"unbounded":false,"complete":false,"unavailable":true},"2.5":{"observed":164,"expected":null,"missing":null,"unbounded":false,"complete":false,"unavailable":true},"3.0":{"observed":164,"expected":null,"missing":null,"unbounded":false,"complete":false,"unavailable":true},"3.5":{"observed":163,"expected":null,"missing":null,"unbounded":false,"complete":false,"unavailable":true},"4.0":{"observed":162,"expected":null,"missing":null,"unbounded":false,"complete":false,"unavailable":true}},"gft90":{"2.0":{"observed":164,"expected":1424642,"missing":1424478,"unbounded":false,"complete":false},"2.5":{"observed":164,"expected":200704,"missing":200540,"unbounded":false,"complete":false},"3.0":{"observed":164,"expected":28275,"missing":28111,"unbounded":false,"complete":false},"3.5":{"observed":163,"expected":3983,"missing":3820,"unbounded":false,"complete":false},"4.0":{"observed":162,"expected":561,"missing":399,"unbounded":false,"complete":false}},"cautious":{"2.0":{"observed":164,"expected":1308311776,"missing":1308311612,"unbounded":false,"complete":false},"2.5":{"observed":164,"expected":65134525,"missing":65134361,"unbounded":false,"complete":false},"3.0":{"observed":164,"expected":3242733,"missing":3242569,"unbounded":false,"complete":false},"3.5":{"observed":163,"expected":161440,"missing":161277,"unbounded":false,"complete":false},"4.0":{"observed":162,"expected":8037,"missing":7875,"unbounded":false,"complete":false}},"none":{"2.0":{"observed":164,"expected":null,"missing":null,"unbounded":true,"complete":false},"2.5":{"observed":164,"expected":null,"missing":null,"unbounded":true,"complete":false},"3.0":{"observed":164,"expected":null,"missing":null,"unbounded":true,"complete":false},"3.5":{"observed":163,"expected":null,"missing":null,"unbounded":true,"complete":false},"4.0":{"observed":162,"expected":null,"missing":null,"unbounded":true,"complete":false}}}},{"name":"South of 60S","cumulative":[773,773,773,773,773,773,773,773,773,773,773,773,773,773,773,773,773,773,773,773,773,773,773,773,773,773,773,773,773,773,773,773,773,773,773,773,773,773,773,773,773,773,773,773,773,773,773,773,773,773,773,771,767,742,686,588,469,342,283,240,179,141,111,95,81,59,47,34,25,20,16,13,10,9,8,8,7,4,4,4,3,3,2,2,2,2,1,0,0,0,0],"total":773,"largest":7.6,"rules":{"maxc":{"mc":4.8,"b":0.9666,"sigma_b":0.057,"n_above":283,"unavailable":false,"implausible_b":false},"maxc_raw":{"mc":4.6,"b":1.0238,"sigma_b":0.0495,"n_above":469,"unavailable":false,"implausible_b":false},"gft95":{"mc":4.4,"b":0.9443,"sigma_b":0.0345,"n_above":686,"unavailable":false,"implausible_b":false},"gft90":{"mc":4.4,"b":0.9443,"sigma_b":0.0345,"n_above":686,"unavailable":false,"implausible_b":false},"cautious":{"mc":5.3,"b":1.0026,"sigma_b":0.1086,"n_above":95,"unavailable":false,"implausible_b":false},"none":{"mc":null,"b":null,"sigma_b":null,"n_above":null,"unavailable":false}},"grid":{"maxc":{"2.0":{"observed":773,"expected":143968,"missing":143195,"unbounded":false,"complete":false},"2.5":{"observed":773,"expected":47311,"missing":46538,"unbounded":false,"complete":false},"3.0":{"observed":773,"expected":15548,"missing":14775,"unbounded":false,"complete":false},"3.5":{"observed":773,"expected":5109,"missing":4336,"unbounded":false,"complete":false},"4.0":{"observed":773,"expected":1679,"missing":906,"unbounded":false,"complete":false}},"maxc_raw":{"2.0":{"observed":773,"expected":215304,"missing":214531,"unbounded":false,"complete":false},"2.5":{"observed":773,"expected":66245,"missing":65472,"unbounded":false,"complete":false},"3.0":{"observed":773,"expected":20382,"missing":19609,"unbounded":false,"complete":false},"3.5":{"observed":773,"expected":6271,"missing":5498,"unbounded":false,"complete":false},"4.0":{"observed":773,"expected":1930,"missing":1157,"unbounded":false,"complete":false}},"gft95":{"2.0":{"observed":773,"expected":126661,"missing":125888,"unbounded":false,"complete":false},"2.5":{"observed":773,"expected":42707,"missing":41934,"unbounded":false,"complete":false},"3.0":{"observed":773,"expected":14399,"missing":13626,"unbounded":false,"complete":false},"3.5":{"observed":773,"expected":4855,"missing":4082,"unbounded":false,"complete":false},"4.0":{"observed":773,"expected":1637,"missing":864,"unbounded":false,"complete":false}},"gft90":{"2.0":{"observed":773,"expected":126661,"missing":125888,"unbounded":false,"complete":false},"2.5":{"observed":773,"expected":42707,"missing":41934,"unbounded":false,"complete":false},"3.0":{"observed":773,"expected":14399,"missing":13626,"unbounded":false,"complete":false},"3.5":{"observed":773,"expected":4855,"missing":4082,"unbounded":false,"complete":false},"4.0":{"observed":773,"expected":1637,"missing":864,"unbounded":false,"complete":false}},"cautious":{"2.0":{"observed":773,"expected":193332,"missing":192559,"unbounded":false,"complete":false},"2.5":{"observed":773,"expected":60954,"missing":60181,"unbounded":false,"complete":false},"3.0":{"observed":773,"expected":19218,"missing":18445,"unbounded":false,"complete":false},"3.5":{"observed":773,"expected":6059,"missing":5286,"unbounded":false,"complete":false},"4.0":{"observed":773,"expected":1910,"missing":1137,"unbounded":false,"complete":false}},"none":{"2.0":{"observed":773,"expected":null,"missing":null,"unbounded":true,"complete":false},"2.5":{"observed":773,"expected":null,"missing":null,"unbounded":true,"complete":false},"3.0":{"observed":773,"expected":null,"missing":null,"unbounded":true,"complete":false},"3.5":{"observed":773,"expected":null,"missing":null,"unbounded":true,"complete":false},"4.0":{"observed":773,"expected":null,"missing":null,"unbounded":true,"complete":false}}}}],"headline":{"maxc":{"2.0":{"missing":24032884,"observed":80237,"unbounded":false},"2.5":{"missing":4160796,"observed":45545,"unbounded":false},"3.0":{"missing":797591,"observed":30271,"unbounded":false},"3.5":{"missing":151909,"observed":24475,"unbounded":false},"4.0":{"missing":17247,"observed":22355,"unbounded":false}},"maxc_raw":{"2.0":{"missing":28460747,"observed":80237,"unbounded":false},"2.5":{"missing":5178775,"observed":45545,"unbounded":false},"3.0":{"missing":990049,"observed":30271,"unbounded":false},"3.5":{"missing":184201,"observed":24475,"unbounded":false},"4.0":{"missing":21919,"observed":22355,"unbounded":false}},"gft95":{"2.0":{"missing":8645264,"observed":80237,"unbounded":false},"2.5":{"missing":2103833,"observed":45545,"unbounded":false},"3.0":{"missing":502004,"observed":30271,"unbounded":false},"3.5":{"missing":108499,"observed":24475,"unbounded":false},"4.0":{"missing":12538,"observed":22355,"unbounded":false}},"gft90":{"2.0":{"missing":9298926,"observed":80237,"unbounded":false},"2.5":{"missing":2107999,"observed":45545,"unbounded":false},"3.0":{"missing":489452,"observed":30271,"unbounded":false},"3.5":{"missing":106198,"observed":24475,"unbounded":false},"4.0":{"missing":11735,"observed":22355,"unbounded":false}},"cautious":{"2.0":{"missing":1567670112,"observed":80237,"unbounded":false},"2.5":{"missing":85417169,"observed":45545,"unbounded":false},"3.0":{"missing":5013391,"observed":30271,"unbounded":false},"3.5":{"missing":345453,"observed":24475,"unbounded":false},"4.0":{"missing":22447,"observed":22355,"unbounded":false}},"none":{"2.0":{"missing":null,"unbounded":true,"observed":80237},"2.5":{"missing":null,"unbounded":true,"observed":45545},"3.0":{"missing":null,"unbounded":true,"observed":30271},"3.5":{"missing":null,"unbounded":true,"observed":24475},"4.0":{"missing":null,"unbounded":true,"observed":22355}}}}</script>
+<script>
+(function(){
+  var D = JSON.parse(document.getElementById('payload').textContent);
+  var nojs = document.getElementById('nojs'); if (nojs) nojs.remove();
+  var byName = {}; D.regions.forEach(function(r){ byName[r.name] = r; });
+  var fs = document.getElementById('floor'), rs = document.getElementById('rule');
+  var big = document.querySelector('.stat .big');
+  var cap = document.querySelector('.stat .cap');
+
+  function fmt(n){
+    if (n === null || n === undefined) return '—';
+    return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+  }
+  function cell(r, rule, floor){ return r.grid[rule][Number(floor).toFixed(1)]; }
+
+  function paint(){
+    var rule = rs.value, floor = parseFloat(fs.value);
+    var tot = D.headline[rule][floor.toFixed(1)];
+    big.textContent = tot.unbounded ? '∞' : fmt(tot.missing);
+    cap.innerHTML = tot.unbounded
+      ? 'is what can be said about earthquakes of magnitude ' + floor.toFixed(1) + ' and above that are '
+        + '<b>missing from this record</b>, if you hold no law about magnitudes below the floor of hearing. '
+        + '<span>' + fmt(tot.observed) + ' are in it. Nothing in the record bounds the rest from above.</span>'
+      : 'earthquakes of magnitude ' + floor.toFixed(1) + ' and above happened inside these boxes in five '
+        + 'years and are <b>not in the record the world reads</b> — against ' + fmt(tot.observed) + ' that are. '
+        + '<span>Under the rule now selected. Choose <i>no law at all</i> and this number is not zero; '
+        + 'it is unbounded.</span>';
+
+    document.querySelectorAll('.cell').forEach(function(fig){
+      var r = byName[fig.getAttribute('data-region')];
+      var c = cell(r, rule, floor), ru = r.rules[rule];
+      fig.querySelector('[data-missing]').textContent =
+        c.unbounded ? '∞' : (c.unavailable ? '—' : fmt(c.missing));
+      fig.querySelector('[data-atm]').textContent =
+        'unrecorded at M ' + floor.toFixed(1) + ' and above';
+      fig.querySelector('[data-sub]').textContent =
+        (ru.mc === null ? (ru.unavailable ? 'this estimator found no floor here' : 'no floor assumed')
+                        : 'floor of hearing M ' + ru.mc.toFixed(1))
+        + (ru.b ? ' · b = ' + ru.b.toFixed(2) + ' ± ' + (ru.sigma_b || 0).toFixed(2) : '')
+        + ' · ' + fmt(c.observed) + ' in the record';
+      redraw(fig.querySelector('svg'), r, rule, floor);
+    });
+    document.querySelectorAll('td.dflt').forEach(function(td){ td.classList.remove('dflt'); });
+    var ri = D.rules.indexOf(rule), fi = D.floors.indexOf(floor);
+    if (ri >= 0 && fi >= 0) {
+      document.querySelectorAll('tbody tr').forEach(function(tr){
+        var td = tr.querySelectorAll('td')[1 + ri * D.floors.length + fi];
+        if (td) td.classList.add('dflt');
+      });
+    }
+  }
+
+  function redraw(svg, r, rule, floor){
+    var W = 250, H = 168, L = 34, RT = 8, T = 16, BT = 26, lo = 1.0, hi = 7.0;
+    var ymax = Math.max(1, Math.log10(Math.max(1, r.cumulative[0])) + 0.25);
+    var X = function(m){ return L + (m - lo) / (hi - lo) * (W - L - RT); };
+    var Y = function(v){ return T + (1 - v / ymax) * (H - T - BT); };
+    var ru = r.rules[rule], mc = ru.mc, b = ru.b;
+    var gap = svg.querySelector('.gap'), law = svg.querySelector('.law');
+    var mcl = svg.querySelector('.mcline'), fl = svg.querySelector('.floorline');
+    if (fl){ fl.setAttribute('x1', X(floor)); fl.setAttribute('x2', X(floor)); }
+    var at = function(m){
+      for (var i = 0; i < D.thresholds.length; i++)
+        if (Math.abs(D.thresholds[i] - m) < 1e-9) return r.cumulative[i];
+      return null;
+    };
+    if (mc === null || b === null || floor >= mc - 1e-9){
+      if (gap) gap.setAttribute('points', '');
+      if (law) law.setAttribute('x1', 0), law.setAttribute('x2', 0), law.setAttribute('y1', 0), law.setAttribute('y2', 0);
+      if (mcl) mcl.setAttribute('x1', -10), mcl.setAttribute('x2', -10);
+      return;
+    }
+    var nmc = at(mc); if (!nmc) return;
+    var a = Math.log10(nmc) + b * mc, up = [], back = [], m;
+    for (m = floor; m <= mc + 1e-9; m = Math.round((m + 0.1) * 10) / 10)
+      up.push(X(m).toFixed(1) + ',' + Y(Math.max(0, a - b * m)).toFixed(1));
+    for (m = mc; m >= floor - 1e-9; m = Math.round((m - 0.1) * 10) / 10){
+      var c = at(Math.round(m * 10) / 10);
+      if (c) back.push(X(m).toFixed(1) + ',' + Y(Math.log10(c)).toFixed(1));
+    }
+    if (gap) gap.setAttribute('points', up.concat(back).join(' '));
+    var top = Math.min(hi, r.largest === null ? hi : r.largest);
+    if (law){
+      law.setAttribute('x1', X(floor).toFixed(1)); law.setAttribute('y1', Y(Math.max(0, a - b * floor)).toFixed(1));
+      law.setAttribute('x2', X(top).toFixed(1));   law.setAttribute('y2', Y(Math.max(0, a - b * top)).toFixed(1));
+    }
+    if (mcl){ mcl.setAttribute('x1', X(mc).toFixed(1)); mcl.setAttribute('x2', X(mc).toFixed(1)); }
+  }
+
+  fs.addEventListener('change', paint);
+  rs.addEventListener('change', paint);
+  paint();
+})();
+</script>
+<footer class="fbde-work-frame fbde-work-frame--foot"><p class="fbde-work-frame__note">Leave the work:</p><nav class="fbde-work-frame__nav"><a href="/studio">← The Studio</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/studio/works">the studio’s premieres</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/ecology">the research ecology</a></nav></footer></body>
+</html>
