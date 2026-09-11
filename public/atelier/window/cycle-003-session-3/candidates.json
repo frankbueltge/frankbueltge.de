@@ -1,0 +1,81 @@
+{
+ "candidates": [
+  {
+   "holds": "works and people of every kind, community-built, CC0",
+   "id": "wikidata",
+   "independent_of_the_atlas": true,
+   "judgement": "chosen. Its inclusion rule was written before this atlas and without reference to it, and it is queryable. A 429 in the status line below is this practice's own doing: the front door was knocked on while the session's probe was still running against the same endpoint, and the probe record beside this file is the evidence that it served.",
+   "machine_readable": true,
+   "name": "Wikidata",
+   "probe": {
+    "content_type": "text/html; charset=utf-8",
+    "error": "HTTP 429",
+    "seconds": 0.22,
+    "status": 429
+   },
+   "url": "https://query.wikidata.org/sparql?query=SELECT%20*%20WHERE%20%7B%3Fs%20%3Fp%20%3Fo%7D%20LIMIT%201&format=json"
+  },
+  {
+   "holds": "born-digital art, curated since 1999",
+   "id": "rhizome-artbase",
+   "independent_of_the_atlas": true,
+   "judgement": "refused an honestly identified instrument at the front door; not asked again and nothing worked around.",
+   "machine_readable": null,
+   "name": "Rhizome ArtBase",
+   "probe": {
+    "content_type": "text/html; charset=UTF-8",
+    "error": "HTTP 403",
+    "seconds": 1.74,
+    "status": 403
+   },
+   "url": "https://rhizome.org/art/artbase/"
+  },
+  {
+   "holds": "digital and algorithmic art, University of Bremen",
+   "id": "compart-dada",
+   "independent_of_the_atlas": true,
+   "judgement": "the connection was reset from this machine; not reachable here.",
+   "machine_readable": null,
+   "name": "compart — Database of Digital Art",
+   "probe": {
+    "content_type": null,
+    "error": "URLError: <urlopen error [Errno 104] Connection reset by peer>",
+    "seconds": 6.3,
+    "status": null
+   },
+   "url": "https://dada.compart-bremen.de/browse/artwork"
+  },
+  {
+   "holds": "media art, ZKM and Goethe-Institut",
+   "id": "medienkunstnetz",
+   "independent_of_the_atlas": true,
+   "judgement": "the connection was reset from this machine; not reachable here.",
+   "machine_readable": null,
+   "name": "Medien Kunst Netz / Media Art Net",
+   "probe": {
+    "content_type": null,
+    "error": "URLError: <urlopen error [Errno 104] Connection reset by peer>",
+    "seconds": 6.88,
+    "status": null
+   },
+   "url": "https://www.medienkunstnetz.de/works/"
+  },
+  {
+   "holds": "works distinguished by one prize, 1987 onwards",
+   "id": "ars-electronica-archive",
+   "independent_of_the_atlas": true,
+   "judgement": "reachable, and not a candidate on the merits: it is the record of one prize's distinctions, so its inclusion rule is a jury's and its population is not data art. Left unasked rather than mined.",
+   "machine_readable": null,
+   "name": "Ars Electronica Prix archive",
+   "probe": {
+    "content_type": "text/html; charset=utf-8",
+    "error": null,
+    "seconds": 3.13,
+    "status": 200
+   },
+   "url": "https://archive.aec.at/prix/"
+  }
+ ],
+ "method": "one GET per candidate front door, User-Agent naming this instrument, no retry and no attempt to get around a refusal",
+ "probed_at_utc": "2026-09-11T04:48:09Z"
+}

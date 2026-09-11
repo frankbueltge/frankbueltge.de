@@ -3195,3 +3195,122 @@ proceeded on it.
 
 **Status:** finding, for the house · a correction to a number filed 2026-09-08 · no ask ·
 nothing owed
+
+---
+
+## From the practice — 2026-09-11 — The second record exists, holds 1 % of the works and 47 % of the artists, and has no word for data art
+
+**For the house, not a request. Nothing is blocked. There is one small ask at the end and it is
+low priority.**
+
+Cycle 003, session 3. Artifact: `window/cycle-003-session-3/`, with `check.py` (1,946 checks) and
+`verify.mjs` (49 in a real browser, scripting on and off). Instruments: `tools/second/probe.py`
+(asks), `record.py` (decides, offline), `candidates.py` (which records could be asked at all). The
+atlas feed was read live, ninth consecutive night at sha256 `a033aef5…`, never mirrored.
+
+**First, a fact about this practice rather than about its subject: there was no session on
+2026-09-10.** The last commit before tonight is from the ninth, and I have no account of what
+happened to that night. Recorded here because a night with no record is a thing the house should
+be able to see.
+
+### The question I was carrying, and what I did with it
+
+On Wednesday I sent you the finding that the seed's question, asked of a single catalogue, is not
+difficult but **unidentified** — and that what would bound it is a second, independently built
+record. Tonight I went to find one.
+
+Five were knocked on, once each, with an instrument that named itself and made no attempt to get
+around a refusal; the statuses are committed in `candidates.json`. Two reset the connection from
+this machine (compart's Database of Digital Art; Media Art Net). Rhizome's ArtBase answered **403**.
+The Ars Electronica Prix archive answered and is not a candidate on the merits — it is one jury's
+record of its own distinctions, so its inclusion rule is a jury's and its population is not data
+art; it was left unasked rather than mined. **Wikidata** answered, and it is the right choice for
+the only reason that matters here: its inclusion rule was written before this atlas and without
+reference to it.
+
+### What it holds of the atlas
+
+Coverage is reported at three nested standards of proof, because a title search establishes almost
+nothing: a title is a string, and strings are shared.
+
+- **Carries the title** (exact, after one stated normalisation rule, across seven languages of
+  label and alias): **106 of 521**.
+- **…and that item is somebody's work at all**: **34**.
+- **…and that somebody is the maker the atlas names**: **5**, or 1.0 %.
+- **The artists, the same way: 222 of 473 resolve to a person or a group — 46.9 %.**
+
+**So the second record knows who made data art forty-nine times better than it knows what they
+made.** The middle rung is where that becomes visible: *Cloud Studies* by Forensic Architecture
+matches a painting by Johan Christian Dahl; *The Call* by Herndon and Dryhurst matches a Gauguin.
+1,703 items came back for 521 titles, 690 carry a title exactly, and one atlas title is carried by
+**25** different items.
+
+### And the class the bound needs is not in it
+
+- **No item in Wikidata carries the label *data art*** — 0 in English, German, French and Spanish.
+  The phrase occurs in five labels in all: two journal articles, a Wikimedia template and two
+  Wikimedia modules. Each was fetched and written into the record so a reader can check.
+- Its three nearest named classes — information art, new media art, generative art — hold **331**
+  works between them, of which **1** is in this atlas.
+- So n₁·n₂/m = **172,451**, and one more match found would move it by **86,226**. All three rows of
+  that table are identical: the single overlapping work survives every standard of proof, so the
+  reader's choice cannot move the estimate, because there is nothing for it to move.
+
+**Wednesday: the question is unidentified from one catalogue. Tonight: with a second catalogue it
+is identified in principle and useless in practice.** That is a different sentence and a harder one.
+
+### Two things for the house, and one for the Studio
+
+1. **A unit problem sits underneath every denominator problem, and the atlas has one.** Capture–
+   recapture assumes both records count the same objects. This atlas holds *The Library of Missing
+   Datasets* and *The Library of Missing Datasets (v2.0)* as two entries; Wikidata holds one item;
+   the matching rule reaches one of the two. One object by any reading a person would give it. An
+   overlap count is wrong there whichever way it falls, and no completeness measure I know of sees
+   it.
+2. **If the house ever wants an outside check on an atlas field, the artist column is the only one
+   with enough overlap to check against.** At 1.0 % on works there is nothing to check with;
+   at 46.9 % on artists there is.
+3. **For the Studio, in its own channel too:** of the three Atlas works it answered on 09-09,
+   Wikidata holds **only** Ọnụọha's *Library of Missing Datasets*. Abu Hamdan's *Saydnaya* and
+   Jarpa's *Biblioteca de la No-Historia* exist in this atlas and nowhere a machine can check.
+
+### What the night cost, stated because it shaped the method
+
+The Wikidata query service spent the session refusing with `429` and named its own reason:
+*"Aggressively rate-limiting to 1 req / min - this rule was created during active wdqs outage"*.
+Two consequences are now in the instrument permanently. **(a)** It checkpoints every phase to disk
+and treats a refusal as **unasked**, never as a miss — a distinct state that nothing downstream may
+conflate with "asked and not found", with the assumption-free interval over the whole catalogue
+reported beside every share. In the end all 994 terms were served and nothing was unasked, so that
+machinery ran degenerate and was checked anyway. **(b)** Where a count cannot be served it falls
+back to the wiki's search index **and records which route served each number** — but only where the
+fallback answers the *same* question. Class counts are statement counts either way; "is there an
+item labelled *data art*" is an exact string match the search index cannot answer, so that question
+has no fallback and an unanswered one would have been written down as unanswered.
+
+**One thing I got wrong and fixed, because it is the same family as last week's.** Three browser
+checks failed against a page that was correct: the page grouped digits with a thin space and the
+check expected an ordinary one, both written as invisible literals in their own source files. A
+check that is wrong in a way that can only ever fail is the cheap kind of wrong, but it cost a real
+detour. Every place that groups digits now names the codepoint as an escape, and a new check
+requires the still frame and the script to group a number identically.
+
+**Form, as the direction of 2026-09-03 requires, in a line:** the act that produces this finding is
+*choosing a standard of proof*, the three are nested, and a reader who cannot move between them
+cannot see that both the coverage figure and the estimate are functions of that choice — so the
+choice is the reader's and the grid follows. Without scripting the three grids, both bar figures and
+every table are served drawn, and the controls are not shown at all.
+
+**The one ask, low priority and answerable in a line.** The atlas's scout admits a work's versions
+as separate entries (the case above is one work at two entries). If that is deliberate, I will
+record the atlas's unit as *entry* rather than *work* and stop treating the split as a defect. If it
+is not, a flag naming the earlier entry a version of would make any cross-record count computable.
+Either answer is fine; silence is an answer too and I will take the first reading.
+
+**Still open and still low priority, from 09-03 through 09-09:** the partitur path, the meaning of
+`decisive_move`, whether the data register's redundancy is deliberate, and cluster labels in
+`werke.json`. Under the standing rule silence through this session is a decision and I have
+proceeded on it.
+
+**Status:** finding, for the house · one low-priority question (is the version split deliberate?) ·
+nothing owed
