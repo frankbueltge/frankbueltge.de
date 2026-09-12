@@ -3034,3 +3034,133 @@ rather than edited into the file.
 
 **Status:** correction filed · nothing withdrawn, the corrected claims stand beside the struck ones ·
 no answer required
+
+---
+
+## Response — 2026-09-12 (session 158) — we replaced the reader's opinion with a task, and the task convicted itself
+
+**To the direction of 2026-09-03, still standing; nothing newer from you in this file, and none was
+needed.** Cycle 003, session 4 of 3–5. Artifact:
+`artifacts/cycle-003/2026-09-12-what-a-description-is-for/` — page, five-minute summary,
+pre-registration committed before the first record was fetched, three blind sheets committed before
+any answer existed, `VERIFICATION.md`, `check.py` (1,434 checks).
+
+**Where we were.** On 2026-09-11 a blind reader convicted our hollowness screen — it flagged 31 of
+60 values, the reader called 5 empty, precision 0.129 — and the defect we filed was in our own
+*audit*: one of the rules is a relation between a value and the whole catalogue, and a reader shown
+one value at a time cannot see it. We had scored a rule against a question that could not see it.
+
+**What we did about it.** Stopped asking an opinion and asked a task with the same shape as the
+rule. Blank out of a description every word the record's own title already contains; show it with
+five candidate titles from the same catalogue; see whether the right one can be picked. Chance 20 %.
+Two catalogues counted whole — the house atlas (521) and data.gov.uk (68,017, description filled on
+98.81 %) — sixty held-out items per arm, three separate readers, each given one file and nothing
+else.
+
+**It did not work, and it failed in the opposite direction.** Accuracy 95.00 % at home and 93.33 %
+abroad. **27 of 29** values the screen calls hollow still identified their record out of five. The
+screen's precision against the new criterion is **0.069** — half of yesterday's 0.129 — and on
+data.gov.uk the sign reverses: flagged values were identified *more* often than unflagged ones, a
+gap of **−6.67** points. Four of seven predictions refuted; one of the two confirmations is vacuous
+and the page says so; one was unevaluable because of a defect of ours.
+
+**The finding that makes the night worth something.** A second, wholly mechanical instrument said
+0.96 % of the atlas fails to identify itself against 62.17 % of data.gov.uk — sixty-five times more.
+Then we saw what it actually does: it intersects word lists *inside* the catalogue, so a bigger room
+makes the same sentence less identifying. We measured that rather than confessing it. One catalogue,
+eight sizes, instrument unchanged: **16.51 % at 521 records, 62.17 % at 67,205** — a factor of 3.8
+with nothing about the descriptions changed. At matched size the real difference against the atlas is
+about seventeen-fold, roughly a quarter of what the raw comparison claimed.
+
+**Identifying power is not a property of a description. It is a property of a description and a
+room.** So is duplication. So, we now think, is hollowness — and that is the same shape the Atelier
+reports as a unit problem and the Studio as "missing from this record and missing from the world are
+two different things."
+
+**So we are closing a question against ourselves rather than leaving it open.** On 2026-09-08 we
+asked whether a completeness metric that discounts unusable values is worth defining. Four
+operationalisations of "unusable" in five sessions, pairwise κ between −0.0667 and 0.0378. **Not on
+this evidence.** A metric whose numerator cannot be defined twice the same way should not be
+proposed to anybody. What survives is smaller and holds: the screen is **not** a detector of
+uninformative text, and no artifact of this practice may call it one again. It detects scrape
+residue, truncation and repetition, which are real catalogue defects and not the same thing.
+
+**One report against ourselves that you should see, because it is a press-law matter and not only a
+method one.** Our first read of the nearest neighbouring paper was **delegated**, and it invented its
+evidence: two sentences returned inside quotation marks that do not occur in the paper, and a claimed
+method (self-retrieval) that is not the paper's — it uses ranking quality against a query set. We
+re-read the same PDF with this house's own extractor and found neither. Had we trusted the delegate,
+this artifact would have attributed to five named authors a method they do not use. Our open question
+46 has been about how much of the literature an automated reader is *refused*; this is what an
+automated reader is *given* that was never there, and it is the worse half, because a refusal
+announces itself. The fabricated strings and their zero counts are in `data/sources.json` so anyone
+can check the check.
+
+**Eight defects of our own are filed in `VERIFICATION.md`**, including: no kill condition guarded
+against the task being too *easy*, only too hard; a prediction we wrote whose subject our own
+committed artifact of the day before showed to be empty; and — worse than a new error — this
+pre-registration **repeats** the opener-list miscount an adversary found in yesterday's, copied
+forward one day later.
+
+**Next session is the fifth and last of this cycle's budget and should be the presentation**,
+`presentations/cycle-003/`, unless the siblings' work makes one more measurement the better close.
+
+**Status:** report · no answer required before the next session
+
+---
+
+## Correction — 2026-09-12 (session 158, same day) — an adversary broke the checker twice, and one prediction was decided before a label was read
+
+**Filed the same night, after the entry above and after the branch had already landed.** An adversary
+was convened against the finished artifact. It broke `check.py` twice. Both breaks were reproduced
+here before anything was changed; both are closed; nothing is withdrawn.
+
+**1. The screen verdicts had no anchor at all.** `check.py` claimed it could not be fooled by a lie
+written into `results.json`, because it recomputed from `data/task-rows.json`. But the *screen* fields
+in that file — which value the screen flagged — were never recomputed from anything. Flip one
+`hollow_broad`, recompute the figures that follow, rebuild: the page reported **26 of 28** instead of
+27 of 29 and precision 0.0714 instead of 0.0690, with **1,434 of 1,434 checks green**. **Closed:** the
+frozen rules R1, R2, R3 and R5 are now re-run from a raw value anchored in `data/screen-anchor.json`,
+`task-rows.json` must agree with them field by field, and every anchored raw value must mask down
+byte-for-byte to the value in the sheet that was committed *before any label existed*.
+
+**2. The predictions block was a second copy of numbers held elsewhere.** We re-derived every
+prediction's *verdict* from its falsifier and never checked its *values*. Setting
+`predictions.P3.precision` to 0.9999 and touching nothing else rendered "precision 0.9999" in the
+predictions table while the same page showed 0.0690 two sections above — all green. **Closed:** every
+numeric field of every prediction must now equal its source.
+
+**What the checker still cannot verify, and now says so.** R4 is a relation between a value and the
+whole catalogue, and no catalogue is committed here (protocol §7). It is checkable only by re-fetching
+the feed at the recorded digest. The old docstring implied it verified everything; it did not.
+
+**3. One claim we asserted by analogy, now measured — and the stronger for it.** The page said the
+screen's duplicate rule must be size-dependent too, having measured only the narrowing instrument.
+That was rhetoric. Measured on the same ladder, rules untouched: **R4 fires on 4.84 % of data.gov.uk
+at 521 records and 30.92 % at 67,205 — a factor of 6.39, larger than the narrowing instrument's
+3.77.** The whole screen moves 48.21 % → 62.03 % with it, and since R1, R2 and R3 cannot move at all,
+every point of that rise is R4's.
+
+**4. P4 was decided by the census before a single label was read.** It scores the agreement between
+the model-free instrument and the reader — but **0 of 60** home items were ones the instrument called
+non-unique, because only 5 of 521 atlas values are. With one binary rater at zero variance, κ is
+exactly **0** whatever the other does. P4's "refuted" carries no information at all. P5 got a
+minimum-count clause written in advance; **P4 has the same structure — a rare-event indicator — and
+did not.** We audited P6 for precisely this vacuity in the same document and missed P4. Filed as A9.
+
+**5. And one of ours, found while closing theirs.** The sheet generator applies Unicode NFKC and the
+frozen screen does not, so the text the reader saw was not byte-identical to the text the screen
+judged, for **6 of 180** sampled items — in every case an ellipsis expanded to three dots. Checked
+rather than assumed: **0 of 180** rule verdicts move under NFKC, and the checker now enforces it.
+
+**Eleven defects now stand against this artifact, three of them the adversary's.** The checker runs
+**4,344** checks and its two prose records must state that number or it fails. `VERIFICATION.md` §5
+also records the fronts the adversary attacked and could not break, because a failed attack is
+evidence too — including the reproduction of 2026-09-08's figures and the house rule on naming tools.
+
+**One thing it observed that is ours to fix, not its.** It was reviewing a moving target: this session
+kept committing to the same branch while it worked, and it had to re-run every demonstration against
+the final commit. It handled that correctly and said which commit each result belonged to. The pacing
+was our fault.
+
+**Status:** correction filed · nothing withdrawn · no answer required

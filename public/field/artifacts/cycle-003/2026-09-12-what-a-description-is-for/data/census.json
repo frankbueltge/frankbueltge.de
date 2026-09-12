@@ -1,0 +1,146 @@
+{
+  "generated_by": "tools/identify/identify.py",
+  "date": "2026-09-12",
+  "session": 158,
+  "params": {
+    "seed": 20260912,
+    "n_sample": 60,
+    "n_candidates": 5,
+    "common_df_fraction": 0.1,
+    "n_rarest": 3,
+    "sheet_cap_chars": 1200
+  },
+  "manifest": {
+    "atlas": {
+      "catalogue": "atlas",
+      "api_total": 521,
+      "harvested": 521,
+      "endpoint": "https://frankbueltge.de/atlas/werke.json",
+      "field": "decisive_move",
+      "stratum_field": "venue_prize (provenance families, frozen 2026-09-08)",
+      "sha256": "a033aef59a4a0d397de02f57cd7db50bd44b075fe1756c6d3490355528c64a61",
+      "bytes": 387847,
+      "seconds": 0.4,
+      "fetched_utc": "2026-09-12T03:41:45Z",
+      "ok": true
+    },
+    "uk": {
+      "catalogue": "uk",
+      "api_total": 68017,
+      "harvested": 68017,
+      "pages": 69,
+      "endpoint": "https://ckan.publishing.service.gov.uk/api/3/action/package_search",
+      "field": "notes",
+      "stratum_field": "organization",
+      "seconds": 174.7,
+      "fetched_utc": "2026-09-12T03:44:40Z",
+      "ok": true
+    }
+  },
+  "census": {
+    "atlas": {
+      "catalogue": "atlas",
+      "label": "Atlas of Data Art (home arm)",
+      "field": "decisive_move",
+      "records": 521,
+      "present": 521,
+      "declared_completeness_pct": 100.0,
+      "narrowing": {
+        "not_unique": 5,
+        "not_unique_pct": 0.96,
+        "not_unique_ci": [
+          0.41,
+          2.23
+        ],
+        "identifies_nothing": 0,
+        "identifies_nothing_pct": 0.0,
+        "median_set_size": 1,
+        "mean_masked_tokens": 28.49,
+        "under_3_masked_tokens": 0,
+        "under_3_masked_tokens_pct": 0.0
+      },
+      "screen": {
+        "r1_chrome": {
+          "n": 78,
+          "pct": 14.97
+        },
+        "r2_truncated_tail": {
+          "n": 207,
+          "pct": 39.73
+        },
+        "r3_truncated_head": {
+          "n": 152,
+          "pct": 29.17
+        },
+        "r4_duplicate": {
+          "n": 4,
+          "pct": 0.77
+        },
+        "r5_title_echo": {
+          "n": 0,
+          "pct": 0.0
+        },
+        "hollow_strict": {
+          "n": 82,
+          "pct": 15.74
+        },
+        "hollow_broad": {
+          "n": 211,
+          "pct": 40.5
+        }
+      }
+    },
+    "uk": {
+      "catalogue": "uk",
+      "label": "data.gov.uk",
+      "field": "notes",
+      "records": 68017,
+      "present": 67205,
+      "declared_completeness_pct": 98.81,
+      "narrowing": {
+        "not_unique": 41784,
+        "not_unique_pct": 62.17,
+        "not_unique_ci": [
+          61.81,
+          62.54
+        ],
+        "identifies_nothing": 1895,
+        "identifies_nothing_pct": 2.82,
+        "median_set_size": 3,
+        "mean_masked_tokens": 81.45,
+        "under_3_masked_tokens": 2981,
+        "under_3_masked_tokens_pct": 4.44
+      },
+      "screen": {
+        "r1_chrome": {
+          "n": 3275,
+          "pct": 4.87
+        },
+        "r2_truncated_tail": {
+          "n": 30116,
+          "pct": 44.81
+        },
+        "r3_truncated_head": {
+          "n": 1181,
+          "pct": 1.76
+        },
+        "r4_duplicate": {
+          "n": 20783,
+          "pct": 30.92
+        },
+        "r5_title_echo": {
+          "n": 1706,
+          "pct": 2.54
+        },
+        "hollow_strict": {
+          "n": 23340,
+          "pct": 34.73
+        },
+        "hollow_broad": {
+          "n": 41689,
+          "pct": 62.03
+        }
+      }
+    }
+  }
+}
