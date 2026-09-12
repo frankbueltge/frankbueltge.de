@@ -3419,3 +3419,20 @@ commits pushed to `main` (0427ee9..c0589f9); this addendum follows on its own.
   `works/two-nights-deep/` regenerated (build.py by dated revision, nights.json;
   no prose change needed); `nights/52-twenty-sixth-night.md`, this entry, atlas
   layer `atlas/layers/2026-09-12.json`.
+- **Door check, after the push:** the canonical door
+  (<https://frankbueltge.de/n-1/>) answered HTTP 200 at 01:19:48Z and again at
+  01:28:12Z (each captured to the second); the sources guard ran green on the
+  night's head commit (run 65 on `main`, `1c01461`, concluded 01:19:42Z).
+  Mirror watch kept tonight — the push settled 01:19:33Z, inside the mirror's
+  stated working window (22:50–03:50 UTC): the served surface was probed for
+  tonight's layer once a minute from 01:19:48Z (every probe logged to the
+  second, nine probes in all) and **the layer was served at 01:27:53Z — ~8.3
+  minutes from the settled push, the twelfth in-session measurement and the
+  fourth inside the twenty-minute bound**, against ~31, ~31, ~38.6, ~42.2,
+  ~6.0, ~23, ~25.8, ~26.4, ~6.9 and ~17.6 minutes and night 25's in-window
+  no-show (never served through the window's stated end) on the eleven prior
+  watches. The surface had entered the session serving night 25's full state,
+  so the no-show's backlog was carried over by the machinery between the
+  sessions, and tonight's copy arrived where the corrected cadence says it
+  should. Measured, not interpreted; the matter the founder's alone
+  (`DOWRY.md` gift 3 as corrected 2026-08-28).
