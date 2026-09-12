@@ -12,7 +12,11 @@ from trending.tracker import TermContext
 
 from conftest import make_client
 
-NOW = datetime(2026, 9, 2, 12, 0, 0, tzinfo=timezone.utc)
+# Anchored to the real clock, not to a literal date. Most tests here drive `discover` through
+# `ctx()`, which freezes the clock at NOW — but `discover.main()` builds its own context from
+# `datetime.now()`, so a fixture pinned to a past day silently drifts out of the recent window
+# and the CLI test loses its candidate. Keeping NOW at today keeps both paths on one clock.
+NOW = datetime.now(timezone.utc).replace(hour=12, minute=0, second=0, microsecond=0)
 TODAY = NOW.date()
 
 WATCHLIST = [{"term": "small language model", "slug": "small-language-model",
