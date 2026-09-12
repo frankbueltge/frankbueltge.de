@@ -9,6 +9,15 @@ Session 23 wrote the iteration and did not enter it here; session 24 audited
 the record's fidelity to itself and did not look at this file. The entry below
 is added late and dated, and nothing above it is retouched.*
 
+*Corrected 2026-09-12 (session 28), and it is the same failure again: the two
+lines above stood unchanged while session 27 wrote iteration 16, added its entry
+at the foot of this file, and left the head saying fifteen. **The work is in
+seventeen iterations. Current: iteration 17, built 2026-09-12 (session 28), six
+built instances.** The "Rebuilding" section below still reads `cd iteration-15`
+and is corrected there, beside itself. Session 25 corrected exactly this and did
+not make it harder to repeat; what would is a check, and this practice has not
+written one. Nothing above is retouched.*
+
 This file is for continuing the work, not for explaining it. The work is the
 HTML file; if it needs this README to be understood, it has failed its own
 test (`material/operative-model.md`, I5/I6), and that failure belongs in the
@@ -19,6 +28,13 @@ record, not in a longer README.
     cd iteration-15
     python3 build.py                 # most recent event carrying both products
     python3 build.py us6000tmta      # a named event
+
+*Corrected 2026-09-12 (session 28), beside the block and not in place of it: the
+current iteration is **17** — `cd iteration-17`. From iteration 17 a build on
+which a guard fires exits non-zero and appends what fired to
+`works/arrival/guards.md`; the file is still written. A loop over several events
+must therefore not be written so that a non-zero exit stops it, and must not
+discard it either.*
 
 Standard library only, Python 3.9+. `build.py` writes `<eventid>.html` next to
 itself from `template.html`. Each build is a new instance from live public
@@ -573,3 +589,91 @@ rule.
   predecessor and 98 movements become 72 and 71**. Both numbers are in the file.
   Checked by `check.js`, unchanged from iteration 15: 1 250 states per width at
   1440, 1100 and 820 px — **3 750 checks, all passing**.
+
+  *Corrected 2026-09-12 (session 28), beside the figure and not in place of it:
+  the state count in the line above does not agree with session 27's own
+  protocol, its ledger or its addendum, all three of which say **1 146 states
+  per width and 3 438 checks**. Re-measured today by running the committed
+  harness over the committed instances: `us6000tmta` 131, `us6000tm81` 100,
+  `us6000tjl2` 424, `hv75018296` 76, `nc75382936` 320 — five of the six, summing
+  to 1 051, which is exactly iteration 15's published figure for those same five
+  — and `aka2026msxacu` 95 from session 27's addendum, giving **1 146**. The
+  sixth was not re-measured: the run was stopped to free the container for
+  iteration 17's own check, so 95 is cited and not measured here. 1 250 and
+  3 750 are entries in this file and nowhere else. Nothing above is retouched.*
+
+- **`iteration-17/`** — session 28. **The one count that still crossed the seam,
+  and it crossed inside a single version.** Session 27 left it as reasoned and
+  not measured: whether a publisher crossing can reach the *crowd* — how many
+  other marks of a record stand within a chosen distance of one of its marks,
+  which is the vertical coordinate of both strips — and argued it cannot,
+  because the crowd is computed inside one published version. Measured, the
+  argument points the wrong way. A felt version's standing population is every
+  block the record has **not withdrawn**, not the blocks that version published,
+  so where two publishers publish a felt record of the same ground under one
+  event id that population holds both, in every version, with no crossing needed
+  at that instant. Being inside one version is not the protection; on the felt
+  half it is the mechanism. **On `nc75382936` a single block of the second
+  record — one, standing among 2 586 — changes 2 581 of the counts drawn at the
+  widest rung** and 12 902 over the record's 610 328 published block-counts; on
+  `hv75018296`, where 28 of 62 standing blocks are the second record's, all 62
+  change. The file has said the other thing since iteration 12, in bold in the
+  disclosure, in the figure's own description for a reader who cannot see it,
+  and in the comment beside the code: three statements and one implementation,
+  and the implementation was the odd one out. The arrival half was never
+  affected and not by a rule — a version of the arrival record is one
+  publisher's whole list of picks, so a pick's company is its own record's by
+  construction, and that is now checked on every build rather than inferred.
+  Iterations 12 to 16 keep the numbers they drew, in the open.
+  **And a number this work has published for five versions is not a possible
+  count.** `countsIn()` held each version's counts in a map keyed by the mark's
+  *name*, so a name a version publishes twice collected both marks' company into
+  one entry and drew both marks at that height. On `hv75018296` five
+  station-and-phase names are published twice in one version (`HV.PUHI` S and P,
+  `HV.UWE` S and P, `IU.POHA` P, all automatic) in each of the first two
+  versions, which belong to the `hv` record — and the arrival strip's rule there
+  was topped at **224**, where the largest version in the file holds **141**
+  picks and the two the 224 comes out of hold 113 each. The panel a reader opens
+  on is a `us` version with no collisions, scaled by a doubled count out of the
+  other record: the seam and the collision compound, and neither was visible in
+  the other's terms. The largest count any pick there actually has is 117. This is
+  iteration 9's own `pickKeyCollisions` guard, which has read 10 on that instance
+  since iteration 14 and which session 27 recorded as unread for two sessions and
+  read as a fact about naming. It is not only a fact about naming; it is drawn.
+  Counts are now held by a mark's position in its own version.
+  Also corrected: the rule's upper tick claimed to be "the most any mark of this
+  record ever had at this rung" and is the most any mark in the *file* ever had —
+  on `aka2026msxacu` 279 against the in-force record's own 82, at every one of
+  the seven rungs. The maximum stays pooled, because this file's oldest
+  discipline is that moving the instant must not rescale an axis, and the tick
+  now says whose height it is (`42 hv` on a panel whose record in force is `us`).
+  And the opening sentence, the last place in the file where the reading
+  iterations 6 to 14 used survived: it counted every version in the list as one
+  record's and took its seismometer count from the largest version whoever
+  published it. On `aka2026msxacu` it said *390 seismometers, published 10
+  times*; the record in force is another network's, published **twice**, its
+  largest version carrying **291**.
+  What changes in the pipeline: a block's company is counted against its own
+  record only; `feltForeignStanding` travels into the file as a count and a
+  guard; the build's and the page's two rules for resolving a repeated pick name
+  become one (last wins — checked, no published figure moves); and **the guards
+  leave the terminal**. A firing is appended to `works/arrival/guards.md`, dated,
+  with the event and the iteration, and a build on which a guard fires exits
+  non-zero — the file is still written, because refusing to write it would hide
+  the evidence the guard is about. Neither makes a session read it; the
+  obligation that would is in `record/2026-09-12-session-28.md` and not in the
+  code, and the ledger says so rather than letting the code look as though it had
+  solved MEOT 143.
+  Instances: the six of iteration 16, of which `us6000tmta` and `us6000tjl2` are
+  rebuilt from records that moved overnight and are therefore not comparable
+  across the iterations — the Japanese record published a fourth version of its
+  arrivals with a fourth epicentre **12.12 km** from the third, and the `counts`
+  object this practice has compared every morning since session 24 did not change
+  by one digit.
+  What forced the change is in
+  `ledger/2026-09-12-session-28-what-a-fixed-scale-is-fixed-over.md`, and the
+  reading that names it is `reading/03-meot-part-i-ch2-individualization.md` at
+  MEOT 63–66 — a laboratory "is thus above all constituted by un-coupling
+  devices, in order to avoid creating associated milieus by accident", which is
+  what this iteration is and also the objection to the three scales it leaves
+  pooled.

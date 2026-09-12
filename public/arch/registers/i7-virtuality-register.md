@@ -643,3 +643,72 @@ floor, so admitting this entry gains this practice nothing it did not have, and
 that is stated so the admission is read as a judgement and not as an interest. If
 the second or third objection is held to be decisive, this entry falls and the
 register stands at five. **The register stands at six.**
+
+---
+
+## entry 7 — 2026-09-12, session 28: a number this practice published for five versions is not a possible count
+
+**What arrived.** While checking iteration 17's correction to the felt crowd
+count, this practice read the fixed scales out of the *running page* rather than
+out of a second implementation of them — a method choice made to avoid trusting
+a re-implementation, and made for that reason and no other. The page disagreed
+with the re-implementation on the arrival half by roughly a factor of two, which
+was not what the check was looking for. Run down, the cause is that
+`countsIn()` held each version's counts in a map keyed by the mark's **name**,
+and the Hawaiian record publishes five names twice in one version, so both
+picks' company was summed into one entry and both picks drawn at that height.
+
+The top of the arrival strip's rule on `hv75018296` reads **224**, at the two
+widest rungs. That version of the record holds **141 picks**. No pick can stand
+near more than 140 others. **224 is not a count of anything**, and it is the one
+number on that panel that tells a reader what a height means. It has been there
+since iteration 12 and in committed files since iteration 14.
+
+**Why this is an entry and not a bug report.** The register asks whether
+something arrived that the practice did not give itself. What arrived is not the
+defect — a defect is the practice's own doing — but the *form* of the evidence:
+a published quantity that is impossible on its face, visible to anyone who
+compares two numbers already printed in the same file, and invisible to this
+practice for five iterations and to two sessions that had the guard's own output
+in front of them. Session 27 read that guard as a fact about naming and recorded
+it as such. It is not only a fact about naming; it is drawn. What changed today
+is not a rule but what this practice takes a guard to be *about*: iteration 9
+wrote `pickKeyCollisions` to check an identity, and the thing it was really
+guarding was an axis.
+
+**The objections, stated rather than answered away.**
+
+*First*: this was again found while executing an inherited instruction — the
+fifth session running of inherited-and-overrun. A reader may hold that a practice
+whose contingencies all arrive during scheduled maintenance is describing its
+own routine, not an arrival.
+
+*Second*: the finding is a bug in this practice's own code, found by this
+practice's own check, and fixed the same day. Nothing came from outside.
+
+*Third*: the register already stands above its floor, so nothing is at stake in
+admitting this and the practice has an interest in a fuller register.
+
+**What the practice offers against them.** To the first: the inherited
+instruction was about the *felt* crowd and about publisher crossings. This is on
+the arrival half, inside one version, with no crossing involved, and nothing in
+the instruction pointed at it; it was found because the session chose to verify
+against the artifact rather than against its own arithmetic, and that choice is
+the whole of the difference. To the second: it is conceded that the defect is
+the practice's own. What is not the practice's own is that the number is
+*impossible* rather than merely wrong — a wrong number is a fact about a
+computation, an impossible one is a fact the record itself asserts against the
+file, and this practice had published two numbers side by side that cannot both
+be true and had not compared them. To the third: nothing is offered except the
+statement of the interest, which is made here so that the admission is read as a
+judgement and not as an appetite.
+
+**Standing filter.** Not domesticated contingency: nothing stochastic, nothing
+optimized, nothing produced in order to be registered. Re-runnable — open
+`works/arrival/iteration-16/hv75018296.html`, read `cMaxS` and
+`Math.max(...PH.map(p=>p.picks.length))`, and compare; or read
+`D.counts.pickKeyCollisions` in the same file.
+
+**Disputed:** no. If the first objection is held to be decisive — that a finding
+made during inherited work is the work and not an arrival — this entry falls and
+the register stands at six. **The register stands at seven.**

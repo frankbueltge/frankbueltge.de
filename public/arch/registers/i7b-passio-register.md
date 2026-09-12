@@ -754,3 +754,79 @@ product, and `works/arrival/iteration-16/build.py` exits on it.
 **Disputed:** no. If the second objection is held to be decisive — that a known
 coded filter condition cannot be an arrival however it falls — this entry falls
 and the register stands at six. **The register stands at seven.**
+
+---
+
+## entry 8 — 2026-09-12, session 28: a record moved 12 km under the work and the practice's standing check said nothing had moved
+
+**What arrived.** The Japanese event is the first this work was ever built on;
+`us6000tmta` has been in every iteration since the first, and its arrival record
+had published three versions since 2026-08-22. Overnight it published a fourth —
+nineteen days and twenty hours after the origin — with a new epicentre **12.12 km**
+from the previous one. Every felt report in that file is positioned by
+great-circle distance from the epicentre in force, so the whole lower half of the
+figure moved, on a record whose own content did not change: the 83rd felt version
+adds no block, changes no block and withdraws none. The Colombian record did the
+same thing without the epicentre: a 360th version that publishes nothing new.
+
+**Why this is an entry.** Not because a record moved — records move, and this
+practice has recorded that on 2026-09-03, -05, -06 and -08. Because **the
+instrument this practice built to see it could not see it.** Since session 24 the
+standing environment check has compared the `counts` object of each committed
+instance against a build made the same morning. `counts` carries accretion
+totals, name checks, seam counts and publisher fields, and carries no version
+count at all. It is identical on both records that moved. Had this session run
+the check as the last four ran it, its first line would have read *"not one of
+the six records moved"* — and that sentence would have been produced by a
+working instrument, from live data, about a record that had just moved its own
+epicentre twelve kilometres.
+
+It was caught only because this session was comparing whole payloads for an
+unrelated reason: it wanted to know whether today's correction to the crowd count
+moved anything, and a field-by-field comparison was the cheapest way to find out.
+The instrument did not improve. A different question happened to pass over it.
+
+**What it cost and what it changed.** The environment check is over the payload
+from this session onward, which is a change of method and is recorded as one.
+Iteration 17's Japanese and Colombian instances carry versions iteration 16's do
+not, so those two are not byte-comparable across the iterations and every
+before-and-after figure in this session's ledger says which event it is safe on.
+
+**The objections against entering this, stated before they are answered.**
+
+*First*: a record publishing a new version is the ordinary weather of this work,
+and the practice has a whole standing paragraph for it. Calling it an arrival
+inflates the register.
+
+*Second*: what is actually being registered is a defect in this practice's own
+check, which is actio — the practice wrote the check, the check was weak, the
+practice fixed it.
+
+*Third*: nothing was lost. No published figure was wrong; the check would have
+said "nothing moved" about a thing that moved, and no conclusion rested on it.
+
+**What the practice offers against them.** To the first: what is entered is not
+the new version. It is that a record can move in the one way this work is most
+sensitive to — the epicentre, which moves every mark below the axis at once —
+while publishing content that is identical block for block, so that the motion is
+invisible to any check that asks what the record *says*. That is a property of
+the apparatus, not of this practice, and this practice did not know it this
+morning. To the second: it is conceded that the check is the practice's own and
+that repairing it is action. The passio is that the practice learned the check
+was blind from the record and not from itself — it had run the check four times
+believing it sufficient, and what ended that belief was an event outside, landing
+where the check does not look. To the third: it is conceded that nothing
+published was wrong, and the entry claims nothing about size. It claims that the
+practice's account of *what it knows each morning* was false for four sessions,
+and that it was corrected by something arriving rather than by something being
+thought.
+
+**Standing filter.** Not domesticated contingency: nothing stochastic, nothing
+optimized, no variation produced in order to be registered. Re-runnable — build
+`us6000tmta` and compare the payload of the result with
+`works/arrival/iteration-16/us6000tmta.html`: `counts` is identical field for
+field, `phases` is 3 against 4 and `epis` 3 against 4.
+
+**Disputed:** no. If the second objection is held to be decisive — that a blind
+check is the practice's own doing end to end — this entry falls and the register
+stands at seven. **The register stands at eight.**

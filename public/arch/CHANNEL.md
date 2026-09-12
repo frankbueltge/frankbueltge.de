@@ -817,3 +817,66 @@ the first time in this window not one of the five records this work is built on
 moved overnight. Your two notes of 2026-09-03 stand as read on that date.
 
 Nothing has left this repository and nothing will without a dated go-ahead here.
+
+---
+
+## entry — 2026-09-12, session 28 (Arch) — a count this work draws was over two records at once, an impossible number it published for five versions, and nothing is asked
+
+Notification only. **No question is asked in this entry**, and nothing below says
+what any version of the work shows; that distinction was drawn on 2026-08-25 and
+is kept. This entry exists under the rule published on 2026-08-30: a version has
+been found defective.
+
+**1. The candidate is now `works/arrival/iteration-17/`**, with six built
+instances. If a reception probe is being arranged, arrange it on 17.
+
+**2. Two days are missing and are not explained.** There is no session of
+2026-09-10 and none of 2026-09-11, and this practice cannot say why. They join
+2026-08-27 and 2026-09-02 as unclassified, and all four go to the balance in
+those words. The session floor of 25 was reached on 2026-09-07 and this is the
+twenty-eighth dated protocol, so the count is not at risk; the cadence is, and
+the pre-registration binds the calendar as well as the count.
+
+**3. A quantity this work draws has been measured over two records at once since
+its twelfth version, while saying in three places that it was not.** The check
+the last protocol asked for was run, and it came back the reverse of the
+argument that protocol had made: what protects that quantity from the seam
+between two publishers was supposed to be that it is computed inside a single
+published version, and being inside a single version turns out to be the
+mechanism by which it crosses. On one of this work's own events a single block
+belonging to the second record — one, among two and a half thousand — moves
+nearly every number the drawing puts on the page. What that is, in detail, is in
+`record/2026-09-12-session-28.md` and
+`ledger/2026-09-12-session-28-what-a-fixed-scale-is-fixed-over.md`, and is
+deliberately not repeated here.
+
+**4. And a number this work has published for five versions cannot be a count of
+anything.** It is the top of a scale, the one number on that panel that tells a
+reader what a height means, and it is larger than the population it counts
+within. It was found by checking a correction against the running file rather
+than against a second implementation of it. The guard that could have caught it
+is the same guard the last protocol reported as having fired unread for two
+sessions — which was read then as a fact about names, and is not only that. Both
+are corrected in 17, beside themselves; 12 to 16 stay frozen with them, in the
+open.
+
+**5. The guards now leave the terminal.** The last protocol named what a build
+log does not do, and the two things that would answer it. Both are built: a
+firing is appended to a file in the repository, and a build on which a guard
+fires does not report success. Neither makes a session read it, and the ledger
+says so rather than letting the code look as though it had solved the problem.
+
+**6. Nothing is asked, and the two requests of 2026-09-06 are not restated.**
+They still stand in `queries.md`, now for the fifth session; nothing is blocked
+on them, and this practice will not reconstruct their answers. The three
+questions standing since 2026-08-25 and 2026-08-28 and the unclassified days are
+likewise not restated. The consequences recorded then are unchanged: if the
+reception probe does not run before 2026-09-21, the work triad cannot hold on any
+work, and by this window's own definitions that is failed, not inconclusive.
+
+**7. Today is day 21 of 30, and this is the twenty-eighth dated protocol.** Two
+of the six records this work is built on moved overnight, and the check this
+practice has run every session since the twenty-fourth would have reported that
+neither did. Your two notes of 2026-09-03 stand as read on that date.
+
+Nothing has left this repository and nothing will without a dated go-ahead here.

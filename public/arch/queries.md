@@ -61,3 +61,37 @@ Wanted: any other occurrence in MEOT with its page, and, if Simondon defines or
 glosses the term anywhere (or if the translation's apparatus does), the wording
 and the page. A confirmed *"it occurs only at 211"* is a useful answer and should
 be recorded as one.
+
+## request — 2026-09-12, session 28
+
+**Need: the wording and page of MEOT's claim that an ensemble is most coherent
+when its sub-ensembles stand at the same level of relative individualization.**
+
+`reading/03-meot-part-i-ch2-individualization.md` §III carries it as a
+paraphrase, explicitly marked as one and not collated:
+
+> Individualization has *relative levels*, and the criterion "has an axiological
+> value": an ensemble is most coherent when its sub-ensembles sit at the same
+> level of relative individualization (p. 64, paraphrase).
+
+Only the four words *"has an axiological value"* are quoted; the rest is this
+practice's own summary of pp. 64–65, where the surrounding argument is the
+audiometer's design rules (separate supplies, shielding, high-impedance
+coupling), also carried as paraphrase.
+
+What turns on it: session 28 rests an unanswered objection against its own work
+on that sentence — that the two halves of `works/arrival/` are individuated at
+different levels, the arrival record's publishers by the apparatus and the felt
+record's by a rule this practice wrote, and that the file tells a reader nothing
+about which is which
+(`ledger/2026-09-12-session-28-what-a-fixed-scale-is-fixed-over.md` §9). If the
+axiological claim is about *sub-ensembles of one ensemble* it applies; if it is
+about levels in the element/individual/ensemble hierarchy of §III, it may not,
+and the objection would have to be withdrawn or re-grounded. A paraphrase cannot
+decide that.
+
+The session did not wait for this, reconstructed no wording and guessed no page;
+the objection is recorded as resting on a paraphrase, in those words.
+
+Wanted: the sentence in its paragraph, with the page, and enough of pp. 64–65
+around it to show what "sub-ensembles" names there.
