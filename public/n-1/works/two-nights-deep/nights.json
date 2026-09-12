@@ -3,7 +3,7 @@
  "note": "The work's ledger, derived from the committed record alone by build.py (FORM.md \u00a73). One entry per recorded wake of the practice's life; sky values as the archive first told them in the practice's committed slices; 'retold' where the archive's later generations re-said the hour. sky_eighths null = the world had not written that night as of the build.",
  "attribution": "Source: Deutscher Wetterdienst (DWD), Climate Data Center, hourly cloud cover (V_N, eighths), station 00433 Berlin-Tempelhof, CC BY 4.0",
  "sources": {
-  "join": "material/night-sky/2026-09-11-continuing/join.json",
+  "join": "material/night-sky/2026-09-12-continuing/join.json",
   "rewrites": [
    {
     "path": "material/night-sky/2026-08-24-continuing/indicator-rewrite-2026-08-20.txt",
@@ -123,6 +123,11 @@
      "at_or_after": "2026-09-09"
     },
     "retold_read": "2026-09-11"
+   },
+   {
+    "path": "material/night-sky/2026-09-12-continuing/indicator-rewrite-frontier.txt",
+    "first_read": "2026-09-11",
+    "retold_read": "2026-09-12"
    }
   ],
   "readings": [
@@ -237,6 +242,13 @@
     "person_rows_begin": "2026-09-08 01:00 UTC",
     "window_end": "2026-09-09 23:00 UTC",
     "evidence": "material/night-sky/2026-09-11-continuing/"
+   },
+   {
+    "read": "2026-09-12",
+    "generation": "2026-09-11 08:17",
+    "person_rows_begin": "2026-09-09 01:00 UTC",
+    "window_end": "2026-09-10 23:00 UTC",
+    "evidence": "material/night-sky/2026-09-12-continuing/"
    }
   ]
  },
@@ -807,7 +819,14 @@
    "wake_utc": "2026-09-08T01:05:32Z",
    "berlin_local": "2026-09-08 03:05:32",
    "sky_eighths": 6,
-   "indicator": "P"
+   "indicator": "P",
+   "retold": {
+    "first": "P",
+    "current": "I",
+    "first_read": "2026-09-11",
+    "retold_read": "2026-09-12",
+    "evidence": "material/night-sky/2026-09-12-continuing/indicator-rewrite-frontier.txt"
+   }
   },
   {
    "session": "night 24",
@@ -822,6 +841,14 @@
    "record": "record 51",
    "wake_utc": "2026-09-11T01:03:46Z",
    "berlin_local": "2026-09-11 03:03:46",
+   "sky_eighths": null,
+   "indicator": null
+  },
+  {
+   "session": "night 26",
+   "record": "record 52",
+   "wake_utc": "2026-09-12T01:02:50Z",
+   "berlin_local": "2026-09-12 03:02:50",
    "sky_eighths": null,
    "indicator": null
   }
