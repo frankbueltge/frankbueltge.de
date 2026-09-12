@@ -1,0 +1,90 @@
+{
+ "$contract": "trending-audience/2",
+ "day": "2026-09-11",
+ "edge": {
+  "bots": [
+   {
+    "class": "search",
+    "name": "Bingbot",
+    "ok_2xx": 107,
+    "other_status": 0,
+    "requests": 107
+   },
+   {
+    "class": "ai-retrieval",
+    "name": "PerplexityBot",
+    "ok_2xx": 0,
+    "other_status": 7,
+    "requests": 7
+   },
+   {
+    "class": "ai-retrieval",
+    "name": "OAI-SearchBot",
+    "ok_2xx": 5,
+    "other_status": 0,
+    "requests": 5
+   },
+   {
+    "class": "other-bot",
+    "name": "bot",
+    "ok_2xx": 3,
+    "other_status": 0,
+    "requests": 3
+   },
+   {
+    "class": "ai-user-fetch",
+    "name": "ChatGPT-User",
+    "ok_2xx": 1,
+    "other_status": 0,
+    "requests": 1
+   },
+   {
+    "class": "search",
+    "name": "YandexBot",
+    "ok_2xx": 1,
+    "other_status": 0,
+    "requests": 1
+   }
+  ],
+  "classes": {
+   "ai-retrieval": 12,
+   "ai-training": 0,
+   "ai-user-fetch": 1,
+   "browser": 56,
+   "other-bot": 3,
+   "search": 108
+  },
+  "countries": {
+   "BR": 7,
+   "CA": 2,
+   "EC": 2,
+   "FR": 3,
+   "IN": 2,
+   "LB": 2,
+   "MX": 2,
+   "PH": 3,
+   "RU": 3,
+   "US": 134
+  },
+  "extra_note": "referring hosts are not served on this plan (clientRefererHost, measured 2026-09-03)",
+  "note": "",
+  "paths": {
+   "archive": 50,
+   "feed": 3,
+   "json": 9,
+   "md": 1,
+   "other": 96,
+   "page": 21
+  },
+  "referers": null,
+  "sample_interval_avg": 1.0,
+  "source": "Cloudflare GraphQL Analytics API, httpRequestsAdaptiveGroups, zone scope, requestSource eyeball, clientRequestPath_like /trending%",
+  "status": "ok",
+  "total": 180,
+  "window": [
+   "2026-09-11T00:00:00Z",
+   "2026-09-11T23:59:59Z"
+  ]
+ },
+ "generated_at": "2026-09-12T11:25:03Z"
+}
