@@ -3346,3 +3346,88 @@ carry 2026-09-09.
 — Ensemble, session 133, 2026-09-11
 
 ---
+
+## Ensemble — 2026-09-12 (session 134) — A dataset that did not exist until tonight, and a rule that can be watched working
+
+**Request:** none. **Status:** a statement, three things decided here under the standing rule, and one line on your build gate.
+
+### The work
+
+**TOO FEW TO HIDE BEHIND** — `works/2026-09-12-too-few-to-hide-behind/`. Cycle 003, session 4, on the seeded question
+*Missing Data Art*. Last night's letter promised the same question from the other end: a missing dataset this practice can
+**produce** rather than count. This is that, and the thing produced is a file, not a figure.
+
+A public record has two kinds of hole. One is where nobody looked. The other is where somebody looked, wrote the number
+down, keeps it in a file tonight, and is forbidden to print it. In a table both are an empty cell. European statistics tell
+them apart with a flag almost nobody reads — `CONF_STATUS = C`, "confidential" in Eurostat's own code list — and **we
+collected the second kind**: of the 5 294 716 cells of Eurostat's structural business statistics by activity, **798 520 are
+sealed, 15.08 per cent**; 4 275 321 are printed and 220 875 are simply not available. The wall on the page draws one
+indicator of that table, turnover, at one mark per cell: 547 activity classes down, 36 countries across, four years. Beside
+the page is `withheld.csv`, **11 658 rows**, one per sealed cell of that wall — country, activity, year. Nobody publishes
+that list. It exists now.
+
+### The finding that is worth your eye, because it is about a rule rather than about us
+
+Eurostat states its own rule in the metadata: a cell is closed when the number of contributors falls below a minimum
+threshold, or when — its words, quoted on the page in short with the source — *a well-informed intruder, i.e., the second
+largest contributor, can estimate the value of the largest contributor* closely enough. The same table publishes the number
+of enterprises in each cell. **So the rule can be watched working, and it is monotone:** of turnover figures whose company
+count is printed, more than a thousand companies in a cell → 2.25 % sealed; 21 to 50 → 13.33 %; three → 57.69 %; two →
+**98.80 %**; none at all → 0.72 %, because there is nothing to protect. A figure may be printed exactly when there are
+enough companies in it for any one of them to hide behind the others.
+
+**The one step out of place is one company: 89.75 per cent, lower than two.** Of the 282 single-company turnover figures
+printed anyway, **25 are K6411, Central banking** — where the one enterprise carrying the code is the country's central
+bank, and a number cannot disclose an identity the reader already has — then reinsurance, crude petroleum extraction,
+postal activities under universal service obligation. **But the same list holds casting of light metals, margarine,
+workwear and biscuits**, where the single enterprise is an ordinary private company whose turnover is printed to the cent
+while the same figure is sealed for two companies elsewhere. The page says both happen and refuses to say why: the flag
+records a decision, never its reason.
+
+Two further things, and the second is the one a curator will want:
+
+1. **Absence of the seal is not openness.** Ireland leaves not one of its turnover cells "not available" and seals 52.1 %
+   of them; Romania prints 2 188 and seals none; four of the 36 countries in the file carry no seal at all. A country with
+   a sparse record looks clean, and this flag cannot tell a country that hides nothing from a country that has nothing.
+2. **The seal lives where the counted are companies.** Ten further Eurostat tables were counted whole, chosen before any of
+   them was read — population, prices, electricity, tourism, waste, causes of death, education, cars, internet use:
+   **26 382 343 cells, 0.75 % sealed.** Causes of death and waste carry the flag too, because small counts of people
+   identify a person as surely as small counts of firms identify a company. But the order of magnitude is the finding: one
+   cell in seven in the table of European business, about one in a hundred and thirty across ten tables of European life.
+
+### Caught while building, and it would have been the finding
+
+The first version of the ladder put cells with **no** enterprises in the same bucket as cells with one, and printed a step
+at "one company" of 20.9 per cent — which reads as a large hole in the rule and would have been the night's headline. It
+was an off-by-one in the bucketing: an activity with no companies in it has nothing to protect and is printed as zero.
+Separated, the ladder is monotone and the real anomaly at one company is small and explainable. Written down here because
+the wrong version was more interesting than the right one, which is exactly when a number gets published.
+
+### Three things decided here rather than asked
+
+1. **The register covers turnover only.** The full register of all 798 520 sealed cells would be a file this repository
+   should not carry; the wall's own indicator is complete and the other 47 indicators are published as counts. Said on the
+   page rather than left to be discovered.
+2. **Nothing reconstructs a sealed figure.** Many could be narrowed from the totals around them. That is precisely the
+   disclosure the rule exists to prevent, and a work about a protection is a poor place to break it — so the register
+   carries coordinates and no estimates, and `verify.mjs` fails if a decimal value appears in it.
+3. **The four countries that seal nothing stay in the single-company list**, with a note, rather than being dropped after
+   we had read what they do to the number. Same reasoning as the twelve boxes of 09-11.
+
+### And the housekeeping
+
+`HEYGEN_API_KEY` checked in this session's environment at open: **not present**, the ninth session to check and report it.
+The clone was shallow again (52 commits, root 2026-09-04); nothing tonight reads git history. **Your build gate:** nothing
+new investigated and nothing re-reported — the two failures of 09-10 and 09-11 stand as described in last night's letter,
+and the only change from here is that tonight's work makes it **twenty-two** premieres against a lit band that fits three
+rows. EUR-Lex announced itself temporarily unavailable when we went for the primary text of Regulation (EC) No 223/2009, so
+the page cites the rule through Eurostat's own metadata page and quotes only that; and the gallery page for one neighbour
+refused a direct fetch and was read with a second tool, which is the Field's "open is not readable" arriving here for the
+second time in three sessions.
+
+**Cycle 003 has now had its four working sessions in this room. The next one should be `presentations/cycle-003/`**, unless
+you say otherwise before it starts.
+
+— Ensemble, session 134, 2026-09-12
+
+---
