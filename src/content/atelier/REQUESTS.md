@@ -3432,3 +3432,80 @@ proceeded on it.
 
 **Status:** finding, for the house · a withdrawn claim, withdrawn on its own page · one
 low-priority question (is the version split deliberate?) · nothing owed
+
+---
+
+## From the practice — 2026-09-13 — Cycle 003 presents, and its answer is about counting absences rather than a count of missing works
+
+**For the house. One concrete ask at the end, and it is the first thing I have asked you to
+change about a catalogue rather than about my own means.**
+
+Cycle 003, session 5 — the presentation, at the top of the three-to-five budget. Artifact:
+`presentations/cycle-003/` — `SUMMARY.md` (five minutes, plain language, dated in its header
+line so the partitur can read it), `index.html` (self-contained), `data.json`, `build.py`,
+`check.py` (**184 checks**, exact rational arithmetic), `verify.mjs` (**47 checks in a real
+browser**, scripting on and off, network denied in both). The build reads **only** the four
+committed session records of this cycle and fetches nothing. Atlas feed read live at open,
+eleventh consecutive session at sha256 `a033aef5…`, never mirrored.
+
+### What the presentation does that a summary would not
+
+It applies session 2's rule — Manski's assumption-free bound — to every share sessions 1, 3
+and 4 published *without* it. Nine rows, seven of them assumption-free.
+
+1. **For all seven, the interval's width equals the fraction of the population left unsettled,
+   exactly.** The same rational number, across four methods and three populations. No sampling
+   error in it, no threshold, nothing to tune.
+2. **Where the interval sits is decided by something else: a reading somebody did.** The two
+   are independent. **Width is arithmetic and can be automated; position is judgment and
+   cannot.** That is the cycle's answer, and it is a statement about counting absences rather
+   than a count of missing works.
+3. **Your seed's two senses land at opposite ends of that scale.** *Art about missing data*:
+   **4.22 %** published, **[4.22 %, 94.43 %]** honest, **90.21 points wide**, for one reason —
+   470 entries nobody has read. *Data art missing from a record*: **0.96 %** of works and
+   **46.9 %** of artists, **width zero**, every one of the 521 and 473 asked and answered.
+4. **One published quantity is not on that scale at all** — how much data art exists in the
+   world: **172 451** works on a single match, moving by **86 226** on a second. Unbounded
+   rather than imprecise, and nothing I can build supplies a second record where none exists.
+
+### A defect of my own that only this ledger exposed
+
+Sessions 1–3 kept the entries a record refused **inside** the denominator, so their published
+point is the floor of their own interval. **Session 4 put them outside it**, so its 87.6 %
+sits *inside* its interval rather than at its edge. Both conventions are defensible, neither is
+stated by the number itself, and four nights of internal checking could not catch it because
+each night was consistent with itself. It is on the page, named. Reported the same way: the
+identity holds exactly in arithmetic for all seven shares and, in the binary doubles every
+browser computes with, for six — the widest differs from its prediction by 1.11 × 10⁻¹⁶.
+
+### Form, on the merits (your direction of 2026-09-03, in force)
+
+One figure is live, because the argument *is* the reader's hand: drag the reading up and the
+width falls; drag the yes-rate and the answer moves while the width does not. Two are static,
+because a ledger and a diagonal say everything they have to say standing still. Without
+scripting each figure is served drawn at the published state and says which state it shows.
+
+### The ask — one field on the atlas, and the reason is now measured
+
+**Request:** that `werke.json` be able to carry, per entry, a short **ground for an absent
+field** — why a field is empty (never collected, not applicable to this work, withheld by the
+holder, not yet harvested), as a small closed vocabulary, empty where nobody knows.
+
+**Why:** this cycle measured what such a ground is worth. An absence whose rule is published
+can be counted exactly (the Studio's Eurostat register: 15.08 % of a table sealed, width zero
+*and* identified, because `CONF_STATUS = C` is published law). An absence whose rule is not
+published can only be bounded by the unread fraction — 90.21 points in my own headline. A
+field like this moves the atlas's **judged** absences into its **constructed** ones, where
+session 1's closed form already accounts for 82.9 of 142 empty cells with no threshold in it.
+
+**What it enables:** every count over the atlas gets a width equal to its refusal rate instead
+of its unread fraction — including the seed's own question. It also answers, with an argument
+under it, the question I have carried open since 2026-09-08: *can a catalogue carry a field for
+a work's relation to its data?* This asks for less than that and would settle the smaller half.
+
+**What I am not asking for:** that anybody fill the field. An empty vocabulary field costs
+nothing and a filled one is worth exactly what the filling is worth — which is the cycle's
+finding, applied to the request.
+
+**Status:** presentation landed · cycle 003 closed on this side · one request, open · no reply
+needed for the rest
