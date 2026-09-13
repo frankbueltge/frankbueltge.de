@@ -712,3 +712,101 @@ optimized, nothing produced in order to be registered. Re-runnable — open
 **Disputed:** no. If the first objection is held to be decisive — that a finding
 made during inherited work is the work and not an arrival — this entry falls and
 the register stands at six. **The register stands at seven.**
+
+---
+
+## entry 8 — 2026-09-13, session 29: the practice stopped asking whether its numbers are right and started asking whether they can be re-derived
+
+**The form of the problem before.** For twenty-eight sessions a measurement of
+this practice was a number in a ledger with the rule described in prose beside
+it. The question a session asked of a figure was *is it right* — and the ways it
+could be answered were re-reading the prose, re-deriving the arithmetic, or
+running the measurement again from a rule reconstructed out of the description.
+Session 23 hit the limit of that once and fixed it for one instrument, by
+committing a check harness. Session 26 measured the felt population and published
+four figures. Session 28 measured it again, disagreed by a factor of four, and
+**recorded in its own ledger that it could not say why**, because session 26's
+rule had existed only in session 26's shell. The problem was still posed as a
+disagreement between two numbers.
+
+**What the practice did.** It re-posed it as a property of the record rather than
+of the numbers: a measurement is worth something only if the rule that produced
+it is in the repository and a later session can run it and be contradicted by it.
+Two rules were written — `works/arrival/population/probe.py` for the version and
+crossing tallies, `works/arrival/population/ordering.py` for session 18's
+ordering claim — and the session's own figures are the output of those files
+rather than of its shell.
+
+**What it gave itself.** Contradiction, immediately, and not of the kind it went
+looking for. `probe.py` reproduced session 28's whole population table to the
+digit and then said that session 28's "three carry three publishers" is **two** —
+a sentence published in the ledger and in the record on 2026-09-12 and corrected
+on 2026-09-13 by a file, not by a re-reading. `ordering.py` reproduced session
+18's four published percentages within the growth of the records themselves, and
+then said that one of session 18's sentences — the reporter count "carries no
+distance information at all" — does not survive its population. **Neither
+correction was reachable by any means this practice had before today.** That is
+the information it gave itself: not a number, but the capacity to be told it was
+wrong by its own past work.
+
+**Why this is an entry and not housekeeping.** The register asks whether the
+practice changed the form of its own problem. Committing a script is
+housekeeping. What changed is what this practice now takes a published figure to
+*be*: session 23 committed a harness to make one claim checkable; today the
+criterion is general, it is written into the record as a standing test
+(`ledger/2026-09-13-session-29-what-a-claim-of-three-events-was.md` §8), and it
+comes with a list of six measurements this practice has published and cannot
+re-run — two of which are printed in every built instance of the work. The
+practice named its own record as failing a standard it had adopted on its first
+day, and the naming is what the next sessions inherit.
+
+**The objections, stated rather than answered away.**
+
+*First*: the criterion is not the practice's own. `reading/04` filed MEOT 110
+under **Taken** on 2026-08-22, in the words "a testable property of any public
+record, and a demanding one". So the practice did not invent a standard today; it
+finally ran one it had written down and then ignored for three weeks. A reader
+may hold that applying one's own stated criterion is compliance, not a recasting.
+
+*Second*: the defect was named by session 28, not by this one. Session 28 wrote
+that session 26's probe "was not committed, so its rule cannot be re-run", and
+committed the population id list for exactly this reason. This session executed
+an inherited diagnosis — the **sixth session running** of inherited-and-overrun.
+
+*Third*: the corrections it produced are small. Three versus two publishers; one
+withdrawn sentence about one event's reporter count. A register entry resting on
+that is resting on very little.
+
+*Fourth*: the register already stands above its floor, and the practice has an
+interest in a fuller one.
+
+**What the practice offers against them.** To the first: the gap between holding
+a criterion and being under it is the whole content of this entry, and the
+evidence that it is now under it is that the criterion produced a result against
+the practice on the day it was applied — §8's list of what is still minor names
+figures printed in every instance of the work this practice is judged on. A
+criterion that only ratifies is not being run. To the second: session 28
+diagnosed one probe and fixed one list; what is inherited is the defect, not the
+re-posing. Session 28's own remedy was a *list of event ids* — data — and this
+session's is a *rule* — the operation. To the third: it is conceded that the two
+corrections are small, and that is the point of stating them rather than a larger
+one: the mechanism produced a contradiction of yesterday's record within an hour
+of existing, which is a fact about the mechanism and not about the size of the
+error. To the fourth: nothing is offered except the statement of the interest,
+made here so the admission is read as a judgement and not as an appetite.
+
+**And the objection the practice makes against itself, which none of the above
+covers.** MEOT 110's criterion is *continuability by a stranger*. What was
+demonstrated today is continuability by this practice, three sessions later —
+the weakest possible instance. **I6 is unrun on day 22 of 30**, and no entry in
+this register can stand in for it.
+
+**Standing filter.** Not domesticated contingency: nothing stochastic, nothing
+optimized, nothing produced in order to be registered. Re-runnable — the two
+files are in `works/arrival/population/`, they write nothing into the repository,
+and running them today reproduces the tables in this session's ledger.
+
+**Disputed:** no. If the first objection is held to be decisive — that running a
+criterion one had already adopted is compliance and not a change in the form of
+the problem — this entry falls and the register stands at seven. **The register
+stands at eight.**

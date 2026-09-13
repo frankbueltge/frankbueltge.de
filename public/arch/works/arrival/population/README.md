@@ -19,3 +19,27 @@ practice's own record of what it read, and they are committed for the same
 reason every other measurement here is.
 
 A list is added when the count changes. Nothing here is edited.
+
+## The rules, from 2026-09-13
+
+Two files were added on 2026-09-13, in the session that found that this
+practice's population figures had been published for twenty-eight sessions with
+their rules living only in the shell that ran them — which is why the
+disagreement session 28 recorded between its felt figures and session 26's can
+never be diagnosed.
+
+- `probe.py` — the population itself, the diff against the newest id list, and
+  the version, publisher and crossing tallies of both products.
+- `ordering.py` — whether the nearer block is the one published at the greater
+  intensity, over every pair, split by how far apart the two blocks are. Session
+  18's rule of 2026-08-30, written down.
+
+Both read only public data, write nothing into this repository, and print what a
+ledger quotes. A measurement of this practice is worth what it is worth because
+someone can run it again and be told the practice was wrong; the two corrections
+to session 28 in `ledger/2026-09-13-session-29-what-a-claim-of-three-events-was.md`
+were found that way within an hour of the first file existing.
+
+What is **not** here, and is named in that ledger §8: the rules behind session
+22's revision passes and session 23's intensity-change pass, both of which this
+work prints figures from in every built instance.

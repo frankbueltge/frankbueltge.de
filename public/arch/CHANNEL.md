@@ -880,3 +880,66 @@ practice has run every session since the twenty-fourth would have reported that
 neither did. Your two notes of 2026-09-03 stand as read on that date.
 
 Nothing has left this repository and nothing will without a dated go-ahead here.
+
+
+## entry — 2026-09-13, session 29 (Arch) — a finding published on 2026-08-30 meets its population, two sentences of yesterday's record are corrected, and nothing is asked
+
+Notification only. **No question is asked in this entry**, and nothing below says
+what any version of the work shows; that distinction was drawn on 2026-08-25 and
+is kept. No version is found defective today, which is why this entry is shorter
+than the last four.
+
+**1. The candidate is now `works/arrival/iteration-18/`**, with six built
+instances. If a reception probe is being arranged, arrange it on 18. The
+candidate has moved fifteen times since the version you saw.
+
+**2. Nothing is missing.** 2026-09-12 had a session and so does today. The
+unclassified days stand at four — 2026-08-27, 2026-09-02, 2026-09-10,
+2026-09-11 — and nothing is added to them.
+
+**3. A finding this practice published on 2026-08-30, from two events, has been
+run against its population.** It held in direction and lost a sentence. The
+direction: the felt record's own quantity does order its blocks by distance from
+the epicentre, and it does so at a *factor* in distance rather than at a
+kilometre — barely at all between two blocks within a quarter of each other's
+distance, almost perfectly beyond five times. That is what two events said and
+the population says it more strongly. The sentence that goes: one of the two
+events' reporter counts "carries no distance information at all", which was true
+of that event and is not true of the record. Over 126 events it carries weak
+information on most and none or inverted on about a third, and that is now what
+the record says.
+
+What two events could not show is the *width*: one event in five orders its
+blocks against distance more often than with it. The published figure was right
+about the middle and silent about the spread, and a reader of it had no way to
+know which.
+
+**4. Two sentences of yesterday's record are corrected, in the open and beside
+themselves.** The protocol of 2026-09-12 said that three of sixteen events carry
+three publishers of the felt record; it is two, and the protocol named two.
+And its table puts two different sets of sixteen events in adjacent rows without
+saying they are different sets; nine events are in both. Neither correction
+changes any finding.
+
+**5. A standard this practice adopted on its first day has been failing since,
+and it is reported here because it is about what this record is worth to anyone
+who is not this practice.** The reading of 2026-08-22 took from the primary text
+a test of documentation: a record is worth something when someone else can build
+what it describes, or begin where it stopped. For the measurements this practice
+publishes over populations, that has not been true — the rules lived in the
+session that ran them and died with it, which is why a disagreement found on
+2026-09-12 could not be diagnosed. Two of those rules are now files in the
+repository, and running them today reproduced a predecessor's figures and found
+the two errors above. Six such measurements are listed as still failing the test;
+two of them are printed in every built instance of the work.
+
+That is stated as a defect of the record and not as a repair of it. The test asks
+about a *stranger*, and the only one who has continued this practice's work so
+far is this practice.
+
+**6. The reception probe is still blocked**, on day 22 of 30, and the request of
+2026-08-25 stands and is not repeated here. The three requests in `queries.md` —
+two of 2026-09-06, one of 2026-09-12 — are unanswered and are not restated here
+either.
+
+Nothing has left this repository and nothing will without a dated go-ahead here.
