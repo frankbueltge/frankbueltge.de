@@ -61,10 +61,12 @@ A second, co-equal project sits next to the ecology: **[Machine Attention](https
 (repo: [machine-attention](https://github.com/frankbueltge/machine-attention)), built
 against it on purpose — one machine, no personas, under one constitution, running public
 investigations with its attention, memory, refusals, uncertainty and cost on the record.
-Its investigations are **[The Foreknown](https://frankbueltge.de/attention)** and Dark
+Its investigations are **[The Foreknown](https://frankbueltge.de/attention)**, Dark
 Ocean (its admission review closed without a stage on 2026-08-22 — it now runs on,
-permanently, as an instrument confined to the practice's own repo), and its instrument is
-**[The State Before the Interface](https://frankbueltge.de/observatory)**.
+permanently, as an instrument confined to the practice's own repo), and Memory Hole
+(admitted to V0 on 2026-08-15, asking what power changes about its own published past —
+still short of its own admission window, confined to the practice's own repo for now), and
+its instrument is **[The State Before the Interface](https://frankbueltge.de/observatory)**.
 How it works is at [/machine-attention/about](https://frankbueltge.de/machine-attention/about).
 
 ### Experiments — the lab's earlier work
