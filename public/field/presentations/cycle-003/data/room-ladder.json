@@ -1,0 +1,298 @@
+{
+ "_status": "PRE-REGISTERED. presentations/cycle-003/PREREGISTRATION.md §3, committed before this file fetched anything. Instruments imported unchanged from tools/identify/identify.py (frozen 2026-09-12) and tools/hollow/hollow.py (frozen 2026-09-08). No model is called. Standard library only.",
+ "generated_by": "tools/room/room.py",
+ "date": "2026-09-13",
+ "session": 159,
+ "cycle": 3,
+ "question": "Missing Data Art",
+ "params": {
+  "seed": 20260913,
+  "ladder": [
+   521,
+   1000,
+   2000,
+   4000,
+   8000,
+   16000,
+   32000,
+   64000
+  ],
+  "repeats_per_size": 5,
+  "common_df_fraction": 0.1,
+  "n_rarest": 3
+ },
+ "reference": {
+  "_note": "Quoted from artifacts/cycle-003/2026-09-12-what-a-description-is-for/data/size-curve.json and .../results.json. Not re-measured here.",
+  "uk_not_unique_pct_at_521": 16.51,
+  "uk_not_unique_pct_at_full": 62.17,
+  "uk_narrowing_ratio": 3.77,
+  "uk_r4_ratio": 6.39,
+  "atlas_not_unique_pct_at_521": 0.96
+ },
+ "growth": {
+  "_note": "Observed by a one-request probe BEFORE the pre-registration was written and declared there (§0.2). An observation, never a prediction.",
+  "count_2026_09_11": 146492,
+  "count_probe_2026_09_13": 156003,
+  "delta": 9511
+ },
+ "manifest": {
+  "ok": true,
+  "catalogue": "govdata",
+  "api_total": 156003,
+  "harvested": 156003,
+  "pages": 157,
+  "endpoint": "https://www.govdata.de/ckan/api/3/action/package_search",
+  "field": "notes",
+  "stratum_field": "organization",
+  "pages_sha256": "8f25de16e8555fdee4771ce0a1090696d282f121d42456fb3e8bc4f91a20fb02",
+  "seconds": 385.2,
+  "fetched_utc": "2026-09-13T03:48:56Z"
+ },
+ "population": {
+  "records": 156003,
+  "present": 152155,
+  "declared_completeness_pct": 97.53,
+  "mean_masked_tokens": 35.34,
+  "under_3_masked_tokens": 24526,
+  "under_3_masked_tokens_pct": 16.12
+ },
+ "ladder": [
+  {
+   "n": 521,
+   "repeats": 5,
+   "not_unique_pct": 52.78,
+   "not_unique_pct_sd": 2.378,
+   "identifies_nothing_pct": 11.4,
+   "identifies_nothing_pct_sd": 1.779,
+   "r1_chrome_pct": 0.15,
+   "r1_chrome_pct_sd": 0.21,
+   "r2_truncated_tail_pct": 49.9,
+   "r2_truncated_tail_pct_sd": 1.273,
+   "r3_truncated_head_pct": 1.11,
+   "r3_truncated_head_pct_sd": 0.497,
+   "r4_duplicate_pct": 24.84,
+   "r4_duplicate_pct_sd": 2.484,
+   "hollow_broad_pct": 63.19,
+   "hollow_broad_pct_sd": 1.737
+  },
+  {
+   "n": 1000,
+   "repeats": 5,
+   "not_unique_pct": 56.26,
+   "not_unique_pct_sd": 1.785,
+   "identifies_nothing_pct": 12.2,
+   "identifies_nothing_pct_sd": 0.539,
+   "r1_chrome_pct": 0.3,
+   "r1_chrome_pct_sd": 0.071,
+   "r2_truncated_tail_pct": 50.88,
+   "r2_truncated_tail_pct_sd": 2.2,
+   "r3_truncated_head_pct": 1.24,
+   "r3_truncated_head_pct_sd": 0.134,
+   "r4_duplicate_pct": 27.62,
+   "r4_duplicate_pct_sd": 1.746,
+   "hollow_broad_pct": 65.66,
+   "hollow_broad_pct_sd": 1.668
+  },
+  {
+   "n": 2000,
+   "repeats": 5,
+   "not_unique_pct": 60.54,
+   "not_unique_pct_sd": 0.71,
+   "identifies_nothing_pct": 12.05,
+   "identifies_nothing_pct_sd": 0.6,
+   "r1_chrome_pct": 0.28,
+   "r1_chrome_pct_sd": 0.104,
+   "r2_truncated_tail_pct": 50.43,
+   "r2_truncated_tail_pct_sd": 1.892,
+   "r3_truncated_head_pct": 0.97,
+   "r3_truncated_head_pct_sd": 0.321,
+   "r4_duplicate_pct": 30.65,
+   "r4_duplicate_pct_sd": 0.807,
+   "hollow_broad_pct": 66.89,
+   "hollow_broad_pct_sd": 1.095
+  },
+  {
+   "n": 4000,
+   "repeats": 5,
+   "not_unique_pct": 64.18,
+   "not_unique_pct_sd": 0.825,
+   "identifies_nothing_pct": 11.97,
+   "identifies_nothing_pct_sd": 0.824,
+   "r1_chrome_pct": 0.33,
+   "r1_chrome_pct_sd": 0.074,
+   "r2_truncated_tail_pct": 50.57,
+   "r2_truncated_tail_pct_sd": 0.742,
+   "r3_truncated_head_pct": 1.03,
+   "r3_truncated_head_pct_sd": 0.093,
+   "r4_duplicate_pct": 33.49,
+   "r4_duplicate_pct_sd": 0.606,
+   "hollow_broad_pct": 68.76,
+   "hollow_broad_pct_sd": 0.493
+  },
+  {
+   "n": 8000,
+   "repeats": 5,
+   "not_unique_pct": 66.37,
+   "not_unique_pct_sd": 0.221,
+   "identifies_nothing_pct": 11.61,
+   "identifies_nothing_pct_sd": 0.502,
+   "r1_chrome_pct": 0.34,
+   "r1_chrome_pct_sd": 0.054,
+   "r2_truncated_tail_pct": 50.38,
+   "r2_truncated_tail_pct_sd": 0.364,
+   "r3_truncated_head_pct": 0.96,
+   "r3_truncated_head_pct_sd": 0.09,
+   "r4_duplicate_pct": 35.39,
+   "r4_duplicate_pct_sd": 0.505,
+   "hollow_broad_pct": 70.1,
+   "hollow_broad_pct_sd": 0.388
+  },
+  {
+   "n": 16000,
+   "repeats": 5,
+   "not_unique_pct": 69.49,
+   "not_unique_pct_sd": 0.357,
+   "identifies_nothing_pct": 11.76,
+   "identifies_nothing_pct_sd": 0.178,
+   "r1_chrome_pct": 0.26,
+   "r1_chrome_pct_sd": 0.035,
+   "r2_truncated_tail_pct": 50.27,
+   "r2_truncated_tail_pct_sd": 0.124,
+   "r3_truncated_head_pct": 0.94,
+   "r3_truncated_head_pct_sd": 0.041,
+   "r4_duplicate_pct": 37.85,
+   "r4_duplicate_pct_sd": 0.477,
+   "hollow_broad_pct": 71.51,
+   "hollow_broad_pct_sd": 0.271
+  },
+  {
+   "n": 32000,
+   "repeats": 5,
+   "not_unique_pct": 72.38,
+   "not_unique_pct_sd": 0.177,
+   "identifies_nothing_pct": 11.65,
+   "identifies_nothing_pct_sd": 0.253,
+   "r1_chrome_pct": 0.29,
+   "r1_chrome_pct_sd": 0.031,
+   "r2_truncated_tail_pct": 50.35,
+   "r2_truncated_tail_pct_sd": 0.171,
+   "r3_truncated_head_pct": 0.94,
+   "r3_truncated_head_pct_sd": 0.111,
+   "r4_duplicate_pct": 39.84,
+   "r4_duplicate_pct_sd": 0.304,
+   "hollow_broad_pct": 73.03,
+   "hollow_broad_pct_sd": 0.188
+  },
+  {
+   "n": 64000,
+   "repeats": 5,
+   "not_unique_pct": 75.18,
+   "not_unique_pct_sd": 0.101,
+   "identifies_nothing_pct": 11.8,
+   "identifies_nothing_pct_sd": 0.071,
+   "r1_chrome_pct": 0.3,
+   "r1_chrome_pct_sd": 0.02,
+   "r2_truncated_tail_pct": 50.39,
+   "r2_truncated_tail_pct_sd": 0.126,
+   "r3_truncated_head_pct": 0.97,
+   "r3_truncated_head_pct_sd": 0.018,
+   "r4_duplicate_pct": 41.39,
+   "r4_duplicate_pct_sd": 0.162,
+   "hollow_broad_pct": 74.36,
+   "hollow_broad_pct_sd": 0.204
+  },
+  {
+   "n": 152155,
+   "repeats": 1,
+   "not_unique_pct": 79.43,
+   "not_unique_pct_sd": null,
+   "identifies_nothing_pct": 11.72,
+   "identifies_nothing_pct_sd": null,
+   "r1_chrome_pct": 0.29,
+   "r1_chrome_pct_sd": null,
+   "r2_truncated_tail_pct": 50.4,
+   "r2_truncated_tail_pct_sd": null,
+   "r3_truncated_head_pct": 0.97,
+   "r3_truncated_head_pct_sd": null,
+   "r4_duplicate_pct": 44.18,
+   "r4_duplicate_pct_sd": null,
+   "hollow_broad_pct": 76.5,
+   "hollow_broad_pct_sd": null
+  }
+ ],
+ "kill_conditions": {
+  "K1": {
+   "condition": "notes non-empty on < 80 % of harvested records",
+   "value_pct": 97.53,
+   "fired": false
+  },
+  "K2": {
+   "condition": "fewer than 90 % of the API's reported count harvested",
+   "value_pct": 100.0,
+   "fired": false
+  },
+  "K3": {
+   "condition": "the endpoint refuses past the retry budget",
+   "fired": false
+  },
+  "K4": {
+   "condition": ">= 25 % of masked values retain fewer than 3 tokens",
+   "value_pct": 16.12,
+   "fired": false
+  }
+ },
+ "predictions": {
+  "P1": {
+   "statement": "not_unique_pct is monotonically non-decreasing; refuted by any drop > 1.0 point",
+   "largest_drop_points": 0.0,
+   "between": null,
+   "verdict": "confirmed"
+  },
+  "P2": {
+   "statement": "at n = 521 the govdata rate is at least 5 points above the atlas's 0.96 %",
+   "value_pct": 52.78,
+   "atlas_pct": 0.96,
+   "gap_points": 51.82,
+   "verdict": "confirmed"
+  },
+  "P3": {
+   "statement": "the full/521 narrowing ratio is within a factor of 2 of data.gov.uk's 3.77",
+   "ratio": 1.5,
+   "uk_ratio": 3.77,
+   "band": [
+    1.88,
+    7.54
+   ],
+   "verdict": "refuted"
+  },
+  "P4": {
+   "statement": "R4's full/521 ratio is above 2.0",
+   "ratio": 1.78,
+   "r4_at_521": 24.84,
+   "r4_at_full": 44.18,
+   "verdict": "refuted"
+  },
+  "P5": {
+   "statement": "R4's ratio exceeds the narrowing instrument's ratio, as on data.gov.uk (6.39 > 3.77)",
+   "r4_ratio": 1.78,
+   "narrowing_ratio": 1.5,
+   "verdict": "confirmed"
+  },
+  "P6": {
+   "statement": "R1-R3 are properties of one value and cannot move with catalogue size; refuted by any move > 0.05 points (a control on our own code)",
+   "moves_points": {
+    "r1_chrome_pct": 0.14,
+    "r2_truncated_tail_pct": 0.5,
+    "r3_truncated_head_pct": 0.14
+   },
+   "largest": 0.5,
+   "verdict": "refuted"
+  }
+ },
+ "_tally": {
+  "total": 6,
+  "confirmed": 3,
+  "refuted": 3
+ },
+ "scored": true
+}

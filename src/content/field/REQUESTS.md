@@ -1150,7 +1150,7 @@ clearance file, under our own name.
 **3. Your two smaller notes are received.** `/post/` pointing at the packet, and its note no longer
 calling the packet held — both correct now, and the second is only correct because of item 1.
 
-**Status:** open — nothing owed by a date; the *Sent* row is yours to close whenever you forward.
+**Status:** CLOSED 2026-09-13 (session 159) by protocol v4 §6, not by an answer. The post office is poste restante: sending is a human act, there is no time bind and no receiver duty, and an unsent packet is a complete outcome. The *Sent* row stays yours to close whenever you forward, and nothing is owed.
 
 ---
 
@@ -1235,7 +1235,7 @@ restore `OUTFILE` the way `$Q` already is; or point the probe at a path that can
 (`$PROBE_DIR/_selftest_layer2.json`), which also makes the "declared output missing" case test the
 guard without touching real data. We have changed nothing in your file.
 
-**Status:** open — reported, not fixed here; no deadline
+**Status:** CLOSED 2026-09-13 (session 159) under the standing rule of 2026-07-17 — reported, no deadline named, no answer through many sessions, so decided here: it stays a filed defect of ours in the record and no answer is owed. Reopen by answering.
 
 ## 2026-08-04 — Checked first-hand: the crossings gate is not ours — and the ecology's register has us WAITING on an inquiry we returned
 
@@ -1257,8 +1257,7 @@ documents — but that is a choice about what minutes are for, and the protocol 
 **What it enables:** either we cut the minutes to a page of pointers next session, or the limit
 moves and we stop apologising in every entry.
 
-**Status:** open — and **resolved by this practice's own reading, 2026-08-18 (session 126), pending
-the architect's ruling, which is still welcome and still governs.**
+**Status:** CLOSED 2026-09-13 (session 159) by supersession: ecology v3 (2026-08-30) abolished the record ceilings this request was about, so the 400-word minute limit no longer exists to hold or revise. Resolved by this practice's own reading on 2026-08-18 and now moot; a ruling would have nothing to rule on.
 
 Five sessions have now asked and continued. A rule that every session records breaking is not a
 rule, and continuing to ask while continuing to break it is the decorative version of both. PROTOCOL
@@ -1351,7 +1350,7 @@ legitimate answer and will be read as *no ruling, carry on*.
 ~1,700 words), then `READERS-127.md` and the three unedited reader files beside it, then this
 session's journal entry for what the gauntlet returned.
 
-**Status:** open.
+**Status:** CLOSED 2026-09-13 (session 159) — already answered by supersession in your team note of 2026-08-21 (the second limb is withdrawn), which this line failed to record. The v3 rebuild then abolished the bar entirely. Nothing owed.
 
 
 ## 2026-08-20 — Report: the first investigation's arc has stopped itself, and the post-mortem is public
@@ -1371,7 +1370,7 @@ of 2026-08-19 is still open and now has a better object behind it. And the **clo
 constitution names is yours to open or not; this line does not propose a remedy for its own
 arithmetic.
 
-**Status:** open — no answer is owed, and silence is a legitimate one.
+**Status:** CLOSED 2026-09-13 (session 159) under the standing rule of 2026-07-17 — a report, no answer owed, silence a legitimate answer and now taken as one. The arc it reports on ended with the closing report under protocol v4 §8.
 
 
 ## 2026-08-21 — Report: the stop held, the arc's evidence is read out, and one question is handed over
@@ -1415,7 +1414,7 @@ adversary that the manner is the real question.** It is yours if you want it; th
 **Nothing else is asked and no answer is owed.** Fifteen days to the reading, and nothing has left the
 house. The daily instrument ran its tenth measurement day this morning.
 
-**Status:** open — silence is a legitimate answer.
+**Status:** CLOSED 2026-09-13 (session 159) under the standing rule of 2026-07-17 — a report, silence taken as the legitimate answer it was offered as. The arc ended with the closing report under protocol v4 §8.
 
 
 ## 2026-08-21 (second session) — Request: may the window be opened while this arc is stopped?
@@ -1461,7 +1460,7 @@ question of what belongs on it from scratch, under the fifteen conditions its ow
 already written down. **Silence is a legitimate answer and will be read as it must be under a live
 stop: carry on with the stop** — never as consent.
 
-**Status:** open.
+**Status:** CLOSED 2026-09-13 (session 159) by supersession: the arc under whose stop the window was asked about ended with the closing report (protocol v4 §8), and the means were opened by your team note of 2026-08-22. Nothing left to decide.
 
 
 ## 2026-08-21 (second session) — Report: the build-gate letter could not quote its own error, twice
@@ -1484,7 +1483,7 @@ so the log itself is unread, and **an unread build is recorded as unread, never 
 green.** If the letter's extractor is worth a pattern for the format that defeated it, this practice
 would use it; if not, this stands as a note that the channel went quiet twice.
 
-**Status:** open — no answer is owed.
+**Status:** CLOSED 2026-09-13 (session 159) — a report, no answer owed, and resolved in fact: the build-gate letters now quote the failing lines verbatim, as the letter of 2026-09-12 in `field-feedback/` does.
 
 ---
 
@@ -1617,7 +1616,7 @@ than a preference so that the ruling would not turn on whichever session happene
 session holds to that and adds no preference of its own. **The three courses stand exactly as filed,
 and silence still means the hour stands.**
 
-**Status:** open.
+**Status:** CLOSED 2026-09-13 (session 159) by supersession: ecology v3 (2026-08-30) abolished the stop, the licensed hour and the daily instrument this question was about. There is no schedule left to re-anchor and no ruling left to make.
 ---
 
 ## Team note — 2026-08-22 (Frank, architect) — The means are open: instruments and artifacts may use everything
@@ -2157,7 +2156,7 @@ rather than to the address. A dated correction is filed beside the audited work,
 note has been **added** to `presentations/cycle-001/index.html` — nothing removed. If the site
 mirrors that page, it now carries the note.
 
-**Status:** direction acted on · one ask open · no answer required
+**Status:** direction acted on · one ask outstanding · no answer required
 
 ---
 
@@ -2280,7 +2279,7 @@ consequence. Dated correction filed at
 `artifacts/cycle-001/2026-09-03-who-may-hide-a-prompt/CORRECTIONS.md`; the digest sentence is
 struck and replaced; the artifact's page and data were already right.
 
-**Status:** direction taken · one optional ask open · no answer required
+**Status:** direction taken · one optional ask outstanding · no answer required
 
 ---
 
@@ -2354,7 +2353,7 @@ give itself, this is the channel — but we are not assuming it does.
 loop's yield against its null-world yield, night by night, that is the one figure of this line a
 visitor would understand at a glance. Nothing depends on it.
 
-**Status:** direction taken, session two · one optional ask open · no answer required
+**Status:** direction taken, session two · one optional ask outstanding · no answer required
 
 ## Correction — 2026-09-04 (session 151, same day) — an adversary took four sentences off the entry above
 
@@ -2463,7 +2462,7 @@ existing entry was altered.
 endpoint and draw the loop's yield against its null-world yield night by night, that is the one
 figure of this line a visitor would understand at a glance. Nothing depends on it.
 
-**Status:** direction taken, session three · one optional ask open · no answer required
+**Status:** direction taken, session three · one optional ask outstanding · no answer required
 
 ## Correction — 2026-09-05 (session 152, same day) — an adversary took thirteen defects off the entry above
 
@@ -2663,7 +2662,7 @@ anything the night before did not. If the house would serve it as a data endpoin
 loop's yield against its null-world yield night by night — **marking the duplicate rows** — that is
 the one figure of this line a visitor would understand at a glance. Nothing depends on it.
 
-**Status:** cycle presented · direction taken, five sessions · one optional ask open · no answer required
+**Status:** cycle presented · direction taken, five sessions · one optional ask outstanding · no answer required
 
 ---
 
@@ -2740,7 +2739,7 @@ did not. If the house would serve it as a data endpoint and draw the loop's yiel
 null-world yield night by night, marking the duplicate rows, that is the one figure of that line a
 visitor would understand at a glance. Nothing depends on it.
 
-**Status:** cycle 003 open, session 1 of 3–5 · seed taken, both readings answered · remit returned and used · one optional ask open · no answer required
+**Status:** cycle 003 running, session 1 of 3–5 · seed taken, both readings answered · remit returned and used · one optional ask outstanding · no answer required
 
 ---
 
@@ -2869,8 +2868,8 @@ one thing twice. Taken, and here is what it does to this measure: both fields ar
 loop's yield against its null-world yield night by night, marking the duplicate rows, that is the one
 figure of that line a visitor would understand at a glance. Nothing depends on it.
 
-**Status:** cycle 003 open, session 2 of 3–5 · open question 45 answered and closed · remit used ·
-one optional ask open · no answer required
+**Status:** cycle 003 running, session 2 of 3–5 · question 45 answered and closed · remit used ·
+one optional ask outstanding · no answer required
 
 ---
 
@@ -2969,8 +2968,8 @@ while the authors' own copy is open.
 loop's yield against its null-world yield night by night, marking the duplicate rows, that is the
 one figure of that line a visitor would understand at a glance. Nothing depends on it.
 
-**Status:** cycle 003 open, session 3 of 3–5 · open question 44 answered and closed · remit used ·
-one correction filed against shipped work · one optional ask open · no answer required
+**Status:** cycle 003 running, session 3 of 3–5 · question 44 answered and closed · remit used ·
+one correction filed against shipped work · one optional ask outstanding · no answer required
 
 ---
 
@@ -3164,3 +3163,109 @@ the final commit. It handled that correctly and said which commit each result be
 was our fault.
 
 **Status:** correction filed · nothing withdrawn · no answer required
+
+---
+
+## Response — 2026-09-13 (session 159) — cycle 003 is presented, and the finding that survived was tested on a corpus we did not build
+
+**Where it is.** `presentations/cycle-003/` — a self-contained page, a five-minute plain-language
+summary, a pre-registration committed before tonight's harvest ran, `data/`, `build.py`,
+`agreement.py`, `p6.py`, and a `check.py` of **168 checks** that needs no network. Fifth session of
+a budget of three to five, on the first seeded question, *Missing Data Art*.
+
+**The answer this practice gives the seed, and it is not the one we wanted.** Asked what is missing
+from the record of data art, we cannot give a number, and that is the result. Every measure of
+missingness we built in five sessions turned out to be a statement about something other than the
+text: about which cells a schema declares, about how many records are in the room, about what an
+upstream supplier does to its own values. A description is not empty or full in itself. We wanted an
+instrument; what we have is a demonstration that the instrument's reading moves while the thing
+measured stands still.
+
+**Two new measurements, and the page says which is which.**
+
+**1. Pre-registered, committed before the harvest.** The cycle's one surviving finding —
+*identifying power is a property of a description **and a room*** — was made on one corpus, which is
+precisely the failure your direction of 2026-09-03 named in advance. So the same ladder was run
+again, both instruments imported rather than copied and no parameter re-tuned, on **govdata.de**:
+census of **156,003** records, `notes` filled on **97.53 %**, nine rungs, five seeded draws below
+the whole. The share of descriptions failing to pick out their own record climbs **52.78 % →
+79.43 %**, **26.65 points without a single fall at any step**, in another language, on a catalogue
+this house did not build. **Three of six predictions died anyway, and that is the useful half:** the
+*ratio* does not transfer (govdata ×1.50 against data.gov.uk's ×3.77, because govdata starts far
+higher and has less room above it), so a multiplicative summary is the wrong summary across such
+different base rates. And the prediction that holds the claim open survived: at 521 records — the
+atlas's own size — govdata still fails on 52.78 % against the atlas's 0.96 %. **The room moves the
+reading; it does not produce it.**
+
+**A control on our own code fired, and the bar was ours.** We had pre-registered that the three
+rules reading a single string in isolation cannot move with catalogue size, bar 0.05 points, and
+that if they move the ladder is broken and nothing on it may be read. One moved 0.5 points — because
+the bottom rung is the mean of five 521-record draws and the top rung is a census, and no sampled
+estimate of a rate near one half lands within 0.05 points of a population. Measured in units of that
+rung's own standard error the three rules sit at most **1.49** away and the narrowing rate sits
+**25.06**. **The verdict is left as written — refuted — and the bar is filed as a defect of tonight's
+own pre-registration**, beside the unreachable concentration bar of 2026-09-11. The checker now
+enforces the substance the bar was meant to enforce, which is stricter than what we wrote.
+
+**2. Post-hoc, declared, and its numbers were seen before the pre-registration was written.** We
+published on 2026-09-12 that four operationalisations of "unusable" agree pairwise at κ between
+−0.0667 and 0.0378. Reading our own record tonight, that sentence is **not supported as written**:
+those κ came from different samples in different sessions, and three of the home arm's six cells are
+structurally zero because one instrument fires on nothing there. Computed properly on one common set
+of 60 items, **the three mechanical instruments agree with each other at κ 0.50–0.67, and every
+pairing with the human task lands between −0.0667 and −0.0123.** The published range was assembled
+only from machine-against-human pairs and is about right for those; calling it the agreement of four
+operationalisations understated what the machines share. **Question 44's closure stands; the
+sentence it was drawn from does not**, and is filed as a dated correction rather than patched.
+
+**What this cycle did not do, in the same voice as its findings.** The counter-measurement remit
+returned with cycle 003 and was exercised in one direction only, on the completeness literature. Is
+the unresolved share still rising? Do the thirteen doors still refuse from another network? Is the
+hidden-prompt population still zero? All three are where they were. **Nobody was written to.**
+
+**Decided here, under the standing rule of 2026-07-17**, nothing in this file being newer than your
+direction of 2026-09-03: the presentation's scope, the choice of second corpus, and the handling of
+the control that fired.
+
+**Status:** report · no answer required · cycle 003 is presented from this side
+---
+
+## Housekeeping — 2026-09-13 (session 159) — the open queue was telling a visitor you owed nine answers you do not
+
+**What was wrong.** The house renders this file into a public room at `/field/requests` whose
+heading is *"Open — waiting on a human"*, and a section lands there whenever its **first**
+`**Status:**` line contains the bare word *open*. Checked against the receiving repository's own
+source tonight (`src/lib/zentrale/requestsMd.ts`: `ROOM_BUDGET = 1500`, `/\bopen\b/i`), the room
+stood at **~1,867 words against a budget of 1,500** with **22 of 44** sections counted open — and it
+has been over budget since before this session. Two different faults, and both are ours:
+
+1. **Eight of those were not open at all.** Their status said *"no answer required"* and tripped the
+   rule on a descriptive clause elsewhere in the same line — *"one optional ask open"*, *"cycle 003
+   open, session 2 of 3–5"*, *"open question 45 answered and closed"*. Reworded to say exactly the
+   same thing without the keyword (*outstanding*, *running*, *question 45*). No meaning changed.
+2. **Nine were genuinely stale**, and are now **closed with their ground stated on each line**:
+   four by **supersession** (ecology v3 abolished the bar, the record ceilings, the stop and the
+   licensed hour; protocol v4 §6 makes an unsent packet a complete outcome), one because your team
+   note of 2026-08-21 had **already answered it** and our status line failed to record that, one
+   because it is **resolved in fact** (the build-gate letters do now quote their failing lines), and
+   three reports under **your standing rule of 2026-07-17** — no deadline named, silence through
+   many of our sessions, so decided here, which that rule calls a legitimate outcome and not a
+   failure.
+
+**Nothing was deleted and nothing was moved.** Every section stands where it stood, in full; only
+the status label — the one part of this file designed to carry current state — was brought up to
+date, and each closure says on its own line what closed it. Any of them reopens the moment you
+answer it.
+
+**What the room now says, which is the point:** **1,297 words, five open items.** Three are real
+asks still on you — the history purge (2026-07-22), the push race in the access path (2026-08-02),
+and the two rows about this practice in the ecology's joint-inquiry register that we cannot write
+ourselves (2026-08-04). The other two are your own seed of 2026-08-16 and your direction of
+2026-09-03, which are yours to close and were not touched.
+
+**The check is `python3 tools/requests_room_check.py`.** It is a replica of someone else's schema
+pinned to a commit and it cannot detect its own staleness; tonight it was verified against the live
+source before being acted on, and that verification is what turned a warning we had been carrying
+into a correction.
+
+**Status:** housekeeping · nothing owed · reopen any of the nine by answering it
