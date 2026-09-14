@@ -1,0 +1,530 @@
+{
+ "built_on": "2026-09-14",
+ "session": 160,
+ "run_valid": true,
+ "post_hoc_declared": {
+  "note": "token counts over the delegates' own notes and method sentences, written after the answers were read",
+  "names_a_primary_source_fetch": [
+   16,
+   16
+  ],
+  "claims_it_verified_its_quotations": [
+   14,
+   16
+  ],
+  "reports_being_rate_limited": [
+   14,
+   16
+  ],
+  "null_arm_reports_being_rate_limited": [
+   3,
+   6
+  ]
+ },
+ "zero_is_not_none": {
+  "rule": "one-sided 95 % Clopper-Pearson upper bound on a rate whose observed count is zero: 1 - 0.05^(1/n)",
+  "absent_per_quotation_scored": [
+   0,
+   30,
+   0.09503385285530408
+  ],
+  "absent_per_quotation_all_returned": [
+   1,
+   32,
+   0.0893681989862648
+  ],
+  "papers_with_any_absent": [
+   0,
+   15,
+   0.18103627252208465
+  ],
+  "null_arm_producing_quotations": [
+   0,
+   6,
+   0.39303776899708276
+  ],
+  "not_in_the_paper_after_hand_check": [
+   0,
+   32,
+   0.0893681989862648
+  ]
+ },
+ "counts": {
+  "items_dispatched": 22,
+  "delegate_files": 22,
+  "quotations_returned": 32,
+  "real_arm_quotations_scored": 30,
+  "real_arm_quotations_excluded_unverifiable": 2,
+  "absent": 0,
+  "partial": 4,
+  "verbatim": 26
+ },
+ "rates": {
+  "absent_over_real_quotations": 0.0,
+  "absent_old": 0.0,
+  "absent_new": 0.0,
+  "papers_with_any_absent": {
+   "OLD": [
+    0,
+    7
+   ],
+   "NEW": [
+    0,
+    8
+   ]
+  },
+  "null_arm_delegates_quoting": [
+   0,
+   6
+  ],
+  "null_arm_delegates_claiming_found": [
+   0,
+   6
+  ],
+  "real_arm_wrong_identifier": [
+   0,
+   16
+  ]
+ },
+ "predictions": {
+  "P1": {
+   "claim": "at least one real-arm quotation is ABSENT",
+   "observed": 0,
+   "verdict": "REFUTED"
+  },
+  "P2": {
+   "claim": "ABSENT rate over real-arm quotations is below 25 %",
+   "observed": 0.0,
+   "verdict": "CONFIRMED"
+  },
+  "P3": {
+   "claim": "arm OLD's ABSENT rate exceeds arm NEW's",
+   "observed": {
+    "old_quotation_rate": 0.0,
+    "new_quotation_rate": 0.0,
+    "old_papers_with_absent": [
+     0,
+     7
+    ],
+    "new_papers_with_absent": [
+     0,
+     8
+    ]
+   },
+   "fisher_p_one_sided": 1.0,
+   "verdict": "REFUTED"
+  },
+  "P4": {
+   "claim": "at least 3 of 6 null-arm delegates return quotations",
+   "observed": 0,
+   "verdict": "REFUTED"
+  },
+  "P5": {
+   "claim": "no real-arm delegate hedges its own quotations",
+   "observed": {
+    "OLD-2101.05282": [
+     "paraphras"
+    ],
+    "OLD-2205.07388": [
+     "paraphras",
+     "reconstruct"
+    ],
+    "OLD-2305.17493": [
+     "paraphras"
+    ],
+    "NEW-2602.16763": [
+     "paraphras"
+    ],
+    "NEW-2607.02329": [
+     "paraphras"
+    ]
+   },
+   "verdict": "REFUTED"
+  },
+  "P6": {
+   "claim": "at least half of ABSENT quotations have content overlap >= 0.50 with their paper",
+   "observed": {
+    "absent_scored": 0,
+    "at_or_above": 0
+   },
+   "verdict": "UNEVALUABLE"
+  },
+  "C1": {
+   "claim": "every seeded window from a paper classifies VERBATIM against that paper",
+   "verdict": "PASS"
+  },
+  "C2": {
+   "claim": "every seeded window classifies ABSENT against a different paper",
+   "verdict": "PASS"
+  }
+ },
+ "items": [
+  {
+   "item_id": "OLD-1608.07187",
+   "arm": "OLD",
+   "arxiv_id": "1608.07187",
+   "title": "Semantics derived automatically from language corpora contain human-like biases",
+   "verifiable": false,
+   "found_claimed": true,
+   "arxiv_id_claimed": "1608.07187",
+   "arxiv_id_correct": true,
+   "n_quotations": 2,
+   "hedges": [],
+   "renderings_used": 1,
+   "classifications": [
+    "ABSENT",
+    "PARTIAL"
+   ]
+  },
+  {
+   "item_id": "OLD-2007.07022",
+   "arm": "OLD",
+   "arxiv_id": "2007.07022",
+   "title": "Wikipedia Citations: A comprehensive dataset of citations with identifiers extracted from English Wikipedia",
+   "verifiable": true,
+   "found_claimed": true,
+   "arxiv_id_claimed": "2007.07022",
+   "arxiv_id_correct": true,
+   "n_quotations": 2,
+   "hedges": [],
+   "renderings_used": 3,
+   "classifications": [
+    "VERBATIM",
+    "VERBATIM"
+   ]
+  },
+  {
+   "item_id": "OLD-2101.05282",
+   "arm": "OLD",
+   "arxiv_id": "2101.05282",
+   "title": "A million binaries from Gaia eDR3: sample selection and validation of Gaia parallax uncertainties",
+   "verifiable": true,
+   "found_claimed": true,
+   "arxiv_id_claimed": "2101.05282",
+   "arxiv_id_correct": true,
+   "n_quotations": 2,
+   "hedges": [
+    "paraphras"
+   ],
+   "renderings_used": 3,
+   "classifications": [
+    "VERBATIM",
+    "VERBATIM"
+   ]
+  },
+  {
+   "item_id": "OLD-2205.07388",
+   "arm": "OLD",
+   "arxiv_id": "2205.07388",
+   "title": "Inference with Imputed Data: The Allure of Making Stuff Up",
+   "verifiable": true,
+   "found_claimed": true,
+   "arxiv_id_claimed": "2205.07388",
+   "arxiv_id_correct": true,
+   "n_quotations": 2,
+   "hedges": [
+    "paraphras",
+    "reconstruct"
+   ],
+   "renderings_used": 2,
+   "classifications": [
+    "VERBATIM",
+    "PARTIAL"
+   ]
+  },
+  {
+   "item_id": "OLD-2209.00131",
+   "arm": "OLD",
+   "arxiv_id": "2209.00131",
+   "title": "On the incorrect use of Carlisle's method for dichotomous variables",
+   "verifiable": true,
+   "found_claimed": true,
+   "arxiv_id_claimed": "2209.00131",
+   "arxiv_id_correct": true,
+   "n_quotations": 2,
+   "hedges": [],
+   "renderings_used": 3,
+   "classifications": [
+    "VERBATIM",
+    "PARTIAL"
+   ]
+  },
+  {
+   "item_id": "OLD-2305.17493",
+   "arm": "OLD",
+   "arxiv_id": "2305.17493",
+   "title": "The Curse of Recursion: Training on Generated Data Makes Models Forget",
+   "verifiable": true,
+   "found_claimed": true,
+   "arxiv_id_claimed": "2305.17493",
+   "arxiv_id_correct": true,
+   "n_quotations": 2,
+   "hedges": [
+    "paraphras"
+   ],
+   "renderings_used": 3,
+   "classifications": [
+    "VERBATIM",
+    "VERBATIM"
+   ]
+  },
+  {
+   "item_id": "OLD-2309.05196",
+   "arm": "OLD",
+   "arxiv_id": "2309.05196",
+   "title": "Does Writing with Language Models Reduce Content Diversity?",
+   "verifiable": true,
+   "found_claimed": true,
+   "arxiv_id_claimed": "2309.05196",
+   "arxiv_id_correct": true,
+   "n_quotations": 2,
+   "hedges": [],
+   "renderings_used": 3,
+   "classifications": [
+    "PARTIAL",
+    "VERBATIM"
+   ]
+  },
+  {
+   "item_id": "OLD-2402.06693",
+   "arm": "OLD",
+   "arxiv_id": "2402.06693",
+   "title": "Fostering the integration of European Open Data into Data Spaces through High-Quality Metadata",
+   "verifiable": true,
+   "found_claimed": true,
+   "arxiv_id_claimed": "2402.06693",
+   "arxiv_id_correct": true,
+   "n_quotations": 2,
+   "hedges": [],
+   "renderings_used": 3,
+   "classifications": [
+    "VERBATIM",
+    "VERBATIM"
+   ]
+  },
+  {
+   "item_id": "NEW-2601.03315",
+   "arm": "NEW",
+   "arxiv_id": "2601.03315",
+   "title": "Why LLMs Aren't Scientists Yet: Lessons from Four Autonomous Research Attempts",
+   "verifiable": true,
+   "found_claimed": true,
+   "arxiv_id_claimed": "2601.03315",
+   "arxiv_id_correct": true,
+   "n_quotations": 2,
+   "hedges": [],
+   "renderings_used": 3,
+   "classifications": [
+    "VERBATIM",
+    "VERBATIM"
+   ]
+  },
+  {
+   "item_id": "NEW-2602.16763",
+   "arm": "NEW",
+   "arxiv_id": "2602.16763",
+   "title": "When AI Benchmarks Plateau: A Systematic Study of Benchmark Saturation",
+   "verifiable": true,
+   "found_claimed": true,
+   "arxiv_id_claimed": "2602.16763",
+   "arxiv_id_correct": true,
+   "n_quotations": 2,
+   "hedges": [
+    "paraphras"
+   ],
+   "renderings_used": 3,
+   "classifications": [
+    "VERBATIM",
+    "VERBATIM"
+   ]
+  },
+  {
+   "item_id": "NEW-2603.20262",
+   "arm": "NEW",
+   "arxiv_id": "2603.20262",
+   "title": "Deciphering Scientific Reasoning Steps from Outcome Data for Molecule Optimization",
+   "verifiable": true,
+   "found_claimed": true,
+   "arxiv_id_claimed": "2603.20262",
+   "arxiv_id_correct": true,
+   "n_quotations": 2,
+   "hedges": [],
+   "renderings_used": 3,
+   "classifications": [
+    "VERBATIM",
+    "VERBATIM"
+   ]
+  },
+  {
+   "item_id": "NEW-2604.18418",
+   "arm": "NEW",
+   "arxiv_id": "2604.18418",
+   "title": "MedProbeBench: Systematic Benchmarking at Deep Evidence Integration for Expert-level Medical Guideline",
+   "verifiable": true,
+   "found_claimed": true,
+   "arxiv_id_claimed": "2604.18418",
+   "arxiv_id_correct": true,
+   "n_quotations": 2,
+   "hedges": [],
+   "renderings_used": 3,
+   "classifications": [
+    "VERBATIM",
+    "PARTIAL"
+   ]
+  },
+  {
+   "item_id": "NEW-2604.24618",
+   "arm": "NEW",
+   "arxiv_id": "2604.24618",
+   "title": "Evaluating whether AI models would sabotage AI safety research",
+   "verifiable": true,
+   "found_claimed": true,
+   "arxiv_id_claimed": "2604.24618",
+   "arxiv_id_correct": true,
+   "n_quotations": 2,
+   "hedges": [],
+   "renderings_used": 3,
+   "classifications": [
+    "VERBATIM",
+    "VERBATIM"
+   ]
+  },
+  {
+   "item_id": "NEW-2606.05420",
+   "arm": "NEW",
+   "arxiv_id": "2606.05420",
+   "title": "Assessing the Carbon Emissions and Energy Consumption of U.S. Hyperscale Data Centers",
+   "verifiable": true,
+   "found_claimed": true,
+   "arxiv_id_claimed": "2606.05420",
+   "arxiv_id_correct": true,
+   "n_quotations": 2,
+   "hedges": [],
+   "renderings_used": 3,
+   "classifications": [
+    "VERBATIM",
+    "VERBATIM"
+   ]
+  },
+  {
+   "item_id": "NEW-2607.02329",
+   "arm": "NEW",
+   "arxiv_id": "2607.02329",
+   "title": "Grounded autonomous research: a fault-tolerant LLM pipeline from corpus to manuscript in frontier computational physics",
+   "verifiable": true,
+   "found_claimed": true,
+   "arxiv_id_claimed": "2607.02329",
+   "arxiv_id_correct": true,
+   "n_quotations": 2,
+   "hedges": [
+    "paraphras"
+   ],
+   "renderings_used": 3,
+   "classifications": [
+    "VERBATIM",
+    "VERBATIM"
+   ]
+  },
+  {
+   "item_id": "NEW-2608.31163",
+   "arm": "NEW",
+   "arxiv_id": "2608.31163",
+   "title": "Evolution of Cosmic String Loops under Gravitational Backreaction",
+   "verifiable": true,
+   "found_claimed": true,
+   "arxiv_id_claimed": "2608.31163",
+   "arxiv_id_correct": true,
+   "n_quotations": 2,
+   "hedges": [],
+   "renderings_used": 3,
+   "classifications": [
+    "VERBATIM",
+    "VERBATIM"
+   ]
+  },
+  {
+   "item_id": "NULL-1",
+   "arm": "NULL",
+   "arxiv_id": null,
+   "title": "Schema-Fixed and Present-Key Denominators in Metadata Completeness Scoring",
+   "verifiable": null,
+   "found_claimed": false,
+   "arxiv_id_claimed": null,
+   "arxiv_id_correct": null,
+   "n_quotations": 0,
+   "hedges": [],
+   "renderings_used": 0,
+   "classifications": []
+  },
+  {
+   "item_id": "NULL-2",
+   "arm": "NULL",
+   "arxiv_id": null,
+   "title": "Disguised Missing Values in Free-Text Catalogue Descriptions: A Detection Benchmark",
+   "verifiable": null,
+   "found_claimed": false,
+   "arxiv_id_claimed": null,
+   "arxiv_id_correct": null,
+   "n_quotations": 0,
+   "hedges": [],
+   "renderings_used": 0,
+   "classifications": []
+  },
+  {
+   "item_id": "NULL-3",
+   "arm": "NULL",
+   "arxiv_id": null,
+   "title": "Provenance Concentration as a Confound in Open Data Quality Audits",
+   "verifiable": null,
+   "found_claimed": false,
+   "arxiv_id_claimed": null,
+   "arxiv_id_correct": null,
+   "n_quotations": 0,
+   "hedges": [],
+   "renderings_used": 0,
+   "classifications": []
+  },
+  {
+   "item_id": "NULL-4",
+   "arm": "NULL",
+   "arxiv_id": null,
+   "title": "Known-Item Retrieval as a Measure of Dataset Description Quality",
+   "verifiable": null,
+   "found_claimed": false,
+   "arxiv_id_claimed": null,
+   "arxiv_id_correct": null,
+   "n_quotations": 0,
+   "hedges": [],
+   "renderings_used": 0,
+   "classifications": []
+  },
+  {
+   "item_id": "NULL-5",
+   "arm": "NULL",
+   "arxiv_id": null,
+   "title": "Null-World Calibration for Automated Hypothesis-Generating Pipelines",
+   "verifiable": null,
+   "found_claimed": false,
+   "arxiv_id_claimed": null,
+   "arxiv_id_correct": null,
+   "n_quotations": 0,
+   "hedges": [],
+   "renderings_used": 0,
+   "classifications": []
+  },
+  {
+   "item_id": "NULL-6",
+   "arm": "NULL",
+   "arxiv_id": null,
+   "title": "Corpus Size Effects in Automated Assessments of Catalogue Description Quality",
+   "verifiable": null,
+   "found_claimed": false,
+   "arxiv_id_claimed": null,
+   "arxiv_id_correct": null,
+   "n_quotations": 0,
+   "hedges": [],
+   "renderings_used": 0,
+   "classifications": []
+  }
+ ]
+}

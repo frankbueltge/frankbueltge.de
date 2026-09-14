@@ -3269,3 +3269,64 @@ source before being acted on, and that verification is what turned a warning we 
 into a correction.
 
 **Status:** housekeeping · nothing owed · reopen any of the nine by answering it
+
+---
+
+## Response — 2026-09-14 (session 160) — the fabrication we feared did not reproduce, and the bound says keep the rule
+
+**Where it is.** `artifacts/2026-09-14-a-refusal-announces-itself/` — a self-contained page, a
+five-minute summary, a pre-registration **committed in its own commit before the first delegate was
+dispatched**, `data/`, five scripts and a `check.py` of **323 checks** that needs no network.
+
+**Why a session between cycles, decided here.** Cycle 003 is presented from all three sides and the
+cycle file is turned by you or a site session, never by a practice. Cycle 002 ran nine sessions
+against a budget of three to five and your own transition note records that, so this is **not** a
+sixth cycle-003 session. It works the counter-measurement remit on the one thing our presentation
+said the cycle had not done.
+
+**The question.** Two days earlier a delegated reading handed this practice two sentences in
+quotation marks that are **not in the paper** they were attributed to, and a method that is not that
+paper's. Believed, it would have published, under your name, a claim about five named researchers
+who do not do what we would have said they do. The protocol answers that with its hardest rule — read
+the source, cite the passage, never reconstruct from memory — but the rule rested on **one event**,
+and one event is a story, not a rate.
+
+**What was run.** 22 independent delegated readings, one per item, none seeing another's task. Each
+got a title, a year and the words *arXiv preprint* — **no identifiers in any arm** — and was asked
+for two verbatim quotations of at least twelve words with their section, having been told plainly
+that "I could not find it" was acceptable. Eight papers first posted 2024 or earlier and eight first
+posted in 2026, drawn by fixed seed from this house's own reading register; and **six titles that
+name no paper**, each verified before dispatch against a control that proved a zero was a zero.
+
+**The result is a zero, and the zero is the finding. 32 quotations returned; not one is missing from
+its paper.** Six scored below a perfect match and all six were read by hand: every break is **our own
+extractor** losing a ligature or a hyphen — a paper reads *owers* where the quotation reads
+"flowers". All six non-existent titles came back *not found*, with no quotations and no invented
+identifiers, three of them after being rate-limited on the way. Sixteen of sixteen real papers got
+the right identifier.
+
+**And a zero is not a zero risk, which is the half we are careful about.** Nothing in 32 permits a
+true rate up to **8.9 %**; nothing in 15 papers up to **18.1 %**. The failure we saw happened on an
+arXiv preprint we could reach, so this clean run is not explained by easier papers. **The rule
+stands unchanged.** There is also a hole no number closes: a quotation can be checked only where the
+text is reachable, so we are blind exactly where a publisher has closed the door — which is the part
+of open question 46 still owed an answer.
+
+**One death is ours, and it is the third of its kind in four sessions.** We predicted no delegate
+would hedge its own quotations, and operationalised it as a token list. Five tripped it — and all
+five had used those words to say their quotations were verbatim **rather than** paraphrased. The test
+caught the opposite of its target. Verdict left as written, test filed as a defect, beside the
+unreachable bar of 2026-09-11 and the 0.05-point bar of 2026-09-13. **Pre-registration stops a
+practice reasoning after the fact; it does not stop it writing a bad test, and an automated loop has
+nobody to catch one before it runs.** That is the sentence we would most like you to argue with.
+
+**Met on the way.** The arXiv programming interface answered **429** to every request from this
+session's egress while the website answered 200, and fourteen of sixteen delegates hit the same wall
+and fetched the papers another way. Not a paywall and not a policy — our own traffic. Filed to
+question 46.
+
+**Decided here, under the standing rule of 2026-07-17**, nothing in this file being newer than your
+direction of 2026-09-03: that this session happen at all between cycles, its question, its sample,
+and the handling of the test that fired wrongly.
+
+**Status:** report · no answer required · nothing owed from your side
