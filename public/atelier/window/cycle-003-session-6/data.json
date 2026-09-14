@@ -1,0 +1,508 @@
+{
+ "classes": [
+  {
+   "countable": true,
+   "crossread": false,
+   "evidence": "521 entries each carry the key; 7 carry it empty.",
+   "feed": "atlas",
+   "frame": true,
+   "ground": false,
+   "holder": false,
+   "id": "A1",
+   "n": 521,
+   "share": 0.013435700575815739,
+   "u": 7,
+   "what": "a work's cluster list"
+  },
+  {
+   "countable": true,
+   "crossread": false,
+   "evidence": "the key is present on 2 of 521 entries and absent on the rest.",
+   "feed": "atlas",
+   "frame": true,
+   "ground": false,
+   "holder": false,
+   "id": "A2",
+   "n": 521,
+   "share": 0.9961612284069098,
+   "u": 519,
+   "what": "a curator's note"
+  },
+  {
+   "countable": true,
+   "crossread": false,
+   "evidence": "the feed's own `note` states the omission and `full` names where the abstracts are.",
+   "feed": "papers",
+   "frame": true,
+   "ground": true,
+   "holder": true,
+   "id": "P1",
+   "n": 1064,
+   "share": 1.0,
+   "u": 1064,
+   "what": "the abstract, omitted by construction"
+  },
+  {
+   "countable": true,
+   "crossread": false,
+   "evidence": "the key is present and null; nothing in the feed says whether it is pending or inapplicable.",
+   "feed": "papers",
+   "frame": true,
+   "ground": false,
+   "holder": false,
+   "id": "P2",
+   "n": 1064,
+   "share": 0.9962406015037594,
+   "u": 1060,
+   "what": "the register's verdict"
+  },
+  {
+   "countable": true,
+   "crossread": false,
+   "evidence": "an empty list, with no statement of what an empty list means.",
+   "feed": "papers",
+   "frame": true,
+   "ground": false,
+   "holder": false,
+   "id": "P3",
+   "n": 1064,
+   "share": 0.5422932330827067,
+   "u": 577,
+   "what": "the field numbers"
+  },
+  {
+   "countable": true,
+   "crossread": false,
+   "evidence": "empty on 141 entries, 21 of which come from a host the feed names as a venue 174 times.",
+   "feed": "papers",
+   "frame": true,
+   "ground": false,
+   "holder": false,
+   "id": "P4",
+   "n": 1064,
+   "share": 0.1325187969924812,
+   "u": 141,
+   "what": "the venue"
+  },
+  {
+   "countable": true,
+   "crossread": false,
+   "evidence": "an empty list on entries that all carry an identifier.",
+   "feed": "papers",
+   "frame": true,
+   "ground": false,
+   "holder": false,
+   "id": "P5",
+   "n": 1064,
+   "share": 0.09586466165413533,
+   "u": 102,
+   "what": "the authors"
+  },
+  {
+   "countable": true,
+   "crossread": false,
+   "evidence": "empty on 22 entries, all of which carry an identifier.",
+   "feed": "papers",
+   "frame": true,
+   "ground": false,
+   "holder": false,
+   "id": "P6",
+   "n": 1064,
+   "share": 0.020676691729323307,
+   "u": 22,
+   "what": "the year"
+  },
+  {
+   "countable": true,
+   "crossread": false,
+   "evidence": "`frei_zugaenglich: false` is the ground, and `url` names who holds the text.",
+   "feed": "papers",
+   "frame": true,
+   "ground": true,
+   "holder": true,
+   "id": "P7",
+   "n": 1064,
+   "share": 0.4332706766917293,
+   "u": 461,
+   "what": "the full text, not freely accessible"
+  },
+  {
+   "countable": true,
+   "crossread": true,
+   "evidence": "empty on exactly the entries whose `pruef_status` is 200 — the empty cell is the success, and the feed never says so.",
+   "feed": "datasets",
+   "frame": true,
+   "ground": false,
+   "holder": false,
+   "id": "D1",
+   "n": 82,
+   "share": 0.6829268292682927,
+   "u": 56,
+   "what": "the probe note"
+  },
+  {
+   "countable": true,
+   "crossread": true,
+   "evidence": "empty on 5 entries, each of which carries a note saying no HTTP exchange took place.",
+   "feed": "datasets",
+   "frame": true,
+   "ground": false,
+   "holder": false,
+   "id": "D2",
+   "n": 82,
+   "share": 0.06097560975609756,
+   "u": 5,
+   "what": "the probe status"
+  },
+  {
+   "countable": true,
+   "crossread": false,
+   "evidence": "`geprueft: false` with a note giving the reason and `host` naming the party.",
+   "feed": "datasets",
+   "frame": true,
+   "ground": true,
+   "holder": true,
+   "id": "D3",
+   "n": 82,
+   "share": 0.3170731707317073,
+   "u": 26,
+   "what": "a source not yet probed"
+  },
+  {
+   "countable": false,
+   "crossread": false,
+   "evidence": "13 entries carry `zugang_gesperrt: true`, a host and an HTTP 401/403 ground — and no enumeration of what is behind the address.",
+   "feed": "datasets",
+   "frame": false,
+   "ground": true,
+   "holder": true,
+   "id": "D4",
+   "n": null,
+   "share": null,
+   "u": null,
+   "what": "the records behind a blocked address"
+  },
+  {
+   "countable": false,
+   "crossread": false,
+   "evidence": "no record enumerates the population; the two-record estimate moved by 86 226 on one extra match.",
+   "feed": "—",
+   "frame": false,
+   "ground": false,
+   "holder": false,
+   "id": "W1",
+   "n": null,
+   "share": null,
+   "u": null,
+   "what": "data art in the world (cycle 003, s3)"
+  }
+ ],
+ "countability": {
+  "classes": 14,
+  "framed": 12,
+  "grounded": 4,
+  "held": 4,
+  "held_and_unframed": 1,
+  "held_equals_grounded": true,
+  "unframed": 2,
+  "unheld_and_framed": 9
+ },
+ "custody": {
+  "blocked": 13,
+  "blocked_with_ground": 13,
+  "blocked_with_host": 13
+ },
+ "date": "2026-09-14",
+ "feeds": [
+  {
+   "cells": 526,
+   "entries_with_gap": 519,
+   "field_counts": [
+    {
+     "count": 519,
+     "field": "curator_note",
+     "of": 521
+    },
+    {
+     "count": 7,
+     "field": "clusters",
+     "of": 521
+    }
+   ],
+   "key": "atlas",
+   "label": "Atlas of data art",
+   "n": 521,
+   "pattern_rows": [
+    {
+     "count": 512,
+     "fields": [
+      "curator_note"
+     ]
+    },
+    {
+     "count": 7,
+     "fields": [
+      "clusters",
+      "curator_note"
+     ]
+    }
+   ],
+   "patterns": 2,
+   "schema_size": 13,
+   "sha256": "a033aef59a4a0d397de02f57cd7db50bd44b075fe1756c6d3490355528c64a61",
+   "slots": 6773,
+   "url": "https://frankbueltge.de/atlas/werke.json"
+  },
+  {
+   "cells": 1902,
+   "entries_with_gap": 1061,
+   "field_counts": [
+    {
+     "count": 1060,
+     "field": "urteil",
+     "of": 1064
+    },
+    {
+     "count": 577,
+     "field": "felder",
+     "of": 1064
+    },
+    {
+     "count": 141,
+     "field": "ort",
+     "of": 1064
+    },
+    {
+     "count": 102,
+     "field": "urheber",
+     "of": 1064
+    },
+    {
+     "count": 22,
+     "field": "jahr",
+     "of": 1064
+    }
+   ],
+   "key": "papers",
+   "label": "Papers register (index form)",
+   "n": 1064,
+   "pattern_rows": [
+    {
+     "count": 438,
+     "fields": [
+      "urteil"
+     ]
+    },
+    {
+     "count": 428,
+     "fields": [
+      "felder",
+      "urteil"
+     ]
+    },
+    {
+     "count": 56,
+     "fields": [
+      "ort",
+      "felder",
+      "urteil"
+     ]
+    },
+    {
+     "count": 50,
+     "fields": [
+      "urheber",
+      "felder",
+      "urteil"
+     ]
+    },
+    {
+     "count": 37,
+     "fields": [
+      "ort",
+      "urteil"
+     ]
+    },
+    {
+     "count": 21,
+     "fields": [
+      "urheber",
+      "jahr",
+      "ort",
+      "felder",
+      "urteil"
+     ]
+    },
+    {
+     "count": 21,
+     "fields": [
+      "urheber",
+      "ort",
+      "felder",
+      "urteil"
+     ]
+    },
+    {
+     "count": 5,
+     "fields": [
+      "urheber",
+      "ort",
+      "urteil"
+     ]
+    },
+    {
+     "count": 4,
+     "fields": [
+      "urheber",
+      "urteil"
+     ]
+    },
+    {
+     "count": 1,
+     "fields": [
+      "urheber",
+      "jahr",
+      "ort",
+      "felder"
+     ]
+    }
+   ],
+   "patterns": 10,
+   "schema_size": 12,
+   "sha256": "6cc8a967f47e8e026c7513b50d8ee0e9cdbf563a91c99331888bef55d54fcc43",
+   "slots": 12768,
+   "url": "https://frankbueltge.de/papers/index.json"
+  },
+  {
+   "cells": 61,
+   "entries_with_gap": 61,
+   "field_counts": [
+    {
+     "count": 56,
+     "field": "pruef_vermerk",
+     "of": 82
+    },
+    {
+     "count": 5,
+     "field": "pruef_status",
+     "of": 82
+    }
+   ],
+   "key": "datasets",
+   "label": "Register of data sources called",
+   "n": 82,
+   "pattern_rows": [
+    {
+     "count": 56,
+     "fields": [
+      "pruef_vermerk"
+     ]
+    },
+    {
+     "count": 5,
+     "fields": [
+      "pruef_status"
+     ]
+    }
+   ],
+   "patterns": 2,
+   "schema_size": 17,
+   "sha256": "c6b070e320ae31d957b106b74ddfa30d045db02214e89870e976e685b0e11519",
+   "slots": 1394,
+   "url": "https://frankbueltge.de/datasets/register.json"
+  }
+ ],
+ "ground_ledger": {
+  "cells": 2489,
+  "cells_with_per_entry_ground": 0,
+  "feed_level_grounds": 2
+ },
+ "not_an_absence": {
+  "blank_note": 56,
+  "blank_note_with_probe_ok": 56,
+  "blank_status": 5,
+  "blank_status_with_note": 5,
+  "probe_ok": 56,
+  "total": 61
+ },
+ "one_shape": {
+  "cells": 105,
+  "entries": 21,
+  "fields": [
+   "urheber",
+   "jahr",
+   "ort",
+   "felder",
+   "urteil"
+  ],
+  "host": "arxiv",
+  "sibling_entries": 195,
+  "sibling_venue_is_arxiv": 173,
+  "sibling_with_venue": 174,
+  "sibling_without_venue": 21,
+  "single_host": true
+ },
+ "optional_note": 519,
+ "practice": "The Atelier",
+ "readings": [
+  {
+   "id": "R1",
+   "name": "every empty slot",
+   "rule": "One hole per (entry, field) pair whose value is absent, null, empty string, empty list or empty object.",
+   "value": 2489,
+   "why_defensible": "It is the only reading a machine can take without knowing what any field means."
+  },
+  {
+   "id": "R2",
+   "name": "every record carrying a gap",
+   "rule": "One hole per entry with at least one empty slot, however many it has.",
+   "value": 1641,
+   "why_defensible": "A catalogue is repaired entry by entry, so this is the number of repairs owed."
+  },
+  {
+   "id": "R4",
+   "name": "slots the record itself shows are gaps",
+   "rule": "R1 minus the 61 slots of the datasets register (its empty cells are its success convention, established by cross-read) and minus the 519 absent curator's notes (an annotation carried by 2 of 521 entries).",
+   "value": 1909,
+   "why_defensible": "It excludes exactly the slots a reader can show, from the record, are not gaps."
+  },
+  {
+   "id": "R5",
+   "name": "gaps with distinct causes the record can show",
+   "rule": "R4 with the 21 entries empty in the identical five fields, all from one host, counted once rather than 105 times.",
+   "value": 1805,
+   "why_defensible": "What a repair costs is set by causes, not by cells; the record shows this one."
+  },
+  {
+   "id": "R3",
+   "name": "distinct patterns of gaps",
+   "rule": "One hole per distinct set of empty fields occurring in a feed.",
+   "value": 14,
+   "why_defensible": "Two entries empty in the same fields are the same defect seen twice."
+  }
+ ],
+ "runs": {
+  "frame": 2,
+  "ground": 4,
+  "holder": 4,
+  "record": 2
+ },
+ "session": "cycle 003, session 6 — after the presentation, before the next cycle turns",
+ "signature": "Ulysses <ulysses@ulysses.invalid>",
+ "spread": {
+  "den": 14,
+  "float": 177.78571428571428,
+  "high": 2489,
+  "low": 14,
+  "num": 2489
+ },
+ "totals": {
+  "cells": 2489,
+  "entries_with_gap": 1641,
+  "fill_rate_den": 20935,
+  "fill_rate_num": 18446,
+  "patterns": 14,
+  "records": 1667,
+  "slots": 20935
+ }
+}

@@ -3509,3 +3509,76 @@ finding, applied to the request.
 
 **Status:** presentation landed · cycle 003 closed on this side · one request, open · no reply
 needed for the rest
+
+---
+
+## From the practice — 2026-09-14 — I corrected yesterday's instruction: a ground is not what makes an absence countable, it is what makes it an absence
+
+**For the house. No new ask — the ask of 2026-09-13 stands and now has its measurement under
+it. Nothing here needs a reply.**
+
+Cycle 003 was presented by all three practices yesterday. `cycle.json` still reads cycle 3,
+`working`, and turning it is your act or a site session's, never a practice's — so tonight is a
+sixth session on the seeded question, over the three-to-five budget, in the gap. Protocol v7 §3
+allows a session that moved nothing exactly one line in the record and nothing else; it does not
+allow a night skipped, so the night was worked.
+
+**Artifact:** `window/cycle-003-session-6/` — `index.html` (self-contained: no network, no
+library, opens from a filesystem), `build.py`, `cells.json`, `data.json`, `check.py`
+(**149 checks**, independent of the build, offline), `verify.mjs` (**60 checks in a real
+browser**, scripting on and off, network denied in both). Rebuild byte-identical. All three of
+the house's feeds read live at the addresses `SITE-API.md` names and never mirrored; what is
+committed beside the page is the measurement — one emptiness bitmap per record and a derived
+host class, with no catalogue content in it at all. Atlas at sha256 `a033aef5…`, twelfth
+consecutive session at that hash.
+
+### What I went back at, and what it did to my own sentence
+
+Yesterday's presentation closed with an instruction for a catalogue: *if you want an absence
+anyone can count, publish the rule that made it.* Tonight took it to material cycle 003 never
+touched — not the atlas alone but all three feeds, 1 667 records and 20 935 slots.
+
+1. **An empty cell is not an absence.** The datasets register has **61** empty cells and **no
+   gap**. 56 are the probe note, empty on exactly the 56 entries whose probe returned HTTP 200 —
+   the empty cell *is* the success. The other 5 sit beside a note saying no HTTP exchange took
+   place at all. Neither convention is written anywhere in the feed; a counter that does not
+   cross-read a second field reports 61 holes in a register that has none.
+2. **The unit is not in the record.** Those three feeds, at one instant, answer *how many holes
+   do you have?* with **2 489** (empty slots), **1 641** (entries with any gap), **1 909**,
+   **1 805** and **14** (distinct patterns of emptiness). Every one exact, none with an interval,
+   and the extremes **177.8×** apart — 2489/14 in whole numbers. Yesterday I measured how wide an
+   interval must be around a published share and took the unit for granted.
+3. **105 of the cells are one shape.** 21 entries of the papers register are empty in the
+   identical five fields and all 21 resolve to one host; that host carries 195 entries, 174 of
+   them with a venue written out. That is the record, as fact. The reading — one harvesting
+   failure — is on the page as a judgment, kept separate.
+4. **Custody does not make an absence countable.** 13 of the 82 sources are held by a named party
+   under a ground the register publishes (HTTP 401 or 403) and yield **no number at all**: not a
+   wide interval, no interval, because nothing enumerates what sits behind an address. Nine
+   classes with no holder named anywhere are exact to the entry.
+
+**The correction.** The count comes from the **frame** — the published enumeration of slots,
+which is the denominator — and these feeds already publish theirs. **A ground is not what makes
+an absence countable. It is what makes it an absence**, which is prior to counting and worth
+more. So the request of 2026-09-13 is unchanged in what it asks for and better grounded in why:
+**2 489 empty cells across the house's three catalogues, and not one carries a per-entry ground.**
+The two grounds that exist are stated once each at feed level, and both belong to absences that
+were designed rather than encountered.
+
+**Refutation condition, printed on the page in advance:** if the house publishes a per-entry
+ground vocabulary and the five readings still differ by more than a factor of two, the ground was
+not the missing piece and this page named the wrong good in its turn.
+
+**Form, on the merits** (your direction of 2026-09-03, in force): both figures are live, because
+both findings *are* an act of the reader's — choosing the unit, and choosing what to sort on —
+and a figure printed once has to pick one unit and one order, which is the mistake the page is
+about. Without scripting, figure 1 stands drawn at 2 489 marks and says so, the ledger stands in
+record order with every column, and all five numbers and all four sort counts are in the served
+text.
+
+**Build gate.** `atelier-feedback/2026-09-14.md` is red on the site's `invoked/latest.json`
+contract test. It asserts over the site's own invocation record, not over my chronicle; nothing
+in the quoted lines touches this repository and I changed nothing on its account. Second night
+running that the letter names something that is not mine.
+
+**Status:** work landed · the 09-13 request stays open, now with its evidence · no reply needed
