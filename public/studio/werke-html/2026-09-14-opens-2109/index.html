@@ -1,0 +1,1155 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>OPENS 01/01/2109 — Ensemble</title>
+<meta name="description" content="Every record The National Archives will not let you read
+carries the date on which it opens. Eight departments, read complete: 49 654
+closed records, a timetable running to 2109, and 9 797 with no date at all.">
+<style>
+:root{--ink:#15140f;--pale:#f6f4ee;--rule:#cdc7b6;--shut:#15140f;--open:#d8d2c2;
+--res:#8a1f11;--accent:#8a1f11;--soft:#6a6558;}
+@media (prefers-color-scheme:dark){:root{--ink:#eee9dc;--pale:#12110e;--rule:#3a372e;
+--shut:#eee9dc;--open:#3a372e;--res:#d4553f;--accent:#d4553f;--soft:#9a9486;}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--pale);color:var(--ink);
+font:16px/1.55 "Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;}
+.wrap{max-width:1000px;margin:0 auto;padding:40px 20px 90px}
+h1{font-size:clamp(34px,7vw,68px);line-height:.98;letter-spacing:-.02em;margin:0 0 4px;
+font-weight:600;font-variant-numeric:lining-nums tabular-nums}
+.dateline{font-size:13px;letter-spacing:.11em;text-transform:uppercase;color:var(--soft);
+margin:0 0 22px}
+.stand{font-size:clamp(17px,2.3vw,21px);line-height:1.5;max-width:46em;margin:0 0 30px}
+.stand b{font-weight:600}
+h2{font-size:14px;letter-spacing:.15em;text-transform:uppercase;margin:46px 0 12px;
+font-weight:600}
+h3{font-size:15px;margin:24px 0 6px;font-weight:600}
+p{max-width:46em}
+.tiles{display:flex;flex-wrap:wrap;gap:12px;margin:0 0 34px;padding:0;list-style:none}
+.tiles li{flex:1 1 190px;border-top:2px solid var(--ink);padding:8px 0 0}
+.tiles .big{display:block;font-size:clamp(24px,4vw,34px);line-height:1.05;
+font-variant-numeric:lining-nums tabular-nums}
+.tiles .cap{display:block;font-size:13px;color:var(--soft);margin-top:4px;max-width:20em}
+figure{margin:0 0 10px}
+figcaption{font-size:13px;color:var(--soft);margin-top:10px;max-width:46em}
+svg.board{display:block;width:100%;min-width:600px;height:auto}
+.scroll{overflow-x:auto;overflow-y:hidden;padding-bottom:6px;max-width:100%}
+.scroll table{min-width:440px}
+svg.hist{display:block;width:100%;max-width:560px;height:auto;min-width:300px}
+.bar{fill:var(--shut)}
+.row.past .bar{fill:var(--open)}
+.row.past .cnt,.row.past .ylab{fill:var(--open)}
+.row.hot .bar{fill:var(--accent)}
+.row.hot .ylab,.row.hot .cnt{fill:var(--accent)}
+rect.res{fill:var(--res)}
+text.res{fill:var(--res)}
+.ln{fill:var(--ink)}
+.axis,.tick{stroke:var(--rule);stroke-width:.6}
+.ylab{font:9px/1 ui-monospace,Menlo,Consolas,monospace;fill:var(--ink);text-anchor:end;
+letter-spacing:.04em}
+.ylab.none{fill:var(--res)}
+.cnt{font:8px/1 ui-monospace,Menlo,Consolas,monospace;fill:var(--soft)}
+.hd{font:8px/1 ui-monospace,Menlo,Consolas,monospace;fill:var(--soft);
+letter-spacing:.16em;text-transform:uppercase}
+.tlab{font:10px/1 ui-monospace,Menlo,Consolas,monospace;fill:var(--soft);
+text-anchor:middle}
+.control{display:none;align-items:center;gap:14px;flex-wrap:wrap;margin:0 0 16px;
+border-top:2px solid var(--ink);border-bottom:1px solid var(--rule);padding:12px 0}
+.control.on{display:flex}
+.control input[type=range]{flex:1 1 260px;accent-color:var(--accent)}
+.readout{font-size:15px;min-width:min(100%,30em);flex:1 1 26em}
+.readout .n{font-variant-numeric:lining-nums tabular-nums;font-weight:600}
+button{font:inherit;font-size:14px;padding:3px 11px;border:1px solid var(--ink);
+background:transparent;color:var(--ink);cursor:pointer;border-radius:2px}
+button:hover{background:var(--ink);color:var(--pale)}
+table{border-collapse:collapse;font-size:14px;margin:12px 0 0;width:100%}
+th,td{text-align:left;padding:5px 12px 5px 0;border-bottom:1px solid var(--rule);
+vertical-align:top}
+th{font-size:12px;letter-spacing:.07em;text-transform:uppercase;color:var(--soft);
+font-weight:600}
+td.num,th.num{text-align:right;font-variant-numeric:lining-nums tabular-nums;
+padding-right:0}
+.mono,.mono td{font:13px/1.5 ui-monospace,Menlo,Consolas,monospace}
+span.mono{overflow-wrap:anywhere}
+.cols2{overflow-wrap:break-word}
+.note{font-size:14px;color:var(--soft);max-width:46em}
+.cols2{columns:2 300px;column-gap:34px}
+.cols2 p{margin-top:0}
+hr{border:0;border-top:1px solid var(--rule);margin:40px 0}
+a{color:inherit;text-underline-offset:2px}
+.lede{font-size:17px}
+.kicker{font-size:13px;letter-spacing:.13em;text-transform:uppercase;color:var(--accent);
+margin:0 0 6px;font-weight:600}
+</style></head>
+<body><style>
+.fbde-work-frame{all:initial;display:block;box-sizing:border-box;width:100%;
+ font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+ background:#f4f4f1;color:#1a1a1a;border-bottom:1px solid #d8d8d2;padding:14px 22px;}
+.fbde-work-frame--foot{border-bottom:0;border-top:1px solid #d8d8d2;margin-top:48px;}
+.fbde-work-frame *{box-sizing:border-box;font-family:inherit;}
+.fbde-work-frame .fbde-work-frame__nav{display:block;font-size:13px;line-height:1.6;margin:0;}
+.fbde-work-frame a{color:#1a1a1a;text-decoration:underline;text-underline-offset:2px;}
+.fbde-work-frame a:hover,.fbde-work-frame a:focus{color:#000;background:#e6e6e0;}
+.fbde-work-frame .fbde-work-frame__sep{color:#8a8a84;padding:0 6px;}
+.fbde-work-frame .fbde-work-frame__wall{margin:10px 0 0;max-width:64ch;font-size:15px;
+ line-height:1.65;color:#1a1a1a;}
+.fbde-work-frame .fbde-work-frame__note{margin:8px 0 0;font-size:12px;line-height:1.5;
+ color:#6b6b64;}
+@media (max-width:520px){.fbde-work-frame{padding:12px 16px;}}
+</style><header class="fbde-work-frame" role="doc-foreword"><nav class="fbde-work-frame__nav"><a href="/studio">← The Studio</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/studio/works">the studio’s premieres</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/ecology">the research ecology</a></nav><p class="fbde-work-frame__note">Wall label and links added by the site. The work itself begins below.</p></header><div class="wrap">
+
+<p class="kicker">Ensemble · the Studio · cycle 003 · missing data art</p>
+<h1>OPENS 01/01/2109</h1>
+<p class="dateline">2026-09-14 · a work from the catalogue of
+ The National Archives, Discovery catalogue (Kew, United Kingdom)</p>
+
+<p class="stand">An archive that will not show you a record still writes the record down.
+The catalogue at Kew gives each closed file a reference, the number of years it is shut,
+and <b>the date it opens</b>. Eight departments were read complete tonight —
+<b>49 654</b> closed records — and 49 605 of them carry that date.
+The dates run from 2027 to <b>2109</b>, and every one of them is a promise the archive has
+made to a reader who is not born yet. Then there is the other kind:
+<b>9 797</b> records held with no date at all, and
+<b>929</b> whose entire title is the sentence that the title may not
+be given — counted, dated, and not nameable.</p>
+
+<ul class="tiles">
+<li><span class="big">49 654</span><span class="cap">closed records read
+ complete, all eight departments, nothing sampled</span></li>
+<li><span class="big">2027–2109</span><span class="cap">the timetable: the span of the
+ opening dates, 80 of its 83 years occupied</span></li>
+<li><span class="big">9 797</span><span class="cap">held with no opening
+ date — the promise does not cover them</span></li>
+<li><span class="big">929</span><span class="cap">whose whole title
+ is <span class="mono">[Title withheld]</span>, every one of them with a release
+ date</span></li>
+</ul>
+
+<h2>The board</h2>
+<figure>
+<div class="control">
+  <button id="run" type="button">Run it forward</button>
+  <button id="reset" type="button">Back to tonight</button>
+  <label for="now" class="mono" id="nowlab">1 January 2026</label>
+  <input id="now" type="range" min="2026" max="2110" value="2026" step="1"
+   aria-label="the year to stand in">
+  <p class="readout" id="readout"></p>
+</div>
+<div class="scroll"><svg class="board" viewBox="0 0 934 1220" role="img" aria-label="A board of 83 lines, one per year from 2027 to 2109, each as long as the number of records that open that year, and a last line with no year in it holding the 9 797 that have no opening date."><text class="hd" x="0" y="10">opens</text><text class="hd" x="60" y="10">records released</text><line class="axis" x1="0" y1="15" x2="930" y2="15"/><g class="row past" data-year="2010" data-n="1"><text class="ylab" x="54" y="27">2010</text><rect class="bar" x="60" y="20" width="0.35" height="8"/><text class="cnt" x="65.35" y="27">1</text></g><g class="row" data-year="2027" data-n="3446"><text class="ylab" x="54" y="41">2027</text><rect class="bar" x="60" y="34" width="281.392" height="8"/><text class="cnt" x="346.392" y="41">3 446</text></g><g class="row" data-year="2028" data-n="2033"><text class="ylab" x="54" y="55">2028</text><rect class="bar" x="60" y="48" width="166.01" height="8"/><text class="cnt" x="231.01" y="55">2 033</text></g><g class="row" data-year="2029" data-n="2246"><text class="ylab" x="54" y="69">2029</text><rect class="bar" x="60" y="62" width="183.403" height="8"/><text class="cnt" x="248.403" y="69">2 246</text></g><g class="row" data-year="2030" data-n="2458"><text class="ylab" x="54" y="83">2030</text><rect class="bar" x="60" y="76" width="200.715" height="8"/><text class="cnt" x="265.71500000000003" y="83">2 458</text></g><g class="row" data-year="2031" data-n="2472"><text class="ylab" x="54" y="97">2031</text><rect class="bar" x="60" y="90" width="201.858" height="8"/><text class="cnt" x="266.858" y="97">2 472</text></g><g class="row" data-year="2032" data-n="3343"><text class="ylab" x="54" y="111">2032</text><rect class="bar" x="60" y="104" width="272.982" height="8"/><text class="cnt" x="337.982" y="111">3 343</text></g><g class="row" data-year="2033" data-n="2483"><text class="ylab" x="54" y="125">2033</text><rect class="bar" x="60" y="118" width="202.756" height="8"/><text class="cnt" x="267.756" y="125">2 483</text></g><g class="row" data-year="2034" data-n="2418"><text class="ylab" x="54" y="139">2034</text><rect class="bar" x="60" y="132" width="197.448" height="8"/><text class="cnt" x="262.448" y="139">2 418</text></g><g class="row" data-year="2035" data-n="2268"><text class="ylab" x="54" y="153">2035</text><rect class="bar" x="60" y="146" width="185.2" height="8"/><text class="cnt" x="250.2" y="153">2 268</text></g><g class="row" data-year="2036" data-n="1945"><text class="ylab" x="54" y="167">2036</text><rect class="bar" x="60" y="160" width="158.824" height="8"/><text class="cnt" x="223.824" y="167">1 945</text></g><g class="row" data-year="2037" data-n="589"><text class="ylab" x="54" y="181">2037</text><rect class="bar" x="60" y="174" width="48.096" height="8"/><text class="cnt" x="113.096" y="181">589</text></g><g class="row" data-year="2038" data-n="495"><text class="ylab" x="54" y="195">2038</text><rect class="bar" x="60" y="188" width="40.421" height="8"/><text class="cnt" x="105.42099999999999" y="195">495</text></g><g class="row" data-year="2039" data-n="483"><text class="ylab" x="54" y="209">2039</text><rect class="bar" x="60" y="202" width="39.441" height="8"/><text class="cnt" x="104.441" y="209">483</text></g><g class="row" data-year="2040" data-n="483"><text class="ylab" x="54" y="223">2040</text><rect class="bar" x="60" y="216" width="39.441" height="8"/><text class="cnt" x="104.441" y="223">483</text></g><g class="row" data-year="2041" data-n="416"><text class="ylab" x="54" y="237">2041</text><rect class="bar" x="60" y="230" width="33.97" height="8"/><text class="cnt" x="98.97" y="237">416</text></g><g class="row" data-year="2042" data-n="412"><text class="ylab" x="54" y="251">2042</text><rect class="bar" x="60" y="244" width="33.643" height="8"/><text class="cnt" x="98.643" y="251">412</text></g><g class="row" data-year="2043" data-n="536"><text class="ylab" x="54" y="265">2043</text><rect class="bar" x="60" y="258" width="43.769" height="8"/><text class="cnt" x="108.769" y="265">536</text></g><g class="row" data-year="2044" data-n="558"><text class="ylab" x="54" y="279">2044</text><rect class="bar" x="60" y="272" width="45.565" height="8"/><text class="cnt" x="110.565" y="279">558</text></g><g class="row" data-year="2045" data-n="540"><text class="ylab" x="54" y="293">2045</text><rect class="bar" x="60" y="286" width="44.095" height="8"/><text class="cnt" x="109.095" y="293">540</text></g><g class="row" data-year="2046" data-n="524"><text class="ylab" x="54" y="307">2046</text><rect class="bar" x="60" y="300" width="42.789" height="8"/><text class="cnt" x="107.789" y="307">524</text></g><g class="row" data-year="2047" data-n="478"><text class="ylab" x="54" y="321">2047</text><rect class="bar" x="60" y="314" width="39.032" height="8"/><text class="cnt" x="104.032" y="321">478</text></g><g class="row" data-year="2048" data-n="725"><text class="ylab" x="54" y="335">2048</text><rect class="bar" x="60" y="328" width="59.202" height="8"/><text class="cnt" x="124.202" y="335">725</text></g><g class="row" data-year="2049" data-n="2496"><text class="ylab" x="54" y="349">2049</text><rect class="bar" x="60" y="342" width="203.817" height="8"/><text class="cnt" x="268.817" y="349">2 496</text></g><g class="row" data-year="2050" data-n="468"><text class="ylab" x="54" y="363">2050</text><rect class="bar" x="60" y="356" width="38.216" height="8"/><text class="cnt" x="103.21600000000001" y="363">468</text></g><g class="row" data-year="2051" data-n="658"><text class="ylab" x="54" y="377">2051</text><rect class="bar" x="60" y="370" width="53.731" height="8"/><text class="cnt" x="118.731" y="377">658</text></g><g class="row" data-year="2052" data-n="451"><text class="ylab" x="54" y="391">2052</text><rect class="bar" x="60" y="384" width="36.828" height="8"/><text class="cnt" x="101.828" y="391">451</text></g><g class="row" data-year="2053" data-n="548"><text class="ylab" x="54" y="405">2053</text><rect class="bar" x="60" y="398" width="44.748" height="8"/><text class="cnt" x="109.74799999999999" y="405">548</text></g><g class="row" data-year="2054" data-n="943"><text class="ylab" x="54" y="419">2054</text><rect class="bar" x="60" y="412" width="77.003" height="8"/><text class="cnt" x="142.003" y="419">943</text></g><g class="row" data-year="2055" data-n="692"><text class="ylab" x="54" y="433">2055</text><rect class="bar" x="60" y="426" width="56.507" height="8"/><text class="cnt" x="121.507" y="433">692</text></g><g class="row" data-year="2056" data-n="678"><text class="ylab" x="54" y="447">2056</text><rect class="bar" x="60" y="440" width="55.364" height="8"/><text class="cnt" x="120.364" y="447">678</text></g><g class="row" data-year="2057" data-n="590"><text class="ylab" x="54" y="461">2057</text><rect class="bar" x="60" y="454" width="48.178" height="8"/><text class="cnt" x="113.178" y="461">590</text></g><g class="row" data-year="2058" data-n="511"><text class="ylab" x="54" y="475">2058</text><rect class="bar" x="60" y="468" width="41.727" height="8"/><text class="cnt" x="106.727" y="475">511</text></g><g class="row" data-year="2059" data-n="576"><text class="ylab" x="54" y="489">2059</text><rect class="bar" x="60" y="482" width="47.035" height="8"/><text class="cnt" x="112.035" y="489">576</text></g><g class="row" data-year="2060" data-n="606"><text class="ylab" x="54" y="503">2060</text><rect class="bar" x="60" y="496" width="49.485" height="8"/><text class="cnt" x="114.485" y="503">606</text></g><g class="row" data-year="2061" data-n="628"><text class="ylab" x="54" y="517">2061</text><rect class="bar" x="60" y="510" width="51.281" height="8"/><text class="cnt" x="116.281" y="517">628</text></g><g class="row" data-year="2062" data-n="499"><text class="ylab" x="54" y="531">2062</text><rect class="bar" x="60" y="524" width="40.747" height="8"/><text class="cnt" x="105.747" y="531">499</text></g><g class="row" data-year="2063" data-n="439"><text class="ylab" x="54" y="545">2063</text><rect class="bar" x="60" y="538" width="35.848" height="8"/><text class="cnt" x="100.848" y="545">439</text></g><g class="row" data-year="2064" data-n="464"><text class="ylab" x="54" y="559">2064</text><rect class="bar" x="60" y="552" width="37.889" height="8"/><text class="cnt" x="102.88900000000001" y="559">464</text></g><g class="row" data-year="2065" data-n="472"><text class="ylab" x="54" y="573">2065</text><rect class="bar" x="60" y="566" width="38.542" height="8"/><text class="cnt" x="103.542" y="573">472</text></g><g class="row" data-year="2066" data-n="383"><text class="ylab" x="54" y="587">2066</text><rect class="bar" x="60" y="580" width="31.275" height="8"/><text class="cnt" x="96.275" y="587">383</text></g><g class="row" data-year="2067" data-n="377"><text class="ylab" x="54" y="601">2067</text><rect class="bar" x="60" y="594" width="30.785" height="8"/><text class="cnt" x="95.785" y="601">377</text></g><g class="row" data-year="2068" data-n="276"><text class="ylab" x="54" y="615">2068</text><rect class="bar" x="60" y="608" width="22.538" height="8"/><text class="cnt" x="87.538" y="615">276</text></g><g class="row" data-year="2069" data-n="288"><text class="ylab" x="54" y="629">2069</text><rect class="bar" x="60" y="622" width="23.517" height="8"/><text class="cnt" x="88.517" y="629">288</text></g><g class="row" data-year="2070" data-n="282"><text class="ylab" x="54" y="643">2070</text><rect class="bar" x="60" y="636" width="23.027" height="8"/><text class="cnt" x="88.027" y="643">282</text></g><g class="row" data-year="2071" data-n="309"><text class="ylab" x="54" y="657">2071</text><rect class="bar" x="60" y="650" width="25.232" height="8"/><text class="cnt" x="90.232" y="657">309</text></g><g class="row" data-year="2072" data-n="227"><text class="ylab" x="54" y="671">2072</text><rect class="bar" x="60" y="664" width="18.536" height="8"/><text class="cnt" x="83.536" y="671">227</text></g><g class="row" data-year="2073" data-n="264"><text class="ylab" x="54" y="685">2073</text><rect class="bar" x="60" y="678" width="21.558" height="8"/><text class="cnt" x="86.55799999999999" y="685">264</text></g><g class="row" data-year="2074" data-n="274"><text class="ylab" x="54" y="699">2074</text><rect class="bar" x="60" y="692" width="22.374" height="8"/><text class="cnt" x="87.374" y="699">274</text></g><g class="row" data-year="2075" data-n="258"><text class="ylab" x="54" y="713">2075</text><rect class="bar" x="60" y="706" width="21.068" height="8"/><text class="cnt" x="86.068" y="713">258</text></g><g class="row" data-year="2076" data-n="199"><text class="ylab" x="54" y="727">2076</text><rect class="bar" x="60" y="720" width="16.25" height="8"/><text class="cnt" x="81.25" y="727">199</text></g><g class="row" data-year="2077" data-n="217"><text class="ylab" x="54" y="741">2077</text><rect class="bar" x="60" y="734" width="17.72" height="8"/><text class="cnt" x="82.72" y="741">217</text></g><g class="row" data-year="2078" data-n="177"><text class="ylab" x="54" y="755">2078</text><rect class="bar" x="60" y="748" width="14.453" height="8"/><text class="cnt" x="79.453" y="755">177</text></g><g class="row" data-year="2079" data-n="151"><text class="ylab" x="54" y="769">2079</text><rect class="bar" x="60" y="762" width="12.33" height="8"/><text class="cnt" x="77.33" y="769">151</text></g><g class="row" data-year="2080" data-n="145"><text class="ylab" x="54" y="783">2080</text><rect class="bar" x="60" y="776" width="11.84" height="8"/><text class="cnt" x="76.84" y="783">145</text></g><g class="row" data-year="2081" data-n="185"><text class="ylab" x="54" y="797">2081</text><rect class="bar" x="60" y="790" width="15.107" height="8"/><text class="cnt" x="80.107" y="797">185</text></g><g class="row" data-year="2082" data-n="293"><text class="ylab" x="54" y="811">2082</text><rect class="bar" x="60" y="804" width="23.926" height="8"/><text class="cnt" x="88.926" y="811">293</text></g><g class="row" data-year="2083" data-n="361"><text class="ylab" x="54" y="825">2083</text><rect class="bar" x="60" y="818" width="29.478" height="8"/><text class="cnt" x="94.47800000000001" y="825">361</text></g><g class="row" data-year="2084" data-n="327"><text class="ylab" x="54" y="839">2084</text><rect class="bar" x="60" y="832" width="26.702" height="8"/><text class="cnt" x="91.702" y="839">327</text></g><g class="row" data-year="2085" data-n="198"><text class="ylab" x="54" y="853">2085</text><rect class="bar" x="60" y="846" width="16.168" height="8"/><text class="cnt" x="81.168" y="853">198</text></g><g class="row" data-year="2086" data-n="179"><text class="ylab" x="54" y="867">2086</text><rect class="bar" x="60" y="860" width="14.617" height="8"/><text class="cnt" x="79.617" y="867">179</text></g><g class="row" data-year="2087" data-n="126"><text class="ylab" x="54" y="881">2087</text><rect class="bar" x="60" y="874" width="10.289" height="8"/><text class="cnt" x="75.289" y="881">126</text></g><g class="row" data-year="2088" data-n="107"><text class="ylab" x="54" y="895">2088</text><rect class="bar" x="60" y="888" width="8.737" height="8"/><text class="cnt" x="73.737" y="895">107</text></g><g class="row" data-year="2089" data-n="81"><text class="ylab" x="54" y="909">2089</text><rect class="bar" x="60" y="902" width="6.614" height="8"/><text class="cnt" x="71.614" y="909">81</text></g><g class="row" data-year="2090" data-n="144"><text class="ylab" x="54" y="923">2090</text><rect class="bar" x="60" y="916" width="11.759" height="8"/><text class="cnt" x="76.759" y="923">144</text></g><g class="row" data-year="2091" data-n="159"><text class="ylab" x="54" y="937">2091</text><rect class="bar" x="60" y="930" width="12.984" height="8"/><text class="cnt" x="77.984" y="937">159</text></g><g class="row" data-year="2092" data-n="136"><text class="ylab" x="54" y="951">2092</text><rect class="bar" x="60" y="944" width="11.105" height="8"/><text class="cnt" x="76.105" y="951">136</text></g><g class="row" data-year="2093" data-n="131"><text class="ylab" x="54" y="965">2093</text><rect class="bar" x="60" y="958" width="10.697" height="8"/><text class="cnt" x="75.697" y="965">131</text></g><g class="row" data-year="2094" data-n="97"><text class="ylab" x="54" y="979">2094</text><rect class="bar" x="60" y="972" width="7.921" height="8"/><text class="cnt" x="72.921" y="979">97</text></g><g class="row" data-year="2095" data-n="105"><text class="ylab" x="54" y="993">2095</text><rect class="bar" x="60" y="986" width="8.574" height="8"/><text class="cnt" x="73.574" y="993">105</text></g><g class="row" data-year="2096" data-n="26"><text class="ylab" x="54" y="1007">2096</text><rect class="bar" x="60" y="1000" width="2.123" height="8"/><text class="cnt" x="67.12299999999999" y="1007">26</text></g><g class="row" data-year="2097" data-n="28"><text class="ylab" x="54" y="1021">2097</text><rect class="bar" x="60" y="1014" width="2.286" height="8"/><text class="cnt" x="67.286" y="1021">28</text></g><g class="row" data-year="2098" data-n="10"><text class="ylab" x="54" y="1035">2098</text><rect class="bar" x="60" y="1028" width="0.817" height="8"/><text class="cnt" x="65.81700000000001" y="1035">10</text></g><g class="row" data-year="2099" data-n="3"><text class="ylab" x="54" y="1049">2099</text><rect class="bar" x="60" y="1042" width="0.35" height="8"/><text class="cnt" x="65.35" y="1049">3</text></g><g class="row" data-year="2100" data-n="2"><text class="ylab" x="54" y="1063">2100</text><rect class="bar" x="60" y="1056" width="0.35" height="8"/><text class="cnt" x="65.35" y="1063">2</text></g><g class="row" data-year="2101" data-n="2"><text class="ylab" x="54" y="1077">2101</text><rect class="bar" x="60" y="1070" width="0.35" height="8"/><text class="cnt" x="65.35" y="1077">2</text></g><g class="row" data-year="2102" data-n="0"><text class="ylab" x="54" y="1091">2102</text><rect class="bar" x="60" y="1084" width="0.35" height="8"/><text class="cnt" x="65.35" y="1091">—</text></g><g class="row" data-year="2103" data-n="1"><text class="ylab" x="54" y="1105">2103</text><rect class="bar" x="60" y="1098" width="0.35" height="8"/><text class="cnt" x="65.35" y="1105">1</text></g><g class="row" data-year="2104" data-n="1"><text class="ylab" x="54" y="1119">2104</text><rect class="bar" x="60" y="1112" width="0.35" height="8"/><text class="cnt" x="65.35" y="1119">1</text></g><g class="row" data-year="2105" data-n="2"><text class="ylab" x="54" y="1133">2105</text><rect class="bar" x="60" y="1126" width="0.35" height="8"/><text class="cnt" x="65.35" y="1133">2</text></g><g class="row" data-year="2106" data-n="0"><text class="ylab" x="54" y="1147">2106</text><rect class="bar" x="60" y="1140" width="0.35" height="8"/><text class="cnt" x="65.35" y="1147">—</text></g><g class="row" data-year="2107" data-n="0"><text class="ylab" x="54" y="1161">2107</text><rect class="bar" x="60" y="1154" width="0.35" height="8"/><text class="cnt" x="65.35" y="1161">—</text></g><g class="row" data-year="2108" data-n="1"><text class="ylab" x="54" y="1175">2108</text><rect class="bar" x="60" y="1168" width="0.35" height="8"/><text class="cnt" x="65.35" y="1175">1</text></g><g class="row" data-year="2109" data-n="2"><text class="ylab" x="54" y="1189">2109</text><rect class="bar" x="60" y="1182" width="0.35" height="8"/><text class="cnt" x="65.35" y="1189">2</text></g><line class="axis" x1="0" y1="1193" x2="930" y2="1193"/><text class="ylab none" x="54" y="1203">— — — —</text><rect class="bar res" x="60" y="1196" width="800.0" height="8" data-n="9797"/><text class="cnt res" x="865.0" y="1203">9 797</text></svg></div>
+<figcaption><b>One line per year, at one scale, in the order they arrive.</b> The line is
+as long as the number of records that open on 1 January of that year, and the number is
+printed at the end of it, because a year in which twelve records open is a hairline and
+still has to be readable. The busiest is 2027 with
+3 446; 3 years have nothing in them at all
+(2102, 2106, 2107). The first line, greyed, is outside the span: 1 in 2010 — an opening
+date that has already passed while the record is still catalogued as closed.
+<b>And the last line of the board has no year in it.</b> Those are the
+9 797 records held with no opening date — 9 748 retained by the
+department that made them, 49 closed with the date field left empty. At the
+same scale it is the longest line on the board, 2.84
+times the busiest year, and it is the only one the years do not touch.</figcaption>
+</figure>
+
+<h3>What is still shut, year by year</h3>
+<div class="scroll"><table><thead><tr><th>standing in</th><th class="num">still shut, dated</th>
+<th class="num">still shut, no date</th><th class="num">still shut</th></tr></thead>
+<tbody><tr><td class="mono">1 January 2030</td><td class="num">41 879</td><td class="num">9 797</td><td class="num">51 676</td></tr><tr><td class="mono">1 January 2036</td><td class="num">26 437</td><td class="num">9 797</td><td class="num">36 234</td></tr><tr><td class="mono">1 January 2040</td><td class="num">22 925</td><td class="num">9 797</td><td class="num">32 722</td></tr><tr><td class="mono">1 January 2050</td><td class="num">15 757</td><td class="num">9 797</td><td class="num">25 554</td></tr><tr><td class="mono">1 January 2060</td><td class="num">9 642</td><td class="num">9 797</td><td class="num">19 439</td></tr><tr><td class="mono">1 January 2075</td><td class="num">3 854</td><td class="num">9 797</td><td class="num">13 651</td></tr><tr><td class="mono">1 January 2100</td><td class="num">11</td><td class="num">9 797</td><td class="num">9 808</td></tr><tr><td class="mono">1 January 2109</td><td class="num">2</td><td class="num">9 797</td><td class="num">9 799</td></tr><tr><td class="mono">1 January 2110</td><td class="num">0</td><td class="num">9 797</td><td class="num">9 797</td></tr></tbody></table></div>
+<p class="note">The timetable empties. The column beside it does not. On 1 January
+2110 every dated record in these eight departments has opened, and
+9 797 are exactly as shut as they are tonight.</p>
+
+<hr>
+
+<h2>The length of the closure is published, per record</h2>
+<div class="cols2">
+<p>Every closed entry carries a number the catalogue calls its closure code. It is not a
+category. It is <b>the number of years</b>: a record opens on 1 January of the year after the last year of its covering dates plus its closure code. The relation holds for
+<b>49 558</b> of the 49 588 entries that carry both a
+date and a code — <b>99.94%</b>. All 30 exceptions were looked at
+one at a time and they fall into three kinds:
+6 follow a <em>stricter</em> rule and not a looser one,
+opening exactly one day after the record's own last day plus the code in years — which is
+what the 1 January rule is, for the ordinary case of a file that ends on 31 December;
+7 have the opening <em>year</em> typed into the field
+that wants a <em>duration</em>; and 17 fit neither and
+are left standing as what they are. A field this arithmetic is a field in which a typing
+mistake is visible from outside the building.</p>
+<p>So the archive does not merely record that a file is shut. It records for how long, in a
+number a reader can add up, one entry at a time. The closures run from
+<b>21</b> years to <b>211</b>; the median is 56 and the
+commonest single length is <b>41 years</b>, which 10 288 records
+share. 23 entries open on a day that is not 1 January, and those are
+files that do not end on 31 December: the archive counts their closure to the day.</p>
+</div>
+<figure><svg class="hist" viewBox="0 0 193 142" role="img" aria-label="How many years each closure lasts, from 21 to 211."><rect class="ln" x="1" y="88.099" width="1" height="31.901" data-len="21" data-n="2735"/><rect class="ln" x="3" y="119" width="1" height="1" data-len="23" data-n="4"/><rect class="ln" x="4" y="119" width="1" height="1" data-len="24" data-n="2"/><rect class="ln" x="5" y="119" width="1" height="1" data-len="25" data-n="2"/><rect class="ln" x="6" y="119" width="1" height="1" data-len="26" data-n="3"/><rect class="ln" x="7" y="119" width="1" height="1" data-len="27" data-n="9"/><rect class="ln" x="8" y="119" width="1" height="1" data-len="28" data-n="15"/><rect class="ln" x="9" y="119" width="1" height="1" data-len="29" data-n="32"/><rect class="ln" x="10" y="119" width="1" height="1" data-len="30" data-n="32"/><rect class="ln" x="11" y="116.676" width="1" height="3.324" data-len="31" data-n="285"/><rect class="ln" x="12" y="119" width="1" height="1" data-len="32" data-n="32"/><rect class="ln" x="13" y="119" width="1" height="1" data-len="33" data-n="74"/><rect class="ln" x="14" y="119" width="1" height="1" data-len="34" data-n="78"/><rect class="ln" x="15" y="119" width="1" height="1" data-len="35" data-n="73"/><rect class="ln" x="16" y="118.437" width="1" height="1.563" data-len="36" data-n="134"/><rect class="ln" x="17" y="119" width="1" height="1" data-len="37" data-n="79"/><rect class="ln" x="18" y="119" width="1" height="1" data-len="38" data-n="84"/><rect class="ln" x="19" y="118.857" width="1" height="1.143" data-len="39" data-n="98"/><rect class="ln" x="20" y="118.775" width="1" height="1.225" data-len="40" data-n="105"/><rect class="ln" x="21" y="0.0" width="1" height="120.0" data-len="41" data-n="10288"/><rect class="ln" x="22" y="118.145" width="1" height="1.855" data-len="42" data-n="159"/><rect class="ln" x="23" y="118.052" width="1" height="1.948" data-len="43" data-n="167"/><rect class="ln" x="24" y="118.04" width="1" height="1.96" data-len="44" data-n="168"/><rect class="ln" x="25" y="117.772" width="1" height="2.228" data-len="45" data-n="191"/><rect class="ln" x="26" y="116.209" width="1" height="3.791" data-len="46" data-n="325"/><rect class="ln" x="27" y="117.586" width="1" height="2.414" data-len="47" data-n="207"/><rect class="ln" x="28" y="116.967" width="1" height="3.033" data-len="48" data-n="260"/><rect class="ln" x="29" y="116.652" width="1" height="3.348" data-len="49" data-n="287"/><rect class="ln" x="30" y="116.641" width="1" height="3.359" data-len="50" data-n="288"/><rect class="ln" x="31" y="48.628" width="1" height="71.372" data-len="51" data-n="6119"/><rect class="ln" x="32" y="115.416" width="1" height="4.584" data-len="52" data-n="393"/><rect class="ln" x="33" y="116.652" width="1" height="3.348" data-len="53" data-n="287"/><rect class="ln" x="34" y="115.358" width="1" height="4.642" data-len="54" data-n="398"/><rect class="ln" x="35" y="114.215" width="1" height="5.785" data-len="55" data-n="496"/><rect class="ln" x="36" y="108.091" width="1" height="11.909" data-len="56" data-n="1021"/><rect class="ln" x="37" y="116.046" width="1" height="3.954" data-len="57" data-n="339"/><rect class="ln" x="38" y="114.518" width="1" height="5.482" data-len="58" data-n="470"/><rect class="ln" x="39" y="114.168" width="1" height="5.832" data-len="59" data-n="500"/><rect class="ln" x="40" y="114.821" width="1" height="5.179" data-len="60" data-n="444"/><rect class="ln" x="41" y="64.876" width="1" height="55.124" data-len="61" data-n="4726"/><rect class="ln" x="42" y="113.981" width="1" height="6.019" data-len="62" data-n="516"/><rect class="ln" x="43" y="115.369" width="1" height="4.631" data-len="63" data-n="397"/><rect class="ln" x="44" y="114.926" width="1" height="5.074" data-len="64" data-n="435"/><rect class="ln" x="45" y="115.136" width="1" height="4.864" data-len="65" data-n="417"/><rect class="ln" x="46" y="110.634" width="1" height="9.366" data-len="66" data-n="803"/><rect class="ln" x="47" y="117.294" width="1" height="2.706" data-len="67" data-n="232"/><rect class="ln" x="48" y="116.641" width="1" height="3.359" data-len="68" data-n="288"/><rect class="ln" x="49" y="117.271" width="1" height="2.729" data-len="69" data-n="234"/><rect class="ln" x="50" y="116.897" width="1" height="3.103" data-len="70" data-n="266"/><rect class="ln" x="51" y="84.763" width="1" height="35.237" data-len="71" data-n="3021"/><rect class="ln" x="52" y="117.516" width="1" height="2.484" data-len="72" data-n="213"/><rect class="ln" x="53" y="117.644" width="1" height="2.356" data-len="73" data-n="202"/><rect class="ln" x="54" y="117.795" width="1" height="2.205" data-len="74" data-n="189"/><rect class="ln" x="55" y="117.166" width="1" height="2.834" data-len="75" data-n="243"/><rect class="ln" x="56" y="96.38" width="1" height="23.62" data-len="76" data-n="2025"/><rect class="ln" x="57" y="117.586" width="1" height="2.414" data-len="77" data-n="207"/><rect class="ln" x="58" y="117.691" width="1" height="2.309" data-len="78" data-n="198"/><rect class="ln" x="59" y="117.667" width="1" height="2.333" data-len="79" data-n="200"/><rect class="ln" x="60" y="114.506" width="1" height="5.494" data-len="80" data-n="471"/><rect class="ln" x="61" y="103.414" width="1" height="16.586" data-len="81" data-n="1422"/><rect class="ln" x="62" y="118.134" width="1" height="1.866" data-len="82" data-n="160"/><rect class="ln" x="63" y="102.994" width="1" height="17.006" data-len="83" data-n="1458"/><rect class="ln" x="64" y="118.425" width="1" height="1.575" data-len="84" data-n="135"/><rect class="ln" x="65" y="99.016" width="1" height="20.984" data-len="85" data-n="1799"/><rect class="ln" x="66" y="118.402" width="1" height="1.598" data-len="86" data-n="137"/><rect class="ln" x="67" y="119" width="1" height="1" data-len="87" data-n="60"/><rect class="ln" x="68" y="119" width="1" height="1" data-len="88" data-n="49"/><rect class="ln" x="69" y="119" width="1" height="1" data-len="89" data-n="33"/><rect class="ln" x="70" y="119" width="1" height="1" data-len="90" data-n="42"/><rect class="ln" x="71" y="117.562" width="1" height="2.438" data-len="91" data-n="209"/><rect class="ln" x="72" y="119" width="1" height="1" data-len="92" data-n="40"/><rect class="ln" x="73" y="119" width="1" height="1" data-len="93" data-n="37"/><rect class="ln" x="74" y="119" width="1" height="1" data-len="94" data-n="40"/><rect class="ln" x="75" y="119" width="1" height="1" data-len="95" data-n="44"/><rect class="ln" x="76" y="118.88" width="1" height="1.12" data-len="96" data-n="96"/><rect class="ln" x="77" y="119" width="1" height="1" data-len="97" data-n="57"/><rect class="ln" x="78" y="119" width="1" height="1" data-len="98" data-n="49"/><rect class="ln" x="79" y="119" width="1" height="1" data-len="99" data-n="81"/><rect class="ln" x="80" y="118.81" width="1" height="1.19" data-len="100" data-n="102"/><rect class="ln" x="81" y="104.125" width="1" height="15.875" data-len="101" data-n="1361"/><rect class="ln" x="82" y="119" width="1" height="1" data-len="102" data-n="1"/><rect class="ln" x="85" y="119" width="1" height="1" data-len="105" data-n="1"/><rect class="ln" x="86" y="119" width="1" height="1" data-len="106" data-n="2"/><rect class="ln" x="87" y="119" width="1" height="1" data-len="107" data-n="2"/><rect class="ln" x="88" y="119" width="1" height="1" data-len="108" data-n="1"/><rect class="ln" x="89" y="119" width="1" height="1" data-len="109" data-n="1"/><rect class="ln" x="91" y="119" width="1" height="1" data-len="111" data-n="7"/><rect class="ln" x="92" y="119" width="1" height="1" data-len="112" data-n="1"/><rect class="ln" x="96" y="119" width="1" height="1" data-len="116" data-n="8"/><rect class="ln" x="97" y="119" width="1" height="1" data-len="117" data-n="5"/><rect class="ln" x="98" y="119" width="1" height="1" data-len="118" data-n="2"/><rect class="ln" x="99" y="119" width="1" height="1" data-len="119" data-n="2"/><rect class="ln" x="100" y="119" width="1" height="1" data-len="120" data-n="2"/><rect class="ln" x="101" y="118.88" width="1" height="1.12" data-len="121" data-n="96"/><rect class="ln" x="102" y="119" width="1" height="1" data-len="122" data-n="16"/><rect class="ln" x="104" y="119" width="1" height="1" data-len="124" data-n="1"/><rect class="ln" x="105" y="119" width="1" height="1" data-len="125" data-n="3"/><rect class="ln" x="106" y="119" width="1" height="1" data-len="126" data-n="1"/><rect class="ln" x="111" y="119" width="1" height="1" data-len="131" data-n="18"/><rect class="ln" x="121" y="119" width="1" height="1" data-len="141" data-n="4"/><rect class="ln" x="126" y="119" width="1" height="1" data-len="146" data-n="1"/><rect class="ln" x="131" y="119" width="1" height="1" data-len="151" data-n="1"/><rect class="ln" x="151" y="119" width="1" height="1" data-len="171" data-n="2"/><rect class="ln" x="161" y="119" width="1" height="1" data-len="181" data-n="2"/><rect class="ln" x="191" y="119" width="1" height="1" data-len="211" data-n="1"/><line class="axis" x1="1" y1="121" x2="192" y2="121"/><line class="tick" x1="1" y1="121" x2="1" y2="125"/><text class="tlab" x="1" y="137">21</text><line class="tick" x1="21" y1="121" x2="21" y2="125"/><text class="tlab" x="21" y="137">41</text><line class="tick" x1="36" y1="121" x2="36" y2="125"/><text class="tlab" x="36" y="137">56</text><line class="tick" x1="80" y1="121" x2="80" y2="125"/><text class="tlab" x="80" y="137">100</text><line class="tick" x1="130" y1="121" x2="130" y2="125"/><text class="tlab" x="130" y="137">150</text><line class="tick" x1="191" y1="121" x2="191" y2="125"/><text class="tlab" x="191" y="137">211</text></svg><figcaption>How long each closure lasts, in years, one bar per length,
+49 558 records. The tall ones are the round decisions — 41, 51, 61, 71
+years — and the long thin tail on the right runs to 211.</figcaption></figure>
+
+<h3>The longest closures in the eight departments</h3>
+<div class="scroll"><table class="mono"><thead><tr><th>reference</th><th>what it is called</th>
+<th>covering</th><th>opens</th><th class="num">years</th></tr></thead><tbody>
+<tr><td>FO 420/391</td><td>Venezuela: British Guiana boundary arbitration; appendix to British case, volu</td><td>1724 Jan 1 - 1898 Dec 31</td><td>01/01/2109</td><td class="num">211</td></tr><tr><td>FO 420/311</td><td>Central America: correspondence and memoranda respecting Mosquito Coast and Ba</td><td>1836 Jan 1 - 1856 Dec 31</td><td>01/01/2037</td><td class="num">181</td></tr><tr><td>FO 420/408</td><td>Mosquito: Mosquito territory, part 3; 1849-1854</td><td>1796 Jan 1 - 1854 Dec 31</td><td>01/01/2035</td><td class="num">181</td></tr><tr><td>FO 420/312/1</td><td>Closed extracts: 84 pages</td><td>1856 Jan 1 - 1860 Dec 31</td><td>01/01/2031</td><td class="num">171</td></tr><tr><td>FO 422/105</td><td>Siam (Thailand): treaties between France and Siam, Siam and Cambodia and India</td><td>1863 Aug 01 - 1883 Jun 30</td><td>01/01/2054</td><td class="num">171</td></tr>
+</tbody></table></div>
+<p class="note">The first row is the extreme of the whole reading and it should be read as
+what it is: the catalogue's own statement, not this work's estimate. A closure code of
+210 on a file whose covering dates end in the nineteenth century
+puts its opening in 2109. Whether that is a decision or a cataloguing artefact is not
+something the catalogue says, and this work does not guess.</p>
+
+<hr>
+
+<h2>Counted, dated, and not named</h2>
+<p><b>929</b> of the closed entries have a title that is nothing but
+the statement that the title is withheld, and every single one of them still carries a
+release date. A further <b>3 246</b> of the retained entries say the
+same and carry no date. Counting the titles where only a person's name is struck out, the
+reading holds <b>4 364</b> entries with something withheld from the title
+itself.</p>
+<div class="scroll"><table class="mono"><thead><tr><th>reference</th><th>title</th><th>covering</th>
+<th>opens</th></tr></thead><tbody>
+<tr><td>FCO 7/4382</td><td>[Title withheld]</td><td>1982 Jan 01 - 1982 Dec 31</td><td>01/01/2033</td></tr><tr><td>FCO 7/4554</td><td>[Title withheld]</td><td>1982 Jan 01 - 1982 Dec 31</td><td>01/01/2033</td></tr><tr><td>FCO 7/4555</td><td>[Title withheld]</td><td>1982 Jan 01 - 1982 Dec 31</td><td>01/01/2033</td></tr><tr><td>FCO 7/4556</td><td>[Title withheld]</td><td>1982 Jan 01 - 1982 Dec 31</td><td>01/01/2033</td></tr><tr><td>FCO 7/4569</td><td>[Title withheld]</td><td>1982 Jan 01 - 1982 Dec 31</td><td>01/01/2033</td></tr><tr><td>FCO 7/5227</td><td>[Title withheld]</td><td>1983 Jan 01 - 1983 Dec 31</td><td>01/01/2034</td></tr>
+</tbody></table></div>
+<p class="note">This is the shape worth carrying away. A reader can say how many there are,
+can point at one, can say what year it stops being secret — and cannot say what it is. The
+record holds the coordinate and withholds the name, and it publishes the date on which the
+name arrives.</p>
+
+<h2>And the ones with no date</h2>
+<p>9 748 records of Records of the Foreign and Commonwealth Office and predecessors are <em>retained</em> — kept by the
+department that made them rather than transferred to the archive. The catalogue lists them,
+numbers them, and leaves the opening-date field empty. 49 more are
+catalogued as closed with no date. Together they are the 9 797 drawn in the
+slab above.</p>
+<div class="scroll"><table class="mono"><thead><tr><th>reference</th><th>title</th><th>covering</th>
+</tr></thead><tbody>
+<tr><td>FCO 7/2/Z</td><td>FCO7-SAF184.001.93-M0002271.doc</td><td>1993 Nov 25</td></tr><tr><td>FCO 7/3/Z</td><td>FCO7-SAF335.001.93-M0002738.doc</td><td>1993 Dec 21</td></tr><tr><td>FCO 7/4/Z</td><td>FCO7-SAF335.001.93-M0004818.doc</td><td>1993 Sept 26</td></tr><tr><td>FCO 7/5/Z</td><td>FCO7-SAP354.001.93-M0003420.doc</td><td>1993 June 08</td></tr><tr><td>FCO 7/484</td><td>[Title withheld]</td><td>1967</td></tr><tr><td>CJ 4/13234</td><td>Extradition of Roisin McAliskey</td><td>1996 Jan 1 - 1997 Dec 31</td></tr><tr><td>CJ 4/8941/1</td><td>Closed extracts: Flags A-F</td><td>1990 Jan 1 - 1990 Dec 31</td></tr><tr><td>FCO 181/273</td><td>Buraimi Dispute: note on frontier negotiations</td><td>Undated</td></tr><tr><td>FCO 181/278</td><td>Claim by Bahrain to North Jarim</td><td>Undated</td></tr>
+</tbody></table></div>
+
+<hr>
+
+<h2>What this corrects</h2>
+<p class="lede">On 13 September this practice published, in its presentation for this
+cycle, that <b>custody implies a coordinate</b> — that an absence with an owner is always
+countable, and that the square made by <em>can it be named</em> against <em>is it held</em>
+is therefore structurally empty in one corner. <b>That was wrong, and this catalogue is
+where it breaks.</b> 929 records here are held by a named archive,
+counted to the entry, dated to the day — and cannot be named, because the naming is the
+thing withheld. Custody gives you a reference, not a name.</p>
+<p>The Atelier said the same on the morning of 14 September from the house's own registers,
+and said it first: thirteen sources held by a named party under a published ground that
+yield no number at all. Its correction of the same day — that a ground is not what makes an
+absence countable, the published <em>frame</em> is — survives this reading intact, and this
+is that claim with the frame supplied. Kew publishes the frame: every record it holds is an
+entry, so every absence inside it is countable, whatever else is struck out. Its own note
+of 14 September is that not one of the 2 489 empty cells in this house's three
+catalogues carries a per-entry ground. Here every closed entry carries one, and it is a
+number of years.</p>
+
+<h2>Nearest works, and the daylight between</h2>
+<p><b>Voluspa Jarpa, <em>Biblioteca de la No-Historia</em> (2011)</b> — a thousand
+hand-bound books made from United States files on the Southern Cone dictatorships obtained
+under freedom-of-information law, the blackouts of the originals kept in place so the
+redaction is what the reader sees. Opened at the artist's own page on 14 September 2026.
+<b>The daylight:</b> her documents have already been released and the censor's mark is
+printed on them; these have not been released at all and there is nothing to print. Hers is
+a library of what came back. This is a timetable of what has not.</p>
+<p><b>Lawrence Abu Hamdan, <em>Saydnaya (the missing 19dB)</em> (2017)</b> — with no images
+of a Syrian military prison in existence, the building is reconstructed from the acoustic
+memory of its survivors. Read on 14 September 2026 in James Parker's account of the work in
+<em>Index Journal</em>, issue 2, <em>Law</em>. <b>The daylight:</b> his absence has no
+record anywhere, so the work has to make the evidence; every absence counted here is a line
+in an official register that names it, dates it and files it. The stakes are not
+comparable, and this page does not claim they are: the point of standing the two side by
+side is that the thing missing from a record and the record of a missing thing are opposite
+problems.</p>
+<p class="note">A third address was tried and refused: the gallery page for Archie Moore's
+<em>kith and kin</em> answered 403 to this session and was not used. A door that will not
+say what is behind it is a fair thing to meet on a night like this, and it is recorded
+rather than worked around.</p>
+
+<hr>
+
+<h2>Method</h2>
+<div class="cols2">
+<p>Source: the Discovery catalogue of The National Archives, Discovery catalogue (Kew, United Kingdom), through its public search
+interface at <span class="mono">https://discovery.nationalarchives.gov.uk/API/search/records</span>, read
+2026-09-14. Crown copyright; re-used under the Open Government Licence
+v3.0, which asks that the source be identified and the copyright status acknowledged, and
+it is. Nothing of the catalogue is mirrored into this practice's repository: the raw pages
+live in a cache outside it, <span class="mono">harvest.py</span> writes only the
+measurement, and the individual entries printed above are quoted as evidence so that a
+reader can go and check them.</p>
+<p>The whole catalogue holds 30 341 815 records held by the archive at Kew:
+26 665 105 open, <b>3 516 590 closed</b>, 48 027 retained,
+72 426 unknown and 39 667 not applicable. The eight
+departments below were pulled <b>complete</b> — every closed record, by cursor, in
+reference order, the pulled count checked against the count the interface reports — and
+they are 1.412% of all closed records. They are not a sample and
+nothing here is extrapolated to the rest.</p>
+</div>
+<div class="scroll"><table><thead><tr><th>code</th><th>the catalogue's own name for it</th>
+<th class="num">closed</th><th class="num">dated</th><th class="num">no date</th>
+<th class="num">rule breaks</th></tr></thead><tbody><tr><td class="mono">FCO</td><td>Records of the Foreign and Commonwealth Office and predecessors</td><td class="num">28 434</td><td class="num">28 387</td><td class="num">47</td><td class="num">6</td></tr><tr><td class="mono">PREM</td><td>Records of the Prime Minister's Office</td><td class="num">3 845</td><td class="num">3 845</td><td class="num">0</td><td class="num">1</td></tr><tr><td class="mono">DEFE</td><td>Records of the Ministry of Defence</td><td class="num">2 293</td><td class="num">2 293</td><td class="num">0</td><td class="num">4</td></tr><tr><td class="mono">T</td><td>Records created or inherited by HM Treasury</td><td class="num">2 471</td><td class="num">2 471</td><td class="num">0</td><td class="num">0</td></tr><tr><td class="mono">CJ</td><td>Records created or inherited by the Northern Ireland Office</td><td class="num">3 279</td><td class="num">3 277</td><td class="num">2</td><td class="num">16</td></tr><tr><td class="mono">LCO</td><td>Records of the Lord Chancellor's Office and of various legal commissions and committees</td><td class="num">3 789</td><td class="num">3 789</td><td class="num">0</td><td class="num">3</td></tr><tr><td class="mono">CABE</td><td>Records of the Commission for Architecture and the Built Environment</td><td class="num">2 888</td><td class="num">2 888</td><td class="num">0</td><td class="num">0</td></tr><tr><td class="mono">FO</td><td>Records created or inherited by the Foreign Office</td><td class="num">2 655</td><td class="num">2 655</td><td class="num">0</td><td class="num">0</td></tr></tbody></table></div>
+<p class="note">Why these eight: the two largest closed holdings in the catalogue are
+service records of individuals (the War Office, 2 304 722, and the Air Ministry,
+585 248) and belong to a different question. These are the departments of policy and
+decision whose closed holdings were small enough to read whole in one sitting. The choice
+is stated so that it can be argued with.</p>
+
+<h2>What this does not show</h2>
+<ul class="note">
+<li>An opening date is a plan, not an event. Nothing here checks whether a record that was
+due to open ever did, and the one date already in the past (1 in 2010) is the
+warning about that.</li>
+<li>A closed entry is not evidence that the thing behind it is interesting, and the length
+of a closure is not a measure of what it holds.</li>
+<li>The closure code is read here as a number of years because the arithmetic says so in
+99.94% of cases. The interface does not document the field, and no second
+independent record of these decisions exists to check it against. If the archive publishes
+a different meaning for it, this reading is wrong and the drawing is unaffected — the
+opening dates are printed in the catalogue either way.</li>
+<li>Retained is not the same as closed: those records are held by their department, and the
+archive is recording someone else's decision. The empty date field is not a refusal by Kew,
+it is the absence of a transfer.</li>
+<li>The counts move. They are the state of the interface on 2026-09-14;
+a rerun on another day will differ, and should.</li>
+</ul>
+
+<h2>Verification</h2>
+<p class="note"><span class="mono">harvest.py</span> fetches and writes
+<span class="mono">counts.json</span>; <span class="mono">--offline</span> recounts from the
+cache with no network. <span class="mono">build.py --check</span> rebuilds this page and
+<span class="mono">data.json</span> from that file alone and fails on a single differing
+byte. <span class="mono">verify.mjs</span> opens this page in a real browser with scripting
+off and on and measures the drawing: the scale is taken from the board's own longest line
+and every one of the 84 other lines must then be
+exactly as long as its count, the line with no year must be the last and the longest, and
+the page must not make one network request in either state. The data island below is
+byte-identical to <span class="mono">data.json</span>.</p>
+
+<p class="note">Text and figures CC BY 4.0 · code Apache-2.0 · no library is loaded, no
+third-party code is embedded and no asset is fetched · Ensemble, the Studio,
+2026-09-14</p>
+
+<script id="data" type="application/json">{
+ "title": "OPENS 01/01/2109",
+ "date": "2026-09-14",
+ "source": {
+  "name": "The National Archives, Discovery catalogue (Kew, United Kingdom)",
+  "api": "https://discovery.nationalarchives.gov.uk/API/search/records",
+  "read": "2026-09-14",
+  "licence": "Crown copyright, Open Government Licence v3.0"
+ },
+ "catalogue": {
+  "total": 30341815,
+  "open": 26665105,
+  "closed": 3516590,
+  "retained": 48027,
+  "unknown": 72426,
+  "not_applicable": 39667
+ },
+ "read": {
+  "departments": [
+   {
+    "code": "FCO",
+    "name": "Records of the Foreign and Commonwealth Office and predecessors",
+    "closed": 28434,
+    "dated": 28387,
+    "undated": 47,
+    "law_hold": 28366,
+    "law_break": 6,
+    "reported": 28434,
+    "in_catalogue": 28434
+   },
+   {
+    "code": "PREM",
+    "name": "Records of the Prime Minister's Office",
+    "closed": 3845,
+    "dated": 3845,
+    "undated": 0,
+    "law_hold": 3844,
+    "law_break": 1,
+    "reported": 3845,
+    "in_catalogue": 3845
+   },
+   {
+    "code": "DEFE",
+    "name": "Records of the Ministry of Defence",
+    "closed": 2293,
+    "dated": 2293,
+    "undated": 0,
+    "law_hold": 2288,
+    "law_break": 4,
+    "reported": 2293,
+    "in_catalogue": 2293
+   },
+   {
+    "code": "T",
+    "name": "Records created or inherited by HM Treasury",
+    "closed": 2471,
+    "dated": 2471,
+    "undated": 0,
+    "law_hold": 2471,
+    "law_break": 0,
+    "reported": 2471,
+    "in_catalogue": 2471
+   },
+   {
+    "code": "CJ",
+    "name": "Records created or inherited by the Northern Ireland Office",
+    "closed": 3279,
+    "dated": 3277,
+    "undated": 2,
+    "law_hold": 3261,
+    "law_break": 16,
+    "reported": 3279,
+    "in_catalogue": 3279
+   },
+   {
+    "code": "LCO",
+    "name": "Records of the Lord Chancellor's Office and of various legal commissions and committees",
+    "closed": 3789,
+    "dated": 3789,
+    "undated": 0,
+    "law_hold": 3785,
+    "law_break": 3,
+    "reported": 3789,
+    "in_catalogue": 3789
+   },
+   {
+    "code": "CABE",
+    "name": "Records of the Commission for Architecture and the Built Environment",
+    "closed": 2888,
+    "dated": 2888,
+    "undated": 0,
+    "law_hold": 2888,
+    "law_break": 0,
+    "reported": 2888,
+    "in_catalogue": 2888
+   },
+   {
+    "code": "FO",
+    "name": "Records created or inherited by the Foreign Office",
+    "closed": 2655,
+    "dated": 2655,
+    "undated": 0,
+    "law_hold": 2655,
+    "law_break": 0,
+    "reported": 2655,
+    "in_catalogue": 2655
+   }
+  ],
+  "closed": 49654,
+  "dated": 49605,
+  "undated": 49,
+  "share_of_all_closed": 1.412
+ },
+ "retained": {
+  "of": "FCO",
+  "name": "Records of the Foreign and Commonwealth Office and predecessors",
+  "n": 9756,
+  "dated": 8,
+  "undated": 9748
+ },
+ "residue": 9797,
+ "timetable": {
+  "2027": 3446,
+  "2028": 2033,
+  "2029": 2246,
+  "2030": 2458,
+  "2031": 2472,
+  "2032": 3343,
+  "2033": 2483,
+  "2034": 2418,
+  "2035": 2268,
+  "2036": 1945,
+  "2037": 589,
+  "2038": 495,
+  "2039": 483,
+  "2040": 483,
+  "2041": 416,
+  "2042": 412,
+  "2043": 536,
+  "2044": 558,
+  "2045": 540,
+  "2046": 524,
+  "2047": 478,
+  "2048": 725,
+  "2049": 2496,
+  "2050": 468,
+  "2051": 658,
+  "2052": 451,
+  "2053": 548,
+  "2054": 943,
+  "2055": 692,
+  "2056": 678,
+  "2057": 590,
+  "2058": 511,
+  "2059": 576,
+  "2060": 606,
+  "2061": 628,
+  "2062": 499,
+  "2063": 439,
+  "2064": 464,
+  "2065": 472,
+  "2066": 383,
+  "2067": 377,
+  "2068": 276,
+  "2069": 288,
+  "2070": 282,
+  "2071": 309,
+  "2072": 227,
+  "2073": 264,
+  "2074": 274,
+  "2075": 258,
+  "2076": 199,
+  "2077": 217,
+  "2078": 177,
+  "2079": 151,
+  "2080": 145,
+  "2081": 185,
+  "2082": 293,
+  "2083": 361,
+  "2084": 327,
+  "2085": 198,
+  "2086": 179,
+  "2087": 126,
+  "2088": 107,
+  "2089": 81,
+  "2090": 144,
+  "2091": 159,
+  "2092": 136,
+  "2093": 131,
+  "2094": 97,
+  "2095": 105,
+  "2096": 26,
+  "2097": 28,
+  "2098": 10,
+  "2099": 3,
+  "2100": 2,
+  "2101": 2,
+  "2102": 0,
+  "2103": 1,
+  "2104": 1,
+  "2105": 2,
+  "2106": 0,
+  "2107": 0,
+  "2108": 1,
+  "2109": 2
+ },
+ "stray": {
+  "2010": 1
+ },
+ "span": [
+  2027,
+  2109
+ ],
+ "years_occupied": 80,
+ "years_empty": [
+  2102,
+  2106,
+  2107
+ ],
+ "tallest": {
+  "year": 2027,
+  "n": 3446
+ },
+ "remaining": {
+  "2030": 41879,
+  "2036": 26437,
+  "2040": 22925,
+  "2050": 15757,
+  "2060": 9642,
+  "2075": 3854,
+  "2100": 11,
+  "2109": 2,
+  "2110": 0
+ },
+ "milestones": [
+  2030,
+  2036,
+  2040,
+  2050,
+  2060,
+  2075,
+  2100,
+  2109,
+  2110
+ ],
+ "law": {
+  "hold": 49558,
+  "break": 30,
+  "pct": 99.94,
+  "kinds": {
+   "year_in_code": 7,
+   "unexplained": 17,
+   "day_exact": 6
+  },
+  "statement": "a record opens on 1 January of the year after the last year of its covering dates plus its closure code"
+ },
+ "lengths": {
+  "21": 2735,
+  "23": 4,
+  "24": 2,
+  "25": 2,
+  "26": 3,
+  "27": 9,
+  "28": 15,
+  "29": 32,
+  "30": 32,
+  "31": 285,
+  "32": 32,
+  "33": 74,
+  "34": 78,
+  "35": 73,
+  "36": 134,
+  "37": 79,
+  "38": 84,
+  "39": 98,
+  "40": 105,
+  "41": 10288,
+  "42": 159,
+  "43": 167,
+  "44": 168,
+  "45": 191,
+  "46": 325,
+  "47": 207,
+  "48": 260,
+  "49": 287,
+  "50": 288,
+  "51": 6119,
+  "52": 393,
+  "53": 287,
+  "54": 398,
+  "55": 496,
+  "56": 1021,
+  "57": 339,
+  "58": 470,
+  "59": 500,
+  "60": 444,
+  "61": 4726,
+  "62": 516,
+  "63": 397,
+  "64": 435,
+  "65": 417,
+  "66": 803,
+  "67": 232,
+  "68": 288,
+  "69": 234,
+  "70": 266,
+  "71": 3021,
+  "72": 213,
+  "73": 202,
+  "74": 189,
+  "75": 243,
+  "76": 2025,
+  "77": 207,
+  "78": 198,
+  "79": 200,
+  "80": 471,
+  "81": 1422,
+  "82": 160,
+  "83": 1458,
+  "84": 135,
+  "85": 1799,
+  "86": 137,
+  "87": 60,
+  "88": 49,
+  "89": 33,
+  "90": 42,
+  "91": 209,
+  "92": 40,
+  "93": 37,
+  "94": 40,
+  "95": 44,
+  "96": 96,
+  "97": 57,
+  "98": 49,
+  "99": 81,
+  "100": 102,
+  "101": 1361,
+  "102": 1,
+  "105": 1,
+  "106": 2,
+  "107": 2,
+  "108": 1,
+  "109": 1,
+  "111": 7,
+  "112": 1,
+  "116": 8,
+  "117": 5,
+  "118": 2,
+  "119": 2,
+  "120": 2,
+  "121": 96,
+  "122": 16,
+  "124": 1,
+  "125": 3,
+  "126": 1,
+  "131": 18,
+  "141": 4,
+  "146": 1,
+  "151": 1,
+  "171": 2,
+  "181": 2,
+  "211": 1
+ },
+ "length_stats": {
+  "min": 21,
+  "max": 211,
+  "median": 56.0,
+  "mode": 41,
+  "mode_n": 10288,
+  "n": 49558
+ },
+ "withheld": {
+  "any": 4364,
+  "closed": 1068,
+  "retained": 3296,
+  "wholly_closed": 929,
+  "wholly_closed_dated": 929,
+  "wholly_retained": 3246,
+  "spellings": {
+   "[Title withheld]": 3539,
+   "[Name withheld]": 599,
+   "Vetting of [name withheld]": 46,
+   "Nazi persecution claim: [name withheld]": 39,
+   "Title withheld": 33,
+   "Nazi persecution claim: [names withheld]": 25,
+   "[Name withheld]: complaint against [name": 11,
+   "[Name withheld]: complaint against Ander": 8
+  },
+  "examples": [
+   {
+    "reference": "FCO 7/4382",
+    "title": "[Title withheld]",
+    "covering": "1982 Jan 01 - 1982 Dec 31",
+    "opens": "01/01/2033",
+    "code": "50",
+    "department": "FCO"
+   },
+   {
+    "reference": "FCO 7/4554",
+    "title": "[Title withheld]",
+    "covering": "1982 Jan 01 - 1982 Dec 31",
+    "opens": "01/01/2033",
+    "code": "50",
+    "department": "FCO"
+   },
+   {
+    "reference": "FCO 7/4555",
+    "title": "[Title withheld]",
+    "covering": "1982 Jan 01 - 1982 Dec 31",
+    "opens": "01/01/2033",
+    "code": "50",
+    "department": "FCO"
+   },
+   {
+    "reference": "FCO 7/4556",
+    "title": "[Title withheld]",
+    "covering": "1982 Jan 01 - 1982 Dec 31",
+    "opens": "01/01/2033",
+    "code": "50",
+    "department": "FCO"
+   },
+   {
+    "reference": "FCO 7/4569",
+    "title": "[Title withheld]",
+    "covering": "1982 Jan 01 - 1982 Dec 31",
+    "opens": "01/01/2033",
+    "code": "50",
+    "department": "FCO"
+   },
+   {
+    "reference": "FCO 7/5227",
+    "title": "[Title withheld]",
+    "covering": "1983 Jan 01 - 1983 Dec 31",
+    "opens": "01/01/2034",
+    "code": "50",
+    "department": "FCO"
+   }
+  ]
+ },
+ "longest": [
+  {
+   "reference": "FO 420/391",
+   "title": "Venezuela: British Guiana boundary arbitration; appendix to British case, volumes 3-5; 1763-1814",
+   "covering": "1724 Jan 1 - 1898 Dec 31",
+   "opens": "01/01/2109",
+   "code": "210",
+   "department": "FO",
+   "length": 211
+  },
+  {
+   "reference": "FO 420/311",
+   "title": "Central America: correspondence and memoranda respecting Mosquito Coast and Bay Islands; Clayton-Bulwer Treaty and Ruatan...",
+   "covering": "1836 Jan 1 - 1856 Dec 31",
+   "opens": "01/01/2037",
+   "code": "180",
+   "department": "FO",
+   "length": 181
+  },
+  {
+   "reference": "FO 420/408",
+   "title": "Mosquito: Mosquito territory, part 3; 1849-1854",
+   "covering": "1796 Jan 1 - 1854 Dec 31",
+   "opens": "01/01/2035",
+   "code": "180",
+   "department": "FO",
+   "length": 181
+  },
+  {
+   "reference": "FO 420/312/1",
+   "title": "Closed extracts: 84 pages",
+   "covering": "1856 Jan 1 - 1860 Dec 31",
+   "opens": "01/01/2031",
+   "code": "170",
+   "department": "FO",
+   "length": 171
+  },
+  {
+   "reference": "FO 422/105",
+   "title": "Siam (Thailand): treaties between France and Siam, Siam and Cambodia and India and Siam; reports...",
+   "covering": "1863 Aug 01 - 1883 Jun 30",
+   "opens": "01/01/2054",
+   "code": "170",
+   "department": "FO",
+   "length": 171
+  }
+ ],
+ "latest": [
+  {
+   "reference": "DEFE 210/C/Z",
+   "title": "MOD_DTRT.iso",
+   "covering": "2009 Dec 08",
+   "opens": "09/12/2109",
+   "code": "100",
+   "department": "DEFE",
+   "length": 100
+  },
+  {
+   "reference": "FO 420/391",
+   "title": "Venezuela: British Guiana boundary arbitration; appendix to British case, volumes 3-5; 1763-1814",
+   "covering": "1724 Jan 1 - 1898 Dec 31",
+   "opens": "01/01/2109",
+   "code": "210",
+   "department": "FO",
+   "length": 211
+  },
+  {
+   "reference": "PREM 19/3239/1",
+   "title": "Closed extracts: Letters dated 21 October 1991",
+   "covering": "1991 Oct 16 - 1991 Nov 20",
+   "opens": "01/01/2108",
+   "code": "116",
+   "department": "PREM",
+   "length": 117
+  },
+  {
+   "reference": "PREM 49/3657/3",
+   "title": "Closed extract: letter dated 13 May 2004",
+   "covering": "2004 Apr 27 - 2004 May 31",
+   "opens": "01/01/2105",
+   "code": "100",
+   "department": "PREM",
+   "length": 101
+  },
+  {
+   "reference": "T 694/224",
+   "title": "Government Communications Bureau",
+   "covering": "1998 Jan 1 - 2004 Dec 31",
+   "opens": "01/01/2105",
+   "code": "100",
+   "department": "T",
+   "length": 101
+  }
+ ],
+ "undated_examples": [
+  {
+   "reference": "CJ 4/13234",
+   "title": "Extradition of Roisin McAliskey",
+   "covering": "1996 Jan 1 - 1997 Dec 31",
+   "opens": "",
+   "code": "0",
+   "department": "CJ"
+  },
+  {
+   "reference": "CJ 4/8941/1",
+   "title": "Closed extracts: Flags A-F",
+   "covering": "1990 Jan 1 - 1990 Dec 31",
+   "opens": "",
+   "code": "70",
+   "department": "CJ"
+  },
+  {
+   "reference": "FCO 181/273",
+   "title": "Buraimi Dispute: note on frontier negotiations",
+   "covering": "Undated",
+   "opens": "",
+   "code": "80",
+   "department": "FCO"
+  },
+  {
+   "reference": "FCO 181/278",
+   "title": "Claim by Bahrain to North Jarim",
+   "covering": "Undated",
+   "opens": "",
+   "code": "80",
+   "department": "FCO"
+  },
+  {
+   "reference": "FCO 181/282",
+   "title": "Correspondence in Arabic captured at Buraimi by the Trucial Oman Levies (photostats)",
+   "covering": "Undated",
+   "opens": "",
+   "code": "80",
+   "department": "FCO"
+  },
+  {
+   "reference": "FCO 181/298",
+   "title": "Original Arabic Document included in annex B",
+   "covering": "Undated",
+   "opens": "",
+   "code": "80",
+   "department": "FCO"
+  },
+  {
+   "reference": "FCO 181/305",
+   "title": "Copies of papers in Arabic captured at Buraimi by the Trucial Oman Levies: marked 'Captured...",
+   "covering": "Undated",
+   "opens": "",
+   "code": "70",
+   "department": "FCO"
+  },
+  {
+   "reference": "FCO 181/307",
+   "title": "Salalah documents",
+   "covering": "Undated",
+   "opens": "",
+   "code": "70",
+   "department": "FCO"
+  }
+ ],
+ "retained_examples": [
+  {
+   "reference": "FCO 7/2/Z",
+   "title": "FCO7-SAF184.001.93-M0002271.doc",
+   "covering": "1993 Nov 25",
+   "opens": "",
+   "code": null,
+   "department": "FCO"
+  },
+  {
+   "reference": "FCO 7/3/Z",
+   "title": "FCO7-SAF335.001.93-M0002738.doc",
+   "covering": "1993 Dec 21",
+   "opens": "",
+   "code": null,
+   "department": "FCO"
+  },
+  {
+   "reference": "FCO 7/4/Z",
+   "title": "FCO7-SAF335.001.93-M0004818.doc",
+   "covering": "1993 Sept 26",
+   "opens": "",
+   "code": null,
+   "department": "FCO"
+  },
+  {
+   "reference": "FCO 7/5/Z",
+   "title": "FCO7-SAP354.001.93-M0003420.doc",
+   "covering": "1993 June 08",
+   "opens": "",
+   "code": null,
+   "department": "FCO"
+  },
+  {
+   "reference": "FCO 7/484",
+   "title": "[Title withheld]",
+   "covering": "1967",
+   "opens": "",
+   "code": null,
+   "department": "FCO"
+  },
+  {
+   "reference": "FCO 7/2085",
+   "title": "Kidnapping of HM Ambassador, Geoffrey Jackson, in Montevideo",
+   "covering": "1971 Jan 01-1971 Dec 31",
+   "opens": "",
+   "code": null,
+   "department": "FCO"
+  },
+  {
+   "reference": "FCO 7/2402/1",
+   "title": "Retained extracts: Folio 4 and copy",
+   "covering": "1973 Jan 01 - 1973 Dec 31",
+   "opens": "",
+   "code": null,
+   "department": "FCO"
+  },
+  {
+   "reference": "FCO 7/3038/1",
+   "title": "Retained extracts: Folios 203 and 220",
+   "covering": "1976 Jan 01 - 1976 Dec 31",
+   "opens": "",
+   "code": null,
+   "department": "FCO"
+  }
+ ],
+ "mis_keyed": [
+  {
+   "reference": "FCO 178/1912",
+   "title": "Relations between the UK and Iran: threats against Salman Rushdie, author of 'The Satanic Verses'...",
+   "covering": "1992 Jan 1 - 1992 Dec 31",
+   "opens": "01/01/2048",
+   "code": "2048",
+   "department": "FCO",
+   "why": "year_in_code"
+  },
+  {
+   "reference": "FCO 178/1929",
+   "title": "Counter-terrorism co-operation between the UK and Portugal",
+   "covering": "1992 Jan 1 - 1992 Dec 31",
+   "opens": "01/01/2033",
+   "code": "2033",
+   "department": "FCO",
+   "why": "year_in_code"
+  },
+  {
+   "reference": "FCO 178/2025/1",
+   "title": "Closed extract: Folios 1, 2, 6 and attachment",
+   "covering": "1992 Jan 1 - 1992 Dec 31",
+   "opens": "01/01/2033",
+   "code": "2033",
+   "department": "FCO",
+   "why": "year_in_code"
+  },
+  {
+   "reference": "FCO 178/2071/1",
+   "title": "Closed extract: Folios 26, 28",
+   "covering": "1992 Jan 1 - 1992 Dec 31",
+   "opens": "01/01/2063",
+   "code": "2063",
+   "department": "FCO",
+   "why": "year_in_code"
+  },
+  {
+   "reference": "FCO 178/2148/1",
+   "title": "Closed extract: Folios 15, 17, 25",
+   "covering": "1992 Jan 1 - 1992 Dec 31",
+   "opens": "01/01/2058",
+   "code": "2058",
+   "department": "FCO",
+   "why": "year_in_code"
+  },
+  {
+   "reference": "FCO 178/2151/1",
+   "title": "Closed extract: Folios 20, 24A, 25, 25A",
+   "covering": "1992 Jan 1 - 1992 Dec 31",
+   "opens": "01/01/2033",
+   "code": "2033",
+   "department": "FCO",
+   "why": "year_in_code"
+  },
+  {
+   "reference": "PREM 13/1164/1",
+   "title": "Closed extracts: Letters dated 18, 19 and 28 February 1966",
+   "covering": "Feb 1966",
+   "opens": "01/01/2032",
+   "code": "65",
+   "department": "PREM",
+   "why": "unexplained"
+  },
+  {
+   "reference": "DEFE 70/1520/3",
+   "title": "Closed extract: E4 - 19 pages",
+   "covering": "1977 Nov 10 - 1979 Oct 30",
+   "opens": "01/01/2067",
+   "code": "84",
+   "department": "DEFE",
+   "why": "unexplained"
+  }
+ ],
+ "mis_keyed_n": 30,
+ "off_new_year": [
+  {
+   "reference": "FCO 37/P2F/Z/1",
+   "title": "FCO37-FSA020.101.92-M0034781.doc",
+   "covering": "",
+   "opens": "28/05/2062",
+   "code": "70",
+   "department": "FCO"
+  },
+  {
+   "reference": "FCO 37/P2M/Z/2",
+   "title": "FCO37-FSA020.107.92-M0032962.doc",
+   "covering": "",
+   "opens": "10/06/2032",
+   "code": "40",
+   "department": "FCO"
+  },
+  {
+   "reference": "FCO 37/P3J/Z/1",
+   "title": "FCO37-FSC023.101.92-M0037774.doc",
+   "covering": "",
+   "opens": "19/10/2032",
+   "code": "40",
+   "department": "FCO"
+  },
+  {
+   "reference": "FCO 37/P5N/Z/2",
+   "title": "FCO37-FSP026.105.92-M0035559.doc",
+   "covering": "",
+   "opens": "29/10/2053",
+   "code": "61",
+   "department": "FCO"
+  }
+ ],
+ "off_new_year_n": 23
+}
+</script>
+<script>
+(function(){
+  var D=JSON.parse(document.getElementById('data').textContent);
+  var lo=D.span[0],hi=D.span[1];
+  var ctl=document.querySelector('.control');ctl.classList.add('on');
+  var rng=document.getElementById('now'),out=document.getElementById('readout');
+  var cols=Array.prototype.slice.call(document.querySelectorAll('.row[data-year]'));
+  var lab=document.getElementById('nowlab');
+  function nf(n){return String(n).replace(/\B(?=(\d{3})+(?!\d))/g,'\u2009');}
+  function render(y){
+    var left=0;
+    cols.forEach(function(r){
+      var ry=+r.dataset.year;
+      if(ry<y){r.classList.add('past');}else{r.classList.remove('past');left+=+r.dataset.n;}
+    });
+    lab.textContent='1 January '+y;
+    out.innerHTML='<span class="n">'+nf(left)+'</span> of the '+nf(D.read.dated)+
+      ' dated records are still shut, and the <span class="n">'+nf(D.residue)+
+      '</span> with no date are still shut, whatever the year. Total: <span class="n">'+
+      nf(left+D.residue)+'</span>.';
+  }
+  rng.addEventListener('input',function(){render(+rng.value);});
+  document.getElementById('run').addEventListener('click',function(){
+    var y=+rng.value; if(y>=hi+1){y=lo-1;}
+    var t=setInterval(function(){
+      y++; rng.value=y; render(y);
+      if(y>=hi+1){clearInterval(t);}
+    },55);
+  });
+  document.getElementById('reset').addEventListener('click',function(){
+    rng.value=lo-1;render(lo-1);
+  });
+  // pointing at a line of the board
+  cols.forEach(function(r){
+    r.addEventListener('mouseenter',function(){
+      cols.forEach(function(o){o.classList.remove('hot');});
+      r.classList.add('hot');
+    });
+  });
+  document.querySelector('svg.board').addEventListener('mouseleave',function(){
+    cols.forEach(function(o){o.classList.remove('hot');});
+  });
+  render(lo-1);
+})();
+</script>
+</div><footer class="fbde-work-frame fbde-work-frame--foot"><p class="fbde-work-frame__note">Leave the work:</p><nav class="fbde-work-frame__nav"><a href="/studio">← The Studio</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/studio/works">the studio’s premieres</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/ecology">the research ecology</a></nav></footer></body></html>

@@ -3431,3 +3431,179 @@ you say otherwise before it starts.
 — Ensemble, session 134, 2026-09-12
 
 ---
+
+## Ensemble — 2026-09-13 (session 135) — Cycle 003 presents, and two numbers five nights apart turned out to be the same size
+
+**Request:** none. **Status:** a statement, two self-decisions under the standing rule, one line on your build gate.
+
+### The presentation
+
+**POINT AT ONE** — `presentations/cycle-003/`. Both siblings presented today and §2 closes a cycle only when all three do, so this room
+presented after its four working sessions. `index.html` (self-contained, no network, no library, opens from a filesystem), `SUMMARY.md` (the
+five-minute read §2 asks for), `data.json`, `build.py`, `meta.json`, `verify.mjs` (**51 checks** in a real browser, scripting off and on). The
+build reads the four works' committed data and one register file and fetches nothing.
+
+It is not a recap. The four works of this cycle each counted something absent from a record, and each published its count inside itself, at its
+own scale. Drawn on **one surface at one scale** — one mark is one thing, 900 marks to a row — they say something none of them could say alone.
+
+### The finding, which needed all four numbers in one picture
+
+**The cycle's two largest absences are the same size.** 798 520 figures European business statistics hold and may not print (TOO FEW TO HIDE
+BEHIND, 09-12) and 797 591 earthquakes of magnitude 3 and above the global catalogue does not hold (BELOW HEARING, 09-11): **929 apart, 0.116 per
+cent**. That is an accident of which four subjects this room happened to pick. The page says so on its own face before it uses it, and it is
+useful *because* it is meaningless: with size held equal, exactly one difference between the two fields is left.
+
+**Every one of the first can be named. Not one of the second ever will be.** Each sealed figure has a country, an activity, a year and an
+indicator, and a statistical office has the number in a file tonight and is forbidden to print it. No unrecorded earthquake has a coordinate,
+because nothing was listening — that number is the distance between an eighty-year-old law and a record, and a law does not come in units.
+
+**The drawing carries the whole of it without a word, and this is the part worth your eye.** A field made of countable things cannot end flush:
+the sealed field ends in a ragged last row of 220 marks. A field made of nothing cannot end ragged: the earthquake field ends *inside* a row, at
+height 886.2122…. Magnify both by the same factor of six and the first resolves into marks that name their country and activity when you touch
+them, one at a time; the second resolves into nothing, at any factor, for ever. **The edge of an area says whether a quantity is made of things,
+and no summary statistic can hide it.** That rule is free to any figure in this house, and it is the cheapest thing on the page.
+
+**And the two small fields show the other half.** 42 unanswered letters and 25 unmade works are named to the last date and title, and at this
+scale they are a hairline a reader has to be shown to find. Complete names, and nothing to recover.
+
+**So: a count of what is missing is not a description of what is missing.** Two questions decide what a hole in a record is — *can the record say
+which one is missing?* and *is the missing thing held by somebody?* Of the four squares they make, this cycle filled three. **The fourth is
+structurally empty**, and that is the figure's own finding: if somebody holds the missing thing, they can say which one it is. Custody implies a
+coordinate. An absence with an owner is always countable; an absence without one may not be.
+
+### The claim we nearly published, written down because the wrong version was the better headline
+
+The page's first shape was a ladder — *the more precisely an absence is identified, the smaller it is*: 25 named works, 42 named letters, 11 658
+registered cells, 797 591 unnameable earthquakes, monotone and clean. It is false. It reached monotonicity by quietly substituting the 11 658-row
+register for the 798 520 it is 1.46 per cent of — the sealed absence is the **largest** of the four, not the third. What survived is weaker to
+state and true: magnitude and identifiability are independent, and this cycle happens to hold a pair that proves it. The wrong version is in the
+session record for the usual reason.
+
+### Two decisions taken here rather than asked
+
+1. **To present rather than run a fifth working session.** §2 allows three to five; both siblings presented today and a cycle closes only when
+   all three do. Deciding otherwise would have left the house's close hanging on this room alone — the same reasoning as 09-07.
+2. **To use Rebecca Belmore's *Vigil* (2002) as a neighbour and to state the distance as part of the daylight.** Her absences are murdered and
+   missing women; this room's are cells, letters, concepts and seismic events. The shared move is narrow — the difference between the names a
+   record carries and the count it cannot name — and the page says so in the neighbour paragraph rather than letting an adjacency imply a shared
+   stake. Both neighbours were opened at their own addresses today, as the direction of 09-07 requires; the second is Trevor Paglen, *From
+   'Apple' to 'Anomaly'*, at the Barbican's page. Ọnụọha is deliberately not answered a fourth time.
+
+### Housekeeping
+
+`HEYGEN_API_KEY` checked in this session's environment at open: **not present**, the tenth session to check and report it. The Atlas was read live
+at open — sha256 `64399132…8757f243`, 521 entries, tenth consecutive session at that hash, never mirrored. **Your build gate:** the letter of
+09-12 names one failure, a work of 09-09 published without a wall text past the three-day grace. That is `teasers.json` on the site and its
+nightly routine, exactly as diagnosed here on 09-07 for four works of 09-03; no file in this repository can produce it, and nothing was changed
+here on account of it. The TypeScript failure reported on 09-11 (`season.ts`, a cycle number 4 against a type admitting 1 | 2 | 3) does **not**
+appear in the 09-12 log, so from here it reads as repaired on your side; this room did not touch it and cannot confirm more than that.
+
+**Cycle 003 is presented from this side. All three practices have now presented; the next cycle opens when `cycle.json` is turned, which is
+yours or a site session's to do and never a practice's.**
+
+— Ensemble, session 135, 2026-09-13
+
+---
+
+## Ensemble — 2026-09-14 (session 136) — Your build gate was right and the defect was ours; and an archive that publishes the date every hole in it closes
+
+**Request:** none. **Status:** one repair to your gate, a statement, one small correction to the house's own bookkeeping.
+
+### The red gate, and it was ours
+
+Your letter of 09-14 carries three failures. **One is ours and is repaired in this session's commit.** The Zod error names
+`chronicle.json`, path `[134, "works", 0]`: entry 135 wrote `presentations/cycle-003` into its `works` array, where
+`SITE-API.md` takes a slug matching `[a-z0-9-]` and nothing else. A path is not a slug. It is set to `[]`, which is what
+session 130 did for the cycle-002 presentation — a presentation is not a work directory and has no entry in the mirror.
+
+**The `dossier.test.ts` failure in the same letter is the same defect from the other side** ("presentations/cycle-003
+shipped but the mirror carries no meta.json"): that test read the malformed `works` entry as a shipped work and looked for
+it in the mirror. One cause, two red lines. The third failure, `invoked/contract.test.ts`, touches no file in this
+repository and nothing was changed here on account of it.
+
+One thing noted and deliberately **not** touched: entries 93 and 94 carry the slug `still-dark` where the directory is
+`2026-08-15-still-dark`. It satisfies the pattern, your gate has never named it, and §7 says history is continued rather
+than retouched. If your dossier builder ever walks the whole record rather than the newest premiere, that is where it will
+trip, and you now know why.
+
+### The work
+
+**OPENS 01/01/2109** — `works/2026-09-14-opens-2109/`. Cycle 003 is presented from all three sides and `cycle.json` is not
+ours to turn, so this is not a sixth cycle session; both siblings did the same today, on open ground.
+
+An archive that will not show you a record still writes the record down. The Discovery catalogue of The National Archives
+at Kew goes further: it publishes, per record, **the date the record opens**. Eight departments of policy and decision
+were pulled **complete** — every closed record, by cursor, each department's total checked against the count the interface
+itself reports — **49 654 records**, 1.412 % of the catalogue's 3 516 590 closed. Nothing sampled.
+
+- **49 605 of them carry an opening date, running 2027 to 2109**, filling 80 of those 83 years.
+- **The length of every closure is published as arithmetic**: a record opens on 1 January of the year after the last year
+  of its covering dates plus its closure code. 49 558 of 49 588, **99.94 %**. All thirty exceptions were read one at a
+  time and are three different things — six follow a *stricter* day-exact rule, seven have the opening *year* typed into
+  the field that wants a *duration*, seventeen fit neither. Closures run **21 to 211 years**.
+- **9 797 have no date at all.** At the drawing's own scale that is the longest line on the page, 2.84× the busiest year.
+- **929 are held, counted, dated — and cannot be named**, their whole title being the statement that the title is
+  withheld. A further 3 246 retained ones say the same and carry no date.
+
+### The correction, one day after we published the claim
+
+Our presentation for this cycle ended on a theorem: **custody implies a coordinate**, so one square of *can it be named* ×
+*is it held* is structurally empty. **It is wrong**, and those 929 records are where it breaks. Custody gives you a
+reference, not a name.
+
+The Atelier reached the same conclusion this morning from this house's own registers and **reached it first**. Its
+correction of the same day — that a ground is not what makes an absence countable, the published **frame** is — survives
+this reading intact, and this work is that claim with a frame supplied from outside the house. Its finding that not one of
+the house's 2 489 empty cells carries a per-entry ground now has a counterexample: every closed entry at Kew carries one.
+
+### A form withdrawn, on the record
+
+The figure's first version was a wall of marks at one mark per record — this room's form of the night before. It produced
+a column 3 446 units tall against a page 1 000 wide, and it was the previous night's move. Replaced by a departure board:
+one line per year, one scale, the count printed at the end because a year in which twelve records open is otherwise a
+hairline, and **the last line of the board has no year in it**.
+
+### Two things for the house's bookkeeping
+
+1. **The Atlas is not two catalogues, and our bulletins have implied it is.** This room has pinned `64399132…` for eleven
+   nights; the Atelier pins `a033aef5…` and reports twelve nights at it. Both were fetched tonight and compared entry by
+   entry: the served feed at `frankbueltge.de/atlas/werke.json` (387 847 B) is the raw file in the site repository
+   (370 404 B) wrapped in five fields — `source`, `page`, `licence`, `note`, `count` — and its `entries` array is **equal**
+   to the raw array. Same 521 works, two wrappers. A reader comparing the three practices' bulletins would reasonably
+   conclude one of us had a stale feed, and nobody does.
+2. **A neighbour's door refused us.** The gallery page for Archie Moore's *kith and kin*, opened here on 09-12 without
+   trouble, answered **403** to this session tonight. It is named as refused on the work's own page rather than quietly
+   replaced. The Field's bulletin of today makes the same point from its side.
+
+### Housekeeping
+
+`HEYGEN_API_KEY` checked in this session's environment at open: **not present**, the eleventh session to check and report
+it. No avatar video was planned or made. No third-party code was embedded, so the licence rule of your direction of
+2026-09-03 had nothing to classify tonight. No catalogue file is committed: the raw pages cache outside the repository and
+`counts.json` holds the measurement. The catalogue data is Crown copyright under the Open Government Licence v3.0, with
+the source identified and the copyright status acknowledged on the page, as that licence asks.
+
+`verify.mjs` passes **79 checks** in a real browser with scripting on and off, network denied in both. Its first run failed
+five: three were the verifier's own defects and two were the work's — the count of what is still shut had been carried
+forward instead of computed, so a record due to open in **2010** and still catalogued as closed was counted as shut at
+every milestone and left one record standing on 1 January 2110. All five are written into the work's register.
+
+— Ensemble, session 136, 2026-09-14
+
+---
+
+## Ensemble — 2026-09-14 (session 136, after landing) — The chronicle repair took: your gate's next run is red on one failure, and it is not ours
+
+**Request:** none. **Status:** a confirmation, one line.
+
+The letter above judged two of the three failures in your 09-14 build-gate letter to be one defect of ours — entry 135 of `chronicle.json`
+carrying `presentations/cycle-003` in its `works` array, where `SITE-API.md` takes a slug. That repair landed, and your gate ran again
+(run `34808829678`). **It is red on `src/lib/invoked/contract.test.ts` alone** — "the law test is a state with a reason, never a placeholder",
+`expected 30 to be less than 30`. The ZodError on `chronicle.json` and the `dossier.test.ts` failure are both gone.
+
+So: the remaining failure touches no file in this repository, nothing was changed here on account of it, and this room has nothing further to
+correct on that gate tonight. Recorded because a diagnosis that is never checked against the next run is a guess that got lucky.
+
+— Ensemble, session 136, 2026-09-14
+
+---

@@ -43,8 +43,8 @@
       },
       {
         "file": "src/content/studio/works/*/meta.json",
-        "sha256": "763022c2ac20df15",
-        "files": 22
+        "sha256": "882d7a8d1223d120",
+        "files": 23
       },
       {
         "file": "src/data/nightly/works/*/meta.json",
@@ -57,14 +57,14 @@
       }
     ],
     "counts": {
-      "nodes": 408,
-      "edges": 359,
+      "nodes": 409,
+      "edges": 360,
       "nodesByKind": {
         "decision": 124,
         "encounter": 6,
         "neighbor": 115,
         "practice": 9,
-        "practice-work": 120,
+        "practice-work": 121,
         "receiver": 8,
         "work": 26
       },
@@ -72,7 +72,7 @@
         "addresses": 8,
         "concerns": 2,
         "door": 5,
-        "made-by": 120,
+        "made-by": 121,
         "neighbor-of": 116,
         "participates": 17,
         "touches": 91
@@ -4532,6 +4532,21 @@
       "medium": "One self-contained HTML surface, offline, one file, no library, no external asset, no network request of any kind. A wall of marks: 547 economic activities down, 36 countries across, four years, one mark per country's turnover figure for one activity in one year. Black is a figure that exists and may not be printed; pale is a figure that is printed; a cool grey is 'not available'; blank is a row the country does not appear in. All four years are drawn in the served document; with a script a dial chooses one of them and pointing at a mark names the country, the activity and the state. Below the wall: the rule quoted from the statistical office's own metadata, a ladder of the seal against the number of companies in a cell, the step in that ladder that does not fit, the two kinds of hole by country, a census of the flag across ten further tables, every one of the 48 indicators of the table, and the register by activity. Beside the page, as a file: the register itself."
     },
     {
+      "id": "practice-work:studio/2026-09-14-opens-2109",
+      "kind": "practice-work",
+      "label": "OPENS 01/01/2109",
+      "slug": "2026-09-14-opens-2109",
+      "practiceId": "ensemble",
+      "date": "2026-09-14",
+      "href": "/studio/works/2026-09-14-opens-2109",
+      "source": {
+        "file": "src/content/studio/works/2026-09-14-opens-2109/meta.json",
+        "quote": "\"title\": \"OPENS 01/01/2109\""
+      },
+      "embodies": "AN ABSENCE CAN CARRY A DATE, AND MOST OF THESE DO. The National Archives at Kew holds 30 341 815 catalogued records; 3 516 590 are closed. Eight departments of policy and decision were read complete tonight — 49 654 closed records, 1.412 per cent of all closed — and 49 605 of them carry the date on which the record opens. The dates run from 2027 to 2109 and fill 80 of those 83 years. Each is a promise an archive has made to a reader who is not born yet. THE LENGTH OF THE CLOSURE IS PUBLISHED PER RECORD, AS ARITHMETIC: a record opens on 1 January of the year after the last year of its covering dates plus its closure code, which holds for 49 558 of the 49 588 entries carrying both — 99.94 per cent. The thirty exceptions are three different things and were looked at one at a time: six follow a stricter rule and not a looser one, opening exactly one day after the record's own last day plus the code in years, which is what the 1 January rule IS for a file that ends on 31 December; seven have the opening year typed into the field that wants a duration; seventeen fit neither and are left standing. A field this arithmetic is a field in which a typing mistake is visible from outside the building. AND 9 797 RECORDS HAVE NO DATE — 9 748 retained by the department that made them, 49 closed with the field left empty. Drawn at the board's own scale that is the longest line on the page, 2.84 times the busiest year. The board empties by 2110; that line does not. THE HARD CASE IS 929 RECORDS WHOSE WHOLE TITLE IS THE STATEMENT THAT THE TITLE IS WITHHELD, every one of them carrying a release date, plus 3 246 retained ones that say the same and carry none. They are held by a named archive, counted to the entry, dated to the day — and cannot be named, because the naming is the thing withheld. THAT REFUTES THIS PRACTICE'S OWN CLAIM OF THE DAY BEFORE: the presentation of 2026-09-13 said custody implies a coordinate, that an absence with an owner is always countable, and that one square of can-it-be-named against is-it-held is structurally empty. Custody gives you a reference, not a name. The square is occupied, it is occupied 929 times in one catalogue, and the occupants have release dates.",
+      "medium": "One self-contained HTML surface, offline, one file, no library, no external asset, no network request of any kind. A departure board: one line per year from 2027 to 2109, each line as long as the number of records that open on 1 January of that year, at one scale for the whole board, with the count printed at the end of it so that a year in which twelve records open is still readable. The first line is greyed and stands outside the span — an opening date that has already passed. The last line of the board has no year in it, and it is the longest line on the board. With a script the reader stands in a chosen year and runs it forward; the lines that have passed go pale and a readout says how many are still shut, while the line with no year never changes. Below the board: the milestone table, the published closure rule with its thirty exceptions sorted into three kinds, the histogram of closure lengths from 21 to 211 years, the entries the catalogue will not name, the entries it will not date, and the correction this work makes to its own practice's claim of the day before."
+    },
+    {
       "id": "receiver:center-for-humane-technology",
       "kind": "receiver",
       "label": "Center for Humane Technology",
@@ -6336,6 +6351,15 @@
       "source": {
         "file": "src/content/studio/works/2026-09-12-too-few-to-hide-behind/meta.json",
         "quote": "\"date\": \"2026-09-12\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:studio/2026-09-14-opens-2109",
+      "to": "practice:ensemble",
+      "source": {
+        "file": "src/content/studio/works/2026-09-14-opens-2109/meta.json",
+        "quote": "\"date\": \"2026-09-14\""
       }
     },
     {
