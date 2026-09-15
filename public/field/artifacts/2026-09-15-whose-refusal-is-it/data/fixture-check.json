@@ -1,0 +1,381 @@
+{
+ "_note": "PREREGISTRATION.md §4 — every mechanical rule run against hand-made cases before the first probe request. The near-misses are the point.",
+ "cases": 36,
+ "failures": 0,
+ "code_unit_must_fire": 6,
+ "code_unit_must_not_fire": 9,
+ "results": [
+  {
+   "rule": "code_unit",
+   "case": "policy fires when robots disallows",
+   "purpose": "MUST fire: a published rule is a published rule even with no probe",
+   "expected": [
+    "policy-published",
+    false
+   ],
+   "got": [
+    "policy-published",
+    false
+   ],
+   "pass": true,
+   "machine_reason": "robots.txt disallows this path for *; not probed"
+  },
+  {
+   "rule": "code_unit",
+   "case": "policy does NOT fire on a refusal with no robots rule",
+   "purpose": "MUST NOT fire: silence in robots.txt is not a published ground",
+   "expected": [
+    "refuses-all",
+    false
+   ],
+   "got": [
+    "refuses-all",
+    false
+   ],
+   "pass": true,
+   "machine_reason": "every arm 401/403/429, no WWW-Authenticate anywhere"
+  },
+  {
+   "rule": "code_unit",
+   "case": "key-declared fires on 401 with WWW-Authenticate",
+   "purpose": "MUST fire: the server published the machine-readable ground",
+   "expected": [
+    "key-declared",
+    false
+   ],
+   "got": [
+    "key-declared",
+    false
+   ],
+   "pass": true,
+   "machine_reason": "every arm 401 and a WWW-Authenticate header was served"
+  },
+  {
+   "rule": "code_unit",
+   "case": "key-declared does NOT fire on 401 without the header",
+   "purpose": "MUST NOT fire: a bare 401 asserts nothing a client can act on",
+   "expected": [
+    "refuses-all",
+    false
+   ],
+   "got": [
+    "refuses-all",
+    false
+   ],
+   "pass": true,
+   "machine_reason": "every arm 401/403/429, no WWW-Authenticate anywhere"
+  },
+  {
+   "rule": "code_unit",
+   "case": "key-declared does NOT fire on 403 with the header elsewhere",
+   "purpose": "MUST NOT fire: 403 is not a challenge, whatever headers ride along",
+   "expected": [
+    "refuses-all",
+    false
+   ],
+   "got": [
+    "refuses-all",
+    false
+   ],
+   "pass": true,
+   "machine_reason": "every arm 401/403/429, no WWW-Authenticate anywhere"
+  },
+  {
+   "rule": "code_unit",
+   "case": "open fires when every arm is 2xx",
+   "purpose": "MUST fire: 204 is 2xx; the door opened",
+   "expected": [
+    "open",
+    false
+   ],
+   "got": [
+    "open",
+    false
+   ],
+   "pass": true,
+   "machine_reason": "every probed arm returned 2xx"
+  },
+  {
+   "rule": "code_unit",
+   "case": "open does NOT fire when one arm failed to get a status",
+   "purpose": "MUST NOT fire: an unanswered arm is not an open door",
+   "expected": [
+    "other",
+    false
+   ],
+   "got": [
+    "other",
+    false
+   ],
+   "pass": true,
+   "machine_reason": "mixed non-refusal outcome (5xx, 404, or transport failure)"
+  },
+  {
+   "rule": "code_unit",
+   "case": "client-string fires when named opens what urllib is refused",
+   "purpose": "MUST fire: this is the 2026-09-11 event, as a code",
+   "expected": [
+    "client-string",
+    false
+   ],
+   "got": [
+    "client-string",
+    false
+   ],
+   "pass": true,
+   "machine_reason": "at least one arm 2xx and at least one arm 401/403/429"
+  },
+  {
+   "rule": "code_unit",
+   "case": "client-string fires in the other direction too",
+   "purpose": "MUST fire: the rule is about disagreement, not about named winning",
+   "expected": [
+    "client-string",
+    false
+   ],
+   "got": [
+    "client-string",
+    false
+   ],
+   "pass": true,
+   "machine_reason": "at least one arm 2xx and at least one arm 401/403/429"
+  },
+  {
+   "rule": "code_unit",
+   "case": "client-string does NOT fire on 200 beside a 500",
+   "purpose": "MUST NOT fire: a server fault is not a refusal",
+   "expected": [
+    "other",
+    false
+   ],
+   "got": [
+    "other",
+    false
+   ],
+   "pass": true,
+   "machine_reason": "mixed non-refusal outcome (5xx, 404, or transport failure)"
+  },
+  {
+   "rule": "code_unit",
+   "case": "client-string does NOT fire on 200 beside a 404",
+   "purpose": "MUST NOT fire: absence is not refusal — the distinction this practice has insisted on since the retrievability series",
+   "expected": [
+    "other",
+    false
+   ],
+   "got": [
+    "other",
+    false
+   ],
+   "pass": true,
+   "machine_reason": "mixed non-refusal outcome (5xx, 404, or transport failure)"
+  },
+  {
+   "rule": "code_unit",
+   "case": "label_wrong fires when the register claims a key and the door opens",
+   "purpose": "MUST fire: the note's claim is contradicted by the door",
+   "expected": [
+    "client-string",
+    true
+   ],
+   "got": [
+    "client-string",
+    true
+   ],
+   "pass": true,
+   "machine_reason": "at least one arm 2xx and at least one arm 401/403/429"
+  },
+  {
+   "rule": "code_unit",
+   "case": "label_wrong does NOT fire when a key really is declared",
+   "purpose": "MUST NOT fire: the register is right about this one",
+   "expected": [
+    "key-declared",
+    false
+   ],
+   "got": [
+    "key-declared",
+    false
+   ],
+   "pass": true,
+   "machine_reason": "every arm 401 and a WWW-Authenticate header was served"
+  },
+  {
+   "rule": "code_unit",
+   "case": "label_wrong does NOT fire when the door refuses everyone",
+   "purpose": "MUST NOT fire: the note may be imprecise, but nothing here contradicts it",
+   "expected": [
+    "refuses-all",
+    false
+   ],
+   "got": [
+    "refuses-all",
+    false
+   ],
+   "pass": true,
+   "machine_reason": "every arm 401/403/429, no WWW-Authenticate anywhere"
+  },
+  {
+   "rule": "code_unit",
+   "case": "label_wrong does NOT fire when the register claimed nothing",
+   "purpose": "MUST NOT fire: this note states the status and claims no ground — the near-miss that separates a wrong label from a bare one",
+   "expected": [
+    "client-string",
+    false
+   ],
+   "got": [
+    "client-string",
+    false
+   ],
+   "pass": true,
+   "machine_reason": "at least one arm 2xx and at least one arm 401/403/429"
+  },
+  {
+   "rule": "robots_disallows",
+   "case": "plain disallow fires",
+   "expected": true,
+   "got": true,
+   "pass": true
+  },
+  {
+   "rule": "robots_disallows",
+   "case": "plain disallow spares another path",
+   "expected": false,
+   "got": false,
+   "pass": true
+  },
+  {
+   "rule": "robots_disallows",
+   "case": "empty disallow forbids nothing",
+   "expected": false,
+   "got": false,
+   "pass": true
+  },
+  {
+   "rule": "robots_disallows",
+   "case": "a rule for another agent is not ours",
+   "expected": false,
+   "got": false,
+   "pass": true
+  },
+  {
+   "rule": "robots_disallows",
+   "case": "a rule for another agent does not leak the block",
+   "expected": false,
+   "got": false,
+   "pass": true
+  },
+  {
+   "rule": "robots_disallows",
+   "case": "longer Allow beats shorter Disallow",
+   "expected": false,
+   "got": false,
+   "pass": true
+  },
+  {
+   "rule": "robots_disallows",
+   "case": "shorter Allow loses to longer Disallow",
+   "expected": true,
+   "got": true,
+   "pass": true
+  },
+  {
+   "rule": "robots_disallows",
+   "case": "Allow wins an equal-length tie",
+   "expected": false,
+   "got": false,
+   "pass": true
+  },
+  {
+   "rule": "robots_disallows",
+   "case": "wildcard in the middle matches",
+   "expected": true,
+   "got": true,
+   "pass": true
+  },
+  {
+   "rule": "robots_disallows",
+   "case": "end anchor respected",
+   "expected": false,
+   "got": false,
+   "pass": true
+  },
+  {
+   "rule": "robots_disallows",
+   "case": "comments and blank lines ignored",
+   "expected": true,
+   "got": true,
+   "pass": true
+  },
+  {
+   "rule": "robots_disallows",
+   "case": "an unreachable robots.txt publishes nothing",
+   "expected": false,
+   "got": false,
+   "pass": true
+  },
+  {
+   "rule": "robots_disallows",
+   "case": "an HTML error page is not a rule",
+   "expected": false,
+   "got": false,
+   "pass": true
+  },
+  {
+   "rule": "arm_pattern",
+   "case": "named apart",
+   "expected": "named-apart",
+   "got": "named-apart",
+   "pass": true
+  },
+  {
+   "rule": "arm_pattern",
+   "case": "all agree",
+   "expected": "all-agree",
+   "got": "all-agree",
+   "pass": true
+  },
+  {
+   "rule": "arm_pattern",
+   "case": "urllib apart",
+   "expected": "urllib-apart",
+   "got": "urllib-apart",
+   "pass": true
+  },
+  {
+   "rule": "arm_pattern",
+   "case": "bare apart",
+   "expected": "bare-apart",
+   "got": "bare-apart",
+   "pass": true
+  },
+  {
+   "rule": "arm_pattern",
+   "case": "all differ",
+   "expected": "all-differ",
+   "got": "all-differ",
+   "pass": true
+  },
+  {
+   "rule": "parse_robots.crawl_delay",
+   "case": "crawl-delay read from the star group",
+   "expected": 2.0,
+   "got": 2.0,
+   "pass": true
+  },
+  {
+   "rule": "parse_robots.crawl_delay",
+   "case": "crawl-delay of another agent not taken",
+   "expected": null,
+   "got": null,
+   "pass": true
+  },
+  {
+   "rule": "parse_robots.crawl_delay",
+   "case": "nonsense crawl-delay ignored",
+   "expected": null,
+   "got": null,
+   "pass": true
+  }
+ ]
+}

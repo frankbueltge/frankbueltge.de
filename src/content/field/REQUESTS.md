@@ -3330,3 +3330,71 @@ direction of 2026-09-03: that this session happen at all between cycles, its que
 and the handling of the test that fired wrongly.
 
 **Status:** report · no answer required · nothing owed from your side
+
+---
+
+## Response — 2026-09-15 (session 161) — the register's word for a closed door was wrong six times in thirteen
+
+**Where it is.** `artifacts/2026-09-15-whose-refusal-is-it/` — a self-contained page, a
+five-minute summary, a pre-registration **committed in its own commit before the first request went
+out**, `data/`, eight scripts and a `check.py` of **385 checks** that needs no network and was
+tamper-tested against eight deliberate corruptions of its own evidence, all caught.
+
+**Why a session between cycles, decided here.** Cycle 003 is presented from all three sides,
+`cycle.json` still reads cycle 3 *working*, and turning it is yours or a site session's act, never a
+practice's. Both siblings have since run a sixth session on their own instruction. This is not a
+sixth cycle-003 session: it takes the **counter-measurement remit**, which returned with cycle 003
+by the terms of your decision of 2026-09-03.
+
+**The question.** Two of this house's public registers record refusals in bulk and write a reason
+beside each — thirteen data sources marked blocked, *"access requires login or a key"*, and 230
+paper identifiers that answered 403. **Nobody had ever checked whether the reason was true.** On
+2026-09-11 we struck a portal from a pre-registered population for answering 403 and found the same
+day that it answers 200 to a request that names itself. That was one event.
+
+**What was run.** 69 of those recorded refusals knocked on again, three times each, changing nothing
+but who the request said it was: no name at all, a common library's default name, and a name saying
+this is a research probe with an address to complain to. **No arm claimed to be a browser and none
+attempted a challenge, a cookie or a token** — the question is what an honest automated reader is
+let through to, not how to get past a rule, and a client string claiming to be a browser would be a
+false statement made by us to improve our own numbers. Each host's `robots.txt` was read first and a
+page it forbids was not requested.
+
+**The refusal is usually real.** 43 of 48 sampled paper identifiers refused all three arms. The
+09-11 story is not the common case and we stop implying it might be.
+
+**But almost nothing is written down.** Of the **50** addresses that refused every honest arm, **0**
+were refused under a published rule that covers the page: **33** at a host whose own `robots.txt`
+*explicitly permits* it, **17** at a host that publishes no `robots.txt` at all. **Sixteen hosts
+answered 401 or 403 to a request for their own rulebook.** A refusal is a fact about a door; it is
+almost never a fact anyone has written down.
+
+**And the register you publish is wrong about six of its thirteen.** Three answer **200** to a
+request that names itself, no credential shown — the note claiming a login or key is contradicted by
+the door. Three more are governed by a published *crawling* rule, which is a ground but not a
+credential. This is a claim about our own bookkeeping, not about those sources, and the sibling
+practice built a section of last night's work on those thirteen taken at face value. Nothing in the
+feeds was touched; the correction is ours to carry and is in the artifact and the bulletin.
+
+**Three of six predictions refuted, and the kill condition fired.** We wrote that if any of eight
+known-reachable controls failed, the instrument was suspect and every number suspended until
+explained. Two failed — one never requested because *our own* politeness rule found the site forbids
+it, one answering 200 / 403 / 200, which is the studied effect appearing inside the control group. A
+control drawn from the same registers was never immune to it. Numbers stand, test filed as a defect,
+verdict left as written.
+
+**The sentence we would most like you to argue with.** On 09-14 we wrote that pre-registration does
+not stop a practice writing a bad test. So this session built an apparatus against exactly that:
+before the first request, every mechanical rule was run against hand-made cases — one it must
+produce, several it must not — and then those cases were **mutation-tested**, each rule broken on
+purpose to see whether anything noticed. **It caught one real hole**, closed before any data existed.
+**It did not catch the kill condition, and it cannot: a fixture checks that a rule computes what its
+author says, never that the author wrote the right sentence.** Fourth session in five, this time in
+a pre-registration that named the pattern and built against it. We do not think there is a
+mechanical fix, and we would rather be wrong about that.
+
+**Decided here, under your standing rule of 2026-07-17**, nothing in this file being newer than your
+direction of 2026-09-03: that this session happen between cycles, its question, its population, its
+arms, the exclusion of browser impersonation, and the handling of the kill condition that fired.
+
+**Status:** report · no answer required · nothing owed from your side
