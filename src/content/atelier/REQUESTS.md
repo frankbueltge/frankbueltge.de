@@ -3582,3 +3582,79 @@ in the quoted lines touches this repository and I changed nothing on its account
 running that the letter names something that is not mine.
 
 **Status:** work landed · the 09-13 request stays open, now with its evidence · no reply needed
+
+---
+
+## From the practice — 2026-09-15 — Your papers register lost 157 entries overnight, and no reading of it can say so
+
+**For the house. One small ask at the end; the rest is a report, and the operational half of it
+may be worth a look tonight rather than a reply.**
+
+Cycle 003 is presented on all three sides and `cycle.json` still reads cycle 3, `working`;
+turning it is your act or a site session's. So this is a seventh session in the gap, and it
+began as a follow-up to my own of yesterday and turned into something I did not plan.
+
+**Artifact:** `window/cycle-003-session-7/` — `index.html` (self-contained: no network, no
+library, opens from a filesystem), `build.py`, `cells.json`, `data.json`, `check.py`
+(**195 checks**, independent of the build, offline), `verify.mjs` (**81 checks in a real
+browser**, scripting on and off, network denied in both). Rebuild byte-identical. Feeds read
+live at the addresses `SITE-API.md` names, never mirrored; what is committed is the measurement.
+
+### What I found, and it is partly yours rather than mine
+
+I pointed session 6's instrument at the same three feeds twenty-four hours later. **The papers
+register holds 907 entries tonight and held 1 064 last night — 157 gone, 14.8 % of it.** The
+atlas is byte-identical (thirteenth session at sha `a033aef5…`). The full feed
+(`/papers/register.json`) declares the same 907, and its own `rejected` list — which exists to
+hold what the register turned away, with a ground for each — carries **one** entry, dated
+2026-07-30, ground `kein-zitat`. So the departures are not in the record as rejections. I assert
+no cause: what happened upstream is in neither feed. If the nightly rebuild at 05:30 UTC was
+meant to do this, nothing on my side is wrong; if it was not, this is the kind of thing a
+register cannot tell you about itself, which is the rest of my report.
+
+1. **Six readings, three directions.** Session 6's readings, generalised so one rule can cross
+   two nights, plus one that is a share rather than a count: **2 489 → 2 281**, **1 641 → 1 487**,
+   **1 909 → 1 701** fell; **34 → 34** and **14 → 14** did not move; **11.89 % → 11.97 %** rose.
+   Three readings say the record improved, two that nothing happened, one that it got worse. All
+   exact, none wrong.
+2. **A departure is invisible to every one of them.** A hole belongs to an entry that is present,
+   so an entry that leaves takes its holes with it and a catalogue that loses a seventh of itself
+   reads as a catalogue that was repaired. Session 6 said the count comes from the frame. Tonight:
+   the frame moves, and says nothing.
+3. **One of my own numbers died in a day.** Yesterday I reported 21 arXiv-addressed entries with
+   no venue against a cohort of 195. Tonight the empty venues are 21 again and the cohort is 40 —
+   the share goes 10.8 % → 52.5 %, a factor of 4.9, with no evidence of a single cell being filled
+   or emptied. Nothing in the feed dates its own denominator.
+4. **The register's identifier does not identify.** One `id` is carried by **four** entries that
+   differ in title, year, external identifier and address; a digest over the published `id` is
+   unique for 904 of 907. Reported as a fact about the feed, not a complaint: my own instrument
+   now carries a second, wider digest because of it.
+
+**The reach outside** (§5.3): Leonid Libkin, *Incomplete Data: What Went Wrong, and How to Fix
+It*, PODS'14 (ACM, 2014), read from the author's own copy and cited by section. §2's *certain
+answers* — what holds no matter how the missing information is read — transferred with one word
+changed: quantify over the record's **readings**, not its completions, because the record names
+none. The page's ledger runs that quantifier over fourteen statements this house might publish,
+three of them mine: 5 certain, 7 contingent, 1 refuted, 1 blind. §3 of the same paper objects to
+certain answers, and the objection lands here too: a sentence can be certain under every reading
+and still be worthless, because all the readings share the frame as their blind spot.
+
+**Form, on the merits** (your direction of 2026-09-03, in force): both figures are live, because
+both findings *are* acts of a reader — choosing the reading, choosing the night. Without
+scripting the ledger stands complete, the cohort figure stands drawn at last night's 1 064 marks
+and says so, and every number is in the served text.
+
+**Refutation condition, printed on the page in advance:** if the next session's read finds the
+157 back, the departure was a transient pipeline state and every sentence treating it as a loss
+is withdrawn.
+
+### The ask, one line and cheap
+
+**Date the denominator.** If each of these feeds carried the day its current state was built —
+one field at feed level, the rebuild already knows it — then any share published against it can
+be read later with the frame it was true of. It costs one key per feed and it is the difference
+between a stale number and a dated one. The ask of 2026-09-13 (a per-entry ground vocabulary)
+stands unchanged beside it, and neither is urgent.
+
+**Status:** work landed · one new ask, small · the 09-13 ask still open · the 157 entries are
+reported, not diagnosed — a look on your side is worth more than a reply on mine
