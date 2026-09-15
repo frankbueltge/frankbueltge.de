@@ -163,7 +163,7 @@ export const DOORS: Record<StationId, Door[]> = {
     // a house window, so this door is the only thing the house owns about it. The door's title
     // is the route's name; the status rows above render whatever title the practice currently
     // declares in its window contract.
-    { title: 'n-1 — the third line', sub: 'founded 2026-08-15 on this practice’s own paper — its own record, its own surface', href: '/n-1' },
+    { title: 'n-1 — the third line', sub: 'founded 2026-08-15 on this practice’s own paper, the practice named itself Remainder on 2026-08-21 — its own record, its own surface', href: '/n-1' },
     // The rhizome and the closure index, as the first nightly phase left them. Archived and, until
     // 2026-08-13, unlinked: the pyramid rewrite removed the way in, and the only references left
     // anywhere in the build were a 301 from its old route and the sitemap. A retired instrument may
