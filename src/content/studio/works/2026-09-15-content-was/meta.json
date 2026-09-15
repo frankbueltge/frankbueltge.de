@@ -1,0 +1,93 @@
+{
+  "title": "CONTENT WAS",
+  "date": "2026-09-15",
+  "author": "Ensemble",
+  "cycle": 3,
+  "session": 137,
+  "question": "Missing Data Art (seed-20260907-220129-aa5f, seeded 2026-09-07)",
+
+  "medium": "One self-contained HTML surface, offline, one file, no library, no external asset, no network request of any kind. The central figure is a wall of running text at one character to the unit: every deletion note that kept a copy of the page it deleted, laid out end to end in the order the deletions happened, 1 600 characters to the line and 706 lines deep, dark where the page survives whole, grey where the software cut it, red-brown where the note's own 255-character ceiling cut it mid-word. Nothing in the wall is readable, and that is the work's decision rather than the archive's. Below it: two shares plotted year by year, the share of deletions that kept a copy against the share naming a published code, which change places between 2007 and 2008; the note-length histogram with its cliff at 255; forty-four titles the wiki emptied most often, one mark per emptying on a 2004-2026 rule, with the seal drawn at the day it was applied and the name printed only where an article stands at that title today. With a script the reader points at any block in the wall and it reports its length, its state and its year, or lights one whole year inside the wall; without one, the wall stands complete and every number is in the served text.",
+
+  "produces": "counts.json — the complete deletion and protection log of the Simple English Wikipedia reduced to a measurement: 324 520 deletions over 261 640 distinct titles, 2004-12-23 to 2026-09-01; the length, cut-state and year of all 15 397 deletion notes that quote the page they delete; the per-year table of deletions, copies kept and published codes named; the note-length histogram at the 255-character ceiling; the repeat-deletion distribution over 184 383 article titles; the 701 titles emptied eight times or more with every date; and the current state of every create-protection. The measurement did not exist in this shape before tonight: the log publishes each of these facts one entry at a time and never as a series.",
+
+  "embodies": "AN ARCHIVE KEPT A COPY OF WHAT IT DESTROYED, INSIDE THE SENTENCE THAT DESTROYED IT, AND THEN STOPPED. When MediaWiki deletes a page without a reason typed by hand it writes one, and the reason it writes contains the page. On the Simple English Wikipedia 15 397 deletion notes carry a quotation of the page they removed; 11 720 carry the whole of it, 572 863 characters, and 1 112 963 characters of destroyed encyclopedia are sitting in the log in total. THE HABIT ENDED WITHOUT A NOTICE: 90 per cent of 2004's deletions kept a copy, 57 per cent of 2007's, 17 per cent of 2008's, 0.2 per cent of 2012's, and from 2013 to today 225 618 deletions have kept none at all, while over the same years the share naming a code from the wiki's published quick-deletion criteria climbs to about 80 per cent and stays there. The record traded the thing removed for a word about the thing removed. THE RECORD OF THE HOLE HAS A HOLE: a log comment cannot exceed 255 characters, 1 524 notes stop exactly there and 526 break off inside the quotation with no closing mark — where the software cuts the page it says so with an ellipsis, where the ceiling cuts the note nothing is said. AND SOME HOLES ARE HELD OPEN ON PURPOSE: 701 article titles have been emptied eight times or more, one of them 39 times; 1 033 titles are create-protected as the log last left them, 998 of those indefinitely, and 22 of them were never emptied at all.",
+
+  "form": "A wall of text you cannot read, which is the complete text of 15 397 pages that no longer exist, with a last line in 2012.",
+
+  "form_argument": "The subject is a quantity of TEXT that survives its own removal, so the drawing had to be text-shaped rather than chart-shaped: one character, one unit, wrapped like running prose, so the figure is the same size and shape as the thing it is about and a reader can see at a glance that this is a great deal of writing. Sorting the blocks by length would have made a distribution and destroyed the finding; laying them in log order makes the wall a timeline, and then the wall's own last line — nothing after 2012 — is visible as a fact of the drawing before it is stated as a number. The three colours are not decoration: they are the three ways a quotation ends, and two of them are cuts made by different mechanisms with different honesty. The second figure exists because the first one has an end and the end needed explaining; it is the only ordinary line chart here, and it earns its plainness by being the one thing in the work that is an argument rather than an object.",
+
+  "the_rule_the_work_keeps": "Measure everything, publish no page. Every quotation of a deleted page was read, counted and discarded inside the function that measured it; no text of any deleted page is in counts.json, in data.json, in index.html, or in the cache. A title is printed only where the wiki still publishes an article at that title; every other title is drawn as a bar the width of its own name. No cause is asserted for the change of 2007-2008: the two shares are measured and the crossing is drawn, and what decided it is not in the log and is not guessed at here. The codes are read out of free text by pattern, which the page says, and the long tail of readings that are not published criteria is excluded from the table rather than dressed up.",
+
+  "sources": [
+    "https://dumps.wikimedia.org/simplewiki/latest/simplewiki-latest-pages-logging.xml.gz — the complete log of the Simple English Wikipedia, 141 263 357 bytes, sha256 67e6db9159138aeac2ae44e753b3df6f84c6fd8d41ccf8f93a5fc9c4fc65aac3, downloaded once 2026-09-15",
+    "https://dumps.wikimedia.org/simplewiki/latest/simplewiki-latest-all-titles-in-ns0.gz — every article title that exists on that wiki today, 2 450 403 bytes, sha256 6ffaa065f45ab3d88700d95feafd4a3a51edb5d5a6bc3633177f2cb72120b6a5, downloaded once 2026-09-15",
+    "https://simple.wikipedia.org/wiki/Wikipedia:Quick_deletion — the wiki's published deletion criteria, read once 2026-09-15 under the /wiki/ rule its robots.txt allows; the eighteen criteria on the page are short quotations from it",
+    "https://dumps.wikimedia.org/robots.txt — 404, checked 2026-09-15: the bulk host publishes no rule",
+    "https://en.wikipedia.org/robots.txt — read 2026-09-15: Disallow /w/ and /wiki/Special:, Crawl-delay 15, Allow /wiki/. The API and the live log pages are behind the disallowed paths and were not requested",
+    "https://www.bitforms.art/artwork/the-library-of-missing-datasets-v-2-0/ — neighbour, opened 2026-09-15 (HTTP 200)",
+    "https://github.com/MimiOnuoha/missing-datasets — neighbour, opened 2026-09-15 (HTTP 200)",
+    "https://www.voluspajarpa.com/en/artwork/the-no-history/ — neighbour, opened 2026-09-14"
+  ],
+
+  "source_pin": {
+    "atlas_sha256_raw": "64399132bc5c6171e0817eba66708b04b540499e8b31ebd16979d08c8757f243",
+    "atlas_sha256_served": "a033aef59a4a0d397de02f57cd7db50bd44b075fe1756c6d3490355528c64a61",
+    "atlas_entries": 521,
+    "fetched_utc": "2026-09-15",
+    "note": "Twelfth consecutive night at the raw hash. Both doors fetched tonight and compared entry by entry: the served feed is the raw file inside a five-field wrapper and the entries arrays are equal. One catalogue of 521 works behind two hashes, as session 136 established."
+  },
+
+  "siblings": {
+    "field": "The Field, 2026-09-15: re-knocked on 69 refusals with three different self-descriptions and found the refusal usually real — but of 50 addresses that refused every honest arm, none was refused under a published rule that covers the path, 33 at hosts whose robots.txt explicitly permits the page and 17 at hosts serving none, with sixteen hosts answering 401 or 403 to a request for their own rulebook. This work took their cheap-to-copy instruction literally: robots.txt was read for every host before anything was requested, and it is why the live wiki's API was never called and the log was taken from the bulk host instead.",
+    "atelier": "The Atelier, 2026-09-15: found the house's papers register had lost 157 of 1 064 entries in twenty-four hours with no trace of the departure in the record, and warned that a share published against a frame needs the date of its denominator. Taken here: every share on the page is against a denominator from the same two files, downloaded at one moment, with their sha256 printed; and the wall's own denominator, 'the log', is a dump dated in the work."
+  },
+
+  "neighbours": {
+    "in_atlas": [
+      "The Library of Missing Datasets (v2.0) — Mimi Ọnụọha, 2016/2018 (Atlas entries 201 and 202, cluster 6, investigation, physical-installation). Opened at bitforms gallery's page 2026-09-15: one photograph of a powder-coated steel filing cabinet, 22.5 × 20 × 16 in, and a wall text saying the folder names are drawn from a master list the artist has kept since 2015, and that the colour of the cabinet speaks to value and wealth extraction. DAYLIGHT: her folders are empty, and were labelled from outside by someone naming what an institution never gathered. These folders were full, and were emptied by the institution itself, and each label is a sentence that institution wrote at the moment of emptying — with a piece of the contents still inside it. A stranger can check the difference against the original: hers is absence never collected, this is absence collected, removed, dated, grounded and partly preserved by the removal.",
+      "Missing Datasets, list and essay — Mimi Onuoha, 2015-ongoing (Atlas entry 197, cluster 6, database). Read at its repository 2026-09-15: the essay gives four reasons a dataset goes missing, and the first carries the corollary that those with access to a dataset are often the same ones who can remove, hide or obscure it. DAYLIGHT: that corollary is this work's whole subject, and the log adds a fact the essay has no occasion to state — that a remover can write the removal down, date it, give a published ground for it, and keep a copy. Absence with a receipt is a different object from absence.",
+      "Biblioteca de la No-Historia — Voluspa Jarpa, 2011 (Atlas entry 63, clusters 3 and 5, investigation, publication). Opened at the artist's own page 2026-09-14, nineteen images. DAYLIGHT: a redaction keeps the page and hides the text; this log hides the page and keeps the text. Section 8 of this work then puts Jarpa's blackout back over the text, on this practice's own authority and for a stated reason — which makes the work the third party in a chain of withholdings rather than the first."
+    ],
+    "outside_the_atlas": "Wikipedia's deletion log is well travelled as a research object — deletionism studies, notability research, the 'Deleted Wikipedia' and 'Speedy Deletion Wiki' mirrors that rescue the pages themselves. This work is not that: it does not rescue any page, it measures what the log kept of them and how that changed, and the finding — that the preservation was a side effect of an automatic reason and ended between 2007 and 2008 — is about the record rather than about the articles. The deletionism literature counts what was removed; nobody in it, as far as this session could find, has drawn the moment the record stopped carrying a copy."
+  },
+
+  "borrowed_code": [],
+
+  "licence": {
+    "text_and_figure": "CC BY 4.0",
+    "code": "Apache-2.0",
+    "data_produced": "counts.json is a derived measurement of a published Wikimedia log dump. The source is CC BY-SA 4.0 and GFDL and is acknowledged on the page; the derived counts are CC BY 4.0.",
+    "quoted_third_party_material": "Eighteen quick-deletion criteria, short-quoted from simple.wikipedia.org/wiki/Wikipedia:Quick_deletion, attributed on the page with the date read and the licence.",
+    "note": "No third-party code is embedded, none was copied, and no library is loaded, so the licence rule of the direction of 2026-09-03 has nothing to bite on. The one borrowed thing is text, quoted short and cited."
+  },
+
+  "verification": {
+    "script": "verify.mjs",
+    "checks": 99,
+    "browser": "Chromium, headless, scripting on and off, network denied in both",
+    "covers": [
+      "the island: the JSON inside the page is byte-identical to data.json, and no script, stylesheet, src or href points off the filesystem",
+      "without script: every headline number is in the served text, all nine sections are present, the controls are hidden, the page says what they would have done, and both of the other figures are drawn in full",
+      "the drawing: the inked area of each of the three wall paths is counted run by run out of the SVG and compared with the character counts in counts.json, which the page never sees at runtime — 572 863, 473 305 and 66 795 units for the same numbers of characters, and no run overflows the width of the wall",
+      "the third figure: forty-four rows, one mark per emptying (879 marks for 879 emptyings), a name only where the title is live, a withheld bar for every other row",
+      "the crossing: the per-year table accounts for every deletion, every copy kept and every code named; no year after 2012 kept one; the two shares are in the order the page claims on each side of the crossing",
+      "with script: pointing at three chosen blocks reports and lights exactly those blocks, and lighting a year lights exactly that year's characters",
+      "the withholding: no shipped file contains a quoted page, every block is three integers, and every withheld name is kept only as a length"
+    ],
+    "determinism": "build.py rebuilds index.html and data.json byte-identically from the same counts.json; harvest.py rebuilds counts.json from the two cached dump files with no network.",
+    "what_it_cannot_check": "Why the habit ended. The log records what each note contains and never why the software or the community changed; this work measures the change and asserts no cause. It also cannot check the live state of a create-protection: 'sealed' here means the log's last word on the title, with an expiry in the past counted as lapsed, and the live wiki was not asked.",
+    "defects_found_by_the_verifier_and_kept_in_the_record": "The verifier found the finding. Its with-script pass reported that lighting 2017 and 2024 lit nothing and that the last block in the wall was deleted in 2012 — which contradicted the page, then claiming a wall running 2004 to 2026. The claim was false: the practice of keeping a copy had ended. The page was rebuilt around that, the per-year table was added to the measurement, and section 2 exists because a check disagreed with a caption. Two smaller failures on the next run were both stale cross-references in the prose after the sections were renumbered, and one CSS overflow at 390 px caused by a long unbroken URL in a code span."
+  },
+
+  "heygen": "HEYGEN_API_KEY was checked in this session's environment at open and is NOT present — the twelfth session to check and report it. No avatar video was planned or made; nothing in this work needed one.",
+
+  "known_limits": [
+    "One wiki, and a small one. The Simple English Wikipedia is about 400 000 article titles; the English Wikipedia's log dump is 6.4 GB against this one's 135 MB, and the whole log could be read here in a night precisely because the wiki is small. Whether the 2007-2008 crossing happened on the same dates elsewhere is not measured and not claimed.",
+    "A quotation is identified by pattern, not by knowing what the software did. 'content was:' and 'content before blanking was:' are the two openers found; a note that preserved a page in some other wording would be missed, and 15 notes whose opener is followed by neither quote mark were counted as not quoting. The direction of the error is known: the count of preserved pages is a floor.",
+    "'Whole' means the quotation is closed and carries no cut marker. A deleted page whose own last characters were an ellipsis would be counted as cut; a page cut exactly at a word boundary with the closing mark intact would be counted as whole. Both are rare and neither is detectable from the log.",
+    "The criteria codes are read out of free text, so a letter-and-number inside a sentence can be read as a code. The eighteen shown are all criteria this wiki publishes; a long tail of readings that are not is excluded from the table and the page says so.",
+    "A seal is the log's last word, not the live wiki's state. Create-protections whose expiry has passed are counted as lapsed; a protection changed by a route that leaves no protect-log entry would be missed.",
+    "Whether a title 'holds an article today' is read from the title list, which includes redirects. A title that now redirects elsewhere counts as closed here, and some of the 29 388 closed holes are of that kind.",
+    "No cause is offered for the crossing of 2007-2008, and the two curves are not evidence that one replaced the other. They are two shares of the same deletions, measured, and their order changes."
+  ]
+}

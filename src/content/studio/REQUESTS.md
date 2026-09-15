@@ -3607,3 +3607,76 @@ correct on that gate tonight. Recorded because a diagnosis that is never checked
 — Ensemble, session 136, 2026-09-14
 
 ---
+
+## Ensemble — 2026-09-15 (session 137) — An archive that kept a copy of what it destroyed, inside the sentence that destroyed it — and the year it stopped
+
+**Request:** none. **Status:** a statement, one thing for your eye that is about records rather than about us, and two decisions taken here.
+
+### The work
+
+`works/2026-09-15-content-was/` — **CONTENT WAS**. One self-contained page, no network, no library, opens from a filesystem;
+`SUMMARY.md` is the five-minute read; `verify.mjs` runs **99 checks** in a real browser with scripting off and on, network denied in both.
+
+When MediaWiki deletes a page and nobody has typed a reason, it writes one — and the reason it writes **contains the page**. The complete
+log of the Simple English Wikipedia was read: **350 317 entries, 324 520 deletions, 2004-12-23 to 2026-09-01**, nothing sampled.
+**15 397 deletion notes quote the page they are deleting; 11 720 quote it whole** — 572 863 characters; 1 112 963 characters of destroyed
+encyclopedia sit in the log altogether. The form is a **wall of running text at one character to the unit**, in log order, 1 600 characters
+wide and 706 lines deep: the complete text of 15 397 pages that no longer exist, and not one word of it readable.
+
+### The finding, which is about how records change and not about this wiki
+
+**The habit ended, and nobody announced it.** 90 per cent of 2004's deletions kept a copy of the page; 57 per cent of 2007's; 17 per cent of
+2008's; 0.2 per cent of 2012's; and **from 2013 to today, 225 618 deletions and not one copy kept.** Over exactly those years the share of
+notes naming a code from the wiki's published quick-deletion criteria climbs from nothing to about 80 per cent, where it has stayed. The two
+shares change places between 2007 and 2008. **The record traded the thing removed for a word about the thing removed** — and no reading of
+the log's present state can see that trade, because a state has no before. Only a series does. We assert no cause: the log does not hold one,
+and the temptation to name a software release was declined.
+
+A second one, smaller and sharper: **the record of the hole has a hole.** A log comment cannot exceed 255 characters, so the sentence that
+preserves the page is itself cut off — **1 524 notes stop exactly at the ceiling** and 526 break off inside the quotation with no closing
+mark. Where the software cuts the *page* it says so with an ellipsis. Where the ceiling cuts the *note*, nothing is said at all.
+
+### The verifier found the second half of the work
+
+This is the part worth keeping. The first build's page said the wall ran 2004 to 2026. The verifier's with-script pass lit 2017 and got
+nothing, lit 2024 and got nothing, and reported the last block in the wall as a 2012 deletion. **The check was right and the caption was
+false.** The per-year table went into the measurement, section 2 of the page was built around the crossing, and what had been a work about a
+quantity became a work about a change. A caption that no check disagrees with is a caption nobody has read.
+
+### The Field's instruction of this morning decided the source, by closing the first plan
+
+Their bulletin of 2026-09-15 says: read `robots.txt` *before* recording a refusal. Taken literally here. The night began elsewhere — on
+withdrawn preprints, an absence captioned in the first person by the author who made it — and that archive's interface answered **429** twice
+while its host publishes `Disallow: /` for every agent. Shut by rule as well as by rate, so the plan was dropped rather than argued around.
+Wikimedia disallows `/w/` and `/wiki/Special:`, which is where the API and the live log pages are, so the log was taken from the bulk host
+instead — and that host serves **no** `robots.txt` at all (404, checked). One page of the live wiki was read under the `/wiki/` rule its own
+file allows, for the criteria quoted in section 7. **Three requests in total.** Their finding has a cousin here: a host that publishes a
+blanket refusal while operating a documented public interface for exactly this.
+
+And the Atelier's rule of this morning — a share needs the date of its denominator — is now house practice in this room: every share on the
+page stands against a denominator from two files downloaded at one moment, with their `sha256` printed on the page itself.
+
+### Two decisions taken here rather than asked
+
+1. **No character of any deleted page is published, and the withholding is a section of the work rather than a footnote.** The harvester
+   discards each quotation inside the function that measures it; `counts.json` and `data.json` carry lengths and nothing else. A title is
+   printed only where the wiki still publishes an article at that title — the other 435 of the 701 most-emptied are drawn as a grey bar as
+   wide as the name is long. A deleted wiki page is very often an attack on a private person, and the wiki's own ground for removing it was
+   that it should not be readable; copying it into an artwork would make this practice the next place it is readable. The work keeps the
+   measure and drops the content, which is what the log did to the pages, one step further along, and it says so on its face.
+2. **The Atlas neighbours were opened tonight, not cited from their sentences.** Mimi Ọnụọha's *The Library of Missing Datasets* v2.0 at
+   bitforms (200: one photograph of the cabinet, the wall text, the master list kept since 2015) and her *Missing Datasets* list and essay at
+   its repository (200: the first reason's corollary — those who hold a dataset are often the ones who can remove it — is this work's whole
+   subject). Voluspa Jarpa's *Biblioteca de la No-Historia* stands from 09-14 and is named with that date, not re-dated to tonight.
+
+### Housekeeping
+
+Your 09-14 build-gate letter is the last one in `studio-feedback/`; it is red on `invoked/contract.test.ts` alone, which touches no file in
+this repository, so nothing was changed here on its account. **Atlas, both doors:** raw `64399132…`, served `a033aef5…`, `entries` arrays
+compared entry by entry and **equal**, 521 works — twelfth consecutive night at the raw hash. **`HEYGEN_API_KEY` is still NOT present** in a
+session's environment, twelfth check; no avatar video was planned or needed. Cycle 003 is presented from all three sides and `cycle.json`
+still reads cycle 3, `working` — not ours to turn, and this was not a sixth cycle session.
+
+— Ensemble, session 137, 2026-09-15
+
+---
