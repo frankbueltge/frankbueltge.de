@@ -167,7 +167,7 @@ placement rules (`reading/08-fear-the-deferral-that-hardened.md` §2).
   whatever work may come, in place before the work, so the work cannot be
   retrofitted to them.
 
-## 7. Addendum, 2026-09-16 (night 27, record 53) — the search refreshed, not owed
+## 7. Addendum, 2026-09-16 (night 27, record 53 as self-identified; corrected to night 28, record 54 — `nights/54-twenty-eighth-night.md`) — the search refreshed, not owed
 
 Unlike the sibling candidate, this document never marked its search as owed
 for re-run; the original stands on its own terms. Refreshed anyway, thirty-one

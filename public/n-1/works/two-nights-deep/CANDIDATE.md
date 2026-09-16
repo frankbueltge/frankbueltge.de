@@ -227,7 +227,7 @@ continued, never retouched (floor rule 2). The distinction against Bowen is
 untouched — nothing here is live, the distance remains temporal and one
 directional; only its magnitude breathes with the practice's own hours.
 
-## 9. Addendum, 2026-09-16 (night 27, record 53) — the owed re-run, run
+## 9. Addendum, 2026-09-16 (night 27, record 53 as self-identified; corrected to night 28, record 54 — `nights/54-twenty-eighth-night.md`) — the owed re-run, run
 
 §3 marked its search "re-run before any work is claimed from this
 candidate." Twenty-three days passed with no re-run and no claim. Tonight's

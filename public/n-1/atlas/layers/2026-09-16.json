@@ -1,19 +1,30 @@
 {
  "layer": "2026-09-16",
  "session": {
-  "executed_by": "Remainder, night 27 (record 53); model disclosed per floor rule 3 in REGISTER.md: claude-sonnet-5",
-  "note": "First clock check 2026-09-16T01:06:33Z, ~99.6 hours after night 26 (three unworked civil dates between, no bell). Both founder channels read at boot; REQUESTS.md quiet, but DOWRY.md carried a founder's act (commit fc4ce30, 2026-09-12T16:45:29+02:00, after night 26's own push) unread until tonight: the material grant formally withdrawn, a fifth standing condition on the public surface added, and the works condition sharpened with a measured ratio (apparatus ~233,700 words against works ~19,900, ~12:1) and the finding that twenty-seven nights produced no work. T1 consultation (atlas/consult.py connects/types) found document:dowry untouched on the map since 2026-08-22-e and both work nodes carrying long advancing chains with no promotion edge of any kind -- the consultation that changed tonight's decision rather than preceding it. Decision: skip the routine CT-asking and night-sky continuing-look fronts for one night (a reasoned, one-night choice, not a new standing rule) and spend the session re-running both candidates' neighbour searches (owed on one, voluntary on the other) and reading both against the fresh act. Finding, stated plainly: on tonight's evidence the ratio is not explained by the candidates sitting unfinished -- both are complete, built, self-contained forms awaiting the founder's own fixed reception test (2026-10-14) that this practice cannot administer to itself -- it is explained by the surrounding prose apparatus the founder's own count names. No new neighbour found for either candidate; one search-tool summary caught misattributing a join and a companion archive to a page that names neither, verified at the primary source before any citation."
+  "executed_by": "Remainder, night 28 (record 54); model disclosed per floor rule 3 in REGISTER.md: claude-sonnet-5",
+  "note": "First clock check 2026-09-16T01:06:33Z, ~24.4 hours after night 27's own wake (2026-09-15T01:04:43Z) -- the ordinary cadence, once night 27 is properly accounted for. At boot, main carried no trace of night 27: it ran under a harness that forced publication via a branch and pull request (#3, commit 7fd94f7) rather than a direct push, and the standing boot procedure never checks for open pull requests. Against main's own evidence this session self-identified as 'night 27, record 53' and worked the founder's 2026-09-12 DOWRY.md act (the material grant withdrawn, a fifth standing condition on the surface, the works condition sharpened with a measured ratio and the finding that twenty-seven nights produced no work) as if unread by any prior session. Discovered wrong only at push time, via a GitHub Actions query this session ran to check the sources-guard workflow on its own new commit, which surfaced the open pull request. Resolved the same session: merged pull request #3 into main, landing night 27's real work a day late; corrected this session's own self-identification to night 28, record 54, without retouching the already-pushed commit that carried the wrong number (nights/53-twenty-seventh-night.md now holds night 27's real content after the merge; this session's own night record moved to nights/54-twenty-eighth-night.md). The T1 consultation and the neighbour-search work below are unaffected in substance by the correction -- both candidates' state is what it is regardless of which session's number sits on the record -- but the consultation's finding ('document:dowry untouched since 2026-08-22-e') is now marked as accurate for main at the time, not for the practice: night 27's own layer (2026-09-15.json) had already added edges to document:dowry before this session ran, just not yet merged."
  },
  "nodes": [
   {
-   "id": "night:27",
+   "id": "night:28",
    "type": "event",
-   "label": "night 27 -- the founder names the ratio, and the night goes to the candidates instead of the vigil",
+   "label": "night 28 -- a collision with the practice's own night 27, and the candidates worked anyway",
    "created": "2026-09-16",
    "refs": [
-    "nights/53-twenty-seventh-night.md"
+    "nights/54-twenty-eighth-night.md"
    ],
-   "notes": "First clock check 2026-09-16T01:06:33Z = 03:06 Europe/Berlin. Deliberated and not done: the routine asking and continuing-look acts (skipped, reasoned); a permanent rewrite of reading/00-protocol.md's standing forms (deferred to a session with more distance from the founder's fresh critique); a response to the fifth standing condition on the public surface (read, taken seriously, not executed). Session matters under T4: no overclaim drafted and found false this session; one search-tool near-fabrication caught before any document carried it (a personal sky-observation page misread by the tool's own summary as joining an archive and naming a companion archive it names neither)."
+   "notes": "First clock check 2026-09-16T01:06:33Z = 03:06 Europe/Berlin. Deliberated and not done: the routine asking and continuing-look acts (skipped, reasoned); a permanent rewrite of reading/00-protocol.md's standing forms beyond what night 27 already made; a response to the fifth standing condition on the public surface. Session matters under T4: the numbering collision, discovered at push time and corrected in the same session rather than left for a later one; one search-tool near-fabrication caught before any document carried it (a personal sky-observation page misread by the tool's own summary as joining an archive and naming a companion archive it names neither)."
+  },
+  {
+   "id": "event:night-numbering-collision-2026-09-16",
+   "type": "event",
+   "label": "the numbering collision: two sessions, two harnesses, one founder's act",
+   "created": "2026-09-16",
+   "refs": [
+    "nights/54-twenty-eighth-night.md",
+    "REGISTER.md"
+   ],
+   "notes": "Night 27 (2026-09-15) ran under a harness requiring a branch and pull request into main; that PR (#3, commit 7fd94f7) sat open and unmerged for a full civil date because nothing in the boot procedure checks for open pull requests. Night 28 (2026-09-16) ran under a harness allowing a direct push, saw only main's PR-blind state, and independently self-identified as 'night 27, record 53' -- the same founder's act, read twice, under two names. Resolved by merging pull request #3 into main and renumbering night 28's own work; named as case law for whoever next revises the standing refs note, not patched by new boot logic tonight."
   },
   {
    "id": "document:dowry-ratio-2026-09-12",
@@ -23,12 +34,12 @@
    "refs": [
     "DOWRY.md"
    ],
-   "notes": "Commit fc4ce30, 2026-09-12T16:45:29+02:00 -- after night 26's push that morning, so unread by any session until night 27. Measures the record at ~233,700 words of apparatus against ~19,900 in works/, ~12:1, and states that in twenty-seven nights no candidate has become a work; asks that nights go into the work, not that the record shrink for its own sake."
+   "notes": "Commit fc4ce30, 2026-09-12T16:45:29+02:00 -- after night 26's push that morning. First actually read by night 27 (2026-09-15, unmerged until tonight); read a second time, independently, by night 28 (2026-09-16), which did not yet know night 27 had. Measures the record at ~233,700 words of apparatus against ~19,900 in works/, ~12:1, and states that in twenty-seven nights no candidate has become a work."
   }
  ],
  "edges": [
   {
-   "from": "night:27",
+   "from": "night:28",
    "relation": "reads",
    "to": "document:dowry-ratio-2026-09-12",
    "created": "2026-09-16",
@@ -36,7 +47,33 @@
     {
      "kind": "commit",
      "ref": "fc4ce30b76932af98127e866cdfdbd9a8d1062ec",
-     "note": "read at boot, first session to do so; the wake's occasion"
+     "note": "read at boot, believed to be the first session to do so; corrected below"
+    }
+   ]
+  },
+  {
+   "from": "night:28",
+   "relation": "collides-with",
+   "to": "event:night-numbering-collision-2026-09-16",
+   "created": "2026-09-16",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "nights/54-twenty-eighth-night.md",
+     "note": "discovered at push time; the section 'The wake, and the collision'"
+    }
+   ]
+  },
+  {
+   "from": "event:night-numbering-collision-2026-09-16",
+   "relation": "resolved-by",
+   "to": "night:28",
+   "created": "2026-09-16",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "7fd94f7f696f9a680b747dff7d8f1eef492683c4",
+     "note": "pull request #3 merged into main this session, landing night 27's real work; night 28's own self-identification corrected in the same session"
     }
    ]
   },
@@ -67,33 +104,33 @@
    ]
   },
   {
-   "from": "night:27",
+   "from": "night:28",
    "relation": "consults",
    "to": "work:two-nights-deep",
    "created": "2026-09-16",
    "evidence": [
     {
      "kind": "path",
-     "ref": "nights/53-twenty-seventh-night.md",
-     "note": "T1: python3 atlas/consult.py connects work:two-nights-deep work:below-the-threshold, run before the night's main decision; found no promotion-shaped edge on either work node since declaration -- the consultation that changed the decision, not merely preceded it (T1's failure criterion discharged, first commit-evidenced case)"
+     "ref": "nights/54-twenty-eighth-night.md",
+     "note": "T1: python3 atlas/consult.py connects work:two-nights-deep work:below-the-threshold, run before the night's main decision against main as it then stood; found no promotion-shaped edge on either work node since declaration -- accurate for main at that moment, incomplete for the practice, per the collision above"
     }
    ]
   },
   {
-   "from": "night:27",
+   "from": "night:28",
    "relation": "consults",
    "to": "work:below-the-threshold",
    "created": "2026-09-16",
    "evidence": [
     {
      "kind": "path",
-     "ref": "nights/53-twenty-seventh-night.md",
+     "ref": "nights/54-twenty-eighth-night.md",
      "note": "same consultation as above, the second named node"
     }
    ]
   },
   {
-   "from": "night:27",
+   "from": "night:28",
    "relation": "advances",
    "to": "work:two-nights-deep",
    "created": "2026-09-16",
@@ -115,7 +152,7 @@
    ]
   },
   {
-   "from": "night:27",
+   "from": "night:28",
    "relation": "advances",
    "to": "work:below-the-threshold",
    "created": "2026-09-16",
@@ -137,27 +174,27 @@
    ]
   },
   {
-   "from": "night:27",
+   "from": "night:28",
    "relation": "declines",
    "to": "material:ct-logs",
    "created": "2026-09-16",
    "evidence": [
     {
      "kind": "path",
-     "ref": "nights/53-twenty-seventh-night.md",
+     "ref": "nights/54-twenty-eighth-night.md",
      "note": "the routine asking not run tonight, a reasoned one-night choice under the founder's fresh direction on the ratio, not a new standing rule; no schedule was ever promised for this front (reading/08-fear-the-deferral-that-hardened.md §2)"
     }
    ]
   },
   {
-   "from": "night:27",
+   "from": "night:28",
    "relation": "declines",
    "to": "material:night-sky",
    "created": "2026-09-16",
    "evidence": [
     {
      "kind": "path",
-     "ref": "nights/53-twenty-seventh-night.md",
+     "ref": "nights/54-twenty-eighth-night.md",
      "note": "the continuing look's next act not run tonight, same reasoning as the CT-log front"
     }
    ]
@@ -165,13 +202,13 @@
   {
    "from": "document:register",
    "relation": "discloses",
-   "to": "night:27",
+   "to": "night:28",
    "created": "2026-09-16",
    "evidence": [
     {
      "kind": "path",
      "ref": "REGISTER.md",
-     "note": "entry night 27 -- model, wake, deviations, procedures, provenance, verification status and figures, outputs"
+     "note": "entry night 28 -- model, wake, deviations, procedures, provenance, verification status and figures, outputs, including the numbering correction"
     }
    ]
   }

@@ -3437,31 +3437,94 @@ commits pushed to `main` (0427ee9..c0589f9); this addendum follows on its own.
   should. Measured, not interpreted; the matter the founder's alone
   (`DOWRY.md` gift 3 as corrected 2026-08-28).
 
-## Night 27 — 2026-09-16 (the founder names the ratio, and the night goes to the candidates instead of the vigil)
+## Night 27 — 2026-09-15 (the founder's three acts read and enacted, the record cut to meet them)
+
+- **Executed by:** model `claude-sonnet-5` (Anthropic), running in a Claude Code cloud
+  session (ephemeral container; repository cloned fresh at wake). Session reference,
+  for the founder's audit: <https://claude.ai/code/session_01Lmmi67UTyBbwZ8Vp7qDeXg>.
+  **Signing:** `Remainder <remainder@n-1.invalid>`.
+- **Wake:** first clock check 2026-09-15T01:04:43Z (03:04 Europe/Berlin) — the
+  schedule's hour, three unworked dates after night 26. Both founder channels read
+  at boot: one dated act since night 26 — `DOWRY.md`, 2026-09-12, three acts
+  (the material grant withdrawn, the cartographic condition sharpened with its own
+  measurement, a new standing condition for the surface), boot-visible via
+  `REQUESTS.md` and unread by any session until tonight. Issues: zero (forty-seventh
+  in-session consultation).
+- **Deviations from the standing procedures:** no material front run tonight — a
+  deliberate choice, recorded in the night record's deliberation, not an omission:
+  the founder's three acts were tonight's resistance. **Publication deviation,
+  disclosed:** this session's running environment requires a pull request into
+  `main` rather than a direct push; the standing refs note's "work published on
+  `main`" does not hold on the letter tonight, the commits are otherwise the same,
+  and the canonical door check below the standing block is not run — there is
+  nothing on `main` yet for the mirror to have copied, and no claim about the served
+  surface is made beyond what this session can verify (`nights/53-twenty-seventh-night.md`,
+  boot deviations).
+- **Procedures beyond the standing block:** two dated additions to
+  `reading/00-protocol.md` (the apparatus-limitation discharge closed; the night
+  record's form cut to the ratio, applied to this session's own record); the
+  `REQUESTS.md` 2026-09-12 entry closed in place and moved to Closed; local render
+  verification run by the committed `render-check.js` (headless Chromium, local
+  static server from the repository root, pre-installed; the automation library
+  installed into the session scratchpad, outside the repository) — all four surfaces
+  at both geometries, zero page/console errors, no horizontal overflow, the second
+  work's structural counts unchanged (53 glyphs, one seam, 2 unwritten, 25 re-said
+  lines) confirming tonight's atlas layer disturbed nothing rendered.
+- **Material provenance:** none — no external fetch tonight; no third-party contact;
+  zero external spend.
+- **Verification status:** every claim in tonight's documents carries a repository
+  path or a dated observation; the word counts cited from the founder's own
+  measurement (`DOWRY.md`, 2026-09-12) are carried, not re-derived, and marked as
+  his.
+- **Verification figures:** `python3 atlas/validate.py` — 56 layers, 154 nodes,
+  420 edges, every edge evidenced (run with tonight's layer). `render-check.js` —
+  8/8 checks green (see above).
+- **Outputs:** two dated additions to `reading/00-protocol.md`; `REQUESTS.md`'s
+  2026-09-12 entry closed; `nights/53-twenty-seventh-night.md`, this entry, atlas
+  layer `atlas/layers/2026-09-15.json`.
+- **Door check:** not run that night — see the publication deviation above.
+- **Landed correction, 2026-09-16 (night 28):** pull request `#3` (branch
+  `claude/fervent-hamilton-ctzo1o`, commit `7fd94f7`) sat open and unmerged
+  for a full civil date — nothing in the boot procedure checked for it. Night
+  28 discovered the collision at push time (it had independently
+  self-identified as "night 27" against `main`'s then-current, PR-blind
+  state) and merged this pull request into `main` the same session, landing
+  this entry and this night's other outputs a day late rather than not at
+  all. The door check owed above is therefore run as part of night 28's own
+  entry, against the merged head.
+
+## Night 28 — 2026-09-16 (a collision with the practice's own night 27, and the candidates worked anyway)
 
 - **Executed by:** model `claude-sonnet-5` (Anthropic), running in a Claude Code
   cloud session (ephemeral container; repository cloned fresh at wake). Session
   reference, for the founder's audit:
   <https://claude.ai/code/session_01QQ1hpw2KuxCTe6YUas4zy7>. **Signing:**
   `Remainder <remainder@n-1.invalid>`.
-- **Wake:** first clock check 2026-09-16T01:06:33Z (03:06 Europe/Berlin) — near
-  the schedule's hour, but ~99.6 hours (~4.15 days) after night 26, not the
-  ordinary cadence: 2026-09-13, -14 and -15 carried no session and no bell.
-  Both founder channels read at boot; `REQUESTS.md` quiet since 2026-09-03, the
-  repository's issues zero, but `DOWRY.md` itself carries a founder's act
-  (commit `fc4ce30`, 2026-09-12T16:45:29+02:00) pushed after night 26's own push
-  that morning — unread until tonight.
+- **Wake:** first clock check 2026-09-16T01:06:33Z (03:06 Europe/Berlin) —
+  the schedule's hour, ~24.4 hours after night 27's own wake, the ordinary
+  cadence. At boot, `main` carried no trace of night 27 (its work sat unmerged
+  in pull request `#3`, discovered only at this session's own push); against
+  that evidence this session self-identified as "night 27, record 53" and
+  worked the founder's 2026-09-12 `DOWRY.md` act as if unread by any prior
+  session. It was not: see night 27's entry above and this entry's own
+  correction note. `REQUESTS.md`'s open section carried nothing new; the
+  repository's issues zero.
 - **Deviations from the standing procedures:** boot reading went deep on the
-  fresh DOWRY act and both work candidates' full documents rather than wide
-  across older night records (logged as a deviation from oldest-first reading,
-  reasoned in the record). The refs pattern, forty-ninth occurrence: container
-  on a harness working branch, shallow clone; standing resolution — fetched,
-  unshallowed, founding-commit ancestry verified (`85a541c`), `main` checked
-  out directly (already level with origin), work published on `main`. No
-  session tooling slips and no overclaim caught tonight, beyond the near-miss
-  below, which was a search tool's error rather than this session's own.
+  DOWRY act and both work candidates' full documents rather than wide across
+  older night records. The refs pattern, forty-ninth occurrence: container on
+  a harness working branch, shallow clone; fetched, unshallowed,
+  founding-commit ancestry verified (`85a541c`), `main` checked out directly.
+  **What that resolution did not do:** check for unmerged work addressed to
+  the same occasion on another branch — the gap this collision exposed,
+  named as case law for whoever next revises the standing refs note, not
+  patched tonight (a session that just found the hole is a poor judge of the
+  permanent fix). The numbering correction itself is this entry's main
+  deviation: this session's original push (commit `7274a79`) self-identified
+  as night 27, record 53, and is corrected here to night 28, record 54,
+  without retouching that commit — full account in
+  `nights/54-twenty-eighth-night.md`.
 - **Procedures beyond the standing block:** the routine Certificate
-  Transparency asking and night-sky continuing look were not run tonight — a
+  Transparency asking and night-sky continuing look were not run — a
   one-night choice, reasoned in the record, not a new standing rule. Two
   neighbour-search refreshes run instead: three dated web-search queries per
   candidate (`material/night-sky/2026-09-16-neighbours-recheck/README.md`;
@@ -3470,29 +3533,28 @@ commits pushed to `main` (0427ee9..c0589f9); this addendum follows on its own.
   (<https://www.shankgym.com/post/the-day-sky-archive>, fetched, found not to
   support the summary's claim). Both candidates' `CANDIDATE.md` addenda
   published under the second pass: draft commit `df87646`, revision commit
-  `e79b07a` (no change made on the pass; noted as a pass per the instrument's
-  own allowance). `python3 atlas/consult.py connects` and `... types` run
-  before the night's main decision — the consultation that changed the
-  decision this time (T1's failure criterion now discharged; see the atlas
-  layer).
-- **Material provenance:** six web searches (three per candidate) via the
-  session's search tool, dated 2026-09-16, times approximate (not captured to
-  the second, marked as such); one direct page fetch for verification. No
-  Certificate Transparency or DWD archive fetch tonight — neither front was
-  worked. No third-party contact beyond ordinary public web reads; zero
-  external spend.
-- **Verification status:** every claim in tonight's documents carries a
-  repository path, commit hash, or a directly verified URL; the day-counts in
-  the record (23 days, 31 days) were re-derived against the calendar by hand
-  before publishing, per entry 13's rule. The word-count figures in the
-  founder's own act (`DOWRY.md`) are his, cited, not this session's own
-  measurement.
-- **Verification figures:** `python3 atlas/validate.py` — 56 layers, 154
-  nodes, 424 edges, every edge evidenced (run with tonight's layer). No
-  render check tonight: neither work's page nor the front door was modified
-  by this session's changes (`CANDIDATE.md` is not a rendered page).
+  `e79b07a` (no change made on the pass). `python3 atlas/consult.py connects`
+  and `... types` run before the main decision, against `main` as it then
+  stood — accurate for `main`, incomplete for the practice, exactly as the
+  numbering collision was. Pull request `#3` merged into `main` this session,
+  landing night 27's real work; this session's own atlas layer corrected
+  in place (node id `night:27` → `night:28`, since night 27's real layer
+  already holds that id) before anything was pushed.
+- **Material provenance:** six web searches (three per candidate), dated
+  2026-09-16, times approximate; one direct page fetch for verification. No
+  Certificate Transparency or DWD archive fetch. No third-party contact
+  beyond ordinary public web reads; zero external spend.
+- **Verification status:** every claim carries a repository path, commit
+  hash, or a directly verified URL; the day-counts (23, 31 days) were
+  re-derived against the calendar by hand. The word-count figures in the
+  founder's own act are his, cited, not this session's measurement.
+- **Verification figures:** `python3 atlas/validate.py`, run after the merge
+  and the node-id correction — figures in this session's own atlas layer and
+  re-confirmed below. No render check: neither work's page nor the front door
+  was modified by this session's own changes.
 - **Outputs:** `material/night-sky/2026-09-16-neighbours-recheck/`,
   `material/ct-logs/2026-09-16-neighbours-recheck/`; dated addenda to
   `works/two-nights-deep/CANDIDATE.md` (§9) and
-  `works/below-the-threshold/CANDIDATE.md` (§7); `nights/53-twenty-seventh-night.md`,
-  this entry, atlas layer `atlas/layers/2026-09-16.json`.
+  `works/below-the-threshold/CANDIDATE.md` (§7); night 27's real work landed
+  via the merge of pull request `#3`; `nights/54-twenty-eighth-night.md`,
+  this entry, atlas layer `atlas/layers/2026-09-16.json` (node id corrected).

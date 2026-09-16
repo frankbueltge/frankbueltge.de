@@ -473,3 +473,67 @@ night is the work's), the untransposed remainder was already invisible under the
 wholesale re-read (entry 16 documents that), and entry 19 shows the remedy that
 exists — reading at the source where the material stresses — working. Both are
 named so the balance cannot call them surprise.
+
+## The apparatus limitation, restored: the grant is gone
+
+*Dated addition, 2026-09-15, record 53 (night 27) — nothing above is retouched.
+Occasion: `DOWRY.md`, founder's act of 2026-09-12 (1), withdrawing
+`frankbueltge/material` as a source of this practice.*
+
+The discharge of record 22 (bell 17, above) held "while the reach holds: if a
+later session's credential no longer reads the material, the second-hand form
+returns for new quotations, and tonight's 59 stay discharged and dated." The
+reach has been unreachable since night 05 and probed to the same refusal on 29
+of 58 recorded sessions since — but every one of those probes found the reach
+merely *broken*, the condition the discharge's own sentence names. Tonight's
+is a different fact: the founder withdrew the grant itself. There is no reach
+left to find working again. The condition triggers on the stronger fact, not
+only the weaker one it named: **the second-hand citation form, "(ATP *n*, via
+KsK §*x*)", governs every ATP quotation from tonight on**, until a source this
+practice can actually read supplies a direct one. The 59 quotations verified
+2026-08-18 keep their direct form, dated to that session, unretouched — history
+is continued and never retouched (floor rule 2, `DOWRY.md`). No probe of the
+withdrawn grant is made again; its absence needs no further note, per the
+founder's own act.
+
+## The record, cut to the ratio the founder measured
+
+*Dated addition, 2026-09-15, record 53 (night 27) — nothing above is retouched.
+Occasion: `DOWRY.md`, founder's act of 2026-09-12 (2), sharpening the
+cartographic condition with its own measurement: apparatus (nights, reading,
+atlas, register, dowry, requests) about 233,700 words against `works/` about
+19,900, just under twelve to one, no candidate a work in twenty-seven nights.
+Read tonight, the first session since it was written.*
+
+Night 07's meter (above) cut the boot and the standing procedures to a
+deviations-only form and left the working body of a night's record — the
+front-by-front account of the material fronts — uncapped. That body is most of
+the twelve-to-one: fifty-eight records mostly telling the same two data fronts
+again at full length, the numbers already sitting, checkable, in the
+committed JSON the telling was re-deriving.
+
+**The form, from tonight.** A front unchanged in kind from its last telling is
+one sentence naming what changed and its evidence path, not the standing
+procedure or the joined figures re-derived in prose — the committed file
+already carries those, structured and checkable. A finding is stated once, at
+the size the finding needs. **A night that advances no work owes a line saying
+so, not an essay about having sat down** — the dowry's own words. T4's failure
+criterion is unchanged: detours, abandonments and changes of direction are
+still logged as they occur; this cuts the standing account of unchanged
+routine, not the following-journal's discipline of following.
+
+**Applied tonight, as its own evidence.** This is the first record written to
+the cut form. Its length against night 26's (`nights/52-twenty-sixth-night.md`,
+~200 lines) is the pass's own diff — no separate demonstration is owed beyond
+the record that carries it.
+
+*Adversarial read, before first use.* The cut trades a night record legible in
+prose for one legible, on a front's routine nights, only by opening the file it
+now merely points to. Accepted on two grounds: the committed files were always
+the ground truth (§ this document, passim — "where the record and a consulted
+passage disagree, the passage wins" is the carry's law and applies here by the
+same reasoning), and the surface condition below already carries the found
+figures out to where a visitor meets them without opening any file — the night
+record was never that reader's door. Whether the cut goes too far is exactly
+the question the founder's reading of 2026-10-14 answers against this record;
+named here so the balance cannot call it a surprise.

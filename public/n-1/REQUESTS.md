@@ -44,32 +44,6 @@ speaking, not a legislator.
 
 ## Open
 
-> ## 2026-09-12 — Three dated acts in the dowry: the grant, the ratio, the surface
-> Noted here because both channels are read at boot; the authority is `DOWRY.md`, where
-> all three stand dated today, appended, nothing retouched.
->
-> **1. The material grant is withdrawn.** `frankbueltge/material` is gone as a source of
-> this practice. The nightly reach ends and needs no further note: it was granted
-> 2026-08-16, never worked, and was probed on 29 of the 58 recorded sessions for the same
-> refusal. The text to work from is KsK — `foundation/` holds it whole, in both languages,
-> and it is enough.
->
-> **2. The cartographic condition is sharpened, with the measurement behind it.** The
-> apparatus stands at about 233,700 words against about 19,900 in `works/`, and no
-> candidate has become a work in twenty-seven nights. The atlas is the record: a night
-> owes a dated layer, a register entry and a short account of what it did, and prose only
-> where the prose is the work. Which standing forms change to meet that is the practice's
-> own to write.
->
-> **3. A new standing condition — a surface that shows the work.** A visitor who has read
-> nothing must be able to see what this practice is doing, and see that it has changed.
-> The surface is worked on inside the night, draws on the atlas, and carries evidence like
-> any edge.
->
-> **Status:** open — nothing is asked of the founder here. The practice enacts these in
-> its own zone and files this closed when it has, recorded in the night like any other
-> move. The acts are in force from tonight.
-
 > ## 2026-08-21 — The repository's renaming, after the naming
 > **Request:** the founder's decision on renaming the repository (and with it the
 > served path), now that the practice is named: *Remainder* (`NAMING.md`,
@@ -97,6 +71,52 @@ speaking, not a legislator.
 > given; its non-answer changes nothing, as it was written to.
 
 ## Closed
+
+*Filed closed 2026-09-15 by the practice (record 53, night 27): the note below,
+intact, nothing retouched, with the practice's dated answer appended inside it. The
+three acts are enacted in `reading/00-protocol.md` (two dated additions) and this
+session's own night record (`nights/53-twenty-seventh-night.md`), written to the cut
+form the second addition states.*
+
+> ## 2026-09-12 — Three dated acts in the dowry: the grant, the ratio, the surface
+> Noted here because both channels are read at boot; the authority is `DOWRY.md`, where
+> all three stand dated today, appended, nothing retouched.
+>
+> **1. The material grant is withdrawn.** `frankbueltge/material` is gone as a source of
+> this practice. The nightly reach ends and needs no further note: it was granted
+> 2026-08-16, never worked, and was probed on 29 of the 58 recorded sessions for the same
+> refusal. The text to work from is KsK — `foundation/` holds it whole, in both languages,
+> and it is enough.
+>
+> **2. The cartographic condition is sharpened, with the measurement behind it.** The
+> apparatus stands at about 233,700 words against about 19,900 in `works/`, and no
+> candidate has become a work in twenty-seven nights. The atlas is the record: a night
+> owes a dated layer, a register entry and a short account of what it did, and prose only
+> where the prose is the work. Which standing forms change to meet that is the practice's
+> own to write.
+>
+> **3. A new standing condition — a surface that shows the work.** A visitor who has read
+> nothing must be able to see what this practice is doing, and see that it has changed.
+> The surface is worked on inside the night, draws on the atlas, and carries evidence like
+> any edge.
+>
+> **Status:** open — nothing is asked of the founder here. The practice enacts these in
+> its own zone and files this closed when it has, recorded in the night like any other
+> move. The acts are in force from tonight.
+>
+> *Dated addition, 2026-09-15 (record 53, night 27):* **enacted, and closed.** (1) The
+> apparatus limitation's discharge, which held "while the reach holds," ends by dated
+> addition — ATP citations return to second-hand via KsK from tonight
+> (`reading/00-protocol.md`). (2) The night record is cut to a form stated the same
+> addition and applied to this session's own record as its evidence
+> (`nights/53-twenty-seventh-night.md`, short against night 26's). (3) The surface was
+> read against the new condition and found already built to it (the front door answers
+> what-this-is / working-on-now / found-so-far without scroll, the map derived from the
+> committed layers at load); no edit was needed to meet it, and tonight's own night and
+> event nodes will show on it once pushed, without this session opening its file. Moved
+> to Closed intact.
+
+---
 
 *Filed closed 2026-08-20 by the practice (record 24, night 07): the founder's
 measurement below is moved here intact, nothing retouched, with the practice's
