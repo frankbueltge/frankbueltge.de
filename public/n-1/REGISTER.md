@@ -3549,12 +3549,41 @@ commits pushed to `main` (0427ee9..c0589f9); this addendum follows on its own.
   re-derived against the calendar by hand. The word-count figures in the
   founder's own act are his, cited, not this session's measurement.
 - **Verification figures:** `python3 atlas/validate.py`, run after the merge
-  and the node-id correction — figures in this session's own atlas layer and
-  re-confirmed below. No render check: neither work's page nor the front door
-  was modified by this session's own changes.
+  and the node-id correction — 57 layers, 157 nodes, 432 edges, every edge
+  evidenced. Render check run after all, once the merge landed night 27's
+  `reading/00-protocol.md` changes (unrelated to any page template, but
+  checked rather than assumed): `render-check.js` — 8/8 green, both
+  geometries (1440×900, 390×844), zero page/console errors, no horizontal
+  overflow; the second work's structural counts unchanged (53 glyphs, one
+  seam, 2 unwritten, 25 re-said lines) confirming tonight's merge disturbed
+  nothing rendered.
 - **Outputs:** `material/night-sky/2026-09-16-neighbours-recheck/`,
   `material/ct-logs/2026-09-16-neighbours-recheck/`; dated addenda to
   `works/two-nights-deep/CANDIDATE.md` (§9) and
   `works/below-the-threshold/CANDIDATE.md` (§7); night 27's real work landed
   via the merge of pull request `#3`; `nights/54-twenty-eighth-night.md`,
-  this entry, atlas layer `atlas/layers/2026-09-16.json` (node id corrected).
+  this entry, atlas layer `atlas/layers/2026-09-16.json` (node id corrected);
+  a same-session fix commit (`f9496bd`) after the night record was found
+  staged with its pre-correction text (see the night record and this entry's
+  own deviations).
+- **Door check, after the push:** the canonical door
+  (<https://frankbueltge.de/n-1/>) answered HTTP 200 at 01:20:02Z, right after
+  the merge commit settled, and again at 01:40:59Z; the sources guard ran
+  green on the night's final head commit (run 76 on `main`, `f9496bd`,
+  concluded 01:21:18Z per the platform's own timestamp). Mirror watch kept
+  tonight, against tonight's own layer (`atlas/layers/2026-09-16.json`)
+  rather than the homepage, which can answer 200 while still serving a
+  stale copy: probed once a minute from 01:20:35Z, twenty probes, every one
+  logged to the second (`/tmp/mirror_watch.sh`, run in the session's own
+  background, output kept in this session's transcript) — **not served
+  within the twenty-minute bound**, a 404 at every probe through 01:39:45Z,
+  matching night 25's precedent no-show rather than the recent run of
+  in-bound arrivals (~8.3, ~17.6, ~6.9, ~26.4, ~25.8, ~23, ~6.0, ~42.2,
+  ~38.6, ~31, ~31 minutes on the eleven watches before that no-show, and
+  ~8.3 the one after it, night 26). Two candidate explanations, neither
+  confirmed: three pushes this session in quick succession (01:19:33Z,
+  01:19:55Z, 01:21:11Z by the platform's push timestamps) may have reset the
+  mirror's three-minutes-of-stillness trigger against itself each time; or
+  the no-show is simply the mirror's known irregular face, recurring rather
+  than cured. Measured, not interpreted; the matter the founder's alone
+  (`DOWRY.md` gift 3 as corrected 2026-08-28).

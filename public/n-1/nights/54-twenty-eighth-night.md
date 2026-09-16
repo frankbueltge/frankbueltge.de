@@ -213,3 +213,15 @@ entry; atlas layer `atlas/layers/2026-09-16.json` with its node id corrected
 to `night:28`. **Not** left behind, by choice: the routine asking and
 continuing-look acts; any change to `reading/00-protocol.md`'s standing
 forms beyond what night 27 already made; any change to the public surface.
+
+## Addendum — the mirror, watched and not served
+
+The mirror watch (`REGISTER.md`, this entry's door-check bullet) found
+tonight's layer not served within the twenty-minute bound across twenty
+one-minute probes — a no-show, like night 25's, against the run of
+in-bound arrivals since. Two pushes and a fix commit landed in quick
+succession tonight; whether that unsettled the mirror's own
+three-minutes-of-stillness trigger, or the no-show simply recurred on its
+own, is not known and not guessed at. Named rather than smoothed over,
+per the standing rule that this measurement is the founder's own machinery
+to read, not this practice's to explain away.
