@@ -830,3 +830,85 @@ field, `phases` is 3 against 4 and `epis` 3 against 4.
 **Disputed:** no. If the second objection is held to be decisive — that a blind
 check is the practice's own doing end to end — this entry falls and the register
 stands at seven. **The register stands at eight.**
+
+---
+
+## entry 9 — 2026-09-16, session 30: the record's own size refused the measurement, and the instrument changed rather than the population
+
+**What arrived.** Session 29 left session 19's jolt-and-drift claim named as the
+last of this work's two ordering claims still resting on two events, and said
+what running it would need: version *pairs* across a population, not last
+versions. The rule was written
+(`works/arrival/population/jolts.py`), it reproduced session 19's control
+exactly, and then the population refused it — not slowly, but at all.
+
+Session 19's rule reads a felt version the way `build.py` reads one, from the
+published geojson. Summed over the 249 felt versions of `nc75382936` alone, that
+geojson totals **502 082 658 bytes** — half a gigabyte for one of 180 events,
+against a per-session writable allowance that is not a fraction of that, and
+against a clock. A first serial pass measured **143 of the population's 5 907
+transitions in fifteen minutes**, which puts the whole at about ten hours. The
+measurement as session 19 specified it does not exist at this scale. Nothing
+about that was foreseeable from session 19's two events, whose whole published
+history is 123 versions of a few hundred kilobytes.
+
+**What it interrupted.** The session's principal work, at the point where the
+rule had just passed its control and the only thing left was to run it.
+
+**What changed downstream, in the instrument and not in the claim.**
+
+1. **The rule reads a different published file.** The same three fields session
+   19's claim is about — the geocoded box, the intensity, the reporter count —
+   are published by the same product as `cdi_geo_1km.txt` and `cdi_geo.txt`, at
+   about a ninth of the size. This is a divergence from "the fields `build.py`
+   reads", so it is not assumed: `jolts.py --verify-grid` reads the text and the
+   geojson of the last version of every event against each other, and the
+   disagreement count is printed with the result and quoted in
+   `ledger/2026-09-16-session-30-what-moved-while-no-one-was-reading.md`.
+2. **The rule fetches through a window.** Almost all of the ten hours was waiting
+   on a request rather than computing, so eight requests stand in flight at once
+   and are consumed strictly in published order — the arithmetic of a serial
+   read, with only the waiting overlapped. The control was re-run through the
+   window and returns the same figures digit for digit, which is how this
+   practice now says that a change to an instrument was not a change to a
+   measurement.
+
+Both changes are written into the file's own docstring, under the heading of
+what the population forced, so that the next session meets the reason and not
+only the code.
+
+**The objections against entering this, stated before they are answered.**
+
+*First*: a large file is not an accident. It is the ordinary size of a public
+record and anyone could have looked it up before writing the rule.
+
+*Second*: what is registered is an optimization — a faster fetch and a smaller
+file — which is exactly the domesticated contingency the standing filter
+excludes.
+
+*Third*: nothing about the claim changed, so nothing was demonstrably changed at
+all.
+
+**What the practice offers against them.** To the first: it is conceded that the
+size was lookup-able and was not looked up, and that is the shape of most
+material resistance — available in principle, met in fact. What could not have
+been looked up is that the refusal falls where it does: not on the two events the
+claim was made on, not on the population's count, but on the one product the
+claim happens to need every version of. To the second: an optimization chosen
+from a menu is not this. The instrument had to stop reading the file the work is
+drawn from and start reading a second published file, and then prove the two
+agree — that is a change in what the measurement is made of, and it carries a
+new check that did not exist this morning. To the third: the claim is unchanged
+and the entry claims nothing about the claim. It claims that **a rule which
+passed its control could not be run**, and that what this practice could measure
+about its own past work was decided by the size of someone else's record.
+
+**Standing filter.** Not domesticated contingency: nothing stochastic, nothing
+sampled, no variation produced in order to be registered. Re-runnable — sum the
+`dyfi_geo_1km.geojson` content lengths over the `dyfi` products of
+`nc75382936` with `includesuperseded=true`, and run `jolts.py --workers 1`
+against a stopwatch.
+
+**Disputed:** no. If the second objection is held to be decisive — that reading a
+smaller file and fetching in parallel is engineering and nothing else — this
+entry falls and the register stands at eight. **The register stands at nine.**

@@ -943,3 +943,70 @@ two of 2026-09-06, one of 2026-09-12 — are unanswered and are not restated her
 either.
 
 Nothing has left this repository and nothing will without a dated go-ahead here.
+
+
+## entry — 2026-09-16, session 30 (Arch) — four of the six records moved in the three days since the last session, a guard fired differently for the first time, and a finding of 2026-08-31 meets its population
+
+Notification only. **No question is asked in this entry**, and nothing below says
+what any version of the work shows; that distinction was drawn on 2026-08-25 and
+is kept.
+
+**1. The candidate is now `works/arrival/iteration-19/`**, with six built
+instances. If a reception probe is being arranged, arrange it on 19. The
+candidate has moved sixteen times since the version you saw.
+
+**2. Two days are missing and are not explained.** There is no session of
+2026-09-14 and none of 2026-09-15, and this practice cannot say why. They join
+2026-08-27, 2026-09-02, 2026-09-10 and 2026-09-11: **six days of this window —
+one day in five — are unclassified**, and all six go to the balance in those
+words. The session floor of 25 was reached on 2026-09-07 and this is the
+thirtieth dated protocol, so the count is not at risk. The cadence is, and the
+pre-registration binds the calendar as well as the count.
+
+**3. Four of the six records this work is built on moved while nobody was
+reading them.** The standing check that compares a build made today against the
+committed one has never returned four before; it returned two on 2026-09-12 and
+none on 2026-09-13. One of the four moved its epicentre — the point every mark
+below the axis is measured from — by 3.8 km, three weeks after the event. Two
+moved only in how many people had answered. One published a new version of its
+instrument record under the other network's name.
+
+**And a guard fired differently for the first time since guards were given a
+file.** On 2026-09-12 this practice built a channel so that a guard firing would
+survive the terminal it fired in. Today that file said `4` where it had said `3`
+for two sessions: a fourth version now exists at which two honest readings of
+the same published figure disagree. Nobody had to be watching for that to be
+found, which is the whole of what the channel was for.
+
+**4. A finding this practice published on 2026-08-31, from two events, has been
+run against its population.** What it held and what it lost is in
+`record/2026-09-16-session-30.md` and
+`ledger/2026-09-16-session-30-what-moved-while-no-one-was-reading.md`, and is
+deliberately not repeated here.
+
+Two things about it are worth this entry rather than the record. The first: the
+rule, written down for the first time, **reproduced the 2026-08-31 figures
+exactly** and then showed that the protocol of that date had counted the same
+thing two different ways in two adjacent tables and told a reader neither. That
+was not findable by re-reading; it needed the rule to exist as a file. The
+second: one of the four things published that day **could not have come out any
+other way**. It is arithmetic, not evidence, and it stood in this record as
+evidence for sixteen days. It is withdrawn from the evidence and the finding it
+was offered in support of survives on its other grounds.
+
+**5. The instrument had to change, and the record is why.** The felt history of
+one event in the population is half a gigabyte of the file this work reads. The
+measurement as it was specified in 2026-08-31 cannot be run over a population at
+that size — not slowly, at all. What this practice did about it, and the check
+it wrote to prove the substitute honest (which promptly failed, for a reason
+that turned out to be the check's own), is in the ledger.
+
+**6. The reception probe is still blocked**, on day 25 of 30, and the request of
+2026-08-25 stands and is not repeated here. The three requests in `queries.md` —
+two of 2026-09-06, one of 2026-09-12 — are unanswered for the seventh and third
+session and are not restated here either. Six days remain before window close,
+and the consequence recorded since 2026-08-25 is unchanged: if the probe does
+not run, the work triad cannot hold on any work, and by this window's own
+definitions that is failed, not inconclusive.
+
+Nothing has left this repository and nothing will without a dated go-ahead here.

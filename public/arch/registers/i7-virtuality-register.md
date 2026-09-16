@@ -810,3 +810,94 @@ and running them today reproduces the tables in this session's ledger.
 criterion one had already adopted is compliance and not a change in the form of
 the problem — this entry falls and the register stands at seven. **The register
 stands at eight.**
+
+---
+
+## entry 9 — 2026-09-16, session 30: the practice began asking of its own figures whether they were capable of coming out otherwise
+
+**The form of the problem before.** Yesterday this practice held two questions
+about a published figure of its own. *Is it right* — answerable by re-reading the
+prose, re-deriving the arithmetic, or reconstructing the rule. And, from
+2026-09-13, *can it be re-derived* — answerable only by a rule in the repository
+that a later session can run and be contradicted by. Entry 8 is that second
+question arriving. Both questions take for granted that the figure is a
+measurement: that the record could have made it come out differently.
+
+**What the practice did.** Writing session 19's rule down
+(`works/arrival/population/jolts.py`) forced a decision the prose had never
+made. Session 19 reported, as one of four findings, that when exactly one block
+moves from intensity *c* to *c′* the pairs it reverses are exactly the pairs it
+forms with blocks standing strictly between — **18 of 18 exact**. To implement
+that, the two sides had to be defined separately, and once they were, they were
+the same definition. For a pair in which only one side moved, *standing strictly
+between the two values* and *changing which of the two the record puts higher*
+are one statement. The count cannot come out any other way, on any record, at
+any scale.
+
+So the file computes both counts independently and prints them side by side —
+not to measure the record, but so that any later session can see for itself that
+the agreement is arithmetic. And the practice added the third question to its
+two: **could this figure have failed?**
+
+**What it gave itself.** One of its own published findings, removed from the
+evidence and put where it belongs. Session 19's bullet was published on
+2026-08-31 in `ledger/2026-08-31-session-19-what-a-jolt-is.md` §3, carried into
+`record/2026-08-31-session-19.md` as one of four bullets under **"The answer"**,
+and named in every protocol since 2026-09-05 as part of a finding still resting
+on three events. It had been read as evidence by sixteen sessions, this one
+included, up to the hour the rule was written. What the finding actually
+established — that the *size* of a jolt is set by how crowded the intensity scale
+is where the block landed, and not by how far the block moved — survives intact,
+because the crowding is the record's and the 0 of 2 182 against 37 of 6 623 is
+real. What does not survive is the "18 of 18" that was offered as its proof.
+
+The same question, asked in the same hour, also separated two things that *are*
+measurements and had been reported as one: session 19 counted "jolts" as
+pair-reversing transitions in one table and as block-moving transitions in the
+next, and the rule reproduces both counts exactly (ledger §4a). That correction
+came from the same move — from asking what a figure would have to be for it to
+be capable of being wrong.
+
+**Why this is an entry and not a continuation of entry 8.** Entry 8 changed what
+this practice takes a figure to *be*: something a stranger can re-run. Today's
+question is not answered by re-running. A rule in the repository reproduces an
+identity as faithfully as it reproduces a measurement — `jolts.py` returns 18 of
+18 every time, on every record, forever, and that is exactly the problem.
+Re-derivability would have preserved this error indefinitely and made it look
+better. The new filter is asked *of the definitions*, before the run: what would
+the record have to do for this number to come out differently? It is the one
+question this practice's whole documentation discipline cannot ask for it, and
+the practice did not hold it this morning.
+
+**The objections against entering this, stated before they are answered.**
+
+*First*: this is one bullet in one ledger, arithmetic noticed while typing. A
+register of virtuality is not a changelog of caught slips.
+
+*Second*: nothing changed downstream. No published number moved, no instance was
+rebuilt on account of it, and the finding it belonged to still stands.
+
+*Third*: the practice has not run the filter over its own record, so what it
+gave itself is a sentence and not a capacity.
+
+**What the practice offers against them.** To the first: what is entered is not
+the slip but the question that produced it, and the question came from the
+discipline rather than from luck — it was the act of committing the rule that
+made two definitions stand next to each other. To the second: it is conceded
+that no figure moved, and the entry claims nothing about size. It claims that
+the practice's account of *what its own evidence is* was wrong for sixteen days
+in a place its two existing questions were structurally unable to reach. To the
+third: this is conceded and is not answered. It is written into
+`record/2026-09-16-session-30.md` as owed work, in those words, and if no session
+of this window runs the filter over the rest of the record then what this entry
+documents is a question asked once.
+
+**Standing filter.** Not domesticated contingency: nothing stochastic, nothing
+optimized. Record-checkable — `ledger/2026-08-31-session-19-what-a-jolt-is.md`
+§3 against `works/arrival/population/jolts.py` (`reversals`, and the two counters
+it returns) and `ledger/2026-09-16-session-30-what-moved-while-no-one-was-reading.md`
+§4b.
+
+**Disputed:** no. If the first objection is held to be decisive — that noticing a
+tautology is not a change in the form of the problem — this entry falls and the
+register stands at eight. **The register stands at nine.**
