@@ -3398,3 +3398,87 @@ direction of 2026-09-03: that this session happen between cycles, its question, 
 arms, the exclusion of browser impersonation, and the handling of the kill condition that fired.
 
 **Status:** report · no answer required · nothing owed from your side
+
+---
+
+## Response — 2026-09-16 (session 162) — we went through the doors we had only knocked on, and the inside is better than we predicted
+
+**Where it is.** `artifacts/2026-09-16-an-address-is-not-an-artifact/` — a self-contained page, a
+five-minute summary, a pre-registration **committed in its own commit before the first repository
+was contacted**, `data/`, seven scripts and a `check.py` of **940 checks** that needs no network and
+was run against 13 deliberate corruptions of its own evidence, all caught.
+
+**Why a session between cycles, decided here.** Cycle 003 is presented from all three sides,
+`cycle.json` still reads cycle 3 *working*, and turning it is yours or a site session's act, never a
+practice's. This is not a sixth cycle-003 session: it takes the **counter-measurement remit**, which
+returned with cycle 003 by the terms of your decision of 2026-09-03, and it is also the session
+protocol v4 §5.3 asks for — one that works a domain this practice has never worked. The house
+register of 915 examined papers returns **zero** hits for *github*, *reproducib\**, *licen\**,
+*dependenc\**, *artifact*.
+
+**The question, and whose claim was under test — ours.** On 2026-08-31 we published how often a
+paper whose abstract advertises automating research hands a reader an address, and whether the
+address answers. That artifact's own method wrote down its limit: *it does not measure whether an
+artifact works — only whether its address answers.* Nobody had gone through the door. So we took the
+**144** code repositories it had already found and scored reachable, knocked on every one again, and
+read what is inside — a blobless partial clone, the full path list, and a fixed short list of file
+names read for their text. Eight mechanical rungs. **No rule calls a model**, deliberately: the
+nearest neighbour in aim audits repositories with language-model agents, and our own session of
+2026-09-12 recorded a delegate returning quoted sentences that do not occur in the paper it cited.
+
+**Three of six predictions refuted, and every refutation runs against our own pessimism.** Licence
+files, which we expected to be the commonest absence, are in **78.6 %** of the automation cohort —
+*above* the 73.1 % that a 2026 study reports for `LICENSE` across 10,000 popular, actively
+maintained GitHub projects. Our whole floor (code, a licence, a declared environment, a documented
+way in) is met by **64.5 %** against a prediction of under half, and **49 %** pin their dependencies
+where pinning is decidable, against a prediction of under 40 %. A practice whose remit is
+counter-measurement has an easy failure mode — assuming other people's work is thinner than it is —
+and tonight that is what we did. We would rather report it than round it off.
+
+**What is missing is not competence. It is permission.** **32 of 141** repositories hold source code
+and **no licence file anywhere in the tree** — sixteen in each cohort, the one measure on which the
+two are exactly level. Under default copyright a reader may look and may not lawfully reuse. Cycle
+001 concluded that everything we found failing sat at the handover and called it a boundary of
+**consent, not competence**. That sentence now has a number.
+
+**And a correction to our own shipped measure.** **Three of the repositories are empty** —
+`ls-remote` exits 0 and lists no branch and no tag, so the repository exists, is public, and has no
+commit to clone. Two more clone cleanly and hold only boilerplate. Session 141 defined a GitHub
+address as *reachable* when `ls-remote` returns a ref list, and **that call succeeds for a
+repository with no refs**: a probe built that way counts an empty repository as a delivered
+artifact. Filed beside the old artifact as a dated event, not patched into it.
+
+**The cohort comparison found nothing, and the page says so.** Every raw difference favours the
+automation cohort, two clear 0.05 on their own, and **none of the eight survives correction** for
+testing eight rungs at once. At 84 against 57 the smallest gap this design can detect is 14–23
+points. So: *below this instrument's resolution*, not *no difference exists*. The direction was
+spoken for in advance by genre, which is why that prediction was written to be **uninformative if
+confirmed** — and it was confirmed.
+
+**The sentence we would most like you to argue with.** Our kill condition was defective, and the
+defect is inside the sentence we wrote to repair the last one. It said: suspend every number if the
+tree step fails for over 10 % of answering doors, *including any clone with no resolvable `HEAD`*.
+It did not fire — 3 of 144. But **all three are the empty repositories**, and an empty repository
+has no `HEAD`. The line directly above it in the same file, written that same hour as the correction
+owed for 09-15's kill condition firing on its own studied effect, reads: *a kill condition must be
+able to fire only on the apparatus, never on the phenomenon.* Fifteen empties instead of three and a
+correct result would have been suspended by the rule written that hour to prevent exactly that.
+**Fifth session in six with a test firing off-target, and the first where the defect is in the
+repair.** Verdict left as written, defect filed, nothing patched. Before any contact we also ran
+every rule against 69 hand-made cases and then broke each rule on purpose 19 times: all 19
+breakages were caught and **four real problems** were found while there was still nothing to be
+wrong about. None of them was the sentence that mattered. We do not think there is a mechanical fix,
+and we would still rather be wrong about that.
+
+**Decided here, under your standing rule of 2026-07-17**, nothing in this file being newer than your
+direction of 2026-09-03: that this session happen between cycles; its question; the population
+inherited unrepaired from session 141 with both of that session's disclosed defects carried and
+stated; the exclusion of the 49 non-GitHub addresses; the model-free instrument; and the handling of
+the defective kill condition.
+
+**One thing you may want to know, not a request.** The arXiv API refused this session three times —
+one 60-second timeout, then two 429s — while arxiv.org answered 200 throughout, from a container
+built tonight, so the rate limit is not one we set. That is 2026-09-14 reproduced, and it is filed
+against our open question 46 rather than asked of you.
+
+**Status:** report · no answer required · nothing owed from your side
