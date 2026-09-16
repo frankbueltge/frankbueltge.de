@@ -1,0 +1,600 @@
+{
+ "date": "2026-09-16",
+ "prior_date": "2026-09-15",
+ "first_date": "2026-09-14",
+ "prior_sha256": "f5a440c9741e5785e38e88bb25e276766bb4927fade2154f8dcd48478d7a9cd0",
+ "first_sha256": "b30e2557c1f1487404664356b2795f178f3e7a7fb06e6702c542c601be7186a8",
+ "feeds": [
+  {
+   "key": "atlas",
+   "label": "Atlas of data art",
+   "url": "https://frankbueltge.de/atlas/werke.json",
+   "sha256": "a033aef59a4a0d397de02f57cd7db50bd44b075fe1756c6d3490355528c64a61",
+   "n": 521,
+   "declared_count": 521,
+   "columns": 13,
+   "schema": [
+    "title",
+    "artist",
+    "year",
+    "venue_prize",
+    "clusters",
+    "axis_pole",
+    "form",
+    "medium_class",
+    "lab_renderable",
+    "decisive_move",
+    "source_url",
+    "verify_status",
+    "curator_note"
+   ],
+   "crossreads": {}
+  },
+  {
+   "key": "papers",
+   "label": "Papers register (index form)",
+   "url": "https://frankbueltge.de/papers/index.json",
+   "sha256": "9278f1e80589cbe2349a8dcff20589e7519d04e06509c38cff17018afe164fb0",
+   "n": 915,
+   "declared_count": 915,
+   "columns": 12,
+   "schema": [
+    "id",
+    "titel",
+    "urheber",
+    "jahr",
+    "ort",
+    "kennung",
+    "url",
+    "frei_zugaenglich",
+    "felder",
+    "urteil",
+    "verify_status",
+    "zitiert_von"
+   ],
+   "crossreads": {
+    "arxiv_entries": 40,
+    "arxiv_without_venue": 21,
+    "arxiv_with_venue": 19,
+    "ids_shared": 1,
+    "entries_on_shared_ids": 3,
+    "max_entries_on_one_id": 3
+   }
+  },
+  {
+   "key": "datasets",
+   "label": "Register of data sources called",
+   "url": "https://frankbueltge.de/datasets/register.json",
+   "sha256": "061d22bdd94463f2ec901f248a0316fbb7d60c71c26338bde37892fba2f5a5d7",
+   "n": 82,
+   "declared_count": 82,
+   "columns": 17,
+   "schema": [
+    "id",
+    "titel",
+    "host",
+    "adressen",
+    "zugriff_url",
+    "geprueft",
+    "pruef_status",
+    "pruef_vermerk",
+    "zugang_gesperrt",
+    "nur_vorlage",
+    "relevanz",
+    "relevanz_herkunft",
+    "weg",
+    "aufnahmegrund",
+    "fundstellen",
+    "benutzt_von",
+    "verify_status"
+   ],
+   "crossreads": {
+    "blocked": 13
+   }
+  }
+ ],
+ "turned_away": {
+  "url": "https://frankbueltge.de/papers/register.json",
+  "sha256": "e6c7e201a4ffdfd346bc384886027d9bd70a90d0fe1b7b865e72e717829c80f1",
+  "count": 915,
+  "rejected_count": 1,
+  "rejected_grounds": {
+   "kein-zitat": 1
+  },
+  "rejected_dates": [
+   "2026-07-30"
+  ]
+ },
+ "totals": {
+  "now": {
+   "R1": 2292,
+   "R2": 1495,
+   "R4": 1712,
+   "R5": 34,
+   "R3": 14,
+   "slots": 19147,
+   "n": 1518,
+   "R6": 0.11970543688306262
+  },
+  "prior": {
+   "R1": 2281,
+   "R2": 1487,
+   "R4": 1701,
+   "R5": 34,
+   "R3": 14,
+   "slots": 19051,
+   "n": 1510,
+   "R6": 0.11973124770353262
+  },
+  "first": {
+   "R1": 2489,
+   "R2": 1641,
+   "R4": 1909,
+   "R5": 34,
+   "R3": 14,
+   "slots": 20935,
+   "n": 1667,
+   "R6": 0.11889180797707188
+  }
+ },
+ "membership": {
+  "atlas": {
+   "was": 521,
+   "now": 521,
+   "left": 0,
+   "arrived": 0,
+   "survived": 521,
+   "left_narrow": 0,
+   "arrived_narrow": 0,
+   "edits": 0,
+   "arrivals_matching_prior_id": 0,
+   "gross": 0,
+   "net": 0
+  },
+  "papers": {
+   "was": 907,
+   "now": 915,
+   "left": 62,
+   "arrived": 70,
+   "survived": 845,
+   "left_narrow": 57,
+   "arrived_narrow": 66,
+   "edits": 5,
+   "arrivals_matching_prior_id": 4,
+   "gross": 132,
+   "net": 8
+  },
+  "datasets": {
+   "was": 82,
+   "now": 82,
+   "left": 0,
+   "arrived": 0,
+   "survived": 82,
+   "left_narrow": 0,
+   "arrived_narrow": 0,
+   "edits": 0,
+   "arrivals_matching_prior_id": 0,
+   "gross": 0,
+   "net": 0
+  },
+  "all": {
+   "was": 1510,
+   "now": 1518,
+   "left": 62,
+   "arrived": 70,
+   "survived": 1448,
+   "left_narrow": 57,
+   "arrived_narrow": 66,
+   "edits": 5,
+   "gross": 132,
+   "net": 8,
+   "arrivals_matching_prior_id": 4
+  }
+ },
+ "series": [
+  {
+   "id": "R1",
+   "name": "every empty slot",
+   "unit": "slots",
+   "kind": "count",
+   "klass": "distributive",
+   "rule": "One hole per (entry, field) pair whose value is absent, null, an empty string, an empty list or an empty object.",
+   "why": "A sum over records. Gray et al. call F distributive when the whole can be recovered from the parts by one function — here SUM, and the split is an identity, not an estimate.",
+   "was": 2281,
+   "now": 2292,
+   "delta": 11,
+   "arrived": 130,
+   "left": 119,
+   "survivors": 0,
+   "residual": 0,
+   "exact": true,
+   "admits": true,
+   "first": 2489,
+   "prior_delta": -208,
+   "per": {
+    "atlas": {
+     "was": 526,
+     "now": 526,
+     "delta": 0,
+     "arrived": 0,
+     "left": 0,
+     "survivors": 0,
+     "residual": 0
+    },
+    "papers": {
+     "was": 1694,
+     "now": 1705,
+     "delta": 11,
+     "arrived": 130,
+     "left": 119,
+     "survivors": 0,
+     "residual": 0
+    },
+    "datasets": {
+     "was": 61,
+     "now": 61,
+     "delta": 0,
+     "arrived": 0,
+     "left": 0,
+     "survivors": 0,
+     "residual": 0
+    }
+   }
+  },
+  {
+   "id": "R2",
+   "name": "every entry carrying a gap",
+   "unit": "entries",
+   "kind": "count",
+   "klass": "distributive",
+   "rule": "One hole per entry with at least one empty slot, however many it has.",
+   "why": "A count over records, and COUNT is the trichotomy's own example of a distributive function whose G is SUM.",
+   "was": 1487,
+   "now": 1495,
+   "delta": 8,
+   "arrived": 70,
+   "left": 62,
+   "survivors": 0,
+   "residual": 0,
+   "exact": true,
+   "admits": true,
+   "first": 1641,
+   "prior_delta": -154,
+   "per": {
+    "atlas": {
+     "was": 519,
+     "now": 519,
+     "delta": 0,
+     "arrived": 0,
+     "left": 0,
+     "survivors": 0,
+     "residual": 0
+    },
+    "papers": {
+     "was": 907,
+     "now": 915,
+     "delta": 8,
+     "arrived": 70,
+     "left": 62,
+     "survivors": 0,
+     "residual": 0
+    },
+    "datasets": {
+     "was": 61,
+     "now": 61,
+     "delta": 0,
+     "arrived": 0,
+     "left": 0,
+     "survivors": 0,
+     "residual": 0
+    }
+   }
+  },
+  {
+   "id": "R4",
+   "name": "slots the record shows are gaps",
+   "unit": "slots",
+   "kind": "count",
+   "klass": "distributive",
+   "rule": "R1 less every empty cell the record itself explains: the datasets register's success convention and the atlas's optional curator's note.",
+   "why": "Session 6's finding, kept as a reading. Subtracting a per-row quantity from a per-row quantity leaves a sum over records, so the class does not change.",
+   "was": 1701,
+   "now": 1712,
+   "delta": 11,
+   "arrived": 130,
+   "left": 119,
+   "survivors": 0,
+   "residual": 0,
+   "exact": true,
+   "admits": true,
+   "first": 1909,
+   "prior_delta": -208,
+   "per": {
+    "atlas": {
+     "was": 7,
+     "now": 7,
+     "delta": 0,
+     "arrived": 0,
+     "left": 0,
+     "survivors": 0,
+     "residual": 0
+    },
+    "papers": {
+     "was": 1694,
+     "now": 1705,
+     "delta": 11,
+     "arrived": 130,
+     "left": 119,
+     "survivors": 0,
+     "residual": 0
+    },
+    "datasets": {
+     "was": 0,
+     "now": 0,
+     "delta": 0,
+     "arrived": 0,
+     "left": 0,
+     "survivors": 0,
+     "residual": 0
+    }
+   }
+  },
+  {
+   "id": "R5",
+   "name": "every distinct shape of gap",
+   "unit": "shape-slots",
+   "kind": "count",
+   "klass": "holistic",
+   "rule": "One hole per (shape, field): entries empty in exactly the same fields are one shape, counted once however many entries carry it.",
+   "why": "To combine two parts you need their shape sets, and no fixed-size summary of a part suffices — the paper's definition of holistic. The split is arithmetic with no referent, and here it does not even balance.",
+   "was": 34,
+   "now": 34,
+   "delta": 0,
+   "arrived": 17,
+   "left": 18,
+   "survivors": 0,
+   "residual": 1,
+   "exact": false,
+   "admits": false,
+   "first": 34,
+   "prior_delta": 0,
+   "per": {
+    "atlas": {
+     "was": 3,
+     "now": 3,
+     "delta": 0,
+     "arrived": 0,
+     "left": 0,
+     "survivors": 0,
+     "residual": 0
+    },
+    "papers": {
+     "was": 29,
+     "now": 29,
+     "delta": 0,
+     "arrived": 17,
+     "left": 18,
+     "survivors": 0,
+     "residual": 1
+    },
+    "datasets": {
+     "was": 2,
+     "now": 2,
+     "delta": 0,
+     "arrived": 0,
+     "left": 0,
+     "survivors": 0,
+     "residual": 0
+    }
+   }
+  },
+  {
+   "id": "R3",
+   "name": "every distinct shape, once",
+   "unit": "shapes",
+   "kind": "count",
+   "klass": "holistic",
+   "rule": "One hole per distinct set of empty fields occurring in the record.",
+   "why": "Holistic for the same reason as R5, and the more dangerous of the two: tonight its split balances exactly and both of its terms are false.",
+   "was": 14,
+   "now": 14,
+   "delta": 0,
+   "arrived": 7,
+   "left": 7,
+   "survivors": 0,
+   "residual": 0,
+   "exact": true,
+   "admits": false,
+   "first": 14,
+   "prior_delta": 0,
+   "per": {
+    "atlas": {
+     "was": 2,
+     "now": 2,
+     "delta": 0,
+     "arrived": 0,
+     "left": 0,
+     "survivors": 0,
+     "residual": 0
+    },
+    "papers": {
+     "was": 10,
+     "now": 10,
+     "delta": 0,
+     "arrived": 7,
+     "left": 7,
+     "survivors": 0,
+     "residual": 0
+    },
+    "datasets": {
+     "was": 2,
+     "now": 2,
+     "delta": 0,
+     "arrived": 0,
+     "left": 0,
+     "survivors": 0,
+     "residual": 0
+    }
+   }
+  },
+  {
+   "id": "R6",
+   "name": "the share of slots left empty",
+   "unit": "share",
+   "kind": "rate",
+   "klass": "algebraic",
+   "rule": "Empty slots divided by all slots the schema declares.",
+   "why": "A ratio of two sums. The paper's algebraic class: a part can be summarised, but only by a tuple — here (empty, declared) — never by the share itself. Split as one number it is nonsense; split as the pair it is exact.",
+   "was": 0.11973124770353262,
+   "now": 0.11970543688306262,
+   "delta": -2.5810820469998608e-05,
+   "arrived": 0.15476190476190477,
+   "left": 0.15994623655913978,
+   "survivors": 0.0,
+   "residual": 0.005158520976765016,
+   "exact": false,
+   "pair": {
+    "arrived": [
+     130,
+     840
+    ],
+    "left": [
+     119,
+     744
+    ],
+    "survivors_now": [
+     2162,
+     18307
+    ],
+    "survivors_was": [
+     2162,
+     18307
+    ],
+    "residual": 0.0,
+    "exact": true
+   },
+   "admits": false,
+   "first": 0.11889180797707188,
+   "prior_delta": 0.0008394397264607362,
+   "per": {
+    "atlas": {
+     "was": 0.07766130222944043,
+     "now": 0.07766130222944043,
+     "delta": 0.0,
+     "arrived": 0.0,
+     "left": 0.0,
+     "survivors": 0.0,
+     "residual": 0.0
+    },
+    "papers": {
+     "was": 0.15564130834252113,
+     "now": 0.1552823315118397,
+     "delta": -0.0003589768306814234,
+     "arrived": 0.15476190476190477,
+     "left": 0.15994623655913978,
+     "survivors": 0.0,
+     "residual": 0.004825354966553591
+    },
+    "datasets": {
+     "was": 0.04375896700143472,
+     "now": 0.04375896700143472,
+     "delta": 0.0,
+     "arrived": 0.0,
+     "left": 0.0,
+     "survivors": 0.0,
+     "residual": 0.0
+    }
+   }
+  }
+ ],
+ "shapes": {
+  "per": {
+   "atlas": {
+    "shapes_was": 2,
+    "shapes_now": 2,
+    "carried_by_departures": 0,
+    "lost_from_record": 0,
+    "brought_by_arrivals": 0,
+    "new_to_record": 0
+   },
+   "papers": {
+    "shapes_was": 10,
+    "shapes_now": 10,
+    "carried_by_departures": 7,
+    "lost_from_record": 0,
+    "brought_by_arrivals": 7,
+    "new_to_record": 0
+   },
+   "datasets": {
+    "shapes_was": 2,
+    "shapes_now": 2,
+    "carried_by_departures": 0,
+    "lost_from_record": 0,
+    "brought_by_arrivals": 0,
+    "new_to_record": 0
+   }
+  },
+  "carried_by_departures": 7,
+  "lost_from_record": 0,
+  "brought_by_arrivals": 7,
+  "new_to_record": 0
+ },
+ "repair": {
+  "records_compared": 1448,
+  "changed": 1,
+  "cells_filled": 1,
+  "cells_emptied": 1,
+  "holes_moved": 1,
+  "detail": [
+   {
+    "feed": "datasets",
+    "was": [
+     "pruef_vermerk"
+    ],
+    "now": [
+     "pruef_status"
+    ],
+    "filled": [
+     "pruef_vermerk"
+    ],
+    "emptied": [
+     "pruef_status"
+    ]
+   }
+  ]
+ },
+ "condition": {
+  "printed": "If the next session finds the 157 back, the departure was a transient pipeline state and every sentence treating it as loss is withdrawn.",
+  "verdict": "did not fire",
+  "n_first": 1064,
+  "n_now": 915,
+  "still_short": 149,
+  "hosts": {
+   "first": {
+    "doi": 716,
+    "other": 153,
+    "arxiv": 195
+   },
+   "prior": {
+    "doi": 711,
+    "other": 156,
+    "arxiv": 40
+   },
+   "now": {
+    "doi": 719,
+    "other": 156,
+    "arxiv": 40
+   }
+  },
+  "arxiv_lost": 155,
+  "arxiv_arrivals_tonight": 1,
+  "max_returned": 1
+ },
+ "outside": {
+  "authors": "Jim Gray, Surajit Chaudhuri, Adam Bosworth, Andrew Layman, Don Reichart, Murali Venkatrao, Frank Pellow, Hamid Pirahesh",
+  "title": "Data Cube: A Relational Aggregation Operator Generalizing Group-By, Cross-Tab, and Sub-Totals",
+  "where": "Data Mining and Knowledge Discovery 1(1):29–53 (1997)",
+  "read_from": "arXiv cs/0701155 (author copy of the same paper)",
+  "section": "the trichotomy of aggregate functions, pp. 10–11"
+ }
+}

@@ -3658,3 +3658,72 @@ stands unchanged beside it, and neither is urgent.
 
 **Status:** work landed · one new ask, small · the 09-13 ask still open · the 157 entries are
 reported, not diagnosed — a look on your side is worth more than a reply on mine
+
+## From the practice — 2026-09-16 — Your register's count moved by eight overnight and a hundred and thirty-two records moved behind it
+
+**For the house. No new ask; the two open ones stand, and one of them turns out to have a reason
+rather than a preference behind it.**
+
+Cycle 003 is presented on all three sides and `cycle.json` still reads cycle 3, `working`. So this
+is an eighth session in the gap, and its first duty was a condition I printed on my own page
+yesterday.
+
+**Artifact:** `window/cycle-003-session-8/` — `index.html` (self-contained: no network, no
+library, opens from a filesystem), `build.py`, `cells.json`, `data.json`, `check.py` (**376
+checks**, offline, importing nothing from the build), `tamper.py` (**eight corruptions of my own
+evidence, all caught**), `verify.mjs` (**120 checks in a real browser**, scripting on and off,
+network denied in both). `--offline` rebuilds byte-identical. Feeds read live at the addresses
+`SITE-API.md` names, never mirrored.
+
+### The condition, settled
+
+Yesterday's page said: if tonight finds the 157 entries back, the departure was a transient
+pipeline state and every sentence treating it as a loss is withdrawn. **It did not fire.** The
+papers register holds **915** tonight against 1 064 on 09-14 — still 149 short — and the cohort
+that carried the departure ran **195 → 40 → 40** across the three nights, with one entry of that
+cohort among tonight's arrivals, so at most one of the 155 came back. I state its limit rather
+than hiding it: *the 157* is a set no committed file identifies, because the night they left was
+measured before I kept an identity. Settled by count and by cohort; not entry by entry.
+
+### What I did not expect, and it is partly yours again
+
+1. **A net of +8 hides a gross of 132.** The register went 907 → 915, which reads as a register
+   that grew a little. Behind it: **62 records left and 70 arrived** — sixteen and a half
+   movements for every unit of net change. Your `rejected` list still holds one entry, dated
+   2026-07-30, so those 62 departures are again not in the record as rejections. I assert no
+   cause; what happens upstream is in neither feed. If the nightly rebuild is meant to churn a
+   fifteenth of the register every night, nothing here is wrong and this paragraph is just a
+   measurement of it.
+2. **My own headline of yesterday is narrowed on tonight's page.** "157 entries left" was itself a
+   difference of two counts — a **net**, computed by an instrument that had no identity to
+   subtract. On this feed a net understates the gross by that ratio, so the gross departure of
+   that night is not recoverable from anything anyone committed. What survives: the register is
+   149 entries shorter than on 09-14, and they did not come back.
+3. **Nothing in any of the three feeds was repaired.** Splitting each change into arrival,
+   departure and what changed inside the records present on both nights: across **1 448
+   survivors**, exactly one cell was filled and one emptied — **in the same row** (the datasets
+   register moved a hole from `pruef_vermerk` to `pruef_status`). The repair term is zero under
+   every reading, by cancellation. Every visible motion of every count is membership. A hole that
+   changes column is invisible to all six readings; only a per-record comparison sees it.
+
+**The reach outside** (§5.3): Gray, Chaudhuri, Bosworth, Layman, Reichart, Venkatrao, Pellow and
+Pirahesh, *Data Cube: A Relational Aggregation Operator Generalizing Group-By, Cross-Tab, and
+Sub-Totals*, Data Mining and Knowledge Discovery 1(1):29–53 (1997), read from arXiv cs/0701155,
+the trichotomy at pp. 10–11. Their classification of aggregate functions — distributive, algebraic,
+holistic — sorts my six readings **before any of them is measured**, and it is right in every case:
+three split exactly, the share is off by 200× the change it measures unless its denominator travels
+with it, and the two shape readings cannot be split at all. One of those two balances to the last
+unit while both of its terms are false: 7 shapes left with the departing records and **0** of them
+left the record. So a decomposition is to be trusted by the measure's class, never by its residual,
+because the failure that cancels is the one a residual test cannot see.
+
+### The asks, unchanged, one of them now with a reason
+
+**Date the denominator** (asked 09-15) is not a nicety about staleness. A share is *algebraic* in
+the sense above: a part of it can only be summarised by the pair (numerator, denominator), never by
+the share. Carrying the denominator is what the class requires, and it is the difference between a
+share that can be compared across two nights and one that cannot. The **per-entry ground
+vocabulary** (asked 09-13) stands beside it. Neither is urgent.
+
+**Status:** work landed · no new ask · both earlier asks open · the 62 departures are reported,
+not diagnosed — as with the 157, a look on your side is worth more than a reply on mine
