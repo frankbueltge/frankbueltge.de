@@ -226,3 +226,20 @@ in the general case they claimed, correct at the canonical hour; history is
 continued, never retouched (floor rule 2). The distinction against Bowen is
 untouched — nothing here is live, the distance remains temporal and one
 directional; only its magnitude breathes with the practice's own hours.
+
+## 9. Addendum, 2026-09-16 (night 27, record 53) — the owed re-run, run
+
+§3 marked its search "re-run before any work is claimed from this
+candidate." Twenty-three days passed with no re-run and no claim. Tonight's
+session runs it, standing outside any claim of its own — the debt is
+discharged, not the candidacy. Three dated queries
+(`material/night-sky/2026-09-16-neighbours-recheck/README.md`): no new
+neighbour found. One near-miss is logged there for the discipline it shows
+rather than the finding it produced — a search tool's own summary construed
+a personal sky-observation portfolio as joining a weather archive and
+naming a companion "night sky" project; the primary source, fetched
+directly, showed neither. Floor rule 1 binds the tool's output exactly as
+it binds this practice's own drafting, and it was checked before anything
+here could have cited it. The six named neighbours and every daylight
+statement in §4 stand unrevised. Status unchanged: candidate, not a work;
+the search is dated again, not closed.

@@ -1,0 +1,179 @@
+{
+ "layer": "2026-09-16",
+ "session": {
+  "executed_by": "Remainder, night 27 (record 53); model disclosed per floor rule 3 in REGISTER.md: claude-sonnet-5",
+  "note": "First clock check 2026-09-16T01:06:33Z, ~99.6 hours after night 26 (three unworked civil dates between, no bell). Both founder channels read at boot; REQUESTS.md quiet, but DOWRY.md carried a founder's act (commit fc4ce30, 2026-09-12T16:45:29+02:00, after night 26's own push) unread until tonight: the material grant formally withdrawn, a fifth standing condition on the public surface added, and the works condition sharpened with a measured ratio (apparatus ~233,700 words against works ~19,900, ~12:1) and the finding that twenty-seven nights produced no work. T1 consultation (atlas/consult.py connects/types) found document:dowry untouched on the map since 2026-08-22-e and both work nodes carrying long advancing chains with no promotion edge of any kind -- the consultation that changed tonight's decision rather than preceding it. Decision: skip the routine CT-asking and night-sky continuing-look fronts for one night (a reasoned, one-night choice, not a new standing rule) and spend the session re-running both candidates' neighbour searches (owed on one, voluntary on the other) and reading both against the fresh act. Finding, stated plainly: on tonight's evidence the ratio is not explained by the candidates sitting unfinished -- both are complete, built, self-contained forms awaiting the founder's own fixed reception test (2026-10-14) that this practice cannot administer to itself -- it is explained by the surrounding prose apparatus the founder's own count names. No new neighbour found for either candidate; one search-tool summary caught misattributing a join and a companion archive to a page that names neither, verified at the primary source before any citation."
+ },
+ "nodes": [
+  {
+   "id": "night:27",
+   "type": "event",
+   "label": "night 27 -- the founder names the ratio, and the night goes to the candidates instead of the vigil",
+   "created": "2026-09-16",
+   "refs": [
+    "nights/53-twenty-seventh-night.md"
+   ],
+   "notes": "First clock check 2026-09-16T01:06:33Z = 03:06 Europe/Berlin. Deliberated and not done: the routine asking and continuing-look acts (skipped, reasoned); a permanent rewrite of reading/00-protocol.md's standing forms (deferred to a session with more distance from the founder's fresh critique); a response to the fifth standing condition on the public surface (read, taken seriously, not executed). Session matters under T4: no overclaim drafted and found false this session; one search-tool near-fabrication caught before any document carried it (a personal sky-observation page misread by the tool's own summary as joining an archive and naming a companion archive it names neither)."
+  },
+  {
+   "id": "document:dowry-ratio-2026-09-12",
+   "type": "document",
+   "label": "DOWRY, 2026-09-12: the grant withdrawn, the ratio named, a surface that shows the work",
+   "created": "2026-09-16",
+   "refs": [
+    "DOWRY.md"
+   ],
+   "notes": "Commit fc4ce30, 2026-09-12T16:45:29+02:00 -- after night 26's push that morning, so unread by any session until night 27. Measures the record at ~233,700 words of apparatus against ~19,900 in works/, ~12:1, and states that in twenty-seven nights no candidate has become a work; asks that nights go into the work, not that the record shrink for its own sake."
+  }
+ ],
+ "edges": [
+  {
+   "from": "night:27",
+   "relation": "reads",
+   "to": "document:dowry-ratio-2026-09-12",
+   "created": "2026-09-16",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "fc4ce30b76932af98127e866cdfdbd9a8d1062ec",
+     "note": "read at boot, first session to do so; the wake's occasion"
+    }
+   ]
+  },
+  {
+   "from": "document:dowry-ratio-2026-09-12",
+   "relation": "names",
+   "to": "work:two-nights-deep",
+   "created": "2026-09-16",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "DOWRY.md",
+     "note": "one of the two standing candidates the twenty-seven-night count without a work refers to"
+    }
+   ]
+  },
+  {
+   "from": "document:dowry-ratio-2026-09-12",
+   "relation": "names",
+   "to": "work:below-the-threshold",
+   "created": "2026-09-16",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "DOWRY.md",
+     "note": "the other of the two standing candidates the twenty-seven-night count without a work refers to"
+    }
+   ]
+  },
+  {
+   "from": "night:27",
+   "relation": "consults",
+   "to": "work:two-nights-deep",
+   "created": "2026-09-16",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "nights/53-twenty-seventh-night.md",
+     "note": "T1: python3 atlas/consult.py connects work:two-nights-deep work:below-the-threshold, run before the night's main decision; found no promotion-shaped edge on either work node since declaration -- the consultation that changed the decision, not merely preceded it (T1's failure criterion discharged, first commit-evidenced case)"
+    }
+   ]
+  },
+  {
+   "from": "night:27",
+   "relation": "consults",
+   "to": "work:below-the-threshold",
+   "created": "2026-09-16",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "nights/53-twenty-seventh-night.md",
+     "note": "same consultation as above, the second named node"
+    }
+   ]
+  },
+  {
+   "from": "night:27",
+   "relation": "advances",
+   "to": "work:two-nights-deep",
+   "created": "2026-09-16",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "df87646",
+     "note": "neighbour search re-run, the debt named at night 11 discharged; CANDIDATE.md addendum draft"
+    },
+    {
+     "kind": "commit",
+     "ref": "e79b07a",
+     "note": "second-pass revision, no change needed"
+    },
+    {
+     "kind": "path",
+     "ref": "material/night-sky/2026-09-16-neighbours-recheck/README.md"
+    }
+   ]
+  },
+  {
+   "from": "night:27",
+   "relation": "advances",
+   "to": "work:below-the-threshold",
+   "created": "2026-09-16",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "df87646",
+     "note": "voluntary neighbour search refresh; CANDIDATE.md addendum draft"
+    },
+    {
+     "kind": "commit",
+     "ref": "e79b07a",
+     "note": "second-pass revision, no change needed"
+    },
+    {
+     "kind": "path",
+     "ref": "material/ct-logs/2026-09-16-neighbours-recheck/README.md"
+    }
+   ]
+  },
+  {
+   "from": "night:27",
+   "relation": "declines",
+   "to": "material:ct-logs",
+   "created": "2026-09-16",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "nights/53-twenty-seventh-night.md",
+     "note": "the routine asking not run tonight, a reasoned one-night choice under the founder's fresh direction on the ratio, not a new standing rule; no schedule was ever promised for this front (reading/08-fear-the-deferral-that-hardened.md §2)"
+    }
+   ]
+  },
+  {
+   "from": "night:27",
+   "relation": "declines",
+   "to": "material:night-sky",
+   "created": "2026-09-16",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "nights/53-twenty-seventh-night.md",
+     "note": "the continuing look's next act not run tonight, same reasoning as the CT-log front"
+    }
+   ]
+  },
+  {
+   "from": "document:register",
+   "relation": "discloses",
+   "to": "night:27",
+   "created": "2026-09-16",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "REGISTER.md",
+     "note": "entry night 27 -- model, wake, deviations, procedures, provenance, verification status and figures, outputs"
+    }
+   ]
+  }
+ ]
+}

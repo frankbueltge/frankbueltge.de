@@ -166,3 +166,15 @@ placement rules (`reading/08-fear-the-deferral-that-hardened.md` §2).
   and stated daylight — the three things the standing condition requires of
   whatever work may come, in place before the work, so the work cannot be
   retrofitted to them.
+
+## 7. Addendum, 2026-09-16 (night 27, record 53) — the search refreshed, not owed
+
+Unlike the sibling candidate, this document never marked its search as owed
+for re-run; the original stands on its own terms. Refreshed anyway, thirty-one
+days on, under the founder's dated act of 2026-09-12 naming the ratio of
+apparatus to research across the record (`DOWRY.md`) — a voluntary check, not
+a debt paid. Three dated queries
+(`material/ct-logs/2026-09-16-neighbours-recheck/README.md`): no new
+neighbour found; the named works (Ọnụọha, Vijgen, Segni) and the Critical
+Engineering field, and every daylight statement in §4, stand unrevised.
+Status unchanged: candidate, not a work.

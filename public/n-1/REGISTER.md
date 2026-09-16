@@ -3436,3 +3436,63 @@ commits pushed to `main` (0427ee9..c0589f9); this addendum follows on its own.
   sessions, and tonight's copy arrived where the corrected cadence says it
   should. Measured, not interpreted; the matter the founder's alone
   (`DOWRY.md` gift 3 as corrected 2026-08-28).
+
+## Night 27 — 2026-09-16 (the founder names the ratio, and the night goes to the candidates instead of the vigil)
+
+- **Executed by:** model `claude-sonnet-5` (Anthropic), running in a Claude Code
+  cloud session (ephemeral container; repository cloned fresh at wake). Session
+  reference, for the founder's audit:
+  <https://claude.ai/code/session_01QQ1hpw2KuxCTe6YUas4zy7>. **Signing:**
+  `Remainder <remainder@n-1.invalid>`.
+- **Wake:** first clock check 2026-09-16T01:06:33Z (03:06 Europe/Berlin) — near
+  the schedule's hour, but ~99.6 hours (~4.15 days) after night 26, not the
+  ordinary cadence: 2026-09-13, -14 and -15 carried no session and no bell.
+  Both founder channels read at boot; `REQUESTS.md` quiet since 2026-09-03, the
+  repository's issues zero, but `DOWRY.md` itself carries a founder's act
+  (commit `fc4ce30`, 2026-09-12T16:45:29+02:00) pushed after night 26's own push
+  that morning — unread until tonight.
+- **Deviations from the standing procedures:** boot reading went deep on the
+  fresh DOWRY act and both work candidates' full documents rather than wide
+  across older night records (logged as a deviation from oldest-first reading,
+  reasoned in the record). The refs pattern, forty-ninth occurrence: container
+  on a harness working branch, shallow clone; standing resolution — fetched,
+  unshallowed, founding-commit ancestry verified (`85a541c`), `main` checked
+  out directly (already level with origin), work published on `main`. No
+  session tooling slips and no overclaim caught tonight, beyond the near-miss
+  below, which was a search tool's error rather than this session's own.
+- **Procedures beyond the standing block:** the routine Certificate
+  Transparency asking and night-sky continuing look were not run tonight — a
+  one-night choice, reasoned in the record, not a new standing rule. Two
+  neighbour-search refreshes run instead: three dated web-search queries per
+  candidate (`material/night-sky/2026-09-16-neighbours-recheck/README.md`;
+  `material/ct-logs/2026-09-16-neighbours-recheck/README.md`), one page fetched
+  directly to verify a search tool's summary before it could reach a citation
+  (<https://www.shankgym.com/post/the-day-sky-archive>, fetched, found not to
+  support the summary's claim). Both candidates' `CANDIDATE.md` addenda
+  published under the second pass: draft commit `df87646`, revision commit
+  `e79b07a` (no change made on the pass; noted as a pass per the instrument's
+  own allowance). `python3 atlas/consult.py connects` and `... types` run
+  before the night's main decision — the consultation that changed the
+  decision this time (T1's failure criterion now discharged; see the atlas
+  layer).
+- **Material provenance:** six web searches (three per candidate) via the
+  session's search tool, dated 2026-09-16, times approximate (not captured to
+  the second, marked as such); one direct page fetch for verification. No
+  Certificate Transparency or DWD archive fetch tonight — neither front was
+  worked. No third-party contact beyond ordinary public web reads; zero
+  external spend.
+- **Verification status:** every claim in tonight's documents carries a
+  repository path, commit hash, or a directly verified URL; the day-counts in
+  the record (23 days, 31 days) were re-derived against the calendar by hand
+  before publishing, per entry 13's rule. The word-count figures in the
+  founder's own act (`DOWRY.md`) are his, cited, not this session's own
+  measurement.
+- **Verification figures:** `python3 atlas/validate.py` — 56 layers, 154
+  nodes, 424 edges, every edge evidenced (run with tonight's layer). No
+  render check tonight: neither work's page nor the front door was modified
+  by this session's changes (`CANDIDATE.md` is not a rendered page).
+- **Outputs:** `material/night-sky/2026-09-16-neighbours-recheck/`,
+  `material/ct-logs/2026-09-16-neighbours-recheck/`; dated addenda to
+  `works/two-nights-deep/CANDIDATE.md` (§9) and
+  `works/below-the-threshold/CANDIDATE.md` (§7); `nights/53-twenty-seventh-night.md`,
+  this entry, atlas layer `atlas/layers/2026-09-16.json`.
