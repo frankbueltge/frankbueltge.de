@@ -1010,3 +1010,57 @@ not run, the work triad cannot hold on any work, and by this window's own
 definitions that is failed, not inconclusive.
 
 Nothing has left this repository and nothing will without a dated go-ahead here.
+
+
+## entry — 2026-09-17 (founder; paraphrase, wording private) — the missing nights were the account, not the practice; and a schedule change
+
+A measurement this practice cannot take from where it stands, and one authorisation
+that the pre-registration requires to come from here.
+
+**1. The nights that left no record were refused before the session existed.** Five
+dated gaps in this window — 2026-09-10, 09-11, 09-14, 09-15 and today, 09-17 — were
+read from outside as the practice skipping. They were not. The scheduled routine fired
+on time on each of them, the sandbox was allocated, this repository was cloned, and the
+process was then rejected by the account's weekly usage limit before a single turn ran.
+Measured on today's run of a sibling practice's routine, which failed the same way ten
+seconds after starting: `rate_limit: rejected (seven_day)`. Nine practices in this house
+draw nightly sessions from one weekly allowance, and it runs out near the end of the
+billing week. The allowance reset today at 18:00 UTC and the remainder of this window
+falls inside the new week.
+
+This is stated because floor rule 3 asks that a machine output be verified or marked an
+estimate, and a gap in the record is an output like any other: the record cannot tell a
+night the practice declined from a night the practice was never given. Now it can, for
+these five. Nothing follows from it for the work.
+
+**2. The arithmetic, since it bears on a pre-registered number and not on a judgement.**
+Twenty-two dated protocols stand inside the window (2026-08-23 to today). The
+pre-registration fixes the minimum at twenty-five and the window closes 2026-09-21, which
+leaves four scheduled nights. The founder offers the count and no reading of it: what a
+session does with a night is the practice's, and inconclusive condition (c) — fewer than
+twenty-five sessions for documented reasons — is now documented in paragraph 1 above,
+whether or not it is reached.
+
+**3. A schedule change, which only this channel can authorise** (answer of 2026-08-23:
+any change during the window requires a founder entry here). Additional wake signals may
+be sent inside the remaining nights, by hand, at hours off the schedule's own. Two
+sessions on one civil date are permitted where a signal arrives twice, as they were on
+2026-08-23 and 2026-08-24 at the window's start; floor rule 5's bar on doubling without
+reason is met by this entry, which is the reason. The cadence of one scheduled session per
+day is otherwise unchanged, and nothing here asks a session to work faster, longer or
+differently. A wake signal still carries no message.
+
+*Signature correction, appended 2026-09-17 beside this entry and not over it: the commit
+that carried it (`edd17eb`) was authored `Arch <arch@arch.invalid>`, the practice's own
+signature, because that identity stands in the local checkout's git config. It is a
+founder entry and was written as one; the commit's authorship is wrong and is recorded
+here rather than rewritten, per this repository's rule that history is continued and
+never retouched. This correction and everything the founder writes here from now on is
+authored `Frank Bültge <f.bueltge@gmail.com>`.*
+
+**4. The reception probe is answered separately and within days, not left to run out.**
+The request of 2026-08-25 (session 14) has stood for twenty-three days, and its two
+questions — the lead time, and whether the "understands unaided" condition survives — are
+being answered now rather than by silence. That entry named the consequence correctly and
+early, on day 3, and the founder records here that it was right to and that the delay was
+his. The answer follows in this channel.
