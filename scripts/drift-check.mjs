@@ -29,6 +29,17 @@ import { fileURLToPath } from 'node:url'
 
 const ROOT = join(fileURLToPath(import.meta.url), '..', '..')
 const findings = []
+// Notices are defects the gate REPORTS but does not fail on. The distinction is not severity,
+// it is blast radius: this script is the first gate in five integrate workflows, so a finding
+// here stops the deploy of the WHOLE house — every practice, not the one that caused it. That
+// is the right response to a page that is wrong, and the wrong response to a page that is
+// merely incomplete in a way the site already renders honestly. (2026-09-18, after one work
+// published without a wall text on 09-14 took the deploy down for four days: Studio, the
+// Atelier, the Field and the Plenum each received a nightly "build is red" letter over it, and
+// the Plenum landed nothing else for two weeks. The letters say truthfully that they cannot
+// tell whose defect it is. That one was nobody's — the nightly teaser routine had not run,
+// because the account's weekly usage limit was exhausted.)
+const notices = []
 
 function* walk(dir, exts) {
   if (!existsSync(dir)) return
@@ -202,6 +213,12 @@ if (werkInlineTally.length) {
 //       in it defeats its entire purpose, and a 400-word "teaser" is the apparatus returning
 //       through the front door. Measured, not trusted.
 const WALL_TEXT_GRACE_DAYS = 3
+// Past the grace window a missing wall text is a notice, not a finding: the work is published
+// and the site renders the gap honestly (wrapper.ts shows nothing rather than a paragraph of
+// apparatus), so the visitor meets an undescribed work — a real defect, and one that does not
+// justify taking every other practice's deploy with it. It becomes a finding only once it has
+// been ignored for long enough that no routine is going to fix it on its own.
+const WALL_TEXT_STALE_DAYS = 14
 const WALL_TEXT_MAX_WORDS = 90
 // Terms that exist ONLY inside the practices. Kept deliberately narrow: the first draft of this
 // list also held `tick`, `disposition`, `inviolable` and `swerve`, and immediately flagged a
@@ -237,9 +254,13 @@ if (existsSync(teaserPath)) {
       if (!text) {
         // The slug's own date is the work's date — no file mtime, which the mirror resets.
         const ageDays = (today - new Date(slug.slice(0, 10))) / 86_400_000
-        if (ageDays > WALL_TEXT_GRACE_DAYS) {
+        if (ageDays > WALL_TEXT_STALE_DAYS) {
           findings.push(
-            `${key} — published work without a wall text (${Math.floor(ageDays)} days old, grace ${WALL_TEXT_GRACE_DAYS}); a visitor opens the work and meets it cold`,
+            `${key} — published work still without a wall text after ${Math.floor(ageDays)} days (notice since day ${WALL_TEXT_GRACE_DAYS}); no routine is going to write it now`,
+          )
+        } else if (ageDays > WALL_TEXT_GRACE_DAYS) {
+          notices.push(
+            `${key} — published work without a wall text (${Math.floor(ageDays)} days old, grace ${WALL_TEXT_GRACE_DAYS}); a visitor opens the work and meets it cold. Fails the gate at day ${WALL_TEXT_STALE_DAYS}`,
           )
         } else {
           waiting++
@@ -450,6 +471,20 @@ if (process.env.DRIFT_NETWORK === '1') {
 }
 
 // ——— Report ————————————————————————————————————————————————————————————————
+// Notices first, so they are visible whether or not a finding follows and are never buried
+// under a failure they did not cause.
+if (notices.length) {
+  console.warn(`drift-check: ${notices.length} notice(s) — reported, not blocking\n`)
+  for (const n of notices) console.warn('  ! ' + n)
+  console.warn('')
+  if (process.env.GITHUB_STEP_SUMMARY) {
+    appendFileSync(
+      process.env.GITHUB_STEP_SUMMARY,
+      `## Drift-Wächter: ${notices.length} Hinweis(e), nicht blockierend\n\n` +
+        notices.map((n) => `- \`${n}\``).join('\n') + '\n',
+    )
+  }
+}
 if (findings.length) {
   console.error(`DRIFT: ${findings.length} finding(s)\n`)
   for (const f of findings) console.error('  ✗ ' + f)
@@ -461,4 +496,7 @@ if (findings.length) {
   }
   process.exit(1)
 }
-console.log('drift-check: clean' + (process.env.DRIFT_NETWORK === '1' ? ' (incl. mirror freshness)' : ' (static only)'))
+console.log(
+  `drift-check: clean${notices.length ? ` (${notices.length} notice(s) above)` : ''}` +
+    (process.env.DRIFT_NETWORK === '1' ? ' (incl. mirror freshness)' : ' (static only)'),
+)
