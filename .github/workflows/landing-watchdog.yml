@@ -24,9 +24,19 @@ jobs:
         run: |
           set -euo pipefail
           DATE=$(date -u +%F)
-          for REPO in ulysses field-research studio; do
+          # arch, n-1, error-as-method and the plenum added 2026-09-18, to the same list the
+          # morning digest was extended to on 2026-09-11 — that pass moved the "keine Session
+          # gelandet" side and left this one on the three practices of 2026-07-16. The two
+          # report opposite failures (nothing ran / something ran and stranded), so a practice
+          # in one list and not the other is watched only half the way. n-1's night 29 paid for
+          # it on 2026-09-18: the session ran, pushed `claude/fervent-hamilton-96wl27` three
+          # commits ahead of main, opened a pull request saying its environment could not push
+          # to main — and nothing called, because n-1 was not read here. Bound together under
+          # test in src/lib/gate/landing-watchdog.test.ts so the lists cannot drift apart again.
+          # `night/` is error-as-method's session branch; n-1 and the plenum push `claude/*`.
+          for REPO in ulysses field-research studio arch n-1 error-as-method data-snack-plenum; do
             BRANCHES=$(git ls-remote "https://github.com/frankbueltge/$REPO" \
-              | grep -E 'refs/heads/(research/session-|ulysses/|claude/)' \
+              | grep -E 'refs/heads/(research/session-|ulysses/|claude/|night/)' \
               | sed 's|.*refs/heads/||') || true
             for BR in $BRANCHES; do
               AHEAD=$(gh api "repos/frankbueltge/$REPO/compare/main...$(python3 -c "import urllib.parse,sys;print(urllib.parse.quote(sys.argv[1],safe=''))" "$BR")" --jq '.ahead_by' 2>/dev/null || echo 0)
