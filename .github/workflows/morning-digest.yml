@@ -51,10 +51,32 @@ jobs:
           # 09-11 and nothing said so. `Night [0-9]` is n-1's own session marker ("Night 25: …");
           # it is written with the digit so that prose like "Two Nights Deep" is not counted as
           # a landing. arch and error-as-method are caught by the existing "Session" alternative.
+          # The plenum is the one weekly practice here (README: "one plenum per week,
+          # routine-driven"); the others owe a session nightly. Read against the 24h window it
+          # printed "keine Session gelandet" on the six days that owe nothing and printed the
+          # same line on the seventh, which owes one — so the sentence carried no information
+          # on any day, and three consecutive weeks without a plenum (last session 2026-08-26;
+          # nothing for the weeks of 09-02, 09-09 and 09-16) passed unremarked beneath it.
+          # Read over its own week instead, and when the week is empty say how long the silence
+          # has run, because one missed week and three are not the same finding.
+          SESSION_RE="session|Session|Research day|Plenum|Auto-land research|Project work|Night [0-9]"
+          WEEK=$(date -u -d '7 days ago' +%FT%TZ)
           for REPO in field-research ulysses studio data-snack-plenum arch n-1 error-as-method; do
-            LINES=$(gh api "repos/frankbueltge/$REPO/commits?since=$SINCE&per_page=15" \
-              --jq '[.[] | select(.commit.message | test("session|Session|Research day|Plenum|Auto-land research|Project work|Night [0-9]")) | "- **'"$REPO"'**: " + (.commit.message | split("\n")[0] | .[0:140])] | join("\n")' 2>/dev/null || echo "")
+            if [ "$REPO" = "data-snack-plenum" ]; then WINDOW="$WEEK"; else WINDOW="$SINCE"; fi
+            LINES=$(gh api "repos/frankbueltge/$REPO/commits?since=$WINDOW&per_page=15" \
+              --jq '[.[] | select(.commit.message | test("'"$SESSION_RE"'")) | "- **'"$REPO"'**: " + (.commit.message | split("\n")[0] | .[0:140])] | join("\n")' 2>/dev/null || echo "")
             if [ -n "$LINES" ]; then BODY+="$LINES"$'\n'
+            elif [ "$REPO" = "data-snack-plenum" ]; then
+              # Empty week. Date the silence from the newest session commit the repository still
+              # shows; if even that cannot be read, say so rather than imply a fresh miss.
+              LAST=$(gh api "repos/frankbueltge/$REPO/commits?per_page=100" \
+                --jq '[.[] | select(.commit.message | test("'"$SESSION_RE"'"))][0].commit.committer.date // empty' 2>/dev/null || echo "")
+              if [ -n "$LAST" ]; then
+                DAYS=$(( ( $(date -u +%s) - $(date -u -d "$LAST" +%s) ) / 86400 ))
+                BODY+="- **$REPO**: keine Sitzung im 7-Tage-Fenster (Wochentakt geschuldet) — letzte: ${LAST%%T*}, vor $DAYS Tagen"$'\n'
+              else
+                BODY+="- **$REPO**: keine Sitzung im 7-Tage-Fenster (Wochentakt geschuldet) — letzte Sitzung nicht lesbar"$'\n'
+              fi
             # Atelier arbeitet seit Protokoll v4 projektbasiert (v5 seit 2026-07-24: Arbeitslinien) —
             # eine Nacht ohne Landung ist normal, kein Alarm. Sein Sitzungsmarker heißt "Project work",
             # deshalb steht der oben im Filter — sonst meldet der Digest Stille, wo gearbeitet wurde.
