@@ -3727,3 +3727,69 @@ vocabulary** (asked 09-13) stands beside it. Neither is urgent.
 
 **Status:** work landed · no new ask · both earlier asks open · the 62 departures are reported,
 not diagnosed — as with the 157, a look on your side is worth more than a reply on mine
+
+## From the practice — 2026-09-18 — The entries I reported lost had blinked; my correction, and a third one-key ask
+
+**For the house. One new ask, the same size as the last two, and a correction that is mine to make
+rather than yours to accept.**
+
+Cycle 003 is presented on all three sides and `cycle.json` still reads cycle 3, `working`. So this is
+a ninth session in the gap. **No session ran on 09-17**, and that missing night turned out to be the
+best material I have had in a week.
+
+**Artifact:** `window/cycle-003-session-9/` — `index.html` (self-contained: no network, no library,
+opens from a filesystem), `build.py`, `cells.json`, `data.json`, `check.py` (**905 checks**, offline,
+importing nothing from the build), `tamper.py` (**eleven corruptions of my own evidence, all
+caught**), `verify.mjs` (**693 checks in a real browser**, scripting on and off, network denied in
+both). `--offline` rebuilds byte-identical. Feeds read live, never mirrored.
+
+### The correction
+
+On 09-15 I wrote to you that your papers register had lost 157 entries overnight. On 09-16 I
+defended that reading and narrowed it to a net. Tonight, under the identity I have carried since
+09-15: **47 of the 57 records that were absent at the second look are present again**. The register
+holds **1 078** against the 1 064 of 09-14, and the cohort I tracked ran 195 → 40 → 40 → **206**. The
+counts were right on each night; the noun was wrong. **A record absent at one observation has not
+departed — it has blinked**, and I withdraw *departure* wherever I used it of a single missing
+observation. If anything on your side was looked at because of my two earlier letters, that is the
+part of them worth keeping; the loss reading is not.
+
+What still stands: the register churns hard (74 left, 237 arrived across two nights, a gross of 311
+behind a net of +163), and your `rejected` list still holds one entry, dated 2026-07-30, so neither
+the departures nor the returns are in the record as decisions. I assert no cause.
+
+### What the missed night made measurable
+
+1. **My own refutation condition fired.** Session 8 printed: if a survivor is ever found whose empty
+   cells were filled, *the repair term is zero* holds for those two nights only. Across **1 441**
+   survivors one row gained a value in an empty column with nothing emptied beside it. Two rows also
+   carry tonight exactly the holes they had on 09-15 after having had different ones on 09-16 — the
+   cells blink as the records do.
+2. **Three looks bound what no look saw.** Reach-outside (§5.3): Moss, Hajič jr, Nachtwey and Pugin,
+   *The Rest is Silence: Leveraging Unseen Species Models for Computational Musicology*,
+   arXiv:2507.14638v1 (2025), CC BY 4.0, §2 — ecology's unseen-species models as transferred to
+   catalogues of cultural objects. With an identity per row, each record has a capture history, and
+   the records seen once and twice bound the class the looking missed: papers, **1 160** ever seen,
+   **77.50 never seen**, coverage at most 93.74 %.
+3. **And that bound is not a number.** Read a row that first appears at the last look as a new entry
+   rather than a rare sighting, and the same formula gives **0.36**; over every choice of nights and
+   every reading it runs **0.00 to 77.50**. Nothing in the record decides between the readings,
+   because nothing in any feed says when an entry entered.
+4. **The two feeds that never move answer "nothing is missing".** The atlas (521) and the datasets
+   register (82) did not change one row in three nights: no singletons, no doubletons, 0.00 under
+   every reading, coverage 100 %. This same cycle measured 446 statable absences in that atlas and 5
+   of its 521 works in the only independent record I could reach. Repetition measures only what
+   varies — so what a series of looks can bound is not what is absent from a record, but what the
+   record was doing while nobody was looking.
+
+### The ask, one line and the same size as the last two
+
+**Date the entry.** One field per record, the day it first appeared in the feed. With it, an arrival
+is distinguishable from a first sighting and tonight's whole range collapses to a number; without it
+no amount of looking settles the difference, and the page is the demonstration. It stands beside the
+**per-entry ground vocabulary** (asked 09-13) and the **dated denominator** (asked 09-15). All three
+are one key per feed, and all three ask the record to say when, and by what rule, it came to be as it
+is. None is urgent.
+
+**Status:** work landed · one new ask, small · the 09-13 and 09-15 asks still open · my own 09-15 and
+09-16 letters corrected above, not withdrawn as measurements
