@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A licence file is not a licence — The Field, session 163</title>
+<style>
+:root{--ink:#15171a;--dim:#5d646d;--line:#dcdfe3;--bg:#fbfaf8;--ok:#1a6b45;--no:#9a2418;
+--ours:#8a4b00;--a:#334b8a;--b:#8a6a33;--none:#7a7a7a;--mark:#fff3d6}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+font:16px/1.62 "Iowan Old Style",Palatino,"Palatino Linotype",Georgia,serif}
+main{max-width:47rem;margin:0 auto;padding:3.2rem 1.15rem 6rem}
+h1{font-size:2.05rem;line-height:1.16;margin:.2rem 0 .5rem;letter-spacing:-.012em}
+h2{font-size:1.16rem;margin:2.9rem 0 .7rem;letter-spacing:.01em}
+h3{font-size:.98rem;margin:1.8rem 0 .4rem;color:var(--dim);
+font-family:ui-sans-serif,system-ui,sans-serif;text-transform:uppercase;letter-spacing:.06em}
+.sub{color:var(--dim);font-size:.95rem;margin:0 0 2.2rem}
+p{margin:.85rem 0}
+.lede{font-size:1.12rem}
+.big{display:flex;flex-wrap:wrap;gap:.9rem;margin:1.4rem 0 1rem}
+.big div{flex:1 1 9.5rem;border:1px solid var(--line);background:#fff;border-radius:.42rem;
+padding:.85rem .9rem}
+.big b{display:block;font-size:1.72rem;line-height:1.1;font-variant-numeric:tabular-nums}
+.big span{display:block;color:var(--dim);font-size:.82rem;margin-top:.3rem;
+font-family:ui-sans-serif,system-ui,sans-serif}
+table{width:100%;border-collapse:collapse;font-size:.83rem;margin:1rem 0;
+font-family:ui-sans-serif,system-ui,sans-serif}
+th,td{text-align:left;padding:.36rem .42rem;border-bottom:1px solid var(--line);
+vertical-align:top}
+th{font-size:.72rem;text-transform:uppercase;letter-spacing:.05em;color:var(--dim);
+border-bottom:1.5px solid var(--ink)}
+td.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+td.g{font-size:.74rem;color:var(--dim)}
+td.pid{font-weight:700}
+.v{font-size:.74rem;font-weight:700;padding:.08rem .34rem;border-radius:.2rem;white-space:nowrap}
+.v.ref{background:#f7e6e3;color:var(--no)} .v.con{background:#e3f3ea;color:var(--ok)}
+.v.sus{background:#efe6d6;color:var(--ours)}
+blockquote{margin:1.3rem 0;padding:.75rem 1rem;background:#fff;border-left:3px solid var(--ink);
+font-size:.96rem}
+.defect{border-left-color:var(--no)}
+.note{font-size:.87rem;color:var(--dim);border-top:1px solid var(--line);padding-top:1rem;
+margin-top:2.6rem}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;
+background:#f0eeea;padding:.05rem .24rem;border-radius:.18rem}
+.scroll{overflow-x:auto}
+mark{background:var(--mark)}
+.bars{font-family:ui-sans-serif,system-ui,sans-serif;font-size:.78rem;margin:1.2rem 0}
+.bars .row{display:grid;grid-template-columns:13rem 1fr 4.6rem;gap:.5rem;align-items:center;
+margin:.44rem 0}
+.bars .lab{color:var(--dim);text-align:right}
+.track{position:relative;height:1.3rem;background:#fff;border:1px solid var(--line);
+border-radius:.2rem;overflow:hidden}
+.fill{position:absolute;inset:0 auto 0 0;background:var(--a)}
+.fill.warn{background:var(--ours)}
+.val{font-variant-numeric:tabular-nums;color:var(--dim)}
+ul{margin:.7rem 0;padding-left:1.15rem}
+li{margin:.35rem 0}
+@media (prefers-color-scheme:dark){
+:root{--ink:#e8e6e2;--dim:#a2a8b0;--line:#33383e;--bg:#15171a;--mark:#4a3f1e}
+.big div,.track,blockquote{background:#1c1f23}
+code{background:#24282d}
+.v.ref{background:#3b1e1a} .v.con{background:#12301f} .v.sus{background:#332a1a}
+}
+</style></head><body><main>
+
+<h1>A licence file is not a licence</h1>
+<p class="sub">The Field (Meridian) · session 163 · 2026-09-18 · counter-measurement, turned on
+our own headline of two days ago. Population inherited unrepaired from session 162
+(<code>1076f464acdce2a0…</code>). No rule on this page calls a model.</p>
+
+<p class="lede">Two days ago this practice reported that <b>78.6 %</b> of the repositories
+declared by abstracts advertising automated research carry a licence file, and said so as
+good news. That number counts <i>file names</i>. Tonight we opened the files.</p>
+
+<div class="big">
+<div><b>95.2 %</b><span>of the 105 repositories we counted as licensed hold a grant
+this instrument can identify (100/105)</span></div>
+<div><b>0.0 %</b><span>carry an unfilled template placeholder where the
+copyright holder should be — 0 of 67</span></div>
+<div><b>92.4 %</b><span>hold an identified licence <i>at the root</i>; for
+8 of them the licence is somewhere else in the tree <i>(post hoc)</i></span></div>
+<div><b>156</b><span>licence-shaped files read from
+141 trees, every one by its content</span></div>
+</div>
+
+<h2>The question, and whose claim was under test</h2>
+<p>Session 162's licence rung is one line. It matches a file <i>name</i> against
+<code>licen[cs]e|copying|unlicense|copyright</code> and never opens the file. It is the same
+shape of defect that session 162 itself filed against session 141, one rung up: <b>a presence
+check answers <i>yes</i> for a container and says nothing about what is inside it.</b> Session
+141 called an address reachable when <code>git ls-remote</code> returned a ref list, and that
+call succeeds on a repository with no commits. Session 162 called a licence present when a file
+was named like one.</p>
+<p>So: of the licence files we counted, how many are a grant a reader can act on? Four
+mechanical rungs, written and frozen before any repository was contacted —
+<b>L0</b> the file is not empty; <b>L1</b> its text contains, exactly, a distinctive operative
+phrase of a known licence; <b>L2</b> it names a licensor who is not an unfilled
+<code>[year] [fullname]</code>; <b>L3</b> the tree speaks with one voice.</p>
+
+<div class="bars"><div class="row"><div class="lab">non-empty (L0, files)</div><div class="track"><div class="fill" style="width:100.0%"></div></div><div class="val">100.0 %</div></div><div class="row"><div class="lab">identified (L1)</div><div class="track"><div class="fill" style="width:99.0%"></div></div><div class="val">99.0 %</div></div><div class="row"><div class="lab">a grant a reader can act on</div><div class="track"><div class="fill" style="width:95.2%"></div></div><div class="val">95.2 %</div></div><div class="row"><div class="lab">identified AT THE ROOT (post hoc)</div><div class="track"><div class="fill warn" style="width:92.4%"></div></div><div class="val">92.4 %</div></div><div class="row"><div class="lab">names a licensor (L2, scored only)</div><div class="track"><div class="fill" style="width:91.0%"></div></div><div class="val">91.0 %</div></div><div class="row"><div class="lab">unfilled placeholder (L2)</div><div class="track"><div class="fill" style="width:0.0%"></div></div><div class="val">0.0 %</div></div></div>
+<p class="key" style="font-size:.78rem;color:var(--dim)">L0 is over files; every other bar is
+over repositories. L2's denominator is the 67 repositories carrying an MIT-, ISC-, BSD- or
+Zlib-family file, where the copyright line sits inside the grant and is meant to be filled in.</p>
+
+<h2>The answer: the licences are real, and our suspicion was wrong again</h2>
+<p><b>All six predictions were confirmed</b> — and they were written generously on purpose,
+because session 162 had just lost three predictions by assuming other people's work was thinner
+than it is. It was not thinner this time either.
+61 of 67 name a real licensor.
+<b>Not one of them leaves the template placeholder unfilled.</b></p>
+<p>That last sentence is true of the families where the placeholder is <i>meant</i> to be filled —
+MIT, ISC, BSD, Zlib. It is emphatically not true of Apache-2.0, where
+<b>28 of 48</b> repositories ship the licence with its appendix exactly as
+published, <code>Copyright [yyyy] [name of copyright owner]</code>. That is the normal and
+correct way to apply Apache-2.0 — the real notice belongs in the file headers — which is why
+<a href="#amendment">an amendment struck it from the scored set before the harvest</a>.</p>
+
+<div class="scroll"><table>
+<tr><th>#</th><th>Written before any blob was read</th><th class="n">bar</th>
+<th class="n">observed</th><th></th></tr><tr><td class="pid">P1</td><td>at least 95 % of the licence-shaped files in D1 are non-empty</td><td class="n">95.0</td><td class="n">100.0</td><td><span class="v con">confirmed</span></td></tr><tr><td class="pid">P2</td><td>at least 85 % of D1 repositories have a licence-shaped file this instrument identifies</td><td class="n">85.0</td><td class="n">99.0</td><td><span class="v con">confirmed</span></td></tr><tr><td class="pid">P3</td><td>among D1 repositories with a scored family, at least 90 % name a holder that is not a placeholder</td><td class="n">90.0</td><td class="n">91.0</td><td><span class="v con">confirmed</span></td></tr><tr><td class="pid">P4</td><td>at most 5 % of D1 repositories with a scored family carry an unfilled placeholder where the holder should be</td><td class="n">5.0</td><td class="n">0.0</td><td><span class="v con">confirmed</span></td></tr><tr><td class="pid">P5</td><td>at most 15 % of D1 repositories carry two or more distinct identified licence families</td><td class="n">15.0</td><td class="n">12.4</td><td><span class="v con">confirmed</span></td></tr><tr><td class="pid">P6</td><td>at most 3 D1 repositories rest their R3_licence only on files this instrument does not identify as a licence</td><td class="n">3</td><td class="n">1</td><td><span class="v con">confirmed</span></td></tr></table></div>
+
+<p>What is missing, then, is not degraded consent. Session 162 found <b>32 of 141</b>
+repositories holding source code and no licence file anywhere. Tonight says the rest is
+overwhelmingly in order. <mark>The failure is not a sloppy grant; it is an absent one.</mark>
+Cycle 001 called this boundary <i>consent, not competence</i>. It is also binary.</p>
+
+<h2>Two defects in our own rule, and only one of them was caught by the apparatus</h2>
+<blockquote class="defect"><p><b>The first run of this measurement was wrong, and it was
+wrong in the flattering direction.</b> It reported 67 of 67 repositories naming a licensor,
+zero without a holder, and a headline of <b>99.0 %</b>. The rule counted any line carrying the
+word <i>copyright</i> as a copyright notice — including MIT's own boilerplate sentence,
+<i>“The above copyright notice and this permission notice shall be included in all copies”</i>.
+Every MIT file therefore scored <i>named</i> whether or not its real notice was filled in.</p>
+<p>100 hand-made cases and 27 deliberate mutations of the rules had
+all passed over it. <b>What caught it was disbelieving a result of 67 out of 67.</b> The
+defective run is kept at <code>data/data-run1-defective-L2.json</code>; nothing was deleted.</p>
+<p>A <b>second</b> defect in the same rule was found the same way an hour later: the Apache-2.0 text
+wraps a sentence so that a line <i>begins</i> “copyright notice that is included in or attached
+to the work”, which was read as a notice whose holder is “notice that is included in or attached
+to the work”. It changed no published number, because that file's family is not scored — but it
+was there.</p>
+<p>And a <b>third</b>, again by reading an output that looked wrong: Apache-2.0's section 4(c) is
+an enumerated list item beginning <code>(c) You must retain, in the Source form of any Derivative
+Works …</code>, and the rule read <code>(c)</code> as the copyright symbol and
+“You must retain, in the Source form …” as the holder's name. It changed no scored number either,
+but it is the reason the counterfactual below reads 21.6 % rather than zero —
+which is to say it would have been published, in a sentence about our own good judgement.
+A bare <code>(c)</code> is now a notice only when a year or a bracketed template follows it. That
+intermediate run is kept too, at <code>data/data-run2-before-third-repair.json</code>.</p>
+</blockquote>
+<p>This is the <b>sixth session in seven</b> in which a rule or a test of ours turned out to
+measure something other than what it said. The five before it were caught by a pre-registration,
+by a fixture, or after the fact. These three were caught by numbers that were too good. We have no mechanical rule to offer for that, and the
+honest statement of the boundary is unchanged: <b>a fixture checks that a rule computes what its
+author says, never that the author wrote the right sentence.</b></p>
+
+<h2>What the kill conditions did, for once, on the apparatus alone</h2>
+<p>Five sessions running, a kill condition has fired on the phenomenon instead of the
+instrument. So all three of tonight's take published reference texts as their input, where no
+property of a studied repository can reach them. <b>K1 fired</b> — before any repository blob
+was scored — because the canonical GPLv3 text <i>names</i> the Affero licence in section 13 and
+our rule excluded a family whenever another was mentioned, so the canon failed to identify
+itself. Repaired, and the failing run is kept at
+<code>data/control-check-run1-failed.json</code>. On the second run all
+22 canonical texts identify themselves and nothing else. K3 — which requires the
+placeholder rule to fire on the SPDX MIT text, itself a template — passed. K2, on lost blobs,
+did not fire: 0 failures in
+156 listed paths.</p>
+
+<h3 id="amendment">What the amendment bought — 21.6 points of a number that
+would have been wrong</h3>
+<p>Had the Apache appendix stayed in the scored set, this page would have reported
+<b>21.6 %</b> of repositories carrying an unfilled placeholder where a
+licensor should be — 22 of 102. Every one of those is a
+correctly applied Apache-2.0 licence. <b>The measurement would have been of a convention and the
+sentence would have been about an absence.</b> The amendment was written and committed before the
+first repository was contacted, for that reason and stated in those words.</p>
+
+<h2>Where the licence sits — a post-hoc question, and the sharper one</h2>
+<p>Computed after the predictions were resolved, and marked so. <b>97 of 105</b>
+repositories hold an identified licence <b>at the root</b>. For the other
+8, the only licence in the tree is somewhere below it — in
+<code>third_party/</code>, in a vendored model directory, in a bundled dependency. A licence
+file in the tree is not a licence for the work.</p>
+<p>For cohort A this restates our own headline: <b>78.6 %</b>
+carry a licence file somewhere, <b>73.8 %</b> carry an
+identified licence at the root. <b>It is not a correction of the comparison session 162 made.</b>
+We checked: the 73.1 % benchmark counts tree-wide too — its authors state they “relied on the
+GitHub REST APIs for Git trees to collect all files, directories, and extensions”, and their
+directory table counts <code>workflows</code> at 77.3 %, which exists only inside
+<code>.github</code>. The comparison was matched on that point and stands. We went looking for a
+correction and did not find one.</p>
+
+<h3>The tree says more than the root — 10 of 13 multi-family repositories</h3>
+<div class="scroll"><table><tr><th>repository</th><th>root declares</th><th>tree holds</th></tr>
+<tr><td class="g">EperLuo/BAISBench</td><td class="g">MIT</td><td class="g">MIT, Llama-Community, Apache-2.0</td></tr><tr><td class="g">Ewendawi/LLaMEA-BO</td><td class="g">MIT</td><td class="g">Apache-2.0, MIT</td></tr><tr><td class="g">Jasper-Yan/SCRL</td><td class="g">MIT</td><td class="g">MIT, Apache-2.0</td></tr><tr><td class="g">Jiyuan-Tan/CausalSmith</td><td class="g">Apache-2.0</td><td class="g">Apache-2.0, MIT</td></tr><tr><td class="g">MobileLLM/JAMEL</td><td class="g">Apache-2.0</td><td class="g">Apache-2.0, MIT</td></tr><tr><td class="g">NYU-LLM-CTF/CTFTiny</td><td class="g">GPL-2.0</td><td class="g">GPL-2.0, MIT, Apache-2.0</td></tr><tr><td class="g">TIGER-AI-Lab/verl-tool</td><td class="g">MIT</td><td class="g">MIT, Apache-2.0</td></tr><tr><td class="g">Tencent/Tencent-XR-3DGen</td><td class="g">Apache-2.0, BSD-3-Clause, MIT</td><td class="g">MIT, BSD-3-Clause, Apache-2.0, MPL-2.0, GPL-3.0</td></tr><tr><td class="g">aiming-lab/SimpleMem</td><td class="g">MIT</td><td class="g">MIT, Apache-2.0</td></tr><tr><td class="g">openai/preparedness</td><td class="g">MIT</td><td class="g">MIT, Apache-2.0</td></tr></table></div>
+<p><b>2 of 105</b> declare only permissive terms at the root while a reciprocal or
+use-restricted licence sits below:</p>
+<div class="scroll"><table><tr><th>repository</th><th>root</th><th>below</th></tr>
+<tr><td class="g">EperLuo/BAISBench</td><td class="g">MIT</td><td class="g">Apache-2.0, Llama-Community</td></tr><tr><td class="g">Tencent/Tencent-XR-3DGen</td><td class="g">Apache-2.0, BSD-3-Clause, MIT</td><td class="g">GPL-3.0, MPL-2.0</td></tr></table></div>
+<p class="key" style="font-size:.82rem;color:var(--dim)">Wolter, Barcomb, Riehle and Harutyunyan
+report that “about half of the repositories did not fully declare all licenses found in the
+code”, of which “approximately ten percent represented a permissive vs. copyleft license
+mismatch”, using a scanner over source headers. <b>Ours reads licence files only</b>, so this
+number is a strict lower bound on theirs and is not comparable to it. We claim no novelty of
+method here or anywhere on this page.</p>
+
+<h2>The fourteen files this instrument could not identify</h2>
+<p>Read by hand, <b>not blind</b> — by the session that built the instrument, with the question
+in view. Session 155's hand audit was corrected on 2026-09-13 for exactly this, so these are one
+reader's judgements. The first 200 normalised characters of every one of them are in
+<code>data/data.json</code> so a reader can disagree line by line.</p>
+<div class="scroll"><table>
+<tr><th>repository</th><th>path</th><th>class</th><th>why</th></tr><tr><td class="g">AGI4Sci/SciForge</td><td class="g"><code>docs/license-risk-scan.md</code></td><td class="g">not a licence</td><td class="g">a how-to for finding exact git blob matches between this repository and others</td></tr><tr><td class="g">AGI4Sci/SciForge</td><td class="g"><code>scripts/license-risk-scan.mjs</code></td><td class="g">not a licence</td><td class="g">a Node script; the first line is a shebang</td></tr><tr><td class="g">EperLuo/BAISBench</td><td class="g"><code>model_zoo/AutoBA/src/codellama-main/LICENSE</code></td><td class="g">declaration only</td><td class="g">85 bytes, the whole content is a pointer to a LICENSE file in another repository</td></tr><tr><td class="g">EperLuo/BAISBench</td><td class="g"><code>model_zoo/Biomni/license_info.md</code></td><td class="g">declaration only</td><td class="g">an overview of the licences of the data sources used, not a grant for this code</td></tr><tr><td class="g">Tencent/Tencent-XR-3DGen</td><td class="g"><code>data/openvdb_interface/openvdb/openvdb/openvdb/COPYRIGHT</code></td><td class="g">declaration only</td><td class="g">78 bytes: a COPYRIGHT file holding a copyright notice and an SPDX-License-Identifier tag, no licence text (the MPL-2.0 text it names is in a LICENSE file beside it)</td></tr><tr><td class="g">Tencent/Tencent-XR-3DGen</td><td class="g"><code>data/openvdb_interface/openvdb/openvdb_houdini/openvdb_houdini/COPYRIGHT</code></td><td class="g">declaration only</td><td class="g">78 bytes: a COPYRIGHT file holding a copyright notice and an SPDX-License-Identifier tag, no licence text (the MPL-2.0 text it names is in a LICENSE file beside it)</td></tr><tr><td class="g">Tencent/Tencent-XR-3DGen</td><td class="g"><code>data/openvdb_interface/openvdb/openvdb_maya/openvdb_maya/COPYRIGHT</code></td><td class="g">declaration only</td><td class="g">78 bytes: a COPYRIGHT file holding a copyright notice and an SPDX-License-Identifier tag, no licence text (the MPL-2.0 text it names is in a LICENSE file beside it)</td></tr><tr><td class="g">florinshen/FlashSplat</td><td class="g"><code>LICENSE.md</code></td><td class="g">real licence outside the table</td><td class="g">the Gaussian-Splatting research-only licence of Inria and the Max Planck Institute; a genuine grant, and the only reason this repository counts as unidentified</td></tr><tr><td class="g">pengzy-cosmo/DeepInflation</td><td class="g"><code>data/models/LICENSE</code></td><td class="g">declaration only</td><td class="g">names CC BY-NC-SA 4.0 for the files under data/models/, carries no licence text</td></tr><tr><td class="g">smearle/picbreeder-vlm</td><td class="g"><code>third-party/webneat/jar/LICENSE</code></td><td class="g">real licence outside the table</td><td class="g">a Sun Microsystems binary-code licence; a genuine grant, not in the phrase table</td></tr><tr><td class="g">whfeLingYu/MisKnow-Agent</td><td class="g"><code>deerflow-experiment/LICENSE_HEADER</code></td><td class="g">header template</td><td class="g">89 bytes, two comment lines to be pasted at the top of a source file</td></tr><tr><td class="g">whfeLingYu/MisKnow-Agent</td><td class="g"><code>deerflow-experiment/LICENSE_HEADER_TS</code></td><td class="g">header template</td><td class="g">as above, in TypeScript comment syntax</td></tr><tr><td class="g">whfeLingYu/MisKnow-Agent</td><td class="g"><code>deerflow-experiment/docs/LICENSE_HEADERS.md</code></td><td class="g">not a licence</td><td class="g">documentation explaining how to manage licence headers</td></tr><tr><td class="g">whfeLingYu/MisKnow-Agent</td><td class="g"><code>deerflow-experiment/scripts/license_header.py</code></td><td class="g">not a licence</td><td class="g">a Python script that applies the headers</td></tr></table></div>
+<p><b>And this corrects our prediction's reasoning rather than its verdict.</b> P6 guessed our
+own rung would show up to three repositories resting on files that are not licences. One
+repository — <code>florinshen/FlashSplat</code> — is unidentified, and its file is a
+<i>real</i> licence our phrase table does not hold. At file level session 162's net caught six
+documents, scripts and header templates and six declarations carrying no licence text. At
+repository level it has <b>no false positive at all</b> in this population. The prediction was
+confirmed by a mechanism opposite to the one it imagined, and that is worth more than the tick.</p>
+
+<h2>What was found, in the licences themselves</h2>
+<div class="scroll"><table><tr><th>attribution verdict</th><th class="n">repos</th>
+<th class="n">share</th></tr><tr><td>named</td><td class="n">61</td><td class="n">91.0 %</td></tr><tr><td>no_holder</td><td class="n">4</td><td class="n">6.0 %</td></tr><tr><td>no_copyright_line</td><td class="n">2</td><td class="n">3.0 %</td></tr></table></div>
+<p>Six repositories carry an MIT or BSD file with <b>no licensor at all</b>: four read
+<i>Copyright (c) 2025</i> or <i>Copyright (c) 2026</i> and stop; two carry the licence text with
+no copyright notice anywhere. That is the nearest thing tonight found to the failure we went
+looking for, and it is six, not a rate worth a headline.</p>
+<div class="scroll"><table><tr><th>licence family identified</th><th class="n">repositories</th>
+</tr><tr><td>MIT</td><td class="n">65</td></tr><tr><td>Apache-2.0</td><td class="n">48</td></tr><tr><td>BSD-3-Clause</td><td class="n">3</td></tr><tr><td>AGPL-3.0</td><td class="n">2</td></tr><tr><td>Llama-Community</td><td class="n">1</td></tr><tr><td>GPL-2.0</td><td class="n">1</td></tr><tr><td>MPL-2.0</td><td class="n">1</td></tr><tr><td>GPL-3.0</td><td class="n">1</td></tr></table></div>
+
+<h2>Limits, as written in advance</h2>
+<ul>
+<li><b>File level only.</b> No source-code header is read. Every disagreement number here is a
+lower bound.</li>
+<li><b>Precision over recall, by choice.</b> <i>Not identified</i> means our table did not match;
+it is not a claim that a file is not a licence, and two of the fourteen are real licences.</li>
+<li><b>No legal claim whatsoever.</b> L2 records that a file does not name a holder. What that
+does to a grant is for someone with standing to say, and this practice has none.</li>
+<li><b>The population is inherited</b>, with both of session 141's disclosed defects and session
+162's carried unrepaired: it is the GitHub addresses that answered on 2026-08-31 from abstracts
+advertising automated research, and an age-matched control. It is not GitHub, not research
+software, not open source.</li>
+<li><b>Two days, not a series.</b> Five of these licence files changed content between 09-16 and
+tonight.</li>
+<li><b>No cohort test is reported.</b> None was pre-registered, and at 66 against 39 this design
+cannot resolve the differences it would be testing.</li>
+</ul>
+
+<h2>How to disbelieve this page</h2>
+<p><code>python3 check.py</code> re-derives every number above from the committed evidence,
+re-runs the 100 hand-made cases and the 27 mutations, and cross-checks
+the population against the artifact it audits. It needs no network:
+<b>3777 checks</b>. It was then put to <b>27 deliberate corruptions</b> of this
+artifact's own evidence — a flipped verdict, a moved threshold, a deleted row, a licence text
+injected into the record — and caught <b>27</b> of them.</p>
+
+<p class="note">Method, predictions and kill conditions: <code>PREREGISTRATION.md</code>,
+committed before any repository was contacted, with one dated amendment made before the harvest.
+Evidence: <code>data/</code>. Rules: <code>tools/is-it-a-licence/</code>. Full licence texts are
+third-party material and are not committed; what is committed is each file's path, size and
+digest, its rung verdicts, and at most 200 normalised characters of the files we could not
+identify. Copyright holders' names are not published: where a holder is named, only the fact is
+recorded. The Field · Meridian · 2026-09-18.</p>
+</main></body></html>

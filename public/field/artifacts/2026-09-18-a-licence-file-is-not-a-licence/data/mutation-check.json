@@ -1,0 +1,317 @@
+{
+ "note": "Each rule broken on purpose; a mutation no hand-made case notices is a hole in the case list. Run before any repository blob was read.",
+ "baseline_failures": [],
+ "n_mutants": 27,
+ "n_survived": 1,
+ "expected_survivors": [
+  "norm/no-quote-fold"
+ ],
+ "unexpected_survivors": [],
+ "expected_survivors_that_were_caught": [],
+ "mutants": [
+  {
+   "mutant": "shape/always-true",
+   "n_caught": 4,
+   "caught_by": [
+    "shape/licenses-dir-name",
+    "shape/licensing.py",
+    "shape/README",
+    "shape/relicense.md"
+   ],
+   "survived": false,
+   "expected_to_survive": false
+  },
+  {
+   "mutant": "shape/no-suffix-group",
+   "n_caught": 4,
+   "caught_by": [
+    "shape/LICENSE.md",
+    "shape/LICENCE.txt",
+    "shape/LICENSE-MIT",
+    "shape/license-risk-scan.md"
+   ],
+   "survived": false,
+   "expected_to_survive": false
+  },
+  {
+   "mutant": "shape/case-sensitive",
+   "n_caught": 5,
+   "caught_by": [
+    "shape/LICENSE",
+    "shape/LICENSE.md",
+    "shape/LICENCE.txt",
+    "shape/COPYING",
+    "shape/LICENSE-MIT"
+   ],
+   "survived": false,
+   "expected_to_survive": false
+  },
+  {
+   "mutant": "L0/whitespace-counts",
+   "n_caught": 3,
+   "caught_by": [
+    "L0/empty",
+    "L0/whitespace",
+    "HEAD/reason-empty"
+   ],
+   "survived": false,
+   "expected_to_survive": false
+  },
+  {
+   "mutant": "norm/no-whitespace-collapse",
+   "n_caught": 19,
+   "caught_by": [
+    "L1/mit",
+    "L1/mit-crlf",
+    "L1/mit-curly-quotes",
+    "L1/mit-hard-wrapped",
+    "L1/bsl-en-dash",
+    "L1/epl-em-dash"
+   ],
+   "survived": false,
+   "expected_to_survive": false
+  },
+  {
+   "mutant": "norm/no-lowercase",
+   "n_caught": 27,
+   "caught_by": [
+    "L1/mit",
+    "L1/mit-crlf",
+    "L1/mit-curly-quotes",
+    "L1/mit-hard-wrapped",
+    "L1/bsl-en-dash",
+    "L1/epl-em-dash"
+   ],
+   "survived": false,
+   "expected_to_survive": false
+  },
+  {
+   "mutant": "norm/no-quote-fold",
+   "n_caught": 0,
+   "caught_by": [],
+   "survived": true,
+   "expected_to_survive": true
+  },
+  {
+   "mutant": "norm/no-dash-fold",
+   "n_caught": 2,
+   "caught_by": [
+    "L1/bsl-en-dash",
+    "L1/epl-em-dash"
+   ],
+   "survived": false,
+   "expected_to_survive": false
+  },
+  {
+   "mutant": "norm/no-nbsp-fold",
+   "n_caught": 1,
+   "caught_by": [
+    "L1/mit-nbsp"
+   ],
+   "survived": false,
+   "expected_to_survive": false
+  },
+  {
+   "mutant": "L1/ignore-none-of",
+   "n_caught": 3,
+   "caught_by": [
+    "L1/bsd3",
+    "L1/bsd4",
+    "L1/bsd3-is-not-bsd2"
+   ],
+   "survived": false,
+   "expected_to_survive": false
+  },
+  {
+   "mutant": "L1/ignore-requires-all",
+   "n_caught": 2,
+   "caught_by": [
+    "L1/bsd2",
+    "L1/bsd3"
+   ],
+   "survived": false,
+   "expected_to_survive": false
+  },
+  {
+   "mutant": "L1/prefix-match-only",
+   "n_caught": 14,
+   "caught_by": [
+    "L1/bsd2",
+    "L1/bsd3",
+    "L1/bsd4",
+    "L1/bsd3-is-not-bsd2",
+    "L1/gpl3",
+    "L1/gpl2"
+   ],
+   "survived": false,
+   "expected_to_survive": false
+  },
+  {
+   "mutant": "L1/no-empty-check",
+   "n_caught": 12,
+   "caught_by": [
+    "L1/bsd2",
+    "L1/bsd3",
+    "L1/bsd4",
+    "L1/bsd3-is-not-bsd2",
+    "L1/pointer-only",
+    "L1/spdx-tag-only"
+   ],
+   "survived": false,
+   "expected_to_survive": false
+  },
+  {
+   "mutant": "notice/any-mention-counts",
+   "n_caught": 2,
+   "caught_by": [
+    "L2/mit-boilerplate-is-not-a-notice",
+    "L2/mit-boilerplate-template-is-placeholder"
+   ],
+   "survived": false,
+   "expected_to_survive": false
+  },
+  {
+   "mutant": "notice/never-a-notice",
+   "n_caught": 15,
+   "caught_by": [
+    "L2/mit-named",
+    "L2/mit-placeholder-angle",
+    "L2/mit-placeholder-square",
+    "L2/mit-placeholder-brace",
+    "L2/mit-yyyy-word",
+    "L2/year-only-no-holder"
+   ],
+   "survived": false,
+   "expected_to_survive": false
+  },
+  {
+   "mutant": "placeholder/never-fires",
+   "n_caught": 8,
+   "caught_by": [
+    "L2/mit-placeholder-angle",
+    "L2/mit-placeholder-square",
+    "L2/mit-placeholder-brace",
+    "L2/mit-yyyy-word",
+    "L2/mit-boilerplate-is-not-a-notice",
+    "L2/mit-boilerplate-template-is-placeholder"
+   ],
+   "survived": false,
+   "expected_to_survive": false
+  },
+  {
+   "mutant": "placeholder/bare-word-substring",
+   "n_caught": 1,
+   "caught_by": [
+    "L2/holder-containing-yyyy-is-not-placeholder"
+   ],
+   "survived": false,
+   "expected_to_survive": false
+  },
+  {
+   "mutant": "placeholder/always-fires",
+   "n_caught": 10,
+   "caught_by": [
+    "L2/mit-named",
+    "L2/holder-containing-yyyy-is-not-placeholder",
+    "L2/year-only-no-holder",
+    "L2/one-filled-among-many-wins",
+    "L2/comment-prefixed-line",
+    "L2/range-of-years"
+   ],
+   "survived": false,
+   "expected_to_survive": false
+  },
+  {
+   "mutant": "holder/keeps-years",
+   "n_caught": 1,
+   "caught_by": [
+    "L2/year-only-no-holder"
+   ],
+   "survived": false,
+   "expected_to_survive": false
+  },
+  {
+   "mutant": "holder/whole-line",
+   "n_caught": 1,
+   "caught_by": [
+    "L2/year-only-no-holder"
+   ],
+   "survived": false,
+   "expected_to_survive": false
+  },
+  {
+   "mutant": "L2/named-if-any-copyright-line",
+   "n_caught": 8,
+   "caught_by": [
+    "L2/mit-placeholder-angle",
+    "L2/mit-placeholder-square",
+    "L2/mit-placeholder-brace",
+    "L2/mit-yyyy-word",
+    "L2/year-only-no-holder",
+    "L2/mit-boilerplate-is-not-a-notice"
+   ],
+   "survived": false,
+   "expected_to_survive": false
+  },
+  {
+   "mutant": "L2/scores-every-family",
+   "n_caught": 5,
+   "caught_by": [
+    "L2/year-only-no-holder",
+    "L2/not-applicable-gpl",
+    "L2/not-applicable-apache",
+    "L2/not-applicable-unidentified",
+    "HEAD/gpl-delivers-without-holder"
+   ],
+   "survived": false,
+   "expected_to_survive": false
+  },
+  {
+   "mutant": "L2/placeholder-beats-named",
+   "n_caught": 1,
+   "caught_by": [
+    "L2/one-filled-among-many-wins"
+   ],
+   "survived": false,
+   "expected_to_survive": false
+  },
+  {
+   "mutant": "L3/first-file-only",
+   "n_caught": 1,
+   "caught_by": [
+    "L3/two-voices"
+   ],
+   "survived": false,
+   "expected_to_survive": false
+  },
+  {
+   "mutant": "HEAD/ignores-L2",
+   "n_caught": 1,
+   "caught_by": [
+    "HEAD/mit-template-does-not"
+   ],
+   "survived": false,
+   "expected_to_survive": false
+  },
+  {
+   "mutant": "HEAD/ignores-L1",
+   "n_caught": 3,
+   "caught_by": [
+    "HEAD/mit-template-does-not",
+    "HEAD/pointer-does-not",
+    "HEAD/reason-not-identified"
+   ],
+   "survived": false,
+   "expected_to_survive": false
+  },
+  {
+   "mutant": "APX/drops-family-check",
+   "n_caught": 1,
+   "caught_by": [
+    "APX/not-apache"
+   ],
+   "survived": false,
+   "expected_to_survive": false
+  }
+ ]
+}

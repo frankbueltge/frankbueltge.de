@@ -1,0 +1,431 @@
+{
+ "note": "K1 and K3, run on published reference texts before any repository blob was scored. Neither condition can be reached by a property of a studied repository.",
+ "source": "https://raw.githubusercontent.com/spdx/license-list-data/main/text/",
+ "n_families_in_table": 22,
+ "n_fetched": 22,
+ "fetch_errors": [],
+ "K1_identifier_identifies_the_canon": {
+  "fired": true,
+  "failures": [
+   "GPL-3.0",
+   "GPL-2.0"
+  ],
+  "verdict": "BROKEN \u2014 L1 and L2 suspended"
+ },
+ "K3_placeholder_rule_fires_on_the_MIT_canon": {
+  "fired": false,
+  "mit_copyright_line": [
+   "Copyright (c) <year> <copyright holders>",
+   "The above copyright notice and this permission notice shall be included in all copies or substantial",
+   "EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER"
+  ],
+  "verdict": "passed"
+ },
+ "rows": [
+  {
+   "family": "MIT",
+   "spdx_id": "MIT",
+   "fetched": true,
+   "http": "200",
+   "bytes": 1078,
+   "sha256": "b05785f9f18e6716bab63424b11454513b9943a222595b70411009202fc592b5",
+   "identified_as": [
+    "MIT"
+   ],
+   "identifies_itself": true,
+   "also_identified_as": [],
+   "copyright_lines": [
+    "Copyright (c) <year> <copyright holders>",
+    "The above copyright notice and this permission notice shall be included in all copies or substantial",
+    "EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER"
+   ],
+   "placeholder_fires": true
+  },
+  {
+   "family": "ISC",
+   "spdx_id": "ISC",
+   "fetched": true,
+   "http": "200",
+   "bytes": 737,
+   "sha256": "521c6f0ed8e64736684f89843d16a4df6b4b7449acbcfc6ca6630a3037ca8c53",
+   "identified_as": [
+    "ISC"
+   ],
+   "identifies_itself": true,
+   "also_identified_as": [],
+   "copyright_lines": [
+    "Copyright <year> <owner>",
+    "Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies."
+   ],
+   "placeholder_fires": true
+  },
+  {
+   "family": "BSD-4-Clause",
+   "spdx_id": "BSD-4-Clause",
+   "fetched": true,
+   "http": "200",
+   "bytes": 1618,
+   "sha256": "c80d927f03db7212ba43a869a383e249c19b40859ff0d9e2e2f968e4fdcf005f",
+   "identified_as": [
+    "BSD-4-Clause"
+   ],
+   "identifies_itself": true,
+   "also_identified_as": [],
+   "copyright_lines": [
+    "Copyright (c) <year> <owner>. All rights reserved.",
+    "1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.",
+    "2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution."
+   ],
+   "placeholder_fires": true
+  },
+  {
+   "family": "BSD-3-Clause",
+   "spdx_id": "BSD-3-Clause",
+   "fetched": true,
+   "http": "200",
+   "bytes": 1460,
+   "sha256": "5a93d5831e1297ab10fe643e1a631e83be392896da14ee2951285a79012df69d",
+   "identified_as": [
+    "BSD-3-Clause"
+   ],
+   "identifies_itself": true,
+   "also_identified_as": [],
+   "copyright_lines": [
+    "Copyright (c) <year> <owner>.",
+    "1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.",
+    "2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution."
+   ],
+   "placeholder_fires": true
+  },
+  {
+   "family": "BSD-2-Clause",
+   "spdx_id": "BSD-2-Clause",
+   "fetched": true,
+   "http": "200",
+   "bytes": 1267,
+   "sha256": "f32fb3b417a194167cfad068223fc975ba96c5960513a10f66a3c28720aec1df",
+   "identified_as": [
+    "BSD-2-Clause"
+   ],
+   "identifies_itself": true,
+   "also_identified_as": [],
+   "copyright_lines": [
+    "Copyright (c) <year> <owner>",
+    "1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.",
+    "2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution."
+   ],
+   "placeholder_fires": true
+  },
+  {
+   "family": "Zlib",
+   "spdx_id": "Zlib",
+   "fetched": true,
+   "http": "200",
+   "bytes": 838,
+   "sha256": "bfb1112d49db5b1daecdfef24bd7e2f3ea0bafb33aa67aa0ab51e2bf8407c03d",
+   "identified_as": [
+    "Zlib"
+   ],
+   "identifies_itself": true,
+   "also_identified_as": [],
+   "copyright_lines": [],
+   "placeholder_fires": false
+  },
+  {
+   "family": "Apache-2.0",
+   "spdx_id": "Apache-2.0",
+   "fetched": true,
+   "http": "200",
+   "bytes": 10280,
+   "sha256": "074e6e32c86a4c0ef8b3ed25b721ca23aca83df277cd88106ef7177c354615ff",
+   "identified_as": [
+    "Apache-2.0"
+   ],
+   "identifies_itself": true,
+   "also_identified_as": [],
+   "copyright_lines": [
+    "\"Licensor\" shall mean the copyright owner or entity authorized by the copyright owner that is granting the License.",
+    "\"Work\" shall mean the work of authorship, whether in Source or Object form, made available under the License, as indicated by a copyright notice that is included in or attached to the work (an example is provided in the Appendix below).",
+    "\"Contribution\" shall mean any work of authorship, including the original version of the Work and any modifications or additions to that Work or Derivative Works thereof, that is intentionally submitted to Licensor for inclusion in the Work by the copyright owner or by an individual or Legal Entity authorized to submit on behalf of the copyright owner. For the purposes of this definition, \"submitted\" means any form of electronic, verbal, or written communication sent to the Licensor or its representatives, including but not limited to communication on electronic mailing lists, source code control systems, and issue tracking systems that are managed by, or on behalf of, the Licensor for the purpose of discussing and improving the Work, but excluding communication that is conspicuously marked or otherwise designated in writing by the copyright owner as \"Not a Contribution.\""
+   ],
+   "placeholder_fires": true
+  },
+  {
+   "family": "GPL-3.0",
+   "spdx_id": "GPL-3.0-only",
+   "fetched": true,
+   "http": "200",
+   "bytes": 34674,
+   "sha256": "fb981668c18a279e285fc4d83fba1e836cc84dd4daa73c9697d3cfd2d8aca6e0",
+   "identified_as": [],
+   "identifies_itself": false,
+   "also_identified_as": [],
+   "copyright_lines": [
+    "Copyright \u00a9 2007 Free Software Foundation, Inc. <https://fsf.org/>",
+    "Developers that use the GNU GPL protect your rights with two steps: (1) assert copyright on the software, and (2) offer you this License giving you legal permission to copy, distribute and/or modify it.",
+    "\u201cCopyright\u201d also means copyright-like laws that apply to other kinds of works, such as semiconductor masks."
+   ],
+   "placeholder_fires": true
+  },
+  {
+   "family": "GPL-2.0",
+   "spdx_id": "GPL-2.0-only",
+   "fetched": true,
+   "http": "200",
+   "bytes": 17337,
+   "sha256": "aaf135472f81c5b4a0dca9367e5bb5e9750032b5bebe5442b36e4c0a47430df3",
+   "identified_as": [],
+   "identifies_itself": false,
+   "also_identified_as": [],
+   "copyright_lines": [
+    "Copyright (C) 1989, 1991 Free Software Foundation, Inc.",
+    "We protect your rights with two steps: (1) copyright the software, and (2) offer you this license which gives you legal permission to copy, distribute and/or modify the software.",
+    "0. This License applies to any program or other work which contains a notice placed by the copyright holder saying it may be distributed under the terms of this General Public License. The \"Program\", below, refers to any such program or work, and a \"work based on the Program\" means either the Program or any derivative work under copyright law: that is to say, a work containing the Program or a portion of it, either verbatim or with modifications and/or translated into another language. (Hereinafter, translation is included without limitation in the term \"modification\".) Each licensee is addressed as \"you\"."
+   ],
+   "placeholder_fires": true
+  },
+  {
+   "family": "LGPL-3.0",
+   "spdx_id": "LGPL-3.0-only",
+   "fetched": true,
+   "http": "200",
+   "bytes": 42098,
+   "sha256": "996af0513df21f7496288951c41428a03c174e9e4a9d63665c57d670f845ccb1",
+   "identified_as": [
+    "LGPL-3.0"
+   ],
+   "identifies_itself": true,
+   "also_identified_as": [],
+   "copyright_lines": [
+    "Copyright (C) 2007 Free Software Foundation, Inc. <http://fsf.org/>",
+    "c) For a Combined Work that displays copyright notices during execution, include the copyright notice for the Library among these notices, as well as a reference directing the user to the copies of the GNU GPL and this license document.",
+    "Copyright \u00a9 2007 Free Software Foundation, Inc. <http://fsf.org/>"
+   ],
+   "placeholder_fires": true
+  },
+  {
+   "family": "LGPL-2.1",
+   "spdx_id": "LGPL-2.1-only",
+   "fetched": true,
+   "http": "200",
+   "bytes": 26001,
+   "sha256": "5749785c8bdefafcb5d798270ed0a967036fe2ca63dcedade1627565dfef81d2",
+   "identified_as": [
+    "LGPL-2.1"
+   ],
+   "identifies_itself": true,
+   "also_identified_as": [],
+   "copyright_lines": [
+    "Copyright (C) 1991, 1999 Free Software Foundation, Inc.",
+    "We protect your rights with a two-step method: (1) we copyright the library, and (2) we offer you this license, which gives you legal permission to copy, distribute and/or modify the library.",
+    "0. This License Agreement applies to any software library or other program which contains a notice placed by the copyright holder or other authorized party saying it may be distributed under the terms of this Lesser General Public License (also called \"this License\"). Each licensee is addressed as \"you\"."
+   ],
+   "placeholder_fires": false
+  },
+  {
+   "family": "AGPL-3.0",
+   "spdx_id": "AGPL-3.0-only",
+   "fetched": true,
+   "http": "200",
+   "bytes": 34020,
+   "sha256": "d8a6cc31abc16b6748c7a21f21611f5a1ec33f67d22ca23d7da1c19b95496bee",
+   "identified_as": [
+    "AGPL-3.0"
+   ],
+   "identifies_itself": true,
+   "also_identified_as": [],
+   "copyright_lines": [
+    "Copyright (C) 2007 Free Software Foundation, Inc. <http://fsf.org/>",
+    "Developers that use our General Public Licenses protect your rights with two steps: (1) assert copyright on the software, and (2) offer you this License which gives you legal permission to copy, distribute and/or modify the software.",
+    "\"Copyright\" also means copyright-like laws that apply to other kinds of works, such as semiconductor masks."
+   ],
+   "placeholder_fires": true
+  },
+  {
+   "family": "MPL-2.0",
+   "spdx_id": "MPL-2.0",
+   "fetched": true,
+   "http": "200",
+   "bytes": 16727,
+   "sha256": "66a3107d5ad6a058aab753eaac2047ccb2ed0e39465dd0fe5844da3e300d5172",
+   "identified_as": [
+    "MPL-2.0"
+   ],
+   "identifies_itself": true,
+   "also_identified_as": [],
+   "copyright_lines": [
+    "applicable copyright doctrines of fair use, fair dealing, or other",
+    "(including copyright notices, patent notices, disclaimers of warranty,",
+    "You may add additional accurate notices of copyright ownership."
+   ],
+   "placeholder_fires": false
+  },
+  {
+   "family": "EPL-2.0",
+   "spdx_id": "EPL-2.0",
+   "fetched": true,
+   "http": "200",
+   "bytes": 14020,
+   "sha256": "61616a4066701bc7888ad910de1633dbc55eb4d4d30d930feef55afb9492e33c",
+   "identified_as": [
+    "EPL-2.0"
+   ],
+   "identifies_itself": true,
+   "also_identified_as": [],
+   "copyright_lines": [
+    "a) Subject to the terms of this Agreement, each Contributor hereby grants Recipient a non-exclusive, worldwide, royalty-free copyright license to reproduce, prepare Derivative Works of, publicly display, publicly perform, Distribute and sublicense the Contribution of such Contributor, if any, and such Derivative Works.",
+    "d) Each Contributor represents that to its knowledge it has sufficient copyright rights in its Contribution, if any, to grant the copyright license set forth in this Agreement.",
+    "3.3 Contributors may not remove or alter any copyright, patent, trademark, attribution notices, disclaimers of warranty, or limitations of liability (\u2018notices\u2019) contained within the Program from any copy of the Program which they Distribute, provided that Contributors may add their own appropriate notices."
+   ],
+   "placeholder_fires": false
+  },
+  {
+   "family": "BSL-1.0",
+   "spdx_id": "BSL-1.0",
+   "fetched": true,
+   "http": "200",
+   "bytes": 1338,
+   "sha256": "84c6ef3ea9e3254a54d0acf5d3e0c61ae011b8fef7dd6940591cf060e6380a8f",
+   "identified_as": [
+    "BSL-1.0"
+   ],
+   "identifies_itself": true,
+   "also_identified_as": [],
+   "copyright_lines": [
+    "The copyright notices in the Software and this entire statement, including the above license grant, this restriction and the following disclaimer, must be included in all copies of the Software, in whole or in part, and all derivative works of the Software, unless such copies or derivative works are solely in the form of machine-executable object code generated by a source language processor.",
+    "THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE COPYRIGHT HOLDERS OR ANYONE DISTRIBUTING THE SOFTWARE BE LIABLE FOR ANY DAMAGES OR OTHER LIABILITY, WHETHER IN CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE."
+   ],
+   "placeholder_fires": false
+  },
+  {
+   "family": "Unlicense",
+   "spdx_id": "Unlicense",
+   "fetched": true,
+   "http": "200",
+   "bytes": 1211,
+   "sha256": "0bdebfeda07d45dada625ae1317c6f833186e798b171d0db640bcf32e92a8240",
+   "identified_as": [
+    "Unlicense"
+   ],
+   "identifies_itself": true,
+   "also_identified_as": [],
+   "copyright_lines": [
+    "In jurisdictions that recognize copyright laws, the author or authors of this software dedicate any and all copyright interest in the software to the public domain. We make this dedication for the benefit of the public at large and to the detriment of our heirs and",
+    "successors. We intend this dedication to be an overt act of relinquishment in perpetuity of all present and future rights to this software under copyright law."
+   ],
+   "placeholder_fires": false
+  },
+  {
+   "family": "CC0-1.0",
+   "spdx_id": "CC0-1.0",
+   "fetched": true,
+   "http": "200",
+   "bytes": 7048,
+   "sha256": "a2010f343487d3f7618affe54f789f5487602331c0a8d03f49e9a7c547cf0499",
+   "identified_as": [
+    "CC0-1.0"
+   ],
+   "identifies_itself": true,
+   "also_identified_as": [],
+   "copyright_lines": [
+    "exclusive Copyright and Related Rights (defined below) upon the creator",
+    "is an owner of Copyright and Related Rights in the Work, voluntarily",
+    "terms, with knowledge of his or her Copyright and Related Rights in the"
+   ],
+   "placeholder_fires": false
+  },
+  {
+   "family": "CC-BY-NC-SA-4.0",
+   "spdx_id": "CC-BY-NC-SA-4.0",
+   "fetched": true,
+   "http": "200",
+   "bytes": 19018,
+   "sha256": "600ca4e25fe11762b75a97e714707fab48bb778374e92d24c6ca068791661c11",
+   "identified_as": [
+    "CC-BY-NC-SA-4.0"
+   ],
+   "identifies_itself": true,
+   "also_identified_as": [],
+   "copyright_lines": [
+    "Creative Commons public licenses provide a standard set of terms and conditions that creators and other rights holders may use to share original works of authorship and other material subject to copyright and certain other rights specified in the public license below. The following considerations are for informational purposes only, are not exhaustive, and do not form part of our licenses.",
+    "Considerations for licensors: Our public licenses are intended for use by those authorized to give the public permission to use material in ways otherwise restricted by copyright and certain other rights. Our licenses are irrevocable. Licensors should read and understand the terms and conditions of the license they choose before applying it. Licensors should also secure all rights necessary before applying our licenses so that the public can reuse the material as expected. Licensors should clearly mark any material not subject to the license. This includes other CC-licensed material, or material used under an exception or limitation to copyright. More considerations for licensors.",
+    "Considerations for the public: By using one of our public licenses, a licensor grants the public permission to use the licensed material under specified terms and conditions. If the licensor\u2019s permission is not necessary for any reason\u2013for example, because of any applicable exception or limitation to copyright\u2013then that use is not regulated by the license. Our licenses grant only permissions under copyright and certain other rights that a licensor has authority to grant. Use of the licensed material may still be restricted for other reasons, including because others have copyright or other rights in the material. A licensor may make special requests, such as asking that all changes be marked or described. Although not required by our licenses, you are encouraged to respect those requests where reasonable. More considerations for the public."
+   ],
+   "placeholder_fires": false
+  },
+  {
+   "family": "CC-BY-NC-4.0",
+   "spdx_id": "CC-BY-NC-4.0",
+   "fetched": true,
+   "http": "200",
+   "bytes": 17649,
+   "sha256": "cc97a2c4ff7723a1f25179dc7c18f676fa84191bbb36ea7d0061acaf3c102559",
+   "identified_as": [
+    "CC-BY-NC-4.0"
+   ],
+   "identifies_itself": true,
+   "also_identified_as": [],
+   "copyright_lines": [
+    "Creative Commons public licenses provide a standard set of terms and conditions that creators and other rights holders may use to share original works of authorship and other material subject to copyright and certain other rights specified in the public license below. The following considerations are for informational purposes only, are not exhaustive, and do not form part of our licenses.",
+    "Considerations for licensors: Our public licenses are intended for use by those authorized to give the public permission to use material in ways otherwise restricted by copyright and certain other rights. Our licenses are irrevocable. Licensors should read and understand the terms and conditions of the license they choose before applying it. Licensors should also secure all rights necessary before applying our licenses so that the public can reuse the material as expected. Licensors should clearly mark any material not subject to the license. This includes other CC-licensed material, or material used under an exception or limitation to copyright. More considerations for licensors.",
+    "Considerations for the public: By using one of our public licenses, a licensor grants the public permission to use the licensed material under specified terms and conditions. If the licensor\u2019s permission is not necessary for any reason\u2013for example, because of any applicable exception or limitation to copyright\u2013then that use is not regulated by the license. Our licenses grant only permissions under copyright and certain other rights that a licensor has authority to grant. Use of the licensed material may still be restricted for other reasons, including because others have copyright or other rights in the material. A licensor may make special requests, such as asking that all changes be marked or described. Although not required by our licenses, you are encouraged to respect those requests where reasonable. More considerations for the public."
+   ],
+   "placeholder_fires": false
+  },
+  {
+   "family": "CC-BY-SA-4.0",
+   "spdx_id": "CC-BY-SA-4.0",
+   "fetched": true,
+   "http": "200",
+   "bytes": 18375,
+   "sha256": "cde7883b9050a1104f4ac19a1572aafd6e5d7323b68351aaf51fbf4beba54966",
+   "identified_as": [
+    "CC-BY-SA-4.0"
+   ],
+   "identifies_itself": true,
+   "also_identified_as": [],
+   "copyright_lines": [
+    "Creative Commons public licenses provide a standard set of terms and conditions that creators and other rights holders may use to share original works of authorship and other material subject to copyright and certain other rights specified in the public license below. The following considerations are for informational purposes only, are not exhaustive, and do not form part of our licenses.",
+    "Considerations for licensors: Our public licenses are intended for use by those authorized to give the public permission to use material in ways otherwise restricted by copyright and certain other rights. Our licenses are irrevocable. Licensors should read and understand the terms and conditions of the license they choose before applying it. Licensors should also secure all rights necessary before applying our licenses so that the public can reuse the material as expected. Licensors should clearly mark any material not subject to the license. This includes other CC-licensed material, or material used under an exception or limitation to copyright. More considerations for licensors.",
+    "Considerations for the public: By using one of our public licenses, a licensor grants the public permission to use the licensed material under specified terms and conditions. If the licensor\u2019s permission is not necessary for any reason\u2013for example, because of any applicable exception or limitation to copyright\u2013then that use is not regulated by the license. Our licenses grant only permissions under copyright and certain other rights that a licensor has authority to grant. Use of the licensed material may still be restricted for other reasons, including because others have copyright or other rights in the material. A licensor may make special requests, such as asking that all changes be marked or described."
+   ],
+   "placeholder_fires": false
+  },
+  {
+   "family": "CC-BY-4.0",
+   "spdx_id": "CC-BY-4.0",
+   "fetched": true,
+   "http": "200",
+   "bytes": 17023,
+   "sha256": "d557539df68e771cc1eedcc91d13f70fca930e508d11eedcafa4b15db49e3744",
+   "identified_as": [
+    "CC-BY-4.0"
+   ],
+   "identifies_itself": true,
+   "also_identified_as": [],
+   "copyright_lines": [
+    "Creative Commons public licenses provide a standard set of terms and conditions that creators and other rights holders may use to share original works of authorship and other material subject to copyright and certain other rights specified in the public license below. The following considerations are for informational purposes only, are not exhaustive, and do not form part of our licenses.",
+    "Considerations for licensors: Our public licenses are intended for use by those authorized to give the public permission to use material in ways otherwise restricted by copyright and certain other rights. Our licenses are irrevocable. Licensors should read and understand the terms and conditions of the license they choose before applying it. Licensors should also secure all rights necessary before applying our licenses so that the public can reuse the material as expected. Licensors should clearly mark any material not subject to the license. This includes other CC-licensed material, or material used under an exception or limitation to copyright. More considerations for licensors.",
+    "Considerations for the public: By using one of our public licenses, a licensor grants the public permission to use the licensed material under specified terms and conditions. If the licensor\u2019s permission is not necessary for any reason\u2013for example, because of any applicable exception or limitation to copyright\u2013then that use is not regulated by the license. Our licenses grant only permissions under copyright and certain other rights that a licensor has authority to grant. Use of the licensed material may still be restricted for other reasons, including because others have copyright or other rights in the material. A licensor may make special requests, such as asking that all changes be marked or described. Although not required by our licenses, you are encouraged to respect those requests where reasonable. More considerations for the public."
+   ],
+   "placeholder_fires": false
+  },
+  {
+   "family": "WTFPL",
+   "spdx_id": "WTFPL",
+   "fetched": true,
+   "http": "200",
+   "bytes": 432,
+   "sha256": "13d8825a59e5e546d41e8711405d0f335a9934362a47c04a3b4280fa7932dc4a",
+   "identified_as": [
+    "WTFPL"
+   ],
+   "identifies_itself": true,
+   "also_identified_as": [],
+   "copyright_lines": [
+    "Copyright (C) 2004 Sam Hocevar <sam@hocevar.net>"
+   ],
+   "placeholder_fires": false
+  }
+ ]
+}

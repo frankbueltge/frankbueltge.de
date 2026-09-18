@@ -3482,3 +3482,81 @@ built tonight, so the rate limit is not one we set. That is 2026-09-14 reproduce
 against our open question 46 rather than asked of you.
 
 **Status:** report · no answer required · nothing owed from your side
+
+---
+
+## Response — 2026-09-18 (session 163) — we opened the licence files we had only counted, and got our own rule wrong three times doing it
+
+**Where it is.** `artifacts/2026-09-18-a-licence-file-is-not-a-licence/` — a self-contained page, a
+five-minute summary, a pre-registration **committed in its own commit before any repository was
+contacted** with one dated amendment made before the harvest, `data/`, seven scripts, and a
+`check.py` of **3,777 checks** that needs no network and was put to **27 deliberate corruptions** of
+its own evidence, all caught.
+
+**Why a session between cycles, decided here.** Cycle 003 is presented from all three sides,
+`cycle.json` still reads cycle 3 *working*, and turning it is yours or a site session's act, never a
+practice's. This is not a sixth cycle-003 session: it takes the **counter-measurement remit**, which
+returned with cycle 003 by the terms of your decision of 2026-09-03, and turns it on the headline
+this practice published two days ago.
+
+**The question, and whose claim was under test — ours, again, and two days old.** On 2026-09-16 we
+reported that **78.6 %** of the automation cohort ships a licence file, and called it good news. The
+rung behind that number is one line: it matches a file *name* and never opens the file. It is the
+same defect, one rung up, that 09-16 filed against session 141 — a presence check answers *yes* for
+a container. So we read all **156** licence-shaped files in the **105** repositories that number was
+computed over, by their contents, on four mechanical rungs. **No rule calls a model.**
+
+**The answer is against our suspicion for the second night running. The licences are real.**
+**100 of 105** hold a grant this instrument identifies and, where the licence asks for one, a named
+licensor. **All six predictions confirmed** — written generously on purpose, because two days ago we
+lost three by assuming other people's work was thinner than it is. The template failure we went
+looking for is not there: in the families where the copyright line is meant to be filled, **0 of 67**
+leave it unfilled. The nearest thing to a failure is six repositories whose licence names no holder
+at all.
+
+**Which makes cycle 001's sentence sharper rather than softer.** 09-16 found 32 of 141 repositories
+with source code and no licence file anywhere. Tonight says that where consent is given it is given
+properly. **The failure is not a sloppy grant, it is an absent one — consent is binary.**
+
+**The sentence we would most like you to argue with: we got our own rule wrong three times in one
+night, and the apparatus caught none of them.** The first run of this measurement read **99.0 %**
+and 67 of 67 named. The rule counted any line carrying the word *copyright* as a copyright notice —
+including MIT's own boilerplate, *"The above copyright notice and this permission notice shall be
+included in all copies"* — so every MIT file scored *named* whether its real notice was filled in or
+not. **100 hand-made cases and 27 deliberate mutations of the rules all passed over it.** What
+caught it was disbelieving a result of 67 out of 67. Two more followed the same way, both in the
+Apache-2.0 text: a wrapped line that *begins* "copyright notice that is included in or attached to
+the work", and section 4(c)'s list marker `(c) You must retain…` read as the copyright symbol.
+Neither of those changed a scored number; the first changed the headline by **3.8 points in the
+flattering direction**. The defective run is kept beside the artifact and nothing was deleted.
+
+**Two things that went right, and they are the only two.** An amendment struck Apache-2.0 from the
+scored set **before the harvest**, because shipping its appendix reading `Copyright [yyyy] [name of
+copyright owner]` is the correct way to apply it — **28 of 48** Apache repositories here do exactly
+that. Without it this page would have reported **21.6 %** of repositories carrying an unfilled
+placeholder where a licensor should be, every one of them correctly licensed: a convention published
+as an absence. And for the first time in six sessions **a kill condition fired where it was meant
+to** — all three were set on published reference texts, and one caught our rule excluding the
+canonical GPLv3 text from its own family because that text names the Affero licence in section 13.
+
+**A correction we went looking for and did not find, reported because looking is part of the
+record.** 97 of 105 repositories hold an identified licence *at the root*; for eight the only licence
+in the tree is below it, in a vendored directory. For cohort A that restates 78.6 % (a licence file
+anywhere) as **73.8 %** (identified, at the root). We expected this to collapse 09-16's comparison
+with the 73.1 % benchmark. **It does not:** that study counts tree-wide too — its authors "relied on
+the GitHub REST APIs for Git trees to collect all files, directories, and extensions", and their
+directory table counts `workflows` at 77.3 %, which exists only inside `.github`. Matched, and it
+stands.
+
+**Decided here, under your standing rule of 2026-07-17**, nothing in this file being newer than your
+direction of 2026-09-03: that this session happen between cycles; its question; the population
+inherited unrepaired from sessions 141 and 162 with their disclosed defects carried; the model-free
+instrument; the amendment; and the handling of three defects found in our own rule after the data
+was in.
+
+**One thing you may want to know, not a request.** The arXiv programming interface answered **406**
+to a search from this session's egress while arxiv.org answered 200 to the same paper. That is the
+fourth consecutive session in which that interface has refused this practice and the website has
+not. Filed against our open question 46 rather than asked of you.
+
+**Status:** report · no answer required · nothing owed from your side
