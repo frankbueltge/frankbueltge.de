@@ -43,8 +43,8 @@
       },
       {
         "file": "src/content/studio/works/*/meta.json",
-        "sha256": "a67fde332ef9dcef",
-        "files": 24
+        "sha256": "b266f1f84dd18868",
+        "files": 25
       },
       {
         "file": "src/data/nightly/works/*/meta.json",
@@ -57,14 +57,14 @@
       }
     ],
     "counts": {
-      "nodes": 413,
-      "edges": 364,
+      "nodes": 414,
+      "edges": 365,
       "nodesByKind": {
         "decision": 124,
         "encounter": 6,
         "neighbor": 115,
         "practice": 9,
-        "practice-work": 125,
+        "practice-work": 126,
         "receiver": 8,
         "work": 26
       },
@@ -72,7 +72,7 @@
         "addresses": 8,
         "concerns": 2,
         "door": 5,
-        "made-by": 125,
+        "made-by": 126,
         "neighbor-of": 116,
         "participates": 17,
         "touches": 91
@@ -4607,6 +4607,21 @@
       "medium": "One self-contained HTML surface, offline, one file, no library, no external asset, no network request of any kind. The central figure is a wall of running text at one character to the unit: every deletion note that kept a copy of the page it deleted, laid out end to end in the order the deletions happened, 1 600 characters to the line and 706 lines deep, dark where the page survives whole, grey where the software cut it, red-brown where the note's own 255-character ceiling cut it mid-word. Nothing in the wall is readable, and that is the work's decision rather than the archive's. Below it: two shares plotted year by year, the share of deletions that kept a copy against the share naming a published code, which change places between 2007 and 2008; the note-length histogram with its cliff at 255; forty-four titles the wiki emptied most often, one mark per emptying on a 2004-2026 rule, with the seal drawn at the day it was applied and the name printed only where an article stands at that title today. With a script the reader points at any block in the wall and it reports its length, its state and its year, or lights one whole year inside the wall; without one, the wall stands complete and every number is in the served text."
     },
     {
+      "id": "practice-work:studio/2026-09-18-hours-that-do-not-count",
+      "kind": "practice-work",
+      "label": "THE HOURS THAT DO NOT COUNT",
+      "slug": "2026-09-18-hours-that-do-not-count",
+      "practiceId": "ensemble",
+      "date": "2026-09-18",
+      "href": "/studio/works/2026-09-18-hours-that-do-not-count",
+      "source": {
+        "file": "src/content/studio/works/2026-09-18-hours-that-do-not-count/meta.json",
+        "quote": "\"title\": \"THE HOURS THAT DO NOT COUNT\""
+      },
+      "embodies": "A LAW DEFINES A QUANTITY THE RECORD CANNOT CARRY. Directive 2008/50/EC, Annex I Section A, sets the minimum data capture for nitrogen dioxide at 90 per cent and then says, in the same annex: the requirements for minimum data capture and time coverage do not include losses of data due to the regular calibration or the normal maintenance of the instrumentation. To compute that share you must be able to separate one class of absence from the rest. THE PUBLISHED RECORD HAS NO FIELD THAT DOES SO. An hour with no value looks exactly like an hour with no value. 415 stations published 3 498 971 hourly values for 2024 and 78 162 hours have none - 2.18 per cent of the hours inside the stations' own reporting spans, 4.02 per cent of the calendar year - in 46 181 separate holes of which 41 879 are exactly one hour long, commonest at 01:00 and rarest at 06:00. In 8 774 of the year's 8 784 hours at least one German station published nothing; the ten complete hours are the year's first and nine in the last eleven days of December. 410 of the 415 stations have at least one hole. AND THE SAME RECORD HOLDS ELEVEN HOURS ABOVE THE 200 MICROGRAM HOURLY LIMIT IN THE WHOLE COUNTRY, all at one station, against an allowance of eighteen: 7 106 unmeasured hours for every hour over the limit. A SECOND ABSENCE IS INSIDE THE VALUES. 249 of the 415 stations publish whole numbers only and six of the seventeen networks publish no tenth anywhere, so a change smaller than one microgram cannot be written down: the longest run of the identical value in the year is 332 hours, every run of twelve hours or more sits at 8 microgram or below, and matched on a station's own annual mean a whole-number station in the cleanest band spends 941.6 hours a year inside a run of 24 or more identical values against 57.0 for a tenths station in comparable air. The change is not missing from the air; it is missing from the record, and which it is depends on which federal state the station stands in. A THIRD IS IN THE REGISTER: nine stations where the list and the archive disagree about when they existed, five of them listed as beginning on 1 January 2026 while the archive holds a nearly complete 2024. ASKED A SECOND TIME THE ARCHIVE AGREES WITH ITSELF - all 147 675 published daily maxima equal the largest hourly value of their day, none higher, none lower - AND DISCLOSES A RULE NOBODY WROTE DOWN: from eighteen hours upward, exactly three quarters of a day, every one of 147 545 station-days carries a maximum without a single exception; below eighteen the rule holds in neither direction, 130 days carry one anyway, one of them built on four hours, and nothing in the published number says which it stands on.",
+      "medium": "One self-contained HTML surface, offline, one file, no library, no external asset, no network request of any kind. The year 2024 as a wall: 366 days across, twenty-four hours of the day down, and ink only where at least one air-quality station in Germany published no value for that hour, the cell darkening with the number of stations silent at once. The measured year - all 3 498 971 values of it - is the paper. With a script the same grid takes two further readings of the same year (hours inside a run of 24 or more identical values; hours in which a station was not yet reporting or no longer) and reads back the date, the hour and the count under the pointer. Below the wall: the clock of missing hours by hour of the day, the run-length histogram, every station as a tick against the directive's 90 per cent line, the fourteen longest holes, the resolution table, the register disagreements, and the second door."
+    },
+    {
       "id": "receiver:center-for-humane-technology",
       "kind": "receiver",
       "label": "Center for Humane Technology",
@@ -6456,6 +6471,15 @@
       "source": {
         "file": "src/content/studio/works/2026-09-15-content-was/meta.json",
         "quote": "\"date\": \"2026-09-15\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:studio/2026-09-18-hours-that-do-not-count",
+      "to": "practice:ensemble",
+      "source": {
+        "file": "src/content/studio/works/2026-09-18-hours-that-do-not-count/meta.json",
+        "quote": "\"date\": \"2026-09-18\""
       }
     },
     {

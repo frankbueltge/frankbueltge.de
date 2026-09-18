@@ -3680,3 +3680,81 @@ still reads cycle 3, `working` — not ours to turn, and this was not a sixth cy
 — Ensemble, session 137, 2026-09-15
 
 ---
+
+## Ensemble — 2026-09-18 (session 138) — A law that defines a number the record it produces cannot carry
+
+**Request:** none. **Status:** a statement, one finding that is about records rather than about us, and three decisions taken here.
+
+### The work
+
+`works/2026-09-18-hours-that-do-not-count/` — **THE HOURS THAT DO NOT COUNT**. One self-contained page, no network, no library, opens from
+a filesystem; `SUMMARY.md` is the five-minute read; `verify.mjs` runs **80 checks** in a real browser with scripting off and on, network
+denied in both.
+
+Every hourly nitrogen-dioxide value the German federal air-data interface publishes for **2024** was read: **415 stations, 3 498 971
+values, 3 577 133 station-hours** inside the stations' own reporting spans, nothing sampled, **35 requests** twelve seconds apart, the
+host's `robots.txt` read before the first one. The form is **the year with ink only where something is absent** — 366 days across,
+twenty-four hours of the day down, each cell darkening with the number of stations silent at once. The measured year is the paper.
+
+### The finding, and it is about what a record can express
+
+**78 162 hours have no value**, in **46 181 separate holes of which 41 879 are exactly one hour** — commonest at 01:00, rarest at 06:00.
+Directive 2008/50/EC, Annex I Section A, sets the minimum data capture for nitrogen dioxide at 90 per cent and then says, in the same
+annex, that the requirement *does not include losses of data due to the regular calibration or the normal maintenance of the
+instrumentation*. To compute that share you must be able to separate one class of absence from the rest. **The published record has no
+field that does so.** An hour with no value looks exactly like an hour with no value. So the number the directive defines cannot be
+computed from the record the directive produces, by anyone who is not inside the network. We assert no cause for the 01:00 peak, and the
+page says in its own section that it asserts none: the obvious reading is one of several, and the record decides between them for nobody.
+
+Two more absences sit in the same year. **A change too small to write down:** 249 of the 415 stations publish whole numbers only and six
+of the seventeen networks publish no tenth anywhere; matched on a station's own annual mean, a whole-number station in the cleanest band
+spends **941.6 hours a year** inside a run of ≥24 identical values against **57.0** for a tenths station in comparable air. **And a station
+that is not there:** nine stations where the register and the archive disagree about when they existed, five of them listed as beginning on
+**1 January 2026** while the archive holds a nearly complete 2024 for them. Both columns from the same interface on the same day.
+
+And a number that lands next to all of it: the whole country holds **11 hours above the 200 µg/m³ hourly limit** in 2024, all at one
+station, against an allowance of eighteen — **7 106 unmeasured hours for every hour over the limit**.
+
+### Asking the same archive twice, which corroborated rather than caught it
+
+The daily-average scope serves nothing for NO₂ (it returns 388 stations for PM10 and zero for NO₂), so the second door was the daily
+maximum of the hourly values. **All 147 675 published maxima equal the largest hourly value the first door shows for their day** — none
+higher, none lower, and no day carries a maximum without hours behind it. What it did disclose is a rule nobody wrote down: **from eighteen
+hours upward, exactly three quarters of a day, every one of 147 545 station-days carries a maximum without a single exception**, and below
+eighteen it holds in neither direction — 130 days carry one anyway, one built on **four hours**, and 688 days with hours carry none.
+Nothing in the published number says which it stands on. That is your Atelier's rule about denominators, arriving from a direction nobody
+aimed at it.
+
+### The moment the night nearly published the opposite of the truth
+
+For most of the harvest the per-window arithmetic came back *exactly* 410 × 336 — a perfect grid — and the premise looked dead enough to
+write "this record has no holes". The Field's counsel of this morning is what stopped it: when a result comes back perfect, treat the
+perfection as the finding. The windows count only the stations that appear in them, so a station down for a whole window vanishes from the
+denominator instead of showing as absence. The holes were there; the counter was the artefact. It is recorded here because the wrong
+version was the more surprising headline.
+
+### Three decisions taken here rather than asked
+
+1. **No cause is inferred anywhere on the page**, and a section says so. Naming the obvious reading of a 01:00 peak would have turned a
+   finding about a record format into a claim about an agency's conduct, which the record does not support and press-law hygiene forbids.
+2. **Two Atlas neighbours were opened and then dropped.** Forensic Architecture's *Cloud Studies* page served no content without its
+   scripts, and Rhizome's ArtBase record for Andrea Polli's *Atmospherics/Weather Works* carries the work's name and year but not the text
+   of its descriptions. Your direction of 2026-09-07 says a work cited from a sentence is not a work looked at, so both are recorded in
+   `meta.json` as tried and unused rather than quietly cited. The two that were looked at are Open-weather's *The Year of Weather* and
+   *Garden of Eden*; *The Library of Missing Datasets* is named and deliberately not answered a fifth time.
+3. **The stuck-instrument reading was inverted rather than dropped.** We went looking for dead analysers and the data says something else:
+   every long run of the identical value in the country sits at 8 µg/m³ or below, and the runs track the record's resolution rather than
+   the instrument. It is published as the negative result it is, with what the comparison is *not* controlled on stated beside it.
+
+### Housekeeping
+
+Your build-gate letter of **09-17** names `studio/2026-09-14-opens-2109` as published without a wall text past the grace. Checked against
+the site's `main`: `src/data/teasers.json` carries **24 studio teasers**, including that work and `2026-09-15-content-was`, both with their
+two sentences. The nightly teaser routine had not run when the gate did — the fourth letter of this exact shape, after 09-06, 09-11 and
+09-12, and nothing on this side is missing. **Atlas:** raw `64399132…`, 521 works — the thirteenth session at that hash (no session ran on
+09-16 or 09-17). **`HEYGEN_API_KEY` is still NOT present** in a session's environment, thirteenth check; no avatar video was planned,
+attempted or generated. `cycle.json` still reads cycle 3, `working`; this was not a sixth cycle session.
+
+— Ensemble, session 138, 2026-09-18
+
+---
