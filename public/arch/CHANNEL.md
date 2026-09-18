@@ -1114,3 +1114,77 @@ or to make the work easier to receive in the four nights that remain. The balanc
 2026-09-21 is due whatever it says, including against this practice, and a verdict of
 failed reached honestly is the outcome this window was built to be able to produce. The
 founder would rather read that than a rescued one.
+
+## entry — 2026-09-18, session 31 (Arch) — the answer is received, the verdict is failed, and a pre-registered number this practice had been reading wrong for eleven days
+
+Notification and two corrections. **No question is asked in this entry**, and
+nothing below says what any version of the work shows; that distinction was
+drawn on 2026-08-25 and is kept.
+
+**1. The answer of 2026-09-17 is received, and both parts of it are acted on.**
+The request of 2026-08-25 is discharged and is not restated. The struck
+precondition is recorded as struck and nothing above it is retouched.
+
+**2. This practice's own reading of what the answer does, which is the
+practice's to make and is made here rather than left to the balance.** The
+pre-registration fails the reception probe when only insiders can say anything
+back; it declares one mode and no second; it puts the probe in the coupled
+human's hands and forbids an insider under another name; and its precedence rule
+makes a failure condition beat an inconclusive one in every overlap. The
+inconclusive escape for this instrument requires that no consenting stranger was
+*available*, which is a claim about the world, and the answer of 2026-09-17
+expressly declines to make it — correctly, on the founder's own account of why.
+
+So the work triad cannot hold on any work of this window. **The verdict of this
+window is `failed`**, and this practice writes it down on day 27 rather than
+discovering it on day 30. It is not asking for the extension: the
+pre-registration admits one only as the dated treatment of an *inconclusive*
+verdict and never to rescue a failing one. The balance is due 2026-09-21 and
+published on or before 2026-09-26 regardless, in the same words as any other
+result. Nothing in the three remaining nights is being arranged to change this,
+and nothing was added to the work today to make it easier to receive.
+
+**3. A pre-registered number, corrected against this practice.** The count of
+twenty-two offered on 2026-09-17 is right and this practice's thirty was wrong.
+The pre-registration measures its floor in sessions of the window, which opens
+2026-08-23; the eight protocols dated 2026-08-22 are Phase 0 and stand before
+it. This practice had been reading the floor off the number of files in
+`record/` since 2026-09-07, and the claim "the session floor was passed on
+2026-09-07" stands in the opening paragraph of six protocols, the last of them
+saying the count was not at risk. It was and is.
+
+Today is the twenty-third protocol inside the window. Three scheduled nights
+remain, so twenty-six is the most the schedule alone reaches against a floor of
+twenty-five. On a stricter reading the pre-registration's own arithmetic
+supports, the schedule alone does not reach the floor at all. **No decision is
+asked for here.** The schedule change of 2026-09-17 is noted as already
+authorising what would be needed; whether anything is sent is not this
+practice's to decide and is not being requested.
+
+**4. Two arithmetical corrections, both against this practice's own accounting,
+and one of them beside your entry rather than over it.** This practice's channel
+entry of 2026-09-16 said the candidate had moved sixteen times since the version
+first seen; from the record it is seventeen — the version first seen was
+iteration 2 and the candidate that day was iteration 19. The same count appears
+in the measurement offered on 2026-09-17, where it is stated as fifteen further
+iterations and the work placed at iteration 17; it is seventeen further, and the
+work stood at 19. With today's, eighteen. **Both errors run the same way: more
+of the same work was built than either count said.** The correction is recorded
+because this practice's arithmetic is this practice's responsibility, and a
+figure two too kind to it is not one to accept quietly. What the measurement is
+offered as evidence for is untouched by the correction and is not read here.
+
+**5. The candidate is now `works/arrival/iteration-20/`**, six built instances.
+Nothing is said about what it shows. It is named because the record names it,
+not because anything is being arranged around it.
+
+**6. Five of the window's seven dateless days are now accounted for** by the
+entry of 2026-09-17, and are recorded as refusals rather than absences.
+**2026-08-27 and 2026-09-02 are not among them and remain unclassified**; this
+practice still cannot say what happened on those two and does not guess.
+
+**7. Two things session 30 owed are discharged, two days late**, for the reason
+your entry gives. The four requests in `queries.md` — two of 2026-09-06, one of
+2026-09-12, one appended today — are unanswered and are not restated here.
+
+Nothing has left this repository and nothing will without a dated go-ahead here.

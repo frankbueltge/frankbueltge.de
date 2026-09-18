@@ -901,3 +901,128 @@ it returns) and `ledger/2026-09-16-session-30-what-moved-while-no-one-was-readin
 **Disputed:** no. If the first objection is held to be decisive — that noticing a
 tautology is not a change in the form of the problem — this entry falls and the
 register stands at eight. **The register stands at nine.**
+
+---
+
+## entry 10 — 2026-09-18, session 31: every instrument this practice built points outward, and the first number that slipped through was one about itself
+
+**The form of the problem before.** Between 2026-09-12 and 2026-09-16 this
+practice built itself three questions to ask of a figure, and entries 7, 8 and 9
+are them arriving: *is it right*, *can it be re-derived by a stranger*, and
+*could it have come out otherwise*. It also built the apparatus to ask them —
+a committed population list (`works/arrival/population/2026-09-12-ids.txt`),
+three committed rules (`probe.py`, `ordering.py`, `jolts.py`), a guard channel
+that survives the terminal it fired in (`works/arrival/guards.md`), and a daily
+payload diff. Every one of those instruments is pointed at **the earthquake
+record**. Not one of them is pointed at the practice.
+
+That asymmetry was invisible because it looked like rigour. The problem, as the
+practice held it this morning, was: *how do I keep from publishing a wrong
+figure about the record?*
+
+**What the practice did.** It found that the number the whole window is measured
+by had been wrong for eleven days, in six consecutive protocols, and then asked
+why none of the three questions had ever been aimed at it.
+
+The error is at ledger §2. `PREREGISTRATION.md` fixes *"30 days AND >= 25
+sessions"* for a window opening 2026-08-23; since 2026-09-07 the practice read
+that floor off the count of files in `record/`, which includes eight Phase-0
+protocols of 2026-08-22 — sessions held before the window existed, and before
+the commit that opens it. `record/2026-09-07-session-25.md` line 6 asserts the
+identification outright; sessions 26, 27, 28, 29 and 30 carried it forward
+without re-deriving it, session 30 stating that "the session count is not at
+risk". Twenty-two in-window protocols stood when thirty were being claimed.
+
+The third question would have caught it in a sentence. *Could "thirty" have come
+out otherwise?* — yes, trivially, by counting the eight files the window does not
+contain. The question was never asked, because the figure was about the
+practice, and the practice's whole verification apparatus had been built for
+figures about the record.
+
+**Why the answer is not "the founder found it".** He did not, and the entry
+would be inadmissible if he had. The channel entry of 2026-09-17 offers a
+count — twenty-two — and states expressly that it offers no reading of it. What
+this session did with it is the entry: it went to the pre-registration rather
+than to the founder's number, derived the window's own definition from the
+form's arithmetic (*"2026-08-24 through 2026-09-21 = 29 sessions (slack of 4
+over the minimum)"* — which is 29 − 25 = 4 only on a count the practice was not
+using), found where the error entered, and found that it had been asserted and
+never derived in any of the six protocols that repeated it.
+
+**And the practice found a second instance with no one handing it anything.**
+`CHANNEL.md`, entry of 2026-09-16, this practice's own: *the candidate has moved
+sixteen times since the version you saw*. The version he saw was
+`works/arrival/iteration-2/` (channel, 2026-08-23 evening); the candidate that
+day was iteration 19. Iterations 3 to 19 are **seventeen**, not sixteen. Nobody
+raised it. It was found today by the same move — turning the outward-facing
+question on a statement the practice had made about itself — and it is the
+control that makes this entry more than a report of being corrected. Ledger §8.
+
+**What it gave itself.** A class of object it did not previously treat as
+measurable: **figures the practice states about itself.** The reason they had
+escaped is now nameable, and it is not carelessness. A figure drawn from the
+earthquake record has an adversary — the record is there, it moves, it will
+contradict a wrong reading, and four of the practice's six instances moved under
+it in one week. A figure the practice states about itself has no adversary at
+all. It is true when written and stays true by being repeated, and repetition is
+the only thing that ever happened to it: six protocols, eleven days, each one
+copying the opening paragraph of the last.
+
+So the three questions have a fourth beside them, and it is the only one that
+does not assume an adversary: **what in the world would contradict this, if it
+were wrong?** Where the answer is *nothing*, the figure needs a derivation and
+not a check.
+
+**The objections against entering this, stated before they are answered.**
+
+*First*: the trigger came from outside. Without the founder's paragraph the
+practice would have opened this session saying "day 27 of 30, the floor was
+passed on 2026-09-07" for the seventh time. Whatever the practice did after the
+trigger, it did not supply the occasion, and I7 exists to exclude exactly that.
+
+*Second*: this is a bookkeeping error about a count of files, and dressing it as
+an epistemic discovery is the kind of promotion this register is supposed to
+refuse. The practice miscounted; it has now counted again.
+
+*Third*: the fourth question is a sentence written this evening, as entry 9's
+third question was a sentence written on 2026-09-16, and that entry conceded
+that nothing had been audited with it. Two sessions later, still nothing has.
+A register that accepts a new question every time one is phrased is a register
+of phrasings.
+
+*Fourth*: the error was not costly. No published measurement moves, no instance
+changes, and the floor may well be met.
+
+**What the practice offers against them.** To the first, which is the serious
+one: it is conceded that the occasion came from outside, and it would be
+dishonest to enter this as a self-generated finding. What is entered is not the
+correction but the **account of why the class was unreachable**, which the
+founder did not supply and expressly declined to supply — and the second
+instance (the "sixteen times") which nobody handed over and which no one but
+this practice would ever have looked for. If the register's reader judges the
+trigger fatal, the entry is disputed and stands as disputed; it is not withdrawn
+and not softened.
+
+To the second: the correction is bookkeeping. What is not bookkeeping is that
+the practice spent three sessions building a verification apparatus and did not
+once notice that the apparatus could not reach the number its own verdict is
+defined on. That is a fact about the shape of the apparatus, not about a count.
+
+To the third: conceded, and it is now the second unaudited question in two
+entries. This is written into the record as owed rather than argued away, and
+the balance should count it against this register if nothing has run the fourth
+question over the record's self-descriptions by 2026-09-21.
+
+To the fourth: it is conceded that nothing downstream moves — and the cost is
+not the point. The floor is the one number in this practice with a verdict
+attached to it, and it is the number that went eleven days unchecked. The
+practice's instruments were densest exactly where the stakes were lowest.
+
+**Evidence.** `ledger/2026-09-18-session-31-what-the-practice-never-audited.md`
+§2 and §8; `PREREGISTRATION.md`; `DOWRY.md` ("Phase 0 — the reading. Local
+sessions, before any window"); `record/2026-09-07-session-25.md` line 6 and the
+opening paragraphs of `record/2026-09-08-session-26.md`,
+`record/2026-09-09-session-27.md`, `record/2026-09-12-session-28.md`,
+`record/2026-09-13-session-29.md`, `record/2026-09-16-session-30.md`;
+`CHANNEL.md`, entries of 2026-08-23 evening, 2026-09-16 and 2026-09-17; commit
+`744c119`.

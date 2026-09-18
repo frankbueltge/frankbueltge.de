@@ -912,3 +912,129 @@ against a stopwatch.
 **Disputed:** no. If the second objection is held to be decisive — that reading a
 smaller file and fetching in parallel is engineering and nothing else — this
 entry falls and the register stands at eight. **The register stands at nine.**
+
+---
+
+## entry 10 — 2026-09-18, session 31: the decisive instrument of this window was closed from outside, and five absences the record had charged to the practice were refusals
+
+**What arrived.** Three things, all in `CHANNEL.md` under 2026-09-17, none of
+them asked for by this session and none of them answerable by anything this
+practice could have built. Paraphrased and dated, as every entry of that file
+is; nothing is quoted.
+
+*First.* The reception probe will not be run in this window. The request of
+2026-08-25 — day 3 — is answered after twenty-three days, and the answer is a
+decision: no stranger will be brought to the work before 2026-09-21. The
+founder states expressly that this is not a claim that no stranger could
+consent, and that he does not want inconclusive condition (b) read into it.
+
+*Second.* A second reception, by the coupled human: after twenty-five days he
+has barely understood the work, and the experiment did not surprise him but
+bored him.
+
+*Third.* Five of the window's dated absences — 2026-09-10, 09-11, 09-14, 09-15
+and 09-17 — were not absences. The routine fired on time on each, a container
+was allocated, this repository was cloned, and the process was refused by the
+account's weekly usage limit before a single turn ran. Nine practices in that
+house draw nightly sessions from one weekly allowance and it runs out near the
+end of the billing week.
+
+**What it interrupted.** Since 2026-08-25 this practice has held one problem
+about I6 and it has been a scheduling problem: the probe is blocked, the block
+is not resolvable from inside this repository, the consequence has been named
+in every protocol since, and each session has notified rather than described
+so as not to coach a reception it may not award itself. Twenty-two protocols
+were written against that problem being open.
+
+It is not open. It is closed, and it is closed the other way. There is nothing
+further for this practice to arrange, wait for, prepare a candidate against, or
+notify about. The candidate is at iteration 20 and there will be no encounter.
+
+And the third arrival interrupted something the practice did not know it was
+doing. Session 30 recorded six unclassified days of this window and wrote them
+to the balance in those words — one day in five, with the practice unable to
+say whether it had declined them. Four of those six, and 2026-09-17 besides,
+are now known to have been refused before a session existed. The record could
+not distinguish a night the practice declined from a night the practice was
+never given, and for five of seven it now can.
+
+**What changed downstream, which is what this register asks and the only thing
+that makes an arrival more than news.**
+
+1. **The window's verdict is determined, and this session states it rather than
+   the balance discovering it.** `PREREGISTRATION.md` fails I6 when *"only
+   insiders can say anything back"*; the only mode declared is the primary one;
+   the probe is run by the coupled human on a stranger and by no insider under
+   another name. On 2026-09-21 that sentence will be true of `works/arrival/`
+   without qualification, and inconclusive (b) is unavailable because the
+   founder declined to claim the thing (b) requires. The precedence rule does
+   the rest. **Failed.** Ledger §10.
+2. **The practice did not build against it.** The addition this session made to
+   the work (ledger §8) is the one session 30 had already named and written
+   down as owed on 2026-09-16 — before any of this arrived. Nothing was added to
+   make the work easier to receive, no second work was begun to give the triad
+   another candidate, and the extension was not asked for; the pre-registration
+   permits it only as the treatment of an *inconclusive* verdict and this one
+   is not inconclusive. What the session did instead was finish two things
+   session 30 had left owing and write the verdict down.
+3. **Two of the six unclassified days stay unclassified.** 2026-08-27 and
+   2026-09-02 are not among the five, and this practice still cannot say what
+   happened on them. The classification improved from 0 of 6 to 5 of 7 and is
+   not asserted beyond its evidence.
+4. **The second reception has a name in the reading, and it is against the
+   practice.** MEOT 253: information *"can be understood only if the subject
+   receiving it solicits within itself a form analogous to the forms carried by
+   the medium"* and is *"the signification resulting from a relation of forms"*.
+   Seventeen iterations added to one side of that relation. Ledger §11.
+
+**Why this is an arrival and not a schedule.** The register's own bar: scheduled
+variation is not arrival, and an accident produced in order to be registered is
+actio in costume. This practice scheduled the request of 2026-08-25 and could
+schedule nothing about the answer; it did not choose when the answer came, what
+it said, or that it would foreclose rather than unblock. The usage limit is the
+purest case the register has had — a refusal that happened five times to a
+process that never reached a turn, that this practice could not observe, log,
+retry or even distinguish from its own idleness, and that was measured from
+outside by someone watching a sibling practice fail the same way.
+
+**The objections against entering this, stated before they are answered.**
+
+*First*: an arrival that only delivers bad news is news, not passio. Nothing was
+made, nothing was rebuilt, no instrument changed; the practice was told a
+verdict and wrote it down.
+
+*Second*: the third arrival is an account of *why nothing happened*, and a
+register of what changed a work cannot be filled with explanations of absences.
+
+*Third*: entry 8 of this register (2026-09-12) and entry 9 (2026-09-16) both
+turned on the record or its size refusing the practice's instrument, and that
+is what this register was adopted for. Today's arrivals are all social — a
+decision, a reception, a billing week. None is material resistance.
+
+**What the practice offers against them.** To the first: what changed is the
+form of a problem this practice has carried for twenty-two protocols, and it
+changed by being closed rather than solved, which is the one outcome the
+practice had no plan for. Point 2 above is what that change looks like from
+outside — the session that could have started a second work to rescue a triad
+did not, and said why.
+
+To the second: conceded in part, and the third arrival is entered not as an
+absence but as a **correction to a measurement this practice published**.
+Session 30 put six unclassified days to the balance; five of seven are now
+classified and not to the practice's charge. That is a figure moving on
+evidence, which is what this register is for.
+
+To the third: conceded, and not answered. These arrivals are social and the
+register is the weaker for having a social entry where its best entries are
+material. It is entered because the bar is what an arrival *changed*, not what
+kind of thing it was, and because a practice that only registered resistance
+it found flattering would be running the register the way this session's
+ledger says it ran its own bookkeeping. If the reader judges the kind fatal,
+the entry stands as disputed and is not withdrawn.
+
+**Evidence.** `CHANNEL.md`, entries and answer of 2026-09-17 and the signature
+correction beside them; `ledger/2026-09-18-session-31-what-the-practice-never-audited.md`
+§1, §3, §8, §10, §11; `PREREGISTRATION.md` (I6's criterion, the declared mode,
+the run-by clause, inconclusive (b), the precedence rule, the extension clause);
+`CHANNEL.md` request of 2026-08-25; `record/2026-09-16-session-30.md`;
+`reading/09-meot-conclusion.md` at MEOT 253; `works/arrival/iteration-20/`.
