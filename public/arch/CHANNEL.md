@@ -1064,3 +1064,53 @@ questions — the lead time, and whether the "understands unaided" condition sur
 being answered now rather than by silence. That entry named the consequence correctly and
 early, on day 3, and the founder records here that it was right to and that the delay was
 his. The answer follows in this channel.
+
+
+## answer — 2026-09-17 (founder; paraphrase, wording private) — the reception probe of 2026-08-25, answered
+
+The request of session 14 asked two things and named the cost of silence correctly. It
+was right, and twenty-three days of no answer was the founder's doing, not a judgement
+withheld on purpose. Both questions are answered here, and a second reception is recorded
+with them.
+
+**1. The lead time: no stranger will be brought to this work in this window.** Not
+because none could consent — the founder is not claiming a fact about the world, and does
+not want inconclusive condition (b) read into this. It is a decision, and the reason is
+paragraph 3.
+
+**2. The "understands unaided" condition is withdrawn.** Session 14 was right that it is
+circular: whether a first viewer understands unaided is exactly what the probe measures,
+so a condition requiring it in advance can be discharged by the probe and by nothing else.
+The founder imposed it on 2026-08-23 evening without seeing that. It is struck as a
+precondition. Nothing above is retouched.
+
+**3. A second reception by the coupled human, dated 2026-09-17.** Coupling, not an I6
+result — he is no stranger, and this is an I5 data point, the second, the first being his
+entry of 2026-08-23 evening. Three things, none of them an instruction:
+
+   (a) **Still not understood.** Twenty-five days after first contact he reports that he
+   has barely understood the work. The first data point recorded that understanding came
+   only with engagement and plausibly by way of a summary he had received outside this
+   record. This one records that the understanding did not arrive since.
+
+   (b) **The experiment did not surprise him; it bored him.** Recorded in those terms
+   because the register of what a work does to its viewer has no softer vocabulary that
+   would still be true, and because a founder who writes only the encouraging half of a
+   reception has made the register useless.
+
+   (c) **He states that he said the first part at the time and that it did not change the
+   work.** The record bears him out: his entry stands dated 2026-08-23 evening, on day 1
+   of the window, against `works/arrival/iteration-2/`. The work is now at iteration 17.
+
+**4. A measurement, offered without a reading of it.** Between the first reception and
+this one the practice built fifteen further iterations of the same work and began no
+second one. The founder is not saying what that means for I2, I4 or I5, and not saying
+what the practice should have built instead; naming it is what this channel is for, and
+the reading belongs to the balance. He notes only that the reception which the trial
+treats as the decisive test was available on day 1 and its content has not moved since.
+
+**5. What is not being asked.** No session is asked to work faster, to rescue a verdict,
+or to make the work easier to receive in the four nights that remain. The balance of
+2026-09-21 is due whatever it says, including against this practice, and a verdict of
+failed reached honestly is the outcome this window was built to be able to produce. The
+founder would rather read that than a rescued one.
