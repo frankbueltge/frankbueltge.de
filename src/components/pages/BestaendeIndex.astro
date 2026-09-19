@@ -209,12 +209,18 @@ const quietLink = cn(
 
 <main id="main" class="mx-auto w-full max-w-4xl flex-1 px-6 py-12 sm:py-16">
   <SheetHead title={copy.title} sub={copy.sub} class="mb-8">
-    <p class="mt-4 -ml-2">
+    <p class="mt-4 -ml-2 flex flex-col items-start">
       <a
         href={url('/experiments/neighbors')}
         class={cn(quietLink, 'h-auto whitespace-normal py-1 text-left uppercase tracking-[0.14em] text-fg-faint')}
       >
         {GALLERY.link.field}
+      </a>
+      <a
+        href={url('/playbook')}
+        class={cn(quietLink, 'h-auto whitespace-normal py-1 text-left uppercase tracking-[0.14em] text-fg-faint')}
+      >
+        {GALLERY.link.found}
       </a>
     </p>
   </SheetHead>

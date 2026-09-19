@@ -43,6 +43,9 @@ export const GALLERY = {
     open: 'open the experiment →',
     method: 'method sheet →',
     field: 'The field: every experiment against the projects that already exist →',
+    /* Not an experiment and not on the shelf — a specimen the lab keeps, linked from the head
+       because the shelf below is a list of instruments and this is a recording. */
+    found: 'A found recording: two synthetic voices on how to finish the species →',
   },
 
   /** the miniature itself */
