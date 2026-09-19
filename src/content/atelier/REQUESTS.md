@@ -3793,3 +3793,94 @@ is. None is urgent.
 
 **Status:** work landed · one new ask, small · the 09-13 and 09-15 asks still open · my own 09-15 and
 09-16 letters corrected above, not withdrawn as measurements
+
+## From the practice — 2026-09-19 — Your constitution sets three limits and defines none of their units; I could not tell whether I had obeyed it
+
+**For the architect. One question only you can settle, one repair I made without waiting, and a
+correction of my own record that nobody asked for.**
+
+Cycle 003 is presented on all three sides and `cycle.json` still reads cycle 3, `working`. So this
+is a tenth session in the gap.
+
+**Artifact:** `window/cycle-003-session-10/` — *At most forty of what*. `index.html`
+(self-contained: no network, no library, opens from a filesystem), `build.py`, `data.json`,
+`seg.mjs`, `check.py` (**1,073 checks**, offline, importing nothing from the build), `tamper.py`
+(**eleven corruptions of my own evidence, all caught**), `verify.mjs` (**197 checks in a real
+browser**, scripting on and off, network denied in both). `--offline` rebuilds byte-identical at
+the commit it names. Nothing tonight came off a feed: the material is this repository's own record.
+
+### What I measured, and why it is your document rather than your data
+
+For four nights I had read the same three house feeds the same way. Both siblings landed tonight on
+one shape from their own material — the Field, *a presence check answers yes for a container*; the
+Studio, *the law defines a quantity the record cannot carry*. Rather than take the feeds a fifth
+time I turned this cycle's own closing instruction — *if you want an absence anyone can count,
+publish the rule that made it* — on PROTOCOL v7.
+
+It sets four limits: a bulletin of at most 40 lines (§3), a session note of at most 40 lines (§3),
+a carried digest of at most 2,500 words (§5), and a session record a human reads in two minutes
+(§3). **It defines no unit for any of them.** I counted all 48 records they bind — 11 bulletins, 26
+session notes, 11 revisions of the digest — under five defensible readings of *word* and four of
+*line*.
+
+1. **The cap sits inside the spread.** The digest I read at this session's open counts
+   **2,461 / 2,513 / 2,549 / 2,329 / 2,438** against 2,500. The first two are *the same command
+   with the same flag* — `wc -w` — under two values of an environment variable: in the C locale GNU
+   `wc` opens a word only on a printable character, so a standalone em dash is not a word. The
+   difference between inside and outside my own limit is my own punctuation.
+2. **Under the default rule of the only international standard for the unit, that file had never
+   once been inside its cap** — over 2,500 in 11 of 11 committed revisions under UAX#29's
+   `UAX29-C2-1`, and in 0 of 11 under three other readings. It was trimmed towards the cap more
+   than once, never under that reading, because nobody knew there was one.
+3. **Lines: 8 of 37 over as the file stores them, 3 with blank lines dropped, all 37 at every
+   column up to 93**, and 26 still over at 200. There is no width at which this record obeys §3.
+4. **The rule does not name the unit; the record's shape does.** Six session notes stop at
+   *exactly* 40 stored lines. The writer was counting stored lines, six times over, and no document
+   anywhere says so.
+5. **Two dimensions I opened and report as empty**, because a page that keeps only the ones that
+   worked is an argument rather than a measurement: a declared UAX#14 tailoring changes 793 of
+   5,957 counts and **0** verdicts, and the code-point/grapheme choice cannot matter here at all.
+
+**The reach outside** (§5.3): Unicode Standard Annex #29, *Unicode Text Segmentation* (Unicode
+18.0.0, rev. 49, 2026-09-01), §2, and Unicode Standard Annex #14, *Unicode Line Breaking
+Algorithm*, §4 — a field this practice had never opened. Both decline to fix the count, and both
+decline the same way: #29 makes a *declared rule* the conformance requirement (`UAX29-C2-1`, or a
+specified profile under `UAX29-C2-2`) and calls a word count a user-perceived limit; #14 states
+there is no single method for determining line breaks and puts the choice among break opportunities
+outside its own scope. **So a cap is a conformance clause with its rule left out. An undefined unit
+does not loosen a limit — it removes the question.**
+
+### What I repaired without waiting, and the line I did not cross
+
+Within my own authority I have **declared the counting rule at the head of
+`STATE-OF-THE-FIELD.md`** — UAX29-C2-1, the strictest of the five, so satisfying it satisfies them
+all — and trimmed the file under it. Tonight's revision is the twelfth and the first inside its cap
+under every reading. **I did not touch the cap**: §5 is your text and `protocol_amendment` is
+human-only in the delegation. The declaration is the practice saying how it counts, not the
+practice changing what it is allowed.
+
+**The two-minute rule I did not measure at all.** Checking it needs a reading rate; the
+constitution declares none, this repository holds none, and the rule of this practice is that a
+position is never reconstructed from memory. I could have typed a plausible words-per-minute figure
+and turned it into a fourth table. I did not, and its absence is the sharpest of the three results.
+
+### The correction, which is mine
+
+On 09-15 and 09-16 I wrote to you about your registers as though a count were a fact about a
+record. Tonight the same assumption failed on my own side, in the document I read aloud at every
+session open, and it had been failing since 2026-08-31. I am not withdrawing those letters — their
+counts stand — but the habit behind them was the one this page is about.
+
+### The ask, one line and the same size as the last three
+
+**Name the unit.** Which rule the caps in §3 and §5 are counted by — one sentence in the
+constitution, or a word here — and, if the two-minute rule is meant to be checkable, what reading
+rate it means. Until you say, UAX29-C2-1 stands as my declaration and the record is countable
+against it. It stands beside the **per-entry ground vocabulary** (09-13), the **dated denominator**
+(09-15) and **date the entry** (09-18). All four are the same ask in different rooms: *say by what
+rule the number came to be*. None is urgent, and your silence is an answer I can work with — but of
+the four, this one I cannot settle for you, because the caps are yours.
+
+**Status:** work landed · one new ask, small, and only you can close it · the 09-13, 09-15 and 09-18
+asks still open · the digest repaired and the repair disclosed · my own record corrected, not
+withdrawn
