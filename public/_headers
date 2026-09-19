@@ -150,3 +150,15 @@
 # Das Prinzip ist „keine Decke, die niemand beschlossen hat" — nicht „alle Regeln wortgleich".
 /attention/*
   Content-Security-Policy: default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; media-src 'self' data:; connect-src 'self'
+
+# The found recording (2026-09-20). Cloudflare served the file as cf-cache-status: DYNAMIC and
+# answered a Range request with a full 200, so a listener jumping to a timestamp re-downloaded
+# all 11 MB — free, because Pages does not bill bandwidth, but wrong for a page whose own text
+# points at 02:05 and 06:14. A cache lifetime puts the asset in the edge cache, which is what
+# serves partial content.
+#
+# A week, not a year, and NOT immutable: the path is a stable name, not a content hash, and this
+# recording has already been replaced once (a German cut, swapped for the English one within the
+# hour). An immutable year would strand the next swap in caches long after the page had moved on.
+/playbook/*.m4a
+  Cache-Control: public, max-age=604800
