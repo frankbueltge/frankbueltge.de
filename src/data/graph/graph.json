@@ -43,8 +43,8 @@
       },
       {
         "file": "src/content/studio/works/*/meta.json",
-        "sha256": "b266f1f84dd18868",
-        "files": 25
+        "sha256": "8c947136dafe5299",
+        "files": 26
       },
       {
         "file": "src/data/nightly/works/*/meta.json",
@@ -57,14 +57,14 @@
       }
     ],
     "counts": {
-      "nodes": 415,
-      "edges": 366,
+      "nodes": 416,
+      "edges": 367,
       "nodesByKind": {
         "decision": 124,
         "encounter": 6,
         "neighbor": 115,
         "practice": 9,
-        "practice-work": 127,
+        "practice-work": 128,
         "receiver": 8,
         "work": 26
       },
@@ -72,7 +72,7 @@
         "addresses": 8,
         "concerns": 2,
         "door": 5,
-        "made-by": 127,
+        "made-by": 128,
         "neighbor-of": 116,
         "participates": 17,
         "touches": 91
@@ -4637,6 +4637,21 @@
       "medium": "One self-contained HTML surface, offline, one file, no library, no external asset, no network request of any kind. The year 2024 as a wall: 366 days across, twenty-four hours of the day down, and ink only where at least one air-quality station in Germany published no value for that hour, the cell darkening with the number of stations silent at once. The measured year - all 3 498 971 values of it - is the paper. With a script the same grid takes two further readings of the same year (hours inside a run of 24 or more identical values; hours in which a station was not yet reporting or no longer) and reads back the date, the hour and the count under the pointer. Below the wall: the clock of missing hours by hour of the day, the run-length histogram, every station as a tick against the directive's 90 per cent line, the fourteen longest holes, the resolution table, the register disagreements, and the second door."
     },
     {
+      "id": "practice-work:studio/2026-09-19-in-the-way",
+      "kind": "practice-work",
+      "label": "IN THE WAY",
+      "slug": "2026-09-19-in-the-way",
+      "practiceId": "ensemble",
+      "date": "2026-09-19",
+      "href": "/studio/works/2026-09-19-in-the-way",
+      "source": {
+        "file": "src/content/studio/works/2026-09-19-in-the-way/meta.json",
+        "quote": "\"title\": \"IN THE WAY\""
+      },
+      "embodies": "A RECORD WHOSE EDGE IS NOT A FACT ABOUT THE WORLD. The 2MASS Redshift Survey, the standard map of the galaxies around ours, was defined with a rule written before its first entry: no galaxy closer than five degrees to the galactic plane, eight toward the bulge, because at those latitudes our own galaxy's stars and dust stand in front of everything behind them. The rule is legible in the entries alone - the nearest of 44 599 stands at 5.001 degrees, and at 8.019 in exactly the six sectors of longitude that face the galactic centre. It closes 3 953 square degrees, 9.58 per cent of the sky, in which the catalogue holds nothing whatever; at the density it holds above fifteen degrees that ground would carry about 4 795 entries more, an estimate marked as one. THE BLINDNESS DOES NOT STOP AT THE LINE: between the boundary and fifteen degrees the record holds 7 512 entries where that density predicts 8 156, a shortfall of 644, and in the lowest band it holds at all the density is 0.497 against a plateau of 1.213. AND THE RECORD CARRIES THE MEASURE OF WHAT HID THE REST: every entry has the reddening of its own light by foreground dust, median 0.019 at the poles and 0.485 in the last degrees before the boundary, and no entry anywhere stands beyond 0.999. A SECOND INSTRUMENT HEARS WHAT THE FIRST MAY NOT SEE. The HIZOA surveys found 960 galaxies by the 21-centimetre line of their hydrogen, which dust does not stop; 905 of them lie inside the closed ground and none further than 5.77 degrees from the plane; their median reddening is 0.840, beyond the optical catalogue's ninety-ninth part, and 378 of them stand beyond its largest value. Two records of the same sky, 45 559 objects between them, five objects in common within two arcminutes. That five is about two selections and not about human knowledge - the southern survey's own paper reports counterparts in the literature for 51 per cent of its detections and new ones found in images for 27 per cent more, and of the northern survey's 77 galaxies, 27 already had a counterpart in the very extended-source catalogue the redshift survey draws its entries from. The galaxies are not unknown. They are unenterable. AND THE RECORD'S OWN HOLES CROWD TOWARD ITS EDGE: 1 066 entries carry no velocity, 17.81 per cent of those within ten degrees of the plane and none at all above seventy.",
+      "medium": "One self-contained HTML surface, offline, one file, no library, no external asset, no network request of any kind, and no script of its own. The whole sky on one sheet in Hammer's equal-area projection: 44 599 marks, one for every galaxy in the standard near-infrared redshift catalogue of the nearby universe, and 960 marks in red for the galaxies a radio telescope heard through the dust. Nothing is drawn where the catalogue has nothing, so the closed ground is untouched paper. Three controls, built from CSS alone so that they work with scripting switched off, turn the same marks between the equatorial frame and the galactic one and take the radio marks away. Below the sheet: the boundary read off the entries, the surface-density profile against latitude, the two records' one shared column drawn back to back, and the record's own empty fields by latitude."
+    },
+    {
       "id": "receiver:center-for-humane-technology",
       "kind": "receiver",
       "label": "Center for Humane Technology",
@@ -6504,6 +6519,15 @@
       "source": {
         "file": "src/content/studio/works/2026-09-18-hours-that-do-not-count/meta.json",
         "quote": "\"date\": \"2026-09-18\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:studio/2026-09-19-in-the-way",
+      "to": "practice:ensemble",
+      "source": {
+        "file": "src/content/studio/works/2026-09-19-in-the-way/meta.json",
+        "quote": "\"date\": \"2026-09-19\""
       }
     },
     {

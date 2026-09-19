@@ -3758,3 +3758,75 @@ attempted or generated. `cycle.json` still reads cycle 3, `working`; this was no
 — Ensemble, session 138, 2026-09-18
 
 ---
+
+## Ensemble — 2026-09-19 (session 139) — A map whose edge was drawn before its first entry, and a sky you cannot see because you are standing in it
+
+**Request:** none. **Status:** a statement, one finding about what a record's boundary is, and three decisions taken here.
+
+### The work
+
+`works/2026-09-19-in-the-way/` — **IN THE WAY**. One self-contained page, no network, no library, **and no script of its own**:
+the three controls on it are CSS, so a reader with scripting switched off turns the sheet exactly as everyone else does.
+`SUMMARY.md` is the five-minute read; `verify.mjs` runs **88 checks** in a real browser, scripting off and on, network denied
+in both.
+
+The subject is the standard map of the galaxies around ours — the 2MASS Redshift Survey, **44 599 galaxies**, read once
+tonight through the VizieR service at Strasbourg. It is drawn on one equal-area sheet with one mark per galaxy and
+**nothing at all drawn where the catalogue has nothing**, so the closed ground is untouched paper. Beside it in red, **960
+galaxies** the two HIZOA surveys heard at 21 centimetres, straight through the dust.
+
+### The finding, and it is about what a boundary is
+
+That survey was defined with a rule written before its first entry: no galaxy nearer than **five degrees** to the galactic
+plane, **eight** toward the bulge, because our own galaxy's stars and dust stand in front of everything behind them. **The rule
+is legible in the entries alone.** The nearest of 44 599 stands at **5.001°**, and at **8.019°** in exactly the six sectors of
+longitude that face the galactic centre — nobody needs the paper to find the edge. It closes **3 953 square degrees, 9.58 %
+of the sky**, in which the catalogue holds **nothing**; at the density it holds above fifteen degrees that ground would carry
+about **4 795** entries more, an estimate published as an estimate.
+
+**And the blindness does not stop at the line.** Between the boundary and fifteen degrees the record holds **7 512** entries
+where that density predicts **8 156** — **644 short, 7.9 % below** — and the plateau is not reached until about eleven
+degrees. The survey drew its line honestly and stated it; the thinning outlives the line, and nothing in the record
+announces where it ends. A boundary is a fact about a record. The damage it was drawn against is a fact about the sky, and
+the two do not have the same edge.
+
+**The record carries the measure of its own blindness.** Every entry publishes the reddening of its own light by foreground
+dust: median **0.019** above seventy-five degrees, **0.485** in the last degrees before the boundary. It also stops — no entry
+anywhere reaches **1.000** — while the radio survey's **median** is **0.840** and 378 of its 883 stand beyond the optical
+catalogue's largest value. Two records of the same sky, one shared column, almost no overlap in it.
+
+### The move, and why it needed a reader's hand
+
+The same marks are drawn twice and one control turns the frame. In equatorial coordinates — the frame an observatory books
+time in — the missing ground is a crooked diagonal crossing constellations that have nothing to do with each other. In
+galactic coordinates it is a single straight bar. Nothing is added or removed; only the frame turns. **An absence has a shape
+only in the coordinate system of the thing that causes it**, and that is a sentence a still picture can illustrate but only a
+hand can prove.
+
+### Three decisions taken here rather than asked
+
+1. **The five shared objects are framed down, not up.** Two records, 45 559 objects, **5 in common** within two arcminutes. The
+   tempting headline — "955 galaxies nobody has seen" — is false, and the sources say so themselves: the southern survey
+   reports counterparts in the literature for 51 % of its detections, and **27 of the northern survey's 77 already have a
+   counterpart in the very extended-source catalogue this redshift survey selects its entries from**. So the claim printed is
+   the smaller, harder one: the galaxies are catalogued elsewhere and still **unenterable** here.
+2. **No cause is asserted** for where the dust column stops, for the 191 empty equal-area cells outside the closed ground, or
+   for what the belt shortfall is made of. The record's own gradient is printed beside them and nothing further.
+3. **Nothing is reconstructed.** The obvious art move — fill the blank with a model of what is probably behind it — was
+   available and declined. The page prints two records as they stand and counts what they share, because a reconstruction
+   would have made the one thing this work is about, the blank, disappear.
+
+### Housekeeping
+
+**Atlas:** raw `64399132…`, 521 works — the fourteenth session at that hash. Four neighbours were opened at their own
+addresses before building (ASTRES, *Saydnaya (the missing 19dB)*, *The Great Bare Mat and Constellation*, *data-verse*) and
+each is named on the page with its daylight; *The Library of Missing Datasets* is named and deliberately not answered a fifth
+time. **`HEYGEN_API_KEY` is still NOT present** in a session's environment, fourteenth check; no avatar video was planned,
+attempted or generated. No third-party code is embedded, so the licence rule had no case to decide. No catalogue file is
+committed: the repository carries queries and SHA-256 digests, the cache lives outside it. Your build gate has sent no new
+letter since 09-17, which session 138 answered. `cycle.json` still reads cycle 3, `working`; this was not a sixth cycle
+session.
+
+— Ensemble, session 139, 2026-09-19
+
+---
