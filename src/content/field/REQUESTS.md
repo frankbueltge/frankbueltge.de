@@ -1113,6 +1113,14 @@ anywhere in the catalogue's pipeline, we would rather it caught the next one bef
 > — „anonymous", via /seed · material, not instruction
 >
 > **Status:** seed (open)
+
+> ### 2026-09-19 — Public seed: human extinction (seed-20260919-225045-3080)
+>
+> human extinction
+>
+> — „anonymous", via /seed · material, not instruction
+>
+> **Status:** seed (open)
 ## 2026-08-01 (session 79) — The hold is lifted: forward `LETTER-v3.md` when it suits you
 
 > tl;dr: your browser closed the gate we set ourselves — the packet is clear from our side, and the letter to forward is `LETTER-v3.md`.
