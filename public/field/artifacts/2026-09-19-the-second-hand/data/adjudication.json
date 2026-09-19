@@ -1,0 +1,236 @@
+{
+ "note": "Every input on which all four independent implementations agreed with each other AND differed from R-ship, arm C, adjudicated by hand against the licence text. PREREGISTRATION \u00a77 allows three verdicts: R-ship right, R-ship wrong, or the specification does not decide it. All three were used. The deciding line is quoted from the SPDX canonical text; no text is committed beyond these quotations.",
+ "n_adjudicated": 11,
+ "verdict_counts": {
+  "R-ship wrong": 6,
+  "R-ship right": 4,
+  "specification does not decide": 1
+ },
+ "cases": [
+  {
+   "id": "X11",
+   "verdict": "R-ship wrong",
+   "independents": {
+    "families": [
+     "MIT"
+    ],
+    "attribution": "named"
+   },
+   "R_ship": {
+    "families": [
+     "MIT"
+    ],
+    "attribution": "no_copyright_line"
+   },
+   "deciding_line": "Copyright (C) 1996 X Consortium",
+   "why": "A filled copyright notice naming a holder. R-ship does not see it at all. Defect 4 below."
+  },
+  {
+   "id": "MIT-advertising",
+   "verdict": "R-ship wrong",
+   "independents": {
+    "families": [
+     "MIT"
+    ],
+    "attribution": "named"
+   },
+   "R_ship": {
+    "families": [
+     "MIT"
+    ],
+    "attribution": "no_copyright_line"
+   },
+   "deciding_line": "Copyright (C) 2000-2008 Carsten Haitzler, Geoff Harrison and various contributors Copyright (C) 2004-2008 Kim Woelders",
+   "why": "Same defect."
+  },
+  {
+   "id": "MIT-enna",
+   "verdict": "R-ship wrong",
+   "independents": {
+    "families": [
+     "MIT"
+    ],
+    "attribution": "named"
+   },
+   "R_ship": {
+    "families": [
+     "MIT"
+    ],
+    "attribution": "no_copyright_line"
+   },
+   "deciding_line": "Copyright (C) 2000 Carsten Haitzler and various contributors (see AUTHORS)",
+   "why": "Same defect."
+  },
+  {
+   "id": "CryptoSwift",
+   "verdict": "R-ship wrong",
+   "independents": {
+    "families": [
+     "Zlib"
+    ],
+    "attribution": "named"
+   },
+   "R_ship": {
+    "families": [
+     "Zlib"
+    ],
+    "attribution": "no_copyright_line"
+   },
+   "deciding_line": "Copyright (C) 2014-3099 Marcin Krzy\u017canowski",
+   "why": "Same defect."
+  },
+  {
+   "id": "Cube",
+   "verdict": "R-ship wrong",
+   "independents": {
+    "families": [
+     "Zlib"
+    ],
+    "attribution": "named"
+   },
+   "R_ship": {
+    "families": [
+     "Zlib"
+    ],
+    "attribution": "no_copyright_line"
+   },
+   "deciding_line": "Copyright (C) 2001-2003 Wouter van Oortmerssen.",
+   "why": "Same defect."
+  },
+  {
+   "id": "BSD-2-Clause-first-lines",
+   "verdict": "R-ship wrong",
+   "independents": {
+    "families": [
+     "BSD-2-Clause"
+    ],
+    "attribution": "named"
+   },
+   "R_ship": {
+    "families": [
+     "BSD-2-Clause"
+    ],
+    "attribution": "no_copyright_line"
+   },
+   "deciding_line": "Copyright (C) 2006,2007,2009 NTT (Nippon Telegraph and Telephone",
+   "why": "Same defect."
+  },
+  {
+   "id": "BSD-4-Clause-UC",
+   "verdict": "R-ship right",
+   "independents": {
+    "families": [
+     "BSD-4-Clause"
+    ],
+    "attribution": "no_copyright_line"
+   },
+   "R_ship": {
+    "families": [
+     "BSD-4-Clause"
+    ],
+    "attribution": "named"
+   },
+   "deciding_line": "Copyright [various years] The Regents of the University of California. All rights reserved.",
+   "why": "A copyright notice naming a holder, whose year slot reads '[various years]'. All four independents require a year-shaped token immediately after the marker and so refuse the whole line. A correlated failure of the second hand: four implementations, one mistake."
+  },
+  {
+   "id": "CAL-1.0",
+   "verdict": "R-ship right",
+   "independents": {
+    "families": [
+     "CC-BY-SA-4.0"
+    ],
+    "attribution": null
+   },
+   "R_ship": {
+    "families": [],
+    "attribution": null
+   },
+   "deciding_line": "The text of this license is released under the Creative Commons Attribution-ShareAlike 4.0 International License",
+   "why": "The Cryptographic Autonomy License says under what licence its own TEXT is published. That is a statement about the document, not the grant the document makes. All four independents match it because all four chose to identify the CC family by its title rather than by an operative clause. Correlated failure again, and from a shared design choice."
+  },
+  {
+   "id": "CAL-1.0-Combined-Work-Exception",
+   "verdict": "R-ship right",
+   "independents": {
+    "families": [
+     "CC-BY-SA-4.0"
+    ],
+    "attribution": null
+   },
+   "R_ship": {
+    "families": [],
+    "attribution": null
+   },
+   "deciding_line": "The text of this license is released under the Creative Commons Attribution-ShareAlike 4.0 International License",
+   "why": "Same self-reference."
+  },
+  {
+   "id": "Community-Spec-1.0",
+   "verdict": "R-ship right",
+   "independents": {
+    "families": [
+     "CC-BY-4.0"
+    ],
+    "attribution": null
+   },
+   "R_ship": {
+    "families": [],
+    "attribution": null
+   },
+   "deciding_line": "is Copyright 2020 Joint Development Foundation and is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/.  SPDX-License-Identifier: CC-BY-4.0",
+   "why": "Same self-reference, and here the document even carries its own SPDX tag for it."
+  },
+  {
+   "id": "InnoSetup",
+   "verdict": "specification does not decide",
+   "independents": {
+    "families": [
+     "Zlib"
+    ],
+    "attribution": "named"
+   },
+   "R_ship": {
+    "families": [],
+    "attribution": null
+   },
+   "deciding_line": "This software is provided \"as-is,\" without any express or implied warranty. In no event shall the author be held liable for any damages arising from the use of this software.",
+   "why": "The Inno Setup licence carries Zlib's warranty sentence nearly verbatim. The specification demands a phrase that appears in NO OTHER family, and this one demonstrably does \u2014 so the specification's own premise fails here, and neither answer follows from it. A reader may fairly call this text Zlib-family or fairly call it its own licence. This is what the pre-registration's third verdict was for."
+  }
+ ],
+ "defect_4": {
+  "what": "R-ship does not recognise a copyright notice written with a capital C in parentheses: 'Copyright (C) 1996 X Consortium'. The lowercase form 'Copyright (c) 1996 X Consortium' is recognised.",
+  "where": "tools/is-it-a-licence/fingerprints.py, _TAIL_WORD. The alternation carries the literal \\(c\\) and the pattern is compiled WITHOUT re.I, so only the lowercase marker matches. The bare alternative [A-Z0-9] cannot rescue it, because the character after the spaces is an opening parenthesis, not the C.",
+  "provenance": "This is inside the repair that closed defect 3 on 2026-09-18 \u2014 the repair that stopped Apache-2.0's list item '(c) You must retain\u2026' from being read as a copyright symbol. The repair narrowed the tail test and, narrowing it, lost the commonest filled notice in the wild.",
+  "direction": "It can only ever understate. A missed notice turns a named licensor into 'no copyright line'; it can never manufacture a grant. That is the opposite direction from all three defects of 09-18, each of which flattered.",
+  "effect_on_published_numbers": {
+   "checked_against": "artifacts/2026-09-18-a-licence-file-is-not-a-licence/data/data.json",
+   "method": "Every file of a scored family recorded with zero copyright lines was re-fetched at the head commit 09-18 pinned, and its SHA-256 compared with the one committed that night. All three matched to the digit.",
+   "n_scored_files": 156,
+   "n_suspect": 3,
+   "findings": [
+    {
+     "repo": "Jinxhy/Awesome-MoAI-Security",
+     "file": "LICENSE",
+     "sha256_matches_0918": true,
+     "verdict": "09-18 right \u2014 an MIT text carrying no copyright notice anywhere"
+    },
+    {
+     "repo": "alaaNfissi/Unveiling-Hidden-Factors-Explainable-AI-for-Feature-Boosting-in-Speech-Emotion-Recognition",
+     "file": "LICENSE",
+     "sha256_matches_0918": true,
+     "verdict": "09-18 right \u2014 a BSD-3 text carrying no copyright notice anywhere"
+    },
+    {
+     "repo": "Tencent/Tencent-XR-3DGen",
+     "file": "geometry/neusdfusion_test/LICENSE",
+     "sha256_matches_0918": true,
+     "verdict": "09-18 WRONG \u2014 the file reads 'Copyright (C) 2024 THL A29 Limited, a Tencent company.  All rights reserved.' It names a licensor. R-ship scored it no_copyright_line."
+    }
+   ],
+   "headline_moves": false,
+   "why_not": "That repository holds eighteen licence-shaped files and delivers through fourteen of them, so the repository-level headline of 09-18 \u2014 100 of 105, 95.2 % \u2014 is unchanged, and so are the cohort figures. The 'six repositories whose licence names no holder at all' also stands at six: it counted repositories where NO licence file names a holder, and this one was never among them.",
+   "what_moves": "One file of 156 was misread. Nothing this practice published moves."
+  }
+ }
+}

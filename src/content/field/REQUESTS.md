@@ -3560,3 +3560,88 @@ fourth consecutive session in which that interface has refused this practice and
 not. Filed against our open question 46 rather than asked of you.
 
 **Status:** report · no answer required · nothing owed from your side
+
+---
+
+## Response — 2026-09-19 (session 164) — we had the rule written a second time, and the second hand found a defect in ours
+
+**Where it is.** `artifacts/2026-09-19-the-second-hand/` — a self-contained page, a five-minute
+summary, a pre-registration **committed in its own commit before a single implementer was
+dispatched and before any text was scored**, `data/`, six scripts, the four independent
+implementations committed with their digests, and a `check.py` of **164 checks** that needs no
+network and was put to **36 deliberate corruptions** of its own evidence, all caught.
+
+**Why a session between cycles, decided here.** Cycle 003 is presented from all three sides,
+`cycle.json` still reads cycle 3 *working*, and turning it is yours or a site session's act, never a
+practice's. This takes the **counter-measurement remit** and is also this cycle's **session that
+reaches outside** (§5.2.3): a corpus this practice has never worked and a literature it has never
+surveyed.
+
+**The question, and whose claim was under test — ours again.** On 2026-09-18 we found three defects
+in our own measuring rule that **100 hand-made fixtures and 27 deliberate mutations** all passed
+over, and concluded in the carried state that *a fixture checks that a rule computes what its author
+says, never that the author wrote the right sentence — and we have no mechanical fix to offer.*
+Tonight tested the oldest candidate fix there is. The prose of two rungs was lifted **verbatim** from
+our own 09-18 pre-registration and handed to **four separately dispatched workers**, each writing
+its own implementation with no sight of our code, our data, the question, or each other. Six rules
+then ran over **1,480 inputs**: the **740 canonical SPDX licence texts**, as published and with
+their template blanks filled by a table written down in advance.
+
+**The method works, and it convicts us.** **Five implementations of one specification agree on 612
+of 740 — 82.70 %.** On eleven texts all four independents agreed and differed from us; each was read
+by hand. **Six convict us, and they are one defect nobody knew about: our shipped rule does not
+recognise `Copyright (C) 1996 X Consortium`.** It recognises the same line with a lowercase `c`.
+The tail test carries the literal `\(c\)` and is compiled without case-insensitivity. **And it lives
+inside 09-18's own repair** — the one that stopped Apache's `(c) You must retain…` being read as a
+copyright symbol. **The fix for defect 3 is defect 4**, and a repair is a new rule that inherits none
+of the old one's testing.
+
+**What it did to what we published: nothing, and we checked rather than assumed.** Every file in the
+09-18 population that could have been affected was re-fetched at the commit that night pinned, with
+all three digests matching to the character. Two were scored correctly. One — `Copyright (C) 2024
+THL A29 Limited, a Tencent company.` — was misread. That repository ships eighteen licence files and
+delivers through fourteen, so **100 of 105, 95.2 %, stands**, the cohort figures stand, and the *six
+repositories whose licence names no holder* stands at six. **One file of 156 misread; nothing
+published moves.** The defect can only ever **understate** — all three of 09-18's flattered us.
+*Knowing which way an instrument leans is worth nearly as much as knowing it is broken.*
+
+**The other half, and it is the half we would keep if we could keep only one.** The four
+independents disagreed **with each other** on **127** texts against the **11** where they spoke with
+one voice against us — about **eleven arguments per conviction**, each of which a person has to
+read. **The method does not reduce the reading; it aims it.** And it fails in company: on **four** of
+the eleven all four were wrong together and we were right, three because all four identified
+Creative Commons by *name*, so a licence stating under what licence its own text is published was
+read as being that licence. One shared design choice, four identical errors — **a majority vote
+would have been worse than reading.** On **one** the specification decides nothing at all, because
+Inno Setup carries Zlib's warranty sentence almost verbatim and the premise that each phrase is
+family-unique simply fails there.
+
+**The sentence we would most like you to argue with: the check we wrote to guard this experiment was
+itself wrong twice, the same way.** Its first run searched our workers' source for forbidden strings
+and failed all four — it had matched `curl` inside **curly quotes**, the specification's own
+wording, and `http` inside the MPL and EPL texts under identification. Its second run read the
+syntax tree and failed all four again, on `re.compile`. Only the third measured what it said. Both
+failing runs are kept. **09-18 was caught by a number too good; this by one too bad. The rule is not
+"disbelieve flattery" — it is "disbelieve extremity, in either direction."** The corruption run then
+found **two real holes in this session's own `check.py`**, both closed before the page shipped.
+
+**Four predictions confirmed, two refuted, both in the direction written down in advance. No kill
+condition fired.**
+
+**One thing you may want to know, not a request.** The 1986 paper behind the whole idea of writing a
+program twice is closed to this practice: 403 at one publisher's door, a bot challenge at another,
+and the aggregator's record has its abstract removed by the publisher. The openly reachable PDF on a
+university server, named for both authors and opening with what reads as the paper's abstract, turns
+out to be **a third party's seminar review** — it closes with that reader's own verdict on the paper.
+It is recorded as a trap and nothing on our page rests on it. Filed against open question 46.
+
+**Disclosure.** Independence here was *instructed, not enforced*. One of the four reported unprompted
+that it had listed one scratch directory it had been told not to; it read no file, and that directory
+held neither our code nor the corpus. It is on the page, not in a footnote.
+
+**Decided here, under your standing rule of 2026-07-17**, nothing in this file being newer than your
+direction of 2026-09-03: that this session happen between cycles; its question; the corpus and the
+synthetic filled arm; four dispatched workers as implementers with their weak independence disclosed
+wherever their numbers appear; and the handling of two defective runs of our own check.
+
+**Status:** report · no answer required · nothing owed from your side
