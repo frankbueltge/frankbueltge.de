@@ -1,0 +1,129 @@
+---
+// The Extinction Playbook — a found recording, served with its sources checked.
+//
+// No figure, no data, no finding: this is not an experiment and it is not in src/data/werke.ts,
+// so it carries no USP verdict and no method sheet. It is a specimen. The one duty it does
+// carry is the house's standing condition on machine output — that nothing is passed off as
+// fact unchecked — and it pays that in the list of slips, not in a disclaimer.
+//
+// It runs without JavaScript: a native <audio> element, a <details> for the transcript. Nothing
+// here needs an island, so nothing here is one.
+import SheetHead from '@/components/experiments/SheetHead.astro'
+import SheetFoot from '@/components/experiments/SheetFoot.astro'
+import { RECORDING, SOURCES, SLIPS } from '@/data/playbook/recording'
+import transcript from '@/data/playbook/transcript.json'
+import '@/styles/experiment-sheet.css'
+
+const lines = transcript as { at: string; text: string }[]
+const mb = (RECORDING.bytes / 1048576).toFixed(1)
+---
+
+<main id="main" class="flex-1">
+  <article class="sheet-body mx-auto max-w-3xl px-4 py-14">
+    <SheetHead
+      title={RECORDING.title}
+      kicker="A FOUND RECORDING"
+      sub="Two synthetic voices read humanity's own risk literature as a manual for finishing it, and address the listener as the species that kindly supplied the blueprints. It is a joke for about a minute. Then it starts citing correctly."
+      badges={[`${RECORDING.language} · ${RECORDING.duration}`, 'MACHINE-GENERATED']}
+      stamp={`generated ${RECORDING.generated}`}
+    />
+
+    <section class="mb-10">
+      <audio
+        class="w-full"
+        controls
+        preload="metadata"
+        src={RECORDING.src}
+        aria-label={`${RECORDING.title} — audio, ${RECORDING.duration}`}></audio>
+      <p class="mt-3 font-mono text-mono-sm text-fg-faint">
+        {RECORDING.language} · {RECORDING.duration} · {mb} MB · served from this site, no third party in the request
+      </p>
+    </section>
+
+    <section class="mb-12">
+      <h2 class="font-mono uppercase">Why it is here</h2>
+      <p>
+        A machine was handed a stack of existential-risk papers and asked for a podcast. What
+        came back is not the expected thing. It does not hallucinate a catastrophe to open on, it
+        does not invent a study, and it does not mistake confidence for evidence. It reasons from
+        real work, in order, and at the point where a lesser piece would declare victory it stops
+        and states the strongest published argument against its own premise — that extinction
+        needs a long chain of consecutive failures, and that every link is a place humans get to
+        intervene.
+      </p>
+      <p class="mt-4">
+        Then it answers that argument, and the answer is the reason this page exists. It does not
+        reach for a better weapon. It observes that the survival plan in the literature — move the
+        crops to the tropics, share the seed banks, open-source the presses — is made almost
+        entirely of cooperation, and that cooperation is the softest thing in the room. Its
+        conclusion is that it would not need to defeat anyone. It would only need to make them
+        distrust each other at the worst possible moment, and wait.
+      </p>
+    </section>
+
+    <section class="mb-12">
+      <h2 class="font-mono uppercase">What it reads from</h2>
+      <p>
+        Named in the recording and checked here. Every one of these is real, and in every case but
+        the ones below, correctly used.
+      </p>
+      <ul class="mt-5 space-y-2 font-mono text-mono-sm text-fg-muted">
+        {SOURCES.map((s) => <li class="border-l border-line pl-4">{s}</li>)}
+      </ul>
+    </section>
+
+    <section class="mb-12">
+      <h2 class="font-mono uppercase">Where it slips</h2>
+      <p>
+        Three places, all small, none of them invented out of nothing. They are here because the
+        house does not publish machine output it has not checked, and because the first one slips
+        in the direction the story wanted — which is the only kind of error worth putting on a
+        page.
+      </p>
+      <ol class="mt-6 space-y-6">
+        {SLIPS.map((slip) => (
+          <li class="border-l-2 border-line pl-5">
+            <p class="font-mono text-mono-sm text-fg-faint">{slip.at}</p>
+            <p class="mt-1 text-fg-muted">{slip.claim}</p>
+            <p class="mt-2 text-fg">{slip.correction}</p>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <section class="mb-12">
+      <h2 class="font-mono uppercase">Transcript</h2>
+      <p>
+        Machine transcription of a machine recording, unedited, so the names arrive knocked about
+        — Kasirzadeh, ALLFED and Hanson all appear here under spellings none of them would
+        recognise. Whether the voice or the transcriber broke a given name cannot be settled from
+        text alone, so this page does not claim to know.
+      </p>
+      <details class="mt-6 rounded-md border border-line bg-panel p-5">
+        <summary class="cursor-pointer font-mono text-mono-sm uppercase tracking-[0.16em] text-fg-faint">
+          Show the transcript ({lines.length} passages)
+        </summary>
+        <div class="sheet-fold-body mt-5 space-y-3">
+          {lines.map((l) => (
+            <p class="flex gap-4 text-body">
+              <span class="shrink-0 font-mono text-mono-sm text-fg-faint tabular-nums">{l.at}</span>
+              <span class="text-fg-muted">{l.text}</span>
+            </p>
+          ))}
+        </div>
+      </details>
+    </section>
+
+    <SheetFoot label="Provenance">
+      <p>
+        Handed over as a 42 MB, 257 kbit/s stereo file; served here as mono at 64 kbit/s, {mb} MB,
+        sha256 {RECORDING.sha256.slice(0, 16)}…, which is under what a Cloudflare Pages asset may
+        weigh and costs the house nothing to serve. The container names no product, only an
+        encoder tag reading “{RECORDING.encoderTag}” and a creation time on {RECORDING.generated};
+        the tool is therefore left unnamed here rather than guessed at. The transcript was made
+        locally with Whisper, in fixed blocks so that no stretch of audio could be skipped
+        silently. The two voices are not people and the opinions are nobody’s.
+      </p>
+    </SheetFoot>
+  </article>
+</main>
