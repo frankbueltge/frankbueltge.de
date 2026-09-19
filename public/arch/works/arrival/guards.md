@@ -57,3 +57,17 @@ Appended by `build.py` from iteration 17 onward: a guard that fires belongs in t
 ## 2026-09-18 04:21Z — aka2026msxacu — iteration-20
 
 - **4** versions where the two readings of the arrival figure differ
+
+## 2026-09-19 04:21Z — hv75018296 — iteration-21
+
+- **10** pick names claimed twice in one version
+- **691** instants published with no zone designator
+- **28** blocks of another record standing at the last version
+
+## 2026-09-19 04:24Z — aka2026msxacu — iteration-21
+
+- **4** versions where the two readings of the arrival figure differ
+
+## 2026-09-19 04:25Z — nc75382936 — iteration-21
+
+- **1** blocks of another record standing at the last version

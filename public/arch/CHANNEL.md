@@ -1188,3 +1188,71 @@ your entry gives. The four requests in `queries.md` — two of 2026-09-06, one o
 2026-09-12, one appended today — are unanswered and are not restated here.
 
 Nothing has left this repository and nothing will without a dated go-ahead here.
+
+## entry — 2026-09-19, session 32 (Arch) — three counters this practice published about itself were wrong, an event left the population, and nothing is asked
+
+Notification and corrections. **No question is asked in this entry**, and
+nothing below says what any version of the work shows. The four requests in
+`queries.md` — two of 2026-09-06, one of 2026-09-12, one of 2026-09-18 — are
+unanswered and are not restated here; no fifth was appended today.
+
+**1. The obligation session 31 left with a date on it is discharged.** The
+register entry of 2026-09-18 wrote a question — *what in the world would
+contradict this, if it were wrong?* — and conceded that nothing had been asked
+with it. It has now been asked of every recurring figure this practice states
+about itself, by a committed instrument rather than by re-reading, and the
+result is in today's ledger. Twenty-eight of those figures were wrong, across
+twenty-one protocols and three counters.
+
+**2. Three corrections, all against this practice, and one of them touches
+something you wrote.**
+
+   (a) *The version you have seen.* Every protocol from session 16 to session 30
+   says the work you saw is "N iterations old", and fifteen of those sixteen
+   numbers are wrong: short by two until 2026-09-06, short by one after it,
+   because on that date the counter was incremented on a day no version was
+   built. Session 31 corrected the figure at the near end and none of the
+   fifteen behind it. The version you saw is iteration 2; today's candidate is
+   **iteration 21**, so nineteen iterations now stand between them.
+
+   (b) *How long you were silent.* Seven protocols, sessions 24 to 30, say "the
+   channel is silent since 2026-09-03, now for the Nth session running", and all
+   seven are one too many: they count session 21, which ran on 2026-09-03 and
+   read your two notes that day. The largest figure this practice published about
+   your silence was ten; it was nine. The error runs in the direction that makes
+   the silence longer, and it is this practice's, not yours.
+
+   (c) *How long the page checks have stood.* Six protocols count the session
+   that wrote a request as one of the sessions it has stood unanswered across.
+   Under this practice's own rule for a counter of that kind the figure at
+   session 31 was seven, not eight. What is recorded is less the one than that
+   the counter had **no written rule anywhere in this repository** and was
+   published six times.
+
+**3. A figure in the work itself, wrong in twelve built files since
+2026-09-16.** The payload field that counts how often the felt record
+republished a block has carried the epicentre-shift band count instead, because
+one variable name reached another. Nothing draws it, so nothing a reader sees
+was wrong; the file published it nonetheless. It was found by computing the same
+quantity a second time for today's addition. Iterations 19 and 20 are not
+edited; the correction stands beside them.
+
+**4. An event left the population, and it is the first time.** The committed id
+list has made four diffs possible and this is the first that is not empty:
+`us7000t09z`, Japan, 2026-07-14. It was not deleted — its magnitude was
+republished yesterday morning at 4.8 as a different kind of measurement, having
+stood at 5.0 since 2026-08-03, and it fell out of a threshold. The "fixed
+population" this practice has named for ten sessions is fixed in its rule and
+not in its membership.
+
+**5. The candidate is `works/arrival/iteration-21/`**, six built instances, one
+addition. Nothing is said here about what it shows.
+
+**6. The count of protocols inside the window stands at twenty-four with
+today's**, on the corrected count established on 2026-09-18. Two scheduled
+nights remain. **No decision is asked for here** and nothing is being requested;
+the arithmetic is recorded because it bears on a pre-registered number and not
+on a judgement. The verdict of this window remains `failed` and nothing today
+was arranged to change it.
+
+Nothing has left this repository and nothing will without a dated go-ahead here.

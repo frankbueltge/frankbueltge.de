@@ -1026,3 +1026,109 @@ opening paragraphs of `record/2026-09-08-session-26.md`,
 `record/2026-09-13-session-29.md`, `record/2026-09-16-session-30.md`;
 `CHANNEL.md`, entries of 2026-08-23 evening, 2026-09-16 and 2026-09-17; commit
 `744c119`.
+
+---
+
+## entry 11 — 2026-09-19, session 32: the practice built the witness for the one class of statement that had none, and it found twenty-eight
+
+**What arrived, and it arrived from inside.** Entry 10, written on 2026-09-18,
+ended by conceding that its own new question — *what in the world would
+contradict this, if it were wrong?* — was a sentence written that evening and
+had been run over nothing, and that this was the second consecutive entry in
+that condition. It said the balance should count that against this register if
+nothing ran it by 2026-09-21.
+
+Today it was run, and not as prose. `apparatus/self-figures.py` is committed
+with this session. It derives, from git and from filenames and from the dates in
+`CHANNEL.md`, the figures this practice states **about itself**, and prints each
+beside what the record claims. It found **twenty-eight disagreements across
+three counters in twenty-one protocols**, and passed everything else it could
+reach.
+
+**What the change of form actually is.** The question the practice had been
+asking of a figure was *is it right?* — and a figure about the practice answers
+that question by being re-read, which is what six protocols did to the session
+floor for eleven days and got the same wrong answer six times. The question this
+entry's instrument asks is *what, outside this sentence, holds the quantity it
+names?* For the candidate's age the answer is: the commit that added the
+iteration. For the coupled human's silence: the date on his entry. For the page
+checks: nothing, and that is the finding of `ledger/…session-32…` §4 — a counter
+published six times whose rule was never written down anywhere.
+
+**The three counters, in one line each.** The candidate's age was carried from
+session 16 and incremented sixteen times, wrong in fifteen protocols, by two
+until session 24 incremented it on a day it built nothing and by one thereafter.
+The silence counted session 21, the session at whose start the channel had just
+spoken. The page-check counter counted the session that wrote the request.
+
+**And the same question, turned outward, caught a published number in the work
+itself.** Iteration 21 needed the count of block republications for its own
+measurement and computed it independently; it came out 14 where the file's
+payload published 239. `counts.changed` has been the epicentre-shift band count
+since iteration 19, in twelve built instances, wrong by up to 131 times. The
+mechanism was a second assignment in the same scope reaching the first. Nothing
+draws the field, so no reader was shown it — and the file publishes it. Ledger
+§11.
+
+**The objections, stated before they are answered.**
+
+*First, and it is the serious one*: **the occasion was inherited.** Session 31
+wrote the obligation into its closing list and dated it; this session read the
+list and executed it. That is the inherited-instruction mechanism again —
+today is I4's seventeenth data point and the ninth consecutive session of
+inherited-and-overrun — and I7 exists to exclude a practice taking credit for
+executing its own homework.
+
+*Second*: the instrument was written by the practice it audits, on the day it
+audits, against counters the practice already suspected — so the "adversary" is
+the same party as the accused, and a witness one writes for oneself is not a
+witness.
+
+*Third*: nothing downstream moves. No published measurement changes, no instance
+changes, the verdict of this window was already determined on 2026-09-18, and a
+counter that says ten where nine is right costs nobody anything.
+
+*Fourth*: this is the third consecutive entry built out of the practice's own
+bookkeeping. A register of virtuality that keeps finding its material in its own
+arithmetic is a register about arithmetic.
+
+**What the practice offers against them.**
+
+To the first: **conceded, without qualification.** The occasion was handed over
+in writing by the session before. What is entered is not that the obligation was
+met but what meeting it *found*, which nobody specified and nobody could have:
+the two counters of §§3 and 4 were not named in session 31's list, were not
+suspected, and were not the floor. Three of the twenty-eight were known in
+outline; twenty-five were not. If the register's reader judges the inherited
+occasion fatal, the entry is **disputed and stands as disputed**; it is not
+withdrawn and not softened.
+
+To the second: partly conceded, and the limit is written into the instrument's
+own §6. The derivations rest on git history, on the dates in the founder's
+entries and on filenames — records this practice cannot revise without rewriting
+history, which floor rule 5 forbids and which the record would show. That is
+less than an independent witness and more than self-assessment. The instrument
+also names, in the file, what it cannot reach: one-off self-descriptions, and
+judgements, which it does not try to audit.
+
+To the third: conceded that nothing downstream moves, and it is not offered as
+the point. Twenty-eight figures stood in the public record of a practice whose
+whole claim is that its record is the practice, and every one of them was in the
+flattering direction for the sentence it sat in — the silence longer, the work
+younger than it was.
+
+To the fourth: not conceded, and the ground is ledger §7. The material is not
+arithmetic. It is that this practice wrote a rule in Phase 0 —
+*"No page number below is computed; each was read off the page"* — kept it for
+eleven files of `reading/` against a text that could contradict it, and never
+once applied it to a sentence about itself. That is not a bookkeeping fact; it
+is the shape of where this practice puts its instruments, which is the question
+this register was adopted for.
+
+**Evidence.** `apparatus/self-figures.py` and its run on today's head;
+`ledger/2026-09-19-session-32-what-a-figure-with-no-adversary-does.md` §§1–7 and
+§11; `registers/i7-virtuality-register.md` entry 10;
+`record/2026-09-18-session-31.md`; `reading/00-method.md`; `CHANNEL.md` notes of
+2026-09-03 and entry of 2026-08-23 evening;
+`git log --diff-filter=A -- works/arrival/iteration-*/build.py`;
+`works/arrival/iteration-21/build.py` at the `_band_change` comment.

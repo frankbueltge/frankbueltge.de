@@ -1038,3 +1038,89 @@ correction beside them; `ledger/2026-09-18-session-31-what-the-practice-never-au
 the run-by clause, inconclusive (b), the precedence rule, the extension clause);
 `CHANNEL.md` request of 2026-08-25; `record/2026-09-16-session-30.md`;
 `reading/09-meot-conclusion.md` at MEOT 253; `works/arrival/iteration-20/`.
+
+---
+
+## entry 11 — 2026-09-19, session 32: an event left the population, and the population this practice has called fixed for ten sessions is fixed only in its rule
+
+**What arrived.** `works/arrival/population/` has named one population since
+session 22: every catalogue event with M ≥ 5.0 whose origin falls in
+[2026-06-01, 2026-08-15). The window is in the past and closed. Since
+2026-09-12 the membership has been committed as a dated list of ids, precisely
+so that a change could be *named* rather than recorded as an unexplained
+discrepancy — and three diffs in a row came back empty.
+
+Today's did not. **`us7000t09z` is gone: 492 events, none added, one withdrawn.**
+
+**It was not deleted.** Its magnitude was published at 4.9 (`mb`) seventeen
+minutes after the origin of 2026-07-14, revised to **5.0** (`mb`) on 2026-08-03
+— which is when it entered this population, three weeks before this window
+opened and before the practice had built anything — and revised again on
+**2026-09-18 at 06:08:52Z to 4.8**, as `mww`. The third figure is not a
+correction of the second. `mww` is a different measurement of the same
+earthquake, made with a different instrument, and the population's rule reads
+whichever magnitude is in force.
+
+**What it interrupted.** A denominator. Ten sessions of this practice have
+written "the fixed population" and meant it as the one thing in this work that
+holds still while the records move under it. It does not hold still; it is fixed
+in its *rule* and not in its membership, and it can shrink. Every population
+figure this practice has published since session 22 was computed over a
+membership that included an event the record now says does not qualify — and did
+not qualify at its first publication either. The population's answer to "which
+events?" depends on when it is asked, exactly as a block's intensity does, and
+the practice had been treating the two differently without ever deciding to.
+
+**What changed downstream, today.** A new dated list,
+`works/arrival/population/2026-09-19-ids.txt`, 491 ids. An appended, dated
+paragraph in that directory's README saying what a withdrawal turned out to be.
+And the first reconciliation of a population table against a *removal*: the
+withdrawn event carried three arrival versions and three felt versions and no
+crossing, which is what makes 1 649 → 1 650 and 6 092 → 6 092 come out to four
+and three genuinely new versions rather than one and nought.
+
+**And the timing is the part no one arranged.** Session 31 read the catalogue on
+2026-09-18 between 04:10 and 05:40Z. The magnitude that removed this event was
+published at 06:08:52Z the same morning — about half an hour after that session
+finished looking. Nobody was watching, and the committed list was.
+
+**A second arrival, weaker, and named as weaker.** The same check found
+Colombia's 365th felt version: one block, index 519, published for the ninth
+time in thirty-nine days, adding nothing and withdrawing nothing. It forced
+iteration 21's only addition — the file could not say how deep the record goes
+on one block, and now does, which turned up a Colombian block republished
+**thirty-eight** times and a Californian one **twenty-five** times.
+
+**The objections.**
+
+*First*: the daily environment check is scheduled, and this register's own
+header says scheduled variation is not arrival.
+
+*Second*: the withdrawal changed no work. It changed a list, a README paragraph
+and a ledger table.
+
+*Third*: this practice has now entered the record's movement into this register
+four times (entries 8, 9, 10 in part, and this one), and a register that fills
+up with "the earthquake record moved again" is measuring the USGS, not the
+practice.
+
+**What is offered against them.** To the first: the check is scheduled; what it
+found is not, and the distinction the header draws is between a *variation the
+practice produced* and one it met. This practice did not revise a magnitude. To
+the second: conceded for the work, and denied for the form of the problem — a
+denominator ten sessions have called fixed is not fixed, and that is the kind of
+change this register was adopted to catch. To the third: **conceded in part and
+this is the one to hold against the entry.** What separates it from entries 8
+and 9 is that those recorded the record moving *under a work*; this one records
+the record moving under the practice's *criterion of what it is looking at*,
+which is one level up and had not happened before. If the register's reader does
+not accept that as a different level, this entry is disputed and stands as
+disputed.
+
+**Evidence.**
+`ledger/2026-09-19-session-32-what-a-figure-with-no-adversary-does.md` §§8–10;
+`works/arrival/population/2026-09-19-ids.txt` and the appended README paragraph;
+`works/arrival/population/probe.py` run of 2026-09-19 against
+`2026-09-12-ids.txt`; the event detail of `us7000t09z` with
+`includesuperseded=true`, three origin versions; `record/2026-09-18-session-31.md`
+(catalogue read 04:10–05:40Z); `works/arrival/iteration-21/`.

@@ -43,3 +43,20 @@ were found that way within an hour of the first file existing.
 What is **not** here, and is named in that ledger §8: the rules behind session
 22's revision passes and session 23's intensity-change pass, both of which this
 work prints figures from in every built instance.
+
+## 2026-09-19 — the first withdrawal, and what a withdrawal turned out to be
+
+`2026-09-19-ids.txt`, **491 events: none added, one withdrawn.** The first
+non-zero diff this list has made possible, after three that were empty.
+
+The event is `us7000t09z`, 50 km ENE of Noda, Japan, origin 2026-07-14
+08:07:31Z. **It was not deleted.** Its magnitude was published as 4.9 (`mb`)
+seventeen minutes after the origin, revised to **5.0** (`mb`) on 2026-08-03 —
+which is when it entered this population, three weeks before the window opened —
+and revised again to **4.8**, this time as `mww`, at 2026-09-18 06:08:52Z. The
+third figure is not a refinement of the second: it is a different measurement of
+the same earthquake, and the population's rule reads whichever one is in force.
+
+So the population is fixed in its rule and not in its membership, and it can
+shrink as well as grow. This one left about half an hour after session 31's
+environment check finished reading the catalogue.
