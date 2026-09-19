@@ -48,17 +48,39 @@ jobs:
           # arch, n-1 and error-as-method added 2026-09-11. They have run a session every night
           # since 2026-09-03 and none of them appeared here, so the one mechanism that reports
           # "keine Session gelandet" never looked at them: arch missed the nights of 09-10 and
-          # 09-11 and nothing said so. `Night [0-9]` is n-1's own session marker ("Night 25: …");
-          # it is written with the digit so that prose like "Two Nights Deep" is not counted as
-          # a landing. arch and error-as-method are caught by the existing "Session" alternative.
-          for REPO in field-research ulysses studio data-snack-plenum arch n-1 error-as-method; do
+          # 09-11 and nothing said so. research-ecology added 2026-09-19 for the same reason —
+          # the Middle Scribe runs its own nightly routine and landed nothing between 09-16 and
+          # 09-19, unread by this list and by the landing watchdog both.
+          # One marker list for both reads below. Two hand-written lists drift, and the half that
+          # drifts goes silent instead of red — the same way the digest's and the landing
+          # watchdog's repo lists drifted apart between 2026-09-11 and 2026-09-18.
+          # `Night [0-9]` is n-1's own session marker ("Night 25: …"), written with the digit so
+          # prose like "Two Nights Deep" is not counted as a landing; `^scribe: ` is the Middle
+          # Scribe's, anchored so that "describe" cannot match it.
+          MARKER='session|Session|Research day|Plenum|Auto-land research|Project work|Night [0-9]|^scribe: '
+          for REPO in field-research ulysses studio data-snack-plenum arch n-1 error-as-method research-ecology; do
             LINES=$(gh api "repos/frankbueltge/$REPO/commits?since=$SINCE&per_page=15" \
-              --jq '[.[] | select(.commit.message | test("session|Session|Research day|Plenum|Auto-land research|Project work|Night [0-9]")) | "- **'"$REPO"'**: " + (.commit.message | split("\n")[0] | .[0:140])] | join("\n")' 2>/dev/null || echo "")
-            if [ -n "$LINES" ]; then BODY+="$LINES"$'\n'
+              --jq "[.[] | select(.commit.message | test(\"$MARKER\")) | \"- **$REPO**: \" + (.commit.message | split(\"\n\")[0] | .[0:140])] | join(\"\n\")" 2>/dev/null || echo "")
+            # The read above sees `main` and nothing else. A session whose environment cannot push
+            # to main publishes to a branch and opens a pull request instead, and from main that
+            # complete record is indistinguishable from a night that never ran. n-1 has worked this
+            # way every night since night 22; on 2026-09-18 this section called it an empty night
+            # while night 29's record sat finished in pull request #4. So the open pull requests
+            # are read too, by the same markers, and reported beside the commits rather than
+            # instead of them — on 2026-09-19 `main` carried the merge of night 29 while night 30
+            # was the night that had just been worked.
+            PRS=$(gh api "repos/frankbueltge/$REPO/pulls?state=open&sort=created&direction=desc&per_page=20" \
+              --jq "[.[] | select(.created_at > \"$SINCE\") | select(.title | test(\"$MARKER\")) | \"- **$REPO**: \" + (.title | .[0:120]) + \" (offener PR #\" + (.number|tostring) + \" — nicht auf main)\"] | join(\"\n\")" 2>/dev/null || echo "")
+            # Plain `if`, not `[ … ] && BODY+=…`: under `set -e` a false test ends the whole
+            # digest, and a digest that dies mid-loop looks like a quiet night for every
+            # practice after it.
+            if [ -n "$LINES" ]; then BODY+="$LINES"$'\n'; fi
+            if [ -n "$PRS" ]; then BODY+="$PRS"$'\n'; fi
+            if [ -n "$LINES" ] || [ -n "$PRS" ]; then continue; fi
             # Atelier arbeitet seit Protokoll v4 projektbasiert (v5 seit 2026-07-24: Arbeitslinien) —
             # eine Nacht ohne Landung ist normal, kein Alarm. Sein Sitzungsmarker heißt "Project work",
             # deshalb steht der oben im Filter — sonst meldet der Digest Stille, wo gearbeitet wurde.
-            elif [ "$REPO" = "ulysses" ]; then BODY+="- **$REPO**: keine Landung (projektbasierte Praxis, v5 — kein nächtlicher Takt geschuldet)"$'\n'
+            if [ "$REPO" = "ulysses" ]; then BODY+="- **$REPO**: keine Landung (projektbasierte Praxis, v5 — kein nächtlicher Takt geschuldet)"$'\n'
             else BODY+="- **$REPO**: keine Session gelandet"$'\n'; fi
           done
 

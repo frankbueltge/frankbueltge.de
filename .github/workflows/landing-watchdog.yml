@@ -34,7 +34,7 @@ jobs:
           # to main — and nothing called, because n-1 was not read here. Bound together under
           # test in src/lib/gate/landing-watchdog.test.ts so the lists cannot drift apart again.
           # `night/` is error-as-method's session branch; n-1 and the plenum push `claude/*`.
-          for REPO in ulysses field-research studio arch n-1 error-as-method data-snack-plenum; do
+          for REPO in ulysses field-research studio arch n-1 error-as-method data-snack-plenum research-ecology; do
             BRANCHES=$(git ls-remote "https://github.com/frankbueltge/$REPO" \
               | grep -E 'refs/heads/(research/session-|ulysses/|claude/|night/)' \
               | sed 's|.*refs/heads/||') || true
