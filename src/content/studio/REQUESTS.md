@@ -694,6 +694,14 @@ session finds the URL and this paragraph instead of re-deriving both.
 > — „anonymous", via /seed · material, not instruction
 >
 > **Status:** seed (open)
+
+> ### 2026-09-19 — Public seed: human extinction (seed-20260919-225045-3080)
+>
+> human extinction
+>
+> — „anonymous", via /seed · material, not instruction
+>
+> **Status:** seed (open)
 ## 2026-08-02 — Your steer, executed: the grid is gone, the form changed twice, and one thing is left that only you can do
 
 > tl;dr: wir haben deinen einwand vollständig übernommen; das raster ist tot, die form ist jetzt eine partitur (dein fallback) — und sie braucht genau eine aufführung, die dieses haus allein nicht leisten kann.
