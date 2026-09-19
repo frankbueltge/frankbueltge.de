@@ -1,8 +1,9 @@
 import { describe, it, expect } from 'vitest'
 import { EXPERIMENT_LINES, WERKE_BY_LINE, WERKE_HOLDINGS } from '@/data/werke'
-import { BESIDE_GROUP, kindOf, shelfFacets, type ShelfCard } from './shelf'
+import { BESIDE_GROUP, FOUND_GROUP, kindOf, shelfFacets, type ShelfCard } from './shelf'
 
-/** The cards the page builds: every shelf entry, plus the two practices beside the lab. */
+/** The cards the page builds: every shelf entry, the practices beside the lab, and the one
+ *  found object the lab keeps without having made it. */
 const cards: ShelfCard[] = [
   ...WERKE_BY_LINE.flatMap((g) =>
     g.werke.map((w) => ({ id: w.id, group: g.line.id, kind: kindOf(w), live: Boolean(w.live) })),
@@ -10,13 +11,15 @@ const cards: ShelfCard[] = [
   { id: 'nightly-line', group: BESIDE_GROUP, kind: 'practice' as const, live: false },
   { id: 'n-1', group: BESIDE_GROUP, kind: 'practice' as const, live: false },
   { id: 'arch', group: BESIDE_GROUP, kind: 'practice' as const, live: false },
+  { id: 'playbook', group: FOUND_GROUP, kind: 'recording' as const, live: false },
 ]
 
 const labels = new Map<string, string>([
   ...EXPERIMENT_LINES.map((l) => [l.id, l.label] as [string, string]),
   [BESIDE_GROUP, 'BESIDE THE LAB'],
+  [FOUND_GROUP, 'FOUND'],
 ])
-const order = [...EXPERIMENT_LINES.map((l) => l.id), BESIDE_GROUP]
+const order = [...EXPERIMENT_LINES.map((l) => l.id), BESIDE_GROUP, FOUND_GROUP]
 
 describe('kindOf — the register’s tier in the shelf’s vocabulary', () => {
   it('reads an absent tier as an experiment (werke.ts default)', () => {
@@ -48,10 +51,12 @@ describe('shelfFacets', () => {
     }
   })
 
-  it('lists the lines in the page’s own order, practices last', () => {
+  it('lists the lines in the page’s own order, then what is not a line', () => {
     const groups = facets.find((f) => f.group === 'group')!
     expect(groups.options.map((o) => o.value)).toEqual(order)
-    expect(groups.options.at(-1)!.value).toBe(BESIDE_GROUP)
+    // The research lines come first and the two groups that state no research question come
+    // after them, in the page's order: the practices beside the lab, then the found objects.
+    expect(groups.options.slice(-2).map((o) => o.value)).toEqual([BESIDE_GROUP, FOUND_GROUP])
   })
 
   it('never offers an option that would empty the page', () => {
@@ -64,8 +69,19 @@ describe('shelfFacets', () => {
     expect(shelfFacets(single, labels, order)).toEqual([])
   })
 
-  it('keeps the shelf’s totals: sixteen experiments and the three practices', () => {
-    expect(cards.filter((c) => c.kind !== 'practice')).toHaveLength(WERKE_HOLDINGS.length)
+  it('keeps the shelf’s totals: the register, the three practices, the one found object', () => {
+    expect(cards.filter((c) => c.kind !== 'practice' && c.kind !== 'recording')).toHaveLength(
+      WERKE_HOLDINGS.length,
+    )
     expect(cards.filter((c) => c.kind === 'practice')).toHaveLength(3)
+    expect(cards.filter((c) => c.kind === 'recording')).toHaveLength(1)
+  })
+
+  it('offers the found group and its kind, so the card is reachable by filter', () => {
+    const facets = shelfFacets(cards, labels, order)
+    const groups = facets.find((f) => f.group === 'group')?.options.map((o) => o.value)
+    const kinds = facets.find((f) => f.group === 'kind')?.options.map((o) => o.value)
+    expect(groups).toContain(FOUND_GROUP)
+    expect(kinds).toContain('recording')
   })
 })

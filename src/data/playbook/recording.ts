@@ -27,7 +27,11 @@ export const RECORDING = {
   /** the source file's own encoder tag; the product that wrote it is not named here because the
    *  file does not name it, and the house does not fill gaps with plausible guesses. */
   encoderTag: 'Google',
-  src: '/playbook/extinction-playbook.m4a',
+  /** Served through functions/audio/[file].js, not as a plain asset: Pages answered a Range
+   *  request on this file with a full 200 and no Accept-Ranges, which a media element cannot
+   *  seek against and Safari will not start playback on at all. The function answers 206
+   *  itself. The file still lives at public/playbook/ — the function reads it from there. */
+  src: '/audio/extinction-playbook.m4a',
   /** what was served, against what was handed over: the original is 42 MB at 257 kbit/s stereo,
    *  which is studio bitrate for two synthetic voices. Re-encoded to mono at 64 kbit/s it is
    *  11 MB — under the 25 MiB ceiling a Cloudflare Pages asset may weigh, so the house serves it

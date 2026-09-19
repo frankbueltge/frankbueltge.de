@@ -37,7 +37,8 @@
 import { getRelativeLocaleUrl } from 'astro:i18n'
 import type { Locale } from '@/lib/site'
 import { WERKE_BY_LINE, werkTitle } from '@/data/werke'
-import { BESIDE_GROUP, KIND_LABEL, kindOf, shelfFacets, type ShelfCard, type ShelfKind } from '@/lib/experiments/shelf'
+import { BESIDE_GROUP, FOUND_GROUP, KIND_LABEL, kindOf, shelfFacets, type ShelfCard, type ShelfKind } from '@/lib/experiments/shelf'
+import { RECORDING } from '@/data/playbook/recording'
 import { datedEntries, recordThumbnail, THUMBNAILS, THUMB_BOX } from '@/lib/experiments/thumbnails'
 import { GALLERY } from '@/config/gallery-wording'
 import { NAMING } from '@/config/naming'
@@ -174,6 +175,26 @@ const sections: GallerySection[] = [
       },
     ],
   },
+  {
+    id: FOUND_GROUP,
+    label: GALLERY.found.label,
+    blurb: GALLERY.found.blurb,
+    cards: [
+      {
+        id: 'playbook',
+        group: FOUND_GROUP,
+        kind: 'recording',
+        kindLabel: KIND_LABEL.recording,
+        live: false,
+        title: RECORDING.title,
+        description:
+          'Two synthetic voices read the existential-risk literature as a manual for finishing the species, and address the listener as the species that supplied the blueprints. Machine-made, and better than that premise deserves: it works from real sources, states the strongest published argument against itself, and answers it by observing that the survival plan in the literature is made almost entirely of cooperation. Served with its sources checked and its three slips named.',
+        href: url('/playbook'),
+        meta: `generated ${RECORDING.generated} · ${RECORDING.duration} · ${RECORDING.language} · sources checked`,
+        thumb: null,
+      },
+    ],
+  },
 ]
 
 // The facet counts stay ONE arithmetic with the cards on the page: they are derived from the
@@ -209,18 +230,12 @@ const quietLink = cn(
 
 <main id="main" class="mx-auto w-full max-w-4xl flex-1 px-6 py-12 sm:py-16">
   <SheetHead title={copy.title} sub={copy.sub} class="mb-8">
-    <p class="mt-4 -ml-2 flex flex-col items-start">
+    <p class="mt-4 -ml-2">
       <a
         href={url('/experiments/neighbors')}
         class={cn(quietLink, 'h-auto whitespace-normal py-1 text-left uppercase tracking-[0.14em] text-fg-faint')}
       >
         {GALLERY.link.field}
-      </a>
-      <a
-        href={url('/playbook')}
-        class={cn(quietLink, 'h-auto whitespace-normal py-1 text-left uppercase tracking-[0.14em] text-fg-faint')}
-      >
-        {GALLERY.link.found}
       </a>
     </p>
   </SheetHead>

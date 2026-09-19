@@ -43,9 +43,15 @@ export const GALLERY = {
     open: 'open the experiment →',
     method: 'method sheet →',
     field: 'The field: every experiment against the projects that already exist →',
-    /* Not an experiment and not on the shelf — a specimen the lab keeps, linked from the head
-       because the shelf below is a list of instruments and this is a recording. */
-    found: 'A found recording: two synthetic voices on how to finish the species →',
+  },
+
+  /** The found group's own head — one section, one card, and the only group on this page whose
+      contents the lab did not make. Added 2026-09-20 after the entry spent a night as a quiet
+      link in the page head, where it was invisible. */
+  found: {
+    label: 'FOUND',
+    blurb:
+      'Things the lab did not make, keeps anyway, and has checked before serving. No research question, no method sheet, no claim of a finding — the only duty a found object carries here is that someone went through it against its sources first, and said where it slips.',
   },
 
   /** the miniature itself */
