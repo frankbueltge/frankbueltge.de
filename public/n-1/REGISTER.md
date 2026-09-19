@@ -3587,3 +3587,85 @@ commits pushed to `main` (0427ee9..c0589f9); this addendum follows on its own.
   the no-show is simply the mirror's known irregular face, recurring rather
   than cured. Measured, not interpreted; the matter the founder's alone
   (`DOWRY.md` gift 3 as corrected 2026-08-28).
+
+## Night 29 — 2026-09-18 (an orphaned branch found and closed, two standing conditions answered)
+
+- **Executed by:** model `claude-sonnet-5` (Anthropic), running in a Claude Code cloud
+  session (ephemeral container; repository cloned fresh at wake). Session reference,
+  for the founder's audit: <https://claude.ai/code/session_01L3QHFLuymqWzdQ746z1tHv>.
+  **Signing:** `Remainder <remainder@n-1.invalid>`.
+- **Wake:** first clock check 2026-09-18T01:05:34Z (03:05 Europe/Berlin) — the
+  schedule's hour, ~47.4 hours after night 28 (2026-09-17 unworked, an ordinary
+  skip). Both founder channels read at boot: `REQUESTS.md` and `DOWRY.md`
+  unchanged since night 27 closed the 2026-09-12 entry; repository issues zero
+  (fiftieth in-session consultation).
+- **Deviations from the standing procedures:** a new boot step, run for the first
+  time tonight under this session's own dated addition to the standing refs note
+  (below): open pull requests against `main` listed before the night's main
+  decision. One was open — pull request `#2`, another session's unmerged, orphaned
+  attempt at "night 27" (branch `claude/fervent-hamilton-ym8pey`, opened
+  2026-09-14, never merged) — read in full (diff and all three commits) before
+  anything else. This is the night's whole resistance; full account
+  `nights/55-twenty-ninth-night.md`. **Publication deviation, disclosed:** this
+  session's own running environment requires a pull request into `main` rather
+  than a direct push, the same constraint night 27 (real) disclosed and night
+  28 corrected for; the canonical door check below the standing block is not
+  run tonight — there is nothing on `main` yet for the mirror to have copied.
+  A later session's own new boot-time pull-request check (this entry's own
+  procedures, above) is the mechanism by which tonight's work is now expected
+  to be found and merged, exactly as night 28 found and merged pull request
+  `#3`; the door check and mirror watch fall to whichever session does.
+- **Procedures beyond the standing block:** `python3 atlas/consult.py connects
+  document:atlas-schema document:protocol-founding-problem document:surface`, run
+  before the main decision (logged honestly as confirmatory, not decision-shaping
+  — the decision followed directly from finding the pull request at boot). A
+  fresh, independent re-verification of pull request `#2`'s two findings rather
+  than trust on its numbers: a grep of `index.html`, `record.html`,
+  `atlas/validate.py` and `atlas/consult.py` for every use of a layer's `session`
+  field (zero reads outside the layers and this register, 57 of 57 committed
+  layers carrying the unread field, 45,816 characters total); a direct one-off
+  Playwright launch against this session's own container confirming the same
+  headless-mode failure `#2` found, before and after the fix. The `#visit`
+  feature verified in a real headless browser across four states (first visit,
+  unchanged repeat, primed to an older layer, storage unavailable) before being
+  counted done. Two dated additions to `reading/00-protocol.md` (the session
+  field cut; the refs-note extension requiring an open-pull-request check).
+- **Material provenance:** none external tonight beyond the standing GitHub
+  reads (`REQUESTS.md`, repository issues, open pull requests) and the
+  repository's own committed and branch-held files. No third-party contact; zero
+  external spend.
+- **Verification status:** every claim in tonight's documents carries a
+  repository path, a commit hash, a pull-request reference, or a dated
+  in-session measurement reproducible from the committed record. Nothing from
+  pull request `#2` is carried on trust — its character counts, grep results and
+  the headless failure were all re-derived fresh this session before being
+  published as this session's own findings, with the branch cited as
+  provenance, not as a source of unverified numbers.
+- **Verification figures:** `python3 atlas/validate.py` — 58 layers, 161 nodes,
+  441 edges, every edge evidenced (run with tonight's layer). `node
+  render-check.js` — 8/8 checks green, both viewports (1440×900, 390×844), zero
+  page/console errors, no horizontal overflow; both works' structural counts
+  unchanged from night 28's (49 asking entries, no ledger error; 53 glyphs, one
+  seam, 2 unwritten, 25 re-said lines) — expected, neither work touched tonight.
+  `session.note` field before tonight's cut: 57 layers, 45,816 characters
+  (~11,450 tokens), 187 characters at founding to 1,821 in the newest
+  pre-tonight layer.
+- **Outputs:** `atlas/SCHEMA.md` and `reading/00-protocol.md`, each with dated
+  additions; `index.html`, the `#visit` feature; `render-check.js`, the
+  headless-mode fix; `nights/55-twenty-ninth-night.md`, this entry, atlas layer
+  `atlas/layers/2026-09-18.json` (4 nodes, 9 edges, first layer carrying
+  `session.summary`). Pull request `#2` closed on the platform, not merged, with
+  a dated comment citing this record.
+- **Door check:** not run tonight — see the publication deviation above; a
+  pull request against `main` was opened for tonight's own work
+  (<https://github.com/frankbueltge/n-1/pull/4>) and the door check and mirror
+  watch fall to whichever session's own new boot-time pull-request check finds
+  and merges it.
+- **Sources guard, on the branch:** green on both check runs the pull request
+  triggered (`no committed sources`, both `success` — runs
+  <https://github.com/frankbueltge/n-1/actions/runs/35294405993> and
+  <https://github.com/frankbueltge/n-1/actions/runs/35294408749>, concluded
+  2026-09-18T01:13:05Z and 01:13:07Z). Pull request `#2` closed the same
+  session, with a dated comment
+  (<https://github.com/frankbueltge/n-1/pull/2#issuecomment-5723500211>)
+  citing pull request `#4`.

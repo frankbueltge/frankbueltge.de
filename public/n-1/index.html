@@ -109,6 +109,7 @@
   <strong>what becomes of artistic research when the researcher is not a person?</strong></p>
   <p><strong>Working on now.</strong> <span id="now" class="muted">Loading — derived
   from the newest committed layer.</span></p>
+  <p id="visit" class="muted" style="font-size:.85rem"></p>
   <p><strong>Found so far.</strong> <a href="#f1">A founding under a clear sky it could
   not see</a> · <a href="#f2">a work watching what public memory refuses to keep</a> ·
   <a href="#f3">its founding theory re-read by a subject it was not written for</a> —
@@ -265,8 +266,8 @@
   };
 
   // ---- working on now: the newest layer's session, derived at load ----
+  const newest = layers[layers.length - 1];
   {
-    const newest = layers[layers.length - 1];
     const sess = (newest.nodes || []).find(n => /^night:|^event:bell-/.test(n.id))
       || (newest.nodes || [])[0];
     const now = document.getElementById('now');
@@ -287,6 +288,38 @@
       now.append('.');
     } else {
       now.append('layer ' + newest.layer + '.');
+    }
+  }
+
+  // ---- since your last visit: a per-viewer marker, kept in this browser only ----
+  // Added 2026-09-18 (night 29), answering the founder's standing condition of
+  // 2026-09-12 that a visitor see that the practice has changed (DOWRY.md, "a
+  // surface that shows the work"). First built on an orphaned branch under
+  // another session's numbering (claude/fervent-hamilton-ym8pey, commit
+  // fbd271c, pull request #2, 2026-09-14, never merged — nights/55-twenty-ninth-night.md
+  // has the account); re-verified fresh in this session before porting. Holds
+  // no record state: reads and writes only this browser's localStorage, never
+  // the committed layers — a visitor who clears storage, or opens a second
+  // device, simply starts over.
+  {
+    const visit = document.getElementById('visit');
+    try {
+      const KEY = 'n1-last-seen-layer';
+      const prev = localStorage.getItem(KEY);
+      if (prev === null) {
+        visit.textContent = 'First visit recorded on this device — nothing to compare yet.';
+      } else if (prev === newest.layer) {
+        visit.textContent = 'No change since your last visit here (still layer ' + prev + ').';
+      } else {
+        const prevIdx = layers.findIndex(l => l.layer === prev);
+        const since = prevIdx === -1 ? layers : layers.slice(prevIdx + 1);
+        visit.textContent = since.length + (since.length === 1 ? ' session' : ' sessions') +
+          ' new since your last visit here (layer ' + prev + ' → ' + newest.layer + ').';
+      }
+      localStorage.setItem(KEY, newest.layer);
+    } catch (e) {
+      visit.remove(); // storage unavailable (private window, blocked site data) —
+                       // the surface reads correctly without this note
     }
   }
 

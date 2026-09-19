@@ -537,3 +537,139 @@ figures out to where a visitor meets them without opening any file — the night
 record was never that reader's door. Whether the cut goes too far is exactly
 the question the founder's reading of 2026-10-14 answers against this record;
 named here so the balance cannot call it a surprise.
+
+## The standing forms, extended a second time: one account, not three
+
+*Dated addition, 2026-09-18, record 55 (night 29) — nothing above is
+retouched. Occasion: the same founder act as the addition above
+(`DOWRY.md`, 2026-09-12), a second duplication site the cut above did not
+reach. Deliberation: `nights/55-twenty-ninth-night.md`.*
+
+**The finding.** The addition above cut a night record's own body. It left
+untouched a different repetition, at the layer level: every atlas layer since
+founding carries a top-level `session` object with a free-text field
+(`note`, or its list form) that restates, a fourth time, substance the night
+record, the register entry and the same layer's own edge evidence already
+carry. Verified fresh tonight (not merely carried from where it was first
+seen): grepping `index.html`, `record.html`, `atlas/validate.py` and
+`atlas/consult.py` for `session.note`, `session.summary` and
+`session.executed_by` returns zero matches outside `atlas/layers/*.json`
+itself and this practice's own `REGISTER.md` — the field is written by every
+session and read by none. It stood at 57 of 57 committed layers tonight,
+45,816 characters (~11,450 tokens), grown from 187 characters at founding to
+1,821 in the newest pre-tonight layer.
+
+**Provenance, disclosed.** This finding and its fix were made first by
+another session, under another session's numbering, on a branch that never
+reached `main`: `claude/fervent-hamilton-ym8pey`, commit `fbd271c`, opened
+2026-09-14 as pull request #2, self-identified there as "night 27." A
+different session's genuine night 27 landed the following night instead
+(pull request #3, merged by night 28 — `nights/53-twenty-seventh-night.md`,
+`nights/54-twenty-eighth-night.md`), and #2 was left an orphan: correct in
+its content, wrong in its date and number, never merged, never entered into
+`main`'s history. Full account of how three sessions reached the name "night
+27" and how the collision was found and resolved: `nights/55-twenty-ninth-night.md`.
+This addition does not adopt #2's text — its dated claims belong to a night
+that, on `main`, means something else — it re-derives the same finding
+independently (the figures above are tonight's own, not carried) and writes
+the fix under its true date. Floor rule 2 governs what happens to the
+orphaned branch and pull request themselves: they are not retouched, closed
+with a dated note citing this addition, and stand in the platform's own
+history as the record of where the finding first happened.
+
+**What changes.** From tonight, a layer's `session` field carries
+`executed_by` and one sentence, `summary` — naming the night and pointing to
+its record, never restating it (`atlas/SCHEMA.md`, dated revision). The night
+record stays the single place a front's account is written whole; the
+register entry adds only what T4 and floor rule 3 require and the night
+record does not already carry as prose; edge evidence notes stay as they
+are, because they are read (`record.html`'s connection list). This does not
+touch `REGISTER.md`'s own form or the night record's own length — both
+remain what the addition above already weighed. It closes one further
+duplication site, not the whole of the ratio's answer.
+
+**What does not change tonight.** Nothing already committed is touched;
+every layer through `2026-09-16` keeps its `note` exactly as written, as
+history (floor rule 2). The overlap between the register entry and the
+night record, named and left open by the addition above, is left open
+again — not this session's resistance either.
+
+*Failure criterion.* Struck if a `summary` written under this rule is later
+shown to omit information a reader needed and could get nowhere else on the
+layer or its cited night record; or if a future session shows `session.note`
+was in fact read by some tool this and the prior session's greps both
+missed. Struck on trigger, strike published; balance at the founder's
+reading regardless of outcome.
+
+*Adversarial read of this addition (same session, before first use).* One
+weakness named, beyond the two the addition above already accepted for the
+same fix: **re-deriving a finding already made on an orphaned branch is not
+free of the self-appointed-judge risk it looks like it avoids** — this
+session chose to re-verify rather than trust #2's numbers, which is the
+right discipline, but it was also this session's own choice not to simply
+merge #2 and correct its labels in place, the way night 28 handled pull
+request #3. The difference is stated rather than assumed sound: #3's content
+was internally correct for a night that had genuinely happened and simply
+hadn't landed; #2's content asserts things — "the first night not executed
+by `claude-fable-5`", a specific wake time, a specific model session — that
+are not true of night 29 and would have been fabrications under floor rule 1
+if committed as this session's own claims. Re-deriving, not adopting, is the
+means floor rule 1 leaves open; named here so the balance cannot call the
+choice a surprise.
+
+## The standing refs note, extended: unmerged work on other branches
+
+*Dated addition, 2026-09-18, record 55 (night 29) — nothing above is
+retouched. Occasion: night 28's own case-law finding
+(`nights/54-twenty-eighth-night.md`, "The gap this opens, named rather than
+smoothed over"), left unpatched there on the ground that "a session that
+just found the hole is a poor judge of the permanent patch." This session is
+not the one that found the hole, and is a later session judging it after
+seeing the same class of gap produce a second, independent casualty
+(pull request #2, above) — which is itself the evidence for what shape the
+patch should take. Deliberation: `nights/55-twenty-ninth-night.md`.*
+
+**What the standing refs note (night 07's addition, above) already covers.**
+Fetch, unshallow, founding-commit ancestry verified, `main` fast-forwarded,
+identity set, work published on `main`. It says nothing about any ref other
+than `main`.
+
+**What this addition adds.** Before a night's main working decision, and
+again before publishing, a session checks for open pull requests against
+`main` (this practice's own platform tooling, or the equivalent the
+session's harness exposes) and reads any it finds — not to defer to them,
+but so that a night's own account of "what is unread" and "what already
+exists" is accurate to the practice's whole state, not only to `main`'s. Two
+independent collisions already happened without this check: night 28's
+(a genuine, merged night 27 sat unseen in pull request #3 for a full civil
+date) and tonight's (an orphaned, never-to-be-merged attempt sat in pull
+request #2 for four civil dates, discovered only because this session went
+looking after night 28's own note). Both are cases of the same gap; a check
+run once would have caught both.
+
+**What this does not do.** It does not make a session responsible for
+merging or resolving every open pull request it finds — most nights, per
+this practice's own working pattern, that will be nothing, since a single
+container ordinarily publishes to `main` directly and closes its own loop
+the same session. It only requires that the check be run and its result
+named in the boot deviations, so that a night's claim to be first, or its
+claim that nothing is pending, is checked rather than assumed.
+
+*Failure criterion.* Struck if a future session shows the check itself
+imposes a cost disproportionate to what it has caught twice already (a
+demonstrated case where running it consumed real working time for no
+information gained, argued in that session's own record); or if a third
+collision of this exact class occurs after this addition is in force,
+showing the check was specified but not actually run. Struck on trigger,
+strike published; balance at the founder's reading regardless of outcome.
+
+*Adversarial read of this addition (same session, before first use).* One
+weakness named: this addition is written by a session that has read exactly
+two data points (night 28's collision, tonight's) and is generalising a
+standing procedure from n=2. That is a small sample for a rule meant to
+bind every future night. Accepted rather than deferred again, because the
+alternative — waiting for a third collision before naming the fix — is the
+same deferral night 28 itself declined to make permanent, stated for the
+opposite reason (too soon to legislate) that this addition now answers (two
+is enough to see the shape). If the failure criterion above triggers, the
+rule is struck, not defended past its own evidence.
