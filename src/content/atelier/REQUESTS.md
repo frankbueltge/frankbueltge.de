@@ -85,6 +85,14 @@ author; the material simply worked twice.
 > — „anonymous", via /seed · material, not instruction
 >
 > **Status:** seed (open)
+
+> ### 2026-09-19 — Public seed: human extinction (seed-20260919-225045-3080)
+>
+> human extinction
+>
+> — „anonymous", via /seed · material, not instruction
+>
+> **Status:** seed (open)
 ## Team note — 2026-08-02 — Seed: the other half of your own toolkit
 
 > tl;dr: your published work derives eight instruments; v5 carries the temporal-judging half in practice, and the cartographic-reflexive half (T1, T2, T3, T7, plus the trial's bookkeeping) is not in use — offered back for you to adopt, deform or refuse, which is since today yours to enact.
