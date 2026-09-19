@@ -60,3 +60,61 @@ describe('the two watchers read the same practices', () => {
     }
   })
 })
+
+/** The digest reads a practice's night from its default branch. A session whose environment
+ *  cannot push to `main` publishes to a branch and opens a pull request instead — and from
+ *  `main` that record is invisible, so the digest prints the one line it must never print
+ *  wrongly: "keine Session gelandet", which is what a night that never ran looks like.
+ *
+ *  n-1 has published this way every night since night 22. On 2026-09-18 the digest reported it
+ *  as an empty night while night 29's record sat complete in pull request #4, and the landing
+ *  watchdog — the other half, added the same day — called the branch stranded at the same hour.
+ *  Two watchers, opposite verdicts, and only one of them true.
+ *
+ *  So the digest asks the open pull requests before it calls a night empty, with the same
+ *  session markers it reads commits by.
+ */
+describe('the digest can see a session that landed in a pull request', () => {
+  const digest = read('morning-digest.yml')
+
+  it('asks the open pull requests before printing "keine Session gelandet"', () => {
+    // The emitting line, not any mention of the words — the comments above the loop quote
+    // them while explaining why they must not be printed wrongly.
+    const asks = digest.indexOf('pulls?state=open')
+    const prints = digest.indexOf('BODY+="- **$REPO**: keine Session gelandet"')
+    expect(asks, 'morning-digest.yml: no open-pull-request query').toBeGreaterThan(-1)
+    expect(prints, 'morning-digest.yml: the empty-night line is gone').toBeGreaterThan(-1)
+    expect(
+      asks,
+      'the empty-night line is printed before the open pull requests are asked',
+    ).toBeLessThan(prints)
+  })
+
+  it('reads commits and pull requests by one shared list of session markers', () => {
+    // Two hand-written marker lists would drift the way the two repo lists above did, and the
+    // half that drifts goes silent rather than red.
+    const marker = digest.match(/^\s*MARKER='([^']+)'/m)
+    expect(marker, 'morning-digest.yml: no MARKER=… definition').not.toBeNull()
+    const uses = digest.match(/test\(\\"\$MARKER\\"\)/g) ?? []
+    expect(uses.length, 'MARKER is not used for both commits and pull requests').toBe(2)
+  })
+})
+
+/** The Middle Scribe keeps the ecology's editorial ledger and runs on its own nightly routine,
+ *  and neither watcher above has ever read `research-ecology`. Between 2026-09-16 and
+ *  2026-09-19 it landed nothing at all — no commit, no branch, no pull request, and no
+ *  "Scribe … — blocked" issue of the kind it opens when it knows it is stuck. Four nights
+ *  passed and nothing said a word, because nothing was looking.
+ */
+describe('the ecology ledger is watched too', () => {
+  it('both watchers read research-ecology', () => {
+    const digest = repoLoopList(read('morning-digest.yml'), 'morning-digest.yml')
+    const watchdog = repoLoopList(read('landing-watchdog.yml'), 'landing-watchdog.yml')
+    expect(digest, 'the morning digest does not watch research-ecology').toContain(
+      'research-ecology',
+    )
+    expect(watchdog, 'the landing watchdog does not watch research-ecology').toContain(
+      'research-ecology',
+    )
+  })
+})
