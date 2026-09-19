@@ -160,8 +160,10 @@ const drift = figure('futures_drift')
           Dark Ocean&rsquo;s notary, since its acceptance experiment closed without a stage:
           {' '}{figure('darkocean_continuity_rechecks')?.value.toLocaleString('en-US')} catalog rows
           re-asked over {figure('darkocean_nights_on_record')?.value} nights,
-          {' '}{figure('darkocean_continuity_divergences')?.value} divergences. The archive has not
-          yet changed its mind — which is the finding, not the absence of one.
+          {' '}{figure('darkocean_continuity_divergences')?.value} divergences.
+          {' '}{figure('darkocean_continuity_divergences')?.value === 0
+            ? <>The archive has not yet changed its mind — which is the finding, not the absence of one.</>
+            : <>The archive has changed its answer on that many rows since the notary opened — a divergence on the record, not interpreted here.</>}
         </p>
       )}
 
