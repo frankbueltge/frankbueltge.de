@@ -32,6 +32,10 @@ export const OG_PAGES: Record<string, { title: string; description: string }> = 
     title: 'Dataset Register',
     description: 'A curated record of datasets this research has actually reached for: a verbatim access route, how far it has been checked, and one sentence on why the entry counts.',
   },
+  playbook: {
+    title: 'Playbook for Human Extinction',
+    description: 'A found recording: two synthetic voices read the existential-risk literature as a manual for finishing the species. Served with its sources checked and its three slips named.',
+  },
   papers: {
     title: 'Paper Catalogue',
     description: 'What the three research practices actually read — each entry here because a practice reached for it, with the record of that use attached.',

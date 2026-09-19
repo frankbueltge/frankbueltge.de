@@ -20,7 +20,14 @@ export interface Slip {
 }
 
 export const RECORDING = {
-  title: 'The Extinction Playbook',
+  /** No definite article, like the lab's own titles since 2026-08-22 (Society · Protocol ·
+   *  Consensus · Ghost Fleet): it sits on the same shelf as those, and it reads as a filed
+   *  document rather than a book, which is what the recording pretends to be. Frank's call,
+   *  2026-09-20. "The Extinction Playbook" was a shortening that dropped whose extinction;
+   *  "The AI Playbook for Human Extinction" took the export's filename for a title and led
+   *  with the most worn word available. Who is speaking is the subtitle's job, not the
+   *  title's — it says "two synthetic voices" in the first line. */
+  title: 'Playbook for Human Extinction',
   generated: '2026-09-19',
   duration: '22:57',
   language: 'English',

@@ -1,5 +1,5 @@
 ---
-// The Extinction Playbook — a found recording, served with its sources checked.
+// Playbook for Human Extinction — a found recording, served with its sources checked.
 //
 // No figure, no data, no finding: this is not an experiment and it is not in src/data/werke.ts,
 // so it carries no USP verdict and no method sheet. It is a specimen. The one duty it does
@@ -30,10 +30,15 @@ const mb = (RECORDING.bytes / 1048576).toFixed(1)
 
     <section class="mb-10">
       <audio
+        id="playbook-audio"
         class="w-full"
         controls
         preload="metadata"
         src={RECORDING.src}
+        data-title={RECORDING.title}
+        data-artist="Two synthetic voices"
+        data-album="Found recordings — the lab"
+        data-artwork="/og/playbook.png"
         aria-label={`${RECORDING.title} — audio, ${RECORDING.duration}`}></audio>
       <p class="mt-3 font-mono text-mono-sm text-fg-faint">
         {RECORDING.language} · {RECORDING.duration} · {mb} MB · served from this site, no third party in the request
@@ -127,3 +132,72 @@ const mb = (RECORDING.bytes / 1048576).toFixed(1)
     </SheetFoot>
   </article>
 </main>
+
+<script>
+  // Tell the operating system this page is playing a podcast, not a sound effect.
+  //
+  // Reported from an iPhone on 2026-09-20: playback stopped a few seconds after the screen
+  // locked. A bare <audio> element gives iOS nothing to keep alive — no title, no artwork, no
+  // handlers — so the page is treated as an ordinary backgrounded tab and suspended. The Media
+  // Session API is the documented way to say otherwise: it puts the recording on the lock
+  // screen with its own name and controls, and makes the session something the OS sustains.
+  //
+  // Everything here is progressive: without JavaScript, or on a browser without mediaSession,
+  // the native element still plays. The strings come from the element's data attributes, so the
+  // wording stays in src/data/playbook/recording.ts and is never retyped here.
+  const audio = document.getElementById('playbook-audio') as HTMLAudioElement | null
+
+  if (audio && 'mediaSession' in navigator) {
+    const ms = navigator.mediaSession
+
+    ms.metadata = new MediaMetadata({
+      title: audio.dataset.title ?? 'Playbook for Human Extinction',
+      artist: audio.dataset.artist ?? '',
+      album: audio.dataset.album ?? '',
+      artwork: audio.dataset.artwork
+        ? [{ src: audio.dataset.artwork, sizes: '1200x630', type: 'image/png' }]
+        : [],
+    })
+
+    const seekTo = (t: number) => {
+      const end = Number.isFinite(audio.duration) ? audio.duration : t
+      audio.currentTime = Math.min(Math.max(0, t), end)
+    }
+    const nudge = (by: number) => seekTo(audio.currentTime + by)
+
+    // A handler that throws would leave the lock screen with a dead button, and Safari has not
+    // always offered every action — so each one is registered on its own.
+    const handlers: [MediaSessionAction, MediaSessionActionHandler][] = [
+      ['play', () => void audio.play()],
+      ['pause', () => audio.pause()],
+      ['seekbackward', (d) => nudge(-(d.seekOffset ?? 15))],
+      ['seekforward', (d) => nudge(d.seekOffset ?? 30)],
+      ['seekto', (d) => { if (d.seekTime != null) seekTo(d.seekTime) }],
+    ]
+    for (const [action, handler] of handlers) {
+      try {
+        ms.setActionHandler(action, handler)
+      } catch {
+        /* this browser does not offer that control; the others still work */
+      }
+    }
+
+    const position = () => {
+      if (!Number.isFinite(audio.duration) || audio.duration <= 0) return
+      try {
+        ms.setPositionState({
+          duration: audio.duration,
+          playbackRate: audio.playbackRate,
+          position: Math.min(audio.currentTime, audio.duration),
+        })
+      } catch {
+        /* a rate or position the browser will not accept; the scrubber simply stays put */
+      }
+    }
+
+    audio.addEventListener('play', () => { ms.playbackState = 'playing'; position() })
+    audio.addEventListener('pause', () => { ms.playbackState = 'paused' })
+    audio.addEventListener('loadedmetadata', position)
+    audio.addEventListener('timeupdate', position)
+  }
+</script>
