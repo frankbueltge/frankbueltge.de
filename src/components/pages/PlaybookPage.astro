@@ -62,6 +62,14 @@ const mb = (RECORDING.bytes / 1048576).toFixed(1)
           resume position — none of which this page should be pretending to build. It is listed
           in no directory; the URL is the whole distribution.
         </p>
+        <p class="mt-4 font-mono text-mono-sm">
+          <a class="sheet-link" href={RECORDING.download} download>Or take the file ({mb} MB)</a>
+        </p>
+        <p class="mt-2 font-mono text-mono-sm text-fg-faint">
+          The shortest way out of the browser and the one that needs nothing set up: saved to a
+          phone, it plays in whatever that phone already uses for audio, offline, with the screen
+          off, and with no request coming back here at all.
+        </p>
       </div>
     </section>
 

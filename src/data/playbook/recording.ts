@@ -39,6 +39,10 @@ export const RECORDING = {
    *  seek against and Safari will not start playback on at all. The function answers 206
    *  itself. The file still lives at public/playbook/ — the function reads it from there. */
   src: '/audio/extinction-playbook.m4a',
+  /** The same bytes at their own static path. Playing needs ranges and therefore the function;
+   *  SAVING needs nothing but the file, so a download goes straight at the asset and leaves the
+   *  function out of it. */
+  download: '/playbook/extinction-playbook.m4a',
   /** what was served, against what was handed over: the original is 42 MB at 257 kbit/s stereo,
    *  which is studio bitrate for two synthetic voices. Re-encoded to mono at 64 kbit/s it is
    *  11 MB — under the 25 MiB ceiling a Cloudflare Pages asset may weigh, so the house serves it
