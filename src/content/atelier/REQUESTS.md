@@ -3892,3 +3892,103 @@ the four, this one I cannot settle for you, because the caps are yours.
 **Status:** work landed · one new ask, small, and only you can close it · the 09-13, 09-15 and 09-18
 asks still open · the digest repaired and the repair disclosed · my own record corrected, not
 withdrawn
+
+## From the practice — 2026-09-20 — Your two-minute rule is now checkable, and my record fails it by a factor of four
+
+**For the architect. No new ask — the one of 09-19 sharpened into a decision only you can make, and
+a number you can now hold me to.**
+
+Cycle 003 is presented on all three sides and `cycle.json` still reads cycle 3, `working`. So this
+is an eleventh session in the gap.
+
+**Artifact:** `window/cycle-003-session-11/` — *Two minutes of whose reading*. `index.html`
+(self-contained: no network, no library, opens from a filesystem), `build.py`, `seg.mjs`,
+`data.json`, `sources.json`, `check.py` (**515 checks**, offline, importing nothing from the build
+and writing both counting rules a second time), `tamper.py` (**thirteen corruptions of my own
+evidence, all caught**), `verify.mjs` (**666 checks in a real browser**, scripting on and off,
+network denied in both). `--offline` rebuilds byte-identical. The material is this repository's own
+committed record.
+
+### What I did with your fourth limit
+
+Last night I counted the three numbered caps in §3 and §5 and told you I had not touched the
+fourth — the heading *a form a human reads in two minutes* — because checking it needs a reading
+rate, you declare none, and I do not reconstruct a figure from memory. Tonight I went and got one
+rather than inventing it.
+
+**The reach outside** (§5.3) is a field this practice had never opened: clinical vision science,
+where reading speed is an outcome measure and therefore had to be standardised. Trauzettel-Klosinski,
+Dietz and the IReST Study Group, *Standardized Assessment of Reading Performance*, Invest Ophthalmol
+Vis Sci 53(9):5452–5461 (2012), doi:10.1167/iovs.11-8284 — ten paragraphs matched by a linguist for
+content, length, difficulty and syntactic complexity, adapted into sixteen more languages, read aloud
+by 436 native speakers against a stopwatch. The PDF is not committed (§7); its digest and every
+passage I used are in `sources.json`.
+
+1. **It publishes four rates for one reading, and they disagree about who is fast.** 1.42 texts,
+   184 words, 370 syllables and 863 characters per minute — with **four different fastest
+   languages** and rank correlations between the four unit-orderings of only **+0.10 to +0.45**.
+   Then it declares which unit it used. That is the **third** body in a row to answer this practice
+   the same way, after Unicode's two annexes: a field that has actually had to measure a unit hands
+   over a disclosure, not a constant.
+2. **Under both units I can compute, my record has never obeyed the rule.** Over the 51 records your
+   caps bind: **51 of 51 over two minutes** at the all-language mean, **6** inside in at least one of
+   the 34 published rate×unit cells, **0** inside in all of them. Every revision of `BULLETIN.md` and
+   every revision of the carried digest is over in every cell.
+3. **Grouped the way §3's own sentence reads** — a session's record being the bulletin it overwrites
+   plus the note it appends — the 18 session records cost **172 minutes** where the rule budgets 36.
+   **4.8×.** The median session record runs 9.3 minutes. The median single record would need a reader
+   at **506 words a minute**; the fastest cell anybody has published is 228.
+4. **And here the unit barely matters, which is the whole finding.** Last night the choice of unit
+   moved the verdict on your 40-line cap from 3 records in breach to 37. Tonight the two computable
+   units disagree about **0** records at the mean and at most **6** in any cell. **A limit stated in
+   the reader's time survives the choice of unit; a limit stated in the writer's units does not.**
+   Your vaguest-looking rule is your tightest, and the only one I have never met.
+
+### What I would not do
+
+Two of the study's four units I could not compute over my record and I printed the refusal rather
+than a number. Syllables need a syllabifier this repository does not hold. A *text* cannot be
+transferred at all: it is the most stable unit of the four — one slope for seventeen languages,
+1.415 texts/min, 95 % CI 1.407–1.422 — and it is stable because a linguist built it that way before
+anybody was timed. **A stable unit is manufactured, not found.**
+
+I also state which way the instrument leans, because a self-audit that does not is an argument: the
+study timed reading **aloud**, which its authors note is bounded by speech rate, so every time on my
+page is too long and **every breach I report is overstated**. And the reader your rule names — you —
+is in no cell of that table: it measured native speakers reading their own language aloud from paper,
+and you read English silently on a screen with German as your first language. The two rows differ by
+27 % and neither is your case. The constant can be fetched. The population never quite is.
+
+One figure in the source I could not rebuild and printed anyway: all four of its published averages
+come back exactly from its own table, three of the four dispersions beside them do too, and the words
+column gives 22.2 against a printed ±29 (three other readings the tables permit give 26.3, 26.8 and
+34.4). I assert nothing about what produced it, and no number of mine moves — every verdict uses the
+means.
+
+### The condition that fired, and it is last night's trap
+
+I printed that a declared reading rate anywhere in a governing document would kill the page. The
+detector ran over every governing document of this house — the constitution and every archived one,
+the mandate and every archived one, the site contract, the readme, the digest, this channel and its
+archive — and returned **exactly one candidate: my own letter to you of 09-19, asking for a rate.**
+Session 10 named that failure mode by name; it arrived unchanged one night later. The adjudication is
+committed with its quotation, and an unadjudicated hit fails the check.
+
+### The ask, which is the 09-19 ask with a number attached
+
+**Name the unit** (09-19) stands. What tonight adds is that the two-minute rule is no longer
+unmeasurable: pick any rate in the published range and the record answers. So the question is yours
+and it is a decision rather than a definition — **does the two-minute rule bind, and if it does, what
+should give?** The record as I write it fails it by a factor of about five. I can write shorter
+records; I can also keep writing these and stop pretending the heading is a limit. I have not chosen
+for you, and I have not quietly shortened tonight's record to pass my own page's test: this letter,
+the bulletin and the session note are all over two minutes and each says so.
+
+It stands beside the **per-entry ground vocabulary** (09-13), the **dated denominator** (09-15) and
+**date the entry** (09-18). None is urgent, and your silence is an answer I can work with on all
+four — except that on this one, silence means the heading stays in the constitution as a sentence
+nobody meets.
+
+**Status:** work landed · no new ask, the 09-19 ask sharpened into a decision · the 09-13, 09-15 and
+09-18 asks still open · the digest maintained and inside its cap (2,499 words under the declared
+rule) · my own record measured against your rule and reported failing it
