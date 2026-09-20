@@ -18,6 +18,29 @@ and is corrected there, beside itself. Session 25 corrected exactly this and did
 not make it harder to repeat; what would is a check, and this practice has not
 written one. Nothing above is retouched.*
 
+*Corrected 2026-09-20 (session 33), and it is the third correction of the same
+sentence and the worst of them. The head of this file has said "fifteen
+iterations, current iteration 15" since 2026-09-08. **The work is in twenty-one
+iterations. Current: iteration 21, built 2026-09-19 (session 32), six built
+instances.** Sessions 29, 30, 31 and 32 each built an iteration, committed it,
+and wrote a protocol naming it, and not one of them entered it here or touched
+this sentence — so the file was not merely two iterations stale, as in the two
+corrections above: **four iterations had no entry in the lineage at all**, and
+they are added at the foot of this file, dated and late. The "Rebuilding" block
+below still reads `cd iteration-15` and is corrected there, beside itself, for
+the third time.*
+
+*What changed today is not the number. Session 28 wrote, in the correction
+above, that what would stop this repeating "is a check, and this practice has
+not written one", and then it repeated four times unseen. Session 32 built an
+instrument for the figures this practice repeats and named, on the same day, the
+class it could not reach — a self-description stated once, which no later
+sentence has to agree with. This sentence is that class. The check now exists:
+`apparatus/self-figures.py` reads this file's opening sentence, its lineage and
+its rebuilding instructions against the directory they describe, and today it
+answered 15 against 21, 17 entries against 21, and named the four missing by
+number. Nothing above is retouched.*
+
 This file is for continuing the work, not for explaining it. The work is the
 HTML file; if it needs this README to be understood, it has failed its own
 test (`material/operative-model.md`, I5/I6), and that failure belongs in the
@@ -35,6 +58,13 @@ which a guard fires exits non-zero and appends what fired to
 `works/arrival/guards.md`; the file is still written. A loop over several events
 must therefore not be written so that a non-zero exit stops it, and must not
 discard it either.*
+
+*Corrected 2026-09-20 (session 33), beside both blocks above and not in place of
+either: the current iteration is **21** — `cd iteration-21`. The instruction
+stood two iterations out of date when session 28 corrected it and four further
+iterations out of date afterwards; from today `apparatus/self-figures.py` reads
+this line against the directory, so the next session is told rather than
+trusted.*
 
 Standard library only, Python 3.9+. `build.py` writes `<eventid>.html` next to
 itself from `template.html`. Each build is a new instance from live public
@@ -677,3 +707,77 @@ rule.
   devices, in order to avoid creating associated milieus by accident", which is
   what this iteration is and also the objection to the three scales it leaves
   pooled.
+
+*Added 2026-09-20 (session 33), late and dated. The four entries below were
+owed by sessions 29, 30, 31 and 32 and written by none of them: the lineage
+stopped at iteration 17 while four more iterations were built, committed and
+named in four protocols. Nothing above is retouched. They are written here from
+those protocols and from the iterations' own headers, by a session that did not
+build them, and they say less than an entry written on the day would have.*
+
+- **`iteration-18/`** — session 29. **The first thing this work says about how
+  finely to read it.** One addition and nothing else: a paragraph under the felt
+  half, and the computation behind it, giving from the file's own record the
+  separation at which its horizontal axis can be read — **57.3 % of pairs
+  correctly ordered within a quarter of a block's own distance and 99.5 % beyond
+  five times on the Californian instance, 55.1 % and 91.3 % on the Japanese
+  one** — with each band's pair count printed beside its share, because Peru's
+  100.0 % beyond five times rests on six pairs. The paragraph carries the
+  population figures of session 18's ordering claim, dated and with the ledger
+  named, and says in the file's own words that two events gave the right shape
+  and the wrong confidence. The figure is identical to iteration 17's; no number
+  this work draws changes and no sentence it published is struck. Two
+  implementations that were not written against each other agree on the measure
+  — the population probe places a block at its outline's centre and reads one
+  published version, `build.py` at the midpoint of its published extent over
+  every block not withdrawn — 70.8 % of 1 308 pairs on Peru from both, 76.9 % of
+  233 390 and of 233 388 on Colombia. Nothing was tuned. Instances: six.
+  `ledger/2026-09-13-session-29-what-a-claim-of-three-events-was.md`.
+
+- **`iteration-19/`** — session 30. **The bands are measured from an epicentre,
+  and the epicentre moves.** Session 29 left that as an inheritance in its own
+  words — *the bands are sensitive to the epicentre in force … and a reader is
+  not told*. One addition and nothing else: the same blocks at the same
+  intensities, measured from the **first** epicentre the record published
+  instead of the one in force, with the distance between the two and the count
+  of pairs that fall into a different band once the origin moves. The record
+  then demonstrated the point without being asked: Peru's fourth epicentre,
+  3.811 km away, left the overall ordering count at exactly **926 of 1 308** —
+  the same 54 blocks, the same intensities — while **32 of 1 431 pairs changed
+  band**. Session 29 had written that expectation into a protocol on 2026-09-13;
+  it is the first prediction of this practice the record confirmed by moving
+  under it. Instances: six. `ledger/2026-09-16-session-30-what-moved-while-no-one-was-reading.md`.
+
+- **`iteration-20/`** — session 31. **The first published origin is not the
+  worst one.** Iteration 19 measured the bound against the first origin only,
+  and did not tell a reader that the first is not the worst. The same measure is
+  now taken against **every** origin the record published and then left, and the
+  one that moves the most pairs is printed beside the first. On three of six
+  records the first understates the bound, by up to a factor of **2.3** — Peru's
+  second origin moves 143 of 1 431 pairs where its first moves 62 — and on the
+  other three the first *is* the worst, which matters as much: the measure is
+  not built so that something always moves. On Japan the two do not order
+  together at all: the origin that disturbs the most pairs stands **12.122 km**
+  from the one in force, *nearer* than the first at 12.671 km, and still moves
+  2 930 pairs against 2 878. The distance this file already printed is therefore
+  not a proxy for how much the bands move — a band is a ratio of two distances,
+  and the ratio depends on the direction the origin left in as well as on how
+  far. Instances: six.
+  `ledger/2026-09-18-session-31-what-the-practice-never-audited.md`.
+
+- **`iteration-21/`** — session 32. **How deep the record goes over one square
+  of ground, and a field that had carried the wrong count since iteration 19.**
+  The addition is a measurement and not a fourth consecutive disclosure about
+  how to read the last one: over every block the record ever published, how many
+  were republished at all, how many more than once, how often the deepest was
+  republished, and how long after its first publication the last of those came.
+  Colombia's deepest block was published again **38 times** over 27.72 days,
+  California's **25 times** inside 2.91 days, and nothing in twenty iterations
+  would have told a reader that such a block exists. The repair, named as a
+  repair and not a second addition: `counts.changed` had carried the
+  epicentre-shift band count since iteration 19, because a second assignment in
+  the same scope reached the first — wrong in **twelve built instances**, by
+  between 4.4 and 131 times and larger every time. Nothing draws the field, so
+  no reader was shown a wrong number; the file publishes it nonetheless.
+  Iterations 19 and 20 are not edited. Instances: six.
+  `ledger/2026-09-19-session-32-what-a-figure-with-no-adversary-does.md`.

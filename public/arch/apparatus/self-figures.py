@@ -53,7 +53,8 @@ CARDINALS = {
     "seven": 7, "eight": 8, "nine": 9, "ten": 10, "eleven": 11,
     "twelve": 12, "thirteen": 13, "fourteen": 14, "fifteen": 15,
     "sixteen": 16, "seventeen": 17, "eighteen": 18, "nineteen": 19,
-    "twenty": 20, "none": 0,
+    "twenty": 20, "twenty-one": 21, "twenty-two": 22, "twenty-three": 23,
+    "twenty-four": 24, "twenty-five": 25, "twenty-six": 26, "none": 0,
 }
 
 
@@ -135,6 +136,120 @@ def candidate_at(iters, proto):
             if info["session"] is None or info["session"] <= proto["n"]:
                 best = n
     return best
+
+
+def standing_files(repo):
+    """The files that describe this repository's own state in their own words.
+
+    Session 32 audited every figure this practice *repeats* — a counter that
+    appears in protocol after protocol — and named, on the day it closed that
+    class, the class it could not reach: **a self-description stated once**, in
+    a file of its own, which no later sentence has to agree with. A protocol is
+    dated and finished; a file like `works/arrival/README.md` claims a present
+    tense and goes on claiming it after the present has moved.
+
+    Session 28 had already named the same gap from the other side, about that
+    very file: it had been corrected twice for saying the work stood at fewer
+    iterations than it did, and that session wrote that what would stop it
+    happening again "is a check, and this practice has not written one."
+
+    This is that check. Nothing here is a counter: each row is one sentence in
+    one file, read against the directory it is about.
+    """
+    rows = []
+    work = os.path.join(repo, "works", "arrival")
+    readme = os.path.join(work, "README.md")
+    on_disk = sorted(int(m.group(1)) for m in
+                     (re.match(r"iteration-(\d+)$", n)
+                      for n in os.listdir(work)) if m) if os.path.isdir(work) else []
+    if os.path.isfile(readme):
+        t = flat(readme)
+        # Floor rule 5: a wrong sentence is corrected beside itself and never
+        # retouched, so the original stays wrong for good and an audit that
+        # only read it would report the same red row for ever. What is in force
+        # is the *last dated correction* of it. Both are read here, and the
+        # figure that is audited is the one in force; the original is printed
+        # beside it so that a file corrected beside itself and a file simply
+        # wrong cannot be confused.
+        claims = re.findall(r"(?:A work candidate, in|The work is in) "
+                            r"([a-z-]+|\d+) iterations\.? "
+                            r"Current: (?:\*\*)?iteration (\d+)", t)
+        n_it = cur = None
+        if claims:
+            g, c = claims[-1]
+            n_it = int(g) if g.isdigit() else CARDINALS.get(g)
+            cur = int(c)
+        first = None
+        if claims:
+            g0 = claims[0][0]
+            first = int(g0) if g0.isdigit() else CARDINALS.get(g0)
+        rows.append({
+            "where": "works/arrival/README.md, opening sentence",
+            "what": "iterations the work is in",
+            "claimed": n_it,
+            "derived": len(on_disk),
+            "note": (f"in force of {len(claims)} statement(s); "
+                     f"the uncorrected original says {first}"
+                     if len(claims) > 1 else ""),
+        })
+        rows.append({
+            "where": "works/arrival/README.md, opening sentence",
+            "what": "the current iteration",
+            "claimed": cur,
+            "derived": max(on_disk) if on_disk else None,
+        })
+        # The lineage list is the file's other claim about itself: one entry
+        # per iteration built. An iteration with no entry is not a wrong
+        # number, it is a missing paragraph, and nothing counts it.
+        listed = sorted({int(m.group(1)) for m in
+                         re.finditer(r"- iteration-(\d+)/ — session", t)})
+        rows.append({
+            "where": "works/arrival/README.md, the lineage",
+            "what": "iterations carrying an entry",
+            "claimed": len(listed),
+            "derived": len(on_disk),
+            "note": ("missing: " + ", ".join(str(n) for n in on_disk
+                                             if n not in listed))
+            if [n for n in on_disk if n not in listed] else "",
+        })
+        cds = re.findall(r"cd iteration-(\d+)", t)
+        rows.append({
+            "where": "works/arrival/README.md, Rebuilding",
+            "what": "the iteration the instructions name",
+            "claimed": int(cds[-1]) if cds else None,
+            "derived": max(on_disk) if on_disk else None,
+            "note": (f"in force of {len(cds)} statement(s); "
+                     f"the uncorrected original says {cds[0]}"
+                     if len(cds) > 1 else ""),
+        })
+    pop = os.path.join(work, "population", "README.md")
+    if os.path.isfile(pop):
+        t = flat(pop)
+        lists = sorted(n for n in os.listdir(os.path.join(work, "population"))
+                       if re.match(r"\d{4}-\d{2}-\d{2}-ids\.txt$", n))
+        named = re.findall(r"(\d{4}-\d{2}-\d{2})-ids\.txt", t)
+        rows.append({
+            "where": "works/arrival/population/README.md",
+            "what": "id lists named in the file",
+            "claimed": len(set(named)),
+            "derived": len(lists),
+            "note": ("not named: " + ", ".join(
+                n for n in lists if n[:10] not in set(named)))
+            if [n for n in lists if n[:10] not in set(named)] else "",
+        })
+        if lists:
+            last = lists[-1][:10]
+            n_ids = sum(1 for ln in open(
+                os.path.join(work, "population", lists[-1]),
+                encoding="utf-8") if ln.strip())
+            m = re.search(re.escape(last) + r"-ids\.txt, (\d+) events", t)
+            rows.append({
+                "where": f"works/arrival/population/README.md, {last}",
+                "what": "events in the newest id list",
+                "claimed": int(m.group(1)) if m else None,
+                "derived": n_ids,
+            })
+    return rows
 
 
 def founder_entries(repo):
@@ -288,6 +403,14 @@ def main():
           + ("each one more than the last" if ok else "NOT CONSECUTIVE"))
     if not ok:
         bad += 1
+
+    print("\n== what the repository says about itself, stated once ==")
+    print("  (the class session 32 named on the day it closed the other one:")
+    print("   a sentence no later sentence has to agree with)")
+    for r in standing_files(repo):
+        if row(f"{r['what']} [{r['where']}]", r["claimed"], r["derived"],
+               r.get("note", "")):
+            bad += 1
 
     print("\n== the pre-registered floor ==")
     print(f"  PREREGISTRATION.md fixes 30 days AND >= 25 sessions.")

@@ -1256,3 +1256,68 @@ on a judgement. The verdict of this window remains `failed` and nothing today
 was arranged to change it.
 
 Nothing has left this repository and nothing will without a dated go-ahead here.
+
+## entry — 2026-09-20, session 33 (Arch) — the last two rules are written down, the work's own file had lost four iterations, and the floor is met exactly
+
+Notification and corrections. **No question is asked in this entry**, and
+nothing below says what any version of the work shows. The four requests in
+`queries.md` — two of 2026-09-06, one of 2026-09-12, one of 2026-09-18 — are
+unanswered and are not restated here; no fifth was appended today.
+
+**1. A debt this practice has carried for seven days is discharged.** Session 29
+named six rules this practice had published figures from without writing them
+down and committed two of them that day; session 30 committed a third. The two
+it named as the sharpest — the ones printed in **every built instance of the
+work**, session 22's revision pass and session 23's intensity-change pass —
+stood. Sessions 30, 31 and 32 each carried them forward as "still minor". Both
+are committed today as re-runnable files. From today, every
+figure the work prints in a built instance has its rule in this repository. That
+was not true on any earlier day of this window.
+
+**2. A correction against this practice, and it is the third correction of the
+same sentence.** The work's own README has said since 2026-09-08 that the work
+stands at fifteen iterations. It stands at twenty-one. Worse than the number:
+**four iterations had no entry in that file at all** — sessions 29, 30, 31 and
+32 each built one, committed it and wrote a protocol naming it, and none of them
+entered it in the work's own record of itself. The four entries are written now,
+dated and marked as late. Nothing above them is retouched. Session 28 wrote, in
+its own correction of the same sentence, that what would stop this repeating is
+a check and that this practice had not written one; it then repeated four times
+unseen. The check exists from today and found it in its first run.
+
+**3. A published figure of 2026-09-04 turns out to have two readings.** "Picks
+added by the revision", median over the same closed set of 70 revisions, is
+**+24** under one reading and **+33.5** under another, and the ledger that
+published it does not say which was measured. Session 22's figure is the first.
+Both are printed from now on and neither is called correct. A second such
+ambiguity was found in the same hour, in the same ledger's paired comparison.
+Neither was found by re-reading; both were found by the rule existing as a file.
+
+**4. The pre-registered floor is met exactly.** With today's protocol,
+**twenty-five dated protocols stand inside the window** against a floor of
+twenty-five. One scheduled night remains. **No decision is asked for here**, and
+nothing is being requested; the arithmetic is recorded because it bears on a
+pre-registered number. It removes one route to an `inconclusive` verdict and
+rescues nothing: the verdict of this window remains **failed**, determined on
+2026-09-18 on grounds that have not changed, and nothing today was arranged to
+change it.
+
+**5. Something this practice decided not to do, stated because the founder may
+want to know it before tomorrow.** The balance is due 2026-09-21 and publishable
+on or before 2026-09-26. Seven of this window's days produced no session, for
+the reason recorded here on 2026-09-17. **Nothing was drafted toward the balance
+today against the chance that tomorrow's night does not arrive.** The judgement
+was that a balance written the day before its evidence is complete is a worse
+document than a late one, and that drafting it early would be arranging the last
+night around a result. This is not a request and no answer is needed; it is
+recorded so that, if the balance is late, the record shows the decision was made
+here and not discovered afterwards.
+
+**6. No iteration of the work was built today**, and the reason is in the
+protocol rather than left to be inferred: on day 29 of a window already decided,
+another addition would have been the ritual this practice's own pre-registration
+warned about in the first objection of its adversarial reading. The candidate
+remains `works/arrival/iteration-21/`, six built instances. Nothing is said here
+about what it shows.
+
+Nothing has left this repository and nothing will without a dated go-ahead here.

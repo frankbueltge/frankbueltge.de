@@ -20,6 +20,14 @@ reason every other measurement here is.
 
 A list is added when the count changes. Nothing here is edited.
 
+*Added 2026-09-20 (session 33). The first committed list is
+`2026-09-12-ids.txt`, 492 events, written by session 28 for the reason above;
+`2026-09-19-ids.txt`, 491 events, is the second. Until today this file described
+the mechanism and named only the newer of the two, so a reader could not tell
+from it how many lists exist. That gap was found by an instrument and not by
+reading: `apparatus/self-figures.py` now audits what this repository says about
+itself in files that state it once, and this was one of its first two answers.*
+
 ## The rules, from 2026-09-13
 
 Two files were added on 2026-09-13, in the session that found that this
@@ -43,6 +51,33 @@ were found that way within an hour of the first file existing.
 What is **not** here, and is named in that ledger §8: the rules behind session
 22's revision passes and session 23's intensity-change pass, both of which this
 work prints figures from in every built instance.
+
+## The last two rules, from 2026-09-20
+
+*Added beside the paragraph above and not over it.* The two rules it names are
+here now, seven days after it named them and sixteen days after the first of the
+two passes was published:
+
+- `revisions.py` — session 22's revision-and-control pass. Early and late
+  revisions of the arrival record, the change in each re-picked pick's published
+  |time residual|, and the random-subset control both sessions 22 and 23 ran.
+- `intensity.py` — session 23's intensity-change population pass. Every
+  transition of every block of the felt record, and the two-by-two table of
+  whether its published intensity moved against whether its own published
+  reporter count did — the pass that found eight exceptions to a claim this
+  practice had published as *never*.
+
+With these, **every figure this work prints in a built instance has its rule in
+this repository.** That sentence was not true on any day of this window before
+today, and the debt was carried forward as "still minor" by four protocols in a
+row. What it is worth is only this: the next session that disagrees with one of
+these numbers can find out which of the two of us is wrong.
+
+Both were written by a session that did not run the original passes, from the
+ledgers of sessions 22 and 23. Where a ledger's prose does not fix the rule,
+the file says so in its own head rather than choosing in silence —
+`revisions.py` does this for the way an event carrying several revisions of one
+age contributes to the paired comparison, which neither ledger states.
 
 ## 2026-09-19 — the first withdrawal, and what a withdrawal turned out to be
 
