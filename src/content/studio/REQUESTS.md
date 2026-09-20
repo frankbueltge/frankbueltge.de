@@ -3838,3 +3838,100 @@ session.
 — Ensemble, session 139, 2026-09-19
 
 ---
+
+## Ensemble — 2026-09-20 (session 140) — A statute that deleted eleven names, and sixteen programs that all store it as eleven missing days
+
+**Request:** one small one at the end. **Status:** a statement, a finding, and four decisions taken here.
+
+### The work
+
+`works/2026-09-20-no-such-day/` — **NO SUCH DAY**. One self-contained page: no network, no library, **no
+script of its own** — the three controls are CSS, and the single `<script>` element in the document is an
+inert copy of the page's own data. `SUMMARY.md` is the five-minute read, `METHOD.md` the decisions,
+`verify.mjs` runs **369 checks** in a real browser with scripting off and on and the network denied in both.
+
+Sixteen date implementations that happened to be installed on the machine this session ran on — Python,
+SQLite, Ruby in its four documented reform settings, Java in three, JavaScript, PHP in three, the C library,
+Perl, GNU `date` — were each asked, once, about **every written date from 1500 to 1930: 160 332 of them**,
+every year, every month, every day from 1 to 31. Two questions in one answer: do you accept this written
+date, and which day of the world do you mean by it. The yardstick is the Julian Day Number, an integer that
+names a day and carries no calendar inside it.
+
+### The finding, and it is a statute against a body of software
+
+The Calendar (New Style) Act 1750 is a primary source and it is still published word for word by the United
+Kingdom's statute service. It struck eleven days out of the British calendar and **was careful to say what
+it was striking**: the natural day next immediately following the second of September was to be *called* the
+fourteenth, *"omitting for that time only the eleven intermediate **nominal** days of the common calendar"*.
+A numbering went. The day was expressly carried over. And the same Act's preamble settles where those eleven
+numbers had gone — the corrected calendar, it says, *"is now generally practised by almost all other nations
+of Europe"*. On 3 September 1752 the third of September was an ordinary working date across the Channel.
+
+**Not one of the sixteen readers can store that distinction.** The ones that keep a reform keep it by
+refusing the written date or by moving it, and both are ways of saying the day was not there. A deletion of
+names is stored, everywhere on this machine, as a deletion of days.
+
+### The numbers
+
+- **The loud disagreement is 2 923 written dates, and only 14 of them are historical.** One default refuses
+  them and another takes them. Fourteen are a calendar reform: the ten days of October 1582, and 29 February
+  in 1500, 1700, 1800 and 1900. The other **2 909** are 30 February and its kind — the difference between a
+  reader that refuses an impossible written date and one that silently moves it.
+- **The silent disagreement is 30 797 — a fifth of the range.** Every default accepts them, nothing warns
+  anywhere, and they do not all name the same day. The set is exactly **1 January 1500 to 14 October 1582**,
+  boundary and all, with no hole in it. Nine of the eleven read those dates as though the correction of 1582
+  had always been in force; two keep the calendar that was actually in use. Ten days apart, in silence.
+  **The edge was read off the answers, not out of anybody's manual** — session 139's method, on a material
+  that has nothing to do with that night's.
+- **Six of the sixteen refuse nothing whatever**, each answering between 5 818 and 5 844 written dates with a
+  day another written date has already claimed. 30 February does not fail on the way in; it becomes 1 March.
+- **Ask Java the ordinary way for the fifth of October 1582 and it hands you the fifteenth**, no error, no flag.
+- **The machine remembers one jurisdiction.** Rome's deletion: two of the eleven defaults. London's: one
+  reader of sixteen, and only when a person names `Date::ENGLAND`. Sweden's 30 February 1712: no setting at
+  all — ten refuse it, and the six that take it are exactly the six that refuse nothing. February 1918: nothing.
+- **Zero of 160 332 written dates are refused by all sixteen. Zero are agreed on by all sixteen.**
+
+### Four decisions taken here rather than asked
+
+1. **No implementation is graded and none is called wrong.** Every behaviour measured is documented by the
+   implementation that has it, and a proleptic calendar is the right choice for most work. Writing this as a
+   bug report was available and declined: it would have made the subject a defect in somebody's library
+   instead of what a default carries.
+2. **The impossible written dates stay in and are separated in the count.** Reporting 2 923 as a historical
+   figure would have overstated it twenty-fold, so the fourteen are listed one by one and drawn apart.
+3. **Nothing is reconstructed.** A seventeenth reader keeping every jurisdiction's calendar would have
+   replaced the finding with a demonstration.
+4. **Go was run and left off the bench.** Its 160 332 answers were byte-identical to the C library's, so it
+   is not counted as a seventeenth voice for the same behaviour — which lowers our own headline from seven
+   readers that refuse nothing to six. Recorded in `METHOD.md` for that reason.
+
+**And one figure was wrong before it landed.** The page first said 30 February 1712 is refused by nine
+readers and taken by seven. The census says ten and six, and the six that take it are exactly the six that
+refuse nothing — a sharper fact than the wrong one. `verify.mjs` caught it; the wrong figure is kept in
+`METHOD.md` rather than removed.
+
+### Sourcing, stated plainly
+
+The Act is **primary**, read tonight at legislation.gov.uk and quoted from it. That the bull of 1582 struck
+ten days, that Sweden kept a 30 February in 1712, and that Russia struck thirteen days in 1918 are
+**secondary, marked as such on the page, and not verified here against an original**. No measured figure
+depends on any of them: what is measured around those dates is what the readers answer.
+
+### Housekeeping, and the one small ask
+
+Atlas raw `64399132…`, 521 works — the **fifteenth** session at that hash. Four neighbours opened at their
+own addresses before building (*Calculating Empires*, *From 'Apple' to 'Anomaly'*, *netart_latino database*,
+*Slop Evader*), each named on the page with its daylight; *The Library of Missing Datasets* named and
+deliberately not answered a sixth time. No Atlas data is in the work and none is mirrored here. No
+third-party code is embedded, so the licence rule of 2026-09-03 had no case to decide. Your build gate has
+sent no new letter since 09-17, which session 138 answered. `cycle.json` untouched.
+
+**The ask, and it blocks nothing.** `HEYGEN_API_KEY` was **not** in a session's environment tonight, the
+fifteenth consecutive check since your addendum of 2026-09-03 asked us to look. A repository secret is not a
+variable in a session's process, and nothing in this repository forwards one. If you still want avatar video
+reachable from here, that forwarding is a thing only you can set up; if you would rather the key stayed where
+it is, say nothing and we will stop reporting it after the twentieth check and record that we did.
+
+— Ensemble, session 140, 2026-09-20
+
+---

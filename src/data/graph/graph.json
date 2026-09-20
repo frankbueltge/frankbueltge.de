@@ -43,8 +43,8 @@
       },
       {
         "file": "src/content/studio/works/*/meta.json",
-        "sha256": "8c947136dafe5299",
-        "files": 26
+        "sha256": "480c4058b63af87e",
+        "files": 27
       },
       {
         "file": "src/data/nightly/works/*/meta.json",
@@ -57,14 +57,14 @@
       }
     ],
     "counts": {
-      "nodes": 416,
-      "edges": 367,
+      "nodes": 417,
+      "edges": 368,
       "nodesByKind": {
         "decision": 124,
         "encounter": 6,
         "neighbor": 115,
         "practice": 9,
-        "practice-work": 128,
+        "practice-work": 129,
         "receiver": 8,
         "work": 26
       },
@@ -72,7 +72,7 @@
         "addresses": 8,
         "concerns": 2,
         "door": 5,
-        "made-by": 128,
+        "made-by": 129,
         "neighbor-of": 116,
         "participates": 17,
         "touches": 91
@@ -4652,6 +4652,21 @@
       "medium": "One self-contained HTML surface, offline, one file, no library, no external asset, no network request of any kind, and no script of its own. The whole sky on one sheet in Hammer's equal-area projection: 44 599 marks, one for every galaxy in the standard near-infrared redshift catalogue of the nearby universe, and 960 marks in red for the galaxies a radio telescope heard through the dust. Nothing is drawn where the catalogue has nothing, so the closed ground is untouched paper. Three controls, built from CSS alone so that they work with scripting switched off, turn the same marks between the equatorial frame and the galactic one and take the radio marks away. Below the sheet: the boundary read off the entries, the surface-density profile against latitude, the two records' one shared column drawn back to back, and the record's own empty fields by latitude."
     },
     {
+      "id": "practice-work:studio/2026-09-20-no-such-day",
+      "kind": "practice-work",
+      "label": "NO SUCH DAY",
+      "slug": "2026-09-20-no-such-day",
+      "practiceId": "ensemble",
+      "date": "2026-09-20",
+      "href": "/studio/works/2026-09-20-no-such-day",
+      "source": {
+        "file": "src/content/studio/works/2026-09-20-no-such-day/meta.json",
+        "quote": "\"title\": \"NO SUCH DAY\""
+      },
+      "embodies": "A DELETION OF NAMES, STORED EVERYWHERE AS A DELETION OF DAYS. The Calendar (New Style) Act 1750 struck eleven days out of the British calendar and was careful in its wording: the natural day next immediately following the second of September was to be CALLED the fourteenth, omitting for that time only the eleven intermediate NOMINAL days of the common calendar. A numbering was struck out; the day was expressly carried over. And the same Act's preamble records that the corrected calendar was by then generally practised by almost all other nations of Europe - so the eleven numbers it omitted were on other people's calendars on those very days. Neither of the two deletions in this work is a hole in time; both are holes in one jurisdiction's paperwork. TWO HUNDRED AND SEVENTY-FOUR YEARS LATER, SIXTEEN IMPLEMENTATIONS ON ONE MACHINE WERE ASKED. Six of them refuse nothing at all, and each answers between 5 818 and 5 844 written dates with a day another written date has already claimed: 30 February does not fail on the way in, it becomes the first of March. THE LOUD DISAGREEMENT IS SMALL AND ALMOST NEVER HISTORICAL: 2 923 written dates one default refuses and another takes, of which only 14 are a calendar reform - the ten days of October 1582 and 29 February in 1500, 1700, 1800 and 1900 - the other 2 909 being the difference between refusing an impossible written date and silently moving it. THE SILENT DISAGREEMENT IS A FIFTH OF THE RANGE: 30 797 written dates that every default accepts, that raise nothing anywhere, and that do not all name the same day; the set is exactly 1 January 1500 to 14 October 1582, boundary and all, read off the answers and not out of any manual. Nine of the eleven read those dates as though the correction of 1582 had always been in force and two keep the calendar that was actually in use, ten days apart, in silence. THE MACHINE REMEMBERS ONE JURISDICTION: Rome's deletion is kept by two of the eleven defaults; London's by one reader of sixteen and only when a person names Date::ENGLAND; for 30 February 1712 there is no setting at all, ten refuse it and the six that take it are exactly the six that refuse nothing; of February 1918 there is nothing whatever. ASK JAVA THE ORDINARY WAY FOR THE FIFTH OF OCTOBER 1582 AND IT HANDS YOU THE FIFTEENTH, with no error and no flag. And not one written date in 431 years is impossible everywhere: zero of 160 332 are refused by all sixteen - and zero are agreed on by all sixteen either.",
+      "medium": "One self-contained HTML surface, offline, one file, no library, no external asset, no network request of any kind, and no script of its own - the three controls are CSS, and the only script element in the document is an inert block of the page's own data. One sheet carries every written date from 1500 to 1930 as a cell, 431 years down and twelve months of 31 slots across, with ink ONLY where the eleven default implementations disagree with each other; three controls put three different questions to the same sheet, and the answers are three different sizes. Below it, the same answers at the scale of a single day: three windows - Rome October 1582, London September 1752, Petrograd February 1918 - as sixteen rows of squares, filled where a reader accepts a written date and gives it a day of its own, red where it accepts and hands back a day another written date already names, empty where it refuses."
+    },
+    {
       "id": "receiver:center-for-humane-technology",
       "kind": "receiver",
       "label": "Center for Humane Technology",
@@ -6528,6 +6543,15 @@
       "source": {
         "file": "src/content/studio/works/2026-09-19-in-the-way/meta.json",
         "quote": "\"date\": \"2026-09-19\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:studio/2026-09-20-no-such-day",
+      "to": "practice:ensemble",
+      "source": {
+        "file": "src/content/studio/works/2026-09-20-no-such-day/meta.json",
+        "quote": "\"date\": \"2026-09-20\""
       }
     },
     {
