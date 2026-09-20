@@ -41,17 +41,18 @@ const mb = (RECORDING.bytes / 1048576).toFixed(1)
         data-artwork="/og/playbook.png"
         aria-label={`${RECORDING.title} — audio, ${RECORDING.duration}`}></audio>
       <p class="mt-3 font-mono text-mono-sm text-fg-faint">
-        {RECORDING.language} · {RECORDING.duration} · {mb} MB · served from this site, no third party in the request
+        {RECORDING.language} · {RECORDING.duration} · {mb} MB · served from this site, no third party
+        in the request · holds the screen awake while it plays, and lets go the moment it stops
       </p>
 
       <div class="mt-6 rounded-md border border-line bg-panel p-5">
-        <p class="kicker">Listen away from this page</p>
+        <p class="kicker">With the screen off</p>
         <p class="mt-2 text-body text-fg-muted">
-          A browser tab is a poor place for twenty-three minutes. Lock an iPhone and Safari
-          suspends the page: the player finishes the few seconds it already holds and stops,
-          because a backgrounded tab is not allowed to keep fetching. That is not a setting this
-          site can change — the apps that do this properly are native ones, and what they
-          subscribe to is a feed. So there is a feed.
+          While this page is in front, it keeps the phone from locking itself — the same thing a
+          news site's player does during a clip. With the screen actually off it is a different
+          matter: a backgrounded Safari tab is suspended, so the player finishes the seconds it
+          already holds and stops. No header or setting on this side changes that, which is why
+          the apps that do it properly are native ones. Two ways out, both of them here.
         </p>
         <p class="mt-3 font-mono text-mono-sm">
           <a class="sheet-link" href="/playbook/feed.xml">/playbook/feed.xml</a>
@@ -227,5 +228,49 @@ const mb = (RECORDING.bytes / 1048576).toFixed(1)
     audio.addEventListener('pause', () => { ms.playbackState = 'paused' })
     audio.addEventListener('loadedmetadata', position)
     audio.addEventListener('timeupdate', position)
+  }
+
+  // Hold the screen awake while it plays.
+  //
+  // This is what a news site's player is doing when a phone stops locking during a clip: iOS
+  // suppresses the idle timer for <video>, and the Screen Wake Lock API (Safari 16.4+) asks for
+  // the same thing explicitly. It is worth being exact about what it does and does not buy —
+  // three reports came in before the distinction was drawn. It prevents the phone from locking
+  // ITSELF while the tab is in front. It does not play with the screen off: a backgrounded
+  // Safari tab is suspended, the element finishes the buffer it holds and stops, and no header
+  // or API on this side changes that. For the screen genuinely off, the page offers the file and
+  // the feed.
+  //
+  // The lock is released the moment playback stops or the tab goes away, so nothing here keeps a
+  // phone lit after the listener has left.
+  if (audio && 'wakeLock' in navigator) {
+    let lock: WakeLockSentinel | null = null
+
+    const hold = async () => {
+      if (lock || audio.paused || document.visibilityState !== 'visible') return
+      try {
+        lock = await navigator.wakeLock.request('screen')
+        lock.addEventListener('release', () => { lock = null })
+      } catch {
+        /* refused — low battery, or a browser that lists the API and declines the request */
+      }
+    }
+    const drop = async () => {
+      const held = lock
+      lock = null
+      try {
+        await held?.release()
+      } catch {
+        /* already gone */
+      }
+    }
+
+    audio.addEventListener('play', hold)
+    audio.addEventListener('pause', drop)
+    audio.addEventListener('ended', drop)
+    // A wake lock dies whenever the page is hidden, so coming back has to ask again.
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible') void hold()
+    })
   }
 </script>
