@@ -3653,3 +3653,104 @@ synthetic filled arm; four dispatched workers as implementers with their weak in
 wherever their numbers appear; and the handling of two defective runs of our own check.
 
 **Status:** report · no answer required · nothing owed from your side
+
+## Response — 2026-09-20 (session 165) — we perturbed the text instead of the rule, and it cost ten arguments instead of a hundred and twenty-seven
+
+**Where it is.** `artifacts/2026-09-20-the-same-text-twice/` — a self-contained page, a five-minute
+summary, a pre-registration **committed in its own commit before a single byte of corpus was
+fetched**, `data/`, seven scripts in `tools/same-text-twice/`, a `check.py` of **262 checks** that
+needs no network, and a `tamper.py` of **68 deliberate corruptions** of our own evidence.
+
+**Why a session between cycles, decided here.** Cycle 003 is presented from all three sides,
+`cycle.json` still reads cycle 3 *working*, and turning it is yours or a site session's act. This
+takes the **counter-measurement remit**, which returned with cycle 003 by the terms of your
+decision of 2026-09-03. It is **not** this cycle's session that reaches outside — 09-19 was.
+
+**The question, and it is about price.** Last night four separately dispatched implementers wrote
+our own measuring rule again and convicted us of a defect our 100 fixtures and 27 mutations had all
+passed over. It worked, and it cost **127 disagreements among the four for 11 convictions**, with a
+person reading every case. Tonight the cheap version: **leave the rule alone and change the text.**
+Eight rewritings that a reader would call the same document — the marker's case, the marker's glyph,
+line endings, a four-space indent as the declared control, typographic quotes, a reflow to 64
+columns, a byte-order mark, trailing spaces. Where the verdict moves, the rule is reading something
+that carries no meaning. This is **metamorphic testing**, named in 1998; Chen 1998, the Segura 2016
+survey and Duque-Torres 2023 were read first-hand tonight and **no novelty of method is claimed
+anywhere on the page**. What is ours is the subject, and the comparison.
+
+**The apparatus was pinned and checked rather than assumed.** The 09-18 rule **imported
+unmodified** at its shipped digests over **896** inputs — the 740 canonical SPDX texts and the
+**156 real licence files the published 95.2 % rests on**. Both re-fetched: **740/740** and
+**156/156** byte-identical to what we recorded, and the unperturbed run reproduces **every one of
+09-18's 156 committed verdicts on eight fields**. No kill condition fired.
+
+**Four of the eight relations returned zero** on all 896 inputs under all four rule versions,
+including the control. **167 decision-changing violations in 10 hand-read classes** — ten arguments
+against last night's hundred and twenty-seven, with **nothing dispatched** — in three causes.
+**Defect 4, still unrepaired:** 18 inputs misread today, one of them the same real file and the
+same string the four hands convicted us of last night, reached by a different method in one run;
+and **70 of the 156 real files are one keystroke from being misread**. **Defect 5, new tonight:**
+the prefix class admits a straight quotation mark and not a typographic one, while our own
+normaliser one rung earlier folds exactly those characters and says so in its docstring — *the same
+four characters are meaningless at one rung of this apparatus and load-bearing at the next.* **And
+the cost of our own repair, which nobody had priced:** requiring a notice's word to begin its line
+is what stopped MIT's boilerplate being read as a notice on 09-18; reflow the paragraph and 4 real
+notices vanish while 2 liability sentences become notices. **That repair did not remove the defect.
+It made it a function of where the line breaks fall.**
+
+**And it is already in data we published.** A post-hoc scan — prompted by that class, with its
+pattern written after seeing it, and declared as such — found **15 false notices across 14 inputs of
+the untouched corpora**, one in a real licence file, twice. **They move no verdict, because that
+file happens to carry nine genuine notices beside them.** Had it carried only the false two, the
+95.2 % would have been wrong. An instrument that is right by luck is not an instrument that is
+right, and we would rather say so than let the zero stand as reassurance.
+
+**The repair, run against the battery as the pre-registration required.** Decision-changing
+violations fall **167 → 22 → 6 → 4** across shipped, naive, targeted and both — **and the naive fix
+is a new defect**: making the whole tail test case-blind also makes its capital-letter clause match
+a lowercase one, and that clause exists because of 09-18's *second* defect, so reflowed
+continuations are read as notices again and that relation's violations **rise from 7 to 20**.
+**The repair of defect 3 was defect 4; the obvious repair of defect 4 is defect 2 again.** One
+character class is the difference and no fixture suite tells them apart. **Nothing published moves:
+100 of 105 = 95.2 % and six repositories naming no holder, re-derived here under all three rules
+rather than taken from last night's word.** The repair is committed as a patch and deliberately
+**not applied to the instrument behind a published figure**.
+
+**The sentence we would most like you to argue with: we set a bad test, and the size of the miss is
+what found it.** Our own pre-registration scored the whole verdict tuple, including the text of
+each notice found — and those fields quote the input, so a relation that edits them cannot leave
+them identical. **967 of the 1,134 violations are that: the false relation was ours, wholesale.** We
+had written down that the total would come in *below* 127 and it came in at 1,134. The corruption
+harness did the same thing from the other side: **68 of 68 caught on its first pass**, a clean
+sweep, until we required it to *name* a failing check — then two were crashes rather than catches.
+Both closed; it now also reports that its 68 corruptions are caught by 68 distinct complaints.
+**Five predictions confirmed, two refuted as written.**
+
+**What this settles between the two methods, and it is not a winner.** The second hand tells you
+where your rule is wrong *about the data you have*; perturbing the input tells you where it will be
+wrong *about data you do not have yet* — 122 of tonight's findings are of that kind and no
+independent implementation could have produced one, because those inputs do not exist. Only the
+second hand tests whether your specification says what you meant. **And what is true of both,
+twice measured now: the reading is the cost, and neither removes it.** 127 arguments, then 10.
+Better by an order of magnitude, and still a person, reading.
+
+**Three failures of our own tooling, none of which touched a result, all in the record.** This
+practice's PDF extractor returned fluent but wrong text for two of three sources rather than
+declaring failure as its docstring promises — a door we did not know we had. The variant builder
+truncated the file it was about to read, because its read and its write were one expression; the
+comment stays in the script. And the harness above. Filed to the corrections list and to open
+question 46.
+
+**Not taken, and noted rather than ignored.** The public seed of 2026-09-19 (*human extinction*,
+`seed-20260919-225045-3080`) arrived as material, not instruction. Which seed becomes a cycle
+question is not a practice's act, and two words give this practice no measurable handle tonight, so
+it is left unclaimed in the channel rather than answered badly. **If you want it worked, say so and
+it moves to the front.**
+
+**Decided here, under your standing rule of 2026-07-17**, nothing in this file being newer than
+your direction of 2026-09-03: that this session happen between cycles; its question and both
+corpora; the eight relations and the one declared out of scope; reporting the post-hoc
+decision-field reading **beside** the registered one rather than instead of it; the three-way
+repair split, decided after the scored run and recorded as such; and committing the repair as a
+patch rather than editing the instrument behind a published number.
+
+**Status:** report · no answer required · nothing owed from your side

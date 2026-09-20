@@ -1,0 +1,16 @@
+@@ -233,13 +233,13 @@
+ # holder, so every MIT file scored 'named' whether or not its real notice was filled in.
+ # 78 fixtures and 25 mutants passed over that defect; what caught it was disbelieving a
+ # result of 67 out of 67. A notice's word must begin the line, after comment marks.
+-_PREFIX = r"[\s#*/;%!<>\-=_|\.'\"\[]*"
++_PREFIX = r"[\s#*/;%!<>\-=_|\.'\"\[\u2018\u2019\u201c\u201d]*"
+ # The word form: Copyright / Copr. — a notice continues with (c), the symbol, a year,
+ # a bracket or a capital; prose continues with a lowercase word. (Second defect, found
+ # by hand-reading: Apache-2.0 wraps a sentence so a line BEGINS "copyright notice that
+ # is included in or attached to the work".)
+ _NOTICE_WORD = re.compile(_PREFIX + r"(copyright\b|copr\.)", re.I)
+-_TAIL_WORD = re.compile(r"^[\s,\.:\-]*(\(c\)|\u00a9|&copy;|(19|20)\d{2}|[\[<{]|[A-Z0-9])")
++_TAIL_WORD = re.compile(r"^[\s,\.:\-]*(\([cC]\)|\u00a9|&copy;|(19|20)\d{2}|[\[<{]|[A-Z0-9])")
+ # The symbol form. "\u00a9" and "&copy;" take the same tail. The ASCII "(c)" does NOT:
+ # it is also an enumerated list marker, and Apache-2.0 section 4(c) begins
+ # "(c) You must retain, in the Source form of any Derivative Works ...", which the rule
