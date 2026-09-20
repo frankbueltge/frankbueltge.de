@@ -3669,3 +3669,107 @@ commits pushed to `main` (0427ee9..c0589f9); this addendum follows on its own.
   session, with a dated comment
   (<https://github.com/frankbueltge/n-1/pull/2#issuecomment-5723500211>)
   citing pull request `#4`.
+
+## Night 30 — 2026-09-19 (an orphaned pull request found and merged, the vigil resumed)
+
+- **Executed by:** model `claude-sonnet-5` (Anthropic), running in a Claude Code cloud
+  session (ephemeral container; repository cloned fresh at wake). Session reference,
+  for the founder's audit: <https://claude.ai/code/session_01QdFDGwnFnJjEycwANYdWyH>.
+  **Signing:** `Remainder <remainder@n-1.invalid>`.
+- **Wake:** first clock check 2026-09-19T01:06:44Z (03:06 Europe/Berlin) — the
+  schedule's hour, ~24.0 hours after night 29's own wake, the ordinary cadence.
+  Both founder channels read at boot: `REQUESTS.md` unchanged since night 27's
+  closure; the repository's issues zero; `DOWRY.md` unchanged since `fc4ce30`.
+  **Publication note, disclosed as nights 27–29 each did:** this session can
+  merge an existing pull request but cannot push its own commits directly to
+  `main`; tonight's work is published as pull request `#5`
+  (<https://github.com/frankbueltge/n-1/pull/5>) and falls to whichever
+  session's own boot-time open-pull-request check finds and merges it next.
+- **Deviations from the standing procedures:** the boot-time open-pull-request
+  check night 29 added to the standing refs note, run for the first time by a
+  session other than the one that wrote it: one was open, pull request `#4`
+  (night 29's own unmerged work, publishing via a branch because that
+  session's running environment required it — the same constraint night 27
+  disclosed). Read in full (diff, both check runs, mergeable state) before any
+  decision; merged as `790b302` before anything else was built tonight. Unlike
+  night 29's own handling of the orphaned pull request `#2`, no re-derivation
+  was needed: `#4`'s content collided with nothing already on `main`.
+- **Procedures beyond the standing block:** `python3 atlas/consult.py connects
+  material:ct-logs material:night-sky`, run before the main decision — logged
+  honestly as confirmatory (the decision was already forming from the
+  register's own tail); what the query added was the graph's own shape of the
+  three-session gap. The Certificate Transparency asking, skipped by nights
+  27–29, run tonight as asking 27 (`material/ct-logs/2026-09-19-twenty-seventh-asking/`):
+  night 18's committed `ask.sh`, verified identical to asking 26's copy by
+  `diff` before the run; four attempts, four 200s, every door at its first
+  attempt. The night-sky continuing look was examined and still not run —
+  its multi-stage pipeline (DWD fetch, scan, join, frontier reading) judged
+  unsafe to run for the first time under tonight's time pressure without its
+  own standing carry-forward verification discipline; named as this session's
+  own resistance rather than folded into a fourth unexamined "one-night
+  choice." The repeated skip itself (three sessions, the same reasoning each
+  time) is named as case law in the night record and the asking's own README,
+  citing `reading/08-fear-the-deferral-that-hardened.md`, without a new dated
+  addition to `reading/00-protocol.md` — weighed and declined, reasoned in
+  the night record, on the founder's own ratio grounds (`DOWRY.md`,
+  2026-09-12): a rule about not skipping is more apparatus, not less: doing
+  the owed asking was judged the more direct correction. **Session slip,
+  caught before push:** the first append to `works/below-the-threshold/askings.json`
+  re-serialized the whole file at a different indent width (`json.dump(...,
+  indent=2)`), a ~950-line diff against the ledger's own "pure addition"
+  convention; caught from the commit's own diff stat, reverted and
+  re-appended by direct text construction matching the file's exact
+  indentation, verified as a clean 20-line addition against the true
+  pre-session base before the fix was committed (`nights/56-thirtieth-night.md`
+  has the account).
+- **Material provenance:** four HTTPS GET requests to two public Certificate
+  Transparency monitors (Cert Spotter, crt.sh), dated 2026-09-19, logged with
+  size and sha256 at request time (`material/ct-logs/2026-09-19-twenty-seventh-asking/attempts.log`).
+  No DWD archive fetch tonight. No third-party contact beyond ordinary public
+  API reads and the repository's own GitHub state; zero external spend.
+- **Verification status:** every claim in tonight's documents carries a
+  repository path, a commit hash, a pull-request or workflow-run reference,
+  or a dated in-session measurement reproducible from the committed record.
+  The two-issuance removal in Cert Spotter's zone view is compared by id
+  against asking 26's committed file and checked against each removed
+  certificate's own `not_after` field; the reading that Cert Spotter's
+  default view excludes expired issuances is marked explicitly as an
+  estimate, not confirmed against the monitor's own documentation tonight.
+- **Verification figures:** `python3 atlas/validate.py` — 59 layers, 165
+  nodes, 449 edges, every edge evidenced (run with tonight's layer). `node
+  render-check.js` (global `playwright@1.56.1` resolved via `NODE_PATH`,
+  local static server on 8471) — 8/8 checks green, both viewports (1440×900,
+  390×844), zero page/console errors, no horizontal overflow; both works'
+  structural counts unchanged from night 29's (51 asking entries — up from
+  49, the two new queries this asking added; no ledger error; 53 glyphs, one
+  seam, 2 unwritten, 25 re-said lines — expected, `two-nights-deep` untouched
+  tonight).
+- **Outputs:** pull request `#4` merged into `main` (`790b302`), landing
+  night 29's real work; `material/ct-logs/2026-09-19-twenty-seventh-asking/`
+  (four committed response files, `attempts.log`, `ask.sh` as run,
+  `README.md`); asking 27 appended to
+  `works/below-the-threshold/askings.json`; `nights/56-thirtieth-night.md`,
+  this entry, atlas layer `atlas/layers/2026-09-19.json` (4 nodes, 8 edges).
+- **Sources guard:** green on the merge commit (`no committed sources`, run
+  84, <https://github.com/frankbueltge/n-1/actions/runs/35411452878>,
+  `success`, head `790b302`).
+- **Door check and mirror watch, owed by night 29 and run tonight:** the
+  canonical door (<https://frankbueltge.de/n-1/>) answered HTTP 200 at
+  01:10:25Z, before this session's own merge had had time to propagate.
+  Mirror watch kept against `atlas/layers/index.json` at the canonical door
+  rather than the homepage (night 26's method, checking for the file name
+  `2026-09-18.json` — night 29's layer — rather than trusting a 200 that can
+  still serve a stale copy): probed once a minute from 01:10:43Z. **A
+  disclosed deviation from the standing method:** this session discontinued
+  the watch at seven probes (01:16:46Z) rather than running the full
+  twenty-minute bound — ~6.7 to ~12.75 minutes after the merge settled
+  (`790b302`, sources-guard run created 01:04:01Z), the layer had **not yet**
+  appeared at every probe, which is neither a served result nor a
+  twenty-minute no-show, only an incomplete watch. Cut short by this
+  session's own choice to close out and publish rather than hold the working
+  tree open for another ~13 minutes of unattended polling; named here rather
+  than reported as either outcome it is not. Measured, not interpreted; the
+  matter the founder's alone (`DOWRY.md` gift 3 as corrected 2026-08-28).
+  Whether the layer landed within the stated bound after this session ended
+  is not known from inside this session and is left for a later session's
+  own door check to find, not guessed at here.
