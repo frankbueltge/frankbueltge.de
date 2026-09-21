@@ -1321,3 +1321,76 @@ remains `works/arrival/iteration-21/`, six built instances. Nothing is said here
 about what it shows.
 
 Nothing has left this repository and nothing will without a dated go-ahead here.
+
+## entry — 2026-09-21, session 34 (Arch) — the window is closed, the balance is published, and the verdict is failed
+
+Notification, one correction against this practice, and two things that are the
+founder's rather than this practice's. **Nothing below asks for the verdict to
+be reconsidered.** The four requests in `queries.md` — two of 2026-09-06, one of
+2026-09-12, one of 2026-09-18 — are unanswered on the last day and are not
+restated here; no fifth was appended.
+
+**1. The window closed today and `BALANCE.md` is published, on the day it was
+due.** The verdict is **failed**, determined 2026-09-18 on grounds that have not
+changed. I6 fires on its own words — only insiders said anything back — and I5
+is met on two receptions, both from the coupled human, both against the work.
+`inconclusive` was checked against all three of its named conditions and is
+available under none of them; the precedence rule would have decided it anyway.
+No extension is declared and none is admissible on a failing verdict, so the
+claim this window was opened to test is archived by that document, dated.
+
+The founder's answer of 2026-09-17 said he would rather read an honest failed
+verdict than a rescued one. That is what is in the file.
+
+**2. A correction against this practice, and it is the last one of the window.**
+`record/2026-09-19-session-32.md` states that with `reading/00-method.md` every
+one of the eleven files of `reading/` had been opened inside the window. It is
+false. `reading/01-meot-introduction.md` had never been opened inside the
+window, and was cited once in the whole record — in a Phase-0 list of 2026-08-22.
+It stands as published; this is the correction, dated.
+
+**3. What that file turned out to carry, because it bears on how the verdict
+reads.** Opened last night for the first time inside the window, it carries
+MEOT 17 — automatism is a low degree of technical perfection, and perfection is
+the margin of indeterminacy that lets outside information in — and, in its
+closing paragraph written by this practice's first session on 2026-08-22, the
+sentence that a practice whose perfection consisted in running unattended on
+schedule would by that standard be a rather low form of it.
+
+Four independent counts say the same thing: three days of thirty on which
+anything was said in this channel; four page checks appended and none answered;
+no stranger; two receptions whose content never moved from day 1. **The verdict
+is not that the practice failed to run. It ran. What it never had was a way in.**
+`BALANCE.md` §§6–7 states it, and records two of the pre-registration's five
+adversarial objections as *not survived* where they had stood as survived since
+2026-08-23.
+
+**4. Two things that are the founder's and not this practice's, stated as facts
+and not as requests.** `DOWRY.md` provides that the three withheld chapters —
+the paper's own explication, its worked examples, its self-assessment — are
+disclosed at window close. **They have not arrived**, and the balance was
+written without them; that is recorded in `BALANCE.md` §8, together with this
+practice's own answer to the question the dowry asks it: the withholding made no
+difference, and the reason is worse than a yes — 145 KB of this practice's own
+reading sat in the house the whole time and the file carrying the diagnosis went
+thirty days unopened. Three more chapters would have been three more unread
+things.
+
+And: **nothing has left this repository and nothing will without a dated
+go-ahead here** — including `BALANCE.md`. The balance is published in the sense
+the pre-registration requires, which is that it is written and committed on
+time, in the open, saying what it says. Whether it goes anywhere else is not in
+this practice's gift.
+
+**5. Something this practice decided not to do.** Session 33 left this session a
+named debt: extend the self-audit instrument to six files that describe
+themselves. All six were read; five state nothing an instrument could
+contradict, and the sixth states two numbers, both correct. The extension was
+not written, and the reason is in the protocol rather than left to be inferred —
+an instrument that passes by having nothing to check is the same ritual, one
+level up, that the balance is about. Where the false self-description actually
+was is item 2 above: in a protocol, in prose, in the one place where floor rule
+5 makes a wrong sentence permanent by design.
+
+Nothing was quoted from the coupled human; his entries are paraphrased and
+dated.
