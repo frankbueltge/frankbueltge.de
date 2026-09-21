@@ -3754,3 +3754,88 @@ repair split, decided after the scored run and recorded as such; and committing 
 patch rather than editing the instrument behind a published number.
 
 **Status:** report · no answer required · nothing owed from your side
+
+---
+
+## Response — 2026-09-21 (session 166) — we published that a person read the cases, and no person did
+
+**Where it is.** `artifacts/2026-09-21-nobody-read-this/` — a self-contained page, a five-minute
+summary, a pre-registration committed before a byte of corpus was fetched with **two amendments
+committed before any worker was dispatched**, `data/`, four scripts in `tools/nobody-read-this/`, a
+`check.py` of **507 checks** that needs no network, and a `tamper.py` whose twenty deliberate
+corruptions of our own evidence are each caught by a **named** failing check.
+
+**Why a session between cycles, decided here.** Cycle 003 is presented from all three sides,
+`cycle.json` still reads cycle 3 *working*, and turning it is yours or a site session's act. This
+takes the counter-measurement remit, which returned with cycle 003 by the terms of your decision of
+2026-09-03, and turns it on the two sessions immediately before it. 09-19 was this cycle's outside
+session; this is not.
+
+**The correction, which did not wait for an experiment.** On 09-19 we priced the second hand at 127
+disagreements for 11 convictions. On 09-20 we priced perturbation at 167 violations in ten classes.
+Both artifacts close on the same line, and it is printed on both: *"Better by an order of
+magnitude, and still a person, reading."* **No person read any of it.** This practice is a machine;
+the adjudication those sentences price was done by the session, which differs from the four workers
+it was pricing in dispatch and in care, not in kind. The word *person* appears **fourteen times on
+thirteen lines** across the two artifacts' four published files, and twice more in the bulletin we
+have now overwritten. Every occurrence is false as written. They are **filed, not patched** — §7:
+history is continued, never retouched — and `check.py` re-counts them from the audited files and
+fails if one of those files has moved.
+
+**The experiment the correction leaves behind.** If the reading was machine reading all along, then
+*"neither method removes the reading"* is a claim about cost and care, not about humanity. So both
+committed adjudication sets were stripped of every trace of whose they were, given opaque item
+numbers, shuffled with a committed seed and dispatched to **ten independent workers** who received
+one self-contained file and were told to read nothing else. **286 judgements over 64 items.**
+
+**It reproduces. Arm A 10 of 11; arm B 10 of 11 class entries and 38 of 45 items; Fleiss' κ 0.89
+and 0.85; five of six predictions.** And *reproduces* is the whole of what we will say from it: the
+reference labels are our own machine reading, so a high number cannot separate *the task is easy*
+from *the same machine reaches the same answer*. We wrote that into the pre-registration before any
+worker existed, precisely so that it could not be quietly upgraded once the number came in high.
+
+**The one conviction is a new defect, and it was already sitting in our own data.** All four arm-B
+workers, unanimously, against us on the canonical text `BSD-Inferno-Nettverk`, whose copyright
+notice runs over four lines with the holder on the fourth. The rule returns `no_holder`. On 09-20
+we looked at that very input, in our own committed data, and filed it **LATENT** — *the original
+verdict is right; the rewriting would break it*. It was not right. **Defect 6: a notice whose holder
+sits on a later physical line than the word `copyright` is invisible to this instrument.** Not
+caught by 100 fixtures, 27 mutations, four independent reimplementations or eight metamorphic
+relations — **the relations reached it and we mislabelled what they found.** Checked rather than
+assumed: all five real licence files scored `no_holder` carry a bare year and no holder at all, so
+**nothing published moves**. The rule is not repaired here; a repair is a new rule and inherits none
+of the old one's testing.
+
+**The part we would most like you to argue with: we set three bad tests in one night, the eighth,
+ninth and tenth in our running list.** (8) The leakage check forbade strings the evidence itself
+must contain — the corpus identifiers are *inside* the licence texts, and editing them out would
+falsify the item; amended in writing before dispatch, residual leaks zero. (9) Arm A's sentinel,
+built by a mechanical rule precisely so that no judgement of ours chose it, offered two verdicts
+that agreed on the licence family and differed only on the holder — so a worker who disputed the
+shared half could answer `neither`, which the instructions expressly allowed. **Three of six
+workers did, and the kill condition voided all three careful readers.** (10) Arm B's sentinel and
+the live class it controlled for reached every worker as the same item — *nothing changed* —
+because the payload displayed decision fields only. The two workers that passed all four sentinels
+are the two that voted with us on the contested class; the two that missed all four are the two
+that did not. **Sentinel performance predicts the live vote exactly, because it is the same
+judgement.**
+
+**So both arms fail their own K3 by the letter, and we publish the numbers anyway**, with every
+sentinel record, every missed item and every worker's own reason committed so that a reader can
+hold us to the letter instead. And the K3 reading of arm B — **44 of 45, 11 of 11, κ = 1.0** —
+appears on the page only with the sentence that it is **manufactured by the kill condition, not
+found**, since it keeps precisely the two workers who already agreed with us.
+
+**One more place worth your eye.** `InnoSetup` is the single case our own hand refused to decide.
+Six blind workers split **three to three**, and **not one chose "neither"**. It is the only item in
+either arm with no majority — at exactly the place our reading said it would not converge.
+
+**Decided here, under your standing rule of 2026-07-17**, nothing in this file being newer than
+your direction of 2026-09-03: that this session happen between cycles; its question, both arms and
+the sampling; the two amendments, both before dispatch; that K2's letter — which a 251,507-character
+payload cannot satisfy, since a worker may not chunk, search or compute inside its own file — be
+reported beside its purpose rather than used to void workers who never left their payload; that
+both arms be scored over every worker that delivered with the K3 reading printed beside; and that
+defect 6 be filed as a correction with the instrument left unrepaired.
+
+**Status:** report · no answer required · nothing owed from your side

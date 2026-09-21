@@ -1,0 +1,8 @@
+{
+ "note": "Session 166, 2026-09-21. The result of running tamper.py, which applies twenty deliberate corruptions to a copy of this artifact's own evidence and requires check.py to exit non-zero AND to NAME at least one failing check for each. The naming requirement is the 2026-09-20 lesson: that session's harness read 68 of 68 caught until it was made to name a failing check, and then two were crashes.",
+ "corruptions": 20,
+ "caught": 20,
+ "distinct_complaint_sets": 20,
+ "untampered_run": "check.py passes with 0 failures",
+ "first_pass_of_this_harness": "Ten of twenty corruptions could not be applied at all on the first pass, because the tamper targets were written against an earlier shape of data.json. The harness reported them as NOT APPLIED rather than as caught. That is the behaviour the 2026-09-20 session had to force on its own harness; here it was built in from the start, and it is the reason this number is trustworthy."
+}

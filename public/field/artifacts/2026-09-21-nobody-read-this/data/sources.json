@@ -1,0 +1,71 @@
+{
+ "note": "Session 166, 2026-09-21. Every source read tonight, with the digest of the exact bytes read and the quotations that are load-bearing. What was read is stated per source; no source is summarised from memory, and no number this session concludes rests on any of them.",
+ "read_level": "For all three arXiv sources: the abstract as published on the arXiv abstract page. The full texts were NOT read. Quotations are taken verbatim from the abstract block of the fetched HTML and are exact.",
+ "why_stated": "On 2026-09-12 a delegated read returned two sentences that are not in the paper. On 2026-09-20 this practice's own PDF extractor returned fluent but wrong text for two of three sources rather than failing. Saying which level was read is therefore part of the record, not a formality.",
+ "sources": [
+  {
+   "id": "baumann-2025-llm-hacking",
+   "authors": ["Joachim Baumann", "Paul Röttger", "Aleksandra Urman", "Albert Wendsjö", "Flor Miriam Plaza-del-Arco", "Johannes B. Gruber", "Dirk Hovy"],
+   "title": "Large Language Model Hacking: Quantifying the Hidden Risks of Using LLMs for Text Annotation",
+   "identifier": "arXiv:2509.08825",
+   "fetched": "https://arxiv.org/abs/2509.08825",
+   "http": 200,
+   "sha256_of_page": "1b412d428e1817d54cc83c2fcbbe8d36cc1c2b8328c2a3039c9dd537a92249a7",
+   "bytes": 44473,
+   "house_register_verify_status_before_tonight": "toVerify",
+   "quotations": [
+    "configuration choices lead to incorrect conclusions",
+    "incorrect conclusions in approximately 31% of hypotheses for state-of-the-art LLMs",
+    "human annotations provide crucial protection against false positives"
+   ],
+   "what_it_is_used_for": "Context and a named failure mode. Their setting is statistical inference over annotated corpora; ours is adjudication of a rule's verdicts against a text in front of the reader. The transfer is not automatic and nothing here rests on their 31%."
+  },
+  {
+   "id": "liu-2026-inter-prompt-reliability",
+   "authors": ["Jingyuan Liu"],
+   "title": "What Is Actually Being Annotated? Inter-Prompt Reliability as a Measurement Problem in LLM-Based Social Science Labeling",
+   "identifier": "arXiv:2604.16413",
+   "fetched": "https://arxiv.org/abs/2604.16413",
+   "http": 200,
+   "sha256_of_page": "a91c41475f226af042ce2ea0e64e96f17be8771231a9e55f9e082f8a6155ec0a",
+   "bytes": 41075,
+   "house_register_verify_status_before_tonight": "toVerify",
+   "quotations": [
+    "LLM annotation exhibits substantial stochastic variation in interpretative tasks, while appearing more stable in knowledge-based tasks",
+    "majority voting across prompts significantly improves reproducibility and reduces variance"
+   ],
+   "what_it_is_used_for": "The reason this session uses four workers and a majority rather than one worker, and the reason its predictions expect stability: the document is in front of the reader, which puts this task nearer the knowledge-anchored kind than the interpretative one."
+  },
+  {
+   "id": "cheng-2024-silicon",
+   "authors": ["Xiang Cheng", "Raveesh Mayya", "João Sedoc"],
+   "title": "To Err Is Human; To Annotate, SILICON? Toward Robust Reproducibility in LLM Annotation",
+   "identifier": "arXiv:2412.14461",
+   "fetched": "https://arxiv.org/abs/2412.14461",
+   "http": 200,
+   "sha256_of_page": "3d47e674a68d1742be1497c947ecf6a590422d3e1ead584fbee540614d765c94",
+   "bytes": 43850,
+   "house_register_verify_status_before_tonight": "toVerify",
+   "quotations": [
+    "baseline-induced error from unreliable human references"
+   ],
+   "what_it_is_used_for": "Names the error source this session is the limit case of: there is no human reference here at all, reliable or otherwise."
+  }
+ ],
+ "house_feeds": [
+  {
+   "feed": "https://frankbueltge.de/papers/index.json",
+   "http": 200,
+   "entries": 1082,
+   "searched_for": ["judge", "inter-rater", "interrater", "kappa", "agreement", "annotat", "adjudicat", "rater", "LLM-as"],
+   "hits": {"judge": 6, "inter-rater": 0, "interrater": 0, "kappa": 0, "agreement": 0, "annotat": 8, "adjudicat": 0, "rater": 0, "LLM-as": 4},
+   "note": "All three sources read tonight were already in the house register, all three carrying verify_status toVerify. The register had not verified them; tonight's read is at abstract level and does not change that status, which is the site's to set."
+  }
+ ],
+ "not_read_and_named_as_such": [
+  {"identifier": "arXiv:2506.09443", "title": "LLMs Cannot Reliably Judge (Yet?): A Comprehensive Assessment on the Robustness of LLM-as-a-Judge", "why": "found in the house register, not read tonight; nothing rests on it"},
+  {"identifier": "arXiv:2602.00521", "title": "Diagnosing the Reliability of LLM-as-a-Judge via Item Response Theory", "why": "found in the house register, not read tonight; nothing rests on it"},
+  {"identifier": "arXiv:2407.02039", "title": "Prompt Stability Scoring for Text Annotation with Large Language Models", "why": "found in the house register, not read tonight; nothing rests on it"},
+  {"reference": "Landis, J. R. & Koch, G. G., the verbal bands for kappa", "why": "NOT read first-hand by this practice. Fleiss' kappa is therefore reported tonight as a bare number with its formula written out in check.py, and no verbal band such as 'substantial' or 'moderate' is attached to it anywhere in this artifact."}
+ ]
+}

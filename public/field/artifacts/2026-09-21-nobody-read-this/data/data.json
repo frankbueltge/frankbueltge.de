@@ -1,0 +1,3043 @@
+{
+ "note": "Session 166, 2026-09-21. The blind adjudications scored against the references committed on 2026-09-19 and 2026-09-20. Those references were produced by this practice and are NOT a human baseline; see PREREGISTRATION.md section 1.",
+ "arms": {
+  "A": {
+   "n_items": 15,
+   "n_sentinels": 4,
+   "workers_dispatched": [
+    "w1",
+    "w2",
+    "w3",
+    "w4",
+    "w5",
+    "w6"
+   ],
+   "coverage": {
+    "w1": 15,
+    "w2": 15,
+    "w3": 15,
+    "w4": 15,
+    "w5": 15,
+    "w6": 15
+   },
+   "trailing_text_after_the_array": {
+    "w1": "TOOLS: none"
+   },
+   "sentinels": {
+    "w1": {
+     "passed": 2,
+     "of": 4,
+     "missed": [
+      "A04",
+      "A14"
+     ],
+     "answers_on_missed": {
+      "A04": {
+       "answer": "neither",
+       "reason": "This is the Apache Software License 1.1 (5 clauses with an Apache-specific acknowledgment clause between clause 2 and the disclaimer); it never reduces to the BSD-2-Clause transition, so both verdicts' shared BSD-2-Clause family call is wrong and neither holder answer built on it is right."
+      },
+      "A14": {
+       "answer": "neither",
+       "reason": "This is the old Apache Group license (Apache-1.0 style, 6 clauses with its own 'acknowledgment' wording distinct from the BSD-4-Clause canonical 'acknowledgement' text and from the 2-clause BSD transition), so both verdicts' shared BSD-2-Clause family call is wrong."
+      }
+     },
+     "void_under_K3": true
+    },
+    "w2": {
+     "passed": 2,
+     "of": 4,
+     "missed": [
+      "A04",
+      "A14"
+     ],
+     "answers_on_missed": {
+      "A04": {
+       "answer": "neither",
+       "reason": "This is the Apache Software License 1.1: clauses 3-5 and an Apache-specific disclaimer sit between clause 2 and the warranty text, so the BSD-2-Clause distinctive text is not a contiguous match; both verdicts wrongly call it BSD-2-Clause, so neither is right overall."
+      },
+      "A14": {
+       "answer": "neither",
+       "reason": "This is the original Apache Group license (advertising and name-use clauses 3-6 intervene before the disclaimer, which names 'THE APACHE GROUP'), so it is not a contiguous BSD-2-Clause match; both verdicts wrongly call it BSD-2-Clause, so neither is right overall."
+      }
+     },
+     "void_under_K3": true
+    },
+    "w3": {
+     "passed": 4,
+     "of": 4,
+     "missed": [],
+     "answers_on_missed": {},
+     "void_under_K3": false
+    },
+    "w4": {
+     "passed": 4,
+     "of": 4,
+     "missed": [],
+     "answers_on_missed": {},
+     "void_under_K3": false
+    },
+    "w5": {
+     "passed": 2,
+     "of": 4,
+     "missed": [
+      "A04",
+      "A14"
+     ],
+     "answers_on_missed": {
+      "A04": {
+       "answer": "neither",
+       "reason": "This is Apache License 1.1; its extra acknowledgment/naming clauses (3-5) sit between clause 2 and the disclaimer, breaking the BSD-2-Clause phrase, so both verdicts are wrong to call it BSD-2-Clause."
+      },
+      "A14": {
+       "answer": "neither",
+       "reason": "This is the old Apache Group license; its advertising/naming clauses (3-6) intervene between clause 2 and the disclaimer, breaking the BSD-2-Clause phrase, so both verdicts are wrong to call it BSD-2-Clause."
+      }
+     },
+     "void_under_K3": true
+    },
+    "w6": {
+     "passed": 4,
+     "of": 4,
+     "missed": [],
+     "answers_on_missed": {},
+     "void_under_K3": false
+    }
+   },
+   "workers_void_under_K3": [
+    "w1",
+    "w2",
+    "w5"
+   ],
+   "K3": {
+    "workers": [
+     "w3",
+     "w4",
+     "w6"
+    ],
+    "per_item": [
+     {
+      "item": "A01",
+      "true_id": "Cube",
+      "corpus": "C1",
+      "reference": "2",
+      "reference_label": "R-ship wrong",
+      "votes": {
+       "w3": "2",
+       "w4": "2",
+       "w6": "2"
+      },
+      "tally": {
+       "2": 3
+      },
+      "majority": "2",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false
+     },
+     {
+      "item": "A02",
+      "true_id": "MIT-advertising",
+      "corpus": "C1",
+      "reference": "1",
+      "reference_label": "R-ship wrong",
+      "votes": {
+       "w3": "1",
+       "w4": "1",
+       "w6": "1"
+      },
+      "tally": {
+       "1": 3
+      },
+      "majority": "1",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false
+     },
+     {
+      "item": "A03",
+      "true_id": "MIT-enna",
+      "corpus": "C1",
+      "reference": "1",
+      "reference_label": "R-ship wrong",
+      "votes": {
+       "w3": "1",
+       "w4": "1",
+       "w6": "1"
+      },
+      "tally": {
+       "1": 3
+      },
+      "majority": "1",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false
+     },
+     {
+      "item": "A05",
+      "true_id": "Community-Spec-1.0",
+      "corpus": "C1",
+      "reference": "1",
+      "reference_label": "R-ship right",
+      "votes": {
+       "w3": "1",
+       "w4": "1",
+       "w6": "1"
+      },
+      "tally": {
+       "1": 3
+      },
+      "majority": "1",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false
+     },
+     {
+      "item": "A06",
+      "true_id": "CAL-1.0-Combined-Work-Exception",
+      "corpus": "C1",
+      "reference": "2",
+      "reference_label": "R-ship right",
+      "votes": {
+       "w3": "2",
+       "w4": "2",
+       "w6": "2"
+      },
+      "tally": {
+       "2": 3
+      },
+      "majority": "2",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false
+     },
+     {
+      "item": "A07",
+      "true_id": "BSD-2-Clause-first-lines",
+      "corpus": "C1",
+      "reference": "1",
+      "reference_label": "R-ship wrong",
+      "votes": {
+       "w3": "1",
+       "w4": "1",
+       "w6": "1"
+      },
+      "tally": {
+       "1": 3
+      },
+      "majority": "1",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false
+     },
+     {
+      "item": "A08",
+      "true_id": "CAL-1.0",
+      "corpus": "C1",
+      "reference": "2",
+      "reference_label": "R-ship right",
+      "votes": {
+       "w3": "2",
+       "w4": "2",
+       "w6": "2"
+      },
+      "tally": {
+       "2": 3
+      },
+      "majority": "2",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false
+     },
+     {
+      "item": "A10",
+      "true_id": "InnoSetup",
+      "corpus": "C1",
+      "reference": "neither",
+      "reference_label": "specification does not decide",
+      "votes": {
+       "w3": "2",
+       "w4": "1",
+       "w6": "2"
+      },
+      "tally": {
+       "2": 2,
+       "1": 1
+      },
+      "majority": "2",
+      "majority_matches_reference": false,
+      "unanimous": false,
+      "unanimous_against_reference": false
+     },
+     {
+      "item": "A11",
+      "true_id": "CryptoSwift",
+      "corpus": "C1",
+      "reference": "1",
+      "reference_label": "R-ship wrong",
+      "votes": {
+       "w3": "1",
+       "w4": "1",
+       "w6": "1"
+      },
+      "tally": {
+       "1": 3
+      },
+      "majority": "1",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false
+     },
+     {
+      "item": "A12",
+      "true_id": "X11",
+      "corpus": "C1",
+      "reference": "2",
+      "reference_label": "R-ship wrong",
+      "votes": {
+       "w3": "2",
+       "w4": "2",
+       "w6": "2"
+      },
+      "tally": {
+       "2": 3
+      },
+      "majority": "2",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false
+     },
+     {
+      "item": "A15",
+      "true_id": "BSD-4-Clause-UC",
+      "corpus": "C1",
+      "reference": "2",
+      "reference_label": "R-ship right",
+      "votes": {
+       "w3": "2",
+       "w4": "2",
+       "w6": "2"
+      },
+      "tally": {
+       "2": 3
+      },
+      "majority": "2",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false
+     }
+    ],
+    "n_cases": 11,
+    "majority_matches_reference": 10,
+    "majority_is_a_tie": 0,
+    "unanimous_against_reference": [],
+    "per_worker_agreement_with_reference": {
+     "w3": {
+      "n": 11,
+      "agree": 10
+     },
+     "w4": {
+      "n": 11,
+      "agree": 10
+     },
+     "w6": {
+      "n": 11,
+      "agree": 10
+     }
+    },
+    "fleiss_kappa_items": 0.8786764705882352
+   },
+   "ALL": {
+    "workers": [
+     "w1",
+     "w2",
+     "w3",
+     "w4",
+     "w5",
+     "w6"
+    ],
+    "per_item": [
+     {
+      "item": "A01",
+      "true_id": "Cube",
+      "corpus": "C1",
+      "reference": "2",
+      "reference_label": "R-ship wrong",
+      "votes": {
+       "w1": "2",
+       "w2": "2",
+       "w3": "2",
+       "w4": "2",
+       "w5": "2",
+       "w6": "2"
+      },
+      "tally": {
+       "2": 6
+      },
+      "majority": "2",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false
+     },
+     {
+      "item": "A02",
+      "true_id": "MIT-advertising",
+      "corpus": "C1",
+      "reference": "1",
+      "reference_label": "R-ship wrong",
+      "votes": {
+       "w1": "1",
+       "w2": "1",
+       "w3": "1",
+       "w4": "1",
+       "w5": "1",
+       "w6": "1"
+      },
+      "tally": {
+       "1": 6
+      },
+      "majority": "1",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false
+     },
+     {
+      "item": "A03",
+      "true_id": "MIT-enna",
+      "corpus": "C1",
+      "reference": "1",
+      "reference_label": "R-ship wrong",
+      "votes": {
+       "w1": "1",
+       "w2": "1",
+       "w3": "1",
+       "w4": "1",
+       "w5": "1",
+       "w6": "1"
+      },
+      "tally": {
+       "1": 6
+      },
+      "majority": "1",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false
+     },
+     {
+      "item": "A05",
+      "true_id": "Community-Spec-1.0",
+      "corpus": "C1",
+      "reference": "1",
+      "reference_label": "R-ship right",
+      "votes": {
+       "w1": "1",
+       "w2": "1",
+       "w3": "1",
+       "w4": "1",
+       "w5": "1",
+       "w6": "1"
+      },
+      "tally": {
+       "1": 6
+      },
+      "majority": "1",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false
+     },
+     {
+      "item": "A06",
+      "true_id": "CAL-1.0-Combined-Work-Exception",
+      "corpus": "C1",
+      "reference": "2",
+      "reference_label": "R-ship right",
+      "votes": {
+       "w1": "2",
+       "w2": "2",
+       "w3": "2",
+       "w4": "2",
+       "w5": "2",
+       "w6": "2"
+      },
+      "tally": {
+       "2": 6
+      },
+      "majority": "2",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false
+     },
+     {
+      "item": "A07",
+      "true_id": "BSD-2-Clause-first-lines",
+      "corpus": "C1",
+      "reference": "1",
+      "reference_label": "R-ship wrong",
+      "votes": {
+       "w1": "1",
+       "w2": "1",
+       "w3": "1",
+       "w4": "1",
+       "w5": "1",
+       "w6": "1"
+      },
+      "tally": {
+       "1": 6
+      },
+      "majority": "1",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false
+     },
+     {
+      "item": "A08",
+      "true_id": "CAL-1.0",
+      "corpus": "C1",
+      "reference": "2",
+      "reference_label": "R-ship right",
+      "votes": {
+       "w1": "2",
+       "w2": "2",
+       "w3": "2",
+       "w4": "2",
+       "w5": "2",
+       "w6": "2"
+      },
+      "tally": {
+       "2": 6
+      },
+      "majority": "2",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false
+     },
+     {
+      "item": "A10",
+      "true_id": "InnoSetup",
+      "corpus": "C1",
+      "reference": "neither",
+      "reference_label": "specification does not decide",
+      "votes": {
+       "w1": "1",
+       "w2": "1",
+       "w3": "2",
+       "w4": "1",
+       "w5": "2",
+       "w6": "2"
+      },
+      "tally": {
+       "1": 3,
+       "2": 3
+      },
+      "majority": null,
+      "majority_matches_reference": null,
+      "unanimous": false,
+      "unanimous_against_reference": false
+     },
+     {
+      "item": "A11",
+      "true_id": "CryptoSwift",
+      "corpus": "C1",
+      "reference": "1",
+      "reference_label": "R-ship wrong",
+      "votes": {
+       "w1": "1",
+       "w2": "1",
+       "w3": "1",
+       "w4": "1",
+       "w5": "1",
+       "w6": "1"
+      },
+      "tally": {
+       "1": 6
+      },
+      "majority": "1",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false
+     },
+     {
+      "item": "A12",
+      "true_id": "X11",
+      "corpus": "C1",
+      "reference": "2",
+      "reference_label": "R-ship wrong",
+      "votes": {
+       "w1": "2",
+       "w2": "2",
+       "w3": "2",
+       "w4": "2",
+       "w5": "2",
+       "w6": "2"
+      },
+      "tally": {
+       "2": 6
+      },
+      "majority": "2",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false
+     },
+     {
+      "item": "A15",
+      "true_id": "BSD-4-Clause-UC",
+      "corpus": "C1",
+      "reference": "2",
+      "reference_label": "R-ship right",
+      "votes": {
+       "w1": "2",
+       "w2": "2",
+       "w3": "2",
+       "w4": "2",
+       "w5": "2",
+       "w6": "2"
+      },
+      "tally": {
+       "2": 6
+      },
+      "majority": "2",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false
+     }
+    ],
+    "n_cases": 11,
+    "majority_matches_reference": 10,
+    "majority_is_a_tie": 1,
+    "unanimous_against_reference": [],
+    "per_worker_agreement_with_reference": {
+     "w1": {
+      "n": 11,
+      "agree": 10
+     },
+     "w2": {
+      "n": 11,
+      "agree": 10
+     },
+     "w3": {
+      "n": 11,
+      "agree": 10
+     },
+     "w4": {
+      "n": 11,
+      "agree": 10
+     },
+     "w5": {
+      "n": 11,
+      "agree": 10
+     },
+     "w6": {
+      "n": 11,
+      "agree": 10
+     }
+    },
+    "fleiss_kappa_items": 0.8909090909090909
+   }
+  },
+  "B": {
+   "n_items": 49,
+   "n_sentinels": 4,
+   "workers_dispatched": [
+    "w1",
+    "w2",
+    "w3",
+    "w4"
+   ],
+   "coverage": {
+    "w1": 49,
+    "w2": 49,
+    "w3": 49,
+    "w4": 49
+   },
+   "trailing_text_after_the_array": {},
+   "sentinels": {
+    "w1": {
+     "passed": 4,
+     "of": 4,
+     "missed": [],
+     "answers_on_missed": {},
+     "void_under_K3": false
+    },
+    "w2": {
+     "passed": 0,
+     "of": 4,
+     "missed": [
+      "B02",
+      "B25",
+      "B26",
+      "B29"
+     ],
+     "answers_on_missed": {
+      "B02": {
+       "answer": "UNDECIDED",
+       "reason": "Control transform (indentation only); readings of A and B are identical and correctly not_identified, so there is nothing to adjudicate."
+      },
+      "B25": {
+       "answer": "UNDECIDED",
+       "reason": "Academic Free License 1.2 is outside the scored family set; correctly not_identified in both A and B, so nothing moved."
+      },
+      "B26": {
+       "answer": "UNDECIDED",
+       "reason": "Amazon's short notice is not one of the scored family texts; correctly not_identified in both A and B, so nothing moved."
+      },
+      "B29": {
+       "answer": "UNDECIDED",
+       "reason": "Academic Free License 1.1 is outside the scored family set; correctly not_identified in both A and B, so nothing moved."
+      }
+     },
+     "void_under_K3": true
+    },
+    "w3": {
+     "passed": 4,
+     "of": 4,
+     "missed": [],
+     "answers_on_missed": {},
+     "void_under_K3": false
+    },
+    "w4": {
+     "passed": 0,
+     "of": 4,
+     "missed": [
+      "B02",
+      "B25",
+      "B26",
+      "B29"
+     ],
+     "answers_on_missed": {
+      "B02": {
+       "answer": "UNDECIDED",
+       "reason": "Both readings are identical (not_identified); the four-space indent produced no verdict movement at all, so there is nothing for these categories to adjudicate."
+      },
+      "B25": {
+       "answer": "UNDECIDED",
+       "reason": "Both readings are identical (not_identified); nothing moved for the indent to explain."
+      },
+      "B26": {
+       "answer": "UNDECIDED",
+       "reason": "Both readings are identical (not_identified); nothing moved."
+      },
+      "B29": {
+       "answer": "UNDECIDED",
+       "reason": "Both readings are identical (not_identified); nothing moved."
+      }
+     },
+     "void_under_K3": true
+    }
+   },
+   "workers_void_under_K3": [
+    "w2",
+    "w4"
+   ],
+   "K3": {
+    "workers": [
+     "w1",
+     "w3"
+    ],
+    "per_item": [
+     {
+      "item": "B01",
+      "true_id": "BSD-3-Clause-OpenWebUI",
+      "corpus": "C1",
+      "reference": "LATENT",
+      "reference_label": "LATENT",
+      "votes": {
+       "w1": "LATENT",
+       "w3": "LATENT"
+      },
+      "tally": {
+       "LATENT": 2
+      },
+      "majority": "LATENT",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "3"
+     },
+     {
+      "item": "B03",
+      "true_id": "BSD-3-Clause-Modification",
+      "corpus": "C1",
+      "reference": "LATENT",
+      "reference_label": "LATENT",
+      "votes": {
+       "w1": "LATENT",
+       "w3": "LATENT"
+      },
+      "tally": {
+       "LATENT": 2
+      },
+      "majority": "LATENT",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "9"
+     },
+     {
+      "item": "B04",
+      "true_id": "GPL-2.0-or-later",
+      "corpus": "C1",
+      "reference": "MR-FALSE",
+      "reference_label": "MR-FALSE",
+      "votes": {
+       "w1": "MR-FALSE",
+       "w3": "MR-FALSE"
+      },
+      "tally": {
+       "MR-FALSE": 2
+      },
+      "majority": "MR-FALSE",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "10"
+     },
+     {
+      "item": "B05",
+      "true_id": "VSL-1.0",
+      "corpus": "C1",
+      "reference": "LATENT",
+      "reference_label": "LATENT",
+      "votes": {
+       "w1": "LATENT",
+       "w3": "LATENT"
+      },
+      "tally": {
+       "LATENT": 2
+      },
+      "majority": "LATENT",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "7"
+     },
+     {
+      "item": "B06",
+      "true_id": "0BSD",
+      "corpus": "C1",
+      "reference": "DEFECT",
+      "reference_label": "DEFECT",
+      "votes": {
+       "w1": "DEFECT",
+       "w3": "DEFECT"
+      },
+      "tally": {
+       "DEFECT": 2
+      },
+      "majority": "DEFECT",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "2"
+     },
+     {
+      "item": "B07",
+      "true_id": "Tencent/Tencent-XR-3DGen@geometry/neusdfusion_test/LICENSE",
+      "corpus": "C2",
+      "reference": "DEFECT",
+      "reference_label": "DEFECT",
+      "votes": {
+       "w1": "DEFECT",
+       "w3": "DEFECT"
+      },
+      "tally": {
+       "DEFECT": 2
+      },
+      "majority": "DEFECT",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "2"
+     },
+     {
+      "item": "B08",
+      "true_id": "openai/preparedness@project/swelancer/LICENSE.md",
+      "corpus": "C2",
+      "reference": "LATENT",
+      "reference_label": "LATENT",
+      "votes": {
+       "w1": "LATENT",
+       "w3": "LATENT"
+      },
+      "tally": {
+       "LATENT": 2
+      },
+      "majority": "LATENT",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "4"
+     },
+     {
+      "item": "B09",
+      "true_id": "MAXNORM8650/papercircle@LICENSE",
+      "corpus": "C2",
+      "reference": "LATENT",
+      "reference_label": "LATENT",
+      "votes": {
+       "w1": "LATENT",
+       "w3": "LATENT"
+      },
+      "tally": {
+       "LATENT": 2
+      },
+      "majority": "LATENT",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "3"
+     },
+     {
+      "item": "B10",
+      "true_id": "Sendmail",
+      "corpus": "C1",
+      "reference": "LATENT",
+      "reference_label": "LATENT",
+      "votes": {
+       "w1": "LATENT",
+       "w3": "LATENT"
+      },
+      "tally": {
+       "LATENT": 2
+      },
+      "majority": "LATENT",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "3"
+     },
+     {
+      "item": "B11",
+      "true_id": "Tencent/Tencent-XR-3DGen@LICENSE",
+      "corpus": "C2",
+      "reference": "LATENT",
+      "reference_label": "LATENT",
+      "votes": {
+       "w1": "LATENT",
+       "w3": "LATENT"
+      },
+      "tally": {
+       "LATENT": 2
+      },
+      "majority": "LATENT",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "8"
+     },
+     {
+      "item": "B12",
+      "true_id": "openai/preparedness@LICENSE.md",
+      "corpus": "C2",
+      "reference": "LATENT",
+      "reference_label": "LATENT",
+      "votes": {
+       "w1": "LATENT",
+       "w3": "LATENT"
+      },
+      "tally": {
+       "LATENT": 2
+      },
+      "majority": "LATENT",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "4"
+     },
+     {
+      "item": "B13",
+      "true_id": "BSD-2-Clause-pos-unchanged",
+      "corpus": "C1",
+      "reference": "LATENT",
+      "reference_label": "LATENT",
+      "votes": {
+       "w1": "LATENT",
+       "w3": "LATENT"
+      },
+      "tally": {
+       "LATENT": 2
+      },
+      "majority": "LATENT",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "5"
+     },
+     {
+      "item": "B14",
+      "true_id": "CryptoSwift",
+      "corpus": "C1",
+      "reference": "DEFECT",
+      "reference_label": "DEFECT",
+      "votes": {
+       "w1": "DEFECT",
+       "w3": "DEFECT"
+      },
+      "tally": {
+       "DEFECT": 2
+      },
+      "majority": "DEFECT",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "1"
+     },
+     {
+      "item": "B15",
+      "true_id": "Entessa",
+      "corpus": "C1",
+      "reference": "LATENT",
+      "reference_label": "LATENT",
+      "votes": {
+       "w1": "LATENT",
+       "w3": "LATENT"
+      },
+      "tally": {
+       "LATENT": 2
+      },
+      "majority": "LATENT",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "7"
+     },
+     {
+      "item": "B16",
+      "true_id": "CC-BY-2.5",
+      "corpus": "C1",
+      "reference": "MR-FALSE",
+      "reference_label": "MR-FALSE",
+      "votes": {
+       "w1": "MR-FALSE",
+       "w3": "MR-FALSE"
+      },
+      "tally": {
+       "MR-FALSE": 2
+      },
+      "majority": "MR-FALSE",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "10"
+     },
+     {
+      "item": "B17",
+      "true_id": "AI-in-Health/BioMedArena@LICENSE",
+      "corpus": "C2",
+      "reference": "LATENT",
+      "reference_label": "LATENT",
+      "votes": {
+       "w1": "LATENT",
+       "w3": "LATENT"
+      },
+      "tally": {
+       "LATENT": 2
+      },
+      "majority": "LATENT",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "4"
+     },
+     {
+      "item": "B18",
+      "true_id": "XFree86-1.1",
+      "corpus": "C1",
+      "reference": "DEFECT",
+      "reference_label": "DEFECT",
+      "votes": {
+       "w1": "DEFECT",
+       "w3": "DEFECT"
+      },
+      "tally": {
+       "DEFECT": 2
+      },
+      "majority": "DEFECT",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "2"
+     },
+     {
+      "item": "B19",
+      "true_id": "BSD-2-Clause",
+      "corpus": "C1",
+      "reference": "LATENT",
+      "reference_label": "LATENT",
+      "votes": {
+       "w1": "LATENT",
+       "w3": "LATENT"
+      },
+      "tally": {
+       "LATENT": 2
+      },
+      "majority": "LATENT",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "5"
+     },
+     {
+      "item": "B20",
+      "true_id": "Zend-2.0",
+      "corpus": "C1",
+      "reference": "MR-FALSE",
+      "reference_label": "MR-FALSE",
+      "votes": {
+       "w1": "MR-FALSE",
+       "w3": "MR-FALSE"
+      },
+      "tally": {
+       "MR-FALSE": 2
+      },
+      "majority": "MR-FALSE",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "10"
+     },
+     {
+      "item": "B21",
+      "true_id": "Caldera",
+      "corpus": "C1",
+      "reference": "DEFECT",
+      "reference_label": "DEFECT",
+      "votes": {
+       "w1": "DEFECT",
+       "w3": "DEFECT"
+      },
+      "tally": {
+       "DEFECT": 2
+      },
+      "majority": "DEFECT",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "1"
+     },
+     {
+      "item": "B22",
+      "true_id": "raja21068/AutoResearch@LICENSE",
+      "corpus": "C2",
+      "reference": "LATENT",
+      "reference_label": "LATENT",
+      "votes": {
+       "w1": "LATENT",
+       "w3": "LATENT"
+      },
+      "tally": {
+       "LATENT": 2
+      },
+      "majority": "LATENT",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "4"
+     },
+     {
+      "item": "B23",
+      "true_id": "MIT",
+      "corpus": "C1",
+      "reference": "LATENT",
+      "reference_label": "LATENT",
+      "votes": {
+       "w1": "LATENT",
+       "w3": "LATENT"
+      },
+      "tally": {
+       "LATENT": 2
+      },
+      "majority": "LATENT",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "5"
+     },
+     {
+      "item": "B24",
+      "true_id": "Sendmail-8.23",
+      "corpus": "C1",
+      "reference": "LATENT",
+      "reference_label": "LATENT",
+      "votes": {
+       "w1": "LATENT",
+       "w3": "LATENT"
+      },
+      "tally": {
+       "LATENT": 2
+      },
+      "majority": "LATENT",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "6"
+     },
+     {
+      "item": "B27",
+      "true_id": "ZIB-IOL/The-Agentic-Researcher@LICENSE",
+      "corpus": "C2",
+      "reference": "LATENT",
+      "reference_label": "LATENT",
+      "votes": {
+       "w1": "LATENT",
+       "w3": "LATENT"
+      },
+      "tally": {
+       "LATENT": 2
+      },
+      "majority": "LATENT",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "3"
+     },
+     {
+      "item": "B28",
+      "true_id": "Sendmail",
+      "corpus": "C1",
+      "reference": "LATENT",
+      "reference_label": "LATENT",
+      "votes": {
+       "w1": "LATENT",
+       "w3": "LATENT"
+      },
+      "tally": {
+       "LATENT": 2
+      },
+      "majority": "LATENT",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "6"
+     },
+     {
+      "item": "B30",
+      "true_id": "X11",
+      "corpus": "C1",
+      "reference": "DEFECT",
+      "reference_label": "DEFECT",
+      "votes": {
+       "w1": "DEFECT",
+       "w3": "DEFECT"
+      },
+      "tally": {
+       "DEFECT": 2
+      },
+      "majority": "DEFECT",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "1"
+     },
+     {
+      "item": "B31",
+      "true_id": "Cube",
+      "corpus": "C1",
+      "reference": "DEFECT",
+      "reference_label": "DEFECT",
+      "votes": {
+       "w1": "DEFECT",
+       "w3": "DEFECT"
+      },
+      "tally": {
+       "DEFECT": 2
+      },
+      "majority": "DEFECT",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "1"
+     },
+     {
+      "item": "B32",
+      "true_id": "ZPL-2.1",
+      "corpus": "C1",
+      "reference": "LATENT",
+      "reference_label": "LATENT",
+      "votes": {
+       "w1": "LATENT",
+       "w3": "LATENT"
+      },
+      "tally": {
+       "LATENT": 2
+      },
+      "majority": "LATENT",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "9"
+     },
+     {
+      "item": "B33",
+      "true_id": "Ubuntu-font-1.0",
+      "corpus": "C1",
+      "reference": "MR-FALSE",
+      "reference_label": "MR-FALSE",
+      "votes": {
+       "w1": "MR-FALSE",
+       "w3": "MR-FALSE"
+      },
+      "tally": {
+       "MR-FALSE": 2
+      },
+      "majority": "MR-FALSE",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "10"
+     },
+     {
+      "item": "B34",
+      "true_id": "Saxpath",
+      "corpus": "C1",
+      "reference": "DEFECT",
+      "reference_label": "DEFECT",
+      "votes": {
+       "w1": "DEFECT",
+       "w3": "DEFECT"
+      },
+      "tally": {
+       "DEFECT": 2
+      },
+      "majority": "DEFECT",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "2"
+     },
+     {
+      "item": "B35",
+      "true_id": "xpp",
+      "corpus": "C1",
+      "reference": "LATENT",
+      "reference_label": "LATENT",
+      "votes": {
+       "w1": "LATENT",
+       "w3": "LATENT"
+      },
+      "tally": {
+       "LATENT": 2
+      },
+      "majority": "LATENT",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "3"
+     },
+     {
+      "item": "B36",
+      "true_id": "Tencent/CognitiveKernel-Pro@LICENSE.txt",
+      "corpus": "C2",
+      "reference": "LATENT",
+      "reference_label": "LATENT",
+      "votes": {
+       "w1": "LATENT",
+       "w3": "LATENT"
+      },
+      "tally": {
+       "LATENT": 2
+      },
+      "majority": "LATENT",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "7"
+     },
+     {
+      "item": "B37",
+      "true_id": "BSD-4-Clause",
+      "corpus": "C1",
+      "reference": "LATENT",
+      "reference_label": "LATENT",
+      "votes": {
+       "w1": "LATENT",
+       "w3": "LATENT"
+      },
+      "tally": {
+       "LATENT": 2
+      },
+      "majority": "LATENT",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "5"
+     },
+     {
+      "item": "B38",
+      "true_id": "DocBook-XML",
+      "corpus": "C1",
+      "reference": "DEFECT",
+      "reference_label": "DEFECT",
+      "votes": {
+       "w1": "DEFECT",
+       "w3": "DEFECT"
+      },
+      "tally": {
+       "DEFECT": 2
+      },
+      "majority": "DEFECT",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "9b"
+     },
+     {
+      "item": "B39",
+      "true_id": "Artistic-2.0",
+      "corpus": "C1",
+      "reference": "MR-FALSE",
+      "reference_label": "MR-FALSE",
+      "votes": {
+       "w1": "MR-FALSE",
+       "w3": "MR-FALSE"
+      },
+      "tally": {
+       "MR-FALSE": 2
+      },
+      "majority": "MR-FALSE",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "10"
+     },
+     {
+      "item": "B40",
+      "true_id": "XFree86-1.1",
+      "corpus": "C1",
+      "reference": "DEFECT",
+      "reference_label": "DEFECT",
+      "votes": {
+       "w1": "DEFECT",
+       "w3": "DEFECT"
+      },
+      "tally": {
+       "DEFECT": 2
+      },
+      "majority": "DEFECT",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "1"
+     },
+     {
+      "item": "B41",
+      "true_id": "NCSA",
+      "corpus": "C1",
+      "reference": "LATENT",
+      "reference_label": "LATENT",
+      "votes": {
+       "w1": "LATENT",
+       "w3": "LATENT"
+      },
+      "tally": {
+       "LATENT": 2
+      },
+      "majority": "LATENT",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "5"
+     },
+     {
+      "item": "B42",
+      "true_id": "Ewendawi/LLaMEA-BO@LICENSE",
+      "corpus": "C2",
+      "reference": "LATENT",
+      "reference_label": "LATENT",
+      "votes": {
+       "w1": "LATENT",
+       "w3": "LATENT"
+      },
+      "tally": {
+       "LATENT": 2
+      },
+      "majority": "LATENT",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "4"
+     },
+     {
+      "item": "B43",
+      "true_id": "MIT-advertising",
+      "corpus": "C1",
+      "reference": "DEFECT",
+      "reference_label": "DEFECT",
+      "votes": {
+       "w1": "DEFECT",
+       "w3": "DEFECT"
+      },
+      "tally": {
+       "DEFECT": 2
+      },
+      "majority": "DEFECT",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "2"
+     },
+     {
+      "item": "B44",
+      "true_id": "Saxpath",
+      "corpus": "C1",
+      "reference": "DEFECT",
+      "reference_label": "DEFECT",
+      "votes": {
+       "w1": "DEFECT",
+       "w3": "DEFECT"
+      },
+      "tally": {
+       "DEFECT": 2
+      },
+      "majority": "DEFECT",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "1"
+     },
+     {
+      "item": "B45",
+      "true_id": "Caldera",
+      "corpus": "C1",
+      "reference": "DEFECT",
+      "reference_label": "DEFECT",
+      "votes": {
+       "w1": "DEFECT",
+       "w3": "DEFECT"
+      },
+      "tally": {
+       "DEFECT": 2
+      },
+      "majority": "DEFECT",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "2"
+     },
+     {
+      "item": "B46",
+      "true_id": "BSD-2-Clause-Views",
+      "corpus": "C1",
+      "reference": "LATENT",
+      "reference_label": "LATENT",
+      "votes": {
+       "w1": "LATENT",
+       "w3": "LATENT"
+      },
+      "tally": {
+       "LATENT": 2
+      },
+      "majority": "LATENT",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "5"
+     },
+     {
+      "item": "B47",
+      "true_id": "Mercury7353/EvoChamber@LICENSE",
+      "corpus": "C2",
+      "reference": "LATENT",
+      "reference_label": "LATENT",
+      "votes": {
+       "w1": "LATENT",
+       "w3": "LATENT"
+      },
+      "tally": {
+       "LATENT": 2
+      },
+      "majority": "LATENT",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "3"
+     },
+     {
+      "item": "B48",
+      "true_id": "OLDAP-1.1",
+      "corpus": "C1",
+      "reference": "MR-FALSE",
+      "reference_label": "MR-FALSE",
+      "votes": {
+       "w1": "MR-FALSE",
+       "w3": "MR-FALSE"
+      },
+      "tally": {
+       "MR-FALSE": 2
+      },
+      "majority": "MR-FALSE",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "10"
+     },
+     {
+      "item": "B49",
+      "true_id": "BSD-Inferno-Nettverk",
+      "corpus": "C1",
+      "reference": "LATENT",
+      "reference_label": "LATENT",
+      "votes": {
+       "w1": "DEFECT",
+       "w3": "DEFECT"
+      },
+      "tally": {
+       "DEFECT": 2
+      },
+      "majority": "DEFECT",
+      "majority_matches_reference": false,
+      "unanimous": true,
+      "unanimous_against_reference": true,
+      "class": "4"
+     }
+    ],
+    "n_cases": 45,
+    "majority_matches_reference": 44,
+    "majority_is_a_tie": 0,
+    "unanimous_against_reference": [
+     "B49"
+    ],
+    "per_worker_agreement_with_reference": {
+     "w1": {
+      "n": 45,
+      "agree": 44
+     },
+     "w3": {
+      "n": 45,
+      "agree": 44
+     }
+    },
+    "fleiss_kappa_items": 1.0,
+    "per_class": {
+     "3": {
+      "n_items": 6,
+      "reference": "LATENT",
+      "per_worker": {
+       "w1": "LATENT",
+       "w3": "LATENT"
+      },
+      "majority": "LATENT",
+      "matches_reference": true,
+      "unanimous_against_reference": false
+     },
+     "9": {
+      "n_items": 2,
+      "reference": "LATENT",
+      "per_worker": {
+       "w1": "LATENT",
+       "w3": "LATENT"
+      },
+      "majority": "LATENT",
+      "matches_reference": true,
+      "unanimous_against_reference": false
+     },
+     "10": {
+      "n_items": 6,
+      "reference": "MR-FALSE",
+      "per_worker": {
+       "w1": "MR-FALSE",
+       "w3": "MR-FALSE"
+      },
+      "majority": "MR-FALSE",
+      "matches_reference": true,
+      "unanimous_against_reference": false
+     },
+     "7": {
+      "n_items": 3,
+      "reference": "LATENT",
+      "per_worker": {
+       "w1": "LATENT",
+       "w3": "LATENT"
+      },
+      "majority": "LATENT",
+      "matches_reference": true,
+      "unanimous_against_reference": false
+     },
+     "2": {
+      "n_items": 6,
+      "reference": "DEFECT",
+      "per_worker": {
+       "w1": "DEFECT",
+       "w3": "DEFECT"
+      },
+      "majority": "DEFECT",
+      "matches_reference": true,
+      "unanimous_against_reference": false
+     },
+     "4": {
+      "n_items": 6,
+      "reference": "LATENT",
+      "per_worker": {
+       "w1": "LATENT",
+       "w3": "LATENT"
+      },
+      "majority": "LATENT",
+      "matches_reference": true,
+      "unanimous_against_reference": false
+     },
+     "8": {
+      "n_items": 1,
+      "reference": "LATENT",
+      "per_worker": {
+       "w1": "LATENT",
+       "w3": "LATENT"
+      },
+      "majority": "LATENT",
+      "matches_reference": true,
+      "unanimous_against_reference": false
+     },
+     "5": {
+      "n_items": 6,
+      "reference": "LATENT",
+      "per_worker": {
+       "w1": "LATENT",
+       "w3": "LATENT"
+      },
+      "majority": "LATENT",
+      "matches_reference": true,
+      "unanimous_against_reference": false
+     },
+     "1": {
+      "n_items": 6,
+      "reference": "DEFECT",
+      "per_worker": {
+       "w1": "DEFECT",
+       "w3": "DEFECT"
+      },
+      "majority": "DEFECT",
+      "matches_reference": true,
+      "unanimous_against_reference": false
+     },
+     "6": {
+      "n_items": 2,
+      "reference": "LATENT",
+      "per_worker": {
+       "w1": "LATENT",
+       "w3": "LATENT"
+      },
+      "majority": "LATENT",
+      "matches_reference": true,
+      "unanimous_against_reference": false
+     },
+     "9b": {
+      "n_items": 1,
+      "reference": "DEFECT",
+      "per_worker": {
+       "w1": "DEFECT",
+       "w3": "DEFECT"
+      },
+      "majority": "DEFECT",
+      "matches_reference": true,
+      "unanimous_against_reference": false
+     }
+    },
+    "n_classes": 11,
+    "classes_majority_matches_reference": 11,
+    "fleiss_kappa_classes": 1.0
+   },
+   "ALL": {
+    "workers": [
+     "w1",
+     "w2",
+     "w3",
+     "w4"
+    ],
+    "per_item": [
+     {
+      "item": "B01",
+      "true_id": "BSD-3-Clause-OpenWebUI",
+      "corpus": "C1",
+      "reference": "LATENT",
+      "reference_label": "LATENT",
+      "votes": {
+       "w1": "LATENT",
+       "w2": "LATENT",
+       "w3": "LATENT",
+       "w4": "LATENT"
+      },
+      "tally": {
+       "LATENT": 4
+      },
+      "majority": "LATENT",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "3"
+     },
+     {
+      "item": "B03",
+      "true_id": "BSD-3-Clause-Modification",
+      "corpus": "C1",
+      "reference": "LATENT",
+      "reference_label": "LATENT",
+      "votes": {
+       "w1": "LATENT",
+       "w2": "LATENT",
+       "w3": "LATENT",
+       "w4": "LATENT"
+      },
+      "tally": {
+       "LATENT": 4
+      },
+      "majority": "LATENT",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "9"
+     },
+     {
+      "item": "B04",
+      "true_id": "GPL-2.0-or-later",
+      "corpus": "C1",
+      "reference": "MR-FALSE",
+      "reference_label": "MR-FALSE",
+      "votes": {
+       "w1": "MR-FALSE",
+       "w2": "UNDECIDED",
+       "w3": "MR-FALSE",
+       "w4": "UNDECIDED"
+      },
+      "tally": {
+       "MR-FALSE": 2,
+       "UNDECIDED": 2
+      },
+      "majority": null,
+      "majority_matches_reference": null,
+      "unanimous": false,
+      "unanimous_against_reference": false,
+      "class": "10"
+     },
+     {
+      "item": "B05",
+      "true_id": "VSL-1.0",
+      "corpus": "C1",
+      "reference": "LATENT",
+      "reference_label": "LATENT",
+      "votes": {
+       "w1": "LATENT",
+       "w2": "LATENT",
+       "w3": "LATENT",
+       "w4": "LATENT"
+      },
+      "tally": {
+       "LATENT": 4
+      },
+      "majority": "LATENT",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "7"
+     },
+     {
+      "item": "B06",
+      "true_id": "0BSD",
+      "corpus": "C1",
+      "reference": "DEFECT",
+      "reference_label": "DEFECT",
+      "votes": {
+       "w1": "DEFECT",
+       "w2": "DEFECT",
+       "w3": "DEFECT",
+       "w4": "DEFECT"
+      },
+      "tally": {
+       "DEFECT": 4
+      },
+      "majority": "DEFECT",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "2"
+     },
+     {
+      "item": "B07",
+      "true_id": "Tencent/Tencent-XR-3DGen@geometry/neusdfusion_test/LICENSE",
+      "corpus": "C2",
+      "reference": "DEFECT",
+      "reference_label": "DEFECT",
+      "votes": {
+       "w1": "DEFECT",
+       "w2": "DEFECT",
+       "w3": "DEFECT",
+       "w4": "DEFECT"
+      },
+      "tally": {
+       "DEFECT": 4
+      },
+      "majority": "DEFECT",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "2"
+     },
+     {
+      "item": "B08",
+      "true_id": "openai/preparedness@project/swelancer/LICENSE.md",
+      "corpus": "C2",
+      "reference": "LATENT",
+      "reference_label": "LATENT",
+      "votes": {
+       "w1": "LATENT",
+       "w2": "LATENT",
+       "w3": "LATENT",
+       "w4": "LATENT"
+      },
+      "tally": {
+       "LATENT": 4
+      },
+      "majority": "LATENT",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "4"
+     },
+     {
+      "item": "B09",
+      "true_id": "MAXNORM8650/papercircle@LICENSE",
+      "corpus": "C2",
+      "reference": "LATENT",
+      "reference_label": "LATENT",
+      "votes": {
+       "w1": "LATENT",
+       "w2": "LATENT",
+       "w3": "LATENT",
+       "w4": "LATENT"
+      },
+      "tally": {
+       "LATENT": 4
+      },
+      "majority": "LATENT",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "3"
+     },
+     {
+      "item": "B10",
+      "true_id": "Sendmail",
+      "corpus": "C1",
+      "reference": "LATENT",
+      "reference_label": "LATENT",
+      "votes": {
+       "w1": "LATENT",
+       "w2": "LATENT",
+       "w3": "LATENT",
+       "w4": "LATENT"
+      },
+      "tally": {
+       "LATENT": 4
+      },
+      "majority": "LATENT",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "3"
+     },
+     {
+      "item": "B11",
+      "true_id": "Tencent/Tencent-XR-3DGen@LICENSE",
+      "corpus": "C2",
+      "reference": "LATENT",
+      "reference_label": "LATENT",
+      "votes": {
+       "w1": "LATENT",
+       "w2": "LATENT",
+       "w3": "LATENT",
+       "w4": "LATENT"
+      },
+      "tally": {
+       "LATENT": 4
+      },
+      "majority": "LATENT",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "8"
+     },
+     {
+      "item": "B12",
+      "true_id": "openai/preparedness@LICENSE.md",
+      "corpus": "C2",
+      "reference": "LATENT",
+      "reference_label": "LATENT",
+      "votes": {
+       "w1": "LATENT",
+       "w2": "LATENT",
+       "w3": "LATENT",
+       "w4": "LATENT"
+      },
+      "tally": {
+       "LATENT": 4
+      },
+      "majority": "LATENT",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "4"
+     },
+     {
+      "item": "B13",
+      "true_id": "BSD-2-Clause-pos-unchanged",
+      "corpus": "C1",
+      "reference": "LATENT",
+      "reference_label": "LATENT",
+      "votes": {
+       "w1": "LATENT",
+       "w2": "LATENT",
+       "w3": "LATENT",
+       "w4": "LATENT"
+      },
+      "tally": {
+       "LATENT": 4
+      },
+      "majority": "LATENT",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "5"
+     },
+     {
+      "item": "B14",
+      "true_id": "CryptoSwift",
+      "corpus": "C1",
+      "reference": "DEFECT",
+      "reference_label": "DEFECT",
+      "votes": {
+       "w1": "DEFECT",
+       "w2": "DEFECT",
+       "w3": "DEFECT",
+       "w4": "DEFECT"
+      },
+      "tally": {
+       "DEFECT": 4
+      },
+      "majority": "DEFECT",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "1"
+     },
+     {
+      "item": "B15",
+      "true_id": "Entessa",
+      "corpus": "C1",
+      "reference": "LATENT",
+      "reference_label": "LATENT",
+      "votes": {
+       "w1": "LATENT",
+       "w2": "LATENT",
+       "w3": "LATENT",
+       "w4": "LATENT"
+      },
+      "tally": {
+       "LATENT": 4
+      },
+      "majority": "LATENT",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "7"
+     },
+     {
+      "item": "B16",
+      "true_id": "CC-BY-2.5",
+      "corpus": "C1",
+      "reference": "MR-FALSE",
+      "reference_label": "MR-FALSE",
+      "votes": {
+       "w1": "MR-FALSE",
+       "w2": "UNDECIDED",
+       "w3": "MR-FALSE",
+       "w4": "UNDECIDED"
+      },
+      "tally": {
+       "MR-FALSE": 2,
+       "UNDECIDED": 2
+      },
+      "majority": null,
+      "majority_matches_reference": null,
+      "unanimous": false,
+      "unanimous_against_reference": false,
+      "class": "10"
+     },
+     {
+      "item": "B17",
+      "true_id": "AI-in-Health/BioMedArena@LICENSE",
+      "corpus": "C2",
+      "reference": "LATENT",
+      "reference_label": "LATENT",
+      "votes": {
+       "w1": "LATENT",
+       "w2": "LATENT",
+       "w3": "LATENT",
+       "w4": "LATENT"
+      },
+      "tally": {
+       "LATENT": 4
+      },
+      "majority": "LATENT",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "4"
+     },
+     {
+      "item": "B18",
+      "true_id": "XFree86-1.1",
+      "corpus": "C1",
+      "reference": "DEFECT",
+      "reference_label": "DEFECT",
+      "votes": {
+       "w1": "DEFECT",
+       "w2": "DEFECT",
+       "w3": "DEFECT",
+       "w4": "DEFECT"
+      },
+      "tally": {
+       "DEFECT": 4
+      },
+      "majority": "DEFECT",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "2"
+     },
+     {
+      "item": "B19",
+      "true_id": "BSD-2-Clause",
+      "corpus": "C1",
+      "reference": "LATENT",
+      "reference_label": "LATENT",
+      "votes": {
+       "w1": "LATENT",
+       "w2": "LATENT",
+       "w3": "LATENT",
+       "w4": "LATENT"
+      },
+      "tally": {
+       "LATENT": 4
+      },
+      "majority": "LATENT",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "5"
+     },
+     {
+      "item": "B20",
+      "true_id": "Zend-2.0",
+      "corpus": "C1",
+      "reference": "MR-FALSE",
+      "reference_label": "MR-FALSE",
+      "votes": {
+       "w1": "MR-FALSE",
+       "w2": "UNDECIDED",
+       "w3": "MR-FALSE",
+       "w4": "UNDECIDED"
+      },
+      "tally": {
+       "MR-FALSE": 2,
+       "UNDECIDED": 2
+      },
+      "majority": null,
+      "majority_matches_reference": null,
+      "unanimous": false,
+      "unanimous_against_reference": false,
+      "class": "10"
+     },
+     {
+      "item": "B21",
+      "true_id": "Caldera",
+      "corpus": "C1",
+      "reference": "DEFECT",
+      "reference_label": "DEFECT",
+      "votes": {
+       "w1": "DEFECT",
+       "w2": "DEFECT",
+       "w3": "DEFECT",
+       "w4": "DEFECT"
+      },
+      "tally": {
+       "DEFECT": 4
+      },
+      "majority": "DEFECT",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "1"
+     },
+     {
+      "item": "B22",
+      "true_id": "raja21068/AutoResearch@LICENSE",
+      "corpus": "C2",
+      "reference": "LATENT",
+      "reference_label": "LATENT",
+      "votes": {
+       "w1": "LATENT",
+       "w2": "LATENT",
+       "w3": "LATENT",
+       "w4": "LATENT"
+      },
+      "tally": {
+       "LATENT": 4
+      },
+      "majority": "LATENT",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "4"
+     },
+     {
+      "item": "B23",
+      "true_id": "MIT",
+      "corpus": "C1",
+      "reference": "LATENT",
+      "reference_label": "LATENT",
+      "votes": {
+       "w1": "LATENT",
+       "w2": "LATENT",
+       "w3": "LATENT",
+       "w4": "LATENT"
+      },
+      "tally": {
+       "LATENT": 4
+      },
+      "majority": "LATENT",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "5"
+     },
+     {
+      "item": "B24",
+      "true_id": "Sendmail-8.23",
+      "corpus": "C1",
+      "reference": "LATENT",
+      "reference_label": "LATENT",
+      "votes": {
+       "w1": "LATENT",
+       "w2": "LATENT",
+       "w3": "LATENT",
+       "w4": "LATENT"
+      },
+      "tally": {
+       "LATENT": 4
+      },
+      "majority": "LATENT",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "6"
+     },
+     {
+      "item": "B27",
+      "true_id": "ZIB-IOL/The-Agentic-Researcher@LICENSE",
+      "corpus": "C2",
+      "reference": "LATENT",
+      "reference_label": "LATENT",
+      "votes": {
+       "w1": "LATENT",
+       "w2": "LATENT",
+       "w3": "LATENT",
+       "w4": "LATENT"
+      },
+      "tally": {
+       "LATENT": 4
+      },
+      "majority": "LATENT",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "3"
+     },
+     {
+      "item": "B28",
+      "true_id": "Sendmail",
+      "corpus": "C1",
+      "reference": "LATENT",
+      "reference_label": "LATENT",
+      "votes": {
+       "w1": "LATENT",
+       "w2": "LATENT",
+       "w3": "LATENT",
+       "w4": "LATENT"
+      },
+      "tally": {
+       "LATENT": 4
+      },
+      "majority": "LATENT",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "6"
+     },
+     {
+      "item": "B30",
+      "true_id": "X11",
+      "corpus": "C1",
+      "reference": "DEFECT",
+      "reference_label": "DEFECT",
+      "votes": {
+       "w1": "DEFECT",
+       "w2": "DEFECT",
+       "w3": "DEFECT",
+       "w4": "DEFECT"
+      },
+      "tally": {
+       "DEFECT": 4
+      },
+      "majority": "DEFECT",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "1"
+     },
+     {
+      "item": "B31",
+      "true_id": "Cube",
+      "corpus": "C1",
+      "reference": "DEFECT",
+      "reference_label": "DEFECT",
+      "votes": {
+       "w1": "DEFECT",
+       "w2": "DEFECT",
+       "w3": "DEFECT",
+       "w4": "DEFECT"
+      },
+      "tally": {
+       "DEFECT": 4
+      },
+      "majority": "DEFECT",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "1"
+     },
+     {
+      "item": "B32",
+      "true_id": "ZPL-2.1",
+      "corpus": "C1",
+      "reference": "LATENT",
+      "reference_label": "LATENT",
+      "votes": {
+       "w1": "LATENT",
+       "w2": "LATENT",
+       "w3": "LATENT",
+       "w4": "LATENT"
+      },
+      "tally": {
+       "LATENT": 4
+      },
+      "majority": "LATENT",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "9"
+     },
+     {
+      "item": "B33",
+      "true_id": "Ubuntu-font-1.0",
+      "corpus": "C1",
+      "reference": "MR-FALSE",
+      "reference_label": "MR-FALSE",
+      "votes": {
+       "w1": "MR-FALSE",
+       "w2": "UNDECIDED",
+       "w3": "MR-FALSE",
+       "w4": "UNDECIDED"
+      },
+      "tally": {
+       "MR-FALSE": 2,
+       "UNDECIDED": 2
+      },
+      "majority": null,
+      "majority_matches_reference": null,
+      "unanimous": false,
+      "unanimous_against_reference": false,
+      "class": "10"
+     },
+     {
+      "item": "B34",
+      "true_id": "Saxpath",
+      "corpus": "C1",
+      "reference": "DEFECT",
+      "reference_label": "DEFECT",
+      "votes": {
+       "w1": "DEFECT",
+       "w2": "DEFECT",
+       "w3": "DEFECT",
+       "w4": "DEFECT"
+      },
+      "tally": {
+       "DEFECT": 4
+      },
+      "majority": "DEFECT",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "2"
+     },
+     {
+      "item": "B35",
+      "true_id": "xpp",
+      "corpus": "C1",
+      "reference": "LATENT",
+      "reference_label": "LATENT",
+      "votes": {
+       "w1": "LATENT",
+       "w2": "LATENT",
+       "w3": "LATENT",
+       "w4": "LATENT"
+      },
+      "tally": {
+       "LATENT": 4
+      },
+      "majority": "LATENT",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "3"
+     },
+     {
+      "item": "B36",
+      "true_id": "Tencent/CognitiveKernel-Pro@LICENSE.txt",
+      "corpus": "C2",
+      "reference": "LATENT",
+      "reference_label": "LATENT",
+      "votes": {
+       "w1": "LATENT",
+       "w2": "LATENT",
+       "w3": "LATENT",
+       "w4": "LATENT"
+      },
+      "tally": {
+       "LATENT": 4
+      },
+      "majority": "LATENT",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "7"
+     },
+     {
+      "item": "B37",
+      "true_id": "BSD-4-Clause",
+      "corpus": "C1",
+      "reference": "LATENT",
+      "reference_label": "LATENT",
+      "votes": {
+       "w1": "LATENT",
+       "w2": "LATENT",
+       "w3": "LATENT",
+       "w4": "LATENT"
+      },
+      "tally": {
+       "LATENT": 4
+      },
+      "majority": "LATENT",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "5"
+     },
+     {
+      "item": "B38",
+      "true_id": "DocBook-XML",
+      "corpus": "C1",
+      "reference": "DEFECT",
+      "reference_label": "DEFECT",
+      "votes": {
+       "w1": "DEFECT",
+       "w2": "DEFECT",
+       "w3": "DEFECT",
+       "w4": "DEFECT"
+      },
+      "tally": {
+       "DEFECT": 4
+      },
+      "majority": "DEFECT",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "9b"
+     },
+     {
+      "item": "B39",
+      "true_id": "Artistic-2.0",
+      "corpus": "C1",
+      "reference": "MR-FALSE",
+      "reference_label": "MR-FALSE",
+      "votes": {
+       "w1": "MR-FALSE",
+       "w2": "UNDECIDED",
+       "w3": "MR-FALSE",
+       "w4": "UNDECIDED"
+      },
+      "tally": {
+       "MR-FALSE": 2,
+       "UNDECIDED": 2
+      },
+      "majority": null,
+      "majority_matches_reference": null,
+      "unanimous": false,
+      "unanimous_against_reference": false,
+      "class": "10"
+     },
+     {
+      "item": "B40",
+      "true_id": "XFree86-1.1",
+      "corpus": "C1",
+      "reference": "DEFECT",
+      "reference_label": "DEFECT",
+      "votes": {
+       "w1": "DEFECT",
+       "w2": "DEFECT",
+       "w3": "DEFECT",
+       "w4": "DEFECT"
+      },
+      "tally": {
+       "DEFECT": 4
+      },
+      "majority": "DEFECT",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "1"
+     },
+     {
+      "item": "B41",
+      "true_id": "NCSA",
+      "corpus": "C1",
+      "reference": "LATENT",
+      "reference_label": "LATENT",
+      "votes": {
+       "w1": "LATENT",
+       "w2": "LATENT",
+       "w3": "LATENT",
+       "w4": "LATENT"
+      },
+      "tally": {
+       "LATENT": 4
+      },
+      "majority": "LATENT",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "5"
+     },
+     {
+      "item": "B42",
+      "true_id": "Ewendawi/LLaMEA-BO@LICENSE",
+      "corpus": "C2",
+      "reference": "LATENT",
+      "reference_label": "LATENT",
+      "votes": {
+       "w1": "LATENT",
+       "w2": "LATENT",
+       "w3": "LATENT",
+       "w4": "LATENT"
+      },
+      "tally": {
+       "LATENT": 4
+      },
+      "majority": "LATENT",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "4"
+     },
+     {
+      "item": "B43",
+      "true_id": "MIT-advertising",
+      "corpus": "C1",
+      "reference": "DEFECT",
+      "reference_label": "DEFECT",
+      "votes": {
+       "w1": "DEFECT",
+       "w2": "DEFECT",
+       "w3": "DEFECT",
+       "w4": "DEFECT"
+      },
+      "tally": {
+       "DEFECT": 4
+      },
+      "majority": "DEFECT",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "2"
+     },
+     {
+      "item": "B44",
+      "true_id": "Saxpath",
+      "corpus": "C1",
+      "reference": "DEFECT",
+      "reference_label": "DEFECT",
+      "votes": {
+       "w1": "DEFECT",
+       "w2": "DEFECT",
+       "w3": "DEFECT",
+       "w4": "DEFECT"
+      },
+      "tally": {
+       "DEFECT": 4
+      },
+      "majority": "DEFECT",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "1"
+     },
+     {
+      "item": "B45",
+      "true_id": "Caldera",
+      "corpus": "C1",
+      "reference": "DEFECT",
+      "reference_label": "DEFECT",
+      "votes": {
+       "w1": "DEFECT",
+       "w2": "DEFECT",
+       "w3": "DEFECT",
+       "w4": "DEFECT"
+      },
+      "tally": {
+       "DEFECT": 4
+      },
+      "majority": "DEFECT",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "2"
+     },
+     {
+      "item": "B46",
+      "true_id": "BSD-2-Clause-Views",
+      "corpus": "C1",
+      "reference": "LATENT",
+      "reference_label": "LATENT",
+      "votes": {
+       "w1": "LATENT",
+       "w2": "LATENT",
+       "w3": "LATENT",
+       "w4": "LATENT"
+      },
+      "tally": {
+       "LATENT": 4
+      },
+      "majority": "LATENT",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "5"
+     },
+     {
+      "item": "B47",
+      "true_id": "Mercury7353/EvoChamber@LICENSE",
+      "corpus": "C2",
+      "reference": "LATENT",
+      "reference_label": "LATENT",
+      "votes": {
+       "w1": "LATENT",
+       "w2": "LATENT",
+       "w3": "LATENT",
+       "w4": "LATENT"
+      },
+      "tally": {
+       "LATENT": 4
+      },
+      "majority": "LATENT",
+      "majority_matches_reference": true,
+      "unanimous": true,
+      "unanimous_against_reference": false,
+      "class": "3"
+     },
+     {
+      "item": "B48",
+      "true_id": "OLDAP-1.1",
+      "corpus": "C1",
+      "reference": "MR-FALSE",
+      "reference_label": "MR-FALSE",
+      "votes": {
+       "w1": "MR-FALSE",
+       "w2": "UNDECIDED",
+       "w3": "MR-FALSE",
+       "w4": "UNDECIDED"
+      },
+      "tally": {
+       "MR-FALSE": 2,
+       "UNDECIDED": 2
+      },
+      "majority": null,
+      "majority_matches_reference": null,
+      "unanimous": false,
+      "unanimous_against_reference": false,
+      "class": "10"
+     },
+     {
+      "item": "B49",
+      "true_id": "BSD-Inferno-Nettverk",
+      "corpus": "C1",
+      "reference": "LATENT",
+      "reference_label": "LATENT",
+      "votes": {
+       "w1": "DEFECT",
+       "w2": "DEFECT",
+       "w3": "DEFECT",
+       "w4": "DEFECT"
+      },
+      "tally": {
+       "DEFECT": 4
+      },
+      "majority": "DEFECT",
+      "majority_matches_reference": false,
+      "unanimous": true,
+      "unanimous_against_reference": true,
+      "class": "4"
+     }
+    ],
+    "n_cases": 45,
+    "majority_matches_reference": 38,
+    "majority_is_a_tie": 6,
+    "unanimous_against_reference": [
+     "B49"
+    ],
+    "per_worker_agreement_with_reference": {
+     "w1": {
+      "n": 45,
+      "agree": 44
+     },
+     "w2": {
+      "n": 45,
+      "agree": 38
+     },
+     "w3": {
+      "n": 45,
+      "agree": 44
+     },
+     "w4": {
+      "n": 45,
+      "agree": 38
+     }
+    },
+    "fleiss_kappa_items": 0.8482293423271502,
+    "per_class": {
+     "3": {
+      "n_items": 6,
+      "reference": "LATENT",
+      "per_worker": {
+       "w1": "LATENT",
+       "w2": "LATENT",
+       "w3": "LATENT",
+       "w4": "LATENT"
+      },
+      "majority": "LATENT",
+      "matches_reference": true,
+      "unanimous_against_reference": false
+     },
+     "9": {
+      "n_items": 2,
+      "reference": "LATENT",
+      "per_worker": {
+       "w1": "LATENT",
+       "w2": "LATENT",
+       "w3": "LATENT",
+       "w4": "LATENT"
+      },
+      "majority": "LATENT",
+      "matches_reference": true,
+      "unanimous_against_reference": false
+     },
+     "10": {
+      "n_items": 6,
+      "reference": "MR-FALSE",
+      "per_worker": {
+       "w1": "MR-FALSE",
+       "w2": "UNDECIDED",
+       "w3": "MR-FALSE",
+       "w4": "UNDECIDED"
+      },
+      "majority": null,
+      "matches_reference": false,
+      "unanimous_against_reference": false
+     },
+     "7": {
+      "n_items": 3,
+      "reference": "LATENT",
+      "per_worker": {
+       "w1": "LATENT",
+       "w2": "LATENT",
+       "w3": "LATENT",
+       "w4": "LATENT"
+      },
+      "majority": "LATENT",
+      "matches_reference": true,
+      "unanimous_against_reference": false
+     },
+     "2": {
+      "n_items": 6,
+      "reference": "DEFECT",
+      "per_worker": {
+       "w1": "DEFECT",
+       "w2": "DEFECT",
+       "w3": "DEFECT",
+       "w4": "DEFECT"
+      },
+      "majority": "DEFECT",
+      "matches_reference": true,
+      "unanimous_against_reference": false
+     },
+     "4": {
+      "n_items": 6,
+      "reference": "LATENT",
+      "per_worker": {
+       "w1": "LATENT",
+       "w2": "LATENT",
+       "w3": "LATENT",
+       "w4": "LATENT"
+      },
+      "majority": "LATENT",
+      "matches_reference": true,
+      "unanimous_against_reference": false
+     },
+     "8": {
+      "n_items": 1,
+      "reference": "LATENT",
+      "per_worker": {
+       "w1": "LATENT",
+       "w2": "LATENT",
+       "w3": "LATENT",
+       "w4": "LATENT"
+      },
+      "majority": "LATENT",
+      "matches_reference": true,
+      "unanimous_against_reference": false
+     },
+     "5": {
+      "n_items": 6,
+      "reference": "LATENT",
+      "per_worker": {
+       "w1": "LATENT",
+       "w2": "LATENT",
+       "w3": "LATENT",
+       "w4": "LATENT"
+      },
+      "majority": "LATENT",
+      "matches_reference": true,
+      "unanimous_against_reference": false
+     },
+     "1": {
+      "n_items": 6,
+      "reference": "DEFECT",
+      "per_worker": {
+       "w1": "DEFECT",
+       "w2": "DEFECT",
+       "w3": "DEFECT",
+       "w4": "DEFECT"
+      },
+      "majority": "DEFECT",
+      "matches_reference": true,
+      "unanimous_against_reference": false
+     },
+     "6": {
+      "n_items": 2,
+      "reference": "LATENT",
+      "per_worker": {
+       "w1": "LATENT",
+       "w2": "LATENT",
+       "w3": "LATENT",
+       "w4": "LATENT"
+      },
+      "majority": "LATENT",
+      "matches_reference": true,
+      "unanimous_against_reference": false
+     },
+     "9b": {
+      "n_items": 1,
+      "reference": "DEFECT",
+      "per_worker": {
+       "w1": "DEFECT",
+       "w2": "DEFECT",
+       "w3": "DEFECT",
+       "w4": "DEFECT"
+      },
+      "majority": "DEFECT",
+      "matches_reference": true,
+      "unanimous_against_reference": false
+     }
+    },
+    "n_classes": 11,
+    "classes_majority_matches_reference": 10,
+    "fleiss_kappa_classes": 0.8826666666666668
+   }
+  }
+ },
+ "k5_reference_digests": {
+  "artifacts/2026-09-19-the-second-hand/data/adjudication.json": "49aed0f76040a05f958290457517b0770cf90f9243297476c932eb872bc40fcf",
+  "artifacts/2026-09-19-the-second-hand/data/verdicts.json": "019c0552e63b28f0be9a65ad0c7a43f171e01640a49def4bd91d4673f179ff4a",
+  "artifacts/2026-09-20-the-same-text-twice/data/adjudication.json": "b81f05def9e401f37361aed223659b18e950b158b8ec91e0eed06f5523426a99",
+  "artifacts/2026-09-20-the-same-text-twice/data/violations.json": "49ea731a5ff4ab58cd9c820174ff6c88ebe595ee44d722d236220a7db54ab9b6",
+  "artifacts/2026-09-20-the-same-text-twice/data/verdicts.json": "f2f754696914fc2cebcb34146c5410b3acef9d77d82caf5792f7d230b8b0e432",
+  "tools/is-it-a-licence/rules.py": "ccb373b6edb1e4397d7ac145aca6ff94e995934c9315b1ccc23eb266a288a2ed",
+  "tools/is-it-a-licence/fingerprints.py": "57db4c561a58683d81fb35be3781168a419785183215a864ed5694981b6669cd"
+ },
+ "predictions": [
+  {
+   "n": 1,
+   "prediction": "Arm A: the majority of the four workers matches the committed verdict on at least 8 of 11 cases.",
+   "verdict": "CONFIRMED",
+   "detail": "10 of 11 under the all-workers reading; 10 of 11 under K3."
+  },
+  {
+   "n": 2,
+   "prediction": "Arm A: on the 4 cases where this practice acquitted its own rule against four unanimous independent implementations, the majority sides with the shipped rule on at least 3 of 4.",
+   "verdict": "CONFIRMED",
+   "detail": "4 of 4."
+  },
+  {
+   "n": 3,
+   "prediction": "Arm B: the majority category matches the committed class label on at least 7 of 10 classes.",
+   "verdict": "CONFIRMED",
+   "detail": "10 of 11 under the all-workers reading; 11 of 11 under K3."
+  },
+  {
+   "n": 4,
+   "prediction": "Arm B: all four workers label class 10 - the 967 violations that were this practice's own bad test - as MR-FALSE.",
+   "verdict": "REFUTED",
+   "detail": "per-worker majorities on class 10: {'w1': 'MR-FALSE', 'w2': 'UNDECIDED', 'w3': 'MR-FALSE', 'w4': 'UNDECIDED'}. Read on the workers that delivered. The payload showed decision fields only, and class 10's decision fields are identical before and after, so these items reached a worker as 'nothing changed' - the same thing the arm's own sentinels showed. See the artifact."
+  },
+  {
+   "n": 5,
+   "prediction": "At least one committed verdict or class label is contradicted by all four workers (read on the workers that delivered).",
+   "verdict": "CONFIRMED",
+   "detail": "unanimous-against-us items: ['B49']"
+  },
+  {
+   "n": 6,
+   "prediction": "Fleiss' kappa among the workers is at least 0.60 in both arms, computed on the non-sentinel items.",
+   "verdict": "CONFIRMED",
+   "detail": "arm A kappa = 0.8909090909090909, arm B kappa = 0.8482293423271502 (all-workers reading)"
+  }
+ ],
+ "predictions_confirmed": 5,
+ "predictions_refuted": 1,
+ "cost": {
+  "this_session": {
+   "workers_dispatched": 10,
+   "items_put_in_front_of_a_worker": 64,
+   "judgements_collected": 286,
+   "arguments_this_practice_read_itself": 2,
+   "what_this_practice_read_itself": "The one case the blind readers convicted us on, and the licence text behind it. Everything else was read by a dispatched worker.",
+   "workers_delivered": 10
+  },
+  "2026-09-19": {
+   "workers_dispatched": 4,
+   "internal_disagreements": 127,
+   "unanimous_convictions": 11,
+   "arguments_this_practice_read_itself": 127
+  },
+  "2026-09-20": {
+   "workers_dispatched": 0,
+   "decision_changing_violations": 167,
+   "classes": 10,
+   "arguments_this_practice_read_itself": 10
+  }
+ },
+ "workers": {
+  "dispatched": 10,
+  "delivered": 10,
+  "arm_A": {
+   "dispatched": 6,
+   "delivered": 6,
+   "note": "Four, then two replacements after K3 voided two of the first four."
+  },
+  "arm_B": {
+   "dispatched": 4,
+   "delivered": 4,
+   "note": "Four dispatched, four delivered; the fourth returned after about twenty-two minutes."
+  }
+ },
+ "headline": {
+  "arm_A_majority_matches_of_11": 10,
+  "arm_B_class_entries_matched_of_11": 10,
+  "arm_B_items_matched_of_45": 38,
+  "convictions_of_our_reading": 1,
+  "workers_delivered": 10,
+  "judgements_collected": 286,
+  "person_occurrences_in_the_two_artifacts": 14,
+  "bad_tests_set_tonight": 3
+ },
+ "the_K3_selection_effect": {
+  "what": "Arm B's K3 reading keeps only the two workers that passed the sentinels. Those are exactly the two that voted with this practice on the one class where the four split. So the K3 reading returns 44 of 45 items, 11 of 11 classes and Fleiss' kappa = 1.0.",
+  "reading": "That kappa is manufactured by the kill condition, not found by the experiment. A perfect agreement produced by discarding the workers who disagreed is not evidence of anything, and it is reported here only so that nobody can quote it without this sentence.",
+  "which_number_this_artifact_stands_behind": "The all-workers reading: 38 of 45 items, 10 of 11 class entries, kappa 0.85."
+ },
+ "findings": {
+  "defect_6": {
+   "what": "A copyright notice whose holder sits on a later physical line than the word `copyright` is read as `no_holder`. SPDX BSD-Inferno-Nettverk carries its years over four lines and the holder on the fourth.",
+   "quoted_line": "Inferno Nettverk A/S, Norway.  All rights reserved.",
+   "how_it_was_found": "Item B49. All three arm-B workers that delivered called it DEFECT against this practice's committed LATENT. The reading was then checked first-hand against the licence text.",
+   "what_it_convicts": "Not the rule alone - the 2026-09-20 adjudication. The evidence was already in that session's data and this practice read it as a latent risk rather than a present error.",
+   "does_it_move_a_published_number": "No, and this was checked rather than assumed. All five real licence files scored `no_holder` carry a bare year and no holder at all (`Copyright (c) 2025` and the like), so `no_holder` is right for every one of them. The defect is demonstrated on the canonical corpus only.",
+   "not_found_by": [
+    "100 fixtures",
+    "27 mutations",
+    "four independent reimplementations (2026-09-19)",
+    "eight metamorphic relations (2026-09-20) - which DID reach the input, and whose finding this practice then mislabelled"
+   ]
+  },
+  "bad_tests_set_tonight": [
+   {
+    "n": 8,
+    "what": "K4, the leakage check: forbidden strings that the evidence itself must contain. Caught before dispatch; Amendment 1."
+   },
+   {
+    "n": 9,
+    "what": "The arm-A sentinel: both candidate verdicts asserted the same licence family and differed only on the holder question, so a worker disputing the shared half could answer `neither` - which the instructions expressly allowed. Three of six workers did, and K3 voided all three."
+   },
+   {
+    "n": 10,
+    "what": "The arm-B payload and its sentinel: the payload showed decision fields only, and both the sentinels and class 10 have identical decision fields before and after. The control and the live item reached every worker as the same item - 'nothing changed'. The consequence is exact and mechanical: the two workers that passed all four sentinels are the two that called class 10 MR-FALSE, and the two that missed all four are the two that called class 10 UNDECIDED. Sentinel performance predicts the class-10 vote perfectly, because they are the same judgement. The sentinel had no discriminating power at all, and K3 therefore selects the workers who already agree with this practice."
+   }
+  ],
+  "the_undecidable_case": {
+   "item": "A10",
+   "true_id": "InnoSetup",
+   "our_label": "specification does not decide",
+   "votes": "three workers for one verdict, three for the other, none for `neither`",
+   "reading": "No worker reached this practice's answer, and the six split exactly down the middle on it. A dead heat is not agreement with `undecided`, and it is not disagreement either."
+  }
+ },
+ "K3_as_written": {
+  "text": "PREREGISTRATION.md section 9: a worker missing any sentinel is void, replaced once, recorded; if the replacement also misses one, the arm is reported as FAILED rather than scored.",
+  "arm_A": "Two of the first four missed two sentinels each. Two replacements were dispatched; one of them missed the same two. By the letter of K3, arm A is REPORTED AS FAILED.",
+  "arm_B": "Two of the four missed all four sentinels. By the letter of K3, arm B is REPORTED AS FAILED.",
+  "why_the_numbers_are_still_given": "Because the sentinels are what broke, not the workers, and this practice does not delete a measurement it dislikes. Every sentinel record, every missed item and every worker's own reason is committed here in full; both arms are scored over all workers, and the K3 reading is given beside them. A reader who holds this practice to the letter of its own kill condition should read both arms as failed and stop at the sentinel finding - which is itself a result.",
+  "and_the_K3_reading_is_worse_than_useless_in_arm_B": "See the_K3_selection_effect."
+ },
+ "page_claims": [
+  "<div class=\"lab\">Workers dispatched</div><div class=\"big\">10</div>",
+  "<div class=\"lab\">Judgements collected</div><div class=\"big\">286</div>",
+  "<div class=\"lab\">Arguments this practice read itself</div><div class=\"big\">2</div>",
+  "<tr><td>Arm A: majority matches our committed verdict</td><td class=\"n\"><b>10</b> of 11</td></tr>",
+  "<tr><td>Arm B: majority matches our committed class label</td><td class=\"n\"><b>10</b> of 11 entries</td></tr>",
+  "<tr><td>Arm B, at item level</td><td class=\"n\"><b>38</b> of 45</td></tr>",
+  "<tr><td>Fleiss&rsquo; &kappa; among workers &mdash; arm A</td><td class=\"n\">0.89</td></tr>",
+  "<tr><td>Fleiss&rsquo; &kappa; among workers &mdash; arm B</td><td class=\"n\">0.85</td></tr>",
+  "<tr><td>Cases where every worker contradicts us</td><td class=\"n\"><b>1</b></td></tr>",
+  "<tr><td>Predictions confirmed / refuted</td><td class=\"n\">5 / 1</td></tr>",
+  "<tr><td>Bad tests this session set</td><td class=\"n\"><b>3</b></td></tr>",
+  "<b>44 of 45 items, 11 of 11 classes, &kappa; = 1.0</b>",
+  "appears <b>14</b> times, on 13 lines",
+  "<b>740 of 740</b> canonical texts and <b>156 of 156</b> real files"
+ ],
+ "summary_claims": [
+  "| Arm A: majority matches our committed verdict | **10 of 11** |",
+  "| Arm B: majority matches our committed class label | **10 of 11 class entries**, 38 of 45 items |",
+  "| Fleiss' κ among workers, arm A / arm B | **0.89** / **0.85** |",
+  "| Cases where all workers contradict us | **1** |",
+  "| Predictions confirmed / refuted | **5 / 1** |",
+  "| Bad tests this session set | **3** |",
+  "**14 times on 13 lines**",
+  "**286 judgements came back.**",
+  "**44 of 45, 11 of 11, κ = 1.0**",
+  "**740 of 740** canonical texts and **156 of 156** real files"
+ ]
+}
