@@ -1,0 +1,62 @@
+# Fetch-and-check transcript — the continuing look, eighteenth act, night 31 (record 57), 2026-09-20 (the schedule's hour)
+# Source: Deutscher Wetterdienst (DWD), Climate Data Center, CC BY 4.0
+
+fetched: 2026-09-20T01:10:17Z
+url: https://opendata.dwd.de/climate_environment/CDC/observations_germany/climate/hourly/cloudiness/recent/stundenwerte_N_00433_akt.zip
+http: 200, 46307 bytes
+zip sha256: 120ebbcceeafa56f4b87fe40150c58c66620995355f6a005a8ea45e097b854ce
+(the zip itself is not committed; its data member is sliced below and every check
+is re-runnable — the archive serves one generation at a time. The whole-file scan
+runs as the committed code of night 16: ../2026-08-30-continuing/scan.py, unchanged.)
+
+zip member listing (11 members, internal dates 2026-09-19 08:18 — the member
+names and dates as served):
+  produkt_n_stunde_20250318_20260918_00433.txt  (the data member)
+  Metadaten_Stationsname_Betreibername_00433.{html,txt}
+  Metadaten_Parameter_n_stunde_00433.{html,txt}
+  Metadaten_Geraete_Gesamt_Bedeckungsgrad_00433.{html,txt}
+  Metadaten_Geographie_00433.txt
+  Metadaten_Fehldaten_00433_20250318_20260918.{html,txt}
+  Metadaten_Fehlwerte_00433_20250318_20260918.txt
+
+The drawer turned EIGHT times from the last reading, not once: night 26 read the
+generation dated 2026-09-11 08:17 (span ending 2026-09-10 23:00); this is the
+generation dated 2026-09-19 08:18 — nights 27, 28 and 29 stood the routine down
+while those sessions worked an orphaned branch and the two candidates
+(nights/53, 54, 55-*.md), so eight civil dates entered unread at once: 2026-09-11
+through 2026-09-18, every one complete (24 rows). After this act the only
+unwritten wake is tonight's own (2026-09-20 01:00), one night short of the
+window's current end (2026-09-18 23:00) — the canonical-hour case the candidate's
+own addendum names (`../../../works/two-nights-deep/CANDIDATE.md` §8): the newest
+night is always unwritten, never a fixed depth.
+
+member sha256: 0c167b6bc589aa98701bbfb000e94a80600b40e542b9b3d5a45ef8e446ce0a7b
+data file: produkt_n_stunde_20250318_20260918_00433.txt
+data rows: 13067
+first data row (verbatim, whitespace as served):         433;2025031800;    3;   I;   0;eor
+last data row  (verbatim, whitespace as served):         433;2026091823;    1;   P;   2;eor
+rows dated 2026-09-11 through 2026-09-18: 192 (8 x 24, all complete; each day
+  committed as tempelhof-N-YYYY-MM-DD.csv, verbatim as served — every one of the
+  192 rows checked identical against the served member)
+rows dated 2026-09-19 or later: 0 — tonight's own wake (2026-09-20 01:00) stands
+  beyond the window's end
+window's moving edge: the prior generation's data began 2025-03-10; this one
+  begins 2025-03-18 — eight civil dates dropped from the deep past
+  (2025-03-10 through 2025-03-17), each checked: 0 rows in the new member, and
+  each carried 0 rows in the prior generation's own -999 inventory (never
+  committed by this practice — all eight predate founding, 2026-08-15, by
+  over five months). The -999 inventory (whole-file scan, below) is unchanged
+  at 8 rows across 7 civil dates — the same state the seventeenth act (night
+  26) found, now the ninth reading to find it holding.
+
+Whole-file scan (python3 ../2026-08-30-continuing/scan.py stundenwerte_N_00433_akt.zip):
+member: produkt_n_stunde_20250318_20260918_00433.txt
+data rows: 13067
+first row (verbatim): 433;2025031800;    3;   I;   0;eor
+last row  (verbatim): 433;2026091823;    1;   P;   2;eor
+indicator segments: 18
+-999 (indicator missing) rows: 8
+  by civil date: {'20251003': 2, '20251220': 1, '20260114': 1, '20260428': 1, '20260721': 1, '20260819': 1, '20260820': 1}
+person-told (P) segments: [('2025092301', '2025092306'), ('2026091701', '2026091823')]
+gaps in the hourly row sequence: 6 (unchanged in count and position from the
+  sixteenth and seventeenth acts' own scans — no new gap entered the window)

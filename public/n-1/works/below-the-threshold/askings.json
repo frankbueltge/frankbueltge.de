@@ -531,6 +531,26 @@
     }
    ],
    "control": "crt.sh's [] byte-identical to askings 15 and 17–26's committed bodies (sha256 4f53cda1…) — the eleventh consecutive two-eyed exact-name night. Cert Spotter's [] re-wrapped across two lines rather than one (4 bytes at askings 4–26, 3 bytes tonight) — logged as an API serialization difference, not a content change; both parse to an empty array. Cert Spotter's zone view CHANGED: 20 issuances / 12,691 bytes / sha256 e9e8d6d1…, down from 22 at asking 26 — compared by id, none added and exactly two removed (15491368679, www.frankbueltge.de; 15491380698, frankbueltge.de), both Let's Encrypt, both not_after 2026-09-18T22:09–22:10Z — expired ~2.9–3.0 hours before this query. The zone's fifth recorded movement and its first removal rather than addition; read as an estimate (not confirmed against Cert Spotter's own documentation) that its default view excludes expired issuances. crt.sh's zone answer stands byte-identical to askings 19–26 (108 rows / 33,493 bytes / sha256 4c1ba2b1…, cmp clean) — the eyes disagree again, this time apparently on retention of the already-expired rather than on crawl completeness. The procedure: night 18's committed ask.sh unchanged (diff clean against asking 26's copy); the run — four attempts, four 200s, every door at first attempt, the vigil's seventh four-for-four run. Evidence: material/ct-logs/2026-09-19-twenty-seventh-asking/README.md."
+  },
+  {
+   "asking": 28,
+   "date": "2026-09-20",
+   "session": "night 31 (record 57, nights/57-thirty-first-night.md) — ~24.0 hours after asking 27; a confirmation run, not a new movement: the same 20/108 split holds, and crt.sh's exact rows for the two certificates asking 27 found missing from Cert Spotter are fetched and checked directly for the first time, confirming by row id and not_after rather than leaving it a presumption",
+   "queries": [
+    {
+     "monitor": "Cert Spotter (SSLMate)",
+     "queried_utc": "2026-09-20T01:14:30Z",
+     "answer": "[]",
+     "evidence": "material/ct-logs/2026-09-20-twenty-eighth-asking/certspotter.n-1.frankbueltge.de.json"
+    },
+    {
+     "monitor": "crt.sh",
+     "queried_utc": "2026-09-20T01:14:31Z",
+     "answer": "[]",
+     "evidence": "material/ct-logs/2026-09-20-twenty-eighth-asking/crt-sh.n-1.frankbueltge.de.json"
+    }
+   ],
+   "control": "Cert Spotter's [] the same empty array as asking 27's, reformatted compact rather than pretty-printed by the monitor's own API, as asking 27 already found (sha256 differs from askings 4–26, content does not); crt.sh's [] byte-identical to askings 15 and 17–27's committed bodies (sha256 4f53cda1…) — the twelfth consecutive two-eyed exact-name night. Cert Spotter's zone view unchanged from asking 27: still 20 issuances / 12,691 bytes / sha256 e9e8d6d1…, byte-identical (cmp clean) — no further movement in 24.0 hours. crt.sh's zone door answered at its first attempt byte-identical to askings 19–27 (108 rows / 33,493 bytes / sha256 4c1ba2b1…). What this asking adds beyond confirmation: asking 27 left crt.sh's continued retention of the two certificates Cert Spotter dropped (15491368679, www.frankbueltge.de; 15491380698, frankbueltge.de) as a presumption from an unchanged row count, not a direct check; tonight both are located in crt.sh's zone rows by their shared not_before timestamps (2026-06-20T22:09:17 and 22:10:48) under crt.sh's own ids (27355426031/27355423729 and 27355447381/27355449472, each certificate logged twice, paired precertificate and certificate as this zone's history always has been) — confirmed present, with not_after 2026-09-18T22:09:16Z and 22:10:47Z matching asking 27's figures exactly. The procedure: night 18's committed ask.sh unchanged; the run — four attempts, four 200s, every door on its first try. Evidence: material/ct-logs/2026-09-20-twenty-eighth-asking/README.md."
   }
  ]
 }
