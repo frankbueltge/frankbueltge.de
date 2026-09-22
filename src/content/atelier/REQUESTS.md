@@ -3992,3 +3992,91 @@ nobody meets.
 **Status:** work landed · no new ask, the 09-19 ask sharpened into a decision · the 09-13, 09-15 and
 09-18 asks still open · the digest maintained and inside its cap (2,499 words under the declared
 rule) · my own record measured against your rule and reported failing it
+
+---
+
+## From the practice — 2026-09-22 — I read fifteen of my own paragraphs as if a stranger had written them, and the second sentence is false in all of them
+
+**Status when written:** no new ask. Your four open ones stand, unchanged and unurgent.
+
+Since 09-13 every bulletin of mine has carried two sentences in one paragraph: that the reader's
+hand makes the finding, and that without scripting the page stands complete. The Field spent
+last night reading its own published pages as if someone else had written them and found
+fourteen occurrences of a word that was never true. I did the same to mine, and the difference
+between my two sentences turned out to be measurable rather than arguable, so I measured it
+instead of defending it.
+
+### What I did
+
+Every page this practice has published that a visitor can open — twenty-one of them, the
+windows and the three presentations — was opened twice in one browser, once with scripting on
+and once with it off, with every request that is not a local file refused in both states. Every
+range, select, checkbox, radio and button on each page was worked one at a time from the
+default state, the page reloaded before each move, and the rendered text read back: 434 states
+in all. Two units, declared on the page before anything was counted, and written a second time
+in the checker.
+
+### What came back
+
+**Without the script there is no hand.** Across 217 scriptless states the rendered text never
+once left the first rendering. Not one of the twenty-one pages carries a control a reader
+without scripting can work. My completeness sentence is true of the text and false of the
+instrument — and the Studio's page of 09-20, whose three controls are CSS and which has no
+script of its own, is the proof that this was a choice and not a necessity. I never noticed
+making it.
+
+**With the script, the hand mostly re-selects.** It adds nothing whatever on 8 of 21 pages, and
+corpus-wide only 6.88 % of what it can reach is not already in the served text. Where it adds,
+the additions are readouts: the same measurement computed again for the state the hand has put
+the page in.
+
+**One page serves less than it holds.** Session 11 — the one I wrote you about on 09-20 —
+carries two ledgers and serves one. The second sits in the file behind the HTML `hidden`
+attribute, which only a script removes: 18 rows, 44 quantities served nowhere else on the page.
+Thirty-eight come back when the hand reveals the block. Six never come back at all, because the
+same script that reveals it overwrites those cells with its own recomputation first. Six numbers
+published in a file a visitor can download and put in front of no reader in any state of the
+page. That is this cycle's seeded question arriving inside my own work: an absence made by the
+apparatus rather than by the record.
+
+**And that page hands its two readers two different numbers.** Its served cell is written by a
+Python format, which sends a half to its even neighbour; its own script rewrites the same cell
+with `Math.round`, which sends a half up. They agree when the lower neighbour is odd and
+disagree when it is even — 23 of 69 records, 22 distinct values. It happened on the page whose
+whole argument was that a count with no declared rule is not a count. A rule can be declared in
+a page's prose and left undeclared in the two implementations that page runs on. Nothing
+published moves: the cell is derived, and both derivations are committed with their source
+lines quoted.
+
+### What it does to the claim
+
+It narrows it, and your own Research Foundation had the narrower version before my measurement
+did — exposition is a curatorial and epistemic operation with visible exclusions, and apparatus
+knowledge does not arise from a transparency page. On a page that serves everything, exclusion
+is the only operation the hand has that the text has not. The finding is not made by the hand;
+it is selected by it, and the selection is the exposition. Two of my pages already do only that,
+and one of them withholds nineteen served quantities and adds none — a reader who touches
+nothing sees more of it than a reader who uses it.
+
+### My own instrument failed first, and I would rather you heard it from me
+
+The first full run silently recorded failed actions as states that changed nothing, which is
+what a state that changed nothing also looks like. The checker caught it, because it requires
+every withheld quantity to occur in the committed source of the page said to serve it, and two
+pages failed that test. The second run, with a fallback path and the failure written down per
+state, reproduced 20 of 21 pages exactly and moved session 11 from 37 additions to 139. Without
+the checker I would have published a finding true in direction, wrong in size, and missing its
+best part.
+
+### The ask, which is that there is none
+
+Your four stand as written: the per-entry ground vocabulary (09-13), the dated denominator
+(09-15), date the entry (09-18), name the unit (09-19), and the two-minute decision (09-20).
+None is urgent and your silence on all of them is an answer I can work with. Tonight's repair —
+pages that answer a hand without scripting, as the Studio's do — is inside my own authority and
+belongs to me. I am recording it here so that it is on the record before I do it, and so that
+you can stop me if you would rather I left the published pages as they stand.
+
+**Status:** work landed · no new ask · the 09-13, 09-15, 09-18, 09-19 and 09-20 items still open
+· the digest maintained and inside its cap under the declared rule · one defect found in my own
+published work, reported here with its mechanism and its two source lines
