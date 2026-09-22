@@ -17,14 +17,31 @@
 // Not one digit is typed here: every date and count is derived from the mirror at build time,
 // so the page cannot drift from the record it serves (the currency rule, and the ops-room
 // precedent).
+import { existsSync, readFileSync } from 'node:fs'
+import { join } from 'node:path'
 import Page from '@/layouts/Page.astro'
 import { NAMING } from '@/config/naming'
-import { archReadPaths, readArchFacts } from '@/lib/arch/facts'
+import { ARCH_MIRROR, archReadPaths, readArchFacts } from '@/lib/arch/facts'
 
 const REPO = 'https://github.com/frankbueltge/arch'
 const facts = readArchFacts()
 const card = NAMING.overview.items.find((i) => i.id === 'arch')
 if (!card?.line) throw new Error('/arch: NAMING.overview.items has no "arch" card to read')
+
+// BALANCE.md exists only once the window has closed and the practice has written its verdict
+// (public/arch/BALANCE.md, mirrored by arch-integrate.yml) — its absence is the ordinary case
+// for a still-open window, so this reads it locally rather than assuming it is there.
+const BALANCE_PATH = 'BALANCE.md'
+const balancePath = join(ARCH_MIRROR, BALANCE_PATH)
+const balance = existsSync(balancePath)
+  ? (() => {
+      const text = readFileSync(balancePath, 'utf8')
+      const written = /Written\s+(\d{4}-\d{2}-\d{2})/.exec(text)?.[1]
+      const verdict = /##\s*1\.\s*The verdict\s*\n+\*\*([A-Z]+)\.?\*\*/.exec(text)?.[1]
+      if (!written || !verdict) throw new Error(`/arch: ${BALANCE_PATH} format changed — no "Written" date or "## 1. The verdict"`)
+      return { written, verdict, path: BALANCE_PATH }
+    })()
+  : null
 
 const w = facts.window
 const instances = facts.works.flatMap((work) =>
@@ -72,7 +89,16 @@ const plural = (n: number, one: string, many: string) => `${n} ${n === 1 ? one :
     {/* THE FRAME — the one sentence the site adds above the works, every number read */}
     <section class="mb-10 border border-line bg-panel/60 p-5" aria-labelledby="arch-frame">
       <h2 id="arch-frame" class="mb-2 text-[11px] uppercase tracking-[0.18em] text-fg-faint">The window</h2>
-      {w ? (
+      {w && balance ? (
+        <p class="text-sm leading-relaxed">
+          Open from <span class="text-fg">{w.opens}</span> to <span class="text-fg">{w.closes}</span> —
+          {w.days} days, at least {w.minSessions} sessions owed, <span class="text-fg">{facts.protocols.length}</span> on the record.
+          The model was {w.decision}ed on {w.decisionDate}, with its divergences named. The window closed
+          {' '}<span class="text-fg">{w.closes}</span>; the balance was published {balance.written},
+          verdict <span class="text-fg font-semibold">{balance.verdict}</span> — read it in full in{' '}
+          <a href={readHref(balance.path)} class="underline underline-offset-2">the balance</a>.
+        </p>
+      ) : w ? (
         <p class="text-sm leading-relaxed">
           Open from <span class="text-fg">{w.opens}</span> to <span class="text-fg">{w.closes}</span> —
           {w.days} days, at least {w.minSessions} sessions owed, <span class="text-fg">{facts.protocols.length}</span> on the record so far.

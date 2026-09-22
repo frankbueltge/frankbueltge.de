@@ -43,7 +43,9 @@ import { datedEntries, recordThumbnail, THUMBNAILS, THUMB_BOX } from '@/lib/expe
 import { GALLERY } from '@/config/gallery-wording'
 import { NAMING } from '@/config/naming'
 import { readN1Facts } from '@/lib/ecology/n1-line'
-import { readArchFacts } from '@/lib/arch/facts'
+import { existsSync, readFileSync } from 'node:fs'
+import { join } from 'node:path'
+import { ARCH_MIRROR, readArchFacts } from '@/lib/arch/facts'
 import { buttonVariants } from '@/components/ui/button'
 import { cn } from '@/lib/ui/cn'
 import SheetHead from '@/components/experiments/SheetHead.astro'
@@ -87,6 +89,19 @@ const n1 = readN1Facts()
 const archCard = NAMING.overview.items.find((i) => i.id === 'arch')
 if (!archCard?.href || !archCard.line) throw new Error('/experiments: NAMING.overview.items has no "arch" card to read')
 const arch = readArchFacts()
+// BALANCE.md exists only once Arch's window has closed and the practice has written its verdict
+// (public/arch/BALANCE.md, mirrored by arch-integrate.yml) — read locally, the same way n-1's
+// and Arch's other facts above are, rather than assumed present.
+const archBalancePath = join(ARCH_MIRROR, 'BALANCE.md')
+const archBalance = existsSync(archBalancePath)
+  ? (() => {
+      const text = readFileSync(archBalancePath, 'utf8')
+      const written = /Written\s+(\d{4}-\d{2}-\d{2})/.exec(text)?.[1]
+      const verdict = /##\s*1\.\s*The verdict\s*\n+\*\*([A-Z]+)\.?\*\*/.exec(text)?.[1]
+      if (!written || !verdict) throw new Error('/experiments: BALANCE.md format changed — no "Written" date or "## 1. The verdict"')
+      return { written, verdict }
+    })()
+  : null
 
 const url = (href: string) => getRelativeLocaleUrl(locale, href)
 
@@ -163,9 +178,11 @@ const sections: GallerySection[] = [
         title: archCard.title ?? 'Arch',
         description: archCard.line,
         href: url(archCard.href),
-        meta: arch.window
-          ? `founded ${arch.founded} · window ${arch.window.opens} → ${arch.window.closes} · balance by ${arch.window.balanceBy}`
-          : `founded ${arch.founded} · no window open`,
+        meta: arch.window && archBalance
+          ? `founded ${arch.founded} · window ${arch.window.opens} → ${arch.window.closes} · balance published ${archBalance.written}, verdict ${archBalance.verdict}`
+          : arch.window
+            ? `founded ${arch.founded} · window ${arch.window.opens} → ${arch.window.closes} · balance by ${arch.window.balanceBy}`
+            : `founded ${arch.founded} · no window open`,
         thumb: recordThumbnail(
           'arch',
           datedEntries('public/arch/ledger'),

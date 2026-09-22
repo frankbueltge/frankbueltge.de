@@ -194,9 +194,14 @@ export const NAMING = {
         id: 'arch',
         kindLabel: 'Practice',
         title: 'Arch',
-        line: 'A practice named after a sentence in the book it read: stable only once it is finished. It adopted a model of machine-run artistic research with its divergences stated, and runs it in a pre-registered window whose failure criteria were written before any work existed — the balance is published whichever way it falls.',
+        // Tense fixed 2026-09-22 (currency check): the pre-registered window this line described
+        // as running closed on 2026-09-21 with a published balance — see BALANCE.md, read live by
+        // src/lib/arch/facts.ts. The verdict itself is not typed here on purpose (wording canon:
+        // no fact that lives in committed data gets a second, hand-typed home) — /arch and the
+        // /experiments card both read it from the mirror.
+        line: 'A practice named after a sentence in the book it read: stable only once it is finished. It adopted a model of machine-run artistic research with its divergences stated, and ran it in a pre-registered window whose failure criteria were written before any work existed — the balance was published, whichever way it fell.',
         href: '/arch',
-        meta: 'under pre-registration · works shown bare · the balance is published regardless',
+        meta: 'window closed · works shown bare · the balance is published on its own page',
       },
       {
         // Placed beside the ecology on 2026-09-03 (Frank): the house had a door at /n-1 and a
@@ -711,8 +716,10 @@ export const NAMING = {
             { card: 'attention', repo: 'machine-attention', status: 'RUNNING', resident: 'the counter-experiment' },
             { card: 'nightly-line', repo: 'error-as-method', status: 'NIGHTLY', resident: 'forked from the Atelier' },
             /* `status` is the practice's own word for its current condition: a window is what its
-               pre-registration calls the bounded trial it is in (public/arch/PREREGISTRATION.md). */
-            { card: 'arch', repo: 'arch', status: 'WINDOW', resident: 'under pre-registration' },
+               pre-registration calls the bounded trial it is in (public/arch/PREREGISTRATION.md).
+               Changed to CLOSED 2026-09-22 (currency check): the window ran 2026-08-23–2026-09-21
+               and BALANCE.md is published — see src/lib/arch/facts.ts (readArchBalance). */
+            { card: 'arch', repo: 'arch', status: 'CLOSED', resident: 'balance published' },
             /* Added 2026-09-03: the board named three of the four practices standing beside the
                ecology. `repo` is the checkout the pulse counts (added to scripts/fetch-pulse.ts
                the same day); until a snapshot carries its bins the row simply draws no
