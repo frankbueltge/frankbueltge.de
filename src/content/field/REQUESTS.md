@@ -3839,3 +3839,99 @@ both arms be scored over every worker that delivered with the K3 reading printed
 defect 6 be filed as a correction with the instrument left unrepaired.
 
 **Status:** report · no answer required · nothing owed from your side
+
+---
+
+## Response — 2026-09-22 (session 167) — the repair note nobody had acted on, and the regime that rated the worst repair best
+
+**Where it is.** `artifacts/2026-09-22-a-repair-is-a-new-rule/` — a self-contained page with an
+interactive lattice and the complete figure also standing as a table for a reader with no
+JavaScript, a five-minute summary, a pre-registration committed before either corpus was
+fetched with **one amendment dated after the result and its reason stated**, `data/`, six
+scripts in `tools/a-repair-is-a-new-rule/`, a `check.py` of **65 checks** that needs no
+network, and a `tamper.py` whose **30** deliberate corruptions of our own evidence are each
+caught by a **named** failing check.
+
+**Why this session, decided here.** Cycle 003 is presented from all three sides and
+`cycle.json` still reads cycle 3 *working*, which is not ours to turn. Nothing in this file is
+newer than your direction of 2026-09-03. On 2026-09-20 we filed a repair beside its artifact
+as a patch, with a note to the next session: *apply it before measuring anything new, and
+re-run the fixtures and the mutants first — a repair is a new rule and inherits none of the old
+one's testing.* Eight sessions went past and nobody acted on it. Six defects stood against our
+09-18 licence rule, three found by other hands, **none repaired in a shipped instrument**. So
+this session made the *repairs* the object, under the counter-measurement remit.
+
+**What was done.** Five candidate repairs, one per open defect, and **all 32 subsets** of them,
+each scored through **all four regimes the instrument owns** — 100 fixtures, 27 mutations, 8
+perturbations over **896** inputs, the 105 real repositories behind the published headline.
+Both corpora re-fetched to their pinned corpus digests, **740/740 and 156/156**, character for
+character. Before any subset was scored the shipped rule reproduced all four of its reference
+numbers.
+
+**The finding: every regime rated the worst repair the best.** R7 — search the logical line
+rather than the physical one — cut perturbation failures **167 → 7** and lifted the headline
+**95.2 % → 99.0 %**, while multiplying the instrument's *false* copyright notices **15 → 312**
+and putting **18** decisions on notices that are not in the files. Three of the four
+repositories it added to the headline were added on a "holder" read out of the liability
+disclaimer. **One case carries the whole page:** `microsoft/WindowsAgentArena@LICENSE` holds one
+notice, `Copyright (c) Microsoft Corporation.`; under R7 the real notice is **destroyed** and
+the verdict stays *correct anyway*, on a notice the rule invented. The right answer from
+evidence that is not in the file. It took a second repair stacked on top to make that visible.
+
+**The repairs interact, and one changes sign.** Six of ten pairs non-additive. R4 and R7 each
+remove about 160 failures and together remove no more, because both close the same defect — one
+on purpose, one by accident — and nothing in either two-line patch says so. R7's marginal effect
+runs **−160 to +10** by context. **R6 with R7 blinds the test suite**: each alone leaves all 100
+fixtures passing and all 27 mutations caught; together they break a fixture neither breaks and
+let two mutations through that neither lets through.
+
+**A prediction refuted, and two corrections filed against our own published work.** We
+predicted in writing, before the corpus was fetched, that no repository would change verdict
+under any subset. **Wrong:** 16 of 32 subsets move the set; the headline takes four values
+(99.0, 95.2, 93.3, and 95.2 *again with two repositories gained and two lost*); and under the
+full repair the percentage is identical to the published one while **all four movements inside
+it are errors**. So: **09-18's 95.2 % is not a property of the population but of which of six
+known defects you repair.** And **09-20's 167 was an undercount** — R1 raises the count to 168
+while breaking nothing, because false notices were masking three real violations, so a
+perturbation-failure count is not monotone in instrument quality. Which is exactly why R7
+looked best. Both corrections are filed beside the artifacts they concern, dated; **nothing is
+patched**.
+
+**Something is landed at last, and it is not the full repair.** `tools/is-it-a-licence-v2/`
+carries **R4 + R5 + R6** — the one subset closing all three defects found by other hands at
+**zero cost on every regime**: 100 fixtures passing, no mutation blinded, failures 167 → **4**,
+the headline and its exact membership unchanged, the four `no_holder` repositories still
+`no_holder`, false notices unchanged at 15 with none deciding anything. Our own §8 said the full
+repair would be landed; the measurement disqualified it and the amendment says so, dated. R7 is
+refused as harmful. **R1 is refused for a different reason:** it is *not* harmful — it cuts
+false notices 15 → 4 and changes no decision — but it **contradicts the specification**, since a
+fixture says `Copyright Contributors to the OpenVDB Project` is a copyright notice and R1 says
+it is not. Changing a specification is a separate act from repairing a rule, and we will not
+settle it quietly by shipping a patch that decides it. **If you want it settled, that is a
+question for you, and it is the one thing in this session we would genuinely like an answer to
+— though under your standing rule your silence decides it, and it will stay open rather than be
+decided by patch.** Version 1 is untouched, with the figures it made.
+
+**Two failures of our own, both left in the record.** Our `tamper.py`'s first version of one
+corruption **corrupted nothing** — it inserted a duplicate JSON key, and a later duplicate wins,
+so the named check rightly did not fire; the comment stays in the file. And `check.py` printed
+**"58 checks, 0 failed"** while five checks appended after its `__main__` guard never ran at
+all, caught only by noticing the count had not moved. Bad tests eleven and twelve. *A suite that
+counts itself can count wrong.*
+
+**To the team note of 2026-09-03 (2), the line it asks for.** Interactive and client-rendered,
+decided on the merits: the finding *is* that four regimes rank the same 32 candidates
+differently, and a still plate can show only one ranking — switching the metric re-colours the
+lattice and the best cell moves. The complete table of every subset and every metric stands in
+the document, not beside it, for a reader with no JavaScript. Verified in a real browser with
+scripting on and off at 390, 768 and 1280 px: zero console errors, zero network requests. **The
+first run overflowed at 390 px and was fixed rather than reported as passing**; both numbers are
+in `data/render-check.json`. No policy change needed, no assets, no outside fetches.
+
+**One thing closed on our side.** This was the **seventh consecutive session on one
+instrument**, which is a cost we state rather than leave you to count. The licensing arc ends
+with this page: six defects named, four independent defect-finders priced, the repair landed
+rather than filed. The next session starts elsewhere.
+
+**Status:** report · one question genuinely open (the yearless-notice specification) · nothing
+owed from your side

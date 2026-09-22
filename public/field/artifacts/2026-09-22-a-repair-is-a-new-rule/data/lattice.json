@@ -1,0 +1,1684 @@
+{
+ "note": "Session 167. Every repair subset of the 2026-09-18 licence rule, through all four test regimes of the pre-registration. Variant ids read R1,R4,R5,R6,R7 left to right; 00000 is the shipped rule with the pipeline block installed and every flag off, verified output-identical to the shipped file over all 896 inputs.",
+ "repairs": [
+  "R1",
+  "R4",
+  "R5",
+  "R6",
+  "R7"
+ ],
+ "shipped_digests": {
+  "rules.py": "ccb373b6edb1e4397d7ac145aca6ff94e995934c9315b1ccc23eb266a288a2ed",
+  "fingerprints.py": "57db4c561a58683d81fb35be3781168a419785183215a864ed5694981b6669cd"
+ },
+ "n_variants": 32,
+ "variants": [
+  {
+   "variant": "00000",
+   "repairs": [],
+   "n_repairs": 0,
+   "digests": {
+    "rules.py": "ccb373b6edb1e4397d7ac145aca6ff94e995934c9315b1ccc23eb266a288a2ed",
+    "fingerprints.py": "14ace9e18532382bd25e611d02ac433fa074c4cc9bdd670f8ccb7640cab4020e"
+   },
+   "fixtures_failed": [],
+   "n_fixtures_failed": 0,
+   "mutants_surviving_unexpectedly": [],
+   "n_mutants_surviving_unexpectedly": 0,
+   "decision_changing_by_relation": {
+    "M1": 140,
+    "M2": 18,
+    "M3": 0,
+    "M4": 0,
+    "M5": 2,
+    "M6": 7,
+    "M7": 0,
+    "M8": 0
+   },
+   "decision_changing_total": 167,
+   "control_M4": 0,
+   "description_only_total": 967,
+   "headline_k": 100,
+   "headline_n": 105,
+   "headline_pct": 95.2,
+   "L2": {
+    "n": 67,
+    "counts": {
+     "named": 61,
+     "no_copyright_line": 2,
+     "no_holder": 4
+    }
+   },
+   "no_holder_repos": [
+    "AI-in-Health/BioMedArena",
+    "Ewendawi/LLaMEA-BO",
+    "openai/preparedness",
+    "raja21068/AutoResearch"
+   ],
+   "delivering_gained_vs_shipped": [],
+   "delivering_lost_vs_shipped": [],
+   "delivering_symmetric_difference": 0
+  },
+  {
+   "variant": "00001",
+   "repairs": [
+    "R7"
+   ],
+   "n_repairs": 1,
+   "digests": {
+    "rules.py": "ccb373b6edb1e4397d7ac145aca6ff94e995934c9315b1ccc23eb266a288a2ed",
+    "fingerprints.py": "96cc8497608cf5e1ec1261e5dd0cf03b2afbc40ae13214148b0a51e241b90e8e"
+   },
+   "fixtures_failed": [
+    "L2/mit-yyyy-word"
+   ],
+   "n_fixtures_failed": 1,
+   "mutants_surviving_unexpectedly": [],
+   "n_mutants_surviving_unexpectedly": 0,
+   "decision_changing_by_relation": {
+    "M1": 0,
+    "M2": 7,
+    "M3": 0,
+    "M4": 0,
+    "M5": 0,
+    "M6": 0,
+    "M7": 0,
+    "M8": 0
+   },
+   "decision_changing_total": 7,
+   "control_M4": 0,
+   "description_only_total": 1700,
+   "headline_k": 104,
+   "headline_n": 105,
+   "headline_pct": 99.0,
+   "L2": {
+    "n": 67,
+    "counts": {
+     "named": 67
+    }
+   },
+   "no_holder_repos": [],
+   "delivering_gained_vs_shipped": [
+    "AI-in-Health/BioMedArena",
+    "Jinxhy/Awesome-MoAI-Security",
+    "alaaNfissi/Unveiling-Hidden-Factors-Explainable-AI-for-Feature-Boosting-in-Speech-Emotion-Recognition",
+    "raja21068/AutoResearch"
+   ],
+   "delivering_lost_vs_shipped": [],
+   "delivering_symmetric_difference": 4
+  },
+  {
+   "variant": "00010",
+   "repairs": [
+    "R6"
+   ],
+   "n_repairs": 1,
+   "digests": {
+    "rules.py": "ccb373b6edb1e4397d7ac145aca6ff94e995934c9315b1ccc23eb266a288a2ed",
+    "fingerprints.py": "411fe1ab4ed4b41a35992fb3cd01308c730e6631a953899f42a20a975f51eae3"
+   },
+   "fixtures_failed": [],
+   "n_fixtures_failed": 0,
+   "mutants_surviving_unexpectedly": [],
+   "n_mutants_surviving_unexpectedly": 0,
+   "decision_changing_by_relation": {
+    "M1": 140,
+    "M2": 18,
+    "M3": 0,
+    "M4": 0,
+    "M5": 2,
+    "M6": 6,
+    "M7": 0,
+    "M8": 0
+   },
+   "decision_changing_total": 166,
+   "control_M4": 0,
+   "description_only_total": 966,
+   "headline_k": 100,
+   "headline_n": 105,
+   "headline_pct": 95.2,
+   "L2": {
+    "n": 67,
+    "counts": {
+     "named": 61,
+     "no_copyright_line": 2,
+     "no_holder": 4
+    }
+   },
+   "no_holder_repos": [
+    "AI-in-Health/BioMedArena",
+    "Ewendawi/LLaMEA-BO",
+    "openai/preparedness",
+    "raja21068/AutoResearch"
+   ],
+   "delivering_gained_vs_shipped": [],
+   "delivering_lost_vs_shipped": [],
+   "delivering_symmetric_difference": 0
+  },
+  {
+   "variant": "00100",
+   "repairs": [
+    "R5"
+   ],
+   "n_repairs": 1,
+   "digests": {
+    "rules.py": "ccb373b6edb1e4397d7ac145aca6ff94e995934c9315b1ccc23eb266a288a2ed",
+    "fingerprints.py": "dd96870eb7573a1775ef0f1e833cfafa4655831b6fcc8fc75ad14cc6c98445ab"
+   },
+   "fixtures_failed": [],
+   "n_fixtures_failed": 0,
+   "mutants_surviving_unexpectedly": [],
+   "n_mutants_surviving_unexpectedly": 0,
+   "decision_changing_by_relation": {
+    "M1": 140,
+    "M2": 18,
+    "M3": 0,
+    "M4": 0,
+    "M5": 0,
+    "M6": 7,
+    "M7": 0,
+    "M8": 0
+   },
+   "decision_changing_total": 165,
+   "control_M4": 0,
+   "description_only_total": 970,
+   "headline_k": 100,
+   "headline_n": 105,
+   "headline_pct": 95.2,
+   "L2": {
+    "n": 67,
+    "counts": {
+     "named": 61,
+     "no_copyright_line": 2,
+     "no_holder": 4
+    }
+   },
+   "no_holder_repos": [
+    "AI-in-Health/BioMedArena",
+    "Ewendawi/LLaMEA-BO",
+    "openai/preparedness",
+    "raja21068/AutoResearch"
+   ],
+   "delivering_gained_vs_shipped": [],
+   "delivering_lost_vs_shipped": [],
+   "delivering_symmetric_difference": 0
+  },
+  {
+   "variant": "01000",
+   "repairs": [
+    "R4"
+   ],
+   "n_repairs": 1,
+   "digests": {
+    "rules.py": "ccb373b6edb1e4397d7ac145aca6ff94e995934c9315b1ccc23eb266a288a2ed",
+    "fingerprints.py": "25aa169286015c95368e4d8eee806ef390af5e682bddb94334c08de68a207954"
+   },
+   "fixtures_failed": [],
+   "n_fixtures_failed": 0,
+   "mutants_surviving_unexpectedly": [],
+   "n_mutants_surviving_unexpectedly": 0,
+   "decision_changing_by_relation": {
+    "M1": 0,
+    "M2": 0,
+    "M3": 0,
+    "M4": 0,
+    "M5": 2,
+    "M6": 4,
+    "M7": 0,
+    "M8": 0
+   },
+   "decision_changing_total": 6,
+   "control_M4": 0,
+   "description_only_total": 1189,
+   "headline_k": 100,
+   "headline_n": 105,
+   "headline_pct": 95.2,
+   "L2": {
+    "n": 67,
+    "counts": {
+     "named": 61,
+     "no_copyright_line": 2,
+     "no_holder": 4
+    }
+   },
+   "no_holder_repos": [
+    "AI-in-Health/BioMedArena",
+    "Ewendawi/LLaMEA-BO",
+    "openai/preparedness",
+    "raja21068/AutoResearch"
+   ],
+   "delivering_gained_vs_shipped": [],
+   "delivering_lost_vs_shipped": [],
+   "delivering_symmetric_difference": 0
+  },
+  {
+   "variant": "10000",
+   "repairs": [
+    "R1"
+   ],
+   "n_repairs": 1,
+   "digests": {
+    "rules.py": "ccb373b6edb1e4397d7ac145aca6ff94e995934c9315b1ccc23eb266a288a2ed",
+    "fingerprints.py": "22ad74deedd967bf8709a9daadc24a1a96bf9790341ac407d2f94c439cf907d7"
+   },
+   "fixtures_failed": [
+    "NOTICE/no-year-but-capital"
+   ],
+   "n_fixtures_failed": 1,
+   "mutants_surviving_unexpectedly": [],
+   "n_mutants_surviving_unexpectedly": 0,
+   "decision_changing_by_relation": {
+    "M1": 141,
+    "M2": 18,
+    "M3": 0,
+    "M4": 0,
+    "M5": 2,
+    "M6": 7,
+    "M7": 0,
+    "M8": 0
+   },
+   "decision_changing_total": 168,
+   "control_M4": 0,
+   "description_only_total": 885,
+   "headline_k": 100,
+   "headline_n": 105,
+   "headline_pct": 95.2,
+   "L2": {
+    "n": 67,
+    "counts": {
+     "named": 61,
+     "no_copyright_line": 2,
+     "no_holder": 4
+    }
+   },
+   "no_holder_repos": [
+    "AI-in-Health/BioMedArena",
+    "Ewendawi/LLaMEA-BO",
+    "openai/preparedness",
+    "raja21068/AutoResearch"
+   ],
+   "delivering_gained_vs_shipped": [],
+   "delivering_lost_vs_shipped": [],
+   "delivering_symmetric_difference": 0
+  },
+  {
+   "variant": "00011",
+   "repairs": [
+    "R6",
+    "R7"
+   ],
+   "n_repairs": 2,
+   "digests": {
+    "rules.py": "ccb373b6edb1e4397d7ac145aca6ff94e995934c9315b1ccc23eb266a288a2ed",
+    "fingerprints.py": "d2e7c8aea150659bba5f643cac298321c36386ea89518914bc49c2b85954a654"
+   },
+   "fixtures_failed": [
+    "L2/mit-yyyy-word",
+    "L2/year-only-no-holder"
+   ],
+   "n_fixtures_failed": 2,
+   "mutants_surviving_unexpectedly": [
+    "holder/keeps-years",
+    "holder/whole-line"
+   ],
+   "n_mutants_surviving_unexpectedly": 2,
+   "decision_changing_by_relation": {
+    "M1": 0,
+    "M2": 7,
+    "M3": 0,
+    "M4": 0,
+    "M5": 0,
+    "M6": 0,
+    "M7": 0,
+    "M8": 0
+   },
+   "decision_changing_total": 7,
+   "control_M4": 0,
+   "description_only_total": 1707,
+   "headline_k": 104,
+   "headline_n": 105,
+   "headline_pct": 99.0,
+   "L2": {
+    "n": 67,
+    "counts": {
+     "named": 67
+    }
+   },
+   "no_holder_repos": [],
+   "delivering_gained_vs_shipped": [
+    "AI-in-Health/BioMedArena",
+    "Jinxhy/Awesome-MoAI-Security",
+    "alaaNfissi/Unveiling-Hidden-Factors-Explainable-AI-for-Feature-Boosting-in-Speech-Emotion-Recognition",
+    "raja21068/AutoResearch"
+   ],
+   "delivering_lost_vs_shipped": [],
+   "delivering_symmetric_difference": 4
+  },
+  {
+   "variant": "00101",
+   "repairs": [
+    "R5",
+    "R7"
+   ],
+   "n_repairs": 2,
+   "digests": {
+    "rules.py": "ccb373b6edb1e4397d7ac145aca6ff94e995934c9315b1ccc23eb266a288a2ed",
+    "fingerprints.py": "6b4fe6c09947460c83b87f71405283bd5ea4fdbb5e92aeae179deb08bd63b989"
+   },
+   "fixtures_failed": [
+    "L2/mit-yyyy-word"
+   ],
+   "n_fixtures_failed": 1,
+   "mutants_surviving_unexpectedly": [],
+   "n_mutants_surviving_unexpectedly": 0,
+   "decision_changing_by_relation": {
+    "M1": 0,
+    "M2": 7,
+    "M3": 0,
+    "M4": 0,
+    "M5": 0,
+    "M6": 0,
+    "M7": 0,
+    "M8": 0
+   },
+   "decision_changing_total": 7,
+   "control_M4": 0,
+   "description_only_total": 1700,
+   "headline_k": 104,
+   "headline_n": 105,
+   "headline_pct": 99.0,
+   "L2": {
+    "n": 67,
+    "counts": {
+     "named": 67
+    }
+   },
+   "no_holder_repos": [],
+   "delivering_gained_vs_shipped": [
+    "AI-in-Health/BioMedArena",
+    "Jinxhy/Awesome-MoAI-Security",
+    "alaaNfissi/Unveiling-Hidden-Factors-Explainable-AI-for-Feature-Boosting-in-Speech-Emotion-Recognition",
+    "raja21068/AutoResearch"
+   ],
+   "delivering_lost_vs_shipped": [],
+   "delivering_symmetric_difference": 4
+  },
+  {
+   "variant": "00110",
+   "repairs": [
+    "R5",
+    "R6"
+   ],
+   "n_repairs": 2,
+   "digests": {
+    "rules.py": "ccb373b6edb1e4397d7ac145aca6ff94e995934c9315b1ccc23eb266a288a2ed",
+    "fingerprints.py": "b9015fbdc0fdef2b50c5250f33a0bdf59cfff65f9385d5f8e8b38e744cf19d0b"
+   },
+   "fixtures_failed": [],
+   "n_fixtures_failed": 0,
+   "mutants_surviving_unexpectedly": [],
+   "n_mutants_surviving_unexpectedly": 0,
+   "decision_changing_by_relation": {
+    "M1": 140,
+    "M2": 18,
+    "M3": 0,
+    "M4": 0,
+    "M5": 0,
+    "M6": 6,
+    "M7": 0,
+    "M8": 0
+   },
+   "decision_changing_total": 164,
+   "control_M4": 0,
+   "description_only_total": 969,
+   "headline_k": 100,
+   "headline_n": 105,
+   "headline_pct": 95.2,
+   "L2": {
+    "n": 67,
+    "counts": {
+     "named": 61,
+     "no_copyright_line": 2,
+     "no_holder": 4
+    }
+   },
+   "no_holder_repos": [
+    "AI-in-Health/BioMedArena",
+    "Ewendawi/LLaMEA-BO",
+    "openai/preparedness",
+    "raja21068/AutoResearch"
+   ],
+   "delivering_gained_vs_shipped": [],
+   "delivering_lost_vs_shipped": [],
+   "delivering_symmetric_difference": 0
+  },
+  {
+   "variant": "01001",
+   "repairs": [
+    "R4",
+    "R7"
+   ],
+   "n_repairs": 2,
+   "digests": {
+    "rules.py": "ccb373b6edb1e4397d7ac145aca6ff94e995934c9315b1ccc23eb266a288a2ed",
+    "fingerprints.py": "604a3ab05cdd9013c9f5515a878658bf985b2cb7f0b6faff40e24b0ce4c3fe97"
+   },
+   "fixtures_failed": [
+    "L2/mit-yyyy-word"
+   ],
+   "n_fixtures_failed": 1,
+   "mutants_surviving_unexpectedly": [],
+   "n_mutants_surviving_unexpectedly": 0,
+   "decision_changing_by_relation": {
+    "M1": 0,
+    "M2": 7,
+    "M3": 0,
+    "M4": 0,
+    "M5": 0,
+    "M6": 0,
+    "M7": 0,
+    "M8": 0
+   },
+   "decision_changing_total": 7,
+   "control_M4": 0,
+   "description_only_total": 1700,
+   "headline_k": 104,
+   "headline_n": 105,
+   "headline_pct": 99.0,
+   "L2": {
+    "n": 67,
+    "counts": {
+     "named": 67
+    }
+   },
+   "no_holder_repos": [],
+   "delivering_gained_vs_shipped": [
+    "AI-in-Health/BioMedArena",
+    "Jinxhy/Awesome-MoAI-Security",
+    "alaaNfissi/Unveiling-Hidden-Factors-Explainable-AI-for-Feature-Boosting-in-Speech-Emotion-Recognition",
+    "raja21068/AutoResearch"
+   ],
+   "delivering_lost_vs_shipped": [],
+   "delivering_symmetric_difference": 4
+  },
+  {
+   "variant": "01010",
+   "repairs": [
+    "R4",
+    "R6"
+   ],
+   "n_repairs": 2,
+   "digests": {
+    "rules.py": "ccb373b6edb1e4397d7ac145aca6ff94e995934c9315b1ccc23eb266a288a2ed",
+    "fingerprints.py": "31ad93d132ec81c4e6fe07660d57c66b8b40876f5fb9fb2c0b3d6ecb865e0a87"
+   },
+   "fixtures_failed": [],
+   "n_fixtures_failed": 0,
+   "mutants_surviving_unexpectedly": [],
+   "n_mutants_surviving_unexpectedly": 0,
+   "decision_changing_by_relation": {
+    "M1": 0,
+    "M2": 0,
+    "M3": 0,
+    "M4": 0,
+    "M5": 2,
+    "M6": 4,
+    "M7": 0,
+    "M8": 0
+   },
+   "decision_changing_total": 6,
+   "control_M4": 0,
+   "description_only_total": 1187,
+   "headline_k": 100,
+   "headline_n": 105,
+   "headline_pct": 95.2,
+   "L2": {
+    "n": 67,
+    "counts": {
+     "named": 61,
+     "no_copyright_line": 2,
+     "no_holder": 4
+    }
+   },
+   "no_holder_repos": [
+    "AI-in-Health/BioMedArena",
+    "Ewendawi/LLaMEA-BO",
+    "openai/preparedness",
+    "raja21068/AutoResearch"
+   ],
+   "delivering_gained_vs_shipped": [],
+   "delivering_lost_vs_shipped": [],
+   "delivering_symmetric_difference": 0
+  },
+  {
+   "variant": "01100",
+   "repairs": [
+    "R4",
+    "R5"
+   ],
+   "n_repairs": 2,
+   "digests": {
+    "rules.py": "ccb373b6edb1e4397d7ac145aca6ff94e995934c9315b1ccc23eb266a288a2ed",
+    "fingerprints.py": "22c4451af57051485e0abd01edf172f5d64c87fa986680ed6025c3934975899c"
+   },
+   "fixtures_failed": [],
+   "n_fixtures_failed": 0,
+   "mutants_surviving_unexpectedly": [],
+   "n_mutants_surviving_unexpectedly": 0,
+   "decision_changing_by_relation": {
+    "M1": 0,
+    "M2": 0,
+    "M3": 0,
+    "M4": 0,
+    "M5": 0,
+    "M6": 4,
+    "M7": 0,
+    "M8": 0
+   },
+   "decision_changing_total": 4,
+   "control_M4": 0,
+   "description_only_total": 1192,
+   "headline_k": 100,
+   "headline_n": 105,
+   "headline_pct": 95.2,
+   "L2": {
+    "n": 67,
+    "counts": {
+     "named": 61,
+     "no_copyright_line": 2,
+     "no_holder": 4
+    }
+   },
+   "no_holder_repos": [
+    "AI-in-Health/BioMedArena",
+    "Ewendawi/LLaMEA-BO",
+    "openai/preparedness",
+    "raja21068/AutoResearch"
+   ],
+   "delivering_gained_vs_shipped": [],
+   "delivering_lost_vs_shipped": [],
+   "delivering_symmetric_difference": 0
+  },
+  {
+   "variant": "10001",
+   "repairs": [
+    "R1",
+    "R7"
+   ],
+   "n_repairs": 2,
+   "digests": {
+    "rules.py": "ccb373b6edb1e4397d7ac145aca6ff94e995934c9315b1ccc23eb266a288a2ed",
+    "fingerprints.py": "9eaef3000e5479d9f0543b97524464051de6d6e3336dfeca1a8f4b16111067a5"
+   },
+   "fixtures_failed": [
+    "L2/mit-yyyy-word",
+    "NOTICE/no-year-but-capital"
+   ],
+   "n_fixtures_failed": 2,
+   "mutants_surviving_unexpectedly": [],
+   "n_mutants_surviving_unexpectedly": 0,
+   "decision_changing_by_relation": {
+    "M1": 0,
+    "M2": 9,
+    "M3": 5,
+    "M4": 0,
+    "M5": 0,
+    "M6": 0,
+    "M7": 0,
+    "M8": 0
+   },
+   "decision_changing_total": 14,
+   "control_M4": 0,
+   "description_only_total": 1423,
+   "headline_k": 98,
+   "headline_n": 105,
+   "headline_pct": 93.3,
+   "L2": {
+    "n": 67,
+    "counts": {
+     "named": 59,
+     "no_copyright_line": 4,
+     "no_holder": 4
+    }
+   },
+   "no_holder_repos": [
+    "AI-in-Health/BioMedArena",
+    "Ewendawi/LLaMEA-BO",
+    "openai/preparedness",
+    "raja21068/AutoResearch"
+   ],
+   "delivering_gained_vs_shipped": [],
+   "delivering_lost_vs_shipped": [
+    "elixir-research-group/Verifierstesttimescaling.github.io",
+    "microsoft/WindowsAgentArena"
+   ],
+   "delivering_symmetric_difference": 2
+  },
+  {
+   "variant": "10010",
+   "repairs": [
+    "R1",
+    "R6"
+   ],
+   "n_repairs": 2,
+   "digests": {
+    "rules.py": "ccb373b6edb1e4397d7ac145aca6ff94e995934c9315b1ccc23eb266a288a2ed",
+    "fingerprints.py": "62b7bfa88fc4acc12cb206439e417293aeb28943c764268df3ec0b1d08183106"
+   },
+   "fixtures_failed": [
+    "NOTICE/no-year-but-capital"
+   ],
+   "n_fixtures_failed": 1,
+   "mutants_surviving_unexpectedly": [],
+   "n_mutants_surviving_unexpectedly": 0,
+   "decision_changing_by_relation": {
+    "M1": 141,
+    "M2": 18,
+    "M3": 0,
+    "M4": 0,
+    "M5": 2,
+    "M6": 6,
+    "M7": 0,
+    "M8": 0
+   },
+   "decision_changing_total": 167,
+   "control_M4": 0,
+   "description_only_total": 884,
+   "headline_k": 100,
+   "headline_n": 105,
+   "headline_pct": 95.2,
+   "L2": {
+    "n": 67,
+    "counts": {
+     "named": 61,
+     "no_copyright_line": 2,
+     "no_holder": 4
+    }
+   },
+   "no_holder_repos": [
+    "AI-in-Health/BioMedArena",
+    "Ewendawi/LLaMEA-BO",
+    "openai/preparedness",
+    "raja21068/AutoResearch"
+   ],
+   "delivering_gained_vs_shipped": [],
+   "delivering_lost_vs_shipped": [],
+   "delivering_symmetric_difference": 0
+  },
+  {
+   "variant": "10100",
+   "repairs": [
+    "R1",
+    "R5"
+   ],
+   "n_repairs": 2,
+   "digests": {
+    "rules.py": "ccb373b6edb1e4397d7ac145aca6ff94e995934c9315b1ccc23eb266a288a2ed",
+    "fingerprints.py": "2fbb1eed4cff055c114ce62c3c6dc542b69b93e58f6ff3f43f671642a63a2f9f"
+   },
+   "fixtures_failed": [
+    "NOTICE/no-year-but-capital"
+   ],
+   "n_fixtures_failed": 1,
+   "mutants_surviving_unexpectedly": [],
+   "n_mutants_surviving_unexpectedly": 0,
+   "decision_changing_by_relation": {
+    "M1": 141,
+    "M2": 18,
+    "M3": 0,
+    "M4": 0,
+    "M5": 0,
+    "M6": 7,
+    "M7": 0,
+    "M8": 0
+   },
+   "decision_changing_total": 166,
+   "control_M4": 0,
+   "description_only_total": 888,
+   "headline_k": 100,
+   "headline_n": 105,
+   "headline_pct": 95.2,
+   "L2": {
+    "n": 67,
+    "counts": {
+     "named": 61,
+     "no_copyright_line": 2,
+     "no_holder": 4
+    }
+   },
+   "no_holder_repos": [
+    "AI-in-Health/BioMedArena",
+    "Ewendawi/LLaMEA-BO",
+    "openai/preparedness",
+    "raja21068/AutoResearch"
+   ],
+   "delivering_gained_vs_shipped": [],
+   "delivering_lost_vs_shipped": [],
+   "delivering_symmetric_difference": 0
+  },
+  {
+   "variant": "11000",
+   "repairs": [
+    "R1",
+    "R4"
+   ],
+   "n_repairs": 2,
+   "digests": {
+    "rules.py": "ccb373b6edb1e4397d7ac145aca6ff94e995934c9315b1ccc23eb266a288a2ed",
+    "fingerprints.py": "53037e6c817f06388312c33eabc3aaba8017e08062e6655841e65524c32146e1"
+   },
+   "fixtures_failed": [
+    "NOTICE/no-year-but-capital"
+   ],
+   "n_fixtures_failed": 1,
+   "mutants_surviving_unexpectedly": [],
+   "n_mutants_surviving_unexpectedly": 0,
+   "decision_changing_by_relation": {
+    "M1": 0,
+    "M2": 0,
+    "M3": 0,
+    "M4": 0,
+    "M5": 2,
+    "M6": 4,
+    "M7": 0,
+    "M8": 0
+   },
+   "decision_changing_total": 6,
+   "control_M4": 0,
+   "description_only_total": 1115,
+   "headline_k": 100,
+   "headline_n": 105,
+   "headline_pct": 95.2,
+   "L2": {
+    "n": 67,
+    "counts": {
+     "named": 61,
+     "no_copyright_line": 2,
+     "no_holder": 4
+    }
+   },
+   "no_holder_repos": [
+    "AI-in-Health/BioMedArena",
+    "Ewendawi/LLaMEA-BO",
+    "openai/preparedness",
+    "raja21068/AutoResearch"
+   ],
+   "delivering_gained_vs_shipped": [],
+   "delivering_lost_vs_shipped": [],
+   "delivering_symmetric_difference": 0
+  },
+  {
+   "variant": "00111",
+   "repairs": [
+    "R5",
+    "R6",
+    "R7"
+   ],
+   "n_repairs": 3,
+   "digests": {
+    "rules.py": "ccb373b6edb1e4397d7ac145aca6ff94e995934c9315b1ccc23eb266a288a2ed",
+    "fingerprints.py": "8124492360e42e22116581911236bdea0ba6f683f1575498dd225cd3634508b2"
+   },
+   "fixtures_failed": [
+    "L2/mit-yyyy-word",
+    "L2/year-only-no-holder"
+   ],
+   "n_fixtures_failed": 2,
+   "mutants_surviving_unexpectedly": [
+    "holder/keeps-years",
+    "holder/whole-line"
+   ],
+   "n_mutants_surviving_unexpectedly": 2,
+   "decision_changing_by_relation": {
+    "M1": 0,
+    "M2": 7,
+    "M3": 0,
+    "M4": 0,
+    "M5": 0,
+    "M6": 0,
+    "M7": 0,
+    "M8": 0
+   },
+   "decision_changing_total": 7,
+   "control_M4": 0,
+   "description_only_total": 1707,
+   "headline_k": 104,
+   "headline_n": 105,
+   "headline_pct": 99.0,
+   "L2": {
+    "n": 67,
+    "counts": {
+     "named": 67
+    }
+   },
+   "no_holder_repos": [],
+   "delivering_gained_vs_shipped": [
+    "AI-in-Health/BioMedArena",
+    "Jinxhy/Awesome-MoAI-Security",
+    "alaaNfissi/Unveiling-Hidden-Factors-Explainable-AI-for-Feature-Boosting-in-Speech-Emotion-Recognition",
+    "raja21068/AutoResearch"
+   ],
+   "delivering_lost_vs_shipped": [],
+   "delivering_symmetric_difference": 4
+  },
+  {
+   "variant": "01011",
+   "repairs": [
+    "R4",
+    "R6",
+    "R7"
+   ],
+   "n_repairs": 3,
+   "digests": {
+    "rules.py": "ccb373b6edb1e4397d7ac145aca6ff94e995934c9315b1ccc23eb266a288a2ed",
+    "fingerprints.py": "10bf91d7ea1a037a8dafadbe0d8a210115ddf70e906522c27bf63a0f802b16af"
+   },
+   "fixtures_failed": [
+    "L2/mit-yyyy-word",
+    "L2/year-only-no-holder"
+   ],
+   "n_fixtures_failed": 2,
+   "mutants_surviving_unexpectedly": [
+    "holder/keeps-years",
+    "holder/whole-line"
+   ],
+   "n_mutants_surviving_unexpectedly": 2,
+   "decision_changing_by_relation": {
+    "M1": 0,
+    "M2": 7,
+    "M3": 0,
+    "M4": 0,
+    "M5": 0,
+    "M6": 0,
+    "M7": 0,
+    "M8": 0
+   },
+   "decision_changing_total": 7,
+   "control_M4": 0,
+   "description_only_total": 1707,
+   "headline_k": 104,
+   "headline_n": 105,
+   "headline_pct": 99.0,
+   "L2": {
+    "n": 67,
+    "counts": {
+     "named": 67
+    }
+   },
+   "no_holder_repos": [],
+   "delivering_gained_vs_shipped": [
+    "AI-in-Health/BioMedArena",
+    "Jinxhy/Awesome-MoAI-Security",
+    "alaaNfissi/Unveiling-Hidden-Factors-Explainable-AI-for-Feature-Boosting-in-Speech-Emotion-Recognition",
+    "raja21068/AutoResearch"
+   ],
+   "delivering_lost_vs_shipped": [],
+   "delivering_symmetric_difference": 4
+  },
+  {
+   "variant": "01101",
+   "repairs": [
+    "R4",
+    "R5",
+    "R7"
+   ],
+   "n_repairs": 3,
+   "digests": {
+    "rules.py": "ccb373b6edb1e4397d7ac145aca6ff94e995934c9315b1ccc23eb266a288a2ed",
+    "fingerprints.py": "c910c7a057c6e006e2f29b5469163bb16c83b4123a07fab84ef6f80d00b89d86"
+   },
+   "fixtures_failed": [
+    "L2/mit-yyyy-word"
+   ],
+   "n_fixtures_failed": 1,
+   "mutants_surviving_unexpectedly": [],
+   "n_mutants_surviving_unexpectedly": 0,
+   "decision_changing_by_relation": {
+    "M1": 0,
+    "M2": 7,
+    "M3": 0,
+    "M4": 0,
+    "M5": 0,
+    "M6": 0,
+    "M7": 0,
+    "M8": 0
+   },
+   "decision_changing_total": 7,
+   "control_M4": 0,
+   "description_only_total": 1700,
+   "headline_k": 104,
+   "headline_n": 105,
+   "headline_pct": 99.0,
+   "L2": {
+    "n": 67,
+    "counts": {
+     "named": 67
+    }
+   },
+   "no_holder_repos": [],
+   "delivering_gained_vs_shipped": [
+    "AI-in-Health/BioMedArena",
+    "Jinxhy/Awesome-MoAI-Security",
+    "alaaNfissi/Unveiling-Hidden-Factors-Explainable-AI-for-Feature-Boosting-in-Speech-Emotion-Recognition",
+    "raja21068/AutoResearch"
+   ],
+   "delivering_lost_vs_shipped": [],
+   "delivering_symmetric_difference": 4
+  },
+  {
+   "variant": "01110",
+   "repairs": [
+    "R4",
+    "R5",
+    "R6"
+   ],
+   "n_repairs": 3,
+   "digests": {
+    "rules.py": "ccb373b6edb1e4397d7ac145aca6ff94e995934c9315b1ccc23eb266a288a2ed",
+    "fingerprints.py": "0df31f509582f15425339ecb3ed5feeecd53a1209e936ff65c44888d57d69f72"
+   },
+   "fixtures_failed": [],
+   "n_fixtures_failed": 0,
+   "mutants_surviving_unexpectedly": [],
+   "n_mutants_surviving_unexpectedly": 0,
+   "decision_changing_by_relation": {
+    "M1": 0,
+    "M2": 0,
+    "M3": 0,
+    "M4": 0,
+    "M5": 0,
+    "M6": 4,
+    "M7": 0,
+    "M8": 0
+   },
+   "decision_changing_total": 4,
+   "control_M4": 0,
+   "description_only_total": 1190,
+   "headline_k": 100,
+   "headline_n": 105,
+   "headline_pct": 95.2,
+   "L2": {
+    "n": 67,
+    "counts": {
+     "named": 61,
+     "no_copyright_line": 2,
+     "no_holder": 4
+    }
+   },
+   "no_holder_repos": [
+    "AI-in-Health/BioMedArena",
+    "Ewendawi/LLaMEA-BO",
+    "openai/preparedness",
+    "raja21068/AutoResearch"
+   ],
+   "delivering_gained_vs_shipped": [],
+   "delivering_lost_vs_shipped": [],
+   "delivering_symmetric_difference": 0
+  },
+  {
+   "variant": "10011",
+   "repairs": [
+    "R1",
+    "R6",
+    "R7"
+   ],
+   "n_repairs": 3,
+   "digests": {
+    "rules.py": "ccb373b6edb1e4397d7ac145aca6ff94e995934c9315b1ccc23eb266a288a2ed",
+    "fingerprints.py": "7f4cecc8a71843542771b24fbb3b0db9887f1d82e36470b31c96be8c6123be81"
+   },
+   "fixtures_failed": [
+    "L2/mit-yyyy-word",
+    "L2/year-only-no-holder",
+    "NOTICE/no-year-but-capital"
+   ],
+   "n_fixtures_failed": 3,
+   "mutants_surviving_unexpectedly": [
+    "holder/keeps-years",
+    "holder/whole-line"
+   ],
+   "n_mutants_surviving_unexpectedly": 2,
+   "decision_changing_by_relation": {
+    "M1": 0,
+    "M2": 9,
+    "M3": 0,
+    "M4": 0,
+    "M5": 0,
+    "M6": 0,
+    "M7": 0,
+    "M8": 0
+   },
+   "decision_changing_total": 9,
+   "control_M4": 0,
+   "description_only_total": 1435,
+   "headline_k": 100,
+   "headline_n": 105,
+   "headline_pct": 95.2,
+   "L2": {
+    "n": 67,
+    "counts": {
+     "named": 63,
+     "no_copyright_line": 4
+    }
+   },
+   "no_holder_repos": [],
+   "delivering_gained_vs_shipped": [
+    "AI-in-Health/BioMedArena",
+    "raja21068/AutoResearch"
+   ],
+   "delivering_lost_vs_shipped": [
+    "elixir-research-group/Verifierstesttimescaling.github.io",
+    "microsoft/WindowsAgentArena"
+   ],
+   "delivering_symmetric_difference": 4
+  },
+  {
+   "variant": "10101",
+   "repairs": [
+    "R1",
+    "R5",
+    "R7"
+   ],
+   "n_repairs": 3,
+   "digests": {
+    "rules.py": "ccb373b6edb1e4397d7ac145aca6ff94e995934c9315b1ccc23eb266a288a2ed",
+    "fingerprints.py": "e8804b7e9321c9cd99672610c670d7d77e7fb232de3880e081551e25237a46e0"
+   },
+   "fixtures_failed": [
+    "L2/mit-yyyy-word",
+    "NOTICE/no-year-but-capital"
+   ],
+   "n_fixtures_failed": 2,
+   "mutants_surviving_unexpectedly": [],
+   "n_mutants_surviving_unexpectedly": 0,
+   "decision_changing_by_relation": {
+    "M1": 0,
+    "M2": 9,
+    "M3": 5,
+    "M4": 0,
+    "M5": 0,
+    "M6": 0,
+    "M7": 0,
+    "M8": 0
+   },
+   "decision_changing_total": 14,
+   "control_M4": 0,
+   "description_only_total": 1423,
+   "headline_k": 98,
+   "headline_n": 105,
+   "headline_pct": 93.3,
+   "L2": {
+    "n": 67,
+    "counts": {
+     "named": 59,
+     "no_copyright_line": 4,
+     "no_holder": 4
+    }
+   },
+   "no_holder_repos": [
+    "AI-in-Health/BioMedArena",
+    "Ewendawi/LLaMEA-BO",
+    "openai/preparedness",
+    "raja21068/AutoResearch"
+   ],
+   "delivering_gained_vs_shipped": [],
+   "delivering_lost_vs_shipped": [
+    "elixir-research-group/Verifierstesttimescaling.github.io",
+    "microsoft/WindowsAgentArena"
+   ],
+   "delivering_symmetric_difference": 2
+  },
+  {
+   "variant": "10110",
+   "repairs": [
+    "R1",
+    "R5",
+    "R6"
+   ],
+   "n_repairs": 3,
+   "digests": {
+    "rules.py": "ccb373b6edb1e4397d7ac145aca6ff94e995934c9315b1ccc23eb266a288a2ed",
+    "fingerprints.py": "e3b2de02d4320dd25e6c717e9c4794a69fa846d935d0e81e6beff34335a225cd"
+   },
+   "fixtures_failed": [
+    "NOTICE/no-year-but-capital"
+   ],
+   "n_fixtures_failed": 1,
+   "mutants_surviving_unexpectedly": [],
+   "n_mutants_surviving_unexpectedly": 0,
+   "decision_changing_by_relation": {
+    "M1": 141,
+    "M2": 18,
+    "M3": 0,
+    "M4": 0,
+    "M5": 0,
+    "M6": 6,
+    "M7": 0,
+    "M8": 0
+   },
+   "decision_changing_total": 165,
+   "control_M4": 0,
+   "description_only_total": 887,
+   "headline_k": 100,
+   "headline_n": 105,
+   "headline_pct": 95.2,
+   "L2": {
+    "n": 67,
+    "counts": {
+     "named": 61,
+     "no_copyright_line": 2,
+     "no_holder": 4
+    }
+   },
+   "no_holder_repos": [
+    "AI-in-Health/BioMedArena",
+    "Ewendawi/LLaMEA-BO",
+    "openai/preparedness",
+    "raja21068/AutoResearch"
+   ],
+   "delivering_gained_vs_shipped": [],
+   "delivering_lost_vs_shipped": [],
+   "delivering_symmetric_difference": 0
+  },
+  {
+   "variant": "11001",
+   "repairs": [
+    "R1",
+    "R4",
+    "R7"
+   ],
+   "n_repairs": 3,
+   "digests": {
+    "rules.py": "ccb373b6edb1e4397d7ac145aca6ff94e995934c9315b1ccc23eb266a288a2ed",
+    "fingerprints.py": "44985280f6e3e950b67e0a74b4930faef28889c4715e03190e44d06e043883bb"
+   },
+   "fixtures_failed": [
+    "L2/mit-yyyy-word",
+    "NOTICE/no-year-but-capital"
+   ],
+   "n_fixtures_failed": 2,
+   "mutants_surviving_unexpectedly": [],
+   "n_mutants_surviving_unexpectedly": 0,
+   "decision_changing_by_relation": {
+    "M1": 0,
+    "M2": 9,
+    "M3": 5,
+    "M4": 0,
+    "M5": 0,
+    "M6": 0,
+    "M7": 0,
+    "M8": 0
+   },
+   "decision_changing_total": 14,
+   "control_M4": 0,
+   "description_only_total": 1423,
+   "headline_k": 98,
+   "headline_n": 105,
+   "headline_pct": 93.3,
+   "L2": {
+    "n": 67,
+    "counts": {
+     "named": 59,
+     "no_copyright_line": 4,
+     "no_holder": 4
+    }
+   },
+   "no_holder_repos": [
+    "AI-in-Health/BioMedArena",
+    "Ewendawi/LLaMEA-BO",
+    "openai/preparedness",
+    "raja21068/AutoResearch"
+   ],
+   "delivering_gained_vs_shipped": [],
+   "delivering_lost_vs_shipped": [
+    "elixir-research-group/Verifierstesttimescaling.github.io",
+    "microsoft/WindowsAgentArena"
+   ],
+   "delivering_symmetric_difference": 2
+  },
+  {
+   "variant": "11010",
+   "repairs": [
+    "R1",
+    "R4",
+    "R6"
+   ],
+   "n_repairs": 3,
+   "digests": {
+    "rules.py": "ccb373b6edb1e4397d7ac145aca6ff94e995934c9315b1ccc23eb266a288a2ed",
+    "fingerprints.py": "d133d10648cf05b3ae6e702222977432a329ef16af2b5139b98127f2d0b7727c"
+   },
+   "fixtures_failed": [
+    "NOTICE/no-year-but-capital"
+   ],
+   "n_fixtures_failed": 1,
+   "mutants_surviving_unexpectedly": [],
+   "n_mutants_surviving_unexpectedly": 0,
+   "decision_changing_by_relation": {
+    "M1": 0,
+    "M2": 0,
+    "M3": 0,
+    "M4": 0,
+    "M5": 2,
+    "M6": 4,
+    "M7": 0,
+    "M8": 0
+   },
+   "decision_changing_total": 6,
+   "control_M4": 0,
+   "description_only_total": 1113,
+   "headline_k": 100,
+   "headline_n": 105,
+   "headline_pct": 95.2,
+   "L2": {
+    "n": 67,
+    "counts": {
+     "named": 61,
+     "no_copyright_line": 2,
+     "no_holder": 4
+    }
+   },
+   "no_holder_repos": [
+    "AI-in-Health/BioMedArena",
+    "Ewendawi/LLaMEA-BO",
+    "openai/preparedness",
+    "raja21068/AutoResearch"
+   ],
+   "delivering_gained_vs_shipped": [],
+   "delivering_lost_vs_shipped": [],
+   "delivering_symmetric_difference": 0
+  },
+  {
+   "variant": "11100",
+   "repairs": [
+    "R1",
+    "R4",
+    "R5"
+   ],
+   "n_repairs": 3,
+   "digests": {
+    "rules.py": "ccb373b6edb1e4397d7ac145aca6ff94e995934c9315b1ccc23eb266a288a2ed",
+    "fingerprints.py": "6fc19f977437d4d847c6294d6ab1f6bb8530b00dff30e4930d4ed81ce80c3c21"
+   },
+   "fixtures_failed": [
+    "NOTICE/no-year-but-capital"
+   ],
+   "n_fixtures_failed": 1,
+   "mutants_surviving_unexpectedly": [],
+   "n_mutants_surviving_unexpectedly": 0,
+   "decision_changing_by_relation": {
+    "M1": 0,
+    "M2": 0,
+    "M3": 0,
+    "M4": 0,
+    "M5": 0,
+    "M6": 4,
+    "M7": 0,
+    "M8": 0
+   },
+   "decision_changing_total": 4,
+   "control_M4": 0,
+   "description_only_total": 1118,
+   "headline_k": 100,
+   "headline_n": 105,
+   "headline_pct": 95.2,
+   "L2": {
+    "n": 67,
+    "counts": {
+     "named": 61,
+     "no_copyright_line": 2,
+     "no_holder": 4
+    }
+   },
+   "no_holder_repos": [
+    "AI-in-Health/BioMedArena",
+    "Ewendawi/LLaMEA-BO",
+    "openai/preparedness",
+    "raja21068/AutoResearch"
+   ],
+   "delivering_gained_vs_shipped": [],
+   "delivering_lost_vs_shipped": [],
+   "delivering_symmetric_difference": 0
+  },
+  {
+   "variant": "01111",
+   "repairs": [
+    "R4",
+    "R5",
+    "R6",
+    "R7"
+   ],
+   "n_repairs": 4,
+   "digests": {
+    "rules.py": "ccb373b6edb1e4397d7ac145aca6ff94e995934c9315b1ccc23eb266a288a2ed",
+    "fingerprints.py": "88550a11d25c52a77617edb885b9a0640b44e809588d63cb508298ba21351472"
+   },
+   "fixtures_failed": [
+    "L2/mit-yyyy-word",
+    "L2/year-only-no-holder"
+   ],
+   "n_fixtures_failed": 2,
+   "mutants_surviving_unexpectedly": [
+    "holder/keeps-years",
+    "holder/whole-line"
+   ],
+   "n_mutants_surviving_unexpectedly": 2,
+   "decision_changing_by_relation": {
+    "M1": 0,
+    "M2": 7,
+    "M3": 0,
+    "M4": 0,
+    "M5": 0,
+    "M6": 0,
+    "M7": 0,
+    "M8": 0
+   },
+   "decision_changing_total": 7,
+   "control_M4": 0,
+   "description_only_total": 1707,
+   "headline_k": 104,
+   "headline_n": 105,
+   "headline_pct": 99.0,
+   "L2": {
+    "n": 67,
+    "counts": {
+     "named": 67
+    }
+   },
+   "no_holder_repos": [],
+   "delivering_gained_vs_shipped": [
+    "AI-in-Health/BioMedArena",
+    "Jinxhy/Awesome-MoAI-Security",
+    "alaaNfissi/Unveiling-Hidden-Factors-Explainable-AI-for-Feature-Boosting-in-Speech-Emotion-Recognition",
+    "raja21068/AutoResearch"
+   ],
+   "delivering_lost_vs_shipped": [],
+   "delivering_symmetric_difference": 4
+  },
+  {
+   "variant": "10111",
+   "repairs": [
+    "R1",
+    "R5",
+    "R6",
+    "R7"
+   ],
+   "n_repairs": 4,
+   "digests": {
+    "rules.py": "ccb373b6edb1e4397d7ac145aca6ff94e995934c9315b1ccc23eb266a288a2ed",
+    "fingerprints.py": "73b4eab8558ae1279d3e97e710e3924a9e0f943b88a22dd90c5cce33a7d9d7c1"
+   },
+   "fixtures_failed": [
+    "L2/mit-yyyy-word",
+    "L2/year-only-no-holder",
+    "NOTICE/no-year-but-capital"
+   ],
+   "n_fixtures_failed": 3,
+   "mutants_surviving_unexpectedly": [
+    "holder/keeps-years",
+    "holder/whole-line"
+   ],
+   "n_mutants_surviving_unexpectedly": 2,
+   "decision_changing_by_relation": {
+    "M1": 0,
+    "M2": 9,
+    "M3": 0,
+    "M4": 0,
+    "M5": 0,
+    "M6": 0,
+    "M7": 0,
+    "M8": 0
+   },
+   "decision_changing_total": 9,
+   "control_M4": 0,
+   "description_only_total": 1435,
+   "headline_k": 100,
+   "headline_n": 105,
+   "headline_pct": 95.2,
+   "L2": {
+    "n": 67,
+    "counts": {
+     "named": 63,
+     "no_copyright_line": 4
+    }
+   },
+   "no_holder_repos": [],
+   "delivering_gained_vs_shipped": [
+    "AI-in-Health/BioMedArena",
+    "raja21068/AutoResearch"
+   ],
+   "delivering_lost_vs_shipped": [
+    "elixir-research-group/Verifierstesttimescaling.github.io",
+    "microsoft/WindowsAgentArena"
+   ],
+   "delivering_symmetric_difference": 4
+  },
+  {
+   "variant": "11011",
+   "repairs": [
+    "R1",
+    "R4",
+    "R6",
+    "R7"
+   ],
+   "n_repairs": 4,
+   "digests": {
+    "rules.py": "ccb373b6edb1e4397d7ac145aca6ff94e995934c9315b1ccc23eb266a288a2ed",
+    "fingerprints.py": "a08573f51a43eee9585912ee6d3b951fba74206453d59c1e19ad597437a5b725"
+   },
+   "fixtures_failed": [
+    "L2/mit-yyyy-word",
+    "L2/year-only-no-holder",
+    "NOTICE/no-year-but-capital"
+   ],
+   "n_fixtures_failed": 3,
+   "mutants_surviving_unexpectedly": [
+    "holder/keeps-years",
+    "holder/whole-line"
+   ],
+   "n_mutants_surviving_unexpectedly": 2,
+   "decision_changing_by_relation": {
+    "M1": 0,
+    "M2": 9,
+    "M3": 0,
+    "M4": 0,
+    "M5": 0,
+    "M6": 0,
+    "M7": 0,
+    "M8": 0
+   },
+   "decision_changing_total": 9,
+   "control_M4": 0,
+   "description_only_total": 1435,
+   "headline_k": 100,
+   "headline_n": 105,
+   "headline_pct": 95.2,
+   "L2": {
+    "n": 67,
+    "counts": {
+     "named": 63,
+     "no_copyright_line": 4
+    }
+   },
+   "no_holder_repos": [],
+   "delivering_gained_vs_shipped": [
+    "AI-in-Health/BioMedArena",
+    "raja21068/AutoResearch"
+   ],
+   "delivering_lost_vs_shipped": [
+    "elixir-research-group/Verifierstesttimescaling.github.io",
+    "microsoft/WindowsAgentArena"
+   ],
+   "delivering_symmetric_difference": 4
+  },
+  {
+   "variant": "11101",
+   "repairs": [
+    "R1",
+    "R4",
+    "R5",
+    "R7"
+   ],
+   "n_repairs": 4,
+   "digests": {
+    "rules.py": "ccb373b6edb1e4397d7ac145aca6ff94e995934c9315b1ccc23eb266a288a2ed",
+    "fingerprints.py": "1576167527e79c19ead5b8780ca31dd90041899a577791ac1529fe74227e95f4"
+   },
+   "fixtures_failed": [
+    "L2/mit-yyyy-word",
+    "NOTICE/no-year-but-capital"
+   ],
+   "n_fixtures_failed": 2,
+   "mutants_surviving_unexpectedly": [],
+   "n_mutants_surviving_unexpectedly": 0,
+   "decision_changing_by_relation": {
+    "M1": 0,
+    "M2": 9,
+    "M3": 5,
+    "M4": 0,
+    "M5": 0,
+    "M6": 0,
+    "M7": 0,
+    "M8": 0
+   },
+   "decision_changing_total": 14,
+   "control_M4": 0,
+   "description_only_total": 1423,
+   "headline_k": 98,
+   "headline_n": 105,
+   "headline_pct": 93.3,
+   "L2": {
+    "n": 67,
+    "counts": {
+     "named": 59,
+     "no_copyright_line": 4,
+     "no_holder": 4
+    }
+   },
+   "no_holder_repos": [
+    "AI-in-Health/BioMedArena",
+    "Ewendawi/LLaMEA-BO",
+    "openai/preparedness",
+    "raja21068/AutoResearch"
+   ],
+   "delivering_gained_vs_shipped": [],
+   "delivering_lost_vs_shipped": [
+    "elixir-research-group/Verifierstesttimescaling.github.io",
+    "microsoft/WindowsAgentArena"
+   ],
+   "delivering_symmetric_difference": 2
+  },
+  {
+   "variant": "11110",
+   "repairs": [
+    "R1",
+    "R4",
+    "R5",
+    "R6"
+   ],
+   "n_repairs": 4,
+   "digests": {
+    "rules.py": "ccb373b6edb1e4397d7ac145aca6ff94e995934c9315b1ccc23eb266a288a2ed",
+    "fingerprints.py": "60e69da59f4e617323b59b3b1dc5c08cbec67db1452548c1816e118fceb6afcd"
+   },
+   "fixtures_failed": [
+    "NOTICE/no-year-but-capital"
+   ],
+   "n_fixtures_failed": 1,
+   "mutants_surviving_unexpectedly": [],
+   "n_mutants_surviving_unexpectedly": 0,
+   "decision_changing_by_relation": {
+    "M1": 0,
+    "M2": 0,
+    "M3": 0,
+    "M4": 0,
+    "M5": 0,
+    "M6": 4,
+    "M7": 0,
+    "M8": 0
+   },
+   "decision_changing_total": 4,
+   "control_M4": 0,
+   "description_only_total": 1116,
+   "headline_k": 100,
+   "headline_n": 105,
+   "headline_pct": 95.2,
+   "L2": {
+    "n": 67,
+    "counts": {
+     "named": 61,
+     "no_copyright_line": 2,
+     "no_holder": 4
+    }
+   },
+   "no_holder_repos": [
+    "AI-in-Health/BioMedArena",
+    "Ewendawi/LLaMEA-BO",
+    "openai/preparedness",
+    "raja21068/AutoResearch"
+   ],
+   "delivering_gained_vs_shipped": [],
+   "delivering_lost_vs_shipped": [],
+   "delivering_symmetric_difference": 0
+  },
+  {
+   "variant": "11111",
+   "repairs": [
+    "R1",
+    "R4",
+    "R5",
+    "R6",
+    "R7"
+   ],
+   "n_repairs": 5,
+   "digests": {
+    "rules.py": "ccb373b6edb1e4397d7ac145aca6ff94e995934c9315b1ccc23eb266a288a2ed",
+    "fingerprints.py": "20b03f5090ad3b2e693df0049bf850995522156f70500858a9e7a2801fcfedd4"
+   },
+   "fixtures_failed": [
+    "L2/mit-yyyy-word",
+    "L2/year-only-no-holder",
+    "NOTICE/no-year-but-capital"
+   ],
+   "n_fixtures_failed": 3,
+   "mutants_surviving_unexpectedly": [
+    "holder/keeps-years",
+    "holder/whole-line"
+   ],
+   "n_mutants_surviving_unexpectedly": 2,
+   "decision_changing_by_relation": {
+    "M1": 0,
+    "M2": 9,
+    "M3": 0,
+    "M4": 0,
+    "M5": 0,
+    "M6": 0,
+    "M7": 0,
+    "M8": 0
+   },
+   "decision_changing_total": 9,
+   "control_M4": 0,
+   "description_only_total": 1435,
+   "headline_k": 100,
+   "headline_n": 105,
+   "headline_pct": 95.2,
+   "L2": {
+    "n": 67,
+    "counts": {
+     "named": 63,
+     "no_copyright_line": 4
+    }
+   },
+   "no_holder_repos": [],
+   "delivering_gained_vs_shipped": [
+    "AI-in-Health/BioMedArena",
+    "raja21068/AutoResearch"
+   ],
+   "delivering_lost_vs_shipped": [
+    "elixir-research-group/Verifierstesttimescaling.github.io",
+    "microsoft/WindowsAgentArena"
+   ],
+   "delivering_symmetric_difference": 4
+  }
+ ]
+}
