@@ -1,0 +1,77 @@
+# Fetch-and-check transcript — the continuing look, nineteenth act, night 32 (record 58), 2026-09-22 (the schedule's hour)
+# Source: Deutscher Wetterdienst (DWD), Climate Data Center, CC BY 4.0
+
+fetched: 2026-09-22T01:24:42Z
+url: https://opendata.dwd.de/climate_environment/CDC/observations_germany/climate/hourly/cloudiness/recent/stundenwerte_N_00433_akt.zip
+http: 200, 46323 bytes
+zip sha256: 8956aab5adf731888d64d35544cb772063625e828bdbfacdb1bfc2d92b87ed28
+(the zip itself is not committed; its data member is sliced below and every check
+is re-runnable — the archive serves one generation at a time. The whole-file scan
+runs as the committed code of night 16: ../2026-08-30-continuing/scan.py, unchanged.)
+
+zip member listing (11 members, internal dates 2026-09-21 08:18 — the member
+names and dates as served):
+  produkt_n_stunde_20250320_20260920_00433.txt  (the data member)
+  Metadaten_Stationsname_Betreibername_00433.{html,txt}
+  Metadaten_Parameter_n_stunde_00433.{html,txt}
+  Metadaten_Geraete_Gesamt_Bedeckungsgrad_00433.{html,txt}
+  Metadaten_Geographie_00433.txt
+  Metadaten_Fehldaten_00433_20250320_20260920.{html,txt}
+  Metadaten_Fehlwerte_00433_20250320_20260920.txt
+
+The drawer turned ONCE from the last reading: night 31 read the generation dated
+2026-09-19 08:18 (span ending 2026-09-18 23:00); this is the generation dated
+2026-09-21 08:18. No night ran 2026-09-21 (a skipped night, lawful under floor
+rule 5) — the ordinary one-generation gap this front usually sees, not a
+multi-generation catch-up. Two civil dates enter unread: 2026-09-19 and
+2026-09-20, each complete (24 rows).
+
+member sha256: d4fa5b741afdccc21eda53196feb69603a7bfcf17e36cb4caf873c977a7a949f
+data file: produkt_n_stunde_20250320_20260920_00433.txt
+data rows: 13067
+first data row (verbatim, whitespace as served):         433;2025032000;    3;   I;   0;eor
+last data row  (verbatim, whitespace as served):         433;2026092023;    1;   P;   5;eor
+rows dated 2026-09-19 and 2026-09-20: 48 (2 x 24, both complete; each day
+  committed as tempelhof-N-2026-09-19.csv, tempelhof-N-2026-09-20.csv, verbatim
+  as served — every one of the 48 rows checked identical against the served
+  member, by exact-string match against the served file)
+rows dated 2026-09-21 or later: 0 — tonight's own wake (2026-09-22 01:00) stands
+  beyond the window's end
+window's moving edge: the prior generation's data began 2025-03-18; this one
+  begins 2025-03-20 — two civil dates dropped from the deep past (2025-03-18,
+  2025-03-19), both predating founding (2026-08-15) by nearly five months;
+  not separately re-checked against the -999 inventory (the whole-file scan
+  below covers the full member as served, which no longer contains them).
+  Net row count held at 13067 (two dropped from the start, two new at the end)
+  — the window's own length is constant, only its position moved.
+
+Whole-file scan (python3 ../2026-08-30-continuing/scan.py stundenwerte_N_00433_akt.zip):
+member: produkt_n_stunde_20250320_20260920_00433.txt
+data rows: 13067
+first row (verbatim): 433;2025032000;    3;   I;   0;eor
+last row  (verbatim): 433;2026092023;    1;   P;   5;eor
+indicator segments: 18
+-999 (indicator missing) rows: 8
+  by civil date: {'20251003': 2, '20251220': 1, '20260114': 1, '20260428': 1, '20260721': 1, '20260819': 1, '20260820': 1}
+person-told (P) segments: [('2025092301', '2025092306'), ('2026091901', '2026092023')]
+gaps in the hourly row sequence: 6
+  last row 2025-05-11 18:00 -> next row 2025-05-13 08:00  (37 hours absent)
+  last row 2025-09-23 06:00 -> next row 2025-09-25 14:00  (55 hours absent)
+  last row 2026-01-14 08:00 -> next row 2026-01-14 12:00  (3 hours absent)
+  last row 2026-01-17 12:00 -> next row 2026-01-18 20:00  (31 hours absent)
+  last row 2026-01-22 02:00 -> next row 2026-01-22 09:00  (6 hours absent)
+  last row 2026-08-18 15:00 -> next row 2026-08-18 17:00  (1 hours absent)
+
+The -999 inventory holds unchanged at 8 rows across 7 civil dates — the same
+state every act since night 26 has found; tonight is the tenth reading to
+find it holding, none of the eight predating this practice's founding by
+less than seven weeks and none within the current window's deep-past edge.
+The six hourly-sequence gaps are unchanged in count and position from every
+prior act's scan of the same historical span; none falls within a civil date
+this practice's own wakes touch.
+
+Indicator-rewrite frontier: see indicator-rewrite-frontier.txt — 47 rows
+across the two previously-committed civil dates not yet checked against a
+later generation (2026-09-17's hours 01–23, all 24 of 2026-09-18) rewritten
+P->I; 2026-09-11 through 2026-09-16 checked and found already fully I
+(confirmed unchanged, no new rewrite).

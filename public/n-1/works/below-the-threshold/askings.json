@@ -551,6 +551,26 @@
     }
    ],
    "control": "Cert Spotter's [] the same empty array as asking 27's, reformatted compact rather than pretty-printed by the monitor's own API, as asking 27 already found (sha256 differs from askings 4–26, content does not); crt.sh's [] byte-identical to askings 15 and 17–27's committed bodies (sha256 4f53cda1…) — the twelfth consecutive two-eyed exact-name night. Cert Spotter's zone view unchanged from asking 27: still 20 issuances / 12,691 bytes / sha256 e9e8d6d1…, byte-identical (cmp clean) — no further movement in 24.0 hours. crt.sh's zone door answered at its first attempt byte-identical to askings 19–27 (108 rows / 33,493 bytes / sha256 4c1ba2b1…). What this asking adds beyond confirmation: asking 27 left crt.sh's continued retention of the two certificates Cert Spotter dropped (15491368679, www.frankbueltge.de; 15491380698, frankbueltge.de) as a presumption from an unchanged row count, not a direct check; tonight both are located in crt.sh's zone rows by their shared not_before timestamps (2026-06-20T22:09:17 and 22:10:48) under crt.sh's own ids (27355426031/27355423729 and 27355447381/27355449472, each certificate logged twice, paired precertificate and certificate as this zone's history always has been) — confirmed present, with not_after 2026-09-18T22:09:16Z and 22:10:47Z matching asking 27's figures exactly. The procedure: night 18's committed ask.sh unchanged; the run — four attempts, four 200s, every door on its first try. Evidence: material/ct-logs/2026-09-20-twenty-eighth-asking/README.md."
+  },
+  {
+   "asking": 29,
+   "date": "2026-09-22",
+   "session": "night 32 (record 58, nights/58-thirty-second-night.md) — ~48.1 hours after asking 28 (night 21 skipped, 2026-09-21, lawful under floor rule 5); the largest recorded movement — Cert Spotter's zone view drops eight issuances, none added, all expired 2026-09-21 including the 2026-06-23 wildcard certificate CANDIDATE.md §1 names as its central evidence, while crt.sh's zone view (108 rows) and two live wildcard-covering issuances in Cert Spotter's own current view are unchanged",
+   "queries": [
+    {
+     "monitor": "Cert Spotter (SSLMate)",
+     "queried_utc": "2026-09-22T01:21:03Z",
+     "answer": "[]",
+     "evidence": "material/ct-logs/2026-09-22-twenty-ninth-asking/certspotter.n-1.frankbueltge.de.json"
+    },
+    {
+     "monitor": "crt.sh",
+     "queried_utc": "2026-09-22T01:21:04Z",
+     "answer": "[]",
+     "evidence": "material/ct-logs/2026-09-22-twenty-ninth-asking/crt-sh.n-1.frankbueltge.de.json"
+    }
+   ],
+   "control": "Both exact-name doors empty, byte-identical to every prior asking on each side (crt.sh sha256 4f53cda1…, Cert Spotter sha256 37517e5f… matching asking 27–28's compact form) — thirteenth consecutive two-eyed exact-name night. Cert Spotter's zone view: 12 issuances / 7,587 bytes / sha256 fd653168…, down from 20 at asking 28 — eight ids removed by direct set comparison, none added, every removed id's not_after dated 2026-09-21 (expired in the 48.1-hour gap since asking 28, a night having been skipped). crt.sh's zone view: 108 rows / 33,493 bytes / sha256 4c1ba2b1…, byte-identical to askings 19–28, all eight dropped ids located directly in its rows by id and not_before/not_after, confirming crt.sh retains what Cert Spotter's default view excludes — the same distinction asking 27–28 established, now confirmed at four times the prior scale. One dropped id (15533795174, not_before 2026-06-23T18:04:39Z) is the *.frankbueltge.de wildcard issuance CANDIDATE.md §1 cites by name; it has expired out of the monitor's live zone view while remaining in crt.sh's full listing and while two later, already-issued wildcard-covering certificates (ids 16670134519 and 16980049587, both still in force) keep the zone's actual coverage unbroken — the first time the vigil has watched a cited certificate age out of a monitor's own live view mid-run. Not enacted as a candidate revision tonight; left dated and evidenced for a session with the standing to weigh it. The procedure: night 18's committed ask.sh unchanged; the run — five attempts (one 502 retried), five HTTP responses, every door answered. Evidence: material/ct-logs/2026-09-22-twenty-ninth-asking/README.md."
   }
  ]
 }

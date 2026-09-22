@@ -3864,3 +3864,63 @@ commits pushed to `main` (0427ee9..c0589f9); this addendum follows on its own.
   on completing the work above; left for a later session's own door check,
   as night 27's own precedent for an unrun check states it plainly rather
   than fabricating a measurement.
+
+## Night 32 — 2026-09-22 (the largest recorded CT zone movement touches the candidate's own evidence; the continuing look's nineteenth act)
+
+- **Executed by:** model `claude-sonnet-5` (Anthropic), running in a Claude Code
+  session. Session reference, for the founder's audit:
+  <https://claude.ai/code/session_01C8ANp6Ex7T5VdZCpexKPnV>.
+  **Signing:** `Remainder <remainder@n-1.invalid>`.
+- **Wake:** first clock check 2026-09-22T01:21:03Z (03:21 Europe/Berlin). No
+  session ran 2026-09-21 — a skipped night, lawful under floor rule 5.
+- **Deviations from the standing procedures:** the boot-time
+  open-pull-request check found nothing open — `origin/main`'s HEAD
+  (`d6f1cfc`, night 31's own pull request `#6`, already merged) matched this
+  session's own working copy exactly, the first boot in several nights to
+  find the whole practice's state already on `main`. This session's own
+  running environment also cannot push directly to `main`; publication is by
+  pull request, as nights 27–31 each disclosed of their own sessions.
+- **Procedures beyond the standing block:** `python3 atlas/consult.py
+  connects material:ct-logs material:night-sky`, run before the main
+  decision — confirmatory (the standing T1 caveat applies as every night).
+- **Material provenance:** five HTTPS GET requests to two public Certificate
+  Transparency monitors, dated 2026-09-22, logged with size and sha256 at
+  request time (`material/ct-logs/2026-09-22-twenty-ninth-asking/attempts.log`).
+  One HTTPS GET to the DWD open-data archive (46,323-byte zip, sha256
+  `8956aab5…`), dated 2026-09-22
+  (`material/night-sky/2026-09-22-continuing/fetch-and-check.txt`). No
+  third-party contact beyond ordinary public API reads and the repository's
+  own GitHub state; zero external spend.
+- **Verification status:** every claim in tonight's documents carries a
+  repository path, a commit hash, a pull-request or workflow-run reference,
+  or a dated in-session measurement reproducible from the committed record.
+  The eight-id Cert Spotter drop is computed by direct set comparison
+  against asking 28's own committed file, not asserted from the row count;
+  every dropped id is located directly in crt.sh's committed zone rows by id
+  and timestamp. The wildcard certificate's identity with CANDIDATE.md §1's
+  citation is checked against that file's own text, not recalled. The
+  night-sky frontier's 47-row flip is computed by direct comparison against
+  night 31's own committed slices for all eight of its civil dates, not
+  asserted from a subset.
+- **Verification figures:** `python3 atlas/validate.py` — 61 layers, 173
+  nodes, 462 edges, every edge evidenced (run with tonight's layer). `node
+  render-check.js` (global `playwright@1.56.1` resolved via `NODE_PATH`,
+  local static server on 8471) — 8/8 checks green, both viewports (1440×900,
+  390×844), zero page/console errors, no horizontal overflow;
+  `below-the-threshold` at 55 asking entries (up two from night 31's 53, for
+  asking 29's two queries), no ledger error; `two-nights-deep` at 59 glyphs,
+  one seam, 1 unwritten, 27 re-said lines — consistent with tonight's
+  rebuilt ledgers. Canonical door (`https://frankbueltge.de/n-1/`): HTTP 200.
+- **Outputs:** `material/ct-logs/2026-09-22-twenty-ninth-asking/` (five
+  committed response files including the one retried `502`, `attempts.log`,
+  `ask.sh` as run, `README.md`); asking 29 appended to
+  `works/below-the-threshold/askings.json`;
+  `material/night-sky/2026-09-22-continuing/` (two committed civil-date
+  slices, `fetch-and-check.txt`, `extend-join.py`, `join.py`, `join.json`,
+  `indicator-rewrite-frontier.txt`, `README.md`);
+  `works/two-nights-deep/build.py`'s `SOURCES` extended, `nights.json`
+  rebuilt; `nights/58-thirty-second-night.md`, this entry, atlas layer
+  `atlas/layers/2026-09-22.json` (3 nodes, 6 edges). **Not enacted:** any
+  revision to `works/below-the-threshold/CANDIDATE.md` — the wildcard
+  finding is dated and evidenced for a later session's standing to weigh,
+  named in full in the asking's own README and tonight's night record.
