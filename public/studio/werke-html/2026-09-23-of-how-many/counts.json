@@ -1,0 +1,420 @@
+{
+ "work": "OF HOW MANY",
+ "built": "census.py, exact integer arithmetic, nothing sampled",
+ "nmax": 2000,
+ "rules": [
+  "half_even",
+  "half_up",
+  "trunc"
+ ],
+ "floor_crosscheck": {
+  "d0": {
+   "agree": 101,
+   "disagree": 0,
+   "beyond_brute_force": 0,
+   "brute_force_nmax": 2000
+  },
+  "d1": {
+   "agree": 1001,
+   "disagree": 0,
+   "beyond_brute_force": 0,
+   "brute_force_nmax": 2000
+  },
+  "d2": {
+   "agree": 9987,
+   "disagree": 0,
+   "beyond_brute_force": 14,
+   "brute_force_nmax": 2000
+  }
+ },
+ "floors": {
+  "d0": {
+   "values": 101,
+   "max": 67,
+   "max_at": [
+    1,
+    99
+   ],
+   "median": 13,
+   "mean": 14.97,
+   "floor_is_1": 2,
+   "floor_over_100": 0,
+   "floor_over_1000": 0,
+   "differs_under_truncation": 65,
+   "truncation_max": 100
+  },
+  "d1": {
+   "values": 1001,
+   "max": 667,
+   "max_at": [
+    1,
+    999
+   ],
+   "median": 41,
+   "mean": 50.056,
+   "floor_is_1": 2,
+   "floor_over_100": 62,
+   "floor_over_1000": 0,
+   "differs_under_truncation": 682,
+   "truncation_max": 1000
+  },
+  "d2": {
+   "values": 10001,
+   "max": 6667,
+   "max_at": [
+    1,
+    9999
+   ],
+   "median": 131,
+   "mean": 160.792,
+   "floor_is_1": 2,
+   "floor_over_100": 6956,
+   "floor_over_1000": 62,
+   "differs_under_truncation": 6992,
+   "truncation_max": 10000
+  }
+ },
+ "fan": {
+  "decimals": 1,
+  "nmax": 2000,
+  "printed_values": 1001,
+  "cells": 2002000,
+  "cells_possible": 1502500,
+  "cells_impossible": 499500,
+  "cells_two_or_more_numerators": 500001,
+  "cells_the_rule_decides": 4601,
+  "picture_classes": {
+   "dark_impossible": 498900,
+   "one_numerator": 1000199,
+   "pale_several_numerators": 498300,
+   "red_the_rule_decides": 4601
+  },
+  "picture_note": "The picture paints the red class over the other three: a cell where the rounding rule decides whether that percentage is printed at all is red, whether or not half-to-even prints it. So the dark count below is the impossible count less the impossible cells that are red.",
+  "pairs": 2003000,
+  "first_denominator_with_two_numerators": 1001,
+  "distinct_values_at_n": {
+   "1": 2,
+   "2": 3,
+   "3": 4,
+   "7": 8,
+   "10": 11,
+   "16": 17,
+   "20": 21,
+   "30": 31,
+   "50": 51,
+   "100": 101,
+   "200": 201,
+   "500": 501,
+   "1000": 1001,
+   "1001": 1001,
+   "2000": 1001
+  },
+  "bin_sha256": "aa1838478e598c96dcc9a7706839cae2d5557d683bbf5f9301b924a09eef5bdd",
+  "png_sha256": "ecc043590bc47bc5193c87f47f34a9d7b875f8deb70f1e484fdb5d62c3c215bf",
+  "png_bytes": 26084
+ },
+ "ties": {
+  "decimals": 1,
+  "nmax": 2000,
+  "pairs_on_a_boundary": 3400,
+  "by_reduced_denominator": {
+   "16": 1000,
+   "80": 800,
+   "400": 800,
+   "2000": 800
+  },
+  "reduced_denominators": [
+   16,
+   80,
+   400,
+   2000
+  ]
+ },
+ "rule_disagreement": {
+  "pairs": 2003000,
+  "half_up_vs_half_even": 1700,
+  "half_up_vs_truncation": 993700,
+  "half_even_vs_truncation": 992000,
+  "half_up_vs_truncation_pct": 49.6106
+ },
+ "tie_theorem": {
+  "d0": {
+   "observed": [
+    8,
+    40,
+    200
+   ],
+   "predicted_to_nmax": [
+    8,
+    40,
+    200
+   ],
+   "agree": true
+  },
+  "d1": {
+   "observed": [
+    16,
+    80,
+    400,
+    2000
+   ],
+   "predicted_to_nmax": [
+    16,
+    80,
+    400,
+    2000
+   ],
+   "agree": true
+  },
+  "d2": {
+   "observed": [
+    32,
+    160,
+    800
+   ],
+   "predicted_to_nmax": [
+    32,
+    160,
+    800
+   ],
+   "agree": true
+  }
+ },
+ "worlds": {
+  "nmax": 2000,
+  "mean_pairs_per_printed_value": 2001.0,
+  "mean_denominators_per_printed_value": 1501.0,
+  "fewest_denominators": [
+   {
+    "printed": 0.1,
+    "denominators": 1334,
+    "pairs": 2000
+   },
+   {
+    "printed": 99.9,
+    "denominators": 1334,
+    "pairs": 2000
+   },
+   {
+    "printed": 33.4,
+    "denominators": 1429,
+    "pairs": 2002
+   },
+   {
+    "printed": 66.6,
+    "denominators": 1429,
+    "pairs": 2002
+   },
+   {
+    "printed": 0.2,
+    "denominators": 1468,
+    "pairs": 2004
+   },
+   {
+    "printed": 42.8,
+    "denominators": 1468,
+    "pairs": 2004
+   }
+  ],
+  "most_denominators": [
+   {
+    "printed": 100.0,
+    "denominators": 2000,
+    "pairs": 2001
+   },
+   {
+    "printed": 0.0,
+    "denominators": 2000,
+    "pairs": 2001
+   },
+   {
+    "printed": 66.7,
+    "denominators": 1599,
+    "pairs": 1998
+   },
+   {
+    "printed": 33.3,
+    "denominators": 1599,
+    "pairs": 1998
+   }
+  ]
+ },
+ "sentences": [
+  {
+   "printed": "44.44",
+   "decimals": 2,
+   "note": "a percentage of this house, printed 2026-09-23 without its integers",
+   "floor": 9,
+   "floor_k": 4,
+   "denominators_up_to_nmax": 314,
+   "first_ten_denominators": [
+    9,
+    18,
+    27,
+    36,
+    45,
+    54,
+    63,
+    72,
+    81,
+    90
+   ],
+   "rules_out_1000": true,
+   "rules_out_100": true
+  },
+  {
+   "printed": "10.63",
+   "decimals": 2,
+   "note": "a percentage of this house, printed 2026-09-23 without its integers",
+   "floor": 207,
+   "floor_k": 22,
+   "denominators_up_to_nmax": 193,
+   "first_ten_denominators": [
+    207,
+    254,
+    301,
+    348,
+    367,
+    395,
+    414,
+    442,
+    461,
+    489
+   ],
+   "rules_out_1000": true,
+   "rules_out_100": true
+  },
+  {
+   "printed": "2.91",
+   "decimals": 2,
+   "note": "a percentage of this house, printed 2026-09-23 without its integers",
+   "floor": 103,
+   "floor_k": 3,
+   "denominators_up_to_nmax": 203,
+   "first_ten_denominators": [
+    103,
+    172,
+    206,
+    275,
+    309,
+    344,
+    378,
+    412,
+    413,
+    446
+   ],
+   "rules_out_1000": true,
+   "rules_out_100": true
+  },
+  {
+   "printed": "7.11",
+   "decimals": 2,
+   "note": "a percentage of this house, printed 2026-09-23 without its integers",
+   "floor": 197,
+   "floor_k": 14,
+   "denominators_up_to_nmax": 200,
+   "first_ten_denominators": [
+    197,
+    211,
+    225,
+    239,
+    253,
+    380,
+    394,
+    408,
+    422,
+    436
+   ],
+   "rules_out_1000": true,
+   "rules_out_100": true
+  },
+  {
+   "printed": "6.88",
+   "decimals": 2,
+   "note": "a percentage of this house, printed 2026-09-22 without its integers",
+   "floor": 160,
+   "floor_k": 11,
+   "denominators_up_to_nmax": 205,
+   "first_ten_denominators": [
+    160,
+    189,
+    218,
+    247,
+    276,
+    320,
+    349,
+    378,
+    407,
+    436
+   ],
+   "rules_out_1000": true,
+   "rules_out_100": true
+  },
+  {
+   "printed": "30.5",
+   "decimals": 1,
+   "note": "a percentage of this room, printed 2026-09-22 with its integers",
+   "floor": 59,
+   "floor_k": 18,
+   "denominators_up_to_nmax": 1499,
+   "first_ten_denominators": [
+    59,
+    82,
+    95,
+    105,
+    118,
+    128,
+    131,
+    141,
+    151,
+    154
+   ],
+   "rules_out_1000": false,
+   "rules_out_100": true
+  },
+  {
+   "printed": "0.1",
+   "decimals": 1,
+   "note": "the one-decimal percentage with the highest floor there is",
+   "floor": 667,
+   "floor_k": 1,
+   "denominators_up_to_nmax": 1334,
+   "first_ten_denominators": [
+    667,
+    668,
+    669,
+    670,
+    671,
+    672,
+    673,
+    674,
+    675,
+    676
+   ],
+   "rules_out_1000": false,
+   "rules_out_100": true
+  },
+  {
+   "printed": "33.4",
+   "decimals": 1,
+   "note": "one digit away from a third",
+   "floor": 287,
+   "floor_k": 96,
+   "denominators_up_to_nmax": 1429,
+   "first_ten_denominators": [
+    287,
+    290,
+    293,
+    296,
+    299,
+    302,
+    305,
+    308,
+    311,
+    314
+   ],
+   "rules_out_1000": false,
+   "rules_out_100": true
+  }
+ ]
+}

@@ -1,0 +1,99 @@
+/* OF HOW MANY — a page about printed numbers, so it is printed: paper, ink, one
+   accent for the place where the arithmetic stops being able to decide. */
+:root{
+  --paper:#f7f5f0; --ink:#17161a; --dim:#5d5a63; --faint:#8c8892;
+  --rule:#ddd8ce; --panel:#efece5; --hot:#a8341f; --cool:#2d5d77; --deep:#111014;
+}
+*{box-sizing:border-box}
+html{background:var(--paper)}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font:17px/1.62 Iowan Old Style,Palatino Linotype,Palatino,Georgia,serif;
+  -webkit-text-size-adjust:100%}
+main{max-width:980px;margin:0 auto;padding:0 22px 120px}
+h1,h2,h3,.sans,th,caption,figcaption,small,code,.tag,.lab,.axis{
+  font-family:ui-sans-serif,Inter,Helvetica Neue,Segoe UI,Arial,sans-serif}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.86em;color:var(--dim)}
+
+header{padding:72px 0 30px;border-bottom:2px solid var(--ink)}
+h1{font-size:clamp(40px,9vw,86px);line-height:.94;letter-spacing:-.03em;
+  font-weight:800;margin:0 0 20px;text-transform:uppercase}
+.stand{font-size:clamp(19px,2.6vw,25px);line-height:1.42;margin:0 0 22px;max-width:46ch}
+.meta{font-size:13.5px;color:var(--faint);letter-spacing:.02em;margin:0}
+.meta b{color:var(--dim);font-weight:600}
+
+section{padding:52px 0;border-bottom:1px solid var(--rule)}
+h2{font-size:13px;letter-spacing:.17em;text-transform:uppercase;color:var(--dim);
+  font-weight:700;margin:0 0 24px}
+h3{font-size:19px;margin:36px 0 12px;font-weight:700;letter-spacing:-.01em}
+p{margin:0 0 17px;max-width:70ch}
+.lead{font-size:20.5px;line-height:1.5;max-width:60ch}
+.dim{color:var(--dim)}
+strong{font-weight:700}
+a{color:var(--ink);text-underline-offset:3px;text-decoration-color:var(--faint)}
+
+/* a percentage on this page carries its own two integers, or says it has none */
+.pc{white-space:nowrap;font-weight:700}
+.pc .of{font-weight:400;color:var(--dim);font-size:.88em;white-space:nowrap}
+.pc.quoted .of{color:var(--hot)}
+
+figure{margin:0 0 6px}
+figcaption{font-size:13px;color:var(--dim);line-height:1.5;margin-top:10px;max-width:76ch}
+svg{display:block;max-width:100%;height:auto}
+svg rect,svg path,svg line{shape-rendering:crispEdges}
+.axis{fill:var(--faint);font:600 10px/1 ui-sans-serif,Arial,sans-serif;letter-spacing:.09em}
+.mark{fill:var(--hot);font:700 10px/1 ui-sans-serif,Arial,sans-serif}
+.bars{fill:var(--deep)}
+.grid-l{stroke:var(--rule);stroke-width:1}
+.fan{display:block;width:100%;height:auto;image-rendering:pixelated;
+  border:1px solid var(--rule);background:var(--paper)}
+
+/* the CSS-only control: three precisions, no script anywhere near it */
+.ctl{border:0;padding:0;margin:0 0 18px}
+.ctl legend{font:700 11.5px/1 ui-sans-serif,Arial,sans-serif;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--faint);padding:0;margin-bottom:10px}
+input[name=dec]{position:absolute;opacity:0;width:1px;height:1px}
+.ctl label{display:inline-block;border:1px solid var(--rule);background:var(--panel);
+  padding:7px 13px;margin:0 7px 7px 0;font:600 13.5px/1.2 ui-sans-serif,Arial,sans-serif;
+  color:var(--dim);cursor:pointer;border-radius:3px}
+input[name=dec]:focus-visible+.ctl label[for]{outline:2px solid var(--cool);outline-offset:2px}
+#d0:checked~.ctl label[for=d0],#d1:checked~.ctl label[for=d1],#d2:checked~.ctl label[for=d2]{
+  border-color:var(--ink);background:var(--paper);color:var(--ink)}
+.band{display:none}
+#d0:checked~.bands .b0,#d1:checked~.bands .b1,#d2:checked~.bands .b2{display:block}
+
+table{border-collapse:collapse;width:100%;font-size:14.5px;margin:6px 0 4px}
+caption{text-align:left;font-size:13.5px;color:var(--dim);line-height:1.5;
+  margin-bottom:12px;max-width:76ch}
+th,td{text-align:left;padding:9px 12px 9px 0;border-bottom:1px solid var(--rule);
+  vertical-align:top}
+thead th{font-size:11.5px;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--faint);font-weight:700;padding-bottom:7px}
+tbody th{font-weight:600;white-space:nowrap}
+td small{display:block;color:var(--faint);font-size:11.5px}
+.num td,.num th{font-variant-numeric:tabular-nums}
+.mono{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px}
+.no{color:var(--hot);font-weight:700}
+.yes{color:var(--cool);font-weight:700}
+
+.keys{display:flex;flex-wrap:wrap;gap:14px 26px;margin:14px 0 0;padding:0;list-style:none;
+  font:13px/1.3 ui-sans-serif,Arial,sans-serif;color:var(--dim)}
+.keys li{display:flex;align-items:center;gap:8px}
+.sw{width:14px;height:14px;border:1px solid rgba(0,0,0,.18);border-radius:2px;flex:0 0 auto}
+
+.big{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:26px;margin:30px 0 8px}
+.big div{border-top:2px solid var(--ink);padding-top:12px}
+.big b{display:block;font:700 34px/1.05 ui-sans-serif,Arial,sans-serif;letter-spacing:-.02em;
+  font-variant-numeric:tabular-nums}
+.big span{display:block;font:13px/1.45 ui-sans-serif,Arial,sans-serif;color:var(--dim);margin-top:7px}
+
+.note{background:var(--panel);border-left:3px solid var(--ink);padding:16px 18px;margin:26px 0;
+  font-size:15px;line-height:1.55}
+.note p{margin:0 0 10px;max-width:none}
+.note p:last-child{margin:0}
+.sum{font-size:15px}
+footer{padding:50px 0 0;color:var(--faint);font-size:13.5px;line-height:1.6}
+footer a{color:var(--dim)}
+@media(max-width:620px){
+  .big{gap:18px}
+  th,td{font-size:13.5px}
+}

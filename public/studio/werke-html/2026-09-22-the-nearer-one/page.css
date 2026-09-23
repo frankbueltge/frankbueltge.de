@@ -1,0 +1,138 @@
+/* The page is grey on purpose. Any colour placed beside a swatch changes what
+   you see of that swatch, and this page is asking you to look at swatches. */
+:root{
+  --bg:#0c0c0d; --ink:#e9e9ea; --dim:#9b9b9f; --faint:#6a6a6e;
+  --rule:#26262a; --panel:#141416; --hot:#e8e8ea;
+}
+*{box-sizing:border-box}
+html{background:var(--bg)}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:17px/1.62 Iowan Old Style,Palatino Linotype,Palatino,Georgia,serif;
+  -webkit-text-size-adjust:100%}
+main{max-width:980px;margin:0 auto;padding:0 22px 120px}
+h1,h2,h3,.sans,th,.coal,.olab,.tag,figcaption,caption,small,code,.cnt,.rt,.panehead,.rplab{
+  font-family:ui-sans-serif,Inter,Helvetica Neue,Segoe UI,Arial,sans-serif}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.86em;color:var(--dim)}
+
+header{padding:76px 0 34px;border-bottom:1px solid var(--rule)}
+h1{font-size:clamp(38px,8.4vw,74px);line-height:.98;letter-spacing:-.025em;
+  font-weight:800;margin:0 0 20px;text-transform:uppercase}
+.stand{font-size:clamp(19px,2.6vw,25px);line-height:1.42;margin:0 0 22px;max-width:44ch}
+.meta{font-size:13.5px;color:var(--faint);letter-spacing:.02em;margin:0}
+.meta b{color:var(--dim);font-weight:600}
+
+section{padding:56px 0;border-bottom:1px solid var(--rule)}
+h2{font-size:13px;letter-spacing:.17em;text-transform:uppercase;color:var(--dim);
+  font-weight:700;margin:0 0 26px}
+h3{font-size:19px;margin:38px 0 12px;font-weight:700;letter-spacing:-.01em}
+p{margin:0 0 17px;max-width:70ch}
+.lead{font-size:20.5px;line-height:1.5;max-width:60ch}
+.dim{color:var(--dim)}
+em.k{font-style:normal;background:#26262a;padding:.08em .34em;border-radius:3px}
+
+.chip{display:inline-block;width:16px;height:16px;vertical-align:-3px;border-radius:2px;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.16)}
+.chip.big{width:74px;height:74px;border-radius:3px;display:block}
+
+.grid{display:block;max-width:100%;height:auto;margin:6px 0 10px}
+.grid rect{shape-rendering:crispEdges}
+.frame{fill:none;stroke:rgba(255,255,255,.24);stroke-width:1}
+.glab{fill:var(--faint);font:600 10px/1 ui-sans-serif,Arial,sans-serif;letter-spacing:.1em}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:start}
+.two figcaption{font-size:13px;color:var(--dim);line-height:1.45;margin-top:8px}
+figure{margin:0}
+
+table{border-collapse:collapse;width:100%;font-size:14.5px;margin:6px 0 4px}
+caption{text-align:left;font-size:13.5px;color:var(--dim);line-height:1.5;
+  margin-bottom:12px;max-width:74ch}
+th,td{text-align:left;padding:9px 12px 9px 0;border-bottom:1px solid var(--rule);
+  vertical-align:top}
+thead th,thead td{font-size:11.5px;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--faint);font-weight:700;padding-bottom:7px}
+tbody th{font-weight:600;white-space:nowrap}
+td small{display:block;color:var(--faint);font-size:11.5px}
+.num td{font-variant-numeric:tabular-nums;font-family:ui-monospace,Menlo,monospace;font-size:13.5px}
+.num .note{font-family:inherit;color:var(--dim);font-size:13.5px}
+.mx td{white-space:nowrap}
+.self{color:var(--faint)}
+.ok{color:#8fbf9a}.bad{color:#e0a05a}
+.five td{font-size:14.5px;color:var(--dim)}
+.five .yr,.five .sym{white-space:nowrap;color:var(--faint);font-size:13px}
+.tag{font-weight:700;color:var(--ink);font-size:13.5px;white-space:nowrap}
+
+.big-nums{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;margin:0 0 30px}
+.big-nums div{border-top:2px solid var(--ink);padding-top:12px}
+.big-nums b{display:block;font:800 clamp(27px,4.6vw,42px)/1 ui-sans-serif,Arial,sans-serif;
+  letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.big-nums span{display:block;font-size:13px;color:var(--dim);margin-top:7px;
+  font-family:ui-sans-serif,Arial,sans-serif;line-height:1.4}
+
+.wall{list-style:none;margin:0;padding:0}
+.case{border-top:1px solid var(--rule);padding:22px 0}
+.case .hd{display:flex;flex-wrap:wrap;gap:6px 18px;align-items:baseline;margin-bottom:14px}
+.coal{font-weight:700;font-size:14px;letter-spacing:.02em}
+.cnt,.rt{font-size:12.5px;color:var(--faint)}
+.tri{display:flex;flex-wrap:wrap;gap:22px;align-items:flex-start}
+.ref figcaption{font-size:12px;color:var(--dim);margin-top:7px;line-height:1.35}
+.cands{display:flex;gap:14px}
+.cand{background:none;border:0;padding:0;cursor:default;font:inherit;color:inherit;
+  display:block;text-align:left}
+.cand code{display:block;margin-top:7px;font-size:11.5px}
+.votes{display:flex;flex-wrap:wrap;gap:7px;align-content:flex-start;max-width:280px}
+.v{font-family:ui-sans-serif,Arial,sans-serif;font-size:11px;line-height:1.25;
+  border:1px solid var(--rule);border-radius:3px;padding:4px 7px;color:var(--faint)}
+.v b{display:block;font-size:10px;letter-spacing:.06em;color:var(--dim);font-weight:700}
+.v0,.v1{color:var(--ink)}
+.case.none{opacity:.55}
+
+.orders{margin-top:6px}
+.rp{position:absolute;opacity:0;pointer-events:none}
+.rplabs{display:flex;flex-wrap:wrap;gap:9px;margin:0 0 20px}
+.rplab{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--rule);
+  border-radius:4px;padding:5px 9px;font-size:12px;cursor:pointer}
+.rplab code{font-size:11px}
+.pane{display:none}
+.panehead{font-size:13px;color:var(--dim);margin:0 0 14px;max-width:76ch}
+.orow{display:flex;align-items:center;gap:12px;margin-bottom:5px}
+.olab{font-size:11px;color:var(--faint);width:112px;flex:0 0 112px;text-align:right;
+  letter-spacing:.03em}
+.orow svg{flex:1 1 auto;min-width:0;height:26px}
+.orow rect{shape-rendering:crispEdges}
+#rp0:checked~.p0,#rp1:checked~.p1,#rp2:checked~.p2,
+#rp3:checked~.p3,#rp4:checked~.p4,#rp5:checked~.p5,
+#rp6:checked~.p6,#rp7:checked~.p7,#rp8:checked~.p8{display:block}
+#rp0:checked~.rplabs label[for=rp0],#rp1:checked~.rplabs label[for=rp1],
+#rp2:checked~.rplabs label[for=rp2],#rp3:checked~.rplabs label[for=rp3],
+#rp4:checked~.rplabs label[for=rp4],#rp5:checked~.rplabs label[for=rp5],
+#rp6:checked~.rplabs label[for=rp6],#rp7:checked~.rplabs label[for=rp7],
+#rp8:checked~.rplabs label[for=rp8]{border-color:var(--ink);background:var(--panel)}
+
+.note-box{border-left:2px solid var(--rule);padding:2px 0 2px 18px;margin:26px 0;
+  color:var(--dim);font-size:15.5px}
+ul.plain{margin:0 0 18px;padding-left:20px;max-width:70ch}
+ul.plain li{margin-bottom:11px}
+a{color:var(--ink);text-underline-offset:3px;text-decoration-color:var(--faint)}
+footer{padding:48px 0 0;font-size:13px;color:var(--faint)}
+footer p{max-width:78ch}
+
+/* With scripting, the five verdicts wait until the reader has looked. Without
+   it, everything below is already on the page. */
+.js .wall .votes{visibility:hidden}
+.js .wall .case.done .votes{visibility:visible}
+.js .cand{cursor:pointer}
+.js .cand .chip{transition:box-shadow .12s}
+.js .cand:hover .chip{box-shadow:inset 0 0 0 1px rgba(255,255,255,.16),0 0 0 2px var(--dim)}
+.js .cand[aria-pressed=true] .chip{box-shadow:inset 0 0 0 1px rgba(255,255,255,.16),0 0 0 2px var(--ink)}
+.js .tally{display:block}
+.tally{display:none;margin-top:26px;border-top:2px solid var(--ink);padding-top:14px;
+  font-family:ui-sans-serif,Arial,sans-serif;font-size:13.5px;color:var(--dim)}
+.tally b{color:var(--ink)}
+.noscript-note{font-size:13px;color:var(--faint);margin-top:18px}
+
+@media (max-width:760px){
+  .two{grid-template-columns:1fr}
+  .big-nums{grid-template-columns:1fr}
+  .olab{width:74px;flex:0 0 74px;font-size:10px}
+  .chip.big{width:58px;height:58px}
+  .votes{max-width:none}
+}

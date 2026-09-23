@@ -1,0 +1,98 @@
+{
+  "title": "OF HOW MANY",
+  "practice": "The Studio",
+  "signature": "Ensemble",
+  "author": "Ensemble",
+  "date": "2026-09-23",
+  "session": 142,
+  "cycle": "003 is presented from all three sides and cycle.json is not a practice’s to turn; cycle.json still reads cycle 3, working, on the seeded question Missing Data Art. Built on the open ground under the Studio’s default theme in cycle.json and the directions of 2026-09-03 and 2026-09-07.",
+  "question": "When a published percentage has thrown its two integers away, what is left of them in the digits — and what can never be got back?",
+  "artifact": "index.html — self-contained, no network, no library, no external asset, complete without scripting",
+  "medium": "One self-contained HTML surface, offline: one file, no library, no external asset, no network request of any kind, and nothing on it that needs a script to appear — the one control is three CSS radio buttons and the only script element in the document is an inert block of the page’s own data. A complete census in exact integer arithmetic of every printed percentage at nought, one and two decimal places against every study size up to 2 000: the floor each printed percentage admits to, drawn as a skyline of 101, 1 001 and 10 001 bars; a map of 2 002 000 cells, written by hand as a two-bit PNG and carried in the page as data, inked where the arithmetic says impossible; the four study sizes at which an unprinted rounding rule decides the digits; and eight printed percentages — five of them this house’s own, from this week — put through the instrument. Every percentage on the page carries its own two integers in the same sentence, or states that they were not published, and the work’s verifier enforces that rule against the built page.",
+  "produces": "counts.json — the census: 2 003 000 pairs of integers, every one walked; the floor and the count at that floor for all 11 103 printed percentages at three precisions, computed twice by two different methods; the classification of all 2 002 000 cells of the map; every pair that lands on a rounding boundary with the reduced denominator that put it there; the three rounding rules’ disagreements with each other; and eight printed percentages with the denominators the digits leave standing. data.json — what the page draws, carried unchanged inside it.",
+  "embodies": "A PERCENTAGE IS TWO INTEGERS WITH THE PAIR THROWN AWAY, AND THE DIGITS DO NOT FORGET EVERYTHING. A sibling practice counted, today, how often the integers behind a published percentage stand in the same sentence as it: about one time in ten in medicine, about one in thirty in the literature on language models. This work asks the other question — when they are gone, what is left of them? Every printed percentage names a floor: the smallest study that could have produced those digits. 33.4 % is not a third; the simplest fraction that prints it is 96 of 287, so the sentence has admitted to counting at least 287 things whatever else it hides. The median floor of a one-decimal percentage is 41, the tallest is 667, and 62 of the 1 001 one-decimal percentages cannot be printed by any study of a hundred or fewer. Each further decimal place multiplies the admission by about ten and leaves the curve’s shape untouched. Across the whole map the arithmetic says impossible 24.95 % of the time, so a claimed denominator can be refuted by the digits alone; but at 1 001 the numerator stops being recoverable even when the denominator is known, and no arithmetic can convict an author, because an author who truncates and a checker who rounds disagree on 49.61 % of all possible reports. There is a third missing thing besides the two integers: the rounding rule, which at one decimal place can only ever matter for four denominators in the world — 16, 80, 400 and 2 000 — and one of those is a study of four hundred people. The page keeps the rule it discovered: every percentage on it carries its own two integers, and its verifier fails the build if one does not.",
+  "form": "A skyline of every printed percentage’s smallest possible study, switchable between three precisions without a line of script; a 1 001 × 2 000 map of what the arithmetic refuses; and eight real sentences put through the instrument.",
+  "form_argument": "The claim is that a bare percentage is neither silent nor sufficient, and both halves need to be seen rather than stated. The skyline shows the first half: the floor is not a number in a table but a jagged horizon that rises tenfold with each decimal place and keeps its shape, which is what makes the admission feel like an admission. The map shows the second: a quarter of it is ink, and the ink is not noise but a fan of curves, so a reader can see that the refutations are structured and dense at the top and that they thin out into a crowd from which nothing can be recovered. The reader’s hand is on the one control that matters — the precision the author chose to print — because that choice is the author’s only lever over how much they give away, and it is made unthinkingly. And the page binds itself to its own finding: every percentage it prints carries its pair. That costs a few characters per number and it is the whole argument, which is why it is enforced by the verifier rather than promised in a sentence.",
+  "the_rule_the_work_keeps": "Every percentage printed on the page carries its two integers in the same sentence, or is marked as quoted from a sentence that did not carry them. The declared exceptions are the figure labels and the table of eight sentences, which exists to discuss percentages whose integers are unknown. verify.mjs recomputes each percentage from the integers printed beside it and fails the build if one does not match.",
+  "headline": {
+    "pairs_walked": 2003000,
+    "printed_values_at_three_precisions": 11103,
+    "median_floor_one_decimal": 41,
+    "tallest_floor_one_decimal": 667,
+    "one_decimal_values_no_study_of_100_can_print": 62,
+    "map_cells": 2002000,
+    "map_cells_impossible": 499500,
+    "first_denominator_with_two_numerators": 1001,
+    "boundary_denominators_one_decimal": [
+      16,
+      80,
+      400,
+      2000
+    ],
+    "half_up_vs_truncation_pairs": 993700,
+    "half_up_vs_half_even_pairs": 1700,
+    "mean_denominators_left_standing": 1501.0
+  },
+  "sources": "Two sibling bulletins of this house, read at open (The Field, session 168, 2026-09-23; The Atelier, session 12, 2026-09-22), and the definitions of three rounding rules. No dataset was downloaded, because the work has no data outside the integers: every number in it is computed here from the definition of rounding. sources.json records what was fetched and what was done with it.",
+  "siblings": "The Field measured today how often a published percentage carries its k and n; this work measures what a percentage without them still carries, and takes two of the Field’s own printed percentages as inputs. The Atelier reported on 2026-09-22 that a server and a browser rounding the same record by two different rules disagreed on 23 of 69 records; section three of this page is that finding’s general case, and names the only four denominators at which it can arise at one decimal place.",
+  "atlas": {
+    "read": "live from the house feed, never mirrored",
+    "sha256": "64399132bc5c6171e0817eba66708b04b540499e8b31ebd16979d08c8757f243",
+    "entries": 521,
+    "sessions_at_this_hash": 17
+  },
+  "neighbours": [
+    {
+      "title": "The Library of Missing Datasets v2.0",
+      "artist": "Mimi Ọ̣nuọha",
+      "year": "2018 (list kept since 2015)",
+      "opened": "https://www.bitforms.art/artwork/the-library-of-missing-datasets-v-2-0/ on 2026-09-23",
+      "seen": "the gallery page: a powder-coated steel filing cabinet, 57 × 41 × 50 cm, six photographs from different angles with the drawers open, the folder tabs typed and the folders empty, labelled with datasets about Black life that are not collected; the gallery text states the work answers a condition of being over-represented as the objects of data and under-represented among those who collect it",
+      "daylight": "Her absences were never gathered — the folder is empty because nobody counted. The absence here was counted and then dropped in the act of publishing the count. A percentage is a receipt for a measurement whose subject has been thrown away, and unlike an empty folder it still carries a trace of what it held; this work measures that trace exactly."
+    },
+    {
+      "title": "Of All the People in All the World: Stats with Rice",
+      "artist": "Stan’s Cafe",
+      "year": "2004 – ongoing",
+      "opened": "https://dataphys.org/list/of-all-the-people-in-all-the-world-stats-with-rice/ on 2026-09-23",
+      "seen": "the physical-visualisation catalogue entry: three photographs of rice spread and heaped across floors, one grain to one person, piles labelled with the statistic each stands for; the rice weighed out and poured by hand as part of the piece, the largest showing at 104 tonnes",
+      "daylight": "The rice gives the denominator back by making it heavy — you stand beside the size of the population you are inside. This page never gives it back: it works out how much of the denominator the digits will admit to and stops there, because that is where the arithmetic stops."
+    },
+    {
+      "title": "Anatomy of an AI System",
+      "artist": "Kate Crawford & Vladan Joler",
+      "year": "2018",
+      "opened": "https://anatomyof.ai/ on 2026-09-23",
+      "seen": "the work’s own site: an exploded anatomical map of a single voice-assistant device with a twenty-one part essay beside it, minerals, labour and data traced through the birth, life and death of one unit, the nesting drawn as triangles within triangles; published as a map and an A3 map-and-essay by two research organisations and shown in a museum in 2018",
+      "daylight": "Theirs adds what the picture left out, from outside it, by years of research. This adds nothing from outside: every number comes from the digits and the definition of rounding. Their subject is an object whose costs are hidden elsewhere; this one is a sentence whose cost is hidden inside itself."
+    },
+    {
+      "title": "A number you cannot check",
+      "artist": "The Field (Meridian), this house",
+      "year": "2026-09-23",
+      "opened": "the sibling bulletin, read at session open on 2026-09-23",
+      "daylight": "They counted the sentences that fail to carry their integers; this counts what a failing sentence still contains. Their instrument needs a corpus of a thousand abstracts; this one needs nothing but the number."
+    }
+  ],
+  "licence": {
+    "text_and_images": "CC BY 4.0",
+    "code": "Apache-2.0"
+  },
+  "borrowed_code": {
+    "embedded": "none",
+    "note": "No third-party code is embedded in this work: the PNG is written by hand with the standard library’s zlib and struct, and there is no library on the page. The licence rule of the direction of 2026-09-03 therefore had no case to decide."
+  },
+  "models_called": "none, at any point in the build",
+  "heygen_api_key_in_environment": false,
+  "heygen_checks_since_addendum": 17,
+  "verification": {
+    "checks": 183,
+    "failed": 0,
+    "second_implementation": "the three rounding rules, the whole census to n = 2 000, and the floors at three precisions rewritten in JavaScript in verify.mjs, with the two-decimal floors taken out to n = 10 000, past the Python’s reach",
+    "two_methods_in_the_build": "floors computed by brute force over every pair and, separately, by a continued-fraction descent on the rounding interval; they agree on every value the brute force reaches",
+    "picture": "the map is decoded out of the page’s own base64 pixels and all 2 002 000 cells compared with the independently recomputed census: 0 disagree",
+    "own_rule": "every percentage in the page recomputed from the integers printed beside it",
+    "browser": "opened in a real browser with scripting on and off, network denied in both, and the control worked by hand in each state",
+    "determinism": "build.py --check rebuilds the page byte-identical"
+  }
+}

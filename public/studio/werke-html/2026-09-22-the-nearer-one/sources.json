@@ -1,0 +1,113 @@
+{
+  "work": "THE NEARER ONE",
+  "practice": "Ensemble — The Studio",
+  "date": "2026-09-22",
+  "note": "Nothing in this list is mirrored into this repository. Where a file was fetched to check something, its address, its size and its SHA-256 are recorded here instead of its contents.",
+  "formulas": [
+    {
+      "name": "sRGB, and the transfer function and primaries used to linearise it",
+      "standard": "IEC 61966-2-1 (sRGB)",
+      "status": "transcribed from the published definition; the white point is taken from the primaries matrix itself rather than from a rounded table, which is checked on the page (white lands on L*=100, a*=0, b*=0 exactly)"
+    },
+    {
+      "name": "CIELAB",
+      "standard": "CIE 15 (colorimetry); the 1976 L*a*b* space",
+      "status": "transcribed from the published definition; checked by two independent transcriptions, one in Python and one in JavaScript"
+    },
+    {
+      "name": "CIE76 ΔE*ab",
+      "standard": "CIE, 1976",
+      "status": "Euclidean distance in CIELAB; checked against the definition of a Euclidean norm and by two independent transcriptions"
+    },
+    {
+      "name": "CIE94 ΔE*94, graphic-arts parameters (kL=kC=kH=1, K1=0.045, K2=0.015)",
+      "standard": "CIE 116-1995",
+      "status": "transcribed from the published definition. NOT checked against a published test set tonight — no such set was retrieved. It rests on two independent transcriptions and on one structural check: at a neutral reference its weights all become 1 and it must reduce exactly to CIE76, which the verifier measures over all 138030 comparisons at the palette's six neutral references."
+    },
+    {
+      "name": "CMC(l:c) at 2:1",
+      "standard": "Clarke, McDonald & Rigg, Journal of the Society of Dyers and Colourists, 1984",
+      "status": "transcribed from the published definition. NOT checked against a published test set tonight. It rests on two independent transcriptions. This is the weakest link in the work and is stated as such on the page and in METHOD.md."
+    },
+    {
+      "name": "CIEDE2000 ΔE00 (kL=kC=kH=1)",
+      "standard": "CIE 142-2001",
+      "status": "transcribed in the notation of Sharma, Wu & Dalal (2005) and checked against that paper's supplementary test data: all 34 published pairs reproduced to four decimal places, largest deviation 4.95e-05."
+    }
+  ],
+  "fetched": [
+    {
+      "what": "The CIEDE2000 Color-Difference Formula — implementation notes page of G. Sharma",
+      "url": "https://hajim.rochester.edu/ece/sites/gsharma/ciede2000/",
+      "fetched": "2026-09-22",
+      "http": 200,
+      "cites": "\"The CIEDE2000 Color-Difference Formula: Implementation Notes, Supplementary Test Data, and Mathematical Observations\", G. Sharma, W. Wu, E. N. Dalal, Color Research and Application, vol. 30, no. 1, pp. 21-30, February 2005."
+    },
+    {
+      "what": "Supplementary test data, 34 pairs of CIELAB values with their published CIEDE2000 difference",
+      "url": "https://hajim.rochester.edu/ece/sites/gsharma/ciede2000/dataNprograms/ciede2000testdata.txt",
+      "fetched": "2026-09-22",
+      "http": 200,
+      "bytes": 1830,
+      "sha256": "44aebb39107128328add54fbef5ac8ee89909e50508f448a1580adea2058a4b8",
+      "used_for": "checking this work's CIEDE2000 transcription; four of its 34 rows are quoted in verify.mjs as a short quotation with source, and the file is not copied into this repository"
+    },
+    {
+      "what": "Atlas of Data Art — the house's feed, read live",
+      "url": "https://raw.githubusercontent.com/frankbueltge/frankbueltge.de/main/src/data/atlas/werke.json",
+      "fetched": "2026-09-22",
+      "http": 200,
+      "bytes": 370404,
+      "sha256": "64399132bc5c6171e0817eba66708b04b540499e8b31ebd16979d08c8757f243",
+      "entries": 521,
+      "used_for": "finding the neighbours of this work. No Atlas data is in the work and none is mirrored here."
+    },
+    {
+      "what": "Joy Buolamwini's own account of AI, Ain't I a Woman? (2018)",
+      "url": "https://medium.com/@Joy.Buolamwini/when-ai-fails-on-oprah-serena-williams-and-michelle-obama-its-time-to-face-truth-bf7c2c8a4119",
+      "fetched": "2026-09-22",
+      "http": "403 to a direct request; read through a research service",
+      "used_for": "the neighbour paragraph: which five companies were asked, whose faces, and the artist's own reason for choosing poetry"
+    },
+    {
+      "what": "The address the Atlas cites for AI, Ain't I a Woman?",
+      "url": "https://www.blackhistory.mit.edu/archive/joy-buolamwini-ai-aint-i-woman-2018",
+      "fetched": "2026-09-22",
+      "http": 404,
+      "used_for": "recorded, not repaired: whether an Atlas entry is repointed is a curator's decision and not this practice's"
+    },
+    {
+      "what": "Gender Shades project page",
+      "url": "https://www.media.mit.edu/projects/gender-shades/overview/",
+      "fetched": "2026-09-22",
+      "http": 200,
+      "used_for": "the neighbour paragraph: 1270 faces, the Pilot Parliaments Benchmark, and the project's own wording about its results"
+    },
+    {
+      "what": "The Art Newspaper on the Jeu de Paume survey, the address the Atlas cites for Faces of ImageNet",
+      "url": "https://www.theartnewspaper.com/2025/04/07/jeu-de-paume-survey-artists-working-with-artificial-intelligence",
+      "fetched": "2026-09-22",
+      "http": 200,
+      "used_for": "the neighbour paragraph; the page gives no account of the installation's mechanics, and the work's record says so rather than filling the gap"
+    },
+    {
+      "what": "Rhizome ArtBase record for ZUR FARBENLEHRE (THEORY OF COLOURS), Steven Jones",
+      "url": "https://artbase.rhizome.org/wiki/Item:Q2423",
+      "fetched": "2026-09-22",
+      "http": 200,
+      "used_for": "the neighbour paragraph; what is at the address is a catalogue record and a 640x480 GIF, not the work, and the record says so"
+    },
+    {
+      "what": "MoMA's page for Hito Steyerl's How Not to Be Seen",
+      "url": "https://www.moma.org/collection/works/181784",
+      "fetched": "2026-09-22",
+      "http": 403,
+      "used_for": "nothing. It was opened because a calibration-target work looked like a neighbour; the address refused this instrument and the work is therefore NOT named as a neighbour, because a neighbour paragraph about a work nobody here looked at is a sentence about a sentence."
+    }
+  ],
+  "not_used": [
+    "No published set of human colour-difference judgements was used. No formula is scored against any other, and no answer key exists in this work.",
+    "No model was called at any point in the build.",
+    "No third-party code is embedded. The licence rule of the direction of 2026-09-03 had no case to decide."
+  ]
+}
