@@ -51,12 +51,15 @@ const LAB: Werk[] = [
 ]
 
 const ARTIFACTS: ArtifactEntry[] = [
-  { practice: 'atelier', slug: 'cycle-002-session-4', date: '2026-09-06', href: '/atelier/window/cycle-002-session-4/', cycle: 2, title: 'Dials' },
-  { practice: 'field', slug: 'does-it-know', date: '2026-09-06', href: '/field/artifacts/cycle-002/2026-09-06-does-it-know/', cycle: 2 },
+  { practice: 'atelier', slug: 'cycle-002-session-4', date: '2026-09-06', href: '/atelier/window/cycle-002-session-4/', cycle: 2, title: 'Dials', fromWorksRegister: false },
+  { practice: 'field', slug: 'does-it-know', date: '2026-09-06', href: '/field/artifacts/cycle-002/2026-09-06-does-it-know/', cycle: 2, fromWorksRegister: false },
+  // the Field's flat layout (since 2026-09-14): no cycle wrapper, so the path names no cycle —
+  // but unlike a Studio work, it is not in the register anywhere else, and must still show
+  { practice: 'field', slug: 'a-refusal-announces-itself', date: '2026-09-14', href: '/field/artifacts/2026-09-14-a-refusal-announces-itself/', cycle: null, fromWorksRegister: false },
   // a window whose journal names no day — dropped, never dated by the feed
-  { practice: 'atelier', slug: 'cycle-002-session-1', date: null, href: '/atelier/window/cycle-002-session-1/', cycle: 2, title: 'An undated window' },
+  { practice: 'atelier', slug: 'cycle-002-session-1', date: null, href: '/atelier/window/cycle-002-session-1/', cycle: 2, title: 'An undated window', fromWorksRegister: false },
   // the Studio ships its artifact as a work; the register already carries it, so it names no cycle
-  { practice: 'studio', slug: 'c', date: '2026-07-30', href: '/studio/werke-html/c/', cycle: null, title: 'A withdrawn premiere' },
+  { practice: 'studio', slug: 'c', date: '2026-07-30', href: '/studio/werke-html/c/', cycle: null, title: 'A withdrawn premiere', fromWorksRegister: true },
 ]
 
 const feed = () => buildHouseFeed({ works: WORKS, arch: ARCH, n1: N1, werke: LAB, artifacts: ARTIFACTS })
@@ -117,12 +120,19 @@ describe('each house is named and counted by its own record', () => {
   it('lists the Field’s and the Atelier’s cycle artifacts under their own houses, in their own colour', () => {
     const rows = feed()
       .filter((e) => e.kind === NAMING.opsRoom.signal.kindLabels.artifact)
-      .sort((a, b) => a.house.localeCompare(b.house))
+      .sort((a, b) => a.house.localeCompare(b.house) || b.date.localeCompare(a.date))
     expect(rows.map((e) => [e.house, e.title, e.date, e.href])).toEqual([
       ['atelier', 'Dials', '2026-09-06', '/atelier/window/cycle-002-session-4/'],
+      ['field', 'a-refusal-announces-itself', '2026-09-14', '/field/artifacts/2026-09-14-a-refusal-announces-itself/'],
       ['field', 'does-it-know', '2026-09-06', '/field/artifacts/cycle-002/2026-09-06-does-it-know/'],
     ])
-    expect(rows.map((e) => e.voice)).toEqual(['ulysses', 'meridian'])
+    expect(rows.map((e) => e.voice)).toEqual(['ulysses', 'meridian', 'meridian'])
+  })
+
+  it('keeps a Field artifact in the flat, unwrapped layout — it names no cycle, but it is not a work', () => {
+    const row = feed().find((e) => e.href === '/field/artifacts/2026-09-14-a-refusal-announces-itself/')
+    expect(row?.kind).toBe(NAMING.opsRoom.signal.kindLabels.artifact)
+    expect(row?.date).toBe('2026-09-14')
   })
 
   it('leaves a work-shaped artifact to the register — one row, not two', () => {
@@ -198,7 +208,7 @@ describe('against the real record, not only the fixture', () => {
   it('carries the practices’ cycle artifacts, so the Atelier’s newest row is not a work of July', () => {
     const K = NAMING.opsRoom.signal.kindLabels
     for (const practice of ['atelier', 'field'] as const) {
-      const shipped = loadArtifacts().filter((a) => a.practice === practice && a.cycle !== null && a.date)
+      const shipped = loadArtifacts().filter((a) => a.practice === practice && !a.fromWorksRegister && a.date)
       expect(shipped.length, `${practice} has committed no dated cycle artifact`).toBeGreaterThan(0)
       const rows = real.filter((e) => e.house === practice && e.kind === K.artifact)
       expect(rows).toHaveLength(shipped.length)

@@ -192,6 +192,42 @@ describe('loadArtifacts', () => {
     expect(loadArtifacts(root)[0]).toMatchObject({ practice: 'field', cycle: 2, date: '2026-10-01' })
   })
 
+  // The Field's flat convention (landed upstream 2026-09-14): artifacts/<date>-<slug>/ with no
+  // cycle wrapper at all. Told apart from the nested shape by index.html sitting directly
+  // inside the top-level directory, not one level down.
+  it('reads the Field’s flat layout too — a dated artifact with no cycle wrapper', () => {
+    const root = fixtureRoot()
+    const dir = path.join(root, 'public/field/artifacts/2026-09-14-a-refusal-announces-itself')
+    fs.mkdirSync(dir, { recursive: true })
+    fs.writeFileSync(path.join(dir, 'index.html'), '<!doctype html>')
+    // a same-directory file that is not a page of its own — must not be mistaken for a slug
+    fs.writeFileSync(path.join(dir, 'check.py'), '')
+    const found = loadArtifacts(root)
+    expect(found).toHaveLength(1)
+    expect(found[0]).toMatchObject({
+      practice: 'field',
+      slug: 'a-refusal-announces-itself',
+      date: '2026-09-14',
+      href: '/field/artifacts/2026-09-14-a-refusal-announces-itself/',
+      cycle: null,
+      fromWorksRegister: false,
+    })
+  })
+
+  it('reads both the Field’s nested and flat layouts side by side, newest first', () => {
+    const root = fixtureRoot()
+    const nested = path.join(root, 'public/field/artifacts/cycle-003/2026-09-12-what-a-description-is-for')
+    const flat = path.join(root, 'public/field/artifacts/2026-09-14-a-refusal-announces-itself')
+    for (const dir of [nested, flat]) {
+      fs.mkdirSync(dir, { recursive: true })
+      fs.writeFileSync(path.join(dir, 'index.html'), '<!doctype html>')
+    }
+    expect(loadArtifacts(root).map((a) => [a.slug, a.cycle])).toEqual([
+      ['a-refusal-announces-itself', null],
+      ['what-a-description-is-for', 3],
+    ])
+  })
+
   // The Atelier's convention: window/cycle-NNN[-session-n]/, dated by the journal note that
   // names the window, titled by the page's own <title> with the practice's suffix trimmed.
   function writeWindow(root: string, dir: string, title: string): void {
@@ -325,6 +361,7 @@ describe('inCycle', () => {
     date: '2026-09-01',
     href: '/x/',
     cycle: null,
+    fromWorksRegister: false,
     ...over,
   })
 

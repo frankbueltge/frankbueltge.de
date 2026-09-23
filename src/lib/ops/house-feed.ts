@@ -169,14 +169,17 @@ export function registerEntries(works: readonly LatestWork[], names = houseNames
 }
 
 /** The practices' cycle artifacts — research ecology v3: every session leaves one. The Field
- *  writes them to `artifacts/cycle-NNN/<date>-<slug>/`, the Atelier to `window/cycle-NNN-session-n/`;
- *  neither is a work in the register's sense, so the register never saw them. The Studio ships
- *  its artifacts as works, which the register already carries: an entry naming no cycle is its
- *  and is left to it. A window whose journal names no day drops out rather than being dated. */
+ *  writes them to `artifacts/cycle-NNN/<date>-<slug>/` (and, since 2026-09-14, the flat
+ *  `artifacts/<date>-<slug>/`), the Atelier to `window/cycle-NNN-session-n/`; neither is a work
+ *  in the register's sense, so the register never saw them. The Studio ships its artifacts as
+ *  works (and the Atelier did too, before it moved to window/), which the register already
+ *  carries — `fromWorksRegister` names exactly those entries, so they are left to the register
+ *  here rather than shown twice. A window whose journal names no day drops out rather than
+ *  being dated. */
 export function artifactEntries(artifacts: readonly ArtifactEntry[], names = houseNames()): FeedEntry[] {
   const K = NAMING.opsRoom.signal.kindLabels
   return artifacts.flatMap((a) => {
-    if (a.cycle === null || a.date === null) return []
+    if (a.date === null || a.fromWorksRegister) return []
     return [
       {
         date: a.date,
