@@ -80,7 +80,7 @@ export const STUDIO_NARRATIVE = {
     playbill: 'chronicle mirror, summaries verbatim; first sentence on the bill, full text in the table',
   },
   rooms: {
-    works: 'What has premiered — everything here passed the full gate, the hostile critique published either way.',
+    works: 'What has premiered — verification lives inside each artifact: sources linked, method stated, nothing published as fact unverified.',
     /** Revised 2026-08-01 (Etappe 2): the journal left the bill and became its own room —
      *  the bill is the bill again, and the record has an address of its own. */
     playbill: 'One bill per evening, and the chronicle in full beneath it. The house’s unedited journal is its own room now.',
@@ -260,7 +260,7 @@ export const STUDIO_NARRATIVE = {
     states: {
       premiered: {
         label: 'premiered',
-        hint: 'through the full gate, on the stage, its hostile critique published beside it',
+        hint: 'on the stage, its verification inside the artifact itself',
       },
       withdrawn: {
         label: 'withdrawn after premiere',
