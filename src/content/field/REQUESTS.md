@@ -3935,3 +3935,91 @@ rather than filed. The next session starts elsewhere.
 
 **Status:** report · one question genuinely open (the yearless-notice specification) · nothing
 owed from your side
+
+---
+
+## Response — 2026-09-23 (session 168) — we measured how much of the literature can be checked at all, and answered your open question ourselves
+
+**Where it is.** `artifacts/2026-09-23-a-number-you-cannot-check/` — a self-contained page with
+**no JavaScript and no controls**, a five-minute summary, a pre-registration committed before any
+corpus existed with **seven amendments every one of them dated before the first fetch**, `data/`,
+the rule in `tools/a-number-you-cannot-check/`, a `check.py` of **51 checks** that needs no
+network, and a `tamper.py` whose **32** deliberate corruptions are each caught by a **named**
+failing check.
+
+**Why this session, decided here.** Cycle 003 is presented from all three sides and `cycle.json`
+still reads cycle 3 *working*, which is not ours to turn. Nothing in this file is newer than your
+direction of 2026-09-03. Our own record closed the licensing arc on 09-22 with the note that the
+next session starts elsewhere; this one does — new corpora, new rule, new subject, not a licence
+file touched. It runs under the counter-measurement remit and on protocol §5's default theme,
+because claim verification is one of the steps the end-to-end systems say they automate, and its
+ceiling is set by the text rather than by the verifier.
+
+**The question.** *"The method succeeded in 62 % of cases"* cannot be checked by anyone — you,
+us, or an automated reviewer — without leaving the sentence. *"…in 31 of 50 cases (62 %)"* can be
+checked in your head. So: of the percentages printed in scientific abstracts, how many hand over
+the integers that would let anyone recompute them, and of those, how many are wrong? Three
+corpora, pinned by digest: **1,000** PubMed randomised-trial abstracts, **1,000** Semantic
+Scholar abstracts on *large language model*, and **all 30** of our own public summaries and
+bulletins.
+
+**The finding: almost nothing is checkable.** Medicine, where a reporting standard applies, hands
+over **10.63 %**. The AI literature hands over **2.91 %**. We hand over **7.11 %**. The top of
+every interval is far below a half. Of 75 un-checkable percentages read one by one, the largest
+class in all three corpora is the plain one — a proportion whose counts are simply absent;
+changes, thresholds and confidence levels do not account for the gap. **An un-checkable number is
+not thereby a false one, and we claim nothing of the sort.** What it is, is unverifiable from the
+text that carries it — by a machine, and by a reader.
+
+**Where it can check, it finds things — in one corpus only.** Six real arithmetic errors, all in
+medicine, in **4 of 1,000** abstracts; one reports eczema at *9 % (n = 3/44)* when 3/44 is 6.8 %
+and the line above reports 9 % for 4/44. The AI corpus yielded **none**, which **refutes our own
+written prediction** that both would — and is no clean bill, since with 27 checkable numbers in
+853 there was almost nothing there to be wrong.
+
+**And the screen convicts falsely 82 % of the time.** **33** flags, **6** real, **13** of them
+from a single abstract that compares two arms in one sentence. That is why the rule ships as a
+*screen* and the rate as a *reading*: 145 of its verdicts were read sentence by sentence, half
+from each side, under a design registered before the first fetch because the errors were known to
+run both ways. **No person read any of it. The correction of 2026-09-21 stands and nothing in
+this artifact says otherwise.**
+
+**What it cost us to put ourselves in the corpus.** We predicted zero arithmetic errors in our
+own record and there are zero. We did not predict the rest, and it is the more useful half:
+**the rule's precision is worst on us — 0.70 against 0.92 on both world corpora** — because our
+prose packs numbers densely enough to be mispaired. And **the three corpora order differently on
+the screen than on the reading**: on the screen our record ranks first of the three, after the
+reading it ranks second. *Which instrument you believe decides which practice looks best.*
+
+**Two faults of our own, both left in the record.** A mutation survived all **45** fixtures and
+then changed exactly **1 document in 2,030** — one of our own summaries, where it invents a false
+conviction against us: *a corpus can be a test the fixtures are not.* And our tamper harness
+**truncated the file it was about to read**, its read and its write being one expression — **the
+same defect this practice recorded against a different script on 09-22, made again eight sessions
+later**, and caught only because one corruption then failed to fire. A second corruption fired
+the wrong check and exposed a check that was missing. Both repaired; the comments stay in the
+files.
+
+**Your open question, answered by us under your standing rule of 2026-07-17.** On 09-22 we asked
+you one thing: whether a yearless `Copyright <holder>` line counts as a copyright notice. Your
+silence has run through our own next session, so we decided it, and on evidence rather than
+taste. **The specification stands — it is a notice — and R1 stays refused, permanently.** R1
+conflates two jobs: rejecting disclaimer prose (right) and rejecting yearless notices (wrong,
+since the year is not what names the holder). 09-22's own false-notice data identifies that prose
+by a **prose pattern**, so a narrower repair — **R1′**, named and left unbuilt — removes the same
+15 false notices without discarding real holders. Filed dated beside the artifact it concerns at
+`artifacts/2026-09-22-a-repair-is-a-new-rule/DECISION-2026-09-23-yearless-notice.md`. **Nothing
+is patched and no published number moves.** Reversible by you at any time.
+
+**One access result worth your knowing.** arXiv refused this session from **every route tried** —
+429 direct, 406 through a dispatched client, 301 with an empty body on the OAI endpoint — and
+OpenAlex answered 429 because the free daily budget shared by this network's address was spent.
+Both are facts about this network, not about those services' policies, and they are in the
+artifact's `data/sources.json` rather than smoothed over. Corpus A is a Semantic Scholar corpus
+**because arXiv was shut**, and the record says so rather than presenting a second choice as a
+first.
+
+**Status:** report · nothing owed from your side · one decision taken in your silence and
+reversible by you
+
+---
