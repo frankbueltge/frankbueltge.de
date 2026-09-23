@@ -128,6 +128,10 @@ export function loadClosingReports(root: string = process.cwd()): ClosingReport[
  *  artifact and names no path for it, and the practices did not land in the same place:
  *
  *    · The Field writes `artifacts/cycle-NNN/<date>-<slug>/` — date and cycle in the path.
+ *      Since 2026-09-14 its own mirror has also landed the flat `artifacts/<date>-<slug>/`
+ *      (no cycle wrapper; the layout change happened upstream, in the engine repo, and the
+ *      rsync mirror carries it through verbatim) — both shapes are read, distinguished by
+ *      whether `index.html` sits directly inside the top-level directory.
  *    · The Atelier writes `window/cycle-NNN[-session-n]/` — the cycle in the path, no date; the
  *      session note in its journal that names the window (`Artifact: window/…`) carries the day
  *      in its own filename, and the window's <title> is the artifact's title.
@@ -136,16 +140,24 @@ export function loadClosingReports(root: string = process.cwd()): ClosingReport[
  *      which is the caller's rule (inCycle), because only the house clock knows the cycle.
  *
  *  Until 2026-09-02 the loader read the Field's convention alone, and the entrance's score drew
- *  "no artifact yet this cycle" on two lanes that had delivered four artifacts each. */
+ *  "no artifact yet this cycle" on two lanes that had delivered four artifacts each. Until
+ *  2026-09-23 it read only the Field's nested shape, silently dropping every artifact the flat
+ *  shape carried — six sessions invisible on every surface this loader feeds. */
 export interface ArtifactEntry {
   practice: PracticeId
   slug: string
   date: string | null
   href: string
-  /** The cycle the practice's own path names; null when the record carries none (a work). */
+  /** The cycle the practice's own path names; null when the record carries none — a work, or a
+   *  Field artifact in the flat, unwrapped layout. */
   cycle: number | null
   /** The practice's own title where its record has one (a window's <title>, a work's meta.json). */
   title?: string
+  /** True for an entry read from `works/<date>-<slug>/meta.json` — the Studio's convention, and
+   *  the Atelier's until it moved to `window/`. Both also glob into the works register
+   *  (src/lib/engines/register.ts), so a caller that already draws from the register must skip
+   *  these or double-count them; a caller that draws only from this loader need not care. */
+  fromWorksRegister: boolean
 }
 
 /** Whether an artifact belongs to the given cycle: by the cycle its path names, or — for a
@@ -202,23 +214,43 @@ function windowDate(practice: PracticeId, dir: string, root: string): string | n
 export function loadArtifacts(root: string = process.cwd()): ArtifactEntry[] {
   const found: ArtifactEntry[] = []
   for (const practice of PRACTICES) {
-    // artifacts/cycle-NNN/<date>-<slug>/ — the Field's convention, read for every practice
+    // artifacts/cycle-NNN/<date>-<slug>/ — the Field's convention, read for every practice.
+    // Since 2026-09-14 the Field has also landed artifacts/<date>-<slug>/ directly, with no
+    // cycle wrapper; the two shapes are told apart by where index.html sits, not by name, since
+    // neither convention marks itself.
     const artifacts = path.join(root, 'public', practice, 'artifacts')
     if (isDir(artifacts)) {
-      for (const cycleDir of fs.readdirSync(artifacts)) {
-        const cyclePath = path.join(artifacts, cycleDir)
-        if (!isDir(cyclePath)) continue
-        const cycleNo = CYCLE_DIR.exec(cycleDir)
-        for (const slug of fs.readdirSync(cyclePath)) {
-          const dir = path.join(cyclePath, slug)
+      for (const entry of fs.readdirSync(artifacts)) {
+        const entryPath = path.join(artifacts, entry)
+        if (!isDir(entryPath)) continue
+
+        if (fs.existsSync(path.join(entryPath, 'index.html'))) {
+          // the flat shape: `entry` is the artifact itself, not a cycle wrapper — its path
+          // names no cycle, so inCycle() places it by date, exactly as it does a Studio work.
+          const m = DATED_SLUG.exec(entry)
+          found.push({
+            practice,
+            slug: m ? m[2]! : entry,
+            date: m ? m[1]! : null,
+            href: `/${practice}/artifacts/${entry}/`,
+            cycle: null,
+            fromWorksRegister: false,
+          })
+          continue
+        }
+
+        const cycleNo = CYCLE_DIR.exec(entry)
+        for (const slug of fs.readdirSync(entryPath)) {
+          const dir = path.join(entryPath, slug)
           if (!isDir(dir) || !fs.existsSync(path.join(dir, 'index.html'))) continue
           const m = DATED_SLUG.exec(slug)
           found.push({
             practice,
             slug: m ? m[2]! : slug,
             date: m ? m[1]! : null,
-            href: `/${practice}/artifacts/${cycleDir}/${slug}/`,
+            href: `/${practice}/artifacts/${entry}/${slug}/`,
             cycle: cycleNo ? Number(cycleNo[1]) : null,
+            fromWorksRegister: false,
           })
         }
       }
@@ -241,12 +273,14 @@ export function loadArtifacts(root: string = process.cwd()): ArtifactEntry[] {
           href: `/${practice}/window/${dir}/`,
           cycle: Number(cycleNo[1]),
           title: pageTitle(index),
+          fromWorksRegister: false,
         })
       }
     }
 
-    // works/<date>-<slug>/meta.json + werke-html/<slug>/index.html — the Studio's convention.
-    // A work without a page on this site is not linked, so it is not listed.
+    // works/<date>-<slug>/meta.json + werke-html/<slug>/index.html — the Studio's convention,
+    // and the Atelier's own before it moved to window/ (src/content/atelier/works/ still holds
+    // that earlier run). A work without a page on this site is not linked, so it is not listed.
     const works = path.join(root, 'src/content', practice, 'works')
     if (isDir(works)) {
       for (const dir of fs.readdirSync(works)) {
@@ -273,6 +307,7 @@ export function loadArtifacts(root: string = process.cwd()): ArtifactEntry[] {
           date,
           href: `/${practice}/werke-html/${dir}/`,
           cycle: null,
+          fromWorksRegister: true,
           ...(title ? { title } : {}),
         })
       }

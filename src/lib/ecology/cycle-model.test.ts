@@ -44,12 +44,12 @@ const CYCLE: CycleState = {
 }
 
 const ARTIFACTS: ArtifactEntry[] = [
-  { practice: 'field', slug: 'a-door-to-knock-on', date: '2026-09-01', cycle: 1, href: '/field/artifacts/cycle-001/2026-09-01-a-door-to-knock-on/' },
-  { practice: 'field', slug: 'yield-of-a-loop', date: '2026-08-30', cycle: 1, href: '/field/artifacts/cycle-001/2026-08-30-yield-of-a-loop/' },
-  { practice: 'atelier', slug: 'cycle-001-session-2', date: '2026-09-01', cycle: 1, href: '/atelier/window/cycle-001-session-2/', title: 'The Cheapest Thing That Worked' },
-  { practice: 'studio', slug: 'not-yet', date: '2026-09-01', cycle: null, href: '/studio/werke-html/2026-09-01-not-yet/', title: 'NOT YET' },
+  { practice: 'field', slug: 'a-door-to-knock-on', date: '2026-09-01', cycle: 1, href: '/field/artifacts/cycle-001/2026-09-01-a-door-to-knock-on/', fromWorksRegister: false },
+  { practice: 'field', slug: 'yield-of-a-loop', date: '2026-08-30', cycle: 1, href: '/field/artifacts/cycle-001/2026-08-30-yield-of-a-loop/', fromWorksRegister: false },
+  { practice: 'atelier', slug: 'cycle-001-session-2', date: '2026-09-01', cycle: 1, href: '/atelier/window/cycle-001-session-2/', title: 'The Cheapest Thing That Worked', fromWorksRegister: false },
+  { practice: 'studio', slug: 'not-yet', date: '2026-09-01', cycle: null, href: '/studio/werke-html/2026-09-01-not-yet/', title: 'NOT YET', fromWorksRegister: true },
   // an undated record: the practice committed no day, so the drawing cannot place it
-  { practice: 'studio', slug: 'no-day', date: null, cycle: null, href: '/studio/werke-html/no-day/' },
+  { practice: 'studio', slug: 'no-day', date: null, cycle: null, href: '/studio/werke-html/no-day/', fromWorksRegister: true },
 ]
 
 const SESSIONS: SessionNote[] = [

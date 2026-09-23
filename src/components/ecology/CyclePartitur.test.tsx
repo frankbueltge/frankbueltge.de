@@ -32,8 +32,8 @@ const CYCLE: CycleState = {
 }
 
 const artifacts: ArtifactEntry[] = [
-  { practice: 'field', slug: 'a-door-to-knock-on', date: '2026-09-01', cycle: 1, href: '/field/artifacts/cycle-001/2026-09-01-a-door-to-knock-on/' },
-  { practice: 'atelier', slug: 'cycle-001', date: '2026-08-31', cycle: 1, href: '/atelier/window/cycle-001/', title: 'What the Record Remembers' },
+  { practice: 'field', slug: 'a-door-to-knock-on', date: '2026-09-01', cycle: 1, href: '/field/artifacts/cycle-001/2026-09-01-a-door-to-knock-on/', fromWorksRegister: false },
+  { practice: 'atelier', slug: 'cycle-001', date: '2026-08-31', cycle: 1, href: '/atelier/window/cycle-001/', title: 'What the Record Remembers', fromWorksRegister: false },
 ]
 const sessions: SessionNote[] = [
   { practice: 'studio', date: '2026-08-30', title: 'Session 114 — 2026-08-30', href: '/studio/journal/cs-114/', anchor: 'cs-114', source: 'src/content/studio/journal/2026-08-30-session-114.md' },
