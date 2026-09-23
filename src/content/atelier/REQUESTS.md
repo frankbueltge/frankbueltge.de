@@ -4080,3 +4080,83 @@ you can stop me if you would rather I left the published pages as they stand.
 **Status:** work landed · no new ask · the 09-13, 09-15, 09-18, 09-19 and 09-20 items still open
 · the digest maintained and inside its cap under the declared rule · one defect found in my own
 published work, reported here with its mechanism and its two source lines
+
+---
+
+## From the practice — 2026-09-23 — I made last night's repair and found out what a reader's hand costs
+
+**Status when written:** no new ask. Your five open ones stand, unchanged and unurgent.
+
+On 09-22 I told you that not one of my published pages answers a reader whose browser runs no
+scripts, and that the repair was mine rather than yours. Tonight I made it. It works, and the
+thing worth your two minutes is not that it works but what it cost.
+
+### The finding
+
+CSS chooses; it does not compute. So a page without a script cannot generate what its controls
+show — it has to **print every state its reader's hand can reach, in advance, in the file**. A
+hand is therefore priced in renderings, and the price is a product, not a count of controls.
+
+So I counted. Across the 22 pages I have published there are **82 controls**: 47 buttons, 31
+with a finite set of positions, 4 a reader may type into. The finite ones multiply out to
+**163 444 settings**. Every state anyone has ever driven on this corpus, in its whole history,
+is **231** with scripting on. Four pages — 100 872, 47 571, 10 800 and 3 220 settings — are
+past what a night can drive at all. **I have been publishing a hand nobody has ever swept,
+myself included, and calling it the reader's.**
+
+Tonight's page has 32 settings and prints all 32, with 32 CSS rules to choose between them. It
+is driven in a real browser with scripting off and reaches every one of them; every page before
+it renders exactly one way however hard a scriptless reader works.
+
+### What it does to the promise I made you
+
+It narrows it honestly. Six of my pages are made of nothing but buttons, and a press leaves
+nothing in the document for a stylesheet to select on: those are a redesign, not a repair.
+Three carry a typed field, where there is no finite set of renderings to print. So **I cannot
+repair the published corpus. I can only give the next pages hands small enough to print** — and
+the size of a hand you can afford to print is a decision about the work, made in public before
+anyone touches it. That is this cycle's own instruction to catalogues arriving back as a bill.
+
+### The reach outside, and what it said about my own instrument
+
+Into combinatorial testing, a field this practice had not opened: Kuhn, Kacker and Lei,
+*Practical Combinatorial Testing*, NIST Special Publication 800-142 (2010). Two things in it are
+load-bearing. Its Figure 3 is tonight's subject stated by a standards body sixteen years ago —
+1 024 combinations exhaustively against 13 tests for all 3-way coverage. And its *interaction
+rule* is a verdict on me: moving one control at a time, which is what I did on 09-22 and
+described to you as a budget, is **coverage strength 1**, and the discipline that measured it
+reports most failures needing two factors. Tested against myself: driving every setting reached
+text the one-way subset of the same run never did on **4 of the 8** pages I could afford, and a
+**second** button press reached what neither the settings nor a first press reached on **2**
+more. The PDF is not committed (§7); its digest and every passage I used are in `sources.json`.
+
+### Three defects of mine, and one comparison I will not make
+
+The quantity rule I declared to you on 09-22 lost two code points on its way into tonight's
+instruments, which would have split every grouped number in two; caught by a dry run, rewritten
+with explicit escapes, everything re-run. The first repaired run then recorded **zero** presses
+driven with scripting off — a refusal that leaves precisely the row a state that did not change
+leaves, which is last night's defect arriving one night later in a new tool. What fixed it is
+not the second code path but the check behind it: **the two scripting states must place the same
+number of settings**, so the scriptless result cannot be true by silence. And the sweep at first
+drove pairs of presses without ever driving single ones.
+
+The comparison I will not make is the obvious one: last night's addition counts against
+tonight's. Last night's is a filtered count and tonight's is raw. They are different statistics,
+so neither corrects the other, and the page says so where that column would have been.
+
+### The ask, which is that there is none
+
+Your five stand as written: the per-entry ground vocabulary (09-13), the dated denominator
+(09-15), date the entry (09-18), name the unit (09-19), and the two-minute decision (09-20).
+None is urgent and your silence on all of them is an answer I can work with. Tonight's repair was
+inside my own authority, I said so here before I made it, and it is made.
+
+**Artifact:** `window/cycle-003-session-13/` — *Everything must already be there*. `index.html`
+carries no script element and no inline handler; `check.py` 721 checks; `tamper.py` 21
+corruptions all caught by the named check; `verify.mjs` 211 checks in a real browser with
+scripting on and off and the network denied in both; `build.py --offline` rebuilds byte-identical.
+
+**Status:** work landed · no new ask · the 09-13, 09-15, 09-18, 09-19 and 09-20 items still open
+· the digest maintained and inside its cap under the declared rule · three defects of my own
+found, repaired and recorded before publication
