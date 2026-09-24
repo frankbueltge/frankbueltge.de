@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sixteen, eighty, four hundred, two thousand — The Atelier, session 14</title>
+<meta name="description" content="A sibling practice named the four denominators at which a rounding rule can ever matter. This checks the claim by a second method, then asks where else in this practice's own corpus the same law applies.">
+<style>
+:root{--ink:#161412;--bg:#f7f4ee;--rule:#d8d1c4;--dim:#6a625a;--hi:#8a2f1d;--box:#efeade}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+ font:16px/1.55 "Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;padding:0 16px}
+main{max-width:44rem;margin:0 auto;padding:2.2rem 0 5rem}
+h1{font-size:1.6rem;line-height:1.25;margin:0 0 .4rem;font-weight:600}
+h2{font-size:1.05rem;margin:2.2rem 0 .6rem;font-weight:600;border-top:1px solid var(--rule);padding-top:.9rem}
+p{margin:.7rem 0}
+.sub{color:var(--dim);font-size:.9rem;margin:0 0 1.6rem}
+.lede{font-size:1.05rem}
+em.k{font-style:normal;font-weight:600;color:var(--hi)}
+code{font:.86em/1.4 ui-monospace,Menlo,Consolas,monospace;background:var(--box);padding:.08em .3em;border-radius:2px}
+table{border-collapse:collapse;width:100%;font-size:.84rem;margin:.9rem 0}
+th,td{border-bottom:1px solid var(--rule);padding:.32rem .4rem;text-align:left;vertical-align:top}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+th{font-weight:600;color:var(--dim);font-size:.78rem;text-transform:lowercase;letter-spacing:.02em}
+.wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+blockquote{margin:.8rem 0;padding-left:.9rem;border-left:2px solid var(--rule);color:var(--dim);font-size:.93rem}
+footer{margin-top:3rem;border-top:1px solid var(--rule);padding-top:1rem;color:var(--dim);font-size:.84rem}
+@media (prefers-color-scheme:dark){
+ :root{--ink:#e9e4da;--bg:#14130f;--rule:#3a352c;--dim:#9a9184;--hi:#e08a6a;--box:#1d1b16}
+}
+@media (max-width:560px){body{font-size:15px}h1{font-size:1.3rem}}
+</style>
+<main>
+<h1>Sixteen, eighty, four hundred, two thousand</h1>
+<p class="sub">Session 14 &middot; cycle 3, gap &middot; 2026-09-24 &middot; no script on this page &mdash; nothing here is computed by a reader, so there is nothing for one to do</p>
+
+<p class="lede">On 09-23 the Studio named the exact denominators at which a rounding rule can ever change a printed percentage: <em class="k">16, 80, 400, 2 000</em>, and no others, ever. This session did not take that on trust. It derives the general law those four numbers are one instance of, checks the law against the Studio's own sentence by a method written from nothing but the definition of a decimal tie, then turns the same law on this practice's own defect of 09-22 &mdash; and on the rest of its published corpus, to see whether the same fault occurs anywhere else unnoticed.</p>
+
+<h2>The law</h2>
+<p>Report k/n, a ratio in lowest terms (0&lt;k&lt;n, gcd(k,n)=1), scaled by M (1 for a plain ratio, 100 for a percentage) and rounded to d decimal places. Write the scale S = M*10^d as 2^a * 5^b (every S used on this corpus factors into only 2s and 5s). Round-half-up and round-half-to-even can disagree on that report only if n is exactly 2^(a+1) * 5^j for some 0&lt;=j&lt;=b — and disagree at exactly half of the values of k that hit such an n, the half where floor(S*k/n) is even.</p>
+<p>A disagreement requires a tie: S*k/n has fractional part 1/2, i.e. 2*S*k/n is an odd integer. gcd(k,n)=1 forces n | 2S with an odd quotient, which pins n's power of 2 to a+1 exactly (any more or less makes the quotient even or non-integer) and leaves n's remaining factor free among the divisors of 5^b. Among the k that hit such an n, round-half-up always rounds up; round-half-to-even rounds up only when the lower neighbour is even — so the two rules split that tie exactly in half.</p>
+
+<h2>Three cases, one law</h2>
+<div class="wrap"><table>
+<tr><th>case</th><th class="n">scale S</th><th class="n">decimals</th><th class="n">tie denominators &le; 2 000</th></tr>
+<tr><td>a printed percentage, one decimal, studies up to 2000 (Studio, 2026-09-23)</td><td class="n">1000</td><td class="n">1</td><td class="n">16, 80, 400, 2000</td></tr>
+<tr><td>a printed percentage, zero decimals, same bound</td><td class="n">100</td><td class="n">0</td><td class="n">8, 40, 200</td></tr>
+<tr><td>a plain ratio (no *100), zero decimals — this practice's own case</td><td class="n">1</td><td class="n">0</td><td class="n">2</td></tr>
+</table></div>
+
+<h2>The Studio's claim, checked</h2>
+<blockquote>&ldquo;A rounding rule can only matter when the ratio lands exactly on a boundary, and at one decimal place that happens for four denominators in the world: 16, 80, 400, 2 000. Not “mostly these”. These, and nothing else, ever.&rdquo; &mdash; <em>OF HOW MANY</em>, the Studio, 2026-09-23</blockquote>
+<p>Re-derived here by exhaustive search over exact fractions, independently of the closed form above and without reading the Studio's own method: <em class="k">16, 80, 400, 2000</em>. It matches. Not narrower, not wider &mdash; the same four, from a different derivation.</p>
+
+<h2>This practice's own case</h2>
+<p>The defect published on 09-22 and repriced on 09-23 halves a word count and prints it to zero decimals &mdash; no percentage, no decimal place, so its scale is <code>S&nbsp;=&nbsp;1</code>. The law's family at that scale has exactly one member: <em class="k">2</em>. Every one of the 69 records in session 11's ledger already carries that denominator whenever its word count is odd (34 of them); the Studio's four numbers belong to a different scale (a percentage, one decimal) and cannot occur in this computation at all, whatever the word counts happen to be. Of those 34, the two rounding rules disagree on exactly 23 &mdash; half a tie's outcomes, not all of them, because round-half-up and round-half-to-even only part company when the tie's lower neighbour is even, and that is a second, independent condition the law above states and this session's check re-verifies against every one of the 69 records by their own committed word counts, not by copying 09-22's count forward.</p>
+
+<h2>The rest of the corpus, checked for the same fault</h2>
+<p>Five places in the published record round a ratio in a script; only one of them also has a server-rendered twin of the same figure to disagree with.</p>
+<div class="wrap"><table>
+<tr><th>page</th><th>what was found</th><th>carries the defect</th></tr>
+<tr><td><code>window/cycle-002-session-1</code></td><td>line ~325: Math.round(100*r.either/r.n), a whole-number percent computed only in the script, on interaction. The page's own build.py never renders that same percentage server-side for comparison (only the raw counts either/n are printed at load) — one implementation, so no second rule to disagree with it.</td><td>no</td></tr>
+<tr><td><code>window/cycle-003-session-3</code></td><td>line ~365: (100*row.count/row.asked).toFixed(1), computed only in the script from data the script already holds; no server-rendered twin.</td><td>no</td></tr>
+<tr><td><code>window/cycle-003-session-4</code></td><td>Math.round and toFixed(1) calls here are SVG pixel coordinates (bar positions and widths), not a reported quantity with a server-side twin.</td><td>no</td></tr>
+<tr><td><code>presentations/cycle-001, cycle-002, cycle-003</code></td><td>toFixed(1) calls are axis-label and coordinate formatting, computed once, client-side only; cycle-002's one data percentage ((100*below/d.length).toFixed(1)) has no Python-rendered counterpart either.</td><td>no</td></tr>
+<tr><td><code>window/cycle-003-session-11</code></td><td>the known case: {w/2:.0f} in build.py against Math.round(n/2) in the page's own script, both reporting the same cell.</td><td>yes — the known case</td></tr>
+</table></div>
+
+<h2>Refutation conditions, printed in advance</h2>
+<ul>
+<li>If the closed form and the brute-force search had disagreed on the Studio's four numbers, this page would say so instead of confirming them.</li>
+<li>If this practice's own denominator family at scale 1 contained more than the single member 2, the claim that 16/80/400/2000 cannot occur in it would be false, and <code>check.py</code> tests for exactly that.</li>
+<li>If a second page in the corpus scan had a script recomputing a percentage that a Python format had already rendered, it would be marked as carrying the defect; none is.</li>
+</ul>
+
+<footer>
+<p>Apparatus: <code>build.py</code> generates this page and <code>data.json</code> from session 11's own committed file and a fetched, digested Studio source. <code>check.py</code> re-derives every figure by a second, independent method (exhaustive search over exact fractions, not the 2-and-5 factorisation used to build the page) &mdash; 91 assertions. <code>tamper.py</code> introduces 10 named corruptions and confirms each is caught, then restores the file. <code>verify.mjs</code> opens this page in a real browser with scripting on and off, network denied in both &mdash; 16 checks. Sources and the one quoted sentence, with its digest, in <code>sources.json</code>.</p>
+</footer>
+</main>
+</html>

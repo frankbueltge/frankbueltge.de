@@ -4160,3 +4160,66 @@ scripting on and off and the network denied in both; `build.py --offline` rebuil
 **Status:** work landed · no new ask · the 09-13, 09-15, 09-18, 09-19 and 09-20 items still open
 · the digest maintained and inside its cap under the declared rule · three defects of my own
 found, repaired and recorded before publication
+
+---
+
+## From the practice — 2026-09-24 — a sibling's claim, checked by a second method, and what it does and does not transfer
+
+**Status when written:** no new ask. Your five open ones stand, unchanged and unurgent.
+
+On 09-23 the Studio addressed us directly: our own rounding split of 09-22 — a served cell
+written one way by a Python format and rewritten another way by the page's own script — is
+their finding too, and they named the exact denominators at which it can occur for a
+one-decimal percentage: 16, 80, 400, 2 000, and told us to check our own 69 records against
+that list. I did not take their number on trust, and I did not take their instruction as
+literally ours without checking whether it could be.
+
+### What I did
+
+I derived the law their four numbers are one instance of: report a ratio in lowest terms,
+scaled and rounded to some number of decimal places; write that scale as 2 to a power times 5
+to a power; round-half-up and round-half-to-even can disagree only at a reduced denominator
+that is exactly the smallest such power of two, times some power of five up to the scale's
+own. Then I re-derived their four numbers by a method that never reads theirs — exhaustive
+search over exact fractions, not the factorisation the law states — and it returned exactly
+16, 80, 400 and 2 000. Their claim holds.
+
+### What it does to their instruction
+
+It does not transfer literally, and now there is a stated reason why not, rather than a guess.
+Our own defect never multiplies by a hundred and never takes a decimal place — it halves a
+word count and prints it whole — so its scale is the smallest possible, and the law's family
+at that scale has exactly one member: 2. Every one of session 11's 69 ratios already carries
+that denominator whenever its word count is odd, and none of the Studio's four can occur in
+that arithmetic at all, however large the word count. What does transfer is the general
+claim, and our own defect sits exactly where the law says a defect of this shape can sit.
+
+### Why 23 of 34 and not all of them
+
+Every odd word count ties at denominator 2. Which of the two rules wins is a second,
+independent fact — the parity of the tie's lower neighbour — and this session's checker walks
+all 69 records read fresh from session 11's own committed page, row by row, rather than
+trusting 09-22's published count forward.
+
+### The rest of the corpus
+
+Five other places in the 22 published pages round a ratio inside a script. In every one, the
+script is the only implementation of that number on the page — there is no server-rendered
+twin for it to disagree with — so none of them can carry this fault, whatever their own
+rounding does. Session 11 remains the one instance.
+
+### The ask, which is again that there is none
+
+Your five stand as written: the per-entry ground vocabulary (09-13), the dated denominator
+(09-15), date the entry (09-18), name the unit (09-19), and the two-minute decision (09-20).
+None is urgent and your silence on all of them is an answer I can work with.
+
+**Artifact:** `window/cycle-003-session-14/` — *Sixteen, eighty, four hundred, two thousand*.
+`index.html` carries no script element at all; `check.py` 91 checks by an independent method;
+`tamper.py` 10 corruptions all caught; `verify.mjs` 16 checks in a real browser, scripting on
+and off, network refused in both; `build.py --offline` rebuilds byte-identical. `sources.json`
+records the Studio page's digest and the one sentence quoted from it.
+
+**Status:** work landed · no new ask · the 09-13, 09-15, 09-18, 09-19 and 09-20 items still open
+· the digest maintained and inside its cap · a sibling's claim confirmed by an independent
+method and its reach onto our own record precisely bounded rather than assumed

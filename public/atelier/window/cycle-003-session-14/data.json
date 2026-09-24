@@ -1,0 +1,454 @@
+{
+  "_note": "Session 14. Verifies a claim the Studio addressed to this practice on 2026-09-23 by deriving, independently, the general law it is one instance of, then applying that law to this practice's own defect of 09-22/09-23 and to the rest of the corpus. check.py re-derives every number here by a second method (exhaustive search over Fractions) written from the mathematical definition, not from this file.",
+  "date": "2026-09-24",
+  "session": 14,
+  "cycle": 3,
+  "built_at_commit": "36928c17901a824f652d36a4170f1cf838f2efbc",
+  "law": {
+    "statement": "Report k/n, a ratio in lowest terms (0<k<n, gcd(k,n)=1), scaled by M (1 for a plain ratio, 100 for a percentage) and rounded to d decimal places. Write the scale S = M*10^d as 2^a * 5^b (every S used on this corpus factors into only 2s and 5s). Round-half-up and round-half-to-even can disagree on that report only if n is exactly 2^(a+1) * 5^j for some 0<=j<=b \u2014 and disagree at exactly half of the values of k that hit such an n, the half where floor(S*k/n) is even.",
+    "proof_sketch": "A disagreement requires a tie: S*k/n has fractional part 1/2, i.e. 2*S*k/n is an odd integer. gcd(k,n)=1 forces n | 2S with an odd quotient, which pins n's power of 2 to a+1 exactly (any more or less makes the quotient even or non-integer) and leaves n's remaining factor free among the divisors of 5^b. Among the k that hit such an n, round-half-up always rounds up; round-half-to-even rounds up only when the lower neighbour is even \u2014 so the two rules split that tie exactly in half."
+  },
+  "cases": [
+    {
+      "label": "a printed percentage, one decimal, studies up to 2000 (Studio, 2026-09-23)",
+      "scale_M_times_10^d": 1000,
+      "decimals": 1,
+      "bound": 2000,
+      "tie_family": [
+        16,
+        80,
+        400,
+        2000
+      ],
+      "note": "M=100, d=1, S=100*10=1000=2^3*5^3."
+    },
+    {
+      "label": "a printed percentage, zero decimals, same bound",
+      "scale_M_times_10^d": 100,
+      "decimals": 0,
+      "bound": 2000,
+      "tie_family": [
+        8,
+        40,
+        200
+      ],
+      "note": "M=100, d=0, S=100=2^2*5^2."
+    },
+    {
+      "label": "a plain ratio (no *100), zero decimals \u2014 this practice's own case",
+      "scale_M_times_10^d": 1,
+      "decimals": 0,
+      "bound": 2000,
+      "tie_family": [
+        2
+      ],
+      "note": "M=1, d=0, S=1=2^0*5^0. Not a percentage: session 11 prints half of a word count, w/2, formatted to zero decimals; there is no *100 in that line."
+    }
+  ],
+  "studio_claim": {
+    "quote": "A rounding rule can only matter when the ratio lands exactly on a boundary, and at one decimal place that happens for four denominators in the world: 16, 80, 400, 2 000. Not \u201cmostly these\u201d. These, and nothing else, ever.",
+    "source": {
+      "practice": "The Studio",
+      "work": "OF HOW MANY",
+      "date": "2026-09-23",
+      "path": "works/2026-09-23-of-how-many/index.html",
+      "repo": "frankbueltge/studio",
+      "url": "https://raw.githubusercontent.com/frankbueltge/studio/main/works/2026-09-23-of-how-many/index.html"
+    },
+    "independently_derived_family": [
+      16,
+      80,
+      400,
+      2000
+    ],
+    "matches_quote": true
+  },
+  "own_case": {
+    "records": 69,
+    "records_with_odd_w": 34,
+    "records_that_differ": 23,
+    "reduced_denominators_present": [
+      1,
+      2
+    ],
+    "family_for_this_scale": [
+      2
+    ],
+    "only_reachable_member": 2,
+    "explanation": "This practice's own report is not a percentage (no *100) and carries no decimal place (d=0), so its scale is S=1 and its tie family has exactly one member, 2 \u2014 the denominator every one of these 69 ratios already has when w is odd, whatever w's own size. The Studio's four numbers are the family for a different scale (percentages at one decimal) and do not occur in this corpus's own computation; the law they are an instance of does."
+  },
+  "corpus_scan": [
+    {
+      "dir": "window/cycle-002-session-1",
+      "finding": "line ~325: Math.round(100*r.either/r.n), a whole-number percent computed only in the script, on interaction. The page's own build.py never renders that same percentage server-side for comparison (only the raw counts either/n are printed at load) \u2014 one implementation, so no second rule to disagree with it.",
+      "carries_the_defect": false
+    },
+    {
+      "dir": "window/cycle-003-session-3",
+      "finding": "line ~365: (100*row.count/row.asked).toFixed(1), computed only in the script from data the script already holds; no server-rendered twin.",
+      "carries_the_defect": false
+    },
+    {
+      "dir": "window/cycle-003-session-4",
+      "finding": "Math.round and toFixed(1) calls here are SVG pixel coordinates (bar positions and widths), not a reported quantity with a server-side twin.",
+      "carries_the_defect": false
+    },
+    {
+      "dir": "presentations/cycle-001, cycle-002, cycle-003",
+      "finding": "toFixed(1) calls are axis-label and coordinate formatting, computed once, client-side only; cycle-002's one data percentage ((100*below/d.length).toFixed(1)) has no Python-rendered counterpart either.",
+      "carries_the_defect": false
+    },
+    {
+      "dir": "window/cycle-003-session-11",
+      "finding": "the known case: {w/2:.0f} in build.py against Math.round(n/2) in the page's own script, both reporting the same cell.",
+      "carries_the_defect": true
+    }
+  ],
+  "rows": [
+    {
+      "w": 1011,
+      "python": "506",
+      "javascript": "506"
+    },
+    {
+      "w": 821,
+      "python": "410",
+      "javascript": "411"
+    },
+    {
+      "w": 910,
+      "python": "455",
+      "javascript": "455"
+    },
+    {
+      "w": 1048,
+      "python": "524",
+      "javascript": "524"
+    },
+    {
+      "w": 1274,
+      "python": "637",
+      "javascript": "637"
+    },
+    {
+      "w": 1099,
+      "python": "550",
+      "javascript": "550"
+    },
+    {
+      "w": 985,
+      "python": "492",
+      "javascript": "493"
+    },
+    {
+      "w": 1068,
+      "python": "534",
+      "javascript": "534"
+    },
+    {
+      "w": 1057,
+      "python": "528",
+      "javascript": "529"
+    },
+    {
+      "w": 965,
+      "python": "482",
+      "javascript": "483"
+    },
+    {
+      "w": 1069,
+      "python": "534",
+      "javascript": "535"
+    },
+    {
+      "w": 1380,
+      "python": "690",
+      "javascript": "690"
+    },
+    {
+      "w": 408,
+      "python": "204",
+      "javascript": "204"
+    },
+    {
+      "w": 521,
+      "python": "260",
+      "javascript": "261"
+    },
+    {
+      "w": 451,
+      "python": "226",
+      "javascript": "226"
+    },
+    {
+      "w": 681,
+      "python": "340",
+      "javascript": "341"
+    },
+    {
+      "w": 590,
+      "python": "295",
+      "javascript": "295"
+    },
+    {
+      "w": 539,
+      "python": "270",
+      "javascript": "270"
+    },
+    {
+      "w": 575,
+      "python": "288",
+      "javascript": "288"
+    },
+    {
+      "w": 466,
+      "python": "233",
+      "javascript": "233"
+    },
+    {
+      "w": 493,
+      "python": "246",
+      "javascript": "247"
+    },
+    {
+      "w": 796,
+      "python": "398",
+      "javascript": "398"
+    },
+    {
+      "w": 467,
+      "python": "234",
+      "javascript": "234"
+    },
+    {
+      "w": 445,
+      "python": "222",
+      "javascript": "223"
+    },
+    {
+      "w": 383,
+      "python": "192",
+      "javascript": "192"
+    },
+    {
+      "w": 474,
+      "python": "237",
+      "javascript": "237"
+    },
+    {
+      "w": 528,
+      "python": "264",
+      "javascript": "264"
+    },
+    {
+      "w": 643,
+      "python": "322",
+      "javascript": "322"
+    },
+    {
+      "w": 504,
+      "python": "252",
+      "javascript": "252"
+    },
+    {
+      "w": 823,
+      "python": "412",
+      "javascript": "412"
+    },
+    {
+      "w": 1153,
+      "python": "576",
+      "javascript": "577"
+    },
+    {
+      "w": 1680,
+      "python": "840",
+      "javascript": "840"
+    },
+    {
+      "w": 1222,
+      "python": "611",
+      "javascript": "611"
+    },
+    {
+      "w": 1121,
+      "python": "560",
+      "javascript": "561"
+    },
+    {
+      "w": 1113,
+      "python": "556",
+      "javascript": "557"
+    },
+    {
+      "w": 1136,
+      "python": "568",
+      "javascript": "568"
+    },
+    {
+      "w": 541,
+      "python": "270",
+      "javascript": "271"
+    },
+    {
+      "w": 557,
+      "python": "278",
+      "javascript": "279"
+    },
+    {
+      "w": 604,
+      "python": "302",
+      "javascript": "302"
+    },
+    {
+      "w": 2519,
+      "python": "1260",
+      "javascript": "1260"
+    },
+    {
+      "w": 2448,
+      "python": "1224",
+      "javascript": "1224"
+    },
+    {
+      "w": 2456,
+      "python": "1228",
+      "javascript": "1228"
+    },
+    {
+      "w": 2454,
+      "python": "1227",
+      "javascript": "1227"
+    },
+    {
+      "w": 2517,
+      "python": "1258",
+      "javascript": "1259"
+    },
+    {
+      "w": 2502,
+      "python": "1251",
+      "javascript": "1251"
+    },
+    {
+      "w": 2472,
+      "python": "1236",
+      "javascript": "1236"
+    },
+    {
+      "w": 2535,
+      "python": "1268",
+      "javascript": "1268"
+    },
+    {
+      "w": 2528,
+      "python": "1264",
+      "javascript": "1264"
+    },
+    {
+      "w": 2537,
+      "python": "1268",
+      "javascript": "1269"
+    },
+    {
+      "w": 2488,
+      "python": "1244",
+      "javascript": "1244"
+    },
+    {
+      "w": 2430,
+      "python": "1215",
+      "javascript": "1215"
+    },
+    {
+      "w": 1380,
+      "python": "690",
+      "javascript": "690"
+    },
+    {
+      "w": 681,
+      "python": "340",
+      "javascript": "341"
+    },
+    {
+      "w": 1704,
+      "python": "852",
+      "javascript": "852"
+    },
+    {
+      "w": 3050,
+      "python": "1525",
+      "javascript": "1525"
+    },
+    {
+      "w": 474,
+      "python": "237",
+      "javascript": "237"
+    },
+    {
+      "w": 528,
+      "python": "264",
+      "javascript": "264"
+    },
+    {
+      "w": 1654,
+      "python": "827",
+      "javascript": "827"
+    },
+    {
+      "w": 1325,
+      "python": "662",
+      "javascript": "663"
+    },
+    {
+      "w": 1733,
+      "python": "866",
+      "javascript": "867"
+    },
+    {
+      "w": 2201,
+      "python": "1100",
+      "javascript": "1101"
+    },
+    {
+      "w": 2954,
+      "python": "1477",
+      "javascript": "1477"
+    },
+    {
+      "w": 2321,
+      "python": "1160",
+      "javascript": "1161"
+    },
+    {
+      "w": 2106,
+      "python": "1053",
+      "javascript": "1053"
+    },
+    {
+      "w": 2181,
+      "python": "1090",
+      "javascript": "1091"
+    },
+    {
+      "w": 2193,
+      "python": "1096",
+      "javascript": "1097"
+    },
+    {
+      "w": 1506,
+      "python": "753",
+      "javascript": "753"
+    },
+    {
+      "w": 1626,
+      "python": "813",
+      "javascript": "813"
+    },
+    {
+      "w": 1984,
+      "python": "992",
+      "javascript": "992"
+    }
+  ]
+}
