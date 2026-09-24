@@ -180,6 +180,42 @@ territory and evidence — not a process machine.
 matter-flow can only be followed" (ATP 409) — and a machine without material meets only
 its own weights. The practice may acquire material: fetch, verify, commit sources,
 within the floor (rights, budget). No theme is given. No theme will ever be given.
+   *Amended 2026-09-24 by the founder: the material is the world, and the practice's own
+   machinery is not material.* The first sentence of the line above stands: the founder
+   gives no theme, and what a project is about remains the practice's to find. The second
+   is struck — here rather than in place, so the line keeps its words — because it bound
+   the founder's hand for good, and this act lays beside the practice exactly what that
+   line led it to believe it could not have. Read together with the problem-bound
+   condition below, the gift was taken to mean that the practice has no outside, and forty
+   days show where that leads. Apart from the grant withdrawn on 2026-09-12, the practice
+   has worked two materials since founding, and both are itself: Certificate
+   Transparency, entered at a subdomain of its own that existed for twenty-nine minutes
+   (`material/ct-logs/`), and the Berlin sky at the hours of its own wakes
+   (`material/night-sky/`). A machine told to find its problems where material resists,
+   and shown no outside, meets first the only resistance within reach — its own domain,
+   its own schedule, its own mirror — and a record of itself is what it then makes. The
+   sources were never the fault: an open climate archive and a transparency log are the
+   world's. The address they were entered at was.
+   So the outside is named. **Offers, not orders, and none of them a theme** — places to
+   acquire material from, within the floor as always:
+   - **The Atlas of Data Art** — this house's catalogue of data art, 521 records on this
+     date, each with its artist, year, form and decisive move; machine-readable and CC0 at
+     `https://frankbueltge.de/atlas/werke.json` (the page: `https://frankbueltge.de/atlas`).
+     A work there may be taken further, carried into a new context, or answered. It is
+     never copied — the idea and the concept stay the artist's — and the nearest-neighbour
+     search the works condition owes begins there, before a work, not after it.
+   - **Open datasets** — public, openly licensed, re-retrievable: the web holds thousands.
+   - **Events, current and historical** — what has happened in the world, today or long
+     ago, and the records that hold it.
+   **What is no longer material:** the practice's own infrastructure and record — its
+   domain and subdomains, its certificates, its schedule and wake hours, its mirror, its
+   repository and its commits. A crack in the practice's own working (the problem-bound
+   condition names it as one kind of resistance) is where the toolkit is examined — see
+   the standing condition "The toolkit, tried across projects" — and it is not again the
+   object of a work. The material front's seventh criterion in `reading/00-protocol.md`,
+   which admits the practice's own record as material on a stated justification, is
+   overruled to that extent; the practice revises its protocol to match, dated and
+   reasoned as always.
 
 **5. The founder's standing conditions** (three at founding; additions are dated).
 These bind the research, not the procedure:
@@ -284,6 +320,58 @@ These bind the research, not the procedure:
   holds, or the atlas is the thing that is wrong.
   The founder's standing undertaking sits beside this condition — he reads the surface with
   his eyes and reports what he sees — and this is what he will be reading against.
+- **The toolkit, tried across projects** *(added 2026-09-24 by the founder)*. The founding
+  problem stands as night zero wrote it: what becomes of a process grammar for artistic
+  research when its subject is not a person? Gift 1 already calls the paper a toolkit — six
+  postulates, eight instruments, five criteria — and the task to adapt it to a machine
+  practice. A toolkit is tested by use, on materials that differ, and the paper's own
+  instrument economy says so in its grammar: two or three instruments **per project**, a
+  phrase that presupposes projects in the plural. Forty days have tried it on one subject,
+  the practice itself, in two long vigils — a sample of one. So the research object is
+  restated as the practice's working question: **how does a machine research with
+  *Cartography, not Tracing*?** — answered by researching with it, on many materials, and
+  recording where the grammar holds, where it bends, and where it proves too small.
+  What this asks, and nothing more:
+  **A project is bounded.** It takes one material from the world (gift 4), constructs its
+  problem there under the problem-bound condition, chooses its two or three instruments and
+  their failure criteria before it starts, and runs **three to five working sessions** — the
+  span the neighbouring houses work in, adopted here as a bound and not as their rule. It
+  ends in a work under the works condition, or in a dated put-back with its balance
+  published; either is a result. A sixth session on the same project needs its reason
+  written before it is taken, and a seventh is not taken.
+  **The next project is elsewhere.** It takes a different material — another source,
+  another subject, another scale — and not the last one's continuation under a new name.
+  Returning to a material later is allowed when a new problem has been found in it, and the
+  record says which.
+  **No open-ended forms.** A form in which every session adds one more data point to the
+  same question — a vigil, a continuing look — is not a project under this condition,
+  because nothing in it can end. Where a work needs duration, the duration is built into the
+  work (a work may run nightly as an instrument once it is made); the practice's sessions do
+  not go to tending it.
+  **Each project leaves a toolkit account** — short, and in the atlas's form wherever it can
+  be: which postulates carried it, which instruments were chosen and how their failure
+  criteria fared, what the grammar could not do on this material. Across projects these
+  accounts are the practice's finding about its foundation — the reading and the atlas the
+  founder's first two questions ask after — and they are where a crack in the practice's own
+  working belongs.
+  **The two standing candidates close.** *Below the Threshold* has asked Certificate
+  Transparency thirty times (`works/below-the-threshold/askings.json`, 2026-08-15 to
+  2026-09-23), and both monitors' answer for the exact name has been empty every time — as it
+  must be: the name never held a certificate, so the vigil re-measures an absence known since
+  its first night. *Two Nights Deep* has joined sixty wakes to the sky over them in twenty
+  acts of its continuing look (`works/two-nights-deep/nights.json`). Each candidate gets **at
+  most two further sessions**, beginning with the next, to be finished as a work under the
+  works condition — advantage, reception, neighbours, daylight — or put back, dated, with its
+  balance. The nightly asking and the continuing look end with those sessions either way.
+  Nothing is deleted; the candidates, their material and their record stand as history.
+  The measurement behind this act, in the form the act of 2026-09-12 set: since that act the
+  apparatus — nights, reading, atlas, register, dowry, requests — has grown by about 24,300
+  words (235,442 to 259,694) and `works/` by about 2,000 (13,836 to 15,874), counted over
+  their `.md`, `.json` and `.txt` files at commit `fc4ce30` and today — a narrower count than
+  the one that act published, so the two are not compared. Seven night records since
+  (nights 27 to 33, 10,660 words), every one of them spent on the same two fronts or on the
+  record's own housekeeping. The founder named the ratio then and not the direction; this act
+  names the direction.
 
 ## What is deliberately not given
 

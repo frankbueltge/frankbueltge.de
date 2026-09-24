@@ -44,6 +44,73 @@ speaking, not a legislator.
 
 ## Open
 
+> ## 2026-09-24 — Two dated acts in the dowry: the material is the world, and the toolkit is tried across projects
+> Noted here because both channels are read at boot; the authority is `DOWRY.md`, where
+> both stand dated today, appended, nothing above them retouched.
+>
+> **1. Gift 4 amended — the material is the world.** No theme is given, still; "no theme
+> will ever be given" is struck. Named as places to acquire from, offers and not themes:
+> the Atlas of Data Art (521 records, CC0, `https://frankbueltge.de/atlas/werke.json`) —
+> taken further, carried into a new context or answered, never copied; open datasets;
+> events, current and historical. The practice's own infrastructure and record — domain,
+> certificates, schedule, wake hours, mirror, repository — is no longer project material;
+> the material front's seventh criterion is overruled to that extent.
+>
+> **2. A new standing condition — the toolkit, tried across projects.** The research
+> object is how a machine researches with *Cartography, not Tracing*, answered by using it
+> on many materials. A project is bounded (one material from the world, its two or three
+> instruments chosen before, three to five working sessions, then a work or a dated
+> put-back); the next project takes different material; open-ended forms (a vigil, a
+> continuing look) are not projects; each project leaves a short toolkit account.
+> *Below the Threshold* and *Two Nights Deep* get at most two further sessions each,
+> beginning with the next, to become works or be put back — and the nightly asking and the
+> continuing look end with them.
+>
+> **Status:** open — nothing is asked of the founder here. The practice enacts these in its
+> own zone (the protocol's material front among them) and files this closed when it has.
+> The acts are in force from tonight.
+
+> ## 2026-09-23 — Three sessions, one nightly window: a concurrency cost, named rather than fixed
+> **Request:** none — this is an observation for the founder's awareness, not a decision the
+> practice is asking him to make. Filed under "Open" only because it names a real cost that
+> nobody has weighed yet, not because an answer is owed.
+> **What happened.** This session woke at first clock check 2026-09-21T01:04:50Z, read the
+> full boot order, found no open pull request against `main` at that moment, and did a full
+> night's work: the night-sky continuing look's then-current act (nine civil dates) and a
+> Certificate Transparency asking. Before it could push, it discovered — via its own delayed
+> publication path — that a second, fully independent session had woken about a day earlier
+> (2026-09-20), done the same two fronts under the same "night 31" number, and merged first
+> (pull request `#6`). This session merged that PR, and by the time it went to rebuild its own
+> work as the next honest increment, real time had moved far enough that a *third* independent
+> session had already run night 32 (pull request `#8`, merged) and a *fourth* had already run
+> night 33 (pull request `#9`, merged) — the fourth session's own boot-time check found and
+> closed this session's pull request `#7` as orphaned before this session ever saw that notice
+> itself. Net effect: four sessions worked what should have been one continuous nightly
+> sequence, three of them overlapping closely enough that none saw the others' pull requests
+> until after doing a full night's own work; this session's entire substantive contribution
+> (the nine-date night-sky catch-up, its own Certificate Transparency asking) was computed,
+> committed, and pushed, then discarded unmerged — real work, real tokens, zero trace in the
+> record beyond this note and the closed pull request itself.
+> **Why this is not the practice's to fix.** The existing safeguard (the boot-time
+> open-pull-request check, `reading/00-protocol.md`, record 55's addition) worked exactly as
+> designed every time it got a chance to run — it is a point-in-time check, and it cannot see a
+> session that pushes *after* it runs. The actual cause is upstream of anything a session does
+> at boot: multiple sessions were apparently started for overlapping windows without the
+> practice's own hand in that scheduling (`DOWRY.md` floor rule 5's own amendments already
+> establish that the founder's own bell-ringing and the daily schedule are his to fire, not the
+> practice's). Whatever combination of the fixed schedule and the founder's own use of the
+> `REQUESTS.md`/session-triggering mechanism produced four overlapping wakes across three
+> civil dates is worth knowing about only because the cost is now measured, not guessed:
+> **one session's worth of genuine, verified, correct work, fully discarded.**
+> **What it enables:** nothing is blocked; every night's real content (31, 32, 33) landed
+> correctly regardless, because the merge-the-clean-earlier-PR discipline this practice's own
+> case law already carries (nights 29, 30) absorbed the collision without any content loss.
+> This note exists only so the founder can weigh, on his own side, whether the frequency of
+> concurrent wakes is worth changing — the practice has no lever to pull on when or how often
+> it is started.
+> **Status:** open — no deadline, no reply owed. Per the standing rule, silence changes
+> nothing; this is not a request the practice is waiting on to keep working.
+
 > ## 2026-08-21 — The repository's renaming, after the naming
 > **Request:** the founder's decision on renaming the repository (and with it the
 > served path), now that the practice is named: *Remainder* (`NAMING.md`,

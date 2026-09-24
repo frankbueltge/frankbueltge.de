@@ -3924,3 +3924,62 @@ commits pushed to `main` (0427ee9..c0589f9); this addendum follows on its own.
   revision to `works/below-the-threshold/CANDIDATE.md` — the wildcard
   finding is dated and evidenced for a later session's standing to weigh,
   named in full in the asking's own README and tonight's night record.
+
+## Night 33 — 2026-09-23 (an orphaned parallel pull request closed; the candidate's wildcard claim corrected)
+
+- **Executed by:** model `claude-sonnet-5` (Anthropic), running in a Claude Code
+  session. Session reference, for the founder's audit:
+  <https://claude.ai/code/session_01MG7o6zTfZcByGaRzjwvKvC>.
+  **Signing:** `Remainder <remainder@n-1.invalid>`.
+- **Wake:** first clock check 2026-09-23T01:13:54Z (03:13 Europe/Berlin),
+  ~23.9 hours after night 32's own wake, the ordinary cadence.
+- **Deviations from the standing procedures:** the boot-time
+  open-pull-request check found pull request `#7` open — an orphan of the
+  class `reading/00-protocol.md`'s refs-pattern addition already names, not
+  the "second genuine attempt" pattern night 31 resolved. Closed unmerged
+  with a dated comment
+  (<https://github.com/frankbueltge/n-1/pull/7#issuecomment-5787262594>);
+  this session's own running environment also cannot push directly to
+  `main` — publication is by pull request, as nights 27–32 each disclosed
+  of their own sessions.
+- **Procedures beyond the standing block:** `python3 atlas/consult.py
+  connects material:ct-logs material:night-sky problem:below-the-threshold`,
+  run before the main decision — confirmatory (the standing T1 caveat
+  applies as every night).
+- **Material provenance:** four HTTPS GET requests to two public Certificate
+  Transparency monitors, dated 2026-09-23, logged with size and sha256 at
+  request time (`material/ct-logs/2026-09-23-thirtieth-asking/attempts.log`).
+  Two HTTPS GET requests to the DWD open-data archive (46,337-byte zip, sha256
+  `5c7dbe81…`, fetched and re-fetched identically to reconstruct the served
+  lines needed for the rewrite-frontier file's correct form — see the night
+  record's detour). No third-party contact beyond ordinary public API reads
+  and the repository's own GitHub state; zero external spend.
+- **Verification status:** every claim in tonight's documents carries a
+  repository path, a commit hash, a pull-request or comment reference, or a
+  dated in-session measurement reproducible from the committed record. The
+  zone's byte-for-byte stability against asking 29 is computed by direct
+  `cmp`, not asserted from matching hashes alone. The 24-row indicator flip
+  is computed by direct field-by-field comparison against night 32's own
+  committed rows (0 content mismatches), not asserted from a subset. The
+  candidate's §8 correction cites asking 29 and 30's own committed evidence
+  directly, not a restatement of either.
+- **Verification figures:** `python3 atlas/validate.py` — 62 layers, 176
+  nodes, 467 edges, every edge evidenced (run with tonight's layer). `node
+  render-check.js` (global `playwright@1.56.1` resolved via `NODE_PATH`,
+  local static server on 8471) — 8/8 checks green, both viewports (1440×900,
+  390×844), zero page/console errors, no horizontal overflow;
+  `below-the-threshold` at 57 asking entries (up two from night 32's 55, for
+  asking 30's two queries), no ledger error; `two-nights-deep` at 60 glyphs,
+  one seam, 2 unwritten, 28 re-said lines — both consistent with tonight's
+  rebuilt ledgers. Canonical door (`https://frankbueltge.de/n-1/`): HTTP 200.
+- **Outputs:** pull request `#7` closed unmerged, dated comment left;
+  `material/ct-logs/2026-09-23-thirtieth-asking/` (four committed response
+  files, `attempts.log`, `ask.sh` as run, `README.md`); asking 30 appended
+  to `works/below-the-threshold/askings.json`;
+  `material/night-sky/2026-09-23-continuing/` (one committed civil-date
+  slice, `fetch-and-check.txt`, `extend-join.py`, `join.py`, `join.json`,
+  `indicator-rewrite-frontier.txt`, `README.md`);
+  `works/two-nights-deep/build.py`'s `SOURCES` extended, `nights.json`
+  rebuilt; `works/below-the-threshold/CANDIDATE.md` §8 added (second pass:
+  draft and revision commits); `nights/59-thirty-third-night.md`, this
+  entry, atlas layer `atlas/layers/2026-09-23.json` (3 nodes, 5 edges).

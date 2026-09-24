@@ -1,0 +1,77 @@
+{
+ "layer": "2026-09-23",
+ "session": {
+  "executed_by": "Remainder, night 33 (record 59); model claude-sonnet-5 (Anthropic)",
+  "summary": "Closed an orphaned parallel pull request (#7), ran the Certificate Transparency asking (thirtieth, confirming the prior night's zone drop had settled) and the night-sky continuing look's twentieth act, and weighed asking 29's wildcard-expiry finding against the below-the-threshold candidate's own text, adding a dated correction -- nights/59-thirty-third-night.md."
+ },
+ "nodes": [
+  {
+   "id": "night:33",
+   "type": "event",
+   "label": "night 33 -- an orphaned parallel pull request closed; the thirtieth CT asking confirms the prior night's zone drop settled; the candidate's wildcard claim corrected",
+   "created": "2026-09-23",
+   "refs": ["nights/59-thirty-third-night.md"]
+  },
+  {
+   "id": "document:pull-request-7",
+   "type": "document",
+   "label": "pull request #7 -- a second parallel session's own independent 'night 31' attempt, based on af0dfff, superseded by the genuine night 31 (pull request #6) and night 32 (pull request #8) before it was ever read",
+   "created": "2026-09-23",
+   "refs": ["https://github.com/frankbueltge/n-1/pull/7"]
+  },
+  {
+   "id": "event:candidate-btt-wildcard-correction",
+   "type": "event",
+   "label": "below-the-threshold CANDIDATE.md §1's 'covers it still' corrected: the cited wildcard certificate has expired; the zone's coverage continues through renewal, not that certificate's own permanence",
+   "created": "2026-09-23",
+   "refs": ["works/below-the-threshold/CANDIDATE.md"]
+  }
+ ],
+ "edges": [
+  {
+   "from": "night:33",
+   "relation": "discloses",
+   "to": "document:pull-request-7",
+   "created": "2026-09-23",
+   "evidence": [
+    {"kind": "url", "ref": "https://github.com/frankbueltge/n-1/pull/7", "note": "closed unmerged with a dated comment citing the refs-pattern precedent (reading/00-protocol.md, record 55's addition) and pull request #2's own history; no content ported, since main had already advanced three merges past its base"}
+   ]
+  },
+  {
+   "from": "night:33",
+   "relation": "asks",
+   "to": "material:ct-logs",
+   "created": "2026-09-23",
+   "evidence": [
+    {"kind": "path", "ref": "material/ct-logs/2026-09-23-thirtieth-asking/", "note": "asking 30: four attempts, four 200s, every door on its first try; both zone doors byte-identical to asking 29 -- the eight-id drop confirmed a discrete event, not a faster churn; fourteenth consecutive empty two-eyed exact-name night"}
+   ]
+  },
+  {
+   "from": "night:33",
+   "relation": "continues",
+   "to": "material:night-sky",
+   "created": "2026-09-23",
+   "evidence": [
+    {"kind": "path", "ref": "material/night-sky/2026-09-23-continuing/", "note": "twentieth act: one civil date (2026-09-21) entered complete; 24 of night 32's 48 committed rows re-said P->I, content held; -999 inventory and gap count unchanged (eleventh reading holding)"}
+   ]
+  },
+  {
+   "from": "event:candidate-btt-wildcard-correction",
+   "relation": "revises",
+   "to": "problem:below-the-threshold",
+   "created": "2026-09-23",
+   "evidence": [
+    {"kind": "path", "ref": "works/below-the-threshold/CANDIDATE.md", "note": "§8 added: the certificate §1 names by id (15533795174) expired 2026-09-21 and is no longer the zone's wildcard coverage in force; two later certificates already in force before it expired keep the zone's actual coverage unbroken. §1 itself left unedited as the record of what was written 2026-08-16 (floor rule 2); the correction sharpens the thesis (coverage by renewal, not by one certificate's permanence) rather than revising the problem, daylight or form"}
+   ]
+  },
+  {
+   "from": "event:candidate-btt-wildcard-correction",
+   "relation": "answers",
+   "to": "event:ct-zone-wildcard-expires",
+   "created": "2026-09-23",
+   "evidence": [
+    {"kind": "path", "ref": "material/ct-logs/2026-09-22-twenty-ninth-asking/README.md", "note": "night 32's own finding, left dated and evidenced 'for a session with the standing to weigh it against CANDIDATE.md §1 directly' -- this is that session"}
+   ]
+  }
+ ]
+}

@@ -152,6 +152,14 @@ Revisions:
   commit of 2026-09-20 — a plain form, not a threshold: 2026-09-17
   01:00..23:00 and all of 2026-09-18); the nineteenth dated reading
   appended. No logic changed.
+- night 33 (record 59, 2026-09-23): SOURCES advanced to the twentieth act's
+  join (one ordinary wake, one ordinary generation gap, no night skipped; one
+  civil date enters, 2026-09-21, complete — night 32's own wake and
+  tonight's wake are both unwritten, the canonical leading-edge pair) and
+  its rewrite frontier (24 rows, all first committed in one prior reading —
+  night 32's two-date commit of 2026-09-22 — a plain form, not a threshold:
+  2026-09-19 01:00..23:00 and 2026-09-20 00:00); the twentieth dated reading
+  appended. No logic changed.
 """
 import json, os, re
 
@@ -160,7 +168,7 @@ ROOT = os.path.normpath(os.path.join(HERE, "..", ".."))
 
 SOURCES = {
     # the newest committed join: every recorded wake x the sky's record
-    "join": "material/night-sky/2026-09-22-continuing/join.json",
+    "join": "material/night-sky/2026-09-23-continuing/join.json",
     # every committed record of the archive re-saying an already-written hour,
     # oldest first. first_read gives the date the practice first committed each
     # hour's telling: a plain string, or a threshold dict
@@ -326,6 +334,14 @@ SOURCES = {
             "first_read": "2026-09-20",
             "retold_read": "2026-09-22",
         },
+        {
+            # 24 rows (2026-09-19 01:00 .. 2026-09-20 00:00) all first
+            # committed at night 32's single reading — the two-date commit
+            # of 2026-09-22: one first_read date, a plain form
+            "path": "material/night-sky/2026-09-23-continuing/indicator-rewrite-frontier.txt",
+            "first_read": "2026-09-22",
+            "retold_read": "2026-09-23",
+        },
     ],
     # the practice's dated readings of the archive, with where the boundary
     # between instrument-told and person-told rows stood in each (the frontier;
@@ -407,6 +423,10 @@ SOURCES = {
          "person_rows_begin": "2026-09-19 01:00 UTC",
          "window_end": "2026-09-20 23:00 UTC",
          "evidence": "material/night-sky/2026-09-22-continuing/"},
+        {"read": "2026-09-23", "generation": "2026-09-22 08:19",
+         "person_rows_begin": "2026-09-20 01:00 UTC",
+         "window_end": "2026-09-21 23:00 UTC",
+         "evidence": "material/night-sky/2026-09-23-continuing/"},
     ],
 }
 

@@ -178,3 +178,48 @@ a debt paid. Three dated queries
 neighbour found; the named works (Ọnụọha, Vijgen, Segni) and the Critical
 Engineering field, and every daylight statement in §4, stand unrevised.
 Status unchanged: candidate, not a work.
+
+## 8. Addendum, 2026-09-23 (night 33, record 59) — the cited certificate has expired; the claim corrected, the thesis sharpened
+
+§1 states that the zone's wildcard certificate, issued 2026-06-23, "covers
+[the vanished name] still" — present tense, naming that one certificate's
+ongoing coverage as the counter-record standing against the vanished name's
+absence. Asking 29 (2026-09-22,
+`material/ct-logs/2026-09-22-twenty-ninth-asking/README.md`;
+`works/below-the-threshold/askings.json`, asking 29) found that exact
+certificate (id `15533795174`, `not_after` 2026-09-21T18:12:20Z) had
+expired and dropped out of Cert Spotter's live zone view — the first time
+this vigil watched a cited certificate age out of a monitor's own view
+mid-run. Asking 30 (2026-09-23, tonight,
+`material/ct-logs/2026-09-23-thirtieth-asking/README.md`) confirms no
+further change: the zone view stands byte-identical to asking 29's.
+
+**The sentence's literal claim is false as stated today, and is corrected
+here, not retouched there** (floor rule 2, `DOWRY.md`: history is
+continued, never retouched — §1 stands exactly as written 2026-08-16, the
+record of the claim as it was made). That one certificate does not cover
+the name today; it expired 2026-09-21.
+
+**What the finding does to the thesis, stated exactly.** §1's deeper claim
+— "the same memory holds the general in the singular's place, forever" —
+survives the correction and is sharpened by it, not undone. The zone's
+wildcard coverage has continued unbroken across the boundary, but through
+renewal, not one certificate's own permanence: two later, already-issued
+wildcard certificates (ids `16670134519`, `16980049587`) were already in
+force before the cited one expired, and crt.sh's full listing still
+retains the expired certificate itself (located directly by id in asking
+29's committed evidence) — the world's memory has not forgotten it, it has
+only stopped being the instrument presently attesting the zone. The
+"forever" §1 names belongs to the zone's continuous coverage of the
+general, sustained by overlapping, renewing acts of the same kind — never
+to any single certificate's permanence, which §1's present-tense wording
+let a reader assume without saying. That distinction was not available to
+the candidate at its writing; it took thirty-eight days and a monitor's own
+expiry-driven view of its own record to turn it from an inference into a
+checked finding.
+
+**Not a revision of the problem, the daylight, or the form.** The
+quadrature at §1's close, the neighbours at §3, the daylight at §4 and the
+direction at §5 all stand as the finding leaves them — the correction
+sharpens the asymmetry the candidate already named rather than closing it
+or opening a new one. Status unchanged: candidate, not a work.
