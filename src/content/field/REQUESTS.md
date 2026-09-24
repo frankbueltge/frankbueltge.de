@@ -4023,3 +4023,74 @@ first.
 reversible by you
 
 ---
+
+## Response — 2026-09-24 (session 169) — the door mostly holds, but not always, and we caught our own screen lying first
+
+**Where it is.** `artifacts/2026-09-24-another-network/` — a self-contained page with no
+JavaScript and no controls, a five-minute summary, a pre-registration committed before either
+probe ran, `data/`, the probe in `tools/another-network/`, a `check.py` of **33 checks** that
+needs no network, and a `tamper.py` whose **17** deliberate corruptions are each caught by a
+**named** failing check.
+
+**Why this session, decided here.** Cycle 003 is presented from all three sides and
+`cycle.json` still reads cycle 3 *working*, which is not ours to turn. Nothing in this file is
+newer than your direction of 2026-09-03. 09-15's session (`whose-refusal-is-it`) probed 69 doors
+three ways and closed with one question stated and left open: does a request that leaves from
+somewhere else meet the same door? Carried since as the tail of open question (46) through
+09-23. This session answers it rather than opening a new subject.
+
+**Method.** The same 65 eligible units from 09-15's pinned population, reused rather than
+redrawn — the question is about the same doors, not a fresh census of the registers. Two arms,
+minutes apart, in this one session: `local` (one honest GET from this session's own address,
+the same named user-agent 09-15 used) and `delegate` (the same 64 URLs — a fifth unit was found
+freshly robots-excluded today and withheld from both arms — handed to a third-party extraction
+service fetching from infrastructure this session neither controls nor can inspect). Four
+numeric predictions and three kill conditions were committed before either arm ran; none fired.
+
+**The finding: mostly the same door, not always.** Of 58 units this population's own registers
+record as refused, **52 (89.7%, CI 79.2–95.2)** still refuse from this session's own address
+today — nine days on, and very likely a different container than 09-15 ran in. Of those 52,
+**6 (11.5%, CI 5.4–23.0)** were read in full by the delegate: three US federal sites (FEMA,
+IEA, UNHCR) and three paywalled DOIs. Across all 64 units, 48 refuse under both networks, 8 read
+under both, and 8 disagree — 6 delegate-reads-where-local-refuses against 2 the reverse. The
+6-vs-2 split trends toward the delegate seeing more, but an exact sign test on 8 discordant
+pairs gives p ≈ 0.29 — not distinguishable from chance at this sample size, and said so rather
+than oversold.
+
+**Not every refusal is address-dependent.** Two positive controls — both Springer chapter DOIs
+whose only body text is "Please enable JavaScript to proceed" — failed identically under both
+networks. A bot-wall keyed on IP or client fingerprint is network-dependent; a client-rendered
+wall is not, and this population held one clean example of each side by side. One case carried
+by hand: `state.gov`'s climate page returned 403 to us and "404 page not found" to the
+delegate — the same URL, the same coded verdict under this study's binary rule, two entirely
+different failure signatures underneath it.
+
+**A fault in our own borrowed instrument, caught before publishing rather than after.** 09-15's
+`CHALLENGE_MARKS` word-list, reused unchanged, fired on five of today's 200-status pages. Read
+by hand, all five — a census of the screen's own candidates on this population, not a sample:
+**three were false convictions** (a `<script>` tag loading a Cloudflare-hosted CDN library; a
+MediaWiki config key naming a captcha feature, twice) and **two were real** (the Springer walls
+above). Both the uncorrected screen (16.4%) and the hand-corrected reading (11.5%) are
+published side by side in `data/estimates.json`; the pre-registered P2 band (15–35%) was met by
+the former and undershot by the latter. Which number is right depends on whether the screen or
+the reading is trusted — the same shape 09-23 found in the world's literature, found again this
+session in our own apparatus.
+
+**One render fault, fixed rather than reported as passing.** The page's data tables overflowed
+the viewport at 390px on first render; wrapped in a horizontal-scroll container and re-verified
+at 390/768/1280px with zero console errors before publishing. Recorded, not hidden, in
+`data/render-check.json`.
+
+**No novelty claimed.** That a delegated fetch reads differently than a direct one is already
+established in this house's own record (09-12, 09-16, 09-18, 09-20). What is new here is the
+paired, same-session count on the same 64 doors, with a positive-control floor under both arms
+so the comparison has somewhere to stand.
+
+**`STATE-OF-THE-FIELD.md` updated in place.** Open question (46)'s tail answered at §4.8;
+the standing-position header extended to sessions 160–169. Several older entries were trimmed
+a little further, without dropping a figure, to hold the document's own 2,500-token cap while
+making room for today's line — the cap binds this practice too.
+
+**Status:** report · no answer required · nothing owed from your side
+
+---
