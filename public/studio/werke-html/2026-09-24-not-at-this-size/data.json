@@ -1,0 +1,54 @@
+{
+  "_source": {
+    "paper": "Joy Buolamwini and Timnit Gebru, \"Gender Shades: Intersectional Accuracy Disparities in Commercial Gender Classification\", Proceedings of Machine Learning Research 81:1-15, 2018 (Conference on Fairness, Accountability, and Transparency).",
+    "paper_pdf": "http://proceedings.mlr.press/v81/buolamwini18a/buolamwini18a.pdf",
+    "project_page": "https://www.media.mit.edu/projects/gender-shades/overview/",
+    "retrieved": "2026-09-24",
+    "note": "Every number below is copied by hand from the paper's own Table 2, Table 3, Table 4 and Table 5 (pages 7, 9 and 10), and from the one sentence on page 8 that states South Africa's lighter/darker split as both a percentage and a count (n=91, n=346). No number in this file is estimated, interpolated or taken from a secondary source."
+  },
+  "table2_composition": {
+    "_what": "PPB decomposition by country/region: n, then percentages of Female, Male, Darker, Lighter, Darker-Female, Darker-Male, Lighter-Female, Lighter-Male, each printed to one decimal place. Table 2, page 7.",
+    "rows": [
+      {"name": "All Subjects", "n": 1270, "F": "44.6", "M": "55.4", "Darker": "46.4", "Lighter": "53.6", "DF": "21.3", "DM": "25.0", "LF": "23.3", "LM": "30.3"},
+      {"name": "Africa", "n": 661, "F": "43.9", "M": "56.1", "Darker": "86.2", "Lighter": "13.8", "DF": "39.8", "DM": "46.4", "LF": "4.1", "LM": "9.7"},
+      {"name": "South Africa", "n": 437, "F": "41.4", "M": "58.6", "Darker": "79.2", "Lighter": "20.8", "DF": "35.2", "DM": "43.9", "LF": "6.2", "LM": "14.6"},
+      {"name": "Senegal", "n": 149, "F": "43.0", "M": "57.0", "Darker": "100.0", "Lighter": "0.0", "DF": "43.0", "DM": "57.0", "LF": "0.0", "LM": "0.0"},
+      {"name": "Rwanda", "n": 75, "F": "60.0", "M": "40.0", "Darker": "100.0", "Lighter": "0.0", "DF": "60.0", "DM": "40.0", "LF": "0.0", "LM": "0.0"},
+      {"name": "Europe", "n": 609, "F": "45.5", "M": "54.5", "Darker": "3.1", "Lighter": "96.9", "DF": "1.3", "DM": "1.8", "LF": "44.2", "LM": "52.7"},
+      {"name": "Sweden", "n": 349, "F": "46.7", "M": "53.3", "Darker": "4.9", "Lighter": "95.1", "DF": "2.0", "DM": "2.9", "LF": "44.7", "LM": "50.4"},
+      {"name": "Finland", "n": 197, "F": "42.6", "M": "57.4", "Darker": "1.0", "Lighter": "99.0", "DF": "0.5", "DM": "0.5", "LF": "42.1", "LM": "56.9"},
+      {"name": "Iceland", "n": 63, "F": "47.6", "M": "52.4", "Darker": "0.0", "Lighter": "100.0", "DF": "0.0", "DM": "0.0", "LF": "47.6", "LM": "52.4"}
+    ],
+    "south_africa_prose_check": {
+      "_what": "Page 8, prose, not the table: 'Lighter subjects makeup 20.8% (n=91)... darker subjects make up the remaining 79.2% (n=346)'. The paper states these two counts in words, nowhere else, for one row only.",
+      "lighter_n": 91,
+      "darker_n": 346
+    }
+  },
+  "table3_lighter_darker": {
+    "_what": "Table 3, page 7 — the only table in the paper that prints a count beside every percentage.",
+    "rows": [
+      {"dataset": "PPB", "lighter_pct": "53.6", "lighter_n": 681, "darker_pct": "46.4", "darker_n": 589, "total": 1270},
+      {"dataset": "IJB-A", "lighter_pct": "79.6", "lighter_n": 398, "darker_pct": "20.4", "darker_n": 102, "total": 500},
+      {"dataset": "Adience", "lighter_pct": "86.2", "lighter_n": 1892, "darker_pct": "13.8", "darker_n": 302, "total": 2194}
+    ]
+  },
+  "table4_full_ppb": {
+    "_what": "Table 4, page 9 — true positive rate (TPR) of the three classifiers over the full PPB, by subgroup. Percentages to one decimal. n=1270 is the paper's own stated benchmark size; the nine subgroup denominators (F, M, Darker, Lighter, DF, DM, LF, LM) are not printed in this table and must be taken from Table 2.",
+    "groups": ["All", "F", "M", "Darker", "Lighter", "DF", "DM", "LF", "LM"],
+    "classifiers": {
+      "MSFT":   {"All": "93.7", "F": "89.3", "M": "97.4", "Darker": "87.1", "Lighter": "99.3", "DF": "79.2", "DM": "94.0", "LF": "98.3", "LM": "100.0"},
+      "Face++": {"All": "90.0", "F": "78.7", "M": "99.3", "Darker": "83.5", "Lighter": "95.3", "DF": "65.5", "DM": "99.3", "LF": "90.2", "LM": "99.2"},
+      "IBM":    {"All": "87.9", "F": "79.7", "M": "94.4", "Darker": "77.6", "Lighter": "96.8", "DF": "65.3", "DM": "88.0", "LF": "92.9", "LM": "99.7"}
+    }
+  },
+  "table5_south_africa": {
+    "_what": "Table 5, page 10 — TPR of the three classifiers on the South African subset of PPB, by the four intersectional subgroups only. n=437 is stated for the whole subset; the four subgroup denominators (DF, DM, LF, LM) are not printed in this table and must be taken from Table 2's South Africa row together with the prose count of page 8.",
+    "groups": ["DF", "DM", "LF", "LM"],
+    "classifiers": {
+      "MSFT":   {"DF": "76.2", "DM": "100.0", "LF": "100.0", "LM": "100.0"},
+      "Face++": {"DF": "64.0", "DM": "99.5",  "LF": "92.6",  "LM": "100.0"},
+      "IBM":    {"DF": "66.9", "DM": "94.3",  "LF": "100.0", "LM": "98.4"}
+    }
+  }
+}

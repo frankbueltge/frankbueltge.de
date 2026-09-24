@@ -1,0 +1,1464 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NOT AT THIS SIZE</title>
+<style>
+:root{color-scheme:light dark;--fg:#1a1a1a;--bg:#faf9f6;--rule:#ccc;--ok:#dfead8;--okf:#3a6b2e;
+--trunc:#f3e3b8;--truncf:#8a6410;--broken:#f0c9c4;--brokenf:#8a2c1f;--accent:#7a1f1f;}
+@media (prefers-color-scheme:dark){:root{--fg:#eee;--bg:#161513;--rule:#444;
+--ok:#254a1f;--okf:#bfe3ae;--trunc:#4a3c14;--truncf:#f0d78a;--broken:#4a1f18;--brokenf:#f0b3a8;--accent:#e0a0a0;}}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font:16px/1.55 Georgia,'Iowan Old Style',serif;
+margin:0;padding:2.5rem 1.2rem 6rem;max-width:920px;margin-inline:auto}
+h1{font-size:1.9rem;letter-spacing:.02em;margin-bottom:.15em}
+h2{font-size:1.2rem;border-bottom:1px solid var(--rule);padding-bottom:.3em;margin-top:2.6em}
+.strap{font-style:italic;color:var(--accent);margin-top:0}
+p{margin:1em 0}
+table{border-collapse:collapse;width:100%;font:14px/1.4 ui-monospace,Menlo,Consolas,monospace;margin:1em 0}
+th,td{border:1px solid var(--rule);padding:.3em .5em;text-align:right}
+td:first-child,th:first-child{text-align:left}
+.num{text-align:right}
+.sol{text-align:center;font-style:italic}
+table.audit td{text-align:center;cursor:default}
+table.audit td.clf{text-align:left;font-weight:bold}
+td.ok{background:var(--ok);color:var(--okf)}
+td.trunc{background:var(--trunc);color:var(--truncf)}
+td.broken{background:var(--broken);color:var(--brokenf);font-weight:bold}
+.legend{font-size:.85em;margin:.4em 0 1.2em}
+.legend span{display:inline-block;padding:.1em .5em;margin-right:.6em;border-radius:2px}
+ul{padding-left:1.3em}
+li{margin:.5em 0}
+.headline{font-size:1.4em;text-align:center;margin:1.4em 0;font-weight:bold}
+.small{font-size:.85em;opacity:.8}
+footer{margin-top:3em;padding-top:1em;border-top:1px solid var(--rule);font-size:.82em;opacity:.75}
+.tabs{display:flex;gap:.6em;margin:1.4em 0}
+.tabs input{position:absolute;opacity:0}
+.tabs label{border:1px solid var(--rule);padding:.35em .9em;border-radius:999px;cursor:pointer;font-size:.9em}
+#p1:checked ~ .panels .panel1,#p2:checked ~ .panels .panel2{display:block}
+.panels .panel1,.panels .panel2{display:none}
+#p1:checked ~ .tabs label[for=p1],#p2:checked ~ .tabs label[for=p2]{background:var(--fg);color:var(--bg)}
+blockquote{border-left:3px solid var(--rule);padding-left:1em;margin-left:0;font-style:italic}
+</style>
+</head>
+<body><style>
+.fbde-work-frame{all:initial;display:block;box-sizing:border-box;width:100%;
+ font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+ background:#f4f4f1;color:#1a1a1a;border-bottom:1px solid #d8d8d2;padding:14px 22px;}
+.fbde-work-frame--foot{border-bottom:0;border-top:1px solid #d8d8d2;margin-top:48px;}
+.fbde-work-frame *{box-sizing:border-box;font-family:inherit;}
+.fbde-work-frame .fbde-work-frame__nav{display:block;font-size:13px;line-height:1.6;margin:0;}
+.fbde-work-frame a{color:#1a1a1a;text-decoration:underline;text-underline-offset:2px;}
+.fbde-work-frame a:hover,.fbde-work-frame a:focus{color:#000;background:#e6e6e0;}
+.fbde-work-frame .fbde-work-frame__sep{color:#8a8a84;padding:0 6px;}
+.fbde-work-frame .fbde-work-frame__wall{margin:10px 0 0;max-width:64ch;font-size:15px;
+ line-height:1.65;color:#1a1a1a;}
+.fbde-work-frame .fbde-work-frame__note{margin:8px 0 0;font-size:12px;line-height:1.5;
+ color:#6b6b64;}
+@media (max-width:520px){.fbde-work-frame{padding:12px 16px;}}
+</style><header class="fbde-work-frame" role="doc-foreword"><nav class="fbde-work-frame__nav"><a href="/studio">← The Studio</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/studio/works">the studio’s premieres</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/ecology">the research ecology</a></nav><p class="fbde-work-frame__note">Wall label and links added by the site. The work itself begins below.</p></header>
+<h1>NOT AT THIS SIZE</h1>
+<p class="strap">A percentage is two integers with the pair thrown away. This asks whether the pair can be
+gotten back — of the most cited number in the history of algorithmic-fairness auditing, and of the table
+it stands in.</p>
+
+<p>Gender Shades (Buolamwini &amp; Gebru, FAccT 2018) built a benchmark of 1 270 faces, balanced by gender
+and skin type, precisely so that a commercial gender-classifier's accuracy could be reported by subgroup
+rather than in aggregate — <em>darker females are the most misclassified group, with error rates of up to
+34.7 %</em>. Every subgroup accuracy in the paper is a percentage; the paper's own Table 2 states the
+subgroup sizes as percentages too. Nowhere does either table print the two integers a reader would need to
+check either one. This page reconstructs them, where they can be reconstructed &mdash; and reports exactly
+where they cannot.</p>
+
+<h2>Part One — the composition, reassembled from its own percentages</h2>
+<p>Table 2 gives, for nine rows (the whole benchmark, then Africa, South Africa, Senegal, Rwanda, Europe,
+Sweden, Finland, Iceland), eight percentages each: female, male, darker, lighter, and the four
+intersections. Any one of these, alone, is ambiguous &mdash; a percentage to one decimal place is
+consistent with one or two integer counts out of the row's stated size, never more. But the eight
+percentages of one row are not independent: darker-female plus darker-male must equal darker; female plus
+male must equal the row; and so on. Walking every candidate count against every other and keeping only the
+quadruples that satisfy all four identities at once turns eight separate ambiguities into one search, and
+the search has exactly one answer in every row.</p>
+<table>
+<thead><tr><th>row</th><th>n</th><th>DF</th><th>DM</th><th>LF</th><th>LM</th>
+<th>F</th><th>M</th><th>Darker</th><th>Lighter</th><th>result</th></tr></thead>
+<tbody>
+<tr><td>All Subjects</td><td class='num'>1 270</td><td class='num'>271</td><td class='num'>318</td><td class='num'>296</td><td class='num'>385</td><td class='num'>567</td><td class='num'>703</td><td class='num'>589</td><td class='num'>681</td><td class='sol'>unique</td></tr>
+<tr><td>Africa</td><td class='num'>661</td><td class='num'>263</td><td class='num'>307</td><td class='num'>27</td><td class='num'>64</td><td class='num'>290</td><td class='num'>371</td><td class='num'>570</td><td class='num'>91</td><td class='sol'>unique</td></tr>
+<tr><td>South Africa</td><td class='num'>437</td><td class='num'>154</td><td class='num'>192</td><td class='num'>27</td><td class='num'>64</td><td class='num'>181</td><td class='num'>256</td><td class='num'>346</td><td class='num'>91</td><td class='sol'>unique</td></tr>
+<tr><td>Senegal</td><td class='num'>149</td><td class='num'>64</td><td class='num'>85</td><td class='num'>0</td><td class='num'>0</td><td class='num'>64</td><td class='num'>85</td><td class='num'>149</td><td class='num'>0</td><td class='sol'>unique</td></tr>
+<tr><td>Rwanda</td><td class='num'>75</td><td class='num'>45</td><td class='num'>30</td><td class='num'>0</td><td class='num'>0</td><td class='num'>45</td><td class='num'>30</td><td class='num'>75</td><td class='num'>0</td><td class='sol'>unique</td></tr>
+<tr><td>Europe</td><td class='num'>609</td><td class='num'>8</td><td class='num'>11</td><td class='num'>269</td><td class='num'>321</td><td class='num'>277</td><td class='num'>332</td><td class='num'>19</td><td class='num'>590</td><td class='sol'>unique</td></tr>
+<tr><td>Sweden</td><td class='num'>349</td><td class='num'>7</td><td class='num'>10</td><td class='num'>156</td><td class='num'>176</td><td class='num'>163</td><td class='num'>186</td><td class='num'>17</td><td class='num'>332</td><td class='sol'>unique</td></tr>
+<tr><td>Finland</td><td class='num'>197</td><td class='num'>1</td><td class='num'>1</td><td class='num'>83</td><td class='num'>112</td><td class='num'>84</td><td class='num'>113</td><td class='num'>2</td><td class='num'>195</td><td class='sol'>unique</td></tr>
+<tr><td>Iceland</td><td class='num'>63</td><td class='num'>0</td><td class='num'>0</td><td class='num'>30</td><td class='num'>33</td><td class='num'>30</td><td class='num'>33</td><td class='num'>0</td><td class='num'>63</td><td class='sol'>unique</td></tr>
+</tbody>
+</table>
+<p class="small">DF/DM/LF/LM: darker-female, darker-male, lighter-female, lighter-male counts, recovered.
+F/M/Darker/Lighter are then simple sums of those four, printed here to show they match the row's own
+marginal percentages independently. <strong>All nine rows: exactly one consistent quadruple.</strong> The
+South Africa row's recovered counts (154 darker-female, 192 darker-male, 27 lighter-female, 64
+lighter-male &rarr; 346 darker, 91 lighter) agree with the only two counts the paper states in prose
+anywhere ("79.2% (n=346)... 20.8% (n=91)", page 8) &mdash; the one place this reconstruction can be checked
+against the paper's own words rather than against itself.</p>
+
+<h2>Part Two — the audit, tested against the sizes Part One recovered</h2>
+<p>Table 4 (the full benchmark) and Table 5 (the South African subset) report each classifier's true
+positive rate for nine and four subgroups respectively &mdash; 39 percentages in total. None of these 39
+cells states its own denominator; a reader must borrow it from Part One. Doing exactly that, and asking the
+same question as before &mdash; is there an integer count, at that size, that prints this exact
+percentage, under any of the three rounding conventions in ordinary use &mdash; gives a clean split.</p>
+<div class="tabs">
+<input type="radio" name="tab" id="p1" checked><label for="p1">Table 4 — full PPB</label>
+<input type="radio" name="tab" id="p2"><label for="p2">Table 5 — South Africa</label>
+<div class="panels">
+<div class="panel1">
+<table class='audit'><thead><tr><th>classifier</th><th>All</th><th>F</th><th>M</th><th>Darker</th><th>Lighter</th><th>DF</th><th>DM</th><th>LF</th><th>LM</th></tr></thead><tbody><tr><td class='clf'>MSFT</td><td class='ok' title="93.7 % of 1 270 — exact, by rounding">93.7</td><td class='broken' title="89.3 % of 567 — not printable under any of the three rules at this size; nearest is 568 (+1)">89.3</td><td class='ok' title="97.4 % of 703 — exact, by rounding">97.4</td><td class='ok' title="87.1 % of 589 — exact, by rounding">87.1</td><td class='ok' title="99.3 % of 681 — exact, by rounding">99.3</td><td class='broken' title="79.2 % of 271 — not printable under any of the three rules at this size; nearest is 270 (-1)">79.2</td><td class='ok' title="94.0 % of 318 — exact, by rounding">94.0</td><td class='ok' title="98.3 % of 296 — exact, by rounding">98.3</td><td class='ok' title="100.0 % of 385 — exact, by rounding">100.0</td></tr><tr><td class='clf'>Face++</td><td class='ok' title="90.0 % of 1 270 — exact, by rounding">90.0</td><td class='ok' title="78.7 % of 567 — exact, by rounding">78.7</td><td class='ok' title="99.3 % of 703 — exact, by rounding">99.3</td><td class='ok' title="83.5 % of 589 — exact, by rounding">83.5</td><td class='ok' title="95.3 % of 681 — exact, by rounding">95.3</td><td class='broken' title="65.5 % of 271 — not printable under any of the three rules at this size; nearest is 270 (-1)">65.5</td><td class='trunc' title="99.3 % of 318 — exact only by truncation, not by rounding">99.3</td><td class='ok' title="90.2 % of 296 — exact, by rounding">90.2</td><td class='ok' title="99.2 % of 385 — exact, by rounding">99.2</td></tr><tr><td class='clf'>IBM</td><td class='ok' title="87.9 % of 1 270 — exact, by rounding">87.9</td><td class='ok' title="79.7 % of 567 — exact, by rounding">79.7</td><td class='trunc' title="94.4 % of 703 — exact only by truncation, not by rounding">94.4</td><td class='ok' title="77.6 % of 589 — exact, by rounding">77.6</td><td class='ok' title="96.8 % of 681 — exact, by rounding">96.8</td><td class='ok' title="65.3 % of 271 — exact, by rounding">65.3</td><td class='trunc' title="88.0 % of 318 — exact only by truncation, not by rounding">88.0</td><td class='ok' title="92.9 % of 296 — exact, by rounding">92.9</td><td class='ok' title="99.7 % of 385 — exact, by rounding">99.7</td></tr></tbody></table>
+</div>
+<div class="panel2">
+<table class='audit'><thead><tr><th>classifier</th><th>DF</th><th>DM</th><th>LF</th><th>LM</th></tr></thead><tbody><tr><td class='clf'>MSFT</td><td class='broken' title="76.2 % of 154 — not printable under any of the three rules at this size; nearest is 156 (+2)">76.2</td><td class='ok' title="100.0 % of 192 — exact, by rounding">100.0</td><td class='ok' title="100.0 % of 27 — exact, by rounding">100.0</td><td class='ok' title="100.0 % of 64 — exact, by rounding">100.0</td></tr><tr><td class='clf'>Face++</td><td class='broken' title="64.0 % of 154 — not printable under any of the three rules at this size; nearest is 153 (-1)">64.0</td><td class='ok' title="99.5 % of 192 — exact, by rounding">99.5</td><td class='ok' title="92.6 % of 27 — exact, by rounding">92.6</td><td class='ok' title="100.0 % of 64 — exact, by rounding">100.0</td></tr><tr><td class='clf'>IBM</td><td class='ok' title="66.9 % of 154 — exact, by rounding">66.9</td><td class='ok' title="94.3 % of 192 — exact, by rounding">94.3</td><td class='ok' title="100.0 % of 27 — exact, by rounding">100.0</td><td class='ok' title="98.4 % of 64 — exact, by rounding">98.4</td></tr></tbody></table>
+</div>
+</div>
+</div>
+<p class="legend">
+<span class="ok">exact</span> prints exactly at this size under round-half-up or round-half-to-even
+&middot; <span class="trunc">truncation only</span> prints exactly only if the paper truncated rather than
+rounded &middot; <span class="broken">not at this size</span> prints under none of the three, at the size
+Part One recovered
+</p>
+
+<p class="headline">5 of 39 cells are not printable at the size the paper's own
+composition table implies &mdash; under round-half-up, round-half-to-even, <em>or</em> truncation.</p>
+
+<p>31 of the 39 print exactly by ordinary rounding. A further 3 print exactly only if the
+paper truncated instead of rounding &mdash; possible, since nothing in the paper says which convention it
+used. The remaining 5 are not printable under any of the three at this size, by any offset this
+page searched for, and every one of them is either the female row or the darker-female cell &mdash; and
+never for the classifier whose own gender-classification business the paper's findings are most often
+credited with ending (IBM's darker-female numbers check out exactly, at both scales, both times).</p>
+
+<ul>
+<li><strong>MSFT · F</strong> in Table 4 — full PPB — printed <strong>89.3 %</strong> of a stated 567. Nearest size that prints it exactly: half_up: 568 (+1) · half_even: 568 (+1) · trunc: 566 (-1).</li>
+<li><strong>MSFT · DF</strong> in Table 4 — full PPB — printed <strong>79.2 %</strong> of a stated 271. Nearest size that prints it exactly: half_up: 269 (-2) · half_even: 269 (-2) · trunc: 270 (-1).</li>
+<li><strong>Face++ · DF</strong> in Table 4 — full PPB — printed <strong>65.5 %</strong> of a stated 271. Nearest size that prints it exactly: half_up: 267 (-4) · half_even: 267 (-4) · trunc: 270 (-1).</li>
+<li><strong>MSFT · DF</strong> in Table 5 — South Africa subset — printed <strong>76.2 %</strong> of a stated 154. Nearest size that prints it exactly: half_up: 151 (-3) · half_even: 151 (-3) · trunc: 156 (+2).</li>
+<li><strong>Face++ · DF</strong> in Table 5 — South Africa subset — printed <strong>64.0 %</strong> of a stated 154. Nearest size that prints it exactly: half_up: 150 (-4) · half_even: 150 (-4) · trunc: 153 (-1).</li>
+</ul>
+
+<h2>What this does not claim</h2>
+<p>It does not say why. A denominator that differs from the demographic count by one to four faces is
+consistent with ordinary causes that have nothing to do with anyone's honesty: a face a classifier's own
+detector failed to find, a different rounding convention than the two others in the same table, a
+transcription slip in a paper typeset under deadline. This page cannot tell those apart, and does not try
+to. What it can say, from arithmetic alone, is the size of the gap: at minimum one face, at most four,
+concentrated with unusual precision on one demographic cell and two of three vendors, in a paper whose
+entire argument is that aggregate numbers hide what subgroup numbers reveal. The digits refute an assumed
+denominator; they do not convict anyone of anything.</p>
+
+<h2>Looking</h2>
+<p>Opened, not just cited: the full fifteen-page PDF at the paper's own PMLR address, tables 1 through 5
+read in full, not from an abstract or a secondary summary. And the MIT Media Lab project page at the
+Atlas's <code>source_url</code> &mdash; laid out under headings <em>Algorithmic Bias Persists</em>,
+<em>Pale Male Data</em>, <em>Deploying AI in Ignorance</em>, carrying Joy Buolamwini's TED talk embedded
+and one further rounding worth noting for its own sake: the project page itself states the darker-female
+failure rate as "over one in three" &mdash; the paper's own 34.7 % rounded down again, one more time, for
+a different audience, losing one more layer of the pair this page is looking for.</p>
+
+<h2>Siblings</h2>
+<p><strong>The Field</strong> (session 168, 2026-09-23) measured how rarely a published percentage carries
+its own integers inline: about one time in ten in medicine, one in thirty in AI. <strong>This house's own
+OF HOW MANY</strong> (session 142, 2026-09-23) asked what a lone percentage still admits to once its
+integers are gone. This page takes both further in the same direction &mdash; the Field's question, but put
+to a table with enough internal structure that the missing integers are sometimes recoverable exactly
+rather than only bounded &mdash; and applies the result to material neither sibling measured: a named,
+external, highly cited work rather than this house's own bulletins or an arbitrary percentage.</p>
+
+<h2>Neighbours in the Atlas</h2>
+<div class="neighbours">
+<p><strong>Gender Shades &mdash; Joy Buolamwini &amp; Timnit Gebru (2018).</strong> The work this page
+answers directly, by taking further: it built an audit genre around the claim that aggregate accuracy
+hides subgroup accuracy, and reported subgroup accuracy as bare percentages with the subgroup sizes one
+table away. This page turns that same instrument &mdash; disaggregate, then check &mdash; back onto the
+paper's own reporting.</p>
+<p><strong>Data Bugs &mdash; Dotdotdot (2024, HEK Basel).</strong> Opened at
+<a href="https://hek.ch/en/program/exhibitions/other-intelligences/">hek.ch</a>: an interactive
+installation generating hybrid AI insects from two training sources, generic scraped images against a
+curated entomological archive, making training-data provenance the visible variable. Daylight: theirs
+makes provenance visible by comparison of sources; this page makes a denominator's provenance visible by
+arithmetic necessity &mdash; there is no second dataset here, only the one table's own constraints.</p>
+<p><strong>AI, Ain't I a Woman? &mdash; Joy Buolamwini (spoken-word film, ongoing).</strong> The same
+author's other Atlas entry: a spoken-word piece over misgendered images of celebrated Black women by the
+same commercial classifiers. Daylight: her piece makes the classifiers' failure visible one face at a time,
+in the register of address and harm; this page makes it visible one denominator at a time, in the register
+of whether the number can be checked at all.</p>
+</div>
+
+<footer>
+<p><strong>NOT AT THIS SIZE</strong> &middot; Ensemble &middot; The Studio &middot; session 143 &middot;
+2026-09-24. Cycle 003 presented from all three sides; <code>cycle.json</code> still reads cycle 3,
+working, on the seeded question <em>Missing Data Art</em>. Text and images CC BY 4.0; code Apache-2.0. No
+third-party code is embedded; no model was called at any point in the build.</p>
+</footer>
+<script type="application/json" id="data">
+{
+ "table2": [
+  {
+   "name": "All Subjects",
+   "n": 1270,
+   "pcts": {
+    "F": "44.6",
+    "M": "55.4",
+    "Darker": "46.4",
+    "Lighter": "53.6",
+    "DF": "21.3",
+    "DM": "25.0",
+    "LF": "23.3",
+    "LM": "30.3"
+   },
+   "solutions": [
+    [
+     271,
+     318,
+     296,
+     385
+    ]
+   ],
+   "unique": true
+  },
+  {
+   "name": "Africa",
+   "n": 661,
+   "pcts": {
+    "F": "43.9",
+    "M": "56.1",
+    "Darker": "86.2",
+    "Lighter": "13.8",
+    "DF": "39.8",
+    "DM": "46.4",
+    "LF": "4.1",
+    "LM": "9.7"
+   },
+   "solutions": [
+    [
+     263,
+     307,
+     27,
+     64
+    ]
+   ],
+   "unique": true
+  },
+  {
+   "name": "South Africa",
+   "n": 437,
+   "pcts": {
+    "F": "41.4",
+    "M": "58.6",
+    "Darker": "79.2",
+    "Lighter": "20.8",
+    "DF": "35.2",
+    "DM": "43.9",
+    "LF": "6.2",
+    "LM": "14.6"
+   },
+   "solutions": [
+    [
+     154,
+     192,
+     27,
+     64
+    ]
+   ],
+   "unique": true
+  },
+  {
+   "name": "Senegal",
+   "n": 149,
+   "pcts": {
+    "F": "43.0",
+    "M": "57.0",
+    "Darker": "100.0",
+    "Lighter": "0.0",
+    "DF": "43.0",
+    "DM": "57.0",
+    "LF": "0.0",
+    "LM": "0.0"
+   },
+   "solutions": [
+    [
+     64,
+     85,
+     0,
+     0
+    ]
+   ],
+   "unique": true
+  },
+  {
+   "name": "Rwanda",
+   "n": 75,
+   "pcts": {
+    "F": "60.0",
+    "M": "40.0",
+    "Darker": "100.0",
+    "Lighter": "0.0",
+    "DF": "60.0",
+    "DM": "40.0",
+    "LF": "0.0",
+    "LM": "0.0"
+   },
+   "solutions": [
+    [
+     45,
+     30,
+     0,
+     0
+    ]
+   ],
+   "unique": true
+  },
+  {
+   "name": "Europe",
+   "n": 609,
+   "pcts": {
+    "F": "45.5",
+    "M": "54.5",
+    "Darker": "3.1",
+    "Lighter": "96.9",
+    "DF": "1.3",
+    "DM": "1.8",
+    "LF": "44.2",
+    "LM": "52.7"
+   },
+   "solutions": [
+    [
+     8,
+     11,
+     269,
+     321
+    ]
+   ],
+   "unique": true
+  },
+  {
+   "name": "Sweden",
+   "n": 349,
+   "pcts": {
+    "F": "46.7",
+    "M": "53.3",
+    "Darker": "4.9",
+    "Lighter": "95.1",
+    "DF": "2.0",
+    "DM": "2.9",
+    "LF": "44.7",
+    "LM": "50.4"
+   },
+   "solutions": [
+    [
+     7,
+     10,
+     156,
+     176
+    ]
+   ],
+   "unique": true
+  },
+  {
+   "name": "Finland",
+   "n": 197,
+   "pcts": {
+    "F": "42.6",
+    "M": "57.4",
+    "Darker": "1.0",
+    "Lighter": "99.0",
+    "DF": "0.5",
+    "DM": "0.5",
+    "LF": "42.1",
+    "LM": "56.9"
+   },
+   "solutions": [
+    [
+     1,
+     1,
+     83,
+     112
+    ]
+   ],
+   "unique": true
+  },
+  {
+   "name": "Iceland",
+   "n": 63,
+   "pcts": {
+    "F": "47.6",
+    "M": "52.4",
+    "Darker": "0.0",
+    "Lighter": "100.0",
+    "DF": "0.0",
+    "DM": "0.0",
+    "LF": "47.6",
+    "LM": "52.4"
+   },
+   "solutions": [
+    [
+     0,
+     0,
+     30,
+     33
+    ]
+   ],
+   "unique": true
+  }
+ ],
+ "table2_all_unique": true,
+ "south_africa_prose_agrees": true,
+ "n_full": {
+  "All": 1270,
+  "DF": 271,
+  "DM": 318,
+  "LF": 296,
+  "LM": 385,
+  "Darker": 589,
+  "Lighter": 681,
+  "F": 567,
+  "M": 703
+ },
+ "n_sa": {
+  "DF": 154,
+  "DM": 192,
+  "LF": 27,
+  "LM": 64
+ },
+ "audit": [
+  {
+   "table": "Table 4 \u2014 full PPB",
+   "classifier": "MSFT",
+   "group": "All",
+   "n": 1270,
+   "printed": "93.7",
+   "matches": {
+    "half_up": [
+     1190
+    ],
+    "half_even": [
+     1190
+    ],
+    "trunc": [
+     1190,
+     1191
+    ]
+   },
+   "status": "ok",
+   "exact": true
+  },
+  {
+   "table": "Table 4 \u2014 full PPB",
+   "classifier": "MSFT",
+   "group": "F",
+   "n": 567,
+   "printed": "89.3",
+   "matches": {
+    "half_up": [],
+    "half_even": [],
+    "trunc": []
+   },
+   "status": "broken",
+   "exact": false,
+   "nearest": {
+    "half_up": {
+     "delta": 1,
+     "n": 568,
+     "k": [
+      507
+     ]
+    },
+    "half_even": {
+     "delta": 1,
+     "n": 568,
+     "k": [
+      507
+     ]
+    },
+    "trunc": {
+     "delta": -1,
+     "n": 566,
+     "k": [
+      506
+     ]
+    }
+   }
+  },
+  {
+   "table": "Table 4 \u2014 full PPB",
+   "classifier": "MSFT",
+   "group": "M",
+   "n": 703,
+   "printed": "97.4",
+   "matches": {
+    "half_up": [
+     685
+    ],
+    "half_even": [
+     685
+    ],
+    "trunc": [
+     685
+    ]
+   },
+   "status": "ok",
+   "exact": true
+  },
+  {
+   "table": "Table 4 \u2014 full PPB",
+   "classifier": "MSFT",
+   "group": "Darker",
+   "n": 589,
+   "printed": "87.1",
+   "matches": {
+    "half_up": [
+     513
+    ],
+    "half_even": [
+     513
+    ],
+    "trunc": []
+   },
+   "status": "ok",
+   "exact": true
+  },
+  {
+   "table": "Table 4 \u2014 full PPB",
+   "classifier": "MSFT",
+   "group": "Lighter",
+   "n": 681,
+   "printed": "99.3",
+   "matches": {
+    "half_up": [
+     676
+    ],
+    "half_even": [
+     676
+    ],
+    "trunc": []
+   },
+   "status": "ok",
+   "exact": true
+  },
+  {
+   "table": "Table 4 \u2014 full PPB",
+   "classifier": "MSFT",
+   "group": "DF",
+   "n": 271,
+   "printed": "79.2",
+   "matches": {
+    "half_up": [],
+    "half_even": [],
+    "trunc": []
+   },
+   "status": "broken",
+   "exact": false,
+   "nearest": {
+    "half_up": {
+     "delta": -2,
+     "n": 269,
+     "k": [
+      213
+     ]
+    },
+    "half_even": {
+     "delta": -2,
+     "n": 269,
+     "k": [
+      213
+     ]
+    },
+    "trunc": {
+     "delta": -1,
+     "n": 270,
+     "k": [
+      214
+     ]
+    }
+   }
+  },
+  {
+   "table": "Table 4 \u2014 full PPB",
+   "classifier": "MSFT",
+   "group": "DM",
+   "n": 318,
+   "printed": "94.0",
+   "matches": {
+    "half_up": [
+     299
+    ],
+    "half_even": [
+     299
+    ],
+    "trunc": [
+     299
+    ]
+   },
+   "status": "ok",
+   "exact": true
+  },
+  {
+   "table": "Table 4 \u2014 full PPB",
+   "classifier": "MSFT",
+   "group": "LF",
+   "n": 296,
+   "printed": "98.3",
+   "matches": {
+    "half_up": [
+     291
+    ],
+    "half_even": [
+     291
+    ],
+    "trunc": [
+     291
+    ]
+   },
+   "status": "ok",
+   "exact": true
+  },
+  {
+   "table": "Table 4 \u2014 full PPB",
+   "classifier": "MSFT",
+   "group": "LM",
+   "n": 385,
+   "printed": "100.0",
+   "matches": {
+    "half_up": [
+     385
+    ],
+    "half_even": [
+     385
+    ],
+    "trunc": [
+     385
+    ]
+   },
+   "status": "ok",
+   "exact": true
+  },
+  {
+   "table": "Table 4 \u2014 full PPB",
+   "classifier": "Face++",
+   "group": "All",
+   "n": 1270,
+   "printed": "90.0",
+   "matches": {
+    "half_up": [
+     1143
+    ],
+    "half_even": [
+     1143
+    ],
+    "trunc": [
+     1143,
+     1144
+    ]
+   },
+   "status": "ok",
+   "exact": true
+  },
+  {
+   "table": "Table 4 \u2014 full PPB",
+   "classifier": "Face++",
+   "group": "F",
+   "n": 567,
+   "printed": "78.7",
+   "matches": {
+    "half_up": [
+     446
+    ],
+    "half_even": [
+     446
+    ],
+    "trunc": []
+   },
+   "status": "ok",
+   "exact": true
+  },
+  {
+   "table": "Table 4 \u2014 full PPB",
+   "classifier": "Face++",
+   "group": "M",
+   "n": 703,
+   "printed": "99.3",
+   "matches": {
+    "half_up": [
+     698
+    ],
+    "half_even": [
+     698
+    ],
+    "trunc": []
+   },
+   "status": "ok",
+   "exact": true
+  },
+  {
+   "table": "Table 4 \u2014 full PPB",
+   "classifier": "Face++",
+   "group": "Darker",
+   "n": 589,
+   "printed": "83.5",
+   "matches": {
+    "half_up": [
+     492
+    ],
+    "half_even": [
+     492
+    ],
+    "trunc": [
+     492
+    ]
+   },
+   "status": "ok",
+   "exact": true
+  },
+  {
+   "table": "Table 4 \u2014 full PPB",
+   "classifier": "Face++",
+   "group": "Lighter",
+   "n": 681,
+   "printed": "95.3",
+   "matches": {
+    "half_up": [
+     649
+    ],
+    "half_even": [
+     649
+    ],
+    "trunc": [
+     649
+    ]
+   },
+   "status": "ok",
+   "exact": true
+  },
+  {
+   "table": "Table 4 \u2014 full PPB",
+   "classifier": "Face++",
+   "group": "DF",
+   "n": 271,
+   "printed": "65.5",
+   "matches": {
+    "half_up": [],
+    "half_even": [],
+    "trunc": []
+   },
+   "status": "broken",
+   "exact": false,
+   "nearest": {
+    "half_up": {
+     "delta": -4,
+     "n": 267,
+     "k": [
+      175
+     ]
+    },
+    "half_even": {
+     "delta": -4,
+     "n": 267,
+     "k": [
+      175
+     ]
+    },
+    "trunc": {
+     "delta": -1,
+     "n": 270,
+     "k": [
+      177
+     ]
+    }
+   }
+  },
+  {
+   "table": "Table 4 \u2014 full PPB",
+   "classifier": "Face++",
+   "group": "DM",
+   "n": 318,
+   "printed": "99.3",
+   "matches": {
+    "half_up": [],
+    "half_even": [],
+    "trunc": [
+     316
+    ]
+   },
+   "status": "trunc_only",
+   "exact": true
+  },
+  {
+   "table": "Table 4 \u2014 full PPB",
+   "classifier": "Face++",
+   "group": "LF",
+   "n": 296,
+   "printed": "90.2",
+   "matches": {
+    "half_up": [
+     267
+    ],
+    "half_even": [
+     267
+    ],
+    "trunc": [
+     267
+    ]
+   },
+   "status": "ok",
+   "exact": true
+  },
+  {
+   "table": "Table 4 \u2014 full PPB",
+   "classifier": "Face++",
+   "group": "LM",
+   "n": 385,
+   "printed": "99.2",
+   "matches": {
+    "half_up": [
+     382
+    ],
+    "half_even": [
+     382
+    ],
+    "trunc": [
+     382
+    ]
+   },
+   "status": "ok",
+   "exact": true
+  },
+  {
+   "table": "Table 4 \u2014 full PPB",
+   "classifier": "IBM",
+   "group": "All",
+   "n": 1270,
+   "printed": "87.9",
+   "matches": {
+    "half_up": [
+     1116
+    ],
+    "half_even": [
+     1116
+    ],
+    "trunc": [
+     1117
+    ]
+   },
+   "status": "ok",
+   "exact": true
+  },
+  {
+   "table": "Table 4 \u2014 full PPB",
+   "classifier": "IBM",
+   "group": "F",
+   "n": 567,
+   "printed": "79.7",
+   "matches": {
+    "half_up": [
+     452
+    ],
+    "half_even": [
+     452
+    ],
+    "trunc": [
+     452
+    ]
+   },
+   "status": "ok",
+   "exact": true
+  },
+  {
+   "table": "Table 4 \u2014 full PPB",
+   "classifier": "IBM",
+   "group": "M",
+   "n": 703,
+   "printed": "94.4",
+   "matches": {
+    "half_up": [],
+    "half_even": [],
+    "trunc": [
+     664
+    ]
+   },
+   "status": "trunc_only",
+   "exact": true
+  },
+  {
+   "table": "Table 4 \u2014 full PPB",
+   "classifier": "IBM",
+   "group": "Darker",
+   "n": 589,
+   "printed": "77.6",
+   "matches": {
+    "half_up": [
+     457
+    ],
+    "half_even": [
+     457
+    ],
+    "trunc": []
+   },
+   "status": "ok",
+   "exact": true
+  },
+  {
+   "table": "Table 4 \u2014 full PPB",
+   "classifier": "IBM",
+   "group": "Lighter",
+   "n": 681,
+   "printed": "96.8",
+   "matches": {
+    "half_up": [
+     659
+    ],
+    "half_even": [
+     659
+    ],
+    "trunc": []
+   },
+   "status": "ok",
+   "exact": true
+  },
+  {
+   "table": "Table 4 \u2014 full PPB",
+   "classifier": "IBM",
+   "group": "DF",
+   "n": 271,
+   "printed": "65.3",
+   "matches": {
+    "half_up": [
+     177
+    ],
+    "half_even": [
+     177
+    ],
+    "trunc": [
+     177
+    ]
+   },
+   "status": "ok",
+   "exact": true
+  },
+  {
+   "table": "Table 4 \u2014 full PPB",
+   "classifier": "IBM",
+   "group": "DM",
+   "n": 318,
+   "printed": "88.0",
+   "matches": {
+    "half_up": [],
+    "half_even": [],
+    "trunc": [
+     280
+    ]
+   },
+   "status": "trunc_only",
+   "exact": true
+  },
+  {
+   "table": "Table 4 \u2014 full PPB",
+   "classifier": "IBM",
+   "group": "LF",
+   "n": 296,
+   "printed": "92.9",
+   "matches": {
+    "half_up": [
+     275
+    ],
+    "half_even": [
+     275
+    ],
+    "trunc": [
+     275
+    ]
+   },
+   "status": "ok",
+   "exact": true
+  },
+  {
+   "table": "Table 4 \u2014 full PPB",
+   "classifier": "IBM",
+   "group": "LM",
+   "n": 385,
+   "printed": "99.7",
+   "matches": {
+    "half_up": [
+     384
+    ],
+    "half_even": [
+     384
+    ],
+    "trunc": [
+     384
+    ]
+   },
+   "status": "ok",
+   "exact": true
+  },
+  {
+   "table": "Table 5 \u2014 South Africa subset",
+   "classifier": "MSFT",
+   "group": "DF",
+   "n": 154,
+   "printed": "76.2",
+   "matches": {
+    "half_up": [],
+    "half_even": [],
+    "trunc": []
+   },
+   "status": "broken",
+   "exact": false,
+   "nearest": {
+    "half_up": {
+     "delta": -3,
+     "n": 151,
+     "k": [
+      115
+     ]
+    },
+    "half_even": {
+     "delta": -3,
+     "n": 151,
+     "k": [
+      115
+     ]
+    },
+    "trunc": {
+     "delta": 2,
+     "n": 156,
+     "k": [
+      119
+     ]
+    }
+   }
+  },
+  {
+   "table": "Table 5 \u2014 South Africa subset",
+   "classifier": "MSFT",
+   "group": "DM",
+   "n": 192,
+   "printed": "100.0",
+   "matches": {
+    "half_up": [
+     192
+    ],
+    "half_even": [
+     192
+    ],
+    "trunc": [
+     192
+    ]
+   },
+   "status": "ok",
+   "exact": true
+  },
+  {
+   "table": "Table 5 \u2014 South Africa subset",
+   "classifier": "MSFT",
+   "group": "LF",
+   "n": 27,
+   "printed": "100.0",
+   "matches": {
+    "half_up": [
+     27
+    ],
+    "half_even": [
+     27
+    ],
+    "trunc": [
+     27
+    ]
+   },
+   "status": "ok",
+   "exact": true
+  },
+  {
+   "table": "Table 5 \u2014 South Africa subset",
+   "classifier": "MSFT",
+   "group": "LM",
+   "n": 64,
+   "printed": "100.0",
+   "matches": {
+    "half_up": [
+     64
+    ],
+    "half_even": [
+     64
+    ],
+    "trunc": [
+     64
+    ]
+   },
+   "status": "ok",
+   "exact": true
+  },
+  {
+   "table": "Table 5 \u2014 South Africa subset",
+   "classifier": "Face++",
+   "group": "DF",
+   "n": 154,
+   "printed": "64.0",
+   "matches": {
+    "half_up": [],
+    "half_even": [],
+    "trunc": []
+   },
+   "status": "broken",
+   "exact": false,
+   "nearest": {
+    "half_up": {
+     "delta": -4,
+     "n": 150,
+     "k": [
+      96
+     ]
+    },
+    "half_even": {
+     "delta": -4,
+     "n": 150,
+     "k": [
+      96
+     ]
+    },
+    "trunc": {
+     "delta": -1,
+     "n": 153,
+     "k": [
+      98
+     ]
+    }
+   }
+  },
+  {
+   "table": "Table 5 \u2014 South Africa subset",
+   "classifier": "Face++",
+   "group": "DM",
+   "n": 192,
+   "printed": "99.5",
+   "matches": {
+    "half_up": [
+     191
+    ],
+    "half_even": [
+     191
+    ],
+    "trunc": []
+   },
+   "status": "ok",
+   "exact": true
+  },
+  {
+   "table": "Table 5 \u2014 South Africa subset",
+   "classifier": "Face++",
+   "group": "LF",
+   "n": 27,
+   "printed": "92.6",
+   "matches": {
+    "half_up": [
+     25
+    ],
+    "half_even": [
+     25
+    ],
+    "trunc": []
+   },
+   "status": "ok",
+   "exact": true
+  },
+  {
+   "table": "Table 5 \u2014 South Africa subset",
+   "classifier": "Face++",
+   "group": "LM",
+   "n": 64,
+   "printed": "100.0",
+   "matches": {
+    "half_up": [
+     64
+    ],
+    "half_even": [
+     64
+    ],
+    "trunc": [
+     64
+    ]
+   },
+   "status": "ok",
+   "exact": true
+  },
+  {
+   "table": "Table 5 \u2014 South Africa subset",
+   "classifier": "IBM",
+   "group": "DF",
+   "n": 154,
+   "printed": "66.9",
+   "matches": {
+    "half_up": [
+     103
+    ],
+    "half_even": [
+     103
+    ],
+    "trunc": []
+   },
+   "status": "ok",
+   "exact": true
+  },
+  {
+   "table": "Table 5 \u2014 South Africa subset",
+   "classifier": "IBM",
+   "group": "DM",
+   "n": 192,
+   "printed": "94.3",
+   "matches": {
+    "half_up": [
+     181
+    ],
+    "half_even": [
+     181
+    ],
+    "trunc": []
+   },
+   "status": "ok",
+   "exact": true
+  },
+  {
+   "table": "Table 5 \u2014 South Africa subset",
+   "classifier": "IBM",
+   "group": "LF",
+   "n": 27,
+   "printed": "100.0",
+   "matches": {
+    "half_up": [
+     27
+    ],
+    "half_even": [
+     27
+    ],
+    "trunc": [
+     27
+    ]
+   },
+   "status": "ok",
+   "exact": true
+  },
+  {
+   "table": "Table 5 \u2014 South Africa subset",
+   "classifier": "IBM",
+   "group": "LM",
+   "n": 64,
+   "printed": "98.4",
+   "matches": {
+    "half_up": [
+     63
+    ],
+    "half_even": [
+     63
+    ],
+    "trunc": [
+     63
+    ]
+   },
+   "status": "ok",
+   "exact": true
+  }
+ ],
+ "audit_total": 39,
+ "audit_ok": 31,
+ "audit_trunc_only": 3,
+ "audit_irreducible": 5,
+ "irreducible_cells": [
+  {
+   "table": "Table 4 \u2014 full PPB",
+   "classifier": "MSFT",
+   "group": "F",
+   "n": 567,
+   "printed": "89.3",
+   "matches": {
+    "half_up": [],
+    "half_even": [],
+    "trunc": []
+   },
+   "status": "broken",
+   "exact": false,
+   "nearest": {
+    "half_up": {
+     "delta": 1,
+     "n": 568,
+     "k": [
+      507
+     ]
+    },
+    "half_even": {
+     "delta": 1,
+     "n": 568,
+     "k": [
+      507
+     ]
+    },
+    "trunc": {
+     "delta": -1,
+     "n": 566,
+     "k": [
+      506
+     ]
+    }
+   }
+  },
+  {
+   "table": "Table 4 \u2014 full PPB",
+   "classifier": "MSFT",
+   "group": "DF",
+   "n": 271,
+   "printed": "79.2",
+   "matches": {
+    "half_up": [],
+    "half_even": [],
+    "trunc": []
+   },
+   "status": "broken",
+   "exact": false,
+   "nearest": {
+    "half_up": {
+     "delta": -2,
+     "n": 269,
+     "k": [
+      213
+     ]
+    },
+    "half_even": {
+     "delta": -2,
+     "n": 269,
+     "k": [
+      213
+     ]
+    },
+    "trunc": {
+     "delta": -1,
+     "n": 270,
+     "k": [
+      214
+     ]
+    }
+   }
+  },
+  {
+   "table": "Table 4 \u2014 full PPB",
+   "classifier": "Face++",
+   "group": "DF",
+   "n": 271,
+   "printed": "65.5",
+   "matches": {
+    "half_up": [],
+    "half_even": [],
+    "trunc": []
+   },
+   "status": "broken",
+   "exact": false,
+   "nearest": {
+    "half_up": {
+     "delta": -4,
+     "n": 267,
+     "k": [
+      175
+     ]
+    },
+    "half_even": {
+     "delta": -4,
+     "n": 267,
+     "k": [
+      175
+     ]
+    },
+    "trunc": {
+     "delta": -1,
+     "n": 270,
+     "k": [
+      177
+     ]
+    }
+   }
+  },
+  {
+   "table": "Table 5 \u2014 South Africa subset",
+   "classifier": "MSFT",
+   "group": "DF",
+   "n": 154,
+   "printed": "76.2",
+   "matches": {
+    "half_up": [],
+    "half_even": [],
+    "trunc": []
+   },
+   "status": "broken",
+   "exact": false,
+   "nearest": {
+    "half_up": {
+     "delta": -3,
+     "n": 151,
+     "k": [
+      115
+     ]
+    },
+    "half_even": {
+     "delta": -3,
+     "n": 151,
+     "k": [
+      115
+     ]
+    },
+    "trunc": {
+     "delta": 2,
+     "n": 156,
+     "k": [
+      119
+     ]
+    }
+   }
+  },
+  {
+   "table": "Table 5 \u2014 South Africa subset",
+   "classifier": "Face++",
+   "group": "DF",
+   "n": 154,
+   "printed": "64.0",
+   "matches": {
+    "half_up": [],
+    "half_even": [],
+    "trunc": []
+   },
+   "status": "broken",
+   "exact": false,
+   "nearest": {
+    "half_up": {
+     "delta": -4,
+     "n": 150,
+     "k": [
+      96
+     ]
+    },
+    "half_even": {
+     "delta": -4,
+     "n": 150,
+     "k": [
+      96
+     ]
+    },
+    "trunc": {
+     "delta": -1,
+     "n": 153,
+     "k": [
+      98
+     ]
+    }
+   }
+  }
+ ]
+}
+</script>
+<footer class="fbde-work-frame fbde-work-frame--foot"><p class="fbde-work-frame__note">Leave the work:</p><nav class="fbde-work-frame__nav"><a href="/studio">← The Studio</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/studio/works">the studio’s premieres</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/ecology">the research ecology</a></nav></footer></body>
+</html>

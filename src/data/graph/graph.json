@@ -43,8 +43,8 @@
       },
       {
         "file": "src/content/studio/works/*/meta.json",
-        "sha256": "9c278bcebb782339",
-        "files": 29
+        "sha256": "e601cbe8c2867249",
+        "files": 30
       },
       {
         "file": "src/data/nightly/works/*/meta.json",
@@ -57,14 +57,14 @@
       }
     ],
     "counts": {
-      "nodes": 422,
-      "edges": 373,
+      "nodes": 423,
+      "edges": 374,
       "nodesByKind": {
         "decision": 124,
         "encounter": 6,
         "neighbor": 115,
         "practice": 9,
-        "practice-work": 134,
+        "practice-work": 135,
         "receiver": 8,
         "work": 26
       },
@@ -72,7 +72,7 @@
         "addresses": 8,
         "concerns": 2,
         "door": 5,
-        "made-by": 134,
+        "made-by": 135,
         "neighbor-of": 116,
         "participates": 17,
         "touches": 91
@@ -4742,6 +4742,21 @@
       "medium": "One self-contained HTML surface, offline: one file, no library, no external asset, no network request of any kind, and nothing on it that needs a script to appear — the one control is three CSS radio buttons and the only script element in the document is an inert block of the page’s own data. A complete census in exact integer arithmetic of every printed percentage at nought, one and two decimal places against every study size up to 2 000: the floor each printed percentage admits to, drawn as a skyline of 101, 1 001 and 10 001 bars; a map of 2 002 000 cells, written by hand as a two-bit PNG and carried in the page as data, inked where the arithmetic says impossible; the four study sizes at which an unprinted rounding rule decides the digits; and eight printed percentages — five of them this house’s own, from this week — put through the instrument. Every percentage on the page carries its own two integers in the same sentence, or states that they were not published, and the work’s verifier enforces that rule against the built page."
     },
     {
+      "id": "practice-work:studio/2026-09-24-not-at-this-size",
+      "kind": "practice-work",
+      "label": "NOT AT THIS SIZE",
+      "slug": "2026-09-24-not-at-this-size",
+      "practiceId": "ensemble",
+      "date": "2026-09-24",
+      "href": "/studio/works/2026-09-24-not-at-this-size",
+      "source": {
+        "file": "src/content/studio/works/2026-09-24-not-at-this-size/meta.json",
+        "quote": "\"title\": \"NOT AT THIS SIZE\""
+      },
+      "embodies": "A LANDMARK AUDIT OF MISSING SUBGROUP DATA HAS SIX YEARS OF ITS OWN DATA MISSING FROM ITS RESULTS TABLE. Gender Shades exists to show that an aggregate accuracy figure hides what a subgroup figure reveals; its subgroup figures are then printed as bare percentages, the denominators sitting in a different table entirely. This work puts them back together. Table 2's own composition survives the trip perfectly — nine rows, eight ambiguous percentages each, and constraint propagation across their shared totals finds exactly one consistent set of integer counts every time, agreeing on the one row (South Africa) where the paper also states two of those counts in prose. Table 4 and Table 5's accuracy figures do not fare as well: of 39 cells, 31 print exactly at the size Table 2 implies, 3 more print exactly only if the paper truncated rather than rounded, and 5 are not printable under any of the three ordinary conventions at any size within a handful of the demographic count. Every one of those 5 is either the female row or the darker-female cell — the paper's own most-quoted, most-consequential subgroup — and every one belongs to Microsoft or Face++. IBM's darker-female numbers, the ones behind the famous 34.7 %, check out exactly, at both the full-benchmark and the national-subset scale, both times. The page does not say why. It says exactly how large the gap must be if a denominator differs from the demographic count: never less than one face, never more than four.",
+      "medium": "One self-contained HTML surface, offline: one file, no external library, no network request of any kind, and nothing on it that needs a script to appear — the one control is a pair of CSS radio tabs. Table 2 of Gender Shades (nine rows, eight percentages each, describing the composition of its 1270-face benchmark) is reassembled by constraint propagation: every percentage alone admits one or two integer counts, but the eight of one row share totals, and walking every combination against every other finds exactly one quadruple per row that satisfies all four identities at once. That reconstruction supplies the denominators that Table 4 (the full benchmark) and Table 5 (the South African subset) need but never state, and the paper's 39 subgroup accuracy percentages are then tested against those denominators under the three rounding conventions in ordinary use."
+    },
+    {
       "id": "receiver:center-for-humane-technology",
       "kind": "receiver",
       "label": "Center for Humane Technology",
@@ -6672,6 +6687,15 @@
       "source": {
         "file": "src/content/studio/works/2026-09-23-of-how-many/meta.json",
         "quote": "\"date\": \"2026-09-23\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:studio/2026-09-24-not-at-this-size",
+      "to": "practice:ensemble",
+      "source": {
+        "file": "src/content/studio/works/2026-09-24-not-at-this-size/meta.json",
+        "quote": "\"date\": \"2026-09-24\""
       }
     },
     {

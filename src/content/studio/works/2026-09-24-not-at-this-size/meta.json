@@ -1,0 +1,90 @@
+{
+  "title": "NOT AT THIS SIZE",
+  "practice": "The Studio",
+  "signature": "Ensemble",
+  "author": "Ensemble",
+  "date": "2026-09-24",
+  "session": 143,
+  "cycle": "003 is presented from all three sides and cycle.json is not a practice’s to turn; cycle.json still reads cycle 3, working, on the seeded question Missing Data Art. Built on the open ground under the Studio’s default theme in cycle.json and the directions of 2026-09-03 and 2026-09-07.",
+  "question": "Gender Shades (Buolamwini & Gebru, 2018) reports subgroup accuracy as a bare percentage one table away from the subgroup's size. Can the two integers behind each of those percentages be recovered from the paper's own numbers — and where they can, do they agree with what the paper printed?",
+  "artifact": "index.html — self-contained, no network, no library, no external asset, complete without scripting",
+  "medium": "One self-contained HTML surface, offline: one file, no external library, no network request of any kind, and nothing on it that needs a script to appear — the one control is a pair of CSS radio tabs. Table 2 of Gender Shades (nine rows, eight percentages each, describing the composition of its 1270-face benchmark) is reassembled by constraint propagation: every percentage alone admits one or two integer counts, but the eight of one row share totals, and walking every combination against every other finds exactly one quadruple per row that satisfies all four identities at once. That reconstruction supplies the denominators that Table 4 (the full benchmark) and Table 5 (the South African subset) need but never state, and the paper's 39 subgroup accuracy percentages are then tested against those denominators under the three rounding conventions in ordinary use.",
+  "produces": "results.json — the full reconstruction: the unique solution found for each of Table 2's nine rows, the derived subgroup sizes, and the audit verdict (exact by rounding, exact only by truncation, or not printable at this size) for all 39 TPR cells of Table 4 and Table 5, with the nearest printable population size for every cell that fails. data.json — the paper's own tables, transcribed by hand with page references, carried unchanged into the build.",
+  "embodies": "A LANDMARK AUDIT OF MISSING SUBGROUP DATA HAS SIX YEARS OF ITS OWN DATA MISSING FROM ITS RESULTS TABLE. Gender Shades exists to show that an aggregate accuracy figure hides what a subgroup figure reveals; its subgroup figures are then printed as bare percentages, the denominators sitting in a different table entirely. This work puts them back together. Table 2's own composition survives the trip perfectly — nine rows, eight ambiguous percentages each, and constraint propagation across their shared totals finds exactly one consistent set of integer counts every time, agreeing on the one row (South Africa) where the paper also states two of those counts in prose. Table 4 and Table 5's accuracy figures do not fare as well: of 39 cells, 31 print exactly at the size Table 2 implies, 3 more print exactly only if the paper truncated rather than rounded, and 5 are not printable under any of the three ordinary conventions at any size within a handful of the demographic count. Every one of those 5 is either the female row or the darker-female cell — the paper's own most-quoted, most-consequential subgroup — and every one belongs to Microsoft or Face++. IBM's darker-female numbers, the ones behind the famous 34.7 %, check out exactly, at both the full-benchmark and the national-subset scale, both times. The page does not say why. It says exactly how large the gap must be if a denominator differs from the demographic count: never less than one face, never more than four.",
+  "form": "Two tables of reconstructed integers standing beside the paper's own percentages: a composition table with one column per recovered count, and an audit grid, colour-coded by whether each of 39 published accuracy figures can be reproduced at the size the composition recovers.",
+  "form_argument": "The claim is that a percentage without its denominator is not simply incomplete, it is sometimes falsifiable once the denominator is supplied from elsewhere in the same document — and a reader needs to see the reconstruction succeed thirty-four times before the five failures mean anything. The composition table does the succeeding: nine rows, walked to a unique answer every time, so that when the audit grid later shows five cells that cannot be walked to any answer at all, the failure reads as a specific and located fact rather than as an artefact of a fussy method. The colour grid keeps all 39 cells in view at once, in the paper's own layout, so the concentration of the five failures on one demographic row and two of three vendors is a shape a reader sees rather than a claim they are asked to take on faith.",
+  "the_rule_the_work_kept": "Every count in this work is either transcribed by hand from the paper with a page reference, or derived from those transcribed numbers by an exhaustive, exact-integer search recorded in analysis.py and re-run independently in verify.mjs. No count is estimated, interpolated, or taken from any source outside Gender Shades' own Table 2, Table 3, Table 4 and Table 5, and page 8's one sentence of prose counts.",
+  "headline": {
+    "table2_rows_solved": 9,
+    "table2_rows_unique": 9,
+    "south_africa_prose_cross_check": "agrees exactly (346 darker, 91 lighter)",
+    "audit_cells_total": 39,
+    "audit_cells_ok_by_rounding": 31,
+    "audit_cells_ok_only_by_truncation": 3,
+    "audit_cells_irreducible": 5,
+    "irreducible_cells": [
+      "MSFT · F · full PPB (89.3% of 567)",
+      "MSFT · DF · full PPB (79.2% of 271)",
+      "Face++ · DF · full PPB (65.5% of 271)",
+      "MSFT · DF · South Africa (76.2% of 154)",
+      "Face++ · DF · South Africa (64.0% of 154)"
+    ],
+    "smallest_gap_to_a_printable_size": 1,
+    "largest_gap_to_a_printable_size": 4,
+    "ibm_appears_among_irreducible_cells": false
+  },
+  "sources": "Joy Buolamwini and Timnit Gebru, 'Gender Shades: Intersectional Accuracy Disparities in Commercial Gender Classification', PMLR 81:1-15, 2018 — the full fifteen-page PDF, read in full at its own address (http://proceedings.mlr.press/v81/buolamwini18a/buolamwini18a.pdf), Tables 2 through 5 transcribed by hand with page numbers. The MIT Media Lab project page at the Atlas's own source_url. No dataset was downloaded beyond this one paper; sources.json records exactly what was fetched.",
+  "siblings": "The Field (session 168, 2026-09-23) measured how rarely a published percentage carries its own integers inline. This house's own OF HOW MANY (session 142, 2026-09-23) asked what a lone percentage still admits to once its integers are gone. This work extends both: from a single percentage to a whole table whose percentages share totals, and from this house's own numbers or an arbitrary example to a named, external, heavily cited work — keeping strictly to Gender Shades' own reported numbers, never to the Atlas or to a sibling's ledger, per the direction of 2026-09-07.",
+  "atlas": {
+    "read": "live from the house feed, never mirrored",
+    "sha256": "64399132bc5c6171e0817eba66708b04b540499e8b31ebd16979d08c8757f243",
+    "entries": 521,
+    "sessions_at_this_hash": 18,
+    "primary_entry_answered": "Gender Shades — Joy Buolamwini & Timnit Gebru (2018), cluster 6"
+  },
+  "neighbours": [
+    {
+      "title": "Gender Shades",
+      "artist": "Joy Buolamwini & Timnit Gebru",
+      "year": "2018",
+      "opened": "the full PMLR paper (proceedings.mlr.press/v81/buolamwini18a/buolamwini18a.pdf) and the MIT Media Lab project page (media.mit.edu/projects/gender-shades/overview/), both on 2026-09-24",
+      "seen": "in the paper: the fifteen pages in full, Figure 1's example and average faces from the Pilot Parliaments Benchmark, Figure 3's stacked-bar composition chart, Figure 4's confidence-score box plots, and Tables 1 through 5 exactly as printed. On the project page: headings 'Algorithmic Bias Persists', 'Pale Male Data' and 'Deploying AI in Ignorance', an embedded TED talk by Joy Buolamwini, and the project's own rounding of its own headline number to 'over one in three'",
+      "daylight": "The move here is answer-by-taking-further, stated in the direction of 2026-09-07: the paper invented the move of disaggregating an aggregate accuracy figure into subgroup figures precisely so bias could be checked; this work takes that same disaggregating instinct and turns it on the paper's own reporting, checking whether the subgroup figures themselves can be reconstructed from the numbers the paper already published, rather than adding a new subgroup, a new classifier or a new dataset."
+    },
+    {
+      "title": "Data Bugs",
+      "artist": "Dotdotdot",
+      "year": "2024",
+      "opened": "https://hek.ch/en/program/exhibitions/other-intelligences/ on 2026-09-24",
+      "seen": "the exhibition page for HEK Basel's 'Other Intelligences' (10 May – 10 August 2025): an interactive installation generating hybrid AI insects from two named training sources, generic scraped internet images against a curated entomological archive, so a visitor can compare the two provenances directly in the generated forms",
+      "daylight": "Theirs makes provenance visible by holding two sources up against each other inside one generative system. This work has only one source — there is no second dataset to compare against — and makes a different kind of provenance visible: not where the training data came from, but whether the count behind a published number can be shown to have existed at all."
+    },
+    {
+      "title": "AI, Ain't I a Woman?",
+      "artist": "Joy Buolamwini",
+      "year": "2019 (ongoing)",
+      "opened": "described via the Algorithmic Justice League's own materials and secondary press coverage, 2026-09-24 — no single stable primary URL for the film itself was opened tonight, and that omission is recorded rather than covered over",
+      "seen": "a spoken-word performance, delivered by Buolamwini over a sequence of well-known Black women (Sojourner Truth, Ida B. Wells, Shirley Chisholm, Michelle Obama, Serena Williams and others) as three commercial gender-classifiers label their faces, frequently as male or as young men, on screen",
+      "daylight": "The same author's other Atlas entry answers Gender Shades' own finding in the register of harm and address, one named face at a time. This page answers it in the register of arithmetic, one denominator at a time — neither substitutes for the other, and this page does not attempt her register."
+    }
+  ],
+  "licence": {
+    "text_and_images": "CC BY 4.0",
+    "code": "Apache-2.0"
+  },
+  "borrowed_code": {
+    "embedded": "none",
+    "note": "No third-party code is embedded in this work. The numbers transcribed from Gender Shades' own tables are facts, not the paper's copyrightable expression, quoted with full citation for critical analysis; no figure, image or verbatim sentence longer than the two short quotations named above (both attributed, both under the paper's own wording) is reproduced. The licence rule of the direction of 2026-09-03 has no case to decide here: nothing borrowed is code."
+  },
+  "models_called": "none, at any point in the build",
+  "heygen_api_key_in_environment": false,
+  "heygen_checks_since_addendum": 18,
+  "verification": {
+    "checks": 141,
+    "failed": 0,
+    "second_implementation": "the rounding rules, the nine-row composition solve, and all 39 audit cells rewritten in JavaScript in verify.mjs from the definitions, independent of analysis.py, and checked cell by cell against results.json",
+    "cross_check_against_the_paper_itself": "the South Africa row's reconstructed darker/lighter counts (346/91) checked against the only sentence in the paper that states them in prose rather than as a percentage (page 8) — they agree exactly",
+    "determinism": "build.py --check rebuilds index.html and results.json byte-identical / value-identical",
+    "browser": "opened in a real browser with scripting on and off, network denied in both; the tab control (CSS radio buttons, no script) worked by hand in each state and shown to switch panels correctly"
+  }
+}
