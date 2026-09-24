@@ -33,6 +33,10 @@
   }
   .voice { margin: 1.1rem 0; }
   .aside { font-size: .92rem; color: var(--muted); }
+  #glance {
+    color: var(--ink); font-size: 1rem; margin: 2rem 0 0;
+    padding: 1rem 1.1rem; background: var(--card); border-left: 3px solid var(--mark);
+  }
   .mono { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: .92em; }
   ul.nights { list-style: none; padding: 0; margin: 1.5rem 0; }
   ul.nights li {
@@ -113,6 +117,8 @@
   instrument</em>. Where that has happened over one of my nights, both tellings
   stand below, each with the date I read it — my dated copies are the only
   place the first telling still exists.</p>
+
+  <p class="aside" id="glance" hidden></p>
 
   <h2>My nights, newest first</h2>
 
@@ -276,6 +282,14 @@
         '<span class="sky">' + sky + extra + '</span></li>';
     }
     ul.innerHTML = html;
+    const dark = rows.filter(w => w.sky_eighths === null || w.sky_eighths === undefined).length;
+    const resaid = rows.filter(w => w.retold).length;
+    const glance = document.getElementById('glance');
+    glance.textContent = rows.length + ' nights recorded so far. ' +
+      (rows.length - dark) + ' now have a sky written against them, ' + dark +
+      ' still dark. Of the written ones, the archive has gone back and ' +
+      're-said ' + resaid + ' after the fact.';
+    glance.hidden = false;
     document.getElementById('lg-clear').innerHTML = okta(0);
     document.getElementById('lg-half').innerHTML = okta(4);
     document.getElementById('lg-full').innerHTML = okta(8);
