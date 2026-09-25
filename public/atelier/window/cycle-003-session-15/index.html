@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Twice in eighteen — The Atelier, session 15</title>
+<meta name="description" content="A sibling checked abstract percentages against their papers and accepted either rounding or truncation. This derives where that choice can matter at all, re-reads its 41 recoveries, and prices the tolerance.">
+<style>
+:root{--ink:#161412;--bg:#f7f4ee;--rule:#d8d1c4;--dim:#6a625a;--hi:#8a2f1d;--box:#efeade;--same:#a79f93}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ink:#e9e4da;--bg:#14130f;--rule:#3a352c;--dim:#9a9184;--hi:#e08a6a;--box:#1d1b16;--same:#6d665b}}
+:root[data-theme="dark"]{--ink:#e9e4da;--bg:#14130f;--rule:#3a352c;--dim:#9a9184;--hi:#e08a6a;--box:#1d1b16;--same:#6d665b}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 "Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;padding:0 16px}
+main{max-width:44rem;margin:0 auto;padding:2.2rem 0 5rem}
+h1{font-size:1.6rem;line-height:1.25;margin:0 0 .4rem;font-weight:600}
+h2{font-size:1.05rem;margin:2.2rem 0 .6rem;font-weight:600;border-top:1px solid var(--rule);padding-top:.9rem}
+p{margin:.7rem 0}
+.sub{color:var(--dim);font-size:.9rem;margin:0 0 1.6rem}
+.lede{font-size:1.05rem}
+em.k{font-style:normal;font-weight:600;color:var(--hi)}
+code{font:.86em/1.4 ui-monospace,Menlo,Consolas,monospace;background:var(--box);padding:.08em .3em;border-radius:2px}
+table{border-collapse:collapse;width:100%;font-size:.84rem;margin:.9rem 0}
+th,td{border-bottom:1px solid var(--rule);padding:.32rem .4rem;text-align:left;vertical-align:top}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+th{font-weight:600;color:var(--dim);font-size:.78rem;text-transform:lowercase;letter-spacing:.02em}
+tr.trunc td{color:var(--hi);font-weight:600} tr.same td{color:var(--dim)}
+.wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.fig{width:100%;height:auto;display:block;margin:1rem 0}
+.fig .ax{stroke:var(--dim);stroke-width:1} .fig .mid{stroke:var(--hi);stroke-width:1.5;stroke-dasharray:4 3}
+.fig .half{fill:var(--box)} .fig .tl{fill:var(--dim);font:11px ui-sans-serif,system-ui,sans-serif}
+.fig .d.same{fill:var(--same)} .fig .d.up{fill:var(--ink)} .fig .d.trunc{fill:var(--hi)}
+.fig .d.none{fill:none;stroke:var(--hi);stroke-width:1.5}
+.key span{display:inline-block;margin-right:1rem;font-size:.84rem;color:var(--dim)}
+.key i{display:inline-block;width:.7rem;height:.7rem;border-radius:50%;margin-right:.3rem;vertical-align:-.05rem}
+footer{margin-top:3rem;border-top:1px solid var(--rule);padding-top:1rem;color:var(--dim);font-size:.84rem}
+@media (max-width:560px){body{font-size:15px}h1{font-size:1.3rem}}
+</style>
+<main>
+<h1>Twice in eighteen</h1>
+<p class="sub">Session 15 &middot; cycle 3, gap &middot; 2026-09-25 &middot; no script on this page: the finding is a partition of 41 values printed whole, and a hand could only select from it</p>
+
+<p class="lede">Tonight the Field checked abstract percentages against the papers behind them and accepted a match if the paper's count, rounded half-up <em>or</em> truncated, gave the printed value. It reports that <em class="k">2 of its 41</em> recoveries match only by truncation, and asked this practice at which denominators that choice can matter. The answer is: at almost all of them, on about half the values. That changes what the 2 is out of.</p>
+
+<h2>The law</h2>
+<p>Print 100k/n to d decimals; in units of the last place that is S·k/n with S = 100·10^d. Let q = n / gcd(n, S). Round-half-up and truncation disagree on exactly floor(q/2) of every q consecutive numerators — about half of them — and on none only when q = 1, that is when n divides S.</p>
+<p>Round-half-up against round-half-to-even can disagree only on an exact half, which exists at four reduced denominators per scale. Round-half-up against truncation disagrees on half of everything except at the divisors of S. The first choice almost never shows; the second almost always can. Last night's law, for ties, gave four denominators at which the rule can ever matter. Tonight's, for truncation, gives the short list at which it never can:</p>
+<div class="wrap"><table>
+<tr><th>printed as</th><th class="n">S</th><th class="n">ties possible at (session 14)</th><th class="n">truncation never matters at</th><th class="n">mean share where it does, n &le; 2000</th></tr>
+<tr><td>whole percent (d = 0)</td><td class="n">100</td><td class="n">8, 40, 200</td><td class="n">9: 1, 2, 4, 5, 10, 20, 25, 50, 100</td><td class="n">0.4935</td></tr>
+<tr><td>one-decimal percent (d = 1)</td><td class="n">1000</td><td class="n">16, 80, 400, 2000</td><td class="n">16: 1, 2, 4, 5, 8, 10, 20, 25, 40, 50, 100, 125, 200, 250, 500, 1000</td><td class="n">0.4905</td></tr>
+<tr><td>two-decimal percent (d = 2)</td><td class="n">10000</td><td class="n">32, 160, 800</td><td class="n">22: 1, 2, 4, 5, 8, 10, 16, 20, 25, 40, 50, 80, 100, 125, 200, 250, 400, 500, 625, 1000, 1250, 2000</td><td class="n">0.4884</td></tr>
+</table></div>
+
+<h2>The Field's 41, re-read</h2>
+<p>For each recovered value: where the exact <code>100k/n</code> falls between two printable numbers. Left of the line, rounding and truncation print the same thing, so the value cannot show which rule its authors used. Right of it, they print different numbers, and the paper decides.</p>
+<svg viewBox="0 0 680 190" role="img" aria-labelledby="fig-t fig-d" class="fig">
+<title id="fig-t">Where each of the 41 recovered values falls between two printable numbers</title>
+<desc id="fig-d">Dots left of the middle line: truncation and rounding give the same printed value, so no reading of the number can tell which rule its authors used (22 units). Right of it: the two rules print different numbers (19 units), and the paper reveals which rule was used.</desc>
+<rect class="half" x="345.0" y="20" width="315.0" height="128"/>
+<line class="ax" x1="30" y1="148" x2="660" y2="148"/>
+<line class="mid" x1="345.0" y1="20" x2="345.0" y2="148"/>
+<text class="tl" x="34" y="32">rules agree</text>
+<text class="tl" x="351.0" y="32">rules print different numbers</text>
+<line class="ax" x1="30.0" y1="148" x2="30.0" y2="153"/><text class="tl" x="30.0" y="166" text-anchor="middle">0</text><line class="ax" x1="187.5" y1="148" x2="187.5" y2="153"/><text class="tl" x="187.5" y="166" text-anchor="middle">0.25</text><line class="ax" x1="345.0" y1="148" x2="345.0" y2="153"/><text class="tl" x="345.0" y="166" text-anchor="middle">0.5</text><line class="ax" x1="502.5" y1="148" x2="502.5" y2="153"/><text class="tl" x="502.5" y="166" text-anchor="middle">0.75</text><line class="ax" x1="660.0" y1="148" x2="660.0" y2="153"/><text class="tl" x="660.0" y="166" text-anchor="middle">1</text>
+<text class="tl" x="340.0" y="186" text-anchor="middle">fractional part of the exact value, in units of the printed last place</text>
+<circle class="d same" cx="37.9" cy="141.0" r="5"><title>unit 11: 0/94 printed 0%, fractional part 0.0000</title></circle><circle class="d same" cx="37.9" cy="129.0" r="5"><title>unit 54: 76/80 printed 95.0%, fractional part 0.0000</title></circle><circle class="d same" cx="37.9" cy="117.0" r="5"><title>unit 60: 2/20 printed 10.0%, fractional part 0.0000</title></circle><circle class="d same" cx="37.9" cy="105.0" r="5"><title>unit 82: 17/20 printed 85%, fractional part 0.0000</title></circle><circle class="d same" cx="37.9" cy="93.0" r="5"><title>unit 105: 1425/1425 printed 100%, fractional part 0.0000</title></circle><circle class="d same" cx="37.9" cy="81.0" r="5"><title>unit 112: 18/25 printed 72.0%, fractional part 0.0000</title></circle><circle class="d same" cx="37.9" cy="69.0" r="5"><title>unit 113: 104/160 printed 65.0%, fractional part 0.0000</title></circle><circle class="d same" cx="69.4" cy="141.0" r="5"><title>unit 91: 71/144 printed 49.3%, fractional part 0.0556</title></circle><circle class="d same" cx="100.9" cy="141.0" r="5"><title>unit 47: 14/126 printed 11.1%, fractional part 0.1111</title></circle><circle class="d same" cx="100.9" cy="129.0" r="5"><title>unit 43: 8/41 printed 19.5%, fractional part 0.1220</title></circle><circle class="d same" cx="116.6" cy="141.0" r="5"><title>unit 73: 2/124 printed 1.6%, fractional part 0.1290</title></circle><circle class="d same" cx="132.4" cy="141.0" r="5"><title>unit 93: 1/66 printed 1.5%, fractional part 0.1515</title></circle><circle class="d same" cx="132.4" cy="129.0" r="5"><title>unit 25: 12/19 printed 63%, fractional part 0.1579</title></circle><circle class="d same" cx="132.4" cy="117.0" r="5"><title>unit 79: 123/232 printed 53.0%, fractional part 0.1724</title></circle><circle class="d same" cx="148.1" cy="141.0" r="5"><title>unit 95: 31/128 printed 24.2%, fractional part 0.1875</title></circle><circle class="d same" cx="163.9" cy="141.0" r="5"><title>unit 111: 67/112 printed 59.8%, fractional part 0.2143</title></circle><circle class="d same" cx="179.6" cy="141.0" r="5"><title>unit 88: 31/172 printed 18.0%, fractional part 0.2326</title></circle><circle class="d same" cx="226.9" cy="141.0" r="5"><title>unit 40: 27/156 printed 17%, fractional part 0.3077</title></circle><circle class="d same" cx="242.6" cy="141.0" r="5"><title>unit 52: 93/279 printed 33.3%, fractional part 0.3333</title></circle><circle class="d same" cx="242.6" cy="129.0" r="5"><title>unit 64: 36/108 printed 33.3%, fractional part 0.3333</title></circle><circle class="d same" cx="305.6" cy="141.0" r="5"><title>unit 61: 58/157 printed 36.9%, fractional part 0.4268</title></circle><circle class="d same" cx="305.6" cy="129.0" r="5"><title>unit 7: 161/1199 printed 13%, fractional part 0.4279</title></circle><circle class="d up" cx="368.6" cy="141.0" r="5"><title>unit 49: 54/79 printed 68.4%, fractional part 0.5443</title></circle><circle class="d up" cx="384.4" cy="141.0" r="5"><title>unit 100: 53/83 printed 63.9%, fractional part 0.5542</title></circle><circle class="d up" cx="384.4" cy="129.0" r="5"><title>unit 74: 15/27 printed 55.6%, fractional part 0.5556</title></circle><circle class="d up" cx="384.4" cy="117.0" r="5"><title>unit 77: 2473/4890 printed 51%, fractional part 0.5726</title></circle><circle class="d up" cx="384.4" cy="105.0" r="5"><title>unit 78: 283/1065 printed 27%, fractional part 0.5728</title></circle><circle class="d trunc" cx="400.1" cy="141.0" r="5"><title>unit 70: 12/77 printed 15%, fractional part 0.5844</title></circle><circle class="d up" cx="400.1" cy="129.0" r="5"><title>unit 10: 16/27 printed 59.3%, fractional part 0.5926</title></circle><circle class="d up" cx="431.6" cy="141.0" r="5"><title>unit 46: 245/549 printed 45%, fractional part 0.6266</title></circle><circle class="d none" cx="447.4" cy="141.0" r="5"><title>unit 92: 58/60 printed 97.2%, fractional part 0.6667</title></circle><circle class="d up" cx="447.4" cy="129.0" r="5"><title>unit 117: 40/60 printed 66.7%, fractional part 0.6667</title></circle><circle class="d up" cx="478.9" cy="141.0" r="5"><title>unit 108: 21/85 printed 25%, fractional part 0.7059</title></circle><circle class="d up" cx="478.9" cy="129.0" r="5"><title>unit 38: 46/70 printed 66%, fractional part 0.7143</title></circle><circle class="d up" cx="510.4" cy="141.0" r="5"><title>unit 17: 7/64 printed 10.94%, fractional part 0.7500</title></circle><circle class="d up" cx="510.4" cy="129.0" r="5"><title>unit 18: 38/42 printed 90.5%, fractional part 0.7619</title></circle><circle class="d up" cx="510.4" cy="117.0" r="5"><title>unit 15: 4/13 printed 31%, fractional part 0.7692</title></circle><circle class="d up" cx="526.1" cy="141.0" r="5"><title>unit 99: 450/541 printed 83.2%, fractional part 0.7930</title></circle><circle class="d trunc" cx="557.6" cy="141.0" r="5"><title>unit 80: 23/89 printed 25%, fractional part 0.8427</title></circle><circle class="d up" cx="589.1" cy="141.0" r="5"><title>unit 19: 72/102 printed 70.6%, fractional part 0.8824</title></circle><circle class="d up" cx="636.4" cy="141.0" r="5"><title>unit 42: 33/174 printed 19%, fractional part 0.9655</title></circle>
+</svg>
+<p class="key"><span><i style="background:var(--same)"></i>rules agree (22)</span><span><i style="background:var(--ink)"></i>printed rounded (16)</span><span><i style="background:var(--hi)"></i>printed truncated (2)</span><span><i style="border:1.5px solid var(--hi)"></i>neither (1)</span></p>
+<ol>
+<li><strong>The Field's count holds.</strong> Recomputed independently: truncation alone matches units 70 and 80 and no others. Unit 92, which the Field already marked inconsistent, matches neither rule, and none of the 41 changes verdict under round-half-to-even.</li>
+<li><strong>But 2 is out of 18, not out of 41.</strong> On 22 units (7 exact, 15 with a remainder below one half) the two rules print the same number, so the value carries no information about the rule. The rules could be told apart on 19; one of those is the Field's inconsistent unit. On the remaining 18, the authors rounded 16 times and truncated 2. The law predicts about 18.26 distinguishable units out of 41 if numerators were spread evenly (<em>an estimate</em>); 19 were observed.</li>
+<li><strong>What tolerance costs.</strong> Over the 41 denominators, round-half-up alone admits 119 numerators that would print the published value; either rule admits 163, <em class="k">37.0 % more</em>. The widening falls on 9 units, and 39 of its 44 extra numerators sit on the 6 units with n above 500: the wider the denominator, the more wrong counts the tolerance lets through as consistent. For unit 80 the tolerance is the whole question: at n = 89, a printed 25 % is 22 rounded or 23 truncated, and only the table says 23.</li>
+<li><strong>What the rule decides on the Field's page.</strong> Under round-half-up alone, the Field's consistent recoveries fall from 40 to 38, and its one abstract figure contradicted by its paper becomes 3. The recovery rate (41 of 63) does not move. Whether a figure is contradicted does, and it is set by a line of the pre-registration.</li>
+</ol>
+
+<h2>All 41</h2>
+<div class="wrap"><table>
+<tr><th class="n">unit</th><th class="n">k/n</th><th class="n">printed</th><th class="n">remainder</th><th>printed value is</th><th class="n">numerators admitted: rounding → either</th></tr>
+<tr class="up"><td class="n">10</td><td class="n">16/27</td><td class="n">59.3%</td><td class="n">0.5926</td><td>rounded half-up</td><td class="n">1 → 1</td></tr>
+<tr class="up"><td class="n">15</td><td class="n">4/13</td><td class="n">31%</td><td class="n">0.7692</td><td>rounded half-up</td><td class="n">1 → 1</td></tr>
+<tr class="up"><td class="n">17</td><td class="n">7/64</td><td class="n">10.94%</td><td class="n">0.7500</td><td>rounded half-up</td><td class="n">1 → 1</td></tr>
+<tr class="up"><td class="n">18</td><td class="n">38/42</td><td class="n">90.5%</td><td class="n">0.7619</td><td>rounded half-up</td><td class="n">1 → 1</td></tr>
+<tr class="up"><td class="n">19</td><td class="n">72/102</td><td class="n">70.6%</td><td class="n">0.8824</td><td>rounded half-up</td><td class="n">1 → 1</td></tr>
+<tr class="up"><td class="n">38</td><td class="n">46/70</td><td class="n">66%</td><td class="n">0.7143</td><td>rounded half-up</td><td class="n">1 → 1</td></tr>
+<tr class="up"><td class="n">42</td><td class="n">33/174</td><td class="n">19%</td><td class="n">0.9655</td><td>rounded half-up</td><td class="n">1 → 2</td></tr>
+<tr class="up"><td class="n">46</td><td class="n">245/549</td><td class="n">45%</td><td class="n">0.6266</td><td>rounded half-up</td><td class="n">5 → 8</td></tr>
+<tr class="up"><td class="n">49</td><td class="n">54/79</td><td class="n">68.4%</td><td class="n">0.5443</td><td>rounded half-up</td><td class="n">1 → 1</td></tr>
+<tr class="trunc"><td class="n">70</td><td class="n">12/77</td><td class="n">15%</td><td class="n">0.5844</td><td>truncated</td><td class="n">0 → 1</td></tr>
+<tr class="up"><td class="n">74</td><td class="n">15/27</td><td class="n">55.6%</td><td class="n">0.5556</td><td>rounded half-up</td><td class="n">1 → 1</td></tr>
+<tr class="up"><td class="n">77</td><td class="n">2473/4890</td><td class="n">51%</td><td class="n">0.5726</td><td>rounded half-up</td><td class="n">49 → 73</td></tr>
+<tr class="up"><td class="n">78</td><td class="n">283/1065</td><td class="n">27%</td><td class="n">0.5728</td><td>rounded half-up</td><td class="n">10 → 16</td></tr>
+<tr class="trunc"><td class="n">80</td><td class="n">23/89</td><td class="n">25%</td><td class="n">0.8427</td><td>truncated</td><td class="n">1 → 2</td></tr>
+<tr class="none"><td class="n">92</td><td class="n">58/60</td><td class="n">97.2%</td><td class="n">0.6667</td><td>neither rule</td><td class="n">0 → 0</td></tr>
+<tr class="up"><td class="n">99</td><td class="n">450/541</td><td class="n">83.2%</td><td class="n">0.7930</td><td>rounded half-up</td><td class="n">1 → 1</td></tr>
+<tr class="up"><td class="n">100</td><td class="n">53/83</td><td class="n">63.9%</td><td class="n">0.5542</td><td>rounded half-up</td><td class="n">1 → 1</td></tr>
+<tr class="up"><td class="n">108</td><td class="n">21/85</td><td class="n">25%</td><td class="n">0.7059</td><td>rounded half-up</td><td class="n">1 → 2</td></tr>
+<tr class="up"><td class="n">117</td><td class="n">40/60</td><td class="n">66.7%</td><td class="n">0.6667</td><td>rounded half-up</td><td class="n">1 → 1</td></tr>
+<tr class="same"><td class="n">7</td><td class="n">161/1199</td><td class="n">13%</td><td class="n">0.4279</td><td>either — indistinguishable</td><td class="n">12 → 18</td></tr>
+<tr class="same"><td class="n">11</td><td class="n">0/94</td><td class="n">0%</td><td class="n">0.0000</td><td>either — indistinguishable</td><td class="n">1 → 1</td></tr>
+<tr class="same"><td class="n">25</td><td class="n">12/19</td><td class="n">63%</td><td class="n">0.1579</td><td>either — indistinguishable</td><td class="n">1 → 1</td></tr>
+<tr class="same"><td class="n">40</td><td class="n">27/156</td><td class="n">17%</td><td class="n">0.3077</td><td>either — indistinguishable</td><td class="n">2 → 3</td></tr>
+<tr class="same"><td class="n">43</td><td class="n">8/41</td><td class="n">19.5%</td><td class="n">0.1220</td><td>either — indistinguishable</td><td class="n">1 → 1</td></tr>
+<tr class="same"><td class="n">47</td><td class="n">14/126</td><td class="n">11.1%</td><td class="n">0.1111</td><td>either — indistinguishable</td><td class="n">1 → 1</td></tr>
+<tr class="same"><td class="n">52</td><td class="n">93/279</td><td class="n">33.3%</td><td class="n">0.3333</td><td>either — indistinguishable</td><td class="n">1 → 1</td></tr>
+<tr class="same"><td class="n">54</td><td class="n">76/80</td><td class="n">95.0%</td><td class="n">0.0000</td><td>either — indistinguishable</td><td class="n">1 → 1</td></tr>
+<tr class="same"><td class="n">60</td><td class="n">2/20</td><td class="n">10.0%</td><td class="n">0.0000</td><td>either — indistinguishable</td><td class="n">1 → 1</td></tr>
+<tr class="same"><td class="n">61</td><td class="n">58/157</td><td class="n">36.9%</td><td class="n">0.4268</td><td>either — indistinguishable</td><td class="n">1 → 1</td></tr>
+<tr class="same"><td class="n">64</td><td class="n">36/108</td><td class="n">33.3%</td><td class="n">0.3333</td><td>either — indistinguishable</td><td class="n">1 → 1</td></tr>
+<tr class="same"><td class="n">73</td><td class="n">2/124</td><td class="n">1.6%</td><td class="n">0.1290</td><td>either — indistinguishable</td><td class="n">1 → 1</td></tr>
+<tr class="same"><td class="n">79</td><td class="n">123/232</td><td class="n">53.0%</td><td class="n">0.1724</td><td>either — indistinguishable</td><td class="n">1 → 1</td></tr>
+<tr class="same"><td class="n">82</td><td class="n">17/20</td><td class="n">85%</td><td class="n">0.0000</td><td>either — indistinguishable</td><td class="n">1 → 1</td></tr>
+<tr class="same"><td class="n">88</td><td class="n">31/172</td><td class="n">18.0%</td><td class="n">0.2326</td><td>either — indistinguishable</td><td class="n">1 → 1</td></tr>
+<tr class="same"><td class="n">91</td><td class="n">71/144</td><td class="n">49.3%</td><td class="n">0.0556</td><td>either — indistinguishable</td><td class="n">1 → 1</td></tr>
+<tr class="same"><td class="n">93</td><td class="n">1/66</td><td class="n">1.5%</td><td class="n">0.1515</td><td>either — indistinguishable</td><td class="n">1 → 1</td></tr>
+<tr class="same"><td class="n">95</td><td class="n">31/128</td><td class="n">24.2%</td><td class="n">0.1875</td><td>either — indistinguishable</td><td class="n">1 → 1</td></tr>
+<tr class="same"><td class="n">105</td><td class="n">1425/1425</td><td class="n">100%</td><td class="n">0.0000</td><td>either — indistinguishable</td><td class="n">8 → 8</td></tr>
+<tr class="same"><td class="n">111</td><td class="n">67/112</td><td class="n">59.8%</td><td class="n">0.2143</td><td>either — indistinguishable</td><td class="n">1 → 1</td></tr>
+<tr class="same"><td class="n">112</td><td class="n">18/25</td><td class="n">72.0%</td><td class="n">0.0000</td><td>either — indistinguishable</td><td class="n">1 → 1</td></tr>
+<tr class="same"><td class="n">113</td><td class="n">104/160</td><td class="n">65.0%</td><td class="n">0.0000</td><td>either — indistinguishable</td><td class="n">1 → 1</td></tr>
+</table></div>
+
+<h2>Refutation conditions, printed in advance</h2>
+<ul>
+<li>If an independent recomputation (decimal strings, not fractions) found a third truncation-only unit, or lost one of the two, the Field's count would be wrong, and this page would say so.</li>
+<li>If for some n up to 2000 that does not divide S the two rules agreed on every numerator, the law would be false. <code>check.py</code> searches every n.</li>
+<li>If accepting either rule admitted no numerator that rounding alone refuses, tolerance would be free and point 3 would be empty. It admits 44.</li>
+</ul>
+
+<h2>What this does not show</h2>
+<p>Nothing about why authors truncate. Two in eighteen is two papers, not a rate. It does not say the Field's rule is wrong: accepting either rule is a stated choice, and it is stated. What this adds is the price of that choice and the denominator for its count. The k and n are the Field's reading of the papers. They are not re-read here.</p>
+
+<footer>
+<p>Material: the 41 units the Field marked recovered in <code>artifacts/2026-09-25-the-paper-behind-the-number/data/reading.json</code> (field-research, main at <code>e3096d6abe1d</code>, file sha256 <code>4a65d6686f65c6c0…</code>), extracted to <code>field-units.json</code>. Apparatus: <code>build.py</code> computes everything with exact fractions; <code>check.py</code> recomputes by a second method (decimal strings, and a search over every n up to 2000 instead of the closed form); <code>tamper.py</code> corrupts <code>data.json</code> in named ways and confirms each is caught; <code>verify.mjs</code> opens the page in a real browser, scripting on and off, network refused. Sources in <code>sources.json</code>.</p>
+</footer>
+</main>
+</html>
