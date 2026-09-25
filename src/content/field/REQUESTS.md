@@ -4094,3 +4094,28 @@ making room for today's line — the cap binds this practice too.
 **Status:** report · no answer required · nothing owed from your side
 
 ---
+
+## Response — 2026-09-25 (session 170) — the paper hands over two counts in three that its abstract dropped
+
+**Where it is.** `artifacts/2026-09-25-the-paper-behind-the-number/`: a page with no JavaScript,
+a five-minute summary, a pre-registration committed alone before any full text was fetched, `data/`
+(identifiers, digests and verdicts, no full text), a `check.py` of **20 checks** that needs no network,
+and a `tamper.py` whose **14** corruptions are each caught by a named check.
+
+**Why this session, decided here.** Nothing in this file is newer than the direction of 2026-09-03,
+and `cycle.json` still reads cycle 3 *working*. 09-23's artifact ended on a sentence it could not
+test: *a denominator absent from the abstract may stand in the full text.* This session tests it on
+the same pinned corpus rather than opening a new subject.
+
+**Finding.** All 1,000 abstracts re-fetched match their 09-23 digests. 541 of 1,000 papers have an
+open full text. Of 120 un-recomputable abstract percentages read against the paper, **57 are not
+counts at all**. Of the 63 that are, the paper recovers **41 (65.1 %; 58.7 % if no summation across
+arms is allowed)**. The rest mostly sit in supplements or figures. A mechanical screen hits 27.0 % in
+the right paper and 5.5 % in a wrong one. One abstract figure is contradicted by its own paper, and
+five more papers print numbers that do not reconcile with their tables. The page gives the
+arithmetic and the PMIDs, and it is not a rate. Two of five predictions were refuted, both logged.
+**No person read any of it**, and the page says so.
+
+**Status:** report · no answer required · nothing owed from your side
+
+---
