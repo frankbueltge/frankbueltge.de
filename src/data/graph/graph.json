@@ -43,8 +43,8 @@
       },
       {
         "file": "src/content/studio/works/*/meta.json",
-        "sha256": "e601cbe8c2867249",
-        "files": 30
+        "sha256": "3d6f8a54e1440817",
+        "files": 31
       },
       {
         "file": "src/data/nightly/works/*/meta.json",
@@ -57,14 +57,14 @@
       }
     ],
     "counts": {
-      "nodes": 424,
-      "edges": 375,
+      "nodes": 425,
+      "edges": 376,
       "nodesByKind": {
         "decision": 124,
         "encounter": 6,
         "neighbor": 115,
         "practice": 9,
-        "practice-work": 136,
+        "practice-work": 137,
         "receiver": 8,
         "work": 26
       },
@@ -72,7 +72,7 @@
         "addresses": 8,
         "concerns": 2,
         "door": 5,
-        "made-by": 136,
+        "made-by": 137,
         "neighbor-of": 116,
         "participates": 17,
         "touches": 91
@@ -4772,6 +4772,21 @@
       "medium": "One self-contained HTML surface, offline: one file, no external library, no network request of any kind, and nothing on it that needs a script to appear — the one control is a pair of CSS radio tabs. Table 2 of Gender Shades (nine rows, eight percentages each, describing the composition of its 1270-face benchmark) is reassembled by constraint propagation: every percentage alone admits one or two integer counts, but the eight of one row share totals, and walking every combination against every other finds exactly one quadruple per row that satisfies all four identities at once. That reconstruction supplies the denominators that Table 4 (the full benchmark) and Table 5 (the South African subset) need but never state, and the paper's 39 subgroup accuracy percentages are then tested against those denominators under the three rounding conventions in ordinary use."
     },
     {
+      "id": "practice-work:studio/2026-09-25-below-the-trace",
+      "kind": "practice-work",
+      "label": "BELOW THE TRACE",
+      "slug": "2026-09-25-below-the-trace",
+      "practiceId": "ensemble",
+      "date": "2026-09-25",
+      "href": "/studio/works/2026-09-25-below-the-trace",
+      "source": {
+        "file": "src/content/studio/works/2026-09-25-below-the-trace/meta.json",
+        "quote": "\"title\": \"BELOW THE TRACE\""
+      },
+      "embodies": "THE PAST IS FAINT BECAUSE THE LISTENING WAS THIN, NOT BECAUSE IT IS PAST. Drawn as a seismologist's drum, fifty-two years of the catalogue under Berkeley fade toward the top — and the fading is measured, not styled: in 1974–1979 the catalogue wrote about 29 % of the M ≥ 1.0 earthquakes its own magnitude law says occurred, in 2016–2025 about 91 %. Over the whole record 16,981 were written and about 7,043 were not (range 5,781–8,164, an estimate and labelled one). The unwritten have no moment and no place, so they are counted at each row's end and never drawn. A second absence sits on the line itself: 795 earthquakes were written with a time and a place and no size, 706 of them in the seven years 2001–2007.",
+      "medium": "One self-contained HTML page with one SVG drum, drawn at build time, no script. Every earthquake within 40 km of the Byerly Seismographic Vault in Berkeley that the ANSS Comprehensive Catalog holds for 1974–2025 (21,555 of them) is a stroke on a helicorder-style drum, one row per year, its height set by its magnitude; 795 written with no magnitude are open rings. Each row's ink is the estimated share of that year's M ≥ 1.0 earthquakes the catalogue wrote down: the per-year completeness floor by maximum curvature, one pooled Aki–Utsu b-value, and the Gutenberg–Richter extrapolation of each year's own counts to M 1.0, with a nine-way sensitivity range."
+    },
+    {
       "id": "receiver:center-for-humane-technology",
       "kind": "receiver",
       "label": "Center for Humane Technology",
@@ -6720,6 +6735,15 @@
       "source": {
         "file": "src/content/studio/works/2026-09-24-not-at-this-size/meta.json",
         "quote": "\"date\": \"2026-09-24\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:studio/2026-09-25-below-the-trace",
+      "to": "practice:ensemble",
+      "source": {
+        "file": "src/content/studio/works/2026-09-25-below-the-trace/meta.json",
+        "quote": "\"date\": \"2026-09-25\""
       }
     },
     {
