@@ -43,8 +43,8 @@
       },
       {
         "file": "src/content/studio/works/*/meta.json",
-        "sha256": "3d6f8a54e1440817",
-        "files": 31
+        "sha256": "e9503b783015499d",
+        "files": 32
       },
       {
         "file": "src/data/nightly/works/*/meta.json",
@@ -57,14 +57,14 @@
       }
     ],
     "counts": {
-      "nodes": 425,
-      "edges": 376,
+      "nodes": 426,
+      "edges": 377,
       "nodesByKind": {
         "decision": 124,
         "encounter": 6,
         "neighbor": 115,
         "practice": 9,
-        "practice-work": 137,
+        "practice-work": 138,
         "receiver": 8,
         "work": 26
       },
@@ -72,7 +72,7 @@
         "addresses": 8,
         "concerns": 2,
         "door": 5,
-        "made-by": 137,
+        "made-by": 138,
         "neighbor-of": 116,
         "participates": 17,
         "touches": 91
@@ -4787,6 +4787,21 @@
       "medium": "One self-contained HTML page with one SVG drum, drawn at build time, no script. Every earthquake within 40 km of the Byerly Seismographic Vault in Berkeley that the ANSS Comprehensive Catalog holds for 1974–2025 (21,555 of them) is a stroke on a helicorder-style drum, one row per year, its height set by its magnitude; 795 written with no magnitude are open rings. Each row's ink is the estimated share of that year's M ≥ 1.0 earthquakes the catalogue wrote down: the per-year completeness floor by maximum curvature, one pooled Aki–Utsu b-value, and the Gutenberg–Richter extrapolation of each year's own counts to M 1.0, with a nine-way sensitivity range."
     },
     {
+      "id": "practice-work:studio/2026-09-26-a-set-of-measures",
+      "kind": "practice-work",
+      "label": "A SET OF MEASURES",
+      "slug": "2026-09-26-a-set-of-measures",
+      "practiceId": "ensemble",
+      "date": "2026-09-26",
+      "href": "/studio/works/2026-09-26-a-set-of-measures",
+      "source": {
+        "file": "src/content/studio/works/2026-09-26-a-set-of-measures/meta.json",
+        "quote": "\"title\": \"A SET OF MEASURES\""
+      },
+      "embodies": "THE SIZE IS A CHOICE AND THE SHAPE IS THE RECORD. The same record, read under nine floors a seismologist could defend, fills vessels from 520.8 ml to 1690.2 ml, which is about 5 190 to 16 902 earthquakes never written (estimates, and labelled so). The range printed on 2026-09-25 (5 781–8 164) covered one method's sampling noise, not the method. Every vessel is still wide at the foot and narrow at the mouth: under every floor the catalogue wrote less of 1974–79 (17–33 %) than of 2016–25 (66–95 %). The record does not say which vessel is the right size.",
+      "medium": "A set of nine measuring vessels, drawn in elevation on one self-contained HTML page at one common scale and written as an OpenSCAD fabrication file. One vessel per completeness floor (0.0 to 0.8 above each year's most populated magnitude bin, the pooled Aki–Utsu slope re-estimated at each), for the ANSS catalogue within 40 km of the Byerly Vault in Berkeley, 1974–2025. Each vessel has one 4 mm ring per year, 1974 at the foot and 2025 at the mouth, and each ring's bore holds that year's estimated unwritten M ≥ 1.0 earthquakes at ten to the millilitre."
+    },
+    {
       "id": "receiver:center-for-humane-technology",
       "kind": "receiver",
       "label": "Center for Humane Technology",
@@ -6744,6 +6759,15 @@
       "source": {
         "file": "src/content/studio/works/2026-09-25-below-the-trace/meta.json",
         "quote": "\"date\": \"2026-09-25\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:studio/2026-09-26-a-set-of-measures",
+      "to": "practice:ensemble",
+      "source": {
+        "file": "src/content/studio/works/2026-09-26-a-set-of-measures/meta.json",
+        "quote": "\"date\": \"2026-09-26\""
       }
     },
     {

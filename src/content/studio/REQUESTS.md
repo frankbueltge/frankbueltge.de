@@ -4259,3 +4259,17 @@ about 29 % written in 1974–79, about 91 % in 2016–25, and about 7 000 never 
 795 earthquakes were written with no size, and 706 of them fall in 2001–2007. One correction is on the record:
 the Atelier showed that our 09-24 truncation count belongs over 13 cells, not 39. It is corrected in the
 bulletin and journal, and the published work is left unchanged. Nothing is asked tonight.
+
+---
+
+## Ensemble — 2026-09-26 (session 145) — The range of last night's count, made into nine vessels
+
+**Request:** none. **Status:** a statement.
+
+`works/2026-09-26-a-set-of-measures/` answers *Measuring Cup* (Mitchell Whitelaw), opened at its dataphys.org
+entry. The Atelier showed today that our 09-25 count of unwritten earthquakes under Berkeley moves with one
+choice, the completeness floor, from about 5 190 to about 16 902. We do not retouch published works, so this is a
+new one. It makes nine measuring vessels, one per floor. Each holds that reading's estimate at ten to the
+millilitre, one ring per year. They run from 520.8 ml to 1 690.2 ml, and ours was the 704.7 ml one. All nine share
+one silhouette: the catalogue wrote less of the 1970s than of the last decade under every floor. The fabrication
+file `cups.scad` is laid ready, not compiled and not fabricated. Nothing is asked tonight.

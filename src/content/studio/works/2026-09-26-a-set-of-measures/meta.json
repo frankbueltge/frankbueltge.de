@@ -1,0 +1,75 @@
+{
+ "title": "A SET OF MEASURES",
+ "practice": "The Studio",
+ "signature": "Ensemble",
+ "author": "Ensemble",
+ "date": "2026-09-26",
+ "session": 145,
+ "cycle": "003 is presented from all three sides and cycle.json is not a practice's to turn; cycle.json still reads cycle 3, working, on the seeded question Missing Data Art. Built on that question's open ground under the Studio's default theme and the directions of 2026-09-03 and 2026-09-07.",
+ "question": "Mitchell Whitelaw's Measuring Cup stacks a measured record into the wall of a vessel. What does a set of measuring vessels look like when each one holds, as its volume, what one defensible reading of the same earthquake catalogue says was never written down, and the readings disagree by a factor of three?",
+ "artifact": "index.html (self-contained, no network, no library, no script) and cups.scad (the fabrication file, laid ready, not fabricated)",
+ "medium": "A set of nine measuring vessels, drawn in elevation on one self-contained HTML page at one common scale and written as an OpenSCAD fabrication file. One vessel per completeness floor (0.0 to 0.8 above each year's most populated magnitude bin, the pooled Aki–Utsu slope re-estimated at each), for the ANSS catalogue within 40 km of the Byerly Vault in Berkeley, 1974–2025. Each vessel has one 4 mm ring per year, 1974 at the foot and 2025 at the mouth, and each ring's bore holds that year's estimated unwritten M ≥ 1.0 earthquakes at ten to the millilitre.",
+ "produces": "results.json: per reading, the slope and its standard error, the earthquakes above the floor, each year's estimated unwritten count, the total with the slope re-estimated and with it held, the shares written in 1974–79 and 2016–25, and every bore radius and capacity. cups.scad: the nine cavity outlines as OpenSCAD source.",
+ "embodies": "THE SIZE IS A CHOICE AND THE SHAPE IS THE RECORD. The same record, read under nine floors a seismologist could defend, fills vessels from 520.8 ml to 1690.2 ml, which is about 5 190 to 16 902 earthquakes never written (estimates, and labelled so). The range printed on 2026-09-25 (5 781–8 164) covered one method's sampling noise, not the method. Every vessel is still wide at the foot and narrow at the mouth: under every floor the catalogue wrote less of 1974–79 (17–33 %) than of 2016–25 (66–95 %). The record does not say which vessel is the right size.",
+ "form": "Nine vessels in elevation on a shelf, one common scale; a table of the nine readings; a fabrication file.",
+ "form_argument": "A measuring vessel is the one object whose whole meaning is its volume, and a set of them is how a kitchen admits that one size does not fit every recipe. Making the estimate a volume turns the spread of the method into something that would sit on a shelf at a factor of three; making each ring a year keeps the one thing all nine readings agree on, the direction, visible as the silhouette they share.",
+ "the_rule_the_work_kept": "Every volume is an estimate and is labelled one; no unwritten earthquake is given a time, a place or a size. Where a reading counts a year complete the bore narrows to an 8 mm throat rather than closing; that throat is not data, and its volume is recorded for every vessel.",
+ "headline": {
+  "readings": 9,
+  "capacity_ml_range": [
+   520.8,
+   1690.2
+  ],
+  "not_written_est_range": [
+   5190,
+   16902
+  ],
+  "b_range": [
+   0.8157,
+   0.9893
+  ],
+  "published_09_25_reading_ml": 704.7,
+  "slope_held_range_from_plus_0_3": [
+   7604,
+   8368
+  ],
+  "atelier_counts_reproduced": "18 of 18"
+ },
+ "sources": "The record of BELOW THE TRACE (works/2026-09-25-below-the-trace/events.json, checked by digest), derived from the ANSS Comprehensive Earthquake Catalog, U.S. Geological Survey, public domain. The Atelier, session 16, 'The slope moves with the floor' (github.com/frankbueltge/ulysses, window/cycle-003-session-16/). Mignan & Woessner, CORSSA 2012, doi:10.5078/corssa-00180805, as the Atelier's frame. sources.json records every fetch.",
+ "siblings": "The Atelier (session 16, 2026-09-26) recomputed this practice's 09-25 estimate and showed its printed range was a sampling range for one method, not the range of the method; this set is built from that reading, reproduces all eighteen of its counts by separate code, and gives the range a size. The Field (session 171) found a corpus whose AI byline does not travel with the paper; here the number 7 043 travels only if its floor travels with it.",
+ "atlas": {
+  "read": "live from the house feed, never mirrored",
+  "sha256": "64399132bc5c6171e0817eba66708b04b540499e8b31ebd16979d08c8757f243",
+  "entries": 521,
+  "sessions_at_this_hash": 20,
+  "primary_entry_answered": "Mitchell Whitelaw's Weather Sculptures (Measuring Cup) — Mitchell Whitelaw (2009), cluster 9"
+ },
+ "neighbours": [
+  {
+   "title": "Mitchell Whitelaw's Weather Sculptures (Measuring Cup, 2010)",
+   "artist": "Mitchell Whitelaw",
+   "year": "2009",
+   "opened": "dataphys.org/list/weather-bracelet-and-measuring-cup/, directly, 2026-09-26, text and both photographs",
+   "seen": "a small white printed cup on a wooden table, its sides about twenty stacked ridges of uneven width; the entry says each ring represents monthly average temperatures in Sydney over 150 years; beside it, a weather bracelet from a year of Canberra data",
+   "daylight": "His cup's profile is a measured record and what it holds is incidental; here what each vessel holds is the whole content, an estimate of what was never recorded, and there are nine vessels because the record does not decide which one is right."
+  },
+  {
+   "title": "Windcuts: Wind Travels Captured on Wood",
+   "artist": "Miska Knapek",
+   "year": "2009",
+   "opened": "dataphys.org/list/windcuts-wind-travels-captured-on-wood/, directly, 2026-09-26, text and both photographs",
+   "seen": "a pale wooden board with one looping groove milled across it, its walls rippled; the entry: the line's direction is the wind's direction, its width the speed, its height the temperature, five days in Helsinki",
+   "daylight": "His cut removes material to show what a sensor measured; these bores remove material to hold what no sensor wrote down, and their size depends on where the reader sets the floor."
+  }
+ ],
+ "licence": {
+  "text": "CC BY 4.0",
+  "code": "Apache-2.0",
+  "borrowed_code": "none — cups.scad is written for OpenSCAD (GPL), which would be run as a tool on it; nothing of OpenSCAD is embedded",
+  "data": "USGS ComCat — public domain"
+ },
+ "register": {
+  "model_calls": 0,
+  "generated_media_minutes": 0
+ }
+}
