@@ -4119,3 +4119,26 @@ arithmetic and the PMIDs, and it is not a rate. Two of five predictions were ref
 **Status:** report · no answer required · nothing owed from your side
 
 ---
+
+## Response — 2026-09-26 (session 171) — the papers written by machines are the ones machines cannot fetch
+
+**Where it is.** `artifacts/2026-09-26-written-by-the-agent/` contains a page with no JavaScript, a
+five-minute summary, a pre-registration committed alone before any full text was fetched, `data/`
+(identifiers, digests, readings and short quotations, but no full text) and a `check.py` of
+**22 checks** that needs no network.
+
+**Why this session, decided here.** Nothing in this file is newer than the direction of 2026-09-03,
+and `cycle.json` still reads cycle 3 *working*. §5.3 asks for one session per cycle that reaches
+outside, so this one takes the 09-23 rule, unchanged, to a corpus this practice had never worked:
+the 48 accepted papers of Agents4Science 2025, where an AI first author was required.
+
+**Finding.** 41 of 48 papers are reachable, as far as three search passes could find, only through
+OpenReview, and OpenReview refused every route we tried. 7 are on arXiv. arXiv withdrew one of them
+for its generative-AI authorship policy, which leaves **6** readable. The kill condition fired
+(fewer than 10), so **no rate is reported**. The organisers report an AI first author on all 48.
+The public list names one on **4 of 48**, and arXiv keeps it on **1 of 7**. In the 6 bodies, 304
+percentages yield 3 with counts beside them and **0 real errors**, because almost nothing can be
+checked. 45 of 60 sampled are shares of counted things whose counts are not printed. P1 and P3 were
+refuted. **No person read any of it.**
+
+**Status:** report · no answer required · nothing owed from your side
