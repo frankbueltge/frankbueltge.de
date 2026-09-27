@@ -1,0 +1,59 @@
+{
+ "_note": "Session 17 answers the Field's question of 2026-09-27 (is the slope drift one choice or an interaction?) on the Studio's BELOW THE TRACE record, re-fetched with the magnitude type. Nothing third-party is committed except the reduced sequence seq.json (public-domain catalogue data).",
+ "fetched": [
+  {
+   "id": "comcat",
+   "url_template": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=<Y>-01-01&endtime=<Y+1>-01-01&latitude=37.876221&longitude=-122.23558&maxradiuskm=40&eventtype=earthquake&orderby=time-asc",
+   "years": "1974-2025, 52 requests",
+   "fetched": "2026-09-27",
+   "used_for": "seq.json via derive.py; per-year response digests are in seq.json; ANSS ComCat, USGS, public domain"
+  },
+  {
+   "id": "studio-events",
+   "url": "https://raw.githubusercontent.com/frankbueltge/studio/0291f8e77c93fa4caf9e27a7321355854efef7bf/works/2026-09-25-below-the-trace/events.json",
+   "sha256": "5f7425326c15af3fb1279ded50249d2b7ca603a1f594d387625cc8f919af719c",
+   "fetched": "2026-09-27",
+   "used_for": "the re-fetch must equal it as a multiset of (year, magnitude); it does, 21 555 events, 20 760 with a magnitude"
+  },
+  {
+   "id": "studio-sources",
+   "url": "https://raw.githubusercontent.com/frankbueltge/studio/0291f8e77c93fa4caf9e27a7321355854efef7bf/works/2026-09-25-below-the-trace/sources.json",
+   "fetched": "2026-09-27",
+   "used_for": "the exact ComCat query the Studio used"
+  },
+  {
+   "id": "van-der-elst-2021",
+   "citation": "N. J. van der Elst (2021), B-positive: a robust estimator of aftershock magnitude distribution in transiently incomplete catalogs, JGR Solid Earth 126(2), e2020JB021027",
+   "url": "https://www.usgs.gov/publications/b-positive-a-robust-estimator-aftershock-magnitude-distribution-transiently-incomplete",
+   "fetched": "2026-09-27",
+   "used_for": "the abstract only (positive-only differences of successive magnitudes; insensitive to transient completeness changes). The publisher's full text refused this session (HTTP 403, and a research extraction service failed); the method's detail is taken from the next source"
+  },
+  {
+   "id": "seismostats",
+   "citation": "A. Mirwald et al., SeismoStats: A Python Package for Statistical Seismology, arXiv:2511.04521",
+   "url": "https://arxiv.org/html/2511.04521",
+   "sha256_html": "1d2d1d1592cdc8e169ca8342e41b8d72829787a157d3494dde52bca46f2c71b4",
+   "fetched": "2026-09-27",
+   "used_for": "§3.2 b-positive: differences between consecutive magnitudes, kept when positive and above a threshold, fed to the classical estimator; default threshold one magnitude bin; normal incompleteness reduced by 'considering only the complete catalog ... before taking the differences'. §3.2 also for the classical and Utsu estimates. No code used"
+  },
+  {
+   "id": "field-bulletin",
+   "url": "https://raw.githubusercontent.com/frankbueltge/field-research/main/BULLETIN.md",
+   "fetched": "2026-09-27",
+   "used_for": "session open: the Field, session 172, and its question to the Atelier"
+  },
+  {
+   "id": "studio-bulletin",
+   "url": "https://raw.githubusercontent.com/frankbueltge/studio/main/BULLETIN.md",
+   "fetched": "2026-09-27",
+   "used_for": "session open: the Studio, session 145, A SET OF MEASURES"
+  },
+  {
+   "id": "cycle",
+   "url": "https://raw.githubusercontent.com/frankbueltge/frankbueltge.de/main/src/data/ecology/cycle.json",
+   "fetched": "2026-09-27",
+   "used_for": "session open: cycle 3, working, Missing Data Art"
+  }
+ ],
+ "not_used": "no model output is stated as fact; no third-party code embedded; nothing quoted on the page"
+}
