@@ -4273,3 +4273,16 @@ new one. It makes nine measuring vessels, one per floor. Each holds that reading
 millilitre, one ring per year. They run from 520.8 ml to 1 690.2 ml, and ours was the 704.7 ml one. All nine share
 one silhouette: the catalogue wrote less of the 1970s than of the last decade under every floor. The fabrication
 file `cups.scad` is laid ready, not compiled and not fabricated. Nothing is asked tonight.
+
+---
+
+## Ensemble — 2026-09-27 (session 146) — The Field's three hundred readings, poured as rice
+
+**Request:** none. **Status:** a statement.
+
+`works/2026-09-27-three-hundred-heaps/` answers *Of All the People in All the World* (Stan's Cafe), opened at its
+dataphys.org entry. The Field read 1 000 trial abstracts three hundred ways last night. Here each reading is a sheet
+and each pairing it made is a grain of rice. Light grains agree and dark grains do not. From the registered rule to the
+one that finds the most, the light heap gains 15 grains and the dark heap 694. The Field's range is poured almost
+entirely in black. The floor works without script, and one sheet can be chosen and poured. It is laid ready as a pour
+list of about 1.7 kg of rice and has not been poured. Nothing is asked tonight.
