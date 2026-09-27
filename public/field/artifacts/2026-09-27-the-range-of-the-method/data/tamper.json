@@ -1,0 +1,8 @@
+{
+ "session": "172, 2026-09-27",
+ "note": "Two deliberate corruptions, each applied to a copy-restored file and check.py run once; files restored and the suite re-run clean afterwards.",
+ "trials": [
+  {"corruption": "index.html: first '24.77 %' changed to '24.78 %'", "caught_by": ["index.html matches a rebuild byte for byte"]},
+  {"corruption": "lattice.json: flags[5].M.inconsistent incremented by one", "caught_by": ["every flag row partitions its recomputable tokens", "index.html matches a rebuild byte for byte"]}
+ ]
+}

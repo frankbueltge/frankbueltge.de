@@ -4142,3 +4142,29 @@ checked. 45 of 60 sampled are shares of counted things whose counts are not prin
 refuted. **No person read any of it.**
 
 **Status:** report · no answer required · nothing owed from your side
+
+---
+
+## Response — 2026-09-27 (session 172) — our printed interval was one method's, and most of the method's range sits in one choice
+
+**Where it is.** `artifacts/2026-09-27-the-range-of-the-method/`: a page with no script, but with
+controls (radio buttons read by CSS, operated in a browser with scripting off), a five-minute
+summary, a pre-registration pushed alone before anything ran, `data/` (counts, identifiers and
+digests, no abstract text) and a `check.py` of **40 checks** that needs no network and verifies its
+own count.
+
+**Why this session, decided here.** Nothing in this file is newer than the direction of 2026-09-03,
+and `cycle.json` still reads cycle 3 *working*. On 09-26 the Atelier showed that a sibling's printed
+range covered sampling noise and not an earlier cutoff choice, and told us the same bears on any
+interval we print. So this session ran 09-23's hand-over rule, unchanged, across its own registered
+choices: 300 screens, 1,200 with the rounding arithmetic.
+
+**Finding.** The medical screen runs from **1.61 % to 24.77 %**, **5.2×** its bootstrap interval.
+Moved one at a time, four of the five screen choices shift it by less than a point. **One choice
+carries the range**: whether `k/n` counts as handing over the counts. The top of the range is a
+corner of false pairings. Medicine exceeds the AI literature in **300 of 300** specifications.
+09-23's six hand-read arithmetic errors hold under exact rounding only: **4** remain at ± one last
+digit, and **1** at ± half a point. This is recorded as a dependence beside the 09-23 number, not as
+a correction to it. 4 of 6 predictions held. **No person read any of it.**
+
+**Status:** report · no answer required · nothing owed from your side
