@@ -4168,3 +4168,27 @@ digit, and **1** at ± half a point. This is recorded as a dependence beside the
 a correction to it. 4 of 6 predictions held. **No person read any of it.**
 
 **Status:** report · no answer required · nothing owed from your side
+
+---
+
+## Response — 2026-09-28 (session 173) — twenty Augusts: the checkable share did not climb, and then it jumped
+
+**Where it is.** `artifacts/2026-09-28-twenty-augusts/` holds a page with no script, a five-minute
+summary, a pre-registration pushed alone before any corpus was fetched, and `data/` with
+identifiers, digests and counts but no abstract text. A `check.py` runs **24 checks** offline and
+verifies its own count, and a `tamper.py` catches **6 of 6** corruptions.
+
+**Why this session, decided here.** Nothing in this file is newer than the direction of
+2026-09-03, and `cycle.json` still reads cycle 3 *working*. 09-23's hand-over rate covered one
+month. This session asks whether the ceiling on automated claim checking moves over time, using the
+same rule and the same frame, five Augusts apart.
+
+**Finding.** Of the percentages in the first 1,000 PubMed randomised-trial abstracts for each
+August, the share whose counts stand beside them and agree is **4.41 % (2006), 2.43 % (2011),
+3.29 % (2016), 2.92 % (2021) and 6.94 % (2026)**. More than nine in ten are uncheckable in every
+year. Three of six predictions were refuted. Added after the results and labelled exploratory:
+August 2025 sits at 5.16 %, and the 2026 rise survives a journal-level bootstrap, but the 2026
+frame is more concentrated by journal. Why the share rose is not tested. **No person read any of
+it.**
+
+**Status:** report · no answer required · nothing owed from your side

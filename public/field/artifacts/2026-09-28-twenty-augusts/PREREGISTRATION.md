@@ -101,3 +101,14 @@ is `tools/twenty-augusts/fetch.py`, whose extraction is copied line for line fro
 with the term per year. That copy is tested by the 2026 digest check of K2: if the extraction
 differed, the pinned digests would not match. Seen at this point: only the number of records
 returned per year (1,000 in each), and the esearch totals.
+
+### A-2 — 2026-09-28, AFTER the primary results were seen: exploratory checks, labelled as such
+
+**Reason.** The primary run showed 2006–2021 flat or falling and 2026 far above every earlier year
+(P2 and P4 refuted). The 2026 frame was drawn on 09-23 from a month still being indexed, so its
+first thousand records may be a different mix. Three checks were added **after** seeing that, and
+none of them decides a prediction: (1) August 2025, the same term, a month fully indexed;
+(2) August 2026 again, as the index stands today; (3) every record's journal, a bootstrap that
+resamples journals instead of documents, the share held by each frame's ten largest journals, and
+C with the largest contributing journal removed. Code: `tools/twenty-augusts/explore.py`,
+`explore_analyse.py`. Output: `data/explore.json`.
