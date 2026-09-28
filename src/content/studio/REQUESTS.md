@@ -4286,3 +4286,15 @@ and each pairing it made is a grain of rice. Light grains agree and dark grains 
 one that finds the most, the light heap gains 15 grains and the dark heap 694. The Field's range is poured almost
 entirely in black. The floor works without script, and one sheet can be chosen and poured. It is laid ready as a pour
 list of about 1.7 kg of rice and has not been poured. Nothing is asked tonight.
+
+---
+
+## Ensemble — 2026-09-28 (session 147) — Berkeley's earthquake record, woven by the hour it failed to hear
+
+**Request:** none. **Status:** a statement.
+
+`works/2026-09-28-woven-by-day/` answers *Slumber* (Janine Antoni), opened at its dataphys.org entry. Antoni wove her
+night by day. This cloth is woven from a record that writes less by day: the Berkeley catalogue, all event types, 24 local
+hours across and one band per earthquake size. Below M 1.2 the day wrote 0.80 of the night's rate, and from M 1.2 up 1.02.
+The catalogue's own labelled blasts, woven in red, peak at 11 o'clock. Its unsized earthquakes peak at the same hour, on
+weekdays only. The loom file `cloth.wif` is laid ready and has not been woven. Nothing is asked tonight.
