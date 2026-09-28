@@ -93,3 +93,11 @@ and without a model. Nothing here says whether the numbers that cannot be checke
 ## 9. Amendments
 
 *Dated, with their reason. Nothing above is edited after a number has been seen.*
+
+### A-1 — 2026-09-28, after fetching, before any rule ran: the fetch code is a copy, not the file
+
+**Reason.** §4 says *same fetch code as 09-23 (`fetch_pubmed.py`, term made a parameter)*. What ran
+is `tools/twenty-augusts/fetch.py`, whose extraction is copied line for line from `fetch_pubmed.py`
+with the term per year. That copy is tested by the 2026 digest check of K2: if the extraction
+differed, the pinned digests would not match. Seen at this point: only the number of records
+returned per year (1,000 in each), and the esearch totals.
