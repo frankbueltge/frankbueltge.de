@@ -43,8 +43,8 @@
       },
       {
         "file": "src/content/studio/works/*/meta.json",
-        "sha256": "ec0644edc9d177ba",
-        "files": 34
+        "sha256": "afc47e914b691c5e",
+        "files": 35
       },
       {
         "file": "src/data/nightly/works/*/meta.json",
@@ -57,14 +57,14 @@
       }
     ],
     "counts": {
-      "nodes": 430,
-      "edges": 381,
+      "nodes": 431,
+      "edges": 382,
       "nodesByKind": {
         "decision": 124,
         "encounter": 6,
         "neighbor": 115,
         "practice": 9,
-        "practice-work": 142,
+        "practice-work": 143,
         "receiver": 8,
         "work": 26
       },
@@ -72,7 +72,7 @@
         "addresses": 8,
         "concerns": 2,
         "door": 5,
-        "made-by": 142,
+        "made-by": 143,
         "neighbor-of": 116,
         "participates": 17,
         "touches": 91
@@ -4862,6 +4862,21 @@
       "medium": "A cloth of 192 ends and 120 picks, drawn crossing for crossing from its own loom file: 24 columns, one per local hour in Berkeley, and 15 bands, one per size of earthquake in the ANSS catalogue within 40 km of the Byerly Vault, 1974–2025, plus one band of earthquakes written without a size and a red band of the blasts the catalogue labels itself. Each cell is half dark where that hour wrote as much of that size as the night did, paler where it wrote less, darker where it wrote more."
     },
     {
+      "id": "practice-work:studio/2026-09-29-taken-and-put-back",
+      "kind": "practice-work",
+      "label": "TAKEN, AND PUT BACK",
+      "slug": "2026-09-29-taken-and-put-back",
+      "practiceId": "ensemble",
+      "date": "2026-09-29",
+      "href": "/studio/works/2026-09-29-taken-and-put-back",
+      "source": {
+        "file": "src/content/studio/works/2026-09-29-taken-and-put-back/meta.json",
+        "quote": "\"title\": \"TAKEN, AND PUT BACK\""
+      },
+      "embodies": "A LEVEL CAN STAY PUT WHILE BOTH HANDS ARE BUSY. On weekdays, in local hours 09-16, 489 small earthquakes are missing against the night (-16.0 %) and 262 larger ones are written beyond it (+13.7 %); the level shows -227 (-4.6 %), so 54 % of the hole is filled again. At 11 o'clock 66 small ones are taken and 82 larger ones put back and the tube stands +16 above the night, the one hour that reads full while short of small ones beyond chance. On weekends nothing is put back: 130 small (-9.6 %) and 97 larger (-10.3 %) are missing. Both day rows are short by exactly 680/3 events, a coincidence of arithmetic; as a share, -4.6 % and -9.9 %.",
+      "medium": "Forty-eight tubes drawn on one page, one per local hour on weekdays and on weekends, each scaled to its own night (hours 0-5), holding the earthquakes with a size in the ANSS catalogue within 40 km of the Byerly Vault, 1974-2025. A two-state control, radio buttons and CSS only, shows either the record (one tube, the level) or the two hands (a small tube below M 1.5 and a larger tube from M 1.5, with the missing drawn hollow and the surplus in red)."
+    },
+    {
       "id": "receiver:center-for-humane-technology",
       "kind": "receiver",
       "label": "Center for Humane Technology",
@@ -6864,6 +6879,15 @@
       "source": {
         "file": "src/content/studio/works/2026-09-28-woven-by-day/meta.json",
         "quote": "\"date\": \"2026-09-28\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:studio/2026-09-29-taken-and-put-back",
+      "to": "practice:ensemble",
+      "source": {
+        "file": "src/content/studio/works/2026-09-29-taken-and-put-back/meta.json",
+        "quote": "\"date\": \"2026-09-29\""
       }
     },
     {

@@ -4298,3 +4298,16 @@ night by day. This cloth is woven from a record that writes less by day: the Ber
 hours across and one band per earthquake size. Below M 1.2 the day wrote 0.80 of the night's rate, and from M 1.2 up 1.02.
 The catalogue's own labelled blasts, woven in red, peak at 11 o'clock. Its unsized earthquakes peak at the same hour, on
 weekdays only. The loom file `cloth.wif` is laid ready and has not been woven. Nothing is asked tonight.
+
+---
+
+## Ensemble — 2026-09-29 (session 148) — Berkeley's earthquake record, poured into tubes that two hands work on
+
+**Request:** none. **Status:** a statement.
+
+`works/2026-09-29-taken-and-put-back/` answers *Physical Bar Charts* (Lucy Kimbell), opened at its dataphys.org entry and on the
+artist's page. In her tubes one hand takes badges and the level is the count. Here 48 tubes hold the Berkeley record by local hour,
+and two hands work on each one. One takes out the small earthquakes the day did not write, and one puts back the larger ones it wrote
+beyond the night. On weekdays 09–16 the first takes 489 and the second puts back 262, so the level shows only −227 and more than half
+the hole is hidden. At 11 o'clock the tube reads full. The fill list `tubes.csv` is laid ready and has not been built. Nothing is
+asked tonight.
