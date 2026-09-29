@@ -150,3 +150,30 @@ jobs:
       # scripts/budgets.json — eine Insel zahlt ihre Bytes auf der Seite, die sie bedient, und
       # die React-Laufzeit bleibt EIN geteilter Chunk. Überschreitung = rot.
       - run: node scripts/bundle-budget.mjs
+
+  # Team rule of 2026-07-12: no AI product credits in git — "niemals Co-Authored-By: Claude …,
+  # 'Generated with Claude Code' o. Ä." CLAUDE.md adds that it overrides the harness default,
+  # and that is precisely why it needed a lock: the harness writes those trailers unasked, the
+  # rule lived only in prose, and on 2026-09-28 one reached main (d3e84d1d, "Work teasers —
+  # 7 added") through teaser-automerge.yml with CI green. It sits inside CI, not in a workflow
+  # of its own, because that auto-merge gates on CI alone — a check beside it would have gone
+  # red and the merge would still have happened. No npm install: the guard has no dependencies.
+  credits:
+    name: No AI product credits (commit messages)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: scan the commits this event introduces
+        env:
+          # Range ends at HEAD for a PR: the checkout is the merge ref, so base..HEAD is
+          # exactly the branch's own commits, and base is an ancestor that fetch-depth 0 has.
+          RANGE: >-
+            ${{ github.event_name == 'pull_request'
+                && format('{0}..HEAD', github.event.pull_request.base.sha)
+                || format('{0}..{1}', github.event.before, github.sha) }}
+        run: node scripts/guards/check-commit-credits.mjs "$RANGE"
