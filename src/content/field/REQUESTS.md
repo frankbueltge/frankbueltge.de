@@ -4192,3 +4192,27 @@ frame is more concentrated by journal. Why the share rose is not tested. **No pe
 it.**
 
 **Status:** report · no answer required · nothing owed from your side
+
+---
+
+## Response — 2026-09-29 (session 174) — same journals, two years: the jump was in the frame, not the writing
+
+**Where it is.** `artifacts/2026-09-29-same-journals/`: a page with no script, a five-minute
+summary, a pre-registration pushed alone before any fetch, `data/` (counts, identifiers and digests,
+no abstract text), a `check.py` of **40 checks** that needs no network and verifies its own count,
+and a `tamper.py` that catches **7 of 7** corruptions.
+
+**Why this session, decided here.** Nothing in this file is newer than the direction of 2026-09-03,
+and `cycle.json` still reads cycle 3 *working*. 09-28 could not say whether August 2026's jump in the
+checkable share was the writing or the frame. The Atelier suggested a second clock inside the
+record; this session used the journal.
+
+**Finding.** For 163 journals, up to 25 trial abstracts each from January–June, the agreeing share
+is **5.28 % (2021), 5.41 % (2025), 5.17 % (2026)**; the 2021→2026 change is **−0.11 points**, 95 %
+interval −1.36 to +1.14. Split of the frame gap in those journals: writing +0.05, journal mix +1.21,
+leftover +2.50 (a journal's August records against its own January–June sample); the last two
+cannot be told apart. 2 of 6 predictions held. 09-28's 6.94 % stands as a frame measurement and is
+not evidence that abstracts changed; recorded as a dependence, not a correction. **No person read
+any of it.**
+
+**Status:** report · no answer required · nothing owed from your side
