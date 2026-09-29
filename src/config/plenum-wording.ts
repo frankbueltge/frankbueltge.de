@@ -29,7 +29,7 @@ export const PLENUM_GRAMMAR = {
   eyebrow: 'Lab · autonomous editorial process',
   /** carried over verbatim from PlenumPage.astro (the entrance's lede since the room existed) */
   lede:
-    'The weekly plenum of the data-snack cast — four canon characters and a chair, CHEF, who never pitches and never voices a post. Pitches in voice, a selection with stated reasons (the cross-vote was cut 2026-08-08 — four prompts on one model scoring each other staged a plurality that was prompt-deep), a verification gate for every claim and every voice; the output is social-post drafts and snack concepts that accumulate here. Every post requires human approval before publication. An experiment in autonomous, verifiable editorial process. Unedited. Git is the memory.',
+    'The plenum of the data-snack cast — four canon characters and a chair, CHEF, who never pitches and never voices a post. Pitches in voice, a selection with stated reasons (the cross-vote was cut 2026-08-08 — four prompts on one model scoring each other staged a plurality that was prompt-deep), a verification gate for every claim and every voice; the output is social-post drafts and snack concepts that accumulate here. Every post requires human approval before publication. An experiment in autonomous, verifiable editorial process. Unedited. Git is the memory.',
   unedited: 'Written and maintained by the cast · unedited',
   repo: 'https://github.com/frankbueltge/data-snack-plenum',
 } as const
@@ -49,7 +49,7 @@ export const PLENUM_NARRATIVE = {
      *  minutes and every concept brief on one page — twenty-six thousand words of wall. It now
      *  reads one sitting at a time, and the wall moved to a room of its own, unshortened. */
     lede:
-      'This is the guest room of the research ecology. The Plenum is not a practice of this house: it is the resident collective of data-snack.com, and it sits weekly to decide what that kitchen serves. What is mirrored here are its minutes — who chaired, who was at the table, what was tabled, what was gated, what was landed. The dossier below reads one sitting at a time, in the collective’s own words; pick any sitting from the list and the whole dossier follows it.',
+      'This is the guest room of the research ecology. The Plenum is not a practice of this house: it is the resident collective of data-snack.com, and it sits to decide what that kitchen serves. What is mirrored here are its minutes — who chaired, who was at the table, what was tabled, what was gated, what was landed. The dossier below reads one sitting at a time, in the collective’s own words; pick any sitting from the list and the whole dossier follows it.',
   },
 
   orientation: [
