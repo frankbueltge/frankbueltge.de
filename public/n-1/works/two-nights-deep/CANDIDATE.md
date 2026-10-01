@@ -243,3 +243,82 @@ it binds this practice's own drafting, and it was checked before anything
 here could have cited it. The six named neighbours and every daylight
 statement in §4 stand unrevised. Status unchanged: candidate, not a work;
 the search is dated again, not closed.
+
+## 10. Addendum, 2026-09-24 (night 34, record 60) — declared a work; the continuing look closed
+
+**The occasion.** The founder's act of 2026-09-24 (`DOWRY.md`, "the toolkit,
+tried across projects") gives this candidate at most two further sessions,
+beginning with this one, to be finished as a work under the works
+condition or put back with its balance, and ends the continuing look
+either way. This addendum is that decision for this session — the first of
+the at most two.
+
+**What was checked tonight, before deciding anything.** The neighbour
+search §3 requires before any claim was re-run fresh (two dated queries,
+2026-09-24, logged in the night record; no new neighbour found — the
+third dated negative finding on this candidate's material, at three
+different dates). The page (`index.html`) was read end to end against
+`FORM.md`'s own reception bar and against the form's own law (§3 there):
+every figure — the calendar of nights, the readings replay — is built
+entirely from `nights.json`, rebuilt fresh tonight by `build.py`
+(unlike the sibling candidate, nothing here pointed at a frozen historical
+snapshot, so no drift-class defect of that kind was found). `render-check.js`
+passes clean at both stated geometries against tonight's rebuilt ledger,
+screenshotted and read for legibility in-session: 61 nights shown, one
+(tonight's own) unwritten, the seam and legend rendering, the readings
+replay drawing and captioning correctly across all 21 dated readings.
+
+**The continuing look, closed.** A twenty-first, closing act ran tonight
+rather than closing on act twenty's evidence
+(`material/night-sky/2026-09-24-closing-continuing/`): two civil dates
+entered (2026-09-22, 2026-09-23, both complete), the indicator-rewrite
+frontier advanced across 2026-09-21 (all 24 hours, the fourth full-date
+flip this front has watched), the `-999` inventory and gap count holding
+unchanged for the twelfth reading running. `works/two-nights-deep/build.py`'s
+`SOURCES` extended one last time and `nights.json` rebuilt: 61 wakes, 595
+hours retold. No further act is promised or scheduled from tonight.
+
+**The decision.** Declared a **work**. Problem constructed (night 11),
+neighbours searched three times to no new finding, daylight stated (§4),
+the two bars answered in candidate form (§5) and restated at the form
+(`FORM.md` §1), form built, tested and re-verified tonight, reception
+designed for and checked as far as this practice can check it. This
+candidate's own text is more exact than the sibling's about the limit of
+that check: §5 already says of the reception claim that this candidate
+"cannot test for it" and that the bar "is not passable by this practice's
+own judgment" — nothing tonight closes that gap, and nothing tonight
+pretends to. This addendum asks, in `REQUESTS.md`, dated the same night,
+for the founder to run the reception test with a stranger, no preparation
+permitted. If that test finds the piece needs the record as a caption
+after all, the put-back criterion of §7 still applies and would be
+executed as a dated correction to this addendum — declaring a work
+tonight is this practice's claim, checkable and revisable, not a verdict
+no later evidence can revise.
+
+**The toolkit account**, per the founder's act of 2026-09-24. Instruments
+in force (`reading/00-protocol.md`): T1 ran most nights this project
+touched, confirmatory per its own standing caveat, as everywhere else in
+this record so far — no night's continuing-look decision is on record as
+having turned on what the graph showed rather than on the material itself.
+T4 is again the instrument this project leaned on hardest and the one
+whose yield is most legible: night 12's form-fixing session found "the
+problem's missing half" mid-session and logged the detour that let it
+decide the same night rather than the next (`FORM.md` §0); night 20 caught its
+own standing sentence going false under a counter-instance and re-said it
+rather than letting it stand (`CANDIDATE.md` §8); tonight's own two-date
+catch-up is logged as what it is, a gap in the front's reading, not the
+archive's publishing. The second pass ran on every work presentation this
+candidate produced (night 11's two founding commits, `FORM.md`'s two
+commits and its own addendum's two, two candidate addenda, this one).
+Of the postulates, Postulate 4 (the refrain, not phases) carried this
+project's whole problem: the material *is* the practice's own night
+concept under Postulate 4's inversion (`reading/CARRY.md` §2, item 4),
+tested here by joining that concept to an external record with a mind of
+its own. What the grammar could not do on this material: it gave no method
+for discovering that "two nights deep" was the canonical case and not the
+general one — that came only from a counter-instance the practice happened
+to produce by waking at an unusual hour (night 19) and a session willing
+to re-examine standing prose against it rather than defend it (§8);
+nothing in the six postulates or the instrument economy specifies when a
+following practice should doubt its own settled finding, only that it
+must, when the material says so.

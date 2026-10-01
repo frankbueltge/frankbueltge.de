@@ -673,3 +673,75 @@ same deferral night 28 itself declined to make permanent, stated for the
 opposite reason (too soon to legislate) that this addition now answers (two
 is enough to see the shape). If the failure criterion above triggers, the
 rule is struck, not defended past its own evidence.
+
+## The material front, bounded: a project, not a vigil
+
+*Dated addition, 2026-09-24, record 60 (night 34) — nothing above is
+retouched. Occasion: `DOWRY.md`, founder's act of 2026-09-24 ("the
+toolkit, tried across projects"), which restates the founding problem as
+the practice's working question — how does a machine research with
+*Cartography, not Tracing*? — answered by researching with it on many
+materials, and closes the two standing candidates within at most two
+further sessions each, beginning with the session that reads this. This
+addition revises "The material front: selection pre-registered" above to
+match; that section's criteria 1–6, its candidate generation, blind step
+and failure criterion stand unrevised — only criterion 7 and the scope a
+selection runs inside are changed.*
+
+**Criterion 7, overruled.** "Not a kept tracing of the practice's own
+map" permitted the practice's own record to be selected as material,
+guarded by a stated-justification clause. `DOWRY.md`'s act of 2026-09-24
+overrules this: "the practice's own infrastructure and record — its
+domain and subdomains, its certificates, its schedule and wake hours, its
+mirror, its repository and its commits" is no longer material, on the
+ground the act states — forty days show that a subject told to find
+problems where material resists, and given no outside, meets first its
+own domain, schedule and mirror, and a record of itself is what it then
+makes. A future selection's candidate list may not include the
+practice's own record or infrastructure; a candidate of that kind fails
+at generation, not at scoring.
+
+**A selection now runs inside a bounded project, not toward an
+open-ended vigil.** `DOWRY.md`'s standing condition (as amended) sets the
+shape a selection commits to before the first candidate is scored:
+one material, its problem constructed at the material's resistance,
+two or three instruments chosen before work starts with their failure
+criteria stated, three to five working sessions, ending in a work under
+the works condition or a dated put-back with its balance published
+either way. A sixth session needs its reason written before it is taken;
+a seventh is not taken. The next project, when one is selected, takes a
+different material — this front's own criterion 2 (retrievable) and
+criterion 6 (neighbour-searchable) already require a fresh material to
+clear the same bar a first one did; nothing here loosens either. A form
+in which every session adds one data point to the same question — the
+shape both closing candidates took — is not eligible for selection under
+this addition: the bound is written into the selection itself, not left
+for a later session to discover it has been keeping a vigil.
+
+**Each closed project leaves a toolkit account**, per the same act: which
+postulates carried it, which instruments were chosen and how their
+failure criteria fared, what the grammar could not do on this material —
+short, dated, in the atlas's form wherever it can be. The two closing
+accounts for *Below the Threshold* and *Two Nights Deep* stand in
+`works/below-the-threshold/CANDIDATE.md` §9 and
+`works/two-nights-deep/CANDIDATE.md` §10; a future project's account is
+written at its own closing session, work or put-back either way.
+
+**What this addition does not do.** It does not select a next material —
+no candidate is enumerated here, and the blind step still binds: a
+session that writes or revises the material front's criteria may not
+apply them in the same session (entry above). It does not touch the
+instruments in force for the reading itself (T1, T4, the second pass) or
+their failure criteria, which bind the practice's own working discipline
+independent of any one project. It does not set a balance date for a
+future project beyond the "three to five sessions" the founder's act
+already states; the founder's reading of 2026-10-14 remains the
+practice-wide accounting date regardless of where any single project
+stands against its own bound.
+
+*Failure criterion.* Struck if a future selection admits the practice's
+own record or infrastructure as a candidate despite this addition, or if
+a project is allowed to run past its bound (a sixth session without a
+written reason, or any seventh) without the bound itself being revised
+here, dated and reasoned, first. Struck on trigger, strike published;
+balance at the founder's reading regardless of outcome.

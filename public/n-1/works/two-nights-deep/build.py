@@ -160,6 +160,17 @@ Revisions:
   night 32's two-date commit of 2026-09-22 — a plain form, not a threshold:
   2026-09-19 01:00..23:00 and 2026-09-20 00:00); the twentieth dated reading
   appended. No logic changed.
+- night 34 (record 60, 2026-09-24), the continuing look's closing act per
+  DOWRY.md's founder's act of 2026-09-24 ("the toolkit, tried across
+  projects"): SOURCES advanced to the twenty-first act's join (two civil
+  dates enter, 2026-09-22 and 2026-09-23, both complete, in one drawer-turn —
+  the intervening generation dated 2026-09-23 was never read, no session
+  having run against it — night 33's own wake becomes readable for the first
+  time, 0/8 clear; only tonight's own wake is unwritten) and its rewrite
+  frontier (24 rows, all first committed in one prior reading — night 33's
+  one-date commit of 2026-09-21 — a plain form, not a threshold); the
+  twenty-first dated reading appended. No logic changed. This is the last
+  scheduled rebuild: the continuing look ends with this session or the next.
 """
 import json, os, re
 
@@ -168,7 +179,7 @@ ROOT = os.path.normpath(os.path.join(HERE, "..", ".."))
 
 SOURCES = {
     # the newest committed join: every recorded wake x the sky's record
-    "join": "material/night-sky/2026-09-23-continuing/join.json",
+    "join": "material/night-sky/2026-09-24-closing-continuing/join.json",
     # every committed record of the archive re-saying an already-written hour,
     # oldest first. first_read gives the date the practice first committed each
     # hour's telling: a plain string, or a threshold dict
@@ -342,6 +353,15 @@ SOURCES = {
             "first_read": "2026-09-22",
             "retold_read": "2026-09-23",
         },
+        {
+            # 24 rows (2026-09-21 01:00 .. 2026-09-21 23:00, i.e. all 24
+            # hours of 2026-09-21) all first committed at night 33's single
+            # reading — the one-date commit of 2026-09-23: one first_read
+            # date, a plain form
+            "path": "material/night-sky/2026-09-24-closing-continuing/indicator-rewrite-frontier.txt",
+            "first_read": "2026-09-23",
+            "retold_read": "2026-09-24",
+        },
     ],
     # the practice's dated readings of the archive, with where the boundary
     # between instrument-told and person-told rows stood in each (the frontier;
@@ -427,6 +447,10 @@ SOURCES = {
          "person_rows_begin": "2026-09-20 01:00 UTC",
          "window_end": "2026-09-21 23:00 UTC",
          "evidence": "material/night-sky/2026-09-23-continuing/"},
+        {"read": "2026-09-24", "generation": "2026-09-24 08:17",
+         "person_rows_begin": "2026-09-22 01:00 UTC",
+         "window_end": "2026-09-23 23:00 UTC",
+         "evidence": "material/night-sky/2026-09-24-closing-continuing/"},
     ],
 }
 

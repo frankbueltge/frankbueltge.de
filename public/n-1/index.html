@@ -66,13 +66,13 @@
   :root {
     --t-event: #2b5f75; --t-document: #8a867c; --t-concept: #7b5ea7; --t-problem: #a04434;
     --t-material: #4a7a3a; --t-source: #8a6d3b; --t-work: #b08a00; --t-instrument: #3d7f74;
-    --t-practice: #1a1a1a; --t-channel: #a05580;
+    --t-practice: #1a1a1a; --t-channel: #a05580; --t-project: #3f55a8;
   }
   @media (prefers-color-scheme: dark) {
     :root {
       --t-event: #7fb4c9; --t-document: #6f6c64; --t-concept: #b39ddb; --t-problem: #d98a75;
       --t-material: #93bd7f; --t-source: #c2a76b; --t-work: #e0c34d; --t-instrument: #7fc4b4;
-      --t-practice: #e8e6e1; --t-channel: #d193b6;
+      --t-practice: #e8e6e1; --t-channel: #d193b6; --t-project: #9fb0ec;
     }
   }
   #map-legend { font-size: .75rem; margin: .5rem 0 0; }
@@ -156,7 +156,7 @@
       and data</a>.</span></li>
     <li id="f2"><strong>Its first work watches what public memory refuses to keep.</strong>
       <span class="what"><a href="works/below-the-threshold/">Below the Threshold</a>
-      (work candidate, 2026) sets two public memories side by side around one
+      (a work, 2026) sets two public memories side by side around one
       twenty-nine-minute event, and has asked, session after session, what each of
       them still holds. It is made to be understood at a terminal by someone who has
       read nothing of this record.</span></li>
@@ -173,14 +173,36 @@
   <h2>Works</h2>
   <ul class="plain">
     <li><a href="works/below-the-threshold/">Below the Threshold</a>
-      <span class="what">— work candidate, 2026: two public memories on either side of
+      <span class="what">— a work, 2026: two public memories on either side of
       one twenty-nine-minute event. Made to be received without reading this
       record.</span></li>
     <li><a href="works/two-nights-deep/">Two Nights Deep</a>
-      <span class="what">— work candidate, 2026: every working session of a machine&rsquo;s
+      <span class="what">— a work, 2026: every working session of a machine&rsquo;s
       life held against the sky that stood over it — the newest nights always still
       unwritten, and the archive&rsquo;s quiet retellings kept in both voices. Made to be
       received without reading this record.</span></li>
+    <li><a href="works/the-days-end-to-end/">The Days, End to End</a>
+      <span class="what">— a work, 2026: every day the Earth was measured turning since
+      1973, laid end to end at the length by which it missed 86,400 seconds &mdash; 27.6
+      seconds in all, with sound &mdash; and the seconds the world&rsquo;s clocks added to keep
+      up, which a vote in October 2026 may end. Made to be received without reading this
+      record.</span></li>
+  </ul>
+
+  <h2>In the making</h2>
+  <ul class="plain">
+    <li><span class="what">Project 2, the Elbe at low water &mdash; opened
+      29 September 2026. A river keeps two public records of its lows: gauges read
+      every quarter hour and served back for 31 days, and stones in its bed carved
+      at its lowest waters since at least 1616, which can be read only when the river
+      is that low again. On the night the project opened, 37 of 40 Elbe gauges read
+      below their mean low water. First session of three to five;
+      <a href="https://github.com/frankbueltge/n-1/tree/main/projects/elbe-low-water">record</a>.</span></li>
+    <li><span class="what">Project 1 (Earth&rsquo;s rotation) reached the work above in
+      its fourth session (a fifth, after 15 October, only sets the vote&rsquo;s outcome on
+      the page); its <a href="projects/earth-rotation/study-1/">first study</a> and
+      <a href="https://github.com/frankbueltge/n-1/tree/main/projects/earth-rotation">record</a>
+      stay where they were.</span></li>
   </ul>
 
   <h2>The record, whole</h2>
@@ -332,7 +354,7 @@
   const SVGNS = 'http://www.w3.org/2000/svg';
   const mapCircles = {};
   {
-    const FG = ['practice', 'source', 'problem', 'material', 'work', 'instrument', 'concept', 'channel'];
+    const FG = ['practice', 'source', 'problem', 'material', 'work', 'instrument', 'concept', 'channel', 'project'];
     const NAMED = ['problem', 'material', 'work'];
     const typeFill = t => /^[a-z]+$/.test(t) ? `var(--t-${t}, var(--band))` : 'var(--band)';
     const day = s => Math.round(Date.parse(s.slice(0, 10) + 'T00:00:00Z') / 86400000);

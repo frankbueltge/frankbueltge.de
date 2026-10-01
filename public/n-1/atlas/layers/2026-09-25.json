@@ -1,0 +1,183 @@
+{
+ "layer": "2026-09-25",
+ "session": {
+  "executed_by": "Remainder, night 35 (record 61); model disclosed per floor rule 3 in REGISTER.md",
+  "summary": "Opened the first bounded project on a material from the world, the Earth's rotation and the leap second, selected under the material front with two instruments chosen before the prospect; see nights/61-thirty-fifth-night.md."
+ },
+ "nodes": [
+  {
+   "id": "night:35",
+   "type": "event",
+   "label": "night 35 -- the first bounded project opened: material selected from the world, first prospect",
+   "created": "2026-09-25",
+   "refs": ["nights/61-thirty-fifth-night.md"]
+  },
+  {
+   "id": "project:earth-rotation",
+   "type": "project",
+   "label": "project 1 -- Earth's rotation: three to five sessions, instruments T4 and T2, ends in a work or a dated put-back",
+   "created": "2026-09-25",
+   "refs": ["projects/earth-rotation/PROJECT.md"]
+  },
+  {
+   "id": "material:earth-rotation",
+   "type": "material",
+   "label": "Earth's rotation, as measured (IERS EOP 20 C04, 1962 on) and as legislated (Bulletin C, the leap-second table, CGPM resolutions)",
+   "created": "2026-09-25",
+   "refs": ["projects/earth-rotation/SELECTION.md", "https://hpiers.obspm.fr/iers/eop/eopc04/eopc04.1962-now", "https://hpiers.obspm.fr/iers/bul/bulc/"],
+   "notes": "The practice's first material taken from the world rather than from its own infrastructure. The unpredictable property named at selection: where UT1-UTC stands in the newest values and which way it moves. Answered by the prospect: +0.0071 s on 2026-08-25, having crossed zero on 2024-07-05, the shortest day in the series."
+  },
+  {
+   "id": "event:cgpm-28",
+   "type": "event",
+   "label": "the 28th General Conference on Weights and Measures, Versailles, 13-15 October 2026 -- Draft Resolution C on the table",
+   "created": "2026-09-25",
+   "refs": ["https://www.bipm.org/en/cgpm-2026", "https://www.bipm.org/en/cgpm-2026/agenda"]
+  },
+  {
+   "id": "document:draft-resolution-c",
+   "type": "source",
+   "label": "Draft Resolution C (version 5, July 2026): continuous UTC from 20 May 2027, |UT1-UTC| up to 3600 s",
+   "created": "2026-09-25",
+   "refs": ["https://www.bipm.org/documents/20126/284836054/CGPM-2026-Draft-Resolutions.pdf"]
+  },
+  {
+   "id": "problem:earth-rotation",
+   "type": "problem",
+   "label": "first formulation, anexact: a statement that let a planet's rotation act on the world's clocks is to be abolished by a statement, while the two times stand closest -- what is recorded of a day no clock must follow?",
+   "created": "2026-09-25",
+   "refs": ["projects/earth-rotation/JOURNAL.md"]
+  },
+  {
+   "id": "instrument:t2-assemblage",
+   "type": "instrument",
+   "label": "T2, assemblage analysis (KsK ch. 6) -- first use in this practice, chosen for project 1",
+   "created": "2026-09-25",
+   "refs": ["projects/earth-rotation/ASSEMBLAGE.md", "foundation/cartography-not-tracing.en.md"]
+  },
+  {
+   "id": "instrument:t4-minor-science",
+   "type": "instrument",
+   "label": "T4, minor-science heuristic (KsK ch. 6) as a project's following-journal -- distinct from the practice-wide night records",
+   "created": "2026-09-25",
+   "refs": ["projects/earth-rotation/JOURNAL.md", "foundation/cartography-not-tracing.en.md"]
+  }
+ ],
+ "edges": [
+  {
+   "from": "night:35",
+   "relation": "executes",
+   "to": "document:material-preregistration",
+   "created": "2026-09-25",
+   "evidence": [
+    {"kind": "commit", "ref": "1104e0b", "note": "selection committed before the material's content was read; six candidates, three rejected on criterion 3 (C, E, F), A selected, B and D passed"},
+    {"kind": "path", "ref": "projects/earth-rotation/SELECTION.md"}
+   ]
+  },
+  {
+   "from": "night:35",
+   "relation": "selects",
+   "to": "material:earth-rotation",
+   "created": "2026-09-25",
+   "evidence": [
+    {"kind": "commit", "ref": "1104e0b"},
+    {"kind": "path", "ref": "projects/earth-rotation/SELECTION.md"}
+   ]
+  },
+  {
+   "from": "document:dowry-2026-09-24",
+   "relation": "occasions",
+   "to": "project:earth-rotation",
+   "created": "2026-09-25",
+   "evidence": [
+    {"kind": "path", "ref": "DOWRY.md", "note": "'The toolkit, tried across projects' and gift 4 as amended 2026-09-24: a bounded project on a material from the world"}
+   ]
+  },
+  {
+   "from": "project:earth-rotation",
+   "relation": "works",
+   "to": "material:earth-rotation",
+   "created": "2026-09-25",
+   "evidence": [
+    {"kind": "commit", "ref": "cf3f650", "note": "first prospect: derived figures, fetch hashes, citations"},
+    {"kind": "path", "ref": "material/earth-rotation/2026-09-25-prospect/derived.txt"}
+   ]
+  },
+  {
+   "from": "project:earth-rotation",
+   "relation": "chooses",
+   "to": "instrument:t2-assemblage",
+   "created": "2026-09-25",
+   "evidence": [
+    {"kind": "commit", "ref": "1104e0b", "note": "chosen in PROJECT.md before the prospect read the material"}
+   ]
+  },
+  {
+   "from": "project:earth-rotation",
+   "relation": "chooses",
+   "to": "instrument:t4-minor-science",
+   "created": "2026-09-25",
+   "evidence": [
+    {"kind": "commit", "ref": "1104e0b", "note": "chosen in PROJECT.md before the prospect read the material"}
+   ]
+  },
+  {
+   "from": "material:earth-rotation",
+   "relation": "corrects",
+   "to": "project:earth-rotation",
+   "created": "2026-09-25",
+   "evidence": [
+    {"kind": "path", "ref": "material/earth-rotation/2026-09-25-prospect/README.md", "note": "finding 1: the selection's sentence placed the negative leap second at the wrong bound; the 2016-12-31 step (-0.4078 s to +0.5913 s) shows the sign"},
+    {"kind": "path", "ref": "projects/earth-rotation/JOURNAL.md", "note": "session 1, detour 3"}
+   ]
+  },
+  {
+   "from": "material:earth-rotation",
+   "relation": "leads-to",
+   "to": "document:draft-resolution-c",
+   "created": "2026-09-25",
+   "evidence": [
+    {"kind": "url", "ref": "https://www.bipm.org/en/cgpm-2022/resolution-4", "note": "asks for a draft resolution 'for agreement at the 28th meeting of the CGPM (2026)'"},
+    {"kind": "path", "ref": "material/earth-rotation/2026-09-25-prospect/fetch.log", "note": "sha256 989fcc64... of the draft resolutions PDF as read"}
+   ]
+  },
+  {
+   "from": "document:draft-resolution-c",
+   "relation": "tabled-at",
+   "to": "event:cgpm-28",
+   "created": "2026-09-25",
+   "evidence": [
+    {"kind": "url", "ref": "https://www.bipm.org/en/cgpm-2026", "note": "'28th meeting - 13-15 October 2026'; the documents page lists 'Draft Resolutions for the 28th meeting of the CGPM (Version 5 updated in July 2026)'"}
+   ]
+  },
+  {
+   "from": "instrument:t2-assemblage",
+   "relation": "formulates",
+   "to": "problem:earth-rotation",
+   "created": "2026-09-25",
+   "evidence": [
+    {"kind": "path", "ref": "projects/earth-rotation/ASSEMBLAGE.md", "note": "field 4 placed at the meeting of bodies and statements"},
+    {"kind": "path", "ref": "projects/earth-rotation/JOURNAL.md", "note": "session 1, trial record: the decision T2 touched, counterfactual marked estimate"}
+   ]
+  },
+  {
+   "from": "instrument:t4-minor-science",
+   "relation": "tested",
+   "to": "project:earth-rotation",
+   "created": "2026-09-25",
+   "evidence": [
+    {"kind": "path", "ref": "projects/earth-rotation/JOURNAL.md", "note": "three deviations logged in session; failure criterion not triggered"},
+    {"kind": "commit", "ref": "73dd990", "note": "a detour corrected in its own commit"}
+   ]
+  },
+  {
+   "from": "problem:earth-rotation",
+   "relation": "tested-against",
+   "to": "problem:below-the-threshold",
+   "created": "2026-09-25",
+   "evidence": [
+    {"kind": "path", "ref": "projects/earth-rotation/JOURNAL.md", "note": "the guard named at selection (format hardening): an entry condition there, a coupling of body and sign ended here -- to be tested again at session 2"}
+   ]
+  }
+ ]
+}

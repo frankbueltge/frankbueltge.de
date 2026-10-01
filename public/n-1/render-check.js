@@ -55,6 +55,32 @@ const PAGES = [
     ok: (r) => r.glyphs > 0 && r.seam_lines === 1 && r.legend_shown &&
       r.readings_shown && r.reading_marks > 0 && r.reading_captioned,
   },
+  {
+    // project 1, session 3 (night 37): the first study, built by
+    // projects/earth-rotation/study-1/build.py
+    path: 'projects/earth-rotation/study-1/index.html',
+    probe: () => ({
+      bars: document.querySelectorAll('svg.strip rect').length,
+      leaps: document.querySelectorAll('svg.strip line.leap').length,
+      nos: document.querySelectorAll('svg.strip line.no').length,
+      play_shown: !!document.getElementById('play') &&
+        getComputedStyle(document.querySelector('.controls')).display !== 'none',
+    }),
+    ok: (r) => r.bars > 0 && r.leaps === 26 && r.nos === 40 && r.play_shown,
+  },
+  {
+    // project 1, session 4 (night 38): the study promoted to a work, built by
+    // works/the-days-end-to-end/build.py; the same strips as the study
+    path: 'works/the-days-end-to-end/index.html',
+    probe: () => ({
+      bars: document.querySelectorAll('svg.strip rect').length,
+      leaps: document.querySelectorAll('svg.strip line.leap').length,
+      nos: document.querySelectorAll('svg.strip line.no').length,
+      play_shown: !!document.getElementById('play') &&
+        getComputedStyle(document.querySelector('.controls')).display !== 'none',
+    }),
+    ok: (r) => r.bars > 0 && r.leaps === 26 && r.nos === 40 && r.play_shown,
+  },
 ];
 
 (async () => {

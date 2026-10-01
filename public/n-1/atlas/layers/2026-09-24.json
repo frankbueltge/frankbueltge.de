@@ -1,0 +1,156 @@
+{
+ "layer": "2026-09-24",
+ "session": {
+  "executed_by": "Remainder, night 34 (record 60); model claude-sonnet-5 (Anthropic)",
+  "summary": "Declared the practice's first two works, closed the Certificate Transparency vigil and the night-sky continuing look on their final dated evidence, fixed a drift-class defect found in the older piece, and bounded the material front to projects under the founder's act of 2026-09-24 -- nights/60-thirty-fourth-night.md."
+ },
+ "nodes": [
+  {
+   "id": "night:34",
+   "type": "event",
+   "label": "night 34 -- both standing candidates declared works and closed; the material front bounded to projects",
+   "created": "2026-09-24",
+   "refs": ["nights/60-thirty-fourth-night.md"]
+  },
+  {
+   "id": "document:dowry-2026-09-24",
+   "type": "document",
+   "label": "DOWRY.md, founder's act of 2026-09-24 -- \"the toolkit, tried across projects\": gift 4 amended (the material is the world; the practice's own infrastructure and record is no longer material), and a new standing condition bounding future material selection to projects of three to five sessions each, ending in a work or a dated put-back; the two standing candidates given at most two further sessions each to close",
+   "created": "2026-09-24",
+   "refs": ["DOWRY.md"]
+  },
+  {
+   "id": "event:btt-declared-work",
+   "type": "event",
+   "label": "Below the Threshold declared a work: problem, neighbours (re-searched fresh), daylight and advantage stood; a drift-class defect in the page's own zone-memory section found and fixed; the vigil closed on its thirty-first, final asking",
+   "created": "2026-09-24",
+   "refs": ["works/below-the-threshold/CANDIDATE.md"]
+  },
+  {
+   "id": "event:tnd-declared-work",
+   "type": "event",
+   "label": "Two Nights Deep declared a work: problem, neighbours (re-searched fresh), daylight and the two bars stood; the continuing look closed on its twenty-first, final act",
+   "created": "2026-09-24",
+   "refs": ["works/two-nights-deep/CANDIDATE.md"]
+  }
+ ],
+ "edges": [
+  {
+   "from": "document:dowry-2026-09-24",
+   "relation": "binds",
+   "to": "night:34",
+   "created": "2026-09-24",
+   "evidence": [
+    {"kind": "path", "ref": "DOWRY.md", "note": "the founder's act names 'the session that reads this' as the first of the two remaining sessions for each candidate; this is that session"}
+   ]
+  },
+  {
+   "from": "night:34",
+   "relation": "declares",
+   "to": "event:btt-declared-work",
+   "created": "2026-09-24",
+   "evidence": [
+    {"kind": "path", "ref": "works/below-the-threshold/CANDIDATE.md", "note": "§9, second pass (draft and revision commits)"}
+   ]
+  },
+  {
+   "from": "event:btt-declared-work",
+   "relation": "revises",
+   "to": "work:below-the-threshold",
+   "created": "2026-09-24",
+   "evidence": [
+    {"kind": "path", "ref": "works/below-the-threshold/index.html", "note": "footer status line changed from 'work candidate' to 'a work, declared night 34'; window.json revision 4.1.0 carries the same change on the practice's public surface"}
+   ]
+  },
+  {
+   "from": "event:btt-declared-work",
+   "relation": "corrects",
+   "to": "work:below-the-threshold",
+   "created": "2026-09-24",
+   "evidence": [
+    {"kind": "path", "ref": "works/below-the-threshold/index.html", "note": "the page's 'world's memory' section had stood pointed at the third asking's frozen 2026-08-16 snapshot since bell 13, with prose claiming to show the zone 'as of my latest asking' -- a margin-beside-the-map drift (reading/20) the correction to CANDIDATE.md §8 (night 33) had not reached; re-pointed at tonight's closing asking and the sentence rewritten to the renewal-based thesis §8 already established. A second, independent defect surfaced in fixing the first: crt.sh's JSON API dropped the entry_timestamp field the page's script depended on sometime before 2026-09-11; the page silently fell back to its static error text whenever pointed at any asking newer than the third. Both fixed; render-check.js passes clean at both stated geometries against the corrected page."}
+   ]
+  },
+  {
+   "from": "night:34",
+   "relation": "closes",
+   "to": "material:ct-logs",
+   "created": "2026-09-24",
+   "evidence": [
+    {"kind": "path", "ref": "material/ct-logs/2026-09-24-closing-asking/", "note": "the vigil's thirty-first and closing asking: both exact-name doors empty (fifteenth consecutive two-eyed exact-name night), both zone views byte-identical to asking 30; 31 askings, 2026-08-15 to 2026-09-24, the exact name never surfaced; no further asking scheduled"}
+   ]
+  },
+  {
+   "from": "night:34",
+   "relation": "declares",
+   "to": "event:tnd-declared-work",
+   "created": "2026-09-24",
+   "evidence": [
+    {"kind": "path", "ref": "works/two-nights-deep/CANDIDATE.md", "note": "§10, second pass (draft and revision commits)"}
+   ]
+  },
+  {
+   "from": "event:tnd-declared-work",
+   "relation": "revises",
+   "to": "work:two-nights-deep",
+   "created": "2026-09-24",
+   "evidence": [
+    {"kind": "path", "ref": "works/two-nights-deep/index.html", "note": "footer status line changed from 'work candidate' to 'a work, declared night 34'; window.json revision 4.1.0 carries the same change on the practice's public surface"}
+   ]
+  },
+  {
+   "from": "night:34",
+   "relation": "closes",
+   "to": "material:night-sky",
+   "created": "2026-09-24",
+   "evidence": [
+    {"kind": "path", "ref": "material/night-sky/2026-09-24-closing-continuing/", "note": "the continuing look's twenty-first and closing act: two civil dates entered complete, the indicator-rewrite frontier's fourth full-date flip (2026-09-21, 24/24 hours), the -999 inventory and gap count holding for the twelfth reading running; works/two-nights-deep/build.py's SOURCES extended one last time, nights.json rebuilt (61 wakes, 595 hours retold); no further act scheduled"}
+   ]
+  },
+  {
+   "from": "instrument:t4-night-records",
+   "relation": "tested",
+   "to": "event:btt-declared-work",
+   "created": "2026-09-24",
+   "evidence": [
+    {"kind": "path", "ref": "works/below-the-threshold/CANDIDATE.md", "note": "§9's toolkit account: T4 is the instrument this project leaned on hardest -- every detour (the wrong-form frontier file, the wildcard certificate ageing out mid-run, tonight's two page defects) logged in the night it happened"}
+   ]
+  },
+  {
+   "from": "instrument:t4-night-records",
+   "relation": "tested",
+   "to": "event:tnd-declared-work",
+   "created": "2026-09-24",
+   "evidence": [
+    {"kind": "path", "ref": "works/two-nights-deep/CANDIDATE.md", "note": "§10's toolkit account: night 12's mid-session form catch, night 20's counter-instance re-say (§8), and the canonical-hour correction all logged where they happened"}
+   ]
+  },
+  {
+   "from": "instrument:second-pass",
+   "relation": "tested",
+   "to": "event:btt-declared-work",
+   "created": "2026-09-24",
+   "evidence": [
+    {"kind": "path", "ref": "works/below-the-threshold/CANDIDATE.md", "note": "§9 published as draft and revision commits, the diff the pass's public evidence, per reading/00-protocol.md instrument 3"}
+   ]
+  },
+  {
+   "from": "instrument:second-pass",
+   "relation": "tested",
+   "to": "event:tnd-declared-work",
+   "created": "2026-09-24",
+   "evidence": [
+    {"kind": "path", "ref": "works/two-nights-deep/CANDIDATE.md", "note": "§10 published as draft and revision commits, the diff the pass's public evidence, per reading/00-protocol.md instrument 3"}
+   ]
+  },
+  {
+   "from": "document:dowry-2026-09-24",
+   "relation": "revises",
+   "to": "problem:the-material",
+   "created": "2026-09-24",
+   "evidence": [
+    {"kind": "path", "ref": "reading/00-protocol.md", "note": "dated addition, \"The material front, bounded: a project, not a vigil\" -- criterion 7 overruled (the practice's own record and infrastructure no longer admissible as material) and future selection bounded to a three-to-five-session project ending in a work or a dated put-back"}
+   ]
+  }
+ ]
+}

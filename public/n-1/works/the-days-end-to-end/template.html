@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:,">
+<title>The Days, End to End</title>
+<style>
+  :root {
+    --bg: #f7f5f0; --ink: #171614; --muted: #6e6a62; --line: #d5d1c7;
+    --up: #6e6a62; --dn: #3f55a8; --mark: #8a4b2f; --head: #171614;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #131211; --ink: #e9e6e0; --muted: #98938a; --line: #3c3934;
+      --up: #a49f94; --dn: #9fb0ec; --mark: #d08a63; --head: #e9e6e0;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+    font: 17px/1.65 Georgia, "Times New Roman", serif; }
+  main { max-width: 46rem; margin: 0 auto; padding: 3.5rem 1rem 5rem; }
+  h1 { font-size: 1.45rem; font-weight: normal; letter-spacing: .12em;
+    text-transform: uppercase; margin: 0 0 .4rem; text-align: center; }
+  .sub { text-align: center; color: var(--muted); font-size: .9rem; margin: 0 0 2.5rem; }
+  h2 { font-size: .8rem; letter-spacing: .18em; text-transform: uppercase;
+    color: var(--muted); font-weight: normal; margin: 3rem 0 1rem;
+    border-top: 1px solid var(--line); padding-top: 1.1rem; }
+  p { margin: .85rem 0; }
+  .aside { color: var(--muted); font-size: .9rem; }
+  .mono { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: .85em; }
+  figure { margin: 2rem 0 1rem; }
+  svg.strip { display: block; width: 100%; height: 160px; cursor: crosshair; touch-action: none; }
+  svg.strip .axis { stroke: var(--line); stroke-width: 1; vector-effect: non-scaling-stroke; }
+  svg.strip .up { fill: var(--up); }
+  svg.strip .dn { fill: var(--dn); }
+  svg.strip .leap { stroke: var(--mark); stroke-width: 1.5; vector-effect: non-scaling-stroke; }
+  svg.strip .no { stroke: var(--ink); stroke-width: 1; stroke-dasharray: 2 2; vector-effect: non-scaling-stroke; }
+  svg.strip .cross { fill: var(--bg); stroke: var(--ink); stroke-width: 1; vector-effect: non-scaling-stroke; }
+  svg.strip .head { stroke: var(--head); stroke-width: 2; vector-effect: non-scaling-stroke; }
+  .ticks { position: relative; height: 1.3rem; font-size: .7rem; color: var(--muted);
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; }
+  .ticks span { position: absolute; top: 0; transform: translateX(-50%); }
+  .ticks span.end { right: 0; transform: none; }
+  .ticks span.start { left: 0; transform: none; }
+  .legend { display: flex; flex-wrap: wrap; gap: .3rem 1.2rem; font-size: .8rem; color: var(--muted); margin: .4rem 0 0; }
+  .legend i { display: inline-block; width: 14px; height: 10px; margin-right: .35rem; vertical-align: baseline; }
+  .k-up { background: var(--up); } .k-dn { background: var(--dn); }
+  .k-leap { border-left: 2px solid var(--mark); width: 4px !important; }
+  .k-no { border-left: 1px dashed var(--ink); width: 4px !important; }
+  .controls { display: flex; flex-wrap: wrap; gap: .8rem; align-items: center; margin: 1.2rem 0 .4rem; }
+  button { font: inherit; font-size: .95rem; padding: .45rem 1rem; border: 1px solid var(--ink);
+    background: transparent; color: var(--ink); cursor: pointer; }
+  button:focus-visible { outline: 2px solid var(--mark); outline-offset: 2px; }
+  .readout { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: .82rem;
+    min-height: 3.2em; color: var(--ink); overflow-wrap: anywhere; }
+  .readout .m { color: var(--muted); }
+  .js-only { display: none; }
+  .has-js .js-only { display: flex; }
+  .has-js .readout.js-only { display: block; }
+  footer { margin-top: 3.5rem; font-size: .8rem; color: var(--muted); border-top: 1px solid var(--line); padding-top: 1rem; }
+  footer p { margin: .5rem 0; overflow-wrap: anywhere; }
+</style>
+</head>
+<body><style>
+.fbde-work-frame{all:initial;display:block;box-sizing:border-box;width:100%;
+ font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+ background:#f4f4f1;color:#1a1a1a;border-bottom:1px solid #d8d8d2;padding:14px 22px;}
+.fbde-work-frame--foot{border-bottom:0;border-top:1px solid #d8d8d2;margin-top:48px;}
+.fbde-work-frame *{box-sizing:border-box;font-family:inherit;}
+.fbde-work-frame .fbde-work-frame__nav{display:block;font-size:13px;line-height:1.6;margin:0;}
+.fbde-work-frame a{color:#1a1a1a;text-decoration:underline;text-underline-offset:2px;}
+.fbde-work-frame a:hover,.fbde-work-frame a:focus{color:#000;background:#e6e6e0;}
+.fbde-work-frame .fbde-work-frame__sep{color:#8a8a84;padding:0 6px;}
+.fbde-work-frame .fbde-work-frame__wall{margin:10px 0 0;max-width:64ch;font-size:15px;
+ line-height:1.65;color:#1a1a1a;}
+.fbde-work-frame .fbde-work-frame__note{margin:8px 0 0;font-size:12px;line-height:1.5;
+ color:#6b6b64;}
+@media (max-width:520px){.fbde-work-frame{padding:12px 16px;}}
+</style><header class="fbde-work-frame" role="doc-foreword"><nav class="fbde-work-frame__nav"><a href="/n-1">← n-1</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/">frankbueltge.de</a></nav><p class="fbde-work-frame__note">Wall label and links added by the site. The work itself begins below.</p></header>
+<main>
+<h1>The Days, End to End</h1>
+<p class="sub">Remainder, 2026 · data art, with sound · built 27 September 2026</p>
+
+<p>The world's clocks count a day as 86,400 seconds. The Earth, measured
+turning every day, almost never takes exactly that: most days it takes up to a
+few thousandths of a second more, some days a little less.</p>
+
+<p>Here are {{NDAYS}} of those differences, from {{FIRST}} to {{LAST}}, laid end
+to end. Each day lasts, below, exactly as long as it differed. More than
+fifty-three years of them take <strong>{{TOTAL}} seconds</strong>.</p>
+
+<figure>
+{{SVG}}
+<div class="ticks" aria-hidden="true">{{TICKS}}</div>
+<div class="legend">
+  <span><i class="k-up"></i>a day longer than 86,400 s</span>
+  <span><i class="k-dn"></i>a day shorter</span>
+  <span><i class="k-leap"></i>a second added to the clocks</span>
+  <span><i class="k-no"></i>a bulletin: “NO leap second”</span>
+</div>
+<div class="controls js-only">
+  <button id="play" type="button">Play the days ({{TOTAL}} s, with sound)</button>
+</div>
+<div class="readout js-only" aria-live="off"><span class="m">Point at the strip to read a day.</span></div>
+</figure>
+
+<p>The years are not evenly spaced: a year takes as much room as its days
+differed. Where the days ran long, the clocks fell behind the planet, and
+{{NLEAPS}} times a second was added to them to catch up. In the calendar those
+marks fall between one and seven years apart; here they fall far more
+evenly, because each one paid back about a second of long days.</p>
+
+<p>The last second was added on 1 January 2017. Since then twenty bulletins,
+one every six months, have said: no second this time. Those years are
+{{CALPCT}}&nbsp;% of the calendar and {{AXPCT}}&nbsp;% of the strip —
+{{TSINCE}} seconds, enlarged here:</p>
+
+<figure>
+{{SVG2}}
+<div class="ticks" aria-hidden="true">{{TICKS2}}</div>
+<div class="readout js-only" aria-live="off"><span class="m">Point at the strip to read a day.</span></div>
+</figure>
+
+<p>The days have come so close to 86,400 seconds that
+{{NNEG}} of them were shorter ({{NEG}} s in all), and five times since 2017
+the planet and the clock agreed with no one making them agree.</p>
+
+<p>Until now, whenever the difference neared a second, someone stepped in.
+A draft before the General Conference on Weights and Measures, meeting
+13–15 October 2026, proposes that from 20 May 2027 no one will: the clocks
+may drift up to an hour from the planet. <span class="aside">(As of 27 September
+2026 the resolution is a draft; whether it is adopted is not yet known.)</span>
+The days will go on being measured, and a strip like this one could go on
+growing. Only the marks would stop.</p>
+
+<p class="aside">This page was built on 27 September 2026 from the days measured
+to 23 September. It does not update itself.</p>
+
+<h2>How it is made</h2>
+<p class="aside">Every day is one measured value: the length-of-day excess
+from the U.S. Naval Observatory's IERS Bulletin A (rapid-service values,
+“distribution unlimited”), committed in this repository and read by a script
+that writes this page; nothing is fetched while you look. A day's width on the
+strip, and its duration in the sound, is the size of its excess, whichever
+way it went; days shorter than 86,400 s are drawn below the line and heard as
+a low hum. In the sound each day begins with a click, so the pitch you hear
+is the length of the day: slow clicks for long days, a higher whine the
+nearer the days come to 86,400 s. So the pitch follows the planet rather than rising
+steadily: it climbs into the mid-1980s, sinks through the 1990s as the days
+lengthened again, climbs through the 2000s, dips before 2017 and is highest in
+the last years. The added seconds are heard as a low thud. The twenty
+bulletins make no sound: they are statements that nothing need be done.
+The newest days are provisional and may be revised.</p>
+
+<p class="aside">That the added seconds fall evenly on the strip is not a
+discovery. Timekeepers know the relation: the number of leap seconds needed is
+proportional to the area between zero and the length-of-day curve (Steve Allen,
+UCO/Lick Observatory, <span class="mono">https://www.ucolick.org/~sla/leapsecs/dutc.html</span>).
+Laid end to end, the days turn that area into a length, and each added second
+into a step along it. The strip makes the relation visible and audible; it
+does not claim to have found it.</p>
+
+<footer>
+<p>Source: <span class="mono">material/earth-rotation/2026-09-25-session-2/bulletin-a-ut1.csv</span>
+(from <span class="mono">https://maia.usno.navy.mil/ser7/finals2000A.all</span>, fetched 2026-09-25);
+Bulletin C dates from <span class="mono">material/earth-rotation/2026-09-25-prospect/</span>;
+the draft resolution: Draft Resolution C, 28th CGPM (BIPM, version 5, July 2026).
+Build: <span class="mono">works/the-days-end-to-end/build.py</span> (from the study at <span class="mono">projects/earth-rotation/study-1/</span>); every figure on this page
+is printed in <span class="mono">figures.txt</span>.</p>
+<p>Nearest neighbours (<span class="mono">projects/earth-rotation/NEIGHBOURS.md</span>):
+Sara Morawetz, <em>61/60</em> (2015–), a one-second action for each added second;
+Alistair McClymont, <em>Leap Second</em>, a photograph for each. Both are keyed to the added
+seconds. This work is keyed to the days between them. For the form: Harlan Brothers's
+temperature-anomaly sonification (2025) plays one note per year of the calendar;
+here the calendar is not the clock, and each day lasts its own difference.</p>
+<p>Remainder · data CC0, text CC BY 4.0, code Apache-2.0</p>
+</footer>
+</main>
+<script>
+(function () {
+  document.documentElement.className += ' has-js';
+  var D = {{DATA}};
+  var n = D.lod.length, start = new Float64Array(n + 1), t = 0;
+  for (var k = 0; k < n; k++) { start[k] = t; t += Math.abs(D.lod[k]) / 1e7; }
+  start[n] = t; var TOTAL = t;
+  var t0 = Date.UTC(+D.first.slice(0, 4), +D.first.slice(5, 7) - 1, +D.first.slice(8, 10));
+  var noAt = {}; D.nos.forEach(function (x) { noAt[x[1]] = x[0]; });
+  var leapAt = {}; D.leaps.forEach(function (i) { leapAt[i] = 1; });
+  var strips = [].slice.call(document.querySelectorAll('svg.strip')).map(function (el) {
+    return { el: el, head: el.querySelector('.head'), from: +el.getAttribute('data-from'), to: +el.getAttribute('data-to') };
+  });
+  var outs = [].slice.call(document.querySelectorAll('.readout')), btn = document.getElementById('play');
+
+  function dayAt(tt) {
+    var lo = 0, hi = n - 1;
+    while (lo < hi) { var mid = (lo + hi + 1) >> 1; if (start[mid] <= tt) lo = mid; else hi = mid - 1; }
+    return lo;
+  }
+  function fmt(k) {
+    var d = new Date(t0 + k * 864e5).toISOString().slice(0, 10);
+    var l = D.lod[k] / 1e7, s = (86400 + l).toFixed(7);
+    var u = (D.ut1[k] / 1e4), us = (u >= 0 ? '+' : '\u2212') + Math.abs(u).toFixed(4);
+    var extra = leapAt[k] ? ' \u00b7 a second was added to the clocks' : '';
+    if (noAt[k]) extra += ' \u00b7 Bulletin C ' + noAt[k] + ': \u201cNO leap second\u201d';
+    return d + '<br><span class="m">this day lasted</span> ' + s + ' s' +
+      '<br><span class="m">planet minus clock</span> ' + us + ' s' + extra;
+  }
+  function show(k) {
+    var tt = start[k], html = fmt(k);
+    strips.forEach(function (st) {
+      if (tt < st.from) { st.head.setAttribute('visibility', 'hidden'); return; }
+      var x = (tt - st.from) / (st.to - st.from) * 1000;
+      st.head.setAttribute('x1', x); st.head.setAttribute('x2', x); st.head.setAttribute('visibility', 'visible');
+    });
+    outs.forEach(function (o) { o.innerHTML = html; });
+  }
+  var playing = null;
+  strips.forEach(function (st) {
+    st.el.addEventListener('pointermove', function (e) {
+      if (playing) return;
+      var r = st.el.getBoundingClientRect();
+      var f = Math.min(1, Math.max(0, (e.clientX - r.left) / r.width));
+      show(dayAt(st.from + f * (st.to - st.from)));
+    });
+  });
+
+  var buf = null, ctx = null;
+  function render() {
+    var sr = ctx.sampleRate, len = Math.ceil((TOTAL + 1) * sr), a = new Float32Array(len);
+    for (var k = 0; k < n; k++) {
+      var s0 = Math.floor(start[k] * sr);
+      for (var j = 0; j < 14; j++) a[s0 + j] += 0.32 * Math.exp(-j / 3);
+      if (D.lod[k] < 0) {
+        var s1 = Math.floor(start[k + 1] * sr);
+        for (var s = s0; s < s1; s++) a[s] += 0.1 * Math.sin(2 * Math.PI * 110 * s / sr);
+      }
+      if (leapAt[k]) {
+        for (var q = 0; q < sr * 0.6 && s0 + q < len; q++)
+          a[s0 + q] += 0.5 * Math.exp(-q / (sr * 0.15)) * Math.sin(2 * Math.PI * 55 * q / sr);
+      }
+    }
+    for (var i = 0; i < len; i++) a[i] = Math.tanh(a[i] * 1.4) * 0.8;
+    buf = ctx.createBuffer(1, len, sr); buf.copyToChannel(a, 0);
+  }
+  btn.addEventListener('click', function () {
+    if (playing) { playing.stop(); return; }
+    var AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) { btn.textContent = 'Sound is not available in this browser'; return; }
+    if (!ctx) { ctx = new AC(); btn.textContent = 'Preparing…'; render(); }
+    var src = ctx.createBufferSource(); src.buffer = buf; src.connect(ctx.destination);
+    var began = ctx.currentTime + 0.05; src.start(began); playing = src;
+    btn.textContent = 'Stop';
+    (function tick() {
+      if (playing !== src) return;
+      var tt = ctx.currentTime - began;
+      if (tt >= TOTAL) return;
+      if (tt >= 0) show(dayAt(tt));
+      requestAnimationFrame(tick);
+    })();
+    src.onended = function () { playing = null; btn.textContent = 'Play the days again'; show(n - 1); };
+  });
+})();
+</script>
+<footer class="fbde-work-frame fbde-work-frame--foot"><p class="fbde-work-frame__note">Leave the work:</p><nav class="fbde-work-frame__nav"><a href="/n-1">← n-1</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/">frankbueltge.de</a></nav></footer></body>
+</html>

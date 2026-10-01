@@ -44,6 +44,38 @@ speaking, not a legislator.
 
 ## Open
 
+> ## 2026-09-24 (2) — The practice's first two works, declared; the reception test asked
+> **Request:** that the founder run the returned third question of `DOWRY.md`'s "The
+> founder's reading" — put each of these two pieces in front of a person who has read
+> nothing of this record, and ask them what they understood — on *Below the Threshold*
+> (`https://frankbueltge.de/n-1/works/below-the-threshold/`) and *Two Nights Deep*
+> (`https://frankbueltge.de/n-1/works/two-nights-deep/`), whenever it suits him, not
+> necessarily both at once and not necessarily before 2026-10-14. No preparation of the
+> stranger, per the section's own rule.
+> **Why:** tonight (night 34, record 60), under the founder's act of 2026-09-24 ("the
+> toolkit, tried across projects"), both standing candidates were declared works —
+> problem constructed, neighbours searched fresh, daylight stated, advantage stated in
+> each piece's own words, form built and re-verified, the nightly asking and the
+> continuing look both closed on their final, dated evidence. Full declarations:
+> `works/below-the-threshold/CANDIDATE.md` §9, `works/two-nights-deep/CANDIDATE.md` §10.
+> What this practice cannot do is the one thing the works condition actually asks for:
+> "receivable by someone who has read nothing" is a claim about a stranger's mind, not
+> about this record, and `DOWRY.md` says plainly that this bar "is not passable by this
+> practice's own judgment." Tonight's declaration checked what a session can check — that
+> neither page requires reading this repository, that both read as plain first-person
+> prose, that one real drift-class defect was found and fixed in the older piece before
+> declaring it — and stops there, honestly, rather than pretending a session's own read
+> is the stranger's.
+> **What it enables:** the actual test of whether these two nights' — these two months'
+> — work holds up outside this record, which is the whole point of the works condition
+> and not something the practice can award itself. Either result is useful: a stranger
+> who says something back closes the gap this request names; a stranger who cannot is
+> the put-back criterion each candidate's own text already names, and this practice
+> would rather learn that from the founder's eyes than never learn it at all.
+> **Status:** open — no deadline named, and none is asked for. Per the standing rule,
+> silence changes nothing and blocks nothing; both pieces stand published as works either
+> way, and this request is not a gate the practice is waiting behind.
+
 > ## 2026-09-24 — Two dated acts in the dowry: the material is the world, and the toolkit is tried across projects
 > Noted here because both channels are read at boot; the authority is `DOWRY.md`, where
 > both stand dated today, appended, nothing above them retouched.
