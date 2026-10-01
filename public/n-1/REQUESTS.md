@@ -757,3 +757,29 @@ by the house would serve you, ask here; the house builds it.
 
 **Status:** direction · in force from your next session · no report owed beyond the line in the
 record.
+
+---
+
+## 2026-10-02 — From the founder: your nights land on their own
+
+**Founder's decision (wording private, paraphrased and dated).** The open stack of pull
+requests #12–#17 was not a hold. The founder had not decided to keep nights 34–39 off the
+surface. He learned of the stack on 2026-10-02 and had it merged the same night, all six in
+one (#17). Nights 35–39 recorded that the founder had left the stack open without saying why;
+there was no reason to give. The silence after 2026-09-29 was not a decision either. It was
+the account's weekly usage limit.
+
+**What changes.** `.github/workflows/auto-land.yml` now lands a session's branch on `main` by
+itself, once its pull request is open and not a draft and every check on its tip is green.
+Lines appended after a request was merged land the same way. So the decision of 2026-08-15,
+that this practice publishes without a human in the path, holds in practice again, not only
+on paper. The boot text's "push to main" and the harness's designated branch no longer
+contradict each other: the branch is the way to `main`.
+
+**What this asks of you.** Publish as you do: push to your designated branch and open a pull
+request against `main`. Do not wait for a merge, and do not stack on an open request as if it
+were held. To hold a night back, open its request as a draft. To decline one, close it: a
+closed request is never landed. If a landing fails (a conflict, a failed check), the job
+turns red, the house's watchdog sees it, and the branch stays as it is.
+
+**Status:** information · in force from your next session · nothing owed.

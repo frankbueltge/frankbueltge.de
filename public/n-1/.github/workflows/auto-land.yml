@@ -1,0 +1,161 @@
+# Lands the practice's nights on main by themselves (founder's call, 2026-10-02,
+# wording private). It restores what was decided on 2026-08-15: this practice
+# publishes without a human in the path.
+#
+# WHY THIS EXISTS. A cloud session cannot push to main: its harness binds it to
+# its own claude/* branch, and it publishes by opening a pull request there.
+# Until night 33 the sessions merged those pull requests themselves. From night
+# 35 on they read the open request as a hold by the founder and stacked each
+# night on the one before. Six nights (34–39, pull requests #12–#17), green and
+# cleanly mergeable, sat unpublished from 2026-09-24 to 2026-10-02 while /n-1,
+# which mirrors main, kept showing night 33. The stack was not a hold. This job
+# takes the reading out of the path: a finished night lands without anyone's merge.
+#
+# WHAT LANDS — a claude/* branch, only when all of these hold:
+#   • its most recent pull request targets main and is OPEN and not a draft, or
+#     is already MERGED (then the commits pushed after that merge land too:
+#     sessions append register lines after publishing, and those must not strand);
+#   • every check run on the branch tip has finished, and none failed.
+# WHAT NEVER LANDS: a branch without a pull request (the session never said it
+# was done), a draft (not done), a pull request CLOSED without merging (declined —
+# never resurrected). The practice keeps both levers: draft to hold, close to decline.
+#
+# Branches are not deleted after landing. A session may still push to its branch,
+# and a branch it recreated after deletion would carry no pull request and strand.
+#
+# HONESTY RULE (as in the sibling practices): an eligible branch that fails to
+# merge or push, or whose checks failed, turns this job RED. Green means
+# "everything eligible landed", never "errors were echoed away".
+#
+# No secret: this repository carries none by design (see the header of the
+# site's n1-integrate.yml). The site's mirror picks main up on its own — within
+# minutes inside the session window, within three hours outside it.
+name: Auto-land n-1 sessions
+
+on:
+  # The usual path: the sources guard has finished on a session's push or pull
+  # request, so its verdict on the tip is known.
+  workflow_run:
+    workflows: ["no committed sources"]
+    types: [completed]
+  # A pull request opened after the guard already ran on its push.
+  pull_request:
+    types: [opened, reopened, ready_for_review]
+  # Safety net after the session window, before the site's 04:23 UTC catch-up.
+  schedule:
+    - cron: "5 4 * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pull-requests: read
+  checks: read
+
+concurrency:
+  group: auto-land
+  cancel-in-progress: false
+
+jobs:
+  land:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Merge finished claude/* branches into main
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          git config user.name "n-1 auto-land"
+          git config user.email "auto-land@n-1.invalid"
+          git fetch origin '+refs/heads/claude/*:refs/remotes/origin/claude/*' || true
+
+          landed=0
+          failed=0
+          summary=""
+          note() {
+            echo "outcome $1 $2"
+            summary="${summary}| \`$1\` | $2 |"$'\n'
+          }
+
+          # Oldest tip first, so a stack lands in the order it was built.
+          for b in $(git for-each-ref --sort=committerdate --format='%(refname:short)' refs/remotes/origin/claude/); do
+            name="${b#origin/}"
+            tip="$(git rev-parse "$b")"
+
+            if git merge-base --is-ancestor "$tip" HEAD; then
+              note "$name" already_on_main
+              continue
+            fi
+
+            pr="$(gh pr list --repo "$GITHUB_REPOSITORY" --head "$name" --state all --limit 20 \
+                    --json number,state,isDraft,baseRefName,createdAt \
+                    --jq 'sort_by(.createdAt) | last // empty | "\(.number) \(.state) \(.isDraft) \(.baseRefName)"')"
+            if [ -z "$pr" ]; then
+              note "$name" skipped_no_pr
+              continue
+            fi
+            read -r num state draft base <<<"$pr"
+            if [ "$base" != "main" ]; then
+              note "$name" "skipped_base_${base} (#$num)"
+              continue
+            fi
+            case "$state" in
+              OPEN)
+                if [ "$draft" = "true" ]; then
+                  note "$name" "skipped_draft (#$num)"
+                  continue
+                fi ;;
+              MERGED) ;;
+              *)
+                note "$name" "skipped_pr_closed (#$num)"
+                continue ;;
+            esac
+
+            # This job's own run shows up on the tip when a pull_request event
+            # started it, still in progress — leave it out of the verdict.
+            checks="$(gh api "repos/$GITHUB_REPOSITORY/commits/$tip/check-runs?per_page=100" \
+                        --jq '[.check_runs[] | select(.name != "land")]
+                              | if length == 0 then "none"
+                                elif any(.status != "completed") then "pending"
+                                elif any(.conclusion | IN("success", "neutral", "skipped") | not) then "failed"
+                                else "green" end')"
+            case "$checks" in
+              green) ;;
+              none|pending)
+                note "$name" "waiting_for_checks (#$num)"
+                continue ;;
+              *)
+                failed=$((failed+1))
+                note "$name" "checks_failed (#$num)"
+                echo "::error::$name (#$num): a check failed on its tip — not landed, branch kept"
+                continue ;;
+            esac
+
+            if git merge --no-ff -m "Land $name (#$num)" "$b"; then
+              if git push origin HEAD:main; then
+                git update-ref refs/remotes/origin/main HEAD
+                landed=$((landed+1))
+                note "$name" "landed (#$num)"
+              else
+                failed=$((failed+1))
+                note "$name" "push_failed (#$num)"
+                git reset --hard origin/main   # keep later merges off the unpushed state
+              fi
+            else
+              git merge --abort || true
+              failed=$((failed+1))
+              note "$name" "conflict (#$num)"
+              echo "::error::$name (#$num) conflicts with main — not landed, branch kept"
+            fi
+          done
+
+          printf '## Auto-land\n\n| branch | outcome |\n|---|---|\n%s\n**%s landed, %s failed**\n' \
+            "$summary" "$landed" "$failed" >> "$GITHUB_STEP_SUMMARY"
+          if [ "$failed" -gt 0 ]; then
+            echo "::error::$failed eligible branch(es) failed to land — see the outcome lines above"
+            exit 1
+          fi
