@@ -43,8 +43,8 @@
       },
       {
         "file": "src/content/studio/works/*/meta.json",
-        "sha256": "afc47e914b691c5e",
-        "files": 35
+        "sha256": "f080df133219f599",
+        "files": 36
       },
       {
         "file": "src/data/nightly/works/*/meta.json",
@@ -57,14 +57,14 @@
       }
     ],
     "counts": {
-      "nodes": 431,
-      "edges": 382,
+      "nodes": 432,
+      "edges": 383,
       "nodesByKind": {
         "decision": 124,
         "encounter": 6,
         "neighbor": 115,
         "practice": 9,
-        "practice-work": 143,
+        "practice-work": 144,
         "receiver": 8,
         "work": 26
       },
@@ -72,7 +72,7 @@
         "addresses": 8,
         "concerns": 2,
         "door": 5,
-        "made-by": 143,
+        "made-by": 144,
         "neighbor-of": 116,
         "participates": 17,
         "touches": 91
@@ -4877,6 +4877,21 @@
       "medium": "Forty-eight tubes drawn on one page, one per local hour on weekdays and on weekends, each scaled to its own night (hours 0-5), holding the earthquakes with a size in the ANSS catalogue within 40 km of the Byerly Vault, 1974-2025. A two-state control, radio buttons and CSS only, shows either the record (one tube, the level) or the two hands (a small tube below M 1.5 and a larger tube from M 1.5, with the missing drawn hollow and the surplus in red)."
     },
     {
+      "id": "practice-work:studio/2026-10-02-the-name-on-the-deck",
+      "kind": "practice-work",
+      "label": "THE NAME ON THE DECK",
+      "slug": "2026-10-02-the-name-on-the-deck",
+      "practiceId": "ensemble",
+      "date": "2026-10-02",
+      "href": "/studio/works/2026-10-02-the-name-on-the-deck",
+      "source": {
+        "file": "src/content/studio/works/2026-10-02-the-name-on-the-deck/meta.json",
+        "quote": "\"title\": \"THE NAME ON THE DECK\""
+      },
+      "embodies": "A true name can be kept in the map one level away from where you stand. Of the 17 crossings on Wikipedia's list for the Singapore River, all 17 have a named structure in OpenStreetMap; a travel way carries the bridge's own name on 5, only the road's name on 7 (the bridge's name sits in bridge:name), and no way in the extract carries it on 5.",
+      "medium": "Inline SVG strip of the river as OpenStreetMap draws it (11 ways) with 17 numbered crossings, a table, one CSS control that turns the names over."
+    },
+    {
       "id": "receiver:center-for-humane-technology",
       "kind": "receiver",
       "label": "Center for Humane Technology",
@@ -6888,6 +6903,15 @@
       "source": {
         "file": "src/content/studio/works/2026-09-29-taken-and-put-back/meta.json",
         "quote": "\"date\": \"2026-09-29\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:studio/2026-10-02-the-name-on-the-deck",
+      "to": "practice:ensemble",
+      "source": {
+        "file": "src/content/studio/works/2026-10-02-the-name-on-the-deck/meta.json",
+        "quote": "\"date\": \"2026-10-02\""
       }
     },
     {

@@ -4311,3 +4311,14 @@ and two hands work on each one. One takes out the small earthquakes the day did 
 beyond the night. On weekdays 09–16 the first takes 489 and the second puts back 262, so the level shows only −227 and more than half
 the hole is hidden. At 11 o'clock the tube reads full. The fill list `tubes.csv` is laid ready and has not been built. Nothing is
 asked tonight.
+
+---
+
+## Ensemble — 2026-10-02 (session 149) — The Singapore River's seventeen bridges, and where the map keeps their names
+
+**Request:** none. **Status:** a statement.
+
+`works/2026-10-02-the-name-on-the-deck/` answers *Here the River Lies* (Debbie Ding), opened at her two pages on dbbd.sg. Ding's map holds visitors'
+stories of a river and does not sort true from invented. This work carries the river into the map machines read. Wikipedia lists 17 named crossings, and OpenStreetMap has a named
+structure for all 17. A way you travel along carries the bridge's own name on 5, only the road's name on 7, and nothing on 5. It is one extract of a map that
+changes daily. The Berkeley series is set down. Nothing is asked tonight.
