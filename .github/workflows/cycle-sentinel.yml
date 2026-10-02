@@ -19,16 +19,34 @@ name: Cycle sentinel
 # — because WHICH question the next cycle carries is a judgement no script can make. Cycle 002
 # proved that the day this was built: its question was changed, not repeated. The answer to
 # nobody noticing is to notice, not to automate the decision.
+#
+# SINCE 2026-10-03 IT TURNS — UNDER ONE RULE, AND ONLY THERE (the architect's decision, wording
+# private; docs/design/2026-10-03-the-continuing-question.md). Cycle 003 was presented within days
+# and then sat open for nearly four weeks while the practices wrote "between cycles" and this
+# issue stood every morning. The judgement the paragraph above protects was then made once, in
+# advance: the ecology has a CONTINUING question, and only a seed released to all three moves it
+# off. Where that rule decides, no judgement is left, so the clock applies it before the watch
+# reads the state — a presented continuing round opens the next round, a released seed interrupts
+# at once, a presented seed's cycle returns to the continuing question. Without a continuing
+# question the old limit holds unchanged: the clock does nothing and the issue below still asks
+# for a hand. The rule is src/lib/ecology/cycle-turn.ts, under test.
 
 on:
   schedule:
     # After the Ecology sentinel (06:45 UTC) and before the morning digest (06:30 UTC next day),
     # so a finished cycle is already standing when the digest reads the house.
     - cron: '50 6 * * *'
+  # A released seed is committed to the register by the Steuerzentrale with a token that DOES
+  # fire `on: push` — so the interruption lands within minutes of the release, not next morning.
+  push:
+    branches: [main]
+    paths: ['src/data/saat/register.json']
   workflow_dispatch: {}
 
+# contents: write since 2026-10-03 — the turn commits cycle.json and nothing else. The deploy
+# follows through deploy-cf.yml's workflow_run list, like every other committer of site data.
 permissions:
-  contents: read
+  contents: write
   issues: write
 
 concurrency:
@@ -45,6 +63,34 @@ jobs:
           node-version: '22'
           cache: npm
       - run: npm ci
+
+      # The clock (2026-10-03). Runs first, so the watch below reads the state it leaves. Writes
+      # cycle.json only when the rule says a turn is due, validates it through the site's own
+      # loader before committing, and commits nothing else.
+      - name: Turn the cycle where the continuing-question rule decides
+        id: turn
+        run: |
+          set -euo pipefail
+          npx tsx scripts/ecology/cycle-turn.ts > "$RUNNER_TEMP/turn.json" 2> "$RUNNER_TEMP/turn.txt"
+          cat "$RUNNER_TEMP/turn.txt"
+          if [ "$(jq -r .turned "$RUNNER_TEMP/turn.json")" != "true" ]; then
+            echo "turned=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          git config user.name "Cycle-Clock"
+          git config user.email "cycle-clock@frankbueltge.de"
+          git add src/data/ecology/cycle.json
+          git commit -m "cycle $(jq -r '.cycle' "$RUNNER_TEMP/turn.json"): $(jq -r '.kind' "$RUNNER_TEMP/turn.json") — turned by the cycle clock"
+          for attempt in 1 2 3 4 5; do
+            if git push; then
+              echo "turned=true" >> "$GITHUB_OUTPUT"
+              { echo "### Cycle clock"; echo; sed 's/^/- /' "$RUNNER_TEMP/turn.txt"; echo; } >> "$GITHUB_STEP_SUMMARY"
+              exit 0
+            fi
+            git pull --rebase
+          done
+          echo "::error::the cycle clock could not push its turn after 5 attempts"
+          exit 1
 
       # The presentations live in public/<practice>/presentations/, mirrored by the integrate
       # workflows into this repository — so the verdict reads committed state here and needs no
@@ -92,10 +138,10 @@ jobs:
             jq -r '.standings[] | "| \(.practice) | \(.sessions) | \(if .presented then "yes" else "not yet" end) | \(if .over > 0 then "+\(.over)" else "—" end) |"' \
               "$RUNNER_TEMP/verdict.json"
             echo
-            echo "Turning the cycle is a hand step and stays one: edit \`src/data/ecology/cycle.json\` —"
-            echo "raise \`cycle\`, set \`opened\`, and decide what question the next cycle carries."
-            echo "This watcher reads that file and never writes it; the question is not a thing a"
-            echo "script may choose. Closing this issue without turning the cycle will reopen it"
+            echo "No rule turned this cycle — either no continuing question is set, or the cycle clock"
+            echo "failed (see this run's \"Turn the cycle\" step). Turning it is then a hand step: edit"
+            echo "\`src/data/ecology/cycle.json\` — raise \`cycle\`, set \`opened\`, and decide what question"
+            echo "the next cycle carries. Closing this issue without turning the cycle will reopen it"
             echo "tomorrow, because the condition, not the issue, is what is true."
             echo
             echo "_Cycle sentinel, $(date -u '+%Y-%m-%d %H:%M UTC'). Derivation: \`src/lib/ecology/cycle-watch.ts\` (under test)._"

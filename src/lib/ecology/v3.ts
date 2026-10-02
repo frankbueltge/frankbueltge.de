@@ -31,15 +31,35 @@ export const PRACTICE_REPO: Record<PracticeId, string> = {
 export type CyclePhase = 'closing' | 'working' | 'presenting'
 const PHASES: CyclePhase[] = ['closing', 'working', 'presenting']
 
+/** Where the running cycle's question came from. 'continuing' since 2026-10-03: the one question
+ *  all three work between seeds, which replaces the per-practice defaults while it is set. */
+export type CycleSource = 'seed' | 'continuing' | 'defaults'
+const SOURCES: CycleSource[] = ['seed', 'continuing', 'defaults']
+
+/** The continuing question (architect's decision, 2026-10-03): worked whenever no seed is live,
+ *  in rounds the cycle clock turns by itself; only a seed released to all three interrupts it. */
+export interface ContinuingQuestion {
+  question: string
+  since: string
+}
+
 export interface CycleState {
   cycle: number
   phase: CyclePhase
   question: string | null
-  source: 'seed' | 'defaults'
+  source: CycleSource
   opened: string
   sessionsPerPractice: string
   defaults: Record<PracticeId, string>
+  /** absent in states written before 2026-10-03, and whenever the architect removes it */
+  continuing?: ContinuingQuestion | null
+  /** the seed this cycle's question carries — the interrupting seed, or a seed taken into a round */
+  seedId?: string | null
+  /** every seed already used as a cycle question or taken into one; the cycle clock skips them */
+  takenSeeds?: string[]
 }
+
+const DATE = /^\d{4}-\d{2}-\d{2}$/
 
 export function loadCycle(root: string = process.cwd()): CycleState {
   const file = path.join(root, 'src/data/ecology/cycle.json')
@@ -47,15 +67,24 @@ export function loadCycle(root: string = process.cwd()): CycleState {
   if (!PHASES.includes(raw.phase)) throw new Error(`cycle.json: unknown phase "${raw.phase}"`)
   if (typeof raw.cycle !== 'number' || raw.cycle < 0)
     throw new Error(`cycle.json: cycle must be a non-negative number, got ${raw.cycle}`)
-  if (raw.source !== 'seed' && raw.source !== 'defaults')
-    throw new Error(`cycle.json: unknown source "${raw.source}"`)
-  if (raw.source === 'seed' && (typeof raw.question !== 'string' || raw.question.length === 0))
-    throw new Error('cycle.json: source "seed" requires a question')
+  if (!SOURCES.includes(raw.source)) throw new Error(`cycle.json: unknown source "${raw.source}"`)
+  if (raw.source !== 'defaults' && (typeof raw.question !== 'string' || raw.question.length === 0))
+    throw new Error(`cycle.json: source "${raw.source}" requires a question`)
   for (const p of PRACTICES)
     if (typeof raw.defaults?.[p] !== 'string' || raw.defaults[p].length === 0)
       throw new Error(`cycle.json: missing default theme for "${p}"`)
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(raw.opened))
-    throw new Error(`cycle.json: opened must be a date, got "${raw.opened}"`)
+  if (!DATE.test(raw.opened)) throw new Error(`cycle.json: opened must be a date, got "${raw.opened}"`)
+  const continuing = raw.continuing ?? null
+  if (continuing !== null) {
+    if (typeof continuing.question !== 'string' || continuing.question.length === 0)
+      throw new Error('cycle.json: a continuing block requires a question')
+    if (!DATE.test(continuing.since))
+      throw new Error(`cycle.json: continuing.since must be a date, got "${continuing.since}"`)
+  }
+  if (raw.source === 'continuing' && continuing === null)
+    throw new Error('cycle.json: source "continuing" requires a continuing block')
+  if (raw.taken_seeds !== undefined && !Array.isArray(raw.taken_seeds))
+    throw new Error('cycle.json: taken_seeds must be a list of seed ids')
   return {
     cycle: raw.cycle,
     phase: raw.phase,
@@ -64,7 +93,16 @@ export function loadCycle(root: string = process.cwd()): CycleState {
     opened: raw.opened,
     sessionsPerPractice: String(raw.sessions_per_practice ?? '3-5'),
     defaults: { atelier: raw.defaults.atelier, field: raw.defaults.field, studio: raw.defaults.studio },
+    continuing: continuing && { question: continuing.question, since: continuing.since },
+    seedId: raw.seed_id ?? null,
+    takenSeeds: raw.taken_seeds ?? [],
   }
+}
+
+/** The question a practice works right now: the cycle's own question when it carries one (a
+ *  seed or the continuing question), otherwise that practice's default theme. */
+export function questionFor(cycle: CycleState, practice: PracticeId): string {
+  return cycle.source !== 'defaults' && cycle.question ? cycle.question : cycle.defaults[practice]
 }
 
 /** The protocols cap a bulletin at 40 lines; the surface tolerates a little drift before it

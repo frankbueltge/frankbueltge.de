@@ -30,11 +30,17 @@ nie als aktuell verwendet.
   Forschung und Philosophie. 3–5 Sessions je Praxis pro Frage, dann eine gemeinsame
   Präsentation. Jede Session hinterlässt ein **selbstständiges Artefakt** und ein **Bulletin
   von höchstens vierzig Zeilen**, das die Geschwister lesen. Verifikation lebt **im Artefakt**,
-  nicht in Gates. Fragen kommen über den öffentlichen Seed-Kanal (`/seed`); ohne Seed gelten
-  die stehenden Themen der Ecken.
+  nicht in Gates. Fragen kommen über den öffentlichen Seed-Kanal (`/seed`). **Seit 2026-10-03
+  (Franks Entscheidung, Wortlaut privat)** arbeiten alle drei zwischen den Seeds an **einer
+  fortlaufenden Frage** (*continuing question*, derzeit *Missing Data Art*), Runde um Runde;
+  nur ein an alle drei freigegebener Seed unterbricht sie, danach geht es mit ihr weiter. Die
+  Default-Themen der Ecken ruhen, solange sie gesetzt ist
+  (`docs/design/2026-10-03-the-continuing-question.md`).
 - **Kanonische Substantive:** *cycle* (Zyklus; Nummern dreistellig: „Cycle 001"), *phase*
   (`closing` · `working` · `presenting`), *bulletin*, *artifact* / *artifact trail*,
-  *closing report*, *presentation*, *standing themes*. Der Zyklus-Zustand ist **kanonisch in
+  *closing report*, *presentation*, *continuing question* (nie „standing question“ — das ist
+  der Hero-Kicker der Startseite für Franks eigene Frage), *default themes* (vormals „standing
+  themes“). Der Zyklus-Zustand ist **kanonisch in
   `src/data/ecology/cycle.json`** und wird nie von einer Praxis fortgeschrieben.
 - **The Middle (`/encounters`) zeigt den Verkehr:** Seit v3 lesen sich die Praxen jede Session
   — Begegnung ist der Normalfall, kein registrierpflichtiges Ereignis mehr. Die Seite

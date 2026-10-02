@@ -129,9 +129,11 @@ const blockClass: Record<string, string> = {
     {
       (
         <div class="mt-5 border-t border-line pt-4">
-          {cycle.source === 'seed' && cycle.question ? (
+          {cycle.source !== 'defaults' && cycle.question ? (
             <>
-              <p class={kicker}>{W.cycle.seededQuestionKicker}</p>
+              <p class={kicker}>
+                {cycle.source === 'seed' ? W.cycle.seededQuestionKicker : W.cycle.continuingQuestionKicker}
+              </p>
               <p class="mt-2 text-lg leading-snug text-fg">{cycle.question}</p>
             </>
           ) : (

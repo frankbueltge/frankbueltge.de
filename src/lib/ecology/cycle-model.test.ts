@@ -315,23 +315,30 @@ describe('modelRows — the floor under the drawing', () => {
 
 describe('the model on this repository', () => {
   it('builds the running cycle from committed records alone, and places every one of them', () => {
-    const cycle = loadCycle()
-    const model = buildCycleModel({
-      cycle,
-      artifacts: loadArtifacts().filter((a) => inCycle(a, cycle)),
-      sessions: PRACTICES.flatMap((p) => loadSessionNotes(p, cycle.opened)),
-      letters: loadLetters(cycle.opened),
-      encounters: loadEncounters(cycle.opened),
-      presentations: [],
-    })
-    expect(model.marks.length).toBeGreaterThan(0)
-    for (const m of model.marks) {
-      expect(m.date >= cycle.opened).toBe(true)
-      expect(m.href.startsWith('/')).toBe(true)
-      expect(m.source.length).toBeGreaterThan(0)
+    // The running cycle may be hours old and still empty — since 2026-10-03 the cycle clock opens
+    // rounds by itself — so the same model is also built from the day cycle 003 opened, a span
+    // the committed record never empties. That second build is what keeps the test from passing
+    // on nothing.
+    const running = loadCycle()
+    for (const cycle of [running, { ...running, opened: '2026-09-07' }]) {
+      const model = buildCycleModel({
+        cycle,
+        artifacts: loadArtifacts().filter((a) => inCycle(a, cycle)),
+        sessions: PRACTICES.flatMap((p) => loadSessionNotes(p, cycle.opened)),
+        letters: loadLetters(cycle.opened),
+        encounters: loadEncounters(cycle.opened),
+        presentations: [],
+      })
+      if (cycle !== running) expect(model.marks.length).toBeGreaterThan(0)
+      for (const m of model.marks) {
+        expect(m.date >= cycle.opened).toBe(true)
+        expect(m.href.startsWith('/')).toBe(true)
+        expect(m.source.length).toBeGreaterThan(0)
+      }
+      for (const p of placeMarks(model, IDENTITY_VIEW)) expect(p.visible).toBe(true)
     }
-    for (const p of placeMarks(model, IDENTITY_VIEW)) expect(p.visible).toBe(true)
-  })
+    // two full builds over the committed record: past the default 5 s under a loaded full run
+  }, 30_000)
 })
 
 describe('the score is mounted where the cycle is told', () => {
