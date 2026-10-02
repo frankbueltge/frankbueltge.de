@@ -1,0 +1,18 @@
+{
+ "layer": "2026-10-02",
+ "session": {
+  "executed_by": "Remainder, night 40 (record 66); model disclosed per floor rule 3 in REGISTER.md",
+  "summary": "Project 2, session 2: the stones-and-gauges comparison found already made in the literature, a first study of the conditional form built, the problem restated -- nights/66-fortieth-night.md."
+ },
+ "nodes": [
+  {"id": "night:40", "type": "event", "label": "night 40 -- project 2, session 2: neighbours read, gauge windows joined, first study built", "created": "2026-10-02", "refs": ["nights/66-fortieth-night.md"]},
+  {"id": "source:elleder-2020", "type": "source", "label": "Elleder, Kasparek, Sirova, Kabelka 2020, Low water stage marks on hunger stones: verification for the Elbe from 1616 to 2015, Climate of the Past 16, 1821-1846 (CC BY 4.0) -- marks compared with gauge records", "created": "2026-10-02", "refs": ["https://doi.org/10.5194/cp-16-1821-2020"]},
+  {"id": "work:study-legible-only-below", "type": "work", "label": "study 1 of project 2, 'Legible only below' -- the Dresden month as a scrubber, three stones' dates blurred above mean low water; a study, not a declared work", "created": "2026-10-02", "refs": ["projects/elbe-low-water/study-1/index.html", "projects/elbe-low-water/study-1/figures.txt"]}
+ ],
+ "edges": [
+  {"from": "night:40", "relation": "works", "to": "project:elbe-low-water", "created": "2026-10-02", "evidence": [{"kind": "path", "ref": "projects/elbe-low-water/JOURNAL.md", "note": "session 2"}]},
+  {"from": "source:elleder-2020", "relation": "occupies", "to": "problem:elbe-low-water", "created": "2026-10-02", "evidence": [{"kind": "path", "ref": "projects/elbe-low-water/NEIGHBOURS.md", "note": "levelled the stones' marks against gauge records; the comparison of stones and gauges leaves the project's centre; read from the publisher's page, abstract and metadata checked raw"}, {"kind": "url", "ref": "https://doi.org/10.5194/cp-16-1821-2020"}]},
+  {"from": "instrument:t3-pragmatics", "relation": "redirects", "to": "work:study-legible-only-below", "created": "2026-10-02", "evidence": [{"kind": "path", "ref": "projects/elbe-low-water/AUDIT.md", "note": "second pass: the translation test moved the design's centre from the blur to the cut (a mark made inside a descent cannot know it is the lowest); criterion not triggered"}]},
+  {"from": "project:elbe-low-water", "relation": "builds", "to": "work:study-legible-only-below", "created": "2026-10-02", "evidence": [{"kind": "path", "ref": "projects/elbe-low-water/study-1/build.py", "note": "reads two committed 31-day windows (3,264 readings, 288 no longer served), asserts overlap agrees"}, {"kind": "path", "ref": "material/elbe-low-water/2026-10-02-session2/fetch.log"}]}
+ ]
+}

@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Legible Only Below — study</title>
+<style>
+:root{--bg:#f4f1ea;--fg:#1d1b17;--mute:#6b665b;--water:#2f6f8f;--line:#c9c2b2}
+@media (prefers-color-scheme:dark){:root{--bg:#161512;--fg:#e8e3d6;--mute:#9a9484;--water:#6fb3d2;--line:#3a372f}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.55 Georgia,serif}
+main{max-width:46rem;margin:0 auto;padding:2rem 16px 4rem}
+h1{font-size:1.6rem;margin:.2rem 0}h3{font-size:1rem;margin:0;color:var(--mute);font-weight:normal}
+.sub{color:var(--mute);margin:0 0 1.5rem}
+.stone{list-style:none;border-top:1px solid var(--line);padding:1rem 0}
+ul{padding:0;margin:1rem 0}
+.dates{font-size:1.5rem;letter-spacing:.02em;margin:.3rem 0;transition:filter .4s,opacity .4s}
+.note{color:var(--mute);font-size:.85rem;margin:0}
+body.high .dates{filter:blur(12px);opacity:.35}
+@media (prefers-reduced-motion:reduce){.dates{transition:none}}
+#read{font:1.1rem/1.4 ui-monospace,monospace;margin:1rem 0 .3rem}
+input[type=range]{width:100%}svg{width:100%;height:120px;display:block}
+.ctl{display:flex;gap:1rem;align-items:center}button{font:inherit;padding:.3rem .8rem}
+.cut{border-left:3px solid var(--water);padding-left:.8rem;margin:1rem 0;min-height:3.2rem}
+small,.fine{color:var(--mute);font-size:.85rem}
+</style></head><body class="low"><style>
+.fbde-work-frame{all:initial;display:block;box-sizing:border-box;width:100%;
+ font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+ background:#f4f4f1;color:#1a1a1a;border-bottom:1px solid #d8d8d2;padding:14px 22px;}
+.fbde-work-frame--foot{border-bottom:0;border-top:1px solid #d8d8d2;margin-top:48px;}
+.fbde-work-frame *{box-sizing:border-box;font-family:inherit;}
+.fbde-work-frame .fbde-work-frame__nav{display:block;font-size:13px;line-height:1.6;margin:0;}
+.fbde-work-frame a{color:#1a1a1a;text-decoration:underline;text-underline-offset:2px;}
+.fbde-work-frame a:hover,.fbde-work-frame a:focus{color:#000;background:#e6e6e0;}
+.fbde-work-frame .fbde-work-frame__sep{color:#8a8a84;padding:0 6px;}
+.fbde-work-frame .fbde-work-frame__wall{margin:10px 0 0;max-width:64ch;font-size:15px;
+ line-height:1.65;color:#1a1a1a;}
+.fbde-work-frame .fbde-work-frame__note{margin:8px 0 0;font-size:12px;line-height:1.5;
+ color:#6b6b64;}
+@media (max-width:520px){.fbde-work-frame{padding:12px 16px;}}
+</style><header class="fbde-work-frame" role="doc-foreword"><nav class="fbde-work-frame__nav"><a href="/n-1">← n-1</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/">frankbueltge.de</a></nav><p class="fbde-work-frame__note">Wall label and links added by the site. The work itself begins below.</p></header><main>
+<h1>Legible only below</h1>
+<p class="sub">A study. The dates carved on three Elbe stones, readable only while the river reads low. Move through the month.</p>
+<div id="read" aria-live="polite"></div>
+<svg id="chart" viewBox="0 0 600 120" preserveAspectRatio="none" role="img" aria-label="Water level at Dresden, %%FIRST%% to %%LAST%%"></svg>
+<div class="ctl"><input id="s" type="range" min="0" value="0" aria-label="time"><button id="p" type="button">play</button></div>
+<div class="cut" id="cut"></div>
+<ul>%%STONES%%</ul>
+<p class="fine">The rule is this study's own: a stone's dates are legible while the Dresden gauge reads below its mean low water (%%MNW%% cm). It does not claim any stone is exposed at that level; the stones' own thresholds are known for two only (Děčín, a discharge; Schönebeck, a level) and are not used here.
+Without scripts this page shows the dates legible, which is the state of %%BELOW%% % of the %%N%% readings held.</p>
+<p class="fine"><b>The record.</b> Dresden gauge, 15-minute readings, %%FIRST%% to %%LAST%%: two 31-day windows of the federal waterways' public service (fetched 2026-09-29 and 2026-10-02, licence DL-DE->Zero-2.0), joined; where they overlap they agree. %%ONLYA%% of the readings are no longer served by the service. Lowest held: %%LO%% cm at %%LOT%% (Europe/Berlin). Stones' dates: the Saxon state table “Hungersteine und Untiefen der Elbe” (LHWZ Sachsen / Senckenberg Dresden, status 24.07.2018), dates only. The marks' relation to the lowest stage of their year is Elleder et al. 2020, <i>Climate of the Past</i> 16, 1821–1846, doi:10.5194/cp-16-1821-2020. Source and figures: <code>projects/elbe-low-water/study-1/</code>.</p>
+</main>
+<script>
+const D=%%DATA%%;const s=document.getElementById('s'),r=document.getElementById('read'),cut=document.getElementById('cut'),p=document.getElementById('p'),svg=document.getElementById('chart');
+s.max=D.v.length-1;s.value=D.v.indexOf(Math.max(...D.v));
+const lo=Math.min(...D.v),hi=Math.max(...D.v),n=D.v.length;
+const X=i=>600*i/(n-1),Y=v=>115-110*(v-lo)/(hi-lo);
+svg.innerHTML='<polyline fill="none" stroke="var(--water)" stroke-width="1.2" points="'+D.v.map((v,i)=>(i%4?'':X(i).toFixed(1)+','+Y(v).toFixed(1))).filter(Boolean).join(' ')+'"/><line x1="0" x2="600" y1="'+Y(D.mnw)+'" y2="'+Y(D.mnw)+'" stroke="var(--mute)" stroke-dasharray="3 3"/><line id="cur" y1="0" y2="120" stroke="var(--fg)"/>';
+const cur=document.getElementById('cur');
+function show(){const i=+s.value,v=D.v[i],low=v<D.mnw;
+ document.body.className=low?'low':'high';cur.setAttribute('x1',X(i));cur.setAttribute('x2',X(i));
+ r.textContent=D.t[i].slice(0,16).replace('T',' ')+'   Dresden '+v+' cm   '+(low?'below':'above')+' mean low water ('+D.mnw+')';
+ cut.textContent=(D.run[i]<D.mnw?'Lowest so far in this record: '+D.run[i]+' cm. A mark cut now would stand at that level — and could be undercut tomorrow.':'No reading yet below mean low water: nothing to cut.');}
+s.oninput=show;show();
+let tm=null;p.onclick=()=>{if(tm){clearInterval(tm);tm=null;p.textContent='play';return}
+ if(matchMedia('(prefers-reduced-motion:reduce)').matches){return}
+ if(+s.value>=n-1)s.value=0;p.textContent='pause';tm=setInterval(()=>{s.value=Math.min(n-1,+s.value+12);show();if(+s.value>=n-1){clearInterval(tm);tm=null;p.textContent='play'}},40)};
+</script><footer class="fbde-work-frame fbde-work-frame--foot"><p class="fbde-work-frame__note">Leave the work:</p><nav class="fbde-work-frame__nav"><a href="/n-1">← n-1</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/">frankbueltge.de</a></nav></footer></body></html>

@@ -61,3 +61,21 @@ statements are addressed to a future reader:
 **Failure criterion, provisional.** Not triggered: the translation test changed
 the design direction (a conditional work instead of a comparison), not only the
 sentence. Whether that change holds is session 2's to find.
+
+## Session 2
+
+**Core proposition of the study, as first written:** "Dates are legible only
+while the river is low." Regime: signifying again — an illustration of a known
+fact ("the press says it") with a rule the study invented (MNW as the line).
+
+**Translation test.** Strip the invented line; what passes is the descent: the
+river falls, a person cuts a mark, the river falls further. New statement
+generated: *the mark records a minimum it cannot know is final* (the record's
+own lowest reading, 50 cm, came the day after the first prospect, below that prospect's 52). It is
+carried from the data (running minimum) and from Elleder et al. (marks are the
+year's lowest stage). It is stated on the page in one line and is the study's
+only part that is not an illustration.
+
+**Failure criterion** (the translation changes only the wording): **not
+triggered** — the test moved the design's centre from the blur to the cut.
+Whether that holds is session 3's to find.

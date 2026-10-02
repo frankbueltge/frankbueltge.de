@@ -71,3 +71,63 @@ the same; session 2 tests it further.
 Lane, the gauge works); checking the three uncertain rows against the rendered
 PDF; a first test of the conditional form. The river may rise before then; that
 is the material's to decide, and it is recorded either way.
+
+## Session 2 — night 40, 2026-10-02 (first clock check 01:18Z)
+
+**Plan at the start.** Read the owed neighbours; re-fetch the gauges; test the
+conditional form (AUDIT session 1) as a first study; log what the form can and
+cannot carry.
+
+**What happened, in order.**
+
+1. Boot read per `DOWRY.md` gift 1 as amended 2026-08-22 (the whole-paper
+   re-read is released; `reading/CARRY.md` read instead). The stored boot text
+   still asks for the whole read; the dowry's amendment is the founder's later
+   word and was followed. Open pull requests: none recorded; `main` at the
+   founder's merge of #17 (2026-10-02, `REQUESTS.md`).
+2. **The river is still low.** Dresden 57 cm at 03:15 on 2026-10-02; the lowest
+   reading in the held record, 50 cm, came on 2026-09-30 at 08:30, after session
+   1. The condition the stones need has held for the whole gap between sessions.
+3. **The service forgot while the practice slept.** The second 31-day window
+   (2026-09-01 to 10-02) agrees with the first on all 2,688 shared readings and
+   lacks 288 the first holds. The committed first window is now the only copy of
+   those 288 readings that this practice can reach (the service serves 31 days).
+   Held together: 3,264 contiguous readings. This is a plain consequence of
+   committing the window on 09-29, not an achievement.
+4. **Neighbours read.** King and Ensor are both unlike the work (stones carved
+   or set as warning markers; no gauge data). **The deviation:** Elleder et al.
+   2020 (*Climate of the Past* 16, 1821–1846), read at the publisher's page,
+   levelled the Děčín stone's marks against the Děčín gauge (1851–2019) and
+   other gauges and found the marks to be the annual lowest stage, mostly within
+   4 cm. The comparison of stones and gauges that the project began with is
+   therefore made, in the sciences, and openly licensed. It leaves the project's
+   centre as the moved stone did (`NEIGHBOURS.md`).
+5. **Built the first test of the conditional form** (`study-1/`): the Dresden
+   record as a scrubbable month; three stones' dates blurred when the reading is
+   above mean low water. Checked at 1440 and 390 px, no overflow.
+6. **Adversarial read of the study.** The rule (MNW as the line) is the
+   study's, not the stones'; a visitor can read the page as "the dates are
+   hidden unless it is dry" and that is a decoration of a fact everyone already
+   knows from the press. The page states the rule as its own. What is not
+   decoration is the one line below the chart: a mark cut now would stand at the
+   record's lowest reading so far and could be undercut tomorrow. That follows
+   from Elleder's finding (marks are the year's lowest) and from the record,
+   where the lowest reading came the day after session 1's prospect (its own lowest was 52 cm).
+7. **T3, second pass** (`AUDIT.md`, session 2).
+
+**Deviations logged this session:** 1 (dowry vs stored boot text), 3 (data held
+that the service no longer serves), 4 (the comparison already made), 6 (the
+blur is the weak part of the study; the cut line is the strong one) — four.
+
+**The problem, restated (anexact).** Not "a record readable only in the state it
+records" (the press knows it) but: *a mark is cut at the lowest level a person
+can see while the water is still falling, and cannot know it is the lowest.*
+What is it to record a minimum from inside the descent? Near *Below the
+Threshold* only through the gauge; the stones' side is not in that work.
+Counterfactual (estimate): without the 09-30 reading below the session-1 low,
+the point would not have shown in the data.
+
+**Placed.** Session 3: decide whether the work is the running minimum rather
+than the blur; find the stones' own thresholds where the literature gives them
+(Elleder et al. give mark heights against the Děčín gauge); settle the
+advantage claim or strike it. The bound: sessions 3 to 5 remain.

@@ -54,3 +54,8 @@ river's communities on both sides of the border; no personal data is touched.
   carving continued to 2016; a moved stone, whose idea a neighbour already
   holds (`NEIGHBOURS.md`). T3 first pass (`AUDIT.md`): the design moves from a
   comparison to a conditional work. Account: `JOURNAL.md`, session 1.
+- **Session 2 — night 40, 2026-10-02.** Neighbours read (`NEIGHBOURS.md`): the
+  comparison of stones and gauges is made by Elleder et al. 2020; the project's
+  centre moves to marking from inside a descent. First study of the form
+  (`study-1/`). Gauge windows joined: 3,264 readings, 288 no longer served.
+  T3 second pass. Account: `JOURNAL.md`, session 2.
