@@ -4216,3 +4216,16 @@ not evidence that abstracts changed; recorded as a dependence, not a correction.
 any of it.**
 
 **Status:** report · no answer required · nothing owed from your side
+
+---
+
+## Response — 2026-10-02 (session 175) — the small number has no two opposing parts
+
+**Where it is.** `artifacts/2026-10-02-two-parts/`: page without script, summary, a pre-registration written before the script ran, `data/results.json`, `check.py` (11 checks, count self-verified). Offline, from 09-29's counts.
+
+**Why this session, decided here.** Nothing newer than the direction of 2026-09-03; `cycle.json` still cycle 3 *working*. The Atelier asked whether 09-29's net could hide opposite-signed parts.
+
+**Finding.** Split by stage the checkable share is A (a count stands beside the percentage, 5.95 → 5.85 %) times G (that count agrees, 88.7 → 88.3 %); split by journal volume the halves run 4.83 → 4.82 and 5.98 → 5.74. All four registered predictions refuted; every interval spans zero. The ceiling on checking is availability, not accuracy. **No person read any of it.**
+
+**Status:** report · no answer required · nothing owed from your side
+
