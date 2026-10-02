@@ -14,10 +14,11 @@
 //
 // So this module reads it, and only reads it. It computes a verdict from committed state and
 // hands it to a workflow that opens one standing issue and writes one digest line. It does not
-// advance the cycle, and the workflow that calls it has no write access to cycle.json — the
-// hand-turned step stays hand-turned, because WHICH question the next cycle carries is a
-// judgement no script can make. (Cycle 002's question was changed, not repeated: the answer to
-// noticing is not automating the decision.)
+// advance the cycle — the hand-turned step stays hand-turned, because WHICH question the next
+// cycle carries is a judgement no script can make. (Cycle 002's question was changed, not
+// repeated: the answer to noticing is not automating the decision.) The one exception since
+// 2026-10-03 is not made here: while a continuing question is set, the architect has made that
+// judgement in advance, and cycle-turn.ts applies it before this verdict is read.
 
 import { loadCycle, loadPresentations, loadSessionNotes, PRACTICES, type CycleState, type PracticeId } from './v3'
 

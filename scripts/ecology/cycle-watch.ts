@@ -3,7 +3,8 @@
 // All the thinking is in src/lib/ecology/cycle-watch.ts, under test. This file is the mouth:
 // it prints one JSON object for the workflow to branch on and, on stderr, the same finding in
 // the words a human reads. It writes nothing and changes nothing — least of all cycle.json,
-// which stays hand-turned by the architect or a site session (v3 decision, 2026-08-30).
+// which is turned by the architect or a site session (v3 decision, 2026-08-30), or, while a
+// continuing question is set, by the cycle clock (cycle-turn.ts, rule of 2026-10-03).
 
 import { cycleVerdict } from '../../src/lib/ecology/cycle-watch'
 

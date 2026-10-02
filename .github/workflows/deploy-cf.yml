@@ -74,6 +74,10 @@ on:
       # token every morning — the same reason as every entry above: without this line the day's
       # ledger would wait for an unrelated push.
       - Trending nightly
+      # The cycle clock (2026-10-03) commits src/data/ecology/cycle.json with the built-in token
+      # when the continuing-question rule turns a cycle — without this line a new round or a seed's
+      # interruption would reach the practices (they read cycle.json from main) but not the site.
+      - Cycle sentinel
     types: [completed]
 
 permissions:

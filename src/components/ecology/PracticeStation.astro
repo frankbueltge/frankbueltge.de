@@ -41,6 +41,7 @@ import {
   loadCycle,
   PRACTICES,
   PRACTICE_REPO,
+  questionFor,
   type PracticeId,
 } from '@/lib/ecology/v3'
 import { bulletinBlocks } from '@/lib/ecology/bulletin-render'
@@ -78,7 +79,7 @@ const S = STATION_V3
 
 const cycle = loadCycle()
 const phase = ECOLOGY_V3.cycle.phase[cycle.phase]
-const question = cycle.source === 'seed' && cycle.question ? cycle.question : cycle.defaults[id]
+const question = questionFor(cycle, id)
 
 const bulletin = loadBulletin(id)
 const blocks = bulletin.present && bulletin.text ? bulletinBlocks(bulletin.text) : []
@@ -147,7 +148,7 @@ const blockClass: Record<string, string> = {
       <p class={kicker}>{S.now.questionKicker}</p>
       <p class="mt-2 max-w-3xl text-lg leading-snug text-fg">{question}</p>
       <p class="mt-1.5 font-mono text-mono text-fg-faint">
-        {cycle.source === 'seed' ? S.now.seededNote : S.now.defaultsNote}
+        {cycle.source === 'seed' ? S.now.seededNote : cycle.source === 'continuing' ? S.now.continuingNote : S.now.defaultsNote}
       </p>
     </div>
 

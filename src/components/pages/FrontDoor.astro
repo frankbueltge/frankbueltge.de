@@ -144,15 +144,15 @@ const catalogues = NAMING.catalogues.items.filter((c) => c.href !== '/atlas')
             {card.id === 'ecology' && (
               /* The one live line of this section: the house clock, from the same committed
                  cycle state /ecology renders. The badge is ECOLOGY_V3's own word for the
-                 phase; what the practices work is the seeded question or the standing themes. */
+                 phase; what the practices work is the cycle's question (a seed's or the continuing one) or the default themes. */
               <span class="fd-card-cycle">
                 <span class="ops-led"></span>
                 <span class="fd-cycle-label">{FD.ecologyLive.cycleLabel(cycle.cycle)}</span>
                 <span class="fd-cycle-badge">{ECOLOGY_V3.cycle.phase[cycle.phase].badge}</span>
                 <span class="fd-cycle-q">
-                  {cycle.source === 'seed' && cycle.question
+                  {cycle.source !== 'defaults' && cycle.question
                     ? FD.ecologyLive.question(cycle.question)
-                    : FD.ecologyLive.standingThemes}
+                    : FD.ecologyLive.defaultThemes}
                 </span>
               </span>
             )}

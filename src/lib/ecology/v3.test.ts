@@ -17,6 +17,7 @@ import {
   loadPresentations,
   loadSessionNotes,
   PRACTICES,
+  questionFor,
   type ArtifactEntry,
 } from './v3'
 
@@ -66,6 +67,33 @@ describe('loadCycle', () => {
     const root = fixtureRoot()
     writeCycle(root, { defaults: { atelier: 'a', field: 'f' } })
     expect(() => loadCycle(root)).toThrow(/missing default theme/)
+  })
+
+  it('reads a continuing round, and the question every practice then works is the shared one', () => {
+    const root = fixtureRoot()
+    const continuing = { question: 'Missing Data Art', since: '2026-10-03' }
+    writeCycle(root, { source: 'continuing', question: 'Missing Data Art', continuing, taken_seeds: ['s1'] })
+    const c = loadCycle(root)
+    expect(c.continuing).toEqual(continuing)
+    expect(c.takenSeeds).toEqual(['s1'])
+    for (const p of PRACTICES) expect(questionFor(c, p)).toBe('Missing Data Art')
+  })
+
+  it('falls back to each practice\'s default theme only in the defaults regime', () => {
+    const root = fixtureRoot()
+    writeCycle(root)
+    const c = loadCycle(root)
+    expect(c.continuing).toBeNull()
+    expect(questionFor(c, 'field')).toBe('f')
+    expect(questionFor(c, 'studio')).toBe('s')
+  })
+
+  it('rejects a continuing round without its continuing block, and a continuing block without a date', () => {
+    const root = fixtureRoot()
+    writeCycle(root, { source: 'continuing', question: 'Missing Data Art' })
+    expect(() => loadCycle(root)).toThrow(/requires a continuing block/)
+    writeCycle(root, { source: 'continuing', question: 'q', continuing: { question: 'q', since: 'soon' } })
+    expect(() => loadCycle(root)).toThrow(/continuing.since must be a date/)
   })
 })
 
@@ -449,8 +477,11 @@ describe('loadSessionNotes', () => {
   it('reads this repository’s running cycle, and every note points at a page this site builds', () => {
     const cycle = loadCycle()
     for (const practice of PRACTICES) {
+      // Not vacuous on the morning a cycle opens (since 2026-10-03 the cycle clock opens rounds by
+      // itself, so a running cycle with no session yet is a normal state): the committed record
+      // since cycle 003 opened is never empty, and a loader that silently drops it fails here.
+      expect(loadSessionNotes(practice, '2026-09-07').length).toBeGreaterThan(0)
       const notes = loadSessionNotes(practice, cycle.opened)
-      expect(notes.length).toBeGreaterThan(0)
       for (const n of notes) {
         expect(n.date >= cycle.opened).toBe(true)
         expect(n.href.startsWith(`/${practice}/journal/`)).toBe(true)

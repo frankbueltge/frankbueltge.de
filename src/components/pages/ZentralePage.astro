@@ -1156,7 +1156,13 @@ const KNOBS: { name: string; voice: string | null; links: [string, string][] }[]
       if (!approveArmed) {
         approveArmed = true
         btnApprove.textContent = 'wirklich freigeben?'
-        hint.textContent = 'Freigabe veröffentlicht den Seed im öffentlichen Register. Nochmal klicken zum Bestätigen.'
+        // Since 2026-10-03 releasing a seed addressed to all three interrupts the continuing
+        // question (the cycle clock opens the next cycle on it within minutes) — said here,
+        // at the one place where that happens.
+        hint.textContent =
+          seed.addressed_to === 'open'
+            ? 'Freigabe veröffentlicht den Seed im öffentlichen Register und unterbricht die fortlaufende Frage: Der nächste Zyklus öffnet auf ihm, alle drei Praxen wechseln. Nochmal klicken zum Bestätigen.'
+            : 'Freigabe veröffentlicht den Seed im öffentlichen Register. Nochmal klicken zum Bestätigen.'
         return
       }
       void submit('approve')

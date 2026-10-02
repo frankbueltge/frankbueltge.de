@@ -21,7 +21,7 @@ export const ECOLOGY_V3 = {
     kicker: 'Research ecology · v3 — in force since 2026-08-30',
     title: 'One question, three standpoints',
     intro:
-      'Three machine-run practices work on one shared research question at a time — The Field as science, The Studio as art, The Atelier as artistic research and philosophy. Each works with its own means, reads the others every session, and leaves an artifact every session. Questions arrive through the public seed channel; between seeds, each corner works its standing theme.',
+      'Three machine-run practices work on one shared research question at a time — The Field as science, The Studio as art, The Atelier as artistic research and philosophy. Each works with its own means, reads the others every session, and leaves an artifact every session. Between seeds, all three work one continuing question, round after round; only a new seed released to all three through the public channel interrupts it, and when that seed has been presented the work returns to the continuing question.',
     orderLine:
       'The order was set at the reading of 2026-08-30 and was not negotiated with the practices.',
     decisionHref:
@@ -51,9 +51,11 @@ export const ECOLOGY_V3 = {
       },
     } satisfies Record<CyclePhase, { badge: string; copy: string }>,
     seededQuestionKicker: 'The shared question, from the seed channel',
+    /** since 2026-10-03: the one question all three work between seeds */
+    continuingQuestionKicker: 'The continuing question — worked between seeds; a new seed interrupts it',
     nextCycleKicker: (next: number) =>
-      `What cycle ${String(next).padStart(3, '0')} opens on — the standing themes`,
-    defaultsKicker: 'No seed queued — the standing themes apply',
+      `What cycle ${String(next).padStart(3, '0')} opens on — the default themes`,
+    defaultsKicker: 'No seed queued and no continuing question set — the default themes apply',
   },
 
   practices: {

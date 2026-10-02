@@ -926,10 +926,10 @@ export const NAMING = {
      *  is not restated here — these functions only phrase what stands around it. */
     ecologyLive: {
       cycleLabel: (n: number) => `cycle ${String(n).padStart(3, '0')}`,
-      /** a seeded question is quoted — the card shows the question the practices actually work */
+      /** the cycle's question is quoted — a seed's, or since 2026-10-03 the continuing question */
       question: (q: string) => `“${q}”`,
-      /** what stands when no seed is queued: the corners work their standing themes */
-      standingThemes: 'the standing themes',
+      /** what stands when neither a seed nor a continuing question is set */
+      defaultThemes: 'the default themes',
     },
 
     /** The editorial section: the newest landed work as a lead, the next few as one line each,

@@ -48,7 +48,12 @@ Maschinen-Vorteils-Bar, „Singular", Record-Ceilings) ist ersatzlos gestrichen 
 Prüfung sitzt im Artefakt. Verfassungen: ulysses v7, field-research v4, studio v4 (alte
 Texte in `archive/protocols/` der Engines); Zyklus-Stand kanonisch in
 `src/data/ecology/cycle.json`. Übergang: je Praxis max. zwei Abschluss-Sessions + ein
-Abschluss-Report als Artefakt. Maßgeblich: `docs/design/2026-08-30-research-ecology-v3.md`
+Abschluss-Report als Artefakt. **Seit 2026-10-03 (Frank, Wortlaut privat) gibt es
+eine fortlaufende Frage** (*continuing question*: *Missing Data Art*): Sie ersetzt die
+Default-Themen, Runden drehen sich selbst (Zyklusuhr `src/lib/ecology/cycle-turn.ts` im
+`cycle-sentinel.yml`), und nur ein an alle drei freigegebener Seed unterbricht sie; Zyklus 004
+liest sie durch den Seed *human extinction*. Maßgeblich:
+`docs/design/2026-10-03-the-continuing-question.md`. Maßgeblich: `docs/design/2026-08-30-research-ecology-v3.md`
 + decision-log 2026-08-30. Die v2-Ordnung (2026-08-08 – 2026-08-30) ist datiert abgelöst;
 ältere Beschreibungen (Seasons, Arcs, Ship-Gates, Kill-Reading) sind historisch.
 
