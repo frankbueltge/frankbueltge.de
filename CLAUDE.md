@@ -9,7 +9,9 @@ Project · Instrument · Experiment im Wording-Kanon):
 Forschungspraktiken und eine Kontaktzone: The Atelier (Assay — so benannt seit 2026-09-03, davor provisorisch „Ulysses“; `/atelier`), The Field
 (Meridian, `/field`), The Studio (Ensemble, `/studio`), The Middle (`/encounters`);
 **(2) Machine Attention** (`/machine-attention`) — das Gegen-Experiment: EINE Maschine unter
-EINER Verfassung, mit den Untersuchungen The Foreknown (`/attention`), Dark Ocean (E-Experiment
+EINER Verfassung, mit den Untersuchungen The Foreknown (`/attention`, **seit 2026-10-04
+RETIRED** — Archiv, die Frage zieht als „The Interval“ zu langsamen Ernährungskrisen um, gebaut vom
+Discovery-Pass der Praxis, dessen Auftrag seitdem Bauen statt Warten ist), Dark Ocean (E-Experiment
 am 2026-08-22 nicht bestanden — bleibt dauerhaft nur im Praxis-Repo, läuft als Instrument
 weiter, keine Bühne mehr in Aussicht) und dem Instrument The State Before the
 Interface (`/observatory`). Eigenes Repo: `../machine-attention`.

@@ -38,6 +38,9 @@ const STATUS_WORDS: Record<string, string> = {
   // entered its window yet.
   instrument: 'a running instrument',
   v0: 'at v0, before its window',
+  // 2026-10-04: the admission path's pre-committed word for an honest end (projekt-aufnahme.md:
+  // "jederzeit: RETIRED") — the notary stopped, the record stays public at the same route.
+  retired: 'retired — the record kept',
 }
 
 /** Where an experiment can be read today. A null route is the admission path's
@@ -47,6 +50,10 @@ const STATUS_WORDS: Record<string, string> = {
  *  docs/wording-kanon.md, so it is a translation and not a drift.) */
 const PROJECT_NOTE: Record<string, string> = {
   foreknown: 'The flagship: the stage, a dossier per warning, the full ledger, and a level where the claims meet the preserved bytes.',
+  // Read when the export says `retired` (2026-10-04). Kept beside the running note so the hours
+  // between the practice's decision and the nightly mirror never show the wrong one.
+  'foreknown:retired':
+    'Retired on 2026-10-04 after fifty nights. It preserved every public warning from three keyless feeds the moment it was issued, and it was built to measure the gap between warning and response. The record says it could not: most of what it held were local US weather warnings announced hours ahead, nearly every verdict said only that a warning ran out at its source, and the money and attention it measured belonged to whole countries, never to one warning. The bytes, every dossier and every verdict stay public as an archive. The question moves to a clock where response is measurable — The Interval, below.',
   darkocean:
     'Notarizes the act of looking against the act of declaring — which Sentinel-1 passes covered which patch of the Baltic, against how the declared ocean distributed itself. Its acceptance experiment did not pass, reviewed 2026-08-22: two nights were lost to a deadlock in the practice’s own machinery, which put the sample-hour criterion out of reach, and the per-moment declared source never answered in 13 nights. What runs on is narrower than the project was — the nightly notary that asks a public archive whether it still says what it said.',
   memoryhole:
@@ -64,6 +71,8 @@ const PROJECT_NOTE: Record<string, string> = {
 // once the measurements came in, and a candidate that got smaller to become
 // provable should not keep advertising the larger promise.
 const CANDIDATES = [
+  // 2026-10-04: The Foreknown's question, moved to the clock where response is measurable.
+  { name: 'The Interval', origin: 'The Foreknown', line: 'how long humanitarian money takes to follow a projected food crisis', standing: 'audited 2026-10-04 — V0 admitted, built nightly by the discovery pass' },
   { name: 'Planetary Listening', origin: '—', line: 'one named site against its own public declaration and against the public catalogues', standing: 'audited 2026-08-22 — a V0 recommended as an instrument, awaiting admission' },
   { name: 'The Synthetic Flood', origin: 'Consensus', line: 'how much of public language is written by machines', standing: 'parked on a verified negative' },
   { name: 'Compute Ground', origin: 'Two Meters · The Floor · One Tap', line: 'the physical ground under the compute story', standing: 'parked until a form thesis exists, not until more data appears' },
@@ -110,19 +119,19 @@ const drift = figure('futures_drift')
     <section class="mb-12 border border-line bg-panel/60 p-5 text-sm leading-relaxed text-fg-muted">
       <h2 class="mb-3 text-[11px] uppercase tracking-[0.18em] text-fg-faint">What happens every night</h2>
       <ol class="space-y-2">
-        <li><b class="text-fg">1 · It reads</b> public sources that need no login and cost nothing — hazard alerts, cyclone forecasts, funding plans, news volume, satellite catalogues, procurement notices.</li>
+        <li><b class="text-fg">1 · It reads</b> public sources that need no login and cost nothing — satellite catalogues, the public web archive, procurement notices; until 2026-10-03 also hazard alerts, cyclone forecasts, funding plans and news volume.</li>
         <li><b class="text-fg">2 · It preserves</b> the original bytes with a SHA-256 and the UTC retrieval time, before deriving anything. Where a file is too large to keep, the record carries its address and hash instead.</li>
         <li><b class="text-fg">3 · It derives</b> its records deterministically. <em>No model touches observation, preservation or the ledger</em> — that path is plain code, so the same inputs always give the same output.</li>
         <li><b class="text-fg">4 · It verifies</b> itself: a separate implementation walks the chain backwards from every published figure to the bytes, and fails the build on any hole.</li>
-        <li><b class="text-fg">5 · It thinks</b> — separately. A nightly discovery pass reads the accumulated record and may propose difference observations, new sensors with their own falsification rule, new sources, and whole new investigations. It delivers by pull request; the tests and the verifier are the gate.</li>
+        <li><b class="text-fg">5 · It builds</b> — separately. Since 2026-10-04 a nightly discovery pass carries the next investigation through the admission path, one committed step a night: an exposé with its nearest neighbours, a live audit of every source, a V0 in tested increments. It repairs a running instrument only where the record proves a defect. It delivers by pull request; the tests and the verifier are the gate.</li>
         <li><b class="text-fg">6 · It writes itself down.</b> Every step lands in a public autonomy protocol — actor, model, tokens, cost, and who corrected whom. <em>No aggregate score is computed</em>, by design: a single number would invite exactly the comparison this practice refuses.</li>
       </ol>
       <p class="mt-4 text-xs text-fg-faint">
-        The intelligence layer is not decoration. The axis that now measures money and attention
-        around a running warning exists because the machine proposed it on its first night, before
-        anyone had built it — and it was implemented as written, including its own refusal to judge
-        whether funding is adequate. On that same first night it criticised its own overdue flag,
-        and that critique is now the register&rsquo;s cold-start honesty.
+        The intelligence layer is not decoration. The axis that measured money and attention
+        around The Foreknown&rsquo;s warnings existed because the machine proposed it on its first
+        night, before anyone had built it — and it was implemented as written, including its own
+        refusal to judge whether funding is adequate. For eight weeks the same layer then tended that
+        one instrument and moved no new investigation; since 2026-10-04 it is told to build instead.
       </p>
     </section>
 
@@ -145,10 +154,10 @@ const drift = figure('futures_drift')
                 {STATUS_WORDS[p.status] ?? p.status} · since {p.since}
               </span>
             </div>
-            <p class="mt-2 text-sm leading-relaxed text-fg-muted">{PROJECT_NOTE[p.id]}</p>
+            <p class="mt-2 text-sm leading-relaxed text-fg-muted">{PROJECT_NOTE[`${p.id}:${p.status}`] ?? PROJECT_NOTE[p.id]}</p>
             <p class="mt-2 font-mono text-[11px] text-fg-faint">
               {p.site_route
-                ? <>Public at <a href={p.site_route} class="underline hover:text-fg">{p.site_route}</a></>
+                ? <>{p.status === 'retired' ? 'Archived at' : 'Public at'} <a href={p.site_route} class="underline hover:text-fg">{p.site_route}</a></>
                 : <>Public only in <a href={REPO} class="underline hover:text-fg">the practice’s repository</a>{p.status === 'instrument' ? ' — and now by rule, permanently' : ' — by rule, until it passes'}</>}
             </p>
           </li>
@@ -167,6 +176,14 @@ const drift = figure('futures_drift')
         </p>
       )}
 
+      {!underWatch && figure('futures_notarized_total') && (
+        <p class="mt-5 font-mono text-xs leading-relaxed text-fg-faint">
+          The Foreknown&rsquo;s finished record: {figure('futures_notarized_total')?.value} announced
+          futures over {figure('nights_on_record')?.value} nights, {figure('futures_resolved')?.value} of
+          them resolved with a measured verdict, {figure('materialized')?.value} of those a forecast
+          that became an alert.
+        </p>
+      )}
       {underWatch && windowOpen && coldStart && (
         <p class="mt-5 font-mono text-xs leading-relaxed text-fg-faint">
           On record today: {underWatch.value} announced futures preserved and source-open —

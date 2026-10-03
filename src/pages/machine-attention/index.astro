@@ -22,8 +22,19 @@ const momentsCommit = (momentsFile as { generated_from?: { commit?: string } })?
 type Project = { id: string; title: string; since: string; site_route: string | null; status: string }
 const contractOk = (exportFile as { $contract?: string })?.$contract === 'attention-export/1'
 const projects: Project[] = contractOk ? (exportFile.projects as Project[]) : []
-const running = projects.filter((p) => p.site_route)
+// A retired project keeps its route as an archive (The Foreknown, 2026-10-04), so the
+// route alone no longer says "its attention lives here": the status word decides.
+const running = projects.filter((p) => p.site_route && p.status !== 'retired')
+const archived = projects.filter((p) => p.site_route && p.status === 'retired')
 const gated = projects.filter((p) => !p.site_route)
+/** How a project without a stage stands, in a reader's words — this line said "run an
+ *  acceptance experiment … until they pass" for Dark Ocean (an instrument since 2026-08-22)
+ *  and Memory Hole (at v0) until 2026-10-04; the status word now says which is which. */
+const GATED_WORDS: Record<string, string> = {
+  instrument: 'a quiet instrument, without a stage by rule',
+  v0: 'at v0, before its acceptance window',
+  'e-experiment': 'in its acceptance experiment',
+}
 
 /** Server-rendered fallback for every timestamp: the moment in plain UTC.
  *  The inline script upgrades it to a relative age; without JS the date
@@ -107,12 +118,25 @@ const utc = (ts: string) => `${ts.slice(0, 16).replace('T', ' ')} UTC`
           ))}
         </p>
       )}
+      {archived.length > 0 && (
+        <p class="mb-2 text-[13px]">
+          <span class="text-[11px] uppercase tracking-[0.18em] text-fg-faint">Retired, the record kept</span>
+          {archived.map((p) => (
+            <>
+              {' '}· <a href={p.site_route} class="underline decoration-line underline-offset-4 hover:text-fg">{p.title}</a>
+            </>
+          ))}
+        </p>
+      )}
       {gated.length > 0 && (
         <p class="mb-6 text-xs text-fg-faint">
-          {gated.length === 1 ? 'One more investigation runs' : `${gated.length} more investigations run`} an
-          acceptance experiment, public only in
-          {' '}<a href={REPO} class="underline hover:text-fg">the practice&rsquo;s repository</a> — by
-          rule, until {gated.length === 1 ? 'it passes' : 'they pass'}.
+          Public only in
+          {' '}<a href={REPO} class="underline hover:text-fg">the practice&rsquo;s repository</a>:
+          {gated.map((p, i) => (
+            <>
+              {i > 0 ? '; ' : ' '}{p.title}, {GATED_WORDS[p.status] ?? p.status}
+            </>
+          ))}.
         </p>
       )}
 

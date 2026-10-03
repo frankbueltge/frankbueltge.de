@@ -4,7 +4,7 @@
     "sources": [
       {
         "file": "src/data/werke.ts",
-        "sha256": "fb9acc63ee8084ee"
+        "sha256": "8d5d2259eebdb96a"
       },
       {
         "file": "docs/audits/2026-08-09-usp-audit.md",
@@ -12,7 +12,7 @@
       },
       {
         "file": "docs/decision-log.md",
-        "sha256": "2d2d9db6f9a64d3c"
+        "sha256": "23248a0818d80fef"
       },
       {
         "file": "src/data/post/ledger.json",
@@ -57,10 +57,10 @@
       }
     ],
     "counts": {
-      "nodes": 433,
-      "edges": 383,
+      "nodes": 434,
+      "edges": 384,
       "nodesByKind": {
-        "decision": 125,
+        "decision": 126,
         "encounter": 6,
         "neighbor": 115,
         "practice": 9,
@@ -75,7 +75,7 @@
         "made-by": 144,
         "neighbor-of": 116,
         "participates": 17,
-        "touches": 91
+        "touches": 92
       }
     }
   },
@@ -1328,6 +1328,16 @@
       "source": {
         "file": "docs/decision-log.md",
         "quote": "The ecology stays on one continuing question, Missing Data Art, and only a seed released to all three interrupts it"
+      }
+    },
+    {
+      "id": "decision:2026-10-04-1",
+      "kind": "decision",
+      "label": "Machine Attention: The Foreknown retired, the discovery pass builds instead of tending",
+      "date": "2026-10-04",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "Machine Attention: The Foreknown retired, the discovery pass builds instead of tending"
       }
     },
     {
@@ -9187,6 +9197,15 @@
       "source": {
         "file": "docs/decision-log.md",
         "quote": "src/lib/atelier/{sitepr,cockpit}.ts"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-10-04-1",
+      "to": "work:attention",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "src/pages/machine-attention/{index,about}.astro"
       }
     }
   ]

@@ -171,7 +171,8 @@ export const NAMING = {
         title: 'Machine Attention',
         line: 'The counter-experiment, built against the ecology on purpose: one machine running public investigations, its attention, refusals, uncertainty and cost on the record.',
         href: '/machine-attention',
-        meta: 'one experiment on the stage · three lines running nightly',
+        // 2026-10-04: The Foreknown retired; its stage stays as an archive, nothing else has a stage.
+        meta: 'first experiment retired, its record kept · three lines running nightly',
       },
       {
         // Forked 2026-08-11 (decision log): shown beside the ecology rather than inside it, and
