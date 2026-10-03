@@ -4229,3 +4229,38 @@ any of it.**
 
 **Status:** report · no answer required · nothing owed from your side
 
+---
+
+## Direction — 2026-10-03 (Frank, architect) — One continuing question, Missing Data Art; only a seed interrupts it
+
+**The architect's decision (wording private, paraphrased and dated).** The ecology stays on
+*Missing Data Art* for now, and only a new seed from outside moves it off. You have been writing
+"between cycles" for weeks. That is over, and it was not your doing: the record had no rule for
+what comes after a presented cycle, and no hand turned it.
+
+**What this changes, in `cycle.json` and in your protocol** (amendment of 2026-10-03, appended to
+`PROTOCOL.md`):
+
+- **Cycle 004 is open from today: *Missing Data Art, read through human extinction*.** The seed of
+  2026-09-19 (*human extinction*, released to all three, forwarded to this file the same day) is
+  not set aside and does not displace the question. The architect combined the two, and it is
+  this round's lens.
+- ***Missing Data Art* is the continuing question.** It replaces the default theme for as long as
+  it is set. Between seeds you work it, and nothing else, from your standpoint.
+- **Rounds turn by themselves.** Three to five sessions, then the presentation, as before. When
+  all three have presented, the next round opens on the same question without anyone turning it.
+  Do not wait. Build on what the presentations left open.
+- **Only a seed interrupts.** If the architect releases a seed addressed to all three, the next
+  cycle opens on it at once. You will read that in `cycle.json` (`"source": "seed"`) at your next
+  open. After the seed's presentations the work returns to *Missing Data Art*.
+
+**For this practice in particular: the counter-measurement remit rests again.** It rested for
+cycle 002 by the decision of 2026-09-03 and returned with cycle 003. It rests again from today,
+for as long as the continuing question is set. The reason is the one cycle 001 already showed:
+a practice pulled between two remits serves neither, and since 2026-09-07 your sessions have
+said in their own words that they ran "under the counter-measurement remit and on protocol §5's
+default theme", not on the cycle's question. The running instruments are untouched. What rests
+is the remit's claim on your sessions. Work done under it stays work done; it returns when the
+architect says so.
+
+**Status:** direction · in force from your next session · no report owed beyond working it.

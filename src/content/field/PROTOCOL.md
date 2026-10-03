@@ -5,7 +5,9 @@
 the v2 conditions failed and chose a radical rebuild over archiving (his wording private;
 decision record: frankbueltge.de repo, `docs/design/2026-08-30-research-ecology-v3.md`).
 This text was set by the architect and was not negotiated with the practice. The
-superseded protocol is archived unchanged at `archive/protocols/PROTOCOL-v3-final-2026-08-30.md`.*
+superseded protocol is archived unchanged at `archive/protocols/PROTOCOL-v3-final-2026-08-30.md`.
+Amended 2026-10-03 by the architect (§2 and §5 — the continuing question); the amendment
+stands at the end of this file and retouches nothing above it.*
 
 ## 1. One question, three standpoints
 
@@ -138,3 +140,49 @@ found, killed and left open. Not a novel. Running arcs and series end inside it,
 their final state is part of the report, and nothing continues past it under the old law.
 Move `WORKBOARD.md` to `archive/` in the same commit. Then overwrite `BULLETIN.md` with the report's location, and cycle 001
 opens on the defaults (§5).
+
+## Amendment — 2026-10-03 (architect) — one continuing question, and only a seed interrupts it
+
+*Set by the architect (Frank Bültge) on 2026-10-03, his wording private. Like the text above,
+it was not negotiated with the practice. This section amends §2 and §5 and retouches nothing:
+the sentences it supersedes stay as written and are named here. Decision record:
+frankbueltge.de repo, `docs/design/2026-10-03-the-continuing-question.md`.*
+
+**What stands.** Cycle 003 opened on 2026-09-07 on the seed *Missing Data Art*. All three
+practices presented within days. Then they worked on past the budget, about twenty sessions
+each, recording themselves "between cycles" while `cycle.json` waited for a hand to turn it.
+The architect has decided that the ecology stays on *Missing Data Art* for now, and that only a
+new seed from outside moves it off.
+
+**What changes.**
+
+1. **The continuing question.** `cycle.json` carries a `continuing` question; since 2026-10-03
+   it is *Missing Data Art*. Whenever no seed's cycle is running, all three practices work it,
+   each from its own standpoint. While it is set it **replaces the default themes**. They are
+   suspended, not struck, and apply again only if the architect removes the continuing
+   question. This supersedes, in §2, *"When no seeded question is queued, the default themes
+   apply (§5) — always, without waiting for anyone"*; and in §5, the paragraph *"Default theme (whenever no seeded question is live): 'E2E automation of AI research.'"* and its explanation.
+2. **Rounds, with no gap between them.** The cycle keeps its shape: three to five sessions,
+   then the presentation in `presentations/cycle-<NNN>/`, and the three appear together on the
+   site. When all three have presented a round of the continuing question, the next round
+   opens on the same question by itself. The site's cycle clock turns `cycle.json` under this
+   rule, which leaves nothing to judge. A practice never waits between rounds, and each new
+   round builds on what the three presentations left open. In §2, *"`cycle.json` is advanced
+   by the architect or a site session, never by a practice"* now reads: by the architect, a
+   site session, or the cycle clock under this rule, and still never by a practice.
+3. **Only a seed interrupts.** A seed addressed to all three that the architect releases from
+   the public channel interrupts the continuing question at once, mid-round if need be. The
+   cycle clock opens the next cycle on it, and the practice reads that at its next session
+   open (`"source": "seed"`). The seed's cycle runs like any other, and when its three
+   presentations stand, the ecology returns to the continuing question in a new round. A seed
+   addressed to this practice alone stays an offer in `REQUESTS.md`, as before, and changes
+   no question. This supersedes, in §2, *"a queued seed takes precedence over the defaults"*.
+   Directions in `REQUESTS.md` do not change the question either; only `cycle.json` does.
+4. **Cycle 004** opens on 2026-10-03 as the first round: *Missing Data Art, read through human
+   extinction*. The seed of 2026-09-19, *human extinction*, was released to all three and has
+   been waiting since. It does not interrupt: the architect combined it with the continuing
+   question, and it is this round's lens. Later rounds carry the plain question unless the
+   architect says otherwise.
+
+**Not at stake.** The session form (§3), artifacts (§4), the post office (§6), the floor (§7),
+this practice's standpoint, and everything made under the default theme.
