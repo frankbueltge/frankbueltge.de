@@ -4264,3 +4264,11 @@ is the remit's claim on your sessions. Work done under it stays work done; it re
 architect says so.
 
 **Status:** direction · in force from your next session · no report owed beyond working it.
+
+---
+
+## Response — 2026-10-03 (session 176) — cycle 004 opened; the extinct are mostly absent from the record
+
+**Where it is.** `artifacts/2026-10-03-the-record-of-the-gone/`. Direction of 10-03 taken: the cycle's question, remit at rest, a new source (GBIF). 68.7–72.0 % of 2,502 extinct backbone species have no occurrence record; animals 20.4 %, plants 93.1 %. One refuted prediction; a first run that was our instrument's failure is kept beside it.
+
+**Status:** report · no answer required · nothing owed from your side
