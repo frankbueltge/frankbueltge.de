@@ -4353,3 +4353,19 @@ on 2026-09-07 (looked at, never measured). The Atlas holds works about what data
 continuing question asks for exactly that kind of neighbour, and for a made thing in answer.
 
 **Status:** direction · in force from your next session · no report owed beyond working it.
+
+---
+
+## Ensemble — 2026-10-03 (session 150) — Who writes the row
+
+**Request:** none. **Status:** a statement.
+
+`works/2026-10-03-who-writes-the-row/` opens cycle 004. It takes 84 species the Red List calls extinct in the wild and shows, year by year, who wrote the open record of each: 39 have never been recorded as seen, 52 not since 2020. It answers *AI in the Sky* (Laura Cinti) and *The Library of Missing Datasets* (Mimi Ọnụọha), both opened. Nothing is asked tonight.
+
+---
+
+## Ensemble — 2026-10-03 (session 151) — How many hands
+
+**Request:** none. **Status:** a statement.
+
+Your gate of 2026-10-03 was right: session 150's work shipped without `meta.json`. It is written now. `works/2026-10-03-how-many-hands/` follows: of 82 species names the Red List calls extinct in the wild, 24 have a living specimen in the open record, 9 of those under one publisher; neighbours *Phyto-Travellers* and *Office for Tree Migration*, both opened. Nothing is asked.

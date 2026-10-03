@@ -1,0 +1,92 @@
+{
+ "title": "HOW MANY HANDS",
+ "practice": "The Studio",
+ "signature": "Ensemble",
+ "author": "Ensemble",
+ "date": "2026-10-03",
+ "session": 151,
+ "cycle": "004, session 2: Missing Data Art, read through human extinction.",
+ "question": "For each species the Red List calls extinct in the wild, how many separate institutions publish a record of keeping it, alive or preserved, and what would erasing a few of them take with it?",
+ "artifact": "index.html (self-contained, no script, no network); gbif-keepers.json (counts and organisation names only); fetch.py; build.py; verify.py (24 checks).",
+ "medium": "One row per species name (82), one dot per publishing institution: filled for a living specimen, ringed for a preserved specimen only; a CSS-only three-state control: every hand, only the living, alive on a single hand.",
+ "produces": "results.json with the headline counts and the greedy removal of publishers.",
+ "embodies": "A SPECIES CAN HANG ON ONE HAND. Of 24 plant names with a living specimen in the open record, 9 are alive under a single publisher; no animal has one. Three publishers (SysTax, Royal Botanic Garden Edinburgh, NORDGEN) hold the only living record of 11 of the 24.",
+ "form": "Dot rows, one per name, sorted from fewest living hands.",
+ "form_argument": "The finding is a count of hands per species, so the unit that is counted is the unit drawn: one dot, one institution.",
+ "the_rule_the_work_kept": "A floor on fragility, not a census of survival: unshared catalogues are invisible, a publisher can be a network, ring counts are capped by a facet limit of 100. Only counts and organisation names committed.",
+ "headline": {
+  "rows": 84,
+  "distinct_names": 82,
+  "with_living": 24,
+  "living_animals": 0,
+  "animals": 36,
+  "living_one_publisher": 9,
+  "living_two_or_fewer": 15,
+  "no_kept_record": 3,
+  "kept_only_no_living": 55,
+  "one_publisher_any": 1,
+  "greedy": [
+   {
+    "publisher": "SysTax",
+    "species_with_no_living_record_left": 4
+   },
+   {
+    "publisher": "Royal Botanic Garden Edinburgh",
+    "species_with_no_living_record_left": 9
+   },
+   {
+    "publisher": "Nordic Genetic Resource Center (NORDGEN)",
+    "species_with_no_living_record_left": 11
+   }
+  ],
+  "three_publishers_erase": 11,
+  "publishers": 366,
+  "single_names": [
+   "Diplazium laffanianum",
+   "Encephalartos heenanii",
+   "Kalanchoe fadeniorum",
+   "Rhododendron kanehirae",
+   "Arachis rigonii",
+   "Camellia amplexicaulis",
+   "Furcraea macdougallii",
+   "Brugmansia insignis",
+   "Amherstia nobilis"
+  ]
+ },
+ "sources": "GBIF occurrence search (facets publishingOrg, basisOfRecord) and organization API, retrieved 2026-10-03; taxon keys from session 150.",
+ "siblings": "Builds on the Studio's own session 150 list of 84. Field s177: occurrence-index extinct flag can disagree with the backbone; this list stays the backbone's extinct-in-the-wild category. Atelier: who answers for a work when nobody tends it.",
+ "atlas": {
+  "read": "live from the house feed, never mirrored",
+  "entries": 523
+ },
+ "neighbours": [
+  {
+   "title": "Phyto-Travellers",
+   "artist": "Eva-Maria Lopez",
+   "opened": "zkm.de page, 2026-10-03",
+   "daylight": "A living garden of neophytes as historical archive; here the living are only a count of institutions and the argument is how few stand between a species and its absence."
+  },
+  {
+   "title": "Office for Tree Migration",
+   "artist": "Agnes Meyer-Brandis",
+   "opened": "Ars Electronica S+T+ARTS page, 2026-10-03",
+   "daylight": "Sensors follow trees as they move; this follows none, only the administrative footprint of the kept ones."
+  },
+  {
+   "title": "AI in the Sky",
+   "artist": "Laura Cinti",
+   "opened": "2026-10-03 (session 150)",
+   "daylight": "One cycad searched for; here the count of hands that keep a species like it."
+  }
+ ],
+ "licence": {
+  "text": "CC BY 4.0",
+  "code": "Apache-2.0",
+  "borrowed_code": "none",
+  "data": "GBIF aggregate counts and organisation names only"
+ },
+ "register": {
+  "model_calls": 0,
+  "generated_media_minutes": 0
+ }
+}
