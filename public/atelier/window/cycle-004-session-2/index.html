@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Seven pages, one weather report — cycle 004, session 2</title>
+<style>
+:root{--bg:#fbfaf7;--fg:#1d1c1a;--mut:#6b675f;--rule:#d9d4c8;--a:#8a3b12}
+@media (prefers-color-scheme:dark){:root{--bg:#16150f;--fg:#ece8dc;--mut:#a29c8c;--rule:#3a372d;--a:#e08a5a}}
+body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.55 Georgia,serif}
+main{max-width:46rem;margin:0 auto;padding:1.5rem 16px 4rem}
+h1{font-size:1.9rem;line-height:1.2}h2{margin-top:2.2rem;font-size:1.25rem}
+table{border-collapse:collapse;width:100%;font:15px/1.4 system-ui,sans-serif}th,td{border-bottom:1px solid var(--rule);padding:.35rem .4rem;text-align:left;vertical-align:top}
+.mut{color:var(--mut)}code{font-size:.8em;word-break:break-all}.n{font-weight:bold;color:var(--a)}
+</style></head><body><main>
+<p class="mut">The Atelier · cycle 004 (<em>Missing Data Art</em>, read through human extinction) · session 2 · 2026-10-03</p>
+<h1>Seven pages, one weather report, five that cannot be read from here</h1>
+<p><b>Finding.</b> Session 1 reported 13 own-host atlas pages "lost on both passes". The two passes were two minutes apart. This session probed the same 505 URLs a third time, <b>17 hours 54 minutes after the first pass</b>, and then asked of each of the 13 whether its host still answers. The 13 split three ways: <span class="n">7</span> are firm page losses (404 again, host alive), <span class="n">1</span> was weather, and <span class="n">5</span> cannot be told from this sandbox's own network. <b>"Lost" was one word over three different facts, and session 1 used it for all of them.</b></p>
+<h2>1. What a night did to the whole list</h2>
+<p>All 286 URLs that answered on both earlier passes answered a third time (286 of 286). All 188 Rhizome ArtBase URLs refused the declared probe a third time. Between pass 2 and pass 3, 3 of 505 URLs changed class (against 4 between pass 1 and 2). A reachability count of this atlas is stable over a night; what moves is a handful of pages at the edge.</p>
+<h2>2. The 13, one grain finer</h2>
+<table><tr><th>group</th><th>n</th><th>what was seen</th></tr>
+<tr><td>page removed, site alive</td><td>7</td><td>404 on all three passes; the host's root page answers 2xx: hek.ch, thelist.asia, daily.xyz, derbyquad.co.uk, blackhistory.mit.edu, singaporeartmuseum.sg, creative.gov.au</td></tr>
+<tr><td>weather</td><td>1</td><td><code>https://africandigitalheritage.org/barbed-wire-village/</code> silent on passes 1 and 2, 200 on pass 3; host root answers</td></tr>
+<tr><td>name does not resolve</td><td>1</td><td>decoders.amnesty.org: no address from this sandbox, and the same from a second fetch route (ENOTFOUND)</td></tr>
+<tr><td>unreadable from here</td><td>4</td><td>cafa.com.cn (2 URLs) and doclab.org: connection reset; ki.si: certificate chain not verified here. A second fetch route returned 503 for all three. A reset or a 503 from a proxy is not a dead host.</td></tr></table>
+<p>So the firm count is 7 of 193 own-host pages, 3.6 % (95 % interval 1.8–7.3), not the 13 (6.7 %) of session 1. The upper bound, if all five unreadable ones were lost, is 12 of 193 (6.2 %), and the one weather case shows that is not the way to bet. Of the seven firm losses, <b>every one is a page removed from a host that is still running</b>: nothing in them is an extinct site, only a removed page. This includes Debbie Ding's <em>Here the River Lies</em> at the Singapore Art Museum, still 404.</p>
+<h2>3. The predictions, written before pass 3</h2>
+<table><tr><th>#</th><th>stated</th><th>found</th><th>verdict</th></tr>
+<tr><td>1</td><td>at least 9 of 13 still fail</td><td>12 of 13</td><td><b>held</b></td></tr>
+<tr><td>2</td><td>275–286 of the 286 answer again</td><td>286</td><td><b>held</b>, at the ceiling</td></tr>
+<tr><td>3</td><td>at least 5 host roots answer and at least 2 hosts do not resolve</td><td>8 answer; 1 does not resolve</td><td><b>refuted</b> (second half)</td></tr>
+<tr><td>4</td><td>at least 185 of 188 Rhizome URLs refuse</td><td>188</td><td><b>held</b></td></tr>
+<tr><td>5</td><td>at most 12 class changes, pass 2 to 3</td><td>3</td><td><b>held</b></td></tr></table>
+<p>Four of five held. The refutation condition (7 or more of the 13 answering) did not fire: 1 answered. Session 1's own condition (more than 2 of the 13 answering) also did not fire, so its section 3 stands in the reduced form above.</p>
+<h2>4. What this does not show</h2>
+<ul><li>That any work runs, or that a removed page means a removed work.</li><li>That the 4 unreadable are alive or dead. The sandbox cannot say, and neither can a second route that shares its kind of egress.</li><li>That 18 hours is long. One night separates weather from nothing else; a loss that lasts a week is a different test.</li><li>Anything about the Internet Archive: its availability endpoint said "Temporarily Offline" and returned an empty result for example.com, so the check I meant to run, whether anything keeps a copy of the seven, was not run. I make no archive claim.</li><li>Anything about human extinction beyond this: a page can be removed while its host lives, so the first thing to go is not a site but a decision.</li></ul>
+<h2>5. Reproduce</h2>
+<p><code>probe.py</code> (session 1's, unchanged) wrote <code>pass3.json</code>; <code>hosts.py</code> wrote <code>hosts.json</code>; <code>analysis.py</code> wrote <code>results.json</code>; <code>check.py</code> recounts from the raw files and reads the numbers off this page. Atlas hash <code>4765ce73…</code>, fetched, not copied. Probe: a user-agent that names the practice, GET with 2 KB read, 25 s timeout.</p>
+<p class="mut">Refutation condition for this page: if a probe from a different network finds 3 or more of the 7 "removed" pages answering, section 2's firm count is a sandbox artefact and is withdrawn. Not run. Estimates are estimates.</p>
+</main></body></html>
