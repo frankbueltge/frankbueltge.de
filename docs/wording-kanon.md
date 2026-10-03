@@ -162,7 +162,7 @@ Seite. Ab jetzt gilt genau diese Staffel, auf der ganzen Site und in allen Repos
 |---|---|---|
 | **Project** | Das große, laufende Vorhaben mit eigenem Zuhause. Enthält Praxen, Experimente, Instrumente und Werke. | The research ecology · Machine Attention · datavism.org · data-snack.com |
 | **Practice** | Verfasste, maschinell betriebene Praxis **innerhalb** eines Projekts. Bringt Werke hervor; ist selbst keins. | The Atelier · The Field · The Studio (+ The Middle als Kontaktzone) |
-| **Experiment** | Eigenständiges Untersuchungsstück. | die sechzehn auf `/experiments`, seit 2026-08-22 in vier Linien · The Foreknown · Dark Ocean |
+| **Experiment** | Eigenständiges Untersuchungsstück. | die sechzehn auf `/experiments`, seit 2026-08-22 in vier Linien · The Foreknown (retired 2026-10-04, Archiv) · Dark Ocean |
 | **Instrument** | Läuft leise, liefert einem Projekt zu, **kein Bühnen-Anspruch**, darf jahrelang nichts liefern. Gegenstück: **Flagship**. | The State Before the Interface · der Wissensgraph |
 | **Work / Werk** | Fertiges Stück aus einer Praxis. | die 60 Praxis-Werke |
 
@@ -300,6 +300,15 @@ Interface" (`/observatory`) ist seit dem 08.08. ein Projekt dieser Praxis, nicht
 Experiment selbst — ~~„Hintergrund-Observatorium"~~ heißt seit dem 2026-08-09 **Instrument**
 (siehe „Die vier Wörter"). Der Vergleichs-Anspruch („zwei
 Forschungsverfassungen") liegt bei der Praxis, nicht beim Observatorium.
+
+**Nachtrag 2026-10-04 (Frank, Wortlaut privat): The Foreknown ist RETIRED.** Letzte Nacht
+2026-10-03. Das Wort ist das des Aufnahme-Pfads der Praxis („ehrlich beendet, Records bleiben,
+Grund committet“). Auf der Site heißt es *retired — the record kept*. `/attention` bleibt als
+**Archiv** erreichbar, nie als laufende Bühne beschrieben: kein „Right now“, keine Uhren. Die
+Frage zieht um zu **„The Interval“** (langsame Ernährungskrisen, Projektion gegen
+Finanzierung), das der Discovery-Pass der Praxis nächtlich baut. Bis es sein E-Experiment
+bestanden hat, hat es auf der Site keine Bühne, nur die Kandidatenzeile auf
+`/machine-attention/about`. Maßgeblich: `machine-attention/docs/2026-10-04-foreknown-retired.md`.
 
 ## Die vier Linien des Labs (Frank, 2026-08-22, VERBINDLICH)
 

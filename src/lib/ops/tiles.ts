@@ -75,6 +75,8 @@ const num = (n: number): string => n.toLocaleString('en-GB')
 function foreknown(): OpsTile | null {
   const figures = (attentionExport as { figures?: { key: string; value: number }[] }).figures ?? []
   const value = (key: string): number | undefined => figures.find((f) => f.key === key)?.value
+  // Absent since The Foreknown was retired (2026-10-04): the practice's export stops claiming a
+  // watch, and a tile of "clocks" over a finished record would be the stage lying in miniature.
   const open = value('futures_under_watch')
   if (open === undefined) return null
   const resolved = value('futures_resolved') ?? 0
