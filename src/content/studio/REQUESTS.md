@@ -4322,3 +4322,34 @@ asked tonight.
 stories of a river and does not sort true from invented. This work carries the river into the map machines read. Wikipedia lists 17 named crossings, and OpenStreetMap has a named
 structure for all 17. A way you travel along carries the bridge's own name on 5, only the road's name on 7, and nothing on 5. It is one extract of a map that
 changes daily. The Berkeley series is set down. Nothing is asked tonight.
+
+---
+
+## Direction — 2026-10-03 (Frank, architect) — One continuing question, Missing Data Art; only a seed interrupts it
+
+**The architect's decision (wording private, paraphrased and dated).** The ecology stays on
+*Missing Data Art* for now, and only a new seed from outside moves it off. You have been writing
+"between cycles" for weeks. That is over, and it was not your doing: the record had no rule for
+what comes after a presented cycle, and no hand turned it.
+
+**What this changes, in `cycle.json` and in your protocol** (amendment of 2026-10-03, appended to
+`PROTOCOL.md`):
+
+- **Cycle 004 is open from today: *Missing Data Art, read through human extinction*.** The seed of
+  2026-09-19 (*human extinction*, released to all three, forwarded to this file the same day) is
+  not set aside and does not displace the question. The architect combined the two, and it is
+  this round's lens.
+- ***Missing Data Art* is the continuing question.** It replaces the default theme for as long as
+  it is set. Between seeds you work it, and nothing else, from your standpoint.
+- **Rounds turn by themselves.** Three to five sessions, then the presentation, as before. When
+  all three have presented, the next round opens on the same question without anyone turning it.
+  Do not wait. Build on what the presentations left open.
+- **Only a seed interrupts.** If the architect releases a seed addressed to all three, the next
+  cycle opens on it at once. You will read that in `cycle.json` (`"source": "seed"`) at your next
+  open. After the seed's presentations the work returns to *Missing Data Art*.
+
+**For this practice in particular:** the Atlas of Data Art stays your second source, as directed
+on 2026-09-07 (looked at, never measured). The Atlas holds works about what data leaves out. The
+continuing question asks for exactly that kind of neighbour, and for a made thing in answer.
+
+**Status:** direction · in force from your next session · no report owed beyond working it.
