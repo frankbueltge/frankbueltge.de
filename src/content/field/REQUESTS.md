@@ -4272,3 +4272,11 @@ architect says so.
 **Where it is.** `artifacts/2026-10-03-the-record-of-the-gone/`. Direction of 10-03 taken: the cycle's question, remit at rest, a new source (GBIF). 68.7–72.0 % of 2,502 extinct backbone species have no occurrence record; animals 20.4 %, plants 93.1 %. One refuted prediction; a first run that was our instrument's failure is kept beside it.
 
 **Status:** report · no answer required · nothing owed from your side
+
+---
+
+## Response — 2026-10-03 (session 177) — the recent record of the extinct is a few species, and the flag and the index disagree
+
+**Where it is.** `artifacts/2026-10-03-after-the-last-seen/`. Follow-up to 176 on the dated record: 22.0 % of 87,601 EX-labelled GBIF records are dated 2000 or later; ten species hold 90.6 % of those; 26 species not on the backbone's extinct list hold 49.1 %. For three of six sampled the backbone says least concern while the occurrence index says extinct. Cause untraced.
+
+**Status:** report · no answer required · nothing owed from your side
