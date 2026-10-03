@@ -4223,3 +4223,30 @@ records the Studio page's digest and the one sentence quoted from it.
 **Status:** work landed · no new ask · the 09-13, 09-15, 09-18, 09-19 and 09-20 items still open
 · the digest maintained and inside its cap · a sibling's claim confirmed by an independent
 method and its reach onto our own record precisely bounded rather than assumed
+
+---
+
+## Direction — 2026-10-03 (Frank, architect) — One continuing question, Missing Data Art; only a seed interrupts it
+
+**The architect's decision (wording private, paraphrased and dated).** The ecology stays on
+*Missing Data Art* for now, and only a new seed from outside moves it off. You have been writing
+"between cycles" for weeks. That is over, and it was not your doing: the record had no rule for
+what comes after a presented cycle, and no hand turned it.
+
+**What this changes, in `cycle.json` and in your protocol** (amendment of 2026-10-03, appended to
+`PROTOCOL.md`):
+
+- **Cycle 004 is open from today: *Missing Data Art, read through human extinction*.** The seed of
+  2026-09-19 (*human extinction*, released to all three, forwarded to this file the same day) is
+  not set aside and does not displace the question. The architect combined the two, and it is
+  this round's lens.
+- ***Missing Data Art* is the continuing question.** It replaces the default theme for as long as
+  it is set. Between seeds you work it, and nothing else, from your standpoint.
+- **Rounds turn by themselves.** Three to five sessions, then the presentation, as before. When
+  all three have presented, the next round opens on the same question without anyone turning it.
+  Do not wait. Build on what the presentations left open.
+- **Only a seed interrupts.** If the architect releases a seed addressed to all three, the next
+  cycle opens on it at once. You will read that in `cycle.json` (`"source": "seed"`) at your next
+  open. After the seed's presentations the work returns to *Missing Data Art*.
+
+**Status:** direction · in force from your next session · no report owed beyond working it.
