@@ -43,8 +43,8 @@
       },
       {
         "file": "src/content/studio/works/*/meta.json",
-        "sha256": "f080df133219f599",
-        "files": 36
+        "sha256": "1db1882f6dd3cd49",
+        "files": 38
       },
       {
         "file": "src/data/nightly/works/*/meta.json",
@@ -57,14 +57,14 @@
       }
     ],
     "counts": {
-      "nodes": 433,
-      "edges": 383,
+      "nodes": 435,
+      "edges": 385,
       "nodesByKind": {
         "decision": 125,
         "encounter": 6,
         "neighbor": 115,
         "practice": 9,
-        "practice-work": 144,
+        "practice-work": 146,
         "receiver": 8,
         "work": 26
       },
@@ -72,7 +72,7 @@
         "addresses": 8,
         "concerns": 2,
         "door": 5,
-        "made-by": 144,
+        "made-by": 146,
         "neighbor-of": 116,
         "participates": 17,
         "touches": 91
@@ -4902,6 +4902,36 @@
       "medium": "Inline SVG strip of the river as OpenStreetMap draws it (11 ways) with 17 numbered crossings, a table, one CSS control that turns the names over."
     },
     {
+      "id": "practice-work:studio/2026-10-03-how-many-hands",
+      "kind": "practice-work",
+      "label": "HOW MANY HANDS",
+      "slug": "2026-10-03-how-many-hands",
+      "practiceId": "ensemble",
+      "date": "2026-10-03",
+      "href": "/studio/works/2026-10-03-how-many-hands",
+      "source": {
+        "file": "src/content/studio/works/2026-10-03-how-many-hands/meta.json",
+        "quote": "\"title\": \"HOW MANY HANDS\""
+      },
+      "embodies": "A SPECIES CAN HANG ON ONE HAND. Of 24 plant names with a living specimen in the open record, 9 are alive under a single publisher; no animal has one. Three publishers (SysTax, Royal Botanic Garden Edinburgh, NORDGEN) hold the only living record of 11 of the 24.",
+      "medium": "One row per species name (82), one dot per publishing institution: filled for a living specimen, ringed for a preserved specimen only; a CSS-only three-state control: every hand, only the living, alive on a single hand."
+    },
+    {
+      "id": "practice-work:studio/2026-10-03-who-writes-the-row",
+      "kind": "practice-work",
+      "label": "WHO WRITES THE ROW",
+      "slug": "2026-10-03-who-writes-the-row",
+      "practiceId": "ensemble",
+      "date": "2026-10-03",
+      "href": "/studio/works/2026-10-03-who-writes-the-row",
+      "source": {
+        "file": "src/content/studio/works/2026-10-03-who-writes-the-row/meta.json",
+        "quote": "\"title\": \"WHO WRITES THE ROW\""
+      },
+      "embodies": "A RECORD CAN BE FULL AND STILL HAVE NO WATCHER. 39 of 84 species have no observation record, 52 none dated 2020 or later; the folders are full, the absence is the watcher.",
+      "medium": "One row per species, 84 rows, one mark per year 1900-2026 with a record, coloured by basis of record (seen, kept, living, unspecified); one CSS-only control that dims all but the observer marks and outlines the rows with none."
+    },
+    {
       "id": "receiver:center-for-humane-technology",
       "kind": "receiver",
       "label": "Center for Humane Technology",
@@ -6922,6 +6952,24 @@
       "source": {
         "file": "src/content/studio/works/2026-10-02-the-name-on-the-deck/meta.json",
         "quote": "\"date\": \"2026-10-02\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:studio/2026-10-03-how-many-hands",
+      "to": "practice:ensemble",
+      "source": {
+        "file": "src/content/studio/works/2026-10-03-how-many-hands/meta.json",
+        "quote": "\"date\": \"2026-10-03\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:studio/2026-10-03-who-writes-the-row",
+      "to": "practice:ensemble",
+      "source": {
+        "file": "src/content/studio/works/2026-10-03-who-writes-the-row/meta.json",
+        "quote": "\"date\": \"2026-10-03\""
       }
     },
     {

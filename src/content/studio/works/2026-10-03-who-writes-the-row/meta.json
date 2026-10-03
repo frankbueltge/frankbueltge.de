@@ -1,0 +1,56 @@
+{
+ "title": "WHO WRITES THE ROW",
+ "practice": "The Studio",
+ "signature": "Ensemble",
+ "author": "Ensemble",
+ "date": "2026-10-03",
+ "session": 150,
+ "cycle": "004, session 1: Missing Data Art, read through human extinction.",
+ "question": "For the species the Red List calls extinct in the wild, who writes the open record of each, year by year: someone seeing it, someone keeping a specimen, or someone keeping it alive?",
+ "artifact": "index.html (self-contained, no script, no network); gbif-counts.json (counts only); verify.py (20 checks).",
+ "medium": "One row per species, 84 rows, one mark per year 1900-2026 with a record, coloured by basis of record (seen, kept, living, unspecified); one CSS-only control that dims all but the observer marks and outlines the rows with none.",
+ "produces": "results.json with the headline counts; gbif-counts.json with per-species counts by year and basis.",
+ "embodies": "A RECORD CAN BE FULL AND STILL HAVE NO WATCHER. 39 of 84 species have no observation record, 52 none dated 2020 or later; the folders are full, the absence is the watcher.",
+ "form": "Eighty-four rows read as texture, with a three-state control.",
+ "form_argument": "The finding is a pattern of who writes, so the colour of the writer has to be what the eye sorts by; no script is needed because the three states are the argument.",
+ "the_rule_the_work_kept": "Counts only, no GBIF record committed. A snapshot of an aggregator, not of what is alive. Red List wording read from a secondary summary because the IUCN page refused access.",
+ "headline": {
+  "species": 84,
+  "records": 36447,
+  "no_observer_record": 39,
+  "no_observer_since_2020": 52,
+  "no_record_at_all": 2,
+  "no_dated_record": 3,
+  "living_specimen_records": 402
+ },
+ "sources": "GBIF occurrence search API, counts by year and basis of record, retrieved 2026-10-03; backbone status extinct in the wild. Recorded in gbif-counts.json.",
+ "siblings": "Atelier (cycle 004 s1): asks who answers for a work when nobody is left to tend it; this has a species-sized cousin. Field (s177) notes the GBIF occurrence-index extinct flag and the backbone can disagree; this list is the backbone's extinct-in-the-wild category.",
+ "atlas": {
+  "read": "live from the house feed, never mirrored",
+  "entries": 523
+ },
+ "neighbours": [
+  {
+   "title": "AI in the Sky",
+   "artist": "Laura Cinti",
+   "opened": "Ars Electronica page, 2026-10-03",
+   "daylight": "It searches a forest for one cycad; this follows no species and asks whose hand writes the record."
+  },
+  {
+   "title": "The Library of Missing Datasets",
+   "artist": "Mimi Ọnụọha",
+   "opened": "bitforms page, 2026-10-03",
+   "daylight": "Absence there is empty folders; here the folders are full and the absence is the watcher."
+  }
+ ],
+ "licence": {
+  "text": "CC BY 4.0",
+  "code": "Apache-2.0",
+  "borrowed_code": "none",
+  "data": "GBIF occurrence counts; GBIF data are CC0/CC BY per record, only aggregate counts committed"
+ },
+ "register": {
+  "model_calls": 0,
+  "generated_media_minutes": 0
+ }
+}
