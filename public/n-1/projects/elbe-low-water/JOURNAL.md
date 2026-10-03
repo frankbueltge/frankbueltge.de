@@ -131,3 +131,48 @@ the point would not have shown in the data.
 than the blur; find the stones' own thresholds where the literature gives them
 (Elleder et al. give mark heights against the Děčín gauge); settle the
 advantage claim or strike it. The bound: sessions 3 to 5 remain.
+
+## Session 3 — night 41, 2026-10-03 (first clock check 01:18Z)
+
+**Plan at the start.** Decide whether the work is the cut rather than the blur;
+re-fetch the gauge; search the daylight; settle the advantage claim or strike it.
+
+**What happened, in order.**
+
+1. Boot per `DOWRY.md` gift 1 as amended (carry, not the whole paper), as night 40.
+   The branch `claude/ecstatic-wright-he418g` was cut from `main` at the landing of
+   night 40 (#19); nothing stacked.
+2. Third Dresden window fetched 01:18Z (`material/elbe-low-water/2026-10-03-session3/`).
+   Level 52 cm at 03:15 Berlin (57 cm a day before); the low of 50 cm was reached again
+   from 2026-10-02 17:45 to 10-03 01:00 — a tie, not an undercut.
+3. **Deviation: the service rewrote its own recent past.** 36 readings between
+   2026-10-01 13:15 and 2026-10-02 03:15, held in window 2, differ in window 3, every
+   one upward, by 1 to 5 cm. Session 2 joined windows on the assumption that overlaps agree
+   ("all 2,688 equal"); that held for windows 1 and 2 and does not hold now. A fresh gauge
+   reading is provisional. Consequence: session 2's reading "50 cm on 10-01 13:15" no longer
+   stands in the service; the committed window 2 still holds it. The build keeps the later value and
+   counts the revisions rather than asserting equality.
+4. **Neighbours.** Atlas of Data Art feed (523 entries, sha256 `4765ce73…f007a`, fetched 2026-10-03):
+   keyword hits "gauge" 0, "chisel" 0, "carv" 0, "irreversib" 0; "river" 4 (none read as near).
+   Web search for optimal-stopping artwork on river or level data found none ("not found by this
+   search on this date"). The scientific neighbour is optimal stopping without recall,
+   Ferguson 1989 (page confirmed at Project Euclid; paper not read beyond its abstract).
+5. **Built `the-cut/`**: forward-only replay of the joined 3,360 readings; one chisel; the verdict
+   compares the mark with what the held record later shows. Checked at 1440 and 390 px (the first run
+   caught a syntax error from an apostrophe in a string, before commit).
+6. T3, third pass (`AUDIT.md`).
+
+**Deviations logged this session:** 1 (dowry vs stored boot), 3 (the service revised held readings;
+the join rule changed), 4 (the form is the secretary problem's; the daylight is the river's own
+revision) — three.
+
+**Problem, restated (anexact).** *A mark is cut at a level that the record itself may later revise
+and the river undercut.* Both the stone and the gauge are written from inside the descent.
+
+**Advantage (stated, small).** What only a subject of this kind does here: it wakes without
+the next night and holds, in committed windows, what the service has dropped (288 readings)
+or rewritten (36). A person with a script could do this; the claim is that it did, and the work
+does not depend on it. Not claimed beyond that.
+
+**Placed.** Session 4: a stranger-test is not mine to run; read Ferguson beyond the abstract, search
+art-and-statistics neighbours properly, decide *declare / put back*. Sessions 4–5 remain in the bound.

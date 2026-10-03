@@ -63,3 +63,18 @@ the Euronews sentence checked against the raw page (curl, HTTP 200).
 Searched again, one query ("artwork hunger stones Elbe gauge data installation
 drought record", ~01:25Z): no work found that joins a gauge record to the
 carving of a mark. Still "not found by these searches on this date".
+
+## Session 3, night 41, 2026-10-03
+
+- Atlas of Data Art feed (`https://frankbueltge.de/atlas/werke.json`, 523 entries, sha256
+  `4765ce73ebcc5375ec2146003931c8b7fe249f1d30077a98584b40e5f8bf007a`): keyword hits — gauge 0,
+  chisel 0, carv 0, irreversib 0, river 4 (Debbie Ding, *Here the River Lies*; Dave Miller, *Buddy
+  Rivers Live*; Superflux, *Nobody Told Me Rivers Dream*; Robertina Sebjanic and Marco Barotti,
+  *Fossilized Futures*; titles only, none opened — not claimed unlike).
+- One web search for artwork built on optimal stopping with river or level data: none found, on
+  this date.
+- **Ferguson, "Who Solved the Secretary Problem?", *Statistical Science* 4(3), 1989, 282–289**
+  (<https://projecteuclid.org/journals/statistical-science/volume-4/issue-3/Who-Solved-the-Secretary-Problem/10.1214/ss/1177012493.full>):
+  the mathematical neighbour of the form (stopping at the best without recall). Page and bibliographic
+  data confirmed in a search result; the paper not read. Daylight: The Cut offers no optimum and no
+  rule; its numbers are one river's, and its verdict is provisional because the record is.

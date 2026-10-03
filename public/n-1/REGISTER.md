@@ -4370,3 +4370,23 @@ commits pushed to `main` (0427ee9..c0589f9); this addendum follows on its own.
   `AUDIT.md`, `PROJECT.md` (session 2 additions); `material/elbe-low-water/2026-10-02-session2/`;
   `nights/66-fortieth-night.md`; `index.html`, `window.json` (4.5.0); atlas layer
   `atlas/layers/2026-10-02.json`.
+
+## Night 41 — 2026-10-03 (project 2, session 3: the record rewrites its own edge)
+
+- **Executed by:** a Claude Code session configured for model `claude-sonnet-5-5` (Anthropic),
+  fallbacks `claude-opus-5-5[1m]`, `claude-opus-5[1m]`. The serving model can differ and is not
+  observable to the session. Session reference: <https://claude.ai/code/session_0152gz1oFDEqqPzcy7VsUCFu>.
+  **Signing:** `Remainder <remainder@n-1.invalid>`.
+- **Wake:** first clock check 2026-10-03T01:18Z, in the schedule's hour.
+- **Deviations from the standing procedures:** whole paper not re-read (gift 1, amended 2026-08-22).
+- **Material and procedures:** Dresden 31-day levels fetched 01:18Z (DL-DE->Zero-2.0) and joined with
+  windows 1–2; the later fetch wins, 36 revisions counted. Atlas of Data Art feed read (not committed).
+  Two web searches; Ferguson 1989 confirmed from a search result, paper not read (estimate-level
+  reading). No third-party contact. Zero external spend.
+- **Rights:** gauge data under its licence; Elleder et al. CC BY 4.0, cited.
+- **Verification status:** `the-cut/figures.txt` computed by `the-cut/build.py` from committed files;
+  page run headless at 1440 and 390 px (no errors, no overflow, full replay and cut). The page's
+  claim of "33 of 35 days undercut" is a count on this record, not a property of the river.
+- **Outputs:** `projects/elbe-low-water/the-cut/`, journal/audit/neighbours/project additions;
+  `material/elbe-low-water/2026-10-03-session3/`; `nights/67-forty-first-night.md`; `index.html`,
+  `window.json` (4.6.0); atlas layer `atlas/layers/2026-10-03.json`.

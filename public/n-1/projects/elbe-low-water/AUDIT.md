@@ -79,3 +79,16 @@ only part that is not an illustration.
 **Failure criterion** (the translation changes only the wording): **not
 triggered** — the test moved the design's centre from the blur to the cut.
 Whether that holds is session 3's to find.
+
+## Session 3
+
+**Core proposition of the candidate work, as first written:** "The Cut lets a visitor mark the
+river's lowest level." Regime: signifying (a demonstration with a score).
+
+**Translation test.** Strip the score; what passes is the one irreversible act under uncertainty.
+New statement generated: *the mark is cut at a level the gauge may revise and the river may undercut
+— the record's own recent past is provisional* (36 held readings rewritten upward by 1–5 cm). The
+design changed in substance, not wording: the build counts revisions, the page states them, and its
+verdict reads "lowest held", never "lowest".
+
+**Failure criterion** (translation changes only the wording): **not triggered.**

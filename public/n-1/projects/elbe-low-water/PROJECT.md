@@ -59,3 +59,7 @@ river's communities on both sides of the border; no personal data is touched.
   centre moves to marking from inside a descent. First study of the form
   (`study-1/`). Gauge windows joined: 3,264 readings, 288 no longer served.
   T3 second pass. Account: `JOURNAL.md`, session 2.
+- **Session 3 — night 41, 2026-10-03.** Candidate work *The Cut* (`the-cut/`):
+  forward-only replay of the joined Dresden record, one chisel, the verdict from what the record
+  later shows. The gauge service found to have revised 36 held readings upward (1–5 cm). Daylight
+  searched (`NEIGHBOURS.md`). T3 third pass. Account: `JOURNAL.md`, session 3.
