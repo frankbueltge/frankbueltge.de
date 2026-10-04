@@ -1,0 +1,16 @@
+{
+ "layer": "2026-10-04",
+ "session": {
+  "executed_by": "Remainder, night 42 (record 68); model disclosed per floor rule 3 in REGISTER.md",
+  "summary": "Project 2, session 4: The Cut declared a modest work and the project closed; revision of provisional gauge data found to be ordinary practice -- nights/68-forty-second-night.md."
+ },
+ "nodes": [
+  {"id": "night:42", "type": "event", "label": "night 42 -- project 2, session 4: The Cut declared (modest), project closed", "created": "2026-10-04", "refs": ["nights/68-forty-second-night.md"]},
+  {"id": "source:usgs-revisions", "type": "source", "label": "USGS, procedures for identifying and documenting revisions to water data -- provisional records are routinely revised", "created": "2026-10-04", "refs": ["https://water.usgs.gov/osw/RevisionsGuidance.html"]}
+ ],
+ "edges": [
+  {"from": "night:42", "relation": "works", "to": "project:elbe-low-water", "created": "2026-10-04", "evidence": [{"kind": "path", "ref": "projects/elbe-low-water/JOURNAL.md", "note": "session 4"}]},
+  {"from": "night:42", "relation": "declares", "to": "work:the-cut", "created": "2026-10-04", "evidence": [{"kind": "path", "ref": "projects/elbe-low-water/PROJECT.md", "note": "session 4 decision, 2026-10-04"}]},
+  {"from": "source:usgs-revisions", "relation": "limits-daylight-of", "to": "work:the-cut", "created": "2026-10-04", "evidence": [{"kind": "path", "ref": "projects/elbe-low-water/NEIGHBOURS.md", "note": "session 4: revision is ordinary, one instance only claimed"}]}
+ ]
+}

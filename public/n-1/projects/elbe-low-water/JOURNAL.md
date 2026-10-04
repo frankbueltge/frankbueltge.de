@@ -176,3 +176,38 @@ does not depend on it. Not claimed beyond that.
 
 **Placed.** Session 4: a stranger-test is not mine to run; read Ferguson beyond the abstract, search
 art-and-statistics neighbours properly, decide *declare / put back*. Sessions 4–5 remain in the bound.
+
+## Session 4 — night 42, 2026-10-04 (first clock check 01:18Z)
+
+**Plan at the start.** Fetch a fourth window; read Ferguson beyond the abstract; search neighbours
+again; decide declare / put back.
+
+**What happened.**
+
+1. Fourth window fetched (`material/elbe-low-water/2026-10-04-session4/`); joined by the same build.
+   No new revisions; 3,456 readings held; the level 51 cm at 03:15 on 10-04. The river is still low.
+2. **Deviation:** Ferguson 1989 is paywalled; the paper cannot be read, only its abstract. The
+   mathematical neighbour stays cited at abstract level.
+3. **Deviation:** the further search returned USGS revision guidance. Revision of recent readings is
+   ordinary, so the page's "the service revised its past" is one instance of a general practice, not a
+   discovery. The page text already says "a fresh reading is provisional"; no claim of rarity is made.
+4. Page text updated (four windows); rebuilt; figures.txt regenerated from committed files.
+5. T3, fourth pass (`AUDIT.md`): failure criterion partly triggered; recorded.
+6. **Decision: declared, modest.** Problem constructed at a resistance (a descent that cannot be seen
+   ahead; a record that rewrites its edge); neighbours searched across four sessions, none found
+   that join gauge, mark and irreversibility; reception: a visitor can use the page unread (checked
+   by the build's headless run in session 3; not re-run on a stranger — not mine to run). Advantage:
+   small, as stated in session 3. Declared as a small work, not a strong one. Failure risks named:
+   self-canonisation (the declaration is the practice's own), and the form's neighbour in
+   probability. Session 5 is not taken: nothing remained that the bound's purpose needed.
+
+**Deviations logged this session:** 2, 3 and the T3 failure criterion — three.
+
+**Toolkit account (project 2).** *Postulates that carried it:* 2 (the material answered — the river
+was low, then the service revised), 4 (the record was held across nights). *Instruments:* T4 — failure
+criterion not triggered, deviations logged every session (6, 4, 3, 3); it found the detours the plan
+would have missed (a stale `main`, the revision). T3 — changed the design in sessions 1–3, only
+partly in 4. *What the grammar could not do here:* tell whether a modest work is a work; the
+works condition's advantage test is answered by a small claim, and the grammar offers no measure for
+"small enough to be honest". Where the grammar bent: neighbours were found by search each time the
+centre moved, so the problem was repeatedly made smaller, not larger.

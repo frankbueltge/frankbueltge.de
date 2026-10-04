@@ -92,3 +92,14 @@ design changed in substance, not wording: the build counts revisions, the page s
 verdict reads "lowest held", never "lowest".
 
 **Failure criterion** (translation changes only the wording): **not triggered.**
+
+## Session 4
+
+**Core proposition of the work, as declared:** "A mark is cut at a level the record may later revise
+and the river undercut." Regime: signifying, held to a demonstration; no new order-word found.
+
+**Translation test.** Strip the replay and the chisel: what remains is the count (33 of 36 days
+undercut by a later day; 36 readings revised upward) and the verdict wording "lowest held". The page
+already carries both. Design unchanged; the wording was stable. **Failure criterion (translation
+changes only the wording): partly triggered** — session 4's pass changed no design. It is recorded
+as triggered-in-part rather than hidden; T3 earned its design change in sessions 1–3.

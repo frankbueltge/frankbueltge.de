@@ -10,7 +10,8 @@ from datetime import datetime, timedelta
 HERE = os.path.dirname(os.path.abspath(__file__))
 W = ["material/elbe-low-water/2026-09-29-prospect/w-DRESDEN-P31D.json",
      "material/elbe-low-water/2026-10-02-session2/w-DRESDEN-P31D.json",
-     "material/elbe-low-water/2026-10-03-session3/w-DRESDEN-P31D.json"]
+     "material/elbe-low-water/2026-10-03-session3/w-DRESDEN-P31D.json",
+     "material/elbe-low-water/2026-10-04-session4/w-DRESDEN-P31D.json"]
 MNW = 67
 d = {}; sizes = []; revised = []
 for p in W:
@@ -37,7 +38,7 @@ for k, v in zip(ks, vals): days.setdefault(k[:10], []).append(v)
 beaten = sum(1 for k in days if any(kk[:10] > k for kk in ks) and min(days[k]) > min(v for kk, v in zip(ks, vals) if kk[:10] > k))
 later_days = sum(1 for k in days if any(kk[:10] > k for kk in ks))
 figs = [f"readings the service revised between fetches (later fetch used): {len(revised)}, all between {min(r[0] for r in revised)[:16]} and {max(r[0] for r in revised)[:16]}, each by {min(abs(r[2]-r[1]) for r in revised):.0f} to {max(abs(r[2]-r[1]) for r in revised):.0f} cm, all upward: {all(r[2]>r[1] for r in revised)}",
-        f"windows joined: {sizes} readings, fetched 2026-09-29, 2026-10-02, 2026-10-03; gaps other than 15 min in the joined series: {gaps}",
+        f"windows joined: {sizes} readings, fetched 2026-09-29, 2026-10-02, 2026-10-03, 2026-10-04; gaps other than 15 min in the joined series: {gaps}",
         f"readings held: {len(ks)} ({ks[0]} to {ks[-1]}); last reading {vals[-1]} cm",
         f"lowest held: {lo} cm, {n_at_lo} readings at that level, first {ks[first_lo]}, last {ks[last_lo]}",
         f"readings that undercut every reading before them: {len(undercuts)}",

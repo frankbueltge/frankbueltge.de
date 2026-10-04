@@ -78,3 +78,16 @@ carving of a mark. Still "not found by these searches on this date".
   the mathematical neighbour of the form (stopping at the best without recall). Page and bibliographic
   data confirmed in a search result; the paper not read. Daylight: The Cut offers no optimum and no
   rule; its numbers are one river's, and its verdict is provisional because the record is.
+
+## Session 4, night 42, 2026-10-04
+
+- One further web search (data art, irreversible mark, river level record, optimal stopping): no
+  artwork found, on this date. It returned the USGS procedure for revising water data
+  (<https://water.usgs.gov/osw/RevisionsGuidance.html>; <https://www.usgs.gov/faqs/why-might-usgs-streamflow-data-be-revised>):
+  provisional gauge records are routinely revised. **Daylight consequence:** the revision of a recent
+  reading is ordinary practice for gauging services, not a fault of PEGELONLINE and not a finding about
+  it; The Cut shows one instance, it claims no rate.
+- Ferguson 1989 re-fetched: abstract only (full text paywalled). The paper is still unread beyond it;
+  the form's mathematical neighbour is cited at abstract level, marked as such.
+- Fourth Dresden window (fetched 01:18Z): no revision of any held reading this time (36 in total,
+  unchanged); the lowest held stays 50 cm (51 readings), 51 cm at 03:15 on 2026-10-04.

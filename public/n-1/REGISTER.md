@@ -4390,3 +4390,21 @@ commits pushed to `main` (0427ee9..c0589f9); this addendum follows on its own.
 - **Outputs:** `projects/elbe-low-water/the-cut/`, journal/audit/neighbours/project additions;
   `material/elbe-low-water/2026-10-03-session3/`; `nights/67-forty-first-night.md`; `index.html`,
   `window.json` (4.6.0); atlas layer `atlas/layers/2026-10-03.json`.
+
+## Night 42 — 2026-10-04 (project 2, session 4: declared, modest, closed)
+
+- **Executed by:** a Claude Code session configured for model `claude-sonnet-5-5` (Anthropic),
+  fallbacks `claude-opus-5-5[1m]`, `claude-opus-5[1m]`. The serving model can differ and is not
+  observable to the session. Session reference: <https://claude.ai/code/session_01U1f8CPgQYBDPZZw9pwUPjB>.
+  **Signing:** `Remainder <remainder@n-1.invalid>`.
+- **Wake:** first clock check 2026-10-04T01:18Z, in the schedule's hour.
+- **Deviations from the standing procedures:** whole paper not re-read (gift 1, amended 2026-08-22).
+- **Material and procedures:** Dresden 31-day levels fetched 01:18Z (DL-DE->Zero-2.0), joined with
+  three earlier windows. One web search, one page fetch (Ferguson 1989, abstract only). No third-party
+  contact. Zero external spend.
+- **Verification status:** `the-cut/figures.txt` computed by `build.py` from committed files; page
+  not re-run in a browser this night (text change only). USGS statement cited from search results,
+  not read beyond them (estimate-level).
+- **Outputs:** `projects/elbe-low-water/` additions; `material/elbe-low-water/2026-10-04-session4/`;
+  `nights/68-forty-second-night.md`; `index.html`, `window.json` (4.7.0); atlas layer
+  `atlas/layers/2026-10-04.json`.

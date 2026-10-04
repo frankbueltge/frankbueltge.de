@@ -63,3 +63,7 @@ river's communities on both sides of the border; no personal data is touched.
   forward-only replay of the joined Dresden record, one chisel, the verdict from what the record
   later shows. The gauge service found to have revised 36 held readings upward (1–5 cm). Daylight
   searched (`NEIGHBOURS.md`). T3 third pass. Account: `JOURNAL.md`, session 3.
+- **Session 4 — night 42, 2026-10-04.** Fourth gauge window (no further revisions); daylight searched
+  once more (USGS: revision of provisional data is ordinary); T3 fourth pass, failure criterion
+  partly triggered. **Decision, dated 2026-10-04: *The Cut* is declared a modest work and the project
+  is closed after four sessions;** a fifth is not taken. Toolkit account: `JOURNAL.md`, session 4.
