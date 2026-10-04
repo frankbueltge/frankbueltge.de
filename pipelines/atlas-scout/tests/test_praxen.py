@@ -206,3 +206,18 @@ def test_eine_pruefziel_liste_zaehlt_nicht_als_zitat(tmp_path: Path):
     kennungen = {k.kennung for k in saat.koerner}
     assert "10.1215/2834703x-11700255" in kennungen, "echtes Zitat bleibt"
     assert "10.1186/s13031-024-00580-x" not in kennungen, "das Prüfziel fällt weg"
+
+
+def test_material_handed_to_a_practice_is_not_its_reading(tmp_path: Path):
+    """2026-10-04: the nightly line is read again. What the house hands it under
+    `material/` (the architect's working paper) is not a citation the line made."""
+    _repo(tmp_path, "error-as-method", {
+        "journal/2026-10-05.md": "Read: https://doi.org/10.1215/2834703X-11700255",
+        "material/iteration-not-imitation/working-paper-v0.6.en.md":
+            "cites https://doi.org/10.1007/s00146-024-02167-0",
+    })
+    saat = sammle(tmp_path, {"nightly": "error-as-method"})
+    kennungen = {k.kennung for k in saat.koerner}
+    assert "10.1215/2834703x-11700255" in kennungen
+    assert "10.1007/s00146-024-02167-0" not in kennungen
+    assert all(k.praxen == ("nightly",) for k in saat.koerner)

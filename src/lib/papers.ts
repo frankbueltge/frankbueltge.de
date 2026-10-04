@@ -133,6 +133,8 @@ const praxisNamen: Record<string, string> = {
   field: 'Field',
   studio: 'Studio',
   meridian: 'Meridian',
+  // 2026-10-04: the nightly line (error-as-method), read by the scout again since its fork.
+  nightly: 'Nightly line',
 }
 export const praxisLabel = (p: string): string => praxisNamen[p] ?? p
 
