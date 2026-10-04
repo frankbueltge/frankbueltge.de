@@ -12,7 +12,7 @@
       },
       {
         "file": "docs/decision-log.md",
-        "sha256": "23248a0818d80fef"
+        "sha256": "bc06e076a8019340"
       },
       {
         "file": "src/data/post/ledger.json",
@@ -57,10 +57,10 @@
       }
     ],
     "counts": {
-      "nodes": 437,
-      "edges": 387,
+      "nodes": 438,
+      "edges": 388,
       "nodesByKind": {
-        "decision": 126,
+        "decision": 127,
         "encounter": 6,
         "neighbor": 115,
         "practice": 9,
@@ -75,7 +75,7 @@
         "made-by": 147,
         "neighbor-of": 116,
         "participates": 17,
-        "touches": 92
+        "touches": 93
       }
     }
   },
@@ -1332,6 +1332,16 @@
     },
     {
       "id": "decision:2026-10-04-1",
+      "kind": "decision",
+      "label": "Dark Ocean retired too, Planetary Listening admitted to V0, and Common Ground joins the homepage's live experiments",
+      "date": "2026-10-04",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "Dark Ocean retired too, Planetary Listening admitted to V0, and Common Ground joins the homepage's live experiments"
+      }
+    },
+    {
+      "id": "decision:2026-10-04-2",
       "kind": "decision",
       "label": "Machine Attention: The Foreknown retired, the discovery pass builds instead of tending",
       "date": "2026-10-04",
@@ -9254,6 +9264,15 @@
     {
       "kind": "touches",
       "from": "decision:2026-10-04-1",
+      "to": "work:attention",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "src/pages/machine-attention/{index,about}.astro"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-10-04-2",
       "to": "work:attention",
       "source": {
         "file": "docs/decision-log.md",

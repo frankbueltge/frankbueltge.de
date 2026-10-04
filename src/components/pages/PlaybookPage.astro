@@ -44,34 +44,6 @@ const mb = (RECORDING.bytes / 1048576).toFixed(1)
         {RECORDING.language} · {RECORDING.duration} · {mb} MB · served from this site, no third party
         in the request · holds the screen awake while it plays, and lets go the moment it stops
       </p>
-
-      <div class="mt-6 rounded-md border border-line bg-panel p-5">
-        <p class="kicker">With the screen off</p>
-        <p class="mt-2 text-body text-fg-muted">
-          While this page is in front, it keeps the phone from locking itself — the same thing a
-          news site's player does during a clip. With the screen actually off it is a different
-          matter: a backgrounded Safari tab is suspended, so the player finishes the seconds it
-          already holds and stops. No header or setting on this side changes that, which is why
-          the apps that do it properly are native ones. Two ways out, both of them here.
-        </p>
-        <p class="mt-3 font-mono text-mono-sm">
-          <a class="sheet-link" href="/playbook/feed.xml">/playbook/feed.xml</a>
-        </p>
-        <p class="mt-2 font-mono text-mono-sm text-fg-faint">
-          Paste it into Overcast, Pocket Casts, AntennaPod or any podcast app that takes a URL.
-          There it gets background playback, the lock screen, a sleep timer, variable speed and a
-          resume position — none of which this page should be pretending to build. It is listed
-          in no directory; the URL is the whole distribution.
-        </p>
-        <p class="mt-4 font-mono text-mono-sm">
-          <a class="sheet-link" href={RECORDING.download} download>Or take the file ({mb} MB)</a>
-        </p>
-        <p class="mt-2 font-mono text-mono-sm text-fg-faint">
-          The shortest way out of the browser and the one that needs nothing set up: saved to a
-          phone, it plays in whatever that phone already uses for audio, offline, with the screen
-          off, and with no request coming back here at all.
-        </p>
-      </div>
     </section>
 
     <section class="mb-12">
