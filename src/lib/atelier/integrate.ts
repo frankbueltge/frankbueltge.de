@@ -19,10 +19,10 @@ const SHIELD_EXT = /\.(astro|ts|js|mjs)$/
 const SHIELD_NOTE =
   '// @ts-nocheck — engine work script shielded from the site TS gate (sandboxed display code, vetted by the collective gauntlet + checkForbidden + astro build). A missing type annotation must never turn the whole site build red — see work 011, 2026-07-06.'
 
-// Engine works are authored autonomously and only need to render, not satisfy the site's strict
-// tsconfig. Neutralise type-checking on their client scripts (.astro <script>) and helper modules
-// (.ts/.js/.mjs) so an implicit-any or missing annotation can't fail `astro check` and block the
-// deploy for every work. Bundling is still validated by `astro build`; genuinely unsafe code is
+// Native Astro works are authored autonomously and only need to render, not satisfy the site's
+// strict tsconfig. Neutralise type-checking on their client scripts (.astro <script>) and helper
+// modules (.ts/.js/.mjs) so an implicit-any or missing annotation can't fail `astro check` and
+// block the deploy for every work. (Standalone works are never shielded — see importWorkDir.) Bundling is still validated by `astro build`; genuinely unsafe code is
 // still rejected by checkForbidden (which scans the untouched source, not this shielded copy).
 // JSON-LD/data <script> blocks (and self-closing tags) are left untouched.
 function shieldEngineTypes(from: string, content: string): string {
@@ -33,12 +33,25 @@ function shieldEngineTypes(from: string, content: string): string {
   return `${SHIELD_NOTE}\n${content}`
 }
 
+/** Every file of a work directory, as '/'-separated paths relative to it — the whole tree
+ *  (2026-10-05: a standalone work travels whole, see paths.ts). Symbolic links are left out at
+ *  every depth: a link can point outside the work, and outside the clone, and copying its
+ *  target would publish whatever it names. */
+function listTree(dir: string, prefix = ''): string[] {
+  const out: string[] = []
+  for (const entry of readdirSync(dir, { withFileTypes: true })) {
+    const rel = prefix ? `${prefix}/${entry.name}` : entry.name
+    if (entry.isDirectory()) out.push(...listTree(join(dir, entry.name), rel))
+    else if (entry.isFile()) out.push(rel)
+  }
+  return out
+}
+
 // One work directory → site targets. Shared by the historical works/ pass and the
 // v4 published-projects pass; the technical gate (classify, slug, forbidden-scan,
 // shielding) is identical for both.
 function importWorkDir(dir: string, slug: string, ns: string, siteDir: string, report: IntegrateReport): void {
-  const files = readdirSync(dir)
-  const work = classifyWork(slug, files)
+  const work = classifyWork(slug, listTree(dir))
   if (work.kind === null) { report.rejected.push({ slug, reason: work.reason }); return }
   // Same rule as renderWrapperPage — reject before any file is touched
   if (!/^[a-z0-9-]+$/.test(slug)) { report.rejected.push({ slug, reason: 'unsafe slug (nur a-z, 0-9, - erlaubt)' }); return }
@@ -64,7 +77,11 @@ function importWorkDir(dir: string, slug: string, ns: string, siteDir: string, r
     for (const { from, to } of siteTargets(work, ns)) {
       const dest = join(siteDir, to)
       mkdirSync(dirname(dest), { recursive: true })
-      if (SHIELD_EXT.test(from)) writeFileSync(dest, shieldEngineTypes(from, readFileSync(join(dir, from), 'utf8')))
+      // Only a native Astro work's code is shielded: it becomes source of this site. A
+      // standalone work's scripts are served from public/, which the type check does not read
+      // (tsconfig.json excludes it since 2026-10-05), so they travel byte for byte — a rewritten
+      // vendored library would fail its own integrity hash and shift its source map.
+      if (work.kind === 'astro' && SHIELD_EXT.test(from)) writeFileSync(dest, shieldEngineTypes(from, readFileSync(join(dir, from), 'utf8')))
       // A standalone work is served straight from public/ and never passes through Astro, so
       // the wall text and the way back have to be written INTO the mirror — see work-frame.ts.
       // Source stays untouched; the mirror is rewritten from it on every integrate.

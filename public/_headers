@@ -1,67 +1,148 @@
 # public/_headers — Cloudflare Pages
-# frame-ancestors kann nicht per <meta http-equiv> gesetzt werden → muss als HTTP-Header kommen.
-# X-Frame-Options ist Legacy-Fallback für ältere Browser.
-
-# Standalone-Werke: Inline-Scripts erlaubt (generative Kunst). Sandbox im iframe gibt
-# zusätzlich null-origin → liest nichts aus frankbueltge.de.
 #
-# Gleichstellung mit dem Studio am 2026-08-16 (Franks Freigabe): Atelier, Field und Plenum
-# bekommen dieselbe Policy, die das Studio seit heute früh hat — style-src auch 'self',
-# media-src, connect-src 'self'. Vorher konnten diese drei zwar Skripte ausführen, aber
-# KEINE Datendatei zur Laufzeit nachladen: alles musste inline im HTML stehen, Ton und
-# Bewegtbild waren unmöglich. Das war eine Formfessel, keine Sicherheitsgrenze — der
-# Exfiltrations-Kanal, um dessentwillen die Sperre 2026-07-21 kam, bleibt zu, weil
-# connect-src NUR 'self' erlaubt: ein Werk erreicht die committeten, ohnehin öffentlichen
-# Daten dieser Domain und keinen fremden Host. wasm-unsafe-eval bleibt ungesetzt, bis ein
-# Konzept es nachweislich braucht.
-/atelier/werke-html/*
-  Content-Security-Policy: default-src 'none'; script-src 'unsafe-inline' 'self'; style-src 'unsafe-inline' 'self'; img-src 'self' data:; font-src 'self' data:; media-src 'self' data:; connect-src 'self'
+# frame-ancestors cannot be set from a <meta http-equiv> tag, so it has to arrive as an HTTP
+# header (the site-wide `/*` block below). X-Frame-Options is the legacy fallback for older
+# browsers.
+#
+# How rules combine (Cloudflare Pages docs, "Headers"): a request inherits the headers of EVERY
+# rule whose pattern matches it, and a header set by two rules has its values joined with a
+# comma. For Content-Security-Policy a comma separates two policies, and the browser enforces
+# BOTH: policies intersect, they never widen each other. A narrower rule overlapping a practice
+# prefix would silently narrow it. src/lib/engines/practice-policy.test.ts holds every rule here
+# against every practice prefix and against every target the integrate workflows mirror.
 
-# The practices' own windows (2026-08-16, the n-1 model carried to the practices): pages the
-# practices author and update themselves, mirrored verbatim — served under the same
-# self-contained sandbox their interactive works live under — which since 2026-08-16 means
-# media and connect-to-self as well (assets from this origin only; style-src also 'self' for a
-# built stylesheet). The rule is the sameness: a window may do what that practice's works may
-# do, never more and never less.
+# ——— The practices' surfaces: one shared policy ——————————————————————————————————————————
+#
+# 2026-10-05, Frank's decision (wording private): the machine-run practices may publish RICH
+# works on this site — interactive and generative pieces, 3D/WebGL scenes, interactive video
+# and sound, whole multi-page sites, built apps, WebAssembly (Pyodide among them) and live data
+# from public APIs. Size and form are not limited. Every path a practice's own pages are served
+# from bare carries the same policy, word for word, so no practice may do less than another
+# and no new mirror can arrive with a narrower one:
+#
+#   script-src   'self' 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob:
+#                Scripts from FOREIGN HOSTS still do not run (Frank's decision of 2026-09-04
+#                stands). A work vendors its libraries into its practice's repository, the
+#                mirror brings them along, and they run from this origin. eval and WebAssembly
+#                compilation, because three.js loaders, Pyodide and many built apps need them;
+#                blob:, because workers and generated modules are made from blobs.
+#   worker-src   'self' blob:
+#   style-src    'self' 'unsafe-inline'            stylesheets and fonts are vendored, too
+#   img-src      'self' data: blob: https:
+#   font-src     'self' data:
+#   media-src    'self' data: blob: https:        sound and moving image, streamed or not
+#   connect-src  'self' https: wss:               live data from any public API or socket,
+#                                                 as for the house's own pages since 2026-09-04
+#   frame-src    https:
+#   manifest-src 'self'
+#
+# What it replaces: from 2026-08-16 every practice prefix carried `connect-src 'self'` with no
+# 'wasm-unsafe-eval', no workers, no blob: and no image or media from another host — the
+# sandbox that kept the exfiltration channel closed after the 2026-07-21 lock. The decision of
+# 2026-10-05 opens it on purpose: a practice's work may read the world while it runs, as the
+# house's pages may. The policy text lives in src/lib/engines/practice-policy.ts; a test keeps
+# every line below identical to it.
+
+# The Atelier: standalone works (scripts/atelier/integrate.ts), its own window (2026-08-16, the
+# n-1 model carried to the practices) and its v3 public artifacts (2026-08-30/31), each mirrored
+# bare by atelier-integrate.yml.
+/atelier/werke-html/*
+  Content-Security-Policy: default-src 'none'; script-src 'self' 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob:; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self' data:; media-src 'self' data: blob: https:; connect-src 'self' https: wss:; frame-src https:; manifest-src 'self'
+
 /atelier/window/*
-  Content-Security-Policy: default-src 'none'; script-src 'unsafe-inline' 'self'; style-src 'unsafe-inline' 'self'; img-src 'self' data:; font-src 'self' data:; media-src 'self' data:; connect-src 'self'
+  Content-Security-Policy: default-src 'none'; script-src 'self' 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob:; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self' data:; media-src 'self' data: blob: https:; connect-src 'self' https: wss:; frame-src https:; manifest-src 'self'
+
+# The v3 artifacts — closing reports, cycle artifacts, cycle presentations — are the practices'
+# own self-contained pages, mirrored bare since 2026-08-30/31. Until 2026-10-05 they carried no
+# practice policy at all, only the site-wide frame-ancestors one, so a script from any host
+# would have run on them. Measured before setting this, for all three practices: no page
+# mirrored there today loads anything from another host, so the policy costs them nothing.
+/atelier/presentations/*
+  Content-Security-Policy: default-src 'none'; script-src 'self' 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob:; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self' data:; media-src 'self' data: blob: https:; connect-src 'self' https: wss:; frame-src https:; manifest-src 'self'
+
+/atelier/artifacts/*
+  Content-Security-Policy: default-src 'none'; script-src 'self' 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob:; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self' data:; media-src 'self' data: blob: https:; connect-src 'self' https: wss:; frame-src https:; manifest-src 'self'
+
+/atelier/closing-report/*
+  Content-Security-Policy: default-src 'none'; script-src 'self' 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob:; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self' data:; media-src 'self' data: blob: https:; connect-src 'self' https: wss:; frame-src https:; manifest-src 'self'
+
+# The Field, the same four kinds of surface (field-integrate.yml).
+/field/werke-html/*
+  Content-Security-Policy: default-src 'none'; script-src 'self' 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob:; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self' data:; media-src 'self' data: blob: https:; connect-src 'self' https: wss:; frame-src https:; manifest-src 'self'
 
 /field/window/*
-  Content-Security-Policy: default-src 'none'; script-src 'unsafe-inline' 'self'; style-src 'unsafe-inline' 'self'; img-src 'self' data:; font-src 'self' data:; media-src 'self' data:; connect-src 'self'
+  Content-Security-Policy: default-src 'none'; script-src 'self' 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob:; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self' data:; media-src 'self' data: blob: https:; connect-src 'self' https: wss:; frame-src https:; manifest-src 'self'
 
-# The Studio's window carries the same widened policy as its works (media + connect-to-self,
-# Franks Freigabe 2026-08-16, see the studio werke-html block below): a practice whose form
-# floor demands exhibitable sound and time behaviour gets them in its own window too.
-/studio/window/*
-  Content-Security-Policy: default-src 'none'; script-src 'unsafe-inline' 'self'; style-src 'unsafe-inline' 'self'; img-src 'self' data:; font-src 'self' data:; media-src 'self' data:; connect-src 'self'
+/field/presentations/*
+  Content-Security-Policy: default-src 'none'; script-src 'self' 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob:; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self' data:; media-src 'self' data: blob: https:; connect-src 'self' https: wss:; frame-src https:; manifest-src 'self'
 
-/field/werke-html/*
-  Content-Security-Policy: default-src 'none'; script-src 'unsafe-inline' 'self'; style-src 'unsafe-inline' 'self'; img-src 'self' data:; font-src 'self' data:; media-src 'self' data:; connect-src 'self'
+/field/artifacts/*
+  Content-Security-Policy: default-src 'none'; script-src 'self' 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob:; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self' data:; media-src 'self' data: blob: https:; connect-src 'self' https: wss:; frame-src https:; manifest-src 'self'
 
-/plenum/werke-html/*
-  Content-Security-Policy: default-src 'none'; script-src 'unsafe-inline' 'self'; style-src 'unsafe-inline' 'self'; img-src 'self' data:; font-src 'self' data:; media-src 'self' data:; connect-src 'self'
+/field/closing-report/*
+  Content-Security-Policy: default-src 'none'; script-src 'self' 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob:; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self' data:; media-src 'self' data: blob: https:; connect-src 'self' https: wss:; frame-src https:; manifest-src 'self'
 
-# style-src zusätzlich 'self': Werkstatt-Werke des Studios (SITE-API "Built works") liefern
-# ein gebautes style.css als eigene Datei statt nur Inline-Styles.
-#
-# media-src und connect-src ergänzt am 2026-08-16 (Franks Freigabe) — Bedingung des
-# Formbodens von Studio-Protokoll v3: ein Werk muss ausstellbar sein und darf Ton,
-# Bewegtbild, Zeitverhalten oder Livedaten tragen. Beides war zuvor unmöglich, nicht schwer:
-# `default-src 'none'` ohne media-src spielt keinen Ton ab, auch nicht als data:-URI.
-#
-# Bewusst eng: connect-src erlaubt NUR 'self'. Ein Werk erreicht damit die committeten
-# Daten dieser Domain (die ohnehin öffentlich sind), aber keinen fremden Host — der
-# Exfiltrations-Kanal, um dessentwillen die Sperre 2026-07-21 überhaupt kam, bleibt zu.
-# wasm-unsafe-eval bleibt NICHT gesetzt: erst wenn ein Konzept es nachweislich braucht.
-# Galt zunächst nur für das Studio; am selben Tag auf Atelier, Field und Plenum ausgeweitet
-# (Franks Freigabe) — Begründung im Atelier-Block oben. Alle vier Werk-Policies sind seitdem
-# wortgleich, und das sollen sie bleiben: eine Praxis, deren Werke weniger dürfen als die
-# der Nachbarn, hat eine Formfessel, die niemand beschlossen hat.
+# The Studio, the same four kinds of surface (studio-integrate.yml).
 /studio/werke-html/*
-  Content-Security-Policy: default-src 'none'; script-src 'unsafe-inline' 'self'; style-src 'unsafe-inline' 'self'; img-src 'self' data:; font-src 'self' data:; media-src 'self' data:; connect-src 'self'
+  Content-Security-Policy: default-src 'none'; script-src 'self' 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob:; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self' data:; media-src 'self' data: blob: https:; connect-src 'self' https: wss:; frame-src https:; manifest-src 'self'
 
-# Öffentlicher Chronik-Feed des Field-Projekts: bewusst offener CORS (read-only JSON,
-# konsumiert von data-snack.com "Wareneingang" und datavism.org — eine Quelle, drei Flächen).
+/studio/window/*
+  Content-Security-Policy: default-src 'none'; script-src 'self' 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob:; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self' data:; media-src 'self' data: blob: https:; connect-src 'self' https: wss:; frame-src https:; manifest-src 'self'
+
+/studio/presentations/*
+  Content-Security-Policy: default-src 'none'; script-src 'self' 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob:; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self' data:; media-src 'self' data: blob: https:; connect-src 'self' https: wss:; frame-src https:; manifest-src 'self'
+
+/studio/artifacts/*
+  Content-Security-Policy: default-src 'none'; script-src 'self' 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob:; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self' data:; media-src 'self' data: blob: https:; connect-src 'self' https: wss:; frame-src https:; manifest-src 'self'
+
+/studio/closing-report/*
+  Content-Security-Policy: default-src 'none'; script-src 'self' 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob:; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self' data:; media-src 'self' data: blob: https:; connect-src 'self' https: wss:; frame-src https:; manifest-src 'self'
+
+# The Plenum's standalone works (plenum-integrate.yml).
+/plenum/werke-html/*
+  Content-Security-Policy: default-src 'none'; script-src 'self' 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob:; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self' data:; media-src 'self' data: blob: https:; connect-src 'self' https: wss:; frame-src https:; manifest-src 'self'
+
+# n-1: the practice's whole repository, mirrored byte for byte (n1-integrate.yml). It had no
+# policy at all until 2026-08-16 — not by decision, but because nobody had written one.
+/n-1/*
+  Content-Security-Policy: default-src 'none'; script-src 'self' 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob:; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self' data:; media-src 'self' data: blob: https:; connect-src 'self' https: wss:; frame-src https:; manifest-src 'self'
+
+# Arch: the whole repository as well (arch-integrate.yml). Until 2026-10-05 only its works were
+# covered (2026-08-23); a page anywhere else in the record would have run under no policy. The
+# house's own pages under /arch/ (the room, the reading) carry Astro's stricter per-page CSP as
+# well, and two policies intersect, so they lose nothing and gain nothing. The works keep a rule
+# of their own, so the door cannot be lost with the wider one; identical policies cost nothing.
+/arch/*
+  Content-Security-Policy: default-src 'none'; script-src 'self' 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob:; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self' data:; media-src 'self' data: blob: https:; connect-src 'self' https: wss:; frame-src https:; manifest-src 'self'
+
+/arch/works/*
+  Content-Security-Policy: default-src 'none'; script-src 'self' 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob:; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self' data:; media-src 'self' data: blob: https:; connect-src 'self' https: wss:; frame-src https:; manifest-src 'self'
+
+# The nightly line (scripts/nightly/mirror.mjs, 2026-09-03): a stage work's own index.html is
+# served bare at /error-as-method/<slug>/. The house's own pages under this prefix carry Astro's
+# stricter per-page CSP as well; two policies intersect, so they lose nothing and gain nothing.
+/error-as-method/*
+  Content-Security-Policy: default-src 'none'; script-src 'self' 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob:; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self' data:; media-src 'self' data: blob: https:; connect-src 'self' https: wss:; frame-src https:; manifest-src 'self'
+
+# The nightly line's faces (2026-10-04): a text work's own index.html, with everything beside
+# it, at /error-as-method/works-html/<slug>/. The block above already covers this path; this one
+# names the door so that it cannot be lost by accident. Narrowing the block above would narrow
+# the faces too, because policies intersect and never widen each other.
+/error-as-method/works-html/*
+  Content-Security-Policy: default-src 'none'; script-src 'self' 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob:; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self' data:; media-src 'self' data: blob: https:; connect-src 'self' https: wss:; frame-src https:; manifest-src 'self'
+
+# Machine Attention's practice stage (attention-integrate.yml). Until 2026-10-05 it carried a
+# stricter form — 'self' without 'unsafe-inline', no WebAssembly, connect to this origin only —
+# because the stage kept to it (stage.js and style.css as files, no inline script). The decision
+# of 2026-10-05 covers this practice as much as the others; the stage loses nothing it uses
+# today and may now grow into what the others may do.
+/attention/*
+  Content-Security-Policy: default-src 'none'; script-src 'self' 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob:; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self' data:; media-src 'self' data: blob: https:; connect-src 'self' https: wss:; frame-src https:; manifest-src 'self'
+
+# ——— The house ——————————————————————————————————————————————————————————————————————————
+
+# Public chronicle feed of the Field project: deliberately open CORS (read-only JSON, consumed
+# by data-snack.com "Wareneingang" and datavism.org — one source, three surfaces).
 /field/chronicle.json
   Access-Control-Allow-Origin: *
   Cache-Control: public, max-age=3600
@@ -101,67 +182,6 @@
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
   Content-Security-Policy: frame-ancestors 'self'
-
-# n-1: the practice's whole repository is mirrored here and served as its own surface. Until
-# 2026-08-16 it had no policy at all — not by decision, but because nobody had written one, so
-# the practice with the most freedom on this site was the one nobody had thought about. It now
-# carries the same policy as the practices' works (Franks Freigabe).
-#
-# Measured before setting it, so this is a fact and not a hope: n-1 references no third-party
-# host at all today — its work uses an inline script and fetches its own committed evidence
-# from this origin. The policy therefore costs it nothing it currently does, and adds media
-# and connect-to-self on top. What it blocks is foreign code, which is also the one thing the
-# practice's own surface already promises not to use: it claims to hold "no state a layer
-# cannot back" and to re-derive itself from committed layers at every load. A CDN library
-# would break that promise before it broke anything else.
-/n-1/*
-  Content-Security-Policy: default-src 'none'; script-src 'unsafe-inline' 'self'; style-src 'unsafe-inline' 'self'; img-src 'self' data:; font-src 'self' data:; media-src 'self' data:; connect-src 'self'
-
-# Arch's works (2026-08-23): served bare from the practice's mirror, under the same sandbox as
-# every other practice's works. Measured before setting it: the first work is one self-contained
-# file — inline script, inline style, its data embedded, no request at encounter time — so the
-# policy costs it nothing and forbids only foreign code, which its own README promises not to use.
-/arch/works/*
-  Content-Security-Policy: default-src 'none'; script-src 'unsafe-inline' 'self'; style-src 'unsafe-inline' 'self'; img-src 'self' data:; font-src 'self' data:; media-src 'self' data:; connect-src 'self'
-
-# The nightly line's works (2026-09-03, Frank's direction that every practice use the new
-# means, wording private): scripts/nightly/mirror.mjs already serves a work's own index.html
-# bare at /error-as-method/<slug>/, with no page of the house in front of it — but no policy
-# was ever set for that path, so such a work fell under the site's own CSP, which allows no
-# inline script, and would not have run. This is the siblings' sandbox, word for word. The
-# house's own pages under this prefix carry Astro's stricter per-page CSP as well, and two
-# policies intersect, so they lose nothing; only a bare work gains what the others already have.
-/error-as-method/*
-  Content-Security-Policy: default-src 'none'; script-src 'unsafe-inline' 'self'; style-src 'unsafe-inline' 'self'; img-src 'self' data:; font-src 'self' data:; media-src 'self' data:; connect-src 'self'
-
-# The nightly line's faces (2026-10-04): the door promised to the line on 2026-09-03 and built
-# today. A text work's own index.html is mirrored to /error-as-method/works-html/<slug>/ and served
-# bare, like the siblings' werke-html pages, under their sandbox word for word. The block above
-# already sends this exact policy for the whole prefix; this one names the door so that it cannot
-# be lost by accident. Both match, Pages joins the two values with a comma, and a comma-separated
-# CSP is two policies that BOTH apply — identical ones cost nothing. The consequence to keep in
-# mind: narrowing the block above would narrow the faces too, because policies intersect and never
-# widen each other. Measured before setting it: the sixteen faces are inline script and style,
-# their figure.svg and work.md beside them, and no request to any other host.
-/error-as-method/works-html/*
-  Content-Security-Policy: default-src 'none'; script-src 'unsafe-inline' 'self'; style-src 'unsafe-inline' 'self'; img-src 'self' data:; font-src 'self' data:; media-src 'self' data:; connect-src 'self'
-
-# The machine-attention practice stage: separate CSS/JS files, embedded fonts,
-# no inline scripts, no network calls (clocks tick from data attributes).
-#
-# media-src und connect-src ergänzt 2026-08-16 (Franks Freigabe), aus demselben Grund wie bei
-# den Praxen: eine Decke, die niemand beschlossen hatte. Die Bühne KONNTE keine Daten zur
-# Laufzeit holen und keinen Ton abspielen — auch nicht von der eigenen Domain, auch nicht als
-# data:-URI. Vorsorglich, nicht korrigierend: anders als bei Atelier und Field gibt es kein
-# Anzeichen, dass die Grenze drückt.
-#
-# script-src und style-src bleiben BEWUSST bei 'self' ohne 'unsafe-inline' — anders als bei
-# den vier Werk-Policies. Das ist die strengere Form, und diese Praxis hält sie nachweislich
-# ein: stage.js und style.css liegen als eigene Dateien, null Inline-Skripte. Sie hier
-# aufzuweichen, damit alle Blöcke gleich aussehen, wäre eine Verschlechterung ohne Gewinn.
-# Das Prinzip ist „keine Decke, die niemand beschlossen hat" — nicht „alle Regeln wortgleich".
-/attention/*
-  Content-Security-Policy: default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; media-src 'self' data:; connect-src 'self'
 
 # The found recording (2026-09-20). Delivery moved to functions/audio/[file].js, which answers
 # Range requests itself — Pages answered them here with a full 200 and no Accept-Ranges, which

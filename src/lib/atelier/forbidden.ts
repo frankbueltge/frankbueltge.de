@@ -1,17 +1,26 @@
 // src/lib/atelier/forbidden.ts
-// Gate principle: LINKS YES, LOADS NO. External URLs are only forbidden where the browser
-// or code would LOAD them (src/srcset/poster, <link href>, @import, url(), fetch/import(),
-// Worker/WebSocket/XHR). Citation links (<a href>) and plain-text URLs are allowed — the
-// engines' constitutions REQUIRE retrievable source URLs.
+// The scan of a NATIVE Astro work (work.astro), whose code becomes part of a page of the house
+// and runs under the house's own CSP. A standalone work (index.html) is not scanned: it is
+// served bare under the practices' shared policy (src/lib/engines/practice-policy.ts).
+//
+// Gate principle: LINKS YES, FOREIGN CODE AND ASSETS NO. External URLs are only forbidden where
+// the browser or code would LOAD them as code or as an asset of the page (src/srcset/poster,
+// <link href>, @import, url(), import(), Worker). Citation links (<a href>) and plain-text URLs
+// are allowed — the engines' constitutions REQUIRE retrievable source URLs.
+//
+// Reading DATA from another host is allowed since 2026-10-05: fetch(), XHR, WebSocket and
+// EventSource. The house's own CSP has carried `connect-src 'self' https: wss:` since
+// 2026-09-04 (Frank's decision, wording private), so this scan was the last thing still
+// refusing a live feed in an Astro work — and live data from public APIs is one of the forms
+// Frank's decision of 2026-10-05 names for the practices.
 
 const LOADING_CONTEXTS: { re: RegExp; label: string }[] = [
   { re: /\b(?:src|poster)\s*=\s*\{?\s*["'`]?(https?:\/\/[^"'`\s>})]+)/g, label: 'resource attribute' },
   { re: /<link\b[^>]*\bhref\s*=\s*["']?(https?:\/\/[^"'\s>]+)/g, label: 'link href' },
   { re: /@import\s+(?:url\(\s*)?["']?(https?:\/\/[^"'\s)]+)/g, label: '@import' },
   { re: /\burl\(\s*["']?(https?:\/\/[^"')\s]+)/g, label: 'css url()' },
-  { re: /\b(?:fetch|import)\s*\(\s*["'`](https?:\/\/[^"'`]+)/g, label: 'fetch/import()' },
-  { re: /\bnew\s+(?:Worker|SharedWorker|WebSocket|EventSource)\s*\(\s*["'`](https?:\/\/[^"'`]+)/g, label: 'worker/socket' },
-  { re: /\.open\s*\(\s*["'][A-Za-z]+["']\s*,\s*["'](https?:\/\/[^"']+)/g, label: 'xhr open' },
+  { re: /\bimport\s*\(\s*["'`](https?:\/\/[^"'`]+)/g, label: 'import()' },
+  { re: /\bnew\s+(?:Worker|SharedWorker)\s*\(\s*["'`](https?:\/\/[^"'`]+)/g, label: 'worker' },
   { re: /<(?:object|embed)\b[^>]*\b(?:data|src)\s*=\s*["']?(https?:\/\/[^"'\s>]+)/g, label: 'object/embed' },
 ]
 

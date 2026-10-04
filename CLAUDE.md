@@ -142,8 +142,17 @@ behauptet nichts über gestern — und ist damit frei von USP-Audit, Währungs-T
 Methodenblatt-Pflicht. Es schuldet genau eine Sache, testgesichert statt in Prosa: Es sagt auf
 seiner eigenen Fläche, dass es live und nicht archiviert ist (`src/lib/experiments/unarchived.ts`,
 Wächter in `src/data/werke.test.ts`). **`connect-src` ist seit demselben Tag für jeden
-HTTPS-Host offen** — der Browser darf jede API und jeden Event-Stream lesen; `script-src` und
-`style-src` bleiben geschlossen, fremder Code läuft hier weiterhin nicht.
+HTTPS-Host offen** — der Browser darf jede API und jeden Event-Stream lesen. **Skripte fremder
+Hosts laufen hier weiterhin nirgends:** Auf den Hausseiten bleiben `script-src` und `style-src`
+geschlossen (`'self'` plus gepinnte Hashes). **Praxisseiten seit 2026-10-05 (Franks
+Entscheidung, Wortlaut privat — Kern: die Praxen dürfen reiche Werke veröffentlichen, Größe und
+Form unbegrenzt):** Jede Fläche, von der eine Praxis eigene Seiten nackt ausliefert, trägt
+dieselbe Policy (`src/lib/engines/practice-policy.ts`, testgesichert gegen `public/_headers`
+und gegen jedes Spiegelziel der Integrate-Workflows) — eingebettete (vendored) Bibliotheken von
+dieser Origin, Inline-Skript, `eval`, WebAssembly, Worker und `blob:`, Live-Daten, Bilder,
+Medien und Frames von jedem HTTPS-Host; nur `script-src` nennt keinen fremden Host. Die Spiegel
+bringen ein Werk ganz, mit allen Unterverzeichnissen und Dateitypen; `public/` liegt außerhalb
+des Type-Checks (`tsconfig.json`).
 Die Protokoll-Pipelines (`pipelines/protokoll/`, Python 3.12) laufen als nächtliche
 **GitHub-Actions-Workflows** und schreiben täglich `src/content/protokoll/<jahr>/<datum>.json`,
 `src/data/praemie/police.json` und `src/data/parallaxe/register.json`, committet als Autorin

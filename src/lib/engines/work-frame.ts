@@ -22,10 +22,10 @@
 //     rule renderWrapperPage follows, so the gap stays countable instead of being papered
 //     over with the apparatus prose the wall text exists to replace.
 //
-// Constraints that are not negotiable here: the standalone route runs under its own CSP
-// (`default-src 'none'; style-src 'unsafe-inline'`, see public/_headers), so the frame is
-// inline HTML and inline CSS with no external request of any kind, and no JavaScript — it
-// must work in a document whose own scripts have failed.
+// Constraints that are not negotiable here: the standalone route runs under the practices'
+// shared CSP (src/lib/engines/practice-policy.ts, public/_headers), and the frame is inline HTML
+// and inline CSS with no external request of any kind, and no JavaScript — it must work in a
+// document whose own scripts have failed, whatever the work below it loads.
 import { NAMING } from '@/config/naming'
 
 /** Marker so framing is idempotent: re-running over an already-framed mirror yields the same

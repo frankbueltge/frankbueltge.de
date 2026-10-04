@@ -10,11 +10,11 @@
 //   3. CSP-Regel: keine Inline-style-Attribute in Templates/SVG-Buildern — die Site-CSP
 //      führt Style-Hashes, Inline-Styles werden vom Browser verworfen (Befund 25.07.:
 //      die e2e-automation-Balken standen deshalb alle auf 100 %).
-//   3b. Dieselbe CSP-Regel über den Werk-Spiegel — dort gilt die Voice-Ausnahme nicht,
-//      denn ob ein Style-Attribut die Policy überlebt, ist eine Tatsache über die Seite und
-//      keine Meinung über das Werk (angeboten von field-research, Issue #254). Die bereits
-//      betroffenen Werke stehen datiert mit Zählstand in Quarantäne: Neues und Wachstum
-//      sind harte Befunde, Repariertes verlangt seine Streichung aus der Liste.
+//   3b. The same CSP rule over the native Astro works of the mirror (offered by field-research,
+//      issue #254). Since 2026-10-05 it reports NOTICES only, never a finding: the practices'
+//      works are not limited in form (Frank's decision, wording private), and one work's inline
+//      styles must not take every practice's deploy down. The works already affected stay
+//      quarantined with their dated counts, so the tally remains visible.
 //   4. (nur mit DRIFT_NETWORK=1) Spiegel-Frische: gespiegelte Engine-Verfassungen gegen
 //      die Engine-Repos auf GitHub — Abweichung heißt, die Site erzählt einen alten Stand.
 //   5. (nur mit DRIFT_NETWORK=1) MRR-Journal-Frische: die Runtime-Linie wird nicht
@@ -146,10 +146,16 @@ for (const f of voiceFiles) {
 // It cannot hard-fail the whole mirror today: 286 attributes across 7 works are already
 // live, the fix belongs in the engine repo (this mirror is wiped and re-copied on every
 // integrate run), and a red gate here would block every nightly sync and every deploy.
-// So the known-affected are quarantined WITH THEIR COUNTS, dated — anything new fails, any
-// regression fails, and a repaired work fails until it is struck from the list, so the list
-// cannot quietly rot into an allowlist. The tally prints on every run: visible debt, never
-// a silent cap.
+// So the known-affected are quarantined WITH THEIR COUNTS, dated, and the tally prints on
+// every run: visible debt, never a silent cap.
+//
+// NOTICES, NOT FINDINGS, since 2026-10-05 (Frank's decision, wording private: the practices'
+// works are not limited in form). A new work with inline styles, a regression, a repaired work
+// still on the list — each is reported to the practice and to the house, and none of them
+// takes the deploy down any more. Whether its inline styles take effect is the practice's
+// call to make about its own work; a gate that stops every practice's deploy over one work's
+// form is the blast radius the notices exist to avoid. (A standalone work is not affected at
+// all: it is served bare under the practices' shared policy, which allows inline styles.)
 const WERK_INLINE_STYLE_QUARANTINE = {
   // Measured 2026-08-01. Shrinking is free; growing is a finding; reaching 0 means: delete the line.
   'src/components/field/werke/2026-07-01-the-edition/index.astro': 95,
@@ -174,16 +180,16 @@ for (const f of walk(join(ROOT, 'src/components'), ['.astro'])) {
   const allowed = WERK_INLINE_STYLE_QUARANTINE[rel]
   if (allowed === undefined) {
     if (count > 0) {
-      findings.push(
-        `${rel} — ${count} inline style attribute(s) in a mirrored work (the CSP carries style hashes and no 'unsafe-hashes', so the browser drops them and whatever they carry has no effect; use a component <style> block, which the build hashes)`,
+      notices.push(
+        `${rel} — ${count} inline style attribute(s) in a native Astro work (the house CSP carries style hashes and no 'unsafe-hashes', so the browser drops them and whatever they carry has no effect; a component <style> block is hashed by the build, and a standalone index.html work keeps its inline styles)`,
       )
     }
   } else if (count > allowed) {
-    findings.push(
-      `${rel} — inline style attributes grew from ${allowed} (quarantined 2026-08-01) to ${count}; the repair moves one way only`,
+    notices.push(
+      `${rel} — inline style attributes grew from ${allowed} (quarantined 2026-08-01) to ${count}; they have no effect on the page`,
     )
   } else if (count === 0) {
-    findings.push(`${rel} — repaired, no inline styles left: strike it from WERK_INLINE_STYLE_QUARANTINE so the list stays honest`)
+    notices.push(`${rel} — repaired, no inline styles left: strike it from WERK_INLINE_STYLE_QUARANTINE so the list stays honest`)
   } else {
     werkInlineTally.push(`${rel}: ${count}/${allowed}`)
   }

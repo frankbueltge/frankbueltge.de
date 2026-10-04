@@ -12,7 +12,7 @@
       },
       {
         "file": "docs/decision-log.md",
-        "sha256": "690cb33c4db9e1b0"
+        "sha256": "651ce112b2a9f3f8"
       },
       {
         "file": "src/data/post/ledger.json",
@@ -57,10 +57,10 @@
       }
     ],
     "counts": {
-      "nodes": 443,
-      "edges": 391,
+      "nodes": 444,
+      "edges": 393,
       "nodesByKind": {
-        "decision": 129,
+        "decision": 130,
         "encounter": 6,
         "neighbor": 115,
         "practice": 9,
@@ -75,7 +75,7 @@
         "made-by": 150,
         "neighbor-of": 116,
         "participates": 17,
-        "touches": 93
+        "touches": 95
       }
     }
   },
@@ -1368,6 +1368,16 @@
       "source": {
         "file": "docs/decision-log.md",
         "quote": "Machine Attention: The Foreknown retired, the discovery pass builds instead of tending"
+      }
+    },
+    {
+      "id": "decision:2026-10-05-1",
+      "kind": "decision",
+      "label": "The practices may publish rich works — size and form not limited",
+      "date": "2026-10-05",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "The practices may publish rich works — size and form not limited"
       }
     },
     {
@@ -9369,6 +9379,24 @@
       "source": {
         "file": "docs/decision-log.md",
         "quote": "src/pages/machine-attention/{index,about}.astro"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-10-05-1",
+      "to": "work:atelier",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "src/lib/atelier/{paths,integrate,forbidden,feedback}.ts"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-10-05-1",
+      "to": "work:praemie",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "src/lib/engines/practice-policy.ts"
       }
     }
   ]
