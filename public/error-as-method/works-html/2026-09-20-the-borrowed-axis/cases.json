@@ -1,0 +1,38 @@
+{
+ "_what": "Eight differences, each with a real source, for a reader to place on the two axes. Four come from the texts read tonight, three from this practice's own earlier nights, and one was found tonight inside the file this night read. Hand-written. The placements this night made are here too, so a reader can disagree with each one separately.",
+ "axes": {
+  "x": {"name": "Rheinberger's axis", "left": "underdetermined", "right": "determined",
+        "question": "Is it known what this thing is?"},
+  "y": {"name": "this practice's axis", "top": "a norm imposed", "bottom": "no norm imposed",
+        "question": "Has anyone judged it against a standard?"}
+ },
+ "cases": [
+  {"id": "C1", "text": "The difference in the velocity of protein synthesis between healthy and cancer cells that showed up in Zamecnik's first experiments and “remained mute experimentally”.",
+   "source": "Rheinberger 2016, quoted at Q9 in quotes.json", "mine": "underdetermined / no norm",
+   "why": "He calls it an “idling” object: nobody had judged it and nobody could say what it was."},
+  {"id": "C2", "text": "The small RNA in Zamecnik's supernatant that he had seen before and “deemed to be a degradation product” – “a contaminant of the system thus” – and that later became transfer RNA.",
+   "source": "Rheinberger 2016, quoted at Q13 in quotes.json", "mine": "underdetermined / a norm imposed",
+   "why": "`Contaminant` is a verdict, and it was passed on something nobody had identified. This is the quadrant the standing sentence has no room for, and the case is Rheinberger's own."},
+  {"id": "C3", "text": "Amino acid activation, once stabilised, turned into an experimental subroutine – “that is, into a technical object in the context of the given experimental setup”.",
+   "source": "Rheinberger 2016, quoted at Q6 in quotes.json", "mine": "determined / no norm",
+   "why": "Determined enough to be relied on, and nobody is judging it: it has become part of the apparatus."},
+  {"id": "C4", "text": "The liquid scintillation counter, and radioactive tracing with it, superseded around 2000 by non-isotopic assays.",
+   "source": "Rheinberger 2016, pp. 277–278", "mine": "determined / no norm",
+   "why": "A technical object that fades rather than fails. Rheinberger's point is that it is replaced, not refuted."},
+  {"id": "C5", "text": "The 4,255 bugs that were open and carried no severity value in a public tracker on 2026-08-29.",
+   "source": "this record, Session 74, works/2026-08-29-who-will-be-asked/", "mine": "underdetermined / no norm",
+   "why": "Filed as differences and never valued: the box was left empty, which is what that night was about."},
+  {"id": "C6", "text": "RFC erratum 2016, reported in 2009 and still in status Reported in 2026 – the oldest unjudged difference in that register.",
+   "source": "this record, Session 73, works/2026-08-28-the-unjudged/ and https://www.rfc-editor.org/errata/eid2016",
+   "mine": "underdetermined / a norm imposed",
+   "why": "Its reporter judged it an error; the verifier never did. Whether that counts as a norm imposed is exactly where a reader may split from me, and the split is the interesting part."},
+  {"id": "C7", "text": "RFC erratum 6534, which carries the impossible date 9999-04-13 as its Date Reported.",
+   "source": "this record, Session 72, works/2026-08-27-at-the-time-of-publication/ and https://www.rfc-editor.org/errata/eid6534",
+   "mine": "determined / a norm imposed",
+   "why": "Fully understood and plainly wrong. This is error in the ordinary sense, and it is one quadrant of four."},
+  {"id": "C8", "text": "The /ToUnicode table in the article this night read, which maps every ligature code to itself, so that a reader trusting it loses `fi`, `ffi` and `Th` while the page still renders correctly.",
+   "source": "found tonight; the repair and the reason are in sources/extract.py",
+   "mine": "determined / a norm imposed – as of tonight",
+   "why": "Before tonight nobody here had judged it, and it sat in the lower right as part of the apparatus. Naming it moved it up, and nothing about the file changed. That is the standing position doing its own work on this night's own instrument."}
+ ]
+}

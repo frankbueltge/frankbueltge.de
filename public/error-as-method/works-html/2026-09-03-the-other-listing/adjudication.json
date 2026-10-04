@@ -1,0 +1,426 @@
+{
+ "instrument_check": {
+  "P5": "LOST",
+  "expected": {
+   "n_codes": 268,
+   "n_with_condition_name": 262,
+   "n_classes": 43
+  },
+  "measured": {
+   "n_rows": 268,
+   "n_codes": 262,
+   "n_codes_with_condition_name": 262,
+   "n_rows_with_condition_name": 262,
+   "n_classes": 43
+  },
+  "reading": "268 is the number of ROWS in errcodes.txt, not the number of codes. Six SQLSTATEs carry two rows each, with two macro names. 43 classes agree. Every one of the 262 codes carries a condition name, so no code is missing from Appendix A -- Session 77's 'six codes with no condition name' are six second rows.",
+  "duplicates": {
+   "22008": [
+    {
+     "sqlstate": "22008",
+     "line": 166,
+     "section": "Class 22 - Data Exception",
+     "severity": "E",
+     "macro": "ERRCODE_DATETIME_FIELD_OVERFLOW",
+     "condition": "datetime_field_overflow",
+     "nfields": 4
+    },
+    {
+     "sqlstate": "22008",
+     "line": 167,
+     "section": "Class 22 - Data Exception",
+     "severity": "E",
+     "macro": "ERRCODE_DATETIME_VALUE_OUT_OF_RANGE",
+     "condition": null,
+     "nfields": 3
+    }
+   ],
+   "2202E": [
+    {
+     "sqlstate": "2202E",
+     "line": 162,
+     "section": "Class 22 - Data Exception",
+     "severity": "E",
+     "macro": "ERRCODE_ARRAY_ELEMENT_ERROR",
+     "condition": null,
+     "nfields": 3
+    },
+    {
+     "sqlstate": "2202E",
+     "line": 164,
+     "section": "Class 22 - Data Exception",
+     "severity": "E",
+     "macro": "ERRCODE_ARRAY_SUBSCRIPT_ERROR",
+     "condition": "array_subscript_error",
+     "nfields": 4
+    }
+   ],
+   "26000": [
+    {
+     "sqlstate": "26000",
+     "line": 266,
+     "section": "Class 26 - Invalid SQL Statement Name",
+     "severity": "E",
+     "macro": "ERRCODE_INVALID_SQL_STATEMENT_NAME",
+     "condition": "invalid_sql_statement_name",
+     "nfields": 4
+    },
+    {
+     "sqlstate": "26000",
+     "line": 372,
+     "section": "Class 42 - Syntax Error or Access Rule Violation",
+     "severity": "E",
+     "macro": "ERRCODE_UNDEFINED_PSTATEMENT",
+     "condition": null,
+     "nfields": 3
+    }
+   ],
+   "34000": [
+    {
+     "sqlstate": "34000",
+     "line": 296,
+     "section": "Class 34 - Invalid Cursor Name",
+     "severity": "E",
+     "macro": "ERRCODE_INVALID_CURSOR_NAME",
+     "condition": "invalid_cursor_name",
+     "nfields": 4
+    },
+    {
+     "sqlstate": "34000",
+     "line": 369,
+     "section": "Class 42 - Syntax Error or Access Rule Violation",
+     "severity": "E",
+     "macro": "ERRCODE_UNDEFINED_CURSOR",
+     "condition": null,
+     "nfields": 3
+    }
+   ],
+   "3D000": [
+    {
+     "sqlstate": "3D000",
+     "line": 322,
+     "section": "Class 3D - Invalid Catalog Name",
+     "severity": "E",
+     "macro": "ERRCODE_INVALID_CATALOG_NAME",
+     "condition": "invalid_catalog_name",
+     "nfields": 4
+    },
+    {
+     "sqlstate": "3D000",
+     "line": 370,
+     "section": "Class 42 - Syntax Error or Access Rule Violation",
+     "severity": "E",
+     "macro": "ERRCODE_UNDEFINED_DATABASE",
+     "condition": null,
+     "nfields": 3
+    }
+   ],
+   "3F000": [
+    {
+     "sqlstate": "3F000",
+     "line": 326,
+     "section": "Class 3F - Invalid Schema Name",
+     "severity": "E",
+     "macro": "ERRCODE_INVALID_SCHEMA_NAME",
+     "condition": "invalid_schema_name",
+     "nfields": 4
+    },
+    {
+     "sqlstate": "3F000",
+     "line": 373,
+     "section": "Class 42 - Syntax Error or Access Rule Violation",
+     "severity": "E",
+     "macro": "ERRCODE_UNDEFINED_SCHEMA",
+     "condition": null,
+     "nfields": 3
+    }
+   ]
+  }
+ },
+ "predictions": {
+  "P1": {
+   "bar": 3,
+   "mechanical": 6,
+   "members": [
+    "07001",
+    "07006",
+    "07009",
+    "33000",
+    "YE001",
+    "YE002"
+   ],
+   "hand_checked": 7,
+   "members_after_hand_check": [
+    "07001",
+    "07002",
+    "07006",
+    "07009",
+    "33000",
+    "YE001",
+    "YE002"
+   ],
+   "verdict": "WON",
+   "hand_check": "every member read in its entry; all are offered to a reader as a SQLSTATE the library may return. The rule UNDER-counts: it cannot take the second code of '(SQLSTATE 07001 or 07002)'.",
+   "entries_of_the_or_form": [
+    "100 (ECPG_NOT_FOUND)",
+    "-201 (ECPG_TOO_MANY_ARGUMENTS)",
+    "-202 (ECPG_TOO_FEW_ARGUMENTS)",
+    "-401 (ECPG_TRANS)"
+   ]
+  },
+  "P2": {
+   "bar": 5,
+   "measured": 6,
+   "verdict": "WON",
+   "unpublished_remainder": [
+    "YE000"
+   ]
+  },
+  "P3": {
+   "bar": 1,
+   "measured": 0,
+   "verdict": "LOST"
+  },
+  "P4": {
+   "bar": 1,
+   "measured": 4,
+   "verdict": "WON",
+   "conflicts": [
+    {
+     "sqlstate": "34000",
+     "vocabulary_severity": "E (error)",
+     "ecpg_term": "-602 (ECPG_WARNING_UNKNOWN_PORTAL)",
+     "ecpg_line": 5646,
+     "ecpg_text": "An invalid cursor name was specified. (SQLSTATE 34000)"
+    },
+    {
+     "sqlstate": "25001",
+     "vocabulary_severity": "E (error)",
+     "ecpg_term": "-603 (ECPG_WARNING_IN_TRANSACTION)",
+     "ecpg_line": 5655,
+     "ecpg_text": "Transaction is in progress. (SQLSTATE 25001)"
+    },
+    {
+     "sqlstate": "25P01",
+     "vocabulary_severity": "E (error)",
+     "ecpg_term": "-604 (ECPG_WARNING_NO_TRANSACTION)",
+     "ecpg_line": 5664,
+     "ecpg_text": "There is no active (in-progress) transaction. (SQLSTATE 25P01)"
+    },
+    {
+     "sqlstate": "42P03",
+     "vocabulary_severity": "E (error)",
+     "ecpg_term": "-605 (ECPG_WARNING_PORTAL_EXISTS)",
+     "ecpg_line": 5673,
+     "ecpg_text": "An existing cursor name was specified. (SQLSTATE 42P03)"
+    }
+   ]
+  },
+  "P6": {
+   "bar": 1,
+   "mechanical": 2,
+   "members": [
+    "00000",
+    "YE002"
+   ],
+   "hand_checked": 1,
+   "members_after_hand_check": [
+    "YE002"
+   ],
+   "verdict": "WON",
+   "hand_check": "00000 is a FALSE member: ecpg imposes it in src/interfaces/ecpg/ecpglib/misc.c, in sqlca_init, as five character constants rather than as a string literal. The bar selected 'codes with no five-character literal'; the claim was about 'codes ecpg cannot set'."
+  }
+ },
+ "ye002": {
+  "documented_conditions": [
+   "ECPG_EMPTY",
+   "ECPG_NOT_CONN",
+   "ECPG_UNKNOWN_DESCRIPTOR_ITEM",
+   "ECPG_UNSUPPORTED"
+  ],
+  "entries": [
+   {
+    "term": "-200 (ECPG_UNSUPPORTED)",
+    "line": 5278,
+    "text": "Indicates the preprocessor has generated something that the library does not know about. Perhaps you are running incompatible versions of the preprocessor and t"
+   },
+   {
+    "term": "-212 (ECPG_EMPTY)",
+    "line": 5419,
+    "text": "The statement sent to the PostgreSQL server was empty. (This cannot normally happen in an embedded SQL program, so it might point to an internal error.) (SQLSTA"
+   },
+   {
+    "term": "-221 (ECPG_NOT_CONN)",
+    "line": 5481,
+    "text": "The program tried to access a connection that does exist but is not open. (This is an internal error.) (SQLSTATE YE002)"
+   },
+   {
+    "term": "-242 (ECPG_UNKNOWN_DESCRIPTOR_ITEM)",
+    "line": 5531,
+    "text": "An invalid descriptor item was requested. (This is an internal error.) (SQLSTATE YE002)"
+   }
+  ],
+  "raise_sites": [
+   {
+    "file": "src/interfaces/ecpg/ecpglib/descriptor.c",
+    "line": 463,
+    "condition": "ECPG_UNKNOWN_DESCRIPTOR_ITEM",
+    "sqlstate_constant": "ECPG_SQLSTATE_ECPG_INTERNAL_ERROR"
+   },
+   {
+    "file": "src/interfaces/ecpg/ecpglib/descriptor.c",
+    "line": 721,
+    "condition": "ECPG_UNKNOWN_DESCRIPTOR_ITEM",
+    "sqlstate_constant": "ECPG_SQLSTATE_ECPG_INTERNAL_ERROR"
+   },
+   {
+    "file": "src/interfaces/ecpg/ecpglib/descriptor.c",
+    "line": 866,
+    "condition": "ECPG_UNSUPPORTED",
+    "sqlstate_constant": "ECPG_SQLSTATE_ECPG_INTERNAL_ERROR"
+   },
+   {
+    "file": "src/interfaces/ecpg/ecpglib/error.c",
+    "line": 305,
+    "condition": "ECPG_EMPTY",
+    "sqlstate_constant": "ECPG_SQLSTATE_ECPG_INTERNAL_ERROR"
+   },
+   {
+    "file": "src/interfaces/ecpg/ecpglib/misc.c",
+    "line": 137,
+    "condition": "ECPG_NOT_CONN",
+    "sqlstate_constant": "ECPG_SQLSTATE_ECPG_INTERNAL_ERROR"
+   },
+   {
+    "file": "src/interfaces/ecpg/ecpglib/data.c",
+    "line": 295,
+    "condition": "ECPG_UNSUPPORTED",
+    "sqlstate_constant": "ECPG_SQLSTATE_ECPG_INTERNAL_ERROR"
+   },
+   {
+    "file": "src/interfaces/ecpg/ecpglib/data.c",
+    "line": 950,
+    "condition": "ECPG_UNSUPPORTED",
+    "sqlstate_constant": "ECPG_SQLSTATE_ECPG_INTERNAL_ERROR"
+   },
+   {
+    "file": "src/interfaces/ecpg/ecpglib/execute.c",
+    "line": 1067,
+    "condition": "ECPG_UNSUPPORTED",
+    "sqlstate_constant": "ECPG_SQLSTATE_ECPG_INTERNAL_ERROR"
+   },
+   {
+    "file": "src/interfaces/ecpg/ecpglib/execute.c",
+    "line": 1960,
+    "condition": "ECPG_EMPTY",
+    "sqlstate_constant": "ECPG_SQLSTATE_ECPG_INTERNAL_ERROR"
+   },
+   {
+    "file": "src/interfaces/ecpg/ecpglib/execute.c",
+    "line": 2189,
+    "condition": "ECPG_NOT_CONN",
+    "sqlstate_constant": "ECPG_SQLSTATE_ECPG_INTERNAL_ERROR"
+   }
+  ],
+  "n_sites": 10,
+  "sqlstate_constants_actually_passed": [
+   "ECPG_SQLSTATE_ECPG_INTERNAL_ERROR"
+  ]
+ },
+ "session_77_headline_recomputed": {
+  "unit_used_by_session_77": "row",
+  "unit_forced_by_tonight": "code",
+  "rows_with_no_site": 75,
+  "codes_with_no_site_on_any_row": 72,
+  "counted_siteless_as_a_row_but_imposed_through_the_other_row": [
+   "26000",
+   "3D000",
+   "3F000"
+  ],
+  "session_77_rule_C_rescues": [
+   "22002",
+   "26000"
+  ],
+  "rule_C_rescues_still_applying_at_code_level": [
+   "22002"
+  ],
+  "corrected_headline": 71,
+  "session_77_published_headline": 73,
+  "corrected_headline_without_class_generic_xx000": 59,
+  "session_77_published_without_xx000": 59,
+  "n_xx000_in_corrected_set": 12,
+  "codes": [
+   "01003",
+   "01004",
+   "01008",
+   "0100C",
+   "02001",
+   "03000",
+   "08004",
+   "08007",
+   "0B000",
+   "0F000",
+   "0F001",
+   "0Z000",
+   "2200B",
+   "2200D",
+   "2200G",
+   "22010",
+   "22018",
+   "22019",
+   "22022",
+   "22024",
+   "22027",
+   "22032",
+   "22037",
+   "2203D",
+   "2203E",
+   "2203G",
+   "23000",
+   "25002",
+   "25003",
+   "25004",
+   "25005",
+   "25007",
+   "25008",
+   "2B000",
+   "2F000",
+   "2F002",
+   "2F004",
+   "38001",
+   "38002",
+   "38003",
+   "38004",
+   "39001",
+   "39004",
+   "3B000",
+   "40002",
+   "40003",
+   "42000",
+   "42P12",
+   "57000",
+   "HV000",
+   "HV004",
+   "HV005",
+   "HV006",
+   "HV007",
+   "HV008",
+   "HV009",
+   "HV00A",
+   "HV00B",
+   "HV00C",
+   "HV00K",
+   "HV00L",
+   "HV00M",
+   "HV00N",
+   "HV00R",
+   "HV010",
+   "HV014",
+   "HV021",
+   "HV024",
+   "HV090",
+   "HV091",
+   "P0000"
+  ]
+ }
+}

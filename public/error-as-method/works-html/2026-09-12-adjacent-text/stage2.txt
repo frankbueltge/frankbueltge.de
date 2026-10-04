@@ -1,0 +1,795 @@
+# Stage 2 -- heading chain, 5 preceding blocks, own block.
+
+====================================================================================================
+S01   [DOM Standard]
+  HEADING h2  b71     2. Events
+  HEADING h3  b82     2.2. Interface Event
+  -5  dd   Returns true or false depending on how event was initialized. True if event invokes listeners past a ShadowRoot node that is the root of its target; otherwise false.
+  -4  dt   event . isTrusted
+  -3  dd   Returns true if event was dispatched by the user agent, and false otherwise.
+  -2  dt   event . timeStamp
+  -1       Returns the event’s timestamp as the number of milliseconds measured relative to the occurrence.
+  >>> OWN BLOCK b121: The type attribute must return the value it was initialized to. When an event is created the attribute must be initialized to the empty string.
+  *** SENTENCE: When an event is created the attribute must be initialized to the empty string.
+
+====================================================================================================
+S02   [DOM Standard]
+  HEADING h2  b568    4. Nodes
+  HEADING h3  b585    4.2. Node tree
+  HEADING h4  b979    4.2.10. Old-style collections: NodeList and HTMLCollection
+  -5  p    If this’s parent is null, then return.
+  -4  p    Remove this.
+  -3  h4   4.2.9. Mixin Slottable
+  -2  p    The assignedSlot getter steps are to return the result of find a slot given this and true.
+  -1  h4   4.2.10. Old-style collections: NodeList and HTMLCollection
+  >>> OWN BLOCK b980: A collection is an object that represents a list of nodes. A collection can be either live or static. Unless otherwise stated, a collection must be live.
+  *** SENTENCE: Unless otherwise stated, a collection must be live.
+
+====================================================================================================
+S03   [DOM Standard]
+  HEADING h2  b568    4. Nodes
+  HEADING h3  b1135   4.4. Interface Node
+  -5  p    When invoked with the same arguments, the same HTMLCollection object may be returned as returned by an earlier call.
+  -4  p    The list of elements with class names classNames for a node root is the HTMLCollection returned by the following algorithm:
+  -3  li   Let classes be the result of running the ordered set parser on classNames.
+  -2  li   If classes is the empty set, return an empty HTMLCollection.
+  -1  p    Return an HTMLCollection rooted at root, whose filter matches descendant elements that have all their classes in classes.
+  >>> OWN BLOCK b1505: The comparisons for the classes must be done in an ASCII case-insensitive manner if root’s node document’s mode is "quirks"; otherwise in an identical to manner.
+  *** SENTENCE: The comparisons for the classes must be done in an ASCII case-insensitive manner if root’s node document’s mode is "quirks"; otherwise in an identical to manner.
+
+====================================================================================================
+S04   [Fetch Standard]
+  HEADING h2  b20     2. Infrastructure
+  HEADING h3  b122    2.2. HTTP
+  HEADING h4  b397    2.2.4. Bodies
+  -5  p    To clone a body body, run these steps:
+  -4  p    Let « out1, out2 » be the result of teeing body’s stream.
+  -3  p    Set body’s stream to out1.
+  -2  p    Return a body whose stream is out2 and other members are copied from body.
+  -1  p    To get a byte sequence bytes as a body, return the body of the result of safely extracting bytes.
+  >>> OWN BLOCK b407: To incrementally read a body body, given an algorithm processBodyChunk, an algorithm processEndOfBody, an algorithm processBodyError, and an optional null, parallel queue, or global object taskDestination (default null), run these steps. processBodyChunk must be an algorithm accepting a byte sequence. processEndOfBody must be an algorithm accepting no arguments. processBodyError must be an algorithm accepting an exception.
+  *** SENTENCE: To incrementally read a body body, given an algorithm processBodyChunk, an algorithm processEndOfBody, an algorithm processBodyError, and an optional null, parallel queue, or global object taskDestination (default null), run these steps. processBodyChunk must be an algorithm accepting a byte sequence. processEndOfBody must be an algorithm accepting no arguments. processBodyError must be an algorithm accepting an exception.
+
+====================================================================================================
+S05   [Fetch Standard]
+  HEADING h2  b825    3. HTTP extensions
+  HEADING h3  b1067   3.8. `Sec-Purpose` header
+  -5  p    Let disposition be "reporting" if reportOnly is true; otherwise "enforce".
+  -4  p    Let body be a new object containing the following properties:
+  -3  p    Generate and queue a report for settingsObject’s global object given the "coep" report type, endpoint, and body. [REPORTING]
+  -2  h3   3.8. `Sec-Purpose` header
+  -1  p    The `Sec-Purpose` HTTP request header specifies that the request serves one or more purposes other than requesting the resource for immediate use by the user.
+  >>> OWN BLOCK b1069: The `Sec-Purpose` header field is a structured header whose value must be a token.
+  *** SENTENCE: The `Sec-Purpose` header field is a structured header whose value must be a token.
+
+====================================================================================================
+S06   [Fetch Standard]
+  HEADING h2  b1925   5. Fetch API
+  HEADING h3  b2050   5.3. Body mixin
+  -5  p    The formData() method steps are to return the result of running consume body with this and the following steps given a byte sequence bytes:
+  -4  p    Let mimeType be the result of get the MIME type with this.
+  -3  p    If mimeType is non-null, then switch on mimeType’s essence and run the corresponding steps:
+  -2  dt   "multipart/form-data"
+  -1  p    Parse bytes, using the value of the `boundary` parameter from mimeType, per the rules set forth in Returning Values from Forms: multipart/form-data. [RFC7578]
+  >>> OWN BLOCK b2099: Each part whose `Content-Disposition` header contains a `filename` parameter must be parsed into an entry whose value is a File object whose contents are the contents of the part. The name attribute of the File object must have the value of the `filename` parameter of the part. The type attribute of the File object must have the value of the `Content-Type` header of the part if the part has such header, and `text/plain` (the default defined by [RFC7578] section 4.4) otherwise.
+  *** SENTENCE: Each part whose `Content-Disposition` header contains a `filename` parameter must be parsed into an entry whose value is a File object whose contents are the contents of the part.
+
+====================================================================================================
+S07   [HTML Standard]
+  HEADING h2  b4921   4 The elements of HTML
+  HEADING h3  b4953   4.2 Document metadata
+  HEADING h4  b5410   4.2.5 The meta element
+  -5  p    The charset attribute specifies the character encoding used by the document. This is a character encoding declaration. If the attribute is present, its value must be an ASCII case-insensitive match for the string "utf-8".
+  -4  p    The charset attribute on the meta element has no effect in XML documents, but is allowed in XML documents in order to facilitate migration to and from XML.
+  -3  p    There must not be more than one meta element with a charset attribute per document.
+  -2  p    The content attribute gives the value of the document metadata or pragma directive when the element is used for those purposes. The allowed values depend on the exact context, as described in subsequent sections of this specification.
+  -1  p    If a meta element has a name attribute, it sets document metadata. Document metadata is expressed in terms of name-value pairs, the name attribute on the meta element giving the name, and the content attribute on the same element giving the value. The name specifies what aspect of metadata is being set; valid names and the meaning of their values are described in the following sections. If a meta element has no content attribute, then the value part of the metadata name-value pair is the empty string.
+  >>> OWN BLOCK b5456: The media attribute says which media the metadata applies to. The value must be a valid media query list. Unless the name is theme-color, the media attribute has no effect on the processing model and must not be used by authors.
+  *** SENTENCE: The value must be a valid media query list.
+
+====================================================================================================
+S08   [HTML Standard]
+  HEADING h2  b4921   4 The elements of HTML
+  HEADING h3  b4953   4.2 Document metadata
+  HEADING h4  b5410   4.2.5 The meta element
+  HEADING h5  b5457   4.2.5.1 Standard metadata names
+  -5  p    Return nothing (the page has no theme color).
+  -4  p    If any meta elements are inserted into the document or removed from the document, or existing meta elements have their name, content, or media attributes changed, or if the environment changes such that any meta element's media attribute's value may now or may no longer match the environment, user agents must re-run the above algorithm and apply the result to any affected UI.
+  -3  p    When using the theme color in UI, user agents may adjust it in implementation-specific ways to make it more suitable for the UI in question. For example, if a user agent intends to use the theme color as a background and display white text over it, it might use a darker variant of the theme color in that part of the UI, to ensure adequate contrast.
+  -2  dt   color-scheme
+  -1  p    To aid user agents in rendering the page background with the desired color scheme immediately (rather than waiting for all CSS in the page to load), a 'color-scheme' value can be provided in a meta element.
+  >>> OWN BLOCK b5530: The value must be a string that matches the syntax for the CSS 'color-scheme' property value. It determines the page's supported color-schemes.
+  *** SENTENCE: The value must be a string that matches the syntax for the CSS 'color-scheme' property value.
+
+====================================================================================================
+S09   [HTML Standard]
+  HEADING h2  b4921   4 The elements of HTML
+  HEADING h3  b6861   4.5 Text-level semantics
+  HEADING h4  b7129   4.5.8 The dfn element
+  -5  dd   Phrasing content.
+  -4  dd   Palpable content.
+  -3  dt   Contexts in which this element can be used:
+  -2  dd   Where phrasing content is expected.
+  -1  dt   Content model:
+  >>> OWN BLOCK b7141: Phrasing content, but there must be no dfn element descendants.
+  *** SENTENCE: Phrasing content, but there must be no dfn element descendants.
+
+====================================================================================================
+S10   [HTML Standard]
+  HEADING h2  b4921   4 The elements of HTML
+  HEADING h3  b7920   4.6 Links
+  HEADING h4  b8358   4.6.8 Link types
+  HEADING h5  b8504   4.6.8.10 Link type "license"
+  -5  p    The following snippet shows the top part of an application with several icons.
+  -4  p    For historical reasons, the icon keyword may be preceded by the keyword "shortcut". If the "shortcut" keyword is present, the rel attribute's entire value must be an ASCII case-insensitive match for the string "shortcut icon" (with a single U+0020 SPACE character between the tokens and no other ASCII whitespace).
+  -3  h5   4.6.8.10 Link type "license"
+  -2  p    The license keyword may be used with link, a, area, and form elements. This keyword creates a hyperlink.
+  -1  p    The license keyword indicates that the referenced document provides the copyright license terms under which the main content of the current document is provided.
+  >>> OWN BLOCK b8507: This specification does not specify how to distinguish between the main content of a document and content that is not deemed to be part of that main content. The distinction should be made clear to the user.
+  *** SENTENCE: The distinction should be made clear to the user.
+
+====================================================================================================
+S11   [HTML Standard]
+  HEADING h2  b4921   4 The elements of HTML
+  HEADING h3  b9020   4.8 Embedded content
+  HEADING h4  b9412   4.8.4 Images
+  HEADING h5  b9481   4.8.4.2 Attributes common to source, img, and link elements
+  HEADING h6  b9498   4.8.4.2.2 Sizes attributes
+  -5  h6   4.8.4.2.2 Sizes attributes
+  -4  p    A sizes attribute is an attribute with requirements defined in this section.
+  -3  p    If present, the value must be a valid source size list.
+  -2  p    A valid source size list is a string that matches the following grammar: [CSSVALUES] [MQ]
+  -1  p    A <source-size-value> that is a <length> must not be negative, and must not use CSS functions other than the math functions.
+  >>> OWN BLOCK b9503: The keyword auto is a width that is computed in parse a sizes attribute. If present, it must be the first entry and the entire <source-size-list> value must either be the string "auto" (ASCII case-insensitive) or start with the string "auto," (ASCII case-insensitive).
+  *** SENTENCE: If present, it must be the first entry and the entire <source-size-list> value must either be the string "auto" (ASCII case-insensitive) or start with the string "auto," (ASCII case-insensitive).
+
+====================================================================================================
+S12   [HTML Standard]
+  HEADING h2  b4921   4 The elements of HTML
+  HEADING h3  b9020   4.8 Embedded content
+  HEADING h4  b9412   4.8.4 Images
+  HEADING h5  b9512   4.8.4.3 Processing model
+  HEADING h6  b9581   4.8.4.3.5 Updating the image data
+  -5  p    Set image request to the completely available state.
+  -4  p    Add the image to the list of available images using the key key, with the ignore higher-layer caching flag set.
+  -3  p    If maybe omit events is not set or previousURL is not equal to urlString, then fire an event named load at element.
+  -2  dt   Otherwise
+  -1  p    The image data is not in a supported file format; the user agent must set image request's state to broken, abort the image request for the current request and the pending request, upgrade the pending request to the current request if image request is the pending request, and then, if maybe omit events is not set or previousURL is not equal to urlString, queue an element task on the DOM manipulation task source given element to fire an event named error at element.
+  >>> OWN BLOCK b9684: While a user agent is running the above algorithm for an element x, there must be a strong reference from the element's node document to the element x, even if that element is not connected.
+  *** SENTENCE: While a user agent is running the above algorithm for an element x, there must be a strong reference from the element's node document to the element x, even if that element is not connected.
+
+====================================================================================================
+S13   [HTML Standard]
+  HEADING h2  b4921   4 The elements of HTML
+  HEADING h3  b9020   4.8 Embedded content
+  HEADING h4  b9412   4.8.4 Images
+  HEADING h5  b9895   4.8.4.4 Requirements for providing text to act as an alternative for images
+  HEADING h6  b9933   4.8.4.4.5 Text that has been rendered to a graphic for typographical effect
+  -5  p    In this third snippet, we have a logo being used in an aside, as part of the larger article discussing the acquisition:
+  -4  p    Finally, we have an opinion piece talking about a logo, and the logo is therefore described in detail in the alternative text.
+  -3  p    This example shows how the alternative text should be written such that if the image isn't available, and the text is used instead, the text flows seamlessly into the surrounding text, as if the image had never been there in the first place.
+  -2  h6   4.8.4.4.5 Text that has been rendered to a graphic for typographical effect
+  -1  p    Sometimes, an image just consists of text, and the purpose of the image is not to highlight the actual typographic effects used to render the text, but just to convey the text itself.
+  >>> OWN BLOCK b9935: In such cases, the alt attribute must be present but must consist of the same text as written in the image itself.
+  *** SENTENCE: In such cases, the alt attribute must be present but must consist of the same text as written in the image itself.
+
+====================================================================================================
+S14   [HTML Standard]
+  HEADING h2  b4921   4 The elements of HTML
+  HEADING h3  b9020   4.8 Embedded content
+  HEADING h4  b9412   4.8.4 Images
+  HEADING h5  b9895   4.8.4.4 Requirements for providing text to act as an alternative for images
+  HEADING h6  b10008  4.8.4.4.14 Guidance for markup generators
+  -5  h6   4.8.4.4.14 Guidance for markup generators
+  -4  p    Markup generators (such as WYSIWYG authoring tools) should, wherever possible, obtain alternative text from their users. However, it is recognized that in many cases, this will not be possible.
+  -3  p    For images that are the sole contents of links, markup generators should examine the link target to determine the title of the target, or the URL of the target, and use information obtained in this manner as the alternative text.
+  -2  p    For images that have captions, markup generators should use the figure and figcaption elements, or the title attribute, to provide the image's caption.
+  -1  p    As a last resort, implementers should either set the alt attribute to the empty string, under the assumption that the image is a purely decorative image that doesn't add any information but is still specific to the surrounding content, or omit the alt attribute altogether, under the assumption that the image is a key part of the content.
+  >>> OWN BLOCK b10013: Markup generators may specify a generator-unable-to-provide-required-alt attribute on img elements for which they have been unable to obtain alternative text and for which they have therefore omitted the alt attribute. The value of this attribute must be the empty string. Documents containing such attributes are not conforming, but conformance checkers will silently ignore this error.
+  *** SENTENCE: The value of this attribute must be the empty string.
+
+====================================================================================================
+S15   [HTML Standard]
+  HEADING h2  b4921   4 The elements of HTML
+  HEADING h3  b9020   4.8 Embedded content
+  HEADING h4  b10023  4.8.5 The iframe element
+  -5  li   allow-top-navigation
+  -4  li   allow-top-navigation-by-user-activation
+  -3  li   allow-top-navigation-to-custom-protocols
+  -2  p    When the attribute is set, the content is treated as being from a unique opaque origin, forms, scripts, and various potentially annoying APIs are disabled, and links are prevented from targeting other navigables. The allow-same-origin keyword causes the content to be treated as being from its real origin instead of forcing it into an opaque origin; the allow-top-navigation keyword allows the content to navigate its traversable navigable; the allow-top-navigation-by-user-activation keyword behaves similarly but allows such navigation only when the browsing context's active window has transient 
+  -1  p    The allow-top-navigation and allow-top-navigation-by-user-activation keywords must not both be specified, as doing so is redundant; only allow-top-navigation will have an effect in such non-conformant markup.
+  >>> OWN BLOCK b10188: Similarly, the allow-top-navigation-to-custom-protocols keyword must not be specified if either allow-top-navigation or allow-popups are specified, as doing so is redundant.
+  *** SENTENCE: Similarly, the allow-top-navigation-to-custom-protocols keyword must not be specified if either allow-top-navigation or allow-popups are specified, as doing so is redundant.
+
+====================================================================================================
+S16   [HTML Standard]
+  HEADING h2  b4921   4 The elements of HTML
+  HEADING h3  b9020   4.8 Embedded content
+  HEADING h4  b10255  4.8.6 The embed element
+  -5  p    To display no plugin for an embed element element:
+  -4  p    Destroy a child navigable given element.
+  -3  p    Display an indication that no plugin could be found for element, as the contents of element.
+  -2  p    element now represents nothing.
+  -1  p    The embed element has no fallback content; its descendants are ignored.
+  >>> OWN BLOCK b10338: Whenever an embed element that was potentially active stops being potentially active, any plugin that had been instantiated for that element must be unloaded.
+  *** SENTENCE: Whenever an embed element that was potentially active stops being potentially active, any plugin that had been instantiated for that element must be unloaded.
+
+====================================================================================================
+S17   [HTML Standard]
+  HEADING h2  b4921   4 The elements of HTML
+  HEADING h3  b9020   4.8 Embedded content
+  HEADING h4  b10341  4.8.7 The object element
+  -5  dt   DOM interface:
+  -4  p    Depending on the type of content instantiated by the object element, the node also supports other interfaces.
+  -3  p    The object element can represent an external resource, which, depending on the type of the resource, will either be treated as an image or as a child navigable.
+  -2  p    The data attribute specifies the URL of the resource. It must be present, and must contain a valid non-empty URL potentially surrounded by spaces.
+  -1  p    The type attribute, if present, specifies the type of the resource. If present, the attribute must be a valid MIME type string.
+  >>> OWN BLOCK b10389: The name attribute, if present, must be a valid navigable target name. The given value is used to name the element's content navigable, if applicable, and if present when the element's content navigable is created.
+  *** SENTENCE: The name attribute, if present, must be a valid navigable target name.
+
+====================================================================================================
+S18   [HTML Standard]
+  HEADING h2  b4921   4 The elements of HTML
+  HEADING h3  b9020   4.8 Embedded content
+  HEADING h4  b10469  4.8.8 The video element
+  -5  dd   The video element represents the last frame of the video to have been rendered.
+  -4  dt   When the video element is paused
+  -3  dd   The video element represents the frame of video corresponding to the current playback position.
+  -2  dt   Otherwise (the video element has a video channel and is potentially playing)
+  -1  dd   The video element represents the frame of video at the continuously increasing "current" position. When the current playback position changes such that the last frame rendered is no longer the frame corresponding to the current playback position in the video, the new frame must be rendered.
+  >>> OWN BLOCK b10569: Frames of video must be obtained from the video track that was selected when the event loop last reached step 1.
+  *** SENTENCE: Frames of video must be obtained from the video track that was selected when the event loop last reached step 1.
+
+====================================================================================================
+S19   [HTML Standard]
+  HEADING h2  b4921   4 The elements of HTML
+  HEADING h3  b9020   4.8 Embedded content
+  HEADING h4  b10754  4.8.11 Media elements
+  HEADING h5  b11207  4.8.11.6 Offsets into the media resource
+  -5  p    Support in all current engines.
+  -4  div  Firefox3.5+Safari3.1+Chrome3+Opera12.1+Edge79+Edge (Legacy)12+Internet Explorer9+Firefox Android?Safari iOS3+Chrome Android?WebView Android37+Samsung Internet?Opera Android12.1+
+  -3  p    Returns the official playback position, in seconds.
+  -2  p    Can be set, to seek to the given time.
+  -1  p    A media resource has a media timeline that maps times (in seconds) to positions in the media resource. The origin of a timeline is its earliest defined position. The duration of a timeline is its last defined position.
+  >>> OWN BLOCK b11224: Establishing the media timeline: if the media resource somehow specifies an explicit timeline whose origin is not negative (i.e. gives each frame a specific time offset and gives the first frame a zero or positive offset), then the media timeline should be that timeline. (Whether the media resource can specify a timeline or not depends on the media resource's format.) If the media resource specifies an explicit start time and date, then that time and date should be considered the zero point in the media timeline; the timeline offset will be the time and date, exposed using the getStartDate() method.
+  *** SENTENCE: (Whether the media resource can specify a timeline or not depends on the media resource's format.) If the media resource specifies an explicit start time and date, then that time and date should be considered the zero point in the media timeline; the timeline offset will be the time and date, exposed using the getStartDate() method.
+
+====================================================================================================
+S20   [HTML Standard]
+  HEADING h2  b4921   4 The elements of HTML
+  HEADING h3  b9020   4.8 Embedded content
+  HEADING h4  b10754  4.8.11 Media elements
+  HEADING h5  b11307  4.8.11.8 Playing the media resource
+  -5  p    If the element's playbackRate is not 1.0 and preservesPitch is true, the user agent must apply pitch adjustment to preserve the original pitch of the audio. Otherwise, the user agent must speed up or slow down the audio without any pitch adjustment.
+  -4  p    When a media element is potentially playing, its audio data played must be synchronized with the current playback position, at the element's effective media volume. The user agent must play the audio from audio tracks that were enabled when the event loop last reached step 1.
+  -3  p    When a media element is not potentially playing, audio must not play for the element.
+  -2  p    Media elements that are potentially playing while not in a document must not play any video, but should play any audio component. Media elements must not stop playing just because all references to them have been removed; only once a media element is in a state where no further audio could ever be played by that element may the element be garbage collected.
+  -1  p    It is possible for an element to which no explicit references exist to play audio, even if such an element is not still actively playing: for instance, it could be unpaused but stalled waiting for content to buffer, or it could be still buffering, but with a suspend event listener that begins playback. Even a media element whose media resource has no audio tracks could eventually play audio again if it had an event listener that changes the media resource.
+  >>> OWN BLOCK b11465: Each media element has a list of newly introduced cues, which must be initially empty. Whenever a text track cue is added to the list of cues of a text track that is in the list of text tracks for a media element, that cue must be added to the media element's list of newly introduced cues. Whenever a text track is added to the list of text tracks for a media element, all of the cues in that text track's list of cues must be added to the media element's list of newly introduced cues. When a media element's list of newly introduced cues has new cues added while the media element's show poster flag is not set, then the user agent must run the time marches on steps.
+  *** SENTENCE: Whenever a text track cue is added to the list of cues of a text track that is in the list of text tracks for a media element, that cue must be added to the media element's list of newly introduced cues.
+
+====================================================================================================
+S21   [HTML Standard]
+  HEADING h2  b4921   4 The elements of HTML
+  HEADING h3  b9020   4.8 Embedded content
+  HEADING h4  b10754  4.8.11 Media elements
+  HEADING h5  b11705  4.8.11.11 Timed text tracks
+  HEADING h6  b11816  4.8.11.11.3 Sourcing out-of-band text tracks
+  -5  p    Set the new text track's mode to the mode consistent with the user's preferences and the requirements of the relevant specification for the data.
+  -4  p    For instance, if there are no other active subtitles, and this is a forced subtitle track (a subtitle track giving subtitles in the audio track's primary language, but only for audio that is actually in another language), then those subtitles might be activated here.
+  -3  p    Add the new text track to the media element's list of text tracks.
+  -2  p    Fire an event named addtrack at the media element's textTracks attribute's TextTrackList object, using TrackEvent, with the track attribute initialized to the text track.
+  -1  h6   4.8.11.11.3 Sourcing out-of-band text tracks
+  >>> OWN BLOCK b11817: When a track element is created, it must be associated with a new text track (with its value set as defined below).
+  *** SENTENCE: When a track element is created, it must be associated with a new text track (with its value set as defined below).
+
+====================================================================================================
+S22   [HTML Standard]
+  HEADING h2  b4921   4 The elements of HTML
+  HEADING h3  b9020   4.8 Embedded content
+  HEADING h4  b12287  4.8.13 The area element
+  -5  dd   Uncategorized with navigating URL attributes href.
+  -4  dt   DOM interface:
+  -3  p    The area element represents either a hyperlink with some text and a corresponding area on an image map, or a dead area on an image map.
+  -2  p    An area element with a parent node must have a map element ancestor.
+  -1  p    If the area element has an href attribute, then the area element represents a hyperlink. In this case, the alt attribute must be present. It specifies the text of the hyperlink. Its value must be text that, when presented with the texts specified for the other hyperlinks of the image map, and with the alternative text of the image, but without the image itself, provides the user with the same kind of choice as the hyperlink would when used without its text but with its shape applied to the image. The alt attribute may be left blank if there is another area element in the same image map that po
+  >>> OWN BLOCK b12333: If the area element has no href attribute, then the area represented by the element cannot be selected, and the alt attribute must be omitted.
+  *** SENTENCE: If the area element has no href attribute, then the area represented by the element cannot be selected, and the alt attribute must be omitted.
+
+====================================================================================================
+S23   [HTML Standard]
+  HEADING h2  b4921   4 The elements of HTML
+  HEADING h3  b9020   4.8 Embedded content
+  HEADING h4  b12287  4.8.13 The area element
+  -5  p    The attribute's missing value default and invalid value default are both the rectangle state.
+  -4  p    The coords attribute must, if specified, contain a valid list of floating-point numbers. This attribute gives the coordinates for the shape described by the shape attribute. The processing for this attribute is described as part of the image map processing model.
+  -3  p    In the circle state, area elements must have a coords attribute present, with three integers, the last of which must be non-negative. The first integer must be the distance in CSS pixels from the left edge of the image to the center of the circle, the second integer must be the distance in CSS pixels from the top edge of the image to the center of the circle, and the third integer must be the radius of the circle, again in CSS pixels.
+  -2  p    In the default state, area elements must not have a coords attribute. (The area is the whole image.)
+  -1  p    In the polygon state, area elements must have a coords attribute with at least six integers, and the number of integers must be even. Each pair of integers must represent a coordinate given as the distances from the left and the top of the image in CSS pixels respectively, and all the coordinates together must represent the points of the polygon, in order.
+  >>> OWN BLOCK b12341: In the rectangle state, area elements must have a coords attribute with exactly four integers, the first of which must be less than the third, and the second of which must be less than the fourth. The four points must represent, respectively, the distance from the left edge of the image to the left side of the rectangle, the distance from the top edge to the top side, the distance from the left edge to the right side, and the distance from the top edge to the bottom side, all in CSS pixels.
+  *** SENTENCE: In the rectangle state, area elements must have a coords attribute with exactly four integers, the first of which must be less than the third, and the second of which must be less than the fourth.
+
+====================================================================================================
+S24   [HTML Standard]
+  HEADING h2  b4921   4 The elements of HTML
+  HEADING h3  b13176  4.10 Forms
+  HEADING h4  b13318  4.10.3 The form element
+  -5  dt   Sanitization:
+  -4  dd   Uncategorized with navigating URL attributes action.
+  -3  dt   DOM interface:
+  -2  p    The form element represents a hyperlink that can be manipulated through a collection of form-associated elements, some of which can represent editable values that can be submitted to a server for processing.
+  -1  p    The accept-charset attribute gives the character encodings that are to be used for the submission. If specified, the value must be an ASCII case-insensitive match for "UTF-8". [ENCODING]
+  >>> OWN BLOCK b13364: The name attribute represents the form's name within the forms collection. The value must not be the empty string, and the value must be unique amongst the form elements in the forms collection that it is in, if any.
+  *** SENTENCE: The value must not be the empty string, and the value must be unique amongst the form elements in the forms collection that it is in, if any.
+
+====================================================================================================
+S25   [HTML Standard]
+  HEADING h2  b4921   4 The elements of HTML
+  HEADING h3  b13176  4.10 Forms
+  HEADING h4  b13550  4.10.5 The input element
+  -5  p    If this element's type attribute is in the Checkbox state, then set this element's checkedness to its opposite value (i.e. true if it is false, false if it is true) and set this element's indeterminateness to false.
+  -4  p    If this element's type attribute is in the Radio Button state, then get a reference to the element in this element's radio button group that has its checkedness set to true, if any, and then set this element's checkedness to true.
+  -3  p    The legacy-canceled-activation behavior for input elements are these steps:
+  -2  p    If the element's type attribute is in the Checkbox state, then set the element's checkedness and the element's indeterminateness back to the values they had before the legacy-pre-activation behavior was run.
+  -1  p    If this element's type attribute is in the Radio Button state, then if the element to which a reference was obtained in the legacy-pre-activation behavior, if any, is still in what is now this element's radio button group, if it still has one, and if so, set that element's checkedness to true; or else, if there was no such element, or that element is no longer in this element's radio button group, or if this element no longer has a radio button group, set this element's checkedness to false.
+  >>> OWN BLOCK b13685: When an input element is first created, the element's rendering and behavior must be set to the rendering and behavior defined for the type attribute's state, and the value sanitization algorithm, if one is defined for the type attribute's state, must be invoked.
+  *** SENTENCE: When an input element is first created, the element's rendering and behavior must be set to the rendering and behavior defined for the type attribute's state, and the value sanitization algorithm, if one is defined for the type attribute's state, must be invoked.
+
+====================================================================================================
+S26   [HTML Standard]
+  HEADING h2  b4921   4 The elements of HTML
+  HEADING h3  b13176  4.10 Forms
+  HEADING h4  b13550  4.10.5 The input element
+  HEADING h5  b13712  4.10.5.1 States of the type attribute
+  HEADING h6  b13959  4.10.5.1.12 Number state (type=number)
+  -5  p    The algorithm to convert a string to a number, given a string input, is as follows: If applying the rules for parsing floating-point number values to input results in an error, then return an error; otherwise, return the resulting number.
+  -4  p    The algorithm to convert a number to a string, given a number input, is as follows: Return a valid floating-point number that represents input.
+  -3  p    The following common input element content attributes, IDL attributes, and methods apply to the element: autocomplete, list, max, min, placeholder, readonly, required, and step content attributes; list, value, and valueAsNumber IDL attributes; select(), stepDown(), and stepUp() methods.
+  -2  p    The value IDL attribute is in mode value.
+  -1  p    The input and change events apply.
+  >>> OWN BLOCK b13979: The following content attributes must not be specified and do not apply to the element: accept, alpha, alt, checked, colorspace, dirname, formaction, formenctype, formmethod, formnovalidate, formtarget, height, maxlength, minlength, multiple, pattern, popovertarget, popovertargetaction, size, src, and width.
+  *** SENTENCE: The following content attributes must not be specified and do not apply to the element: accept, alpha, alt, checked, colorspace, dirname, formaction, formenctype, formmethod, formnovalidate, formtarget, height, maxlength, minlength, multiple, pattern, popovertarget, popovertargetaction, size, src, and width.
+
+====================================================================================================
+S27   [HTML Standard]
+  HEADING h2  b4921   4 The elements of HTML
+  HEADING h3  b13176  4.10 Forms
+  HEADING h4  b14618  4.10.6 The button element
+  -5  p    Otherwise, if this standard defines command steps for target's local name, then run the corresponding command steps given target, element, and command.
+  -4  p    Otherwise, run the popover target attribute activation behavior given element and event's target.
+  -3  p    An HTML element can have specific is valid command steps and command steps defined for the element's local name.
+  -2  p    The form attribute is used to explicitly associate the button element with its form owner. The name attribute represents the element's name. The disabled attribute is used to make the control non-interactive and to prevent its value from being submitted. The formaction, formenctype, formmethod, formnovalidate, and formtarget attributes are attributes for form submission.
+  -1  p    The formnovalidate attribute can be used to make submit buttons that do not trigger the constraint validation.
+  >>> OWN BLOCK b14722: The formaction, formenctype, formmethod, formnovalidate, and formtarget must not be specified if the element is not a submit button.
+  *** SENTENCE: The formaction, formenctype, formmethod, formnovalidate, and formtarget must not be specified if the element is not a submit button.
+
+====================================================================================================
+S28   [HTML Standard]
+  HEADING h2  b4921   4 The elements of HTML
+  HEADING h3  b13176  4.10 Forms
+  HEADING h4  b15031  4.10.10 The option element
+  -5  p    The label attribute provides a label for element. The label of an option element is the value of the label content attribute, if there is one and its value is not the empty string, or, otherwise, the value of the element's text IDL attribute.
+  -4  p    The label content attribute, if specified, must not be empty.
+  -3  p    The value attribute provides a value for element. The value of an option element is the value of the value content attribute, if there is one, or, if there is not, the result of collect option text given this and false.
+  -2  p    The selected attribute is a boolean attribute. It represents the default selectedness of the element.
+  -1  p    The dirtiness of an option element is a boolean state, initially false. It controls whether adding or removing the selected content attribute has any effect.
+  >>> OWN BLOCK b15084: The selectedness of an option element is a boolean state, initially false. Except where otherwise specified, when the element is created, its selectedness must be set to true if the element has a selected attribute. Whenever an option element's selected attribute is added, if its dirtiness is false, its selectedness must be set to true. Whenever an option element's selected attribute is removed, if its dirtiness is false, its selectedness must be set to false.
+  *** SENTENCE: Whenever an option element's selected attribute is removed, if its dirtiness is false, its selectedness must be set to false.
+
+====================================================================================================
+S29   [HTML Standard]
+  HEADING h2  b4921   4 The elements of HTML
+  HEADING h3  b13176  4.10 Forms
+  HEADING h4  b15649  4.10.18 Form control infrastructure
+  HEADING h5  b15663  4.10.18.3 Association of controls and forms
+  -5  p    Attributes#attr-form
+  -4  p    Support in all current engines.
+  -3  div  Firefox1+Safari≤4+Chrome1+Opera≤12.1+Edge79+Edge (Legacy)12+Internet Explorer≤6+Firefox Android?Safari iOS?Chrome Android?WebView Android?Samsung Internet?Opera Android≤12.1+
+  -2  p    A form-associated element is, by default, associated with its nearest ancestor form element (as described below), but, if it is listed, may have a form attribute specified to override this.
+  -1  p    This feature allows authors to work around the lack of support for nested form elements.
+  >>> OWN BLOCK b15675: If a listed form-associated element has a form attribute specified, then that attribute's value must be the ID of a form element in the element's tree.
+  *** SENTENCE: If a listed form-associated element has a form attribute specified, then that attribute's value must be the ID of a form element in the element's tree.
+
+====================================================================================================
+S30   [HTML Standard]
+  HEADING h2  b4921   4 The elements of HTML
+  HEADING h3  b16743  4.11 Interactive elements
+  HEADING h4  b16744  4.11.1 The details element
+  -5  p    The group of elements that is created by a common name attribute is exclusive, meaning that at most one of the details elements can be open at once. While this exclusivity is enforced by user agents, the resulting enforcement immediately changes the open attributes in the markup. This requirement on authors forbids such misleading markup.
+  -4  p    A document must not contain a details element that is a descendant of another details element in the same details name group.
+  -3  p    Documents that use the name attribute to group multiple related details elements should keep those related elements together in a containing element (such as a section element or article element). When it makes sense for the group to be introduced with a heading, authors should put that heading in a heading element at the start of the containing element.
+  -2  p    Visually and programmatically grouping related elements together can be important for accessible user experiences. This can help users understand the relationship between such elements. When related elements are in disparate sections of a web page rather than being grouped, the elements' relationships to each other can be less discoverable or understandable.
+  -1  p    The open content attribute is a boolean attribute. If present, it indicates that both the summary and the additional information is to be shown to the user. If the attribute is absent, only the summary is to be shown.
+  >>> OWN BLOCK b16789: When the element is created, if the attribute is absent, the additional information should be hidden; if the attribute is present, that information should be shown. Subsequently, if the attribute is removed, then the information should be hidden; if the attribute is added, the information should be shown.
+  *** SENTENCE: When the element is created, if the attribute is absent, the additional information should be hidden; if the attribute is present, that information should be shown.
+
+====================================================================================================
+S31   [HTML Standard]
+  HEADING h2  b4921   4 The elements of HTML
+  HEADING h3  b17216  4.12 Scripting
+  HEADING h4  b17843  4.12.5 The canvas element
+  HEADING h5  b17957  4.12.5.1 The 2D rendering context
+  HEADING h6  b18990  4.12.5.1.12 Drawing text to the bitmap
+  -5  p    The fillText(text, x, y, maxWidth) and strokeText(text, x, y, maxWidth) methods render the given text at the given (x, y) coordinates ensuring that the text isn't wider than maxWidth if specified, using the current font, textAlign, and textBaseline values. Specifically, when the methods are invoked, the user agent must run these steps:
+  -4  p    If any of the arguments are infinite or NaN, then return.
+  -3  p    Run the text preparation algorithm, passing it text, the object implementing the CanvasText interface, and, if the maxWidth argument was provided, that argument. Let glyphs be the result.
+  -2  p    Move all the shapes in glyphs to the right by x CSS pixels and down by y CSS pixels.
+  -1  p    Paint the shapes given in glyphs, as transformed by the current transformation matrix, with each CSS pixel in the coordinate space of glyphs mapped to one coordinate space unit.
+  >>> OWN BLOCK b19076: For fillText(), this's fill style must be applied to the shapes and this's stroke style must be ignored. For strokeText(), the reverse holds: this's stroke style must be applied to the result of tracing the shapes using the object implementing the CanvasText interface for the line styles, and this's fill style must be ignored.
+  *** SENTENCE: For strokeText(), the reverse holds: this's stroke style must be applied to the result of tracing the shapes using the object implementing the CanvasText interface for the line styles, and this's fill style must be ignored.
+
+====================================================================================================
+S32   [HTML Standard]
+  HEADING h2  b4921   4 The elements of HTML
+  HEADING h3  b19682  4.13 Custom elements
+  HEADING h4  b19749  4.13.2 Requirements for custom element constructors and reactions
+  -5  p    A parameter-less call to super() must be the first statement in the constructor body, to establish the correct prototype chain and this value before any further code is run.
+  -4  p    A return statement must not appear anywhere inside the constructor body, unless it is a simple early-return (return or return this).
+  -3  p    The constructor must not use the document.write() or document.open() methods.
+  -2  p    The element's attributes and children must not be inspected, as in the non-upgrade case none will be present, and relying on upgrades makes the element less usable.
+  -1  p    The element must not gain any attributes or children, as this violates the expectations of consumers who use the createElement or createElementNS methods.
+  >>> OWN BLOCK b19756: In general, work should be deferred to connectedCallback as much as possible—especially work involving fetching resources or rendering. However, note that connectedCallback can be called more than once, so any initialization work that is truly one-time will need a guard to prevent it from running twice.
+  *** SENTENCE: In general, work should be deferred to connectedCallback as much as possible—especially work involving fetching resources or rendering.
+
+====================================================================================================
+S33   [HTML Standard]
+  HEADING h2  b20588  5 Microdata
+  HEADING h3  b20651  5.2 Encoding microdata
+  HEADING h4  b20655  5.2.2 Items
+  -5  div  FirefoxYesSafariYesChromeYesOpera?EdgeYesEdge (Legacy)12+Internet ExplorerYesFirefox Android?Safari iOS?Chrome Android?WebView Android?Samsung Internet?Opera Android?
+  -4  p    Elements with an itemscope attribute may have an itemtype attribute specified, to give the item types of the item.
+  -3  p    The itemtype attribute, if specified, must have a value that is an unordered set of unique space-separated tokens, none of which are identical to another token and each of which is a valid URL string that is an absolute URL, and all of which are defined to use the same vocabulary. The attribute's value must have at least one token.
+  -2  p    The item types of an item are the tokens obtained by splitting the element's itemtype attribute's value on ASCII whitespace. If the itemtype attribute is missing or parsing it in this way finds no tokens, the item is said to have no item types.
+  -1  p    The item types must all be types defined in applicable specifications and must all be defined to use the same vocabulary.
+  >>> OWN BLOCK b20670: Except if otherwise specified by that specification, the URLs given as the item types should not be automatically dereferenced.
+  *** SENTENCE: Except if otherwise specified by that specification, the URLs given as the item types should not be automatically dereferenced.
+
+====================================================================================================
+S34   [HTML Standard]
+  HEADING h2  b20588  5 Microdata
+  HEADING h3  b20798  5.3 Sample microdata vocabularies
+  HEADING h4  b20800  5.3.1 vCard
+  -5  p    Gives the type of delivery address.
+  -4  p    The value must be text that is identical to one of the address type strings.
+  -3  p    Any number of properties with the name type may be present within the item that forms the value of an adr property of an item with the type http://microformats.org/profile/hcard, but within each such adr property item there must only be one type property per distinct value.
+  -2  dt   post-office-box (inside adr)
+  -1  p    Gives the post office box component of the delivery address of the person or organization.
+  >>> OWN BLOCK b20872: The value must be text.
+  *** SENTENCE: The value must be text.
+
+====================================================================================================
+S35   [HTML Standard]
+  HEADING h2  b20588  5 Microdata
+  HEADING h3  b20798  5.3 Sample microdata vocabularies
+  HEADING h4  b20800  5.3.1 vCard
+  -5  p    Gives the role, occupation, or business category of the person or organization.
+  -4  p    The value must be text.
+  -3  p    Any number of properties with the name role may be present within each item with the type http://microformats.org/profile/hcard.
+  -2  dt   logo
+  -1  p    Gives the logo of the person or organization.
+  >>> OWN BLOCK b20956: The value must be an absolute URL.
+  *** SENTENCE: The value must be an absolute URL.
+
+====================================================================================================
+S36   [HTML Standard]
+  HEADING h2  b20588  5 Microdata
+  HEADING h3  b20798  5.3 Sample microdata vocabularies
+  HEADING h4  b20800  5.3.1 vCard
+  -5  p    The value must be an item with one url property and one rel properties.
+  -4  p    Any number of properties with the name related may be present within each item with the type http://microformats.org/profile/hcard.
+  -3  dt   url (inside related)
+  -2  p    Gives the URL for the related entity.
+  -1  p    The value must be an absolute URL.
+  >>> OWN BLOCK b20985: Exactly one property with the name url must be present within the item that forms the value of a related property of an item with the type http://microformats.org/profile/hcard.
+  *** SENTENCE: Exactly one property with the name url must be present within the item that forms the value of a related property of an item with the type http://microformats.org/profile/hcard.
+
+====================================================================================================
+S37   [HTML Standard]
+  HEADING h2  b20588  5 Microdata
+  HEADING h3  b20798  5.3 Sample microdata vocabularies
+  HEADING h4  b20800  5.3.1 vCard
+  -5  p    Gives the URL for the related entity.
+  -4  p    The value must be an absolute URL.
+  -3  p    Exactly one property with the name url must be present within the item that forms the value of a related property of an item with the type http://microformats.org/profile/hcard.
+  -2  dt   rel (inside related)
+  -1  p    Gives the relationship between the entity and the related entity.
+  >>> OWN BLOCK b20988: The value must be text that is identical to one of the relationship strings.
+  *** SENTENCE: The value must be text that is identical to one of the relationship strings.
+
+====================================================================================================
+S38   [HTML Standard]
+  HEADING h2  b20588  5 Microdata
+  HEADING h3  b20798  5.3 Sample microdata vocabularies
+  HEADING h4  b21192  5.3.2 vEvent
+  -5  p    This vocabulary does not support global identifiers for items.
+  -4  p    The following are the type's defined property names. They are based on the vocabulary defined in Internet Calendaring and Scheduling Core Object Specification (iCalendar), where more information on how to interpret the values can be found. [RFC5545]
+  -3  p    Only the parts of the iCalendar vocabulary relating to events are used here; this vocabulary cannot express a complete iCalendar instance.
+  -2  dt   attach
+  -1  p    Gives the address of an associated document for the event.
+  >>> OWN BLOCK b21199: The value must be an absolute URL.
+  *** SENTENCE: The value must be an absolute URL.
+
+====================================================================================================
+S39   [HTML Standard]
+  HEADING h2  b21429  6 User interaction
+  HEADING h3  b22508  6.11 Drag and drop
+  HEADING h4  b22943  6.11.7 The draggable attribute
+  -5  p    Can be set, to override the default and set the draggable content attribute.
+  -4  p    The draggable IDL attribute, whose value depends on the content attribute's in the way described below, controls whether or not the element is draggable. Generally, only text selections are draggable, but elements whose draggable IDL attribute is true become draggable as well.
+  -3  p    If an element's draggable content attribute has the state True, the draggable IDL attribute must return true.
+  -2  p    Otherwise, if the element's draggable content attribute has the state False, the draggable IDL attribute must return false.
+  -1  p    Otherwise, the element's draggable content attribute has the state Auto. If the element is an img element, an object element that represents an image, or an a element with an href content attribute, the draggable IDL attribute must return true; otherwise, the draggable IDL attribute must return false.
+  >>> OWN BLOCK b22958: If the draggable IDL attribute is set to the value false, the draggable content attribute must be set to the literal value "false". If the draggable IDL attribute is set to the value true, the draggable content attribute must be set to the literal value "true".
+  *** SENTENCE: If the draggable IDL attribute is set to the value true, the draggable content attribute must be set to the literal value "true".
+
+====================================================================================================
+S40   [HTML Standard]
+  HEADING h2  b23345  7 Loading web pages
+  HEADING h3  b23347  7.1 Supporting concepts
+  HEADING h4  b23482  7.1.3 Cross-origin opener policies
+  HEADING h5  b23630  7.1.3.3 Reporting
+  -5  p    The accessor browsing context or one of its ancestors is the opener browsing context of the accessed browsing context's top-level browsing context.
+  -4  dt   accessor is openee
+  -3  p    The accessed browsing context or one of its ancestors is the opener browsing context of the accessor browsing context's top-level browsing context.
+  -2  dt   none
+  -1  p    There is no opener relationship between the accessor browsing context, the accessor browsing context, or any of their ancestors.
+  >>> OWN BLOCK b23638: To check if an access between two browsing contexts should be reported, given two browsing contexts accessor and accessed, a JavaScript property name P, and an environment settings object environment:
+  *** SENTENCE: To check if an access between two browsing contexts should be reported, given two browsing contexts accessor and accessed, a JavaScript property name P, and an environment settings object environment:
+
+====================================================================================================
+S41   [HTML Standard]
+  HEADING h2  b23345  7 Loading web pages
+  HEADING h3  b23902  7.2 APIs related to navigation and session history
+  HEADING h4  b24393  7.2.3 The WindowProxy exotic object
+  HEADING h5  b24438  7.2.3.7 [[Get]] ( P, Receiver )
+  -5  p    Return ? OrdinaryDefineOwnProperty(W, P, Desc).
+  -4  p    This is a willful violation of the JavaScript specification's invariants of the essential internal methods to maintain compatibility with existing web content. See tc39/ecma262 issue #672 for more information. [JAVASCRIPT]
+  -3  p    Throw a "SecurityError" DOMException.
+  -2  h5   7.2.3.7 [[Get]] ( P, Receiver )
+  -1  p    Let W be the value of the [[Window]] internal slot of this.
+  >>> OWN BLOCK b24440: Check if an access between two browsing contexts should be reported, given the current global object's browsing context, W's browsing context, P, and the current settings object.
+  *** SENTENCE: Check if an access between two browsing contexts should be reported, given the current global object's browsing context, W's browsing context, P, and the current settings object.
+
+====================================================================================================
+S42   [HTML Standard]
+  HEADING h2  b23345  7 Loading web pages
+  HEADING h3  b28361  7.6 Speculative loading
+  HEADING h4  b28364  7.6.1 Speculation rules
+  -5  p    If the value corresponding to the "source" key is "document", then the "urls" key must be absent.
+  -4  p    The "urls" and "where" keys must not both be present.
+  -3  p    If the value corresponding to the "source" key is "document" or the "where" key is present, then the "relative_to" key must be absent.
+  -2  p    The value corresponding to the "urls" key, if present, must be an array of valid URL strings.
+  -1  p    The value corresponding to the "where" key, if present, must be a valid document rule predicate.
+  >>> OWN BLOCK b28385: The value corresponding to the "relative_to" key, if present, must be either "ruleset" or "document".
+  *** SENTENCE: The value corresponding to the "relative_to" key, if present, must be either "ruleset" or "document".
+
+====================================================================================================
+S43   [HTML Standard]
+  HEADING h2  b28921  8 Web application APIs
+  HEADING h3  b28922  8.1 Scripting
+  HEADING h4  b29190  8.1.4 Script processing model
+  HEADING h5  b29229  8.1.4.2 Fetching scripts
+  -5  p    If mimeType is a JSON MIME type and moduleType is "json", then set moduleScript to the result of creating a JSON module script given sourceText and settingsObject.
+  -4  p    Let callbacks be moduleMap[(url, moduleType)].
+  -3  p    If moduleScript is null, then remove moduleMap[(url, moduleType)]; otherwise set moduleMap[(url, moduleType)] to moduleScript.
+  -2  p    It is intentional that the module map is keyed by the request URL, whereas the base URL for the module script is set to the response URL. The former is used to deduplicate fetches, while the latter is used for URL resolution.
+  -1  p    For each callback of callbacks: run callback given moduleScript.
+  >>> OWN BLOCK b29419: To fetch a single imported module script, given a URL url, an environment settings object fetchClient, a destination destination, a script fetch options options, environment settings object settingsObject, a referrer referrer, a ModuleRequest Record moduleRequest, an algorithm onComplete, and an optional perform the fetch hook performFetch, run these steps. onComplete must be an algorithm accepting null (on failure) or a module script (on success).
+  *** SENTENCE: To fetch a single imported module script, given a URL url, an environment settings object fetchClient, a destination destination, a script fetch options options, environment settings object settingsObject, a referrer referrer, a ModuleRequest Record moduleRequest, an algorithm onComplete, and an optional perform the fetch hook performFetch, run these steps. onComplete must be an algorithm accepting null (on failure) or a module script (on success).
+
+====================================================================================================
+S44   [HTML Standard]
+  HEADING h2  b28921  8 Web application APIs
+  HEADING h3  b32385  8.12 Animation frames
+  -5  p    Each AnimationFrameProvider object also has a target object that stores the provider's internal state. It is defined as follows:
+  -4  dt   If the AnimationFrameProvider is a Window
+  -3  dd   The Window's associated Document
+  -2  dt   If the AnimationFrameProvider is a DedicatedWorkerGlobalScope
+  -1  dd   The DedicatedWorkerGlobalScope
+  >>> OWN BLOCK b32392: Each target object has a map of animation frame callbacks, which is an ordered map that must be initially empty, and an animation frame callback identifier, which is a number that must initially be zero.
+  *** SENTENCE: Each target object has a map of animation frame callbacks, which is an ordered map that must be initially empty, and an animation frame callback identifier, which is a number that must initially be zero.
+
+====================================================================================================
+S45   [HTML Standard]
+  HEADING h2  b32425  9 Communication
+  HEADING h3  b32905  9.5 Broadcasting to other browsing contexts
+  -5  p    If destination's closed flag is true, then abort these steps.
+  -4  p    Let targetRealm be destination's relevant realm.
+  -3  p    Let data be StructuredDeserialize(serialized, targetRealm).
+  -2  p    If this throws an exception, catch it, fire an event named messageerror at destination, using MessageEvent, with its origin initialized to sourceOrigin, and then abort these steps.
+  -1  p    Fire an event named message at destination, using MessageEvent, with the data attribute initialized to data and its origin initialized to sourceOrigin.
+  >>> OWN BLOCK b32966: While a BroadcastChannel object whose closed flag is false has an event listener registered for message or messageerror events, there must be a strong reference from the BroadcastChannel object's relevant global object to the BroadcastChannel object itself.
+  *** SENTENCE: While a BroadcastChannel object whose closed flag is false has an event listener registered for message or messageerror events, there must be a strong reference from the BroadcastChannel object's relevant global object to the BroadcastChannel object itself.
+
+====================================================================================================
+S46   [HTML Standard]
+  HEADING h2  b33991  13 The HTML syntax
+  HEADING h3  b33993  13.1 Writing HTML documents
+  HEADING h4  b34027  13.1.2 Elements
+  HEADING h5  b34053  13.1.2.1 Start tags
+  -5  p    The innermost element, cdr:license, is actually in the SVG namespace, as the "xmlns:cdr" attribute has no effect (unlike in XML). In fact, as the comment in the fragment above says, the fragment is actually non-conforming. This is because SVG 2 does not define any elements called "cdr:license" in the SVG namespace.
+  -4  p    Normal elements can have text, character references, other elements, and comments, but the text must not contain the character U+003C LESS-THAN SIGN (<) or an ambiguous ampersand. Some normal elements also have yet more restrictions on what content they are allowed to hold, beyond the restrictions imposed by the content model and those described in this paragraph. Those restrictions are described below.
+  -3  p    Tags contain a tag name, giving the element's name. HTML elements all have names that only use ASCII alphanumerics. In the HTML syntax, tag names, even those for foreign elements, may be written with any mix of lower- and uppercase letters that, when converted to all-lowercase, matches the element's tag name; tag names are case-insensitive.
+  -2  h5   13.1.2.1 Start tags
+  -1  p    Start tags must have the following format:
+  >>> OWN BLOCK b34055: The first character of a start tag must be a U+003C LESS-THAN SIGN character (<).
+  *** SENTENCE: The first character of a start tag must be a U+003C LESS-THAN SIGN character (<).
+
+====================================================================================================
+S47   [HTML Standard]
+  HEADING h2  b33991  13 The HTML syntax
+  HEADING h3  b33993  13.1 Writing HTML documents
+  HEADING h4  b34027  13.1.2 Elements
+  HEADING h5  b34062  13.1.2.2 End tags
+  -5  li   Then, if the element is one of the void elements, or if the element is a foreign element, then there may be a single U+002F SOLIDUS character (/), which on foreign elements marks the start tag as self-closing. On void elements, it does not mark the start tag as self-closing but instead is unnecessary and has no effect of any kind. For such void elements, it should be used only with caution — especially since, if directly preceded by an unquoted attribute value, it becomes part of the attribute value rather than being discarded by the parser.
+  -4  li   Finally, start tags must be closed by a U+003E GREATER-THAN SIGN character (>).
+  -3  h5   13.1.2.2 End tags
+  -2  p    End tags must have the following format:
+  -1  li   The first character of an end tag must be a U+003C LESS-THAN SIGN character (<).
+  >>> OWN BLOCK b34065: The second character of an end tag must be a U+002F SOLIDUS character (/).
+  *** SENTENCE: The second character of an end tag must be a U+002F SOLIDUS character (/).
+
+====================================================================================================
+S48   [HTML Standard]
+  HEADING h2  b33991  13 The HTML syntax
+  HEADING h3  b34194  13.2 Parsing HTML documents
+  HEADING h4  b35501  13.2.6 Tree construction
+  HEADING h5  b35635  13.2.6.4 The rules for parsing tokens in HTML content
+  HEADING h6  b35636  13.2.6.4.1 The "initial" insertion mode
+  -5  p    Otherwise, if the document is not an iframe srcdoc document, and the parser cannot change the mode flag is false, and the DOCTYPE token matches one of the conditions in the following list, then set the Document to limited-quirks mode:
+  -4  li   The public identifier starts with: "-//W3C//DTD XHTML 1.0 Frameset//"
+  -3  li   The public identifier starts with: "-//W3C//DTD XHTML 1.0 Transitional//"
+  -2  li   The system identifier is neither missing nor the empty string, and the public identifier starts with: "-//W3C//DTD HTML 4.01 Frameset//"
+  -1  li   The system identifier is neither missing nor the empty string, and the public identifier starts with: "-//W3C//DTD HTML 4.01 Transitional//"
+  >>> OWN BLOCK b35718: The system identifier and public identifier strings must be compared to the values given in the lists above in an ASCII case-insensitive manner. A system identifier whose value is the empty string is not considered missing for the purposes of the conditions above.
+  *** SENTENCE: The system identifier and public identifier strings must be compared to the values given in the lists above in an ASCII case-insensitive manner.
+
+====================================================================================================
+S49   [HTML Standard]
+  HEADING h2  b37880  16 Obsolete features
+  HEADING h3  b37881  16.1 Obsolete but conforming features
+  -5  h2   16 Obsolete features
+  -4  h3   16.1 Obsolete but conforming features
+  -3  p    Features listed in this section will trigger warnings in conformance checkers.
+  -2  p    Authors should not specify a border attribute on an img element. If the attribute is present, its value must be the string "0". CSS should be used instead.
+  -1  p    Authors should not specify a charset attribute on a script element. If the attribute is present, its value must be an ASCII case-insensitive match for "utf-8". (This has no effect in a document that conforms to the requirements elsewhere in this standard of being encoded as UTF-8.)
+  >>> OWN BLOCK b37885: Authors should not specify a language attribute on a script element. If the attribute is present, its value must be an ASCII case-insensitive match for the string "JavaScript" and either the type attribute must be omitted or its value must be an ASCII case-insensitive match for the string "text/javascript". The attribute should be entirely omitted instead (with the value "JavaScript", it has no effect), or replaced with use of the type attribute.
+  *** SENTENCE: The attribute should be entirely omitted instead (with the value "JavaScript", it has no effect), or replaced with use of the type attribute.
+
+====================================================================================================
+S50   [HTML Standard]
+  HEADING h2  b37880  16 Obsolete features
+  HEADING h3  b37881  16.1 Obsolete but conforming features
+  -5  h2   16 Obsolete features
+  -4  h3   16.1 Obsolete but conforming features
+  -3  p    Features listed in this section will trigger warnings in conformance checkers.
+  -2  p    Authors should not specify a border attribute on an img element. If the attribute is present, its value must be the string "0". CSS should be used instead.
+  -1  p    Authors should not specify a charset attribute on a script element. If the attribute is present, its value must be an ASCII case-insensitive match for "utf-8". (This has no effect in a document that conforms to the requirements elsewhere in this standard of being encoded as UTF-8.)
+  >>> OWN BLOCK b37885: Authors should not specify a language attribute on a script element. If the attribute is present, its value must be an ASCII case-insensitive match for the string "JavaScript" and either the type attribute must be omitted or its value must be an ASCII case-insensitive match for the string "text/javascript". The attribute should be entirely omitted instead (with the value "JavaScript", it has no effect), or replaced with use of the type attribute.
+  *** SENTENCE: If the attribute is present, its value must be an ASCII case-insensitive match for the string "JavaScript" and either the type attribute must be omitted or its value must be an ASCII case-insensitive match for the string "text/javascript".
+
+====================================================================================================
+S51   [Infra Standard]
+  HEADING h2  b45     3. Algorithms
+  HEADING h3  b114    3.5. Variables
+  -5  p    Let value be null.
+  -4  p    If input is a string, then set value to input.
+  -3  p    Otherwise, set value to input, UTF-8 decoded.
+  -2  p    Assert: value is a string.
+  -1  p    Let activationTarget be target if isActivationEvent is true and target has activation behavior; otherwise null.
+  >>> OWN BLOCK b122: Variables must not be used before they are declared. Variables are block scoped. Variables must not be declared more than once per algorithm.
+  *** SENTENCE: Variables must not be used before they are declared.
+
+====================================================================================================
+S52   [Streams Standard]
+  HEADING h2  b68     4. Readable streams
+  HEADING h3  b542    4.9. Abstract operations
+  HEADING h4  b543    4.9.1. Working with readable streams
+  -5  p    It’s frequently inefficient to read chunks that are too small or too large. Other information might be factored in to determine the optimal chunk size.
+  -4  p    Reads or writes should not be delayed for reasons other than these backpressure signals.
+  -3  p    An implementation that waits for each write to successfully complete before proceeding to the next read/write operation violates this recommendation. In doing so, such an implementation makes the internal queue of dest useless, as it ensures dest always contains at most one queued chunk.
+  -2  p    Shutdown must stop activity: if shuttingDown becomes true, the user agent must not initiate further reads from reader, and must only perform writes of already-read chunks, as described below. In particular, the user agent must check the below conditions before performing any reads or writes, since they might lead to immediate shutdown.
+  -1  p    Error and close states must be propagated: the following conditions must be applied in order.
+  >>> OWN BLOCK b629: Errors must be propagated forward: if source.[[state]] is or becomes "errored", then
+  *** SENTENCE: Errors must be propagated forward: if source.[[state]] is or becomes "errored", then
+
+====================================================================================================
+S53   [Test Utils Standard]
+  HEADING h2  b10     3. Availability
+  -5  p    This specification defines additional in-browser APIs for use in tests, but which are not suitable to enable for end users. The primary client of these APIs is the web-platform-tests testsuite.
+  -4  h2   2. Infrastructure
+  -3  p    This specification depends on the Infra Standard. [INFRA]
+  -2  p    This specification uses terminology from the Web IDL standard. [WEBIDL]
+  -1  h2   3. Availability
+  >>> OWN BLOCK b11: The interfaces defined in this specification must not be enabled in the default shipping configuration of user agents. They must only be enabled in testing configurations for example with special build flags, or when a specific non-default preference is set.
+  *** SENTENCE: The interfaces defined in this specification must not be enabled in the default shipping configuration of user agents.
+
+====================================================================================================
+S54   [URL Standard]
+  HEADING h2  b345    4. URLs
+  HEADING h3  b392    4.3. URL writing
+  -5  p    An absolute-URL string must be one of the following:
+  -4  p    a URL-scheme string that is an ASCII case-insensitive match for a special scheme and not an ASCII case-insensitive match for "file", followed by U+003A (:) and a scheme-relative-special-URL string
+  -3  p    a URL-scheme string that is not an ASCII case-insensitive match for a special scheme, followed by U+003A (:) and one of: a scheme-relative-URL string, a path-absolute-non-authority-URL string, or an opaque-path-URL string
+  -2  p    a URL-scheme string that is an ASCII case-insensitive match for "file", followed by U+003A (:) and a scheme-relative-file-URL string
+  -1  p    any optionally followed by U+003F (?) and a URL-query string.
+  >>> OWN BLOCK b400: A URL-scheme string must be one ASCII alpha, followed by zero or more of ASCII alphanumeric, U+002B (+), U+002D (-), and U+002E (.). Schemes should be registered in the IANA URI [sic] Schemes registry. [IANA-URI-SCHEMES] [RFC7595]
+  *** SENTENCE: Schemes should be registered in the IANA URI [sic] Schemes registry. [IANA-URI-SCHEMES] [RFC7595]
+
+====================================================================================================
+S55   [URL Pattern Standard]
+  HEADING h2  b518    2. Pattern strings
+  HEADING h3  b525    2.1. Parsing pattern strings
+  HEADING h4  b685    2.1.3. Parts
+  -5  dt   "segment-wildcard"
+  -4  dd   The part represents a matching group that matches code points up to the next separator code point. This is typically used for a named group like ":foo" that does not have a custom regular expression.
+  -3  dt   "full-wildcard"
+  -2       The part represents a matching group that greedily matches all code points. This is typically used for the "*" wildcard matching group.
+  -1  p    A part has an associated value, a string, which must be set upon creation.
+  >>> OWN BLOCK b698: A part has an associated modifier a string, which must be set upon creation. It must be one of the following:
+  *** SENTENCE: A part has an associated modifier a string, which must be set upon creation.
+
+====================================================================================================
+S56   [Web IDL Standard]
+  HEADING h2  b8      2. Interface definition language
+  HEADING h3  b36     2.2. Interfaces
+  -5  p    Interfaces may specify an interface member that has the same name as one from an inherited interface. Objects that implement the derived interface will expose the member on the derived interface. It is language binding specific whether the overridden member can be accessed on the object.
+  -4  p    Consider the following two interfaces.
+  -3  p    In the JavaScript language binding, an instance of B will have a prototype chain that looks like the following:
+  -2  p    Calling instanceOfB.f() in JavaScript will invoke the f defined on B. However, the f from A can still be invoked on an object that implements B by calling A.prototype.f.call(instanceOfB).
+  -1  p    The inherited interfaces of a given interface A is the set of all interfaces that A inherits from, directly or indirectly. If A does not inherit from another interface, then the set is empty. Otherwise, the set includes the interface B that A inherits from and all of B’s inherited interfaces.
+  >>> OWN BLOCK b47: An interface must not be declared such that its inheritance hierarchy has a cycle. That is, an interface A cannot inherit from itself, nor can it inherit from another interface B that inherits from A, and so on.
+  *** SENTENCE: An interface must not be declared such that its inheritance hierarchy has a cycle.
+
+====================================================================================================
+S57   [Web IDL Standard]
+  HEADING h2  b8      2. Interface definition language
+  HEADING h3  b111    2.5. Members
+  HEADING h4  b190    2.5.3. Operations
+  -5  p    Note: The identifier of a static operation can be the same as the identifier of a regular operation defined on the same interface.
+  -4  p    The return type of the operation is given by the type (matching Type) that appears before the operation’s optional identifier. If the return type is an identifier followed by ?, then the identifier must identify an interface, dictionary, enumeration, callback function, callback interface or typedef.
+  -3  p    An operation’s arguments (matching ArgumentList) are given between the parentheses in the declaration. Each individual argument is specified as a type (matching Type) followed by an identifier (matching ArgumentName).
+  -2  p    Note: For expressiveness, the identifier of an operation argument can also be specified as one of the keywords matching the ArgumentNameKeyword symbol without needing to escape it.
+  -1  p    If the Type of an operation argument is an identifier followed by ?, then the identifier must identify an interface, enumeration, callback function, callback interface, or typedef. If the operation argument type is an identifier not followed by ?, then the identifier must identify any one of those definitions or a dictionary.
+  >>> OWN BLOCK b204: If the operation argument type, after resolving typedefs, is a nullable type, its inner type must not be a dictionary type.
+  *** SENTENCE: If the operation argument type, after resolving typedefs, is a nullable type, its inner type must not be a dictionary type.
+
+====================================================================================================
+S58   [Web IDL Standard]
+  HEADING h2  b8      2. Interface definition language
+  HEADING h3  b111    2.5. Members
+  HEADING h4  b190    2.5.3. Operations
+  -5  p    The value of the string token is S.
+  -4  dt   ByteString
+  -3  p    Assert: S doesn’t contain any code points higher than U+00FF.
+  -2  p    The value of the string token is the isomorphic encoding of S.
+  -1  p    If the type of the optional argument is an enumeration, then its default value if specified must be one of the enumeration’s values.
+  >>> OWN BLOCK b232: Optional argument default values can also be specified using the two token value [], which represents an empty sequence value. The type of this value is the same as the type of the optional argument it is being used as the default value of. That type must be a sequence type, a nullable type whose inner type is a sequence type or a union type or nullable union type that has a sequence type in its flattened member types.
+  *** SENTENCE: That type must be a sequence type, a nullable type whose inner type is a sequence type or a union type or nullable union type that has a sequence type in its flattened member types.
+
+====================================================================================================
+S59   [Web IDL Standard]
+  HEADING h2  b8      2. Interface definition language
+  HEADING h3  b111    2.5. Members
+  HEADING h4  b279    2.5.5. Stringifiers
+  -5  p    A JavaScript implementation supporting these interfaces would implement a [[Construct]] internal method on the Circle interface object which would return a new object that implements the interface. It would take either zero or one argument.
+  -4  p    It is unclear whether the NodeList interface object would implement a [[Construct]] internal method. In any case, trying to use it as a constructor will cause a TypeError to be thrown. [whatwg/webidl Issue #698]
+  -3  h4   2.5.5. Stringifiers
+  -2  p    When an interface has a stringifier, it indicates that objects that implement the interface have a non-default conversion to a string. Stringifiers can be specified using a stringifier keyword, which creates a stringifier operation when used alone.
+  -1  p    Prose accompanying the interface must define the stringification behavior of the interface.
+  >>> OWN BLOCK b282: The stringifier keyword can also be placed on an attribute. In this case, the string to convert the object to is the value of the attribute. The stringifier keyword must not be placed on an attribute unless it is declared to be of type DOMString or USVString. It also must not be placed on a static attribute.
+  *** SENTENCE: It also must not be placed on a static attribute.
+
+====================================================================================================
+S60   [Web IDL Standard]
+  HEADING h2  b985    3. JavaScript binding
+  HEADING h3  b1751   3.3. Extended attributes
+  HEADING h4  b1870   3.3.8. [Global]
+  -5  p    The [Global] extended attribute also defines the global names for the interface:
+  -4  dt   If the [Global] extended attribute takes an identifier
+  -3  p    « the given identifier »
+  -2  dt   If the [Global] extended attribute takes an identifier list
+  -1  p    the identifier list
+  >>> OWN BLOCK b1877: The [Global] extended attribute must be one of the forms given above.
+  *** SENTENCE: The [Global] extended attribute must be one of the forms given above.
+

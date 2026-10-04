@@ -1,0 +1,348 @@
+{
+ "question_1_what_the_rule_misses_inside_ecpg_sgml": {
+  "found_by_hand": [
+   "07002"
+  ],
+  "why_the_rule_cannot_see_it": "two entries read '(SQLSTATE 07001 or 07002)'. The rule takes the code adjacent to the word SQLSTATE and there is no second word SQLSTATE before 07002. The rule under-counts by one code.",
+  "entries": [
+   "-201 (ECPG_TOO_MANY_ARGUMENTS)",
+   "-202 (ECPG_TOO_FEW_ARGUMENTS)"
+  ]
+ },
+ "question_2_outside_ecpg_sgml": {
+  "mechanical_result_of_the_adjacency_rule": 0,
+  "bare_vocabulary_literals_found_by_hand": 14,
+  "of_those_actually_naming_a_SQLSTATE": 8,
+  "codes_naming_a_SQLSTATE": [
+   "00000",
+   "22003",
+   "22012",
+   "22013",
+   "23505",
+   "23P01",
+   "40001",
+   "40P01"
+  ],
+  "all_of_them_in_the_vocabulary": true,
+  "reading": "The manual does name SQLSTATE values in three other files -- mvcc.sgml, plpgsql.sgml, btree.sgml -- and every one of them is a code Appendix A carries. Only the ecpg listing steps outside the vocabulary. P3 loses on its own bar and the hand-check makes the loss sharper rather than softer: the second face is singular, not one of many.",
+  "false_positives_reported_rather_than_dropped": [
+   {
+    "code": "01000",
+    "what_it_really_is": "func.sgml: the value of a bit-string shift, B'10001' << 3"
+   },
+   {
+    "code": "20000",
+    "what_it_really_is": "array.sgml: a salary in the tutorial table"
+   },
+   {
+    "code": "25000",
+    "what_it_really_is": "array.sgml: a salary in the tutorial table"
+   },
+   {
+    "code": "27000",
+    "what_it_really_is": "array.sgml: a salary in the tutorial table"
+   },
+   {
+    "code": "40000",
+    "what_it_really_is": "libpq.sgml: a server version number, 4.0"
+   },
+   {
+    "code": "P0001",
+    "what_it_really_is": "datatype.sgml: the timestamp P0001-02-03T04:05:06"
+   }
+  ],
+  "all": [
+   {
+    "code": "00000",
+    "in_vocabulary": true,
+    "verdict": "SQLSTATE",
+    "note": "plpgsql.sgml: the rule for user-chosen codes, 'other than 00000'",
+    "n_occurrences": 7,
+    "occurrences": [
+     {
+      "file": "doc/src/sgml/plpgsql.sgml",
+      "line": 4021,
+      "context": "isting of five digits and/or upper-case ASCII letters, other than <literal>00000</literal>. It is recommended that you avoid"
+     },
+     {
+      "file": "doc/src/sgml/func.sgml",
+      "line": 8196,
+      "context": "entry><literal>FF5</literal></entry> <entry>hundredth of a millisecond (00000&ndash;99999)</entry> </row> <row>"
+     },
+     {
+      "file": "doc/src/sgml/ref/psql-ref.sgml",
+      "line": 4519,
+      "context": "pplication>psql</application> session, or an empty string and <literal>00000</literal> if no error has occurred in th"
+     },
+     {
+      "file": "doc/src/sgml/ref/psql-ref.sgml",
+      "line": 4760,
+      "context": "appendix\"/>) associated with the last SQL query's failure, or <literal>00000</literal> if it succeeded. </par"
+     }
+    ]
+   },
+   {
+    "code": "01000",
+    "in_vocabulary": true,
+    "verdict": "not a SQLSTATE",
+    "note": "func.sgml: the value of a bit-string shift, B'10001' << 3",
+    "n_occurrences": 1,
+    "occurrences": [
+     {
+      "file": "doc/src/sgml/func.sgml",
+      "line": 5246,
+      "context": "<para> <literal>B'10001' &lt;&lt; 3</literal> <returnvalue>01000</returnvalue> </para></entry> </row>"
+     }
+    ]
+   },
+   {
+    "code": "20000",
+    "in_vocabulary": true,
+    "verdict": "not a SQLSTATE",
+    "note": "array.sgml: a salary in the tutorial table",
+    "n_occurrences": 7,
+    "occurrences": [
+     {
+      "file": "doc/src/sgml/array.sgml",
+      "line": 147,
+      "context": "\"training\", \"presentation\"}}'); INSERT INTO sal_emp VALUES ('Carol', '{20000, 25000, 25000, 25000}', '{{\"breakfast\", \"cons"
+     },
+     {
+      "file": "doc/src/sgml/array.sgml",
+      "line": 160,
+      "context": "{10000,10000,10000,10000} | {{meeting,lunch},{training,presentation}} Carol | {20000,25000,25000,25000} | {{breakfast,consulting},{mee"
+     },
+     {
+      "file": "doc/src/sgml/array.sgml",
+      "line": 189,
+      "context": "aining', 'presentation']]); INSERT INTO sal_emp VALUES ('Carol', ARRAY[20000, 25000, 25000, 25000], ARRAY[['breakfast', 'c"
+     },
+     {
+      "file": "doc/src/sgml/plpgsql.sgml",
+      "line": 5885,
+      "context": "count &gt; 0 THEN COMMIT; -- free lock raise_application_error(-20000, 'Unable to create a new job: a"
+     }
+    ]
+   },
+   {
+    "code": "22003",
+    "in_vocabulary": true,
+    "verdict": "SQLSTATE",
+    "note": "plpgsql.sgml: RAISE ... USING ERRCODE = '22003'",
+    "n_occurrences": 2,
+    "occurrences": [
+     {
+      "file": "doc/src/sgml/plpgsql.sgml",
+      "line": 6130,
+      "context": "RAISE 'argument ''%'' is out of range', occur_index USING ERRCODE = '22003'; END IF; IF beg_index > 0 THEN"
+     },
+     {
+      "file": "doc/src/sgml/func.sgml",
+      "line": 27488,
+      "context": "------- value \"42000000000\" is out of range for type integer | | | 22003 </programlisting> </para></entry> </"
+     }
+    ]
+   },
+   {
+    "code": "22012",
+    "in_vocabulary": true,
+    "verdict": "SQLSTATE",
+    "note": "plpgsql.sgml: WHEN SQLSTATE '22012' THEN",
+    "n_occurrences": 2,
+    "occurrences": [
+     {
+      "file": "doc/src/sgml/plpgsql.sgml",
+      "line": 2845,
+      "context": "are equivalent: <programlisting> WHEN division_by_zero THEN ... WHEN SQLSTATE '22012' THEN ... </programlisting> </para> <par"
+     },
+     {
+      "file": "doc/src/sgml/plpgsql.sgml",
+      "line": 3900,
+      "context": "ceable> usage: <programlisting> RAISE division_by_zero; RAISE WARNING SQLSTATE '22012'; </programlisting> </para> <para> In"
+     }
+    ]
+   },
+   {
+    "code": "22013",
+    "in_vocabulary": true,
+    "verdict": "SQLSTATE",
+    "note": "btree.sgml: the code an operator class must raise",
+    "n_occurrences": 1,
+    "occurrences": [
+     {
+      "file": "doc/src/sgml/btree.sgml",
+      "line": 365,
+      "context": "error <literal>ERRCODE_INVALID_PRECEDING_OR_FOLLOWING_SIZE</literal> (22013) with error text like <quote>invalid preceding or"
+     }
+    ]
+   },
+   {
+    "code": "23505",
+    "in_vocabulary": true,
+    "verdict": "SQLSTATE",
+    "note": "mvcc.sgml: 'which have SQLSTATE code 23505'",
+    "n_occurrences": 2,
+    "occurrences": [
+     {
+      "file": "doc/src/sgml/mvcc.sgml",
+      "line": 1794,
+      "context": "appropriate to retry unique-key failures, which have SQLSTATE code <literal>23505</literal> (<literal>unique_violation</literal"
+     },
+     {
+      "file": "doc/src/sgml/plpgsql.sgml",
+      "line": 3974,
+      "context": "DE = 'unique_violation'; RAISE 'Duplicate user ID: %', user_id USING ERRCODE = '23505'; </programlisting> Another way to produce th"
+     }
+    ]
+   },
+   {
+    "code": "23P01",
+    "in_vocabulary": true,
+    "verdict": "SQLSTATE",
+    "note": "mvcc.sgml: 'which have SQLSTATE code 23P01'",
+    "n_occurrences": 1,
+    "occurrences": [
+     {
+      "file": "doc/src/sgml/mvcc.sgml",
+      "line": 1796,
+      "context": "ral>), and exclusion constraint failures, which have SQLSTATE code <literal>23P01</literal> (<literal>exclusion_violation</lite"
+     }
+    ]
+   },
+   {
+    "code": "25000",
+    "in_vocabulary": true,
+    "verdict": "not a SQLSTATE",
+    "note": "array.sgml: a salary in the tutorial table",
+    "n_occurrences": 14,
+    "occurrences": [
+     {
+      "file": "doc/src/sgml/array.sgml",
+      "line": 147,
+      "context": "ng\", \"presentation\"}}'); INSERT INTO sal_emp VALUES ('Carol', '{20000, 25000, 25000, 25000}', '{{\"breakfast\", \"consulting\""
+     },
+     {
+      "file": "doc/src/sgml/array.sgml",
+      "line": 147,
+      "context": "resentation\"}}'); INSERT INTO sal_emp VALUES ('Carol', '{20000, 25000, 25000, 25000}', '{{\"breakfast\", \"consulting\"}, {\"me"
+     },
+     {
+      "file": "doc/src/sgml/array.sgml",
+      "line": 147,
+      "context": "tion\"}}'); INSERT INTO sal_emp VALUES ('Carol', '{20000, 25000, 25000, 25000}', '{{\"breakfast\", \"consulting\"}, {\"meeting\","
+     },
+     {
+      "file": "doc/src/sgml/array.sgml",
+      "line": 160,
+      "context": ",10000,10000,10000} | {{meeting,lunch},{training,presentation}} Carol | {20000,25000,25000,25000} | {{breakfast,consulting},{meeting,l"
+     }
+    ]
+   },
+   {
+    "code": "27000",
+    "in_vocabulary": true,
+    "verdict": "not a SQLSTATE",
+    "note": "array.sgml: a salary in the tutorial table",
+    "n_occurrences": 6,
+    "occurrences": [
+     {
+      "file": "doc/src/sgml/array.sgml",
+      "line": 392,
+      "context": "completely: <programlisting> UPDATE sal_emp SET pay_by_quarter = '{25000,25000,27000,27000}' WHERE name = 'Carol'; </programlistin"
+     },
+     {
+      "file": "doc/src/sgml/array.sgml",
+      "line": 392,
+      "context": "tely: <programlisting> UPDATE sal_emp SET pay_by_quarter = '{25000,25000,27000,27000}' WHERE name = 'Carol'; </programlisting>"
+     },
+     {
+      "file": "doc/src/sgml/array.sgml",
+      "line": 399,
+      "context": "syntax: <programlisting> UPDATE sal_emp SET pay_by_quarter = ARRAY[25000,25000,27000,27000] WHERE name = 'Carol'; </programlisting"
+     },
+     {
+      "file": "doc/src/sgml/array.sgml",
+      "line": 399,
+      "context": ": <programlisting> UPDATE sal_emp SET pay_by_quarter = ARRAY[25000,25000,27000,27000] WHERE name = 'Carol'; </programlisting> A"
+     }
+    ]
+   },
+   {
+    "code": "40000",
+    "in_vocabulary": true,
+    "verdict": "not a SQLSTATE",
+    "note": "libpq.sgml: a server version number, 4.0",
+    "n_occurrences": 1,
+    "occurrences": [
+     {
+      "file": "doc/src/sgml/libpq.sgml",
+      "line": 2914,
+      "context": "ion 3.2 would be returned as 30002, and version 4.0 would be returned as 40000. Zero is returned if the connection is bad. The 3"
+     }
+    ]
+   },
+   {
+    "code": "40001",
+    "in_vocabulary": true,
+    "verdict": "SQLSTATE",
+    "note": "mvcc.sgml: 'an SQLSTATE value of 40001'",
+    "n_occurrences": 4,
+    "occurrences": [
+     {
+      "file": "doc/src/sgml/mvcc.sgml",
+      "line": 744,
+      "context": "ling serialization failures (which always return with an SQLSTATE value of '40001'), because it will be very hard to predict ex"
+     },
+     {
+      "file": "doc/src/sgml/mvcc.sgml",
+      "line": 1782,
+      "context": "e precise circumstances, but it will always have the SQLSTATE code <literal>40001</literal> (<literal>serialization_failure</li"
+     },
+     {
+      "file": "doc/src/sgml/ref/select.sgml",
+      "line": 1727,
+      "context": "e a serialization failure (with an <literal>SQLSTATE</literal> of <literal>'40001'</literal>), so there is no possibility of re"
+     },
+     {
+      "file": "doc/src/sgml/ref/update.sgml",
+      "line": 338,
+      "context": "e a serialization failure error (which always returns with an SQLSTATE code '40001'). Applications may wish to retry the transac"
+     }
+    ]
+   },
+   {
+    "code": "40P01",
+    "in_vocabulary": true,
+    "verdict": "SQLSTATE",
+    "note": "mvcc.sgml: 'These have the SQLSTATE code 40P01'",
+    "n_occurrences": 1,
+    "occurrences": [
+     {
+      "file": "doc/src/sgml/mvcc.sgml",
+      "line": 1788,
+      "context": "advisable to retry deadlock failures. These have the SQLSTATE code <literal>40P01</literal> (<literal>deadlock_detected</litera"
+     }
+    ]
+   },
+   {
+    "code": "P0001",
+    "in_vocabulary": true,
+    "verdict": "not a SQLSTATE",
+    "note": "datatype.sgml: the timestamp P0001-02-03T04:05:06",
+    "n_occurrences": 2,
+    "occurrences": [
+     {
+      "file": "doc/src/sgml/datatype.sgml",
+      "line": 2954,
+      "context": "meaning as above</entry> </row> <row> <entry><literal>P0001-02-03T04:05:06</literal></entry> <entry>"
+     },
+     {
+      "file": "doc/src/sgml/plpgsql.sgml",
+      "line": 4011,
+      "context": "command, the default is to use <literal>raise_exception</literal> (<literal>P0001</literal>). If no message text is specified,"
+     }
+    ]
+   }
+  ]
+ }
+}

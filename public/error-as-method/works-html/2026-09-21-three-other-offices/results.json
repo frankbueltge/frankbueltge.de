@@ -1,0 +1,889 @@
+{
+ "note": "Session 91's r1/r2/r3/r3b imported from works/2026-09-17-the-second-instrument/validate.py and called, not reimplemented. Vocabularies and the decision band are declared in PREDICTIONS.md, committed before this file.",
+ "band_that_would_falsify_S91.RULEBOUND": {
+  "low_pct": 21.42,
+  "high_pct": 41.42,
+  "session_91_narrow_R3b_pct": 31.42
+ },
+ "base_terms": [
+  "user agent",
+  "user agents",
+  "browser",
+  "browsers",
+  "author",
+  "authors",
+  "implementation",
+  "implementations",
+  "implementer",
+  "implementers",
+  "markup generator",
+  "markup generators",
+  "conformance checker",
+  "conformance checkers",
+  "parser",
+  "parsers",
+  "server",
+  "servers",
+  "client",
+  "clients",
+  "validator",
+  "validators",
+  "editor",
+  "editors",
+  "specification author",
+  "specification authors"
+ ],
+ "base_term_count": 26,
+ "corpora": {
+  "EU acts": {
+   "documents": 63,
+   "population": 3864,
+   "binding_register": "articles (the enacting terms)",
+   "own_terms": [
+    "Commission",
+    "Council",
+    "European Parliament",
+    "Member State",
+    "Member States",
+    "Agency",
+    "Agencies",
+    "Authority",
+    "Authorities",
+    "Board",
+    "Committee",
+    "Court",
+    "Court of Justice",
+    "Institution",
+    "Institutions",
+    "Body",
+    "Bodies",
+    "operator",
+    "operators",
+    "manufacturer",
+    "manufacturers",
+    "importer",
+    "importers",
+    "distributor",
+    "distributors",
+    "supplier",
+    "suppliers",
+    "provider",
+    "providers",
+    "controller",
+    "controllers",
+    "processor",
+    "processors"
+   ],
+   "wide_adds": [
+    "person",
+    "persons"
+   ],
+   "lists": {
+    "base": {
+     "terms_in_list": 26,
+     "population": 3864,
+     "rows_in_reach_at_word_36": 59,
+     "reach_pct": 1.53,
+     "of_them_carrier_in_the_obligation_s_own_block": 56,
+     "carrier_in_own_block_pct": 94.92,
+     "median_carrier_block_words": 376,
+     "median_obligation_block_words": 363,
+     "median_word_distance_to_carrier": 19,
+     "by_rule": {
+      "R1_adjacent_subject": {
+       "fires": 2,
+       "fire_rate": 0.0339,
+       "fire_pct": 3.39
+      },
+      "R2_no_competing_nominal": {
+       "fires": 6,
+       "fire_rate": 0.1017,
+       "fire_pct": 10.17
+      },
+      "R3_active_governor": {
+       "fires": 6,
+       "fire_rate": 0.1017,
+       "fire_pct": 10.17
+      },
+      "R3b_active_governor_own_block": {
+       "fires": 6,
+       "fire_rate": 0.1017,
+       "fire_pct": 10.17
+      }
+     },
+     "carriers_in_reach": {
+      "implementation": 47,
+      "clients": 8,
+      "client": 4
+     },
+     "R3b_fire_share_by_carrier": {
+      "implementation": 0.0638,
+      "clients": 0.125,
+      "client": 0.5
+     }
+    },
+    "narrow": {
+     "terms_in_list": 59,
+     "population": 3864,
+     "rows_in_reach_at_word_36": 2015,
+     "reach_pct": 52.15,
+     "of_them_carrier_in_the_obligation_s_own_block": 1944,
+     "carrier_in_own_block_pct": 96.48,
+     "median_carrier_block_words": 392,
+     "median_obligation_block_words": 393,
+     "median_word_distance_to_carrier": 15,
+     "by_rule": {
+      "R1_adjacent_subject": {
+       "fires": 355,
+       "fire_rate": 0.1762,
+       "fire_pct": 17.62
+      },
+      "R2_no_competing_nominal": {
+       "fires": 534,
+       "fire_rate": 0.265,
+       "fire_pct": 26.5
+      },
+      "R3_active_governor": {
+       "fires": 1343,
+       "fire_rate": 0.6665,
+       "fire_pct": 66.65
+      },
+      "R3b_active_governor_own_block": {
+       "fires": 1362,
+       "fire_rate": 0.6759,
+       "fire_pct": 67.59
+      }
+     },
+     "carriers_in_reach": {
+      "commission": 407,
+      "institution": 232,
+      "authorities": 188,
+      "member states": 157,
+      "member state": 143,
+      "authority": 129,
+      "institutions": 126,
+      "board": 81,
+      "provider": 69,
+      "body": 51,
+      "providers": 51,
+      "council": 50
+     },
+     "R3b_fire_share_by_carrier": {
+      "commission": 0.8919,
+      "institution": 0.7845,
+      "authorities": 0.6383,
+      "member states": 0.6879,
+      "member state": 0.5175,
+      "authority": 0.5891,
+      "institutions": 0.7698,
+      "board": 0.642,
+      "provider": 0.6522,
+      "body": 0.6863,
+      "providers": 0.1569,
+      "council": 0.22
+     }
+    },
+    "wide": {
+     "terms_in_list": 61,
+     "population": 3864,
+     "rows_in_reach_at_word_36": 2095,
+     "reach_pct": 54.22,
+     "of_them_carrier_in_the_obligation_s_own_block": 2019,
+     "carrier_in_own_block_pct": 96.37,
+     "median_carrier_block_words": 393,
+     "median_obligation_block_words": 397,
+     "median_word_distance_to_carrier": 14,
+     "by_rule": {
+      "R1_adjacent_subject": {
+       "fires": 368,
+       "fire_rate": 0.1757,
+       "fire_pct": 17.57
+      },
+      "R2_no_competing_nominal": {
+       "fires": 557,
+       "fire_rate": 0.2659,
+       "fire_pct": 26.59
+      },
+      "R3_active_governor": {
+       "fires": 1366,
+       "fire_rate": 0.652,
+       "fire_pct": 65.2
+      },
+      "R3b_active_governor_own_block": {
+       "fires": 1387,
+       "fire_rate": 0.6621,
+       "fire_pct": 66.21
+      }
+     },
+     "carriers_in_reach": {
+      "commission": 403,
+      "institution": 232,
+      "authorities": 183,
+      "member states": 157,
+      "member state": 137,
+      "authority": 128,
+      "institutions": 125,
+      "board": 80,
+      "provider": 68,
+      "person": 57,
+      "body": 50,
+      "council": 50
+     },
+     "R3b_fire_share_by_carrier": {
+      "commission": 0.8958,
+      "institution": 0.7845,
+      "authorities": 0.6503,
+      "member states": 0.6879,
+      "member state": 0.5328,
+      "authority": 0.5938,
+      "institutions": 0.768,
+      "board": 0.6375,
+      "provider": 0.6471,
+      "person": 0.386,
+      "body": 0.7,
+      "council": 0.22
+     }
+    }
+   },
+   "decision": {
+    "narrow_R3b_pct": 67.59,
+    "inside_the_band": false,
+    "distance_from_31.42": 36.17
+   }
+  },
+  "RFCs": {
+   "documents": 63,
+   "population": 956,
+   "binding_register": "the keyword in all capitals (RFC 8174)",
+   "own_terms": [
+    "sender",
+    "senders",
+    "receiver",
+    "receivers",
+    "node",
+    "nodes",
+    "host",
+    "hosts",
+    "router",
+    "routers",
+    "peer",
+    "peers",
+    "endpoint",
+    "endpoints",
+    "gateway",
+    "gateways",
+    "proxy",
+    "proxies",
+    "responder",
+    "responders",
+    "requester",
+    "requesters",
+    "initiator",
+    "initiators",
+    "device",
+    "devices",
+    "application",
+    "applications"
+   ],
+   "wide_adds": [
+    "party",
+    "parties"
+   ],
+   "lists": {
+    "base": {
+     "terms_in_list": 26,
+     "population": 956,
+     "rows_in_reach_at_word_36": 124,
+     "reach_pct": 12.97,
+     "of_them_carrier_in_the_obligation_s_own_block": 82,
+     "carrier_in_own_block_pct": 66.13,
+     "median_carrier_block_words": 49.5,
+     "median_obligation_block_words": 45.0,
+     "median_word_distance_to_carrier": 17.0,
+     "by_rule": {
+      "R1_adjacent_subject": {
+       "fires": 13,
+       "fire_rate": 0.1048,
+       "fire_pct": 10.48
+      },
+      "R2_no_competing_nominal": {
+       "fires": 23,
+       "fire_rate": 0.1855,
+       "fire_pct": 18.55
+      },
+      "R3_active_governor": {
+       "fires": 41,
+       "fire_rate": 0.3306,
+       "fire_pct": 33.06
+      },
+      "R3b_active_governor_own_block": {
+       "fires": 61,
+       "fire_rate": 0.4919,
+       "fire_pct": 49.19
+      }
+     },
+     "carriers_in_reach": {
+      "server": 45,
+      "client": 30,
+      "implementation": 19,
+      "implementations": 16,
+      "servers": 5,
+      "clients": 3,
+      "implementers": 1,
+      "user agent": 1,
+      "parsers": 1,
+      "author": 1,
+      "implementer": 1,
+      "browser": 1
+     },
+     "R3b_fire_share_by_carrier": {
+      "server": 0.4889,
+      "client": 0.3333,
+      "implementation": 0.6316,
+      "implementations": 0.6875,
+      "servers": 0.4,
+      "clients": 0.6667,
+      "implementers": 0.0,
+      "user agent": 0.0,
+      "parsers": 1.0,
+      "author": 0.0,
+      "implementer": 0.0,
+      "browser": 1.0
+     }
+    },
+    "narrow": {
+     "terms_in_list": 54,
+     "population": 956,
+     "rows_in_reach_at_word_36": 302,
+     "reach_pct": 31.59,
+     "of_them_carrier_in_the_obligation_s_own_block": 199,
+     "carrier_in_own_block_pct": 65.89,
+     "median_carrier_block_words": 48.0,
+     "median_obligation_block_words": 47.5,
+     "median_word_distance_to_carrier": 15.0,
+     "by_rule": {
+      "R1_adjacent_subject": {
+       "fires": 19,
+       "fire_rate": 0.0629,
+       "fire_pct": 6.29
+      },
+      "R2_no_competing_nominal": {
+       "fires": 55,
+       "fire_rate": 0.1821,
+       "fire_pct": 18.21
+      },
+      "R3_active_governor": {
+       "fires": 58,
+       "fire_rate": 0.1921,
+       "fire_pct": 19.21
+      },
+      "R3b_active_governor_own_block": {
+       "fires": 85,
+       "fire_rate": 0.2815,
+       "fire_pct": 28.15
+      }
+     },
+     "carriers_in_reach": {
+      "application": 58,
+      "server": 41,
+      "client": 30,
+      "router": 23,
+      "peer": 18,
+      "node": 18,
+      "implementation": 16,
+      "implementations": 14,
+      "device": 12,
+      "sender": 11,
+      "host": 8,
+      "receiver": 7
+     },
+     "R3b_fire_share_by_carrier": {
+      "application": 0.0,
+      "server": 0.5366,
+      "client": 0.3333,
+      "router": 0.087,
+      "peer": 0.2222,
+      "node": 0.2778,
+      "implementation": 0.625,
+      "implementations": 0.6429,
+      "device": 0.25,
+      "sender": 0.0909,
+      "host": 0.25,
+      "receiver": 0.4286
+     }
+    },
+    "wide": {
+     "terms_in_list": 56,
+     "population": 956,
+     "rows_in_reach_at_word_36": 314,
+     "reach_pct": 32.85,
+     "of_them_carrier_in_the_obligation_s_own_block": 209,
+     "carrier_in_own_block_pct": 66.56,
+     "median_carrier_block_words": 48.0,
+     "median_obligation_block_words": 45.5,
+     "median_word_distance_to_carrier": 16.0,
+     "by_rule": {
+      "R1_adjacent_subject": {
+       "fires": 20,
+       "fire_rate": 0.0637,
+       "fire_pct": 6.37
+      },
+      "R2_no_competing_nominal": {
+       "fires": 56,
+       "fire_rate": 0.1783,
+       "fire_pct": 17.83
+      },
+      "R3_active_governor": {
+       "fires": 65,
+       "fire_rate": 0.207,
+       "fire_pct": 20.7
+      },
+      "R3b_active_governor_own_block": {
+       "fires": 93,
+       "fire_rate": 0.2962,
+       "fire_pct": 29.62
+      }
+     },
+     "carriers_in_reach": {
+      "application": 58,
+      "server": 41,
+      "client": 30,
+      "router": 23,
+      "peer": 18,
+      "node": 18,
+      "implementation": 16,
+      "implementations": 14,
+      "device": 12,
+      "sender": 11,
+      "party": 10,
+      "host": 8
+     },
+     "R3b_fire_share_by_carrier": {
+      "application": 0.0,
+      "server": 0.5366,
+      "client": 0.3333,
+      "router": 0.087,
+      "peer": 0.2222,
+      "node": 0.2778,
+      "implementation": 0.625,
+      "implementations": 0.6429,
+      "device": 0.25,
+      "sender": 0.0909,
+      "party": 0.7,
+      "host": 0.25
+     }
+    }
+   },
+   "decision": {
+    "narrow_R3b_pct": 28.15,
+    "inside_the_band": true,
+    "distance_from_31.42": -3.27
+   }
+  },
+  "WHATWG standards": {
+   "documents": 22,
+   "population": 1190,
+   "binding_register": "blocks flagged NORM",
+   "own_terms": [
+    "document",
+    "documents",
+    "element",
+    "elements",
+    "attribute",
+    "attributes"
+   ],
+   "wide_adds": [
+    "party",
+    "parties"
+   ],
+   "lists": {
+    "base": {
+     "terms_in_list": 26,
+     "population": 1190,
+     "rows_in_reach_at_word_36": 187,
+     "reach_pct": 15.71,
+     "of_them_carrier_in_the_obligation_s_own_block": 89,
+     "carrier_in_own_block_pct": 47.59,
+     "median_carrier_block_words": 40,
+     "median_obligation_block_words": 32,
+     "median_word_distance_to_carrier": 21,
+     "by_rule": {
+      "R1_adjacent_subject": {
+       "fires": 5,
+       "fire_rate": 0.0267,
+       "fire_pct": 2.67
+      },
+      "R2_no_competing_nominal": {
+       "fires": 9,
+       "fire_rate": 0.0481,
+       "fire_pct": 4.81
+      },
+      "R3_active_governor": {
+       "fires": 59,
+       "fire_rate": 0.3155,
+       "fire_pct": 31.55
+      },
+      "R3b_active_governor_own_block": {
+       "fires": 84,
+       "fire_rate": 0.4492,
+       "fire_pct": 44.92
+      }
+     },
+     "carriers_in_reach": {
+      "user agent": 60,
+      "authors": 28,
+      "user agents": 23,
+      "parser": 21,
+      "implementation": 10,
+      "author": 7,
+      "implementers": 7,
+      "server": 7,
+      "browser": 6,
+      "browsers": 4,
+      "specification authors": 3,
+      "client": 3
+     },
+     "R3b_fire_share_by_carrier": {
+      "user agent": 0.6833,
+      "authors": 0.5357,
+      "user agents": 0.5217,
+      "parser": 0.2381,
+      "implementation": 0.0,
+      "author": 0.1429,
+      "implementers": 0.1429,
+      "server": 0.0,
+      "browser": 0.0,
+      "browsers": 0.25,
+      "specification authors": 1.0,
+      "client": 0.3333
+     }
+    },
+    "narrow": {
+     "terms_in_list": 32,
+     "population": 1190,
+     "rows_in_reach_at_word_36": 697,
+     "reach_pct": 58.57,
+     "of_them_carrier_in_the_obligation_s_own_block": 540,
+     "carrier_in_own_block_pct": 77.47,
+     "median_carrier_block_words": 38,
+     "median_obligation_block_words": 38,
+     "median_word_distance_to_carrier": 5,
+     "by_rule": {
+      "R1_adjacent_subject": {
+       "fires": 190,
+       "fire_rate": 0.2726,
+       "fire_pct": 27.26
+      },
+      "R2_no_competing_nominal": {
+       "fires": 294,
+       "fire_rate": 0.4218,
+       "fire_pct": 42.18
+      },
+      "R3_active_governor": {
+       "fires": 350,
+       "fire_rate": 0.5022,
+       "fire_pct": 50.22
+      },
+      "R3b_active_governor_own_block": {
+       "fires": 387,
+       "fire_rate": 0.5552,
+       "fire_pct": 55.52
+      }
+     },
+     "carriers_in_reach": {
+      "attribute": 295,
+      "element": 129,
+      "attributes": 65,
+      "document": 53,
+      "user agent": 41,
+      "elements": 38,
+      "authors": 15,
+      "parser": 13,
+      "user agents": 12,
+      "implementation": 9,
+      "documents": 4,
+      "author": 4
+     },
+     "R3b_fire_share_by_carrier": {
+      "attribute": 0.6237,
+      "element": 0.5194,
+      "attributes": 0.7385,
+      "document": 0.2453,
+      "user agent": 0.7317,
+      "elements": 0.4474,
+      "authors": 0.3333,
+      "parser": 0.3846,
+      "user agents": 0.75,
+      "implementation": 0.0,
+      "documents": 0.0,
+      "author": 0.25
+     }
+    },
+    "wide": {
+     "terms_in_list": 34,
+     "population": 1190,
+     "rows_in_reach_at_word_36": 697,
+     "reach_pct": 58.57,
+     "of_them_carrier_in_the_obligation_s_own_block": 540,
+     "carrier_in_own_block_pct": 77.47,
+     "median_carrier_block_words": 38,
+     "median_obligation_block_words": 38,
+     "median_word_distance_to_carrier": 5,
+     "by_rule": {
+      "R1_adjacent_subject": {
+       "fires": 190,
+       "fire_rate": 0.2726,
+       "fire_pct": 27.26
+      },
+      "R2_no_competing_nominal": {
+       "fires": 294,
+       "fire_rate": 0.4218,
+       "fire_pct": 42.18
+      },
+      "R3_active_governor": {
+       "fires": 350,
+       "fire_rate": 0.5022,
+       "fire_pct": 50.22
+      },
+      "R3b_active_governor_own_block": {
+       "fires": 387,
+       "fire_rate": 0.5552,
+       "fire_pct": 55.52
+      }
+     },
+     "carriers_in_reach": {
+      "attribute": 295,
+      "element": 129,
+      "attributes": 65,
+      "document": 53,
+      "user agent": 41,
+      "elements": 38,
+      "authors": 15,
+      "parser": 13,
+      "user agents": 12,
+      "implementation": 9,
+      "documents": 4,
+      "author": 4
+     },
+     "R3b_fire_share_by_carrier": {
+      "attribute": 0.6237,
+      "element": 0.5194,
+      "attributes": 0.7385,
+      "document": 0.2453,
+      "user agent": 0.7317,
+      "elements": 0.4474,
+      "authors": 0.3333,
+      "parser": 0.3846,
+      "user agents": 0.75,
+      "implementation": 0.0,
+      "documents": 0.0,
+      "author": 0.25
+     }
+    }
+   },
+   "decision": {
+    "narrow_R3b_pct": 55.52,
+    "inside_the_band": false,
+    "distance_from_31.42": 24.1
+   }
+  }
+ },
+ "calibration_UK_statute": {
+  "note": "Not one of the three. Session 90's corpus rebuilt by tonight's plumbing and required to return Session 91's published counts and fire rates exactly before any new corpus is scanned.",
+  "binding_register": "the Act, not its Explanatory Notes",
+  "session_91_published": {
+   "base": {
+    "in_reach": 5,
+    "R1": 0.0,
+    "R2": 0.0,
+    "R3": 0.0,
+    "R3b": 0.0
+   },
+   "narrow": {
+    "in_reach": 226,
+    "R1": 0.0575,
+    "R2": 0.1018,
+    "R3": 0.1903,
+    "R3b": 0.3142
+   },
+   "wide": {
+    "in_reach": 336,
+    "R1": 0.0685,
+    "R2": 0.1429,
+    "R3": 0.1667,
+    "R3b": 0.2619
+   }
+  },
+  "lists": {
+   "base": {
+    "terms_in_list": 26,
+    "population": 660,
+    "rows_in_reach_at_word_36": 5,
+    "reach_pct": 0.76,
+    "of_them_carrier_in_the_obligation_s_own_block": 1,
+    "carrier_in_own_block_pct": 20.0,
+    "median_carrier_block_words": 29,
+    "median_obligation_block_words": 26,
+    "median_word_distance_to_carrier": 28,
+    "by_rule": {
+     "R1_adjacent_subject": {
+      "fires": 0,
+      "fire_rate": 0.0,
+      "fire_pct": 0.0
+     },
+     "R2_no_competing_nominal": {
+      "fires": 0,
+      "fire_rate": 0.0,
+      "fire_pct": 0.0
+     },
+     "R3_active_governor": {
+      "fires": 0,
+      "fire_rate": 0.0,
+      "fire_pct": 0.0
+     },
+     "R3b_active_governor_own_block": {
+      "fires": 0,
+      "fire_rate": 0.0,
+      "fire_pct": 0.0
+     }
+    },
+    "carriers_in_reach": {
+     "client": 4,
+     "implementation": 1
+    },
+    "R3b_fire_share_by_carrier": {
+     "client": 0.0,
+     "implementation": 0.0
+    }
+   },
+   "narrow": {
+    "terms_in_list": 41,
+    "population": 660,
+    "rows_in_reach_at_word_36": 226,
+    "reach_pct": 34.24,
+    "of_them_carrier_in_the_obligation_s_own_block": 75,
+    "carrier_in_own_block_pct": 33.19,
+    "median_carrier_block_words": 25.0,
+    "median_obligation_block_words": 22.0,
+    "median_word_distance_to_carrier": 16.0,
+    "by_rule": {
+     "R1_adjacent_subject": {
+      "fires": 13,
+      "fire_rate": 0.0575,
+      "fire_pct": 5.75
+     },
+     "R2_no_competing_nominal": {
+      "fires": 23,
+      "fire_rate": 0.1018,
+      "fire_pct": 10.18
+     },
+     "R3_active_governor": {
+      "fires": 43,
+      "fire_rate": 0.1903,
+      "fire_pct": 19.03
+     },
+     "R3b_active_governor_own_block": {
+      "fires": 71,
+      "fire_rate": 0.3142,
+      "fire_pct": 31.42
+     }
+    },
+    "carriers_in_reach": {
+     "secretary of state": 74,
+     "court": 39,
+     "authority": 39,
+     "officer": 36,
+     "tribunal": 11,
+     "local authority": 5,
+     "treasury": 4,
+     "courts": 4,
+     "minister": 3,
+     "client": 3,
+     "constable": 2,
+     "tribunals": 2
+    },
+    "R3b_fire_share_by_carrier": {
+     "secretary of state": 0.473,
+     "court": 0.2051,
+     "authority": 0.2564,
+     "officer": 0.3889,
+     "tribunal": 0.0,
+     "local authority": 0.2,
+     "treasury": 0.25,
+     "courts": 0.0,
+     "minister": 0.3333,
+     "client": 0.0,
+     "constable": 0.5,
+     "tribunals": 0.0
+    }
+   },
+   "wide": {
+    "terms_in_list": 43,
+    "population": 660,
+    "rows_in_reach_at_word_36": 336,
+    "reach_pct": 50.91,
+    "of_them_carrier_in_the_obligation_s_own_block": 120,
+    "carrier_in_own_block_pct": 35.71,
+    "median_carrier_block_words": 23.0,
+    "median_obligation_block_words": 22.0,
+    "median_word_distance_to_carrier": 15.0,
+    "by_rule": {
+     "R1_adjacent_subject": {
+      "fires": 23,
+      "fire_rate": 0.0685,
+      "fire_pct": 6.85
+     },
+     "R2_no_competing_nominal": {
+      "fires": 48,
+      "fire_rate": 0.1429,
+      "fire_pct": 14.29
+     },
+     "R3_active_governor": {
+      "fires": 56,
+      "fire_rate": 0.1667,
+      "fire_pct": 16.67
+     },
+     "R3b_active_governor_own_block": {
+      "fires": 88,
+      "fire_rate": 0.2619,
+      "fire_pct": 26.19
+     }
+    },
+    "carriers_in_reach": {
+     "person": 119,
+     "secretary of state": 67,
+     "authority": 36,
+     "court": 35,
+     "officer": 29,
+     "persons": 19,
+     "tribunal": 6,
+     "local authority": 4,
+     "treasury": 4,
+     "courts": 4,
+     "minister": 3,
+     "constable": 2
+    },
+    "R3b_fire_share_by_carrier": {
+     "person": 0.2185,
+     "secretary of state": 0.4627,
+     "authority": 0.25,
+     "court": 0.2286,
+     "officer": 0.3448,
+     "persons": 0.0,
+     "tribunal": 0.0,
+     "local authority": 0.25,
+     "treasury": 0.25,
+     "courts": 0.0,
+     "minister": 0.3333,
+     "constable": 0.5
+    }
+   }
+  }
+ },
+ "S91.RULEBOUND": {
+  "corpora_inside_the_band": [
+   "RFCs"
+  ],
+  "falsified": true
+ }
+}

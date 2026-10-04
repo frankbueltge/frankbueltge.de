@@ -1,0 +1,117 @@
+{
+ "note": "The six predictions of PREDICTIONS.md \u00a74, adjudicated against results.json.  R3b is the repair \u00a73 permits and is NOT one of the declared three; where it changes a verdict that is reported beside the verdict and never in place of it.",
+ "predictions": {
+  "P1": {
+   "prediction": "No rule reaches 0.80 agreement with the reader over the 40 rows.",
+   "falsified_if": "any declared rule agrees with 32 or more of the 40",
+   "verdict": "survives",
+   "numbers": {
+    "agreements_by_rule": {
+     "R1_adjacent_subject": 22,
+     "R2_no_competing_nominal": 18,
+     "R3_active_governor": 30
+    },
+    "best": 30,
+    "threshold": 32,
+    "majority_baseline_always_NO": 23
+   }
+  },
+  "P2": {
+   "prediction": "R1's precision on the rows where it fires is below the reader's 0.425.",
+   "falsified_if": "R1 precision-on-YES >= 0.425 with 5 or more firings",
+   "verdict": "survives",
+   "numbers": {
+    "fires": 5,
+    "precision_on_yes": 0.4,
+    "reader_base_rate": 0.425,
+    "margin": 0.025
+   }
+  },
+  "P3": {
+   "prediction": "The rules disagree with each other more than any of them disagrees with the reader.",
+   "falsified_if": "largest rule-to-rule disagreement < largest rule-to-reader disagreement",
+   "verdict": "FALSIFIED",
+   "numbers": {
+    "max_rule_to_rule": 20,
+    "max_rule_to_reader": 22,
+    "pairwise": {
+     "R1_adjacent_subject vs R2_no_competing_nominal": 8,
+     "R1_adjacent_subject vs R3_active_governor": 16,
+     "R2_no_competing_nominal vs R3_active_governor": 20
+    },
+    "disagreements_by_rule": {
+     "R1_adjacent_subject": 18,
+     "R2_no_competing_nominal": 22,
+     "R3_active_governor": 10
+    }
+   }
+  },
+  "P4": {
+   "prediction": "Precision correction does not collapse the interval.",
+   "falsified_if": "span between the three corrected figures is 20 points or less",
+   "verdict": "FALSIFIED",
+   "numbers": {
+    "best_agreeing_declared_rule": "R3_active_governor",
+    "uncorrected_span_session_90": 50.15,
+    "corrected_reach_pct": {
+     "base": 0.0,
+     "narrow": 6.51,
+     "wide": 8.48
+    },
+    "corrected_span_points": 8.48,
+    "with_the_repair_R3b": {
+     "base": 0.0,
+     "narrow": 10.76,
+     "wide": 13.33
+    },
+    "corrected_span_points_R3b": 13.33,
+    "band": 20,
+    "caution": "the BASE list has 5 rows in reach and its fire rate is 0 of 5; the span between the two powered lists alone is 1.97 points (R3) and 2.57 points (R3b)"
+   }
+  },
+  "P5": {
+   "prediction": "`person` is the least active carrier of the five, under R3.",
+   "falsified_if": "person is not last of the five",
+   "verdict": "FALSIFIED",
+   "numbers": {
+    "fire_share": {
+     "person": 0.1765,
+     "secretary of state": 0.2537,
+     "court": 0.1143,
+     "authority": 0.1389,
+     "officer": 0.3103
+    },
+    "lowest": "court",
+    "with_the_repair_R3b": {
+     "person": 0.2185,
+     "secretary of state": 0.4627,
+     "court": 0.2286,
+     "authority": 0.25,
+     "officer": 0.3448
+    }
+   }
+  },
+  "P6": {
+   "prediction": "No rule reproduces 0.425: the best rule's fire rate over the NARROW rows in reach falls outside 0.325-0.525.",
+   "falsified_if": "the fire rate lands inside 0.325-0.525",
+   "verdict": "survives",
+   "numbers": {
+    "best_agreeing_declared_rule": "R3_active_governor",
+    "fire_rate_over_226_rows": 0.1903,
+    "band": [
+     0.325,
+     0.525
+    ],
+    "reader_sample_figure": 0.425,
+    "with_the_repair_R3b": 0.3142,
+    "R3b_also_outside": true,
+    "note": "R3b lands 0.0108 below the band's floor"
+   }
+  }
+ },
+ "tally": {
+  "survives": 3,
+  "FALSIFIED": 3,
+  "unscoreable": 0
+ }
+}

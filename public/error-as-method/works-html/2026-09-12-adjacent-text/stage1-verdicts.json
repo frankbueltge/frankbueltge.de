@@ -1,0 +1,612 @@
+{
+ "stage": 1,
+ "note": "the sentence alone; adjudicated from stage1.txt before any context existed",
+ "rule": "NAMED = a specific party is identified and the text licenses attaching this obligation to it; NO-ACTOR = the requirement is that a thing have a form or a value, not that a party act; UNNAMED = somebody must act and the sentence does not say who",
+ "counts": {
+  "UNNAMED": 29,
+  "NO-ACTOR": 29,
+  "NAMED": 2
+ },
+ "rows": [
+  {
+   "id": "S01",
+   "doc": "dom",
+   "modal": "must",
+   "slot_token": "initialized",
+   "stage1": "UNNAMED",
+   "stage1_reason": "initialized -- somebody initializes the attribute; the sentence does not say who",
+   "modal_mentioned_not_used": false,
+   "sentence": "When an event is created the attribute must be initialized to the empty string."
+  },
+  {
+   "id": "S02",
+   "doc": "dom",
+   "modal": "must",
+   "slot_token": "live",
+   "stage1": "NO-ACTOR",
+   "stage1_reason": "be live -- a property the collection must have",
+   "modal_mentioned_not_used": false,
+   "sentence": "Unless otherwise stated, a collection must be live."
+  },
+  {
+   "id": "S03",
+   "doc": "dom",
+   "modal": "must",
+   "slot_token": "done",
+   "stage1": "UNNAMED",
+   "stage1_reason": "done -- the comparison is performed by somebody unnamed",
+   "modal_mentioned_not_used": false,
+   "sentence": "The comparisons for the classes must be done in an ASCII case-insensitive manner if root\u2019s node document\u2019s mode is \"quirks\"; otherwise in an identical to manner."
+  },
+  {
+   "id": "S04",
+   "doc": "fetch",
+   "modal": "must",
+   "slot_token": "an",
+   "stage1": "NO-ACTOR",
+   "stage1_reason": "be an algorithm -- a type constraint on an argument",
+   "modal_mentioned_not_used": false,
+   "sentence": "To incrementally read a body body, given an algorithm processBodyChunk, an algorithm processEndOfBody, an algorithm processBodyError, and an optional null, parallel queue, or global object taskDestination (default null), run these steps. processBodyChunk must be an algorithm accepting a byte sequence. processEndOfBody must be an algorithm accepting no arguments. processBodyError must be an algorithm accepting an exception."
+  },
+  {
+   "id": "S05",
+   "doc": "fetch",
+   "modal": "must",
+   "slot_token": "a",
+   "stage1": "NO-ACTOR",
+   "stage1_reason": "be a token -- a constraint on the header value",
+   "modal_mentioned_not_used": false,
+   "sentence": "The `Sec-Purpose` header field is a structured header whose value must be a token."
+  },
+  {
+   "id": "S06",
+   "doc": "fetch",
+   "modal": "must",
+   "slot_token": "parsed",
+   "stage1": "UNNAMED",
+   "stage1_reason": "parsed -- somebody parses the part; not said who",
+   "modal_mentioned_not_used": false,
+   "sentence": "Each part whose `Content-Disposition` header contains a `filename` parameter must be parsed into an entry whose value is a File object whose contents are the contents of the part."
+  },
+  {
+   "id": "S07",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "a",
+   "stage1": "NO-ACTOR",
+   "stage1_reason": "be a valid media query list -- the pre-registered example form",
+   "modal_mentioned_not_used": false,
+   "sentence": "The value must be a valid media query list."
+  },
+  {
+   "id": "S08",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "a",
+   "stage1": "NO-ACTOR",
+   "stage1_reason": "be a string that matches -- a constraint on the value",
+   "modal_mentioned_not_used": false,
+   "sentence": "The value must be a string that matches the syntax for the CSS 'color-scheme' property value."
+  },
+  {
+   "id": "S09",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "no",
+   "stage1": "NO-ACTOR",
+   "stage1_reason": "there must be no dfn descendants -- a constraint on document form",
+   "modal_mentioned_not_used": false,
+   "sentence": "Phrasing content, but there must be no dfn element descendants."
+  },
+  {
+   "id": "S10",
+   "doc": "html",
+   "modal": "should",
+   "slot_token": "made",
+   "stage1": "UNNAMED",
+   "stage1_reason": "made clear -- somebody makes it clear to the user; not said who",
+   "modal_mentioned_not_used": false,
+   "sentence": "The distinction should be made clear to the user."
+  },
+  {
+   "id": "S11",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "the",
+   "stage1": "NO-ACTOR",
+   "stage1_reason": "be the first entry -- a constraint on the value",
+   "modal_mentioned_not_used": false,
+   "sentence": "If present, it must be the first entry and the entire <source-size-list> value must either be the string \"auto\" (ASCII case-insensitive) or start with the string \"auto,\" (ASCII case-insensitive)."
+  },
+  {
+   "id": "S12",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "a",
+   "stage1": "NAMED",
+   "stage1_reason": "a user agent is named in the sentence's own opening clause and the strong reference is its to hold",
+   "modal_mentioned_not_used": false,
+   "sentence": "While a user agent is running the above algorithm for an element x, there must be a strong reference from the element's node document to the element x, even if that element is not connected."
+  },
+  {
+   "id": "S13",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "present",
+   "stage1": "NO-ACTOR",
+   "stage1_reason": "be present -- a constraint on the attribute",
+   "modal_mentioned_not_used": false,
+   "sentence": "In such cases, the alt attribute must be present but must consist of the same text as written in the image itself."
+  },
+  {
+   "id": "S14",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "the",
+   "stage1": "NO-ACTOR",
+   "stage1_reason": "be the empty string -- a constraint on the value",
+   "modal_mentioned_not_used": false,
+   "sentence": "The value of this attribute must be the empty string."
+  },
+  {
+   "id": "S15",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "specified",
+   "stage1": "UNNAMED",
+   "stage1_reason": "specified -- somebody specifies the keyword; not said who",
+   "modal_mentioned_not_used": false,
+   "sentence": "Similarly, the allow-top-navigation-to-custom-protocols keyword must not be specified if either allow-top-navigation or allow-popups are specified, as doing so is redundant."
+  },
+  {
+   "id": "S16",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "unloaded",
+   "stage1": "UNNAMED",
+   "stage1_reason": "unloaded -- somebody unloads the plugin; not said who",
+   "modal_mentioned_not_used": false,
+   "sentence": "Whenever an embed element that was potentially active stops being potentially active, any plugin that had been instantiated for that element must be unloaded."
+  },
+  {
+   "id": "S17",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "a",
+   "stage1": "NO-ACTOR",
+   "stage1_reason": "be a valid navigable target name -- a constraint on the attribute",
+   "modal_mentioned_not_used": false,
+   "sentence": "The name attribute, if present, must be a valid navigable target name."
+  },
+  {
+   "id": "S18",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "obtained",
+   "stage1": "UNNAMED",
+   "stage1_reason": "obtained -- somebody obtains the frames; not said who",
+   "modal_mentioned_not_used": false,
+   "sentence": "Frames of video must be obtained from the video track that was selected when the event loop last reached step 1."
+  },
+  {
+   "id": "S19",
+   "doc": "html",
+   "modal": "should",
+   "slot_token": "considered",
+   "stage1": "UNNAMED",
+   "stage1_reason": "considered -- somebody treats the date as the zero point; not said who",
+   "modal_mentioned_not_used": false,
+   "sentence": "(Whether the media resource can specify a timeline or not depends on the media resource's format.) If the media resource specifies an explicit start time and date, then that time and date should be considered the zero point in the media timeline; the timeline offset will be the time and date, exposed using the getStartDate() method."
+  },
+  {
+   "id": "S20",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "added",
+   "stage1": "UNNAMED",
+   "stage1_reason": "added -- somebody adds the cue; not said who",
+   "modal_mentioned_not_used": false,
+   "sentence": "Whenever a text track cue is added to the list of cues of a text track that is in the list of text tracks for a media element, that cue must be added to the media element's list of newly introduced cues."
+  },
+  {
+   "id": "S21",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "associated",
+   "stage1": "UNNAMED",
+   "stage1_reason": "associated -- somebody associates the element with a track; not said who",
+   "modal_mentioned_not_used": false,
+   "sentence": "When a track element is created, it must be associated with a new text track (with its value set as defined below)."
+  },
+  {
+   "id": "S22",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "omitted",
+   "stage1": "UNNAMED",
+   "stage1_reason": "omitted -- somebody omits the attribute; not said who",
+   "modal_mentioned_not_used": false,
+   "sentence": "If the area element has no href attribute, then the area represented by the element cannot be selected, and the alt attribute must be omitted."
+  },
+  {
+   "id": "S23",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "less",
+   "stage1": "NO-ACTOR",
+   "stage1_reason": "be less than -- a constraint between two integers",
+   "modal_mentioned_not_used": false,
+   "sentence": "In the rectangle state, area elements must have a coords attribute with exactly four integers, the first of which must be less than the third, and the second of which must be less than the fourth."
+  },
+  {
+   "id": "S24",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "the",
+   "stage1": "NO-ACTOR",
+   "stage1_reason": "be the empty string -- a constraint on the value",
+   "modal_mentioned_not_used": false,
+   "sentence": "The value must not be the empty string, and the value must be unique amongst the form elements in the forms collection that it is in, if any."
+  },
+  {
+   "id": "S25",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "invoked",
+   "stage1": "UNNAMED",
+   "stage1_reason": "invoked -- somebody invokes the sanitization algorithm; not said who",
+   "modal_mentioned_not_used": false,
+   "sentence": "When an input element is first created, the element's rendering and behavior must be set to the rendering and behavior defined for the type attribute's state, and the value sanitization algorithm, if one is defined for the type attribute's state, must be invoked."
+  },
+  {
+   "id": "S26",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "specified",
+   "stage1": "UNNAMED",
+   "stage1_reason": "specified -- somebody specifies the attributes; not said who",
+   "modal_mentioned_not_used": false,
+   "sentence": "The following content attributes must not be specified and do not apply to the element: accept, alpha, alt, checked, colorspace, dirname, formaction, formenctype, formmethod, formnovalidate, formtarget, height, maxlength, minlength, multiple, pattern, popovertarget, popovertargetaction, size, src, and width."
+  },
+  {
+   "id": "S27",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "specified",
+   "stage1": "UNNAMED",
+   "stage1_reason": "specified -- somebody specifies the attributes; not said who",
+   "modal_mentioned_not_used": false,
+   "sentence": "The formaction, formenctype, formmethod, formnovalidate, and formtarget must not be specified if the element is not a submit button."
+  },
+  {
+   "id": "S28",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "set",
+   "stage1": "UNNAMED",
+   "stage1_reason": "set -- somebody sets selectedness to false; not said who",
+   "modal_mentioned_not_used": false,
+   "sentence": "Whenever an option element's selected attribute is removed, if its dirtiness is false, its selectedness must be set to false."
+  },
+  {
+   "id": "S29",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "the",
+   "stage1": "NO-ACTOR",
+   "stage1_reason": "be the ID of a form element -- a constraint on the value",
+   "modal_mentioned_not_used": false,
+   "sentence": "If a listed form-associated element has a form attribute specified, then that attribute's value must be the ID of a form element in the element's tree."
+  },
+  {
+   "id": "S30",
+   "doc": "html",
+   "modal": "should",
+   "slot_token": "shown",
+   "stage1": "UNNAMED",
+   "stage1_reason": "shown -- somebody shows or hides the information; not said who",
+   "modal_mentioned_not_used": false,
+   "sentence": "When the element is created, if the attribute is absent, the additional information should be hidden; if the attribute is present, that information should be shown."
+  },
+  {
+   "id": "S31",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "ignored",
+   "stage1": "UNNAMED",
+   "stage1_reason": "ignored -- somebody ignores the fill style; the CanvasText object is the instrument, not the actor",
+   "modal_mentioned_not_used": false,
+   "sentence": "For strokeText(), the reverse holds: this's stroke style must be applied to the result of tracing the shapes using the object implementing the CanvasText interface for the line styles, and this's fill style must be ignored."
+  },
+  {
+   "id": "S32",
+   "doc": "html",
+   "modal": "should",
+   "slot_token": "deferred",
+   "stage1": "UNNAMED",
+   "stage1_reason": "deferred -- somebody defers the work; not said who",
+   "modal_mentioned_not_used": false,
+   "sentence": "In general, work should be deferred to connectedCallback as much as possible\u2014especially work involving fetching resources or rendering."
+  },
+  {
+   "id": "S33",
+   "doc": "html",
+   "modal": "should",
+   "slot_token": "automatically",
+   "stage1": "UNNAMED",
+   "stage1_reason": "dereferenced -- somebody would dereference the URLs; not said who",
+   "modal_mentioned_not_used": false,
+   "sentence": "Except if otherwise specified by that specification, the URLs given as the item types should not be automatically dereferenced."
+  },
+  {
+   "id": "S34",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "text",
+   "stage1": "NO-ACTOR",
+   "stage1_reason": "be text -- a constraint on the value",
+   "modal_mentioned_not_used": false,
+   "sentence": "The value must be text."
+  },
+  {
+   "id": "S35",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "an",
+   "stage1": "NO-ACTOR",
+   "stage1_reason": "be an absolute URL -- the pre-registered example form",
+   "modal_mentioned_not_used": false,
+   "sentence": "The value must be an absolute URL."
+  },
+  {
+   "id": "S36",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "present",
+   "stage1": "NO-ACTOR",
+   "stage1_reason": "be present within the item -- a constraint on the item's form",
+   "modal_mentioned_not_used": false,
+   "sentence": "Exactly one property with the name url must be present within the item that forms the value of a related property of an item with the type http://microformats.org/profile/hcard."
+  },
+  {
+   "id": "S37",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "text",
+   "stage1": "NO-ACTOR",
+   "stage1_reason": "be text that is identical to -- a constraint on the value",
+   "modal_mentioned_not_used": false,
+   "sentence": "The value must be text that is identical to one of the relationship strings."
+  },
+  {
+   "id": "S38",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "an",
+   "stage1": "NO-ACTOR",
+   "stage1_reason": "be an absolute URL -- the pre-registered example form",
+   "modal_mentioned_not_used": false,
+   "sentence": "The value must be an absolute URL."
+  },
+  {
+   "id": "S39",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "set",
+   "stage1": "UNNAMED",
+   "stage1_reason": "set -- somebody sets the content attribute; not said who",
+   "modal_mentioned_not_used": false,
+   "sentence": "If the draggable IDL attribute is set to the value true, the draggable content attribute must be set to the literal value \"true\"."
+  },
+  {
+   "id": "S40",
+   "doc": "html",
+   "modal": "should",
+   "slot_token": "reported",
+   "stage1": "NO-ACTOR",
+   "stage1_reason": "the modal is inside the NAME of an algorithm, mentioned rather than used",
+   "modal_mentioned_not_used": true,
+   "sentence": "To check if an access between two browsing contexts should be reported, given two browsing contexts accessor and accessed, a JavaScript property name P, and an environment settings object environment:"
+  },
+  {
+   "id": "S41",
+   "doc": "html",
+   "modal": "should",
+   "slot_token": "reported",
+   "stage1": "NO-ACTOR",
+   "stage1_reason": "the modal is inside the NAME of an algorithm being invoked, mentioned rather than used",
+   "modal_mentioned_not_used": true,
+   "sentence": "Check if an access between two browsing contexts should be reported, given the current global object's browsing context, W's browsing context, P, and the current settings object."
+  },
+  {
+   "id": "S42",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "either",
+   "stage1": "NO-ACTOR",
+   "stage1_reason": "be either 'ruleset' or 'document' -- a constraint on the value",
+   "modal_mentioned_not_used": false,
+   "sentence": "The value corresponding to the \"relative_to\" key, if present, must be either \"ruleset\" or \"document\"."
+  },
+  {
+   "id": "S43",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "an",
+   "stage1": "NO-ACTOR",
+   "stage1_reason": "be an algorithm accepting -- a type constraint on an argument",
+   "modal_mentioned_not_used": false,
+   "sentence": "To fetch a single imported module script, given a URL url, an environment settings object fetchClient, a destination destination, a script fetch options options, environment settings object settingsObject, a referrer referrer, a ModuleRequest Record moduleRequest, an algorithm onComplete, and an optional perform the fetch hook performFetch, run these steps. onComplete must be an algorithm accepting null (on failure) or a module script (on success)."
+  },
+  {
+   "id": "S44",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "initially",
+   "stage1": "NO-ACTOR",
+   "stage1_reason": "be initially empty -- a constraint on the map's initial state",
+   "modal_mentioned_not_used": false,
+   "sentence": "Each target object has a map of animation frame callbacks, which is an ordered map that must be initially empty, and an animation frame callback identifier, which is a number that must initially be zero."
+  },
+  {
+   "id": "S45",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "a",
+   "stage1": "UNNAMED",
+   "stage1_reason": "the same construction as S12 with no user agent in the sentence: somebody holds the reference",
+   "modal_mentioned_not_used": false,
+   "sentence": "While a BroadcastChannel object whose closed flag is false has an event listener registered for message or messageerror events, there must be a strong reference from the BroadcastChannel object's relevant global object to the BroadcastChannel object itself."
+  },
+  {
+   "id": "S46",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "a",
+   "stage1": "NO-ACTOR",
+   "stage1_reason": "be a U+003C character -- a constraint on the character",
+   "modal_mentioned_not_used": false,
+   "sentence": "The first character of a start tag must be a U+003C LESS-THAN SIGN character (<)."
+  },
+  {
+   "id": "S47",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "a",
+   "stage1": "NO-ACTOR",
+   "stage1_reason": "be a U+002F character -- a constraint on the character",
+   "modal_mentioned_not_used": false,
+   "sentence": "The second character of an end tag must be a U+002F SOLIDUS character (/)."
+  },
+  {
+   "id": "S48",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "compared",
+   "stage1": "UNNAMED",
+   "stage1_reason": "compared -- somebody compares the strings; not said who",
+   "modal_mentioned_not_used": false,
+   "sentence": "The system identifier and public identifier strings must be compared to the values given in the lists above in an ASCII case-insensitive manner."
+  },
+  {
+   "id": "S49",
+   "doc": "html",
+   "modal": "should",
+   "slot_token": "entirely",
+   "stage1": "UNNAMED",
+   "stage1_reason": "omitted -- somebody omits the attribute; not said who",
+   "modal_mentioned_not_used": false,
+   "sentence": "The attribute should be entirely omitted instead (with the value \"JavaScript\", it has no effect), or replaced with use of the type attribute."
+  },
+  {
+   "id": "S50",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "an",
+   "stage1": "NO-ACTOR",
+   "stage1_reason": "be an ASCII case-insensitive match -- a constraint on the value",
+   "modal_mentioned_not_used": false,
+   "sentence": "If the attribute is present, its value must be an ASCII case-insensitive match for the string \"JavaScript\" and either the type attribute must be omitted or its value must be an ASCII case-insensitive match for the string \"text/javascript\"."
+  },
+  {
+   "id": "S51",
+   "doc": "infra",
+   "modal": "must",
+   "slot_token": "used",
+   "stage1": "UNNAMED",
+   "stage1_reason": "used -- somebody uses a variable before declaring it; not said who",
+   "modal_mentioned_not_used": false,
+   "sentence": "Variables must not be used before they are declared."
+  },
+  {
+   "id": "S52",
+   "doc": "streams",
+   "modal": "must",
+   "slot_token": "propagated",
+   "stage1": "UNNAMED",
+   "stage1_reason": "propagated -- somebody propagates errors forward; not said who",
+   "modal_mentioned_not_used": false,
+   "sentence": "Errors must be propagated forward: if source.[[state]] is or becomes \"errored\", then"
+  },
+  {
+   "id": "S53",
+   "doc": "testutils",
+   "modal": "must",
+   "slot_token": "enabled",
+   "stage1": "NAMED",
+   "stage1_reason": "user agents are named; the obligation not to enable the interfaces falls on whoever ships one",
+   "modal_mentioned_not_used": false,
+   "sentence": "The interfaces defined in this specification must not be enabled in the default shipping configuration of user agents."
+  },
+  {
+   "id": "S54",
+   "doc": "url",
+   "modal": "should",
+   "slot_token": "registered",
+   "stage1": "UNNAMED",
+   "stage1_reason": "registered -- somebody registers the scheme; IANA is the registry, not the registrant",
+   "modal_mentioned_not_used": false,
+   "sentence": "Schemes should be registered in the IANA URI [sic] Schemes registry. [IANA-URI-SCHEMES] [RFC7595]"
+  },
+  {
+   "id": "S55",
+   "doc": "urlpattern",
+   "modal": "must",
+   "slot_token": "set",
+   "stage1": "UNNAMED",
+   "stage1_reason": "set -- somebody sets the modifier on creation; not said who",
+   "modal_mentioned_not_used": false,
+   "sentence": "A part has an associated modifier a string, which must be set upon creation."
+  },
+  {
+   "id": "S56",
+   "doc": "webidl",
+   "modal": "must",
+   "slot_token": "declared",
+   "stage1": "UNNAMED",
+   "stage1_reason": "declared -- somebody declares the interface; not said who",
+   "modal_mentioned_not_used": false,
+   "sentence": "An interface must not be declared such that its inheritance hierarchy has a cycle."
+  },
+  {
+   "id": "S57",
+   "doc": "webidl",
+   "modal": "must",
+   "slot_token": "a",
+   "stage1": "NO-ACTOR",
+   "stage1_reason": "be a dictionary type -- a constraint on the inner type",
+   "modal_mentioned_not_used": false,
+   "sentence": "If the operation argument type, after resolving typedefs, is a nullable type, its inner type must not be a dictionary type."
+  },
+  {
+   "id": "S58",
+   "doc": "webidl",
+   "modal": "must",
+   "slot_token": "a",
+   "stage1": "NO-ACTOR",
+   "stage1_reason": "be a sequence type -- a constraint on the type",
+   "modal_mentioned_not_used": false,
+   "sentence": "That type must be a sequence type, a nullable type whose inner type is a sequence type or a union type or nullable union type that has a sequence type in its flattened member types."
+  },
+  {
+   "id": "S59",
+   "doc": "webidl",
+   "modal": "must",
+   "slot_token": "placed",
+   "stage1": "UNNAMED",
+   "stage1_reason": "placed -- somebody places the extended attribute; not said who",
+   "modal_mentioned_not_used": false,
+   "sentence": "It also must not be placed on a static attribute."
+  },
+  {
+   "id": "S60",
+   "doc": "webidl",
+   "modal": "must",
+   "slot_token": "one",
+   "stage1": "NO-ACTOR",
+   "stage1_reason": "be one of the forms given above -- a constraint on the attribute's form",
+   "modal_mentioned_not_used": false,
+   "sentence": "The [Global] extended attribute must be one of the forms given above."
+  }
+ ]
+}
