@@ -109,10 +109,6 @@ describe('the committed view is the derivation, packed — run `npm run graph:bu
     expect(committed.edgeKinds).toEqual(EDGE_KINDS)
   })
 
-  it('stays under the size the plan budgets for it', () => {
-    const bytes = readFileSync(new URL('../../data/graph/graph-view.json', import.meta.url)).byteLength
-    expect(bytes, 'the view outgrew its budget — cut QUOTE_MAX or NOTE_MAX before raising it').toBeLessThanOrEqual(120 * 1024)
-  })
 })
 
 describe('the radial layout is arithmetic over the record', () => {

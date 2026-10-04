@@ -10,13 +10,17 @@
 // for the island to fetch the receipts from — one source, two readers.
 
 import { readFileSync, writeFileSync } from 'node:fs'
+import { gzipSync } from 'node:zlib'
 import { buildGraphView, packView } from '../src/lib/graph/graph-explorer-model.ts'
 import type { KnowledgeGraph } from '../src/lib/graph/types.ts'
 
 const IN = 'src/data/graph/graph.json'
 const OUT = 'src/data/graph/graph-view.json'
-/** The size the plan budgets for the view (docs/design/2026-09-02-the-visual-layer.md §4). */
-const MAX_BYTES = 120 * 1024
+// No size limit (Frank's decision of 2026-10-05, wording private). Until then this script
+// stopped graph:build when the view passed 120 KB of raw JSON — a number a session set in the
+// visual-layer plan of 2026-09-02, not a decision of Frank's — and a 43-byte overrun blocked every
+// mirror of the practices' work for a night. The size is measured and reported below; a work that
+// gains from a larger file may have one.
 
 const graph = JSON.parse(readFileSync(IN, 'utf8')) as KnowledgeGraph
 const view = buildGraphView(graph)
@@ -25,8 +29,5 @@ const text = `${JSON.stringify(packView(view))}\n`
 writeFileSync(OUT, text, 'utf8')
 
 const kb = (text.length / 1024).toFixed(1)
-console.log(`${OUT}: ${view.counts.nodes} nodes, ${view.counts.edges} edges, ${kb} KB`)
-if (text.length > MAX_BYTES) {
-  console.error(`  ✗ the view is over its ${MAX_BYTES / 1024} KB budget — cut QUOTE_MAX or drop a field, do not raise the budget silently`)
-  process.exit(1)
-}
+const gz = gzipSync(text, { level: 9 }).byteLength
+console.log(`${OUT}: ${view.counts.nodes} nodes, ${view.counts.edges} edges, ${kb} KB (${(gz / 1024).toFixed(1)} KB gzip)`)

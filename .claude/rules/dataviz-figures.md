@@ -83,8 +83,10 @@ jeder interaktiven Figur**, geprüft durch Tests und `scripts/drift-check.mjs`:
    Bewegung (`reducedMotion()` in `runtime.ts`).
 5. **Readout-Hausregeln** (`src/lib/dataviz/readout.ts`): in den Kasten der Figur geklemmt,
    kippt am Rand statt zu clippen, nie ein Trefferziel.
-6. **Ein gzip-Budget je Insel** in `scripts/budgets.json`, geprüft von
-   `scripts/bundle-budget.mjs` nach jedem Build (CI und Deploy). Schwere Bibliotheken laden
+6. **Gewicht wird gemessen und gemeldet, nie gesperrt** (Frank, 2026-10-05, Wortlaut privat):
+   `scripts/bundle-budget.mjs` druckt nach jedem Build die gzip-Größe jeder Insel gegen die
+   Richtwerte in `scripts/budgets.json`; eine Überschreitung ist ein Hinweis, kein Fehler, und
+   stoppt weder CI noch Deploy. Ein Werk, das von einer schwereren Insel profitiert, darf sie haben. Schwere Bibliotheken laden
    verzögert (`client:visible` / `client:idle`, dynamischer `import()`); d3 wird per Submodul
    importiert, nie als Wurzelbündel. Die React-Laufzeit ist EIN geteilter Chunk.
 7. **Jedes neue Farbset wird hell und dunkel validiert** und in `src/lib/dataviz/palette.ts`

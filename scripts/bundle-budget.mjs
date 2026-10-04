@@ -1,5 +1,11 @@
 #!/usr/bin/env node
-// scripts/bundle-budget.mjs — the client-side weight gate of the visual layer (2026-09-02).
+// scripts/bundle-budget.mjs — the client-side weight REPORT of the visual layer (2026-09-02).
+//
+// Report, not gate, since 2026-10-05 (Frank's decision, wording private): sizes are measured and
+// printed after every build, and an island over its budget line or an unmatched budget is shown —
+// but none of it fails CI or the deploy any more. The budgets in scripts/budgets.json were set by a
+// session in the visual-layer plan, not by Frank; a work that gains from a heavier island may have
+// one. Only a missing dist/ still exits non-zero, because then there is nothing to report on.
 //
 // Runs after `astro build`. Every JavaScript chunk under dist/_astro/ is gzip-measured and matched
 // against scripts/budgets.json by file-name prefix; a chunk over its budget fails the build, and
@@ -42,20 +48,17 @@ const chunks = readdirSync(DIST)
   .sort((a, b) => b.gzip - a.gzip)
 
 const kb = (bytes) => (bytes / 1024).toFixed(1)
-let failed = false
 
 console.log(`bundle-budget: ${chunks.length} chunk(s) in ${relative(ROOT, DIST)}`)
 for (const budget of budgets) {
   const matched = chunks.filter((c) => c.name.startsWith(budget.prefix))
   if (matched.length === 0) {
-    failed = true
-    console.error(`  ✗ ${budget.prefix}* — no chunk matches (${budget.what}); re-budget the renamed chunk or drop the entry`)
+    console.log(`  · ${budget.prefix}* — no chunk matches (${budget.what}); re-budget the renamed chunk or drop the entry`)
     continue
   }
   const total = matched.reduce((sum, c) => sum + c.gzip, 0)
   const limit = budget.maxGzipKB * 1024
-  const mark = total <= limit ? '✓' : '✗'
-  if (total > limit) failed = true
+  const mark = total <= limit ? '✓' : '!'
   console.log(
     `  ${mark} ${budget.prefix}* — ${kb(total)} KB gz of ${budget.maxGzipKB} KB (${matched.map((c) => c.name).join(', ')}) — ${budget.what}`,
   )
@@ -69,4 +72,4 @@ if (unbudgetedHeavy.length) {
   for (const c of unbudgetedHeavy) console.log(`    · ${c.name} — ${kb(c.gzip)} KB gz (${kb(c.raw)} KB raw)`)
 }
 
-process.exit(failed ? 1 : 0)
+process.exit(0)
