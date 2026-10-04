@@ -22,8 +22,9 @@ const SHIELD_NOTE =
 // Native Astro works are authored autonomously and only need to render, not satisfy the site's
 // strict tsconfig. Neutralise type-checking on their client scripts (.astro <script>) and helper
 // modules (.ts/.js/.mjs) so an implicit-any or missing annotation can't fail `astro check` and
-// block the deploy for every work. (Standalone works are never shielded — see importWorkDir.) Bundling is still validated by `astro build`; genuinely unsafe code is
-// still rejected by checkForbidden (which scans the untouched source, not this shielded copy).
+// block the deploy for every work. Bundling is still validated by `astro build`; genuinely unsafe
+// code is still rejected by checkForbidden (which scans the untouched source, not this shielded
+// copy). Standalone works are never shielded — see importWorkDir.
 // JSON-LD/data <script> blocks (and self-closing tags) are left untouched.
 function shieldEngineTypes(from: string, content: string): string {
   if (from.endsWith('.astro'))
