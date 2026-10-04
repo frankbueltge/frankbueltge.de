@@ -309,6 +309,9 @@ Frage zieht um zu **„The Interval“** (langsame Ernährungskrisen, Projektion
 Finanzierung), das der Discovery-Pass der Praxis nächtlich baut. Bis es sein E-Experiment
 bestanden hat, hat es auf der Site keine Bühne, nur die Kandidatenzeile auf
 `/machine-attention/about`. Maßgeblich: `machine-attention/docs/2026-10-04-foreknown-retired.md`.
+**Am selben Tag RETIRED: Dark Ocean** (`machine-attention/docs/2026-10-04-dark-ocean-retired.md`),
+ohne Bühne, daher auf der Site nur namentlich, ohne Link. **Planetary Listening** ist für V0
+freigegeben und steht auf der Kandidatenliste, bis es sein E-Experiment bestanden hat.
 
 ## Die vier Linien des Labs (Frank, 2026-08-22, VERBINDLICH)
 

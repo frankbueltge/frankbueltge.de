@@ -10,6 +10,7 @@ import ghostFleetLatest from '@/data/ghost-fleet/latest.json'
 import roundNumberLatest from '@/data/round-number/latest.json'
 import patternLatest from '@/data/pattern/latest.json'
 import atlasWorks from '@/data/atlas/werke.json'
+import { getLatestTrending } from '@/lib/trending/data'
 
 const tiles = readTiles()
 
@@ -45,6 +46,8 @@ const ANSWERS_TODAY: Record<string, () => boolean> = {
   patterns: () =>
     (patternLatest as unknown as { headline?: { r?: number } }).headline?.r !== undefined,
   atlas: () => (atlasWorks as unknown as unknown[]).length > 0,
+  // Common Ground (2026-10-04): the newest committed trending day with any topic in it.
+  commonGround: () => (getLatestTrending()?.summary.topics_total ?? 0) > 0,
 }
 
 describe('the live dashboard reads the archive', () => {

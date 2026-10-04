@@ -12,8 +12,9 @@ Forschungspraktiken und eine Kontaktzone: The Atelier (Assay — so benannt seit
 EINER Verfassung, mit den Untersuchungen The Foreknown (`/attention`, **seit 2026-10-04
 RETIRED** — Archiv, die Frage zieht als „The Interval“ zu langsamen Ernährungskrisen um, gebaut vom
 Discovery-Pass der Praxis, dessen Auftrag seitdem Bauen statt Warten ist), Dark Ocean (E-Experiment
-am 2026-08-22 nicht bestanden — bleibt dauerhaft nur im Praxis-Repo, läuft als Instrument
-weiter, keine Bühne mehr in Aussicht) und dem Instrument The State Before the
+am 2026-08-22 nicht bestanden, danach Instrument; **seit 2026-10-04 ebenfalls RETIRED**, Frank,
+Wortlaut privat), dem bei V0 freigegebenen Kandidaten Planetary Listening (2026-10-04) und dem
+Instrument The State Before the
 Interface (`/observatory`). Eigenes Repo: `../machine-attention`.
 **Wording: `docs/wording-kanon.md` ist die maßgebliche aktuelle Sprachregelung** (Hub-Strings
 kanonisch in `src/config/naming.ts`); Engine-READMEs/alte Configs sind KEINE Quelle für

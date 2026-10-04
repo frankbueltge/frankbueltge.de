@@ -56,6 +56,10 @@ const PROJECT_NOTE: Record<string, string> = {
     'Retired on 2026-10-04 after fifty nights. It preserved every public warning from three keyless feeds the moment it was issued, and it was built to measure the gap between warning and response. The record says it could not: most of what it held were local US weather warnings announced hours ahead, nearly every verdict said only that a warning ran out at its source, and the money and attention it measured belonged to whole countries, never to one warning. The bytes, every dossier and every verdict stay public as an archive. The question moves to a clock where response is measurable — The Interval, below.',
   darkocean:
     'Notarizes the act of looking against the act of declaring — which Sentinel-1 passes covered which patch of the Baltic, against how the declared ocean distributed itself. Its acceptance experiment did not pass, reviewed 2026-08-22: two nights were lost to a deadlock in the practice’s own machinery, which put the sample-hour criterion out of reach, and the per-moment declared source never answered in 13 nights. What runs on is narrower than the project was — the nightly notary that asks a public archive whether it still says what it said.',
+  // 2026-10-04: retired the same day as The Foreknown (machine-attention
+  // docs/2026-10-04-dark-ocean-retired.md); the figures paragraph below turns past tense with it.
+  'darkocean:retired':
+    'Set the act of looking against the act of declaring — which Sentinel-1 passes covered which patch of the Baltic, against how the declared ocean distributed itself. Its acceptance experiment did not pass on 2026-08-22; what ran on afterwards was a nightly notary asking the Copernicus catalogue whether it still says what it said. Retired on 2026-10-04: the instrument did not hold the practice’s attention, and attention is what this practice cannot spend twice. The record stays in the repository.',
   memoryhole:
     'Asks what power changes about its own published past: one archive query per institution a night, a validity gate before a difference may mean anything, five named operations on text, and every deletion claim rechecked live before the word “gone” appears. Its criteria were committed 2026-08-22; three build conditions stand between it and night 1.',
   'state-before-interface':
@@ -80,6 +84,7 @@ const CANDIDATES = [
 
 // The epistemic split of the register (stage honesty, 2026-08-09): only a
 // window still open under the last committed run counts as prospective watch.
+const darkoceanRetired = projects.find((p) => p.id === 'darkocean')?.status === 'retired'
 const underWatch = figure('futures_under_watch')
 const windowOpen = figure('futures_window_open')
 const coldStart = figure('futures_cold_start')
@@ -158,13 +163,24 @@ const drift = figure('futures_drift')
             <p class="mt-2 font-mono text-[11px] text-fg-faint">
               {p.site_route
                 ? <>{p.status === 'retired' ? 'Archived at' : 'Public at'} <a href={p.site_route} class="underline hover:text-fg">{p.site_route}</a></>
-                : <>Public only in <a href={REPO} class="underline hover:text-fg">the practice’s repository</a>{p.status === 'instrument' ? ' — and now by rule, permanently' : ' — by rule, until it passes'}</>}
+                : p.status === 'retired'
+                  ? <>Retired — the record stays in <a href={REPO} class="underline hover:text-fg">the practice’s repository</a></>
+                  : <>Public only in <a href={REPO} class="underline hover:text-fg">the practice’s repository</a>{p.status === 'instrument' ? ' — and now by rule, permanently' : ' — by rule, until it passes'}</>}
             </p>
           </li>
         ))}
       </ul>
 
-      {figure('darkocean_continuity_rechecks') && (
+      {figure('darkocean_continuity_rechecks') && darkoceanRetired && (
+        <p class="mt-5 font-mono text-xs leading-relaxed text-fg-faint">
+          Dark Ocean&rsquo;s notary, until it was retired on 2026-10-04:
+          {' '}{figure('darkocean_continuity_rechecks')?.value.toLocaleString('en-US')} catalog rows
+          re-asked over {figure('darkocean_nights_on_record')?.value} nights;
+          {' '}{figure('darkocean_continuity_divergences')?.value} products diverged from what the
+          catalogue had first said.
+        </p>
+      )}
+      {figure('darkocean_continuity_rechecks') && !darkoceanRetired && (
         <p class="mt-5 font-mono text-xs leading-relaxed text-fg-faint">
           Dark Ocean&rsquo;s notary, since its acceptance experiment closed without a stage:
           {' '}{figure('darkocean_continuity_rechecks')?.value.toLocaleString('en-US')} catalog rows
