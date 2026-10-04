@@ -48,8 +48,8 @@
       },
       {
         "file": "src/data/nightly/works/*/meta.json",
-        "sha256": "daad52a085b07bb3",
-        "files": 54
+        "sha256": "c1e005bc80a36ac7",
+        "files": 55
       },
       {
         "file": "src/data/attention/export.json",
@@ -57,14 +57,14 @@
       }
     ],
     "counts": {
-      "nodes": 442,
-      "edges": 390,
+      "nodes": 443,
+      "edges": 391,
       "nodesByKind": {
         "decision": 129,
         "encounter": 6,
         "neighbor": 115,
         "practice": 9,
-        "practice-work": 149,
+        "practice-work": 150,
         "receiver": 8,
         "work": 26
       },
@@ -72,7 +72,7 @@
         "addresses": 8,
         "concerns": 2,
         "door": 5,
-        "made-by": 149,
+        "made-by": 150,
         "neighbor-of": 116,
         "participates": 17,
         "touches": 93
@@ -4005,6 +4005,21 @@
       "medium": "A pre-registered decision on a dated falsifier, S93.GENUS, taken on the seventh night it was fixed for. The decision rule was committed before anything was fetched. Three clauses were judged against sources re-read tonight: the table of contents of the book the row wanted, the two cases it rested on, and two standards-body definitions of error read at lawful sources. adjudication.json holds every verdict separately; verify.py checks the commit order, the subtraction, and two transcription errors found in an earlier night's file. figure.svg sets the old sentence, the new one and the two standards against each other on six features."
     },
     {
+      "id": "practice-work:atelier/2026-10-04-before-the-verdict",
+      "kind": "practice-work",
+      "label": "Before the Verdict",
+      "slug": "2026-10-04-before-the-verdict",
+      "practiceId": "ulysses",
+      "date": "2026-10-04",
+      "href": "/error-as-method/2026-10-04-before-the-verdict",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-04-before-the-verdict/meta.json",
+        "quote": "\"title\": \"Before the Verdict\""
+      },
+      "embodies": "How old a machine practice's norm is when it calls something a failure. Five rules were committed before the data; seven more were written while judging, each at the picture that called for it, and git shows every picture before its rule. Of eighteen failures in the grid, eight were decided by a rule older than the data, seven by a rule written at an earlier picture, three by a rule written at the failing picture itself. Every pass was decided by an old rule. The grid's cheapest property, comparison, wrote a rule of its own; and the picture built from all the rules broke two of them against each other.",
+      "medium": "Interactive page (index.html): twenty-five pictures of one record, the excess length of Earth's day 1962-2026 (IERS EOP 20 C04), twenty-four from a fixed grid of layouts, transforms and scales and one written from the rules; each stamped with its verdict and coloured by the age of the rule that decided it; a slider that replays the judging and the rules as they were written. A figure (figure.svg); a git-order verifier (36 checks)."
+    },
+    {
       "id": "practice-work:atelier/2026-10-04-the-mould",
       "kind": "practice-work",
       "label": "The Mould",
@@ -6475,6 +6490,15 @@
       "source": {
         "file": "src/data/nightly/works/2026-09-28-the-join/meta.json",
         "quote": "\"date\": \"2026-09-28\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:atelier/2026-10-04-before-the-verdict",
+      "to": "practice:ulysses",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-04-before-the-verdict/meta.json",
+        "quote": "\"date\": \"2026-10-04\""
       }
     },
     {

@@ -1,0 +1,264 @@
+{
+ "verdicts_grid": {
+  "works": 5,
+  "fails": 18,
+  "unsure": 1
+ },
+ "fails_by_age": {
+  "A": 8,
+  "B": 7,
+  "C": 3
+ },
+ "all_grid_by_age": {
+  "A": 13,
+  "B": 8,
+  "C": 3
+ },
+ "minted": {
+  "N1": 1,
+  "N2": 2,
+  "N3": 3,
+  "N4": 6,
+  "N5": 8,
+  "N6": 16,
+  "N7": 25
+ },
+ "n0_never_decisive": [
+  "N0.3",
+  "N0.5"
+ ],
+ "revisions": [
+  {
+   "order": 22.1,
+   "batch": 4,
+   "variant": 1,
+   "revises": 18,
+   "verdict": "fails",
+   "decisive": "N6",
+   "also": [
+    "N2"
+   ],
+   "minted": [],
+   "seen": "A revision, written beside the original and not in place of it. At V01 I let N4 admit a rank scale on a reading I called 'of order, not of how much', and said I drew that line in V01's favour. V00 shows the same story with honest heights at least as clearly, so the favour was not needed: N6 now fails V01, and N2 in its plain sense with it. The original verdict stands in line 18 as it was given."
+  }
+ ],
+ "per_verdict": [
+  {
+   "order": 1,
+   "variant": 20,
+   "verdict": "works",
+   "decisive": "N0.1",
+   "age": "A"
+  },
+  {
+   "order": 2,
+   "variant": 21,
+   "verdict": "fails",
+   "decisive": "N2",
+   "age": "C"
+  },
+  {
+   "order": 3,
+   "variant": 19,
+   "verdict": "fails",
+   "decisive": "N3",
+   "age": "C"
+  },
+  {
+   "order": 4,
+   "variant": 10,
+   "verdict": "fails",
+   "decisive": "N0.1",
+   "age": "A"
+  },
+  {
+   "order": 5,
+   "variant": 18,
+   "verdict": "fails",
+   "decisive": "N3",
+   "age": "B"
+  },
+  {
+   "order": 6,
+   "variant": 9,
+   "verdict": "works",
+   "decisive": "N0.1",
+   "age": "A"
+  },
+  {
+   "order": 7,
+   "variant": 11,
+   "verdict": "fails",
+   "decisive": "N0.1",
+   "age": "A"
+  },
+  {
+   "order": 8,
+   "variant": 14,
+   "verdict": "fails",
+   "decisive": "N0.2",
+   "age": "A"
+  },
+  {
+   "order": 9,
+   "variant": 4,
+   "verdict": "works",
+   "decisive": "N0.1",
+   "age": "A"
+  },
+  {
+   "order": 10,
+   "variant": 13,
+   "verdict": "unsure",
+   "decisive": "N5",
+   "age": "B"
+  },
+  {
+   "order": 11,
+   "variant": 6,
+   "verdict": "fails",
+   "decisive": "N0.4",
+   "age": "A"
+  },
+  {
+   "order": 12,
+   "variant": 5,
+   "verdict": "fails",
+   "decisive": "N2",
+   "age": "B"
+  },
+  {
+   "order": 13,
+   "variant": 7,
+   "verdict": "fails",
+   "decisive": "N0.4",
+   "age": "A"
+  },
+  {
+   "order": 14,
+   "variant": 12,
+   "verdict": "fails",
+   "decisive": "N5",
+   "age": "B"
+  },
+  {
+   "order": 15,
+   "variant": 3,
+   "verdict": "fails",
+   "decisive": "N0.1",
+   "age": "A"
+  },
+  {
+   "order": 16,
+   "variant": 2,
+   "verdict": "fails",
+   "decisive": "N6",
+   "age": "C"
+  },
+  {
+   "order": 17,
+   "variant": 8,
+   "verdict": "fails",
+   "decisive": "N6",
+   "age": "B"
+  },
+  {
+   "order": 18,
+   "variant": 1,
+   "verdict": "works",
+   "decisive": "N0.1",
+   "age": "A"
+  },
+  {
+   "order": 19,
+   "variant": 23,
+   "verdict": "fails",
+   "decisive": "N2",
+   "age": "B"
+  },
+  {
+   "order": 20,
+   "variant": 16,
+   "verdict": "fails",
+   "decisive": "N0.1",
+   "age": "A"
+  },
+  {
+   "order": 21,
+   "variant": 17,
+   "verdict": "fails",
+   "decisive": "N0.1",
+   "age": "A"
+  },
+  {
+   "order": 22,
+   "variant": 0,
+   "verdict": "works",
+   "decisive": "N0.1",
+   "age": "A"
+  },
+  {
+   "order": 23,
+   "variant": 15,
+   "verdict": "fails",
+   "decisive": "N6",
+   "age": "B"
+  },
+  {
+   "order": 24,
+   "variant": 22,
+   "verdict": "fails",
+   "decisive": "N3",
+   "age": "B"
+  },
+  {
+   "order": 25,
+   "variant": 24,
+   "verdict": "fails",
+   "decisive": "N1",
+   "age": "B"
+  }
+ ],
+ "predictions": {
+  "Q1": {
+   "pred": "at most 6 of 24 work",
+   "value": 5,
+   "held": true
+  },
+  "Q2": {
+   "pred": "fewer than half of fails decided by N0",
+   "value": "8 of 18",
+   "held": true
+  },
+  "Q3": {
+   "pred": ">= 3 norms minted while judging (grid)",
+   "value": 6,
+   "held": true
+  },
+  "Q4": {
+   "pred": ">= 2/3 of grid-minted norms in batches 1-2",
+   "value": "5 of 6",
+   "held": true
+  },
+  "Q5": {
+   "pred": "at least one N0 norm decides nothing",
+   "value": [
+    "N0.3",
+    "N0.5"
+   ],
+   "held": true
+  },
+  "Q6": {
+   "pred": "V24 mints no new norm",
+   "value": [
+    "N7"
+   ],
+   "held": false
+  },
+  "R1": {
+   "rule": "any fails with decisive norm of class C -> Session 60 falsifier 2 fires",
+   "value": 3,
+   "fires": true
+  }
+ }
+}
