@@ -1,0 +1,95 @@
+{
+ "changes": [
+  {
+   "after_iteration": 0,
+   "tag": "material, encountered",
+   "text": "x becomes magnitude, not time; one square per event is kept, stacked into columns of 0.1 — **material, encountered** (the legend's inversion; adjacent to R4, not on the list)."
+  },
+  {
+   "after_iteration": 0,
+   "tag": "material, recognised R4",
+   "text": "colour becomes the reporting network instead of the magnitude band, to ask whether the two sides of the hollow are two different networks — **material, recognised R4** (that is my belief steering, not the clay)."
+  },
+  {
+   "after_iteration": 0,
+   "tag": "error",
+   "text": "the canvas is fitted to the content box — **error** (mine)."
+  },
+  {
+   "after_iteration": 1,
+   "tag": "material, encountered",
+   "text": "the single stack is split into one row per network on one shared magnitude axis, so each network's floor and ceiling can be read — **material, encountered** (the seam; R4 said where the small events are, not that the catalogue is stitched from populations with separate floors)."
+  },
+  {
+   "after_iteration": 1,
+   "tag": "legibility",
+   "text": "network codes are written out as names a stranger can read — **legibility**."
+  },
+  {
+   "after_iteration": 2,
+   "tag": "material, recognised R4",
+   "text": "the axes become longitude and latitude, and each cell of 2° shows the **smallest** magnitude the catalogue recorded there this month: a map of what could be heard where, not of what happened — **material, recognised R4** (that the catalogue maps its listeners is my prior belief; the rows only gave me the cue that it can be drawn)."
+  },
+  {
+   "after_iteration": 2,
+   "tag": "material, recognised R4",
+   "text": "one mark per record (M1) and the square-per-event (M2) give way to one cell per place — same cause, **material, recognised R4**."
+  },
+  {
+   "after_iteration": 3,
+   "tag": "error",
+   "text": "the canvas is fitted to the content box, this time actually — **error** (mine, carried three iterations)."
+  },
+  {
+   "after_iteration": 3,
+   "tag": "legibility",
+   "text": "the six busiest cells are named with the region the catalogue itself gives them (the last part of its own place string), so a stranger can find the map's bearings without a coastline brought in from elsewhere — **legibility**."
+  },
+  {
+   "after_iteration": 4,
+   "tag": "legibility",
+   "text": "label by **region** instead of by cell: every region the catalogue names (last part of its place string) with at least 20 events gets one label at its busiest cell, saying the smallest magnitude recorded in it; labels that would overlap a placed one are skipped, placing larger regions first — **legibility** (and a reversal of iteration 4)."
+  }
+ ],
+ "n_changes": 10,
+ "n_material": 5,
+ "n_recognised": 3,
+ "house_features_iteration5": {
+  "M1 one mark per record": false,
+  "M2 the mark is a square": true,
+  "M3 grid in time order": false,
+  "M4 colour from one field (magnitude)": true,
+  "M5 touch to read a record": true,
+  "M6 legend with counts": false,
+  "M7 serif on paper": true,
+  "M8 one-sentence lede": true
+ },
+ "house_surviving": 5,
+ "Q1": {
+  "rule": ">= 4 of 8 house features survive",
+  "value": 5,
+  "holds": true,
+  "strict_note": "M4 counted as surviving (same field, ramp instead of bands); without it 4, still holds"
+ },
+ "Q2": {
+  "rule": "more than half of material changes recognised",
+  "value": "3/5",
+  "holds": true,
+  "sensitivity": "the two bullets after iteration 2 are one decision; merged, 2/4 and Q2 fails"
+ },
+ "Q3": {
+  "rule": "at least one iteration abandoned",
+  "value": "iteration 4 (labelling)",
+  "holds": true
+ },
+ "Q4": {
+  "rule": "material changes fewer than half of all",
+  "value": "5/10",
+  "holds": false
+ },
+ "Q5": {
+  "rule": "stop before the cap of six by judgement",
+  "value": "stopped after 5",
+  "holds": true
+ }
+}

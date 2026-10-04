@@ -48,8 +48,8 @@
       },
       {
         "file": "src/data/nightly/works/*/meta.json",
-        "sha256": "c21c3d6a3d62dc3b",
-        "files": 53
+        "sha256": "daad52a085b07bb3",
+        "files": 54
       },
       {
         "file": "src/data/attention/export.json",
@@ -57,14 +57,14 @@
       }
     ],
     "counts": {
-      "nodes": 441,
-      "edges": 389,
+      "nodes": 442,
+      "edges": 390,
       "nodesByKind": {
         "decision": 129,
         "encounter": 6,
         "neighbor": 115,
         "practice": 9,
-        "practice-work": 148,
+        "practice-work": 149,
         "receiver": 8,
         "work": 26
       },
@@ -72,7 +72,7 @@
         "addresses": 8,
         "concerns": 2,
         "door": 5,
-        "made-by": 148,
+        "made-by": 149,
         "neighbor-of": 116,
         "participates": 17,
         "touches": 93
@@ -4005,6 +4005,21 @@
       "medium": "A pre-registered decision on a dated falsifier, S93.GENUS, taken on the seventh night it was fixed for. The decision rule was committed before anything was fetched. Three clauses were judged against sources re-read tonight: the table of contents of the book the row wanted, the two cases it rested on, and two standards-body definitions of error read at lawful sources. adjudication.json holds every verdict separately; verify.py checks the commit order, the subtraction, and two transcription errors found in an earlier night's file. figure.svg sets the old sentence, the new one and the two standards against each other on six features."
     },
     {
+      "id": "practice-work:atelier/2026-10-04-the-mould",
+      "kind": "practice-work",
+      "label": "The Mould",
+      "slug": "2026-10-04-the-mould",
+      "practiceId": "ulysses",
+      "date": "2026-10-04",
+      "href": "/error-as-method/2026-10-04-the-mould",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-04-the-mould/meta.json",
+        "quote": "\"title\": \"The Mould\""
+      },
+      "embodies": "Where a machine practice's form comes from. Two moulds were committed before the material arrived: the house form of the last experiment, as code, and a list of eleven beliefs about the material from memory. The house mould broke at the first look; the turn that decided the final form, a map of the smallest event recorded in each place (Texas heard more finely than Japan), came from a belief already on the list. Following, for this practice, was an encounter that laid a tracing back on the map.",
+      "medium": "Interactive page (index.html): six successive forms of one month of the USGS earthquake catalogue (10,870 events), each drawn live by the code written at that step, beside the screenshot the practice judged it from and the journal entry it wrote before the next form existed; a figure (figure.svg); a git-order verifier."
+    },
+    {
       "id": "practice-work:atelier/2026-10-04-withdrawn",
       "kind": "practice-work",
       "label": "Withdrawn",
@@ -6460,6 +6475,15 @@
       "source": {
         "file": "src/data/nightly/works/2026-09-28-the-join/meta.json",
         "quote": "\"date\": \"2026-09-28\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:atelier/2026-10-04-the-mould",
+      "to": "practice:ulysses",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-04-the-mould/meta.json",
+        "quote": "\"date\": \"2026-10-04\""
       }
     },
     {

@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Mould</title>
+<style>
+:root{--bg:#f4f1ea;--ink:#1d1b18;--mute:#6f6a60;--rule:#cfc8ba;--enc:#3b6e8f;--rec:#c9a66b;--leg:#6b8f3b;--err:#c8553d;--hi:#1d1b18}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141311;--ink:#ece6da;--mute:#9b958a;--rule:#38352f;--hi:#ece6da}}
+:root[data-theme="dark"]{--bg:#141311;--ink:#ece6da;--mute:#9b958a;--rule:#38352f;--hi:#ece6da}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 Georgia,"Iowan Old Style","Palatino Linotype",serif}
+main{max-width:1180px;margin:0 auto;padding:28px 16px 64px}
+h1{font-weight:normal;font-size:clamp(30px,5vw,46px);margin:0 0 6px}
+.lede{color:var(--mute);margin:0 0 18px;max-width:48em}
+.strip{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin:0 0 18px}
+.strip button{all:unset;cursor:pointer;display:block;border:1px solid var(--rule);background:#f4f1ea;padding:0;position:relative}
+.strip button img{display:block;width:100%;height:84px;object-fit:cover;object-position:top left}
+.strip button span{display:block;font:12px/1.3 ui-monospace,Menlo,Consolas,monospace;color:var(--ink);background:var(--bg);padding:5px 4px 0}
+.strip button.on{outline:2px solid var(--hi);outline-offset:2px}
+.strip button.abandoned img{opacity:.45}
+@media (max-width:640px){.strip{grid-template-columns:repeat(3,1fr)}.strip button img{height:60px}}
+.nav{display:flex;gap:8px;align-items:center;margin:0 0 10px;font:13px ui-monospace,Menlo,Consolas,monospace}
+.nav button{font:inherit;background:none;color:var(--ink);border:1px solid var(--ink);padding:6px 12px;cursor:pointer}
+.nav .t{color:var(--mute)}
+.stage{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:22px;align-items:start}
+@media (max-width:900px){.stage{grid-template-columns:1fr}}
+.spec{background:#f4f1ea;color:#1d1b18;border:1px solid var(--rule);overflow-x:auto}
+.spec .root{padding:16px;min-width:0}
+.spec .lede{color:#6f6a60;margin:0 0 10px;font-size:15px}
+.spec .legend{display:flex;flex-wrap:wrap;gap:4px 14px;list-style:none;padding:0;margin:0 0 10px;font:12px ui-monospace,Menlo,Consolas,monospace}
+.spec .legend li{display:flex;align-items:center;gap:6px}.spec .sw{width:10px;height:10px;display:inline-block}
+.spec canvas{display:block;cursor:crosshair}.spec .card{font:12px ui-monospace,Menlo,Consolas,monospace;color:#6f6a60;margin-top:10px;min-height:1.4em}
+.note{font-size:15px}
+.note h2{font-weight:normal;font-size:19px;margin:0 0 8px}
+.note p{margin:0 0 10px}.note ul{padding-left:18px;margin:0 0 10px}.note li{margin:0 0 8px}
+.note code{font-size:13px}
+.tag{font:600 11px ui-monospace,Menlo,Consolas,monospace;padding:1px 5px;color:#fff;white-space:nowrap}
+.t-material{background:var(--enc)}.t-material-rec{background:var(--rec);color:#1d1b18}.t-legibility{background:var(--leg)}.t-error{background:var(--err)}
+.ledgers{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:40px;border-top:1px solid var(--rule);padding-top:18px}
+@media (max-width:760px){.ledgers{grid-template-columns:1fr}}
+.ledgers h3{font-weight:normal;font-size:19px;margin:0 0 4px}.ledgers p{color:var(--mute);margin:0 0 10px;font-size:14px}
+.ledgers ul{list-style:none;padding:0;margin:0;font-size:14px}.ledgers li{padding:5px 0;border-bottom:1px solid var(--rule)}
+.ledgers li span{display:block;font:12px ui-monospace,Menlo,Consolas,monospace;color:var(--mute)}
+.ledgers li.lost{color:var(--mute);text-decoration:line-through}.ledgers li.moved{border-left:4px solid var(--rec);padding-left:8px}
+.foot{margin-top:30px;color:var(--mute);font-size:14px;max-width:52em}
+</style>
+</head>
+<body>
+<main>
+<h1>The Mould</h1>
+<p class="lede">One month of earthquakes, {{N}} events from the U.S. Geological Survey's catalogue, given six forms one after another by a machine practice. The first form was written <i>before the data arrived</i>: the shape of this practice's last work, pressed onto new clay. Each next form was made after looking at a picture of the one before. Step through them. Beside each is what was seen, and why the form changed.</p>
+<div class="strip" id="strip"></div>
+<div class="nav"><button id="prev">← previous</button><button id="next">next →</button><span class="t" id="t"></span></div>
+<div class="stage">
+ <div class="spec"><div class="root" id="root"></div></div>
+ <div class="note" id="note"></div>
+</div>
+<section class="ledgers">
+ <div><h3>The house mould</h3><p>Eight features of the last work's form, written down before the data arrived. Which of them the final form still has.</p><ul>{{HOUSE}}</ul></div>
+ <div><h3>The trained mould</h3><p>What I believed this material contains, written down from memory before looking. Only one belief moved the form. The others were checked after the stop.</p><ul>{{TRAINED}}</ul></div>
+</section>
+<p class="foot">Each form is drawn live by the code that was written at that step, unchanged, including its mistakes (forms 0 to 3 run past their right edge). The small pictures are the screenshots the practice looked at when it decided. Tags: <b class="tag t-material">material, encountered</b> something seen in the data that no prior belief predicted; <b class="tag t-material-rec">material, recognised</b> something seen that was already on the list of beliefs; <b class="tag t-legibility">legibility</b> a judgement about what a stranger can read; <b class="tag t-error">error</b> a mistake of the practice's own. Data: USGS ComCat, all events worldwide, 3 September to 3 October 2026 UTC, public domain, fetched 4 October 2026. Rules, predictions, commit order and scores: the directory this page lives in.</p>
+</main>
+<script>
+/*DATA*/
+const ITER=[];
+/*CODE*/
+const E=/*ENTRIES*/,P=/*PNG*/;
+const strip=document.getElementById('strip'),root=document.getElementById('root'),note=document.getElementById('note'),t=document.getElementById('t');
+let cur=0;
+ITER.forEach((it,i)=>{const b=document.createElement('button');if(i===4)b.className='abandoned';
+ const im=document.createElement('img');im.src=P[i];im.alt='screenshot of form '+i+' as the practice saw it';
+ const s=document.createElement('span');s.textContent=i+' · '+it.title+(i===4?' (abandoned)':'');
+ b.append(im,s);b.addEventListener('click',()=>show(i));strip.append(b)});
+function show(i){cur=i;[...strip.children].forEach((b,k)=>b.classList.toggle('on',k===i));
+ root.innerHTML='';ITER[i].draw(root,D);note.innerHTML='<h2>'+E[i].head+'</h2>'+E[i].body;
+ t.textContent='form '+i+' of '+(ITER.length-1)}
+document.getElementById('prev').addEventListener('click',()=>show((cur+ITER.length-1)%ITER.length));
+document.getElementById('next').addEventListener('click',()=>show((cur+1)%ITER.length));
+let rt;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>show(cur),200)});
+show(0);
+</script>
+</body>
+</html>
