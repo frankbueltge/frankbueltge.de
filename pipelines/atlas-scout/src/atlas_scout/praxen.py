@@ -37,6 +37,19 @@ PRAXEN: dict[str, str] = {
     "field": "field-research",
     "studio": "studio",
     "meridian": "meridian-runtime",
+    # The nightly line (2026-10-04, Frank's question, wording private). It helped build this
+    # catalogue while it still ran inside the `ulysses` repository; since its fork into
+    # `error-as-method` nothing it cited reached the catalogue, because this list never
+    # followed it. Its older citations stay under "atelier", where they were made.
+    "nightly": "error-as-method",
+}
+
+# Top-level folders that hold material HANDED TO a practice rather than used by it. A citation
+# there is the house's, not the practice's: `error-as-method/material/` holds the architect's
+# working paper (2026-10-04), and counting its references as the nightly line's reading would
+# claim a use that never happened.
+FREMDES_MATERIAL: dict[str, tuple[str, ...]] = {
+    "error-as-method": ("material",),
 }
 
 # Wo in einem Praxis-Repo überhaupt zitiert wird. Alles andere (Sperrdateien, Zeugs unter
@@ -310,6 +323,8 @@ def _lies_repo(praxis: str, repo_name: str, wurzel: Path) -> tuple[dict, Ausfall
             continue
         relativ_pfad = pfad.relative_to(repo)
         if UEBERSPRUNGENE_ORDNER & set(relativ_pfad.parts):
+            continue
+        if relativ_pfad.parts and relativ_pfad.parts[0] in FREMDES_MATERIAL.get(repo_name, ()):
             continue
         if _ist_pruefstueck(relativ_pfad) or _ist_rohmaterial(relativ_pfad):
             continue
