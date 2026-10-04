@@ -167,7 +167,8 @@ auf Tailwind v4** (kopierte Primitives in `src/components/ui/`, Token-Brücke in
 `global.css`), der Rahmen bleibt monochrom, aber reicher. Unverändert binden: committete,
 nachrechenbare Daten; Geometrie und jede Zahl aus reinen, getesteten Libs in `src/lib/**`;
 der Server-Render als Boden ohne JavaScript; kein `style=`-Attribut (CSP, drift-check-Regel 3
-auch über `.tsx`); ein gzip-Budget je Insel (`scripts/bundle-budget.mjs`);
+auch über `.tsx`); Inselgewicht wird gemessen und gemeldet, nie als Sperre
+(`scripts/bundle-budget.mjs`, Frank 2026-10-05 — Größengrenzen blockieren nichts mehr);
 Paletten-Validierung. Die sieben Pflichten einer interaktiven Figur:
 `.claude/rules/dataviz-figures.md`; Herkunft, Programm und Reihenfolge der Flaggschiffe:
 `docs/design/2026-09-02-the-visual-layer.md`.
