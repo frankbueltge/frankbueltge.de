@@ -1,0 +1,149 @@
+/* src/styles/middle-relay.css — the Middle's triangle, its handoffs and its key (2026-10-05).
+ *
+ * PALETTE: ecology-voices (src/lib/dataviz/palette.ts). This sheet carries no hex of its own: a
+ * lane wears the hue of the practice that GAVE, read by token from hub-triptych.css
+ * (--hub-c-meridian, --hub-c-ulysses, --hub-c-ensemble — own steps per mode, validated against
+ * the panel surface the figure sits on), so one practice wears one colour on this page as on
+ * every other. The three kinds of relation are told apart by width and strength, never by a hue
+ * of their own; the empty lane, the key and every label wear the site's neutral ink. The hue
+ * never carries a fact alone: every lane has its counts as a native title, a readout and a group
+ * in the table floor, and the card names both practices in words.
+ *
+ * Positions, widths and points are SVG attributes from src/lib/ecology/relay-triangle.ts; this
+ * file decides only how the marks are inked. No `style=` anywhere (the CSP drops it). */
+
+.hub-voices .g-field { --tri-c: var(--hub-c-meridian); }
+.hub-voices .g-atelier { --tri-c: var(--hub-c-ulysses); }
+.hub-voices .g-studio { --tri-c: var(--hub-c-ensemble); }
+
+/* position: relative — the box dataviz/readout.ts clamps the readout within (its house rule 1:
+   the FIGURE's own box, never a scroll container or the viewport) */
+.tri-figure { position: relative; }
+.tri-root [hidden] { display: none !important; }
+
+.tri-svg {
+  display: block;
+  width: 100%;
+  max-width: 34rem;
+  height: auto;
+  margin: 0 auto;
+}
+
+/* ── the lanes ─────────────────────────────────────────────────────────────── */
+.tri-band { cursor: pointer; outline: none; transition: opacity 160ms ease; }
+.tri-root[data-active] .tri-band:not([data-selected]) { opacity: 0.28; }
+.tri-hit { stroke: none; }
+.tri-band:hover .tri-hit { stroke: var(--color-line-lift); stroke-width: 1; }
+.tri-band:focus-visible .tri-hit,
+.tri-band[data-selected] .tri-hit {
+  stroke: var(--color-fg-muted);
+  stroke-width: 1;
+  stroke-dasharray: 2 3;
+}
+
+.tri-stroke { fill: none; stroke: var(--tri-c); stroke-linecap: butt; }
+/* strong · medium · faint — the weight of what passed, doubled by the width the model gives */
+.tri-stroke.k-built_on { opacity: 1; }
+.tri-stroke.k-answered { opacity: 0.55; }
+.tri-stroke.k-noted { opacity: 0.42; }
+
+/* nothing load-bearing in this direction: an empty track in neutral ink — absence is drawn */
+.tri-void {
+  fill: none;
+  stroke: var(--color-fg-faint);
+  stroke-width: 1.3;
+  stroke-dasharray: 3 4;
+}
+.tri-arrow { fill: var(--tri-c); }
+.tri-band[data-empty] .tri-arrow { fill: var(--color-fg-faint); opacity: 0.75; }
+
+/* ── the corners ───────────────────────────────────────────────────────────── */
+.tri-node-disc { fill: var(--color-panel-2); stroke: var(--tri-c); stroke-width: 3; }
+.tri-name { font: 600 17px var(--font-sans); fill: var(--color-fg); }
+.tri-persona { font: 12.5px var(--font-mono); letter-spacing: 0.08em; fill: var(--color-fg-muted); }
+/* the drawing scales with its column; on a phone that is about half size, so the corner labels
+   are set larger in the drawing's own units to stay readable (the model leaves room for it) */
+@media (max-width: 640px) {
+  .tri-name { font-size: 23px; }
+  .tri-persona { font-size: 17px; }
+}
+
+/* ── the words around the drawing ──────────────────────────────────────────── */
+.tri-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 0.25rem; margin-bottom: 0.5rem; }
+.tri-windows { display: flex; flex-wrap: wrap; gap: 0.25rem; }
+.tri-drawn,
+.tri-hint {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-sm);
+  color: var(--color-fg-faint);
+}
+.tri-hint { margin-top: 0.375rem; text-align: center; }
+.tri-isolation {
+  margin: 0.75rem auto 0;
+  max-width: 34rem;
+  font-size: 0.875rem;
+  line-height: 1.55;
+  text-align: center;
+  color: var(--color-fg-muted);
+}
+.tri-unreported { margin: 0.75rem auto 0; max-width: 34rem; text-align: center; }
+.tri-unreported-title { margin: 0; font-weight: 600; color: var(--color-fg); }
+.tri-unreported-body { margin: 0.375rem 0 0; font-size: 0.875rem; line-height: 1.55; color: var(--color-fg-muted); }
+
+/* the readout: the shell is dataviz/Readout.astro's, the ink is this figure's */
+.tri-figure .dv-readout {
+  padding: 0.375rem 0.625rem;
+  border: 1px solid var(--color-line);
+  border-radius: 6px;
+  background: var(--color-panel-2);
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-sm);
+  line-height: 1.5;
+  color: var(--color-fg);
+}
+
+/* ── the card a lane opens ─────────────────────────────────────────────────── */
+.tri-dot {
+  display: inline-block;
+  flex: none;
+  width: 0.625rem;
+  height: 0.625rem;
+  border-radius: 999px;
+  background: var(--tri-c);
+}
+.tri-rel-list { display: grid; gap: 0.875rem; margin: 0; padding: 0; list-style: none; }
+.tri-rel { padding-left: 0.75rem; border-left: 2px solid var(--color-line); }
+.tri-rel[data-kind='built_on'] { border-left-color: var(--color-fg-muted); }
+.tri-rel[data-kind='noted'] { border-left-style: dotted; }
+.tri-kind { text-transform: uppercase; letter-spacing: 0.12em; color: var(--color-fg-muted); }
+
+/* ── the key: the figure's own strokes, in neutral ink ─────────────────────── */
+.relay-key { display: flex; flex-wrap: wrap; align-items: center; gap: 0.25rem 1rem; }
+.relay-key-item { display: inline-flex; align-items: center; gap: 0.4rem; }
+.relay-key svg { width: 1.75rem; height: 0.75rem; flex: none; }
+.relay-key .tri-stroke { stroke: var(--color-fg-muted); }
+.relay-key .relay-key-hue circle:nth-child(1) { fill: var(--hub-c-meridian); }
+.relay-key .relay-key-hue circle:nth-child(2) { fill: var(--hub-c-ulysses); }
+.relay-key .relay-key-hue circle:nth-child(3) { fill: var(--hub-c-ensemble); }
+
+/* ── the table floor ───────────────────────────────────────────────────────── */
+.relay-floor summary { cursor: pointer; }
+.relay-table { width: 100%; border-collapse: collapse; font-size: 0.8125rem; }
+.relay-table th,
+.relay-table td { padding: 0.375rem 0.5rem; border-top: 1px solid var(--color-line); text-align: left; vertical-align: top; }
+.relay-table th { font-family: var(--font-mono); font-size: var(--text-mono-sm); font-weight: 400; color: var(--color-fg-faint); }
+.relay-table td { color: var(--color-fg-muted); }
+.relay-table [data-nowrap] { white-space: nowrap; }
+.relay-table tr:target td { background: var(--color-panel-2); }
+.relay-lane:target .relay-lane-head { color: var(--color-fg); }
+
+/* ── the handoffs beside the triangle ──────────────────────────────────────── */
+.relay-handoffs { display: grid; gap: 0.875rem; margin: 0; padding: 0; list-style: none; }
+.relay-handoff { padding-left: 0.75rem; border-left: 2px solid var(--tri-c, var(--color-line)); }
+.relay-handoff:not([data-status='open']) { opacity: 0.6; border-left-style: dotted; }
+
+@media (prefers-reduced-motion: reduce) {
+  .tri-band,
+  .tri-root * { transition: none !important; animation: none !important; }
+}

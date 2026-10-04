@@ -283,8 +283,10 @@ export const NAMING = {
         href: '/encounters',
         // Rewritten 2026-09-01 with the Middle's v3 rebuild (PR #802): meeting is no longer an
         // exceptional recorded event — every bulletin carries a section for the siblings, and
-        // /encounters transcribes that traffic verbatim.
-        description: 'The contact zone: what passes between the practices — every bulletin’s word to its siblings, quoted verbatim, never summarised, all on the record.',
+        // /encounters transcribes that traffic verbatim. Rewritten again 2026-10-05, when the page
+        // came to draw the relay: who built on, answered or only noted whom — the notes are
+        // still quoted there, folded under the drawing.
+        description: 'The contact zone: who builds on whom — what each practice built on, answered or only noted of the others, where nothing passes, and every bulletin’s word to its siblings, quoted whole.',
         noResident: 'no resident — kept by the conductor',
       },
     ] as DoorItem[],

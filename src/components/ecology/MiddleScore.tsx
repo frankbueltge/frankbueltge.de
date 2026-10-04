@@ -1,3 +1,6 @@
+// RETIRED 2026-10-05: unmounted since the relay's triangle (RelayTriangle.tsx) took its place on
+// /encounters; kept, with its tests, as this house keeps retired surfaces.
+//
 // src/components/ecology/MiddleScore.tsx — the Middle's score, alive (visual layer, Phase 3d,
 // 2026-09-02; docs/design/2026-09-02-the-visual-layer.md). It replaces the SVG-string builder
 // that drew this figure from 2026-09-01, and draws the SAME class vocabulary — the 2026-07-15

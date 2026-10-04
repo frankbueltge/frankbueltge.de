@@ -446,7 +446,7 @@ export const NODES: readonly ApparatusNode[] = [
     layer: 'gates',
     kind: 'gate',
     owner: 'shared',
-    what: 'Imports all three practices, runs the export contract, and then decides: a regenerated projection commits itself; new meaning waits for Frank in a pull request.',
+    what: 'Mirrors the Middle’s relay as research-ecology publishes it, on its own commit; then imports all three practices, runs the export contract, and decides: a regenerated projection commits itself; new meaning waits for Frank in a pull request.',
     ref: '.github/workflows/ecology-integrate.yml',
     commitsAs: 'Ecology-Integrate <ecology-integrate@frankbueltge.de>',
   },
@@ -527,7 +527,7 @@ export const NODES: readonly ApparatusNode[] = [
     layer: 'archive',
     kind: 'store',
     owner: 'shared',
-    what: 'The Middle’s record: what happened when the practices met — crossings, and the joint inquiries that ran until 2026-08-08.',
+    what: 'The Middle’s record: what happened when the practices met — crossings, and the joint inquiries that ran until 2026-08-08; an archive since 2026-10-05, when the relay (src/data/middle) took its place on /encounters.',
     ref: 'src/data/begegnungen',
   },
   {

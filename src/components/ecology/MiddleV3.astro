@@ -1,23 +1,37 @@
 ---
-// The Middle under research ecology v3 (2026-09-01) — the traffic, not a ledger of events.
+// The Middle under research ecology v3 — rebuilt 2026-10-05 (Frank's decision, wording private):
+// a visitor should SEE, with very little text, how the three practices work together and where
+// they don't.
 //
-// Properties kept from the surfaces around it: no number is typed (all from
-// src/lib/ecology/middle.ts, derived from mirrored files); no client fetching; absence is
-// drawn; and the one rule this page inherits from the Middle Scribe's own prompt — quote,
-// never summarise, because summarising would be speaking for a practice.
+// What stood here from 2026-09-01 was a score of the bulletins' notes to the siblings and a count
+// of who addressed whom. A count of addresses cannot tell a courtesy from a dependency — a
+// measurement of the v3 record found three in four sibling references to be courtesy — and its
+// parser knew one practice's heading only, so the live page claimed one practice of three
+// speaking and nobody addressed. Now, top to bottom:
 //
-// Re-skin 2b (2026-09-02): the same words on the frame's recipe — the type scale for the head,
-// the `.kicker` class, panels on the frame's radius and resting depth, links inside the panels
-// cut from the shadcn Button recipe so they share one hover surface and one focus ring with the
-// top bar. The voice panels hold text a reader reads in place, so they stay still (no `.lift`).
+//   · about eighty words of framing and a one-line key (middle-v3-wording.ts, counted by its test);
+//   · the relay's triangle — who built on, answered or only noted whom (RelayTriangleFigure), with
+//     the open handoffs beside it (RelayHandoffs); before the relay first reports, both say so;
+//   · the bulletins' own notes to the siblings, folded one practice at a time and quoted whole,
+//     from a parser that now reads the forms all three practices write (src/lib/ecology/middle.ts);
+//   · the encounter register, dated as the archive it became on 2026-10-05.
+//
+// Kept from the surfaces around it: no number is typed (every count is derived from mirrored
+// files at build time); no client fetching; absence is drawn; and the Middle Scribe's own rule —
+// quote, never summarise, because summarising would be speaking for a practice. The retired
+// partitur (MiddleScoreFigure) stays in the repository, unmounted.
 import { getRelativeLocaleUrl } from 'astro:i18n'
 import type { Locale } from '@/lib/site'
 import '@/styles/hub-triptych.css'
+import '@/styles/middle-relay.css'
 import { MIDDLE_V3 } from '@/config/middle-v3-wording'
 import { ECOLOGY_V3 } from '@/config/ecology-v3-wording'
-import { loadMiddle, middleCounts, segments, PRACTICE_REPO } from '@/lib/ecology/middle-page'
-import { itemAnchor, itemNumbers } from '@/lib/ecology/middle-score-model'
-import MiddleScoreFigure from '@/components/ecology/MiddleScoreFigure.astro'
+import { loadMiddle, segments, PRACTICE_REPO } from '@/lib/ecology/middle-page'
+import { loadRelay } from '@/lib/ecology/relay'
+import { buildRelayView } from '@/lib/ecology/relay-triangle'
+import { loadCycle, type PracticeId } from '@/lib/ecology/v3'
+import RelayTriangleFigure from '@/components/ecology/RelayTriangleFigure.astro'
+import RelayHandoffs from '@/components/ecology/RelayHandoffs.astro'
 import { buttonVariants } from '@/components/ui/button'
 import { cn } from '@/lib/ui/cn'
 
@@ -25,12 +39,9 @@ const locale = (Astro.currentLocale ?? 'en') as Locale
 const url = (href: string) => (href.startsWith('http') ? href : getRelativeLocaleUrl(locale, href))
 
 const W = MIDDLE_V3
+const view = buildRelayView(loadRelay(), loadCycle().opened)
 const voices = loadMiddle()
-const counts = middleCounts(voices)
-// The score draws exactly what the panels below quote — one derivation, two views of it.
-// The badge numbers the partitur draws are the list's numbers — one count, derived once.
-const numbers = itemNumbers(voices)
-const name = (id: 'field' | 'atelier' | 'studio') => ECOLOGY_V3.practices[id].name
+const name = (id: PracticeId) => ECOLOGY_V3.practices[id].name
 
 /* the frame's recipe, named once */
 const kicker = 'kicker'
@@ -46,45 +57,63 @@ const quiet = cn(
     <p class={kicker}>{W.head.kicker}</p>
     <h1 class="mt-3 text-h1 font-semibold text-fg">{W.head.title}</h1>
     <p class="mt-4 max-w-3xl leading-relaxed text-fg-muted">{W.head.intro}</p>
-    <p class="mt-3 max-w-3xl border-l border-line pl-4 text-sm leading-relaxed text-fg-faint">{W.head.rule}</p>
-    <p class="mt-4 font-mono text-mono text-fg-faint">
-      {W.counts.line(counts.directed, counts.open, counts.speaking)}
+    {/* The key: the figure's own stroke classes in neutral ink — the kinds are told apart by
+        weight, never by a hue; the one hue swatch says what colour means. */}
+    <p class="relay-key mt-3 font-mono text-mono-sm text-fg-faint" aria-label={W.legend.label}>
+      <span class="relay-key-item">
+        <svg viewBox="0 0 28 12" aria-hidden="true"><line class="tri-stroke k-built_on" x1="0" y1="6" x2="28" y2="6" stroke-width="6" /></svg>
+        {W.legend.kinds.built_on}
+      </span>
+      <span class="relay-key-item">
+        <svg viewBox="0 0 28 12" aria-hidden="true"><line class="tri-stroke k-answered" x1="0" y1="6" x2="28" y2="6" stroke-width="3.5" /></svg>
+        {W.legend.kinds.answered}
+      </span>
+      <span class="relay-key-item">
+        <svg viewBox="0 0 28 12" aria-hidden="true"><line class="tri-stroke k-noted" x1="0" y1="6" x2="28" y2="6" stroke-width="1.2" /></svg>
+        {W.legend.kinds.noted}
+      </span>
+      <span class="relay-key-item">
+        <svg viewBox="0 0 28 12" aria-hidden="true"><line class="tri-void" x1="0" y1="6" x2="28" y2="6" /></svg>
+        {W.legend.empty}
+      </span>
+      <span class="relay-key-item">
+        <svg class="relay-key-hue" viewBox="0 0 28 12" aria-hidden="true"><circle cx="5" cy="6" r="4" /><circle cx="14" cy="6" r="4" /><circle cx="23" cy="6" r="4" /></svg>
+        {W.legend.hue}
+      </span>
     </p>
   </header>
 
-  {/* ── The score: the same traffic, drawn (2026-09-01) ──────────────────── */}
-  <section class="mt-10" aria-label="The current exchange, drawn as a score">
-    <MiddleScoreFigure voices={voices} />
+  {/* ── The relay: the triangle, and the handoffs beside it (2026-10-05) ──────── */}
+  <section class="mt-8 grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_19rem]" aria-label={W.triangle.sectionLabel}>
+    <RelayTriangleFigure view={view} />
+    <RelayHandoffs view={view} />
   </section>
 
-  {/* ── The traffic, practice by practice ────────────────────────────────── */}
-  <section class="mt-12 space-y-6" aria-label="What passes between the practices">
-    {
-      voices.map((v) => (
-        <div class={panel}>
-          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-line py-3 pl-4 pr-2 sm:pl-5">
-            <h2 class="text-h3 font-semibold text-fg">
-              <a class="hover:underline" href={url(ECOLOGY_V3.practices[v.practice].href)}>{name(v.practice)}</a>
-              <span class="ml-2 font-mono text-mono-sm font-normal text-fg-faint">wrote down for its siblings</span>
-            </h2>
-            <a
-              class={cn(quiet, 'text-fg-faint')}
-              href={`https://github.com/frankbueltge/${PRACTICE_REPO[v.practice]}/blob/main/BULLETIN.md`}
-            >{W.voice.sourceLabel}</a>
-          </div>
-          <div class="p-4 sm:p-5">
-            {
-              !v.present || v.items.length === 0 ? (
+  {/* ── In their own words: the bulletins' notes to the siblings, folded ─────── */}
+  <section class="mt-12" aria-labelledby="middle-bulletins">
+    <h2 id="middle-bulletins" class={kicker}>{W.bulletins.kicker}</h2>
+    <p class="mt-2 max-w-3xl text-sm leading-relaxed text-fg-faint">{W.bulletins.sub}</p>
+    <div class="mt-4 space-y-3">
+      {
+        voices.map((v) => (
+          <details class={cn(panel, 'group')} id={`notes-${v.practice}`}>
+            <summary class="flex cursor-pointer flex-wrap items-center gap-x-3 gap-y-1 px-4 py-3 sm:px-5">
+              <span class={`tri-dot g-${v.practice}`} aria-hidden="true" />
+              <span class="font-semibold text-fg">{name(v.practice)}</span>
+              <span class="font-mono text-mono-sm text-fg-faint">
+                {v.present && v.items.length > 0 ? W.bulletins.notes(v.items.length) : W.bulletins.none}
+                {v.date && <> · {W.bulletins.date(v.date)}</>}
+              </span>
+            </summary>
+            <div class="border-t border-line px-4 py-4 sm:px-5">
+              {!v.present || v.items.length === 0 ? (
                 <p class="text-sm leading-relaxed text-fg-faint">{W.voice.absent}</p>
               ) : (
                 <ul class="space-y-4">
-                  {v.items.map((item, i) => (
-                    <li id={itemAnchor(v.practice, i)} class="scroll-mt-24 rounded-sm target:bg-panel-2">
-                      <p class="font-mono text-mono-sm uppercase tracking-[0.16em] text-accent">
-                        <span class="text-fg-faint">{numbers.get(itemAnchor(v.practice, i))} · </span>
-                        {item.to.length > 0
-                          ? W.voice.toLabel(item.to.map((t) => name(t)))
-                          : W.voice.openLabel}
+                  {v.items.map((item) => (
+                    <li>
+                      <p class="font-mono text-mono-sm uppercase tracking-[0.16em] text-fg-faint">
+                        {item.to.length > 0 ? W.voice.toLabel(item.to.map((t) => name(t))) : W.voice.openLabel}
                       </p>
                       <p class="mt-1.5 leading-relaxed text-fg-muted">
                         {segments(item.text).map((s) =>
@@ -100,16 +129,21 @@ const quiet = cn(
                     </li>
                   ))}
                 </ul>
-              )
-            }
-          </div>
-        </div>
-      ))
-    }
+              )}
+              <p class="mt-4 -ml-2">
+                <a class={cn(quiet, 'text-fg-faint')} href={`https://github.com/frankbueltge/${PRACTICE_REPO[v.practice]}/blob/main/BULLETIN.md`}>
+                  {W.voice.sourceLabel}
+                </a>
+              </p>
+            </div>
+          </details>
+        ))
+      }
+    </div>
   </section>
 
-  {/* ── The ledger this page replaces, dated ─────────────────────────────── */}
-  <section class="mt-14 border-t border-line pt-6" aria-label="The former ledger of encounters">
+  {/* ── The register this page replaced, dated ───────────────────────────────── */}
+  <section class="mt-14 border-t border-line pt-6" aria-label={W.archive.kicker}>
     <p class={kicker}>{W.archive.kicker}</p>
     <p class="mt-2 max-w-3xl text-sm leading-relaxed text-fg-faint">{W.archive.body}</p>
     <p class="mt-3 -ml-2 flex flex-wrap gap-x-1 gap-y-1">

@@ -50,10 +50,11 @@ describe('the instruments are on a page', () => {
     // the /ecology cycle partitur, an island since 2026-09-02 — the only surface on which the
     // running cycle's artifacts, sessions, letters, encounters and presentations stand together
     ['CyclePartitur', 'the running cycle as a score — every record of the cycle on one dated ruler'],
-    // the Middle's score, an island since 2026-09-02 — the only drawing of the traffic between
-    // the three practices; without it /encounters is a list of quotes with nothing showing who
-    // addressed whom
-    ['MiddleScore', 'the Middle’s score — every item a bulletin carries for its siblings, and the current to each one it names'],
+    // the Middle's triangle (2026-10-05) — the only drawing of what passes between the three
+    // practices: who built on, answered or only noted whom, and in which directions nothing did.
+    // It replaced the Middle's score (MiddleScore, an island since 2026-09-02), which counted
+    // addresses and stays in the repository unmounted, as retired surfaces do here.
+    ['RelayTriangle', 'the Middle’s triangle — every relation of the relay, lane by lane, and every direction in which nothing load-bearing passed'],
     // the knowledge graph, explorable (2026-09-02) — the one surface on which every record the
     // house keeps about itself stands with its receipts; without it the graph is a file
     ['GraphExplorer', 'the knowledge graph of the house — every node with the file and quote each edge was read from'],
