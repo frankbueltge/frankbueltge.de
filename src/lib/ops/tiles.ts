@@ -37,6 +37,7 @@ import roundNumberLatest from '@/data/round-number/latest.json'
 import patternLatest from '@/data/pattern/latest.json'
 import satellites from '@/data/ueberflug/satellites.json'
 import atlasWorks from '@/data/atlas/werke.json'
+import { getLatestTrending } from '@/lib/trending/data'
 
 /** How the tile's 26px mark is drawn. Chosen per reading, not per taste: a count of things in two
  *  states gets cells, a distribution gets bars, a series over time gets a line, a share gets the
@@ -426,6 +427,31 @@ interface AtlasWork {
   year?: string
 }
 
+/** Common Ground (Frank's request, 2026-10-04): the nightly trending ledger's own reading — how
+ *  many of the morning's topics ran on two platforms or more, the same rule /trending draws its
+ *  matrix from (src/lib/trending/converge.ts: platform_count >= 2). Read from the newest committed
+ *  day through the ledger's own loader, so the tile and the page cannot name two different days. */
+function commonGround(): OpsTile | null {
+  const day = getLatestTrending()
+  if (!day || day.summary.topics_total === 0) return null
+  const converging = day.topics.filter((t) => t.platform_count >= 2).slice(0, 16)
+  const { sources_ok: ok, sources_total: total, topics_total: topics } = day.summary
+  return {
+    id: 'commonGround',
+    name: COPY.commonGround.name,
+    big: `${num(day.summary.converging)} in common`,
+    sub: COPY.commonGround.sub({ topics, ok, total, lead: day.summary.top_labels[0] }),
+    stamp: COPY.commonGround.stamp,
+    href: '/trending',
+    viz: {
+      kind: 'bars',
+      values: converging.map((t) => t.platform_count),
+      marked: converging.flatMap((t, i) => (t.platform_count >= 4 ? [i] : [])),
+      labels: converging.map((t) => COPY.commonGround.readout({ label: t.label, platforms: t.platform_count })),
+    },
+  }
+}
+
 function atlas(): OpsTile | null {
   const works = atlasWorks as unknown as AtlasWork[]
   if (!Array.isArray(works) || works.length === 0) return null
@@ -463,6 +489,7 @@ export function readTiles(input: { protokoll?: ProtokollDay } = {}): OpsTile[] {
     foreknown(),
     protocol(input.protokoll),
     consensus(),
+    commonGround(),
     iceberg(),
     policy(),
     redaction(),

@@ -172,7 +172,7 @@ export const NAMING = {
         line: 'The counter-experiment, built against the ecology on purpose: one machine running public investigations, its attention, refusals, uncertainty and cost on the record.',
         href: '/machine-attention',
         // 2026-10-04: The Foreknown retired; its stage stays as an archive, nothing else has a stage.
-        meta: 'first experiment retired, its record kept · three lines running nightly',
+        meta: 'two experiments retired, their records kept · two lines running nightly',
       },
       {
         // Forked 2026-08-11 (decision log): shown beside the ecology rather than inside it, and
@@ -890,6 +890,13 @@ export const NAMING = {
           sub: () =>
             'Earth-observation satellites on tonight’s committed orbital data — which of them have you in view is computed in your browser, on the piece itself',
           readout: (p: { owner: string; count: number }) => `${p.owner}: ${p.count} satellite${p.count === 1 ? '' : 's'}`,
+        },
+        commonGround: {
+          name: 'COMMON GROUND',
+          stamp: 'SEARCH · READING · POSTING · CROSS-CHECKED EVERY MORNING',
+          sub: (p: { topics: number; ok: number; total: number; lead?: string }) =>
+            `topics ran on two platforms or more this morning — of ${p.topics} read from ${p.ok} of ${p.total} sources${p.lead ? `; leading: ${p.lead}` : ''}`,
+          readout: (p: { label: string; platforms: number }) => `${p.label}: on ${p.platforms} platforms`,
         },
         atlas: {
           name: 'ATLAS OF DATA ART',

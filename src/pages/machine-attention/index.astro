@@ -25,8 +25,10 @@ const projects: Project[] = contractOk ? (exportFile.projects as Project[]) : []
 // A retired project keeps its route as an archive (The Foreknown, 2026-10-04), so the
 // route alone no longer says "its attention lives here": the status word decides.
 const running = projects.filter((p) => p.site_route && p.status !== 'retired')
-const archived = projects.filter((p) => p.site_route && p.status === 'retired')
-const gated = projects.filter((p) => !p.site_route)
+// Retired with or without a stage (The Foreknown keeps /attention as an archive; Dark Ocean,
+// retired the same day, never had one and is named without a link).
+const archived = projects.filter((p) => p.status === 'retired')
+const gated = projects.filter((p) => !p.site_route && p.status !== 'retired')
 /** How a project without a stage stands, in a reader's words — this line said "run an
  *  acceptance experiment … until they pass" for Dark Ocean (an instrument since 2026-08-22)
  *  and Memory Hole (at v0) until 2026-10-04; the status word now says which is which. */
@@ -123,7 +125,9 @@ const utc = (ts: string) => `${ts.slice(0, 16).replace('T', ' ')} UTC`
           <span class="text-[11px] uppercase tracking-[0.18em] text-fg-faint">Retired, the record kept</span>
           {archived.map((p) => (
             <>
-              {' '}· <a href={p.site_route} class="underline decoration-line underline-offset-4 hover:text-fg">{p.title}</a>
+              {' '}· {p.site_route
+                ? <a href={p.site_route} class="underline decoration-line underline-offset-4 hover:text-fg">{p.title}</a>
+                : p.title}
             </>
           ))}
         </p>
