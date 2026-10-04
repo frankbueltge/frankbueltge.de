@@ -320,6 +320,55 @@ describe('loadArtifacts', () => {
     expect(loadArtifacts(root)[0]!.date).toBeNull()
   })
 
+  // 2026-10-04: from session 20 of cycle 003 on, the Atelier's notes stopped writing the window's
+  // path; they share the window's TITLE instead, which is still the practice's own record tying
+  // note to window. Five windows — all of cycle 004 so far — had no day until this was read.
+  it('dates a window by the note whose H1 is the window’s own title, when no note names its path', () => {
+    const root = fixtureRoot()
+    writeWindow(root, 'cycle-004-session-1', 'Who still answers — cycle 004, session 1')
+    writeWindow(root, 'cycle-003-session-20', 'The weekend&#8217;s own hearing')
+    writeNote(root, '2026-10-03-who-still-answers.md', '# 2026-10-03 — Who still answers\n\nCycle 004, session 1.')
+    writeNote(root, '2026-10-02-the-weekends-own-hearing.md', "---\nx: 1\n---\n# 2026-10-02 — The weekend's own hearing\n\nSession 20.")
+    // a later note that merely mentions the title in its body does not date the window
+    writeNote(root, '2026-10-04-looking-back.md', '# 2026-10-04 — Looking back\n\nWho still answers, again.')
+    const found = loadArtifacts(root)
+    expect(found.find((a) => a.slug === 'cycle-004-session-1')).toMatchObject({ date: '2026-10-03', cycle: 4 })
+    expect(found.find((a) => a.slug === 'cycle-003-session-20')).toMatchObject({
+      date: '2026-10-02',
+      title: 'The weekend’s own hearing',
+    })
+  })
+
+  it('lets a note that names the path win over a note that only shares the title', () => {
+    const root = fixtureRoot()
+    writeWindow(root, 'cycle-002-session-1', 'Same title')
+    writeNote(root, '2026-09-01-same-title.md', '# 2026-09-01 — Same title')
+    writeNote(root, '2026-09-03-the-session.md', 'Artifact: `window/cycle-002-session-1/`.')
+    expect(loadArtifacts(root)[0]!.date).toBe('2026-09-03')
+  })
+
+  it('does not date a window by a note with a different title', () => {
+    const root = fixtureRoot()
+    writeWindow(root, 'cycle-004-session-2', 'Seven pages, one weather report — cycle 004, session 2')
+    writeNote(root, '2026-10-03-seven-pages.md', '# 2026-10-03 — Seven pages, one weather map')
+    expect(loadArtifacts(root)[0]!.date).toBeNull()
+  })
+
+  // The Field's pages name themselves; until 2026-10-04 every surface listed them by slug.
+  it('titles the Field’s artifacts by their own page, entities decoded and the practice suffix trimmed', () => {
+    const root = fixtureRoot()
+    const page = (rel: string, title: string) => {
+      const dir = path.join(root, 'public/field/artifacts', rel)
+      fs.mkdirSync(dir, { recursive: true })
+      fs.writeFileSync(path.join(dir, 'index.html'), `<!doctype html><title>${title}</title>`)
+    }
+    page('2026-09-14-a-refusal-announces-itself', 'A refusal announces itself — The Field, session 160')
+    page('cycle-002/2026-09-04-the-dial', 'The dial &mdash; how a loop&#x2019;s false findings scale')
+    const found = loadArtifacts(root)
+    expect(found.find((a) => a.slug === 'a-refusal-announces-itself')?.title).toBe('A refusal announces itself')
+    expect(found.find((a) => a.slug === 'the-dial')?.title).toBe('The dial — how a loop’s false findings scale')
+  })
+
   // The Studio's convention: works/<date>-<slug>/meta.json with the page under werke-html/.
   function writeWork(root: string, dir: string, meta: Record<string, unknown> | null, face: boolean): void {
     const d = path.join(root, 'src/content/studio/works', dir)

@@ -488,7 +488,10 @@ export const NAMING = {
         /* The anchor, not /works: the register moved onto /ecology on 2026-09-03 and the old
            route only redirects here. A card pointing at a redirect makes every visit two hops. */
         href: '/ecology#register',
-        description: 'Every work the three research practices have brought forth, on one page: dated, named by its practice, and linked to the work itself. Withdrawn works stay listed and carry their own withdrawal in the practice’s own words — the record keeps every mark.',
+        /* Widened 2026-10-04 with the register itself: since research ecology v3 two of the
+           three practices leave session artifacts rather than works, and the register lists
+           both — a card promising "every work" would have described the page of September. */
+        description: 'Every work and every session artifact the research practices have brought forth, on one page: dated, named by the practice that made it, and linked to the thing itself. Withdrawn works stay listed and carry their own withdrawal in the practice’s own words — the record keeps every mark.',
       },
     ],
   },
@@ -503,16 +506,21 @@ export const NAMING = {
    * in ihrem eigenen Raum Instrumente, also heißen sie hier auch so. */
   worksRegister: {
     kicker: 'WORKS REGISTER',
-    kickerSub: 'EVERY WORK, EVERY PRACTICE, ONE PAGE',
+    kickerSub: 'EVERY WORK AND ARTIFACT, EVERY PRACTICE, ONE PAGE',
     /* `pageTitle` and `metaDescription` were dropped on 2026-09-03 with the route they served:
        the register is a section of /ecology now and wears that page's tab and description. A
        title for a page that no longer exists is the kind of string that quietly outlives its
        reason and gets copied somewhere it does not belong. */
     title: 'everything the practices have brought forth',
+    /* Rewritten 2026-10-04 (Frank's request of that day, wording private): the register had
+       listed works only, and since research ecology v3 the Field and the Atelier close every
+       session with an ARTIFACT that is not a work — two months of their output were missing
+       here while the Studio, which still ships works, filled the list. The artifact rows are
+       marked as what they are; the nightly line's works stand under its own name. */
     intro:
-      'The three research practices each keep their own room, in their own vocabulary. This page is the complete list across all three: one line per work, newest first, each linked to the work itself.',
+      'The three research practices each keep their own room, in their own vocabulary. This is the complete list across all three: one line per work and, since every session of the ecology’s shared question closes with a self-contained artifact, one line per artifact — marked as such, newest first, each linked to the thing itself. The works of the nightly line, which keeps its own address beside the ecology, stand here under its own name.',
     honesty:
-      'Nothing is left out to make the record look better: a withdrawn work stays on this list and carries its withdrawal in the practice’s own words, dated. Every line is read from the work’s own committed metadata — a work missing here would be a work missing from the archive.',
+      'Nothing is left out to make the record look better: a withdrawn work stays on this list and carries its withdrawal in the practice’s own words, dated. Every line is read from the practice’s own committed record — a work’s metadata, an artifact’s own page — so a line missing here would be a line missing from the archive.',
     /** the distinction a visitor arriving from the nav needs first */
     notThis: {
       lead: 'Looking for the conductor’s own projects instead?',
@@ -526,6 +534,16 @@ export const NAMING = {
       { ns: 'field' as const, name: 'The Field', noun: 'instruments', roomLabel: 'the field’s instruments', roomHref: '/field/instruments' },
       { ns: 'studio' as const, name: 'The Studio', noun: 'premieres', roomLabel: 'the studio’s premieres', roomHref: '/studio/works' },
     ],
+    /** What a session leaves under research ecology v3 (2026-08-30), in the canon's noun — the
+     *  plural counts in the head line, the singular marks the row. An artifact is never called a
+     *  work, an instrument or a premiere here: the practice's record does not call it one. */
+    artifactNoun: 'artifacts',
+    artifactLabel: 'artifact',
+    /** The nightly line's works, which the register reads from the fork's mirror. Its NAME is not
+     *  typed here: it is read from the line's overview card, the same string the signal log uses
+     *  (houseNames() in src/lib/ops/house-feed.ts), so the register cannot call it something its
+     *  own card does not. The noun is the one its own page uses for what it made. */
+    nightlyLine: { noun: 'works', roomLabel: 'the nightly line’s works', roomHref: '/error-as-method' },
     roomsLead: 'Each practice keeps its own room, where a work stands in its house’s own language:',
     /** What a STANDALONE work carries when someone lands on it cold — a shared link, a search
      *  result — with no site chrome around it at all. Two gaps closed at once (Frank,
@@ -570,6 +588,11 @@ export const NAMING = {
       href: '/#latest',
     },
     provenanceLead: 'Read at build time from the works’ own committed metadata:',
+    /** the artifact sources, named after the works' — the directories each artifact row came from */
+    provenanceArtifactsLead:
+      'and from the session artifacts the practices commit, each titled by its own page and dated by its directory name or, for a window, by the journal note that names it:',
+    /** shown only when an artifact's record gives it no day: it is named, never dated by guess */
+    undatedLead: 'Committed, but not listed above because no record gives them a day:',
     provenanceTail:
       'Dates, titles and descriptions are the practices’ own; the withdrawal state is the /^WITHDRAWN/ marker a practice writes into its work’s own medium line. This page adds no judgement of its own. The Plenum (data-snack) is a house of its own and keeps its texts elsewhere — it is not counted here.',
   },

@@ -31,15 +31,17 @@
 //     sorted by date is a lie about what landed last.
 //
 // The register on /ecology is deliberately NOT this: it stays the three practices' catalogue
-// (src/lib/engines/register.ts), because that is what it claims to be. One house, two readings,
-// each answering its own question.
+// (src/lib/engines/register.ts, buildRegister), because that is what it claims to be — their
+// works and, since 2026-10-04, their session artifacts, with the nightly line's works under the
+// line's own name; Arch, n-1 and the lab stay off it. One house, two readings, each answering
+// its own question.
 
 import { NAMING } from '@/config/naming'
 import { WERKE, type Werk } from '@/data/werke'
 import { readArchFacts, type ArchFacts } from '@/lib/arch/facts'
 import { readN1Works, type N1Work } from '@/lib/n1/works'
 import type { LatestWork } from '@/lib/engines/latest'
-import { allWorks, NIGHTLY_FORK_DIR } from '@/lib/engines/register'
+import { allWorks, isListedArtifact, NIGHTLY_FORK_DIR } from '@/lib/engines/register'
 import { loadArtifacts, type ArtifactEntry } from '@/lib/ecology/v3'
 
 /** Every house that lands dated work on this site. Not a namespace — `EngineNs` is the works
@@ -179,7 +181,8 @@ export function registerEntries(works: readonly LatestWork[], names = houseNames
 export function artifactEntries(artifacts: readonly ArtifactEntry[], names = houseNames()): FeedEntry[] {
   const K = NAMING.opsRoom.signal.kindLabels
   return artifacts.flatMap((a) => {
-    if (a.date === null || a.fromWorksRegister) return []
+    // the register's own predicate, so the log and the register list the same artifacts
+    if (!isListedArtifact(a) || a.date === null) return []
     return [
       {
         date: a.date,

@@ -11,7 +11,7 @@ import { NAMING } from '@/config/naming'
 import worksData from '@/data/atlas/werke.json'
 import { ENTRIES as datasetEntries } from '@/lib/register'
 import { PAPERS } from '@/lib/papers'
-import { allWorks } from '@/lib/engines/register'
+import { registerCount } from '@/lib/engines/register'
 import { cn } from '@/lib/ui/cn'
 
 const counts: Record<string, number> = {
@@ -19,8 +19,10 @@ const counts: Record<string, number> = {
   '/datasets': datasetEntries.length,
   '/papers': PAPERS.length,
   // The works register counts itself the same way the other three do — from its own source,
-  // not from a number typed here (added 2026-08-01 with the fourth card).
-  '/ecology#register': allWorks().length,
+  // not from a number typed here (added 2026-08-01 with the fourth card). Since 2026-10-04 that
+  // source is the register's own list, works and session artifacts together: the card counted
+  // allWorks() and would otherwise have shown fewer entries than the page it leads to.
+  '/ecology#register': registerCount(),
 }
 
 const kicker = 'kicker'

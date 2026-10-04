@@ -169,10 +169,12 @@ export function loadClosingReports(root: string = process.cwd()): ClosingReport[
  *      Since 2026-09-14 its own mirror has also landed the flat `artifacts/<date>-<slug>/`
  *      (no cycle wrapper; the layout change happened upstream, in the engine repo, and the
  *      rsync mirror carries it through verbatim) — both shapes are read, distinguished by
- *      whether `index.html` sits directly inside the top-level directory.
+ *      whether `index.html` sits directly inside the top-level directory. Either page's own
+ *      <title> is the artifact's title.
  *    · The Atelier writes `window/cycle-NNN[-session-n]/` — the cycle in the path, no date; the
- *      session note in its journal that names the window (`Artifact: window/…`) carries the day
- *      in its own filename, and the window's <title> is the artifact's title.
+ *      session note in its journal that names the window (`Artifact: window/…`) — or, where no
+ *      note names it, the note whose H1 is the window's own title — carries the day in its own
+ *      filename, and the window's <title> is the artifact's title.
  *    · The Studio ships works: `works/<date>-<slug>/meta.json` (date, title) with the page under
  *      `werke-html/`. A work names no cycle; it belongs to the cycle whose opening it follows,
  *      which is the caller's rule (inCycle), because only the house clock knows the cycle.
@@ -189,7 +191,8 @@ export interface ArtifactEntry {
   /** The cycle the practice's own path names; null when the record carries none — a work, or a
    *  Field artifact in the flat, unwrapped layout. */
   cycle: number | null
-  /** The practice's own title where its record has one (a window's <title>, a work's meta.json). */
+  /** The practice's own title where its record has one (an artifact page's or a window's <title>,
+   *  a work's meta.json). */
   title?: string
   /** True for an entry read from `works/<date>-<slug>/meta.json` — the Studio's convention, and
    *  the Atelier's until it moved to `window/`. Both also glob into the works register
@@ -214,38 +217,99 @@ function isDir(p: string): boolean {
   return fs.existsSync(p) && fs.statSync(p).isDirectory()
 }
 
+/** The named entities a page title commonly carries. Numeric references (&#8217;, &#x2019;) are
+ *  decoded generically below; a name not listed here is left as written rather than guessed. */
+const NAMED_ENTITIES: Record<string, string> = {
+  amp: '&',
+  apos: "'",
+  quot: '"',
+  lt: '<',
+  gt: '>',
+  nbsp: ' ',
+  mdash: '—',
+  ndash: '–',
+  lsquo: '‘',
+  rsquo: '’',
+  ldquo: '“',
+  rdquo: '”',
+  hellip: '…',
+}
+
+function decodeEntities(text: string): string {
+  return text.replace(/&(#x[0-9a-f]+|#\d+|[a-z]+);/gi, (whole, ref: string) => {
+    if (ref[0] === '#') {
+      const code = ref[1] === 'x' || ref[1] === 'X' ? parseInt(ref.slice(2), 16) : parseInt(ref.slice(1), 10)
+      return Number.isFinite(code) && code > 0 && code <= 0x10ffff ? String.fromCodePoint(code) : whole
+    }
+    return NAMED_ENTITIES[ref.toLowerCase()] ?? whole
+  })
+}
+
 /** The <title> of a self-contained page, read from its head only, with the practice's own
  *  " — The Atelier, cycle 001, session 2" suffix trimmed: the practice is the lane, the cycle
- *  is the ruler, so the title keeps what only it says. Entities a title commonly carries are
- *  decoded; anything else is left as written. */
+ *  is the ruler, so the title keeps what only it says. Entities are decoded — a title showing
+ *  "&#8217;" on a surface is the page's markup leaking, not the practice's words. */
 function pageTitle(index: string): string | undefined {
   const head = fs.readFileSync(index, 'utf8').slice(0, 4096)
   const m = /<title>([^<]*)<\/title>/i.exec(head)
   if (!m) return undefined
-  const raw = m[1]!
-    .replace(/&amp;/g, '&')
-    .replace(/&#39;|&apos;/g, "'")
-    .replace(/&quot;/g, '"')
-    .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>')
+  const raw = decodeEntities(m[1]!)
     .replace(/\s+—\s+The (Atelier|Field|Studio)\b.*$/, '')
     .trim()
   return raw.length > 0 ? raw : undefined
 }
 
-/** The day a window was made: the earliest journal note that names it. A note names a window
- *  by its path (`window/cycle-001-session-3/`); the match stops at the directory's end so the
- *  note for `window/cycle-001/` does not date every session under that cycle. */
-function windowDate(practice: PracticeId, dir: string, root: string): string | null {
+/** A session's title as two of the practice's own records may spell it: the window's <title>
+ *  can carry a trailing " — cycle 004, session 1" that the journal's H1 does not, and either
+ *  may set an apostrophe straight or curly. Only that is normalised — two different titles never
+ *  become equal here. */
+function sessionTitleKey(title: string): string {
+  return title
+    .replace(/\s+[—–-]\s+cycle\s+\d+,\s*session\s+\d+\s*$/i, '')
+    .replace(/[‘’]/g, "'")
+    .replace(/[“”]/g, '"')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .toLowerCase()
+}
+
+/** A journal note's own H1, without the "2026-10-03 — " day prefix the Atelier writes into it. */
+function noteHeading(text: string): string | undefined {
+  const m = /^#\s+(.+)$/m.exec(withoutFrontmatter(text))
+  if (!m) return undefined
+  return m[1]!.replace(/^\d{4}-\d{2}-\d{2}\s+[—–-]\s+/, '').trim()
+}
+
+/** The day a window was made, from the practice's journal — never from the clock or from git.
+ *
+ *  First by PATH: the earliest note that names the window (`window/cycle-001-session-3/`); the
+ *  match stops at the directory's end so the note for `window/cycle-001/` does not date every
+ *  session under that cycle.
+ *
+ *  Then, only when no note names the path, by TITLE: the earliest note whose own H1 is the
+ *  window's own <title>. Added 2026-10-04: from session 20 of cycle 003 on, the Atelier's notes
+ *  stopped writing the window's path into their text (they open "Cycle 004, session 1" instead),
+ *  so the newest five windows — the whole of cycle 004 so far — had no day, and every surface that
+ *  needs one dropped them. The note and the window share their title; that is the practice's own
+ *  record tying the two together. A window neither names stays undated. */
+function windowDate(practice: PracticeId, dir: string, root: string, title?: string): string | null {
   const journal = path.join(root, 'src/content', practice, 'journal')
   if (!isDir(journal)) return null
   const names = new RegExp(`window/${dir.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}(?![\\w-])`)
-  const days: string[] = []
+  const key = title ? sessionTitleKey(title) : null
+  const byPath: string[] = []
+  const byTitle: string[] = []
   for (const file of fs.readdirSync(journal)) {
     const m = /^(\d{4}-\d{2}-\d{2})-.*\.md$/.exec(file)
     if (!m) continue
-    if (names.test(fs.readFileSync(path.join(journal, file), 'utf8'))) days.push(m[1]!)
+    const text = fs.readFileSync(path.join(journal, file), 'utf8')
+    if (names.test(text)) byPath.push(m[1]!)
+    else if (key) {
+      const heading = noteHeading(text)
+      if (heading && sessionTitleKey(heading) === key) byTitle.push(m[1]!)
+    }
   }
+  const days = byPath.length > 0 ? byPath : byTitle
   return days.length > 0 ? days.sort()[0]! : null
 }
 
@@ -262,10 +326,12 @@ export function loadArtifacts(root: string = process.cwd()): ArtifactEntry[] {
         const entryPath = path.join(artifacts, entry)
         if (!isDir(entryPath)) continue
 
-        if (fs.existsSync(path.join(entryPath, 'index.html'))) {
+        const flatFace = path.join(entryPath, 'index.html')
+        if (fs.existsSync(flatFace)) {
           // the flat shape: `entry` is the artifact itself, not a cycle wrapper — its path
           // names no cycle, so inCycle() places it by date, exactly as it does a Studio work.
           const m = DATED_SLUG.exec(entry)
+          const title = pageTitle(flatFace)
           found.push({
             practice,
             slug: m ? m[2]! : entry,
@@ -273,6 +339,7 @@ export function loadArtifacts(root: string = process.cwd()): ArtifactEntry[] {
             href: `/${practice}/artifacts/${entry}/`,
             cycle: null,
             fromWorksRegister: false,
+            ...(title ? { title } : {}),
           })
           continue
         }
@@ -280,8 +347,12 @@ export function loadArtifacts(root: string = process.cwd()): ArtifactEntry[] {
         const cycleNo = CYCLE_DIR.exec(entry)
         for (const slug of fs.readdirSync(entryPath)) {
           const dir = path.join(entryPath, slug)
-          if (!isDir(dir) || !fs.existsSync(path.join(dir, 'index.html'))) continue
+          const face = path.join(dir, 'index.html')
+          if (!isDir(dir) || !fs.existsSync(face)) continue
           const m = DATED_SLUG.exec(slug)
+          // The page's own <title> since 2026-10-04 — until then the Field's artifacts were
+          // listed by their slugs alone on every surface, although each page names itself.
+          const title = pageTitle(face)
           found.push({
             practice,
             slug: m ? m[2]! : slug,
@@ -289,6 +360,7 @@ export function loadArtifacts(root: string = process.cwd()): ArtifactEntry[] {
             href: `/${practice}/artifacts/${entry}/${slug}/`,
             cycle: cycleNo ? Number(cycleNo[1]) : null,
             fromWorksRegister: false,
+            ...(title ? { title } : {}),
           })
         }
       }
@@ -304,13 +376,14 @@ export function loadArtifacts(root: string = process.cwd()): ArtifactEntry[] {
         if (!cycleNo) continue
         const index = path.join(window, dir, 'index.html')
         if (!isDir(path.join(window, dir)) || !fs.existsSync(index)) continue
+        const title = pageTitle(index)
         found.push({
           practice,
           slug: dir,
-          date: windowDate(practice, dir, root),
+          date: windowDate(practice, dir, root, title),
           href: `/${practice}/window/${dir}/`,
           cycle: Number(cycleNo[1]),
-          title: pageTitle(index),
+          title,
           fromWorksRegister: false,
         })
       }
