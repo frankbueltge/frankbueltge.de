@@ -26,7 +26,9 @@ and rhythm, its own repository and its own public record — published unedited,
 semi-autonomous under human and infrastructural responsibility. Since research ecology v3
 (2026-08-30) they work **one shared research question at a time**, three to five sessions
 each, then present together; each session closes with a self-contained artifact and a
-bulletin of at most forty lines. They are not departments of a fixed pipeline; no practice is
+bulletin of at most forty lines. Since 2026-10-03 they also share a **continuing
+question** (*Missing Data Art*) between seeds: rounds turn by themselves, and only a seed
+released to all three interrupts it. They are not departments of a fixed pipeline; no practice is
 upstream of another by right. A fourth place, **The Middle** (`/encounters`), has no resident
 of its own: it is kept by the conductor and transcribes what each bulletin says to its
 siblings, verbatim, every session — meeting is the normal case, not a registrable event.
@@ -61,12 +63,15 @@ A second, co-equal project sits next to the ecology: **[Machine Attention](https
 (repo: [machine-attention](https://github.com/frankbueltge/machine-attention)), built
 against it on purpose — one machine, no personas, under one constitution, running public
 investigations with its attention, memory, refusals, uncertainty and cost on the record.
-Its investigations are **[The Foreknown](https://frankbueltge.de/attention)**, Dark
-Ocean (its admission review closed without a stage on 2026-08-22 — it now runs on,
-permanently, as an instrument confined to the practice's own repo), and Memory Hole
-(admitted to V0 on 2026-08-15, asking what power changes about its own published past —
-still short of its own admission window, confined to the practice's own repo for now), and
-its instrument is **[The State Before the Interface](https://frankbueltge.de/observatory)**.
+Its investigations: **[The Foreknown](https://frankbueltge.de/attention)** was retired on
+2026-10-04 after fifty nights (its stage stays as a dated archive, the record kept, and its
+question moves to *The Interval*, built nightly by the practice's discovery pass and without a
+stage until it passes its own acceptance experiment); Dark Ocean (its admission review
+closed without a stage on 2026-08-22 — it now runs on, permanently, as an instrument confined
+to the practice's own repo); and Memory Hole (admitted to V0 on 2026-08-15, asking what
+power changes about its own published past — still short of its own admission window,
+confined to the practice's own repo for now). Its instrument is
+**[The State Before the Interface](https://frankbueltge.de/observatory)**.
 How it works is at [/machine-attention/about](https://frankbueltge.de/machine-attention/about).
 
 ### Experiments — the lab's earlier work
