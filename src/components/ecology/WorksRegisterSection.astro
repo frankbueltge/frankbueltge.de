@@ -19,10 +19,18 @@
 // list and nothing else. It is a catalogue, not a practice room: no figure, no interaction, one
 // line per work.
 //
-// Data: src/lib/engines/register.ts reads the same four committed meta.json sources the hub's
+// Data: src/lib/engines/register.ts reads the same committed meta.json sources the hub's
 // LATEST strip reads (src/lib/engines/latest.ts) — one derivation, so a work can never carry two
 // different dates on two surfaces. Copy: NAMING.worksRegister; no number is written into any
 // string, every count on this page is counted from the register itself.
+//
+// Since 2026-10-04 the list is buildRegister(), not allWorks(): the works AND the session
+// artifacts research ecology v3 has every session leave (loadArtifacts, src/lib/ecology/v3.ts).
+// Before, the Field's and the Atelier's v3 output — one artifact per session since 2026-08-30 —
+// never reached this page, and the register read as if only the Studio had worked since August.
+// An artifact row is marked as one and counted under the practice's artifacts, never its works.
+// The nightly line's works are listed under the line's own name and counted as its own, no
+// longer as the Atelier's (the name and the line moved apart on 2026-08-31).
 //
 // Honesty rules of the house, made visible here:
 //   · every row is dated, from the work's own metadata;
@@ -36,7 +44,8 @@
 //     UNEXAMINED and must never be read as cleared (docs/audits/2026-08-09-ecology-usp-audit.md).
 import { NAMING } from '@/config/naming'
 import { descFor } from '@/lib/engines/teaser'
-import { allWorks, summarise, WORK_SOURCES } from '@/lib/engines/register'
+import { buildRegister, REGISTER_HOUSES, summariseRegister, WORK_SOURCES, type RegisterHouse, type RegisterRow } from '@/lib/engines/register'
+import { houseNames } from '@/lib/ops/house-feed'
 import { GRAPH } from '@/lib/graph/load'
 import { practiceWorkAudits } from '@/lib/graph/query'
 import { readable } from '@/lib/graph/derive'
@@ -46,13 +55,18 @@ import { Badge } from '@/components/ui/badge'
 import { cn } from '@/lib/ui/cn'
 
 const copy = NAMING.worksRegister
-const works = allWorks().map((w) => ({ ...w, desc: descFor(w.ns, w.slug, w.blurb) }))
-const summary = summarise(works)
+const { rows, undated } = buildRegister()
+const summary = summariseRegister(rows)
+// A work's description, where its record carries one; an artifact is its own page and brings none.
+const descOf = (r: RegisterRow): string | undefined =>
+  r.kind === 'work' ? descFor(r.work.ns, r.work.slug, r.work.blurb) : undefined
 
 // The audit, keyed as this register names its works. Derived from the committed graph, which is
-// derived from the audit document — so this page cannot say anything the audit does not say.
+// derived from the audit document — so this page cannot say anything the audit does not say. It
+// covers works only: an artifact row never borrows a verdict from a work that shares its slug.
 const audits = practiceWorkAudits(GRAPH)
-const auditedCount = works.filter((w) => audits.has(`${w.ns}/${w.slug}`)).length
+const auditOf = (r: RegisterRow) => (r.kind === 'work' ? audits.get(`${r.ns}/${r.slug}`) : undefined)
+const auditedCount = rows.filter((r) => auditOf(r)).length
 // The same plain words the neighbourhood figure's legend uses, so the two surfaces speak one
 // language: "wide daylight" / "some daylight" / "little daylight".
 const daylightWord = (verdict: string): string =>
@@ -60,13 +74,36 @@ const daylightWord = (verdict: string): string =>
 const auditHref =
   'https://github.com/frankbueltge/frankbueltge.de/blob/main/docs/audits/2026-08-09-ecology-usp-audit.md'
 
-// The count line, assembled from the counts and the practices' OWN nouns: "N works · M works by
-// The Atelier · …". A practice with nothing on record drops out rather than showing a zero.
-const perPractice = copy.practices
-  .map((p) => ({ ...p, count: summary.byNs[p.ns] }))
-  .filter((p) => p.count > 0)
+// Who each row belongs to, by name: the three practices as the register has always named them,
+// the nightly line by its own card (houseNames() — the signal log's derivation, not a second one).
+type PracticeNs = (typeof copy.practices)[number]['ns']
+const names = houseNames()
+const houseName: Record<RegisterHouse, string> = {
+  ...(Object.fromEntries(copy.practices.map((p) => [p.ns, p.name])) as Record<PracticeNs, string>),
+  'nightly-line': names['nightly-line'],
+}
 
-const nsName = new Map(copy.practices.map((p) => [p.ns, p.name]))
+// The count line, assembled from the counts and each house's OWN nouns: "N in the register ·
+// A works, B artifacts by The Atelier · …". A kind a house has nothing of drops out rather than
+// showing a zero, and a house with nothing on record drops out entirely.
+const nounOf: Record<RegisterHouse, string> = {
+  ...(Object.fromEntries(copy.practices.map((p) => [p.ns, p.noun])) as Record<PracticeNs, string>),
+  'nightly-line': copy.nightlyLine.noun,
+}
+const perHouse = REGISTER_HOUSES.map((h) => ({
+  name: houseName[h],
+  parts: [
+    { count: summary.byHouse[h].works, noun: nounOf[h] },
+    { count: summary.byHouse[h].artifacts, noun: copy.artifactNoun },
+  ].filter((p) => p.count > 0),
+})).filter((h) => h.parts.length > 0)
+
+// The foot names every place a row was read from: the work sources, then the artifact layouts
+// that actually contributed a row — a layout nobody used is not a source of this page.
+const artifactSources = [...new Set(rows.flatMap((r) => (r.kind === 'artifact' ? [r.source] : [])))].sort()
+
+// The rooms line gains the nightly line's room, since its works are listed here under its name.
+const rooms = [...copy.practices, copy.nightlyLine]
 
 // Which LINE of its practice a work belongs to. Only the Atelier has run more than one (two
 // since 2026-08-10, under two constitutions), so every other row gets null and shows nothing —
@@ -76,7 +113,10 @@ const nsName = new Map(copy.practices.map((p) => [p.ns, p.name]))
 // were mixed together everywhere in the register. It had just been repaired in the other
 // direction — the fork used to appear here as a FOURTH practice, which was worse — and the
 // repair made the two lines indistinguishable. Both are the Atelier; only one keeps the nights.
-const lineOf = (w: (typeof works)[number]) => lineOfWork(w)
+//
+// Only on the Atelier's own works: a nightly-line row already says whose it is in the house
+// column, and an artifact is not a work of any line.
+const lineOf = (r: RegisterRow) => (r.kind === 'work' && r.house === 'atelier' ? lineOfWork(r.work) : null)
 
 // Re-skin 2d (2026-09-02): the register on the frame's recipe — the kicker as the one .kicker
 // class, the head on the type scale, the list as a panel with the frame's resting depth and a
@@ -109,9 +149,15 @@ const mark = 'border-line font-mono text-mono-sm font-normal uppercase tracking-
   {/* Counted, never claimed. */}
   <p class="mb-6 font-mono text-mono leading-relaxed text-fg-muted">
     <b class="tabular-nums text-fg">{summary.total}</b> in the register
-    {perPractice.map((p) => (
+    {perHouse.map((h) => (
       <>
-        {' · '}<span class="tabular-nums">{p.count}</span> {p.noun} by {p.name}
+        {' · '}
+        {h.parts.map((p, i) => (
+          <>
+            {i > 0 ? ', ' : ''}<span class="tabular-nums">{p.count}</span> {p.noun}
+          </>
+        ))}
+        {' '}by {h.name}
       </>
     ))}
     {summary.withdrawn > 0 && (
@@ -129,42 +175,54 @@ const mark = 'border-line font-mono text-mono-sm font-normal uppercase tracking-
       being read at all; a single sentence that names the ratio cannot be skimmed past. */}
   <p class="mb-6 max-w-[80ch] font-mono text-mono-sm leading-relaxed text-fg-faint">
     Prior art checked for <b class="tabular-nums text-fg-muted">{auditedCount}</b> of{' '}
-    <span class="tabular-nums">{summary.total}</span> works
+    <span class="tabular-nums">{summary.total}</span> entries
     (<a href={auditHref} rel="noopener" class={quietLink}>the audit of 2026-08-09</a>).
-    A work without a note below is <b class="text-fg-muted">unexamined, not cleared</b>.
+    An entry without a note below is <b class="text-fg-muted">unexamined, not cleared</b>.
   </p>
 
   <ol class={cn(panel, 'divide-y divide-line/60 overflow-hidden')}>
-    {works.map((w) => {
-      const audit = audits.get(`${w.ns}/${w.slug}`)
+    {rows.map((r) => {
+      const audit = auditOf(r)
+      const work = r.kind === 'work' ? r.work : null
+      const desc = descOf(r)
+      const line = lineOf(r)
       return (
-      <li class="wr-row" data-voice={w.ns}>
-        <a href={w.href} class="group flex flex-wrap items-baseline gap-x-3 gap-y-1 py-3.5 pl-4 pr-4 sm:pl-6 sm:pr-6">
-          <span class="w-[6.5em] shrink-0 whitespace-nowrap font-mono text-mono-sm tabular-nums text-fg-faint">{w.date}</span>
-          {/* nowrap and wide enough for the longest practice name: at 7.5em "THE ATELIER" broke
-              over two lines and pushed its own row taller than the rest of the register. */}
-          <span class="w-[8.5em] shrink-0 whitespace-nowrap font-mono text-mono-xs uppercase tracking-[0.14em] text-fg-muted">{nsName.get(w.ns) ?? w.ns}</span>
-          <span class="text-h3 font-semibold group-hover:text-fg">{w.title}</span>
+      <li class="wr-row" data-voice={r.ns} data-house={r.house} data-kind={r.kind}>
+        <a href={r.href} class="group flex flex-wrap items-baseline gap-x-3 gap-y-1 py-3.5 pl-4 pr-4 sm:pl-6 sm:pr-6">
+          <span class="w-[6.5em] shrink-0 whitespace-nowrap font-mono text-mono-sm tabular-nums text-fg-faint">{r.date}</span>
+          {/* nowrap and wide enough for the longest house name: at 7.5em "THE ATELIER" broke over
+              two lines and pushed its own row taller than the rest of the register, and since
+              2026-10-04 the column also carries the nightly line's own name, which is longer. */}
+          <span class="w-[11.5em] shrink-0 whitespace-nowrap font-mono text-mono-xs uppercase tracking-[0.14em] text-fg-muted">{houseName[r.house]}</span>
+          <span class="text-h3 font-semibold group-hover:text-fg">{r.title}</span>
+          {/* What the row IS, where it is not a work: a session's artifact under research ecology
+              v3. Set like the line marker — a leading rule, no box — because it is a fact about
+              the thing, not a state the record put on it. */}
+          {r.kind === 'artifact' && (
+            <span class="wr-kind font-mono text-mono-xs uppercase tracking-[0.12em] text-fg-faint">{copy.artifactLabel}</span>
+          )}
           {/* The line, where a practice runs more than one. It sits AFTER the title rather than in
               the practice column: the column is fixed-width so that titles align down the whole
               register, and a second word in it would have pushed every title of every practice. */}
-          {lineOf(w) && (
-            <span class="wr-line font-mono text-mono-xs uppercase tracking-[0.12em] text-fg-faint">{lineShortLabel(lineOf(w)!)}</span>
+          {line && (
+            <span class="wr-line font-mono text-mono-xs uppercase tracking-[0.12em] text-fg-faint">{lineShortLabel(line)}</span>
           )}
-          {w.state === 'withdrawn' && (
+          {work?.state === 'withdrawn' && (
             <Badge variant="outline" className={cn(mark, 'text-fg-faint')}>
-              {copy.withdrawnLabel}{w.withdrawnOn && ` ${w.withdrawnOn}`}
+              {copy.withdrawnLabel}{work.withdrawnOn && ` ${work.withdrawnOn}`}
             </Badge>
           )}
           {/* The second-line indent is in rem, not em: the two lines below run at different font
-              sizes, so an em indent would have set them a dozen pixels apart under the same title. */}
-          {w.desc && (
-            <span class="w-full text-small leading-snug text-fg-muted line-clamp-2 sm:pl-[11.3rem]">{w.desc}</span>
+              sizes, so an em indent would have set them a dozen pixels apart under the same title.
+              13.2rem = the date column (6.5em at 11px) + the house column (11.5em at 10px) + two
+              gaps of 0.75rem. */}
+          {desc && (
+            <span class="w-full text-small leading-snug text-fg-muted line-clamp-2 sm:pl-[13.2rem]">{desc}</span>
           )}
           {/* The withdrawal itself, verbatim and in full — a mark the record keeps has to be
               readable, not a tooltip somebody has to find. */}
-          {w.withdrawnNote && (
-            <span class="w-full font-mono text-mono-sm leading-relaxed text-fg-faint sm:pl-[11.3rem]">{w.withdrawnNote}</span>
+          {work?.withdrawnNote && (
+            <span class="w-full font-mono text-mono-sm leading-relaxed text-fg-faint sm:pl-[13.2rem]">{work.withdrawnNote}</span>
           )}
         </a>
         {/* The neighbours, OUTSIDE the row's link: they are links of their own, and a link
@@ -173,7 +231,7 @@ const mark = 'border-line font-mono text-mono-sm font-normal uppercase tracking-
             words ("little daylight"), never painted. */}
         {audit && (
           <div class="wr-audit pb-3.5 pl-4 pr-4 sm:pl-6 sm:pr-6">
-            <p class="font-mono text-mono-sm leading-relaxed text-fg-faint sm:pl-[11.3rem]">
+            <p class="font-mono text-mono-sm leading-relaxed text-fg-faint sm:pl-[13.2rem]">
               <Badge variant="outline" className={cn(mark, 'mr-2 text-fg-muted')}>{daylightWord(audit.verdict)}</Badge>
               nearest prior art:{' '}
               {audit.neighbours.map((n, i) => (
@@ -196,7 +254,7 @@ const mark = 'border-line font-mono text-mono-sm font-normal uppercase tracking-
 
   <p class="mt-6 font-mono text-mono leading-relaxed text-fg-faint">
     {copy.roomsLead}
-    {copy.practices.map((p, i) => (
+    {rooms.map((p, i) => (
       <>
         {i > 0 ? ' · ' : ' '}<a href={p.roomHref} class={quietLink}>{p.roomLabel}</a>
       </>
@@ -216,7 +274,29 @@ const mark = 'border-line font-mono text-mono-sm font-normal uppercase tracking-
           {i > 0 ? ' · ' : ' '}<code class="text-fg-muted">{s.dir}/*/meta.json</code>
         </>
       ))}
+      {artifactSources.length > 0 && (
+        <>
+          {' — '}{copy.provenanceArtifactsLead}
+          {artifactSources.map((s, i) => (
+            <>
+              {i > 0 ? ' · ' : ' '}<code class="text-fg-muted">{s}</code>
+            </>
+          ))}
+        </>
+      )}
     </p>
+    {/* An artifact the practices committed with no day on its record: named here, so its
+        absence from the dated list above is said rather than left for a reader to discover. */}
+    {undated.length > 0 && (
+      <p class="mt-2 max-w-[80ch] font-mono text-mono-sm leading-relaxed text-fg-faint">
+        {copy.undatedLead}
+        {undated.map((a, i) => (
+          <>
+            {i > 0 ? ' · ' : ' '}<a href={a.href} class={quietLink}>{houseName[a.practice]}: {a.title ?? a.slug}</a>
+          </>
+        ))}
+      </p>
+    )}
     <p class="mt-2 max-w-[80ch] font-mono text-mono-sm leading-relaxed text-fg-faint">{copy.provenanceTail}</p>
   </footer>
 </section>
@@ -277,7 +357,8 @@ const mark = 'border-line font-mono text-mono-sm font-normal uppercase tracking-
      practice made the thing. So it wears the practice's own hairline as a leading rule and no
      box, which also keeps it from reading as a second withdrawal mark two words further along
      the same row. */
-  .wr-line {
+  .wr-line,
+  .wr-kind {
     border-left: 2px solid var(--wr-c, var(--color-line));
     padding-left: 6px;
     white-space: nowrap;

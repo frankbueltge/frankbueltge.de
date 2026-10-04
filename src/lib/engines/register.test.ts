@@ -1,8 +1,20 @@
-import { readdirSync, existsSync } from 'node:fs'
+import { readdirSync, existsSync, readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { describe, expect, it } from 'vitest'
-import { collectWorks, hrefFor } from './latest'
-import { NIGHTLY_FORK_DIR, WORK_SOURCES, allWorks, summarise } from './register'
+import { loadArtifacts, type ArtifactEntry } from '@/lib/ecology/v3'
+import { collectWorks, hrefFor, type LatestWork } from './latest'
+import {
+  NIGHTLY_FORK_DIR,
+  WORK_SOURCES,
+  allWorks,
+  artifactSource,
+  buildRegister,
+  forkedNightlyWorks,
+  isListedArtifact,
+  registerCount,
+  summarise,
+  summariseRegister,
+} from './register'
 
 const ROOT = fileURLToPath(new URL('../../..', import.meta.url))
 
@@ -124,5 +136,181 @@ describe('the register and the hub LATEST strip agree', () => {
     const registerTop = allWorks().slice(0, 8).map((w) => `${w.ns}/${w.slug}`)
     const stripTop = collectWorks(WORK_SOURCES).slice(0, 8).map((w) => `${w.ns}/${w.slug}`)
     expect(registerTop).toEqual(stripTop)
+  })
+})
+
+// ---------------------------------------------------------------------------------------------
+// The register as /ecology prints it (2026-10-04): works AND session artifacts. Until this day
+// the page read allWorks() alone, and since research ecology v3 two of the three practices land
+// one artifact per session outside any meta.json — the register showed the Studio's September
+// and the Field's and the Atelier's August.
+
+const work = (over: Partial<LatestWork> & Pick<LatestWork, 'ns' | 'slug' | 'date'>): LatestWork => ({
+  kind: 'html',
+  title: over.slug,
+  href: `/${over.ns}/werke-html/${over.date}-${over.slug}/`,
+  state: 'published',
+  ...over,
+})
+
+const artifact = (over: Partial<ArtifactEntry> & Pick<ArtifactEntry, 'practice' | 'slug' | 'href'>): ArtifactEntry => ({
+  date: null,
+  cycle: null,
+  fromWorksRegister: false,
+  ...over,
+})
+
+describe('buildRegister, against fixtures', () => {
+  const works = [
+    work({ ns: 'studio', slug: 'come-in', date: '2026-08-31' }),
+    work({ ns: 'atelier', slug: 'a-night', date: '2026-09-28', dir: NIGHTLY_FORK_DIR, href: '/error-as-method/a-night/' }),
+    work({ ns: 'field', kind: 'astro', slug: 'an-instrument', date: '2026-08-05', href: '/field/werke/an-instrument' }),
+  ]
+  const artifacts = [
+    artifact({ practice: 'field', slug: 'the-label-and-the-species', date: '2026-10-04', href: '/field/artifacts/2026-10-04-the-label-and-the-species/' }),
+    artifact({ practice: 'atelier', slug: 'cycle-004-session-1', date: '2026-10-03', cycle: 4, title: 'Who still answers', href: '/atelier/window/cycle-004-session-1/' }),
+    artifact({ practice: 'field', slug: 'yield-of-a-loop', date: '2026-08-31', cycle: 1, title: 'Yield of a loop', href: '/field/artifacts/cycle-001/2026-08-31-yield-of-a-loop/' }),
+    // the Studio's artifact IS its work — the register already lists it
+    artifact({ practice: 'studio', slug: 'come-in', date: '2026-08-31', title: 'COME IN', href: '/studio/werke-html/2026-08-31-come-in/', fromWorksRegister: true }),
+    // a window no record dates
+    artifact({ practice: 'atelier', slug: 'cycle-004-session-9', cycle: 4, title: 'Nobody dated this', href: '/atelier/window/cycle-004-session-9/' }),
+  ]
+  const { rows, undated } = buildRegister({ works, artifacts })
+
+  it('lists every work and every dated artifact the works register does not already carry', () => {
+    expect(rows.map((r) => `${r.kind}:${r.house}:${r.slug}`)).toEqual([
+      'artifact:field:the-label-and-the-species',
+      'artifact:atelier:cycle-004-session-1',
+      'work:nightly-line:a-night',
+      // one day, two houses: the doors' order (atelier, field, studio) decides, not the kind
+      'artifact:field:yield-of-a-loop',
+      'work:studio:come-in',
+      'work:field:an-instrument',
+    ])
+  })
+
+  it('puts a house’s work before its artifact of the same day', () => {
+    const sameDay = buildRegister({
+      works: [work({ ns: 'field', kind: 'astro', slug: 'w', date: '2026-09-01', href: '/field/werke/w' })],
+      artifacts: [artifact({ practice: 'field', slug: 'a', date: '2026-09-01', href: '/field/artifacts/2026-09-01-a/' })],
+    })
+    expect(sameDay.rows.map((r) => r.kind)).toEqual(['work', 'artifact'])
+  })
+
+  it('names the undated artifact instead of dating it or dropping it silently', () => {
+    expect(undated.map((a) => a.slug)).toEqual(['cycle-004-session-9'])
+    expect(rows.some((r) => r.slug === 'cycle-004-session-9')).toBe(false)
+  })
+
+  it('titles an artifact by its own page, and by its slug read as words where it has none', () => {
+    expect(rows.find((r) => r.slug === 'cycle-004-session-1')?.title).toBe('Who still answers')
+    expect(rows.find((r) => r.slug === 'the-label-and-the-species')?.title).toBe('the label and the species')
+  })
+
+  it('files the nightly line’s works under the line, in the Atelier’s colour, never under the Atelier', () => {
+    const night = rows.find((r) => r.slug === 'a-night')!
+    expect(night).toMatchObject({ kind: 'work', house: 'nightly-line', ns: 'atelier' })
+    const s = summariseRegister(rows)
+    expect(s.byHouse['nightly-line']).toEqual({ works: 1, artifacts: 0 })
+    expect(s.byHouse.atelier).toEqual({ works: 0, artifacts: 1 })
+  })
+
+  it('counts per house and per kind, so an artifact is never counted as a work', () => {
+    expect(summariseRegister(rows)).toMatchObject({
+      total: 6,
+      works: 3,
+      artifacts: 3,
+      withdrawn: 0,
+      byHouse: {
+        atelier: { works: 0, artifacts: 1 },
+        field: { works: 1, artifacts: 2 },
+        studio: { works: 1, artifacts: 0 },
+        'nightly-line': { works: 1, artifacts: 0 },
+      },
+      first: '2026-08-05',
+      last: '2026-10-04',
+    })
+  })
+
+  it('does not list an artifact twice even when its own flag forgets it is a work', () => {
+    const twice = artifact({ practice: 'studio', slug: 'come-in', date: '2026-08-31', href: '/studio/werke-html/2026-08-31-come-in/' })
+    const again = buildRegister({ works, artifacts: [twice] })
+    expect(again.rows.filter((r) => r.href === twice.href)).toHaveLength(1)
+    expect(again.rows.find((r) => r.href === twice.href)?.kind).toBe('work')
+  })
+
+  it('names the committed layout each artifact row was read from', () => {
+    expect(artifactSource({ href: '/field/artifacts/cycle-003/2026-09-12-what-a-description-is-for/' })).toBe(
+      'public/field/artifacts/cycle-NNN/<date>-<slug>/',
+    )
+    expect(artifactSource({ href: '/field/artifacts/2026-10-04-the-label-and-the-species/' })).toBe(
+      'public/field/artifacts/<date>-<slug>/',
+    )
+    expect(artifactSource({ href: '/atelier/window/cycle-004-session-1/' })).toBe('public/atelier/window/cycle-NNN[-session-n]/')
+    // the cycle's own window, with no session in its name, comes from the same place
+    expect(artifactSource({ href: '/atelier/window/cycle-001/' })).toBe('public/atelier/window/cycle-NNN[-session-n]/')
+  })
+})
+
+describe('the register on /ecology, against the committed record', () => {
+  const { rows } = buildRegister()
+  const listed = loadArtifacts().filter(isListedArtifact)
+
+  // (a) Since 2026-08-30 the Field and the Atelier leave artifacts, not works; the committed
+  // mirror holds them, so the register must too — and its newest row per practice must be the
+  // practice's newest dated output, not a work of August.
+  it('carries the Field’s and the Atelier’s artifacts of the shared question, newest included', () => {
+    for (const practice of ['field', 'atelier'] as const) {
+      const shipped = listed.filter((a) => a.practice === practice && a.date! > '2026-08-30')
+      expect(shipped.length, `${practice}: the mirror holds no v3 artifact`).toBeGreaterThan(0)
+      const inRegister = new Set(rows.filter((r) => r.kind === 'artifact' && r.house === practice).map((r) => r.href))
+      for (const a of shipped) expect(inRegister, `${a.href} is missing from the register`).toContain(a.href)
+      const newest = [...shipped].sort((x, y) => y.date!.localeCompare(x.date!))[0]!
+      expect(rows.find((r) => r.house === practice)!.date >= newest.date!).toBe(true)
+    }
+  })
+
+  it('lists every work and every listed artifact, and nothing else', () => {
+    expect(rows.filter((r) => r.kind === 'work')).toHaveLength(allWorks().length)
+    expect(rows.filter((r) => r.kind === 'artifact')).toHaveLength(listed.length)
+  })
+
+  // (b)
+  it('lists nothing twice — one row per address', () => {
+    const hrefs = rows.map((r) => r.href)
+    expect(new Set(hrefs).size).toBe(hrefs.length)
+  })
+
+  it('is dated on every row and newest first', () => {
+    const dates = rows.map((r) => r.date)
+    for (const d of dates) expect(d).toMatch(/^\d{4}-\d{2}-\d{2}$/)
+    expect([...dates].sort((a, b) => b.localeCompare(a))).toEqual(dates)
+  })
+
+  // (c)
+  it('never counts the nightly line’s works as the Atelier’s', () => {
+    const forked = forkedNightlyWorks()
+    expect(forked.length, 'the fork mirror is empty — this test would prove nothing').toBeGreaterThan(0)
+    const forkedHrefs = new Set(forked.map((w) => w.href))
+    for (const r of rows) {
+      if (r.kind === 'work' && forkedHrefs.has(r.href)) expect(r.house, r.href).toBe('nightly-line')
+      if (r.house === 'atelier' && r.kind === 'work') expect(r.work.dir, r.href).not.toBe(NIGHTLY_FORK_DIR)
+    }
+    const s = summariseRegister(rows)
+    expect(s.byHouse['nightly-line'].works).toBe(forked.length)
+    expect(s.byHouse.atelier.works).toBe(allWorks().filter((w) => w.ns === 'atelier' && w.dir !== NIGHTLY_FORK_DIR).length)
+  })
+
+  // (d)
+  it('gives the catalogues card exactly the number the register page counts', () => {
+    expect(registerCount()).toBe(rows.length)
+    expect(summariseRegister(rows).total).toBe(rows.length)
+    const card = readFileSync(`${ROOT}src/components/pages/CataloguesPage.astro`, 'utf8')
+    expect(card).toMatch(/'\/ecology#register':\s*registerCount\(\)/)
+    const page = readFileSync(`${ROOT}src/components/ecology/WorksRegisterSection.astro`, 'utf8')
+    expect(page).toMatch(/const \{ rows, undated \} = buildRegister\(\)/)
+    expect(page).toMatch(/const summary = summariseRegister\(rows\)/)
+    // the works alone are not the register any more — the page must not import them separately
+    expect(page).not.toMatch(/import \{[^}]*\ballWorks\b[^}]*\} from '@\/lib\/engines\/register'/)
   })
 })
