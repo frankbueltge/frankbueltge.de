@@ -9,7 +9,9 @@
 //   works/<slug>/work.md    → src/data/nightly/works/<slug>/work.md
 //   works/<slug>/figure.svg → public/error-as-method/<slug>/figure.svg
 //   works/<slug>/index.html → public/error-as-method/works-html/<slug>/  (the work's own face,
-//                             with the files beside it — only when work.md is there too)
+//                             with everything beside it, subdirectories included since
+//                             2026-10-05 — only when work.md is there too; a stage-only work
+//                             lands at public/error-as-method/<slug>/ the same way)
 //   journal/<date>.md       → src/data/nightly/journal/<date>.md
 //   PROTOCOL.md             → src/data/nightly/PROTOCOL.md
 //
@@ -59,17 +61,40 @@ export const FACES = 'works-html'
  *  the first faces: the line ships its harvested corpora as `*.json.gz` (up to 6 MB a night),
  *  no face reads one, and copying them would have put 13 MB of evidence on the site. */
 const HEAVY = /\.(py|ipynb|gz)$|citations\.json$/
+/** The directory beside a work where the line keeps the source bytes it harvested — manifests,
+ *  snapshots of other people's pages. Evidence, like HEAVY: the work's page cites it and links
+ *  the repository; several works say outright that the bytes are "not redistributed here". */
+const EVIDENCE = 'sources'
+/** Cloudflare Pages refuses a single asset over 25 MiB — at DEPLOY time, after this mirror is
+ *  committed, and then the whole house stops deploying. Same limit as src/lib/atelier/integrate.ts. */
+export const MAX_ASSET_BYTES = 25 * 1024 * 1024
 
-/** A stage, as the practice built it: the page and everything beside it, except the metadata
- *  (mirrored to the data tree), the heavy evidence (linked, not copied) and dotfiles (a work's
- *  own .gitignore is the practice's housekeeping, and inside this repository it would start
- *  deciding what the integrate commits). Directories stay behind: `sources/` is evidence too. */
-function copyStage(from, to) {
+/** A stage, as the practice built it: the page and everything beside it, AT EVERY DEPTH.
+ *
+ *  Until 2026-10-05 directories stayed behind, so a multi-file work arrived broken — the face of
+ *  2026-10-04-before-the-verdict loads its images from thumbs/ and showed none of them, and
+ *  2026-10-04-the-mould lost seen/ and iterations/. Since Frank's decision of that day (wording
+ *  private: the practices may publish rich works, size and form not limited) a work arrives
+ *  whole: subdirectories, scripts, models, textures, sound, video, fonts, WebAssembly, data.
+ *
+ *  What stays behind, and why: the metadata at the top (mirrored to the data tree); the evidence
+ *  the repository keeps — HEAVY files at any depth and the top-level sources/ directory, both
+ *  linked from the work, not copied; dotfiles at any depth (a work's own .gitignore inside this
+ *  repository would start deciding what the integrate commits); symbolic links, which can point
+ *  outside the work; and a file over Cloudflare's 25 MiB asset limit, reported by name. */
+function copyStage(from, to, report, rel = '') {
   mkdirSync(to, { recursive: true })
-  for (const file of readdirSync(from)) {
-    if (file === META || file.startsWith('.') || HEAVY.test(file)) continue
-    if (statSync(join(from, file)).isDirectory()) continue
-    cpSync(join(from, file), join(to, file))
+  for (const entry of readdirSync(from, { withFileTypes: true })) {
+    const name = entry.name
+    if (name.startsWith('.') || HEAVY.test(name)) continue
+    if (!rel && (name === META || name === EVIDENCE)) continue
+    const path = rel ? `${rel}/${name}` : name
+    if (entry.isDirectory()) copyStage(join(from, name), join(to, name), report, path)
+    else if (entry.isFile()) {
+      const bytes = statSync(join(from, name)).size
+      if (bytes > MAX_ASSET_BYTES) report.push({ file: path, bytes })
+      else cpSync(join(from, name), join(to, name))
+    }
   }
 }
 /** The last night under the Atelier's roof — kept in sync with src/lib/engines/nightly-line.ts. */
@@ -109,6 +134,13 @@ export function mirror(src, dest) {
   const skipped = []
   /** the text works that carry their own face, by slug — reported, so a run says what it served */
   const faces = []
+  /** files left behind for exceeding Cloudflare's asset limit, by work — a report, never silence */
+  const oversized = []
+  const stage = (dir, to, slug) => {
+    const over = []
+    copyStage(dir, to, over)
+    for (const o of over) oversized.push({ slug, ...o })
+  }
   for (const slug of existsSync(worksSrc) ? readdirSync(worksSrc).sort() : []) {
     const dir = join(worksSrc, slug)
     if (!statSync(dir).isDirectory()) continue
@@ -143,14 +175,14 @@ export function mirror(src, dest) {
       // The work's own face, when it has one: copied by the same rule as an interactive work,
       // into its own directory. The text above is untouched by it and still renders as before.
       if (hasStage) {
-        copyStage(dir, join(facesDest, slug))
+        stage(dir, join(facesDest, slug), slug)
         faces.push(slug)
       }
     } else {
       // An interactive work is served as the practice built it. Everything beside it travels
-      // too — a self-contained page may still load its own data file — except the measuring
-      // code and the harvested evidence, which stay in the repository and are linked.
-      copyStage(dir, join(figuresDest, slug))
+      // too, subdirectories included — a page loads its own scripts, data and media — except
+      // the measuring code and the harvested evidence, which stay in the repository and are linked.
+      stage(dir, join(figuresDest, slug), slug)
     }
     works.push({ slug, form: hasText ? 'text' : 'stage', ...(hasText && hasStage ? { face: true } : {}) })
   }
@@ -178,7 +210,7 @@ export function mirror(src, dest) {
     protocol = 'PROTOCOL.md'
   }
 
-  return { works, faces, inherited, journal, skipped, protocol }
+  return { works, faces, inherited, journal, skipped, oversized, protocol }
 }
 
 if (import.meta.url === `file://${process.argv[1]}`) {
@@ -191,6 +223,9 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   console.log(JSON.stringify(report, null, 2))
   for (const { slug, missing } of report.skipped) {
     console.warn(`skipped ${slug}: missing ${missing.join(', ')}`)
+  }
+  for (const { slug, file, bytes } of report.oversized) {
+    console.warn(`left behind ${slug}/${file}: ${(bytes / 1024 / 1024).toFixed(1)} MiB, over Cloudflare Pages' 25 MiB asset limit`)
   }
   // To stderr, like the warnings: stdout is the JSON report the workflow parses.
   console.warn(`faces served at /error-as-method/${FACES}/: ${report.faces.length}`)

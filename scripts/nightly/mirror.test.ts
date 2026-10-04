@@ -5,11 +5,11 @@
 // by this site at its route, the page served bare at /error-as-method/works-html/<slug>/. For a
 // month the mirror read such a work as text only and dropped the page without a word, and
 // nothing failed, because nothing checked for the page.
-import { existsSync, mkdirSync, mkdtempSync, readdirSync, rmSync, writeFileSync } from 'node:fs'
+import { existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, symlinkSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
-import { FACES, mirror } from './mirror.mjs'
+import { FACES, MAX_ASSET_BYTES, mirror } from './mirror.mjs'
 
 let root = ''
 let src = ''
@@ -59,7 +59,7 @@ describe('a work with both forms comes out as both', () => {
     mirror(src, dest)
     // The page's own relative links (figure.svg, work.md) resolve beside it; the metadata, the
     // measuring code, the compressed corpus, the harvested citations, the dotfile and the
-    // sources/ directory stay in the repository.
+    // sources/ directory (the harvested source bytes, evidence) stay in the repository.
     expect(listing(join(dest, 'public/error-as-method', FACES, '2026-09-22-both'))).toEqual([
       'figure.svg',
       'index.html',
@@ -118,5 +118,83 @@ describe('the other forms are unchanged', () => {
     expect(report.inherited).toEqual(['2026-07-04-old'])
     expect(report.faces).toEqual([])
     expect(existsSync(join(dest, 'public/error-as-method', FACES, '2026-07-04-old'))).toBe(false)
+  })
+})
+
+// 2026-10-05 (Frank's decision, wording private: the practices may publish rich works, size and
+// form not limited). Until that day copyStage() skipped every directory, so the face of
+// 2026-10-04-before-the-verdict went online without the 25 images it loads from thumbs/, and
+// 2026-10-04-the-mould without seen/ and iterations/. A work now arrives whole.
+describe('a multi-file work arrives whole', () => {
+  const PNG = Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a, 0x00, 0xff])
+  const face = (p = '') => join(dest, 'public/error-as-method', FACES, '2026-10-04-verdict', p)
+
+  beforeEach(() => {
+    const dir = join(src, 'works', '2026-10-04-verdict')
+    work('2026-10-04-verdict', {
+      'meta.json': meta('2026-10-04'),
+      'work.md': '# Verdict\n',
+      'index.html': '<!doctype html><img src="thumbs/V01.jpg"><script src="iterations/i1.js"></script>',
+      'measure.py': 'print(1)',
+    })
+    for (const d of ['thumbs', 'seen', 'iterations', 'models/lod', 'data/sources', 'sources', '.cache']) {
+      mkdirSync(join(dir, d), { recursive: true })
+    }
+    writeFileSync(join(dir, 'thumbs', 'V01.jpg'), PNG)
+    writeFileSync(join(dir, 'thumbs', 'V02.jpg'), PNG)
+    writeFileSync(join(dir, 'seen', '0.png'), PNG)
+    writeFileSync(join(dir, 'iterations', 'i1.js'), 'console.log(1)')
+    writeFileSync(join(dir, 'models', 'lod', 'scene.glb'), 'glTF')
+    writeFileSync(join(dir, 'models', 'lod', 'engine.wasm'), Buffer.from([0x00, 0x61, 0x73, 0x6d]))
+    writeFileSync(join(dir, 'data', 'sources', 'counts.json'), '{}')
+    // evidence and housekeeping, at depth
+    writeFileSync(join(dir, 'iterations', 'fit.py'), 'print(2)')
+    writeFileSync(join(dir, 'models', 'corpus.json.gz'), 'gz')
+    writeFileSync(join(dir, 'seen', 'citations.json'), '[]')
+    writeFileSync(join(dir, 'seen', '.DS_Store'), 'x')
+    writeFileSync(join(dir, '.cache', 'tmp.json'), '{}')
+    writeFileSync(join(dir, 'sources', 'MANIFEST.json'), '{}')
+    symlinkSync(join(src, 'journal'), join(dir, 'up'))
+  })
+
+  it('brings every subdirectory with its images, scripts, models and WebAssembly', () => {
+    mirror(src, dest)
+    expect(listing(face('thumbs'))).toEqual(['V01.jpg', 'V02.jpg'])
+    expect(listing(face('seen'))).toEqual(['0.png'])
+    expect(listing(face('iterations'))).toEqual(['i1.js'])
+    expect(listing(face('models/lod'))).toEqual(['engine.wasm', 'scene.glb'])
+    expect(readFileSync(face('thumbs/V01.jpg')).equals(PNG)).toBe(true)
+    // only the TOP-LEVEL sources/ is the line's evidence directory; one further in is the work's
+    expect(listing(face('data/sources'))).toEqual(['counts.json'])
+  })
+
+  it('keeps the evidence, the dotfiles and the links behind at every depth', () => {
+    mirror(src, dest)
+    expect(listing(face())).toEqual(['data', 'index.html', 'iterations', 'models', 'seen', 'thumbs', 'work.md'])
+    expect(listing(face('iterations'))).not.toContain('fit.py')
+    expect(listing(face('models'))).toEqual(['lod'])
+    expect(listing(face('seen'))).not.toContain('citations.json')
+    expect(listing(face('seen'))).not.toContain('.DS_Store')
+  })
+
+  it('serves a stage-only work whole at its own address', () => {
+    const dir = join(src, 'works', '2026-10-05-stage')
+    work('2026-10-05-stage', { 'meta.json': meta('2026-10-05'), 'index.html': '<!doctype html>' })
+    mkdirSync(join(dir, 'assets', 'audio'), { recursive: true })
+    writeFileSync(join(dir, 'assets', 'app.js'), 'export {}')
+    writeFileSync(join(dir, 'assets', 'audio', 'score.ogg'), 'ogg')
+    mirror(src, dest)
+    const at = join(dest, 'public/error-as-method/2026-10-05-stage')
+    expect(listing(at)).toEqual(['assets', 'index.html'])
+    expect(listing(join(at, 'assets'))).toEqual(['app.js', 'audio'])
+    expect(listing(join(at, 'assets', 'audio'))).toEqual(['score.ogg'])
+  })
+
+  it('leaves a file over the 25 MiB asset limit behind, by name, and copies the rest', () => {
+    writeFileSync(join(src, 'works', '2026-10-04-verdict', 'seen', 'film.mp4'), Buffer.alloc(MAX_ASSET_BYTES + 1))
+    const report = mirror(src, dest)
+    expect(report.oversized).toEqual([{ slug: '2026-10-04-verdict', file: 'seen/film.mp4', bytes: MAX_ASSET_BYTES + 1 }])
+    expect(listing(face('seen'))).toEqual(['0.png'])
+    expect(report.faces).toEqual(['2026-10-04-verdict'])
   })
 })

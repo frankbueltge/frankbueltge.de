@@ -67,6 +67,10 @@ jobs:
               line(``); line(`**skipped — a work directory missing its own files:**`)
               for (const s of r.skipped) line(`- \`${s.slug}\` — missing ${s.missing.join(", ")}`)
             }
+            if (r.oversized.length) {
+              line(``); line(`**left behind — over the Cloudflare Pages asset limit of 25 MiB:**`)
+              for (const o of r.oversized) line(`- \`${o.slug}/${o.file}\` — ${(o.bytes / 1048576).toFixed(1)} MiB`)
+            }
           '
 
       # The graph is derived from what this mirror just wrote (a work's meta.json, the

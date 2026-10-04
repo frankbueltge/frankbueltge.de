@@ -6,6 +6,7 @@ import { existsSync, readFileSync, readdirSync } from 'node:fs'
 import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
 import { FACES_DIR, faceHref, workFace } from './face'
+import { PRACTICE_POLICY, governsLoads, matchesPattern, parseHeaders } from '@/lib/engines/practice-policy'
 
 const WORKS_DIR = 'src/data/nightly/works'
 
@@ -49,10 +50,17 @@ describe('the committed faces', () => {
     }
   })
 
-  it('carry none of the evidence that stays in the repository', () => {
+  it('carry none of the evidence that stays in the repository, at any depth', () => {
+    // Faces arrive whole since 2026-10-05, subdirectories included; the evidence still stays.
+    const walk = (dir: string, rel: string): string[] =>
+      readdirSync(dir, { withFileTypes: true }).flatMap((e) =>
+        e.isDirectory() ? [`${rel}${e.name}/`, ...walk(join(dir, e.name), `${rel}${e.name}/`)] : [`${rel}${e.name}`],
+      )
     for (const slug of faceSlugs()) {
-      for (const file of readdirSync(join(FACES_DIR, slug))) {
-        expect(file, `${slug}/${file}`).not.toMatch(/^\.|^meta\.json$|\.(py|ipynb|gz)$|citations\.json$/)
+      for (const path of walk(join(FACES_DIR, slug), '')) {
+        const name = path.replace(/\/$/, '').split('/').pop()!
+        expect(name, `${slug}/${path}`).not.toMatch(/^\.|\.(py|ipynb|gz)$|citations\.json$/)
+        expect(path, `${slug}/${path}`).not.toMatch(/^meta\.json$|^sources\/$/)
       }
     }
   })
@@ -86,34 +94,22 @@ describe('the policy the faces are served under', () => {
   // Every rule in public/_headers whose pattern matches a path, with its CSP. Pages joins the
   // values of every matching rule with a comma, and the browser enforces each as its own policy,
   // so EVERY matching CSP must allow what the face needs — one strict rule is enough to block it.
-  const rules = (() => {
-    const out: { pattern: string; csp?: string }[] = []
-    for (const line of readFileSync('public/_headers', 'utf8').split('\n')) {
-      if (/^\//.test(line)) out.push({ pattern: line.trim() })
-      const m = line.match(/^\s+Content-Security-Policy:\s*(.+)$/)
-      if (m && out.length) out[out.length - 1]!.csp = m[1]
-    }
-    return out
-  })()
-  const matches = (pattern: string, path: string) =>
-    new RegExp(`^${pattern.replace(/[.+?^${}()|[\]\\]/g, '\\$&').replace('*', '.*')}$`).test(path)
+  const rules = parseHeaders(readFileSync('public/_headers', 'utf8'))
   const SIBLING = rules.find((r) => r.pattern === '/studio/werke-html/*')?.csp
 
-  it('names the door with the siblings\' sandbox, word for word', () => {
-    expect(SIBLING).toBeDefined()
-    expect(rules.find((r) => r.pattern === '/error-as-method/works-html/*')?.csp).toBe(SIBLING)
+  it('names the door with the siblings\' policy, word for word', () => {
+    expect(SIBLING).toBe(PRACTICE_POLICY)
+    expect(rules.find((r) => r.pattern === '/error-as-method/works-html/*')?.csp).toBe(PRACTICE_POLICY)
   })
 
-  it('lets every matching policy run the face\'s inline script and style', () => {
+  it('lets every matching policy run what a face needs (inline script, WebAssembly, live data)', () => {
     const path = '/error-as-method/works-html/2026-09-22-the-same-rate/index.html'
-    const applying = rules.filter((r) => r.csp && matches(r.pattern, path))
+    const applying = rules.filter((r) => r.csp && matchesPattern(r.pattern, path))
     expect(applying.length).toBeGreaterThan(1)
     for (const { pattern, csp } of applying) {
-      // A policy that only restricts framing (the site-wide `/*` rule) says nothing about scripts.
-      if (!/(default|script)-src/.test(csp!)) continue
-      expect(csp, pattern).toContain("script-src 'unsafe-inline' 'self'")
-      expect(csp, pattern).toContain("style-src 'unsafe-inline' 'self'")
-      expect(csp, pattern).toContain("connect-src 'self'")
+      // A policy that only restricts framing (the site-wide `/*` rule) says nothing about loads.
+      if (!governsLoads(csp!)) continue
+      expect(csp, pattern).toBe(PRACTICE_POLICY)
     }
   })
 })
