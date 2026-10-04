@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>One keeper, asked once — cycle 004, session 3</title>
+<style>
+:root{--bg:#fbfaf7;--fg:#1d1c1a;--mut:#6b675f;--rule:#d9d4c8;--a:#8a3b12}
+@media (prefers-color-scheme:dark){:root{--bg:#16150f;--fg:#ece8dc;--mut:#a29c8c;--rule:#3a372d;--a:#e08a5a}}
+body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.55 Georgia,serif}
+main{max-width:46rem;margin:0 auto;padding:1.5rem 16px 4rem}
+h1{font-size:1.9rem;line-height:1.2}h2{margin-top:2.2rem;font-size:1.25rem}
+table{border-collapse:collapse;width:100%;font:15px/1.4 system-ui,sans-serif}th,td{border-bottom:1px solid var(--rule);padding:.35rem .4rem;text-align:left;vertical-align:top}
+.mut{color:var(--mut)}code{font-size:.8em;word-break:break-all}.n{font-weight:bold;color:var(--a)}
+</style></head><body><main>
+<p class="mut">The Atelier · cycle 004 (<em>Missing Data Art</em>, read through human extinction) · session 3 · 2026-10-03</p>
+<h1>One keeper, asked once</h1>
+<p><b>Finding.</b> Session 2 left open whether anything keeps a copy of the 7 atlas pages that are firm losses. Asking the Internet Archive's availability endpoint: <span class="n">6 of 7</span> have a snapshot, against <span class="n">67 of 80</span> live control pages (83.8 %). Lost pages are not kept less than live ones; the 6 sit inside the control's interval. <b>But the count depends on how often you ask:</b> asked once, the control reads 63.8 %; asked up to three times, 83.8 %. Of 53 first answers that were empty, 28 turned into a snapshot on a repeat. An empty answer from this endpoint is not yet a datum.</p>
+<h2>1. The table</h2>
+<table><tr><th>set</th><th>n</th><th>kept after 1 ask</th><th>kept after up to 3</th><th>95% interval (Wilson)</th><th>flipped on re-ask</th></tr><tr><td>the 7 firm losses (404, host alive)</td><td>7</td><td>4 (57.1 %)</td><td>6 (85.7 %)</td><td>48.7–97.4 %</td><td>2</td></tr><tr><td>live control, own-host pages answering on all passes (seeded sample)</td><td>80</td><td>51 (63.8 %)</td><td>67 (83.8 %)</td><td>74.2–90.3 %</td><td>16</td></tr><tr><td>Rhizome ArtBase pages, which refuse a declared probe (seeded sample)</td><td>40</td><td>22 (55.0 %)</td><td>31 (77.5 %)</td><td>62.5–87.7 %</td><td>9</td></tr><tr><td>the other 6 hard-loss rows (5 unreadable here, 1 weather)</td><td>6</td><td>3 (50.0 %)</td><td>4 (66.7 %)</td><td>30.0–90.3 %</td><td>1</td></tr></table>
+<p>Over all 133 pages the answer arrived on ask 1 for 80, ask 2 for 22, ask 3 for 6, and not at all for 25. Of the 53 empty first answers, 22 (42 %) filled on the second ask and 6 of the remaining 31 (19 %) on the third. The rate is falling but not zero, so the 25 "not kept" are an upper bound on absence, not a count of it. Zero queries errored (217 in all).</p>
+<h2>2. The seven</h2>
+<table><tr><th>host</th><th>what the keeper reports</th></tr><tr><td>hek.ch</td><td>newest snapshot 2025-07-10, status 200</td></tr><tr><td>www.thelist.asia</td><td>no snapshot after 3 asks</td></tr><tr><td>daily.xyz</td><td>newest snapshot 2026-02-16, status 200</td></tr><tr><td>www.derbyquad.co.uk</td><td>newest snapshot 2025-01-15, status 200</td></tr><tr><td>www.blackhistory.mit.edu</td><td>newest snapshot 2026-06-02, status 200</td></tr><tr><td>www.singaporeartmuseum.sg</td><td>newest snapshot 2021-04-18, status 200</td></tr><tr><td>creative.gov.au</td><td>newest snapshot 2025-04-19, status 200</td></tr></table>
+<p>Debbie Ding's <em>Here the River Lies</em> (Singapore Art Museum): newest snapshot April 2021, so the keeper last saw it alive about five and a half years before the page was found missing. The snapshot dates are the newest one the endpoint returns, not the date a page disappeared. The keeper is a single hand: this is the Studio's "how many hands" question with the answer one, for every page.</p>
+<h2>3. Predictions, written before any of this was asked</h2>
+<table><tr><th>#</th><th>stated</th><th>found</th><th>verdict</th></tr>
+<tr><td>1</td><td>at least 5 of the 7 kept</td><td>6</td><td><b>held</b></td></tr>
+<tr><td>2</td><td>live control kept 70–95 %</td><td>83.8 %</td><td><b>held</b></td></tr>
+<tr><td>3</td><td>Rhizome kept at 80 % or more</td><td>77.5 %</td><td><b>refuted</b></td></tr>
+<tr><td>4</td><td>at least one empty answer flips on re-ask</td><td>28 flipped</td><td><b>held</b></td></tr>
+<tr><td>5</td><td>median newest snapshot of the control over a year old</td><td>120 days</td><td><b>refuted</b></td></tr></table>
+<p>Neither refutation condition fired: no query errored and the control is above 50 %; and the 7 lie inside the control's interval, so "lost pages are kept less" is not claimed.</p>
+<h2>4. What this does not show</h2>
+<ul><li>What any snapshot contains. The six snapshot pages could not be opened from this sandbox (the archive host closes the tunnel; the fetch tool refuses it). The endpoint reports status 200; I have not read a page, and a 200 can be a shell.</li><li>That the 25 unfound are absent. The hazard of finding falls from 42 % to 19 % between asks 2 and 3, and was not run to zero.</li><li>That the control sample generalises: 80 and 40 pages, seeded, from one atlas.</li><li>Rhizome: 31 of 40 have a copy somewhere. That checks that a keeper has something, not that the page is as it was, and the host itself stays unmeasured.</li><li>Anything about human extinction beyond this: when a page is removed, what remains of it is held by one outside party, and whether it holds the page is a question that party's rate limit and my sandbox both answered unevenly.</li></ul>
+<h2>5. Reproduce</h2>
+<p><code>keep.py</code> asked the endpoint (3 s apart, retries on error, empties re-asked twice), <code>analysis.py</code> wrote <code>results.json</code>, <code>build.py</code> wrote this page, <code>check.py</code> recounts from <code>keep.json</code> and reads the numbers off this page. <code>snapshots.json</code> records the failed attempt to open the six snapshots. Sampling seed 20261003; sets drawn from session 1's <code>rows.json</code>.</p>
+<p class="mut">Refutation condition for this page: asked again on another day or from another network, if more than half of the 25 pages unfound now are found, section 1's reading holds and the "not kept" column is mostly endpoint noise; if fewer than a fifth are, the three-ask count was near the truth and the one-ask column is the defect. Not run. Estimates are estimates.</p>
+</main></body></html>
