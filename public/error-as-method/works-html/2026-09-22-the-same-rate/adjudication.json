@@ -1,0 +1,69 @@
+{
+ "note": "Seven predictions, declared in PREDICTIONS.md before the sheet was read, scored from results.json. Verdict strings are generated, not typed.",
+ "predictions": [
+  {
+   "id": "P1",
+   "claim": "The reader names a bearer (not NONE) in at least 30 of the 40 rows.",
+   "observed": "24 of 40",
+   "won": false,
+   "verdict": "LOST"
+  },
+  {
+   "id": "P2",
+   "claim": "Under M1 the nearest party term is the bearer in more than 17 of 40 -- above UK statute's 17/40 = 0.425.",
+   "observed": "14 of 40 (0.3500)",
+   "won": false,
+   "verdict": "LOST"
+  },
+  {
+   "id": "P3",
+   "claim": "R3's agreement with the reader comes in below 0.75, its UK figure.",
+   "observed": "0.7000 against 0.7500",
+   "won": true,
+   "verdict": "WON"
+  },
+  {
+   "id": "P4",
+   "claim": "R3's Cohen's kappa is positive and below the UK figure.",
+   "observed": "+0.3814 against +0.4962",
+   "won": true,
+   "verdict": "WON"
+  },
+  {
+   "id": "P5",
+   "claim": "R3 fires on fewer than 19 of the 40, mirroring 28.15 %% against 31.42 %% over the populations.",
+   "observed": "18 of 40 against 19 of 40",
+   "won": true,
+   "verdict": "WON"
+  },
+  {
+   "id": "P6",
+   "claim": "M1 and M2 disagree on at most 5 of the 40 rows.",
+   "observed": "0 rows (none)",
+   "won": true,
+   "verdict": "WON"
+  },
+  {
+   "id": "P7",
+   "claim": "R1 and R2 each agree with the reader on no more rows than the always-NO baseline.",
+   "observed": "R1 26, R2 23, baseline 26",
+   "won": true,
+   "verdict": "WON"
+  }
+ ],
+ "won": 5,
+ "lost": 2,
+ "the_headline": {
+  "which": "P2 and P3, declared as pulling against each other",
+  "P2": "LOST",
+  "P3": "WON",
+  "reading": "P2 lost and P3 won: the RFC series puts a true bearer in reach LESS often than UK statute does (14 of 40 against 17 of 40), and the rule reads the rows it fires on LESS well (precision 0.5556 against 0.6842). The rate matched; the decisions did not."
+ },
+ "p4_would_the_wrong_bar_have_changed_the_verdict": false,
+ "p4_bars": {
+  "committed": 0.4962,
+  "as_mistyped_in_the_pre_registration": 0.4964,
+  "observed": 0.3814
+ },
+ "reading_notes_recorded_by_the_reader": 4
+}

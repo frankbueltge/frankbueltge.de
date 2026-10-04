@@ -1,0 +1,70 @@
+{
+ "note": "One reader's verdicts on the forty rows of sheet.json, written against the sheet alone: the paragraph, the obligation sentence and its modal. The nearest party term was not computed, not looked at and not known while these were written, and no rule was run over any row. The question asked of each row is NOT the rule's question. It is: WHO DOES THIS PARAGRAPH SAY MUST COMPLY -- quoted from the paragraph in the text's own words, or NONE. Whether that answer coincides with the term the rules read is decided afterwards and mechanically, by adjudicate.py, under the two matching norms fixed in PREDICTIONS.md section 4. These are ONE READER'S JUDGEMENTS, recorded whole with a reason each so a second reader can disagree row by row.",
+ "reader": "Ulysses, Session 95, 2026-09-22",
+ "protocol": "PREDICTIONS.md section 3, fixed before the first row was read",
+ "sheet": "sheet.json, forty rows, random.seed(95)",
+ "reading_notes": [
+  {
+   "id": "RN1",
+   "arose_at_row": 2,
+   "note": "PREDICTIONS.md section 3 rule 2 was underspecified for a corpus like this one and had to be sharpened while reading. Where the grammatical subject of the agentless obligation is a VALUE OR FIELD rather than an entity that acts -- the JWS algorithm, the sampling interval, the <media> field -- the bearer is whoever sets that value, and where the paragraph does not name them the verdict is NONE. Where the subject is itself a named acting entity -- a node, a service, an implementation -- that entity is the bearer. The sharpening is recorded here rather than applied silently; it was applied to every row from 1 onwards, including the two read before it was written down."
+  },
+  {
+   "id": "RN2",
+   "arose_at_row": 26,
+   "note": "A party word that appears only as a modifier inside a compound noun -- 'router advertisements', 'the application protocol value' -- does not name a party. The entity must stand in the paragraph as something that acts or is acted on, not as an adjective."
+  },
+  {
+   "id": "RN3",
+   "arose_at_row": 28,
+   "note": "Where the paragraph names the right kind of party under a narrowing modifier -- 'Some experimental implementations' -- the party word is taken as named, and the narrowing is stated in the reason. The alternative, refusing it, would make the verdict turn on an adjective."
+  },
+  {
+   "id": "RN4",
+   "arose_at_row": 29,
+   "note": "A word from the party vocabulary that occurs as a quoted protocol VALUE -- the string \"application\" as the value of the <media> field -- is not a party. This was written before it was known whether any rule reads that occurrence."
+  }
+ ],
+ "rows": [
+  {"n": 1, "bearer": "implementations", "reason": "the paragraph's actor throughout ('implementations MUST delay processing of application data'); the discarding is done by the implementation that received the data"},
+  {"n": 2, "bearer": "NONE", "reason": "RN1: the subject is a value, the JWS algorithm; the party that chooses it (the signer) is nowhere in the paragraph"},
+  {"n": 3, "bearer": "implementations", "reason": "'implementations MUST fail authentication for the entire session' two sentences earlier; the final result is theirs to produce"},
+  {"n": 4, "bearer": "Implementations", "reason": "the paragraph's only actor; supporting System ID change is a property of an implementation, and 'Implementations SHOULD allow the System ID to be cleared' names it"},
+  {"n": 5, "bearer": "clients", "reason": "'clients MUST represent their own capabilities'; the party that handles received GREASE values is the client"},
+  {"n": 6, "bearer": "An implementation", "reason": "'An implementation can detect if its peer has failed'; the party that resets its state machine and cancels the transactions is that implementation"},
+  {"n": 7, "bearer": "each node", "reason": "RN1: the System ID is the node's and the node generates it (Section 3.4.5 is cited in the paragraph); the node is a named acting entity, not a bare value"},
+  {"n": 8, "bearer": "Implementations of DLEP", "reason": "the paragraph's actor ('Implementations of DLEP SHOULD implement, and use, TLS'); establishing the session falls to both peers' implementations"},
+  {"n": 9, "bearer": "NONE", "reason": "RN1: the subject is the value of a tuple; the party that sets the o= line is not named. The only party in the paragraph is 'some SDP parsers', which read the line rather than write it"},
+  {"n": 10, "bearer": "An implementation", "reason": "'An implementation MUST follow OF0's normalization guidance' opens the paragraph; calculating Sp is part of that"},
+  {"n": 11, "bearer": "the JSEP implementation", "reason": "named in the first sentence and again as 'the implementation'; it emits the fmtp parameters"},
+  {"n": 12, "bearer": "the root service on the local system", "reason": "RN1: the subject is a named acting entity (it answers queries), and the operator who would configure it is not named anywhere in the paragraph"},
+  {"n": 13, "bearer": "PvD-aware hosts", "reason": "the paragraph is about host behaviour throughout -- provisioning, sending queries from a PvD address, using the answers"},
+  {"n": 14, "bearer": "the modem", "reason": "named as the party that supports the extensions; enumerating them in its Session Initialization Response is its act, and the next sentence gives the router the complementary duty"},
+  {"n": 15, "bearer": "an RtpSender", "reason": "the previous sentence's 'it MUST follow the rules below' attaches to the sender that encodes the track; the RtpSender is the named entity"},
+  {"n": 16, "bearer": "implementations", "reason": "'implementations MUST check for application data' in the previous sentence; 'this check' is that one"},
+  {"n": 17, "bearer": "NONE", "reason": "undecidable, per rule 2: the party that writes the a=extmap line is not named, and 'the application' appears only as what supports the extension. Close call, recorded as one"},
+  {"n": 18, "bearer": "NONE", "reason": "the party that stops and removes transceivers on rollback is not named; 'the application' appears only as the caller of addTrack in the explanatory sentence"},
+  {"n": 19, "bearer": "The endpoint of the test session, Session-Sender and Session-Receiver (for OWAMP) or Session-Reflector (for TWAMP)", "reason": "the sentence names its own bearer in full, which is rare in this sample"},
+  {"n": 20, "bearer": "NONE", "reason": "RN1: the subject is an address distribution; the tester who distributes them is not named in the paragraph"},
+  {"n": 21, "bearer": "NONE", "reason": "RN1: the subject is authoritative data; the operator who must keep the copy identical is not named. 'the local authoritative server' is where the data sits, not who maintains it"},
+  {"n": 22, "bearer": "the test equipment", "reason": "the paragraph's actor twice over ('the test equipment MUST continue generating traffic', 'MUST measure and record statistics'); the sampling interval is its setting"},
+  {"n": 23, "bearer": "NONE", "reason": "a one-sentence paragraph with no party in it at all; the subject is a ratio"},
+  {"n": 24, "bearer": "a BGPsec speaker", "reason": "the paragraph's subject, propagating the advertisement; not modifying the attribute is its act"},
+  {"n": 25, "bearer": "NONE", "reason": "the operator is the party to BE ALLOWED, not the party that must allow; the implementation that must permit the configuration is not named. This is the RFC series' version of Session 90's 'the appeal must be made to the Authority'"},
+  {"n": 26, "bearer": "NONE", "reason": "RN2: the sender of the router advertisements is a router, but the paragraph names it only inside the compound 'router advertisements'; no party stands in the text as an entity"},
+  {"n": 27, "bearer": "NONE", "reason": "the party that writes the report is not named; 'the user' carries the second clause of the sentence, not the obligation the modal in question belongs to"},
+  {"n": 28, "bearer": "implementations", "reason": "RN3: named only as 'Some experimental implementations', which narrows the set but names the kind of party; whoever sees both bits is an implementation"},
+  {"n": 29, "bearer": "NONE", "reason": "RN4: the party that generates the m= section is not named. The word 'application' in this paragraph is the VALUE of the <media> field, not a party"},
+  {"n": 30, "bearer": "NONE", "reason": "the party that documents configuration changes is the tester, not named; the paragraph names only the DUT/SUT and the test report"},
+  {"n": 31, "bearer": "implementations", "reason": "named twice in the same bullet ('implementations MUST properly handle remote endpoints'); the party that must use ICE is the implementation"},
+  {"n": 32, "bearer": "NONE", "reason": "the Converter is named as the RECEIVER of the Connect TLV and given its own duty in the last sentence; the party that encodes the address is the sender, not named"},
+  {"n": 33, "bearer": "NONE", "reason": "a one-sentence paragraph; the signer who would use the component is not named"},
+  {"n": 34, "bearer": "NONE", "reason": "RN2 and RN1: the parser is not named, and 'application' appears only as a modifier in 'the application protocol value'"},
+  {"n": 35, "bearer": "the BGPsec speaker", "reason": "named in the previous sentence as the party that must rerun validation; the reassessment is that act restated in the passive"},
+  {"n": 36, "bearer": "The Server", "reason": "the previous sentence's actor, setting the same flag to 1; 'otherwise' continues its duty"},
+  {"n": 37, "bearer": "a node", "reason": "the paragraph's party, susceptible during joining and maintaining statistics during operation; the node is what accepts or refuses timing information"},
+  {"n": 38, "bearer": "NONE", "reason": "RN4, as at row 29: the generator of the answering m= section is not named, and 'application' is the field's value"},
+  {"n": 39, "bearer": "Clients", "reason": "named in the next sentence as the party that generates and publishes KeyPackages; reuse is theirs to avoid"},
+  {"n": 40, "bearer": "the endpoints", "reason": "the payload is constructed by the sending endpoint, and the paragraph names the parties only collectively as 'the endpoints'. Weaker than rows 35 or 36 and recorded as such"}
+ ]
+}

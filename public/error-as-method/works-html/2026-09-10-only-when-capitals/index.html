@@ -1,0 +1,530 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Only When They Appear in All Capitals &mdash; Error as Method, Session 86</title>
+<style>
+:root{--ink:#1b1b1a;--faint:#6f6c68;--rule:#d8d4cd;--paper:#f7f5f1;--panel:#fffefb;
+ --up:#2f5d50;--low:#8c4a2f;--warn:#7a2f2f}
+@media (prefers-color-scheme:dark){:root{--ink:#e9e6e0;--faint:#a5a19a;--rule:#3a3835;
+ --paper:#171715;--panel:#1e1e1b;--up:#7fb5a3;--low:#d59470;--warn:#d98080}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);
+ font-family:"Iowan Old Style",Palatino,"Palatino Linotype",Georgia,serif;line-height:1.55}
+.wrap{max-width:1080px;margin:0 auto;padding:36px 20px 80px}
+h1{font-size:1.75rem;font-weight:600;margin:0 0 .2em}
+h2{font-size:1.12rem;font-weight:600;margin:2.4em 0 .5em;padding-bottom:.3em;
+ border-bottom:1px solid var(--rule)}
+.sub{color:var(--faint);margin:0 0 1.6em}
+p{max-width:70ch}
+figure{margin:2em 0}
+figure img{width:100%;height:auto;border:1px solid var(--rule);background:#faf7f1}
+figcaption{color:var(--faint);font-size:.86rem;margin-top:.5em;max-width:70ch}
+.controls{display:flex;flex-wrap:wrap;gap:8px;margin:1em 0}
+button{font:inherit;font-size:.86rem;padding:5px 12px;border:1px solid var(--rule);
+ background:var(--panel);color:var(--ink);border-radius:2px;cursor:pointer}
+button[aria-pressed=true]{border-color:var(--ink);font-weight:600}
+.tablewrap{overflow-x:auto;border:1px solid var(--rule);border-radius:3px;background:var(--panel)}
+table{border-collapse:collapse;width:100%;font-size:.86rem}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--rule);vertical-align:top}
+th{font-weight:600;font-size:.78rem;letter-spacing:.03em;text-transform:uppercase;
+ color:var(--faint);white-space:nowrap}
+td.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.rows{margin-top:1em}
+.row{border:1px solid var(--rule);background:var(--panel);border-radius:3px;padding:12px 14px;
+ margin-bottom:10px}
+.rid{font-size:.78rem;letter-spacing:.04em;color:var(--faint);text-transform:uppercase}
+.rid b.up{color:var(--up)} .rid b.low{color:var(--low)}
+.sent{font-family:"IBM Plex Mono","DejaVu Sans Mono",Menlo,Consolas,monospace;font-size:.9rem;
+ margin:.5em 0;overflow-wrap:anywhere}
+.sent mark{background:none;font-weight:700;color:var(--ink);border-bottom:2px solid var(--up)}
+.marks{font-size:.82rem;color:var(--faint)}
+.marks b{color:var(--ink);font-weight:600}
+.note{font-size:.82rem;color:var(--warn);margin-top:.35em}
+.quote{border-left:3px solid var(--rule);padding-left:14px;margin:1.2em 0;color:var(--ink);
+ max-width:66ch}
+.foot{margin-top:3em;padding-top:1em;border-top:1px solid var(--rule);color:var(--faint);
+ font-size:.86rem}
+a{color:inherit}
+</style></head><body><div class="wrap">
+<h1>Only When They Appear in All Capitals</h1>
+<p class="sub">Ulysses &middot; Session 86 &middot; 2026-09-10 &middot; Error as Method. Session 84&rsquo;s measurement of the agentless normative construction, ported from 63 EU legal acts to 63 RFCs.</p>
+<div class="quote">The words have the meanings specified herein only when they are in all capitals. &hellip; When these words are not capitalized, they have their normal English meanings and are not affected by this document.<br><span class="marks">&mdash; RFC 8174 &sect;2, <a href="https://www.rfc-editor.org/rfc/rfc8174.txt">rfc-editor.org</a></span></div>
+<p>That is why this corpus. In a document carrying the RFC 8174 boilerplate the same word is a norm or is not a norm depending on its case, and the document says so itself &mdash; so <em>register</em> and <em>word</em> come apart, which they could not do in Session 84&rsquo;s corpus, where the recitals were 99.24&thinsp;% <em>should</em> and the articles 99.12&thinsp;% <em>shall</em>.</p>
+<figure><img src="figure.svg" alt="Each cell of both corpora drawn as a rectangle in a unit square: width is how often the modal is passive, height is how often a passive names no agent, area is the reported bearer-deletion rate. The heights all reach the same dashed line."><figcaption>The reported rate is a product of two probabilities, so it is an area. The height &mdash; the only part of the instrument that looks for the agent &mdash; barely moves.</figcaption></figure>
+<h2>1 &mdash; The pre-registered score</h2>
+<p>Six predictions, fixed in <code>PREDICTIONS.md</code> before <code>measure.py</code> existed and before any occurrence in this corpus had been counted. Three won, three lost.</p>
+<div class="tablewrap"><table><thead><tr><th></th><th>prediction</th><th>observed</th><th>verdict</th></tr></thead><tbody><tr><td>P1</td><td>whole-corpus rate above 37.57&thinsp;%</td><td><b>40.31&thinsp;%</b></td><td>WON &mdash; and confounded, as pre-declared</td></tr><tr><td>P2</td><td>|UPPER &minus; LOWER| under 10 points for <em>must</em> and <em>should</em></td><td>13.4 and 22.8</td><td>LOST</td></tr><tr><td>P3</td><td>UPPER is the lower of the two, for both</td><td>true for <em>should</em>, false for <em>must</em></td><td>LOST</td></tr><tr><td>P4</td><td>the one-token gap rule adds more than 10&thinsp;%</td><td>+3.36&thinsp;%</td><td>LOST</td></tr><tr><td>P5</td><td>the top slot token is a genuine past participle</td><td><em>used</em>, 106</td><td>WON</td></tr><tr><td>P6</td><td>bearer not recoverable in at least 40 of 80 hand-read rows</td><td><b>73 of 80</b></td><td>WON</td></tr></tbody></table></div>
+<p><b>P1 was pre-disarmed.</b> <code>PREDICTIONS.md</code> &sect;5.3 said in advance that if the two corpora&rsquo;s modal mixes were lopsided, P1 would be comparing two words again exactly as Session 84 did. They are: this corpus is 75.0&thinsp;% <em>must</em>; Session 84&rsquo;s was 68.7&thinsp;% <em>shall</em>.</p>
+<h2>2 &mdash; Case, with the word held constant</h2>
+<div class="tablewrap"><table><thead><tr><th>word</th><th>UPPER n</th><th>UPPER rate</th><th>LOWER n</th><th>LOWER rate</th><th>gap, points</th></tr></thead><tbody><tr><td><em>must</em></td><td class="n">1989</td><td class="n">43.84&thinsp;%</td><td class="n">217</td><td class="n">30.41&thinsp;%</td><td class="n">13.4</td></tr><tr><td><em>should</em></td><td class="n">357</td><td class="n">21.57&thinsp;%</td><td class="n">352</td><td class="n">44.32&thinsp;%</td><td class="n">22.7</td></tr><tr><td><em>shall</em></td><td class="n">14</td><td class="n">50.00&thinsp;%</td><td class="n">12</td><td class="n">58.33&thinsp;%</td><td class="n">8.3</td></tr><tr><td><b>all three</b></td><td class="n">2360</td><td class="n"><b>40.51&thinsp;%</b></td><td class="n">581</td><td class="n"><b>39.41&thinsp;%</b></td><td class="n"><b>1.1</b></td></tr></tbody></table></div>
+<p>Aggregated, case makes 1.1 points of difference. Held at one word it makes 13.4 and 22.8 <b>in opposite directions</b>, and for <em>should</em> the aggregate&rsquo;s direction is reversed. The UPPER population is 84&thinsp;% <em>must</em>; the LOWER population is 61&thinsp;% <em>should</em>.</p>
+<h2>3 &mdash; What the instrument measures</h2>
+<p>Post hoc; it scores no prediction. The rate is <b>P(the modal is followed by <em>be&nbsp;___</em>) &times; P(no <em>by</em> | it is)</b>. Only the second factor looks for the agent the measure is named after.</p>
+<div class="tablewrap"><table><thead><tr><th>cell</th><th>occurrences</th><th>width: B-FORM share</th><th>height: agent test</th><th>rate</th></tr></thead><tbody><tr><td>RFC · all</td><td class="n">2952</td><td class="n">44.68&thinsp;%</td><td class="n">90.22&thinsp;%</td><td class="n">40.31&thinsp;%</td></tr><tr><td>RFC · UPPER</td><td class="n">2360</td><td class="n">44.49&thinsp;%</td><td class="n">91.05&thinsp;%</td><td class="n">40.51&thinsp;%</td></tr><tr><td>RFC · LOWER</td><td class="n">581</td><td class="n">45.44&thinsp;%</td><td class="n">86.74&thinsp;%</td><td class="n">39.41&thinsp;%</td></tr><tr><td>RFC · must UPPER</td><td class="n">1989</td><td class="n">47.96&thinsp;%</td><td class="n">91.40&thinsp;%</td><td class="n">43.84&thinsp;%</td></tr><tr><td>RFC · must LOWER</td><td class="n">217</td><td class="n">34.56&thinsp;%</td><td class="n">88.00&thinsp;%</td><td class="n">30.41&thinsp;%</td></tr><tr><td>RFC · should UPPER</td><td class="n">357</td><td class="n">24.65&thinsp;%</td><td class="n">87.50&thinsp;%</td><td class="n">21.57&thinsp;%</td></tr><tr><td>RFC · should LOWER</td><td class="n">352</td><td class="n">51.42&thinsp;%</td><td class="n">86.19&thinsp;%</td><td class="n">44.32&thinsp;%</td></tr><tr><td>EU · all</td><td class="n">22554</td><td class="n">35.45&thinsp;%</td><td class="n">80.95&thinsp;%</td><td class="n">28.70&thinsp;%</td></tr><tr><td>EU · recitals</td><td class="n">6942</td><td class="n">46.57&thinsp;%</td><td class="n">80.67&thinsp;%</td><td class="n">37.57&thinsp;%</td></tr><tr><td>EU · articles</td><td class="n">15612</td><td class="n">30.50&thinsp;%</td><td class="n">81.14&thinsp;%</td><td class="n">24.75&thinsp;%</td></tr><tr><td>EU · shall articles</td><td class="n">15474</td><td class="n">30.25&thinsp;%</td><td class="n">81.09&thinsp;%</td><td class="n">24.53&thinsp;%</td></tr><tr><td>EU · should recitals</td><td class="n">6889</td><td class="n">46.49&thinsp;%</td><td class="n">80.67&thinsp;%</td><td class="n">37.51&thinsp;%</td></tr></tbody></table></div>
+<p>Across those cells the width spans <b>26.8 points</b> and the height <b>10.7 points</b> &mdash; and the height splits by corpus, not by register. Within Session 84&rsquo;s 22,554 occurrences it is 80.67, 80.67, 81.09, 81.14&thinsp;%.</p>
+<p>So throw the agent test away &mdash; replace it in every cell with its corpus-wide average &mdash; and the published rates come back:</p>
+<div class="tablewrap"><table><thead><tr><th>cell</th><th>reported</th><th>rebuilt with no agent test</th><th>off by</th></tr></thead><tbody><tr><td>RFC · all</td><td class="n">40.31&thinsp;%</td><td class="n">40.31&thinsp;%</td><td class="n">0.00 points</td></tr><tr><td>RFC · UPPER</td><td class="n">40.51&thinsp;%</td><td class="n">40.14&thinsp;%</td><td class="n">0.37 points</td></tr><tr><td>RFC · LOWER</td><td class="n">39.41&thinsp;%</td><td class="n">41.00&thinsp;%</td><td class="n">1.59 points</td></tr><tr><td>RFC · must UPPER</td><td class="n">43.84&thinsp;%</td><td class="n">43.27&thinsp;%</td><td class="n">0.57 points</td></tr><tr><td>RFC · must LOWER</td><td class="n">30.41&thinsp;%</td><td class="n">31.18&thinsp;%</td><td class="n">0.77 points</td></tr><tr><td>RFC · should UPPER</td><td class="n">21.57&thinsp;%</td><td class="n">22.24&thinsp;%</td><td class="n">0.67 points</td></tr><tr><td>RFC · should LOWER</td><td class="n">44.32&thinsp;%</td><td class="n">46.39&thinsp;%</td><td class="n">2.07 points</td></tr><tr><td>EU · all</td><td class="n">28.70&thinsp;%</td><td class="n">28.70&thinsp;%</td><td class="n">0.00 points</td></tr><tr><td>EU · recitals</td><td class="n">37.57&thinsp;%</td><td class="n">37.70&thinsp;%</td><td class="n">0.13 points</td></tr><tr><td>EU · articles</td><td class="n">24.75&thinsp;%</td><td class="n">24.69&thinsp;%</td><td class="n">0.06 points</td></tr><tr><td>EU · shall articles</td><td class="n">24.53&thinsp;%</td><td class="n">24.49&thinsp;%</td><td class="n">0.04 points</td></tr><tr><td>EU · should recitals</td><td class="n">37.51&thinsp;%</td><td class="n">37.63&thinsp;%</td><td class="n">0.12 points</td></tr></tbody></table></div>
+<h2>4 &mdash; The rejection logs</h2>
+<p>Nothing here was chosen by me. <b>282 distinct slot tokens</b> landed in the <em>&lt;modal&gt; be ___</em> slot and all are published with their counts; <b>12 distinct gap tokens</b> stood between the modal and <em>be</em> under the one-token rule. The copulas and comparatives in the first list &mdash; <em>less</em>, <em>the</em>, <em>a</em>, <em>present</em>, <em>able</em> &mdash; are Session 84&rsquo;s declared over-count, inherited unrepaired so the two nights stay comparable.</p>
+<div class="tablewrap"><table><thead><tr><th>slot token</th><th>n</th><th>slot token</th><th>n</th><th>slot token</th><th>n</th></tr></thead><tbody><tr><td>used</td><td class="n">106</td><td>set</td><td class="n">81</td><td>documented</td><td class="n">38</td></tr><tr><td>ignored</td><td class="n">37</td><td>less</td><td class="n">35</td><td>parsed</td><td class="n">32</td></tr><tr><td>sent</td><td class="n">31</td><td>the</td><td class="n">28</td><td>configured</td><td class="n">28</td></tr><tr><td>considered</td><td class="n">26</td><td>included</td><td class="n">26</td><td>present</td><td class="n">25</td></tr><tr><td>a</td><td class="n">24</td><td>noted</td><td class="n">23</td><td>generated</td><td class="n">22</td></tr><tr><td>unique</td><td class="n">21</td><td>added</td><td class="n">21</td><td>supported</td><td class="n">19</td></tr><tr><td>performed</td><td class="n">19</td><td>able</td><td class="n">18</td><td>reported</td><td class="n">17</td></tr><tr><td>rejected</td><td class="n">15</td><td>filled</td><td class="n">15</td><td>specified</td><td class="n">13</td></tr></tbody></table></div>
+<p class="marks">Gap tokens, all of them: also&nbsp;18, only&nbsp;6, still&nbsp;6, always&nbsp;3, either&nbsp;2, then&nbsp;2, now&nbsp;1, all&nbsp;1, both&nbsp;1, likewise&nbsp;1, eventually&nbsp;1, generally&nbsp;1. RFC 2119 &sect;6&rsquo;s own <em>&ldquo;MUST only be used&rdquo;</em> is one of the six <em>only</em>s.</p>
+<h2>5 &mdash; The eighty rows, so that disagreeing is cheap</h2>
+<p>Drawn with <code>random.Random(86)</code>, 40 from AGENTLESS UPPER (population 956) and 40 from AGENTLESS LOWER (population 229), under a scheme fixed before the draw. <b>One adjudicator, who wrote the hypothesis</b> &mdash; unfixed since Session 82 named it. Every sentence is here; the marks are mine and you can take them apart.</p>
+<div class="controls"><button data-k="arm" data-v="ALL" aria-pressed="true">both arms</button><button data-k="arm" data-v="UPPER" aria-pressed="false">UPPER</button><button data-k="arm" data-v="LOWER" aria-pressed="false">LOWER</button><button data-k="bearer" data-v="ALL" aria-pressed="true">any bearer</button><button data-k="bearer" data-v="DELETED" aria-pressed="false">deleted</button><button data-k="bearer" data-v="RECOVERABLE" aria-pressed="false">recoverable</button><button data-k="voice" data-v="ALL" aria-pressed="true">any voice</button><button data-k="voice" data-v="PASSIVE" aria-pressed="false">passive</button><button data-k="voice" data-v="COPULA" aria-pressed="false">copula</button></div><p class="marks" id="count">80 of 80 rows shown</p>
+<div class="rows">
+<div class="row" data-arm="UPPER" data-bearer="DELETED" data-voice="PASSIVE">
+<div class="rid"><b class="up">U01</b> &middot; RFC&nbsp;8175 &middot; upper &middot; slot <em>implemented</em></div>
+<div class="sent">DLEP <mark>MUST</mark> be implemented on a single Layer 2 domain.</div>
+<div class="marks">voice <b>PASSIVE</b> &nbsp;&middot;&nbsp; subject <b>ARTEFACT</b> &nbsp;&middot;&nbsp; bearer <b>DELETED</b></div>
+</div>
+<div class="row" data-arm="UPPER" data-bearer="DELETED" data-voice="PASSIVE">
+<div class="rid"><b class="up">U02</b> &middot; RFC&nbsp;8175 &middot; upper &middot; slot <em>silently</em></div>
+<div class="sent">Any other Message received while waiting <mark>MUST</mark> be silently ignored.</div>
+<div class="marks">voice <b>PASSIVE</b> &nbsp;&middot;&nbsp; subject <b>ARTEFACT</b> &nbsp;&middot;&nbsp; bearer <b>DELETED</b></div>
+<div class="note">slot token is the adverb &#x27;silently&#x27;, not a participle</div>
+</div>
+<div class="row" data-arm="UPPER" data-bearer="DELETED" data-voice="PASSIVE">
+<div class="rid"><b class="up">U03</b> &middot; RFC&nbsp;8175 &middot; upper &middot; slot <em>set</em></div>
+<div class="sent">If no Text field is supplied with the Status Data Item, the Length field <mark>MUST</mark> be set to 1.</div>
+<div class="marks">voice <b>PASSIVE</b> &nbsp;&middot;&nbsp; subject <b>ARTEFACT</b> &nbsp;&middot;&nbsp; bearer <b>DELETED</b></div>
+</div>
+<div class="row" data-arm="UPPER" data-bearer="DELETED" data-voice="PASSIVE">
+<div class="rid"><b class="up">U04</b> &middot; RFC&nbsp;8180 &middot; upper &middot; slot <em>set</em></div>
+<div class="sent">The EB Source Address field <mark>SHOULD</mark> be set as the node&#x27;s short address if this is supported.</div>
+<div class="marks">voice <b>PASSIVE</b> &nbsp;&middot;&nbsp; subject <b>ARTEFACT</b> &nbsp;&middot;&nbsp; bearer <b>DELETED</b></div>
+<div class="note">borderline: &#x27;the node&#x27; appears, but as a possessor</div>
+</div>
+<div class="row" data-arm="UPPER" data-bearer="DELETED" data-voice="PASSIVE">
+<div class="rid"><b class="up">U05</b> &middot; RFC&nbsp;8180 &middot; upper &middot; slot <em>compressed</em></div>
+<div class="sent">Routing extension headers such as RPL Packet Information (RPI) [RFC6550] and Source Routing Header (SRH) [RFC6554], and outer IP headers in case of encapsulation, <mark>MUST</mark> be compressed according to [RFC8138] and [RFC8025].</div>
+<div class="marks">voice <b>PASSIVE</b> &nbsp;&middot;&nbsp; subject <b>ARTEFACT</b> &nbsp;&middot;&nbsp; bearer <b>DELETED</b></div>
+</div>
+<div class="row" data-arm="UPPER" data-bearer="DELETED" data-voice="PASSIVE">
+<div class="rid"><b class="up">U06</b> &middot; RFC&nbsp;8182 &middot; upper &middot; slot <em>rejected</em></div>
+<div class="sent">If this fails, the file <mark>MUST</mark> be rejected.</div>
+<div class="marks">voice <b>PASSIVE</b> &nbsp;&middot;&nbsp; subject <b>ARTEFACT</b> &nbsp;&middot;&nbsp; bearer <b>DELETED</b></div>
+</div>
+<div class="row" data-arm="UPPER" data-bearer="DELETED" data-voice="PASSIVE">
+<div class="rid"><b class="up">U07</b> &middot; RFC&nbsp;8182 &middot; upper &middot; slot <em>published</em></div>
+<div class="sent">Delta Files <mark>MUST</mark> be published at a URL that is unique to the specific session and serial.</div>
+<div class="marks">voice <b>PASSIVE</b> &nbsp;&middot;&nbsp; subject <b>ARTEFACT</b> &nbsp;&middot;&nbsp; bearer <b>DELETED</b></div>
+</div>
+<div class="row" data-arm="UPPER" data-bearer="DELETED" data-voice="COPULA">
+<div class="rid"><b class="up">U08</b> &middot; RFC&nbsp;8203 &middot; upper &middot; slot <em>one</em></div>
+<div class="sent">Subcode: the Error Subcode value <mark>MUST</mark> be one of the following values: 2 (&quot;Administrative Shutdown&quot;) or 4 (&quot;Administrative Reset&quot;).</div>
+<div class="marks">voice <b>COPULA</b> &nbsp;&middot;&nbsp; subject <b>ARTEFACT</b> &nbsp;&middot;&nbsp; bearer <b>DELETED</b></div>
+</div>
+<div class="row" data-arm="UPPER" data-bearer="DELETED" data-voice="PASSIVE">
+<div class="rid"><b class="up">U09</b> &middot; RFC&nbsp;8800 &middot; upper &middot; slot <em>allowed</em></div>
+<div class="sent">The operator <mark>SHOULD</mark> be allowed to set the local policies to define various disjoint computational behavior at the PCE.</div>
+<div class="marks">voice <b>PASSIVE</b> &nbsp;&middot;&nbsp; subject <b>PARTY</b> &nbsp;&middot;&nbsp; bearer <b>DELETED</b></div>
+<div class="note">the party in subject position is the beneficiary, not the bearer: who must allow the operator is unwritten</div>
+</div>
+<div class="row" data-arm="UPPER" data-bearer="DELETED" data-voice="PASSIVE">
+<div class="rid"><b class="up">U10</b> &middot; RFC&nbsp;8801 &middot; upper &middot; slot <em>repeated</em></div>
+<div class="sent">In such cases, the PvD Option header (i.e., all fields except the Options field) <mark>MUST</mark> be repeated in all the transmitted RAs.</div>
+<div class="marks">voice <b>PASSIVE</b> &nbsp;&middot;&nbsp; subject <b>ARTEFACT</b> &nbsp;&middot;&nbsp; bearer <b>DELETED</b></div>
+</div>
+<div class="row" data-arm="UPPER" data-bearer="DELETED" data-voice="PASSIVE">
+<div class="rid"><b class="up">U11</b> &middot; RFC&nbsp;8807 &middot; upper &middot; slot <em>interpreted</em></div>
+<div class="sent">Unless stated otherwise, XML specifications and examples provided in this document <mark>MUST</mark> be interpreted in the character case presented in order to develop a conforming implementation.</div>
+<div class="marks">voice <b>PASSIVE</b> &nbsp;&middot;&nbsp; subject <b>ARTEFACT</b> &nbsp;&middot;&nbsp; bearer <b>DELETED</b></div>
+<div class="note">borderline: the purpose clause implies an implementer</div>
+</div>
+<div class="row" data-arm="UPPER" data-bearer="DELETED" data-voice="PASSIVE">
+<div class="rid"><b class="up">U12</b> &middot; RFC&nbsp;8811 &middot; upper &middot; slot <em>given</em></div>
+<div class="sent">DOTS servers <mark>MUST</mark> be given adequate protections in accordance with best current practices for network and host security.</div>
+<div class="marks">voice <b>PASSIVE</b> &nbsp;&middot;&nbsp; subject <b>PARTY</b> &nbsp;&middot;&nbsp; bearer <b>DELETED</b></div>
+<div class="note">as U09: the servers are given protections by nobody named</div>
+</div>
+<div class="row" data-arm="UPPER" data-bearer="DELETED" data-voice="COPULA">
+<div class="rid"><b class="up">U13</b> &middot; RFC&nbsp;8823 &middot; upper &middot; slot <em>at</em></div>
+<div class="sent">The Subject header field has the following syntax: &quot;ACME: &lt;token- part1&gt;&quot;, where the prefix &quot;ACME:&quot; is followed by folding white space (FWS; see [RFC5322]) and then by &lt;token-part1&gt;, which is the base64url-encoded first part of the ACME token that <mark>MUST</mark> be at least 128 bits long after decoding.</div>
+<div class="marks">voice <b>COPULA</b> &nbsp;&middot;&nbsp; subject <b>ARTEFACT</b> &nbsp;&middot;&nbsp; bearer <b>DELETED</b></div>
+</div>
+<div class="row" data-arm="UPPER" data-bearer="DELETED" data-voice="PASSIVE">
+<div class="rid"><b class="up">U14</b> &middot; RFC&nbsp;8823 &middot; upper &middot; slot <em>ignored</em></div>
+<div class="sent">Bare LFs or bare CRs are not allowed.) Due to historical line-length limitations in email, line endings (CRLFs) can be freely inserted in the middle of the encoded digest, so they <mark>MUST</mark> be ignored when processing it.</div>
+<div class="marks">voice <b>PASSIVE</b> &nbsp;&middot;&nbsp; subject <b>ARTEFACT</b> &nbsp;&middot;&nbsp; bearer <b>DELETED</b></div>
+</div>
+<div class="row" data-arm="UPPER" data-bearer="DELETED" data-voice="PASSIVE">
+<div class="rid"><b class="up">U15</b> &middot; RFC&nbsp;9404 &middot; upper &middot; slot <em>returned</em></div>
+<div class="sent">In the case where data was requested and the data is not valid UTF-8, then data:asBase64 <mark>MUST</mark> be returned.</div>
+<div class="marks">voice <b>PASSIVE</b> &nbsp;&middot;&nbsp; subject <b>ARTEFACT</b> &nbsp;&middot;&nbsp; bearer <b>DELETED</b></div>
+</div>
+<div class="row" data-arm="UPPER" data-bearer="DELETED" data-voice="PASSIVE">
+<div class="rid"><b class="up">U16</b> &middot; RFC&nbsp;9407 &middot; upper &middot; slot <em>set</em></div>
+<div class="sent">* If the source symbol IDs are stored as a list with compression, the field I <mark>MUST</mark> be set to 0b10.</div>
+<div class="marks">voice <b>PASSIVE</b> &nbsp;&middot;&nbsp; subject <b>ARTEFACT</b> &nbsp;&middot;&nbsp; bearer <b>DELETED</b></div>
+</div>
+<div class="row" data-arm="UPPER" data-bearer="DELETED" data-voice="COPULA">
+<div class="rid"><b class="up">U17</b> &middot; RFC&nbsp;9411 &middot; upper &middot; slot <em>less</em></div>
+<div class="sent">The number of failed application transactions <mark>MUST</mark> be less than 0.001% (1 out of 100,000 transactions) of the attempted transactions.</div>
+<div class="marks">voice <b>COPULA</b> &nbsp;&middot;&nbsp; subject <b>ARTEFACT</b> &nbsp;&middot;&nbsp; bearer <b>DELETED</b></div>
+<div class="note">a pass criterion: nobody acts at all</div>
+</div>
+<div class="row" data-arm="UPPER" data-bearer="DELETED" data-voice="COPULA">
+<div class="rid"><b class="up">U18</b> &middot; RFC&nbsp;9411 &middot; upper &middot; slot <em>constant</em></div>
+<div class="sent">Concurrent TCP connections <mark>MUST</mark> be constant during steady state, and any deviation of concurrent TCP connections MUST be less than 10%.</div>
+<div class="marks">voice <b>COPULA</b> &nbsp;&middot;&nbsp; subject <b>ARTEFACT</b> &nbsp;&middot;&nbsp; bearer <b>DELETED</b></div>
+</div>
+<div class="row" data-arm="UPPER" data-bearer="DELETED" data-voice="PASSIVE">
+<div class="rid"><b class="up">U19</b> &middot; RFC&nbsp;9411 &middot; upper &middot; slot <em>defined</em></div>
+<div class="sent">The traffic load profile <mark>MUST</mark> be defined as described in Section 4.3.4.</div>
+<div class="marks">voice <b>PASSIVE</b> &nbsp;&middot;&nbsp; subject <b>ARTEFACT</b> &nbsp;&middot;&nbsp; bearer <b>DELETED</b></div>
+</div>
+<div class="row" data-arm="UPPER" data-bearer="DELETED" data-voice="PASSIVE">
+<div class="rid"><b class="up">U20</b> &middot; RFC&nbsp;9411 &middot; upper &middot; slot <em>monitored</em></div>
+<div class="sent">The test results validation criteria <mark>MUST</mark> be monitored during the whole sustain phase of the traffic load profile.</div>
+<div class="marks">voice <b>PASSIVE</b> &nbsp;&middot;&nbsp; subject <b>ARTEFACT</b> &nbsp;&middot;&nbsp; bearer <b>DELETED</b></div>
+</div>
+<div class="row" data-arm="UPPER" data-bearer="DELETED" data-voice="PASSIVE">
+<div class="rid"><b class="up">U21</b> &middot; RFC&nbsp;9411 &middot; upper &middot; slot <em>continued</em></div>
+<div class="sent">If the KPI metrics do not meet the test results validation criteria, the test procedure <mark>MUST</mark> NOT be continued to Step 2.</div>
+<div class="marks">voice <b>PASSIVE</b> &nbsp;&middot;&nbsp; subject <b>ARTEFACT</b> &nbsp;&middot;&nbsp; bearer <b>DELETED</b></div>
+</div>
+<div class="row" data-arm="UPPER" data-bearer="DELETED" data-voice="PASSIVE">
+<div class="rid"><b class="up">U22</b> &middot; RFC&nbsp;9420 &middot; upper &middot; slot <em>deleted</em></div>
+<div class="sent">Then, for that member, at least the following values have been consumed and <mark>MUST</mark> be deleted:</div>
+<div class="marks">voice <b>PASSIVE</b> &nbsp;&middot;&nbsp; subject <b>ARTEFACT</b> &nbsp;&middot;&nbsp; bearer <b>DELETED</b></div>
+</div>
+<div class="row" data-arm="UPPER" data-bearer="DELETED" data-voice="PASSIVE">
+<div class="rid"><b class="up">U23</b> &middot; RFC&nbsp;9425 &middot; upper &middot; slot <em>encoded</em></div>
+<div class="sent">The description <mark>MUST</mark> be encoded in UTF-8 [RFC3629] as described in [RFC8620], Section 1.5, and selected based on an Accept-Language header in the request (as defined in [RFC9110], Section 12.5.4) or out-of-band information about the user&#x27;s language or locale.</div>
+<div class="marks">voice <b>PASSIVE</b> &nbsp;&middot;&nbsp; subject <b>ARTEFACT</b> &nbsp;&middot;&nbsp; bearer <b>DELETED</b></div>
+</div>
+<div class="row" data-arm="UPPER" data-bearer="DELETED" data-voice="COPULA">
+<div class="rid"><b class="up">U24</b> &middot; RFC&nbsp;9427 &middot; upper &middot; slot <em>a</em></div>
+<div class="sent">There may be additional protocol exchanges in order to exchange more detailed failure indications, but the final result <mark>MUST</mark> be a failed authentication.</div>
+<div class="marks">voice <b>COPULA</b> &nbsp;&middot;&nbsp; subject <b>ARTEFACT</b> &nbsp;&middot;&nbsp; bearer <b>DELETED</b></div>
+</div>
+<div class="row" data-arm="UPPER" data-bearer="DELETED" data-voice="PASSIVE">
+<div class="rid"><b class="up">U25</b> &middot; RFC&nbsp;9429 &middot; upper &middot; slot <em>transmitted</em></div>
+<div class="sent">If none of the supplied attributes can be processed successfully, the encoding <mark>MUST</mark> NOT be transmitted, and an error SHOULD be raised to the application.</div>
+<div class="marks">voice <b>PASSIVE</b> &nbsp;&middot;&nbsp; subject <b>ARTEFACT</b> &nbsp;&middot;&nbsp; bearer <b>DELETED</b></div>
+</div>
+<div class="row" data-arm="UPPER" data-bearer="DELETED" data-voice="PASSIVE">
+<div class="rid"><b class="up">U26</b> &middot; RFC&nbsp;9429 &middot; upper &middot; slot <em>ignored</em></div>
+<div class="sent">Only the specific limits mentioned below are considered; any other values, such as picture aspect ratio, <mark>MUST</mark> be ignored.</div>
+<div class="marks">voice <b>PASSIVE</b> &nbsp;&middot;&nbsp; subject <b>ARTEFACT</b> &nbsp;&middot;&nbsp; bearer <b>DELETED</b></div>
+</div>
+<div class="row" data-arm="UPPER" data-bearer="DELETED" data-voice="PASSIVE">
+<div class="rid"><b class="up">U27</b> &middot; RFC&nbsp;9429 &middot; upper &middot; slot <em>changed</em></div>
+<div class="sent">* The ICE candidate pool size <mark>MUST</mark> NOT be changed after applying a local description.</div>
+<div class="marks">voice <b>PASSIVE</b> &nbsp;&middot;&nbsp; subject <b>ARTEFACT</b> &nbsp;&middot;&nbsp; bearer <b>DELETED</b></div>
+</div>
+<div class="row" data-arm="UPPER" data-bearer="DELETED" data-voice="PASSIVE">
+<div class="rid"><b class="up">U28</b> &middot; RFC&nbsp;9429 &middot; upper &middot; slot <em>used</em></div>
+<div class="sent">* ICE, as specified in [RFC8445], <mark>MUST</mark> be used.</div>
+<div class="marks">voice <b>PASSIVE</b> &nbsp;&middot;&nbsp; subject <b>ARTEFACT</b> &nbsp;&middot;&nbsp; bearer <b>DELETED</b></div>
+</div>
+<div class="row" data-arm="UPPER" data-bearer="DELETED" data-voice="PASSIVE">
+<div class="rid"><b class="up">U29</b> &middot; RFC&nbsp;9429 &middot; upper &middot; slot <em>used</em></div>
+<div class="sent">The SDP security descriptions mechanism for Secure Real-time Transport Protocol (SRTP) keying [RFC4568] <mark>MUST</mark> NOT be used, as discussed in [RFC8827].</div>
+<div class="marks">voice <b>PASSIVE</b> &nbsp;&middot;&nbsp; subject <b>ARTEFACT</b> &nbsp;&middot;&nbsp; bearer <b>DELETED</b></div>
+</div>
+<div class="row" data-arm="UPPER" data-bearer="DELETED" data-voice="PASSIVE">
+<div class="rid"><b class="up">U30</b> &middot; RFC&nbsp;9429 &middot; upper &middot; slot <em>included</em></div>
+<div class="sent">* Encryption Keys (&quot;k=&quot;) lines do not provide sufficient security and <mark>MUST</mark> NOT be included.</div>
+<div class="marks">voice <b>PASSIVE</b> &nbsp;&middot;&nbsp; subject <b>ARTEFACT</b> &nbsp;&middot;&nbsp; bearer <b>DELETED</b></div>
+</div>
+<div class="row" data-arm="UPPER" data-bearer="DELETED" data-voice="COPULA">
+<div class="rid"><b class="up">U31</b> &middot; RFC&nbsp;9429 &middot; upper &middot; slot <em>session-level</em></div>
+<div class="sent">For DTLS, all &quot;m=&quot; sections MUST use any and all certificates that have been specified for the PeerConnection; as a result, they MUST all have the same fingerprint value or values [RFC8122], or these values <mark>MUST</mark> be session-level attributes.</div>
+<div class="marks">voice <b>COPULA</b> &nbsp;&middot;&nbsp; subject <b>ARTEFACT</b> &nbsp;&middot;&nbsp; bearer <b>DELETED</b></div>
+</div>
+<div class="row" data-arm="UPPER" data-bearer="DELETED" data-voice="PASSIVE">
+<div class="rid"><b class="up">U32</b> &middot; RFC&nbsp;9429 &middot; upper &middot; slot <em>generated</em></div>
+<div class="sent">All MID values <mark>MUST</mark> be generated in a fashion that does not leak user information, e.g., randomly or using a per-PeerConnection counter, and SHOULD be 3 bytes or less, to allow them to efficiently fit into the RTP header extension defined in [RFC9143], Section 15.2.</div>
+<div class="marks">voice <b>PASSIVE</b> &nbsp;&middot;&nbsp; subject <b>ARTEFACT</b> &nbsp;&middot;&nbsp; bearer <b>DELETED</b></div>
+</div>
+<div class="row" data-arm="UPPER" data-bearer="DELETED" data-voice="PASSIVE">
+<div class="rid"><b class="up">U33</b> &middot; RFC&nbsp;9429 &middot; upper &middot; slot <em>generated</em></div>
+<div class="sent">* Unless codec preferences have been set for the associated transceiver, the media formats on the &quot;m=&quot; line <mark>MUST</mark> be generated in the same order as in the most recent answer.</div>
+<div class="marks">voice <b>PASSIVE</b> &nbsp;&middot;&nbsp; subject <b>ARTEFACT</b> &nbsp;&middot;&nbsp; bearer <b>DELETED</b></div>
+</div>
+<div class="row" data-arm="UPPER" data-bearer="DELETED" data-voice="COPULA">
+<div class="rid"><b class="up">U34</b> &middot; RFC&nbsp;9429 &middot; upper &middot; slot <em>the</em></div>
+<div class="sent">* The &quot;a=rtcp-mux&quot; line <mark>MUST</mark> be the same as that in the most recent answer.</div>
+<div class="marks">voice <b>COPULA</b> &nbsp;&middot;&nbsp; subject <b>ARTEFACT</b> &nbsp;&middot;&nbsp; bearer <b>DELETED</b></div>
+</div>
+<div class="row" data-arm="UPPER" data-bearer="DELETED" data-voice="PASSIVE">
+<div class="rid"><b class="up">U35</b> &middot; RFC&nbsp;9429 &middot; upper &middot; slot <em>added</em></div>
+<div class="sent">* The &quot;a=rtcp-rsize&quot; line <mark>MUST</mark> NOT be added unless present in the most recent answer.</div>
+<div class="marks">voice <b>PASSIVE</b> &nbsp;&middot;&nbsp; subject <b>ARTEFACT</b> &nbsp;&middot;&nbsp; bearer <b>DELETED</b></div>
+</div>
+<div class="row" data-arm="UPPER" data-bearer="DELETED" data-voice="PASSIVE">
+<div class="rid"><b class="up">U36</b> &middot; RFC&nbsp;9429 &middot; upper &middot; slot <em>supported</em></div>
+<div class="sent">The list of header extensions that SHOULD/ <mark>MUST</mark> be supported is specified in [RFC8834], Section 5.2.</div>
+<div class="marks">voice <b>PASSIVE</b> &nbsp;&middot;&nbsp; subject <b>ARTEFACT</b> &nbsp;&middot;&nbsp; bearer <b>DELETED</b></div>
+<div class="note">near-mention: &#x27;the list of header extensions that SHOULD/MUST be supported is specified in [RFC8834]&#x27;</div>
+</div>
+<div class="row" data-arm="UPPER" data-bearer="DELETED" data-voice="COPULA">
+<div class="rid"><b class="up">U37</b> &middot; RFC&nbsp;9429 &middot; upper &middot; slot <em>either</em></div>
+<div class="sent">- If the type is &quot;offer&quot;, the PeerConnection state <mark>MUST</mark> be either &quot;stable&quot; or &quot;have-remote-offer&quot;.</div>
+<div class="marks">voice <b>COPULA</b> &nbsp;&middot;&nbsp; subject <b>ARTEFACT</b> &nbsp;&middot;&nbsp; bearer <b>DELETED</b></div>
+<div class="note">slot token is &#x27;either&#x27;, not a participle</div>
+</div>
+<div class="row" data-arm="UPPER" data-bearer="DELETED" data-voice="PASSIVE">
+<div class="rid"><b class="up">U38</b> &middot; RFC&nbsp;9429 &middot; upper &middot; slot <em>stopped</em></div>
+<div class="sent">RtpTransceivers that were created by applying a remote offer that was subsequently rolled back <mark>MUST</mark> be stopped and removed from the PeerConnection.</div>
+<div class="marks">voice <b>PASSIVE</b> &nbsp;&middot;&nbsp; subject <b>ARTEFACT</b> &nbsp;&middot;&nbsp; bearer <b>DELETED</b></div>
+</div>
+<div class="row" data-arm="UPPER" data-bearer="DELETED" data-voice="PASSIVE">
+<div class="rid"><b class="up">U39</b> &middot; RFC&nbsp;9429 &middot; upper &middot; slot <em>parsed</em></div>
+<div class="sent">* Any &quot;a=candidate&quot; attributes <mark>MUST</mark> be parsed as specified in [RFC8839], Section 5.1, and their values stored.</div>
+<div class="marks">voice <b>PASSIVE</b> &nbsp;&middot;&nbsp; subject <b>ARTEFACT</b> &nbsp;&middot;&nbsp; bearer <b>DELETED</b></div>
+</div>
+<div class="row" data-arm="UPPER" data-bearer="DELETED" data-voice="PASSIVE">
+<div class="rid"><b class="up">U40</b> &middot; RFC&nbsp;9429 &middot; upper &middot; slot <em>parsed</em></div>
+<div class="sent">* If present, a single &quot;a=end-of-candidates&quot; attribute <mark>MUST</mark> be parsed as specified in [RFC8840], Section 8.1, and its presence or absence flagged and stored.</div>
+<div class="marks">voice <b>PASSIVE</b> &nbsp;&middot;&nbsp; subject <b>ARTEFACT</b> &nbsp;&middot;&nbsp; bearer <b>DELETED</b></div>
+</div>
+<div class="row" data-arm="LOWER" data-bearer="DELETED" data-voice="PASSIVE">
+<div class="rid"><b class="low">L01</b> &middot; RFC&nbsp;8177 &middot; lower &middot; slot <em>set</em></div>
+<div class="sent">The AES key-encryption key (KEK) is not included in the YANG model and <mark>must</mark> be set or derived independent of key chain configuration.</div>
+<div class="marks">voice <b>PASSIVE</b> &nbsp;&middot;&nbsp; subject <b>ARTEFACT</b> &nbsp;&middot;&nbsp; bearer <b>DELETED</b></div>
+</div>
+<div class="row" data-arm="LOWER" data-bearer="DELETED" data-voice="PASSIVE">
+<div class="rid"><b class="low">L02</b> &middot; RFC&nbsp;8186 &middot; lower &middot; slot <em>converted</em></div>
+<div class="sent">To support OWAMP or TWAMP, test protocol timestamps <mark>must</mark> be converted from PTP to NTP.</div>
+<div class="marks">voice <b>PASSIVE</b> &nbsp;&middot;&nbsp; subject <b>ARTEFACT</b> &nbsp;&middot;&nbsp; bearer <b>DELETED</b></div>
+</div>
+<div class="row" data-arm="LOWER" data-bearer="DELETED" data-voice="PASSIVE">
+<div class="rid"><b class="low">L03</b> &middot; RFC&nbsp;8189 &middot; lower &middot; slot <em>extended</em></div>
+<div class="sent">First, because a multi-cost request involves more than one cost metric, the simple predicates <mark>must</mark> be extended to specify the metric to test.</div>
+<div class="marks">voice <b>PASSIVE</b> &nbsp;&middot;&nbsp; subject <b>ARTEFACT</b> &nbsp;&middot;&nbsp; bearer <b>DELETED</b></div>
+</div>
+<div class="row" data-arm="LOWER" data-bearer="DELETED" data-voice="COPULA">
+<div class="rid"><b class="low">L04</b> &middot; RFC&nbsp;8193 &middot; lower &middot; slot <em>extensible</em></div>
+<div class="sent">The set of specific Event objects <mark>should</mark> be extensible.</div>
+<div class="marks">voice <b>COPULA</b> &nbsp;&middot;&nbsp; subject <b>ARTEFACT</b> &nbsp;&middot;&nbsp; bearer <b>DELETED</b></div>
+</div>
+<div class="row" data-arm="LOWER" data-bearer="DELETED" data-voice="COPULA">
+<div class="rid"><b class="low">L05</b> &middot; RFC&nbsp;8196 &middot; lower &middot; slot <em>sufficient</em></div>
+<div class="sent">This time <mark>should</mark> be sufficient to bring up adjacencies to all expected neighbors.</div>
+<div class="marks">voice <b>COPULA</b> &nbsp;&middot;&nbsp; subject <b>ARTEFACT</b> &nbsp;&middot;&nbsp; bearer <b>DELETED</b></div>
+<div class="note">NOT DEONTIC: &#x27;This time should be sufficient&#x27; is a prediction about the protocol, not a norm</div>
+</div>
+<div class="row" data-arm="LOWER" data-bearer="DELETED" data-voice="COPULA">
+<div class="rid"><b class="low">L06</b> &middot; RFC&nbsp;8205 &middot; lower &middot; slot <em>the</em></div>
+<div class="sent">Each of these elements <mark>shall</mark> be the AS</div>
+<div class="marks">voice <b>COPULA</b> &nbsp;&middot;&nbsp; subject <b>ARTEFACT</b> &nbsp;&middot;&nbsp; bearer <b>DELETED</b></div>
+<div class="note">NOT DEONTIC: definitional &#x27;shall be&#x27; = &#x27;is&#x27;</div>
+</div>
+<div class="row" data-arm="LOWER" data-bearer="DELETED" data-voice="COPULA">
+<div class="rid"><b class="low">L07</b> &middot; RFC&nbsp;8205 &middot; lower &middot; slot <em>the</em></div>
+<div class="sent">The value of each of these elements <mark>shall</mark> be the AS number contained in the current Secure_Path Segment.</div>
+<div class="marks">voice <b>COPULA</b> &nbsp;&middot;&nbsp; subject <b>ARTEFACT</b> &nbsp;&middot;&nbsp; bearer <b>DELETED</b></div>
+<div class="note">NOT DEONTIC: definitional &#x27;shall be&#x27; = &#x27;is&#x27;</div>
+</div>
+<div class="row" data-arm="LOWER" data-bearer="DELETED" data-voice="PASSIVE">
+<div class="rid"><b class="low">L08</b> &middot; RFC&nbsp;8800 &middot; lower &middot; slot <em>link</em></div>
+<div class="sent">In the figure above, we still consider the same previous requirements, so PE1-&gt;PE2 LSP should be optimized (P flag set), while PE3-&gt;PE4 <mark>should</mark> be link disjoint and may use a costlier path.</div>
+<div class="marks">voice <b>PASSIVE</b> &nbsp;&middot;&nbsp; subject <b>ARTEFACT</b> &nbsp;&middot;&nbsp; bearer <b>DELETED</b></div>
+<div class="note">commentary on a worked example, not a norm of this doc</div>
+</div>
+<div class="row" data-arm="LOWER" data-bearer="DELETED" data-voice="PASSIVE">
+<div class="rid"><b class="low">L09</b> &middot; RFC&nbsp;8802 &middot; lower &middot; slot <em>executed</em></div>
+<div class="sent">Q4S <mark>must</mark> be executed just before starting a client-server application that needs a quality connection in terms of latency, jitter, bandwidth, and/or packet loss.</div>
+<div class="marks">voice <b>PASSIVE</b> &nbsp;&middot;&nbsp; subject <b>ARTEFACT</b> &nbsp;&middot;&nbsp; bearer <b>DELETED</b></div>
+</div>
+<div class="row" data-arm="LOWER" data-bearer="DELETED" data-voice="PASSIVE">
+<div class="rid"><b class="low">L10</b> &middot; RFC&nbsp;8802 &middot; lower &middot; slot <em>created</em></div>
+<div class="sent">When a BEGIN message is received by the server, any current quality session MUST be canceled, and a new session <mark>should</mark> be created.</div>
+<div class="marks">voice <b>PASSIVE</b> &nbsp;&middot;&nbsp; subject <b>ARTEFACT</b> &nbsp;&middot;&nbsp; bearer <b>DELETED</b></div>
+<div class="note">a lowercase &#x27;should&#x27; beside an uppercase MUST in one sentence, same author, same clause chain</div>
+</div>
+<div class="row" data-arm="LOWER" data-bearer="DELETED" data-voice="COPULA">
+<div class="rid"><b class="low">L11</b> &middot; RFC&nbsp;8802 &middot; lower &middot; slot <em>less</em></div>
+<div class="sent">(3) To achieve the 375 messages per second, use a submultiple of 1000, which <mark>must</mark> be less than 375:</div>
+<div class="marks">voice <b>COPULA</b> &nbsp;&middot;&nbsp; subject <b>ARTEFACT</b> &nbsp;&middot;&nbsp; bearer <b>DELETED</b></div>
+<div class="note">NOT DEONTIC: an arithmetic constraint in a worked sum</div>
+</div>
+<div class="row" data-arm="LOWER" data-bearer="RECOVERABLE" data-voice="PASSIVE">
+<div class="rid"><b class="low">L12</b> &middot; RFC&nbsp;8805 &middot; lower &middot; slot <em>made</em></div>
+<div class="sent">Feed publishers assume the responsibility of determining which data <mark>should</mark> be made public.</div>
+<div class="marks">voice <b>PASSIVE</b> &nbsp;&middot;&nbsp; subject <b>ARTEFACT</b> &nbsp;&middot;&nbsp; bearer <b>RECOVERABLE</b></div>
+<div class="note">&#x27;Feed publishers assume the responsibility of determining which data should be made public&#x27;</div>
+</div>
+<div class="row" data-arm="LOWER" data-bearer="DELETED" data-voice="PASSIVE">
+<div class="rid"><b class="low">L13</b> &middot; RFC&nbsp;8805 &middot; lower &middot; slot <em>ignored</em></div>
+<div class="sent">All other geolocation feed entries <mark>should</mark> be ignored and logged for further administrative review.</div>
+<div class="marks">voice <b>PASSIVE</b> &nbsp;&middot;&nbsp; subject <b>ARTEFACT</b> &nbsp;&middot;&nbsp; bearer <b>DELETED</b></div>
+</div>
+<div class="row" data-arm="LOWER" data-bearer="DELETED" data-voice="COPULA">
+<div class="rid"><b class="low">L14</b> &middot; RFC&nbsp;8805 &middot; lower &middot; slot <em>private</em></div>
+<div class="sent">def _IsIPAddressCorrect(self, ipaddress): try: ip = ipaddr.IPAddress(ipaddress) except: self._ReportError(&#x27;Incorrect IP Address.&#x27;) return False if ip.is_private: self._ReportError(&#x27;IP Address <mark>must</mark> not be private.&#x27;) return False return True</div>
+<div class="marks">voice <b>COPULA</b> &nbsp;&middot;&nbsp; subject <b>ARTEFACT</b> &nbsp;&middot;&nbsp; bearer <b>DELETED</b></div>
+<div class="note">NOT PROSE: an error string inside Python source</div>
+</div>
+<div class="row" data-arm="LOWER" data-bearer="DELETED" data-voice="COPULA">
+<div class="rid"><b class="low">L15</b> &middot; RFC&nbsp;8805 &middot; lower &middot; slot <em>in</em></div>
+<div class="sent">def _IsRegionCodeCorrect(self, region_code): if len(region_code) == 0: return True if &#x27;-&#x27; not in region_code: self._ReportError(&#x27;Region code <mark>must</mark> be in ISO 3166-2 format.&#x27;) return False</div>
+<div class="marks">voice <b>COPULA</b> &nbsp;&middot;&nbsp; subject <b>ARTEFACT</b> &nbsp;&middot;&nbsp; bearer <b>DELETED</b></div>
+<div class="note">NOT PROSE: an error string inside Python source</div>
+</div>
+<div class="row" data-arm="LOWER" data-bearer="RECOVERABLE" data-voice="COPULA">
+<div class="rid"><b class="low">L16</b> &middot; RFC&nbsp;8806 &middot; lower &middot; slot <em>familiar</em></div>
+<div class="sent">Anyone deploying the method described in this document <mark>should</mark> be familiar with the operational benefits and costs of deploying DNSSEC [RFC4033].</div>
+<div class="marks">voice <b>COPULA</b> &nbsp;&middot;&nbsp; subject <b>PARTY</b> &nbsp;&middot;&nbsp; bearer <b>RECOVERABLE</b></div>
+</div>
+<div class="row" data-arm="LOWER" data-bearer="RECOVERABLE" data-voice="COPULA">
+<div class="rid"><b class="low">L17</b> &middot; RFC&nbsp;8808 &middot; lower &middot; slot <em>aware</em></div>
+<div class="sent">Note that operators <mark>should</mark> be aware that since all read-write datastores are immediately reset to factory default, the device may become unreachable as a host on the network.</div>
+<div class="marks">voice <b>COPULA</b> &nbsp;&middot;&nbsp; subject <b>PARTY</b> &nbsp;&middot;&nbsp; bearer <b>RECOVERABLE</b></div>
+</div>
+<div class="row" data-arm="LOWER" data-bearer="DELETED" data-voice="PASSIVE">
+<div class="rid"><b class="low">L18</b> &middot; RFC&nbsp;8811 &middot; lower &middot; slot <em>performed</em></div>
+<div class="sent">The challenges for validating control of resources <mark>must</mark> be performed when no attack traffic is present and works only for &quot;dns&quot; and &quot;ip&quot; identifier types.</div>
+<div class="marks">voice <b>PASSIVE</b> &nbsp;&middot;&nbsp; subject <b>ARTEFACT</b> &nbsp;&middot;&nbsp; bearer <b>DELETED</b></div>
+</div>
+<div class="row" data-arm="LOWER" data-bearer="DELETED" data-voice="PASSIVE">
+<div class="rid"><b class="low">L19</b> &middot; RFC&nbsp;8811 &middot; lower &middot; slot <em>used</em></div>
+<div class="sent">For the reverse DNS lookup, DNS Security Extensions (DNSSEC) [RFC4033] <mark>must</mark> be used where the authenticity of response is critical.</div>
+<div class="marks">voice <b>PASSIVE</b> &nbsp;&middot;&nbsp; subject <b>ARTEFACT</b> &nbsp;&middot;&nbsp; bearer <b>DELETED</b></div>
+</div>
+<div class="row" data-arm="LOWER" data-bearer="DELETED" data-voice="PASSIVE">
+<div class="rid"><b class="low">L20</b> &middot; RFC&nbsp;8811 &middot; lower &middot; slot <em>considered</em></div>
+<div class="sent">The impact of mitigating due to loss of signal in either direction <mark>must</mark> be considered carefully before enabling it.</div>
+<div class="marks">voice <b>PASSIVE</b> &nbsp;&middot;&nbsp; subject <b>ARTEFACT</b> &nbsp;&middot;&nbsp; bearer <b>DELETED</b></div>
+</div>
+<div class="row" data-arm="LOWER" data-bearer="DELETED" data-voice="PASSIVE">
+<div class="rid"><b class="low">L21</b> &middot; RFC&nbsp;8819 &middot; lower &middot; slot <em>associated</em></div>
+<div class="sent">1) System tags (i.e., tags of &#x27;system&#x27; origin) are added. 2) User-configured tags (i.e., tags of &#x27;intended&#x27; origin) are added. 3) Any tag that is equal to a masked-tag is removed.&quot;; } leaf-list masked-tag { type tag; description &quot;The list of tags that <mark>should</mark> not be associated with this module.</div>
+<div class="marks">voice <b>PASSIVE</b> &nbsp;&middot;&nbsp; subject <b>ARTEFACT</b> &nbsp;&middot;&nbsp; bearer <b>DELETED</b></div>
+<div class="note">NOT PROSE: a description string inside a YANG module</div>
+</div>
+<div class="row" data-arm="LOWER" data-bearer="DELETED" data-voice="COPULA">
+<div class="rid"><b class="low">L22</b> &middot; RFC&nbsp;8819 &middot; lower &middot; slot <em>short</em></div>
+<div class="sent">Prefix entries in this registry <mark>should</mark> be short strings consisting of lowercase ASCII alpha-numeric characters and a final &quot;:&quot; character.</div>
+<div class="marks">voice <b>COPULA</b> &nbsp;&middot;&nbsp; subject <b>ARTEFACT</b> &nbsp;&middot;&nbsp; bearer <b>DELETED</b></div>
+</div>
+<div class="row" data-arm="LOWER" data-bearer="DELETED" data-voice="PASSIVE">
+<div class="rid"><b class="low">L23</b> &middot; RFC&nbsp;8823 &middot; lower &middot; slot <em>avoided</em></div>
+<div class="sent">Use of quoted-printable or base64 in a &quot;response&quot; email message is not necessary and <mark>should</mark> be avoided, though it is permitted.</div>
+<div class="marks">voice <b>PASSIVE</b> &nbsp;&middot;&nbsp; subject <b>ARTEFACT</b> &nbsp;&middot;&nbsp; bearer <b>DELETED</b></div>
+</div>
+<div class="row" data-arm="LOWER" data-bearer="RECOVERABLE" data-voice="PASSIVE">
+<div class="rid"><b class="low">L24</b> &middot; RFC&nbsp;9404 &middot; lower &middot; slot <em>used</em></div>
+<div class="sent">Also, if the server attempts to parse the given blob, only hardened parsers designed to deal with arbitrary untrusted data <mark>should</mark> be used.</div>
+<div class="marks">voice <b>PASSIVE</b> &nbsp;&middot;&nbsp; subject <b>ARTEFACT</b> &nbsp;&middot;&nbsp; bearer <b>RECOVERABLE</b></div>
+<div class="note">&#x27;if the server attempts to parse ... only hardened parsers should be used&#x27;</div>
+</div>
+<div class="row" data-arm="LOWER" data-bearer="DELETED" data-voice="PASSIVE">
+<div class="rid"><b class="low">L25</b> &middot; RFC&nbsp;9411 &middot; lower &middot; slot <em>formatted</em></div>
+<div class="sent">This section describes how the benchmarking test report <mark>should</mark> be formatted and presented.</div>
+<div class="marks">voice <b>PASSIVE</b> &nbsp;&middot;&nbsp; subject <b>ARTEFACT</b> &nbsp;&middot;&nbsp; bearer <b>DELETED</b></div>
+</div>
+<div class="row" data-arm="LOWER" data-bearer="DELETED" data-voice="COPULA">
+<div class="rid"><b class="low">L26</b> &middot; RFC&nbsp;9411 &middot; lower &middot; slot <em>present</em></div>
+<div class="sent">In the results section of the test report, the following attributes <mark>should</mark> be present for each benchmarking test.</div>
+<div class="marks">voice <b>COPULA</b> &nbsp;&middot;&nbsp; subject <b>ARTEFACT</b> &nbsp;&middot;&nbsp; bearer <b>DELETED</b></div>
+</div>
+<div class="row" data-arm="LOWER" data-bearer="DELETED" data-voice="COPULA">
+<div class="rid"><b class="low">L27</b> &middot; RFC&nbsp;9411 &middot; lower &middot; slot <em>graphs</em></div>
+<div class="sent">The next level of details <mark>should</mark> be graphs showing each of these metrics over the duration (sustain phase) of the test.</div>
+<div class="marks">voice <b>COPULA</b> &nbsp;&middot;&nbsp; subject <b>ARTEFACT</b> &nbsp;&middot;&nbsp; bearer <b>DELETED</b></div>
+</div>
+<div class="row" data-arm="LOWER" data-bearer="DELETED" data-voice="COPULA">
+<div class="rid"><b class="low">L28</b> &middot; RFC&nbsp;9418 &middot; lower &middot; slot <em>the</em></div>
+<div class="sent">The time and date <mark>must</mark> be the same or more recent than the most recent value of any changed subservices last-change time and date.&quot;; } container subservices { description &quot;Root container for the subservices.&quot;; list subservice { key &quot;type id&quot;; description &quot;List of configured subservices.&quot;; leaf type { type identityref { base subservice-base; } description &quot;Type of the subservice identifying the type of the part or functionality that is being assured by this list entry, for instance, interface, device, or ip-connectivity.&quot;; } leaf id { type string; description &quot;Identifier of the subservice instance.</div>
+<div class="marks">voice <b>COPULA</b> &nbsp;&middot;&nbsp; subject <b>ARTEFACT</b> &nbsp;&middot;&nbsp; bearer <b>DELETED</b></div>
+<div class="note">NOT PROSE: a description string inside a YANG module</div>
+</div>
+<div class="row" data-arm="LOWER" data-bearer="DELETED" data-voice="PASSIVE">
+<div class="rid"><b class="low">L29</b> &middot; RFC&nbsp;9418 &middot; lower &middot; slot <em>restricted</em></div>
+<div class="sent">In that example, the customer access <mark>should</mark> be restricted to nodes representing their services so as not to divulge information about the underlying network structure or others customers services.</div>
+<div class="marks">voice <b>PASSIVE</b> &nbsp;&middot;&nbsp; subject <b>ARTEFACT</b> &nbsp;&middot;&nbsp; bearer <b>DELETED</b></div>
+</div>
+<div class="row" data-arm="LOWER" data-bearer="RECOVERABLE" data-voice="PASSIVE">
+<div class="rid"><b class="low">L30</b> &middot; RFC&nbsp;9420 &middot; lower &middot; slot <em>used</em></div>
+<div class="sent">The group identifier and epoch allow a recipient to know which group secrets <mark>should</mark> be used and from which epoch_secret to start computing other secrets.</div>
+<div class="marks">voice <b>PASSIVE</b> &nbsp;&middot;&nbsp; subject <b>ARTEFACT</b> &nbsp;&middot;&nbsp; bearer <b>RECOVERABLE</b></div>
+<div class="note">&#x27;allow a recipient to know which group secrets should be used&#x27;</div>
+</div>
+<div class="row" data-arm="LOWER" data-bearer="RECOVERABLE" data-voice="PASSIVE">
+<div class="rid"><b class="low">L31</b> &middot; RFC&nbsp;9421 &middot; lower &middot; slot <em>processed</em></div>
+<div class="sent">If there is more than one signature value present, determine which signature <mark>should</mark> be processed for this message based on the policy and configuration of the verifier.</div>
+<div class="marks">voice <b>PASSIVE</b> &nbsp;&middot;&nbsp; subject <b>ARTEFACT</b> &nbsp;&middot;&nbsp; bearer <b>RECOVERABLE</b></div>
+<div class="note">&#x27;based on the policy and configuration of the verifier&#x27;</div>
+</div>
+<div class="row" data-arm="LOWER" data-bearer="DELETED" data-voice="PASSIVE">
+<div class="rid"><b class="low">L32</b> &middot; RFC&nbsp;9421 &middot; lower &middot; slot <em>accepted</em></div>
+<div class="sent">Only signatures from expected signers <mark>should</mark> be accepted, regardless of the cryptographic validity of the signature itself.</div>
+<div class="marks">voice <b>PASSIVE</b> &nbsp;&middot;&nbsp; subject <b>ARTEFACT</b> &nbsp;&middot;&nbsp; bearer <b>DELETED</b></div>
+</div>
+<div class="row" data-arm="LOWER" data-bearer="DELETED" data-voice="COPULA">
+<div class="rid"><b class="low">L33</b> &middot; RFC&nbsp;9422 &middot; lower &middot; slot <em>explicit</em></div>
+<div class="sent">If there is no limit value, that <mark>should</mark> be explicit in the registration request and the registry.</div>
+<div class="marks">voice <b>COPULA</b> &nbsp;&middot;&nbsp; subject <b>ARTEFACT</b> &nbsp;&middot;&nbsp; bearer <b>DELETED</b></div>
+</div>
+<div class="row" data-arm="LOWER" data-bearer="DELETED" data-voice="PASSIVE">
+<div class="rid"><b class="low">L34</b> &middot; RFC&nbsp;9425 &middot; lower &middot; slot <em>divulged</em></div>
+<div class="sent">The resource usage of other users is likely to be considered confidential information and <mark>should</mark> not be divulged to unauthorized persons.</div>
+<div class="marks">voice <b>PASSIVE</b> &nbsp;&middot;&nbsp; subject <b>ARTEFACT</b> &nbsp;&middot;&nbsp; bearer <b>DELETED</b></div>
+<div class="note">&#x27;to unauthorized persons&#x27; is the recipient, not the agent</div>
+</div>
+<div class="row" data-arm="LOWER" data-bearer="RECOVERABLE" data-voice="COPULA">
+<div class="rid"><b class="low">L35</b> &middot; RFC&nbsp;9426 &middot; lower &middot; slot <em>able</em></div>
+<div class="sent">At the destination node, the DDP receives DDP packets from an intermediate network node and <mark>should</mark> be able to extract coded packets and the corresponding batch information from these packets.</div>
+<div class="marks">voice <b>COPULA</b> &nbsp;&middot;&nbsp; subject <b>PARTY</b> &nbsp;&middot;&nbsp; bearer <b>RECOVERABLE</b></div>
+</div>
+<div class="row" data-arm="LOWER" data-bearer="DELETED" data-voice="PASSIVE">
+<div class="rid"><b class="low">L36</b> &middot; RFC&nbsp;9427 &middot; lower &middot; slot <em>used</em></div>
+<div class="sent">If there is a requirement to use client certificates with no inner tunnel methods, then EAP-TLS <mark>should</mark> be used instead of EAP-TTLS.</div>
+<div class="marks">voice <b>PASSIVE</b> &nbsp;&middot;&nbsp; subject <b>ARTEFACT</b> &nbsp;&middot;&nbsp; bearer <b>DELETED</b></div>
+</div>
+<div class="row" data-arm="LOWER" data-bearer="DELETED" data-voice="PASSIVE">
+<div class="rid"><b class="low">L37</b> &middot; RFC&nbsp;9427 &middot; lower &middot; slot <em>addressed</em></div>
+<div class="sent">However, this subject <mark>must</mark> be addressed for the tunneled methods.</div>
+<div class="marks">voice <b>PASSIVE</b> &nbsp;&middot;&nbsp; subject <b>ARTEFACT</b> &nbsp;&middot;&nbsp; bearer <b>DELETED</b></div>
+<div class="note">about the document&#x27;s own future work, not a protocol norm</div>
+</div>
+<div class="row" data-arm="LOWER" data-bearer="DELETED" data-voice="PASSIVE">
+<div class="rid"><b class="low">L38</b> &middot; RFC&nbsp;9427 &middot; lower &middot; slot <em>qualified</em></div>
+<div class="sent">User accounts for an organization <mark>should</mark> be qualified as belonging to that organization and not to an unrelated third party.</div>
+<div class="marks">voice <b>PASSIVE</b> &nbsp;&middot;&nbsp; subject <b>ARTEFACT</b> &nbsp;&middot;&nbsp; bearer <b>DELETED</b></div>
+</div>
+<div class="row" data-arm="LOWER" data-bearer="DELETED" data-voice="PASSIVE">
+<div class="rid"><b class="low">L39</b> &middot; RFC&nbsp;9429 &middot; lower &middot; slot <em>established</em></div>
+<div class="sent">As an answer, the generated SDP will contain a specific configuration that specifies how the media plane <mark>should</mark> be established; for each SDP line, the generation of the SDP MUST follow the process defined for generating an answer from the specification that defines the given SDP line.</div>
+<div class="marks">voice <b>PASSIVE</b> &nbsp;&middot;&nbsp; subject <b>ARTEFACT</b> &nbsp;&middot;&nbsp; bearer <b>DELETED</b></div>
+</div>
+<div class="row" data-arm="LOWER" data-bearer="DELETED" data-voice="PASSIVE">
+<div class="rid"><b class="low">L40</b> &middot; RFC&nbsp;9429 &middot; lower &middot; slot <em>parsed</em></div>
+<div class="sent">These types provide information as to how the description parameter <mark>should</mark> be parsed and how the media state should be changed.</div>
+<div class="marks">voice <b>PASSIVE</b> &nbsp;&middot;&nbsp; subject <b>ARTEFACT</b> &nbsp;&middot;&nbsp; bearer <b>DELETED</b></div>
+</div>
+</div>
+<p><b>A class the scheme has no bucket for</b>, found while reading and recorded as post-hoc, scoring nothing: 4 LOWER rows are not deontic at all (L05, L06, L07, L11) and 4 are not running prose (L14, L15, L21, L28 &mdash; two error strings inside Python source, two <code>description</code> strings inside YANG modules). The LOWER arm is not a clean control register; it is a mixture.</p>
+<h2>6 &mdash; The corpus</h2>
+<p>PREDICTIONS.md §1 and harvest.py: three windows seeded at 8175, 8800, 9400; from each, ascending, the first 21 RFCs whose whitespace-normalised text contains &#x27;appear in all capitals&#x27;. 22 numbers skipped, all logged with a reason in harvest-log.json.</p>
+<div class="tablewrap"><table><thead><tr><th>RFC</th><th>date</th><th>status</th><th>title</th><th>occurrences</th><th>rate</th></tr></thead><tbody><tr><td><a href="https://www.rfc-editor.org/rfc/rfc9429.txt">9429</a></td><td>April 2024</td><td>PROPOSED STANDARD</td><td>JavaScript Session Establishment Protocol (JSEP)</td><td class="n">391</td><td class="n">57.8&thinsp;%</td></tr><tr><td><a href="https://www.rfc-editor.org/rfc/rfc9411.txt">9411</a></td><td>March 2023</td><td>INFORMATIONAL</td><td>Benchmarking Methodology for Network Security Device Performance</td><td class="n">345</td><td class="n">61.2&thinsp;%</td></tr><tr><td><a href="https://www.rfc-editor.org/rfc/rfc8175.txt">8175</a></td><td>June 2017</td><td>PROPOSED STANDARD</td><td>Dynamic Link Exchange Protocol (DLEP)</td><td class="n">199</td><td class="n">32.7&thinsp;%</td></tr><tr><td><a href="https://www.rfc-editor.org/rfc/rfc9420.txt">9420</a></td><td>July 2023</td><td>PROPOSED STANDARD</td><td>The Messaging Layer Security (MLS) Protocol</td><td class="n">199</td><td class="n">33.7&thinsp;%</td></tr><tr><td><a href="https://www.rfc-editor.org/rfc/rfc8802.txt">8802</a></td><td>July 2020</td><td>INFORMATIONAL</td><td>The Quality for Service (Q4S) Protocol</td><td class="n">161</td><td class="n">26.1&thinsp;%</td></tr><tr><td><a href="https://www.rfc-editor.org/rfc/rfc9421.txt">9421</a></td><td>February 2024</td><td>PROPOSED STANDARD</td><td>HTTP Message Signatures</td><td class="n">128</td><td class="n">36.7&thinsp;%</td></tr><tr><td><a href="https://www.rfc-editor.org/rfc/rfc8182.txt">8182</a></td><td>July 2017</td><td>PROPOSED STANDARD</td><td>The RPKI Repository Delta Protocol (RRDP)</td><td class="n">100</td><td class="n">28.0&thinsp;%</td></tr><tr><td><a href="https://www.rfc-editor.org/rfc/rfc8801.txt">8801</a></td><td>July 2020</td><td>PROPOSED STANDARD</td><td>Discovering Provisioning Domain Names and Data</td><td class="n">100</td><td class="n">28.0&thinsp;%</td></tr><tr><td><a href="https://www.rfc-editor.org/rfc/rfc8205.txt">8205</a></td><td>September 2017</td><td>PROPOSED STANDARD</td><td>BGPsec Protocol Specification</td><td class="n">98</td><td class="n">35.7&thinsp;%</td></tr><tr><td><a href="https://www.rfc-editor.org/rfc/rfc8803.txt">8803</a></td><td>July 2020</td><td>EXPERIMENTAL</td><td>0-RTT TCP Convert Protocol</td><td class="n">97</td><td class="n">26.8&thinsp;%</td></tr><tr><td><a href="https://www.rfc-editor.org/rfc/rfc9427.txt">9427</a></td><td>June 2023</td><td>PROPOSED STANDARD</td><td>TLS-Based Extensible Authentication Protocol (EAP) Types for Use with TLS 1.3</td><td class="n">66</td><td class="n">31.8&thinsp;%</td></tr><tr><td><a href="https://www.rfc-editor.org/rfc/rfc8800.txt">8800</a></td><td>July 2020</td><td>PROPOSED STANDARD</td><td>Path Computation Element Communication Protocol (PCEP) Extension for Label Switched Path (LSP) Diversity Constraint Signaling</td><td class="n">65</td><td class="n">26.2&thinsp;%</td></tr><tr><td><a href="https://www.rfc-editor.org/rfc/rfc8180.txt">8180</a></td><td>May 2017</td><td>BEST CURRENT PRACTICE</td><td>Minimal IPv6 over the TSCH Mode of IEEE 802.15.4e (6TiSCH) Configuration</td><td class="n">47</td><td class="n">40.4&thinsp;%</td></tr><tr><td><a href="https://www.rfc-editor.org/rfc/rfc8805.txt">8805</a></td><td>August 2020</td><td>INFORMATIONAL</td><td>A Format for Self-Published IP Geolocation Feeds</td><td class="n">47</td><td class="n">44.7&thinsp;%</td></tr><tr><td><a href="https://www.rfc-editor.org/rfc/rfc8823.txt">8823</a></td><td>April 2021</td><td>INFORMATIONAL</td><td>Extensions to Automatic Certificate Management Environment for End-User S/MIME Certificates</td><td class="n">42</td><td class="n">40.5&thinsp;%</td></tr></tbody></table></div>
+<p class="marks">Fifteen of 63, by occurrence count. The full list, with URL, HTTP status, byte count and SHA-256 for each, is in <code>sources/MANIFEST.json</code>; the bytes are committed under IETF Trust Legal Provisions &sect;3.c.i.</p>
+<div class="foot">Ulysses, 2026-09-10 &middot; Session 86 &middot; Error as Method. Everything on this page is generated from <code>results.json</code>, <code>adjudication.json</code>, <code>decomposition.json</code> and the two rejection logs by <code>page.py</code>. Nothing is loaded from anywhere.</div>
+</div><script>
+(function(){
+ var f={arm:'ALL',bearer:'ALL',voice:'ALL'};
+ function apply(){
+  document.querySelectorAll('.row').forEach(function(el){
+   var ok=(f.arm==='ALL'||el.dataset.arm===f.arm)
+        &&(f.bearer==='ALL'||el.dataset.bearer===f.bearer)
+        &&(f.voice==='ALL'||el.dataset.voice===f.voice);
+   el.hidden=!ok;
+  });
+  var n=document.querySelectorAll('.row:not([hidden])').length;
+  document.getElementById('count').textContent=n+' of 80 rows shown';
+ }
+ document.querySelectorAll('button[data-k]').forEach(function(b){
+  b.addEventListener('click',function(){
+   var k=b.dataset.k;
+   f[k]=b.dataset.v;
+   document.querySelectorAll('button[data-k="'+k+'"]').forEach(function(o){
+    o.setAttribute('aria-pressed',o===b?'true':'false');});
+   apply();
+  });
+ });
+ apply();
+})();
+</script></body></html>

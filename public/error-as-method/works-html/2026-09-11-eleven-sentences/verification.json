@@ -1,0 +1,185 @@
+{
+ "session": 87,
+ "date": "2026-09-11",
+ "ported_rules": {
+  "session_86": {
+   "MODAL_RE": "r\"\\b(shall|should|must)\\b\"",
+   "B_FORM": "r\"^\\s+(?:not\\s+|never\\s+)?be\\s+([A-Za-z][A-Za-z\\-]*)\"",
+   "BY": "r\"\\bby\\b\"",
+   "AGENT_WINDOW": "200",
+   "SENT_SPLIT": "r\"(?<=[.;:])\\s+(?=[A-Z(\u2018'\u2018\u201c])\""
+  },
+  "session_87": {
+   "MODAL_RE": "r\"\\b(shall|should|must)\\b\"",
+   "B_FORM": "r\"^\\s+(?:not\\s+|never\\s+)?be\\s+([A-Za-z][A-Za-z\\-]*)\"",
+   "BY": "r\"\\bby\\b\"",
+   "AGENT_WINDOW": "200",
+   "SENT_SPLIT": "r\"(?<=[.;:])\\s+(?=[A-Z(\u2018'\u2018\u201c])\""
+  },
+  "identical": true
+ },
+ "extractor_audit": {
+  "route": "tags stripped after removing script/style/pre/svg/xmp/table; no block, register or furniture logic at all",
+  "flat_route_total": 3611,
+  "extractor_total": 3603,
+  "dropped_total": 8,
+  "dropped_share": 0.0022,
+  "documents_where_extractor_exceeds_flat_route": [],
+  "per_document": [
+   {
+    "doc": "compat",
+    "flat_route": 30,
+    "extractor": 30,
+    "dropped": 0,
+    "dropped_share": 0.0
+   },
+   {
+    "doc": "compression",
+    "flat_route": 12,
+    "extractor": 12,
+    "dropped": 0,
+    "dropped_share": 0.0
+   },
+   {
+    "doc": "console",
+    "flat_route": 9,
+    "extractor": 9,
+    "dropped": 0,
+    "dropped_share": 0.0
+   },
+   {
+    "doc": "cookiestore",
+    "flat_route": 6,
+    "extractor": 6,
+    "dropped": 0,
+    "dropped_share": 0.0
+   },
+   {
+    "doc": "dom",
+    "flat_route": 39,
+    "extractor": 39,
+    "dropped": 0,
+    "dropped_share": 0.0
+   },
+   {
+    "doc": "encoding",
+    "flat_route": 12,
+    "extractor": 12,
+    "dropped": 0,
+    "dropped_share": 0.0
+   },
+   {
+    "doc": "fetch",
+    "flat_route": 73,
+    "extractor": 71,
+    "dropped": 2,
+    "dropped_share": 0.0274
+   },
+   {
+    "doc": "fs",
+    "flat_route": 9,
+    "extractor": 9,
+    "dropped": 0,
+    "dropped_share": 0.0
+   },
+   {
+    "doc": "fullscreen",
+    "flat_route": 11,
+    "extractor": 11,
+    "dropped": 0,
+    "dropped_share": 0.0
+   },
+   {
+    "doc": "html",
+    "flat_route": 2786,
+    "extractor": 2780,
+    "dropped": 6,
+    "dropped_share": 0.0022
+   },
+   {
+    "doc": "infra",
+    "flat_route": 41,
+    "extractor": 41,
+    "dropped": 0,
+    "dropped_share": 0.0
+   },
+   {
+    "doc": "mimesniff",
+    "flat_route": 13,
+    "extractor": 13,
+    "dropped": 0,
+    "dropped_share": 0.0
+   },
+   {
+    "doc": "notifications",
+    "flat_route": 21,
+    "extractor": 21,
+    "dropped": 0,
+    "dropped_share": 0.0
+   },
+   {
+    "doc": "quirks",
+    "flat_route": 19,
+    "extractor": 19,
+    "dropped": 0,
+    "dropped_share": 0.0
+   },
+   {
+    "doc": "storage",
+    "flat_route": 12,
+    "extractor": 12,
+    "dropped": 0,
+    "dropped_share": 0.0
+   },
+   {
+    "doc": "streams",
+    "flat_route": 52,
+    "extractor": 52,
+    "dropped": 0,
+    "dropped_share": 0.0
+   },
+   {
+    "doc": "testutils",
+    "flat_route": 4,
+    "extractor": 4,
+    "dropped": 0,
+    "dropped_share": 0.0
+   },
+   {
+    "doc": "url",
+    "flat_route": 46,
+    "extractor": 46,
+    "dropped": 0,
+    "dropped_share": 0.0
+   },
+   {
+    "doc": "urlpattern",
+    "flat_route": 33,
+    "extractor": 33,
+    "dropped": 0,
+    "dropped_share": 0.0
+   },
+   {
+    "doc": "webidl",
+    "flat_route": 341,
+    "extractor": 341,
+    "dropped": 0,
+    "dropped_share": 0.0
+   },
+   {
+    "doc": "websockets",
+    "flat_route": 36,
+    "extractor": 36,
+    "dropped": 0,
+    "dropped_share": 0.0
+   },
+   {
+    "doc": "xhr",
+    "flat_route": 6,
+    "extractor": 6,
+    "dropped": 0,
+    "dropped_share": 0.0
+   }
+  ]
+ }
+}

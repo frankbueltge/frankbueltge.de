@@ -1,0 +1,62 @@
+{
+ "predictions": [
+  {
+   "id": "P1",
+   "claim": "EU comes in strictly above 13.6 % at block window 0 (S88.REACH's own test).",
+   "declared": "non-evidential before the run: an 11.11x unit ratio, not a drafting fact.",
+   "threshold": "> 13.6",
+   "measured": 68.35,
+   "verdict": "WON"
+  },
+  {
+   "id": "P2",
+   "claim": "RFC comes in strictly above 13.6 % and strictly below 35.0 % at block window 0.",
+   "declared": "evidential: the RFC hosting block is 1.14x WHATWG's.",
+   "threshold": "13.6 < x < 35.0",
+   "measured": 18.31,
+   "verdict": "WON"
+  },
+  {
+   "id": "P3",
+   "claim": "The three-corpus spread is > 40 points at block window 0 and < 20 points at word window 36.",
+   "declared": "both halves must hold.",
+   "threshold": "spread(blocks,0) > 40 and spread(words,36) < 20",
+   "measured": {
+    "block_window_0": 54.74,
+    "word_window_36": 7.7
+   },
+   "verdict": "WON"
+  },
+  {
+   "id": "P4",
+   "claim": "Of the three, WHATWG has the largest median word distance to the nearest party term -- S88.REACH's motivating sentence, in the unit that travels.",
+   "declared": "the sharper form of the row's claim; can fail while the block test survives.",
+   "threshold": "argmax(median word distance) == whatwg",
+   "measured": {
+    "whatwg": 184,
+    "eu": 134.0,
+    "rfc": 215.0
+   },
+   "verdict": "LOST"
+  },
+  {
+   "id": "P5",
+   "claim": "On the base list alone -- no Member States, no the Commission -- EU still comes in strictly above 13.6 % at block window 0.",
+   "declared": "a robustness check on how much of the EU result two strings carry.",
+   "threshold": "> 13.6",
+   "measured": 13.15,
+   "verdict": "LOST"
+  }
+ ],
+ "falsifier": {
+  "row": "S88.REACH",
+  "condition": "falsified if either corpus comes in at or below 13.6 % at block window 0",
+  "instrument_the_row_specified": "the base list extended by each tradition's own terms",
+  "eu": 68.35,
+  "rfc": 18.31,
+  "outcome": "SURVIVES on the instrument the row specified: 68.35 % and 18.31 %, both above 13.6 %.",
+  "the_qualification_this_night_attaches": "On the strictest common instrument -- WHATWG's own 26 terms, with no extension -- EU comes in at 13.15 %, which is AT OR BELOW 13.6 % and would falsify the row. The row survives because it authorised an extension, and the extension is two strings wide. That is a fact about the instrument's sensitivity, not about EU drafting, and it is recorded here rather than left for a later session to find."
+ },
+ "won": 3,
+ "lost": 2
+}

@@ -1,0 +1,22 @@
+{
+ "_what": "A reader's verdict on reconcile.py's matches, made after the counts existed and kept in a separate file for that reason. reconcile.py declares a normalisation that deletes spaces and hyphens before matching, which is the right default for a count that must not undercount and the wrong one for the question *is this word in the source*. Every match for the six terms in doubt was printed by inspect.py and read. Nothing here edits readings.json.",
+ "rule": "A match counts as the term if the letters form that word in the source. It does not count if they are part of a longer word, or if they only appear because the extractor dropped a word gap.",
+ "verdicts": {
+  "error":    {"matches": 0,  "genuine": 0,  "note": "absent from both texts."},
+  "special":  {"matches": 1,  "genuine": 0,  "note": "the single hit is `especially` (R2004). The genus operator of this practice's sentence -- `a special case of` -- is not in either text."},
+  "onto":     {"matches": 4,  "genuine": 0,  "note": "`contours` twice, and twice across a dropped word gap (`phenomenon to be`, `generalization to decide`). Not the preposition."},
+  "observer": {"matches": 1,  "genuine": 0,  "note": "`we can observe - roughly`, joined into `observeroughly` by the space deletion. The noun does not occur; the verb `observe` does, eleven times, always of the scientist looking."},
+  "imposed":  {"matches": 0,  "genuine": 0,  "note": "absent from both texts."},
+  "norm":     {"matches": 0,  "genuine": 0,  "note": "absent from both texts. `normal` occurs once in each, of cells and of bodily processes, never of a standard."},
+  "case":     {"matches": 13, "genuine": 13, "note": "all genuine and all in the sense of an instance or an episode -- `case studies`, `in this case`, `in the second case`. None in the taxonomic sense `a special case of` needs."},
+  "already":  {"matches": 5,  "genuine": 5,  "note": "all five are ordinary temporal adverbs in historical narration -- Darwin had already been interested, Drosophila had already conquered the laboratories. None does conceptual work, where this practice has given the word two fixed readings."},
+  "epistemic":{"matches": 67, "genuine": 67, "note": "the borrowed term."},
+  "thing":    {"matches": 24, "genuine": 22, "note": "two are `everything`; the rest are `epistemic things`, `those things`, `The Shape of Time. Remarks on the History of Things`."},
+  "difference":{"matches": 18,"genuine": 18, "note": "`difference`, `differences`, `differential`, `differentiation`, `differ`. The word is central in both texts."}
+ },
+ "summary": {
+  "terms_absent_by_the_counter": ["error", "imposed", "norm"],
+  "terms_absent_once_read": ["error", "special", "onto", "observer", "imposed", "norm"],
+  "why_they_differ": "Three matches survive the counter and not the reading: `especially`, `contours` and a word gap the extractor dropped. The declared looseness inflated presence by exactly three terms, in the direction it was declared to fail in."
+ }
+}

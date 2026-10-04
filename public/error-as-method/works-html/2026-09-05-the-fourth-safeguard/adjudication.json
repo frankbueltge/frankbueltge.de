@@ -1,0 +1,230 @@
+{
+ "date": "2026-09-05",
+ "session": 81,
+ "work": "works/2026-09-05-the-fourth-safeguard",
+ "calibration": {
+  "declared_in_advance": true,
+  "recital_71_safeguards": 4,
+  "article_22_safeguards": 3,
+  "diff": [
+   "obtain an explanation of the decision reached after such assessment",
+   "challenge the decision"
+  ],
+  "passes": true,
+  "note": "The check is that the extractor reproduces the four-against-three diff of recital 71 and Article 22(3). It does, and it also returns 'challenge the decision', which is granted as 'contest' -- so the calibration passes and, in passing, shows the tool's own false-positive rate on the smallest possible sample."
+ },
+ "predictions": [
+  {
+   "id": "P1",
+   "blind": true,
+   "claim": "between 60 and 110 of the 173 recitals contain at least one directed normative sentence",
+   "observed": 71,
+   "result": "WON",
+   "note": "71 recitals, 136 occurrences. Guideline 10 of the Joint Practical Guide says recitals 'SHALL NOT CONTAIN NORMATIVE PROVISIONS'."
+  },
+  {
+   "id": "P2",
+   "blind": true,
+   "claim": "the most frequently directed actor is 'the controller'",
+   "observed": {
+    "actor": "the controller",
+    "occurrences": 38,
+    "all": {
+     "the controller": 38,
+     "the processor": 5,
+     "the data subject": 18,
+     "Member States": 25,
+     "the supervisory authority": 27,
+     "the Commission": 13,
+     "the Board": 10
+    }
+   },
+   "result": "WON"
+  },
+  {
+   "id": "P3",
+   "blind": false,
+   "claim": "exactly one atom naming a concrete safeguard for a data subject has no counterpart in the 99 articles, and it is recital 71's 'obtain an explanation'",
+   "observed": {
+    "count": 1,
+    "atoms": [
+     "obtain an explanation of the decision reached after such assessment"
+    ]
+   },
+   "result": "WON",
+   "note": "Won on its own wording and drawn too tight. The same 46 atoms contain two further norms with no article counterpart -- recital 68's technical-compatibility limit and recital 78's duty on producers -- which the prediction's phrase 'for a data subject' excludes by wording rather than by evidence. Rows with no article counterpart of any class: [3, 4, 5, 6, 16, 23, 27, 28, 36, 40, 41]."
+  },
+  {
+   "id": "P4",
+   "blind": true,
+   "claim": "the mechanical and the hand verdict disagree on at least 5 of the 46 atoms",
+   "observed": {
+    "disagreements": 12,
+    "detail": [
+     {
+      "id": 3,
+      "recital": 4,
+      "atom": "the protection of personal data is not an absolute right; it must be considered in relatio",
+      "mechanical": "MATCHED",
+      "hand": "UNMATCHED",
+      "class": "general"
+     },
+     {
+      "id": 4,
+      "recital": 4,
+      "atom": "an effective remedy",
+      "mechanical": "MATCHED",
+      "hand": "UNMATCHED",
+      "class": "external"
+     },
+     {
+      "id": 5,
+      "recital": 4,
+      "atom": "a fair trial, and cultural, religious and linguistic diversity",
+      "mechanical": "MATCHED",
+      "hand": "UNMATCHED",
+      "class": "external"
+     },
+     {
+      "id": 6,
+      "recital": 9,
+      "atom": "the protection of personal data, with regard to the processing ... may prevent the free fl",
+      "mechanical": "MATCHED",
+      "hand": "UNMATCHED",
+      "class": "artefact"
+     },
+     {
+      "id": 16,
+      "recital": 68,
+      "atom": "transmit or receive personal data concerning him or her should not create an obligation fo",
+      "mechanical": "MATCHED",
+      "hand": "UNMATCHED",
+      "class": "third-party-duty"
+     },
+     {
+      "id": 23,
+      "recital": 71,
+      "atom": "obtain an explanation of the decision reached after such assessment",
+      "mechanical": "MATCHED",
+      "hand": "UNMATCHED",
+      "class": "safeguard"
+     },
+     {
+      "id": 24,
+      "recital": 71,
+      "atom": "challenge the decision",
+      "mechanical": "UNMATCHED",
+      "hand": "MATCHED",
+      "class": "safeguard"
+     },
+     {
+      "id": 27,
+      "recital": 78,
+      "atom": "data protection when developing and designing such products, services and applications ...",
+      "mechanical": "MATCHED",
+      "hand": "UNMATCHED",
+      "class": "third-party-duty"
+     },
+     {
+      "id": 28,
+      "recital": 78,
+      "atom": "make sure that controllers and processors are able to fulfil their data protection obligat",
+      "mechanical": "MATCHED",
+      "hand": "UNMATCHED",
+      "class": "artefact"
+     },
+     {
+      "id": 36,
+      "recital": 143,
+      "atom": "bring an action for annulment of decisions of the Board before the Court of Justice under ",
+      "mechanical": "MATCHED",
+      "hand": "UNMATCHED",
+      "class": "external"
+     },
+     {
+      "id": 40,
+      "recital": 153,
+      "atom": "freedom of expression and information, as enshrined in Article 11 of the Charter",
+      "mechanical": "MATCHED",
+      "hand": "UNMATCHED",
+      "class": "external"
+     },
+     {
+      "id": 41,
+      "recital": 153,
+      "atom": "freedom of expression in every democratic society, it is necessary to interpret notions re",
+      "mechanical": "MATCHED",
+      "hand": "UNMATCHED",
+      "class": "artefact"
+     }
+    ]
+   },
+   "result": "WON",
+   "note": "The direction matters more than the count: the mechanical rule flags exactly one atom in the whole preamble, and it is a false positive (recital 71's 'challenge', granted by Article 22(3) as 'contest'), while the one atom a court has ruled to be missing passes the mechanical rule because 'obtain' occurs elsewhere in the articles. On the two cases that matter the machine is wrong both times, in both directions."
+  }
+ ],
+ "won": 4,
+ "lost": 0,
+ "census_totals_recomputed": {
+  "atoms": 46,
+  "by_class": {
+   "general": 7,
+   "external": 4,
+   "artefact": 6,
+   "safeguard": 27,
+   "third-party-duty": 2
+  },
+  "by_verdict": {
+   "safeguard/reworded": 7,
+   "safeguard/matched": 19,
+   "third-party-duty/unmatched": 2,
+   "safeguard/unmatched": 1
+  },
+  "rows_with_no_article_counterpart": [
+   3,
+   4,
+   5,
+   6,
+   16,
+   23,
+   27,
+   28,
+   36,
+   40,
+   41
+  ]
+ },
+ "census_totals_as_written": {
+  "atoms": 46,
+  "by_class": {
+   "safeguard": 27,
+   "general": 7,
+   "external": 4,
+   "third-party-duty": 2,
+   "artefact": 6
+  },
+  "safeguards_by_verdict": {
+   "matched": 19,
+   "reworded": 7,
+   "unmatched": 1
+  },
+  "third_party_duties_by_verdict": {
+   "unmatched": 2
+  },
+  "rows_with_no_article_counterpart": [
+   3,
+   4,
+   5,
+   6,
+   16,
+   23,
+   27,
+   28,
+   36,
+   40,
+   41
+  ],
+  "totals_note": "These numbers were first written by hand from the rows and three of them were wrong -- general 6 for 7, artefact 7 for 6, matched 20 for 19, reworded 6 for 7. adjudicate.py recomputes the totals from the rows and refused to agree with them; the block above is the recomputation and the wrong figures are named here rather than deleted. The rows themselves were not altered."
+ },
+ "census_totals_agree": true
+}

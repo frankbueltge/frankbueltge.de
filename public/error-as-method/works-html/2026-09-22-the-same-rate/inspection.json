@@ -1,0 +1,601 @@
+{
+ "note": "EXPLORATORY. Written after PREDICTIONS.md was scored; nothing here is a prediction, and no quantity here may be read as one.",
+ "what_the_rule_was_reading": {
+  "carriers": {
+   "application": 8,
+   "implementation": 4,
+   "implementations": 3,
+   "clients": 3,
+   "server": 3,
+   "router": 3,
+   "node": 2,
+   "peers": 2,
+   "host": 2,
+   "client": 2,
+   "peer": 2,
+   "parsers": 1,
+   "sender": 1,
+   "receiver": 1,
+   "device": 1,
+   "endpoint": 1,
+   "endpoints": 1
+  },
+  "distinct_carriers": 17,
+  "most_frequent": [
+   "application",
+   8
+  ],
+  "share_of_rows_carried_by_the_single_most_frequent_term": 0.2,
+  "rows_the_reader_called_NONE": 16,
+  "their_carriers": {
+   "application": 6,
+   "client": 2,
+   "implementation": 1,
+   "parsers": 1,
+   "server": 1,
+   "peers": 1,
+   "router": 1,
+   "device": 1,
+   "peer": 1,
+   "host": 1
+  },
+  "every_row_whose_carrier_is_application": [
+   {
+    "n": 1,
+    "rfc": "9427",
+    "bearer": "implementations",
+    "r3": false,
+    "m1": false,
+    "context": "NOT send or expect to receive [[application]] data in the TLS session if"
+   },
+   {
+    "n": 16,
+    "rfc": "9427",
+    "bearer": "implementations",
+    "r3": false,
+    "m1": false,
+    "context": "a result, implementations MUST check for [[application]] data once the TLS session has"
+   },
+   {
+    "n": 17,
+    "rfc": "9429",
+    "bearer": "NONE",
+    "r3": false,
+    "m1": false,
+    "context": "RTP header extension supported by the [[application]] , an \"a=extmap\" line, as specified"
+   },
+   {
+    "n": 18,
+    "rfc": "9429",
+    "bearer": "NONE",
+    "r3": true,
+    "m1": false,
+    "context": "associated with \"m=\" sections by the [[application]] of the rolled-back session description (see"
+   },
+   {
+    "n": 29,
+    "rfc": "9429",
+    "bearer": "NONE",
+    "r3": false,
+    "m1": false,
+    "context": "field MUST be set to \" [[application]] \", and the <proto> field MUST"
+   },
+   {
+    "n": 30,
+    "rfc": "9411",
+    "bearer": "NONE",
+    "r3": false,
+    "m1": false,
+    "context": "the encrypted traffic of the relevant [[application]] traffic mix."
+   },
+   {
+    "n": 34,
+    "rfc": "9429",
+    "bearer": "NONE",
+    "r3": false,
+    "m1": false,
+    "context": "in [RFC8841], Section 4.3, and the [[application]] protocol value stored."
+   },
+   {
+    "n": 38,
+    "rfc": "9429",
+    "bearer": "NONE",
+    "r3": false,
+    "m1": false,
+    "context": "field MUST be set to \" [[application]] \", and the <proto> and <fmt>"
+   }
+  ]
+ },
+ "does_it_survive_n_40": {
+  "precision_of_R3_UK_vs_RFC": {
+   "table": {
+    "UK_right": 13,
+    "UK_wrong": 6,
+    "RFC_right": 10,
+    "RFC_wrong": 8
+   },
+   "p_two_sided": 0.5077
+  },
+  "reader_base_rate_UK_vs_RFC": {
+   "table": {
+    "UK_yes": 17,
+    "UK_no": 23,
+    "RFC_yes": 14,
+    "RFC_no": 26
+   },
+   "p_two_sided": 0.6466
+  },
+  "agreement_of_R3_UK_vs_RFC": {
+   "table": {
+    "UK_agree": 30,
+    "UK_disagree": 10,
+    "RFC_agree": 28,
+    "RFC_disagree": 12
+   },
+   "p_two_sided": 0.8027
+  },
+  "self_check": {
+   "note": "derived from math.comb in this file, not quoted from a textbook",
+   "table_3_1_1_3": {
+    "derived": 0.4857,
+    "function": 0.4857
+   },
+   "table_4_0_0_4": {
+    "derived": 0.0286,
+    "function": 0.0286
+   }
+  },
+  "what_forty_rows_could_have_separated": {
+   "note": "EXPLORATORY. UK is held at its published 13 right of 19 fires; the RFC arm is swept over every possible count of right answers on its 18 fires.",
+   "uk_precision": 0.6842,
+   "rfc_precision_observed": 0.5556,
+   "p_observed": 0.5077,
+   "highest_rfc_precision_that_would_have_been_significant": 0.2778,
+   "gap_in_points_needed": 40.64,
+   "sweep": [
+    {
+     "rfc_right": 0,
+     "rfc_precision": 0.0,
+     "p_two_sided": 0.0,
+     "significant_at_0.05": true
+    },
+    {
+     "rfc_right": 1,
+     "rfc_precision": 0.0556,
+     "p_two_sided": 0.0001,
+     "significant_at_0.05": true
+    },
+    {
+     "rfc_right": 2,
+     "rfc_precision": 0.1111,
+     "p_two_sided": 0.0006,
+     "significant_at_0.05": true
+    },
+    {
+     "rfc_right": 3,
+     "rfc_precision": 0.1667,
+     "p_two_sided": 0.0025,
+     "significant_at_0.05": true
+    },
+    {
+     "rfc_right": 4,
+     "rfc_precision": 0.2222,
+     "p_two_sided": 0.0081,
+     "significant_at_0.05": true
+    },
+    {
+     "rfc_right": 5,
+     "rfc_precision": 0.2778,
+     "p_two_sided": 0.0217,
+     "significant_at_0.05": true
+    },
+    {
+     "rfc_right": 6,
+     "rfc_precision": 0.3333,
+     "p_two_sided": 0.0502,
+     "significant_at_0.05": false
+    },
+    {
+     "rfc_right": 7,
+     "rfc_precision": 0.3889,
+     "p_two_sided": 0.1031,
+     "significant_at_0.05": false
+    },
+    {
+     "rfc_right": 8,
+     "rfc_precision": 0.4444,
+     "p_two_sided": 0.1914,
+     "significant_at_0.05": false
+    },
+    {
+     "rfc_right": 9,
+     "rfc_precision": 0.5,
+     "p_two_sided": 0.3245,
+     "significant_at_0.05": false
+    },
+    {
+     "rfc_right": 10,
+     "rfc_precision": 0.5556,
+     "p_two_sided": 0.5077,
+     "significant_at_0.05": false
+    },
+    {
+     "rfc_right": 11,
+     "rfc_precision": 0.6111,
+     "p_two_sided": 0.7374,
+     "significant_at_0.05": false
+    },
+    {
+     "rfc_right": 12,
+     "rfc_precision": 0.6667,
+     "p_two_sided": 1.0,
+     "significant_at_0.05": false
+    },
+    {
+     "rfc_right": 13,
+     "rfc_precision": 0.7222,
+     "p_two_sided": 1.0,
+     "significant_at_0.05": false
+    },
+    {
+     "rfc_right": 14,
+     "rfc_precision": 0.7778,
+     "p_two_sided": 0.714,
+     "significant_at_0.05": false
+    },
+    {
+     "rfc_right": 15,
+     "rfc_precision": 0.8333,
+     "p_two_sided": 0.447,
+     "significant_at_0.05": false
+    },
+    {
+     "rfc_right": 16,
+     "rfc_precision": 0.8889,
+     "p_two_sided": 0.232,
+     "significant_at_0.05": false
+    },
+    {
+     "rfc_right": 17,
+     "rfc_precision": 0.9444,
+     "p_two_sided": 0.0897,
+     "significant_at_0.05": false
+    },
+    {
+     "rfc_right": 18,
+     "rfc_precision": 1.0,
+     "p_two_sided": 0.0197,
+     "significant_at_0.05": true
+    }
+   ]
+  },
+  "the_price_of_the_question": {
+   "note": "EXPLORATORY. Both arms held at tonight's proportions and scaled; the reader's verdicts are assumed to come out the same way, which is exactly what is not known. It is an order of magnitude, not a promise.",
+   "observed_gap_points": 12.86,
+   "rows_needed_to_see_a_gap_that_size": 300,
+   "curve": [
+    {
+     "rows_read": 40,
+     "uk_fires": 19,
+     "rfc_fires": 18,
+     "smallest_visible_gap_points": 40.64
+    },
+    {
+     "rows_read": 60,
+     "uk_fires": 28,
+     "rfc_fires": 27,
+     "smallest_visible_gap_points": 30.82
+    },
+    {
+     "rows_read": 80,
+     "uk_fires": 38,
+     "rfc_fires": 36,
+     "smallest_visible_gap_points": 26.75
+    },
+    {
+     "rows_read": 100,
+     "uk_fires": 48,
+     "rfc_fires": 45,
+     "smallest_visible_gap_points": 22.08
+    },
+    {
+     "rows_read": 120,
+     "uk_fires": 57,
+     "rfc_fires": 54,
+     "smallest_visible_gap_points": 20.27
+    },
+    {
+     "rows_read": 140,
+     "uk_fires": 66,
+     "rfc_fires": 63,
+     "smallest_visible_gap_points": 18.98
+    },
+    {
+     "rows_read": 160,
+     "uk_fires": 76,
+     "rfc_fires": 72,
+     "smallest_visible_gap_points": 17.03
+    },
+    {
+     "rows_read": 180,
+     "uk_fires": 86,
+     "rfc_fires": 81,
+     "smallest_visible_gap_points": 16.75
+    },
+    {
+     "rows_read": 200,
+     "uk_fires": 95,
+     "rfc_fires": 90,
+     "smallest_visible_gap_points": 15.09
+    },
+    {
+     "rows_read": 220,
+     "uk_fires": 104,
+     "rfc_fires": 99,
+     "smallest_visible_gap_points": 14.73
+    },
+    {
+     "rows_read": 240,
+     "uk_fires": 114,
+     "rfc_fires": 108,
+     "smallest_visible_gap_points": 13.79
+    },
+    {
+     "rows_read": 260,
+     "uk_fires": 124,
+     "rfc_fires": 117,
+     "smallest_visible_gap_points": 12.99
+    },
+    {
+     "rows_read": 280,
+     "uk_fires": 133,
+     "rfc_fires": 126,
+     "smallest_visible_gap_points": 12.87
+    },
+    {
+     "rows_read": 300,
+     "uk_fires": 142,
+     "rfc_fires": 135,
+     "smallest_visible_gap_points": 12.01
+    },
+    {
+     "rows_read": 320,
+     "uk_fires": 152,
+     "rfc_fires": 144,
+     "smallest_visible_gap_points": 12.17
+    },
+    {
+     "rows_read": 340,
+     "uk_fires": 162,
+     "rfc_fires": 153,
+     "smallest_visible_gap_points": 11.0
+    },
+    {
+     "rows_read": 360,
+     "uk_fires": 171,
+     "rfc_fires": 162,
+     "smallest_visible_gap_points": 11.01
+    },
+    {
+     "rows_read": 380,
+     "uk_fires": 180,
+     "rfc_fires": 171,
+     "smallest_visible_gap_points": 10.44
+    },
+    {
+     "rows_read": 400,
+     "uk_fires": 190,
+     "rfc_fires": 180,
+     "smallest_visible_gap_points": 10.64
+    },
+    {
+     "rows_read": 420,
+     "uk_fires": 200,
+     "rfc_fires": 189,
+     "smallest_visible_gap_points": 10.3
+    },
+    {
+     "rows_read": 440,
+     "uk_fires": 209,
+     "rfc_fires": 198,
+     "smallest_visible_gap_points": 10.34
+    },
+    {
+     "rows_read": 460,
+     "uk_fires": 218,
+     "rfc_fires": 207,
+     "smallest_visible_gap_points": 9.89
+    },
+    {
+     "rows_read": 480,
+     "uk_fires": 228,
+     "rfc_fires": 216,
+     "smallest_visible_gap_points": 9.16
+    },
+    {
+     "rows_read": 500,
+     "uk_fires": 238,
+     "rfc_fires": 225,
+     "smallest_visible_gap_points": 9.38
+    },
+    {
+     "rows_read": 520,
+     "uk_fires": 247,
+     "rfc_fires": 234,
+     "smallest_visible_gap_points": 9.02
+    },
+    {
+     "rows_read": 540,
+     "uk_fires": 256,
+     "rfc_fires": 243,
+     "smallest_visible_gap_points": 8.69
+    },
+    {
+     "rows_read": 560,
+     "uk_fires": 266,
+     "rfc_fires": 252,
+     "smallest_visible_gap_points": 8.9
+    },
+    {
+     "rows_read": 580,
+     "uk_fires": 276,
+     "rfc_fires": 261,
+     "smallest_visible_gap_points": 8.33
+    },
+    {
+     "rows_read": 600,
+     "uk_fires": 285,
+     "rfc_fires": 270,
+     "smallest_visible_gap_points": 8.42
+    },
+    {
+     "rows_read": 620,
+     "uk_fires": 294,
+     "rfc_fires": 279,
+     "smallest_visible_gap_points": 8.15
+    },
+    {
+     "rows_read": 640,
+     "uk_fires": 304,
+     "rfc_fires": 288,
+     "smallest_visible_gap_points": 8.0
+    },
+    {
+     "rows_read": 660,
+     "uk_fires": 314,
+     "rfc_fires": 297,
+     "smallest_visible_gap_points": 7.87
+    },
+    {
+     "rows_read": 680,
+     "uk_fires": 323,
+     "rfc_fires": 306,
+     "smallest_visible_gap_points": 7.96
+    },
+    {
+     "rows_read": 700,
+     "uk_fires": 332,
+     "rfc_fires": 315,
+     "smallest_visible_gap_points": 7.74
+    },
+    {
+     "rows_read": 720,
+     "uk_fires": 342,
+     "rfc_fires": 324,
+     "smallest_visible_gap_points": 7.62
+    },
+    {
+     "rows_read": 740,
+     "uk_fires": 352,
+     "rfc_fires": 333,
+     "smallest_visible_gap_points": 7.5
+    },
+    {
+     "rows_read": 760,
+     "uk_fires": 361,
+     "rfc_fires": 342,
+     "smallest_visible_gap_points": 7.31
+    },
+    {
+     "rows_read": 780,
+     "uk_fires": 370,
+     "rfc_fires": 351,
+     "smallest_visible_gap_points": 7.41
+    },
+    {
+     "rows_read": 800,
+     "uk_fires": 380,
+     "rfc_fires": 360,
+     "smallest_visible_gap_points": 7.31
+    },
+    {
+     "rows_read": 820,
+     "uk_fires": 390,
+     "rfc_fires": 369,
+     "smallest_visible_gap_points": 6.94
+    },
+    {
+     "rows_read": 840,
+     "uk_fires": 399,
+     "rfc_fires": 378,
+     "smallest_visible_gap_points": 7.05
+    },
+    {
+     "rows_read": 860,
+     "uk_fires": 408,
+     "rfc_fires": 387,
+     "smallest_visible_gap_points": 6.88
+    },
+    {
+     "rows_read": 880,
+     "uk_fires": 418,
+     "rfc_fires": 396,
+     "smallest_visible_gap_points": 6.8
+    },
+    {
+     "rows_read": 900,
+     "uk_fires": 428,
+     "rfc_fires": 405,
+     "smallest_visible_gap_points": 6.73
+    },
+    {
+     "rows_read": 920,
+     "uk_fires": 437,
+     "rfc_fires": 414,
+     "smallest_visible_gap_points": 6.83
+    },
+    {
+     "rows_read": 940,
+     "uk_fires": 446,
+     "rfc_fires": 423,
+     "smallest_visible_gap_points": 6.68
+    },
+    {
+     "rows_read": 960,
+     "uk_fires": 456,
+     "rfc_fires": 432,
+     "smallest_visible_gap_points": 6.38
+    },
+    {
+     "rows_read": 980,
+     "uk_fires": 466,
+     "rfc_fires": 441,
+     "smallest_visible_gap_points": 6.55
+    },
+    {
+     "rows_read": 1000,
+     "uk_fires": 475,
+     "rfc_fires": 450,
+     "smallest_visible_gap_points": 6.42
+    }
+   ]
+  }
+ },
+ "the_forwards_looking_window": {
+  "note": "Block window 0 looks forwards as well as back -- a defect Session 89 named, Session 90 kept unrepaired so its replication would hold, and this night inherits unchanged. In UK statute the nearest term stood AFTER the modal in 10 of 40 rows.",
+  "UK_after_rows_published_by_session_91": 10,
+  "RFC": {
+   "before": {
+    "rows": 23,
+    "reader_says_this_is_the_bearer": 8,
+    "precision_of_the_nearest_term": 0.3478,
+    "R3_fires": 10,
+    "R3_right_when_it_fires": 5
+   },
+   "after": {
+    "rows": 17,
+    "reader_says_this_is_the_bearer": 6,
+    "precision_of_the_nearest_term": 0.3529,
+    "R3_fires": 8,
+    "R3_right_when_it_fires": 5
+   }
+  }
+ },
+ "frame_effect": {
+  "note": "Both samples are block-window-0 rows, where a carrier is in the obligation's own block by construction. The population fire rates are not these.",
+  "R3_over_the_sample_RFC": 0.45,
+  "R3_over_the_sample_UK": 0.475,
+  "R3b_over_the_population_RFC_session_94": 0.2815,
+  "R3b_over_the_population_UK_session_91": 0.3142
+ }
+}

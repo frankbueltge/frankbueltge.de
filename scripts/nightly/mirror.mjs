@@ -8,6 +8,8 @@
 //   works/<slug>/meta.json  → src/data/nightly/works/<slug>/meta.json
 //   works/<slug>/work.md    → src/data/nightly/works/<slug>/work.md
 //   works/<slug>/figure.svg → public/error-as-method/<slug>/figure.svg
+//   works/<slug>/index.html → public/error-as-method/works-html/<slug>/  (the work's own face,
+//                             with the files beside it — only when work.md is there too)
 //   journal/<date>.md       → src/data/nightly/journal/<date>.md
 //   PROTOCOL.md             → src/data/nightly/PROTOCOL.md
 //
@@ -20,7 +22,9 @@
 // claiming to be the archive, and git is the archive.
 //
 // Both target trees are reset before writing, so a work withdrawn upstream disappears here
-// instead of lingering as an orphan.
+// instead of lingering as an orphan. The faces live inside public/error-as-method, so the same
+// reset clears them: a page withdrawn upstream, or a file dropped from beside it, is gone here
+// on the next run.
 //
 // ONLY WHAT THE FORK MADE. The repository inherited the line's whole record — thirty works and
 // forty-six research days from before 2026-07-18 — and every one of those is already on this
@@ -36,13 +40,38 @@ import { join, resolve } from 'node:path'
 // INTERACTIVE work is a self-contained `index.html`, which this site does not render at all —
 // it serves the practice's own page from public/error-as-method/<slug>/, exactly as built. Both
 // answer to the same address; only one of them is a route.
+//
+// And both at once, since 2026-09-03: a text work may carry its own `index.html` beside its
+// `work.md` — the work's own FACE, which the text accompanies. The house promised the line that
+// day that such a page would be served at /error-as-method/works-html/<slug>/ and linked from the
+// work's page as the work itself; until 2026-10-04 this script read a work with both files as a
+// text work and dropped the page, so sixteen faces never went online. The text keeps its route;
+// the face gets a directory of its own, because the route and a static index.html cannot share
+// one address.
 const META = 'meta.json'
 const TEXT = 'work.md'
 const STAGE = 'index.html'
 const FIGURE = 'figure.svg'
+/** Where a text work's own face is served, under public/error-as-method/. */
+export const FACES = 'works-html'
 /** Big enough that carrying it would make this site claim to be the archive. The repository
- *  holds the evidence and the work page links to it. */
-const HEAVY = /\.(py|ipynb)$|citations\.json$/
+ *  holds the evidence and the work page links to it. Compressed files joined on 2026-10-04 with
+ *  the first faces: the line ships its harvested corpora as `*.json.gz` (up to 6 MB a night),
+ *  no face reads one, and copying them would have put 13 MB of evidence on the site. */
+const HEAVY = /\.(py|ipynb|gz)$|citations\.json$/
+
+/** A stage, as the practice built it: the page and everything beside it, except the metadata
+ *  (mirrored to the data tree), the heavy evidence (linked, not copied) and dotfiles (a work's
+ *  own .gitignore is the practice's housekeeping, and inside this repository it would start
+ *  deciding what the integrate commits). Directories stay behind: `sources/` is evidence too. */
+function copyStage(from, to) {
+  mkdirSync(to, { recursive: true })
+  for (const file of readdirSync(from)) {
+    if (file === META || file.startsWith('.') || HEAVY.test(file)) continue
+    if (statSync(join(from, file)).isDirectory()) continue
+    cpSync(join(from, file), join(to, file))
+  }
+}
 /** The last night under the Atelier's roof — kept in sync with src/lib/engines/nightly-line.ts. */
 export const LINE_END = '2026-07-18'
 
@@ -65,6 +94,7 @@ export function mirror(src, dest) {
   const worksSrc = join(src, 'works')
   const worksDest = join(dest, 'src/data/nightly/works')
   const figuresDest = join(dest, 'public/error-as-method')
+  const facesDest = join(figuresDest, FACES)
   const journalSrc = join(src, 'journal')
   const journalDest = join(dest, 'src/data/nightly/journal')
 
@@ -77,6 +107,8 @@ export function mirror(src, dest) {
   const works = []
   const inherited = []
   const skipped = []
+  /** the text works that carry their own face, by slug — reported, so a run says what it served */
+  const faces = []
   for (const slug of existsSync(worksSrc) ? readdirSync(worksSrc).sort() : []) {
     const dir = join(worksSrc, slug)
     if (!statSync(dir).isDirectory()) continue
@@ -108,18 +140,19 @@ export function mirror(src, dest) {
         mkdirSync(join(figuresDest, slug), { recursive: true })
         cpSync(join(dir, FIGURE), join(figuresDest, slug, FIGURE))
       }
+      // The work's own face, when it has one: copied by the same rule as an interactive work,
+      // into its own directory. The text above is untouched by it and still renders as before.
+      if (hasStage) {
+        copyStage(dir, join(facesDest, slug))
+        faces.push(slug)
+      }
     } else {
       // An interactive work is served as the practice built it. Everything beside it travels
       // too — a self-contained page may still load its own data file — except the measuring
       // code and the harvested evidence, which stay in the repository and are linked.
-      mkdirSync(join(figuresDest, slug), { recursive: true })
-      for (const file of readdirSync(dir)) {
-        if (file === META || HEAVY.test(file)) continue
-        if (statSync(join(dir, file)).isDirectory()) continue
-        cpSync(join(dir, file), join(figuresDest, slug, file))
-      }
+      copyStage(dir, join(figuresDest, slug))
     }
-    works.push({ slug, form: hasText ? 'text' : 'stage' })
+    works.push({ slug, form: hasText ? 'text' : 'stage', ...(hasText && hasStage ? { face: true } : {}) })
   }
 
   const journal = []
@@ -145,7 +178,7 @@ export function mirror(src, dest) {
     protocol = 'PROTOCOL.md'
   }
 
-  return { works, inherited, journal, skipped, protocol }
+  return { works, faces, inherited, journal, skipped, protocol }
 }
 
 if (import.meta.url === `file://${process.argv[1]}`) {
@@ -159,4 +192,7 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   for (const { slug, missing } of report.skipped) {
     console.warn(`skipped ${slug}: missing ${missing.join(', ')}`)
   }
+  // To stderr, like the warnings: stdout is the JSON report the workflow parses.
+  console.warn(`faces served at /error-as-method/${FACES}/: ${report.faces.length}`)
+  for (const slug of report.faces) console.warn(`  face ${slug}`)
 }

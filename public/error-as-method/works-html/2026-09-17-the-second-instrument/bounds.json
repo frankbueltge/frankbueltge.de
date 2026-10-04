@@ -1,0 +1,93 @@
+{
+ "note": "Counts only.  Written and run before PREDICTIONS.md and before any decision rule exists.  The question tonight asks is whether the reader can be replaced; this file measures the material the replacement would have to read.",
+ "corpus": "63 UK Public General Acts 2012-2014, committed by Session 90 as corpus.json.gz",
+ "population": 660,
+ "restriction": "B-FORM, AGENTLESS, register ACT -- Session 89's scan population, unchanged",
+ "lists": {
+  "base": {
+   "rows_with_a_carrier_anywhere": 245,
+   "rows_with_a_carrier_within_36_words": 5,
+   "pct_within_36_words": 0.76,
+   "rows_with_a_carrier_in_the_same_block": 1,
+   "median_word_distance_where_present": 5821,
+   "gap_words_within_36": {
+    "zero": 0,
+    "one": 0,
+    "two_to_five": 0,
+    "six_or_more": 5
+   },
+   "carriers_within_36": {
+    "client": 4,
+    "implementation": 1
+   }
+  },
+  "narrow": {
+   "rows_with_a_carrier_anywhere": 660,
+   "rows_with_a_carrier_within_36_words": 226,
+   "pct_within_36_words": 34.24,
+   "rows_with_a_carrier_in_the_same_block": 76,
+   "median_word_distance_where_present": 83.5,
+   "gap_words_within_36": {
+    "zero": 11,
+    "one": 3,
+    "two_to_five": 21,
+    "six_or_more": 191
+   },
+   "carriers_within_36": {
+    "secretary of state": 74,
+    "court": 39,
+    "authority": 39,
+    "officer": 36,
+    "tribunal": 11,
+    "local authority": 5,
+    "treasury": 4,
+    "courts": 4,
+    "minister": 3,
+    "client": 3,
+    "constable": 2,
+    "tribunals": 2
+   }
+  },
+  "wide": {
+   "rows_with_a_carrier_anywhere": 660,
+   "rows_with_a_carrier_within_36_words": 336,
+   "pct_within_36_words": 50.91,
+   "rows_with_a_carrier_in_the_same_block": 121,
+   "median_word_distance_where_present": 34.5,
+   "gap_words_within_36": {
+    "zero": 21,
+    "one": 3,
+    "two_to_five": 56,
+    "six_or_more": 256
+   },
+   "carriers_within_36": {
+    "person": 119,
+    "secretary of state": 67,
+    "authority": 36,
+    "court": 35,
+    "officer": 29,
+    "persons": 19,
+    "tribunal": 6,
+    "local authority": 4,
+    "treasury": 4,
+    "courts": 4,
+    "minister": 3,
+    "constable": 2
+   }
+  }
+ },
+ "the_reader_s_sample": {
+  "session_90": {
+   "population_window_0_narrow": 112,
+   "sampled": 40,
+   "seed": 90,
+   "bearer": 17,
+   "not_bearer": 23,
+   "precision": 0.425
+  },
+  "session_88": {
+   "precision_in_its_own_corpus": 0.611
+  },
+  "note": "the only ground truth this line owns.  40 YES/NO verdicts with reasons, committed by Session 90 as handreading.json.  Tonight scores mechanical rules against them."
+ }
+}

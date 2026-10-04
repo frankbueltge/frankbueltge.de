@@ -1,0 +1,231 @@
+{
+ "session": 86,
+ "date": "2026-09-10",
+ "status": "post hoc; scores no prediction",
+ "identity": "rate = b_form_share x no_by_given_b_form",
+ "rfc": [
+  {
+   "cell": "RFC \u00b7 all",
+   "occurrences": 2952,
+   "b_form": 1319,
+   "b_form_share": 0.4468,
+   "agentless": 1190,
+   "no_by_given_b_form": 0.9022,
+   "rate": 0.4031
+  },
+  {
+   "cell": "RFC \u00b7 UPPER",
+   "occurrences": 2360,
+   "b_form": 1050,
+   "b_form_share": 0.4449,
+   "agentless": 956,
+   "no_by_given_b_form": 0.9105,
+   "rate": 0.4051
+  },
+  {
+   "cell": "RFC \u00b7 LOWER",
+   "occurrences": 581,
+   "b_form": 264,
+   "b_form_share": 0.4544,
+   "agentless": 229,
+   "no_by_given_b_form": 0.8674,
+   "rate": 0.3941
+  },
+  {
+   "cell": "RFC \u00b7 must UPPER",
+   "occurrences": 1989,
+   "b_form": 954,
+   "b_form_share": 0.4796,
+   "agentless": 872,
+   "no_by_given_b_form": 0.914,
+   "rate": 0.4384
+  },
+  {
+   "cell": "RFC \u00b7 must LOWER",
+   "occurrences": 217,
+   "b_form": 75,
+   "b_form_share": 0.3456,
+   "agentless": 66,
+   "no_by_given_b_form": 0.88,
+   "rate": 0.3041
+  },
+  {
+   "cell": "RFC \u00b7 should UPPER",
+   "occurrences": 357,
+   "b_form": 88,
+   "b_form_share": 0.2465,
+   "agentless": 77,
+   "no_by_given_b_form": 0.875,
+   "rate": 0.2157
+  },
+  {
+   "cell": "RFC \u00b7 should LOWER",
+   "occurrences": 352,
+   "b_form": 181,
+   "b_form_share": 0.5142,
+   "agentless": 156,
+   "no_by_given_b_form": 0.8619,
+   "rate": 0.4432
+  }
+ ],
+ "eu": [
+  {
+   "cell": "EU \u00b7 all",
+   "occurrences": 22554,
+   "b_form": 7995,
+   "b_form_share": 0.3545,
+   "agentless": 6472,
+   "no_by_given_b_form": 0.8095,
+   "rate": 0.287
+  },
+  {
+   "cell": "EU \u00b7 recitals",
+   "occurrences": 6942,
+   "b_form": 3233,
+   "b_form_share": 0.4657,
+   "agentless": 2608,
+   "no_by_given_b_form": 0.8067,
+   "rate": 0.3757
+  },
+  {
+   "cell": "EU \u00b7 articles",
+   "occurrences": 15612,
+   "b_form": 4762,
+   "b_form_share": 0.305,
+   "agentless": 3864,
+   "no_by_given_b_form": 0.8114,
+   "rate": 0.2475
+  },
+  {
+   "cell": "EU \u00b7 shall recitals",
+   "occurrences": 11,
+   "b_form": 4,
+   "b_form_share": 0.3636,
+   "agentless": 2,
+   "no_by_given_b_form": 0.5,
+   "rate": 0.1818
+  },
+  {
+   "cell": "EU \u00b7 shall articles",
+   "occurrences": 15474,
+   "b_form": 4681,
+   "b_form_share": 0.3025,
+   "agentless": 3796,
+   "no_by_given_b_form": 0.8109,
+   "rate": 0.2453
+  },
+  {
+   "cell": "EU \u00b7 should recitals",
+   "occurrences": 6889,
+   "b_form": 3203,
+   "b_form_share": 0.4649,
+   "agentless": 2584,
+   "no_by_given_b_form": 0.8067,
+   "rate": 0.3751
+  },
+  {
+   "cell": "EU \u00b7 should articles",
+   "occurrences": 71,
+   "b_form": 41,
+   "b_form_share": 0.5775,
+   "agentless": 38,
+   "no_by_given_b_form": 0.9268,
+   "rate": 0.5352
+  }
+ ],
+ "spread_over_cells_with_100_or_more_occurrences": {
+  "b_form_share": {
+   "min": 0.2465,
+   "max": 0.5142,
+   "spread_points": 26.8
+  },
+  "no_by_given_b_form": {
+   "min": 0.8067,
+   "max": 0.914,
+   "spread_points": 10.7
+  },
+  "rate": {
+   "min": 0.2157,
+   "max": 0.4432,
+   "spread_points": 22.7
+  }
+ },
+ "agent_test_constants": {
+  "RFC": 0.9022,
+  "EU": 0.8095
+ },
+ "counterfactual": [
+  {
+   "cell": "RFC \u00b7 all",
+   "reported_rate": 0.4031,
+   "rate_with_the_agent_test_replaced_by_its_corpus_average": 0.4031,
+   "difference_points": 0.0
+  },
+  {
+   "cell": "RFC \u00b7 UPPER",
+   "reported_rate": 0.4051,
+   "rate_with_the_agent_test_replaced_by_its_corpus_average": 0.4014,
+   "difference_points": 0.37
+  },
+  {
+   "cell": "RFC \u00b7 LOWER",
+   "reported_rate": 0.3941,
+   "rate_with_the_agent_test_replaced_by_its_corpus_average": 0.41,
+   "difference_points": 1.59
+  },
+  {
+   "cell": "RFC \u00b7 must UPPER",
+   "reported_rate": 0.4384,
+   "rate_with_the_agent_test_replaced_by_its_corpus_average": 0.4327,
+   "difference_points": 0.57
+  },
+  {
+   "cell": "RFC \u00b7 must LOWER",
+   "reported_rate": 0.3041,
+   "rate_with_the_agent_test_replaced_by_its_corpus_average": 0.3118,
+   "difference_points": 0.77
+  },
+  {
+   "cell": "RFC \u00b7 should UPPER",
+   "reported_rate": 0.2157,
+   "rate_with_the_agent_test_replaced_by_its_corpus_average": 0.2224,
+   "difference_points": 0.67
+  },
+  {
+   "cell": "RFC \u00b7 should LOWER",
+   "reported_rate": 0.4432,
+   "rate_with_the_agent_test_replaced_by_its_corpus_average": 0.4639,
+   "difference_points": 2.07
+  },
+  {
+   "cell": "EU \u00b7 all",
+   "reported_rate": 0.287,
+   "rate_with_the_agent_test_replaced_by_its_corpus_average": 0.287,
+   "difference_points": 0.0
+  },
+  {
+   "cell": "EU \u00b7 recitals",
+   "reported_rate": 0.3757,
+   "rate_with_the_agent_test_replaced_by_its_corpus_average": 0.377,
+   "difference_points": 0.13
+  },
+  {
+   "cell": "EU \u00b7 articles",
+   "reported_rate": 0.2475,
+   "rate_with_the_agent_test_replaced_by_its_corpus_average": 0.2469,
+   "difference_points": 0.06
+  },
+  {
+   "cell": "EU \u00b7 shall articles",
+   "reported_rate": 0.2453,
+   "rate_with_the_agent_test_replaced_by_its_corpus_average": 0.2449,
+   "difference_points": 0.04
+  },
+  {
+   "cell": "EU \u00b7 should recitals",
+   "reported_rate": 0.3751,
+   "rate_with_the_agent_test_replaced_by_its_corpus_average": 0.3763,
+   "difference_points": 0.12
+  }
+ ]
+}

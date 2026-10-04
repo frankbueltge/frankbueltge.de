@@ -47,7 +47,7 @@ jobs:
       - name: Clone the nightly line's repository
         run: git clone --depth 1 https://github.com/frankbueltge/error-as-method /tmp/nightly
 
-      - name: Mirror works, figures and research days
+      - name: Mirror works, figures, faces and research days
         run: |
           node scripts/nightly/mirror.mjs /tmp/nightly . | tee /tmp/mirror.json
           # A malformed new work is a report, never a silent gap: the mirror lists what it
@@ -57,8 +57,12 @@ jobs:
             const line = (s) => require("fs").appendFileSync(process.env.GITHUB_STEP_SUMMARY, s + "\n")
             line(`| what | count |`); line(`|---|---|`)
             line(`| works mirrored | ${r.works.length} |`)
+            line(`| works with their own face (/error-as-method/works-html/) | ${r.faces.length} |`)
             line(`| research days mirrored | ${r.journal.length} |`)
             line(`| inherited, left with the Atelier mirror | ${r.inherited.length} |`)
+            if (r.faces.length) {
+              line(``); line(`**faces served:** ${r.faces.map((s) => "`" + s + "`").join(", ")}`)
+            }
             if (r.skipped.length) {
               line(``); line(`**skipped — a work directory missing its own files:**`)
               for (const s of r.skipped) line(`- \`${s.slug}\` — missing ${s.missing.join(", ")}`)

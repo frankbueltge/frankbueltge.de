@@ -14,9 +14,16 @@
 // therefore resolved against the work's own address here. The house's own markdown renderer is
 // used rather than Astro's content pipeline, which would try to resolve the relative image as a
 // bundled asset next to the source file, where the mirror deliberately does not put it.
+//
+// A work may also have its own face (promised 2026-09-03, served since 2026-10-04): a page the
+// practice built, mirrored to /error-as-method/works-html/<slug>/. Where it exists it IS the work
+// and the text is its accompaniment, so the door to it stands above the text, not at the foot.
+// A link, not an iframe — the house pattern for every practice's bare page (/studio/works,
+// /atelier): the face runs under its own policy at its own address, with the whole viewport.
 import Page from '@/layouts/Page.astro'
 import { absolutizeRelativeUrls, renderMarkdown } from '@/lib/engines/journal'
 import { LINE_REPO, forkedMeta, forkedWorks } from '@/lib/engines/nightly-line'
+import { workFace } from '@/lib/nightly/face'
 
 export async function getStaticPaths() {
   // Raw markdown, deliberately: see the note in src/content.config.ts on why the nightly mirror
@@ -56,6 +63,7 @@ export async function getStaticPaths() {
 
 const { work, html, hasJournal } = Astro.props
 const medium = forkedMeta(work.slug)?.medium
+const face = workFace(work.slug)
 // The work's own `embodies`, cut to a meta description. A work that carries none falls back to
 // naming the line rather than to an empty tag.
 const description = work.blurb?.slice(0, 300) ?? `A night of the forked line Error as Method, ${work.date}.`
@@ -67,6 +75,22 @@ const description = work.blurb?.slice(0, 300) ?? `A night of the forked line Err
       <a href="/error-as-method" class="transition-colors hover:text-fg">Error as Method</a>
       <span> · night of </span><span class="tabular-nums">{work.date}</span>
     </p>
+
+    {
+      face && (
+        <div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 border-y border-line/60 py-5">
+          <a
+            href={face}
+            class="inline-flex items-baseline gap-2 border border-fg px-5 py-3 font-mono text-xs uppercase tracking-[0.16em] text-fg transition-colors hover:bg-fg hover:text-bg"
+          >
+            Enter the work <span aria-hidden="true">→</span>
+          </a>
+          <p class="max-w-md text-sm leading-relaxed text-fg-muted">
+            The work's own page, made by the practice and served as it built it. The text below accompanies it.
+          </p>
+        </div>
+      )
+    }
 
     {
       medium && (

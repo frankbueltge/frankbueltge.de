@@ -1,0 +1,3250 @@
+{
+ "back": 5,
+ "rows": [
+  {
+   "id": "S01",
+   "doc": "dom",
+   "doc_title": "DOM Standard",
+   "doc_url": "https://dom.spec.whatwg.org/",
+   "block": 121,
+   "headings": [
+    {
+     "block": 71,
+     "tag": "h2",
+     "text": "2. Events"
+    },
+    {
+     "block": 82,
+     "tag": "h3",
+     "text": "2.2. Interface Event"
+    }
+   ],
+   "before": [
+    {
+     "block": 116,
+     "tag": "dd",
+     "text": "Returns true or false depending on how event was initialized. True if event invokes listeners past a ShadowRoot node that is the root of its target; otherwise false."
+    },
+    {
+     "block": 117,
+     "tag": "dt",
+     "text": "event . isTrusted"
+    },
+    {
+     "block": 118,
+     "tag": "dd",
+     "text": "Returns true if event was dispatched by the user agent, and false otherwise."
+    },
+    {
+     "block": 119,
+     "tag": "dt",
+     "text": "event . timeStamp"
+    },
+    {
+     "block": 120,
+     "tag": null,
+     "text": "Returns the event\u2019s timestamp as the number of milliseconds measured relative to the occurrence."
+    }
+   ],
+   "own_block": "The type attribute must return the value it was initialized to. When an event is created the attribute must be initialized to the empty string.",
+   "sentence": "When an event is created the attribute must be initialized to the empty string."
+  },
+  {
+   "id": "S02",
+   "doc": "dom",
+   "doc_title": "DOM Standard",
+   "doc_url": "https://dom.spec.whatwg.org/",
+   "block": 980,
+   "headings": [
+    {
+     "block": 568,
+     "tag": "h2",
+     "text": "4. Nodes"
+    },
+    {
+     "block": 585,
+     "tag": "h3",
+     "text": "4.2. Node tree"
+    },
+    {
+     "block": 979,
+     "tag": "h4",
+     "text": "4.2.10. Old-style collections: NodeList and HTMLCollection"
+    }
+   ],
+   "before": [
+    {
+     "block": 975,
+     "tag": "p",
+     "text": "If this\u2019s parent is null, then return."
+    },
+    {
+     "block": 976,
+     "tag": "p",
+     "text": "Remove this."
+    },
+    {
+     "block": 977,
+     "tag": "h4",
+     "text": "4.2.9. Mixin Slottable"
+    },
+    {
+     "block": 978,
+     "tag": "p",
+     "text": "The assignedSlot getter steps are to return the result of find a slot given this and true."
+    },
+    {
+     "block": 979,
+     "tag": "h4",
+     "text": "4.2.10. Old-style collections: NodeList and HTMLCollection"
+    }
+   ],
+   "own_block": "A collection is an object that represents a list of nodes. A collection can be either live or static. Unless otherwise stated, a collection must be live.",
+   "sentence": "Unless otherwise stated, a collection must be live."
+  },
+  {
+   "id": "S03",
+   "doc": "dom",
+   "doc_title": "DOM Standard",
+   "doc_url": "https://dom.spec.whatwg.org/",
+   "block": 1505,
+   "headings": [
+    {
+     "block": 568,
+     "tag": "h2",
+     "text": "4. Nodes"
+    },
+    {
+     "block": 1135,
+     "tag": "h3",
+     "text": "4.4. Interface Node"
+    }
+   ],
+   "before": [
+    {
+     "block": 1500,
+     "tag": "p",
+     "text": "When invoked with the same arguments, the same HTMLCollection object may be returned as returned by an earlier call."
+    },
+    {
+     "block": 1501,
+     "tag": "p",
+     "text": "The list of elements with class names classNames for a node root is the HTMLCollection returned by the following algorithm:"
+    },
+    {
+     "block": 1502,
+     "tag": "li",
+     "text": "Let classes be the result of running the ordered set parser on classNames."
+    },
+    {
+     "block": 1503,
+     "tag": "li",
+     "text": "If classes is the empty set, return an empty HTMLCollection."
+    },
+    {
+     "block": 1504,
+     "tag": "p",
+     "text": "Return an HTMLCollection rooted at root, whose filter matches descendant elements that have all their classes in classes."
+    }
+   ],
+   "own_block": "The comparisons for the classes must be done in an ASCII case-insensitive manner if root\u2019s node document\u2019s mode is \"quirks\"; otherwise in an identical to manner.",
+   "sentence": "The comparisons for the classes must be done in an ASCII case-insensitive manner if root\u2019s node document\u2019s mode is \"quirks\"; otherwise in an identical to manner."
+  },
+  {
+   "id": "S04",
+   "doc": "fetch",
+   "doc_title": "Fetch Standard",
+   "doc_url": "https://fetch.spec.whatwg.org/",
+   "block": 407,
+   "headings": [
+    {
+     "block": 20,
+     "tag": "h2",
+     "text": "2. Infrastructure"
+    },
+    {
+     "block": 122,
+     "tag": "h3",
+     "text": "2.2. HTTP"
+    },
+    {
+     "block": 397,
+     "tag": "h4",
+     "text": "2.2.4. Bodies"
+    }
+   ],
+   "before": [
+    {
+     "block": 402,
+     "tag": "p",
+     "text": "To clone a body body, run these steps:"
+    },
+    {
+     "block": 403,
+     "tag": "p",
+     "text": "Let \u00ab out1, out2 \u00bb be the result of teeing body\u2019s stream."
+    },
+    {
+     "block": 404,
+     "tag": "p",
+     "text": "Set body\u2019s stream to out1."
+    },
+    {
+     "block": 405,
+     "tag": "p",
+     "text": "Return a body whose stream is out2 and other members are copied from body."
+    },
+    {
+     "block": 406,
+     "tag": "p",
+     "text": "To get a byte sequence bytes as a body, return the body of the result of safely extracting bytes."
+    }
+   ],
+   "own_block": "To incrementally read a body body, given an algorithm processBodyChunk, an algorithm processEndOfBody, an algorithm processBodyError, and an optional null, parallel queue, or global object taskDestination (default null), run these steps. processBodyChunk must be an algorithm accepting a byte sequence. processEndOfBody must be an algorithm accepting no arguments. processBodyError must be an algorithm accepting an exception.",
+   "sentence": "To incrementally read a body body, given an algorithm processBodyChunk, an algorithm processEndOfBody, an algorithm processBodyError, and an optional null, parallel queue, or global object taskDestination (default null), run these steps. processBodyChunk must be an algorithm accepting a byte sequence. processEndOfBody must be an algorithm accepting no arguments. processBodyError must be an algorithm accepting an exception."
+  },
+  {
+   "id": "S05",
+   "doc": "fetch",
+   "doc_title": "Fetch Standard",
+   "doc_url": "https://fetch.spec.whatwg.org/",
+   "block": 1069,
+   "headings": [
+    {
+     "block": 825,
+     "tag": "h2",
+     "text": "3. HTTP extensions"
+    },
+    {
+     "block": 1067,
+     "tag": "h3",
+     "text": "3.8. `Sec-Purpose` header"
+    }
+   ],
+   "before": [
+    {
+     "block": 1064,
+     "tag": "p",
+     "text": "Let disposition be \"reporting\" if reportOnly is true; otherwise \"enforce\"."
+    },
+    {
+     "block": 1065,
+     "tag": "p",
+     "text": "Let body be a new object containing the following properties:"
+    },
+    {
+     "block": 1066,
+     "tag": "p",
+     "text": "Generate and queue a report for settingsObject\u2019s global object given the \"coep\" report type, endpoint, and body. [REPORTING]"
+    },
+    {
+     "block": 1067,
+     "tag": "h3",
+     "text": "3.8. `Sec-Purpose` header"
+    },
+    {
+     "block": 1068,
+     "tag": "p",
+     "text": "The `Sec-Purpose` HTTP request header specifies that the request serves one or more purposes other than requesting the resource for immediate use by the user."
+    }
+   ],
+   "own_block": "The `Sec-Purpose` header field is a structured header whose value must be a token.",
+   "sentence": "The `Sec-Purpose` header field is a structured header whose value must be a token."
+  },
+  {
+   "id": "S06",
+   "doc": "fetch",
+   "doc_title": "Fetch Standard",
+   "doc_url": "https://fetch.spec.whatwg.org/",
+   "block": 2099,
+   "headings": [
+    {
+     "block": 1925,
+     "tag": "h2",
+     "text": "5. Fetch API"
+    },
+    {
+     "block": 2050,
+     "tag": "h3",
+     "text": "5.3. Body mixin"
+    }
+   ],
+   "before": [
+    {
+     "block": 2094,
+     "tag": "p",
+     "text": "The formData() method steps are to return the result of running consume body with this and the following steps given a byte sequence bytes:"
+    },
+    {
+     "block": 2095,
+     "tag": "p",
+     "text": "Let mimeType be the result of get the MIME type with this."
+    },
+    {
+     "block": 2096,
+     "tag": "p",
+     "text": "If mimeType is non-null, then switch on mimeType\u2019s essence and run the corresponding steps:"
+    },
+    {
+     "block": 2097,
+     "tag": "dt",
+     "text": "\"multipart/form-data\""
+    },
+    {
+     "block": 2098,
+     "tag": "p",
+     "text": "Parse bytes, using the value of the `boundary` parameter from mimeType, per the rules set forth in Returning Values from Forms: multipart/form-data. [RFC7578]"
+    }
+   ],
+   "own_block": "Each part whose `Content-Disposition` header contains a `filename` parameter must be parsed into an entry whose value is a File object whose contents are the contents of the part. The name attribute of the File object must have the value of the `filename` parameter of the part. The type attribute of the File object must have the value of the `Content-Type` header of the part if the part has such header, and `text/plain` (the default defined by [RFC7578] section 4.4) otherwise.",
+   "sentence": "Each part whose `Content-Disposition` header contains a `filename` parameter must be parsed into an entry whose value is a File object whose contents are the contents of the part."
+  },
+  {
+   "id": "S07",
+   "doc": "html",
+   "doc_title": "HTML Standard",
+   "doc_url": "https://html.spec.whatwg.org/",
+   "block": 5456,
+   "headings": [
+    {
+     "block": 4921,
+     "tag": "h2",
+     "text": "4 The elements of HTML"
+    },
+    {
+     "block": 4953,
+     "tag": "h3",
+     "text": "4.2 Document metadata"
+    },
+    {
+     "block": 5410,
+     "tag": "h4",
+     "text": "4.2.5 The meta element"
+    }
+   ],
+   "before": [
+    {
+     "block": 5451,
+     "tag": "p",
+     "text": "The charset attribute specifies the character encoding used by the document. This is a character encoding declaration. If the attribute is present, its value must be an ASCII case-insensitive match for the string \"utf-8\"."
+    },
+    {
+     "block": 5452,
+     "tag": "p",
+     "text": "The charset attribute on the meta element has no effect in XML documents, but is allowed in XML documents in order to facilitate migration to and from XML."
+    },
+    {
+     "block": 5453,
+     "tag": "p",
+     "text": "There must not be more than one meta element with a charset attribute per document."
+    },
+    {
+     "block": 5454,
+     "tag": "p",
+     "text": "The content attribute gives the value of the document metadata or pragma directive when the element is used for those purposes. The allowed values depend on the exact context, as described in subsequent sections of this specification."
+    },
+    {
+     "block": 5455,
+     "tag": "p",
+     "text": "If a meta element has a name attribute, it sets document metadata. Document metadata is expressed in terms of name-value pairs, the name attribute on the meta element giving the name, and the content attribute on the same element giving the value. The name specifies what aspect of metadata is being set; valid names and the meaning of their values are described in the following sections. If a meta element has no content attribute, then the value part of the metadata name-value pair is the empty string."
+    }
+   ],
+   "own_block": "The media attribute says which media the metadata applies to. The value must be a valid media query list. Unless the name is theme-color, the media attribute has no effect on the processing model and must not be used by authors.",
+   "sentence": "The value must be a valid media query list."
+  },
+  {
+   "id": "S08",
+   "doc": "html",
+   "doc_title": "HTML Standard",
+   "doc_url": "https://html.spec.whatwg.org/",
+   "block": 5530,
+   "headings": [
+    {
+     "block": 4921,
+     "tag": "h2",
+     "text": "4 The elements of HTML"
+    },
+    {
+     "block": 4953,
+     "tag": "h3",
+     "text": "4.2 Document metadata"
+    },
+    {
+     "block": 5410,
+     "tag": "h4",
+     "text": "4.2.5 The meta element"
+    },
+    {
+     "block": 5457,
+     "tag": "h5",
+     "text": "4.2.5.1 Standard metadata names"
+    }
+   ],
+   "before": [
+    {
+     "block": 5525,
+     "tag": "p",
+     "text": "Return nothing (the page has no theme color)."
+    },
+    {
+     "block": 5526,
+     "tag": "p",
+     "text": "If any meta elements are inserted into the document or removed from the document, or existing meta elements have their name, content, or media attributes changed, or if the environment changes such that any meta element's media attribute's value may now or may no longer match the environment, user agents must re-run the above algorithm and apply the result to any affected UI."
+    },
+    {
+     "block": 5527,
+     "tag": "p",
+     "text": "When using the theme color in UI, user agents may adjust it in implementation-specific ways to make it more suitable for the UI in question. For example, if a user agent intends to use the theme color as a background and display white text over it, it might use a darker variant of the theme color in that part of the UI, to ensure adequate contrast."
+    },
+    {
+     "block": 5528,
+     "tag": "dt",
+     "text": "color-scheme"
+    },
+    {
+     "block": 5529,
+     "tag": "p",
+     "text": "To aid user agents in rendering the page background with the desired color scheme immediately (rather than waiting for all CSS in the page to load), a 'color-scheme' value can be provided in a meta element."
+    }
+   ],
+   "own_block": "The value must be a string that matches the syntax for the CSS 'color-scheme' property value. It determines the page's supported color-schemes.",
+   "sentence": "The value must be a string that matches the syntax for the CSS 'color-scheme' property value."
+  },
+  {
+   "id": "S09",
+   "doc": "html",
+   "doc_title": "HTML Standard",
+   "doc_url": "https://html.spec.whatwg.org/",
+   "block": 7141,
+   "headings": [
+    {
+     "block": 4921,
+     "tag": "h2",
+     "text": "4 The elements of HTML"
+    },
+    {
+     "block": 6861,
+     "tag": "h3",
+     "text": "4.5 Text-level semantics"
+    },
+    {
+     "block": 7129,
+     "tag": "h4",
+     "text": "4.5.8 The dfn element"
+    }
+   ],
+   "before": [
+    {
+     "block": 7136,
+     "tag": "dd",
+     "text": "Phrasing content."
+    },
+    {
+     "block": 7137,
+     "tag": "dd",
+     "text": "Palpable content."
+    },
+    {
+     "block": 7138,
+     "tag": "dt",
+     "text": "Contexts in which this element can be used:"
+    },
+    {
+     "block": 7139,
+     "tag": "dd",
+     "text": "Where phrasing content is expected."
+    },
+    {
+     "block": 7140,
+     "tag": "dt",
+     "text": "Content model:"
+    }
+   ],
+   "own_block": "Phrasing content, but there must be no dfn element descendants.",
+   "sentence": "Phrasing content, but there must be no dfn element descendants."
+  },
+  {
+   "id": "S10",
+   "doc": "html",
+   "doc_title": "HTML Standard",
+   "doc_url": "https://html.spec.whatwg.org/",
+   "block": 8507,
+   "headings": [
+    {
+     "block": 4921,
+     "tag": "h2",
+     "text": "4 The elements of HTML"
+    },
+    {
+     "block": 7920,
+     "tag": "h3",
+     "text": "4.6 Links"
+    },
+    {
+     "block": 8358,
+     "tag": "h4",
+     "text": "4.6.8 Link types"
+    },
+    {
+     "block": 8504,
+     "tag": "h5",
+     "text": "4.6.8.10 Link type \"license\""
+    }
+   ],
+   "before": [
+    {
+     "block": 8502,
+     "tag": "p",
+     "text": "The following snippet shows the top part of an application with several icons."
+    },
+    {
+     "block": 8503,
+     "tag": "p",
+     "text": "For historical reasons, the icon keyword may be preceded by the keyword \"shortcut\". If the \"shortcut\" keyword is present, the rel attribute's entire value must be an ASCII case-insensitive match for the string \"shortcut icon\" (with a single U+0020 SPACE character between the tokens and no other ASCII whitespace)."
+    },
+    {
+     "block": 8504,
+     "tag": "h5",
+     "text": "4.6.8.10 Link type \"license\""
+    },
+    {
+     "block": 8505,
+     "tag": "p",
+     "text": "The license keyword may be used with link, a, area, and form elements. This keyword creates a hyperlink."
+    },
+    {
+     "block": 8506,
+     "tag": "p",
+     "text": "The license keyword indicates that the referenced document provides the copyright license terms under which the main content of the current document is provided."
+    }
+   ],
+   "own_block": "This specification does not specify how to distinguish between the main content of a document and content that is not deemed to be part of that main content. The distinction should be made clear to the user.",
+   "sentence": "The distinction should be made clear to the user."
+  },
+  {
+   "id": "S11",
+   "doc": "html",
+   "doc_title": "HTML Standard",
+   "doc_url": "https://html.spec.whatwg.org/",
+   "block": 9503,
+   "headings": [
+    {
+     "block": 4921,
+     "tag": "h2",
+     "text": "4 The elements of HTML"
+    },
+    {
+     "block": 9020,
+     "tag": "h3",
+     "text": "4.8 Embedded content"
+    },
+    {
+     "block": 9412,
+     "tag": "h4",
+     "text": "4.8.4 Images"
+    },
+    {
+     "block": 9481,
+     "tag": "h5",
+     "text": "4.8.4.2 Attributes common to source, img, and link elements"
+    },
+    {
+     "block": 9498,
+     "tag": "h6",
+     "text": "4.8.4.2.2 Sizes attributes"
+    }
+   ],
+   "before": [
+    {
+     "block": 9498,
+     "tag": "h6",
+     "text": "4.8.4.2.2 Sizes attributes"
+    },
+    {
+     "block": 9499,
+     "tag": "p",
+     "text": "A sizes attribute is an attribute with requirements defined in this section."
+    },
+    {
+     "block": 9500,
+     "tag": "p",
+     "text": "If present, the value must be a valid source size list."
+    },
+    {
+     "block": 9501,
+     "tag": "p",
+     "text": "A valid source size list is a string that matches the following grammar: [CSSVALUES] [MQ]"
+    },
+    {
+     "block": 9502,
+     "tag": "p",
+     "text": "A <source-size-value> that is a <length> must not be negative, and must not use CSS functions other than the math functions."
+    }
+   ],
+   "own_block": "The keyword auto is a width that is computed in parse a sizes attribute. If present, it must be the first entry and the entire <source-size-list> value must either be the string \"auto\" (ASCII case-insensitive) or start with the string \"auto,\" (ASCII case-insensitive).",
+   "sentence": "If present, it must be the first entry and the entire <source-size-list> value must either be the string \"auto\" (ASCII case-insensitive) or start with the string \"auto,\" (ASCII case-insensitive)."
+  },
+  {
+   "id": "S12",
+   "doc": "html",
+   "doc_title": "HTML Standard",
+   "doc_url": "https://html.spec.whatwg.org/",
+   "block": 9684,
+   "headings": [
+    {
+     "block": 4921,
+     "tag": "h2",
+     "text": "4 The elements of HTML"
+    },
+    {
+     "block": 9020,
+     "tag": "h3",
+     "text": "4.8 Embedded content"
+    },
+    {
+     "block": 9412,
+     "tag": "h4",
+     "text": "4.8.4 Images"
+    },
+    {
+     "block": 9512,
+     "tag": "h5",
+     "text": "4.8.4.3 Processing model"
+    },
+    {
+     "block": 9581,
+     "tag": "h6",
+     "text": "4.8.4.3.5 Updating the image data"
+    }
+   ],
+   "before": [
+    {
+     "block": 9679,
+     "tag": "p",
+     "text": "Set image request to the completely available state."
+    },
+    {
+     "block": 9680,
+     "tag": "p",
+     "text": "Add the image to the list of available images using the key key, with the ignore higher-layer caching flag set."
+    },
+    {
+     "block": 9681,
+     "tag": "p",
+     "text": "If maybe omit events is not set or previousURL is not equal to urlString, then fire an event named load at element."
+    },
+    {
+     "block": 9682,
+     "tag": "dt",
+     "text": "Otherwise"
+    },
+    {
+     "block": 9683,
+     "tag": "p",
+     "text": "The image data is not in a supported file format; the user agent must set image request's state to broken, abort the image request for the current request and the pending request, upgrade the pending request to the current request if image request is the pending request, and then, if maybe omit events is not set or previousURL is not equal to urlString, queue an element task on the DOM manipulation task source given element to fire an event named error at element."
+    }
+   ],
+   "own_block": "While a user agent is running the above algorithm for an element x, there must be a strong reference from the element's node document to the element x, even if that element is not connected.",
+   "sentence": "While a user agent is running the above algorithm for an element x, there must be a strong reference from the element's node document to the element x, even if that element is not connected."
+  },
+  {
+   "id": "S13",
+   "doc": "html",
+   "doc_title": "HTML Standard",
+   "doc_url": "https://html.spec.whatwg.org/",
+   "block": 9935,
+   "headings": [
+    {
+     "block": 4921,
+     "tag": "h2",
+     "text": "4 The elements of HTML"
+    },
+    {
+     "block": 9020,
+     "tag": "h3",
+     "text": "4.8 Embedded content"
+    },
+    {
+     "block": 9412,
+     "tag": "h4",
+     "text": "4.8.4 Images"
+    },
+    {
+     "block": 9895,
+     "tag": "h5",
+     "text": "4.8.4.4 Requirements for providing text to act as an alternative for images"
+    },
+    {
+     "block": 9933,
+     "tag": "h6",
+     "text": "4.8.4.4.5 Text that has been rendered to a graphic for typographical effect"
+    }
+   ],
+   "before": [
+    {
+     "block": 9930,
+     "tag": "p",
+     "text": "In this third snippet, we have a logo being used in an aside, as part of the larger article discussing the acquisition:"
+    },
+    {
+     "block": 9931,
+     "tag": "p",
+     "text": "Finally, we have an opinion piece talking about a logo, and the logo is therefore described in detail in the alternative text."
+    },
+    {
+     "block": 9932,
+     "tag": "p",
+     "text": "This example shows how the alternative text should be written such that if the image isn't available, and the text is used instead, the text flows seamlessly into the surrounding text, as if the image had never been there in the first place."
+    },
+    {
+     "block": 9933,
+     "tag": "h6",
+     "text": "4.8.4.4.5 Text that has been rendered to a graphic for typographical effect"
+    },
+    {
+     "block": 9934,
+     "tag": "p",
+     "text": "Sometimes, an image just consists of text, and the purpose of the image is not to highlight the actual typographic effects used to render the text, but just to convey the text itself."
+    }
+   ],
+   "own_block": "In such cases, the alt attribute must be present but must consist of the same text as written in the image itself.",
+   "sentence": "In such cases, the alt attribute must be present but must consist of the same text as written in the image itself."
+  },
+  {
+   "id": "S14",
+   "doc": "html",
+   "doc_title": "HTML Standard",
+   "doc_url": "https://html.spec.whatwg.org/",
+   "block": 10013,
+   "headings": [
+    {
+     "block": 4921,
+     "tag": "h2",
+     "text": "4 The elements of HTML"
+    },
+    {
+     "block": 9020,
+     "tag": "h3",
+     "text": "4.8 Embedded content"
+    },
+    {
+     "block": 9412,
+     "tag": "h4",
+     "text": "4.8.4 Images"
+    },
+    {
+     "block": 9895,
+     "tag": "h5",
+     "text": "4.8.4.4 Requirements for providing text to act as an alternative for images"
+    },
+    {
+     "block": 10008,
+     "tag": "h6",
+     "text": "4.8.4.4.14 Guidance for markup generators"
+    }
+   ],
+   "before": [
+    {
+     "block": 10008,
+     "tag": "h6",
+     "text": "4.8.4.4.14 Guidance for markup generators"
+    },
+    {
+     "block": 10009,
+     "tag": "p",
+     "text": "Markup generators (such as WYSIWYG authoring tools) should, wherever possible, obtain alternative text from their users. However, it is recognized that in many cases, this will not be possible."
+    },
+    {
+     "block": 10010,
+     "tag": "p",
+     "text": "For images that are the sole contents of links, markup generators should examine the link target to determine the title of the target, or the URL of the target, and use information obtained in this manner as the alternative text."
+    },
+    {
+     "block": 10011,
+     "tag": "p",
+     "text": "For images that have captions, markup generators should use the figure and figcaption elements, or the title attribute, to provide the image's caption."
+    },
+    {
+     "block": 10012,
+     "tag": "p",
+     "text": "As a last resort, implementers should either set the alt attribute to the empty string, under the assumption that the image is a purely decorative image that doesn't add any information but is still specific to the surrounding content, or omit the alt attribute altogether, under the assumption that the image is a key part of the content."
+    }
+   ],
+   "own_block": "Markup generators may specify a generator-unable-to-provide-required-alt attribute on img elements for which they have been unable to obtain alternative text and for which they have therefore omitted the alt attribute. The value of this attribute must be the empty string. Documents containing such attributes are not conforming, but conformance checkers will silently ignore this error.",
+   "sentence": "The value of this attribute must be the empty string."
+  },
+  {
+   "id": "S15",
+   "doc": "html",
+   "doc_title": "HTML Standard",
+   "doc_url": "https://html.spec.whatwg.org/",
+   "block": 10188,
+   "headings": [
+    {
+     "block": 4921,
+     "tag": "h2",
+     "text": "4 The elements of HTML"
+    },
+    {
+     "block": 9020,
+     "tag": "h3",
+     "text": "4.8 Embedded content"
+    },
+    {
+     "block": 10023,
+     "tag": "h4",
+     "text": "4.8.5 The iframe element"
+    }
+   ],
+   "before": [
+    {
+     "block": 10183,
+     "tag": "li",
+     "text": "allow-top-navigation"
+    },
+    {
+     "block": 10184,
+     "tag": "li",
+     "text": "allow-top-navigation-by-user-activation"
+    },
+    {
+     "block": 10185,
+     "tag": "li",
+     "text": "allow-top-navigation-to-custom-protocols"
+    },
+    {
+     "block": 10186,
+     "tag": "p",
+     "text": "When the attribute is set, the content is treated as being from a unique opaque origin, forms, scripts, and various potentially annoying APIs are disabled, and links are prevented from targeting other navigables. The allow-same-origin keyword causes the content to be treated as being from its real origin instead of forcing it into an opaque origin; the allow-top-navigation keyword allows the content to navigate its traversable navigable; the allow-top-navigation-by-user-activation keyword behaves similarly but allows such navigation only when the browsing context's active window has transient activation; the allow-top-navigation-to-custom-protocols reenables navigations toward non fetch scheme to be handed off to external software; and the allow-forms, allow-modals, allow-orientation-lock, allow-pointer-lock, allow-popups, allow-presentation, allow-scripts, and allow-popups-to-escape-sandbox keywords re-enable forms, modal dialogs, screen orientation lock, the pointer lock API, popups, the presentation API, scripts, and the creation of unsandboxed auxiliary browsing contexts respectively. The allow-downloads keyword allows content to perform downloads. [POINTERLOCK] [SCREENORIENTATION] [PRESENTATION]"
+    },
+    {
+     "block": 10187,
+     "tag": "p",
+     "text": "The allow-top-navigation and allow-top-navigation-by-user-activation keywords must not both be specified, as doing so is redundant; only allow-top-navigation will have an effect in such non-conformant markup."
+    }
+   ],
+   "own_block": "Similarly, the allow-top-navigation-to-custom-protocols keyword must not be specified if either allow-top-navigation or allow-popups are specified, as doing so is redundant.",
+   "sentence": "Similarly, the allow-top-navigation-to-custom-protocols keyword must not be specified if either allow-top-navigation or allow-popups are specified, as doing so is redundant."
+  },
+  {
+   "id": "S16",
+   "doc": "html",
+   "doc_title": "HTML Standard",
+   "doc_url": "https://html.spec.whatwg.org/",
+   "block": 10338,
+   "headings": [
+    {
+     "block": 4921,
+     "tag": "h2",
+     "text": "4 The elements of HTML"
+    },
+    {
+     "block": 9020,
+     "tag": "h3",
+     "text": "4.8 Embedded content"
+    },
+    {
+     "block": 10255,
+     "tag": "h4",
+     "text": "4.8.6 The embed element"
+    }
+   ],
+   "before": [
+    {
+     "block": 10333,
+     "tag": "p",
+     "text": "To display no plugin for an embed element element:"
+    },
+    {
+     "block": 10334,
+     "tag": "p",
+     "text": "Destroy a child navigable given element."
+    },
+    {
+     "block": 10335,
+     "tag": "p",
+     "text": "Display an indication that no plugin could be found for element, as the contents of element."
+    },
+    {
+     "block": 10336,
+     "tag": "p",
+     "text": "element now represents nothing."
+    },
+    {
+     "block": 10337,
+     "tag": "p",
+     "text": "The embed element has no fallback content; its descendants are ignored."
+    }
+   ],
+   "own_block": "Whenever an embed element that was potentially active stops being potentially active, any plugin that had been instantiated for that element must be unloaded.",
+   "sentence": "Whenever an embed element that was potentially active stops being potentially active, any plugin that had been instantiated for that element must be unloaded."
+  },
+  {
+   "id": "S17",
+   "doc": "html",
+   "doc_title": "HTML Standard",
+   "doc_url": "https://html.spec.whatwg.org/",
+   "block": 10389,
+   "headings": [
+    {
+     "block": 4921,
+     "tag": "h2",
+     "text": "4 The elements of HTML"
+    },
+    {
+     "block": 9020,
+     "tag": "h3",
+     "text": "4.8 Embedded content"
+    },
+    {
+     "block": 10341,
+     "tag": "h4",
+     "text": "4.8.7 The object element"
+    }
+   ],
+   "before": [
+    {
+     "block": 10384,
+     "tag": "dt",
+     "text": "DOM interface:"
+    },
+    {
+     "block": 10385,
+     "tag": "p",
+     "text": "Depending on the type of content instantiated by the object element, the node also supports other interfaces."
+    },
+    {
+     "block": 10386,
+     "tag": "p",
+     "text": "The object element can represent an external resource, which, depending on the type of the resource, will either be treated as an image or as a child navigable."
+    },
+    {
+     "block": 10387,
+     "tag": "p",
+     "text": "The data attribute specifies the URL of the resource. It must be present, and must contain a valid non-empty URL potentially surrounded by spaces."
+    },
+    {
+     "block": 10388,
+     "tag": "p",
+     "text": "The type attribute, if present, specifies the type of the resource. If present, the attribute must be a valid MIME type string."
+    }
+   ],
+   "own_block": "The name attribute, if present, must be a valid navigable target name. The given value is used to name the element's content navigable, if applicable, and if present when the element's content navigable is created.",
+   "sentence": "The name attribute, if present, must be a valid navigable target name."
+  },
+  {
+   "id": "S18",
+   "doc": "html",
+   "doc_title": "HTML Standard",
+   "doc_url": "https://html.spec.whatwg.org/",
+   "block": 10569,
+   "headings": [
+    {
+     "block": 4921,
+     "tag": "h2",
+     "text": "4 The elements of HTML"
+    },
+    {
+     "block": 9020,
+     "tag": "h3",
+     "text": "4.8 Embedded content"
+    },
+    {
+     "block": 10469,
+     "tag": "h4",
+     "text": "4.8.8 The video element"
+    }
+   ],
+   "before": [
+    {
+     "block": 10564,
+     "tag": "dd",
+     "text": "The video element represents the last frame of the video to have been rendered."
+    },
+    {
+     "block": 10565,
+     "tag": "dt",
+     "text": "When the video element is paused"
+    },
+    {
+     "block": 10566,
+     "tag": "dd",
+     "text": "The video element represents the frame of video corresponding to the current playback position."
+    },
+    {
+     "block": 10567,
+     "tag": "dt",
+     "text": "Otherwise (the video element has a video channel and is potentially playing)"
+    },
+    {
+     "block": 10568,
+     "tag": "dd",
+     "text": "The video element represents the frame of video at the continuously increasing \"current\" position. When the current playback position changes such that the last frame rendered is no longer the frame corresponding to the current playback position in the video, the new frame must be rendered."
+    }
+   ],
+   "own_block": "Frames of video must be obtained from the video track that was selected when the event loop last reached step 1.",
+   "sentence": "Frames of video must be obtained from the video track that was selected when the event loop last reached step 1."
+  },
+  {
+   "id": "S19",
+   "doc": "html",
+   "doc_title": "HTML Standard",
+   "doc_url": "https://html.spec.whatwg.org/",
+   "block": 11224,
+   "headings": [
+    {
+     "block": 4921,
+     "tag": "h2",
+     "text": "4 The elements of HTML"
+    },
+    {
+     "block": 9020,
+     "tag": "h3",
+     "text": "4.8 Embedded content"
+    },
+    {
+     "block": 10754,
+     "tag": "h4",
+     "text": "4.8.11 Media elements"
+    },
+    {
+     "block": 11207,
+     "tag": "h5",
+     "text": "4.8.11.6 Offsets into the media resource"
+    }
+   ],
+   "before": [
+    {
+     "block": 11219,
+     "tag": "p",
+     "text": "Support in all current engines."
+    },
+    {
+     "block": 11220,
+     "tag": "div",
+     "text": "Firefox3.5+Safari3.1+Chrome3+Opera12.1+Edge79+Edge (Legacy)12+Internet Explorer9+Firefox Android?Safari iOS3+Chrome Android?WebView Android37+Samsung Internet?Opera Android12.1+"
+    },
+    {
+     "block": 11221,
+     "tag": "p",
+     "text": "Returns the official playback position, in seconds."
+    },
+    {
+     "block": 11222,
+     "tag": "p",
+     "text": "Can be set, to seek to the given time."
+    },
+    {
+     "block": 11223,
+     "tag": "p",
+     "text": "A media resource has a media timeline that maps times (in seconds) to positions in the media resource. The origin of a timeline is its earliest defined position. The duration of a timeline is its last defined position."
+    }
+   ],
+   "own_block": "Establishing the media timeline: if the media resource somehow specifies an explicit timeline whose origin is not negative (i.e. gives each frame a specific time offset and gives the first frame a zero or positive offset), then the media timeline should be that timeline. (Whether the media resource can specify a timeline or not depends on the media resource's format.) If the media resource specifies an explicit start time and date, then that time and date should be considered the zero point in the media timeline; the timeline offset will be the time and date, exposed using the getStartDate() method.",
+   "sentence": "(Whether the media resource can specify a timeline or not depends on the media resource's format.) If the media resource specifies an explicit start time and date, then that time and date should be considered the zero point in the media timeline; the timeline offset will be the time and date, exposed using the getStartDate() method."
+  },
+  {
+   "id": "S20",
+   "doc": "html",
+   "doc_title": "HTML Standard",
+   "doc_url": "https://html.spec.whatwg.org/",
+   "block": 11465,
+   "headings": [
+    {
+     "block": 4921,
+     "tag": "h2",
+     "text": "4 The elements of HTML"
+    },
+    {
+     "block": 9020,
+     "tag": "h3",
+     "text": "4.8 Embedded content"
+    },
+    {
+     "block": 10754,
+     "tag": "h4",
+     "text": "4.8.11 Media elements"
+    },
+    {
+     "block": 11307,
+     "tag": "h5",
+     "text": "4.8.11.8 Playing the media resource"
+    }
+   ],
+   "before": [
+    {
+     "block": 11460,
+     "tag": "p",
+     "text": "If the element's playbackRate is not 1.0 and preservesPitch is true, the user agent must apply pitch adjustment to preserve the original pitch of the audio. Otherwise, the user agent must speed up or slow down the audio without any pitch adjustment."
+    },
+    {
+     "block": 11461,
+     "tag": "p",
+     "text": "When a media element is potentially playing, its audio data played must be synchronized with the current playback position, at the element's effective media volume. The user agent must play the audio from audio tracks that were enabled when the event loop last reached step 1."
+    },
+    {
+     "block": 11462,
+     "tag": "p",
+     "text": "When a media element is not potentially playing, audio must not play for the element."
+    },
+    {
+     "block": 11463,
+     "tag": "p",
+     "text": "Media elements that are potentially playing while not in a document must not play any video, but should play any audio component. Media elements must not stop playing just because all references to them have been removed; only once a media element is in a state where no further audio could ever be played by that element may the element be garbage collected."
+    },
+    {
+     "block": 11464,
+     "tag": "p",
+     "text": "It is possible for an element to which no explicit references exist to play audio, even if such an element is not still actively playing: for instance, it could be unpaused but stalled waiting for content to buffer, or it could be still buffering, but with a suspend event listener that begins playback. Even a media element whose media resource has no audio tracks could eventually play audio again if it had an event listener that changes the media resource."
+    }
+   ],
+   "own_block": "Each media element has a list of newly introduced cues, which must be initially empty. Whenever a text track cue is added to the list of cues of a text track that is in the list of text tracks for a media element, that cue must be added to the media element's list of newly introduced cues. Whenever a text track is added to the list of text tracks for a media element, all of the cues in that text track's list of cues must be added to the media element's list of newly introduced cues. When a media element's list of newly introduced cues has new cues added while the media element's show poster flag is not set, then the user agent must run the time marches on steps.",
+   "sentence": "Whenever a text track cue is added to the list of cues of a text track that is in the list of text tracks for a media element, that cue must be added to the media element's list of newly introduced cues."
+  },
+  {
+   "id": "S21",
+   "doc": "html",
+   "doc_title": "HTML Standard",
+   "doc_url": "https://html.spec.whatwg.org/",
+   "block": 11817,
+   "headings": [
+    {
+     "block": 4921,
+     "tag": "h2",
+     "text": "4 The elements of HTML"
+    },
+    {
+     "block": 9020,
+     "tag": "h3",
+     "text": "4.8 Embedded content"
+    },
+    {
+     "block": 10754,
+     "tag": "h4",
+     "text": "4.8.11 Media elements"
+    },
+    {
+     "block": 11705,
+     "tag": "h5",
+     "text": "4.8.11.11 Timed text tracks"
+    },
+    {
+     "block": 11816,
+     "tag": "h6",
+     "text": "4.8.11.11.3 Sourcing out-of-band text tracks"
+    }
+   ],
+   "before": [
+    {
+     "block": 11812,
+     "tag": "p",
+     "text": "Set the new text track's mode to the mode consistent with the user's preferences and the requirements of the relevant specification for the data."
+    },
+    {
+     "block": 11813,
+     "tag": "p",
+     "text": "For instance, if there are no other active subtitles, and this is a forced subtitle track (a subtitle track giving subtitles in the audio track's primary language, but only for audio that is actually in another language), then those subtitles might be activated here."
+    },
+    {
+     "block": 11814,
+     "tag": "p",
+     "text": "Add the new text track to the media element's list of text tracks."
+    },
+    {
+     "block": 11815,
+     "tag": "p",
+     "text": "Fire an event named addtrack at the media element's textTracks attribute's TextTrackList object, using TrackEvent, with the track attribute initialized to the text track."
+    },
+    {
+     "block": 11816,
+     "tag": "h6",
+     "text": "4.8.11.11.3 Sourcing out-of-band text tracks"
+    }
+   ],
+   "own_block": "When a track element is created, it must be associated with a new text track (with its value set as defined below).",
+   "sentence": "When a track element is created, it must be associated with a new text track (with its value set as defined below)."
+  },
+  {
+   "id": "S22",
+   "doc": "html",
+   "doc_title": "HTML Standard",
+   "doc_url": "https://html.spec.whatwg.org/",
+   "block": 12333,
+   "headings": [
+    {
+     "block": 4921,
+     "tag": "h2",
+     "text": "4 The elements of HTML"
+    },
+    {
+     "block": 9020,
+     "tag": "h3",
+     "text": "4.8 Embedded content"
+    },
+    {
+     "block": 12287,
+     "tag": "h4",
+     "text": "4.8.13 The area element"
+    }
+   ],
+   "before": [
+    {
+     "block": 12328,
+     "tag": "dd",
+     "text": "Uncategorized with navigating URL attributes href."
+    },
+    {
+     "block": 12329,
+     "tag": "dt",
+     "text": "DOM interface:"
+    },
+    {
+     "block": 12330,
+     "tag": "p",
+     "text": "The area element represents either a hyperlink with some text and a corresponding area on an image map, or a dead area on an image map."
+    },
+    {
+     "block": 12331,
+     "tag": "p",
+     "text": "An area element with a parent node must have a map element ancestor."
+    },
+    {
+     "block": 12332,
+     "tag": "p",
+     "text": "If the area element has an href attribute, then the area element represents a hyperlink. In this case, the alt attribute must be present. It specifies the text of the hyperlink. Its value must be text that, when presented with the texts specified for the other hyperlinks of the image map, and with the alternative text of the image, but without the image itself, provides the user with the same kind of choice as the hyperlink would when used without its text but with its shape applied to the image. The alt attribute may be left blank if there is another area element in the same image map that points to the same resource and has a non-blank alt attribute."
+    }
+   ],
+   "own_block": "If the area element has no href attribute, then the area represented by the element cannot be selected, and the alt attribute must be omitted.",
+   "sentence": "If the area element has no href attribute, then the area represented by the element cannot be selected, and the alt attribute must be omitted."
+  },
+  {
+   "id": "S23",
+   "doc": "html",
+   "doc_title": "HTML Standard",
+   "doc_url": "https://html.spec.whatwg.org/",
+   "block": 12341,
+   "headings": [
+    {
+     "block": 4921,
+     "tag": "h2",
+     "text": "4 The elements of HTML"
+    },
+    {
+     "block": 9020,
+     "tag": "h3",
+     "text": "4.8 Embedded content"
+    },
+    {
+     "block": 12287,
+     "tag": "h4",
+     "text": "4.8.13 The area element"
+    }
+   ],
+   "before": [
+    {
+     "block": 12336,
+     "tag": "p",
+     "text": "The attribute's missing value default and invalid value default are both the rectangle state."
+    },
+    {
+     "block": 12337,
+     "tag": "p",
+     "text": "The coords attribute must, if specified, contain a valid list of floating-point numbers. This attribute gives the coordinates for the shape described by the shape attribute. The processing for this attribute is described as part of the image map processing model."
+    },
+    {
+     "block": 12338,
+     "tag": "p",
+     "text": "In the circle state, area elements must have a coords attribute present, with three integers, the last of which must be non-negative. The first integer must be the distance in CSS pixels from the left edge of the image to the center of the circle, the second integer must be the distance in CSS pixels from the top edge of the image to the center of the circle, and the third integer must be the radius of the circle, again in CSS pixels."
+    },
+    {
+     "block": 12339,
+     "tag": "p",
+     "text": "In the default state, area elements must not have a coords attribute. (The area is the whole image.)"
+    },
+    {
+     "block": 12340,
+     "tag": "p",
+     "text": "In the polygon state, area elements must have a coords attribute with at least six integers, and the number of integers must be even. Each pair of integers must represent a coordinate given as the distances from the left and the top of the image in CSS pixels respectively, and all the coordinates together must represent the points of the polygon, in order."
+    }
+   ],
+   "own_block": "In the rectangle state, area elements must have a coords attribute with exactly four integers, the first of which must be less than the third, and the second of which must be less than the fourth. The four points must represent, respectively, the distance from the left edge of the image to the left side of the rectangle, the distance from the top edge to the top side, the distance from the left edge to the right side, and the distance from the top edge to the bottom side, all in CSS pixels.",
+   "sentence": "In the rectangle state, area elements must have a coords attribute with exactly four integers, the first of which must be less than the third, and the second of which must be less than the fourth."
+  },
+  {
+   "id": "S24",
+   "doc": "html",
+   "doc_title": "HTML Standard",
+   "doc_url": "https://html.spec.whatwg.org/",
+   "block": 13364,
+   "headings": [
+    {
+     "block": 4921,
+     "tag": "h2",
+     "text": "4 The elements of HTML"
+    },
+    {
+     "block": 13176,
+     "tag": "h3",
+     "text": "4.10 Forms"
+    },
+    {
+     "block": 13318,
+     "tag": "h4",
+     "text": "4.10.3 The form element"
+    }
+   ],
+   "before": [
+    {
+     "block": 13359,
+     "tag": "dt",
+     "text": "Sanitization:"
+    },
+    {
+     "block": 13360,
+     "tag": "dd",
+     "text": "Uncategorized with navigating URL attributes action."
+    },
+    {
+     "block": 13361,
+     "tag": "dt",
+     "text": "DOM interface:"
+    },
+    {
+     "block": 13362,
+     "tag": "p",
+     "text": "The form element represents a hyperlink that can be manipulated through a collection of form-associated elements, some of which can represent editable values that can be submitted to a server for processing."
+    },
+    {
+     "block": 13363,
+     "tag": "p",
+     "text": "The accept-charset attribute gives the character encodings that are to be used for the submission. If specified, the value must be an ASCII case-insensitive match for \"UTF-8\". [ENCODING]"
+    }
+   ],
+   "own_block": "The name attribute represents the form's name within the forms collection. The value must not be the empty string, and the value must be unique amongst the form elements in the forms collection that it is in, if any.",
+   "sentence": "The value must not be the empty string, and the value must be unique amongst the form elements in the forms collection that it is in, if any."
+  },
+  {
+   "id": "S25",
+   "doc": "html",
+   "doc_title": "HTML Standard",
+   "doc_url": "https://html.spec.whatwg.org/",
+   "block": 13685,
+   "headings": [
+    {
+     "block": 4921,
+     "tag": "h2",
+     "text": "4 The elements of HTML"
+    },
+    {
+     "block": 13176,
+     "tag": "h3",
+     "text": "4.10 Forms"
+    },
+    {
+     "block": 13550,
+     "tag": "h4",
+     "text": "4.10.5 The input element"
+    }
+   ],
+   "before": [
+    {
+     "block": 13680,
+     "tag": "p",
+     "text": "If this element's type attribute is in the Checkbox state, then set this element's checkedness to its opposite value (i.e. true if it is false, false if it is true) and set this element's indeterminateness to false."
+    },
+    {
+     "block": 13681,
+     "tag": "p",
+     "text": "If this element's type attribute is in the Radio Button state, then get a reference to the element in this element's radio button group that has its checkedness set to true, if any, and then set this element's checkedness to true."
+    },
+    {
+     "block": 13682,
+     "tag": "p",
+     "text": "The legacy-canceled-activation behavior for input elements are these steps:"
+    },
+    {
+     "block": 13683,
+     "tag": "p",
+     "text": "If the element's type attribute is in the Checkbox state, then set the element's checkedness and the element's indeterminateness back to the values they had before the legacy-pre-activation behavior was run."
+    },
+    {
+     "block": 13684,
+     "tag": "p",
+     "text": "If this element's type attribute is in the Radio Button state, then if the element to which a reference was obtained in the legacy-pre-activation behavior, if any, is still in what is now this element's radio button group, if it still has one, and if so, set that element's checkedness to true; or else, if there was no such element, or that element is no longer in this element's radio button group, or if this element no longer has a radio button group, set this element's checkedness to false."
+    }
+   ],
+   "own_block": "When an input element is first created, the element's rendering and behavior must be set to the rendering and behavior defined for the type attribute's state, and the value sanitization algorithm, if one is defined for the type attribute's state, must be invoked.",
+   "sentence": "When an input element is first created, the element's rendering and behavior must be set to the rendering and behavior defined for the type attribute's state, and the value sanitization algorithm, if one is defined for the type attribute's state, must be invoked."
+  },
+  {
+   "id": "S26",
+   "doc": "html",
+   "doc_title": "HTML Standard",
+   "doc_url": "https://html.spec.whatwg.org/",
+   "block": 13979,
+   "headings": [
+    {
+     "block": 4921,
+     "tag": "h2",
+     "text": "4 The elements of HTML"
+    },
+    {
+     "block": 13176,
+     "tag": "h3",
+     "text": "4.10 Forms"
+    },
+    {
+     "block": 13550,
+     "tag": "h4",
+     "text": "4.10.5 The input element"
+    },
+    {
+     "block": 13712,
+     "tag": "h5",
+     "text": "4.10.5.1 States of the type attribute"
+    },
+    {
+     "block": 13959,
+     "tag": "h6",
+     "text": "4.10.5.1.12 Number state (type=number)"
+    }
+   ],
+   "before": [
+    {
+     "block": 13974,
+     "tag": "p",
+     "text": "The algorithm to convert a string to a number, given a string input, is as follows: If applying the rules for parsing floating-point number values to input results in an error, then return an error; otherwise, return the resulting number."
+    },
+    {
+     "block": 13975,
+     "tag": "p",
+     "text": "The algorithm to convert a number to a string, given a number input, is as follows: Return a valid floating-point number that represents input."
+    },
+    {
+     "block": 13976,
+     "tag": "p",
+     "text": "The following common input element content attributes, IDL attributes, and methods apply to the element: autocomplete, list, max, min, placeholder, readonly, required, and step content attributes; list, value, and valueAsNumber IDL attributes; select(), stepDown(), and stepUp() methods."
+    },
+    {
+     "block": 13977,
+     "tag": "p",
+     "text": "The value IDL attribute is in mode value."
+    },
+    {
+     "block": 13978,
+     "tag": "p",
+     "text": "The input and change events apply."
+    }
+   ],
+   "own_block": "The following content attributes must not be specified and do not apply to the element: accept, alpha, alt, checked, colorspace, dirname, formaction, formenctype, formmethod, formnovalidate, formtarget, height, maxlength, minlength, multiple, pattern, popovertarget, popovertargetaction, size, src, and width.",
+   "sentence": "The following content attributes must not be specified and do not apply to the element: accept, alpha, alt, checked, colorspace, dirname, formaction, formenctype, formmethod, formnovalidate, formtarget, height, maxlength, minlength, multiple, pattern, popovertarget, popovertargetaction, size, src, and width."
+  },
+  {
+   "id": "S27",
+   "doc": "html",
+   "doc_title": "HTML Standard",
+   "doc_url": "https://html.spec.whatwg.org/",
+   "block": 14722,
+   "headings": [
+    {
+     "block": 4921,
+     "tag": "h2",
+     "text": "4 The elements of HTML"
+    },
+    {
+     "block": 13176,
+     "tag": "h3",
+     "text": "4.10 Forms"
+    },
+    {
+     "block": 14618,
+     "tag": "h4",
+     "text": "4.10.6 The button element"
+    }
+   ],
+   "before": [
+    {
+     "block": 14717,
+     "tag": "p",
+     "text": "Otherwise, if this standard defines command steps for target's local name, then run the corresponding command steps given target, element, and command."
+    },
+    {
+     "block": 14718,
+     "tag": "p",
+     "text": "Otherwise, run the popover target attribute activation behavior given element and event's target."
+    },
+    {
+     "block": 14719,
+     "tag": "p",
+     "text": "An HTML element can have specific is valid command steps and command steps defined for the element's local name."
+    },
+    {
+     "block": 14720,
+     "tag": "p",
+     "text": "The form attribute is used to explicitly associate the button element with its form owner. The name attribute represents the element's name. The disabled attribute is used to make the control non-interactive and to prevent its value from being submitted. The formaction, formenctype, formmethod, formnovalidate, and formtarget attributes are attributes for form submission."
+    },
+    {
+     "block": 14721,
+     "tag": "p",
+     "text": "The formnovalidate attribute can be used to make submit buttons that do not trigger the constraint validation."
+    }
+   ],
+   "own_block": "The formaction, formenctype, formmethod, formnovalidate, and formtarget must not be specified if the element is not a submit button.",
+   "sentence": "The formaction, formenctype, formmethod, formnovalidate, and formtarget must not be specified if the element is not a submit button."
+  },
+  {
+   "id": "S28",
+   "doc": "html",
+   "doc_title": "HTML Standard",
+   "doc_url": "https://html.spec.whatwg.org/",
+   "block": 15084,
+   "headings": [
+    {
+     "block": 4921,
+     "tag": "h2",
+     "text": "4 The elements of HTML"
+    },
+    {
+     "block": 13176,
+     "tag": "h3",
+     "text": "4.10 Forms"
+    },
+    {
+     "block": 15031,
+     "tag": "h4",
+     "text": "4.10.10 The option element"
+    }
+   ],
+   "before": [
+    {
+     "block": 15079,
+     "tag": "p",
+     "text": "The label attribute provides a label for element. The label of an option element is the value of the label content attribute, if there is one and its value is not the empty string, or, otherwise, the value of the element's text IDL attribute."
+    },
+    {
+     "block": 15080,
+     "tag": "p",
+     "text": "The label content attribute, if specified, must not be empty."
+    },
+    {
+     "block": 15081,
+     "tag": "p",
+     "text": "The value attribute provides a value for element. The value of an option element is the value of the value content attribute, if there is one, or, if there is not, the result of collect option text given this and false."
+    },
+    {
+     "block": 15082,
+     "tag": "p",
+     "text": "The selected attribute is a boolean attribute. It represents the default selectedness of the element."
+    },
+    {
+     "block": 15083,
+     "tag": "p",
+     "text": "The dirtiness of an option element is a boolean state, initially false. It controls whether adding or removing the selected content attribute has any effect."
+    }
+   ],
+   "own_block": "The selectedness of an option element is a boolean state, initially false. Except where otherwise specified, when the element is created, its selectedness must be set to true if the element has a selected attribute. Whenever an option element's selected attribute is added, if its dirtiness is false, its selectedness must be set to true. Whenever an option element's selected attribute is removed, if its dirtiness is false, its selectedness must be set to false.",
+   "sentence": "Whenever an option element's selected attribute is removed, if its dirtiness is false, its selectedness must be set to false."
+  },
+  {
+   "id": "S29",
+   "doc": "html",
+   "doc_title": "HTML Standard",
+   "doc_url": "https://html.spec.whatwg.org/",
+   "block": 15675,
+   "headings": [
+    {
+     "block": 4921,
+     "tag": "h2",
+     "text": "4 The elements of HTML"
+    },
+    {
+     "block": 13176,
+     "tag": "h3",
+     "text": "4.10 Forms"
+    },
+    {
+     "block": 15649,
+     "tag": "h4",
+     "text": "4.10.18 Form control infrastructure"
+    },
+    {
+     "block": 15663,
+     "tag": "h5",
+     "text": "4.10.18.3 Association of controls and forms"
+    }
+   ],
+   "before": [
+    {
+     "block": 15670,
+     "tag": "p",
+     "text": "Attributes#attr-form"
+    },
+    {
+     "block": 15671,
+     "tag": "p",
+     "text": "Support in all current engines."
+    },
+    {
+     "block": 15672,
+     "tag": "div",
+     "text": "Firefox1+Safari\u22644+Chrome1+Opera\u226412.1+Edge79+Edge (Legacy)12+Internet Explorer\u22646+Firefox Android?Safari iOS?Chrome Android?WebView Android?Samsung Internet?Opera Android\u226412.1+"
+    },
+    {
+     "block": 15673,
+     "tag": "p",
+     "text": "A form-associated element is, by default, associated with its nearest ancestor form element (as described below), but, if it is listed, may have a form attribute specified to override this."
+    },
+    {
+     "block": 15674,
+     "tag": "p",
+     "text": "This feature allows authors to work around the lack of support for nested form elements."
+    }
+   ],
+   "own_block": "If a listed form-associated element has a form attribute specified, then that attribute's value must be the ID of a form element in the element's tree.",
+   "sentence": "If a listed form-associated element has a form attribute specified, then that attribute's value must be the ID of a form element in the element's tree."
+  },
+  {
+   "id": "S30",
+   "doc": "html",
+   "doc_title": "HTML Standard",
+   "doc_url": "https://html.spec.whatwg.org/",
+   "block": 16789,
+   "headings": [
+    {
+     "block": 4921,
+     "tag": "h2",
+     "text": "4 The elements of HTML"
+    },
+    {
+     "block": 16743,
+     "tag": "h3",
+     "text": "4.11 Interactive elements"
+    },
+    {
+     "block": 16744,
+     "tag": "h4",
+     "text": "4.11.1 The details element"
+    }
+   ],
+   "before": [
+    {
+     "block": 16784,
+     "tag": "p",
+     "text": "The group of elements that is created by a common name attribute is exclusive, meaning that at most one of the details elements can be open at once. While this exclusivity is enforced by user agents, the resulting enforcement immediately changes the open attributes in the markup. This requirement on authors forbids such misleading markup."
+    },
+    {
+     "block": 16785,
+     "tag": "p",
+     "text": "A document must not contain a details element that is a descendant of another details element in the same details name group."
+    },
+    {
+     "block": 16786,
+     "tag": "p",
+     "text": "Documents that use the name attribute to group multiple related details elements should keep those related elements together in a containing element (such as a section element or article element). When it makes sense for the group to be introduced with a heading, authors should put that heading in a heading element at the start of the containing element."
+    },
+    {
+     "block": 16787,
+     "tag": "p",
+     "text": "Visually and programmatically grouping related elements together can be important for accessible user experiences. This can help users understand the relationship between such elements. When related elements are in disparate sections of a web page rather than being grouped, the elements' relationships to each other can be less discoverable or understandable."
+    },
+    {
+     "block": 16788,
+     "tag": "p",
+     "text": "The open content attribute is a boolean attribute. If present, it indicates that both the summary and the additional information is to be shown to the user. If the attribute is absent, only the summary is to be shown."
+    }
+   ],
+   "own_block": "When the element is created, if the attribute is absent, the additional information should be hidden; if the attribute is present, that information should be shown. Subsequently, if the attribute is removed, then the information should be hidden; if the attribute is added, the information should be shown.",
+   "sentence": "When the element is created, if the attribute is absent, the additional information should be hidden; if the attribute is present, that information should be shown."
+  },
+  {
+   "id": "S31",
+   "doc": "html",
+   "doc_title": "HTML Standard",
+   "doc_url": "https://html.spec.whatwg.org/",
+   "block": 19076,
+   "headings": [
+    {
+     "block": 4921,
+     "tag": "h2",
+     "text": "4 The elements of HTML"
+    },
+    {
+     "block": 17216,
+     "tag": "h3",
+     "text": "4.12 Scripting"
+    },
+    {
+     "block": 17843,
+     "tag": "h4",
+     "text": "4.12.5 The canvas element"
+    },
+    {
+     "block": 17957,
+     "tag": "h5",
+     "text": "4.12.5.1 The 2D rendering context"
+    },
+    {
+     "block": 18990,
+     "tag": "h6",
+     "text": "4.12.5.1.12 Drawing text to the bitmap"
+    }
+   ],
+   "before": [
+    {
+     "block": 19071,
+     "tag": "p",
+     "text": "The fillText(text, x, y, maxWidth) and strokeText(text, x, y, maxWidth) methods render the given text at the given (x, y) coordinates ensuring that the text isn't wider than maxWidth if specified, using the current font, textAlign, and textBaseline values. Specifically, when the methods are invoked, the user agent must run these steps:"
+    },
+    {
+     "block": 19072,
+     "tag": "p",
+     "text": "If any of the arguments are infinite or NaN, then return."
+    },
+    {
+     "block": 19073,
+     "tag": "p",
+     "text": "Run the text preparation algorithm, passing it text, the object implementing the CanvasText interface, and, if the maxWidth argument was provided, that argument. Let glyphs be the result."
+    },
+    {
+     "block": 19074,
+     "tag": "p",
+     "text": "Move all the shapes in glyphs to the right by x CSS pixels and down by y CSS pixels."
+    },
+    {
+     "block": 19075,
+     "tag": "p",
+     "text": "Paint the shapes given in glyphs, as transformed by the current transformation matrix, with each CSS pixel in the coordinate space of glyphs mapped to one coordinate space unit."
+    }
+   ],
+   "own_block": "For fillText(), this's fill style must be applied to the shapes and this's stroke style must be ignored. For strokeText(), the reverse holds: this's stroke style must be applied to the result of tracing the shapes using the object implementing the CanvasText interface for the line styles, and this's fill style must be ignored.",
+   "sentence": "For strokeText(), the reverse holds: this's stroke style must be applied to the result of tracing the shapes using the object implementing the CanvasText interface for the line styles, and this's fill style must be ignored."
+  },
+  {
+   "id": "S32",
+   "doc": "html",
+   "doc_title": "HTML Standard",
+   "doc_url": "https://html.spec.whatwg.org/",
+   "block": 19756,
+   "headings": [
+    {
+     "block": 4921,
+     "tag": "h2",
+     "text": "4 The elements of HTML"
+    },
+    {
+     "block": 19682,
+     "tag": "h3",
+     "text": "4.13 Custom elements"
+    },
+    {
+     "block": 19749,
+     "tag": "h4",
+     "text": "4.13.2 Requirements for custom element constructors and reactions"
+    }
+   ],
+   "before": [
+    {
+     "block": 19751,
+     "tag": "p",
+     "text": "A parameter-less call to super() must be the first statement in the constructor body, to establish the correct prototype chain and this value before any further code is run."
+    },
+    {
+     "block": 19752,
+     "tag": "p",
+     "text": "A return statement must not appear anywhere inside the constructor body, unless it is a simple early-return (return or return this)."
+    },
+    {
+     "block": 19753,
+     "tag": "p",
+     "text": "The constructor must not use the document.write() or document.open() methods."
+    },
+    {
+     "block": 19754,
+     "tag": "p",
+     "text": "The element's attributes and children must not be inspected, as in the non-upgrade case none will be present, and relying on upgrades makes the element less usable."
+    },
+    {
+     "block": 19755,
+     "tag": "p",
+     "text": "The element must not gain any attributes or children, as this violates the expectations of consumers who use the createElement or createElementNS methods."
+    }
+   ],
+   "own_block": "In general, work should be deferred to connectedCallback as much as possible\u2014especially work involving fetching resources or rendering. However, note that connectedCallback can be called more than once, so any initialization work that is truly one-time will need a guard to prevent it from running twice.",
+   "sentence": "In general, work should be deferred to connectedCallback as much as possible\u2014especially work involving fetching resources or rendering."
+  },
+  {
+   "id": "S33",
+   "doc": "html",
+   "doc_title": "HTML Standard",
+   "doc_url": "https://html.spec.whatwg.org/",
+   "block": 20670,
+   "headings": [
+    {
+     "block": 20588,
+     "tag": "h2",
+     "text": "5 Microdata"
+    },
+    {
+     "block": 20651,
+     "tag": "h3",
+     "text": "5.2 Encoding microdata"
+    },
+    {
+     "block": 20655,
+     "tag": "h4",
+     "text": "5.2.2 Items"
+    }
+   ],
+   "before": [
+    {
+     "block": 20665,
+     "tag": "div",
+     "text": "FirefoxYesSafariYesChromeYesOpera?EdgeYesEdge (Legacy)12+Internet ExplorerYesFirefox Android?Safari iOS?Chrome Android?WebView Android?Samsung Internet?Opera Android?"
+    },
+    {
+     "block": 20666,
+     "tag": "p",
+     "text": "Elements with an itemscope attribute may have an itemtype attribute specified, to give the item types of the item."
+    },
+    {
+     "block": 20667,
+     "tag": "p",
+     "text": "The itemtype attribute, if specified, must have a value that is an unordered set of unique space-separated tokens, none of which are identical to another token and each of which is a valid URL string that is an absolute URL, and all of which are defined to use the same vocabulary. The attribute's value must have at least one token."
+    },
+    {
+     "block": 20668,
+     "tag": "p",
+     "text": "The item types of an item are the tokens obtained by splitting the element's itemtype attribute's value on ASCII whitespace. If the itemtype attribute is missing or parsing it in this way finds no tokens, the item is said to have no item types."
+    },
+    {
+     "block": 20669,
+     "tag": "p",
+     "text": "The item types must all be types defined in applicable specifications and must all be defined to use the same vocabulary."
+    }
+   ],
+   "own_block": "Except if otherwise specified by that specification, the URLs given as the item types should not be automatically dereferenced.",
+   "sentence": "Except if otherwise specified by that specification, the URLs given as the item types should not be automatically dereferenced."
+  },
+  {
+   "id": "S34",
+   "doc": "html",
+   "doc_title": "HTML Standard",
+   "doc_url": "https://html.spec.whatwg.org/",
+   "block": 20872,
+   "headings": [
+    {
+     "block": 20588,
+     "tag": "h2",
+     "text": "5 Microdata"
+    },
+    {
+     "block": 20798,
+     "tag": "h3",
+     "text": "5.3 Sample microdata vocabularies"
+    },
+    {
+     "block": 20800,
+     "tag": "h4",
+     "text": "5.3.1 vCard"
+    }
+   ],
+   "before": [
+    {
+     "block": 20867,
+     "tag": "p",
+     "text": "Gives the type of delivery address."
+    },
+    {
+     "block": 20868,
+     "tag": "p",
+     "text": "The value must be text that is identical to one of the address type strings."
+    },
+    {
+     "block": 20869,
+     "tag": "p",
+     "text": "Any number of properties with the name type may be present within the item that forms the value of an adr property of an item with the type http://microformats.org/profile/hcard, but within each such adr property item there must only be one type property per distinct value."
+    },
+    {
+     "block": 20870,
+     "tag": "dt",
+     "text": "post-office-box (inside adr)"
+    },
+    {
+     "block": 20871,
+     "tag": "p",
+     "text": "Gives the post office box component of the delivery address of the person or organization."
+    }
+   ],
+   "own_block": "The value must be text.",
+   "sentence": "The value must be text."
+  },
+  {
+   "id": "S35",
+   "doc": "html",
+   "doc_title": "HTML Standard",
+   "doc_url": "https://html.spec.whatwg.org/",
+   "block": 20956,
+   "headings": [
+    {
+     "block": 20588,
+     "tag": "h2",
+     "text": "5 Microdata"
+    },
+    {
+     "block": 20798,
+     "tag": "h3",
+     "text": "5.3 Sample microdata vocabularies"
+    },
+    {
+     "block": 20800,
+     "tag": "h4",
+     "text": "5.3.1 vCard"
+    }
+   ],
+   "before": [
+    {
+     "block": 20951,
+     "tag": "p",
+     "text": "Gives the role, occupation, or business category of the person or organization."
+    },
+    {
+     "block": 20952,
+     "tag": "p",
+     "text": "The value must be text."
+    },
+    {
+     "block": 20953,
+     "tag": "p",
+     "text": "Any number of properties with the name role may be present within each item with the type http://microformats.org/profile/hcard."
+    },
+    {
+     "block": 20954,
+     "tag": "dt",
+     "text": "logo"
+    },
+    {
+     "block": 20955,
+     "tag": "p",
+     "text": "Gives the logo of the person or organization."
+    }
+   ],
+   "own_block": "The value must be an absolute URL.",
+   "sentence": "The value must be an absolute URL."
+  },
+  {
+   "id": "S36",
+   "doc": "html",
+   "doc_title": "HTML Standard",
+   "doc_url": "https://html.spec.whatwg.org/",
+   "block": 20985,
+   "headings": [
+    {
+     "block": 20588,
+     "tag": "h2",
+     "text": "5 Microdata"
+    },
+    {
+     "block": 20798,
+     "tag": "h3",
+     "text": "5.3 Sample microdata vocabularies"
+    },
+    {
+     "block": 20800,
+     "tag": "h4",
+     "text": "5.3.1 vCard"
+    }
+   ],
+   "before": [
+    {
+     "block": 20980,
+     "tag": "p",
+     "text": "The value must be an item with one url property and one rel properties."
+    },
+    {
+     "block": 20981,
+     "tag": "p",
+     "text": "Any number of properties with the name related may be present within each item with the type http://microformats.org/profile/hcard."
+    },
+    {
+     "block": 20982,
+     "tag": "dt",
+     "text": "url (inside related)"
+    },
+    {
+     "block": 20983,
+     "tag": "p",
+     "text": "Gives the URL for the related entity."
+    },
+    {
+     "block": 20984,
+     "tag": "p",
+     "text": "The value must be an absolute URL."
+    }
+   ],
+   "own_block": "Exactly one property with the name url must be present within the item that forms the value of a related property of an item with the type http://microformats.org/profile/hcard.",
+   "sentence": "Exactly one property with the name url must be present within the item that forms the value of a related property of an item with the type http://microformats.org/profile/hcard."
+  },
+  {
+   "id": "S37",
+   "doc": "html",
+   "doc_title": "HTML Standard",
+   "doc_url": "https://html.spec.whatwg.org/",
+   "block": 20988,
+   "headings": [
+    {
+     "block": 20588,
+     "tag": "h2",
+     "text": "5 Microdata"
+    },
+    {
+     "block": 20798,
+     "tag": "h3",
+     "text": "5.3 Sample microdata vocabularies"
+    },
+    {
+     "block": 20800,
+     "tag": "h4",
+     "text": "5.3.1 vCard"
+    }
+   ],
+   "before": [
+    {
+     "block": 20983,
+     "tag": "p",
+     "text": "Gives the URL for the related entity."
+    },
+    {
+     "block": 20984,
+     "tag": "p",
+     "text": "The value must be an absolute URL."
+    },
+    {
+     "block": 20985,
+     "tag": "p",
+     "text": "Exactly one property with the name url must be present within the item that forms the value of a related property of an item with the type http://microformats.org/profile/hcard."
+    },
+    {
+     "block": 20986,
+     "tag": "dt",
+     "text": "rel (inside related)"
+    },
+    {
+     "block": 20987,
+     "tag": "p",
+     "text": "Gives the relationship between the entity and the related entity."
+    }
+   ],
+   "own_block": "The value must be text that is identical to one of the relationship strings.",
+   "sentence": "The value must be text that is identical to one of the relationship strings."
+  },
+  {
+   "id": "S38",
+   "doc": "html",
+   "doc_title": "HTML Standard",
+   "doc_url": "https://html.spec.whatwg.org/",
+   "block": 21199,
+   "headings": [
+    {
+     "block": 20588,
+     "tag": "h2",
+     "text": "5 Microdata"
+    },
+    {
+     "block": 20798,
+     "tag": "h3",
+     "text": "5.3 Sample microdata vocabularies"
+    },
+    {
+     "block": 21192,
+     "tag": "h4",
+     "text": "5.3.2 vEvent"
+    }
+   ],
+   "before": [
+    {
+     "block": 21194,
+     "tag": "p",
+     "text": "This vocabulary does not support global identifiers for items."
+    },
+    {
+     "block": 21195,
+     "tag": "p",
+     "text": "The following are the type's defined property names. They are based on the vocabulary defined in Internet Calendaring and Scheduling Core Object Specification (iCalendar), where more information on how to interpret the values can be found. [RFC5545]"
+    },
+    {
+     "block": 21196,
+     "tag": "p",
+     "text": "Only the parts of the iCalendar vocabulary relating to events are used here; this vocabulary cannot express a complete iCalendar instance."
+    },
+    {
+     "block": 21197,
+     "tag": "dt",
+     "text": "attach"
+    },
+    {
+     "block": 21198,
+     "tag": "p",
+     "text": "Gives the address of an associated document for the event."
+    }
+   ],
+   "own_block": "The value must be an absolute URL.",
+   "sentence": "The value must be an absolute URL."
+  },
+  {
+   "id": "S39",
+   "doc": "html",
+   "doc_title": "HTML Standard",
+   "doc_url": "https://html.spec.whatwg.org/",
+   "block": 22958,
+   "headings": [
+    {
+     "block": 21429,
+     "tag": "h2",
+     "text": "6 User interaction"
+    },
+    {
+     "block": 22508,
+     "tag": "h3",
+     "text": "6.11 Drag and drop"
+    },
+    {
+     "block": 22943,
+     "tag": "h4",
+     "text": "6.11.7 The draggable attribute"
+    }
+   ],
+   "before": [
+    {
+     "block": 22953,
+     "tag": "p",
+     "text": "Can be set, to override the default and set the draggable content attribute."
+    },
+    {
+     "block": 22954,
+     "tag": "p",
+     "text": "The draggable IDL attribute, whose value depends on the content attribute's in the way described below, controls whether or not the element is draggable. Generally, only text selections are draggable, but elements whose draggable IDL attribute is true become draggable as well."
+    },
+    {
+     "block": 22955,
+     "tag": "p",
+     "text": "If an element's draggable content attribute has the state True, the draggable IDL attribute must return true."
+    },
+    {
+     "block": 22956,
+     "tag": "p",
+     "text": "Otherwise, if the element's draggable content attribute has the state False, the draggable IDL attribute must return false."
+    },
+    {
+     "block": 22957,
+     "tag": "p",
+     "text": "Otherwise, the element's draggable content attribute has the state Auto. If the element is an img element, an object element that represents an image, or an a element with an href content attribute, the draggable IDL attribute must return true; otherwise, the draggable IDL attribute must return false."
+    }
+   ],
+   "own_block": "If the draggable IDL attribute is set to the value false, the draggable content attribute must be set to the literal value \"false\". If the draggable IDL attribute is set to the value true, the draggable content attribute must be set to the literal value \"true\".",
+   "sentence": "If the draggable IDL attribute is set to the value true, the draggable content attribute must be set to the literal value \"true\"."
+  },
+  {
+   "id": "S40",
+   "doc": "html",
+   "doc_title": "HTML Standard",
+   "doc_url": "https://html.spec.whatwg.org/",
+   "block": 23638,
+   "headings": [
+    {
+     "block": 23345,
+     "tag": "h2",
+     "text": "7 Loading web pages"
+    },
+    {
+     "block": 23347,
+     "tag": "h3",
+     "text": "7.1 Supporting concepts"
+    },
+    {
+     "block": 23482,
+     "tag": "h4",
+     "text": "7.1.3 Cross-origin opener policies"
+    },
+    {
+     "block": 23630,
+     "tag": "h5",
+     "text": "7.1.3.3 Reporting"
+    }
+   ],
+   "before": [
+    {
+     "block": 23633,
+     "tag": "p",
+     "text": "The accessor browsing context or one of its ancestors is the opener browsing context of the accessed browsing context's top-level browsing context."
+    },
+    {
+     "block": 23634,
+     "tag": "dt",
+     "text": "accessor is openee"
+    },
+    {
+     "block": 23635,
+     "tag": "p",
+     "text": "The accessed browsing context or one of its ancestors is the opener browsing context of the accessor browsing context's top-level browsing context."
+    },
+    {
+     "block": 23636,
+     "tag": "dt",
+     "text": "none"
+    },
+    {
+     "block": 23637,
+     "tag": "p",
+     "text": "There is no opener relationship between the accessor browsing context, the accessor browsing context, or any of their ancestors."
+    }
+   ],
+   "own_block": "To check if an access between two browsing contexts should be reported, given two browsing contexts accessor and accessed, a JavaScript property name P, and an environment settings object environment:",
+   "sentence": "To check if an access between two browsing contexts should be reported, given two browsing contexts accessor and accessed, a JavaScript property name P, and an environment settings object environment:"
+  },
+  {
+   "id": "S41",
+   "doc": "html",
+   "doc_title": "HTML Standard",
+   "doc_url": "https://html.spec.whatwg.org/",
+   "block": 24440,
+   "headings": [
+    {
+     "block": 23345,
+     "tag": "h2",
+     "text": "7 Loading web pages"
+    },
+    {
+     "block": 23902,
+     "tag": "h3",
+     "text": "7.2 APIs related to navigation and session history"
+    },
+    {
+     "block": 24393,
+     "tag": "h4",
+     "text": "7.2.3 The WindowProxy exotic object"
+    },
+    {
+     "block": 24438,
+     "tag": "h5",
+     "text": "7.2.3.7 [[Get]] ( P, Receiver )"
+    }
+   ],
+   "before": [
+    {
+     "block": 24435,
+     "tag": "p",
+     "text": "Return ? OrdinaryDefineOwnProperty(W, P, Desc)."
+    },
+    {
+     "block": 24436,
+     "tag": "p",
+     "text": "This is a willful violation of the JavaScript specification's invariants of the essential internal methods to maintain compatibility with existing web content. See tc39/ecma262 issue #672 for more information. [JAVASCRIPT]"
+    },
+    {
+     "block": 24437,
+     "tag": "p",
+     "text": "Throw a \"SecurityError\" DOMException."
+    },
+    {
+     "block": 24438,
+     "tag": "h5",
+     "text": "7.2.3.7 [[Get]] ( P, Receiver )"
+    },
+    {
+     "block": 24439,
+     "tag": "p",
+     "text": "Let W be the value of the [[Window]] internal slot of this."
+    }
+   ],
+   "own_block": "Check if an access between two browsing contexts should be reported, given the current global object's browsing context, W's browsing context, P, and the current settings object.",
+   "sentence": "Check if an access between two browsing contexts should be reported, given the current global object's browsing context, W's browsing context, P, and the current settings object."
+  },
+  {
+   "id": "S42",
+   "doc": "html",
+   "doc_title": "HTML Standard",
+   "doc_url": "https://html.spec.whatwg.org/",
+   "block": 28385,
+   "headings": [
+    {
+     "block": 23345,
+     "tag": "h2",
+     "text": "7 Loading web pages"
+    },
+    {
+     "block": 28361,
+     "tag": "h3",
+     "text": "7.6 Speculative loading"
+    },
+    {
+     "block": 28364,
+     "tag": "h4",
+     "text": "7.6.1 Speculation rules"
+    }
+   ],
+   "before": [
+    {
+     "block": 28380,
+     "tag": "p",
+     "text": "If the value corresponding to the \"source\" key is \"document\", then the \"urls\" key must be absent."
+    },
+    {
+     "block": 28381,
+     "tag": "p",
+     "text": "The \"urls\" and \"where\" keys must not both be present."
+    },
+    {
+     "block": 28382,
+     "tag": "p",
+     "text": "If the value corresponding to the \"source\" key is \"document\" or the \"where\" key is present, then the \"relative_to\" key must be absent."
+    },
+    {
+     "block": 28383,
+     "tag": "p",
+     "text": "The value corresponding to the \"urls\" key, if present, must be an array of valid URL strings."
+    },
+    {
+     "block": 28384,
+     "tag": "p",
+     "text": "The value corresponding to the \"where\" key, if present, must be a valid document rule predicate."
+    }
+   ],
+   "own_block": "The value corresponding to the \"relative_to\" key, if present, must be either \"ruleset\" or \"document\".",
+   "sentence": "The value corresponding to the \"relative_to\" key, if present, must be either \"ruleset\" or \"document\"."
+  },
+  {
+   "id": "S43",
+   "doc": "html",
+   "doc_title": "HTML Standard",
+   "doc_url": "https://html.spec.whatwg.org/",
+   "block": 29419,
+   "headings": [
+    {
+     "block": 28921,
+     "tag": "h2",
+     "text": "8 Web application APIs"
+    },
+    {
+     "block": 28922,
+     "tag": "h3",
+     "text": "8.1 Scripting"
+    },
+    {
+     "block": 29190,
+     "tag": "h4",
+     "text": "8.1.4 Script processing model"
+    },
+    {
+     "block": 29229,
+     "tag": "h5",
+     "text": "8.1.4.2 Fetching scripts"
+    }
+   ],
+   "before": [
+    {
+     "block": 29414,
+     "tag": "p",
+     "text": "If mimeType is a JSON MIME type and moduleType is \"json\", then set moduleScript to the result of creating a JSON module script given sourceText and settingsObject."
+    },
+    {
+     "block": 29415,
+     "tag": "p",
+     "text": "Let callbacks be moduleMap[(url, moduleType)]."
+    },
+    {
+     "block": 29416,
+     "tag": "p",
+     "text": "If moduleScript is null, then remove moduleMap[(url, moduleType)]; otherwise set moduleMap[(url, moduleType)] to moduleScript."
+    },
+    {
+     "block": 29417,
+     "tag": "p",
+     "text": "It is intentional that the module map is keyed by the request URL, whereas the base URL for the module script is set to the response URL. The former is used to deduplicate fetches, while the latter is used for URL resolution."
+    },
+    {
+     "block": 29418,
+     "tag": "p",
+     "text": "For each callback of callbacks: run callback given moduleScript."
+    }
+   ],
+   "own_block": "To fetch a single imported module script, given a URL url, an environment settings object fetchClient, a destination destination, a script fetch options options, environment settings object settingsObject, a referrer referrer, a ModuleRequest Record moduleRequest, an algorithm onComplete, and an optional perform the fetch hook performFetch, run these steps. onComplete must be an algorithm accepting null (on failure) or a module script (on success).",
+   "sentence": "To fetch a single imported module script, given a URL url, an environment settings object fetchClient, a destination destination, a script fetch options options, environment settings object settingsObject, a referrer referrer, a ModuleRequest Record moduleRequest, an algorithm onComplete, and an optional perform the fetch hook performFetch, run these steps. onComplete must be an algorithm accepting null (on failure) or a module script (on success)."
+  },
+  {
+   "id": "S44",
+   "doc": "html",
+   "doc_title": "HTML Standard",
+   "doc_url": "https://html.spec.whatwg.org/",
+   "block": 32392,
+   "headings": [
+    {
+     "block": 28921,
+     "tag": "h2",
+     "text": "8 Web application APIs"
+    },
+    {
+     "block": 32385,
+     "tag": "h3",
+     "text": "8.12 Animation frames"
+    }
+   ],
+   "before": [
+    {
+     "block": 32387,
+     "tag": "p",
+     "text": "Each AnimationFrameProvider object also has a target object that stores the provider's internal state. It is defined as follows:"
+    },
+    {
+     "block": 32388,
+     "tag": "dt",
+     "text": "If the AnimationFrameProvider is a Window"
+    },
+    {
+     "block": 32389,
+     "tag": "dd",
+     "text": "The Window's associated Document"
+    },
+    {
+     "block": 32390,
+     "tag": "dt",
+     "text": "If the AnimationFrameProvider is a DedicatedWorkerGlobalScope"
+    },
+    {
+     "block": 32391,
+     "tag": "dd",
+     "text": "The DedicatedWorkerGlobalScope"
+    }
+   ],
+   "own_block": "Each target object has a map of animation frame callbacks, which is an ordered map that must be initially empty, and an animation frame callback identifier, which is a number that must initially be zero.",
+   "sentence": "Each target object has a map of animation frame callbacks, which is an ordered map that must be initially empty, and an animation frame callback identifier, which is a number that must initially be zero."
+  },
+  {
+   "id": "S45",
+   "doc": "html",
+   "doc_title": "HTML Standard",
+   "doc_url": "https://html.spec.whatwg.org/",
+   "block": 32966,
+   "headings": [
+    {
+     "block": 32425,
+     "tag": "h2",
+     "text": "9 Communication"
+    },
+    {
+     "block": 32905,
+     "tag": "h3",
+     "text": "9.5 Broadcasting to other browsing contexts"
+    }
+   ],
+   "before": [
+    {
+     "block": 32961,
+     "tag": "p",
+     "text": "If destination's closed flag is true, then abort these steps."
+    },
+    {
+     "block": 32962,
+     "tag": "p",
+     "text": "Let targetRealm be destination's relevant realm."
+    },
+    {
+     "block": 32963,
+     "tag": "p",
+     "text": "Let data be StructuredDeserialize(serialized, targetRealm)."
+    },
+    {
+     "block": 32964,
+     "tag": "p",
+     "text": "If this throws an exception, catch it, fire an event named messageerror at destination, using MessageEvent, with its origin initialized to sourceOrigin, and then abort these steps."
+    },
+    {
+     "block": 32965,
+     "tag": "p",
+     "text": "Fire an event named message at destination, using MessageEvent, with the data attribute initialized to data and its origin initialized to sourceOrigin."
+    }
+   ],
+   "own_block": "While a BroadcastChannel object whose closed flag is false has an event listener registered for message or messageerror events, there must be a strong reference from the BroadcastChannel object's relevant global object to the BroadcastChannel object itself.",
+   "sentence": "While a BroadcastChannel object whose closed flag is false has an event listener registered for message or messageerror events, there must be a strong reference from the BroadcastChannel object's relevant global object to the BroadcastChannel object itself."
+  },
+  {
+   "id": "S46",
+   "doc": "html",
+   "doc_title": "HTML Standard",
+   "doc_url": "https://html.spec.whatwg.org/",
+   "block": 34055,
+   "headings": [
+    {
+     "block": 33991,
+     "tag": "h2",
+     "text": "13 The HTML syntax"
+    },
+    {
+     "block": 33993,
+     "tag": "h3",
+     "text": "13.1 Writing HTML documents"
+    },
+    {
+     "block": 34027,
+     "tag": "h4",
+     "text": "13.1.2 Elements"
+    },
+    {
+     "block": 34053,
+     "tag": "h5",
+     "text": "13.1.2.1 Start tags"
+    }
+   ],
+   "before": [
+    {
+     "block": 34050,
+     "tag": "p",
+     "text": "The innermost element, cdr:license, is actually in the SVG namespace, as the \"xmlns:cdr\" attribute has no effect (unlike in XML). In fact, as the comment in the fragment above says, the fragment is actually non-conforming. This is because SVG 2 does not define any elements called \"cdr:license\" in the SVG namespace."
+    },
+    {
+     "block": 34051,
+     "tag": "p",
+     "text": "Normal elements can have text, character references, other elements, and comments, but the text must not contain the character U+003C LESS-THAN SIGN (<) or an ambiguous ampersand. Some normal elements also have yet more restrictions on what content they are allowed to hold, beyond the restrictions imposed by the content model and those described in this paragraph. Those restrictions are described below."
+    },
+    {
+     "block": 34052,
+     "tag": "p",
+     "text": "Tags contain a tag name, giving the element's name. HTML elements all have names that only use ASCII alphanumerics. In the HTML syntax, tag names, even those for foreign elements, may be written with any mix of lower- and uppercase letters that, when converted to all-lowercase, matches the element's tag name; tag names are case-insensitive."
+    },
+    {
+     "block": 34053,
+     "tag": "h5",
+     "text": "13.1.2.1 Start tags"
+    },
+    {
+     "block": 34054,
+     "tag": "p",
+     "text": "Start tags must have the following format:"
+    }
+   ],
+   "own_block": "The first character of a start tag must be a U+003C LESS-THAN SIGN character (<).",
+   "sentence": "The first character of a start tag must be a U+003C LESS-THAN SIGN character (<)."
+  },
+  {
+   "id": "S47",
+   "doc": "html",
+   "doc_title": "HTML Standard",
+   "doc_url": "https://html.spec.whatwg.org/",
+   "block": 34065,
+   "headings": [
+    {
+     "block": 33991,
+     "tag": "h2",
+     "text": "13 The HTML syntax"
+    },
+    {
+     "block": 33993,
+     "tag": "h3",
+     "text": "13.1 Writing HTML documents"
+    },
+    {
+     "block": 34027,
+     "tag": "h4",
+     "text": "13.1.2 Elements"
+    },
+    {
+     "block": 34062,
+     "tag": "h5",
+     "text": "13.1.2.2 End tags"
+    }
+   ],
+   "before": [
+    {
+     "block": 34060,
+     "tag": "li",
+     "text": "Then, if the element is one of the void elements, or if the element is a foreign element, then there may be a single U+002F SOLIDUS character (/), which on foreign elements marks the start tag as self-closing. On void elements, it does not mark the start tag as self-closing but instead is unnecessary and has no effect of any kind. For such void elements, it should be used only with caution \u2014 especially since, if directly preceded by an unquoted attribute value, it becomes part of the attribute value rather than being discarded by the parser."
+    },
+    {
+     "block": 34061,
+     "tag": "li",
+     "text": "Finally, start tags must be closed by a U+003E GREATER-THAN SIGN character (>)."
+    },
+    {
+     "block": 34062,
+     "tag": "h5",
+     "text": "13.1.2.2 End tags"
+    },
+    {
+     "block": 34063,
+     "tag": "p",
+     "text": "End tags must have the following format:"
+    },
+    {
+     "block": 34064,
+     "tag": "li",
+     "text": "The first character of an end tag must be a U+003C LESS-THAN SIGN character (<)."
+    }
+   ],
+   "own_block": "The second character of an end tag must be a U+002F SOLIDUS character (/).",
+   "sentence": "The second character of an end tag must be a U+002F SOLIDUS character (/)."
+  },
+  {
+   "id": "S48",
+   "doc": "html",
+   "doc_title": "HTML Standard",
+   "doc_url": "https://html.spec.whatwg.org/",
+   "block": 35718,
+   "headings": [
+    {
+     "block": 33991,
+     "tag": "h2",
+     "text": "13 The HTML syntax"
+    },
+    {
+     "block": 34194,
+     "tag": "h3",
+     "text": "13.2 Parsing HTML documents"
+    },
+    {
+     "block": 35501,
+     "tag": "h4",
+     "text": "13.2.6 Tree construction"
+    },
+    {
+     "block": 35635,
+     "tag": "h5",
+     "text": "13.2.6.4 The rules for parsing tokens in HTML content"
+    },
+    {
+     "block": 35636,
+     "tag": "h6",
+     "text": "13.2.6.4.1 The \"initial\" insertion mode"
+    }
+   ],
+   "before": [
+    {
+     "block": 35713,
+     "tag": "p",
+     "text": "Otherwise, if the document is not an iframe srcdoc document, and the parser cannot change the mode flag is false, and the DOCTYPE token matches one of the conditions in the following list, then set the Document to limited-quirks mode:"
+    },
+    {
+     "block": 35714,
+     "tag": "li",
+     "text": "The public identifier starts with: \"-//W3C//DTD XHTML 1.0 Frameset//\""
+    },
+    {
+     "block": 35715,
+     "tag": "li",
+     "text": "The public identifier starts with: \"-//W3C//DTD XHTML 1.0 Transitional//\""
+    },
+    {
+     "block": 35716,
+     "tag": "li",
+     "text": "The system identifier is neither missing nor the empty string, and the public identifier starts with: \"-//W3C//DTD HTML 4.01 Frameset//\""
+    },
+    {
+     "block": 35717,
+     "tag": "li",
+     "text": "The system identifier is neither missing nor the empty string, and the public identifier starts with: \"-//W3C//DTD HTML 4.01 Transitional//\""
+    }
+   ],
+   "own_block": "The system identifier and public identifier strings must be compared to the values given in the lists above in an ASCII case-insensitive manner. A system identifier whose value is the empty string is not considered missing for the purposes of the conditions above.",
+   "sentence": "The system identifier and public identifier strings must be compared to the values given in the lists above in an ASCII case-insensitive manner."
+  },
+  {
+   "id": "S49",
+   "doc": "html",
+   "doc_title": "HTML Standard",
+   "doc_url": "https://html.spec.whatwg.org/",
+   "block": 37885,
+   "headings": [
+    {
+     "block": 37880,
+     "tag": "h2",
+     "text": "16 Obsolete features"
+    },
+    {
+     "block": 37881,
+     "tag": "h3",
+     "text": "16.1 Obsolete but conforming features"
+    }
+   ],
+   "before": [
+    {
+     "block": 37880,
+     "tag": "h2",
+     "text": "16 Obsolete features"
+    },
+    {
+     "block": 37881,
+     "tag": "h3",
+     "text": "16.1 Obsolete but conforming features"
+    },
+    {
+     "block": 37882,
+     "tag": "p",
+     "text": "Features listed in this section will trigger warnings in conformance checkers."
+    },
+    {
+     "block": 37883,
+     "tag": "p",
+     "text": "Authors should not specify a border attribute on an img element. If the attribute is present, its value must be the string \"0\". CSS should be used instead."
+    },
+    {
+     "block": 37884,
+     "tag": "p",
+     "text": "Authors should not specify a charset attribute on a script element. If the attribute is present, its value must be an ASCII case-insensitive match for \"utf-8\". (This has no effect in a document that conforms to the requirements elsewhere in this standard of being encoded as UTF-8.)"
+    }
+   ],
+   "own_block": "Authors should not specify a language attribute on a script element. If the attribute is present, its value must be an ASCII case-insensitive match for the string \"JavaScript\" and either the type attribute must be omitted or its value must be an ASCII case-insensitive match for the string \"text/javascript\". The attribute should be entirely omitted instead (with the value \"JavaScript\", it has no effect), or replaced with use of the type attribute.",
+   "sentence": "The attribute should be entirely omitted instead (with the value \"JavaScript\", it has no effect), or replaced with use of the type attribute."
+  },
+  {
+   "id": "S50",
+   "doc": "html",
+   "doc_title": "HTML Standard",
+   "doc_url": "https://html.spec.whatwg.org/",
+   "block": 37885,
+   "headings": [
+    {
+     "block": 37880,
+     "tag": "h2",
+     "text": "16 Obsolete features"
+    },
+    {
+     "block": 37881,
+     "tag": "h3",
+     "text": "16.1 Obsolete but conforming features"
+    }
+   ],
+   "before": [
+    {
+     "block": 37880,
+     "tag": "h2",
+     "text": "16 Obsolete features"
+    },
+    {
+     "block": 37881,
+     "tag": "h3",
+     "text": "16.1 Obsolete but conforming features"
+    },
+    {
+     "block": 37882,
+     "tag": "p",
+     "text": "Features listed in this section will trigger warnings in conformance checkers."
+    },
+    {
+     "block": 37883,
+     "tag": "p",
+     "text": "Authors should not specify a border attribute on an img element. If the attribute is present, its value must be the string \"0\". CSS should be used instead."
+    },
+    {
+     "block": 37884,
+     "tag": "p",
+     "text": "Authors should not specify a charset attribute on a script element. If the attribute is present, its value must be an ASCII case-insensitive match for \"utf-8\". (This has no effect in a document that conforms to the requirements elsewhere in this standard of being encoded as UTF-8.)"
+    }
+   ],
+   "own_block": "Authors should not specify a language attribute on a script element. If the attribute is present, its value must be an ASCII case-insensitive match for the string \"JavaScript\" and either the type attribute must be omitted or its value must be an ASCII case-insensitive match for the string \"text/javascript\". The attribute should be entirely omitted instead (with the value \"JavaScript\", it has no effect), or replaced with use of the type attribute.",
+   "sentence": "If the attribute is present, its value must be an ASCII case-insensitive match for the string \"JavaScript\" and either the type attribute must be omitted or its value must be an ASCII case-insensitive match for the string \"text/javascript\"."
+  },
+  {
+   "id": "S51",
+   "doc": "infra",
+   "doc_title": "Infra Standard",
+   "doc_url": "https://infra.spec.whatwg.org/",
+   "block": 122,
+   "headings": [
+    {
+     "block": 45,
+     "tag": "h2",
+     "text": "3. Algorithms"
+    },
+    {
+     "block": 114,
+     "tag": "h3",
+     "text": "3.5. Variables"
+    }
+   ],
+   "before": [
+    {
+     "block": 117,
+     "tag": "p",
+     "text": "Let value be null."
+    },
+    {
+     "block": 118,
+     "tag": "p",
+     "text": "If input is a string, then set value to input."
+    },
+    {
+     "block": 119,
+     "tag": "p",
+     "text": "Otherwise, set value to input, UTF-8 decoded."
+    },
+    {
+     "block": 120,
+     "tag": "p",
+     "text": "Assert: value is a string."
+    },
+    {
+     "block": 121,
+     "tag": "p",
+     "text": "Let activationTarget be target if isActivationEvent is true and target has activation behavior; otherwise null."
+    }
+   ],
+   "own_block": "Variables must not be used before they are declared. Variables are block scoped. Variables must not be declared more than once per algorithm.",
+   "sentence": "Variables must not be used before they are declared."
+  },
+  {
+   "id": "S52",
+   "doc": "streams",
+   "doc_title": "Streams Standard",
+   "doc_url": "https://streams.spec.whatwg.org/",
+   "block": 629,
+   "headings": [
+    {
+     "block": 68,
+     "tag": "h2",
+     "text": "4. Readable streams"
+    },
+    {
+     "block": 542,
+     "tag": "h3",
+     "text": "4.9. Abstract operations"
+    },
+    {
+     "block": 543,
+     "tag": "h4",
+     "text": "4.9.1. Working with readable streams"
+    }
+   ],
+   "before": [
+    {
+     "block": 624,
+     "tag": "p",
+     "text": "It\u2019s frequently inefficient to read chunks that are too small or too large. Other information might be factored in to determine the optimal chunk size."
+    },
+    {
+     "block": 625,
+     "tag": "p",
+     "text": "Reads or writes should not be delayed for reasons other than these backpressure signals."
+    },
+    {
+     "block": 626,
+     "tag": "p",
+     "text": "An implementation that waits for each write to successfully complete before proceeding to the next read/write operation violates this recommendation. In doing so, such an implementation makes the internal queue of dest useless, as it ensures dest always contains at most one queued chunk."
+    },
+    {
+     "block": 627,
+     "tag": "p",
+     "text": "Shutdown must stop activity: if shuttingDown becomes true, the user agent must not initiate further reads from reader, and must only perform writes of already-read chunks, as described below. In particular, the user agent must check the below conditions before performing any reads or writes, since they might lead to immediate shutdown."
+    },
+    {
+     "block": 628,
+     "tag": "p",
+     "text": "Error and close states must be propagated: the following conditions must be applied in order."
+    }
+   ],
+   "own_block": "Errors must be propagated forward: if source.[[state]] is or becomes \"errored\", then",
+   "sentence": "Errors must be propagated forward: if source.[[state]] is or becomes \"errored\", then"
+  },
+  {
+   "id": "S53",
+   "doc": "testutils",
+   "doc_title": "Test Utils Standard",
+   "doc_url": "https://testutils.spec.whatwg.org/",
+   "block": 11,
+   "headings": [
+    {
+     "block": 10,
+     "tag": "h2",
+     "text": "3. Availability"
+    }
+   ],
+   "before": [
+    {
+     "block": 6,
+     "tag": "p",
+     "text": "This specification defines additional in-browser APIs for use in tests, but which are not suitable to enable for end users. The primary client of these APIs is the web-platform-tests testsuite."
+    },
+    {
+     "block": 7,
+     "tag": "h2",
+     "text": "2. Infrastructure"
+    },
+    {
+     "block": 8,
+     "tag": "p",
+     "text": "This specification depends on the Infra Standard. [INFRA]"
+    },
+    {
+     "block": 9,
+     "tag": "p",
+     "text": "This specification uses terminology from the Web IDL standard. [WEBIDL]"
+    },
+    {
+     "block": 10,
+     "tag": "h2",
+     "text": "3. Availability"
+    }
+   ],
+   "own_block": "The interfaces defined in this specification must not be enabled in the default shipping configuration of user agents. They must only be enabled in testing configurations for example with special build flags, or when a specific non-default preference is set.",
+   "sentence": "The interfaces defined in this specification must not be enabled in the default shipping configuration of user agents."
+  },
+  {
+   "id": "S54",
+   "doc": "url",
+   "doc_title": "URL Standard",
+   "doc_url": "https://url.spec.whatwg.org/",
+   "block": 400,
+   "headings": [
+    {
+     "block": 345,
+     "tag": "h2",
+     "text": "4. URLs"
+    },
+    {
+     "block": 392,
+     "tag": "h3",
+     "text": "4.3. URL writing"
+    }
+   ],
+   "before": [
+    {
+     "block": 395,
+     "tag": "p",
+     "text": "An absolute-URL string must be one of the following:"
+    },
+    {
+     "block": 396,
+     "tag": "p",
+     "text": "a URL-scheme string that is an ASCII case-insensitive match for a special scheme and not an ASCII case-insensitive match for \"file\", followed by U+003A (:) and a scheme-relative-special-URL string"
+    },
+    {
+     "block": 397,
+     "tag": "p",
+     "text": "a URL-scheme string that is not an ASCII case-insensitive match for a special scheme, followed by U+003A (:) and one of: a scheme-relative-URL string, a path-absolute-non-authority-URL string, or an opaque-path-URL string"
+    },
+    {
+     "block": 398,
+     "tag": "p",
+     "text": "a URL-scheme string that is an ASCII case-insensitive match for \"file\", followed by U+003A (:) and a scheme-relative-file-URL string"
+    },
+    {
+     "block": 399,
+     "tag": "p",
+     "text": "any optionally followed by U+003F (?) and a URL-query string."
+    }
+   ],
+   "own_block": "A URL-scheme string must be one ASCII alpha, followed by zero or more of ASCII alphanumeric, U+002B (+), U+002D (-), and U+002E (.). Schemes should be registered in the IANA URI [sic] Schemes registry. [IANA-URI-SCHEMES] [RFC7595]",
+   "sentence": "Schemes should be registered in the IANA URI [sic] Schemes registry. [IANA-URI-SCHEMES] [RFC7595]"
+  },
+  {
+   "id": "S55",
+   "doc": "urlpattern",
+   "doc_title": "URL Pattern Standard",
+   "doc_url": "https://urlpattern.spec.whatwg.org/",
+   "block": 698,
+   "headings": [
+    {
+     "block": 518,
+     "tag": "h2",
+     "text": "2. Pattern strings"
+    },
+    {
+     "block": 525,
+     "tag": "h3",
+     "text": "2.1. Parsing pattern strings"
+    },
+    {
+     "block": 685,
+     "tag": "h4",
+     "text": "2.1.3. Parts"
+    }
+   ],
+   "before": [
+    {
+     "block": 693,
+     "tag": "dt",
+     "text": "\"segment-wildcard\""
+    },
+    {
+     "block": 694,
+     "tag": "dd",
+     "text": "The part represents a matching group that matches code points up to the next separator code point. This is typically used for a named group like \":foo\" that does not have a custom regular expression."
+    },
+    {
+     "block": 695,
+     "tag": "dt",
+     "text": "\"full-wildcard\""
+    },
+    {
+     "block": 696,
+     "tag": null,
+     "text": "The part represents a matching group that greedily matches all code points. This is typically used for the \"*\" wildcard matching group."
+    },
+    {
+     "block": 697,
+     "tag": "p",
+     "text": "A part has an associated value, a string, which must be set upon creation."
+    }
+   ],
+   "own_block": "A part has an associated modifier a string, which must be set upon creation. It must be one of the following:",
+   "sentence": "A part has an associated modifier a string, which must be set upon creation."
+  },
+  {
+   "id": "S56",
+   "doc": "webidl",
+   "doc_title": "Web IDL Standard",
+   "doc_url": "https://webidl.spec.whatwg.org/",
+   "block": 47,
+   "headings": [
+    {
+     "block": 8,
+     "tag": "h2",
+     "text": "2. Interface definition language"
+    },
+    {
+     "block": 36,
+     "tag": "h3",
+     "text": "2.2. Interfaces"
+    }
+   ],
+   "before": [
+    {
+     "block": 42,
+     "tag": "p",
+     "text": "Interfaces may specify an interface member that has the same name as one from an inherited interface. Objects that implement the derived interface will expose the member on the derived interface. It is language binding specific whether the overridden member can be accessed on the object."
+    },
+    {
+     "block": 43,
+     "tag": "p",
+     "text": "Consider the following two interfaces."
+    },
+    {
+     "block": 44,
+     "tag": "p",
+     "text": "In the JavaScript language binding, an instance of B will have a prototype chain that looks like the following:"
+    },
+    {
+     "block": 45,
+     "tag": "p",
+     "text": "Calling instanceOfB.f() in JavaScript will invoke the f defined on B. However, the f from A can still be invoked on an object that implements B by calling A.prototype.f.call(instanceOfB)."
+    },
+    {
+     "block": 46,
+     "tag": "p",
+     "text": "The inherited interfaces of a given interface A is the set of all interfaces that A inherits from, directly or indirectly. If A does not inherit from another interface, then the set is empty. Otherwise, the set includes the interface B that A inherits from and all of B\u2019s inherited interfaces."
+    }
+   ],
+   "own_block": "An interface must not be declared such that its inheritance hierarchy has a cycle. That is, an interface A cannot inherit from itself, nor can it inherit from another interface B that inherits from A, and so on.",
+   "sentence": "An interface must not be declared such that its inheritance hierarchy has a cycle."
+  },
+  {
+   "id": "S57",
+   "doc": "webidl",
+   "doc_title": "Web IDL Standard",
+   "doc_url": "https://webidl.spec.whatwg.org/",
+   "block": 204,
+   "headings": [
+    {
+     "block": 8,
+     "tag": "h2",
+     "text": "2. Interface definition language"
+    },
+    {
+     "block": 111,
+     "tag": "h3",
+     "text": "2.5. Members"
+    },
+    {
+     "block": 190,
+     "tag": "h4",
+     "text": "2.5.3. Operations"
+    }
+   ],
+   "before": [
+    {
+     "block": 199,
+     "tag": "p",
+     "text": "Note: The identifier of a static operation can be the same as the identifier of a regular operation defined on the same interface."
+    },
+    {
+     "block": 200,
+     "tag": "p",
+     "text": "The return type of the operation is given by the type (matching Type) that appears before the operation\u2019s optional identifier. If the return type is an identifier followed by ?, then the identifier must identify an interface, dictionary, enumeration, callback function, callback interface or typedef."
+    },
+    {
+     "block": 201,
+     "tag": "p",
+     "text": "An operation\u2019s arguments (matching ArgumentList) are given between the parentheses in the declaration. Each individual argument is specified as a type (matching Type) followed by an identifier (matching ArgumentName)."
+    },
+    {
+     "block": 202,
+     "tag": "p",
+     "text": "Note: For expressiveness, the identifier of an operation argument can also be specified as one of the keywords matching the ArgumentNameKeyword symbol without needing to escape it."
+    },
+    {
+     "block": 203,
+     "tag": "p",
+     "text": "If the Type of an operation argument is an identifier followed by ?, then the identifier must identify an interface, enumeration, callback function, callback interface, or typedef. If the operation argument type is an identifier not followed by ?, then the identifier must identify any one of those definitions or a dictionary."
+    }
+   ],
+   "own_block": "If the operation argument type, after resolving typedefs, is a nullable type, its inner type must not be a dictionary type.",
+   "sentence": "If the operation argument type, after resolving typedefs, is a nullable type, its inner type must not be a dictionary type."
+  },
+  {
+   "id": "S58",
+   "doc": "webidl",
+   "doc_title": "Web IDL Standard",
+   "doc_url": "https://webidl.spec.whatwg.org/",
+   "block": 232,
+   "headings": [
+    {
+     "block": 8,
+     "tag": "h2",
+     "text": "2. Interface definition language"
+    },
+    {
+     "block": 111,
+     "tag": "h3",
+     "text": "2.5. Members"
+    },
+    {
+     "block": 190,
+     "tag": "h4",
+     "text": "2.5.3. Operations"
+    }
+   ],
+   "before": [
+    {
+     "block": 227,
+     "tag": "p",
+     "text": "The value of the string token is S."
+    },
+    {
+     "block": 228,
+     "tag": "dt",
+     "text": "ByteString"
+    },
+    {
+     "block": 229,
+     "tag": "p",
+     "text": "Assert: S doesn\u2019t contain any code points higher than U+00FF."
+    },
+    {
+     "block": 230,
+     "tag": "p",
+     "text": "The value of the string token is the isomorphic encoding of S."
+    },
+    {
+     "block": 231,
+     "tag": "p",
+     "text": "If the type of the optional argument is an enumeration, then its default value if specified must be one of the enumeration\u2019s values."
+    }
+   ],
+   "own_block": "Optional argument default values can also be specified using the two token value [], which represents an empty sequence value. The type of this value is the same as the type of the optional argument it is being used as the default value of. That type must be a sequence type, a nullable type whose inner type is a sequence type or a union type or nullable union type that has a sequence type in its flattened member types.",
+   "sentence": "That type must be a sequence type, a nullable type whose inner type is a sequence type or a union type or nullable union type that has a sequence type in its flattened member types."
+  },
+  {
+   "id": "S59",
+   "doc": "webidl",
+   "doc_title": "Web IDL Standard",
+   "doc_url": "https://webidl.spec.whatwg.org/",
+   "block": 282,
+   "headings": [
+    {
+     "block": 8,
+     "tag": "h2",
+     "text": "2. Interface definition language"
+    },
+    {
+     "block": 111,
+     "tag": "h3",
+     "text": "2.5. Members"
+    },
+    {
+     "block": 279,
+     "tag": "h4",
+     "text": "2.5.5. Stringifiers"
+    }
+   ],
+   "before": [
+    {
+     "block": 277,
+     "tag": "p",
+     "text": "A JavaScript implementation supporting these interfaces would implement a [[Construct]] internal method on the Circle interface object which would return a new object that implements the interface. It would take either zero or one argument."
+    },
+    {
+     "block": 278,
+     "tag": "p",
+     "text": "It is unclear whether the NodeList interface object would implement a [[Construct]] internal method. In any case, trying to use it as a constructor will cause a TypeError to be thrown. [whatwg/webidl Issue #698]"
+    },
+    {
+     "block": 279,
+     "tag": "h4",
+     "text": "2.5.5. Stringifiers"
+    },
+    {
+     "block": 280,
+     "tag": "p",
+     "text": "When an interface has a stringifier, it indicates that objects that implement the interface have a non-default conversion to a string. Stringifiers can be specified using a stringifier keyword, which creates a stringifier operation when used alone."
+    },
+    {
+     "block": 281,
+     "tag": "p",
+     "text": "Prose accompanying the interface must define the stringification behavior of the interface."
+    }
+   ],
+   "own_block": "The stringifier keyword can also be placed on an attribute. In this case, the string to convert the object to is the value of the attribute. The stringifier keyword must not be placed on an attribute unless it is declared to be of type DOMString or USVString. It also must not be placed on a static attribute.",
+   "sentence": "It also must not be placed on a static attribute."
+  },
+  {
+   "id": "S60",
+   "doc": "webidl",
+   "doc_title": "Web IDL Standard",
+   "doc_url": "https://webidl.spec.whatwg.org/",
+   "block": 1877,
+   "headings": [
+    {
+     "block": 985,
+     "tag": "h2",
+     "text": "3. JavaScript binding"
+    },
+    {
+     "block": 1751,
+     "tag": "h3",
+     "text": "3.3. Extended attributes"
+    },
+    {
+     "block": 1870,
+     "tag": "h4",
+     "text": "3.3.8. [Global]"
+    }
+   ],
+   "before": [
+    {
+     "block": 1872,
+     "tag": "p",
+     "text": "The [Global] extended attribute also defines the global names for the interface:"
+    },
+    {
+     "block": 1873,
+     "tag": "dt",
+     "text": "If the [Global] extended attribute takes an identifier"
+    },
+    {
+     "block": 1874,
+     "tag": "p",
+     "text": "\u00ab the given identifier \u00bb"
+    },
+    {
+     "block": 1875,
+     "tag": "dt",
+     "text": "If the [Global] extended attribute takes an identifier list"
+    },
+    {
+     "block": 1876,
+     "tag": "p",
+     "text": "the identifier list"
+    }
+   ],
+   "own_block": "The [Global] extended attribute must be one of the forms given above.",
+   "sentence": "The [Global] extended attribute must be one of the forms given above."
+  }
+ ]
+}
