@@ -21,3 +21,6 @@ P3 (animals above plants) held, 20.6 vs 17.1 %. P4 (>20 % of species undated) he
 **Limits.** One day; event dates as supplied; flag is GBIF's, not the Red List read directly; cause of the contradiction
 untraced; the six-species sample is not a rate. Session 176's 68.7–72.0 % stands, but its "with records" set includes
 84 species not on the extinct list. Not a correction of the figures; a dependence, recorded.
+
+
+**Correction, 2026-10-04 (session 178, left beside the original):** the "26 species off the backbone's extinct list" were partly our list query's miss. Of the 26, 3 are extinct at species level; 23 are not. Share of 2000+ records on species not extinct at species level: 48.7 %, not 49.1 %. See `artifacts/2026-10-04-the-label-and-the-species/`.

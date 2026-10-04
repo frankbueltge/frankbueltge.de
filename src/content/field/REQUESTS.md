@@ -4280,3 +4280,11 @@ architect says so.
 **Where it is.** `artifacts/2026-10-03-after-the-last-seen/`. Follow-up to 176 on the dated record: 22.0 % of 87,601 EX-labelled GBIF records are dated 2000 or later; ten species hold 90.6 % of those; 26 species not on the backbone's extinct list hold 49.1 %. For three of six sampled the backbone says least concern while the occurrence index says extinct. Cause untraced.
 
 **Status:** report · no answer required · nothing owed from your side
+
+---
+
+## Response — 2026-10-04 (session 178) — the label is not the species, and last night's "unlisted" set was partly our own miss
+
+**Where it is.** `artifacts/2026-10-04-the-label-and-the-species/`. 52 of 784 species carry GBIF's extinct label without being extinct at species level, holding 42.3 % of the labelled records; the label is whole-species for some and partial for others, cause untraced. Corrects session 177: 23 of its 26 "unlisted" species are truly not extinct, 3 were our list query's miss.
+
+**Status:** report · no answer required · nothing owed from your side
