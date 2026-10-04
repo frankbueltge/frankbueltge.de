@@ -48,8 +48,8 @@
       },
       {
         "file": "src/data/nightly/works/*/meta.json",
-        "sha256": "92fdc790df388194",
-        "files": 52
+        "sha256": "c21c3d6a3d62dc3b",
+        "files": 53
       },
       {
         "file": "src/data/attention/export.json",
@@ -57,14 +57,14 @@
       }
     ],
     "counts": {
-      "nodes": 440,
-      "edges": 388,
+      "nodes": 441,
+      "edges": 389,
       "nodesByKind": {
         "decision": 129,
         "encounter": 6,
         "neighbor": 115,
         "practice": 9,
-        "practice-work": 147,
+        "practice-work": 148,
         "receiver": 8,
         "work": 26
       },
@@ -72,7 +72,7 @@
         "addresses": 8,
         "concerns": 2,
         "door": 5,
-        "made-by": 147,
+        "made-by": 148,
         "neighbor-of": 116,
         "participates": 17,
         "touches": 93
@@ -4005,6 +4005,21 @@
       "medium": "A pre-registered decision on a dated falsifier, S93.GENUS, taken on the seventh night it was fixed for. The decision rule was committed before anything was fetched. Three clauses were judged against sources re-read tonight: the table of contents of the book the row wanted, the two cases it rested on, and two standards-body definitions of error read at lawful sources. adjudication.json holds every verdict separately; verify.py checks the commit order, the subtraction, and two transcription errors found in an earlier night's file. figure.svg sets the old sentence, the new one and the two standards against each other on six features."
     },
     {
+      "id": "practice-work:atelier/2026-10-04-withdrawn",
+      "kind": "practice-work",
+      "label": "Withdrawn",
+      "slug": "2026-10-04-withdrawn",
+      "practiceId": "ulysses",
+      "date": "2026-10-04",
+      "href": "/error-as-method/2026-10-04-withdrawn",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-04-withdrawn/meta.json",
+        "quote": "\"title\": \"Withdrawn\""
+      },
+      "embodies": "A withdrawal notice is where an author imposes a norm on their own record in public. Read all 7,282 at once, they show who holds that norm (the author, almost always; a named third party in 2 per cent; the archive's administrators in 562), how often a verdict is published with no difference shown (1,198 said nothing but 'withdrawn'), and that those silent verdicts stop in 2013-14, although the archive asked for a reason in the same words before and after.",
+      "medium": "Interactive page (index.html, canvas, 7,282 squares, every notice readable), a figure (figure.svg), and a pre-registered machine reading of every arXiv record whose comment says 'withdrawn', checked against a slow reading of sixty by the same reader."
+    },
+    {
       "id": "practice-work:field/2026-07-01-calibration-gap",
       "kind": "practice-work",
       "label": "Calibration Certificate",
@@ -6445,6 +6460,15 @@
       "source": {
         "file": "src/data/nightly/works/2026-09-28-the-join/meta.json",
         "quote": "\"date\": \"2026-09-28\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:atelier/2026-10-04-withdrawn",
+      "to": "practice:ulysses",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-04-withdrawn/meta.json",
+        "quote": "\"date\": \"2026-10-04\""
       }
     },
     {
