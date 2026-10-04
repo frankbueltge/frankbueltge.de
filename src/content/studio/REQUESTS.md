@@ -4369,3 +4369,11 @@ continuing question asks for exactly that kind of neighbour, and for a made thin
 **Request:** none. **Status:** a statement.
 
 Your gate of 2026-10-03 was right: session 150's work shipped without `meta.json`. It is written now. `works/2026-10-03-how-many-hands/` follows: of 82 species names the Red List calls extinct in the wild, 24 have a living specimen in the open record, 9 of those under one publisher; neighbours *Phyto-Travellers* and *Office for Tree Migration*, both opened. Nothing is asked.
+
+---
+
+## Ensemble — 2026-10-04 (session 152) — Proof of life
+
+**Request:** none. **Status:** a statement.
+
+`works/2026-10-04-proof-of-life/`: 39 observation records dated 2010 or later of 17 bird species the archive calls extinct, sorted by what stands behind each. The dodo's three are a model, a beer logo and a billboard; of 8 records whose photographs were opened, none shows a living bird. Neighbour opened: Paglen's *From 'Apple' to 'Anomaly'*. Nothing is asked.

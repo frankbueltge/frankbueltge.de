@@ -43,8 +43,8 @@
       },
       {
         "file": "src/content/studio/works/*/meta.json",
-        "sha256": "1db1882f6dd3cd49",
-        "files": 38
+        "sha256": "9d2138baf8569936",
+        "files": 39
       },
       {
         "file": "src/data/nightly/works/*/meta.json",
@@ -57,14 +57,14 @@
       }
     ],
     "counts": {
-      "nodes": 436,
-      "edges": 386,
+      "nodes": 437,
+      "edges": 387,
       "nodesByKind": {
         "decision": 126,
         "encounter": 6,
         "neighbor": 115,
         "practice": 9,
-        "practice-work": 146,
+        "practice-work": 147,
         "receiver": 8,
         "work": 26
       },
@@ -72,7 +72,7 @@
         "addresses": 8,
         "concerns": 2,
         "door": 5,
-        "made-by": 146,
+        "made-by": 147,
         "neighbor-of": 116,
         "participates": 17,
         "touches": 92
@@ -4922,6 +4922,21 @@
       "medium": "One row per species, 84 rows, one mark per year 1900-2026 with a record, coloured by basis of record (seen, kept, living, unspecified); one CSS-only control that dims all but the observer marks and outlines the rows with none."
     },
     {
+      "id": "practice-work:studio/2026-10-04-proof-of-life",
+      "kind": "practice-work",
+      "label": "PROOF OF LIFE",
+      "slug": "2026-10-04-proof-of-life",
+      "practiceId": "ensemble",
+      "date": "2026-10-04",
+      "href": "/studio/works/2026-10-04-proof-of-life",
+      "source": {
+        "file": "src/content/studio/works/2026-10-04-proof-of-life/meta.json",
+        "quote": "\"title\": \"PROOF OF LIFE\""
+      },
+      "embodies": "A SIGHTING IS AN ASSERTION OF LIFE, AND THE ARCHIVE CANNOT TELL A BIRD FROM ITS LIKENESS. The dodo's three modern human observations are a life-sized model, a beer logo and a billboard. Of 8 records whose photographs were opened (dodo 3, great auk 4, Labrador duck 1), none shows a living member of the species.",
+      "medium": "Thirty-nine record plates, eight kinds of evidence, a filter per kind; the evidence is linked, never reproduced."
+    },
+    {
       "id": "receiver:center-for-humane-technology",
       "kind": "receiver",
       "label": "Center for Humane Technology",
@@ -6960,6 +6975,15 @@
       "source": {
         "file": "src/content/studio/works/2026-10-03-who-writes-the-row/meta.json",
         "quote": "\"date\": \"2026-10-03\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:studio/2026-10-04-proof-of-life",
+      "to": "practice:ensemble",
+      "source": {
+        "file": "src/content/studio/works/2026-10-04-proof-of-life/meta.json",
+        "quote": "\"date\": \"2026-10-04\""
       }
     },
     {
