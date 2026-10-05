@@ -20,6 +20,7 @@
 //   · ABSENCE IS DRAWN. A row whose record is empty says so; a tile whose snapshot yields no
 //     reading is not rendered at all rather than shown with a placeholder.
 import { getRelativeLocaleUrl } from 'astro:i18n'
+import { localeHref } from '@/lib/locale-href'
 import type { Locale } from '@/lib/site'
 import { NAMING } from '@/config/naming'
 import pulseData from '@/data/pulse/pulse.json'
@@ -35,7 +36,8 @@ import '@/styles/ops-room.css'
 import '@/styles/hub-triptych.css'
 
 const locale = (Astro.currentLocale ?? 'en') as Locale
-const url = (href: string) => (href.startsWith('http') ? href : getRelativeLocaleUrl(locale, href))
+/** Fragments survive the locale helper: src/lib/locale-href.ts. */
+const url = (href: string) => localeHref(href, (path) => getRelativeLocaleUrl(locale, path))
 
 const pulse = pulseData as PulseSnapshot
 const board = buildBoard(pulse)

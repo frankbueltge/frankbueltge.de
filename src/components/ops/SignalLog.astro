@@ -23,6 +23,7 @@
 // site's CSP drops inline styles silently (drift-check rule 3). The entrance hands in its twenty
 // rows with a page size of twenty: one page, and so no pager at all.
 import { getRelativeLocaleUrl } from 'astro:i18n'
+import { localeHref } from '@/lib/locale-href'
 import type { Locale } from '@/lib/site'
 import { NAMING } from '@/config/naming'
 import { FEED_PAGE_SIZE, paginate, type FeedEntry } from '@/lib/ops/house-feed'
@@ -38,14 +39,8 @@ interface Props {
 const { entries, pageSize = FEED_PAGE_SIZE, listClass = '' } = Astro.props
 
 const locale = (Astro.currentLocale ?? 'en') as Locale
-/** A row may lead into a section of its page (a handoff on /encounters, Arch's works): the locale
- *  helper owns the path and the fragment stays the fragment — handed whole, the helper appends
- *  its trailing slash after the `#` and the anchor misses. The same rule as OpsRoom's urlTo. */
-const url = (href: string) => {
-  if (href.startsWith('http')) return href
-  const [path, fragment] = href.split('#')
-  return fragment ? `${getRelativeLocaleUrl(locale, path!)}#${fragment}` : getRelativeLocaleUrl(locale, href)
-}
+/** Fragments survive the locale helper: src/lib/locale-href.ts. */
+const url = (href: string) => localeHref(href, (path) => getRelativeLocaleUrl(locale, path))
 
 const S = NAMING.opsRoom.signal
 const pages = paginate(entries, pageSize)

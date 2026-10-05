@@ -10,6 +10,7 @@
 // visible, and the script below only hides rows once it runs. A register that needed a script to
 // show its holdings would have failed the one job it has.
 import { getRelativeLocaleUrl } from 'astro:i18n'
+import { localeHref } from '@/lib/locale-href'
 import type { Locale } from '@/lib/site'
 import { PYRAMID } from '@/config/ecology-pyramid-wording'
 import { STATIONS, type StationId } from '@/lib/ecology/pyramid/model'
@@ -71,7 +72,8 @@ const years = [...firstOfYear.keys()]
 const showYears = groupByYear && years.length > 1
 
 const locale = (Astro.currentLocale ?? 'en') as Locale
-const url = (href: string) => (href.startsWith('http') ? href : getRelativeLocaleUrl(locale, href))
+/** Fragments survive the locale helper: src/lib/locale-href.ts. */
+const url = (href: string) => localeHref(href, (path) => getRelativeLocaleUrl(locale, path))
 
 const W = PYRAMID.register
 const here = STATIONS.find((s) => s.id === id)!
