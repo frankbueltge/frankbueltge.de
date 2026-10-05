@@ -264,8 +264,8 @@ describe('the order of one day (Frank, 2026-10-05: deterministic, and tested)', 
     expect(s('moment', 'attention')).toBe(s('project', 'attention'))
     // papers, atlas and datasets are one each, though they share a house
     expect(new Set([s('papers', 'catalogues'), s('atlas', 'catalogues'), s('datasets', 'catalogues')]).size).toBe(3)
-    // the relay is one: its relations and its handoffs
-    expect(s('relay', 'middle')).toBe(s('handoff', 'middle'))
+    // the relay is one, the Middle's own: not a practice's, not a catalogue's
+    expect(new Set([s('relay', 'middle'), s('work', 'atelier'), s('papers', 'catalogues')]).size).toBe(3)
     // and an experiment arriving on the lab's shelf is not one more reading
     expect(s('shelf', 'lab')).not.toBe(s('reading', 'lab'))
   })
@@ -365,7 +365,7 @@ describe('the wording', () => {
 
   it('names one noun per kind of update', () => {
     const K = NAMING.opsRoom.signal.kindLabels
-    expect([K.reading, K.probe, K.papers, K.atlas, K.moment, K.turn, K.presentation, K.relay, K.handoff, K.datasets]).toEqual([
+    expect([K.reading, K.probe, K.papers, K.atlas, K.moment, K.turn, K.presentation, K.relay, K.datasets]).toEqual([
       'reading',
       'probe',
       'papers',
@@ -374,7 +374,6 @@ describe('the wording', () => {
       'turn',
       'presentation',
       'relations',
-      'handoff',
       'sources',
     ])
   })

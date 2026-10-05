@@ -88,7 +88,6 @@ export const SOURCE_ORDER = [
   'artifact',
   'work',
   'relay',
-  'handoff',
   'n1-night',
   'n1-work',
   'arch-session',
@@ -340,9 +339,9 @@ export function compareFeed(a: FeedEntry, b: FeedEntry): number {
  * source whatever it lands — works, artifacts, presentations — and the lab's readings are one,
  * however many instruments read that night (Headroom's probe is one of them). Each catalogue is
  * one, because the three count different things. Everything else is its house: Error as Method,
- * Machine Attention (its moments and its projects), the relay (its handoffs and its relations),
- * n-1, Arch, the ecology's own turn. The lab's shelf stands apart from its readings: an
- * experiment arriving is not one more reading, and would otherwise wait behind a dozen of them.
+ * Machine Attention (its moments and its projects), the relay, n-1, Arch, the ecology's own
+ * turn. The lab's shelf stands apart from its readings: an experiment arriving is not one more
+ * reading, and would otherwise wait behind a dozen of them.
  */
 export function streamOf(e: Pick<FeedEntry, 'source' | 'house'>): string {
   switch (e.source) {

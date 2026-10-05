@@ -13,8 +13,7 @@
 //   the atlas               one row per day its scout counted it larger than the day before
 //   the dataset register    one row per day: the probe pass of that day, the sources that first
 //                           appeared, the sources whose reachability changed — as its builder dates them
-//   the Middle's relay      a row per handoff and day (offered, taken up, declined, lapsed), and
-//                           one row per day counting the load-bearing relations between the practices
+//   the Middle's relay      one row per day counting the load-bearing relations between the practices
 //   the ecology             the cycle's opening, and each practice's presentation
 //   n-1 and Arch            n-1's nights and Arch's session protocols — what each lands daily
 //
@@ -28,17 +27,7 @@ import { NAMING } from '@/config/naming'
 import type { Werk } from '@/data/werke'
 import type { ArchFacts } from '@/lib/arch/facts'
 import { readMoments, type StageMoment } from '@/lib/attention/moments'
-import {
-  LAPSE_DAYS,
-  LOAD_BEARING,
-  lapseDay,
-  relayLastDay,
-  supersededIds,
-  type Handoff,
-  type Relay,
-  type RelayState,
-} from '@/lib/ecology/relay'
-import { handoffAnchor } from '@/lib/ecology/relay-triangle'
+import { LOAD_BEARING, supersededIds, type Relay, type RelayState } from '@/lib/ecology/relay'
 import type { CycleState, PresentationEntry } from '@/lib/ecology/v3'
 import { count, READOUTS } from '@/lib/experiments/readouts'
 import type { N1Night } from '@/lib/n1/works'
@@ -483,23 +472,18 @@ const RELAY_HREF = '/encounters#relay'
 
 /**
  * The Middle's relay (contract middle-relay/1, mirrored to src/data/middle/relay.json): what passed
- * between the practices, on the days the relay itself dates.
- *
- *   a handoff's day    one row per handoff and day: offered (`offered_on`), taken up
- *                      (`taken_by.date`), declined (`declined_by.date`), lapsed (`offered_on` plus
- *                      the contract's days, relay.ts lapseDay). Two of these on one day — an offer
- *                      taken up the day it was made — are one row that says both.
- *   the day's relations  the load-bearing ones, built on and answered, counted in one row per
- *                      day. A relation a later one corrects counts no more (readers take the newest
- *                      of a `corrects` chain, the contract says); a merely noted one is the
- *                      relay's to show, not the log's.
+ * between the practices, on the days the relay itself dates — a day's load-bearing relations, the
+ * built-on and the answered, counted in one row per day. A relation a later one corrects counts no
+ * more (readers take the newest of a `corrects` chain, the contract says); a merely noted one is
+ * the relay's to show, not the log's. The handoffs are not a source of the stream: /encounters
+ * draws them (Frank's decision of 2026-10-05, wording private).
  *
  * An absent or unreadable relay is an empty source — loadRelay says which, and the log says
  * nothing rather than a guess.
  */
 export function relayEntries(state: RelayState | null, names: HouseNames = houseNames()): FeedEntry[] {
   if (state?.status !== 'ok') return []
-  return [...relationEntries(state.relay, names), ...handoffEntries(state.relay, names)]
+  return relationEntries(state.relay, names)
 }
 
 function relationEntries(relay: Relay, names: HouseNames): FeedEntry[] {
@@ -532,51 +516,6 @@ function relationEntries(relay: Relay, names: HouseNames): FeedEntry[] {
       withdrawn: false,
       voice: null,
     }
-  })
-}
-
-/** What happened to a handoff, in the order it can happen. */
-interface HandoffEvent {
-  date: string
-  phrase: string
-}
-
-function handoffEvents(h: Handoff, lastDay: string | null, names: HouseNames): HandoffEvent[] {
-  const E = F.handoffEvents
-  const events: HandoffEvent[] = [{ date: h.offeredOn, phrase: E.offered }]
-  const lapsed = lapseDay(h, lastDay)
-  if (lapsed) events.push({ date: lapsed, phrase: E.lapsed(count(LAPSE_DAYS)) })
-  // a closing dated before the offer it closes is a record contradicting itself, and is not read
-  if (h.status === 'taken' && h.takenBy && h.takenBy.date >= h.offeredOn) {
-    events.push({ date: h.takenBy.date, phrase: E.taken(names[h.takenBy.practice]) })
-  }
-  if (h.status === 'declined' && h.declinedBy && h.declinedBy.date >= h.offeredOn) {
-    events.push({ date: h.declinedBy.date, phrase: E.declined(names[h.declinedBy.practice]) })
-  }
-  return events
-}
-
-function handoffEntries(relay: Relay, names: HouseNames): FeedEntry[] {
-  const lastDay = relayLastDay(relay)
-  return relay.handoffs.flatMap((h) => {
-    const days = new Map<string, string[]>()
-    for (const e of handoffEvents(h, lastDay, names)) days.set(e.date, [...(days.get(e.date) ?? []), e.phrase])
-    return [...days.entries()].map(([date, phrases]) => ({
-      date,
-      time: null,
-      source: 'handoff' as const,
-      house: 'middle' as const,
-      houseName: names.middle,
-      title: F.handoffTitle(
-        names[h.giver],
-        h.to.map((p) => names[p]),
-      ),
-      fact: F.handoff({ events: phrases, offer: h.offer }),
-      kind: K.handoff,
-      href: `/encounters#${handoffAnchor(h.id)}`,
-      withdrawn: false,
-      voice: null,
-    }))
   })
 }
 
