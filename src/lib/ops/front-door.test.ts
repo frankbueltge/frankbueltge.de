@@ -173,9 +173,9 @@ describe('the log’s links land where its rows say', () => {
   const signalLog = read('../../components/ops/SignalLog.astro')
 
   it('hands a row’s fragment past the locale helper, which would write its slash after the #', () => {
-    // Since 2026-10-05 rows lead into sections of their pages — the relay (`/encounters#relay`),
-    // each handoff's own line, Arch's works (`/arch#works`). Handed whole, the helper wrote
-    // `#relay/`, and every one of those links missed its anchor.
+    // Since 2026-10-05 rows lead into sections of their pages — the relay (`/encounters#relay`)
+    // and Arch's works (`/arch#works`). Handed whole, the helper wrote `#relay/`, and both links
+    // missed their anchor.
     expect(signalLog).toContain('localeHref(href,')
     expect(buildHouseFeed().some((e) => e.href.includes('#'))).toBe(true)
   })

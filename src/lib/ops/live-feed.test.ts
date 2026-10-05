@@ -33,11 +33,12 @@ describe('the stream reads the whole house', () => {
     }
   })
 
-  it('carries every handoff the relay records, on the day it was offered', () => {
-    const state = loadFeedInput().relay
-    if (state?.status !== 'ok') return
-    const offered = real.filter((e) => e.source === 'handoff' && e.fact?.startsWith(NAMING.opsRoom.signal.facts.handoffEvents.offered))
-    expect(offered).toHaveLength(state.relay.handoffs.length)
+  it('carries the relay as its counted relations only — no row per handoff', () => {
+    // the handoffs are drawn on /encounters, where the relay is (Frank, 2026-10-05, wording private)
+    const middle = real.filter((e) => e.house === 'middle')
+    expect(middle.map((e) => e.source)).toEqual(middle.map(() => 'relay'))
+    expect(middle.map((e) => e.href)).toEqual(middle.map(() => '/encounters#relay'))
+    expect(real.some((e) => e.href.includes('#handoff-'))).toBe(false)
   })
 
   it('completes every row from its record', () => {

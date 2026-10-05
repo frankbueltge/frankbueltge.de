@@ -778,7 +778,7 @@ export const NAMING = {
      * time it leads somewhere the entrance cannot go: further back.
      *
      * Later the same day the stream was widened to the rest of what changes daily — the
-     * Middle's relay (its handoffs and its load-bearing relations) and the dataset register —
+     * Middle's relay (its load-bearing relations) and the dataset register —
      * and one day's rows began to take turns by source, so a night of a dozen readings no
      * longer pushes the catalogues and the relay off the entrance (house-feed.ts, sortFeed).
      */
@@ -825,9 +825,6 @@ export const NAMING = {
         'arch-session': 'session',
         /** the Middle's relay: a day's load-bearing relations between the practices, counted */
         relay: 'relations',
-        /** one practice's offer to another, as the relay follows it: offered, taken up,
-         *  declined or lapsed */
-        handoff: 'handoff',
         /** the dataset register's day: its data sources checked, added, or changed in reach */
         datasets: 'sources',
       },
@@ -900,17 +897,6 @@ export const NAMING = {
                 ? 'built on'
                 : 'answered'
           })`,
-        /** a handoff's title: who offered it, to whom — the line the Middle's own list prints */
-        handoffTitle: (giver: string, to: readonly string[]) => (to.length > 0 ? `${giver} → ${to.join(', ')}` : giver),
-        /** a handoff's day: what happened to it that day, then the offer in the relay's words */
-        handoff: (p: { events: readonly string[]; offer: string }) => `${p.events.join(', ')}: ${p.offer}`,
-        handoffEvents: {
-          offered: 'offered',
-          taken: (by: string) => `taken up by ${by}`,
-          declined: (by: string) => `declined by ${by}`,
-          /** the contract's lapse; the days arrive from the relay module, which holds the rule */
-          lapsed: (days: string) => `lapsed, ${days} days without uptake`,
-        },
         /** the atlas dates no admission either; its scout counts the atlas at every run, and a
          *  count that rose is the growth this row states, on the day it was counted */
         atlas: (p: { count: string; one: boolean }) =>

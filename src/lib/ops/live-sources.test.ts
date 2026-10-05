@@ -403,7 +403,7 @@ describe('the ecology: the cycle’s turn and the practices’ presentations', (
   })
 })
 
-describe('the Middle’s relay: its handoffs by day, its load-bearing relations counted', () => {
+describe('the Middle’s relay: its load-bearing relations counted, and no row per handoff', () => {
   const ref = (repo: string) => ({ repo, path: 'BULLETIN.md', commit: 'abcdef1' })
   const relation = (id: string, date: string, kind: string, over: Record<string, unknown> = {}) => ({
     id,
@@ -439,7 +439,6 @@ describe('the Middle’s relay: its handoffs by day, its load-bearing relations 
       handoffs,
       counts: {},
     })
-  const E = S.facts.handoffEvents
 
   it('counts a day’s built-on and answered relations in one row, and leaves the noted out', () => {
     const rows = relayEntries(
@@ -490,10 +489,10 @@ describe('the Middle’s relay: its handoffs by day, its load-bearing relations 
     expect(rows.map((r) => [r.date, r.fact])).toEqual([['2026-10-03', S.facts.relations({ count: '1', one: true, builtOn: null, answered: '1' })]])
   })
 
-  it('files each handoff on the days it was offered, taken up, declined and lapsed', () => {
+  it('gives a handoff no row of its own — /encounters draws those, the stream counts relations', () => {
     const rows = relayEntries(
       relay(
-        [],
+        [relation('r1', '2026-10-04', 'built_on')],
         [
           handoff('h-open', '2026-10-02', 'open', { to: ['studio', 'field'] }),
           handoff('h-taken', '2026-09-30', 'taken', { taken_by: { practice: 'studio', date: '2026-10-03', relation: 'r9' } }),
@@ -502,51 +501,13 @@ describe('the Middle’s relay: its handoffs by day, its load-bearing relations 
             to: ['atelier'],
             declined_by: { practice: 'atelier', date: '2026-10-04', relation: 'r8' },
           }),
-          // offered 21 days before the 3rd: lapsed on the 3rd, as the contract counts it
+          // offered 21 days before the 3rd: it lapsed on the 3rd, and that is no row either
           handoff('h-lapsed', '2026-09-12', 'lapsed'),
         ],
       ),
       names,
     )
-    const byId = (id: string) => rows.filter((r) => r.href === `/encounters#handoff-${id}`).map((r) => [r.date, r.fact])
-    expect(byId('h-open')).toEqual([['2026-10-02', S.facts.handoff({ events: [E.offered], offer: 'The offer of h-open.' })]])
-    expect(byId('h-taken')).toEqual([
-      ['2026-09-30', S.facts.handoff({ events: [E.offered], offer: 'The offer of h-taken.' })],
-      ['2026-10-03', S.facts.handoff({ events: [E.taken(names.studio)], offer: 'The offer of h-taken.' })],
-    ])
-    expect(byId('h-declined')).toEqual([
-      ['2026-10-01', S.facts.handoff({ events: [E.offered], offer: 'The offer of h-declined.' })],
-      ['2026-10-04', S.facts.handoff({ events: [E.declined(names.atelier)], offer: 'The offer of h-declined.' })],
-    ])
-    expect(byId('h-lapsed')).toEqual([
-      ['2026-09-12', S.facts.handoff({ events: [E.offered], offer: 'The offer of h-lapsed.' })],
-      ['2026-10-03', S.facts.handoff({ events: [E.lapsed('21')], offer: 'The offer of h-lapsed.' })],
-    ])
-    const open = rows.find((r) => r.href === '/encounters#handoff-h-open')!
-    expect(open).toMatchObject({ title: `${names.atelier} → ${names.studio}, ${names.field}`, kind: K.handoff, house: 'middle', source: 'handoff', voice: null })
-    expect(rows.find((r) => r.href === '/encounters#handoff-h-declined')!.title).toBe(`${names.field} → ${names.atelier}`)
-  })
-
-  it('says an offer taken up the day it was made in one row', () => {
-    const rows = relayEntries(
-      relay([], [handoff('h', '2026-10-04', 'taken', { taken_by: { practice: 'studio', date: '2026-10-04', relation: 'r1' } })]),
-      names,
-    )
-    expect(rows.map((r) => r.fact)).toEqual([S.facts.handoff({ events: [E.offered, E.taken(names.studio)], offer: 'The offer of h.' })])
-    expect(rows[0]!.fact).toBe(`offered, taken up by ${names.studio}: The offer of h.`)
-  })
-
-  it('dates a lapse an offer was taken up after, and none it was taken up before', () => {
-    const late = handoff('late', '2026-09-01', 'taken', { taken_by: { practice: 'studio', date: '2026-09-30', relation: 'r1' } })
-    const inTime = handoff('in-time', '2026-09-01', 'taken', { taken_by: { practice: 'studio', date: '2026-09-22', relation: 'r2' } })
-    const rows = relayEntries(relay([], [late, inTime]), names)
-    expect(rows.filter((r) => r.fact!.startsWith(E.lapsed('21'))).map((r) => [r.href, r.date])).toEqual([['/encounters#handoff-late', '2026-09-22']])
-  })
-
-  it('never dates a lapse beyond the last day the relay read', () => {
-    // marked lapsed after 20 days — the record contradicts its own rule, and the lapse is not shown
-    const rows = relayEntries(relay([], [handoff('early', '2026-09-15', 'lapsed')], '2026-10-05'), names)
-    expect(rows.map((r) => r.date)).toEqual(['2026-09-15'])
+    expect(rows.map((r) => [r.date, r.source, r.href])).toEqual([['2026-10-04', 'relay', '/encounters#relay']])
   })
 
   it('is an empty source while the relay is absent or unreadable', () => {
