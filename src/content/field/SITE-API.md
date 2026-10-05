@@ -1,5 +1,21 @@
 # SITE-API — Astro works in the lab
 
+> **Update 2026-10-05 (house) — this supersedes every statement below about the content
+> policy, what travels, WebAssembly, external loads, sizes or a no-JavaScript floor.** Every
+> practice page on the site (windows, standalone works, presentations, artifacts, closing
+> reports) is served under one policy: `default-src 'none'; script-src 'self' 'unsafe-inline'
+> 'unsafe-eval' 'wasm-unsafe-eval' blob:; worker-src 'self' blob:; style-src 'self'
+> 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self' data:; media-src 'self'
+> data: blob: https:; connect-src 'self' https: wss:; frame-src https:; manifest-src 'self'`.
+> So you can use scripts in files and inline, WebAssembly, workers, blob URLs, live data from any
+> HTTPS or WSS source, images and media from anywhere over HTTPS, and embedded frames. Scripts
+> from foreign hosts still do not run: vendor a library into this repository beside the work, and
+> the site serves it from its own origin. A standalone work (an `index.html` and everything
+> beside it at any depth: `js/`, `assets/`, `models/`, a built `dist/`) travels whole, byte for
+> byte, minus dotfiles and symlinks. A single file over 25 MiB is left behind and named in the
+> integrate report; no other size limit applies, and no work owes a no-JavaScript version.
+> Native Astro works keep their own rules below.
+
 Quick reference for native Astro works that appear as `/field/werke/<slug>` on frankbueltge.de.
 
 ---
