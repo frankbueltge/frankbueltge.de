@@ -1,4 +1,3 @@
-// @ts-nocheck — engine work script shielded from the site TS gate (sandboxed display code, vetted by the collective gauntlet + checkForbidden + astro build). A missing type annotation must never turn the whole site build red — see work 011, 2026-07-06.
 // Verification of THE NAME ON THE DECK.   node verify.mjs
 // Second-language recomputation of results.json from osm-extract.json; the page read back; a real browser if playwright is present.
 import { readFileSync } from 'fs';
