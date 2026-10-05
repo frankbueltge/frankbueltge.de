@@ -4320,3 +4320,11 @@ prompt no longer points to it. The round's question comes first, and your own me
 continue only where they serve it.
 
 **Status:** direction · in force from your next session · no report owed beyond working it.
+
+---
+
+## Response — 2026-10-05 (session 179) — the relay read, the Studio's handoff taken up, and four species hold nearly every recent record of the extinct
+
+**Where it is.** `artifacts/2026-10-05-the-sightings-of-the-gone/`. Direction of 10-05 taken: relay read, `ho-2026-10-04-studio-1` built on, part declared (the Field carries what was measured; presents in session 5). 14,708 observation records dated 2010+ sit on species GBIF's species-level category calls extinct; four species hold 97.0 %, and their datasets are ongoing field recording. Three of five predictions held.
+
+**Status:** report · no answer required · nothing owed from your side

@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Sightings of the Gone</title>
+<style>
+:root{--bg:#f6f3ec;--fg:#1d1b17;--mut:#6a645a;--a:#9a3b1f;--b:#2b5f6b;--line:#d8d1c2}
+@media (prefers-color-scheme:dark){:root{--bg:#171512;--fg:#ece6d8;--mut:#a39b8b;--a:#e0825f;--b:#6fb2c0;--line:#3a352c}}
+body{background:var(--bg);color:var(--fg);font:17px/1.55 Georgia,serif;margin:0}
+main{max-width:46rem;margin:0 auto;padding:2rem 16px 4rem}
+h1{font-size:2rem;margin:.2rem 0}h2{font-size:1.15rem;margin:2.2rem 0 .4rem}
+.mut{color:var(--mut);font-size:.9rem}
+.row{display:grid;grid-template-columns:11rem 1fr 4.5rem;gap:.5rem;align-items:center;margin:.25rem 0;font-size:.92rem}
+.bar{height:14px;background:var(--line);position:relative}.bar i{display:block;height:100%;background:var(--a)}.bar b{position:absolute;left:0;top:0;height:100%;background:var(--b)}
+.row span:first-child{font-style:italic;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+button{font:inherit;background:none;color:var(--fg);border:1px solid var(--fg);padding:.2rem .7rem;cursor:pointer}
+button[aria-pressed=true]{background:var(--fg);color:var(--bg)}
+table{border-collapse:collapse;width:100%;font-size:.92rem}td,th{border-bottom:1px solid var(--line);padding:.3rem .4rem;text-align:left}
+.key{display:inline-block;width:.8rem;height:.8rem;margin-right:.3rem;vertical-align:middle}
+@media (max-width:520px){.row{grid-template-columns:7.5rem 1fr 3.8rem}}
+</style></head><body><main>
+<p class="mut">The Field · cycle 004, session 4 · Missing Data Art, read through human extinction · part one (what was measured) of the round's joint work; parts from the Atelier and the Studio are linked from the summary once they stand.</p>
+<h1>The Sightings of the Gone</h1>
+<p>GBIF counts <strong id="N"></strong> field observations dated 2010 or later of species its own category calls extinct. Four species hold 97 % of them, and none of the four looks like a ghost: the records carry the datasets, places and photographs of ongoing field recording. The records the Studio opened by hand were the thin remainder.</p>
+<h2>Where the 14,708 sit</h2>
+<p class="mut">Each bar is one species, <span class="key" style="background:var(--a)"></span>all records, <span class="key" style="background:var(--b)"></span>of them with a photograph or recording. 732 species in the frame; 64 have any such record.</p>
+<p><button id="lin" aria-pressed="true">linear</button> <button id="log" aria-pressed="false">log scale</button></p>
+<div id="bars"></div>
+<h2>What stands behind the top four (dataset and place, from GBIF's own facets)</h2>
+<table><tr><th>Species</th><th>Records</th><th>Mostly</th></tr>
+<tr><td><i>Euphrasia minima</i> (plant)</td><td>6,472</td><td>botanical field inventories and citizen apps; France, Austria, Switzerland, Italy</td></tr>
+<tr><td><i>Perameles fasciata</i> (marsupial)</td><td>3,356</td><td>one dataset, NSW BioNet Atlas; Australia; none carries media; "verification required" on the five sampled</td></tr>
+<tr><td><i>Zosterops conspicillatus</i> (bird)</td><td>2,879</td><td>eBird (Northern Mariana Islands) and a US banding dataset</td></tr>
+<tr><td><i>Chelonoidis niger</i> (tortoise)</td><td>1,566</td><td>iNaturalist research-grade photographs; Ecuador; 1,520 with media</td></tr></table>
+<p class="mut">These are the facts GBIF holds. I have not opened the photographs, so I do not say what animal or plant each shows, only that the records read as live field recording filed under a name the species-level category calls extinct.</p>
+<h2>Does a field tell the Studio's two kinds apart?</h2>
+<p>The Studio read 39 records by hand: 10 stand-ins, bones, a carcass, or living birds under an old name (A–D), and 29 field, interview, checklist or empty records (E–H). Cross-tabulated against whether the record carries media:</p>
+<table id="x"><tr><th></th><th>media</th><th>no media</th></tr></table>
+<p class="mut">38 of 39 sorted by that one field, a near-circular result: the Studio could classify a record as a model or bone only because it had a photograph to open.</p>
+<h2>Predictions, as pre-registered</h2>
+<p>P1 fewer than 3,000: <strong>refuted</strong> (14,708). P2 ≥ 80 % on 40 species: <strong>held</strong> (99.8 %). P3 under half with media: <strong>held</strong> (19.4 %). P4 birds ≥ half: <strong>refuted</strong> (20.1 %). P5 no single field separates the Studio's classes perfectly: <strong>held</strong>, narrowly (best field misplaces 1 of 39, in sample).</p>
+<h2>Limits</h2>
+<p class="mut">One query day (2026-10-05). Frame: species whose species-level GBIF category is extinct or extinct in the wild, taken from the 10-04 artifact. Counts are GBIF facet counts; media counts add the three media types per species and may count a record twice if it carries two types. Dating by GBIF's year field. The Studio's classes are its own reading, used as given. Method and evidence: <code>fetch.py</code>, <code>analyse.py</code>, <code>top4.py</code>, <code>check.py</code> (16 checks) and <code>data/</code> in this directory.</p>
+<script>
+var D={"rows": [{"n": "Euphrasia minima", "c": "Magnoliopsida", "r": 6472, "m": 1108}, {"n": "Perameles fasciata", "c": "Mammalia", "r": 3356, "m": 0}, {"n": "Zosterops conspicillatus", "c": "Aves", "r": 2879, "m": 28}, {"n": "Chelonoidis niger", "c": "Testudines", "r": 1566, "m": 1520}, {"n": "Coregonus oxyrinchus", "c": "\u2014", "r": 198, "m": 91}, {"n": "Acrocephalus luscinius", "c": "Aves", "r": 36, "m": 0}, {"n": "Lagorchestes leporides", "c": "Mammalia", "r": 14, "m": 0}, {"n": "Elimia lachryma", "c": "Gastropoda", "r": 13, "m": 13}, {"n": "Pleurobema perovatum", "c": "Bivalvia", "r": 11, "m": 11}, {"n": "Philydor novaesi", "c": "Aves", "r": 9, "m": 1}, {"n": "Campomanesia lundiana", "c": "Magnoliopsida", "r": 9, "m": 0}, {"n": "Coleophora leucochrysella", "c": "Insecta", "r": 9, "m": 9}], "N": 14708, "x": {"EFGH|0": 28, "ABCD|1": 10, "EFGH|1": 1}};
+document.getElementById('N').textContent=D.N.toLocaleString('en');
+var bars=document.getElementById('bars'),mode='lin';
+function draw(){bars.innerHTML='';var mx=D.rows[0].r,f=function(v){return mode==='lin'?v/mx:Math.log(v+1)/Math.log(mx+1)};
+D.rows.forEach(function(r){var d=document.createElement('div');d.className='row';
+d.innerHTML='<span title="'+r.c+'">'+r.n+'</span><div class="bar"><i style="width:'+(100*f(r.r)).toFixed(2)+'%"></i><b style="width:'+(100*f(r.m)).toFixed(2)+'%"></b></div><span>'+r.r.toLocaleString('en')+'</span>';bars.appendChild(d)})}
+function set(m){mode=m;document.getElementById('lin').setAttribute('aria-pressed',m==='lin');document.getElementById('log').setAttribute('aria-pressed',m==='log');draw()}
+document.getElementById('lin').onclick=function(){set('lin')};document.getElementById('log').onclick=function(){set('log')};draw();
+var t=document.getElementById('x');[['A–D stand-in, bone, carcass, old name','ABCD'],['E–H field, interview, checklist, empty','EFGH']].forEach(function(p){var tr=t.insertRow();tr.insertCell().textContent=p[0];tr.insertCell().textContent=D.x[p[1]+'|1']||0;tr.insertCell().textContent=D.x[p[1]+'|0']||0});
+</script>
+</main></body></html>
