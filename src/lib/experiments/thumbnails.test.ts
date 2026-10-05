@@ -11,6 +11,12 @@ import { describe, expect, it } from 'vitest'
 
 import { GALLERY } from '@/config/gallery-wording'
 import { WERKE, WERKE_BY_LINE } from '@/data/werke'
+import consensusLatest from '@/data/consensus/latest.json'
+import ghostFleetLatest from '@/data/ghost-fleet/latest.json'
+import invokedLatest from '@/data/invoked/latest.json'
+import police from '@/data/praemie/police.json'
+import revisionLatest from '@/data/revision/latest.json'
+import { READOUTS, type ReadoutId } from './readouts'
 import { datedEntries, recordThumbnail, THUMBNAILS, THUMB_BOX, type ThumbMark } from './thumbnails'
 
 /** An unarchived work (Frank, 2026-09-04, wording private) reads the world at the moment someone
@@ -126,6 +132,21 @@ describe('the reading comes from the record, never from the copy', () => {
     expect(THUMBNAILS.get('society')!.readout).toMatch(/agents/)
     expect(THUMBNAILS.get('redaction')!.readout).toMatch(/pages watched/)
     expect(THUMBNAILS.get('consensus')!.readout).toMatch(/outlets/)
+  })
+
+  it('composes each card’s reading with the composer the signal log uses (readouts.ts)', () => {
+    // One composer for the shelf and the log since 2026-10-05: the log's newest reading of an
+    // instrument is READOUTS over the newest record (live-feed.test.ts), and so is the card.
+    const cards: [ReadoutId, unknown][] = [
+      ['consensus', consensusLatest],
+      ['invoked-past', invokedLatest],
+      ['praemie', police],
+      ['ghost-fleet', ghostFleetLatest],
+      ['correction', revisionLatest],
+    ]
+    for (const [id, record] of cards) expect(THUMBNAILS.get(id)!.readout, id).toBe(READOUTS[id](record))
+    // and a year stays a year on the card: never "since 1,998"
+    expect(THUMBNAILS.get('praemie')!.readout).not.toMatch(/\d,\d{3} the premium/)
   })
 
   it('types no number into the gallery’s wording', () => {

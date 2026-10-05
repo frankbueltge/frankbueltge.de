@@ -13,7 +13,8 @@
 //
 // The page is a status board of everything running here: the standing question as hero, the commit
 // pulse as an instrument beside it, one board for every running system, a signal log of the newest
-// works, and a dashboard of the experiments that ship data daily.
+// live updates across the house (works, readings, moments, catalogue days — since 2026-10-05), and
+// a dashboard of the experiments that ship data daily.
 //
 // Three properties this component is built to keep:
 //
@@ -48,7 +49,8 @@ import pulseData from '@/data/pulse/pulse.json'
 import type { PulseSnapshot } from '@/lib/pulse/render'
 import { buildStackSvg, stackWeekRange } from '@/lib/ops/stack'
 import { buildBoard } from '@/lib/ops/board'
-import { buildHouseFeed } from '@/lib/ops/house-feed'
+import { FEED_TOP, topOf } from '@/lib/ops/house-feed'
+import { buildHouseFeed } from '@/lib/ops/live-feed'
 import SignalLog from '@/components/ops/SignalLog.astro'
 import { buildDayDial } from '@/lib/ops/dial'
 import { readTiles, type OpsTile } from '@/lib/ops/tiles'
@@ -71,13 +73,20 @@ import '@/styles/hub-triptych.css'
 
 const locale = (Astro.currentLocale ?? 'en') as Locale
 const url = (href: string) => (href.startsWith('http') ? href : getRelativeLocaleUrl(locale, href))
+/** A link into a section of another page: the locale helper owns the path, the fragment stays
+ *  the fragment — handed whole, it appends its trailing slash after the `#` and the anchor misses. */
+const urlTo = (href: string) => {
+  const [path, fragment] = href.split('#')
+  return fragment ? `${url(path!)}#${fragment}` : url(href)
+}
 
 const pulse = pulseData as PulseSnapshot
 const stackSvg = buildStackSvg(pulse)
 const dial = buildDayDial(pulse)
 const board = buildBoard(pulse)
-// The whole house, newest first — the component pages it seven at a time.
-const signal = buildHouseFeed()
+// The house's live updates, newest first — the entrance shows the newest twenty, all in view, and
+// /now carries the longer log (Frank, 2026-10-05).
+const signal = topOf(buildHouseFeed(), FEED_TOP)
 const tiles = readTiles({ protokoll: await getLatestProtokoll() })
 
 const OPS = NAMING.opsRoom
@@ -282,8 +291,9 @@ const catalogues = NAMING.catalogues.items.filter((c) => c.href !== '/atlas')
   <section class="ops-section" id="latest">
     <div class="ops-head">
       <p class="kicker ops-kicker"><b>{OPS.signal.kicker}</b> · {OPS.signal.kickerSub}</p>
+      <a class="ops-headlink" href={urlTo(OPS.signal.link.href)}>{OPS.signal.link.label}</a>
     </div>
-    <SignalLog entries={signal} />
+    <SignalLog entries={signal} pageSize={FEED_TOP} />
     <p class="ops-foot-line">{OPS.signal.foot} <span class="ops-cursor">▍</span></p>
   </section>
 
@@ -363,20 +373,6 @@ const catalogues = NAMING.catalogues.items.filter((c) => c.href !== '/atlas')
     </ul>
   </section>
 </main>
-
-<style>
-  /* The signal log's stagger. Eight declared steps rather than an inline delay per row, because
-     this site's CSP drops inline style attributes — the rows would simply all have arrived at
-     once, silently. Eight is the ceiling the strip can ever render. */
-  .ops-log-row-0 { animation-delay: 0s; }
-  .ops-log-row-1 { animation-delay: 0.08s; }
-  .ops-log-row-2 { animation-delay: 0.16s; }
-  .ops-log-row-3 { animation-delay: 0.24s; }
-  .ops-log-row-4 { animation-delay: 0.32s; }
-  .ops-log-row-5 { animation-delay: 0.4s; }
-  .ops-log-row-6 { animation-delay: 0.48s; }
-  .ops-log-row-7 { animation-delay: 0.56s; }
-</style>
 
 <script>
   // The room's moving parts: the UTC clock (text and hand) and the dots walking the pulse. ONE

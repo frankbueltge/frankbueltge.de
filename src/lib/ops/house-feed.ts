@@ -1,5 +1,5 @@
-// src/lib/ops/house-feed.ts — THE SIGNAL LOG's feed: everything this house has landed, from
-// every practice in it, newest first.
+// src/lib/ops/house-feed.ts — THE SIGNAL LOG's model: what one row is, whose house it belongs to,
+// in which order rows stand, and where the log is cut.
 //
 // What changed on 2026-09-03 (Frank): the signal log used to read allWorks() and nothing else,
 // so it showed the three ecology practices and — mislabelled as "The Atelier" — the nightly
@@ -7,7 +7,15 @@
 // land dated work. A log headed "what landed last" that silently means "what landed last in
 // three of the six places" is the kind of half-truth this site's own honesty line forbids.
 //
-// So the feed is assembled here, from each house's OWN record, in each house's OWN noun:
+// What changed on 2026-10-05 (Frank's decision, wording private): the log became the stream of
+// the house's LIVE UPDATES — not only what the houses land, but everything that changes daily and
+// can be dated by its own record. The lab's nightly readings, the ecology's cycle turn and
+// presentations, Machine Attention's moments, n-1's nights, Arch's sessions, the paper catalogue
+// and the atlas joined the works below; their readers are in live-sources.ts, the assembly from
+// the committed record in live-feed.ts. The entrance shows the newest FEED_TOP rows, /now the
+// newest FEED_DEPTH, paged.
+//
+// The house sources this module still reads itself, each from its OWN record, in its OWN noun:
 //
 //   the three practices   works · instruments · premieres, from their committed meta.json
 //   their cycles          the artifacts each session leaves (ecology v3), from the practices'
@@ -20,15 +28,18 @@
 //   n-1                   the works it has laid down, dated by their own form documents
 //   the lab               the experiments and instruments on /experiments, dated by `since`
 //
-// Two rules this module keeps, both learned from the derivations it sits beside:
+// Three rules every source keeps, learned from the derivations this module sits beside:
 //
-//   · NOTHING IS AUTHORED HERE. Every title, date and address comes from the record it belongs
-//     to. The house NAMES come from NAMING (the doors and the overview cards), so a reworded
-//     practice moves this feed with it and the log can never call a house something its own
-//     door does not.
-//   · A SILENT SOURCE IS A SHORTER FEED, NEVER A GUESS. A work whose record carries no date
-//     drops out rather than appearing under today's — an undated row at the top of a log
-//     sorted by date is a lie about what landed last.
+//   · NOTHING IS AUTHORED HERE. Every title, date, number and address comes from the record it
+//     belongs to. The house NAMES come from NAMING (the doors and the overview cards), so a
+//     reworded practice moves this feed with it and the log can never call a house something its
+//     own door does not. Wording that wraps a figure is a function in NAMING taking that figure.
+//   · A SILENT SOURCE IS A SHORTER FEED, NEVER A GUESS. A row whose record carries no date drops
+//     out rather than appearing under today's — an undated row at the top of a log sorted by
+//     date is a lie about what happened last. Nothing here reads the clock.
+//   · THE ORDER IS THE RECORD'S, AND IT DOES NOT MOVE BETWEEN BUILDS. Newest day first; within a
+//     day, the rows whose records name a time first, newest first; then the fixed order of
+//     SOURCE_ORDER; then house, title and address. See compareFeed.
 //
 // The register on /ecology is deliberately NOT this: it stays the three practices' catalogue
 // (src/lib/engines/register.ts, buildRegister), because that is what it claims to be — their
@@ -37,43 +48,92 @@
 // its own question.
 
 import { NAMING } from '@/config/naming'
-import { WERKE, type Werk } from '@/data/werke'
-import { readArchFacts, type ArchFacts } from '@/lib/arch/facts'
-import { readN1Works, type N1Work } from '@/lib/n1/works'
+import type { Werk } from '@/data/werke'
+import type { ArchFacts } from '@/lib/arch/facts'
+import type { N1Work } from '@/lib/n1/works'
 import type { LatestWork } from '@/lib/engines/latest'
-import { allWorks, isListedArtifact, NIGHTLY_FORK_DIR } from '@/lib/engines/register'
-import { loadArtifacts, type ArtifactEntry } from '@/lib/ecology/v3'
+import { isListedArtifact, NIGHTLY_FORK_DIR } from '@/lib/engines/register'
+import type { ArtifactEntry } from '@/lib/ecology/v3'
 
-/** Every house that lands dated work on this site. Not a namespace — `EngineNs` is the works
- *  register's three practices and stays that; this is the wider set the entrance speaks for. */
-export type HouseId = 'atelier' | 'field' | 'studio' | 'nightly-line' | 'arch' | 'n-1' | 'lab'
+/** Every house that lands dated work or a dated update on this site. Not a namespace — `EngineNs`
+ *  is the works register's three practices and stays that; this is the wider set the entrance
+ *  speaks for. */
+export type HouseId =
+  | 'atelier'
+  | 'field'
+  | 'studio'
+  | 'nightly-line'
+  | 'arch'
+  | 'n-1'
+  | 'lab'
+  | 'attention'
+  | 'ecology'
+  | 'catalogues'
+
+/**
+ * Which reader produced a row. The ORDER of this list is the fixed order in which rows of one day
+ * stand when their records name no time (or name the same one): the ecology first — its cycle,
+ * its presentations, the artifacts and works of its sessions — then the other houses' own
+ * records, then Machine Attention, then the lab's instruments and catalogues, and the lab's shelf
+ * last, because an experiment's `since` is the oldest kind of news a day can carry.
+ */
+export const SOURCE_ORDER = [
+  'cycle',
+  'presentation',
+  'artifact',
+  'work',
+  'n1-night',
+  'n1-work',
+  'arch-session',
+  'arch-work',
+  'moment',
+  'project',
+  'reading',
+  'probe',
+  'papers',
+  'atlas',
+  'shelf',
+] as const
+export type SourceId = (typeof SOURCE_ORDER)[number]
+const SOURCE_RANK = new Map<SourceId, number>(SOURCE_ORDER.map((s, i) => [s, i]))
+
+/** The identity colours a row may wear — the ecology's three voices, and nothing else. */
+export type Voice = 'ulysses' | 'meridian' | 'ensemble'
 
 export interface FeedEntry {
   /** ISO date, from the entry's own record */
   date: string
+  /** the instant the record names, ISO UTC, when it names one ON `date` — null otherwise */
+  time: string | null
+  /** the reader that produced the row */
+  source: SourceId
   house: HouseId
   /** the house's own name, from its door or its overview card */
   houseName: string
   title: string
-  /** the noun that house uses for what it makes */
+  /** the one headline fact the record carries, worded by NAMING — null where it carries none */
+  fact: string | null
+  /** the noun that house uses for what it makes or records */
   kind: string
   href: string
   withdrawn: boolean
-  /** the identity colour this row wears; null for the houses outside the ecology quartet */
-  voice: 'ulysses' | 'meridian' | 'ensemble' | null
+  /** the identity colour this row wears; null for everything outside the ecology quartet */
+  voice: Voice | null
 }
 
 /** Which door names each practice, and which colour that practice wears — the same mapping the
  *  board keeps, in the same place for the same reason: ids and namespaces cannot be derived
  *  from one another. */
-const PRACTICE: Record<'atelier' | 'field' | 'studio', { door: string; voice: 'ulysses' | 'meridian' | 'ensemble' }> = {
+export const PRACTICE: Record<'atelier' | 'field' | 'studio', { door: string; voice: Voice }> = {
   atelier: { door: 'ulysses', voice: 'ulysses' },
   field: { door: 'meridian', voice: 'meridian' },
   studio: { door: 'ensemble', voice: 'ensemble' },
 }
 
+export type HouseNames = Record<HouseId, string>
+
 /** House names, read from the strings the doors and the cards already render. */
-export function houseNames(): Record<HouseId, string> {
+export function houseNames(): HouseNames {
   const doors = new Map(NAMING.doors.items.map((d) => [d.id, d.name]))
   const cards = new Map(NAMING.overview.items.map((c) => [c.id, c.title]))
   const S = NAMING.opsRoom.signal
@@ -85,6 +145,9 @@ export function houseNames(): Record<HouseId, string> {
     arch: cards.get('arch') ?? S.houseFallback.arch,
     'n-1': cards.get('n-1') ?? S.houseFallback['n-1'],
     lab: S.houseFallback.lab,
+    attention: cards.get('attention') ?? S.houseFallback.attention,
+    ecology: cards.get('ecology') ?? S.houseFallback.ecology,
+    catalogues: S.houseFallback.catalogues,
   }
 }
 
@@ -97,17 +160,23 @@ function labKind(tier: Werk['tier']): string {
   return K.experiment
 }
 
+/** An experiment's English title — werke.ts keeps a few bilingual for the German legacy pages. */
+export const werkTitle = (w: Werk): string => (typeof w.title === 'string' ? w.title : w.title.en)
+
 /** The entries the lab contributes: everything /experiments renders, which is exactly the set
  *  carrying a research line (werke.test.ts holds that rule from the other side). The practice
  *  doors and the other houses' cards live in the same array and are NOT the lab's. */
-export function labEntries(werke: readonly Werk[] = WERKE, names = houseNames()): FeedEntry[] {
+export function labEntries(werke: readonly Werk[], names = houseNames()): FeedEntry[] {
   return werke
     .filter((w) => w.line && w.since)
     .map((w) => ({
       date: w.since,
+      time: null,
+      source: 'shelf' as const,
       house: 'lab' as const,
       houseName: names.lab,
-      title: typeof w.title === 'string' ? w.title : w.title.en,
+      title: werkTitle(w),
+      fact: null,
       kind: labKind(w.tier),
       href: w.href,
       withdrawn: false,
@@ -123,9 +192,12 @@ export function archEntries(facts: ArchFacts, names = houseNames()): FeedEntry[]
     .filter((w) => w.built)
     .map((w) => ({
       date: w.built!,
+      time: null,
+      source: 'arch-work' as const,
       house: 'arch' as const,
       houseName: names.arch,
       title: w.title,
+      fact: null,
       kind: K.arch,
       href: '/arch#works',
       withdrawn: false,
@@ -138,9 +210,12 @@ export function n1Entries(works: readonly N1Work[], names = houseNames()): FeedE
   const K = NAMING.opsRoom.signal.kindLabels
   return works.map((w) => ({
     date: w.date,
+    time: null,
+    source: 'n1-work' as const,
     house: 'n-1' as const,
     houseName: names['n-1'],
     title: w.title,
+    fact: null,
     kind: K['n-1'],
     href: w.href,
     withdrawn: false,
@@ -157,9 +232,12 @@ export function registerEntries(works: readonly LatestWork[], names = houseNames
     const p = PRACTICE[w.ns]
     return {
       date: w.date,
+      time: null,
+      source: 'work' as const,
       house: forked ? ('nightly-line' as const) : (w.ns as HouseId),
       houseName: forked ? names['nightly-line'] : names[w.ns],
       title: w.title,
+      fact: null,
       kind: forked ? K['nightly-line'] : K[w.ns],
       href: w.href,
       withdrawn: w.state === 'withdrawn',
@@ -186,9 +264,12 @@ export function artifactEntries(artifacts: readonly ArtifactEntry[], names = hou
     return [
       {
         date: a.date,
+        time: null,
+        source: 'artifact' as const,
         house: a.practice as HouseId,
         houseName: names[a.practice],
         title: a.title ?? a.slug,
+        fact: null,
         kind: K.artifact,
         href: a.href,
         withdrawn: false,
@@ -198,42 +279,70 @@ export function artifactEntries(artifacts: readonly ArtifactEntry[], names = hou
   })
 }
 
-export interface FeedSources {
-  works?: readonly LatestWork[]
-  artifacts?: readonly ArtifactEntry[]
-  arch?: ArchFacts | null
-  n1?: readonly N1Work[]
-  werke?: readonly Werk[]
-}
+// ── the order ────────────────────────────────────────────────────────────────────────────────
+
+const DAY = /^\d{4}-\d{2}-\d{2}$/
+/** An instant written with a time of day — a bare date is not one, however Date.parse reads it. */
+const STAMP = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/
 
 /**
- * The whole feed, newest first. Every source is injectable so the derivation can be tested
- * against fixtures rather than against whatever the practices shipped last night; left out,
- * each reads its own committed record.
- *
- * The tie-break on title keeps a rebuild from being a re-ordering: a dozen entries share a date
- * on any given night, and a comparator that never returns 0 leaves the order to engine internals.
+ * The instant a record names, normalised to ISO UTC — but only when it falls on `date`, the day
+ * the row is filed under. A reading of one day written just after midnight of the next would
+ * otherwise be ordered among rows it does not belong with; its time is then dropped and the row
+ * counts as untimed, never moved to another day.
  */
-export function buildHouseFeed(sources: FeedSources = {}): FeedEntry[] {
-  const names = houseNames()
-  const works = sources.works ?? allWorks()
-  const artifacts = sources.artifacts ?? loadArtifacts()
-  const arch = sources.arch !== undefined ? sources.arch : readArchFacts()
-  const n1 = sources.n1 ?? readN1Works()
-
-  return [
-    ...registerEntries(works, names),
-    ...artifactEntries(artifacts, names),
-    ...(arch ? archEntries(arch, names) : []),
-    ...n1Entries(n1, names),
-    ...labEntries(sources.werke ?? WERKE, names),
-  ]
-    .filter((e) => e.date)
-    .sort((a, b) => b.date.localeCompare(a.date) || a.houseName.localeCompare(b.houseName) || a.title.localeCompare(b.title))
+export function instantOn(date: string, stamp: unknown): string | null {
+  if (!DAY.test(date) || typeof stamp !== 'string' || !STAMP.test(stamp)) return null
+  const ms = Date.parse(stamp)
+  if (!Number.isFinite(ms)) return null
+  const iso = new Date(ms).toISOString()
+  return iso.slice(0, 10) === date ? iso : null
 }
 
-/** How the log is paged: seven rows in view, the rest one click away (Frank, 2026-09-03). */
+/** Plain code-unit order: ISO dates and instants sort correctly by it, and it is the same on
+ *  every machine — a locale-aware compare would not promise that for the tie-breaks either. */
+const byCode = (a: string, b: string): number => (a < b ? -1 : a > b ? 1 : 0)
+
+/**
+ * The log's one order. Newest day first. Within a day, rows whose record names a time come
+ * first, newest first: a row whose record names only its day is read as standing at that day's
+ * start — the day is all it claims, and the start is the one reading of it that never lifts the
+ * row above a record that names its hour. Rows still tied stand in SOURCE_ORDER, then by house,
+ * title and address — so a rebuild is never a re-ordering, and the comparator never returns 0
+ * for two different rows.
+ */
+export function compareFeed(a: FeedEntry, b: FeedEntry): number {
+  return (
+    byCode(b.date, a.date) ||
+    (a.time && b.time ? byCode(b.time, a.time) : a.time ? -1 : b.time ? 1 : 0) ||
+    (SOURCE_RANK.get(a.source) ?? SOURCE_ORDER.length) - (SOURCE_RANK.get(b.source) ?? SOURCE_ORDER.length) ||
+    byCode(a.houseName, b.houseName) ||
+    byCode(a.title, b.title) ||
+    byCode(a.href, b.href)
+  )
+}
+
+/** The rows newest first, dropping any whose record named no day. */
+export function sortFeed(entries: readonly FeedEntry[]): FeedEntry[] {
+  return entries.filter((e) => DAY.test(e.date)).sort(compareFeed)
+}
+
+// ── the cuts ─────────────────────────────────────────────────────────────────────────────────
+
+/** How many rows the entrance shows (Frank, 2026-10-05): the newest twenty, all in view. */
+export const FEED_TOP = 20
+
+/** How deep the longer log on /now reaches: twenty pages of FEED_PAGE_SIZE. Every page ships in
+ *  the HTML (SignalLog.astro), so the depth is a size, and a week of the stream is what fits. */
+export const FEED_DEPTH = 140
+
+/** How the longer log is paged: seven rows in view, the rest one click away (Frank, 2026-09-03). */
 export const FEED_PAGE_SIZE = 7
+
+/** The newest `n` rows of an already-ordered feed — a cut, never a re-ordering. */
+export function topOf<T>(entries: readonly T[], n: number = FEED_TOP): T[] {
+  return entries.slice(0, Math.max(0, n))
+}
 
 /** The feed cut into pages of `size`. An empty feed yields no pages at all — a pager offering
  *  "page 1 of 1" over nothing would be furniture around an absence. */
