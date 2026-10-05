@@ -139,7 +139,7 @@ describe('the line break — two narrow shapes, closed on 2026-10-05', () => {
     // re-measurement of 2026-10-05 found ten such findings and no speech among them. This test
     // exists so the gap is a stated property of the guard rather than a surprise to whoever
     // trusts it.
-    expect(scanFile('x.md', 'Wordings approved ("die wortlaute sind frei", Frank, morgens).')).toHaveLength(0)
+    expect(scanFile('x.md', 'Wordings approved ("ein erfundener satz", Frank, morgens).')).toHaveLength(0)
   })
 })
 

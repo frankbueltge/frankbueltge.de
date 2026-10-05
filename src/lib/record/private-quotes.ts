@@ -191,7 +191,7 @@ const INTRODUCER = /[:(—–]\s*(?:\*\/\}?|-->)?\s*$/
 // attributing the naming: "Experiments" (Frank, 2026-07-31). The attempt produced
 // twenty-five findings, of which about one was speech. Every discriminator tried — word
 // count, capitalisation, sentence punctuation — either kept the noise or dropped the one
-// true case with it ("wortlaute sind freigegeben" is three lowercase words, and so is half
+// true case with it (that one was three lowercase words of his, and so is half
 // the noise). Re-measured on 2026-10-05 against the cleaned repository, over the wider roots:
 // ten findings, five of them at three words or more, not one of them speech — labels and
 // framings named and then attributed („Global + Tagesfall" (Frank, …)). The one parenthetical
