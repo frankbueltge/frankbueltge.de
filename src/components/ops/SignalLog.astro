@@ -5,7 +5,14 @@
 // three slightly different slices of one derivation. That is three places for the same log to
 // drift, and it had already drifted in one way that mattered: all three showed the ecology's
 // three practices and called the nightly line's works "The Atelier". So the log is one component
-// now, over one feed (src/lib/ops/house-feed.ts), and the pages compose it.
+// now, over one feed (src/lib/ops/house-feed.ts, assembled in live-feed.ts), and the pages
+// compose it.
+//
+// Since 2026-10-05 the feed is the house's stream of live updates, and a row may carry one fact
+// beside its title — the reading of the day, a count, a moment's own statement — always the
+// record's, worded by NAMING. Its date is a <time> whose `datetime` holds the instant the record
+// names where it names one, so the order within a day stays readable by machines without a
+// second column for people.
 //
 // The pager (Frank, 2026-09-03: seven rows in view, the rest behind older/newer). What it must
 // not do is fetch: this site renders static and the log is small, so EVERY page is in the HTML
@@ -13,7 +20,8 @@
 // compromises — the whole log is in the document for search and for Ctrl-F, and a visitor with
 // no JavaScript sees page one complete, with the pager hidden from them because it would not
 // work. Visibility is toggled with the `hidden` property, never with a style attribute: this
-// site's CSP drops inline styles silently (drift-check rule 3).
+// site's CSP drops inline styles silently (drift-check rule 3). The entrance hands in its twenty
+// rows with a page size of twenty: one page, and so no pager at all.
 import { getRelativeLocaleUrl } from 'astro:i18n'
 import type { Locale } from '@/lib/site'
 import { NAMING } from '@/config/naming'
@@ -35,6 +43,8 @@ const url = (href: string) => (href.startsWith('http') ? href : getRelativeLocal
 const S = NAMING.opsRoom.signal
 const pages = paginate(entries, pageSize)
 const voiceClass = (v: FeedEntry['voice']) => (v ? ` ops-voice-${v}` : '')
+/** the stagger's declared steps (src/styles/ops-room.css); rows past the last arrive with it */
+const STAGGER_STEPS = 20
 ---
 
 <div class="ops-signal" data-signal-log>
@@ -47,12 +57,13 @@ const voiceClass = (v: FeedEntry['voice']) => (v ? ` ops-voice-${v}` : '')
         /* The stagger comes from a class, not from an inline delay: this site's CSP drops
            inline style attributes silently, so a per-row delay written that way would have
            failed without a trace — and drift-check rule 3 catches it before it can. */
-        <li class={`ops-log-row-${Math.min(i, 7)}`}>
+        <li class={`ops-log-row-${Math.min(i, STAGGER_STEPS - 1)}`}>
           <a href={url(entry.href)}>
-            <span class="ops-log-date">{entry.date}</span>
+            <time class="ops-log-date" datetime={entry.time ?? entry.date}>{entry.date}</time>
             <span class={`ops-log-ns${voiceClass(entry.voice)}`}>{entry.houseName}</span>
             <span class="ops-log-title">
               {entry.title}
+              {entry.fact && <span class="ops-log-fact"> · {entry.fact}</span>}
               {entry.withdrawn && <span class="ops-log-withdrawn">{NAMING.worksRegister.withdrawnLabel}</span>}
             </span>
             <span class="ops-log-kind">{entry.kind}</span>

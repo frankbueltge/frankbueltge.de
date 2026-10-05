@@ -646,8 +646,10 @@
      "Error as Method", which the browser measures at 12.2em in this face including the mark and
      its gap — so the column is set from that measurement with a little air, not from an eyeball.
      A shorter guess (11.5em was tried) wraps it, which is the very defect this width exists to
-     prevent. Re-measure if a longer house name ever joins. */
-  width: 12.5em;
+     prevent. Re-measured 2026-10-05, when the live updates brought longer houses in: "Machine
+     Attention" measures 13.7em and "The research ecology" (the cycle's turn) 15.9em — the
+     latter sets the column now. Re-measure if a longer house name ever joins. */
+  width: 16.4em;
   flex: none;
   font-family: var(--font-mono);
   font-size: var(--text-mono-xs);
@@ -671,8 +673,18 @@
 }
 .ops-log-title {
   font-size: var(--text-h3);
+  line-height: var(--text-h3--line-height);
   font-weight: 600;
   letter-spacing: -0.008em;
+}
+/* The one fact a row carries (2026-10-05): the reading of the day, a count, a moment's own
+   statement. It reads as the title's continuation, one register quieter — the title says which
+   instrument or catalogue, the fact says what it recorded. */
+.ops-log-fact {
+  font-size: var(--text-small);
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--ops-muted);
 }
 .ops-log-kind {
   margin-left: auto;
@@ -681,6 +693,32 @@
   font-size: var(--text-mono-xs);
   color: var(--ops-faint);
 }
+/* The stagger. Declared steps rather than an inline delay per row, because this site's CSP drops
+   inline style attributes — the rows would simply all have arrived at once, silently. They live
+   here, beside the rows they time, since 2026-10-05: until then they stood in the pages' scoped
+   <style> blocks, whose selectors carry the page's scope and so never reached the rows the
+   SignalLog component renders. Twenty steps for the entrance's twenty rows, the whole cascade in
+   about half a second; SignalLog.astro clamps any later row to the last step. */
+.ops-log-row-0 { animation-delay: 0s; }
+.ops-log-row-1 { animation-delay: 0.03s; }
+.ops-log-row-2 { animation-delay: 0.06s; }
+.ops-log-row-3 { animation-delay: 0.09s; }
+.ops-log-row-4 { animation-delay: 0.12s; }
+.ops-log-row-5 { animation-delay: 0.15s; }
+.ops-log-row-6 { animation-delay: 0.18s; }
+.ops-log-row-7 { animation-delay: 0.21s; }
+.ops-log-row-8 { animation-delay: 0.24s; }
+.ops-log-row-9 { animation-delay: 0.27s; }
+.ops-log-row-10 { animation-delay: 0.3s; }
+.ops-log-row-11 { animation-delay: 0.33s; }
+.ops-log-row-12 { animation-delay: 0.36s; }
+.ops-log-row-13 { animation-delay: 0.39s; }
+.ops-log-row-14 { animation-delay: 0.42s; }
+.ops-log-row-15 { animation-delay: 0.45s; }
+.ops-log-row-16 { animation-delay: 0.48s; }
+.ops-log-row-17 { animation-delay: 0.51s; }
+.ops-log-row-18 { animation-delay: 0.54s; }
+.ops-log-row-19 { animation-delay: 0.57s; }
 .ops-log-withdrawn {
   font-family: var(--font-mono);
   font-size: var(--text-mono-xs);
@@ -752,12 +790,24 @@
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: none; }
 }
+/* At phone width a row is two lines, not three (2026-10-05, for the entrance's twenty rows): the
+   date, the house and the kind share the first — the kind still pushed to the right edge — and the
+   title with its fact takes the whole second. The house column lets go of its fixed width here:
+   it heads its line instead of aligning a column. */
 @media (max-width: 720px) {
   .ops-log a {
     flex-wrap: wrap;
-    gap: 6px 12px;
+    gap: 3px 12px;
+    padding: 10px 16px;
+  }
+  .ops-log-ns {
+    width: auto;
+  }
+  .ops-log-kind {
+    order: 1;
   }
   .ops-log-title {
+    order: 2;
     width: 100%;
   }
 }
@@ -793,8 +843,10 @@
 @media (max-width: 800px) {
   .ops-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
+/* minmax(0, …) like the wider steps: a bare 1fr lets a tile's unwrapped stamp line set the
+   column's minimum, and at phone width that pushed the single column wider than the screen. */
 @media (max-width: 520px) {
-  .ops-tiles { grid-template-columns: 1fr; }
+  .ops-tiles { grid-template-columns: minmax(0, 1fr); }
 }
 
 /* A tile IS a destination — it links a live experiment — so it takes the frame's .lift in the

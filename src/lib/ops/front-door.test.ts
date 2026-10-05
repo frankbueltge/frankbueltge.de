@@ -64,6 +64,27 @@ describe('the full-board promise the homepage link makes stays true', () => {
   })
 })
 
+describe('the signal log’s two cuts (Frank, 2026-10-05)', () => {
+  const opsRoom = read('../../components/pages/OpsRoom.astro')
+
+  it('shows the newest twenty on the entrance, all in view — one page, so no pager', () => {
+    expect(opsRoom).toContain('topOf(buildHouseFeed(), FEED_TOP)')
+    expect(opsRoom).toContain('pageSize={FEED_TOP}')
+  })
+
+  it('carries the longer log on /now, paged', () => {
+    expect(nowBoard).toContain('topOf(buildHouseFeed(), FEED_DEPTH)')
+    expect(nowBoard).not.toContain('pageSize={FEED_TOP}')
+  })
+
+  it('links the entrance’s log to the longer one, and the link goes to /now', () => {
+    expect(NAMING.opsRoom.signal.link.href).toMatch(/^\/now#latest$/)
+    // through the fragment-aware helper: the locale helper alone writes `/now#latest/`, and misses
+    expect(opsRoom).toContain('urlTo(OPS.signal.link.href)')
+    expect(nowBoard).toContain('id="latest"')
+  })
+})
+
 describe('the front page mounts the ops room', () => {
   // The eyebrow guard in naming.test.ts reads OpsRoom.astro; this is what keeps that guard
   // honest — if the page ever mounts something else, one of the two fails.

@@ -25,7 +25,8 @@ import { NAMING } from '@/config/naming'
 import pulseData from '@/data/pulse/pulse.json'
 import { formatWeekRange, type PulseSnapshot } from '@/lib/pulse/render'
 import { buildBoard } from '@/lib/ops/board'
-import { buildHouseFeed } from '@/lib/ops/house-feed'
+import { FEED_DEPTH, topOf } from '@/lib/ops/house-feed'
+import { buildHouseFeed } from '@/lib/ops/live-feed'
 import SignalLog from '@/components/ops/SignalLog.astro'
 import { readTiles } from '@/lib/ops/tiles'
 import { bars, cells, linePath, ratioBars, smooth3, SPARK_BOX } from '@/lib/ops/viz'
@@ -38,8 +39,9 @@ const url = (href: string) => (href.startsWith('http') ? href : getRelativeLocal
 
 const pulse = pulseData as PulseSnapshot
 const board = buildBoard(pulse)
-// The whole house, newest first — the component pages it seven at a time.
-const signal = buildHouseFeed()
+// The house's live updates, newest first, to the depth of the longer log — the component pages
+// them seven at a time (the entrance shows only the newest twenty since 2026-10-05).
+const signal = topOf(buildHouseFeed(), FEED_DEPTH)
 const tiles = readTiles({ protokoll: await getLatestProtokoll() })
 
 // The provenance foot: the pulse caption the hub has carried since it was built, filled from
@@ -214,18 +216,6 @@ const catalogues = NAMING.catalogues.items.filter((c) => c.href !== '/atlas')
     font-family: var(--font-mono);
     font-size: 11px;
   }
-
-  /* The signal log's stagger. Eight declared steps rather than an inline delay per row, because
-     this site's CSP drops inline style attributes — the rows would simply all have arrived at
-     once, silently. Eight is the ceiling the strip can ever render. */
-  .ops-log-row-0 { animation-delay: 0s; }
-  .ops-log-row-1 { animation-delay: 0.08s; }
-  .ops-log-row-2 { animation-delay: 0.16s; }
-  .ops-log-row-3 { animation-delay: 0.24s; }
-  .ops-log-row-4 { animation-delay: 0.32s; }
-  .ops-log-row-5 { animation-delay: 0.4s; }
-  .ops-log-row-6 { animation-delay: 0.48s; }
-  .ops-log-row-7 { animation-delay: 0.56s; }
 </style>
 
 <script>

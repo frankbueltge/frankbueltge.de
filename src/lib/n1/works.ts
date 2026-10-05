@@ -88,7 +88,17 @@ const NIGHT_H1 = /^#\s+(.+?)\s+—\s+(\d{4}-\d{2}-\d{2}),\s*(.+?)\s*$/m
  * normal shape, not a broken mirror, so an unparsable file is skipped rather than thrown on.
  */
 export function lastN1Night(root: string = N1_NIGHTS_DIR): N1Night | null {
-  if (!existsSync(root)) return null
+  return readN1Nights(root).at(-1) ?? null
+}
+
+/**
+ * Every night on n-1's record, oldest first by the practice's own record number. The signal log
+ * lists them all since 2026-10-05 — the nights are what this practice lands daily, and a log of
+ * live updates that showed only its two works would say n-1 had been quiet since August. Same
+ * fail-soft reading as lastN1Night, which is this list's last entry.
+ */
+export function readN1Nights(root: string = N1_NIGHTS_DIR): N1Night[] {
+  if (!existsSync(root)) return []
   const nights: N1Night[] = []
   for (const name of readdirSync(root)) {
     if (!name.endsWith('.md') || name === 'README.md') continue
@@ -98,6 +108,5 @@ export function lastN1Night(root: string = N1_NIGHTS_DIR): N1Night | null {
     if (!m) continue
     nights.push({ record, date: m[2], title: `${m[1]} — ${m[3]}` })
   }
-  if (nights.length === 0) return null
-  return nights.sort((a, b) => a.record - b.record).at(-1)!
+  return nights.sort((a, b) => a.record - b.record)
 }

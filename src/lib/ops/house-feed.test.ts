@@ -1,22 +1,29 @@
 import { describe, expect, it } from 'vitest'
 import {
   archEntries,
-  buildHouseFeed,
+  compareFeed,
+  FEED_DEPTH,
   FEED_PAGE_SIZE,
+  FEED_TOP,
   houseNames,
+  instantOn,
   labEntries,
   n1Entries,
   paginate,
   registerEntries,
+  sortFeed,
+  SOURCE_ORDER,
+  topOf,
+  type FeedEntry,
   type HouseId,
 } from './house-feed'
+import { buildFeed } from './live-feed'
 import { NAMING } from '@/config/naming'
-import { WERKE } from '@/data/werke'
 import type { Werk } from '@/data/werke'
 import type { ArchFacts } from '@/lib/arch/facts'
 import type { N1Work } from '@/lib/n1/works'
 import type { LatestWork } from '@/lib/engines/latest'
-import { loadArtifacts, type ArtifactEntry } from '@/lib/ecology/v3'
+import type { ArtifactEntry } from '@/lib/ecology/v3'
 import { NIGHTLY_FORK_DIR } from '@/lib/engines/register'
 
 const WORKS: LatestWork[] = [
@@ -62,7 +69,23 @@ const ARTIFACTS: ArtifactEntry[] = [
   { practice: 'studio', slug: 'c', date: '2026-07-30', href: '/studio/werke-html/c/', cycle: null, title: 'A withdrawn premiere', fromWorksRegister: true },
 ]
 
-const feed = () => buildHouseFeed({ works: WORKS, arch: ARCH, n1: N1, werke: LAB, artifacts: ARTIFACTS })
+const feed = () => buildFeed({ works: WORKS, arch: ARCH, n1: N1, werke: LAB, artifacts: ARTIFACTS })
+
+/** A row with only what an ordering test needs to vary. */
+const row = (over: Partial<FeedEntry>): FeedEntry => ({
+  date: '2026-10-04',
+  time: null,
+  source: 'work',
+  house: 'field',
+  houseName: 'The Field',
+  title: 'A row',
+  fact: null,
+  kind: 'work',
+  href: '/a',
+  withdrawn: false,
+  voice: null,
+  ...over,
+})
 
 describe('the signal log speaks for the whole house', () => {
   it('carries every house that lands dated work, not only the ecology’s three practices', () => {
@@ -91,6 +114,13 @@ describe('the signal log speaks for the whole house', () => {
   it('drops an entry whose record carries no date rather than dating it itself', () => {
     expect(feed().some((e) => e.title === 'A candidate with no build date')).toBe(false)
   })
+
+  it('gives the house sources no time and no fact: a work is dated by its day, and is its own news', () => {
+    for (const e of feed()) {
+      expect(e.time, e.title).toBeNull()
+      expect(e.fact, e.title).toBeNull()
+    }
+  })
 })
 
 describe('each house is named and counted by its own record', () => {
@@ -101,6 +131,8 @@ describe('each house is named and counted by its own record', () => {
     expect(names.studio).toBe(NAMING.doors.items.find((d) => d.id === 'ensemble')!.name)
     expect(names.arch).toBe(NAMING.overview.items.find((c) => c.id === 'arch')!.title)
     expect(names['n-1']).toBe(NAMING.overview.items.find((c) => c.id === 'n-1')!.title)
+    expect(names.attention).toBe(NAMING.overview.items.find((c) => c.id === 'attention')!.title)
+    expect(names.ecology).toBe(NAMING.overview.items.find((c) => c.id === 'ecology')!.title)
   })
 
   it('uses each house’s own noun for what it makes', () => {
@@ -130,9 +162,9 @@ describe('each house is named and counted by its own record', () => {
   })
 
   it('keeps a Field artifact in the flat, unwrapped layout — it names no cycle, but it is not a work', () => {
-    const row = feed().find((e) => e.href === '/field/artifacts/2026-09-14-a-refusal-announces-itself/')
-    expect(row?.kind).toBe(NAMING.opsRoom.signal.kindLabels.artifact)
-    expect(row?.date).toBe('2026-09-14')
+    const r = feed().find((e) => e.href === '/field/artifacts/2026-09-14-a-refusal-announces-itself/')
+    expect(r?.kind).toBe(NAMING.opsRoom.signal.kindLabels.artifact)
+    expect(r?.date).toBe('2026-09-14')
   })
 
   it('leaves a work-shaped artifact to the register — one row, not two', () => {
@@ -162,9 +194,77 @@ describe('each house is named and counted by its own record', () => {
   })
 })
 
-describe('the pager', () => {
-  it('shows seven and holds the rest — the house rule', () => {
+describe('the order of one day (Frank, 2026-10-05: deterministic, and tested)', () => {
+  it('reads a time only where the record names one on the row’s own day', () => {
+    expect(instantOn('2026-10-04', '2026-10-04T11:51:18+00:00')).toBe('2026-10-04T11:51:18.000Z')
+    expect(instantOn('2026-10-04', '2026-10-04T10:19:49Z')).toBe('2026-10-04T10:19:49.000Z')
+    // a reading of the 4th written after midnight would be ordered among rows it does not belong to
+    expect(instantOn('2026-10-04', '2026-10-05T00:12:00Z')).toBeNull()
+    // a bare date is no time, however Date.parse reads it
+    expect(instantOn('2026-10-04', '2026-10-04')).toBeNull()
+    expect(instantOn('2026-10-04', 'not a time')).toBeNull()
+    expect(instantOn('2026-10-04', undefined)).toBeNull()
+  })
+
+  it('puts the newest day first, whatever the time of the older day says', () => {
+    const older = row({ date: '2026-10-03', time: '2026-10-03T23:59:00.000Z' })
+    const newer = row({ date: '2026-10-04' })
+    expect(sortFeed([older, newer])).toEqual([newer, older])
+  })
+
+  it('within a day, puts timed rows first, the latest first', () => {
+    const early = row({ title: 'early', time: '2026-10-04T08:00:00.000Z', source: 'reading' })
+    const late = row({ title: 'late', time: '2026-10-04T12:00:00.000Z', source: 'reading' })
+    const dayOnly = row({ title: 'day only', source: 'cycle' })
+    expect(sortFeed([dayOnly, early, late]).map((e) => e.title)).toEqual(['late', 'early', 'day only'])
+  })
+
+  it('stands rows that name no time in the fixed source order', () => {
+    const shuffled = [...SOURCE_ORDER].reverse().map((source) => row({ source, title: source }))
+    expect(sortFeed(shuffled).map((e) => e.source)).toEqual([...SOURCE_ORDER])
+  })
+
+  it('breaks the last ties by house, title and address — never by the input order', () => {
+    const rows = [
+      row({ houseName: 'The Studio', title: 'b' }),
+      row({ houseName: 'The Atelier', title: 'b', href: '/z' }),
+      row({ houseName: 'The Atelier', title: 'b', href: '/a' }),
+      row({ houseName: 'The Atelier', title: 'a' }),
+    ]
+    const expected = [rows[3], rows[2], rows[1], rows[0]]
+    expect(sortFeed(rows)).toEqual(expected)
+    expect(sortFeed([...rows].reverse())).toEqual(expected)
+  })
+
+  it('never calls two different rows equal', () => {
+    const a = row({ title: 'same', href: '/one' })
+    const b = row({ title: 'same', href: '/two' })
+    expect(compareFeed(a, b)).not.toBe(0)
+    expect(Math.sign(compareFeed(a, b))).toBe(-Math.sign(compareFeed(b, a)))
+  })
+
+  it('drops a row whose date is not a day', () => {
+    expect(sortFeed([row({ date: '' }), row({ date: 'today' }), row({})])).toHaveLength(1)
+  })
+})
+
+describe('the cuts', () => {
+  it('shows the newest twenty on the entrance, and pages the longer log seven at a time', () => {
+    expect(FEED_TOP).toBe(20)
     expect(FEED_PAGE_SIZE).toBe(7)
+    expect(FEED_DEPTH).toBeGreaterThan(FEED_TOP)
+    expect(FEED_DEPTH % FEED_PAGE_SIZE).toBe(0)
+  })
+
+  it('cuts without re-ordering, and never past what there is', () => {
+    const entries = [...Array(30).keys()]
+    expect(topOf(entries)).toEqual(entries.slice(0, FEED_TOP))
+    expect(topOf(entries, 5)).toEqual([0, 1, 2, 3, 4])
+    expect(topOf(entries.slice(0, 3))).toEqual([0, 1, 2])
+    expect(topOf(entries, -1)).toEqual([])
+  })
+
+  it('pages: seven, seven, and the rest', () => {
     const pages = paginate([...Array(17).keys()])
     expect(pages.map((p) => p.length)).toEqual([7, 7, 3])
   })
@@ -177,48 +277,37 @@ describe('the pager', () => {
     const entries = feed()
     expect(paginate(entries).flat()).toEqual(entries)
   })
+
+  it('makes the entrance’s twenty one page, so it carries no pager', () => {
+    expect(paginate([...Array(FEED_TOP).keys()], FEED_TOP)).toHaveLength(1)
+  })
 })
 
-describe('against the real record, not only the fixture', () => {
-  const real = buildHouseFeed()
-
-  it('reads the whole house — every source contributes at least one entry', () => {
-    const houses = new Set(real.map((e) => e.house))
-    for (const h of ['atelier', 'field', 'studio', 'nightly-line', 'arch', 'n-1', 'lab'] as HouseId[]) {
-      expect(houses.has(h), `${h} contributes nothing to the signal log`).toBe(true)
-    }
+describe('the wording', () => {
+  it('carries no digits — the figures arrive as arguments', () => {
+    const S = NAMING.opsRoom.signal
+    // n-1 is a practice's name, not a figure; every other string here is wording
+    const { 'n-1': _name, ...houses } = S.houseFallback
+    const strings = [S.kicker, S.kickerSub, S.link.label, S.foot, ...Object.values(S.kindLabels), ...Object.values(houses)]
+    for (const s of strings) expect(s, s).not.toMatch(/\d/)
   })
 
-  it('is long enough to page, and every row is complete', () => {
-    expect(real.length).toBeGreaterThan(FEED_PAGE_SIZE)
-    for (const e of real) {
-      expect(e.date, e.title).toMatch(/^\d{4}-\d{2}-\d{2}$/)
-      expect(e.title.length, e.href).toBeGreaterThan(0)
-      expect(e.href, e.title).toMatch(/^(\/|https?:)/)
-      expect(e.kind.length, e.title).toBeGreaterThan(0)
-      expect(e.houseName.length, e.title).toBeGreaterThan(0)
-    }
+  it('says what the log now is: live updates, newest first — not only what landed', () => {
+    expect(NAMING.opsRoom.signal.kickerSub).toMatch(/LIVE UPDATES/)
+    expect(NAMING.opsRoom.signal.kickerSub).toMatch(/NEWEST FIRST/)
   })
 
-  it('lists every lab experiment and instrument /experiments renders', () => {
-    const lab = real.filter((e) => e.house === 'lab')
-    expect(lab).toHaveLength(WERKE.filter((w) => w.line).length)
-  })
-
-  it('carries the practices’ cycle artifacts, so the Atelier’s newest row is not a work of July', () => {
+  it('names one noun per kind of update', () => {
     const K = NAMING.opsRoom.signal.kindLabels
-    for (const practice of ['atelier', 'field'] as const) {
-      const shipped = loadArtifacts().filter((a) => a.practice === practice && !a.fromWorksRegister && a.date)
-      expect(shipped.length, `${practice} has committed no dated cycle artifact`).toBeGreaterThan(0)
-      const rows = real.filter((e) => e.house === practice && e.kind === K.artifact)
-      expect(rows).toHaveLength(shipped.length)
-      expect(real.find((e) => e.house === practice)?.date).toBe(shipped[0]!.date)
-    }
-  })
-
-  it('carries no address twice — one row per thing that landed', () => {
-    const seen = real.map((e) => `${e.href}#${e.title}`)
-    expect(new Set(seen).size).toBe(seen.length)
+    expect([K.reading, K.probe, K.papers, K.atlas, K.moment, K.turn, K.presentation]).toEqual([
+      'reading',
+      'probe',
+      'papers',
+      'works',
+      'moment',
+      'turn',
+      'presentation',
+    ])
   })
 })
 

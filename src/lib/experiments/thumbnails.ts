@@ -26,6 +26,7 @@ import { feature } from 'topojson-client'
 import type { Topology } from 'topojson-specification'
 
 import { GALLERY } from '@/config/gallery-wording'
+import { count, decimal, READOUTS, type ReadoutId } from './readouts'
 import { bars as vizBars, linePath, type VizBox } from '@/lib/ops/viz'
 import { bars as benfordBars } from '@/lib/round-number/histogram'
 import { yearAreaPath, yearLinePath } from '@/lib/praemie/chart'
@@ -87,11 +88,10 @@ export interface Thumbnail {
 /** One decimal is all a 240-wide box can carry, and it keeps the server render byte-stable. */
 const r1 = (n: number): number => Math.round(n * 10) / 10
 
-const count = (n: number): string => new Intl.NumberFormat('en-GB').format(Math.round(n))
-const decimal = (n: number, digits = 2): string =>
-  new Intl.NumberFormat('en-GB', { minimumFractionDigits: digits, maximumFractionDigits: digits }).format(n)
-const percent = (share: number): string =>
-  new Intl.NumberFormat('en-GB', { style: 'percent', maximumFractionDigits: 0 }).format(share)
+// The number formats and the readings themselves live in readouts.ts since 2026-10-05: the
+// signal log on the entrance states the same reading of the same record, and one composer for
+// both is what keeps the shelf and the log from wording one file two ways.
+const readout = (id: ReadoutId, record: unknown): string => READOUTS[id](record) ?? ''
 
 // ── shared primitives ─────────────────────────────────────────────────────────────────────
 const { width: W, height: H, pad: P } = THUMB_BOX
@@ -520,35 +520,29 @@ function buildThumbnails(): Thumbnail[] {
       id: 'protokoll',
       marks: protokollMarks(day),
       draws: D.protokoll!,
-      readout: R.protokoll(count(day.entries.length), count(day.index.worsened)),
+      readout: readout('protokoll', day),
       source: `${PROTOKOLL_DIR}/${day.date}.json`,
     })
   }
 
   const run = latestBeifang()
   if (run) {
-    const results = run.vantages.automat?.results ?? []
-    const blocked = results.filter((r) => typeof r.third_party_requests !== 'number').length
     out.push({
       id: 'beifang',
       marks: beifangMarks(run),
       draws: D.beifang!,
-      readout: R.beifang(count(results.length - blocked), count(blocked)),
+      readout: readout('beifang', run),
       source: `${BEIFANG_DIR}/${run.date}.json`,
     })
   }
 
   const trendingDay = getLatestTrending()
   if (trendingDay) {
-    const platforms = Math.min(...trendingDay.topics.map((t) => t.platform_count), Infinity)
     out.push({
       id: 'trending',
       marks: trendingMarks(),
       draws: D.trending!,
-      readout: R.trending(
-        count(trendingDay.summary.converging),
-        count(Number.isFinite(platforms) ? platforms : 0),
-      ),
+      readout: readout('trending', trendingDay),
       source: `src/data/trending/${trendingDay.date}.json`,
     })
   }
@@ -561,7 +555,7 @@ function buildThumbnails(): Thumbnail[] {
       id: 'round-number',
       marks: roundNumberMarks(),
       draws: D['round-number']!,
-      readout: R['round-number'](picked.name, picked.benford.verdict),
+      readout: readout('round-number', roundNumberData),
       source: 'src/data/round-number/latest.json',
     })
   }
@@ -593,7 +587,7 @@ function buildThumbnails(): Thumbnail[] {
     id: 'tell',
     marks: tellMarks(),
     draws: D.tell!,
-    readout: R.tell(tellData.headline.word, decimal(tellData.headline.fold, 1)),
+    readout: readout('tell', tellData),
     source: 'src/data/tell/latest.json',
   })
 
@@ -601,7 +595,7 @@ function buildThumbnails(): Thumbnail[] {
     id: 'redaction',
     marks: redactionMarks(),
     draws: D.redaction!,
-    readout: R.redaction(count(redactionData.watched_count), count(redactionData.changed_count)),
+    readout: readout('redaction', redactionData),
     source: 'src/data/redaction/latest.json',
   })
 
@@ -609,11 +603,7 @@ function buildThumbnails(): Thumbnail[] {
     id: 'pattern',
     marks: patternMarks(),
     draws: D.pattern!,
-    readout: R.pattern(
-      patternData.headline.a_label.en,
-      patternData.headline.b_label.en,
-      decimal(patternData.headline.r, 2),
-    ),
+    readout: readout('pattern', patternData),
     source: 'src/data/pattern/latest.json',
   })
 
@@ -621,10 +611,7 @@ function buildThumbnails(): Thumbnail[] {
     id: 'praemie',
     marks: praemieMarks(),
     draws: D.praemie!,
-    readout: R.praemie(
-      count(praemieData.premium.base_year),
-      percent(praemieData.premium.change_pct_since_base / 100),
-    ),
+    readout: readout('praemie', praemieData),
     source: 'src/data/praemie/police.json',
   })
 
@@ -632,7 +619,7 @@ function buildThumbnails(): Thumbnail[] {
     id: 'parallaxe',
     marks: parallaxeMarks(),
     draws: D.parallaxe!,
-    readout: R.parallaxe(count(parallaxeData.topics.length), decimal(parallaxeData.mean_omission_index, 2)),
+    readout: readout('parallaxe', parallaxeData),
     source: 'src/data/parallaxe/register.json',
   })
 
@@ -664,10 +651,7 @@ function buildThumbnails(): Thumbnail[] {
     id: 'consensus',
     marks: consensusMarks(),
     draws: D.consensus!,
-    readout: R.consensus(
-      count(consensusData.headline.domain_count),
-      decimal(consensusData.headline.span_hours, 1),
-    ),
+    readout: readout('consensus', consensusData),
     source: 'src/data/consensus/latest.json',
   })
 
@@ -675,10 +659,7 @@ function buildThumbnails(): Thumbnail[] {
     id: 'invoked-past',
     marks: invokedMarks(),
     draws: D['invoked-past']!,
-    readout: R['invoked-past'](
-      count(invokedData.headline.year),
-      decimal(invokedData.headline.times_its_neighbourhood, 1),
-    ),
+    readout: readout('invoked-past', invokedData),
     source: 'src/data/invoked/latest.json',
   })
 
@@ -686,7 +667,7 @@ function buildThumbnails(): Thumbnail[] {
     id: 'balance',
     marks: balanceMarks(),
     draws: D.balance!,
-    readout: R.balance(balanceData.headline.name, decimal(balanceData.headline.gap, 1)),
+    readout: readout('balance', balanceData),
     source: 'src/data/balance/latest.json',
   })
 
@@ -694,10 +675,7 @@ function buildThumbnails(): Thumbnail[] {
     id: 'correction',
     marks: correctionMarks(),
     draws: D.correction!,
-    readout: R.correction(
-      count(revisionData.systematic.revised_down),
-      count(revisionData.systematic.months),
-    ),
+    readout: readout('correction', revisionData),
     source: 'src/data/revision/latest.json',
   })
 
@@ -708,7 +686,7 @@ function buildThumbnails(): Thumbnail[] {
       id: 'ghost-fleet',
       marks: ghostFleetMarks(),
       draws: D['ghost-fleet']!,
-      readout: R['ghost-fleet'](pick.vessel.name, count(pick.duration_hours)),
+      readout: readout('ghost-fleet', ghostFleetData),
       source: 'src/data/ghost-fleet/latest.json',
     })
   }
